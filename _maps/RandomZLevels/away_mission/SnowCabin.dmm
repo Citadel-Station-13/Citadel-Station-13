@@ -312,7 +312,7 @@
 /obj/structure/janitorialcart,
 /obj/item/mop,
 /obj/item/reagent_containers/glass/bucket,
-/obj/item/caution,
+/obj/item/clothing/suit/caution,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
@@ -881,7 +881,7 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "cT" = (
-/obj/vehicle/ridden/atv,
+/obj/vehicle/ridden/atv/snowmobile,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -893,7 +893,7 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "cV" = (
-/obj/vehicle/ridden/atv,
+/obj/vehicle/ridden/atv/snowmobile,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "cW" = (

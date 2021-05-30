@@ -80,9 +80,9 @@
 	SStgui.close_uis(src)
 	. = ..()
 
+/// @depricated DO NOT USE
 /obj/proc/setAnchored(anchorvalue)
-	SEND_SIGNAL(src, COMSIG_OBJ_SETANCHORED, anchorvalue)
-	anchored = anchorvalue
+	set_anchored(anchorvalue)
 
 /obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, messy_throw = TRUE)
 	. = ..()
@@ -304,18 +304,36 @@
 /obj/proc/reskin_obj(mob/M)
 	if(!LAZYLEN(unique_reskin))
 		return
-	var/list/skins = list()
-	for(var/S in unique_reskin)
-		skins[S] = image(icon = icon, icon_state = unique_reskin[S])
-	var/choice = show_radial_menu(M, src, skins, custom_check = CALLBACK(src, .proc/check_skinnable, M), radius = 40, require_near = TRUE)
-	if(!choice)
-		return FALSE
-	icon_state = unique_reskin[choice]
-	current_skin = choice
-	return
 
-/obj/proc/check_skinnable(/mob/M)
-	if(current_skin || !always_reskinnable)
+	var/list/items = list()
+	for(var/reskin_option in unique_reskin)
+		var/image/item_image = image(icon = src.icon, icon_state = unique_reskin[reskin_option])
+		items += list("[reskin_option]" = item_image)
+	sortList(items)
+
+	var/pick = show_radial_menu(M, src, items, custom_check = CALLBACK(src, .proc/check_reskin_menu, M), radius = 38, require_near = TRUE)
+	if(!pick)
+		return
+	if(!unique_reskin[pick])
+		return
+	current_skin = pick
+	icon_state = unique_reskin[pick]
+	to_chat(M, "[src] is now skinned as '[pick].'")
+
+/**
+  * Checks if we are allowed to interact with a radial menu for reskins
+  *
+  * Arguments:
+  * * user The mob interacting with the menu
+  */
+/obj/proc/check_reskin_menu(mob/user)
+	if(QDELETED(src))
+		return FALSE
+	if(current_skin)
+		return FALSE
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated())
 		return FALSE
 	return TRUE
 
@@ -325,11 +343,6 @@
 		. += GLOB.acid_overlay
 	if(resistance_flags & ON_FIRE)
 		. += GLOB.fire_overlay
-
-//Called when the object is constructed by an autolathe
-//Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes
-/obj/proc/autolathe_crafted(obj/machinery/autolathe/A)
-	return
 
 /obj/proc/rnd_crafted(obj/machinery/rnd/production/P)
 	return

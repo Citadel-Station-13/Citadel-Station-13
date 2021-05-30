@@ -20,7 +20,6 @@
 	density = FALSE
 	movement_type = FLYING
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	ventcrawler = VENTCRAWLER_ALWAYS
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	gold_core_spawnable = FRIENDLY_SPAWN
@@ -30,11 +29,12 @@
 	verb_yell = "buzzes intensely"
 	emote_see = list("buzzes.", "makes a loud buzz.", "rolls several times.", "buzzes happily.")
 	speak_chance = 1
-	unique_name = TRUE
+	unique_name = FALSE
 
 /mob/living/simple_animal/pet/bumbles/Initialize()
 	. = ..()
 	add_verb(src, /mob/living/proc/lay_down)
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/pet/bumbles/ComponentInitialize()
 	. = ..()

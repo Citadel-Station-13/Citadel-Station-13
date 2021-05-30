@@ -86,6 +86,8 @@
 
 // recharge the cell
 /obj/item/stock_parts/cell/proc/give(amount)
+	if(amount < 0)
+		return
 	if(rigged && amount > 0)
 		explode()
 		return 0
@@ -407,3 +409,10 @@
 /obj/item/stock_parts/cell/toymagburst
 	name = "toy mag burst rifle power supply"
 	maxcharge = 4000
+
+/obj/item/stock_parts/cell/family
+	name = "broken power cell"
+	desc = "An old faulty power cell. You can see your family name faintly etched onto it."
+	maxcharge = 100
+	self_recharge = -5 //it loses power over time instead of gaining
+	rating = 1

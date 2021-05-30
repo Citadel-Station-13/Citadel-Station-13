@@ -42,6 +42,8 @@
 		A.GiveTarget(target)
 		A.friends = friends
 		A.faction = faction.Copy()
+		if(!A == /mob/living/simple_animal/hostile/poison/bees/toxin)
+			A.my_creator = type
 		ranged_cooldown = world.time + ranged_cooldown_time
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
@@ -88,6 +90,7 @@
 	density = FALSE
 	del_on_death = 1
 	var/swarming = FALSE
+	var/my_creator = null
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize()
 	. = ..()
@@ -205,17 +208,27 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/infest(mob/living/carbon/human/H)
 	visible_message("<span class='warning'>[name] burrows into the flesh of [H]!</span>")
-	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L
-	if(HAS_TRAIT(H, TRAIT_DWARF)) //dwarf legions aren't just fluff!
-		L = new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf(H.loc)
-	else
-		L = new(H.loc)
+	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = check_infest_type(H)
 	visible_message("<span class='warning'>[L] staggers to [L.p_their()] feet!</span>")
 	H.death()
 	H.adjustBruteLoss(1000)
 	L.stored_mob = H
 	H.forceMove(L)
 	qdel(src)
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/check_infest_type(mob/living/carbon/human/human)
+	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L
+	var/list/blacklisted_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf)
+	if(HAS_TRAIT(human, TRAIT_DWARF)) //dwarf legions aren't just fluff!
+		L = new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf(human.loc)
+	else if(my_creator)
+		if(my_creator in blacklisted_types)
+			L = new(human.loc)
+		else
+			L = new my_creator(human.loc)
+	else
+		L = new(human.loc)
+	return L
 
 //Advanced Legion is slightly tougher to kill and can raise corpses (revive other legions)
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/advanced
@@ -240,6 +253,7 @@
 	icon_state = "legion"
 	icon_living = "legion"
 	icon_dead = "legion"
+	health_doll_icon = "legion"
 	health = 450
 	maxHealth = 450
 	melee_damage_lower = 20
@@ -398,7 +412,6 @@
 			uniform = /obj/item/clothing/under/color/grey
 			belt = /obj/item/tank/internals/emergency_oxygen
 			mask = /obj/item/clothing/mask/gas
-			ears = /obj/item/radio/headset
 			gloves = /obj/item/clothing/gloves/color/fyellow
 			id = /obj/item/card/id/silver/reaper //looks cool and has a fancy name but only a 1% chance
 			if(prob(99))
@@ -412,7 +425,7 @@
 				back = /obj/item/spear
 			else if(prob(80)) //Now they dont always have a backpack
 				back = /obj/item/storage/backpack
-				backpack_contents = list(/obj/item/stack/cable_coil = 1, /obj/item/assembly/flash = 1, /obj/item/storage/fancy/donut_box = 1, /obj/item/storage/fancy/cigarettes/cigpack_shadyjims = 1, /obj/item/lighter = 1)
+				backpack_contents = list(/obj/item/stack/cable_coil = 1, /obj/item/storage/fancy/donut_box = 1, /obj/item/storage/fancy/cigarettes/cigpack_shadyjims = 1, /obj/item/lighter = 1)
 			if(prob(90))
 				r_pocket = /obj/item/kitchen/knife
 			if(prob(60))
@@ -423,7 +436,6 @@
 			suit = /obj/item/clothing/suit/hooded/bee_costume
 			shoes = /obj/item/clothing/shoes/sneakers/yellow
 			gloves = /obj/item/clothing/gloves/color/yellow
-			ears = /obj/item/radio/headset
 			belt = /obj/item/storage/belt/fannypack/yellow
 			id_job = "Assisant"
 			id = /obj/item/card/id

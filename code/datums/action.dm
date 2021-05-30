@@ -2,6 +2,7 @@
 #define AB_CHECK_STUN 2
 #define AB_CHECK_LYING 4
 #define AB_CHECK_CONSCIOUS 8
+#define AB_CHECK_ALIVE 16
 
 /datum/action
 	var/name = "Generic Action"
@@ -115,6 +116,9 @@
 	if(check_flags & AB_CHECK_CONSCIOUS)
 		if(owner.stat)
 			return FALSE
+	if(check_flags & AB_CHECK_ALIVE)
+		if(owner.stat == DEAD)
+			return FALSE
 	return TRUE
 
 /datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
@@ -174,7 +178,7 @@
 	M.ghostize(can_reenter_corpse = TRUE, voluntary = TRUE)
 
 /datum/action/proc/OnUpdatedIcon()
-	UpdateButtonIcon()
+	addtimer(CALLBACK(src, .proc/UpdateButtonIcon), 1) //Hopefully runs after new icon overlays have been compiled.
 
 //Presets for item actions
 /datum/action/item_action
@@ -270,6 +274,13 @@
 
 /datum/action/item_action/toggle_welding_screen/Trigger()
 	var/obj/item/clothing/head/hardhat/weldhat/H = target
+	if(istype(H))
+		H.toggle_welding_screen(owner)
+
+/datum/action/item_action/toggle_welding_screen/plasmaman
+
+/datum/action/item_action/toggle_welding_screen/plasmaman/Trigger()
+	var/obj/item/clothing/head/helmet/space/plasmaman/H = target
 	if(istype(H))
 		H.toggle_welding_screen(owner)
 

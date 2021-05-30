@@ -1,9 +1,11 @@
 /obj/item/forbidden_book
 	name = "Codex Cicatrix"
-	desc = "Book describing the secrets of the veil."
+	desc = "This book describes the secrets of the veil between worlds."
 	icon = 'icons/obj/eldritch.dmi'
-	icon_state = "book"
-	item_state = "book"
+	icon_state = "codex"
+	item_state = "codex"
+	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	///Last person that touched this
 	var/mob/living/last_user
@@ -40,7 +42,7 @@
 ///Gives you a charge and destroys a corresponding influence
 /obj/item/forbidden_book/proc/get_power_from_influence(atom/target, mob/user)
 	var/obj/effect/reality_smash/RS = target
-	to_chat(target, "<span class='danger'>You start drawing power from influence...</span>")
+	to_chat(user, "<span class='danger'>You start drawing power from influence...</span>")
 	if(do_after(user,10 SECONDS,TRUE,RS))
 		qdel(RS)
 		charge += 1
@@ -50,7 +52,7 @@
 
 	for(var/turf/T in range(1,target))
 		if(is_type_in_typecache(T, blacklisted_turfs))
-			to_chat(target, "<span class='warning'>The terrain doesn't support runes!</span>")
+			to_chat(user, "<span class='warning'>The terrain doesn't support runes!</span>")
 			return
 	var/A = get_turf(target)
 	to_chat(user, "<span class='danger'>You start drawing a rune...</span>")
@@ -72,8 +74,8 @@
 	last_user = user
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		icon_state = "book_open"
-		flick("book_opening", src)
+		icon_state = "codex_open"
+		flick("codex_opening", src)
 		ui = new(user, src, "ForbiddenLore", name)
 		ui.open()
 
@@ -131,13 +133,13 @@
 				if(initial(EK.name) != ekname)
 					continue
 				if(cultie.gain_knowledge(EK))
-					charge -= text2num(params["cost"])
+					charge -= initial(EK.cost)
 					return TRUE
 
 	update_icon() // Not applicable to all objects.
 
 /obj/item/forbidden_book/ui_close(mob/user)
-	flick("book_closing",src)
+	flick("codex_closing",src)
 	icon_state = initial(icon_state)
 	return ..()
 

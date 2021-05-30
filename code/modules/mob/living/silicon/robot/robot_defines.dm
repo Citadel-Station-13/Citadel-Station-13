@@ -1,15 +1,16 @@
 
 /mob/living/silicon/robot
+	maxHealth = 100
+	health = 100
 	designation = "Default" //used for displaying the prefix & getting the current module of cyborg
 	has_limbs = TRUE
 	hud_type = /datum/hud/robot
 
+	// radio = /obj/item/radio/borg
+
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
-
-	maxHealth = 100
-	health = 100
-
-	combat_flags = COMBAT_FLAGS_DEFAULT
+	// light_system = MOVABLE_LIGHT_DIRECTIONAL
+	var/light_on = FALSE
 
 	var/custom_name = ""
 	var/braintype = "Cyborg"
@@ -21,6 +22,8 @@
 	var/mob/living/silicon/ai/mainframe = null
 	var/datum/action/innate/undeployment/undeployment_action = new
 
+	/// the last health before updating - to check net change in health
+	var/previous_health
 //Hud stuff
 
 	var/obj/screen/inv1 = null
@@ -38,16 +41,20 @@
 	var/obj/item/module_active = null
 	held_items = list(null, null, null) //we use held_items for the module holding, because that makes sense to do!
 
+	/// For checking which modules are disabled or not.
+	var/disabled_modules
+
 	var/mutable_appearance/eye_lights
 
 	var/mob/living/silicon/ai/connected_ai = null
-	var/obj/item/stock_parts/cell/cell = null
+	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high ///If this is a path, this gets created as an object in Initialize.
 
-	var/opened = 0
+	var/opened = FALSE
 	var/emagged = FALSE
 	var/emag_cooldown = 0
-	var/wiresexposed = 0
+	var/wiresexposed = FALSE
 
+	/// Random serial number generated for each cyborg upon its initialization
 	var/ident = 0
 	var/locked = TRUE
 	var/list/req_access = list(ACCESS_ROBOTICS)
@@ -64,56 +71,51 @@
 	var/datum/effect_system/spark_spread/spark_system // So they can initialize sparks whenever/N
 
 	var/lawupdate = 1 //Cyborgs will sync their laws with their AI by default
-	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
-	var/locked_down //Boolean of whether the borg is locked down or not
+	var/scrambledcodes = FALSE // Used to determine if a borg shows up on the robotics console.  Setting to TRUE hides them.
+	var/locked_down = FALSE //Boolean of whether the borg is locked down or not
 
 	var/toner = 0
 	var/tonermax = 40
 
-	var/lamp_max = 10 //Maximum brightness of a borg lamp. Set as a var for easy adjusting.
-	var/lamp_intensity = 0 //Luminosity of the headlamp. 0 is off. Higher settings than the minimum require power.
-	light_color = "#FFCC66"
-	light_power = 0.8
-	var/lamp_cooldown = 0 //Flag for if the lamp is on cooldown after being forcibly disabled.
+	///If the lamp isn't broken.
+	var/lamp_functional = TRUE
+	///If the lamp is turned on
+	var/lamp_enabled = FALSE
+	///Set lamp color
+	var/lamp_color = "#FFCC66" //COLOR_WHITE
+	///Set to true if a doomsday event is locking our lamp to on and RED
+	var/lamp_doom = FALSE
+	///Lamp brightness. Starts at 3, but can be 1 - 5.
+	var/lamp_intensity = 3
+	///Lamp button reference
+	var/obj/screen/robot/lamp/lampButton
 
 	var/sight_mode = 0
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD)
+
+	///The reference to the built-in tablet that borgs carry.
+	var/obj/item/modular_computer/tablet/integrated/modularInterface
+	var/obj/screen/robot/modPC/interfaceButton
 
 	var/list/upgrades = list()
 
 	var/hasExpanded = FALSE
 	var/obj/item/hat
 	var/hat_offset = -3
-	var/list/equippable_hats = list(/obj/item/clothing/head/caphat,
-	/obj/item/clothing/head/hardhat,
-	/obj/item/clothing/head/centhat,
-	/obj/item/clothing/head/HoS,
-	/obj/item/clothing/head/beret,
-	/obj/item/clothing/head/kitty,
-	/obj/item/clothing/head/hopcap,
-	/obj/item/clothing/head/wizard,
-	/obj/item/clothing/head/nursehat,
-	/obj/item/clothing/head/sombrero,
-	/obj/item/clothing/head/helmet/chaplain/witchunter_hat,
-	/obj/item/clothing/head/soft/, //All baseball caps
-	/obj/item/clothing/head/that, //top hat
-	/obj/item/clothing/head/collectable/tophat, //Not sure where this one is found, but it looks the same so might as well include
-	/obj/item/clothing/mask/bandana/, //All bandanas (which only work in hat mode)
-	/obj/item/clothing/head/fedora,
-	/obj/item/clothing/head/beanie/, //All beanies
-	/obj/item/clothing/ears/headphones,
-	/obj/item/clothing/head/helmet/skull,
-	/obj/item/clothing/head/crown/fancy)
 
 	can_buckle = TRUE
 	buckle_lying = FALSE
+	/// What types of mobs are allowed to ride/buckle to this mob
 	var/static/list/can_ride_typecache = typecacheof(/mob/living/carbon/human)
 
+	// cit specific vars //
 	var/sitting = 0
 	var/bellyup = 0
 	var/dogborg = FALSE
 
 	var/cansprint = 1
+
+	combat_flags = COMBAT_FLAGS_DEFAULT
 
 	var/orebox = null
 
@@ -123,3 +125,5 @@
 	var/sleeper_g
 	var/sleeper_r
 	var/sleeper_nv
+
+	tooltips = TRUE

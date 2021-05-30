@@ -73,9 +73,14 @@
 				icon_state = "breaker_drop"
 
 /obj/structure/femur_breaker/proc/damage_leg(mob/living/carbon/human/H)
-		H.emote("scream")
-		H.apply_damage(150, BRUTE, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-		H.adjustBruteLoss(rand(5,20) + (max(0, H.health))) //Make absolutely sure they end up in crit, so that they can succumb if they wish.
+	var/where_we_snappin_boys = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	H.emote("scream")
+	H.apply_damage(150, BRUTE, where_we_snappin_boys)
+	var/obj/item/bodypart/cracka = H.get_bodypart(where_we_snappin_boys)
+	if(cracka)
+		var/datum/wound/blunt/critical/cracka_lackin = new
+		cracka_lackin.apply_wound(cracka)
+	H.adjustBruteLoss(rand(5,20) + (max(0, H.health))) //Make absolutely sure they end up in crit, so that they can succumb if they wish.
 
 /obj/structure/femur_breaker/proc/raise_slat()
 	slat_status = BREAKER_SLAT_RAISED

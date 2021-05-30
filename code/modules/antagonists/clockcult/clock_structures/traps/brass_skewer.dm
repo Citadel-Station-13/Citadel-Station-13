@@ -115,7 +115,7 @@
 			skewee.visible_message("<span class='warning'>[skewee] painfully slides back down [src].</span>")
 			if(skewee.stat >= UNCONSCIOUS)
 				return //by ratvar, no more spamming my deadchat, holy fuck
-			skewee.say("Oof, ouch owwie!!", forced = "fail brass skewer removal")
+			skewee.emote("pain")
 			return
 	skewee.visible_message("<span class='danger'>[skewee] comes free of [src] with a squelching pop!</span>", \
 	"<span class='boldannounce'>You come free of [src]!</span>")

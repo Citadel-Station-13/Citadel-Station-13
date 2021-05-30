@@ -65,12 +65,14 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
+	strip_mod = 1.2 // because apparently black gloves had this
 
 /obj/item/clothing/gloves/tackler/combat/insulated
 	name = "guerrilla gloves"
 	desc = "Superior quality combative gloves, good for performing tackle takedowns as well as absorbing electrical shocks."
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
+	strip_mod = 1.5 // and combat gloves had this??
 
 /obj/item/clothing/gloves/tackler/combat/insulated/infiltrator
 	name = "insidious guerrilla gloves"

@@ -46,9 +46,11 @@
 			return
 		if(!L.can_inject(user, TRUE, user.zone_selected, FALSE, TRUE)) //stopped by clothing, like patches
 			return
-		if(affecting.status != BODYPART_ORGANIC)
+		if(!affecting.is_organic_limb())
 			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
 			return
+		else if(!affecting.is_organic_limb(FALSE))
+			to_chat(user, "<span class='notice'>Medical sprays won't work on a biomechanical limb!</span>")
 
 	if(L == user)
 		L.visible_message("<span class='notice'>[user] attempts to [apply_method] [src] on [user.p_them()]self.</span>")
@@ -78,7 +80,7 @@
 		playsound(src, 'sound/effects/spray2.ogg', 50, 1, -6)
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 		reagents.reaction(L, apply_type, fraction)
-		reagents.trans_to(L, amount_per_transfer_from_this)
+		reagents.trans_to(L, amount_per_transfer_from_this, log = TRUE)
 	return
 
 /obj/item/reagent_containers/medspray/styptic

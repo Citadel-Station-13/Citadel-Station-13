@@ -715,21 +715,27 @@
 	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/medicine/synaptizine = 1, /datum/reagent/water = 1)
 
 /datum/chemical_reaction/cat
-	name = "felinid mutation toxic"
+	name = "felinid mutation toxin"
 	id = /datum/reagent/mutationtoxin/felinid
 	results = list(/datum/reagent/mutationtoxin/felinid = 1)
-	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/ammonia = 1, /datum/reagent/water = 1, /datum/reagent/pax/catnip = 1, /datum/reagent/mutationtoxin = 1)
+	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/ammonia = 1, /datum/reagent/water = 1, /datum/reagent/drug/aphrodisiac = 10, /datum/reagent/mutationtoxin = 1)
 	required_temp = 450
 
 /datum/chemical_reaction/moff
-	name = "insect mutation toxic"
+	name = "insect mutation toxin"
 	id = /datum/reagent/mutationtoxin/insect
 	results = list(/datum/reagent/mutationtoxin/insect = 1)
 	required_reagents  = list(/datum/reagent/liquid_dark_matter = 2, /datum/reagent/ammonia = 5, /datum/reagent/lithium = 1, /datum/reagent/mutationtoxin = 1)
 	required_temp = 320
 
+/datum/chemical_reaction/mutationtoxin/arachnid
+	name = "arachnid mutation toxin"
+	id = /datum/reagent/mutationtoxin/arachnid
+	results = list(/datum/reagent/mutationtoxin/arachnid = 1)
+	required_reagents = list(/datum/reagent/mutationtoxin/insect = 1, /datum/reagent/toxin/heparin = 10)
+
 /datum/chemical_reaction/notlight //Harder to make do to it being a hard race to play
-	name = "shadow muatatuin toxic"
+	name = "shadow mutation toxin"
 	id = /datum/reagent/mutationtoxin/shadow
 	results = list(/datum/reagent/mutationtoxin/shadow = 1)
 	required_reagents  = list(/datum/reagent/liquid_dark_matter = 5, /datum/reagent/medicine/synaptizine = 10, /datum/reagent/medicine/oculine = 10, /datum/reagent/mutationtoxin = 1)
@@ -875,3 +881,29 @@
 	results = list(/datum/reagent/carbon = 1)
 	required_reagents = list(/datum/reagent/cellulose = 1)
 	required_temp = 512
+
+//Nerdy card shit
+
+/datum/chemical_reaction/card_powder/blue
+	name = "Blue Card Powder"
+	id = /datum/reagent/card_powder/blue
+	results = list(/datum/reagent/card_powder/blue = 1)
+	required_reagents = list(/datum/reagent/card_powder/green = 12)
+
+/datum/chemical_reaction/card_powder/purple
+	name = "Purple Card Powder"
+	id = /datum/reagent/card_powder/purple
+	results = list(/datum/reagent/card_powder/purple = 1)
+	required_reagents = list(/datum/reagent/card_powder/blue = 12)
+
+/datum/chemical_reaction/card_powder/yellow
+	name = "Yellow Card Powder"
+	id = /datum/reagent/card_powder/yellow
+	results = list(/datum/reagent/card_powder/yellow = 1)
+	required_reagents = list(/datum/reagent/card_powder/purple = 12)
+
+/datum/chemical_reaction/card_powder/black
+	name = "Black Card Powder"
+	id = /datum/reagent/card_powder/black
+	results = list(/datum/reagent/card_powder/black = 1)
+	required_reagents = list(/datum/reagent/card_powder/yellow = 12)

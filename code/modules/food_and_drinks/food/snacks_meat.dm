@@ -435,7 +435,7 @@
 	name = "alien drone cube"
 	desc = "Just add water and run!"
 	tastes = list("the jungle" = 1, "acid" = 1)
-	dried_being = /mob/living/carbon/alien/humanoid/drone
+	dried_being = /mob/living/simple_animal/hostile/alien/sentinel/cube
 
 /obj/item/reagent_containers/food/snacks/cube/goat
 	name = "goat cube"

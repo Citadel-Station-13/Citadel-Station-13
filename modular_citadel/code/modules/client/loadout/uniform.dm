@@ -32,6 +32,10 @@
 	name = "Tan suit"
 	path = /obj/item/clothing/under/suit/tan
 
+/datum/gear/uniform/suit/charismatic_suit
+	name = "Charismatic suit"
+	path = /obj/item/clothing/under/suit/charismatic_suit
+
 /datum/gear/uniform/suit/white
 	name = "White suit"
 	path = /obj/item/clothing/under/suit/white
@@ -43,6 +47,12 @@
 /datum/gear/uniform/maidcostume
 	name = "Maid costume"
 	path = /obj/item/clothing/under/costume/maid
+
+/datum/gear/uniform/maidcostume/polychromic
+	name = "Polychromic maid costume"
+	path = /obj/item/clothing/under/rank/civilian/janitor/maid/polychromic
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#FFFFFF", "#000000")
 
 /datum/gear/uniform/mailmanuniform
 	name = "Mailman's jumpsuit"
@@ -160,6 +170,13 @@
 	name = "Tan Pants"
 	path = /obj/item/clothing/under/pants/tan
 
+/datum/gear/uniform/pants/polypants
+	name = "Polychromic Pants"
+	path = /obj/item/clothing/under/pants/polypants/polychromic
+	cost = 2
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#75634F", "#3D3D3D", "#575757")
+
 /datum/gear/uniform/pants/track
 	name = "Track Pants"
 	path = /obj/item/clothing/under/pants/track
@@ -181,6 +198,10 @@
 /datum/gear/uniform/turtleneck
 	name = "Tactitool Turtleneck"
 	path = /obj/item/clothing/under/syndicate/cosmetic
+
+/datum/gear/uniform/skirtleneck
+	name = "Tactitool Skirtleneck"
+	path = /obj/item/clothing/under/syndicate/cosmetic/skirt
 
 /datum/gear/uniform/sweater
 	name = "Cream Commando Sweater"
@@ -219,40 +240,70 @@
 	name = "Grey Turtleneck"
 	path = /obj/item/clothing/under/suit/turtle/grey
 
+/datum/gear/uniform/purpleturtle
+	name = "Purple Turtleneck"
+	path = /obj/item/clothing/under/suit/turtle/purple
+
+/datum/gear/uniform/orangeturtle
+	name = "Orange Turtleneck"
+	path = /obj/item/clothing/under/suit/turtle/orange
+
+/datum/gear/uniform/blueturtle
+	name = "Blue Turtleneck"
+	path = /obj/item/clothing/under/suit/turtle/blue
+
+/datum/gear/uniform/redturtle
+	name = "Red Turtleneck"
+	path = /obj/item/clothing/under/suit/turtle/red
+
 /datum/gear/uniform/polyjump
 	name = "Polychromic Jumpsuit"
 	path = /obj/item/clothing/under/misc/polyjumpsuit
 	cost = 2
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#FFFFFF", "#808080", "#353535")
 
 /datum/gear/uniform/skirt/poly
 	name = "Polychromic Jumpskirt"
 	path = /obj/item/clothing/under/dress/skirt/polychromic
 	cost = 2
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#FFFFFF", "#F08080", "#808080")
 
 /datum/gear/uniform/suit/poly
 	name = "Polychromic Button-up Shirt"
 	path = /obj/item/clothing/under/misc/poly_shirt
 	cost = 3
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#FFFFFF", "#353535", "#353535")
 
 /datum/gear/uniform/skirt/poly/pleated
 	name = "Polychromic Pleated Sweaterskirt"
 	path = /obj/item/clothing/under/dress/skirt/polychromic/pleated
 	cost = 3
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#8CC6FF", "#808080", "#FF3535")
 
 /datum/gear/uniform/polykilt
 	name = "Polychromic Kilt"
 	path = /obj/item/clothing/under/costume/kilt/polychromic
 	cost = 3
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#FFFFFF", "#F08080")
 
 /datum/gear/uniform/shorts/poly
 	name = "Polychromic Shorts"
 	path = /obj/item/clothing/under/misc/polyshorts
 	cost = 3
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#353535", "#808080", "#808080")
 
 /datum/gear/uniform/shorts/poly/athletic
 	name = "Polychromic Athletic Shorts"
 	path = /obj/item/clothing/under/shorts/polychromic
 	cost = 2
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#FFFFFF", "#F08080")
 
 /datum/gear/uniform/hopcasual
 	name = "Casual Head of Personnel's uniform"

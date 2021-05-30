@@ -37,7 +37,9 @@
 #define FIELD_OF_VISION_VISUAL_RENDER_TARGET "FIELD_OF_VISION_VISUAL_PLANE"
 
 #define CHAT_PLANE -1 //We don't want heard messages to be hidden by FoV.
-#define CHAT_LAYER 12.1 //Legacy, it doesn't matter that much because we are displayed above the game plane anyway.
+
+#define CHAT_LAYER 12.0001 // Do not insert layers between these two values
+#define CHAT_LAYER_MAX 12.9999
 
 #define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
 #define BLACKNESS_PLANE_RENDER_TARGET "BLACKNESS_PLANE"
@@ -75,6 +77,7 @@
 #define PROJECTILE_HIT_THRESHHOLD_LAYER 2.75 //projectiles won't hit objects at or below this layer if possible
 #define TABLE_LAYER 2.8
 #define TRAY_LAYER 2.85
+#define GATEWAY_UNDERLAY_LAYER 2.85
 #define BELOW_OBJ_LAYER 2.9
 #define LOW_ITEM_LAYER 2.95
 //#define OBJ_LAYER 3 //For easy recordkeeping; this is a byond define

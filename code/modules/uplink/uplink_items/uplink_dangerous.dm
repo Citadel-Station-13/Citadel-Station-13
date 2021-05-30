@@ -118,6 +118,18 @@
 /datum/uplink_item/dangerous/doublesword/get_discount()
 	return pick(4;0.8,2;0.65,1;0.5)
 
+/datum/uplink_item/dangerous/hyperblade
+	name = "Hypereutactic Blade"
+	desc = "The result of two Dragon Tooth swords combining, you wouldn't want to see this coming at you down the hall! \
+			Requires two hands to wield and it slows you down.  You can also recolor it!"
+	item = /obj/item/dualsaber/hypereutactic
+	player_minimum = 25
+	cost = 16
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
+
+/datum/uplink_item/dangerous/hyperblade/get_discount()
+	return pick(4;0.8,2;0.65,1;0.5)
+
 /datum/uplink_item/dangerous/sword
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
@@ -215,6 +227,15 @@
 	cost = 18
 	surplus = 50
 	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/dangerous/maulergauntlets
+	name = "Mauler Gauntlets"
+	desc = "Mauler gauntlets are a pair of high-tech plastitanium gauntlets fused with illegal nanite auto-injectors designed \
+	to grant the wearer sextuple the strength of an average human being. Wearing these, you will punch harder, inflict more injuries \
+	with your fists, and be able to slam people through tables with immense force. \
+	Unfortunately, due to the size of the gloves you will be unable to wield firearms with them equipped."
+	item = /obj/item/clothing/gloves/fingerless/pugilist/mauler
+	cost = 8
 
 /datum/uplink_item/dangerous/powerfist
 	name = "Power Fist"

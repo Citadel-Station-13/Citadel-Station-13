@@ -19,6 +19,7 @@
 	var/boom_sizes = list(0, 0, 3)
 	var/can_attach_mob = FALSE
 	var/full_damage_on_mobs = FALSE
+	var/can_gib_mobs = FALSE
 
 /obj/item/grenade/plastic/Initialize()
 	. = ..()
@@ -46,7 +47,7 @@
 		playsound(src, 'sound/weapons/tap.ogg', 20, 1)
 		update_icon()
 		return
-	if(nadeassembly && istype(I, /obj/item/wirecutters))
+	if(nadeassembly && I.tool_behaviour == TOOL_WIRECUTTER)
 		I.play_tool_sound(src, 20)
 		nadeassembly.forceMove(get_turf(src))
 		nadeassembly.master = null
@@ -72,7 +73,7 @@
 			explosion(get_step(T, aim_dir), boom_sizes[1], boom_sizes[2], boom_sizes[3])
 		else
 			explosion(location, boom_sizes[1], boom_sizes[2], boom_sizes[3])
-	if(ismob(target))
+	if(ismob(target) && can_gib_mobs)
 		var/mob/M = target
 		M.gib()
 	qdel(src)
@@ -84,6 +85,7 @@
 /obj/item/grenade/plastic/Crossed(atom/movable/AM)
 	if(nadeassembly)
 		nadeassembly.Crossed(AM)
+	. = ..()
 
 /obj/item/grenade/plastic/on_found(mob/finder)
 	if(nadeassembly)
@@ -204,7 +206,7 @@
 	user.gib(1, 1)
 
 /obj/item/grenade/plastic/c4/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		open_panel = !open_panel
 		to_chat(user, "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>")
 	else if(is_wire_tool(I))

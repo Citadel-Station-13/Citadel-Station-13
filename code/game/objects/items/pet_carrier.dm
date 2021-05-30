@@ -328,6 +328,10 @@
 		REMOVE_TRAIT(occupant, TRAIT_RESISTHIGHPRESSURE, "bluespace_container_resist_high_pressure")
 		REMOVE_TRAIT(occupant, TRAIT_RESISTLOWPRESSURE, "bluespace_container_resist_low_pressure")
 	name = initial(name)
+	if(iscarbon(occupant))
+		to_chat(occupant, "You pop out of the [src], slightly dazed!")
+		occupant.Stun(5 SECONDS)
+
 
 /obj/item/pet_carrier/bluespace/return_air()
 	if(!occupant_gas_supply)
@@ -349,5 +353,15 @@
 /obj/item/pet_carrier/bluespace/load_occupant(mob/living/user, mob/living/target)
 	if(..())
 		name = "[initial(name)] ([target])"
+
+/obj/item/pet_carrier/bluespace/single_use
+	desc = "A jar, that seems to be bigger on the inside, somehow allowing lifeforms to fit through its narrow entrance. This one looks exceptionally fragile."
+
+/obj/item/pet_carrier/bluespace/single_use/remove_occupant(mob/living/occupant)
+	. = ..()
+
+	if(!QDELETED(src))
+		playsound(src, "shatter", 70, 1)
+		qdel(src)
 
 #undef pet_carrier_full

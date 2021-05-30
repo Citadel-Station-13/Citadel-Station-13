@@ -973,10 +973,8 @@
 	for(var/A in cached_reagents)
 		var/datum/reagent/R = A
 		if (R.type == reagent)
-			if((total_volume - amount) <= 0)//Because this can result in 0, I don't want it to crash.
-				pH = REAGENT_NORMAL_PH
 			//In practice this is really confusing and players feel like it randomly melts their beakers, but I'm not sure how else to handle it. We'll see how it goes and I can remove this if it confuses people.
-			else if (!ignore_pH)
+			if(!ignore_pH)
 				//if (((pH > R.pH) && (pH <= 7)) || ((pH < R.pH) && (pH >= 7)))
 				pH = (((pH - R.pH) / total_volume) * amount) + pH
 			if(istype(my_atom, /obj/item/reagent_containers/))
@@ -987,6 +985,8 @@
 			amount = clamp(amount, 0, R.volume)
 			R.volume -= amount
 			update_total()
+			if(total_volume <= 0)//Because this can result in 0, I don't want it to crash.
+				pH = REAGENT_NORMAL_PH
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
 			if(my_atom)

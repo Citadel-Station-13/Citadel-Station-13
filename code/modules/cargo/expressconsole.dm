@@ -20,7 +20,7 @@
 	var/printed_beacons = 0 //number of beacons printed. Used to determine beacon names.
 	var/list/meme_pack_data
 	var/obj/item/supplypod_beacon/beacon //the linked supplypod beacon
-	var/area/landingzone = /area/quartermaster/storage //where we droppin boys
+	var/area/landingzone = /area/cargo/storage //where we droppin boys
 	var/podType = /obj/structure/closet/supplypod
 	var/cooldown = 0 //cooldown to prevent printing supplypod beacon spam
 	var/locked = TRUE //is the console locked? unlock with ID
@@ -177,9 +177,9 @@
 						LZ = get_turf(beacon)
 						beacon.update_status(SP_LAUNCH)
 					else if (!usingBeacon)//find a suitable supplypod landing zone in cargobay
-						landingzone = GLOB.areas_by_type[/area/quartermaster/storage]
+						landingzone = GLOB.areas_by_type[/area/cargo/storage]
 						if (!landingzone)
-							WARNING("[src] couldnt find a Quartermaster/Storage (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
+							WARNING("[src] couldnt find \"/area/cargo/storage\" (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
 							landingzone = get_area(src)
 						for(var/turf/open/floor/T in landingzone.contents)//uses default landing zone
 							if(is_blocked_turf(T))
@@ -190,7 +190,7 @@
 							LZ = pick(empty_turfs)
 					if (SO.pack.cost <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
 						D.adjust_money(-SO.pack.cost)
-						new /obj/effect/abstract/DPtarget(LZ, podType, SO)
+						new /obj/effect/pod_landingzone(LZ, podType, SO)
 						. = TRUE
 						update_icon()
 			else
@@ -208,7 +208,7 @@
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = pick(empty_turfs)
 							LAZYREMOVE(empty_turfs, LZ)
-							new /obj/effect/abstract/DPtarget(LZ, podType, SO)
+							new /obj/effect/pod_landingzone(LZ, podType, SO)
 							. = TRUE
 							update_icon()
 							CHECK_TICK

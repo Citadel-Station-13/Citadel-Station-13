@@ -243,6 +243,17 @@
 	icon_state = "shieldsparkles"
 	duration = 5
 
+/obj/effect/temp_visual/voidpush
+	name = "eldritch energy"
+	icon_state = "emark4"
+	duration = 5
+
+/obj/effect/temp_visual/voidswap
+	name = "altered space"
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "voidalter"
+	duration = 5
+
 /obj/effect/temp_visual/telekinesis
 	name = "telekinetic force"
 	icon_state = "empdisable"
@@ -515,3 +526,12 @@
 /obj/effect/temp_visual/dir_setting/space_wind/Initialize(mapload, set_dir, set_alpha = 255)
 	. = ..()
 	alpha = set_alpha
+
+/obj/effect/temp_visual/slime_puddle
+	icon = 'icons/mob/mob.dmi'
+	duration = 12
+	icon_state = "to_puddle"
+
+/obj/effect/temp_visual/slime_puddle/reverse
+	icon_state = "from_puddle"
+	duration = 7

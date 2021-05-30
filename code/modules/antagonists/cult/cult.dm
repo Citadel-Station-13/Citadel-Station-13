@@ -19,9 +19,11 @@
 	var/ignore_holy_water = FALSE
 
 /datum/antagonist/cult/neutered
+	name = "Neutered Cultist"
 	neutered = TRUE
 
 /datum/antagonist/cult/neutered/traitor
+	name = "Traitor Cultist"
 	ignore_eligibility_checks = TRUE
 	ignore_holy_water = TRUE
 	show_in_roundend = FALSE
@@ -100,7 +102,7 @@
 
 	var/T = new item_path(mob)
 	var/item_name = initial(item_path.name)
-	var/where = mob.equip_in_one_of_slots(T, slots)
+	var/where = mob.equip_in_one_of_slots(T, slots, critical = TRUE)
 	if(!where)
 		to_chat(mob, "<span class='userdanger'>Unfortunately, you weren't able to get a [item_name]. This is very bad and you should adminhelp immediately (press F1).</span>")
 		return 0
@@ -295,6 +297,8 @@
 				++cultplayers
 			else
 				++alive
+	if(!alive)
+		return
 	var/ratio = cultplayers/alive
 	if(ratio > CULT_RISEN && !cult_risen)
 		for(var/datum/mind/B in members)
@@ -328,7 +332,7 @@
 		var/mob/living/carbon/human/H = cultist
 		new /obj/effect/temp_visual/cult/sparks(get_turf(H), H.dir)
 		var/istate = pick("halo1","halo2","halo3","halo4","halo5","halo6")
-		H.add_overlay(mutable_appearance('icons/effects/32x64.dmi', istate, -BODY_FRONT_LAYER))
+		H.add_overlay(mutable_appearance('icons/effects/32x64.dmi', istate, -ANTAG_LAYER))
 
 /datum/team/cult/proc/setup_objectives()
 	//SAC OBJECTIVE , todo: move this to objective internals
@@ -415,7 +419,7 @@
 	var/sanity = 0
 	while(summon_spots.len < SUMMON_POSSIBILITIES && sanity < 100)
 		var/area/summon = pick(GLOB.sortedAreas - summon_spots)
-		if(summon && is_station_level(summon.z) && summon.valid_territory)
+		if(summon && is_station_level(summon.z) && !(summon.area_flags & VALID_TERRITORY))
 			summon_spots += summon
 		sanity++
 	update_explanation_text()

@@ -100,6 +100,42 @@
 						"<span class='suicide'>[user] is slitting [user.p_their()] stomach open with the [src.name]! It looks like [user.p_theyre()] trying to commit seppuku.</span>"))
 	return (BRUTELOSS)
 
+/obj/item/kitchen/efink
+	name = "E-Fink"
+	icon_state = "efink"
+	desc = "The E-Fink is a product by Mending Solutions Inc. Unfortunately it can only mend sliced meat, fruits and dough back to their original state. Unbutchering is not possible."
+	flags_1 = CONDUCT_1
+	force = 10
+	w_class = WEIGHT_CLASS_SMALL
+	throwforce = 10
+	hitsound = 'sound/weapons/bladesliceb.ogg'
+	throw_speed = 3
+	throw_range = 6
+	custom_materials = list(/datum/material/iron=12000)
+	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	sharpness = SHARP_POINTY
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	var/bayonet = FALSE	//Can this be attached to a gun?
+	wound_bonus = -5
+	bare_wound_bonus = 10
+	custom_price = PRICE_NORMAL
+
+/obj/item/kitchen/efink/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 80 - force, 100, force - 10) //bonus chance increases depending on force
+
+/obj/item/kitchen/efink/attack(mob/living/carbon/M, mob/living/carbon/user)
+	if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
+		return eyestab(M,user)
+	else
+		return ..()
+
+/obj/item/kitchen/efink/suicide_act(mob/user)
+	user.visible_message(pick("<span class='suicide'>[user] is slitting [user.p_their()] wrists with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is slitting [user.p_their()] throat with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is slitting [user.p_their()] stomach open with the [src.name]! It looks like [user.p_theyre()] trying to commit seppuku.</span>"))
+	return (BRUTELOSS)
+
 /obj/item/kitchen/knife/ritual
 	name = "ritual knife"
 	desc = "The unearthly energies that once powered this blade are now dormant."
@@ -150,8 +186,8 @@
 	item_state = "knife"
 	desc = "A military combat utility survival knife."
 	embedding = list("pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
-	force = 20
-	throwforce = 20
+	force = 16
+	throwforce = 16
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
 	bayonet = TRUE
 
@@ -164,6 +200,35 @@
 	force = 15
 	throwforce = 15
 	bayonet = TRUE
+
+/obj/item/kitchen/knife/combat/survival/knuckledagger
+	name = "survival dagger"
+	icon_state = "glaive-dagger"
+	desc = "An enhanced hunting grade survival dagger, with a bright light and a handguard that makes it better for efficient butchery."
+	actions_types = list(/datum/action/item_action/toggle_light)
+	var/light_on = FALSE
+	var/brightness_on = 7
+
+/obj/item/kitchen/knife/combat/survival/knuckledagger/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 30, 130, 20) // it's good for butchering stuff
+
+/obj/item/kitchen/knife/combat/survival/knuckledagger/ui_action_click(mob/user, actiontype)
+	light_on = !light_on
+	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
+	update_brightness(user)
+	update_icon()
+
+/obj/item/kitchen/knife/combat/survival/knuckledagger/proc/update_brightness(mob/user = null)
+	if(light_on)
+		set_light(brightness_on)
+	else
+		set_light(0)
+
+/obj/item/kitchen/knife/combat/survival/knuckledagger/update_overlays()
+	. = ..()
+	if(light_on)
+		. += "[icon_state]_lit"
 
 /obj/item/kitchen/knife/combat/bone
 	name = "bone dagger"
@@ -219,13 +284,31 @@
 /obj/item/kitchen/rollingpin/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins flattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
+
+/obj/item/kitchen/unrollingpin
+	name = "unrolling pin"
+	desc = "For when you accidentally flattened something."
+	icon_state = "unrolling_pin"
+	force = 8
+	throwforce = 5
+	throw_speed = 3
+	throw_range = 7
+	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1.5)
+	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
+	custom_price = PRICE_ALMOST_CHEAP
+
+/obj/item/kitchen/unrollingpin/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins unflattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
+
 /* Trays  moved to /obj/item/storage/bag */
 
 /obj/item/kitchen/knife/scimitar
-	name = "Scimitar knife"
+	name = "scimitar knife"
 	desc = "A knife used to cleanly butcher. Its razor-sharp edge has been honed for butchering, but has been poorly maintained over the years."
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-/obj/item/kitchen/knife/scimiar/Initialize()
+/obj/item/kitchen/knife/scimitar/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 90 - force, 100, force - 60) //bonus chance increases depending on force

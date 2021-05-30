@@ -802,7 +802,8 @@
 		. += "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
 
 /obj/item/storage/belt/sabre/PopulateContents()
-	new starting_sword(src)
+	if(starting_sword)
+		new starting_sword(src)
 
 /obj/item/storage/belt/sabre/rapier
 	name = "rapier sheath"
@@ -816,13 +817,47 @@
 	fitting_swords = list(/obj/item/melee/rapier)
 	starting_sword = /obj/item/melee/rapier
 
+/obj/item/storage/belt/sabre/secbelt
+	name = "security sheath"
+	desc = "A statement on modern practical fashion; this limber black sheath is fitted to a lightened security belt, allowing one to look fashionable with their sword-shaped stun-baton, while of course carrying less things."
+	icon_state = "secsheath"
+	item_state = "secsheath"
+	w_class = WEIGHT_CLASS_BULKY
+	starting_sword = /obj/item/melee/baton/stunsword
+	content_overlays = TRUE
+
+/obj/item/storage/belt/sabre/secbelt/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 5
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.rustle_sound = TRUE
+	STR.quickdraw = FALSE
+	STR.can_hold = typecacheof(list( // cannot carry other batons
+		/obj/item/melee/baton/stunsword,
+		/obj/item/grenade,
+		/obj/item/reagent_containers/spray/pepper,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash/handheld,
+		/obj/item/clothing/glasses,
+		/obj/item/reagent_containers/food/snacks/donut,
+		/obj/item/flashlight/seclite,
+		/obj/item/radio,
+		/obj/item/clothing/gloves,
+		/obj/item/restraints/legcuffs/bola
+		))
+
+/obj/item/storage/belt/sabre/secbelt/PopulateContents()
+	new /obj/item/melee/baton/stunsword(src)
+	update_icon()
+
 /obj/item/storage/belt/sabre/twin
 	name = "twin sheath"
 	desc = "Two sheaths. One is capable of holding a katana (or bokken) and the other a wakizashi. You could put two wakizashis in if you really wanted to. Now you can really roleplay as a samurai."
-	icon_state = "twinsheath"
-	item_state = "quiver" //this'll do.
+	icon_state = "2sheath"
+	item_state = "katana" //this'll do.
 	w_class = WEIGHT_CLASS_BULKY
-	fitting_swords = list(/obj/item/melee/smith/wakizashi, /obj/item/melee/smith/twohand/katana, /obj/item/melee/bokken)
+	fitting_swords = list(/obj/item/melee/smith/wakizashi, /obj/item/melee/smith/twohand/katana, /obj/item/melee/bokken, /obj/item/katana)
 	starting_sword = null
 
 /obj/item/storage/belt/sabre/twin/ComponentInitialize()
@@ -830,3 +865,65 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 2
 	STR.max_w_class = WEIGHT_CLASS_BULKY + WEIGHT_CLASS_NORMAL //katana and waki.
+	STR.max_combined_w_class = 7
+
+/obj/item/melee/smith/twohand/katana/on_exit_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/twin/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+	. = ..()
+
+/obj/item/melee/smith/twohand/katana/on_enter_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/twin/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+	. = ..()
+
+/obj/item/melee/smith/wakizashi/on_exit_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/twin/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+	. = ..()
+
+/obj/item/melee/smith/wakizashi/on_enter_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/twin/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+	. = ..()
+
+/obj/item/melee/bokken/on_exit_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/twin/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+	. = ..()
+
+/obj/item/melee/bokken/on_enter_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/twin/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+	. = ..()
+
+/obj/item/storage/belt/plant
+	name = "botanical belt"
+	desc = "A belt used to hold most hydroponics supplies. Suprisingly, not green."
+	icon_state = "plantbelt"
+	item_state = "plantbelt"
+	content_overlays = TRUE
+
+/obj/item/storage/belt/plant/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 6
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.can_hold = typecacheof(list(
+		/obj/item/reagent_containers/spray/plantbgone,
+		/obj/item/plant_analyzer,
+		/obj/item/seeds,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/cultivator,
+		/obj/item/reagent_containers/spray/pestspray,
+		/obj/item/hatchet,
+		/obj/item/shovel/spade,
+		/obj/item/gun/energy/floragun
+	))

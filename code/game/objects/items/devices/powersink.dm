@@ -16,9 +16,9 @@ GLOBAL_LIST_EMPTY(power_sinks)
 	throw_speed = 1
 	throw_range = 2
 	custom_materials = list(/datum/material/iron=750)
-	var/drain_rate = 1600000	// amount of power to drain per tick
+	var/drain_rate = 2000000	// amount of power to drain per tick. Currently 2MJ.
 	var/power_drained = 0 		// has drained this much power
-	var/max_power = 1e10		// maximum power that can be drained before exploding
+	var/max_power = 2000000000		// maximum power that can be drained before exploding. Currently 2GJ. About 17 minutes to explode at the max rate.
 	var/mode = 0		// 0 = off, 1=clamped (off), 2=operating
 	var/admins_warned = FALSE // stop spam, only warn the admins once that we are about to boom
 
@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(power_sinks)
 	set_light(0)
 
 /obj/item/powersink/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(mode == DISCONNECTED)
 			var/turf/T = loc
 			if(isturf(T) && !T.intact)
@@ -155,5 +155,5 @@ GLOBAL_LIST_EMPTY(power_sinks)
 
 	if(power_drained >= max_power)
 		STOP_PROCESSING(SSobj, src)
-		explosion(src.loc, 4,8,16,32)
+		explosion(src.loc, 3,7,14,28)
 		qdel(src)

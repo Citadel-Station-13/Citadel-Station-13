@@ -20,23 +20,6 @@
 	data["totalPoints"] = points
 	return data
 
-/obj/machinery/mineral/ore_redemption/ui_act(action, params)
-	if(..())
-		return
-	switch(action)
-		if("Claim")
-			var/mob/M = usr
-			var/obj/item/card/id/I = M.get_idcard(TRUE)
-			if(points)
-				if(I)
-					I.mining_points += points
-					points = 0
-				else
-					to_chat(usr, "<span class='warning'>No ID detected.</span>")
-			else
-				to_chat(usr, "<span class='warning'>No points to claim.</span>")
-			return TRUE
-
 /obj/machinery/point_bank/power_change()
 	..()
 	update_icon()

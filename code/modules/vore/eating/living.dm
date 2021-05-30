@@ -342,20 +342,26 @@
 		to_chat(src, "<span class='warning'>You can't do that so fast, slow down.</span>")
 		return
 
-	var/list/choices
+	DelayNextAction(CLICK_CD_MELEE, flush = TRUE)
+
+	var/list/lickable = list()
 	for(var/mob/living/L in view(1))
 		if(L != src && (!L.ckey || L.client?.prefs.vore_flags & LICKABLE) && Adjacent(L))
-			LAZYADD(choices, L)
+			LAZYADD(lickable, L)
+	for(var/mob/living/listed in lickable)
+		lickable[listed] = new /mutable_appearance(listed)
 
-	if(!choices)
+	if(!lickable)
 		return
 
-	var/mob/living/tasted = input(src, "Who would you like to lick? (Excluding yourself and those with the preference disabled)", "Licking") as null|anything in choices
+	var/mob/living/tasted = show_radial_menu(src, src, lickable, radius = 40, require_near = TRUE)
 
 	if(QDELETED(tasted) || (tasted.ckey && !(tasted.client?.prefs.vore_flags & LICKABLE)) || !Adjacent(tasted) || incapacitated(ignore_restraints = TRUE))
 		return
 
-	DelayNextAction(CLICK_CD_MELEE)
+	if(ishuman(tasted))
+		var/mob/living/carbon/human/H = tasted
+		H.wash_cream()
 
 	visible_message("<span class='warning'>[src] licks [tasted]!</span>","<span class='notice'>You lick [tasted]. They taste rather like [tasted.get_taste_message()].</span>","<b>Slurp!</b>")
 

@@ -348,11 +348,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/proc/alarm()
 	switch(get_status())
 		if(SUPERMATTER_DELAMINATING)
-			playsound(src, 'sound/misc/bloblarm.ogg', 100)
+			playsound(src, 'sound/misc/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
 		if(SUPERMATTER_EMERGENCY)
-			playsound(src, 'sound/machines/engine_alert1.ogg', 100)
+			playsound(src, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 		if(SUPERMATTER_DANGER)
-			playsound(src, 'sound/machines/engine_alert2.ogg', 100)
+			playsound(src, 'sound/machines/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 		if(SUPERMATTER_WARNING)
 			playsound(src, 'sound/machines/terminal_alert.ogg', 75)
 
@@ -390,7 +390,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			speaking = "[DisplayTimeText(i, TRUE)] remain before causality stabilization."
 		else
 			speaking = "[i*0.1]..."
-		radio.talk_into(src, speaking, common_channel)
+		radio.talk_into(src, speaking, common_channel, list(SPAN_COMMAND))	// IT GOT WORSE, LOUD TIME
 		sleep(10)
 
 	explode()
@@ -715,7 +715,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 			//Oh shit it's bad, time to freak out
 			if(damage > emergency_point)
-				radio.talk_into(src, "[emergency_alert] Integrity: [get_integrity()]%", common_channel)
+				// it's bad, LETS YELL
+				radio.talk_into(src, "[emergency_alert] Integrity: [get_integrity()]%", common_channel, list(SPAN_YELL))
 				lastwarning = REALTIMEOFDAY
 				if(!has_reached_emergency)
 					investigate_log("has reached the emergency point for the first time.", INVESTIGATE_SUPERMATTER)
@@ -928,8 +929,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/mob/living/user = AM
 		if(user.status_flags & GODMODE)
 			return
-		message_admins("[src] has consumed [key_name_admin(user)] [ADMIN_JMP(src)].")
-		investigate_log("has consumed [key_name(user)].", INVESTIGATE_SUPERMATTER)
+		var/add
+		if(user.mind?.assigned_role == "Clown")
+			var/denergy = rand(-1000, 1000)
+			var/ddamage = rand(-150, clamp(150, 0, (explosion_point - damage) + 150))
+			power += denergy
+			damage += ddamage
+			add = ", adding [denergy] energy and [ddamage] damage to the crystal"
+		message_admins("[src] has consumed [key_name_admin(user)] [ADMIN_JMP(src)][add].")
+		investigate_log("has consumed [key_name(user)][add].", INVESTIGATE_SUPERMATTER)
 		user.dust(force = TRUE)
 		if(power_changes)
 			matter_power += 200

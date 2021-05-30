@@ -30,6 +30,9 @@
 	attack(user,user)
 	return FIRELOSS
 
+/obj/item/assembly/flash/DoRevenantThrowEffects(atom/target)
+	AOE_flash()
+
 /obj/item/assembly/flash/update_icon(flash = FALSE)
 	cut_overlays()
 	attached_overlays = list()
@@ -258,70 +261,6 @@
 
 /obj/item/assembly/flash/armimplant/proc/cooldown()
 	overheat = FALSE
-
-/obj/item/assembly/flash/shield
-	name = "strobe shield"
-	desc = "A shield with a built in, high intensity light capable of blinding and disorienting suspects. Takes regular handheld flashes as bulbs."
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "flashshield"
-	item_state = "flashshield"
-	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
-	slot_flags = ITEM_SLOT_BACK
-	force = 10
-	throwforce = 5
-	throw_speed = 2
-	throw_range = 3
-	w_class = WEIGHT_CLASS_BULKY
-	custom_materials = list(/datum/material/glass=7500, /datum/material/iron=1000)
-	attack_verb = list("shoved", "bashed")
-	block_chance = 50
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
-
-/obj/item/assembly/flash/shield/flash_recharge(interval=10)
-	if(times_used >= 4)
-		burn_out()
-		return FALSE
-	return TRUE
-
-/obj/item/assembly/flash/shield/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/assembly/flash/handheld))
-		var/obj/item/assembly/flash/handheld/flash = W
-		if(flash.crit_fail)
-			to_chat(user, "No sense replacing it with a broken bulb.")
-			return
-		else
-			to_chat(user, "You begin to replace the bulb.")
-			if(do_after(user, 20, target = src))
-				if(flash.crit_fail || !flash || QDELETED(flash))
-					return
-				crit_fail = FALSE
-				times_used = 0
-				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-				update_icon()
-				flash.crit_fail = TRUE
-				flash.update_icon()
-				return
-	..()
-
-/obj/item/assembly/flash/shield/update_icon(flash = FALSE)
-	icon_state = "flashshield"
-	item_state = "flashshield"
-
-	if(crit_fail)
-		icon_state = "riot"
-		item_state = "riot"
-	else if(flash)
-		icon_state = "flashshield_flash"
-		item_state = "flashshield_flash"
-		addtimer(CALLBACK(src, /atom/.proc/update_icon), 5)
-
-	if(holder)
-		holder.update_icon()
-
-/obj/item/assembly/flash/shield/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	activate()
-	return ..()
 
 //ported from tg - check to make sure it can't appear where it's not supposed to.
 /obj/item/assembly/flash/hypnotic

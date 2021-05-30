@@ -39,6 +39,7 @@
 	. = ..()
 	update_config_movespeed()
 	update_movespeed(TRUE)
+	initialize_actionspeed()
 	hook_vr("mob_new",list(src))
 
 /mob/GenerateTag()
@@ -126,8 +127,9 @@
   * * ignored_mobs (optional) doesn't show any message to any given mob in the list.
   * * target (optional) is the other mob involved with the visible message. For example, the attacker in many combat messages.
   * * target_message (optional) is what the target mob will see e.g. "[src] does something to you!"
+  * * omni (optional) if TRUE, will show to users no matter what.
   */
-/atom/proc/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, ignored_mobs, mob/target, target_message)
+/atom/proc/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, ignored_mobs, mob/target, target_message, omni = FALSE)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
@@ -138,19 +140,25 @@
 
 	if(target_message && target && istype(target) && target.client)
 		hearers -= target
-		//This entire if/else chain could be in two lines but isn't for readibilties sake.
-		var/msg = target_message
-		if(target.see_invisible<invisibility) //if src is invisible to us,
-			msg = blind_message
-		//the light object is dark and not invisible to us, darkness does not matter if you're directly next to the target
-		else if(T.lighting_object && T.lighting_object.invisibility <= target.see_invisible && T.is_softly_lit() && !in_range(T,target))
-			msg = blind_message
-		if(msg)
-			target.show_message(msg, MSG_VISUAL,blind_message, MSG_AUDIBLE)
+		if(omni)
+			target.show_message(target_message)
+		else
+			//This entire if/else chain could be in two lines but isn't for readibilties sake.
+			var/msg = target_message
+			if(target.see_invisible<invisibility) //if src is invisible to us,
+				msg = blind_message
+			//the light object is dark and not invisible to us, darkness does not matter if you're directly next to the target
+			else if(T.lighting_object && T.lighting_object.invisibility <= target.see_invisible && T.is_softly_lit() && !in_range(T,target))
+				msg = blind_message
+			if(msg)
+				target.show_message(msg, MSG_VISUAL,blind_message, MSG_AUDIBLE)
 	if(self_message)
 		hearers -= src
 	for(var/mob/M in hearers)
 		if(!M.client)
+			continue
+		if(omni)
+			M.show_message(message)
 			continue
 		//This entire if/else chain could be in two lines but isn't for readibilties sake.
 		var/msg = message
@@ -166,10 +174,13 @@
 		M.show_message(msg, MSG_VISUAL,blind_message, MSG_AUDIBLE)
 
 ///Adds the functionality to self_message.
-mob/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, mob/target, target_message)
+/mob/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, mob/target, target_message, omni = FALSE)
 	. = ..()
 	if(self_message && target != src)
-		show_message(self_message, MSG_VISUAL, blind_message, MSG_AUDIBLE)
+		if(!omni)
+			show_message(self_message, MSG_VISUAL, blind_message, MSG_AUDIBLE)
+		else
+			show_message(self_message)
 
 /**
   * Show a message to all mobs in earshot of this atom
@@ -445,39 +456,6 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 		mind.store_memory(msg)
 	else
 		to_chat(src, "You don't have a mind datum for some reason, so you can't add a note to it.")
-
-/mob/verb/abandon_mob()
-	set name = "Respawn"
-	set category = "OOC"
-
-	if (CONFIG_GET(flag/norespawn))
-		return
-	if ((stat != DEAD || !( SSticker )))
-		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
-		return
-
-	log_game("[key_name(usr)] used abandon mob.")
-
-	to_chat(usr, "<span class='boldnotice'>Please roleplay correctly!</span>")
-
-	if(!client)
-		log_game("[key_name(usr)] AM failed due to disconnect.")
-		return
-	client.screen.Cut()
-	client.screen += client.void
-	if(!client)
-		log_game("[key_name(usr)] AM failed due to disconnect.")
-		return
-
-	var/mob/dead/new_player/M = new /mob/dead/new_player()
-	if(!client)
-		log_game("[key_name(usr)] AM failed due to disconnect.")
-		qdel(M)
-		return
-
-	M.key = key
-//	M.Login()	//wat
-	return
 
 /mob/proc/transfer_ckey(mob/new_mob, send_signal = TRUE)
 	if(!new_mob || (!ckey && new_mob.ckey))
@@ -991,6 +969,12 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 	switch(var_name)
 		if("logging")
 			return debug_variable(var_name, logging, 0, src, FALSE)
+		if(NAMEOF(src, lastKnownIP))
+			if(!check_rights(R_SENSITIVE, FALSE))
+				return "SENSITIVE"
+		if(NAMEOF(src, computer_id))
+			if(!check_rights(R_SENSITIVE, FALSE))
+				return "SENSITIVE"
 	. = ..()
 
 /mob/vv_auto_rename(new_name)

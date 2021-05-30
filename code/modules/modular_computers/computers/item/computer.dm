@@ -9,6 +9,7 @@
 	var/light_on = FALSE
 	integrity_failure = 0.5
 	max_integrity = 100
+	rad_flags = RAD_PROTECT_CONTENTS
 	armor = list("melee" = 0, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
 
 	var/enabled = 0											// Whether the computer is turned on.
@@ -20,6 +21,10 @@
 	var/last_battery_percent = 0							// Used for deciding if battery percentage has chandged
 	var/last_world_time = "00:00"
 	var/list/last_header_icons
+	///Looping sound for when the computer is on
+	var/datum/looping_sound/computer/soundloop
+	///Whether or not this modular computer uses the looping sound
+	var/looping_sound = TRUE
 
 	var/base_active_power_usage = 50						// Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
 	var/base_idle_power_usage = 5							// Power usage when the computer is idle and screen is off (currently only applies to laptops)
@@ -56,11 +61,14 @@
 		physical = src
 	comp_light_color = "#FFFFFF"
 	idle_threads = list()
+	if(looping_sound)
+		soundloop = new(list(src), enabled)
 	update_icon()
 
 /obj/item/modular_computer/Destroy()
 	kill_program(forced = TRUE)
 	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(soundloop)
 	for(var/H in all_components)
 		var/obj/item/computer_hardware/CH = all_components[H]
 		if(CH.holder == src)
@@ -103,7 +111,6 @@
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
 	if(!(card_slot || card_slot2))
-		//to_chat(user, "<span class='warning'>There isn't anywhere you can fit a card into on this computer.</span>")
 		return FALSE
 
 	var/obj/item/card/inserting_id = inserting_item.RemoveID()
@@ -112,7 +119,6 @@
 
 	if((card_slot?.try_insert(inserting_id)) || (card_slot2?.try_insert(inserting_id)))
 		return TRUE
-	//to_chat(user, "<span class='warning'>This computer doesn't have an open card slot.</span>")
 	return FALSE
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
@@ -198,7 +204,7 @@
 			to_chat(user, "<span class='warning'>You send an activation signal to \the [src], but it responds with an error code. It must be damaged.</span>")
 		else
 			to_chat(user, "<span class='warning'>You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again.</span>")
-		return
+		return FALSE
 
 	// If we have a recharger, enable it automatically. Lets computer without a battery work.
 	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
@@ -210,24 +216,28 @@
 			to_chat(user, "<span class='notice'>You send an activation signal to \the [src], turning it on.</span>")
 		else
 			to_chat(user, "<span class='notice'>You press the power button and start up \the [src].</span>")
+		if(looping_sound)
+			soundloop.start()
 		enabled = 1
 		update_icon()
 		ui_interact(user)
+		return TRUE
 	else // Unpowered
 		if(issynth)
 			to_chat(user, "<span class='warning'>You send an activation signal to \the [src] but it does not respond.</span>")
 		else
 			to_chat(user, "<span class='warning'>You press the power button but \the [src] does not respond.</span>")
+		return FALSE
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
-/obj/item/modular_computer/process()
+/obj/item/modular_computer/process(delta_time)
 	if(!enabled) // The computer is turned off
 		last_power_usage = 0
-		return 0
+		return
 
 	if(obj_integrity <= integrity_failure * max_integrity)
 		shutdown_computer()
-		return 0
+		return
 
 	if(active_program && active_program.requires_ntnet && !get_ntnet_status(active_program.requires_ntnet_feature))
 		active_program.event_networkfailure(0) // Active program requires NTNet to run but we've just lost connection. Crash.
@@ -239,7 +249,7 @@
 
 	if(active_program)
 		if(active_program.program_state != PROGRAM_STATE_KILLED)
-			active_program.process_tick()
+			active_program.process_tick(delta_time)
 			active_program.ntnet_status = get_ntnet_status()
 		else
 			active_program = null
@@ -247,13 +257,35 @@
 	for(var/I in idle_threads)
 		var/datum/computer_file/program/P = I
 		if(P.program_state != PROGRAM_STATE_KILLED)
-			P.process_tick()
+			P.process_tick(delta_time)
 			P.ntnet_status = get_ntnet_status()
 		else
 			idle_threads.Remove(P)
 
-	handle_power() // Handles all computer power interaction
+	handle_power(delta_time) // Handles all computer power interaction
 	//check_update_ui_need()
+
+/**
+ * Displays notification text alongside a soundbeep when requested to by a program.
+ *
+ * After checking tha the requesting program is allowed to send an alert, creates
+ * a visible message of the requested text alongside a soundbeep. This proc adds
+ * text to indicate that the message is coming from this device and the program
+ * on it, so the supplied text should be the exact message and ending punctuation.
+ *
+ * Arguments:
+ * The program calling this proc.
+ * The message that the program wishes to display.
+ */
+
+/obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
+	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
+		return
+	playsound(src, sound, 50, TRUE)
+	visible_message("<span class='notice'>The [src] displays a [caller.filedesc] notification: [alerttext]</span>")
+	var/mob/living/holder = loc
+	if(istype(holder))
+		to_chat(holder, "[icon2html(src)] <span class='notice'>The [src] displays a [caller.filedesc] notification: [alerttext]</span>")
 
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()
@@ -344,13 +376,76 @@
 	for(var/datum/computer_file/program/P in idle_threads)
 		P.kill_program(forced = TRUE)
 		idle_threads.Remove(P)
+	if(looping_sound)
+		soundloop.stop()
 	if(loud)
 		physical.visible_message("<span class='notice'>\The [src] shuts down.</span>")
 	enabled = 0
 	update_icon()
 
+/**
+ * Toggles the computer's flashlight, if it has one.
+ *
+ * Called from ui_act(), does as the name implies.
+ * It is seperated from ui_act() to be overwritten as needed.
+*/
+/obj/item/modular_computer/proc/toggle_flashlight()
+	if(!has_light)
+		return FALSE
+	light_on = !light_on
+	if(light_on)
+		set_light(comp_light_luminosity, 1, comp_light_color)
+	else
+		set_light(0)
+	return TRUE
+
+/**
+ * Sets the computer's light color, if it has a light.
+ *
+ * Called from ui_act(), this proc takes a color string and applies it.
+ * It is seperated from ui_act() to be overwritten as needed.
+ * Arguments:
+ ** color is the string that holds the color value that we should use. Proc auto-fails if this is null.
+*/
+/obj/item/modular_computer/proc/set_flashlight_color(color)
+	if(!has_light || !color)
+		return FALSE
+	comp_light_color = color
+	// set_light_color(color)
+	update_light()
+	return TRUE
+
+/obj/item/modular_computer/screwdriver_act(mob/user, obj/item/tool)
+	if(!all_components.len)
+		to_chat(user, "<span class='warning'>This device doesn't have any components installed.</span>")
+		return
+	var/list/component_names = list()
+	for(var/h in all_components)
+		var/obj/item/computer_hardware/H = all_components[h]
+		component_names.Add(H.name)
+
+	var/choice = input(user, "Which component do you want to uninstall?", "Computer maintenance", null) as null|anything in sortList(component_names)
+
+	if(!choice)
+		return
+
+	if(!Adjacent(user))
+		return
+
+	var/obj/item/computer_hardware/H = find_hardware_by_name(choice)
+
+	if(!H)
+		return
+
+	uninstall_component(H, user)
+	return
+
 
 /obj/item/modular_computer/attackby(obj/item/W as obj, mob/user as mob)
+	// Check for ID first
+	if(istype(W, /obj/item/card/id) && InsertID(W))
+		return
+
 	// Insert items into the components
 	for(var/h in all_components)
 		var/obj/item/computer_hardware/H = all_components[h]
@@ -384,31 +479,6 @@
 		if(W.use_tool(src, user, 20, volume=50, amount=1))
 			obj_integrity = max_integrity
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
-		return
-
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		if(!all_components.len)
-			to_chat(user, "<span class='warning'>This device doesn't have any components installed.</span>")
-			return
-		var/list/component_names = list()
-		for(var/h in all_components)
-			var/obj/item/computer_hardware/H = all_components[h]
-			component_names.Add(H.name)
-
-		var/choice = input(user, "Which component do you want to uninstall?", "Computer maintenance", null) as null|anything in sortList(component_names)
-
-		if(!choice)
-			return
-
-		if(!Adjacent(user))
-			return
-
-		var/obj/item/computer_hardware/H = find_hardware_by_name(choice)
-
-		if(!H)
-			return
-
-		uninstall_component(H, user)
 		return
 
 	..()

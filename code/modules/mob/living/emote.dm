@@ -443,6 +443,7 @@
 	key = "me"
 	key_third_person = "custom"
 	message = null
+	emote_type = EMOTE_BOTH
 
 /datum/emote/living/custom/proc/check_invalid(mob/user, input)
 	if(stop_bad_mime.Find(input, 1, 1))
@@ -462,24 +463,12 @@
 	else if(!params)
 		var/custom_emote = stripped_multiline_input_or_reflect(user, "Choose an emote to display.", "Custom Emote", null, MAX_MESSAGE_LEN)
 		if(custom_emote && !check_invalid(user, custom_emote))
-			var/type = input("Is this a visible or hearable emote?") as null|anything in list("Visible", "Hearable")
-			switch(type)
-				if("Visible")
-					emote_type = EMOTE_VISIBLE
-				if("Hearable")
-					emote_type = EMOTE_AUDIBLE
-				else
-					alert("Unable to use this emote, must be either hearable or visible.")
-					return
 			message = custom_emote
 	else
 		message = params
-		if(type_override)
-			emote_type = type_override
 	message = user.say_emphasis(message)
 	. = ..()
 	message = null
-	emote_type = EMOTE_VISIBLE
 
 /datum/emote/living/custom/replace_pronoun(mob/user, message)
 	return message
@@ -520,7 +509,7 @@
 	message = "beeps."
 	message_param = "beeps at %t."
 	sound = 'sound/machines/twobeep.ogg'
-	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon, /mob/living/carbon/human)
+	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon, /mob/living/carbon/human, /mob/camera/aiEye)
 
 /datum/emote/living/circle
 	key = "circle"
@@ -562,7 +551,7 @@
 	if(. && iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(isjellyperson(C))
-			pick(playsound(C, 'sound/effects/attackblob.ogg', 50, 1),playsound(C, 'sound/effects/blobattack.ogg', 50, 1))
+			playsound(C, 'sound/effects/attackblob.ogg', 50, 1)
 
 /datum/emote/living/audio_emote/blurp
 	key = "blurp"

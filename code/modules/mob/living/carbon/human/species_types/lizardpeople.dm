@@ -1,17 +1,17 @@
 /datum/species/lizard
 	// Reptilian humanoids with scaled skin and tails.
-	name = "Anthromorphic Lizard"
-	id = "lizard"
+	name = "Anthropomorphic Lizard"
+	id = SPECIES_LIZARD
 	say_mod = "hisses"
 	default_color = "00FF00"
-	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,LIPS,HORNCOLOR,WINGCOLOR,HAS_FLESH,HAS_BONE)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,LIPS,HORNCOLOR,WINGCOLOR,CAN_SCAR,HAS_FLESH,HAS_BONE)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	mutanttongue = /obj/item/organ/tongue/lizard
 	mutanttail = /obj/item/organ/tail/lizard
 	coldmod = 1.5
 	heatmod = 0.67
 	mutant_bodyparts = list("mcolor" = "0F0", "mcolor2" = "0F0", "mcolor3" = "0F0", "tail_lizard" = "Smooth", "mam_snouts" = "Round",
-							 "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None",
+							 "horns" = "None", "frills" = "None", "spines" = "None", "mam_body_markings" = list(),
 							  "legs" = "Digitigrade", "taur" = "None", "deco_wings" = "None")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
@@ -28,7 +28,9 @@
 
 	tail_type = "tail_lizard"
 	wagging_type = "waggingtail_lizard"
-	species_type = "lizard"
+	species_category = SPECIES_CATEGORY_LIZARD
+
+	ass_image = 'icons/ass/asslizard.png'
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -46,9 +48,9 @@
 */
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
-	id = "ashlizard"
-	limbs_id = "lizard"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
+	id = SPECIES_ASHWALKER
+	limbs_id = SPECIES_LIZARD
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE,CAN_SCAR,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_CHUNKYFINGERS)
 	mutantlungs = /obj/item/organ/lungs/ashwalker
 	mutanteyes = /obj/item/organ/eyes/night_vision
@@ -60,9 +62,12 @@
 	if((C.dna.features["spines"] != "None" ) && (C.dna.features["tail_lizard"] == "None")) //tbh, it's kinda ugly for them not to have a tail yet have floating spines
 		C.dna.features["tail_lizard"] = "Smooth"
 		C.update_body()
-	if(C.dna.features["legs"] != "digitigrade")
-		C.dna.features["legs"] = "digitigrade"
+	if(C.dna.features["legs"] != "Digitigrade")
+		C.dna.features["legs"] = "Digitigrade"
 		for(var/obj/item/bodypart/leggie in C.bodyparts)
 			if(leggie.body_zone == BODY_ZONE_L_LEG || leggie.body_zone == BODY_ZONE_R_LEG)
 				leggie.update_limb(FALSE, C)
+	if(C.dna.features["mam_snouts"] != "Sharp")
+		C.dna.features["mam_snouts"] = "Sharp"
+		C.update_body()
 	return ..()

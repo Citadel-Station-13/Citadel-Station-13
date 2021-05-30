@@ -1,4 +1,5 @@
 #define COOLDOWN_STUN 1200
+#define COOLDOWN_KNOCKDOWN 600
 #define COOLDOWN_DAMAGE 600
 #define COOLDOWN_MEME 300
 #define COOLDOWN_NONE 100
@@ -213,7 +214,6 @@
 
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
 	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown")
-	var/static/regex/sleep_words = regex("sleep|slumber|rest")
 	var/static/regex/vomit_words = regex("vomit|throw up|sick")
 	var/static/regex/silence_words = regex("shut up|silence|be silent|ssh|quiet|hush")
 	var/static/regex/hallucinate_words = regex("see the truth|hallucinate")
@@ -264,26 +264,20 @@
 		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Stun(60 * power_multiplier)
+			L.Stagger(60 * power_multiplier)
 
 	//KNOCKDOWN
 	else if(findtext(message, knockdown_words))
-		cooldown = COOLDOWN_STUN
+		cooldown = COOLDOWN_KNOCKDOWN
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.DefaultCombatKnockdown(60 * power_multiplier)
-
-	//SLEEP
-	else if((findtext(message, sleep_words)))
-		cooldown = COOLDOWN_STUN
-		for(var/mob/living/carbon/C in listeners)
-			C.Sleeping(40 * power_multiplier)
+			L.DefaultCombatKnockdown()
 
 	//VOMIT
 	else if((findtext(message, vomit_words)))
-		cooldown = COOLDOWN_STUN
+		cooldown = COOLDOWN_DAMAGE
 		for(var/mob/living/carbon/C in listeners)
-			C.vomit(10 * power_multiplier, distance = power_multiplier)
+			C.vomit(10 * power_multiplier, distance = power_multiplier, stun = FALSE)
 
 	//SILENCE
 	else if((findtext(message, silence_words)))
@@ -757,7 +751,6 @@
 	//phase 2
 	var/static/regex/awoo_words = regex("howl|awoo|bark")
 	var/static/regex/nya_words = regex("nya|meow|mewl")
-	var/static/regex/sleep_words = regex("sleep|slumber|rest")
 	var/static/regex/strip_words = regex("strip|derobe|nude|at ease|suit off")
 	var/static/regex/walk_words = regex("slow down|walk")
 	var/static/regex/run_words = regex("run|speed up")
@@ -835,7 +828,7 @@
 				if(HAS_TRAIT(L, TRAIT_MASO))
 					if(ishuman(L))
 						var/mob/living/carbon/human/H = L
-						H.adjust_arousal(3*power_multiplier,maso = TRUE)
+						H.adjust_arousal(3*power_multiplier,"velvet speech", maso = TRUE)
 					descmessage += "And yet, it feels so good..!</span>" //I don't really understand masco, is this the right sort of thing they like?
 					E.enthrallTally += power_multiplier
 					E.resistanceTally -= power_multiplier
@@ -1102,17 +1095,6 @@
 					H.emote("me", EMOTE_VISIBLE, "lets out a nya!")
 					E.cooldown += 1
 
-	//SLEEP
-	else if((findtext(message, sleep_words)))
-		for(var/mob/living/carbon/C in listeners)
-			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
-			switch(E.phase)
-				if(2 to INFINITY)
-					C.Sleeping(45 * power_multiplier)
-					E.cooldown += 10
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='notice'>Drowsiness suddenly overwhelms you as you fall asleep!</b></span>"), 5)
-					to_chat(user, "<span class='notice'><i>You send [C] to sleep.</i></span>")
-
 	//STRIP
 	else if((findtext(message, strip_words)))
 		for(var/V in listeners)
@@ -1319,7 +1301,7 @@
 			if(E.phase > 1)
 				if(user.ckey == E.enthrallID && user.real_name == E.master.real_name)
 					E.master = user
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='nicegreen'>[(E.lewd?"You hear the words of your [E.enthrallGender] again!! They're back!!":"You recognise the voice of [E.master].")]</b></span>"), 5)
+					to_chat(H, "<span class='nicegreen'>[(E.lewd?"You hear the words of your [E.enthrallGender] again!! They're back!!":"You recognise the voice of [E.master].")]</b></span>")
 					to_chat(user, "<span class='notice'><i>[H] looks at you with sparkling eyes, recognising you!</i></span>")
 
 	//I dunno how to do state objectives without them revealing they're an antag

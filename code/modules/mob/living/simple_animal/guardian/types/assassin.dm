@@ -1,5 +1,7 @@
 //Assassin
 /mob/living/simple_animal/hostile/guardian/assassin
+	melee_damage_lower = 15
+	melee_damage_upper = 15
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'

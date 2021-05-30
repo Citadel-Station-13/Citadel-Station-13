@@ -25,6 +25,9 @@
 	if(stat != DEAD)
 		handle_liver()
 
+	if(stat != DEAD)
+		handle_corruption()
+
 
 /mob/living/carbon/PhysicalLife(seconds, times_fired)
 	if(!(. = ..()))
@@ -406,7 +409,7 @@
 	for(var/thing in all_wounds)
 		var/datum/wound/W = thing
 		if(W.processes) // meh
-			W.handle_process()	
+			W.handle_process()
 
 /mob/living/carbon/handle_mutations_and_radiation()
 	if(dna && dna.temporary_mutations.len)
@@ -438,7 +441,12 @@
 
 	radiation -= min(radiation, RAD_LOSS_PER_TICK)
 	if(radiation > RAD_MOB_SAFE)
-		adjustToxLoss(log(radiation-RAD_MOB_SAFE)*RAD_TOX_COEFFICIENT)
+		if(!HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+			adjustToxLoss(log(radiation-RAD_MOB_SAFE)*RAD_TOX_COEFFICIENT)
+		else
+			var/rad_threshold = HAS_TRAIT(src, TRAIT_ROBOT_RADSHIELDING) ? RAD_UPGRADED_ROBOT_SAFE : RAD_DEFAULT_ROBOT_SAFE
+			if(radiation > rad_threshold)
+				adjustToxLoss(log(radiation-rad_threshold)*RAD_TOX_COEFFICIENT, toxins_type = TOX_SYSCORRUPT) //Robots are less resistant to rads, unless upgraded in which case they are fine at higher levels than organics.
 
 /mob/living/carbon/handle_stomach()
 	set waitfor = 0
@@ -502,18 +510,13 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-	if(getStaminaLoss() && !SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))		//CIT CHANGE - prevents stamina regen while combat mode is active
-		adjustStaminaLoss(!CHECK_MOBILITY(src, MOBILITY_STAND) ? ((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) ? STAM_RECOVERY_STAM_CRIT : STAM_RECOVERY_RESTING) : STAM_RECOVERY_NORMAL)
+	var/combat_mode = SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE)
+	if(getStaminaLoss() && !HAS_TRAIT(src, TRAIT_NO_STAMINA_REGENERATION))
+		adjustStaminaLoss((!CHECK_MOBILITY(src, MOBILITY_STAND) ? ((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) ? STAM_RECOVERY_STAM_CRIT : STAM_RECOVERY_RESTING) : STAM_RECOVERY_NORMAL) * (combat_mode? 0.25 : 1))
 
 	if(!(combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && incomingstammult != 1)
 		incomingstammult = max(0.01, incomingstammult)
 		incomingstammult = min(1, incomingstammult*2)
-
-	//CIT CHANGES START HERE. STAMINA BUFFER STUFF
-	if(bufferedstam && world.time > stambufferregentime)
-		var/drainrate = max((bufferedstam*(bufferedstam/(5)))*0.1,1)
-		bufferedstam = max(bufferedstam - drainrate, 0)
-	//END OF CIT CHANGES
 
 	var/restingpwr = 1 + 4 * !CHECK_MOBILITY(src, MOBILITY_STAND)
 
@@ -591,10 +594,18 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		drunkenness = max(drunkenness - (drunkenness * 0.04), 0)
 		if(drunkenness >= 6)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
+			if(prob(25))
+				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)
+			// throw_alert("drunk", /atom/movable/screen/alert/drunk)
 			if(HAS_TRAIT(src, TRAIT_DRUNK_HEALING))
 				adjustBruteLoss(-0.12, FALSE)
 				adjustFireLoss(-0.06, FALSE)
+			sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
+		else
+			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
+			clear_alert("drunk")
+			sound_environment_override = SOUND_ENVIRONMENT_NONE
 
 		if(mind && (mind.assigned_role == "Scientist" || mind.assigned_role == "Research Director"))
 			if(SSresearch.science_tech)

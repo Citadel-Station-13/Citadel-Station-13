@@ -263,18 +263,18 @@
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
+	if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
+		to_chat(M, "<span class='warning'>You feel yourself slip into a regenerative coma...</span>")
+		active_coma = TRUE
+		addtimer(CALLBACK(src, .proc/coma, M), 60)
 	if(HAS_TRAIT(M, TRAIT_DEATHCOMA))
 		return power
-	else if(M.IsUnconscious() || M.stat == UNCONSCIOUS)
-		return power * 0.9
 	else if(M.stat == SOFT_CRIT)
 		return power * 0.5
 	else if(M.IsSleeping())
 		return power * 0.25
-	else if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
-		to_chat(M, "<span class='warning'>You feel yourself slip into a regenerative coma...</span>")
-		active_coma = TRUE
-		addtimer(CALLBACK(src, .proc/coma, M), 60)
+	else if(M.IsUnconscious() || M.stat == UNCONSCIOUS)
+		return power * 0.9
 
 /datum/symptom/heal/coma/proc/coma(mob/living/M)
 	if(deathgasp)
@@ -384,7 +384,7 @@
 	var/temp_rate = 1
 	threshold_desc = list(
 		"Transmission 6" = "Additionally increases temperature adjustment rate and heals those who love toxins",
-		"Resistance 7" = "Increases healing speed.",
+		"Stage Speed 7" = "Increases healing speed.",
 	)
 /datum/symptom/heal/plasma/Start(datum/disease/advance/A)
 	if(!..())

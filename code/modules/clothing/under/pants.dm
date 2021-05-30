@@ -46,6 +46,17 @@
 	desc = "Some tan pants. You look like a white collar worker with these on."
 	icon_state = "tanpants"
 
+/obj/item/clothing/under/pants/polypants/polychromic
+	name = "polychromic pants"
+	desc = "Some stylish pair of pants made from polychrome."
+	icon_state = "polypants"
+	item_state = "polypants"
+	var/list/poly_colors = list("#75634F", "#3D3D3D", "#575757")
+
+/obj/item/clothing/under/pants/polypants/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, poly_colors, 3)
+
 /obj/item/clothing/under/pants/track
 	name = "track pants"
 	desc = "A pair of track pants, for the athletic."

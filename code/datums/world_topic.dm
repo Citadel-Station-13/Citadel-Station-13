@@ -90,7 +90,7 @@
 	if(!is_new_ckey)
 		log_admin("AUTO BUNKER: [ckeytobypass] given access (incoming comms from [sender]).")
 		message_admins("AUTO BUNKER: [ckeytobypass] given access (incoming comms from [sender]).")
-		send2irc("Panic Bunker", "AUTO BUNKER: [ckeytobypass] given access (incoming comms from [sender]).")
+		send2adminchat("Panic Bunker", "AUTO BUNKER: [ckeytobypass] given access (incoming comms from [sender]).")
 	return "Success"
 
 /datum/world_topic/ahelp_relay
@@ -106,8 +106,8 @@
 
 /datum/world_topic/comms_console/Run(list/input, addr)
 	minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
-	for(var/obj/machinery/computer/communications/CM in GLOB.machines)
-		CM.overrideCooldown()
+	for(var/obj/machinery/computer/communications/console in GLOB.machines)
+		console.override_cooldown()
 
 /datum/world_topic/news_report
 	keyword = "News_Report"
@@ -164,7 +164,7 @@
 	. = list()
 	.["version"] = GLOB.game_version
 	.["mode"] = "hidden"	//CIT CHANGE - hides the gamemode in topic() calls to prevent meta'ing the gamemode
-	.["respawn"] = config ? !CONFIG_GET(flag/norespawn) : FALSE
+	.["respawn"] = config ? CONFIG_GET(flag/respawns_enabled) : FALSE
 	.["enter"] = GLOB.enter_allowed
 	.["vote"] = CONFIG_GET(flag/allow_vote_mode)
 	.["ai"] = CONFIG_GET(flag/allow_ai)

@@ -263,7 +263,7 @@
 /mob/living/simple_animal/pet/dog/corgi/proc/place_on_head(obj/item/item_to_add, mob/user)
 
 	if(istype(item_to_add, /obj/item/grenade/plastic)) // last thing he ever wears, I guess
-		item_to_add.afterattack(src,user,1)
+		INVOKE_ASYNC(item_to_add, /obj/item.proc/afterattack, src, user, 1)
 		return
 
 	if(inventory_head)
@@ -271,13 +271,15 @@
 			to_chat(user, "<span class='warning'>You can't put more than one hat on [src]!</span>")
 		return
 	if(!item_to_add)
-		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
+		user.visible_message("<span class='notice'>[user] pets [src].</span>", "<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
+		if(flags_1 & HOLOGRAM_1)
+			return
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
 		return
 
 	if(user && !user.temporarilyRemoveItemFromInventory(item_to_add))
 		to_chat(user, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>")
-		return 0
+		return
 
 	var/valid = FALSE
 	if(ispath(item_to_add.dog_fashion, /datum/dog_fashion/head))
@@ -287,11 +289,11 @@
 
 	if(valid)
 		if(health <= 0)
-			to_chat(user, "<span class ='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on [p_them()].</span>")
+			to_chat(user, "<span class='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on [p_them()].</span>")
 		else if(user)
-			user.visible_message("[user] puts [item_to_add] on [real_name]'s head.  [src] looks at [user] and barks once.",
-				"<span class='notice'>You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags [p_their()] tail once and barks.</span>",
-				"<span class='italics'>You hear a friendly-sounding bark.</span>")
+			user.visible_message("<span class='notice'>[user] puts [item_to_add] on [real_name]'s head. [src] looks at [user] and barks once.</span>",
+				"<span class='notice'>You put [item_to_add] on [real_name]'s head. [src] gives you a peculiar look, then wags [p_their()] tail once and barks.</span>",
+				"<span class='hear'>You hear a friendly-sounding bark.</span>")
 		item_to_add.forceMove(src)
 		src.inventory_head = item_to_add
 		update_corgi_fluff()
@@ -361,7 +363,7 @@
 		icon_state = "old_corgi"
 		icon_living = "old_corgi"
 		icon_dead = "old_corgi_dead"
-		desc = "At a ripe old age of [record_age] Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
+		desc = "At a ripe old age of [record_age], Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
 		turns_per_move = 20
 		RemoveElement(/datum/element/mob_holder, held_icon)
 		AddElement(/datum/element/mob_holder, "old_corgi")
@@ -423,7 +425,9 @@
 /mob/living/simple_animal/pet/dog/corgi/Ian/BiologicalLife()
 	if(!(. = ..()))
 		return
+	INVOKE_ASYNC(src, .proc/corgi_ai_behavior)
 
+/mob/living/simple_animal/pet/dog/corgi/Ian/proc/corgi_ai_behavior()
 	//Feeding, chasing food, FOOOOODDDD
 	if(!stat && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)
 		turns_since_scan++

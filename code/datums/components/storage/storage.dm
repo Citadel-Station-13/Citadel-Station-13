@@ -47,18 +47,8 @@
 
 	var/display_numerical_stacking = FALSE			//stack things of the same type and show as a single object with a number.
 
-	/// "legacy"/default view mode's storage "boxes"
-	var/obj/screen/storage/boxes/ui_boxes
-	/// New volumetric storage display mode's left side
-	var/obj/screen/storage/left/ui_left
-	/// New volumetric storage display mode's center 'blocks'
-	var/obj/screen/storage/continuous/ui_continuous
-	/// The close button, used in all modes. Frames right side in volumetric mode.
-	var/obj/screen/storage/close/ui_close
-	/// Associative list of list(item = screen object) for volumetric storage item screen blocks
-	var/list/ui_item_blocks
-
-	var/current_maxscreensize
+	/// Ui objects by person. mob = list(objects)
+	var/list/ui_by_mob = list()
 
 	var/allow_big_nesting = FALSE					//allow storage objects of the same or greater size.
 
@@ -125,17 +115,15 @@
 
 /datum/component/storage/Destroy()
 	close_all()
-	QDEL_NULL(ui_boxes)
-	QDEL_NULL(ui_close)
-	QDEL_NULL(ui_continuous)
-	QDEL_NULL(ui_left)
-	// DO NOT USE QDEL_LIST_ASSOC.
-	if(ui_item_blocks)
-		for(var/i in ui_item_blocks)
-			qdel(ui_item_blocks[i])		//qdel the screen object not the item
-		ui_item_blocks.Cut()
+	wipe_ui_objects()
 	LAZYCLEARLIST(is_using)
 	return ..()
+
+/datum/component/storage/proc/wipe_ui_objects()
+	for(var/i in ui_by_mob)
+		var/list/objects = ui_by_mob[i]
+		QDEL_LIST(objects)
+	ui_by_mob.Cut()
 
 /datum/component/storage/PreTransfer()
 	update_actions()
@@ -351,13 +339,6 @@
 	return master._removal_reset(thing)
 
 /datum/component/storage/proc/_remove_and_refresh(datum/source, atom/movable/thing)
-	if(LAZYACCESS(ui_item_blocks, thing))
-		var/obj/screen/storage/volumetric_box/center/C = ui_item_blocks[thing]
-		for(var/i in can_see_contents())		//runtimes result if mobs can access post deletion.
-			var/mob/M = i
-			M.client?.screen -= C.on_screen_objects()
-		ui_item_blocks -= thing
-		qdel(C)
 	_removal_reset(thing)		// THIS NEEDS TO HAPPEN AFTER SO LAYERING DOESN'T BREAK!
 	refresh_mob_views()
 
@@ -449,6 +430,10 @@
 		// this must come before the screen objects only block, dunno why it wasn't before
 		if(over_object == M)
 			user_show_to_mob(M)
+			return
+		if(isrevenant(M))
+			RevenantThrow(over_object, M, source)
+			return
 		if(!M.incapacitated())
 			if(!istype(over_object, /obj/screen))
 				dump_content_at(over_object, M)
@@ -463,14 +448,14 @@
 				return
 			A.add_fingerprint(M)
 
-/datum/component/storage/proc/user_show_to_mob(mob/M, force = FALSE, ghost = FALSE)
+/datum/component/storage/proc/user_show_to_mob(mob/M, force = FALSE)
 	var/atom/A = parent
 	if(!istype(M))
 		return FALSE
 	A.add_fingerprint(M)
 	if(!force && (check_locked(null, M) || !M.CanReach(parent, view_only = TRUE)))
 		return FALSE
-	ui_show(M, !ghost)
+	ui_show(M)
 
 /datum/component/storage/proc/mousedrop_receive(datum/source, atom/movable/O, mob/M)
 	if(isitem(O))
@@ -592,7 +577,7 @@
 	return can_be_inserted(I, silent, M)
 
 /datum/component/storage/proc/show_to_ghost(datum/source, mob/dead/observer/M)
-	return user_show_to_mob(M, TRUE, TRUE)
+	return user_show_to_mob(M, TRUE)
 
 /datum/component/storage/proc/signal_show_attempt(datum/source, mob/showto, force = FALSE)
 	return user_show_to_mob(showto, force)

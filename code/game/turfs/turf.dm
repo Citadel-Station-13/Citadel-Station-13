@@ -1,8 +1,11 @@
+GLOBAL_LIST_EMPTY(station_turfs)
+
+/// Any floor or wall. What makes up the station and the rest of the map.
 /turf
 	icon = 'icons/turf/floors.dmi'
-	level = 1
-	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID	//when this be added to vis_contents of something it inherit something.plane and be associatet with something on clicking,
-													//important for visualisation of turf in openspace and interraction with openspace that show you turf.
+	flags_1 = CAN_BE_DIRTY_1
+	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE // Important for interaction with and visualization of openspace.
+	luminosity = 1
 
 	var/intact = 1
 
@@ -18,8 +21,6 @@
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 
 	var/blocks_air = FALSE
-
-	flags_1 = CAN_BE_DIRTY_1
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
@@ -41,7 +42,13 @@
 		return FALSE
 	. = ..()
 
+/**
+ * Turf Initialize
+ *
+ * Doesn't call parent, see [/atom/proc/Initialize]
+ */
 /turf/Initialize(mapload)
+	SHOULD_CALL_PARENT(FALSE)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
@@ -49,7 +56,7 @@
 	// by default, vis_contents is inherited from the turf that was here before
 	vis_contents.Cut()
 
-	if(color)
+	if(color) // is this being used? This is here because parent isn't being called
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
 	assemble_baseturfs()
@@ -57,6 +64,7 @@
 	levelupdate()
 	if(smooth)
 		queue_smooth(src)
+
 	visibilityChanged()
 
 	for(var/atom/movable/AM in src)
@@ -76,11 +84,10 @@
 	var/turf/T = SSmapping.get_turf_above(src)
 	if(T)
 		T.multiz_turf_new(src, DOWN)
-		SEND_SIGNAL(T, COMSIG_TURF_MULTIZ_NEW, src, DOWN)
 	T = SSmapping.get_turf_below(src)
 	if(T)
 		T.multiz_turf_new(src, UP)
-		SEND_SIGNAL(T, COMSIG_TURF_MULTIZ_NEW, src, UP)
+
 
 	if (opacity)
 		has_opaque_atom = TRUE
@@ -112,8 +119,6 @@
 		var/turf/B = new world.turf(src)
 		for(var/A in B.contents)
 			qdel(A)
-		for(var/I in B.vars)
-			B.vars[I] = null
 		return
 	SSair.remove_from_active(src)
 	visibilityChanged()
@@ -122,12 +127,14 @@
 	requires_activation = FALSE
 	..()
 
-/turf/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/turf/on_attack_hand(mob/user)
 	user.Move_Pulled(src)
 
 /turf/proc/multiz_turf_del(turf/T, dir)
+	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_DEL, T, dir)
 
 /turf/proc/multiz_turf_new(turf/T, dir)
+	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_NEW, T, dir)
 
 //zPassIn doesn't necessarily pass an atom!
 //direction is direction of travel of air
@@ -158,13 +165,14 @@
 		prev_turf.visible_message("<span class='danger'>[mov_name] falls through [prev_turf]!</span>")
 	if(flags & FALL_INTERCEPTED)
 		return
-	if(zFall(A, ++levels))
+	if(zFall(A, levels + 1))
 		return FALSE
 	A.visible_message("<span class='danger'>[A] crashes into [src]!</span>")
 	A.onZImpact(src, levels)
 	return TRUE
 
 /turf/proc/can_zFall(atom/movable/A, levels = 1, turf/target)
+	SHOULD_BE_PURE(TRUE)
 	return zPassOut(A, DOWN, target) && target.zPassIn(A, DOWN, src)
 
 /turf/proc/zFall(atom/movable/A, levels = 1, force = FALSE)
@@ -217,49 +225,54 @@
 	stack_trace("Non movable passed to turf CanPass : [mover]")
 	return FALSE
 
+//There's a lot of QDELETED() calls here if someone can figure out how to optimize this but not runtime when something gets deleted by a Bump/CanPass/Cross call, lemme know or go ahead and fix this mess - kevinz000
 /turf/Enter(atom/movable/mover, atom/oldloc)
 	// Do not call ..()
 	// Byond's default turf/Enter() doesn't have the behaviour we want with Bump()
 	// By default byond will call Bump() on the first dense object in contents
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
 	var/atom/firstbump
-	if(!CanPass(mover, src))
-		firstbump = src
-	else
+	var/canPassSelf = CanPass(mover, src)
+	if(canPassSelf || (mover.movement_type & UNSTOPPABLE))
 		for(var/i in contents)
+			if(QDELETED(mover))
+				return FALSE		//We were deleted, do not attempt to proceed with movement.
 			if(i == mover || i == mover.loc) // Multi tile objects and moving out of other objects
 				continue
-			if(QDELETED(mover))
-				break
 			var/atom/movable/thing = i
 			if(!thing.Cross(mover))
-				if(CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE))
+				if(QDELETED(mover))		//Mover deleted from Cross/CanPass, do not proceed.
+					return FALSE
+				if((mover.movement_type & UNSTOPPABLE))
 					mover.Bump(thing)
 					continue
 				else
 					if(!firstbump || ((thing.layer > firstbump.layer || thing.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
 						firstbump = thing
+	if(QDELETED(mover))					//Mover deleted from Cross/CanPass/Bump, do not proceed.
+		return FALSE
+	if(!canPassSelf)	//Even if mover is unstoppable they need to bump us.
+		firstbump = src
 	if(firstbump)
-		if(!QDELETED(mover))
-			mover.Bump(firstbump)
-		return CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE)
+		mover.Bump(firstbump)
+		return (mover.movement_type & UNSTOPPABLE)
 	return TRUE
 
 /turf/Exit(atom/movable/mover, atom/newloc)
 	. = ..()
-	if(!.)
+	if(!. || QDELETED(mover))
 		return FALSE
 	for(var/i in contents)
-		if(QDELETED(mover))
-			break
 		if(i == mover)
 			continue
 		var/atom/movable/thing = i
 		if(!thing.Uncross(mover, newloc))
 			if(thing.flags_1 & ON_BORDER_1)
 				mover.Bump(thing)
-			if(!CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE))
+			if(!(mover.movement_type & UNSTOPPABLE))
 				return FALSE
+		if(QDELETED(mover))
+			return FALSE		//We were deleted.
 
 /turf/Entered(atom/movable/AM)
 	..()
@@ -271,6 +284,7 @@
 		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
 		reconsider_lights()
 
+
 /turf/open/Entered(atom/movable/AM)
 	..()
 	//melting
@@ -278,7 +292,6 @@
 		var/obj/O = AM
 		if(O.obj_flags & FROZEN)
 			O.make_unfrozen()
-
 	if(!AM.zfalling)
 		zFall(AM)
 
@@ -336,14 +349,13 @@
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
-		if(O.level == 1 && (O.flags_1 & INITIALIZED_1))
-			O.hide(src.intact)
+		if(O.flags_1 & INITIALIZED_1)
+			// SEND_SIGNAL(O, COMSIG_OBJ_HIDE, intact)
+			O.hide(intact)
 
 // override for space turfs, since they should never hide anything
 /turf/open/space/levelupdate()
-	for(var/obj/O in src)
-		if(O.level == 1 && (O.flags_1 & INITIALIZED_1))
-			O.hide(0)
+	return
 
 // Removes all signs of lattice on the pos of the turf -Donkieyo
 /turf/proc/RemoveLattice()
@@ -368,13 +380,13 @@
 	if(.)
 		return
 	if(length(src_object.contents()))
-		to_chat(user, "<span class='notice'>You start dumping out the contents...</span>")
-		if(!do_after(user,20,target=src_object.parent))
+		to_chat(usr, "<span class='notice'>You start dumping out the contents...</span>")
+		if(!do_after(usr,20,target=src_object.parent))
 			return FALSE
 
 	var/list/things = src_object.contents()
 	var/datum/progressbar/progress = new(user, things.len, src)
-	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(src_object, /datum/component/storage.proc/mass_remove_from_storage, src, things, progress)))
+	while (do_after(usr, 1 SECONDS, TRUE, src, FALSE, CALLBACK(src_object, /datum/component/storage.proc/mass_remove_from_storage, src, things, progress)))
 		stoplag(1)
 	qdel(progress)
 
@@ -450,6 +462,24 @@
 			A.ex_act(severity, target)
 			CHECK_TICK
 
+/turf/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	. = ..()
+	var/affecting_level
+	if(is_shielded())
+		affecting_level = 3
+	else if(intact)
+		affecting_level = 2
+	else
+		affecting_level = 1
+	var/atom/A
+	for(var/i in contents)
+		if(. <= 0)
+			return 0
+		A = i
+		if(!QDELETED(A) && A.level >= affecting_level)
+			.  = A.wave_explode(., explosion, dir)
+	maptext = "[.]"
+
 /turf/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)
 	for(var/I in src)
@@ -494,9 +524,7 @@
 	I.loc = src
 	I.setDir(AM.dir)
 	I.alpha = 128
-
 	LAZYADD(blueprint_data, I)
-
 
 /turf/proc/add_blueprints_preround(atom/movable/AM)
 	if(!SSticker.HasRoundStarted())
@@ -531,7 +559,7 @@
 	if(!forced)
 		return
 	if(has_gravity(src))
-		playsound(src, "bodyfall", 50, 1)
+		playsound(src, "bodyfall", 50, TRUE)
 	faller.drop_all_held_items()
 
 /turf/proc/photograph(limit=20)

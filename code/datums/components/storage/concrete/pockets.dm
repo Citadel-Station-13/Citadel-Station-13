@@ -57,7 +57,7 @@
 		/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper,
 		/obj/item/implanter, /obj/item/screwdriver, /obj/item/weldingtool/mini,
 		/obj/item/firing_pin, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/automatic/magrifle/pistol,
-		/obj/item/toy/plush/snakeplushie, /obj/item/gun/energy/e_gun/mini
+		/obj/item/toy/plush/snakeplushie, /obj/item/gun/energy/e_gun/mini, /obj/item/gun/ballistic/derringer
 		))
 
 /datum/component/storage/concrete/pockets/shoes/clown/Initialize()
@@ -97,3 +97,11 @@
 	. = ..()
 	can_hold = typecacheof(list(/obj/item/reagent_containers/glass/bottle,
 								/obj/item/ammo_box/a762))
+
+/datum/component/storage/concrete/pockets/void_cloak
+	quickdraw = TRUE
+	max_items = 3
+
+/datum/component/storage/concrete/pockets/void_cloak/Initialize()
+	. = ..()
+	var/static/list/exception_cache = typecacheof(list(/obj/item/living_heart,/obj/item/forbidden_book))
