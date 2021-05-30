@@ -574,6 +574,7 @@
 /datum/action/item_action/toggle_scope_zoom/Trigger()
 	. = ..()
 	if(.)
+		var/obj/item/gun/G = target
 		G.zoom(owner, owner.dir)
 
 /datum/action/item_action/toggle_scope_zoom/Remove(mob/living/L)
