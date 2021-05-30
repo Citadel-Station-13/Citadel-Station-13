@@ -38,6 +38,11 @@
 	reagents.add_reagent(/datum/reagent/foaming_agent, 5)
 	reagents.add_reagent(/datum/reagent/toxin/acid, 5)
 
+/obj/item/projectile/bullet/dart/catranq/Initialize()
+	. = ..()
+	reagents.add_reagent(/datum/reagent/toxin/sodium_thiopental, 5)
+	reagents.add_reagent(/datum/reagent/fermi/furranium, 10)
+
 /obj/item/projectile/bullet/dart/syringe
 	name = "syringe"
 	icon_state = "syringeproj"
