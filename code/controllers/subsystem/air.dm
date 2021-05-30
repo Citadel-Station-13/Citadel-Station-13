@@ -105,6 +105,15 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/auxtools_update_reactions()
 
+/proc/reset_all_air()
+	SSair.can_fire = 0
+	message_admins("Air reset begun.")
+	for(var/turf/open/T in world)
+		T.Initalize_Atmos(0)
+		CHECK_TICK
+	message_admins("Air reset done.")
+	SSair.can_fire = 1
+
 /datum/controller/subsystem/air/proc/thread_running()
 	return FALSE
 
@@ -113,7 +122,7 @@ SUBSYSTEM_DEF(air)
 /datum/admins/proc/fixcorruption()
 	set category = "Debug"
 	set desc="Fixes air that has weird NaNs (-1.#IND and such). Hopefully."
-	set name="Fix Air"
+	set name="Fix Infinite Air"
 	fix_corrupted_atmos()
 
 /datum/controller/subsystem/air/fire(resumed = 0)

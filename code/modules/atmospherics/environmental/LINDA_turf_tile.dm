@@ -35,11 +35,6 @@
 		update_air_ref(planetary_atmos ? 1 : 2)
 	. = ..()
 
-/turf/open/proc/force_air_reset()
-	air = new(2500,src)
-	air.copy_from_turf(src)
-	update_air_ref(planetary_atmos ? 1 : 2)
-
 /turf/open/Destroy()
 	if(active_hotspot)
 		QDEL_NULL(active_hotspot)

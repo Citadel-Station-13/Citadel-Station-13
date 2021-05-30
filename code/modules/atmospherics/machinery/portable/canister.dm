@@ -217,6 +217,8 @@
 		// air_contents.add_gas(gas_type)
 		if(starter_temp)
 			air_contents.set_temperature(starter_temp)
+		if(!air_contents.return_volume())
+			CRASH("Auxtools is failing somehow! Gas with pointer [air_contents._extools_pointer_gasmixture] is not valid.")
 		air_contents.set_moles(gas_type,(maximum_pressure * filled) * air_contents.return_volume() / (R_IDEAL_GAS_EQUATION * air_contents.return_temperature()))
 
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
