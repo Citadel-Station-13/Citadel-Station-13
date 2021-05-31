@@ -94378,7 +94378,7 @@
 /obj/machinery/power/apc{
 	areastring = "/area/command/heads_quarters/ce";
 	name = "Chief Engineer's APC";
-	pixel_y = 32
+	pixel_y = 30
 	},
 /obj/structure/cable/white{
 	icon_state = "0-2"
