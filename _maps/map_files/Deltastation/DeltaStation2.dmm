@@ -94377,6 +94377,7 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "/area/command/heads_quarters/ce";
+	dir = 1;
 	name = "Chief Engineer's APC";
 	pixel_y = 30
 	},
@@ -122229,6 +122230,22 @@
 /obj/effect/spawner/lootdrop/keg,
 /turf/open/floor/plating,
 /area/service/abandoned_gambling_den)
+"vXq" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	pixel_y = -28
+	},
+/turf/open/floor/plasteel/dark,
+/area/command/heads_quarters/ce)
 "vXw" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -151679,7 +151696,7 @@ lLv
 lCx
 vBq
 ikP
-iLR
+vXq
 qjg
 ine
 vJe
