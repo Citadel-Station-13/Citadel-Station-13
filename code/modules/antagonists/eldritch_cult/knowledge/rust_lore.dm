@@ -24,7 +24,7 @@
 	var/check = FALSE
 	if(ismob(target))
 		var/mob/living/mobster = target
-		if(!mobster.mob_biotypes & MOB_ROBOTIC)
+		if(!(mobster.mob_biotypes & MOB_ROBOTIC))
 			return FALSE
 		else
 			check = TRUE

@@ -48,6 +48,7 @@ Difficulty: Medium
 	icon_state = "dragon"
 	icon_living = "dragon"
 	icon_dead = "dragon_dead"
+	health_doll_icon = "dragon"
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
 	speak_emote = list("roars")

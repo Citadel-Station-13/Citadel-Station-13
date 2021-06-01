@@ -149,6 +149,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	///
 	var/sound/attack_sound = 'sound/weapons/punch1.ogg'
 	var/sound/miss_sound = 'sound/weapons/punchmiss.ogg'
+	var/attack_sound_override = null
 
 	var/list/mob/living/ignored_by = list()	// list of mobs that will ignore this species
 	//Breathing!
@@ -569,12 +570,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/remove_blacklisted_quirks(mob/living/carbon/C)
 	var/mob/living/L = C.mind?.current
 	if(istype(L))
-		var/list/my_quirks = L.client?.prefs.all_quirks.Copy()
-		SSquirks.filter_quirks(my_quirks, blacklisted_quirks)
 		for(var/q in L.roundstart_quirks)
 			var/datum/quirk/Q = q
-			if(!(SSquirks.quirk_name_by_path(Q.type) in my_quirks))
-				L.remove_quirk(Q.type)
+			if(Q.type in blacklisted_quirks)
+				qdel(Q)
 				removed_quirks += Q.type
 
 // restore any quirks that we removed
@@ -1615,7 +1614,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 
 		var/armor_block = target.run_armor_check(affecting, "melee")
-		playsound(target.loc, user.dna.species.attack_sound, 25, 1, -1)
+		playsound(target.loc, user.dna.species.attack_sound_override || attack_sound, 25, 1, -1)
 		target.visible_message("<span class='danger'>[user] [atk_verb]ed [target]!</span>", \
 					"<span class='userdanger'>[user] [atk_verb]ed you!</span>", null, COMBAT_MESSAGE_RANGE, null, \
 					user, "<span class='danger'>You [atk_verb]ed [target]!</span>")
