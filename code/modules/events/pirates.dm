@@ -206,6 +206,7 @@
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
 	light_color = LIGHT_COLOR_RED
+	req_access = list(ACCESS_SYNDICATE)
 	possible_destinations = "pirateship_away;pirateship_home;pirateship_custom"
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate
@@ -214,8 +215,8 @@
 	shuttleId = "pirateship"
 	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "pirateship_custom"
-	x_offset = 9
-	y_offset = 0
+	x_offset = 11
+	y_offset = 1
 	see_hidden = FALSE
 
 /obj/docking_port/mobile/pirate
@@ -224,11 +225,7 @@
 	rechargeTime = 3 MINUTES
 
 /obj/machinery/suit_storage_unit/pirate
-	suit_type = /obj/item/clothing/suit/space
-	helmet_type = /obj/item/clothing/head/helmet/space
-	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/tank/jetpack/void
-	// storage_type = /obj/item/tank/internals/oxygen
+	storage_type = /obj/item/tank/jetpack/carbondioxide
 
 /obj/machinery/loot_locator
 	name = "Booty Locator"

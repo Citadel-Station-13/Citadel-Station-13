@@ -59,8 +59,8 @@
 
 /mob/living/silicon/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/flavor_text, _name = "Silicon Flavor Text", _save_key = "silicon_flavor_text")
-	AddElement(/datum/element/flavor_text, "", "Temporary Flavor Text", "This should be used only for things pertaining to the current round!")
+	AddElement(/datum/element/flavor_text, _name = "Silicon Flavor Text", _always_show = TRUE, _save_key = "silicon_flavor_text")
+	AddElement(/datum/element/flavor_text, "", "Temporary Flavor Text", "This should be used only for things pertaining to the current round!", _always_show = TRUE)
 	AddElement(/datum/element/flavor_text, _name = "OOC Notes", _addendum = "Put information on ERP/vore/lewd-related preferences here. THIS SHOULD NOT CONTAIN REGULAR FLAVORTEXT!!", _always_show = TRUE, _save_key = "ooc_notes", _examine_no_preview = TRUE)
 
 /mob/living/silicon/med_hud_set_health()

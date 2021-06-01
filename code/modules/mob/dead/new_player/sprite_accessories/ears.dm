@@ -67,6 +67,13 @@
 	matrixed_sections = MATRIX_RED_GREEN
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 
+/datum/sprite_accessory/ears/bunnyalt
+	name = "Bunny (Vegas)"
+	icon_state = "bunnyalt"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED_GREEN
+	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+
 /datum/sprite_accessory/ears/cat
 	name = "Cat"
 	icon_state = "cat"
@@ -256,6 +263,11 @@
 /datum/sprite_accessory/ears/mam_ears/bunny
 	name = "Bunny"
 	icon_state = "bunny"
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/mam_ears/bunnyalt
+	name = "Bunny (Vegas)"
+	icon_state = "bunnyalt"
 	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/ears/mam_ears/cat
