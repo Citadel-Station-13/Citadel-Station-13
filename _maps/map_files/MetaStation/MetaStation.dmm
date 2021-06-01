@@ -16060,10 +16060,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=14-Starboard-Central";
-	location = "13.3-Engineering-Central"
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
@@ -21712,7 +21708,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=13.3-Engineering-Central";
+	codes_txt = "patrol;next_patrol=14-Starboard-Central";
 	location = "13.2-Tcommstore"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -74464,9 +74460,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/command/bridge)
-"sKV" = (
-/turf/open/space/basic,
-/area/command/heads_quarters/captain)
 "sLs" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/field/generator,
@@ -122070,7 +122063,7 @@ oRp
 oRp
 aaa
 aai
-sKV
+aaa
 aaa
 aaa
 aaa
@@ -130641,7 +130634,7 @@ aaf
 aaf
 aaa
 aaa
-sKV
+aaa
 aaa
 aaa
 aaa

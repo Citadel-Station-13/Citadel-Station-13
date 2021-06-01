@@ -50,7 +50,7 @@
 
 /obj/item/melee/touch_attack/mansus_fist/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 
-	if(!proximity_flag | target == user)
+	if(!proximity_flag || (target == user))
 		return
 	playsound(user, 'sound/items/welder.ogg', 75, TRUE)
 	if(ishuman(target))

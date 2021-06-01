@@ -66,6 +66,16 @@
 
 ////////////////////////////////////////////////MISC RECIPE's////////////////////////////////////////////////
 
+/datum/crafting_recipe/food/meatslab
+	name = "Meat Slab"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/meat/rawcutlet = 3,
+	)
+	tools = list(/obj/item/kitchen/efink)
+	result = /obj/item/reagent_containers/food/snacks/meat/slab
+	subcategory = CAT_MEAT
+
+
 /datum/crafting_recipe/food/ribs
 	name = "BBQ Ribs"
 	reqs = list(
