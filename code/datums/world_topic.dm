@@ -285,23 +285,23 @@
 	keyword = "jsonrevision"
 
 /datum/world_topic/jsonrevision/Run(list/input, addr)
-    var/datum/getrev/revdata = GLOB.revdata
-    var/list/data = list(
-        "date" = copytext(revdata.date, 1, 11),
-        "dd_version" = world.byond_version,
-        "dd_build" = world.byond_build,
-        "dm_version" = DM_VERSION,
-        "dm_build" = DM_BUILD,
-        "revision" = revdata.commit,
+	var/datum/getrev/revdata = GLOB.revdata
+	var/list/data = list(
+		"date" = copytext(revdata.date, 1, 11),
+		"dd_version" = world.byond_version,
+		"dd_build" = world.byond_build,
+		"dm_version" = DM_VERSION,
+		"dm_build" = DM_BUILD,
+		"revision" = revdata.commit,
 		"round_id" = "[GLOB.round_id]"
-        "testmerge_base_url" = "[CONFIG_GET(string/githuburl)]/pull/"
-    )
-    if (revdata.testmerge.len)
-        for (var/datum/tgs_revision_information/test_merge/TM in revdata.testmerge)
-            data["testmerges"] += list(list(
-                "id" = TM.number,
-                "desc" = TM.title,
-                "author" = TM.author
-            ))
+		"testmerge_base_url" = "[CONFIG_GET(string/githuburl)]/pull/"
+	)
+	if (revdata.testmerge.len)
+		for (var/datum/tgs_revision_information/test_merge/TM in revdata.testmerge)
+			data["testmerges"] += list(list(
+				"id" = TM.number,
+				"desc" = TM.title,
+				"author" = TM.author
+			))
 
-    return json_encode(data)
+	return json_encode(data)
