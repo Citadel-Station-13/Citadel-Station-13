@@ -1096,7 +1096,7 @@
 	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
 		return "<font color='#aaa9ad'>"
 	if(HAS_TRAIT(src, TRAIT_TOXINLOVER))
-		return "<font color='0#0ffff'>"
+		return "<font color='#00ffff'>"
 	return "<font color='#18d855'>"
 
 
