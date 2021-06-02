@@ -67711,6 +67711,9 @@
 	pixel_y = 24
 	},
 /obj/machinery/computer/atmos_control,
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/checker,
 /area/engineering/atmos)
 "oOi" = (
