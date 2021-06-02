@@ -1087,16 +1087,23 @@
  * # `spec_trait_examine_font()`
  *
  * This gets a humanoid's special examine font, which is used to color their species name during examine / health analyzing.
+ * The first of these that applies is returned.
  * Returns:
- * Metallic font if robotic
- * Cyan if a toxinlover
- * Green if none of the others apply (aka, generic organic)
+ * * Metallic font if robotic
+ * * Cyan if a toxinlover
+ * * Purple if plasmaperson
+ * * Rock / Brownish if a golem
+ * * Green if none of the others apply (aka, generic organic)
 */
 /mob/living/carbon/human/proc/spec_trait_examine_font() 
 	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
 		return "<font color='#aaa9ad'>"
 	if(HAS_TRAIT(src, TRAIT_TOXINLOVER))
 		return "<font color='#00ffff'>"
+	if(isplasmaman(src))
+		return "<font color='#800080'"
+	if(isgolem(src))
+		return "<font color='#8b4513'"
 	return "<font color='#18d855'>"
 
 
