@@ -108,6 +108,7 @@
 
 /obj/item/clothing/under/trek/sec/orv
 	desc = "An uniform worn by security officers since 2420s."
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30, "wound" = 10)
 	icon_state = "orv_sec"
 
 /obj/item/clothing/under/trek/medsci/orv
@@ -122,12 +123,13 @@
 	icon_state = "orv_com_capt"
 
 /obj/item/clothing/under/trek/command/orv/eng
-	name = "operations command uniform"
+	name = "engineering command uniform"
 	desc = "An uniform worn by Chief Engineers since 2550s."
 	icon_state = "orv_com_eng"
 
 /obj/item/clothing/under/trek/command/orv/sec
-	name = "operations command uniform"
+	name = "security command uniform"
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50, "wound" = 10)
 	desc = "An uniform worn by Heads of Security since 2550s."
 	icon_state = "orv_com_sec"
 
@@ -141,13 +143,11 @@
 	name = "adjutant uniform"
 	desc = "An uniform worn by adjutants <i>(assistants)</i> since 2550s."
 	icon_state = "orv_ass"
-	item_state = "gy_suit"
 
 /obj/item/clothing/under/trek/orv/service
 	name = "service uniform"
 	desc = "An uniform worn by service officers since 2550s."
 	icon_state = "orv_srv"
-	item_state = "g_suit"
 
 //The Motion Picture
 /obj/item/clothing/under/trek/fedutil
