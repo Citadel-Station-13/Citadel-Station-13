@@ -293,7 +293,7 @@
 		"dm_version" = DM_VERSION,
 		"dm_build" = DM_BUILD,
 		"revision" = revdata.commit,
-		"round_id" = "[GLOB.round_id]"
+		"round_id" = "[GLOB.round_id]",
 		"testmerge_base_url" = "[CONFIG_GET(string/githuburl)]/pull/"
 	)
 	if (revdata.testmerge.len)
