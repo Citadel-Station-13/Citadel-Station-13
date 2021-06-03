@@ -1,0 +1,6 @@
+author: "TripleShades"
+delete-after: True
+changes: 
+  - rscadd: "Added a camera to both solar entryways"
+  - rscadd: "Added an intercom to toxin's launch for the doppler"
+  - rscdel: "The fake nuke auth disk in the library"
