@@ -485,7 +485,7 @@
 	end_day = 30
 
 /datum/holiday/pride/getStationPrefix()
-	return pick("Pride", "Gay", "Bi", "Trans", "Lesbian", "Ace", "Aro", "Agender", pick("Enby", "Enbie"), "Pan", "Intersex", "Demi", "Poly", "Closeted", "Genderfluid")
+	return pick("Pride", "Gay", "Bi", "Trans", "Lesbian", "Ace", "Aro", "Agender", pick("Enby", "Enbie"), "Pan", "Intersex", "Demi", "Poly", "Closeted", "Genderfluid", "Tax Fraud")
 
 /datum/holiday/stonewall
 	name = "Stonewall Riots Anniversary"
