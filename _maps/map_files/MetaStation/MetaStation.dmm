@@ -67711,6 +67711,9 @@
 	pixel_y = 24
 	},
 /obj/machinery/computer/atmos_control,
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/checker,
 /area/engineering/atmos)
 "oOi" = (
@@ -74460,9 +74463,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/command/bridge)
-"sKV" = (
-/turf/open/space/basic,
-/area/command/heads_quarters/captain)
 "sLs" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/field/generator,
@@ -122066,7 +122066,7 @@ oRp
 oRp
 aaa
 aai
-sKV
+aaa
 aaa
 aaa
 aaa
@@ -130637,7 +130637,7 @@ aaf
 aaf
 aaa
 aaa
-sKV
+aaa
 aaa
 aaa
 aaa
