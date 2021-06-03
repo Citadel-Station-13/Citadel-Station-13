@@ -10755,6 +10755,11 @@
 	name = "Port Solar APC";
 	pixel_y = 23
 	},
+/obj/machinery/camera{
+	c_tag = "Port Bow Solar";
+	dir = 9;
+	name = "solar camera"
+	},
 /turf/open/floor/plating,
 /area/maintenance/solars/port)
 "ayD" = (
@@ -37823,6 +37828,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/item/radio/intercom{
+	pixel_x = 30;
+	pixel_y = -2
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bHI" = (
@@ -52321,7 +52330,6 @@
 /area/service/library)
 "czp" = (
 /obj/structure/table/wood,
-/obj/item/disk/nuclear/fake,
 /obj/item/barcodescanner,
 /turf/open/floor/plasteel/dark,
 /area/service/library)
@@ -57378,6 +57386,11 @@
 	dir = 8;
 	name = "Starboard Solar APC";
 	pixel_x = -25
+	},
+/obj/machinery/camera{
+	c_tag = "Starboard Solar";
+	dir = 10;
+	name = "solar camera"
 	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard)
