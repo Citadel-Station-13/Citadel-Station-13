@@ -101,6 +101,13 @@
 	matrixed_sections = MATRIX_RED
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 
+/datum/sprite_accessory/ears/lablight
+	name = "Dog, Floppy (Light)"
+	icon_state = "lablight"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED
+	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+
 /datum/sprite_accessory/ears/human/eevee
 	name = "Eevee"
 	icon_state = "eevee"
@@ -351,8 +358,13 @@
 	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/ears/mam_ears/lab
-	name = "Dog, Long"
+	name = "Dog, Floppy"
 	icon_state = "lab"
+	matrixed_sections = MATRIX_RED
+
+/datum/sprite_accessory/ears/mam_ears/lablight
+	name = "Dog, Floppy (Light)"
+	icon_state = "lablight"
 	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/ears/mam_ears/murid
