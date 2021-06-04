@@ -23919,11 +23919,11 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bfe" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bff" = (
@@ -56045,7 +56045,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "jyO" = (
@@ -81884,7 +81884,7 @@ aQN
 aQN
 aZA
 aPA
-aWv
+jxF
 aYb
 aZE
 aZE
@@ -82655,7 +82655,7 @@ aQW
 aQW
 xDM
 aPA
-jxF
+aWv
 aYb
 aZE
 bjp
@@ -86193,7 +86193,7 @@ aaa
 aaa
 gXs
 gXs
-aaH
+gXs
 abc
 abu
 abu
