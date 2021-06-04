@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes: 
+  - code_imp: "float sanity now makes it not actually run if it's actively being thrown"
