@@ -12,6 +12,10 @@
 	description = "<span class='boldwarning'>I'M ON FIRE!!!</span>\n"
 	mood_change = -8
 
+/datum/mood_event/table
+	description = "<span class='warning'>I ate without a table! How uncivilised.</span>\n"
+	mood_change = -1
+
 /datum/mood_event/suffocation
 	description = "<span class='boldwarning'>CAN'T... BREATHE...</span>\n"
 	mood_change = -6

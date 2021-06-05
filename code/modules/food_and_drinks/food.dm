@@ -49,4 +49,9 @@
 					H.adjust_disgust(25 + 30 * fraction)
 			if((foodtype & BREAKFAST) && world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
 				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "breakfast", /datum/mood_event/breakfast)
+			if(locate(/obj/structure/table) in range(1, get_turf(H)))
+				to_chat(H,"<span class='notice'>I love tables!</span>")
+			else
+				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
+				to_chat(H, "<span class='warning'>I ate without a table. How uncivilised.</span>")
 			last_check_time = world.time
