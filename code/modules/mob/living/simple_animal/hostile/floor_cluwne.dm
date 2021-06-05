@@ -25,6 +25,7 @@ GLOBAL_VAR_INIT(floor_cluwnes, 0)
 	wander = FALSE
 	minimum_distance = 2
 	move_to_delay = 1
+	movement_type = FLYING
 	environment_smash = FALSE
 	lose_patience_timeout = FALSE
 	pixel_y = 8
@@ -347,6 +348,9 @@ GLOBAL_VAR_INIT(floor_cluwnes, 0)
 
 
 /mob/living/simple_animal/hostile/floor_cluwne/proc/Grab(mob/living/carbon/human/H)
+	if (H != current_victim)
+		message_admins("Cluwne tried to grab someone who's not the target. Returning to life stage.")
+		return
 	to_chat(H, "<span class='userdanger'>You feel a cold, gloved hand clamp down on your ankle!</span>")
 	for(var/I in 1 to get_dist(src, H))
 		if(do_after(src, 5, target = H))
@@ -378,7 +382,12 @@ GLOBAL_VAR_INIT(floor_cluwnes, 0)
 
 
 /mob/living/simple_animal/hostile/floor_cluwne/proc/Kill(mob/living/carbon/human/H)
+	if (H != current_victim)
+		message_admins("Cluwne tried to kill someone who's not the target. Returning to life stage.")
+		H.invisibility = initial(H.invisibility)
+		return
 	if(!istype(H) || !H.client)
+		H.invisibility = initial(H.invisibility)
 		Acquire_Victim()
 		return
 	playsound(H, 'sound/effects/cluwne_feast.ogg', 100, 0, -4)
