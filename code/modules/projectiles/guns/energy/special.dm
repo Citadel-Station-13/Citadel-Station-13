@@ -111,6 +111,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron=4000)
 	suppressed = null
+	overheat_time = 16
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	weapon_weight = WEAPON_HEAVY
 	pin = null

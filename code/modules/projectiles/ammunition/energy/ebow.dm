@@ -10,3 +10,4 @@
 /obj/item/ammo_casing/energy/bolt/large
 	projectile_type = /obj/item/projectile/energy/bolt/large
 	select_name = "heavy bolt"
+	fire_sound = 'sound/weapons/Laser2.ogg'
