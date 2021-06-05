@@ -15,7 +15,7 @@
 	icon_state = "candy_corn"
 
 /obj/item/projectile/energy/bolt/large
-	icont_state = "cbboltlarge"
+	icon_state = "cbboltlarge"
 	damage = 20
 	knockdown = 0
 	stamina = 0
