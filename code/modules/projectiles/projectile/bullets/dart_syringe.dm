@@ -40,7 +40,7 @@
 
 /obj/item/projectile/bullet/dart/catranq/Initialize()
 	. = ..()
-	reagents.add_reagent(/datum/reagent/fermi/furranium, 10) // Turns out I don't even need to give this guy actual tranquilizer chems.
+	reagents.add_reagent(/datum/reagent/fermi/furranium, 5) // Turns out I don't even need to give this guy actual tranquilizer chems.
 
 /obj/item/projectile/bullet/dart/syringe
 	name = "syringe"
