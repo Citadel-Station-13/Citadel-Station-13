@@ -368,7 +368,6 @@
 /obj/item/borg/upgrade/modkit/damage/modify_projectile(obj/item/projectile/kinetic/K)
 	K.damage += modifier
 
-
 //Cooldown
 /obj/item/borg/upgrade/modkit/cooldown
 	name = "cooldown decrease"

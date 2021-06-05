@@ -106,7 +106,7 @@
 
 /obj/item/gun/energy/kinetic_accelerator/crossbow/large
 	name = "energy crossbow"
-	desc = "A reverse engineered weapon using syndicate technology. This thing seems incredibly unwieldly, and seems to be using similar internals to the Proto-Kinetic Accelerator. It might not play nice when brought near weapons similar to it."
+	desc = "A reverse engineered modular weapon using syndicate technology. This thing seems incredibly unwieldly, and seems to be using similar internals to the Proto-Kinetic Accelerator. It might not play nice when brought near weapons similar to it."
 	icon_state = "crossbowlarge"
 	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron=4000)
@@ -115,7 +115,13 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	weapon_weight = WEAPON_HEAVY
 	pin = null
-	unique_frequency = FALSE
+	can_flashlight = 1
+	flight_x_offset = 15
+	flight_y_offset = 9
+	can_bayonet = TRUE
+	knife_x_offset = 25
+	knife_y_offset = 14
+	max_mod_capacity = 60
 
 /obj/item/gun/energy/plasmacutter
 	name = "plasma cutter"
