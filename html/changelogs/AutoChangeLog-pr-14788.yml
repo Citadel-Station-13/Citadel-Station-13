@@ -1,4 +1,0 @@
-author: "coderbus13"
-delete-after: True
-changes: 
-  - bugfix: "Pubby's toxins injector now starts at 200L, like it does on other maps"
