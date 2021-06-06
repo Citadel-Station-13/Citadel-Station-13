@@ -40850,7 +40850,7 @@
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
 "bOu" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,

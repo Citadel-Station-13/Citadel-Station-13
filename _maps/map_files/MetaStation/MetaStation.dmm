@@ -53189,7 +53189,10 @@
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "fVD" = (
-/obj/machinery/pool/drain,
+/obj/machinery/pool/drain{
+	drain_suck_range = 2;
+	item_suction_range = 1
+	},
 /turf/open/pool,
 /area/commons/fitness/pool)
 "fVX" = (
