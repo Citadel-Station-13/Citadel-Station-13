@@ -23,6 +23,9 @@
 
 /// Returns true if tick_usage is above the limit
 #define TICK_CHECK ( TICK_USAGE > Master.current_ticklimit )
+
+#define TICK_REMAINING_MS ((Master.current_ticklimit - TICK_USAGE) * world.tick_lag)
+
 /// runs stoplag if tick_usage is above the limit
 #define CHECK_TICK ( TICK_CHECK ? stoplag() : 0 )
 
