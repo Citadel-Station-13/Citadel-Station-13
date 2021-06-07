@@ -229,13 +229,13 @@
 	// determine how we'll parry
 	var/list/determined = determine_parry_method(TRUE, TRUE)
 	if(!islist(determined))
-		return FALSE
+		return BLOCK_NONE
 	var/datum/block_parry_data/data = return_block_parry_datum(determined[2])
 	if(!data.parry_automatic_enabled || (last_autoparry > (world.time + data.autoparry_cooldown_absolute)))
-		return FALSE
+		return BLOCK_NONE
 	// before doing anything, check if the user moused over them properly
 	if(!client)
-		return FALSE
+		return BLOCK_NONE
 	var/found = FALSE
 	for(var/i in client.moused_over_objects)
 		if(i == object)
@@ -243,7 +243,7 @@
 				found = TRUE
 			break
 	if(!found)
-		return FALSE
+		return BLOCK_NONE
 
 	// if that works, try to start parry
 	// first, check cooldowns
@@ -257,7 +257,8 @@
 			parry_start_time = world.time - data.parry_time_windup
 		else
 			parry_start_time = world.time - data.autoparry_sequence_start_time
-		return TRUE
+		// recurse back to original
+		return run_parry(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, FALSE)
 	else
 		// for single attack block
 		#warn single attack block
@@ -300,8 +301,8 @@
 	if(stage != PARRY_ACTIVE)
 		// If they're not currently parrying, attempt auto parry
 		if(stage == NOT_PARRYING)
-			if(!allow_auto || SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE) || !attempt_auto_parry(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list))
-				return BLOCK_NONE
+			if(!allow_auto || SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
+				return attempt_auto_parry(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)
 		else
 			return BLOCK_NONE
 	var/datum/block_parry_data/data = get_parry_data()
