@@ -155,7 +155,7 @@ GLOBAL_LIST_INIT(auxtools_atmos_initialized,FALSE)
 /datum/gas_mixture/proc/vv_react(datum/holder)
 	return react(holder)
 
-/datum/gas_mixture/proc/scrub_into(datum/gas_mixture/target, list/gases)
+/datum/gas_mixture/proc/scrub_into(datum/gas_mixture/target, ratio, list/gases)
 /datum/gas_mixture/proc/mark_immutable()
 /datum/gas_mixture/proc/get_gases()
 /datum/gas_mixture/proc/multiply(factor)
@@ -183,7 +183,9 @@ GLOBAL_LIST_INIT(auxtools_atmos_initialized,FALSE)
 
 /datum/gas_mixture/proc/transfer_to(datum/gas_mixture/target, amount)
 	//Transfers amount of gas to target. Equivalent to target.merge(remove(amount)) but faster.
-	//Removes amount of gas from the gas_mixture
+
+/datum/gas_mixture/proc/transfer_ratio_to(datum/gas_mixture/target, ratio)
+	//Transfers ratio of gas to target. Equivalent to target.merge(remove_ratio(amount)) but faster.
 
 /datum/gas_mixture/proc/remove_ratio(ratio)
 	//Proportionally removes amount of gas from the gas_mixture
@@ -402,8 +404,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 		var/transfer_moles = pressure_delta*output_air.return_volume()/(input_air.return_temperature() * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
-		var/datum/gas_mixture/removed = input_air.remove(transfer_moles)
-		output_air.merge(removed)
+		input_air.transfer_to(output_air, transfer_moles)
 
 		return TRUE
 	return FALSE

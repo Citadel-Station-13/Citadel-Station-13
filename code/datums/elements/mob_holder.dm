@@ -179,24 +179,37 @@
 			return location.loc.assume_air(env)
 	return location.assume_air(env)
 
-/obj/item/clothing/head/mob_holder/remove_air(amount)
+/obj/item/clothing/head/mob_holder/proc/get_loc_for_air()
 	var/atom/location = loc
 	if(!loc)
-		return null
+		return //null
 	var/turf/T = get_turf(loc)
 	while(location != T)
 		location = location.loc
 		if(ismob(location))
-			return location.loc.remove_air(amount)
+			return location.loc
+	return location
+
+/obj/item/clothing/head/mob_holder/assume_air_moles(datum/gas_mixture/env, moles)
+	var/atom/location = get_loc_for_air()
+	return location.assume_air_moles(env, moles)
+
+/obj/item/clothing/head/mob_holder/assume_air_ratio(datum/gas_mixture/env, ratio)
+	var/atom/location = get_loc_for_air()
+	return location.assume_air_ratio(env, ratio)
+
+/obj/item/clothing/head/mob_holder/remove_air(amount)
+	var/atom/location = get_loc_for_air()
 	return location.remove_air(amount)
 
 /obj/item/clothing/head/mob_holder/remove_air_ratio(ratio)
-	var/atom/location = loc
-	if(!loc)
-		return null
-	var/turf/T = get_turf(loc)
-	while(location != T)
-		location = location.loc
-		if(ismob(location))
-			return location.loc.remove_air_ratio(ratio)
+	var/atom/location = get_loc_for_air()
 	return location.remove_air_ratio(ratio)
+
+/obj/item/clothing/head/mob_holder/transfer_air(datum/gas_mixture/taker, amount)
+	var/atom/location = get_loc_for_air()
+	return location.transfer_air(taker, amount)
+
+/obj/item/clothing/head/mob_holder/transfer_air_ratio(datum/gas_mixture/taker, ratio)
+	var/atom/location = get_loc_for_air()
+	return location.transfer_air(taker, ratio)

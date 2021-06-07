@@ -56,20 +56,20 @@
 	return gases[gas_type]
 /datum/gas_mixture/set_moles(gas_type, moles)
 	gases[gas_type] = moles
-/datum/gas_mixture/scrub_into(datum/gas_mixture/target, list/gases)
+/datum/gas_mixture/scrub_into(datum/gas_mixture/target, ratio, list/gases)
 	if(isnull(target))
 		return FALSE
 
-	var/list/removed_gases = target.gases
+	var/list/removed_gases = gases
 
 	//Filter it
 	var/datum/gas_mixture/filtered_out = new
 	var/list/filtered_gases = filtered_out.gases
 	filtered_out.temperature = removed.temperature
 	for(var/gas in filter_types & removed_gases)
-		filtered_gases[gas] = removed_gases[gas]
-		removed_gases[gas] = 0
-	merge(filtered_out)
+		filtered_gases[gas] = removed_gases[gas] * ratio
+		removed_gases[gas] = removed_gases[gas] * (1 - ratio)
+	target.merge(filtered_out)
 /datum/gas_mixture/mark_immutable()
 	return
 /datum/gas_mixture/get_gases()

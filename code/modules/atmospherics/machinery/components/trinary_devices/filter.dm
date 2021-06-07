@@ -98,11 +98,6 @@
 	//Actually transfer the gas
 
 	if(transfer_ratio > 0)
-		var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
-
-		if(!removed)
-			return
-
 		var/filtering = TRUE
 		if(!ispath(filter_type))
 			if(filter_type)
@@ -110,21 +105,10 @@
 			else
 				filtering = FALSE
 
-		if(filtering && removed.get_moles(filter_type))
-			var/datum/gas_mixture/filtered_out = new
-
-			filtered_out.set_temperature(removed.return_temperature())
-			filtered_out.set_moles(filter_type, removed.get_moles(filter_type))
-
-			removed.set_moles(filter_type, 0)
-
-			var/datum/gas_mixture/target = (air2.return_pressure() < 9000 ? air2 : air1)
-			target.merge(filtered_out)
-
-		if(air3.return_pressure() <= 9000)
-			air3.merge(removed)
-		else
-			air1.merge(removed) // essentially just leaving it in
+		if(filtering && air3.return_pressure() <= 9000)
+			air1.scrub_into(air3, transfer_ratio, list(filter_type))
+		if(air2.return_pressure() <= 9000)
+			air1.transfer_ratio_to(air2, transfer_ratio)
 
 	update_parents()
 

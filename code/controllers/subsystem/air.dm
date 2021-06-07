@@ -281,12 +281,23 @@ SUBSYSTEM_DEF(air)
 	while(deferred_airs.len)
 		var/list/cur_op = deferred_airs[deferred_airs.len]
 		deferred_airs.len--
-		var/turf/open/T = cur_op[1]
-		if(istype(cur_op[2],/datum/gas_mixture))
-			T.air.merge(cur_op[2])
-		else if(istype(cur_op[2], /datum/callback))
-			var/datum/callback/cb = cur_op[2]
-			cb.Invoke(T)
+		var/datum/gas_mixture/air1
+		var/datum/gas_mixture/air2
+		if(isopenturf(cur_op[1]))
+			var/turf/open/T = cur_op[1]
+			air1 = T.return_air()
+		else
+			air1 = cur_op[1]
+		if(isopenturf(cur_op[2]))
+			var/turf/open/T = cur_op[2]
+			air2 = T.return_air()
+		else
+			air2 = cur_op[2]
+		if(istype(cur_op[3], /datum/callback))
+			var/datum/callback/cb = cur_op[3]
+			cb.Invoke(air1, air2)
+		else
+			air1.transfer_ratio_to(air2, cur_op[3])
 		if(MC_TICK_CHECK)
 			return
 

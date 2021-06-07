@@ -287,9 +287,8 @@
 
 /obj/machinery/portable_atmospherics/canister/proc/canister_break()
 	disconnect()
-	var/datum/gas_mixture/expelled_gas = air_contents.remove(air_contents.total_moles())
 	var/turf/T = get_turf(src)
-	T.assume_air(expelled_gas)
+	T.assume_air(air_contents)
 	air_update_turf()
 
 	obj_break()
