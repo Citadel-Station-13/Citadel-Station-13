@@ -559,4 +559,4 @@
 	name = "pokerchip set"
 	slot = SLOT_IN_BACKPACK
 	path = /obj/item/storage/box/pockerchips
-	ckeywhitelist = list("daveyjones")
+	ckeywhitelist = list("greed2323")
