@@ -195,17 +195,17 @@
 /**
   * Called when an attack is parried using this, whether or not the parry was successful.
   */
-/obj/item/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
+/obj/item/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time, autoparry = FALSE)
 
 /**
   * Called when an attack is parried innately, whether or not the parry was successful.
   */
-/mob/living/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
+/mob/living/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time, autoparry = FALSE)
 
 /**
   * Called when an attack is parried using this, whether or not the parry was successful.
   */
-/datum/martial_art/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
+/datum/martial_art/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time, autoparry = FALSE)
 
 /**
   * Called when an attack is parried and block_parra_data indicates to use a proc to handle counterattack.
@@ -232,6 +232,8 @@
 		return BLOCK_NONE
 	var/datum/block_parry_data/data = return_block_parry_datum(determined[2])
 	if(!data.parry_automatic_enabled || (last_autoparry > (world.time + data.autoparry_cooldown_absolute)))
+		return BLOCK_NONE
+	if(attack_type && !(attack_type & data.parry_attack_types))
 		return BLOCK_NONE
 	// before doing anything, check if the user moused over them properly
 	if(!client)
@@ -260,9 +262,52 @@
 		// recurse back to original
 		return run_parry(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, FALSE)
 	else
-		// for single attack block
-		#warn single attack block
-		return FALSE
+		// yes, this is mostly a copypaste of run_parry.
+		var/efficiency = data.attack_type_list_scan(data.autoparry_single_efficiency_override, attack_type)
+		if(isnull(efficiency))
+			efficiency = data.autoparry_single_efficiency
+		var/method = determined[1]
+		switch(parrying)
+			if(ITEM_PARRY)
+				var/obj/item/I = determined[3]
+				. = I.on_active_parry(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency, null, TRUE)
+			if(UNARMED_PARRY)
+				. = on_active_parry(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency, null, TRUE)
+			if(MARTIAL_PARRY)
+				. = mind.martial_art.on_active_parry(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency, null, TRUE)
+		if(!isnull(return_list[BLOCK_RETURN_OVERRIDE_PARRY_EFFICIENCY]))		// one of our procs overrode
+			efficiency = return_list[BLOCK_RETURN_OVERRIDE_PARRY_EFFICIENCY]
+		if(efficiency <= 0)		// Do not allow automatically handled/standardized parries that increase damage for now.
+			return
+		. |= BLOCK_SHOULD_PARTIAL_MITIGATE
+		if(efficiency >= data.parry_efficiency_perfect)
+			. |= data.perfect_parry_block_return_flags
+			if(data.perfect_parry_block_return_list)
+				return_list |= data.perfect_parry_block_return_list
+		else if(efficiency >= data.parry_efficiency_considered_successful)
+			. |= data.imperfect_parry_block_return_flags
+			if(data.imperfect_parry_block_return_list)
+				return_list |= data.imperfect_parry_block_return_list
+		else
+			. |= data.failed_parry_block_return_flags
+			if(data.failed_parry_block_return_list)
+				return_list |= data.failed_parry_block_return_list
+		if(isnull(return_list[BLOCK_RETURN_MITIGATION_PERCENT]))		//  if one of the on_active_parry procs overrode. We don't have to worry about interference since parries are the first thing checked in the [do_run_block()] sequence.
+			return_list[BLOCK_RETURN_MITIGATION_PERCENT] = clamp(efficiency, 0, 100)		// do not allow > 100% or < 0% for now.
+		if((return_list[BLOCK_RETURN_MITIGATION_PERCENT] >= 100) || (damage <= 0))
+			. |= BLOCK_SUCCESS
+		var/list/effect_text
+		var/pacifist_counter_check = TRUE
+		if(HAS_TRAIT(src, TRAIT_PACIFISM))
+			switch(parrying)
+				if(ITEM_PARRY)
+					pacifist_counter_check = (!active_parry_item.force || active_parry_item.damtype == STAMINA)
+				else
+					pacifist_counter_check = FALSE //Both martial and unarmed counter attacks generally are harmful, so no need to have the same line twice.
+		if(efficiency >= data.parry_efficiency_to_counterattack && pacifist_counter_check && !return_list[BLOCK_RETURN_FORCE_NO_PARRY_COUNTERATTACK] && (!(attacker in successful_parry_counterattacks) && !data.parry_allow_repeated_counterattacks))
+			effect_text = run_parry_countereffects(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency, data)
+		if(data.parry_flags & PARRY_DEFAULT_HANDLE_FEEDBACK)
+			handle_parry_feedback(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency, effect_text)
 
 /**
   * Gets the stage of our parry sequence we're currently in.
@@ -355,8 +400,9 @@
 	if(length(successful_parries) >= data.parry_max_attacks)
 		end_parry_sequence()
 
-/mob/living/proc/handle_parry_feedback(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list(), parry_efficiency, list/effect_text)
-	var/datum/block_parry_data/data = get_parry_data()
+/mob/living/proc/handle_parry_feedback(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list(), parry_efficiency, list/effect_text, datum/block_parry_data/data)
+	if(!data)
+		data = get_parry_data()
 	var/knockdown_check = FALSE
 	if(data.parry_data[PARRY_KNOCKDOWN_ATTACKER] && parry_efficiency >= data.parry_efficiency_to_counterattack)
 		knockdown_check = TRUE
@@ -365,11 +411,12 @@
 	visible_message("<span class='danger'>[src] parries [attack_text][length(effect_text)? ", [english_list(effect_text)] [attacker]" : ""][length(effect_text) && knockdown_check? " and" : ""][knockdown_check? " knocking them to the ground" : ""]!</span>")
 
 /// Run counterattack if any
-/mob/living/proc/run_parry_countereffects(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list(), parry_efficiency)
+/mob/living/proc/run_parry_countereffects(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list(), parry_efficiency, datum/block_parry_data/data)
 	if(!isliving(attacker))
 		return
 	var/mob/living/L = attacker
-	var/datum/block_parry_data/data = get_parry_data()
+	if(!data)
+		data = get_parry_data()
 	var/list/effect_text = list()
 	successful_parry_counterattacks |= attacker
 	// Always proc so items can override behavior easily
