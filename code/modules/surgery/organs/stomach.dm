@@ -93,6 +93,40 @@
 	icon_state = "stomach-p"
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
 
+/obj/item/organ/stomach/cybernetic
+	name = "basic cybernetic stomach"
+	icon_state = "stomach-c"
+	desc = "A basic device designed to mimic the functions of a human stomach"
+	organ_flags = ORGAN_SYNTHETIC
+	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
+	var/emp_vulnerability = 1 //The value the severity of emps are divided by to determine the likelihood of permanent damage.
+
+/obj/item/organ/stomach/cybernetic/tier2
+	name = "cybernetic stomach"
+	icon_state = "stomach-c-u"
+	desc = "An electronic device designed to mimic the functions of a human stomach. Handles disgusting food a bit better."
+	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
+	disgust_metabolism = 2
+	emp_vulnerability = 2
+
+/obj/item/organ/stomach/cybernetic/tier3
+	name = "upgraded cybernetic stomach"
+	icon_state = "stomach-c-u2"
+	desc = "An upgraded version of the cybernetic stomach, designed to improve further upon organic stomachs. Handles disgusting food very well."
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
+	disgust_metabolism = 3
+	emp_vulnerability = 3
+
+/obj/item/organ/stomach/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
+		owner.vomit(stun = FALSE)
+		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
+	if(prob(severity/emp_vulnerability))	//Chance of permanent effects
+		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+
 /obj/item/organ/stomach/ipc
 	name = "ipc cell"
 	icon_state = "stomach-ipc"

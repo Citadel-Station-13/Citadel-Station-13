@@ -705,7 +705,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/commons/fitness/pool)
+/area/maintenance/department/crew_quarters/dorms)
 "abG" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -3392,6 +3392,10 @@
 /obj/vehicle/ridden/secway,
 /obj/item/key/security,
 /obj/effect/turf_decal/bot,
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/office)
 "ais" = (
@@ -4890,6 +4894,10 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -10746,6 +10754,11 @@
 	dir = 1;
 	name = "Port Solar APC";
 	pixel_y = 23
+	},
+/obj/machinery/camera{
+	c_tag = "Port Bow Solar";
+	dir = 9;
+	name = "solar camera"
 	},
 /turf/open/floor/plating,
 /area/maintenance/solars/port)
@@ -24639,6 +24652,12 @@
 	},
 /turf/open/space,
 /area/solars/starboard)
+"beW" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/engineering/atmos)
 "beY" = (
 /obj/machinery/camera{
 	c_tag = "Arrivals Central";
@@ -37279,7 +37298,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/science/mixing)
+/area/maintenance/department/science)
 "bGB" = (
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -37808,6 +37827,10 @@
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
+	},
+/obj/item/radio/intercom{
+	pixel_x = 30;
+	pixel_y = -2
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -40347,15 +40370,9 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Mix to Ports"
-	},
-/turf/open/floor/plasteel,
-/area/engineering/atmos)
-"bNk" = (
-/obj/machinery/atmospherics/pipe/manifold/green/visible{
-	dir = 1
+	name = "Unfiltered to Mix"
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
@@ -40364,8 +40381,9 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/green/visible{
-	dir = 1
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 4;
+	name = "Unfiltered & Air to Mix"
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
@@ -40801,23 +40819,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
-"bOo" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
-/turf/open/floor/plasteel,
-/area/engineering/atmos)
 "bOp" = (
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 10
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "Pure to Mix"
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "bOq" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1;
-	name = "Pure to Mix"
+/obj/machinery/atmospherics/pipe/manifold/green/visible{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
@@ -40836,7 +40850,7 @@
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
 "bOu" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -41078,13 +41092,6 @@
 "bOZ" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 9
-	},
-/turf/open/floor/plasteel,
-/area/engineering/atmos)
-"bPa" = (
-/obj/machinery/portable_atmospherics/canister,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
@@ -41399,7 +41406,6 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "bPW" = (
@@ -41777,14 +41783,16 @@
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "bQK" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "bQL" = (
-/obj/machinery/atmospherics/pipe/manifold4w/general/visible,
+/obj/machinery/atmospherics/pipe/manifold/green/visible{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "bQM" = (
@@ -41792,9 +41800,8 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 1;
-	name = "Unfiltered to Mix"
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
@@ -42101,8 +42108,7 @@
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "bRw" = (
-/obj/machinery/atmospherics/pipe/manifold4w/general/visible,
-/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "bRx" = (
@@ -45936,14 +45942,8 @@
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "bZV" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external{
-	req_access_txt = "13"
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/cargo)
+/turf/closed/wall,
+/area/hallway/primary/fore)
 "bZY" = (
 /turf/closed/wall,
 /area/service/chapel/office)
@@ -52330,7 +52330,6 @@
 /area/service/library)
 "czp" = (
 /obj/structure/table/wood,
-/obj/item/disk/nuclear/fake,
 /obj/item/barcodescanner,
 /turf/open/floor/plasteel/dark,
 /area/service/library)
@@ -53827,6 +53826,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
+"eEd" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/engineering/atmos)
 "eEp" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -55196,6 +55201,15 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
+"hEi" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/engineering/atmos)
 "hEX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -56737,6 +56751,12 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/dark,
 /area/engineering/main)
+"kWG" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engineering/atmos)
 "kWQ" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
 /obj/structure/cable/yellow{
@@ -57367,6 +57387,11 @@
 	name = "Starboard Solar APC";
 	pixel_x = -25
 	},
+/obj/machinery/camera{
+	c_tag = "Starboard Solar";
+	dir = 10;
+	name = "solar camera"
+	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard)
 "mwg" = (
@@ -57441,6 +57466,15 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
 /area/maintenance/department/engine)
+"mAR" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/engineering/atmos)
 "mCe" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -58847,6 +58881,10 @@
 	},
 /turf/open/floor/wood,
 /area/service/lawoffice)
+"pEM" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible,
+/turf/open/floor/plasteel,
+/area/engineering/atmos)
 "pFe" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/red{
@@ -59368,6 +59406,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/crew_quarters/dorms)
+"qQu" = (
+/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engineering/atmos)
 "qRl" = (
 /obj/item/radio/intercom{
 	name = "Station Intercom (General)";
@@ -60108,6 +60153,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
+"sGJ" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible,
+/turf/open/floor/plasteel,
+/area/engineering/atmos)
 "sIK" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -61029,6 +61081,12 @@
 	},
 /turf/open/floor/engine,
 /area/engineering/main)
+"uST" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	name = "Mix to Ports"
+	},
+/turf/open/floor/plasteel,
+/area/engineering/atmos)
 "uUQ" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Engineering Maintenance";
@@ -61261,8 +61319,14 @@
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "vtT" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	req_access_txt = "13"
+	},
 /turf/open/floor/plating,
-/area/maintenance/solars/port)
+/area/maintenance/department/cargo)
 "vuP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -62179,7 +62243,7 @@
 "xuv" = (
 /obj/item/broken_bottle,
 /turf/open/floor/plating,
-/area/maintenance/solars/port)
+/area/maintenance/department/security/brig)
 "xvO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -79788,11 +79852,11 @@ atp
 aus
 aiu
 wxb
-axC
+aiu
 xuv
-azN
-vtT
-vtT
+aoe
+ajD
+ajD
 aiu
 apB
 aiu
@@ -82360,8 +82424,8 @@ apE
 avq
 apE
 ajM
-aiu
-aiu
+bZV
+bZV
 gSH
 xJy
 sJr
@@ -99640,7 +99704,7 @@ bJN
 bKS
 bMe
 bNh
-bOo
+pEM
 bOX
 bMf
 bMf
@@ -100154,9 +100218,9 @@ bHw
 bKU
 bOr
 bPU
+kWG
 bRw
-bPa
-bMf
+beW
 bMf
 bMf
 bMf
@@ -100410,13 +100474,13 @@ bIF
 bHw
 bKV
 bOX
-bUv
+eEd
 bQL
-bPa
+uST
+pEM
 bMf
-bMf
-bMf
-bMf
+qQu
+qQu
 bSU
 bTT
 bUv
@@ -100670,10 +100734,10 @@ bMg
 bNj
 bOp
 bPV
-bPV
-bPV
-bPV
-bPV
+hEi
+sGJ
+bUw
+bUw
 bUw
 bUw
 bUw
@@ -100924,8 +100988,8 @@ bIH
 bHw
 cqG
 bOX
-bNk
 bOq
+mAR
 bPd
 bPW
 bPW
@@ -106255,7 +106319,7 @@ aaF
 aaF
 aaF
 abF
-aaF
+aiS
 aiS
 atn
 awC
@@ -107807,8 +107871,8 @@ aaa
 aaa
 aaa
 aaa
-aEl
-aFi
+aEj
+vtT
 aEj
 aaa
 aEj
@@ -108064,9 +108128,9 @@ aaa
 aaa
 aaa
 aaa
-aEj
-bZV
-aEj
+cdm
+cdm
+cdm
 aaa
 aaa
 aaa
@@ -108321,9 +108385,9 @@ aaa
 aaa
 aaa
 aaa
-ahi
-ahi
-ahi
+bBW
+bBW
+bBW
 aaa
 aaa
 aaa
