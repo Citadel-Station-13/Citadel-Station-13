@@ -105,10 +105,10 @@
 			else
 				filtering = FALSE
 
-		if(filtering && air3.return_pressure() <= 9000)
-			air1.scrub_into(air3, transfer_ratio, list(filter_type))
-		if(air2.return_pressure() <= 9000)
-			air1.transfer_ratio_to(air2, transfer_ratio)
+		if(filtering && air2.return_pressure() <= 9000)
+			air1.scrub_into(air2, transfer_ratio, list(filter_type))
+		if(air3.return_pressure() <= 9000)
+			air1.transfer_ratio_to(air3, transfer_ratio)
 
 	update_parents()
 
