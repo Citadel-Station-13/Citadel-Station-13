@@ -126,6 +126,9 @@
 	parry_efficiency_perfect = 100
 	parry_failed_stagger_duration = 4 SECONDS
 	parry_cooldown = 0.5 SECONDS
+	parry_automatic_enabled = TRUE
+	autoparry_single_efficiency = 65
+	autoparry_cooldown_absolute = 3 SECONDS
 
 /obj/item/melee/transforming/energy/sword/Initialize(mapload)
 	. = ..()

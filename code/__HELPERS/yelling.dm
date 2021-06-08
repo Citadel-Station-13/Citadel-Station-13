@@ -16,8 +16,10 @@
 // blatantly copied from wave explosion code
 // check explosion2.dm for what this does and how it works.
 /datum/yelling_wavefill/proc/do_run(atom/source, dist)
-	var/list/edges = list(source = (NORTH|SOUTH|EAST|WEST))
-	var/list/powers = list(source = dist)
+	var/list/edges = list()
+	edges[source] = (NORTH|SOUTH|EAST|WEST)
+	var/list/powers = list()
+	powers[source] = dist
 	var/list/processed_last = list()
 	var/turf/T
 	var/turf/expanding

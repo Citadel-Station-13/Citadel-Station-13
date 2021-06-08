@@ -238,12 +238,13 @@
 	// before doing anything, check if the user moused over them properly
 	if(!client)
 		return BLOCK_NONE
-	var/found = FALSE
-	for(var/i in client.moused_over_objects)
-		if(i == object)
-			if((client.moused_over_objects[i] + (data.autoparry_mouse_delay_maximum SECONDS)) >= world.time)
-				found = TRUE
-			break
+	var/found = attacker == client.mouseObject
+	if(!found)
+		for(var/i in client.moused_over_objects)
+			if(i == object)
+				if((client.moused_over_objects[i] + (data.autoparry_mouse_delay_maximum)) >= world.time)
+					found = TRUE
+				break
 	if(!found)
 		return BLOCK_NONE
 
@@ -267,7 +268,7 @@
 		if(isnull(efficiency))
 			efficiency = data.autoparry_single_efficiency
 		var/method = determined[1]
-		switch(parrying)
+		switch(method)
 			if(ITEM_PARRY)
 				var/obj/item/I = determined[3]
 				. = I.on_active_parry(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency, null, TRUE)
@@ -347,7 +348,8 @@
 		// If they're not currently parrying, attempt auto parry
 		if(stage == NOT_PARRYING)
 			if(!allow_auto || SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-				return attempt_auto_parry(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)
+				return BLOCK_NONE
+			return attempt_auto_parry(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)
 		else
 			return BLOCK_NONE
 	var/datum/block_parry_data/data = get_parry_data()

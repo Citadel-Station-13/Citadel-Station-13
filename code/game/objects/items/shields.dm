@@ -34,6 +34,10 @@
 	block_damage_absorption = 5
 	block_resting_stamina_penalty_multiplier = 2
 	block_projectile_mitigation = 75
+	block_damage_absorption_override = list(
+		TEXT_ATTACK_TYPE_TACKLE = INFINITY,
+		TEXT_ATTACK_TYPE_THROWN = 10
+	)
 
 /obj/item/shield/examine(mob/user)
 	. = ..()
@@ -374,10 +378,9 @@
 
 /obj/item/shield/riot/flash/on_shield_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	. = ..()
-	if (. && !embedded_flash.crit_fail)
+	if (. && damage && !embedded_flash.crit_fail)
 		embedded_flash.activate()
 		update_icon()
-
 
 /obj/item/shield/riot/flash/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/assembly/flash/handheld))

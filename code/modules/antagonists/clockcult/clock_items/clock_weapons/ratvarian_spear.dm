@@ -93,4 +93,3 @@
 	parry_efficiency_to_counterattack = 110
 	parry_cooldown = 15 //But also very low cooldown..
 	parry_failed_stagger_duration = 2 SECONDS //And relatively small penalties for failing.
-	parry_failed_clickcd_duration = 1 SECONDS

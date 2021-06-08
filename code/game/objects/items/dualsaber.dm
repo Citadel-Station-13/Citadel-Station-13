@@ -71,7 +71,6 @@
 	parry_imperfect_falloff_percent = 10
 	parry_efficiency_considered_successful = 25		// VERY generous
 	parry_failed_stagger_duration = 3 SECONDS
-	parry_failed_clickcd_duration = CLICK_CD_MELEE
 
 /obj/item/dualsaber/directional_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, override_direction)
 	if((attack_type & ATTACK_TYPE_PROJECTILE) && is_energy_reflectable_projectile(object))
@@ -374,7 +373,6 @@
 		TEXT_ATTACK_TYPE_PROJECTILE = 30,
 	)
 	parry_failed_stagger_duration = 3 SECONDS
-	parry_failed_clickcd_duration = 2 SECONDS
 
 /obj/item/dualsaber/hypereutactic/chaplain/ComponentInitialize()
 	. = ..()

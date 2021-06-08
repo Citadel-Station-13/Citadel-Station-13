@@ -194,7 +194,6 @@
 	parry_efficiency_perfect = 100
 	parry_stamina_cost = 5
 	parry_failed_stagger_duration = 2 SECONDS
-	parry_failed_clickcd_duration = CLICK_CD_RANGE
 	parry_cooldown = 0
 
 /obj/item/melee/rapier/active_parry_reflex_counter(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list, parry_efficiency, list/effect_text)

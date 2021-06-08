@@ -108,7 +108,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Priority for [mob/do_run_block()] while we're being used to parry.
 	//  None - Parry is always highest priority!
 	/// Parry doesn't work if you aren't able to otherwise attack due to clickdelay
-	var/parry_respect_clickdelay = TRUE
+	var/parry_respect_clickdelay = FALSE
 	/// Parry stamina cost
 	var/parry_stamina_cost = 5
 	/// Attack types we can block
@@ -164,7 +164,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Stagger duration post-parry if you fail to parry an attack
 	var/parry_failed_stagger_duration = 3.5 SECONDS
 	/// Clickdelay duration post-parry if you fail to parry an attack
-	var/parry_failed_clickcd_duration = 2 SECONDS
+	var/parry_failed_clickcd_duration = 0 SECONDS
 	/// Parry cooldown post-parry if failed. This is ADDED to parry_cooldown!!!
 	var/parry_failed_cooldown_duration = 0 SECONDS
 
@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	// Clickdelay/cooldown settings not included, as well as whether or not to lock attack/sprinting/etc. They will be pulled from the above.
 
 	/// ADVANCED - Autoparry requirement for time since last moused over for a specific object
-	var/autoparry_mouse_delay_maximum = 0.5
+	var/autoparry_mouse_delay_maximum = 0.5 SECONDS
 
 /**
   * Quirky proc to get average of flags in list that are in attack_type because why is attack_type a flag.
