@@ -77,6 +77,8 @@
 		return
 	if(!iscarbon(target))
 		return
+	if(!(target?.client?.prefs?.cit_toggles & MEDIHOUND_SLEEPER))
+		return
 	var/voracious = TRUE
 	if(!target.client || !(target.client.prefs.cit_toggles & MEDIHOUND_SLEEPER) || !hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
 		voracious = FALSE
