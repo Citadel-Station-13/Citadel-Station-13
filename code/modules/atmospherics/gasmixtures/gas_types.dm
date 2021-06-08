@@ -1,5 +1,5 @@
-GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)) //the main four gases, which were at one time hardcoded
-GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/pluoxium, /datum/gas/stimulum, /datum/gas/nitryl))) //unable to react amongst themselves
+GLOBAL_LIST_INIT(hardcoded_gases, list(GAS_O2, GAS_N2, GAS_CO2, GAS_PLASMA)) //the main four gases, which were at one time hardcoded
+GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GAS_PLUOXIUM, GAS_STIMULUM, GAS_NITRYL))) //unable to react amongst themselves
 
 /proc/gas_id2path(id)
 	var/list/meta_gas = GLOB.meta_gas_ids
@@ -10,65 +10,71 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 			return path
 	return ""
 
-//Unomos - oh god oh fuck oh shit oh lord have mercy this is messy as fuck oh god
-//my addiction to seeing better performance numbers isn't healthy, kids
-//you see this shit, children?
-//i am not a good idol. don't take after me.
-//this is literally worse than my alcohol addiction
+// Listmos 2.0
+// aka "auxgm", a send-up of XGM
+// it's basically the same architecture as XGM but
+// structured differently to make it more convenient for auxmos
+
+// most important compared to TG is that it does away with hardcoded typepaths,
+// which lead to problems on the auxmos end anyway.
+
+// second most important is that i hate how breath is handled
+// and most basically every other thing in the codebase
+// when it comes to hardcoded gas typepaths, so, yeah, go away
+
+GLOBAL_LIST_INIT(gas_data, meta_gas_info_list())
+
+/proc/meta_gas_info_list()
+	. = list()
+	for(var/gas_path in subtypesof(/datum/gas))
+		var/datum/gas/gas = new gas_path // !
+		.[gas.id] = gas
+
 /proc/meta_gas_heat_list()
 	. = subtypesof(/datum/gas)
 	for(var/gas_path in .)
 		var/datum/gas/gas = gas_path
-		.[gas_path] = initial(gas.specific_heat)
+		.[initial(gas.id)] = initial(gas.specific_heat)
 
 /proc/meta_gas_name_list()
 	. = subtypesof(/datum/gas)
 	for(var/gas_path in .)
 		var/datum/gas/gas = gas_path
-		.[gas_path] = initial(gas.name)
+		.[initial(gas.id)] = initial(gas.name)
 
 /proc/meta_gas_visibility_list()
 	. = subtypesof(/datum/gas)
 	for(var/gas_path in .)
 		var/datum/gas/gas = gas_path
-		.[gas_path] = initial(gas.moles_visible)
+		.[initial(gas.id)] = initial(gas.moles_visible)
 
 /proc/meta_gas_overlay_list()
 	. = subtypesof(/datum/gas)
 	for(var/gas_path in .)
 		var/datum/gas/gas = gas_path
-		.[gas_path] = 0 //gotta make sure if(GLOB.meta_gas_overlays[gaspath]) doesn't break
+		.[initial(gas.id)] = 0 //gotta make sure if(GLOB.meta_gas_overlays[gaspath]) doesn't break
 		if(initial(gas.moles_visible) != null)
-			.[gas_path] = new /list(FACTOR_GAS_VISIBLE_MAX)
+			.[initial(gas.id)] = new /list(FACTOR_GAS_VISIBLE_MAX)
 			for(var/i in 1 to FACTOR_GAS_VISIBLE_MAX)
-				.[gas_path][i] = new /obj/effect/overlay/gas(initial(gas.gas_overlay), i * 255 / FACTOR_GAS_VISIBLE_MAX)
+				.[initial(gas.id)][i] = new /obj/effect/overlay/gas(initial(gas.gas_overlay), i * 255 / FACTOR_GAS_VISIBLE_MAX)
 
-/proc/meta_gas_danger_list()
+/proc/meta_gas_flags_list()
 	. = subtypesof(/datum/gas)
 	for(var/gas_path in .)
 		var/datum/gas/gas = gas_path
-		.[gas_path] = initial(gas.dangerous)
+		.[initial(gas.id)] = initial(gas.flags)
 
 /proc/meta_gas_id_list()
 	. = subtypesof(/datum/gas)
 	for(var/gas_path in .)
 		var/datum/gas/gas = gas_path
-		.[gas_path] = initial(gas.id)
+		.[initial(gas.id)] = initial(gas.id)
 
 /proc/meta_gas_fusion_list()
 	. = subtypesof(/datum/gas)
 	for(var/gas_path in .)
 		var/datum/gas/gas = gas_path
-		.[gas_path] = initial(gas.fusion_power)
-
-/*||||||||||||||/----------\||||||||||||||*\
-||||||||||||||||[GAS DATUMS]||||||||||||||||
-||||||||||||||||\__________/||||||||||||||||
-||||These should never be instantiated. ||||
-||||They exist only to make it easier   ||||
-||||to add a new gas. They are accessed ||||
-||||only by meta_gas_list().            ||||
-\*||||||||||||||||||||||||||||||||||||||||*/
+		.[initial(gas.id)] = initial(gas.fusion_power)
 
 /datum/gas
 	var/id = ""
@@ -76,40 +82,40 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	var/name = ""
 	var/gas_overlay = "" //icon_state in icons/effects/atmospherics.dmi
 	var/moles_visible = null
-	var/dangerous = FALSE //currently used by canisters
+	var/flags = NONE //currently used by canisters
 	var/fusion_power = 0 //How much the gas accelerates a fusion reaction
 	var/rarity = 0 // relative rarity compared to other gases, used when setting up the reactions list.
 
 /datum/gas/oxygen
-	id = "o2"
+	id = GAS_O2
 	specific_heat = 20
 	name = "Oxygen"
 	rarity = 900
 
 /datum/gas/nitrogen
-	id = "n2"
+	id = GAS_N2
 	specific_heat = 20
 	name = "Nitrogen"
 	rarity = 1000
 
 /datum/gas/carbon_dioxide //what the fuck is this?
-	id = "co2"
+	id = GAS_CO2
 	specific_heat = 30
 	name = "Carbon Dioxide"
 	fusion_power = 3
 	rarity = 700
 
 /datum/gas/plasma
-	id = "plasma"
+	id = GAS_PLASMA
 	specific_heat = 200
 	name = "Plasma"
 	gas_overlay = "plasma"
 	moles_visible = MOLES_GAS_VISIBLE
-	dangerous = TRUE
+	flags = GAS_FLAG_DANGEROUS
 	rarity = 800
 
 /datum/gas/water_vapor
-	id = "water_vapor"
+	id = GAS_H2O
 	specific_heat = 40
 	name = "Water Vapor"
 	gas_overlay = "water_vapor"
@@ -118,67 +124,66 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	rarity = 500
 
 /datum/gas/hypernoblium
-	id = "nob"
+	id = GAS_HYPERNOB
 	specific_heat = 2000
 	name = "Hyper-noblium"
 	gas_overlay = "freon"
 	moles_visible = MOLES_GAS_VISIBLE
-	dangerous = TRUE
 	rarity = 50
 
 /datum/gas/nitrous_oxide
-	id = "n2o"
+	id = GAS_NITROUS
 	specific_heat = 40
 	name = "Nitrous Oxide"
 	gas_overlay = "nitrous_oxide"
 	moles_visible = MOLES_GAS_VISIBLE * 2
-	dangerous = TRUE
+	flags = GAS_FLAG_DANGEROUS
 	rarity = 600
 
 /datum/gas/nitryl
-	id = "no2"
+	id = GAS_NITRYL
 	specific_heat = 20
 	name = "Nitryl"
 	gas_overlay = "nitryl"
 	moles_visible = MOLES_GAS_VISIBLE
-	dangerous = TRUE
+	flags = GAS_FLAG_DANGEROUS
 	fusion_power = 15
 	rarity = 100
 
 /datum/gas/tritium
-	id = "tritium"
+	id = GAS_TRITIUM
 	specific_heat = 10
 	name = "Tritium"
 	gas_overlay = "tritium"
 	moles_visible = MOLES_GAS_VISIBLE
-	dangerous = TRUE
+	flags = GAS_FLAG_DANGEROUS
 	fusion_power = 1
 	rarity = 300
 
 /datum/gas/bz
-	id = "bz"
+	id = GAS_BZ
 	specific_heat = 20
 	name = "BZ"
-	dangerous = TRUE
+	flags = GAS_FLAG_DANGEROUS
 	fusion_power = 8
 	rarity = 400
 
 /datum/gas/stimulum
-	id = "stim"
+	id = GAS_STIMULUM
 	specific_heat = 5
 	name = "Stimulum"
 	fusion_power = 7
 	rarity = 1
 
 /datum/gas/pluoxium
-	id = "pluox"
+	id = GAS_PLUOXIUM
 	specific_heat = 80
 	name = "Pluoxium"
 	fusion_power = 10
 	rarity = 200
 
 /datum/gas/miasma
-	id = "miasma"
+	id = GAS_MIASMA
 	specific_heat = 20
 	fusion_power = 50
 	name = "Miasma"
@@ -187,16 +192,16 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	rarity = 250
 
 /datum/gas/methane
-	id = "methane"
+	id = GAS_METHANE
 	specific_heat = 30
 	name = "Methane"
 	rarity = 320
 
 /datum/gas/methyl_bromide
-	id = "methyl_bromide"
+	id = GAS_METHYL_BROMIDE
 	specific_heat = 42
 	name = "Methyl Bromide"
-	dangerous = TRUE
+	flags = GAS_FLAG_DANGEROUS
 	rarity = 310
 
 

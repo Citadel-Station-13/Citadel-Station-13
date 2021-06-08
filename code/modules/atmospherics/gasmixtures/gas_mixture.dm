@@ -12,7 +12,7 @@ GLOBAL_LIST_INIT(meta_gas_specific_heats, meta_gas_heat_list())
 GLOBAL_LIST_INIT(meta_gas_names, meta_gas_name_list())
 GLOBAL_LIST_INIT(meta_gas_visibility, meta_gas_visibility_list())
 GLOBAL_LIST_INIT(meta_gas_overlays, meta_gas_overlay_list())
-GLOBAL_LIST_INIT(meta_gas_dangers, meta_gas_danger_list())
+GLOBAL_LIST_INIT(meta_gas_flags, meta_gas_flags_list())
 GLOBAL_LIST_INIT(meta_gas_ids, meta_gas_id_list())
 GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 /datum/gas_mixture
@@ -93,9 +93,10 @@ GLOBAL_LIST_INIT(auxtools_atmos_initialized,FALSE)
 		if(!isnum(amount))
 			return
 		amount = max(0, amount)
+		var/datum/gas/gas = gastype
 		log_admin("[key_name(usr)] modified gas mixture [REF(src)]: Set gas type [gastype] to [amount] moles.")
 		message_admins("[key_name(usr)] modified gas mixture [REF(src)]: Set gas type [gastype] to [amount] moles.")
-		set_moles(gastype, amount)
+		set_moles(initial(gas.id), amount)
 	if(href_list[VV_HK_SET_TEMPERATURE])
 		var/temp = input(usr, "Set the temperature of this mixture to?", "Set Temperature", return_temperature()) as num|null
 		if(!isnum(temp))
@@ -270,10 +271,7 @@ GLOBAL_LIST_INIT(auxtools_atmos_initialized,FALSE)
 		set_temperature(temp)
 	clear()
 	for(var/id in gas)
-		var/path = id
-		if(!ispath(path))
-			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
-		set_moles(path, text2num(gas[id]))
+		set_moles(id, text2num(gas[id]))
 	archive()
 	return 1
 /*
