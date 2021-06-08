@@ -492,7 +492,7 @@
 	var/targetAmount = 100
 
 /datum/objective/revenant/New()
-	targetAmount = rand(350,600)
+	targetAmount = rand(200,400)
 	explanation_text = "Absorb [targetAmount] points of essence from humans."
 	..()
 
