@@ -81,7 +81,7 @@
 		to_chat(user, "<span class='warning'>The user has opted out of the use of your [src].")
 		return
 	var/voracious = TRUE
-	if(!target.client || !(target.client.prefs.cit_toggles & MEDIHOUND_SLEEPER) || !hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
+	if(!hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
 		voracious = FALSE
 	if(target.buckled)
 		to_chat(user, "<span class='warning'>The user is buckled and can not be put into your [src].</span>")
