@@ -16,6 +16,7 @@
 // blatantly copied from wave explosion code
 // check explosion2.dm for what this does and how it works.
 /datum/yelling_wavefill/proc/do_run(atom/source, dist)
+	source = get_turf(source)
 	var/list/edges = list()
 	edges[source] = (NORTH|SOUTH|EAST|WEST)
 	var/list/powers = list()
