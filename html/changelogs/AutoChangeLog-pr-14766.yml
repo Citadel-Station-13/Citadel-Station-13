@@ -1,0 +1,5 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - bugfix: "cults can build in maintenance (and other small areas) again."
+  - bugfix: "centcom can no longer be selected as the target area for narsie to be summoned??????"
