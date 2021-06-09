@@ -1484,6 +1484,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
+"afI" = (
+/obj/effect/turf_decal/vg_decals/atmos/oxygen,
+/turf/open/floor/engine/o2,
+/area/engineering/atmos)
 "afT" = (
 /obj/structure/chair{
 	dir = 4
@@ -23430,9 +23434,6 @@
 	icon_state = "4-8"
 	},
 /obj/structure/cable/white{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/white{
 	icon_state = "1-4"
 	},
 /obj/structure/cable/white{
@@ -30107,9 +30108,6 @@
 /area/security/brig)
 "cgW" = (
 /obj/structure/cable/white{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/white{
 	icon_state = "4-8"
 	},
 /obj/structure/cable/white{
@@ -30124,6 +30122,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/structure/cable/white{
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -32692,9 +32693,6 @@
 	},
 /obj/structure/cable/white{
 	icon_state = "1-4"
-	},
-/obj/structure/cable/white{
-	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	icon_state = "1-8"
@@ -44753,6 +44751,7 @@
 	},
 /obj/item/folder/yellow,
 /obj/machinery/door/window/northleft{
+	dir = 2;
 	name = "Chemistry Desk";
 	req_access_txt = "5; 33"
 	},
@@ -46132,8 +46131,8 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/components/binary/valve/digital{
-	icon_state = "dvalve_map-2";
-	dir = 8
+	dir = 8;
+	icon_state = "dvalve_map-2"
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -74589,8 +74588,10 @@
 /turf/open/floor/wood,
 /area/service/library)
 "fsx" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/engine/air,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/engineering/atmos)
 "fsP" = (
 /obj/structure/table/wood,
@@ -74733,6 +74734,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/service/library/abandoned)
+"fuR" = (
+/obj/effect/turf_decal/vg_decals/atmos/air,
+/turf/open/floor/engine/air,
+/area/engineering/atmos)
 "fvf" = (
 /obj/structure/cable/white,
 /obj/structure/cable/white{
@@ -75928,6 +75933,27 @@
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
+"fPd" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/aisat/exterior)
 "fPO" = (
 /obj/machinery/status_display/evac{
 	pixel_y = -32
@@ -77511,8 +77537,8 @@
 /area/engineering/main)
 "grf" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	icon_state = "pipe11-2";
-	dir = 5
+	dir = 5;
+	icon_state = "pipe11-2"
 	},
 /turf/closed/wall/r_wall,
 /area/science/xenobiology)
@@ -77848,8 +77874,8 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	icon_state = "inje_map-2";
-	dir = 4
+	dir = 4;
+	icon_state = "inje_map-2"
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
@@ -81057,6 +81083,10 @@
 /obj/item/flashlight,
 /turf/open/floor/plating,
 /area/maintenance/port)
+"hFi" = (
+/obj/effect/turf_decal/vg_decals/atmos/nitrous_oxide,
+/turf/open/floor/engine/n2o,
+/area/engineering/atmos)
 "hFj" = (
 /obj/machinery/computer/security/mining{
 	dir = 4
@@ -87364,6 +87394,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/command/heads_quarters/cmo)
+"jDB" = (
+/obj/effect/turf_decal/vg_decals/atmos/plasma,
+/turf/open/floor/engine/plasma,
+/area/engineering/atmos)
 "jDH" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -92073,7 +92107,6 @@
 /turf/closed/wall,
 /area/commons/storage/primary)
 "lkg" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
 /obj/machinery/atmospherics/miner/toxins,
 /turf/open/floor/engine/plasma,
 /area/engineering/atmos)
@@ -93634,7 +93667,6 @@
 /turf/open/floor/plasteel,
 /area/engineering/main)
 "lNq" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/atmospherics/miner/nitrogen,
 /turf/open/floor/engine/n2,
 /area/engineering/atmos)
@@ -100471,7 +100503,6 @@
 /turf/open/floor/plasteel/dark,
 /area/service/library)
 "ohX" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/machinery/atmospherics/miner/carbon_dioxide,
 /turf/open/floor/engine/co2,
 /area/engineering/atmos)
@@ -100582,6 +100613,10 @@
 "ojB" = (
 /turf/open/floor/plasteel/grimy,
 /area/service/library)
+"ojI" = (
+/obj/effect/turf_decal/vg_decals/atmos/carbon_dioxide,
+/turf/open/floor/engine/co2,
+/area/engineering/atmos)
 "ojM" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -102476,9 +102511,6 @@
 /turf/open/floor/plasteel,
 /area/engineering/break_room)
 "oTt" = (
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide{
-	valve_open = 1
-	},
 /obj/machinery/atmospherics/miner/n2o,
 /turf/open/floor/engine/n2o,
 /area/engineering/atmos)
@@ -103543,6 +103575,29 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/grimy,
 /area/command/heads_quarters/hop)
+"pog" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/aisat/exterior)
 "por" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/tile/neutral{
@@ -105873,6 +105928,7 @@
 	dir = 1;
 	name = "atmospherics camera"
 	},
+/obj/effect/turf_decal/vg_decals/atmos/mix,
 /turf/open/floor/engine/vacuum,
 /area/engineering/atmos)
 "qbJ" = (
@@ -111560,6 +111616,25 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/commons/fitness/recreation)
+"seg" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/aisat/exterior)
 "seD" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/bot,
@@ -116977,7 +117052,6 @@
 /turf/open/floor/plasteel,
 /area/cargo/storage)
 "tWb" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/atmospherics/miner/oxygen,
 /turf/open/floor/engine/o2,
 /area/engineering/atmos)
@@ -125886,6 +125960,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/grimy,
 /area/command/heads_quarters/hop)
+"xmS" = (
+/obj/effect/turf_decal/vg_decals/atmos/nitrogen,
+/turf/open/floor/engine/n2,
+/area/engineering/atmos)
 "xmW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light{
@@ -127298,6 +127376,29 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/service/chapel/office)
+"xOg" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/aisat/exterior)
 "xOo" = (
 /obj/machinery/light/small,
 /obj/structure/closet/firecloset,
@@ -134724,7 +134825,7 @@ uSd
 fWX
 gxc
 gxc
-gxc
+xOg
 gxc
 gxc
 gxc
@@ -135254,7 +135355,7 @@ bPC
 bRO
 ivC
 gxc
-gxc
+xOg
 eCQ
 hzs
 oMz
@@ -136000,7 +136101,7 @@ ajr
 ajr
 ajr
 bkF
-tBB
+seg
 brO
 aad
 btH
@@ -136031,7 +136132,7 @@ cdt
 cdt
 aad
 bkE
-tBB
+fPd
 brM
 ajr
 ajr
@@ -138056,7 +138157,7 @@ ajr
 ajr
 ajr
 bkF
-tBB
+seg
 brO
 aad
 btH
@@ -138087,7 +138188,7 @@ cdt
 cdt
 aad
 bkE
-tBB
+fPd
 brM
 ajr
 ajr
@@ -138852,7 +138953,7 @@ bPC
 bRO
 ygA
 gxc
-gxc
+pog
 eCQ
 hzs
 xaW
@@ -139350,7 +139451,7 @@ uhb
 fWX
 gxc
 gxc
-gxc
+pog
 tzE
 gxc
 gxc
@@ -149868,15 +149969,15 @@ aSQ
 iio
 iMu
 ohX
-hFW
+ojI
 iio
 sEM
 lkg
-kRS
+jDB
 iio
 rUo
 oTt
-lbI
+hFi
 iio
 kcG
 kcG
@@ -152950,13 +153051,13 @@ fcn
 lfN
 oUP
 hlN
-lXg
+fsx
 rmJ
 lXg
 lXg
 lXg
 xQQ
-lXg
+fsx
 lXg
 lXg
 mhk
@@ -157318,16 +157419,16 @@ aaa
 aad
 iio
 wTN
-fsx
 lEq
+fuR
 iio
 wjw
 tWb
-sCm
+afI
 iio
 eFu
 lNq
-skw
+xmS
 iio
 aMN
 emZ
