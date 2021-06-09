@@ -612,8 +612,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "An ancient weapon still used to this day, due to its ease of lodging itself into its victim's body parts."
 	icon_state = "throwingstar"
 	item_state = "throwingstar"
-	lefthand_file = 'icons/mob/inhands/equipment/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/swords_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 2
 	throwforce = 10 //10 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = 18 damage on hit due to guaranteed embedding
 	throw_speed = 4
