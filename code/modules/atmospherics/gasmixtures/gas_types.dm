@@ -1,15 +1,6 @@
 GLOBAL_LIST_INIT(hardcoded_gases, list(GAS_O2, GAS_N2, GAS_CO2, GAS_PLASMA)) //the main four gases, which were at one time hardcoded
 GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GAS_PLUOXIUM, GAS_STIMULUM, GAS_NITRYL))) //unable to react amongst themselves
 
-/proc/gas_id2path(id)
-	var/list/meta_gas = GLOB.meta_gas_ids
-	if(id in meta_gas)
-		return id
-	for(var/path in meta_gas)
-		if(meta_gas[path] == id)
-			return path
-	return ""
-
 // Listmos 2.0
 // aka "auxgm", a send-up of XGM
 // it's basically the same architecture as XGM but
@@ -28,29 +19,30 @@ GLOBAL_LIST_INIT(gas_data, meta_gas_info_list())
 	. = list()
 	for(var/gas_path in subtypesof(/datum/gas))
 		var/datum/gas/gas = new gas_path // !
-		.[gas.id] = gas
+		if(gas.id)
+			.[gas.id] = gas
 
 /proc/meta_gas_heat_list()
-	. = subtypesof(/datum/gas)
-	for(var/gas_path in .)
+	. = list()
+	for(var/gas_path in subtypesof(/datum/gas))
 		var/datum/gas/gas = gas_path
 		.[initial(gas.id)] = initial(gas.specific_heat)
 
 /proc/meta_gas_name_list()
-	. = subtypesof(/datum/gas)
-	for(var/gas_path in .)
+	. = list()
+	for(var/gas_path in subtypesof(/datum/gas))
 		var/datum/gas/gas = gas_path
 		.[initial(gas.id)] = initial(gas.name)
 
 /proc/meta_gas_visibility_list()
-	. = subtypesof(/datum/gas)
-	for(var/gas_path in .)
+	. = list()
+	for(var/gas_path in subtypesof(/datum/gas))
 		var/datum/gas/gas = gas_path
 		.[initial(gas.id)] = initial(gas.moles_visible)
 
 /proc/meta_gas_overlay_list()
-	. = subtypesof(/datum/gas)
-	for(var/gas_path in .)
+	. = list()
+	for(var/gas_path in subtypesof(/datum/gas))
 		var/datum/gas/gas = gas_path
 		.[initial(gas.id)] = 0 //gotta make sure if(GLOB.meta_gas_overlays[gaspath]) doesn't break
 		if(initial(gas.moles_visible) != null)
@@ -59,20 +51,20 @@ GLOBAL_LIST_INIT(gas_data, meta_gas_info_list())
 				.[initial(gas.id)][i] = new /obj/effect/overlay/gas(initial(gas.gas_overlay), i * 255 / FACTOR_GAS_VISIBLE_MAX)
 
 /proc/meta_gas_flags_list()
-	. = subtypesof(/datum/gas)
-	for(var/gas_path in .)
+	. = list()
+	for(var/gas_path in subtypesof(/datum/gas))
 		var/datum/gas/gas = gas_path
 		.[initial(gas.id)] = initial(gas.flags)
 
 /proc/meta_gas_id_list()
-	. = subtypesof(/datum/gas)
-	for(var/gas_path in .)
+	. = list()
+	for(var/gas_path in subtypesof(/datum/gas))
 		var/datum/gas/gas = gas_path
 		.[initial(gas.id)] = initial(gas.id)
 
 /proc/meta_gas_fusion_list()
-	. = subtypesof(/datum/gas)
-	for(var/gas_path in .)
+	. = list()
+	for(var/gas_path in subtypesof(/datum/gas))
 		var/datum/gas/gas = gas_path
 		.[initial(gas.id)] = initial(gas.fusion_power)
 

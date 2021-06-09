@@ -98,14 +98,8 @@
 	//Actually transfer the gas
 
 	if(transfer_ratio > 0)
-		var/filtering = TRUE
-		if(!ispath(filter_type))
-			if(filter_type)
-				filter_type = gas_id2path(filter_type) //support for mappers so they don't need to type out paths
-			else
-				filtering = FALSE
 
-		if(filtering && air2.return_pressure() <= 9000)
+		if(filter_type && air2.return_pressure() <= 9000)
 			air1.scrub_into(air2, transfer_ratio, list(filter_type))
 		if(air3.return_pressure() <= 9000)
 			air1.transfer_ratio_to(air3, transfer_ratio)
@@ -129,9 +123,9 @@
 	data["max_rate"] = round(MAX_TRANSFER_RATE)
 
 	data["filter_types"] = list()
-	data["filter_types"] += list(list("name" = "Nothing", "path" = "", "selected" = !filter_type))
-	for(var/path in GLOB.meta_gas_ids)
-		data["filter_types"] += list(list("name" = GLOB.meta_gas_names[path], "id" = GLOB.meta_gas_ids[path], "selected" = (path == gas_id2path(filter_type))))
+	data["filter_types"] += list(list("name" = "Nothing", "id" = "", "selected" = !filter_type))
+	for(var/id in GLOB.gas_data)
+		data["filter_types"] += list(list("name" = GLOB.meta_gas_names[id], "id" = id, "selected" = (id == filter_type)))
 
 	return data
 
@@ -161,7 +155,7 @@
 		if("filter")
 			filter_type = null
 			var/filter_name = "nothing"
-			var/gas = gas_id2path(params["mode"])
+			var/gas = params["mode"]
 			if(gas in GLOB.meta_gas_names)
 				filter_type = gas
 				filter_name	= GLOB.meta_gas_names[gas]

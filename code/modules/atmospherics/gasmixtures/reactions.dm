@@ -8,13 +8,6 @@
 		if(initial(reaction.exclude))
 			continue
 		reaction = new r
-		var/datum/gas/reaction_key
-		for (var/req in reaction.min_requirements)
-			if (ispath(req))
-				var/datum/gas/req_gas = req
-				if (!reaction_key || initial(reaction_key.rarity) > initial(req_gas.rarity))
-					reaction_key = req_gas
-		reaction.major_gas = reaction_key
 		. += reaction
 	sortTim(., /proc/cmp_gas_reaction)
 
@@ -26,7 +19,6 @@
 	//when in doubt, use MINIMUM_MOLE_COUNT.
 	var/list/min_requirements
 	var/list/max_requirements
-	var/major_gas //the highest rarity gas used in the reaction.
 	var/exclude = FALSE //do it this way to allow for addition/removal of reactions midmatch in the future
 	var/priority = 100 //lower numbers are checked/react later than higher numbers. if two reactions have the same priority they may happen in either order
 	var/name = "reaction"
