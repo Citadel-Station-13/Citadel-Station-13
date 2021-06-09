@@ -1,0 +1,4 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - code_imp: "Uses some of the existing images for the typing indicators."
