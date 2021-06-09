@@ -1,0 +1,5 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - balance: "Made it so Off Balance only disarms if they're shoved into a wall or person."
+  - balance: "Reduced Off Balance time to 2 seconds."

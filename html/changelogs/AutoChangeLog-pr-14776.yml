@@ -1,0 +1,5 @@
+author: "WanderingFox95"
+delete-after: True
+changes: 
+  - rscadd: "A random event for the cat surgeon to invade the station. Listen for scary noises!"
+  - soundadd: "Screaming Cat SFX, you know, for the mood."

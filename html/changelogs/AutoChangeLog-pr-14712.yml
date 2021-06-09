@@ -1,0 +1,10 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - balance: "Pierced Realities despawn after 3 minutes and 15 seconds, new unresearched realities spawn in after that time elsewhere to help other heretics get back into the game."
+  - balance: "A required sacrifice amount for heretic's second to last and last powers are added to discourage only rushing for holes."
+  - balance: "An announcement automatically plays to everyone that there's a heretic gunning for ascension upon learning the 2nd to last power"
+  - balance: "Blade Shatters are now used in hand other than with a HUD icon
+tweak: Adjusted some TGUI menus for the book to reflect how many sacrifices a heretic has and how many are required for certain powers"
+  - bugfix: "Fixes sprite issue for Void Cloak for people who have digigrade legs."
+  - bugfix: "Fixes the Raw Prophet recipe to match the description"
