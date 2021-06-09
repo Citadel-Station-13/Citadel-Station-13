@@ -13,14 +13,14 @@
 		return
 	ADD_TRAIT(owner, TRAIT_RESISTCOLD, "cold_resistance")
 	ADD_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, "cold_resistance")
-	owner.add_filter("space_glow", 2, list("type" = "outline", "color" = "#ffe46bd8", "size" = 2))
+	owner.add_filter("space_glow", 2, list("type" = "outline", "color" = "#ffe46bd8", "size" = 1))
 	addtimer(CALLBACK(src, .proc/glow_loop, owner), rand(1,19))
 
 /datum/mutation/human/space_adaptation/proc/glow_loop(mob/living/carbon/human/owner)
 	var/filter = owner.get_filter("space_glow")
 	if(filter)
-		animate(filter, alpha = 110, time = 15, loop = -1)
-		animate(alpha = 40, time = 25)
+		animate(filter, alpha = 190, time = 15, loop = -1)
+		animate(alpha = 110, time = 25)
 
 /datum/mutation/human/space_adaptation/on_losing(mob/living/carbon/human/owner)
 	if(..())
