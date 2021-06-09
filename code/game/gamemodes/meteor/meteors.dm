@@ -18,6 +18,8 @@ GLOBAL_LIST_INIT(meteorsB, list(/obj/effect/meteor/meaty=5, /obj/effect/meteor/m
 
 GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
+GLOBAL_LIST_INIT(meteorsCat, list(/obj/effect/meteor/cat)) //for cat meteors
+
 
 ///////////////////////////////
 //Meteor spawning global procs
@@ -345,6 +347,17 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	..()
 	if(prob(20))
 		explosion(src.loc,2,4,6,8)
+		
+/obj/effect/meteor/cat
+	name = "space cat"
+	icon_state = "catmeteor"
+	desc = "Meow."
+	hits = 1
+	heavy = FALSE
+	meteorsound = 'sound/effects/meow1.ogg'
+	meteordrop = list(/mob/living/simple_animal/pet/cat/space)
+	threat = 0
+	dropamt = 1
 
 //////////////////////////
 //Spookoween meteors
