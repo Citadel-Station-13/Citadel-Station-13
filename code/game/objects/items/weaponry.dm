@@ -630,8 +630,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "An aerodynamic disc designed to cause excruciating pain when stuck inside fleeing targets, hopefully without causing fatal harm."
 	icon_state = "energystar"
 	item_state = "energystar"
-	lefthand_file = 'icons/mob/inhands/equipment/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/swords_righthand.dmi'
 	throwforce = 5
 	embedding = list("pain_chance" = 5, "embed_chance" = 100, "fall_chance" = 0, "jostle_chance" = 10, "pain_stam_pct" = 0.8, "jostle_pain_mult" = 3)
 
