@@ -1,4 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - bugfix: "Fixes soulstone shard not working for non-cultists."
