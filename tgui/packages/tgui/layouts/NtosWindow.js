@@ -88,7 +88,7 @@ export const NtosWindow = (props, context) => {
                 icon="pen-alt"
                 tooltip="Eject pen"
                 tooltipPosition="bottom-left"
-                onClick={() => act('eject_pen')}/>
+                onClick={() => act('eject_pen')} />
             )}
             {!!PC_showexitprogram && (
               <Button
