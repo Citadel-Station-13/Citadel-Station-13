@@ -310,9 +310,10 @@
 /obj/item/gun/energy/temperature
 	name = "temperature gun"
 	icon_state = "freezegun"
+	item_state = "freezegun"
 	desc = "A gun that changes temperatures."
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
-	cell_type = "/obj/item/stock_parts/cell/high"
+	shaded_charge = 1
 	pin = null
 
 /obj/item/gun/energy/temperature/security
