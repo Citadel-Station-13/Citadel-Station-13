@@ -17,24 +17,29 @@
 	announceWhen = rand(4, 60)
 	supernova = new
 	SSsun.suns += supernova
-	if(prob(20))
-		power = rand(5,100) / 100
-	else
-		power = rand(5,5000) / 100
+	switch(rand(1,5))
+		if(1)
+			power = rand(5,100) / 100
+		if(2)
+			power = rand(5,500) / 100
+		if(3)
+			power = rand(5,1000) / 100
+		if(4, 5)
+			power = rand(5,5000) / 100
 	supernova.azimuth = rand(0, 359)
 	supernova.power_mod = 0
 
 /datum/round_event/supernova/announce()
-	var/message = "Our tachyon-doppler array has detected a supernova in your vicinity. Peak flux from the supernova estimated to be [round(power,0.1)] times current solar flux. [power > 1 ? "Short burts of radiation may be possible, so please prepare accordingly." : ""]"
+	var/message = "[station_name()]: Our tachyon-doppler array has detected a supernova in your vicinity. Peak flux from the supernova estimated to be [round(power,0.1)] times current solar flux; if the supernova is close to your sun in the sky, your solars may receive this as a power boost.[power > 1 ? " Short burts of radiation may be possible, so please prepare accordingly." : ""] We hope you enjoy the light."
 	if(prob(power * 25))
-		priority_announce(message)
+		priority_announce(message, sender_override = "Nanotrasen Meteorology Division")
 	else
 		print_command_report(message)
 
 
 /datum/round_event/supernova/start()
 	supernova.power_mod = 0.001 * power
-	var/explosion_size = rand(1000000000, 999999999)
+	var/explosion_size = rand(1000000000, 10000000000)
 	var/turf/epicenter = get_turf_in_angle(supernova.azimuth, SSmapping.get_station_center(), round(world.maxx * 0.45))
 	for(var/array in GLOB.doppler_arrays)
 		var/obj/machinery/doppler_array/A = array
@@ -51,13 +56,15 @@
 		supernova.power_mod = min(supernova.power_mod*1.2, power)
 	if(activeFor > endWhen-10)
 		supernova.power_mod /= 4
-	if(prob(round(supernova.power_mod)) && prob(5) && storm_count < 5 && !SSweather.get_weather_by_type(/datum/weather/rad_storm))
+	if(prob(round(supernova.power_mod*2)) && prob(3) && storm_count < 5 && !SSweather.get_weather_by_type(/datum/weather/rad_storm))
 		SSweather.run_weather(/datum/weather/rad_storm/supernova)
 		storm_count++
 
 /datum/round_event/supernova/end()
 	SSsun.suns -= supernova
 	qdel(supernova)
+	priority_announce("The supernova's flux is now negligible. Radiation storms have ceased. Have a pleasant shift, [station_name()], and thank you for bearing with nature.",
+	sender_override = "Nanotrasen Meteorology Division")
 
 /datum/weather/rad_storm/supernova
 	weather_duration_lower = 50

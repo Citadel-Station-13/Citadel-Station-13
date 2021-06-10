@@ -309,6 +309,10 @@
 
 /obj/structure/foamedmetal/resin/Initialize()
 	. = ..()
+	neutralize_air()
+	addtimer(CALLBACK(src, .proc/neutralize_air), 5)		// yeah this sucks, maybe when auxmos is out
+
+/obj/structure/foamedmetal/resin/proc/neutralize_air()
 	if(isopenturf(loc))
 		var/turf/open/O = loc
 		O.ClearWet()
@@ -336,6 +340,9 @@
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return TRUE
 	. = ..()
+
+/obj/structure/foamedmetal/resin/BlockSuperconductivity()
+	return TRUE
 
 #undef ALUMINUM_FOAM
 #undef IRON_FOAM

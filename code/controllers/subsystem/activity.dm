@@ -61,14 +61,14 @@ SUBSYSTEM_DEF(activity)
 	for(var/threat in threat_history)
 		. = max(threat_history[threat], .)
 
-/datum/controller/subsystem/activity/proc/on_explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
+/datum/controller/subsystem/activity/proc/on_explosion(datum/source, atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
 	if(!("explosions" in deferred_threats))
 		deferred_threats["explosions"] = 0
 	var/area/A = get_area(epicenter)
 	if(is_station_level(epicenter.z) && (A.area_flags & BLOBS_ALLOWED) && !istype(A, /area/asteroid))
 		deferred_threats["explosions"] += devastation_range**2 + heavy_impact_range**2 / 4 + light_impact_range**2 / 8 // 75 for a maxcap
 
-/datum/controller/subsystem/activity/proc/on_death(mob/M, gibbed)
+/datum/controller/subsystem/activity/proc/on_death(datum/source, mob/M, gibbed)
 	if(!("crew_deaths" in deferred_threats))
 		deferred_threats["crew_deaths"] = 0
 	if(M?.mind && SSjob.GetJob(M.mind.assigned_role))

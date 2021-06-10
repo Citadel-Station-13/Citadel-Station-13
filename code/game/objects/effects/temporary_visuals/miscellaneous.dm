@@ -378,6 +378,12 @@
 	icon_state = "shieldsparkles"
 	duration = 6
 
+/obj/effect/temp_visual/impact_effect/judgement_cut
+	name = "judgement cut impact"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "impact_judgement"
+	duration = 6
+
 /obj/effect/temp_visual/heart
 	name = "heart"
 	icon = 'icons/mob/animal.dmi'
@@ -535,3 +541,7 @@
 /obj/effect/temp_visual/slime_puddle/reverse
 	icon_state = "from_puddle"
 	duration = 7
+
+/obj/effect/temp_visual/gib_animation
+	icon = 'icons/mob/mob.dmi'
+	duration = 15
