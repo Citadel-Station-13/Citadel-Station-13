@@ -1,72 +1,65 @@
 GLOBAL_LIST_INIT(hardcoded_gases, list(GAS_O2, GAS_N2, GAS_CO2, GAS_PLASMA)) //the main four gases, which were at one time hardcoded
 GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GAS_PLUOXIUM, GAS_STIMULUM, GAS_NITRYL))) //unable to react amongst themselves
 
-// Listmos 2.0
-// aka "auxgm", a send-up of XGM
-// it's basically the same architecture as XGM but
-// structured differently to make it more convenient for auxmos
+// Auxgm
+// It's a send-up of XGM, like what baystation got.
+// It's got the same architecture as XGM, but it's structured
+// differently to make it more convenient for auxmos.
 
-// most important compared to TG is that it does away with hardcoded typepaths,
-// which lead to problems on the auxmos end anyway.
+// Most important compared to TG is that it does away with hardcoded typepaths,
+// which lead to problems on the auxmos end anyway. We cache the string value
+// references on the Rust end, so no performance is lost here.
 
-// second most important is that i hate how breath is handled
-// and most basically every other thing in the codebase
-// when it comes to hardcoded gas typepaths, so, yeah, go away
+// Also allows you to add new gases at runtime
 
-GLOBAL_LIST_INIT(gas_data, meta_gas_info_list())
+/proc/_auxtools_register_gas(datum/gas/gas) // makes sure auxtools knows stuff about this gas
 
-/proc/meta_gas_info_list()
-	. = list()
-	for(var/gas_path in subtypesof(/datum/gas))
-		var/datum/gas/gas = new gas_path // !
-		if(gas.id)
-			.[gas.id] = gas
+/datum/auxgm
+	var/list/datums = list()
+	var/list/specific_heats = list()
+	var/list/names = list()
+	var/list/visibility = list()
+	var/list/overlays = list()
+	var/list/flags = list()
+	var/list/ids = list()
+	var/list/typepaths = list()
+	var/list/fusion_powers = list()
 
-/proc/meta_gas_heat_list()
-	. = list()
-	for(var/gas_path in subtypesof(/datum/gas))
-		var/datum/gas/gas = gas_path
-		.[initial(gas.id)] = initial(gas.specific_heat)
-
-/proc/meta_gas_name_list()
-	. = list()
-	for(var/gas_path in subtypesof(/datum/gas))
-		var/datum/gas/gas = gas_path
-		.[initial(gas.id)] = initial(gas.name)
-
-/proc/meta_gas_visibility_list()
-	. = list()
-	for(var/gas_path in subtypesof(/datum/gas))
-		var/datum/gas/gas = gas_path
-		.[initial(gas.id)] = initial(gas.moles_visible)
-
-/proc/meta_gas_overlay_list()
-	. = list()
-	for(var/gas_path in subtypesof(/datum/gas))
-		var/datum/gas/gas = gas_path
-		.[initial(gas.id)] = 0 //gotta make sure if(GLOB.meta_gas_overlays[gaspath]) doesn't break
-		if(initial(gas.moles_visible) != null)
-			.[initial(gas.id)] = new /list(FACTOR_GAS_VISIBLE_MAX)
+/datum/auxgm/add_gas(datum/gas/gas)
+	var/g = gas.id
+	if(g)
+		datums[g] = gas
+		specific_heats[g] = gas.specific_heat
+		names[g] = gas.name
+		if(gas.moles_visible)
+			visibility[g] = gas.moles_visible
+			overlays[g] = new /list(FACTOR_GAS_VISIBLE_MAX)
 			for(var/i in 1 to FACTOR_GAS_VISIBLE_MAX)
-				.[initial(gas.id)][i] = new /obj/effect/overlay/gas(initial(gas.gas_overlay), i * 255 / FACTOR_GAS_VISIBLE_MAX)
+				overlays[g][i] = new /obj/effect/overlay/gas(gas.gas_overlay, i * 255 / FACTOR_GAS_VISIBLE_MAX)
+		else
+			visibility[g] = 0
+			overlays[g] = 0
+		flags[g] = gas.flags
+		ids[g] = g
+		typepaths[g] = gas_path
+		fusion_powers[g] = gas.fusion_power
+		_auxtools_register_gas(gas)
 
-/proc/meta_gas_flags_list()
-	. = list()
+/datum/auxgm/New()
 	for(var/gas_path in subtypesof(/datum/gas))
-		var/datum/gas/gas = gas_path
-		.[initial(gas.id)] = initial(gas.flags)
+		var/datum/gas/gas = new gas_path
+		add_gas(gas)
 
-/proc/meta_gas_id_list()
-	. = list()
-	for(var/gas_path in subtypesof(/datum/gas))
-		var/datum/gas/gas = gas_path
-		.[initial(gas.id)] = initial(gas.id)
+GLOBAL_DATUM_INIT(gas_data, /datum/auxgm, new)
 
-/proc/meta_gas_fusion_list()
-	. = list()
-	for(var/gas_path in subtypesof(/datum/gas))
-		var/datum/gas/gas = gas_path
-		.[initial(gas.id)] = initial(gas.fusion_power)
+/datum/breath_info
+	var/breathing_power = 1 // how much this gas counts for good-breath
+	var/breathing_class = null // what type of breath this is; lungs can also use gas IDs directly
+	var/breath_results = GAS_CO2 // what breathing a mole of this results in
+
+/datum/oxidation_info
+	var/oxidation_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST // temperature above which this gas is an oxidizer
+	var/list/oxidation_provides = list() // a list of elements this gas provides in combustion
 
 /datum/gas
 	var/id = ""
@@ -75,27 +68,36 @@ GLOBAL_LIST_INIT(gas_data, meta_gas_info_list())
 	var/gas_overlay = "" //icon_state in icons/effects/atmospherics.dmi
 	var/moles_visible = null
 	var/flags = NONE //currently used by canisters
-	var/fusion_power = 0 //How much the gas accelerates a fusion reaction
-	var/rarity = 0 // relative rarity compared to other gases, used when setting up the reactions list.
+	var/fusion_power = 0 // How much the gas destabilizes a fusion reaction
+	var/breathing_power = 1 // how much this gas counts for good-breath
+	var/breathing_class = null // what type of breath this is; lungs can also use gas IDs directly
+	var/breath_results = GAS_CO2 // what breathing a mole of this results in
+	var/oxidation_temperature = null // temperature above which this gas is an oxidizer; null for none
+	var/oxidation_rate = 1 // how many moles of this can oxidize how many moles of material
+	var/oxidation_energy_released = 0 // how many moles are released per mole burned
+	var/list/oxidation_products = null // extra results from oxidizing this (per mole); null for none
+	var/fire_temperature = null // temperature above which gas may catch fire; null for none
+	var/list/fire_provides = null // what elements this gas provides as fuel for combustion; null for none
+	var/fire_energy_released = 0 // how much energy is released per mole of fuel burned
+	var/fire_burn_rate = 1 // how many moles are burned per product released
 
 /datum/gas/oxygen
 	id = GAS_O2
 	specific_heat = 20
 	name = "Oxygen"
-	rarity = 900
+	breathing_class = BREATH_OXY
+	oxidation_temperature = T0C - 100 // it checks max of this and fire temperature, so rarely will things spontaneously combust
 
 /datum/gas/nitrogen
 	id = GAS_N2
 	specific_heat = 20
 	name = "Nitrogen"
-	rarity = 1000
 
 /datum/gas/carbon_dioxide //what the fuck is this?
 	id = GAS_CO2
 	specific_heat = 30
 	name = "Carbon Dioxide"
 	fusion_power = 3
-	rarity = 700
 
 /datum/gas/plasma
 	id = GAS_PLASMA
@@ -104,7 +106,8 @@ GLOBAL_LIST_INIT(gas_data, meta_gas_info_list())
 	gas_overlay = "plasma"
 	moles_visible = MOLES_GAS_VISIBLE
 	flags = GAS_FLAG_DANGEROUS
-	rarity = 800
+	breathing_class = BREATH_PLASMA
+	// no fire info cause it has its own bespoke reaction for trit generation reasons
 
 /datum/gas/water_vapor
 	id = GAS_H2O
@@ -113,7 +116,6 @@ GLOBAL_LIST_INIT(gas_data, meta_gas_info_list())
 	gas_overlay = "water_vapor"
 	moles_visible = MOLES_GAS_VISIBLE
 	fusion_power = 8
-	rarity = 500
 
 /datum/gas/hypernoblium
 	id = GAS_HYPERNOB
@@ -121,7 +123,6 @@ GLOBAL_LIST_INIT(gas_data, meta_gas_info_list())
 	name = "Hyper-noblium"
 	gas_overlay = "freon"
 	moles_visible = MOLES_GAS_VISIBLE
-	rarity = 50
 
 /datum/gas/nitrous_oxide
 	id = GAS_NITROUS
@@ -130,7 +131,9 @@ GLOBAL_LIST_INIT(gas_data, meta_gas_info_list())
 	gas_overlay = "nitrous_oxide"
 	moles_visible = MOLES_GAS_VISIBLE * 2
 	flags = GAS_FLAG_DANGEROUS
-	rarity = 600
+	oxidation_products = list(GAS_N2 = 1)
+	oxidation_rate = 0.5
+	oxidation_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100
 
 /datum/gas/nitryl
 	id = GAS_NITRYL
@@ -140,7 +143,8 @@ GLOBAL_LIST_INIT(gas_data, meta_gas_info_list())
 	moles_visible = MOLES_GAS_VISIBLE
 	flags = GAS_FLAG_DANGEROUS
 	fusion_power = 15
-	rarity = 100
+	oxidation_products = list(GAS_N2 = 0.5)
+	oxidation_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 50
 
 /datum/gas/tritium
 	id = GAS_TRITIUM
@@ -150,7 +154,13 @@ GLOBAL_LIST_INIT(gas_data, meta_gas_info_list())
 	moles_visible = MOLES_GAS_VISIBLE
 	flags = GAS_FLAG_DANGEROUS
 	fusion_power = 1
-	rarity = 300
+	/*
+	these are for when we add hydrogen, trit gets to keep its hardcoded fire for legacy reasons
+	fire_provides = list(GAS_H2O = 2)
+	fire_burn_rate = 2
+	fire_energy_released = FIRE_HYDROGEN_ENERGY_RELEASED
+	fire_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 50
+	*/
 
 /datum/gas/bz
 	id = GAS_BZ
@@ -158,21 +168,22 @@ GLOBAL_LIST_INIT(gas_data, meta_gas_info_list())
 	name = "BZ"
 	flags = GAS_FLAG_DANGEROUS
 	fusion_power = 8
-	rarity = 400
 
 /datum/gas/stimulum
 	id = GAS_STIMULUM
 	specific_heat = 5
 	name = "Stimulum"
 	fusion_power = 7
-	rarity = 1
 
 /datum/gas/pluoxium
 	id = GAS_PLUOXIUM
 	specific_heat = 80
 	name = "Pluoxium"
 	fusion_power = 10
-	rarity = 200
+	breathing_power = 8
+	breathing_class = CLASS_OXY
+	oxidation_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100
+	oxidation_rate = 8
 
 /datum/gas/miasma
 	id = GAS_MIASMA
@@ -181,20 +192,25 @@ GLOBAL_LIST_INIT(gas_data, meta_gas_info_list())
 	name = "Miasma"
 	gas_overlay = "miasma"
 	moles_visible = MOLES_GAS_VISIBLE * 60
-	rarity = 250
 
 /datum/gas/methane
 	id = GAS_METHANE
 	specific_heat = 30
 	name = "Methane"
-	rarity = 320
+	fire_provides = list(GAS_CO2 = 1, GAS_H2O = 2)
+	fire_burn_rate = 0.5
+	fire_energy_released = FIRE_CARBON_ENERGY_RELEASED
+	fire_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 
 /datum/gas/methyl_bromide
 	id = GAS_METHYL_BROMIDE
 	specific_heat = 42
 	name = "Methyl Bromide"
 	flags = GAS_FLAG_DANGEROUS
-	rarity = 310
+	fire_provides = list(GAS_CO2 = 1, GAS_H2O = 1.5, GAS_BZ = 0.5)
+	fire_energy_released = FIRE_CARBON_ENERGY_RELEASED
+	fire_burn_rate = 0.5
+	fire_temperature = 808 // its autoignition, it apparently doesn't spark readily, so i don't put it lower
 
 
 /obj/effect/overlay/gas

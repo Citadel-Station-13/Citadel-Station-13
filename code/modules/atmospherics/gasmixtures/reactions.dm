@@ -241,6 +241,22 @@
 		return list("success" = FALSE, "message" = "Plasma fires aren't making trit!")
 	return ..()
 
+/datum/gas_reaction/genericfire
+	priority = -3 // very last reaction
+	name = "Combustion"
+	id = "genericfire"
+
+// no requirements, always runs
+// bad idea? maybe
+// this is overridden by auxmos but, hey, good idea to have it readable
+
+/datum/gas_reaction/genericfire/react(datum/gas_mixture/air, datum/holder)
+	var/temperature = air.return_temperature()
+	var/list/oxidation_temps = GLOB.gas_data.oxidation_temps
+	for(var/datum/gas/G in air.get_gases())
+
+
+
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again!
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
 //6 reworks
@@ -291,7 +307,7 @@
 	var/scale_factor = (air.return_volume())/(PI) //We scale it down by volume/Pi because for fusion conditions, moles roughly = 2*volume, but we want it to be based off something constant between reactions.
 	var/toroidal_size = (2*PI)+TORADIANS(arctan((air.return_volume()-TOROID_VOLUME_BREAKEVEN)/TOROID_VOLUME_BREAKEVEN)) //The size of the phase space hypertorus
 	var/gas_power = 0
-	var/list/gas_fusion_powers = GLOB.meta_gas_fusions
+	var/list/gas_fusion_powers = GLOB.gas_data.fusion_powers
 	for (var/gas_id in air.get_gases())
 		gas_power += (gas_fusion_powers[gas_id]*air.get_moles(gas_id))
 	var/instability = MODULUS((gas_power*INSTABILITY_GAS_POWER_FACTOR)**2,toroidal_size) //Instability effects how chaotic the behavior of the reaction is

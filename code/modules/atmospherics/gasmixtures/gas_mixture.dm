@@ -6,15 +6,6 @@ What are the archived variables for?
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define MINIMUM_MOLE_COUNT		0.01
 
-//Unomos - global list inits for all of the meta gas lists.
-//This setup allows procs to only look at one list instead of trying to dig around in lists-within-lists
-GLOBAL_LIST_INIT(meta_gas_specific_heats, meta_gas_heat_list())
-GLOBAL_LIST_INIT(meta_gas_names, meta_gas_name_list())
-GLOBAL_LIST_INIT(meta_gas_visibility, meta_gas_visibility_list())
-GLOBAL_LIST_INIT(meta_gas_overlays, meta_gas_overlay_list())
-GLOBAL_LIST_INIT(meta_gas_flags, meta_gas_flags_list())
-GLOBAL_LIST_INIT(meta_gas_ids, meta_gas_id_list())
-GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 /datum/gas_mixture
 	/// Never ever set this variable, hooked into vv_get_var for view variables viewing.
 	var/gas_list_view_only
