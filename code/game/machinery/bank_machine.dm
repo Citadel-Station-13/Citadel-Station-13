@@ -1,10 +1,7 @@
 /obj/machinery/computer/bank_machine
 	name = "bank machine"
 	desc = "A machine used to deposit and withdraw station funds."
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "computer"
-	icon_screen = "vault"
-	icon_keyboard = "security_key"
+	icon = 'goon/icons/obj/goon_terminals.dmi'
 	idle_power_usage = 100
 
 	var/siphoning = FALSE
