@@ -206,7 +206,7 @@ GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 			misc_order_num[buyer] = "[misc_order_num[buyer]]#[our_order.id]  "
 
 
-	// mat locker test
+	// handling locker bundles
 	for(var/D in lockers_by_buyer)
 		var/list/buying_account_orders = lockers_by_buyer[D]
 
