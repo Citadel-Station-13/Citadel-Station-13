@@ -246,19 +246,34 @@
 	name = "Combustion"
 	id = "genericfire"
 
+/datum/gas_reaction/genericfire/init_reqs()
+	var/lowest_fire_temp = INFINITY
+	var/list/fire_temperatures = GLOB.gas_data.fire_temperatures
+	for(var/gas in fire_temperatures)
+		lowest_fire_temp = min(lowest_fire_temp, fire_temperatures[gas])
+	var/lowest_oxi_temp = INFINITY
+	var/list/oxidation_temperatures = GLOB.gas_data.oxidation_temperatures
+	for(var/gas in oxidation_temperatures)
+		lowest_oxi_temp = min(lowest_oxi_temp, oxidation_temperatures[gas])
+	min_requirements = list(
+		"TEMP" = max(lowest_oxi_temp, lowest_fire_temp),
+		"FIRE_REAGENTS" = MINIMUM_MOLE_COUNT
+	)
+
 // no requirements, always runs
 // bad idea? maybe
 // this is overridden by auxmos but, hey, good idea to have it readable
 
 /datum/gas_reaction/genericfire/react(datum/gas_mixture/air, datum/holder)
 	var/temperature = air.return_temperature()
-	var/list/oxidation_temps = GLOB.gas_data.oxidation_temps
+	var/list/oxidation_temps = GLOB.gas_data.oxidation_temperatures
 	var/list/oxidation_rates = GLOB.gas_data.oxidation_rates
 	var/oxidation_power = 0
 	var/list/burn_results = list()
 	var/list/fuels = list()
 	var/list/oxidizers = list()
-	var/list/fuel_rates = GLOB.gas_data.fuel_rates
+	var/list/fuel_rates = GLOB.gas_data.fire_burn_rates
+	var/list/fuel_temps = GLOB.gas_data.fire_temperatures
 	var/total_fuel = 0
 	var/energy_released = 0
 	for(var/G in air.get_gases())
@@ -280,7 +295,7 @@
 	if(oxidation_ratio > 1)
 		for(var/oxidizer in oxidizers)
 			oxidizers[oxidizer] /= oxidation_ratio
-	else if oxidation_ratio < 1
+	else if(oxidation_ratio < 1)
 		for(var/fuel in fuels)
 			fuels[fuel] *= oxidation_ratio
 	fuels += oxidizers
@@ -295,7 +310,7 @@
 		for(var/product in fire_products[fuel])
 			if(!burn_results[product])
 				burn_results[product] = 0
-			burn_results[o] += amt
+			burn_results[product] += amt
 	var/final_energy = air.thermal_energy() + energy_released
 	for(var/result in burn_results)
 		air.adjust_moles(result, burn_results[result])

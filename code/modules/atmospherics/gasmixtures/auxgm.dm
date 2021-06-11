@@ -61,7 +61,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GA
 	// greatly prefer just adding a reagent. This is mostly around for legacy reasons.
 	return null
 
-/datum/auxgm/add_gas(datum/gas/gas)
+/datum/auxgm/proc/add_gas(datum/gas/gas)
 	var/g = gas.id
 	if(g)
 		datums[g] = gas
@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GA
 			overlays[g] = 0
 		flags[g] = gas.flags
 		ids[g] = g
-		typepaths[g] = gas_path
+		typepaths[g] = gas.type
 		fusion_powers[g] = gas.fusion_power
 
 		if(gas.breath_alert_info)
@@ -103,10 +103,17 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GA
 
 		_auxtools_register_gas(gas)
 
+/proc/finalize_gas_refs()
+
 /datum/auxgm/New()
 	for(var/gas_path in subtypesof(/datum/gas))
 		var/datum/gas/gas = new gas_path
 		add_gas(gas)
+	for(var/breathing_class_path in subtypesof(/datum/breathing_class))
+		var/datum/breathing_class/class = new breathing_class_path
+		breathing_classes[breathing_class_path] = class
+	finalize_gas_refs()
+
 
 GLOBAL_DATUM_INIT(gas_data, /datum/auxgm, new)
 

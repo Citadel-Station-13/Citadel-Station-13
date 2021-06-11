@@ -94,7 +94,7 @@
 	var/list/TLV = list( // Breathable air.
 		"pressure"					= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
 		"temperature"				= new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66),
-		GAS_O2			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
+		GAS_O2			= new/datum/tlv(16, 19, 40, 50), // Partial pressure, kpa
 		GAS_N2			= new/datum/tlv(-1, -1, 1000, 1000),
 		GAS_CO2	= new/datum/tlv(-1, -1, 5, 10),
 		GAS_MIASMA			= new/datum/tlv(-1, -1, 2, 5),
@@ -106,7 +106,7 @@
 		GAS_TRITIUM			= new/datum/tlv/dangerous,
 		GAS_STIMULUM			= new/datum/tlv(-1, -1, 1000, 1000), // Stimulum has only positive effects
 		GAS_NITRYL			= new/datum/tlv/dangerous,
-		GAS_PLUOXIUM			= new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
+		GAS_PLUOXIUM			= new/datum/tlv(-1, -1, 5, 6), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
 		GAS_METHANE			= new/datum/tlv(-1, -1, 3, 6),
 		GAS_METHYL_BROMIDE	= new/datum/tlv/dangerous
 	)

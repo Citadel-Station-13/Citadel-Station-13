@@ -11,7 +11,7 @@
 		not_enough_alert = list(
 			alert_category = "not_enough_nitro",
 			alert_type = /obj/screen/alert/not_enough_nitro
-		)
+		),
 		too_much_alert = list(
 			alert_category = "too_much_nitro",
 			alert_type = /obj/screen/alert/too_much_nitro
@@ -28,13 +28,12 @@
 		not_enough_alert = list(
 			alert_category = "not_enough_co2",
 			alert_type = /obj/screen/alert/not_enough_co2
-		)
+		),
 		too_much_alert = list(
 			alert_category = "too_much_co2",
 			alert_type = /obj/screen/alert/too_much_co2
 		)
 	)
-	breath_reagent_dangerous = /datum/reagent/co2_toxic
 	fusion_power = 3
 
 /datum/gas/plasma
@@ -134,13 +133,13 @@
 	specific_heat = 30
 	name = "Methane"
 	breath_results = GAS_METHYL_BROMIDE
-	fire_provides = list(GAS_CO2 = 1, GAS_H2O = 2)
+	fire_products = list(GAS_CO2 = 1, GAS_H2O = 2)
 	fire_burn_rate = 0.5
 	breath_alert_info = list(
 		not_enough_alert = list(
 			alert_category = "not_enough_ch4",
 			alert_type = /obj/screen/alert/not_enough_ch4
-		)
+		),
 		too_much_alert = list(
 			alert_category = "too_much_ch4",
 			alert_type = /obj/screen/alert/too_much_ch4
@@ -158,13 +157,13 @@
 		not_enough_alert = list(
 			alert_category = "not_enough_ch3br",
 			alert_type = /obj/screen/alert/not_enough_ch3br
-		)
+		),
 		too_much_alert = list(
 			alert_category = "too_much_ch3br",
 			alert_type = /obj/screen/alert/too_much_ch3br
 		)
 	)
-	fire_provides = list(GAS_CO2 = 1, GAS_H2O = 1.5, GAS_BZ = 0.5)
+	fire_products = list(GAS_CO2 = 1, GAS_H2O = 1.5, GAS_BZ = 0.5)
 	fire_energy_released = FIRE_CARBON_ENERGY_RELEASED
 	fire_burn_rate = 0.5
 	fire_temperature = 808 // its autoignition, it apparently doesn't spark readily, so i don't put it lower
