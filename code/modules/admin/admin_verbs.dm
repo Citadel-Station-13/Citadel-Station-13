@@ -116,6 +116,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/show_tip,
 	/client/proc/smite,
 	/client/proc/admin_away,
+	/client/proc/spawn_floor_cluwne,
 	/client/proc/cmd_admin_toggle_fov,		//CIT CHANGE - FOV
 	/client/proc/roll_dices					//CIT CHANGE - Adds dice verb
 	))

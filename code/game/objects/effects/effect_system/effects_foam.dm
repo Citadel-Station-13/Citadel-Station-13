@@ -341,6 +341,9 @@
 		return TRUE
 	. = ..()
 
+/obj/structure/foamedmetal/resin/BlockSuperconductivity()
+	return TRUE
+
 #undef ALUMINUM_FOAM
 #undef IRON_FOAM
 #undef RESIN_FOAM

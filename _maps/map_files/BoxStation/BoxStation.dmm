@@ -23919,11 +23919,11 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bfe" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bff" = (
@@ -27607,12 +27607,12 @@
 	pixel_x = 32
 	},
 /obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/cable{
 	icon_state = "0-8"
 	},
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
 /turf/open/floor/plating,
 /area/engineering/gravity_generator)
 "bnX" = (
@@ -40890,8 +40890,8 @@
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "bTT" = (
-/obj/machinery/atmospherics/pipe/manifold/yellow/visible{
-	dir = 8
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 1
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
@@ -56045,7 +56045,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "jyO" = (
@@ -56262,6 +56262,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/engineering/engine_smes)
 "jLv" = (
@@ -56574,7 +56575,7 @@
 	dir = 6
 	},
 /obj/structure/cable{
-	icon_state = "0-8"
+	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel,
 /area/engineering/gravity_generator)
@@ -57372,6 +57373,7 @@
 /area/service/bar)
 "moS" = (
 /obj/machinery/atmospherics/pipe/manifold4w/yellow/visible,
+/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "mps" = (
@@ -57535,6 +57537,19 @@
 /obj/structure/falsewall,
 /turf/open/floor/plating,
 /area/security/prison)
+"mJf" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating,
+/area/engineering/gravity_generator)
 "mJo" = (
 /obj/structure/door_assembly/door_assembly_mai,
 /obj/item/electronics/airlock,
@@ -57575,9 +57590,6 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Gravity Generator";
 	req_access_txt = "11"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/dark,
 /area/engineering/gravity_generator)
@@ -58244,9 +58256,6 @@
 "oqO" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
 	},
 /obj/machinery/light{
 	dir = 4;
@@ -60541,6 +60550,9 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/engineering/gravity_generator)
 "tJS" = (
@@ -60771,10 +60783,10 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ugu" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel,
 /area/engineering/gravity_generator)
 "uhm" = (
@@ -61143,10 +61155,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/terminal,
 /turf/closed/wall/r_wall,
 /area/engineering/gravity_generator)
 "uRn" = (
@@ -61353,11 +61361,10 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "vob" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/machinery/meter,
 /turf/open/floor/plasteel,
-/area/engineering/gravity_generator)
+/area/engineering/atmos)
 "voW" = (
 /obj/structure/pool/Lboard,
 /turf/open/pool,
@@ -61563,10 +61570,13 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "vFr" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
 /turf/open/floor/plasteel,
 /area/engineering/gravity_generator)
 "vGn" = (
@@ -62192,9 +62202,6 @@
 /turf/open/floor/carpet/royalblue,
 /area/maintenance/starboard/aft)
 "xgC" = (
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
 /obj/machinery/power/apc{
 	areastring = "/area/engineering/gravity_generator";
 	dir = 8;
@@ -62208,12 +62215,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/light{
 	dir = 8;
 	light_color = "#e8eaff"
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel,
 /area/engineering/gravity_generator)
@@ -62224,13 +62231,10 @@
 	},
 /area/maintenance/bar)
 "xhS" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
 /turf/open/floor/plasteel,
 /area/engineering/gravity_generator)
 "xhV" = (
@@ -81880,7 +81884,7 @@ aQN
 aQN
 aZA
 aPA
-aWv
+jxF
 aYb
 aZE
 aZE
@@ -82651,7 +82655,7 @@ aQW
 aQW
 xDM
 aPA
-jxF
+aWv
 aYb
 aZE
 bjp
@@ -85028,7 +85032,7 @@ btG
 rXl
 xgC
 ugu
-bnV
+mJf
 bph
 bih
 big
@@ -85283,7 +85287,7 @@ xTy
 xTy
 tJK
 xTy
-vob
+xTy
 xhS
 mOB
 bph
@@ -86189,7 +86193,7 @@ aaa
 aaa
 gXs
 gXs
-aaH
+gXs
 abc
 abu
 abu
@@ -87072,11 +87076,11 @@ bCq
 bSs
 ceY
 ccw
-ccw
+cjJ
 cnR
 cgT
 cjJ
-ccw
+cjJ
 ccw
 ccw
 ccw
@@ -96303,7 +96307,7 @@ bPc
 bQs
 cez
 ceA
-daq
+bTT
 bUN
 bOd
 bOd
@@ -97335,9 +97339,9 @@ moS
 kGv
 bUS
 cCE
-bTT
+bXU
 bUS
-bUS
+vob
 bUS
 bXU
 bUS

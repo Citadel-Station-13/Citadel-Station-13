@@ -37,14 +37,19 @@
 /obj/item/clothing/gloves/fingerless/pugilist/equipped(mob/user, slot)
 	. = ..()
 	if(slot == SLOT_GLOVES)
-		use_buffs(user, TRUE)
 		wornonce = TRUE
+		if((HAS_TRAIT(user, TRAIT_NOPUGILIST)))
+			to_chat(user, "<span class='danger'>What purpose is there to don the weapons of pugilism if you're already well-practiced in martial arts? Mixing arts is blasphemous!</span>")
+			return
+		use_buffs(user, TRUE)
 
 /obj/item/clothing/gloves/fingerless/pugilist/dropped(mob/user)
 	. = ..()
 	if(wornonce)
-		use_buffs(user, FALSE)
 		wornonce = FALSE
+		if((HAS_TRAIT(user, TRAIT_NOPUGILIST)))
+			return
+		use_buffs(user, FALSE)
 
 /obj/item/clothing/gloves/fingerless/pugilist/proc/use_buffs(mob/user, buff)
 	if(buff) // tarukaja
@@ -67,6 +72,7 @@
 			H.dna.species.punchdamagehigh -= enhancement
 			H.dna.species.punchdamagelow -= enhancement
 			H.dna.species.punchwoundbonus -= wound_enhancement
+			H.dna?.species?.attack_sound_override = null
 		if(!silent)
 			to_chat(user, "<span class='warning'>With [src] off of your arms, you feel less ready to punch things.</span>")
 
@@ -223,6 +229,50 @@
 	parry_cooldown = 0
 	parry_failed_clickcd_duration = 0
 
+/obj/item/clothing/gloves/fingerless/pugilist/mauler
+	name = "mauler gauntlets"
+	desc = "Plastitanium gauntlets coated in a thick nano-weave carbon material and implanted with nanite injectors that boost the wielder's strength six-fold."
+	icon_state = "mauler_gauntlets"
+	item_state = "mauler_gauntlets"
+	transfer_prints = FALSE
+	body_parts_covered = ARMS|HANDS
+	cold_protection = ARMS|HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	armor = list("melee" = 30, "bullet" = 30, "laser" = 10, "energy" = 10, "bomb" = 55, "bio" = 15, "rad" = 15, "fire" = 80, "acid" = 50)
+	siemens_coefficient = 0
+	permeability_coefficient = 0.05
+	strip_delay = 80
+	enhancement = 12 // same as the changeling gauntlets but without changeling utility
+	wound_enhancement = 12
+	silent = TRUE
+	inherited_trait = TRAIT_CHUNKYFINGERS // your fingers are fat because the gloves are
+	secondary_trait = TRAIT_MAULER // commit table slam
+
+/obj/item/clothing/gloves/fingerless/pugilist/mauler/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_GLOVES)
+		wornonce = TRUE
+		if((HAS_TRAIT(user, TRAIT_NOPUGILIST)))
+			return
+		use_mauls(user, TRUE)
+
+/obj/item/clothing/gloves/fingerless/pugilist/mauler/dropped(mob/user)
+	. = ..()
+	if(wornonce)
+		wornonce = FALSE
+		if((HAS_TRAIT(user, TRAIT_NOPUGILIST)))
+			return
+		use_mauls(user, FALSE)
+
+/obj/item/clothing/gloves/fingerless/pugilist/mauler/proc/use_mauls(mob/user, maul)
+	if(maul)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.dna?.species?.attack_sound_override = 'sound/weapons/mauler_punch.ogg'
+			if(silent)
+				to_chat(H, "<span class='danger'>You feel prickles around your wrists as [src] cling to them - strength courses through your veins!</span>")
+
 /obj/item/clothing/gloves/botanic_leather
 	name = "botanist's leather gloves"
 	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin.  They're also quite warm."
@@ -252,7 +302,6 @@
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
 	strip_mod = 1.5
-
 
 /obj/item/clothing/gloves/bracer
 	name = "bone bracers"

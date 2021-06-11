@@ -89,6 +89,7 @@
 	var/list/lore = list()
 
 	data["charges"] = charge
+	data["total_sacs"] = cultie.total_sacrifices
 
 	for(var/X in to_know)
 		lore = list()
@@ -96,7 +97,11 @@
 		lore["type"] = EK.type
 		lore["name"] = EK.name
 		lore["cost"] = EK.cost
-		lore["disabled"] = EK.cost <= charge ? FALSE : TRUE
+		lore["sacs"] = EK.sacs_needed
+		if(EK.cost <= charge && cultie.total_sacrifices >= EK.sacs_needed)
+			lore["disabled"] = FALSE
+		else
+			lore["disabled"] = TRUE
 		lore["path"] = EK.route
 		lore["state"] = "Research"
 		lore["flavour"] = EK.gain_text
@@ -108,6 +113,7 @@
 		var/datum/eldritch_knowledge/EK = known[X]
 		lore["name"] = EK.name
 		lore["cost"] = EK.cost
+		lore["sacs"] = EK.sacs_needed
 		lore["disabled"] = TRUE
 		lore["path"] = EK.route
 		lore["state"] = "Researched"

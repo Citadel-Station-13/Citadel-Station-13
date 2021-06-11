@@ -381,8 +381,8 @@ GENETICS SCANNER
 		else if (S.mutantstomach != initial(S.mutantstomach))
 			mutant = TRUE
 
-		msg += "\t<span class='info'>Reported Species: [H.dna.custom_species ? H.dna.custom_species : S.name]</span>\n"
-		msg += "\t<span class='info'>Base Species: [S.name]</span>\n"
+		msg += "\t<span class='info'>Reported Species: [H.spec_trait_examine_font()][H.dna.custom_species ? H.dna.custom_species : S.name]</font></span>\n"
+		msg += "\t<span class='info'>Base Species: [H.spec_trait_examine_font()][S.name]</font></span>\n"
 		if(mutant)
 			msg += "\t<span class='info'>Subject has mutations present.</span>\n"
 	msg += "\t<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
