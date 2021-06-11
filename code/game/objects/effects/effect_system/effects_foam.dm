@@ -341,7 +341,7 @@
 		return TRUE
 	. = ..()
 
-/obj/structure/foamedmetal/resin/BlockSuperconductivity()
+/obj/structure/foamedmetal/resin/BlockThermalConductivity()
 	return TRUE
 
 #undef ALUMINUM_FOAM
