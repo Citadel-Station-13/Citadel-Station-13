@@ -196,7 +196,7 @@
 	return location.remove_air(amount)
 
 // escape when found if applicable
-/obj/item/clothing/head/mob_holder/on_find(mob/living/finder)
+/obj/item/clothing/head/mob_holder/on_found(mob/living/finder)
 	if(escape_on_find)
 		finder.visible_message("[finder] accidentally releases the [held_mob]!")
 		release()
