@@ -166,6 +166,25 @@
 	ReworkNetwork()
 
 /**
+*CIT CHANGE
+*
+*Creates a singular reality smash
+*Credit to slimelust
+*/
+
+/datum/reality_smash_tracker/proc/RandomSpawnSmash(var/deferred = FALSE)
+	var/turf/chosen_location = get_safe_random_station_turf()
+	//we also dont want them close to each other, at least 1 tile of separation
+	var/obj/effect/reality_smash/what_if_i_have_one = locate() in range(1, chosen_location)
+	var/obj/effect/broken_illusion/what_if_i_had_one_but_got_used = locate() in range(1, chosen_location)
+	var/tries = 10
+	while((what_if_i_have_one || what_if_i_had_one_but_got_used) && tries-- > 0)
+		chosen_location = get_safe_random_station_turf()
+	new /obj/effect/reality_smash(chosen_location)
+	if(!deferred)
+		ReworkNetwork()
+
+/**
  * Adds a mind to the list of people that can see the reality smashes
  *
  * Use this whenever you want to add someone to the list
@@ -200,14 +219,22 @@
 /obj/effect/broken_illusion/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src,.proc/show_presence),15 SECONDS)
+	addtimer(CALLBACK(src,.proc/remove_presence),195 SECONDS)
 
 	var/image/I = image('icons/effects/eldritch.dmi',src,null,OBJ_LAYER)
 	I.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "pierced_reality", I)
 
+/obj/effect/broken_illusion/Destroy()
+	GLOB.reality_smash_track.RandomSpawnSmash()
+	return ..()
+
 ///Makes this obj appear out of nothing
 /obj/effect/broken_illusion/proc/show_presence()
 	animate(src,alpha = 255,time = 15 SECONDS)
+
+/obj/effect/broken_illusion/proc/remove_presence()
+	qdel(src)
 
 /obj/effect/broken_illusion/attack_hand(mob/living/user, list/modifiers)
 	if(!ishuman(user))

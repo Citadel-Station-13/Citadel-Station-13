@@ -3,15 +3,13 @@
 	desc = "A easily concealable derringer. Uses .38 ammo"
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "derringer"
+	flags_1 = CONDUCT_1
 	mag_type = /obj/item/ammo_box/magazine/internal/derringer
+	fire_delay = 5
 	obj_flags = UNIQUE_RENAME
 	fire_sound = 'sound/weapons/revolvershot.ogg'
 	casing_ejector = FALSE
 	w_class = WEIGHT_CLASS_TINY
-
-/obj/item/gun/ballistic/derringer/Initialize()
-	..()
-	transform *= 0.8 //Spriter too lazy to make icons smaller than default revolvers, local coder hacks in solution.
 
 /obj/item/gun/ballistic/derringer/get_ammo(countchambered = FALSE, countempties = TRUE)
 	var/boolets = 0 //legacy var name maturity
@@ -27,7 +25,7 @@
 		return
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
-		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>")
+		to_chat(user, "<span class='notice'>You load [num_loaded] bullet\s into \the [src].</span>")
 		playsound(user, 'sound/weapons/bulletinsert.ogg', 60, 1)
 		A.update_icon()
 		update_icon()

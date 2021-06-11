@@ -59,6 +59,13 @@
 		if(3)
 			adjustBruteLoss(110)
 
+/mob/living/simple_animal/hostile/asteroid/basilisk/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	. = ..()
+	if(power > EXPLOSION_POWER_NORMAL_MOB_GIB)
+		gib()
+	else
+		adjustBruteLoss(EXPLOSION_POWER_STANDARD_SCALE_MOB_DAMAGE(power, explosion.mob_damage_mod))
+
 //Watcher
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
 	name = "watcher"
@@ -68,6 +75,7 @@
 	icon_living = "watcher"
 	icon_aggro = "watcher"
 	icon_dead = "watcher_dead"
+	health_doll_icon = "watcher"
 	pixel_x = -10
 	throw_message = "bounces harmlessly off of"
 	melee_damage_lower = 15

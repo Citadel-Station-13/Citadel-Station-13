@@ -206,6 +206,9 @@
 /mob/living/simple_animal/hostile/retaliate/clown/insane/ex_act()
 	return
 
+/mob/living/simple_animal/hostile/retaliate/clown/insane/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	return power
+
 /mob/living/simple_animal/hostile/retaliate/clown/insane/Life()
 	timer--
 	if(target)

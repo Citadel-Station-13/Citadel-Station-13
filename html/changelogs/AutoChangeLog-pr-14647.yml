@@ -1,8 +1,0 @@
-author: "Melbert, SandPoot"
-delete-after: True
-changes: 
-  - refactor: "TGUI Limbgrower"
-  - refactor: "Refactored the limbgrower to modernize the code and allow for more types of designs."
-  - rscadd: "The limbgrower now supports plumbing ducts."
-  - bugfix: "Fixes genitals not actually getting data from disks."
-  - code_imp: "Adds two special helpers."

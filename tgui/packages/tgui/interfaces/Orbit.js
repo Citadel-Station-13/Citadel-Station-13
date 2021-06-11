@@ -165,7 +165,7 @@ export const Orbit = (props, context) => {
           </Flex>
         </Section>
         {antagonists.length > 0 && (
-          <Section title="Ghost-Visible Antagonists">
+          <Section title="Visible Antagonists">
             {sortedAntagonists.map(([name, antags]) => (
               <Section key={name} title={name} level={2}>
                 {antags
