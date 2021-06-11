@@ -23,6 +23,14 @@
 #define WINDOW_IN_FRAME 1
 #define WINDOW_SCREWED_TO_FRAME 2
 
+//reinforced plasma window construction states
+#define PRWINDOW_FRAME_BOLTED 3
+#define PRWINDOW_BARS_CUT 4
+#define PRWINDOW_POPPED 5
+#define PRWINDOW_BOLTS_OUT 6
+#define PRWINDOW_BOLTS_HEATED 7
+#define PRWINDOW_SECURE 8
+
 //airlock assembly construction states
 #define AIRLOCK_ASSEMBLY_NEEDS_WIRES 0
 #define AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS 1

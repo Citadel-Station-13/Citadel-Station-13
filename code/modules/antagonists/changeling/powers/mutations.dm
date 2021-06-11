@@ -680,6 +680,11 @@
 	glove_type = /obj/item/clothing/gloves/fingerless/pugilist/cling // just punch his head off dude
 	glove_name_simple = "bone gauntlets"
 
+/obj/effect/proc_holder/changeling/gloves/gauntlets/sting_action(mob/living/user)
+	if(HAS_TRAIT(user, TRAIT_NOPUGILIST))
+		to_chat(user, "<span class='warning'>We would gain nothing by forming our fists into brute-force weapons when we are trained in precision martial arts!</span>")
+		return
+
 /obj/item/clothing/gloves/fingerless/pugilist/cling // switches between lesser GotNS and Big Punchy Rib Breaky Hands
 	name = "hewn bone gauntlets"
 	icon_state = "ling_gauntlets"

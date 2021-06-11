@@ -579,7 +579,7 @@
 
 //TODO: Better floating
 /atom/movable/proc/float(on, throw_override)
-	if(throwing || !throw_override)
+	if(throwing && !throw_override)
 		return
 	if(on && !(movement_type & FLOATING))
 		animate(src, pixel_y = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)

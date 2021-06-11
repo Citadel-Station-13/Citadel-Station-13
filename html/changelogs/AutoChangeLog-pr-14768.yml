@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - bugfix: "xenos are now truly immune to stamina damage."
