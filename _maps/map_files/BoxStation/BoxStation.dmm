@@ -30488,7 +30488,7 @@
 /obj/machinery/keycard_auth{
 	pixel_x = -24
 	},
-/obj/machinery/computer/cargo{
+/obj/machinery/computer/cargo/request{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
