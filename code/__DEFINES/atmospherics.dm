@@ -265,7 +265,9 @@
 #define GAS_METHANE				"methane"
 #define GAS_METHYL_BROMIDE		"methyl_bromide"
 
-#define GAS_FLAG_DANGEROUS (1<<0)
+#define GAS_FLAG_DANGEROUS		(1<<0)
+#define GAS_FLAG_BREATH_PROC	(1<<1)
+
 //HELPERS
 #define PIPING_LAYER_SHIFT(T, PipingLayer) \
 	if(T.dir & (NORTH|SOUTH)) {									\
