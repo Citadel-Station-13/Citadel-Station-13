@@ -179,11 +179,12 @@
 				var/moles = breath.get_moles(gas)
 				var/multiplier = gases[gas]
 				mole_adjustments[gas] = (gas in mole_adjustments) ? mole_adjustments[gas] - moles : -moles
-				required_moles += moles
 				required_pp += PP_MOLES(moles) * multiplier
-				var/to_add = moles * multiplier
-				for(var/product in products)
-					mole_adjustments[product] = (product in mole_adjustments) ? mole_adjustments[product] + to_add : to_add
+				required_moles += moles
+				if(multiplier > 0)
+					var/to_add = moles * multiplier
+					for(var/product in products)
+						mole_adjustments[product] = (product in mole_adjustments) ? mole_adjustments[product] + to_add : to_add
 		else
 			required_moles = breath.get_moles(entry)
 			required_pp = PP_MOLES(required_moles)
