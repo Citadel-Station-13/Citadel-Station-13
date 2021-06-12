@@ -44793,7 +44793,6 @@
 	},
 /obj/item/folder/yellow,
 /obj/machinery/door/window/northleft{
-	dir = 2;
 	name = "Chemistry Desk";
 	req_access_txt = "5; 33"
 	},
