@@ -271,20 +271,20 @@
 	var/turf/T = get_turf(A)
 	var/list/things = contents()
 	var/datum/progressbar/progress = new(M, length(things), T)
-	while (do_after(M, 10, TRUE, T, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress)))
+	while (do_after(M, 10, TRUE, T, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress, TRUE, M)))
 		stoplag(1)
 	qdel(progress)
 	A.do_squish(0.8, 1.2)
 
-/datum/component/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress, trigger_on_found = TRUE)
+/datum/component/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress, trigger_on_found = TRUE, mob/user)
 	var/atom/real_location = real_location()
 	for(var/obj/item/I in things)
 		things -= I
 		if(I.loc != real_location)
 			continue
-		remove_from_storage(I, target)
-		if(trigger_on_found && I.on_found())
+		if(trigger_on_found && user && (user.active_storage != src) && I.on_found(user))
 			return FALSE
+		remove_from_storage(I, target)
 		if(TICK_CHECK)
 			progress.update(progress.goal - length(things))
 			return TRUE
