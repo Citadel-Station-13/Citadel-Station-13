@@ -448,14 +448,27 @@
 				return
 			A.add_fingerprint(M)
 
-/datum/component/storage/proc/user_show_to_mob(mob/M, force = FALSE)
+/datum/component/storage/proc/user_show_to_mob(mob/M, force = FALSE, trigger_on_found = TRUE)
 	var/atom/A = parent
 	if(!istype(M))
 		return FALSE
 	A.add_fingerprint(M)
 	if(!force && (check_locked(null, M) || !M.CanReach(parent, view_only = TRUE)))
 		return FALSE
+	if(trigger_on_found)
+		if(check_on_found(M))
+			return
 	ui_show(M)
+
+/**
+ * Check if we should trigger on_found()
+ * If this returns TRUE, it means an on_found() returned TRUE and immediately broke the chain.
+ * In most contexts, this should mean to stop.
+ */
+/datum/component/storage/proc/check_on_found(mob/user)
+	for(var/obj/item/I in contents())
+		if(I.on_found(user))
+			return TRUE
 
 /datum/component/storage/proc/mousedrop_receive(datum/source, atom/movable/O, mob/M)
 	if(isitem(O))
