@@ -429,7 +429,7 @@
 			return FALSE
 		// this must come before the screen objects only block, dunno why it wasn't before
 		if(over_object == M)
-			user_show_to_mob(M)
+			user_show_to_mob(M, trigger_on_found = TRUE)
 			return
 		if(isrevenant(M))
 			RevenantThrow(over_object, M, source)
@@ -448,7 +448,7 @@
 				return
 			A.add_fingerprint(M)
 
-/datum/component/storage/proc/user_show_to_mob(mob/M, force = FALSE, trigger_on_found = TRUE)
+/datum/component/storage/proc/user_show_to_mob(mob/M, force = FALSE, trigger_on_found = FALSE)
 	var/atom/A = parent
 	if(!istype(M))
 		return FALSE
@@ -592,8 +592,8 @@
 /datum/component/storage/proc/show_to_ghost(datum/source, mob/dead/observer/M)
 	return user_show_to_mob(M, TRUE)
 
-/datum/component/storage/proc/signal_show_attempt(datum/source, mob/showto, force = FALSE)
-	return user_show_to_mob(showto, force)
+/datum/component/storage/proc/signal_show_attempt(datum/source, mob/showto, force = FALSE, trigger_on_found = TRUE)
+	return user_show_to_mob(showto, force, trigger_on_found = trigger_on_found)
 
 /datum/component/storage/proc/on_check()
 	return TRUE
@@ -662,7 +662,7 @@
 	if(A.loc == user)
 		. = COMPONENT_NO_ATTACK_HAND
 		if(!check_locked(source, user, TRUE))
-			ui_show(user)
+			user_show_to_mob(user, trigger_on_found = TRUE)
 			A.do_jiggle()
 
 /datum/component/storage/proc/signal_on_pickup(datum/source, mob/user)
@@ -692,7 +692,7 @@
 	var/atom/A = parent
 	if(!quickdraw)
 		A.add_fingerprint(user)
-		user_show_to_mob(user)
+		user_show_to_mob(user, trigger_on_found = TRUE)
 		if(rustle_sound)
 			playsound(A, "rustle", 50, 1, -5)
 		return TRUE
