@@ -314,6 +314,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	overhearing = yelling_wavefill(src, yell_power)
 	// overhearing = get_hearers_in_view(35, src) | get_hearers_in_range(5, src)
 	overhearing -= already_heard
+	// to_chat(world, "DEBUG: overhearing [english_list(overhearing)]")
 	for(var/_AM in overhearing)
 		var/atom/movable/AM = _AM
 		AM.Hear(rendered, speaker, message_language, message, null, spans, message_mode, source)

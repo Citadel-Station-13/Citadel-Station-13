@@ -4,14 +4,13 @@
 
 /datum/yelling_wavefill/Destroy(force, ...)
 	stop = TRUE
+	collected = null		// don't cut it, something else is probably using it now!
 	return ..()
 
 /datum/yelling_wavefill/proc/run_wavefill(atom/source, dist = 50)
 	collected = list()
 	do_run(source, dist)
-	// gc
-	if(QDELETED(src))
-		collected = null
+	// to_chat(world, "DEBUG: collected [english_list(collected)]")
 
 // blatantly copied from wave explosion code
 // check explosion2.dm for what this does and how it works.
@@ -29,7 +28,7 @@
 	var/dir
 	var/returned
 #define RUN_YELL(_T, _P, _D) \
-	returned = max(_P - max(_T.get_yelling_resistance(_P), 0) - 1, 0);
+	returned = max(_P - max(_T.get_yelling_resistance(_P), 0) - 1, 0); // \
 	// _T.maptext = "[returned]";
 
 	var/list/turf/edges_next
@@ -117,7 +116,9 @@
 			power = diagonal_powers[T]
 			dir = diagonals[T]
 			RUN_YELL(T, power, dir)
-			if(returned < 1)
+			if(returned >= 1)
+				collected |= typecache_filter_list(T.contents, GLOB.typecache_living)
+			else
 				continue
 			CARDINAL_MARK(NORTH, NORTH, dir)
 			CARDINAL_MARK(SOUTH, SOUTH, dir)
@@ -145,4 +146,5 @@
 /proc/yelling_wavefill(atom/source, dist = 50)
 	var/datum/yelling_wavefill/Y = new
 	Y.run_wavefill(source, dist)
-	return Y.collected || list()
+	. = Y.collected
+	qdel(Y)
