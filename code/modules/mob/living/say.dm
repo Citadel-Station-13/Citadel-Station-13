@@ -315,10 +315,19 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return
 	last_yell = world.time
 	var/list/overhearing = list()
+	var/list/overhearing_text = list()
 	overhearing = yelling_wavefill(src, yell_power)
-	log_say("YELL: [ismob(src)? key_name(src) : src] yelled [message] with overhearing mobs [overhearing]")
+	if(!overhearing.len)
+		overhearing_text = "none"
+	else
+		for(var/mob/M as anything in overhearing)
+			overhearing_text += key_name(M)
+		overhearing_text = english_list(overhearing_text)
+	log_say("YELL: [ismob(src)? key_name(src) : src] yelled [message] with overhearing mobs [overhearing_text]")
 	// overhearing = get_hearers_in_view(35, src) | get_hearers_in_range(5, src)
 	overhearing -= already_heard
+	if(!overhearing.len)
+		return
 	// to_chat(world, "DEBUG: overhearing [english_list(overhearing)]")
 	for(var/_AM in overhearing)
 		var/atom/movable/AM = _AM
