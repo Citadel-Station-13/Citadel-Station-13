@@ -40616,8 +40616,8 @@
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "bTT" = (
-/obj/machinery/atmospherics/pipe/manifold/yellow/visible{
-	dir = 8
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 1
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
@@ -54649,6 +54649,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/maintenance/starboard/aft)
+"gFh" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/machinery/meter,
+/turf/open/floor/plasteel,
+/area/engineering/atmos)
 "gGK" = (
 /turf/open/floor/carpet/royalblue,
 /area/maintenance/starboard/aft)
@@ -57138,6 +57143,7 @@
 /area/service/bar)
 "moS" = (
 /obj/machinery/atmospherics/pipe/manifold4w/yellow/visible,
+/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "mps" = (
@@ -96072,7 +96078,7 @@ bPc
 bQs
 cez
 ceA
-daq
+bTT
 bUN
 bOd
 bOd
@@ -97104,9 +97110,9 @@ moS
 kGv
 bUS
 cCE
-bTT
+bXU
 bUS
-bUS
+gFh
 bUS
 bXU
 bUS
