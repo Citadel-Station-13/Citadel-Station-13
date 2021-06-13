@@ -9,7 +9,9 @@
 	wave_explosion_block = 10
 	wave_explosion_multiply = 0.75
 	/// How much we block yelling
-	var/yelling_resistance = 40
+	var/yelling_resistance = 15
+	/// how much of inbound yelling to dampen
+	var/yelling_dampen = 0.5
 
 /turf/closed/Initialize()
 	. = ..()
@@ -217,5 +219,5 @@
 	icon_state = "ice"
 	canSmoothWith = list(/turf/closed/indestructible/rock/glacierrock/blue)
 
-/turf/closed/get_yelling_resistance()
-	return yelling_resistance
+/turf/closed/get_yelling_resistance(power)
+	return yelling_resistance + (power * yelling_dampen)

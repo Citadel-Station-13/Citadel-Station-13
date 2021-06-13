@@ -114,7 +114,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Attack types we can block
 	var/parry_attack_types = ALL
 	/// Parry flags
-	var/parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK | PARRY_LOCK_ATTACKING
+	var/parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK
 
 	/// Parry windup duration in deciseconds. 0 to this is windup, afterwards is main stage.
 	var/parry_time_windup = 0

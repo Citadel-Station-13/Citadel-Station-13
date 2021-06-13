@@ -613,7 +613,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(. != BULLET_ACT_FORCE_PIERCE)
 		. =  BULLET_ACT_TURF
 
-/turf/proc/get_yelling_resistance()
+/turf/proc/get_yelling_resistance(power)
 	. = 0
 	// don't bother checking fulltile, we don't need accuracy
 	var/obj/structure/window/W = locate() in src

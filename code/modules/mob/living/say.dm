@@ -311,7 +311,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /atom/movable/proc/process_yelling(list/already_heard, rendered, atom/movable/speaker, datum/language/message_language, message, list/spans, message_mode, obj/source)
 	var/list/overhearing = list()
-	overhearing = yelling_wavefill(src, 35)
+	overhearing = yelling_wavefill(src, yell_power)
 	// overhearing = get_hearers_in_view(35, src) | get_hearers_in_range(5, src)
 	overhearing -= already_heard
 	for(var/_AM in overhearing)
