@@ -1,0 +1,6 @@
+author: "EmeraldSundisk"
+delete-after: True
+changes: 
+  - rscadd: "Adds a brand new, wholly unique mining base to Snaxi
+tweak: A thorough redesign of Snaxi (see PR #14818 for more info)"
+  - bugfix: "Increases the number of electrical connections between substations"

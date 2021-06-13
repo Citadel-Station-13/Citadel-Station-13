@@ -303,3 +303,11 @@ You do not regenerate as much stamina while in combat mode. Resting (being on th
 Keybinds can be reassigned in character setup on the keybindings tab. This is extremely useful, especially if you know how to use independent binds.
 If your suit sensors have been shorted out, you can use cable coil to fix them by using the coil on your suit. Your suit needs to be in proper condition, however.
 Most clothing when damaged can be repaired using cloth, but there may be some clothes out there that will require different stacks of materials.
+You should under no circumstances, teleport bread.
+Food made from upgraded machines has a higher quality. Food with a high enough quality can give good moodlets even if your species dislikes the kind of food!
+Frying something makes it edible, while still maintaining its original functionality.
+Slimepeople are damaged by most things that heal toxin damage, and healed by most things that deal it. You can recognise people with this functionality through them having a cyan coloured species name when examined!
+EMPs can be created by mixing uranium and iron. The power of the pulse is determined by the distance from its epicentre, and the maximum distance is determined by the volume of the reaction!
+Lizards start with a disabled mutation that allows them to breath fire. This can be unlocked through the usage of genetics!
+Several loadout items can be unlocked through progress in parts of the game. The progress for these can be tracked in the loadout menu.
+

@@ -9177,9 +9177,9 @@ typescript@^4.2.4:
   languageName: node
   linkType: hard
 
-"ws@npm:^7.3.1, ws@npm:^7.4.4":
-  version: 7.4.4
-  resolution: "ws@npm:7.4.4"
+"ws@npm:^7.2.3, ws@npm:^7.3.1":
+  version: 7.4.3
+  resolution: "ws@npm:7.4.3"
   peerDependencies:
     bufferutil: ^4.0.1
     utf-8-validate: ^5.0.2
@@ -9188,7 +9188,7 @@ typescript@^4.2.4:
       optional: true
     utf-8-validate:
       optional: true
-  checksum: ad08761ed753cdd3f7172e9a9efc7d74e7e196623cace2380e5f74ff0abd16196e03223bd4148a34278dcbc653ee3841994635419281cbf303b3f22c589e2ec4
+  checksum: ffeb626d92f14aa3a67aa3784824c1d290131e25d225f4ca6b1b6b6d7ea754fca67694d89a5b99b144382365e1bccf1f7ec2f92df56f0d25f44939b070452f06
   languageName: node
   linkType: hard
 
