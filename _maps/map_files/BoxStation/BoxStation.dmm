@@ -23635,11 +23635,11 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bfe" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bff" = (
@@ -55786,7 +55786,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "jyO" = (
@@ -56006,6 +56006,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/engineering/engine_smes)
 "jLv" = (
@@ -60294,6 +60295,9 @@
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engineering/gravity_generator)
@@ -81645,7 +81649,7 @@ aQN
 aQN
 aZA
 aPA
-aWv
+jxF
 aYb
 aZE
 aZE
@@ -82416,7 +82420,7 @@ aQW
 aQW
 xDM
 aPA
-jxF
+aWv
 aYb
 aZE
 bjp
@@ -85954,7 +85958,7 @@ aaa
 aaa
 gXs
 gXs
-aaH
+gXs
 abc
 abu
 abu
@@ -92929,7 +92933,7 @@ apY
 ath
 arf
 apY
-avG
+ath
 dgz
 fvY
 dvc
