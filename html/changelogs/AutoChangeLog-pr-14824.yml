@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - rscadd: "bees can go in containers and are released upon opening the container"

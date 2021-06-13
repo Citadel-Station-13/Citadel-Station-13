@@ -18,6 +18,69 @@
 	var/has_variants = TRUE
 	var/finish_color = null
 
+	//Pen stuff
+	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
+	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
+	var/can_have_pen = TRUE
+
+/obj/item/modular_computer/tablet/examine(mob/user)
+	. = ..()
+	if(inserted_item && (!isturf(loc)))
+		. += "<span class='notice'>Ctrl-click to remove [inserted_item].</span>"
+
+/obj/item/modular_computer/tablet/Initialize()
+	. = ..()
+	if(can_have_pen)
+		if(inserted_item)
+			inserted_item = new inserted_item(src)
+		else
+			inserted_item =	new /obj/item/pen(src)
+
+/obj/item/modular_computer/tablet/proc/insert_pen(obj/item/pen)
+	if(!usr.transferItemToLoc(pen, src))
+		return
+	to_chat(usr, "<span class='notice'>You slide \the [pen] into \the [src]'s pen slot.</span>")
+	inserted_item = pen
+	playsound(src, 'sound/machines/button.ogg', 50, 1)
+
+/obj/item/modular_computer/tablet/proc/remove_pen()
+	if(hasSiliconAccessInArea(usr) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+
+	if(inserted_item)
+		usr.put_in_hands(inserted_item)
+		to_chat(usr, "<span class='notice'>You remove [inserted_item] from \the [src]'s pen slot.</span>")
+		inserted_item = null
+	else
+		to_chat(usr, "<span class='warning'>\The [src] does not have a pen in it!</span>")
+
+/obj/item/modular_computer/tablet/CtrlClick(mob/user)
+	. = ..()
+	if(isturf(loc))
+		return
+
+	if(can_have_pen)
+		remove_pen(user)
+
+/obj/item/modular_computer/tablet/attackby(obj/item/W, mob/user)
+	if(can_have_pen && is_type_in_list(W, contained_item))
+		if(inserted_item)
+			to_chat(user, "<span class='warning'>There is \a [inserted_item] blocking \the [src]'s pen slot!</span>")
+			return
+		else
+			insert_pen(W)
+			return
+	. = ..()
+
+/obj/item/modular_computer/tablet/Destroy()
+	if(istype(inserted_item))
+		QDEL_NULL(inserted_item)
+	return ..()
+
+/obj/item/modular_computer/tablet/ui_data(mob/user)
+	. = ..()
+	.["PC_showpeneject"] = inserted_item ? 1 : 0
+
 /obj/item/modular_computer/tablet/update_icon_state()
 	if(has_variants)
 		if(!finish_color)
@@ -64,6 +127,7 @@
 	var/datum/computer_file/program/robotact/robotact
 	///IC log that borgs can view in their personal management app
 	var/list/borglog = list()
+	can_have_pen = FALSE
 
 /obj/item/modular_computer/tablet/integrated/Initialize(mapload)
 	. = ..()

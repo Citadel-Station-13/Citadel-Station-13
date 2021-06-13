@@ -1,0 +1,5 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes: 
+  - imageadd: "new bank machine sprite"
+  - imagedel: "unused goon coffin sprite"
