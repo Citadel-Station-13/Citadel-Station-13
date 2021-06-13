@@ -1,5 +1,5 @@
 /datum/species/insect
-	name = "Anthromorphic Insect"
+	name = "Anthropomorphic Insect"
 	id = SPECIES_INSECT
 	say_mod = "chitters"
 	default_color = "00FF00"

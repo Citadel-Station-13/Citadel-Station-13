@@ -96,6 +96,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/cmd_select_equipment,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
+	/client/proc/drop_wave_explosion,
 	/client/proc/set_dynex_scale,
 	/client/proc/drop_dynex_bomb,
 	/client/proc/cinematic,
@@ -115,6 +116,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/show_tip,
 	/client/proc/smite,
 	/client/proc/admin_away,
+	/client/proc/spawn_floor_cluwne,
 	/client/proc/cmd_admin_toggle_fov,		//CIT CHANGE - FOV
 	/client/proc/roll_dices					//CIT CHANGE - Adds dice verb
 	))
@@ -549,6 +551,51 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
 	log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Drop Bomb") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/drop_wave_explosion()
+	set category = "Special Verbs"
+	set name = "Drop Wave Explosion"
+	set desc = "Cause an explosive shockwave at your location."
+
+	var/power = input(src, "Wave initial power", "Power", 50) as num|null
+	if(isnull(power))
+		return
+	var/falloff = input(src, "Wave innate falloff factor", "Falloff", EXPLOSION_DEFAULT_FALLOFF_MULTIPLY) as num|null
+	if(isnull(falloff))
+		return
+	falloff = max(0, falloff)
+	if(falloff > 1)
+		to_chat(src, "<span class='danger'>Aborting: Falloff cannot be higher tahn 1.")
+		return
+	var/constant = input(src, "Wave innate falloff constant", "Constant", EXPLOSION_DEFAULT_FALLOFF_SUBTRACT) as num|null
+	if(isnull(constant))
+		return
+	if(constant < 0)
+		to_chat(src, "<span class='danger'>Aborting: Falloff constant cannot be less than 0.")
+		return
+	var/fire = input(src, "Probability per tile of fire?", "Fire Probability", 0) as num|null
+	if(isnull(fire))
+		return
+	var/speed = input(src, "Speed in ticks to wait between cycles? 0 for fast as possible", "Wait", 0) as num|null
+	if(isnull(speed))
+		return
+	var/block_resistance = input(src, "DANGEROUS: Block resistance? USE 1 IF YOU DO NOT KNOW WHAT YOU ARE DOING.", "Block Negation", 1) as num|null
+	if(isnull(block_resistance))
+		return
+	block_resistance = max(0, block_resistance)
+	if(power > 500)
+		var/sure = alert(src, "Explosion power is extremely high. Are you absolutely sure?", "Uhh...", "No", "Yes")
+		if(sure != "Yes")
+			return
+	// point of no return
+	var/turf/target = get_turf(mob)
+	if(!target)
+		to_chat(src, "<span class='danger'>Cannot proceed. Not on turf.</span>")
+		return
+	message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [target.loc].")
+	log_admin("[key_name(usr)] created an admin explosion at [target.loc].")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Drop Wave Explosion") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	wave_explosion(target, power, falloff, constant, null, fire, speed = speed, block_resistance = block_resistance)
 
 /client/proc/drop_dynex_bomb()
 	set category = "Admin.Fun"

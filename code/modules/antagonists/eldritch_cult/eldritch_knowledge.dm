@@ -15,6 +15,8 @@
 	var/gain_text = ""
 	///Cost of knowledge in souls
 	var/cost = 0
+	///Required sacrifices to unlock
+	var/sacs_needed = 0
 	///Next knowledge in the research tree
 	var/list/next_knowledge = list()
 	///What knowledge is incompatible with this. This will simply make it impossible to research knowledges that are in banned_knowledge once this gets researched.
@@ -229,7 +231,6 @@
 	for(var/mob/living/carbon/human/H in atoms)
 		atoms -= H
 		H.gib()
-
 
 ///////////////
 ///Base lore///

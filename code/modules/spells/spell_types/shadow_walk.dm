@@ -56,9 +56,9 @@
 /obj/effect/dummy/phased_mob/shadow/proc/check_light_level()
 	var/turf/T = get_turf(src)
 	var/light_amount = T.get_lumcount()
-	if(light_amount > 0.2) // jaunt ends
+	if(light_amount > 0.4) // jaunt ends
 		end_jaunt(TRUE)
-	else if (light_amount < 0.2 && (!QDELETED(jaunter))) //heal in the dark
+	else if (light_amount < 0.4 && (!QDELETED(jaunter))) //heal in the dark
 		jaunter.heal_overall_damage(1,1)
 
 /obj/effect/dummy/phased_mob/shadow/proc/end_jaunt(forced = FALSE)
@@ -89,6 +89,9 @@
 
 /obj/effect/dummy/phased_mob/shadow/ex_act()
 	return
+
+/obj/effect/dummy/phased_mob/shadow/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	return power
 
 /obj/effect/dummy/phased_mob/shadow/bullet_act()
 	return BULLET_ACT_FORCE_PIERCE

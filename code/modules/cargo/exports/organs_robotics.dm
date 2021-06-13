@@ -75,7 +75,7 @@
 	cost = 250
 	unit_name = "heart"
 	export_types = list(/obj/item/organ/heart)
-	exclude_types = list(/obj/item/organ/heart/cursed, /obj/item/organ/heart/cybernetic)
+	exclude_types = list(/obj/item/organ/heart/cursed, /obj/item/organ/heart/cybernetic/tier2, /obj/item/organ/heart/cybernetic/tier3)
 
 /datum/export/organs/tongue
 	cost = 75
@@ -92,29 +92,30 @@
 	cost = 50 //can be replaced
 	unit_name = "stomach"
 	export_types = list(/obj/item/organ/stomach)
+	exclude_types = list(/obj/item/organ/stomach/cybernetic/tier2, /obj/item/organ/stomach/cybernetic/tier3)
 
 /datum/export/organs/lungs
 	cost = 150
 	unit_name = "lungs"
-	export_types = list(/obj/item/organ/lungs)
-	exclude_types = list(/obj/item/organ/lungs/cybernetic, /obj/item/organ/lungs/cybernetic/upgraded)
+	export_types = list(/obj/item/organ/lungs,)
+	exclude_types = list(/obj/item/organ/lungs/cybernetic/tier2, /obj/item/organ/lungs/cybernetic/tier3)
 
 /datum/export/organs/liver
 	cost = 175
 	unit_name = "liver"
 	export_types = list(/obj/item/organ/liver)
-	exclude_types = list(/obj/item/organ/liver/cybernetic, /obj/item/organ/liver/cybernetic/upgraded)
+	exclude_types = list(/obj/item/organ/liver/cybernetic/tier2, /obj/item/organ/liver/cybernetic/tier3)
 
 /datum/export/organs/cybernetic
 	cost = 225
 	unit_name = "cybernetic organ"
-	export_types = list(/obj/item/organ/liver/cybernetic, /obj/item/organ/lungs/cybernetic, /obj/item/organ/eyes/robotic, /obj/item/organ/heart/cybernetic)
-	exclude_types = list(/obj/item/organ/lungs/cybernetic/upgraded, /obj/item/organ/liver/cybernetic/upgraded)
+	export_types = list(/obj/item/organ/liver/cybernetic/tier2, /obj/item/organ/lungs/cybernetic/tier2, /obj/item/organ/eyes/robotic/shield, /obj/item/organ/eyes/robotic/glow, /obj/item/organ/stomach/cybernetic/tier2, /obj/item/organ/heart/cybernetic/tier2)
+	exclude_types = list(/obj/item/organ/liver/cybernetic/tier3, /obj/item/organ/lungs/cybernetic/tier3, /obj/item/organ/eyes/robotic/xray, /obj/item/organ/eyes/robotic/thermals, /obj/item/organ/stomach/cybernetic/tier3, /obj/item/organ/heart/cybernetic/tier3)
 
 /datum/export/organs/upgraded
 	cost = 275
 	unit_name = "upgraded cybernetic organ"
-	export_types = list(/obj/item/organ/lungs/cybernetic/upgraded, /obj/item/organ/liver/cybernetic/upgraded)
+	export_types = list(/obj/item/organ/liver/cybernetic/tier3, /obj/item/organ/lungs/cybernetic/tier3, /obj/item/organ/eyes/robotic/xray, /obj/item/organ/eyes/robotic/thermals, /obj/item/organ/stomach/cybernetic/tier3, /obj/item/organ/heart/cybernetic/tier3)
 
 /datum/export/organs/tail // yeah have fun pulling this off someone without catching a bwoink
 	cost = 500

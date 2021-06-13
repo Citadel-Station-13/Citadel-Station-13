@@ -13,6 +13,14 @@
 	build_path = /obj/item/kitchen/knife
 	category = list("initial","Dinnerware")
 
+/datum/design/efink
+	name = "E-Fink"
+	id = "efink"
+	build_type = AUTOLATHE | NO_PUBLIC_LATHE
+	materials = list(/datum/material/iron = 12000)
+	build_path = /obj/item/kitchen/efink
+	category = list("initial","Dinnerware")
+
 /datum/design/fork
 	name = "Fork"
 	id = "fork"

@@ -571,6 +571,26 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("[key_name_admin(src)] has created a command report")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Create Command Report") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_admin_make_priority_announcement()
+	set category = "Admin.Events"
+	set name = "Make Priority Announcement"
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	var/input = input(usr, "Enter a priority announcement. Ensure it makes sense IC.", "What?", "") as message|null
+	if(!input)
+		return
+
+	var/title = input(src, "What should the title be?", "What?","") as text|null
+
+	var/special_name = input(src, "Who is making the announcement?", "Who?", "") as text|null
+	priority_announce(input, title, sender_override = special_name)
+
+	log_admin("[key_name(src)] has sent a priority announcement: [input]")
+	message_admins("[key_name_admin(src)] has made a priority announcement")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make Priority Announcement") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/cmd_change_command_name()
 	set category = "Admin.Events"
 	set name = "Change Command Name"
@@ -1313,9 +1333,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		ADMIN_PUNISHMENT_SHOES,
 		ADMIN_PUNISHMENT_PICKLE,
 		ADMIN_PUNISHMENT_FRY,
-    ADMIN_PUNISHMENT_CRACK,
-    ADMIN_PUNISHMENT_BLEED,
-    ADMIN_PUNISHMENT_SCARIFY)
+		ADMIN_PUNISHMENT_CRACK,
+		ADMIN_PUNISHMENT_BLEED,
+		ADMIN_PUNISHMENT_SCARIFY,
+		ADMIN_PUNISHMENT_CLUWNE)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
@@ -1481,6 +1502,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				to_chat(usr,"<span class='warning'>[C] does not have knottable shoes!</span>")
 				return
 			sick_kicks.adjust_laces(SHOES_KNOTTED)
+		if(ADMIN_PUNISHMENT_CLUWNE)
+			if(!iscarbon(target))
+				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>")
+				return
+			target.cluwneify()
 
 	punish_log(target, punishment)
 
@@ -1671,3 +1697,23 @@ Traitors and the like can also be revived with the previous role mostly intact.
 					if(!source)
 						return
 			REMOVE_TRAIT(D,chosen_trait,source)
+
+/client/proc/spawn_floor_cluwne()
+	set category = "Admin.Fun"
+	set name = "Unleash Floor Cluwne"
+	set desc = "Pick a specific target or just let it select randomly and spawn the floor cluwne mob on the station. Be warned: spawning more than one may cause issues!"
+	var/target
+
+	if(!check_rights(R_FUN))
+		return
+
+	var/turf/T = get_turf(usr)
+	target = input("Any specific target in mind? Please note only live, non cluwned, human targets are valid.", "Target", target) as null|anything in GLOB.player_list
+	if(target && ishuman(target))
+		var/mob/living/carbon/human/H = target
+		var/mob/living/simple_animal/hostile/floor_cluwne/FC = new /mob/living/simple_animal/hostile/floor_cluwne(T)
+		FC.Acquire_Victim(H)
+	else
+		new /mob/living/simple_animal/hostile/floor_cluwne(T)
+	log_admin("[key_name(usr)] spawned floor cluwne.")
+	message_admins("[key_name(usr)] spawned floor cluwne.")

@@ -108,5 +108,8 @@
 /obj/effect/dummy/phased_mob/spell_jaunt/ex_act(blah)
 	return
 
+/obj/effect/dummy/phased_mob/spell_jaunt/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	return power
+
 /obj/effect/dummy/phased_mob/spell_jaunt/bullet_act(blah)
 	return BULLET_ACT_FORCE_PIERCE
