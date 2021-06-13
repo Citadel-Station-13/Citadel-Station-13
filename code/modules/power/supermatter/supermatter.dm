@@ -475,7 +475,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/datum/gas_mixture/removed
 	if(produces_gas)
 		//Remove gas from surrounding area
-		removed = env.remove(gasefficency * env.total_moles())
+		removed = env.remove_ratio(gasefficency)
 	else
 		// Pass all the gas related code an empty gas container
 		removed = new()
