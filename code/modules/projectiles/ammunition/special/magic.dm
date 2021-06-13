@@ -35,6 +35,9 @@
 /obj/item/ammo_casing/magic/spellblade
 	projectile_type = /obj/item/projectile/magic/spellblade
 
+/obj/item/ammo_casing/magic/judgement_cut
+	projectile_type = /obj/item/projectile/judgement_cut
+
 /obj/item/ammo_casing/magic/arcane_barrage
 	projectile_type = /obj/item/projectile/magic/arcane_barrage
 

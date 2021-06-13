@@ -27,8 +27,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/machinery/syndicatebomb,
 		/obj/item/hilbertshotel,
 		/obj/machinery/launchpad,
-		/obj/machinery/disposal,
-		/obj/structure/disposalpipe,
 		/obj/item/hilbertshotel,
 		/obj/machinery/camera,
 		/obj/item/gps,
@@ -128,7 +126,8 @@ GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 	var/value = 0
 	var/purchases = 0
 	var/list/goodies_by_buyer = list() // if someone orders more than GOODY_FREE_SHIPPING_MAX goodies, we upcharge to a normal crate so they can't carry around 20 combat shotties
-	// var/list/lockers_by_buyer = list()	// TODO, combine orders that come in lockers into a single locker to not crowd the shuttle
+	var/list/lockers_by_buyer = list() // used to combine orders that come in lockers into a single locker to not crowd the shuttle
+
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 		if(!empty_turfs.len)
 			break
@@ -149,11 +148,15 @@ GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 				D.bank_card_talk("Goody order size exceeds free shipping limit: Assessing [CRATE_TAX] credit S&H fee.")
 		else
 			D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+
 		if(D)
 			if(!D.adjust_money(-price))
 				if(SO.paying_account)
 					D.bank_card_talk("Cargo order #[SO.id] rejected due to lack of funds. Credits required: [price]")
 				continue
+			else if(ispath(SO.pack.crate_type, /obj/structure/closet/secure_closet/cargo))
+				LAZYADD(lockers_by_buyer[D], SO)
+
 
 		if(SO.paying_account)
 			if(SO.pack.goody)
@@ -166,7 +169,7 @@ GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 		SSshuttle.orderhistory += SO
 		QDEL_NULL(SO.applied_coupon)
 
-		if(!SO.pack.goody) //we handle goody crates below
+		if(!SO.pack.goody && !ispath(SO.pack.crate_type, /obj/structure/closet/secure_closet/cargo)) //we handle goody crates and material closets below
 			SO.generate(pick_n_take(empty_turfs))
 
 		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
@@ -199,6 +202,33 @@ GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 			for (var/item in our_order.pack.contains)
 				misc_contents[buyer] += item
 			misc_order_num[buyer] = "[misc_order_num[buyer]]#[our_order.id]  "
+
+
+	// handling locker bundles
+	for(var/D in lockers_by_buyer)
+		var/list/buying_account_orders = lockers_by_buyer[D]
+
+		var/buyer
+
+		if(!istype(D, /datum/bank_account/department))	// department accounts break the secure closet for some reason
+			var/obj/structure/closet/secure_closet/cargo/owned/our_closet = new /obj/structure/closet/secure_closet/cargo/owned(pick_n_take(empty_turfs))
+			var/datum/bank_account/buying_account = D
+			buyer = buying_account.account_holder
+			our_closet.buyer_account = buying_account
+			our_closet.name = "private cargo locker - purchased by [buyer]"
+			miscboxes[buyer] = our_closet
+		else
+			var/obj/structure/closet/secure_closet/cargo/our_closet = new /obj/structure/closet/secure_closet/cargo(pick_n_take(empty_turfs))
+			buyer = "Cargo"
+			miscboxes[buyer] = our_closet
+
+		misc_contents[buyer] = list()
+		for(var/O in buying_account_orders)
+			var/datum/supply_order/our_order = O
+			for(var/item in our_order.pack.contains)
+				misc_contents[buyer] += item
+			misc_order_num[buyer] = "[misc_order_num[buyer]]#[our_order.id]  "
+
 
 	for(var/I in miscboxes)
 		var/datum/supply_order/SO = new/datum/supply_order()
