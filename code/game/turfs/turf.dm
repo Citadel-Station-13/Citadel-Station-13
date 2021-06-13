@@ -616,10 +616,17 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/get_yelling_resistance(power)
 	. = 0
 	// don't bother checking fulltile, we don't need accuracy
-	var/obj/structure/window/W = locate() in src
-	if(W)
-		. += 7
+	var/obj/window = locate(/obj/structure/window) in src
+	if(!window)
+		window = locate(/obj/machinery/door/window) in src
+	if(window)
+		. += 5		// windows are minimally resistant
+	// if there's more than one someone fucked up as that shouldn't happen
+	var/obj/machinery/door/D = locate() in src
+	if(D?.density)
+		. += D.opacity? 30 : 20			// glass doors are slightly more resistant to screaming
 	for(var/obj/machinery/door/D in src)
 		if(!D.density)
 			continue
-		. += D.opacity? 7 : 15
+		break
+		. += D.opacity? 30 :

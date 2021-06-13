@@ -44,15 +44,15 @@
 #define CARDINAL_MARK(ndir, cdir, edir) \
 	if(edir & cdir) { \
 		expanding = get_step(T,ndir); \
-		if(expanding && isnull(processed_last[expanding]) && isnull(edges[expanding])) { \
+		if(expanding && (isnull(processed_last[expanding]) || (processed_last[expanding] < (power - 5))) && (isnull(edges[expanding]) || (edges[expanding] < (power - 5)))) { \
 			powers_next[expanding] = max(powers_next[expanding], returned); \
-			edges_next[expanding] = (cdir | edges_next[expanding]); \
+			edges_next[expanding] = cdir; \
 		}; \
 	};
 
 #define DIAGONAL_SUBSTEP(ndir, cdir, edir) \
 	expanding = get_step(T,ndir); \
-	if(expanding && isnull(processed_last[expanding]) && isnull(edges[expanding])) { \
+	if(expanding && (isnull(processed_last[expanding])) && (isnull(edges[expanding]))) { \
 		if(!edges_next[expanding]) { \
 			diagonal_powers_max[expanding] = max(diagonal_powers_max[expanding], returned, powers[T]); \
 			diagonal_powers[expanding] = CALCULATE_DIAGONAL_POWER(diagonal_powers[expanding], returned, diagonal_powers_max[expanding]); \

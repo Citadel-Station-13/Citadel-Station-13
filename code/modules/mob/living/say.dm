@@ -310,8 +310,13 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
 
 /atom/movable/proc/process_yelling(list/already_heard, rendered, atom/movable/speaker, datum/language/message_language, message, list/spans, message_mode, obj/source)
+	if(last_yell > (world.time - 10))
+		to_chat(src, "<span class='warning'>Your voice doesn't project as far as you try to yell in such quick succession.")		// yeah no, no spamming an expensive floodfill.
+		return
+	last_yell = world.time
 	var/list/overhearing = list()
 	overhearing = yelling_wavefill(src, yell_power)
+	log_say("YELL: [ismob(src)? key_name(src) : src] yelled [message] with overhearing mobs [overhearing]")
 	// overhearing = get_hearers_in_view(35, src) | get_hearers_in_range(5, src)
 	overhearing -= already_heard
 	// to_chat(world, "DEBUG: overhearing [english_list(overhearing)]")
