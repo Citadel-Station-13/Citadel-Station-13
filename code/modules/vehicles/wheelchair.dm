@@ -26,8 +26,8 @@
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate),CALLBACK(src, .proc/can_be_rotated),null)
 
 /obj/vehicle/ridden/wheelchair/obj_destruction(damage_flag)
-	new /obj/item/stack/rods(drop_location(), 1)
-	new /obj/item/stack/sheet/metal(drop_location(), 1)
+	new /obj/item/stack/rods(drop_location(), 8)
+	new /obj/item/stack/sheet/metal(drop_location(), 2)
 	..()
 
 /obj/vehicle/ridden/wheelchair/Destroy()
@@ -53,7 +53,10 @@
 /obj/vehicle/ridden/wheelchair/Moved()
 	. = ..()
 	cut_overlays()
-	playsound(src, 'sound/effects/roll.ogg', 75, 1)
+	if(istype(src, /obj/vehicle/ridden/wheelchair/motorized))
+		playsound(src, 'sound/effects/chairwhoosh.ogg', 75, 1)
+	else
+		playsound(src, 'sound/effects/roll.ogg', 75, 1)
 	if(has_buckled_mobs())
 		handle_rotation_overlayed()
 
@@ -88,8 +91,12 @@
 
 /obj/vehicle/ridden/wheelchair/proc/handle_rotation_overlayed()
 	cut_overlays()
-	var/image/V = image(icon = icon, icon_state = "wheelchair_overlay", layer = FLY_LAYER, dir = src.dir)
-	add_overlay(V)
+	if(istype(src, /obj/vehicle/ridden/wheelchair/motorized))
+		var/image/V = image(icon = icon, icon_state = "wheelchair_noverlay", layer = FLY_LAYER, dir = src.dir)
+		add_overlay(V)
+	else
+		var/image/V = image(icon = icon, icon_state = "wheelchair_overlay", layer = FLY_LAYER, dir = src.dir)
+		add_overlay(V)
 
 
 
