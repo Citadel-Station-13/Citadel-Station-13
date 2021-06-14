@@ -49,7 +49,7 @@
 	parry_time_active = 7
 	parry_time_spindown = 0
 	parry_time_spindown_visual_override = 1
-	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK | PARRY_LOCK_ATTACKING		// no attacking while parrying
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK		// no attacking while parrying
 	parry_time_perfect = 0
 	parry_time_perfect_leeway = 0.5
 	parry_efficiency_perfect = 85

@@ -185,7 +185,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Can this data automatically parry? This is off by default because this is something that requires thought to balance.
 	var/parry_automatic_enabled = FALSE
 	/// Hard autoparry cooldown
-	var/autoparry_cooldown_absolute = 3 SECONDS
+	var/autoparry_cooldown_absolute = 7.5 SECONDS
 	/// Autoparry : Simulate a parry sequence starting at a certain tick, or simply simulate a single attack parry?
 	var/autoparry_sequence_simulation = FALSE
 	// Single attack simulation:
