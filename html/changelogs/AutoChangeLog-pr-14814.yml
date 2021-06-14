@@ -1,8 +1,0 @@
-author: "TripleShades"
-delete-after: True
-changes: 
-  - rscadd: "Lights to AI Sat Walkways"
-  - rscadd: "Lights to Atmospherics"
-  - rscadd: "Floor labels to Atmospherics Gas Miner containment units"
-  - rscdel: "Gas canisters from Gas Miner containment units"
-  - rscdel: "Excessive wiring in Security and Detective's Office"
