@@ -9,9 +9,9 @@
 	wave_explosion_block = 10
 	wave_explosion_multiply = 0.75
 	/// How much we block yelling
-	var/yelling_resistance = 5
+	var/yelling_resistance = 10
 	/// how much of inbound yelling to dampen
-	var/yelling_dampen = 0.75
+	var/yelling_dampen = 0.5
 
 /turf/closed/Initialize()
 	. = ..()

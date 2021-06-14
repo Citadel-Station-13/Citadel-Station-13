@@ -21,14 +21,15 @@
 	collected += typecache_filter_list(source.contents, GLOB.typecache_living)
 	var/list/powers = list()
 	powers[source] = dist
-	var/list/processed_last = list()
+	var/list/processed = list()
 	var/turf/T
 	var/turf/expanding
 	var/power
 	var/dir
 	var/returned
 #define RUN_YELL(_T, _P, _D) \
-	returned = max(_P - max(_T.get_yelling_resistance(_P), 0) - 1, 0); // \
+	returned = max(_P - max(_T.get_yelling_resistance(_P), 0) - 1, 0); 	\
+	processed[_T] = returned; // \
 	// _T.maptext = "[returned]";
 
 	var/list/turf/edges_next
@@ -44,15 +45,15 @@
 #define CARDINAL_MARK(ndir, cdir, edir) \
 	if(edir & cdir) { \
 		expanding = get_step(T,ndir); \
-		if(expanding && (isnull(processed_last[expanding]) || (processed_last[expanding] < (power - 5))) && (isnull(edges[expanding]) || (edges[expanding] < (power - 5)))) { \
+		if(expanding && (isnull(processed[expanding]) || (processed[expanding] < (power - 3)))) { \
 			powers_next[expanding] = max(powers_next[expanding], returned); \
-			edges_next[expanding] = cdir; \
+			edges_next[expanding] = (cdir | edges_next[expanding]); \
 		}; \
 	};
 
 #define DIAGONAL_SUBSTEP(ndir, cdir, edir) \
 	expanding = get_step(T,ndir); \
-	if(expanding && (isnull(processed_last[expanding])) && (isnull(edges[expanding]))) { \
+	if(expanding && (isnull(processed[expanding]) || (processed[expanding] < (power - 3)))) { \
 		if(!edges_next[expanding]) { \
 			diagonal_powers_max[expanding] = max(diagonal_powers_max[expanding], returned, powers[T]); \
 			diagonal_powers[expanding] = CALCULATE_DIAGONAL_POWER(diagonal_powers[expanding], returned, diagonal_powers_max[expanding]); \
@@ -128,7 +129,6 @@
 		// to_chat(world, "DEBUG: cycle end edges_next [english_list_assoc(edges_next)]")
 
 		// flush lists
-		processed_last = edges + diagonals
 		edges = edges_next
 		powers = powers_next
 
