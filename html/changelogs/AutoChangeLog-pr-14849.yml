@@ -1,0 +1,7 @@
+author: "EmeraldSundisk"
+delete-after: True
+changes: 
+  - rscadd: "Xenobiology now has proper lighting"
+  - bugfix: "The Corporate Showroom now has a proper front door"
+  - bugfix: "Mining snowmobiles now have keys"
+  - bugfix: "Adjusts area designations so GENTURF icons should no longer be visible in-game"
