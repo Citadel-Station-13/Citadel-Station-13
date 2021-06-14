@@ -82,6 +82,7 @@
 #define ADMIN_PUNISHMENT_PICKLE "Pickle-ify"
 #define ADMIN_PUNISHMENT_FRY "Fry"
 #define ADMIN_PUNISHMENT_PERFORATE ":B:erforate"
+#define ADMIN_PUNISHMENT_CLUWNE "Cluwne"
 
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2
