@@ -231,7 +231,7 @@
 	if(!islist(determined))
 		return BLOCK_NONE
 	var/datum/block_parry_data/data = return_block_parry_datum(determined[2])
-	if(!data.parry_automatic_enabled || (last_autoparry > (world.time + data.autoparry_cooldown_absolute)))
+	if(!data.parry_automatic_enabled || (last_autoparry > (world.time - data.autoparry_cooldown_absolute)))
 		return BLOCK_NONE
 	if(attack_type && !(attack_type & data.parry_attack_types))
 		return BLOCK_NONE

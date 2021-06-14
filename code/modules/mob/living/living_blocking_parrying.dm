@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	// Clickdelay/cooldown settings not included, as well as whether or not to lock attack/sprinting/etc. They will be pulled from the above.
 
 	/// ADVANCED - Autoparry requirement for time since last moused over for a specific object
-	var/autoparry_mouse_delay_maximum = 0.5 SECONDS
+	var/autoparry_mouse_delay_maximum = 0.35 SECONDS
 
 /**
   * Quirky proc to get average of flags in list that are in attack_type because why is attack_type a flag.

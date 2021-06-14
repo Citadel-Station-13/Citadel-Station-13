@@ -10,7 +10,7 @@
 #define TEXT_WEST			"[WEST]"
 
 /// yeah yeah i'm a lazy asshole who can't debug yeah yeah
-#define DEBUG_LINE message_admins("</span>DEBUG: [__FILE__] [__LINE__] executing!")
+#define DEBUG_LINE message_admins("DEBUG: [__FILE__] [__LINE__] executing!")
 
 /// world.icon_size
 #define PIXELS 32
