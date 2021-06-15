@@ -604,7 +604,6 @@
 
 //we inform the bodypart of the changes that happened to the owner, or give it the informations from a source mob.
 /obj/item/bodypart/proc/update_limb(dropping_limb, mob/living/carbon/source)
-	message_admins("so now we're updating limbs apparently")
 	var/mob/living/carbon/C
 	if(source)
 		C = source
@@ -718,8 +717,6 @@
 
 	if(dropping_limb)
 		no_update = TRUE //when attached, the limb won't be affected by the appearance changes of its mob owner.
-
-	message_admins("so apparently we finished up with that limb!")
 
 //to update the bodypart's icon when not attached to a mob
 /obj/item/bodypart/proc/update_icon_dropped()

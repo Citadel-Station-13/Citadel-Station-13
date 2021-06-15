@@ -112,7 +112,7 @@
 	if(!owner.get_bodypart(BODY_ZONE_HEAD))
 		owner.regenerate_limb(BODY_ZONE_HEAD, TRUE)
 	//do NOT send a signal here, else you will cause an infinite loop and a crash
-	owner.update_hair(send_signal = FALSE)
+	owner.update_hair()
 	//owner.update_mutant_bodyparts(send_signal = FALSE) this gets updated by update_inv_head
 	owner.update_inv_glasses(send_signal = FALSE)
 	owner.update_inv_ears(send_signal = FALSE)
@@ -167,13 +167,10 @@
 	stored_head.add_overlay(overlays_to_add)
 
 //when you need to update the heads appearance to be that of the characters current appearance
-/datum/component/dullahan/proc/refresh_head_appearance(test, test2)
-	if(test)
-		message_admins("[test]")
-	if(test2)
-		message_admins("[test2]")
-	copy_mutant_overlays()
-	stored_head.regenerate_icons()
+/datum/component/dullahan/proc/refresh_head_appearance()
+	if(owner.head)
+		copy_mutant_overlays()
+		stored_head.regenerate_icons()
 
 /datum/component/dullahan/proc/attempt_render_head_on_body()
 	if(stored_head)
@@ -489,7 +486,9 @@
 		//it's not on the head
 		//cut those overlays if it was previously being worn
 		if(previously_worn)
-			dullahan_body.cut_overlay(dullahan_body.overlays_standing[HEAD_LAYER])
+			// absolutely awful but i can't wrap my head around the terror of human/update_bodyparts.dm and carbon/update_bodyparts.dm any further please forgive me
+			dullahan_body.cut_overlays()
+			dullahan_body.regenerate_icons()
 			previously_worn = FALSE
 
 //make sure it renders properly

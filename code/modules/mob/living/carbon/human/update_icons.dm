@@ -50,44 +50,28 @@ There are several things that need to be remembered:
 
 //HAIR OVERLAY
 /mob/living/carbon/human/update_hair(send_signal = TRUE)
-	message_admins("apparently we're updating hair and signal is [send_signal]")
 	dna.species.handle_hair(src)
 	if(send_signal)
 		SEND_SIGNAL(src, COMSIG_HUMAN_HEAD_ICONS_UPDATED, "hair")
 
 //used when putting/removing clothes that hide certain mutant body parts to just update those and not update the whole body.
 /mob/living/carbon/human/proc/update_mutant_bodyparts(send_signal = TRUE)
-	dna.species.handle_mutant_bodyparts(src, FALSE, send_signal)
-	if(send_signal)
-		SEND_SIGNAL(src, COMSIG_HUMAN_HEAD_ICONS_UPDATED, "mutant")
+	if(dna.species.should_render())
+		dna.species.handle_mutant_bodyparts(src, FALSE, send_signal)
+		if(send_signal)
+			SEND_SIGNAL(src, COMSIG_HUMAN_HEAD_ICONS_UPDATED, "mutant")
 
 /mob/living/carbon/human/update_body(update_genitals = FALSE, send_signal = TRUE)
-	remove_overlay(BODY_LAYER)
-	dna.species.handle_body(src, send_signal)
-	message_admins("so the body is handled, isnt that epic.")
-	..()
-	message_admins("we went crazy and updated it for carbons too")
-	if(update_genitals)
-		update_genitals()
-		message_admins("and now we've updated genitals.")
-	message_admins("and now we cry some more")
+	if(dna.species.should_render())
+		remove_overlay(BODY_LAYER)
+		dna.species.handle_body(src, send_signal)
+		..()
+		if(update_genitals)
+			update_genitals()
 
 /mob/living/carbon/human/update_hair()
 	if(dna.species.should_render())
 		dna.species.handle_hair(src)
-
-//used when putting/removing clothes that hide certain mutant body parts to just update those and not update the whole body.
-/mob/living/carbon/human/proc/update_mutant_bodyparts()
-	if(dna.species.should_render())
-		dna.species.handle_mutant_bodyparts(src)
-
-/mob/living/carbon/human/update_body(update_genitals = FALSE)
-	if(dna.species.should_render())
-		remove_overlay(BODY_LAYER)
-		dna.species.handle_body(src)
-		..()
-		if(update_genitals)
-			update_genitals()
 
 /mob/living/carbon/human/update_fire()
 	..((fire_stacks > 3) ? "Standing" : "Generic_mob_burning")
@@ -722,9 +706,7 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 		. += "-husk"
 
 /mob/living/carbon/human/load_limb_from_cache(send_signal = TRUE)
-	message_admins("pre")
 	..()
-	message_admins("post [send_signal]")
 	update_hair(send_signal)
 
 /mob/living/carbon/human/proc/update_observer_view(obj/item/I, inventory)

@@ -213,7 +213,6 @@
 		BP.update_limb()
 	//LOAD ICONS
 	if(limb_icon_cache[icon_render_key])
-		message_admins("loading limb from cache with signal [send_signal]")
 		load_limb_from_cache(send_signal)
 		return
 
@@ -228,10 +227,8 @@
 	if(new_limbs.len)
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
 		limb_icon_cache[icon_render_key] = new_limbs
-	message_admins("so smooth.")
 	apply_overlay(BODYPARTS_LAYER)
 	update_damage_overlays()
-	message_admins("oho.")
 
 
 /////////////////////
