@@ -55860,6 +55860,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/cargo/qm)
+"hDy" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "xenobio4";
+	name = "Space Blast Door"
+	},
+/turf/open/floor/plating,
+/area/science/xenobiology)
 "hEm" = (
 /obj/item/taperecorder,
 /obj/item/cartridge/lawyer,
@@ -72221,6 +72229,15 @@
 "roz" = (
 /turf/open/floor/plasteel/dark,
 /area/engineering/main)
+"rpu" = (
+/obj/machinery/button/door{
+	id = "xenobio4";
+	name = "Space Blast Doors";
+	pixel_y = 4;
+	req_access_txt = "55"
+	},
+/turf/closed/wall/r_wall,
+/area/science/xenobiology)
 "rqx" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -116283,7 +116300,7 @@ dbZ
 dci
 dcu
 cRi
-cRe
+hDy
 cRi
 cSg
 lbz
@@ -116792,7 +116809,7 @@ dvY
 aaa
 aaa
 aaf
-cRi
+rpu
 cRh
 dck
 cRz
@@ -117306,7 +117323,7 @@ dvY
 aaa
 aaa
 aaf
-cRe
+hDy
 cRS
 dcm
 dcv
@@ -117338,7 +117355,7 @@ ddx
 ddz
 daR
 cZv
-cRe
+hDy
 aaa
 aaa
 aaa
@@ -117563,7 +117580,7 @@ dvY
 aaa
 aaa
 aaf
-cRe
+hDy
 cRS
 dcn
 dcw
@@ -117820,7 +117837,7 @@ dvY
 aaa
 aaa
 aaf
-cRe
+hDy
 cRS
 dco
 dcx
@@ -117852,7 +117869,7 @@ bIv
 ddz
 ddB
 cZv
-cRe
+hDy
 aaa
 aaf
 aaa
@@ -119363,9 +119380,9 @@ aac
 aaa
 aaa
 cRi
-cRe
-cRe
-cRe
+hDy
+hDy
+hDy
 cRi
 cRi
 cRi
