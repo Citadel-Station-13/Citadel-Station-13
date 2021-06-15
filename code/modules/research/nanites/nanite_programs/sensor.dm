@@ -236,8 +236,6 @@
 /datum/nanite_program/sensor/voice
 	name = "Voice Sensor"
 	desc = "The nanites receive a signal when they detect a specific, preprogrammed word or phrase being said."
-	desc = "Sends a signal when the nanites hear a determined word or sentence."
-	var/spent = FALSE
 
 /datum/nanite_program/sensor/voice/register_extra_settings()
 	. = ..()
@@ -249,16 +247,17 @@
 	RegisterSignal(host_mob, COMSIG_MOVABLE_HEAR, .proc/on_hear)
 
 /datum/nanite_program/sensor/voice/on_mob_remove()
-	UnregisterSignal(host_mob, COMSIG_MOVABLE_HEAR, .proc/on_hear)
+	UnregisterSignal(host_mob, COMSIG_MOVABLE_HEAR)
 
 /datum/nanite_program/sensor/voice/proc/on_hear(datum/source, list/hearing_args)
+	SIGNAL_HANDLER
 	var/datum/nanite_extra_setting/sentence = extra_settings[NES_SENTENCE]
 	var/datum/nanite_extra_setting/inclusive = extra_settings[NES_INCLUSIVE_MODE]
 	if(!sentence.get_value())
 		return
 	if(inclusive.get_value())
-		if(findtextEx(hearing_args[HEARING_RAW_MESSAGE], sentence))
+		if(findtext(hearing_args[HEARING_RAW_MESSAGE], sentence.get_value()))
 			send_code()
 	else
-		if(hearing_args[HEARING_RAW_MESSAGE] == sentence)
+		if(lowertext(hearing_args[HEARING_RAW_MESSAGE]) == lowertext(sentence.get_value()))
 			send_code()
