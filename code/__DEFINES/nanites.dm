@@ -50,4 +50,3 @@
 #define NES_SCAN_TYPE "Scan Type"
 #define NES_BUTTON_NAME "Button Name"
 #define NES_ICON "Icon"
-#define NES_COLOR "Color"
