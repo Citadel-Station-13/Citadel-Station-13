@@ -48,7 +48,7 @@
 
 	//Extra settings
 	///Don't ever override this or I will come to your house and stand menacingly behind a bush
-	var/list/extra_settings = list()
+	VAR_FINAL/list/extra_settings = list()
 
 	//Rules
 	//Rules that automatically manage if the program's active without requiring separate sensor programs
@@ -77,6 +77,9 @@
 	if(nanites)
 		nanites.programs -= src
 		nanites.permanent_programs -= src
+	for(var/datum/nanite_rule/rule as anything in rules)
+		rule.remove()
+	rules.Cut()
 	return ..()
 
 /**
@@ -188,14 +191,17 @@
 	if(timer_shutdown_next && world.time > timer_shutdown_next)
 		deactivate()
 		timer_shutdown_next = 0
+		return
 
 	if(timer_trigger && world.time > timer_trigger_next)
 		trigger()
 		timer_trigger_next = world.time + timer_trigger
+		return
 
 	if(timer_trigger_delay_next && world.time > timer_trigger_delay_next)
 		trigger(delayed = TRUE)
 		timer_trigger_delay_next = 0
+		return
 
 	if(check_conditions() && consume_nanites(use_rate))
 		if(!passive_enabled)
@@ -259,18 +265,22 @@
 	if(program_flags & NANITE_EMP_IMMUNE)
 		return
 	if(prob(severity / 2))
+		host_mob.investigate_log("[src] nanite program received a software error due to emp.", INVESTIGATE_NANITES)
 		software_error()
 
 /datum/nanite_program/proc/on_shock(shock_damage)
 	if(!(program_flags & NANITE_SHOCK_IMMUNE))
 		if(prob(10))
+			host_mob.investigate_log("[src] nanite program received a software error due to shock.", INVESTIGATE_NANITES)
 			software_error()
 		else if(prob(33))
+			host_mob.investigate_log("[src] nanite program was deleted due to shock.", INVESTIGATE_NANITES)
 			self_destruct()
 
 /datum/nanite_program/proc/on_minor_shock()
 	if(!(program_flags & NANITE_SHOCK_IMMUNE))
 		if(prob(10))
+			host_mob.investigate_log("[src] nanite program received a software error due to minor shock.", INVESTIGATE_NANITES)
 			software_error()
 
 /datum/nanite_program/proc/on_death()
@@ -281,10 +291,12 @@
 		type = rand(1,is_permanent()? 4 : 5)
 	switch(type)
 		if(1)
-			self_destruct() //kill switch
+			host_mob.investigate_log("[src] nanite program was deleted by software error.", INVESTIGATE_NANITES)
+			qdel(src) //kill switch
 			return
 		if(2) //deprogram codes
 			if(corruptable)
+				host_mob.investigate_log("[src] nanite program was de-programmed by software error.", INVESTIGATE_NANITES)
 				activation_code = 0
 				deactivation_code = 0
 				kill_code = 0
@@ -292,15 +304,18 @@
 		if(3)
 			if(error_flicking)
 				toggle() //enable/disable
+				host_mob.investigate_log("[src] nanite program was toggled by software error.", INVESTIGATE_NANITES)
 		if(4)
-			if(error_flicking && can_trigger)
+			if(can_trigger)
+				host_mob.investigate_log("[src] nanite program was triggered by software error.", INVESTIGATE_NANITES)
 				trigger()
 		if(5) //Program is scrambled and does something different
 			if(corruptable)
 				var/rogue_type = pick(rogue_types)
 				var/datum/nanite_program/rogue = new rogue_type
+				host_mob.investigate_log("[src] nanite program was converted into [rogue.name] by software error.", INVESTIGATE_NANITES)
 				nanites.add_program(null, rogue, src)
-				self_destruct()
+				self_destruct(src)
 
 /datum/nanite_program/proc/receive_signal(code, source)
 	if(activation_code && code == activation_code && !activated)
@@ -323,9 +338,7 @@
 	if(is_permanent())
 		return
 	qdel(src)
-
 ///A nanite program containing a behaviour protocol. Only one protocol of each class can be active at once.
-//Moved to being 'normally' researched due to lack of B.E.P.I.S.
 /datum/nanite_program/protocol
 	name = "Nanite Protocol"
 	var/protocol_class = NONE
@@ -345,4 +358,3 @@
 	if(nanites)
 		nanites.protocols -= src
 	return ..()
-

@@ -53,16 +53,12 @@
 	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
 
 /datum/nanite_program/purging/check_conditions()
-<<<<<<< HEAD
-	var/foreign_reagent = length(host_mob.reagents?.reagent_list)
-	if(!host_mob.getToxLoss() && !foreign_reagent)
-		return FALSE
-	return ..()
-=======
 	. = ..()
 	if(!. || !host_mob.reagents)
 		return FALSE // No trying to purge simple mobs
->>>>>>> e543f07... Fixes nanite purge runtime on simple mobs (#55902)
+	var/foreign_reagent = length(host_mob.reagents?.reagent_list)
+	if(!host_mob.getToxLoss() && !foreign_reagent)
+		return FALSE
 
 /datum/nanite_program/purging/active_effect()
 	host_mob.adjustToxLoss(-1)
