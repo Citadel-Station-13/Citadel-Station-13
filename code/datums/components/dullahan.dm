@@ -111,6 +111,9 @@
 	var/list/overlays_standing
 	if(!owner.get_bodypart(BODY_ZONE_HEAD))
 		owner.regenerate_limb(BODY_ZONE_HEAD, TRUE)
+	// give them some eyes
+	var/obj/item/organ/eyes/new_eyes = new /obj/item/organ/eyes
+	new_eyes.Insert(owner, TRUE)
 	//do NOT send a signal here, else you will cause an infinite loop and a crash
 	owner.update_hair()
 	//owner.update_mutant_bodyparts(send_signal = FALSE) this gets updated by update_inv_head
