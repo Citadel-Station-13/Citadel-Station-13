@@ -159,7 +159,7 @@
 /datum/component/embedded/proc/jostleCheck()
 	var/mob/living/carbon/victim = parent
 
-	var/damage = weapon.w_class * pain_mult
+	var/damage = weapon.w_class * jostle_pain_mult
 	var/pain_chance_current = jostle_chance
 	if(victim.m_intent == MOVE_INTENT_WALK || !(victim.mobility_flags & MOBILITY_STAND))
 		pain_chance_current *= 0.5
