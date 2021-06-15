@@ -157,10 +157,10 @@
 
 /area/shuttle/escape
 	name = "Emergency Shuttle"
-	area_flags = BLOBS_ALLOWED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
 	// area_limited_icon_smoothing = /area/shuttle/escape
 	canSmoothWithAreas = /area/shuttle/escape
-	flags_1 = CAN_BE_DIRTY_1 // | CULT_PERMITTED_1
+	flags_1 = CAN_BE_DIRTY_1
 
 /area/shuttle/escape/backup
 	name = "Backup Emergency Shuttle"

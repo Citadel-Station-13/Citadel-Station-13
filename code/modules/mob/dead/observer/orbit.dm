@@ -83,7 +83,8 @@
 
 				for (var/_A in mind.antag_datums)
 					var/datum/antagonist/A = _A
-					if (A.show_to_ghosts)
+					var/mob/dead/observer/O = user
+					if (A?.show_to_ghosts || !O?.can_reenter_corpse)
 						was_antagonist = TRUE
 						serialized["antag"] = A.name
 						antagonists += list(serialized)

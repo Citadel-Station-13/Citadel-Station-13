@@ -160,15 +160,21 @@
 	gain_text = "This world will be my stage, and nothing will be out of my reach."
 	desc = "Gain the ability to mark a 7x7 area as your domain after a short delay. Creatures in your domain are slowed and branded with a void mark, allowing you to quickly teleport to them and slash them, further inhibiting their ability to move."
 	cost = 2
+	sacs_needed = 3
 	spell_to_add = /obj/effect/proc_holder/spell/aoe_turf/domain_expansion
 	next_knowledge = list(/datum/eldritch_knowledge/final/void_final)
 	route = PATH_VOID
+
+/datum/eldritch_knowledge/spell/domain_expansion/on_gain(mob/user)
+	. = ..()
+	priority_announce("Echos of the lost in space are heard... An ominous presence is being detected! ", sound = 'sound/misc/notice1.ogg')
 
 /datum/eldritch_knowledge/final/void_final
 	name = "Waltz at the End of Time"
 	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual you will automatically silence people around you and will summon a snow storm around you."
 	gain_text = "The world falls into darkness. I stand in an empty plane, small flakes of ice fall from the sky. The Aristocrat stands before me, he motions to me. We will play a waltz to the whispers of dying reality, as the world is destroyed before our eyes."
 	cost = 5
+	sacs_needed = 8
 	required_atoms = list(/mob/living/carbon/human)
 	route = PATH_VOID
 	///soundloop for the void theme
