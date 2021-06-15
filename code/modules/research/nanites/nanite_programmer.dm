@@ -14,7 +14,7 @@
 /obj/machinery/nanite_programmer/update_overlays()
 	. = ..()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	if((machine_stat & (NOPOWER|MAINT|BROKEN)) || panel_open)
+	if((stat & (NOPOWER|MAINT|BROKEN)) || panel_open)
 		return
 	SSvis_overlays.add_vis_overlay(src, icon, "nanite_programmer_on", layer, plane)
 	SSvis_overlays.add_vis_overlay(src, icon, "nanite_programmer_on", EMISSIVE_LAYER, EMISSIVE_PLANE)

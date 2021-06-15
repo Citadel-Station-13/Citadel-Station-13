@@ -64,7 +64,7 @@
 
 /obj/item/organ/heart/gland/heal/proc/reject_implant(obj/item/organ/cyberimp/implant)
 	owner.visible_message("<span class='warning'>[owner] vomits up his [implant.name]!</span>", "<span class='userdanger'>You suddenly vomit up your [implant.name]!</span>")
-	owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FAL SE, TRUE)
+	owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
 	implant.Remove()
 	implant.forceMove(owner.drop_location())
 
