@@ -235,6 +235,7 @@
 
 /datum/nanite_program/sensor/voice
 	name = "Voice Sensor"
+	desc = "The nanites receive a signal when they detect a specific, preprogrammed word or phrase being said."
 	desc = "Sends a signal when the nanites hear a determined word or sentence."
 	var/spent = FALSE
 
