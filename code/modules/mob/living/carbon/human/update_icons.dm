@@ -758,6 +758,7 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 		if(!(NOEYES in dna.species.species_traits))
 			var/has_eyes = getorganslot(ORGAN_SLOT_EYES)
 			if(!has_eyes)
+				message_admins("sorry but you have no eyes")
 				add_overlay(mutable_appearance('icons/mob/eyes.dmi', "eyes_missing", -BODY_LAYER))
 			else
 				var/left_state = DEFAULT_LEFT_EYE_STATE
