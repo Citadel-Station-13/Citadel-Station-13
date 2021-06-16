@@ -823,7 +823,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	handle_mutant_bodyparts(H, send_signal)
 
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour, send_signal = TRUE)
-	message_admins("sigh, we begin our debug journey here.")
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
 
 	H.remove_overlay(BODY_BEHIND_LAYER)
@@ -873,14 +872,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			O.use_digitigrade = FULL_DIGITIGRADE
 			update_needed = TRUE
 	if(update_needed)
-		message_admins("updatng bodyparts with signal [send_signal]")
 		H.update_body_parts(send_signal)
 	if(not_digitigrade && (DIGITIGRADE in species_traits)) //Curse is lifted
 		species_traits -= DIGITIGRADE
 
 	if(!bodyparts_to_add)
 		return
-	message_admins("over here you can see where i cried")
 	var/list/relevant_layers = list()
 	var/list/dna_feature_as_text_string = list()
 

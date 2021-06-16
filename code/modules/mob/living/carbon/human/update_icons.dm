@@ -237,7 +237,7 @@ There are several things that need to be remembered:
 		overlays_standing[GLOVES_LAYER] = gloves_overlay
 		apply_overlay(GLOVES_LAYER)
 
-/mob/living/carbon/human/update_inv_glasses(send_signal = FALSE)
+/mob/living/carbon/human/update_inv_glasses(send_signal = TRUE)
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		remove_overlay(GLASSES_LAYER)
 
@@ -353,7 +353,7 @@ There are several things that need to be remembered:
 			overlays_standing[SUIT_STORE_LAYER] = s_store_overlay
 		apply_overlay(SUIT_STORE_LAYER)
 
-/mob/living/carbon/human/update_inv_head(send_signal = FALSE)
+/mob/living/carbon/human/update_inv_head(send_signal = TRUE)
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		remove_overlay(HEAD_LAYER)
 
@@ -796,7 +796,6 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 		if(!(NOEYES in dna.species.species_traits))
 			var/has_eyes = getorganslot(ORGAN_SLOT_EYES)
 			if(!has_eyes)
-				message_admins("sorry but you have no eyes")
 				add_overlay(mutable_appearance('icons/mob/eyes.dmi', "eyes_missing", -BODY_LAYER))
 			else
 				var/left_state = DEFAULT_LEFT_EYE_STATE
