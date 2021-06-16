@@ -66,7 +66,7 @@ There are several things that need to be remembered:
 		if(send_signal)
 			SEND_SIGNAL(src, COMSIG_HUMAN_HEAD_ICONS_UPDATED, "mutant")
 
-/mob/living/carbon/human/update_body(update_genitals = FALSE)
+/mob/living/carbon/human/update_body(update_genitals = FALSE, send_signal = TRUE)
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		remove_overlay(BODY_LAYER)
 		dna.species.handle_body(src, send_signal)
@@ -237,7 +237,7 @@ There are several things that need to be remembered:
 		overlays_standing[GLOVES_LAYER] = gloves_overlay
 		apply_overlay(GLOVES_LAYER)
 
-/mob/living/carbon/human/update_inv_glasses()
+/mob/living/carbon/human/update_inv_glasses(send_signal = FALSE)
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		remove_overlay(GLASSES_LAYER)
 
@@ -252,7 +252,7 @@ There are several things that need to be remembered:
 			SEND_SIGNAL(src, COMSIG_HUMAN_HEAD_ICONS_UPDATED, "glasses")
 
 /mob/living/carbon/human/update_inv_ears(send_signal = TRUE)
-	if(dna.species.should_render())
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		//send signal early incase the proc returns early for some reason
 		if(send_signal)
 			SEND_SIGNAL(src, COMSIG_HUMAN_HEAD_ICONS_UPDATED, "ears")
@@ -353,7 +353,7 @@ There are several things that need to be remembered:
 			overlays_standing[SUIT_STORE_LAYER] = s_store_overlay
 		apply_overlay(SUIT_STORE_LAYER)
 
-/mob/living/carbon/human/update_inv_head()
+/mob/living/carbon/human/update_inv_head(send_signal = FALSE)
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		remove_overlay(HEAD_LAYER)
 
