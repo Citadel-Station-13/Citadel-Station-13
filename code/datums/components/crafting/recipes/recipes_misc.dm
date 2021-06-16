@@ -385,6 +385,7 @@
 		/obj/item/stock_parts/capacitor = 1)
 	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
 	time = 200
+	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
 
 /datum/crafting_recipe/skateboard
