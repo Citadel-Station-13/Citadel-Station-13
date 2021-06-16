@@ -124,7 +124,7 @@
 	//first find the eyes overlay
 	if(islist(overlays_standing[BODY_LAYER]))
 		for(var/mutable_appearance/some_overlay in overlays_standing[BODY_LAYER])
-			if(some_overlay.icon == 'icons/mob/human_face.dmi' || some_overlay.icon == 'icons/mob/eye.dmi')
+			if(some_overlay.icon == 'icons/mob/human_face.dmi' || some_overlay.icon == 'icons/mob/eyes.dmi')
 				overlays_to_add += some_overlay
 	else
 		var/mutable_appearance/some_overlay = overlays_standing[BODY_LAYER]
