@@ -29,6 +29,7 @@
 	var/taur_mode = NONE //Must be a single specific tauric suit variation bitflag. Don't do FLAG_1|FLAG_2
 	var/alt_taur_mode = NONE //Same as above.
 	var/hide_legs = USE_QUADRUPED_CLIP_MASK
+	mutant_part_string = "taur"
 
 /datum/sprite_accessory/taur/is_not_visible(mob/living/carbon/human/H, tauric)
 	return (!tauric || (H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)))
@@ -67,6 +68,7 @@
 	name = "Cow (Spotted)"
 	icon_state = "cow_spotted"
 	color_src = MATRIXED
+	matrixed_sections = MATRIX_ALL
 
 /datum/sprite_accessory/taur/deer
 	name = "Deer"
@@ -88,6 +90,7 @@
 	icon_state = "drake_old"
 	color_src = MATRIXED
 	extra = FALSE
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/taur/drider
 	name = "Drider"
@@ -114,17 +117,20 @@
 	icon_state = "horse"
 	taur_mode = STYLE_HOOF_TAURIC
 	alt_taur_mode = STYLE_PAW_TAURIC
+	matrixed_sections = MATRIX_ALL
 
 /datum/sprite_accessory/taur/naga
 	name = "Naga"
 	icon_state = "naga"
 	taur_mode = STYLE_SNEK_TAURIC
 	hide_legs = USE_SNEK_CLIP_MASK
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/taur/otie
 	name = "Otie"
 	icon_state = "otie"
 	taur_mode = STYLE_PAW_TAURIC
+	matrixed_sections = MATRIX_ALL
 
 /datum/sprite_accessory/taur/pede
 	name = "Scolipede"

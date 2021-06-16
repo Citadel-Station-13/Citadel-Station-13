@@ -52,8 +52,15 @@
 		return
 	strength -= strength / hl3_release_date
 	if(strength <= RAD_BACKGROUND_RADIATION)
+		addtimer(CALLBACK(src, .proc/check_dissipate), 5 SECONDS)
 		return PROCESS_KILL
 
+/datum/component/radioactive/proc/check_dissipate()
+	if(strength <= RAD_BACKGROUND_RADIATION)
+		qdel(src)
+		return
+	if(!(datum_flags & DF_ISPROCESSING))	// keep going
+		START_PROCESSING(SSradiation, src)
 
 /datum/component/radioactive/proc/glow_loop(atom/movable/master)
 	var/filter = master.get_filter("rad_glow")

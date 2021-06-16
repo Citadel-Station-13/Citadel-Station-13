@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/spacevine
 	weight = 15
 	max_occurrences = 3
-	min_players = 10
+	min_players = 20
 
 /datum/round_event/spacevine
 	fakeable = FALSE
@@ -340,6 +340,7 @@
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/structure/spacevine/Crossed(atom/movable/AM)
+	. = ..()
 	if(!isliving(AM))
 		return
 	for(var/datum/spacevine_mutation/SM in mutations)

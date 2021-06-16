@@ -5,11 +5,25 @@
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	baseturfs = /turf/open/floor/plating
+	dirt_buildup_allowed = TRUE
 
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+	/// Minimum explosion power to break tile
+	var/explosion_power_break_tile = EXPLOSION_POWER_FLOOR_TILE_BREAK
+	/// Minimum explosion power to break turf
+	var/explosion_power_break_turf = EXPLOSION_POWER_FLOOR_TURF_BREAK
+	//// Minimum explosion power to scrape away the floor
+	var/explosion_power_turf_scrape = EXPLOSION_POWER_FLOOR_TURF_SCRAPE
+	//// Shielded turfs are completely protected from anything under this
+	var/explosion_power_protect_shielded = EXPLOSION_POWER_FLOOR_SHIELDED_IMMUNITY
+	/// Starting from here, there's a chance for this to break
+	var/explosion_power_minimum_chance_break = EXPLOSION_POWER_FLOOR_MINIMUM_TURF_BREAK
+	/// Starting from here, +20% chance to break turf.
+	var/explosion_power_break_turf_bonus = EXPLOSION_POWER_FLOOR_TURF_BREAK_BONUS
 
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
@@ -55,7 +69,7 @@
 		icon_regular_floor = "floor"
 	else
 		icon_regular_floor = icon_state
-	if(mapload)
+	if(mapload && prob(66)) // 2/3 instead of 1/3 (default)
 		MakeDirty()
 
 /turf/open/floor/ex_act(severity, target)
@@ -97,6 +111,48 @@
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)
 
+/turf/open/floor/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	var/shielded = is_shielded()
+	. = ..()
+	if(shielded)
+		if(power < explosion_power_protect_shielded)
+			return
+		else
+			power -= explosion_power_protect_shielded
+	hotspot_expose(1000, CELL_VOLUME)
+	if(power < explosion_power_break_tile)
+		return
+	if(power < explosion_power_minimum_chance_break)
+		if(prob(33 + ((explosion_power_break_turf - power) / (explosion_power_break_turf - explosion_power_break_tile))))
+			break_tile()
+		return
+	if((power < explosion_power_turf_scrape) && ((power >= explosion_power_break_turf) || prob((1 - ((explosion_power_break_turf - power) / (explosion_power_break_turf - explosion_power_minimum_chance_break))) * 100 + ((power > explosion_power_break_turf_bonus)? 20 : 0))))
+		switch(pick(1, 2;75, 3))
+			if(1)
+				if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
+					ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+					ReplaceWithLattice()
+				else
+					ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
+				if(prob(33))
+					new /obj/item/stack/sheet/metal(src)
+				return
+			if(2)
+				ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
+				return
+			if(3)
+				if(prob(80))
+					ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+					return
+				else
+					break_tile()
+				hotspot_expose(1000,CELL_VOLUME)
+				if(prob(33))
+					new /obj/item/stack/sheet/metal(src)
+	if(power >= explosion_power_turf_scrape)
+		ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
+		return
+
 /turf/open/floor/is_shielded()
 	for(var/obj/structure/A in contents)
 		if(A.level == 3)
@@ -137,6 +193,9 @@
 	burnt = 1
 
 /turf/open/floor/proc/make_plating()
+	for(var/obj/effect/decal/cleanable/C in src)
+		if(C.wiped_by_floor_change)
+			qdel(C)
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
 /turf/open/floor/ChangeTurf(path, new_baseturf, flags)
@@ -167,7 +226,7 @@
 /turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
 		return
-	var/obj/item/crowbar/CB = user.is_holding_item_of_type(/obj/item/crowbar)
+	var/obj/item/CB = user.is_holding_tool_quality(TOOL_CROWBAR)
 	if(!CB)
 		return
 	var/turf/open/floor/plating/P = pry_tile(CB, user, TRUE)

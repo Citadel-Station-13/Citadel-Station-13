@@ -279,7 +279,7 @@
 		to_chat(user, "<span class='notice'>[src] is now [choice].</span>")
 
 /obj/item/melee/transforming/energy/sword/saber/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/multitool))
+	if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(user.a_intent == INTENT_DISARM)
 			if(!active)
 				to_chat(user, "<span class='warning'>COLOR_SET</span>")
@@ -439,7 +439,9 @@
 	force_on = 15 //As strong a survival knife/bone dagger
 
 /obj/item/melee/transforming/energy/sword/cx/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/melee/transforming/energy/sword/cx))
+	if(istype(W, /obj/item/melee/transforming/energy/sword/cx/traitor))
+		return
+	else if(istype(W, /obj/item/melee/transforming/energy/sword/cx))
 		if(HAS_TRAIT(W, TRAIT_NODROP) || HAS_TRAIT(src, TRAIT_NODROP))
 			to_chat(user, "<span class='warning'>\the [HAS_TRAIT(src, TRAIT_NODROP) ? src : W] is stuck to your hand, you can't attach it to \the [HAS_TRAIT(src, TRAIT_NODROP) ? W : src]!</span>")
 			return

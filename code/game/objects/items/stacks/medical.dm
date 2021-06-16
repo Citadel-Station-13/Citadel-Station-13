@@ -173,11 +173,11 @@
 					 "<span class='italics'>You hear cutting.</span>")
 		use(2)
 	else if(I.is_drainable() && I.reagents.has_reagent(/datum/reagent/space_cleaner/sterilizine))
-		if(!I.reagents.has_reagent(/datum/reagent/space_cleaner/sterilizine, 10))
+		if(!I.reagents.has_reagent(/datum/reagent/space_cleaner/sterilizine, 5))
 			to_chat(user, "<span class='warning'>There's not enough sterilizine in [I] to sterilize [src]!</span>")
 			return
-		user.visible_message("<span class='notice'>[user] pours the contents of [I] onto [src], sterilizing it.</span>", "<span class='notice'>You pour the contents of [I] onto [src], sterilizing it.</span>")
-		I.reagents.remove_reagent(/datum/reagent/space_cleaner/sterilizine, 10)
+		user.visible_message("<span class='notice'>[user] sterilizes [src] with the contents of [I].</span>", "<span class='notice'>You pour the contents of [I] onto [src], sterilizing it.</span>")
+		I.reagents.remove_reagent(/datum/reagent/space_cleaner/sterilizine, 5)
 		new /obj/item/stack/medical/gauze/adv/one(user.drop_location())
 		use(1)
 	else
@@ -186,6 +186,9 @@
 /obj/item/stack/medical/gauze/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins tightening \the [src] around [user.p_their()] neck! It looks like [user.p_they()] forgot how to use medical supplies!</span>")
 	return OXYLOSS
+
+/obj/item/stack/medical/gauze/one
+	amount = 1
 
 /obj/item/stack/medical/gauze/improvised
 	name = "improvised gauze"
@@ -204,8 +207,9 @@
 	heal_brute = 6
 	self_delay = 45
 	other_delay = 15
-	absorption_rate = 0.4
-	absorption_capacity = 6
+	absorption_rate = 0.5
+	absorption_capacity = 12
+	splint_factor = 0.15
 
 /obj/item/stack/medical/gauze/adv/one
 	amount = 1
@@ -379,7 +383,7 @@
 	. = ..()
 
 /obj/item/stack/medical/mesh/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	if(!is_open & user.get_inactive_held_item() == src)
+	if(!is_open && (user.get_inactive_held_item() == src))
 		to_chat(user, "<span class='warning'>You need to open [src] first.</span>")
 		return
 	. = ..()
@@ -472,3 +476,51 @@
 		return TRUE
 
 	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
+
+/obj/item/stack/medical/nanogel
+	name = "nanogel"
+	singular_name = "nanogel"
+	desc = "A highly advanced gel that when applied on a sufficiently repaired robotic limb will neutralize internal damage if present, allowing further repairs without the need for surgery."
+	self_delay = 150	//Agonizingly slow if used on self, but, not completely forbidden because antags with robolimbs need a way to handle their thresholds.
+	other_delay = 30	//Pretty fast if used on others.
+	amount = 12
+	max_amount = 12	//Two synths worth of fixing, if every single bodypart of them has internal damage. Usually, probably more like 6-12.
+	icon_state = "nanogel"
+	var/being_applied = FALSE	//No doafter stacking.
+
+/obj/item/stack/medical/nanogel/try_heal(mob/living/M, mob/user, silent = FALSE)
+	if(being_applied)
+		to_chat(user, "<span class='warning'>You are already applying [src]!</span>")
+		return
+	if(!iscarbon(M))
+		to_chat(user, "<span class='warning'>This won't work on [M]!</span>")
+		return
+	being_applied = TRUE
+	..()
+	being_applied = FALSE
+
+/obj/item/stack/medical/nanogel/heal(mob/living/M, mob/user)
+	var/mob/living/carbon/C = M	//Only carbons should be able to get here
+	if(!C)
+		return
+	var/obj/item/bodypart/affecting = C.get_bodypart(check_zone(user.zone_selected))
+	if(!affecting) //Missing limb?
+		to_chat(user, "<span class='warning'>[C] doesn't have \a [parse_zone(user.zone_selected)]!</span>")
+		return
+	if(!affecting.is_robotic_limb())
+		to_chat(user, "<span class='warning'>This won't work on nonrobotic limbs!</span>")
+		return
+	if(!affecting.threshhold_brute_passed && !affecting.threshhold_burn_passed)
+		to_chat(user, "<span class='warning'>There is no need to use this on [affecting]</span>")
+		return
+	if(affecting.threshhold_brute_passed && affecting.brute_dam == affecting.threshhold_passed_mindamage)
+		. = TRUE
+		affecting.threshhold_brute_passed = FALSE
+	if(affecting.threshhold_burn_passed && affecting.burn_dam == affecting.threshhold_passed_mindamage)
+		. = TRUE
+		affecting.threshhold_burn_passed = FALSE
+	if(.)
+		user.visible_message("<span class='green'>The nanogel gets to work on [C], repairing [affecting]'s internal damage.</span>", "<span_class='green'>You watch as the nanogel gets to work on fixing the internal damage in [affecting]</span>")
+		return
+	//If it gets here: It failed, lets tell the user why.
+	to_chat(user, "<span class='warning'>[src] fails to work on [affecting] due to residual [(affecting.threshhold_burn_passed && affecting.threshhold_burn_passed) ? "brute and burn" : "[affecting.threshhold_burn_passed ? "burn" : "brute"]"] damage! Perform some external repairs before using this.</span>")

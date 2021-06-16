@@ -49,6 +49,7 @@
 		SSair.add_to_active(T)
 	return ..()
 
+/// Function for Extools Atmos
 /turf/proc/update_air_ref()
 
 /////////////////GAS MIXTURE PROCS///////////////////
@@ -312,6 +313,8 @@
 	return TRUE
 
 /turf/open/consider_superconductivity(starting)
+	if(planetary_atmos)
+		return FALSE
 	if(air.return_temperature() < (starting?MINIMUM_TEMPERATURE_START_SUPERCONDUCTION:MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION))
 		return FALSE
 	if(air.heat_capacity() < M_CELL_WITH_RATIO) // Was: MOLES_CELLSTANDARD*0.1*0.05 Since there are no variables here we can make this a constant.

@@ -139,9 +139,12 @@
 
 /obj/machinery/computer/pandemic/proc/eject_beaker()
 	if(beaker)
+		var/obj/item/reagent_containers/B = beaker
 		beaker.forceMove(drop_location())
 		beaker = null
 		update_icon()
+		return B
+	return null
 
 /obj/machinery/computer/pandemic/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -207,7 +210,7 @@
 				to_chat(usr, "<span class='warning'>ERROR: Cannot replicate virus strain.</span>")
 				return
 			A = A.Copy()
-			var/list/data = list("viruses" = list(A))
+			var/list/data = list("donor"=null,"viruses"=list(A),"blood_DNA"="REPLICATED", "bloodcolor" = BLOOD_COLOR_SYNTHETIC, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[A.name] culture bottle"
 			B.desc = "A small bottle. Contains [A.agent] culture in synthblood medium."
@@ -237,14 +240,17 @@
 		. = TRUE //no afterattack
 		if(stat & (NOPOWER|BROKEN))
 			return
+		var/obj/item/reagent_containers/B
 		if(beaker)
-			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
-			return
+			B = eject_beaker() //now with 100% more swapping
 		if(!user.transferItemToLoc(I, src))
 			return
-
+		if(B)
+			if(user && Adjacent(user) && user.can_hold_items())
+				user.put_in_hands(B)
 		beaker = I
-		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+		if(B) to_chat(user, "<span class='notice'>You remove [B] and insert [I] into [src].</span>")
+		else to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		update_icon()
 	else
 		return ..()

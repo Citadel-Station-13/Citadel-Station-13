@@ -18,7 +18,6 @@
 
 	var/list/stored_profiles = list() //list of datum/changelingprofile
 	var/datum/changelingprofile/first_prof = null
-	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 0
 	/// did we get succed by another changeling
 	var/hostile_absorbed = FALSE
@@ -126,6 +125,8 @@
 /datum/antagonist/changeling/proc/remove_changeling_powers()
 	if(ishuman(owner.current) || ismonkey(owner.current))
 		reset_properties()
+		QDEL_NULL(cellular_emporium)
+		QDEL_NULL(emporium_action)
 		for(var/obj/effect/proc_holder/changeling/p in purchasedpowers)
 			if(p.always_keep)
 				continue
@@ -140,6 +141,7 @@
 /datum/antagonist/changeling/proc/reset_powers()
 	if(purchasedpowers)
 		remove_changeling_powers()
+	create_actions()
 	//Repurchase free powers.
 	for(var/path in all_powers)
 		var/obj/effect/proc_holder/changeling/S = new path()
@@ -214,7 +216,7 @@
 	if(canrespec)
 		to_chat(owner.current, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
 		reset_powers()
-		playsound(get_turf(owner.current), 'sound/effects/lingreadapt.ogg', 75, TRUE, 5, soundenvwet = 0)
+		playsound(get_turf(owner.current), 'sound/effects/lingreadapt.ogg', 75, TRUE, 5)
 		canrespec = 0
 		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
 		return 1
@@ -226,7 +228,8 @@
 /datum/antagonist/changeling/proc/regenerate()
 	var/mob/living/carbon/the_ling = owner.current
 	if(istype(the_ling))
-		emporium_action.Grant(the_ling)
+		if(emporium_action)
+			emporium_action.Grant(the_ling)
 		if(the_ling.stat == DEAD)
 			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), (chem_storage*0.5))
 			geneticdamage = max(LING_DEAD_GENETICDAMAGE_HEAL_CAP,geneticdamage-1)
@@ -252,12 +255,6 @@
 	var/mob/living/carbon/user = owner.current
 	if(!istype(user))
 		return
-	if(stored_profiles.len)
-		var/datum/changelingprofile/prof = stored_profiles[1]
-		if(prof.dna == user.dna && stored_profiles.len >= dna_max)//If our current DNA is the stalest, we gotta ditch it.
-			if(verbose)
-				to_chat(user, "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>")
-			return
 	if(!target)
 		return
 	if(NO_DNA_COPY in target.dna.species.species_traits)
@@ -317,9 +314,6 @@
 	return prof
 
 /datum/antagonist/changeling/proc/add_profile(datum/changelingprofile/prof)
-	if(stored_profiles.len > dna_max)
-		if(!push_out_profile())
-			return
 
 	if(!first_prof)
 		first_prof = prof
@@ -339,19 +333,6 @@
 				continue
 			stored_profiles -= prof
 			qdel(prof)
-
-/datum/antagonist/changeling/proc/get_profile_to_remove()
-	for(var/datum/changelingprofile/prof in stored_profiles)
-		if(!prof.protected)
-			return prof
-
-/datum/antagonist/changeling/proc/push_out_profile()
-	var/datum/changelingprofile/removeprofile = get_profile_to_remove()
-	if(removeprofile)
-		stored_profiles -= removeprofile
-		return 1
-	return 0
-
 
 /datum/antagonist/changeling/proc/create_initial_profile()
 	var/mob/living/carbon/C = owner.current	//only carbons have dna now, so we have to typecaste
@@ -456,30 +437,21 @@
 		destroy_objective.find_target()
 		objectives += destroy_objective
 	else
-		if(prob(70))
-			var/datum/objective/assassinate/once/kill_objective = new
-			kill_objective.owner = owner
-			if(team_mode) //No backstabbing while in a team
-				kill_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
-			else
-				kill_objective.find_target()
-			objectives += kill_objective
+		var/datum/objective/assassinate/once/kill_objective = new
+		kill_objective.owner = owner
+		if(team_mode) //No backstabbing while in a team
+			kill_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
 		else
-			var/datum/objective/maroon/maroon_objective = new
-			maroon_objective.owner = owner
-			if(team_mode)
-				maroon_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
-			else
-				maroon_objective.find_target()
-			objectives += maroon_objective
+			kill_objective.find_target()
+		objectives += kill_objective
 
-			if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
-				var/datum/objective/escape/escape_with_identity/identity_theft = new
-				identity_theft.owner = owner
-				identity_theft.target = maroon_objective.target
-				identity_theft.update_explanation_text()
-				objectives += identity_theft
-				escape_objective_possible = FALSE
+		if(!(locate(/datum/objective/escape) in objectives) && escape_objective_possible && prob(50))
+			var/datum/objective/escape/escape_with_identity/identity_theft = new
+			identity_theft.owner = owner
+			identity_theft.target = kill_objective.target
+			identity_theft.update_explanation_text()
+			objectives += identity_theft
+			escape_objective_possible = FALSE
 
 	if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
 		if(prob(50))

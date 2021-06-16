@@ -174,6 +174,10 @@
 		var/atom/movable/AM = object
 		if(CHECK_BITFIELD(shield_flags, SHIELD_TRANSPARENT) && (AM.pass_flags & PASSGLASS))
 			return BLOCK_NONE
+	if(CHECK_BITFIELD(shield_flags, SHIELD_NO_RANGED) && (attack_type & ATTACK_TYPE_PROJECTILE))
+		return BLOCK_NONE
+	if(CHECK_BITFIELD(shield_flags, SHIELD_NO_MELEE) && (attack_type & ATTACK_TYPE_MELEE))
+		return BLOCK_NONE
 	if(attack_type & ATTACK_TYPE_THROWN)
 		final_block_chance += 30
 	if(attack_type & ATTACK_TYPE_TACKLE)
@@ -238,30 +242,75 @@
 	new /obj/item/shard((get_turf(src)))
 
 /obj/item/shield/riot/on_shield_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	var/final_damage = damage
+
+	if(attack_type & ATTACK_TYPE_MELEE)
+		var/obj/hittingthing = object
+		if(hittingthing.damtype == BURN)
+			if(CHECK_BITFIELD(shield_flags, SHIELD_ENERGY_WEAK))
+				final_damage *= 2
+			else if(CHECK_BITFIELD(shield_flags, SHIELD_ENERGY_STRONG))
+				final_damage *= 0.5
+
+		if(hittingthing.damtype == BRUTE)
+			if(CHECK_BITFIELD(shield_flags, SHIELD_KINETIC_WEAK))
+				final_damage *= 2
+			else if(CHECK_BITFIELD(shield_flags, SHIELD_KINETIC_STRONG))
+				final_damage *= 0.5
+
+		if(hittingthing.damtype == STAMINA || hittingthing.damtype == TOX || hittingthing.damtype == CLONE || hittingthing.damtype == BRAIN || hittingthing.damtype == OXY)
+			final_damage = 0
+
+	if(attack_type & ATTACK_TYPE_PROJECTILE)
+		var/obj/item/projectile/shootingthing = object
+		if(is_energy_reflectable_projectile(shootingthing))
+			if(CHECK_BITFIELD(shield_flags, SHIELD_ENERGY_WEAK))
+				final_damage *= 2
+			else if(CHECK_BITFIELD(shield_flags, SHIELD_ENERGY_STRONG))
+				final_damage *= 0.5
+
+		if(!is_energy_reflectable_projectile(object))
+			if(CHECK_BITFIELD(shield_flags, SHIELD_KINETIC_WEAK))
+				final_damage *= 2
+			else if(CHECK_BITFIELD(shield_flags, SHIELD_KINETIC_STRONG))
+				final_damage *= 0.5
+
+		if(shootingthing.damage_type == STAMINA)
+			if(CHECK_BITFIELD(shield_flags, SHIELD_DISABLER_DISRUPTED))
+				final_damage *= 3 //disablers melt these kinds of shields. Really meant more for holoshields.
+			else
+				final_damage = 0
+
+		if(shootingthing.damage_type == TOX || shootingthing.damage_type == CLONE || shootingthing.damage_type == BRAIN || shootingthing.damage_type == OXY)
+			final_damage = 0
+
 	if(can_shatter && (obj_integrity <= damage))
 		var/turf/T = get_turf(owner)
 		T.visible_message("<span class='warning'>[attack_text] destroys [src]!</span>")
 		shatter(owner)
 		qdel(src)
 		return FALSE
-	take_damage(damage)
+	take_damage(final_damage)
 	return ..()
 
-/obj/item/shield/riot/laser_proof
-	name = "laser resistant shield"
-	desc = "A far more frail shield made of dark glass meant to block lasers but suffers from being being weak to ballistic projectiles."
+/obj/item/shield/riot/energy_proof
+	name = "energy resistant shield"
+	desc = "An ablative shield designed to absorb and disperse energy attacks. This comes at significant cost to its ability to withstand ballistics and kinetics, breaking apart easily."
 	armor = list("melee" = 30, "bullet" = -10, "laser" = 80, "energy" = 80, "bomb" = -40, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
 	icon_state = "riot_laser"
 	item_state = "riot_laser"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
-	shield_flags = SHIELD_FLAGS_DEFAULT
+	shield_flags = SHIELD_FLAGS_DEFAULT | SHIELD_ENERGY_STRONG | SHIELD_KINETIC_WEAK
 	max_integrity = 300
 
-obj/item/shield/riot/bullet_proof
-	name = "bullet resistant shield"
-	desc = "A far more frail shield made of resistant plastics and kevlar meant to block ballistics."
+/obj/item/shield/riot/kinetic_proof
+	name = "kinetic resistant shield"
+	desc = "A polymer and ceramic shield designed to absorb ballistic projectiles and kinetic force. It doesn't do very well into energy attacks, especially from weapons that inflict burns."
 	armor = list("melee" = 30, "bullet" = 80, "laser" = 0, "energy" = 0, "bomb" = -40, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
+	icon_state = "riot_bullet"
+	item_state = "riot_bullet"
+	shield_flags = SHIELD_FLAGS_DEFAULT | SHIELD_KINETIC_STRONG | SHIELD_ENERGY_WEAK
 	max_integrity = 300
 
 /obj/item/shield/riot/roman
@@ -277,8 +326,8 @@ obj/item/shield/riot/bullet_proof
 
 /obj/item/shield/riot/roman/fake
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>. It appears to be a bit flimsy."
-	block_chance = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	shield_flags = SHIELD_ENERGY_WEAK | SHIELD_KINETIC_WEAK | SHIELD_NO_RANGED
 	max_integrity = 40
 
 /obj/item/shield/riot/roman/shatter(mob/living/carbon/human/owner)
@@ -295,13 +344,79 @@ obj/item/shield/riot/bullet_proof
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 10)
 	resistance_flags = FLAMMABLE
 	repair_material = /obj/item/stack/sheet/mineral/wood
-	block_chance = 30
-	shield_flags = SHIELD_FLAGS_DEFAULT
+	shield_flags = SHIELD_FLAGS_DEFAULT | SHIELD_ENERGY_WEAK
 	max_integrity = 150
 
 /obj/item/shield/riot/buckler/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/bang.ogg', 50)
 	new /obj/item/stack/sheet/mineral/wood(get_turf(src))
+
+/obj/item/shield/riot/flash
+	name = "strobe shield"
+	desc = "A shield with a built in, high intensity light capable of blinding and disorienting suspects. Takes regular handheld flashes as bulbs."
+	icon_state = "flashshield"
+	item_state = "flashshield"
+	var/obj/item/assembly/flash/handheld/embedded_flash
+
+/obj/item/shield/riot/flash/Initialize()
+	. = ..()
+	embedded_flash = new(src)
+
+/obj/item/shield/riot/flash/ComponentInitialize()
+	. = .. ()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/shield/riot/flash/attack(mob/living/M, mob/user)
+	. =  embedded_flash.attack(M, user)
+	update_icon()
+
+/obj/item/shield/riot/flash/attack_self(mob/living/carbon/user)
+	. = embedded_flash.attack_self(user)
+	update_icon()
+
+/obj/item/shield/riot/flash/on_shield_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	. = ..()
+	if (. && !embedded_flash.crit_fail)
+		embedded_flash.activate()
+		update_icon()
+
+
+/obj/item/shield/riot/flash/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/assembly/flash/handheld))
+		var/obj/item/assembly/flash/handheld/flash = W
+		if(flash.crit_fail)
+			to_chat(user, "<span class='warning'>No sense replacing it with a broken bulb!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>You begin to replace the bulb...</span>")
+			if(do_after(user, 20, target = user))
+				if(flash.crit_fail || !flash || QDELETED(flash))
+					return
+				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+				qdel(embedded_flash)
+				embedded_flash = flash
+				flash.forceMove(src)
+				update_icon()
+				return
+	..()
+
+/obj/item/shield/riot/flash/emp_act(severity)
+	. = ..()
+	embedded_flash.emp_act(severity)
+	update_icon()
+
+/obj/item/shield/riot/flash/update_icon_state()
+	if(!embedded_flash || embedded_flash.crit_fail)
+		icon_state = "riot"
+		item_state = "riot"
+	else
+		icon_state = "flashshield"
+		item_state = "flashshield"
+
+/obj/item/shield/riot/flash/examine(mob/user)
+	. = ..()
+	if (embedded_flash?.crit_fail)
+		. += "<span class='info'>The mounted bulb has burnt out. You can try replacing it with a new one.</span>"
 
 /obj/item/shield/riot/tele
 	name = "telescopic shield"
@@ -348,7 +463,7 @@ obj/item/shield/riot/bullet_proof
 
 /obj/item/shield/makeshift
 	name = "metal shield"
-	desc = "A large shield made of wired and welded sheets of metal. The handle is made of cloth and leather making it unwieldy."
+	desc = "A large shield made of wired and welded sheets of metal. The handle is made of cloth and leather, making it unwieldy."
 	armor = list("melee" = 25, "bullet" = 25, "laser" = 5, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 80)
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
@@ -362,33 +477,34 @@ obj/item/shield/riot/bullet_proof
 
 /obj/item/shield/riot/tower
 	name = "tower shield"
-	desc = "A massive shield that can block a lot of attacks, can take a lot of abuse before braking."
+	desc = "An immense tower shield. Designed to ensure maximum protection to the user, at the expense of mobility."
 	armor = list("melee" = 95, "bullet" = 95, "laser" = 75, "energy" = 60, "bomb" = 90, "bio" = 90, "rad" = 0, "fire" = 90, "acid" = 10) //Armor for the item, dosnt transfer to user
 	item_state = "metal"
 	icon_state = "metal"
 	force = 16
 	slowdown = 2
-	throwforce = 15 //Massive pice of metal
+	throwforce = 15 //Massive piece of metal
+	max_integrity = 600
 	w_class = WEIGHT_CLASS_HUGE
-	item_flags = SLOWS_WHILE_IN_HAND
+	item_flags = SLOWS_WHILE_IN_HAND | ITEM_CAN_BLOCK
 	shield_flags = SHIELD_FLAGS_DEFAULT
 
 /obj/item/shield/riot/tower/swat
 	name = "swat shield"
-	desc = "A massive, heavy shield that can block a lot of attacks, can take a lot of abuse before breaking."
 	max_integrity = 250
 
 /obj/item/shield/riot/implant
-	name = "telescoping shield implant"
-	desc = "A compact, arm-mounted telescopic shield. While nigh-indestructible when powered by a host user, it will eventually overload from damage. Recharges while inside its implant."
-	item_state = "metal"
-	icon_state = "metal"
+	name = "hardlight shield implant"
+	desc = "A hardlight plane of force projected from the implant. While it is capable of withstanding immense amounts of abuse, it will eventually overload from sustained impacts, especially against energy attacks. Recharges while retracted."
+	item_state = "holoshield"
+	icon_state = "holoshield"
 	slowdown = 1
 	shield_flags = SHIELD_FLAGS_DEFAULT
 	max_integrity = 100
 	obj_integrity = 100
 	can_shatter = FALSE
-	item_flags = SLOWS_WHILE_IN_HAND | ITEM_CAN_BLOCK
+	item_flags = ITEM_CAN_BLOCK
+	shield_flags = SHIELD_FLAGS_DEFAULT | SHIELD_KINETIC_STRONG | SHIELD_DISABLER_DISRUPTED
 	var/recharge_timerid
 	var/recharge_delay = 15 SECONDS
 
@@ -400,7 +516,7 @@ obj/item/shield/riot/bullet_proof
 	if(obj_integrity == 0)
 		if(ismob(loc))
 			var/mob/living/L = loc
-			playsound(src, 'sound/effects/glassbr3.ogg', 100)
+			playsound(src, "sparks", 100, TRUE)
 			L.visible_message("<span class='boldwarning'>[src] overloads from the damage sustained!</span>")
 			L.dropItemToGround(src)			//implant component catch hook will grab it.
 

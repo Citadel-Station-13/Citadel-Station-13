@@ -3,8 +3,14 @@
 	desc = "Used to order supplies, approve requests, and control the shuttle."
 	icon_screen = "supply"
 	circuit = /obj/item/circuitboard/computer/cargo
+	light_color = "#E2853D"//orange
 
+	///Can the supply console send the shuttle back and forth? Used in the UI backend.
+	var/can_send = TRUE
+	///Can this console only send requests?
 	var/requestonly = FALSE
+	///Can you approve requests placed for cargo? Works differently between the app and the computer.
+	var/can_approve_requests = TRUE
 	var/contraband = FALSE
 	var/self_paid = FALSE
 	var/safety_warning = "For safety reasons, the automated supply shuttle \
@@ -16,25 +22,21 @@
 	/// var that tracks message cooldown
 	var/message_cooldown
 	var/list/loaded_coupons
-
-	light_color = "#E2853D"//orange
+	/// var that makes express console use rockets
+	var/is_express = FALSE
 
 /obj/machinery/computer/cargo/request
 	name = "supply request console"
 	desc = "Used to request supplies from cargo."
 	icon_screen = "request"
 	circuit = /obj/item/circuitboard/computer/cargo/request
+	can_send = FALSE
+	can_approve_requests = FALSE
 	requestonly = TRUE
 
 /obj/machinery/computer/cargo/Initialize()
 	. = ..()
 	radio = new /obj/item/radio/headset/headset_cargo(src)
-	var/obj/item/circuitboard/computer/cargo/board = circuit
-	contraband = board.contraband
-	if (board.obj_flags & EMAGGED)
-		obj_flags |= EMAGGED
-	else
-		obj_flags &= ~EMAGGED
 
 /obj/machinery/computer/cargo/Destroy()
 	QDEL_NULL(radio)
@@ -64,6 +66,10 @@
 	board.obj_flags |= EMAGGED
 	update_static_data(user)
 
+/obj/machinery/computer/cargo/on_construction()
+	. = ..()
+	circuit.configure_machine(src)
+
 /obj/machinery/computer/cargo/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -81,6 +87,8 @@
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
 	data["loan"] = !!SSshuttle.shuttle_loan
 	data["loan_dispatched"] = SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched
+	data["can_send"] = can_send
+	data["can_approve_requests"] = can_approve_requests
 	var/message = "Remember to stamp and send back the supply manifests."
 	if(SSshuttle.centcom_message)
 		message = SSshuttle.centcom_message
@@ -128,14 +136,15 @@
 			"id" = pack,
 			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
 			"goody" = P.goody,
-			"private_goody" = P.goody == PACK_GOODY_PRIVATE,
 			"access" = P.access,
+			"private_goody" = P.goody == PACK_GOODY_PRIVATE,
 			"can_private_buy" = P.can_private_buy
 		))
 	return data
 
 /obj/machinery/computer/cargo/ui_act(action, params, datum/tgui/ui)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("send")
@@ -147,13 +156,13 @@
 				return
 			if(SSshuttle.supply.getDockedId() == "supply_home")
 				SSshuttle.supply.export_categories = get_export_categories()
-				SSshuttle.moveShuttle("supply", "supply_away", TRUE)
+				SSshuttle.moveShuttle(SSshuttle.supply.id, "supply_away", TRUE)
 				say("The supply shuttle is departing.")
 				investigate_log("[key_name(usr)] sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
 				investigate_log("[key_name(usr)] called the supply shuttle.", INVESTIGATE_CARGO)
 				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
-				SSshuttle.moveShuttle("supply", "supply_home", TRUE)
+				SSshuttle.moveShuttle(SSshuttle.supply.id, "supply_home", TRUE)
 			. = TRUE
 		if("loan")
 			if(!SSshuttle.shuttle_loan)
@@ -172,11 +181,17 @@
 				log_game("[key_name(usr)] accepted a shuttle loan event.")
 				. = TRUE
 		if("add")
+			if(is_express)
+				return
 			var/id = text2path(params["id"])
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				return
 			if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.contraband && !contraband) || pack.DropPodOnly)
+				return
+
+			if(self_paid && !pack.can_private_buy)
+				say("This cannot be bought privately.")
 				return
 
 			var/name = "*None Provided*"
@@ -191,9 +206,9 @@
 				rank = "Silicon"
 
 			var/datum/bank_account/account
-			if(self_paid && ishuman(usr))
-				var/mob/living/carbon/human/H = usr
-				var/obj/item/card/id/id_card = H.get_idcard(TRUE)
+			if(self_paid && isliving(usr))
+				var/mob/living/L = usr
+				var/obj/item/card/id/id_card = L.get_idcard(TRUE)
 				if(!istype(id_card))
 					say("No ID card detected.")
 					return

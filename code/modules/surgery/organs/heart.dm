@@ -97,9 +97,9 @@
 		owner.set_heartattack(TRUE)
 		failed = TRUE
 
-obj/item/organ/heart/slime
-	name = "slime heart"
-	desc = "It seems we've gotten to the slimy core of the matter."
+/obj/item/organ/heart/slime
+	name = "mitochondria"
+	desc = "The powerhouse of the cell. Or in this case, the hearty organelle of a slimeperson."
 	icon_state = "heart-s-on"
 	icon_base = "heart-s"
 
@@ -114,7 +114,7 @@ obj/item/organ/heart/slime
 	var/last_pump = 0
 	var/add_colour = TRUE //So we're not constantly recreating colour datums
 	var/pump_delay = 30 //you can pump 1 second early, for lag, but no more (otherwise you could spam heal)
-	var/blood_loss = 100 //600 blood is human default, so 5 failures (below 122 blood is where humans die because reasons?)
+	var/blood_loss = 50 //600 blood is human default, so 5 failures (below 122 blood is where humans die because reasons?)
 
 	//How much to heal per pump, negative numbers would HURT the player
 	var/heal_brute = 0
@@ -123,7 +123,11 @@ obj/item/organ/heart/slime
 
 
 /obj/item/organ/heart/cursed/attack(mob/living/carbon/human/H, mob/living/carbon/human/user, obj/target)
+
 	if(H == user && istype(H))
+		if(NOBLOOD in H.dna.species.species_traits)
+			to_chat(user, "<span class='danger'>[src] refuses to become one with [H]")
+			return
 		playsound(user,'sound/effects/singlebeat.ogg',40,1)
 		user.temporarilyRemoveItemFromInventory(src, TRUE)
 		Insert(user)
@@ -137,6 +141,8 @@ obj/item/organ/heart/slime
 	if(world.time > (last_pump + pump_delay))
 		if(ishuman(owner) && owner.client) //While this entire item exists to make people suffer, they can't control disconnects.
 			var/mob/living/carbon/human/H = owner
+			if(NOBLOOD in H.dna.species.species_traits) //Otherwise people without will be eternally stuck red
+				return
 			if(H.dna && !(NOBLOOD in H.dna.species.species_traits))
 				H.blood_volume = max(H.blood_volume - blood_loss, 0)
 				to_chat(H, "<span class = 'userdanger'>You have to keep pumping your blood!</span>")
@@ -156,6 +162,8 @@ obj/item/organ/heart/slime
 	return ..()
 
 /datum/action/item_action/organ_action/cursed_heart
+	check_flags = AB_CHECK_ALIVE //We wanna be able to do this always, else thisll just stupidly kill whoever has it
+	required_mobility_flags = NONE
 	name = "Pump your blood"
 
 //You are now brea- pumping blood manually
@@ -175,7 +183,8 @@ obj/item/organ/heart/slime
 		var/mob/living/carbon/human/H = owner
 		if(istype(H))
 			if(H.dna && !(NOBLOOD in H.dna.species.species_traits))
-				H.blood_volume = min(H.blood_volume + cursed_heart.blood_loss*0.5, BLOOD_VOLUME_MAXIMUM)
+				if(H.blood_volume < BLOOD_VOLUME_NORMAL) //We don't need to go too high, otherwise we get annoying messages.
+					H.blood_volume = min(H.blood_volume + cursed_heart.blood_loss * 0.5, BLOOD_VOLUME_MAXIMUM)
 				H.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 				cursed_heart.add_colour = TRUE
 				H.adjustBruteLoss(-cursed_heart.heal_brute)
@@ -184,49 +193,71 @@ obj/item/organ/heart/slime
 
 
 /datum/client_colour/cursed_heart_blood
-	priority = 100 //it's an indicator you're dieing, so it's very high priority
+	priority = 100 //it's an indicator you're dying, so it's very high priority
 	colour = "red"
 
 /obj/item/organ/heart/cybernetic
-	name = "cybernetic heart"
-	desc = "An electronic device designed to mimic the functions of an organic human heart. Offers no benefit over an organic heart other than being easy to make."
+	name = "basic cybernetic heart"
+	desc = "A basic electronic device designed to mimic the functions of an organic human heart."
 	icon_state = "heart-c"
 	organ_flags = ORGAN_SYNTHETIC
+	maxHealth = STANDARD_ORGAN_THRESHOLD*0.75 //This also hits defib timer, so a bit higher than its less important counterparts
+
+	var/dose_available = FALSE
+	var/rid = /datum/reagent/medicine/epinephrine
+	var/ramount = 10
+	var/emp_vulnerability = 1 //The value the severity of emps are divided by to determine the likelihood of permanent damage.
+
+/obj/item/organ/heart/cybernetic/tier2
+	name = "cybernetic heart"
+	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma."
+	icon_state = "heart-c-u"
+	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
+	dose_available = TRUE
+	emp_vulnerability = 2
+
+/obj/item/organ/heart/cybernetic/tier3
+	name = "upgraded cybernetic heart"
+	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma. This upgraded model can regenerate its dose after use."
+	icon_state = "heart-c-u2"
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
+	dose_available = TRUE
+	rid = /datum/reagent/medicine/atropine
+	ramount = 5
+	emp_vulnerability = 3
 
 /obj/item/organ/heart/cybernetic/emp_act(severity)
 	. = ..()
+
+	// If the owner doesn't need a heart, we don't need to do anything with it.
+	if(!owner.needs_heart())
+		return
+
 	if(. & EMP_PROTECT_SELF)
 		return
-	Stop()
-	addtimer(CALLBACK(src, .proc/Restart), 0.2*severity SECONDS)
-	damage += severity
+	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
+		owner.Dizzy(10)
+		owner.losebreath += 10
+		COOLDOWN_START(src, severe_cooldown, 20 SECONDS)
+	if(prob(severity/emp_vulnerability)) //Chance of permanent effects
+		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+		Stop()
+		owner.visible_message("<span class='danger'>[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!</span>", \
+						"<span class='userdanger'>You feel a terrible pain in your chest, as if your heart has stopped!</span>")
+		addtimer(CALLBACK(src, .proc/Restart), 10 SECONDS)
 
-/obj/item/organ/heart/cybernetic/upgraded
-	name = "upgraded cybernetic heart"
-	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma. This upgraded model can regenerate its dose after use."
-	icon_state = "heart-c-u"
-	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
-
-	//I put it on upgraded for now.
-	var/dose_available = TRUE
-	var/rid = /datum/reagent/medicine/epinephrine
-	var/ramount = 10
-
-obj/item/organ/heart/cybernetic/upgraded/on_life()
+/obj/item/organ/heart/cybernetic/on_life(delta_time, times_fired)
 	. = ..()
-	if(!.)
-		return
 	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(rid))
-		owner.reagents.add_reagent(rid, ramount)
 		used_dose()
-	if(ramount < 10) //eats your nutrition to regen epinephrine
-		var/regen_amount = owner.nutrition/2000
-		owner.adjust_nutrition(-regen_amount)
-		ramount += regen_amount
 
-/obj/item/organ/heart/cybernetic/upgraded/proc/used_dose()
+/obj/item/organ/heart/cybernetic/proc/used_dose()
+	owner.reagents.add_reagent(rid, ramount)
+	dose_available = FALSE
+
+/obj/item/organ/heart/cybernetic/tier3/used_dose()
+	. = ..()
 	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 5 MINUTES)
-	ramount = 0
 
 /obj/item/organ/heart/ipc
 	name = "IPC heart"

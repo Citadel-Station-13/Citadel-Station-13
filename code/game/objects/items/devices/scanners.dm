@@ -155,7 +155,7 @@ GENETICS SCANNER
 	if(oxy_loss > 10)
 		msg += "\n\t<span class='info'><span class='alert'>[oxy_loss > 50 ? "Severe" : "Minor"] oxygen deprivation detected.</span>"
 	if(tox_loss > 10)
-		msg += "\n\t<span class='alert'>[tox_loss > 50 ? "Severe" : "Minor"] amount of toxin damage detected.</span>"
+		msg += "\n\t<span class='alert'>[tox_loss > 50 ? "Severe" : "Minor"] amount of [HAS_TRAIT(M, TRAIT_ROBOTIC_ORGANISM) ? "system corruption" : "toxin damage"] detected.</span>"
 	if(M.getStaminaLoss())
 		msg += "\n\t<span class='alert'>Subject appears to be suffering from fatigue.</span>"
 		if(advanced)
@@ -182,7 +182,7 @@ GENETICS SCANNER
 							<td style='width: 90px;'><font color='#0000CC'>Damage:</font></td>\
 							<td style='width: 55px;'><font color='red'><b>Brute</b></font></td>\
 							<td style='width: 45px;'><font color='orange'><b>Burn</b></font></td>\
-							<td style='width: 45px;'><font color='green'><b>Toxin</b></font></td>\
+							<td style='width: 45px;'><font color='green'><b>[HAS_TRAIT(C, TRAIT_ROBOTIC_ORGANISM) ? "Corruption" :"Toxin"]</b></font></td>\
 							<td style='width: 90px;'><font color='purple'><b>Suffocation</b></font></td></tr>\
 							<tr><td><font color='#0000CC'>Overall:</font></td>\
 							<td><font color='red'>[brute_loss]</font></td>\
@@ -306,18 +306,6 @@ GENETICS SCANNER
 				if(T.name == "fluffy tongue")
 					temp_message += " <span class='danger'>Subject is suffering from a fluffified tongue. Suggested cure: Yamerol or a tongue transplant.</span>"
 
-			//HECK
-			else if(istype(O, /obj/item/organ/genital/penis))
-				var/obj/item/organ/genital/penis/P = O
-				if(P.length>20)
-					temp_message += " <span class='info'>Subject has a sizeable gentleman's organ at [P.length] inches.</span>"
-
-			else if(istype(O, /obj/item/organ/genital/breasts))
-				var/obj/item/organ/genital/breasts/Br = O
-				if(Br.cached_size>5)
-					temp_message += " <span class='info'>Subject has a sizeable bosom with a [Br.size] cup.</span>"
-
-
 
 			//GENERAL HANDLER
 			if(!damage_message)
@@ -393,8 +381,8 @@ GENETICS SCANNER
 		else if (S.mutantstomach != initial(S.mutantstomach))
 			mutant = TRUE
 
-		msg += "\t<span class='info'>Reported Species: [H.dna.custom_species ? H.dna.custom_species : S.name]</span>\n"
-		msg += "\t<span class='info'>Base Species: [S.name]</span>\n"
+		msg += "\t<span class='info'>Reported Species: [H.spec_trait_examine_font()][H.dna.custom_species ? H.dna.custom_species : S.name]</font></span>\n"
+		msg += "\t<span class='info'>Base Species: [H.spec_trait_examine_font()][S.name]</font></span>\n"
 		if(mutant)
 			msg += "\t<span class='info'>Subject has mutations present.</span>\n"
 	msg += "\t<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
@@ -628,9 +616,9 @@ GENETICS SCANNER
 	var/turf/location = get_turf(user)
 	if(!istype(location))
 		return
-	
+
 	scan_turf(user, location)
-	
+
 /obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	. = ..()
 
@@ -905,7 +893,7 @@ GENETICS SCANNER
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=200)
 	var/list/discovered = list() //hit a dna console to update the scanners database
-	var/list/buffer
+	buffer = list()
 	var/ready = TRUE
 	var/cooldown = 200
 

@@ -26,6 +26,7 @@ SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
 	spacewalk = TRUE
 	icon_state = "mega_legion"
 	icon_living = "mega_legion"
+	health_doll_icon = "mega_legion"
 	desc = "One of many."
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
 	attack_verb_continuous = "chomps"
@@ -42,8 +43,9 @@ SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
 	retreat_distance = 5
 	minimum_distance = 5
 	ranged_cooldown_time = 10
-	medal_type = BOSS_MEDAL_LEGION
-	score_type = LEGION_SCORE
+	achievement_type = /datum/award/achievement/boss/legion_kill
+	crusher_achievement_type = /datum/award/achievement/boss/legion_crusher
+	score_achievement_type = /datum/award/score/legion_score
 	pixel_y = -16
 	pixel_x = -32
 	loot = list(/obj/item/stack/sheet/bone = 3)
@@ -200,7 +202,7 @@ SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
 		loot = list(/obj/item/staff/storm)
 		elimination = FALSE
 	else if(prob(20)) //20% chance for sick lootz.
-		loot = list(/obj/structure/closet/crate/necropolis/tendril)
+		loot = list(/obj/structure/closet/crate/necropolis/tendril/all)
 		if(!true_spawn)
 			loot = null
 	return ..()
@@ -263,6 +265,7 @@ SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
 /obj/item/staff/storm
 	name = "staff of storms"
 	desc = "An ancient staff retrieved from the remains of Legion. The wind stirs as you move it."
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	icon_state = "staffofstorms"
 	item_state = "staffofstorms"
 	icon = 'icons/obj/guns/magic.dmi'

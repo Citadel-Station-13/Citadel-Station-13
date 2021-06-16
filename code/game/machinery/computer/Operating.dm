@@ -88,6 +88,7 @@
 			data["patient"]["fireLoss"] = patient.getFireLoss()
 			data["patient"]["toxLoss"] = patient.getToxLoss()
 			data["patient"]["oxyLoss"] = patient.getOxyLoss()
+			data["patient"]["is_robotic_organism"] = HAS_TRAIT(patient, TRAIT_ROBOTIC_ORGANISM)
 			if(patient.surgeries.len)
 				data["procedures"] = list()
 				for(var/datum/surgery/procedure in patient.surgeries)

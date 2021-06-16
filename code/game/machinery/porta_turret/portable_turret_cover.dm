@@ -37,7 +37,7 @@
 
 
 /obj/machinery/porta_turret_cover/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench) && !parent_turret.on)
+	if(I.tool_behaviour == TOOL_WRENCH && !parent_turret.on)
 		if(parent_turret.raised)
 			return
 
@@ -60,10 +60,9 @@
 			updateUsrDialog()
 		else
 			to_chat(user, "<span class='notice'>Access denied.</span>")
-	else if(istype(I, /obj/item/multitool) && !parent_turret.locked)
-		var/obj/item/multitool/M = I
-		M.buffer = parent_turret
-		to_chat(user, "<span class='notice'>You add [parent_turret] to multitool buffer.</span>")
+	else if(I.tool_behaviour == TOOL_MULTITOOL && !parent_turret.locked)
+		I.buffer = parent_turret
+		to_chat(user, "<span class='notice'>You add [parent_turret] to [I]'s buffer.</span>")
 	else
 		return ..()
 

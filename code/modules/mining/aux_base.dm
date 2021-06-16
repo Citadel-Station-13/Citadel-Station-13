@@ -25,7 +25,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/possible_destinations
 	clockwork = TRUE
 	var/obj/item/gps/internal/base/locator
-	circuit = /obj/item/circuitboard/computer/auxillary_base
+	circuit = /obj/item/circuitboard/computer/auxiliary_base
 
 /obj/machinery/computer/auxillary_base/Initialize()
 	. = ..()

@@ -196,8 +196,8 @@
 	icon_state = "inje_map-1"
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/layer3
-	piping_layer = 2
-	icon_state = "inje_map-2"
+	piping_layer = 3
+	icon_state = "inje_map-3"
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/on
 	on = TRUE
@@ -207,8 +207,8 @@
 	icon_state = "inje_map-1"
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer3
-	piping_layer = 2
-	icon_state = "inje_map-2"
+	piping_layer = 3
+	icon_state = "inje_map-3"
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos
 	frequency = FREQ_ATMOS_STORAGE

@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(min_spawns)
 	name = "Minimum Spawns" /// this hot steaming pile of garbage makes sure theres a minimum of tendrils scattered around
 	init_order = INIT_ORDER_DEFAULT
-	flags = SS_BACKGROUND | SS_NO_FIRE | SS_ALWAYS_SHOW_STAT
+	flags = SS_NO_FIRE | SS_NO_INIT
 	wait = 2
 	var/where_we_droppin_boys_iterations = 0
 	var/snaxi_snowflake_check = FALSE
@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 					continue
 				if(typesof(/turf/open/lava) in orange(9, TT))
 					continue
-				valid_mining_turfs_2.Add(TT)	
+				valid_mining_turfs_2.Add(TT)
 	else
 		for(var/z_level in SSmapping.levels_by_trait(ZTRAIT_LAVA_RUINS))
 			for(var/turf/TT in Z_TURFS(z_level))
@@ -103,14 +103,14 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 		for(var/mob/living/simple_animal/hostile/megafauna/H in urange(70,RT)) //prevents mob clumps
 			if((istype(MS_tospawn, /mob/living/simple_animal/hostile/megafauna)) && get_dist(RT, H) <= 70)
 				active_spawns.Add(MS_tospawn)
-				continue //let's try not to dump megas too close to each other?	
+				continue //let's try not to dump megas too close to each other?
 			if((istype(MS_tospawn, /obj/structure/spawner)) && get_dist(RT, H) <= 40)
 				active_spawns.Add(MS_tospawn)
 				continue //let's at least /try/ to space these out?
 		for(var/obj/structure/spawner/LT in urange(70,RT)) //prevents tendril/mega clumps
 			if((istype(MS_tospawn, /mob/living/simple_animal/hostile/megafauna)) && get_dist(RT, LT) <= 70)
 				active_spawns.Add(MS_tospawn)
-				continue //let's try not to dump megas too close to each other?	
+				continue //let's try not to dump megas too close to each other?
 			if((istype(MS_tospawn, /obj/structure/spawner)) && get_dist(RT, LT) <= 40)
 				active_spawns.Add(MS_tospawn)
 				continue //let's at least /try/ to space these out?
@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 		for(var/mob/living/simple_animal/hostile/H in urange(70,RT2)) //prevents mob clumps
 			if((istype(MS2_tospawn, /mob/living/simple_animal/hostile/megafauna) || ismegafauna(H)) && get_dist(RT2, H) <= 70)
 				active_spawns_2.Add(MS2_tospawn)
-				continue //let's try not to dump megas too close to each other?	
+				continue //let's try not to dump megas too close to each other?
 			if((istype(MS2_tospawn, /obj/structure/spawner)) && get_dist(RT2, H) <= 40)
 				active_spawns_2.Add(MS2_tospawn)
 				continue //let's at least /try/ to space these out?

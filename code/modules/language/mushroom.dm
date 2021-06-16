@@ -6,6 +6,8 @@
 	exclaim_verb = "poofs loudly"
 	whisper_verb = "puffs quietly"
 	key = "y"
+	flags = TONGUELESS_SPEECH
 	sentence_chance = 0
 	default_priority = 80
 	syllables = list("poof", "pff", "pFfF", "piff", "puff", "pooof", "pfffff", "piffpiff", "puffpuff", "poofpoof", "pifpafpofpuf")
+	chooseable_roundstart = TRUE

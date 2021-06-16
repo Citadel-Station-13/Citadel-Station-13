@@ -98,9 +98,17 @@
 	item = /obj/item/clothing/gloves/tackler/combat/insulated
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	cost = 2
+	illegal_tech = FALSE
 
 /datum/uplink_item/device_tools/syndicate_eyepatch
 	name = "Mechanical Eyepatch"
 	desc = "An eyepatch that connects itself to your eye socket, enhancing your shooting to an impossible degree, allowing your bullets to ricochet far more often than usual."
 	item = /obj/item/clothing/glasses/eyepatch/syndicate
-	cost = 8
+	cost = 4
+
+/datum/uplink_item/device_tools/ablative_armwraps
+	name = "Ablative Armwraps"
+	desc = "A pair of highly reinforced armwraps allowing the user to parry almost anything. Fully reflects projectiles, no downsides to failing, but is very hard to parry melee with."
+	cost = 6
+	item = /obj/item/clothing/gloves/fingerless/ablative
+	exclude_modes = list(/datum/game_mode/nuclear)

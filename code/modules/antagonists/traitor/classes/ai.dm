@@ -9,7 +9,7 @@
 		objective_count += forge_single_objective()
 
 	for(var/i = objective_count, i < CONFIG_GET(number/traitor_objectives_amount), i++)
-		var/datum/objective/assassinate/kill_objective = new
+		var/datum/objective/assassinate/once/kill_objective = new
 		kill_objective.owner = T.owner
 		kill_objective.find_target()
 		T.add_objective(kill_objective)

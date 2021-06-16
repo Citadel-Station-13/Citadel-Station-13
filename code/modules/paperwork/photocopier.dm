@@ -1,19 +1,19 @@
 
 /// For use with the `color_mode` var. Photos will be printed in greyscale while the var has this value.
-#define PHOTO_GREYSCALE	"Greyscale"
+#define PHOTO_GREYSCALE "Greyscale"
 /// For use with the `color_mode` var. Photos will be printed in full color while the var has this value.
-#define PHOTO_COLOR		"Color"
+#define PHOTO_COLOR "Color"
 
 /// How much toner is used for making a copy of a paper.
-#define PAPER_TONER_USE		0.125
+#define PAPER_TONER_USE 0.125
 /// How much toner is used for making a copy of a photo.
-#define PHOTO_TONER_USE		0.625
+#define PHOTO_TONER_USE 0.625
 /// How much toner is used for making a copy of a document.
-#define DOCUMENT_TONER_USE	0.75
+#define DOCUMENT_TONER_USE 0.75
 /// How much toner is used for making a copy of an ass.
-#define ASS_TONER_USE		0.625
+#define ASS_TONER_USE 0.625
 /// The maximum amount of copies you can make with one press of the copy button.
-#define MAX_COPIES_AT_ONCE	10
+#define MAX_COPIES_AT_ONCE 10
 
 /obj/machinery/photocopier
 	name = "photocopier"
@@ -46,7 +46,7 @@
 
 /obj/machinery/photocopier/Initialize()
 	. = ..()
-	//AddComponent(/datum/component/payment, 5, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
+	// AddComponent(/datum/component/payment, 5, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
 	toner_cartridge = new(src)
 
 /obj/machinery/photocopier/ui_interact(mob/user, datum/tgui/ui)
@@ -82,7 +82,8 @@
 	return data
 
 /obj/machinery/photocopier/ui_act(action, list/params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -187,13 +188,12 @@
  */
 /obj/machinery/photocopier/proc/do_copy_loop(datum/callback/copy_cb, mob/user)
 	busy = TRUE
-	var/num_loops
-	for(var/i in 1 to num_copies)
-		//if(attempt_charge(src, user) & COMPONENT_OBJ_CANCEL_CHARGE)
-		//	break
+	var/i
+	for(i in 1 to num_copies)
+		// if(attempt_charge(src, user) & COMPONENT_OBJ_CANCEL_CHARGE)
+		// 	break
 		addtimer(copy_cb, i SECONDS)
-		num_loops++
-	addtimer(CALLBACK(src, .proc/reset_busy), num_loops SECONDS)
+	addtimer(CALLBACK(src, .proc/reset_busy), i SECONDS)
 
 /**
  * Sets busy to `FALSE`. Created as a proc so it can be used in callbacks.
@@ -210,8 +210,8 @@
  * * copied_item - The paper, document, or photo that was just spawned on top of the printer.
  */
 /obj/machinery/photocopier/proc/give_pixel_offset(obj/item/copied_item)
-	copied_item.pixel_x = rand(-10, 10)
-	copied_item.pixel_y = rand(-10, 10)
+	copied_item.pixel_x = initial(copied_item.pixel_x) + rand(-10, 10)
+	copied_item.pixel_y = initial(copied_item.pixel_y) + rand(-10, 10)
 
 /**
  * Handles the copying of devil contract paper. Transfers all the text, stamps and so on from the old paper, to the copy.
@@ -242,8 +242,8 @@
 		copied_paper.info = "<font color = #808080>"
 
 	var/copied_info = paper_copy.info
-	copied_info = replacetext(copied_info, "<font face=\"[PEN_FONT]\" color=", "<font face=\"[PEN_FONT]\" nocolor=")	//state of the art techniques in action
-	copied_info = replacetext(copied_info, "<font face=\"[CRAYON_FONT]\" color=", "<font face=\"[CRAYON_FONT]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+	copied_info = replacetext(copied_info, "<font face=\"[PEN_FONT]\" color=", "<font face=\"[PEN_FONT]\" nocolor=") //state of the art techniques in action
+	copied_info = replacetext(copied_info, "<font face=\"[CRAYON_FONT]\" color=", "<font face=\"[CRAYON_FONT]\" nocolor=") //This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
 	copied_paper.info += copied_info
 	copied_paper.info += "</font>"
 	copied_paper.name = paper_copy.name
@@ -287,17 +287,22 @@
 /obj/machinery/photocopier/proc/make_ass_copy()
 	if(!check_ass())
 		return
-	if(ishuman(ass)) //(ass.get_item_by_slot(ITEM_SLOT_ICLOTHING) || ass.get_item_by_slot(ITEM_SLOT_OCLOTHING)))
-		var/mob/living/carbon/C = ass //have to typecast to this, is_groin_exposed is carbon level
-		if(C.is_groin_exposed())
-			to_chat(usr, "<span class='notice'>You feel kind of silly, copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "[ass.p_their()]"] clothes on.</span>" )
-			return
+	if(ishuman(ass) && (ass.get_item_by_slot(ITEM_SLOT_ICLOTHING) || ass.get_item_by_slot(ITEM_SLOT_OCLOTHING)))
+		to_chat(usr, "<span class='notice'>You feel kind of silly, copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "[ass.p_their()]"] clothes on.</span>" )
+		return
 
 	var/icon/temp_img
-	if(isalienadult(ass) || istype(ass, /mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
+	if(ishuman(ass))
+		var/mob/living/carbon/human/H = ass
+		var/datum/species/spec = H.dna.species
+		if(spec.ass_image)
+			temp_img = icon(spec.ass_image)
+		else
+			temp_img = icon(ass.gender == FEMALE ? 'icons/ass/assfemale.png' : 'icons/ass/assmale.png')
+	else if(isalienadult(ass) || istype(ass, /mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
 		temp_img = icon('icons/ass/assalien.png')
-	else if(ishuman(ass)) //Suit checks are after check_ass
-		temp_img = icon(ass.gender == FEMALE ? 'icons/ass/assfemale.png' : 'icons/ass/assmale.png')
+	else if(issilicon(ass))
+		temp_img = icon('icons/ass/assmachine.png')
 	else if(isdrone(ass)) //Drones are hot
 		temp_img = icon('icons/ass/assdrone.png')
 
@@ -479,6 +484,7 @@
  */
 /obj/item/toner
 	name = "toner cartridge"
+	desc = "A small, lightweight cartridge of NanoTrasen ValueBrand toner. Fits photocopiers and autopainters alike."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "tonercartridge"
 	grind_results = list(/datum/reagent/iodine = 40, /datum/reagent/iron = 10)
@@ -487,9 +493,10 @@
 
 /obj/item/toner/large
 	name = "large toner cartridge"
+	desc = "A hefty cartridge of NanoTrasen ValueBrand toner. Fits photocopiers and autopainters alike."
 	grind_results = list(/datum/reagent/iodine = 90, /datum/reagent/iron = 10)
-	charges = 15
-	max_charges = 15
+	charges = 25
+	max_charges = 25
 
 /obj/item/toner/extreme
 	name = "extremely large toner cartridge"

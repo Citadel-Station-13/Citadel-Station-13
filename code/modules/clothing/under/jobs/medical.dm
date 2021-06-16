@@ -131,7 +131,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0, "wound" = 5)
 
 /obj/item/clothing/under/rank/medical/doctor/util
-	name = "Medical Utility Uniform"
+	name = "medical utility uniform"
 	desc = "Utility jumpsuit for medical personnel"
 	icon_state = "utilmed"
 	item_state = "utilmed"

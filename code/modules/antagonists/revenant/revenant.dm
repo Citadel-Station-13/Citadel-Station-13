@@ -1,6 +1,6 @@
 //Revenants: based off of wraiths from Goon
 //"Ghosts" that are invisible and move like ghosts, cannot take damage while invisible
-//Don't hear deadchat and are NOT normal ghosts
+//Can hear deadchat, but are NOT normal ghosts and do NOT have x-ray vision
 //Admin-spawn or random event
 
 #define INVISIBILITY_REVENANT 50
@@ -63,6 +63,7 @@
 	var/essence_regenerating = TRUE //If the revenant regenerates essence or not
 	var/essence_regen_amount = 5 //How much essence regenerates
 	var/essence_accumulated = 0 //How much essence the revenant has stolen
+	var/essence_excess = 0 //How much stolen essence available for unlocks
 	var/revealed = FALSE //If the revenant can take damage from normal sources.
 	var/unreveal_time = 0 //How long the revenant is revealed for, is about 2 seconds times this var.
 	var/unstun_time = 0 //How long the revenant is stunned for, is about 2 seconds times this var.
@@ -72,9 +73,11 @@
 	var/list/drained_mobs = list() //Cannot harvest the same mob twice
 	var/perfectsouls = 0 //How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
 	var/generated_objectives_and_spells = FALSE
+	var/telekinesis_cooldown
 
 /mob/living/simple_animal/revenant/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/telepathy/revenant(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
@@ -93,13 +96,16 @@
 
 /mob/living/simple_animal/revenant/Login()
 	..()
-	to_chat(src, "<span class='deadsay'><span class='big bold'>You are a revenant.</span></span>")
-	to_chat(src, "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>")
-	to_chat(src, "<b>You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.</b>")
-	to_chat(src, "<b>You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.</b>")
-	to_chat(src, "<b>To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.</b>")
-	to_chat(src, "<b><i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i></b>")
-	to_chat(src, "<b>Be sure to read <a href=\"https://tgstation13.org/wiki/Revenant\">the wiki page</a> to learn more.</b>")
+	var/revenant_greet
+	revenant_greet += "<span class='deadsay'><span class='big bold'>You are a revenant.</span></span>"
+	revenant_greet += "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>"
+	revenant_greet += "<b>You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.</b>"
+	revenant_greet += "<b>You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.</b>"
+	revenant_greet += "<b>To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.</b>"
+	revenant_greet += "<b><i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i></b>"
+	revenant_greet += "<b>Be sure to read <a href=\"https://tgstation13.org/wiki/Revenant\">the wiki page</a> to learn more.</b>"
+	revenant_greet += "<b>You are also able to telekinetically throw objects by clickdragging them.</b>"
+	to_chat(src, revenant_greet)
 	if(!generated_objectives_and_spells)
 		generated_objectives_and_spells = TRUE
 		mind.assigned_role = ROLE_REVENANT
@@ -134,6 +140,7 @@
 	. = ..()
 	. += "Current essence: [essence]/[essence_regen_cap]E"
 	. += "Stolen essence: [essence_accumulated]E"
+	. += "Unused stolen essence: [essence_excess]E)"
 	. += "Stolen perfect souls: [perfectsouls]"
 
 /mob/living/simple_animal/revenant/update_health_hud()
@@ -169,6 +176,9 @@
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
+
+/mob/living/simple_animal/revenant/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	return power
 
 /mob/living/simple_animal/revenant/blob_act(obj/structure/blob/B)
 	return //blah blah blobs aren't in tune with the spirit world, or something.
@@ -300,22 +310,36 @@
 		return FALSE
 	return TRUE
 
+/mob/living/simple_animal/revenant/proc/unlock(essence_cost)
+	if(essence_excess < essence_cost)
+		return FALSE
+	essence_excess -= essence_cost
+	update_action_buttons_icon()
+	return TRUE
+
 /mob/living/simple_animal/revenant/proc/change_essence_amount(essence_amt, silent = FALSE, source = null)
 	if(!src)
 		return
-	if(essence + essence_amt <= 0)
+	if(essence + essence_amt < 0)
 		return
 	essence = max(0, essence+essence_amt)
-	update_action_buttons_icon()
 	update_health_hud()
 	if(essence_amt > 0)
 		essence_accumulated = max(0, essence_accumulated+essence_amt)
+		essence_excess = max(0, essence_excess+essence_amt)
+	update_action_buttons_icon()
 	if(!silent)
 		if(essence_amt > 0)
 			to_chat(src, "<span class='revennotice'>Gained [essence_amt]E[source ? " from [source]":""].</span>")
 		else
 			to_chat(src, "<span class='revenminor'>Lost [essence_amt]E[source ? " from [source]":""].</span>")
 	return 1
+
+/mob/living/simple_animal/revenant/proc/telekinesis_cooldown_end()
+	if(!telekinesis_cooldown)
+		CRASH("telekinesis_cooldown_end ran when telekinesis_cooldown on [src] was false")
+	else
+		telekinesis_cooldown = FALSE
 
 /mob/living/simple_animal/revenant/proc/death_reset()
 	revealed = FALSE
@@ -431,12 +455,44 @@
 		qdel(revenant)
 	..()
 
+/proc/RevenantThrow(over, mob/user, obj/item/throwable)
+	var/mob/living/simple_animal/revenant/spooker = user
+	if(!istype(throwable))
+		return
+	if(!throwable.anchored && !spooker.telekinesis_cooldown && spooker.essence > 20)
+		if(7 < get_dist(throwable, spooker))
+			return
+		if(3 >=  get_dist(throwable, spooker))
+			spooker.stun(10)
+			spooker.reveal(25)
+		else
+			spooker.stun(20)
+			spooker.reveal(50)
+		spooker.change_essence_amount(-20, FALSE, "telekinesis")
+		spooker.telekinesis_cooldown = TRUE
+		throwable.float(TRUE, TRUE)
+		sleep(20)
+		throwable.DoRevenantThrowEffects(over)
+		throwable.throw_at(over, 10, 2)
+		ADD_TRAIT(throwable, TRAIT_SPOOKY_THROW, "revenant")
+		log_combat(throwable, over, "spooky telekinesised at", throwable)
+		var/obj/effect/temp_visual/telekinesis/T = new(get_turf(throwable))
+		T.color = "#8715b4"
+		addtimer(CALLBACK(spooker, /mob/living/simple_animal/revenant.proc/telekinesis_cooldown_end), 50)
+		sleep(5)
+		throwable.float(FALSE, TRUE)
+
+
+//Use this for effects you want to happen when a revenant throws stuff, check the TRAIT_SPOOKY_THROW if you want to know if its still being thrown
+/obj/item/proc/DoRevenantThrowEffects(atom/target)
+	return TRUE
+
 //objectives
 /datum/objective/revenant
 	var/targetAmount = 100
 
 /datum/objective/revenant/New()
-	targetAmount = rand(350,600)
+	targetAmount = rand(150,300)
 	explanation_text = "Absorb [targetAmount] points of essence from humans."
 	..()
 

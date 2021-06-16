@@ -24,7 +24,7 @@
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/under/rank/civilian/util
-	name = "generic utility uniform"
+	name = "utility uniform"
 	desc = "A utility uniform worn by various crew."
 	icon_state = "utilgen"
 	item_state = "utilgen"
@@ -198,6 +198,15 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/under/rank/civilian/janitor/maid/polychromic
+	icon_state = "polymaid"
+	item_state = "polymaid"
+	var/list/poly_colors = list("#FFFFFF", "#000000")
+
+/obj/item/clothing/under/rank/civilian/janitor/maid/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, poly_colors, 2)
 
 /obj/item/clothing/under/rank/civilian/lawyer
 	desc = "Slick threads."

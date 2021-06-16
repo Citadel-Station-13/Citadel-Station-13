@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
- em {
+em {
   font-style: normal;
   font-weight: bold;
 }
@@ -255,7 +255,7 @@ a.popt {
 /* ADD HERE FOR ITALIC */
 
 
-.italic, .italics, .emote {
+.italic, .italics {
   font-style: italic;
 }
 
@@ -338,7 +338,7 @@ em {
   font-weight: bold;
 }
 
-.say {
+.say, .emote, .infoplain {
 }
 
 .deadsay {
@@ -417,10 +417,6 @@ em {
   color: #d82020;
 }
 
-.emote {
-  font-style: italic;
-}
-
 .userdanger {
   color: #c51e1e;
   font-weight: bold;
@@ -457,6 +453,11 @@ em {
   font-weight: bold;
 }
 
+.minorannounce {
+  font-weight: bold;
+  font-size: 185%;
+}
+
 .greenannounce {
   color: #059223;
   font-weight: bold;
@@ -476,11 +477,21 @@ em {
 
 .tinynotice {
   color: #6685f5;
+  font-size: 85%;
+}
+
+.tinynoticeital {
+  color: #6685f5;
   font-style: italic;
   font-size: 85%;
 }
 
 .smallnotice {
+  color: #6685f5;
+  font-size: 90%;
+}
+
+.smallnoticeital {
   color: #6685f5;
   font-style: italic;
   font-size: 90%;
@@ -531,6 +542,7 @@ em {
   color: #059223;
 }
 
+/* hornichems */
 .userlove {
   color: #ff42a6;
   font-style: italic;
@@ -545,40 +557,40 @@ em {
 }
 
 .cult {
-  color: #aa1c1c;
+  color: #973e3b;
 }
 
 .cultitalic {
-  color: #aa1c1c;
+  color: #973e3b;
   font-style: italic;
 }
 
 .cultbold {
-  color: #aa1c1c;
+  color: #973e3b;
   font-style: italic;
   font-weight: bold;
 }
 
 .cultboldtalic {
-  color: #aa1c1c;
+  color: #973e3b;
   font-weight: bold;
   font-size: 185%;
 }
 
 .cultlarge {
-  color: #aa1c1c;
+  color: #973e3b;
   font-weight: bold;
   font-size: 185%;
 }
 
 .narsie {
-  color: #aa1c1c;
+  color: #973e3b;
   font-weight: bold;
   font-size: 925%;
 }
 
 .narsiesmall {
-  color: #aa1c1c;
+  color: #973e3b;
   font-weight: bold;
   font-size: 370%;
 }
@@ -655,7 +667,7 @@ em {
 }
 
 .deconversion_message {
-  color: #5000A0;
+  color: #a947ff;
   font-size: 185%;
   font-style: italic;
 }
@@ -838,9 +850,14 @@ em {
   font-family: "Courier New", cursive, sans-serif;
 }
 
+.tape_recorder {
+  color: #FF0000;
+  font-family: "Courier New", cursive, sans-serif;
+}
+
 .command_headset {
   font-weight: bold;
-  font-size: 160%;
+  font-size: 125%;
 }
 
 .small {
@@ -876,7 +893,7 @@ em {
 
 .clown {
   color: #ff70c1;
-  font-size: 160%;
+  font-size: 125%;
   font-family: "Comic Sans MS", cursive, sans-serif;
   font-weight: bold;
 }
@@ -892,6 +909,7 @@ em {
   font-style: italic;
 }
 
+/*jacq */
 .spooky {
   color: #FF9100;
 }

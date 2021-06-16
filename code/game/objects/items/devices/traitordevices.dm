@@ -69,8 +69,7 @@ effective or pretty fucking useless.
 */
 
 /obj/item/healthanalyzer/rad_laser
-	custom_materials = list(/datum/material/iron=400)
-	var/irradiate = 1
+	var/irradiate = TRUE
 	var/intensity = 10 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds
 	var/used = 0 // is it cooling down?
@@ -92,16 +91,16 @@ effective or pretty fucking useless.
 		addtimer(VARSET_CALLBACK(src, used, FALSE), cooldown)
 		addtimer(VARSET_CALLBACK(src, icon_state, "health"), cooldown)
 		to_chat(user, "<span class='warning'>Successfully irradiated [M].</span>")
-		addtimer(CALLBACK(src, .proc/radiation_aftereffect, M), (wavelength+(intensity*4))*5)
+		addtimer(CALLBACK(src, .proc/radiation_aftereffect, M, intensity), (wavelength+(intensity*4))*5)
 	else
 		to_chat(user, "<span class='warning'>The radioactive microlaser is still recharging.</span>")
 
-/obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M)
-	if(QDELETED(M))
+/obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M, passed_intensity)
+	if(QDELETED(M) || !ishuman(M) || HAS_TRAIT(M, TRAIT_RADIMMUNE))
 		return
-	if(intensity >= 5)
-		M.apply_effect(round(intensity/0.075), EFFECT_UNCONSCIOUS)
-	M.rad_act(intensity*10)
+	if(passed_intensity >= 5)
+		M.apply_effect(round(passed_intensity/0.075), EFFECT_UNCONSCIOUS) //to save you some math, this is a round(intensity * (4/3)) second long knockout
+	M.rad_act(passed_intensity*10)
 
 /obj/item/healthanalyzer/rad_laser/proc/get_cooldown()
 	return round(max(10, (stealth*30 + intensity*5 - wavelength/4)))
@@ -263,6 +262,30 @@ effective or pretty fucking useless.
 	else
 		GLOB.active_jammers -= src
 	update_icon()
+
+/*portable turret*/
+/obj/item/storage/toolbox/emergency/turret
+	desc = "You feel a strange urge to hit this with a wrench."
+
+/obj/item/storage/toolbox/emergency/turret/PopulateContents()
+	new /obj/item/screwdriver(src)
+	new /obj/item/wrench(src)
+	new /obj/item/weldingtool(src)
+	new /obj/item/crowbar(src)
+	new /obj/item/analyzer(src)
+	new /obj/item/wirecutters(src)
+
+/obj/item/storage/toolbox/emergency/turret/attackby(obj/item/I, mob/living/user, params)
+    if(I.tool_behaviour == TOOL_WRENCH && user.a_intent == INTENT_HARM)
+        user.visible_message("<span class='danger'>[user] bashes [src] with [I]!</span>", \
+            "<span class='danger'>You bash [src] with [I]!</span>", null, COMBAT_MESSAGE_RANGE)
+        playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
+        var/obj/machinery/porta_turret/syndicate/pod/toolbox/turret = new(get_turf(loc))
+        turret.faction = list("[REF(user)]")
+        qdel(src)
+        return
+
+    ..()
 
 /obj/item/headsetupgrader
 	name = "headset upgrader"

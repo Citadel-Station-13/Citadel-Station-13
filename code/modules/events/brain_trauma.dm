@@ -2,6 +2,7 @@
 	name = "Spontaneous Brain Trauma"
 	typepath = /datum/round_event/brain_trauma
 	weight = 25
+	min_players = 5
 
 /datum/round_event_control/brain_trauma/canSpawnEvent(var/players_amt, var/gamemode)
 	var/list/enemy_roles = list("Medical Doctor","Chief Medical Officer","Paramedic")
@@ -26,6 +27,7 @@
 		if(!is_station_level(H.z))
 			continue
 		traumatize(H)
+		announce_to_ghosts(H)
 		break
 
 /datum/round_event/brain_trauma/proc/traumatize(mob/living/carbon/human/H)

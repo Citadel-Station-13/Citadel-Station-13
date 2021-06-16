@@ -62,7 +62,7 @@
 	pick_sign(user)
 
 /obj/structure/sign/barsign/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!allowed(user))
 			to_chat(user, "<span class='info'>Access denied.</span>")
 			return
@@ -270,6 +270,11 @@
 	name = "The Lightbulb"
 	icon = "the_lightbulb"
 	desc = "A cafe popular among moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms."
+
+/datum/barsign/goose
+	name = "The Loose Goose"
+	icon = "goose"
+	desc = "Drink till you puke and/or break the laws of reality!"
 
 /datum/barsign/cybersylph
 	name = "Cyber Sylph's"

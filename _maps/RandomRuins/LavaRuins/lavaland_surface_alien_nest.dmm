@@ -111,6 +111,17 @@
 /obj/structure/alien/resin/membrane,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
+"ax" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/structure/alien/weeds/node,
+/mob/living/simple_animal/hostile/alien/drone,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"ay" = (
+/obj/structure/stone_tile/slab/cracked,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/xenonest)
 "aA" = (
 /obj/structure/alien/weeds,
 /obj/item/flamethrower,
@@ -129,6 +140,17 @@
 	pixel_x = -6
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aD" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/center,
+/turf/open/chasm/lavaland,
 /area/ruin/unpowered/xenonest)
 "aE" = (
 /obj/structure/alien/weeds,
@@ -160,6 +182,19 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
+"aK" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/center/cracked,
+/turf/open/chasm/lavaland,
+/area/ruin/unpowered/xenonest)
 "aL" = (
 /obj/structure/alien/weeds,
 /obj/item/tank/internals/plasma,
@@ -168,6 +203,26 @@
 "aM" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/xeno,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aN" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/xenonest)
+"aO" = (
+/obj/structure/alien/weeds,
+/obj/effect/mob_spawn/alien/corpse/humanoid/sentinel,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aP" = (
+/obj/structure/alien/weeds,
+/obj/effect/mob_spawn/alien/corpse/humanoid/hunter,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "aQ" = (
@@ -213,13 +268,6 @@
 "aX" = (
 /obj/structure/alien/weeds,
 /obj/effect/gibspawner/xeno,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
-"aY" = (
-/obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/blood/gibs,
-/mob/living/simple_animal/hostile/alien/drone,
-/obj/structure/alien/weeds/node,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "aZ" = (
@@ -338,10 +386,6 @@
 /obj/structure/stone_tile,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
-"bm" = (
-/obj/structure/stone_tile/slab/cracked,
-/turf/open/indestructible/boss,
-/area/ruin/unpowered/xenonest)
 "bn" = (
 /obj/structure/stone_tile/block{
 	dir = 4
@@ -365,12 +409,6 @@
 /obj/structure/stone_tile/center,
 /turf/open/chasm/lavaland,
 /area/ruin/unpowered/xenonest)
-"bp" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/open/chasm/lavaland,
-/area/ruin/unpowered/xenonest)
 "bq" = (
 /turf/open/chasm/lavaland,
 /area/ruin/unpowered/xenonest)
@@ -390,33 +428,6 @@
 	dir = 8
 	},
 /turf/open/chasm/lavaland,
-/area/ruin/unpowered/xenonest)
-"bt" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/surrounding_tile,
-/obj/structure/stone_tile/surrounding_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/center,
-/turf/open/chasm/lavaland,
-/area/ruin/unpowered/xenonest)
-"bu" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 1
-	},
-/turf/open/chasm/lavaland,
-/area/ruin/unpowered/xenonest)
-"bv" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked,
-/turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
 "bw" = (
 /obj/structure/stone_tile/cracked{
@@ -488,23 +499,6 @@
 /mob/living/simple_animal/hostile/alien,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
-"bD" = (
-/obj/structure/alien/weeds,
-/turf/template_noop,
-/area/ruin/unpowered/xenonest)
-"bE" = (
-/obj/structure/stone_tile/surrounding_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/surrounding_tile/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile/surrounding_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile/center/cracked,
-/turf/open/chasm/lavaland,
-/area/ruin/unpowered/xenonest)
 "dE" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
@@ -512,6 +506,12 @@
 /obj/item/clothing/suit/bio_suit/scientist,
 /obj/item/reagent_containers/hypospray/medipen,
 /obj/item/clothing/mask/facehugger/impregnated,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"gA" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/effect/mob_spawn/alien/corpse/humanoid/sentinel,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "iA" = (
@@ -522,18 +522,24 @@
 /obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
-"kp" = (
-/obj/structure/alien/weeds,
-/obj/item/reagent_containers/syringe/alien,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
 "lG" = (
 /obj/structure/alien/weeds,
 /obj/effect/mob_spawn/alien/corpse/humanoid/drone,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
-"pE" = (
-/obj/effect/mob_spawn/alien/corpse/humanoid/queen,
+"lM" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/chasm/lavaland,
+/area/ruin/unpowered/xenonest)
+"nj" = (
+/obj/effect/mob_spawn/alien/corpse/humanoid/praetorian,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"tY" = (
+/obj/structure/alien/weeds/node,
+/obj/effect/mob_spawn/alien/corpse/humanoid/hunter,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "wA" = (
@@ -546,10 +552,21 @@
 /mob/living/simple_animal/hostile/alien/sentinel,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
+"zj" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/chasm/lavaland,
+/area/ruin/unpowered/xenonest)
 "Dd" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/item/storage/backpack/duffelbag/sec/surgery,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"Ha" = (
+/obj/structure/alien/weeds,
+/obj/item/reagent_containers/syringe/alien,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "JM" = (
@@ -1075,7 +1092,7 @@ ac
 ac
 ac
 bi
-aY
+ax
 ac
 ac
 ac
@@ -1123,7 +1140,7 @@ an
 an
 ac
 ac
-am
+gA
 ac
 ac
 aJ
@@ -1278,10 +1295,10 @@ ac
 Dd
 ag
 ak
-ag
+aP
 af
 ac
-lG
+ag
 ac
 ac
 an
@@ -1357,7 +1374,7 @@ ab
 ac
 af
 ag
-ar
+tY
 lG
 ag
 ag
@@ -1511,7 +1528,7 @@ ac
 ah
 af
 ah
-JM
+ar
 Vi
 ak
 ag
@@ -1552,8 +1569,8 @@ aa
 aa
 aa
 ac
-bD
-bD
+ag
+ag
 aa
 "}
 (20,1,1) = {"
@@ -1604,7 +1621,7 @@ aa
 aa
 aa
 ac
-bD
+ag
 aa
 "}
 (21,1,1) = {"
@@ -1618,7 +1635,7 @@ ag
 wA
 ag
 ag
-pE
+nj
 ag
 at
 ag
@@ -1640,7 +1657,7 @@ ab
 aZ
 aZ
 aZ
-bm
+ay
 aZ
 aZ
 aZ
@@ -1655,8 +1672,8 @@ ac
 aa
 aa
 ac
-bD
-bD
+ag
+ag
 "}
 (22,1,1) = {"
 ab
@@ -1706,8 +1723,8 @@ ac
 ac
 ac
 aW
-bD
-bD
+ag
+ag
 "}
 (23,1,1) = {"
 ab
@@ -1718,7 +1735,7 @@ ah
 ar
 ah
 ak
-kp
+Ha
 at
 ag
 ag
@@ -1742,8 +1759,8 @@ ac
 aZ
 bc
 bj
-bp
-bt
+lM
+aD
 bx
 aZ
 ab
@@ -1757,8 +1774,8 @@ ag
 aw
 ar
 ag
-bD
-bD
+ag
+ag
 "}
 (24,1,1) = {"
 ab
@@ -1794,7 +1811,7 @@ ba
 bd
 bk
 bq
-bu
+zj
 by
 aZ
 ab
@@ -1808,8 +1825,8 @@ ag
 aw
 ar
 ag
-bD
-bD
+ag
+ag
 "}
 (25,1,1) = {"
 ab
@@ -1823,7 +1840,7 @@ ac
 ag
 ar
 ag
-ag
+aO
 ac
 ab
 ab
@@ -1845,7 +1862,7 @@ aZ
 be
 bo
 bs
-bE
+aK
 bz
 aZ
 ab
@@ -1859,8 +1876,8 @@ ac
 ac
 ac
 ac
-bD
-bD
+ag
+ag
 "}
 (26,1,1) = {"
 ab
@@ -1896,7 +1913,7 @@ aZ
 bf
 bl
 br
-bv
+aN
 bA
 aZ
 ab

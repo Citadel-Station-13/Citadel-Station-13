@@ -9,6 +9,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	real_name = "Guardian Spirit"
 	desc = "A mysterious being that stands by its charge, ever vigilant."
 	speak_emote = list("hisses")
+	rad_flags = RAD_NO_CONTAMINATE | RAD_PROTECT_CONTENTS
 	gender = NEUTER
 	mob_biotypes = NONE
 	bubble_icon = "guardian"
@@ -278,6 +279,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			adjustBruteLoss(60)
 		if(3)
 			adjustBruteLoss(30)
+
+/mob/living/simple_animal/hostile/guardian/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	adjustBruteLoss(EXPLOSION_POWER_STANDARD_SCALE_MOB_DAMAGE(power, explosion.mob_damage_mod * 0.33))
 
 /mob/living/simple_animal/hostile/guardian/gib()
 	if(summoner)

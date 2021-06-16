@@ -391,6 +391,15 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("meat" = 3, "smokey sauce" = 1)
 	foodtype = MEAT
+	
+/obj/item/reagent_containers/food/snacks/goliathcalamari
+	name = "goliath calamari"
+	desc = "ACKCHYUALLY, this isn't calamari, guys!"
+	icon_state = "goliathcalamari"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/capsaicin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/capsaicin = 2)
+	tastes = list("rock" = 1, "meat" = 1)
+	foodtype = MEAT
 
 ////////////// Cubes //////////
 
@@ -435,7 +444,7 @@
 	name = "alien drone cube"
 	desc = "Just add water and run!"
 	tastes = list("the jungle" = 1, "acid" = 1)
-	dried_being = /mob/living/carbon/alien/humanoid/drone
+	dried_being = /mob/living/simple_animal/hostile/alien/sentinel/cube
 
 /obj/item/reagent_containers/food/snacks/cube/goat
 	name = "goat cube"

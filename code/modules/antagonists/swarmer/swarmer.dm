@@ -43,7 +43,7 @@
 	to_chat(user, "<span class='notice'>Picking up the swarmer may cause it to activate. You should be careful about this.</span>")
 
 /obj/effect/mob_spawn/swarmer/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver) && user.a_intent != INTENT_HARM)
+	if(W.tool_behaviour == TOOL_SCREWDRIVER && user.a_intent != INTENT_HARM)
 		user.visible_message("<span class='warning'>[usr.name] deactivates [src].</span>",
 			"<span class='notice'>After some fiddling, you find a way to disable [src]'s power source.</span>",
 			"<span class='italics'>You hear clicking.</span>")
@@ -93,7 +93,6 @@
 	AIStatus = AI_OFF
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_TINY
-	ventcrawler = VENTCRAWLER_ALWAYS
 	ranged = 1
 	projectiletype = /obj/item/projectile/beam/disabler
 	ranged_cooldown_time = 20
@@ -112,6 +111,7 @@
 	remove_verb(src, /mob/living/verb/pulled)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/hostile/swarmer/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
@@ -261,19 +261,26 @@
 	S.DisIntegrate(src)
 	return TRUE
 
-/obj/machinery/door/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	var/isonshuttle = istype(get_area(src), /area/shuttle)
-	for(var/turf/T in range(1, src))
-		var/area/A = get_area(T)
-		if(isspaceturf(T) || (!isonshuttle && (istype(A, /area/shuttle) || istype(A, /area/space))) || (isonshuttle && !istype(A, /area/shuttle)))
-			to_chat(S, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
-			S.target = null
+/obj/machinery/door/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	var/is_on_shuttle = istype(get_area(src), /area/shuttle)
+	for(var/turf/turf_in_range in range(1, src))
+		var/area/turf_area = get_area(turf_in_range)
+		//Check for dangerous pressure differences
+		// if (turf_in_range.return_turf_delta_p() > DANGEROUS_DELTA_P)
+		// 	to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause an explosive pressure release. Aborting.</span>")
+		// 	actor.target = null
+		// 	return TRUE
+		//Check if breaking this door will expose the station to space/planetary atmos
+		if(isspaceturf(turf_in_range) || (!is_on_shuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (is_on_shuttle && !istype(turf_area, /area/shuttle)))
+			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+			actor.target = null
 			return FALSE
-		else if(istype(A, /area/engine/supermatter))
-			to_chat(S, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
-			S.target = null
+		//Check if this door is important in supermatter containment
+		else if(istype(turf_area, /area/engineering/supermatter))
+			to_chat(actor, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
+			actor.target = null
 			return FALSE
-	S.DisIntegrate(src)
+	actor.DisIntegrate(src)
 	return TRUE
 
 /obj/machinery/camera/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
@@ -342,31 +349,40 @@
 	to_chat(S, "<span class='warning'>This bluespace source will be important to us later. Aborting.</span>")
 	return FALSE
 
-/turf/closed/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	var/isonshuttle = istype(loc, /area/shuttle)
-	for(var/turf/T in range(1, src))
-		var/area/A = get_area(T)
-		if(isspaceturf(T) || (!isonshuttle && (istype(A, /area/shuttle) || istype(A, /area/space))) || (isonshuttle && !istype(A, /area/shuttle)))
-			to_chat(S, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
-			S.target = null
+/turf/closed/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	var/is_on_shuttle = istype(loc, /area/shuttle)
+	for(var/turf/turf_in_range in range(1, src))
+		var/area/turf_area = get_area(turf_in_range)
+		// if (turf_in_range.return_turf_delta_p() > DANGEROUS_DELTA_P)
+		// 	to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause an explosive pressure release. Aborting.</span>")
+		// 	actor.target = null
+		// 	return TRUE
+		if(isspaceturf(turf_in_range) || (!is_on_shuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (is_on_shuttle && !istype(turf_area, /area/shuttle)))
+			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+			actor.target = null
 			return TRUE
-		else if(istype(A, /area/engine/supermatter))
-			to_chat(S, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
-			S.target = null
+		else if(istype(turf_area, /area/engineering/supermatter))
+			to_chat(actor, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
+			actor.target = null
 			return TRUE
 	return ..()
 
-/obj/structure/window/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	var/isonshuttle = istype(get_area(src), /area/shuttle)
-	for(var/turf/T in range(1, src))
-		var/area/A = get_area(T)
-		if(isspaceturf(T) || (!isonshuttle && (istype(A, /area/shuttle) || istype(A, /area/space))) || (isonshuttle && !istype(A, /area/shuttle)))
-			to_chat(S, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
-			S.target = null
+/obj/structure/window/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	var/is_on_shuttle = istype(get_area(src), /area/shuttle)
+	for(var/t in RANGE_TURFS(1, src))
+		var/turf/turf_in_range = t
+		var/area/turf_area = get_area(turf_in_range)
+		// if (turf_in_range.return_turf_delta_p() > DANGEROUS_DELTA_P)
+		// 	to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause an explosive pressure release. Aborting.</span>")
+		// 	actor.target = null
+		// 	return TRUE
+		if(isspaceturf(turf_in_range) || (!is_on_shuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (is_on_shuttle && !istype(turf_area, /area/shuttle)))
+			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+			actor.target = null
 			return TRUE
-		else if(istype(A, /area/engine/supermatter))
-			to_chat(S, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
-			S.target = null
+		else if(istype(turf_area, /area/engineering/supermatter))
+			to_chat(actor, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
+			actor.target = null
 			return TRUE
 	return ..()
 

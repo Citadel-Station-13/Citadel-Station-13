@@ -17,6 +17,7 @@
 	recommended_enemies = 4
 	reroll_friendly = 1
 	enemy_minimum_age = 0
+	chaos = 2
 
 	announce_span = "danger"
 	announce_text = "There are Syndicate agents on the station!\n\

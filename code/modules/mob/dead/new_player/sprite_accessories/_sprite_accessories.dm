@@ -63,6 +63,7 @@
 	var/list/relevant_layers //list of layers that this accessory uses. As of now only used in species.handle_mutant_bodyparts(), but that's where most sprite accessories are anyway.
 	var/mutant_part_string //Also used in species.handle_mutant_bodyparts() to generate the overlay icon state.
 	var/alpha_mask_state
+	var/matrixed_sections = MATRIX_NONE //if color_src is MATRIXED, how many sections does it have? 1-3
 
 	//Special / holdover traits for Citadel specific sprites.
 	var/extra = FALSE

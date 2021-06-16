@@ -62,7 +62,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0, "wound" = 5)
 
 /obj/item/clothing/under/rank/rnd/scientist/util
-	name = "Science Utility Uniform"
+	name = "science utility uniform"
 	desc = "A utility uniform for science personnel"
 	icon_state = "utilsci"
 	item_state = "utilsci"

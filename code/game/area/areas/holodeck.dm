@@ -2,11 +2,12 @@
 	name = "Holodeck"
 	icon_state = "Holodeck"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-	flags_1 = 0
-	hidden = TRUE
+	flags_1 = NONE
+	sound_environment = SOUND_ENVIRONMENT_PADDED_CELL
 
 	var/obj/machinery/computer/holodeck/linked
-	var/restricted = 0 // if true, program goes on emag list
+	var/restricted = FALSE // if true, program goes on emag list
+	// network_root_id = "HOLODECK"
 
 /*
 	Power tracking: Use the holodeck computer's power grid
@@ -85,9 +86,6 @@
 /area/holodeck/rec_center/lounge
 	name = "Holodeck - Lounge"
 
-/area/holodeck/rec_center/medical
-	name = "Holodeck - Emergency Medical"
-
 /area/holodeck/rec_center/pet_lounge
 	name = "Holodeck - Pet Park"
 
@@ -124,6 +122,10 @@
 
 /area/holodeck/rec_center/bunker
 	name = "Holodeck - Holdout Bunker"
+	restricted = 1
+
+/area/holodeck/rec_center/medical
+	name = "Holodeck - Emergency Medical"
 	restricted = 1
 
 /area/holodeck/rec_center/anthophila

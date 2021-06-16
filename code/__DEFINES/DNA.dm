@@ -53,6 +53,7 @@
 #define GELADIKINESIS		/datum/mutation/human/geladikinesis
 #define CRYOKINESIS /datum/mutation/human/cryokinesis
 #define SPIDER_WEB	/datum/mutation/human/webbing
+#define CLUWNEMUT   /datum/mutation/human/cluwne
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
@@ -171,6 +172,7 @@
 #define ORGAN_SLOT_HEART_AID "heartdrive"
 #define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
 #define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
+#define ORGAN_SLOT_BRAIN_ROBOT_RADSHIELDING "brain_robot_radshielding"
 #define ORGAN_SLOT_TAIL "tail"
 #define ORGAN_SLOT_PENIS "penis"
 #define ORGAN_SLOT_WOMB "womb"

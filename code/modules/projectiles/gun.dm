@@ -18,6 +18,8 @@
 	item_flags = NEEDS_PERMIT
 	attack_verb = list("struck", "hit", "bashed")
 	attack_speed = CLICK_CD_RANGE
+	var/ranged_attack_speed = CLICK_CD_RANGE
+	var/melee_attack_speed = CLICK_CD_MELEE
 
 	var/fire_sound = "gunshot"
 	var/suppressed = null					//whether or not a message is displayed when fired
@@ -158,7 +160,7 @@
 		user.UseStaminaBuffer(safe_cost)
 
 	if(suppressed)
-		playsound(user, fire_sound, 10, 1)
+		playsound(user, fire_sound, 10, TRUE, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 	else
 		playsound(user, fire_sound, 50, 1)
 		if(message)
@@ -173,11 +175,24 @@
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 
+/obj/item/gun/attack(mob/living/M, mob/user)
+	. = ..()
+	if(!(. & DISCARD_LAST_ACTION))
+		user.DelayNextAction(melee_attack_speed)
+
+/obj/item/gun/attack_obj(obj/O, mob/user)
+	. = ..()
+	if(!(. & DISCARD_LAST_ACTION))
+		user.DelayNextAction(melee_attack_speed)
+
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
-	if(!CheckAttackCooldown(user, target))
+	if(!CheckAttackCooldown(user, target, TRUE))
 		return
 	process_afterattack(target, user, flag, params)
+
+/obj/item/gun/CheckAttackCooldown(mob/user, atom/target, shooting = FALSE)
+	return user.CheckActionCooldown(shooting? ranged_attack_speed : attack_speed, clickdelay_from_next_action, clickdelay_mod_bypass, clickdelay_ignores_next_action)
 
 /obj/item/gun/proc/process_afterattack(atom/target, mob/living/user, flag, params)
 	if(!target)
@@ -419,7 +434,7 @@
 		to_chat(user, "<span class='notice'>You attach \the [K] to the front of \the [src].</span>")
 		bayonet = K
 		update_icon()
-	else if(istype(I, /obj/item/screwdriver))
+	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(gun_light)
 			var/obj/item/flashlight/seclite/S = gun_light
 			to_chat(user, "<span class='notice'>You unscrew the seclite from \the [src].</span>")
@@ -554,11 +569,17 @@
 	. = ..()
 	if(!.)
 		var/obj/item/gun/G = target
+		G.zoom(owner, owner.dir, FALSE)
+
+/datum/action/item_action/toggle_scope_zoom/Trigger()
+	. = ..()
+	if(.)
+		var/obj/item/gun/G = target
 		G.zoom(owner, owner.dir)
 
 /datum/action/item_action/toggle_scope_zoom/Remove(mob/living/L)
 	var/obj/item/gun/G = target
-	G.zoom(L, L.dir)
+	G.zoom(L, L.dir, FALSE)
 	return ..()
 
 /obj/item/gun/proc/rotate(atom/thing, old_dir, new_dir)

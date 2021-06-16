@@ -248,7 +248,7 @@
 
 /obj/item/organ/eyes/robotic/glow/Initialize()
 	. = ..()
-	mob_overlay = image('icons/mob/eyes.dmi', "eyes_glow_gs")
+	mob_overlay = image('icons/mob/human_face.dmi', "eyes_glow_gs")
 
 /obj/item/organ/eyes/robotic/glow/Destroy()
 	terminate_effects()
@@ -404,6 +404,7 @@
 		on_mob.set_light(1, 1, current_color_string)
 
 /obj/effect/abstract/eye_lighting
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/obj/item/organ/eyes/robotic/glow/parent
 
 /obj/effect/abstract/eye_lighting/Initialize()

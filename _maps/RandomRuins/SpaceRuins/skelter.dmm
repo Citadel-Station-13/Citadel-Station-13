@@ -6,15 +6,15 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ac" = (
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "ad" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	icon_state = "plating";
-	dir = 4
+	dir = 4;
+	icon_state = "plating"
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -23,10 +23,10 @@
 /area/ruin/space/has_grav/skelter)
 "af" = (
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ag" = (
 /turf/closed/wall/mineral/titanium,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ah" = (
 /turf/template_noop,
 /area/template_noop)
@@ -36,7 +36,7 @@
 "aj" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ak" = (
 /turf/closed/mineral,
 /area/ruin/unpowered/no_grav)
@@ -45,8 +45,8 @@
 /area/ruin/space/has_grav/skelter/crew)
 "am" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 6
+	dir = 6;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
@@ -54,7 +54,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Crew Quarters APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/skelter/crew)
@@ -62,8 +62,8 @@
 /obj/structure/bed,
 /obj/item/bedsheet/blue,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/skelter/crew)
@@ -71,8 +71,8 @@
 /obj/structure/bed,
 /obj/item/bedsheet/black,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/skelter/crew)
@@ -80,8 +80,8 @@
 /obj/structure/bed,
 /obj/item/bedsheet,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/skelter/crew)
@@ -89,8 +89,8 @@
 /obj/structure/bed,
 /obj/item/bedsheet/yellow,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/skelter/crew)
@@ -98,8 +98,8 @@
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	icon_state = "scrub_map_on-2";
-	dir = 8
+	dir = 8;
+	icon_state = "scrub_map_on-2"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/skelter/crew)
@@ -133,8 +133,8 @@
 /area/ruin/space/has_grav/skelter/crew)
 "ay" = (
 /obj/structure/fluff/broken_flooring{
-	icon_state = "pile";
-	dir = 8
+	dir = 8;
+	icon_state = "pile"
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -149,13 +149,13 @@
 /area/ruin/space/has_grav/skelter/crew)
 "aA" = (
 /turf/open/floor/plating/airless,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "aB" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "aC" = (
 /obj/structure/bed,
 /obj/item/bedsheet/purple,
@@ -177,7 +177,7 @@
 	pixel_y = 1
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "aF" = (
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
@@ -185,7 +185,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Port Engine APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
 	icon_state = "sepia"
@@ -193,8 +193,8 @@
 /area/ruin/space/has_grav/skelter/engine/upper)
 "aG" = (
 /obj/machinery/light{
-	icon_state = "tube";
-	dir = 1
+	dir = 1;
+	icon_state = "tube"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "sepia"
@@ -202,8 +202,8 @@
 /area/ruin/space/has_grav/skelter/engine/upper)
 "aH" = (
 /obj/structure/shuttle/engine/large{
-	icon_state = "large_engine";
-	dir = 8
+	dir = 8;
+	icon_state = "large_engine"
 	},
 /turf/open/space/basic,
 /area/space)
@@ -237,8 +237,8 @@
 /area/ruin/space/has_grav/skelter/engine/upper)
 "aN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 6
+	dir = 6;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable/yellow{
@@ -250,8 +250,8 @@
 /area/ruin/space/has_grav/skelter/engine/upper)
 "aO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable/yellow{
@@ -263,13 +263,13 @@
 /area/ruin/space/has_grav/skelter/engine/upper)
 "aP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/corner{
-	icon_state = "warninglinecorner";
-	dir = 1
+	dir = 1;
+	icon_state = "warninglinecorner"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
@@ -284,8 +284,8 @@
 "aQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -299,16 +299,16 @@
 /area/ruin/space/has_grav/skelter/engine/upper)
 "aR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/crew)
@@ -331,51 +331,51 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light{
-	icon_state = "tube";
-	dir = 8
+	dir = 8;
+	icon_state = "tube"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "aV" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/crew)
 "aW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/machinery/light{
-	icon_state = "tube";
-	dir = 1
+	dir = 1;
+	icon_state = "tube"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/crew)
 "aX" = (
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "aY" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -388,8 +388,8 @@
 /area/space/nearstation)
 "ba" = (
 /obj/structure/fluff/broken_flooring{
-	icon_state = "pile";
-	dir = 4
+	dir = 4;
+	icon_state = "pile"
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -398,8 +398,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	icon_state = "manifold-2";
-	dir = 1
+	dir = 1;
+	icon_state = "manifold-2"
 	},
 /obj/machinery/camera{
 	c_tag = "North Hall";
@@ -413,18 +413,18 @@
 	name = "Cafeteria"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "bd" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	icon_state = "trimline_fill";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline_fill"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/crew)
@@ -434,18 +434,18 @@
 /area/ruin/unpowered/no_grav)
 "bf" = (
 /obj/structure/chair{
-	icon_state = "chair";
-	dir = 1
+	dir = 1;
+	icon_state = "chair"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "bg" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "bh" = (
 /obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 1
+	dir = 1;
+	icon_state = "railing"
 	},
 /obj/structure/shuttle/engine/heater{
 	dir = 8
@@ -455,8 +455,8 @@
 "bi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 1
+	dir = 1;
+	icon_state = "railing"
 	},
 /obj/structure/shuttle/engine/heater{
 	dir = 8
@@ -465,8 +465,8 @@
 /area/ruin/space/has_grav/skelter/engine/upper)
 "bj" = (
 /obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 5
+	dir = 5;
+	icon_state = "railing"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/skelter/engine/upper)
@@ -502,12 +502,12 @@
 /area/ruin/space/has_grav/skelter/engine/upper)
 "bn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "pipe11-2";
-	dir = 9
+	dir = 9;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/crew)
@@ -516,8 +516,8 @@
 /area/ruin/space/has_grav/skelter/crew)
 "bp" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/crew)
@@ -540,18 +540,18 @@
 	},
 /obj/effect/turf_decal/trimline/blue/corner,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/crew)
 "bt" = (
 /obj/item/chair{
-	icon_state = "chair_toppled";
-	dir = 1
+	dir = 1;
+	icon_state = "chair_toppled"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "bu" = (
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -565,15 +565,15 @@
 	pixel_y = 2
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "bw" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	icon_state = "trimline_fill";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline_fill"
 	},
 /obj/effect/turf_decal/trimline/blue/corner{
-	icon_state = "trimline_corner";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_corner"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/crew)
@@ -593,11 +593,11 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "bA" = (
 /obj/item/chair{
-	icon_state = "chair_toppled";
-	dir = 1
+	dir = 1;
+	icon_state = "chair_toppled"
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -609,11 +609,11 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "bC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/fluff/railing,
@@ -624,8 +624,8 @@
 /area/ruin/space/has_grav/skelter/engine/upper)
 "bD" = (
 /obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 6
+	dir = 6;
+	icon_state = "railing"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/skelter/engine/upper)
@@ -664,8 +664,8 @@
 "bJ" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/blue/filled/end{
-	icon_state = "trimline_end_fill";
-	dir = 1
+	dir = 1;
+	icon_state = "trimline_end_fill"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/medical{
@@ -687,12 +687,12 @@
 /area/ruin/space/has_grav/skelter)
 "bN" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	icon_state = "scrub_map_on-2";
-	dir = 4
+	dir = 4;
+	icon_state = "scrub_map_on-2"
 	},
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
-	dir = 1
+	dir = 1;
+	icon_state = "warningline"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "sepia"
@@ -700,12 +700,12 @@
 /area/ruin/space/has_grav/skelter/engine/upper)
 "bO" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	icon_state = "manifold-2";
-	dir = 4
+	dir = 4;
+	icon_state = "manifold-2"
 	},
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
-	dir = 1
+	dir = 1;
+	icon_state = "warningline"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "sepia"
@@ -716,8 +716,8 @@
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
-	dir = 1
+	dir = 1;
+	icon_state = "warningline"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -728,12 +728,12 @@
 /area/ruin/space/has_grav/skelter/engine/upper)
 "bQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "pipe11-2";
-	dir = 9
+	dir = 9;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/stripes/corner{
-	icon_state = "warninglinecorner";
-	dir = 4
+	dir = 4;
+	icon_state = "warninglinecorner"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
@@ -760,7 +760,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Security Office APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/skelter/sec)
@@ -771,16 +771,16 @@
 /area/ruin/space/has_grav/skelter/med)
 "bV" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	icon_state = "trimline_fill";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline_fill"
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 5
+	dir = 5;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/skelter/med)
@@ -788,8 +788,8 @@
 /obj/structure/bed,
 /obj/item/bedsheet/blue,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	icon_state = "scrub_map_on-2";
-	dir = 8
+	dir = 8;
+	icon_state = "scrub_map_on-2"
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/skelter/med)
@@ -832,7 +832,7 @@
 "cd" = (
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ce" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
@@ -868,11 +868,11 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "cj" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/clothing/suit/space/syndicate/orange,
@@ -880,8 +880,8 @@
 /area/ruin/space/has_grav/skelter/sec)
 "ck" = (
 /obj/structure/chair/office/dark{
-	icon_state = "officechair_dark";
-	dir = 1
+	dir = 1;
+	icon_state = "officechair_dark"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/skelter/sec)
@@ -904,15 +904,15 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "co" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	icon_state = "trimline_fill";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline_fill"
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/skelter/med)
@@ -950,8 +950,8 @@
 "cv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/trimline/red/line{
-	icon_state = "trimline";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
@@ -959,14 +959,14 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Navigation APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/skelter/nav)
 "cw" = (
 /obj/effect/turf_decal/trimline/red/line{
-	icon_state = "trimline";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline"
 	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/skelter/nav)
@@ -984,11 +984,11 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	icon_state = "manifold-2";
-	dir = 1
+	dir = 1;
+	icon_state = "manifold-2"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "cA" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/mineral/titanium/purple,
@@ -999,8 +999,8 @@
 "cC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/trimline/red/filled/line{
-	icon_state = "trimline_fill";
-	dir = 1
+	dir = 1;
+	icon_state = "trimline_fill"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "sepia"
@@ -1012,8 +1012,8 @@
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
-	icon_state = "trimline_fill";
-	dir = 1
+	dir = 1;
+	icon_state = "trimline_fill"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "sepia"
@@ -1028,18 +1028,18 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "cF" = (
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/skelter/sec)
 "cG" = (
 /obj/machinery/light/broken{
-	icon_state = "tube-broken";
-	dir = 4
+	dir = 4;
+	icon_state = "tube-broken"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -1048,8 +1048,8 @@
 /area/ruin/space/has_grav/skelter/sec)
 "cH" = (
 /obj/machinery/light{
-	icon_state = "tube";
-	dir = 8
+	dir = 8;
+	icon_state = "tube"
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/skelter/med)
@@ -1069,17 +1069,17 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "cL" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "pipe11-2";
-	dir = 10
+	dir = 10;
+	icon_state = "pipe11-2"
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -1104,33 +1104,33 @@
 /area/ruin/space/has_grav/skelter/forehall)
 "cN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 5
+	dir = 5;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/forehall)
 "cO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/forehall)
 "cP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/forehall)
 "cQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 10
+	dir = 10;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/forehall)
@@ -1139,8 +1139,8 @@
 /area/ruin/space/has_grav/skelter/forehall)
 "cS" = (
 /obj/effect/turf_decal/trimline/red/line{
-	icon_state = "trimline";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
@@ -1150,8 +1150,8 @@
 /area/ruin/space/has_grav/skelter/nav)
 "cT" = (
 /obj/structure/chair/comfy/shuttle{
-	icon_state = "shuttle_chair";
-	dir = 1
+	dir = 1;
+	icon_state = "shuttle_chair"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/skelter/nav)
@@ -1170,8 +1170,8 @@
 /area/ruin/space/has_grav/skelter/engine)
 "cX" = (
 /obj/machinery/light/broken{
-	icon_state = "tube-broken";
-	dir = 8
+	dir = 8;
+	icon_state = "tube-broken"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
@@ -1208,16 +1208,16 @@
 /area/ruin/space/has_grav/skelter/med)
 "dd" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map-2";
-	dir = 4
+	dir = 4;
+	icon_state = "connector_map-2"
 	},
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/skelter/oxy)
 "de" = (
 /obj/machinery/atmospherics/components/binary/valve{
-	icon_state = "mvalve_map-2";
-	dir = 4
+	dir = 4;
+	icon_state = "mvalve_map-2"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/skelter/oxy)
@@ -1259,8 +1259,8 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /obj/machinery/light,
 /obj/structure/cable/yellow{
@@ -1270,8 +1270,8 @@
 /area/ruin/space/has_grav/skelter/forehall)
 "dk" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	icon_state = "manifold-2";
-	dir = 1
+	dir = 1;
+	icon_state = "manifold-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -1293,8 +1293,8 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -1310,8 +1310,8 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
-	icon_state = "trimline_fill";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline_fill"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -1322,7 +1322,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Fore Hallway APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/forehall)
@@ -1336,8 +1336,8 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 1
+	dir = 1;
+	icon_state = "trimline_fill"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -1349,12 +1349,12 @@
 /area/ruin/space/has_grav/skelter/nav)
 "dq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "pipe11-2";
-	dir = 9
+	dir = 9;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 1
+	dir = 1;
+	icon_state = "trimline_fill"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
@@ -1363,26 +1363,26 @@
 /area/ruin/space/has_grav/skelter/nav)
 "dr" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 1
+	dir = 1;
+	icon_state = "trimline_fill"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/skelter/nav)
 "ds" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 5
+	dir = 5;
+	icon_state = "trimline_fill"
 	},
 /obj/structure/chair/comfy/shuttle{
-	icon_state = "shuttle_chair";
-	dir = 4
+	dir = 4;
+	icon_state = "shuttle_chair"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/skelter/nav)
 "dt" = (
 /obj/machinery/computer{
-	icon_state = "computer";
-	dir = 8
+	dir = 8;
+	icon_state = "computer"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/skelter/nav)
@@ -1394,8 +1394,8 @@
 /area/ruin/space/has_grav/skelter/engine)
 "dv" = (
 /obj/effect/turf_decal/trimline/purple/line{
-	icon_state = "trimline";
-	dir = 5
+	dir = 5;
+	icon_state = "trimline"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/skelter/engine)
@@ -1410,7 +1410,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Reactor Room APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/skelter/engine)
@@ -1426,8 +1426,8 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/trimline/purple/corner{
-	icon_state = "trimline_corner";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_corner"
 	},
 /obj/machinery/camera{
 	c_tag = "Reactor Hall";
@@ -1454,7 +1454,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Aft Hallway APC";
-	pixel_x = 26
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel{
 	icon_state = "sepia"
@@ -1490,14 +1490,14 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "dF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/mineral/titanium,
@@ -1507,17 +1507,17 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "dH" = (
 /obj/machinery/clonepod,
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
-	dir = 1
+	dir = 1;
+	icon_state = "warningline"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/skelter/med)
@@ -1526,8 +1526,8 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
-	dir = 1
+	dir = 1;
+	icon_state = "warningline"
 	},
 /obj/item/paper/fluff/ruins/skelter/cloner,
 /turf/open/floor/plasteel,
@@ -1535,8 +1535,8 @@
 "dJ" = (
 /obj/machinery/dna_scannernew,
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
-	dir = 1
+	dir = 1;
+	icon_state = "warningline"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/skelter/med)
@@ -1569,7 +1569,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "dR" = (
 /obj/structure/table/reinforced,
 /obj/structure/disposalpipe/segment,
@@ -1582,15 +1582,15 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "dS" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ruin/space/has_grav/skelter/admin)
 "dT" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/item/stack/cable_coil/cut/yellow,
 /turf/template_noop,
@@ -1606,11 +1606,11 @@
 /area/ruin/space/has_grav/skelter/forehall)
 "dW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "pipe11-2";
-	dir = 5
+	dir = 5;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "dX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/firealarm{
@@ -1621,30 +1621,30 @@
 /area/ruin/space/has_grav/skelter/forehall)
 "dY" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	icon_state = "manifold-2";
-	dir = 8
+	dir = 8;
+	icon_state = "manifold-2"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/forehall)
 "dZ" = (
 /obj/effect/decal/cleanable/glass{
-	icon_state = "tiny";
-	dir = 8
+	dir = 8;
+	icon_state = "tiny"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ea" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "eb" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ec" = (
 /obj/structure/chair{
 	dir = 4
@@ -1653,23 +1653,23 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ed" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
-	icon_state = "trimline_fill";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline_fill"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/forehall)
 "ee" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/door/airlock/maintenance/external{
@@ -1679,8 +1679,8 @@
 /area/ruin/space/has_grav/skelter/nav)
 "ef" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 10
+	dir = 10;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /turf/open/floor/plasteel,
@@ -1691,15 +1691,15 @@
 /area/ruin/space/has_grav/skelter/nav)
 "eh" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 6
+	dir = 6;
+	icon_state = "trimline_fill"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/skelter/nav)
 "ei" = (
 /obj/effect/turf_decal/weather,
 /turf/open/floor/plating/airless,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ej" = (
 /obj/machinery/power/port_gen/pacman/super,
 /obj/structure/cable{
@@ -1709,8 +1709,8 @@
 /area/ruin/space/has_grav/skelter/engine)
 "ek" = (
 /obj/effect/turf_decal/trimline/purple/corner{
-	icon_state = "trimline_corner";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline_corner"
 	},
 /obj/effect/turf_decal/trimline/purple/corner,
 /obj/structure/cable{
@@ -1721,21 +1721,21 @@
 "el" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	icon_state = "scrub_map-2";
-	dir = 4
+	dir = 4;
+	icon_state = "scrub_map-2"
 	},
 /obj/item/trash/plate,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "em" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 5
+	dir = 5;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/trimline/purple/line,
 /obj/effect/turf_decal/trimline/purple/line{
-	icon_state = "trimline";
-	dir = 1
+	dir = 1;
+	icon_state = "trimline"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -1748,50 +1748,50 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "eo" = (
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/trimline/purple/line,
 /obj/effect/turf_decal/trimline/purple/line{
-	icon_state = "trimline";
-	dir = 1
+	dir = 1;
+	icon_state = "trimline"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/skelter/engine)
 "ep" = (
 /obj/item/chair,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "eq" = (
 /obj/structure/chair{
-	icon_state = "chair";
-	dir = 8
+	dir = 8;
+	icon_state = "chair"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "er" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	icon_state = "manifold-2";
-	dir = 4
+	dir = 4;
+	icon_state = "manifold-2"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "es" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -1800,8 +1800,8 @@
 	name = "Reactor"
 	},
 /obj/effect/turf_decal/trimline/purple/end{
-	icon_state = "trimline_end";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline_end"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/skelter/engine)
@@ -1811,8 +1811,8 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/trimline/purple/line{
-	icon_state = "trimline";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "sepia"
@@ -1820,12 +1820,12 @@
 /area/ruin/space/has_grav/skelter/afthall)
 "eu" = (
 /obj/effect/turf_decal/trimline/green/line{
-	icon_state = "trimline";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
@@ -1844,8 +1844,8 @@
 	name = "Security"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -1857,23 +1857,23 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/skelter/sec)
 "ex" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/skelter/sec)
 "ey" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 9
+	dir = 9;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/skelter/sec)
@@ -1899,8 +1899,8 @@
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
 "eC" = (
 /obj/machinery/light{
-	icon_state = "tube";
-	dir = 8
+	dir = 8;
+	icon_state = "tube"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/admin)
@@ -1911,7 +1911,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Administration APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/skelter/admin)
@@ -1928,8 +1928,8 @@
 /area/ruin/space/has_grav/skelter/admin)
 "eG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	icon_state = "vent_map_on-2";
-	dir = 4
+	dir = 4;
+	icon_state = "vent_map_on-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -1938,8 +1938,8 @@
 /area/ruin/space/has_grav/skelter/forehall)
 "eH" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	icon_state = "manifold-2";
-	dir = 1
+	dir = 1;
+	icon_state = "manifold-2"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/forehall)
@@ -1948,19 +1948,19 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /obj/machinery/light{
-	icon_state = "tube";
-	dir = 1
+	dir = 1;
+	icon_state = "tube"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/forehall)
 "eJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "pipe11-2";
-	dir = 9
+	dir = 9;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/forehall)
@@ -1970,8 +1970,8 @@
 /area/ruin/space/has_grav/skelter/forehall)
 "eL" = (
 /obj/effect/turf_decal/trimline/red/line{
-	icon_state = "trimline";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/firealarm{
@@ -1990,8 +1990,8 @@
 /area/ruin/space/has_grav/skelter/engine)
 "eO" = (
 /obj/effect/turf_decal/trimline/purple/line{
-	icon_state = "trimline";
-	dir = 6
+	dir = 6;
+	icon_state = "trimline"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/skelter/engine)
@@ -2023,8 +2023,8 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/purple/corner{
-	icon_state = "trimline_corner";
-	dir = 1
+	dir = 1;
+	icon_state = "trimline_corner"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "sepia"
@@ -2032,8 +2032,8 @@
 /area/ruin/space/has_grav/skelter/afthall)
 "eT" = (
 /obj/effect/turf_decal/trimline/green/corner{
-	icon_state = "trimline_corner";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline_corner"
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/structure/cable/yellow{
@@ -2078,8 +2078,8 @@
 /area/ruin/space/has_grav/skelter/sec)
 "eX" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	icon_state = "manifold-2";
-	dir = 1
+	dir = 1;
+	icon_state = "manifold-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -2112,7 +2112,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "fb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -2138,7 +2138,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Med Bay APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
@@ -2195,8 +2195,8 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /obj/machinery/camera{
 	c_tag = "Central Hall";
@@ -2216,8 +2216,8 @@
 /area/ruin/space/has_grav/skelter/admin)
 "fk" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	icon_state = "manifold-2";
-	dir = 1
+	dir = 1;
+	icon_state = "manifold-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -2229,8 +2229,8 @@
 	dir = 4
 	},
 /obj/structure/chair/comfy/brown{
-	icon_state = "comfychair";
-	dir = 1
+	dir = 1;
+	icon_state = "comfychair"
 	},
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/skelter/admin)
@@ -2239,22 +2239,22 @@
 	dir = 4
 	},
 /obj/structure/chair/comfy/brown{
-	icon_state = "comfychair";
-	dir = 4
+	dir = 4;
+	icon_state = "comfychair"
 	},
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/skelter/admin)
 "fn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "pipe11-2";
-	dir = 9
+	dir = 9;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/skelter/admin)
 "fo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 6
+	dir = 6;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -2263,27 +2263,27 @@
 /area/ruin/space/has_grav/skelter/forehall)
 "fp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/forehall)
 "fq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 9
+	dir = 9;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/forehall)
 "fr" = (
 /obj/effect/turf_decal/trimline/red/line{
-	icon_state = "trimline";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	icon_state = "scrub_map_on-2";
-	dir = 1
+	dir = 1;
+	icon_state = "scrub_map_on-2"
 	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/skelter/nav)
@@ -2327,8 +2327,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light{
-	icon_state = "tube";
-	dir = 8
+	dir = 8;
+	icon_state = "tube"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/skelter/sec)
@@ -2357,19 +2357,19 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	icon_state = "manifold-2";
-	dir = 8
+	dir = 8;
+	icon_state = "manifold-2"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/admin)
 "fC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -2379,8 +2379,8 @@
 "fD" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/machinery/door/airlock/security{
 	name = "Administration"
@@ -2392,8 +2392,8 @@
 /area/ruin/space/has_grav/skelter/admin)
 "fE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
@@ -2536,7 +2536,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "fY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/carpet,
@@ -2611,16 +2611,16 @@
 /area/ruin/space/has_grav/skelter/engine/lower)
 "gj" = (
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
-	dir = 1
+	dir = 1;
+	icon_state = "warningline"
 	},
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/skelter/sec)
 "gk" = (
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
-	dir = 1
+	dir = 1;
+	icon_state = "warningline"
 	},
 /obj/machinery/door/window/northleft{
 	name = "Armory"
@@ -2649,8 +2649,8 @@
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
 "go" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
-	dir = 8
+	dir = 8;
+	icon_state = "term"
 	},
 /obj/structure/cable,
 /obj/structure/cable{
@@ -2678,7 +2678,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Storage APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/skelter/storage)
@@ -2729,9 +2729,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/skelter/admin)
 "gx" = (
-/obj/machinery/door/firedoor{
-	pixel_x = 0
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -2742,9 +2740,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/shields)
 "gy" = (
-/obj/machinery/door/firedoor{
-	pixel_x = 0
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/engineering{
 	name = "Shields"
@@ -2766,8 +2762,8 @@
 "gD" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	icon_state = "scrub_map_on-2";
-	dir = 4
+	dir = 4;
+	icon_state = "scrub_map_on-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
@@ -2775,7 +2771,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Starboard Engine APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
 	icon_state = "sepia"
@@ -2784,8 +2780,8 @@
 "gE" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	icon_state = "manifold-2";
-	dir = 4
+	dir = 4;
+	icon_state = "manifold-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -2796,8 +2792,8 @@
 /area/ruin/space/has_grav/skelter/engine/lower)
 "gF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "pipe11-2";
-	dir = 5
+	dir = 5;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable/yellow{
@@ -2815,8 +2811,8 @@
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/corner{
-	icon_state = "warninglinecorner";
-	dir = 1
+	dir = 1;
+	icon_state = "warninglinecorner"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
@@ -2881,15 +2877,15 @@
 "gQ" = (
 /obj/machinery/shieldgen,
 /obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 6
+	dir = 6;
+	icon_state = "railing"
 	},
 /turf/open/floor/circuit,
 /area/ruin/space/has_grav/skelter/shields)
 "gR" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	icon_state = "manifold-2";
-	dir = 8
+	dir = 8;
+	icon_state = "manifold-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -2901,8 +2897,8 @@
 /area/ruin/space/has_grav/skelter/shields)
 "gS" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
@@ -2912,8 +2908,8 @@
 /area/ruin/space/has_grav/skelter/shields)
 "gT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	icon_state = "scrub_map_on-2";
-	dir = 8
+	dir = 8;
+	icon_state = "scrub_map_on-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
@@ -2921,7 +2917,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Shield Room APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/skelter/shields)
@@ -2937,8 +2933,8 @@
 /area/ruin/space/has_grav/skelter/forehall)
 "gW" = (
 /obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 1
+	dir = 1;
+	icon_state = "railing"
 	},
 /obj/structure/shuttle/engine/heater{
 	dir = 8
@@ -2948,8 +2944,8 @@
 "gX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 1
+	dir = 1;
+	icon_state = "railing"
 	},
 /obj/structure/shuttle/engine/heater{
 	dir = 8
@@ -2958,8 +2954,8 @@
 /area/ruin/space/has_grav/skelter/engine/lower)
 "gY" = (
 /obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 5
+	dir = 5;
+	icon_state = "railing"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/skelter/engine/lower)
@@ -2996,8 +2992,8 @@
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
 "hc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 6
+	dir = 6;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -3006,8 +3002,8 @@
 /area/ruin/space/has_grav/skelter/storage)
 "hd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/bot,
 /obj/structure/ore_box,
@@ -3015,8 +3011,8 @@
 /area/ruin/space/has_grav/skelter/storage)
 "he" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
@@ -3028,8 +3024,8 @@
 /area/ruin/space/has_grav/skelter/storage)
 "hg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
@@ -3042,8 +3038,8 @@
 	name = "Storage"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -3052,12 +3048,12 @@
 /area/ruin/space/has_grav/skelter/storage)
 "hi" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -3066,12 +3062,12 @@
 /area/ruin/space/has_grav/skelter/comms)
 "hj" = (
 /obj/machinery/light{
-	icon_state = "tube";
-	dir = 1
+	dir = 1;
+	icon_state = "tube"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -3080,8 +3076,8 @@
 /area/ruin/space/has_grav/skelter/comms)
 "hk" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	icon_state = "manifold-2";
-	dir = 1
+	dir = 1;
+	icon_state = "manifold-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -3096,12 +3092,12 @@
 /area/ruin/space/has_grav/skelter/comms)
 "hl" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	icon_state = "trimline_fill";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline_fill"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -3111,8 +3107,8 @@
 "hm" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -3124,8 +3120,8 @@
 /area/ruin/space/has_grav/skelter/shields)
 "hn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -3134,8 +3130,8 @@
 /area/ruin/space/has_grav/skelter/shields)
 "ho" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 9
+	dir = 9;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
@@ -3149,8 +3145,8 @@
 "hq" = (
 /obj/machinery/shieldgen,
 /obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 9
+	dir = 9;
+	icon_state = "railing"
 	},
 /turf/open/floor/circuit/airless,
 /area/ruin/space/has_grav/skelter/shields)
@@ -3171,8 +3167,8 @@
 /area/ruin/space/has_grav/skelter/engine/lower)
 "ht" = (
 /obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 6
+	dir = 6;
+	icon_state = "railing"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/skelter/engine/lower)
@@ -3199,12 +3195,12 @@
 /area/ruin/space/has_grav/skelter/engine/lower)
 "hw" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline_fill"
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
@@ -3275,8 +3271,8 @@
 /area/ruin/space/has_grav/skelter/storage)
 "hH" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -3297,12 +3293,12 @@
 /area/ruin/space/has_grav/skelter/sec)
 "hK" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	icon_state = "trimline_fill";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline_fill"
 	},
 /obj/effect/turf_decal/trimline/blue/corner{
-	icon_state = "trimline_corner";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_corner"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -3334,15 +3330,15 @@
 "hO" = (
 /obj/machinery/shieldgen,
 /obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 8
+	dir = 8;
+	icon_state = "railing"
 	},
 /turf/open/floor/circuit/airless,
 /area/ruin/space/has_grav/skelter/shields)
 "hP" = (
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
-	dir = 1
+	dir = 1;
+	icon_state = "warningline"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "sepia"
@@ -3350,12 +3346,12 @@
 /area/ruin/space/has_grav/skelter/engine/lower)
 "hQ" = (
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
-	dir = 1
+	dir = 1;
+	icon_state = "warningline"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 5
+	dir = 5;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "sepia"
@@ -3363,12 +3359,12 @@
 /area/ruin/space/has_grav/skelter/engine/lower)
 "hR" = (
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
-	dir = 1
+	dir = 1;
+	icon_state = "warningline"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "sepia"
@@ -3376,12 +3372,12 @@
 /area/ruin/space/has_grav/skelter/engine/lower)
 "hS" = (
 /obj/effect/turf_decal/stripes/corner{
-	icon_state = "warninglinecorner";
-	dir = 4
+	dir = 4;
+	icon_state = "warninglinecorner"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
@@ -3394,8 +3390,8 @@
 "hT" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -3409,26 +3405,26 @@
 /area/ruin/space/has_grav/skelter/engine/lower)
 "hU" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline_fill"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
 "hV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 10
+	dir = 10;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
@@ -3475,11 +3471,11 @@
 /area/ruin/space/has_grav/skelter/storage)
 "ic" = (
 /obj/machinery/light{
-	icon_state = "tube";
-	dir = 8
+	dir = 8;
+	icon_state = "tube"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "id" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -3489,11 +3485,11 @@
 	name = "dust"
 	},
 /obj/machinery/light/broken{
-	icon_state = "tube-broken";
-	dir = 4
+	dir = 4;
+	icon_state = "tube-broken"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ie" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/dark,
@@ -3504,7 +3500,7 @@
 "ig" = (
 /obj/machinery/light/broken,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ih" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/mineral/titanium/interior,
@@ -3564,8 +3560,8 @@
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
 "ir" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	icon_state = "manifold-2";
-	dir = 8
+	dir = 8;
+	icon_state = "manifold-2"
 	},
 /obj/machinery/firealarm{
 	dir = 8;
@@ -3578,8 +3574,8 @@
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
 "is" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -3588,20 +3584,20 @@
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
 "it" = (
 /obj/effect/turf_decal/trimline/yellow/corner{
-	icon_state = "trimline_corner";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline_corner"
 	},
 /obj/machinery/light{
-	icon_state = "tube";
-	dir = 1
+	dir = 1;
+	icon_state = "tube"
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -3610,12 +3606,12 @@
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
 "iu" = (
 /obj/effect/turf_decal/trimline/yellow/line{
-	icon_state = "trimline";
-	dir = 1
+	dir = 1;
+	icon_state = "trimline"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
@@ -3630,16 +3626,16 @@
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/trimline/yellow/corner{
-	icon_state = "trimline_corner";
-	dir = 1
+	dir = 1;
+	icon_state = "trimline_corner"
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline_fill"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -3648,12 +3644,12 @@
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
 "iw" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
-	icon_state = "trimline_fill";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline_fill"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -3662,8 +3658,8 @@
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
 "ix" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -3680,8 +3676,8 @@
 "iz" = (
 /obj/structure/closet/crate/freezer,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	icon_state = "scrub_map_on-2";
-	dir = 8
+	dir = 8;
+	icon_state = "scrub_map_on-2"
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
@@ -3703,7 +3699,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Electrical APC";
-	pixel_x = 26
+	pixel_x = 24
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
@@ -3713,7 +3709,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "iE" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/blue,
@@ -3731,8 +3727,8 @@
 	pixel_y = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	icon_state = "scrub_map_on-2";
-	dir = 4
+	dir = 4;
+	icon_state = "scrub_map_on-2"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/comms)
@@ -3751,8 +3747,8 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 9
+	dir = 9;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/comms)
@@ -3773,8 +3769,8 @@
 /area/ruin/space/has_grav/skelter/comms)
 "iH" = (
 /obj/machinery/computer{
-	icon_state = "computer";
-	dir = 4
+	dir = 4;
+	icon_state = "computer"
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/skelter/shields)
@@ -3784,8 +3780,8 @@
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
 "iJ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_fill"
 	},
 /obj/effect/turf_decal/trimline/blue/corner,
 /turf/open/floor/plasteel/showroomfloor,
@@ -3796,19 +3792,19 @@
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
 "iL" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline_fill"
 	},
 /obj/effect/turf_decal/trimline/blue/corner{
-	icon_state = "trimline_corner";
-	dir = 8
+	dir = 8;
+	icon_state = "trimline_corner"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
 "iM" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
-	icon_state = "trimline_fill";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline_fill"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
@@ -3862,8 +3858,8 @@
 /area/ruin/space/has_grav/skelter/storage)
 "iT" = (
 /obj/structure/disposalpipe/trunk{
-	icon_state = "pipe-t";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe-t"
 	},
 /obj/machinery/disposal/bin,
 /obj/machinery/button/massdriver{
@@ -3952,8 +3948,8 @@
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
 "ja" = (
 /obj/structure/toilet{
-	icon_state = "toilet00";
-	dir = 8
+	dir = 8;
+	icon_state = "toilet00"
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -3962,37 +3958,37 @@
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
 "jb" = (
 /obj/structure/disposalpipe/segment{
-	icon_state = "pipe";
-	dir = 6
+	dir = 6;
+	icon_state = "pipe"
 	},
 /turf/closed/wall/mineral/titanium,
 /area/ruin/space/has_grav/skelter/storage)
 "jc" = (
 /obj/structure/disposalpipe/segment{
-	icon_state = "pipe";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe"
 	},
 /turf/closed/wall/mineral/titanium,
 /area/ruin/space/has_grav/skelter/storage)
 "jd" = (
 /obj/structure/disposalpipe/segment{
-	icon_state = "pipe";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/skelter/storage)
 "je" = (
 /obj/machinery/door/window/eastright,
 /obj/structure/disposalpipe/segment{
-	icon_state = "pipe";
-	dir = 9
+	dir = 9;
+	icon_state = "pipe"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/skelter/storage)
 "jf" = (
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
-	dir = 1
+	dir = 1;
+	icon_state = "warn_end"
 	},
 /obj/machinery/mass_driver,
 /obj/structure/window/reinforced/spawner/north,
@@ -4031,8 +4027,8 @@
 /area/ruin/space/has_grav/skelter/comms)
 "ji" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
-	icon_state = "inje_map-2";
-	dir = 1
+	dir = 1;
+	icon_state = "inje_map-2"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/skelter/oxy)
@@ -4067,7 +4063,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Communications APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/comms)
@@ -4091,8 +4087,8 @@
 /area/ruin/unpowered/no_grav)
 "jp" = (
 /obj/effect/turf_decal/trimline/red/line{
-	icon_state = "trimline";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline"
 	},
 /obj/machinery/light{
 	dir = 1
@@ -4101,16 +4097,16 @@
 /area/ruin/space/has_grav/skelter/nav)
 "jq" = (
 /obj/effect/turf_decal/trimline/red/line{
-	icon_state = "trimline";
-	dir = 4
+	dir = 4;
+	icon_state = "trimline"
 	},
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/skelter/nav)
 "jr" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/skelter/admin)
@@ -4122,8 +4118,8 @@
 /area/ruin/space/has_grav/skelter/admin)
 "jt" = (
 /obj/machinery/light/small/broken{
-	icon_state = "bulb-broken";
-	dir = 4
+	dir = 4;
+	icon_state = "bulb-broken"
 	},
 /obj/item/stack/cable_coil/blue,
 /turf/open/floor/plating,
@@ -4131,8 +4127,8 @@
 "ju" = (
 /obj/structure/table/glass,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	icon_state = "scrub_map_on-2";
-	dir = 1
+	dir = 1;
+	icon_state = "scrub_map_on-2"
 	},
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/skelter/admin)

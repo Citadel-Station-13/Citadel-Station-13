@@ -5,7 +5,12 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	valid_territory = FALSE
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
+	flags_1 = CAN_BE_DIRTY_1
+
+/area/survivalpod/nonpowered
+	name = "\proper Emergency Shelter"
+	requires_power = TRUE
 
 //Survival Capsule
 /obj/item/survivalcapsule
@@ -80,6 +85,10 @@
 	desc = "A luxury bar in a capsule. Bartender required and not included."
 	template_id = "shelter_charlie"
 
+/obj/item/survivalcapsule/luxury/empty
+	name = "large empty capsule"
+	desc = "An extremly large capsule which requires power. Useful for projects all over."
+	template_id = "shelter_delta"
 //Pod objects
 
 //Window
@@ -202,7 +211,7 @@
 		var/obj/item/reagent_containers/food/snacks/donkpocket/warm/W = new(src)
 		load(W)
 	if(prob(50))
-		var/obj/item/storage/box/dice/D = new(src)
+		var/obj/item/storage/dice/D = new(src)
 		load(D)
 	else
 		var/obj/item/instrument/guitar/G = new(src)
