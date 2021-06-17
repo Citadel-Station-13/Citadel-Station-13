@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - bugfix: "fixes an oversight causing embed jostling to do 2x as much damage as it should"
