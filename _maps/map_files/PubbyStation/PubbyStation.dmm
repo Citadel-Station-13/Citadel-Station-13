@@ -46715,15 +46715,6 @@
 	},
 /turf/open/floor/plating,
 /area/engineering/main)
-"cda" = (
-/obj/structure/reflector/single/anchored{
-	dir = 10
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/engineering/main)
 "cdc" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -57098,6 +57089,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
+"lTd" = (
+/obj/structure/reflector/single/anchored{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/engineering/main)
 "lTC" = (
 /obj/item/shard,
 /obj/effect/turf_decal/stripes/line{
@@ -57216,6 +57213,19 @@
 /obj/machinery/status_display/evac,
 /turf/closed/wall/r_wall,
 /area/engineering/supermatter)
+"mfn" = (
+/obj/machinery/power/emitter/anchored{
+	dir = 8;
+	state = 2
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/engineering/main)
 "mfC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable{
@@ -58846,12 +58856,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
-"pCo" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/engineering/main)
 "pDP" = (
 /obj/machinery/vending/assist,
 /obj/effect/turf_decal/tile/neutral{
@@ -61199,6 +61203,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
+"vhf" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/engineering/main)
 "vhk" = (
 /obj/structure/chair,
 /turf/open/floor/carpet,
@@ -93554,8 +93567,8 @@ bYT
 bZB
 caq
 cbk
-aac
-ccY
+bXk
+vhf
 cdT
 ccY
 cbX
@@ -94068,8 +94081,8 @@ bYV
 bZA
 cam
 ccW
-bXk
-cda
+aac
+lTd
 wcs
 wcs
 wcs
@@ -94582,8 +94595,8 @@ bYX
 bZA
 cam
 lfx
-bXk
-pCo
+aac
+cbX
 wcs
 wcs
 wcs
@@ -95096,8 +95109,8 @@ wjm
 bZF
 cbm
 mgz
-aac
-oHa
+bXk
+mfn
 oHa
 eWi
 cbX
