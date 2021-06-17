@@ -1,5 +1,0 @@
-author: "qweq12yt"
-delete-after: True
-changes: 
-  - bugfix: "Locker orders now properly bundle together in a single locker (still separated by buyer)."
-  - bugfix: "Changed some package names to be more accurate."
