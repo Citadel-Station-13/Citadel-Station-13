@@ -13,7 +13,7 @@
 			cocktail which removes all incapacitating effects, lets the user run faster and has a mild healing effect."
 	item = /obj/item/storage/box/syndie_kit/imp_adrenal
 	cost = 8
-	player_minimum = 25
+	player_minimum = 15
 
 /datum/uplink_item/implants/antistun
 	name = "CNS Rebooter Implant"
