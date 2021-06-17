@@ -532,7 +532,7 @@
 // /datum/component/storage signals
 #define COMSIG_CONTAINS_STORAGE "is_storage"						//() - returns bool.
 #define COMSIG_TRY_STORAGE_INSERT "storage_try_insert"				//(obj/item/inserting, mob/user, silent, force) - returns bool
-#define COMSIG_TRY_STORAGE_SHOW "storage_show_to"					//(mob/show_to, force) - returns bool.
+#define COMSIG_TRY_STORAGE_SHOW "storage_show_to"					//(mob/show_to, force, trigger_on_found) - returns bool.
 #define COMSIG_TRY_STORAGE_HIDE_FROM "storage_hide_from"			//(mob/hide_from) - returns bool
 #define COMSIG_TRY_STORAGE_HIDE_ALL "storage_hide_all"				//returns bool
 #define COMSIG_TRY_STORAGE_SET_LOCKSTATE "storage_lock_set_state"	//(newstate)
