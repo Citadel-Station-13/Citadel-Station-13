@@ -73891,6 +73891,15 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/commons/dorms)
+"ffl" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/shower{
+	dir = 8;
+	name = "emergency shower";
+	pixel_y = -4
+	},
+/turf/open/floor/plasteel,
+/area/science/xenobiology)
 "ffE" = (
 /obj/structure/cable/white{
 	icon_state = "0-2"
@@ -76403,18 +76412,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/service/kitchen)
-"fXv" = (
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/stripes/end{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/science/xenobiology)
 "fXy" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrous_output{
 	dir = 4
@@ -81744,6 +81741,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/command/storage/eva)
+"hMb" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
 "hMm" = (
 /obj/structure/table/wood,
 /obj/item/toy/cards/deck,
@@ -91804,15 +91813,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
-"ldW" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/shower{
-	dir = 8;
-	name = "emergency shower";
-	pixel_y = -4
-	},
-/turf/open/floor/plasteel,
-/area/science/xenobiology)
 "ldX" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
@@ -95312,18 +95312,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/command/heads_quarters/hop)
-"mqk" = (
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/stripes/end{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/science/xenobiology)
 "mqL" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/hydroponics/soil,
@@ -101595,6 +101583,18 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
 /area/engineering/break_room)
+"oCd" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/stripes/end{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
 "oCi" = (
 /obj/structure/bookcase/manuals/engineering,
 /turf/open/floor/wood,
@@ -157551,7 +157551,7 @@ cQv
 cRY
 cTJ
 tXb
-mqk
+oCd
 cYS
 dax
 dci
@@ -159093,7 +159093,7 @@ kiv
 cSc
 cTO
 hDD
-fXv
+hMb
 oJE
 dav
 dcm
@@ -160890,7 +160890,7 @@ cNh
 cOQ
 cQy
 cSh
-ldW
+ffl
 cVR
 cXk
 cYZ
