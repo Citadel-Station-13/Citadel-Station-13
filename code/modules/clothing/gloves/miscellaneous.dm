@@ -76,6 +76,18 @@
 		if(!silent)
 			to_chat(user, "<span class='warning'>With [src] off of your arms, you feel less ready to punch things.</span>")
 
+/obj/item/clothing/gloves/fingerless/pugilist/crafted
+	unique_reskin = list("Short" = "armwraps",
+						"Extended" = "armwraps_extended"
+						)
+
+/obj/item/clothing/gloves/fingerless/pugilist/crafted/reskin_obj(mob/M)
+	. = ..()
+	if(icon_state == "armwraps_extended")
+		item_state = "armwraps_extended"
+	else
+		return
+
 /obj/item/clothing/gloves/fingerless/pugilist/chaplain
 	name = "armwraps of unyielding resolve"
 	desc = "A series of armwraps, soaked in holy water. Makes you pretty keen to smite evil magic users."
