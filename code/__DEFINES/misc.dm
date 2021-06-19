@@ -515,6 +515,7 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 
 #define VOMIT_TOXIC 1
 #define VOMIT_PURPLE 2
+#define VOMIT_NANITE 3
 
 // possible bitflag return values of intercept_zImpact(atom/movable/AM, levels = 1) calls
 #define FALL_INTERCEPTED		(1<<0) //Stops the movable from falling further and crashing on the ground
