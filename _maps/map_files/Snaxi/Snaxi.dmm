@@ -5352,7 +5352,6 @@
 	dir = 4
 	},
 /obj/machinery/holopad,
-/mob/living/carbon/human/species/corporate,
 /turf/open/floor/wood,
 /area/command/corporate_showroom)
 "ajQ" = (
@@ -14107,6 +14106,15 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hos)
+"bXH" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/visible{
+	dir = 6
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "bXO" = (
 /obj/machinery/door/morgue{
 	name = "Confession Booth (Chaplain)";
@@ -15923,6 +15931,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"cVv" = (
+/obj/structure/fence,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "cVG" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -18135,6 +18147,15 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
+"evX" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/visible{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "evY" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel,
@@ -22209,6 +22230,18 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/service/bar)
+"hbg" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 9
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "hch" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table/wood,
@@ -25768,6 +25801,16 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/carpet,
 /area/hallway/secondary/exit/departure_lounge)
+"joQ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/visible{
+	dir = 4
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "joT" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -26724,6 +26767,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/gear_painter,
 /turf/open/floor/wood,
 /area/commons/dorms)
 "jYS" = (
@@ -32604,6 +32648,11 @@
 	},
 /turf/open/floor/engine,
 /area/engineering/main)
+"nSk" = (
+/obj/machinery/light,
+/obj/machinery/gear_painter,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
 "nSX" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
@@ -35905,6 +35954,15 @@
 /obj/machinery/light/floor,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
+"pQf" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/visible{
+	dir = 9
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "pQg" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 6
@@ -38839,6 +38897,21 @@
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/ai_monitored/security/armory)
+"rOA" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/visible{
+	dir = 4
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "rOD" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Server Room";
@@ -48303,6 +48376,21 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"xYc" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/visible,
+/obj/machinery/light/floor,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "xYD" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/carpet,
@@ -74479,9 +74567,9 @@ ydp
 avT
 avT
 avT
-xUL
-vcG
-lzB
+bXH
+xYc
+pQf
 avT
 avT
 avT
@@ -74736,9 +74824,9 @@ ydp
 avT
 avT
 avT
+evX
+vcG
 xUL
-lcv
-wgu
 xUL
 xUL
 xUL
@@ -74993,9 +75081,9 @@ avT
 avT
 avT
 avT
-xUL
+evX
 vcG
-lzB
+xUL
 xUL
 xUL
 xUL
@@ -75250,9 +75338,9 @@ ydp
 avT
 avT
 avT
-xUL
+evX
 vcG
-lzB
+xUL
 avT
 avT
 avT
@@ -75507,9 +75595,9 @@ avT
 avT
 avT
 avT
-xUL
+evX
 vcG
-lzB
+xUL
 avT
 avT
 avT
@@ -75764,9 +75852,9 @@ avT
 avT
 avT
 avT
+joQ
+lcv
 xUL
-vcG
-lzB
 avT
 avT
 avT
@@ -76021,9 +76109,9 @@ avT
 avT
 avT
 avT
-xUL
+evX
 vcG
-lzB
+xUL
 avT
 avT
 avT
@@ -76278,9 +76366,9 @@ avT
 avT
 avT
 avT
-xUL
+evX
 vcG
-lzB
+xUL
 avT
 avT
 avT
@@ -76535,10 +76623,10 @@ ydp
 ydp
 avT
 avT
-xUL
-lcv
-wgu
+evX
+vcG
 avT
+krq
 avT
 ydp
 ydp
@@ -76792,11 +76880,11 @@ ydp
 ydp
 ydp
 avT
-xUL
+evX
 vcG
-lzB
+nTz
 xiw
-avT
+cVv
 ydp
 ydp
 ydp
@@ -77049,10 +77137,10 @@ ydp
 ydp
 avT
 avT
-xUL
+evX
 vcG
-lzB
 avT
+xUL
 xUL
 xUL
 xUL
@@ -77306,9 +77394,9 @@ avT
 avT
 avT
 avT
-xUL
+evX
 vcG
-lzB
+avT
 xUL
 xUL
 xUL
@@ -77563,9 +77651,9 @@ avT
 avT
 avT
 avT
-xUL
+evX
 vcG
-lzB
+avT
 xUL
 xUL
 xUL
@@ -77820,9 +77908,9 @@ avT
 avT
 avT
 avT
-xUL
+joQ
 lcv
-nDN
+avT
 xUL
 xUL
 xUL
@@ -78077,9 +78165,9 @@ avT
 avT
 avT
 avT
-xUL
+evX
 vcG
-lzB
+avT
 xUL
 xUL
 xUL
@@ -78334,9 +78422,9 @@ avT
 avT
 avT
 avT
-xUL
+evX
 vcG
-lzB
+avT
 xUL
 xUL
 xUL
@@ -78591,10 +78679,10 @@ xUL
 xUL
 xUL
 xUL
-xUL
+evX
 vcG
-lzB
 avT
+xUL
 xUL
 xUL
 xUL
@@ -78848,14 +78936,14 @@ hnN
 nGx
 nGx
 nGx
-nGx
-xtV
-lzB
+rOA
+hbg
+nTz
 xiw
-avT
-avT
-avT
-avT
+xUL
+xUL
+xUL
+xUL
 bok
 unA
 xjZ
@@ -79105,10 +79193,10 @@ ybT
 sLv
 sLv
 sLv
-sLv
-sLv
-asr
+pQf
 avT
+avT
+hho
 avT
 avT
 krq
@@ -83490,7 +83578,7 @@ wbE
 wbE
 wbE
 uBa
-faZ
+nSk
 bBL
 bBL
 bBL
