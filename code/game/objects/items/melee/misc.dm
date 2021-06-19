@@ -695,7 +695,7 @@
 			playsound(src, 'sound/weapons/batonextend.ogg', 50, 1)
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
-	if(!held_sausage || held_sausage.roasted)
+	if(held_sausage?.roasted)
 		return	// no
 	to_chat(user, "You finish roasting [held_sausage]")
 	playsound(src,'sound/items/welder2.ogg',50,1)
