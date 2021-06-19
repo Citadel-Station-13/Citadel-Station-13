@@ -73,6 +73,8 @@
 		myseed.adjust_yield(rand(-3,2))
 		myseed.adjust_production(rand(-3,3))
 		myseed.endurance = clamp(myseed.endurance + rand(-3,2), 0, 100) // adjust_endurance has a min value of 10, need to edit directly
+	// Scale health to endurance
+	max_integrity = integrity = 10 + endurance / 2
 	delay_spread = delay_spread - myseed.production * 100 //So the delay goes DOWN with better stats instead of up. :I
 	var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
 	if(ispath(G)) // Seeds were ported to initialize so their genes are still typepaths here, luckily their initializer is smart enough to handle us doing this
