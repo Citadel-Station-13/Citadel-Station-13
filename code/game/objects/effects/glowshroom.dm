@@ -195,8 +195,14 @@
 /obj/structure/glowshroom/proc/Decay(spread, amount)
 	if (spread) // Decay due to spread
 		myseed.endurance -= amount
+		max_integrity = min(max_integrity, 10 + myseed.endurance / 2)
+		if(integrity > max_integrity)
+			integrity = max_integrity
 	else // Timed decay
 		myseed.endurance -= 1
+		max_integrity = min(max_integrity, 10 + myseed.endurance / 2)
+		if(integrity > max_integrity)
+			integrity = max_integrity
 		if (myseed.endurance > 0)
 			addtimer(CALLBACK(src, .proc/Decay), delay_decay, FALSE) // Recall decay timer
 			return
