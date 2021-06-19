@@ -30155,12 +30155,14 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -46703,9 +46705,8 @@
 /turf/open/floor/plating,
 /area/engineering/main)
 "ccU" = (
-/obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 4;
-	name = "Air to Distro"
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
@@ -53072,6 +53073,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/item/wrench,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "cSJ" = (
@@ -53132,7 +53134,9 @@
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
 "cXP" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
 /turf/closed/wall/r_wall,
 /area/science/xenobiology)
 "cXW" = (
@@ -54905,11 +54909,12 @@
 	icon_state = "1-8"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
 /obj/structure/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -55086,6 +55091,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "hgD" = (
@@ -55982,8 +55988,8 @@
 	},
 /area/maintenance/department/science)
 "iWV" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
@@ -57399,7 +57405,6 @@
 /turf/closed/wall/r_wall,
 /area/engineering/main)
 "mlr" = (
-/obj/structure/lattice,
 /obj/structure/disposalpipe/junction{
 	dir = 4
 	},
@@ -57504,6 +57509,9 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -57703,6 +57711,7 @@
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "mVM" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "mXq" = (
@@ -58429,9 +58438,8 @@
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "oBb" = (
-/obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 4;
-	name = "Air Outlet Pump"
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/closed/wall/r_wall,
 /area/science/xenobiology)
@@ -58860,6 +58868,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "pkM" = (
@@ -59094,8 +59103,8 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
@@ -59639,9 +59648,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "qVP" = (
@@ -59859,6 +59865,7 @@
 /area/space/nearstation)
 "roc" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "ros" = (
@@ -60574,6 +60581,7 @@
 	icon_state = "0-2";
 	pixel_y = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "tfx" = (
@@ -60850,6 +60858,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/lab)
+"tJW" = (
+/obj/machinery/atmospherics/components/binary/pump/on{
+	name = "Air Out"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
 "tLP" = (
 /obj/machinery/status_display/supply,
 /turf/closed/wall,
@@ -60986,10 +61000,10 @@
 /turf/open/floor/plasteel,
 /area/engineering/main)
 "ufa" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "ugC" = (
@@ -106366,8 +106380,8 @@ oTl
 vzP
 vzP
 iWV
-aFi
-bpq
+tJW
+rxa
 bnj
 brT
 bxF
@@ -106620,7 +106634,7 @@ eCw
 aUC
 aUC
 qHI
-aKq
+bpq
 aEj
 wAI
 vzP
@@ -106883,7 +106897,7 @@ bkF
 bkF
 bkF
 bkF
-oBb
+bkF
 ume
 bkF
 bkF
