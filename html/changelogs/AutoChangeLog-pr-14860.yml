@@ -1,0 +1,15 @@
+author: "Arturlang"
+delete-after: True
+changes: 
+  - rscadd: "Port's TG's nanite storage modification programs from the bepis"
+  - bugfix: "Fixes infective nanite progreams not syncing cloud ID."
+  - rscadd: "Add's off icons for nanite machinery"
+  - bugfix: "Fixes antitox nanites runtiming on simplemobs"
+  - rscadd: "Updates the nanite dermal button icon set"
+  - rscadd: "Adds the ability to select the logic for nanite rules"
+  - bugfix: "Nanite programs with triggers won't ignore rules."
+  - bugfix: "Coagluating nanite program research no longer has the wrong name
+tweak: Nanite program's have better descriptions now
+tweak: Nanite subdermal ID's now also include pulled ID's for simplemobs"
+  - bugfix: "Nanite voice sensors should properly work now."
+  - bugfix: "Fixes nanite comm remote, now they should actually work"
