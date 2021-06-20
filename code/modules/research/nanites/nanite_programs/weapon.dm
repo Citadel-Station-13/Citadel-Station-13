@@ -45,8 +45,8 @@
 
 /datum/nanite_program/aggressive_replication
 	name = "Aggressive Replication"
-	desc = "Nanites will consume organic matter to improve their replication rate, damaging the host. The efficiency increases with the volume of nanites, requiring 200 to break even."
-	use_rate = 0
+	desc = "Nanites will consume organic matter to improve their replication rate, damaging the host. The efficiency increases with the volume of nanites, requiring 200 to break even, \
+			and scaling linearly for a net positive of 0.1 production rate per 20 nanite volume beyond that."
 	rogue_types = list(/datum/nanite_program/necrotic)
 
 /datum/nanite_program/aggressive_replication/active_effect()
@@ -87,11 +87,8 @@
 	addtimer(CALLBACK(src, .proc/boom), clamp((nanites.nanite_volume * 0.35), 25, 150))
 
 /datum/nanite_program/explosive/proc/boom()
-	var/nanite_amount = nanites.nanite_volume
-	var/heavy_range = FLOOR(nanite_amount/100, 1) - 1
-	var/light_range = FLOOR(nanite_amount/50, 1) - 1
-	explosion(host_mob, 0, heavy_range, light_range)
-	nanites.delete_nanites()
+	dyn_explosion(get_turf(host_mob), nanites.nanite_volume / 50)
+	qdel(nanites)
 
 //TODO make it defuse if triggered again
 
