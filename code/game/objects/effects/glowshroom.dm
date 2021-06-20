@@ -74,7 +74,7 @@
 		myseed.adjust_production(rand(-3,3))
 		myseed.endurance = clamp(myseed.endurance + rand(-3,2), 0, 100) // adjust_endurance has a min value of 10, need to edit directly
 	// Scale health to endurance
-	max_integrity = integrity = 10 + endurance / 2
+	max_integrity = obj_integrity = 10 + myseed.endurance / 2
 	delay_spread = delay_spread - myseed.production * 100 //So the delay goes DOWN with better stats instead of up. :I
 	var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
 	if(ispath(G)) // Seeds were ported to initialize so their genes are still typepaths here, luckily their initializer is smart enough to handle us doing this
@@ -196,13 +196,13 @@
 	if (spread) // Decay due to spread
 		myseed.endurance -= amount
 		max_integrity = min(max_integrity, 10 + myseed.endurance / 2)
-		if(integrity > max_integrity)
-			integrity = max_integrity
+		if(obj_integrity > max_integrity)
+			obj_integrity = max_integrity
 	else // Timed decay
 		myseed.endurance -= 1
 		max_integrity = min(max_integrity, 10 + myseed.endurance / 2)
-		if(integrity > max_integrity)
-			integrity = max_integrity
+		if(obj_integrity > max_integrity)
+			obj_integrity = max_integrity
 		if (myseed.endurance > 0)
 			addtimer(CALLBACK(src, .proc/Decay), delay_decay, FALSE) // Recall decay timer
 			return
