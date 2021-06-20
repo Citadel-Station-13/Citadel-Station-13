@@ -1,7 +1,0 @@
-author: "Nanotrasen Structual Engineering Division"
-delete-after: True
-changes: 
-  - rscadd: "Added lables to the atmos tanks on Metastation."
-  - rscadd: "Adjusted Pubbystation's emitter room wall layout to prevent light-breakage on startup of emitters."
-  - rscdel: "Removed frestanding sink and showers from Metastation science airlock, and Deltastation Xenobio. Added an emergency shower next to the kill room."
-  - bugfix: "Removed a leftover pipe in Metastation security hallway."
