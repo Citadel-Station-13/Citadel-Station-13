@@ -46715,15 +46715,6 @@
 	},
 /turf/open/floor/plating,
 /area/engineering/main)
-"cda" = (
-/obj/structure/reflector/single/anchored{
-	dir = 10
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/engineering/main)
 "cdc" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -57562,6 +57553,15 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"mQB" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/engineering/main)
 "mSc" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
@@ -58846,12 +58846,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
-"pCo" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/engineering/main)
 "pDP" = (
 /obj/machinery/vending/assist,
 /obj/effect/turf_decal/tile/neutral{
@@ -58929,6 +58923,19 @@
 /obj/structure/closet/crate,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
+"pKU" = (
+/obj/machinery/power/emitter/anchored{
+	dir = 8;
+	state = 2
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/engineering/main)
 "pMG" = (
 /obj/structure/sink{
 	dir = 8;
@@ -61602,6 +61609,12 @@
 /area/engineering/main)
 "wcs" = (
 /turf/open/floor/plasteel/dark,
+/area/engineering/main)
+"wcE" = (
+/obj/structure/reflector/single/anchored{
+	dir = 10
+	},
+/turf/open/floor/plating,
 /area/engineering/main)
 "wdx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -93554,8 +93567,8 @@ bYT
 bZB
 caq
 cbk
-aac
-ccY
+bXk
+mQB
 cdT
 ccY
 cbX
@@ -94068,8 +94081,8 @@ bYV
 bZA
 cam
 ccW
-bXk
-cda
+aac
+wcE
 wcs
 wcs
 wcs
@@ -94582,8 +94595,8 @@ bYX
 bZA
 cam
 lfx
-bXk
-pCo
+aac
+cbX
 wcs
 wcs
 wcs
@@ -95096,8 +95109,8 @@ wjm
 bZF
 cbm
 mgz
-aac
-oHa
+bXk
+pKU
 oHa
 eWi
 cbX

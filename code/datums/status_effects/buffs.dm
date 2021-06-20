@@ -642,7 +642,7 @@
 		O.Remove()
 		if(iscarbon(owner))
 			var/mob/living/carbon/C = owner
-			C.vomit(0, toxic = TRUE)
+			C.vomit(0)
 		O.forceMove(get_turf(owner))
 	if(isliving(owner))
 		var/mob/living/L = owner
