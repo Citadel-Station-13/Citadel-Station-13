@@ -1733,11 +1733,8 @@
 #include "code\modules\antagonists\slaughter\slaughter.dm"
 #include "code\modules\antagonists\slaughter\slaughter_antag.dm"
 #include "code\modules\antagonists\slaughter\slaughterevent.dm"
-<<<<<<< HEAD
 #include "code\modules\antagonists\space_ninja\space_ninja.dm"
-=======
 #include "code\modules\antagonists\space_dragon\space_dragon.dm"
->>>>>>> 0a1f0d3e66ef5293cde8201f68199d30a6794968
 #include "code\modules\antagonists\survivalist\survivalist.dm"
 #include "code\modules\antagonists\swarmer\swarmer.dm"
 #include "code\modules\antagonists\swarmer\swarmer_event.dm"
@@ -2107,11 +2104,8 @@
 #include "code\modules\events\radiation_storm.dm"
 #include "code\modules\events\sentience.dm"
 #include "code\modules\events\shuttle_loan.dm"
-<<<<<<< HEAD
 #include "code\modules\events\space_ninja.dm"
-=======
 #include "code\modules\events\space_dragon.dm"
->>>>>>> 0a1f0d3e66ef5293cde8201f68199d30a6794968
 #include "code\modules\events\spacevine.dm"
 #include "code\modules\events\spider_infestation.dm"
 #include "code\modules\events\spontaneous_appendicitis.dm"
