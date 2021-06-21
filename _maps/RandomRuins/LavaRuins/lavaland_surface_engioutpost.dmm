@@ -786,10 +786,6 @@
 /turf/open/floor/plating/rust,
 /area/lavaland/surface/outdoors)
 "cr" = (
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Production Room";
-	req_access_txt = "204"
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
@@ -797,7 +793,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
+/obj/structure/door_assembly/door_assembly_eng,
+/turf/open/floor/plating/rust,
 /area/lavaland/surface/outdoors)
 "cs" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/heater{
@@ -1020,7 +1017,7 @@
 "df" = (
 /obj/machinery/door/airlock,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
+/turf/open/floor/plating/rust,
 /area/lavaland/surface/outdoors)
 "dg" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
