@@ -503,6 +503,7 @@
 			return 1
 
 /obj/machinery/porta_turret/proc/popUp()	//pops the turret up
+	set waitfor = FALSE
 	if(!anchored)
 		return
 	if(raising || raised)
