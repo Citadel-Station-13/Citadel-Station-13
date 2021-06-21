@@ -588,18 +588,31 @@
 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
 	restricted_roles = list("Chief Medical Officer", "Research Director")
 
-/datum/gear/uniform/orvops
-	name = "ORV uniform, ops/sec"
-	path = /obj/item/clothing/under/trek/engsec/orv
+/datum/gear/uniform/orvsec
+	name = "ORV uniform, sec"
+	path = /obj/item/clothing/under/trek/sec/orv
 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
-	restricted_desc = "Engineering, Security and Cargo"
-	restricted_roles = list("Chief Engineer", "Atmospheric Technician", "Station Engineer", "Warden", "Detective", "Security Officer", "Head of Security", "Cargo Technician", "Shaft Miner", "Quartermaster")
+	restricted_desc = "Security"
+	restricted_roles = list("Warden", "Detective", "Security Officer", "Head of Security")
 
-/datum/gear/uniform/orvcmd_ops
-	name = "ORV uniform, ops/sec, cmd"
-	path = /obj/item/clothing/under/trek/command/orv/engsec
+/datum/gear/uniform/orveng
+	name = "ORV uniform, eng"
+	path = /obj/item/clothing/under/trek/eng/orv
 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
-	restricted_roles = list("Chief Engineer", "Head of Security")
+	restricted_desc = "Engineering"
+	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer")
+
+/datum/gear/uniform/orvcmd_sec
+	name = "ORV uniform, sec, cmd"
+	path = /obj/item/clothing/under/trek/command/orv/sec
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_roles = list("Head of Security")
+
+/datum/gear/uniform/orvcmd_eng
+	name = "ORV uniform, eng, cmd"
+	path = /obj/item/clothing/under/trek/command/orv/eng
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_roles = list("Chief Engineer")
 
 /datum/gear/uniform/orvass
 	name = "ORV uniform, assistant"
@@ -608,11 +621,11 @@
 	restricted_roles = list("Assistant")
 
 /datum/gear/uniform/orvsrv
-	name = "ORV uniform, service"
+	name = "ORV uniform, other"
 	path = /obj/item/clothing/under/trek/orv/service
 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
-	restricted_roles = list("Assistant", "Bartender", "Botanist", "Cook", "Curator", "Janitor", "Chaplain")
-	restricted_desc = "Service and Civilian, barring Clown, Mime and Lawyer"
+	restricted_roles = list("Bartender", "Botanist", "Cook", "Curator", "Janitor", "Chaplain", "Cargo Technician", "Shaft Miner")
+	restricted_desc = "Service, Cargo and Civilian, barring Clown, Mime and Lawyer"
 
 //Memes
 /datum/gear/uniform/gear_harnesses

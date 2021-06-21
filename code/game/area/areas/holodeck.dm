@@ -3,7 +3,6 @@
 	icon_state = "Holodeck"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	flags_1 = NONE
-	area_flags = VALID_TERRITORY | UNIQUE_AREA
 	sound_environment = SOUND_ENVIRONMENT_PADDED_CELL
 
 	var/obj/machinery/computer/holodeck/linked
@@ -87,9 +86,6 @@
 /area/holodeck/rec_center/lounge
 	name = "Holodeck - Lounge"
 
-/area/holodeck/rec_center/medical
-	name = "Holodeck - Emergency Medical"
-
 /area/holodeck/rec_center/pet_lounge
 	name = "Holodeck - Pet Park"
 
@@ -126,6 +122,10 @@
 
 /area/holodeck/rec_center/bunker
 	name = "Holodeck - Holdout Bunker"
+	restricted = 1
+
+/area/holodeck/rec_center/medical
+	name = "Holodeck - Emergency Medical"
 	restricted = 1
 
 /area/holodeck/rec_center/anthophila

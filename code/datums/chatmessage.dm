@@ -176,6 +176,11 @@
 	scheduled_destruction = world.time + (lifespan - CHAT_MESSAGE_EOL_FADE)
 	enter_subsystem()
 
+	var/mob/living/silicon/robot/R = target
+	if(iscyborg(R))
+		if(R.module.dogborg == TRUE || R.dogborg == TRUE) //I hate whoever that thought that putting two types of dogborg that don't even sync up properly was good
+			message.pixel_x = 16
+
 /**
   * Applies final animations to overlay CHAT_MESSAGE_EOL_FADE deciseconds prior to message deletion
   * Arguments:
