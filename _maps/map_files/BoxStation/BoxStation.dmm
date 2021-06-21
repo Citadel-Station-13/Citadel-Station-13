@@ -17140,10 +17140,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/camera{
-	c_tag = Theatre;
-	dir = 4
-	},
 /turf/open/floor/wood,
 /area/service/theater)
 "aOj" = (
