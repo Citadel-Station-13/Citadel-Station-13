@@ -349,6 +349,7 @@
 
 // Relays kill program request to currently active program. Use this to quit current program.
 /obj/item/modular_computer/proc/kill_program(forced = FALSE)
+	set waitfor = FALSE
 	if(active_program)
 		active_program.kill_program(forced)
 		active_program = null

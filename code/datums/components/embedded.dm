@@ -265,6 +265,7 @@
 /// Items embedded/stuck to carbons both check whether they randomly fall out (if applicable), as well as if the target mob and limb still exists.
 /// Items harmfully embedded in carbons have an additional check for random pain (if applicable)
 /datum/component/embedded/proc/processCarbon()
+	set waitfor = FALSE
 	var/mob/living/carbon/victim = parent
 
 	if(!victim || !limb) // in case the victim and/or their limbs exploded (say, due to a sticky bomb)

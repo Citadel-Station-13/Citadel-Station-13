@@ -25,6 +25,7 @@
 		user_by_item -= source
 
 /datum/element/earhealing/process()
+	set waitfor = FALSE
 	for(var/i in user_by_item)
 		var/mob/living/carbon/user = user_by_item[i]
 		if(HAS_TRAIT(user, TRAIT_DEAF))

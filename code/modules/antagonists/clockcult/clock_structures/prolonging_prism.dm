@@ -60,12 +60,8 @@
 		delay_remaining += PRISM_DELAY_DURATION
 		toggle(0, user)
 
-/obj/structure/destructible/clockwork/powered/prolonging_prism/process()
-	var/turf/own_turf = get_turf(src)
-	if(SSshuttle.emergency.mode != SHUTTLE_CALL || delay_remaining <= 0 || !own_turf || !is_station_level(own_turf.z))
-		forced_disable(FALSE)
-		return
-	. = ..()
+/obj/structure/destructible/clockwork/powered/prolonging_prism/proc/do_process()
+	set waitfor = FALSE
 	var/delay_amount = 40
 	delay_remaining -= delay_amount
 	var/efficiency = get_efficiency_mod()
@@ -113,6 +109,14 @@
 			else if(prob(50 * efficiency))
 				new /obj/effect/temp_visual/ratvar/prolonging_prism(T)
 		CHECK_TICK //we may be going over a hell of a lot of turfs
+
+/obj/structure/destructible/clockwork/powered/prolonging_prism/process()
+	var/turf/own_turf = get_turf(src)
+	if(SSshuttle.emergency.mode != SHUTTLE_CALL || delay_remaining <= 0 || !own_turf || !is_station_level(own_turf.z))
+		forced_disable(FALSE)
+		return
+	. = ..()
+	do_process()
 
 /obj/structure/destructible/clockwork/powered/prolonging_prism/proc/get_delay_cost()
 	return FLOOR(delay_cost, MIN_CLOCKCULT_POWER)

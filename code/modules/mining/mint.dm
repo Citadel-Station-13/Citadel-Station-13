@@ -64,8 +64,6 @@
 			if(materials.use_amount_mat(coin_mat, chosen))
 				for(var/coin_to_make in 1 to 5)
 					create_coins()
-					produced_coins++
-					CHECK_TICK
 			else
 				var/found_new = FALSE
 				for(var/datum/material/inserted_material in materials.materials)
@@ -131,6 +129,7 @@
 		return TRUE
 
 /obj/machinery/mineral/mint/proc/create_coins()
+	set waitfor = FALSE
 	var/turf/T = get_step(src,output_dir)
 	var/temp_list = list()
 	temp_list[chosen] = 400
@@ -143,3 +142,5 @@
 			O.forceMove(bag_to_use) //don't bother sending the signal, the new bag is empty and all that.
 
 		SSblackbox.record_feedback("amount", "coins_minted", 1)
+	produced_coins++
+	CHECK_TICK

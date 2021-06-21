@@ -106,12 +106,7 @@
 				A.aiControlDisabled = 1
 			else if(A.aiControlDisabled == -1)
 				A.aiControlDisabled = 2
-			sleep(10)
-			if(A)
-				if(A.aiControlDisabled == 1)
-					A.aiControlDisabled = 0
-				else if(A.aiControlDisabled == 2)
-					A.aiControlDisabled = -1
+			addtimer(CALLBACK(src, .proc/reenable_ai_control), 10)
 		if(WIRE_SHOCK) // Pulse to shock the door for 10 ticks.
 			if(!A.secondsElectrified)
 				A.set_electrified(30, usr)
@@ -124,6 +119,14 @@
 		if(WIRE_LIGHT)
 			A.lights = !A.lights
 			A.update_icon()
+
+/datum/wires/airlock/proc/reenable_ai_control()
+	var/obj/machinery/door/airlock/A = holder
+	if(A)
+		if(A.aiControlDisabled == 1)
+			A.aiControlDisabled = 0
+		else if(A.aiControlDisabled == 2)
+			A.aiControlDisabled = -1
 
 /datum/wires/airlock/on_cut(wire, mend)
 	var/obj/machinery/door/airlock/A = holder
