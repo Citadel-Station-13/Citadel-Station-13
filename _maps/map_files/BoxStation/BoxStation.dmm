@@ -11816,7 +11816,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/service/theater)
+/area/service/theater/clown)
 "azK" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -12676,13 +12676,10 @@
 	name = "theatre RC";
 	pixel_y = 32
 	},
-/obj/machinery/camera{
-	c_tag = Theatre Backstage
-	},
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
-/area/service/theater)
+/area/service/theater/clown)
 "aCi" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
@@ -14185,7 +14182,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
-/area/service/theater)
+/area/service/theater/mime)
 "aGg" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -14816,7 +14813,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
-/area/service/theater)
+/area/service/theater/mime)
 "aHK" = (
 /turf/open/floor/wood,
 /area/service/theater)
@@ -14829,7 +14826,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/maintenance/fore)
 "aHM" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -53915,7 +53912,7 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/landmark/start/clown,
 /turf/open/floor/plasteel,
-/area/service/theater)
+/area/service/theater/clown)
 "eFx" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -54095,7 +54092,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
-/area/service/theater)
+/area/service/theater/mime)
 "fhu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -54166,7 +54163,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
-/area/service/theater)
+/area/service/theater/mime)
 "fnC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -58806,7 +58803,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
-/area/service/theater)
+/area/service/theater/clown)
 "pJR" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/chair/comfy/brown{
@@ -59458,7 +59455,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
-/area/service/theater)
+/area/service/theater/mime)
 "rrM" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -59654,7 +59651,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
-/area/service/theater)
+/area/service/theater/mime)
 "rQJ" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -60128,7 +60125,7 @@
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel,
-/area/service/theater)
+/area/service/theater/clown)
 "sOs" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -62299,7 +62296,7 @@
 /obj/structure/closet/crate/wooden/toy,
 /obj/item/toy/crayon/spraycan/lubecan,
 /turf/open/floor/plasteel,
-/area/service/theater)
+/area/service/theater/clown)
 "xmS" = (
 /obj/structure/chair/comfy/beige{
 	dir = 8
