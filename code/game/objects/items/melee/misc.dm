@@ -399,7 +399,7 @@
 	on_sound = 'sound/weapons/batonextend.ogg'
 	on_icon_state = "telebaton_1"
 	off_icon_state = "telebaton_0"
-	on_item_state = "nullrod"
+	on_item_state = "telebaton_1"
 	force_on = 10
 	force_off = 0
 	weight_class_on = WEIGHT_CLASS_BULKY
@@ -472,7 +472,7 @@
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
 	on_icon_state = "contractor_baton_1"
 	off_icon_state = "contractor_baton_0"
-	on_item_state = "contractor_baton"
+	on_item_state = "contractor_baton_1"
 	force_on = 16
 	force_off = 5
 	weight_class_on = WEIGHT_CLASS_NORMAL
