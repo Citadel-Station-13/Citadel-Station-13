@@ -121,6 +121,7 @@
 
 
 /obj/structure/transit_tube/station/proc/launch_pod()
+	set waitfor = FALSE
 	if(launch_cooldown >= world.time)
 		return
 	for(var/obj/structure/transit_tube_pod/pod in loc)

@@ -182,6 +182,7 @@
 	. = ..()
 
 /mob/living/silicon/ai/proc/set_core_display_icon(input, client/C)
+	set waitfor = FALSE
 	if(client && !C)
 		C = client
 	if(!input && !C?.prefs?.preferred_ai_core_display)

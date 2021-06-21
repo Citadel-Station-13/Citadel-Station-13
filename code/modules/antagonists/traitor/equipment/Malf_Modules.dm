@@ -401,6 +401,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		next_announce += DOOMSDAY_ANNOUNCE_INTERVAL
 
 /obj/machinery/doomsday_device/proc/detonate()
+	set waitfor = FALSE
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
 	for(var/i in GLOB.mob_living_list)

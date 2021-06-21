@@ -225,7 +225,11 @@
 	return ..()
 
 /obj/effect/clockwork/sigil/transmission/process()
-    var/power_drained = 0
+    do_process()
+
+/obj/effect/clockwork/sigil/transmission/proc/do_process()
+	set waitfor = FALSE
+	var/power_drained = 0
     var/power_mod = 0.005
     for(var/t in spiral_range_turfs(SIGIL_ACCESS_RANGE, src))
         var/turf/T = t
