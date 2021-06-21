@@ -35,6 +35,14 @@
 	cost = 10
 	allow_duplicates = FALSE
 
+/datum/map_template/ruin/lavaland/library
+	name = "Lavaland Library"
+	id = "llibrary"
+	description = "A once grand library, now lost to the confines of lavaland."
+	suffix = "lavaland_surface_library.dmm"
+	cost = 5
+	allow_duplicates = FALSE
+
 /datum/map_template/ruin/lavaland/seed_vault
 	name = "Seed Vault"
 	id = "seed-vault"
@@ -79,6 +87,20 @@
 	suffix = "lavaland_surface_animal_hospital.dmm"
 	allow_duplicates = FALSE
 
+/datum/map_template/ruin/lavaland/hotsprings
+	name = "Hot Springs"
+	id = "lhotsprings"
+	description = "Just relax and take a dip! Lavaland's finest hot springs await!"
+	suffix = "lavaland_surface_hotsprings.dmm"
+
+/datum/map_template/ruin/lavaland/engioutpost
+	name = "Engineer Outpost"
+	id = "lengioutpost"
+	description = "Blown up by an unfortunate accident."
+	suffix = "lavaland_surface_engioutpost.dmm"
+	cost = 10
+	allow_duplicates = FALSE
+
 /datum/map_template/ruin/lavaland/sin
 	cost = 10
 	allow_duplicates = FALSE
@@ -115,6 +137,24 @@
 	suffix = "lavaland_surface_sloth.dmm"
 	// Generates nothing but atmos runtimes and salt
 
+/datum/map_template/ruin/lavaland/sin/lust
+	name = "Ruin of Lust"
+	id = "llust"
+	description = "Not exactly what you expected."
+	suffix = "lavaland_surface_lust.dmm"
+
+/datum/map_template/ruin/lavaland/sin/wrath
+	name = "Ruin of Wrath"
+	id = "lwrath"
+	description = "You'll fight and fight and just keep fighting."
+	suffix = "lavaland_surface_wrath.dmm"
+
+/datum/map_template/ruin/lavaland/bathhouse
+	name = "Bath House"
+	id = "lbathhouse"
+	description = "A taste of paradise, locked in the hell of Lavaland."
+	suffix = "lavaland_surface_bathhouse.dmm"
+
 /datum/map_template/ruin/lavaland/ratvar
 	name = "Dead God"
 	id = "ratvar"
@@ -145,6 +185,21 @@
 /datum/map_template/ruin/lavaland/blood_drunk_miner/hunter
 	name = "Blood-Drunk Miner (Hunter)"
 	suffix = "lavaland_surface_blooddrunk3.dmm"
+
+/datum/map_template/ruin/lavaland/blood_drunk_miner/mining_site
+	name = "Mining Site"
+	id = "lminingsite"
+	description = "Ruins of a site where people once mined with primitive tools for ore."
+	suffix = "lavaland_surface_mining_site.dmm"
+	always_place = FALSE
+	always_spawn_with = list(/datum/map_template/ruin/lavaland/underground/mining_site_below = PLACE_BELOW)
+
+/datum/map_template/ruin/lavaland/underground/mining_site_below
+	name = "Mining Site Underground"
+	id = "lminingsite-underground"
+	description = "Who knew ladders could be so useful?"
+	suffix = "lavaland_underground_mining_site.dmm"
+	unpickable = TRUE
 
 /datum/map_template/ruin/lavaland/ufo_crash
 	name = "UFO Crash"
