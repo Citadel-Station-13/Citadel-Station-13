@@ -124,6 +124,7 @@
 	points = min(points+cost, max_points)
 
 /datum/boss_active_timed_battle/process()
+	SHOULD_NOT_SLEEP(FALSE) // it doesn't actually call anything that sleeps
 	if(world.time >= next_point_time && points < max_points)
 		next_point_time = world.time + point_regen_delay
 		points = min(max_points, points + point_regen_amount)

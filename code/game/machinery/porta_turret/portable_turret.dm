@@ -521,6 +521,7 @@
 	layer = MOB_LAYER
 
 /obj/machinery/porta_turret/proc/popDown()	//pops the turret down
+	set waitfor = FALSE
 	if(raising || !raised)
 		return
 	if(stat & BROKEN)

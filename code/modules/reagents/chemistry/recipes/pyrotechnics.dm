@@ -58,6 +58,7 @@
 	required_reagents = list(/datum/reagent/water/holywater = 1, /datum/reagent/potassium = 1)
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom/on_reaction(datum/reagents/holder, multiplier)
+	set waitfor = FALSE
 	var/turf/T = get_turf(holder.my_atom)
 	if(multiplier >= 150)
 		playsound(get_turf(holder.my_atom), 'sound/effects/pray.ogg', 80, 0, round(multiplier/48))
@@ -430,6 +431,7 @@
 	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/on_reaction(datum/reagents/holder, multiplier)
+	set waitfor = FALSE
 	var/T1 = multiplier * 20		//100 units : Zap 3 times, with powers 2000/5000/12000. Tesla revolvers have a power of 10000 for comparison.
 	var/T2 = multiplier * 50
 	var/T3 = multiplier * 120

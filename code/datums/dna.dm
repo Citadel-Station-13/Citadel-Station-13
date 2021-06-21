@@ -405,7 +405,7 @@
 
 
 /mob/living/carbon/human/proc/hardset_dna(ui, list/mutation_index, newreal_name, newblood_type, datum/species/mrace, newfeatures, list/default_mutation_genes)
-
+	set waitfor = FALSE
 	if(newreal_name)
 		real_name = newreal_name
 		dna.generate_unique_enzymes()

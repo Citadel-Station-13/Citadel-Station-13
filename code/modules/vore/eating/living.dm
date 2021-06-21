@@ -59,13 +59,14 @@
 			// Critical adjustments due to TG grab changes - Poojawa
 
 /mob/living/proc/vore_attack(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
-	lazy_init_belly()
+	set waitfor = FALSE
 	if(!user || !prey || !pred)
 		return
 
 	if(!isliving(pred)) //no badmin, you can't feed people to ghosts or objects.
 		return
 
+	lazy_init_belly()
 	if(pred == prey) //you click your target
 		if(!CHECK_BITFIELD(pred.vore_flags,FEEDING))
 			to_chat(user, "<span class='notice'>They aren't able to be fed.</span>")
