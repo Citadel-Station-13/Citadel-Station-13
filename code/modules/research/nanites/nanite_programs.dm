@@ -292,7 +292,7 @@
 	switch(type)
 		if(1)
 			host_mob.investigate_log("[src] nanite program was deleted by software error.", INVESTIGATE_NANITES)
-			qdel(src) //kill switch
+			self_destruct() //kill switch
 			return
 		if(2) //deprogram codes
 			if(corruptable)
@@ -306,7 +306,7 @@
 				toggle() //enable/disable
 				host_mob.investigate_log("[src] nanite program was toggled by software error.", INVESTIGATE_NANITES)
 		if(4)
-			if(can_trigger)
+			if(error_flicking && can_trigger)
 				host_mob.investigate_log("[src] nanite program was triggered by software error.", INVESTIGATE_NANITES)
 				trigger()
 		if(5) //Program is scrambled and does something different
@@ -315,7 +315,7 @@
 				var/datum/nanite_program/rogue = new rogue_type
 				host_mob.investigate_log("[src] nanite program was converted into [rogue.name] by software error.", INVESTIGATE_NANITES)
 				nanites.add_program(null, rogue, src)
-				self_destruct(src)
+				self_destruct()
 
 /datum/nanite_program/proc/receive_signal(code, source)
 	if(activation_code && code == activation_code && !activated)
