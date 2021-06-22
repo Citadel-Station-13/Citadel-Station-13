@@ -186,7 +186,7 @@
 	name = "Blood-Drunk Miner (Hunter)"
 	suffix = "lavaland_surface_blooddrunk3.dmm"
 
-/datum/map_template/ruin/lavaland/blood_drunk_miner/mining_site
+/*/datum/map_template/ruin/lavaland/blood_drunk_miner/mining_site
 	name = "Mining Site"
 	id = "lminingsite"
 	description = "Ruins of a site where people once mined with primitive tools for ore."
@@ -199,7 +199,7 @@
 	id = "lminingsite-underground"
 	description = "Who knew ladders could be so useful?"
 	suffix = "lavaland_underground_mining_site.dmm"
-	unpickable = TRUE
+	unpickable = TRUE*/
 
 /datum/map_template/ruin/lavaland/ufo_crash
 	name = "UFO Crash"
