@@ -186,20 +186,10 @@
 	name = "Blood-Drunk Miner (Hunter)"
 	suffix = "lavaland_surface_blooddrunk3.dmm"
 
-/*/datum/map_template/ruin/lavaland/blood_drunk_miner/mining_site
-	name = "Mining Site"
-	id = "lminingsite"
-	description = "Ruins of a site where people once mined with primitive tools for ore."
+/datum/map_template/ruin/lavaland/blood_drunk_miner/mining_site
+	name = "Blood-Drunk Miner (Miningsite)"
+	description = "Ruins of a site where people once mined with primitive tools for ore until at least one of them went insane."
 	suffix = "lavaland_surface_mining_site.dmm"
-	always_place = FALSE
-	always_spawn_with = list(/datum/map_template/ruin/lavaland/underground/mining_site_below = PLACE_BELOW)
-
-/datum/map_template/ruin/lavaland/underground/mining_site_below
-	name = "Mining Site Underground"
-	id = "lminingsite-underground"
-	description = "Who knew ladders could be so useful?"
-	suffix = "lavaland_underground_mining_site.dmm"
-	unpickable = TRUE*/
 
 /datum/map_template/ruin/lavaland/ufo_crash
 	name = "UFO Crash"
