@@ -85,17 +85,14 @@
 "r" = (
 /obj/item/chair/wood,
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/mob_spawn/human/miner/explorer,
 /obj/effect/decal/cleanable/blood/drip,
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "s" = (
 /obj/effect/decal/cleanable/trail_holder,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"u" = (
-/obj/effect/decal/cleanable/trail_holder,
-/obj/structure/ladder,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 
@@ -573,7 +570,7 @@ l
 f
 f
 f
-u
+s
 b
 b
 d
