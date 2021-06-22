@@ -268,7 +268,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 // timed process
 // if the switch changed, update the linked conveyors
 
-/obj/machienry/conveyor_switch/proc/do_process()
+/obj/machinery/conveyor_switch/proc/do_process()
 	set waitfor = FALSE
 	for(var/obj/machinery/conveyor/C in GLOB.conveyors_by_id[id])
 		C.operating = position
