@@ -24,7 +24,7 @@
 	else
 		user_by_item -= source
 
-/datum/element/earhealing/do_process()
+/datum/element/earhealing/proc/do_process()
 	set waitfor = FALSE
 	for(var/i in user_by_item)
 		var/mob/living/carbon/user = user_by_item[i]
