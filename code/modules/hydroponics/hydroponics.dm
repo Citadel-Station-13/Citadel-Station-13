@@ -391,6 +391,7 @@
 	mutate(4, 10, 2, 4, 50, 4, 10, 3)
 
 /obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
+	set waitfor = FALSE
 	if(!myseed || dead)
 		return
 

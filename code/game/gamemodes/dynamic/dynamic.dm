@@ -711,10 +711,15 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 		update_playercounts()
 		if (storyteller.should_inject_antag())
 			SSblackbox.record_feedback("tally","dynamic",1,"Attempted midround injections")
-			var/list/drafted_rules = storyteller.midround_draft()
-			if (drafted_rules.len > 0)
-				SSblackbox.record_feedback("tally","dynamic",1,"Successful midround injections")
-				picking_midround_latejoin_rule(drafted_rules)
+			do_midround_injection()
+
+/datum/game_mode/dynamic/proc/do_midround_injection()
+	set waitfor = FALSE
+	var/list/drafted_rules = storyteller.midround_draft()
+	if (drafted_rules.len > 0)
+		SSblackbox.record_feedback("tally","dynamic",1,"Successful midround injections")
+		picking_midround_latejoin_rule(drafted_rules)
+
 
 /// Updates current_players.
 /datum/game_mode/dynamic/proc/update_playercounts()

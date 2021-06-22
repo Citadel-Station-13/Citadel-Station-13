@@ -64,7 +64,8 @@
 		pass = FALSE
 	return pass
 
-/datum/proximity_monitor/advanced/process()
+/datum/proximity_monitor/advanced/proc/lag_checked_process()
+	set waitfor = FALSE
 	if(process_inner_turfs)
 		for(var/turf/T in field_turfs)
 			process_inner_turf(T)
@@ -72,7 +73,10 @@
 	if(process_edge_turfs)
 		for(var/turf/T in edge_turfs)
 			process_edge_turf(T)
-			CHECK_TICK	//Same here.
+			CHECK_TICK		//Same here.
+
+/datum/proximity_monitor/advanced/process()
+	lag_checked_process()
 
 /datum/proximity_monitor/advanced/proc/process_inner_turf(turf/T)
 
