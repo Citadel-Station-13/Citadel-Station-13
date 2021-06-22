@@ -1,0 +1,10 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - bugfix: "A bunch of small nanite things should be less wonky"
+  - bugfix: "Slimes are no longer immune to vomiting (undocumented change from a previous PR)"
+  - bugfix: "Fruit wine exists again."
+  - code_imp: "Airlock hacking no longer sleeps."
+  - code_imp: "The clockwork gateway deconstruction no longer sleeps."
+  - code_imp: "Teslium reactions and Holywater booms no longer sleep."
+  - code_imp: "Slime timestop no longer sleeps."
