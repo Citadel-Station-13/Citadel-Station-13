@@ -1055,7 +1055,7 @@
 		return
 	if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))	//if we want to ignore slowdown from damage, but not from equipment
 		var/scaling = maxHealth / 100
-		var/health_deficiency = max(((maxHealth / scaling) - (health / scaling)), getStaminaLoss())
+		var/health_deficiency = max(((maxHealth / scaling) - (health / scaling)), max(0, getStaminaLoss() - 39))
 		if(health_deficiency >= 40)
 			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, TRUE, health_deficiency / 75)
 			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, TRUE, health_deficiency / 25)
