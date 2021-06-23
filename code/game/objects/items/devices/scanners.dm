@@ -721,7 +721,7 @@ GENETICS SCANNER
 			var/instability = round(cached_scan_results["fusion"], 0.01)
 			var/tier = instability2text(instability)
 			to_chat(user, "<span class='boldnotice'>Large amounts of free neutrons detected in the air indicate that a fusion reaction took place.</span>")
-			to_chat(user, "<span class='notice'>Instability of the last fusion reaction: [instability]\n This indicates it was [tier].</span>")
+			to_chat(user, "<span class='notice'>Instability of the last fusion reaction: [instability]\n This indicates it was [tier]</span>")
 	return
 
 /obj/item/analyzer/proc/scan_turf(mob/user, turf/location)
