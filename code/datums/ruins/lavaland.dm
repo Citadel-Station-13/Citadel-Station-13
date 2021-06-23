@@ -172,24 +172,20 @@
 
 /datum/map_template/ruin/lavaland/blood_drunk_miner
 	name = "Blood-Drunk Miner"
-	id = "blooddrunk"
-	description = "A strange arrangement of stone tiles and an insane, beastly miner contemplating them."
-	suffix = "lavaland_surface_blooddrunk1.dmm"
+	description = "An insane, beastly miner contemplating stone tiles..."
 	always_place = TRUE
-	allow_duplicates = FALSE //will only spawn one variant of the ruin
-
-/datum/map_template/ruin/lavaland/blood_drunk_miner/guidance
-	name = "Blood-Drunk Miner (Guidance)"
-	suffix = "lavaland_surface_blooddrunk2.dmm"
-
-/datum/map_template/ruin/lavaland/blood_drunk_miner/hunter
-	name = "Blood-Drunk Miner (Hunter)"
-	suffix = "lavaland_surface_blooddrunk3.dmm"
-
-/datum/map_template/ruin/lavaland/blood_drunk_miner/mining_site
-	name = "Blood-Drunk Miner (Miningsite)"
-	description = "Ruins of a site where people once mined with primitive tools for ore until at least one of them went insane."
-	suffix = "lavaland_surface_mining_site.dmm"
+	allow_duplicates = FALSE
+	id = "blooddrunk"
+/datum/map_template/ruin/lavaland/blood_drunk_miner/New()
+	if(prob(25))
+		suffix = "lavaland_surface_blooddrunk1.dmm"
+	else if(prob(34))
+		suffix = "lavaland_surface_blooddrunk2.dmm"
+	else if(prob(50))
+		suffix = "lavaland_surface_blooddrunk3.dmm"
+	else
+		suffix = "lavaland_surface_mining_site.dmm"
+	. = ..()
 
 /datum/map_template/ruin/lavaland/ufo_crash
 	name = "UFO Crash"
