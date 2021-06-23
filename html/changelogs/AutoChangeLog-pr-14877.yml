@@ -1,4 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - bugfix: "inelastic exports no longer uselessly do exponential functions"
