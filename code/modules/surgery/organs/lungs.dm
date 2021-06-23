@@ -233,7 +233,7 @@
 		if(found_pp > gas_max[entry])
 			if(istype(danger_reagent))
 				H.reagents.add_reagent(danger_reagent,1)
-			var/list/damage_info = gas_damage[entry]
+			var/list/damage_info = (entry in gas_damage) ? gas_damage[entry] : gas_damage["default"]
 			var/dam = found_pp / gas_max[entry] * 10
 			H.apply_damage_type(clamp(dam, damage_info["min"], damage_info["max"]), damage_info["damage_type"])
 			if(alert_category && alert_type)
