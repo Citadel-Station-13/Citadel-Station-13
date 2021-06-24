@@ -1,0 +1,4 @@
+author: "brokenOculus"
+delete-after: True
+changes: 
+  - rscadd: "pillbottles and syringesare now printable from the medbay protolathe, shiftstart. Hyposprays are now printable in medbay lathe under advanced biotech."
