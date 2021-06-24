@@ -7,8 +7,9 @@
 	var/left_hand
 	var/inv_slots
 	var/proctype //if present, will be invoked on headwear generation.
+	var/escape_on_find = FALSE //if present, will be released upon the item being 'found' (i.e. opening a container or pocket with it present)
 
-/datum/element/mob_holder/Attach(datum/target, worn_state, alt_worn, right_hand, left_hand, inv_slots = NONE, proctype)
+/datum/element/mob_holder/Attach(datum/target, worn_state, alt_worn, right_hand, left_hand, inv_slots = NONE, proctype, escape_on_find)
 	. = ..()
 
 	if(!isliving(target))
@@ -20,6 +21,7 @@
 	src.left_hand = left_hand
 	src.inv_slots = inv_slots
 	src.proctype = proctype
+	src.escape_on_find = escape_on_find
 
 	RegisterSignal(target, COMSIG_CLICK_ALT, .proc/mob_try_pickup)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
@@ -55,6 +57,8 @@
 	to_chat(user, "<span class='notice'>You pick [source] up.</span>")
 	source.drop_all_held_items()
 	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(source), source, worn_state, alt_worn, right_hand, left_hand, inv_slots)
+	holder.escape_on_find = escape_on_find
+
 	if(proctype)
 		INVOKE_ASYNC(src, proctype, source, holder, user)
 	user.put_in_hands(holder)
@@ -78,6 +82,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	dynamic_hair_suffix = ""
 	var/mob/living/held_mob
+	var/escape_on_find
 
 /obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/target, worn_state, alt_worn, right_hand, left_hand, slots = NONE)
 	. = ..()
@@ -189,3 +194,9 @@
 		if(ismob(location))
 			return location.loc.remove_air(amount)
 	return location.remove_air(amount)
+
+// escape when found if applicable
+/obj/item/clothing/head/mob_holder/on_found(mob/living/finder)
+	if(escape_on_find)
+		finder.visible_message("[finder] accidentally releases the [held_mob]!")
+		release()
