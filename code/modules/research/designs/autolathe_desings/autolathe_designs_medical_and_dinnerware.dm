@@ -215,13 +215,3 @@
 	build_path = /obj/item/reagent_containers/glass/bottle/vial/large
 	category = list("initial","Medical","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-
-/datum/design/hypospray/mkii
-	name = "Hypospray Mk. II"
-	id = "hypospray_mkii"
-	build_type = PROTOLATHE | NO_PUBLIC_LATHE
-	materials = list(/datum/material/iron = 1600, /datum/material/glass = 1000)
-	build_path = /obj/item/hypospray/mkii
-	category = list("Medical","Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
