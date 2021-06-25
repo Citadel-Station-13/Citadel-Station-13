@@ -58,7 +58,7 @@ SUBSYSTEM_DEF(air)
 	// Whether turf-to-turf heat exchanging should be enabled.
 	var/heat_enabled = FALSE
 	// Max number of times process_turfs will share in a tick.
-	var/share_max_steps = 2
+	var/share_max_steps = 1
 	// Excited group processing will try to equalize groups with total pressure difference less than this amount.
 	var/excited_group_pressure_goal = 0.25
 
