@@ -453,6 +453,18 @@
 	playsound(src.loc, on_sound, 50, 1)
 	add_fingerprint(user)
 
+/obj/item/melee/classic_baton/telescopic/newspaper
+	name = "The Daily Whiplash"
+	desc = "A newspaper wrapped around a telescopic baton in such a way that it looks like you're beating people with a rolled up newspaper."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "newspaper"
+	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
+	on_sound = 'sound/weapons/batonextend.ogg'
+	on_icon_state = "newspaper2"
+	off_icon_state = "newspaper"
+	on_item_state = "newspaper"
+
 /obj/item/melee/classic_baton/telescopic/contractor_baton
 	name = "contractor baton"
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
