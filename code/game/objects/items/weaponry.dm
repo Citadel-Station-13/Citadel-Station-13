@@ -332,6 +332,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	bare_wound_bonus = 0
 	wound_bonus = 0
 
+/obj/item/melee/bokken/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
+	. = ..()
+	if(!istype(object, /obj/item/melee/bokken))
+		// no counterattack.
+		block_return[BLOCK_RETURN_FORCE_NO_PARRY_COUNTERATTACK] = TRUE
+
 /datum/block_parry_data/bokken // fucked up parry data, emphasizing quicker, shorter parries
 	parry_stamina_cost = 10 // be wise about when you parry, though, else you won't be able to fight enough to make it count
 	parry_time_windup = 0
@@ -358,7 +364,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	parry_time_perfect = 2.5 // however...
 	parry_time_perfect_leeway = 2 // the entire time, the parry is perfect
 	parry_failed_stagger_duration = 1 SECONDS
-	parry_failed_clickcd_duration = 1 SECONDS // more forgiving punishments for missed parries
 	// still, don't fucking miss your parries or you're down stamina and staggered to shit
 
 /datum/block_parry_data/bokken/quick_parry/proj
@@ -475,7 +480,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	parry_time_perfect = 1
 	parry_time_perfect_leeway = 1
 	parry_failed_stagger_duration = 1 SECONDS
-	parry_failed_clickcd_duration = 1 SECONDS
 
 /datum/block_parry_data/bokken/waki/quick_parry/proj
 	parry_efficiency_perfect_override = list()

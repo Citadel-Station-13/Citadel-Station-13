@@ -34,6 +34,10 @@
 	block_damage_absorption = 5
 	block_resting_stamina_penalty_multiplier = 2
 	block_projectile_mitigation = 75
+	block_damage_absorption_override = list(
+		TEXT_ATTACK_TYPE_TACKLE = INFINITY,
+		TEXT_ATTACK_TYPE_THROWN = 10
+	)
 
 /obj/item/shield/examine(mob/user)
 	. = ..()
@@ -120,8 +124,6 @@
 	return TRUE
 
 /obj/item/shield/proc/user_shieldbash(mob/living/user, atom/target, harmful)
-	if(!SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE)) //Combat mode has to be enabled for shield bashing
-		return FALSE
 	if(!(shield_flags & SHIELD_CAN_BASH))
 		to_chat(user, "<span class='warning'>[src] can't be used to shield bash!</span>")
 		return FALSE
@@ -376,10 +378,9 @@
 
 /obj/item/shield/riot/flash/on_shield_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	. = ..()
-	if (. && !embedded_flash.crit_fail)
+	if (. && damage && !embedded_flash.crit_fail)
 		embedded_flash.activate()
 		update_icon()
-
 
 /obj/item/shield/riot/flash/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/assembly/flash/handheld))
@@ -564,7 +565,7 @@
 		return BLOCK_SUCCESS | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT
 	return ..()
 
-/obj/item/shield/energy/active_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, override_direction)
+/obj/item/shield/energy/directional_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, override_direction)
 	if((attack_type & ATTACK_TYPE_PROJECTILE) && is_energy_reflectable_projectile(object))
 		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_DEFLECT
 		return BLOCK_SUCCESS | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT

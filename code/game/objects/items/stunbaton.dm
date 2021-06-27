@@ -19,6 +19,8 @@
 	var/stamina_loss_amount = 35
 	var/turned_on = FALSE
 	var/knockdown = TRUE
+	/// block percent needed to prevent knockdown/disarm
+	var/block_percent_to_counter = 50
 	var/obj/item/stock_parts/cell/cell
 	var/hitcost = 750
 	var/throw_hit_chance = 35

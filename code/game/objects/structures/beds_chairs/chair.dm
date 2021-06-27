@@ -348,7 +348,7 @@
 	parry_time_perfect = 1.5
 	parry_time_perfect_leeway = 1
 	parry_imperfect_falloff_percent = 7.5
-	parry_efficiency_to_counterattack = 100
+	parry_efficiency_to_counterattack = INFINITY
 	parry_efficiency_considered_successful = 50
 	parry_efficiency_perfect = 120
 	parry_efficiency_perfect_override = list(

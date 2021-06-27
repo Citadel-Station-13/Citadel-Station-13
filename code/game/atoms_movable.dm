@@ -57,7 +57,10 @@
 
 	/// Should we use tooltips, if the thing does not have the code implemented `get_tooltip_data()`, it will default to examine(src)
 	var/tooltips = FALSE
-
+	/// How loudly we yell
+	var/yell_power = 50
+	/// last time we yelled
+	var/last_yell = 0
 
 /atom/movable/Initialize(mapload)
 	. = ..()

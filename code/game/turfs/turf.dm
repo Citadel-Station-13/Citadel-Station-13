@@ -625,3 +625,16 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	. = ..()
 	if(. != BULLET_ACT_FORCE_PIERCE)
 		. =  BULLET_ACT_TURF
+
+/turf/proc/get_yelling_resistance(power)
+	. = 0
+	// don't bother checking fulltile, we don't need accuracy
+	var/obj/window = locate(/obj/structure/window) in src
+	if(!window)
+		window = locate(/obj/machinery/door/window) in src
+	if(window)
+		. += 4		// windows are minimally resistant
+	// if there's more than one someone fucked up as that shouldn't happen
+	var/obj/machinery/door/D = locate() in src
+	if(D?.density)
+		. += D.opacity? 29 : 19			// glass doors are slightly more resistant to screaming

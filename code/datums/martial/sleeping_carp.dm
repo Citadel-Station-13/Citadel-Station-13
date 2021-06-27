@@ -144,14 +144,16 @@
 	parry_time_active_visual_override = 3
 	parry_time_spindown_visual_override = 12
 	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK		//can attack while
-	parry_time_perfect = 2.5		// first ds isn't perfect
-	parry_time_perfect_leeway = 1.5
+	parry_time_perfect = 2.5
+	parry_time_perfect_leeway = 2.5
 	parry_imperfect_falloff_percent = 5
 	parry_efficiency_to_counterattack = 100
 	parry_efficiency_considered_successful = 65		// VERY generous
 	parry_efficiency_perfect = 100
 	parry_failed_stagger_duration = 4 SECONDS
+	parry_failed_cooldown_duration = 2 SECONDS
 	parry_cooldown = 0.5 SECONDS
+	parry_flags = NONE
 
 /mob/living/carbon/human/UseStaminaBuffer(amount, warn = FALSE, considered_action = TRUE)
 	amount *= physiology? physiology.stamina_buffer_mod : 1

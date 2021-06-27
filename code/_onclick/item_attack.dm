@@ -257,7 +257,7 @@
 	if(!isnull(stagger_force))
 		return stagger_force
 	/// totally not an untested, arbitrary equation.
-	return clamp((1.5 + (w_class/5)) * ((force_override || force) / 1.5), 0, 10 SECONDS)
+	return clamp((1.5 + (w_class/5)) * ((force_override || force) / 1.5), 0, 10 SECONDS) * CONFIG_GET(number/melee_stagger_factor)
 
 /obj/item/proc/do_stagger_action(mob/living/target, mob/living/user, force_override)
 	if(!CHECK_BITFIELD(target.status_flags, CANSTAGGER))

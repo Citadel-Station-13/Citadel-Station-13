@@ -276,6 +276,8 @@
 	destination_y = dest_y
 	destination_z = dest_z
 
+/turf/open/space/get_yelling_resistance(power)
+	return INFINITY				// no sound through space for crying out loud
 
 /turf/open/space/transparent
 	baseturfs = /turf/open/space/transparent/openspace

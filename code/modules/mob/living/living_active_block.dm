@@ -48,25 +48,23 @@
 	animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, FALSE, SINE_EASING | EASE_IN)
 
 /mob/living/proc/continue_starting_active_block()
-	if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-		return DO_AFTER_STOP
 	return (combat_flags & COMBAT_FLAG_ACTIVE_BLOCK_STARTING)? DO_AFTER_CONTINUE : DO_AFTER_STOP
 
 /mob/living/get_standard_pixel_x_offset()
 	. = ..()
 	if(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING))
 		if(dir & EAST)
-			. += 8
+			. += 4
 		if(dir & WEST)
-			. -= 8
+			. -= 4
 
 /mob/living/get_standard_pixel_y_offset()
 	. = ..()
 	if(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING))
 		if(dir & NORTH)
-			. += 8
+			. += 4
 		if(dir & SOUTH)
-			. -= 8
+			. -= 4
 
 /**
   * Proc called by keybindings to toggle active blocking.
@@ -100,11 +98,6 @@
 	if(!I.can_active_block())
 		to_chat(src, "<span class='warning'>[I] is either not capable of being used to actively block, or is not currently in a state that can! (Try wielding it if it's twohanded, for example.)</span>")
 		return
-	// QOL: Attempt to toggle on combat mode if it isn't already
-	SEND_SIGNAL(src, COMSIG_ENABLE_COMBAT_MODE)
-	if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-		to_chat(src, "<span class='warning'>You must be in combat mode to actively block!</span>")
-		return FALSE
 	var/datum/block_parry_data/data = I.get_block_parry_data()
 	var/delay = data.block_start_delay
 	combat_flags |= COMBAT_FLAG_ACTIVE_BLOCK_STARTING
@@ -147,7 +140,7 @@
 /**
   * Calculates FINAL ATTACK DAMAGE after mitigation
   */
-/obj/item/proc/active_block_calculate_final_damage(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/proc/active_block_calculate_final_damage(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, passive = FALSE)
 	var/datum/block_parry_data/data = get_block_parry_data()
 	var/absorption = data.attack_type_list_scan(data.block_damage_absorption_override, attack_type)
 	var/efficiency = data.attack_type_list_scan(data.block_damage_multiplier_override, attack_type)
@@ -156,7 +149,7 @@
 	if(isnull(absorption))
 		absorption = data.block_damage_absorption
 	if(isnull(efficiency))
-		efficiency = data.block_damage_multiplier
+		efficiency = data.block_damage_multiplier * (passive? (1 / data.block_automatic_mitigation_multiplier) : 1)
 	if(isnull(limit))
 		limit = data.block_damage_limit
 	// now we calculate damage to reduce.
@@ -172,7 +165,7 @@
 	return final_damage
 
 /// Amount of stamina from damage blocked. Note that the damage argument is damage_blocked.
-/obj/item/proc/active_block_stamina_cost(mob/living/owner, atom/object, damage_blocked, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/proc/active_block_stamina_cost(mob/living/owner, atom/object, damage_blocked, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, passive = FALSE)
 	var/datum/block_parry_data/data = get_block_parry_data()
 	var/efficiency = data.attack_type_list_scan(data.block_stamina_efficiency_override, attack_type)
 	if(isnull(efficiency))
@@ -182,7 +175,7 @@
 		multiplier = data.attack_type_list_scan(data.block_resting_stamina_penalty_multiplier_override, attack_type)
 		if(isnull(multiplier))
 			multiplier = data.block_resting_stamina_penalty_multiplier
-	return (damage_blocked / efficiency) * multiplier
+	return (damage_blocked / efficiency) * multiplier * (passive? data.block_automatic_stamina_multiplier : 1)
 
 /// Apply the stamina damage to our user, notice how damage argument is stamina_amount.
 /obj/item/proc/active_block_do_stamina_damage(mob/living/owner, atom/object, stamina_amount, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
@@ -214,6 +207,18 @@
 	return
 
 /obj/item/proc/active_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, override_direction)
+	return directional_block(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return, override_direction)
+
+/obj/item/proc/can_passive_block()
+	if(!block_parry_data || !(item_flags & ITEM_CAN_BLOCK))
+		return FALSE
+	var/datum/block_parry_data/data = return_block_parry_datum(block_parry_data)
+	return data.block_automatic_enabled
+
+/obj/item/proc/passive_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, override_direction)
+	return directional_block(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return, override_direction, TRUE)
+
+/obj/item/proc/directional_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, override_direction, passive = FALSE)
 	if(!can_active_block())
 		return BLOCK_NONE
 	var/datum/block_parry_data/data = get_block_parry_data()
@@ -228,12 +233,12 @@
 			incoming_direction = get_dir(get_turf(attacker) || get_turf(object), src)
 	if(!CHECK_MOBILITY(owner, MOBILITY_STAND) && !(data.block_resting_attack_types_anydir & attack_type) && (!(data.block_resting_attack_types_directional & attack_type) || !can_block_direction(owner.dir, incoming_direction)))
 		return BLOCK_NONE
-	else if(!can_block_direction(owner.dir, incoming_direction))
+	else if(!can_block_direction(owner.dir, incoming_direction, passive))
 		return BLOCK_NONE
 	block_return[BLOCK_RETURN_ACTIVE_BLOCK] = TRUE
-	var/final_damage = active_block_calculate_final_damage(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+	var/final_damage = active_block_calculate_final_damage(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return, passive)
 	var/damage_blocked = damage - final_damage
-	var/stamina_cost = active_block_stamina_cost(owner, object, damage_blocked, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+	var/stamina_cost = active_block_stamina_cost(owner, object, damage_blocked, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return, passive)
 	active_block_do_stamina_damage(owner, object, stamina_cost, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
 	block_return[BLOCK_RETURN_ACTIVE_BLOCK_DAMAGE_MITIGATED] = damage - final_damage
 	block_return[BLOCK_RETURN_SET_DAMAGE_TO] = final_damage
@@ -261,9 +266,9 @@
 /**
   * Gets the block direction bitflags of what we can block.
   */
-/obj/item/proc/blockable_directions()
+/obj/item/proc/blockable_directions(passive = FALSE)
 	var/datum/block_parry_data/data = get_block_parry_data()
-	return data.can_block_directions
+	return (!isnull(data.block_automatic_directions) && passive)? data.block_automatic_directions : data.can_block_directions
 
 /**
   * Checks if we can block from a specific direction from our direction.
@@ -272,14 +277,14 @@
   * * our_dir - our direction.
   * * their_dir - their direction. Must be a single direction, or NONE for an attack from the same tile. This is incoming direction.
   */
-/obj/item/proc/can_block_direction(our_dir, their_dir)
+/obj/item/proc/can_block_direction(our_dir, their_dir, passive = FALSE)
 	their_dir = turn(their_dir, 180)
 	if(our_dir != NORTH)
 		var/turn_angle = dir2angle(our_dir)
 		// dir2angle(), ss13 proc is clockwise so dir2angle(EAST) == 90
 		// turn(), byond proc is counterclockwise so turn(NORTH, 90) == WEST
 		their_dir = turn(their_dir, turn_angle)
-	return (DIR2BLOCKDIR(their_dir) & blockable_directions())
+	return (DIR2BLOCKDIR(their_dir) & blockable_directions(passive))
 
 /**
   * can_block_direction but for "compound" directions to check all of them and return the number of directions that were blocked.

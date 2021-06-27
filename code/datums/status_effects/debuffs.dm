@@ -95,21 +95,31 @@
 /datum/status_effect/staggered/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
+	if(!CONFIG_GET(flag/sprint_enabled))
+		new_owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/stagger, TRUE, CONFIG_GET(number/sprintless_stagger_slowdown))
+	return ..()
+
+/datum/status_effect/staggered/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/stagger)
 	return ..()
 
 /datum/status_effect/off_balance
 	id = "offbalance"
+	blocks_sprint = TRUE
 	alert_type = null
 
 /datum/status_effect/off_balance/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
+	if(!CONFIG_GET(flag/sprint_enabled))
+		new_owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/off_balance, TRUE, CONFIG_GET(number/sprintless_off_balance_slowdown))
 	return ..()
 
 /datum/status_effect/off_balance/on_remove()
 	var/active_item = owner.get_active_held_item()
 	if(active_item)
 		owner.visible_message("<span class='warning'>[owner.name] regains their grip on \the [active_item]!</span>", "<span class='warning'>You regain your grip on \the [active_item]</span>", null, COMBAT_MESSAGE_RANGE)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/off_balance)
 	return ..()
 
 /obj/screen/alert/status_effect/asleep
@@ -117,24 +127,14 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
+
 /datum/status_effect/grouped/stasis
 	id = "stasis"
 	duration = -1
 	tick_interval = 10
 	var/last_dead_time
 
-/datum/status_effect/no_combat_mode
-	id = "no_combat_mode"
-	alert_type = null
-	status_type = STATUS_EFFECT_REPLACE
-	blocks_combatmode = TRUE
-
-/datum/status_effect/no_combat_mode/on_creation(mob/living/new_owner, set_duration)
-	if(isnum(set_duration))
-		duration = set_duration
-	. = ..()
-
-/datum/status_effect/no_combat_mode/robotic_emp
+/datum/status_effect/robotic_emp
 	id = "emp_no_combat_mode"
 
 /datum/status_effect/mesmerize
@@ -144,13 +144,11 @@
 /datum/status_effect/mesmerize/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_MUTE, "mesmerize")
-	ADD_TRAIT(owner, TRAIT_COMBAT_MODE_LOCKED, "mesmerize")
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/mesmerize)
 
 /datum/status_effect/mesmerize/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_MUTE, "mesmerize")
-	REMOVE_TRAIT(owner, TRAIT_COMBAT_MODE_LOCKED, "mesmerize")
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/mesmerize)
 
 /datum/status_effect/mesmerize/on_creation(mob/living/new_owner, set_duration)
@@ -168,7 +166,7 @@
 	id = "tased"
 	alert_type = null
 	var/movespeed_mod = /datum/movespeed_modifier/status_effect/tased
-	var/stamdmg_per_ds = 0		//a 20 duration would do 20 stamdmg, disablers do 24 or something
+	var/stamdmg_per_ds = 1		//a 20 duration would do 20 stamdmg, disablers do 24 or something
 	var/last_tick = 0			//fastprocess processing speed is a goddamn sham, don't trust it.
 
 /datum/status_effect/electrode/on_creation(mob/living/new_owner, set_duration)
@@ -199,8 +197,8 @@
 /datum/status_effect/electrode/no_combat_mode
 	id = "tased_strong"
 	movespeed_mod = /datum/movespeed_modifier/status_effect/tased/no_combat_mode
-	blocks_combatmode = TRUE
 	stamdmg_per_ds = 1
+
 
 //OTHER DEBUFFS
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace

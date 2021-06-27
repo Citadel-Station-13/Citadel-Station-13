@@ -570,3 +570,6 @@
 // twitch plays
 /// Returns direction: (wipe_votes)
 #define COMSIG_TWITCH_PLAYS_MOVEMENT_DATA "twitch_plays_movement_data"
+
+// /datum/component/identification signals
+#define COMSIG_IDENTIFICATION_KNOWLEDGE_CHECK "id_knowledge_check"			// (mob/user) - returns a value from ID_COMPONENT_KNOWLEDGE_NONE to ID_COMPONENT_KNOWLEDGE_FULL
