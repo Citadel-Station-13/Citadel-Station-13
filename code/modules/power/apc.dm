@@ -1389,7 +1389,7 @@
 			charging = APC_NOT_CHARGING
 			chargecount = 0
 			longtermpower = max(-10,longtermpower - 2)
-			cell.use((GLOB.CELLRATE * cur_used, cell.charge))
+			cell.use(min(GLOB.CELLRATE * cur_used, cell.charge))
 
 		// set channels based on remaining charge
 
