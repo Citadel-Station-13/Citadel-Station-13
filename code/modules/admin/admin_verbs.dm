@@ -194,6 +194,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	// /client/proc/check_missing_sprites,
 	// #endif
 	/datum/admins/proc/create_or_modify_area,
+	/datum/admins/proc/fixcorruption,
 #ifdef REFERENCE_TRACKING
 	/datum/admins/proc/view_refs,
 	/datum/admins/proc/view_del_failures,

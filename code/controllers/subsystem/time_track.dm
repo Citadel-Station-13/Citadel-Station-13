@@ -31,18 +31,20 @@ SUBSYSTEM_DEF(time_track)
 			"maptick",
 			"num_timers",
 			"air_turf_cost",
+			"air_turf_thread_time",
+			"air_equalize_cost",
+			"air_post_process_cost",
 			"air_eg_cost",
 			"air_highpressure_cost",
 			"air_hotspots_cost",
-			"air_superconductivity_cost",
+			"air_heat_spread_cost",
 			"air_pipenets_cost",
 			"air_rebuilds_cost",
-			"air_turf_count",
-			"air_eg_count",
+			"air_amt_gas_mixes",
+			"air_alloc_gas_mixes",
 			"air_hotspot_count",
 			"air_network_count",
 			"air_delta_count",
-			"air_superconductive_count"
 		)
 	)
 
@@ -81,17 +83,19 @@ SUBSYSTEM_DEF(time_track)
 			MAPTICK_LAST_INTERNAL_TICK_USAGE,
 			length(SStimer.timer_id_dict),
 			SSair.cost_turfs,
+			SSair.turf_process_time(),
+			SSair.cost_equalize,
+			SSair.cost_post_process,
 			SSair.cost_groups,
 			SSair.cost_highpressure,
 			SSair.cost_hotspots,
 			SSair.cost_superconductivity,
 			SSair.cost_pipenets,
 			SSair.cost_rebuilds,
-			SSair.get_active_turfs(), //does not return a list, which is what we want
-			SSair.get_amt_excited_groups(),
+			SSair.get_amt_gas_mixes(),
+			SSair.get_max_gas_mixes(),
 			length(SSair.hotspots),
 			length(SSair.networks),
-			length(SSair.high_pressure_delta),
-			length(SSair.active_super_conductivity)
+			length(SSair.high_pressure_delta)
 		)
 	)

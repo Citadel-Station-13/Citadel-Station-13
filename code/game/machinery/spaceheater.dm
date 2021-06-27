@@ -66,7 +66,7 @@
 	if(panel_open)
 		. += "sheater-open"
 
-/obj/machinery/space_heater/process()
+/obj/machinery/space_heater/process_atmos()
 	if(!on || !is_operational())
 		if (on) // If it's broken, turn it off too
 			on = FALSE
@@ -220,7 +220,7 @@
 			usr.visible_message("<span class='notice'>[usr] switches [on ? "on" : "off"] \the [src].</span>", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
 			update_icon()
 			if (on)
-				START_PROCESSING(SSmachines, src)
+				SSair.atmos_air_machinery += src
 			. = TRUE
 		if("mode")
 			setMode = params["mode"]

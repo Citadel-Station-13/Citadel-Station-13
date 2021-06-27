@@ -67,9 +67,7 @@
 
 	var/transfer_ratio = transfer_rate/air1.return_volume()
 
-	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
-
-	air2.merge(removed)
+	air1.transfer_ratio_to(air2,transfer_ratio)
 
 	update_parents()
 
