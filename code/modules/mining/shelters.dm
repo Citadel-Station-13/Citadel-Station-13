@@ -85,3 +85,14 @@
 	. = ..()
 	whitelisted_turfs = typecacheof(/turf/closed/mineral)
 	banned_objects = typecacheof(/obj/structure/stone_tile)
+
+/datum/map_template/shelter/epsilon
+	name = "Shelter Epsilon"
+	shelter_id = "shelter_epsilon"
+	description = "A small apartment in the palm of your hand."
+	mappath = "_maps/templates/shelter_5.dmm"
+
+/datum/map_template/shelter/epsilon/New()
+	. = ..()
+	whitelisted_turfs = typecacheof(/turf/closed/mineral)
+	banned_objects = typecacheof(/obj/structure/stone_tile)
