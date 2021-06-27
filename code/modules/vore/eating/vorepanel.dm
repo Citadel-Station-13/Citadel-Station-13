@@ -276,6 +276,8 @@
 	if(href_list["outsidepick"])
 		var/atom/movable/tgt = locate(href_list["outsidepick"])
 		var/obj/belly/OB = locate(href_list["outsidebelly"])
+		if(!istype(OB))
+			return
 		if(!(tgt in OB)) //Aren't here anymore, need to update menu.
 			return TRUE
 		var/intent = "Examine"

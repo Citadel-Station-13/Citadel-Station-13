@@ -72,7 +72,6 @@
 			R.stun(20)
 			R.reveal(100)
 			R.adjustHealth(50)
-		sleep(20)
 		for(var/mob/living/carbon/C in get_hearers_in_view(round(multiplier/48,1),get_turf(holder.my_atom)))
 			if(iscultist(C))
 				to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
@@ -433,19 +432,23 @@
 	var/T1 = multiplier * 20		//100 units : Zap 3 times, with powers 2000/5000/12000. Tesla revolvers have a power of 10000 for comparison.
 	var/T2 = multiplier * 50
 	var/T3 = multiplier * 120
-	sleep(5)
+	var/added_delay = 0.5 SECONDS
 	if(multiplier >= 75)
-		tesla_zap(holder.my_atom, 7, T1, zap_flags)
-		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
-		sleep(15)
+		addtimer(CALLBACK(src, .proc/zappy_zappy, holder, T1), added_delay)
+		added_delay += 1.5 SECONDS
 	if(multiplier >= 40)
-		tesla_zap(holder.my_atom, 7, T2, zap_flags)
-		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
-		sleep(15)
+		addtimer(CALLBACK(src, .proc/zappy_zappy, holder, T2), added_delay)
+		added_delay += 1.5 SECONDS
 	if(multiplier >= 10)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
-		tesla_zap(holder.my_atom, 7, T3, zap_flags)
-		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
+		addtimer(CALLBACK(src, .proc/zappy_zappy, holder, T3), added_delay)
 	..()
+
+
+/datum/chemical_reaction/reagent_explosion/teslium_lightning/proc/zappy_zappy(datum/reagents/holder, power)
+	if(QDELETED(holder.my_atom))
+		return
+	tesla_zap(holder.my_atom, 7, power, zap_flags)
+	playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/heat
 	id = "teslium_lightning2"

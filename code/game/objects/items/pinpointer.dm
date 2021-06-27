@@ -4,10 +4,10 @@
 	desc = "A handheld tracking device that locks onto certain signals."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "pinpointer"
+	item_state = "pinpointer"
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throw_speed = 3
@@ -97,6 +97,7 @@
 	name = "crew pinpointer"
 	desc = "A handheld tracking device that points to crew suit sensors."
 	icon_state = "pinpointer_crew"
+	item_state = "pinpointer_crew"
 	custom_price = PRICE_ABOVE_EXPENSIVE
 	var/has_owner = FALSE
 	var/pinpointer_owner = null
@@ -208,6 +209,7 @@
 	name = "fugitive pinpointer"
 	desc = "A handheld tracking device that locates the bounty hunter shuttle for quick escapes."
 	icon_state = "pinpointer_hunter"
+	item_state = "pinpointer_black"
 	var/obj/shuttleport
 
 /obj/item/pinpointer/shuttle/Initialize(mapload)
@@ -231,4 +233,4 @@
 
 /obj/item/pinpointer/custom
 	resets_target = FALSE
-	
+

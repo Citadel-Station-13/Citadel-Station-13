@@ -280,7 +280,7 @@
 		if(lube & NO_SLIP_WHEN_WALKING)
 			if(C.m_intent == MOVE_INTENT_WALK)
 				return FALSE
-			if(ishuman(C) && !(lube & SLIP_WHEN_JOGGING))
+			if(ishuman(C) && !(lube & SLIP_WHEN_JOGGING) && CONFIG_GET(flag/sprint_enabled))
 				var/mob/living/carbon/human/H = C
 				if(!(H.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) && H.getStaminaLoss() <= 20)
 					return FALSE
