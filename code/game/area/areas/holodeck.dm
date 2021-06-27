@@ -86,6 +86,9 @@
 /area/holodeck/rec_center/lounge
 	name = "Holodeck - Lounge"
 
+/area/holodeck/rec_center/medical
+	name = "Holodeck - Emergency Medical"
+
 /area/holodeck/rec_center/pet_lounge
 	name = "Holodeck - Pet Park"
 
@@ -122,10 +125,6 @@
 
 /area/holodeck/rec_center/bunker
 	name = "Holodeck - Holdout Bunker"
-	restricted = 1
-
-/area/holodeck/rec_center/medical
-	name = "Holodeck - Emergency Medical"
 	restricted = 1
 
 /area/holodeck/rec_center/anthophila
