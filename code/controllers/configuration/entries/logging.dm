@@ -9,6 +9,7 @@
 
 /datum/config_entry/flag/log_admin	// log admin actions
 	protection = CONFIG_ENTRY_LOCKED
+	config_entry_value = TRUE
 
 /datum/config_entry/flag/log_prayer	// log prayers
 	config_entry_value = TRUE

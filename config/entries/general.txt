@@ -1,12 +1,4 @@
 
-# You can use the @ character at the beginning of a config option to lock it from being edited in-game
-# Example usage:
-# @SERVERNAME tgstation
-# Which sets the SERVERNAME, and disallows admins from being able to change it using View Variables.
-# @LOG_TWITTER 0
-# Which explicitly disables LOG_TWITTER, as well as locking it.
-# There are various options which are hard-locked for security reasons.
-
 ## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
 # SERVERNAME tgstation
 
@@ -81,69 +73,7 @@ MENTOR_LEGACY_SYSTEM
 ## Allows admins to bypass job playtime requirements.
 #USE_EXP_RESTRICTIONS_ADMIN_BYPASS
 
-## log OOC channel
-LOG_OOC
 
-## log client Say
-LOG_SAY
-
-## log admin actions
-LOG_ADMIN
-
-## log admin chat
-LOG_ADMINCHAT
-
-## log client access (logon/logoff)
-LOG_ACCESS
-
-## log game actions (start of round, results, etc.)
-LOG_GAME
-
-## log player votes
-LOG_VOTE
-
-## log player crafting
-LOG_CRAFT
-
-## log client Whisper
-LOG_WHISPER
-
-## log emotes
-LOG_EMOTE
-
-## log attack messages
-LOG_ATTACK
-
-## log pda messages
-LOG_PDA
-
-## log telecomms messages
-LOG_TELECOMMS
-
-## log prayers
-LOG_PRAYER
-
-## log lawchanges
-LOG_LAW
-
-## log crew manifest to seperate file
-LOG_MANIFEST
-
-## log job divide debugging information
-#LOG_JOB_DEBUG
-
-## log all world.Topic() calls
-# LOG_WORLD_TOPIC
-
-## enables use of the proc twitterize() that lets you take a large list of strings and turn it into a JSON file of tweet sized strings.
-## As an example of how this could be """useful""" look towards Poly (https://twitter.com/Poly_the_Parrot)
-# LOG_TWITTER
-
-## Enable logging pictures
-# LOG_PICTURES
-
-## log virus and actions
-LOG_VIRUS
 
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA

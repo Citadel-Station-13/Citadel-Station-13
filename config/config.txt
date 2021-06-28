@@ -1,5 +1,16 @@
 # You can use the "$include" directive to split your configs however you want
 
+# MAKE SURE ENTRIES ARE SORTED IN THE SAME FASHION THEY ARE IN THE .dm
+# if you don't do this i will find you and put lemons on your eyes.
+
+# You can use the @ character at the beginning of a config option to lock it from being edited in-game
+# Example usage:
+# @SERVERNAME tgstation
+# Which sets the SERVERNAME, and disallows admins from being able to change it using View Variables.
+# @LOG_TWITTER 0
+# Which explicitly disables LOG_TWITTER, as well as locking it.
+# There are various options which are hard-locked for security reasons.
+
 $include entries/antag_rep.txt
 $include entries/comms.txt
 $include entries/dbconfig.txt

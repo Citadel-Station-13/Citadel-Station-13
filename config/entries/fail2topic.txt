@@ -1,0 +1,20 @@
+## Fail2topic 
+## Disclaimer: If you don't know what you're doing, don't touch this
+
+## Firewall rule name
+@FAIL2TOPIC_RULE_NAME
+
+## Fail2topic enabled/disabled
+FAIL2TOPIC_ENABLED 
+
+## Topic max size before it's rejected, using BYOND length()
+TOPIC_MAX_SIZE 8192
+
+## Fail2topic rate limit whitelist. Using any external IPs is not recommended.
+# TOPIC_RATE_LIMIT_WHITELIST 127.0.0.1:1337
+
+## Max fails before something gets firewalled 
+FAIL2TOPIC_MAX_FAILS 5
+
+## Fail2topic rate limit of 1 topic per this many deciseconds
+FAIL2TOPIC_RATE_LIMIT 10

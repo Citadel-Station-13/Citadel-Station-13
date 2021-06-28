@@ -9,7 +9,6 @@
 	protection = CONFIG_ENTRY_LOCKED		//affects physical server configuration, no touchies!!
 
 /datum/config_entry/flag/fail2topic_enabled
-	config_entry_value = TRUE
 
 /datum/config_entry/number/topic_max_size
 	config_entry_value = 8192
