@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(!opened)
 		return ..()
 
-/mob/living/silicon/robot/shove_act(mob/living/carbon/human/H)
+/mob/living/silicon/robot/disarm_shove(mob/living/carbon/human/H)
 	visible_message(span_danger("[src]'s motors grind as they are shoved by [H]!"))
 	vtec_disable(10 SECONDS)
 

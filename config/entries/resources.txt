@@ -1,0 +1,4 @@
+## List of urls to external CDNs for the .rsc file.
+## MUST BE HTTP, NOT HTTPS DUE TO BYOND LIMItATIONS
+
+# EXTERNAL_RSC_URLS http://www.citadel-station.net/example.rsc
