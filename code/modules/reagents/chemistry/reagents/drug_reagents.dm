@@ -169,7 +169,7 @@
 	color = "#FAFAFA"
 	overdose_threshold = 20
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
-	ph = 5
+	pH =  = 5
 	addiction_threshold = 10
 	value = REAGENT_VALUE_UNCOMMON
 
@@ -185,7 +185,7 @@
 	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
 	if(DT_PROB(2.5, delta_time))
 		to_chat(M, span_notice("[high_message]"))
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
+	// SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
 	M.AdjustStun(-40 * REM * delta_time)
 	M.AdjustKnockdown(-40 * REM * delta_time)
 	M.AdjustUnconscious(-40 * REM * delta_time)

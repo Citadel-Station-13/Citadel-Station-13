@@ -729,7 +729,7 @@
 	return TRUE
 
 /datum/reagent/medicine/ephedrine/overdose_process(mob/living/M, delta_time, times_fired)
-	if(DT_PROB(1 * normalise_creation_purity(), delta_time) && iscarbon(M))
+	if(DT_PROB(1, delta_time) && iscarbon(M))
 		var/datum/disease/D = new /datum/disease/heart_failure
 		M.ForceContractDisease(D)
 		to_chat(M, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))

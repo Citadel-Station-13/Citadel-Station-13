@@ -91,7 +91,7 @@
 				"<span class='danger'>You punch [src], but don't leave a dent.</span>")
 
 /mob/living/silicon/proc/shove_act(mob/living/carbon/human/H)
-	visible_message(span_danger("[M] shoves [src], but doesn't manage to make much of an effect."))
+	visible_message(span_danger("[H] shoves [src], but doesn't manage to make much of an effect."))
 
 /mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)
 	if(M.a_intent == INTENT_HARM)
