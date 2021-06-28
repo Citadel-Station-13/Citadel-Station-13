@@ -169,7 +169,7 @@
 	color = "#FAFAFA"
 	overdose_threshold = 20
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
-	pH =  = 5
+	pH = 5
 	addiction_threshold = 10
 	value = REAGENT_VALUE_UNCOMMON
 
