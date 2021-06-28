@@ -1,8 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - rscadd: "FDA, LINDA without the bookkeeping."
-  - rscadd: "Putnamos, a simpler replacement for Monstermos. If I can get Monstermos to work, this will be Monstermos instead."
-  - rscdel: "LINDA, the old active-turfs-based atmos subsystem."
-  - rscdel: "Monstermos? I would rather not get rid of this, but I can't get it to work correctly."
-  - server: "Extools has been removed, and loading extools alongside auxtools will cause massive problems. If this is tested or merged, remove extools from the static files."
