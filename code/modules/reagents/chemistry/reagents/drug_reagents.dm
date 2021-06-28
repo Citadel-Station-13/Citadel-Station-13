@@ -170,16 +170,15 @@
 	overdose_threshold = 20
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	ph = 5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_threshold = 10
 	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/meth)
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
 
 /datum/reagent/drug/methamphetamine/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/meth)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
 	..()
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -201,7 +200,7 @@
 	. = TRUE
 
 /datum/reagent/drug/methamphetamine/overdose_process(mob/living/M, delta_time, times_fired)
-	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovable(M.loc))
 		for(var/i in 1 to round(4 * REM * delta_time, 1))
 			step(M, pick(GLOB.cardinals))
 	if(DT_PROB(10, delta_time))
@@ -248,14 +247,6 @@
 		M.emote(pick("twitch","drool","moan"))
 	..()
 	. = 1
-
-/datum/reagent/drug/methamphetamine/changeling
-	name = "Changeling Adrenaline"
-	addiction_threshold = 35
-	overdose_threshold = 35
-	jitter = FALSE
-	brain_damage = FALSE
-	value = REAGENT_VALUE_RARE
 
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"

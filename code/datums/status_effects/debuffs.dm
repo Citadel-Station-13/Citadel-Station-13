@@ -214,7 +214,7 @@
 /datum/status_effect/vtec_disabled/on_remove()
 	if(iscyborg(owner))
 		var/mob/living/silicon/robot/R = owner
-		R.vtecs_disabled = FALSE
+		R.vtec_disabled = FALSE
 	return ..()
 
 //OTHER DEBUFFS

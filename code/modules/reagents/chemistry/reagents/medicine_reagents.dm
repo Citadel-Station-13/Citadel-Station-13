@@ -723,8 +723,8 @@
 	// 		to_chat(M, span_notice("Your hands spaz out and you drop what you were holding!"))
 	// 		M.Jitter(10)
 
-	M.AdjustAllImmobility(-20 * REM * delta_time * normalise_creation_purity())
-	M.adjustStaminaLoss(-1 * REM * delta_time * normalise_creation_purity(), FALSE)
+	M.AdjustAllImmobility(-20 * REM * delta_time)
+	M.adjustStaminaLoss(-1 * REM * delta_time, FALSE)
 	..()
 	return TRUE
 
@@ -735,10 +735,10 @@
 		to_chat(M, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
 		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 100, 0)
 
-	if(DT_PROB(3.5 * normalise_creation_purity(), delta_time))
+	if(DT_PROB(3.5, delta_time))
 		to_chat(M, span_notice("[pick("Your head pounds.", "You feel a tight pain in your chest.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]"))
 
-	if(DT_PROB(18 * normalise_creation_purity(), delta_time))
+	if(DT_PROB(18, delta_time))
 		M.adjustToxLoss(1, 0)
 		M.losebreath++
 		. = TRUE
@@ -1438,7 +1438,6 @@
 	description = "Reduces the duration of unconciousness, knockdown and stuns. Restores stamina, but deals toxin damage when overdosed."
 	color = "#C1151D"
 	overdose_threshold = 30
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
@@ -1473,7 +1472,6 @@
 	description = "Drastically increases movement speed, but deals toxin damage."
 	color = "#AE151D"
 	metabolization_rate = 2.5 * REAGENTS_METABOLISM
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/changelinghaste/on_mob_metabolize(mob/living/L)
 	..()

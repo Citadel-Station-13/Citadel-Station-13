@@ -300,26 +300,26 @@
 	if(can_overdose)
 		if(addiction_tick == 6)
 			addiction_tick = 1
-			for(var/addiction in cached_addictions)
+			for(var/addiction in addiction_list)
 				var/datum/reagent/R = addiction
-				if(C && R)
+				if(owner && R)
 					R.addiction_stage++
 					if(1 <= R.addiction_stage && R.addiction_stage <= R.addiction_stage1_end)
-						need_mob_update += R.addiction_act_stage1(C)
+						need_mob_update += R.addiction_act_stage1(owner)
 					else if(R.addiction_stage1_end < R.addiction_stage && R.addiction_stage <= R.addiction_stage2_end)
-						need_mob_update += R.addiction_act_stage2(C)
+						need_mob_update += R.addiction_act_stage2(owner)
 					else if(R.addiction_stage2_end < R.addiction_stage && R.addiction_stage <= R.addiction_stage3_end)
-						need_mob_update += R.addiction_act_stage3(C)
+						need_mob_update += R.addiction_act_stage3(owner)
 					else if(R.addiction_stage3_end < R.addiction_stage && R.addiction_stage <= R.addiction_stage4_end)
-						need_mob_update += R.addiction_act_stage4(C)
+						need_mob_update += R.addiction_act_stage4(owner)
 					else if(R.addiction_stage4_end < R.addiction_stage)
 						remove_addiction(R)
 					else
-						SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
+						SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
 		addiction_tick++
 	if(owner && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		owner.updatehealth()
-		owner.update_mobility
+		owner.update_mobility()
 		owner.update_stamina()
 	update_total()
 
@@ -358,14 +358,14 @@
 
 			// for(var/addiction in reagent.addiction_types)
 			// 	owner.mind?.add_addiction_points(addiction, reagent.addiction_types[addiction] * REAGENTS_METABOLISM)
-			if(R.addiction_threshold)
-				if(R.volume > R.addiction_threshold && !is_type_in_list(R, cached_addictions))
-					var/datum/reagent/new_reagent = new R.type()
-					cached_addictions.Add(new_reagent)
-			if(is_type_in_list(R,cached_addictions))
-				for(var/addiction in cached_addictions)
+			if(reagent.addiction_threshold)
+				if(reagent.volume > reagent.addiction_threshold && !is_type_in_list(reagent, addiction_list))
+					var/datum/reagent/new_reagent = new reagent.type()
+					addiction_list.Add(new_reagent)
+			if(is_type_in_list(reagent, addiction_list))
+				for(var/addiction in addiction_list)
 					var/datum/reagent/A = addiction
-					if(istype(R, A))
+					if(istype(reagent, A))
 						A.addiction_stage = -15 // you're satisfied for a good while.
 
 			if(reagent.overdosed)
