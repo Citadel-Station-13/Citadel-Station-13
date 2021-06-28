@@ -5,7 +5,11 @@
 	multiplicative_slowdown = -0.55
 
 /datum/movespeed_modifier/reagent/ephedrine
-	multiplicative_slowdown = -0.5
+	// strong painkiller effect that caps out at slightly above runspeed
+	multiplicative_slowdown = -1.5
+	priority = -100
+	complex_calculation = TRUE
+	absolute_max_tiles_per_second = 7
 
 /datum/movespeed_modifier/reagent/pepperspray
 	multiplicative_slowdown = 0.25
@@ -14,10 +18,19 @@
 	multiplicative_slowdown = -0.35
 
 /datum/movespeed_modifier/reagent/changelinghaste
-	multiplicative_slowdown = -0.8
+	// extremely strong painkiller effect: allows user to run at old sprint speeds but not over by cancelling out slowdowns.
+	// however, will not make user go faster than that
+	multiplicative_slowdown = -4
+	priority = -100
+	complex_calculation = TRUE
+	absolute_max_tiles_per_second = 8
 
 /datum/movespeed_modifier/reagent/methamphetamine
-	multiplicative_slowdown = -0.65
+	// very strong painkiller effect that caps out at slightly above runspeed
+	multiplicative_slowdown = -2.5
+	priority = -100
+	complex_calculation = TRUE
+	absolute_max_tiles_per_second = 7.5
 
 /datum/movespeed_modifier/reagent/nitryl
 	multiplicative_slowdown = -0.65
