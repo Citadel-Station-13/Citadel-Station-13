@@ -68,17 +68,14 @@ GLOBAL_VAR_INIT(singularity_counter, 0)
 /obj/machinery/power/singularity_beacon/attack_ai(mob/user)
 	return
 
-/obj/machinery/power/singularity_beacon/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/power/singularity_beacon/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(anchored)
 		return active ? Deactivate(user) : Activate(user)
 	else
 		to_chat(user, "<span class='warning'>You need to screw the beacon to the floor first!</span>")
 
 /obj/machinery/power/singularity_beacon/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(active)
 			to_chat(user, "<span class='warning'>You need to deactivate the beacon first!</span>")
 			return

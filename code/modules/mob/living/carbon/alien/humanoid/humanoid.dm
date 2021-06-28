@@ -20,6 +20,8 @@
 	bodyparts = list(/obj/item/bodypart/chest/alien, /obj/item/bodypart/head/alien, /obj/item/bodypart/l_arm/alien,
 					 /obj/item/bodypart/r_arm/alien, /obj/item/bodypart/r_leg/alien, /obj/item/bodypart/l_leg/alien)
 
+	can_ventcrawl = TRUE
+
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/Initialize()
@@ -57,8 +59,17 @@
 
 /mob/living/carbon/alien/humanoid/Topic(href, href_list)
 	..()
-	//strip panel
+	//strip panel & embeds
 	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+		if(href_list["embedded_object"])
+			var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
+			if(!L)
+				return
+			var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
+			if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the alien anymore
+				return
+			SEND_SIGNAL(src, COMSIG_CARBON_EMBED_RIP, I, L)
+			return
 		if(href_list["pouches"])
 			visible_message("<span class='danger'>[usr] tries to empty [src]'s pouches.</span>", \
 							"<span class='userdanger'>[usr] tries to empty [src]'s pouches.</span>")

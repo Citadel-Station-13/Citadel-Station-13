@@ -55,8 +55,7 @@
 /obj/item/gun/ballistic/automatic/spinfusor/attack_self(mob/living/user)
 	return //caseless rounds are too glitchy to unload properly. Best to make it so that you cannot remove disks from the spinfusor
 
-/obj/item/gun/ballistic/automatic/spinfusor/update_icon()
-	..()
+/obj/item/gun/ballistic/automatic/spinfusor/update_icon_state()
 	icon_state = "spinfusor[magazine ? "-[get_ammo(1)]" : ""]"
 
 /obj/item/ammo_box/aspinfusor

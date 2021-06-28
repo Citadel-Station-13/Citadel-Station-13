@@ -30,7 +30,7 @@
 		toggle()
 		return TRUE
 
-/obj/structure/destructible/clockwork/powered/mania_motor/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/destructible/clockwork/powered/mania_motor/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

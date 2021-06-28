@@ -1,8 +1,8 @@
 /datum/species/dullahan
 	name = "Dullahan"
-	id = "dullahan"
+	id = SPECIES_DULLAHAN
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "deco_wings" = "None")
 	use_skintones = USE_SKINTONES_GRAYSCALE_CUSTOM
@@ -11,9 +11,10 @@
 	mutanttongue = /obj/item/organ/tongue/dullahan
 	mutantears = /obj/item/organ/ears/dullahan
 	blacklisted = TRUE
-	limbs_id = "human"
+	limbs_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	has_field_of_vision = FALSE //Too much of a trouble, their vision is already bound to their severed head.
+	species_category = SPECIES_CATEGORY_UNDEAD
 	var/pumpkin = FALSE
 
 	var/obj/item/dullahan_relay/myhead
@@ -26,7 +27,7 @@
 /datum/species/dullahan/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		return TRUE
-	return FALSE
+	return ..()
 
 /datum/species/dullahan/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
@@ -82,17 +83,7 @@
 
 /obj/item/organ/tongue/dullahan
 	zone = "abstract"
-	modifies_speech = TRUE
-
-/obj/item/organ/tongue/dullahan/handle_speech(datum/source, list/speech_args)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		if(isdullahan(H))
-			var/datum/species/dullahan/D = H.dna.species
-			if(isobj(D.myhead.loc))
-				var/obj/O = D.myhead.loc
-				O.say(speech_args[SPEECH_MESSAGE])
-	speech_args[SPEECH_MESSAGE] = ""
+	accents = list(/datum/accent/dullahan)
 
 /obj/item/organ/ears/dullahan
 	zone = "abstract"

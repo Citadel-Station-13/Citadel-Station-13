@@ -14,10 +14,7 @@
 	desc = "[initial(desc)] The planchette is sitting at \"[planchette]\"."
 	return ..()
 
-/obj/structure/spirit_board/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/spirit_board/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	spirit_board_pick_letter(user)
 
 

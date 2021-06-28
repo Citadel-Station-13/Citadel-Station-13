@@ -1,7 +1,6 @@
 /mob/living/simple_animal/hostile/boss
 	name = "A Perfectly Generic Boss Placeholder"
 	desc = ""
-	threat = 10
 	robust_searching = TRUE
 	stat_attack = UNCONSCIOUS
 	status_flags = NONE
@@ -12,7 +11,7 @@
 	var/datum/boss_active_timed_battle/atb
 	var/point_regen_delay = 20
 	var/point_regen_amount = 1
-
+	sentience_type = SENTIENCE_BOSS
 
 /mob/living/simple_animal/hostile/boss/Initialize()
 	. = ..()

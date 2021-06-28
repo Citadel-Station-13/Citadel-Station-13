@@ -19,10 +19,6 @@
 		A.move_camera_by_click()
 
 /mob/living/silicon/ai/ClickOn(var/atom/A, params)
-	if(world.time <= next_click)
-		return
-	next_click = world.time + 1
-
 	if(!can_interact_with(A))
 		return
 
@@ -52,7 +48,7 @@
 		to_chat(src, "<span class='warning'>You're experiencing a bug. Reconnect immediately to fix it. Admins have been notified.</span>")
 		if(REALTIMEOFDAY >= chnotify + 9000)
 			chnotify = REALTIMEOFDAY
-			send2irc_adminless_only("NOCHEAT", message)
+			send2tgs_adminless_only("NOCHEAT", message)
 		return
 
 	var/list/modifiers = params2list(params)
@@ -74,16 +70,16 @@
 		CtrlClickOn(A)
 		return
 
-	if(world.time <= next_move)
+	if(!CheckActionCooldown(immediate = TRUE))
 		return
 
 	if(aicamera.in_camera_mode)
 		aicamera.camera_mode_off()
-		aicamera.captureimage(pixel_turf, usr)
+		INVOKE_ASYNC(aicamera, /obj/item/camera.proc/captureimage, pixel_turf, usr)
 		return
 	if(waypoint_mode)
-		waypoint_mode = 0
-		set_waypoint(A)
+		waypoint_mode = FALSE
+		INVOKE_ASYNC(src, .proc/set_waypoint, A)
 		return
 
 	A.attack_ai(src)
@@ -116,8 +112,8 @@
 /mob/living/silicon/ai/CtrlClickOn(var/atom/A)
 	A.AICtrlClick(src)
 /mob/living/silicon/ai/AltClickOn(var/atom/A)
-	if(!A.AIAltClick(src))
-		altclick_listed_turf(A)
+	A.AIAltClick(src)
+
 
 /*
 	The following criminally helpful code is just the previous code cleaned up;

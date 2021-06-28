@@ -15,7 +15,7 @@
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
 /obj/item/tank/jetpack/Initialize()
-	..()
+	. = ..()
 	ion_trail = new
 	ion_trail.set_up(src)
 
@@ -55,6 +55,8 @@
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/move_react)
 	if(full_speed)
 		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+	else
+		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack)
 
 /obj/item/tank/jetpack/proc/turn_off(mob/user)
 	on = FALSE
@@ -63,6 +65,7 @@
 	ion_trail.stop()
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack)
 
 /obj/item/tank/jetpack/proc/move_react(mob/user)
 	allow_thrust(0.01, user)
@@ -85,7 +88,7 @@
 	return TRUE
 
 /obj/item/tank/jetpack/suicide_act(mob/user)
-	if (istype(user, /mob/living/carbon/human/))
+	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.forcesay("WHAT THE FUCK IS CARBON DIOXIDE?")
 		H.visible_message("<span class='suicide'>[user] is suffocating [user.p_them()]self with [src]! It looks like [user.p_they()] didn't read what that jetpack says!</span>")

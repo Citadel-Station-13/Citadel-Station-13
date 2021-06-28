@@ -22,7 +22,7 @@
 			var/obj/F = new /obj/structure/kitchenspike(src.loc)
 			transfer_fingerprints_to(F)
 			qdel(src)
-	else if(istype(I, /obj/item/weldingtool))
+	else if(I.tool_behaviour == TOOL_WELDER)
 		if(!I.tool_start_check(user, amount=0))
 			return
 		to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
@@ -60,8 +60,7 @@
 		deconstruct(TRUE)
 	return TRUE
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/kitchenspike/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/kitchenspike/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(VIABLE_MOB_CHECK(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
 		if(HAS_TRAIT(user, TRAIT_PACIFISM) && L.stat != DEAD)

@@ -1,8 +1,8 @@
 /datum/round_event_control/travelling_trader
 	name = "Travelling Trader"
 	typepath = /datum/round_event/travelling_trader
-	weight = 10
-	max_occurrences = 3
+	weight = 8
+	max_occurrences = 2
 	earliest_start = 0 MINUTES
 
 /datum/round_event/travelling_trader
@@ -25,14 +25,14 @@
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.set_up(1, spawn_location)
 	smoke.start()
-	trader.visible_message("<b>[src]</b> suddenly appears in a puff of smoke!")
+	trader.visible_message("<b>[trader]</b> suddenly appears in a puff of smoke!")
 
 /datum/round_event/travelling_trader/announce(fake)
 	priority_announce("A mysterious figure has been detected on sensors at [get_area(spawn_location)]", "Mysterious Figure")
 
 /datum/round_event/travelling_trader/end()
-	if(trader)
-		trader.visible_message("The <b>[src]</b> has given up on waiting!")
+	if(trader) // the /datum/round_event/travelling_trader has given up on waiting!
+		trader.visible_message("The <b>[trader]</b> has given up on waiting!")
 		qdel(trader)
 
 //the actual trader mob
@@ -52,6 +52,14 @@
 	var/acceptance_speech = "This is exactly what I wanted! I shall be on my way now, thank you.!"
 	var/refusal_speech = "A given_item? I wanted a requested_item!" //what they say when refusing an item
 	var/active = TRUE
+	var/examine_text = list("<span class='warning'>You attempt to look directly at the being's face, but it's just a blur!")
+	move_resist = MOVE_FORCE_VERY_STRONG
+	mob_size = MOB_SIZE_LARGE
+	alpha = 200
+
+/mob/living/carbon/human/dummy/travelling_trader/examine(mob/user)
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, examine_text)
+	return examine_text
 
 /mob/living/carbon/human/dummy/travelling_trader/proc/setup_speech(var/input_speech, var/obj/item/given_item)
 	if(requested_item)
@@ -60,7 +68,7 @@
 		input_speech = replacetext(input_speech, "given_item", given_item.name)
 	return input_speech
 
-/mob/living/carbon/human/dummy/travelling_trader/attack_hand(mob/living/carbon/human/H)
+/mob/living/carbon/human/dummy/travelling_trader/on_attack_hand(mob/living/carbon/human/H)
 	if(active && last_speech + 3 < world.realtime) //can only talk once per 3 seconds, to avoid spam
 		last_speech = world.realtime
 		if(initial_speech)
@@ -91,7 +99,9 @@
 	new reward(get_turf(src))
 
 /mob/living/carbon/human/dummy/travelling_trader/Initialize()
-	..()
+	. = ..() // return a hint you fuck
+	add_atom_colour("#570d6b", FIXED_COLOUR_PRIORITY) //make them purple (otherworldly!)
+	set_light(1, -0.7, "#AAD84B")
 	ADD_TRAIT(src,TRAIT_PIERCEIMMUNE, "trader_pierce_immune") //don't let people take their blood
 	equipOutfit(trader_outfit, TRUE)
 	for(var/obj/item/item in src.get_equipped_items())
@@ -159,15 +169,11 @@
 	trader_name = "Otherworldly Animal Specialist"
 	trader_outfit = /datum/outfit/job/doctor
 	initial_speech = "Greetings, lifeform. I am here to locate a special creature aboard your station."
-	request_speech = "Find me the creature known as 'requested_item' and you shall be rewarded for your efforts."
+	request_speech = "Find me the creature known as 'requested_item' and hand it to me, preferably in a suitable container."
 	refusal_speech = "Do you think me to be a fool, lifeform? I know a requested_item when I see one."
-	possible_wanted_items = list(/mob/living/simple_animal/pet/dog/corgi/Ian = 1,
-		/mob/living/simple_animal/sloth/paperwork = 1,
-		/mob/living/carbon/monkey/punpun = 1,
-		/mob/living/simple_animal/pet/fox/Renault = 1,
-		/mob/living/simple_animal/hostile/carp/cayenne = 1,
-		/mob/living/simple_animal/pet/bumbles = 1,
-		/mob/living/simple_animal/parrot/Poly = 1)
+	possible_wanted_items = list(/mob/living/simple_animal/pet/dog/corgi = 4,
+	/mob/living/carbon/monkey = 1,
+	/mob/living/simple_animal/mouse = 2)
 	possible_rewards = list(/mob/living/simple_animal/pet/dog/corgi/exoticcorgi = 1, //rewards are animals, friendly to only the person who handed the reward in!
 		/mob/living/simple_animal/cockroach = 1,
 		/mob/living/simple_animal/hostile/skeleton = 1,
@@ -182,26 +188,19 @@
 		/mob/living/simple_animal/hostile/netherworld/blankbody = 1,
 		/mob/living/simple_animal/hostile/retaliate/goose = 1)
 
-mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
+/mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
+	. = ..()
 	acceptance_speech = pick(list("This lifeform shall make for a great stew, thank you.", "This lifeform shall be of a true use to our cause, thank you.", "The lifeform is adequate. Goodbye.", "This lifeform shall make a great addition to my collection."))
-	//make sure they only ask for animals that are still alive
-	for(var/mob/living/animal in possible_wanted_items)
-		if(!(animal in GLOB.mob_living_list))
-			possible_wanted_items -= animal
-	if(!possible_wanted_items)
-		//all the pets are dead, so ask for a monkey, or sometimes a corgi (corgis are more annoying to get a hold of)
-		possible_wanted_items = list(/mob/living/simple_animal/pet/dog/corgi = 1, /mob/living/carbon/monkey = 3)
-	..()
 
-/mob/living/carbon/human/dummy/travelling_trader/animal_hunter/check_item(var/obj/item/supplied_item) //item is likely to be in contents of whats supplied
+/mob/living/carbon/human/dummy/travelling_trader/animal_hunter/check_item(obj/item/supplied_item) //item is likely to be in contents of whats supplied
 	for(var/atom/something in supplied_item.contents)
 		if(istype(something, requested_item))
 			qdel(something) //typically things holding mobs release the mob when the container is deleted, so delete the mob first here
 			return TRUE
 	return FALSE
 
-/mob/living/carbon/human/dummy/travelling_trader/animal_hunter/give_reward(var/mob/giver) //the reward is actually given in a jar, because releasing it onto the station might be a bad idea
-	var/obj/item/pet_carrier/bluespace/jar = new(get_turf(src))
+/mob/living/carbon/human/dummy/travelling_trader/animal_hunter/give_reward(mob/giver) //the reward is actually given in a jar, because releasing it onto the station might be a bad idea
+	var/obj/item/pet_carrier/bluespace/single_use/jar = new(get_turf(src))
 	var/chosen_animal = pickweight(possible_rewards)
 	var/mob/living/new_animal = new chosen_animal(jar)
 	if(giver && giver.tag)
@@ -224,6 +223,7 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 		/obj/structure/reagent_dispensers/keg/quintuple_sec = 3)
 
 /mob/living/carbon/human/dummy/travelling_trader/bartender/Initialize() //pick a subtype of ethanol that isn't found in the default set of the booze dispensers reagents
+	. = ..() // RETURN A HINT.
 	requested_item = pick(subtypesof(/datum/reagent/consumable/ethanol) - list(/datum/reagent/consumable/ethanol/beer,
 		/datum/reagent/consumable/ethanol/kahlua,
 		/datum/reagent/consumable/ethanol/whiskey,
@@ -243,7 +243,6 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 		/datum/reagent/consumable/ethanol/triple_sec,
 		/datum/reagent/consumable/ethanol/sake,
 		/datum/reagent/consumable/ethanol/applejack))
-	..()
 
 /mob/living/carbon/human/dummy/travelling_trader/bartender/check_item(var/obj/item/supplied_item) //you need to check its reagents
 	if(istype(supplied_item, /obj/item/reagent_containers))
@@ -282,6 +281,7 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 	..()
 
 /datum/outfit/artifact_dealer
+	name = "Artifact Dealer"
 	uniform = /obj/item/clothing/under/suit/black_really
 	shoes = /obj/item/clothing/shoes/combat
 	head = /obj/item/clothing/head/that
@@ -321,8 +321,10 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 	var/new_implant = new chosen_implant
 	var/obj/item/autosurgeon/reward = new(get_turf(src))
 	reward.insert_organ(new_implant)
+	reward.uses = 1
 
 /datum/outfit/otherworldly_surgeon
+	name = "Otherworldly Surgeon"
 	uniform = /obj/item/clothing/under/pants/white
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	gloves = /obj/item/clothing/gloves/color/latex

@@ -5,7 +5,6 @@
 	min_players = 5
 	weight = 40
 	alert_observers = FALSE
-	gamemode_blacklist = list("dynamic")
 
 /datum/round_event/electrical_storm
 	var/lightsoutAmount	= 1

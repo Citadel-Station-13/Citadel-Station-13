@@ -115,7 +115,7 @@
 			to_chat(user, "<span class='notice'>[holding ? "In one smooth motion you pop [holding] out of [src]'s connector and replace it with [T]" : "You insert [T] into [src]"].</span>")
 			replace_tank(user, FALSE, T)
 			update_icon()
-	else if(istype(W, /obj/item/wrench))
+	else if(W.tool_behaviour == TOOL_WRENCH)
 		if(!(stat & BROKEN))
 			if(connected_port)
 				disconnect()
@@ -145,6 +145,7 @@
 
 /obj/machinery/portable_atmospherics/analyzer_act(mob/living/user, obj/item/I)
 	atmosanalyzer_scan(air_contents, user, src)
+	return TRUE
 
 /obj/machinery/portable_atmospherics/attacked_by(obj/item/I, mob/user, attackchain_flags = NONE, damage_multiplier = 1)
 	if(I.force < 10 && !(stat & BROKEN))

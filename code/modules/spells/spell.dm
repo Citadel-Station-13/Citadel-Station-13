@@ -56,11 +56,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		to_chat(caller, "<span class='warning'><b>[caller.ranged_ability.name]</b> has been disabled.</span>")
 		caller.ranged_ability.remove_ranged_ability()
 		return TRUE //TRUE for failed, FALSE for passed.
-	if(ranged_clickcd_override >= 0)
-		ranged_ability_user.next_click = world.time + ranged_clickcd_override
-	else
-		ranged_ability_user.next_click = world.time + CLICK_CD_CLICK_ABILITY
-	ranged_ability_user.face_atom(A)
 	return FALSE
 
 /obj/effect/proc_holder/proc/add_ranged_ability(mob/living/user, msg, forced)
@@ -229,7 +224,15 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/choose_targets(mob/user = usr) //depends on subtype - /targeted or /aoe_turf
 	return
 
-/obj/effect/proc_holder/spell/proc/can_target(mob/living/target)
+/**
+  * can_target: Checks if we are allowed to cast the spell on a target.
+  *
+  * Arguments:
+  * * target The atom that is being targeted by the spell.
+  * * user The mob using the spell.
+  * * silent If the checks should not give any feedback messages.
+  */
+/obj/effect/proc_holder/spell/proc/can_target(atom/target, mob/user, silent = FALSE)
 	return TRUE
 
 /obj/effect/proc_holder/spell/proc/start_recharge()
@@ -301,6 +304,13 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/cast(list/targets,mob/user = usr)
 	return
 
+/obj/effect/proc_holder/spell/proc/view_or_range(distance = world.view, center=usr, type="view")
+	switch(type)
+		if("view")
+			. = view(distance,center)
+		if("range")
+			. = range(distance,center)
+
 /obj/effect/proc_holder/spell/proc/revert_cast(mob/user = usr) //resets recharge or readds a charge
 	switch(charge_type)
 		if("recharge")
@@ -350,7 +360,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	switch(max_targets)
 		if(0) //unlimited
 			for(var/mob/living/target in view_or_range(range, user, selection_type))
-				if(!can_target(target))
+				if(!can_target(target, user, TRUE))
 					continue
 				targets += target
 		if(1) //single target can be picked
@@ -362,7 +372,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				for(var/mob/living/M in view_or_range(range, user, selection_type))
 					if(!include_user && user == M)
 						continue
-					if(!can_target(M))
+					if(!can_target(M, user, TRUE))
 						continue
 					possible_targets += M
 
@@ -370,7 +380,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				//Adds a safety check post-input to make sure those targets are actually in range.
 				var/mob/M
 				if(!random_target)
-					M = input("Choose the target for the spell.", "Targeting") as null|mob in possible_targets
+					M = input("Choose the target for the spell.", "Targeting") as null|mob in sortNames(possible_targets)
 				else
 					switch(random_target_priority)
 						if(TARGET_RANDOM)
@@ -390,7 +400,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		else
 			var/list/possible_targets = list()
 			for(var/mob/living/target in view_or_range(range, user, selection_type))
-				if(!can_target(target))
+				if(!can_target(target, user, TRUE))
 					continue
 				possible_targets += target
 			for(var/i=1,i<=max_targets,i++)
@@ -416,7 +426,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/list/targets = list()
 
 	for(var/turf/target in view_or_range(range,user,selection_type))
-		if(!can_target(target))
+		if(!can_target(target, user, TRUE))
 			continue
 		if(!(target in view_or_range(inner_radius,user,selection_type)))
 			targets += target

@@ -18,9 +18,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 	var/obj/item/radio/headset/radio
 	var/arrival = "%PERSON has signed up as %RANK"
-	var/arrivalToggle = 1
+	var/arrivalToggle = TRUE
 	var/newhead = "%PERSON, %RANK, is the department head."
-	var/newheadToggle = 1
+	var/newheadToggle = TRUE
+	var/cryostorage = "%PERSON, %RANK, has been moved into cryogenic storage." // this shouldnt be changed
 
 	var/greenlight = "Light_Green"
 	var/pinklight = "Light_Pink"
@@ -84,6 +85,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		message = CompileText(arrival, user, rank)
 	else if(message_type == "NEWHEAD" && newheadToggle)
 		message = CompileText(newhead, user, rank)
+	else if(message_type == "CRYOSTORAGE")
+		message = CompileText(cryostorage, user, rank)
 	else if(message_type == "ARRIVALS_BROKEN")
 		message = "The arrivals shuttle has been damaged. Docking for repairs..."
 
@@ -93,13 +96,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		for(var/channel in channels)
 			radio.talk_into(src, message, channel)
 
-//config stuff
-
-/obj/machinery/announcement_system/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	. = ..()
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/announcement_system/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "AutomatedAnnouncement", "Automated Announcement System", 500, 225, master_ui, state)
+		ui = new(user, src, "AutomatedAnnouncement")
 		ui.open()
 
 /obj/machinery/announcement_system/ui_data()
@@ -114,7 +114,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	. = ..()
 	if(.)
 		return
-	if(!usr.canUseTopic(src, !issilicon(usr)))
+	if(!usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 		return
 	if(stat & BROKEN)
 		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='hear'>You hear a faint buzz.</span>")
@@ -147,7 +147,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	. = attack_ai(user)
 
 /obj/machinery/announcement_system/attack_ai(mob/user)
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 	if(stat & BROKEN)
 		to_chat(user, "<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>")
@@ -163,11 +163,13 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system/emp_act(severity)
 	. = ..()
-	if(!(stat & (NOPOWER|BROKEN)) && !(. & EMP_PROTECT_SELF))
+	if(!(stat & (NOPOWER|BROKEN)) && !(. & EMP_PROTECT_SELF) && severity >= 30)
 		act_up()
 
 /obj/machinery/announcement_system/emag_act()
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
 	act_up()
+	return TRUE

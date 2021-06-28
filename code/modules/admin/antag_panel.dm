@@ -101,6 +101,10 @@ GLOBAL_VAR(antag_prototypes)
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
 	out += "Assigned role: [assigned_role]. <a href='?src=[REF(src)];role_edit=1'>Edit</a><br>"
 	out += "Faction and special role: <b><font color='red'>[special_role]</font></b><br>"
+	var/datum/component/activity/activity = current.GetComponent(/datum/component/activity)
+	if(activity)
+		out += "Activity level: [activity.activity_level]<br>"
+		out += "Hasn't changed areas in approximately [activity.not_moved_counter] seconds<br>"
 
 	var/special_statuses = get_special_statuses()
 	if(length(special_statuses))

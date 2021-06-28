@@ -21,8 +21,6 @@
 	density = TRUE
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/smes
-	ui_x = 340
-	ui_y = 350
 
 	var/capacity = 5e6 // maximum charge
 	var/charge = 0 // actual charge
@@ -164,8 +162,8 @@
 		return TRUE
 
 
-/obj/machinery/power/smes/default_deconstruction_crowbar(obj/item/crowbar/C)
-	if(istype(C) && terminal)
+/obj/machinery/power/smes/default_deconstruction_crowbar(obj/item/C)
+	if(C.tool_behaviour == TOOL_CROWBAR && terminal)
 		to_chat(usr, "<span class='warning'>You must first remove the power terminal!</span>")
 		return FALSE
 
@@ -202,7 +200,7 @@
 
 /obj/machinery/power/smes/update_overlays()
 	. = ..()
-	if((stat & BROKEN) || panel_open)
+	if(stat & BROKEN)
 		return
 
 	if(panel_open)
@@ -318,11 +316,10 @@
 	return
 
 
-/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/power/smes/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Smes", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Smes", name)
 		ui.open()
 
 /obj/machinery/power/smes/ui_data()
@@ -410,7 +407,7 @@
 	outputting = output_attempt
 	output_level = rand(0, output_level_max)
 	input_level = rand(0, input_level_max)
-	charge -= 1e6/severity
+	charge -= 10000*severity
 	if (charge < 0)
 		charge = 0
 	update_icon()

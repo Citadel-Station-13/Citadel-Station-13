@@ -130,6 +130,7 @@
 			multitool and combat gloves that are resistant to shocks and heat."
 	item = /obj/item/storage/toolbox/syndicate
 	cost = 1
+	illegal_tech = FALSE
 
 /datum/uplink_item/device_tools/syndie_glue
 	name = "Glue"
@@ -146,6 +147,12 @@
 			Be careful with wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/aiModule/syndicate
 	cost = 9
+
+/datum/uplink_item/device_tools/damaged_module
+	name = "Damaged AI Law Upload Module"
+	desc = "This AI law upload module has been laying around our warehouse for god knows how long. We do not know why you would ever use this."
+	item = /obj/item/aiModule/core/full/damaged
+	cost = 5
 
 /datum/uplink_item/device_tools/headsetupgrade
 	name = "Headset Upgrader"
@@ -200,16 +207,14 @@
 			this primer of questionable worth and value is rumored to increase your rifle-bolt-working and/or shotgun \
 			racking fivefold. Then again, the techniques here only work on bolt-actions and pump-actions..."
 	item = /obj/item/book/granter/trait/rifleman
-	cost = 3
-	restricted_roles = list("Operative") // i want it to be surplusable but i also want it to be mostly nukie only, please advise
-	surplus = 90
+	cost = 3 // fuck it available for everyone
 
 /datum/uplink_item/device_tools/stimpack
 	name = "Stimpack"
-	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
+	desc = "Stimpacks, the tool of many great heroes. Makes you nearly immune to non-lethal weaponry for about \
 			5 minutes after injection."
 	item = /obj/item/reagent_containers/syringe/stimulants
-	cost = 3
+	cost = 5
 	surplus = 90
 
 /datum/uplink_item/device_tools/medkit

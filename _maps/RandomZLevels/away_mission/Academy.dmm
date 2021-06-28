@@ -51,7 +51,7 @@
 	},
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	pixel_y = 32;
+	pixel_y = 23;
 	req_access = null
 	},
 /turf/open/floor/carpet,
@@ -1291,7 +1291,7 @@
 	},
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	pixel_y = 32;
+	pixel_y = 23;
 	req_access = null
 	},
 /turf/open/floor/plasteel/grimy,
@@ -2542,7 +2542,7 @@
 	},
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	pixel_y = 32;
+	pixel_y = 23;
 	req_access = null
 	},
 /turf/open/floor/plasteel,
@@ -2710,7 +2710,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/item/caution,
+/obj/item/clothing/suit/caution,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -3129,8 +3129,8 @@
 /obj/structure/table,
 /obj/item/gun/ballistic/revolver/russian/soul,
 /turf/open/floor/plasteel/airless{
-	icon_state = "whitered";
-	dir = 4
+	dir = 4;
+	icon_state = "whitered"
 	},
 /area/awaymission/academy/academyaft)
 "iY" = (
@@ -3197,8 +3197,8 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/airless{
-	icon_state = "whitered";
-	dir = 4
+	dir = 4;
+	icon_state = "whitered"
 	},
 /area/awaymission/academy/academyaft)
 "jh" = (
@@ -3258,8 +3258,8 @@
 	name = "The preserved brain of Harry Houdini"
 	},
 /turf/open/floor/plasteel/airless{
-	icon_state = "whitered";
-	dir = 4
+	dir = 4;
+	icon_state = "whitered"
 	},
 /area/awaymission/academy/academyaft)
 "jp" = (
@@ -3365,8 +3365,8 @@
 /obj/structure/window/reinforced,
 /obj/item/batterer,
 /turf/open/floor/plasteel/airless{
-	icon_state = "whitered";
-	dir = 4
+	dir = 4;
+	icon_state = "whitered"
 	},
 /area/awaymission/academy/academyaft)
 "jB" = (
@@ -3562,7 +3562,7 @@
 "kh" = (
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	pixel_y = 32;
+	pixel_y = 23;
 	req_access = null
 	},
 /obj/structure/cable{
@@ -3616,8 +3616,8 @@
 /area/awaymission/academy/academygate)
 "kw" = (
 /turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 8
+	dir = 8;
+	icon_state = "fakewindows"
 	},
 /area/awaymission/academy/headmaster)
 "kx" = (
@@ -3671,8 +3671,8 @@
 /area/awaymission/academy/academyaft)
 "kF" = (
 /turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows2";
-	dir = 8
+	dir = 8;
+	icon_state = "fakewindows2"
 	},
 /area/awaymission/academy/headmaster)
 "kG" = (
@@ -3855,7 +3855,7 @@
 "lp" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	pixel_y = 32
+	pixel_y = 23
 	},
 /obj/structure/cable{
 	icon_state = "0-8"
@@ -4270,8 +4270,8 @@
 /area/awaymission/academy/academycellar)
 "mW" = (
 /turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 4
+	dir = 4;
+	icon_state = "fakewindows"
 	},
 /area/awaymission/academy/headmaster)
 "mX" = (
@@ -4284,14 +4284,14 @@
 /area/space/nearstation)
 "mZ" = (
 /turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 1
+	dir = 1;
+	icon_state = "fakewindows"
 	},
 /area/awaymission/academy/headmaster)
 "na" = (
 /turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows2";
-	dir = 1
+	dir = 1;
+	icon_state = "fakewindows2"
 	},
 /area/awaymission/academy/headmaster)
 "nb" = (
@@ -4310,20 +4310,20 @@
 /area/awaymission/academy/headmaster)
 "nd" = (
 /turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 1
+	dir = 1;
+	icon_state = "fakewindows"
 	},
 /area/awaymission/academy/academyengine)
 "ne" = (
 /turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows2";
-	dir = 1
+	dir = 1;
+	icon_state = "fakewindows2"
 	},
 /area/awaymission/academy/academyengine)
 "nf" = (
 /turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows2";
-	dir = 6
+	dir = 6;
+	icon_state = "fakewindows2"
 	},
 /area/awaymission/academy/headmaster)
 "ng" = (

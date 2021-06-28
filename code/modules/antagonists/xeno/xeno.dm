@@ -16,6 +16,18 @@
 	var/datum/team/xeno/xeno_team
 	threat = 3
 
+/datum/antagonist/xeno/threat()
+	. = 3
+	if(isalienhunter(owner))
+		. = 6
+	else if(isaliensentinel(owner))
+		. = 12
+	else if(isalienroyal(owner))
+		if(isalienqueen(owner))
+			. = 24
+		else
+			. = 18
+
 /datum/antagonist/xeno/create_team(datum/team/xeno/new_team)
 	if(!new_team)
 		for(var/datum/antagonist/xeno/X in GLOB.antagonists)

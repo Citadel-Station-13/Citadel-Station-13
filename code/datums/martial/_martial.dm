@@ -44,11 +44,11 @@
 	//Here we roll for our damage to be added into the damage var in the various attack procs. This is changed depending on whether we are in combat mode, lying down, or if our target is in combat mode.
 	var/damage = rand(A.dna.species.punchdamagelow, A.dna.species.punchdamagehigh)
 	if(SEND_SIGNAL(D, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-		damage *= 1.5
+		damage *= 1.2
 	if(!CHECK_MOBILITY(A, MOBILITY_STAND))
-		damage *= 0.5
+		damage *= 0.7
 	if(SEND_SIGNAL(A, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-		damage *= 0.25
+		damage *= 0.8
 	return damage
 
 /datum/martial_art/proc/teach(mob/living/carbon/human/H, make_temporary = FALSE)
@@ -64,7 +64,7 @@
 	else if(make_temporary)
 		base = H.mind.default_martial_art
 	if(help_verb)
-		H.verbs += help_verb
+		add_verb(H, help_verb)
 	H.mind.martial_art = src
 	if(pugilist)
 		ADD_TRAIT(H, TRAIT_PUGILIST, MARTIAL_ARTIST_TRAIT)
@@ -90,7 +90,7 @@
 
 /datum/martial_art/proc/on_remove(mob/living/carbon/human/H)
 	if(help_verb)
-		H.verbs -= help_verb
+		remove_verb(H, help_verb)
 	return
 
 ///Gets called when a projectile hits the owner. Returning anything other than BULLET_ACT_HIT will stop the projectile from hitting the mob.

@@ -256,7 +256,7 @@
 /obj/vehicle/ridden/scooter/wheelys/Initialize()
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 0
+	D.vehicle_move_delay = 1
 	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
@@ -280,7 +280,7 @@
 		unbuckle_mob(H)
 		H.throw_at(throw_target, 4, 3)
 		H.DefaultCombatKnockdown(30)
-		H.adjustStaminaLoss(10)
+		H.adjustStaminaLoss(30)
 		var/head_slot = H.get_item_by_slot(SLOT_HEAD)
 		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
 			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1)

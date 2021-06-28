@@ -50,7 +50,7 @@
 			oxygentanks++
 		else
 			full = TRUE
-	else if(istype(I, /obj/item/wrench))
+	else if(I.tool_behaviour == TOOL_WRENCH)
 		default_unfasten_wrench(user, I, time = 20)
 		return
 	else if(user.a_intent != INTENT_HARM)
@@ -67,15 +67,17 @@
 	to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 	update_icon()
 
-/obj/structure/tank_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "TankDispenser", name, 275, 103, master_ui, state)
-		ui.open()
-
 /obj/structure/tank_dispenser/attack_robot(mob/user)
-	ui_interact(user)
+	return _try_interact(user)
+
+/obj/structure/tank_dispenser/ui_state(mob/user)
+	return GLOB.physical_state
+
+/obj/structure/tank_dispenser/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "TankDispenser", name)
+		ui.open()
 
 /obj/structure/tank_dispenser/ui_data(mob/user)
 	var/list/data = list()

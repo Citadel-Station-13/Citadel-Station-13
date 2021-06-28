@@ -8,6 +8,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		if (length(initial(R.name)))
 			.[ckey(initial(R.name))] = t
 
+
 //Various reagents
 //Toxin & acid reagents
 //Hydroponics stuff
@@ -52,6 +53,14 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/metabolizing = FALSE
 	var/chemical_flags // See fermi/readme.dm REAGENT_DEAD_PROCESS, REAGENT_DONOTSPLIT, REAGENT_ONLYINVERSE, REAGENT_ONMOBMERGE, REAGENT_INVISIBLE, REAGENT_FORCEONNEW, REAGENT_SNEAKYNAME
 	var/value = REAGENT_VALUE_NONE //How much does it sell for in cargo?
+	var/datum/material/material //are we made of material?
+
+/datum/reagent/New()
+	. = ..()
+
+	if(material)
+		material = SSmaterials.GetMaterialRef(material)
+
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -204,6 +213,16 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	if(prob(30))
 		to_chat(M, "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>")
 
+/**
+  * New, standardized method for chemicals to affect hydroponics trays.
+  * Defined on a per-chem level as opposed to by the tray.
+  * Can affect plant's health, stats, or cause the plant to react in certain ways.
+  */
+/datum/reagent/proc/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	if(!mytray || !chems)
+		return
+	return
+
 /proc/pretty_string_from_reagent_list(list/reagent_list)
 	//Convert reagent list to a printable string for logging etc
 	var/list/rs = list()
@@ -220,4 +239,3 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 			bloodsuckerdatum.handle_eat_human_food(disgust, blood_puke, force)
 		if(blood_change)
 			bloodsuckerdatum.AddBloodVolume(blood_change)
-

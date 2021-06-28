@@ -11,10 +11,15 @@
 	max_integrity = 350
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 70)
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	flags_1 = PREVENT_CLICK_UNDER_1
+	flags_1 = PREVENT_CLICK_UNDER_1|DEFAULT_RICOCHET_1
 	ricochet_chance_mod = 0.8
 
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
+
+	wave_explosion_block = EXPLOSION_BLOCK_DENSE_FILLER
+	wave_explosion_multiply = EXPLOSION_DAMPEN_DENSE_FILLER
+
+	explosion_flags = EXPLOSION_FLAG_HARD_OBSTACLE | EXPLOSION_FLAG_DENSITY_DEPENDENT
 
 	var/secondsElectrified = 0
 	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close
@@ -140,10 +145,7 @@
 			do_animate("deny")
 	return
 
-/obj/machinery/door/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/door/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	return try_to_activate_door(user)
 
 /obj/machinery/door/attack_tk(mob/user)
@@ -176,7 +178,9 @@
 /obj/machinery/door/proc/unrestricted_side(mob/M) //Allows for specific side of airlocks to be unrestrected (IE, can exit maint freely, but need access to enter)
 	return get_dir(src, M) & unres_sides
 
-/obj/machinery/door/proc/try_to_weld(obj/item/weldingtool/W, mob/user)
+/obj/machinery/door/proc/try_to_weld(obj/item/W, mob/user)
+	if(!W.tool_behaviour == TOOL_WELDER)
+		return
 	return
 
 /obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
@@ -246,13 +250,8 @@
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
 		return
-	if(prob(20/severity) && (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window)) )
+	if(prob(severity/5) && (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window)) )
 		INVOKE_ASYNC(src, .proc/open)
-	if(prob(severity*10 - 20))
-		if(secondsElectrified == MACHINE_NOT_ELECTRIFIED)
-			secondsElectrified = MACHINE_ELECTRIFIED_PERMANENT
-			LAZYADD(shockedby, "\[[TIME_STAMP("hh:mm:ss", FALSE)]\]EM Pulse")
-			addtimer(CALLBACK(src, .proc/unelectrify), 300)
 
 /obj/machinery/door/proc/unelectrify()
 	secondsElectrified = MACHINE_NOT_ELECTRIFIED
@@ -343,6 +342,11 @@
 /obj/machinery/door/proc/crush()
 	for(var/mob/living/L in get_turf(src))
 		L.visible_message("<span class='warning'>[src] closes on [L], crushing [L.p_them()]!</span>", "<span class='userdanger'>[src] closes on you and crushes you!</span>")
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			for(var/i in C.all_wounds) // should probably replace with signal
+				var/datum/wound/W = i
+				W.crush(DOOR_CRUSH_DAMAGE)
 		if(isalien(L))  //For xenos
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5, cause = "crushed to death by a door") //Xenos go into crit after aproximately the same amount of crushes as humans.
 			L.emote("roar")
@@ -413,3 +417,8 @@
 
 /obj/machinery/door/GetExplosionBlock()
 	return density ? real_explosion_block : 0
+
+/obj/machinery/door/wave_explosion_damage(power, datum/wave_explosion/explosion)
+	. = ..()
+	if(!density)
+		return . * EXPLOSION_DAMAGE_OPEN_DOOR_FACTOR

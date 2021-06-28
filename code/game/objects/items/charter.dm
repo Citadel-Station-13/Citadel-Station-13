@@ -13,6 +13,7 @@
 	var/ignores_timeout = FALSE
 	var/response_timer_id = null
 	var/approval_time = 600
+	var/allow_unicode = FALSE
 
 	var/static/regex/standard_station_regex
 
@@ -48,6 +49,9 @@
 
 	if(!new_name)
 		return
+	if(!allow_unicode && (length(new_name) != length_char(new_name)))
+		to_chat(user, "Unicode is not allowed. Adminhelp if you want to use it so badly.")
+		return
 	log_game("[key_name(user)] has proposed to name the station as \
 		[new_name]")
 
@@ -59,7 +63,7 @@
 	to_chat(user, "Your name has been sent to your employers for approval.")
 	// Autoapproves after a certain time
 	response_timer_id = addtimer(CALLBACK(src, .proc/rename_station, new_name, user.name, user.real_name, key_name(user)), approval_time, TIMER_STOPPABLE)
-	to_chat(GLOB.admins, "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[ADMIN_LOOKUPFLW(user)] proposes to rename the [name_type] to [new_name] (will autoapprove in [DisplayTimeText(approval_time)]). [ADMIN_SMITE(user)] (<A HREF='?_src_=holder;[HrefToken(TRUE)];reject_custom_name=[REF(src)]'>REJECT</A>) [ADMIN_CENTCOM_REPLY(user)]</span>")
+	to_chat(GLOB.admins, "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[ADMIN_LOOKUPFLW(user)] proposes to rename the [name_type] to [html_encode(new_name)] (will autoapprove in [DisplayTimeText(approval_time)]). [ADMIN_SMITE(user)] (<A HREF='?_src_=holder;[HrefToken(TRUE)];reject_custom_name=[REF(src)]'>REJECT</A>) [ADMIN_CENTCOM_REPLY(user)]</span>")
 
 /obj/item/station_charter/proc/reject_proposed(user)
 	if(!user)

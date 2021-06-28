@@ -122,10 +122,7 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/ladder/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/ladder/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	use(user)
 
 /obj/structure/ladder/attack_paw(mob/user)

@@ -4,7 +4,7 @@
 	department_head = list("Chief Medical Officer")
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 3
+	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the chief medical officer"
 	selection_color = "#74b5e0"
@@ -36,7 +36,7 @@
 	suit =  /obj/item/clothing/suit/toggle/labcoat/paramedic
 	belt = /obj/item/storage/belt/medical
 	l_hand = /obj/item/storage/firstaid/regular
-	suit_store = /obj/item/flashlight/pen
+	suit_store = /obj/item/flashlight/pen/paramedic
 	id = /obj/item/card/id
 	r_pocket = /obj/item/pinpointer/crew
 	l_pocket = /obj/item/pda/medical

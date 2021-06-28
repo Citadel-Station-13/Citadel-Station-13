@@ -11,6 +11,8 @@
 	maxHealth = 25
 	health = 25
 
+	can_ventcrawl = TRUE
+
 	var/amount_grown = 0
 	var/max_grown = 100
 	var/time_of_birth
@@ -30,10 +32,9 @@
 	..()
 
 //This needs to be fixed
-/mob/living/carbon/alien/larva/Stat()
-	..()
-	if(statpanel("Status"))
-		stat(null, "Progress: [amount_grown]/[max_grown]")
+/mob/living/carbon/alien/larva/get_status_tab_items()
+	. = ..()
+	. += "Progress: [amount_grown]/[max_grown]"
 
 /mob/living/carbon/alien/larva/adjustPlasma(amount)
 	if(stat != DEAD && amount > 0)

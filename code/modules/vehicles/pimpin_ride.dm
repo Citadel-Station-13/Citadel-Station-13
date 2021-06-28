@@ -62,11 +62,8 @@
 	if(floorbuffer)
 		. += "cart_buffer"
 
-/obj/vehicle/ridden/janicart/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
-	else if(mybag)
+/obj/vehicle/ridden/janicart/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+	if(mybag)
 		mybag.forceMove(get_turf(user))
 		user.put_in_hands(mybag)
 		mybag = null

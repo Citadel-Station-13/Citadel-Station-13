@@ -1,6 +1,6 @@
 /turf
 	//used for temperature calculations
-	var/thermal_conductivity = 0.05
+	var/thermal_conductivity = 0.005
 	var/heat_capacity = 1
 	var/temperature_archived
 
@@ -49,6 +49,7 @@
 		SSair.add_to_active(T)
 	return ..()
 
+/// Function for Extools Atmos
 /turf/proc/update_air_ref()
 
 /////////////////GAS MIXTURE PROCS///////////////////
@@ -198,24 +199,27 @@
 //////////////////////////SPACEWIND/////////////////////////////
 
 /turf/open/proc/consider_pressure_difference(turf/T, difference)
-	SSair.high_pressure_delta[src] = TRUE
 	if(difference > pressure_difference)
 		pressure_direction = get_dir(src, T)
 		pressure_difference = difference
+		SSair.high_pressure_delta[src] = TRUE
 
 /turf/open/proc/high_pressure_movements()
-	var/atom/movable/M
-	var/multiplier = 1
+	var/diff = pressure_difference
 	if(locate(/obj/structure/rack) in src)
-		multiplier *= 0.1
+		diff *= 0.1
 	else if(locate(/obj/structure/table) in src)
-		multiplier *= 0.2
-	for(var/thing in src)
-		M = thing
-		if (!M.anchored && !M.pulledby && M.last_high_pressure_movement_air_cycle < SSair.times_fired)
-			M.experience_pressure_difference(pressure_difference * multiplier, pressure_direction, 0, pressure_specific_target)
+		diff *= 0.2
+	for(var/obj/M in src)
+		if(!M.anchored && !M.pulledby && M.last_high_pressure_movement_air_cycle < SSair.times_fired)
+			M.experience_pressure_difference(diff, pressure_direction, 0, pressure_specific_target)
+	for(var/mob/M in src)
+		if(!M.anchored && !M.pulledby && M.last_high_pressure_movement_air_cycle < SSair.times_fired)
+			M.experience_pressure_difference(diff, pressure_direction, 0, pressure_specific_target)
+	/*
 	if(pressure_difference > 100)
 		new /obj/effect/temp_visual/dir_setting/space_wind(src, pressure_direction, clamp(round(sqrt(pressure_difference) * 2), 10, 255))
+	*/
 
 /atom/movable/var/pressure_resistance = 10
 /atom/movable/var/last_high_pressure_movement_air_cycle = 0
@@ -267,7 +271,7 @@
 
 /turf/proc/super_conduct()
 	var/conductivity_directions = conductivity_directions()
-
+	archive()
 	if(conductivity_directions)
 		//Conduct with tiles around me
 		for(var/direction in GLOB.cardinals)
@@ -309,6 +313,8 @@
 	return TRUE
 
 /turf/open/consider_superconductivity(starting)
+	if(planetary_atmos)
+		return FALSE
 	if(air.return_temperature() < (starting?MINIMUM_TEMPERATURE_START_SUPERCONDUCTION:MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION))
 		return FALSE
 	if(air.heat_capacity() < M_CELL_WITH_RATIO) // Was: MOLES_CELLSTANDARD*0.1*0.05 Since there are no variables here we can make this a constant.
@@ -328,6 +334,7 @@
 			var/heat = thermal_conductivity*delta_temperature* \
 				(heat_capacity*HEAT_CAPACITY_VACUUM/(heat_capacity+HEAT_CAPACITY_VACUUM))
 			temperature -= heat/heat_capacity
+			temperature = max(temperature,T0C) //otherwise we just sorta get stuck at super cold temps forever
 
 /turf/open/proc/temperature_share_open_to_solid(turf/sharer)
 	sharer.temperature = air.temperature_share(null, sharer.thermal_conductivity, sharer.temperature, sharer.heat_capacity)
@@ -341,3 +348,5 @@
 
 		temperature -= heat/heat_capacity
 		sharer.temperature += heat/sharer.heat_capacity
+		temperature = max(temperature,T0C)
+		sharer.temperature = max(sharer.temperature,T0C)

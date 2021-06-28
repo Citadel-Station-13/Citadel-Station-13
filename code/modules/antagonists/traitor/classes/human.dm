@@ -13,8 +13,12 @@
 			T.assign_exchange_role(SSticker.mode.exchange_blue)
 		objective_count += 1					//Exchange counts towards number of objectives
 	var/toa = CONFIG_GET(number/traitor_objectives_amount)
+	var/attempts = 0
 	for(var/i = objective_count, i < toa, i++)
-		forge_single_objective(T)
+		var/success = FALSE
+		while(!success && attempts < max(toa*10, 100))
+			success = forge_single_objective(T)
+			attempts += 1
 	if(!(locate(/datum/objective/escape) in T.objectives))
 		var/datum/objective/escape/escape_objective = new
 		escape_objective.owner = T.owner
@@ -41,11 +45,6 @@
 			destroy_objective.owner = T.owner
 			destroy_objective.find_target()
 			T.add_objective(destroy_objective)
-		else if(prob(30) || (is_dynamic && (mode.storyteller.flags & NO_ASSASSIN)))
-			var/datum/objective/maroon/maroon_objective = new
-			maroon_objective.owner = T.owner
-			maroon_objective.find_target()
-			T.add_objective(maroon_objective)
 		else if(prob(max(0,assassin_prob-20)))
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = T.owner

@@ -43,6 +43,12 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 		var/list/dummy = get_gases()
 		for(var/gas in dummy)
 			dummy[gas] = get_moles(gas)
+		dummy["TEMP"] = return_temperature()
+		dummy["PRESSURE"] = return_pressure()
+		dummy["HEAT CAPACITY"] = heat_capacity()
+		dummy["TOTAL MOLES"] = total_moles()
+		dummy["VOLUME"] = return_volume()
+		dummy["THERMAL ENERGY"] = thermal_energy()
 		return debug_variable("gases (READ ONLY)", dummy, 0, src)
 
 /datum/gas_mixture/vv_get_dropdown()
@@ -128,6 +134,19 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 /datum/gas_mixture/proc/set_volume(new_volume)
 /datum/gas_mixture/proc/get_moles(gas_type)
 /datum/gas_mixture/proc/set_moles(gas_type, moles)
+
+// VV WRAPPERS - EXTOOLS HOOKED PROCS DO NOT TAKE ARGUMENTS FROM CALL() FOR SOME REASON.
+/datum/gas_mixture/proc/vv_set_moles(gas_type, moles)
+	return set_moles(gas_type, moles)
+/datum/gas_mixture/proc/vv_get_moles(gas_type)
+	return get_moles(gas_type)
+/datum/gas_mixture/proc/vv_set_temperature(new_temp)
+	return set_temperature(new_temp)
+/datum/gas_mixture/proc/vv_set_volume(new_volume)
+	return set_volume(new_volume)
+/datum/gas_mixture/proc/vv_react(datum/holder)
+	return react(holder)
+
 /datum/gas_mixture/proc/scrub_into(datum/gas_mixture/target, list/gases)
 /datum/gas_mixture/proc/mark_immutable()
 /datum/gas_mixture/proc/get_gases()
@@ -182,7 +201,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 	//Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length
 	//Returns: amount of gas exchanged (+ if sharer received)
 
-/datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
+/datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient,temperature=null,heat_capacity=null)
 	//Performs temperature sharing calculations (via conduction) between two gas_mixtures assuming only 1 boundary length
 	//Returns: new temperature of the sharer
 
@@ -190,7 +209,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 	//Compares sample to self to see if within acceptable ranges that group processing may be enabled
 	//Returns: a string indicating what check failed, or "" if check passes
 
-/datum/gas_mixture/proc/react(turf/open/dump_location)
+/datum/gas_mixture/proc/react(datum/holder)
 	//Performs various reactions such as combustion or fusion (LOL)
 	//Returns: 1 if any reaction took place; 0 otherwise
 
@@ -237,7 +256,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 		set_moles(path, text2num(gas[id]))
 	archive()
 	return 1
-
+/*
 /datum/gas_mixture/react(datum/holder)
 	. = NO_REACTION
 	if(!total_moles())
@@ -285,7 +304,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 			. |= reaction.react(src, holder)
 			if (. & STOP_REACTIONS)
 				break
-
+*/
 //Takes the amount of the gas you want to PP as an argument
 //So I don't have to do some hacky switches/defines/magic strings
 //eg:
@@ -340,3 +359,28 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 	to_chat(src, "Total time (new gas mixture): [total_time]ms")
 	to_chat(src, "Operations per second: [100000 / (total_time/1000)]")
 */
+
+/// Releases gas from src to output air. This means that it can not transfer air to gas mixture with higher pressure.
+/// a global proc due to rustmos
+/proc/release_gas_to(datum/gas_mixture/input_air, datum/gas_mixture/output_air, target_pressure)
+	var/output_starting_pressure = output_air.return_pressure()
+	var/input_starting_pressure = input_air.return_pressure()
+
+	if(output_starting_pressure >= min(target_pressure,input_starting_pressure-10))
+		//No need to pump gas if target is already reached or input pressure is too low
+		//Need at least 10 KPa difference to overcome friction in the mechanism
+		return FALSE
+
+	//Calculate necessary moles to transfer using PV = nRT
+	if((input_air.total_moles() > 0) && (input_air.return_temperature()>0))
+		var/pressure_delta = min(target_pressure - output_starting_pressure, (input_starting_pressure - output_starting_pressure)/2)
+		//Can not have a pressure delta that would cause output_pressure > input_pressure
+
+		var/transfer_moles = pressure_delta*output_air.return_volume()/(input_air.return_temperature() * R_IDEAL_GAS_EQUATION)
+
+		//Actually transfer the gas
+		var/datum/gas_mixture/removed = input_air.remove(transfer_moles)
+		output_air.merge(removed)
+
+		return TRUE
+	return FALSE

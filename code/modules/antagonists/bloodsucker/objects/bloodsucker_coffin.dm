@@ -164,11 +164,11 @@
 			if(istype(W, cutting_tool))
 				to_chat(user, "<span class='notice'>This is a much more complex mechanical structure than you thought. You don't know where to begin cutting [src].</span>")
 				return
-		else if(anchored && istype(W, /obj/item/wrench)) // Can't unanchor unless owner.
+		else if(anchored && W.tool_behaviour == TOOL_WRENCH) // Can't unanchor unless owner.
 			to_chat(user, "<span class='danger'>The coffin won't come unanchored from the floor.</span>")
 			return
 
-	if(locked && istype(W, /obj/item/crowbar))
+	if(locked && W.tool_behaviour == TOOL_CROWBAR)
 		var/pry_time = pryLidTimer * W.toolspeed // Pry speed must be affected by the speed of the tool.
 		user.visible_message("<span class='notice'>[user] tries to pry the lid off of [src] with [W].</span>", \
 							  "<span class='notice'>You begin prying the lid off of [src] with [W]. This should take about [DisplayTimeText(pry_time)].</span>")

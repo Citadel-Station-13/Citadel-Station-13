@@ -4,10 +4,10 @@
 	desc = "A handheld tracking device that locks onto certain signals."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "pinpointer"
+	item_state = "pinpointer"
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throw_speed = 3
@@ -19,6 +19,8 @@
 	var/minimum_range = 0 //at what range the pinpointer declares you to be at your destination
 	var/ignore_suit_sensor_level = FALSE // Do we find people even if their suit sensors are turned off
 	var/alert = FALSE // TRUE to display things more seriously
+	/// resets target on toggle
+	var/resets_target = TRUE
 
 /obj/item/pinpointer/Initialize()
 	. = ..()
@@ -27,17 +29,22 @@
 /obj/item/pinpointer/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	GLOB.pinpointer_list -= src
-	target = null
+	unset_target()
 	return ..()
+
+/obj/item/pinpointer/DoRevenantThrowEffects(atom/target)
+	attack_self()
 
 /obj/item/pinpointer/attack_self(mob/living/user)
 	active = !active
-	user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
+	if(user)
+		user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
 	playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
 	if(active)
 		START_PROCESSING(SSfastprocess, src)
 	else
-		target = null
+		if(resets_target)
+			unset_target()
 		STOP_PROCESSING(SSfastprocess, src)
 	update_icon()
 
@@ -49,6 +56,18 @@
 
 /obj/item/pinpointer/proc/scan_for_target()
 	return
+
+/obj/item/pinpointer/proc/set_target(atom/movable/newtarget)
+	if(target)
+		unset_target()
+	target = newtarget
+	RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/unset_target)
+
+/obj/item/pinpointer/proc/unset_target()
+	if(!target)
+		return
+	UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+	target = null
 
 /obj/item/pinpointer/update_overlays()
 	. = ..()
@@ -78,6 +97,7 @@
 	name = "crew pinpointer"
 	desc = "A handheld tracking device that points to crew suit sensors."
 	icon_state = "pinpointer_crew"
+	item_state = "pinpointer_crew"
 	custom_price = PRICE_ABOVE_EXPENSIVE
 	var/has_owner = FALSE
 	var/pinpointer_owner = null
@@ -101,7 +121,8 @@
 		active = FALSE
 		user.visible_message("<span class='notice'>[user] deactivates [user.p_their()] pinpointer.</span>", "<span class='notice'>You deactivate your pinpointer.</span>")
 		playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
-		target = null //Restarting the pinpointer forces a target reset
+		if(resets_target)
+			unset_target() //Restarting the pinpointer forces a target reset
 		STOP_PROCESSING(SSfastprocess, src)
 		update_icon()
 		return
@@ -137,7 +158,7 @@
 	if(!A || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated())
 		return
 
-	target = names[A]
+	set_target(names[A])
 	active = TRUE
 	user.visible_message("<span class='notice'>[user] activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You activate your pinpointer.</span>")
 	playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
@@ -149,7 +170,7 @@
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(!trackable(H))
-				target = null
+				unset_target()
 	if(!target) //target can be set to null from above code, or elsewhere
 		active = FALSE
 
@@ -163,7 +184,7 @@
 	. = ..()
 
 /obj/item/pinpointer/pair/scan_for_target()
-	target = other_pair
+	set_target(other_pair)
 
 /obj/item/pinpointer/pair/examine(mob/user)
 	. = ..()
@@ -188,6 +209,7 @@
 	name = "fugitive pinpointer"
 	desc = "A handheld tracking device that locates the bounty hunter shuttle for quick escapes."
 	icon_state = "pinpointer_hunter"
+	item_state = "pinpointer_black"
 	var/obj/shuttleport
 
 /obj/item/pinpointer/shuttle/Initialize(mapload)
@@ -195,8 +217,20 @@
 	shuttleport = SSshuttle.getShuttle("huntership")
 
 /obj/item/pinpointer/shuttle/scan_for_target()
-	target = shuttleport
+	set_target(shuttleport)
 
 /obj/item/pinpointer/shuttle/Destroy()
 	shuttleport = null
 	. = ..()
+
+/obj/item/pinpointer/ian
+	name = "ian pinpointer"
+	desc = "A handheld tracking device that locates Ian. Made with real corgis!"
+	icon_state = "pinpointer_ian"
+
+/obj/item/pinpointer/ian/scan_for_target()
+	set_target(locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_living_list)
+
+/obj/item/pinpointer/custom
+	resets_target = FALSE
+

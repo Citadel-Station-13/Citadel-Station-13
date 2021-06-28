@@ -1,0 +1,9 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - rscadd: "Adds the Space Dragon midround event"
+  - soundadd: "Space Dragon sounds"
+  - imageadd: "Space Dragon + effects"
+  - code_imp: "Added Spacewalk trait"
+  - code_imp: "Gibs the original owner if they are turned into a Space Dragon with the traitor panel"
+  - admin: "logging for Space Dragon creation"

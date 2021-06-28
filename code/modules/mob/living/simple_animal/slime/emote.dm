@@ -1,6 +1,5 @@
 /datum/emote/slime
 	mob_type_allowed_typecache = /mob/living/simple_animal/slime
-	mob_type_blacklist_typecache = list()
 
 /datum/emote/slime/bounce
 	key = "bounce"

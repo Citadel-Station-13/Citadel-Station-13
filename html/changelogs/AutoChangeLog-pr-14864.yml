@@ -1,0 +1,6 @@
+author: "EmeraldSundisk"
+delete-after: True
+changes: 
+  - rscadd: "Adds ColorMates to Snow Taxi
+tweak: Slight adjustments near the arrival shuttle landing zone"
+  - rscdel: "Removes an undesired corporate entity"

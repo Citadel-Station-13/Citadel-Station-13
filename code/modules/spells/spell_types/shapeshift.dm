@@ -78,7 +78,7 @@
 	desc = "Take on the shape a lesser ash drake."
 	invocation = "RAAAAAAAAWR!"
 
-	shapeshift_type = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
+	shapeshift_type = /mob/living/simple_animal/hostile/megafauna/dragon/lesser/transformed
 
 
 /obj/shapeshift_holder
@@ -105,7 +105,7 @@
 		var/damage_percent = (stored.maxHealth - stored.health)/stored.maxHealth;
 		var/damapply = damage_percent * shape.maxHealth;
 
-		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE);
+		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND);
 	slink = soullink(/datum/soullink/shapeshift, stored , shape)
 	slink.source = src
 
@@ -158,7 +158,7 @@
 		var/damage_percent = (shape.maxHealth - shape.health)/shape.maxHealth;
 		var/damapply = stored.maxHealth * damage_percent
 
-		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE)
+		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND)
 	qdel(shape)
 	qdel(src)
 

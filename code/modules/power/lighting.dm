@@ -107,7 +107,7 @@
 		return
 	switch(stage)
 		if(1)
-			if(istype(W, /obj/item/wrench))
+			if(W.tool_behaviour == TOOL_WRENCH)
 				to_chat(usr, "<span class='notice'>You begin deconstructing [src]...</span>")
 				if (W.use_tool(src, user, 30, volume=50))
 					new /obj/item/stack/sheet/metal(drop_location(), sheets_refunded)
@@ -127,11 +127,11 @@
 					to_chat(user, "<span class='warning'>You need one length of cable to wire [src]!</span>")
 				return
 		if(2)
-			if(istype(W, /obj/item/wrench))
+			if(W.tool_behaviour == TOOL_WRENCH)
 				to_chat(usr, "<span class='warning'>You have to remove the wires first!</span>")
 				return
 
-			if(istype(W, /obj/item/wirecutters))
+			if(W.tool_behaviour == TOOL_WIRECUTTER)
 				stage = 1
 				icon_state = "[fixture_type]-construct-stage1"
 				new /obj/item/stack/cable_coil(drop_location(), 1, "red")
@@ -140,7 +140,7 @@
 				W.play_tool_sound(src, 100)
 				return
 
-			if(istype(W, /obj/item/screwdriver))
+			if(W.tool_behaviour == TOOL_SCREWDRIVER)
 				user.visible_message("[user.name] closes [src]'s casing.", \
 					"<span class='notice'>You close [src]'s casing.</span>", "<span class='italics'>You hear screwing.</span>")
 				W.play_tool_sound(src, 75)
@@ -462,7 +462,7 @@
 
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
-		if(istype(W, /obj/item/screwdriver)) //If it's a screwdriver open it.
+		if(W.tool_behaviour == TOOL_SCREWDRIVER) //If it acts like a screwdriver, open it.
 			W.play_tool_sound(src, 75)
 			user.visible_message("[user.name] opens [src]'s casing.", \
 				"<span class='notice'>You open [src]'s casing.</span>", "<span class='italics'>You hear a noise.</span>")
@@ -595,11 +595,9 @@
 // attack with hand - remove tube/bulb
 // if hands aren't protected and the light is on, burn the player
 
-/obj/machinery/light/attack_hand(mob/living/carbon/human/user)
+/obj/machinery/light/on_attack_hand(mob/living/carbon/human/user)
 	. = ..()
-	if(.)
-		return
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.DelayNextAction(CLICK_CD_MELEE)
 	add_fingerprint(user)
 
 	if(status == LIGHT_EMPTY)
@@ -612,6 +610,17 @@
 		var/mob/living/carbon/human/H = user
 
 		if(istype(H))
+			var/datum/species/ethereal/eth_species = H.dna?.species
+			if(istype(eth_species))
+				to_chat(H, "<span class='notice'>You start channeling some power through the [fitting] into your body.</span>")
+				if(do_after(user, 50, target = src))
+					var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+					if(istype(stomach))
+						to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
+						stomach.adjust_charge(2)
+					else
+						to_chat(H, "<span class='warning'>You can't receive charge from the [fitting]!</span>")
+				return
 
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves
@@ -812,11 +821,11 @@
 	return
 
 /obj/item/light/attack(mob/living/M, mob/living/user, def_zone)
-	..()
+	. = ..()
 	shatter()
 
 /obj/item/light/attack_obj(obj/O, mob/living/user)
-	..()
+	. = ..()
 	shatter()
 
 /obj/item/light/proc/shatter()

@@ -11,7 +11,6 @@
 	response_disarm_simple = "flail at"
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
-	threat = 1
 	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
 	speed = 0
@@ -45,6 +44,7 @@
 	var/can_repair_constructs = FALSE
 	var/can_repair_self = FALSE
 	var/runetype
+	var/datum/mind/original_mind
 
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
@@ -66,6 +66,15 @@
 		var/pos = 2+spellnum*31
 		CR.button.screen_loc = "6:[pos],4:-2"
 		CR.button.moved = "6:[pos],4:-2"
+
+/mob/living/simple_animal/hostile/construct/Destroy()
+	original_mind = null
+	. = ..()
+
+/mob/living/simple_animal/hostile/construct/death()
+	if(original_mind && !(QDELETED(original_mind)))
+		transfer_ckey(original_mind.current)
+	..()
 
 /mob/living/simple_animal/hostile/construct/Login()
 	..()
@@ -108,7 +117,7 @@
 	return
 
 /mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/hostile/construct/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
@@ -122,7 +131,6 @@
 	desc = "A massive, armored construct built to spearhead attacks and soak up enemy fire."
 	icon_state = "behemoth"
 	icon_living = "behemoth"
-	threat = 3
 	maxHealth = 150
 	health = 150
 	response_harm_continuous = "harmlessly punches"
@@ -187,7 +195,6 @@
 	desc = "A wicked, clawed shell constructed to assassinate enemies and sow chaos behind enemy lines."
 	icon_state = "floating"
 	icon_living = "floating"
-	threat = 3
 	maxHealth = 65
 	health = 65
 	melee_damage_lower = 20

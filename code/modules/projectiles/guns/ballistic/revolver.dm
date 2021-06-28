@@ -3,12 +3,13 @@
 	desc = "A suspicious revolver. Uses .357 ammo." //usually used by syndicates
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
+	fire_sound = "sound/weapons/revolvershot.ogg"
 	casing_ejector = FALSE
 
 /obj/item/gun/ballistic/revolver/Initialize()
 	. = ..()
 	if(!istype(magazine, /obj/item/ammo_box/magazine/internal/cylinder))
-		verbs -= /obj/item/gun/ballistic/revolver/verb/spin
+		verbs += /obj/item/gun/ballistic/revolver/verb/spin
 
 /obj/item/gun/ballistic/revolver/chamber_round(spin = 1)
 	if(spin)
@@ -83,6 +84,16 @@
 /obj/item/gun/ballistic/revolver/examine(mob/user)
 	. = ..()
 	. += "[get_ammo(0,0)] of those are live rounds."
+
+/obj/item/gun/ballistic/revolver/syndicate
+	obj_flags = UNIQUE_RENAME
+	unique_reskin = list("Default" = "revolver",
+						"Silver" = "russianrevolver",
+						"Robust" = "revolvercit",
+						"Bulky" = "revolverhakita",
+						"Polished" = "revolvertoriate",
+						"Soulless" = "revolveroldflip",
+						"Soul" = "revolverold")
 
 /obj/item/gun/ballistic/revolver/detective
 	name = "\improper .38 Mars Special"
@@ -319,7 +330,7 @@
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised
 	name = "improvised shotgun"
-	desc = "A shoddy break-action breechloaded shotgun. Its lacklustre construction shows in its lesser effectiveness."
+	desc = "A shoddy break-action breechloaded shotgun. Less ammo-efficient than an actual shotgun, but still packs a punch."
 	icon_state = "ishotgun"
 	item_state = "shotgun"
 	w_class = WEIGHT_CLASS_BULKY
@@ -328,8 +339,9 @@
 	slot_flags = null
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
 	sawn_desc = "I'm just here for the gasoline."
-	unique_reskin = null
-	projectile_damage_multiplier = 0.9
+	unique_reskin = list("Default" = "ishotgun",
+						"Cobbled" = "old_ishotgun"
+						)
 	var/slung = FALSE
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)
@@ -343,10 +355,10 @@
 		else
 			to_chat(user, "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>")
 
-/obj/item/gun/ballistic/revolver/doublebarrel/improvised/update_icon()
-	..()
+/obj/item/gun/ballistic/revolver/doublebarrel/improvised/update_overlays()
+	. = ..()
 	if(slung)
-		icon_state += "sling"
+		. += "[icon_state]sling"
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/sawoff(mob/user)
 	. = ..()
@@ -364,7 +376,6 @@
 	sawn_off = TRUE
 	slot_flags = ITEM_SLOT_BELT
 
-
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
 	clumsy_check = 0
 
@@ -381,16 +392,12 @@
 // ---------- Code originally from VoreStation ----------
 /obj/item/gun/ballistic/revolver/mws
 	name = "MWS-01 'Big Iron'"
-	desc = "Modular Weapons System"
-
+	desc = "Modular Weapon System-01, does fit on your hip."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "mws"
-
-	fire_sound = 'sound/weapons/Taser.ogg'
-
+	fire_sound = 'sound/weapons/MWSfire.ogg' //i spent 1 hour making a cool sound but byond just compresses it to shit so have this instead >:(
 	mag_type = /obj/item/ammo_box/magazine/mws_mag
 	spawnwithmagazine = FALSE
-
 	recoil = 0
 
 	var/charge_sections = 6

@@ -15,7 +15,7 @@
 	maxbodytemp = INFINITY
 	minbodytemp = 0
 	blood_volume = 0
-	silicon_privileges = PRIVILEDGES_BOT
+	silicon_privileges = PRIVILEGES_BOT
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
 	verb_say = "states"
@@ -101,6 +101,10 @@
 	var/commissioned = FALSE // Will other (noncommissioned) bots salute this bot?
 	var/can_salute = TRUE
 	var/salute_delay = 60 SECONDS
+
+	//emotes/speech stuff
+	var/patrol_emote = "Engaging patrol mode."
+	var/patrol_fail_emote = "Unable to start patrol."
 
 /mob/living/simple_animal/bot/proc/get_mode()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
@@ -286,7 +290,7 @@
 	return TRUE //Successful completion. Used to prevent child process() continuing if this one is ended early.
 
 
-/mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/H)
+/mob/living/simple_animal/bot/on_attack_hand(mob/living/carbon/human/H)
 	if(H.a_intent == INTENT_HELP)
 		interact(H)
 	else
@@ -302,7 +306,7 @@
 	show_controls(user)
 
 /mob/living/simple_animal/bot/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!locked)
 			open = !open
 			to_chat(user, "<span class='notice'>The maintenance panel is now [open ? "opened" : "closed"].</span>")
@@ -331,8 +335,7 @@
 					user.visible_message("<span class='notice'>[user] uses [W] to pull [paicard] out of [bot_name]!</span>","<span class='notice'>You pull [paicard] out of [bot_name] with [W].</span>")
 					ejectpai(user)
 	else
-		user.changeNext_move(CLICK_CD_MELEE)
-		if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
+		if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
 			if(health >= maxHealth)
 				to_chat(user, "<span class='warning'>[src] does not need a repair!</span>")
 				return
@@ -367,7 +370,7 @@
 		ejectpai(0)
 	if(on)
 		turn_off()
-	spawn(severity*300)
+	spawn(3 * severity)
 		stat &= ~EMPED
 		if(was_on)
 			turn_on()
@@ -612,7 +615,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(tries >= BOT_STEP_MAX_RETRIES) //Bot is trapped, so stop trying to patrol.
 		auto_patrol = 0
 		tries = 0
-		speak("Unable to start patrol.")
+		speak(patrol_fail_emote)
 
 		return
 
@@ -628,7 +631,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				return
 			mode = BOT_PATROL
 	else					// no patrol target, so need a new one
-		speak("Engaging patrol mode.")
+		speak(patrol_emote)
 		find_patrol_target()
 		tries++
 	return
@@ -1055,3 +1058,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(I)
 		I.icon_state = null
 	path.Cut(1, 2)
+
+/mob/living/simple_animal/bot/rust_heretic_act()
+	adjustBruteLoss(500)

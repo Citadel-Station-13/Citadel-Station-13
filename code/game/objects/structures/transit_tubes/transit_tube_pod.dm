@@ -26,7 +26,7 @@
 		icon_state = "pod"
 
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/crowbar))
+	if(I.tool_behaviour == TOOL_CROWBAR)
 		if(!moving)
 			I.play_tool_sound(src)
 			if(contents.len)
@@ -69,8 +69,6 @@
 		empty_pod()
 		return
 	if(!moving)
-		user.changeNext_move(CLICK_CD_BREAKOUT)
-		user.last_special = world.time + CLICK_CD_BREAKOUT
 		to_chat(user, "<span class='notice'>You start trying to escape from the pod...</span>")
 		if(do_after(user, 600, target = src))
 			to_chat(user, "<span class='notice'>You manage to open the pod.</span>")
@@ -128,12 +126,13 @@
 
 		if(current_tube == null)
 			setDir(next_dir)
-			Move(get_step(loc, dir), dir) // Allow collisions when leaving the tubes.
+			Move(get_step(loc, dir), dir, DELAY_TO_GLIDE_SIZE(exit_delay)) // Allow collisions when leaving the tubes.
 			break
 
 		last_delay = current_tube.enter_delay(src, next_dir)
 		sleep(last_delay)
 		setDir(next_dir)
+		set_glide_size(DELAY_TO_GLIDE_SIZE(last_delay + exit_delay))
 		forceMove(next_loc) // When moving from one tube to another, skip collision and such.
 		density = current_tube.density
 

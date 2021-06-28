@@ -57,7 +57,7 @@
 	hole_size = LARGE_HOLE
 
 /obj/structure/fence/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/wirecutters))
+	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if(!cuttable)
 			to_chat(user, "<span class='notice'>This section of the fence can't be cut.</span>")
 			return
@@ -120,7 +120,7 @@
 	open = TRUE
 	density = TRUE
 
-/obj/structure/fence/door/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/fence/door/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(can_open(user))
 		toggle(user)
 

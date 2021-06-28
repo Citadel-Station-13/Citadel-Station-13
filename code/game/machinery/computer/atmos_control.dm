@@ -6,6 +6,7 @@
 	name = "gas sensor"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor1"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 0)
 
 	var/on = TRUE
 
@@ -91,8 +92,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	icon_screen = "tank"
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/computer/atmos_control
-	ui_x = 400
-	ui_y = 925
+	light_color = LIGHT_COLOR_CYAN
 
 	var/frequency = FREQ_ATMOS_STORAGE
 	var/list/sensors = list(
@@ -103,6 +103,20 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		ATMOS_GAS_MONITOR_SENSOR_N2O = "Nitrous Oxide Tank",
 		ATMOS_GAS_MONITOR_SENSOR_AIR = "Mixed Air Tank",
 		ATMOS_GAS_MONITOR_SENSOR_MIX = "Mix Tank",
+		// ATMOS_GAS_MONITOR_SENSOR_BZ = "BZ Tank",
+		// ATMOS_GAS_MONITOR_SENSOR_FREON = "Freon Tank",
+		// ATMOS_GAS_MONITOR_SENSOR_HALON = "Halon Tank",
+		// ATMOS_GAS_MONITOR_SENSOR_HEALIUM = "Healium Tank",
+		// ATMOS_GAS_MONITOR_SENSOR_H2 = "Hydrogen Tank",
+		// ATMOS_GAS_MONITOR_SENSOR_HYPERNOBLIUM = "Hypernoblium Tank",
+		// ATMOS_GAS_MONITOR_SENSOR_MIASMA = "Miasma Tank",
+		// ATMOS_GAS_MONITOR_SENSOR_NO2 = "Nitryl Tank",
+		// ATMOS_GAS_MONITOR_SENSOR_PLUOXIUM = "Pluoxium Tank",
+		// ATMOS_GAS_MONITOR_SENSOR_PROTO_NITRATE = "Proto-Nitrate Tank",
+		// ATMOS_GAS_MONITOR_SENSOR_STIMULUM = "Stimulum Tank",
+		// ATMOS_GAS_MONITOR_SENSOR_TRITIUM = "Tritium Tank",
+		// ATMOS_GAS_MONITOR_SENSOR_H2O = "Water Vapor Tank",
+		// ATMOS_GAS_MONITOR_SENSOR_ZAUKER = "Zauker Tank",
 		ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION = "Distribution Loop",
 		ATMOS_GAS_MONITOR_LOOP_ATMOS_WASTE = "Atmos Waste Loop",
 		ATMOS_GAS_MONITOR_SENSOR_INCINERATOR = "Incinerator Chamber",
@@ -111,7 +125,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	var/list/sensor_information = list()
 	var/datum/radio_frequency/radio_connection
 
-	light_color = LIGHT_COLOR_CYAN
 
 /obj/machinery/computer/atmos_control/Initialize()
 	. = ..()
@@ -123,11 +136,10 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	SSradio.remove_object(src, frequency)
 	return ..()
 
-/obj/machinery/computer/atmos_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/atmos_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "AtmosControlConsole", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "AtmosControlConsole", name)
 		ui.open()
 
 /obj/machinery/computer/atmos_control/ui_data(mob/user)
@@ -167,15 +179,10 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 /obj/machinery/computer/atmos_control/incinerator
 	name = "Incinerator Air Control"
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_INCINERATOR = "Incinerator Chamber")
-	ui_x = 400
-	ui_y = 300
-
 //Toxins mix sensor only
 /obj/machinery/computer/atmos_control/toxinsmix
 	name = "Toxins Mixing Air Control"
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB = "Toxins Mixing Chamber")
-	ui_x = 400
-	ui_y = 300
 
 /////////////////////////////////////////////////////////////
 // LARGE TANK CONTROL
@@ -186,12 +193,8 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	var/output_tag
 	frequency = FREQ_ATMOS_STORAGE
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank
-
 	var/list/input_info
 	var/list/output_info
-
-	ui_x = 500
-	ui_y = 315
 
 /obj/machinery/computer/atmos_control/tank/oxygen_tank
 	name = "Oxygen Supply Control"
@@ -238,7 +241,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 // This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
 /obj/machinery/computer/atmos_control/tank/proc/reconnect(mob/user)
 	var/list/IO = list()
-	var/datum/radio_frequency/freq = SSradio.return_frequency(FREQ_ATMOS_STORAGE)
+	var/datum/radio_frequency/freq = SSradio.return_frequency(frequency)
 	var/list/devices = freq.devices["_default"]
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
 		var/list/text = splittext(U.id_tag, "_")
@@ -254,10 +257,11 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		src.output_tag = "[S]_out"
 		name = "[uppertext(S)] Supply Control"
 		var/list/new_devices = freq.devices["4"]
+		sensors.Cut()
 		for(var/obj/machinery/air_sensor/U in new_devices)
 			var/list/text = splittext(U.id_tag, "_")
 			if(text[1] == S)
-				sensors = list("[S]_sensor" = "Tank")
+				sensors = list("[S]_sensor" = "[S] Tank")
 				break
 
 	for(var/obj/machinery/atmospherics/components/unary/outlet_injector/U in devices)
@@ -265,25 +269,21 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
 		U.broadcast_status()
 
-/obj/machinery/computer/atmos_control/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "AtmosControlConsole", name, ui_x, ui_y, master_ui, state)
-		ui.open()
-
 /obj/machinery/computer/atmos_control/tank/ui_data(mob/user)
 	var/list/data = ..()
 	data["tank"] = TRUE
 	data["inputting"] = input_info ? input_info["power"] : FALSE
 	data["inputRate"] = input_info ? input_info["volume_rate"] : 0
+	data["maxInputRate"] = input_info ? MAX_TRANSFER_RATE : 0
 	data["outputting"] = output_info ? output_info["power"] : FALSE
 	data["outputPressure"] = output_info ? output_info["internal"] : 0
-
+	data["maxOutputPressure"] = output_info ? MAX_OUTPUT_PRESSURE : 0
 	return data
 
 /obj/machinery/computer/atmos_control/tank/ui_act(action, params)
-	if(..() || !radio_connection)
+	. = ..()
+
+	if(. || !radio_connection)
 		return
 	var/datum/signal/signal = new(list("sigtype" = "command", "user" = usr))
 	switch(action)

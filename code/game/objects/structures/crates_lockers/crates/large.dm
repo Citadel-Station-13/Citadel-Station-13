@@ -8,7 +8,7 @@
 	delivery_icon = "deliverybox"
 	integrity_failure = 0 //Makes the crate break when integrity reaches 0, instead of opening and becoming an invisible sprite.
 
-/obj/structure/closet/crate/large/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/closet/crate/large/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	add_fingerprint(user)
 	if(manifest)
 		tear_manifest(user)
@@ -16,7 +16,7 @@
 		to_chat(user, "<span class='warning'>You need a crowbar to pry this open!</span>")
 
 /obj/structure/closet/crate/large/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/crowbar))
+	if(W.tool_behaviour == TOOL_CROWBAR)
 		if(manifest)
 			tear_manifest(user)
 

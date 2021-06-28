@@ -275,7 +275,7 @@
 	for(var/i in 1 to 7)
 		new /obj/item/grenade/flashbang(src)
 
-obj/item/storage/box/stingbangs
+/obj/item/storage/box/stingbangs
 	name = "box of stingbangs (WARNING)"
 	desc = "<B>WARNING: These devices are extremely dangerous and can cause severe injuries or death in repeated use.</B>"
 	icon_state = "secbox"
@@ -726,9 +726,9 @@ obj/item/storage/box/stingbangs
 	return (BRUTELOSS)
 
 /obj/item/storage/box/hug/attack_self(mob/user)
-	..()
-	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, "rustle", 50, 1, -5)
+	. = ..()
+	user.DelayNextAction(CLICK_CD_MELEE)
+	playsound(src, "rustle", 50, 1, -5)
 	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
 	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"hugbox", /datum/mood_event/hugbox)
 
@@ -1143,9 +1143,9 @@ obj/item/storage/box/stingbangs
 	desc = "A box containing a gift for worthy golems."
 
 /obj/item/storage/box/rndboards/PopulateContents()
-	new /obj/item/circuitboard/machine/protolathe/offstation(src)
+	new /obj/item/circuitboard/machine/protolathe(src)
 	new /obj/item/circuitboard/machine/destructive_analyzer(src)
-	new /obj/item/circuitboard/machine/circuit_imprinter/offstation(src)
+	new /obj/item/circuitboard/machine/circuit_imprinter(src)
 	new /obj/item/circuitboard/computer/rdconsole(src)
 
 /obj/item/storage/box/silver_sulf

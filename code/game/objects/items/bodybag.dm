@@ -16,6 +16,9 @@
 		if(isopenturf(target))
 			deploy_bodybag(user, target)
 
+/obj/item/bodybag/canReachInto(atom/user, atom/target, list/next, view_only, obj/item/tool)
+	return (user in src)
+
 /obj/item/bodybag/proc/deploy_bodybag(mob/user, atom/location)
 	var/obj/structure/closet/body_bag/R = new unfoldedbag_path(location)
 	R.open(user)
@@ -71,8 +74,6 @@
 	if(user.incapacitated())
 		to_chat(user, "<span class='warning'>You can't get out while you're restrained like this!</span>")
 		return
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
 	to_chat(user, "<span class='notice'>You claw at the fabric of [src], trying to tear it open...</span>")
 	to_chat(loc, "<span class='warning'>Someone starts trying to break free of [src]!</span>")
 	if(!do_after(user, 200, target = src))

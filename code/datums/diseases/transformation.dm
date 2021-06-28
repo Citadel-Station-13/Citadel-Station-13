@@ -121,7 +121,7 @@
 		add_monkey(affected_mob.mind)
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/monkey/M = affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
-		M.ventcrawler = VENTCRAWLER_ALWAYS
+		M.AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 
 /datum/disease/transformation/jungle_fever/stage_act()
@@ -236,12 +236,12 @@
 	switch(stage)
 		if(1)
 			if(ishuman(affected_mob) && affected_mob.dna)
-				if(affected_mob.dna.species.id == "slime" || affected_mob.dna.species.id == "stargazer" || affected_mob.dna.species.id == "lum")
+				if(affected_mob.dna.species.id == SPECIES_SLIME_LUMI || affected_mob.dna.species.id == SPECIES_STARGAZER || affected_mob.dna.species.id == SPECIES_SLIME_LUMI)
 					stage = 5
 		if(3)
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
-				if(human.dna.species.id != "slime" && affected_mob.dna.species.id != "stargazer" && affected_mob.dna.species.id != "lum")
+				if(human.dna.species.id != SPECIES_SLIME_LUMI && affected_mob.dna.species.id != SPECIES_STARGAZER && affected_mob.dna.species.id != SPECIES_SLIME_LUMI)
 					human.set_species(/datum/species/jelly/slime)
 
 /datum/disease/transformation/corgi

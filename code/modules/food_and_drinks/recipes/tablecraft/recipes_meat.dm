@@ -66,6 +66,16 @@
 
 ////////////////////////////////////////////////MISC RECIPE's////////////////////////////////////////////////
 
+/datum/crafting_recipe/food/meatslab
+	name = "Meat Slab"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/meat/rawcutlet = 3,
+	)
+	tools = list(/obj/item/kitchen/efink)
+	result = /obj/item/reagent_containers/food/snacks/meat/slab
+	subcategory = CAT_MEAT
+
+
 /datum/crafting_recipe/food/ribs
 	name = "BBQ Ribs"
 	reqs = list(
@@ -82,6 +92,17 @@
 		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/nugget
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/sweet_and_sour
+	name = "Sweet and sour \"chicken\""
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/nugget = 2,
+		/obj/item/reagent_containers/food/snacks/pineappleslice = 1,
+		/datum/reagent/consumable/soysauce = 2,
+		/datum/reagent/consumable/sodiumchloride = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/sweet_and_sour
 	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/corndog
@@ -135,6 +156,16 @@
 	result = /obj/item/reagent_containers/food/snacks/sausage
 	subcategory = CAT_MEAT
 
+/datum/crafting_recipe/food/meatloaf
+	name = "Meatloaf"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 4,
+		/datum/reagent/consumable/eggyolk = 10,
+		/datum/reagent/consumable/ketchup = 5
+	)
+	result = /obj/item/reagent_containers/food/snacks/meatloaf
+	subcategory = CAT_MEAT
+
 /datum/crafting_recipe/food/pigblanket
 	name = "Pig in a Blanket"
 	reqs = list(
@@ -181,4 +212,13 @@
 		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/salad/gumbo
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/goliathcalamari
+	name = "Goliath Calamari"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/meat/slab/goliath = 2,
+		/datum/reagent/consumable/cooking_oil = 10
+	)
+	result = /obj/item/reagent_containers/food/snacks/goliathcalamari
 	subcategory = CAT_MEAT

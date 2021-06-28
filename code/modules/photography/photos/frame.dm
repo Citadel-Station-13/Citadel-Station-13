@@ -21,8 +21,7 @@
 			to_chat(user, "<span class=notice>\The [src] already contains a photo.</span>")
 	..()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/wallframe/picture/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/wallframe/picture/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.get_inactive_held_item() != src)
 		..()
 		return
@@ -116,14 +115,14 @@
 	return ..()
 
 /obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)
-	if(can_decon && (istype(I, /obj/item/screwdriver) || istype(I, /obj/item/wrench)))
+	if(can_decon && (I.tool_behaviour == TOOL_SCREWDRIVER || I.tool_behaviour == TOOL_WRENCH))
 		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
 		if(I.use_tool(src, user, 30, volume=50))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You unsecure [name].</span>")
 			deconstruct()
 
-	else if(istype(I, /obj/item/wirecutters) && framed)
+	else if(I.tool_behaviour == TOOL_WIRECUTTER && framed)
 		framed.forceMove(drop_location())
 		framed = null
 		user.visible_message("<span class='warning'>[user] cuts away [framed] from [src]!</span>")
@@ -141,10 +140,7 @@
 
 	..()
 
-/obj/structure/sign/picture_frame/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/sign/picture_frame/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(framed)
 		framed.show(user)
 

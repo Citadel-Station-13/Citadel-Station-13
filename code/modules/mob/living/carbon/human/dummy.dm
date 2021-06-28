@@ -4,6 +4,10 @@
 	status_flags = GODMODE|CANPUSH
 	mouse_drag_pointer = MOUSE_INACTIVE_POINTER
 	var/in_use = FALSE
+	vore_flags = NO_VORE
+
+/mob/living/carbon/human/vore
+	vore_flags = DEVOURABLE | DIGESTABLE | FEEDING
 
 INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
@@ -14,10 +18,18 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/dummy/Life()
 	return
 
+/mob/living/carbon/human/dummy/update_mobility()
+	return
+
 /mob/living/carbon/human/dummy/proc/wipe_state()
 	delete_equipment()
 	icon_render_key = null
 	cut_overlays(TRUE)
+
+/mob/living/carbon/human/dummy/setup_human_dna()
+	create_dna(src)
+	randomize_human(src)
+	dna.initialize_dna(skip_index = TRUE) //Skip stuff that requires full round init.
 
 //Inefficient pooling/caching way.
 GLOBAL_LIST_EMPTY(human_dummy_list)
@@ -35,14 +47,48 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 		D = new
 		GLOB.human_dummy_list[slotkey] = D
 		GLOB.dummy_mob_list += D
+	else
+		D.regenerate_icons() //they were cut in wipe_state()
 	D.in_use = TRUE
 	return D
 
-/proc/unset_busy_human_dummy(slotnumber)
-	if(!slotnumber)
+/proc/generate_dummy_lookalike(slotkey, mob/target)
+	if(!istype(target))
+		return generate_or_wait_for_human_dummy(slotkey)
+
+	var/mob/living/carbon/human/dummy/copycat = generate_or_wait_for_human_dummy(slotkey)
+
+	if(iscarbon(target))
+		var/mob/living/carbon/carbon_target = target
+		carbon_target.dna.transfer_identity(copycat, transfer_SE = TRUE)
+
+		if(ishuman(target))
+			var/mob/living/carbon/human/human_target = target
+			human_target.copy_clothing_prefs(copycat)
+
+		copycat.updateappearance(icon_update=TRUE, mutcolor_update=TRUE, mutations_overlay_update=TRUE)
+	else
+		//even if target isn't a carbon, if they have a client we can make the
+		//dummy look like what their human would look like based on their prefs
+		target?.client?.prefs?.copy_to(copycat, icon_updates=TRUE, roundstart_checks=FALSE)
+
+	return copycat
+
+/proc/unset_busy_human_dummy(slotkey)
+	if(!slotkey)
 		return
-	var/mob/living/carbon/human/dummy/D = GLOB.human_dummy_list[slotnumber]
+	var/mob/living/carbon/human/dummy/D = GLOB.human_dummy_list[slotkey]
 	if(istype(D))
-		D.set_species(/datum/species/human,icon_update = TRUE, pref_load = TRUE) //for some fucking reason, if you don't change the species every time, some species will dafault certain things when it's their own species on the mannequin two times in a row, like lizards losing spines and tails setting to smooth. If you can find a fix for this that isn't this, good on you
 		D.wipe_state()
 		D.in_use = FALSE
+
+/proc/clear_human_dummy(slotkey)
+	if(!slotkey)
+		return
+
+	var/mob/living/carbon/human/dummy/dummy = GLOB.human_dummy_list[slotkey]
+
+	GLOB.human_dummy_list -= slotkey
+	if(istype(dummy))
+		GLOB.dummy_mob_list -= dummy
+		qdel(dummy)

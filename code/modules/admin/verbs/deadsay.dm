@@ -1,17 +1,17 @@
 /client/proc/dsay(msg as text)
-	set category = "Special Verbs"
+	set category = "Admin.Game"
 	set name = "Dsay"
 	set hidden = 1
-	if(!src.holder)
-		to_chat(src, "Only administrators may use this command.")
+	if(!holder)
+		to_chat(src, "Only administrators may use this command.", confidential = TRUE)
 		return
-	if(!src.mob)
+	if(!mob)
 		return
 	if(prefs.muted & MUTE_DEADCHAT)
-		to_chat(src, "<span class='danger'>You cannot send DSAY messages (muted).</span>")
+		to_chat(src, "<span class='danger'>You cannot send DSAY messages (muted).</span>", confidential = TRUE)
 		return
 
-	if (src.handle_spam_prevention(msg,MUTE_DEADCHAT))
+	if (handle_spam_prevention(msg,MUTE_DEADCHAT))
 		return
 
 	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
@@ -26,11 +26,15 @@
 	for (var/mob/M in GLOB.player_list)
 		if(isnewplayer(M))
 			continue
-		if (M.stat == DEAD || (M.client && M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD))) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
-			to_chat(M, rendered)
+		if (M.stat == DEAD || (M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD))) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
+			to_chat(M, rendered, confidential = TRUE)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Dsay") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/get_dead_say()
-	var/msg = input(src, null, "dsay \"text\"") as text
+	var/msg = input(src, null, "dsay \"text\"") as text|null
+
+	if (isnull(msg))
+		return
+
 	dsay(msg)

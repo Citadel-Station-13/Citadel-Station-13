@@ -147,23 +147,23 @@
 		to_chat(user, "<span class='warning'>There is not enough of [src] left!</span>")
 		. = TRUE
 
-/obj/item/toy/crayon/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	// tgui is a plague upon this codebase
+/obj/item/toy/crayon/ui_state(mob/user)
+	return GLOB.hands_state
 
-	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/toy/crayon/ui_interact(mob/user, datum/tgui/ui)
+	// tgui is a plague upon this codebase
+	// no u
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Crayon", name, 600, 600,
-			master_ui, state)
+		ui = new(user, src, "Crayon", name)
 		ui.open()
 
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
-	. = ..()
 	if(user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(has_cap)
 			is_capped = !is_capped
 			to_chat(user, "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>")
 			update_icon()
-			return TRUE
 
 /obj/item/toy/crayon/CtrlClick(mob/user)
 	if(can_change_colour && !isturf(loc) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
@@ -273,7 +273,9 @@
 	. = ..()
 	if(!proximity || !check_allowed_items(target))
 		return
+	draw_on(target, user, proximity, params)
 
+/obj/item/toy/crayon/proc/draw_on(atom/target, mob/user, proximity, params)
 	var/static/list/punctuation = list("!","?",".",",","/","+","-","=","%","#","&")
 
 	var/cost = 1
@@ -441,7 +443,7 @@
 	// Check area validity.
 	// Reject space, player-created areas, and non-station z-levels.
 	var/area/A = get_base_area(target)
-	if(!A || (!is_station_level(A.z)) || !A.valid_territory)
+	if(!A || (!is_station_level(A.z)) || !(A.area_flags & VALID_TERRITORY))
 		to_chat(user, "<span class='warning'>[A] is unsuitable for tagging.</span>")
 		return FALSE
 
@@ -568,9 +570,9 @@
 	dye_color = DYE_RAINBOW
 	charges = -1
 
-/obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/toy/crayon/rainbow/draw_on(atom/target, mob/user, proximity, params)
 	paint_color = rgb(rand(0,255), rand(0,255), rand(0,255))
-	. = ..()
+	return ..()
 
 /*
  * Crayon Box
@@ -647,6 +649,9 @@
 	pre_noise = TRUE
 	post_noise = FALSE
 
+	var/stun_delay = 0 // how long it takes for you to be able to stun someone with the spraycan again
+	var/last_stun_time = 0
+
 /obj/item/toy/crayon/spraycan/isValidSurface(surface)
 	return (istype(surface, /turf/open/floor) || istype(surface, /turf/closed/wall))
 
@@ -693,7 +698,7 @@
 		. += "It is empty."
 	. += "<span class='notice'>Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"].</span>"
 
-/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/toy/crayon/spraycan/draw_on(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 
@@ -714,7 +719,8 @@
 		if(C.client)
 			C.blur_eyes(3)
 			C.blind_eyes(1)
-		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS.
+		if(C.get_eye_protection() <= 0 && (last_stun_time + stun_delay) <= world.time) // no eye protection? ARGH IT BURNS.
+			last_stun_time = world.time
 			C.confused = max(C.confused, 3)
 			C.DefaultCombatKnockdown(60)
 		if(ishuman(C) && actually_paints)
@@ -733,7 +739,11 @@
 	if(isobj(target))
 		if(actually_paints)
 			var/list/hsl = rgb2hsl(hex2num(copytext(paint_color,2,4)),hex2num(copytext(paint_color,4,6)),hex2num(copytext(paint_color,6,8)))
-			if(hsl[3] < 0.25 && !istype(target, /obj/structure/window) && !istype(target, /obj/effect/decal/cleanable/crayon)) //Colors too dark are rejected
+			var/static/whitelisted = typecacheof(list(/obj/structure/window,
+										/obj/effect/decal/cleanable/crayon,
+										/obj/machinery/door/window)
+									)
+			if(hsl[3] < 0.25 && !whitelisted[target]) //Colors too dark are rejected
 				to_chat(usr, "<span class='warning'>A color that dark on an object like this? Surely not...</span>")
 				return FALSE
 
@@ -765,8 +775,9 @@
 	name = "cyborg spraycan"
 	desc = "A metallic container containing shiny synthesised paint."
 	charges = -1
+	stun_delay = 5 SECONDS
 
-/obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity, params)
+/obj/item/toy/crayon/spraycan/borg/draw_on(atom/target,mob/user,proximity, params)
 	var/diff = ..()
 	if(!iscyborg(user))
 		to_chat(user, "<span class='notice'>How did you get this?</span>")

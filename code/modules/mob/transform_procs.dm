@@ -175,12 +175,10 @@
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
+
 	new /obj/effect/temp_visual/monkeyify/humanify(loc)
 
-	transformation_timer = addtimer(CALLBACK(src, .proc/finish_humanize, tr_flags), TRANSFORMATION_DURATION, TIMER_UNIQUE)
-
-/mob/living/carbon/proc/finish_humanize(tr_flags)
-	transformation_timer = null
+	sleep(TRANSFORMATION_DURATION)	//This entire proc CANNOT be split into two
 
 	var/list/stored_implants = list()
 	var/list/int_organs = list()
@@ -202,6 +200,8 @@
 
 	var/mob/living/carbon/human/O = new( loc )
 	for(var/obj/item/C in O.loc)
+		if(C.anchored)
+			continue
 		O.equip_to_appropriate_slot(C)
 
 	dna.transfer_identity(O)
@@ -617,7 +617,7 @@
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/hostile/mushroom))
 		return 1
-	if(ispath(MP, /mob/living/simple_animal/shade))
+	if(ispath(MP, /mob/living/simple_animal/hostile/construct/shade))
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/hostile/killertomato))
 		return 1

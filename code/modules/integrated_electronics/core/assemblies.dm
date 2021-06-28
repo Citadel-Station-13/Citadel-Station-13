@@ -452,7 +452,7 @@
 			for(var/obj/item/integrated_circuit/input/S in assembly_components)
 				S.attackby_react(I,user,user.a_intent)
 			return ..()
-	else if(istype(I, /obj/item/multitool) || istype(I, /obj/item/integrated_electronics/wirer) || istype(I, /obj/item/integrated_electronics/debugger))
+	else if(I.tool_behaviour == TOOL_MULTITOOL || istype(I, /obj/item/integrated_electronics/wirer) || istype(I, /obj/item/integrated_electronics/debugger))
 		if(opened)
 			interact(user)
 			return TRUE
@@ -519,6 +519,7 @@
 
 
 /obj/item/electronic_assembly/attack_self(mob/user)
+	set waitfor = FALSE
 	if(!check_interactivity(user))
 		return
 	if(opened)
@@ -577,6 +578,7 @@
 	return FALSE
 
 /obj/item/electronic_assembly/Moved(oldLoc, dir)
+	. = ..()
 	for(var/I in assembly_components)
 		var/obj/item/integrated_circuit/IC = I
 		IC.ext_moved(oldLoc, dir)
@@ -611,7 +613,7 @@
 		return
 	..()
 
-/obj/item/electronic_assembly/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/electronic_assembly/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(anchored)
 		attack_self(user)
 		return

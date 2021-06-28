@@ -22,7 +22,8 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	anchored = TRUE
 	max_integrity = 400
 
-	var/obj/structure/tray/connected = null
+	var/obj/structure/tray/connected
+	var/starting_tray
 	var/locked = FALSE
 	dir = SOUTH
 	var/message_cooldown
@@ -30,6 +31,9 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/Initialize()
 	. = ..()
+	if(starting_tray)
+		connected = new starting_tray(src)
+		connected.connected = src
 	GLOB.bodycontainers += src
 	recursive_organ_check(src)
 
@@ -37,8 +41,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	GLOB.bodycontainers -= src
 	open()
 	if(connected)
-		qdel(connected)
-		connected = null
+		QDEL_NULL(connected)
 	return ..()
 
 /obj/structure/bodycontainer/on_log(login)
@@ -58,10 +61,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 /obj/structure/bodycontainer/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/bodycontainer/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/bodycontainer/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(locked)
 		to_chat(user, "<span class='danger'>It's locked.</span>")
 		return
@@ -106,8 +106,6 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	if(!locked)
 		open()
 		return
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message(null, \
 		"<span class='notice'>You lean on the back of [src] and start pushing the tray open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a metallic creaking from [src].</span>")
@@ -150,14 +148,10 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	desc = "Used to keep bodies in until someone fetches them. Now includes a high-tech alert system."
 	icon_state = "morgue1"
 	dir = EAST
+	starting_tray = /obj/structure/tray/m_tray
 	var/beeper = TRUE
 	var/beep_cooldown = 50
 	var/next_beep = 0
-
-/obj/structure/bodycontainer/morgue/New()
-	connected = new/obj/structure/tray/m_tray(src)
-	connected.connected = src
-	..()
 
 /obj/structure/bodycontainer/morgue/examine(mob/user)
 	. = ..()
@@ -208,6 +202,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	desc = "A human incinerator. Works well on barbecue nights."
 	icon_state = "crema1"
 	dir = SOUTH
+	starting_tray = /obj/structure/tray/c_tray
 	var/id = 1
 
 /obj/structure/bodycontainer/crematorium/attack_robot(mob/user) //Borgs can't use crematoriums without help
@@ -218,17 +213,9 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	GLOB.crematoriums.Remove(src)
 	return ..()
 
-/obj/structure/bodycontainer/crematorium/New()
-	connected = new/obj/structure/tray/c_tray(src)
-	connected.connected = src
-
-	GLOB.crematoriums.Add(src)
-	..()
-
 /obj/structure/bodycontainer/crematorium/Initialize()
 	. = ..()
-	connected = new /obj/structure/tray/c_tray(src)
-	connected.connected = src
+	GLOB.crematoriums.Add(src)
 
 /obj/structure/bodycontainer/crematorium/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	id = "[idnum][id]"
@@ -330,10 +317,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/tray/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/tray/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/tray/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if (src.connected)
 		connected.close()
 		add_fingerprint(user)

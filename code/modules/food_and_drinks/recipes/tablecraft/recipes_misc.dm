@@ -47,6 +47,24 @@
 
 /////////////////////////////////MISC/////////////////////////////////////
 
+/datum/crafting_recipe/food/dough
+	name = "Dough"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/doughslice = 3,
+	)
+	tools = list(/obj/item/kitchen/efink)
+	result = /obj/item/reagent_containers/food/snacks/flatdough
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/Pineapple
+	name = "Pineapple"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/pineappleslice = 3,
+	)
+	tools = list(/obj/item/kitchen/efink)
+	result = /obj/item/reagent_containers/food/snacks/grown/pineapple
+	subcategory = CAT_MISCFOOD
+
 /datum/crafting_recipe/food/beans
 	name = "Beans"
 	time = 40
@@ -111,6 +129,25 @@
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/loadedbakedpotato
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/mashedpotato
+	name = "Mashed potato"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/grown/potato = 1,
+		/datum/reagent/consumable/cream = 5,
+		/datum/reagent/consumable/sodiumchloride = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/mashedpotato
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/butteredpotato
+	name = "Buttered mash"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/mashedpotato = 1,
+		/obj/item/reagent_containers/food/snacks/butter = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/butteredpotato
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/melonfruitbowl

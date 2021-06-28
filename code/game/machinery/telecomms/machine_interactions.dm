@@ -11,7 +11,7 @@
 /obj/machinery/telecomms/attackby(obj/item/P, mob/user, params)
 	var/icon_closed = initial(icon_state)
 	var/icon_open = "[initial(icon_state)]_o"
-	
+
 	if(!on)
 		icon_closed = "[initial(icon_state)]_off"
 		icon_open = "[initial(icon_state)]_o_off"
@@ -19,7 +19,7 @@
 	if(default_deconstruction_screwdriver(user, icon_open, icon_closed, P))
 		return
 	// Using a multitool lets you access the receiver's interface
-	else if(istype(P, /obj/item/multitool))
+	else if(P.tool_behaviour == TOOL_MULTITOOL)
 		attack_hand(user)
 
 	else if(default_deconstruction_crowbar(P))
@@ -27,23 +27,22 @@
 	else
 		return ..()
 
-/obj/machinery/telecomms/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE,\
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/telecomms/ui_interact(mob/user, datum/tgui/ui)
 	if(!canInteract(user))
 		if(ui)
 			ui.close() //haha no.
 		return
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 
 	if(!ui)
-		ui = new(user, src, ui_key, "TelecommsInteraction", "[name] Access", 520, 500, master_ui, state)
+		ui = new(user, src, "TelecommsInteraction", "[name] Access")
 		ui.open()
 
 /obj/machinery/telecomms/ui_data(mob/user)
 	. = list() //cpypaste from the vending bus
 	.["notice"] = temp
 	.["multitool"] = FALSE
-	var/obj/item/multitool/P = get_multitool(user)
+	var/obj/item/P = get_multitool(user)
 	if(P)
 		.["multitool"] = TRUE
 		.["multitool_buf"] = null //to clean the list!
@@ -114,7 +113,7 @@
 			if("network" in params)
 				if(!canAccess(usr))
 					return
-				var/newnet = sanitize(sanitize_text(params["network"], network))	
+				var/newnet = sanitize(sanitize_text(params["network"], network))
 				if(length(newnet) > 15)
 					temp = "-% Too many characters in new network tag. %-"
 					return
@@ -123,19 +122,19 @@
 				temp = "-% New network tag assigned: \"[network]\" %-"
 				return
 		if("multitool")
-			var/obj/item/multitool/P = get_multitool(usr)
+			var/obj/item/P = get_multitool(usr)
 			if("Link" in params)
 				if(!canAccess(usr))
 					return
-				if(!istype(P))
+				if(!P.tool_behaviour == TOOL_MULTITOOL)
 					temp = "-% Unable to acquire buffer %-"
 					return
-				
+
 				var/obj/machinery/telecomms/T = P.buffer
 				if(!istype(T) || T == src)
 					temp = "-% Unable to acquire buffer %-"
 					return
-				
+
 				if(!(src in T.links))
 					LAZYADD(T.links, src)
 
@@ -159,7 +158,7 @@
 					return
 
 				P.buffer = src
-				temp = "% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-"
+				temp = "% Successfully stored [REF(P.buffer)] [P.buffer] in buffer %-"
 
 		if("unlink")
 			var/obj/machinery/telecomms/T = locate(params["value"])
@@ -168,7 +167,7 @@
 			if(!istype(T))
 				temp = "-% Unable to locate machine to unlink from, try again. %-"
 				return
-			
+
 			temp = "-% Removed [REF(T)] [T.name] from linked entities. %-"
 			if(T.links) //lazyrem makes blank list null, which is good but some might cause runtime ee's
 				T.links.Remove(src)
@@ -199,7 +198,7 @@
 				var/x = text2num(params["remove"])
 				temp = "-% Removed frequency filter [x] %-"
 				freq_listening.Remove(x)
-	
+
 /obj/machinery/telecomms/relay/ui_act(action, params)
 	..()
 	switch(action)
@@ -244,9 +243,14 @@
 
 // Check if the user can use it.
 /obj/machinery/telecomms/proc/canInteract(mob/user)
-	if(hasSiliconAccessInArea(user) || istype(user.get_active_held_item(), /obj/item/multitool))
+	var/obj/item/I = user.get_active_held_item()
+	if(!issilicon(user) && I)
+		if(I.tool_behaviour == TOOL_MULTITOOL)
+			return TRUE
+	if(hasSiliconAccessInArea(user))
 		return TRUE
 	return FALSE
+
 // Check if the user is nearby and has a multitool.
 /obj/machinery/telecomms/proc/canAccess(mob/user)
 	if((canInteract(user) && in_range(user, src)) || hasSiliconAccessInArea(user))
@@ -257,14 +261,15 @@
 /obj/machinery/telecomms/proc/get_multitool(mob/user)
 	if(!canInteract(user))
 		return null
-	var/obj/item/multitool/P = user.get_active_held_item()
+	var/obj/item/P = user.get_active_held_item()
 	// Is the ref not a null? and is it the actual type?
-	if(istype(P))
-		return P
-	else if(isAI(user))
+	if(isAI(user))
 		var/mob/living/silicon/ai/U = user
 		P = U.aiMulti
-	else if(iscyborg(user) && in_range(user, src))
-		if(istype(user.get_active_held_item(), /obj/item/multitool))
-			P = user.get_active_held_item()
+	else if(iscyborg(user) && !in_range(user, src))
+		return null
+	if(!P)
+		return null
+	else if(P.tool_behaviour == TOOL_MULTITOOL)
+		return P
 	return P

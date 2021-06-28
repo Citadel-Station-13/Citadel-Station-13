@@ -249,7 +249,7 @@
 /obj/structure/alien/egg/attack_alien(mob/living/carbon/alien/user)
 	return attack_hand(user)
 
-/obj/structure/alien/egg/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/alien/egg/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -269,8 +269,7 @@
 				return
 	else
 		to_chat(user, "<span class='notice'>It feels slimy.</span>")
-		user.changeNext_move(CLICK_CD_MELEE)
-
+		user.DelayNextAction(CLICK_CD_MELEE)
 
 /obj/structure/alien/egg/proc/Grow()
 	status = GROWN

@@ -11,15 +11,15 @@
 /obj/item/stack/circuit_stack/attack_self(mob/user)// Prevents the crafting menu, and tells you how to use it.
 	to_chat(user, "<span class='warning'>You can't use [src] by itself, you'll have to try and remove one of these circuits by hand... carefully.</span>")
 
-/obj/item/stack/circuit_stack/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/stack/circuit_stack/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	var/mob/living/carbon/human/H = user
 	if(!user.get_inactive_held_item() == src)
 		return ..()
 	else
 		if(zero_amount())
 			return
-		chosen_circuit = input("What type of circuit would you like to remove?", "Choose a Circuit Type", chosen_circuit) in list("airlock","firelock","fire alarm","air alarm","APC")
-		if(zero_amount())
+		chosen_circuit = input("What type of circuit would you like to remove?", "Choose a Circuit Type", chosen_circuit) as null|anything in list("airlock","firelock","fire alarm","air alarm","APC")
+		if(zero_amount() || !chosen_circuit || !in_range(src,user))
 			return
 		switch(chosen_circuit)
 			if("airlock")

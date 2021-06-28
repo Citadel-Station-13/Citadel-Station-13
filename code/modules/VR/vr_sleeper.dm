@@ -78,10 +78,15 @@
 	close_machine(target)
 	ui_interact(user)
 
-/obj/machinery/vr_sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_contained_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/vr_sleeper/ui_state(mob/user)
+	if(user == occupant)
+		return GLOB.contained_state
+	return GLOB.default_state
+
+/obj/machinery/vr_sleeper/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "VrSleeper", "VR Sleeper", 475, 340, master_ui, state)
+		ui = new(user, src, "VrSleeper", "VR Sleeper")
 		ui.open()
 
 /obj/machinery/vr_sleeper/ui_act(action, params)

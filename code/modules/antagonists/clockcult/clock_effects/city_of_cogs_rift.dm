@@ -22,7 +22,7 @@
 	for(var/mob/M in GLOB.player_list)
 		if(M.z == z)
 			if(get_dist(src, M) >= 7)
-				M.playsound_local(src, 'sound/magic/blink.ogg', 10, FALSE, falloff = 10)
+				M.playsound_local(src, 'sound/magic/blink.ogg', 10, FALSE)
 			else
 				M.playsound_local(src, 'sound/magic/blink.ogg', 50, FALSE)
 
@@ -36,8 +36,7 @@
 		return
 	. = ..()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/effect/clockwork/city_of_cogs_rift/attack_hand(atom/movable/AM)
+/obj/effect/clockwork/city_of_cogs_rift/on_attack_hand(atom/movable/AM)
 	beckon(AM)
 
 /obj/effect/clockwork/city_of_cogs_rift/Bumped(atom/movable/AM)

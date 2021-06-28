@@ -43,10 +43,13 @@
 			table.computer = src
 			break
 
-/obj/machinery/computer/operating/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/operating/ui_state(mob/user)
+	return GLOB.not_incapacitated_state
+
+/obj/machinery/computer/operating/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "OperatingComputer", name, 350, 470, master_ui, state)
+		ui = new(user, src, "OperatingComputer", name)
 		ui.open()
 
 /obj/machinery/computer/operating/ui_data(mob/user)
@@ -85,6 +88,7 @@
 			data["patient"]["fireLoss"] = patient.getFireLoss()
 			data["patient"]["toxLoss"] = patient.getToxLoss()
 			data["patient"]["oxyLoss"] = patient.getOxyLoss()
+			data["patient"]["is_robotic_organism"] = HAS_TRAIT(patient, TRAIT_ROBOTIC_ORGANISM)
 			if(patient.surgeries.len)
 				data["procedures"] = list()
 				for(var/datum/surgery/procedure in patient.surgeries)
@@ -152,6 +156,8 @@
 				"alt_chems_needed" = alt_chems_needed
 			))
 	return data
+
+
 
 /obj/machinery/computer/operating/ui_act(action, params)
 	if(..())

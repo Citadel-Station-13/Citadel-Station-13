@@ -1,3 +1,8 @@
+/*!
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
 /**
  * tgui state: hands_state
  *
@@ -19,7 +24,7 @@ GLOBAL_DATUM_INIT(hands_state, /datum/ui_state/hands_state, new)
 		return UI_INTERACTIVE
 	return UI_CLOSE
 
-/mob/living/silicon/robot/hands_can_use_topic(obj/src_object)
-	if(activated(src_object) || istype(src_object.loc, /obj/item/weapon/gripper))
+/mob/living/silicon/robot/hands_can_use_topic(src_object)
+	if(activated(src_object))
 		return UI_INTERACTIVE
 	return UI_CLOSE

@@ -6,11 +6,24 @@
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
 	explosion_block = 1
-
+	wave_explosion_block = EXPLOSION_BLOCK_WALL
+	wave_explosion_multiply = EXPLOSION_DAMPEN_WALL
+	flags_1 = DEFAULT_RICOCHET_1
+	flags_ricochet = RICOCHET_HARD
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
+	attack_hand_speed = 8
+	attack_hand_is_action = TRUE
 
 	baseturfs = /turf/open/floor/plating
+
+	explosion_flags = EXPLOSION_FLAG_HARD_OBSTACLE
+	/// Explosion power to disintegrate the wall
+	var/explosion_power_to_scrape = EXPLOSION_POWER_WALL_SCRAPE
+	/// Explosion power to dismantle the wall
+	var/explosion_power_to_dismantle = EXPLOSION_POWER_WALL_DISMANTLE
+	/// Explosion power to potentially dismantle the wall
+	var/explosion_power_minimum_chance_dismantle = EXPLOSION_POWER_WALL_MINIMUM_DISMANTLE
 
 	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/slicing_duration = 100  //default time taken to slice the wall
@@ -88,6 +101,13 @@
 	if(!density)
 		..()
 
+/turf/closed/wall/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	. = ..()
+	var/resultant_power = power * explosion.wall_destroy_mod
+	if(resultant_power >= explosion_power_to_scrape)
+		ScrapeAway()
+	else if((resultant_power >= explosion_power_to_dismantle) || ((resultant_power >= explosion_power_minimum_chance_dismantle) && prob(((resultant_power - explosion_power_minimum_chance_dismantle) / (explosion_power_to_dismantle - explosion_power_minimum_chance_dismantle)) * 100)))
+		dismantle_wall(prob((resultant_power - explosion_power_to_dismantle)/(explosion_power_to_scrape - explosion_power_to_dismantle)), TRUE)
 
 /turf/closed/wall/blob_act(obj/structure/blob/B)
 	if(prob(50))
@@ -113,41 +133,65 @@
 			return FALSE
 
 /turf/closed/wall/attack_paw(mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
 	return attack_hand(user)
 
-
 /turf/closed/wall/attack_animal(mob/living/simple_animal/M)
-	M.changeNext_move(CLICK_CD_MELEE)
+	if(!M.CheckActionCooldown(CLICK_CD_MELEE))
+		return
+	M.DelayNextAction()
 	M.do_attack_animation(src)
 	if((M.environment_smash & ENVIRONMENT_SMASH_WALLS) || (M.environment_smash & ENVIRONMENT_SMASH_RWALLS))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 		dismantle_wall(1)
 		return
 
-/turf/closed/wall/attack_hulk(mob/user, does_attack_animation = 0)
-	..(user, 1)
+/turf/closed/wall/attack_hulk(mob/living/carbon/user)
+	..()
+	var/obj/item/bodypart/arm = user.hand_bodyparts[user.active_hand_index]
+	if(!arm)
+		return
+	if(arm.disabled)
+		return
 	if(prob(hardness))
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
+		//hulk_recoil(arm, user)		// citadel edit - no, hulks are already subject to stamina combat
 		dismantle_wall(1)
+
 	else
-		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 		add_dent(WALL_DENT_HIT)
-		to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
+		user.visible_message("<span class='danger'>[user] smashes \the [src]!</span>", \
+					"<span class='danger'>You smash \the [src]!</span>", \
+					"<span class='hear'>You hear a booming smash!</span>")
 	return TRUE
 
-/turf/closed/wall/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
+/**
+  *Deals damage back to the hulk's arm.
+  *
+  *When a hulk manages to break a wall using their hulk smash, this deals back damage to the arm used.
+  *This is in its own proc just to be easily overridden by other wall types. Default allows for three
+  *smashed walls per arm. Also, we use CANT_WOUND here because wounds are random. Wounds are applied
+  *by hulk code based on arm damage and checked when we call break_an_arm().
+  *Arguments:
+  **arg1 is the arm to deal damage to.
+  **arg2 is the hulk
+ */
+/turf/closed/wall/proc/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, var/damage = 20)
+	arm.receive_damage(brute = damage, blocked = 0, wound_bonus = CANT_WOUND)
+	var/datum/mutation/human/hulk/smasher = locate(/datum/mutation/human/hulk) in hulkman.dna.mutations
+	if(!smasher || !damage) //sanity check but also snow and wood walls deal no recoil damage, so no arm breaky
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
+	smasher.break_an_arm(arm)
+
+/turf/closed/wall/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	to_chat(user, "<span class='notice'>You push the wall but nothing happens!</span>")
 	playsound(src, 'sound/weapons/genhit.ogg', 25, 1)
 	add_fingerprint(user)
 
 /turf/closed/wall/attackby(obj/item/W, mob/user, params)
-	user.changeNext_move(CLICK_CD_MELEE)
+	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
+		return
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
@@ -156,6 +200,7 @@
 	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
 
+	user.DelayNextAction()
 	add_fingerprint(user)
 
 	var/turf/T = user.loc	//get user's location for delay checks
@@ -171,7 +216,7 @@
 	if((user.a_intent != INTENT_HELP) || !LAZYLEN(dent_decals))
 		return FALSE
 
-	if(istype(W, /obj/item/weldingtool))
+	if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount=0))
 			return FALSE
 
@@ -205,7 +250,7 @@
 	return FALSE
 
 /turf/closed/wall/proc/try_decon(obj/item/I, mob/user, turf/T)
-	if(istype(I, /obj/item/weldingtool) || istype(I, /obj/item/gun/energy/plasmacutter))
+	if(I.tool_behaviour == TOOL_WELDER || istype(I, /obj/item/gun/energy/plasmacutter))
 		if(!I.tool_start_check(user, amount=0))
 			return FALSE
 
@@ -296,5 +341,10 @@
 		dent_decals = list(decal)
 
 	add_overlay(dent_decals)
+
+/turf/closed/wall/rust_heretic_act()
+	if(prob(70))
+		new /obj/effect/temp_visual/glowing_rune(src)
+	ChangeTurf(/turf/closed/wall/rust)
 
 #undef MAX_DENT_DECALS

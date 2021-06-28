@@ -8,6 +8,7 @@
 	icon = 'icons/obj/card.dmi'
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
+	attack_speed = CLICK_CD_RAPID
 	var/datum/supply_pack/discounted_pack
 	var/discount_pct_off = 0.05
 	var/obj/machinery/computer/cargo/inserted_console
@@ -34,6 +35,7 @@
 	if(discount_pct_off == COUPON_OMEN)
 		to_chat(user, "<span class='warning'>\The [O] validates the coupon as authentic, but refuses to accept it...</span>")
 		O.say("Coupon fulfillment already in progress...")
+		user.DelayNextAction()
 		return
 
 	inserted_console = O

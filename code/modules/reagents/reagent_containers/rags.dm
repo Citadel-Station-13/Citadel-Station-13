@@ -39,7 +39,7 @@
 			C.visible_message("<span class='danger'>[user] is trying to smother \the [C] with \the [src]!</span>", "<span class='userdanger'>[user] is trying to smother you with \the [src]!</span>", "<span class='italics'>You hear some struggling and muffled cries of surprise.</span>")
 			if(do_after(user, 20, target = C))
 				reagents.reaction(C, INGEST)
-				reagents.trans_to(C, 5)
+				reagents.trans_to(C, 5, log = "rag smother")
 				C.visible_message("<span class='danger'>[user] has smothered \the [C] with \the [src]!</span>", "<span class='userdanger'>[user] has smothered you with \the [src]!</span>", "<span class='italics'>You hear some struggling and a heavy breath taken.</span>")
 				log_combat(user, C, "smothered", log_object)
 		else
@@ -55,11 +55,10 @@
 		if(do_after(user, action_speed, target = A))
 			user.visible_message("[user] finishes wiping off [A]!", "<span class='notice'>You finish wiping off [A].</span>")
 			SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
-	return
 
 /obj/item/reagent_containers/rag/alt_pre_attack(mob/living/M, mob/living/user, params)
 	if(istype(M) && user.a_intent == INTENT_HELP)
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.DelayNextAction(CLICK_CD_MELEE)
 		if(M.on_fire)
 			user.visible_message("<span class='warning'>\The [user] uses \the [src] to pat out [M == user ? "[user.p_their()]" : "\the [M]'s"] flames!</span>")
 			if(hitsound)
@@ -108,7 +107,7 @@
 				reagents.clear_reagents()
 			else
 				msg += "'s liquids into \the [target]"
-				reagents.trans_to(target, reagents.total_volume)
+				reagents.trans_to(target, reagents.total_volume, log = "rag squeeze dry")
 			to_chat(user, "<span class='notice'>[msg].</span>")
 		return TRUE
 

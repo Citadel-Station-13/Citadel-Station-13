@@ -17,13 +17,9 @@
 	var/isGlass = TRUE //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 
 /obj/item/reagent_containers/food/drinks/on_reagent_change(changetype)
-	if (gulp_size < 5)
-		gulp_size = 5
-	else
-		gulp_size = max(round(reagents.total_volume / 5), 5)
+	gulp_size = max(round(reagents.total_volume / 5), 5)
 
 /obj/item/reagent_containers/food/drinks/attack(mob/living/M, mob/user, def_zone)
-
 	if(!reagents || !reagents.total_volume)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return 0
@@ -37,9 +33,6 @@
 
 	if(M == user)
 		user.visible_message("<span class='notice'>[user] swallows a gulp of [src].</span>", "<span class='notice'>You swallow a gulp of [src].</span>")
-		if(HAS_TRAIT(M, TRAIT_VORACIOUS))
-			M.changeNext_move(CLICK_CD_MELEE * 0.5) //chug! chug! chug!
-
 	else
 		M.visible_message("<span class='danger'>[user] attempts to feed the contents of [src] to [M].</span>", "<span class='userdanger'>[user] attempts to feed the contents of [src] to [M].</span>")
 		if(!do_mob(user, M))
@@ -52,9 +45,13 @@
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
 	checkLiked(fraction, M)
 	reagents.reaction(M, INGEST, fraction)
-	reagents.trans_to(M, gulp_size)
+	reagents.trans_to(M, gulp_size, log = TRUE)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
+
+/obj/item/reagent_containers/food/drinks/CheckAttackCooldown(mob/user, atom/target)
+	var/fast = HAS_TRAIT(user, TRAIT_VORACIOUS) && (user == target)
+	return user.CheckActionCooldown(fast? CLICK_CD_RANGE : CLICK_CD_MELEE)
 
 /obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
 	. = ..()
@@ -71,7 +68,7 @@
 			return
 
 		var/refill = reagents.get_master_reagent_id()
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this, log = TRUE)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
 		if(iscyborg(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
@@ -92,7 +89,7 @@
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 			return
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, log = TRUE)
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 /obj/item/reagent_containers/food/drinks/attackby(obj/item/I, mob/user, params)
@@ -299,6 +296,31 @@
 	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
 	list_reagents = list(/datum/reagent/consumable/tea = 30)
 
+/obj/item/reagent_containers/food/drinks/mug/tea/red
+	name = "Dutchess Red tea"
+	icon_state = "tea"
+	desc = "Duchess Red's personal blend of red tea leaves and hot water. Great addition to any meal."
+	list_reagents = list(/datum/reagent/consumable/tea/red = 30)
+
+/obj/item/reagent_containers/food/drinks/mug/tea/green
+	name = "Prince Green tea"
+	icon_state = "tea"
+	desc = "Prince Green's brew of tea. The blend may be different from time to time, but Prince Green swears by it!"
+	list_reagents = list(/datum/reagent/consumable/tea/green = 30)
+
+/obj/item/reagent_containers/food/drinks/mug/tea/forest
+	name = "Royal Forest tea"
+	icon_state = "tea"
+	desc = "Tea fit for anyone with a sweet tooth like Royal Forest."
+	list_reagents = list(/datum/reagent/consumable/tea/forest = 30)
+
+/obj/item/reagent_containers/food/drinks/mug/tea/mush
+	name = "Rebel Mush tea"
+	icon_state = "tea"
+	desc = "Rebel Mush, a hallucinogenic tea to help people find their inner self."
+	list_reagents = list(/datum/reagent/consumable/tea/mush = 30)
+
+
 /obj/item/reagent_containers/food/drinks/mug/coco
 	name = "Dutch hot coco"
 	desc = "Made in Space South America."
@@ -470,7 +492,9 @@
 		playsound(user.loc,'sound/weapons/pierce.ogg', rand(10,50), 1)
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)
 		crushed_can.icon_state = icon_state
-		qdel(src)
+		M.dropItemToGround(src)
+		M.put_in_active_hand(crushed_can)
+		return qdel(src)
 	..()
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
@@ -571,7 +595,7 @@
 	name = "Buzz Fuzz"
 	desc = "The sister drink of Shambler's Juice! Uses real honey, making it a sweet tooth's dream drink. The slogan reads ''A Hive of Flavour'', there's also a label about how it is adddicting."
 	icon_state = "honeysoda_can"
-	list_reagents = list(/datum/reagent/consumable/buzz_fuzz = 25, /datum/reagent/consumable/honey = 5)
+	list_reagents = list(/datum/reagent/consumable/buzz_fuzz = 30)
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/grey_bull
@@ -593,3 +617,9 @@
 	icon_state = "monkey_energy"
 	list_reagents = list(/datum/reagent/consumable/monkey_energy = 50)
 	foodtype = SUGAR | JUNKFOOD
+
+/obj/item/reagent_containers/food/drinks/dwarf_mug //dwarf family heirloom (just a cup that always has the manly dorf icon!)
+	name = "ale mug"
+	desc = "An old stained mug used for filling with dwarven ale."
+	icon_state = "manlydorfglass"
+	isGlass = FALSE //it's a wooden mug!

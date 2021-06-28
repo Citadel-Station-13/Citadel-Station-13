@@ -1,6 +1,6 @@
 /mob/living/silicon
 	gender = NEUTER
-	silicon_privileges = PRIVILEDGES_SILICON
+	silicon_privileges = PRIVILEGES_SILICON
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
@@ -13,6 +13,7 @@
 	mob_biotypes = MOB_ROBOTIC
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	speech_span = SPAN_ROBOT
+	deathsound = 'sound/voice/borg_deathsound.ogg'
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
 	vore_flags = NO_VORE
 
@@ -47,6 +48,8 @@
 	var/hack_software = FALSE //Will be able to use hacking actions
 	var/interaction_range = 7			//wireless control range
 
+	typing_indicator_state = /obj/effect/overlay/typing_indicator/machine
+
 /mob/living/silicon/Initialize()
 	. = ..()
 	GLOB.silicon_mobs += src
@@ -58,8 +61,8 @@
 
 /mob/living/silicon/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/flavor_text, _name = "Silicon Flavor Text", _save_key = "silicon_flavor_text")
-	AddElement(/datum/element/flavor_text, "", "Temporary Flavor Text", "This should be used only for things pertaining to the current round!")
+	AddElement(/datum/element/flavor_text, _name = "Silicon Flavor Text", _always_show = TRUE, _save_key = "silicon_flavor_text")
+	AddElement(/datum/element/flavor_text, "", "Temporary Flavor Text", "This should be used only for things pertaining to the current round!", _always_show = TRUE)
 	AddElement(/datum/element/flavor_text, _name = "OOC Notes", _addendum = "Put information on ERP/vore/lewd-related preferences here. THIS SHOULD NOT CONTAIN REGULAR FLAVORTEXT!!", _always_show = TRUE, _save_key = "ooc_notes", _examine_no_preview = TRUE)
 
 /mob/living/silicon/med_hud_set_health()
@@ -430,3 +433,6 @@
 
 /mob/living/silicon/handle_high_gravity(gravity)
 	return
+
+/mob/living/silicon/rust_heretic_act()
+	adjustBruteLoss(500)

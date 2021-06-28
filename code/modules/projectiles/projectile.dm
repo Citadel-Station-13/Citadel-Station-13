@@ -49,7 +49,7 @@
 	var/pixel_move_interrupted = FALSE
 
 	/// Pixels moved per second.
-	var/pixels_per_second = TILES_TO_PIXELS(12.5)
+	var/pixels_per_second = TILES_TO_PIXELS(17.5)
 	/// The number of pixels we increment by. THIS IS NOT SPEED, DO NOT TOUCH THIS UNLESS YOU KNOW WHAT YOU ARE DOING. In general, lower values means more linetrace accuracy up to a point at cost of performance.
 	var/pixel_increment_amount
 
@@ -100,6 +100,10 @@
 	var/impact_light_intensity = 3
 	var/impact_light_range = 2
 	var/impact_light_color_override
+	// Normal lighting effects
+	var/fired_light_intensity = 1
+	var/fired_light_range = 0
+	var/fired_light_color = rgb(255, 255, 255)
 
 	//Homing
 	var/homing = FALSE
@@ -149,15 +153,25 @@
 
 	var/temporary_unstoppable_movement = FALSE
 
-	///If defined, on hit we create an item of this type then call hitby() on the hit target with this
+	///If defined, on hit we create an item of this type then call hitby() on the hit target with this, mainly used for embedding items (bullets) in targets
 	var/shrapnel_type
 	///If TRUE, hit mobs even if they're on the floor and not our target
 	var/hit_stunned_targets = FALSE
+
+	wound_bonus = CANT_WOUND
+	///How much we want to drop both wound_bonus and bare_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
+	var/wound_falloff_tile
+	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
+	var/embed_falloff_tile
+	/// For telling whether we want to roll for bone breaking or lacerations if we're bothering with wounds
+	sharpness = SHARP_NONE
 
 /obj/item/projectile/Initialize()
 	. = ..()
 	permutated = list()
 	decayedRange = range
+	if(embedding)
+		updateEmbedding()
 
 /**
   * Artificially modified to be called at around every world.icon_size pixels of movement.
@@ -165,6 +179,11 @@
   */
 /obj/item/projectile/proc/Range()
 	range--
+	if(wound_bonus != CANT_WOUND)
+		wound_bonus += wound_falloff_tile
+		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
+	if(embedding)
+		embedding["embed_chance"] += embed_falloff_tile
 	if(range <= 0 && loc)
 		on_range()
 
@@ -230,7 +249,7 @@
 			if(starting)
 				splatter_dir = get_dir(starting, target_loca)
 			var/obj/item/bodypart/B = L.get_bodypart(def_zone)
-			if(B && B.status == BODYPART_ROBOTIC) // So if you hit a robotic, it sparks instead of bloodspatters
+			if(B && B.is_robotic_limb()) // So if you hit a robotic, it sparks instead of bloodspatters - Hybrid limbs don't bleed from this as of now too, subject to balance.. probably.
 				do_sparks(2, FALSE, target.loc)
 				if(prob(25))
 					new /obj/effect/decal/cleanable/oil(target_loca)
@@ -312,16 +331,18 @@
 	if(!trajectory)
 		return
 	var/turf/T = get_turf(A)
-	if(check_ricochet(A) && A.handle_ricochet(src)) //if you can ricochet, attempt to ricochet off the object
-		on_ricochet(A) //if allowed, use autoaim to ricochet into someone, otherwise default to ricocheting off the object from above
-		var/datum/point/pcache = trajectory.copy_to()
-		if(hitscan)
-			store_hitscan_collision(pcache)
-		decayedRange = max(0, decayedRange - reflect_range_decrease)
-		ricochet_chance *= ricochet_decay_chance
-		damage *= ricochet_decay_damage
-		range = decayedRange
-		return TRUE
+	if(check_ricochet_flag(A) && check_ricochet(A)) //if you can ricochet, attempt to ricochet off the object
+		ricochets++
+		if(A.handle_ricochet(src))
+			on_ricochet(A) //if allowed, use autoaim to ricochet into someone, otherwise default to ricocheting off the object from above
+			var/datum/point/pcache = trajectory.copy_to()
+			if(hitscan)
+				store_hitscan_collision(pcache)
+			decayedRange = max(0, decayedRange - reflect_range_decrease)
+			ricochet_chance *= ricochet_decay_chance
+			damage *= ricochet_decay_damage
+			range = decayedRange
+			return TRUE
 
 	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 	if(def_zone && check_zone(def_zone) != BODY_ZONE_CHEST)
@@ -443,17 +464,17 @@
 	return TRUE	//Bullets don't drift in space
 
 /obj/item/projectile/process(wait)
+	set waitfor = FALSE
 	if(!loc || !fired || !trajectory)
 		fired = FALSE
 		return PROCESS_KILL
 	if(paused || !isturf(loc))
 		return
 
-	var/ds = (SSprojectiles.flags & SS_TICKER)? (wait * world.tick_lag) : wait
-	var/required_pixels = (pixels_per_second * ds * 0.1) + pixels_tick_leftover
+	var/required_pixels = (pixels_per_second * wait) + pixels_tick_leftover
 	if(required_pixels >= pixel_increment_amount)
 		pixels_tick_leftover = MODULUS(required_pixels, pixel_increment_amount)
-		pixel_move(FLOOR(required_pixels / pixel_increment_amount, 1), FALSE, ds, SSprojectiles.global_projectile_speed_multiplier)
+		pixel_move(FLOOR(required_pixels / pixel_increment_amount, 1), FALSE, wait, SSprojectiles.global_projectile_speed_multiplier)
 	else
 		pixels_tick_leftover = required_pixels
 
@@ -488,13 +509,14 @@
 		transform = M
 	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
+	set_light(fired_light_range, fired_light_intensity, fired_light_color)
 	trajectory_ignore_forcemove = FALSE
 	if(isnull(pixel_increment_amount))
 		pixel_increment_amount = SSprojectiles.global_pixel_increment_amount
 	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, Angle, pixel_increment_amount)
 	fired = TRUE
 	if(hitscan)
-		process_hitscan()
+		INVOKE_ASYNC(src, .proc/process_hitscan)
 		return
 	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
@@ -580,7 +602,7 @@
   * Trajectory multiplier directly modifies the factor of pixel_increment_amount to go per time.
   * It's complicated, so probably just don't mess with this unless you know what you're doing.
   */
-/obj/item/projectile/proc/pixel_move(times, hitscanning = FALSE, deciseconds_equivalent = world.tick_lag, trajectory_multiplier = 1, allow_animation = TRUE)
+/obj/item/projectile/proc/pixel_move(times, hitscanning = FALSE, seconds_equivalent = world.tick_lag * 0.1, trajectory_multiplier = 1, allow_animation = TRUE)
 	if(!loc || !trajectory)
 		return
 	if(!nondirectional_sprite && !hitscanning)
@@ -597,7 +619,7 @@
 		if(homing_target)
 			// No datum/points, too expensive.
 			var/angle = closer_angle_difference(Angle, get_projectile_angle(src, homing_target))
-			var/max_turn = homing_turn_speed * deciseconds_equivalent * 0.1
+			var/max_turn = homing_turn_speed * seconds_equivalent
 			setAngle(Angle + clamp(angle, -max_turn, max_turn))
 		// HOMING END
 		trajectory.increment(trajectory_multiplier)
@@ -619,7 +641,7 @@
 				pixel_x = trajectory.return_px()
 				pixel_y = trajectory.return_py()
 		else if(T != loc)
-			var/safety = CEILING(pixel_increment_amount / world.icon_size, 1) * 2 + 1
+			var/safety = CEILING(pixel_increment_amount / world.icon_size, 1) * 5 + 1
 			while(T != loc)
 				if(!--safety)
 					CRASH("[type] took too long (allowed: [CEILING(pixel_increment_amount/world.icon_size,1)*2] moves) to get to its location.")
@@ -665,7 +687,8 @@
 	if(!ignore_source_check && firer)
 		var/mob/M = firer
 		if((target == firer) || ((target == firer.loc) && ismecha(firer.loc)) || (target in firer.buckled_mobs) || (istype(M) && (M.buckled == target)))
-			return FALSE
+			if(!ricochets) //if it has ricocheted, it can hit the firer.
+				return FALSE
 	if(!ignore_loc && (loc != target.loc))
 		return FALSE
 	if(target in passthrough)

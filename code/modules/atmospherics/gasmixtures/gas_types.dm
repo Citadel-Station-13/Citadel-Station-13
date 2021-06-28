@@ -186,6 +186,20 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE * 60
 	rarity = 250
 
+/datum/gas/methane
+	id = "methane"
+	specific_heat = 30
+	name = "Methane"
+	rarity = 320
+
+/datum/gas/methyl_bromide
+	id = "methyl_bromide"
+	specific_heat = 42
+	name = "Methyl Bromide"
+	dangerous = TRUE
+	rarity = 310
+
+
 /obj/effect/overlay/gas
 	icon = 'icons/effects/atmospherics.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

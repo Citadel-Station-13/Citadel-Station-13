@@ -26,9 +26,12 @@
 	update_sprint_icon()
 
 /mob/living/proc/enable_sprint_mode(update_icon = TRUE)
+	if(!CONFIG_GET(flag/sprint_enabled))
+		return
 	if(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
 		return
 	ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_SPRINT_ACTIVE)
+	add_movespeed_modifier(/datum/movespeed_modifier/sprinting)
 	if(update_icon)
 		update_sprint_icon()
 
@@ -36,6 +39,7 @@
 	if(!(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) || (combat_flags & COMBAT_FLAG_SPRINT_FORCED))
 		return
 	DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_SPRINT_ACTIVE)
+	remove_movespeed_modifier(/datum/movespeed_modifier/sprinting)
 	if(update_icon)
 		update_sprint_icon()
 
@@ -59,6 +63,8 @@
 	update_sprint_icon()
 
 /mob/living/proc/user_toggle_intentional_sprint_mode()
+	if(!CONFIG_GET(flag/sprint_enabled))
+		return
 	var/old = (combat_flags & COMBAT_FLAG_SPRINT_TOGGLED)
 	if(old)
 		if(combat_flags & COMBAT_FLAG_SPRINT_FORCED)

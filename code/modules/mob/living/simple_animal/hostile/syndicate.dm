@@ -25,7 +25,6 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
 	turns_per_move = 5
-	threat = 1
 	speed = 0
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
@@ -77,6 +76,9 @@
 /mob/living/simple_animal/hostile/syndicate/melee
 	melee_damage_lower = 15
 	melee_damage_upper = 15
+	wound_bonus = -10
+	bare_wound_bonus = 20
+	sharpness = SHARP_EDGED
 	icon_state = "syndicate_knife"
 	icon_living = "syndicate_knife"
 	loot = list(/obj/effect/gibspawner/human)
@@ -128,11 +130,11 @@
 	QDEL_NULL(sord)
 	return ..()
 
-/mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
-	if(prob(25))
-		return ..()
-	visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
-	return BULLET_ACT_BLOCK
+/mob/living/simple_animal/hostile/syndicate/melee/sword/bullet_act(obj/item/projectile/Proj)
+	if(prob(50))
+		visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
+		return BULLET_ACT_BLOCK
+	return ..()
 
 /mob/living/simple_animal/hostile/syndicate/melee/sword/space
 	icon_state = "syndicate_space_sword"

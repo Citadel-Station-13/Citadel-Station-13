@@ -25,10 +25,16 @@
 
 			var/mob/M = locate(href_list["rename"]) in GLOB.mob_list
 			if(!istype(M))
-				to_chat(usr, "This can only be used on instances of type /mob")
+				to_chat(usr, "This can only be used on instances of type /mob", confidential = TRUE)
 				return
 
 			var/new_name = stripped_input(usr,"What would you like to name this mob?","Input a name",M.real_name,MAX_NAME_LEN)
+
+			// If the new name is something that would be restricted by IC chat filters,
+			// give the admin a warning but allow them to do it anyway if they want.
+			// if(CHAT_FILTER_CHECK(new_name) && alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", "Confirm", "Cancel") == "Cancel")
+			// 	return
+
 			if( !new_name || !M )
 				return
 
@@ -43,7 +49,7 @@
 
 			var/atom/A = locate(href_list["rotatedatum"])
 			if(!istype(A))
-				to_chat(usr, "This can only be done to instances of type /atom")
+				to_chat(usr, "This can only be done to instances of type /atom", confidential = TRUE)
 				return
 
 			switch(href_list["rotatedir"])
@@ -60,13 +66,13 @@
 
 			var/mob/living/carbon/monkey/Mo = locate(href_list["makehuman"]) in GLOB.mob_list
 			if(!istype(Mo))
-				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/monkey")
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/monkey", confidential = TRUE)
 				return
 
 			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
 				return
 			if(!Mo)
-				to_chat(usr, "Mob doesn't exist anymore")
+				to_chat(usr, "Mob doesn't exist anymore", confidential = TRUE)
 				return
 			holder.Topic(href, list("humanone"=href_list["makehuman"]))
 
@@ -80,10 +86,13 @@
 
 			var/Text = href_list["adjustDamage"]
 
-			var/amount =  input("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num
+			var/amount =  input("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num|null
+
+			if (isnull(amount))
+				return
 
 			if(!L)
-				to_chat(usr, "Mob doesn't exist anymore")
+				to_chat(usr, "Mob doesn't exist anymore", confidential = TRUE)
 				return
 
 			var/newamt
@@ -95,7 +104,7 @@
 					L.adjustFireLoss(amount, cause = "killed by badminnery")
 					newamt = L.getFireLoss()
 				if("toxin")
-					L.adjustToxLoss(amount, cause = "killed by badminnery")
+					L.adjustToxLoss(amount, toxins_type = TOX_OMNI, forced = TRUE, cause = "killed by badminnery")
 					newamt = L.getToxLoss()
 				if("oxygen")
 					L.adjustOxyLoss(amount, cause = "killed by badminnery")
@@ -110,7 +119,7 @@
 					L.adjustStaminaLoss(amount)
 					newamt = L.getStaminaLoss()
 				else
-					to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]")
+					to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]", confidential = TRUE)
 					return
 
 			if(amount != 0)
@@ -124,5 +133,5 @@
 	//Finally, refresh if something modified the list.
 	if(href_list["datumrefresh"])
 		var/datum/DAT = locate(href_list["datumrefresh"])
-		if(istype(DAT, /datum) || istype(DAT, /client))
+		if(istype(DAT, /datum) || istype(DAT, /client) || islist(DAT))
 			debug_variables(DAT)

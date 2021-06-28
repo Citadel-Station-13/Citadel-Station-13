@@ -97,7 +97,7 @@
 		/datum/gas/oxygen			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
 		/datum/gas/nitrogen			= new/datum/tlv(-1, -1, 1000, 1000),
 		/datum/gas/carbon_dioxide	= new/datum/tlv(-1, -1, 5, 10),
-		/datum/gas/miasma			= new/datum/tlv/(-1, -1, 2, 5),
+		/datum/gas/miasma			= new/datum/tlv(-1, -1, 2, 5),
 		/datum/gas/plasma			= new/datum/tlv/dangerous,
 		/datum/gas/nitrous_oxide	= new/datum/tlv/dangerous,
 		/datum/gas/bz				= new/datum/tlv/dangerous,
@@ -106,7 +106,9 @@
 		/datum/gas/tritium			= new/datum/tlv/dangerous,
 		/datum/gas/stimulum			= new/datum/tlv(-1, -1, 1000, 1000), // Stimulum has only positive effects
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
-		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000) // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
+		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
+		/datum/gas/methane			= new/datum/tlv(-1, -1, 3, 6),
+		/datum/gas/methyl_bromide	= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/server // No checks here.
@@ -125,7 +127,9 @@
 		/datum/gas/tritium			= new/datum/tlv/no_checks,
 		/datum/gas/stimulum			= new/datum/tlv/no_checks,
 		/datum/gas/nitryl			= new/datum/tlv/no_checks,
-		/datum/gas/pluoxium			= new/datum/tlv/no_checks
+		/datum/gas/pluoxium			= new/datum/tlv/no_checks,
+		/datum/gas/methane			= new/datum/tlv/no_checks,
+		/datum/gas/methyl_bromide	= new/datum/tlv/no_checks
 	)
 
 /obj/machinery/airalarm/kitchen_cold_room // Copypasta: to check temperatures.
@@ -144,7 +148,9 @@
 		/datum/gas/tritium			= new/datum/tlv/dangerous,
 		/datum/gas/stimulum			= new/datum/tlv(-1, -1, 1000, 1000), // Stimulum has only positive effects
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
-		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000) // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
+		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
+		/datum/gas/methane			= new/datum/tlv(-1, -1, 3, 6),
+		/datum/gas/methyl_bromide	= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/unlocked
@@ -231,17 +237,25 @@
 			. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] the interface.</span>"
 
 /obj/machinery/airalarm/ui_status(mob/user)
-	if(hasSiliconAccessInArea(user) && aidisabled)
-		to_chat(user, "AI control has been disabled.")
-	else if(!shorted)
+	if(hasSiliconAccessInArea(user))
+		if(aidisabled)
+			to_chat(user, "AI control has been disabled")
+			return UI_CLOSE
+		else if(!issilicon(user)) //True sillycones use ..()
+			return UI_INTERACTIVE
+	if(!shorted)
 		return ..()
 	return UI_CLOSE
 
-/obj/machinery/airalarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/airalarm/can_interact(mob/user)
+	. = ..()
+	if (!issilicon(user) && hasSiliconAccessInArea(user))
+		return TRUE
+
+/obj/machinery/airalarm/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "AirAlarm", name, 440, 650, master_ui, state)
+		ui = new(user, src, "AirAlarm", name)
 		ui.open()
 
 /obj/machinery/airalarm/ui_data(mob/user)
@@ -290,7 +304,7 @@
 								"danger_level" = cur_tlv.get_danger_level(environment.get_moles(gas_id) * partial_pressure)
 		))
 
-	if(!locked || hasSiliconAccessInArea(user, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE))
+	if(!locked || hasSiliconAccessInArea(user, PRIVILEGES_SILICON|PRIVILEGES_DRONE))
 		data["vents"] = list()
 		for(var/id_tag in A.air_vent_names)
 			var/long_name = A.air_vent_names[id_tag]
@@ -371,13 +385,13 @@
 	if(..() || buildstage != 2)
 		return
 	var/silicon_access = hasSiliconAccessInArea(usr)
-	var/bot_priviledges = silicon_access || (usr.silicon_privileges & PRIVILEDGES_DRONE)
-	if((locked && !bot_priviledges) || (silicon_access && aidisabled))
+	var/bot_privileges = silicon_access || (usr.silicon_privileges & PRIVILEGES_DRONE)
+	if((locked && !bot_privileges) || (silicon_access && aidisabled))
 		return
 	var/device_id = params["id_tag"]
 	switch(action)
 		if("lock")
-			if(bot_priviledges && !wires.is_cut(WIRE_IDSCAN))
+			if(bot_privileges && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
 				. = TRUE
 		if("power", "toggle_filter", "widenet", "scrubbing")
@@ -543,7 +557,9 @@
 						/datum/gas/tritium,
 						/datum/gas/bz,
 						/datum/gas/stimulum,
-						/datum/gas/pluoxium
+						/datum/gas/pluoxium,
+						/datum/gas/methane,
+						/datum/gas/methyl_bromide
 					),
 					"scrubbing" = 1,
 					"widenet" = 1,
@@ -746,14 +762,14 @@
 /obj/machinery/airalarm/attackby(obj/item/W, mob/user, params)
 	switch(buildstage)
 		if(2)
-			if(istype(W, /obj/item/wirecutters) && panel_open && wires.is_all_cut())
+			if(W.tool_behaviour == TOOL_WIRECUTTER && panel_open && wires.is_all_cut())
 				W.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You cut the final wires.</span>")
 				new /obj/item/stack/cable_coil(loc, 5)
 				buildstage = 1
 				update_icon()
 				return
-			else if(istype(W, /obj/item/screwdriver))  // Opening that Air Alarm up.
+			else if(W.tool_behaviour == TOOL_SCREWDRIVER)  // Opening that Air Alarm up.
 				W.play_tool_sound(src)
 				panel_open = !panel_open
 				to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
@@ -765,7 +781,7 @@
 				wires.interact(user)
 				return
 		if(1)
-			if(istype(W, /obj/item/crowbar))
+			if(W.tool_behaviour == TOOL_CROWBAR)
 				user.visible_message("[user.name] removes the electronics from [src.name].",\
 									"<span class='notice'>You start prying out the circuit...</span>")
 				W.play_tool_sound(src)
@@ -816,7 +832,7 @@
 				update_icon()
 				return
 
-			if(istype(W, /obj/item/wrench))
+			if(W.tool_behaviour == TOOL_WRENCH)
 				to_chat(user, "<span class='notice'>You detach \the [src] from the wall.</span>")
 				W.play_tool_sound(src)
 				new /obj/item/wallframe/airalarm( user.loc )

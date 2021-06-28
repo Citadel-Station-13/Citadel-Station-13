@@ -13,6 +13,13 @@
 //////////////////// Paperwork and Writing Supplies //////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
+
+/datum/supply_pack/misc/anvil
+	name = "Anvil Crate"
+	desc = "An anvil in a crate, we had to dig this out of the old warehouse. It's got wheels on it so you can move it."
+	cost = 7500
+	contains = list(/obj/structure/anvil/obtainable/basic)
+
 /datum/supply_pack/misc/artsupply
 	name = "Art Supplies"
 	desc = "Make some happy little accidents with six canvasses, two easels, two boxes of crayons, and a rainbow crayon!"
@@ -35,18 +42,21 @@
 
 /datum/supply_pack/misc/book_crate
 	name = "Book Crate"
-	desc = "Surplus from the Nanotrasen Archives, these five books are sure to be good reads."
+	desc = "Surplus from the Nanotrasen Archives, these seven books are sure to be good reads."
+	// cost = CARGO_CRATE_VALUE * 3
 	cost = 1500
 	contains = list(/obj/item/book/codex_gigas,
 					/obj/item/book/manual/random/,
 					/obj/item/book/manual/random/,
 					/obj/item/book/manual/random/,
-					/obj/item/book/random/triple)
+					/obj/item/book/random,
+					/obj/item/book/random,
+					/obj/item/book/random)
 	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/misc/paper
 	name = "Bureaucracy Crate"
-	desc = "High stacks of papers on your desk Are a big problem - make it Pea-sized with these bureaucratic supplies! Contains five pens, some camera film, hand labeler supplies, a paper bin, three folders, two clipboards and two stamps as well as a briefcase."//that was too forced
+	desc = "High stacks of papers on your desk Are a big problem - make it Pea-sized with these bureaucratic supplies! Contains six pens, some camera film, hand labeler supplies, a paper bin, a carbon paper bin, three folders, a laser pointer, two clipboards and two stamps."//that was too forced
 	cost = 1500
 	contains = list(/obj/structure/filingcabinet/chestdrawer/wheeled,
 					/obj/item/camera_film,
@@ -54,9 +64,11 @@
 					/obj/item/hand_labeler_refill,
 					/obj/item/hand_labeler_refill,
 					/obj/item/paper_bin,
+					/obj/item/paper_bin/carbon,
 					/obj/item/pen/fourcolor,
 					/obj/item/pen/fourcolor,
 					/obj/item/pen,
+					/obj/item/pen/fountain,
 					/obj/item/pen/blue,
 					/obj/item/pen/red,
 					/obj/item/folder/blue,
@@ -66,7 +78,7 @@
 					/obj/item/clipboard,
 					/obj/item/stamp,
 					/obj/item/stamp/denied,
-					/obj/item/storage/briefcase)
+					/obj/item/laser_pointer/purple)
 	crate_name = "bureaucracy crate"
 
 /datum/supply_pack/misc/captain_pen
@@ -86,6 +98,30 @@
 					/obj/item/paper_bin)
 	crate_type = /obj/structure/closet/crate/wooden
 	crate_name = "calligraphy crate"
+
+/datum/supply_pack/misc/toner
+	name = "Toner Crate"
+	desc = "Spent too much ink printing butt pictures? Fret not, with these six toner refills, you'll be printing butts 'till the cows come home!'"
+	cost = 200 * 4
+	contains = list(/obj/item/toner,
+					/obj/item/toner,
+					/obj/item/toner,
+					/obj/item/toner,
+					/obj/item/toner,
+					/obj/item/toner)
+	crate_name = "toner crate"
+
+/datum/supply_pack/misc/toner_large
+	name = "Toner Crate (Large)"
+	desc = "Tired of changing toner cartridges? These six extra heavy duty refills contain roughly five times as much toner as the base model!"
+	cost = 200 * 6
+	contains = list(/obj/item/toner/large,
+					/obj/item/toner/large,
+					/obj/item/toner/large,
+					/obj/item/toner/large,
+					/obj/item/toner/large,
+					/obj/item/toner/large)
+	crate_name = "large toner crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Entertainment ///////////////////////////////
@@ -194,9 +230,9 @@
 
 /datum/supply_pack/misc/dirtymags
 	name = "Dirty Magazines"
-	desc = "Get your mind out of the gutter operative, you have work to do. Three items per order. Possible Results: .357 Speedloaders, Kitchen Gun Mags, Stetchkin Mags."
+	desc = "Get your mind out of the gutter operative, you have work to do. Three items per order. Possible Results: .357 Speedloaders, Kitchen Gun patented magazines, or Stetchkin magazines."
 	hidden = TRUE
-	cost = 12000
+	cost = 4000
 	var/num_contained = 3
 	contains = list(/obj/item/ammo_box/a357,
 					/obj/item/ammo_box/magazine/pistolm9mm,
@@ -334,7 +370,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/misc/carpet
-	goody = PACK_GOODY_PUBLIC
+	crate_type = /obj/structure/closet/secure_closet/cargo
 	name = "Classic Carpet Single-Pack"
 	desc = "Plasteel floor tiles getting on your nerves? This 50 units stack of extra soft carpet will tie any room together."
 	cost = 200
@@ -343,6 +379,10 @@
 /datum/supply_pack/misc/carpet/black
 	name = "Black Carpet Single-Pack"
 	contains = list(/obj/item/stack/tile/carpet/black/fifty)
+
+/datum/supply_pack/misc/carpet/arcade
+	name = "Arcade Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/arcade/fifty)
 
 /datum/supply_pack/misc/carpet/premium
 	name = "Monochrome Carpet Single-Pack"
@@ -394,6 +434,17 @@
 					/obj/item/stack/tile/noslip/thirty)
 	crate_name = "high-traction floor tiles crate"
 
+/datum/supply_pack/misc/blackmarket_telepad
+	name = "Black Market LTSRBT"
+	desc = "Need a faster and better way of transporting your illegal goods from and to the station? Fear not, the Long-To-Short-Range-Bluespace-Transceiver (LTSRBT for short) is here to help. Contains a LTSRBT circuit, two bluespace crystals, and one ansible."
+	cost = 8000
+	contraband = TRUE
+	contains = list(/obj/item/circuitboard/machine/ltsrbt,
+		/obj/item/stack/ore/bluespace_crystal/artificial,
+		/obj/item/stack/ore/bluespace_crystal/artificial,
+		/obj/item/stock_parts/subspace/ansible)
+	crate_name = "crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Lewd Supplies ///////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -415,20 +466,9 @@
 					/obj/item/restraints/handcuffs/fake/kinky,
 					/obj/item/clothing/head/kitty/genuine, // Why its illegal
 					/obj/item/clothing/head/kitty/genuine,
-					/obj/item/storage/pill_bottle/penis_enlargement,
-					/obj/structure/reagent_dispensers/keg/aphro)
+					/obj/item/storage/pill_bottle/penis_enlargement)
 	crate_name = "lewd kit"
 	crate_type = /obj/structure/closet/crate
-
-/datum/supply_pack/misc/lewdkeg
-	name = "Lewd Deluxe Keg"
-	desc = "That other stuff not getting you ready? Well I have a Chemslut making tons of the good stuff."
-	cost = 7500 //It can be a weapon
-	contraband = TRUE
-	contains = list(/obj/structure/reagent_dispensers/keg/aphro/strong)
-	crate_name = "deluxe keg"
-	crate_type = /obj/structure/closet/crate
-
 
 ///Special supply crate that generates random syndicate gear up to a determined TC value
 

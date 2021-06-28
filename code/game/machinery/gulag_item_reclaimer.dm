@@ -20,18 +20,15 @@
 	return ..()
 
 /obj/machinery/gulag_item_reclaimer/emag_act(mob/user)
-	. = ..()
 	if(obj_flags & EMAGGED) // emagging lets anyone reclaim all the items
 		return
 	req_access = list()
 	obj_flags |= EMAGGED
-	return TRUE
 
-/obj/machinery/gulag_item_reclaimer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/gulag_item_reclaimer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "GulagItemReclaimer", name, 300, 400, master_ui, state)
+		ui = new(user, src, "GulagItemReclaimer", name)
 		ui.open()
 
 /obj/machinery/gulag_item_reclaimer/ui_data(mob/user)
@@ -60,20 +57,22 @@
 		mobs += list(mob_info)
 
 	data["mobs"] = mobs
-
-
 	data["can_reclaim"] = can_reclaim
 
 	return data
 
-/obj/machinery/gulag_item_reclaimer/ui_act(action, list/params)
+/obj/machinery/gulag_item_reclaimer/ui_act(action, params)
+	if(..())
+		return
+
 	switch(action)
 		if("release_items")
-			var/mob/M = locate(params["mobref"])
-			if(M == usr || allowed(usr))
-				drop_items(M)
-			else
-				to_chat(usr, "Access denied.")
+			var/mob/living/carbon/human/H = locate(params["mobref"]) in stored_items
+			if(H != usr && !allowed(usr))
+				to_chat(usr, "<span class='warning'>Access denied.</span>")
+				return
+			drop_items(H)
+			. = TRUE
 
 /obj/machinery/gulag_item_reclaimer/proc/drop_items(mob/user)
 	if(!stored_items[user])

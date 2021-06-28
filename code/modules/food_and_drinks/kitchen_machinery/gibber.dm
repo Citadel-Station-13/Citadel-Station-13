@@ -63,10 +63,7 @@
 /obj/machinery/gibber/relaymove(mob/living/user)
 	go_out()
 
-/obj/machinery/gibber/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/gibber/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(operating)

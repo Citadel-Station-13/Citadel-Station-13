@@ -24,10 +24,7 @@
 	var/respawn_time = 50
 	var/respawn_sound = 'sound/magic/staff_animation.ogg'
 
-/obj/structure/life_candle/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/life_candle/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!user.mind)
 		return
 	if(user.mind in linked_minds)
@@ -38,7 +35,7 @@
 		linked_minds |= user.mind
 
 	update_icon()
-	float(linked_minds.len)
+	INVOKE_ASYNC(src, /atom/movable.proc/float, linked_minds.len)
 	if(linked_minds.len)
 		START_PROCESSING(SSobj, src)
 		set_light(lit_luminosity)

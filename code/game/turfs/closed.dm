@@ -6,6 +6,8 @@
 	blocks_air = 1
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	rad_insulation = RAD_MEDIUM_INSULATION
+	wave_explosion_block = 10
+	wave_explosion_multiply = 0.75
 
 /turf/closed/Initialize()
 	. = ..()
@@ -28,6 +30,10 @@
 	name = "wall"
 	icon = 'icons/turf/walls.dmi'
 	explosion_block = 50
+	wave_explosion_block = INFINITY
+
+/turf/closed/indestructible/rust_heretic_act()
+	return
 
 /turf/closed/indestructible/TerraformTurf(path, new_baseturf, flags, defer_change = FALSE, ignore_air = FALSE)
 	return
@@ -198,13 +204,13 @@
 	
 /turf/closed/indestructible/rock/glacierrock
 	name = "unaturally hard ice wall"
-	desc = "Ice, hardened over thousands of years, you're not breaking through this." 
+	desc = "Ice, hardened over thousands of years, you're not breaking through this."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "snow_rock"
 	
 /turf/closed/indestructible/rock/glacierrock/blue
 	name = "blue ice wall"
-	desc = "The incredible compressive forces that formed this sturdy ice wall gave it a blue color." 
+	desc = "The incredible compressive forces that formed this sturdy ice wall gave it a blue color."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "ice"
 	canSmoothWith = list(/turf/closed/indestructible/rock/glacierrock/blue)

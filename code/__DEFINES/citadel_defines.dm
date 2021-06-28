@@ -47,7 +47,7 @@
 #define BALLS_SIZE_DEF		2
 #define BALLS_SIZE_MAX		3
 
-#define CUM_RATE			2 // holy shit what a really shitty define name - relates to units per arbitrary measure of time?
+#define CUM_RATE			2 // units per 10 seconds
 #define CUM_RATE_MULT		1
 #define CUM_EFFICIENCY		1 //amount of nutrition required per life()
 
@@ -58,7 +58,7 @@
 
 #define DEF_BREASTS_SHAPE	"Pair"
 
-#define MILK_RATE			5
+#define MILK_RATE			3
 #define MILK_RATE_MULT		1
 #define MILK_EFFICIENCY		1
 
@@ -98,8 +98,33 @@
 #define NO_APHRO			(1<<9)
 #define NO_ASS_SLAP			(1<<10)
 #define BIMBOFICATION		(1<<11)
-
+#define NO_AUTO_WAG			(1<<12)
+#define GENITAL_EXAMINE		(1<<13)
+#define VORE_EXAMINE		(1<<14)
 #define TOGGLES_CITADEL 0
 
 //belly sound pref things
 #define NORMIE_HEARCHECK 4
+
+//icon states for the default eyes and for a state for no eye
+#define DEFAULT_EYES_TYPE			"normal"
+#define DEFAULT_LEFT_EYE_STATE		"normal_left_eye"
+#define DEFAULT_RIGHT_EYE_STATE		"normal_right_eye"
+#define DEFAULT_NO_EYE_STATE		"no_eye"
+
+//special species definitions
+#define MINIMUM_MUTANT_COLOR	"#202020" //this is how dark players mutant parts and skin can be
+
+//defines for different matrix sections
+#define MATRIX_RED			"red"
+#define MATRIX_GREEN		"green"
+#define MATRIX_BLUE			"blue"
+#define MATRIX_RED_GREEN	"red_green"
+#define MATRIX_RED_BLUE		"red_blue"
+#define MATRIX_GREEN_BLUE	"green_blue"
+#define MATRIX_ALL			"red_green_blue"
+#define MATRIX_NONE			"none"
+
+//defines for the two colour schemes, advanced and old
+#define OLD_CHARACTER_COLORING			"old_color_system"
+#define ADVANCED_CHARACTER_COLORING		"advanced_color_system"

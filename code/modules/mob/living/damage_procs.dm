@@ -2,7 +2,7 @@
 /**
   * Applies damage to this mob
   *
-  * Sends [COMSIG_MOB_APPLY_DAMGE]
+  * Sends [COMSIG_MOB_APPLY_DAMAGE]
   *
   * Arguuments:
   * * damage - amount of damage
@@ -14,7 +14,7 @@
   *
   * Returns TRUE if damage applied
   */
-/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE)
+/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = SHARP_NONE)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || (hit_percent <= 0))
 		return 0
@@ -141,7 +141,8 @@
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
-/mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+//only_robotic and only_organic arg only relevant for carbons
+/mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	bruteloss = clamp((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
@@ -168,20 +169,45 @@
 		updatehealth()
 	return amount
 
-/mob/living/proc/getToxLoss()
-	return toxloss
+//By default, returns toxins damage no matter what kind of tox damage the target is using.
+/mob/living/proc/getToxLoss(toxins_type = TOX_OMNI)
+	if(toxins_type == TOX_OMNI)
+		return toxloss
 
-/mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
+	var/affected_by = TOX_DEFAULT
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		affected_by = TOX_SYSCORRUPT
+
+	if(toxins_type != affected_by)
+		return 0
+	else
+		return toxloss
+
+/mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, toxins_type = TOX_DEFAULT)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
+	var/affected_by = TOX_DEFAULT
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		affected_by = TOX_SYSCORRUPT
+	if(toxins_type != TOX_OMNI && toxins_type != affected_by)
+		return FALSE
+
 	toxloss = clamp((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
 
-/mob/living/proc/setToxLoss(amount, updating_health = TRUE, forced = FALSE)
+//Defaults to omni here because setToxLoss is used by very few things that usually want to set all types
+/mob/living/proc/setToxLoss(amount, updating_health = TRUE, forced = FALSE, toxins_type = TOX_OMNI)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
+
+	var/affected_by = TOX_DEFAULT
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		affected_by = TOX_SYSCORRUPT
+	if(toxins_type != TOX_OMNI && toxins_type != affected_by)
+		return FALSE
+
 	toxloss = amount
 	if(updating_health)
 		updatehealth()
@@ -190,7 +216,8 @@
 /mob/living/proc/getFireLoss()
 	return fireloss
 
-/mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+//only_robotic and only_organic arg only relevant for carbons
+/mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	fireloss = clamp((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
@@ -245,7 +272,7 @@
 	update_stamina()
 
 // damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/take_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE)
+/mob/living/proc/take_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status, check_armor = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = SHARP_NONE)
 	adjustBruteLoss(brute, FALSE) //zero as argument for no instant health update
 	adjustFireLoss(burn, FALSE)
 	adjustStaminaLoss(stamina, FALSE)

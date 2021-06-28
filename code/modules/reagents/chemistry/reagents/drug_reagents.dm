@@ -45,6 +45,13 @@
 	trippy = FALSE
 	pH = 8
 
+//Nicotine is used as a pesticide IRL.
+/datum/reagent/drug/nicotine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		mytray.adjustToxic(round(chems.get_reagent_amount(type)))
+		mytray.adjustPests(-rand(1,2))
+
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/M)
 	if(prob(1))
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
@@ -171,12 +178,16 @@
 
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()
-	L.ignore_slowdown(type)
+	ADD_TRAIT(L, TRAIT_IGNOREDAMAGESLOWDOWN, type)
+	L.update_movespeed()
 	ADD_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/meth)
 
 /datum/reagent/drug/methamphetamine/on_mob_end_metabolize(mob/living/L)
-	L.unignore_slowdown(type)
+	REMOVE_TRAIT(L, TRAIT_IGNOREDAMAGESLOWDOWN, type)
+	L.update_movespeed()
 	REMOVE_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/meth)
 	..()
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M)
@@ -467,7 +478,7 @@
 /datum/reagent/drug/skooma/on_mob_metabolize(mob/living/L)
 	. = ..()
 	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/skooma)
-	L.next_move_modifier *= 2
+	L.action_cooldown_mod *= 2
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.physiology)
@@ -480,7 +491,7 @@
 /datum/reagent/drug/skooma/on_mob_end_metabolize(mob/living/L)
 	. = ..()
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/skooma)
-	L.next_move_modifier *= 0.5
+	L.action_cooldown_mod *= 0.5
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.physiology)
@@ -542,13 +553,13 @@
 /datum/reagent/syndicateadrenals/on_mob_metabolize(mob/living/M)
 	. = ..()
 	if(istype(M))
-		M.next_move_modifier *= 0.5
+		M.action_cooldown_mod *= 0.5
 		to_chat(M, "<span class='notice'>You feel an intense surge of energy rushing through your veins.</span>")
 
 /datum/reagent/syndicateadrenals/on_mob_end_metabolize(mob/living/M)
 	. = ..()
 	if(istype(M))
-		M.next_move_modifier *= 2
+		M.action_cooldown_mod *= 2
 		to_chat(M, "<span class='notice'>You feel as though the world around you is going faster.</span>")
 
 /datum/reagent/syndicateadrenals/overdose_start(mob/living/M)
@@ -578,7 +589,7 @@
 			to_chat(M, "<span class='userlove'>[aroused_message]</span>")
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/list/genits = H.adjust_arousal(current_cycle, aphro = TRUE) // redundant but should still be here
+			var/list/genits = H.adjust_arousal(current_cycle, "crocin", aphro = TRUE) // redundant but should still be here
 			for(var/g in genits)
 				var/obj/item/organ/genital/G = g
 				to_chat(M, "<span class='userlove'>[G.arousal_verb]!</span>")
@@ -612,7 +623,7 @@
 			REMOVE_TRAIT(M,TRAIT_NEVERBONER,APHRO_TRAIT)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/list/genits = H.adjust_arousal(100, aphro = TRUE) // redundant but should still be here
+			var/list/genits = H.adjust_arousal(100, "hexacrocin", aphro = TRUE) // redundant but should still be here
 			for(var/g in genits)
 				var/obj/item/organ/genital/G = g
 				to_chat(M, "<span class='userlove'>[G.arousal_verb]!</span>")
@@ -637,6 +648,7 @@
 		if(prob(5) && ishuman(M) && M.has_dna() && (M.client?.prefs.cit_toggles & BIMBOFICATION))
 			if(!HAS_TRAIT(M,TRAIT_PERMABONER))
 				to_chat(M, "<span class='userlove'>Your libido is going haywire!</span>")
+				M.log_message("Made perma-horny by hexacrocin.",LOG_EMOTE)
 				ADD_TRAIT(M,TRAIT_PERMABONER,APHRO_TRAIT)
 	..()
 
@@ -654,7 +666,7 @@
 	if(M && M.client?.prefs.arousable && prob(16))
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/list/genits = H.adjust_arousal(-100, aphro = TRUE)
+			var/list/genits = H.adjust_arousal(-100, "camphor", aphro = TRUE)
 			if(genits.len)
 				to_chat(M, "<span class='notice'>You no longer feel aroused.")
 	..()
@@ -673,7 +685,7 @@
 		REMOVE_TRAIT(M,TRAIT_PERMABONER,APHRO_TRAIT)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/list/genits = H.adjust_arousal(-100, aphro = TRUE)
+			var/list/genits = H.adjust_arousal(-100, "hexacamphor", aphro = TRUE)
 			if(genits.len)
 				to_chat(M, "<span class='notice'>You no longer feel aroused.")
 

@@ -10,6 +10,7 @@
 	selection_color = "#ca8f55"
 
 	outfit = /datum/outfit/job/cargo_tech
+	plasma_outfit = /datum/outfit/plasmaman/cargo
 
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_CARGO_BOT, ACCESS_MINING,
 				ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM)

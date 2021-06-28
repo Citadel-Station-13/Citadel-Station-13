@@ -29,7 +29,9 @@
 	sound_to_playing_players('sound/effects/ratvar_reveal.ogg')
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [get_area_name(src)] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
-	INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 10, null, FALSE, 0)
+	SSpersistence.station_was_destroyed = TRUE
+	INVOKE_ASYNC(src, .proc/purge_the_heresy)
+
 
 /obj/structure/destructible/clockwork/massive/ratvar/Destroy()
 	GLOB.ratvar_awakens--
@@ -101,8 +103,8 @@
 		return
 	clashing = TRUE
 	GLOB.cult_narsie.clashing = TRUE
-	to_chat(world, "<span class='bold brass'><font size=5>\"YOU.\"</font></span>")
-	to_chat(world, "<span class='bold cult'><font size=5>\"Ratvar?!\"</font></span>")
+	to_chat(world, "<span class='bold brass'><font size=5>\"[pick("YOU.", "BLOOD GOD!!", "FACE ME, COWARD!")]\"</font></span>")
+	to_chat(world, "<span class='bold cult'><font size=5>\"[pick("Ratvar?! How?!", "YOU. BANISHED ONCE. KILLED NOW.", "SCRAP HEAP!!")]\"</font></span>")
 	clash_of_the_titans(GLOB.cult_narsie) // >:(
 	return TRUE
 
@@ -137,15 +139,47 @@
 		base_victory_chance *= 2 //The clash has a higher chance of resolving each time both gods attack one another
 	switch(winner)
 		if("Ratvar")
-			send_to_playing_players("<span class='heavy_brass'><font size=5>\"[pick("DIE.", "ROT.")]\"</font></span>\n\
+			send_to_playing_players("<span class='heavy_brass'><font size=5>\"[pick("DIE.", "ROT FOR CENTURIES, AS I HAVE!.","PERISH, HEATHEN.", "DIE, MONSTER, YOU DON'T BELONG IN THIS WORLD.")]\"</font></span>\n\
 			<span class='cult'><font size=5>\"<b>[pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>") //Nar'Sie get out
 			sound_to_playing_players('sound/magic/clockwork/anima_fragment_attack.ogg')
-			sound_to_playing_players('sound/magic/demon_dies.ogg', 50)
+			sound_to_playing_players('sound/magic/abomscream.ogg', 50)
 			clashing = FALSE
 			qdel(narsie)
 		if("Nar'Sie")
-			send_to_playing_players("<span class='cult'><font size=5>\"<b>[pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here.")]</b>\"</font></span>") //Broken English
-			sound_to_playing_players('sound/magic/demon_attack1.ogg')
-			sound_to_playing_players('sound/magic/clockwork/anima_fragment_death.ogg', 62)
+			send_to_playing_players("<span class='cult'><font size=5>\"<b>[pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here.")]</b>\"</font></span>\n\
+			<span class='heavy_brass'><font size=5>\"[pick("NO, YOUR SHADOWS SHALL NO-", "ZNL GUR FGERNZF BS GVZR PNEEL ZL RKVFG-", "MY LIGHT CANNO-")]\"</font></span>")
+			sound_to_playing_players('sound/magic/demon_attack1.ogg', 50)
+			sound_to_playing_players('sound/machines/clockcult/ratvar_scream.ogg', 80)
 			narsie.clashing = FALSE
 			qdel(src)
+
+
+/obj/structure/destructible/clockwork/massive/ratvar/proc/purge_the_heresy()
+	sleep(50)
+	priority_announce("Massive energy surge detected. Closest matching threat: Incoming supernova. All crew are advised to evacuate NAN lightyears away from blast zone","Central Command Higher Dimensional Affairs", 'sound/misc/airraid.ogg')
+	sleep(300)
+	priority_announce("Gravitational anomalies detected on the station. [Gibberish("There is no additional dat", 100)]-BZZZZZT.","Central Command Higher Dimensional Affairs", 'sound/magic/clockwork/ratvar_announce1.ogg')
+	sleep(80)
+	sound_to_playing_players('sound/magic/clockwork/ratvar_announce2.ogg', 70)
+	send_to_playing_players("<span class='heavy_brass'><font size=5>\"COME, ALL THOSE FAITHFUL! WITNESS THE RAYS OF JUSTICE CAST UPON THE HERETICS!\"</font></span>")
+	sleep(50)
+	SSshuttle.registerHostileEnvironment(src)
+	SSshuttle.lockdown = TRUE
+	sleep(250)
+	if(QDELETED(src))
+		priority_announce("Energy signal no longer detected.","Central Command Higher Dimensional Affairs")
+		return
+	sound_to_playing_players('sound/magic/clockwork/ark_activation_sequence.ogg', 80) //if this isn't lessened in volume it peaks for some reason
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/clockcult_ending_helper), 300)
+
+/proc/clockcult_ending_helper()
+	for(var/mob/M in GLOB.mob_list)
+		if(M.client)
+			SEND_SOUND(M, sound('sound/magic/clockwork/ratvar_attack.ogg'))
+			SEND_SOUND(M, sound('sound/magic/clockwork/ratvarfire.ogg'))
+		if(!is_servant_of_ratvar(M) && isliving(M))
+			var/mob/living/L = M
+			L.fire_stacks = INFINITY
+			L.IgniteMob()
+	sleep(50)
+	SSticker.force_ending = 1

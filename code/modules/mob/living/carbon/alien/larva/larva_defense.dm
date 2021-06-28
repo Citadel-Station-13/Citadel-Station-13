@@ -1,6 +1,6 @@
 
 
-/mob/living/carbon/alien/larva/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/alien/larva/on_attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(. || M.a_intent == INTENT_HELP || M.a_intent == INTENT_GRAB)
 		return

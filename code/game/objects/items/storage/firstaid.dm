@@ -41,8 +41,24 @@
 	new /obj/item/stack/medical/suture(src)
 	new /obj/item/stack/medical/mesh(src)
 	new /obj/item/stack/medical/mesh(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
+	new /obj/item/reagent_containers/hypospray/medipen/ekit(src)
 	new /obj/item/healthanalyzer(src)
+
+/obj/item/storage/firstaid/emergency
+	icon_state = "medbriefcase"
+	name = "emergency first-aid kit"
+	desc = "A very simple first aid kit meant to secure and stabilize serious wounds for later treatment."
+
+/obj/item/storage/firstaid/emergency/PopulateContents()
+	if(empty)
+		return
+	var/static/items_inside = list(
+		/obj/item/healthanalyzer/wound = 1,
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/suture/emergency = 1,
+		/obj/item/stack/medical/ointment = 1,
+		/obj/item/reagent_containers/hypospray/medipen/ekit = 2)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/ancient
 	icon_state = "firstaid"
@@ -378,15 +394,15 @@
 	desc = "You want penis enlargement pills?"
 
 /obj/item/storage/pill_bottle/penis_enlargement/PopulateContents()
-	for(var/i in 1 to 7)
+	for(var/i in 1 to 10)
 		new /obj/item/reagent_containers/pill/penis_enlargement(src)
 
 /obj/item/storage/pill_bottle/breast_enlargement
 	name = "breast enlargement pills"
-	desc = "Made by Fermichem - They have a woman with breasts larger than she is on them. The warming states not to take more than 10u at a time."
+	desc = "Made by Fermichem - The bottle shows a woman with breasts larger than she is on them. The warning states to not take more than 10 units at a time."
 
 /obj/item/storage/pill_bottle/breast_enlargement/PopulateContents()
-	for(var/i in 1 to 7)
+	for(var/i in 1 to 10)
 		new /obj/item/reagent_containers/pill/breast_enlargement(src)
 
 /obj/item/storage/pill_bottle/neurine
@@ -435,6 +451,7 @@
 	/obj/item/retractor,
 	/obj/item/cautery,
 	/obj/item/surgical_drapes,
+	/obj/item/bonesetter,
 	/obj/item/autosurgeon,
 	/obj/item/organ,
 	/obj/item/implant,
@@ -452,7 +469,7 @@
 //hijacking the minature first aids for hypospray boxes. <3
 /obj/item/storage/hypospraykit
 	name = "hypospray kit"
-	desc = "It's a kit containing a hypospray and specific treatment chemical-filled vials."
+	desc = "It's a kit designed for containing a hypospray and specific treatment chemical-filled vials."
 	icon_state = "firstaid-mini"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'

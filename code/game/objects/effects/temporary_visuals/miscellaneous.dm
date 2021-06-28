@@ -139,6 +139,23 @@
 /obj/effect/temp_visual/dir_setting/curse/hand
 	icon_state = "cursehand"
 
+/obj/effect/temp_visual/bsa_splash
+	name = "\improper Bluespace energy wave"
+	desc = "A massive, rippling wave of bluepace energy, all rapidly exhausting itself the moment it leaves the concentrated beam of light."
+	icon = 'icons/effects/beam_splash.dmi'
+	icon_state = "beam_splash_l"
+	layer = ABOVE_ALL_MOB_LAYER
+	pixel_y = -16
+	duration = 50
+
+/obj/effect/temp_visual/bsa_splash/Initialize(mapload, dir)
+	. = ..()
+	switch(dir)
+		if(WEST)
+			icon_state = "beam_splash_w"
+		if(EAST)
+			icon_state = "beam_splash_e"
+
 /obj/effect/temp_visual/wizard
 	name = "water"
 	icon = 'icons/mob/mob.dmi'
@@ -224,6 +241,17 @@
 /obj/effect/temp_visual/gravpush
 	name = "gravity wave"
 	icon_state = "shieldsparkles"
+	duration = 5
+
+/obj/effect/temp_visual/voidpush
+	name = "eldritch energy"
+	icon_state = "emark4"
+	duration = 5
+
+/obj/effect/temp_visual/voidswap
+	name = "altered space"
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "voidalter"
 	duration = 5
 
 /obj/effect/temp_visual/telekinesis
@@ -348,6 +376,12 @@
 
 /obj/effect/temp_visual/impact_effect/ion
 	icon_state = "shieldsparkles"
+	duration = 6
+
+/obj/effect/temp_visual/impact_effect/judgement_cut
+	name = "judgement cut impact"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "impact_judgement"
 	duration = 6
 
 /obj/effect/temp_visual/heart
@@ -498,3 +532,16 @@
 /obj/effect/temp_visual/dir_setting/space_wind/Initialize(mapload, set_dir, set_alpha = 255)
 	. = ..()
 	alpha = set_alpha
+
+/obj/effect/temp_visual/slime_puddle
+	icon = 'icons/mob/mob.dmi'
+	duration = 12
+	icon_state = "to_puddle"
+
+/obj/effect/temp_visual/slime_puddle/reverse
+	icon_state = "from_puddle"
+	duration = 7
+
+/obj/effect/temp_visual/gib_animation
+	icon = 'icons/mob/mob.dmi'
+	duration = 15

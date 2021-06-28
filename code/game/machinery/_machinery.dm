@@ -92,8 +92,13 @@ Class Procs:
 	pressure_resistance = 15
 	max_integrity = 200
 	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
+	flags_1 = DEFAULT_RICOCHET_1
 	flags_ricochet = RICOCHET_HARD
 	ricochet_chance_mod = 0.3
+
+	explosion_flags = EXPLOSION_FLAG_DENSITY_DEPENDENT
+	wave_explosion_block = EXPLOSION_BLOCK_MACHINE
+	wave_explosion_multiply = EXPLOSION_DAMPEN_MACHINE
 
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
@@ -116,6 +121,7 @@ Class Procs:
 	var/new_occupant_dir = SOUTH //The direction the occupant will be set to look at when entering the machine.
 	var/speed_process = FALSE // Process as fast as possible?
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
+	var/wire_compatible = FALSE
 		// For storing and overriding ui id and dimensions
 	var/tgui_id // ID of TGUI interface
 	var/ui_style // ID of custom TGUI style (optional)
@@ -135,7 +141,7 @@ Class Procs:
 	GLOB.machines += src
 
 	if(ispath(circuit, /obj/item/circuitboard))
-		circuit = new circuit
+		circuit = new circuit(src)
 		circuit.apply_default_parts(src)
 
 	if(!speed_process && init_process)
@@ -173,7 +179,7 @@ Class Procs:
 /obj/machinery/emp_act(severity)
 	. = ..()
 	if(use_power && !stat && !(. & EMP_PROTECT_SELF))
-		use_power(7500/severity)
+		use_power(1000 + severity*65)
 		new /obj/effect/temp_visual/emp(loc)
 
 /obj/machinery/proc/open_machine(drop = TRUE)
@@ -313,7 +319,7 @@ Class Procs:
 	if(user.a_intent != INTENT_HARM)
 		return attack_hand(user)
 	else
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.DelayNextAction(CLICK_CD_MELEE)
 		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>", null, null, COMBAT_MESSAGE_RANGE)
 		take_damage(4, BRUTE, "melee", 1)
@@ -359,11 +365,11 @@ Class Procs:
 /obj/machinery/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		on_deconstruction()
-		if(component_parts && component_parts.len)
+		if(LAZYLEN(component_parts))
 			spawn_frame(disassembled)
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
-			component_parts.Cut()
+			LAZYCLEARLIST(component_parts)
 	qdel(src)
 
 /obj/machinery/proc/spawn_frame(disassembled)
@@ -379,6 +385,7 @@ Class Procs:
 /obj/machinery/obj_break(damage_flag)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		stat |= BROKEN
+		return TRUE
 
 /obj/machinery/contents_explosion(severity, target)
 	if(occupant)
@@ -432,6 +439,7 @@ Class Procs:
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
 			setAnchored(!anchored)
 			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+			SEND_SIGNAL(src, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, anchored)
 			return SUCCESSFUL_UNFASTEN
 		return FAILED_UNFASTEN
 	return CANT_UNFASTEN
@@ -515,6 +523,8 @@ Class Procs:
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/on_construction()
+	for(var/obj/I in contents)
+		I.moveToNullspace()
 	return
 
 //called on deconstruction before the final deletion
@@ -531,18 +541,26 @@ Class Procs:
 	else if(zap_flags & ZAP_OBJ_DAMAGE)
 		take_damage(power/2000, BURN, "energy")
 		if(prob(40))
-			emp_act(EMP_LIGHT)
+			emp_act(50)
 
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
+	// if(AM == occupant)
+	// 	set_occupant(null)
 	if (AM == occupant)
 		SEND_SIGNAL(src, COMSIG_MACHINE_EJECT_OCCUPANT, occupant)
 		occupant = null
+	if(AM == circuit && circuit.loc != src)
+		component_parts -= AM //TODO: make the cmp part functions use lazyX
+		circuit = null
 
-/obj/machinery/proc/adjust_item_drop_location(atom/movable/AM)	// Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
-	var/md5 = md5(AM.name)										// Oh, and it's deterministic too. A specific item will always drop from the same slot.
+/obj/machinery/proc/adjust_item_drop_location(atom/movable/AM) // Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
+	var/md5 = md5(AM.name) // Oh, and it's deterministic too. A specific item will always drop from the same slot.
 	for (var/i in 1 to 32)
 		. += hex2num(md5[i])
 	. = . % 9
 	AM.pixel_x = -8 + ((.%3)*8)
 	AM.pixel_y = -8 + (round( . / 3)*8)
+
+/obj/machinery/rust_heretic_act()
+	take_damage(500, BRUTE, "melee", 1)

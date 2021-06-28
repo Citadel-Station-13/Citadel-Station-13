@@ -3,9 +3,8 @@
 
 /obj/item/melee/proc/check_martial_counter(mob/living/carbon/human/target, mob/living/carbon/human/user)
 	if(target.check_martial_melee_block())
-		target.visible_message("<span class='danger'>[target.name] blocks [src] and twists [user]'s arm behind [user.p_their()] back!</span>",
+		target.visible_message("<span class='danger'>[target.name] blocks your attack!</span>",
 					"<span class='userdanger'>You block the attack!</span>")
-		user.Stun(40)
 		return TRUE
 
 /obj/item/melee/chainofcommand
@@ -19,6 +18,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 14
 	throwforce = 10
+	wound_bonus = 15
+	bare_wound_bonus = 10
 	reach = 2
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
@@ -42,7 +43,7 @@
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "impaled", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
 /obj/item/melee/synthetic_arm_blade/Initialize()
@@ -62,7 +63,7 @@
 	throwforce = 15
 	w_class = WEIGHT_CLASS_BULKY
 	armour_penetration = 75
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	custom_materials = list(/datum/material/iron = 1000)
@@ -166,7 +167,7 @@
 	flags_1 = CONDUCT_1
 	obj_flags = UNIQUE_RENAME
 	w_class = WEIGHT_CLASS_BULKY
-	sharpness = IS_SHARP_ACCURATE //It cant be sharpend cook -_-
+	sharpness = SHARP_POINTY //It cant be sharpend cook -_-
 	attack_verb = list("stabs", "punctures", "pierces", "pokes")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	total_mass = 0.4
@@ -232,6 +233,9 @@
 /obj/item/melee/rapier/attack(mob/living/target, mob/living/user)
 	. = ..()
 	if(iscarbon(target))
+		if(HAS_TRAIT(user, TRAIT_PACIFISM))
+			visible_message("<span class='warning'>[user] gently taps [target] with [src].</span>",null,null,COMBAT_MESSAGE_RANGE)
+		log_combat(user, target, "slept", src)
 		var/mob/living/carbon/H = target
 		H.Dizzy(10)
 		H.adjustStaminaLoss(30)
@@ -267,9 +271,14 @@
 	var/force_on // Damage when on - not stunning
 	var/force_off // Damage when off - not stunning
 	var/weight_class_on // What is the new size class when turned on
+	var/sword_point = TRUE
+
+	wound_bonus = 15
 
 /obj/item/melee/classic_baton/Initialize()
 	. = ..()
+	if(sword_point)
+		AddElement(/datum/element/sword_point)
 
 // Description for trying to stun when still on cooldown.
 /obj/item/melee/classic_baton/proc/get_wait_description()
@@ -345,6 +354,8 @@
 			return
 	else
 		if(cooldown_check < world.time)
+			if(!UseStaminaBufferStandard(user, STAM_COST_BATON_MOB_MULT, warn = TRUE))
+				return DISCARD_LAST_ACTION
 			if(target.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, null) & BLOCK_SUCCESS)
 				playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 				return
@@ -366,11 +377,11 @@
 			else
 				target.LAssailant = WEAKREF(user)
 			cooldown_check = world.time + cooldown
-			user.adjustStaminaLossBuffered(getweight(user, STAM_COST_BATON_MOB_MULT))
 		else
 			var/wait_desc = get_wait_description()
 			if(wait_desc)
 				to_chat(user, wait_desc)
+			return DISCARD_LAST_ACTION
 
 /obj/item/melee/classic_baton/telescopic
 	name = "telescopic baton"
@@ -388,11 +399,14 @@
 	on_sound = 'sound/weapons/batonextend.ogg'
 	on_icon_state = "telebaton_1"
 	off_icon_state = "telebaton_0"
-	on_item_state = "nullrod"
+	on_item_state = "telebaton_1"
 	force_on = 10
 	force_off = 0
 	weight_class_on = WEIGHT_CLASS_BULKY
 	total_mass = TOTAL_MASS_NORMAL_ITEM
+	bare_wound_bonus = 5
+	sword_point = FALSE
+	var/silent = FALSE
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -422,6 +436,9 @@
 		w_class = weight_class_on
 		force = force_on
 		attack_verb = list("smacked", "struck", "cracked", "beaten")
+		AddElement(/datum/element/sword_point)
+		if(!silent)
+			user?.visible_message("<span class='warning'>[user] extends [src] with a flick of their wrist!</span>")
 	else
 		to_chat(user, desc["local_off"])
 		icon_state = off_icon_state
@@ -430,6 +447,9 @@
 		w_class = WEIGHT_CLASS_SMALL
 		force = force_off
 		attack_verb = list("hit", "poked")
+		RemoveElement(/datum/element/sword_point)
+		if(!silent)
+			user?.visible_message("<span class='warning'>[user] collapses [src] back down!</span>")
 	playsound(src.loc, on_sound, 50, 1)
 	add_fingerprint(user)
 
@@ -452,10 +472,11 @@
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
 	on_icon_state = "contractor_baton_1"
 	off_icon_state = "contractor_baton_0"
-	on_item_state = "contractor_baton"
+	on_item_state = "contractor_baton_1"
 	force_on = 16
 	force_off = 5
 	weight_class_on = WEIGHT_CLASS_NORMAL
+	silent = TRUE
 
 /obj/item/melee/classic_baton/telescopic/contractor_baton/get_wait_description()
 	return "<span class='danger'>The baton is still charging!</span>"
@@ -621,7 +642,7 @@
 			to_chat(user, "<span class='warning'>[target] doesn't seem to want to get on [src]!</span>")
 	update_icon()
 
-/obj/item/melee/roastingstick/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/melee/roastingstick/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	..()
 	if (held_sausage)
 		user.put_in_hands(held_sausage)

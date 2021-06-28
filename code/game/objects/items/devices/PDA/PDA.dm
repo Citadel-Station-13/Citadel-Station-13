@@ -266,7 +266,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/simple/pda)
 	assets.send(user)
 
-	var/datum/asset/spritesheet/emoji_s = get_asset_datum(/datum/asset/spritesheet/goonchat)
+	var/datum/asset/spritesheet/emoji_s = get_asset_datum(/datum/asset/spritesheet/chat)
 	emoji_s.send(user) //Already sent by chat but no harm doing this
 
 	user.set_machine(src)
@@ -665,7 +665,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 				create_message(U, locate(href_list["target"]))
 
 			if("MessageAll")
-				send_to_all(U)
+				if(cartridge?.spam_enabled)
+					send_to_all(U)
 
 			if("toggle_block")
 				toggle_blocking(usr, href_list["target"])
@@ -1027,6 +1028,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	else if(is_type_in_list(C, contained_item)) //Checks if there is a pen
 		if(inserted_item)
 			to_chat(user, "<span class='warning'>There is already \a [inserted_item] in \the [src]!</span>")
+			return ..()
 		else
 			if(!user.transferItemToLoc(C, src))
 				return
@@ -1205,7 +1207,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			A.emp_act(severity)
 	if (!(. & EMP_PROTECT_SELF))
 		emped += 1
-		spawn(200 * severity)
+		spawn(2 * severity)
 			emped -= 1
 
 /proc/get_viewable_pdas()

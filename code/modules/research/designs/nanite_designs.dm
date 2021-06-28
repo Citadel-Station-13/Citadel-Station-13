@@ -113,7 +113,7 @@
 /datum/design/nanites/spreading
 	name = "Infective Exo-Locomotion"
 	desc = "The nanites gain the ability to survive for brief periods outside of the human body, as well as the ability to start new colonies without an integration process; \
-			resulting in an extremely infective strain of nanites."
+			resulting in an extremely infective strain of nanites. Bypasses antiviral defense"
 	id = "spreading_nanites"
 	program_type = /datum/nanite_program/spreading
 	category = list("Utility Nanites")
@@ -131,6 +131,21 @@
 			but it causes occasional software errors due to faulty copies. Not compatible with cloud sync."
 	id = "mitosis_nanites"
 	program_type = /datum/nanite_program/mitosis
+	category = list("Utility Nanites")
+
+/datum/design/nanites/antiviral
+	name = "Enhanced Error Correction"
+	desc = "The nanites self-propagate and replicate their program storage memory, preventing viral takeovers."
+	id = "antiviral_nanites"
+	program_type = /datum/nanite_program/lockout/antiviral
+	category = list("Utility Nanites")
+
+/datum/design/nanites/hostile_lockdown
+	name = "Hostile Lockdown"
+	desc = "The nanites constantly encrypt and scramble their own control sectors, preventing consoles from controlling them. Furthermore, \
+	if the host happens to be a synthetic organism with innate control over nanite strains, this will prevent them from acting on the nanites as well."
+	id = "hostile_lockdown"
+	program_type = /datum/nanite_program/lockout/hostile_lockdown
 	category = list("Utility Nanites")
 
 ////////////////////MEDICAL NANITES//////////////////////////////////////
@@ -231,8 +246,8 @@
 	category = list("Augmentation Nanites")
 
 /datum/design/nanites/coagulating
-	name = "Rapid Coagulation"
-	desc = "The nanites induce rapid coagulation when the host is wounded, dramatically reducing bleeding rate."
+	name = "Vein Repressurization"
+	desc = "The nanites re-route circulating blood away from open wounds, dramatically reducing bleeding rate."
 	id = "coagulating_nanites"
 	program_type = /datum/nanite_program/coagulating
 	category = list("Augmentation Nanites")
@@ -543,15 +558,15 @@
 	program_type = /datum/nanite_program/protocol/factory
 	category = list("Protocols_Nanites")
 
-/datum/design/nanites/tinker
-	name = "Tinker Protocol"
-	desc = "Replication Protocol: the nanites learn to use metallic material in the host's bloodstream to speed up the replication process."
-	id = "tinker_nanites"
-	program_type = /datum/nanite_program/protocol/tinker
+/datum/design/nanites/pyramid
+	name = "Pyramid Protocol"
+	desc = "Replication Protocol: the nanites implement an alternate cooperative replication protocol that is more efficient as long as the saturation level is above 80%."
+	id = "pyramid_nanites"
+	program_type = /datum/nanite_program/protocol/pyramid
 	category = list("Protocols_Nanites")
 
 /datum/design/nanites/offline
-	name = "Offline Production Protocol"
+	name = "Eclipse Protocol"
 	desc = "Replication Protocol: while the host is asleep or otherwise unconcious, the nanites exploit the reduced interference to replicate more quickly."
 	id = "offline_nanites"
 	program_type = /datum/nanite_program/protocol/offline
@@ -562,4 +577,33 @@
 	desc = "Replication Protocol: the nanites syncronize their tasks and processes within a host, leading to an increase in replication speed proportional to the current nanite volume."
 	id = "synergy_nanites"
 	program_type = /datum/nanite_program/protocol/synergy
+	category = list("Protocols_Nanites")
+
+/datum/design/nanites/hive
+	name = "Hive Protocol"
+	desc = "Storage Protocol: the nanites use a more efficient grid arrangment for volume storage, increasing maximum volume in a host."
+	id = "hive_nanites"
+	program_type = /datum/nanite_program/protocol/hive
+	category = list("Protocols_Nanites")
+
+/datum/design/nanites/zip
+	name = "Zip Protocol"
+	desc = "Storage Protocol: the nanites are disassembled and compacted when unused, greatly increasing the maximum volume while in a host. However, the process slows down the replication rate slightly."
+	id = "zip_nanites"
+	program_type = /datum/nanite_program/protocol/zip
+	category = list("Protocols_Nanites")
+
+/datum/design/nanites/free_range
+	name = "Free-range Protocol"
+	desc = "Storage Protocol: the nanites discard their default storage protocols in favour of a cheaper and more organic approach. Reduces maximum volume, but increases the replication rate."
+	id = "free_range_nanites"
+	program_type = /datum/nanite_program/protocol/free_range
+	category = list("Protocols_Nanites")
+
+/datum/design/nanites/unsafe_storage
+	name = "S.L.O. Protocol"
+	desc = "Storage Protocol: 'S.L.O.P.', or Storage Level Override Protocol, completely disables the safety measures normally present in nanites,\
+		allowing them to reach much higher saturation levels, but at the risk of causing internal damage to the host."
+	id = "unsafe_storage_nanites"
+	program_type = /datum/nanite_program/protocol/unsafe_storage
 	category = list("Protocols_Nanites")

@@ -177,12 +177,12 @@
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned livesaving survival spells. You are able to cast charge and forcewall.")
 		if(APPRENTICE_ROBELESS)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
-			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/mind_transfer(null))
+			owner.AddSpell(new /obj/effect/proc_holder/spell/pointed/mind_transfer(null))
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap.")
 		if(APPRENTICE_MARTIAL)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/nuclear_fist(null))
-			H.put_in_hands(new /obj/item/book/granter/martial/plasma_fist(H))
-			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned mystical martial abilities. You are also able to use the Nuclear Fist at will.")
+			owner.AddSpell(new /obj/effect/proc_holder/spell/self/mantra(null))
+			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned to control your Inner Mantra. You are also able to use the Nuclear Fist at will.")
 
 /datum/antagonist/wizard/apprentice/create_objectives()
 	var/datum/objective/protect/new_objective = new /datum/objective/protect

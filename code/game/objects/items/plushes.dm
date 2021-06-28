@@ -8,6 +8,7 @@
 	resistance_flags = FLAMMABLE
 	var/list/squeak_override //Weighted list; If you want your plush to have different squeak sounds use this
 	var/stuffed = TRUE //If the plushie has stuffing in it
+	var/unstuffable = FALSE //for plushies that can't be stuffed
 	var/obj/item/grenade/grenade //You can remove the stuffing from a plushie and add a grenade to it for *nefarious uses*
 	//--love ~<3--
 	gender = NEUTER
@@ -32,6 +33,8 @@
 	//--end of love :'(--
 
 	var/snowflake_id					//if we set from a config snowflake plushie.
+	/// wrapper, do not use, read only
+	var/__ADMIN_SET_TO_ID
 	var/can_random_spawn = TRUE			//if this is FALSE, don't spawn this for random plushies.
 
 /obj/item/toy/plush/random_snowflake/Initialize(mapload, set_snowflake_id)
@@ -42,9 +45,14 @@
 		return
 	set_snowflake_from_config(id)
 
+/obj/item/toy/plush/DoRevenantThrowEffects(atom/target)
+	var/datum/component/squeak/squeaker = GetComponent(/datum/component/squeak)
+	squeaker.do_play_squeak(TRUE)
+
 /obj/item/toy/plush/Initialize(mapload, set_snowflake_id)
 	. = ..()
 	AddComponent(/datum/component/squeak, squeak_override)
+	AddElement(/datum/element/bed_tuckable, 6, -5, 90)
 
 	//have we decided if Pinocchio goes in the blue or pink aisle yet?
 	if(gender == NEUTER)
@@ -111,10 +119,21 @@
 
 	return ..()
 
+/obj/item/toy/plush/vv_get_var(var_name)
+	if(var_name == NAMEOF(src, __ADMIN_SET_TO_ID))
+		return debug_variable("__ADMIN: SET SNOWFLAKE ID", snowflake_id, 0, src)
+	return ..()
+
+/obj/item/toy/plush/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, __ADMIN_SET_TO_ID))
+		return set_snowflake_from_config(var_value)
+	return ..()
+
 /obj/item/toy/plush/proc/set_snowflake_from_config(id)
 	var/list/configlist = CONFIG_GET(keyed_list/snowflake_plushies)
 	var/list/jsonlist = configlist[id]
-	ASSERT(jsonlist)
+	if(!jsonlist)
+		return FALSE
 	jsonlist = json_decode(jsonlist)
 	if(jsonlist["inherit_from"])
 		var/path = text2path(jsonlist["inherit_from"])
@@ -149,6 +168,8 @@
 	if(squeak_override)
 		var/datum/component/squeak/S = GetComponent(/datum/component/squeak)
 		S?.override_squeak_sounds = squeak_override
+	snowflake_id = id
+	return TRUE
 
 /obj/item/toy/plush/handle_atom_del(atom/A)
 	if(A == grenade)
@@ -166,7 +187,7 @@
 					return
 			log_game("[key_name(user)] activated a hidden grenade in [src].")
 			grenade.preprime(user, msg = FALSE, volume = 10)
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"plushpet", /datum/mood_event/plushpet)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"plushpet", /datum/mood_event/plushpet)
 	else
 		to_chat(user, "<span class='notice'>You try to pet [src], but it has no stuffing. Aww...</span>")
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"plush_nostuffing", /datum/mood_event/plush_nostuffing)
@@ -174,6 +195,9 @@
 /obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
 	if(I.get_sharpness())
 		if(!grenade)
+			if(unstuffable)
+				to_chat(user, "<span class='notice'>Nothing to do here.</span>")
+				return
 			if(!stuffed)
 				to_chat(user, "<span class='warning'>You already murdered it!</span>")
 				return
@@ -187,6 +211,13 @@
 			grenade = null
 		return
 	if(istype(I, /obj/item/grenade))
+		if(unstuffable)
+			to_chat(user, "<span class='warning'>No... you should destroy it now!</span>")
+			sleep(10)
+			if(QDELETED(user) || QDELETED(src))
+				return
+			SEND_SOUND(user, 'sound/weapons/armbomb.ogg')
+			return
 		if(stuffed)
 			to_chat(user, "<span class='warning'>You need to remove some stuffing first!</span>")
 			return
@@ -435,6 +466,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	can_random_spawn = FALSE
 
 /obj/item/toy/plush/random/Initialize()
+	SHOULD_CALL_PARENT(FALSE)
 	var/newtype
 	var/list/snowflake_list = CONFIG_GET(keyed_list/snowflake_plushies)
 
@@ -743,3 +775,93 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	attack_verb = list("headbutt", "scritched", "bit")
 	squeak_override = list('modular_citadel/sound/voice/nya.ogg' = 1)
 	can_random_spawn = FALSE
+
+
+/obj/item/toy/plush/hairball
+	name = "Hairball"
+	desc = "A bundle of undigested fibers and scales. Yuck."
+	icon_state = "Hairball"
+	unstuffable = TRUE
+	young = TRUE // Your own mouth-baby.
+	squeak_override = list('sound/misc/splort.ogg'=1)
+	attack_verb = list("sploshed", "splorted", "slushed")
+	can_random_spawn = FALSE
+
+/obj/item/toy/plush/plushling
+	name = "peculiar plushie"
+	desc = "An adorable stuffed toy- wait, did it just move?"
+	can_random_spawn = FALSE
+	var/absorb_cooldown = 100 //ticks cooldown between absorbs
+	var/next_absorb = 0 //When can it absorb another plushie
+	var/check_interval = 20
+	var/next_check = 0
+
+//Overrides parent proc
+/obj/item/toy/plush/plushling/attack_self(mob/user)
+	if(!user) //hmmmmm
+		return
+	to_chat(user, "<span class='warning'>You try to pet the plushie, but recoil as it bites your hand instead! OW!</span>")
+	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"plush_bite", /datum/mood_event/plush_bite)
+	var/mob/living/carbon/human/H = user
+	if(!H)
+		return //Type safety.
+	H.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+	addtimer(CALLBACK(H, /mob/living/carbon/human.proc/dropItemToGround, src, TRUE), 1)
+
+/obj/item/toy/plush/plushling/New()
+	var/initial_state = pick("plushie_lizard", "plushie_snake", "plushie_slime", "fox")
+	icon_state = initial_state
+	item_state = initial_state
+	START_PROCESSING(SSobj, src)
+	. = ..()
+
+/obj/item/toy/plush/plushling/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
+
+/obj/item/toy/plush/plushling/process()
+	if(world.time < next_absorb || world.time < next_check)
+		return
+	next_check = world.time + check_interval
+	var/obj/item/toy/plush/target
+	for(var/obj/item/toy/plush/possible_target in loc) //First, it tries to get anything in its same location, be it a tile or a backpack
+		if(possible_target == src || istype(possible_target, /obj/item/toy/plush/plushling))
+			continue
+		target = possible_target
+		break
+	if(!target)
+		if(!isturf(loc))
+			return
+		for(var/obj/item/toy/plush/P in oview(1, src)) //If that doesn't work, it hunts for plushies adjacent to its own tile
+			if(istype(P, /obj/item/toy/plush/plushling)) //These do not hunt their own kind
+				continue
+			src.throw_at(P, 1, 2)
+			visible_message("<span class='danger'>[src] leaps at [P]!</span>")
+			break
+		return
+	if(istype(target, /obj/item/toy/plush/plushling)) //These do not consume their own.
+		return
+	next_absorb = world.time + absorb_cooldown
+	plushie_absorb(target)
+
+/obj/item/toy/plush/plushling/proc/plushie_absorb(obj/item/toy/plush/victim)
+	if(!victim)
+		return
+	visible_message("<span class='warning'>[src] gruesomely mutilliates [victim], leaving nothing more than dust!</span>")
+	if(victim.snowflake_id) //Snowflake code for snowflake plushies.
+		set_snowflake_from_config(victim.snowflake_id)
+		desc += " Wait, did it just move..?"
+	else
+		name = victim.name
+		desc = victim.desc + " Wait, did it just move..?"
+		icon_state = victim.icon_state
+		item_state = victim.item_state
+		squeak_override = victim.squeak_override
+		attack_verb = victim.attack_verb
+	new /obj/effect/decal/cleanable/ash(get_turf(victim))
+	qdel(victim)
+
+/obj/item/toy/plush/plushling/love(obj/item/toy/plush/Kisser, mob/living/user) //You shouldn't have come here, poor plush.
+	if(!Kisser)
+		return
+	plushie_absorb(Kisser)

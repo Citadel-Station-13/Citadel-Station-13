@@ -80,12 +80,12 @@
 /obj/item/shard{
 	icon_state = "medium"
 	},
-/turf/open/floor/plating/airless{
+/turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
 /area/ruin/space/has_grav)
 "U" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/space)
 "W" = (
 /obj/structure/spider/stickyweb,

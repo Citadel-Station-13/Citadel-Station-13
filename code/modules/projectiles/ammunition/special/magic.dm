@@ -35,6 +35,9 @@
 /obj/item/ammo_casing/magic/spellblade
 	projectile_type = /obj/item/projectile/magic/spellblade
 
+/obj/item/ammo_casing/magic/judgement_cut
+	projectile_type = /obj/item/projectile/judgement_cut
+
 /obj/item/ammo_casing/magic/arcane_barrage
 	projectile_type = /obj/item/projectile/magic/arcane_barrage
 
@@ -43,3 +46,17 @@
 
 /obj/item/ammo_casing/magic/locker
 	projectile_type = /obj/item/projectile/magic/locker
+
+//Spell book ammo casing
+/obj/item/ammo_casing/magic/book
+	projectile_type = /obj/item/projectile/magic/spellcard/book
+
+/obj/item/ammo_casing/magic/book/spark
+	projectile_type = /obj/item/projectile/magic/spellcard/book/spark
+
+/obj/item/ammo_casing/magic/book/heal
+	projectile_type = /obj/item/projectile/magic/spellcard/book/heal
+	harmful = FALSE
+
+/obj/item/ammo_casing/magic/book/shock
+	projectile_type = /obj/item/projectile/magic/spellcard/book/shock

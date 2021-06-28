@@ -153,10 +153,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
-"cX" = (
-/obj/structure/closet/secure_closet/miner,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
 "dk" = (
 /obj/structure/table,
 /obj/item/stack/packageWrap,
@@ -398,6 +394,13 @@
 	},
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
+"he" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
 "hf" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/plasteel,
@@ -417,16 +420,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"hH" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
 "hP" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
@@ -503,6 +496,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
+"ja" = (
+/obj/item/bikehorn{
+	color = "#000";
+	desc = "A horn off of a bicycle. This one has been charred to hell and back, yet somehow it still honks.";
+	name = "charred bike horn"
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "jf" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
@@ -769,11 +770,6 @@
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
-"nH" = (
-/obj/machinery/light,
-/obj/structure/closet/wardrobe/miner,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
 "nI" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -841,6 +837,12 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/mine/production)
+"nS" = (
+/obj/machinery/computer/shuttle/mining/common{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
 "nX" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
@@ -1275,8 +1277,12 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "uG" = (
-/obj/structure/ore_box,
-/obj/effect/turf_decal/box,
+/obj/structure/table,
+/obj/item/clothing/glasses/meson,
+/obj/item/storage/bag/ore,
+/obj/item/pickaxe,
+/obj/item/mining_scanner,
+/obj/item/flashlight,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "uI" = (
@@ -1439,6 +1445,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"wQ" = (
+/obj/structure/table,
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/tank/internals/emergency_oxygen,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
 "wV" = (
 /turf/closed/mineral/random/volcanic,
 /area/lavaland/surface/outdoors/explored)
@@ -1536,6 +1551,18 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
+"yZ" = (
+/obj/docking_port/stationary{
+	area_type = /area/lavaland/surface/outdoors;
+	dir = 8;
+	dwidth = 3;
+	height = 7;
+	id = "lavaland_common_away";
+	name = "Lavaland Mining Public Wing";
+	width = 7
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "zh" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -1644,6 +1671,13 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/mine/production)
+"AC" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
 "AH" = (
 /obj/machinery/cryopod{
 	dir = 4
@@ -1718,6 +1752,12 @@
 "Bo" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
+/area/mine/living_quarters)
+"By" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "BD" = (
 /obj/machinery/door/airlock/maintenance{
@@ -1843,15 +1883,13 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "Dr" = (
+/obj/structure/chair,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -5;
 	pixel_y = 30
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
-	},
-/obj/machinery/light{
-	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
@@ -2695,17 +2733,12 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "Pp" = (
-/obj/machinery/camera{
-	c_tag = "Public Shuttle Lobby";
-	network = list("mine")
+/obj/structure/table,
+/obj/item/gps/mining{
+	pixel_x = 3;
+	pixel_y = 5
 	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
+/obj/item/gps/mining,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "Pq" = (
@@ -2750,6 +2783,10 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
+"Qd" = (
+/obj/structure/displaycase,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
 "Qi" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
@@ -2825,8 +2862,12 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Ru" = (
+/obj/structure/chair,
 /obj/machinery/newscaster{
 	pixel_y = 32
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
@@ -3019,12 +3060,12 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /mob/living/simple_animal/bot/secbot/beepsky{
 	desc = "Powered by the tears and sweat of laborers.";
 	name = "Prison Ofitser"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
@@ -3129,7 +3170,9 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "VY" = (
-/obj/structure/closet/emcloset,
+/obj/structure/closet/emcloset{
+	anchored = 1
+	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -3240,10 +3283,6 @@
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
-/area/mine/living_quarters)
-"XX" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
 /area/mine/living_quarters)
 "Ya" = (
 /turf/closed/wall/r_wall,
@@ -4211,9 +4250,9 @@ VT
 VT
 VT
 VT
-VT
-VT
-VT
+Lm
+Lm
+Lm
 VT
 VT
 VT
@@ -4266,12 +4305,12 @@ VT
 VT
 VT
 VT
-VT
-VT
-VT
-VT
-VT
-VT
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
 VT
 VT
 VT
@@ -4322,15 +4361,15 @@ VT
 VT
 VT
 VT
-VT
-VT
-VT
-VT
-VT
-VT
-VT
-VT
-VT
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
 VT
 VT
 VT
@@ -4379,16 +4418,16 @@ VT
 VT
 VT
 VT
-VT
-VT
-VT
-VT
 Lm
 Lm
-VT
-VT
 Lm
-VT
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
 VT
 VT
 VT
@@ -4435,17 +4474,17 @@ wz
 wz
 VT
 VT
-VT
-VT
 Lm
-VT
-VT
-VT
 Lm
-VT
-VT
-VT
-VT
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
 Lm
 VT
 VT
@@ -4492,18 +4531,18 @@ wz
 wz
 Lm
 VT
-VT
-VT
 Lm
 Lm
 Lm
 Lm
 Lm
-VT
-VT
-VT
-VT
-VT
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
 VT
 VT
 VT
@@ -4549,7 +4588,6 @@ VT
 wz
 Lm
 VT
-VT
 Lm
 Lm
 Lm
@@ -4558,8 +4596,9 @@ Lm
 Lm
 Lm
 Lm
-VT
-VT
+Lm
+Lm
+Lm
 VT
 VT
 VT
@@ -4615,7 +4654,7 @@ Lm
 Lm
 Lm
 Lm
-VT
+Lm
 VT
 VT
 VT
@@ -4662,11 +4701,11 @@ VT
 VT
 VT
 VT
-VT
 Lm
 Lm
-VT
-VT
+Lm
+Lm
+Lm
 Lm
 Lm
 Lm
@@ -4722,10 +4761,10 @@ wz
 Lm
 Lm
 Lm
-VT
 Lm
 Lm
 Lm
+yZ
 Lm
 Lm
 Lm
@@ -4772,18 +4811,18 @@ Gt
 Dv
 my
 VT
+ja
 VT
 VT
-VT
+wz
 wz
 Lm
 Lm
 Lm
-VT
 Lm
-Lm
-Lm
-Lm
+KV
+he
+KV
 Lm
 Lm
 Lm
@@ -4833,14 +4872,14 @@ VT
 VT
 Lm
 Lm
+wz
+wz
 Lm
 Lm
 Lm
-Lm
-Lm
-Lm
-Lm
-Lm
+KV
+Ag
+KV
 Lm
 Lm
 VT
@@ -4893,11 +4932,11 @@ Lm
 VN
 VN
 VN
-XX
+KV
 VN
-VN
-VN
-VN
+KV
+AC
+KV
 VT
 VT
 VT
@@ -4949,12 +4988,12 @@ pu
 bn
 VN
 zy
-Ag
-Ag
-Ag
+By
+nS
+By
 Ag
 qZ
-VN
+KV
 VT
 VT
 VT
@@ -5010,8 +5049,8 @@ Ag
 Ag
 Ag
 Ag
-cX
-VN
+Ag
+KV
 VT
 VT
 VT
@@ -5067,8 +5106,8 @@ Ag
 uG
 uG
 Ag
-cX
-VN
+eS
+KV
 VT
 VT
 VT
@@ -5124,8 +5163,8 @@ KO
 uG
 uG
 Ag
-cX
-VN
+Ag
+KV
 VT
 VT
 VT
@@ -5181,7 +5220,7 @@ RP
 Ag
 Ag
 Ag
-nH
+oy
 VN
 VT
 VT
@@ -5235,10 +5274,10 @@ oy
 VN
 Pp
 sx
-eS
-Ag
-Ag
-hH
+Pp
+wQ
+Qd
+Qd
 VN
 wz
 Lm

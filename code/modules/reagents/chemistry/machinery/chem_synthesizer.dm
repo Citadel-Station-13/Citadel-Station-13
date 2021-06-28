@@ -12,11 +12,10 @@
 		"tricord" = /datum/reagent/medicine/tricordrazine
 	)
 
-/obj/machinery/chem_dispenser/chem_synthesizer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/chem_dispenser/chem_synthesizer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "ChemDebugSynthesizer", name, 390, 330, master_ui, state)
+		ui = new(user, src, "ChemDebugSynthesizer", name)
 		ui.open()
 
 /obj/machinery/chem_dispenser/chem_synthesizer/ui_act(action, params)
@@ -31,7 +30,11 @@
 				beaker = null
 				. = TRUE
 		if("input")
-			var/input_reagent = replacetext(lowertext(input("Enter the name of any reagent", "Input") as text), " ", "") //95% of the time, the reagent types is a lowercase, no spaces / underscored version of the name
+			var/input_reagent = replacetext(lowertext(input("Enter the name of any reagent", "Input") as text|null), " ", "") //95% of the time, the reagent id is a lowercase/no spaces version of the name
+
+			if (isnull(input_reagent))
+				return
+
 			if(shortcuts[input_reagent])
 				input_reagent = shortcuts[input_reagent]
 			else
@@ -51,7 +54,7 @@
 			beaker = new /obj/item/reagent_containers/glass/beaker/bluespace(src)
 			visible_message("<span class='notice'>[src] dispenses a bluespace beaker.</span>")
 		if("amount")
-			var/input = input("Units to dispense", "Units") as num|null
+			var/input = text2num(params["amount"])
 			if(input)
 				amount = input
 	update_icon()

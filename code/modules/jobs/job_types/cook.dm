@@ -11,6 +11,7 @@
 	var/cooks = 0 //Counts cooks amount
 
 	outfit = /datum/outfit/job/cook
+	plasma_outfit = /datum/outfit/plasmaman/chef
 
 	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM)
 	minimal_access = list(ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM)

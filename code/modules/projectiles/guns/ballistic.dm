@@ -8,6 +8,7 @@
 	var/obj/item/ammo_box/magazine/magazine
 	var/casing_ejector = TRUE //whether the gun ejects the chambered casing
 	var/magazine_wording = "magazine"
+	var/sawn_item_state = "gun"
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
@@ -97,8 +98,7 @@
 	w_class += S.w_class //so pistols do not fit in pockets when suppressed
 	update_icon()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/gun/ballistic/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/gun/ballistic/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc == user)
 		if(suppressed && can_unsuppress)
 			var/obj/item/suppressor/S = suppressed
@@ -180,13 +180,11 @@
 #undef BRAINS_BLOWN_THROW_SPEED
 #undef BRAINS_BLOWN_THROW_RANGE
 
-
-
 /obj/item/gun/ballistic/proc/sawoff(mob/user)
 	if(sawn_off)
 		to_chat(user, "<span class='warning'>\The [src] is already shortened!</span>")
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.DelayNextAction(CLICK_CD_MELEE)
 	user.visible_message("[user] begins to shorten \the [src].", "<span class='notice'>You begin to shorten \the [src]...</span>")
 
 	//if there's any live ammo inside the gun, makes it go off
@@ -201,12 +199,16 @@
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
 		w_class = WEIGHT_CLASS_NORMAL
-		item_state = "gun"
+		item_state = sawn_item_state
 		slot_flags &= ~ITEM_SLOT_BACK	//you can't sling it on your back
 		slot_flags |= ITEM_SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 		sawn_off = TRUE
 		update_icon()
 		return 1
+
+/// is something supposed to happen here?
+/obj/item/gun/ballistic/proc/on_sawoff(mob/user)
+	return
 
 // Sawing guns related proc
 /obj/item/gun/ballistic/proc/blow_up(mob/user)

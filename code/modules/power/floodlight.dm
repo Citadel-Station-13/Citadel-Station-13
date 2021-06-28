@@ -9,7 +9,7 @@
 	var/state = FLOODLIGHT_NEEDS_WRENCHING
 
 /obj/structure/floodlight_frame/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/wrench) && (state == FLOODLIGHT_NEEDS_WRENCHING))
+	if(O.tool_behaviour == TOOL_WRENCH && (state == FLOODLIGHT_NEEDS_WRENCHING))
 		to_chat(user, "<span class='notice'>You secure [src].</span>")
 		anchored = TRUE
 		state = FLOODLIGHT_NEEDS_WIRES
@@ -26,7 +26,7 @@
 			to_chat(user, "<span class='notice'>You put lights in [src].</span>")
 			new /obj/machinery/power/floodlight(src.loc)
 			qdel(src)
-	else if(istype(O, /obj/item/screwdriver) && (state == FLOODLIGHT_NEEDS_SECURING))
+	else if(O.tool_behaviour == TOOL_SCREWDRIVER && (state == FLOODLIGHT_NEEDS_SECURING))
 		to_chat(user, "<span class='notice'>You fasten the wiring and electronics in [src].</span>")
 		name = "secured [name]"
 		desc = "A bare metal frame that looks like a floodlight. Requires light tubes."
@@ -82,7 +82,7 @@
 		to_chat(user, "You set [src] to [setting_text].")
 
 /obj/machinery/power/floodlight/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/wrench))
+	if(O.tool_behaviour == TOOL_WRENCH)
 		default_unfasten_wrench(user, O, time = 20)
 		change_setting(1)
 		if(anchored)
@@ -92,10 +92,7 @@
 	else
 		. = ..()
 
-/obj/machinery/power/floodlight/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/power/floodlight/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	var/current = setting
 	if(current == 1)
 		current = light_setting_list.len

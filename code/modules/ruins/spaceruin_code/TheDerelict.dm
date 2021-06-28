@@ -17,7 +17,6 @@
 	desc = "Looks like someone started shakily writing a will in space common, but were interrupted by something bloody..."
 	info = "__Objectives #1__: Find out what is hidden in Kosmicheskaya Stantsiya 13s Vault"
 
-
 /// Vault controller for use on the derelict/KS13.
 /obj/machinery/computer/vaultcontroller
 	name = "vault controller"
@@ -35,14 +34,9 @@
 	var/siphoned_power = 0
 	var/siphon_max = 1e7
 
-	ui_x = 300
-	ui_y = 120
-
-
 /obj/machinery/computer/monitor/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>It appears to be powered via a cable connector.</span>"
-
 
 //Checks for cable connection, charges if possible.
 /obj/machinery/computer/vaultcontroller/process()
@@ -52,12 +46,10 @@
 	if(attached_cable)
 		attempt_siphon()
 
-
 ///Looks for a cable connection beneath the machine.
 /obj/machinery/computer/vaultcontroller/proc/update_cable()
 	var/turf/T = get_turf(src)
 	attached_cable = locate(/obj/structure/cable) in T
-
 
 ///Initializes airlock links.
 /obj/machinery/computer/vaultcontroller/proc/find_airlocks()
@@ -70,14 +62,12 @@
 				door2 = A
 				break
 
-
 ///Tries to charge from powernet excess, no upper limit except max charge.
 /obj/machinery/computer/vaultcontroller/proc/attempt_siphon()
 	var/surpluspower = clamp(attached_cable.surplus(), 0, (siphon_max - siphoned_power))
 	if(surpluspower)
 		attached_cable.add_load(surpluspower)
 		siphoned_power += surpluspower
-
 
 ///Handles the doors closing
 /obj/machinery/computer/vaultcontroller/proc/cycle_close(obj/machinery/door/airlock/A)
@@ -86,13 +76,11 @@
 	A.close()
 	A.bolt()
 
-
 ///Handles the doors opening
 /obj/machinery/computer/vaultcontroller/proc/cycle_open(obj/machinery/door/airlock/A)
 	A.unbolt()
 	A.open()
 	A.bolt()
-
 
 ///Attempts to lock the vault doors
 /obj/machinery/computer/vaultcontroller/proc/lock_vault()
@@ -103,7 +91,6 @@
 	if(door1.density && door1.locked && door2.density && door2.locked)
 		locked = TRUE
 
-
 ///Attempts to unlock the vault doors
 /obj/machinery/computer/vaultcontroller/proc/unlock_vault()
 	if(door1 && door1.density)
@@ -112,7 +99,6 @@
 		cycle_open(door2)
 	if(!door1.density && door1.locked && !door2.density && door2.locked)
 		locked = FALSE
-
 
 ///Attempts to lock/unlock vault doors, if machine is charged.
 /obj/machinery/computer/vaultcontroller/proc/activate_lock()
@@ -125,14 +111,11 @@
 	else
 		lock_vault()
 
-
-/obj/machinery/computer/vaultcontroller/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/vaultcontroller/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "VaultController", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "VaultController", name)
 		ui.open()
-
 
 /obj/machinery/computer/vaultcontroller/ui_act(action, params)
 	if(..())
@@ -141,14 +124,12 @@
 		if("togglelock")
 			activate_lock()
 
-
 /obj/machinery/computer/vaultcontroller/ui_data()
 	var/list/data = list()
 	data["stored"] = siphoned_power
 	data["max"] = siphon_max
 	data["doorstatus"] = locked
 	return data
-
 
 ///Airlock that can't be deconstructed, broken or hacked.
 /obj/machinery/door/airlock/vault/derelict
@@ -158,16 +139,13 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	id_tag = "derelictvault"
 
-
 ///Overrides screwdriver attack to prevent all deconstruction and hacking.
 /obj/machinery/door/airlock/vault/derelict/attackby(obj/item/C, mob/user, params)
 	if(C.tool_behaviour == TOOL_SCREWDRIVER)
 		return
 	..()
 
-
 // So drones can teach borgs and AI dronespeak. For best effect, combine with mother drone lawset.
-
 /obj/item/dronespeak_manual
 	name = "dronespeak manual"
 	desc = "The book's cover reads: \"Understanding Dronespeak - An exercise in futility.\""
@@ -181,7 +159,7 @@
 			to_chat(user, "<span class='boldannounce'>You start skimming through [src], but you already know dronespeak.</span>")
 		else
 			to_chat(user, "<span class='boldannounce'>You start skimming through [src], and suddenly the drone chittering makes sense.</span>")
-			user.grant_language(/datum/language/drone, TRUE, TRUE)
+			user.grant_language(/datum/language/drone, TRUE, TRUE)//, LANGUAGE_MIND)
 		return
 
 	if(user.has_language(/datum/language/drone))
@@ -202,7 +180,7 @@
 			M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", "<span class='userdanger'>[user] beats you over the head with [src]!</span>", "<span class='hear'>You hear smacking.</span>")
 		else
 			M.visible_message("<span class='notice'>[user] teaches [M] by beating [M.p_them()] over the head with [src]!</span>", "<span class='boldnotice'>As [user] hits you with [src], chitters resonate in your mind.</span>", "<span class='hear'>You hear smacking.</span>")
-			M.grant_language(/datum/language/drone, TRUE, TRUE)
+			M.grant_language(/datum/language/drone, TRUE, TRUE) //, LANGUAGE_MIND)
 		return
 
 /obj/structure/fluff/oldturret

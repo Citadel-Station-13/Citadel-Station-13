@@ -12,6 +12,7 @@
 
 
 	outfit = /datum/outfit/job/miner
+	plasma_outfit = /datum/outfit/plasmaman/mining
 
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_CARGO_BOT, ACCESS_MINING,
 				ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM)

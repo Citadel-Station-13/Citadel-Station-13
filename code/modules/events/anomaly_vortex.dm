@@ -5,7 +5,6 @@
 	min_players = 20
 	max_occurrences = 2
 	weight = 5
-	gamemode_blacklist = list("dynamic")
 
 /datum/round_event/anomaly/anomaly_vortex
 	startWhen = 10
@@ -13,7 +12,4 @@
 	anomaly_path = /obj/effect/anomaly/bhole
 
 /datum/round_event/anomaly/anomaly_vortex/announce(fake)
-	if(prob(90))
-		priority_announce("Localized high-intensity vortex anomaly detected on long range scanners. Expected location: [impact_area.name]", "Anomaly Alert")
-	else
-		print_command_report("Localized high-intensity vortex anomaly detected on long range scanners. Expected location: [impact_area.name].","Vortex anomaly")
+	priority_announce("Localized high-intensity vortex anomaly detected on long range scanners. Expected location: [impact_area.name]", "Anomaly Alert")

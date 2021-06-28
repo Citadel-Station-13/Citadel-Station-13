@@ -13,6 +13,10 @@
 
 /obj/effect/dummy/phased_mob/slaughter/ex_act()
 	return
+
+/obj/effect/dummy/phased_mob/slaughter/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	return power
+
 /obj/effect/dummy/phased_mob/slaughter/bullet_act()
 	return BULLET_ACT_FORCE_PIERCE
 
@@ -73,7 +77,7 @@
 
 	if(victim.stat == CONSCIOUS)
 		src.visible_message("<span class='warning'>[victim] kicks free of the blood pool just before entering it!</span>", null, "<span class='notice'>You hear splashing and struggling.</span>")
-	else if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/consumable/ethanol/demonsblood))
+	else if(victim.reagents?.has_reagent(/datum/reagent/consumable/ethanol/demonsblood))
 		visible_message("<span class='warning'>Something prevents [victim] from entering the pool!</span>", "<span class='warning'>A strange force is blocking [victim] from entering!</span>", "<span class='notice'>You hear a splash and a thud.</span>")
 	else
 		victim.forceMove(src)
@@ -104,7 +108,7 @@
 	if(!victim)
 		return FALSE
 
-	if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/consumable/ethanol/devilskiss))
+	if(victim.reagents?.has_reagent(/datum/reagent/consumable/ethanol/devilskiss))
 		to_chat(src, "<span class='warning'><b>AAH! THEIR FLESH! IT BURNS!</b></span>")
 		adjustBruteLoss(25, cause = "killed by trying to consume someone who had drunk devil's kiss!") //I can't use adjustHealth() here because bloodcrawl affects /mob/living and adjustHealth() only affects simple mobs
 		var/found_bloodpool = FALSE

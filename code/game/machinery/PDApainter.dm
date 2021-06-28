@@ -82,7 +82,7 @@
 		O.add_fingerprint(user)
 		update_icon()
 
-	else if(istype(O, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
+	else if(O.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
 		if(stat & BROKEN)
 			if(!O.tool_start_check(user, amount=0))
 				return
@@ -107,10 +107,7 @@
 			stat |= BROKEN
 			update_icon()
 
-/obj/machinery/pdapainter/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/pdapainter/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 
 	if(!storedpda)
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")

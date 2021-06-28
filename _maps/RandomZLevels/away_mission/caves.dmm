@@ -11,8 +11,8 @@
 "ad" = (
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
-	luminosity = 5;
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	luminosity = 5
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "ae" = (
@@ -35,8 +35,8 @@
 "ah" = (
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
-	luminosity = 5;
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	luminosity = 5
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
 "ai" = (
@@ -305,8 +305,8 @@
 /obj/effect/forcefield/cult,
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
-	luminosity = 5;
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	luminosity = 5
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "aW" = (
@@ -540,8 +540,8 @@
 "bM" = (
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
-	luminosity = 5;
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	luminosity = 5
 	},
 /area/awaymission/caves/BMP_asteroid)
 "bN" = (
@@ -550,8 +550,8 @@
 "bO" = (
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
-	luminosity = 5;
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	luminosity = 5
 	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "bP" = (
@@ -1818,8 +1818,8 @@
 /area/awaymission/caves/BMP_asteroid)
 "fQ" = (
 /turf/open/floor/plasteel/elevatorshaft{
-	name = "elevator flooring";
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	name = "elevator flooring"
 	},
 /area/awaymission/caves/BMP_asteroid)
 "fR" = (
@@ -1843,8 +1843,8 @@
 "fU" = (
 /obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel/elevatorshaft{
-	name = "elevator flooring";
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	name = "elevator flooring"
 	},
 /area/awaymission/caves/BMP_asteroid)
 "fW" = (
@@ -2169,8 +2169,8 @@
 /obj/effect/baseturf_helper/lava,
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
-	luminosity = 5;
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	luminosity = 5
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "gZ" = (

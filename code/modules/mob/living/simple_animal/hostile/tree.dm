@@ -6,8 +6,8 @@
 	icon_living = "pine_1"
 	icon_dead = "pine_1"
 	icon_gib = "pine_1"
+	health_doll_icon = "pine_1"
 	gender = NEUTER
-	threat = 1
 	speak_chance = 0
 	turns_per_move = 5
 	response_help_continuous = "brushes"
@@ -73,5 +73,6 @@
 	icon_living = "festivus_pole"
 	icon_dead = "festivus_pole"
 	icon_gib = "festivus_pole"
+	health_doll_icon = "festivus_pole"
 	loot = list(/obj/item/stack/rods)
 	speak_emote = list("polls")

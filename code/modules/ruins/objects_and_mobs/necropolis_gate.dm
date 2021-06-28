@@ -12,6 +12,7 @@
 	pixel_x = -32
 	pixel_y = -32
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	rad_flags = RAD_NO_CONTAMINATE | RAD_PROTECT_CONTENTS
 	light_range = 8
 	light_color = LIGHT_COLOR_LAVA
 	var/open = FALSE
@@ -71,6 +72,7 @@
 /obj/structure/opacity_blocker
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "gate_blocker"
+	rad_flags = RAD_NO_CONTAMINATE | RAD_PROTECT_CONTENTS
 	layer = EDGED_TURF_LAYER
 	pixel_x = -32
 	pixel_y = -32
@@ -87,8 +89,7 @@
 	else
 		return QDEL_HINT_LETMELIVE
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/necropolis_gate/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/necropolis_gate/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(locked || uses == 0)
 		to_chat(user, "<span class='boldannounce'>It's [open ? "stuck open":"locked"].</span>")
 		return
@@ -166,8 +167,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	else
 		return QDEL_HINT_LETMELIVE
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/necropolis_gate/legion_gate/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/necropolis_gate/legion_gate/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!open && !changing_openness)
 		var/safety = alert(user, "You think this might be a bad idea...", "Knock on the door?", "Proceed", "Abort")
 		if(safety == "Abort" || !in_range(src, user) || !src || open || changing_openness || user.incapacitated())
@@ -254,6 +254,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	icon = 'icons/turf/boss_floors.dmi'
 	icon_state = "pristine_tile1"
 	layer = ABOVE_OPEN_TURF_LAYER
+	rad_flags = RAD_NO_CONTAMINATE | RAD_PROTECT_CONTENTS
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/tile_key = "pristine_tile"
@@ -276,6 +277,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	return
 
 /obj/structure/stone_tile/Crossed(atom/movable/AM)
+	. = ..()
 	if(falling || fallen)
 		return
 	var/turf/T = get_turf(src)

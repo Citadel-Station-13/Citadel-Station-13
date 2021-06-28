@@ -8,6 +8,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
+	item_flags = SURGICAL_TOOL
 	force = 6
 	throw_speed = 3
 	throw_range = 7
@@ -69,6 +70,9 @@
 	random_color = FALSE
 	toolspeed = 0.5
 
+/obj/item/wirecutters/brass/family
+	toolspeed = 1
+
 /obj/item/wirecutters/bronze
 	name = "bronze plated wirecutters"
 	desc = "A pair of wirecutters plated with bronze."
@@ -117,6 +121,7 @@
 /obj/item/wirecutters/power/attack_self(mob/user)
 	playsound(get_turf(user), 'sound/items/change_jaws.ogg', 50, 1)
 	var/obj/item/crowbar/power/pryjaws = new /obj/item/crowbar/power(drop_location())
+	pryjaws.name = name
 	to_chat(user, "<span class='notice'>You attach the pry jaws to [src].</span>")
 	qdel(src)
 	user.put_in_active_hand(pryjaws)

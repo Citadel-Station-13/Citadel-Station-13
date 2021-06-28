@@ -8,13 +8,14 @@
 	active_block_item = null
 	REMOVE_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_BLOCK_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_SPRINT_LOCKED, ACTIVE_BLOCK_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NO_STAMINA_BUFFER_REGENERATION, ACTIVE_BLOCK_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NO_STAMINA_REGENERATION, ACTIVE_BLOCK_TRAIT)
 	remove_movespeed_modifier(/datum/movespeed_modifier/active_block)
 	var/datum/block_parry_data/data = I.get_block_parry_data()
-	if(timeToNextMove() < data.block_end_click_cd_add)
-		changeNext_move(data.block_end_click_cd_add)
+	DelayNextAction(data.block_end_click_cd_add)
 	return TRUE
 
-/mob/living/proc/ACTIVE_BLOCK_START(obj/item/I)
+/mob/living/proc/active_block_start(obj/item/I)
 	if(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING))
 		return FALSE
 	if(!(I in held_items))
@@ -28,6 +29,10 @@
 		ADD_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_BLOCK_TRAIT)		//probably should be something else at some point
 	if(data.block_lock_sprinting)
 		ADD_TRAIT(src, TRAIT_SPRINT_LOCKED, ACTIVE_BLOCK_TRAIT)
+	if(data.block_no_stamina_regeneration)
+		ADD_TRAIT(src, TRAIT_NO_STAMINA_REGENERATION, ACTIVE_BLOCK_TRAIT)
+	if(data.block_no_stambuffer_regeneration)
+		ADD_TRAIT(src, TRAIT_NO_STAMINA_BUFFER_REGENERATION, ACTIVE_BLOCK_TRAIT)
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/active_block, multiplicative_slowdown = data.block_slowdown)
 	active_block_effect_start()
 	return TRUE
@@ -97,7 +102,7 @@
 		return
 	// QOL: Attempt to toggle on combat mode if it isn't already
 	SEND_SIGNAL(src, COMSIG_ENABLE_COMBAT_MODE)
-	if(!SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
+	if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		to_chat(src, "<span class='warning'>You must be in combat mode to actively block!</span>")
 		return FALSE
 	var/datum/block_parry_data/data = I.get_block_parry_data()
@@ -110,7 +115,7 @@
 		animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, FALSE, SINE_EASING | EASE_IN, ANIMATION_END_NOW)
 		return
 	combat_flags &= ~(COMBAT_FLAG_ACTIVE_BLOCK_STARTING)
-	ACTIVE_BLOCK_START(I)
+	active_block_start(I)
 
 /**
   * Gets the first item we can that can block, but if that fails, default to active held item.COMSIG_ENABLE_COMBAT_MODE
@@ -181,13 +186,19 @@
 
 /// Apply the stamina damage to our user, notice how damage argument is stamina_amount.
 /obj/item/proc/active_block_do_stamina_damage(mob/living/owner, atom/object, stamina_amount, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(istype(object, /obj/item/projectile))
+		var/obj/item/projectile/P = object
+		if(P.stamina)
+			var/blocked = active_block_calculate_final_damage(owner, object, P.stamina, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+			var/stam = active_block_stamina_cost(owner, object, blocked, attack_text, ATTACK_TYPE_PROJECTILE, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+			stamina_amount += stam
 	var/datum/block_parry_data/data = get_block_parry_data()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		var/held_index = C.get_held_index_of_item(src)
 		var/obj/item/bodypart/BP = C.hand_bodyparts[held_index]
 		if(!BP?.body_zone)
-			return C.adjustStaminaLossBuffered(stamina_amount)		//nah
+			return C.adjustStaminaLoss(stamina_amount)		//nah
 		var/zone = BP.body_zone
 		var/stamina_to_zone = data.block_stamina_limb_ratio * stamina_amount
 		var/stamina_to_chest = stamina_amount - stamina_to_zone
@@ -195,9 +206,9 @@
 		stamina_to_chest -= stamina_buffered
 		C.apply_damage(stamina_to_zone, STAMINA, zone)
 		C.apply_damage(stamina_to_chest, STAMINA, BODY_ZONE_CHEST)
-		C.adjustStaminaLossBuffered(stamina_buffered)
+		C.adjustStaminaLoss(stamina_buffered)
 	else
-		owner.adjustStaminaLossBuffered(stamina_amount)
+		owner.adjustStaminaLoss(stamina_amount)
 
 /obj/item/proc/on_active_block(mob/living/owner, atom/object, damage, damage_blocked, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, override_direction)
 	return
@@ -226,6 +237,7 @@
 	active_block_do_stamina_damage(owner, object, stamina_cost, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
 	block_return[BLOCK_RETURN_ACTIVE_BLOCK_DAMAGE_MITIGATED] = damage - final_damage
 	block_return[BLOCK_RETURN_SET_DAMAGE_TO] = final_damage
+	block_return[BLOCK_RETURN_MITIGATION_PERCENT] = clamp(1 - (final_damage / damage), 0, 1)
 	. = BLOCK_SHOULD_CHANGE_DAMAGE
 	if((final_damage <= 0) || (damage <= 0))
 		. |= BLOCK_SUCCESS			//full block

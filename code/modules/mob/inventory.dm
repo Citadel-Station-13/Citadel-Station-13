@@ -5,12 +5,10 @@
 /mob/proc/get_active_held_item()
 	return get_item_for_held_index(active_hand_index)
 
-
 //Finds the opposite limb for the active one (eg: upper left arm will find the item in upper right arm)
 //So we're treating each "pair" of limbs as a team, so "both" refers to them
 /mob/proc/get_inactive_held_item()
 	return get_item_for_held_index(get_inactive_hand_index())
-
 
 //Finds the opposite index for the active one (eg: upper left arm will find the item in upper right arm)
 //So we're treating each "pair" of limbs as a team, so "both" refers to them
@@ -24,12 +22,9 @@
 		other_hand = 0
 	return other_hand
 
-
 /mob/proc/get_item_for_held_index(i)
 	if(i > 0 && i <= held_items.len)
 		return held_items[i]
-	return FALSE
-
 
 //Odd = left. Even = right
 /mob/proc/held_index_to_dir(i)
@@ -37,16 +32,13 @@
 		return "r"
 	return "l"
 
-
 //Check we have an organ for this hand slot (Dismemberment), Only relevant for humans
 /mob/proc/has_hand_for_held_index(i)
 	return TRUE
 
-
 //Check we have an organ for our active hand slot (Dismemberment),Only relevant for humans
 /mob/proc/has_active_hand()
 	return has_hand_for_held_index(active_hand_index)
-
 
 //Finds the first available (null) index OR all available (null) indexes in held_items based on a side.
 //Lefts: 1, 3, 5, 7...
@@ -106,6 +98,14 @@
 
 /mob/proc/get_held_index_of_item(obj/item/I)
 	return held_items.Find(I)
+
+
+///Find number of held items, multihand compatible
+/mob/proc/get_num_held_items()
+	. = 0
+	for(var/i in 1 to held_items.len)
+		if(held_items[i])
+			.++
 
 
 //Sad that this will cause some overhead, but the alias seems necessary
@@ -298,20 +298,21 @@
 	return doUnEquip(I, force, drop_location(), FALSE)
 
 //for when the item will be immediately placed in a loc other than the ground
-/mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE)
-	return doUnEquip(I, force, newloc, FALSE)
+/mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE, silent = TRUE)
+	return doUnEquip(I, force, newloc, FALSE, silent = silent)
 
 //visibly unequips I but it is NOT MOVED AND REMAINS IN SRC
 //item MUST BE FORCEMOVE'D OR QDEL'D
 /mob/proc/temporarilyRemoveItemFromInventory(obj/item/I, force = FALSE, idrop = TRUE)
-	return doUnEquip(I, force, null, TRUE, idrop)
+	return doUnEquip(I, force, null, TRUE, idrop, silent = TRUE)
 
 //DO NOT CALL THIS PROC
 //use one of the above 3 helper procs
 //you may override it, but do not modify the args
-/mob/proc/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE) //Force overrides TRAIT_NODROP for things like wizarditis and admin undress.
+/mob/proc/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE) //Force overrides TRAIT_NODROP for things like wizarditis and admin undress.
 													//Use no_move if the item is just gonna be immediately moved afterward
 													//Invdrop is used to prevent stuff in pockets dropping. only set to false if it's going to immediately be replaced
+	PROTECTED_PROC(TRUE)
 	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for TRAIT_NODROP.
 		return TRUE
 
@@ -390,10 +391,20 @@
 
 	return 0
 
-//Outdated but still in use apparently. This should at least be a human proc.
-//Daily reminder to murder this - Remie.
+/**
+ * Used to return a list of equipped items on a mob; does not include held items (use get_all_gear)
+ *
+ * Argument(s):
+ * * Optional - include_pockets (TRUE/FALSE), whether or not to include the pockets and suit storage in the returned list
+ */
+
 /mob/living/proc/get_equipped_items(include_pockets = FALSE)
-	return
+	var/list/items = list()
+	for(var/obj/item/I in contents)
+		if(I.item_flags & IN_INVENTORY)
+			items += I
+	items -= held_items
+	return items
 
 /mob/living/proc/unequip_everything()
 	var/list/items = list()
@@ -483,6 +494,20 @@
 			bodyparts += BP
 			hand_bodyparts[i] = BP
 	..() //Don't redraw hands until we have organs for them
+
+
+//GetAllContents that is reasonable and not stupid
+/mob/living/carbon/proc/get_all_gear()
+	var/list/processing_list = get_equipped_items(include_pockets = TRUE) + held_items
+	listclearnulls(processing_list) // handles empty hands
+	var/i = 0
+	while(i < length(processing_list) )
+		var/atom/A = processing_list[++i]
+		if(SEND_SIGNAL(A, COMSIG_CONTAINS_STORAGE))
+			var/list/item_stuff = list()
+			SEND_SIGNAL(A, COMSIG_TRY_STORAGE_RETURN_INVENTORY, item_stuff)
+			processing_list += item_stuff
+	return processing_list
 
 /mob/canReachInto(atom/user, atom/target, list/next, view_only, obj/item/tool)
 	return ..() && (user == src)

@@ -283,7 +283,7 @@
 	desc = "Allows a creature to voluntary discard a random appendage."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your joints feel loose.</span>"
-	instability = 30
+	instability = 20
 	power = /obj/effect/proc_holder/spell/self/self_amputation
 
 	energy_coeff = 1
@@ -316,7 +316,7 @@
 		return
 
 	var/obj/item/bodypart/BP = pick(parts)
-	BP.dismember()
+	BP.dismember(harmless=TRUE)
 
 //spider webs
 /datum/mutation/human/webbing
@@ -342,8 +342,9 @@
 		to_chat(user, "<span class='warning'>You can't lay webs here!</span>")
 		failed = TRUE
 	var/turf/T = get_turf(user)
-	var/obj/structure/spider/stickyweb/genetic/W = locate() in T
-	if(W)
+	var/obj/structure/spider/stickyweb/W = locate() in T
+	var/obj/structure/arachnid/W2 = locate() in T
+	if(W || W2)
 		to_chat(user, "<span class='warning'>There's already a web here!</span>")
 		failed = TRUE
 	if(failed)
@@ -410,7 +411,7 @@
 	throw_speed = 4
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 100, "embedded_fall_chance" = 0)
 	w_class = WEIGHT_CLASS_SMALL
-	sharpness = IS_SHARP
+	sharpness = SHARP_POINTY
 	var/mob/living/carbon/human/fired_by
 	/// if we missed our target
 	var/missed = TRUE

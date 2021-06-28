@@ -115,7 +115,7 @@
 		if(totaldamage)
 			L.heal_overall_damage(brutedamage, burndamage, only_organic = FALSE) //Maybe a machine god shouldn't murder augmented followers instead of healing them
 			L.adjustOxyLoss(-oxydamage)
-			L.adjustToxLoss(totaldamage * 0.5, TRUE, TRUE)
+			L.adjustToxLoss(totaldamage * 0.5, TRUE, TRUE, toxins_type = TOX_OMNI)
 			clockwork_say(ranged_ability_user, text2ratvar("[has_holy_water ? "Heal tainted" : "Mend wounded"] flesh!"))
 			log_combat(ranged_ability_user, L, "healed with Sentinel's Compromise")
 			L.visible_message("<span class='warning'>A blue light washes over [L], [has_holy_water ? "causing [L.p_them()] to briefly glow as it mends" : " mending"] [L.p_their()] bruises and burns!</span>", \
@@ -223,7 +223,7 @@
 				L.flash_act(1, 1)
 				if(issilicon(target))
 					var/mob/living/silicon/S = L
-					S.emp_act(EMP_HEAVY)
+					S.emp_act(80)
 			else //for Nar'sian weaklings
 				to_chat(L, "<span class='heavy_brass'>\"How does it feel to see the light, dog?\"</span>")
 				L.visible_message("<span class='warning'>[L]'s eyes flare with burning light!</span>", \

@@ -6,10 +6,13 @@
 		qdel(src)
 	owner = new_owner
 
-/datum/spawners_menu/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.observer_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/spawners_menu/ui_state(mob/user)
+	return GLOB.observer_state
+
+/datum/spawners_menu/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "SpawnersMenu", "Spawners Menu", 700, 600, master_ui, state)
+		ui = new(user, src, "SpawnersMenu")
 		ui.open()
 
 /datum/spawners_menu/ui_data(mob/user)
@@ -42,11 +45,15 @@
 	if(..())
 		return
 
-	var/spawner_ref = pick(GLOB.mob_spawners[params["name"]])
-	var/obj/effect/mob_spawn/MS = locate(spawner_ref) in GLOB.poi_list
-	if(!MS)
+	var/group_name = params["name"]
+	if(!group_name || !(group_name in GLOB.mob_spawners))
 		return
-
+	var/list/spawnerlist = GLOB.mob_spawners[group_name]
+	if(!spawnerlist.len)
+		return
+	var/obj/effect/mob_spawn/MS = pick(spawnerlist)
+	if(!istype(MS) || !(MS in GLOB.poi_list))
+		return
 	switch(action)
 		if("jump")
 			if(MS)

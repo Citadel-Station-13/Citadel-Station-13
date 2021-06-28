@@ -77,8 +77,11 @@
 		return
 	if(!iscarbon(target))
 		return
+	if(!(target?.client?.prefs?.cit_toggles & MEDIHOUND_SLEEPER))
+		to_chat(user, "<span class='warning'>The user has opted out of the use of your [src].")
+		return
 	var/voracious = TRUE
-	if(!target.client || !(target.client.prefs.cit_toggles & MEDIHOUND_SLEEPER) || !hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
+	if(!hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
 		voracious = FALSE
 	if(target.buckled)
 		to_chat(user, "<span class='warning'>The user is buckled and can not be put into your [src].</span>")
@@ -116,8 +119,6 @@
 	if(!hound)
 		go_out(user)
 		return
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
 	if(user.a_intent == INTENT_HELP)
 		return
 	var/voracious = TRUE
@@ -165,12 +166,13 @@
 		return
 	ui_interact(user)
 
-/obj/item/dogborg/sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
+/obj/item/dogborg/sleeper/ui_state(mob/user)
+	return GLOB.notcontained_state
 
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/dogborg/sleeper/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "dogborg_sleeper", name, 375, 550, master_ui, state)
+		ui = new(user, src, "dogborg_sleeper", name, 375, 550) //UI DOES NOT EXIST
 		ui.open()
 
 /obj/item/dogborg/sleeper/ui_data()
@@ -348,9 +350,9 @@
 						last_hearcheck = world.time
 						for(var/mob/H in hearing_mobs)
 							if(!istype(H.loc, /obj/item/dogborg/sleeper))
-								H.playsound_local(source, null, 45, falloff = 0, S = pred_death)
+								H.playsound_local(source, null, 45, S = pred_death)
 							else if(H in contents)
-								H.playsound_local(source, null, 65, falloff = 0, S = prey_death)
+								H.playsound_local(source, null, 65, S = prey_death)
 					for(var/belly in T.vore_organs)
 						var/obj/belly/B = belly
 						for(var/atom/movable/thing in B)
@@ -392,9 +394,9 @@
 			last_hearcheck = world.time
 			for(var/mob/H in hearing_mobs)
 				if(!istype(H.loc, /obj/item/dogborg/sleeper))
-					H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
+					H.playsound_local(source, null, 45, S = pred_digest)
 				else if(H in contents)
-					H.playsound_local(source, null, 65, falloff = 0, S = prey_digest)
+					H.playsound_local(source, null, 65, S = prey_digest)
 
 	update_gut(hound)
 

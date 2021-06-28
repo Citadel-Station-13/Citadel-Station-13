@@ -97,6 +97,12 @@
 /datum/wires/proc/get_wire(color)
 	return colors[color]
 
+/datum/wires/proc/get_color_of_wire(wire_type)
+	for(var/color in colors)
+		var/other_type = colors[color]
+		if(wire_type == other_type)
+			return color
+
 /datum/wires/proc/get_attached(color)
 	if(assemblies[color])
 		return assemblies[color]
@@ -117,7 +123,7 @@
 		return TRUE
 
 /datum/wires/proc/is_dud(wire)
-	return findtext(wire, WIRE_DUD_PREFIX)
+	return findtext(wire, WIRE_DUD_PREFIX, 1, length(WIRE_DUD_PREFIX) + 1)
 
 /datum/wires/proc/is_dud_color(color)
 	return is_dud(get_wire(color))
@@ -197,12 +203,13 @@
 		S.forceMove(holder.drop_location())
 		return S
 
-/datum/wires/proc/emp_pulse()
+/// Called from [/atom/proc/emp_act]
+/datum/wires/proc/emp_pulse(severity)
 	var/list/possible_wires = shuffle(wires)
 	var/remaining_pulses = MAXIMUM_EMP_WIRES
 
 	for(var/wire in possible_wires)
-		if(prob(33))
+		if(prob(10 + severity/3.5))
 			pulse(wire)
 			remaining_pulses--
 			if(!remaining_pulses)
@@ -239,11 +246,13 @@
 		return ..()
 	return UI_CLOSE
 
-/datum/wires/ui_interact(mob/user, ui_key = "wires", datum/tgui/ui = null, force_open = FALSE, \
-							datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/wires/ui_state(mob/user)
+	return GLOB.physical_state
+
+/datum/wires/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
-		ui = new(user, src, ui_key, "Wires", "[holder.name] Wires", 350, 150 + wires.len * 30, master_ui, state)
+		ui = new(user, src, "Wires", "[holder.name] Wires")
 		ui.open()
 
 /datum/wires/ui_data(mob/user)
@@ -256,11 +265,10 @@
 		reveal_wires = TRUE
 
 	// Same for anyone with an abductor multitool.
-	else if(user.is_holding_item_of_type(/obj/item/multitool/abductor))
-		reveal_wires = TRUE
-	// and advanced multitool
-	else if(user.is_holding_item_of_type(/obj/item/multitool/advanced))
-		reveal_wires = TRUE
+	else if(user.is_holding_tool_quality(TOOL_MULTITOOL))
+		var/obj/item/tool = user.is_holding_tool_quality(TOOL_MULTITOOL)
+		if(tool.show_wires)
+			reveal_wires = TRUE
 
 	// Station blueprints do that too, but only if the wires are not randomized.
 	else if(user.is_holding_item_of_type(/obj/item/areaeditor/blueprints) && !randomize)

@@ -1,3 +1,34 @@
+/datum/chemical_reaction/metalgen
+	name = "metalgen"
+	id = /datum/reagent/metalgen
+	required_reagents = list(/datum/reagent/wittel = 1, /datum/reagent/bluespace = 1, /datum/reagent/toxin/mutagen = 1)
+	results = list(/datum/reagent/metalgen = 1)
+
+/datum/chemical_reaction/metalgen_imprint
+	name = "metalgen imprint"
+	id = /datum/reagent/metalgen
+	required_reagents = list(/datum/reagent/metalgen = 1, /datum/reagent/liquid_dark_matter = 1)
+	results = list(/datum/reagent/metalgen = 1)
+
+/datum/chemical_reaction/holywater
+	name = "Holy Water"
+	id = /datum/reagent/water/holywater
+	results = list(/datum/reagent/water/holywater = 1)
+	required_reagents = list(/datum/reagent/water/hollowwater = 1)
+	required_catalysts = list(/datum/reagent/water/holywater = 1)
+
+/datum/chemical_reaction/metalgen_imprint/on_reaction(datum/reagents/holder, created_volume)
+	var/datum/reagent/metalgen/MM = holder.get_reagent(/datum/reagent/metalgen)
+	for(var/datum/reagent/R in holder.reagent_list)
+		if(R.material && R.volume >= 40)
+			MM.data["material"] = R.material
+			holder.remove_reagent(R.type, 40)
+
+/datum/chemical_reaction/gravitum
+	name = "gravitum"
+	id = /datum/reagent/gravitum
+	required_reagents = list(/datum/reagent/wittel = 1, /datum/reagent/sorium = 10)
+	results = list(/datum/reagent/gravitum = 10)
 
 /datum/chemical_reaction/sterilizine
 	name = "Sterilizine"
@@ -684,25 +715,38 @@
 	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/medicine/synaptizine = 1, /datum/reagent/water = 1)
 
 /datum/chemical_reaction/cat
-	name = "felined mutation toxic"
+	name = "felinid mutation toxin"
 	id = /datum/reagent/mutationtoxin/felinid
 	results = list(/datum/reagent/mutationtoxin/felinid = 1)
-	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/ammonia = 1, /datum/reagent/water = 1, /datum/reagent/drug/aphrodisiac = 10, /datum/reagent/mutationtoxin = 1) // Maybe aphro+ if it becomes a shitty meme
+	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/ammonia = 1, /datum/reagent/water = 1, /datum/reagent/drug/aphrodisiac = 10, /datum/reagent/mutationtoxin = 1)
 	required_temp = 450
 
 /datum/chemical_reaction/moff
-	name = "insect mutation toxic"
+	name = "insect mutation toxin"
 	id = /datum/reagent/mutationtoxin/insect
 	results = list(/datum/reagent/mutationtoxin/insect = 1)
 	required_reagents  = list(/datum/reagent/liquid_dark_matter = 2, /datum/reagent/ammonia = 5, /datum/reagent/lithium = 1, /datum/reagent/mutationtoxin = 1)
 	required_temp = 320
 
+/datum/chemical_reaction/mutationtoxin/arachnid
+	name = "arachnid mutation toxin"
+	id = /datum/reagent/mutationtoxin/arachnid
+	results = list(/datum/reagent/mutationtoxin/arachnid = 1)
+	required_reagents = list(/datum/reagent/mutationtoxin/insect = 1, /datum/reagent/toxin/heparin = 10)
+
 /datum/chemical_reaction/notlight //Harder to make do to it being a hard race to play
-	name = "shadow muatatuin toxic"
+	name = "shadow mutation toxin"
 	id = /datum/reagent/mutationtoxin/shadow
 	results = list(/datum/reagent/mutationtoxin/shadow = 1)
 	required_reagents  = list(/datum/reagent/liquid_dark_matter = 5, /datum/reagent/medicine/synaptizine = 10, /datum/reagent/medicine/oculine = 10, /datum/reagent/mutationtoxin = 1)
 	required_temp = 600
+
+/datum/chemical_reaction/slimejelly
+	name = "slimejelly"
+	results = list(/datum/reagent/toxin/slimejelly = 5)
+	required_reagents = list(/datum/reagent/oil = 3, /datum/reagent/radium = 2, /datum/reagent/consumable/tinlux = 1)
+	required_container = /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom
+	mix_message = "The mushroom's insides bubble and pop and it becomes very limp."
 
 /datum/chemical_reaction/slime_extractification
 	required_reagents = list(/datum/reagent/toxin/slimejelly = 30, /datum/reagent/consumable/frostoil = 5, /datum/reagent/toxin/plasma = 5)
@@ -711,7 +755,7 @@
 /datum/chemical_reaction/slime_extractification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	new /obj/item/slime_extract/grey(location)
-	
+
 // Liquid Carpets
 
 /datum/chemical_reaction/carpet
@@ -725,6 +769,12 @@
 	id = /datum/reagent/carpet/black
 	results = list(/datum/reagent/carpet/black = 2)
 	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/carbon = 1)
+
+/datum/chemical_reaction/carpet/arcade
+	name = "liquid arcade carpet"
+	id = /datum/reagent/carpet/arcade
+	results = list(/datum/reagent/carpet/arcade = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/consumable/pwr_game = 1)
 
 /datum/chemical_reaction/carpet/blackred
 	name = "liquid red black carpet"
@@ -838,3 +888,29 @@
 	results = list(/datum/reagent/carbon = 1)
 	required_reagents = list(/datum/reagent/cellulose = 1)
 	required_temp = 512
+
+//Nerdy card shit
+
+/datum/chemical_reaction/card_powder/blue
+	name = "Blue Card Powder"
+	id = /datum/reagent/card_powder/blue
+	results = list(/datum/reagent/card_powder/blue = 1)
+	required_reagents = list(/datum/reagent/card_powder/green = 12)
+
+/datum/chemical_reaction/card_powder/purple
+	name = "Purple Card Powder"
+	id = /datum/reagent/card_powder/purple
+	results = list(/datum/reagent/card_powder/purple = 1)
+	required_reagents = list(/datum/reagent/card_powder/blue = 12)
+
+/datum/chemical_reaction/card_powder/yellow
+	name = "Yellow Card Powder"
+	id = /datum/reagent/card_powder/yellow
+	results = list(/datum/reagent/card_powder/yellow = 1)
+	required_reagents = list(/datum/reagent/card_powder/purple = 12)
+
+/datum/chemical_reaction/card_powder/black
+	name = "Black Card Powder"
+	id = /datum/reagent/card_powder/black
+	results = list(/datum/reagent/card_powder/black = 1)
+	required_reagents = list(/datum/reagent/card_powder/yellow = 12)

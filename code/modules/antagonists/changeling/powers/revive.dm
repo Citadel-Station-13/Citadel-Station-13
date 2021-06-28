@@ -11,6 +11,14 @@
 
 //Revive from revival stasis
 /obj/effect/proc_holder/changeling/revive/sting_action(mob/living/carbon/user)
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	if(!changeling)
+		return
+	if(changeling.hostile_absorbed)
+		to_chat(user, "<span class='notice'>We cannot muster up the strength to revive ourselves!</span>")
+		changeling.purchasedpowers -= src
+		src.action.Remove(user)
+		return
 	user.cure_fakedeath("changeling")
 	user.revive(full_heal = 1)
 	var/list/missing = user.get_missing_limbs()
@@ -27,7 +35,6 @@
 		user.regenerate_limbs(0, list(BODY_ZONE_HEAD))
 	user.regenerate_organs()
 	to_chat(user, "<span class='notice'>We have revived ourselves.</span>")
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.purchasedpowers -= src
 	src.action.Remove(user)
 	return TRUE
@@ -36,9 +43,10 @@
 	. = ..()
 	if(!.)
 		return
-
-	if(HAS_TRAIT(user, CHANGELING_DRAIN) || ((user.stat != DEAD) && !(HAS_TRAIT(user, TRAIT_DEATHCOMA))))
-		var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	if(!changeling)
+		return FALSE
+	if(changeling.hostile_absorbed || ((user.stat != DEAD) && !(HAS_TRAIT(user, TRAIT_DEATHCOMA))))
 		changeling.purchasedpowers -= src
 		return FALSE
 

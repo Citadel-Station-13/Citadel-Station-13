@@ -14,8 +14,12 @@
 /obj/item/ammo_casing/a357/match
 	name = ".357 match bullet casing"
 	desc = "A .357 bullet casing, manufactured to exceedingly high standards."
-	caliber = "357"
 	projectile_type = /obj/item/projectile/bullet/a357/match
+
+/obj/item/ammo_casing/a357/dumdum
+	name = ".357 DumDum bullet casing"
+	desc = "A .357 bullet casing. Usage of this ammunition will constitute a war crime in your area."
+	projectile_type = /obj/item/projectile/bullet/a357/dumdum
 
 // 7.62x38mmR (Nagant Revolver)
 
@@ -69,3 +73,11 @@
 	name = ".38 DumDum bullet casing"
 	desc = "A .38 DumDum bullet casing."
 	projectile_type = /obj/item/projectile/bullet/c38/dumdum
+
+//.45-70 GOVT (Gunslinger's Derringer)
+
+/obj/item/ammo_casing/g4570
+	name= ".45-70 Govt bullet casing"
+	desc = "An exceedingly rare .45-70 Govt bullet casing."
+	caliber = "45-70g"
+	projectile_type = /obj/item/projectile/bullet/g4570

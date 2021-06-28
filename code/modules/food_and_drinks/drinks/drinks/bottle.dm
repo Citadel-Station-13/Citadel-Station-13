@@ -87,7 +87,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("stabbed", "slashed", "attacked")
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/broken_bottle/Initialize()
 	. = ..()
@@ -303,6 +303,15 @@
 	list_reagents = list(/datum/reagent/consumable/ethanol/hcider = 50)
 
 /obj/item/reagent_containers/food/drinks/bottle/hcider/empty
+	list_reagents = null
+
+/obj/item/reagent_containers/food/drinks/bottle/amaretto
+	name = "Luini Amaretto"
+	desc = "A gentle and syrup-like drink that tastes of almonds and apricots."
+	icon_state = "disaronno"
+	list_reagents = list(/datum/reagent/consumable/ethanol/amaretto = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/amaretto/empty
 	list_reagents = null
 
 /obj/item/reagent_containers/food/drinks/bottle/grappa
@@ -614,6 +623,10 @@
 /obj/item/export/bottle/hcider
 	icon_state = "hcider"
 	name = "Sealed Cider"
+
+/obj/item/export/bottle/amaretto
+	icon_state = "disaronno"
+	name = "Sealed Amaretto"
 
 /obj/item/export/bottle/cognac
 	icon_state = "cognacbottle"

@@ -20,8 +20,9 @@
 	desc = "A sleek box containing a brutally simple Syndicate revolver that fires .357 Magnum rounds and has 7 chambers, and an extra speedloader."
 	item = /obj/item/storage/box/syndie_kit/revolver
 	cost = 13
+	player_minimum = 15
 	surplus = 50
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/dangerous/rawketlawnchair
 	name = "84mm Rocket Propelled Grenade Launcher"
@@ -112,9 +113,21 @@
 	item = /obj/item/dualsaber
 	player_minimum = 25
 	cost = 16
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/dangerous/doublesword/get_discount()
+	return pick(4;0.8,2;0.65,1;0.5)
+
+/datum/uplink_item/dangerous/hyperblade
+	name = "Hypereutactic Blade"
+	desc = "The result of two Dragon Tooth swords combining, you wouldn't want to see this coming at you down the hall! \
+			Requires two hands to wield and it slows you down.  You can also recolor it!"
+	item = /obj/item/dualsaber/hypereutactic
+	player_minimum = 25
+	cost = 16
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
+
+/datum/uplink_item/dangerous/hyperblade/get_discount()
 	return pick(4;0.8,2;0.65,1;0.5)
 
 /datum/uplink_item/dangerous/sword
@@ -123,7 +136,7 @@
 			pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/melee/transforming/energy/sword/saber
 	cost = 8
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/dangerous/shield
 	name = "Energy Shield"
@@ -141,7 +154,7 @@
 			However, due to the size of the blade and obvious nature of the sheath, the weapon stands out as being obviously nefarious."
 	item = /obj/item/storage/belt/sabre/rapier
 	cost = 8
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/dangerous/flamethrower
 	name = "Flamethrower"
@@ -176,14 +189,26 @@
 	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
 			organic host as a home base and source of fuel. Holoparasites come in various types and share damage with their host."
 	item = /obj/item/storage/box/syndie_kit/guardian
-	cost = 15
+	cost = 12
+	limited_stock = 1 // you can only have one holopara apparently?
 	refundable = TRUE
 	cant_discount = TRUE
 	surplus = 0
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 	player_minimum = 25
 	restricted = TRUE
 	refund_path = /obj/item/guardiancreator/tech/choose/traitor
+
+/datum/uplink_item/dangerous/nukieguardian // just like the normal holoparasites but without the support or deffensive stands because nukies shouldnt turtle
+	name = "Holoparasites"
+	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
+			organic host as a home base and source of fuel. Holoparasites come in various types and share damage with their host."
+	item = /obj/item/storage/box/syndie_kit/nukieguardian
+	cost = 8
+	refundable = TRUE
+	surplus = 50
+	refund_path = /obj/item/guardiancreator/tech/choose/nukie
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
@@ -203,6 +228,15 @@
 	surplus = 50
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/dangerous/maulergauntlets
+	name = "Mauler Gauntlets"
+	desc = "Mauler gauntlets are a pair of high-tech plastitanium gauntlets fused with illegal nanite auto-injectors designed \
+	to grant the wearer sextuple the strength of an average human being. Wearing these, you will punch harder, inflict more injuries \
+	with your fists, and be able to slam people through tables with immense force. \
+	Unfortunately, due to the size of the gloves you will be unable to wield firearms with them equipped."
+	item = /obj/item/clothing/gloves/fingerless/pugilist/mauler
+	cost = 8
+
 /datum/uplink_item/dangerous/powerfist
 	name = "Power Fist"
 	desc = "The power-fist is a metal gauntlet with a built-in piston-ram powered by an external gas supply.\
@@ -211,6 +245,7 @@
 		 deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
 	item = /obj/item/melee/powerfist
 	cost = 8
+	exclude_modes = list(/datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
@@ -251,3 +286,13 @@
 	item = /obj/item/gun/ballistic/automatic/toy/pistol/riot
 	cost = 3
 	surplus = 10
+
+/datum/uplink_item/dangerous/motivation
+	name = "Motivation"
+	desc = "An ancient blade said to have ties with Lavaland's most inner demons. \
+			Allows you to cut from a far distance!"
+	item = /obj/item/gun/magic/staff/motivation
+	cost = 20
+	player_minimum = 20
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
+	cant_discount = TRUE

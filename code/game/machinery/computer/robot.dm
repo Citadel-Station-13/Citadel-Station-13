@@ -21,13 +21,15 @@
 			return
 	if(R.scrambledcodes)
 		return
+	if(hasSiliconAccessInArea(user) && !issilicon(user))
+		if(!Adjacent(user))
+			return
 	return TRUE
 
-/obj/machinery/computer/robotics/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/robotics/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "RoboticsControlConsole", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "RoboticsControlConsole", name)
 		ui.open()
 
 /obj/machinery/computer/robotics/ui_data(mob/user)
@@ -40,6 +42,10 @@
 			data["can_hack"] = TRUE
 	else if(IsAdminGhost(user))
 		data["can_hack"] = TRUE
+
+	data["can_convert"] = FALSE
+	if(isAI(user) && is_servant_of_ratvar(user))
+		data["can_convert"] = TRUE
 
 	data["cyborgs"] = list()
 	for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
@@ -55,6 +61,7 @@
 			module = R.module ? "[R.module.name] Module" : "No Module Detected",
 			synchronization = R.connected_ai,
 			emagged =  R.emagged,
+			servant = is_servant_of_ratvar(R),
 			ref = REF(R)
 		)
 		data["cyborgs"] += list(cyborg_data)
@@ -111,6 +118,13 @@
 					log_game("[key_name(usr)] emagged [key_name(R)] using robotic console!")
 					message_admins("[ADMIN_LOOKUPFLW(usr)] emagged cyborg [key_name_admin(R)] using robotic console!")
 					R.SetEmagged(TRUE)
+		if("convert")
+			if(isAI(usr) && is_servant_of_ratvar(usr))
+				var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs
+				if(istype(R) && !is_servant_of_ratvar(R) && R.connected_ai == usr)
+					log_game("[key_name(usr)] converted [key_name(R)] using robotic console!")
+					message_admins("[ADMIN_LOOKUPFLW(usr)] converted cyborg [key_name_admin(R)] using robotic console!")
+					add_servant_of_ratvar(R)
 		if("killdrone")
 			if(allowed(usr))
 				var/mob/living/simple_animal/drone/D = locate(params["ref"]) in GLOB.mob_list
@@ -123,5 +137,5 @@
 					var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 					s.set_up(3, TRUE, D)
 					s.start()
-					D.visible_message("<span class='danger'>\the [D] self destructs!</span>")
+					D.visible_message("<span class='danger'>\the [D] self-destructs!</span>")
 					D.gib()

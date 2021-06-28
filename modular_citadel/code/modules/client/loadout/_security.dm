@@ -1,71 +1,70 @@
-/datum/gear/navyblueuniformhos
+/datum/gear/uniform/navyblueuniformhos
  	name = "Head of Security navyblue uniform"
- 	category = SLOT_W_UNIFORM
+ 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
  	path = /obj/item/clothing/under/rank/security/head_of_security/formal
  	restricted_roles = list("Head of Security")
 
-/datum/gear/navybluehosberet
+/datum/gear/head/navybluehosberet
 	name = "Head of security's navyblue beret"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/beret/sec/navyhos
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_roles = list("Head of Security")
 
-/datum/gear/navybluejackethos
+/datum/gear/suit/navybluejackethos
 	name = "head of security's navyblue jacket"
-	category = SLOT_WEAR_SUIT
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JOBS
 	path = /obj/item/clothing/suit/armor/hos/navyblue
 	restricted_roles = list("Head of Security")
 
-/datum/gear/navybluejacketofficer
+/datum/gear/suit/navybluejacketofficer
 	name = "security officer's navyblue jacket"
-	category = SLOT_WEAR_SUIT
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JOBS
 	path = /obj/item/clothing/suit/armor/navyblue
 	restricted_roles = list("Security Officer")
 
-/datum/gear/navyblueofficerberet
+/datum/gear/head/navyblueofficerberet
 	name = "Security officer's Navyblue beret"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/beret/sec/navyofficer
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_roles = list("Security Officer")
 
-/datum/gear/navyblueuniformofficer
+/datum/gear/uniform/navyblueuniformofficer
  	name = "Security officer navyblue uniform"
- 	category = SLOT_W_UNIFORM
+ 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
  	path = /obj/item/clothing/under/rank/security/officer/formal
  	restricted_roles = list("Security Officer")
 
-/datum/gear/navybluejacketwarden
+/datum/gear/suit/navybluejacketwarden
 	name = "warden navyblue jacket"
-	category = SLOT_WEAR_SUIT
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JOBS
 	path = /obj/item/clothing/suit/armor/vest/warden/navyblue
 	restricted_roles = list("Warden")
 
-/datum/gear/navybluewardenberet
+/datum/gear/head/navybluewardenberet
 	name = "Warden's navyblue beret"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/beret/sec/navywarden
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_roles = list("Warden")
 
-/datum/gear/navyblueuniformwarden
+/datum/gear/uniform/navyblueuniformwarden
  	name = "Warden navyblue uniform"
- 	category = SLOT_W_UNIFORM
+ 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
  	path = /obj/item/clothing/under/rank/security/warden/formal
  	restricted_roles = list("Warden")
 
-/datum/gear/secskirt
+/datum/gear/uniform/secskirt
 	name = "Security skirt"
-	category = SLOT_W_UNIFORM
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
 	path = /obj/item/clothing/under/rank/security/officer/skirt
 	restricted_roles = list("Security Officer", "Warden", "Head of Security")
 
-/datum/gear/hosskirt
+/datum/gear/uniform/hosskirt
 	name = "Head of security's skirt"
-	category = SLOT_W_UNIFORM
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
 	path = /obj/item/clothing/under/rank/security/head_of_security/skirt
 	restricted_roles = list("Head of Security")
 
-/datum/gear/sechud
+/datum/gear/glasses/sechud
 	name = "Security Hud"
-	category = SLOT_GLASSES
 	path = /obj/item/clothing/glasses/hud/security
 	restricted_roles = list("Security Officer", "Warden", "Head of Security")

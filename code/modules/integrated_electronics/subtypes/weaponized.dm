@@ -45,6 +45,9 @@
 /obj/item/integrated_circuit/weaponized/weapon_firing/attackby(var/obj/O, var/mob/user)
 	if(istype(O, /obj/item/gun/energy))
 		var/obj/item/gun/gun = O
+		if(!gun.can_circuit)
+			to_chat(user, "<span class='warning'>[gun] does not fit into circuits.</span>")
+			return
 		if(installed_gun)
 			to_chat(user, "<span class='warning'>There's already a weapon installed.</span>")
 			return
@@ -134,6 +137,10 @@
 	//Shooting Code:
 	A.preparePixelProjectile(target, src)
 	A.fire()
+	if(ismob(loc.loc))
+		installed_gun.shoot_live_shot(loc.loc)
+	else
+		installed_gun.shoot_live_shot() //Shitcode, but we don't have much of a choice
 	log_attack("[assembly] [REF(assembly)] has fired [installed_gun].")
 	return A
 

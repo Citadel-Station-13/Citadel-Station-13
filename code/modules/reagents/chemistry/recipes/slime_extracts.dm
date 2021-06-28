@@ -296,7 +296,7 @@
 	required_other = TRUE
 
 /datum/chemical_reaction/slime/slimeoverload/on_reaction(datum/reagents/holder, multiplier)
-	empulse(get_turf(holder.my_atom), 3, 7)
+	empulse_using_range(get_turf(holder.my_atom), 10)
 	..()
 
 /datum/chemical_reaction/slime/slimecell

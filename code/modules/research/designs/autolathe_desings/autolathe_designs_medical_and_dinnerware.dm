@@ -13,6 +13,14 @@
 	build_path = /obj/item/kitchen/knife
 	category = list("initial","Dinnerware")
 
+/datum/design/efink
+	name = "E-Fink"
+	id = "efink"
+	build_type = AUTOLATHE | NO_PUBLIC_LATHE
+	materials = list(/datum/material/iron = 12000)
+	build_path = /obj/item/kitchen/efink
+	category = list("initial","Dinnerware")
+
 /datum/design/fork
 	name = "Fork"
 	id = "fork"
@@ -118,6 +126,24 @@
 	build_path = /obj/item/hemostat
 	category = list("initial", "Medical","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/bonesetter
+	name = "Bonesetter"
+	id = "bonesetter"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 1000)
+	build_path = /obj/item/bonesetter
+	category = list("initial", "Medical", "Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/sticky_tape/surgical
+	name = "Surgical Tape"
+	id = "surgical_tape"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = 500)
+	build_path = /obj/item/stack/sticky_tape/surgical
+	category = list("initial", "Medical")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/beaker
 	name = "Beaker"

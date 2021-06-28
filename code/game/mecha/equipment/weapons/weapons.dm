@@ -9,6 +9,7 @@
 	var/projectile_delay = 0
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect	//the visual effect appearing when the weapon is fired.
 	var/kickback = TRUE //Will using this weapon in no grav push mecha back.
+	mech_flags = EXOSUIT_MODULE_COMBAT
 
 /obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/combat/M)
 	if(..())
@@ -96,7 +97,7 @@
 	icon_state = "mecha_ion"
 	energy_drain = 120
 	projectile = /obj/item/projectile/ion
-	fire_sound = 'sound/weapons/laser.ogg'
+	fire_sound = 'sound/weapons/IonRifle.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla
 	equip_cooldown = 35
@@ -194,7 +195,7 @@
 //Base ballistic weapon type
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic
 	name = "general ballistic weapon"
-	fire_sound = 'sound/weapons/gunshot.ogg'
+	fire_sound = 'sound/weapons/lmgshot.ogg'
 	var/projectiles
 	var/projectiles_cache //ammo to be loaded in, if possible.
 	var/projectiles_cache_max
@@ -284,6 +285,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
 	name = "\improper LBX AC 10 \"Scattershot\""
 	desc = "A weapon for combat exosuits. Shoots a spread of pellets."
+	fire_sound = 'sound/weapons/gunshotshotgunshot.ogg'
 	icon_state = "mecha_scatter"
 	equip_cooldown = 20
 	projectile = /obj/item/projectile/bullet/scattershot
@@ -298,6 +300,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/seedscatter
 	name = "\improper Melon Seed \"Scattershot\""
 	desc = "A weapon for combat exosuits. Shoots a spread of pellets, shaped as seed."
+	fire_sound = 'sound/weapons/gunshotshotgunshot.ogg'
 	icon_state = "mecha_scatter"
 	equip_cooldown = 20
 	projectile = /obj/item/projectile/bullet/seed
@@ -330,7 +333,7 @@
 	desc = "A weapon for combat exosuits. Launches light explosive missiles."
 	icon_state = "mecha_missilerack"
 	projectile = /obj/item/projectile/bullet/a84mm_he
-	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	fire_sound = 'sound/weapons/rocketlaunch.ogg'
 	projectiles = 8
 	projectiles_cache = 0
 	projectiles_cache_max = 0
@@ -344,7 +347,7 @@
 	desc = "A weapon for combat exosuits. Launches low-explosive breaching missiles designed to explode only when striking a sturdy target."
 	icon_state = "mecha_missilerack_six"
 	projectile = /obj/item/projectile/bullet/a84mm_br
-	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	fire_sound = 'sound/weapons/rocketlaunch.ogg'
 	projectiles = 6
 	projectiles_cache = 0
 	projectiles_cache_max = 0

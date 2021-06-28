@@ -267,7 +267,7 @@
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON|USE_TAUR_CLIP_MASK
 
 /obj/item/clothing/under/costume/christmas/croptop/green
-	name = "green feminine christmas suit"
+	name = "green croptop christmas suit"
 	desc = "A simple green christmas suit. Smells minty!"
 	icon_state = "christmasfemaleg"
 	item_state = "christmasfemaleg"
@@ -328,4 +328,37 @@
 	name = "cloud"
 	desc = "cloud"
 	icon_state = "cloud"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/kimono
+	name = "Kimono"
+	desc = "A traditional piece of clothing from japan"
+	icon_state = "kimono"
+	item_state = "kimono"
+
+/obj/item/clothing/under/costume/kimono/black
+	name = "Black Kimono"
+	icon_state = "kimono_a"
+	item_state = "kimono_a"
+
+/obj/item/clothing/under/costume/kimono/kamishimo
+	name = "Kamishimo"
+	icon_state = "kamishimo"
+	item_state = "kamishimo"
+
+/obj/item/clothing/under/costume/kimono/fancy
+	name = "Fancy Kimono"
+	icon_state = "fancy_kimono"
+	item_state = "fancy_kimono"
+
+/obj/item/clothing/under/costume/kimono/sakura
+	name = "Sakura Kimono'"
+	icon_state = "sakura_kimono"
+	item_state = "sakura_kimono"
+
+/obj/item/clothing/under/costume/swagoutfit
+	name = "Swag outfit"
+	desc = "Why don't you go secure some bitches?"
+	icon_state = "SwagOutfit"
+	item_state = "SwagOutfit"
 	can_adjust = FALSE

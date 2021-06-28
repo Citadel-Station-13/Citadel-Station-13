@@ -14,11 +14,14 @@
 
 	mind.skill_holder.ui_interact(src)
 
-/datum/skill_holder/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/skill_holder/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/skill_holder/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "SkillPanel", "[owner.name]'s Skills", 620, 580, master_ui, state)
-		ui.set_autoupdate(FALSE) // This UI is only ever opened by one person, and never is updated outside of user input.
+		ui = new(user, src, "SkillPanel", "[owner.name]'s Skills")
+		ui.set_autoupdate(FALSE) 
 		ui.open()
 	else if(need_static_data_update)
 		update_static_data(user)

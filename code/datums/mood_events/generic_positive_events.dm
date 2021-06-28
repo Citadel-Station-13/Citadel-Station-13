@@ -70,6 +70,11 @@
 	mood_change = 40 //maybe being a cultist isnt that bad after all
 	hidden = TRUE
 
+/datum/mood_event/heretics
+	description = "<span class='nicegreen'>THE HIGHER I RISE, THE MORE I SEE.</span>\n"
+	mood_change = 12 //maybe being a cultist isnt that bad after all
+	hidden = TRUE
+
 /datum/mood_event/family_heirloom
 	description = "<span class='nicegreen'>My family heirloom is safe with me.</span>\n"
 	mood_change = 1
@@ -196,3 +201,7 @@
 	description = "<span class='nicegreen'>That work of art was so great it made me believe in the goodness of humanity. Says a lot in a place like this.</span>\n"
 	mood_change = 4
 	timeout = 4 MINUTES
+
+/datum/mood_event/cleared_stomach
+	description = "<span class='nicegreen'>Feels nice to get that out of the way!</span>\n"
+	mood_change = 3

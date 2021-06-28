@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/spacevine
 	weight = 15
 	max_occurrences = 3
-	min_players = 10
+	min_players = 20
 
 /datum/round_event/spacevine
 	fakeable = FALSE
@@ -324,7 +324,7 @@
 		damage_dealt *= 4
 	if(I.damtype == BURN)
 		damage_dealt *= 4
-
+	user.DelayNextAction()
 	for(var/datum/spacevine_mutation/SM in mutations)
 		damage_dealt = SM.on_hit(src, user, I, damage_dealt) //on_hit now takes override damage as arg and returns new value for other mutations to permutate further
 	take_damage(damage_dealt, I.damtype, "melee", 1)
@@ -340,13 +340,13 @@
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/structure/spacevine/Crossed(atom/movable/AM)
+	. = ..()
 	if(!isliving(AM))
 		return
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_cross(src, AM)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/spacevine/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/spacevine/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_hit(src, user)
 	user_unbuckle_mob(user, user)
@@ -356,6 +356,7 @@
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_hit(src, user)
 	user_unbuckle_mob(user,user)
+	return ..()
 
 /obj/structure/spacevine/attack_alien(mob/living/user)
 	eat(user)

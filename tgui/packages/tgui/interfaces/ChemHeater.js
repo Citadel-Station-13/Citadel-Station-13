@@ -15,10 +15,12 @@ export const ChemHeater = (props, context) => {
     beakerCurrentVolume,
     beakerMaxVolume,
     beakerContents = [],
-    currentpH,
   } = data;
   return (
-    <Window resizable>
+    <Window
+      width={300}
+      height={320}
+      resizable>
       <Window.Content scrollable>
         <Section
           title="Thermostat"
@@ -61,8 +63,7 @@ export const ChemHeater = (props, context) => {
           buttons={!!isBeakerLoaded && (
             <Fragment>
               <Box inline color="label" mr={2}>
-                {beakerCurrentVolume} / {beakerMaxVolume} units,
-                {data.currentpH} pH
+                {beakerCurrentVolume} / {beakerMaxVolume} units
               </Box>
               <Button
                 icon="eject"
@@ -73,6 +74,7 @@ export const ChemHeater = (props, context) => {
           <BeakerContents
             beakerLoaded={isBeakerLoaded}
             beakerContents={beakerContents} />
+          <Box key="pH" color="label">{Number(data.currentpH).toFixed(data.partRating)} pH</Box>
         </Section>
       </Window.Content>
     </Window>
