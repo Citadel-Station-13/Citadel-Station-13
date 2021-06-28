@@ -70,3 +70,16 @@ LOG_VIRUS
 
 ## Log all raw hrefs of tgui, rather than letting tgui logging handle it. KEEP THIS OFF UNLESS YOU KNOW WHAT YOU ARE DOING.
 # EMERGENCY_TGUI_LOGGING
+
+## Cooldown time for each occurance of a unique runtime in deciseconds
+ERROR_COOLDOWN 600
+
+## Max runtimes of one type before silencing
+ERROR_LIMIT 50
+
+## How long an unique runtime will be silenced for when reaching limit in deciseconds
+ERROR_SILENCE_TIME 6000
+
+How long to wait between messaging admins about an unique runtime
+ERROR_MSG_DELAY 50
+

@@ -16,3 +16,19 @@
 /datum/config_entry/keyed_list/topic_rate_limit_whitelist
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_FLAG
+
+/datum/config_entry/number/minute_topic_limit
+	config_entry_value = null
+	min_val = 0
+
+/datum/config_entry/number/second_topic_limit
+	config_entry_value = null
+	min_val = 0
+
+/datum/config_entry/number/minute_click_limit
+	config_entry_value = 400
+	min_val = 0
+
+/datum/config_entry/number/second_click_limit
+	config_entry_value = 15
+	min_val = 0

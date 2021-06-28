@@ -22,3 +22,7 @@ POST_ACTION_PENALTY_FACTOR 0.25
 
 ## Factor to multiply by for stamina usage past buffer into health
 OVERDRAW_PENALTY_FACTOR 1.5
+
+## Completely disable stamina combat by giving people infinite buffers.
+## Has serious balance implications.
+# DISABLE_STAMBUFFER
