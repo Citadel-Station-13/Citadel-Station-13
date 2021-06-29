@@ -43,10 +43,10 @@
 	hit = null
 	return ..()
 
-/obj/effect/decal/chempuff/proc/hit_thing(atom/A)
+/obj/effect/decal/chempuff/proc/hit_thing(atom/A, ignore_firstmove)
 	if(A == src || A.invisibility)
 		return
-	if(firstmove)
+	if(firstmove && !ignore_firstmove)
 		return
 	if(!hits_left || hit[A])
 		return
@@ -76,7 +76,7 @@
 
 /obj/effect/decal/chempuff/Bump(atom/A)
 	. = ..()
-	hit_thing(A)
+	hit_thing(A, TRUE)
 
 /obj/effect/decal/chempuff/proc/run_puff(atom/target)
 	var/safety = 255
