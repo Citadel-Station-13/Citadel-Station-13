@@ -28,8 +28,9 @@
 /obj/effect/decal/chempuff/blob_act(obj/structure/blob/B)
 	return
 
-/obj/effect/decal/chempuff/Initialize(mapload, stream_mode, speed, range, hits_left)
+/obj/effect/decal/chempuff/Initialize(mapload, stream_mode, speed, range, hits_left, size)
 	. = ..()
+	create_reagents(size, NONE, NO_REAGENTS_VALUE)
 	stream = stream_mode
 	src.speed = speed
 	src.range = src.range_left = range
