@@ -24,6 +24,7 @@
 	var/range = 3
 	var/hits_left = 3
 	var/range_left = 3
+	var/firstmove = TRUE
 	var/list/hit
 
 /obj/effect/decal/chempuff/blob_act(obj/structure/blob/B)
@@ -45,10 +46,12 @@
 /obj/effect/decal/chempuff/proc/hit_thing(atom/A)
 	if(A == src || A.invisibility)
 		return
+	if(firstmove)
+		return
 	if(!hits_left || hit[A])
 		return
 	var/living = isliving(A)
-	if(!A.density && !living)
+	if(!A.density)
 		return
 	if(ismob(A) && !living)
 		return
@@ -71,8 +74,18 @@
 	. = ..()
 	hit_thing(AM)
 
+/obj/effect/decal/chempuff/Bump(atom/A)
+	. = ..()
+	hit_thing(A)
+
 /obj/effect/decal/chempuff/proc/run_puff(atom/target)
-	for(var/i in 1 to range)
+	var/safety = 255
+	while(range_left)
+		if(!safety--)
+			CRASH("Spray ran out of safety.")
+		step_towards(src, target)
+		if(firstmove)
+			firstmove = FALSE
 		range_left--
 		if(!isturf(loc))
 			break
@@ -82,7 +95,6 @@
 				break
 		if(isturf(loc) && (!stream || !range_left))
 			reagents.reaction(loc, VAPOR)
-		step_towards(target)
 		sleep(speed)
 	qdel(src)
 

@@ -16,7 +16,7 @@
 	var/stream_mode = 0 //whether we use the more focused mode
 	var/current_range = 3 //the range of tiles the sprayer will reach.
 	var/spray_range = 3 //the range of tiles the sprayer will reach when in spray mode.
-	var/stream_range = 1 //the range of tiles the sprayer will reach when in stream mode.
+	var/stream_range = 3 //the range of tiles the sprayer will reach when in stream mode.
 	var/stream_amount = 10 //the amount of reagents transfered when in stream mode.
 	/// Amount of time it takes for a spray to completely travel.
 	var/spray_delay = 8
