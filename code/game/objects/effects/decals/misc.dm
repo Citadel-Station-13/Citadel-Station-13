@@ -43,39 +43,38 @@
 	hit = null
 	return ..()
 
-/obj/effect/decal/chempuff/proc/hit_thing(atom/A, ignore_firstmove)
+/// proc called to handle us hitting something
+/obj/effect/decal/chempuff/proc/hit_thing(atom/A, bump_hit)
+	// if the thing is invisible it usually is abstract/underfloor. also, don't hit ourselves.
 	if(A == src || A.invisibility)
 		return
-	if(firstmove && !ignore_firstmove)
+	// don't hit anything on the first move unless overridden (see: we're colliding a wall blocking our move out of the first tile)
+	if(firstmove && !bump_hit)
 		return
+	// we're out of hits or we already hit it
 	if(!hits_left || hit[A])
 		return
 	var/living = isliving(A)
-	if(!A.density)
+	// if it's not dense and we're a stream instead of a mist, and we're not out of range
+	if(!A.density && stream && range_left && !bump_hit)
 		return
+	// non living mobs are effectively abstract
 	if(ismob(A) && !living)
 		return
 	hit[A] = TRUE
-	if(stream)
-		if(ismob(A))
-			var/mob/M = A
-			if(!M.lying || !range_left)
-				reagents.reaction(M, VAPOR)
-				hits_left--
-		else
-			if(!range_left)
-				reagents.reaction(A, VAPOR)
-	else
-		reagents.reaction(A)
-		if(ismob(A))
-			hits_left--
+	reagents.reaction(A, VAPOR)
+	// mobs absorb enough to decrement hits_left, as well as stuff blocking us.
+	if(ismob(A) || bump_hit)
+		hits_left--
 
 /obj/effect/decal/chempuff/Crossed(atom/movable/AM, oldloc)
 	. = ..()
+	// bump things moving into us as long as we're not on our first move/moving out of origin tile
 	hit_thing(AM)
 
 /obj/effect/decal/chempuff/Bump(atom/A)
 	. = ..()
+	// if we hit something blocking our movement, collide it regardless even if we're still on our origin tile
 	hit_thing(A, TRUE)
 
 /obj/effect/decal/chempuff/proc/run_puff(atom/target)
@@ -83,18 +82,24 @@
 	while(range_left)
 		if(!safety--)
 			CRASH("Spray ran out of safety.")
+		// move towards new turf
 		step_towards(src, target)
 		if(firstmove)
+			// mark first movement so future Cross()es result in collisions
 			firstmove = FALSE
+		// decrement range
 		range_left--
+		// if we got nullspaced, exit
 		if(!isturf(loc))
 			break
+		// hit everything in it
 		for(var/atom/T in loc)
 			hit_thing(T)
+			// if we got deleted or ran out of hits, stop
 			if(!hits_left || !isturf(loc))
 				break
-		if(isturf(loc) && (!stream || !range_left))
-			reagents.reaction(loc, VAPOR)
+		// hit the turf
+		hit_thing(loc)
 		sleep(speed)
 	qdel(src)
 
