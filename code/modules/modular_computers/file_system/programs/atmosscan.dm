@@ -31,7 +31,7 @@
 			for(var/id in env_gases)
 				var/gas_level = environment.get_moles(id)/total_moles
 				if(gas_level > 0)
-					airlist += list(list("name" = "[GLOB.meta_gas_names[id]]", "percentage" = round(gas_level*100, 0.01)))
+					airlist += list(list("name" = "[GLOB.gas_data.names[id]]", "percentage" = round(gas_level*100, 0.01)))
 		data["AirData"] = airlist
 	else
 		data["AirPressure"] = 0

@@ -214,7 +214,6 @@
 /datum/component/nanites/proc/check_viral_prevention()
 	return SEND_SIGNAL(src, COMSIG_NANITE_INTERNAL_VIRAL_PREVENTION_CHECK)
 
-//Syncs the nanite component to another, making it so programs are the same with the same programming (except activation status)
 ///Syncs the nanite component to another, making it so programs are the same with the same programming (except activation status)
 /datum/component/nanites/proc/sync(datum/signal_source, datum/component/nanites/source, full_overwrite = TRUE, copy_activation = FALSE)
 	var/list/programs_to_remove = programs.Copy() - permanent_programs
@@ -274,10 +273,9 @@
 
 ///Modifies the current nanite volume, then checks if the nanites are depleted or exceeding the maximum amount
 /datum/component/nanites/proc/adjust_nanites(datum/source, amount)
-	nanite_volume = clamp(nanite_volume + amount, 0, max_nanites)
 	SIGNAL_HANDLER
 
-	nanite_volume += amount
+	nanite_volume = max(nanite_volume + amount, 0)	//Lets not have negative nanite counts on permanent ones.
 	if(nanite_volume > max_nanites)
 		reject_excess_nanites()
 	if(nanite_volume <= 0) //oops we ran out
@@ -407,7 +405,6 @@
 	nanite_volume = clamp(amount, 0, max_nanites)
 
 /datum/component/nanites/proc/set_max_volume(datum/source, amount)
-	max_nanites = max(1, max_nanites)
 	SIGNAL_HANDLER
 
 	max_nanites = max(1, amount)

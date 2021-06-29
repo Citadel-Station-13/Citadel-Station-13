@@ -726,6 +726,8 @@ SUBSYSTEM_DEF(shuttle)
 
 	preview_shuttle.register(replace)
 
+	preview_shuttle.reset_air()
+
 	// TODO indicate to the user that success happened, rather than just
 	// blanking the modification tab
 	preview_shuttle = null

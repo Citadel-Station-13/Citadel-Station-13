@@ -292,10 +292,7 @@
 	if(!source_air || !target_air)
 		return
 
-	var/datum/gas_mixture/removed = source_air.remove(gas_per_throw)
-	if(!removed)
-		return
-	target_air.merge(removed)
+	source_air.transfer_to(target_air, gas_per_throw)
 
 	// If the item is in a grabber circuit we'll update the grabber's outputs after we've thrown it.
 	var/obj/item/integrated_circuit/manipulation/grabber/G = A.loc

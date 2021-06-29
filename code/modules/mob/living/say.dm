@@ -267,16 +267,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		eavesdrop_range = EAVESDROP_EXTRA_RANGE
 	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
 	var/list/the_dead = list()
-	var/list/yellareas	//CIT CHANGE - adds the ability for yelling to penetrate walls and echo throughout areas
-	if(!eavesdrop_range && say_test(message) == "2")	//CIT CHANGE - ditto
-		yellareas = get_areas_in_range(message_range*0.5, source)	//CIT CHANGE - ditto
+
 	for(var/_M in GLOB.player_list)
 		var/mob/M = _M
 		if(M.stat != DEAD) //not dead, not important
-			if(yellareas)	//CIT CHANGE - see above. makes yelling penetrate walls
-				var/area/A = get_area(M)	//CIT CHANGE - ditto
-				if(istype(A) && A.ambientsounds != SPACE && (A in yellareas))	//CIT CHANGE - ditto
-					listening |= M	//CIT CHANGE - ditto
 			continue
 		if(!M.client || !client) //client is so that ghosts don't have to listen to mice
 			continue
@@ -303,6 +297,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			AM.Hear(rendered, src, message_language, message, null, spans, message_mode, source)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
 
+	if(!eavesdrop_range && say_test(message) == "2")	// Yell hook
+		process_yelling(listening, rendered, src, message_language, message, spans, message_mode, source)
+
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in listening)
@@ -311,6 +308,30 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
+
+/atom/movable/proc/process_yelling(list/already_heard, rendered, atom/movable/speaker, datum/language/message_language, message, list/spans, message_mode, obj/source)
+	if(last_yell > (world.time - 10))
+		to_chat(src, "<span class='warning'>Your voice doesn't project as far as you try to yell in such quick succession.")		// yeah no, no spamming an expensive floodfill.
+		return
+	last_yell = world.time
+	var/list/overhearing = list()
+	var/list/overhearing_text = list()
+	overhearing = yelling_wavefill(src, yell_power)
+	if(!overhearing.len)
+		overhearing_text = "none"
+	else
+		for(var/mob/M as anything in overhearing)
+			overhearing_text += key_name(M)
+		overhearing_text = english_list(overhearing_text)
+	log_say("YELL: [ismob(src)? key_name(src) : src] yelled [message] with overhearing mobs [overhearing_text]")
+	// overhearing = get_hearers_in_view(35, src) | get_hearers_in_range(5, src)
+	overhearing -= already_heard
+	if(!overhearing.len)
+		return
+	// to_chat(world, "DEBUG: overhearing [english_list(overhearing)]")
+	for(var/_AM in overhearing)
+		var/atom/movable/AM = _AM
+		AM.Hear(rendered, speaker, message_language, message, null, spans, message_mode, source)
 
 /mob/proc/binarycheck()
 	return FALSE

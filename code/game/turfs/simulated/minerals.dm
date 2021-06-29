@@ -14,8 +14,8 @@
 	density = TRUE
 	blocks_air = TRUE
 	layer = EDGED_TURF_LAYER
+	initial_temperature = 293.15
 	// base_icon_state = "smoothrocks"
-	temperature = TCMB
 	var/smooth_icon = 'icons/turf/smoothrocks.dmi'
 	var/environment_type = "asteroid"
 	var/turf/open/floor/plating/turf_type = /turf/open/floor/plating/asteroid/airless
