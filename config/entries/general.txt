@@ -75,9 +75,6 @@ MENTOR_LEGACY_SYSTEM
 
 
 
-##Log camera pictures - Must have picture logging enabled
-PICTURE_LOGGING_CAMERA
-
 ## period of time in seconds for players to be considered inactive
 # INACTIVITY_PERIOD 300
 
@@ -163,40 +160,6 @@ CHECK_RANDOMIZER
 ## Set to prevent anyone but those ckeys listed in config/whitelist.txt and config/admins.txt from joining your server
 #USEWHITELIST
 
-## set a server location for world reboot. Don't include the byond://, just give the address and port.
-## Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
-# SERVER ss13.example.com:2506
-
-## forum address
-# FORUMURL https://citadel-station.net/forum/
-
-## Wiki address
-# WIKIURL https://katlin.dog/citadel-wiki
-
-## Rules address
-# RULESURL https://katlin.dog/citadel-rules/main
-
-## Github address
-# GITHUBURL https://github.com/Citadel-Station-13/Citadel-Station-13
-
-## Round specific stats address
-## Link to round specific parsed logs; IE statbus. It is appended with the RoundID automatically by ticker/Reboot()
-## This will take priority over the game logs address during reboot.
-## Example: https://atlantaned.space/statbus/round.php?round=
-# ROUNDSTATSURL http://citadel-station.net/slimbus/
-
-## Game Logs address
-## Incase you don't have a fancy parsing system, but still want players to be able to find where you keep your server's logs.
-## Example: https://tgstation13.org/parsed-logs/basil/data/logs/
-# GAMELOGURL
-
-## Github repo id
-##This can be found by going to https://api.github.com/users/<user name here>/repos
-##Or https://api.github.com/orgs/<org name here>/repos if the repo owner is an organization
-# GITHUBREPOID 62485194
-
-## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
-# BANAPPEALS https://citadel-station.net/forum/viewforum.php?f=8&sid=a0ce5331d5594ef6d49661609c6f4ff9
 
 ## System command that invokes youtube-dl, used by Play Internet Sound.
 ## You can install youtube-dl with
@@ -360,35 +323,6 @@ CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
 ## The minimum build needed for joining the server, if using 512, a good minimum build would be 1421 as that disables the Middle Mouse Button exploit.
 CLIENT_ERROR_BUILD 1421
 
-## TOPIC RATE LIMITING
-## This allows you to limit how many topic calls (clicking on an interface window) the client can do in any given game second and/or game minute.
-## Admins are exempt from these limits.
-## Hitting the minute limit notifies admins.
-## Set to 0 or comment out to disable.
-SECOND_TOPIC_LIMIT 10
-
-MINUTE_TOPIC_LIMIT 100
-
-
-## CLICK RATE LIMITING
-## Same as above, but applies to clicking on objects in the game window.
-## This should be a higher then the interface limit to allow for the spam clickly nature of most battles.
-## Admins are exempt from these limits.
-## Hitting the minute limit notifies admins.
-## Set to 0 to disable.
-SECOND_CLICK_LIMIT 15
-
-MINUTE_CLICK_LIMIT 400
-
-##Error handling related options
-## The "cooldown" time for each occurence of a unique error
-#ERROR_COOLDOWN 600
-## How many occurences before the next will silence them
-#ERROR_LIMIT 90
-## How long a unique error will be silenced for
-#ERROR_SILENCE_TIME 6000
-##How long to wait between messaging admins about occurences of a unique error
-#ERROR_MSG_DELAY 50
 
 ## Chat Announce Options
 ## Various messages to be sent to game chats
