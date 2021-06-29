@@ -24,6 +24,7 @@
 	var/range = 3
 	var/hits_left = 3
 	var/range_left = 3
+	var/list/hit
 
 /obj/effect/decal/chempuff/blob_act(obj/structure/blob/B)
 	return
@@ -35,12 +36,23 @@
 	src.speed = speed
 	src.range = src.range_left = range
 	src.hits_left = hits_left
+	hit = list()
+
+/obj/effect/decal/chempuff/Destroy()
+	hit = null
+	return ..()
 
 /obj/effect/decal/chempuff/proc/hit_thing(atom/A)
 	if(A == src || A.invisibility)
 		return
-	if(!hits_left)
+	if(!hits_left || hit[A])
 		return
+	var/living = isliving(A)
+	if(!A.density && !living)
+		return
+	if(ismob(A) && !living)
+		return
+	hit[A] = TRUE
 	if(stream)
 		if(ismob(A))
 			var/mob/M = A
@@ -60,7 +72,6 @@
 	hit_thing(AM)
 
 /obj/effect/decal/chempuff/proc/run_puff(atom/target)
-	set waitfor = FALSE
 	for(var/i in 1 to range)
 		range_left--
 		if(!isturf(loc))
@@ -69,11 +80,10 @@
 			hit_thing(T)
 			if(!hits_left || !isturf(loc))
 				break
-		if(hits_left && isturf(loc) && (!stream || !range_left))
+		if(isturf(loc) && (!stream || !range_left))
 			reagents.reaction(loc, VAPOR)
-			hits_left--
-		if(!hits_left)
-			break
+		step_towards(target)
+		sleep(speed)
 	qdel(src)
 
 /obj/effect/decal/fakelattice

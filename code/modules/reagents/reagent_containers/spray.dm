@@ -85,7 +85,7 @@
 		reagents.trans_to(D, amount_per_transfer_from_this, 1/range)
 	D.add_atom_colour(mix_color_from_reagents(D.reagents.reagent_list), TEMPORARY_COLOUR_PRIORITY)
 	last_spray = world.time
-	D.run_puff(A)
+	INVOKE_ASYNC(D, /obj/effect/decal/chempuff/proc/run_puff, A)
 
 /obj/item/reagent_containers/spray/attack_self(mob/user)
 	stream_mode = !stream_mode
