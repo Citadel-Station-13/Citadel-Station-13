@@ -98,6 +98,9 @@
 			// if we got deleted or ran out of hits, stop
 			if(!hits_left || !isturf(loc))
 				break
+		if(!hits_left || !isturf(loc))
+			// yeah yeah sue me it's copypasted code but I don't want to declare a var.
+			break
 		// hit the turf
 		hit_thing(loc)
 		sleep(speed)
