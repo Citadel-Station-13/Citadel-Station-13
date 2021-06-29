@@ -56562,7 +56562,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/mining/glass{
+/obj/machinery/door/airlock/command{
 	name = "Quartermaster";
 	req_access_txt = "41"
 	},

@@ -30488,7 +30488,7 @@
 /obj/machinery/keycard_auth{
 	pixel_x = -24
 	},
-/obj/machinery/computer/cargo{
+/obj/machinery/computer/cargo/request{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -31346,7 +31346,7 @@
 /turf/open/floor/plasteel,
 /area/cargo/qm)
 "bwT" = (
-/obj/machinery/door/airlock/mining/glass{
+/obj/machinery/door/airlock/command{
 	name = "Quartermaster";
 	req_access_txt = "41"
 	},
@@ -31611,7 +31611,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/science)
 "bxw" = (
-/obj/machinery/door/airlock/mining/glass{
+/obj/machinery/door/airlock/command{
 	name = "Quartermaster";
 	req_access_txt = "41"
 	},

@@ -23298,7 +23298,7 @@
 /turf/open/floor/plating,
 /area/cargo/qm)
 "bbG" = (
-/obj/machinery/door/airlock/mining/glass{
+/obj/machinery/door/airlock/command{
 	name = "Quartermaster";
 	req_access_txt = "41"
 	},
