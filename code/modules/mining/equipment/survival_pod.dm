@@ -89,6 +89,11 @@
 	name = "large empty capsule"
 	desc = "An extremly large capsule which requires power. Useful for projects all over."
 	template_id = "shelter_delta"
+
+/obj/item/survivalcapsule/luxury/penthouse
+	name = "penthouse bluespace sheler capsule"
+	desc = "The absolute pinnacle of luxury in terms of survival capsules. While exuberantly expensive it has everything needed to make a small home in lavaland."
+	template_id = "shelter_epsilon"
 //Pod objects
 
 //Window
