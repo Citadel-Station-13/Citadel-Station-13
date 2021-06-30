@@ -168,25 +168,26 @@
 	. = ..()
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1) && !disassembled)
-		finalize_destruction()
-	else
-		qdel(src)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(!disassembled)
+			resistance_flags |= INDESTRUCTIBLE
+			countdown.stop()
+			visible_message("<span class='userdanger'>[src] begins to pulse uncontrollably... you might want to run!</span>")
+			sound_to_playing_players(volume = 50, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_disrupted.ogg'))
+			for(var/mob/M in GLOB.player_list)
+				var/turf/T = get_turf(M)
+				if((T && T.z == z) || is_servant_of_ratvar(M))
+					M.playsound_local(M, 'sound/machines/clockcult/ark_deathrattle.ogg', 100, FALSE, pressure_affected = FALSE)
+			make_glow()
+			glow.icon_state = "clockwork_gateway_disrupted"
+			resistance_flags |= INDESTRUCTIBLE
+			addtimer(CALLBACK(src, .proc/go_boom), 2.7 SECONDS)
+			return
+	qdel(src)
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/finalize_destruction()
-	set waitfor = FALSE
-	resistance_flags |= INDESTRUCTIBLE
-	countdown.stop()
-	visible_message("<span class='userdanger'>[src] begins to pulse uncontrollably... you might want to run!</span>")
-	sound_to_playing_players(volume = 50, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_disrupted.ogg'))
-	for(var/mob/M in GLOB.player_list)
-		var/turf/T = get_turf(M)
-		if((T && T.z == z) || is_servant_of_ratvar(M))
-			M.playsound_local(M, 'sound/machines/clockcult/ark_deathrattle.ogg', 100, FALSE, pressure_affected = FALSE)
-	make_glow()
-	glow.icon_state = "clockwork_gateway_disrupted"
-	resistance_flags |= INDESTRUCTIBLE
-	sleep(27)
+/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/go_boom()
+	if(QDELETED(src))
+		return
 	explosion(src, 1, 3, 8, 8)
 	sound_to_playing_players('sound/effects/explosion_distant.ogg', volume = 50)
 	qdel(src)

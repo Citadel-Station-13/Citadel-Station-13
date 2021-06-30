@@ -72,15 +72,17 @@
 	block_parry_data = /datum/block_parry_data/captain_saber
 
 /datum/block_parry_data/captain_saber
-	parry_time_windup = 0.5
-	parry_time_active = 4
-	parry_time_spindown = 1
+	parry_time_windup = 0
+	parry_time_active = 6
+	parry_time_spindown = 0
 	parry_time_perfect = 0.75
 	parry_time_perfect_leeway = 0.75
 	parry_imperfect_falloff_percent = 30
 	parry_efficiency_perfect = 100
 	parry_failed_stagger_duration = 3 SECONDS
-	parry_failed_clickcd_duration = 2 SECONDS
+	parry_failed_clickcd_duration = 1 SECONDS
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK
+	parry_automatic_enabled = TRUE
 
 /obj/item/melee/sabre/Initialize()
 	. = ..()
@@ -176,30 +178,24 @@
 
 // Fast, efficient parry.
 /datum/block_parry_data/traitor_rapier
-	parry_time_windup = 0.5
-	parry_time_active = 5
+	parry_time_windup = 0
+	parry_time_active = 6
 	parry_time_spindown = 0
 	parry_time_active_visual_override = 3
 	parry_time_spindown_visual_override = 2
 	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK | PARRY_LOCK_ATTACKING
-	parry_time_perfect = 0
-	parry_time_perfect_leeway = 3
+	parry_time_perfect = 1
+	parry_time_perfect_leeway = 1
 	parry_time_perfect_leeway_override = list(
 		TEXT_ATTACK_TYPE_PROJECTILE = 1
 	)
-	parry_imperfect_falloff_percent_override = list(
-		TEXT_ATTACK_TYPE_PROJECTILE = 50				// useless after 3rd decisecond
-	)
 	parry_imperfect_falloff_percent = 30
-	parry_efficiency_to_counterattack = 100
+	parry_efficiency_to_counterattack = INFINITY
 	parry_efficiency_considered_successful = 1
 	parry_efficiency_perfect = 100
-	parry_data = list(
-		PARRY_DISARM_ATTACKER = TRUE,
-		PARRY_KNOCKDOWN_ATTACKER = 10
-	)
+	parry_stamina_cost = 5
 	parry_failed_stagger_duration = 2 SECONDS
-	parry_failed_clickcd_duration = CLICK_CD_RANGE
+	parry_automatic_enabled = TRUE
 	parry_cooldown = 0
 
 /obj/item/melee/rapier/active_parry_reflex_counter(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list, parry_efficiency, list/effect_text)
@@ -259,6 +255,8 @@
 	var/stam_dmg = 30
 	var/cooldown_check = 0 // Used internally, you don't want to modify
 	var/cooldown = 13 // Default wait time until can stun again.
+	/// block mitigation needed to prevent knockdown/disarms
+	var/block_percent_to_counter = 50
 	var/stun_time_silicon = 60 // How long it stuns silicons for - 6 seconds.
 	var/affect_silicon = FALSE // Does it stun silicons.
 	var/on_sound // "On" sound, played when switching between able to stun or not.
@@ -356,7 +354,8 @@
 		if(cooldown_check < world.time)
 			if(!UseStaminaBufferStandard(user, STAM_COST_BATON_MOB_MULT, warn = TRUE))
 				return DISCARD_LAST_ACTION
-			if(target.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, null) & BLOCK_SUCCESS)
+			var/list/block_return = list()
+			if(target.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, block_return) & BLOCK_SUCCESS)
 				playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 				return
 			if(ishuman(target))
@@ -367,7 +366,8 @@
 			if(stun_animation)
 				user.do_attack_animation(target)
 			playsound(get_turf(src), on_stun_sound, 75, 1, -1)
-			target.DefaultCombatKnockdown(softstun_ds, TRUE, FALSE, hardstun_ds, stam_dmg)
+			var/countered = block_return[BLOCK_RETURN_MITIGATION_PERCENT] > block_percent_to_counter
+			target.DefaultCombatKnockdown(softstun_ds, TRUE, FALSE, countered? 0 : hardstun_ds, stam_dmg, !countered)
 			additional_effects_carbon(target, user)
 			log_combat(user, target, "stunned", src)
 			add_fingerprint(user)
@@ -452,6 +452,18 @@
 			user?.visible_message("<span class='warning'>[user] collapses [src] back down!</span>")
 	playsound(src.loc, on_sound, 50, 1)
 	add_fingerprint(user)
+
+/obj/item/melee/classic_baton/telescopic/newspaper
+	name = "The Daily Whiplash"
+	desc = "A newspaper wrapped around a telescopic baton in such a way that it looks like you're beating people with a rolled up newspaper."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "newspaper"
+	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
+	on_sound = 'sound/weapons/batonextend.ogg'
+	on_icon_state = "newspaper2"
+	off_icon_state = "newspaper"
+	on_item_state = "newspaper"
 
 /obj/item/melee/classic_baton/telescopic/contractor_baton
 	name = "contractor baton"
@@ -695,11 +707,14 @@
 			playsound(src, 'sound/weapons/batonextend.ogg', 50, 1)
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
+	if(!held_sausage || held_sausage.roasted)
+		return	// no
 	to_chat(user, "You finish roasting [held_sausage]")
 	playsound(src,'sound/items/welder2.ogg',50,1)
 	held_sausage.add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
 	held_sausage.name = "[target.name]-roasted [held_sausage.name]"
 	held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."
+	held_sausage.roasted = TRUE
 	update_icon()
 
 /obj/item/melee/cleric_mace

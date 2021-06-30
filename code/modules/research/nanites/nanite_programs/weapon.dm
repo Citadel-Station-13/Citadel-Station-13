@@ -87,8 +87,11 @@
 	addtimer(CALLBACK(src, .proc/boom), clamp((nanites.nanite_volume * 0.35), 25, 150))
 
 /datum/nanite_program/explosive/proc/boom()
-	dyn_explosion(get_turf(host_mob), nanites.nanite_volume / 50)
-	qdel(nanites)
+	var/nanite_amount = nanites.nanite_volume
+	var/heavy_range = FLOOR(nanite_amount/100, 1) - 1
+	var/light_range = FLOOR(nanite_amount/50, 1) - 1
+	explosion(host_mob, 0, heavy_range, light_range)
+	nanites.delete_nanites()
 
 //TODO make it defuse if triggered again
 

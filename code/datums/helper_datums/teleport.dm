@@ -142,12 +142,12 @@
 		// Can most things breathe?
 		if(trace_gases)
 			continue
-		var/oxy_moles = A.get_moles(/datum/gas/oxygen)
+		var/oxy_moles = A.get_moles(GAS_O2)
 		if(oxy_moles < 16 || oxy_moles > 50)
 			continue
-		if(A.get_moles(/datum/gas/plasma))
+		if(A.get_moles(GAS_PLASMA))
 			continue
-		if(A.get_moles(/datum/gas/carbon_dioxide) >= 10)
+		if(A.get_moles(GAS_CO2) >= 10)
 			continue
 
 		// Aim for goldilocks temperatures and pressure

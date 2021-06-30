@@ -209,7 +209,7 @@
 	parry_time_perfect = 2
 	parry_time_perfect_leeway = 0.75
 	parry_imperfect_falloff_percent = 7.5
-	parry_efficiency_to_counterattack = 100
+	parry_efficiency_to_counterattack = INFINITY
 	parry_efficiency_considered_successful = 80
 	parry_efficiency_perfect = 120
 	parry_failed_stagger_duration = 3 SECONDS
@@ -266,14 +266,15 @@
 	parry_time_perfect = 2
 	parry_time_perfect_leeway = 2
 	parry_failed_stagger_duration = 3 SECONDS
-	parry_failed_clickcd_duration = 3 SECONDS
 	parry_time_windup = 0
 	parry_time_spindown = 0
 	parry_imperfect_falloff_percent = 0
-	parry_efficiency_to_counterattack = 100
+	parry_efficiency_to_counterattack = INFINITY
 	parry_efficiency_considered_successful = 120
 	parry_efficiency_perfect = 120
 	parry_data = list(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 4)
+	parry_automatic_enabled = TRUE
+	autoparry_single_efficiency = 75
 
 //unique hammers
 /obj/item/melee/smith/hammer/toolbox

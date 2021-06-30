@@ -18,7 +18,8 @@
 	var/spray_range = 3 //the range of tiles the sprayer will reach when in spray mode.
 	var/stream_range = 1 //the range of tiles the sprayer will reach when in stream mode.
 	var/stream_amount = 10 //the amount of reagents transfered when in stream mode.
-	var/spray_delay = 3 //The amount of sleep() delay between each chempuff step.
+	/// Amount of time it takes for a spray to completely travel.
+	var/spray_delay = 8
 	/// Last world.time of spray
 	var/last_spray = 0
 	/// Spray cooldown
@@ -72,58 +73,20 @@
 	if((last_spray + spray_cooldown) > world.time)
 		return
 	var/range = clamp(get_dist(src, A), 1, current_range)
-	var/obj/effect/decal/chempuff/D = new /obj/effect/decal/chempuff(get_turf(src))
-	D.create_reagents(amount_per_transfer_from_this, NONE, NO_REAGENTS_VALUE)
-	var/puff_reagent_left = range //how many turf, mob or dense objet we can react with before we consider the chem puff consumed
-	if(stream_mode)
-		reagents.trans_to(D, amount_per_transfer_from_this)
-		puff_reagent_left = 1
-	else
-		reagents.trans_to(D, amount_per_transfer_from_this, 1/range)
-	D.color = mix_color_from_reagents(D.reagents.reagent_list)
+	var/wait_step = CEILING(spray_delay * INVERSE(range), world.tick_lag)
+	var/obj/effect/decal/chempuff/D = new /obj/effect/decal/chempuff(get_turf(src), stream_mode, wait_step, range, stream_mode? 1 : range)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
 	log_reagent("SPRAY: [key_name(usr)] fired [src] ([REF(src)]) [COORD(T)] at [A] ([REF(A)]) [COORD(A)] (chempuff: [D.reagents.log_list()])")
-	var/wait_step = max(round(2+ spray_delay * INVERSE(range)), 2)
+	D.create_reagents(amount_per_transfer_from_this, NONE, NO_REAGENTS_VALUE)
+	if(stream_mode)
+		reagents.trans_to(D, amount_per_transfer_from_this)
+	else
+		reagents.trans_to(D, amount_per_transfer_from_this, 1/range)
+	D.color = mix_color_from_reagents(D.reagents.reagent_list)
 	last_spray = world.time
-	INVOKE_ASYNC(src, .proc/do_spray, A, wait_step, D, range, puff_reagent_left)
-	return TRUE
-
-/obj/item/reagent_containers/spray/proc/do_spray(atom/A, wait_step, obj/effect/decal/chempuff/D, range, puff_reagent_left)
-	var/range_left = range
-	for(var/i=0, i<range, i++)
-		range_left--
-		step_towards(D,A)
-		sleep(wait_step)
-
-		for(var/atom/T in get_turf(D))
-			if(T == D || T.invisibility) //we ignore the puff itself and stuff below the floor
-				continue
-			if(puff_reagent_left <= 0)
-				break
-
-			if(stream_mode)
-				if(ismob(T))
-					var/mob/M = T
-					if(!M.lying || !range_left)
-						D.reagents.reaction(M, VAPOR)
-						puff_reagent_left -= 1
-				else if(!range_left)
-					D.reagents.reaction(T, VAPOR)
-			else
-				D.reagents.reaction(T, VAPOR)
-				if(ismob(T))
-					puff_reagent_left -= 1
-
-		if(puff_reagent_left > 0 && (!stream_mode || !range_left))
-			D.reagents.reaction(get_turf(D), VAPOR)
-			puff_reagent_left -= 1
-
-		if(puff_reagent_left <= 0) // we used all the puff so we delete it.
-			qdel(D)
-			return
-	qdel(D)
+	D.run_puff(A)
 
 /obj/item/reagent_containers/spray/attack_self(mob/user)
 	stream_mode = !stream_mode
@@ -207,7 +170,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	volume = 40
 	stream_range = 4
-	spray_delay = 1
+	spray_delay = 2
 	amount_per_transfer_from_this = 5
 	list_reagents = list(/datum/reagent/consumable/condensedcapsaicin = 40)
 

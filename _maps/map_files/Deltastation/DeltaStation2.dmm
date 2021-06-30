@@ -13710,7 +13710,7 @@
 /turf/open/floor/plating{
 	initial_gas_mix = "o2=0.01;n2=0.01";
 	luminosity = 2;
-	temperature = 2.7
+	initial_temperature = 2.7
 	},
 /area/security/prison)
 "ban" = (
@@ -14373,7 +14373,7 @@
 /turf/open/floor/plating{
 	initial_gas_mix = "o2=0.01;n2=0.01";
 	luminosity = 2;
-	temperature = 2.7
+	initial_temperature = 2.7
 	},
 /area/security/prison)
 "bdo" = (
@@ -111598,7 +111598,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/mining{
+/obj/machinery/door/airlock/command{
 	name = "Quartermaster's Quarters";
 	req_access_txt = "41"
 	},
@@ -127746,7 +127746,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/mining{
+/obj/machinery/door/airlock/command{
 	name = "Quartermaster's Office";
 	req_access_txt = "41"
 	},
