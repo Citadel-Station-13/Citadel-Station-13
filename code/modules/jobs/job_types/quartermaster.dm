@@ -25,7 +25,7 @@
 	minimal_access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_CARGO_BOT, ACCESS_QM, ACCESS_MINING,
 					ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM, ACCESS_KEYCARD_AUTH, ACCESS_RC_ANNOUNCE,
 					ACCESS_SEC_DOORS, ACCESS_HEADS)
-	paycheck = PAYCHECK_HARD //They can already buy stuff using cargo budget, don't give em a command-level paycheck.
+	paycheck = PAYCHECK_HARD //They can already buy stuff using cargo budget, don't give em a command-level paycheck.	//alright i'll agree to that -qweq
 	paycheck_department = ACCOUNT_CAR
 
 	display_order = JOB_DISPLAY_ORDER_QUARTERMASTER
