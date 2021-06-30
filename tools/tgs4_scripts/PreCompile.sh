@@ -79,9 +79,6 @@ fi
 
 echo "Deploying auxmos..."
 git checkout "$AUXMOS_VERSION"
-if [ -d "target" ]; then
-	rm -R target
-fi
 env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo rustc --release --target=i686-unknown-linux-gnu -- -C target-cpu=native
 mv target/i686-unknown-linux-gnu/release/auxmos.so "$1/auxmos.so"
 cd ../..
