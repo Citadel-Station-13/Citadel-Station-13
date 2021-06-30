@@ -116,6 +116,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/show_tip,
 	/client/proc/smite,
 	/client/proc/admin_away,
+	/client/proc/spawn_floor_cluwne,
 	/client/proc/cmd_admin_toggle_fov,		//CIT CHANGE - FOV
 	/client/proc/roll_dices					//CIT CHANGE - Adds dice verb
 	))
@@ -193,6 +194,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	// /client/proc/check_missing_sprites,
 	// #endif
 	/datum/admins/proc/create_or_modify_area,
+	/datum/admins/proc/fixcorruption,
 #ifdef REFERENCE_TRACKING
 	/datum/admins/proc/view_refs,
 	/datum/admins/proc/view_del_failures,

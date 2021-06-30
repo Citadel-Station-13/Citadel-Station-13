@@ -158,7 +158,7 @@
 /// how long they're staggered for
 #define SHOVE_STAGGER_DURATION 35
 /// how long they're off balance for
-#define SHOVE_OFFBALANCE_DURATION 30
+#define SHOVE_OFFBALANCE_DURATION 3 SECONDS
 
 
 //Embedded objects

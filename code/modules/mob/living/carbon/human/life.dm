@@ -273,7 +273,7 @@
 		if(getToxLoss() >= 45 && nutrition > 20 && !HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
 			lastpuke += prob(50)
 			if(lastpuke >= 50) // about 25 second delay I guess
-				vomit(20, toxic = TRUE)
+				vomit(20)
 				lastpuke = 0
 
 

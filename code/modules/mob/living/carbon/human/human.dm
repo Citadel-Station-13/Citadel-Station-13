@@ -840,7 +840,7 @@
 		override = dna.species.override_float
 	..()
 
-/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = 0, stun = 1, distance = 0, message = 1, toxic = 0)
+/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
 	if(blood && dna?.species && (NOBLOOD in dna.species.species_traits))
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
@@ -1055,10 +1055,10 @@
 		return
 	if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))	//if we want to ignore slowdown from damage, but not from equipment
 		var/scaling = maxHealth / 100
-		var/health_deficiency = ((maxHealth / scaling) - (health / scaling) + (getStaminaLoss()*0.75))//CIT CHANGE - reduces the impact of staminaloss and makes stamina buffer influence it
+		var/health_deficiency = max(((maxHealth / scaling) - (health / scaling)), (getStaminaLoss()*0.75))
 		if(health_deficiency >= 40)
-			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, TRUE, (health_deficiency-39) / 75)
-			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, TRUE, (health_deficiency-39) / 25)
+			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, TRUE, (health_deficiency - 15) / 75)
+			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, TRUE, (health_deficiency - 15) / 25)
 		else
 			remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 			remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
@@ -1083,6 +1083,30 @@
 	. = ..()
 	set_species(race)
 
+/**
+ * # `spec_trait_examine_font()`
+ *
+ * This gets a humanoid's special examine font, which is used to color their species name during examine / health analyzing.
+ * The first of these that applies is returned.
+ * Returns:
+ * * Metallic font if robotic
+ * * Cyan if a toxinlover
+ * * Purple if plasmaperson
+ * * Rock / Brownish if a golem
+ * * Green if none of the others apply (aka, generic organic)
+*/
+/mob/living/carbon/human/proc/spec_trait_examine_font()
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		return "<font color='#aaa9ad'>"
+	if(HAS_TRAIT(src, TRAIT_TOXINLOVER))
+		return "<font color='#00ffff'>"
+	if(isplasmaman(src))
+		return "<font color='#800080'"
+	if(isgolem(src))
+		return "<font color='#8b4513'"
+	return "<font color='#18d855'>"
+
+
 /mob/living/carbon/human/get_tooltip_data()
 	var/t_He = p_they(TRUE)
 	var/t_is = p_are()
@@ -1091,7 +1115,7 @@
 	if(skipface || get_visible_name() == "Unknown")
 		. += "You can't make out what species they are."
 	else
-		. += "[t_He] [t_is] a [dna.custom_species ? dna.custom_species : dna.species.name]"
+		. += "[t_He] [t_is] a [spec_trait_examine_font()][dna.custom_species ? dna.custom_species : dna.species.name]</font>"
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, usr, .)
 
 /mob/living/carbon/human/species/abductor

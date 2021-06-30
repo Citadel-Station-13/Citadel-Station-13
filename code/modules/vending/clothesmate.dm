@@ -52,6 +52,7 @@
 					/obj/item/clothing/accessory/turtleneck/tactifool = 2,
 					/obj/item/clothing/accessory/turtleneck/tactifool/green = 2,
 					/obj/item/clothing/accessory/turtleneck/tactifool/blue = 2,
+					/obj/item/clothing/accessory/sleevecrop = 2,
 					/obj/item/clothing/under/sweater = 3,
 					/obj/item/clothing/under/sweater/black = 3,
 					/obj/item/clothing/under/sweater/purple = 3,
