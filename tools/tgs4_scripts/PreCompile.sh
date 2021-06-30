@@ -66,31 +66,25 @@ env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --release --target=i686-un
 mv target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
 cd ..
 
-# get dependencies for extools
-apt-get install -y cmake build-essential gcc-multilib g++-multilib cmake wget
-
 # update extools
-if [ ! -d "extools" ]; then
-	echo "Cloning extools..."
-	git clone https://github.com/MCHSL/extools
-	cd extools/byond-extools
+if [ ! -d "auxmos" ]; then
+	echo "Cloning auxmos..."
+	git clone https://github.com/Putnam3145/auxmos
+	cd auxmos
 else
-	echo "Fetching extools..."
-	cd extools/byond-extools
+	echo "Fetching auxmos..."
+	cd auxmos
 	git fetch
 fi
 
-echo "Deploying extools..."
-git checkout "$EXTOOLS_VERSION"
-if [ -d "build" ]; then
-	rm -R build
+echo "Deploying auxmos..."
+git checkout "$AUXMOS_VERSION"
+if [ -d "target" ]; then
+	rm -R target
 fi
-mkdir build
-cd build
-cmake ..
-make
-mv libbyond-extools.so "$1/libbyond-extools.so"
-cd ../../..
+env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo rustc --release --target=i686-unknown-linux-gnu -- -C target-cpu=native
+mv target/i686-unknown-linux-gnu/release/auxmos.so "$1/auxmos.so"
+cd ../..
 
 # install or update youtube-dl when not present, or if it is present with pip3,
 # which we assume was used to install it
