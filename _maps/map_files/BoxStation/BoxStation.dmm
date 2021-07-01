@@ -58490,12 +58490,6 @@
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"pcK" = (
-/obj/structure/urinal{
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "pcQ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -95550,7 +95544,7 @@ aDM
 hIM
 aJq
 aJq
-pcK
+aJq
 aJr
 aJr
 aJr
