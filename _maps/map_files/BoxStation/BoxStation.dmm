@@ -14963,6 +14963,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	areastring = "/area/commons/arcade";
+	dir = 8;
 	name = "Arcade Room";
 	pixel_x = -25
 	},
