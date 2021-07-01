@@ -76,6 +76,18 @@
 		if(!silent)
 			to_chat(user, "<span class='warning'>With [src] off of your arms, you feel less ready to punch things.</span>")
 
+/obj/item/clothing/gloves/fingerless/pugilist/crafted
+	unique_reskin = list("Short" = "armwraps",
+						"Extended" = "armwraps_extended"
+						)
+
+/obj/item/clothing/gloves/fingerless/pugilist/crafted/reskin_obj(mob/M)
+	. = ..()
+	if(icon_state == "armwraps_extended")
+		item_state = "armwraps_extended"
+	else
+		return
+
 /obj/item/clothing/gloves/fingerless/pugilist/chaplain
 	name = "armwraps of unyielding resolve"
 	desc = "A series of armwraps, soaked in holy water. Makes you pretty keen to smite evil magic users."
@@ -224,10 +236,9 @@
 	parry_efficiency_considered_successful = 0.01
 	parry_efficiency_to_counterattack = INFINITY	// no auto counter
 	parry_max_attacks = INFINITY
-	parry_failed_cooldown_duration = 2.25 SECONDS
-	parry_failed_stagger_duration = 2.25 SECONDS
+	parry_failed_cooldown_duration = 1.5 SECONDS
+	parry_failed_stagger_duration = 1.5 SECONDS
 	parry_cooldown = 0
-	parry_failed_clickcd_duration = 0
 
 /obj/item/clothing/gloves/fingerless/pugilist/mauler
 	name = "mauler gauntlets"

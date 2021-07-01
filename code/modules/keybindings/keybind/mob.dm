@@ -76,3 +76,15 @@
 	else
 		user.mob.dropItemToGround(I)
 	return TRUE
+
+/datum/keybinding/mob/examine_immediate
+	hotkey_keys = list()
+	classic_keys = list()
+	name = "examine_immediate"
+	full_name = "Examine (Immediate)"
+	description = "Immediately examine anything you're hovering your mouse over."
+
+/datum/keybinding/mob/examine_immediate/down(client/user)
+	var/atom/A = user.mouseObject
+	if(A)
+		A.attempt_examinate(user.mob)

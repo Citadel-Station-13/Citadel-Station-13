@@ -12,11 +12,7 @@
 
 /// Base regeneration per second
 /datum/config_entry/number/stamina_combat/base_regeneration
-	config_entry_value = 0.5
-
-/// Combat mode regeneration per second
-/datum/config_entry/number/stamina_combat/combat_regeneration
-	config_entry_value = 5
+	config_entry_value = 3.5
 
 /// After out_of_combat_timer elapses, additionally regenerate this percent of total stamina per second. Unaffected by combat mode.
 /datum/config_entry/number/stamina_combat/percent_regeneration_out_of_combat
