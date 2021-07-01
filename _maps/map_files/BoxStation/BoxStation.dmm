@@ -14955,12 +14955,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	areastring = "/area/commons/arcade";
-	name = "Gambling Den";
+	name = "Arcade Room";
 	pixel_x = -25
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aIc" = (
