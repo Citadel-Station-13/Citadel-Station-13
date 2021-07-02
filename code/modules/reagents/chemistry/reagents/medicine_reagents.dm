@@ -1002,7 +1002,7 @@
 					M.grab_ghost()
 					M.emote("gasp")
 					log_combat(M, M, "revived", src)
-					var/list/policies = CONFIG_GET(keyed_list/policyconfig)
+					var/list/policies = CONFIG_GET(keyed_list/policy)
 					var/timelimit = CONFIG_GET(number/defib_cmd_time_limit) * 10 //the config is in seconds, not deciseconds
 					var/late = timelimit && (tplus > timelimit)
 					var/policy = late? policies[POLICYCONFIG_ON_DEFIB_LATE] : policies[POLICYCONFIG_ON_DEFIB_INTACT]

@@ -164,6 +164,7 @@
 	//Try to check if the speaker specified a name or a job to focus on
 	var/list/specific_listeners = list()
 	var/found_string = null
+	var/devil_target = FALSE
 
 	//Get the proper job titles
 	message = get_full_job_name(message)
@@ -177,7 +178,7 @@
 		if(devilinfo && findtext(message, devilinfo.truename))
 			var/start = findtext(message, devilinfo.truename)
 			listeners = list(L) //Devil names are unique.
-			power_multiplier *= 5 //if you're a devil and god himself addressed you, you fucked up
+			devil_target = TRUE //if you're a devil and god himself addressed you, you fucked up
 			//Cut out the name so it doesn't trigger commands
 			message = copytext(message, 1, start) + copytext(message, start + length(devilinfo.truename))
 			break
@@ -198,6 +199,8 @@
 
 	var/power_multiplier = get_vog_multiplier(user, base_multiplier, specific_listeners)
 	var/adminbus = power_multiplier > VOG_MAX_STANDARD_POWER		// an admin is being a dunce, bypass hard scaling limits on this message
+	if(devil_target)
+		power_multiplier = max(power_multiplier, 5)
 
 	if(specific_listeners.len)
 		message = copytext(message, length(found_string) + 1)
@@ -304,7 +307,7 @@
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.apply_damage(min(20 * power_multiplier, adminbus? INFINTIY : VOG_MAX_BURST_DAMAGE), def_zone = BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
+			L.apply_damage(min(20 * power_multiplier, adminbus? INFINITY : VOG_MAX_BURST_DAMAGE), def_zone = BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
 
 	//BLEED
 	else if((findtext(message, bleed_words)))
