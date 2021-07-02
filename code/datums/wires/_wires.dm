@@ -166,6 +166,7 @@
 	on_pulse(wire, user)
 
 /datum/wires/proc/pulse_color(color, mob/living/user)
+	set waitfor = FALSE
 	LAZYINITLIST(current_users)
 	if(current_users[user])
 		return FALSE
