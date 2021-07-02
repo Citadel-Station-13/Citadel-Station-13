@@ -1,0 +1,4 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - bugfix: "Turrets on nonlethal mode now once again shoot till the target is stamcrit as opposed to unable to use items, resolving some issues."
