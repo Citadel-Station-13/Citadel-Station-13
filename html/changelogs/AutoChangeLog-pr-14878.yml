@@ -1,4 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - bugfix: "A bunch of sleeping process() calls now either don't sleep or make sure to call a proc with waitfor set to FALSE"
