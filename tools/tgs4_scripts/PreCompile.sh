@@ -66,31 +66,27 @@ env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --release --target=i686-un
 mv target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
 cd ..
 
-# get dependencies for extools
-apt-get install -y cmake build-essential gcc-multilib g++-multilib cmake wget
+# Auxtools dependencies
+apt-get install build-essential g++-multilib libc6-i386 libstdc++6:i386
 
-# update extools
-if [ ! -d "extools" ]; then
-	echo "Cloning extools..."
-	git clone https://github.com/MCHSL/extools
-	cd extools/byond-extools
+# Update auxmos
+if [ ! -d "auxmos" ]; then
+	echo "Cloning auxmos..."
+	git clone https://github.com/Putnam3145/auxmos
+	cd auxmos
+	~/.cargo/bin/rustup target add i686-unknown-linux-gnu
 else
-	echo "Fetching extools..."
-	cd extools/byond-extools
+	echo "Fetching auxmos..."
+	cd auxmos
 	git fetch
+	~/.cargo/bin/rustup target add i686-unknown-linux-gnu
 fi
 
-echo "Deploying extools..."
-git checkout "$EXTOOLS_VERSION"
-if [ -d "build" ]; then
-	rm -R build
-fi
-mkdir build
-cd build
-cmake ..
-make
-mv libbyond-extools.so "$1/libbyond-extools.so"
-cd ../../..
+echo "Deploying auxmos..."
+git pull origin master 
+env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --release --target=i686-unknown-linux-gnu
+mv -f target/i686-unknown-linux-gnu/release/libauxmos.so "$1/libauxmos.so"
+cd ..
 
 # install or update youtube-dl when not present, or if it is present with pip3,
 # which we assume was used to install it
