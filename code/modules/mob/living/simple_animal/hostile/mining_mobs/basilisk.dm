@@ -103,7 +103,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/proc/consume_bait()
 	var/list/L = list()
-	for(var/obj/O in view(src, 9))
+	for(var/obj/O in view(1, src))
 		L += O
 	var/obj/item/stack/ore/diamond/diamonds = locate(/obj/item/stack/ore/diamond) in L
 	if(diamonds)
