@@ -1,0 +1,4 @@
+author: "cadyn"
+delete-after: True
+changes: 
+  - server: "Updated server scripts for proper linux support"
