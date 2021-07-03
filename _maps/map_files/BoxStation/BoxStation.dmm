@@ -12,7 +12,6 @@
 	dir = 8
 	},
 /obj/item/radio/intercom{
-	pixel_y = 25
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
