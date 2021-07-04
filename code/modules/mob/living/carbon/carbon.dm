@@ -1162,7 +1162,7 @@
 		var/obj/item/clothing/H = head
 		if(H.clothing_flags & SCAN_REAGENTS)
 			return TRUE
-	if(isorgan(/obj/item/organ/cyberimp/eyes/hud/science))
+	if(getorgan(/obj/item/organ/cyberimp/eyes/hud/science))
 		return TRUE
 	if(isclothing(wear_mask) && (wear_mask.clothing_flags & SCAN_REAGENTS))
 		return TRUE
