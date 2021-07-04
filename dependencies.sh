@@ -11,7 +11,7 @@ export BYOND_MINOR=1536
 export RUST_G_VERSION=0.4.8
 
 #auxmos git tag
-export AUXMOS_VERSION=0.2.0
+export AUXMOS_VERSION=v0.2.0
 
 #node version
 export NODE_VERSION=12
