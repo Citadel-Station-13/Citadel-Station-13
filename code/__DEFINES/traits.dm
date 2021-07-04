@@ -196,6 +196,7 @@
 #define TRAIT_MASO              "masochism"
 #define	TRAIT_HIGH_BLOOD        "high_blood"
 #define TRAIT_PARA              "paraplegic"
+#define TRAIT_QUAD              "quadriplegic"
 #define TRAIT_EMPATH			"empath"
 #define TRAIT_FRIENDLY			"friendly"
 #define TRAIT_SNOB				"snob"
@@ -206,6 +207,7 @@
 #define TRAIT_FREESPRINT		"free_sprinting"
 #define TRAIT_XRAY_VISION       "xray_vision"
 #define TRAIT_THERMAL_VISION    "thermal_vision"
+#define TRAIT_MESON_VISION      "meson_vision"
 #define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
 #define TRAIT_NO_INTERNALS		"no-internals"
 #define TRAIT_TOXIC_ALCOHOL		"alcohol_intolerance"
@@ -221,6 +223,15 @@
 #define TRAIT_LIVING_NO_DENSITY			"living_no_density"
 /// forces us to not render our overlays
 #define TRAIT_HUMAN_NO_RENDER			"human_no_render"
+///diaper traits
+#define BABYBRAINED_TRAIT "baby_brained"
+#define TRAIT_INCONTINENT "incontinent"
+#define TRAIT_WETINCONTINENT "urinary incontinent"
+#define TRAIT_MESSINCONTINENT "fecal incontinent"
+#define TRAIT_FULLYINCONTINENT "unaware"
+#define TRAIT_POTTYREBEL "potty_rebel"
+#define TRAIT_DIAPERUSE "diaper_use"
+#define TRAIT_EXACTCHECK "exact_check"
 
 // mobility flag traits
 // IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)
@@ -333,6 +344,8 @@
 #define DEATHSQUAD_TRAIT "deathsquad"
 #define SLIMEPUDDLE_TRAIT "slimepuddle"
 #define CORRUPTED_SYSTEM "corrupted-system"
+#define REGRESSION_TRAIT "regression"
+
 ///Turf trait for when a turf is transparent
 #define TURF_Z_TRANSPARENT_TRAIT "turf_z_transparent"
 /// This trait is added by the active directional block system.
@@ -341,4 +354,3 @@
 #define ACTIVE_PARRY_TRAIT				"active_parry"
 #define STICKY_NODROP "sticky-nodrop" //sticky nodrop sounds like a bad soundcloud rapper's name
 #define TRAIT_SACRIFICED "sacrificed" //Makes sure that people cant be cult sacrificed twice.
-#define TRAIT_SPACEWALK "spacewalk"
