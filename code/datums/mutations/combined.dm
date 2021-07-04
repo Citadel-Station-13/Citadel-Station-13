@@ -30,7 +30,11 @@
 /datum/generecipe/hulk
 	required = "/datum/mutation/human/strong; /datum/mutation/human/radioactive"
 	result = HULK
-	
-/datum/generecipe/thermal
+
+/datum/generecipe/meson
 	required = "/datum/mutation/human/nearsight; /datum/mutation/human/stimmed"
-	result = THERMAL
+	result = MESON
+
+/*/datum/generecipe/thermal
+	required = "/datum/mutation/human/thermal/meson; /datum/mutation/human/fire"
+	result = THERMAL*/
