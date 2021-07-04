@@ -382,7 +382,7 @@
 	icon_state = "ebola"
 	hitsound = 'sound/weapons/taserhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
-	breakouttime = 25
+	breakouttime = 50
 
 /obj/item/restraints/legcuffs/bola/energy/on_removed()
 	do_sparks(1, TRUE, src)
