@@ -681,7 +681,8 @@
 
 	if(HAS_TRAIT(src, TRAIT_MESON_VISION))
 		sight |= (SEE_TURFS)
-		see_in_dark = max(see_in_dark, 4)
+		see_in_dark = max(see_in_dark, 2)
+		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
 
 	if(see_override)
 		see_invisible = see_override
