@@ -1,0 +1,5 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes: 
+  - imageadd: "tg based tool resprites"
+  - bugfix: "wirecutters have proper overlays"
