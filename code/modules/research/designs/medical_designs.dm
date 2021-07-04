@@ -548,7 +548,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 500, /datum/material/gold = 700, /datum/material/plasma = 800)
-	build_path = /obj/item/organ/eyes/robotic/thermals
+	build_path = /obj/item/organ/eyes/robotic/meson
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
