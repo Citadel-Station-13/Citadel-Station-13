@@ -145,8 +145,11 @@
 			D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
 
 /obj/machinery/mineral/ore_redemption/process()
-	if(!materials.mat_container || panel_open || !powered())
-		return
+	if(materials.mat_container && !panel_open && powered())
+		process_all_ores()
+
+/obj/machinery/mineral/ore_redemption/proc/process_all_ores()
+	set waitfor = FALSE
 	var/atom/input = get_step(src, input_dir)
 	var/obj/structure/ore_box/OB = locate() in input
 	if(OB)
@@ -164,6 +167,7 @@
 		process_ores(ore_buffer)
 	else if(!message_sent)
 		send_console_message()
+
 
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/W, mob/user, params)
 	if(default_unfasten_wrench(user, W))
