@@ -395,7 +395,7 @@
 	if(get_turf(user) != last)
 		last = get_turf(user)
 		passed_in[1] = 0.5
-		if(R && !R.allow_breakout_movement)
+		if(cuffs && !cuffs.allow_breakout_movement)
 			return DO_AFTER_STOP
 	else
 		passed_in[1] = 1
