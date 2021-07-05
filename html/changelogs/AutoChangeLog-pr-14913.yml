@@ -1,4 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - server: "Auxmos pull now uses a tag instead of pulling straight from the main branch"
