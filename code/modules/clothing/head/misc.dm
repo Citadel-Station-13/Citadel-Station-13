@@ -487,4 +487,4 @@
 	name = "human skin hat"
 	desc = "This will scare them. All will know my power."
 	icon_state = "human_leather"
-	inhand_icon_state = "human_leather"
+	item_state = "human_leather"
