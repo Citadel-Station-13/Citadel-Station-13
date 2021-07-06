@@ -176,6 +176,17 @@ Class Procs:
 /obj/machinery/proc/process_atmos()//If you dont use process why are you here
 	return PROCESS_KILL
 
+///Called when we want to change the value of the stat variable. Holds bitflags.
+/obj/machinery/proc/set_machine_stat(new_value)
+	if(new_value == stat)
+		return
+	. = stat
+	stat = new_value
+	on_machine_stat_update(stat)
+
+/obj/machinery/proc/on_machine_stat_update(stat)
+	return
+
 /obj/machinery/emp_act(severity)
 	. = ..()
 	if(use_power && !stat && !(. & EMP_PROTECT_SELF))
