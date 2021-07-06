@@ -28,6 +28,7 @@ export const NtosWindow = (props, context) => {
     PC_stationtime,
     PC_programheaders = [],
     PC_showexitprogram,
+    PC_showpeneject,
   } = data;
   return (
     <Window
@@ -77,6 +78,17 @@ export const NtosWindow = (props, context) => {
                   className="NtosHeader__icon"
                   src={resolveAsset(PC_apclinkicon)} />
               </Box>
+            )}
+            {!!PC_showpeneject && (
+              <Button
+                width="26px"
+                lineHeight="22px"
+                textAlign="center"
+                color="transparent"
+                icon="pen-alt"
+                tooltip="Eject pen"
+                tooltipPosition="bottom-left"
+                onClick={() => act('eject_pen')} />
             )}
             {!!PC_showexitprogram && (
               <Button

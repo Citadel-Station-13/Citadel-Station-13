@@ -13,15 +13,16 @@
 		return 0
 	. = ..()
 
-// Exists to work around the minimum 700 cr price for goodies / small items
-/obj/structure/closet/secure_closet/goodies
+// Exists to work around the minimum 700 cr price for goodies / small items / materials
+/obj/structure/closet/secure_closet/cargo
+	name = "cargo locker"
 	icon_state = "goodies"
 	desc = "A sturdier card-locked storage unit used for bulky shipments."
 	max_integrity = 500 // Same as crates.
 	melee_min_damage = 25 // Idem.
 
-/obj/structure/closet/secure_closet/goodies/owned
-	name = "private locker"
+/obj/structure/closet/secure_closet/cargo/owned
+	name = "private cargo locker"
 	desc = "A locker designed to only open for who purchased its contents."
 	///Account of the person buying the crate if private purchasing.
 	var/datum/bank_account/buyer_account
@@ -32,18 +33,18 @@
 	///Is the crate being bought by a person, or a budget card?
 	var/department_purchase = FALSE
 
-/obj/structure/closet/secure_closet/goodies/owned/examine(mob/user)
+/obj/structure/closet/secure_closet/cargo/owned/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>It's locked with a privacy lock, and can only be unlocked by the buyer's ID.</span>"
 
-/obj/structure/closet/secure_closet/goodies/owned/Initialize(mapload, datum/bank_account/_buyer_account)
+/obj/structure/closet/secure_closet/cargo/owned/Initialize(mapload, datum/bank_account/_buyer_account)
 	. = ..()
 	buyer_account = _buyer_account
 	if(istype(buyer_account, /datum/bank_account/department))
 		department_purchase = TRUE
 		department_account = buyer_account
 
-/obj/structure/closet/secure_closet/goodies/owned/togglelock(mob/living/user, silent)
+/obj/structure/closet/secure_closet/cargo/owned/togglelock(mob/living/user, silent)
 	if(privacy_lock)
 		if(!broken)
 			var/obj/item/card/id/id_card = user.get_idcard(TRUE)

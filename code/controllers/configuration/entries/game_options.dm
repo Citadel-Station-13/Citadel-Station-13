@@ -269,6 +269,15 @@
 		/mob/living/carbon/alien/humanoid/royal/queen = 2
 	)
 
+/datum/config_entry/number/sprintless_stagger_slowdown
+	config_entry_value = 0
+
+/datum/config_entry/number/melee_stagger_factor
+	config_entry_value = 1
+
+/datum/config_entry/number/sprintless_off_balance_slowdown
+	config_entry_value = 0.85
+
 /datum/config_entry/number/movedelay	//Used for modifying movement speed for mobs.
 	abstract_type = /datum/config_entry/number/movedelay
 	integer = FALSE

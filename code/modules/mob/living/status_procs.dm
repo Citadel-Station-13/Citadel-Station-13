@@ -4,7 +4,8 @@
 // ignore_castun = same logic as Paralyze() in general
 // override_duration = If this is set, does Paralyze() for this duration.
 // override_stam = If this is set, does this amount of stamina damage.
-/mob/living/proc/DefaultCombatKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg)
+// knocktofloor - whether to knock them to the ground
+/mob/living/proc/DefaultCombatKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg, knocktofloor = TRUE)
 	if(!iscarbon(src))
 		return Paralyze(amount, updating, ignore_canknockdown)
 	if(!ignore_canknockdown && !(status_flags & CANKNOCKDOWN))
@@ -13,7 +14,8 @@
 		buckled.unbuckle_mob(src)
 	var/drop_items = amount > 80		//80 is cutoff for old item dropping behavior
 	var/stamdmg = isnull(override_stamdmg)? (amount * 0.25) : override_stamdmg
-	KnockToFloor(drop_items, TRUE, updating)
+	if(knocktofloor)
+		KnockToFloor(drop_items, TRUE, updating)
 	adjustStaminaLoss(stamdmg)
 	if(!isnull(override_hardstun))
 		Paralyze(override_hardstun)

@@ -358,10 +358,11 @@
 		return
 	I.item_flags |= BEING_REMOVED
 	breakouttime = I.breakouttime
+	var/datum/cuffbreak_checker/cuffbreak_checker = new(get_turf(src))
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
 		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)</span>")
-		if(do_after(src, breakouttime, 0, target = src, required_mobility_flags = MOBILITY_RESIST))
+		if(do_after_advanced(src, breakouttime, src, NONE, CALLBACK(cuffbreak_checker, /datum/cuffbreak_checker.proc/check_movement), required_mobility_flags = MOBILITY_RESIST))
 			clear_cuffs(I, cuff_break)
 		else
 			to_chat(src, "<span class='warning'>You fail to remove [I]!</span>")
@@ -370,14 +371,29 @@
 		breakouttime = 50
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
 		to_chat(src, "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>")
-		if(do_after(src, breakouttime, 0, target = src, required_mobility_flags = MOBILITY_RESIST))
+		if(do_after_advanced(src, breakouttime, src, NONE, CALLBACK(cuffbreak_checker, /datum/cuffbreak_checker.proc/check_movement), required_mobility_flags = MOBILITY_RESIST))
 			clear_cuffs(I, cuff_break)
 		else
 			to_chat(src, "<span class='warning'>You fail to break [I]!</span>")
 
 	else if(cuff_break == INSTANT_CUFFBREAK)
 		clear_cuffs(I, cuff_break)
+
+	QDEL_NULL(cuffbreak_checker)
 	I.item_flags &= ~BEING_REMOVED
+
+/datum/cuffbreak_checker
+	var/turf/last
+
+/datum/cuffbreak_checker/New(turf/initial_turf)
+	last = initial_turf
+
+/datum/cuffbreak_checker/proc/check_movement(atom/user, delay, atom/target, time_left, do_after_flags, required_mobility_flags, required_combat_flags, mob_redirect, stage, initially_held_item, tool, list/passed_in)
+	if(get_turf(user) != last)
+		last = get_turf(user)
+		passed_in[1] = 0.5
+	else
+		passed_in[1] = 1
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
@@ -459,10 +475,6 @@
 	if(HAS_TRAIT(src, TRAIT_CLUMSY))
 		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
 
-	//CIT CHANGES START HERE
-	else if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-		modifier -= 50
-
 	if(modifier < 100)
 		dropItemToGround(I)
 	//END OF CIT CHANGES
@@ -502,17 +514,17 @@
 		return 0
 	return ..()
 
-/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE)
-	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
-		return 1
+/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
+	if(HAS_TRAIT(src, TRAIT_NOHUNGER) && !force)
+		return TRUE
 
-	if(nutrition < 100 && !blood)
+	if(nutrition < 100 && !blood && !force)
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
 			DefaultCombatKnockdown(200)
-		return 1
+		return TRUE
 
 	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
 		if(message)
@@ -525,30 +537,29 @@
 			visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
 			if(!isflyperson(src))
 				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "vomit", /datum/mood_event/vomit)
+
 	if(stun)
 		Stun(80)
 
-	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
 	var/turf/T = get_turf(src)
 	if(!blood)
 		adjust_nutrition(-lost_nutrition)
 		adjustToxLoss(-3)
+
 	for(var/i=0 to distance)
 		if(blood)
 			if(T)
 				add_splatter_floor(T)
-			if(stun)
+			if(harm)
 				adjustBruteLoss(3)
-			else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/blazaam))
-				if(T)
-					T.add_vomit_floor(src, VOMIT_PURPLE)
 		else
 			if(T)
-				T.add_vomit_floor(src, VOMIT_TOXIC)//toxic barf looks different
+				T.add_vomit_floor(src, vomit_type, purge_ratio) //toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
 		T = get_step(T, dir)
 		if (is_blocked_turf(T))
 			break
-	return 1
+	return TRUE
 
 /mob/living/carbon/proc/spew_organ(power = 5, amt = 1)
 	var/list/spillable_organs = list()

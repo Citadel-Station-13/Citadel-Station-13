@@ -173,10 +173,7 @@
 		clonemind.transfer_to(H)
 
 	else if(get_clone_mind == CLONEPOD_POLL_MIND)
-		var/list/candidates = pollCandidatesForMob("Do you want to play as [clonename]'s defective clone? (Don't ERP without permission from the original)", null, null, null, 100, H, POLL_IGNORE_CLONE)
-		if(LAZYLEN(candidates))
-			var/mob/C = pick(candidates)
-			H.key = C.key
+		poll_for_mind(H, clonename)
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		H.grab_ghost()
@@ -205,6 +202,13 @@
 		H.suiciding = FALSE
 	attempting = FALSE
 	return TRUE
+
+/obj/machinery/clonepod/proc/poll_for_mind(mob/living/carbon/human/H, clonename)
+	set waitfor = FALSE
+	var/list/candidates = pollCandidatesForMob("Do you want to play as [clonename]'s defective clone? (Don't ERP without permission from the original)", null, null, null, 100, H, POLL_IGNORE_CLONE)
+	if(LAZYLEN(candidates))
+		var/mob/C = pick(candidates)
+		H.key = C.key
 
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
