@@ -26,12 +26,15 @@
 
 /obj/machinery/light_switch/update_icon_state()
 	if(stat & NOPOWER)
-		icon_state = "light-p"
-	else
-		if(on)
-			icon_state = "light1"
-		else
-			icon_state = "light0"
+		icon_state = "[base_icon_state]-p"
+		return ..()
+	icon_state = "[base_icon_state][area.lightswitch ? 1 : 0]"
+	return ..()
+
+/obj/machinery/light_switch/update_overlays()
+	. = ..()
+	if(!(stat & NOPOWER))
+		. += emissive_appearance(icon, "[base_icon_state]-glow", alpha = src.alpha)
 
 /obj/machinery/light_switch/examine(mob/user)
 	. = ..()
