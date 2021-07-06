@@ -16873,10 +16873,10 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/assistant,
+/obj/machinery/light/small,
 /turf/open/floor/plasteel/freezer,
 /area/commons/toilet/auxiliary)
 "aNd" = (
-/obj/machinery/light/small,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
