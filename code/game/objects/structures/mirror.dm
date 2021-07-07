@@ -57,7 +57,7 @@
 		to_chat(user, "<span class='warning'>A chill runs down your spine as [src] shatters...</span>")
 		user.AddComponent(/datum/component/omen, silent=TRUE) // we have our own message
 
-/obj/structure/mirror/bullet_act(obj/projectile/P)
+/obj/structure/mirror/bullet_act(obj/item/projectile/P)
 	if(broken || !isliving(P.firer) || !P.damage)
 		return ..()
 
