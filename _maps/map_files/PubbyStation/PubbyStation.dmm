@@ -16873,10 +16873,10 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/assistant,
+/obj/machinery/light/small,
 /turf/open/floor/plasteel/freezer,
 /area/commons/toilet/auxiliary)
 "aNd" = (
-/obj/machinery/light/small,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
@@ -34476,7 +34476,7 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	icon_state = "4-8"
+	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel/dark,
 /area/command/heads_quarters/rd)
