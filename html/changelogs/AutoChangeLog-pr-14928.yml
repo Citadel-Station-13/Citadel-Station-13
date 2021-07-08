@@ -1,0 +1,5 @@
+author: "MrJWhit"
+delete-after: True
+changes: 
+  - bugfix: "Made a light not exist on the same tile as a door on pubby."
+  - bugfix: "Makes the RD APC automatically connect to the powernet with the correct wire on pubby."
