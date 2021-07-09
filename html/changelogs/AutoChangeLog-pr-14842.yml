@@ -1,0 +1,6 @@
+author: "WanderingFox95"
+delete-after: True
+changes: 
+  - imageadd: "Returns the wheelchair sprites to having, you know, wheels?"
+  - rscadd: "A motorized wheelchair
+addsound: Chairwhoosh."
