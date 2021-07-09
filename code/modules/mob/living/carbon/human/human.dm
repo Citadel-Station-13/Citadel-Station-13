@@ -1101,9 +1101,9 @@
 	if(HAS_TRAIT(src, TRAIT_TOXINLOVER))
 		return "<font color='#00ffff'>"
 	if(isplasmaman(src))
-		return "<font color='#800080'"
+		return "<font color='#800080'>"
 	if(isgolem(src))
-		return "<font color='#8b4513'"
+		return "<font color='#8b4513'>"
 	return "<font color='#18d855'>"
 
 
