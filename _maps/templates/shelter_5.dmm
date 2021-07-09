@@ -253,6 +253,10 @@
 /obj/machinery/dish_drive,
 /turf/open/floor/pod/dark,
 /area/survivalpod/nonpowered)
+"Vv" = (
+/obj/machinery/biogenerator,
+/turf/open/floor/pod/dark,
+/area/survivalpod/nonpowered)
 "Ws" = (
 /obj/structure/dresser,
 /turf/open/floor/pod/dark,
@@ -274,12 +278,8 @@
 /obj/structure/table/survival_pod,
 /obj/item/shovel,
 /obj/item/pickaxe,
-/obj/item/clothing/gloves/chameleon/insulated,
 /obj/item/storage/toolbox/electrical,
-/turf/open/floor/pod/dark,
-/area/survivalpod/nonpowered)
-"Zd" = (
-/obj/machinery/seed_extractor,
+/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/pod/dark,
 /area/survivalpod/nonpowered)
 
@@ -453,8 +453,8 @@ FZ
 Ng
 wI
 Ng
-FZ
-Zd
+Vv
+Lv
 xC
 td
 FZ
