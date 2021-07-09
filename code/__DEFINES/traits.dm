@@ -175,6 +175,7 @@
 #define TRAIT_AGEUSIA			"ageusia"
 #define TRAIT_HEAVY_SLEEPER		"heavy_sleeper"
 #define TRAIT_NIGHT_VISION		"night_vision"
+#define TRAIT_TRUE_NIGHT_VISION "true_nv"
 #define TRAIT_LIGHT_STEP		"light_step"
 #define TRAIT_SILENT_STEP		"silent_step"
 #define TRAIT_SPEEDY_STEP		"speedy_step"
