@@ -1,5 +1,0 @@
-author: "shellspeed1"
-delete-after: True
-changes: 
-  - balance: "replaces the seed machine with a biogen in the survival pod."
-  - bugfix: "corrected an issue regarding wrong pair of gloves in the pod for DYI wiring ."
