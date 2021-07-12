@@ -1,4 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - refactor: "causes_dirt_buildup_on_floor is now just a thing humans do instead of a weird var only true for humans"
