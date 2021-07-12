@@ -9531,6 +9531,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/mirror{
+	pixel_y = 30
+	},
 /turf/open/floor/plasteel/freezer,
 /area/command/heads_quarters/captain)
 "avJ" = (
