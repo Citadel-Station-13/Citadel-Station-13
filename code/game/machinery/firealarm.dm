@@ -78,9 +78,9 @@
 	. += "fire_overlay"
 
 	if(is_station_level(z))
-		. += "fire_[SSsecurity_level.current_level]"
-		. += mutable_appearance(icon, "fire_[SSsecurity_level.current_level]")
-		. += emissive_appearance(icon, "fire_[SSsecurity_level.current_level]")
+		. += "fire_[GLOB.security_level.current_level]"
+		. += mutable_appearance(icon, "fire_[GLOB.security_level.current_level]")
+		. += emissive_appearance(icon, "fire_[GLOB.security_level.current_level]")
 	else
 		. += "fire_[SEC_LEVEL_GREEN]"
 		. += mutable_appearance(icon, "fire_[SEC_LEVEL_GREEN]")
@@ -102,7 +102,7 @@
 		. += mutable_appearance(icon, "fire_on")
 		. += emissive_appearance(icon, "fire_on")
 
-	if(!panel_open && detecting && triggered) //It just looks horrible with the panel open
+	if(!panel_open && detecting) //It just looks horrible with the panel open
 		. += "fire_detected"
 		. += mutable_appearance(icon, "fire_detected")
 		. += emissive_appearance(icon, "fire_detected") //Pain
