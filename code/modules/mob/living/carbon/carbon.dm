@@ -967,7 +967,9 @@
 /mob/living/carbon/ExtinguishMob()
 	for(var/X in get_equipped_items())
 		var/obj/item/I = X
-		I.acid_level = 0 //washes off the acid on our clothes
+		var/datum/component/acid/acid = I.GetComponent(/datum/component/acid)
+		if(acid)
+			acid.level = 0
 		I.extinguish() //extinguishes our clothes
 	..()
 
