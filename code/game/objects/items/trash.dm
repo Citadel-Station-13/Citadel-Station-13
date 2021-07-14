@@ -7,6 +7,9 @@
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 
+/obj/item/trash/Initialize()
+	AddElement(/datum/element/trash)
+
 /obj/item/trash/raisins
 	name = "\improper 4no raisins"
 	icon_state= "4no_raisins"
@@ -80,17 +83,3 @@
 	name = "boritos bag"
 	icon_state = "boritos"
 	grind_results = list(/datum/reagent/aluminium = 1) //from the mylar bag
-
-/obj/item/trash/attack(mob/M, mob/living/user)
-	if((M == user || user.vore_flags & TRASH_FORCEFEED) && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(HAS_TRAIT(H, TRAIT_TRASHCAN))
-			playsound(H.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
-			if(H.vore_selected)
-				H.visible_message("<span class='notice'>[H] [H.vore_selected.vore_verb]s the [src] into their [H.vore_selected]</span>",
-					"<span class='notice'>You [H.vore_selected.vore_verb]s the [src] into your [H.vore_selected]</span>")
-				forceMove(H.vore_selected)
-			else
-				H.visible_message("<span class='notice'>[H] consumes the [src].")
-				qdel(src)
-
