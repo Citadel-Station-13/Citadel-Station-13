@@ -8,6 +8,7 @@
 	resistance_flags = FLAMMABLE
 
 /obj/item/trash/Initialize()
+	. = ..()
 	AddElement(/datum/element/trash)
 
 /obj/item/trash/raisins

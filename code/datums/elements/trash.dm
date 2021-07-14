@@ -2,6 +2,7 @@
 	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
 
 /datum/element/trash/Attach(datum/target)
+	. = ..()
 	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
 
 /datum/element/trash/proc/UseFromHand(obj/item/source, mob/living/M, mob/living/user)
