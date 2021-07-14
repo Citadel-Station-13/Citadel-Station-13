@@ -138,7 +138,6 @@ Notes:
 	. = ..()
 	if(tooltips)
 		if(!QDELETED(src))
-			var/list/examine_list = examine(src)
 			var/get_tooltip_data = get_tooltip_data()
 			if(length(get_tooltip_data))
 				examine_list = get_tooltip_data
