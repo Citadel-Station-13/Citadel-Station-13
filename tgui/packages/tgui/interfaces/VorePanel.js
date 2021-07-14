@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from "../backend";
 import { Box, Button, Flex, Collapsible, Icon, LabeledList, NoticeBox, Section, Tabs } from "../components";
