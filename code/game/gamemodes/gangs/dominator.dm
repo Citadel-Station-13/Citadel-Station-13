@@ -105,13 +105,17 @@
 					if(tempgang != gang)
 						tempgang.message_gangtools("WARNING: [gang.name] Gang takeover imminent. Their dominator at [domloc.map_name] must be destroyed!",1,1)
 		else
-			Cinematic(CINEMATIC_MALF,world) //Here is the gang victory trigger on the dominator ending.
-			gang.winner = TRUE
-			SSticker.news_report = GANG_VICTORY
-			SSticker.force_ending = TRUE
+			endgame()
 
 	if(!.)
 		STOP_PROCESSING(SSmachines, src)
+
+/obj/machinery/dominator/proc/endgame()
+	set waitfor = FALSE
+	Cinematic(CINEMATIC_MALF,world) //Here is the gang victory trigger on the dominator ending.
+	gang.winner = TRUE
+	SSticker.news_report = GANG_VICTORY
+	SSticker.force_ending = TRUE
 
 /obj/machinery/dominator/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

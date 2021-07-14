@@ -28,6 +28,7 @@
 
 //Called when temperature is above a certain threshold, or if purity is too low.
 /datum/chemical_reaction/proc/FermiExplode(datum/reagents/R0, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
+	set waitfor = FALSE
 	if (Exploding == TRUE)
 		return
 

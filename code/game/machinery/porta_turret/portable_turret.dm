@@ -459,11 +459,11 @@
 
 		else if(iscarbon(A))
 			var/mob/living/carbon/C = A
-			//If not emagged, only target carbons that can use items
-			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || !(C.mobility_flags & MOBILITY_USE)))
+			//If not on lethal, only target carbons that aren't cuffed nor stamcrit or just plain crit.
+			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || IS_STAMCRIT(C)))
 				continue
 
-			//If emagged, target all but dead carbons
+			//If on lethal, target all but dead carbons
 			if(mode == TURRET_LETHAL && C.stat == DEAD)
 				continue
 
@@ -503,6 +503,7 @@
 			return 1
 
 /obj/machinery/porta_turret/proc/popUp()	//pops the turret up
+	set waitfor = FALSE
 	if(!anchored)
 		return
 	if(raising || raised)
@@ -521,6 +522,7 @@
 	layer = MOB_LAYER
 
 /obj/machinery/porta_turret/proc/popDown()	//pops the turret down
+	set waitfor = FALSE
 	if(raising || !raised)
 		return
 	if(stat & BROKEN)
