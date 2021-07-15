@@ -186,7 +186,6 @@
 		"feeding" = CHECK_BITFIELD(host.vore_flags, FEEDING),
 		"absorbable" = CHECK_BITFIELD(host.vore_flags, ABSORBABLE),
 		"allowmobvore" = CHECK_BITFIELD(host.vore_flags, MOBVORE),
-		"allow_spontaneous_tf" = CHECK_BITFIELD(host.vore_flags, SPNTVORE),
 		"vore_sounds" = CHECK_BITFIELD(host.client.prefs.cit_toggles, EATING_NOISES),
 		"digestion_sounds" = CHECK_BITFIELD(host.client.prefs.cit_toggles, DIGESTION_NOISES),
 		"lickable" = CHECK_BITFIELD(host.vore_flags, LICKABLE),
@@ -305,12 +304,6 @@
 				tgui_alert_async(usr, "Entered perfume/smell text too long. [FLAVOR_MAX] character limit.","Error!")
 				return FALSE
 			host.vore_smell = new_smell
-			unsaved_changes = TRUE
-			return TRUE
-		if("toggle_allow_spontaneous_tf")
-			TOGGLE_BITFIELD(host.vore_flags, SPNTVORE)
-			if(host.client.prefs)
-				COPY_SPECIFIC_BITFIELDS(host.client.prefs.vore_flags, host.vore_flags, SPNTVORE)
 			unsaved_changes = TRUE
 			return TRUE
 		if("toggle_digest")

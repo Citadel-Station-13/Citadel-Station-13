@@ -431,7 +431,6 @@ const VoreUserPreferences = (props, context) => {
     feeding,
     absorbable,
     allowmobvore,
-    allow_spontaneous_tf,
     vore_sounds,
     digestion_sounds,
     lickable,
@@ -450,27 +449,6 @@ const VoreUserPreferences = (props, context) => {
     }>
       <Flex spacing={1} wrap="wrap" justify="center">
         <Flex.Item basis="33%">
-          <Button
-            onClick={() => act("toggle_digest")}
-            icon={digestable ? "toggle-on" : "toggle-off"}
-            selected={digestable}
-            fluid
-            tooltip={"This button is for those who don't like being digested. It can make you undigestable."
-            + (digestable ? " Click here to prevent digestion." : " Click here to allow digestion.")}
-            tooltipPosition="bottom-right"
-            content={digestable ? "Digestion Allowed" : "No Digestion"} />
-        </Flex.Item>
-        <Flex.Item basis="33%">
-          <Button
-            onClick={() => act("toggle_absorbable")}
-            icon={absorbable ? "toggle-on" : "toggle-off"}
-            selected={absorbable}
-            fluid
-            tooltip={"This button allows preds to know whether you prefer or don't prefer to be absorbed. "
-            + (absorbable ? "Click here to disallow being absorbed." : "Click here to allow being absorbed.")}
-            content={absorbable ? "Absorption Allowed" : "No Absorption"} />
-        </Flex.Item>
-        <Flex.Item basis="33%" grow={1}>
           <Button
             onClick={() => act("toggle_devour")}
             icon={devourable ? "toggle-on" : "toggle-off"}
@@ -505,10 +483,31 @@ const VoreUserPreferences = (props, context) => {
               : "Click here to allow being fed to/by other people.")}
             content={feeding ? "Feeding Allowed" : "No Feeding"} />
         </Flex.Item>
-        <Flex.Item basis="33%">
+        <Flex.Item basis="50%">
+          <Button
+            onClick={() => act("toggle_digest")}
+            icon={digestable ? "toggle-on" : "toggle-off"}
+            selected={digestable}
+            fluid
+            tooltip={"This button is for those who don't like being digested. It can make you undigestable."
+            + (digestable ? " Click here to prevent digestion." : " Click here to allow digestion.")}
+            tooltipPosition="bottom-right"
+            content={digestable ? "Digestion Allowed" : "No Digestion"} />
+        </Flex.Item>
+        <Flex.Item basis="50%">
+          <Button
+            onClick={() => act("toggle_absorbable")}
+            icon={absorbable ? "toggle-on" : "toggle-off"}
+            selected={absorbable}
+            fluid
+            tooltip={"This button allows preds to know whether you prefer or don't prefer to be absorbed. "
+            + (absorbable ? "Click here to disallow being absorbed." : "Click here to allow being absorbed.")}
+            content={absorbable ? "Absorption Allowed" : "No Absorption"} />
+        </Flex.Item>
+        <Flex.Item basis="50%">
           <Button
             onClick={() => act("toggle_vore_sounds")}
-            icon={vore_sounds ? "toggle-on" : "toggle-off"}
+            icon={vore_sounds ? "volume-up" : "volume-mute"}
             selected={vore_sounds}
             fluid
             tooltip={"Be able to hear vore sounds. "
@@ -520,7 +519,7 @@ const VoreUserPreferences = (props, context) => {
         <Flex.Item basis="50%">
           <Button
             onClick={() => act("toggle_digestion_sounds")}
-            icon={digestion_sounds ? "toggle-on" : "toggle-off"}
+            icon={digestion_sounds ? "volume-up" : "volume-mute"}
             selected={digestion_sounds}
             fluid
             tooltip={"Be able to hear digestion sounds. "
@@ -528,19 +527,6 @@ const VoreUserPreferences = (props, context) => {
               ? "Click here to turn off digestion sounds."
               : "Click here to turn on digestion sounds.")}
             content={digestion_sounds ? "Digestion Sounds Enabled" : "Digestion Sounds Disabled"} />
-        </Flex.Item>
-        <Flex.Item basis="50%">
-          <Button
-            onClick={() => act("toggle_allow_spontaneous_tf")}
-            icon={allow_spontaneous_tf ? "toggle-on" : "toggle-off"}
-            selected={allow_spontaneous_tf}
-            fluid
-            tooltip={"This toggle is for spontaneous or environment related transformation"
-            + " as a victim, such as via chemicals. "
-            + (allow_spontaneous_tf
-              ? "Click here to allow being spontaneously transformed."
-              : "Click here to disable being spontaneously transformed.")}
-            content={allow_spontaneous_tf ? "Spontaneous TF Enabled" : "Spontaneous TF Disabled"} />
         </Flex.Item>
         <Flex.Item basis="25%">
           <Button
