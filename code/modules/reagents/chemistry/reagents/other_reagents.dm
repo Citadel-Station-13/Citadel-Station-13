@@ -287,7 +287,9 @@
 
 /datum/reagent/water/reaction_obj(obj/O, reac_volume)
 	O.extinguish()
-	O.acid_level = 0
+	var/datum/component/acid/acid = O.GetComponent(/datum/component/acid)
+	if(acid)
+		acid.level = 0
 	// cubes
 	if(istype(O, /obj/item/reagent_containers/food/snacks/cube))
 		var/obj/item/reagent_containers/food/snacks/cube/cube = O

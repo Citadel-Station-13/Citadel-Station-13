@@ -622,7 +622,9 @@
 	var/obj/O = owner.get_active_held_item()
 	if(O)
 		O.extinguish() //All shamelessly copied from water's reaction_obj, since I didn't seem to be able to get it here for some reason.
-		O.acid_level = 0
+		var/datum/component/acid/acid = O.GetComponent(/datum/component/acid)
+		if(acid)
+			acid.level = 0
 	// Monkey cube
 	if(istype(O, /obj/item/reagent_containers/food/snacks/cube))
 		to_chat(owner, "<span class='warning'>[linked_extract] kept your hands wet! It makes [O] expand!</span>")
