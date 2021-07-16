@@ -1,0 +1,4 @@
+author: "cadyn"
+delete-after: True
+changes: 
+  - server: "precompile.sh updated"
