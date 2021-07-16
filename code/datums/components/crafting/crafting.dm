@@ -4,8 +4,7 @@
 
 /datum/component/personal_crafting/proc/create_mob_button(mob/user, client/CL)
 	var/datum/hud/H = user.hud_used
-	var/crafting_hud
-	for(var/huds in C.static_inventory)
+	for(var/huds in H.static_inventory)
 		if(istype(huds, /obj/screen/craft))
 			return
 	//We don't want to be stacking multiple crafting huds on relogs
