@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - bugfix: "fixes photosynthesis stopping nutrition going past well fed from non-photosynthesis means"
