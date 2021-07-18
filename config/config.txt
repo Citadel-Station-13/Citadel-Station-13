@@ -11,20 +11,31 @@
 # Which explicitly disables LOG_TWITTER, as well as locking it.
 # There are various options which are hard-locked for security reasons.
 
+
+$include entries/admin.txt
+$include entries/alert.txt
 $include entries/antag_rep.txt
 $include entries/comms.txt
+$include entries/connections.txt
 $include entries/dbconfig.txt
+$include entries/debris.txt
 $include entries/donator.txt
 $include entries/dynamic.txt
-$include entries/fail2topic.txt
-$include entries/game_options.txt
+$include entries/fetish_content.txt
+$include entries/gamemodes.txt
 $include entries/general.txt
+$include entries/jexp.txt
 $include entries/logging.txt
+$include entries/movespeed.txt
 $include entries/persistence.txt
 $include entries/policy.txt
 $include entries/resources.txt
 $include entries/respawns.txt
+$include entries/security.txt
+$include entries/server.txt
 $include entries/stamina_combat.txt
 $include entries/threat.txt
+$include entries/urls.txt
+$include entries/vote.txt
 
 $include plushies/defines.txt
