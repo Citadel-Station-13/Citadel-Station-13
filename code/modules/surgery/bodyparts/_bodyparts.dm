@@ -871,6 +871,13 @@
 		else
 			limb.icon_state = "[body_zone]"
 
+		if(istype(/obj/item/bodypart/l_leg) || istype(/obj/item/bodypart/r_leg))
+			var/original_state = limb.icon_state
+			var/image/second_limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
+			second_limb.icon = icon
+			limb.icon_state = "[original_state]_front"
+			second_limb.icon_state = "[original_state]_behind"
+
 		if(aux_icons)
 			for(var/I in aux_icons)
 				var/aux_layer = aux_icons[I]
