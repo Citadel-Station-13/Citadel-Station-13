@@ -877,6 +877,7 @@
 			second_limb.icon = icon
 			limb.icon_state = "[original_state]_front"
 			second_limb.icon_state = "[original_state]_behind"
+			. += second_limb
 
 		if(aux_icons)
 			for(var/I in aux_icons)
