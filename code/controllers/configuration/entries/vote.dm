@@ -49,4 +49,7 @@
 
 /datum/config_entry/flag/modetier_voting
 
+/datum/config_entry/number/dropped_modes
+	config_entry_value = 3
+
 /datum/config_entry/flag/must_be_readied_to_vote_gamemode

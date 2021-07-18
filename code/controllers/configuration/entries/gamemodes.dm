@@ -1,5 +1,10 @@
 /datum/config_entry/number_list/repeated_mode_adjust
 
+/datum/config_entry/flag/weigh_by_recent_chaos
+
+/datum/config_entry/number/chaos_exponent
+	config_entry_value = 1
+
 /datum/config_entry/keyed_list/probability
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM
