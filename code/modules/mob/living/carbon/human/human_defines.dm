@@ -51,6 +51,9 @@
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
 
+	/// When an braindead player has their equipment fiddled with, we log that info here for when they come back so they know who took their ID while they were DC'd for 30 seconds
+	var/list/afk_thefts
+
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 
 	var/bleedsuppress = 0 //for stopping bloodloss, eventually this will be limb-based like bleeding
