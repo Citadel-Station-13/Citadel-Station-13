@@ -8,7 +8,7 @@
 	time = 1
 	reqs = list(/obj/item/stack/sheet/plastic = 1,
 				/obj/item/stack/sheet/mineral/wood = 1)
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 	subcategory = CAT_TOOL
 
 /datum/crafting_recipe/showercurtain
@@ -18,7 +18,7 @@
 				 /obj/item/stack/rods = 1)
 	result = /obj/structure/curtain
 	subcategory = CAT_FURNITURE
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/guillotine
 	name = "Guillotine"
@@ -29,7 +29,7 @@
 		        /obj/item/stack/cable_coil = 10)
 	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/femur_breaker
 	name = "Femur Breaker"
@@ -39,7 +39,7 @@
 		        /obj/item/stack/cable_coil = 30)
 	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 // Blood Sucker stuff //
 /datum/crafting_recipe/bloodsucker/blackcoffin
@@ -54,7 +54,7 @@
 				///obj/item/pipe = 2)
 	time = 150
 	subcategory = CAT_FURNITURE
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 	always_availible = TRUE
 
 /datum/crafting_recipe/bloodsucker/meatcoffin
@@ -66,7 +66,7 @@
 				/obj/item/restraints/handcuffs/cable = 1)
 	time = 150
 	subcategory = CAT_FURNITURE
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 	always_availible = TRUE
 
 /datum/crafting_recipe/bloodsucker/metalcoffin
@@ -77,7 +77,7 @@
 	reqs = list(/obj/item/stack/sheet/metal = 5)
 	time = 100
 	subcategory = CAT_FURNITURE
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 	always_availible = TRUE
 
 /datum/crafting_recipe/bloodsucker/vassalrack
@@ -100,7 +100,7 @@
 		//			 )
 	time = 150
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 	always_availible = FALSE	// Disabled until learned
 
 
@@ -117,7 +117,7 @@
 				)
 	time = 100
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 	always_availible = FALSE	// Disabled til learned
 
 /datum/crafting_recipe/furnace
@@ -129,7 +129,7 @@
 	/obj/item/stack/rods = 2)
 	tools = list(TOOL_CROWBAR)
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/tableanvil
 	name = "Table Anvil"
@@ -139,7 +139,7 @@
 		        /obj/item/stack/rods = 2)
 	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/sandvil
 	name = "Sandstone Anvil"
@@ -148,7 +148,7 @@
 	reqs = list(/obj/item/stack/sheet/mineral/sandstone = 24)
 	tools = list(TOOL_CROWBAR)
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/basaltblock
 	name = "Sintered Basalt Block"
@@ -157,7 +157,7 @@
 	reqs = list(/obj/item/stack/ore/glass/basalt = 50)
 	tools = list(TOOL_WELDER)
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/basaltanvil
 	name = "Basalt Anvil"
@@ -166,7 +166,7 @@
 	reqs = list(/obj/item/basaltblock = 5)
 	tools = list(TOOL_CROWBAR)
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 ///////////////////
 //Tools & Storage//
 ///////////////////
@@ -177,7 +177,7 @@
 	time = 1
 	reqs = list(/obj/item/stack/medical/gauze = 1,
 				/datum/reagent/space_cleaner/sterilizine = 5)
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 	subcategory = CAT_TOOL
 
 /datum/crafting_recipe/brute_pack
@@ -186,7 +186,7 @@
 	time = 1
 	reqs = list(/obj/item/stack/medical/gauze/adv = 1,
 				/datum/reagent/medicine/styptic_powder = 10)
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 	subcategory = CAT_TOOL
 
 /datum/crafting_recipe/burn_pack
@@ -195,7 +195,7 @@
 	time = 1
 	reqs = list(/obj/item/stack/medical/gauze/adv = 1,
 				/datum/reagent/medicine/silver_sulfadiazine = 10)
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 	subcategory = CAT_TOOL
 
 /datum/crafting_recipe/ghettojetpack
@@ -206,7 +206,7 @@
 				/obj/item/extinguisher = 1,
 				/obj/item/pipe = 3,
 				/obj/item/stack/cable_coil = 30)
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 	subcategory = CAT_TOOL
 	tools = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
 
@@ -220,7 +220,7 @@
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/toolboxhammer
 	name = "Toolbox Hammer"
@@ -231,7 +231,7 @@
 							/obj/item/stack/rods = 2)
 	time = 40
 	subcategory = CAT_TOOL
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/papersack
 	name = "Paper Sack"
@@ -239,7 +239,7 @@
 	time = 10
 	reqs = list(/obj/item/paper = 5)
 	subcategory = CAT_TOOL
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/smallcarton
 	name = "Small Carton"
@@ -247,7 +247,7 @@
 	time = 10
 	reqs = list(/obj/item/stack/sheet/cardboard = 1)
 	subcategory = CAT_TOOL
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/bronze_driver
 	name = "Bronze Plated Screwdriver"
@@ -259,7 +259,7 @@
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/bronze_welder
 	name = "Bronze Plated Welding Tool"
@@ -271,7 +271,7 @@
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/bronze_wirecutters
 	name = "Bronze Plated Wirecutters"
@@ -283,7 +283,7 @@
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/bronze_crowbar
 	name = "Bronze Plated Crowbar"
@@ -295,7 +295,7 @@
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/bronze_wrench
 	name = "Bronze Plated Wrench"
@@ -307,7 +307,7 @@
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/rcl
 	name = "Makeshift Rapid Cable Layer"
@@ -316,7 +316,7 @@
 	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
 	reqs = list(/obj/item/stack/sheet/metal = 15)
 	subcategory = CAT_TOOL
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/picket_sign
 	name = "Picket Sign"
@@ -325,7 +325,7 @@
 				/obj/item/stack/sheet/cardboard = 2)
 	time = 80
 	subcategory = CAT_TOOL
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/electrochromatic_kit
 	name = "Electrochromatic Kit"
@@ -334,7 +334,7 @@
 				/obj/item/stack/cable_coil = 1)
 	time = 5
 	subcategory = CAT_TOOL
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/blackmarket_uplink
 	name = "Black Market Uplink"
@@ -346,7 +346,7 @@
 		/obj/item/radio = 1,
 		/obj/item/analyzer = 1)
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/heretic/codex
 	name = "Codex Cicatrix"
@@ -358,7 +358,7 @@
 				/obj/item/stack/sheet/animalhide/human = 1)
 	time = 150
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 	always_availible = FALSE
 
 ////////////
@@ -372,7 +372,21 @@
 				/obj/item/stack/rods = 8)
 	time = 100
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
+
+/datum/crafting_recipe/motorized_wheelchair
+	name = "Hoverchair"
+	result = /obj/vehicle/ridden/wheelchair/motorized
+	reqs = list(/obj/item/stack/sheet/plasteel = 10,
+		/obj/item/stack/rods = 8,
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/capacitor = 1)
+	parts = list(/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/capacitor = 1)
+	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
+	time = 200
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/skateboard
 	name = "Skateboard"
@@ -381,7 +395,7 @@
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/rods = 10)
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/scooter
 	name = "Scooter"
@@ -390,7 +404,7 @@
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/rods = 12)
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /////////
 //Toys///
@@ -401,28 +415,28 @@
 	reqs = list(/obj/item/light/bulb = 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/plastic = 4)
 	result = /obj/item/toy/sword
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/extendohand
 	name = "Extendo-Hand"
 	reqs = list(/obj/item/bodypart/r_arm/robot = 1, /obj/item/clothing/gloves/boxing = 1)
 	result = /obj/item/extendohand
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/toyneb
 	name = "Non-Euplastic Blade"
 	reqs = list(/obj/item/light/tube = 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/plastic = 4)
 	result = /obj/item/toy/sword/cx
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/catgirlplushie
 	name = "Catgirl Plushie"
 	reqs = list(/obj/item/toy/plush/hairball = 3)
 	result = /obj/item/toy/plush/catgirl
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 ////////////
 //Unsorted//
@@ -436,7 +450,7 @@
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 1)
 	result = /obj/item/stick
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 
 /datum/crafting_recipe/swordhilt
@@ -445,14 +459,14 @@
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 2)
 	result = /obj/item/swordhandle
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/blackcarpet
 	name = "Black Carpet"
 	reqs = list(/obj/item/stack/tile/carpet = 50, /obj/item/toy/crayon/black = 1)
 	result = /obj/item/stack/tile/carpet/black/fifty
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/paperframes
 	name = "Paper Frames"
@@ -460,7 +474,7 @@
 	time = 10
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 5, /obj/item/paper = 20)
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/naturalpaper
 	name = "Hand-Pressed Paper"
@@ -469,7 +483,7 @@
 	tools = list(/obj/item/hatchet)
 	result = /obj/item/paper_bin/bundlenatural
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/bluespacehonker
 	name = "Bluespace Bike horn"
@@ -479,7 +493,7 @@
 				/obj/item/toy/crayon/blue = 1,
 				/obj/item/bikehorn = 1)
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/mousetrap
 	name = "Mouse Trap"
@@ -488,7 +502,7 @@
 	reqs = list(/obj/item/stack/sheet/cardboard = 1,
 				/obj/item/stack/rods = 1)
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/flashlight_eyes
 	name = "Flashlight Eyes"
@@ -499,7 +513,7 @@
 		/obj/item/restraints/handcuffs/cable = 1
 	)
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/pressureplate
 	name = "Pressure Plate"
@@ -510,7 +524,7 @@
 				  /obj/item/stack/cable_coil = 2,
 				  /obj/item/assembly/igniter = 1)
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/gold_horn
 	name = "Golden Bike Horn"
@@ -519,7 +533,7 @@
 	reqs = list(/obj/item/stack/sheet/mineral/bananium = 5,
 				/obj/item/bikehorn = 1)
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/spooky_camera
 	name = "Camera Obscura"
@@ -529,7 +543,7 @@
 				/datum/reagent/water/holywater = 10)
 	parts = list(/obj/item/camera = 1)
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/coconut_bong
 	name = "Coconut Bong"
@@ -538,7 +552,7 @@
 				/obj/item/reagent_containers/food/snacks/grown/coconut = 1)
 	time = 70
 	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 //////////////
 //Banners/////
@@ -551,7 +565,7 @@
 	reqs = list(/obj/item/stack/rods = 2,
 				/obj/item/clothing/under/rank/captain/parade = 1)
 	subcategory = CAT_FURNITURE
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/engineering_banner
 	name = "Engitopia Banner"
@@ -560,7 +574,7 @@
 	reqs = list(/obj/item/stack/rods = 2,
 				/obj/item/clothing/under/rank/engineering/engineer = 1)
 	subcategory = CAT_FURNITURE
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/cargo_banner
 	name = "Cargonia Banner"
@@ -569,7 +583,7 @@
 	reqs = list(/obj/item/stack/rods = 2,
 				/obj/item/clothing/under/rank/cargo/tech = 1)
 	subcategory = CAT_FURNITURE
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/science_banner
 	name = "Sciencia Banner"
@@ -578,7 +592,7 @@
 	reqs = list(/obj/item/stack/rods = 2,
 				/obj/item/clothing/under/rank/rnd/scientist = 1)
 	subcategory = CAT_FURNITURE
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/medical_banner
 	name = "Meditopia Banner"
@@ -587,7 +601,7 @@
 	reqs = list(/obj/item/stack/rods = 2,
 				/obj/item/clothing/under/rank/medical/doctor = 1)
 	subcategory = CAT_FURNITURE
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS
 
 /datum/crafting_recipe/security_banner
 	name = "Securistan Banner"
@@ -596,4 +610,4 @@
 	reqs = list(/obj/item/stack/rods = 2,
 				/obj/item/clothing/under/rank/security/officer = 1)
 	subcategory = CAT_FURNITURE
-	category = CAT_MISC
+	category = CAT_MISCELLANEOUS

@@ -16,7 +16,7 @@
 	RegisterSignal(L, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ATTACK_RANGED, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_THROW, COMSIG_MOVABLE_TELEPORTED, COMSIG_LIVING_GUN_PROCESS_FIRE, COMSIG_MOB_APPLY_DAMAGE), .proc/minor_activity)
 
 /datum/component/activity/proc/log_activity()
-	historical_activity_levels[world.time] = activity_level
+	historical_activity_levels["[world.time]"] = activity_level
 
 /datum/component/activity/proc/minor_activity(datum/source)
 	activity_level += 1

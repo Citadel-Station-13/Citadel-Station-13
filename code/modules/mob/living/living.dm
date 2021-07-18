@@ -911,6 +911,12 @@
 					"<span class='userdanger'>[src] tries to remove your [what.name].</span>", target = src,
 					target_message = "<span class='danger'>You try to remove [who]'s [what.name].</span>")
 		what.add_fingerprint(src)
+		if(ishuman(who))
+			var/mob/living/carbon/human/victim_human = who
+			if(victim_human.key && !victim_human.client) // AKA braindead
+				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
+					var/list/new_entry = list(list(src.name, "tried unequipping your [what]", world.time))
+					LAZYADD(victim_human.afk_thefts, new_entry)
 	else
 		to_chat(src,"<span class='notice'>You try to remove [who]'s [what.name].</span>")
 		what.add_fingerprint(src)
@@ -956,6 +962,13 @@
 		if(!what.mob_can_equip(who, src, final_where, TRUE, TRUE))
 			to_chat(src, "<span class='warning'>\The [what.name] doesn't fit in that place!</span>")
 			return
+
+		if(ishuman(who))
+			var/mob/living/carbon/human/victim_human = who
+			if(victim_human.key && !victim_human.client) // AKA braindead
+				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
+					var/list/new_entry = list(list(src.name, "tried equipping you with [what]", world.time))
+					LAZYADD(victim_human.afk_thefts, new_entry)
 
 		who.visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>",
 			"<span class='notice'>[src] tries to put [what] on you.</span>", target = src,

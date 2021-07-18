@@ -75,7 +75,7 @@
 	while(timeleft > 0)
 		stoplag(1)
 		var/timepassed = world.time - tick_time
-		timepassed = world.time
+		tick_time = world.time
 		progbar?.update(TIMELEFT)
 		if(QDELETED(user) || QDELETED(target) || (user.loc == null) || (target.loc == null))
 			. = FALSE
