@@ -221,6 +221,7 @@
 #define TRAIT_LIVING_NO_DENSITY			"living_no_density"
 /// forces us to not render our overlays
 #define TRAIT_HUMAN_NO_RENDER			"human_no_render"
+#define TRAIT_TRASHCAN					"trashcan"
 
 // mobility flag traits
 // IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)
