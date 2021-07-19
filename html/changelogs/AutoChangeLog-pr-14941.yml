@@ -1,6 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - rscadd: "Put back mob vore with a pref."
-  - code_imp: "Taken some stuff from tg for tgui_alert."
-  - refactor: "Refactored a lot of code on vore panel."

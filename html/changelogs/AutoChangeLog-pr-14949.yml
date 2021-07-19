@@ -1,4 +1,0 @@
-author: "MrJWhit"
-delete-after: True
-changes: 
-  - bugfix: "Fixes a memory leak, there's a good chance that it's the same one that killed kilo."
