@@ -49,7 +49,7 @@
 	toolspeed = 0.5
 
 /obj/item/retractor/ashwalker
-	name = "Bone Retractor"
+	name = "bone retractor"
 	desc = "Kinda looks like a chicken bone."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "retractor_bone"
@@ -86,7 +86,7 @@
 	attack_verb = list("attacked", "pinched")
 
 /obj/item/hemostat/ashwalker
-	name = "Femurstat"
+	name = "femurstat"
 	desc = "Bones that are strapped together with sinews. Used to stop bleeding."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "hemostat_bone"
@@ -124,7 +124,7 @@
 	attack_verb = list("burnt")
 
 /obj/item/cautery/ashwalker
-	name = "Coretery"
+	name = "coretery"
 	desc = "A legion core strapped to a bone. It can close wounds."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "cautery_bone"
