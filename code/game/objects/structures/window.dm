@@ -674,7 +674,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 /obj/structure/window/plasma/reinforced/unanchored
 	anchored = FALSE
 
-/obj/structure/window/plasma/reinforced/BlockSuperconductivity()
+/obj/structure/window/plasma/reinforced/BlockThermalConductivity()
 	return TRUE
 
 /obj/structure/window/reinforced/tinted

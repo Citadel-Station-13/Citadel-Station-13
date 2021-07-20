@@ -70,7 +70,6 @@
 		cell.charge = INFINITY
 		max_integrity = INFINITY
 		obj_integrity = max_integrity
-		CHECK_TICK //Just to be on the safe side lag wise
 	else
 		if(cell.charge < cell.maxcharge)
 			for(var/obj/effect/clockwork/sigil/transmission/T in range(SIGIL_ACCESS_RANGE, src))
@@ -80,7 +79,6 @@
 					adjust_clockwork_power(-delta)
 		if(obj_integrity < max_integrity && istype(loc, /turf/open/floor/clockwork))
 			obj_integrity += min(max_integrity - obj_integrity, max_integrity / 200)
-		CHECK_TICK
 
 /obj/mecha/combat/neovgre/Initialize()
 	.=..()

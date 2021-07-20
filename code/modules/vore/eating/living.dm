@@ -1,17 +1,24 @@
 ///////////////////// Mob Living /////////////////////
 /mob/living
 	var/vore_flags = 0
-	var/showvoreprefs = TRUE				// Determines if the mechanical vore preferences button will be displayed on the mob or not.
-	var/obj/belly/vore_selected				// Default to no vore capability.
-	var/list/vore_organs = list()			// List of vore containers inside a mob
-	var/vore_taste = null					// What the character tastes like
+	// Determines if the mechanical vore preferences button will be displayed on the mob or not.
+	var/showvoreprefs = TRUE
+	/// Default to no vore capability.
+	var/obj/belly/vore_selected
+	/// List of vore containers inside a mob
+	var/list/vore_organs = list()
+	/// What the character tastes like
+	var/vore_taste = null
+	/// What the character smells like
+	var/vore_smell = null
+	/// Next time vore sounds get played for the prey, do not change manually as it is intended to be set automatically
 	var/next_preyloop
 
 //
 // Hook for generic creation of stuff on new creatures
 //
 /hook/living_new/proc/vore_setup(mob/living/M)
-	add_verb(M, list(/mob/living/proc/preyloop_refresh, /mob/living/proc/lick, /mob/living/proc/escapeOOC))
+	add_verb(M, list(/mob/living/proc/preyloop_refresh, /mob/living/proc/lick, /mob/living/proc/smell, /mob/living/proc/escapeOOC))
 
 	if(M.vore_flags & NO_VORE) //If the mob isn't supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
 		return TRUE
@@ -59,13 +66,14 @@
 			// Critical adjustments due to TG grab changes - Poojawa
 
 /mob/living/proc/vore_attack(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
-	lazy_init_belly()
+	set waitfor = FALSE
 	if(!user || !prey || !pred)
 		return
 
 	if(!isliving(pred)) //no badmin, you can't feed people to ghosts or objects.
 		return
 
+	lazy_init_belly()
 	if(pred == prey) //you click your target
 		if(!CHECK_BITFIELD(pred.vore_flags,FEEDING))
 			to_chat(user, "<span class='notice'>They aren't able to be fed.</span>")
@@ -255,6 +263,7 @@
 
 	client.prefs.vore_flags = vore_flags // there's garbage data in here, but it doesn't matter
 	client.prefs.vore_taste = vore_taste
+	client.prefs.vore_smell = vore_smell
 
 	var/list/serialized = list()
 	for(var/belly in vore_organs)
@@ -262,6 +271,8 @@
 		serialized += list(B.serialize()) //Can't add a list as an object to another list in Byond. Thanks.
 
 	client.prefs.belly_prefs = serialized
+
+	client.prefs.save_character()
 
 	return TRUE
 
@@ -273,8 +284,9 @@
 		to_chat(src,"<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs variable. Tell a dev.</span>")
 		return FALSE
 	ENABLE_BITFIELD(vore_flags,VOREPREF_INIT)
-	COPY_SPECIFIC_BITFIELDS(vore_flags,client.prefs.vore_flags,DIGESTABLE | DEVOURABLE | FEEDING | LICKABLE)
+	COPY_SPECIFIC_BITFIELDS(vore_flags, client.prefs.vore_flags, DIGESTABLE | DEVOURABLE | FEEDING | LICKABLE | SMELLABLE | ABSORBABLE | MOBVORE)
 	vore_taste = client.prefs.vore_taste
+	vore_smell = client.prefs.vore_smell
 
 	release_vore_contents(silent = TRUE)
 	QDEL_LIST(vore_organs)
@@ -378,6 +390,56 @@
 		else
 			taste_message += "a plain old normal [src]"
 	return taste_message
+
+//
+// Equally important as the above
+//
+/mob/living/proc/smell()
+	set name = "Smell Someone"
+	set category = "Vore"
+	set desc = "Smell someone nearby!"
+
+	if(incapacitated(ignore_restraints = TRUE))
+		to_chat(src, "<span class='warning'>You can't do that while incapacitated.</span>")
+		return
+	if(!CheckActionCooldown())
+		to_chat(src, "<span class='warning'>You can't do that so fast, slow down.</span>")
+		return
+
+	DelayNextAction(CLICK_CD_MELEE, flush = TRUE)
+
+	var/list/smellable = list()
+	for(var/mob/living/L in view(1))
+		if(L != src && (!L.ckey || L.client?.prefs.vore_flags & SMELLABLE) && Adjacent(L))
+			LAZYADD(smellable, L)
+	for(var/mob/living/listed in smellable)
+		smellable[listed] = new /mutable_appearance(listed)
+
+	if(!smellable)
+		return
+
+	var/mob/living/sniffed = show_radial_menu(src, src, smellable, radius = 40, require_near = TRUE)
+
+	if(QDELETED(sniffed) || (sniffed.ckey && !(sniffed.client?.prefs.vore_flags & SMELLABLE)) || !Adjacent(sniffed) || incapacitated(ignore_restraints = TRUE))
+		return
+
+	visible_message("<span class='warning'>[src] smells [sniffed]!</span>","<span class='notice'>You smell [sniffed]. They smell like [sniffed.get_smell_message()].</span>","<b>Sniff!</b>")
+
+/mob/living/proc/get_smell_message(allow_generic = TRUE, datum/species/mrace)
+	if(!vore_smell && !allow_generic)
+		return FALSE
+
+	var/smell_message = ""
+	if(vore_smell && (vore_smell != ""))
+		smell_message += "[vore_smell]"
+	else
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			smell_message += "a normal [H.custom_species ? H.custom_species : H.dna.species]"
+		else
+			smell_message += "a plain old normal [src]"
+	return smell_message
+
 //	Check if an object is capable of eating things, based on vore_organs
 //
 /proc/has_vore_belly(var/mob/living/O)

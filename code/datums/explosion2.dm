@@ -283,14 +283,11 @@
 	// insanity define to mark the next set of cardinals.
 #define CARDINAL_MARK(ndir, cdir, edir) \
 	if(edir & cdir) { \
-		CARDINAL_MARK_NOCHECK(ndir, cdir, edir); \
-	};
-
-#define CARDINAL_MARK_NOCHECK(ndir, cdir, edir) \
-	expanding = get_step(T,ndir); \
-	if(expanding && !exploded_last[expanding] && !edges[expanding]) { \
-		powers_next[expanding] = max(powers_next[expanding], returned); \
-		edges_next[expanding] = (cdir | edges_next[expanding]); \
+		expanding = get_step(T,ndir); \
+		if(expanding && !exploded_last[expanding] && !edges[expanding]) { \
+			powers_next[expanding] = max(powers_next[expanding], returned); \
+			edges_next[expanding] = (cdir | edges_next[expanding]); \
+		}; \
 	};
 
 	// insanity define to do diagonal marking as 2 substeps
@@ -308,24 +305,15 @@
 	};
 
 	// insanity define to mark the diagonals that would otherwise be missed
-#define DIAGONAL_MARK(ndir, cdir, edir) \
-	if(edir & cdir) { \
-		DIAGONAL_MARK_NOCHECK(ndir, cdir, edir); \
-	};
-
 	// this only works because right now, WEX_DIR_X is the same as a byond dir
 	// and we know we're only passing in one dir at a time.
 	// if this ever stops being the case, and explosions break when you touch this, now you know why.
-#define DIAGONAL_MARK_NOCHECK(ndir, cdir, edir) \
-	DIAGONAL_SUBSTEP(turn(ndir, 90), turn(cdir, 90), edir); \
-	DIAGONAL_SUBSTEP(turn(ndir, -90), turn(cdir, -90), edir);
-
-	// mark
-#define MARK(ndir, cdir, edir) \
+#define DIAGONAL_MARK(ndir, cdir, edir) \
 	if(edir & cdir) { \
-		CARDINAL_MARK_NOCHECK(ndir, cdir, edir); \
-		DIAGONAL_MARK_NOCHECK(ndir, cdir, edir); \
+		DIAGONAL_SUBSTEP(turn(ndir, 90), turn(cdir, 90), edir); \
+		DIAGONAL_SUBSTEP(turn(ndir, -90), turn(cdir, -90), edir); \
 	};
+
 		CARDINAL_MARK(NORTH, WEX_DIR_NORTH, dir)
 		CARDINAL_MARK(SOUTH, WEX_DIR_SOUTH, dir)
 		CARDINAL_MARK(EAST, WEX_DIR_EAST, dir)
@@ -372,7 +360,9 @@
 
 #undef WEX_ACT
 
+#undef CALCULATE_DIAGONAL_POWER
+#undef CALCULATE_DIAGONAL_CROSS_POWER
+
 #undef DIAGONAL_SUBSTEP
 #undef DIAGONAL_MARK
 #undef CARDINAL_MARK
-#undef MARK

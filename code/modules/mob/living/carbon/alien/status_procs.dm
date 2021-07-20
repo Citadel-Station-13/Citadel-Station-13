@@ -2,7 +2,7 @@
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
 // eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
 
-/mob/living/carbon/alien/DefaultCombatKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg)
+/mob/living/carbon/alien/DefaultCombatKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg, knocktofloor)
 	return	//no
 
 /////////////////////////////////// STUN ////////////////////////////////////

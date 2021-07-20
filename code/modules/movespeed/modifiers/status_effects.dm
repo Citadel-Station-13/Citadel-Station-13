@@ -45,3 +45,9 @@
 /datum/movespeed_modifier/status_effect/mkultra
 	multiplicative_slowdown = -2
 	blacklisted_movetypes= FLYING|FLOATING
+
+/datum/movespeed_modifier/status_effect/stagger
+	variable = TRUE
+
+/datum/movespeed_modifier/status_effect/off_balance
+	variable = TRUE

@@ -169,13 +169,13 @@
 /datum/export/large/gas_canister/get_cost(obj/O)
 	var/obj/machinery/portable_atmospherics/canister/C = O
 	var/worth = 10
-	worth += C.air_contents.get_moles(/datum/gas/bz)*3
-	worth += C.air_contents.get_moles(/datum/gas/stimulum)*25
-	worth += C.air_contents.get_moles(/datum/gas/hypernoblium)*20
-	worth += C.air_contents.get_moles(/datum/gas/miasma)*2
-	worth += C.air_contents.get_moles(/datum/gas/tritium)*7
-	worth += C.air_contents.get_moles(/datum/gas/pluoxium)*6
-	worth += C.air_contents.get_moles(/datum/gas/nitryl)*10
+	worth += C.air_contents.get_moles(GAS_BZ)*3
+	worth += C.air_contents.get_moles(GAS_STIMULUM)*25
+	worth += C.air_contents.get_moles(GAS_HYPERNOB)*20
+	worth += C.air_contents.get_moles(GAS_MIASMA)*2
+	worth += C.air_contents.get_moles(GAS_TRITIUM)*7
+	worth += C.air_contents.get_moles(GAS_PLUOXIUM)*6
+	worth += C.air_contents.get_moles(GAS_NITRYL)*10
 	return worth
 
 

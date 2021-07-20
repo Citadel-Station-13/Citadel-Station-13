@@ -221,6 +221,7 @@
 #define TRAIT_LIVING_NO_DENSITY			"living_no_density"
 /// forces us to not render our overlays
 #define TRAIT_HUMAN_NO_RENDER			"human_no_render"
+#define TRAIT_TRASHCAN					"trashcan"
 
 // mobility flag traits
 // IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)
@@ -341,3 +342,4 @@
 #define ACTIVE_PARRY_TRAIT				"active_parry"
 #define STICKY_NODROP "sticky-nodrop" //sticky nodrop sounds like a bad soundcloud rapper's name
 #define TRAIT_SACRIFICED "sacrificed" //Makes sure that people cant be cult sacrificed twice.
+#define TRAIT_SPACEWALK "spacewalk"

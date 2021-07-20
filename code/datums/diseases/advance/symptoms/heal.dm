@@ -404,8 +404,8 @@
 	if(M.loc)
 		environment = M.loc.return_air()
 	if(environment)
-		plasmamount = environment.get_moles(/datum/gas/plasma)
-		if(plasmamount && plasmamount > GLOB.meta_gas_visibility[/datum/gas/plasma]) //if there's enough plasma in the air to see
+		plasmamount = environment.get_moles(GAS_PLASMA)
+		if(plasmamount && plasmamount > GLOB.gas_data.visibility[GAS_PLASMA]) //if there's enough plasma in the air to see
 			. += power * 0.5
 	if(M.reagents.has_reagent(/datum/reagent/toxin/plasma))
 		. +=  power * 0.75
