@@ -119,7 +119,7 @@
 	return (BRUTELOSS)
 
 /obj/item/hatchet/bone
-	name = "Bone Hatchet"
+	name = "bone hatchet"
 	desc = "A very sharp bone blade tied to a bone handle with sinew. You can process wood with it."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "hatchet_bone"
