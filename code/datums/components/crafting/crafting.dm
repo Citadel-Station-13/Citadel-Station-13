@@ -4,6 +4,10 @@
 
 /datum/component/personal_crafting/proc/create_mob_button(mob/user, client/CL)
 	var/datum/hud/H = user.hud_used
+	for(var/huds in H.static_inventory)
+		if(istype(huds, /obj/screen/craft))
+			return
+	//We don't want to be stacking multiple crafting huds on relogs
 	var/obj/screen/craft/C = new()
 	C.icon = H.ui_style
 	H.static_inventory += C
@@ -20,7 +24,7 @@
 					CAT_AMMO,
 				),
 				CAT_ROBOT = CAT_NONE,
-				CAT_MISC = list(
+				CAT_MISCELLANEOUS = list(
 					CAT_MISCELLANEOUS,
 					CAT_TOOL,
 					CAT_FURNITURE,
