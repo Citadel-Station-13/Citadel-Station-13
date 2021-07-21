@@ -387,7 +387,7 @@
 
 /obj/item/weldingtool/experimental/ashwalker
 	name = "necropolis welding torch"
-	desc = "A mysterious welding tool with its origins in the depths of the necropolis. A mysterious force keeps replenishing its."
+	desc = "A mysterious welding tool with its origins in the depths of the necropolis. A mysterious force keeps replenishing its fuel."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	refueling_interval = 5
 	toolspeed = 0.75
