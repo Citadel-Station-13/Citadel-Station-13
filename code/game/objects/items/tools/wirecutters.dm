@@ -92,7 +92,7 @@
 
 /obj/item/wirecutters/ashwalker
 	name = "bone wirecutters"
-	desc = "Rudimentary wirecutters made out of sharpened bones and sinew.""
+	desc = "Rudimentary wirecutters made out of sharpened bones and sinew."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "cutters_bone"
 	toolspeed = 0.75
