@@ -243,6 +243,32 @@
 			new framestack(T, framestackamount)
 	qdel(src)
 
+
+/**
+ * Gets all connected tables
+ * Cardinals only
+ */
+/obj/structure/table/proc/connected_floodfill(max = 25)
+	. = list()
+	connected_floodfill_internal(., list())
+
+/obj/structure/table/proc/connected_floodfill_internal(list/out, list/processed)
+	if(processed[src])
+		return
+	processed[src] = TRUE
+	out += src
+	var/obj/structure/table/other
+#define RUN_TABLE(dir) \
+	T = locate(/obj/structure/table) in get_step(src, dir); \
+	if(T) { \
+		T.connected_floodfill_internal(out, processed); \
+	}
+	RUN_TABLE(NORTH)
+	RUN_TABLE(SOUTH)
+	RUN_TABLE(EAST)
+	RUN_TABLE(WEST)
+#undef RUN_TABLE
+
 /obj/structure/table/greyscale
 	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
 	icon_state = "table"
