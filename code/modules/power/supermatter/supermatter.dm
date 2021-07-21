@@ -24,35 +24,6 @@
 		props[POWER_MIX][g] = gas.powermix
 		props[ALL_SUPERMATTER_GASES] += g
 
-
-#define PLASMA_HEAT_PENALTY 15     // Higher == Bigger heat and waste penalty from having the crystal surrounded by this gas. Negative numbers reduce penalty.
-#define OXYGEN_HEAT_PENALTY 1
-#define PLUOXIUM_HEAT_PENALTY -1
-#define TRITIUM_HEAT_PENALTY 10
-#define CO2_HEAT_PENALTY 0.1
-#define NITROGEN_HEAT_PENALTY -1.5
-#define BZ_HEAT_PENALTY 5
-#define H2O_HEAT_PENALTY 8
-//#define FREON_HEAT_PENALTY -10 //very good heat absorbtion and less plasma and o2 generation
-//#define HYDROGEN_HEAT_PENALTY 10 // similar heat penalty as tritium (dangerous)
-
-
-//All of these get divided by 10-bzcomp * 5 before having 1 added and being multiplied with power to determine rads
-//Keep the negative values here above -10 and we won't get negative rads
-#define OXYGEN_TRANSMIT_MODIFIER 1.5   //Higher == Bigger bonus to power generation.
-#define PLASMA_TRANSMIT_MODIFIER 4
-#define BZ_TRANSMIT_MODIFIER -2
-#define TRITIUM_TRANSMIT_MODIFIER 30 //We divide by 10, so this works out to 3
-#define PLUOXIUM_TRANSMIT_MODIFIER -5 //Should halve the power output
-#define H2O_TRANSMIT_MODIFIER 2
-//#define HYDROGEN_TRANSMIT_MODIFIER 25 //increase the radiation emission, but less than the trit (2.5)
-
-#define BZ_RADIOACTIVITY_MODIFIER 5 //Improves the effect of transmit modifiers
-
-#define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
-#define PLUOXIUM_HEAT_RESISTANCE 3
-//#define HYDROGEN_HEAT_RESISTANCE 2 // just a bit of heat resistance to spice it up
-
 #define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.20         //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
 #define POWERLOSS_INHIBITION_MOLE_THRESHOLD 20        //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.        //Scales powerloss inhibition down until this amount of moles is reached
 #define POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD 500  //bonus powerloss inhibition boost if this amount of moles is reached
