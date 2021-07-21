@@ -46,6 +46,8 @@
 
 #define MOLE_PENALTY_THRESHOLD 1800           //Above this value we can get lord singulo and independent mol damage, below it we can heal damage
 #define MOLE_HEAT_PENALTY 350                 //Heat damage scales around this. Too hot setups with this amount of moles do regular damage, anything above and below is scaled
+#define POWER_HEURISTIC_THRESHOLD 1000        //The point at which the supermatter starts warning that emitters may be on.
+#define TEMPERATURE_HEURISTIC_THRESHOLD 800   //The point at which the supermatter suggests adding gases that reduce heat damage.
 //Along with damage_penalty_point, makes flux anomalies.
 #define POWER_PENALTY_THRESHOLD 5000          //The cutoff on power properly doing damage, pulling shit around, and delamming into a tesla. Low chance of pyro anomalies, +2 bolts of electricity
 #define SEVERE_POWER_PENALTY_THRESHOLD 7000   //+1 bolt of electricity, allows for gravitational anomalies, and higher chances of pyro anomalies
@@ -730,10 +732,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				radio.talk_into(src, "[safe_alert] Integrity: [get_integrity()]%", engineering_channel)
 				lastwarning = REALTIMEOFDAY
 
-			if(power > POWER_PENALTY_THRESHOLD)
-				radio.talk_into(src, "Warning: Hyperstructure has reached dangerous power level.", engineering_channel)
-				if(powerloss_inhibitor < 0.5)
-					radio.talk_into(src, "DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.", engineering_channel)
+			if(removed.return_temperature > TEMPERATURE_HEURISTIC_THRESHOLD)
+				radio.talk_into(src, "High temperatures detected. Recommend adding nitrous oxide or pluoxium to the chamber to reduce integrity loss.")
+			switch(power)
+				if(POWER_HEURISTIC_THRESHOLD to POWER_PENALTY_THRESHOLD)
+					radio.talk_into(src, "Warning: high power detected in the supermatter. Possible causes include emitters being online, a power-rich fuel mix or high levels of carbon dioxide inhibiting power loss. Turn off emitters and perhaps add more nitrogen.")
+				if(POWER_PENALTY_THRESHOLD to INFINITY)
+					radio.talk_into(src, "Warning: Hyperstructure has reached dangerous power level.", engineering_channel)
+					if(powerloss_inhibitor < 0.5)
+						radio.talk_into(src, "DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.", engineering_channel)
 
 			if(combined_gas > MOLE_PENALTY_THRESHOLD)
 				radio.talk_into(src, "Warning: Critical coolant mass reached.", engineering_channel)
