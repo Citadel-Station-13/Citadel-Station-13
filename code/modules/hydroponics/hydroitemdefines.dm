@@ -86,7 +86,7 @@
 
 /obj/item/cultivator/bone
 	name = "bone cultivator"
-	desc = "Bones used for removing weeds."
+	desc = "A handle and a few bones tied together to resemble a hoe. Should work for removing weeds."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "cultivator_bone"
 
@@ -120,7 +120,7 @@
 
 /obj/item/hatchet/bone
 	name = "bone hatchet"
-	desc = "A very sharp bone blade tied to a bone handle with sinew. You can process wood with it."
+	desc = "A primitive hatchet made out of mostly bone, with some sinew to keep it together. It just might do for cutting logs into planks."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "hatchet_bone"
 

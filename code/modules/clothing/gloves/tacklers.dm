@@ -69,7 +69,7 @@
 
 /obj/item/clothing/gloves/tackler/combat/goliath
 	name = "goliath gloves"
-	desc = "Rudimentary combat gloves. To be fair, Goliaths are really good at grappling... Also, they're fireproof."
+	desc = "Rudimentary tackling gloves. The goliath hide makes it great for grappling with targets, while also being fireproof."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goligloves"
 	item_state = "goligloves"
