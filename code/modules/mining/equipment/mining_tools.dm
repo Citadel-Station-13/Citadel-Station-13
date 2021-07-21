@@ -181,7 +181,7 @@
 
 /obj/item/shovel/spade/bone
 	name = "bone spade"
-	desc = "A small tool for digging and moving dirt."
+	desc = "A bone spade, suitable for digging and moving dirt."
 	icon_state = "spade_bone"
 	toolspeed = 0.75
 

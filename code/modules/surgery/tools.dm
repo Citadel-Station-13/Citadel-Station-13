@@ -49,7 +49,7 @@
 	toolspeed = 0.5
 
 /obj/item/retractor/ashwalker
-	name = "bone retractor"
+	name = "bontractor"
 	desc = "Kinda looks like a chicken bone."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "retractor_bone"
