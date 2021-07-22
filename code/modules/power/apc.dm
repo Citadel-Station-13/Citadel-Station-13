@@ -328,7 +328,7 @@
 
 /obj/machinery/power/apc/update_overlays()
 	. = ..()
-	if((machine_stat & (BROKEN|MAINT)) || update_state)
+	if((stat & (BROKEN|MAINT)) || update_state)
 		return
 
 	. += mutable_appearance(icon, "apcox-[locked]")

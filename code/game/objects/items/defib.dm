@@ -283,7 +283,7 @@
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
 	var/grab_ghost = FALSE
 	var/tlimit = DEFIB_TIME_LIMIT * 10
-	var/base_icon_state = "defibpaddles"
+	base_icon_state = "defibpaddles"
 	var/disarm_shock_time = 10
 	var/wielded = FALSE // track wielded status on item
 
