@@ -252,7 +252,7 @@
 	. = list()
 	connected_floodfill_internal(., list())
 
-/obj/structure/table/proc/connected_floodfill_internal(list/out, list/processed)
+/obj/structure/table/proc/connected_floodfill_internal(list/out = list(), list/processed = list())
 	if(processed[src])
 		return
 	processed[src] = TRUE
