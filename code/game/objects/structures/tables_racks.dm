@@ -259,9 +259,9 @@
 	out += src
 	var/obj/structure/table/other
 #define RUN_TABLE(dir) \
-	T = locate(/obj/structure/table) in get_step(src, dir); \
-	if(T) { \
-		T.connected_floodfill_internal(out, processed); \
+	other = locate(/obj/structure/table) in get_step(src, dir); \
+	if(other) { \
+		other.connected_floodfill_internal(out, processed); \
 	}
 	RUN_TABLE(NORTH)
 	RUN_TABLE(SOUTH)
