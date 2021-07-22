@@ -14177,7 +14177,7 @@
 /area/command/gateway)
 "aGf" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access_txt = "46"
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -22498,6 +22498,7 @@
 	},
 /obj/structure/rack,
 /obj/item/storage/toolbox/emergency,
+/obj/machinery/light/small,
 /turf/open/floor/plasteel,
 /area/commons/locker)
 "bbM" = (
