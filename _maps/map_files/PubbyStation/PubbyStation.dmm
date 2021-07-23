@@ -9531,6 +9531,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/mirror{
+	pixel_y = 30
+	},
 /turf/open/floor/plasteel/freezer,
 /area/command/heads_quarters/captain)
 "avJ" = (
@@ -16873,10 +16876,10 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/assistant,
+/obj/machinery/light/small,
 /turf/open/floor/plasteel/freezer,
 /area/commons/toilet/auxiliary)
 "aNd" = (
-/obj/machinery/light/small,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
@@ -24652,12 +24655,6 @@
 	},
 /turf/open/space,
 /area/solars/starboard)
-"beW" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 5
-	},
-/turf/open/floor/plasteel,
-/area/engineering/atmos)
 "beY" = (
 /obj/machinery/camera{
 	c_tag = "Arrivals Central";
@@ -34476,7 +34473,7 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	icon_state = "4-8"
+	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel/dark,
 /area/command/heads_quarters/rd)
@@ -40389,8 +40386,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 8;
-	name = "Unfiltered to Mix"
+	dir = 4;
+	name = "Ports to Mix"
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
@@ -41430,6 +41427,9 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "bPW" = (
@@ -42132,7 +42132,9 @@
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "bRw" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
+	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "bRx" = (
@@ -55286,15 +55288,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
-"hEi" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 10
-	},
-/turf/open/floor/plasteel,
-/area/engineering/atmos)
 "hEX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -61354,12 +61347,6 @@
 	},
 /turf/open/floor/engine,
 /area/engineering/main)
-"uST" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	name = "Mix to Ports"
-	},
-/turf/open/floor/plasteel,
-/area/engineering/atmos)
 "uUQ" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Engineering Maintenance";
@@ -100505,7 +100492,7 @@ bOr
 bPU
 kWG
 bRw
-beW
+bMf
 bMf
 bMf
 bMf
@@ -100761,8 +100748,8 @@ bKV
 bOX
 eEd
 bQL
-uST
 pEM
+bMf
 bMf
 qQu
 qQu
@@ -101019,7 +101006,7 @@ bMg
 bNj
 bOp
 bPV
-hEi
+sGJ
 sGJ
 bUw
 bUw

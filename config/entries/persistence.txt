@@ -1,0 +1,14 @@
+### Whether or not cleanable object persistence is on
+PERSISTENT_DEBRIS
+
+### Whether or not ONLY persistent cleanable objects should be spawned, for supported objects
+PERSISTENT_DEBRIS_ONLY
+
+### Max objects to store, total
+PERSISTENT_DEBRIS_GLOBAL_MAX 10000
+
+### Max objects to store per type, total
+PERSISTENT_DEBRIS_TYPE_MAX 2000
+
+### Wipe objects on nuke for the above
+PERSISTENT_DEBRIS_WIPE_ON_NUKE

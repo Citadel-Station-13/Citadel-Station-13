@@ -40,6 +40,7 @@
 
 
 /datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, multiplier, specialreact)
+	set waitfor = FALSE
 	return
 	//I recommend you set the result amount to the total volume of all components.
 
