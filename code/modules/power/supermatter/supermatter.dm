@@ -732,7 +732,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				radio.talk_into(src, "[safe_alert] Integrity: [get_integrity()]%", engineering_channel)
 				lastwarning = REALTIMEOFDAY
 
-			if(removed.return_temperature > TEMPERATURE_HEURISTIC_THRESHOLD)
+			if(removed.return_temperature() > TEMPERATURE_HEURISTIC_THRESHOLD)
 				radio.talk_into(src, "High temperatures detected. Recommend adding nitrous oxide or pluoxium to the chamber to reduce integrity loss.")
 			switch(power)
 				if(POWER_HEURISTIC_THRESHOLD to POWER_PENALTY_THRESHOLD)
