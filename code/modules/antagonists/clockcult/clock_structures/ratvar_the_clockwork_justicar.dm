@@ -110,6 +110,7 @@
 
 //Put me in Reebe, will you? Ratvar has found and is going to do a hecking murder on Nar'Sie
 /obj/structure/destructible/clockwork/massive/ratvar/proc/clash_of_the_titans(obj/singularity/narsie/narsie)
+	set waitfor = FALSE
 	var/winner = "Undeclared"
 	var/base_victory_chance = 1
 	while(src && narsie)

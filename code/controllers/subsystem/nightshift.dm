@@ -42,6 +42,7 @@ SUBSYSTEM_DEF(nightshift)
 		update_nightshift(night_time, announcing)
 
 /datum/controller/subsystem/nightshift/proc/update_nightshift(active, announce = TRUE, max_level_override)
+	set waitfor = FALSE
 	nightshift_active = active
 	if(announce)
 		if (active)
