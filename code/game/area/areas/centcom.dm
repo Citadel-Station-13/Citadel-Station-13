@@ -1,14 +1,17 @@
 
 // CENTCOM
 
+// Side note, be sure to change the network_root_id of any areas that are not a part of centcom
+// and just using the z space as safe harbor.  It shouldn't matter much as centcom z is isolated
+// from everything anyway
+
 /area/centcom
 	name = "CentCom"
 	icon_state = "centcom"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	noteleport = TRUE
-	blob_allowed = FALSE //Should go without saying, no blobs should take over centcom as a win condition.
+	area_flags = UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 
 /area/centcom/control
@@ -33,6 +36,7 @@
 	name = "VIP Zone"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
+// dear mappers who make winterball: THROW YOUR AREAS IN A DIFFERENT MAP, THIS IS DEFAULT GAME STUFF NOT EVENT STUFF
 /area/centcom/winterball
 	name = "winterball Zone"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
@@ -56,7 +60,7 @@
 	var/loading_id = ""
 
 /area/centcom/supplypod/loading/Initialize()
-	. = ..() 
+	. = ..()
 	if(!loading_id)
 		CRASH("[type] created without a loading_id")
 	if(GLOB.supplypod_loading_bays[loading_id])
@@ -128,17 +132,19 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	noteleport = TRUE
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
+	// network_root_id = "MAGIC_NET"
 
 //Abductors
 /area/abductor_ship
 	name = "Abductor Ship"
 	icon_state = "yellow"
 	requires_power = FALSE
-	noteleport = TRUE
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
+	// network_root_id = "ALIENS"
 
 //Syndicates
 /area/syndicate_mothership
@@ -146,26 +152,28 @@
 	icon_state = "syndie-ship"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	noteleport = TRUE
-	blob_allowed = FALSE //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
+	// ambience_index = AMBIENCE_DANGER
 	ambientsounds = HIGHSEC
+	// network_root_id = SYNDICATE_NETWORK_ROOT
 
 /area/syndicate_mothership/control
 	name = "Syndicate Control Room"
 	icon_state = "syndie-control"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	// network_root_id = SYNDICATE_NETWORK_ROOT
 
 /area/syndicate_mothership/elite_squad
 	name = "Syndicate Elite Squad"
 	icon_state = "syndie-elite"
+	// network_root_id = SYNDICATE_NETWORK_ROOT
 
 /area/fabric_of_reality
 	name = "Tear in the Fabric of Reality"
 	requires_power = FALSE
 	has_gravity = TRUE
-	noteleport = TRUE
-	blob_allowed = FALSE
+	area_flags = UNIQUE_AREA | NOTELEPORT
 
 //CAPTURE THE FLAG
 
@@ -174,6 +182,7 @@
 	icon_state = "yellow"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
+	flags_1 = NONE
 
 /area/ctf/control_room
 	name = "Control Room A"
@@ -209,11 +218,10 @@
 	icon_state = "yellow"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	noteleport = TRUE
-	hidden = TRUE
+	area_flags = HIDDEN_AREA | NOTELEPORT | UNIQUE_AREA
 	ambientsounds = REEBE
 
 /area/reebe/city_of_cogs
 	name = "City of Cogs"
 	icon_state = "purple"
-	hidden = FALSE
+	area_flags = NOTELEPORT | UNIQUE_AREA

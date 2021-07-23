@@ -189,7 +189,7 @@
 	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
 			organic host as a home base and source of fuel. Holoparasites come in various types and share damage with their host."
 	item = /obj/item/storage/box/syndie_kit/guardian
-	cost = 15
+	cost = 12
 	limited_stock = 1 // you can only have one holopara apparently?
 	refundable = TRUE
 	cant_discount = TRUE
@@ -204,7 +204,7 @@
 	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
 			organic host as a home base and source of fuel. Holoparasites come in various types and share damage with their host."
 	item = /obj/item/storage/box/syndie_kit/nukieguardian
-	cost = 15
+	cost = 8
 	refundable = TRUE
 	surplus = 50
 	refund_path = /obj/item/guardiancreator/tech/choose/nukie
@@ -227,6 +227,15 @@
 	cost = 18
 	surplus = 50
 	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/dangerous/maulergauntlets
+	name = "Mauler Gauntlets"
+	desc = "Mauler gauntlets are a pair of high-tech plastitanium gauntlets fused with illegal nanite auto-injectors designed \
+	to grant the wearer sextuple the strength of an average human being. Wearing these, you will punch harder, inflict more injuries \
+	with your fists, and be able to slam people through tables with immense force. \
+	Unfortunately, due to the size of the gloves you will be unable to wield firearms with them equipped."
+	item = /obj/item/clothing/gloves/fingerless/pugilist/mauler
+	cost = 8
 
 /datum/uplink_item/dangerous/powerfist
 	name = "Power Fist"
@@ -277,3 +286,13 @@
 	item = /obj/item/gun/ballistic/automatic/toy/pistol/riot
 	cost = 3
 	surplus = 10
+
+/datum/uplink_item/dangerous/motivation
+	name = "Motivation"
+	desc = "An ancient blade said to have ties with Lavaland's most inner demons. \
+			Allows you to cut from a far distance!"
+	item = /obj/item/gun/magic/staff/motivation
+	cost = 20
+	player_minimum = 20
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
+	cant_discount = TRUE

@@ -40,12 +40,7 @@
 
 ///Called when there is no real turf below this turf
 /turf/open/transparent/proc/show_bottom_level()
-	var/turf/path = SSmapping.level_trait(z, ZTRAIT_BASETURF) || /turf/open/space
-	if(!ispath(path))
-		path = text2path(path)
-		if(!ispath(path))
-			warning("Z-level [z] has invalid baseturf '[SSmapping.level_trait(z, ZTRAIT_BASETURF)]'")
-			path = /turf/open/space
+	var/turf/path = get_z_base_turf()
 	var/mutable_appearance/underlay_appearance = mutable_appearance(initial(path.icon), initial(path.icon_state), layer = TURF_LAYER, plane = PLANE_SPACE)
 	underlays += underlay_appearance
 	return TRUE

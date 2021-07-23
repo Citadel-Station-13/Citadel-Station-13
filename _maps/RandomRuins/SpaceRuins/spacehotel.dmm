@@ -125,8 +125,8 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
 "ay" = (
 /obj/structure/window{
-	icon_state = "window";
-	dir = 8
+	dir = 8;
+	icon_state = "window"
 	},
 /obj/structure/toilet,
 /turf/open/floor/plasteel/showroomfloor,
@@ -166,8 +166,8 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "aG" = (
 /obj/structure/window{
-	icon_state = "window";
-	dir = 8
+	dir = 8;
+	icon_state = "window"
 	},
 /obj/structure/toilet,
 /turf/open/floor/plasteel/showroomfloor,
@@ -207,8 +207,8 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "aO" = (
 /obj/structure/window{
-	icon_state = "window";
-	dir = 8
+	dir = 8;
+	icon_state = "window"
 	},
 /obj/structure/toilet,
 /turf/open/floor/plasteel/showroomfloor,
@@ -248,8 +248,8 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
 "aW" = (
 /obj/structure/window{
-	icon_state = "window";
-	dir = 8
+	dir = 8;
+	icon_state = "window"
 	},
 /obj/structure/toilet,
 /turf/open/floor/plasteel/showroomfloor,
@@ -287,8 +287,8 @@
 /area/ruin/unpowered/no_grav)
 "be" = (
 /obj/structure/window{
-	icon_state = "window";
-	dir = 8
+	dir = 8;
+	icon_state = "window"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
@@ -319,8 +319,8 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
 "bk" = (
 /obj/structure/window{
-	icon_state = "window";
-	dir = 8
+	dir = 8;
+	icon_state = "window"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
@@ -351,8 +351,8 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "bq" = (
 /obj/structure/window{
-	icon_state = "window";
-	dir = 8
+	dir = 8;
+	icon_state = "window"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
@@ -383,8 +383,8 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "bw" = (
 /obj/structure/window{
-	icon_state = "window";
-	dir = 8
+	dir = 8;
+	icon_state = "window"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
@@ -491,7 +491,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "Guest Room APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -541,7 +541,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "Guest Room APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -591,7 +591,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "Guest Room APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -641,7 +641,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "Guest Room APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -1067,8 +1067,8 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
 "dl" = (
 /obj/structure/window{
-	icon_state = "window";
-	dir = 8
+	dir = 8;
+	icon_state = "window"
 	},
 /obj/structure/toilet,
 /turf/open/floor/plasteel/showroomfloor,
@@ -1087,7 +1087,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Guest Room APC";
-	pixel_y = 25
+	pixel_y = 23
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -1131,8 +1131,8 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "dt" = (
 /obj/structure/window{
-	icon_state = "window";
-	dir = 8
+	dir = 8;
+	icon_state = "window"
 	},
 /obj/structure/toilet,
 /turf/open/floor/plasteel/showroomfloor,
@@ -1151,7 +1151,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Guest Room APC";
-	pixel_y = 25
+	pixel_y = 23
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -1230,8 +1230,8 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
 "dI" = (
 /obj/structure/window{
-	icon_state = "window";
-	dir = 8
+	dir = 8;
+	icon_state = "window"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
@@ -1262,8 +1262,8 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "dP" = (
 /obj/structure/window{
-	icon_state = "window";
-	dir = 8
+	dir = 8;
+	icon_state = "window"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
@@ -1484,7 +1484,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "Laundry APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
@@ -1677,7 +1677,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "Kitchen APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -2520,7 +2520,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "Staff Room APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -2564,16 +2564,16 @@
 /area/ruin/space/has_grav/hotel/workroom)
 "hG" = (
 /obj/effect/mob_spawn/human/hotel_staff{
-	icon_state = "sleeper_s";
-	dir = 1
+	dir = 1;
+	icon_state = "sleeper_s"
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "hH" = (
 /obj/effect/mob_spawn/human/hotel_staff{
-	icon_state = "sleeper_s";
-	dir = 1
+	dir = 1;
+	icon_state = "sleeper_s"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
@@ -2894,7 +2894,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Power Storage APC";
-	pixel_y = 25
+	pixel_y = 23
 	},
 /obj/structure/cable{
 	icon_state = "0-8"
@@ -3069,7 +3069,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "Security APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -3116,7 +3116,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "Pool APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -3165,7 +3165,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "Dock APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable,
 /turf/open/floor/wood,
@@ -4283,8 +4283,8 @@
 /area/ruin/space/has_grav/hotel/security)
 "lG" = (
 /obj/structure/window{
-	icon_state = "window";
-	dir = 1
+	dir = 1;
+	icon_state = "window"
 	},
 /obj/machinery/light{
 	dir = 8
@@ -4307,8 +4307,8 @@
 /obj/item/clothing/shoes/sandal,
 /obj/item/clothing/shoes/sandal,
 /obj/structure/window{
-	icon_state = "window";
-	dir = 1
+	dir = 1;
+	icon_state = "window"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/hotel/pool)
@@ -4907,7 +4907,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "Custodial APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{

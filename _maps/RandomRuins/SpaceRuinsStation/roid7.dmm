@@ -256,7 +256,7 @@
 /turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/space)
 "Z" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/space)
 
 (1,1,1) = {"

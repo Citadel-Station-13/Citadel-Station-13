@@ -61,6 +61,8 @@
 				to_chat(src, "<span class='revenminor'>You begin siphoning essence from [target]'s soul.</span>")
 				if(target.stat != DEAD)
 					to_chat(target, "<span class='warning'>You feel a horribly unpleasant draining sensation as your grip on life weakens...</span>")
+				if(target.stat == SOFT_CRIT)
+					target.Stun(46)
 				reveal(46)
 				stun(46)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, [target.p_their()] skin turning an ashy gray.</span>")
@@ -144,7 +146,7 @@
 	if(user.inhibited)
 		return FALSE
 	if(locked)
-		if(user.essence <= unlock_amount)
+		if(user.essence_excess <= unlock_amount)
 			return FALSE
 	if(user.essence <= cast_amount)
 		return FALSE
@@ -158,7 +160,7 @@
 			locked = FALSE
 		return TRUE
 	if(locked)
-		if(!user.castcheck(-unlock_amount))
+		if(!user.unlock(unlock_amount))
 			charge_counter = charge_max
 			return FALSE
 		name = "[initial(name)] ([cast_amount]E)"
@@ -185,6 +187,7 @@
 	range = 5
 	stun = 30
 	cast_amount = 40
+	unlock_amount = 25
 	var/shock_range = 2
 	var/shock_damage = 15
 	action_icon_state = "overload_lights"
@@ -197,7 +200,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload(turf/T, mob/user)
 	for(var/obj/machinery/light/L in T)
 		if(!L.on)
-			return
+			continue
 		L.visible_message("<span class='warning'><b>\The [L] suddenly flares brightly and begins to spark!</span>")
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(4, 0, L)
@@ -226,7 +229,7 @@
 	range = 4
 	stun = 20
 	reveal = 40
-	unlock_amount = 75
+	unlock_amount = 10
 	cast_amount = 30
 	action_icon_state = "defile"
 
@@ -277,7 +280,7 @@
 	charge_max = 200
 	range = 4
 	cast_amount = 60
-	unlock_amount = 200
+	unlock_amount = 125
 	action_icon_state = "malfunction"
 
 //A note to future coders: do not replace this with an EMP because it will wreck malf AIs and everyone will hate you.
@@ -324,7 +327,7 @@
 	charge_max = 200
 	range = 3
 	cast_amount = 50
-	unlock_amount = 200
+	unlock_amount = 75
 	action_icon_state = "blight"
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight/cast(list/targets, mob/living/simple_animal/revenant/user = usr)

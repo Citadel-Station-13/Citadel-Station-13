@@ -6,6 +6,7 @@
 	ask_verb = "inquires"
 	exclaim_verb = "declares"
 	key = "h"
+	flags = TONGUELESS_SPEECH
 	space_chance = 20
 	syllables = list(
 		"fii", "sii", "rii", "rel", "maa", "ala", "san", "tol", "tok", "dia", "eres",
@@ -16,3 +17,4 @@
 	)
 	icon_state = "plant"
 	default_priority = 90
+	chooseable_roundstart = TRUE

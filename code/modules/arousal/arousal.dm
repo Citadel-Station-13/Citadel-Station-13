@@ -197,6 +197,7 @@
 
 //Here's the main proc itself
 /mob/living/carbon/human/proc/mob_climax(forced_climax=FALSE,cause = "") //Forced is instead of the other proc, makes you cum if you have the tools for it, ignoring restraints
+	set waitfor = FALSE
 	if(mb_cd_timer > world.time)
 		if(!forced_climax) //Don't spam the message to the victim if forced to come too fast
 			to_chat(src, "<span class='warning'>You need to wait [DisplayTimeText((mb_cd_timer - world.time), TRUE)] before you can do that again!</span>")
@@ -213,29 +214,6 @@
 		for(var/obj/item/organ/genital/G in internal_organs)
 			if(!CHECK_BITFIELD(G.genital_flags, CAN_CLIMAX_WITH)) //Skip things like wombs and testicles
 				continue
-			var/mob/living/partner
-			var/check_target
-			var/list/worn_stuff = get_equipped_items()
-
-			if(G.is_exposed(worn_stuff))
-				if(pulling) //Are we pulling someone? Priority target, we can't be making option menus for this, has to be quick
-					if(isliving(pulling)) //Don't fuck objects
-						check_target = pulling
-				if(pulledby && !check_target) //prioritise pulled over pulledby
-					if(isliving(pulledby))
-						check_target = pulledby
-				//Now we should have a partner, or else we have to come alone
-				if(check_target)
-					if(iscarbon(check_target)) //carbons can have clothes
-						var/mob/living/carbon/C = check_target
-						if(C.exposed_genitals.len || C.is_groin_exposed() || C.is_chest_exposed()) //Are they naked enough?
-							partner = C
-					else //A cat is fine too
-						partner = check_target
-				if(partner) //Did they pass the clothing checks?
-					mob_climax_partner(G, partner, mb_time = 0) //Instant climax due to forced
-					continue //You've climaxed once with this organ, continue on
-			//not exposed OR if no partner was found while exposed, climax alone
 			mob_climax_outside(G, mb_time = 0) //removed climax timer for sudden, forced orgasms
 		//Now all genitals that could climax, have.
 		//Since this was a forced climax, we do not need to continue with the other stuff

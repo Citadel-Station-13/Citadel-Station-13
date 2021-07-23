@@ -95,21 +95,31 @@
 /datum/status_effect/staggered/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
+	if(!CONFIG_GET(flag/sprint_enabled))
+		new_owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/stagger, TRUE, CONFIG_GET(number/sprintless_stagger_slowdown))
+	return ..()
+
+/datum/status_effect/staggered/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/stagger)
 	return ..()
 
 /datum/status_effect/off_balance
 	id = "offbalance"
+	blocks_sprint = TRUE
 	alert_type = null
 
 /datum/status_effect/off_balance/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
+	if(!CONFIG_GET(flag/sprint_enabled))
+		new_owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/off_balance, TRUE, CONFIG_GET(number/sprintless_off_balance_slowdown))
 	return ..()
 
 /datum/status_effect/off_balance/on_remove()
 	var/active_item = owner.get_active_held_item()
-	if(is_type_in_typecache(active_item, GLOB.shove_disarming_types))
+	if(active_item)
 		owner.visible_message("<span class='warning'>[owner.name] regains their grip on \the [active_item]!</span>", "<span class='warning'>You regain your grip on \the [active_item]</span>", null, COMBAT_MESSAGE_RANGE)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/off_balance)
 	return ..()
 
 /obj/screen/alert/status_effect/asleep
@@ -117,18 +127,14 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
-/datum/status_effect/no_combat_mode
-	id = "no_combat_mode"
-	alert_type = null
-	status_type = STATUS_EFFECT_REPLACE
-	blocks_combatmode = TRUE
 
-/datum/status_effect/no_combat_mode/on_creation(mob/living/new_owner, set_duration)
-	if(isnum(set_duration))
-		duration = set_duration
-	. = ..()
+/datum/status_effect/grouped/stasis
+	id = "stasis"
+	duration = -1
+	tick_interval = 10
+	var/last_dead_time
 
-/datum/status_effect/no_combat_mode/robotic_emp
+/datum/status_effect/robotic_emp
 	id = "emp_no_combat_mode"
 
 /datum/status_effect/mesmerize
@@ -138,13 +144,11 @@
 /datum/status_effect/mesmerize/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_MUTE, "mesmerize")
-	ADD_TRAIT(owner, TRAIT_COMBAT_MODE_LOCKED, "mesmerize")
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/mesmerize)
 
 /datum/status_effect/mesmerize/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_MUTE, "mesmerize")
-	REMOVE_TRAIT(owner, TRAIT_COMBAT_MODE_LOCKED, "mesmerize")
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/mesmerize)
 
 /datum/status_effect/mesmerize/on_creation(mob/living/new_owner, set_duration)
@@ -154,7 +158,7 @@
 
 /obj/screen/alert/status_effect/mesmerized
 	name = "Mesmerized"
-	desc = "You cant tear your sight from who is in front of you... their gaze is simply too enthralling.."
+	desc = "You can't tear your sight from who is in front of you... their gaze is simply too enthralling.."
 	icon = 'icons/mob/actions/bloodsucker.dmi'
 	icon_state = "power_mez"
 
@@ -162,7 +166,7 @@
 	id = "tased"
 	alert_type = null
 	var/movespeed_mod = /datum/movespeed_modifier/status_effect/tased
-	var/stamdmg_per_ds = 0		//a 20 duration would do 20 stamdmg, disablers do 24 or something
+	var/stamdmg_per_ds = 1		//a 20 duration would do 20 stamdmg, disablers do 24 or something
 	var/last_tick = 0			//fastprocess processing speed is a goddamn sham, don't trust it.
 
 /datum/status_effect/electrode/on_creation(mob/living/new_owner, set_duration)
@@ -193,8 +197,25 @@
 /datum/status_effect/electrode/no_combat_mode
 	id = "tased_strong"
 	movespeed_mod = /datum/movespeed_modifier/status_effect/tased/no_combat_mode
-	blocks_combatmode = TRUE
 	stamdmg_per_ds = 1
+
+/datum/status_effect/vtec_disabled
+	id = "vtec_disable"
+	tick = FALSE
+
+/datum/status_effect/vtec_disabled/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+	if(iscyborg(owner))
+		var/mob/living/silicon/robot/R = owner
+		R.vtec_disabled = TRUE
+
+/datum/status_effect/vtec_disabled/on_remove()
+	if(iscyborg(owner))
+		var/mob/living/silicon/robot/R = owner
+		R.vtec_disabled = FALSE
+	return ..()
 
 //OTHER DEBUFFS
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
@@ -498,6 +519,32 @@
 			I.take_damage(100)
 	return ..()
 
+/datum/status_effect/eldritch/void
+	id = "void_mark"
+	effect_sprite = "emark4"
+
+/datum/status_effect/eldritch/void/on_effect()
+	var/turf/open/turfie = get_turf(owner)
+	turfie.TakeTemperature(-40)
+	owner.adjust_bodytemperature(-60)
+	return ..()
+
+/datum/status_effect/domain
+	id = "domain"
+	alert_type = null
+	var/movespeed_mod = /datum/movespeed_modifier/status_effect/domain
+
+/datum/status_effect/domain/on_creation(mob/living/new_owner, set_duration)
+	if(isliving(owner))
+		var/mob/living/carbon/C = owner
+		C.add_movespeed_modifier(movespeed_mod)
+
+/datum/status_effect/electrode/on_remove()
+	if(isliving(owner))
+		var/mob/living/carbon/C = owner
+		C.remove_movespeed_modifier(movespeed_mod)
+	. = ..()
+
 /datum/status_effect/corrosion_curse
 	id = "corrosion_curse"
 	status_type = STATUS_EFFECT_REPLACE
@@ -506,7 +553,7 @@
 
 /datum/status_effect/corrosion_curse/on_creation(mob/living/new_owner, ...)
 	. = ..()
-	to_chat(owner, "<span class='danger'>Your feel your body starting to break apart...</span>")
+	to_chat(owner, "<span class='danger'>You feel your body starting to break apart...</span>")
 
 /datum/status_effect/corrosion_curse/tick()
 	. = ..()
@@ -577,7 +624,7 @@
 
 /datum/status_effect/amok/on_apply(mob/living/afflicted)
 	. = ..()
-	to_chat(owner, "<span class='boldwarning'>Your feel filled with a rage that is not your own!</span>")
+	to_chat(owner, "<span class='boldwarning'>You feel filled with a rage that is not your own!</span>")
 
 /datum/status_effect/amok/tick()
 	. = ..()

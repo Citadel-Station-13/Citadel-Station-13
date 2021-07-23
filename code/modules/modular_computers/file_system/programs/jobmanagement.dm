@@ -20,7 +20,8 @@
 		"Head of Security",
 		"Chief Engineer",
 		"Research Director",
-		"Chief Medical Officer")
+		"Chief Medical Officer",
+		"Quartermaster")
 
 	//The scaling factor of max total positions in relation to the total amount of people on board the station in %
 	var/max_relative_positions = 30 //30%: Seems reasonable, limit of 6 @ 20 players
@@ -43,7 +44,7 @@
 
 /datum/computer_file/program/job_management/proc/can_close_job(datum/job/job)
 	if(!(job?.title in blacklisted))
-		if(job.total_positions > length(GLOB.player_list) * (max_relative_positions / 100))
+		if(job.total_positions > job.current_positions)
 			var/delta = (world.time / 10) - GLOB.time_last_changed_position
 			if((change_position_cooldown < delta) || (opened_positions[job.title] > 0))
 				return TRUE
@@ -67,7 +68,7 @@
 			if(!j || !can_open_job(j))
 				return
 			if(opened_positions[edit_job_target] >= 0)
-				GLOB.time_last_changed_position = world.time / 10
+				GLOB.time_last_changed_position = world.time / 10 // global cd
 			j.total_positions++
 			opened_positions[edit_job_target]++
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)

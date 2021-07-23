@@ -13,11 +13,27 @@
 	var/power = 2000
 
 /datum/round_event/supermatter_surge/setup()
-	power = rand(200,4000)
+	if(prob(70))
+		power = rand(200,100000)
+	else
+		power = rand(200,200000)
 
 /datum/round_event/supermatter_surge/announce()
-	if(power > 800 || prob(round(power/8)))
-		priority_announce("Class [round(power/500) + 1] supermatter surge detected. Intervention may be required.", "Anomaly Alert")
+	var/severity = ""
+	switch(power)
+		if(-INFINITY to 100000)
+			var/low_threat_perc = 100-round(100*((power-200)/(100000-200)))
+			if(prob(low_threat_perc))
+				if(prob(low_threat_perc))
+					severity = "low; the supermatter should return to normal operation shortly."
+				else
+					severity = "medium; the supermatter should return to normal operation, but check NT CIMS to ensure this."
+			else
+				severity = "high; if the supermatter's cooling is not fortified, coolant may need to be added."
+		if(100000 to INFINITY)
+			severity = "extreme; emergency action is likely to be required even if coolant loop is fine."
+	if(power > 20000 || prob(round(power/200)))
+		priority_announce("Supermatter surge detected. Estimated severity is [severity]", "Anomaly Alert")
 
 /datum/round_event/supermatter_surge/start()
 	GLOB.main_supermatter_engine.matter_power += power

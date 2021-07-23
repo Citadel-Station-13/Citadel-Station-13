@@ -354,10 +354,10 @@
 	. = SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	. = O.clean_blood()
 	O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	if(isitem(O))
-		var/obj/item/I = O
-		I.acid_level = 0
-		I.extinguish()
+	var/datum/component/acid/acid = O.GetComponent(/datum/component/acid)
+	if(acid)
+		acid.level = 0
+	O.extinguish()
 
 /obj/machinery/shower/proc/wash_turf()
 	if(isturf(loc))
@@ -554,7 +554,7 @@
 		if(B.cell)
 			if(B.cell.charge > 0 && B.turned_on)
 				flick("baton_active", src)
-				var/stunforce = B.stamforce
+				var/stunforce = B.stamina_loss_amount
 				user.DefaultCombatKnockdown(stunforce * 2)
 				user.stuttering = stunforce/20
 				B.deductcharge(B.hitcost)
@@ -601,7 +601,9 @@
 		busy = FALSE
 		SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 		O.clean_blood()
-		O.acid_level = 0
+		var/datum/component/acid/acid = O.GetComponent(/datum/component/acid)
+		if(acid)
+			acid.level = 0
 		create_reagents(5)
 		reagents.add_reagent(dispensedreagent, 5)
 		reagents.reaction(O, TOUCH)

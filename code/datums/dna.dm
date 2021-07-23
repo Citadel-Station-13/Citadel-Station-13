@@ -329,12 +329,13 @@
 	uni_identity = generate_uni_identity()
 	unique_enzymes = generate_unique_enzymes()
 
-/datum/dna/proc/initialize_dna(newblood_type)
+/datum/dna/proc/initialize_dna(newblood_type, skip_index = FALSE)
 	if(newblood_type)
 		blood_type = newblood_type
 	unique_enzymes = generate_unique_enzymes()
 	uni_identity = generate_uni_identity()
-	generate_dna_blocks()
+	if(!skip_index) //I hate this
+		generate_dna_blocks()
 	features = random_features(species?.id, holder?.gender)
 
 
@@ -404,7 +405,7 @@
 
 
 /mob/living/carbon/human/proc/hardset_dna(ui, list/mutation_index, newreal_name, newblood_type, datum/species/mrace, newfeatures, list/default_mutation_genes)
-
+	set waitfor = FALSE
 	if(newreal_name)
 		real_name = newreal_name
 		dna.generate_unique_enzymes()

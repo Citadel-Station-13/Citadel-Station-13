@@ -45,15 +45,15 @@
 	// no attacking while blocking
 	block_lock_attacking = TRUE
 
-	parry_time_windup = 1
-	parry_time_active = 5
+	parry_time_windup = 0
+	parry_time_active = 7
 	parry_time_spindown = 0
 	parry_time_spindown_visual_override = 1
-	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK | PARRY_LOCK_ATTACKING		// no attacking while parrying
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK		// no attacking while parrying
 	parry_time_perfect = 0
 	parry_time_perfect_leeway = 0.5
-	parry_efficiency_perfect = 100
-	parry_imperfect_falloff_percent = 1
+	parry_efficiency_perfect = 85
+	parry_imperfect_falloff_percent = 10
 	parry_imperfect_falloff_percent_override = list(
 		TEXT_ATTACK_TYPE_PROJECTILE = 45		// really crappy vs projectiles
 	)
@@ -61,9 +61,7 @@
 		TEXT_ATTACK_TYPE_PROJECTILE = 1		// extremely harsh window for projectiles
 	)
 	// not extremely punishing to fail, but no spamming the parry.
-	parry_cooldown = 2.5 SECONDS
 	parry_failed_stagger_duration = 1.5 SECONDS
-	parry_failed_clickcd_duration = 1 SECONDS
 
 /obj/item/electrostaff/Initialize(mapload)
 	. = ..()
@@ -210,8 +208,7 @@
 	target.apply_effect(EFFECT_STUTTER, stunforce)
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
-		target.lastattacker = user.real_name
-		target.lastattackerckey = user.ckey
+		target.set_last_attacker(user)
 		target.visible_message("<span class='danger'>[user] has shocked [target] with [src]!</span>", \
 								"<span class='userdanger'>[user] has shocked you with [src]!</span>")
 		log_combat(user, target, "stunned with an electrostaff")
@@ -237,8 +234,7 @@
 	target.adjustFireLoss(lethal_force)		//good against ointment spam
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
-		target.lastattacker = user.real_name
-		target.lastattackerckey = user.ckey
+		target.set_last_attacker(user)
 		target.visible_message("<span class='danger'>[user] has seared [target] with [src]!</span>", \
 								"<span class='userdanger'>[user] has seared you with [src]!</span>")
 		log_combat(user, target, "burned with an electrostaff")

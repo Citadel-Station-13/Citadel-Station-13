@@ -1,6 +1,0 @@
-author: "KeRSedChaplain"
-delete-after: True
-changes: 
-  - rscadd: "Added three new rites, and makes soul vessels obtainable"
-  - bugfix: "fixes clockwork guardians inheriting marauders blocking"
-  - soundadd: "added sounds for the ratvar end sequence, voiced by @dzahlus"

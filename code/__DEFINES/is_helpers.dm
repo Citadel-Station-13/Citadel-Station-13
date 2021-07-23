@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 	/turf/open/chasm,
 	/turf/open/lava,
 	/turf/open/water,
-	/turf/open/transparent/openspace
+	/turf/open/openspace
 	)))
 
 #define isgroundlessturf(A) (is_type_in_typecache(A, GLOB.turfs_without_ground))
@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isplatingturf(A) (istype(A, /turf/open/floor/plating))
 
-#define istransparentturf(A) (istype(A, /turf/open/transparent)||istype(A, /turf/open/space/transparent))
+#define istransparentturf(A) (istype(A, /turf/open/openspace))
 
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
@@ -226,6 +226,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isfood(A) (istype(A, /obj/item/reagent_containers/food/snacks))
 
+#define iscontainer(A) (istype(A, /obj/structure/reagent_dispensers))
+
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/assembly))
 
@@ -252,6 +254,9 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 #define isshuttleturf(T) (length(T.baseturfs) && (/turf/baseturf_skipover/shuttle in T.baseturfs))
 
 #define isProbablyWallMounted(O) (O.pixel_x > 20 || O.pixel_x < -20 || O.pixel_y > 20 || O.pixel_y < -20)
+
+#define isfinite(n) (isnum(n) && n == n)
+
 #define isbook(O) (is_type_in_typecache(O, GLOB.book_types))
 
 GLOBAL_LIST_INIT(book_types, typecacheof(list(

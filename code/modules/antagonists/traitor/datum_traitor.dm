@@ -26,6 +26,8 @@
 	if(traitor_kind)
 		traitor_kind.remove_innate_effects(owner.current)
 		traitor_kind.clean_up_traitor(src)
+		if(traitor_kind.processing)
+			STOP_PROCESSING(SSprocessing, src)
 		swap_from_old = TRUE
 	traitor_kind = GLOB.traitor_classes[kind]
 	traitor_kind.apply_innate_effects(owner.current)
@@ -33,10 +35,15 @@
 		for(var/O in objectives)
 			qdel(O)
 		traitor_kind.forge_objectives(src)
+	if(traitor_kind.processing)
+		START_PROCESSING(SSprocessing, src)
 	if(swap_from_old)
 		traitor_kind.finalize_traitor(src)
 		traitor_kind.greet(src)
 		owner.announce_objectives()
+
+/datum/antagonist/traitor/process()
+	traitor_kind.on_process(src)
 
 /proc/get_random_traitor_kind(var/list/blacklist = list())
 	var/chaos_weight = 0

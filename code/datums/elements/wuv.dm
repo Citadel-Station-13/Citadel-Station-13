@@ -34,13 +34,13 @@
 	. = ..()
 	UnregisterSignal(source, COMSIG_MOB_ATTACK_HAND)
 
-/datum/element/wuv/proc/on_attack_hand(datum/source, mob/user)
+/datum/element/wuv/proc/on_attack_hand(datum/source, mob/user, act_intent)
 	var/mob/living/L = source
 
 	if(L.stat == DEAD)
 		return
 	//we want to delay the effect to be displayed after the mob is petted, not before.
-	switch(user.a_intent)
+	switch(act_intent)
 		if(INTENT_HARM)
 			addtimer(CALLBACK(src, .proc/kick_the_dog, source, user), 1)
 		if(INTENT_HELP)

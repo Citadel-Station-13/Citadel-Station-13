@@ -52,7 +52,7 @@
 
 /datum/crafting_recipe/armwraps
 	name = "Armwraps"
-	result = /obj/item/clothing/gloves/fingerless/pugilist
+	result = /obj/item/clothing/gloves/fingerless/pugilist/crafted
 	time = 60
 	tools = list(TOOL_WIRECUTTER)
 	reqs = list(/obj/item/stack/sheet/cloth = 4,

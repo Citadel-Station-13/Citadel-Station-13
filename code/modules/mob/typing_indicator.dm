@@ -55,3 +55,12 @@ GLOBAL_LIST_EMPTY(typing_indicator_overlays)
 	icon_state = "normal_typing"
 	appearance_flags = RESET_COLOR | TILE_BOUND | PIXEL_SCALE
 	layer = ABOVE_FLY_LAYER
+
+/obj/effect/overlay/typing_indicator/machine
+	icon_state = "machine_typing"
+
+/obj/effect/overlay/typing_indicator/machine/dogborg
+	icon = 'icons/mob/talk_64x64.dmi'
+
+/obj/effect/overlay/typing_indicator/slime
+	icon_state = "slime_typing"

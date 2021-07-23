@@ -149,6 +149,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	///
 	var/sound/attack_sound = 'sound/weapons/punch1.ogg'
 	var/sound/miss_sound = 'sound/weapons/punchmiss.ogg'
+	var/attack_sound_override = null
 
 	var/list/mob/living/ignored_by = list()	// list of mobs that will ignore this species
 	//Breathing!
@@ -569,12 +570,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/remove_blacklisted_quirks(mob/living/carbon/C)
 	var/mob/living/L = C.mind?.current
 	if(istype(L))
-		var/list/my_quirks = L.client?.prefs.all_quirks.Copy()
-		SSquirks.filter_quirks(my_quirks, blacklisted_quirks)
 		for(var/q in L.roundstart_quirks)
 			var/datum/quirk/Q = q
-			if(!(SSquirks.quirk_name_by_path(Q.type) in my_quirks))
-				L.remove_quirk(Q.type)
+			if(Q.type in blacklisted_quirks)
+				qdel(Q)
 				removed_quirks += Q.type
 
 // restore any quirks that we removed
@@ -1590,12 +1589,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/punchedbrute = target.getBruteLoss()
 
 		//CITADEL CHANGES - makes resting and disabled combat mode reduce punch damage, makes being out of combat mode result in you taking more damage
-		if(!SEND_SIGNAL(target, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-			damage *= 1.2
 		if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 			damage *= 0.65
-		if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-			damage *= 0.8
 		//END OF CITADEL CHANGES
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
@@ -1615,13 +1610,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 
 		var/armor_block = target.run_armor_check(affecting, "melee")
-		playsound(target.loc, user.dna.species.attack_sound, 25, 1, -1)
+		playsound(target.loc, user.dna.species.attack_sound_override || attack_sound, 25, 1, -1)
 		target.visible_message("<span class='danger'>[user] [atk_verb]ed [target]!</span>", \
 					"<span class='userdanger'>[user] [atk_verb]ed you!</span>", null, COMBAT_MESSAGE_RANGE, null, \
 					user, "<span class='danger'>You [atk_verb]ed [target]!</span>")
 
-		target.lastattacker = user.real_name
-		target.lastattackerckey = user.ckey
+		target.set_last_attacker(user)
 		user.dna.species.spec_unarmedattacked(user, target)
 
 		if(user.limb_destroyer)
@@ -1720,12 +1714,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 
-		if(HAS_TRAIT(user, TRAIT_PUGILIST))//CITADEL CHANGE - makes disarmspam cause staminaloss, pugilists can do it almost effortlessly
-			if(!user.UseStaminaBuffer(1, warn = TRUE))
-				return
-		else
-			if(!user.UseStaminaBuffer(1, warn = TRUE))
-				return
+		if(!user.UseStaminaBuffer(1, warn = TRUE))
+			return
 
 		if(attacker_style && attacker_style.disarm_act(user,target))
 			return TRUE
@@ -1743,12 +1733,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			log_combat(user, target, "disarmed out of grab from")
 			return
 		var/randn = rand(1, 100)
-		if(SEND_SIGNAL(target, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE)) // CITADEL CHANGE
-			randn += -10 //CITADEL CHANGE - being out of combat mode makes it easier for you to get disarmed
 		if(!CHECK_MOBILITY(user, MOBILITY_STAND)) //CITADEL CHANGE
 			randn += 100 //CITADEL CHANGE - No kosher disarming if you're resting
-		if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE)) //CITADEL CHANGE
-			randn += 25 //CITADEL CHANGE - Makes it harder to disarm outside of combat mode
 		if(user.pulling == target)
 			randn -= 20 //If you have the time to get someone in a grab, you should have a greater chance at snatching the thing in their hand. Will be made completely obsolete by the grab rework but i've got a poor track record for releasing big projects on time so w/e i guess
 		if(HAS_TRAIT(user, TRAIT_PUGILIST))
@@ -1953,9 +1939,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(IS_STAMCRIT(user))
 			to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")
 			return
-		if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-			to_chat(user, "<span class='warning'>You need combat mode to be active to that!</span>")
-			return
 		if(user.IsKnockdown() || user.IsParalyzed() || user.IsStun())
 			to_chat(user, "<span class='warning'>You can't seem to force yourself up right now!</span>")
 			return
@@ -1995,6 +1978,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		if(CHECK_MOBILITY(target, MOBILITY_STAND))
 			target.adjustStaminaLoss(5)
+		else
+			target.adjustStaminaLoss(target.getStaminaLoss() > 75? 5 : 75)
 
 		if(target.is_shove_knockdown_blocked())
 			return
@@ -2004,6 +1989,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/turf/target_shove_turf = get_step(target.loc, shove_dir)
 		var/mob/living/carbon/human/target_collateral_human
 		var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
+		var/targetatrest = !CHECK_MOBILITY(target, MOBILITY_STAND)
 
 		//Thank you based whoneedsspace
 		target_collateral_human = locate(/mob/living/carbon/human) in target_shove_turf.contents
@@ -2018,7 +2004,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/append_message = ""
 		if(shove_blocked && !target.buckled)
 			var/directional_blocked = !target.Adjacent(target_shove_turf)
-			var/targetatrest = !CHECK_MOBILITY(target, MOBILITY_STAND)
 			if((directional_blocked || !(target_collateral_human || target_shove_turf.shove_act(target, user))) && !targetatrest)
 				target.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_SOLID)
 				target.visible_message("<span class='danger'>[user.name] shoves [target.name], knocking them down!</span>",
@@ -2037,10 +2022,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			target.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
 				"<span class='danger'>[user.name] shoves you!</span>", null, COMBAT_MESSAGE_RANGE, null,
 				user, "<span class='danger'>You shove [target.name]!</span>")
-		target.Stagger(SHOVE_STAGGER_DURATION)
 		var/obj/item/target_held_item = target.get_active_held_item()
-		if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
-			target_held_item = null
 		if(!target.has_status_effect(STATUS_EFFECT_OFF_BALANCE))
 			if(target_held_item)
 				if(!HAS_TRAIT(target_held_item, TRAIT_NODROP))
@@ -2049,16 +2031,20 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					append_message += ", loosening their grip on [target_held_item]"
 				else
 					append_message += ", but couldn't loose their grip on [target_held_item]"
-		else if(target_held_item)
-			if(target.dropItemToGround(target_held_item))
-				target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!!</span>",
-					"<span class='danger'>You drop \the [target_held_item]!!</span>", null, COMBAT_MESSAGE_RANGE)
-				append_message += ", causing them to drop [target_held_item]"
+		else if(target.has_status_effect(STATUS_EFFECT_OFF_BALANCE))
+			if(target_held_item)
+				if(shove_blocked)
+					if (target.buckled)
+						return
+					else if(target.dropItemToGround(target_held_item))
+						target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!!</span>",
+							"<span class='danger'>You drop \the [target_held_item]!!</span>", null, COMBAT_MESSAGE_RANGE)
+						append_message += ", causing them to drop [target_held_item]"
 		target.ShoveOffBalance(SHOVE_OFFBALANCE_DURATION)
 		log_combat(user, target, "shoved", append_message)
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = SHARP_NONE)
-	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone, wound_bonus, bare_wound_bonus, sharpness) // make sure putting wound_bonus here doesn't screw up other signals or uses for this signal
+	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone, wound_bonus, bare_wound_bonus, sharpness) // make sure putting wound_bonus here doesn't screw up other signals or uses for this signal
 	var/hit_percent = (100-(blocked+armor))/100
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
 	if(!forced && hit_percent <= 0)

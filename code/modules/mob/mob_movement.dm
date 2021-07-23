@@ -95,7 +95,7 @@
 	. = ..()
 
 	if((direction & (direction - 1)) && mob.loc == n) //moved diagonally successfully
-		add_delay *= 2
+		add_delay *= SQRT_2
 	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay), FALSE)
 	move_delay += add_delay
 	if(.) // If mob is null here, we deserve the runtime
@@ -208,7 +208,7 @@
 ///For moving in space
 ///return TRUE for movement 0 for none
 /mob/Process_Spacemove(movement_dir = 0)
-	if(spacewalk || ..())
+	if(HAS_TRAIT(src, TRAIT_SPACEWALK) || spacewalk || ..())
 		return TRUE
 	var/atom/movable/backup = get_spacemove_backup()
 	if(backup)

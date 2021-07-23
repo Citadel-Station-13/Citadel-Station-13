@@ -231,8 +231,11 @@
 	R.update_module_innate()
 	RM.rebuild_modules()
 	INVOKE_ASYNC(RM, .proc/do_transform_animation)
-	if(RM.dogborg)
+	if(RM.dogborg || R.dogborg)
 		RM.dogborg_equip()
+		R.typing_indicator_state = /obj/effect/overlay/typing_indicator/machine/dogborg
+	else
+		R.typing_indicator_state = /obj/effect/overlay/typing_indicator/machine
 	R.maxHealth = borghealth
 	R.health = min(borghealth, R.health)
 	qdel(src)

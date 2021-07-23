@@ -50,8 +50,12 @@
 	var/obj/effect/abstract/parry/parry_visual_effect
 	/// world.time of last parry end
 	var/parry_end_time_last = 0
+	/// Last autoparry
+	var/last_autoparry = 0
 	/// Successful parries within the current parry cycle. It's a list of efficiency percentages.
 	var/list/successful_parries
+	/// Current parry counterattacks. Makes sure we can only counterattack someone once per parry.
+	var/list/successful_parry_counterattacks
 
 	var/confused = 0	//Makes the mob move in random directions.
 
@@ -63,8 +67,6 @@
 	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
 	var/incorporeal_move = FALSE //FALSE is off, INCORPOREAL_MOVE_BASIC is normal, INCORPOREAL_MOVE_SHADOW is for ninjas
 								 //and INCORPOREAL_MOVE_JAUNT is blocked by holy water/salt
-	/// Do we make floors dirty as we move?
-	var/causes_dirt_buildup_on_floor = FALSE
 
 	var/list/roundstart_quirks = list()
 
@@ -94,6 +96,7 @@
 	var/smoke_delay = 0 //used to prevent spam with smoke reagent reaction on mob.
 
 	var/bubble_icon = "default" //what icon the mob uses for speechbubbles
+	var/health_doll_icon //if this exists AND the normal sprite is bigger than 32x32, this is the replacement icon state (because health doll size limitations). the icon will always be screen_gen.dmi
 
 	var/last_bumped = 0
 	var/unique_name = 0 //if a mob's name should be appended with an id when created e.g. Mob (666)

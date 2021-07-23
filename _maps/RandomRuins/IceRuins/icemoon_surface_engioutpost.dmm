@@ -506,7 +506,7 @@
 	},
 /obj/machinery/power/apc/unlocked{
 	dir = 4;
-	pixel_x = 26
+	pixel_x = 24
 	},
 /obj/structure/cable{
 	icon_state = "0-8"

@@ -87,7 +87,7 @@
 		if(!M || !M.current)
 			continue
 		if(ishuman(M.current))
-			M.current.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
+			M.current.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -ANTAG_LAYER))
 	var/turf/T = get_turf(src)
 	var/list/open_turfs = list()
 	for(var/turf/open/OT in orange(1, T))
@@ -181,9 +181,15 @@
 			make_glow()
 			glow.icon_state = "clockwork_gateway_disrupted"
 			resistance_flags |= INDESTRUCTIBLE
-			sleep(27)
-			explosion(src, 1, 3, 8, 8)
-			sound_to_playing_players('sound/effects/explosion_distant.ogg', volume = 50)
+			addtimer(CALLBACK(src, .proc/go_boom), 2.7 SECONDS)
+			return
+	qdel(src)
+
+/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/go_boom()
+	if(QDELETED(src))
+		return
+	explosion(src, 1, 3, 8, 8)
+	sound_to_playing_players('sound/effects/explosion_distant.ogg', volume = 50)
 	qdel(src)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/make_glow()
@@ -239,6 +245,36 @@
 					. += "<span class='warning'>The anomaly is stable, and you can see flashes of something from it.</span>"
 				if(GATEWAY_RATVAR_COMING to INFINITY)
 					. += "<span class='boldwarning'>The anomaly is stable! Something is coming through!</span>"
+
+/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/fulfill_purpose()
+	set waitfor = FALSE
+	countdown.stop()
+	resistance_flags |= INDESTRUCTIBLE
+	purpose_fulfilled = TRUE
+	make_glow()
+	animate(glow, transform = matrix() * 1.5, alpha = 255, time = 125)
+	sound_to_playing_players(volume = 100, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/ratvar_rises.ogg')) //End the sounds
+	sleep(125)
+	make_glow()
+	animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
+	QDEL_IN(src, 3)
+	sleep(3)
+	GLOB.clockwork_gateway_activated = TRUE
+	var/turf/T = SSmapping.get_station_center()
+	new /obj/structure/destructible/clockwork/massive/ratvar(T)
+	var/x0 = T.x
+	var/y0 = T.y
+	for(var/I in spiral_range_turfs(255, T, tick_checked = TRUE))
+		var/turf/T2 = I
+		if(!T2)
+			continue
+		var/dist = cheap_hypotenuse(T2.x, T2.y, x0, y0)
+		if(dist < 100)
+			dist = TRUE
+		else
+			dist = FALSE
+		T.ratvar_act(dist)
+		CHECK_TICK
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
 	adjust_clockwork_power(2.5) //Provides weak power generation on its own
@@ -300,33 +336,7 @@
 			glow.icon_state = "clockwork_gateway_closing"
 		if(GATEWAY_RATVAR_ARRIVAL to INFINITY)
 			if(!purpose_fulfilled)
-				countdown.stop()
-				resistance_flags |= INDESTRUCTIBLE
-				purpose_fulfilled = TRUE
-				make_glow()
-				animate(glow, transform = matrix() * 1.5, alpha = 255, time = 125)
-				sound_to_playing_players(volume = 100, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/ratvar_rises.ogg')) //End the sounds
-				sleep(125)
-				make_glow()
-				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
-				QDEL_IN(src, 3)
-				sleep(3)
-				GLOB.clockwork_gateway_activated = TRUE
-				var/turf/T = SSmapping.get_station_center()
-				new /obj/structure/destructible/clockwork/massive/ratvar(T)
-				var/x0 = T.x
-				var/y0 = T.y
-				for(var/I in spiral_range_turfs(255, T, tick_checked = TRUE))
-					var/turf/T2 = I
-					if(!T2)
-						continue
-					var/dist = cheap_hypotenuse(T2.x, T2.y, x0, y0)
-					if(dist < 100)
-						dist = TRUE
-					else
-						dist = FALSE
-					T.ratvar_act(dist)
-					CHECK_TICK
+				fulfill_purpose()
 
 //Converts nearby turfs into their clockwork equivalent, with ever-increasing range the closer the ark is to summoning Ratvar
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/conversion_pulse()

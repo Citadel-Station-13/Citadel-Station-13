@@ -90,7 +90,6 @@
 	parry_time_perfect = 2
 	parry_efficiency_perfect = 110 //Very low leeway for counterattacks...
 	parry_efficiency_considered_successful = 0.8
-	parry_efficiency_to_counterattack = 1
+	parry_efficiency_to_counterattack = 110
 	parry_cooldown = 15 //But also very low cooldown..
 	parry_failed_stagger_duration = 2 SECONDS //And relatively small penalties for failing.
-	parry_failed_clickcd_duration = 1 SECONDS

@@ -233,7 +233,7 @@
 /obj/item/clothing/examine(mob/user)
 	. = ..()
 	if(damaged_clothes == CLOTHING_SHREDDED)
-		. += "<span class='warning'><b>It is completely shredded and requires mending before it can be worn again!</b></span>"
+		. += "<span class='warning'><b>It is completely shredded and requires mending!</b></span>"
 		return
 	for(var/zone in damage_by_parts)
 		var/pct_damage_part = damage_by_parts[zone] / limb_integrity * 100
@@ -437,12 +437,10 @@ BLIND     // can't see anything
 		damaged_clothes = CLOTHING_SHREDDED
 		body_parts_covered = NONE
 		name = "shredded [initial(name)]"
-		slot_flags = NONE
-		update_clothes_damaged_state()
+		update_clothes_damaged_state(CLOTHING_SHREDDED)
 		if(ismob(loc))
 			var/mob/M = loc
-			M.visible_message("<span class='danger'>[M]'s [src.name] falls off, completely shredded!</span>", "<span class='warning'><b>Your [src.name] falls off, completely shredded!</b></span>", vision_distance = COMBAT_MESSAGE_RANGE)
-			M.dropItemToGround(src)
+			M.visible_message("<span class='danger'>[M]'s [src.name] is completely shredded!</span>", "<span class='userdanger'>Your [src.name] is completely shredded!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
 	else
 		..()
 

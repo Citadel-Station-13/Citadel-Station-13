@@ -2,16 +2,13 @@
 
 /area/ruin/space
 	has_gravity = FALSE
-	blob_allowed = FALSE //Nope, no winning in space as a blob. Gotta eat the station.
-	outdoors = TRUE
-	ambientsounds = SPACE
+	area_flags = UNIQUE_AREA
 
 /area/ruin/space/has_grav
 	has_gravity = STANDARD_GRAVITY
 
 /area/ruin/space/has_grav/powered
 	requires_power = FALSE
-
 
 /area/ruin/fakespace
 	icon_state = "space"
@@ -22,10 +19,8 @@
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
-	valid_territory = FALSE
 	outdoors = TRUE
 	ambientsounds = SPACE
-	blob_allowed = FALSE
 
 /////////////
 
@@ -133,22 +128,20 @@
 
 /area/ruin/space/diner
 	name = "Space Diner"
+	area_flags = UNIQUE_AREA
 
 /area/ruin/space/diner/interior
 	name = "Space Diner"
 	icon_state = "maintbar"
 	has_gravity = STANDARD_GRAVITY
-	blob_allowed = FALSE //Nope, no winning in the diner as a blob. Gotta eat the main station.
 
 /area/ruin/space/diner/solars
-	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
-	valid_territory = FALSE
-	blob_allowed = FALSE
-	flags_1 = NONE
-	ambientsounds = ENGINEERING
 	name = "Space Diner Solar Array"
 	icon_state = "yellow"
+	requires_power = FALSE
+	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
+	flags_1 = NONE
+	ambientsounds = ENGINEERING
 
 //Ruin of "Skelter" ship
 
@@ -257,7 +250,7 @@
 //Ruin of old teleporter
 
 /area/ruin/space/oldteleporter
-	name = "Old teleporter"
+	name = "Old Teleporter"
 	icon_state = "teleporter"
 
 
@@ -301,7 +294,7 @@
 	icon_state = "storage_wing"
 
 /area/ruin/space/has_grav/deepstorage/dorm
-	name = "Deep Storage Dormory"
+	name = "Deep Storage Dormitory"
 	icon_state = "crew_quarters"
 
 /area/ruin/space/has_grav/deepstorage/kitchen
@@ -339,7 +332,9 @@
 /area/ruin/space/has_grav/ancientstation/atmo
 	name = "Beta Station Atmospherics"
 	icon_state = "red"
-	has_gravity = FALSE
+	// ambience_index = AMBIENCE_ENGI
+	ambientsounds = ENGINEERING
+	has_gravity = TRUE
 
 /area/ruin/space/has_grav/ancientstation/betanorth
 	name = "Beta Station North Corridor"
@@ -349,9 +344,15 @@
 	name = "Station Solar Array"
 	icon_state = "panelsAP"
 
+/area/ruin/space/has_grav/ancientstation/betacorridor
+	name = "Beta Station Main Corridor"
+	icon_state = "bluenew"
+
 /area/ruin/space/has_grav/ancientstation/engi
 	name = "Charlie Station Engineering"
 	icon_state = "engine"
+	// ambience_index = AMBIENCE_ENGI
+	ambientsounds = ENGINEERING
 
 /area/ruin/space/has_grav/ancientstation/comm
 	name = "Charlie Station Command"
@@ -384,6 +385,27 @@
 /area/ruin/space/has_grav/ancientstation/hivebot
 	name = "Hivebot Mothership"
 	icon_state = "teleporter"
+
+/area/ruin/space/has_grav/ancientstation/deltaai
+	name = "Delta Station AI Core"
+	icon_state = "ai"
+	ambientsounds = list('sound/ambience/ambimalf.ogg', 'sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg')
+
+/area/ruin/space/has_grav/ancientstation/mining
+	name = "Beta Station Mining Equipment"
+	icon_state = "mining"
+
+/area/ruin/space/has_grav/ancientstation/medbay
+	name = "Beta Station Medbay"
+	icon_state = "medbay"
+
+/area/ruin/space/has_grav/ancientstation/betastorage
+	name = "Beta Station Storage"
+	icon_state = "storage"
+
+/area/solars/ancientstation
+	name = "Charlie Station Solar Array"
+	icon_state = "panelsP"
 
 //DERELICT
 
@@ -469,11 +491,11 @@
 	name = "Abandoned Ship"
 	icon_state = "yellow"
 
-/area/solar/derelict_starboard
+/area/solars/derelict_starboard
 	name = "Derelict Starboard Solar Array"
 	icon_state = "panelsS"
 
-/area/solar/derelict_aft
+/area/solars/derelict_aft
 	name = "Derelict Aft Solar Array"
 	icon_state = "yellow"
 
@@ -496,28 +518,24 @@
 	power_light = FALSE
 	power_environ = FALSE
 
-
 //DJSTATION
 
 /area/ruin/space/djstation
 	name = "Ruskie DJ Station"
 	icon_state = "DJ"
 	has_gravity = STANDARD_GRAVITY
-	blob_allowed = FALSE //Nope, no winning on the DJ station as a blob. Gotta eat the main station.
 
 /area/ruin/space/djstation/solars
 	name = "DJ Station Solars"
 	icon_state = "DJ"
 	has_gravity = STANDARD_GRAVITY
 
-
 //ABANDONED TELEPORTER
 
 /area/ruin/space/abandoned_tele
 	name = "Abandoned Teleporter"
 	icon_state = "teleporter"
-	music = "signal"
-	ambientsounds = list('sound/ambience/ambimalf.ogg')
+	ambientsounds = list('sound/ambience/ambimalf.ogg', 'sound/ambience/signal.ogg')
 
 //OLD AI SAT
 
@@ -561,3 +579,13 @@
 /area/ruin/space/has_grav/powered/advancedlab
 	name = "Abductor Replication Lab"
 	icon_state = "yellow"
+
+//HELL'S FACTORY OPERATING FACILITY
+// /area/ruin/space/has_grav/hellfactory
+// 	name = "Hell Factory"
+// 	icon_state = "yellow"
+
+// /area/ruin/space/has_grav/hellfactoryoffice
+// 	name = "Hell Factory Office"
+// 	icon_state = "red"
+// 	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | NOTELEPORT

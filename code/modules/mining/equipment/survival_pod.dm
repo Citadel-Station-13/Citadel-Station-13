@@ -5,7 +5,12 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	valid_territory = FALSE
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
+	flags_1 = CAN_BE_DIRTY_1
+
+/area/survivalpod/nonpowered
+	name = "\proper Emergency Shelter"
+	requires_power = TRUE
 
 //Survival Capsule
 /obj/item/survivalcapsule
@@ -80,6 +85,15 @@
 	desc = "A luxury bar in a capsule. Bartender required and not included."
 	template_id = "shelter_charlie"
 
+/obj/item/survivalcapsule/luxury/empty
+	name = "large empty capsule"
+	desc = "An extremly large capsule which requires power. Useful for projects all over."
+	template_id = "shelter_delta"
+
+/obj/item/survivalcapsule/luxury/penthouse
+	name = "penthouse bluespace sheler capsule"
+	desc = "The absolute pinnacle of luxury in terms of survival capsules. While exuberantly expensive it has everything needed to make a small home in lavaland."
+	template_id = "shelter_epsilon"
 //Pod objects
 
 //Window
@@ -298,7 +312,7 @@
 						/obj/item/energy_katana,
 						/obj/item/hierophant_club,
 						/obj/item/his_grace,
-						/obj/item/gun/ballistic/minigun,
+						/obj/item/gun/energy/minigun,
 						/obj/item/gun/ballistic/automatic/l6_saw,
 						/obj/item/gun/magic/staff/chaos,
 						/obj/item/gun/magic/staff/spellblade,

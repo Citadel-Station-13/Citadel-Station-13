@@ -13,9 +13,9 @@
 	custom_materials = list(/datum/material/iron=2000)
 	clumsy_check = FALSE
 	fire_sound = 'sound/items/syringeproj.ogg'
-	var/time_per_syringe = 250
-	var/syringes_left = 4
-	var/max_syringes = 4
+	var/time_per_syringe = 300
+	var/syringes_left = 5
+	var/max_syringes = 5
 	var/last_synth = 0
 
 /obj/item/gun/chem/Initialize()

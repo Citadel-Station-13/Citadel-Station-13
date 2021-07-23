@@ -6,7 +6,7 @@
 	var/list/saved_chaos = list(5,5,5)
 	var/list/saved_dynamic_rules = list(list(),list(),list())
 	var/list/saved_storytellers = list("foo","bar","baz")
-	var/list/average_dynamic_threat = 50
+	var/average_threat = 50
 	var/list/saved_maps
 
 /datum/controller/subsystem/persistence/SaveServerPersistence()
@@ -38,9 +38,10 @@
 	saved_chaos[3] = saved_chaos[2]
 	saved_chaos[2] = saved_chaos[1]
 	saved_chaos[1] = SSticker.mode.get_chaos()
+	average_threat = (SSactivity.get_average_threat() + average_threat) / 2
 	json_file = file("data/RecentChaos.json")
 	file_data = list()
-	file_data["data"] = saved_chaos
+	file_data["data"] = saved_chaos + average_threat
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
@@ -49,10 +50,9 @@
 	saved_storytellers[3] = saved_storytellers[2]
 	saved_storytellers[2] = saved_storytellers[1]
 	saved_storytellers[1] = mode.storyteller.name
-	average_dynamic_threat = (mode.max_threat + average_dynamic_threat) / 2
 	var/json_file = file("data/RecentStorytellers.json")
 	var/list/file_data = list()
-	file_data["data"] = saved_storytellers + average_dynamic_threat
+	file_data["data"] = saved_storytellers
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
@@ -94,6 +94,9 @@
 	if(!json)
 		return
 	saved_chaos = json["data"]
+	if(saved_chaos.len > 3)
+		average_threat = saved_chaos[4]
+	saved_chaos.len = 3
 
 /datum/controller/subsystem/persistence/proc/LoadRecentRulesets()
 	var/json_file = file("data/RecentRulesets.json")
@@ -112,9 +115,6 @@
 	if(!json)
 		return
 	saved_storytellers = json["data"]
-	if(saved_storytellers.len > 3)
-		average_dynamic_threat = saved_storytellers[4]
-	saved_storytellers.len = 3
 
 /datum/controller/subsystem/persistence/proc/LoadRecentMaps()
 	var/json_file = file("data/RecentMaps.json")

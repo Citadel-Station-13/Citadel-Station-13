@@ -172,8 +172,11 @@
 /obj/item/clothing/head/kepi/orvi/command
 	icon_state = "kepi_com"
 
-/obj/item/clothing/head/kepi/orvi/engsec
-	icon_state = "kepi_ops"
+/obj/item/clothing/head/kepi/orvi/sec
+	icon_state = "kepi_sec"
+
+/obj/item/clothing/head/kepi/orvi/eng
+	icon_state = "kepi_eng"
 
 /obj/item/clothing/head/kepi/orvi/medsci
 	icon_state = "kepi_medsci"

@@ -159,9 +159,9 @@
 /datum/symptom/heal/metabolism/Heal(mob/living/carbon/C, datum/disease/advance/A, actual_power)
 	if(!istype(C))
 		return
-	C.reagents.metabolize(C, can_overdose=TRUE) //this works even without a liver; it's intentional since the virus is metabolizing by itself
+	C.reagents.metabolize(C, SSMOBS_DT, 0, can_overdose=TRUE) //this works even without a liver; it's intentional since the virus is metabolizing by itself
 	if(triple_metabolism)
-		C.reagents.metabolize(C, can_overdose=TRUE)
+		C.reagents.metabolize(C, SSMOBS_DT, 0, can_overdose=TRUE)
 	C.overeatduration = max(C.overeatduration - 2, 0)
 	var/lost_nutrition = 9 - (reduced_hunger * 5)
 	C.adjust_nutrition(-lost_nutrition * HUNGER_FACTOR) //Hunger depletes at 10x the normal speed
@@ -384,7 +384,7 @@
 	var/temp_rate = 1
 	threshold_desc = list(
 		"Transmission 6" = "Additionally increases temperature adjustment rate and heals those who love toxins",
-		"Resistance 7" = "Increases healing speed.",
+		"Stage Speed 7" = "Increases healing speed.",
 	)
 /datum/symptom/heal/plasma/Start(datum/disease/advance/A)
 	if(!..())
@@ -404,8 +404,8 @@
 	if(M.loc)
 		environment = M.loc.return_air()
 	if(environment)
-		plasmamount = environment.get_moles(/datum/gas/plasma)
-		if(plasmamount && plasmamount > GLOB.meta_gas_visibility[/datum/gas/plasma]) //if there's enough plasma in the air to see
+		plasmamount = environment.get_moles(GAS_PLASMA)
+		if(plasmamount && plasmamount > GLOB.gas_data.visibility[GAS_PLASMA]) //if there's enough plasma in the air to see
 			. += power * 0.5
 	if(M.reagents.has_reagent(/datum/reagent/toxin/plasma))
 		. +=  power * 0.75

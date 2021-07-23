@@ -870,6 +870,12 @@
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=changeling;jobban4=[REF(M)]'>Changeling</a></td>"
 
+		//Heretic
+		if(jobban_isbanned(M, ROLE_HERETIC) || isbanned_dept)
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=heretic;jobban4=[REF(M)]'><font color=red>Heretic</font></a></td>"
+		else
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=heretic;jobban4=[REF(M)]'>Heretic</a></td>"
+
 		//Nuke Operative
 		if(jobban_isbanned(M, ROLE_OPERATIVE) || isbanned_dept)
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=operative;jobban4=[REF(M)]'><font color=red>Nuke Operative</font></a></td>"

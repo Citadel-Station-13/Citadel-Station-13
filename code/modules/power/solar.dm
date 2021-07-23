@@ -152,7 +152,7 @@
 		else
 			//dot product of sun and panel -- Lambert's Cosine Law
 			cur_pow = cos(azimuth_current - sun_azimuth) * sun.power_mod
-			cur_pow = clamp(round(cur_pow, 0.01), 0, 1)
+			cur_pow = clamp(round(cur_pow, 0.01), 0, sun.power_mod)
 		total_flux += cur_pow
 
 /obj/machinery/power/solar/process()

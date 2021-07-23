@@ -109,7 +109,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 					ZI.Insert(SM)
 					log_reagent("FERMICHEM: [M] ckey: [M.key]'s zombie_infection has been transferred to their clone")
 
-				var/list/policies = CONFIG_GET(keyed_list/policyconfig)
+				var/list/policies = CONFIG_GET(keyed_list/policy)
 				var/policy = policies[POLICYCONFIG_SDGF]
 				if(policy)
 					to_chat(SM,policy)

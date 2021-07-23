@@ -248,6 +248,14 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	loc = null
 	loc = T
 
+/obj/item/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	. = ..()
+	if(!anchored)
+		var/throw_dist = round(rand(3, max(3, 2.5 * sqrt(power))), 1)
+		throw_speed = EXPLOSION_THROW_SPEED
+		var/turf/target = get_ranged_target_turf(src, dir, throw_dist)
+		throw_at(target, throw_dist, EXPLOSION_THROW_SPEED)
+
 /obj/item/examine(mob/user) //This might be spammy. Remove?
 	. = ..()
 
@@ -343,15 +351,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
 				C.update_damage_overlays()
 			return
-
-	if(acid_level > 20 && ismob(loc))// so we can still remove the clothes on us that have acid.
-		var/mob/living/carbon/C = user
-		if(istype(C))
-			if(!C.gloves || (!(C.gloves.resistance_flags & (UNACIDABLE|ACID_PROOF))))
-				to_chat(user, "<span class='warning'>The acid on [src] burns your hand!</span>")
-				var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-				if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
-					C.update_damage_overlays()
 
 	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP))		//See if we're supposed to auto pickup.
 		return
@@ -453,6 +452,21 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
 	item_flags |= IN_INVENTORY
+	if(item_flags & (ITEM_CAN_BLOCK | ITEM_CAN_PARRY) && user.client && !(type in user.client.block_parry_hinted))
+		var/list/dat = list("<span class='boldnotice'>You have picked up an item that can be used to block and/or parry:</span>")
+		// cit change - parry/block feedback
+		var/datum/block_parry_data/data = return_block_parry_datum(block_parry_data)
+		if(item_flags & ITEM_CAN_BLOCK)
+			dat += "[src] can be used to block damage using directional block. Press your active block keybind to use it."
+			if(data.block_automatic_enabled)
+				dat += "[src] is also capable of automatically blocking damage, if you are facing the right direction (usually towards your attacker)!"
+		if(item_flags & ITEM_CAN_PARRY)
+			dat += "[src] can be used to parry damage using active parry. Pressed your active parry keybind to initiate a timed parry sequence."
+			if(data.parry_automatic_enabled)
+				dat += "[src] is also capable of automatically parrying an incoming attack, if your mouse is over your attacker at the time if you being hit in a direct, melee attack."
+		dat += "Examine [src] to get a full readout of its block/parry stats."
+		to_chat(user, dat.Join("<br>"))
+		user.client.block_parry_hinted |= type
 
 // called when "found" in pockets and storage items. Returns 1 if the search should end.
 /obj/item/proc/on_found(mob/finder)
@@ -496,12 +510,13 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
  */
 /obj/item/proc/equipped(mob/user, slot, initial = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
+	var/signal_flags = SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	current_equipped_slot = slot
-	for(var/X in actions)
-		var/datum/action/A = X
-		if(item_action_slot_check(slot, user, A)) //some items only give their actions buttons when in a specific slot.
-			A.Grant(user)
+	if(!(signal_flags & COMPONENT_NO_GRANT_ACTIONS))
+		for(var/X in actions)
+			var/datum/action/A = X
+			if(item_action_slot_check(slot, user, A)) //some items only give their actions buttons when in a specific slot.
+				A.Grant(user)
 	item_flags |= IN_INVENTORY
 	// if(!initial)
 	// 	if(equip_sound && (slot_flags & slot))

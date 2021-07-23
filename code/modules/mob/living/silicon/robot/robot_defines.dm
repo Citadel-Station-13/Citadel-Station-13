@@ -61,7 +61,9 @@
 
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 
-	var/speed = 0 // VTEC speed boost.
+	var/vtec = 0 // VTEC speed boost.
+	/// vtec shorted out
+	var/vtec_disabled = FALSE
 	var/magpulse = FALSE // Magboot-like effect.
 	var/ionpulse = FALSE // Jetpack-like effect.
 	var/ionpulse_on = FALSE // Jetpack-like effect.
@@ -125,3 +127,5 @@
 	var/sleeper_g
 	var/sleeper_r
 	var/sleeper_nv
+
+	tooltips = TRUE

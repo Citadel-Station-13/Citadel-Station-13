@@ -204,12 +204,11 @@
 	// first 10 minutes only
 	return world.time - SSticker.round_start_time < 6000
 
-// this is broken and does not work. Thanks TG
-// /datum/map_template/shuttle/emergency/airless/post_load()
-// 	. = ..()
-// 	//enable buying engines from cargo
-// 	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shuttle_engine]
-// 	P.special_enabled = TRUE
+/datum/map_template/shuttle/emergency/construction/post_load()
+	. = ..()
+	//enable buying engines from cargo
+	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shuttle_engine]
+	P.special_enabled = TRUE
 
 
 /datum/map_template/shuttle/emergency/asteroid

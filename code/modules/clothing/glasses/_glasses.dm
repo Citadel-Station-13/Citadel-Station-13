@@ -358,6 +358,12 @@
 	..()
 	user.cure_blind("blindfold_[REF(src)]")
 
+/obj/item/clothing/glasses/fakeblindfold
+	name = "thin blindfold"
+	desc = "Covers the eyes, but not thick enough to obscure vision. Mostly for aesthetic."
+	icon_state = "blindfoldwhite"
+	item_state = "blindfoldwhite"
+
 /obj/item/clothing/glasses/sunglasses/blindfold/white
 	name = "blind personnel blindfold"
 	desc = "Indicates that the wearer suffers from blindness."

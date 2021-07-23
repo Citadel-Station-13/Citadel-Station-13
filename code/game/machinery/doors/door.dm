@@ -16,6 +16,11 @@
 
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
 
+	wave_explosion_block = EXPLOSION_BLOCK_DENSE_FILLER
+	wave_explosion_multiply = EXPLOSION_DAMPEN_DENSE_FILLER
+
+	explosion_flags = EXPLOSION_FLAG_HARD_OBSTACLE | EXPLOSION_FLAG_DENSITY_DEPENDENT
+
 	var/secondsElectrified = 0
 	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close
 	var/shockedby
@@ -381,7 +386,7 @@
 	if(!glass && GLOB.cameranet)
 		GLOB.cameranet.updateVisibility(src, 0)
 
-/obj/machinery/door/BlockSuperconductivity() // All non-glass airlocks block heat, this is intended.
+/obj/machinery/door/BlockThermalConductivity() // All non-glass airlocks block heat, this is intended.
 	if(opacity || heat_proof)
 		return 1
 	return 0
@@ -412,3 +417,8 @@
 
 /obj/machinery/door/GetExplosionBlock()
 	return density ? real_explosion_block : 0
+
+/obj/machinery/door/wave_explosion_damage(power, datum/wave_explosion/explosion)
+	. = ..()
+	if(!density)
+		return . * EXPLOSION_DAMAGE_OPEN_DOOR_FACTOR

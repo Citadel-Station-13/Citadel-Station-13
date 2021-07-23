@@ -51,6 +51,11 @@
 		return FALSE
 	return ACCESS_CAPTAIN in authorize_access
 
+/obj/machinery/computer/communications/proc/authenticated_as_non_silicon_command(mob/user)
+	if (issilicon(user))
+		return FALSE
+	return ACCESS_HEADS in authorize_access	//Should always be the case if authorized as it usually needs head access to log in, buut lets be sure.
+
 /// Are we a silicon, OR we're logged in as the captain?
 /obj/machinery/computer/communications/proc/authenticated_as_silicon_or_captain(mob/user)
 	if (issilicon(user))
@@ -74,10 +79,12 @@
 	if (obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
+	SSshuttle.shuttle_purchase_requirements_met |= "emagged"
 	if (authenticated)
 		authorize_access = get_all_accesses()
 	to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")
 	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
+	SSshuttle.shuttle_purchase_requirements_met["emagged"] = TRUE
 	return
 
 /obj/machinery/computer/communications/ui_act(action, list/params)
@@ -97,8 +104,14 @@
 		if ("answerMessage")
 			if (!authenticated(usr))
 				return
-			var/answer_index = text2num(params["answer"])
-			var/message_index = text2num(params["message"])
+			var/answer_index = params["answer"]
+			var/message_index = params["message"]
+
+			// If either of these aren't numbers, then bad voodoo.
+			if(!isnum(answer_index) || !isnum(message_index))
+				message_admins("[ADMIN_LOOKUPFLW(usr)] provided an invalid index type when replying to a message on [src] [ADMIN_JMP(src)]. This should not happen. Please check with a maintainer and/or consult tgui logs.")
+				CRASH("Non-numeric index provided when answering comms console message.")
+
 			if (!answer_index || !message_index || answer_index < 1 || message_index < 1)
 				return
 			var/datum/comm_message/message = messages[message_index]
@@ -151,7 +164,11 @@
 		if ("deleteMessage")
 			if (!authenticated(usr))
 				return
-			var/message_index = text2num(params["message"])
+			var/message_index = params["message"]
+
+			if(!isnum(message_index))
+				message_admins("[ADMIN_LOOKUPFLW(usr)] provided an invalid index type when deleting a message on [src] [ADMIN_JMP(src)]. This should not happen. Please check with a maintainer and/or consult tgui logs.")
+				CRASH("Non-numeric index provided when deleting comms console message.")
 			if (!message_index)
 				return
 			LAZYREMOVE(messages, LAZYACCESS(messages, message_index))
@@ -160,7 +177,7 @@
 				return
 			make_announcement(usr)
 		if ("messageAssociates")
-			if (!authenticated_as_non_silicon_captain(usr))
+			if (!authenticated_as_non_silicon_command(usr))
 				return
 			if (!COOLDOWN_FINISHED(src, important_action_cooldown))
 				return
@@ -361,9 +378,9 @@
 				data["shuttleCanEvacOrFailReason"] = SSshuttle.canEvac(user, TRUE)
 
 				if (authenticated_as_non_silicon_captain(user))
-					data["canMessageAssociates"] = TRUE
 					data["canRequestNuke"] = TRUE
-
+				if (authenticated_as_non_silicon_command(user))
+					data["canMessageAssociates"] = TRUE
 				if (can_send_messages_to_other_sectors(user))
 					data["canSendToSectors"] = TRUE
 

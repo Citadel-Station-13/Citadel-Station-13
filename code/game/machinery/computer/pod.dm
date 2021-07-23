@@ -34,6 +34,7 @@
  * Initiates launching sequence by checking if all components are functional, opening poddoors, firing mass drivers and then closing poddoors
  */
 /obj/machinery/computer/pod/proc/alarm()
+	set waitfor = FALSE
 	if(stat & (NOPOWER|BROKEN))
 		return
 

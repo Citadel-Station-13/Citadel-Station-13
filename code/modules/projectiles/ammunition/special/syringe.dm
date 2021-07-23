@@ -25,7 +25,7 @@
 /obj/item/ammo_casing/chemgun
 	name = "dart synthesiser"
 	desc = "A high-power spring, linked to an energy-based dart synthesiser."
-	projectile_type = /obj/item/projectile/bullet/dart
+	projectile_type = /obj/item/projectile/bullet/dart/piercing
 	firing_effect_type = null
 
 /obj/item/ammo_casing/chemgun/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
@@ -35,7 +35,7 @@
 		var/obj/item/gun/chem/CG = loc
 		if(CG.syringes_left <= 0)
 			return
-		CG.reagents.trans_to(BB, 15)
+		CG.reagents.trans_to(BB, 10)
 		BB.name = "chemical dart"
 		CG.syringes_left--
 	..()

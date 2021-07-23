@@ -609,9 +609,9 @@ SUBSYSTEM_DEF(ticker)
 		var/list/ded = SSblackbox.first_death
 		if(ded.len)
 			var/last_words = ded["last_words"] ? " Their last words were: \"[ded["last_words"]]\"" : ""
-			news_message += " NT Sanctioned Psykers picked up faint traces of someone near the station, allegedly having had died. Their name was: [ded["name"]], [ded["role"]], at [ded["area"]].[last_words]"
+			news_message += "\nNT Sanctioned Psykers picked up faint traces of someone near the station, allegedly having had died. Their name was: [ded["name"]], [ded["role"]], at [ded["area"]].[last_words]"
 		else
-			news_message += " NT Sanctioned Psykers proudly confirm reports that nobody died this shift!"
+			news_message += "\nNT Sanctioned Psykers proudly confirm reports that nobody died this shift!"
 
 	if(news_message)
 		send2otherserver(news_source, news_message,"News_Report")
@@ -713,7 +713,8 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/disappointed.ogg',
 		'sound/roundend/gondolabridge.ogg',
 		'sound/roundend/haveabeautifultime.ogg',
-		'sound/roundend/CitadelStationHasSeenBetterDays.ogg'\
+		'sound/roundend/CitadelStationHasSeenBetterDays.ogg',
+		'sound/roundend/approachingbaystation.ogg'\
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))

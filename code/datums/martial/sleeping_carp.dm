@@ -144,14 +144,16 @@
 	parry_time_active_visual_override = 3
 	parry_time_spindown_visual_override = 12
 	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK		//can attack while
-	parry_time_perfect = 2.5		// first ds isn't perfect
-	parry_time_perfect_leeway = 1.5
+	parry_time_perfect = 2.5
+	parry_time_perfect_leeway = 2.5
 	parry_imperfect_falloff_percent = 5
 	parry_efficiency_to_counterattack = 100
 	parry_efficiency_considered_successful = 65		// VERY generous
 	parry_efficiency_perfect = 100
 	parry_failed_stagger_duration = 4 SECONDS
+	parry_failed_cooldown_duration = 2 SECONDS
 	parry_cooldown = 0.5 SECONDS
+	parry_flags = NONE
 
 /mob/living/carbon/human/UseStaminaBuffer(amount, warn = FALSE, considered_action = TRUE)
 	amount *= physiology? physiology.stamina_buffer_mod : 1
@@ -165,6 +167,7 @@
 	ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, SLEEPING_CARP_TRAIT)
 	ADD_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
 	ADD_TRAIT(H, TRAIT_TASED_RESISTANCE, SLEEPING_CARP_TRAIT)
+	ADD_TRAIT(H, TRAIT_NOPUGILIST, SLEEPING_CARP_TRAIT) // cqc doesn't get this as it's intended to be able to stack with northstar gloves
 	H.physiology.brute_mod *= 0.4 //brute is really not gonna cut it
 	H.physiology.burn_mod *= 0.7 //burn is distinctly more useful against them than brute but they're still resistant
 	H.physiology.stamina_mod *= 0.4 //You take less stamina damage overall, but you do not reduce the damage from stun batons as much
@@ -181,6 +184,7 @@
 	REMOVE_TRAIT(H, TRAIT_PIERCEIMMUNE, SLEEPING_CARP_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_TASED_RESISTANCE, SLEEPING_CARP_TRAIT)
+	REMOVE_TRAIT(H, TRAIT_NOPUGILIST, SLEEPING_CARP_TRAIT)
 	H.physiology.brute_mod = initial(H.physiology.brute_mod)
 	H.physiology.burn_mod = initial(H.physiology.burn_mod)
 	H.physiology.stamina_mod = initial(H.physiology.stamina_mod)

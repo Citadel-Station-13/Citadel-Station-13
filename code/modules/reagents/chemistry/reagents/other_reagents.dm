@@ -287,7 +287,9 @@
 
 /datum/reagent/water/reaction_obj(obj/O, reac_volume)
 	O.extinguish()
-	O.acid_level = 0
+	var/datum/component/acid/acid = O.GetComponent(/datum/component/acid)
+	if(acid)
+		acid.level = 0
 	// cubes
 	if(istype(O, /obj/item/reagent_containers/food/snacks/cube))
 		var/obj/item/reagent_containers/food/snacks/cube/cube = O
@@ -330,7 +332,7 @@
 	name = "Hollow Water"
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen, but it looks kinda hollow."
 	color = "#88878777"
-	taste_description = "emptyiness"
+	taste_description = "emptiness"
 
 
 /datum/reagent/water/holywater

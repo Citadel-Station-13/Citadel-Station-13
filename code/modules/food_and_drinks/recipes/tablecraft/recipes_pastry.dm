@@ -194,6 +194,15 @@
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
+/datum/crafting_recipe/food/piedough
+	name = "Pie Dough"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/rawpastrybase = 3,
+	)
+	tools = list(/obj/item/kitchen/efink)
+	result = /obj/item/reagent_containers/food/snacks/piedough
+	subcategory = CAT_PASTRY
+
 /datum/crafting_recipe/food/chococornet
 	name = "Choco cornet"
 	reqs = list(
@@ -212,6 +221,17 @@
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/cracker
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/dogtreat
+	time = 15
+	name = "Dog Treat"
+	reqs = list(
+		/datum/reagent/consumable/sodiumchloride = 1,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1,
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
+	)
+	result = /obj/item/reagent_containers/food/snacks/dogtreat
 	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/fortunecookie

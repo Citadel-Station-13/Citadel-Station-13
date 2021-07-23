@@ -157,7 +157,7 @@
 		to_chat(user, "<span class='notice'>You need to get closer!</span>")
 		return
 	if(use_paint(user) && isturf(F))
-		F.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', stored_decal_total, turn(stored_dir, -dir2angle(F.dir)), CLEAN_STRONG, color, null, null, alpha)
+		F.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, CLEAN_STRONG, color, null, null, alpha)
 
 /obj/item/airlock_painter/decal/attack_self(mob/user)
 	if((ink) && (ink.charges >= 1))
@@ -180,6 +180,11 @@
 	stored_decal_total = "[stored_decal][yellow_fix][stored_color]"
 	return
 
+/obj/item/airlock_painter/decal/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/decals)
+	)
+
 /obj/item/airlock_painter/decal/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -189,6 +194,7 @@
 /obj/item/airlock_painter/decal/ui_data(mob/user)
 	var/list/data = list()
 	data["decal_direction"] = stored_dir
+	data["decal_dir_text"] = dir2text(stored_dir)
 	data["decal_color"] = stored_color
 	data["decal_style"] = stored_decal
 	data["decal_list"] = list()

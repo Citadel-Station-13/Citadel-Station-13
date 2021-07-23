@@ -297,6 +297,11 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "posibrain-ipc"
 
+/obj/item/organ/brain/slime
+	name = "slime nucleus"
+	desc = "A slimey membranous mass from a slimeperson."
+	icon_state = "brain-s"
+
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 

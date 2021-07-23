@@ -41,7 +41,6 @@
 	H.dna.features["horns"] = pick(GLOB.horns_list)
 	H.dna.features["frills"] = pick(GLOB.frills_list)
 	H.dna.features["spines"] = pick(GLOB.spines_list)
-	H.dna.features["body_markings"] = pick(GLOB.body_markings_list)
 	H.dna.features["insect_wings"] = pick(GLOB.insect_wings_list)
 	H.dna.features["deco_wings"] = pick(GLOB.deco_wings_list)
 	H.dna.features["insect_fluff"] = pick(GLOB.insect_fluffs_list)

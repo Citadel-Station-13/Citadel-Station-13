@@ -47,18 +47,8 @@
 
 	var/display_numerical_stacking = FALSE			//stack things of the same type and show as a single object with a number.
 
-	/// "legacy"/default view mode's storage "boxes"
-	var/obj/screen/storage/boxes/ui_boxes
-	/// New volumetric storage display mode's left side
-	var/obj/screen/storage/left/ui_left
-	/// New volumetric storage display mode's center 'blocks'
-	var/obj/screen/storage/continuous/ui_continuous
-	/// The close button, used in all modes. Frames right side in volumetric mode.
-	var/obj/screen/storage/close/ui_close
-	/// Associative list of list(item = screen object) for volumetric storage item screen blocks
-	var/list/ui_item_blocks
-
-	var/current_maxscreensize
+	/// Ui objects by person. mob = list(objects)
+	var/list/ui_by_mob = list()
 
 	var/allow_big_nesting = FALSE					//allow storage objects of the same or greater size.
 
@@ -125,17 +115,15 @@
 
 /datum/component/storage/Destroy()
 	close_all()
-	QDEL_NULL(ui_boxes)
-	QDEL_NULL(ui_close)
-	QDEL_NULL(ui_continuous)
-	QDEL_NULL(ui_left)
-	// DO NOT USE QDEL_LIST_ASSOC.
-	if(ui_item_blocks)
-		for(var/i in ui_item_blocks)
-			qdel(ui_item_blocks[i])		//qdel the screen object not the item
-		ui_item_blocks.Cut()
+	wipe_ui_objects()
 	LAZYCLEARLIST(is_using)
 	return ..()
+
+/datum/component/storage/proc/wipe_ui_objects()
+	for(var/i in ui_by_mob)
+		var/list/objects = ui_by_mob[i]
+		QDEL_LIST(objects)
+	ui_by_mob.Cut()
 
 /datum/component/storage/PreTransfer()
 	update_actions()
@@ -283,20 +271,20 @@
 	var/turf/T = get_turf(A)
 	var/list/things = contents()
 	var/datum/progressbar/progress = new(M, length(things), T)
-	while (do_after(M, 10, TRUE, T, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress)))
+	while (do_after(M, 10, TRUE, T, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress, TRUE, M)))
 		stoplag(1)
 	qdel(progress)
 	A.do_squish(0.8, 1.2)
 
-/datum/component/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress, trigger_on_found = TRUE)
+/datum/component/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress, trigger_on_found = TRUE, mob/user)
 	var/atom/real_location = real_location()
 	for(var/obj/item/I in things)
 		things -= I
 		if(I.loc != real_location)
 			continue
-		remove_from_storage(I, target)
-		if(trigger_on_found && I.on_found())
+		if(trigger_on_found && user && (user.active_storage != src) && I.on_found(user))
 			return FALSE
+		remove_from_storage(I, target)
 		if(TICK_CHECK)
 			progress.update(progress.goal - length(things))
 			return TRUE
@@ -351,13 +339,6 @@
 	return master._removal_reset(thing)
 
 /datum/component/storage/proc/_remove_and_refresh(datum/source, atom/movable/thing)
-	if(LAZYACCESS(ui_item_blocks, thing))
-		var/obj/screen/storage/volumetric_box/center/C = ui_item_blocks[thing]
-		for(var/i in can_see_contents())		//runtimes result if mobs can access post deletion.
-			var/mob/M = i
-			M.client?.screen -= C.on_screen_objects()
-		ui_item_blocks -= thing
-		qdel(C)
 	_removal_reset(thing)		// THIS NEEDS TO HAPPEN AFTER SO LAYERING DOESN'T BREAK!
 	refresh_mob_views()
 
@@ -448,7 +429,7 @@
 			return FALSE
 		// this must come before the screen objects only block, dunno why it wasn't before
 		if(over_object == M)
-			user_show_to_mob(M)
+			user_show_to_mob(M, trigger_on_found = TRUE)
 			return
 		if(isrevenant(M))
 			RevenantThrow(over_object, M, source)
@@ -467,14 +448,27 @@
 				return
 			A.add_fingerprint(M)
 
-/datum/component/storage/proc/user_show_to_mob(mob/M, force = FALSE, ghost = FALSE)
+/datum/component/storage/proc/user_show_to_mob(mob/M, force = FALSE, trigger_on_found = FALSE)
 	var/atom/A = parent
 	if(!istype(M))
 		return FALSE
 	A.add_fingerprint(M)
 	if(!force && (check_locked(null, M) || !M.CanReach(parent, view_only = TRUE)))
 		return FALSE
-	ui_show(M, !ghost)
+	if(trigger_on_found)
+		if(check_on_found(M))
+			return
+	ui_show(M)
+
+/**
+ * Check if we should trigger on_found()
+ * If this returns TRUE, it means an on_found() returned TRUE and immediately broke the chain.
+ * In most contexts, this should mean to stop.
+ */
+/datum/component/storage/proc/check_on_found(mob/user)
+	for(var/obj/item/I in contents())
+		if(I.on_found(user))
+			return TRUE
 
 /datum/component/storage/proc/mousedrop_receive(datum/source, atom/movable/O, mob/M)
 	if(isitem(O))
@@ -596,10 +590,10 @@
 	return can_be_inserted(I, silent, M)
 
 /datum/component/storage/proc/show_to_ghost(datum/source, mob/dead/observer/M)
-	return user_show_to_mob(M, TRUE, TRUE)
+	return user_show_to_mob(M, TRUE)
 
-/datum/component/storage/proc/signal_show_attempt(datum/source, mob/showto, force = FALSE)
-	return user_show_to_mob(showto, force)
+/datum/component/storage/proc/signal_show_attempt(datum/source, mob/showto, force = FALSE, trigger_on_found = TRUE)
+	return user_show_to_mob(showto, force, trigger_on_found = trigger_on_found)
 
 /datum/component/storage/proc/on_check()
 	return TRUE
@@ -668,7 +662,7 @@
 	if(A.loc == user)
 		. = COMPONENT_NO_ATTACK_HAND
 		if(!check_locked(source, user, TRUE))
-			ui_show(user)
+			user_show_to_mob(user, trigger_on_found = TRUE)
 			A.do_jiggle()
 
 /datum/component/storage/proc/signal_on_pickup(datum/source, mob/user)
@@ -698,7 +692,7 @@
 	var/atom/A = parent
 	if(!quickdraw)
 		A.add_fingerprint(user)
-		user_show_to_mob(user)
+		user_show_to_mob(user, trigger_on_found = TRUE)
 		if(rustle_sound)
 			playsound(A, "rustle", 50, 1, -5)
 		return TRUE

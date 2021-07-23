@@ -32,20 +32,20 @@
 	icon = 'modular_citadel/icons/mob/synthliz_body_markings.dmi'
 	name = "Synthetic Lizard - Pecs"
 	icon_state = "synthlizpecs"
-	matrixed_sections = MATRIX_GREEN
+	covered_limbs = list("Chest" = MATRIX_GREEN)
 
 /datum/sprite_accessory/mam_body_markings/synthliz/synthliz_pecslight
 	icon = 'modular_citadel/icons/mob/synthliz_body_markings.dmi'
 	name = "Synthetic Lizard - Pecs Light"
 	icon_state = "synthlizpecslight"
-	matrixed_sections = MATRIX_GREEN_BLUE
+	covered_limbs = list("Chest" = MATRIX_GREEN_BLUE)
 
 /datum/sprite_accessory/mam_body_markings/synthliz
 	recommended_species = list("synthliz")
 	icon = 'modular_citadel/icons/mob/synthliz_body_markings.dmi'
 	name = "Synthetic Lizard - Plates"
 	icon_state = "synthlizscutes"
-	matrixed_sections = MATRIX_GREEN
+	covered_limbs = list("Chest" = MATRIX_GREEN)
 
 //Synth tails
 /datum/sprite_accessory/tails/mam_tails/synthliz

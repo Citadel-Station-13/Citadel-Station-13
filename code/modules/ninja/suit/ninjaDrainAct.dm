@@ -267,8 +267,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 		apply_effect(EFFECT_STUTTER, G.stunforce)
 		SEND_SIGNAL(src, COMSIG_LIVING_MINOR_SHOCK)
 
-		lastattacker = H.real_name
-		lastattackerckey = H.ckey
+		set_last_attacker(H)
 		log_combat(H, src, "stunned")
 
 		playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)

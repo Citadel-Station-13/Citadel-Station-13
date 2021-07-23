@@ -60,6 +60,13 @@
 	desc = "Designed to quickly reload revolvers. These rounds are manufactured within extremely tight tolerances, making them easy to show off trickshots with."
 	ammo_type = /obj/item/ammo_casing/c38/match
 
+/obj/item/ammo_box/g4570
+	name = "ammo box (.45-70 GOVT)"
+	desc = "Brought to you at great expense,this box contains 10 more .45-70 GOVT bullets."
+	ammo_type = /obj/item/ammo_casing/g4570
+	icon_state = "45box"
+	max_ammo = 10
+
 /obj/item/ammo_box/c9mm
 	name = "ammo box (9mm)"
 	icon_state = "9mmbox"

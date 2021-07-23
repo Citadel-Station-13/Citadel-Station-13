@@ -46,7 +46,8 @@
 		/obj/item/instrument/harmonica,
 		/obj/item/mining_voucher,
 		/obj/item/suit_voucher,
-		/obj/item/reagent_containers/pill))
+		/obj/item/reagent_containers/pill,
+		/obj/item/gun/ballistic/derringer))
 
 /obj/item/storage/wallet/Exited(atom/movable/AM)
 	. = ..()

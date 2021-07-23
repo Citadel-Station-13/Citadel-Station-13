@@ -48,12 +48,13 @@
 							)
 
 /obj/machinery/autolathe/Initialize()
-	AddComponent(/datum/component/material_container, SSmaterials.materialtypes_by_category[MAT_CATEGORY_RIGID], 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
-
 	wires = new /datum/wires/autolathe(src)
 	stored_research = new /datum/techweb/specialized/autounlocking/autolathe
 	matching_designs = list()
+
+/obj/machinery/autolathe/ComponentInitialize()
+	AddComponent(/datum/component/material_container, SSmaterials.materialtypes_by_category[MAT_CATEGORY_RIGID], 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 
 /obj/machinery/autolathe/Destroy()
 	QDEL_NULL(wires)
@@ -439,6 +440,9 @@
 
 /obj/machinery/autolathe/secure/Initialize()
 	. = ..()
+	// let's not leave the parent datum floating, right?
+	if(stored_research)
+		QDEL_NULL(stored_research)
 	stored_research = new /datum/techweb/specialized/autounlocking/autolathe/public
 
 /obj/machinery/autolathe/toy
@@ -457,8 +461,18 @@
 					"Misc",
 					"Imported"
 					)
+/obj/machinery/autolathe/toy/Initialize()
+	. = ..()
+	// let's not leave the parent datum floating, right?
+	if(stored_research)
+		QDEL_NULL(stored_research)
+	stored_research = new /datum/techweb/specialized/autounlocking/autolathe/toy
 
 /obj/machinery/autolathe/toy/hacked/Initialize()
 	. = ..()
 	adjust_hacked(TRUE)
-	stored_research = new /datum/techweb/specialized/autounlocking/autolathe/toy
+
+// override the base to allow plastics
+/obj/machinery/autolathe/ComponentInitialize()
+	var/list/extra_mats = list(/datum/material/plastic)
+	AddComponent(/datum/component/material_container, SSmaterials.materialtypes_by_category[MAT_CATEGORY_RIGID] + extra_mats, 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))

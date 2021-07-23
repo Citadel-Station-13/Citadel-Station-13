@@ -149,6 +149,9 @@
 		if(EXPLODE_LIGHT)
 			adjustBruteLoss(50)
 
+/mob/living/simple_animal/hostile/megafauna/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	adjustBruteLoss(EXPLOSION_POWER_STANDARD_SCALE_MOB_DAMAGE(power, explosion.mob_damage_mod) / 2)
+
 /// Sets the next time the megafauna can use a melee or ranged attack, in deciseconds
 /mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time, ranged_buffer_time)
 	recovery_time = world.time + buffer_time

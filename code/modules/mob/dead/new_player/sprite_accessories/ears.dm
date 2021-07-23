@@ -67,6 +67,13 @@
 	matrixed_sections = MATRIX_RED_GREEN
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 
+/datum/sprite_accessory/ears/bunnyalt
+	name = "Bunny (Vegas)"
+	icon_state = "bunnyalt"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED_GREEN
+	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+
 /datum/sprite_accessory/ears/cat
 	name = "Cat"
 	icon_state = "cat"
@@ -90,6 +97,13 @@
 /datum/sprite_accessory/ears/lab
 	name = "Dog, Floppy"
 	icon_state = "lab"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED
+	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+
+/datum/sprite_accessory/ears/lablight
+	name = "Dog, Floppy (Light)"
+	icon_state = "lablight"
 	color_src = MATRIXED
 	matrixed_sections = MATRIX_RED
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
@@ -155,10 +169,17 @@
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 
 /datum/sprite_accessory/ears/human/rabbit
-	name = "Rabbit"
+	name = "Rabbit (Lop-eared)"
 	icon_state = "rabbit"
 	color_src = MATRIXED
 	matrixed_sections = MATRIX_RED_GREEN
+	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+
+/datum/sprite_accessory/ears/human/rabbitalt
+	name = "Rabbit (Straight-eared)"
+	icon_state = "rabbitalt"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_ALL
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 
 /datum/sprite_accessory/ears/human/pede
@@ -258,6 +279,11 @@
 	icon_state = "bunny"
 	matrixed_sections = MATRIX_RED_GREEN
 
+/datum/sprite_accessory/ears/mam_ears/bunnyalt
+	name = "Bunny (Vegas)"
+	icon_state = "bunnyalt"
+	matrixed_sections = MATRIX_RED_GREEN
+
 /datum/sprite_accessory/ears/mam_ears/cat
 	name = "Cat"
 	icon_state = "cat"
@@ -284,7 +310,7 @@
 /datum/sprite_accessory/ears/mam_ears/deer
 	name = "Deer"
 	icon_state = "deer"
-	color_src = MUTCOLORS3
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/ears/mam_ears/eevee
 	name = "Eevee"
@@ -332,8 +358,13 @@
 	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/ears/mam_ears/lab
-	name = "Dog, Long"
+	name = "Dog, Floppy"
 	icon_state = "lab"
+	matrixed_sections = MATRIX_RED
+
+/datum/sprite_accessory/ears/mam_ears/lablight
+	name = "Dog, Floppy (Light)"
+	icon_state = "lablight"
 	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/ears/mam_ears/murid
@@ -347,9 +378,14 @@
 	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/ears/mam_ears/rabbit
-	name = "Rabbit"
+	name = "Rabbit (Lop-eared)"
 	icon_state = "rabbit"
 	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/mam_ears/rabbitalt
+	name = "Rabbit (Straight-eared)"
+	icon_state = "rabbitalt"
+	matrixed_sections = MATRIX_ALL
 
 /datum/sprite_accessory/ears/mam_ears/pede
 	name = "Scolipede"

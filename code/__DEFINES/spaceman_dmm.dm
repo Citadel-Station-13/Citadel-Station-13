@@ -28,6 +28,5 @@
 	#define VAR_PROTECTED var
 #endif
 
-/world/proc/enable_debugger()
-	if (fexists(EXTOOLS))
-		call(EXTOOLS, "debug_initialize")()
+/proc/enable_debugging()
+    CRASH("Auxtools not found")

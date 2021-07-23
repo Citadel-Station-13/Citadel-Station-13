@@ -1,12 +1,3 @@
-//LISTMOS
-//indices of values in gas lists.
-#define META_GAS_SPECIFIC_HEAT	1
-#define META_GAS_NAME			2
-#define META_GAS_MOLES_VISIBLE	3
-#define META_GAS_OVERLAY		4
-#define META_GAS_DANGER			5
-#define META_GAS_ID				6
-#define META_GAS_FUSION_POWER   7
 //ATMOS
 //stuff you should probably leave well alone!
 #define R_IDEAL_GAS_EQUATION	8.31	//kPa*L/(K*mol)
@@ -148,10 +139,10 @@
 #define CANVERTICALATMOSPASS(A, O) ( A.CanAtmosPassVertical == ATMOS_PASS_PROC ? A.CanAtmosPass(O, TRUE) : ( A.CanAtmosPassVertical == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPassVertical ) )
 
 //OPEN TURF ATMOS
-#define OPENTURF_DEFAULT_ATMOS		"o2=22;n2=82;TEMP=293.15" //the default air mix that open turfs spawn
+#define OPENTURF_DEFAULT_ATMOS		"o2=21.78;n2=82.36;TEMP=293.15" //the default air mix that open turfs spawn, also is what the station vents output at assuming a 21/79% o2/n2 mix
 #define TCOMMS_ATMOS				"n2=100;TEMP=80" //-193,15degC telecommunications. also used for xenobiology slime killrooms
 #define AIRLESS_ATMOS				"TEMP=2.7" //space
-#define FROZEN_ATMOS				"o2=22;n2=82;TEMP=180" //-93.15degC snow and ice turfs
+#define FROZEN_ATMOS				"o2=21.78;n2=82.36;TEMP=180" //-93.15degC snow and ice turfs
 #define BURNMIX_ATMOS				"o2=2500;plasma=5000;TEMP=370" //used in the holodeck burn test program
 
 //ATMOSPHERICS DEPARTMENT GAS TANK TURFS
@@ -160,7 +151,7 @@
 #define ATMOS_TANK_PLASMA			"plasma=70000;TEMP=293.15"
 #define ATMOS_TANK_O2				"o2=100000;TEMP=293.15"
 #define ATMOS_TANK_N2				"n2=100000;TEMP=293.15"
-#define ATMOS_TANK_AIRMIX			"o2=2644;n2=10580;TEMP=293.15"
+#define ATMOS_TANK_AIRMIX			"o2=2811;n2=10583;TEMP=293.15"
 
 //LAVALAND
 #define LAVALAND_EQUIPMENT_EFFECT_PRESSURE 50 //what pressure you have to be under to increase the effect of equipment meant for lavaland
@@ -257,6 +248,26 @@
 #define PIPING_DEFAULT_LAYER_ONLY		(1<<2)	//can only exist at PIPING_LAYER_DEFAULT
 #define PIPING_CARDINAL_AUTONORMALIZE	(1<<3)	//north/south east/west doesn't matter, auto normalize on build.
 
+// Gas defines because i hate typepaths
+#define GAS_O2					"o2"
+#define GAS_N2					"n2"
+#define GAS_CO2					"co2"
+#define GAS_PLASMA				"plasma"
+#define GAS_H2O					"water_vapor"
+#define GAS_HYPERNOB			"nob"
+#define GAS_NITROUS				"n2o"
+#define GAS_NITRYL				"no2"
+#define GAS_TRITIUM				"tritium"
+#define GAS_BZ					"bz"
+#define GAS_STIMULUM			"stim"
+#define GAS_PLUOXIUM			"pluox"
+#define GAS_MIASMA				"miasma"
+#define GAS_METHANE				"methane"
+#define GAS_METHYL_BROMIDE		"methyl_bromide"
+
+#define GAS_FLAG_DANGEROUS		(1<<0)
+#define GAS_FLAG_BREATH_PROC	(1<<1)
+
 //HELPERS
 #define PIPING_LAYER_SHIFT(T, PipingLayer) \
 	if(T.dir & (NORTH|SOUTH)) {									\
@@ -281,16 +292,8 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #define CALCULATE_ADJACENT_TURFS(T) SSadjacent_air.queue[T] = 1
 #endif
 
-GLOBAL_VAR(atmos_extools_initialized) // this must be an uninitialized (null) one or init_monstermos will be called twice because reasons
-#define ATMOS_EXTOOLS_CHECK if(!GLOB.atmos_extools_initialized){\
-	GLOB.atmos_extools_initialized=TRUE;\
-	if(fexists(EXTOOLS)){\
-		var/result = call(EXTOOLS,"init_monstermos")();\
-		if(result != "ok") {CRASH(result);}\
-	} else {\
-		CRASH("[EXTOOLS] does not exist!");\
-	}\
-}
+//If you're doing spreading things related to atmos, DO NOT USE CANATMOSPASS, IT IS NOT CHEAP. use this instead, the info is cached after all. it's tweaked just a bit to allow for circular checks
+#define TURFS_CAN_SHARE(T1, T2) (LAZYACCESS(T2.atmos_adjacent_turfs, T1) || LAZYLEN(T1.atmos_adjacent_turfs & T2.atmos_adjacent_turfs))
 
 //Unomos - So for whatever reason, garbage collection actually drastically decreases the cost of atmos later in the round. Turning this into a define yields massively improved performance.
 #define GAS_GARBAGE_COLLECT(GASGASGAS)\

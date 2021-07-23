@@ -58,42 +58,35 @@
 		if(9)
 			new /obj/item/gun/magic/wand/book/healing(src)
 		if(10)
-			new /obj/item/reagent_containers/glass/bottle/ichor/red(src)
-			new /obj/item/reagent_containers/glass/bottle/ichor/blue(src)
-			new /obj/item/reagent_containers/glass/bottle/ichor/green(src)
+			new /obj/item/guardiancreator(src)
 
 /obj/structure/closet/crate/necropolis/tendril/weapon_armor/PopulateContents()
-	var/loot = rand(1,11)
+	var/loot = rand(1,10)
 	switch(loot)
 		if(1)
 			new /obj/item/clothing/suit/space/hardsuit/cult(src)
 		if(2)
 			new /obj/item/katana/lavaland(src)
 		if(3)
-			if(prob(50))
-				new /obj/item/disk/design_disk/modkit_disc/resonator_blast(src)
-			else
-				new /obj/item/disk/design_disk/modkit_disc/rapid_repeater(src)
-		if(4)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker/old(src)
-		if(5)
+		if(4)
 			new /obj/item/nullrod/scythe/talking(src)
-		if(6)
+		if(5)
 			new /obj/item/nullrod/armblade(src)
-		if(7)
+		if(6)
 			new /obj/item/reagent_containers/food/drinks/bottle/holywater/hell(src)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor/old(src)
-		if(8)
+		if(7)
 			new /obj/item/grenade/clusterbuster/inferno(src)
-		if(9)
+		if(8)
 			new /obj/item/gun/magic/wand/book/shock(src)
-		if(10)
+		if(9)
 			new /obj/item/gun/magic/wand/book/page(src)
-		if(11)
+		if(10)
 			new /obj/item/gun/magic/wand/book/spark(src)
 
 /obj/structure/closet/crate/necropolis/tendril/misc/PopulateContents()
-	var/loot = rand(1,14)
+	var/loot = rand(1,12)
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
@@ -108,31 +101,21 @@
 		if(6)
 			new /obj/item/jacobs_ladder(src)
 		if(7)
-			if(prob(50))
-				new /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe(src)
-			else
-				new /obj/item/disk/design_disk/modkit_disc/bounty(src)
-		if(8)
 			new /obj/item/wisp_lantern(src)
-		if(9)
+		if(8)
 			new /obj/item/pickaxe/rosegold(src)
-		if(10)
+		if(9)
 			new /obj/item/bedsheet/cosmos(src)
 			new /obj/item/melee/skateboard/hoverboard(src)
-		if(11)
+		if(10)
 			new /obj/item/disk/tech_disk/illegal(src)
-		if(12)
+		if(11)
 			new /obj/item/clothing/suit/space/hardsuit/cult(src)
-		if(13)
+		if(12)
 			new /obj/item/katana/lavaland(src)
-		if(14)
-			if(prob(50))
-				new /obj/item/disk/design_disk/modkit_disc/resonator_blast(src)
-			else
-				new /obj/item/disk/design_disk/modkit_disc/rapid_repeater(src)
 
 /obj/structure/closet/crate/necropolis/tendril/all/PopulateContents()
-	var/loot = rand(1,29)
+	var/loot = rand(1,28)
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
@@ -147,59 +130,52 @@
 		if(6)
 			new /obj/item/jacobs_ladder(src)
 		if(7)
-			if(prob(50))
-				new /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe(src)
-			else
-				new /obj/item/disk/design_disk/modkit_disc/bounty(src)
-		if(8)
 			new /obj/item/wisp_lantern(src)
-		if(9)
+		if(8)
 			new /obj/item/pickaxe/rosegold(src)
-		if(10)
+		if(9)
 			new /obj/item/bedsheet/cosmos(src)
 			new /obj/item/melee/skateboard/hoverboard(src)
-		if(11)
+		if(10)
 			new /obj/item/disk/tech_disk/illegal(src)
-		if(12)
+		if(11)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker/old(src)
-		if(13)
+		if(12)
 			new /obj/item/nullrod/scythe/talking(src)
-		if(14)
+		if(13)
 			new /obj/item/nullrod/armblade(src)
-		if(15)
+		if(14)
 			new /obj/item/reagent_containers/food/drinks/bottle/holywater/hell(src)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor/old(src)
-		if(16)
+		if(15)
 			new /obj/item/grenade/clusterbuster/inferno(src)
-		if(17)
+		if(16)
 			new /obj/item/gun/magic/wand/book/shock(src)
-		if(18)
+		if(17)
 			new /obj/item/gun/magic/wand/book/page(src)
-		if(19)
+		if(18)
 			new /obj/item/gun/magic/wand/book/spark(src)
-		if(20)
+		if(19)
 			new /obj/item/soulstone/anybody(src)
-		if(21)
+		if(20)
 			new /obj/item/rod_of_asclepius(src)
-		if(22)
+		if(21)
 			new /obj/item/organ/heart/cursed/wizard(src)
-		if(23)
+		if(22)
 			new /obj/item/book/granter/spell/summonitem(src)
-		if(24)
+		if(23)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
-		if(25)
+		if(24)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
-		if(26)
+		if(25)
 			new /obj/item/warp_cube/red(src)
-		if(27)
+		if(26)
 			new /obj/item/immortality_talisman(src)
-		if(28)
+		if(27)
 			new /obj/item/gun/magic/wand/book/healing(src)
-		if(29)
-			new /obj/item/reagent_containers/glass/bottle/ichor/red(src)
-			new /obj/item/reagent_containers/glass/bottle/ichor/blue(src)
-			new /obj/item/reagent_containers/glass/bottle/ichor/green(src)
+		if(28)
+			new /obj/item/guardiancreator(src)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -270,6 +246,8 @@
 	desc = "A wooden rod about the size of your forearm with a snake carved around it, winding it's way up the sides of the rod. Something about it seems to inspire in you the responsibilty and duty to help others."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "asclepius_dormant"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	var/activated = FALSE
 	var/usedHand
 
@@ -928,7 +906,10 @@
 			ghost.ManualFollow(src)
 
 /obj/item/melee/ghost_sword/process()
-	ghost_check()
+	force = 0
+	var/ghost_counter = ghost_check()
+
+	force = clamp((ghost_counter * 4), 0, 75)
 
 /obj/item/melee/ghost_sword/proc/recursive_orbit_collect(atom/A, list/L)
 	for(var/i in A.orbiters?.orbiters)
@@ -986,7 +967,17 @@
 	switch(random)
 		if(1)
 			to_chat(user, "<span class='danger'>Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities.</span>")
-			H.dna.features = list("mcolor" = "A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade")
+			H.dna.features["mcolor"] = "A02720"
+			H.dna.features["tail_lizard"] = "Dark Tiger"
+			H.dna.features["tail_human"] = "None"
+			H.dna.features["mam_snout"] = "Sharp"
+			H.dna.features["horns"] = "Curled"
+			H.dna.features["ears"] = "None"
+			H.dna.features["wings"] = "None"
+			H.dna.features["frills"] = "None"
+			H.dna.features["spines"] = "Long"
+			H.dna.features["legs"] = "Digitigrade"
+			H.dna.features["taur_body"] = "None"
 			H.left_eye_color = "fee5a3"
 			H.right_eye_color = "fee5a3"
 			H.set_species(/datum/species/lizard)
@@ -1099,14 +1090,12 @@
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
 	new /obj/item/clothing/suit/space/hostile_environment(src)
 	new /obj/item/clothing/head/helmet/space/hostile_environment(src)
-	var/loot = rand(1,3)
+	var/loot = rand(1,2)
 	switch(loot)
 		if(1)
 			new /obj/item/mayhem(src)
 		if(2)
 			new /obj/item/book/granter/spell/asura(src)
-		if(3)
-			new /obj/item/guardiancreator(src)
 
 /obj/structure/closet/crate/necropolis/bubblegum/crusher
 	name = "bloody bubblegum chest"
@@ -1282,8 +1271,8 @@
 			if(isliving(target) && chaser_timer <= world.time) //living and chasers off cooldown? fire one!
 				chaser_timer = world.time + chaser_cooldown
 				var/obj/effect/temp_visual/hierophant/chaser/C = new(get_turf(user), user, target, chaser_speed, friendly_fire_check)
-				C.damage = 30
-				C.monster_damage_boost = FALSE
+				C.damage = 15
+				C.monster_damage_boost = TRUE
 				log_combat(user, target, "fired a chaser at", src)
 			else
 				INVOKE_ASYNC(src, .proc/cardinal_blasts, T, user) //otherwise, just do cardinal blast
@@ -1399,10 +1388,10 @@
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, user)
 		for(var/t in RANGE_TURFS(1, T))
 			var/obj/effect/temp_visual/hierophant/blast/B = new /obj/effect/temp_visual/hierophant/blast(t, user, TRUE) //blasts produced will not hurt allies
-			B.damage = 30
+			B.damage = 15
 		for(var/t in RANGE_TURFS(1, source))
 			var/obj/effect/temp_visual/hierophant/blast/B = new /obj/effect/temp_visual/hierophant/blast(t, user, TRUE) //but absolutely will hurt enemies
-			B.damage = 30
+			B.damage = 15
 		for(var/mob/living/L in range(1, source))
 			INVOKE_ASYNC(src, .proc/teleport_mob, source, L, T, user) //regardless, take all mobs near us along
 		sleep(6) //at this point the blasts detonate
@@ -1463,8 +1452,8 @@
 		if(!J)
 			return
 		var/obj/effect/temp_visual/hierophant/blast/B = new(J, user, friendly_fire_check)
-		B.damage = 30
-		B.monster_damage_boost = FALSE
+		B.damage = 15
+		B.monster_damage_boost = TRUE
 		previousturf = J
 		J = get_step(previousturf, dir)
 
@@ -1476,7 +1465,7 @@
 	sleep(2)
 	for(var/t in RANGE_TURFS(1, T))
 		var/obj/effect/temp_visual/hierophant/blast/B = new(t, user, friendly_fire_check)
-		B.damage = 15 //keeps monster damage boost due to lower damage
+		B.damage = 15 //keeps monster damage boost due to lower damage (now added to all damage due to reduction to 15, 30dmg 50AP isn't cool)
 
 
 //Just some minor stuff

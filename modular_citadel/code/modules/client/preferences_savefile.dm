@@ -23,7 +23,7 @@
 	WRITE_FILE(S["feature_genitals_use_skintone"], features["genitals_use_skintone"])
 	WRITE_FILE(S["feature_mcolor2"], features["mcolor2"])
 	WRITE_FILE(S["feature_mcolor3"], features["mcolor3"])
-	WRITE_FILE(S["feature_mam_body_markings"], features["mam_body_markings"])
+	WRITE_FILE(S["feature_mam_body_markings"], safe_json_encode(features["mam_body_markings"]))
 	WRITE_FILE(S["feature_mam_tail"], features["mam_tail"])
 	WRITE_FILE(S["feature_mam_ears"], features["mam_ears"])
 	WRITE_FILE(S["feature_mam_tail_animated"], features["mam_tail_animated"])

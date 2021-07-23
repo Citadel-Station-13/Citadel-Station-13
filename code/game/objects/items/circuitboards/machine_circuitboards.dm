@@ -472,7 +472,7 @@
 			build_path = /obj/machinery/holopad
 			secure = FALSE
 		else
-			build_path = /obj/machinery/holopad //secure
+			build_path = /obj/machinery/holopad/secure //secure
 			secure = TRUE
 		to_chat(user, "<span class='notice'>You [secure? "en" : "dis"]able the security on the [src]</span>")
 	. = ..()
@@ -609,6 +609,7 @@
 		/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
 		/obj/machinery/vending/games = "\improper Good Clean Fun",
 		/obj/machinery/vending/kink = "KinkMate",
+		/obj/machinery/vending/barkbox = "Bark Box",
 		/obj/machinery/vending/autodrobe = "AutoDrobe",
 		/obj/machinery/vending/wardrobe/sec_wardrobe = "SecDrobe",
 		/obj/machinery/vending/wardrobe/det_wardrobe = "DetDrobe",

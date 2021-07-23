@@ -351,6 +351,78 @@
 	if(!contents.len)
 		. += "[icon_state]_empty"
 
+//Derringer "Cigarettes"//
+/obj/item/storage/fancy/cigarettes/derringer
+	name = "\improper Robust packet"
+	desc = "Smoked by the robust."
+	icon_state = "robust"
+	spawn_type = /obj/item/gun/ballistic/derringer/traitor
+
+/obj/item/storage/fancy/cigarettes/derringer/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 6
+	STR.can_hold = typecacheof(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter, /obj/item/gun/ballistic/derringer, /obj/item/ammo_casing/c38, /obj/item/ammo_casing/a357, /obj/item/ammo_casing/g4570))
+
+/obj/item/storage/fancy/cigarettes/derringer/AltClick(mob/living/carbon/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	var/obj/item/W = (locate(/obj/item/ammo_casing/a357) in contents) || (locate(/obj/item/clothing/mask/cigarette) in contents) ||(locate(/obj/item/gun/ballistic/derringer) in contents) || (locate(/obj/item/ammo_casing/c38) in contents) || locate(/obj/item/ammo_casing/g4570) in contents//Easy access smokes and bullets
+	if(W && contents.len > 0)
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, user)
+		user.put_in_hands(W)
+		contents -= W
+		to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
+	else
+		to_chat(user, "<span class='notice'>There are no items left in the pack.</span>")
+
+/obj/item/storage/fancy/cigarettes/derringer/PopulateContents()
+	new spawn_type(src)
+	new /obj/item/ammo_casing/a357(src)
+	new /obj/item/ammo_casing/a357(src)
+	new /obj/item/ammo_casing/a357(src)
+	new /obj/item/ammo_casing/a357(src)
+	new /obj/item/ammo_casing/a357(src)
+	new /obj/item/clothing/mask/cigarette/syndicate(src)
+
+//For traitors with luck/class
+/obj/item/storage/fancy/cigarettes/derringer/gold
+	name = "\improper Robust Gold packet"
+	desc = "Smoked by the truly robust."
+	icon_state = "robustg"
+	spawn_type = /obj/item/gun/ballistic/derringer/gold
+
+//For operatives, bound in a ka-tet.
+/obj/item/storage/fancy/cigarettes/derringer/midworld
+	name = "\improper Midworld's Lime Bend"
+	desc = "The wheel of Ka turns, Gunslinger."
+	icon_state = "slime"
+	spawn_type = /obj/item/gun/ballistic/derringer/nukeop
+
+/obj/item/storage/fancy/cigarettes/derringer/midworld/PopulateContents()
+	new spawn_type(src)
+	new /obj/item/ammo_casing/g4570(src)
+	new /obj/item/ammo_casing/g4570(src)
+	new /obj/item/ammo_casing/g4570(src)
+	new /obj/item/ammo_casing/g4570(src)
+	new /obj/item/ammo_casing/g4570(src)
+	new /obj/item/clothing/mask/cigarette/xeno(src)
+
+//For Cargomen, looking for a good deal on arms, with no quarrels as to where they're from.
+/obj/item/storage/fancy/cigarettes/derringer/smuggled
+	name = "\improper Shady Jim's Super Slims packet"
+	desc = "If you get caught with this, we don't know you, capiche?"
+	icon_state = "shadyjim"
+	spawn_type = /obj/item/gun/ballistic/derringer
+
+/obj/item/storage/fancy/cigarettes/derringer/smuggled/PopulateContents()
+	new spawn_type(src)
+	new /obj/item/ammo_casing/c38/lethal(src)
+	new /obj/item/ammo_casing/c38/lethal(src)
+	new /obj/item/ammo_casing/c38/lethal(src)
+	new /obj/item/ammo_casing/c38/lethal(src)
+	new /obj/item/ammo_casing/c38/lethal(src)
+	new /obj/item/clothing/mask/cigarette/shadyjims (src)
 /////////////
 //CIGAR BOX//
 /////////////
@@ -434,6 +506,20 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/nugget))
+
+/obj/item/storage/fancy/treat_box
+	name = "treat box"
+	desc = "A cardboard box used for holding dog treats."
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "treatbox"
+	icon_type = "treat"
+	spawn_type = /obj/item/reagent_containers/food/snacks/dogtreat
+
+/obj/item/storage/fancy/treat_box/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 6
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/dogtreat))
 
 /obj/item/storage/fancy/cracker_pack
 	name = "cracker pack"

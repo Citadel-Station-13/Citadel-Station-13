@@ -159,7 +159,7 @@
 /datum/component/embedded/proc/jostleCheck()
 	var/mob/living/carbon/victim = parent
 
-	var/damage = weapon.w_class * pain_mult
+	var/damage = weapon.w_class * jostle_pain_mult
 	var/pain_chance_current = jostle_chance
 	if(victim.m_intent == MOVE_INTENT_WALK || !(victim.mobility_flags & MOBILITY_STAND))
 		pain_chance_current *= 0.5
@@ -265,6 +265,7 @@
 /// Items embedded/stuck to carbons both check whether they randomly fall out (if applicable), as well as if the target mob and limb still exists.
 /// Items harmfully embedded in carbons have an additional check for random pain (if applicable)
 /datum/component/embedded/proc/processCarbon()
+	set waitfor = FALSE
 	var/mob/living/carbon/victim = parent
 
 	if(!victim || !limb) // in case the victim and/or their limbs exploded (say, due to a sticky bomb)

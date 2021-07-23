@@ -280,6 +280,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if(3)
 			adjustBruteLoss(30)
 
+/mob/living/simple_animal/hostile/guardian/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	adjustBruteLoss(EXPLOSION_POWER_STANDARD_SCALE_MOB_DAMAGE(power, explosion.mob_damage_mod * 0.33))
+
 /mob/living/simple_animal/hostile/guardian/gib()
 	if(summoner)
 		to_chat(summoner, "<span class='danger'><B>Your [src] was blown up!</span></B>")

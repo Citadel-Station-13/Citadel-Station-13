@@ -37,14 +37,18 @@
 #define ROLE_INTERNAL_AFFAIRS		"internal affairs agent"
 #define ROLE_GANG					"gangster"
 #define ROLE_BLOODSUCKER			"bloodsucker"
+#define ROLE_SPACE_DRAGON			"Space Dragon"
 //#define ROLE_MONSTERHUNTER			"monster hunter" Disabled for now
 #define ROLE_GHOSTCAFE				"ghostcafe"
 #define ROLE_MINOR_ANTAG			"minorantag"
 #define ROLE_RESPAWN				"respawnsystem"
+/// Not an actual antag. Lets players force all antags off.
+#define ROLE_NO_ANTAGONISM			"NO_ANTAGS"
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough
 //(in game days played) to play that role
 GLOBAL_LIST_INIT(special_roles, list(
+	ROLE_NO_ANTAGONISM,
 	ROLE_TRAITOR = /datum/game_mode/traitor,
 	ROLE_BROTHER = /datum/game_mode/traitor/bros,
 	ROLE_OPERATIVE = /datum/game_mode/nuclear,
@@ -67,7 +71,8 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_SENTIENCE,
 	ROLE_GANG = /datum/game_mode/gang,
 	ROLE_HERETIC = /datum/game_mode/heretics,
-	ROLE_BLOODSUCKER = /datum/game_mode/bloodsucker
+	ROLE_BLOODSUCKER = /datum/game_mode/bloodsucker,
+	ROLE_SPACE_DRAGON
 	//ROLE_MONSTERHUNTER Disabled for now
 ))
 

@@ -2,7 +2,7 @@
 /**
   * Applies damage to this mob
   *
-  * Sends [COMSIG_MOB_APPLY_DAMGE]
+  * Sends [COMSIG_MOB_APPLY_DAMAGE]
   *
   * Arguuments:
   * * damage - amount of damage

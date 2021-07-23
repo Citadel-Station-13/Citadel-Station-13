@@ -602,8 +602,8 @@
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	icon_state = "mmask"
 
-/obj/item/clothing/suit/smaiden
-	name = "shrine maiden"
+/obj/item/clothing/under/smaiden
+	name = "shrine maiden outfit"
 	desc = "Seems questionably tight for religious purposes."
 	icon_state = "smaiden"
 	item_state = "smaiden"

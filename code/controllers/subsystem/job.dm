@@ -490,42 +490,29 @@ SUBSYSTEM_DEF(job)
 		job.after_spawn(H, M, joined_late) // note: this happens before the mob has a key! M will always have a client, H might not.
 		equip_loadout(N, H, TRUE)//CIT CHANGE - makes players spawn with in-backpack loadout items properly. A little hacky but it works
 
-	if(ishuman(H) && H.client && N)
-		if(H.client && H.client.prefs && length(H.client.prefs.tcg_cards))
-			var/obj/item/tcgcard_binder/binder = new(get_turf(H))
-			H.equip_to_slot_if_possible(binder, SLOT_IN_BACKPACK, disable_warning = TRUE, bypass_equip_delay_self = TRUE)
-			for(var/card_type in H.client.prefs.tcg_cards)
-				if(card_type)
-					if(islist(H.client.prefs.tcg_cards[card_type]))
-						for(var/duplicate in H.client.prefs.tcg_cards[card_type])
-							var/obj/item/tcg_card/card = new(get_turf(H), card_type, duplicate)
-							card.forceMove(binder)
-							binder.cards.Add(card)
-					else
-						var/obj/item/tcg_card/card = new(get_turf(H), card_type, H.client.prefs.tcg_cards[card_type])
+	var/list/tcg_cards
+	if(ishuman(H))
+		if(length(H.client?.prefs?.tcg_cards))
+			tcg_cards = H.client.prefs.tcg_cards
+		else if(length(N?.client?.prefs?.tcg_cards))
+			tcg_cards = N.client.prefs.tcg_cards
+	if(tcg_cards)
+		var/obj/item/tcgcard_binder/binder = new(get_turf(H))
+		H.equip_to_slot_if_possible(binder, SLOT_IN_BACKPACK, disable_warning = TRUE, bypass_equip_delay_self = TRUE)
+		for(var/card_type in N.client.prefs.tcg_cards)
+			if(card_type)
+				if(islist(H.client.prefs.tcg_cards[card_type]))
+					for(var/duplicate in N.client.prefs.tcg_cards[card_type])
+						var/obj/item/tcg_card/card = new(get_turf(H), card_type, duplicate)
 						card.forceMove(binder)
 						binder.cards.Add(card)
-			binder.check_for_exodia()
-			if(length(H.client.prefs.tcg_decks))
-				binder.decks = H.client.prefs.tcg_decks
-	else
-		if(H && N.client.prefs && length(N.client.prefs.tcg_cards))
-			var/obj/item/tcgcard_binder/binder = new(get_turf(H))
-			H.equip_to_slot_if_possible(binder, SLOT_IN_BACKPACK, disable_warning = TRUE, bypass_equip_delay_self = TRUE)
-			for(var/card_type in N.client.prefs.tcg_cards)
-				if(card_type)
-					if(islist(H.client.prefs.tcg_cards[card_type]))
-						for(var/duplicate in N.client.prefs.tcg_cards[card_type])
-							var/obj/item/tcg_card/card = new(get_turf(H), card_type, duplicate)
-							card.forceMove(binder)
-							binder.cards.Add(card)
-					else
-						var/obj/item/tcg_card/card = new(get_turf(H), card_type, N.client.prefs.tcg_cards[card_type])
-						card.forceMove(binder)
-						binder.cards.Add(card)
-			binder.check_for_exodia()
-			if(length(N.client.prefs.tcg_decks))
-				binder.decks = N.client.prefs.tcg_decks
+				else
+					var/obj/item/tcg_card/card = new(get_turf(H), card_type, N.client.prefs.tcg_cards[card_type])
+					card.forceMove(binder)
+					binder.cards.Add(card)
+		binder.check_for_exodia()
+		if(length(N.client.prefs.tcg_decks))
+			binder.decks = N.client.prefs.tcg_decks
 
 	return H
 /*

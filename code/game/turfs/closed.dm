@@ -6,15 +6,19 @@
 	blocks_air = 1
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	rad_insulation = RAD_MEDIUM_INSULATION
+	wave_explosion_block = 10
+	wave_explosion_multiply = 0.75
+	/// How much we block yelling
+	var/yelling_resistance = 10
+	/// how much of inbound yelling to dampen
+	var/yelling_dampen = 0.5
 
 /turf/closed/Initialize()
 	. = ..()
-	update_air_ref()
 
 /turf/closed/AfterChange()
 	. = ..()
 	SSair.high_pressure_delta -= src
-	update_air_ref()
 
 /turf/closed/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE
@@ -28,6 +32,7 @@
 	name = "wall"
 	icon = 'icons/turf/walls.dmi'
 	explosion_block = 50
+	wave_explosion_block = INFINITY
 
 /turf/closed/indestructible/rust_heretic_act()
 	return
@@ -198,16 +203,19 @@
 	desc = "A wall made out of a strange metal. The squares on it pulse in a predictable pattern."
 	icon = 'icons/turf/walls/hierophant_wall.dmi'
 	icon_state = "wall"
-	
+
 /turf/closed/indestructible/rock/glacierrock
 	name = "unaturally hard ice wall"
 	desc = "Ice, hardened over thousands of years, you're not breaking through this."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "snow_rock"
-	
+
 /turf/closed/indestructible/rock/glacierrock/blue
 	name = "blue ice wall"
 	desc = "The incredible compressive forces that formed this sturdy ice wall gave it a blue color."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "ice"
 	canSmoothWith = list(/turf/closed/indestructible/rock/glacierrock/blue)
+
+/turf/closed/get_yelling_resistance(power)
+	return yelling_resistance + (power * yelling_dampen)

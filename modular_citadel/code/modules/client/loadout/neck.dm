@@ -21,6 +21,8 @@
 /datum/gear/neck/collar
 	name = "Collar"
 	path = /obj/item/clothing/neck/petcollar
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#00BBBB")
 
 /datum/gear/neck/leathercollar
 	name = "Leather collar"

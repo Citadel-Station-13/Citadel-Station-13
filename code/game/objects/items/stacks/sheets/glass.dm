@@ -272,7 +272,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	. = ..()
 	. += GLOB.plastitaniumglass_recipes
 
-/obj/item/stack/sheet/titaniumglass/on_solar_construction(obj/machinery/power/solar/S)
+/obj/item/stack/sheet/plastitaniumglass/on_solar_construction(obj/machinery/power/solar/S)
 	S.max_integrity *= 2
 	S.efficiency *= 2
 
