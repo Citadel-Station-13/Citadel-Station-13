@@ -310,4 +310,5 @@ Slimepeople are damaged by most things that heal toxin damage, and healed by mos
 EMPs can be created by mixing uranium and iron. The power of the pulse is determined by the distance from its epicentre, and the maximum distance is determined by the volume of the reaction!
 Lizards start with a disabled mutation that allows them to breath fire. This can be unlocked through the usage of genetics!
 Several loadout items can be unlocked through progress in parts of the game. The progress for these can be tracked in the loadout menu.
+Farting is illegal on other worlds
 
