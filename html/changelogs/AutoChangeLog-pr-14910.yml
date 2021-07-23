@@ -1,0 +1,8 @@
+author: "MrJWhit"
+delete-after: True
+changes: 
+  - rscadd: "Replaces the northwest maint room on box with a sadness room"
+  - rscadd: "Replaces bar stripper room with an arcade on boxstation"
+  - rscadd: "Squished the west bathrooms a bit and made a room to sell things on boxstation."
+  - balance: "Southeast maint hallway on box is now ziggy and zaggier."
+  - bugfix: "Fixed pipes being not connected with the recent map PR for boxstation."
