@@ -1,5 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - bugfix: "hallucination now bottoms out at 0"
-  - balance: "supermatter now causes only half the hallucinations"
