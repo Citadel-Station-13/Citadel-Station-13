@@ -1,0 +1,4 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - rscdel: "Removes a sneaky transform button on the vore panel."
