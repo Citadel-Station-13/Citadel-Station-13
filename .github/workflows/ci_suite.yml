@@ -98,8 +98,8 @@ jobs:
         run: |
           bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build
-        #  bash tools/ci/run_server.sh
+          tools/build/build -DCIDEFINE
+          bash tools/ci/run_server.sh
         env:
           CBT_BUILD_MODE: TEST_RUN
 
