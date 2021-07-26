@@ -103,7 +103,7 @@
 	. = ..()
 	AddElement(/datum/element/polychromic, poly_colors, 3)
 
-/obj/item/clothing/neck/cancloak/polychromic
+/obj/item/clothing/neck/cloak/cancloak/polychromic
 	name = "canvas cloak"
 	desc = "A rugged cloak made of canvas."
 	icon_state = "cancloak"
