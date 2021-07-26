@@ -110,7 +110,7 @@
 	item_state = "cloak"
 	var/list/poly_colors = list("#585858", "#373737", "#BEBEBE")
 
-/obj/item/clothing/neck/cancloak/polychromic/ComponentInitialize()
+/obj/item/clothing/neck/cloak/cancloak/polychromic/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/polychromic, poly_colors, 3)
 
