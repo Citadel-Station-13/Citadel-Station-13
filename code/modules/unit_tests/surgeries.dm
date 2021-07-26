@@ -53,7 +53,8 @@
 
 	TEST_ASSERT(!isnull(alice.get_bodypart(BODY_ZONE_HEAD)), "Alice has no head after prosthetic replacement")
 	TEST_ASSERT_EQUAL(alice.get_visible_name(), "Bob", "Bob's head was transplanted onto Alice's body, but their name is not Bob")
-
+/*
+i couldn't actually find anything in the parts of the code it's calling preventing two surgeries, so it's probably somewhere else
 /datum/unit_test/multiple_surgeries/Run()
 	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human)
 	var/mob/living/carbon/human/patient_zero = allocate(/mob/living/carbon/human)
@@ -78,6 +79,7 @@
 	user.apply_status_effect(STATUS_EFFECT_HIPPOCRATIC_OATH)
 	INVOKE_ASYNC(surgery_step, /datum/surgery_step/proc/initiate, user, patient_one, BODY_ZONE_CHEST, scalpel, surgery_for_one)
 	TEST_ASSERT(surgery_for_one.step_in_progress, "Surgery on patient one was not initiated, despite having rod of asclepius")
+*/
 
 /datum/unit_test/tend_wounds/Run()
 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
