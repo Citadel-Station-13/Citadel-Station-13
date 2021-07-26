@@ -93,7 +93,10 @@ jobs:
           sudo dpkg --add-architecture i386
           sudo apt update || true
           sudo apt install -o APT::Immediate-Configure=false libssl1.1:i386
-          bash tools/ci/install_rust_deps.sh
+          bash tools/ci/install_rust_g.sh
+      - name: Install auxmos
+        run: |
+          bash tools/ci/install_auxmos.sh
       - name: Compile and run tests
         run: |
           bash tools/ci/install_byond.sh
