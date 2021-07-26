@@ -30,6 +30,7 @@
 	setup_visuals()
 
 /mob/living/simple_animal/hostile/zombie/proc/setup_visuals()
+	set waitfor = FALSE
 	var/datum/preferences/dummy_prefs = new
 	dummy_prefs.pref_species = new /datum/species/zombie
 	dummy_prefs.be_random_body = TRUE
