@@ -65,7 +65,7 @@
 	var/datum/surgery/organ_manipulation/surgery_for_zero = new
 
 	INVOKE_ASYNC(surgery_step, /datum/surgery_step/proc/initiate, user, patient_zero, BODY_ZONE_CHEST, scalpel, surgery_for_zero)
-	sleep()
+	sleep(1)
 	TEST_ASSERT(surgery_for_zero.step_in_progress, "Surgery on patient zero was not initiated")
 
 	var/datum/surgery/organ_manipulation/surgery_for_one = new
