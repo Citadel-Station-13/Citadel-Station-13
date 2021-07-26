@@ -65,9 +65,11 @@
 	var/datum/surgery/organ_manipulation/surgery_for_zero = new
 
 	INVOKE_ASYNC(surgery_step, /datum/surgery_step/proc/initiate, user, patient_zero, BODY_ZONE_CHEST, scalpel, surgery_for_zero)
+	sleep()
 	TEST_ASSERT(surgery_for_zero.step_in_progress, "Surgery on patient zero was not initiated")
 
 	var/datum/surgery/organ_manipulation/surgery_for_one = new
+
 
 	// Without waiting for the incision to complete, try to start a new surgery
 	TEST_ASSERT(!surgery_step.initiate(user, patient_one, BODY_ZONE_CHEST, scalpel, surgery_for_one), "Was allowed to start a second surgery without the rod of asclepius")
