@@ -50333,11 +50333,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/security/processing)
-"cxW" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/turf/open/space,
-/area/space/nearstation)
 "cxY" = (
 /obj/machinery/camera{
 	c_tag = "Arrivals Escape Pod 1";
@@ -53720,9 +53715,8 @@
 /turf/open/floor/wood/wood_large,
 /area/service/chapel/main)
 "fty" = (
-/obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
-/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space/nearstation)
 "ftE" = (
@@ -56232,10 +56226,6 @@
 /obj/item/trash/candy,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"kvl" = (
-/obj/structure/grille,
-/turf/closed/wall/r_wall,
-/area/space/nearstation)
 "kvL" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -86213,7 +86203,7 @@ bgO
 jBA
 btG
 aaa
-kvl
+iDo
 ctv
 iDo
 aaa
@@ -97522,7 +97512,7 @@ aaa
 aaa
 aaa
 aaa
-jAD
+fIs
 aaa
 aaa
 aaa
@@ -98784,7 +98774,7 @@ cCS
 bMK
 bMK
 bMK
-gXs
+gJi
 aaa
 aaa
 aaa
@@ -99298,7 +99288,7 @@ bMK
 bMK
 bMK
 bMK
-aaf
+aag
 aoV
 aoV
 aoV
@@ -103325,7 +103315,7 @@ aaf
 aaf
 aaf
 aaf
-cxW
+aag
 alO
 anf
 anf
