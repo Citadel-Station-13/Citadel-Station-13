@@ -19,7 +19,7 @@
 
 /obj/item/integrated_circuit/atmospherics/Initialize()
 	air_contents = new(volume)
-	..()
+	return ..()
 
 /obj/item/integrated_circuit/atmospherics/return_air()
 	return air_contents
