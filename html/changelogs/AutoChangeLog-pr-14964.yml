@@ -1,0 +1,12 @@
+author: "EmeraldSundisk"
+delete-after: True
+changes: 
+  - rscadd: "Adds decals between Virology and the general Medbay to provide clarity"
+  - rscadd: "Adds an airlock with access to the Engineering Cooling Loop"
+  - rscadd: "The Maintenance Theater now has a suitable amount of dust"
+  - rscdel: "Removed an errant entertainment monitor left in the morgue"
+  - rscdel: "Removed redundant scrubber piping in and around the bar and kitchen
+tweak: Slightly readjusts an airpipe to take advantage of newfound space
+tweak: The Toxins Lab has received (predominantly) visual adjustments as to render it more in line with the general science department
+tweak: Toxins Storage is no longer its own area and as such needn't worry about APCs"
+  - bugfix: "Hydroponics now has a proper APC as intended"
