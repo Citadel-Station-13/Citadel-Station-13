@@ -144,7 +144,7 @@
 	owner.Stun(15)
 	owner.adjustToxLoss(-15, TRUE, TRUE)
 
-	owner.AddIntegrationBlood(min(BLOOD_VOLUME_NORMAL, owner.blood_volume + 20))
+	owner.AddIntegrationBlood(20)
 	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
 		keep_going = TRUE
 

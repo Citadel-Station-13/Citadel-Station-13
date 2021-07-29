@@ -396,19 +396,21 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
 	taste_description = "sweetness and salt"
+	var/extra_regen = 0.25 // in addition to acting as temporary blood, also add this much to their actual blood per tick
 	var/last_added = 0
 	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10	//So that normal blood regeneration can continue with salglu active
 	pH = 5.5
 
-/datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/human/M)
 	if((HAS_TRAIT(M, TRAIT_NOMARROW)))
 		return
 	if(last_added)
-		M.integrating_blood -= min(M.integrating_blood, last_added)
+		M.AddIntegrationBlood(-last_added)
 		last_added = 0
-	if(M.blood_volume < maximum_reachable)	//Can only up to double your effective blood level.
-		last_added = volume * 5
-		M.AddIntegrationBlood(last_added)
+	if(M.functional_blood() < maximum_reachable) //Can only up to double your effective blood level.
+		var/new_blood_level = min(volume * 5, maximum_reachable)
+		last_added = new_blood_level
+		M.AddIntegrationBlood(new_blood_level + (extra_regen * REM))
 	if(prob(33))
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
