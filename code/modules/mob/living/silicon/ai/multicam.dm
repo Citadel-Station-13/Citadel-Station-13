@@ -251,7 +251,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	to_chat(src, "<span class='notice'>Multiple-camera viewing mode deactivated.</span>")
 
 
-/mob/living/silicon/ai/proc/select_main_multicam_window(obj/screen/movable/pic_in_pic/ai/P)
+/mob/living/silicon/ai/proc/select_main_multicam_window(atom/movable/screen/movable/pic_in_pic/ai/P)
 	if(master_multicam == P)
 		return
 

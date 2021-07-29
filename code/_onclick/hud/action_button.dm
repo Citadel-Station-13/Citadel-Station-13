@@ -235,7 +235,7 @@
 
 	return "WEST[coord_col]:[coord_col_offset],NORTH[coord_row]:-6"
 
-/datum/hud/proc/SetButtonCoords(obj/screen/button,number, supportedcolumns)
+/datum/hud/proc/SetButtonCoords(atom/movable/screen/button,number, supportedcolumns)
 	var/row = round((number-1)/supportedcolumns)
 	var/col = ((number - 1)%(supportedcolumns)) + 1
 	var/x_offset = 32*(col-1) + 4 + 2*col

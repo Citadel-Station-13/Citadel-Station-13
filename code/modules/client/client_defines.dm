@@ -88,7 +88,7 @@
 
 	var/datum/player_details/player_details //these persist between logins/logouts during the same round.
 
-	var/list/char_render_holders			//Should only be a key-value list of north/south/east/west = obj/screen.
+	var/list/char_render_holders			//Should only be a key-value list of north/south/east/west = atom/movable/screen.
 
 	/// Last time they used fix macros
 	var/last_macro_fix = 0

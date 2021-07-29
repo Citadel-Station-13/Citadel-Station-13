@@ -26,7 +26,7 @@
 	QDEL_NULL(button_expand)
 	return ..()
 
-/atom/movable/screen/movable/pic_in_pic/component_click(obj/screen/component_button/component, params)
+/atom/movable/screen/movable/pic_in_pic/component_click(atom/movable/screen/component_button/component, params)
 	if(component == button_x)
 		qdel(src)
 	else if(component == button_expand)

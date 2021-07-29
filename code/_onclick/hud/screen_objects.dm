@@ -11,7 +11,6 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	layer = HUD_LAYER
 	plane = HUD_PLANE
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
 	vis_flags = VIS_INHERIT_PLANE
@@ -34,9 +33,6 @@
 	 */
 	var/del_on_map_removal = TRUE
 
-/atom/movable/screen/take_damage()
-	return
-
 /atom/movable/screen/Destroy()
 	master = null
 	hud = null
@@ -48,7 +44,7 @@
 /atom/movable/screen/orbit()
 	return
 
-/atom/movable/screen/proc/component_click(obj/screen/component_button/component, params)
+/atom/movable/screen/proc/component_click(atom/movable/screen/component_button/component, params)
 	return
 
 /atom/movable/screen/text
@@ -695,7 +691,7 @@
 /atom/movable/screen/component_button
 	var/atom/movable/screen/parent
 
-/atom/movable/screen/component_button/Initialize(mapload, obj/screen/parent)
+/atom/movable/screen/component_button/Initialize(mapload, atom/movable/screen/parent)
 	. = ..()
 	src.parent = parent
 

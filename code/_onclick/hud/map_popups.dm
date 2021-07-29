@@ -46,7 +46,7 @@
  * Registers screen obj with the client, which makes it visible on the
  * assigned map, and becomes a part of the assigned map's lifecycle.
  */
-/client/proc/register_map_obj(obj/screen/screen_obj)
+/client/proc/register_map_obj(atom/movable/screen/screen_obj)
 	if(!screen_obj.assigned_map)
 		CRASH("Can't register [screen_obj] without 'assigned_map' property.")
 	if(!screen_maps[screen_obj.assigned_map])
