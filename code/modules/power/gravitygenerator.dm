@@ -155,7 +155,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		if(count == 5) // Middle
 			middle = part
 		if(count <= 3) // Their sprite is the top part of the generator
-			part.set_density(FALSE)
+			part.density= 0
 			part.layer = WALL_OBJ_LAYER
 		part.sprite_number = count
 		part.main_part = src
@@ -239,7 +239,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	data["charge_count"] = charge_count
 	data["charging_state"] = charging_state
 	data["on"] = on
-	data["operational"] = (machine_stat & BROKEN) ? FALSE : TRUE
+	data["operational"] = (stat & BROKEN) ? FALSE : TRUE
 
 	return data
 
@@ -259,7 +259,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 /obj/machinery/gravity_generator/main/power_change()
 	. = ..()
-	investigate_log("has [machine_stat & NOPOWER ? "lost" : "regained"] power.", INVESTIGATE_GRAVITY)
+	investigate_log("has [stat & NOPOWER ? "lost" : "regained"] power.", INVESTIGATE_GRAVITY)
 	set_power()
 
 /obj/machinery/gravity_generator/main/get_status()
