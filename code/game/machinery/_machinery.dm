@@ -394,8 +394,11 @@ Class Procs:
 	M.icon_state = "box_1"
 
 /obj/machinery/obj_break(damage_flag)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	. = ..()
+	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		stat |= BROKEN
+		SEND_SIGNAL(src, COMSIG_MACHINERY_BROKEN, damage_flag)
+		update_appearance()
 		return TRUE
 
 /obj/machinery/contents_explosion(severity, target)
