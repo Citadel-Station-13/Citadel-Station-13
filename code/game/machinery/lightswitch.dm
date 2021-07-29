@@ -25,6 +25,7 @@
 	pixel_x = -26
 
 /obj/machinery/light_switch/Initialize()
+	. = ..()
 	if(istext(area))
 		area = text2path(area)
 	if(ispath(area))
@@ -36,7 +37,6 @@
 
 	if(!name)
 		name = "light switch ([area.name])"
-	. = ..()
 
 /obj/machinery/light_switch/update_appearance(updates=ALL)
 	. = ..()

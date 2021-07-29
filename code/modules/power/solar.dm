@@ -25,6 +25,7 @@
 	var/efficiency = 1
 
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
+	. = ..()
 	panel = new()
 	panel.vis_flags = VIS_INHERIT_ID|VIS_INHERIT_ICON|VIS_INHERIT_PLANE
 	vis_contents += panel
@@ -34,7 +35,6 @@
 	Make(S)
 	connect_to_network()
 	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/queue_update_solar_exposure)
-	. = ..()
 
 /obj/machinery/power/solar/Destroy()
 	unset_control() //remove from control computer
