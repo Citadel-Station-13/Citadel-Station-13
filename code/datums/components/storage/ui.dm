@@ -20,8 +20,8 @@
 	. = list()
 	var/list/accessible_contents = accessible_items()
 	var/adjusted_contents = length(accessible_contents)
-	var/obj/screen/storage/close/ui_close
-	var/obj/screen/storage/boxes/ui_boxes
+	var/atom/movable/screen/storage/close/ui_close
+	var/atom/movable/screen/storage/boxes/ui_boxes
 
 	//Numbered contents display
 	var/list/datum/numbered_display/numbered_contents
@@ -62,7 +62,7 @@
 		for(var/obj/O in accessible_items())
 			if(QDELETED(O))
 				continue
-			var/obj/screen/storage/item_holder/D = new(null, src, O)
+			var/atom/movable/screen/storage/item_holder/D = new(null, src, O)
 			D.mouse_opacity = MOUSE_OPACITY_OPAQUE //This is here so storage items that spawn with contents correctly have the "click around item to equip"
 			D.screen_loc = "[cx]:[screen_pixel_x],[cy]:[screen_pixel_y]"
 			O.maptext = ""
@@ -81,9 +81,9 @@
   */
 /datum/component/storage/proc/orient2hud_volumetric(mob/user, maxcolumns)
 	. = list()
-	var/obj/screen/storage/left/ui_left
-	var/obj/screen/storage/continuous/ui_continuous
-	var/obj/screen/storage/close/ui_close
+	var/atom/movable/screen/storage/left/ui_left
+	var/atom/movable/screen/storage/continuous/ui_continuous
+	var/atom/movable/screen/storage/close/ui_close
 
 	// Generate ui_item_blocks for missing ones and render+orient.
 	var/list/atom/contents = accessible_items()
@@ -137,7 +137,7 @@
 	for(var/i in percentage_by_item)
 		I = i
 		var/percent = percentage_by_item[I]
-		var/obj/screen/storage/volumetric_box/center/B = new /obj/screen/storage/volumetric_box/center(null, src, I)
+		var/atom/movable/screen/storage/volumetric_box/center/B = new /atom/movable/screen/storage/volumetric_box/center(null, src, I)
 		var/pixels_to_use = overrun? MINIMUM_PIXELS_PER_ITEM : max(using_horizontal_pixels * percent, MINIMUM_PIXELS_PER_ITEM)
 		var/addrow = FALSE
 		if(CEILING(pixels_to_use, 1) >= FLOOR(horizontal_pixels - current_pixel - VOLUMETRIC_STORAGE_EDGE_PADDING, 1))
@@ -255,22 +255,22 @@
   * Gets our ui_boxes, making it if it doesn't exist.
   */
 /datum/component/storage/proc/get_ui_boxes()
-	return new /obj/screen/storage/boxes(null, src)
+	return new /atom/movable/screen/storage/boxes(null, src)
 
 /**
   * Gets our ui_left, making it if it doesn't exist.
   */
 /datum/component/storage/proc/get_ui_left()
-	return new /obj/screen/storage/left(null, src)
+	return new /atom/movable/screen/storage/left(null, src)
 
 /**
   * Gets our ui_close, making it if it doesn't exist.
   */
 /datum/component/storage/proc/get_ui_close()
-	return new /obj/screen/storage/close(null, src)
+	return new /atom/movable/screen/storage/close(null, src)
 
 /**
   * Gets our ui_continuous, making it if it doesn't exist.
   */
 /datum/component/storage/proc/get_ui_continuous()
-	return new /obj/screen/storage/continuous(null, src)
+	return new /atom/movable/screen/storage/continuous(null, src)

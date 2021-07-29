@@ -60,7 +60,7 @@
 
 	preload_rsc = PRELOAD_RSC
 
-	var/obj/screen/click_catcher/void
+	var/atom/movable/screen/click_catcher/void
 
 	//These two vars are used to make a special mouse cursor, with a unique icon for clicking
 	var/mouse_up_icon = null
@@ -168,7 +168,7 @@
 	 * Assoc list with all the active maps - when a screen obj is added to
 	 * a map, it's put in here as well.
 	 *
-	 * Format: list(<mapname> = list(/obj/screen))
+	 * Format: list(<mapname> = list(/atom/movable/screen))
 	 */
 	var/list/screen_maps = list()
 

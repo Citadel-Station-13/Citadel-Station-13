@@ -11,7 +11,7 @@
 	var/check_flags = 0
 	var/required_mobility_flags = MOBILITY_USE
 	var/processing = FALSE
-	var/obj/screen/movable/action_button/button = null
+	var/atom/movable/screen/movable/action_button/button = null
 	var/buttontooltipstyle = ""
 	var/transparent_when_unavailable = TRUE
 	var/use_target_appearance = FALSE

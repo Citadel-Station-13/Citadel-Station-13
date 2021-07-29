@@ -10,11 +10,11 @@
 	breath_alert_info = list(
 		not_enough_alert = list(
 			alert_category = "not_enough_nitro",
-			alert_type = /obj/screen/alert/not_enough_nitro
+			alert_type = /atom/movable/screen/alert/not_enough_nitro
 		),
 		too_much_alert = list(
 			alert_category = "too_much_nitro",
-			alert_type = /obj/screen/alert/too_much_nitro
+			alert_type = /atom/movable/screen/alert/too_much_nitro
 		)
 	)
 	name = "Nitrogen"
@@ -27,11 +27,11 @@
 	breath_alert_info = list(
 		not_enough_alert = list(
 			alert_category = "not_enough_co2",
-			alert_type = /obj/screen/alert/not_enough_co2
+			alert_type = /atom/movable/screen/alert/not_enough_co2
 		),
 		too_much_alert = list(
 			alert_category = "too_much_co2",
-			alert_type = /obj/screen/alert/too_much_co2
+			alert_type = /atom/movable/screen/alert/too_much_co2
 		)
 	)
 	fusion_power = 3
@@ -138,11 +138,11 @@
 	breath_alert_info = list(
 		not_enough_alert = list(
 			alert_category = "not_enough_ch4",
-			alert_type = /obj/screen/alert/not_enough_ch4
+			alert_type = /atom/movable/screen/alert/not_enough_ch4
 		),
 		too_much_alert = list(
 			alert_category = "too_much_ch4",
-			alert_type = /obj/screen/alert/too_much_ch4
+			alert_type = /atom/movable/screen/alert/too_much_ch4
 		)
 	)
 	fire_energy_released = FIRE_CARBON_ENERGY_RELEASED
@@ -156,11 +156,11 @@
 	breath_alert_info = list(
 		not_enough_alert = list(
 			alert_category = "not_enough_ch3br",
-			alert_type = /obj/screen/alert/not_enough_ch3br
+			alert_type = /atom/movable/screen/alert/not_enough_ch3br
 		),
 		too_much_alert = list(
 			alert_category = "too_much_ch3br",
-			alert_type = /obj/screen/alert/too_much_ch3br
+			alert_type = /atom/movable/screen/alert/too_much_ch3br
 		)
 	)
 	fire_products = list(GAS_CO2 = 1, GAS_H2O = 1.5, GAS_BZ = 0.5)

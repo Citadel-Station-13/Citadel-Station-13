@@ -68,11 +68,11 @@
 	try_toggle_open(usr)
 
 /obj/item/modular_computer/laptop/MouseDrop(obj/over_object, src_location, over_location)
-	if(istype(over_object, /obj/screen/inventory/hand) || over_object == usr)
-		var/obj/screen/inventory/hand/H = over_object
+	if(istype(over_object, /atom/movable/screen/inventory/hand) || over_object == usr)
+		var/atom/movable/screen/inventory/hand/H = over_object
 		var/mob/M = usr
 
-		if(!istype(over_object, /obj/screen/inventory/hand))
+		if(!istype(over_object, /atom/movable/screen/inventory/hand))
 			M.put_in_active_hand(src)
 			return
 
