@@ -33,6 +33,7 @@
 /// The APCs power channel is automatically on.
 #define APC_CHANNEL_AUTO_ON 3
 
+
 // APC autoset enums:
 /// The APC turns automated and manual power channels off.
 #define AUTOSET_FORCE_OFF 0
@@ -96,6 +97,8 @@
 #define UPOVERLAY_LIGHTING_SHIFT (6)
 /// Bit shift for the environment channel status of the APC.
 #define UPOVERLAY_ENVIRON_SHIFT (8)
+///Update for hijack overlays
+#define UPOVERLAY_HIJACKED (10)
 
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
 // one per area, needs wire connection to power network through a terminal
@@ -247,7 +250,7 @@
 		opened = APC_COVER_OPENED
 		operating = FALSE
 		name = "\improper [A.name] APC"
-		stat |= MAINT
+		set_machine_stat(stat | MAINT)
 
 	update_appearance()
 	addtimer(CALLBACK(src, .proc/update), 5)
@@ -284,7 +287,7 @@
 		opened = APC_COVER_OPENED
 		operating = FALSE
 		name = "\improper [get_area_name(area, TRUE)] APC"
-		stat |= MAINT
+		set_machine_stat(stat | MAINT)
 		update_appearance()
 		addtimer(CALLBACK(src, .proc/update), 5)
 
@@ -410,8 +413,8 @@
 
 	. += mutable_appearance(icon, "apcox-[locked]")
 	. += emissive_appearance(icon, "apcox-[locked]")
-	. += mutable_appearance(icon, "apco3-[charging]")
-	. += emissive_appearance(icon, "apco3-[charging]")
+	. += mutable_appearance(icon, "apco3-[hijackerreturn() ? "3" : charging]")
+	. += emissive_appearance(icon, "apco3-[hijackerreturn() ? "3" : charging]")
 	if(!operating)
 		return
 
@@ -426,8 +429,6 @@
 /obj/machinery/power/apc/proc/check_updates()
 	SIGNAL_HANDLER
 	. = NONE
-	var/last_update_state = update_state
-	var/last_update_overlay = update_overlay
 
 	// Handle icon status:
 	var/new_update_state = NONE
@@ -454,7 +455,6 @@
 	var/new_update_overlay = NONE
 	if(operating)
 		new_update_overlay |= UPOVERLAY_OPERATING
-
 	if(!update_state)
 		if(locked)
 			new_update_overlay |= UPOVERLAY_LOCKED
@@ -463,29 +463,22 @@
 		new_update_overlay |= (equipment << UPOVERLAY_EQUIPMENT_SHIFT)
 		new_update_overlay |= (lighting << UPOVERLAY_LIGHTING_SHIFT)
 		new_update_overlay |= (environ << UPOVERLAY_ENVIRON_SHIFT)
+		new_update_overlay |= (hijackerreturn() << UPOVERLAY_HIJACKED)
 
 	if(new_update_overlay != update_overlay)
 		update_overlay = new_update_overlay
 		. |= UPDATE_OVERLAYS
-	var/results = 0
-	var/hijackerreturn
-	if (hijacker)
-		var/obj/item/implant/hijack/H = hijacker.getImplant(/obj/item/implant/hijack)
-		hijackerreturn = H && !H.stealthmode
-	if(last_update_state == update_state && last_update_overlay == update_overlay && hijackerreturn == hijackerlast)
-		return 0
-	if(last_update_state != update_state)
-		results += 1
-	if(last_update_overlay != update_overlay || hijackerreturn  != hijackerlast)
-		results += 2
-	if (hijackerreturn  != hijackerlast)
-		hijackerlast = hijackerreturn
-	return results
 
 // Used in process so it doesn't update the icon too much
 /obj/machinery/power/apc/proc/queue_icon_update()
 	icon_update_needed = TRUE
 
+/obj/machinery/power/apc/proc/hijackerreturn()
+	if(!hijacker)
+		return FALSE
+	var/obj/item/implant/hijack/implant = hijacker.getImplant(/obj/item/implant/hijack)
+	if(implant && !implant.stealthmode)
+		return TRUE
 //attack with an item - open/close cover, insert cell, or (un)lock interface
 
 /obj/machinery/power/apc/crowbar_act(mob/user, obj/item/W)
@@ -576,7 +569,7 @@
 					to_chat(user, "<span class='notice'>You screw the circuit electronics into place.</span>")
 				if (APC_ELECTRONICS_SECURED)
 					has_electronics = APC_ELECTRONICS_INSTALLED
-					stat |= MAINT
+					set_machine_stat(stat | MAINT)
 					W.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You unfasten the electronics.</span>")
 				else
@@ -589,7 +582,7 @@
 	else
 		panel_open = !panel_open
 		to_chat(user, "The wires have been [panel_open ? "exposed" : "unexposed"]")
-		update_icon()
+		update_appearance()
 
 /obj/machinery/power/apc/wirecutter_act(mob/living/user, obj/item/W)
 	. = ..()
@@ -756,7 +749,7 @@
 			user.visible_message("<span class='warning'>[user] slices [src]'s cover lock, and it swings wide open!</span>", \
 			"<span class='alloy'>You slice [src]'s cover lock apart with [W], and the cover swings open.</span>")
 			opened = APC_COVER_OPENED
-			update_icon()
+			update_appearance()
 		else
 			user.visible_message("<span class='warning'>[user] presses [W] into [src]!</span>", \
 			"<span class='alloy'>You hold [W] in place within [src], and it slowly begins to warm up...</span>")
@@ -773,7 +766,7 @@
 			playsound(src, 'sound/machines/clockcult/steam_whoosh.ogg', 50, FALSE)
 			opened = APC_COVER_CLOSED
 			locked = TRUE //Clockies get full APC access on cogged APCs, but they can't lock or unlock em unless they steal some ID to give all of them APC access, soo this is pretty much just QoL for them and makes cogs a tiny bit more stealthy
-			update_icon()
+			update_appearance()
 		return
 	else if(panel_open && !opened && is_wire_tool(W))
 		wires.interact(user)
@@ -895,7 +888,7 @@
 		obj_flags |= EMAGGED
 		locked = FALSE
 		to_chat(user, "<span class='notice'>You emag the APC interface.</span>")
-		update_icon()
+		update_appearance()
 	return TRUE
 
 // attack with hand - remove cell (if cover open) or interact with the APC
@@ -1133,7 +1126,7 @@
 			hijacker.toggleSiliconAccessArea(area)
 			hijacker = null
 			set_hijacked_lighting()
-			update_icon()
+			update_appearance()
 			var/obj/item/implant/hijack/H = usr.getImplant(/obj/item/implant/hijack)
 			H.stealthcooldown = world.time + 2 MINUTES
 			energy_fail(30 SECONDS * (cell.charge / cell.maxcharge))
@@ -1191,7 +1184,7 @@
 			hijacker.toggleSiliconAccessArea(area)
 			if (L.toggleSiliconAccessArea(area))
 				hijacker = L
-				update_icon()
+				update_appearance()
 				set_hijacked_lighting()
 			H.hijacking = FALSE
 			being_hijacked = FALSE
@@ -1208,7 +1201,7 @@
 	if (do_after(L,H.stealthmode ? 12 SECONDS : 5 SECONDS,target=src))
 		if (L.toggleSiliconAccessArea(area))
 			hijacker = L
-			update_icon()
+			update_appearance()
 			set_hijacked_lighting()
 			H.hijacking = FALSE
 			being_hijacked = FALSE
@@ -1654,12 +1647,8 @@
 
 /obj/machinery/power/apc/proc/set_hijacked_lighting()
 	set waitfor = FALSE
-	var/hijackerreturn
-	if (hijacker)
-		var/obj/item/implant/hijack/H = hijacker.getImplant(/obj/item/implant/hijack)
-		hijackerreturn = H && !H.stealthmode
 	for(var/obj/machinery/light/L in area)
-		L.hijacked = hijackerreturn
+		L.hijacked = hijackerreturn()
 		L.update(FALSE)
 		CHECK_TICK
 
