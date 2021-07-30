@@ -32,6 +32,8 @@
 	var/max_stamina_damage = 0
 	var/incoming_stam_mult = 1 //Multiplier for incoming staminaloss, decreases when taking staminaloss when the limb is disabled, resets back to 1 when limb is no longer disabled.
 	var/max_damage = 0
+	/// Threshold at which we are disabled. Defaults to max_damage if unset.
+	var/disable_threshold
 	var/stam_heal_tick = 0		//per Life(). Defaults to 0 due to citadel changes
 
 	var/brute_reduction = 0 //Subtracted to brute damage taken
@@ -186,7 +188,7 @@
 	needs_processing = .
 
 //Return TRUE to get whatever mob this is in to update health.
-/obj/item/bodypart/proc/on_life()
+/obj/item/bodypart/proc/on_life(seconds, times_fired)
 	if(stam_heal_tick && stamina_dam > DAMAGE_PRECISION)					//DO NOT update health here, it'll be done in the carbon's life.
 		if(heal_damage(brute = 0, burn = 0, stamina = (stam_heal_tick * (disabled ? 2 : 1)), only_robotic = FALSE, only_organic = FALSE, updating_health = FALSE))
 			. |= BODYPART_LIFE_UPDATE_HEALTH
@@ -505,6 +507,12 @@
 		return
 	set_disabled(is_disabled(silent), silent)
 
+/**
+ * Gets the damage at which point we're disabled.
+ */
+/obj/item/bodypart/proc/get_disable_threshold()
+	return isnull(disable_threshold)? max_damage : disable_threshold
+
 /obj/item/bodypart/proc/is_disabled(silent = FALSE)
 	if(!owner)
 		return
@@ -514,15 +522,16 @@
 		var/datum/wound/W = i
 		if(W.disabling)
 			return BODYPART_DISABLED_WOUND
+	var/disable_threshold = get_disable_threshold()
 	if(can_dismember() && !HAS_TRAIT(owner, TRAIT_NODISMEMBER))
 		. = disabled //inertia, to avoid limbs healing 0.1 damage and being re-enabled
-		if(get_damage(TRUE) >= max_damage * (HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE) ? 0.6 : 1)) //Easy limb disable disables the limb at 40% health instead of 0%
+		if(get_damage(TRUE) >= disable_threshold * (HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE) ? 0.6 : 1)) //Easy limb disable disables the limb at 40% health instead of 0%
 			if(!last_maxed && !silent)
 				owner.emote("scream")
 				last_maxed = TRUE
-			if(!is_organic_limb(FALSE) || stamina_dam >= max_damage)
+			if(!is_organic_limb(FALSE) || stamina_dam >= disable_threshold)
 				return BODYPART_DISABLED_DAMAGE
-		else if(disabled && (get_damage(TRUE) <= (max_damage * 0.8))) // reenabled at 80% now instead of 50% as of wounds update
+		else if(disabled && (get_damage(TRUE) <= (disable_threshold * 0.8))) // reenabled at 80% now instead of 50% as of wounds update
 			last_maxed = FALSE
 			return BODYPART_NOT_DISABLED
 	else

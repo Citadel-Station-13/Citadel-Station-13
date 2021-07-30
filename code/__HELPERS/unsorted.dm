@@ -163,6 +163,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
 /mob/proc/apply_pref_name(role, client/C)
+	set waitfor = FALSE
 	if(!C)
 		C = client
 	var/oldname = real_name

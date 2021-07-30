@@ -679,7 +679,7 @@
 	icon_state = "crow"
 	matrixed_sections = MATRIX_RED
 
-/datum/sprite_accessory/tails/mam_tail/cow
+/datum/sprite_accessory/tails/mam_tails/cow
 	name = "Cow"
 	icon_state = "cow"
 	matrixed_sections = MATRIX_RED

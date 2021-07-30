@@ -268,15 +268,18 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 // timed process
 // if the switch changed, update the linked conveyors
 
-/obj/machinery/conveyor_switch/process()
-	if(!operated)
-		return
-	operated = 0
-
+/obj/machinery/conveyor_switch/proc/do_process()
+	set waitfor = FALSE
 	for(var/obj/machinery/conveyor/C in GLOB.conveyors_by_id[id])
 		C.operating = position
 		C.update_move_direction()
 		CHECK_TICK
+
+/obj/machinery/conveyor_switch/process()
+	if(!operated)
+		return
+	operated = 0
+	do_process()
 
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/interact(mob/user)

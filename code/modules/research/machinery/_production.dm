@@ -42,6 +42,7 @@
 	return ..()
 
 /obj/machinery/rnd/production/proc/update_research()
+	set waitfor = FALSE
 	host_research.copy_research_to(stored_research, TRUE)
 	update_designs()
 

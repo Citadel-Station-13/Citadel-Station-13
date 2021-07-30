@@ -358,10 +358,11 @@
 		return
 	I.item_flags |= BEING_REMOVED
 	breakouttime = I.breakouttime
+	var/datum/cuffbreak_checker/cuffbreak_checker = new(get_turf(src), istype(I, /obj/item/restraints)? I : null)
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
 		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)</span>")
-		if(do_after(src, breakouttime, 0, target = src, required_mobility_flags = MOBILITY_RESIST))
+		if(do_after_advanced(src, breakouttime, src, NONE, CALLBACK(cuffbreak_checker, /datum/cuffbreak_checker.proc/check_movement), required_mobility_flags = MOBILITY_RESIST))
 			clear_cuffs(I, cuff_break)
 		else
 			to_chat(src, "<span class='warning'>You fail to remove [I]!</span>")
@@ -370,14 +371,35 @@
 		breakouttime = 50
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
 		to_chat(src, "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>")
-		if(do_after(src, breakouttime, 0, target = src, required_mobility_flags = MOBILITY_RESIST))
+		if(do_after_advanced(src, breakouttime, src, NONE, CALLBACK(cuffbreak_checker, /datum/cuffbreak_checker.proc/check_movement), required_mobility_flags = MOBILITY_RESIST))
 			clear_cuffs(I, cuff_break)
 		else
 			to_chat(src, "<span class='warning'>You fail to break [I]!</span>")
 
 	else if(cuff_break == INSTANT_CUFFBREAK)
 		clear_cuffs(I, cuff_break)
+
+	QDEL_NULL(cuffbreak_checker)
 	I.item_flags &= ~BEING_REMOVED
+
+/datum/cuffbreak_checker
+	var/turf/last
+	var/obj/item/restraints/cuffs
+
+/datum/cuffbreak_checker/New(turf/initial_turf, obj/item/restraints/R)
+	last = initial_turf
+	if(R)
+		cuffs = R
+
+/datum/cuffbreak_checker/proc/check_movement(atom/user, delay, atom/target, time_left, do_after_flags, required_mobility_flags, required_combat_flags, mob_redirect, stage, initially_held_item, tool, list/passed_in)
+	if(get_turf(user) != last)
+		last = get_turf(user)
+		passed_in[1] = 0.5
+		if(cuffs && !cuffs.allow_breakout_movement)
+			return DO_AFTER_STOP
+	else
+		passed_in[1] = 1
+	return DO_AFTER_CONTINUE
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
@@ -458,10 +480,6 @@
 
 	if(HAS_TRAIT(src, TRAIT_CLUMSY))
 		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
-
-	//CIT CHANGES START HERE
-	else if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-		modifier -= 50
 
 	if(modifier < 100)
 		dropItemToGround(I)
@@ -949,7 +967,9 @@
 /mob/living/carbon/ExtinguishMob()
 	for(var/X in get_equipped_items())
 		var/obj/item/I = X
-		I.acid_level = 0 //washes off the acid on our clothes
+		var/datum/component/acid/acid = I.GetComponent(/datum/component/acid)
+		if(acid)
+			acid.level = 0
 		I.extinguish() //extinguishes our clothes
 	..()
 
