@@ -154,6 +154,10 @@ Class Procs:
 		occupant_typecache = typecacheof(occupant_typecache)
 	return INITIALIZE_HINT_LATELOAD
 
+/obj/machinery/LateInitialize()
+	. = ..()
+	power_change()
+
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
 	if(!speed_process)
