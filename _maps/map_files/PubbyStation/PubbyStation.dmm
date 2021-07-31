@@ -62332,10 +62332,7 @@
 	pixel_x = -15;
 	pixel_y = -4
 	},
-/obj/structure/flora/junglebush/large{
-	pixel_x = -15;
-	pixel_y = -4
-	},
+/obj/structure/flora/rock/pile,
 /turf/open/water/jungle,
 /area/hallway/secondary/entry)
 "wTD" = (
