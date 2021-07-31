@@ -1,7 +1,0 @@
-author: "WanderingFox95"
-delete-after: True
-changes: 
-  - rscadd: "Added new ruin maps: The Bathhouse, The Library, The Engineering outpost, The Hotsprings(un-cursed), Lust, Wrath and an alternate spawn for the BDM in the form of a mining outpost, based on the same Ruins on the Ice Moon.
-removed: A lot of the fun items within the ice moon-based ruins that would break mining even more and trading cards."
-  - balance: "Yes, this includes that the lavaland version of the hot spring is literally just water and not cursed.
-tweak: Also \"fixed\" that only one version of the BDM ruin ever spawns. Not sure it needed fixing but even locally hosted, only blooddrunk2.dmm would spawn. Since I added another spawn for the BDM, I fixed that too."
