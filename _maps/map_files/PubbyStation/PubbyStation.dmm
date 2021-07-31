@@ -53163,7 +53163,8 @@
 	pixel_y = 3
 	},
 /turf/open/water{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS;
+	planetary_atmos = 0
 	},
 /area/hallway/secondary/entry)
 "daY" = (
@@ -57669,7 +57670,8 @@
 /area/space/nearstation)
 "mJR" = (
 /turf/open/water{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS;
+	planetary_atmos = 0
 	},
 /area/hallway/secondary/entry)
 "mKc" = (
@@ -58379,7 +58381,8 @@
 	pixel_y = 13
 	},
 /turf/open/water{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS;
+	planetary_atmos = 0
 	},
 /area/hallway/secondary/entry)
 "ous" = (
@@ -59690,7 +59693,8 @@
 	pixel_y = -60
 	},
 /turf/open/water{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS;
+	planetary_atmos = 0
 	},
 /area/hallway/secondary/entry)
 "qVk" = (
@@ -61185,7 +61189,8 @@
 "upX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/water{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS;
+	planetary_atmos = 0
 	},
 /area/hallway/secondary/entry)
 "uqJ" = (
@@ -62344,7 +62349,8 @@
 	},
 /obj/structure/flora/rock/pile,
 /turf/open/water{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS;
+	planetary_atmos = 0
 	},
 /area/hallway/secondary/entry)
 "wTD" = (
