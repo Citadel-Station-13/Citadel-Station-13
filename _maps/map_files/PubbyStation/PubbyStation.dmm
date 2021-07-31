@@ -53162,10 +53162,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/turf/open/water{
-	initial_gas_mix = OPENTURF_DEFAULT_ATMOS;
-	planetary_atmos = 0
-	},
+/turf/open/water/decorative,
 /area/hallway/secondary/entry)
 "daY" = (
 /obj/structure/disposalpipe/segment,
@@ -57669,10 +57666,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "mJR" = (
-/turf/open/water{
-	initial_gas_mix = OPENTURF_DEFAULT_ATMOS;
-	planetary_atmos = 0
-	},
+/turf/open/water/decorative,
 /area/hallway/secondary/entry)
 "mKc" = (
 /obj/structure/bookcase/random/nonfiction,
@@ -58380,10 +58374,7 @@
 	pixel_x = -2;
 	pixel_y = 13
 	},
-/turf/open/water{
-	initial_gas_mix = OPENTURF_DEFAULT_ATMOS;
-	planetary_atmos = 0
-	},
+/turf/open/water/decorative,
 /area/hallway/secondary/entry)
 "ous" = (
 /obj/effect/turf_decal/stripes/line,
@@ -59692,10 +59683,7 @@
 	pixel_x = -60;
 	pixel_y = -60
 	},
-/turf/open/water{
-	initial_gas_mix = OPENTURF_DEFAULT_ATMOS;
-	planetary_atmos = 0
-	},
+/turf/open/water/decorative,
 /area/hallway/secondary/entry)
 "qVk" = (
 /obj/machinery/door/poddoor/incinerator_atmos_aux,
@@ -61188,10 +61176,7 @@
 /area/hallway/secondary/entry)
 "upX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/water{
-	initial_gas_mix = OPENTURF_DEFAULT_ATMOS;
-	planetary_atmos = 0
-	},
+/turf/open/water/decorative,
 /area/hallway/secondary/entry)
 "uqJ" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -62348,10 +62333,7 @@
 	pixel_y = -4
 	},
 /obj/structure/flora/rock/pile,
-/turf/open/water{
-	initial_gas_mix = OPENTURF_DEFAULT_ATMOS;
-	planetary_atmos = 0
-	},
+/turf/open/water/decorative,
 /area/hallway/secondary/entry)
 "wTD" = (
 /obj/structure/table/wood,
