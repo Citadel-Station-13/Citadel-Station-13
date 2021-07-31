@@ -322,12 +322,14 @@
 	desc = "A small black dress"
 	icon_state = "littleblackdress_s"
 	item_state = "littleblackdress_s"
+	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/misc/pinktutu
 	name = "pink tutu"
 	desc = "A pink tutu"
 	icon_state = "pinktutu_s"
 	item_state = "pinktutu_s"
+	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/misc/bathrobe
 	name = "bathrobe"
