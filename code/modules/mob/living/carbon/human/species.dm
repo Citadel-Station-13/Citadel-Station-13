@@ -680,7 +680,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/mutable_appearance/hair_overlay = mutable_appearance(layer = -HAIR_LAYER)
 		if(!hair_hidden && !H.getorgan(/obj/item/organ/brain)) //Applies the debrained overlay if there is no brain
 			if(!(NOBLOOD in species_traits))
-				hair_overlay.icon = 'icons/mob/hair.dmi'
+				hair_overlay.icon = 'icons/mob/human_parts.dmi'
 				hair_overlay.icon_state = "debrained"
 
 		else if(H.hair_style && (HAIR in species_traits))
