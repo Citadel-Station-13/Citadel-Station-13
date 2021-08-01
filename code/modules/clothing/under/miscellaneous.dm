@@ -336,6 +336,7 @@
 	desc = "A blue bathrobe."
 	icon_state = "bathrobe"
 	item_state = "bathrobe"
+	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/misc/mechsuitred
 	name = "red mech suit"
