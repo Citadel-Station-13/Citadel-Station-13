@@ -64,11 +64,7 @@
 	dir = 1;
 	icon_state = "chairold"
 	},
-/obj/item/crowbar/large{
-	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It feels oddly heavy..";
-	force = 20;
-	name = "heavy crowbar"
-	},
+/obj/item/crowbar/large/heavy,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "o" = (
