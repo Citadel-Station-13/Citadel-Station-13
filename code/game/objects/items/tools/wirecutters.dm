@@ -143,6 +143,23 @@
 			return
 	..()
 
+/obj/item/wirecutters/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
+	. = ..()
+	if(isinhands && random_color)
+		var/mutable_appearance/M = mutable_appearance(icon_file, "cutters_cutty_thingy")
+		M.appearance_flags = RESET_COLOR
+		. += M
+
+/obj/item/wirecutters/get_belt_overlay()
+	if(random_color)
+		var/mutable_appearance/body = mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "cutters")
+		var/mutable_appearance/head = mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "cutters_cutty_thingy")
+		body.color = color
+		head.add_overlay(body)
+		return head
+	else
+		return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)
+
 /obj/item/wirecutters/advanced
 	name = "advanced wirecutters"
 	desc = "A set of reproduction alien wirecutters, they have a silver handle with an exceedingly sharp blade."
