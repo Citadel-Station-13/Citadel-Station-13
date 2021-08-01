@@ -330,9 +330,11 @@
 
 /obj/item/clothing/under/costume/kimono
 	name = "Kimono"
-	desc = "A traditional piece of clothing from japan"
+	desc = "A traditional piece of clothing from Japan."
 	icon_state = "kimono"
 	item_state = "kimono"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/kimono/black
 	name = "Black Kimono"
