@@ -1,5 +1,0 @@
-author: "TripleShades"
-delete-after: True
-changes: 
-  - rscadd: "Decorative (read: Station-safe) water tile in the code"
-  - bugfix: "Pubby's new water feature wont kill atmosphere anymore"
