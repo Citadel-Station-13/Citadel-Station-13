@@ -402,19 +402,28 @@
 	pH = 5.5
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/human/M)
-	if((HAS_TRAIT(M, TRAIT_NOMARROW)))
-		return
-	if(last_added)
-		M.AddIntegrationBlood(-last_added)
-		last_added = 0
-	if(M.functional_blood() < maximum_reachable) //Can only up to double your effective blood level.
-		var/new_blood_level = min(volume * 5, maximum_reachable)
-		last_added = new_blood_level
-		M.AddIntegrationBlood(new_blood_level + (extra_regen * REM))
 	if(prob(33))
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
 		. = TRUE
+	if((HAS_TRAIT(M, TRAIT_NOMARROW)))
+		return ..()
+	if(last_added)
+		M.adjust_integration_blood(-last_added, TRUE)
+		last_added = 0
+	if(M.functional_blood() < maximum_reachable) //Can only up to double your effective blood level.
+		var/new_blood_level = min(volume * 5, maximum_reachable)
+		last_added = new_blood_level
+		M.adjust_integration_blood(new_blood_level + (extra_regen * REM))
+	if(prob(33))
+		M.adjustBruteLoss(-0.5*REM, 0)
+		M.adjustFireLoss(-0.5*REM, 0)
+		. = TRUE
+	..()
+
+/datum/reagent/medicine/salglu_solution/on_mob_delete(mob/living/carbon/human/M)
+	if(last_added)
+		M.adjust_integration_blood(-last_added, TRUE)
 	..()
 
 /datum/reagent/medicine/salglu_solution/overdose_process(mob/living/M)
@@ -1294,7 +1303,7 @@
 	M.adjustCloneLoss(-3*REM, FALSE)
 	M.adjustStaminaLoss(-25*REM,FALSE)
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
-		M.AddIntegrationBlood(40) // blood fall out man bad
+		M.adjust_integration_blood(40) // blood fall out man bad
 	..()
 	. = 1
 
@@ -1315,7 +1324,7 @@
 	M.adjustCloneLoss(-1.25*REM, FALSE)
 	M.adjustStaminaLoss(-4*REM,FALSE)
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
-		M.AddIntegrationBlood(3)
+		M.adjust_integration_blood(3)
 	..()
 	. = 1
 

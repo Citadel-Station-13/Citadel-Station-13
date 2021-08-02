@@ -390,8 +390,9 @@
 		var/mob/living/carbon/human/H = src
 		H.handle_blood()
 
-/mob/living/proc/AddIntegrationBlood(value, force)
-	if(value < 0 && integrating_blood < value) //Remove the normal blood of the carbon if we can't afford it with integrating_blood
-		blood_volume = min(blood_volume, value)
-	if(integrating_blood < blood_volume + BLOOD_VOLUME_NORMAL || force)
-		integrating_blood += value
+/mob/living/proc/adjust_integration_blood(value, remove_actual_blood, force)
+    if(integrating_blood +  value < 0 && remove_actual_blood)
+        blood_volume += value + integrating_blood
+        blood_volume = max(blood_volume, 0)
+    integrating_blood += value
+    integrating_blood = clamp(integrating_blood, 0, force ? INFINITY : (BLOOD_VOLUME_MAXIMUM - (integrating_blood + blood_volume)))

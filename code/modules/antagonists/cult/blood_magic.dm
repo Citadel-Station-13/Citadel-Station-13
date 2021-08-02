@@ -690,7 +690,7 @@
 				if(H.functional_blood() < (BLOOD_VOLUME_SAFE*H.blood_ratio))
 					var/restore_blood = (BLOOD_VOLUME_SAFE*H.blood_ratio) - H.blood_volume
 					if(uses * 2 < restore_blood)
-						H.AddIntegrationBlood(uses * 2)
+						H.adjust_integration_blood(uses * 2)
 						to_chat(user,"<span class='danger'>You use the last of your blood rites to restore what blood you could!</span>")
 						uses = 0
 						return ..()
