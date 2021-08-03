@@ -446,7 +446,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//Prevents huge bursts of gas/heat when a large amount of something is introduced
 			//They range between 0 and 1
 			for(var/gasID in gases_we_care_about)
-				if(!(gas_id in gas_comp))
+				if(!(gasID in gas_comp))
 					gas_comp[gasID] = 0
 				gas_comp[gasID] += clamp(max(removed.get_moles(gasID)/combined_gas, 0) - gas_comp[gasID], -1, gas_change_rate)
 
@@ -474,7 +474,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	//Effects the damage heat does to the crystal.
 	dynamic_heat_resistance = 0
 	//We multiply this with power to find the rads.
-	power_transmission_bonus = 0
+	var/power_transmission_bonus = 0
 	var/powerloss_inhibition_gas = 0
 	var/radioactivity_modifier = 0
 	for(var/gasID in gas_comp)
