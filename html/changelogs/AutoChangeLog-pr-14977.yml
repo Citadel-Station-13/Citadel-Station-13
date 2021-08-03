@@ -1,0 +1,4 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - bugfix: "The debrained overlay actually shows for brainless corpses now instead of showing a blue error."
