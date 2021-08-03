@@ -1,7 +1,0 @@
-author: "zeroisthebiggay"
-delete-after: True
-changes: 
-  - balance: "tempgun is a laser"
-  - balance: "bake mode is useful"
-  - balance: "tempgun has less shots"
-  - imageadd: "tempgun has more sprites"
