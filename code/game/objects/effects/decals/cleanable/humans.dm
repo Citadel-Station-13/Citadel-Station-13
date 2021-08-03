@@ -53,7 +53,7 @@
 	bloodiness = 0
 
 /obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
-	..()
+	. = ..()
 	icon_state += "-old"
 	add_blood_DNA(list("Non-human DNA" = "A+"))
 

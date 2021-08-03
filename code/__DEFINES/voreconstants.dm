@@ -8,17 +8,22 @@
 #define DM_UNABSORB "Un-absorb"
 
 #define DIGESTABLE 		(1<<0)
-#define SHOW_VORE_PREFS (1<<1)
-#define DEVOURABLE		(1<<2)
-#define FEEDING			(1<<3)
-#define NO_VORE			(1<<4)
-#define OPEN_PANEL		(1<<5)
-#define ABSORBED		(1<<6)
-#define VORE_INIT		(1<<7)
-#define VOREPREF_INIT	(1<<8)
-#define LICKABLE		(1<<9)
+#define DEVOURABLE		(1<<1)
+#define FEEDING			(1<<2)
+#define NO_VORE			(1<<3)
+#define ABSORBED		(1<<4)
+#define VORE_INIT		(1<<5)
+#define VOREPREF_INIT	(1<<6)
+#define LICKABLE		(1<<7)
+/// Can be smelled?
+#define SMELLABLE		(1<<8)
+/// Can get absorbed?
+#define ABSORBABLE		(1<<9)
+/// Can get simplemob vored?
+#define MOBVORE			(1<<10)
 
-#define MAX_VORE_FLAG	(1<<10)-1 // change this whenever you add a vore flag, must be largest vore flag*2-1
+/// Change this whenever you add a vore flag, must be largest vore flag*2-1
+#define MAX_VORE_FLAG	(1<<11)-1
 
 #define isbelly(A) istype(A, /obj/belly)
 

@@ -241,7 +241,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///How much the bullets damage should be multiplied by when it is added to the internal variables
 	var/bullet_energy = 2
 	///How much hallucination should we produce per unit of power?
-	var/hallucination_power = 0.1
+	var/hallucination_power = 0.05 // 2 seconds per second at a distance of 7 with a typical nitrogen setup
 
 	///Our internal radio
 	var/obj/item/radio/radio
@@ -648,6 +648,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	for(var/mob/living/carbon/human/l in fov_viewers(src, HALLUCINATION_RANGE(power))) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			var/D = sqrt(1 / max(1, get_dist(l, src)))
+			if(!l.hallucination)
+				to_chat(l, "<span class='warning'>Looking at the supermatter unprotected gives you a headache...</span>")
 			l.hallucination += power * hallucination_power * D
 			l.hallucination = clamp(l.hallucination, 0, 200)
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))

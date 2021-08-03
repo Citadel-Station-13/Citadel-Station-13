@@ -67,7 +67,7 @@ mv target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
 cd ..
 
 # Auxtools dependencies
-apt-get install build-essential g++-multilib libc6-i386 libstdc++6:i386
+apt-get install -y build-essential g++-multilib libc6-i386 libstdc++6:i386
 
 # Update auxmos
 if [ ! -d "auxmos" ]; then

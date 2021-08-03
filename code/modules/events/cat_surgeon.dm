@@ -5,7 +5,7 @@
     weight = 8
 
 /datum/round_event/cat_surgeon/announce(fake)
-	priority_announce("One of our... ahem... 'special' cases has escaped. Our sensors now show their tracker implant on your station. On an unrelated note, has anyone seen our cats?",
+	priority_announce("One of our... ahem... 'special' cases has escaped. As it happens their last known location before their tracker went dead is your station so keep an eye out for them. On an unrelated note, has anyone seen our cats?",
 	sender_override = "Nanotrasen Psych Ward")
 
 /datum/round_event/cat_surgeon/start()

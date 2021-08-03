@@ -44,7 +44,7 @@
 // #include "heretic_knowledge.dm"
 // #include "holidays.dm"
 #include "initialize_sanity.dm"
-#include "keybinding_init.dm"
+// #include "keybinding_init.dm"
 #include "machine_disassembly.dm"
 #include "medical_wounds.dm"
 #include "merge_type.dm"
