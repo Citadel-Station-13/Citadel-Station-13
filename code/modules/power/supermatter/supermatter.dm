@@ -15,7 +15,7 @@
 /datum/auxgm/proc/add_supermatter_properties(datum/gas/gas)
 	var/g = gas.id
 	var/list/props = src.supermatter
-	if(gas.heat_penalty || gas.transmit_modifier || gas.radioactivity_modifier || gas.heat_resistance || gas.powerloss_inhibition)
+	if(gas.powermix || gas.heat_penalty || gas.transmit_modifier || gas.radioactivity_modifier || gas.heat_resistance || gas.powerloss_inhibition)
 		props[HEAT_PENALTY][g] = gas.heat_penalty
 		props[TRANSMIT_MODIFIER][g] = gas.transmit_modifier
 		props[RADIOACTIVITY_MODIFIER][g] = gas.radioactivity_modifier
