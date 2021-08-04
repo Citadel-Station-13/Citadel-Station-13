@@ -93,7 +93,7 @@
 
 //Sources; life.dm process_organs
 /obj/item/organ/proc/on_death(seconds, times_fired) //Runs when outside AND inside.
-	decay()
+	decay(seconds, times_fired)
 
 //Applys the slow damage over time decay
 /obj/item/organ/proc/decay(seconds, times_fired)
