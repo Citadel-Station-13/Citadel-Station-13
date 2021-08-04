@@ -114,7 +114,7 @@
 	can_unsuppress = FALSE
 
 /obj/item/gun/syringe/dart/Initialize()
-	..()
+	. = ..()
 	chambered = new /obj/item/ammo_casing/syringegun/dart(src)
 
 /obj/item/gun/syringe/dart/attackby(obj/item/A, mob/user, params, show_msg = TRUE)

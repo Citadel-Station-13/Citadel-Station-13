@@ -10,6 +10,6 @@
 	var/list/paths = subtypesof(/obj/item/stack) - blacklist
 
 	for(var/stackpath in paths)
-		var/obj/item/stack/stack = stackpath
-		if(!initial(stack.merge_type))
+		var/obj/item/stack/stack = new stackpath
+		if(!stack.merge_type)
 			Fail("([stack]) lacks set merge_type variable!")
