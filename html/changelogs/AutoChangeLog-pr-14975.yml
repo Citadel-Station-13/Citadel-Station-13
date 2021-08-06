@@ -1,0 +1,4 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - bugfix: "The black dress, pink tutu, the bathrobe, the kimonos, and the qipaos no longer have a missing pixel when wearing them with the feminine bodytype. They're also no longer adjustable (they have no sprite for the adjusted variant and therefore it would just make an error if someone did that.)"
