@@ -417,14 +417,14 @@
 		to_chat(M, "<span class='notice'>You feel yourself absorbing plasma inside and around you...</span>")
 
 	if(M.bodytemperature > M.bodytemp_normal)
-		M.adjust_bodytemperature(-20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT,M.bodytemp_normal)
+		M.adjust_bodytemperature(-20 * temp_rate,M.bodytemp_normal)
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel less hot.</span>")
 	else if(M.bodytemperature < (M.bodytemp_normal + 1))
-		M.adjust_bodytemperature(20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT,0,M.bodytemp_normal)
+		M.adjust_bodytemperature(20 * temp_rate,0,M.bodytemp_normal)
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel warmer.</span>")
-	
+
 	M.adjustFireLoss(-temp_rate)
 	M.adjustToxLoss(-heal_amt, forced = (temp_rate == 4))
 

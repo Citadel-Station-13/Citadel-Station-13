@@ -37,7 +37,7 @@
 	if(!owner.stat)
 		to_chat(owner, "The cube melts!")
 	owner.cut_overlay(cube)
-	owner.adjust_bodytemperature(100 * TEMPERATURE_DAMAGE_COEFFICIENT)
+	owner.adjust_bodytemperature(100)
 	owner.update_mobility()
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
 	return ..()

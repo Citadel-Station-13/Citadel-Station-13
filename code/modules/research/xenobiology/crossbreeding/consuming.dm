@@ -184,7 +184,7 @@ Consuming extracts:
 	taste = "mint and bitter cold"
 
 /obj/item/slime_cookie/darkblue/do_effect(mob/living/M, mob/user)
-	M.adjust_bodytemperature(-110 * TEMPERATURE_DAMAGE_COEFFICIENT)
+	M.adjust_bodytemperature(-110)
 	M.ExtinguishMob()
 
 /obj/item/slimecross/consuming/silver

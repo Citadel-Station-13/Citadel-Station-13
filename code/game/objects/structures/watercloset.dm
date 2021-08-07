@@ -467,10 +467,10 @@
 
 /obj/machinery/shower/proc/check_heat(mob/living/carbon/C)
 	if(watertemp == "freezing")
-		C.adjust_bodytemperature(-80 * TEMPERATURE_DAMAGE_COEFFICIENT, 300)
+		C.adjust_bodytemperature(-80, 300)
 		to_chat(C, "<span class='warning'>The water is freezing!</span>")
 	else if(watertemp == "boiling")
-		C.adjust_bodytemperature(35 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, 320)
+		C.adjust_bodytemperature(35, 0, 320)
 		C.adjustFireLoss(5)
 		to_chat(C, "<span class='danger'>The water is searing!</span>")
 

@@ -42,9 +42,9 @@
 
 /datum/nanite_program/temperature/active_effect()
 	if(host_mob.bodytemperature > M.bodytemp_normal)
-		host_mob.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, M.bodytemp_normal)
+		host_mob.adjust_bodytemperature(-40, M.bodytemp_normal)
 	else if(host_mob.bodytemperature < (M.bodytemp_normal + 1))
-		host_mob.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.bodytemp_normal)
+		host_mob.adjust_bodytemperature(40, 0, M.bodytemp_normal)
 
 /datum/nanite_program/purging
 	name = "Blood Purification"

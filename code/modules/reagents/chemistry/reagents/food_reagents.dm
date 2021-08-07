@@ -226,21 +226,21 @@
 	var/heating = 0
 	switch(current_cycle)
 		if(1 to 15)
-			heating = 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+			heating = 5
 			if(holder.has_reagent(/datum/reagent/cryostylane))
 				holder.remove_reagent(/datum/reagent/cryostylane, 5)
 			if(isslime(M))
 				heating = rand(5,20)
 		if(15 to 25)
-			heating = 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			heating = 10
 			if(isslime(M))
 				heating = rand(10,20)
 		if(25 to 35)
-			heating = 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+			heating = 15
 			if(isslime(M))
 				heating = rand(15,20)
 		if(35 to INFINITY)
-			heating = 20 * TEMPERATURE_DAMAGE_COEFFICIENT
+			heating = 20
 			if(isslime(M))
 				heating = rand(20,25)
 	M.adjust_bodytemperature(heating)
@@ -258,23 +258,23 @@
 	var/cooling = 0
 	switch(current_cycle)
 		if(1 to 15)
-			cooling = -10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			cooling = -10
 			if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
 				holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5)
 			if(isslime(M))
 				cooling = -rand(5,20)
 		if(15 to 25)
-			cooling = -20 * TEMPERATURE_DAMAGE_COEFFICIENT
+			cooling = -20
 			if(isslime(M))
 				cooling = -rand(10,20)
 		if(25 to 35)
-			cooling = -30 * TEMPERATURE_DAMAGE_COEFFICIENT
+			cooling = -30
 			if(prob(1))
 				M.emote("shiver")
 			if(isslime(M))
 				cooling = -rand(15,20)
 		if(35 to INFINITY)
-			cooling = -40 * TEMPERATURE_DAMAGE_COEFFICIENT
+			cooling = -40
 			if(prob(5))
 				M.emote("shiver")
 			if(isslime(M))
@@ -414,7 +414,7 @@
 	glass_desc = "Tasty."
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M)
-	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.bodytemp_normal)
+	M.adjust_bodytemperature(5, 0, M.bodytemp_normal)
 	..()
 
 /datum/reagent/drug/mushroomhallucinogen
@@ -555,7 +555,7 @@
 	taste_description = "wet and cheap noodles"
 
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/M)
-	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.bodytemp_normal)
+	M.adjust_bodytemperature(10, 0, M.bodytemp_normal)
 	..()
 
 /datum/reagent/consumable/hell_ramen
@@ -566,7 +566,7 @@
 	taste_description = "wet and cheap noodles on fire"
 
 /datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/carbon/M)
-	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT)
+	M.adjust_bodytemperature(10)
 	..()
 
 /datum/reagent/consumable/flour

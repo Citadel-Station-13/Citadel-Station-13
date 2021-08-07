@@ -74,11 +74,6 @@
 	if(!dna.species.breathe(src))
 		..()
 
-/mob/living/carbon/human/proc/gas_exchange()
-	. = dna?.species?.gas_exchange(src)
-	if(!.)
-		return list(/datum/gas/oxygen = -5*BREATH_PERCENTAGE,/datum/gas/carbon_dioxide = 5*BREATH_PERCENTAGE)
-
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
 
 	var/L = getorganslot(ORGAN_SLOT_LUNGS)

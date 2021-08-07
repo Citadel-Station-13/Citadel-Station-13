@@ -174,6 +174,7 @@
 							visible_message("<span class='danger'>[M] has attempted to disarm [src]!</span>")
 
 /mob/living/carbon/true_devil/handle_breathing()
+	return
 	// devils do not need to breathe
 
 /mob/living/carbon/true_devil/is_literate()

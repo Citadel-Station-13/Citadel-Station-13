@@ -69,7 +69,7 @@
 
 	var/loc_temp = get_temperature(environment)
 	var/thermal_protection = get_thermal_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-	
+
 	var/temp_variation = (loc_temp - bodytemperature)*thermal_protection
 	//Body temperature is adjusted in two parts: first there your body tries to naturally preserve homeostasis (shivering/sweating), then it reacts to the surrounding environment
 	//Thermal protection (insulation) has mixed benefits in two situations (hot in hot places, cold in hot places)
@@ -236,6 +236,6 @@
 			if(!(I.resistance_flags & FIRE_PROOF))
 				I.take_damage(fire_stacks, BURN, "fire", 0)
 
-		adjust_bodytemperature(BODYTEMP_HEATING_MAX * TEMPERATURE_DAMAGE_COEFFICIENT)
+		adjust_bodytemperature(BODYTEMP_HEATING_MAX)
 		adjustFireLoss(2)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)

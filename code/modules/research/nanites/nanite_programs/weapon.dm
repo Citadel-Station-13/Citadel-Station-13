@@ -156,7 +156,7 @@
 	return ..()
 
 /datum/nanite_program/cryo/active_effect()
-	host_mob.adjust_bodytemperature(-rand(15,25) * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
+	host_mob.adjust_bodytemperature(-rand(15,25), 50)
 
 /datum/nanite_program/comm/mind_control
 	name = "Mind Control"

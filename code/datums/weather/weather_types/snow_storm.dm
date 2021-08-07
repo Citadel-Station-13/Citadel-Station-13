@@ -25,5 +25,5 @@
 
 
 /datum/weather/snow_storm/weather_act(mob/living/L)
-	L.adjust_bodytemperature(-rand(5,15) * TEMPERATURE_DAMAGE_COEFFICIENT)
+	L.adjust_bodytemperature(-rand(5,15))
 

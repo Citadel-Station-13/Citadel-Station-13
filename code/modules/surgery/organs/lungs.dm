@@ -75,22 +75,7 @@
 	var/heat_level_3_damage = HEAT_GAS_DAMAGE_LEVEL_3
 	var/heat_damage_type = BURN
 
-	var/datum/gas_mixture/lung_air
-	var/lung_volume = 3
-	var/list/expected_gas_pps = list(
-		/datum/gas/oxygen = 13,
-		/datum/gas/carbon_dioxide = 5.3
-	)
-	var/controlling_gas = /datum/gas/carbon_dioxide // exhale if this is too high, inhale at next opportunity
 	var/crit_stabilizing_reagent = /datum/reagent/medicine/epinephrine
-
-/obj/item/organ/lungs/Initialize()
-	. = ..()
-	lung_air = new
-	lung_air.set_volume(alveolar_volume)
-	lung_air.set_temperature(T20C)
-	for(var/gas in expected_gas_pps)
-		lung_air.set_moles(gas,(expected_gas_pps[gas]*lung_volume)/(T20C*R_IDEAL_GAS_EQUATION))
 
 /obj/item/organ/lungs/New()
 	. = ..()
@@ -132,15 +117,6 @@
 		to_chat(owner, "<span class='notice'>You feel an ache within your chest.</span>")
 		owner.emote("cough")
 		owner.Dizzy(1)
-
-/obj/item/organs/lungs/proc/tick_breath(mob/living/carbon/human/H)
-	. = FALSE
-	if(CHECK_BITFIELD(H.status_flags,GODMODE) || HAS_TRAIT(H, TRAIT_NOBREATH))
-		return
-	var/list/homeostatic_gases = H.gas_exchange()
-	for(var/gas in homeostatic_gases)
-		lung_air.adjust_moles(gas,homeostatic_gases[gas])
-	return expected_gas_pps[controlling_gas] - lung_air.partial_pressure(controlling_gas)
 
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 //TODO: add lung damage = less oxygen gains
@@ -449,9 +425,9 @@
 	to_chat(owner, "<span class='warning'>Alert: Critical cooling system failure!</span>")
 	switch(severity)
 		if(1)
-			owner.adjust_bodytemperature(100*TEMPERATURE_DAMAGE_COEFFICIENT)
+			owner.adjust_bodytemperature(100)
 		if(2)
-			owner.adjust_bodytemperature(30*TEMPERATURE_DAMAGE_COEFFICIENT)
+			owner.adjust_bodytemperature(30)
 
 /obj/item/organ/lungs/plasmaman
 	name = "plasma filter"

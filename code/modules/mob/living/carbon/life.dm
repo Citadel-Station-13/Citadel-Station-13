@@ -47,25 +47,20 @@
 ///////////////
 
 //Start of a breath chain, calls breathe()
-/mob/living/carbon/handle_breathing(times_fired,seconds)
-	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
-	if(reagents.has_reagent(/datum/reagent/toxin/lexorin))
-		return
-	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		return
-	if(istype(loc, /obj/item/dogborg/sleeper))
-		return
-	if(ismob(loc))
-		return
-	if(isbelly(loc))
-		return
-	breath_time += lungs.tick_breath(src) // speeds up breath if too much (e.g.) co2, slows down if not enough
-	breath_time -= seconds
-	if(breath_time < 0)
-		breath_time += 5
-		breathe()
+/mob/living/carbon/handle_breathing(times_fired)
+	var/next_breath = 4
+	var/obj/item/organ/lungs/L = getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/heart/H = getorganslot(ORGAN_SLOT_HEART)
+	if(L)
+		if(L.damage > L.high_threshold)
+			next_breath--
+	if(H)
+		if(H.damage > H.high_threshold)
+			next_breath--
+
+	if((times_fired % next_breath) == 0 || failed_last_breath)
+		breathe() //Breathe per 4 ticks if healthy, down to 2 if our lungs or heart are damaged, unless suffocating
 		if(failed_last_breath)
-			breath_time -= 3
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
 		else
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
@@ -77,6 +72,16 @@
 //Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe()
 	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
+	if(reagents.has_reagent(/datum/reagent/toxin/lexorin))
+		return
+	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+		return
+	if(istype(loc, /obj/item/dogborg/sleeper))
+		return
+	if(ismob(loc))
+		return
+	if(isbelly(loc))
+		return
 
 	var/datum/gas_mixture/environment
 	if(loc)
@@ -129,9 +134,7 @@
 		air_update_turf()
 
 /mob/living/carbon/proc/has_smoke_protection()
-	if(HAS_TRAIT(src, TRAIT_NOBREATH))
-		return TRUE
-	return FALSE
+	return HAS_TRAIT(src, TRAIT_NOBREATH)
 
 
 //Third link in a breath chain, calls handle_breath_temperature()

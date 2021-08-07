@@ -23,9 +23,9 @@
 
 /datum/reagent/medicine/leporazine/on_mob_life(mob/living/carbon/M)
 	if(M.bodytemperature > M.bodytemp_normal)
-		M.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, M.bodytemp_normal)
+		M.adjust_bodytemperature(-40, M.bodytemp_normal)
 	else if(M.bodytemperature < (M.bodytemp_normal + 1))
-		M.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.bodytemp_normal)
+		M.adjust_bodytemperature(40, 0, M.bodytemp_normal)
 	..()
 
 /datum/reagent/medicine/adminordrazine //An OP chemical for admins

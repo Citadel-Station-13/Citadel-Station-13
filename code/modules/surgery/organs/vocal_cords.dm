@@ -329,14 +329,14 @@
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.adjust_bodytemperature(75 * power_multiplier * TEMPERATURE_DAMAGE_COEFFICIENT)
+			L.adjust_bodytemperature(75 * power_multiplier)
 
 	//COLD
 	else if((findtext(message, cold_words)))
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.adjust_bodytemperature(-75 * power_multiplier * TEMPERATURE_DAMAGE_COEFFICIENT)
+			L.adjust_bodytemperature(-75 * power_multiplier)
 
 	//REPULSE
 	else if((findtext(message, repulse_words)))
@@ -1372,7 +1372,7 @@
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
 				if(3 to INFINITY)
-					L.adjust_bodytemperature(50 * power_multiplier * TEMPERATURE_DAMAGE_COEFFICIENT)//This seems nuts, reduced it, but then it didn't do anything, so I reverted it.
+					L.adjust_bodytemperature(50 * power_multiplier)//This seems nuts, reduced it, but then it didn't do anything, so I reverted it.
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You feel your metabolism speed up!</b></span>"), 5)
 					to_chat(user, "<span class='notice'><i>You speed [L]'s metabolism up!</i></span>")
 
@@ -1383,7 +1383,7 @@
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
 				if(3 to INFINITY)
-					L.adjust_bodytemperature(-50 * power_multiplier * TEMPERATURE_DAMAGE_COEFFICIENT)
+					L.adjust_bodytemperature(-50 * power_multiplier)
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You feel your metabolism slow down!</b></span>"), 5)
 					to_chat(user, "<span class='notice'><i>You slow [L]'s metabolism down!</i></span>")
 
