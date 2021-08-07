@@ -36,6 +36,7 @@
 	icon_state = "anvil"
 	density = TRUE
 	anchored = TRUE
+	var/busy = FALSE //If someone is already interacting with this anvil
 	var/workpiece_state = FALSE
 	var/datum/material/workpiece_material
 	var/anvilquality = 0
@@ -84,7 +85,7 @@
 			currentquality = anvilquality
 			var/skillmod = 0
 			if(user.mind.skill_holder)
-				skillmod = user.mind.get_skill_level(/datum/skill/level/dorfy/blacksmithing)/2
+				skillmod = user.mind.get_skill_level(/datum/skill/level/dwarfy/blacksmithing)/2
 			currentquality += skillmod
 			qdel(notsword)
 		else
@@ -93,12 +94,14 @@
 		return
 	else if(istype(I, /obj/item/melee/smith/hammer))
 		var/obj/item/melee/smith/hammer/hammertime = I
-		if(workpiece_state == WORKPIECE_PRESENT || workpiece_state == WORKPIECE_INPROGRESS)
-			do_shaping(user, hammertime.qualitymod)
-			return
-		else
-		 to_chat(user, "You can't work an empty anvil!")
-		 return FALSE
+		if(!(workpiece_state == WORKPIECE_PRESENT || workpiece_state == WORKPIECE_INPROGRESS))
+			to_chat(user, "You can't work an empty anvil!")
+			return FALSE
+		if(busy)
+			to_chat(user, "This anvil is already being worked!")
+			return FALSE
+		do_shaping(user, hammertime.qualitymod)
+		return
 	return ..()
 
 /obj/structure/anvil/wrench_act(mob/living/user, obj/item/I)
@@ -108,16 +111,18 @@
 
 
 /obj/structure/anvil/proc/do_shaping(mob/user, var/qualitychange)
+	busy = TRUE
 	currentquality += qualitychange
 	var/list/shapingsteps = list("weak hit", "strong hit", "heavy hit", "fold", "draw", "shrink", "bend", "punch", "upset") //weak/strong/heavy hit affect strength. All the other steps shape.
 	workpiece_state = WORKPIECE_INPROGRESS
 	var/stepdone = input(user, "How would you like to work the metal?") in shapingsteps
 	var/steptime = 50
 	if(user.mind.skill_holder)
-		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dorfy/blacksmithing)/10 + 1
+		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dwarfy/blacksmithing)/10 + 1
 		steptime = 50 / skillmod
 	playsound(src, 'sound/effects/clang2.ogg',40, 2)
 	if(!do_after(user, steptime, target = src))
+		busy = FALSE
 		return FALSE
 	switch(stepdone)
 		if("weak hit")
@@ -162,16 +167,17 @@
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/clang2.ogg', 40, 2), 15)
 	if(length(stepsdone) >= 3)
 		tryfinish(user)
+	busy = FALSE
 
 /obj/structure/anvil/proc/tryfinish(mob/user)
 	var/artifactchance = 0
 	if(!artifactrolled)
-		artifactchance = (1+(user.mind.get_skill_level(/datum/skill/level/dorfy/blacksmithing)/4))/2500
+		artifactchance = (1+(user.mind.get_skill_level(/datum/skill/level/dwarfy/blacksmithing)/4))/2500
 		artifactrolled = TRUE
 	var/artifact = max(prob(artifactchance), debug)
 	var/finalfailchance = outrightfailchance
 	if(user.mind.skill_holder)
-		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dorfy/blacksmithing)/10 + 1
+		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dwarfy/blacksmithing)/10 + 1
 		finalfailchance = max(0, finalfailchance / skillmod) //lv 2 gives 20% less to fail, 3 30%, etc
 	if((currentsteps > 10 || (rng && prob(finalfailchance))) && !artifact)
 		to_chat(user, "<span class='warning'>You overwork the metal, causing it to turn into useless slag!</span>")
@@ -184,7 +190,7 @@
 		outrightfailchance = 1
 		artifactrolled = FALSE
 		if(user.mind.skill_holder)
-			user.mind.auto_gain_experience(/datum/skill/level/dorfy/blacksmithing, 25, 400, silent = FALSE)
+			user.mind.auto_gain_experience(/datum/skill/level/dwarfy/blacksmithing, 25, 400, silent = FALSE)
 	for(var/i in smithrecipes)
 		if(i == stepsdone)
 			var/turf/T = get_turf(user)
@@ -217,7 +223,7 @@
 			outrightfailchance = 1
 			artifactrolled = FALSE
 			if(user.mind.skill_holder)
-				user.mind.auto_gain_experience(/datum/skill/level/dorfy/blacksmithing, 50, 10000000, silent = FALSE)
+				user.mind.auto_gain_experience(/datum/skill/level/dwarfy/blacksmithing, 50, 10000000, silent = FALSE)
 			break
 
 /obj/structure/anvil/debugsuper

@@ -76,6 +76,13 @@ GLOBAL_LIST_EMPTY(objectives)
 /datum/objective/proc/check_completion()
 	return completed
 
+/*
+Used during the round to check if an objective has already been completed, generally should have harsher requirements that the default objective  (no true because of short afk, etc)
+If not set, defaults to check_completion instead. Set it. It's used by cryo.
+*/
+/datum/objective/proc/check_midround_completion()
+	return check_completion()
+
 /datum/objective/proc/is_unique_objective(possible_target)
 	var/list/datum/mind/owners = get_owners()
 	for(var/datum/mind/M in owners)
@@ -159,7 +166,7 @@ GLOBAL_LIST_EMPTY(objectives)
 			var/list/slots = list("backpack" = SLOT_IN_BACKPACK)
 			for(var/eq_path in special_equipment)
 				var/obj/O = new eq_path
-				H.equip_in_one_of_slots(O, slots)
+				H.equip_in_one_of_slots(O, slots, critical = TRUE)
 
 /datum/objective/assassinate
 	name = "assasinate"
@@ -174,6 +181,9 @@ GLOBAL_LIST_EMPTY(objectives)
 
 /datum/objective/assassinate/check_completion()
 	return !considered_alive(target) || considered_afk(target)
+
+/datum/objective/assassinate/check_midround_completion()
+	return FALSE //They need to be dead at the end of the round, silly!
 
 /datum/objective/assassinate/update_explanation_text()
 	..()
@@ -201,12 +211,15 @@ GLOBAL_LIST_EMPTY(objectives)
 	return won || ..()
 
 /datum/objective/assassinate/once/process()
-	won = check_midround_completion()
+	won = tick_check_completion()
 	if(won)
 		STOP_PROCESSING(SSprocessing,src)
 
-/datum/objective/assassinate/once/proc/check_midround_completion()
+/datum/objective/assassinate/once/proc/tick_check_completion()
 	return won || !considered_alive(target) //The target afking / logging off for a bit during the round doesn't complete it, but them being afk at roundend does.
+
+/datum/objective/assassinate/once/check_midround_completion()
+	return won //If they cryoed, only keep it if we already won
 
 /datum/objective/assassinate/internal
 	var/stolen = 0 		//Have we already eliminated this target?
@@ -233,6 +246,9 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/turf/T = get_turf(target.current)
 	return !T || !is_station_level(T.z)
 
+/datum/objective/mutiny/check_midround_completion()
+	return FALSE
+
 /datum/objective/mutiny/update_explanation_text()
 	..()
 	if(target && target.current)
@@ -252,7 +268,10 @@ GLOBAL_LIST_EMPTY(objectives)
 	return target
 
 /datum/objective/maroon/check_completion()
-	return !target || !considered_alive(target) || (!target.current.onCentCom() && !target.current.onSyndieBase())
+	return !target || !considered_alive(target) || (!target.current?.onCentCom() && !target.current?.onSyndieBase())
+
+/datum/objective/maroon/check_midround_completion()
+	return FALSE
 
 /datum/objective/maroon/update_explanation_text()
 	if(target && target.current)
@@ -312,6 +331,9 @@ GLOBAL_LIST_EMPTY(objectives)
 
 /datum/objective/protect/check_completion()
 	return !target || considered_alive(target, enforce_human = human_check)
+
+/datum/objective/protect/check_midround_completion()
+	return FALSE //Nuh uh, you get a new objective
 
 /datum/objective/protect/update_explanation_text()
 	..()
@@ -390,6 +412,24 @@ GLOBAL_LIST_EMPTY(objectives)
 				counter++
 	return counter >= 8
 
+/datum/objective/freedom
+	name = "freedom"
+	explanation_text = "Don't get captured by nanotrasen."
+	team_explanation_text = "Have all members of your team free of nanotrasen custody."
+
+/datum/objective/freedom/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	for(var/m in owners)
+		var/datum/mind/M = m
+		if(!considered_alive(M))
+			return FALSE
+		if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
+			return FALSE
+		var/turf/location = get_turf(M.current)
+		if(!location || istype(location, /turf/open/floor/plasteel/shuttle/red) || istype(location, /turf/open/floor/mineral/plastitanium/red/brig)) // Fails if they are in the shuttle brig
+			return FALSE
+	return TRUE
+
 /datum/objective/escape
 	name = "escape"
 	explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
@@ -412,6 +452,9 @@ GLOBAL_LIST_EMPTY(objectives)
 /datum/objective/breakout/check_completion()
 	return !target || considered_escaped(target)
 
+/datum/objective/breakout/check_midround_completion()
+	return FALSE
+
 /datum/objective/breakout/find_target_by_role(role, role_type=0, invert=0)
 	if(!invert)
 		target_role_type = role_type
@@ -430,7 +473,7 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/target_real_name // Has to be stored because the target's real_name can change over the course of the round
 	var/target_missing_id
 
-/datum/objective/escape/escape_with_identity/find_target()
+/datum/objective/escape/escape_with_identity/find_target(dupe_search_range, blacklist)
 	target = ..()
 	update_explanation_text()
 
@@ -460,6 +503,9 @@ GLOBAL_LIST_EMPTY(objectives)
 		var/mob/living/carbon/human/H = M.current
 		if(H.dna.real_name == target_real_name && (H.get_id_name() == target_real_name || target_missing_id))
 			return TRUE
+	return FALSE
+
+/datum/objective/escape/escape_with_identity/check_midround_completion()
 	return FALSE
 
 /datum/objective/escape/escape_with_identity/admin_edit(mob/admin)
@@ -525,7 +571,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 		for(var/I in subtypesof(/datum/objective_item/steal))
 			new I
 
-/datum/objective/steal/find_target()
+/datum/objective/steal/find_target(dupe_search_range, blacklist)
 	var/list/datum/mind/owners = get_owners()
 	var/approved_targets = list()
 	check_items:
@@ -603,7 +649,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		for(var/I in subtypesof(/datum/objective_item/special) + subtypesof(/datum/objective_item/stack))
 			new I
 
-/datum/objective/steal/special/find_target()
+/datum/objective/steal/special/find_target(dupe_search_range, blacklist)
 	return set_target(pick(GLOB.possible_items_special))
 
 /datum/objective/steal/exchange
@@ -622,6 +668,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	explanation_text = "Acquire [targetinfo.name] held by [target.current.real_name], the [target.assigned_role] and syndicate agent"
 	steal_target = targetinfo.targetitem
 
+/datum/objective/steal/exchange/check_midround_completion()
+	return FALSE
 
 /datum/objective/steal/exchange/update_explanation_text()
 	..()
@@ -814,7 +862,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	name = "destroy AI"
 	martyr_compatible = 1
 
-/datum/objective/destroy/find_target()
+/datum/objective/destroy/find_target(dupe_search_range, blacklist)
 	var/list/possible_targets = active_ais(1)
 	var/mob/living/silicon/ai/target_ai = pick(possible_targets)
 	target = target_ai.mind
@@ -825,6 +873,9 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	if(target && target.current)
 		return target.current.stat == DEAD || target.current.z > 6 || !target.current.ckey //Borgs/brains/AIs count as dead for traitor objectives.
 	return TRUE
+
+/datum/objective/destroy/check_midround_completion()
+	return FALSE
 
 /datum/objective/destroy/update_explanation_text()
 	..()
@@ -1091,7 +1142,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/hoard/heirloom
 	name = "steal heirloom"
 
-/datum/objective/hoard/heirloom/find_target()
+/datum/objective/hoard/heirloom/find_target(dupe_search_range, blacklist)
 	set_target(pick(GLOB.family_heirlooms))
 
 GLOBAL_LIST_EMPTY(traitor_contraband)
@@ -1108,7 +1159,7 @@ GLOBAL_LIST_EMPTY(cult_contraband)
 	if(!GLOB.cult_contraband.len)
 		GLOB.cult_contraband = list(/obj/item/clockwork/slab,/obj/item/clockwork/component/belligerent_eye,/obj/item/clockwork/component/belligerent_eye/lens_gem,/obj/item/shuttle_curse,/obj/item/cult_shift)
 
-/datum/objective/hoard/collector/find_target()
+/datum/objective/hoard/collector/find_target(dupe_search_range, blacklist)
 	var/obj/item/I
 	var/I_type
 	if(prob(50))
@@ -1119,7 +1170,7 @@ GLOBAL_LIST_EMPTY(cult_contraband)
 	I.forceMove(get_turf(owner))
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.equip_in_one_of_slots(I, list("backpack" = SLOT_IN_BACKPACK))
+		H.equip_in_one_of_slots(I, list("backpack" = SLOT_IN_BACKPACK), critical = TRUE)
 		hoarded_item = I
 
 
@@ -1139,7 +1190,7 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 		for(var/I in subtypesof(/datum/sabotage_objective))
 			new I
 
-/datum/objective/sabotage/find_target()
+/datum/objective/sabotage/find_target(dupe_search_range, blacklist)
 	var/list/datum/mind/owners = get_owners()
 	var/approved_targets = list()
 	check_sabotages:
@@ -1207,7 +1258,7 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	var/payout_bonus = 0
 	var/area/dropoff = null
 	var/static/list/blacklisted_areas = typecacheof(list(/area/ai_monitored/turret_protected,
-														/area/solar/,
+														/area/solars/,
 														/area/ruin/,	//thank you station space ruins
 														/area/science/test_area/,
 														/area/shuttle/))

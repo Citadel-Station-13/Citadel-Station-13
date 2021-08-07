@@ -91,6 +91,12 @@
 	icon_state = "tan_suit"
 	item_state = "tan_suit"
 
+/obj/item/clothing/under/suit/charismatic_suit
+	name = "charismatic suit"
+	desc = "Luck is for losers, baby."
+	icon_state = "charismatic_suit"
+	item_state = "charismatic_suit"
+
 /obj/item/clothing/under/suit/white
 	name = "white suit"
 	desc = "A white suit and jacket with a blue shirt. You wanna play rough? OKAY!"
@@ -116,3 +122,43 @@
 /obj/item/clothing/under/suit/polychromic/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/polychromic, list("#FFFFFF", "#FFFFFF", "#808080"), 3)
+
+/obj/item/clothing/under/suit/turtle
+	desc = "a debatably stylish turtleneck."
+	can_adjust = FALSE
+
+/obj/item/clothing/under/suit/turtle/teal
+	name = "teal turtleneck"
+	icon_state = "tealturtle"
+	item_state = "tealturtle"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/suit/turtle/grey
+	name = "grey turtleneck"
+	icon_state = "greyturtle"
+	item_state = "greyturtle"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/suit/turtle/purple
+	name = "purple turtleneck"
+	icon_state = "turtle_sci"
+	item_state = "turtle_sci"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/suit/turtle/orange
+	name = "orange turtleneck"
+	icon_state = "turtle_eng"
+	item_state = "turtle_eng"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/suit/turtle/red
+	name = "red turtleneck"
+	icon_state = "turtle_sec"
+	item_state = "turtle_sec"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/suit/turtle/blue
+	name = "blue turtleneck"
+	icon_state = "turtle_med"
+	item_state = "turtle_med"
+	can_adjust = FALSE

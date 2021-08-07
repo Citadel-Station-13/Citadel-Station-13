@@ -53,6 +53,9 @@
 		new festive_tree(get_turf(src))
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/xmastree/hilbert
+	christmas_tree = /obj/structure/flora/tree/pine/xmas
+
 /obj/effect/landmark/xmastree/rdrod
 	name = "festivus pole spawner"
 	festive_tree = /obj/structure/festivus

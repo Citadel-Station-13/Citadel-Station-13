@@ -44,8 +44,7 @@
 	else
 		. += "<span class='notice'>Alt-click to seal it.</span>"
 
-
-obj/item/reagent_containers/chem_pack/attack_self(mob/user)
+/obj/item/reagent_containers/chem_pack/attack_self(mob/user)
 	if(sealed)
 		return
 	..()

@@ -11,6 +11,7 @@
 	production = 1
 	yield = 6
 	potency = 10
+	instability = 35
 	growthstages = 3
 	grind_results = list(/datum/reagent/mustardgrind = 1)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
@@ -57,7 +58,7 @@
 		return
 
 	var/datum/gas_mixture/stank = new
-	stank.adjust_moles(/datum/gas/miasma,(yield + 6)*7*0.02) // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
+	stank.adjust_moles(GAS_MIASMA,(yield + 6)*0.14) // 0.14 = 7*0.02, this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
 	stank.set_temperature(T20C) // without this the room would eventually freeze and miasma mining would be easier
 	T.assume_air(stank)
 	T.air_update_turf()
@@ -111,11 +112,13 @@
 	maturation = 3
 	production = 5
 	yield = 4
+	instability = 10
 	growthstages = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/replicapod)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
+	seed_flags = null
 
 /obj/item/reagent_containers/food/snacks/grown/cabbage
 	seed = /obj/item/seeds/cabbage
@@ -140,6 +143,7 @@
 	endurance = 50
 	maturation = 3
 	yield = 4
+	instability = 15
 	growthstages = 2
 	reagents_add = list(/datum/reagent/consumable/sugar = 0.25)
 	mutatelist = list(/obj/item/seeds/bamboo)

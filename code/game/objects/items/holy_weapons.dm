@@ -492,7 +492,7 @@
 	var/possessed = FALSE
 
 /obj/item/nullrod/scythe/talking/process()
-	for(var/mob/living/simple_animal/shade/S in contents)
+	for(var/mob/living/simple_animal/hostile/construct/shade/S in contents)
 		if(S.mind)
 			return
 		else
@@ -516,7 +516,7 @@
 
 	if(LAZYLEN(candidates))
 		var/mob/C = pick(candidates)
-		var/mob/living/simple_animal/shade/S = new(src)
+		var/mob/living/simple_animal/hostile/construct/shade/S = new(src)
 		S.real_name = name
 		S.name = name
 		S.ckey = C.ckey
@@ -537,7 +537,7 @@
 		possessed = FALSE
 
 /obj/item/nullrod/scythe/talking/Destroy()
-	for(var/mob/living/simple_animal/shade/S in contents)
+	for(var/mob/living/simple_animal/hostile/construct/shade/S in contents)
 		to_chat(S, "You were destroyed!")
 		qdel(S)
 	return ..()
@@ -771,7 +771,10 @@
 
 /obj/item/nullrod/tribal_knife/process()
 	slowdown = rand(-2, 2)
-
+	if(iscarbon(loc))
+		var/mob/living/carbon/wielder = loc
+		if(wielder.is_holding(src))
+			wielder.update_equipment_speed_mods()
 
 /obj/item/nullrod/pitchfork
 	icon_state = "pitchfork0"
@@ -803,6 +806,7 @@
 	force = 4
 	throwforce = 0
 	attack_verb = list("whipped", "repented", "lashed", "flagellated")
+	slot_flags = ITEM_SLOT_BELT
 	var/praying = FALSE
 	var/deity_name = "Coderbus" //This is the default, hopefully won't actually appear if the religion subsystem is running properly
 

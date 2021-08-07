@@ -17,6 +17,44 @@
 	var/stealth = FALSE //if TRUE, does not appear on HUDs and health scans
 	var/diagnostics = TRUE //if TRUE, displays program list when scanned by nanite scanners
 
+	/// Delete ourselves when we're depleted.
+	var/qdel_self_on_depletion = TRUE
+	/// Allow deletion
+	var/can_be_deleted = TRUE
+	/// Whether or not we can survive no cloud syncing without errors
+	var/requires_cloud_sync = TRUE
+	/// Permanent programs - can never be deleted. does not count towards max_programs.
+	var/list/datum/nanite_program/permanent_programs = list()
+
+	// Vulnerabilities
+	/// EMP flat deletion upper
+	var/emp_flat_deletion_upper = 35
+	/// EMP flat deletion lower
+	var/emp_flat_deletion_lower = 20
+	/// EMP percent deletion upper
+	var/emp_percent_deletion_upper = 0.35
+	/// EMP percent deletion lower
+	var/emp_percent_deletion_lower = 0.30
+	/// EMP severity multiplier, capping to 0 to 100
+	var/emp_severity_mod = 1
+	/// EMP severity div for cloudsync reset chance
+	var/emp_desync_mod = 0.25
+
+	/// Shock flat deletion upper
+	var/shock_flat_deletion_upper = 45
+	/// Shock flat deletion lower
+	var/shock_flat_deletion_lower = 25
+	/// Shock percent deletion upper
+	var/shock_percent_deletion_upper = 0.25
+	/// Shock percent deletion lower
+	var/shock_percent_deletion_lower = 0.20
+
+
+	/// minor shock deletion lower
+	var/minor_shock_deletion_lower = 5
+	/// minor shock deletion upper
+	var/minor_shock_deletion_upper = 15
+
 /datum/component/nanites/Initialize(amount = 100, cloud = 0)
 	if(!isliving(parent) && !istype(parent, /datum/nanite_cloud_backup))
 		return COMPONENT_INCOMPATIBLE
@@ -55,6 +93,9 @@
 	RegisterSignal(parent, COMSIG_NANITE_ADD_PROGRAM, .proc/add_program)
 	RegisterSignal(parent, COMSIG_NANITE_SCAN, .proc/nanite_scan)
 	RegisterSignal(parent, COMSIG_NANITE_SYNC, .proc/sync)
+	RegisterSignal(parent, COMSIG_NANITE_CHECK_CONSOLE_LOCK, .proc/check_console_locking)
+	RegisterSignal(parent, COMSIG_NANITE_CHECK_HOST_LOCK, .proc/check_host_lockout)
+	RegisterSignal(parent, COMSIG_NANITE_CHECK_VIRAL_PREVENTION, .proc/check_viral_prevention)
 
 	if(isliving(parent))
 		RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, .proc/on_emp)
@@ -118,13 +159,64 @@
 		next_sync = world.time + NANITE_SYNC_DELAY
 	set_nanite_bar()
 
+/**
+  * Called when nanites are depleted.
+  * Deletes ourselves by default.
+  */
+/datum/component/nanites/proc/nanites_depleted()
+	if(qdel_self_on_depletion)
+		delete_nanites()
 
+/**
+  * Used to rid ourselves
+  */
+///Deletes nanites!
 /datum/component/nanites/proc/delete_nanites()
-	qdel(src)
+	if(can_be_deleted)
+		qdel(src)
 
-//Syncs the nanite component to another, making it so programs are the same with the same programming (except activation status)
+/**
+  * Adds permanent programs
+  *
+  * WARNING: Has no sanity checks. Make sure you know what you are doing! (make sure programs do not conflict)
+  */
+/datum/component/nanites/proc/add_permanent_program(list/program, immutable = FALSE)
+	if(!islist(program))
+		program = list(program)
+	for(var/i in program)
+		if(i in permanent_programs)
+			continue
+		var/datum/nanite_program/P = i
+		permanent_programs += P
+		if(immutable)
+			P.immutable = TRUE
+		for(var/e in programs)
+			var/datum/nanite_program/E = e
+			if(E.unique && (E.type == P.type))
+				qdel(e)
+		programs += P
+
+/**
+  * Checks if we can block out console modification
+  */
+/datum/component/nanites/proc/check_console_locking()
+	return SEND_SIGNAL(src, COMSIG_NANITE_INTERNAL_CONSOLE_LOCK_CHECK)
+
+/**
+  * Checks if we can lock out host internal conscious modification
+  */
+/datum/component/nanites/proc/check_host_lockout()
+	return SEND_SIGNAL(src, COMSIG_NANITE_INTERNAL_HOST_LOCK_CHECK)
+
+/**
+  * Checks if we can block out viral replica
+  */
+/datum/component/nanites/proc/check_viral_prevention()
+	return SEND_SIGNAL(src, COMSIG_NANITE_INTERNAL_VIRAL_PREVENTION_CHECK)
+
+///Syncs the nanite component to another, making it so programs are the same with the same programming (except activation status)
 /datum/component/nanites/proc/sync(datum/signal_source, datum/component/nanites/source, full_overwrite = TRUE, copy_activation = FALSE)
-	var/list/programs_to_remove = programs.Copy()
+	var/list/programs_to_remove = programs.Copy() - permanent_programs
 	var/list/programs_to_add = source.programs.Copy()
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
@@ -142,6 +234,7 @@
 		var/datum/nanite_program/SNP = X
 		add_program(null, SNP.copy())
 
+///Syncs the nanites to their assigned cloud copy, if it is available. If it is not, there is a small chance of a software error instead.
 /datum/component/nanites/proc/cloud_sync()
 	if(cloud_id)
 		var/datum/nanite_cloud_backup/backup = SSnanites.get_cloud_backup(cloud_id)
@@ -151,16 +244,20 @@
 				sync(null, cloud_copy)
 				return
 	//Without cloud syncing nanites can accumulate errors and/or defects
-	if(prob(8) && programs.len)
+	if(prob(8) && programs.len && requires_cloud_sync)
 		var/datum/nanite_program/NP = pick(programs)
 		NP.software_error()
 
+///Adds a nanite program, replacing existing unique programs of the same type. A source program can be specified to copy its programming onto the new one.
 /datum/component/nanites/proc/add_program(datum/source, datum/nanite_program/new_program, datum/nanite_program/source_program)
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		if(NP.unique && NP.type == new_program.type)
-			qdel(NP)
-	if(programs.len >= max_programs)
+			if(NP in permanent_programs)
+				return COMPONENT_PROGRAM_NOT_INSTALLED
+			else
+				qdel(NP)
+	if((programs.len - length(permanent_programs)) >= max_programs)
 		return COMPONENT_PROGRAM_NOT_INSTALLED
 	if(source_program)
 		source_program.copy_programming(new_program)
@@ -174,11 +271,67 @@
 	adjust_nanites(null, -amount)
 	return (nanite_volume > 0)
 
+///Modifies the current nanite volume, then checks if the nanites are depleted or exceeding the maximum amount
 /datum/component/nanites/proc/adjust_nanites(datum/source, amount)
-	nanite_volume = clamp(nanite_volume + amount, 0, max_nanites)
-	if(nanite_volume <= 0) //oops we ran out
-		qdel(src)
+	SIGNAL_HANDLER
 
+	nanite_volume = max(nanite_volume + amount, 0)	//Lets not have negative nanite counts on permanent ones.
+	if(nanite_volume > max_nanites)
+		reject_excess_nanites()
+	if(nanite_volume <= 0) //oops we ran out
+		nanites_depleted()
+
+/**
+  *	Handles how nanites leave the host's body if they find out that they're currently exceeding the maximum supported amount
+  *
+  * IC explanation:
+  * Normally nanites simply discard excess volume by slowing replication or 'sweating' it out in imperceptible amounts,
+  * but if there is a large excess volume, likely due to a programming change that leaves them unable to support their current volume,
+  * the nanites attempt to leave the host as fast as necessary to prevent nanite poisoning. This can range from minor oozing to nanites
+  * rapidly bursting out from every possible pathway, causing temporary inconvenience to the host.
+  */
+/datum/component/nanites/proc/reject_excess_nanites()
+	var/excess = nanite_volume - max_nanites
+	nanite_volume = max_nanites
+
+	switch(excess)
+		if(0 to NANITE_EXCESS_MINOR) //Minor excess amount, the extra nanites are quietly expelled without visible effects
+			return
+		if((NANITE_EXCESS_MINOR + 0.1) to NANITE_EXCESS_VOMIT) //Enough nanites getting rejected at once to be visible to the naked eye
+			host_mob.visible_message("<span class='warning'>A grainy grey slurry starts oozing out of [host_mob].</span>", "<span class='warning'>A grainy grey slurry starts oozing out of your skin.</span>", null, 4);
+		if((NANITE_EXCESS_VOMIT + 0.1) to NANITE_EXCESS_BURST) //Nanites getting rejected in massive amounts, but still enough to make a semi-orderly exit through vomit
+			if(iscarbon(host_mob))
+				var/mob/living/carbon/C = host_mob
+				host_mob.visible_message("<span class='warning'>[host_mob] vomits a grainy grey slurry!</span>", "<span class='warning'>You suddenly vomit a metallic-tasting grainy grey slurry!</span>", null);
+				C.vomit(0, FALSE, TRUE, FLOOR(excess / 100, 1), FALSE, VOMIT_NANITE, FALSE, TRUE, 0)
+			else
+				host_mob.visible_message("<span class='warning'>A metallic grey slurry bursts out of [host_mob]'s skin!</span>", "<span class='userdanger'>A metallic grey slurry violently bursts out of your skin!</span>", null);
+				if(isturf(host_mob.drop_location()))
+					var/turf/T = host_mob.drop_location()
+					T.add_vomit_floor(host_mob, VOMIT_NANITE, 0)
+		if((NANITE_EXCESS_BURST + 0.1) to INFINITY) //Way too many nanites, they just leave through the closest exit before they harm/poison the host
+			host_mob.visible_message("<span class='warning'>A torrent of metallic grey slurry violently bursts out of [host_mob]'s face and floods out of [host_mob.p_their()] skin!</span>",
+								"<span class='userdanger'>A torrent of metallic grey slurry violently bursts out of your eyes, ears, and mouth, and floods out of your skin!</span>");
+
+			host_mob.blind_eyes(15) //nanites coming out of your eyes
+			host_mob.Paralyze(120)
+			if(iscarbon(host_mob))
+				var/mob/living/carbon/C = host_mob
+				var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
+				if(ears)
+					ears.adjustEarDamage(0, 30) //nanites coming out of your ears
+				C.vomit(0, FALSE, TRUE, 2, FALSE, VOMIT_NANITE, FALSE, TRUE, 0) //nanites coming out of your mouth
+
+			//nanites everywhere
+			if(isturf(host_mob.drop_location()))
+				var/turf/T = host_mob.drop_location()
+				T.add_vomit_floor(host_mob, VOMIT_NANITE, 0)
+				for(var/turf/adjacent_turf in oview(host_mob, 1))
+					if(adjacent_turf.density || !adjacent_turf.Adjacent(T))
+						continue
+					adjacent_turf.add_vomit_floor(host_mob, VOMIT_NANITE, 0)
+
+///Updates the nanite volume bar visible in diagnostic HUDs
 /datum/component/nanites/proc/set_nanite_bar(remove = FALSE)
 	var/image/holder = host_mob.hud_list[DIAG_NANITE_FULL_HUD]
 	var/icon/I = icon(host_mob.icon, host_mob.icon_state, host_mob.dir)
@@ -191,28 +344,28 @@
 	holder.icon_state = "nanites[nanite_percent]"
 
 /datum/component/nanites/proc/on_emp(datum/source, severity)
-	nanite_volume *= (rand(60, 90) * 0.01)		//Lose 10-40% of nanites
-	adjust_nanites(null, -(rand(5, 50)))		//Lose 5-50 flat nanite volume
-	if(prob(40/severity))
+	severity *= emp_severity_mod
+	var/loss = (severity / 100) * (rand(emp_percent_deletion_lower, emp_percent_deletion_upper) * nanite_volume) + rand(emp_flat_deletion_lower, emp_flat_deletion_upper)
+	adjust_nanites(null, -loss)
+	if(prob(severity * emp_desync_mod))
 		cloud_id = 0
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_emp(severity)
-
 
 /datum/component/nanites/proc/on_shock(datum/source, shock_damage, siemens_coeff = 1, flags = NONE)
 	if(shock_damage < 1)
 		return
 
 	if(!HAS_TRAIT_NOT_FROM(host_mob, TRAIT_SHOCKIMMUNE, "nanites"))//Another shock protection must protect nanites too, but nanites protect only host
-		nanite_volume *= (rand(45, 80) * 0.01)		//Lose 20-55% of nanites
-		adjust_nanites(null, -(rand(5, 50)))			//Lose 5-50 flat nanite volume
+		var/loss = (rand(shock_percent_deletion_lower, shock_percent_deletion_upper) * nanite_volume) + rand(shock_flat_deletion_lower, shock_flat_deletion_upper)
+		adjust_nanites(null, -loss)
 		for(var/X in programs)
 			var/datum/nanite_program/NP = X
 			NP.on_shock(shock_damage)
 
 /datum/component/nanites/proc/on_minor_shock(datum/source)
-	adjust_nanites(null, -(rand(5, 15)))			//Lose 5-15 flat nanite volume
+	adjust_nanites(null, -(rand(minor_shock_deletion_lower, minor_shock_deletion_upper)))			//Lose 5-15 flat nanite volume
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_minor_shock()
@@ -237,7 +390,7 @@
 			NP.receive_comm_signal(comm_code, comm_message, comm_source)
 
 /datum/component/nanites/proc/check_viable_biotype()
-	if(!(host_mob.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+	if(!(host_mob.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_NANITES)))
 		qdel(src) //bodytype no longer sustains nanites
 
 /datum/component/nanites/proc/check_access(datum/source, obj/O)
@@ -252,7 +405,9 @@
 	nanite_volume = clamp(amount, 0, max_nanites)
 
 /datum/component/nanites/proc/set_max_volume(datum/source, amount)
-	max_nanites = max(1, max_nanites)
+	SIGNAL_HANDLER
+
+	max_nanites = max(1, amount)
 
 /datum/component/nanites/proc/set_cloud(datum/source, amount)
 	cloud_id = clamp(amount, 0, 100)
@@ -378,3 +533,10 @@
 		id++
 		mob_programs += list(mob_program)
 	data["mob_programs"] = mob_programs
+
+/**
+  * Subtype that doesn't erase itself from running out
+  */
+/datum/component/nanites/permanent
+	qdel_self_on_depletion = FALSE
+	can_be_deleted = FALSE

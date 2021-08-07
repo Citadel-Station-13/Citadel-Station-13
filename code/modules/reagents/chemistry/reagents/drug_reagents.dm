@@ -45,6 +45,13 @@
 	trippy = FALSE
 	pH = 8
 
+//Nicotine is used as a pesticide IRL.
+/datum/reagent/drug/nicotine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		mytray.adjustToxic(round(chems.get_reagent_amount(type)))
+		mytray.adjustPests(-rand(1,2))
+
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/M)
 	if(prob(1))
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
@@ -157,58 +164,54 @@
 
 /datum/reagent/drug/methamphetamine
 	name = "Methamphetamine"
-	description = "Reduces stun times by about 300%, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
+	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
 	overdose_threshold = 20
-	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
-	var/brain_damage = TRUE
-	var/jitter = TRUE
-	var/confusion = TRUE
 	pH = 5
+	addiction_threshold = 10
 	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()
-	L.ignore_slowdown(type)
-	ADD_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
 
 /datum/reagent/drug/methamphetamine/on_mob_end_metabolize(mob/living/L)
-	L.unignore_slowdown(type)
-	REMOVE_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
 	..()
 
-/datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M)
+/datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
-	if(prob(5))
-		to_chat(M, "<span class='notice'>[high_message]</span>")
-	M.AdjustAllImmobility(-40, 0)
-	M.AdjustUnconscious(-40, 0)
-	M.adjustStaminaLoss(-7.5 * REM, 0)
-	if(jitter)
-		M.Jitter(2)
-	if(brain_damage)
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1,4))
-	M.heal_overall_damage(2, 2)
-	if(prob(5))
+	if(DT_PROB(2.5, delta_time))
+		to_chat(M, span_notice("[high_message]"))
+	// SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
+	M.AdjustStun(-40 * REM * delta_time)
+	M.AdjustKnockdown(-40 * REM * delta_time)
+	M.AdjustUnconscious(-40 * REM * delta_time)
+	M.AdjustParalyzed(-40 * REM * delta_time)
+	M.AdjustImmobilized(-40 * REM * delta_time)
+	M.adjustStaminaLoss(-2 * REM * delta_time, 0)
+	M.Jitter(2 * REM * delta_time)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1, 4) * REM * delta_time)
+	if(DT_PROB(2.5, delta_time))
 		M.emote(pick("twitch", "shiver"))
 	..()
-	. = 1
+	. = TRUE
 
-/datum/reagent/drug/methamphetamine/overdose_process(mob/living/M)
+/datum/reagent/drug/methamphetamine/overdose_process(mob/living/M, delta_time, times_fired)
 	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovable(M.loc))
-		for(var/i in 1 to 4)
+		for(var/i in 1 to round(4 * REM * delta_time, 1))
 			step(M, pick(GLOB.cardinals))
-	if(prob(20))
+	if(DT_PROB(10, delta_time))
 		M.emote("laugh")
-	if(prob(33))
-		M.visible_message("<span class='danger'>[M]'s hands flip out and flail everywhere!</span>")
+	if(DT_PROB(18, delta_time))
+		M.visible_message(span_danger("[M]'s hands flip out and flail everywhere!"))
 		M.drop_all_held_items()
 	..()
-	M.adjustToxLoss(1, 0)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, pick(0.5, 0.6, 0.7, 0.8, 0.9, 1))
-	. = 1
+	M.adjustToxLoss(1 * REM * delta_time, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, (rand(5, 10) / 10) * REM * delta_time)
+	. = TRUE
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage1(mob/living/M)
 	M.Jitter(5)
@@ -244,14 +247,6 @@
 		M.emote(pick("twitch","drool","moan"))
 	..()
 	. = 1
-
-/datum/reagent/drug/methamphetamine/changeling
-	name = "Changeling Adrenaline"
-	addiction_threshold = 35
-	overdose_threshold = 35
-	jitter = FALSE
-	brain_damage = FALSE
-	value = REAGENT_VALUE_RARE
 
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
@@ -559,3 +554,129 @@
 		var/mob/living/carbon/C = M
 		if(!C.undergoing_cardiac_arrest())
 			C.set_heartattack(TRUE)
+
+//aphrodisiac & anaphrodisiac
+
+/datum/reagent/drug/aphrodisiac
+	name = "Crocin"
+	description = "Naturally found in the crocus and gardenia flowers, this drug acts as a natural and safe aphrodisiac."
+	taste_description = "strawberries"
+	color = "#FFADFF"//PINK, rgb(255, 173, 255)
+	can_synth = FALSE
+
+/datum/reagent/drug/aphrodisiac/on_mob_life(mob/living/M)
+	if(M && M.client?.prefs.arousable && !(M.client?.prefs.cit_toggles & NO_APHRO))
+		if((prob(min(current_cycle/2,5))))
+			M.emote(pick("moan","blush"))
+		if(prob(min(current_cycle/4,10)))
+			var/aroused_message = pick("You feel frisky.", "You're having trouble suppressing your urges.", "You feel in the mood.")
+			to_chat(M, "<span class='userlove'>[aroused_message]</span>")
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/list/genits = H.adjust_arousal(current_cycle, "crocin", aphro = TRUE) // redundant but should still be here
+			for(var/g in genits)
+				var/obj/item/organ/genital/G = g
+				to_chat(M, "<span class='userlove'>[G.arousal_verb]!</span>")
+	..()
+
+/datum/reagent/drug/aphrodisiacplus
+	name = "Hexacrocin"
+	description = "Chemically condensed form of basic crocin. This aphrodisiac is extremely powerful and addictive in most animals.\
+					Addiction withdrawals can cause brain damage and shortness of breath. Overdosage can lead to brain damage and a \
+					permanent increase in libido (commonly referred to as 'bimbofication')."
+	taste_description = "liquid desire"
+	color = "#FF2BFF"//dark pink
+	addiction_threshold = 20
+	overdose_threshold = 20
+	can_synth = FALSE
+
+/datum/reagent/drug/aphrodisiacplus/on_mob_life(mob/living/M)
+	if(M && M.client?.prefs.arousable && !(M.client?.prefs.cit_toggles & NO_APHRO))
+		if(prob(5))
+			if(prob(current_cycle))
+				M.say(pick("Hnnnnngghh...", "Ohh...", "Mmnnn..."))
+			else
+				M.emote(pick("moan","blush"))
+		if(prob(5))
+			var/aroused_message
+			if(current_cycle>25)
+				aroused_message = pick("You need to fuck someone!", "You're bursting with sexual tension!", "You can't get sex off your mind!")
+			else
+				aroused_message = pick("You feel a bit hot.", "You feel strong sexual urges.", "You feel in the mood.", "You're ready to go down on someone.")
+			to_chat(M, "<span class='userlove'>[aroused_message]</span>")
+			REMOVE_TRAIT(M,TRAIT_NEVERBONER,APHRO_TRAIT)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/list/genits = H.adjust_arousal(100, "hexacrocin", aphro = TRUE) // redundant but should still be here
+			for(var/g in genits)
+				var/obj/item/organ/genital/G = g
+				to_chat(M, "<span class='userlove'>[G.arousal_verb]!</span>")
+	..()
+
+/datum/reagent/drug/aphrodisiacplus/addiction_act_stage2(mob/living/M)
+	if(prob(30))
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2)
+	..()
+/datum/reagent/drug/aphrodisiacplus/addiction_act_stage3(mob/living/M)
+	if(prob(30))
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3)
+
+		..()
+/datum/reagent/drug/aphrodisiacplus/addiction_act_stage4(mob/living/M)
+	if(prob(30))
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 4)
+	..()
+
+/datum/reagent/drug/aphrodisiacplus/overdose_process(mob/living/M)
+	if(M && M.client?.prefs.arousable && !(M.client?.prefs.cit_toggles & NO_APHRO) && prob(33))
+		if(prob(5) && ishuman(M) && M.has_dna() && (M.client?.prefs.cit_toggles & BIMBOFICATION))
+			if(!HAS_TRAIT(M,TRAIT_PERMABONER))
+				to_chat(M, "<span class='userlove'>Your libido is going haywire!</span>")
+				M.log_message("Made perma-horny by hexacrocin.",LOG_EMOTE)
+				ADD_TRAIT(M,TRAIT_PERMABONER,APHRO_TRAIT)
+	..()
+
+/datum/reagent/drug/anaphrodisiac
+	name = "Camphor"
+	description = "Naturally found in some species of evergreen trees, camphor is a waxy substance. When injested by most animals, it acts as an anaphrodisiac\
+					, reducing libido and calming them. Non-habit forming and not addictive."
+	taste_description = "dull bitterness"
+	taste_mult = 2
+	color = "#D9D9D9"//rgb(217, 217, 217)
+	reagent_state = SOLID
+	can_synth = FALSE
+
+/datum/reagent/drug/anaphrodisiac/on_mob_life(mob/living/M)
+	if(M && M.client?.prefs.arousable && prob(16))
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/list/genits = H.adjust_arousal(-100, "camphor", aphro = TRUE)
+			if(genits.len)
+				to_chat(M, "<span class='notice'>You no longer feel aroused.")
+	..()
+
+/datum/reagent/drug/anaphrodisiacplus
+	name = "Hexacamphor"
+	description = "Chemically condensed camphor. Causes an extreme reduction in libido and a permanent one if overdosed. Non-addictive."
+	taste_description = "tranquil celibacy"
+	color = "#D9D9D9"//rgb(217, 217, 217)
+	reagent_state = SOLID
+	overdose_threshold = 20
+	can_synth = FALSE
+
+/datum/reagent/drug/anaphrodisiacplus/on_mob_life(mob/living/M)
+	if(M && M.client?.prefs.arousable)
+		REMOVE_TRAIT(M,TRAIT_PERMABONER,APHRO_TRAIT)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/list/genits = H.adjust_arousal(-100, "hexacamphor", aphro = TRUE)
+			if(genits.len)
+				to_chat(M, "<span class='notice'>You no longer feel aroused.")
+
+	..()
+
+/datum/reagent/drug/anaphrodisiacplus/overdose_process(mob/living/M)
+	if(M && M.client?.prefs.arousable && prob(5))
+		to_chat(M, "<span class='userlove'>You feel like you'll never feel aroused again...</span>")
+		ADD_TRAIT(M,TRAIT_NEVERBONER,APHRO_TRAIT)
+	..()

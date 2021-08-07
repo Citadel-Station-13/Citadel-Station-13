@@ -39,7 +39,7 @@
 	switch(state)
 		if(1)
 			// State 1
-			if(istype(W, /obj/item/weldingtool))
+			if(W.tool_behaviour == TOOL_WELDER)
 				if(weld(W, user))
 					to_chat(user, "<span class='notice'>You weld the assembly securely into place.</span>")
 					setAnchored(TRUE)
@@ -56,7 +56,7 @@
 					return
 				return
 
-			else if(istype(W, /obj/item/weldingtool))
+			else if(W.tool_behaviour == TOOL_WELDER)
 
 				if(weld(W, user))
 					to_chat(user, "<span class='notice'>You unweld the assembly from its place.</span>")
@@ -133,7 +133,9 @@
 	qdel(src)
 	return TRUE
 
-/obj/structure/camera_assembly/proc/weld(obj/item/weldingtool/W, mob/living/user)
+/obj/structure/camera_assembly/proc/weld(obj/item/W, mob/living/user)
+	if(!W.tool_behaviour == TOOL_WELDER)
+		return
 	if(!W.tool_start_check(user, amount=0))
 		return FALSE
 	to_chat(user, "<span class='notice'>You start to weld \the [src]...</span>")

@@ -12,7 +12,4 @@
 	anomaly_path = /obj/effect/anomaly/grav
 
 /datum/round_event/anomaly/anomaly_grav/announce(fake)
-	if(prob(90))
-		priority_announce("Gravitational anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
-	else
-		print_command_report("Gravitational anomaly detected on long range scanners. Expected location: [impact_area.name].", "Gravitational anomaly")
+	priority_announce("Gravitational anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")

@@ -65,10 +65,14 @@
 	detonate(user)
 
 /datum/component/killerqueen/proc/bump_detonate(datum/source, atom/A)
+	var/atom/us = parent
+	if(!us.density)		// lazy anti-item-throw-OHKO, we need something better at some point
+		return
 	detonate(A)
 
 /datum/component/killerqueen/proc/touch_detonate(datum/source, mob/user)
 	detonate(user)
+	return COMPONENT_NO_ATTACK_HAND
 
 /datum/component/killerqueen/proc/on_examine(datum/source, mob/examiner, list/examine_return)
 	if(examine_message)

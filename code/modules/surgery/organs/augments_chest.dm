@@ -33,9 +33,8 @@
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
-	owner.reagents.add_reagent(/datum/reagent/toxin/bad_food, poison_amount / severity)
+	owner.reagents.add_reagent(/datum/reagent/toxin/bad_food, poison_amount * severity/100)
 	to_chat(owner, "<span class='warning'>You feel like your insides are burning.</span>")
-
 
 /obj/item/organ/cyberimp/chest/nutriment/plus
 	name = "Nutriment pump implant PLUS"
@@ -115,10 +114,10 @@
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		if(H.stat != DEAD && prob(50 / severity) && H.can_heartattack())
+		if(H.stat != DEAD && prob(severity/2) && H.can_heartattack())
 			H.set_heartattack(TRUE)
 			to_chat(H, "<span class='userdanger'>You feel a horrible agony in your chest!</span>")
-			addtimer(CALLBACK(src, .proc/undo_heart_attack), 60 SECONDS / severity)
+			addtimer(CALLBACK(src, .proc/undo_heart_attack), (60 * severity/100) SECONDS)
 
 /obj/item/organ/cyberimp/chest/reviver/proc/undo_heart_attack()
 	var/mob/living/carbon/human/H = owner
@@ -211,13 +210,9 @@
 
 	// Priority 3: use internals tank.
 	var/obj/item/tank/I = owner.internal
-	if(I && I.air_contents && I.air_contents.total_moles() > num)
-		var/datum/gas_mixture/removed = I.air_contents.remove(num)
-		if(removed.total_moles() > 0.005)
-			T.assume_air(removed)
-			return 1
-		else
-			T.assume_air(removed)
+	if(I && I.air_contents && I.air_contents.total_moles() >= num)
+		T.assume_air_moles(I.air_contents, num)
+		return 1
 
 	toggle(silent = TRUE)
 	return 0

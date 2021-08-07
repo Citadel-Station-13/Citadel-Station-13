@@ -56,7 +56,7 @@
 	var/turf/target_turf = pick(L)
 	if(!target_turf)
 		return
-	var/list/obj/effect/portal/created = create_portal_pair(get_turf(src), target_turf, src, 300, 1, /obj/effect/portal/anom)
+	var/list/obj/effect/portal/created = create_portal_pair(get_turf(src), target_turf, 300, 1, /obj/effect/portal/anom)
 	var/turf/T = get_turf(target)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Wormhole Generator in [ADMIN_VERBOSEJMP(T)]")
 	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in [AREACOORD(T)]")
@@ -422,12 +422,12 @@
 		return
 	var/datum/gas_mixture/GM = new
 	if(prob(10))
-		GM.adjust_moles(/datum/gas/plasma,100)
+		GM.adjust_moles(GAS_PLASMA,100)
 		GM.set_temperature(1500+T0C) //should be enough to start a fire
 		T.visible_message("[src] suddenly disgorges a cloud of heated plasma.")
 		qdel(src)
 	else
-		GM.adjust_moles(/datum/gas/plasma,5)
+		GM.adjust_moles(GAS_PLASMA,5)
 		GM.set_temperature(istype(T) ? T.air.return_temperature() : T20C)
 		T.visible_message("[src] suddenly disgorges a cloud of plasma.")
 	T.assume_air(GM)

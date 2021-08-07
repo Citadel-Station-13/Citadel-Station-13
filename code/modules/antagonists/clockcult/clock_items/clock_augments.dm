@@ -5,7 +5,7 @@
 	name = "clock-themed arm-mounted implant"
 	var/clockwork_desc = "According to Ratvar, this really shouldn't exist. Tell Him about this immediately."
 	syndicate_implant = TRUE
-	icon_state = "clock_arm_implant"
+	icon_state = "toolkit_implant"
 
 /obj/item/organ/cyberimp/arm/clockwork/ui_action_click()
 	if(is_servant_of_ratvar(owner) || (obj_flags & EMAGGED)) //If you somehow manage to steal a clockie's implant AND have an emag AND manage to get it implanted for yourself, good on ya!

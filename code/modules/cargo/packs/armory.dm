@@ -176,6 +176,7 @@
 					/obj/effect/spawner/bundle/crate/surplusrifle,
 					/obj/item/storage/toolbox/ammo/surplus)
 	crate_name = "surplus military crate"
+	crate_type = /obj/structure/closet/crate/secure/soviet
 
 /datum/supply_pack/security/armory/russian/fill(obj/structure/closet/crate/C)
 	for(var/i in 1 to 5)
@@ -232,3 +233,34 @@
 	desc = "Contains one hellgun, an old pattern of laser gun infamous for its ability to horribly disfigure targets with burns. Technically violates the Space Geneva Convention when used on humanoids."
 	cost = 1500
 	contains = list(/obj/item/gun/energy/laser/hellgun)
+
+/datum/supply_pack/security/armory/derringerclassic
+	name = "Holdout Crate"
+	crate_name = "dented crate"
+	desc = "Hey kid.. c'mere. Boss says we need to offload these, to any buyer, no questions asked. You pay us, we give you three of these guns, no strings attached. Locks are to ensure they get to PAYING customers."
+	cost = 2000
+	contraband = TRUE
+	contains = list(/obj/item/storage/fancy/cigarettes/derringer/smuggled,
+					/obj/item/storage/fancy/cigarettes/derringer/smuggled,
+					/obj/item/storage/fancy/cigarettes/derringer/smuggled,
+					/obj/item/storage/wallet)
+
+/datum/supply_pack/security/armory/esoteric_arms
+	name = "Esoteric Armory Shipment"
+	desc = "Well.. you're an agent of taste, I can tell that much. For the right price.. we could see our way clear to send you one of our more... unique weapons."
+	hidden = TRUE
+	cost = 10000
+	can_private_buy = TRUE
+	crate_name = "dusty crate"
+	var/num_contained = 1
+	contains = list(/obj/item/gun/ballistic/shotgun/leveraction,
+					/obj/item/storage/fancy/cigarettes/derringer/gold,
+					/obj/item/gun/ballistic/revolver/nagant,
+					/obj/item/gun/ballistic/automatic/pistol/APS,
+					/obj/item/gun/ballistic/revolver/golden)
+
+/datum/supply_pack/security/armory/esoteric_arms/fill(obj/structure/closet/crate/C)
+	var/list/L = contains.Copy()
+	for(var/i in 1 to num_contained)
+		var/item = pick_n_take(L)
+		new item(C)

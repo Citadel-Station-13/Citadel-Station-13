@@ -1,10 +1,9 @@
 /obj/machinery/hydroponics/constructable/automagic
 	name = "automated hydroponics system"
 	desc = "The bane of botanists everywhere. Accepts chemical reagents via plumbing, automatically harvests and removes dead plants."
+	icon_state = "hydrotray4"
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics/automagic
-	self_sufficiency_req = 400 //automating hydroponics makes gaia sad so she needs more drugs to turn they tray godly.
-	canirrigate = FALSE
 
 
 /obj/machinery/hydroponics/constructable/automagic/attackby(obj/item/O, mob/user, params)
@@ -32,18 +31,7 @@
 	START_PROCESSING(SSobj, src)
 	create_reagents(100 , AMOUNT_VISIBLE)
 
-/obj/machinery/hydroponics/constructable/automagic/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
-	AddComponent(/datum/component/plumbing/simple_demand)
-
-/obj/machinery/hydroponics/constructable/proc/can_be_rotated(mob/user, rotation_type)
-	return !anchored
-
 /obj/machinery/hydroponics/constructable/automagic/process()
-	if(reagents)
-		applyChemicals(reagents)
-		reagents.clear_reagents()
 	if(dead)
 		dead = 0
 		qdel(myseed)

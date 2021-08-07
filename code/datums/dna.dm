@@ -5,7 +5,7 @@
 	var/uni_identity
 	var/blood_type
 	var/datum/species/species = new /datum/species/human //The type of mutant race the player is if applicable (i.e. potato-man)
-	var/list/features = list("FFF") //first value is mutant color
+	var/list/features = list("FFF", "body_size" = RESIZE_DEFAULT_SIZE) //first value is mutant color
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 	var/nameless = FALSE
 	var/custom_species	//siiiiigh I guess this is important
@@ -76,6 +76,9 @@
 	new_dna.features = features.Copy()
 	new_dna.species = new species.type
 	new_dna.species.say_mod = species.say_mod
+	new_dna.species.exotic_blood_color = species.exotic_blood_color //it can change from the default value
+	new_dna.species.eye_type = species.eye_type
+	new_dna.species.limbs_id = species.limbs_id || species.id
 	new_dna.real_name = real_name
 	new_dna.nameless = nameless
 	new_dna.custom_species = custom_species
@@ -132,7 +135,8 @@
 		L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(GLOB.facial_hair_styles_list.Find(H.facial_hair_style), GLOB.facial_hair_styles_list.len)
 		L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.facial_hair_color)
 		L[DNA_SKIN_TONE_BLOCK] = construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len)
-		L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
+		L[DNA_LEFT_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.left_eye_color)
+		L[DNA_RIGHT_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.right_eye_color)
 		L[DNA_COLOR_ONE_BLOCK] = sanitize_hexcolor(features["mcolor"], 6)
 		L[DNA_COLOR_TWO_BLOCK] = sanitize_hexcolor(features["mcolor2"], 6)
 		L[DNA_COLOR_THREE_BLOCK] = sanitize_hexcolor(features["mcolor3"], 6)
@@ -224,8 +228,10 @@
 			setblock(uni_identity, blocknumber, sanitize_hexcolor(H.facial_hair_color))
 		if(DNA_SKIN_TONE_BLOCK)
 			setblock(uni_identity, blocknumber, construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len))
-		if(DNA_EYE_COLOR_BLOCK)
-			setblock(uni_identity, blocknumber, sanitize_hexcolor(H.eye_color))
+		if(DNA_LEFT_EYE_COLOR_BLOCK)
+			setblock(uni_identity, blocknumber, sanitize_hexcolor(H.left_eye_color))
+		if(DNA_RIGHT_EYE_COLOR_BLOCK)
+			setblock(uni_identity, blocknumber, sanitize_hexcolor(H.right_eye_color))
 		if(DNA_GENDER_BLOCK)
 			switch(H.gender)
 				if(MALE)
@@ -323,12 +329,13 @@
 	uni_identity = generate_uni_identity()
 	unique_enzymes = generate_unique_enzymes()
 
-/datum/dna/proc/initialize_dna(newblood_type)
+/datum/dna/proc/initialize_dna(newblood_type, skip_index = FALSE)
 	if(newblood_type)
 		blood_type = newblood_type
 	unique_enzymes = generate_unique_enzymes()
 	uni_identity = generate_uni_identity()
-	generate_dna_blocks()
+	if(!skip_index) //I hate this
+		generate_dna_blocks()
 	features = random_features(species?.id, holder?.gender)
 
 
@@ -398,7 +405,7 @@
 
 
 /mob/living/carbon/human/proc/hardset_dna(ui, list/mutation_index, newreal_name, newblood_type, datum/species/mrace, newfeatures, list/default_mutation_genes)
-
+	set waitfor = FALSE
 	if(newreal_name)
 		real_name = newreal_name
 		dna.generate_unique_enzymes()
@@ -464,7 +471,8 @@
 	hair_color = sanitize_hexcolor(getblock(structure, DNA_HAIR_COLOR_BLOCK))
 	facial_hair_color = sanitize_hexcolor(getblock(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
 	skin_tone = dna.skin_tone_override || GLOB.skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), GLOB.skin_tones.len)]
-	eye_color = sanitize_hexcolor(getblock(structure, DNA_EYE_COLOR_BLOCK))
+	left_eye_color = sanitize_hexcolor(getblock(structure, DNA_LEFT_EYE_COLOR_BLOCK))
+	right_eye_color = sanitize_hexcolor(getblock(structure, DNA_RIGHT_EYE_COLOR_BLOCK))
 	facial_hair_style = GLOB.facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), GLOB.facial_hair_styles_list.len)]
 	hair_style = GLOB.hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), GLOB.hair_styles_list.len)]
 	if(icon_update)
@@ -653,27 +661,34 @@
 		return
 	if(dna.stability > 0)
 		return
-	var/instability = -dna.stability
+	var/instability = - dna.stability
 	dna.remove_all_mutations()
 	dna.stability = 100
-	if(prob(max(70-instability,0)))
+	if(prob(max(70 - instability,0)))
 		switch(rand(0,3)) //not complete and utter death
 			if(0)
 				monkeyize()
 			if(1)
 				gain_trauma(/datum/brain_trauma/severe/paralysis)
 			if(2)
+				unequip_everything()
+				drop_all_held_items()
 				corgize()
 			if(3)
 				to_chat(src, "<span class='notice'>Oh, we actually feel quite alright!</span>")
 	else
 		switch(rand(0,3))
 			if(0)
+				unequip_everything()
+				drop_all_held_items()
 				gib()
 			if(1)
+				unequip_everything()
+				drop_all_held_items()
 				dust()
-
 			if(2)
+				unequip_everything()
+				drop_all_held_items()
 				death()
 				petrify(INFINITY)
 			if(3)
@@ -682,6 +697,8 @@
 					if(BP)
 						BP.dismember()
 					else
+						unequip_everything()
+						drop_all_held_items()
 						gib()
 				else
 					set_species(/datum/species/dullahan)
@@ -689,11 +706,19 @@
 /datum/dna/proc/update_body_size(old_size)
 	if(!holder || features["body_size"] == old_size)
 		return
+	//new size detected
 	holder.resize = features["body_size"] / old_size
 	holder.update_transform()
-	var/danger = CONFIG_GET(number/threshold_body_size_slowdown)
-	if(features["body_size"] < danger)
-		var/slowdown = (1 - round(features["body_size"] / danger, 0.1)) * CONFIG_GET(number/body_size_slowdown_multiplier)
-		holder.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/small_stride, TRUE, slowdown)
-	else if(old_size < danger)
-		holder.remove_movespeed_modifier(/datum/movespeed_modifier/small_stride)
+	if(iscarbon(holder))
+		var/mob/living/carbon/C = holder
+		var/penalty_threshold = CONFIG_GET(number/threshold_body_size_penalty)
+		if(features["body_size"] < penalty_threshold && old_size >= penalty_threshold)
+			C.maxHealth -= 10 //reduce the maxhealth
+			var/slowdown = (1 - round(features["body_size"] / penalty_threshold, 0.1)) * CONFIG_GET(number/body_size_slowdown_multiplier)
+			holder.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/small_stride, TRUE, slowdown)
+		else
+			if(old_size < penalty_threshold && features["body_size"] >= penalty_threshold)
+				C.maxHealth  += 10 //give the maxhealth back
+				holder.remove_movespeed_modifier(/datum/movespeed_modifier/small_stride) //remove the slowdown
+
+

@@ -60,7 +60,6 @@
 	cost = 15
 	restricted_roles = list("Clown")
 
-/*
 /datum/uplink_item/role_restricted/clowncar
 	name = "Clown Car"
 	desc = "The Clown Car is the ultimate transportation method for any worthy clown! \
@@ -69,9 +68,8 @@
 			someone saves them or they manage to crawl out. Be sure not to ram into any walls or vending machines, as the springloaded seats \
 			are very sensetive. Now with our included lube defense mechanism which will protect you against any angry shitcurity!"
 	item = /obj/vehicle/sealed/car/clowncar
-	cost = 15
+	cost = 16
 	restricted_roles = list("Clown")
-*/
 
 /datum/uplink_item/role_restricted/haunted_magic_eightball
 	name = "Haunted Magic Eightball"
@@ -144,6 +142,14 @@
 	cost = 4 // Has syndie tools + gloves + a robust weapon
 	restricted_roles = list("Assistant", "Curator") //Curator due to this being made of gold - It fits the theme
 
+/datum/uplink_item/role_restricted/oldtoolboxclean // this is the fourth item relating to toolboxes to be placed into this godforsaken bloated uplink
+	name = "Ancient Toolbox"
+	desc = "An iconic toolbox design notorious with Assistants everywhere, this design was especially made to become more robust the more telecrystals it has inside it! Tools and insulated gloves included."
+	item = /obj/item/storage/toolbox/mechanical/old/clean
+	cost = 2 // with eighteen telecrystals you are still weaker than a desword and without any of its defenses -- the scary part comes from collaborating with allies for a fifty eight force toolbox oh fuck
+	restricted_roles = list("Assistant")
+	surplus = 0
+
 /datum/uplink_item/role_restricted/mimery
 	name = "Guide to Advanced Mimery Series"
 	desc = "The classical two part series on how to further hone your mime skills. Upon studying the series, the user should be able to make 3x1 invisible walls, and shoot bullets out of their fingers. \
@@ -202,9 +208,10 @@
 
 /datum/uplink_item/role_restricted/chemical_gun
 	name = "Reagent Dartgun"
-	desc = "A heavily modified syringe gun which is capable of synthesizing its own chemical darts using input reagents. Can hold 100u of reagents."
+	desc = "A heavily modified syringe gun which is capable of synthesizing its own chemical darts using input reagents. \
+			Synthesizes one piercing 10 unit dart every 30 seconds up to a maximum of five. Can hold 100u of reagents."
 	item = /obj/item/gun/chem
-	cost = 12
+	cost = 10
 	restricted_roles = list("Chemist", "Chief Medical Officer")
 
 /datum/uplink_item/role_restricted/reverse_bear_trap
@@ -244,3 +251,11 @@
 	cost = 2
 	item = /obj/item/clothing/shoes/magboots/crushing
 	restricted_roles = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
+
+/datum/uplink_item/role_restricted/turretbox
+	name = "Disposable Sentry Gun"
+	desc = "A disposable sentry gun deployment system cleverly disguised as a toolbox, apply wrench for functionality."
+	item = /obj/item/storage/toolbox/emergency/turret
+	cost = 11
+	restricted_roles = list("Station Engineer")
+

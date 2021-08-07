@@ -85,9 +85,18 @@
 		to_chat(user, "<span class='warning'>You're not ready to tackle!</span>")
 		return
 
+	if(!user.mob_has_gravity() ||!user.loc.has_gravity() || isspaceturf(user.loc))
+		to_chat(user, "<span class='warning'>You can't find your footing without gravity!</span>")
+		return
+
 	if(user.has_status_effect(STATUS_EFFECT_TASED)) // can't tackle if you just got tased
 		to_chat(user, "<span class='warning'>You can't tackle while tased!</span>")
 		return
+
+	var/left_paralysis = HAS_TRAIT(user, TRAIT_PARALYSIS_L_ARM)
+	var/right_paralysis = HAS_TRAIT(user, TRAIT_PARALYSIS_R_ARM)
+	if(left_paralysis && right_paralysis)
+		to_chat(user, "<span class='warning'>You can't tackle without the use of your arms!</span>")
 
 	user.face_atom(A)
 
@@ -280,6 +289,10 @@
 		attack_mod -= 2
 	if(HAS_TRAIT(sacker, TRAIT_GIANT))
 		attack_mod += 2
+	var/left_paralysis = HAS_TRAIT(sacker, TRAIT_PARALYSIS_L_ARM)
+	var/right_paralysis = HAS_TRAIT(sacker, TRAIT_PARALYSIS_R_ARM)
+	if(left_paralysis || right_paralysis)
+		attack_mod -= 2
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/S = sacker

@@ -77,47 +77,14 @@
 		user.mob.dropItemToGround(I)
 	return TRUE
 
-/datum/keybinding/mob/say_with_indicator
-	hotkey_keys = list("CtrlT")
+/datum/keybinding/mob/examine_immediate
+	hotkey_keys = list()
 	classic_keys = list()
-	name = "say_with_indicator"
-	full_name = "Say with Typing Indicator"
+	name = "examine_immediate"
+	full_name = "Examine (Immediate)"
+	description = "Immediately examine anything you're hovering your mouse over."
 
-/datum/keybinding/mob/say_with_indicator/down(client/user)
-	var/mob/M = user.mob
-	M.say_typing_indicator()
-	return TRUE
-
-/datum/keybinding/mob/me_with_indicator
-	hotkey_keys = list("CtrlM")
-	classic_keys = list()
-	name = "me_with_indicator"
-	full_name = "Me (emote) with Typing Indicator"
-
-/datum/keybinding/mob/me_with_indicator/down(client/user)
-	var/mob/M = user.mob
-	M.me_typing_indicator()
-	return TRUE
-
-/datum/keybinding/living/subtle
-	hotkey_keys = list("5")
-	classic_keys = list()
-	name = "subtle_emote"
-	full_name = "Subtle Emote"
-
-/datum/keybinding/living/subtle/down(client/user)
-	var/mob/living/L = user.mob
-	L.subtle_keybind()
-	return TRUE
-
-/datum/keybinding/mob/whisper
-	hotkey_keys = list("Y")
-	classic_keys = list()
-	name = "whisper"
-	full_name = "Whisper"
-
-/datum/keybinding/mob/whisper/down(client/user)
-	var/mob/M = user.mob
-	M.whisper_keybind()
-	return TRUE
-
+/datum/keybinding/mob/examine_immediate/down(client/user)
+	var/atom/A = user.mouseObject
+	if(A)
+		A.attempt_examinate(user.mob)

@@ -82,6 +82,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return new_msg
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	set waitfor = FALSE
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/talk_key = get_key(message)
@@ -89,11 +90,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE)
 
 	var/ic_blocked = FALSE
-	/*
-	if(client && !forced && config.ic_filter_regex && findtext(message, config.ic_filter_regex))
+
+	if(client && !forced && CHAT_FILTER_CHECK(message))
 		//The filter doesn't act on the sanitized message, but the raw message.
 		ic_blocked = TRUE
-	*/
+
 	if(sanitize)
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message || message == "")
@@ -102,6 +103,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(ic_blocked)
 		//The filter warning message shows the sanitized message though.
 		to_chat(src, "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[message]\"</span></span>")
+		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
 		return
 
 	var/datum/saymode/saymode = SSradio.saymodes[talk_key]
@@ -265,16 +267,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		eavesdrop_range = EAVESDROP_EXTRA_RANGE
 	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
 	var/list/the_dead = list()
-	var/list/yellareas	//CIT CHANGE - adds the ability for yelling to penetrate walls and echo throughout areas
-	if(!eavesdrop_range && say_test(message) == "2")	//CIT CHANGE - ditto
-		yellareas = get_areas_in_range(message_range*0.5, source)	//CIT CHANGE - ditto
+
 	for(var/_M in GLOB.player_list)
 		var/mob/M = _M
 		if(M.stat != DEAD) //not dead, not important
-			if(yellareas)	//CIT CHANGE - see above. makes yelling penetrate walls
-				var/area/A = get_area(M)	//CIT CHANGE - ditto
-				if(istype(A) && A.ambientsounds != SPACE && (A in yellareas))	//CIT CHANGE - ditto
-					listening |= M	//CIT CHANGE - ditto
 			continue
 		if(!M.client || !client) //client is so that ghosts don't have to listen to mice
 			continue
@@ -301,6 +297,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			AM.Hear(rendered, src, message_language, message, null, spans, message_mode, source)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
 
+	if(!eavesdrop_range && say_test(message) == "2")	// Yell hook
+		process_yelling(listening, rendered, src, message_language, message, spans, message_mode, source)
+
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in listening)
@@ -309,6 +308,30 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
+
+/atom/movable/proc/process_yelling(list/already_heard, rendered, atom/movable/speaker, datum/language/message_language, message, list/spans, message_mode, obj/source)
+	if(last_yell > (world.time - 10))
+		to_chat(src, "<span class='warning'>Your voice doesn't project as far as you try to yell in such quick succession.")		// yeah no, no spamming an expensive floodfill.
+		return
+	last_yell = world.time
+	var/list/overhearing = list()
+	var/list/overhearing_text = list()
+	overhearing = yelling_wavefill(src, yell_power)
+	if(!overhearing.len)
+		overhearing_text = "none"
+	else
+		for(var/mob/M as anything in overhearing)
+			overhearing_text += key_name(M)
+		overhearing_text = english_list(overhearing_text)
+	log_say("YELL: [ismob(src)? key_name(src) : src] yelled [message] with overhearing mobs [overhearing_text]")
+	// overhearing = get_hearers_in_view(35, src) | get_hearers_in_range(5, src)
+	overhearing -= already_heard
+	if(!overhearing.len)
+		return
+	// to_chat(world, "DEBUG: overhearing [english_list(overhearing)]")
+	for(var/_AM in overhearing)
+		var/atom/movable/AM = _AM
+		AM.Hear(rendered, speaker, message_language, message, null, spans, message_mode, source)
 
 /mob/proc/binarycheck()
 	return FALSE
@@ -328,8 +351,26 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 1
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
-	if(HAS_TRAIT(src, TRAIT_MUTE))
+	var/obj/item/bodypart/leftarm = get_bodypart(BODY_ZONE_L_ARM)
+	var/obj/item/bodypart/rightarm = get_bodypart(BODY_ZONE_R_ARM)
+	if(HAS_TRAIT(src, TRAIT_MUTE) && get_selected_language() != /datum/language/signlanguage)
 		return 0
+
+	if (get_selected_language() == /datum/language/signlanguage)
+		var/left_disabled = FALSE
+		var/right_disabled = FALSE
+		if (istype(leftarm)) // Need to check if the arms exist first before checking if they are disabled or else it will runtime
+			if (leftarm.is_disabled())
+				left_disabled = TRUE
+		else
+			left_disabled = TRUE
+		if (istype(rightarm))
+			if (rightarm.is_disabled())
+				right_disabled = TRUE
+		else
+			right_disabled = TRUE
+		if (left_disabled && right_disabled) // We want this to only return false if both arms are either missing or disabled since you could technically sign one-handed.
+			return 0
 
 	if(is_muzzled())
 		return 0

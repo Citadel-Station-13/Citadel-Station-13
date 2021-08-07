@@ -24,7 +24,7 @@
   * Common mob click code
   */
 /mob/proc/CommonClickOn(atom/A, params)
-	SHOULD_NOT_SLEEP(TRUE)
+	//SHOULD_NOT_SLEEP(TRUE)
 	if(mob_transforming)
 		return
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
@@ -34,7 +34,7 @@
 		FlushCurrentAction()
 	else
 		DiscardCurrentAction()
-	
+
 /*
 	Standard mob ClickOn()
 	Handles exceptions: Buildmode, middle click, modified clicks, mech actions
@@ -49,7 +49,6 @@
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
 /mob/proc/ClickOn(atom/A, params)
-	SHOULD_NOT_SLEEP(TRUE)
 	if(check_click_intercept(params,A))
 		return
 
@@ -289,6 +288,9 @@
 	return
 
 /atom/proc/ShiftClick(mob/user)
+	attempt_examinate(user)
+
+/atom/proc/attempt_examinate(mob/user)
 	var/flags = SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user) | SEND_SIGNAL(user, COMSIG_MOB_CLICKED_SHIFT_ON, src)
 	if(!(flags & COMPONENT_DENY_EXAMINATE) && user.client && (user.client.eye == user || user.client.eye == user.loc || flags & COMPONENT_ALLOW_EXAMINATE))
 		user.examinate(src)

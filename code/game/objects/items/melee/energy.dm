@@ -121,11 +121,14 @@
 	parry_time_perfect = 2.5		// first ds isn't perfect
 	parry_time_perfect_leeway = 1.5
 	parry_imperfect_falloff_percent = 5
-	parry_efficiency_to_counterattack = 100
+	parry_efficiency_to_counterattack = INFINITY
 	parry_efficiency_considered_successful = 65		// VERY generous
 	parry_efficiency_perfect = 100
 	parry_failed_stagger_duration = 4 SECONDS
 	parry_cooldown = 0.5 SECONDS
+	parry_automatic_enabled = TRUE
+	autoparry_single_efficiency = 65
+	autoparry_cooldown_absolute = 3 SECONDS
 
 /obj/item/melee/transforming/energy/sword/Initialize(mapload)
 	. = ..()
@@ -149,8 +152,8 @@
 
 /obj/item/melee/transforming/energy/sword/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
 	. = ..()
-	if(parry_efficiency >= 80)		// perfect parry
-		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_RETURN_TO_SENDER
+	if(parry_efficiency >= 100)		// perfect parry
+		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_DEFLECT
 		. |= BLOCK_SHOULD_REDIRECT
 
 /obj/item/melee/transforming/energy/sword/cyborg
@@ -190,12 +193,53 @@
 
 /obj/item/melee/transforming/energy/sword/saber
 	possible_colors = list("red" = LIGHT_COLOR_RED, "blue" = LIGHT_COLOR_LIGHT_CYAN, "green" = LIGHT_COLOR_GREEN, "purple" = LIGHT_COLOR_LAVENDER)
+	unique_reskin = list("Sword" = "sword0", "saber" = "esaber0")
 	var/hacked = FALSE
+	var/saber = FALSE
 
-/obj/item/melee/transforming/energy/sword/saber/set_sword_color()
-	if(LAZYLEN(possible_colors))
+/obj/item/melee/transforming/energy/sword/saber/transform_weapon(mob/living/user, supress_message_text)
+	. = ..()
+	if(.)
+		if(active)
+			if(sword_color)
+				if(saber)
+					icon_state = "esaber[sword_color]"
+				else
+					icon_state = "sword[sword_color]"
+		else
+			if(saber)
+				icon_state = "esaber0"
+			else
+				icon_state = "sword0"
+
+/obj/item/melee/transforming/energy/sword/saber/reskin_obj(mob/M)
+	. = ..()
+	if(icon_state == "esaber0")
+		saber = TRUE
+	if(active)
+		if(saber)
+			icon_state = "esaber[sword_color]"
+		else
+			icon_state = "sword[sword_color]"
+
+/obj/item/melee/transforming/energy/sword/saber/set_sword_color(var/color_forced)
+	if(color_forced) // wow i really do not like this at fucking all holy SHIT
+		if(color_forced == "red")
+			sword_color = "red"
+			light_color = LIGHT_COLOR_RED
+		else if(color_forced == "blue")
+			sword_color = "blue"
+			light_color = LIGHT_COLOR_LIGHT_CYAN
+		else if(color_forced == "green")
+			sword_color = "green"
+			light_color = LIGHT_COLOR_GREEN
+		else if(color_forced == "purple")
+			sword_color = "purple"
+			light_color = LIGHT_COLOR_LAVENDER
+	else if(LAZYLEN(possible_colors))
 		sword_color = pick(possible_colors)
 		light_color = possible_colors[sword_color]
+	return
 
 /obj/item/melee/transforming/energy/sword/saber/process()
 	. = ..()
@@ -204,30 +248,59 @@
 		light_color = possible_colors[set_color]
 		update_light()
 
-/obj/item/melee/transforming/energy/sword/saber/red
-	possible_colors = list("red" = LIGHT_COLOR_RED)
+/obj/item/melee/transforming/energy/sword/saber/red/Initialize(mapload)
+	. = ..()
+	set_sword_color("red")
 
-/obj/item/melee/transforming/energy/sword/saber/blue
-	possible_colors = list("blue" = LIGHT_COLOR_LIGHT_CYAN)
+/obj/item/melee/transforming/energy/sword/saber/blue/Initialize(mapload)
+	. = ..()
+	set_sword_color("blue")
 
-/obj/item/melee/transforming/energy/sword/saber/green
-	possible_colors = list("green" = LIGHT_COLOR_GREEN)
+/obj/item/melee/transforming/energy/sword/saber/green/Initialize(mapload)
+	. = ..()
+	set_sword_color("green")
 
-/obj/item/melee/transforming/energy/sword/saber/purple
-	possible_colors = list("purple" = LIGHT_COLOR_LAVENDER)
+/obj/item/melee/transforming/energy/sword/saber/purple/Initialize(mapload)
+	. = ..()
+	set_sword_color("purple")
+
+/obj/item/melee/transforming/energy/sword/saber/proc/select_sword_color(mob/user) /// this is for the radial
+	if(!istype(user) || user.incapacitated())
+		return
+
+	var/static/list/options = list(
+			"red" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "swordred-blade"),
+			"blue" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "swordblue-blade"),
+			"green" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "swordgreen-blade"),
+			"purple" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "swordpurple-blade")
+			)
+
+	var/choice = show_radial_menu(user, src, options, custom_check = FALSE, radius = 36, require_near = TRUE)
+
+	if(src && choice && !user.incapacitated() && in_range(user,src))
+		set_sword_color(choice)
+		to_chat(user, "<span class='notice'>[src] is now [choice].</span>")
 
 /obj/item/melee/transforming/energy/sword/saber/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/multitool))
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(user.a_intent == INTENT_DISARM)
+			if(!active)
+				to_chat(user, "<span class='warning'>COLOR_SET</span>")
+				hacked = FALSE
+				select_sword_color(user)
+				return
+			else
+				to_chat(user, "<span class='notice'>Turn it off first - getting that close to an active sword is not a great idea.</span>")
+				return
 		if(!hacked)
 			hacked = TRUE
 			sword_color = "rainbow"
 			to_chat(user, "<span class='warning'>RNBW_ENGAGE</span>")
-
 			if(active)
 				icon_state = "swordrainbow"
 				user.update_inv_hands()
 		else
-			to_chat(user, "<span class='warning'>It's already fabulous!</span>")
+			to_chat(user, "<span class='warning'>It's already fabulous!</span> <span class='notice'>If you wanted to reset the color, though, try a disarming intent while it's off.</span>")
 	else
 		return ..()
 
@@ -369,7 +442,9 @@
 	force_on = 15 //As strong a survival knife/bone dagger
 
 /obj/item/melee/transforming/energy/sword/cx/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/melee/transforming/energy/sword/cx))
+	if(istype(W, /obj/item/melee/transforming/energy/sword/cx/traitor))
+		return
+	else if(istype(W, /obj/item/melee/transforming/energy/sword/cx))
 		if(HAS_TRAIT(W, TRAIT_NODROP) || HAS_TRAIT(src, TRAIT_NODROP))
 			to_chat(user, "<span class='warning'>\the [HAS_TRAIT(src, TRAIT_NODROP) ? src : W] is stuck to your hand, you can't attach it to \the [HAS_TRAIT(src, TRAIT_NODROP) ? W : src]!</span>")
 			return

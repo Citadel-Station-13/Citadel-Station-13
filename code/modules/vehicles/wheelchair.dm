@@ -10,6 +10,7 @@
 	canmove = TRUE
 	density = FALSE		//Thought I couldn't fix this one easily, phew
 	arms_required = 1
+	var/override_movespeed = FALSE
 
 /obj/vehicle/ridden/wheelchair/Initialize()
 	. = ..()
@@ -25,8 +26,8 @@
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate),CALLBACK(src, .proc/can_be_rotated),null)
 
 /obj/vehicle/ridden/wheelchair/obj_destruction(damage_flag)
-	new /obj/item/stack/rods(drop_location(), 1)
-	new /obj/item/stack/sheet/metal(drop_location(), 1)
+	new /obj/item/stack/rods(drop_location(), 8)
+	new /obj/item/stack/sheet/metal(drop_location(), 2)
 	..()
 
 /obj/vehicle/ridden/wheelchair/Destroy()
@@ -42,16 +43,20 @@
 			canmove = FALSE
 			addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
 			return FALSE
-		var/datum/component/riding/D = GetComponent(/datum/component/riding)
-		//1.5 (movespeed as of this change) multiplied by 6.7 gets ABOUT 10 (rounded), the old constant for the wheelchair that gets divided by how many arms they have
-		//if that made no sense this simply makes the wheelchair speed change along with movement speed delay
-		D.vehicle_move_delay = round((CONFIG_GET(number/movedelay/run_delay) * 4) / min(user.get_num_arms(), 2), world.tick_lag)
+		if(!override_movespeed)
+			var/datum/component/riding/D = GetComponent(/datum/component/riding)
+			//1.5 (movespeed as of this change) multiplied by 6.7 gets ABOUT 10 (rounded), the old constant for the wheelchair that gets divided by how many arms they have
+			//if that made no sense this simply makes the wheelchair speed change along with movement speed delay
+			D.vehicle_move_delay = round((CONFIG_GET(number/movedelay/run_delay) * 4) / min(user.get_num_arms(), 2), world.tick_lag)
 	return ..()
 
 /obj/vehicle/ridden/wheelchair/Moved()
 	. = ..()
 	cut_overlays()
-	playsound(src, 'sound/effects/roll.ogg', 75, 1)
+	if(istype(src, /obj/vehicle/ridden/wheelchair/motorized))
+		playsound(src, 'sound/effects/chairwhoosh.ogg', 75, 1)
+	else
+		playsound(src, 'sound/effects/roll.ogg', 75, 1)
 	if(has_buckled_mobs())
 		handle_rotation_overlayed()
 
@@ -86,8 +91,12 @@
 
 /obj/vehicle/ridden/wheelchair/proc/handle_rotation_overlayed()
 	cut_overlays()
-	var/image/V = image(icon = icon, icon_state = "wheelchair_overlay", layer = FLY_LAYER, dir = src.dir)
-	add_overlay(V)
+	if(istype(src, /obj/vehicle/ridden/wheelchair/motorized))
+		var/image/V = image(icon = icon, icon_state = "wheelchair_noverlay", layer = FLY_LAYER, dir = src.dir)
+		add_overlay(V)
+	else
+		var/image/V = image(icon = icon, icon_state = "wheelchair_overlay", layer = FLY_LAYER, dir = src.dir)
+		add_overlay(V)
 
 
 

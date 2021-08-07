@@ -7,8 +7,9 @@
 	var/left_hand
 	var/inv_slots
 	var/proctype //if present, will be invoked on headwear generation.
+	var/escape_on_find = FALSE //if present, will be released upon the item being 'found' (i.e. opening a container or pocket with it present)
 
-/datum/element/mob_holder/Attach(datum/target, worn_state, alt_worn, right_hand, left_hand, inv_slots = NONE, proctype)
+/datum/element/mob_holder/Attach(datum/target, worn_state, alt_worn, right_hand, left_hand, inv_slots = NONE, proctype, escape_on_find)
 	. = ..()
 
 	if(!isliving(target))
@@ -20,6 +21,7 @@
 	src.left_hand = left_hand
 	src.inv_slots = inv_slots
 	src.proctype = proctype
+	src.escape_on_find = escape_on_find
 
 	RegisterSignal(target, COMSIG_CLICK_ALT, .proc/mob_try_pickup)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
@@ -55,6 +57,8 @@
 	to_chat(user, "<span class='notice'>You pick [source] up.</span>")
 	source.drop_all_held_items()
 	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(source), source, worn_state, alt_worn, right_hand, left_hand, inv_slots)
+	holder.escape_on_find = escape_on_find
+
 	if(proctype)
 		INVOKE_ASYNC(src, proctype, source, holder, user)
 	user.put_in_hands(holder)
@@ -78,6 +82,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	dynamic_hair_suffix = ""
 	var/mob/living/held_mob
+	var/escape_on_find
 
 /obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/target, worn_state, alt_worn, right_hand, left_hand, slots = NONE)
 	. = ..()
@@ -141,7 +146,7 @@
 
 /obj/item/clothing/head/mob_holder/dropped(mob/user)
 	. = ..()
-	if(held_mob && isturf(loc))//don't release on soft-drops
+	if(held_mob && !ismob(loc) && !istype(loc,/obj/item/storage))//don't release on soft-drops
 		release()
 
 /obj/item/clothing/head/mob_holder/proc/release()
@@ -179,7 +184,7 @@
 			return location.loc.assume_air(env)
 	return location.assume_air(env)
 
-/obj/item/clothing/head/mob_holder/remove_air(amount)
+/obj/item/clothing/head/mob_holder/proc/get_loc_for_air()
 	var/atom/location = loc
 	if(!loc)
 		return //null
@@ -187,5 +192,35 @@
 	while(location != T)
 		location = location.loc
 		if(ismob(location))
-			return location.loc.remove_air(amount)
+			return location.loc
+	return location
+
+/obj/item/clothing/head/mob_holder/assume_air_moles(datum/gas_mixture/env, moles)
+	var/atom/location = get_loc_for_air()
+	return location.assume_air_moles(env, moles)
+
+/obj/item/clothing/head/mob_holder/assume_air_ratio(datum/gas_mixture/env, ratio)
+	var/atom/location = get_loc_for_air()
+	return location.assume_air_ratio(env, ratio)
+
+/obj/item/clothing/head/mob_holder/remove_air(amount)
+	var/atom/location = get_loc_for_air()
 	return location.remove_air(amount)
+
+/obj/item/clothing/head/mob_holder/remove_air_ratio(ratio)
+	var/atom/location = get_loc_for_air()
+	return location.remove_air_ratio(ratio)
+
+/obj/item/clothing/head/mob_holder/transfer_air(datum/gas_mixture/taker, amount)
+	var/atom/location = get_loc_for_air()
+	return location.transfer_air(taker, amount)
+
+/obj/item/clothing/head/mob_holder/transfer_air_ratio(datum/gas_mixture/taker, ratio)
+	var/atom/location = get_loc_for_air()
+	return location.transfer_air(taker, ratio)
+
+// escape when found if applicable
+/obj/item/clothing/head/mob_holder/on_found(mob/living/finder)
+	if(escape_on_find)
+		finder.visible_message("[finder] accidentally releases the [held_mob]!")
+		release()

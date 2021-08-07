@@ -24,6 +24,7 @@
 	traitor_name = "Bloodsucker"
 	antag_flag = ROLE_BLOODSUCKER
 	false_report_weight = 1
+	chaos = 4
 	restricted_jobs = list("AI","Cyborg")
 	protected_jobs = list("Chaplain", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
 	required_players = 20
@@ -87,7 +88,7 @@
 // Init Sunlight (called from datum_bloodsucker.on_gain(), in case game mode isn't even Bloodsucker
 /datum/game_mode/proc/check_start_sunlight()
 	// Already Sunlight (and not about to cancel)
-	if(istype(bloodsucker_sunlight) && !bloodsucker_sunlight.cancel_me)
+	if(istype(bloodsucker_sunlight))
 		return
 	bloodsucker_sunlight = new ()
 
@@ -97,7 +98,6 @@
 	if(!istype(bloodsucker_sunlight))
 		return
 	if(bloodsuckers.len <= 0)
-		bloodsucker_sunlight.cancel_me = TRUE
 		qdel(bloodsucker_sunlight)
 		bloodsucker_sunlight = null
 

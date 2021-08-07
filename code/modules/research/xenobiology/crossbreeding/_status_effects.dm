@@ -236,7 +236,7 @@
 	duration = -1
 	alert_type = null
 
-datum/status_effect/rebreathing/tick()
+/datum/status_effect/rebreathing/tick()
 	owner.adjustOxyLoss(-6, 0) //Just a bit more than normal breathing.
 
 ///////////////////////////////////////////////////////
@@ -335,15 +335,11 @@ datum/status_effect/rebreathing/tick()
 	duration = 600
 
 /datum/status_effect/timecookie/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H
-		H.physiology.do_after_speed *= 0.95
+	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/timecookie)
 	return ..()
 
 /datum/status_effect/timecookie/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H
-		H.physiology.do_after_speed /= 0.95
+	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/timecookie)
 	return ..()
 
 /datum/status_effect/lovecookie
@@ -473,6 +469,10 @@ datum/status_effect/rebreathing/tick()
 		qdel(src)
 	return ..()
 
+/datum/status_effect/stabilized/Destroy()
+	linked_extract = null
+	return ..()
+
 /datum/status_effect/stabilized/null //This shouldn't ever happen, but just in case.
 	id = "stabilizednull"
 
@@ -528,7 +528,7 @@ datum/status_effect/rebreathing/tick()
 	ADD_TRAIT(owner, TRAIT_NOSLIPWATER, "slimestatus")
 	return ..()
 
-datum/status_effect/stabilized/blue/on_remove()
+/datum/status_effect/stabilized/blue/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_NOSLIPWATER, "slimestatus")
 	return ..()
 
@@ -622,7 +622,9 @@ datum/status_effect/stabilized/blue/on_remove()
 	var/obj/O = owner.get_active_held_item()
 	if(O)
 		O.extinguish() //All shamelessly copied from water's reaction_obj, since I didn't seem to be able to get it here for some reason.
-		O.acid_level = 0
+		var/datum/component/acid/acid = O.GetComponent(/datum/component/acid)
+		if(acid)
+			acid.level = 0
 	// Monkey cube
 	if(istype(O, /obj/item/reagent_containers/food/snacks/cube))
 		to_chat(owner, "<span class='warning'>[linked_extract] kept your hands wet! It makes [O] expand!</span>")
@@ -702,16 +704,20 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/sepia
 	id = "stabilizedsepia"
 	colour = "sepia"
-	var/mod = 0
+	var/list/possible = list(
+		-0.5,
+		-0.25,
+		0,
+		0.5,
+		1
+	)
+
+/datum/status_effect/stabilized/sepia/New(list/arguments)
+	. = ..()
+	possible = typelist(NAMEOF(src, possible), possible)
 
 /datum/status_effect/stabilized/sepia/tick()
-	if(prob(50) && mod > -1)
-		mod--
-		owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia, multiplicative_slowdown = 1)
-	else if(mod < 1)
-		mod++
-		// yeah a value of 0 does nothing but replacing the trait in place is cheaper than removing and adding repeatedly
-		owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia, multiplicative_slowdown = 0)
+	owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia, multiplicative_slowdown = safepick(possible))
 	return ..()
 
 /datum/status_effect/stabilized/sepia/on_remove()
@@ -888,6 +894,8 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/oil/tick()
 	if(owner.stat == DEAD)
 		explosion(get_turf(owner),1,2,4,flame_range = 5)
+		qdel(linked_extract)
+		return
 	return ..()
 
 /datum/status_effect/stabilized/black
@@ -930,6 +938,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/lightpink/on_apply()
 	ADD_TRAIT(owner, TRAIT_FREESPRINT, "stabilized_slime")
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/slime/light_pink)
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/tick()
@@ -941,6 +950,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/lightpink/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_FREESPRINT, "stabilized_slime")
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/slime/light_pink)
 	return ..()
 
 /datum/status_effect/stabilized/adamantine

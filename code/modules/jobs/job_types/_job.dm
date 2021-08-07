@@ -73,6 +73,37 @@
 	/// Starting skill modifiers.
 	var/list/starting_modifiers
 
+	// These can be flags but I don't care because they're never changed
+	/// Can you always join as this job even while respawning (should probably only be on for assistant)
+	var/always_can_respawn_as = FALSE
+	/// Is this job considered a combat role for respawning? (usually sec/command)
+	var/considered_combat_role = FALSE
+
+/**
+  * Checks if we should be created on a certain map
+  */
+/datum/job/proc/map_check(datum/map_config/C)
+	return (length(C.job_whitelist)? (type in C.job_whitelist) : !(type in C.job_blacklist))
+
+/**
+  * Processes map specific overrides
+  */
+/datum/job/proc/process_map_overrides(datum/map_config/C)
+	if(type in C.job_override_spawn_positions)
+		spawn_positions = C.job_override_spawn_positions[type]
+	if(type in C.job_override_total_positions)
+		total_positions = C.job_override_total_positions[type]
+	if(type in C.job_access_override)
+		access = C.job_access_override[type]
+		minimal_access = access
+	else
+		if(type in C.job_access_add)
+			access += C.job_access_add[type]
+			minimal_access += C.job_access_add[type]
+		if(type in C.job_access_remove)
+			access -= C.job_access_add[type]
+			minimal_access -= C.job_access_remove[type]
+
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
@@ -93,15 +124,21 @@
 
 //Used for a special check of whether to allow a client to latejoin as this job.
 /datum/job/proc/special_check_latejoin(client/C)
+	var/joined = LAZYLEN(C.prefs?.characters_joined_as)
+	if(C.prefs?.respawn_restrictions_active && (joined || CONFIG_GET(flag/respawn_penalty_includes_observe)))
+		if(!CONFIG_GET(flag/allow_non_assistant_respawn) && !always_can_respawn_as)
+			return FALSE
+		if(!CONFIG_GET(flag/allow_combat_role_respawn) && considered_combat_role)
+			return FALSE
 	return TRUE
 
 /datum/job/proc/GetAntagRep()
-	. = CONFIG_GET(keyed_list/antag_rep)[lowertext(title)]
+	. = CONFIG_GET(keyed_list/antag_rep)[ckey(title)]
 	if(. == null)
 		return antag_rep
 
 /datum/job/proc/GetThreat()
-	. = CONFIG_GET(keyed_list/job_threat)[lowertext(title)]
+	. = CONFIG_GET(keyed_list/job_threat)[ckey(title)]
 	if(. == null)
 		return threat
 
@@ -150,7 +187,7 @@
 /datum/job/proc/announce_head(var/mob/living/carbon/human/H, var/channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	if(H && GLOB.announcement_systems.len)
 		//timer because these should come after the captain announcement
-		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/addtimer, CALLBACK(pick(GLOB.announcement_systems), /obj/machinery/announcement_system/proc/announce, "NEWHEAD", H.real_name, H.job, channels), 1))
+		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/_addtimer, CALLBACK(pick(GLOB.announcement_systems), /obj/machinery/announcement_system/proc/announce, "NEWHEAD", H.real_name, H.job, channels), 1))
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/C)
@@ -173,9 +210,6 @@
 	return max(0, minimal_player_age - C.player_age)
 
 /datum/job/proc/config_check()
-	return TRUE
-
-/datum/job/proc/map_check()
 	return TRUE
 
 /datum/job/proc/radio_help_message(mob/M)

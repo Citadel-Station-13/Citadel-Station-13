@@ -135,7 +135,7 @@
 			var/curr_z = text2num(dmmRegex.group[5])
 			if(curr_z < z_lower || curr_z > z_upper)
 				continue
-						
+
 			var/curr_x = text2num(dmmRegex.group[3])
 			var/curr_y = text2num(dmmRegex.group[4])
 
@@ -171,7 +171,7 @@
 			if(width > right_width)
 				for(var/i in 1 to lines)
 					gridLines[i] = copytext(gridLines[i], 1, key_len * right_width)
-			
+
 			// during the actual load we're starting at the top and working our way down
 			gridSet.ycrd += lines - 1
 
@@ -300,13 +300,13 @@
 			//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
 			T.AfterChange(CHANGETURF_IGNORE_AIR)
 
+	if(did_expand)
+		world.refresh_atmos_grid()
+
 	#ifdef TESTING
 	if(turfsSkipped)
 		testing("Skipped loading [turfsSkipped] default turfs")
 	#endif
-
-	if(did_expand)
-		world.refresh_atmos_grid()
 
 	return TRUE
 

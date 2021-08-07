@@ -93,7 +93,7 @@ RSF
 			use_matter(50, user)
 		if(4)
 			to_chat(user, "Dispensing Dice Pack...")
-			new /obj/item/storage/box/dice(T)
+			new /obj/item/storage/dice(T)
 			use_matter(200, user)
 		if(5)
 			to_chat(user, "Dispensing Cigarette...")

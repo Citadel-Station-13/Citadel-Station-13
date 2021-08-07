@@ -1,5 +1,5 @@
 
-/////BURN FIXING SURGERIES//////
+/////PUNCTURE FIXING SURGERIES//////
 
 //the step numbers of each of these two, we only currently use the first to switch back and forth due to advancing after finishing steps anyway
 #define REALIGN_INNARDS 1
@@ -13,6 +13,10 @@
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 	requires_real_bodypart = TRUE
 	targetable_wound = /datum/wound/pierce
+
+/datum/surgery/repair_puncture/biomech
+	requires_bodypart_type = BODYPART_HYBRID
+	steps = list(/datum/surgery_step/mechanic_open, /datum/surgery_step/repair_innards, /datum/surgery_step/seal_veins, /datum/surgery_step/mechanic_close)
 
 /datum/surgery/repair_puncture/can_start(mob/living/user, mob/living/carbon/target)
 	. = ..()

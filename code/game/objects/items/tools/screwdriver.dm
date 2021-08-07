@@ -8,6 +8,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
+	item_flags = SURGICAL_TOOL
 	force = 5
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
@@ -88,6 +89,9 @@
 	item_state = "screwdriver_brass"
 	toolspeed = 0.5
 	random_color = FALSE
+
+/obj/item/screwdriver/brass/family
+	toolspeed = 1
 
 /obj/item/screwdriver/bronze
 	name = "bronze screwdriver"

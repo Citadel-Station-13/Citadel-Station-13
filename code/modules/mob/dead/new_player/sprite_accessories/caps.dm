@@ -1,4 +1,4 @@
-datum/sprite_accessory/caps
+/datum/sprite_accessory/caps
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 	color_src = HAIR
 	relevant_layers = list(BODY_ADJ_LAYER)

@@ -1,6 +1,7 @@
 /datum/sprite_accessory/spines
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER)
+	mutant_part_string = "spines"
 
 /datum/sprite_accessory/spines/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
 	return (!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR))

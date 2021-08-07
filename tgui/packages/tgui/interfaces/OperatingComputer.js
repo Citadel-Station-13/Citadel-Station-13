@@ -7,18 +7,22 @@ const damageTypes = [
   {
     label: 'Brute',
     type: 'bruteLoss',
+    color: 'red',
   },
   {
     label: 'Burn',
     type: 'fireLoss',
+    color: 'orange',
   },
   {
     label: 'Toxin',
     type: 'toxLoss',
+    color: 'green',
   },
   {
     label: 'Respiratory',
     type: 'oxyLoss',
+    color: 'blue',
   },
 ];
 
@@ -90,10 +94,10 @@ const PatientStateView = (props, context) => {
               </ProgressBar>
             </LabeledList.Item>
             {damageTypes.map(type => (
-              <LabeledList.Item key={type.type} label={type.label}>
+              <LabeledList.Item key={type.type} label={(patient.is_robotic_organism && type.label === 'Toxin') ? 'Corruption' : type.label}>
                 <ProgressBar
                   value={patient[type.type] / patient.maxHealth}
-                  color="bad">
+                  color={type.color}>
                   <AnimatedNumber value={patient[type.type]} />
                 </ProgressBar>
               </LabeledList.Item>

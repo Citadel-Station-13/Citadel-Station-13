@@ -94,14 +94,15 @@
 /obj/item/ammo_casing/mws_batt/lethal
 	name = "'MWS' microbattery - LETHAL"
 	type_color = "#bf3d3d"
-	type_name = "<span class='lethal'>LETHAL</span>"
+	type_name = "<span class='lethal'>LASE</span>"
 	projectile_type = /obj/item/projectile/beam
 
 /obj/item/ammo_casing/mws_batt/stun
-	name = "'MWS' microbattery - STUN"
+	name = "'MWS' microbattery - DISABLER"
 	type_color = "#0f81bc"
-	type_name = "<span class='stun'>STUN</span>"
+	type_name = "<span class='stun'>DISABLE</span>"
 	projectile_type = /obj/item/projectile/beam/disabler
+	e_cost = 60  //gives it 10 disabler shots in line with literally all other eguns.
 
 /obj/item/ammo_casing/mws_batt/xray
 	name = "'MWS' microbattery - XRAY"
@@ -114,3 +115,9 @@
 	type_color = "#d084d6"
 	type_name = "<span class='ion'>ION</span>"
 	projectile_type = /obj/item/projectile/ion
+
+/obj/item/ammo_casing/mws_batt/taser
+	name = "'MWS' microbattery - TASER"
+	type_color = "#e5ff00"
+	type_name = "<span class='stun'>TASE</span>"
+	projectile_type = /obj/item/projectile/energy/electrode/security

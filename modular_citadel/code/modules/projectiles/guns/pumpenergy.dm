@@ -11,7 +11,7 @@
 	var/recentpump = 0 // to prevent spammage
 
 /obj/item/gun/energy/pumpaction/emp_act(severity)	//makes it not rack itself when emp'd
-	cell.use(round(cell.charge / severity))
+	cell.use(round(cell.charge * severity/100))
 	chambered = null //we empty the chamber
 	update_icon()
 
@@ -153,7 +153,7 @@
 
 /obj/item/ammo_casing/energy/laser/pump
 	projectile_type = /obj/item/projectile/beam/pump
-	e_cost = 350
+	e_cost = 300
 	select_name = "kill"
 	pellets = 6
 	variance = 15
@@ -189,5 +189,5 @@
 	name = "disabling blast"
 	icon_state = "disablerslug"
 	color = null
-	stamina = 13
+	stamina = 15
 	range = 6

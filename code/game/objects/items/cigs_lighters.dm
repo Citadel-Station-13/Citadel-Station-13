@@ -136,6 +136,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
+/obj/item/clothing/mask/cigarette/DoRevenantThrowEffects(atom/target)
+	if(lit)
+		attackby()
+	else
+		light()
+
 /obj/item/clothing/mask/cigarette/attackby(obj/item/W, mob/user, params)
 	if(!lit && smoketime > 0)
 		var/lighting_text = W.ignition_effect(src, user)
@@ -381,6 +387,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	throwforce = 0
 	grind_results = list(/datum/reagent/carbon = 2)
 
+/obj/item/cigbutt/Initialize()
+	. = ..()
+	AddElement(/datum/element/trash)
+
 /obj/item/cigbutt/cigarbutt
 	name = "cigar butt"
 	desc = "A manky old cigar butt."
@@ -516,6 +526,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!overlay_state)
 		overlay_state = pick(overlay_list)
 	update_icon()
+
+/obj/item/lighter/DoRevenantThrowEffects(atom/target)
+	set_lit()
 
 /obj/item/lighter/suicide_act(mob/living/carbon/user)
 	if (lit)

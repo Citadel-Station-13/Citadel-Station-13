@@ -231,8 +231,11 @@
 	R.update_module_innate()
 	RM.rebuild_modules()
 	INVOKE_ASYNC(RM, .proc/do_transform_animation)
-	if(RM.dogborg)
+	if(RM.dogborg || R.dogborg)
 		RM.dogborg_equip()
+		R.typing_indicator_state = /obj/effect/overlay/typing_indicator/machine/dogborg
+	else
+		R.typing_indicator_state = /obj/effect/overlay/typing_indicator/machine
 	R.maxHealth = borghealth
 	R.health = min(borghealth, R.health)
 	qdel(src)
@@ -269,9 +272,10 @@
 	if(!prev_locked_down)
 		R.SetLockdown(0)
 	R.setDir(SOUTH)
-	R.anchored = FALSE
+	R.set_anchored(FALSE)
 	R.mob_transforming = FALSE
-	R.update_headlamp()
+	R.updatehealth()
+	R.update_icons()
 	R.notify_ai(NEW_MODULE)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
@@ -923,7 +927,8 @@
 		/obj/item/cyborg_clamp,
 		/obj/item/stack/marker_beacon,
 		/obj/item/destTagger,
-		/obj/item/stack/packageWrap)
+		/obj/item/stack/packageWrap,
+		/obj/item/card/id/miningborg)
 	emag_modules = list(/obj/item/borg/stun)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/miner,

@@ -40,12 +40,7 @@
 
 ///Called when there is no real turf below this turf
 /turf/open/transparent/proc/show_bottom_level()
-	var/turf/path = SSmapping.level_trait(z, ZTRAIT_BASETURF) || /turf/open/space
-	if(!ispath(path))
-		path = text2path(path)
-		if(!ispath(path))
-			warning("Z-level [z] has invalid baseturf '[SSmapping.level_trait(z, ZTRAIT_BASETURF)]'")
-			path = /turf/open/space
+	var/turf/path = get_z_base_turf()
 	var/mutable_appearance/underlay_appearance = mutable_appearance(initial(path.icon), initial(path.icon_state), layer = TURF_LAYER, plane = PLANE_SPACE)
 	underlays += underlay_appearance
 	return TRUE
@@ -66,7 +61,12 @@
 
 /turf/open/transparent/glass/Initialize()
 	icon_state = "" //Prevent the normal icon from appearing behind the smooth overlays
-	return ..()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/open/floor/glass/LateInitialize()
+	. = ..()
+	// AddElement(/datum/element/turf_z_transparency, TRUE)
 
 /turf/open/transparent/glass/wrench_act(mob/living/user, obj/item/I)
 	to_chat(user, "<span class='notice'>You begin removing glass...</span>")

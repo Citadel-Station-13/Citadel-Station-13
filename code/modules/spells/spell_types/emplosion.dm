@@ -3,9 +3,7 @@
 	desc = "This spell emplodes an area."
 	charge_max	= 250
 	cooldown_min = 50
-
-	var/emp_heavy = 2
-	var/emp_light = 3
+	var/emp_range = 4 //same as a 50/50 reaction of uranium and iron
 
 	action_icon_state = "emp"
 	sound = 'sound/weapons/zapbang.ogg'
@@ -15,6 +13,6 @@
 	for(var/mob/living/target in targets)
 		if(target.anti_magic_check())
 			continue
-		empulse(target.loc, emp_heavy, emp_light)
+		empulse_using_range(target.loc, emp_range)
 
 	return

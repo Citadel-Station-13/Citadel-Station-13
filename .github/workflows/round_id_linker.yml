@@ -1,0 +1,12 @@
+name: "Round ID Linker"
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  link_rounds:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: Cidatel-Station-13/round_linker@master #notice: fork the round linkies from tg!!
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}

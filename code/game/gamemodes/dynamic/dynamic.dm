@@ -58,12 +58,6 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	var/threat_level = 0
 	/// The current antag threat. Recalculated every time a ruletype starts or ends.
 	var/threat = 0
-	/// Threat average over the course of the round, for endgame logs.
-	var/threat_average = 0
-	/// Number of times threat average has been calculated, for calculating above.
-	var/threat_average_weight = 0
-	/// Last time a threat average sample was taken. Used for weighting the rolling average.
-	var/last_threat_sample_time = 0
 	/// Things that cause a rolling threat adjustment to be displayed at roundend.
 	var/list/threat_tallies = list()
 	/// Running information about the threat. Can store text or datum entries.
@@ -72,6 +66,8 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	var/list/threat_log_verbose = list()
 	/// List of roundstart rules used for selecting the rules.
 	var/list/roundstart_rules = list()
+	/// List of minor roundstart rules used for selecting the rules.
+	var/list/minor_rules = list()
 	/// List of latejoin rules used for selecting the rules.
 	var/list/latejoin_rules = list()
 	/// List of midround rules used for selecting the rules.
@@ -121,10 +117,12 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	var/pop_last_updated = 0
 	/// How many percent of the rounds are more peaceful.
 	var/peaceful_percentage = 50
-	/// If a highlander executed.
+	/// If a highlander executed. No other highlander rulesets will be run.
 	var/highlander_executed = FALSE
-	/// If a only ruleset has been executed.
+	/// If a only ruleset has been executed. No other rulesets will be run.
 	var/only_ruleset_executed = FALSE
+	/// If the first picked ruleset was a minor ruleset. Minor antagonists will be weighted higher.
+	var/minor_ruleset_start = FALSE
 	/// Antags rolled by rules so far, to keep track of and discourage scaling past a certain ratio of crew/antags especially on lowpop.
 	var/antags_rolled = 0
 	// Arbitrary threat addition, for fudging purposes.
@@ -141,6 +139,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 		third_rule_req = list(101, 101, 101, 101, 101, 100, 90, 80, 70, 60)
 	high_pop_second_rule_req = CONFIG_GET(number/dynamic_second_rule_high_pop_requirement)
 	high_pop_third_rule_req = CONFIG_GET(number/dynamic_third_rule_high_pop_requirement)
+	added_threat = CONFIG_GET(number/dynamic_threat_baseline)
 	GLOB.dynamic_high_pop_limit = CONFIG_GET(number/dynamic_high_pop_limit)
 	GLOB.dynamic_latejoin_delay_min = CONFIG_GET(number/dynamic_latejoin_delay_min)*600
 	GLOB.dynamic_latejoin_delay_max = CONFIG_GET(number/dynamic_latejoin_delay_max)*600
@@ -173,7 +172,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 			dat += "[DR.ruletype] - <b>[DR.name]</b><br>"
 	else
 		dat += "none.<br>"
-	dat += "<br>Injection Timers: (<b>[storyteller.get_injection_chance(TRUE)]%</b> chance)<BR>"
+	dat += "<br>Injection Timers:<BR>"
 	dat += "Latejoin: [(latejoin_injection_cooldown-world.time)>60*10 ? "[round((latejoin_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(latejoin_injection_cooldown-world.time)/10] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
 	dat += "Midround: [(midround_injection_cooldown-world.time)>60*10 ? "[round((midround_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(midround_injection_cooldown-world.time)/10] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
 	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
@@ -372,6 +371,8 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 		if(ruleset.name == "")
 			continue
 		switch(ruleset.ruletype)
+			if("Minor")
+				minor_rules += ruleset
 			if("Roundstart")
 				roundstart_rules += ruleset
 			if ("Latejoin")
@@ -396,20 +397,46 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 		rigged_roundstart()
 	else
 		roundstart()
-
-	var/starting_rulesets = ""
-	for (var/datum/dynamic_ruleset/roundstart/DR in executed_rules)
-		starting_rulesets += "[DR.name], "
-	log_game("DYNAMIC: Picked the following roundstart rules: [starting_rulesets]")
+	if(minor_ruleset_start)
+		log_game("DYNAMIC: Starting a minor ruleset round.")
+	else
+		var/starting_rulesets = ""
+		for (var/datum/dynamic_ruleset/roundstart/DR in executed_rules)
+			starting_rulesets += "[DR.name], "
+		log_game("DYNAMIC: Picked the following roundstart rules: [starting_rulesets]")
 	candidates.Cut()
 	return TRUE
 
 /datum/game_mode/dynamic/post_setup(report)
 	update_playercounts()
-
-	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
-		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
+	if(minor_ruleset_start)
+		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/minor_roundstart),rand(1 MINUTES,3 MINUTES))
+	else
+		for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
+			addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
 	..()
+
+/datum/game_mode/dynamic/proc/minor_roundstart()
+	message_admins("Dynamic beginning minor antag roundstart rolls.")
+	var/list/potential_minor_rulesets = storyteller.minor_rule_draft()
+	var/iterations = 0
+	var/num_rulesets_executed = 0
+	while(threat < threat_level && potential_minor_rulesets.len && (!CHECK_TICK || iterations < 100))
+		var/datum/dynamic_ruleset/minor/rule = pickweight(potential_minor_rulesets)
+		rule.candidates = current_players[CURRENT_LIVING_PLAYERS].Copy()
+		rule.trim_candidates()
+		if(!check_blocking(rule.blocking_rules, executed_rules) && rule.ready())
+			rule.execute()
+			executed_rules |= rule
+			log_threat("[rule.ruletype] - <b>[rule.name]</b> [rule.cost] threat", verbose = TRUE)
+			num_rulesets_executed++
+		else
+			potential_minor_rulesets -= rule
+		update_playercounts()
+		iterations++
+	message_admins("Minor antag roundstart rolls completed, with [iterations] rolls done and [num_rulesets_executed] antags or antag teams made.")
+	log_game("DYNAMIC: Minor antag roundstart made [num_rulesets_executed] antags or antag teams.")
+
 
 /// A simple roundstart proc used when dynamic_forced_roundstart_ruleset has rules in it.
 /datum/game_mode/dynamic/proc/rigged_roundstart()
@@ -429,12 +456,17 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	if (GLOB.dynamic_forced_extended)
 		log_game("DYNAMIC: Starting a round of forced extended.")
 		return TRUE
+	if(prob(storyteller.minor_start_chance()))
+		minor_ruleset_start = TRUE
+		message_admins("Dynamic has initialized a minor antag start. Antags will be assigned in 1-5 minutes.")
+		log_game("DYNAMIC: Minor start initialized.")
+		return TRUE
 	var/list/drafted_rules = storyteller.roundstart_draft()
 	if(!drafted_rules.len)
-		message_admins("Not enough threat level for roundstart antags!")
-		log_game("DYNAMIC: Not enough threat level for roundstart antags!")
-		midround_injection_cooldown = round((midround_injection_cooldown + world.time) / 2, 1)
-		latejoin_injection_cooldown = round((latejoin_injection_cooldown + world.time) / 2, 1)
+		message_admins("No roundstart antags drafted! Falling back to minor ruleset start.")
+		log_game("DYNAMIC: No roundstart antags drafted! Falling back to minor ruleset start.")
+		minor_ruleset_start = TRUE
+		return FALSE
 	var/indice_pop = min(10,round(roundstart_pop_ready/pop_per_requirement)+1)
 	extra_rulesets_amount = 0
 	if (GLOB.dynamic_classic_secret)
@@ -468,8 +500,9 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	else
 
 		if(threat_level >= 50)
-			message_admins("DYNAMIC: Picking first roundstart ruleset failed. You should report this.")
+			message_admins("DYNAMIC: Picking first roundstart ruleset failed. You should report this. Falling back to minor antag start.")
 		log_game("DYNAMIC: Picking first roundstart ruleset failed. drafted_rules.len = [drafted_rules.len] and threat = [threat]/[threat_level]")
+		minor_ruleset_start = TRUE
 		return FALSE
 	return TRUE
 
@@ -513,7 +546,6 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	drafted_rules -= starting_rule
 
 	starting_rule.trim_candidates()
-	starting_rule.scale_up(extra_rulesets_amount, threat_level)
 	if (starting_rule.pre_execute())
 		log_threat("[starting_rule.ruletype] - <b>[starting_rule.name]</b> [starting_rule.cost + starting_rule.scaled_times * starting_rule.scaling_cost] threat", verbose = TRUE)
 		if(starting_rule.flags & HIGHLANDER_RULESET)
@@ -575,6 +607,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 			latejoin_rules = remove_from_list(latejoin_rules, rule.type)
 		else if(rule.ruletype == "Midround")
 			midround_rules = remove_from_list(midround_rules, rule.type)
+	message_admins("DYNAMIC: Picked [rule]; executing soon...")
 	addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_midround_latejoin_rule, rule), rule.delay)
 	return TRUE
 
@@ -626,6 +659,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 /datum/game_mode/dynamic/proc/execute_midround_latejoin_rule(sent_rule)
 	var/datum/dynamic_ruleset/rule = sent_rule
 	if (rule.execute())
+		message_admins("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
 		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
 		log_threat("[rule.ruletype] [rule.name] added [rule.cost]", verbose = TRUE)
 		if(rule.flags & HIGHLANDER_RULESET)
@@ -675,13 +709,17 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 		log_game("DYNAMIC: Checking for midround injection.")
 
 		update_playercounts()
-		if (prob(storyteller.get_injection_chance()))
+		if (storyteller.should_inject_antag())
 			SSblackbox.record_feedback("tally","dynamic",1,"Attempted midround injections")
-			var/list/drafted_rules = storyteller.midround_draft()
-			if (drafted_rules.len > 0)
-				SSblackbox.record_feedback("tally","dynamic",1,"Successful midround injections")
-				picking_midround_latejoin_rule(drafted_rules)
-		// get_injection_chance can do things on fail
+			do_midround_injection()
+
+/datum/game_mode/dynamic/proc/do_midround_injection()
+	set waitfor = FALSE
+	var/list/drafted_rules = storyteller.midround_draft()
+	if (drafted_rules.len > 0)
+		SSblackbox.record_feedback("tally","dynamic",1,"Successful midround injections")
+		picking_midround_latejoin_rule(drafted_rules)
+
 
 /// Updates current_players.
 /datum/game_mode/dynamic/proc/update_playercounts()
@@ -704,16 +742,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 					continue
 			if(!M.voluntary_ghosted)
 				current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
-	threat = storyteller.calculate_threat() + added_threat
-	if(threat_average_weight)
-		var/cur_sample_weight = world.time - last_threat_sample_time
-		threat_average = ((threat_average * threat_average_weight) + (threat * cur_sample_weight)) / (threat_average_weight + cur_sample_weight)
-		threat_average_weight += cur_sample_weight
-		last_threat_sample_time  = world.time
-	else
-		threat_average = threat
-		threat_average_weight++
-		last_threat_sample_time = world.time
+	threat = (SSactivity.current_threat * 0.6 + SSactivity.get_max_threat() * 0.2 + SSactivity.get_average_threat() * 0.2) + added_threat
 
 /// Removes type from the list
 /datum/game_mode/dynamic/proc/remove_from_list(list/type_list, type)
@@ -757,12 +786,11 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 			picking_midround_latejoin_rule(list(forced_latejoin_rule), forced = TRUE)
 		forced_latejoin_rule = null
 
-	else if (latejoin_injection_cooldown < world.time && prob(storyteller.get_injection_chance()))
+	else if (storyteller.should_inject_antag())
 		SSblackbox.record_feedback("tally","dynamic",1,"Attempted latejoin injections")
 		var/list/drafted_rules = storyteller.latejoin_draft(newPlayer)
 		if (drafted_rules.len > 0 && picking_midround_latejoin_rule(drafted_rules))
 			SSblackbox.record_feedback("tally","dynamic",1,"Successful latejoin injections")
-			latejoin_injection_cooldown = storyteller.get_latejoin_cooldown() + world.time
 
 /// Increase the threat level.
 /datum/game_mode/dynamic/proc/create_threat(gain)

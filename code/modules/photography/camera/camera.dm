@@ -158,12 +158,12 @@
 		return FALSE
 	size_x = clamp(size_x, 0, CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	size_y = clamp(size_y, 0, CAMERA_PICTURE_SIZE_HARD_LIMIT)
-	var/list/desc = list("This is a photo of an area of [size_x+1] meters by [size_y+1] meters.")
+	var/list/desc = list("This is a photo of an area of [size_x*2 + 1] meters by [size_y*2 + 1] meters.")
 	var/ai_user = isAI(user)
 	var/list/seen
-	var/list/viewlist = (user && user.client)? getviewsize(user.client.view) : getviewsize(world.view)
+	var/list/viewlist = user?.client? getviewsize(user.client.view) : getviewsize(world.view)
 	var/viewr = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
-	var/viewc = user.client? user.client.eye : target
+	var/viewc = user?.client? user.client.eye : target
 	seen = get_hear(viewr, viewc)
 	var/list/turfs = list()
 	var/list/mobs = list()
@@ -184,7 +184,7 @@
 	var/psize_y = (size_y * 2 + 1) * world.icon_size
 	var/get_icon = camera_get_icon(turfs, target_turf, psize_x, psize_y, clone_area, size_x, size_y, (size_x * 2 + 1), (size_y * 2 + 1))
 	qdel(clone_area)
-	var/icon/temp = icon('icons/effects/96x96.dmi',"")
+	var/icon/temp = icon('icons/effects/camera_image_base.dmi',"")
 	temp.Blend("#000", ICON_OVERLAY)
 	temp.Scale(psize_x, psize_y)
 	temp.Blend(get_icon, ICON_OVERLAY)

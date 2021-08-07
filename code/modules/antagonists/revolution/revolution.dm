@@ -251,7 +251,7 @@
 			"left pocket" = SLOT_L_STORE,
 			"right pocket" = SLOT_R_STORE
 		)
-		var/where = H.equip_in_one_of_slots(T, slots)
+		var/where = H.equip_in_one_of_slots(T, slots, critical = TRUE)
 		if (!where)
 			to_chat(H, "The Syndicate were unfortunately unable to get you a flash.")
 		else

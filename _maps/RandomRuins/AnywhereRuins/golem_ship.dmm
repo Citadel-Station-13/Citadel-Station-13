@@ -18,7 +18,7 @@
 /obj/item/mining_scanner,
 /obj/item/flashlight/lantern,
 /obj/item/card/id/mining,
-/obj/item/gps/mining,
+/obj/item/gps/mining/off,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "d" = (
@@ -32,7 +32,7 @@
 /obj/item/mining_scanner,
 /obj/item/flashlight/lantern,
 /obj/item/card/id/mining,
-/obj/item/gps/mining,
+/obj/item/gps/mining/off,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "e" = (
@@ -71,8 +71,8 @@
 /area/ruin/powered/golem_ship)
 "k" = (
 /obj/machinery/computer/arcade/battle{
-	icon_state = "arcade";
-	dir = 4
+	dir = 4;
+	icon_state = "arcade"
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
@@ -112,8 +112,8 @@
 /area/ruin/powered/golem_ship)
 "s" = (
 /obj/machinery/computer/arcade/orion_trail{
-	icon_state = "arcade";
-	dir = 4
+	dir = 4;
+	icon_state = "arcade"
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
@@ -139,6 +139,7 @@
 	dir = 4;
 	name = "shrine of the liberator"
 	},
+/obj/item/tcg_card/special/golem,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "v" = (

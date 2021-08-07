@@ -14,6 +14,7 @@
 	minimal_player_age = 10
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
+	considered_combat_role = TRUE
 	exp_type_department = EXP_TYPE_SECURITY
 
 	outfit = /datum/outfit/job/hos

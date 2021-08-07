@@ -4,7 +4,7 @@
 /obj/effect/proc_holder/changeling/strained_muscles
 	name = "Strained Muscles"
 	desc = "We evolve the ability to reduce the acid buildup in our muscles, allowing us to move much faster."
-	helptext = "The strain will make us tired, and we will rapidly become fatigued. Standard weight restrictions, like hardsuits, still apply. Cannot be used in lesser form."
+	helptext = "The strain will make us tired, and we will rapidly become fatigued. Standard weight restrictions, like hardsuits, still apply. Our chemical generation is drastically slowed while this is active. Cannot be used in lesser form."
 	dna_cost = 1
 	req_human = 1
 	var/stacks = 0 //Increments every 5 seconds; damage increases over time
@@ -14,12 +14,15 @@
 	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/strained_muscles/sting_action(mob/living/carbon/user)
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	active = !active
 	if(active)
 		to_chat(user, "<span class='notice'>Our muscles tense and strengthen.</span>")
+		changeling.chem_recharge_slowdown += 0.8 // stacking this with other abilities will cause you to actively lose chemicals
 	else
 		user.remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
 		to_chat(user, "<span class='notice'>Our muscles relax.</span>")
+		changeling.chem_recharge_slowdown -= 0.8
 		if(stacks >= 10)
 			to_chat(user, "<span class='danger'>We collapse in exhaustion.</span>")
 			user.DefaultCombatKnockdown(60)
@@ -30,6 +33,7 @@
 	return TRUE
 
 /obj/effect/proc_holder/changeling/strained_muscles/proc/muscle_loop(mob/living/carbon/user)
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	while(active)
 		user.add_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
 		if(user.stat != CONSCIOUS || user.staminaloss >= 90)
@@ -37,6 +41,7 @@
 			to_chat(user, "<span class='notice'>Our muscles relax without the energy to strengthen them.</span>")
 			user.DefaultCombatKnockdown(40)
 			user.remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
+			changeling.chem_recharge_slowdown -= 0.8
 			break
 
 		stacks++

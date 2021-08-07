@@ -17,7 +17,6 @@ GLOBAL_LIST_EMPTY(undershirt_f)	 //stores only undershirt name
 	//Socks
 GLOBAL_LIST_EMPTY_TYPED(socks_list, /datum/sprite_accessory/underwear/socks)		//stores socks indexed by name
 	//Lizard Bits (all datum lists indexed by name)
-GLOBAL_LIST_EMPTY(body_markings_list)
 GLOBAL_LIST_EMPTY(tails_list_lizard)
 GLOBAL_LIST_EMPTY(animated_tails_list_lizard)
 GLOBAL_LIST_EMPTY(snouts_list)
@@ -38,6 +37,9 @@ GLOBAL_LIST_EMPTY(r_wings_list)
 GLOBAL_LIST_EMPTY(insect_wings_list)
 GLOBAL_LIST_EMPTY(insect_fluffs_list)
 GLOBAL_LIST_EMPTY(insect_markings_list)
+GLOBAL_LIST_EMPTY(arachnid_legs_list)
+GLOBAL_LIST_EMPTY(arachnid_spinneret_list)
+GLOBAL_LIST_EMPTY(arachnid_mandibles_list)
 GLOBAL_LIST_EMPTY(caps_list)
 
 //a way to index the right bodypart list given the type of bodypart
@@ -52,7 +54,6 @@ GLOBAL_LIST_INIT(mutant_reference_list, list(
 	"frills" = GLOB.frills_list,
 	"horns" = GLOB.horns_list,
 	"ears" = GLOB.ears_list,
-	"body_markings" = GLOB.body_markings_list,
 	"wings" = GLOB.wings_list,
 	"wingsopen" = GLOB.wings_open_list,
 	"deco_wings" = GLOB.deco_wings_list,
@@ -60,6 +61,9 @@ GLOBAL_LIST_INIT(mutant_reference_list, list(
 	"insect_wings" = GLOB.insect_wings_list,
 	"insect_fluff" = GLOB.insect_fluffs_list,
 	"insect_markings" = GLOB.insect_markings_list,
+	"arachnid_legs" = GLOB.arachnid_legs_list,
+	"arachnid_spinneret" = GLOB.arachnid_spinneret_list,
+	"arachnid_mandibles" = GLOB.arachnid_mandibles_list,
 	"caps" = GLOB.caps_list,
 	"ipc_screen" = GLOB.ipc_screens_list,
 	"ipc_antenna" = GLOB.ipc_antennas_list,
@@ -80,7 +84,35 @@ GLOBAL_LIST_INIT(mutant_transform_list, list("wingsopen" = "wings",
 	"waggingspines" = "spines",
 	"mam_waggingtail" = "mam_tail"))
 
-GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list("ghost")) //stores the ghost forms that support directional sprites
+GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list(
+	"ghost",
+	"ghostian",
+	"ghostian2",
+	"ghostking",
+	"ghost_red",
+	"ghost_black",
+	"ghost_blue",
+	"ghost_yellow",
+	"ghost_green",
+	"ghost_pink",
+	"ghost_cyan",
+	"ghost_dblue",
+	"ghost_dred",
+	"ghost_dgreen",
+	"ghost_dcyan",
+	"ghost_grey",
+	"ghost_dyellow",
+	"ghost_dpink",
+	"skeleghost",
+	"ghost_purpleswirl",
+	"ghost_rainbow",
+	"ghost_fire",
+	"ghost_funkypurp",
+	"ghost_pinksherbert",
+	"ghost_blazeit",
+	"ghost_mellow",
+	"ghost_camo",
+	"catghost")) //stores the ghost forms that support directional sprites
 GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list("ghost")) //stores the ghost forms that support hair and other such things
 
 GLOBAL_LIST_INIT(ai_core_display_screens, list(
@@ -120,6 +152,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 	"Not Malf",
 	"Patriot",
 	"Pirate",
+	"Portrait",
 	"President",
 	"Rainbow",
 	"Clown",
@@ -146,13 +179,19 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 	"Yes-Man"
 	))
 
-/proc/resolve_ai_icon(input)
+/proc/resolve_ai_icon(input, radial_preview = FALSE)
 	if(!input || !(input in GLOB.ai_core_display_screens))
 		return "ai"
-	else
-		if(input == "Random")
-			input = pick(GLOB.ai_core_display_screens - "Random")
+	if(radial_preview)
 		return "ai-[lowertext(input)]"
+
+	if(input == "Random")
+		input = pick(GLOB.ai_core_display_screens - "Random")
+	if(input == "Portrait")
+		var/datum/portrait_picker/tgui = new(usr)//create the datum
+		tgui.ui_interact(usr)//datum has a tgui component, here we open the window
+		return "ai-portrait" //just take this until they decide
+	return "ai-[lowertext(input)]"
 
 GLOBAL_LIST_INIT(security_depts_prefs, list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
 
@@ -267,20 +306,78 @@ GLOBAL_LIST_INIT(redacted_strings, list("\[REDACTED\]", "\[CLASSIFIED\]", "\[ARC
 
 GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/wisdoms.txt"))
 
-GLOBAL_LIST_INIT(speech_verbs, list("default","says","gibbers", "states", "chitters", "declares", "bellows", "buzzes" ,"beeps", "chirps" ,"hisses" ,"poofs" ,"rattles", "mewls" ,"barks", "blorbles", "squeaks", "squawks", "flutters"))
+//LANGUAGE CHARACTER CUSTOMIZATION
+GLOBAL_LIST_INIT(speech_verbs, list("default","says","gibbers", "states", "chitters", "chimpers", "declares", "bellows", "buzzes" ,"beeps", "chirps", "clicks", "hisses" ,"poofs" , "puffs", "rattles", "mewls" ,"barks", "blorbles", "squeaks", "squawks", "flutters", "warbles", "caws", "gekkers", "clucks"))
+GLOBAL_LIST_INIT(roundstart_tongues, list("default","human tongue" = /obj/item/organ/tongue, "lizard tongue" = /obj/item/organ/tongue/lizard, "skeleton tongue" = /obj/item/organ/tongue/bone, "fly tongue" = /obj/item/organ/tongue/fly, "ipc tongue" = /obj/item/organ/tongue/robot/ipc, "xeno tongue" = /obj/item/organ/tongue/alien))
 
-GLOBAL_LIST_INIT(roundstart_tongues, list("default","human tongue" = /obj/item/organ/tongue, "lizard tongue" = /obj/item/organ/tongue/lizard, "skeleton tongue" = /obj/item/organ/tongue/bone, "fly tongue" = /obj/item/organ/tongue/fly, "ipc tongue" = /obj/item/organ/tongue/robot/ipc))
+/proc/get_roundstart_languages()
+	var/list/languages = subtypesof(/datum/language)
+	var/list/roundstart_languages = list("None") //default option for the list
+	for(var/some_language in languages)
+		var/datum/language/language = some_language
+		if(initial(language.chooseable_roundstart))
+			roundstart_languages[initial(language.name)] = some_language
+	return roundstart_languages
 
+GLOBAL_LIST_INIT(roundstart_languages, get_roundstart_languages())
+
+//SPECIES BODYPART LISTS
 //locked parts are those that your picked species requires to have
 //unlocked parts are those that anyone can choose on customisation regardless
 //parts not in unlocked, but in all, are thus locked
-GLOBAL_LIST_INIT(all_mutant_parts, list("tail_lizard" = "Tail", "mam_tail" = "Tail", "tail_human" = "Tail", "snout" = "Snout", "frills" = "Frills", "spines" = "Spines", "body_markings" = "Body Markings", "mam_body_markings" = "Species Markings" , "mam_ears" = "Ears", "ears" = "Ears", "mam_snouts" = "Snout", "legs" = "Legs", "deco_wings" = "Decorative Wings", "insect_wings" = "Insect Wings", "insect_fluff" = "Insect Fluff", "taur" = "Tauric Body", "insect_markings" = "Insect Markings", "wings" = "Wings", "xenohead" = "Caste Head", "xenotail" = "Tail", "xenodorsal" = "Dorsal Spines", "ipc_screen" = "Screen", "ipc_antenna" = "Antenna", "meat_type" = "Meat Type", "horns" = "Horns"))
+GLOBAL_LIST_INIT(all_mutant_parts, list("tail_lizard" = "Tail", "mam_tail" = "Tail", "tail_human" = "Tail", "snout" = "Snout", "frills" = "Frills", "spines" = "Spines", "mam_body_markings" = "Species Markings" , "mam_ears" = "Ears", "ears" = "Ears", "mam_snouts" = "Snout", "legs" = "Legs", "deco_wings" = "Decorative Wings", "insect_wings" = "Insect Wings", "insect_fluff" = "Insect Fluff", "taur" = "Tauric Body", "insect_markings" = "Insect Markings", "wings" = "Wings", "arachnid_legs" = "Arachnid Legs", "arachnid_spinneret" = "Spinneret", "arachnid_mandibles" = "Mandibles", "xenohead" = "Caste Head", "xenotail" = "Tail", "xenodorsal" = "Dorsal Spines", "ipc_screen" = "Screen", "ipc_antenna" = "Antenna", "meat_type" = "Meat Type", "horns" = "Horns"))
 GLOBAL_LIST_INIT(unlocked_mutant_parts, list("horns", "insect_fluff"))
+
 //parts in either of the above two lists that require a second option that allows them to be coloured
 GLOBAL_LIST_INIT(colored_mutant_parts, list("insect_wings" = "wings_color", "deco_wings" = "wings_color", "horns" = "horns_color"))
 
 //body ids that have greyscale sprites
-GLOBAL_LIST_INIT(greyscale_limb_types, list("human","moth","lizard","pod","plant","jelly","slime","golem","lum","stargazer","mush","ethereal","snail","c_golem","b_golem","mammal","xeno","ipc","insect","synthliz","avian","aquatic"))
+GLOBAL_LIST_INIT(greyscale_limb_types, list("human","moth","lizard","pod","plant","jelly","slime","golem","slimelumi","stargazer","mush","ethereal","snail","c_golem","b_golem","mammal","xeno","ipc","insect","synthliz","avian","aquatic"))
 
 //body ids that have prosthetic sprites
 GLOBAL_LIST_INIT(prosthetic_limb_types, list("xion","bishop","cybersolutions","grayson","hephaestus","nanotrasen","talon"))
+
+//FAMILY HEIRLOOM LIST
+//this works by using the first number for the species as a probability to choose one of the items in the following list for their family heirloom
+//if the probability fails, or the species simply isn't in the list, then it defaults to the next global list, which has its own list of items for each job
+//the first item in the list is for if your job isn't in that list
+
+//species-heirloom list (we categorise them by the species id var)
+GLOBAL_LIST_INIT(species_heirlooms, list(
+	"dwarf" = list(25, list(/obj/item/reagent_containers/food/drinks/dwarf_mug)), //example: 25% chance for dwarves to get a dwarf mug as their heirloom (normal container but has manly dorf icon)
+	"insect" = list(25, list(/obj/item/flashlight/lantern/heirloom_moth)),
+	"ipc" = list(25, list(/obj/item/stock_parts/cell/family)), //gives a broken powercell for flavor text!
+	"synthliz" = list(25, list(/obj/item/stock_parts/cell/family)), //they're also robots
+	"slimeperson" = list(25, list(/obj/item/toy/plush/slimeplushie)),
+	"lizard" = list(25, list(/obj/item/toy/plush/lizardplushie)),
+	))
+
+//job-heirloom list
+GLOBAL_LIST_INIT(job_heirlooms, list(
+	"NO_JOB" = list(/obj/item/toy/cards/deck, /obj/item/lighter, /obj/item/dice/d20),
+	"Clown" = list(/obj/item/paint/anycolor, /obj/item/bikehorn/golden),
+	"Mime" = list(/obj/item/paint/anycolor, /obj/item/toy/dummy),
+	"Cook" = list(/obj/item/kitchen/knife/scimitar),
+	"Botanist" = list(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/storage/bag/plants, /obj/item/toy/plush/beeplushie),
+	"Medical Doctor" = list(/obj/item/healthanalyzer),
+	"Paramedic" = list(/obj/item/lighter), //..why?
+	"Station Engineer" = list(/obj/item/wirecutters/brass/family, /obj/item/crowbar/brass/family, /obj/item/screwdriver/brass/family, /obj/item/wrench/brass/family), //brass tools but without the tool speed modifier
+	"Atmospheric Technician" = list(/obj/item/extinguisher/mini/family),
+	"Lawyer" = list(/obj/item/storage/briefcase/lawyer/family),
+	"Janitor" = list(/obj/item/mop),
+	"Scientist" = list(/obj/item/toy/plush/slimeplushie),
+	"Assistant" = list(/obj/item/clothing/gloves/cut/family),
+	"Chaplain" = list(/obj/item/camera/spooky/family),
+	"Head of Personnel" = list(/obj/item/pinpointer/ian)
+	))
+
+//body ids that have non-gendered bodyparts
+GLOBAL_LIST_INIT(nongendered_limb_types, list("fly", "zombie" ,"synth", "shadow", "cultgolem", "agent", "plasmaman", "clockgolem", "clothgolem"))
+
+//list of eye types, corresponding to a respective left and right icon state for the set of eyes
+GLOBAL_LIST_INIT(eye_types, list("normal", "insect", "moth", "double", "double2", "double3", "cyclops"))
+
+//list linking bodypart bitflags to their actual names
+GLOBAL_LIST_INIT(bodypart_names, list(num2text(HEAD) = "Head", num2text(CHEST) = "Chest", num2text(LEG_LEFT) = "Left Leg", num2text(LEG_RIGHT) = "Right Leg", num2text(ARM_LEFT) = "Left Arm", num2text(ARM_RIGHT) = "Right Arm"))
+// list linking bodypart names back to the bitflags
+GLOBAL_LIST_INIT(bodypart_values, list("Head" = num2text(HEAD), "Chest" = num2text(CHEST), "Left Leg" = num2text(LEG_LEFT), "Right Leg" = num2text(LEG_RIGHT), "Left Arm" = num2text(ARM_LEFT), "Right Arm" = num2text(ARM_RIGHT)))

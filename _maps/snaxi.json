@@ -33,7 +33,7 @@
          "Linkage":null,
          "Gravity":true,
          "Ice Ruins Underground":true,
-         "Baseturf":"/turf/open/transparent/openspace/icemoon"
+         "Baseturf":"/turf/open/openspace/icemoon"
       },
       {
          "Down":-1,
@@ -46,4 +46,4 @@
       }
    ],
    "minetype":"none"
-} 
+}

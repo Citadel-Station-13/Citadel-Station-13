@@ -48,14 +48,34 @@
 		return // no message spam
 	..()
 
+/obj/structure/mirror/attacked_by(obj/item/I, mob/living/user)
+	if(broken || !istype(user) || !I.force)
+		return ..()
+
+	. = ..()
+	if(broken) // breaking a mirror truly gets you bad luck!
+		to_chat(user, "<span class='warning'>A chill runs down your spine as [src] shatters...</span>")
+		user.AddComponent(/datum/component/omen, silent=TRUE) // we have our own message
+
+/obj/structure/mirror/bullet_act(obj/item/projectile/P)
+	if(broken || !isliving(P.firer) || !P.damage)
+		return ..()
+
+	. = ..()
+	if(broken) // breaking a mirror truly gets you bad luck!
+		var/mob/living/unlucky_dude = P.firer
+		to_chat(unlucky_dude, "<span class='warning'>A chill runs down your spine as [src] shatters...</span>")
+		unlucky_dude.AddComponent(/datum/component/omen, silent=TRUE) // we have our own message
+
 /obj/structure/mirror/obj_break(damage_flag, mapload)
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
-		icon_state = "mirror_broke"
-		if(!mapload)
-			playsound(src, "shatter", 70, 1)
-		if(desc == initial(desc))
-			desc = "Oh no, seven years of bad luck!"
-		broken = TRUE
+	if(broken || (flags_1 & NODECONSTRUCT_1))
+		return
+	icon_state = "mirror_broke"
+	if(!mapload)
+		playsound(src, "shatter", 70, TRUE)
+	if(desc == initial(desc))
+		desc = "Oh no, seven years of bad luck!"
+	broken = TRUE
 
 /obj/structure/mirror/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -94,7 +114,7 @@
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
-	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth", "memezombies", "clockwork golem servant", "android", "synth", "mush", "zombie", "memezombie")
+	var/list/races_blacklist = list("skeleton", "agent", "military_synth", "memezombies", "clockwork golem servant", "android", "synth", "mush", "zombie", "memezombie")
 	var/list/choosable_races = list()
 
 /obj/structure/mirror/magic/New()
@@ -163,7 +183,7 @@
 						var/custom_tone = input(user, "Choose your custom skin tone:", "Race change", default) as color|null
 						if(custom_tone)
 							var/temp_hsv = RGBtoHSV(new_s_tone)
-							if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
+							if(ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3])
 								to_chat(H,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 							else
 								H.skin_tone = custom_tone
@@ -177,7 +197,7 @@
 				if(new_mutantcolor)
 					var/temp_hsv = RGBtoHSV(new_mutantcolor)
 
-					if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
+					if(ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3]) // mutantcolors must be bright
 						H.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 
 					else
@@ -229,17 +249,32 @@
 				H.update_hair()
 
 		if(BODY_ZONE_PRECISE_EYES)
-			var/new_eye_color = input(H, "Choose your eye color", "Eye Color","#"+H.eye_color) as color|null
-			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-				return
-			if(new_eye_color)
-				var/n_color = sanitize_hexcolor(new_eye_color)
-				var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
-				if(eyes)
-					eyes.eye_color = n_color
-				H.eye_color = n_color
-				H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-				H.dna.species.handle_body()
+			var/eye_type = input(H, "Choose the eye you want to color", "Eye Color") as null|anything in list("Both Eyes", "Left Eye", "Right Eye")
+			if(eye_type)
+				var/input_color = H.left_eye_color
+				if(eye_type == "Right Eye")
+					input_color = H.right_eye_color
+				var/new_eye_color = input(H, "Choose your eye color", "Eye Color","#"+input_color) as color|null
+				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+					return
+				if(new_eye_color)
+					var/n_color = sanitize_hexcolor(new_eye_color)
+					var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+					var/left_color = n_color
+					var/right_color = n_color
+					if(eye_type == "Left Eye")
+						right_color = H.right_eye_color
+					else
+						if(eye_type == "Right Eye")
+							left_color = H.left_eye_color
+					if(eyes)
+						eyes.left_eye_color = left_color
+						eyes.right_eye_color = right_color
+					H.left_eye_color = left_color
+					H.right_eye_color = right_color
+					H.dna.update_ui_block(DNA_LEFT_EYE_COLOR_BLOCK)
+					H.dna.update_ui_block(DNA_RIGHT_EYE_COLOR_BLOCK)
+					H.dna.species.handle_body()
 	if(choice)
 		curse(user)
 

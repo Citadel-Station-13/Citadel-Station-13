@@ -1,6 +1,8 @@
 /obj/item/restraints
 	breakouttime = 600
 	var/demoralize_criminals = TRUE // checked on carbon/carbon.dm to decide wheter to apply the handcuffed negative moodlet or not.
+	/// allow movement at all during breakout
+	var/allow_breakout_movement = FALSE
 
 /obj/item/restraints/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -243,7 +245,11 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	slowdown = 7
+	allow_breakout_movement = TRUE
 	breakouttime = 300	//Deciseconds = 30s = 0.5 minute
+
+/obj/item/restraints/legcuffs/proc/on_removed()
+	return
 
 /obj/item/restraints/legcuffs/beartrap
 	name = "bear trap"
@@ -325,7 +331,7 @@
 	. = ..()
 
 /obj/item/restraints/legcuffs/beartrap/energy/cyborg
-	breakouttime = 20 // Cyborgs shouldn't have a strong restraint
+	breakouttime = 40 // Cyborgs shouldn't have a strong restraint
 
 /obj/item/restraints/legcuffs/bola
 	name = "bola"
@@ -376,11 +382,8 @@
 	icon_state = "ebola"
 	hitsound = 'sound/weapons/taserhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
-	breakouttime = 60
+	breakouttime = 50
 
-/obj/item/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(iscarbon(hit_atom))
-		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(hit_atom))
-		B.Crossed(hit_atom)
-		qdel(src)
-	..()
+/obj/item/restraints/legcuffs/bola/energy/on_removed()
+	do_sparks(1, TRUE, src)
+	qdel(src)

@@ -69,6 +69,7 @@ GLOBAL_LIST_INIT(abductor_gear, subtypesof(/datum/abductor_gear))
 	build_path = /obj/item/abductor_machine_beacon/chem_dispenser
 	category = "Advanced Gear"
 
+/*
 /datum/abductor_gear/shrink_ray
 	name = "Shrink Ray Blaster"
 	description = "This is a piece of frightening alien tech that enhances the magnetic pull of atoms in a localized space to temporarily make an object shrink. \
@@ -77,3 +78,4 @@ GLOBAL_LIST_INIT(abductor_gear, subtypesof(/datum/abductor_gear))
 	cost = 2
 	build_path = /obj/item/gun/energy/shrink_ray
 	category = "Advanced Gear"
+*/

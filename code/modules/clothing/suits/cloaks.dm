@@ -102,3 +102,31 @@
 /obj/item/clothing/neck/cloak/polychromic/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/polychromic, poly_colors, 3)
+
+/obj/item/clothing/neck/cloak/cancloak/polychromic
+	name = "canvas cloak"
+	desc = "A rugged cloak made of canvas."
+	icon_state = "cancloak"
+	item_state = "cloak"
+	var/list/poly_colors = list("#585858", "#373737", "#BEBEBE")
+
+/obj/item/clothing/neck/cloak/cancloak/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, poly_colors, 3)
+
+/obj/item/clothing/neck/cloak/alt
+	name = "cloak"
+	desc = "A ragged up white cloak. It reminds you of a place not far from here."
+	icon_state = "cloak"
+	item_state = "cloak"
+
+/obj/item/clothing/neck/cloak/alt/polychromic
+	name = "polychromic cloak"
+	desc = "A ragged up cloak. It reminds you of a place not far from here."
+	icon_state = "cloak"
+	item_state = "cloak"
+	var/list/poly_colors = list("#FFFFFF", "#676767", "#4C4C4C")
+
+/obj/item/clothing/neck/cloak/alt/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, poly_colors, 3)

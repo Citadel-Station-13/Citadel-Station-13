@@ -16,7 +16,7 @@
 	if(!F.check_variables() && !override_checks)
 		QDEL_NULL(F)
 	if(start_field && (F || override_checks))
-		F.Initialize()
+		F.begin_field()
 	return F
 
 /datum/proximity_monitor/advanced
@@ -64,7 +64,8 @@
 		pass = FALSE
 	return pass
 
-/datum/proximity_monitor/advanced/process()
+/datum/proximity_monitor/advanced/proc/lag_checked_process()
+	set waitfor = FALSE
 	if(process_inner_turfs)
 		for(var/turf/T in field_turfs)
 			process_inner_turf(T)
@@ -72,17 +73,20 @@
 	if(process_edge_turfs)
 		for(var/turf/T in edge_turfs)
 			process_edge_turf(T)
-			CHECK_TICK	//Same here.
+			CHECK_TICK		//Same here.
+
+/datum/proximity_monitor/advanced/process()
+	lag_checked_process()
 
 /datum/proximity_monitor/advanced/proc/process_inner_turf(turf/T)
 
 /datum/proximity_monitor/advanced/proc/process_edge_turf(turf/T)
 
-/datum/proximity_monitor/advanced/New()
+/datum/proximity_monitor/advanced/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
 	if(requires_processing)
 		START_PROCESSING(SSfields, src)
 
-/datum/proximity_monitor/advanced/proc/Initialize()
+/datum/proximity_monitor/advanced/proc/begin_field()
 	setup_field()
 	post_setup_field()
 
@@ -154,7 +158,7 @@
 	var/atom/_host = host
 	var/atom/new_host_loc = _host.loc
 	if(last_host_loc != new_host_loc)
-		recalculate_field()
+		INVOKE_ASYNC(src, .proc/recalculate_field)
 
 /datum/proximity_monitor/advanced/proc/post_setup_field()
 
@@ -302,7 +306,7 @@
 
 /obj/item/multitool/field_debug/attack_self(mob/user)
 	operating = !operating
-	to_chat(user, "You turn [src] [operating? "on":"off"].")
+	to_chat(user, "<span class='notice'>You turn [src] [operating? "on":"off"].</span>")
 	UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 	listeningTo = null
 	if(!istype(current) && operating)
@@ -312,13 +316,15 @@
 	else if(!operating)
 		QDEL_NULL(current)
 
-/obj/item/multitool/field_debug/dropped(mob/user)
+/obj/item/multitool/field_debug/dropped()
 	. = ..()
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 		listeningTo = null
 
 /obj/item/multitool/field_debug/proc/on_mob_move()
+	SIGNAL_HANDLER
+
 	check_turf(get_turf(src))
 
 /obj/item/multitool/field_debug/process()

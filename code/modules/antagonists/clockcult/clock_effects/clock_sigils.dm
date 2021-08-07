@@ -144,7 +144,7 @@
 		to_chat(L, "<span class='heavy_brass'>\"You belong to me now.\"</span>")
 		if(!GLOB.application_scripture_unlocked)
 			GLOB.application_scripture_unlocked = TRUE
-			hierophant_message("<span class='large_brass bold'>With the conversion of a new servant the Ark's power grows. Application scriptures are now available.</span>")
+			hierophant_message("<span class='large_brass bold'>With the conversion of a new servant the Hierophant Network's power grows. Application scriptures are now available.</span>")
 	if(add_servant_of_ratvar(L))
 		L.log_message("conversion was done with a [sigil_name]", LOG_ATTACK, color="BE8700")
 		if(iscarbon(L))
@@ -216,19 +216,31 @@
 	else if(get_clockwork_power())
 		to_chat(L, "<span class='brass'>You feel a slight, static shock.</span>")
 
+/obj/effect/clockwork/sigil/transmission/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/effect/clockwork/sigil/transmission/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
 /obj/effect/clockwork/sigil/transmission/process()
-    var/power_drained = 0
-    var/power_mod = 0.005
-    for(var/t in spiral_range_turfs(SIGIL_ACCESS_RANGE, src))
-        var/turf/T = t
-        for(var/M in T)
-            var/atom/movable/A = M
-            power_drained += A.power_drain(TRUE)
+	do_process()
 
-        CHECK_TICK
+/obj/effect/clockwork/sigil/transmission/proc/do_process()
+	set waitfor = FALSE
+	var/power_drained = 0
+	var/power_mod = 0.005
+	for(var/t in spiral_range_turfs(SIGIL_ACCESS_RANGE, src))
+		var/turf/T = t
+		for(var/M in T)
+			var/atom/movable/A = M
+			power_drained += A.power_drain(TRUE)
 
-    adjust_clockwork_power(power_drained * power_mod * 15)
-    new /obj/effect/temp_visual/ratvar/sigil/transmission(loc, 1 + (power_drained * 0.0035))
+		CHECK_TICK
+
+	adjust_clockwork_power(power_drained * power_mod * 15)
+	new /obj/effect/temp_visual/ratvar/sigil/transmission(loc, 1 + (power_drained * 0.0035))
 
 /obj/effect/clockwork/sigil/transmission/proc/charge_cyborg(mob/living/silicon/robot/cyborg)
 	if(!cyborg_checks(cyborg))
@@ -340,9 +352,9 @@
 				L.dust()
 			else if(L.health > min_drain_health)
 				if(!GLOB.ratvar_awakens && L.stat == CONSCIOUS)
-					vitality_drained = L.adjustToxLoss(1, forced = TRUE)
+					vitality_drained = L.adjustToxLoss(1, forced = TRUE, toxins_type = TOX_OMNI)
 				else
-					vitality_drained = L.adjustToxLoss(1.5, forced = TRUE)
+					vitality_drained = L.adjustToxLoss(1.5, forced = TRUE, toxins_type = TOX_OMNI)
 			if(vitality_drained)
 				GLOB.clockwork_vitality += vitality_drained
 			else
@@ -408,7 +420,7 @@
 
 /obj/effect/clockwork/sigil/rite
 	name = "radiant sigil"
-	desc = "A glowing sigil glowing with barely-contained power."
+	desc = "A sigil glowing with barely-contained power."
 	clockwork_desc = "A sigil that will allow you to perform certain rites on it, provided you have access to sufficient power and materials."
 	icon_state = "sigiltransmission" //am big lazy - recolored transmission sigil
 	sigil_name = "Sigil of Rites"
@@ -432,7 +444,8 @@
 		return
 	var/list/possible_rites = list()
 	for(var/datum/clockwork_rite/R in GLOB.all_clockwork_rites)
-		possible_rites[R] = R
+		if(is_servant_of_ratvar(user, require_full_power = TRUE) || !R.requires_full_power)
+			possible_rites[R] = R
 	var/input_key = input(user, "Choose a rite", "Choosing a rite") as null|anything in possible_rites
 	if(!input_key)
 		return

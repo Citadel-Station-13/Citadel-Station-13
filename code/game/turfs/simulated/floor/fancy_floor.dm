@@ -32,9 +32,9 @@
 /turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
 		return
-	var/obj/item/tool = user.is_holding_item_of_type(/obj/item/screwdriver)
+	var/obj/item/tool = user.is_holding_tool_quality(TOOL_SCREWDRIVER)
 	if(!tool)
-		tool = user.is_holding_item_of_type(/obj/item/crowbar)
+		tool = user.is_holding_tool_quality(TOOL_CROWBAR)
 	if(!tool)
 		return
 	var/turf/open/floor/plating/P = pry_tile(tool, user, TRUE)
@@ -69,10 +69,28 @@
 	ChangeTurf(/turf/open/floor/plating/rust)
 
 /turf/open/floor/wood/cold
-	temperature = 255.37
+	initial_temperature = 255.37
 
 /turf/open/floor/wood/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/wood/wood_large
+	desc = "Stylish dark wood."
+	icon_state = "large_wood"
+	floor_tile = /obj/item/stack/tile/wood/wood_large
+	broken_states = list("large_wood-broken", "large_wood-broken2", "large_wood-broken3")
+
+/turf/open/floor/wood/wood_tiled
+	desc = "Stylish dark wood."
+	icon_state = "wood_tile"
+	floor_tile = /obj/item/stack/tile/wood/wood_tiled
+	broken_states = list("wood_tile-broken", "wood_tile-broken2", "wood_tile-broken3")
+
+/turf/open/floor/wood/wood_diagonal
+	desc = "Stylish dark wood."
+	icon_state = "diagonal_wood"
+	floor_tile = /obj/item/stack/tile/wood/wood_diagonal
+	broken_states = list("diagonal_wood-broken", "diagonal_wood-broken2", "diagonal_wood-broken3")
 
 /turf/open/floor/grass
 	name = "grass patch"
@@ -254,6 +272,13 @@
 	floor_tile = /obj/item/stack/tile/carpet/black
 	smooth = SMOOTH_MORE
 	canSmoothWith = list(/turf/open/floor/carpet/black, /turf/open/floor/carpet/blackred, /turf/open/floor/carpet/monochrome)
+
+/turf/open/floor/carpet/arcade
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "arcade"
+	floor_tile = /obj/item/stack/tile/carpet/arcade
+	smooth = SMOOTH_FALSE
+	canSmoothWith = list()
 
 /turf/open/floor/carpet/blackred
 	icon = 'icons/turf/floors/carpet_blackred.dmi'

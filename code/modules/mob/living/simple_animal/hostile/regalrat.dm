@@ -23,7 +23,6 @@
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	ventcrawler = VENTCRAWLER_ALWAYS
 	unique_name = TRUE
 	faction = list("rat")
 	var/datum/action/cooldown/coffer
@@ -36,6 +35,10 @@
 	coffer.Grant(src)
 	riot = new /datum/action/cooldown/riot
 	riot.Grant(src)
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
+	INVOKE_ASYNC(src, .proc/poll_for_player)
+
+/mob/living/simple_animal/hostile/regalrat/proc/poll_for_player()
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the Royal Rat, cheesey be his crown?", ROLE_SENTIENCE, null, FALSE, 100, POLL_IGNORE_SENTIENCE_POTION)
 	if(LAZYLEN(candidates) && !mind)
 		var/mob/dead/observer/C = pick(candidates)
@@ -175,7 +178,6 @@
 	health = 15
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1)
 	density = FALSE
-	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
@@ -185,6 +187,7 @@
 	. = ..()
 	SSmobs.cheeserats += src
 	AddComponent(/datum/component/swarming)
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/hostile/rat/Destroy()
 	SSmobs.cheeserats -= src

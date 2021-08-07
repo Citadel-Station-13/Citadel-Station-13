@@ -10,8 +10,8 @@
 
 /obj/structure/transit_tube_pod/Initialize()
 	. = ..()
-	air_contents.set_moles(/datum/gas/oxygen, MOLES_O2STANDARD)
-	air_contents.set_moles(/datum/gas/nitrogen, MOLES_N2STANDARD)
+	air_contents.set_moles(GAS_O2, MOLES_O2STANDARD)
+	air_contents.set_moles(GAS_N2, MOLES_N2STANDARD)
 	air_contents.set_temperature(T20C)
 
 
@@ -26,7 +26,7 @@
 		icon_state = "pod"
 
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/crowbar))
+	if(I.tool_behaviour == TOOL_CROWBAR)
 		if(!moving)
 			I.play_tool_sound(src)
 			if(contents.len)
@@ -126,12 +126,13 @@
 
 		if(current_tube == null)
 			setDir(next_dir)
-			Move(get_step(loc, dir), dir) // Allow collisions when leaving the tubes.
+			Move(get_step(loc, dir), dir, DELAY_TO_GLIDE_SIZE(exit_delay)) // Allow collisions when leaving the tubes.
 			break
 
 		last_delay = current_tube.enter_delay(src, next_dir)
 		sleep(last_delay)
 		setDir(next_dir)
+		set_glide_size(DELAY_TO_GLIDE_SIZE(last_delay + exit_delay))
 		forceMove(next_loc) // When moving from one tube to another, skip collision and such.
 		density = current_tube.density
 
@@ -152,8 +153,24 @@
 /obj/structure/transit_tube_pod/assume_air(datum/gas_mixture/giver)
 	return air_contents.merge(giver)
 
+/obj/structure/transit_tube_pod/assume_air_moles(datum/gas_mixture/giver, moles)
+	return giver.transfer_to(air_contents, moles)
+
+/obj/structure/transit_tube_pod/assume_air_ratio(datum/gas_mixture/giver, ratio)
+	return giver.transfer_ratio_to(air_contents, ratio)
+
 /obj/structure/transit_tube_pod/remove_air(amount)
 	return air_contents.remove(amount)
+
+/obj/structure/transit_tube_pod/remove_air_ratio(ratio)
+	return air_contents.remove_ratio(ratio)
+
+/obj/structure/transit_tube_pod/transfer_air(datum/gas_mixture/taker, moles)
+	return air_contents.transfer_to(taker, moles)
+
+/obj/structure/transit_tube_pod/transfer_air_ratio(datum/gas_mixture/taker, ratio)
+	return air_contents.transfer_ratio_to(taker, ratio)
+
 
 /obj/structure/transit_tube_pod/relaymove(mob/mob, direction)
 	if(istype(mob) && mob.client)

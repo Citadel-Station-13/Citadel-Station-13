@@ -553,6 +553,9 @@
 /obj/item/card/id/syndicate/locked_banking
 	bank_support = ID_LOCKED_BANK_ACCOUNT
 
+/obj/item/card/id/pirate
+	access = list(ACCESS_SYNDICATE)
+
 /obj/item/card/id/captains_spare
 	name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
@@ -779,16 +782,40 @@
 /obj/item/card/id/departmental_budget/update_label()
 	return
 
+/obj/item/card/id/departmental_budget/civ
+	department_ID = ACCOUNT_CIV
+	department_name = ACCOUNT_CIV_NAME
+
+/obj/item/card/id/departmental_budget/eng
+	department_ID = ACCOUNT_ENG
+	department_name = ACCOUNT_ENG_NAME
+
+/obj/item/card/id/departmental_budget/sci
+	department_ID = ACCOUNT_SCI
+	department_name = ACCOUNT_SCI_NAME
+
+/obj/item/card/id/departmental_budget/med
+	department_ID = ACCOUNT_MED
+	department_name = ACCOUNT_MED_NAME
+
+/obj/item/card/id/departmental_budget/srv
+	department_ID = ACCOUNT_SRV
+	department_name = ACCOUNT_SRV_NAME
+
 /obj/item/card/id/departmental_budget/car
 	department_ID = ACCOUNT_CAR
 	department_name = ACCOUNT_CAR_NAME
+
+/obj/item/card/id/departmental_budget/sec
+	department_ID = ACCOUNT_SEC
+	department_name = ACCOUNT_SEC_NAME
 
 //Polychromatic Knight Badge
 
 /obj/item/card/id/knight
 	name = "knight badge"
 	icon_state = "knight"
-	desc = "A badge denoting the owner as a knight! It has a strip for swiping like an ID"
+	desc = "A badge denoting the owner as a knight! It has a strip for swiping like an ID."
 	var/id_color = "#00FF00" //defaults to green
 	var/mutable_appearance/id_overlay
 

@@ -38,7 +38,7 @@
 	display_name = "Electromagnetic Theory"
 	description = "Study into usage of frequencies in the electromagnetic spectrum."
 	prereq_ids = list("base")
-	design_ids = list("holosign", "holosignsec", "holosignengi", "holosignatmos", "holosignfirelock", "inducer", "tray_goggles", "holopad")
+	design_ids = list("holosign", "holosignsec", "holosignengi", "holosignatmos",/* "holosignfirelock",*/ "inducer", "tray_goggles", "holopad")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/emp_adv
@@ -47,14 +47,6 @@
 	description = "Determining whether reversing the polarity will actually help in a given situation."
 	prereq_ids = list("emp_basic")
 	design_ids = list("ultra_micro_laser")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
-
-/datum/techweb_node/emp_super
-	id = "emp_super"
-	display_name = "Quantum Electromagnetic Technology"	//bs
-	description = "Even better electromagnetic technology."
-	prereq_ids = list("emp_adv")
-	design_ids = list("quadultra_micro_laser")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 /////////////////////////Clown tech/////////////////////////
@@ -75,15 +67,14 @@
 	prereq_ids = list("base")
 	design_ids = list("sticky_tape")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	hidden = TRUE
-	experimental = TRUE
+	starting_node = TRUE
 
-// Can be researched after getting the basic sticky technology from the BEPIS major reward
+// now a BEPIS locked thing
 /datum/techweb_node/sticky_advanced
 	id = "sticky_advanced"
 	display_name = "Advanced Sticky Technology"
 	description = "Taking a good joke too far? Nonsense!"
-	prereq_ids = list("sticky_basic")
 	design_ids = list("super_sticky_tape", "pointy_tape")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	hidden = TRUE
+	experimental = TRUE

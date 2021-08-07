@@ -1,17 +1,3 @@
-/obj/item/caution
-	desc = "Caution! Wet Floor!"
-	name = "wet floor sign"
-	icon = 'icons/obj/janitor.dmi'
-	icon_state = "caution"
-	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	force = 1
-	throwforce = 3
-	throw_speed = 2
-	throw_range = 5
-	w_class = WEIGHT_CLASS_SMALL
-	attack_verb = list("warned", "cautioned", "smashed")
-
 /obj/item/choice_beacon
 	name = "choice beacon"
 	desc = "Hey, why are you viewing this?!! Please let Centcom know about this odd occurance."
@@ -52,7 +38,8 @@
 
 /obj/item/choice_beacon/proc/spawn_option(atom/choice,mob/living/M)
 	var/obj/new_item = create_choice_atom(choice, M)
-	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
+	var/area/pod_storage_area = locate(/area/centcom/supplypod/podStorage) in GLOB.sortedAreas
+	var/obj/structure/closet/supplypod/bluespacepod/pod = new(pick(get_area_turfs(pod_storage_area))) //Lets just have it in the pod storage zone for a really short time because we don't want it in nullspace
 	pod.explosionSize = list(0,0,0,0)
 	new_item.forceMove(pod)
 	var/msg = "<span class='danger'>After making your selection, you notice a strange target on the ground. It might be best to step back!</span>"
@@ -62,7 +49,7 @@
 			msg = "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows: <span class='bold'>Item request received. Your package is inbound, please stand back from the landing site.</span> Message ends.\""
 	to_chat(M, msg)
 
-	new /obj/effect/abstract/DPtarget(get_turf(src), pod)
+	new /obj/effect/pod_landingzone(get_turf(src), pod)
 
 /obj/item/choice_beacon/ingredients
 	name = "ingredient box delivery beacon"
@@ -148,8 +135,8 @@
 		/obj/item/organ/cyberimp/arm/toolset,
 		/obj/item/organ/cyberimp/arm/surgery,
 		/obj/item/organ/cyberimp/chest/thrusters,
-		/obj/item/organ/lungs/cybernetic,
-		/obj/item/organ/liver/cybernetic) //cyberimplants range from a nice bonus to fucking broken bullshit so no subtypesof
+		/obj/item/organ/lungs/cybernetic/tier3,
+		/obj/item/organ/liver/cybernetic/tier3) //cyberimplants range from a nice bonus to fucking broken bullshit so no subtypesof
 		for(var/V in templist)
 			var/atom/A = V
 			augment_list[initial(A.name)] = A

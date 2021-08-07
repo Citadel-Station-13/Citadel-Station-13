@@ -41,6 +41,10 @@
 	// Combat - Blocking/Parrying system
 	/// Our block_parry_data for unarmed blocks/parries. Currently only used for parrying, as unarmed block isn't implemented yet. YOU MUST RUN [get_block_parry_data(this)] INSTEAD OF DIRECTLY ACCESSING!
 	var/datum/block_parry_data/block_parry_data = /datum/block_parry_data		// defaults to *something* because [combat_flags] dictates whether or not we can unarmed block/parry.
+	/// Default
+	var/datum/block_parry_data/default_block_parry_data = /datum/block_parry_data
+	/// If we're a pugilist
+	var/datum/block_parry_data/pugilist_block_parry_data = /datum/block_parry_data/unarmed/pugilist
 	// Blocking
 	/// The item the user is actively blocking with if any.
 	var/obj/item/active_block_item
@@ -55,13 +59,18 @@
 	var/obj/effect/abstract/parry/parry_visual_effect
 	/// world.time of last parry end
 	var/parry_end_time_last = 0
+	/// Last autoparry
+	var/last_autoparry = 0
 	/// Successful parries within the current parry cycle. It's a list of efficiency percentages.
 	var/list/successful_parries
+	/// Current parry counterattacks. Makes sure we can only counterattack someone once per parry.
+	var/list/successful_parry_counterattacks
 
 	var/confused = 0	//Makes the mob move in random directions.
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
 
+	var/last_special = 0 //Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 	var/timeofdeath = 0
 
 	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
@@ -83,7 +92,6 @@
 
 	var/bloodcrawl = 0 //0 No blood crawling, BLOODCRAWL for bloodcrawling, BLOODCRAWL_EAT for crawling+mob devour
 	var/holder = null //The holder for blood crawling
-	var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
 	var/limb_destroyer = 0 //1 Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
 
 	var/mob_size = MOB_SIZE_HUMAN
@@ -97,6 +105,7 @@
 	var/smoke_delay = 0 //used to prevent spam with smoke reagent reaction on mob.
 
 	var/bubble_icon = "default" //what icon the mob uses for speechbubbles
+	var/health_doll_icon //if this exists AND the normal sprite is bigger than 32x32, this is the replacement icon state (because health doll size limitations). the icon will always be screen_gen.dmi
 
 	var/last_bumped = 0
 	var/unique_name = 0 //if a mob's name should be appended with an id when created e.g. Mob (666)
@@ -157,9 +166,6 @@
 	var/combatmessagecooldown = 0
 
 	var/incomingstammult = 1
-	var/bufferedstam = 0
-	var/stambuffer = 20
-	var/stambufferregentime
 
 	//Sprint buffer---
 	var/sprint_buffer = 42					//Tiles
@@ -168,3 +174,13 @@
 	var/sprint_buffer_regen_last = 0		//last world.time this was regen'd for math.
 	var/sprint_stamina_cost = 0.70			//stamina loss per tile while insufficient sprint buffer.
 	//---End
+
+	// Stamina Buffer---
+	/// Our stamina buffer
+	var/stamina_buffer
+	/// Stamina buffer regen modifier
+	var/stamina_buffer_regen_mod = 1
+	/// Last time stamina buffer regen was done
+	var/stamina_buffer_regen_last = 0
+	/// Last time we used stamina buffer
+	var/stamina_buffer_last_use = 0

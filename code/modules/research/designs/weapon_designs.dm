@@ -324,8 +324,7 @@
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells. Harmless to other organic life."
 	id = "flora_gun"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 2000, /datum/material/glass = 500)
-	reagents_list = list(/datum/reagent/radium = 20)
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 500, /datum/material/uranium = 2000)
 	build_path = /obj/item/gun/energy/floragun
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE | DEPARTMENTAL_FLAG_SCIENCE
@@ -458,23 +457,23 @@
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/laser_shield
-	name = "Laser Resistant Riot Shield"
-	desc = "An advanced riot shield made of darker glasses to prevent laser fire from passing through."
+/datum/design/energy_shield
+	name = "Energy Resistant Shield"
+	desc = "An ablative shield designed to stop energy-based attacks dead in their tracks, but shatter easily against kinetic blows."
 	id = "laser_shield"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/plastic = 4000, /datum/material/silver = 800, /datum/material/titanium = 600, /datum/material/plasma = 5000)
-	build_path = /obj/item/shield/riot/laser_proof
+	build_path = /obj/item/shield/riot/energy_proof
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/bullet_shield
-	name = "Bullet Resistant Riot Shield"
-	desc = "An advanced riot shield made bullet resistant plastics and heavy metals to protect against projectile harm."
+/datum/design/kinetic_shield
+	name = "Kinetic Resistant Shield"
+	desc = "An advanced polymer shield designed to stop kinetic-based attacks with ease, but splinter apart against energy-based attacks."
 	id = "bullet_shield"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/silver = 2000, /datum/material/titanium = 1200, /datum/material/plastic = 2500)
-	build_path = /obj/item/shield/riot/bullet_proof
+	build_path = /obj/item/shield/riot/kinetic_proof
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 

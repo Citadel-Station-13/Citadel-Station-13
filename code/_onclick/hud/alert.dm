@@ -149,6 +149,27 @@
 	name = "Choking (Plasma)"
 	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
 	icon_state = "too_much_tox"
+
+/obj/screen/alert/not_enough_ch4
+	name = "Choking (No CH4)"
+	desc = "You're not getting enough methane. Find some good air before you pass out!"
+	icon_state = "not_enough_ch4"
+
+/obj/screen/alert/too_much_ch4
+	name = "Choking (CH4)"
+	desc = "There's too much methane in the air, and you're breathing it in! Find some good air before you pass out!"
+	icon_state = "too_much_ch4"
+
+/obj/screen/alert/not_enough_ch3br
+	name = "Choking (No CH3Br)"
+	desc = "You're not getting enough methyl bromide. Find some good air before you pass out!"
+	icon_state = "not_enough_tox"
+
+/obj/screen/alert/too_much_ch3br
+	name = "Choking (CH3Br)"
+	desc = "There's highly toxic methyl bromide in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
+	icon_state = "too_much_tox"
+
 //End gas alerts
 
 
@@ -199,7 +220,7 @@
 
 /obj/screen/alert/shiver
 	name = "Shivering"
-	desc = "You're shivering! Get somewhere warmer and take off any insulating clothing like a space suit." 
+	desc = "You're shivering! Get somewhere warmer and take off any insulating clothing like a space suit."
 
 /obj/screen/alert/lowpressure
 	name = "Low Pressure"
@@ -285,6 +306,39 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(CHECK_MOBILITY(L, MOBILITY_MOVE))
 		return L.resist_fire() //I just want to start a flame in your hearrrrrrtttttt.
 
+/obj/screen/alert/give // information set when the give alert is made
+	icon_state = "default"
+	var/mob/living/carbon/giver
+	var/obj/item/receiving
+
+/**
+  * Handles assigning most of the variables for the alert that pops up when an item is offered
+  *
+  * Handles setting the name, description and icon of the alert and tracking the person giving
+  * and the item being offered, also registers a signal that removes the alert from anyone who moves away from the giver
+  * Arguments:
+  * * taker - The person receiving the alert
+  * * giver - The person giving the alert and item
+  * * receiving - The item being given by the giver
+  */
+/obj/screen/alert/give/proc/setup(mob/living/carbon/taker, mob/living/carbon/giver, obj/item/receiving)
+	name = "[giver] is offering [receiving]"
+	desc = "[giver] is offering [receiving]. Click this alert to take it."
+	icon_state = "template"
+	cut_overlays()
+	add_overlay(receiving)
+	src.receiving = receiving
+	src.giver = giver
+	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/removeAlert)
+
+/obj/screen/alert/give/proc/removeAlert()
+	to_chat(usr, "<span class='warning'>You moved out of range of [giver]!</span>")
+	usr.clear_alert("[giver]")
+
+/obj/screen/alert/give/Click(location, control, params)
+	. = ..()
+	var/mob/living/carbon/C = usr
+	C.take(giver, receiving)
 
 //ALIENS
 

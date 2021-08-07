@@ -184,13 +184,13 @@
 	var/beakerContents[0]
 	if(beaker)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents.Add(list(list("name" = R.name, "id" = ckey(R.name), "volume" = R.volume))) // list in a list because Byond merges the first list...
+			beakerContents.Add(list(list("name" = R.name, "id" = R.type, "volume" = R.volume))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beakerContents
 
 	var/bufferContents[0]
 	if(reagents.total_volume)
 		for(var/datum/reagent/N in reagents.reagent_list)
-			bufferContents.Add(list(list("name" = N.name, "id" = ckey(N.name), "volume" = N.volume))) // ^
+			bufferContents.Add(list(list("name" = N.name, "id" = N.type, "volume" = N.volume))) // ^
 	data["bufferContents"] = bufferContents
 
 	//Calculated at init time as it never changes
@@ -216,7 +216,7 @@
 	if(action == "transfer")
 		if(!beaker)
 			return FALSE
-		var/reagent = GLOB.name2reagent[params["id"]]
+		var/reagent = text2path(params["id"])
 		var/amount = text2num(params["amount"])
 		var/to_container = params["to"]
 		// Custom amount
@@ -257,9 +257,9 @@
 		var/amount = text2num(params["amount"])
 		if(amount == null)
 			amount = text2num(input(usr,
-				"Max 10. Buffer content will be split evenly.",
+				"Max 20. Buffer content will be split evenly.",
 				"How many to make?", 1))
-		amount = clamp(round(amount), 0, 10)
+		amount = clamp(round(amount), 0, 20)
 		if (amount <= 0)
 			return FALSE
 		// Get units per item
@@ -386,7 +386,7 @@
 
 	if(action == "analyze")
 		// var/datum/reagent/R = GLOB.name2reagent[params["id"]]
-		var/reagent = GLOB.name2reagent[params["id"]]
+		var/reagent = text2path(params["id"])
 		var/datum/reagent/R = GLOB.chemical_reagents_list[reagent]
 		if(R)
 			var/state = "Unknown"
@@ -405,7 +405,7 @@
 				analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = R.purity, "inverseRatioF" = initial(R.inverse_chem_val), "purityE" = initial(Rcr.PurityMin), "minTemp" = initial(Rcr.OptimalTempMin), "maxTemp" = initial(Rcr.OptimalTempMax), "eTemp" = initial(Rcr.ExplodeTemp), "pHpeak" = pHpeakCache)
 			else
 				fermianalyze = FALSE
-				analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
+				analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = R.purity)
 			screen = "analyze"
 			return TRUE
 

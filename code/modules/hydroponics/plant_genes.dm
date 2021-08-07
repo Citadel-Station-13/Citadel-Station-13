@@ -89,6 +89,12 @@
 /datum/plant_gene/core/potency/apply_stat(obj/item/seeds/S)
 	S.potency = value
 
+/datum/plant_gene/core/instability
+	name = "Stability"
+	value = 10
+
+/datum/plant_gene/core/instability/apply_stat(obj/item/seeds/S)
+	S.instability = value
 
 /datum/plant_gene/core/weed_rate
 	name = "Weed Growth Rate"
@@ -413,6 +419,15 @@
 		else
 			to_chat(user, "<span class='warning'>You need five lengths of cable to make a [G] battery!</span>")
 
+/datum/plant_gene/trait/eyes
+	name = "Oculary Mimicry"
+	/// Our googly eyes appearance.
+	var/mutable_appearance/googly
+
+/datum/plant_gene/trait/eyes/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
+	googly = mutable_appearance('icons/obj/hydroponics/harvest.dmi', "eyes")
+	googly.appearance_flags = RESET_COLOR
+	G.add_overlay(googly)
 
 /datum/plant_gene/trait/stinging
 	name = "Hypodermic Prickles"

@@ -40,7 +40,6 @@
 #define SKILL_TRAIN_ATTACK_OBJ	"train_attack_obj"
 #define SKILL_STAMINA_COST		"stamina_cost" //Influences the stamina cost from weapon usage.
 #define SKILL_THROW_STAM_COST	"throw_stam_cost"
-#define SKILL_COMBAT_MODE		"combat_mode" //The user must have combat mode on.
 #define SKILL_SANITY			"sanity" //Is the skill affected by (in)sanity.
 #define SKILL_INTELLIGENCE		"intelligence" //Is the skill affected by brain damage?
 

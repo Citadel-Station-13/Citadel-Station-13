@@ -46,6 +46,33 @@
 			I = getPAIHologramIcon(I)
 	return I
 
+//Prompts this client for custom holoform parameters.
+/proc/user_interface_custom_holoform(client/C)
+	var/datum/preferences/target_prefs = C.prefs
+	if(target_prefs.path)
+		var/list/characters = list()
+		var/savefile/S = new /savefile(target_prefs.path)
+		if(S)
+			var/name
+			var/max_save_slots = C.prefs.max_save_slots
+			for(var/i=1, i<=max_save_slots, i++)
+				S.cd = "/character[i]"
+				S["real_name"] >> name
+				if(name)
+					characters[name] = i
+			var/chosen_name = input(C, "Which character do you wish to use as your appearance.") as anything in characters
+			if(chosen_name)
+				if(C.prefs.last_custom_holoform > world.time - CUSTOM_HOLOFORM_DELAY)
+					to_chat(C.mob, "<span class='boldwarning'>You are attempting to set your custom holoform too fast!</span>")
+					return
+				target_prefs = new(C)
+				if(!target_prefs.load_character(characters[chosen_name], TRUE))
+					target_prefs = C.prefs
+
+	ASSERT(target_prefs)
+	//In the future, maybe add custom path allowances a la admin create outfit but for now..
+	return generate_custom_holoform_from_prefs(target_prefs, null, null, TRUE, TRUE)
+
 //Errors go to user.
 /proc/generate_custom_holoform_from_prefs_safe(datum/preferences/prefs, mob/user)
 	if(user)
@@ -53,10 +80,3 @@
 			to_chat(user, "<span class='boldwarning'>You are attempting to set your custom holoform too fast!</span>")
 			return
 	return generate_custom_holoform_from_prefs(prefs, null, null, TRUE, TRUE)
-
-//Prompts this client for custom holoform parameters.
-/proc/user_interface_custom_holoform(client/C)
-	var/datum/preferences/target_prefs = C.prefs
-	ASSERT(target_prefs)
-	//In the future, maybe add custom path allowances a la admin create outfit but for now..
-	return generate_custom_holoform_from_prefs_safe(target_prefs, C.mob)

@@ -1,5 +1,11 @@
+GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't really work on borgos
+	/obj/item/clothing/head/helmet/space,
+	/obj/item/clothing/head/welding,
+	/obj/item/clothing/head/chameleon/broken \
+	)))
+
 /mob/living/silicon/robot/attackby(obj/item/I, mob/living/user)
-	if(hat_offset != INFINITY && user.a_intent == INTENT_HELP && is_type_in_typecache(I, equippable_hats))
+	if(hat_offset != INFINITY && user.a_intent == INTENT_HELP && is_type_in_typecache(I, GLOB.blacklisted_borg_hats))
 		if(!(I.slot_flags & ITEM_SLOT_HEAD))
 			to_chat(user, "<span class='warning'>You can't quite fit [I] onto [src]'s head.</span>")
 			return
@@ -76,6 +82,18 @@
 	if(!opened)
 		return ..()
 
+/mob/living/silicon/robot/disarm_shove(mob/living/carbon/human/H)
+	visible_message(span_danger("[src]'s motors grind as they are shoved by [H]!"))
+	vtec_disable(10 SECONDS)
+
+/mob/living/silicon/robot/proc/vtec_disable(time)
+	var/datum/status_effect/vtec_disabled/V = has_status_effect(/datum/status_effect/vtec_disabled)
+	if(V)
+		V.duration = max(V.duration, world.time + time)
+	else
+		apply_status_effect(/datum/status_effect/vtec_disabled, time)
+	update_movespeed()
+
 /mob/living/silicon/robot/fire_act()
 	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
 		IgniteMob()
@@ -85,12 +103,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	switch(severity)
-		if(1)
-			Paralyze(160)
-		if(2)
-			Paralyze(60)
-
+	Paralyze(10 + severity/1.2)
 
 /mob/living/silicon/robot/emag_act(mob/user)
 	if(user == src)//To prevent syndieborgs from emagging themselves

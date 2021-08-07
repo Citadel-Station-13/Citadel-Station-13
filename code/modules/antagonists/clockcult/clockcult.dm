@@ -5,7 +5,7 @@
 	antagpanel_category = "Clockcult"
 	job_rank = ROLE_SERVANT_OF_RATVAR
 	antag_moodlet = /datum/mood_event/cult
-	skill_modifiers = list(/datum/skill_modifier/job/level/wiring)
+	skill_modifiers = list(/datum/skill_modifier/job/level/wiring, /datum/skill_modifier/job/level/dwarfy/blacksmithing)
 	var/datum/action/innate/hierophant/hierophant_network = new
 	threat = 3
 	var/datum/team/clockcult/clock_team
@@ -15,13 +15,16 @@
 	var/ignore_holy_water = FALSE
 
 /datum/antagonist/clockcult/silent
+	name = "Silent Clock Cultist"
 	silent = TRUE
 	show_in_antagpanel = FALSE //internal
 
 /datum/antagonist/clockcult/neutered
+	name = "Neutered Clock Cultist"
 	neutered = TRUE
 
 /datum/antagonist/clockcult/neutered/traitor
+	name = "Traitor Clock Cultist"
 	ignore_eligibility_check = TRUE
 	ignore_holy_water = TRUE
 	show_in_roundend = FALSE
@@ -136,7 +139,7 @@
 	current.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
 	if(G && G.active && ishuman(current))
-		current.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
+		current.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -ANTAG_LAYER))
 
 /datum/antagonist/clockcult/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/current = owner.current
@@ -185,7 +188,7 @@
 
 
 /datum/antagonist/clockcult/admin_add(datum/mind/new_owner,mob/admin)
-	add_servant_of_ratvar(new_owner.current, TRUE)
+	add_servant_of_ratvar(new_owner.current, TRUE, override_type = type)
 	message_admins("[key_name_admin(admin)] has made [new_owner.current] into a servant of Ratvar.")
 	log_admin("[key_name(admin)] has made [new_owner.current] into a servant of Ratvar.")
 

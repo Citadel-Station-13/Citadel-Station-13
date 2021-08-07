@@ -28,6 +28,7 @@
 
 //Called when temperature is above a certain threshold, or if purity is too low.
 /datum/chemical_reaction/proc/FermiExplode(datum/reagents/R0, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
+	set waitfor = FALSE
 	if (Exploding == TRUE)
 		return
 
@@ -93,10 +94,8 @@
 		e.set_up(round((volume/28)*(pH-9)), T, 0, 0)
 		e.start()
 
-	if(!ImpureTot == 0) //If impure, v.small emp (0.6 or less)
-		ImpureTot *= volume
-		var/empVol = clamp(volume/10, 0, 15)
-		empulse(T, empVol, ImpureTot/10, 1)
+	if(ImpureTot) //If impure, v.small emp (0.6 or less)
+		empulse(T, ImpureTot, 1)
 
 	my_atom.reagents.clear_reagents() //just in case
 	return
@@ -178,7 +177,7 @@
 	name = "Sucubus milk"
 	id = /datum/reagent/fermi/breast_enlarger
 	results = list(/datum/reagent/fermi/breast_enlarger = 8)
-	required_reagents = list(/datum/reagent/medicine/salglu_solution = 2, /datum/reagent/consumable/milk = 1, /datum/reagent/medicine/synthflesh = 2, /datum/reagent/silicon = 5)
+	required_reagents = list(/datum/reagent/medicine/salglu_solution = 1, /datum/reagent/consumable/milk = 1, /datum/reagent/medicine/synthflesh = 2, /datum/reagent/silicon = 3, /datum/reagent/drug/aphrodisiac = 3)
 	mix_message = "the reaction gives off a mist of milk."
 	//FermiChem vars:
 	OptimalTempMin 			= 200
@@ -218,7 +217,7 @@
 	name = "Incubus draft"
 	id = /datum/reagent/fermi/penis_enlarger
 	results = list(/datum/reagent/fermi/penis_enlarger = 8)
-	required_reagents = list(/datum/reagent/blood = 5, /datum/reagent/medicine/synthflesh = 2, /datum/reagent/carbon = 5, /datum/reagent/medicine/salglu_solution = 2)
+	required_reagents = list(/datum/reagent/blood = 5, /datum/reagent/medicine/synthflesh = 2, /datum/reagent/carbon = 2, /datum/reagent/drug/aphrodisiac = 2, /datum/reagent/medicine/salglu_solution = 1)
 	mix_message = "the reaction gives off a spicy mist."
 	//FermiChem vars:
 	OptimalTempMin 			= 200
@@ -385,7 +384,7 @@
 	name = "Furranium"
 	id = /datum/reagent/fermi/furranium
 	results = list(/datum/reagent/fermi/furranium = 5)
-	required_reagents = list(/datum/reagent/pax/catnip = 1, /datum/reagent/silver = 2, /datum/reagent/medicine/salglu_solution = 2)
+	required_reagents = list(/datum/reagent/drug/aphrodisiac = 1, /datum/reagent/moonsugar = 1, /datum/reagent/silver = 2, /datum/reagent/medicine/salglu_solution = 1)
 	mix_message = "You think you can hear a howl come from the beaker."
 	//FermiChem vars:
 	OptimalTempMin 	= 350
@@ -405,6 +404,10 @@
 
 //FOR INSTANT REACTIONS - DO NOT MULTIPLY LIMIT BY 10.
 //There's a weird rounding error or something ugh.
+
+/datum/chemical_reaction/fermi/furranium/organic
+	id = "furranium_organic"
+	required_reagents = list(/datum/reagent/drug/aphrodisiac = 1, /datum/reagent/pax/catnip = 1, /datum/reagent/silver = 2, /datum/reagent/medicine/salglu_solution = 1)
 
 //Nano-b-gone
 /datum/chemical_reaction/fermi/nanite_b_gone//done test
@@ -592,19 +595,20 @@
 /datum/chemical_reaction/fermi/zeolites
 	name = "Zeolites"
 	id = /datum/reagent/fermi/zeolites
-	results = list(/datum/reagent/fermi/zeolites = 5) //We make a lot!
+	results = list(/datum/reagent/fermi/zeolites = 5) //We make a lot! - But it's now somewhat dangerous, and needs a bit of gold to catalyze the reaction
 	required_reagents = list(/datum/reagent/medicine/potass_iodide = 1, /datum/reagent/aluminium = 1, /datum/reagent/silicon = 1, /datum/reagent/oxygen = 1)
 	//FermiChem vars:
-	OptimalTempMin 	= 300
-	OptimalTempMax 	= 900
-	ExplodeTemp 	= 1000 //check to see overflow doesn't happen!
-	OptimalpHMin 	= 4.0
-	OptimalpHMax 	= 6.0
-	ReactpHLim 		= 4
+	OptimalTempMin 	= 500
+	OptimalTempMax 	= 750
+	ExplodeTemp 	= 850
+	OptimalpHMin 	= 4.8
+	OptimalpHMax 	= 7
+	ReactpHLim 		= 5
 	//CatalystFact 	= 0
-	CurveSharpT 	= 4
-	CurveSharppH 	= 0
-	ThermicConstant = 0
-	HIonRelease 	= 0.01
-	RateUpLim 		= 15
+	CurveSharpT 	= 1.5
+	CurveSharppH 	= 3
+	ThermicConstant = 1
+	HIonRelease 	= -0.15
+	RateUpLim 		= 4
+	PurityMin 		= 0.5 //Good luck!
 	FermiChem 		= TRUE

@@ -22,7 +22,6 @@
 	speak_emote = list("chitters")
 	mouse_opacity = 2
 	density = TRUE
-	ventcrawler = VENTCRAWLER_ALWAYS
 	verb_say = "chitters"
 	verb_ask = "chitters inquisitively"
 	verb_exclaim = "chitters loudly"
@@ -36,6 +35,8 @@
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("A banana spider has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_dnr_observers = TRUE)
+
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/banana_spider/attack_ghost(mob/user)
 	if(key)			//please stop using src. without a good reason.

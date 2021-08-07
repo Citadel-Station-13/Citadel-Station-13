@@ -95,7 +95,7 @@
 		inject_chem(R.type, occupant)
 		open_machine()
 	//Is this too much? Cit specific
-	if(severity == EMP_HEAVY)
+	if(severity >= 80)
 		var/chem = pick(available_chems)
 		available_chems -= chem
 		available_chems += get_random_reagent_id()
@@ -145,8 +145,8 @@
 
 /obj/machinery/sleeper/ui_state(mob/user)
 	if(controls_inside)
-		return GLOB.contained_state
-	return GLOB.default_state
+		return GLOB.default_state
+	return GLOB.notcontained_state
 
 /obj/machinery/sleeper/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -209,6 +209,7 @@
 		data["occupant"]["fireLoss"] = mob_occupant.getFireLoss()
 		data["occupant"]["cloneLoss"] = mob_occupant.getCloneLoss()
 		data["occupant"]["brainLoss"] = mob_occupant.getOrganLoss(ORGAN_SLOT_BRAIN)
+		data["occupant"]["is_robotic_organism"] = HAS_TRAIT(mob_occupant, TRAIT_ROBOTIC_ORGANISM)
 		data["occupant"]["reagents"] = list()
 		if(mob_occupant.reagents && mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)

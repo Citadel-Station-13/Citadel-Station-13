@@ -3,7 +3,7 @@
 	name = "reinforced floor"
 	desc = "Extremely sturdy."
 	icon_state = "engine"
-	thermal_conductivity = 0.0025
+	thermal_conductivity = 0.025
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
 	footstep = FOOTSTEP_PLATING
@@ -43,6 +43,9 @@
 			return TRUE
 		if(floor_tile)
 			new floor_tile(src, 2)
+		for(var/obj/effect/decal/cleanable/C in src)
+			if(C.wiped_by_floor_change)
+				qdel(C)
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return TRUE
 

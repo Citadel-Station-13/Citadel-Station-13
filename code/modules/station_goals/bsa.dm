@@ -41,9 +41,8 @@
 	icon_state = "power_box"
 
 /obj/machinery/bsa/back/multitool_act(mob/living/user, obj/item/I)
-	if(istype(I, /obj/item/multitool)) // Only this multitool type has a data buffer.
-		var/obj/item/multitool/M = I
-		M.buffer = src
+	if(I.tool_behaviour == TOOL_MULTITOOL) // Lies and deception
+		I.buffer = src
 		to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
 	else
 		to_chat(user, "<span class='warning'>[I] has no data buffer!</span>")
@@ -55,9 +54,8 @@
 	icon_state = "emitter_center"
 
 /obj/machinery/bsa/front/multitool_act(mob/living/user, obj/item/I)
-	if(istype(I, /obj/item/multitool)) // Only this multitool type has a data buffer.
-		var/obj/item/multitool/M = I
-		M.buffer = src
+	if(I.tool_behaviour == TOOL_MULTITOOL) // Lies and deception
+		I.buffer = src
 		to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
 	else
 		to_chat(user, "<span class='warning'>[I] has no data buffer!</span>")
@@ -71,16 +69,15 @@
 	var/obj/machinery/bsa/front/front
 
 /obj/machinery/bsa/middle/multitool_act(mob/living/user, obj/item/I)
-	if(istype(I, /obj/item/multitool)) // Only this multitool type has a data buffer.
-		var/obj/item/multitool/M = I
-		if(M.buffer)
-			if(istype(M.buffer, /obj/machinery/bsa/back))
-				back = M.buffer
-				M.buffer = null
+	if(I.tool_behaviour == TOOL_MULTITOOL) // Lies and deception
+		if(I.buffer)
+			if(istype(I.buffer, /obj/machinery/bsa/back))
+				back = I.buffer
+				I.buffer = null
 				to_chat(user, "<span class='notice'>You link [src] with [back].</span>")
-			else if(istype(M.buffer, /obj/machinery/bsa/front))
-				front = M.buffer
-				M.buffer = null
+			else if(istype(I.buffer, /obj/machinery/bsa/front))
+				front = I.buffer
+				I.buffer = null
 				to_chat(user, "<span class='notice'>You link [src] with [front].</span>")
 		else
 			to_chat(user, "<span class='warning'>[I]'s data buffer is empty!</span>")

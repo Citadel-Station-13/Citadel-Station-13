@@ -7,7 +7,7 @@
 		if(QDELETED(I))
 			continue
 		if(!.[I.type])
-			.[I.type] = new /datum/numbered_display(I, 1)
+			.[I.type] = new /datum/numbered_display(I, 1, src)
 		else
 			var/datum/numbered_display/ND = .[I.type]
 			ND.number++
@@ -20,6 +20,8 @@
 	. = list()
 	var/list/accessible_contents = accessible_items()
 	var/adjusted_contents = length(accessible_contents)
+	var/obj/screen/storage/close/ui_close
+	var/obj/screen/storage/boxes/ui_boxes
 
 	//Numbered contents display
 	var/list/datum/numbered_display/numbered_contents
@@ -60,12 +62,13 @@
 		for(var/obj/O in accessible_items())
 			if(QDELETED(O))
 				continue
-			O.mouse_opacity = MOUSE_OPACITY_OPAQUE //This is here so storage items that spawn with contents correctly have the "click around item to equip"
-			O.screen_loc = "[cx]:[screen_pixel_x],[cy]:[screen_pixel_y]"
+			var/obj/screen/storage/item_holder/D = new(null, src, O)
+			D.mouse_opacity = MOUSE_OPACITY_OPAQUE //This is here so storage items that spawn with contents correctly have the "click around item to equip"
+			D.screen_loc = "[cx]:[screen_pixel_x],[cy]:[screen_pixel_y]"
 			O.maptext = ""
 			O.layer = ABOVE_HUD_LAYER
 			O.plane = ABOVE_HUD_PLANE
-			. += O
+			. += D
 			cx++
 			if(cx - screen_start_x >= columns)
 				cx = screen_start_x
@@ -78,6 +81,9 @@
   */
 /datum/component/storage/proc/orient2hud_volumetric(mob/user, maxcolumns)
 	. = list()
+	var/obj/screen/storage/left/ui_left
+	var/obj/screen/storage/continuous/ui_continuous
+	var/obj/screen/storage/close/ui_close
 
 	// Generate ui_item_blocks for missing ones and render+orient.
 	var/list/atom/contents = accessible_items()
@@ -128,14 +134,10 @@
 	var/first = TRUE
 	var/row = 1
 
-	LAZYINITLIST(ui_item_blocks)
-
 	for(var/i in percentage_by_item)
 		I = i
 		var/percent = percentage_by_item[I]
-		if(!ui_item_blocks[I])
-			ui_item_blocks[I] = new /obj/screen/storage/volumetric_box/center(null, src, I)
-		var/obj/screen/storage/volumetric_box/center/B = ui_item_blocks[I]
+		var/obj/screen/storage/volumetric_box/center/B = new /obj/screen/storage/volumetric_box/center(null, src, I)
 		var/pixels_to_use = overrun? MINIMUM_PIXELS_PER_ITEM : max(using_horizontal_pixels * percent, MINIMUM_PIXELS_PER_ITEM)
 		var/addrow = FALSE
 		if(CEILING(pixels_to_use, 1) >= FLOOR(horizontal_pixels - current_pixel - VOLUMETRIC_STORAGE_EDGE_PADDING, 1))
@@ -143,25 +145,17 @@
 			addrow = TRUE
 
 		// now that we have pixels_to_use, place our thing and add it to the returned list.
-		B.screen_loc = I.screen_loc = "[screen_start_x]:[round(current_pixel + (pixels_to_use * 0.5) + (first? 0 : VOLUMETRIC_STORAGE_ITEM_PADDING), 1)],[screen_start_y+row-1]:[screen_pixel_y]"
+		B.screen_loc = "[screen_start_x]:[round(current_pixel + (pixels_to_use * 0.5) + (first? 0 : VOLUMETRIC_STORAGE_ITEM_PADDING), 1)],[screen_start_y+row-1]:[screen_pixel_y]"
 		// add the used pixels to pixel after we place the object
 		current_pixel += pixels_to_use + (first? 0 : VOLUMETRIC_STORAGE_ITEM_PADDING)
 		first = FALSE		//apply padding to everything after this
 
 		// set various things
 		B.set_pixel_size(pixels_to_use)
-		B.layer = VOLUMETRIC_STORAGE_BOX_LAYER
-		B.plane = VOLUMETRIC_STORAGE_BOX_PLANE
 		B.name = I.name
-
-		I.mouse_opacity = MOUSE_OPACITY_ICON
-		I.maptext = ""
-		I.layer = VOLUMETRIC_STORAGE_ITEM_LAYER
-		I.plane = VOLUMETRIC_STORAGE_ITEM_PLANE
 
 		// finally add our things.
 		. += B.on_screen_objects()
-		. += I
 
 		// go up a row if needed
 		if(addrow)
@@ -185,18 +179,19 @@
 /**
   * Shows our UI to a mob.
   */
-/datum/component/storage/proc/ui_show(mob/M, set_screen_size = TRUE)
+/datum/component/storage/proc/ui_show(mob/M)
 	if(!M.client)
 		return FALSE
+	if(ui_by_mob[M] || LAZYFIND(is_using, M))
+		// something went horribly wrong
+		// hide first
+		ui_hide(M)
 	var/list/cview = getviewsize(M.client.view)
 	// in tiles
 	var/maxallowedscreensize = cview[1]-8
-	if(set_screen_size)
-		current_maxscreensize = maxallowedscreensize
-	else if(current_maxscreensize)
-		maxallowedscreensize = current_maxscreensize
 	// we got screen size, register signal
 	RegisterSignal(M, COMSIG_MOB_CLIENT_LOGOUT, .proc/on_logout, override = TRUE)
+	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/on_logout, override = TRUE)
 	if(M.active_storage != src)
 		if(M.active_storage)
 			M.active_storage.ui_hide(M)
@@ -204,10 +199,14 @@
 	LAZYOR(is_using, M)
 	if(!M.client?.prefs?.no_tetris_storage && volumetric_ui())
 		//new volumetric ui bay-style
-		M.client.screen |= orient2hud_volumetric(M, maxallowedscreensize)
+		var/list/objects = orient2hud_volumetric(M, maxallowedscreensize)
+		M.client.screen |= objects
+		ui_by_mob[M] = objects
 	else
 		//old ui
-		M.client.screen |= orient2hud_legacy(M, maxallowedscreensize)
+		var/list/objects = orient2hud_legacy(M, maxallowedscreensize)
+		M.client.screen |= objects
+		ui_by_mob[M] = objects
 	return TRUE
 
 /**
@@ -236,8 +235,10 @@
 /datum/component/storage/proc/ui_hide(mob/M)
 	if(!M.client)
 		return TRUE
-	UnregisterSignal(M, COMSIG_MOB_CLIENT_LOGOUT)
-	M.client.screen -= list(ui_boxes, ui_close, ui_left, ui_continuous) + get_ui_item_objects_hide(M)
+	UnregisterSignal(M, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_CLIENT_LOGOUT))
+	M.client.screen -= ui_by_mob[M]
+	var/list/objects = ui_by_mob[M]
+	QDEL_LIST(objects)
 	if(M.active_storage == src)
 		M.active_storage = null
 	LAZYREMOVE(is_using, M)
@@ -251,47 +252,25 @@
 	return (storage_flags & STORAGE_LIMIT_VOLUME) && (length(real_location.contents) <= MAXIMUM_VOLUMETRIC_ITEMS) && !display_numerical_stacking
 
 /**
-  * Gets the ui item objects to ui_hide.
-  */
-/datum/component/storage/proc/get_ui_item_objects_hide(mob/M)
-	if(!volumetric_ui() || M.client?.prefs?.no_tetris_storage)
-		var/atom/real_location = real_location()
-		return real_location.contents
-	else
-		. = list()
-		for(var/i in ui_item_blocks)
-			// get both the box and the item
-			. += ui_item_blocks[i]
-			. += i
-
-/**
   * Gets our ui_boxes, making it if it doesn't exist.
   */
 /datum/component/storage/proc/get_ui_boxes()
-	if(!ui_boxes)
-		ui_boxes = new(null, src)
-	return ui_boxes
+	return new /obj/screen/storage/boxes(null, src)
 
 /**
   * Gets our ui_left, making it if it doesn't exist.
   */
 /datum/component/storage/proc/get_ui_left()
-	if(!ui_left)
-		ui_left = new(null, src)
-	return ui_left
+	return new /obj/screen/storage/left(null, src)
 
 /**
   * Gets our ui_close, making it if it doesn't exist.
   */
 /datum/component/storage/proc/get_ui_close()
-	if(!ui_close)
-		ui_close = new(null, src)
-	return ui_close
+	return new /obj/screen/storage/close(null, src)
 
 /**
   * Gets our ui_continuous, making it if it doesn't exist.
   */
 /datum/component/storage/proc/get_ui_continuous()
-	if(!ui_continuous)
-		ui_continuous = new(null, src)
-	return ui_continuous
+	return new /obj/screen/storage/continuous(null, src)

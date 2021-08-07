@@ -21,12 +21,11 @@
 	var/can_block_projectiles = FALSE		//can't block guns
 	var/lethal_cost = 400			//10000/400*20 = 500. decent enough?
 	var/lethal_damage = 20
-	var/lethal_stam_cost = 4
 	var/stun_cost = 333				//10000/333*25 = 750. stunbatons are at time of writing 10000/1000*49 = 490.
 	var/stun_status_effect = STATUS_EFFECT_ELECTROSTAFF			//a small slowdown effect
 	var/stun_stamdmg = 40
 	var/stun_status_duration = 25
-	var/stun_stam_cost = 3.5
+	var/stam_cost = 3.5
 	var/wielded = FALSE // track wielded status on item
 
 // haha security desword time /s
@@ -46,15 +45,15 @@
 	// no attacking while blocking
 	block_lock_attacking = TRUE
 
-	parry_time_windup = 1
-	parry_time_active = 5
+	parry_time_windup = 0
+	parry_time_active = 7
 	parry_time_spindown = 0
 	parry_time_spindown_visual_override = 1
-	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK | PARRY_LOCK_ATTACKING		// no attacking while parrying
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK		// no attacking while parrying
 	parry_time_perfect = 0
 	parry_time_perfect_leeway = 0.5
-	parry_efficiency_perfect = 100
-	parry_imperfect_falloff_percent = 1
+	parry_efficiency_perfect = 85
+	parry_imperfect_falloff_percent = 10
 	parry_imperfect_falloff_percent_override = list(
 		TEXT_ATTACK_TYPE_PROJECTILE = 45		// really crappy vs projectiles
 	)
@@ -62,9 +61,7 @@
 		TEXT_ATTACK_TYPE_PROJECTILE = 1		// extremely harsh window for projectiles
 	)
 	// not extremely punishing to fail, but no spamming the parry.
-	parry_cooldown = 2.5 SECONDS
 	parry_failed_stagger_duration = 1.5 SECONDS
-	parry_failed_clickcd_duration = 1 SECONDS
 
 /obj/item/electrostaff/Initialize(mapload)
 	. = ..()
@@ -171,7 +168,7 @@
 		turn_off()
 
 /obj/item/electrostaff/attack(mob/living/target, mob/living/user)
-	if(IS_STAMCRIT(user))//CIT CHANGE - makes it impossible to baton in stamina softcrit
+	if(IS_STAMCRIT(user) || !user.UseStaminaBuffer(stam_cost))//CIT CHANGE - makes it impossible to baton in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted to use [src] properly.</span>")//CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
 	if(on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
@@ -186,13 +183,11 @@
 	if(user.a_intent != INTENT_HARM)
 		if(stun_act(target, user, null, return_list))
 			user.do_attack_animation(target)
-			user.adjustStaminaLossBuffered(stun_stam_cost)
 		return
 	else if(!harm_act(target, user, null, return_list))
 		return ..()		//if you can't fry them just beat them with it
 	else		//we did harm act them
 		user.do_attack_animation(target)
-		user.adjustStaminaLossBuffered(lethal_stam_cost)
 
 /obj/item/electrostaff/proc/stun_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE, list/block_return = list())
 	var/stunforce = block_calculate_resultant_damage(stun_stamdmg, block_return)
@@ -213,8 +208,7 @@
 	target.apply_effect(EFFECT_STUTTER, stunforce)
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
-		target.lastattacker = user.real_name
-		target.lastattackerckey = user.ckey
+		target.set_last_attacker(user)
 		target.visible_message("<span class='danger'>[user] has shocked [target] with [src]!</span>", \
 								"<span class='userdanger'>[user] has shocked you with [src]!</span>")
 		log_combat(user, target, "stunned with an electrostaff")
@@ -240,8 +234,7 @@
 	target.adjustFireLoss(lethal_force)		//good against ointment spam
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
-		target.lastattacker = user.real_name
-		target.lastattackerckey = user.ckey
+		target.set_last_attacker(user)
 		target.visible_message("<span class='danger'>[user] has seared [target] with [src]!</span>", \
 								"<span class='userdanger'>[user] has seared you with [src]!</span>")
 		log_combat(user, target, "burned with an electrostaff")
@@ -261,4 +254,4 @@
 	if (!(. & EMP_PROTECT_SELF))
 		turn_off()
 		if(!iscyborg(loc))
-			deductcharge(1000 / severity, TRUE, FALSE)
+			deductcharge(severity*10, TRUE, FALSE)

@@ -545,9 +545,9 @@
 	dwidth = 11;
 	height = 18;
 	name = "Delta emergency shuttle";
-	width = 30;
+	port_direction = 4;
 	preferred_direction = 2;
-	port_direction = 4
+	width = 30
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,

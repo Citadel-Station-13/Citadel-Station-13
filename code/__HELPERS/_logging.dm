@@ -32,7 +32,7 @@
 #define testing(msg)
 #endif
 
-#ifdef UNIT_TESTS
+#if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
 /proc/log_test(text)
 	WRITE_LOG(GLOB.test_log, text)
 	SEND_TEXT(world.log, text)
@@ -85,10 +85,6 @@
 /proc/log_attack(text)
 	if (CONFIG_GET(flag/log_attack))
 		WRITE_LOG(GLOB.world_attack_log, "ATTACK: [text]")
-
-/proc/log_wounded(text)
-	if (CONFIG_GET(flag/log_attack))
-		WRITE_LOG(GLOB.world_attack_log, "WOUND: [text]")
 
 /proc/log_manifest(ckey, datum/mind/mind,mob/body, latejoin = FALSE)
 	if (CONFIG_GET(flag/log_manifest))
@@ -195,6 +191,10 @@
 /proc/log_mapping(text)
 	WRITE_LOG(GLOB.world_map_error_log, text)
 
+/proc/log_perf(list/perf_info)
+	. = "[perf_info.Join(",")]\n"
+	WRITE_LOG_NO_FORMAT(GLOB.perf_log, .)
+
 /proc/log_reagent(text)
 	WRITE_LOG(GLOB.reagent_log, text)
 
@@ -231,10 +231,10 @@
 		src_object = window.locked_by.src_object
 	// Insert src_object info
 	if(src_object)
-		entry += "\nUsing: [src_object.type] [REF(src_object)]"
+		entry += "Using: [src_object.type] [REF(src_object)]"
 	// Insert message
 	if(message)
-		entry += "\n[message]"
+		entry += "[message]"
 	WRITE_LOG(GLOB.tgui_log, entry)
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */

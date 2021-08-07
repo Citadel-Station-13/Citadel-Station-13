@@ -6,6 +6,7 @@
 	gender = PLURAL //"That's some lava."
 	baseturfs = /turf/open/lava //lava all the way down
 	slowdown = 2
+	dirt_buildup_allowed = FALSE
 
 	light_range = 2
 	light_power = 0.75

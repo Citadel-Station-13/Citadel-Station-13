@@ -41,7 +41,7 @@
 		if(M.reagents)
 			var/trans = 0
 			if(!infinite)
-				trans = reagents.trans_to(M, amount_per_transfer_from_this)
+				trans = reagents.trans_to(M, amount_per_transfer_from_this, log = "hypospray injection")
 			else
 				trans = reagents.copy_to(M, amount_per_transfer_from_this)
 
@@ -391,10 +391,12 @@
 		if(!affecting)
 			to_chat(user, "<span class='warning'>The limb is missing!</span>")
 			return
-		if(affecting.status != BODYPART_ORGANIC)
+		if(!affecting.is_organic_limb())
 			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
 			return
-
+		else if(!affecting.is_organic_limb(FALSE) && mode != HYPO_INJECT)
+			to_chat(user, "<span class='notice'>Biomechanical limbs can only be treated via their integrated injection port, not via spraying!</span>")
+			return
 	//Always log attemped injections for admins
 	var/contained = vial.reagents.log_list()
 	log_combat(user, L, "attemped to inject", src, addition="which had [contained]")
@@ -425,7 +427,7 @@
 
 	var/fraction = min(vial.amount_per_transfer_from_this/vial.reagents.total_volume, 1)
 	vial.reagents.reaction(L, method, fraction)
-	vial.reagents.trans_to(target, vial.amount_per_transfer_from_this)
+	vial.reagents.trans_to(target, vial.amount_per_transfer_from_this, log = "hypospray fill")
 	var/long_sound = vial.amount_per_transfer_from_this >= 15
 	playsound(loc, long_sound ? 'sound/items/hypospray_long.ogg' : pick('sound/items/hypospray.ogg','sound/items/hypospray2.ogg'), 50, 1, -1)
 	to_chat(user, "<span class='notice'>You [fp_verb] [vial.amount_per_transfer_from_this] units of the solution. The hypospray's cartridge now contains [vial.reagents.total_volume] units.</span>")

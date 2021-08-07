@@ -22,6 +22,10 @@ LINEN BINS
 	dog_fashion = /datum/dog_fashion/head/ghost
 	var/list/dream_messages = list("white")
 
+/obj/item/bedsheet/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/bed_tuckable, 0, 0, 0)
+
 /obj/item/bedsheet/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))
 		..()
@@ -41,7 +45,7 @@ LINEN BINS
 	return
 
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
-	if(!(flags_1 & HOLOGRAM_1) && (istype(I, /obj/item/wirecutters) || I.get_sharpness()))
+	if(!(flags_1 & HOLOGRAM_1) && (I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness()))
 		var/obj/item/stack/sheet/cloth/C = new (get_turf(src), 3)
 		transfer_fingerprints_to(C)
 		C.add_fingerprint(user)
@@ -243,7 +247,7 @@ LINEN BINS
 
 /obj/item/bedsheet/random/Initialize()
 	..()
-	var/type = pick(typesof(/obj/item/bedsheet) - list(/obj/item/bedsheet/random, /obj/item/bedsheet/chameleon))
+	var/type = pick(typesof(/obj/item/bedsheet) - (list(/obj/item/bedsheet/random, /obj/item/bedsheet/chameleon) + typesof(/obj/item/bedsheet/unlockable)))
 	new type(loc)
 	return INITIALIZE_HINT_QDEL
 
@@ -257,8 +261,31 @@ LINEN BINS
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/bedsheet
 	chameleon_action.chameleon_name = "Bedsheet"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/bedsheet/chameleon, /obj/item/bedsheet/random), only_root_path = TRUE)
+	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/bedsheet/chameleon, /obj/item/bedsheet/random, /obj/item/bedsheet/unlockable), only_root_path = FALSE)
 	chameleon_action.initialize_disguises()
+
+//unlockable bedsheets
+/obj/item/bedsheet/unlockable
+	name = "unlockable bedsheet"
+	desc = "this shouldn't be here!"
+
+//janitor: clean 100 messes with mop as janitor
+/obj/item/bedsheet/unlockable/janitor
+	name = "janitor bedsheet"
+	desc = "A white bedsheet, with a warning sign on the front."
+	icon_state = "sheetjanitor"
+
+//cook: use microwave 100 times properly (contents must make one good item) as cook
+/obj/item/bedsheet/unlockable/cook
+	name = "cook bedsheet"
+	desc = "A grey bedsheet, with a microwave on the front."
+	icon_state = "sheetcook"
+
+//miner: redeem 100,000 mining points
+/obj/item/bedsheet/unlockable/miner
+	name = "miner bedsheet"
+	desc = "A red and black bedsheet. It seems to be made with goliath hide."
+	icon_state = "sheetminer"
 
 //bedsheet bin
 /obj/structure/bedsheetbin

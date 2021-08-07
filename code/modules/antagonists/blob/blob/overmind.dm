@@ -88,7 +88,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/camera/blob/proc/is_valid_turf(turf/T)
 	var/area/A = get_area(T)
-	if((A && !A.blob_allowed) || !T || !is_station_level(T.z) || isspaceturf(T))
+	if((A && !(A.area_flags & BLOBS_ALLOWED)) || !T || !is_station_level(T.z) || isspaceturf(T))
 		return FALSE
 	return TRUE
 
@@ -131,7 +131,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 		var/area/Ablob = get_area(T)
 
-		if(!Ablob.blob_allowed)
+		if(!(Ablob.area_flags & BLOBS_ALLOWED))
 			continue
 
 		if(!(ROLE_BLOB in L.faction))
@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		for(var/area/A in GLOB.sortedAreas)
 			if(!(A.type in GLOB.the_station_areas))
 				continue
-			if(!A.blob_allowed)
+			if(!(A.area_flags & BLOBS_ALLOWED))
 				continue
 			A.color = blobstrain.color
 			A.name = "blob"
@@ -277,3 +277,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
 	if(!B)
 		mind.add_antag_datum(/datum/antagonist/blob)
+
+//the same but it's forced to be allowed by default as cameras usually don't allow emoting
+/mob/camera/blob/emote(act, m_type=1, message = null, intentional = FALSE, forced = TRUE)
+	. = ..()

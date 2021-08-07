@@ -162,8 +162,8 @@
 		return TRUE
 
 
-/obj/machinery/power/smes/default_deconstruction_crowbar(obj/item/crowbar/C)
-	if(istype(C) && terminal)
+/obj/machinery/power/smes/default_deconstruction_crowbar(obj/item/C)
+	if(C.tool_behaviour == TOOL_CROWBAR && terminal)
 		to_chat(usr, "<span class='warning'>You must first remove the power terminal!</span>")
 		return FALSE
 
@@ -407,7 +407,7 @@
 	outputting = output_attempt
 	output_level = rand(0, output_level_max)
 	input_level = rand(0, input_level_max)
-	charge -= 1e6/severity
+	charge -= 10000*severity
 	if (charge < 0)
 		charge = 0
 	update_icon()

@@ -55,11 +55,12 @@
 	crate.update_icon()
 	var/obj/structure/closet/supplypod/pod = make_pod()
 	crate.forceMove(pod)
-	new /obj/effect/abstract/DPtarget(LZ, pod)
+	new /obj/effect/pod_landingzone(LZ, pod)
 
 ///Handles the creation of the pod, in case it needs to be modified beforehand
 /datum/round_event/stray_cargo/proc/make_pod()
-	var/obj/structure/closet/supplypod/S = new
+	var/area/pod_storage_area = locate(/area/centcom/supplypod/podStorage) in GLOB.sortedAreas
+	var/obj/structure/closet/supplypod/S = new(pick(get_area_turfs(pod_storage_area))) //Lets not runtime
 	return S
 
 ///Picks an area that wouldn't risk critical damage if hit by a pod explosion
@@ -70,12 +71,12 @@
 		var/list/safe_area_types = typecacheof(list(
 		/area/ai_monitored/turret_protected/ai,
 		/area/ai_monitored/turret_protected/ai_upload,
-		/area/engine,
+		/area/engineering,
 		/area/shuttle)
 		)
 
 		///Subtypes from the above that actually should explode.
-		var/list/unsafe_area_subtypes = typecacheof(list(/area/engine/break_room))
+		var/list/unsafe_area_subtypes = typecacheof(list(/area/engineering/break_room))
 		allowed_areas = make_associative(GLOB.the_station_areas) - safe_area_types + unsafe_area_subtypes
 	var/list/possible_areas = typecache_filter_list(GLOB.sortedAreas,allowed_areas)
 	if (length(possible_areas))
@@ -94,6 +95,7 @@
 
 ///Apply the syndicate pod skin
 /datum/round_event/stray_cargo/syndicate/make_pod()
-	var/obj/structure/closet/supplypod/S = new
+	var/area/pod_storage_area = locate(/area/centcom/supplypod/podStorage) in GLOB.sortedAreas
+	var/obj/structure/closet/supplypod/S = new(pick(get_area_turfs(pod_storage_area))) //Lets not runtime
 	S.setStyle(STYLE_SYNDICATE)
 	return S

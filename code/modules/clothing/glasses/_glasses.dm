@@ -311,7 +311,7 @@
 		to_chat(user, "<span class = 'danger'>Install a new flash in [src]!</span>")
 
 /obj/item/clothing/glasses/sunglasses/stunglasses/attackby(obj/item/W,mob/user)
-	if (istype(W,/obj/item/screwdriver))
+	if (W.tool_behaviour == TOOL_SCREWDRIVER)
 		if (installed)
 			installed.forceMove(get_turf(src))
 			to_chat(user, "<span class = 'notice'>You remove [installed] from [src].</span>")
@@ -358,6 +358,12 @@
 	..()
 	user.cure_blind("blindfold_[REF(src)]")
 
+/obj/item/clothing/glasses/fakeblindfold
+	name = "thin blindfold"
+	desc = "Covers the eyes, but not thick enough to obscure vision. Mostly for aesthetic."
+	icon_state = "blindfoldwhite"
+	item_state = "blindfoldwhite"
+
 /obj/item/clothing/glasses/sunglasses/blindfold/white
 	name = "blind personnel blindfold"
 	desc = "Indicates that the wearer suffers from blindness."
@@ -373,7 +379,7 @@
 
 /obj/item/clothing/glasses/sunglasses/blindfold/white/update_icon(mob/living/carbon/human/user)
 	if(ishuman(user) && !colored_before)
-		add_atom_colour("#[user.eye_color]", FIXED_COLOUR_PRIORITY)
+		add_atom_colour("#[user.left_eye_color]", FIXED_COLOUR_PRIORITY)
 		colored_before = TRUE
 
 /obj/item/clothing/glasses/sunglasses/blindfold/white/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
@@ -382,7 +388,7 @@
 		var/mob/living/carbon/human/H = loc
 		var/mutable_appearance/M = mutable_appearance('icons/mob/clothing/eyes.dmi', "blindfoldwhite")
 		M.appearance_flags |= RESET_COLOR
-		M.color = "#[H.eye_color]"
+		M.color = "#[H.left_eye_color]"
 		. += M
 
 /obj/item/clothing/glasses/sunglasses/big

@@ -21,6 +21,9 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 /obj/item/hilbertshotel/Initialize()
 	. = ..()
 	//Load templates
+	INVOKE_ASYNC(src, .proc/prepare_rooms)
+
+/obj/item/hilbertshotel/proc/prepare_rooms()
 	hotelRoomTemp = new()
 	hotelRoomTempEmpty = new()
 	hotelRoomTempLore = new()
@@ -326,9 +329,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	icon_state = "hilbertshotel"
 	requires_power = FALSE
 	has_gravity = TRUE
-	noteleport = TRUE
-	hidden = TRUE
-	unique = FALSE
+	area_flags = NOTELEPORT | HIDDEN_AREA
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	ambientsounds = list('sound/ambience/servicebell.ogg')
 	var/roomnumber = 0
@@ -405,8 +406,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	icon_state = "hilbertshotel"
 	requires_power = FALSE
 	has_gravity = TRUE
-	noteleport = TRUE
-	hidden = TRUE
+	area_flags = NOTELEPORT | HIDDEN_AREA
 
 /obj/item/abstracthotelstorage
 	anchored = TRUE

@@ -59,12 +59,13 @@
 		one though."
 	icon_state = "default_human_l_arm"
 	attack_verb = list("slapped", "punched")
-	max_damage = 50
+	max_damage = 150
+	disable_threshold = 75
 	max_stamina_damage = 50
 	body_zone = BODY_ZONE_L_ARM
 	body_part = ARM_LEFT
 	aux_icons = list(BODY_ZONE_PRECISE_L_HAND = HANDS_PART_LAYER, "l_hand_behind" = BODY_BEHIND_LAYER)
-	body_damage_coeff = 0.75
+	body_damage_coeff = 0.25
 	held_index = 1
 	px_x = -6
 	px_y = 0
@@ -75,11 +76,11 @@
 		return BODYPART_DISABLED_PARALYSIS
 	return ..()
 
-/obj/item/bodypart/l_arm/set_disabled(new_disabled)
+/obj/item/bodypart/l_arm/set_disabled(new_disabled, silent = FALSE)
 	. = ..()
 	if(!.)
 		return
-	if(owner.stat < UNCONSCIOUS)
+	if(owner.stat < UNCONSCIOUS && !silent)
 		switch(disabled)
 			if(BODYPART_DISABLED_DAMAGE)
 				owner.emote("scream")
@@ -120,11 +121,12 @@
 		among humans missing their right arm."
 	icon_state = "default_human_r_arm"
 	attack_verb = list("slapped", "punched")
-	max_damage = 50
+	max_damage = 150
+	disable_threshold = 75
 	body_zone = BODY_ZONE_R_ARM
 	body_part = ARM_RIGHT
 	aux_icons = list(BODY_ZONE_PRECISE_R_HAND = HANDS_PART_LAYER, "r_hand_behind" = BODY_BEHIND_LAYER)
-	body_damage_coeff = 0.75
+	body_damage_coeff = 0.25
 	held_index = 2
 	px_x = 6
 	px_y = 0
@@ -136,11 +138,11 @@
 		return BODYPART_DISABLED_PARALYSIS
 	return ..()
 
-/obj/item/bodypart/r_arm/set_disabled(new_disabled)
+/obj/item/bodypart/r_arm/set_disabled(new_disabled, silent = FALSE)
 	. = ..()
 	if(!.)
 		return
-	if(owner.stat < UNCONSCIOUS)
+	if(owner.stat < UNCONSCIOUS && !silent)
 		switch(disabled)
 			if(BODYPART_DISABLED_DAMAGE)
 				owner.emote("scream")
@@ -182,10 +184,11 @@
 		luck. In this instance, it probably would not have helped."
 	icon_state = "default_human_l_leg"
 	attack_verb = list("kicked", "stomped")
-	max_damage = 50
+	max_damage = 150
+	disable_threshold = 75
 	body_zone = BODY_ZONE_L_LEG
 	body_part = LEG_LEFT
-	body_damage_coeff = 0.75
+	body_damage_coeff = 0.25
 	px_x = -2
 	px_y = 12
 	stam_heal_tick = STAM_RECOVERY_LIMB
@@ -196,16 +199,17 @@
 		return BODYPART_DISABLED_PARALYSIS
 	return ..()
 
-/obj/item/bodypart/l_leg/set_disabled(new_disabled)
+/obj/item/bodypart/l_leg/set_disabled(new_disabled, silent = FALSE)
 	. = ..()
 	if(!. || owner.stat >= UNCONSCIOUS)
 		return
-	switch(disabled)
-		if(BODYPART_DISABLED_DAMAGE)
-			owner.emote("scream")
-			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-		if(BODYPART_DISABLED_PARALYSIS)
-			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+	if(!silent)
+		switch(disabled)
+			if(BODYPART_DISABLED_DAMAGE)
+				owner.emote("scream")
+				to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+			if(BODYPART_DISABLED_PARALYSIS)
+				to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 
 /obj/item/bodypart/l_leg/digitigrade
 	name = "left digitigrade leg"
@@ -239,10 +243,11 @@
 	// alternative spellings of 'pokey' are availible
 	icon_state = "default_human_r_leg"
 	attack_verb = list("kicked", "stomped")
-	max_damage = 50
+	max_damage = 150
+	disable_threshold = 75
 	body_zone = BODY_ZONE_R_LEG
 	body_part = LEG_RIGHT
-	body_damage_coeff = 0.75
+	body_damage_coeff = 0.25
 	px_x = 2
 	px_y = 12
 	max_stamina_damage = 50
@@ -253,16 +258,17 @@
 		return BODYPART_DISABLED_PARALYSIS
 	return ..()
 
-/obj/item/bodypart/r_leg/set_disabled(new_disabled)
+/obj/item/bodypart/r_leg/set_disabled(new_disabled, silent = FALSE)
 	. = ..()
 	if(!. || owner.stat >= UNCONSCIOUS)
 		return
-	switch(disabled)
-		if(BODYPART_DISABLED_DAMAGE)
-			owner.emote("scream")
-			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-		if(BODYPART_DISABLED_PARALYSIS)
-			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+	if(!silent)
+		switch(disabled)
+			if(BODYPART_DISABLED_DAMAGE)
+				owner.emote("scream")
+				to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+			if(BODYPART_DISABLED_PARALYSIS)
+				to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 
 /obj/item/bodypart/r_leg/digitigrade
 	name = "right digitigrade leg"

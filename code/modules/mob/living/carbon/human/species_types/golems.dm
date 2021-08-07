@@ -1,7 +1,7 @@
 /datum/species/golem
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
-	id = "iron golem"
+	id = SPECIES_GOLEM
 	species_traits = list(NOBLOOD,MUTCOLORS,NO_UNDERWEAR,NOGENITALS,NOAROUSAL)
 	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_HYPOTHERMIA_IMMUNE,TRAIT_HYPERTHERMIA_IMMUNE)
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
@@ -33,7 +33,7 @@
 	var/special_name_chance = 5
 	var/owner //dobby is a free golem
 
-	species_type = "golem"
+	species_category = SPECIES_CATEGORY_GOLEM
 
 /datum/species/golem/random_name(gender,unique,lastname)
 	var/golem_surname = pick(GLOB.golem_names)
@@ -644,7 +644,7 @@
 	limbs_id = "clockgolem"
 	info_text = "<span class='bold alloy'>As a </span><span class='bold brass'>Clockwork Golem</span><span class='bold alloy'>, you are faster than other types of golems, and are capable of using guns. On death, you will break down into scrap.</span>"
 	specific_heat = 0.38
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES,NOGENITALS,NOAROUSAL)
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES,NOGENITALS,NOAROUSAL,ROBOTIC_LIMBS)
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_HYPOTHERMIA_IMMUNE,TRAIT_HYPERTHERMIA_IMMUNE)
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
@@ -686,6 +686,10 @@
 
 /datum/species/golem/clockwork/no_scrap //These golems are created through the herald's beacon and leave normal corpses on death.
 	id = "clockwork golem servant"
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES,NOSTOMACH,NOLIVER,NOGENITALS,NOAROUSAL,NOTRANSSTING,ROBOTIC_LIMBS,HAS_BONE)
+	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
+	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_NOHUNGER,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
+	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	armor = 15 //Balance reasons make this armor weak
 	no_equip = list()
 	nojumpsuit = FALSE
@@ -694,6 +698,8 @@
 	dangerous_existence = TRUE
 	random_eligible = FALSE
 	info_text = "<span class='bold alloy'>As a </span><span class='bold brass'>Clockwork Golem Servant</span><span class='bold alloy'>, you are faster than other types of golems, and are capable of using guns.</span>" //warcult golems leave a corpse
+	gib_types = list(/obj/effect/gibspawner/ipc, /obj/effect/gibspawner/ipc/bodypartless)
+
 
 /datum/species/golem/cloth
 	name = "Cloth Golem"
@@ -822,11 +828,11 @@
 
 /datum/species/golem/plastic/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.ventcrawler = VENTCRAWLER_NUDE
+	C.AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /datum/species/golem/plastic/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.ventcrawler = initial(C.ventcrawler)
+	C.RemoveElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /datum/species/golem/bronze
 	name = "Bronze Golem"

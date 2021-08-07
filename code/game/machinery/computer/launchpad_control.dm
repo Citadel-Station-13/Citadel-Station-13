@@ -23,11 +23,10 @@
 	if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(!multitool_check_buffer(user, W))
 			return
-		var/obj/item/multitool/M = W
-		if(M.buffer && istype(M.buffer, /obj/machinery/launchpad))
+		if(W.buffer && istype(W.buffer, /obj/machinery/launchpad))
 			if(LAZYLEN(launchpads) < maximum_pads)
-				launchpads |= M.buffer
-				M.buffer = null
+				launchpads |= W.buffer
+				W.buffer = null
 				to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
 			else
 				to_chat(user, "<span class='warning'>[src] cannot handle any more connections!</span>")

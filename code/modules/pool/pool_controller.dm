@@ -151,7 +151,7 @@
 						return
 				reagents.clear_reagents()
 				// This also reacts them. No nitroglycerin deathpools, sorry gamers :(
-				W.reagents.trans_to(reagents, max_beaker_transfer)
+				W.reagents.trans_to(reagents, max_beaker_transfer, log = "pool fill from reagent container")
 				user.visible_message("<span class='notice'>[src] makes a slurping noise.</span>", "<span class='notice'>All of the contents of [W] are quickly suctioned out by the machine!</span")
 				updateUsrDialog()
 				var/list/reagent_names = list()
@@ -247,7 +247,7 @@
 			if(POOL_COOL)
 				target_temperature = 290
 			if(POOL_FREEZING)
-				target_temperature = 270
+				target_temperature = T0C
 		var/heat = clamp((water_gas_holder.return_temperature() - target_temperature) * water_gas_holder.heat_capacity(),-10000,10000)
 		water_gas_holder.set_temperature(water_gas_holder.return_temperature() + heat/water_gas_holder.heat_capacity())
 		use_power(abs(heat))
@@ -302,10 +302,10 @@
 
 /obj/machinery/pool/controller/proc/update_temp()
 	if(mist_state)
-		if(temperature < POOL_SCALDING)
+		if(temperature < POOL_WARM)
 			mist_off()
 	else
-		if(temperature == POOL_SCALDING)
+		if(temperature >= POOL_WARM)
 			mist_on()
 	update_icon()
 

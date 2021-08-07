@@ -259,7 +259,7 @@
 			. += "-digitigrade[BP.use_digitigrade]"
 		if(BP.animal_origin)
 			. += "-[BP.animal_origin]"
-		if(BP.status == BODYPART_ORGANIC)
+		if(BP.is_organic_limb(FALSE))
 			. += "-organic"
 		else
 			. += "-robotic"

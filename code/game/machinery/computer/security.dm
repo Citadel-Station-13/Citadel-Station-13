@@ -264,6 +264,8 @@ What a mess.*/
 		active1 = null
 	if(!( GLOB.data_core.security.Find(active2) ))
 		active2 = null
+	if(!authenticated && href_list["choice"] != "Log In") // logging in is the only action you can do if not logged in
+		return
 	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || hasSiliconAccessInArea(usr) || IsAdminGhost(usr))
 		usr.set_machine(src)
 		switch(href_list["choice"])
@@ -769,7 +771,7 @@ What a mess.*/
 		return
 
 	for(var/datum/data/record/R in GLOB.data_core.security)
-		if(prob(10/severity))
+		if(prob(severity/10))
 			switch(rand(1,8))
 				if(1)
 					if(prob(10))
@@ -794,7 +796,7 @@ What a mess.*/
 					R.fields["photo_side"] = G.fields["photo_side"]
 			continue
 
-		else if(prob(1))
+		else if(prob(severity/80))
 			qdel(R)
 			continue
 

@@ -8,7 +8,7 @@
 	alpha = 75
 
 /obj/structure/destructible/clockwork/trap/trigger/pressure_sensor/mech/Crossed(atom/movable/AM)
-
+	. = ..()
 	if(!istype(AM,/obj/mecha/))
 		return
 

@@ -29,10 +29,10 @@
 	if(istype(tool, /obj/item/bodypart))
 		var/obj/item/bodypart/BP = tool
 		if(ismonkey(target))// monkey patient only accept organic monkey limbs
-			if(BP.status == BODYPART_ROBOTIC || BP.animal_origin != MONKEY_BODYPART)
+			if(BP.is_robotic_limb() || BP.animal_origin != MONKEY_BODYPART)
 				to_chat(user, "<span class='warning'>[BP] doesn't match the patient's morphology.</span>")
 				return -1
-		if(BP.status != BODYPART_ROBOTIC)
+		if(!BP.is_robotic_limb())
 			organ_rejection_dam = 10
 			if(ishuman(target))
 				if(BP.animal_origin)

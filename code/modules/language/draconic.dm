@@ -18,3 +18,4 @@
 	)
 	icon_state = "lizard"
 	default_priority = 90
+	chooseable_roundstart = TRUE

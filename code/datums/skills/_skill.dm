@@ -171,6 +171,7 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 				continue
 			max_assoc = levels[lvl-1]
 			levels["[max_assoc] +[max_assoc_start++]"] = value
+			continue
 		levels[key] = value
 
 /datum/skill/level/sanitize_value(new_value)

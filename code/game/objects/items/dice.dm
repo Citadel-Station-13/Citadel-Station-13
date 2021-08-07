@@ -1,38 +1,37 @@
-/obj/item/storage/box/dice
+/*****************************Dice Bags********************************/
+
+/obj/item/storage/dice
 	name = "bag of dice"
 	desc = "Contains all the luck you'll ever need."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "dicebag"
+	w_class = WEIGHT_CLASS_SMALL
+	var/list/special_die = list(
+				/obj/item/dice/d1,
+				/obj/item/dice/d2,
+				/obj/item/dice/fudge,
+				/obj/item/dice/d6/space,
+				/obj/item/dice/d00,
+				/obj/item/dice/eightbd20,
+				/obj/item/dice/fourdd6,
+				/obj/item/dice/d100
+				)
 
-/obj/item/storage/box/dice/Initialize()
-	. = ..()
-	var/special_die = pick("1","2","fudge","space","00","8bd20","4dd6","100")
-	if(special_die == "1")
-		new /obj/item/dice/d1(src)
-	if(special_die == "2")
-		new /obj/item/dice/d2(src)
+/obj/item/storage/dice/PopulateContents()
 	new /obj/item/dice/d4(src)
 	new /obj/item/dice/d6(src)
-	if(special_die == "fudge")
-		new /obj/item/dice/fudge(src)
-	if(special_die == "space")
-		new /obj/item/dice/d6/space(src)
 	new /obj/item/dice/d8(src)
 	new /obj/item/dice/d10(src)
-	if(special_die == "00")
-		new /obj/item/dice/d00(src)
 	new /obj/item/dice/d12(src)
 	new /obj/item/dice/d20(src)
-	if(special_die == "8bd20")
-		new /obj/item/dice/eightbd20(src)
-	if(special_die == "4dd6")
-		new /obj/item/dice/fourdd6(src)
-	if(special_die == "100")
-		new /obj/item/dice/d100(src)
+	var/picked = pick(special_die)
+	new picked(src)
 
-/obj/item/storage/box/dice/suicide_act(mob/user)
+/obj/item/storage/dice/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (OXYLOSS)
+
+/*****************************Dice********************************/
 
 /obj/item/dice //depreciated d6, use /obj/item/dice/d6 if you actually want a d6
 	name = "die"

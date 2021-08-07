@@ -38,7 +38,7 @@
 		dat += "<A href='byond://?src=[REF(src)];school=[APPRENTICE_ROBELESS]'>Robeless</A><BR>"
 		dat += "<I>Your apprentice is training to cast spells without their robes. They know Knock and Mindswap.</I><BR>"
 		dat += "<A href='byond://?src=[REF(src)];school=[APPRENTICE_MARTIAL]'>Martial Artist</a><BR>"
-		dat += "<I>Your apprentice is training in ancient martial arts. They know the Plasmafist and Nuclear Fist.</I><BR>"
+		dat += "<I>Your apprentice is training in ancient martial arts. They know an Inner Mantra and the Nuclear Fist technique.</I><BR>"
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return

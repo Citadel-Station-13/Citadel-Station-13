@@ -16,7 +16,7 @@
 	var/datum/nanite_extra_setting/program = extra_settings[NES_PROGRAM_OVERWRITE]
 	var/datum/nanite_extra_setting/cloud = extra_settings[NES_CLOUD_OVERWRITE]
 	for(var/mob/M in orange(host_mob, 5))
-		if(SEND_SIGNAL(M, COMSIG_NANITE_IS_STEALTHY))
+		if(SEND_SIGNAL(M, COMSIG_NANITE_CHECK_VIRAL_PREVENTION))
 			continue
 		switch(program.get_value())
 			if("Overwrite")
@@ -207,24 +207,23 @@
 
 //Syncs the nanites with the cumulative current mob's access level. Can potentially wipe existing access.
 /datum/nanite_program/access/on_trigger(comm_message)
-	var/list/new_access = list()
-	var/obj/item/current_item
-	current_item = host_mob.get_active_held_item()
-	if(current_item)
-		new_access += current_item.GetAccess()
-	current_item = host_mob.get_inactive_held_item()
-	if(current_item)
-		new_access += current_item.GetAccess()
+	var/list/potential_items = list()
+
+	potential_items += host_mob.get_active_held_item()
+	potential_items += host_mob.get_inactive_held_item()
+
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
-		current_item = H.wear_id
-		if(current_item)
-			new_access += current_item.GetAccess()
+		potential_items += H.wear_id
 	else if(isanimal(host_mob))
+		potential_items += host_mob.pulling
 		var/mob/living/simple_animal/A = host_mob
-		current_item = A.access_card
-		if(current_item)
-			new_access += current_item.GetAccess()
+		potential_items += A.access_card
+
+	var/list/new_access = list()
+	for(var/obj/item/I in potential_items)
+		new_access += I.GetAccess()
+
 	access = new_access
 
 /datum/nanite_program/spreading
@@ -253,6 +252,7 @@
 		//this will potentially take over existing nanites!
 		infectee.AddComponent(/datum/component/nanites, 10)
 		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
+		SEND_SIGNAL(infectee, COMSIG_NANITE_SET_CLOUD, nanites.cloud_id)
 		infectee.investigate_log("was infected by spreading nanites by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
 
 /datum/nanite_program/nanite_sting
@@ -277,13 +277,15 @@
 		//unlike with Infective Exo-Locomotion, this can't take over existing nanites, because Nanite Sting only targets non-hosts.
 		infectee.AddComponent(/datum/component/nanites, 5)
 		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
+		SEND_SIGNAL(infectee, COMSIG_NANITE_SET_CLOUD, nanites.cloud_id)
 		infectee.investigate_log("was infected by a nanite cluster by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
 		to_chat(infectee, "<span class='warning'>You feel a tiny prick.</span>")
 
 /datum/nanite_program/mitosis
 	name = "Mitosis"
-	desc = "The nanites gain the ability to self-replicate, using bluespace to power the process. Becomes more effective the more nanites are already in the host.\
-			The replication has also a chance to corrupt the nanite programming due to copy faults - cloud sync is highly recommended."
+	desc = "The nanites gain the ability to self-replicate, using bluespace to power the process. Becomes more effective the more nanites are already in the host; \
+			For every 50 nanite volume in the host, the production rate is increased by 0.5. The replication has also a chance to corrupt the nanite programming \
+			due to copy faults - constant cloud sync is highly recommended."
 	use_rate = 0
 	rogue_types = list(/datum/nanite_program/toxic)
 
@@ -306,16 +308,14 @@
 /datum/nanite_program/dermal_button/register_extra_settings()
 	extra_settings[NES_SENT_CODE] = new /datum/nanite_extra_setting/number(1, 1, 9999)
 	extra_settings[NES_BUTTON_NAME] = new /datum/nanite_extra_setting/text("Button")
-	extra_settings[NES_ICON] = new /datum/nanite_extra_setting/type("power", list("one","two","three","four","five","plus","minus","power"))
-	extra_settings[NES_COLOR] = new /datum/nanite_extra_setting/type("green", list("green","red","yellow","blue"))
+	extra_settings[NES_ICON] = new /datum/nanite_extra_setting/type("power", list("blank","one","two","three","four","five","plus","minus","exclamation","question","cross","info","heart","skull","brain","brain_damage","injection","blood","shield","reaction","network","power","radioactive","electricity","magnetism","scan","repair","id","wireless","say","sleep","bomb"))
 
 /datum/nanite_program/dermal_button/enable_passive_effect()
 	. = ..()
 	var/datum/nanite_extra_setting/bn_name = extra_settings[NES_BUTTON_NAME]
 	var/datum/nanite_extra_setting/bn_icon = extra_settings[NES_ICON]
-	var/datum/nanite_extra_setting/bn_color = extra_settings[NES_COLOR]
 	if(!button)
-		button = new(src, bn_name.get_value(), bn_icon.get_value(), bn_color.get_value())
+		button = new(src, bn_name.get_value(), bn_icon.get_value())
 	button.target = host_mob
 	button.Grant(host_mob)
 
@@ -339,14 +339,77 @@
 	name = "Button"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
-	button_icon_state = "power_green"
+	button_icon_state = "nanite_power"
 	var/datum/nanite_program/dermal_button/program
 
-/datum/action/innate/nanite_button/New(datum/nanite_program/dermal_button/_program, _name, _icon, _color)
+/datum/action/innate/nanite_button/New(datum/nanite_program/dermal_button/_program, _name, _icon)
 	..()
 	program = _program
 	name = _name
-	button_icon_state = "[_icon]_[_color]"
+	button_icon_state = "nanite_[_icon]"
 
 /datum/action/innate/nanite_button/Activate()
 	program.press()
+
+/datum/nanite_program/lockout
+	unique = TRUE
+	var/emp_disable_time = 0
+	var/shock_disable_time = 0
+	var/minor_shock_disable_time = 0
+	var/disable_time = 0
+	var/lock_console = FALSE
+	var/lock_virus = FALSE
+	var/lock_host = FALSE
+
+/datum/nanite_program/lockout/enable_passive_effect()
+	. = ..()
+	if(lock_console)
+		RegisterSignal(src, COMSIG_NANITE_INTERNAL_CONSOLE_LOCK_CHECK, .proc/check_antivirus)
+	if(lock_host)
+		RegisterSignal(src, COMSIG_NANITE_INTERNAL_HOST_LOCK_CHECK, .proc/check_antivirus)
+	if(lock_virus)
+		RegisterSignal(src, COMSIG_NANITE_INTERNAL_VIRAL_PREVENTION_CHECK, .proc/check_antivirus)
+
+/datum/nanite_program/lockout/disable_passive_effect()
+	. = ..()
+	UnregisterSignal(src, list(
+		COMSIG_NANITE_INTERNAL_HOST_LOCK_CHECK,
+		COMSIG_NANITE_INTERNAL_CONSOLE_LOCK_CHECK,
+		COMSIG_NANITE_INTERNAL_VIRAL_PREVENTION_CHECK
+	))
+
+/datum/nanite_program/lockout/on_emp(severity)
+	// no parent call on purpose
+	disable_time = max(disable_time, world.time + emp_disable_time)
+
+/datum/nanite_program/lockout/on_shock(shock_damage)
+	// no parent call on purpose
+	disable_time = max(disable_time, world.time + shock_disable_time)
+
+/datum/nanite_program/lockout/on_minor_shock()
+	// no parent call on purpose
+	disable_time = max(disable_time, world.time + minor_shock_disable_time)
+
+/datum/nanite_program/lockout/proc/check_antivirus()
+	return (world.time <= disable_time)? NANITE_CHANGES_LOCKED : NONE
+
+/datum/nanite_program/lockout/antiviral
+	name = "Enhanced Error Correction"
+	desc = "Through expensive CRC checking and replication, prevents viral takeover of the nanite strain's control sectors. \
+	Temporarily disabled by EMPs and shocks."
+	use_rate = 0.5
+	emp_disable_time = 3 MINUTES
+	shock_disable_time = 45 SECONDS
+	minor_shock_disable_time = 10 SECONDS
+	lock_virus = TRUE
+
+/datum/nanite_program/lockout/hostile_lockdown
+	name = "Hostile Lockdown"
+	desc = "Constantly encrypts and scrambles the nanites' control memory, preventing consoles from modifying them and also locking out conscious host control of the nanite strain, if the host happens to be capable of that. \
+	Temporarily disabled by EMPs and shocks."
+	use_rate = 0.5
+	emp_disable_time = 3 MINUTES
+	shock_disable_time = 1 MINUTES
+	minor_shock_disable_time = 15 SECONDS
+	lock_host = TRUE
+	lock_console = TRUE

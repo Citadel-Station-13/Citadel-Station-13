@@ -73,6 +73,7 @@
 	icon_living = "megacarp"
 	icon_dead = "megacarp_dead"
 	icon_gib = "megacarp_gib"
+	health_doll_icon = "megacarp"
 	regen_amount = 6
 
 	maxHealth = 30

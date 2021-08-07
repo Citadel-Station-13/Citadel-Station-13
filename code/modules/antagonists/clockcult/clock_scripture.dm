@@ -5,7 +5,7 @@ Pieces of scripture require certain follower counts, contruction value, and acti
 Drivers: Unlocked by default
 Scripts: 35k power or one convert
 Applications: 50k or three converts
-Judgement 5 converts
+Judgement 80k power or nine converts
 */
 
 /datum/clockwork_scripture
@@ -167,7 +167,7 @@ Judgement 5 converts
 	set waitfor = FALSE
 	chanting = TRUE
 	for(var/invocation in invocations)
-		sleep(channel_time / invocations.len)
+		sleep(channel_time / (invocations.len + 1)) //So it always finishes the invocation
 		if(QDELETED(src) || QDELETED(slab) || !chanting)
 			return
 		if(multiple_invokers_used)

@@ -18,3 +18,8 @@
 	blacklisted_movetypes = (FLOATING|CRAWLING)
 	variable = TRUE
 	flags = IGNORE_NOSLOW
+
+/datum/movespeed_modifier/slime_puddle
+	multiplicative_slowdown = 4.5
+	flags = IGNORE_NOSLOW
+	variable = TRUE

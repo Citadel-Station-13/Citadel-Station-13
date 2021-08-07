@@ -155,7 +155,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/turf/T = get_turf(src)
 	if(T.intact)
 		return
-	if(istype(W, /obj/item/wirecutters))
+	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if (shock(user, 50))
 			return
 		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>")
@@ -177,7 +177,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			R.loaded.cable_join(src, user)
 			R.is_empty(user)
 
-	else if(istype(W, /obj/item/multitool))
+	else if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(powernet && (powernet.avail > 0))		// is it powered?
 			to_chat(user, "<span class='danger'>[DisplayPower(powernet.avail)] in power network.</span>")
 		else
@@ -531,7 +531,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(OXYLOSS)
 
-/obj/item/stack/cable_coil/Initialize(mapload, new_amount = null)
+/obj/item/stack/cable_coil/Initialize(mapload, new_amount, merge = TRUE)
 	. = ..()
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
@@ -548,12 +548,24 @@ By design, d1 is the smallest direction and d2 is the highest
 		return ..()
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-	if(affecting && affecting.status == BODYPART_ROBOTIC)
+	if(affecting && affecting.is_robotic_limb())
+		//only heal to threshhold_passed_mindamage if limb is damaged to or past threshhold, otherwise heal normally
+		var/damage
+		var/heal_amount = 15
+
 		if(user == H)
 			user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the wires in [H]'s [affecting.name].</span>")
 			if(!do_mob(user, H, 50))
 				return
-		if(item_heal_robotic(H, user, 0, 15))
+		damage = affecting.burn_dam
+		affecting.update_threshhold_state(brute = FALSE)
+		if(affecting.threshhold_burn_passed)
+			heal_amount = min(heal_amount, damage - affecting.threshhold_passed_mindamage)
+
+			if(!heal_amount)
+				to_chat(user, "<span class='notice'>[user == H ? "Your" : "[H]'s"] [affecting.name] appears to have suffered severe internal damage and requires surgery to repair further.</span>")
+				return
+		if(item_heal_robotic(H, user, 0, heal_amount))
 			use(1)
 		return
 	else
@@ -811,7 +823,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/cable_coil/random
 	color = "#ffffff"
 
-/obj/item/stack/cable_coil/random/Initialize(mapload, new_amount = null, param_color = null)
+/obj/item/stack/cable_coil/random/Initialize(mapload, new_amount, merge = TRUE, param_color = null)
 	. = ..()
 	var/list/cable_colors = GLOB.cable_colors
 	color = pick(cable_colors)
@@ -823,12 +835,13 @@ By design, d1 is the smallest direction and d2 is the highest
 	amount = null
 	icon_state = "coil2"
 
-/obj/item/stack/cable_coil/cut/Initialize(mapload)
-	. = ..()
+/obj/item/stack/cable_coil/cut/Initialize(mapload, new_amount, merge = TRUE)
+	// do random amount calls BEFORE we add the mats or else the code eats shit and dies
 	if(!amount)
 		amount = rand(1,2)
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
+	. = ..()
 	update_icon()
 
 /obj/item/stack/cable_coil/cut/red
@@ -857,7 +870,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/cable_coil/cut/random
 	color = "#ffffff"
 
-/obj/item/stack/cable_coil/cut/random/Initialize(mapload, new_amount = null, param_color = null)
+/obj/item/stack/cable_coil/cut/random/Initialize(mapload, new_amount, merge = TRUE, param_color = null)
 	. = ..()
 	var/list/cable_colors = GLOB.cable_colors
 	color = pick(cable_colors)

@@ -48,12 +48,24 @@
 
 /obj/item/gun/energy/e_gun/hos
 	name = "\improper X-01 MultiPhase Energy Gun"
-	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time in exchange for inbuilt advanced firearm EMP shielding."
+	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time in exchange for inbuilt advanced firearm EMP shielding. <span class='boldnotice'>Right click in combat mode to fire a taser shot with a cooldown.</span>"
 	icon_state = "hoslaser"
 	force = 10
-	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/ion/hos)
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/ion/hos, /obj/item/ammo_casing/energy/electrode/hos)
 	ammo_x_offset = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	var/last_altfire = 0
+	var/altfire_delay = 0
+
+/obj/item/gun/energy/e_gun/hos/altafterattack(atom/target, mob/user, proximity_flag, params)
+	. = TRUE
+	if(last_altfire + altfire_delay > world.time)
+		return
+	var/current_index = current_firemode_index
+	set_firemode_to_type(/obj/item/ammo_casing/energy/electrode)
+	process_afterattack(target, user, proximity_flag, params)
+	set_firemode_index(current_index)
+	last_altfire = world.time
 
 /obj/item/gun/energy/e_gun/hos/emp_act(severity)
 	return
@@ -132,7 +144,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	fail_chance = min(fail_chance + round(15/severity), 100)
+	fail_chance = min(fail_chance + round(severity/6.6), 100)
 
 /obj/item/gun/energy/e_gun/nuclear/update_overlays()
 	. = ..()

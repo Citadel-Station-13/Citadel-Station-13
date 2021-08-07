@@ -7,7 +7,21 @@
 	earliest_start = 1 HOURS
 	min_players = 20
 
-
+/datum/round_event_control/slaughter/canSpawnEvent()
+	weight = initial(src.weight)
+	var/list/allowed_turf_typecache = typecacheof(/turf/open) - typecacheof(/turf/open/space)
+	var/list/allowed_z_cache = list()
+	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+		allowed_z_cache[num2text(z)] = TRUE
+	for(var/obj/effect/decal/cleanable/C in world)
+		if(!C.loc || QDELETED(C))
+			continue
+		if(!C.can_bloodcrawl_in())
+			continue
+		if(!SSpersistence.IsValidDebrisLocation(C.loc, allowed_turf_typecache, allowed_z_cache, C.type, FALSE))
+			continue
+		weight += 0.03
+	return ..()
 
 /datum/round_event/ghost_role/slaughter
 	minimum_required = 1

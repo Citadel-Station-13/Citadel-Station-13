@@ -346,7 +346,7 @@
 		if(issilicon(closest_mob))
 			var/mob/living/silicon/S = closest_mob
 			if((zap_flags & ZAP_MOB_STUN) && (zap_flags & ZAP_MOB_DAMAGE))
-				S.emp_act(EMP_LIGHT)
+				S.emp_act(50)
 			next_range = 7 // metallic folks bounce it further
 		else
 			next_range = 5

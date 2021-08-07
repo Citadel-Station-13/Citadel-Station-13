@@ -117,8 +117,8 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 	new/datum/stack_recipe("Captain Statue", /obj/structure/statue/diamond/captain, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("AI Hologram Statue", /obj/structure/statue/diamond/ai1, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("AI Core Statue", /obj/structure/statue/diamond/ai2, 5, one_per_turf = 1, on_floor = 1), \
-//	new/datum/stack_recipe("diamond brick", /obj/item/ingot/diamond, 6, time = 100), \ not yet
-	))
+	new/datum/stack_recipe("diamond ingot", /obj/item/ingot/diamond, 6, time = 100), \
+  ))
 
 /obj/item/stack/sheet/mineral/diamond/get_main_recipes()
 	. = ..()

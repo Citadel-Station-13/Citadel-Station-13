@@ -3,6 +3,15 @@
 
 ////////////////////////////////////////////////BREAD////////////////////////////////////////////////
 
+/datum/crafting_recipe/food/bread
+	name = "Bread"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/breadslice/plain = 5,
+	)
+	tools = list(/obj/item/kitchen/efink)
+	result = /obj/item/reagent_containers/food/snacks/store/bread/plain
+	subcategory = CAT_BREAD
+
 /datum/crafting_recipe/food/banananutbread
 	name = "Banana nut bread"
 	reqs = list(

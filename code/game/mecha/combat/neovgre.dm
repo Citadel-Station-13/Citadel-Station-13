@@ -64,11 +64,12 @@
 
 /obj/mecha/combat/neovgre/process()
 	..()
+	if(!obj_integrity) //Integrity is zero but we would heal out of that state if we went into this before it recognises it being zero
+		return
 	if(GLOB.ratvar_awakens) // At this point only timley intervention by lord singulo could hope to stop the superweapon
 		cell.charge = INFINITY
 		max_integrity = INFINITY
 		obj_integrity = max_integrity
-		CHECK_TICK //Just to be on the safe side lag wise
 	else
 		if(cell.charge < cell.maxcharge)
 			for(var/obj/effect/clockwork/sigil/transmission/T in range(SIGIL_ACCESS_RANGE, src))
@@ -78,7 +79,6 @@
 					adjust_clockwork_power(-delta)
 		if(obj_integrity < max_integrity && istype(loc, /turf/open/floor/clockwork))
 			obj_integrity += min(max_integrity - obj_integrity, max_integrity / 200)
-		CHECK_TICK
 
 /obj/mecha/combat/neovgre/Initialize()
 	.=..()

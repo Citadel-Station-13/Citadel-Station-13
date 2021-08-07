@@ -9,14 +9,14 @@
 
 /datum/gas_mixture/heat_capacity() //joules per kelvin
 	var/list/cached_gases = gases
-	var/list/cached_gasheats = GLOB.meta_gas_specific_heats
+	var/list/cached_gasheats = GLOB.gas_data.specific_heats
 	. = 0
 	for(var/id in cached_gases)
 		. += cached_gases[id] * cached_gasheats[id]
 
 /datum/gas_mixture/turf/heat_capacity() // Same as above except vacuums return HEAT_CAPACITY_VACUUM
 	var/list/cached_gases = gases
-	var/list/cached_gasheats = GLOB.meta_gas_specific_heats
+	var/list/cached_gasheats = GLOB.gas_data.specific_heats
 	for(var/id in cached_gases)
 		. += cached_gases[id] * cached_gasheats[id]
 	if(!.)
@@ -56,20 +56,20 @@
 	return gases[gas_type]
 /datum/gas_mixture/set_moles(gas_type, moles)
 	gases[gas_type] = moles
-/datum/gas_mixture/scrub_into(datum/gas_mixture/target, list/gases)
+/datum/gas_mixture/scrub_into(datum/gas_mixture/target, ratio, list/gases)
 	if(isnull(target))
 		return FALSE
 
-	var/list/removed_gases = target.gases
+	var/list/removed_gases = gases
 
 	//Filter it
 	var/datum/gas_mixture/filtered_out = new
 	var/list/filtered_gases = filtered_out.gases
 	filtered_out.temperature = removed.temperature
 	for(var/gas in filter_types & removed_gases)
-		filtered_gases[gas] = removed_gases[gas]
-		removed_gases[gas] = 0
-	merge(filtered_out)
+		filtered_gases[gas] = removed_gases[gas] * ratio
+		removed_gases[gas] = removed_gases[gas] * (1 - ratio)
+	target.merge(filtered_out)
 /datum/gas_mixture/mark_immutable()
 	return
 /datum/gas_mixture/get_gases()
@@ -208,7 +208,7 @@
 	var/delta
 	var/gas_heat_capacity
 	//and also cache this shit rq because that results in sanic speed for reasons byond explanation
-	var/list/cached_gasheats = GLOB.meta_gas_specific_heats
+	var/list/cached_gasheats = GLOB.gas_data.specific_heats
 	//GAS TRANSFER
 	for(var/id in cached_gases | sharer_gases) // transfer gases
 

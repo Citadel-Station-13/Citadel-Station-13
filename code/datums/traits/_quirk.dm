@@ -11,6 +11,8 @@
 	var/antag_removal_text // Text will be given to the quirk holder if they get an antag that has it blacklisted.
 	var/mood_quirk = FALSE //if true, this quirk affects mood and is unavailable if moodlets are disabled
 	var/mob_trait //if applicable, apply and remove this mob trait
+	/// should we immediately call on_spawn or add a timer to trigger
+	var/on_spawn_immediate = TRUE
 	var/mob/living/quirk_holder
 
 /datum/quirk/New(mob/living/quirk_mob, spawn_effects)
@@ -26,7 +28,10 @@
 	START_PROCESSING(SSquirks, src)
 	add()
 	if(spawn_effects)
-		on_spawn()
+		if(on_spawn_immediate)
+			on_spawn()
+		else
+			addtimer(CALLBACK(src, .proc/on_spawn), 0)
 		addtimer(CALLBACK(src, .proc/post_add), 30)
 
 /datum/quirk/Destroy()

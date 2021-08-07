@@ -291,3 +291,12 @@
 	tastes = list("creamy peas"= 2, "parsnip" = 1)
 	filling_color = "#9dc530"
 	foodtype = VEGETABLES
+
+/obj/item/reagent_containers/food/snacks/soup/facehuggerpot
+	name = "pot of face hugger jambalaya"
+	desc = "An entire pot of an extremely spicy dish made using extremely exotic ingredients. Highly recommend by an interdimensional businessman."
+	icon_state = "facehuggerpot"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("face huggers" = 1)
+	foodtype = MEAT

@@ -35,7 +35,7 @@
 	name = "Simple Drink"
 	reward = 1500
 
-datum/bounty/reagent/simple_drink/New()
+/datum/bounty/reagent/simple_drink/New()
 	// Don't worry about making this comprehensive. It doesn't matter if some drinks are skipped.
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/consumable/ethanol/antifreeze,\
@@ -91,7 +91,7 @@ datum/bounty/reagent/simple_drink/New()
 	name = "Complex Drink"
 	reward = 4000
 
-datum/bounty/reagent/complex_drink/New()
+/datum/bounty/reagent/complex_drink/New()
 	// Don't worry about making this comprehensive. It doesn't matter if some drinks are skipped.
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/consumable/ethanol/atomicbomb,\
@@ -124,7 +124,7 @@ datum/bounty/reagent/complex_drink/New()
 	reward = 2750
 	required_volume = 30
 
-datum/bounty/reagent/chemical/New()
+/datum/bounty/reagent/chemical/New()
 	// Don't worry about making this comprehensive. It doesn't matter if some chems are skipped.
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/medicine/leporazine,\

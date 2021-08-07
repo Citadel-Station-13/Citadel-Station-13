@@ -10,6 +10,7 @@
 	required_enemies = 5
 	recommended_enemies = 8
 	reroll_friendly = 0
+	chaos = 7
 	traitor_name = "Nanotrasen Internal Affairs Agent"
 	antag_flag = ROLE_INTERNAL_AFFAIRS
 

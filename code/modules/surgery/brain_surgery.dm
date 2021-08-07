@@ -17,7 +17,7 @@
 	time = 120 //long and complicated
 /datum/surgery/brain_surgery/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
 	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!B)
+	if(!B || istype(B, /obj/item/organ/brain/ipc))
 		return FALSE
 	return TRUE
 

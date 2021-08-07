@@ -96,8 +96,7 @@
 	include_user = 1
 	cooldown_min = 200 //50 deciseconds reduction per rank
 
-	emp_heavy = 6
-	emp_light = 10
+	range = 14
 	sound = 'sound/magic/disable_tech.ogg'
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/blink

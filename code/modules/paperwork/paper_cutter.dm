@@ -36,9 +36,10 @@
 
 /obj/item/papercutter/update_icon_state()
 	icon_state = (storedcutter ? "[initial(icon_state)]-cutter" : "[initial(icon_state)]")
+	return ..()
 
 /obj/item/papercutter/update_overlays()
-	. = ..()
+	. =..()
 	if(storedpaper)
 		. += "paper"
 
@@ -68,6 +69,9 @@
 	..()
 
 /obj/item/papercutter/on_attack_hand(mob/user)
+	// . = ..()
+	// if(.)
+	// 	return
 	add_fingerprint(user)
 	if(!storedcutter)
 		to_chat(user, "<span class='warning'>The cutting blade is gone! You can't use [src] now.</span>")
@@ -118,8 +122,8 @@
 
 /obj/item/paperslip/Initialize()
 	. = ..()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = initial(pixel_x) + rand(-5, 5)
+	pixel_y = initial(pixel_y) + rand(-5, 5)
 
 
 /obj/item/hatchet/cutterblade

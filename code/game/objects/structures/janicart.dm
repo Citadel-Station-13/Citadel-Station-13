@@ -73,7 +73,7 @@
 			l.janicart_insert(user,src)
 		else
 			to_chat(user, fail_msg)
-	else if(istype(I, /obj/item/caution))
+	else if(istype(I, /obj/item/clothing/suit/caution))
 		if(signs < max_signs)
 			put_in_cart(I, user)
 			signs++
@@ -82,7 +82,7 @@
 			to_chat(user, "<span class='warning'>[src] can't hold any more signs!</span>")
 	else if(mybag)
 		mybag.attackby(I, user)
-	else if(istype(I, /obj/item/crowbar))
+	else if(I.tool_behaviour == TOOL_CROWBAR)
 		user.visible_message("[user] begins to empty the contents of [src].", "<span class='notice'>You begin to empty the contents of [src]...</span>")
 		if(I.use_tool(src, user, 30))
 			to_chat(usr, "<span class='notice'>You empty the contents of [src]'s bucket onto the floor.</span>")
@@ -104,7 +104,7 @@
 		items += list("Spray bottle" = image(icon = myspray.icon, icon_state = myspray.icon_state))
 	if(myreplacer)
 		items += list("Light replacer" = image(icon = myreplacer.icon, icon_state = myreplacer.icon_state))
-	var/obj/item/caution/sign = locate() in src
+	var/obj/item/clothing/suit/caution/sign = locate() in src
 	if(sign)
 		items += list("Sign" = image(icon = sign.icon, icon_state = sign.icon_state))
 

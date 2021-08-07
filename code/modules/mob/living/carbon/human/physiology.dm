@@ -7,6 +7,7 @@
 	var/oxy_mod = 1     	// % of oxygen damage taken from all sources
 	var/clone_mod = 1   	// % of clone damage taken from all sources
 	var/stamina_mod = 1 	// % of stamina damage taken from all sources
+	var/stamina_buffer_mod = 1 // % of stamina buffer
 	var/brain_mod = 1   	// % of brain damage taken from all sources
 
 	var/pressure_mod = 1	// % of brute damage taken from low or high pressure (stacks with brute_mod)
@@ -22,8 +23,6 @@
 	var/datum/armor/armor 	// internal armor datum
 
 	var/hunger_mod = 1		//% of hunger rate taken per tick.
-
-	var/do_after_speed = 1 //Speed mod for do_after. Lower is better. If temporarily adjusting, please only modify using *= and /=, so you don't interrupt other calculations.
 
 	/// footstep type override for both shoeless and not footstep sounds.
 	var/footstep_type

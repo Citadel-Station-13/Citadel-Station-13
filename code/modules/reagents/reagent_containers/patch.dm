@@ -19,8 +19,10 @@
 			return
 		if(!L.can_inject(user, TRUE, user.zone_selected, FALSE, TRUE)) //stopped by clothing, not by species immunity.
 			return
-		if(affecting.status != BODYPART_ORGANIC)
+		if(!affecting.is_organic_limb())
 			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
+		else if(!affecting.is_organic_limb(FALSE))
+			to_chat(user, "<span class='notice'>Medical patches won't work on a biomechanical limb!</span>")
 			return
 	..()
 

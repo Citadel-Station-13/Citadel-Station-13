@@ -1,5 +1,5 @@
 /**
-  * Called by SSmobs at (hopefully) an interval of 1 second.
+  * Called by SSmobs at an interval of 2 seconds.
   * Splits off into PhysicalLife() and BiologicalLife(). Override those instead of this.
   */
 /mob/living/proc/Life(seconds, times_fired)
@@ -24,7 +24,7 @@
 				break
 			var/msg = "[key_name_admin(src)] [ADMIN_JMP(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
 			message_admins(msg)
-			send2irc_adminless_only("Mob", msg, R_ADMIN)
+			INVOKE_ASYNC(GLOBAL_PROC, .proc/send2tgs_adminless_only, "Mob", msg, R_ADMIN)
 			log_game("[key_name(src)] was found to have no .loc with an attached client.")
 
 		// This is a temporary error tracker to make sure we've caught everything
@@ -141,7 +141,7 @@
 		ExtinguishMob()
 		return
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(!G.get_moles(/datum/gas/oxygen, 1))
+	if(!G.get_moles(GAS_O2, 1))
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(src)

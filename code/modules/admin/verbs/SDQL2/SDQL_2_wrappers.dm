@@ -238,3 +238,9 @@
 /proc/__nan()
 	var/list/L = json_decode("{\"value\":NaN}")
 	return L["value"]
+
+/**
+ * Wrapper to return a copy of contents, as SDQL2 can't tell an internal list from a normal list.
+ */
+/atom/proc/_contents()
+	return contents.Copy()

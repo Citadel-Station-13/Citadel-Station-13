@@ -13,6 +13,7 @@
 	var/err_file = ""
 	var/static/list/interpreters = list("[MS_WINDOWS]" = "cmd /c", "[UNIX]" = "sh -c")
 	var/interpreter = interpreters["[world.system_type]"]
+	log_subsystem("SHELL", "Executing command [command]")
 	if(interpreter)
 		for(var/seo_id in shelleo_ids)
 			if(!shelleo_ids[seo_id])
@@ -36,6 +37,7 @@
 	else
 		CRASH("Operating System: [world.system_type] not supported") // If you encounter this error, you are encouraged to update this proc with support for the new operating system
 	. = list(errorcode, stdout, stderr)
+	log_subsystem("SHELL", "Finished execution: [errorcode], [stdout], [stderr]")
 #undef SHELLEO_NAME
 #undef SHELLEO_ERR
 #undef SHELLEO_OUT

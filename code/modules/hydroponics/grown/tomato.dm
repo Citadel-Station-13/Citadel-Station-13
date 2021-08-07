@@ -6,6 +6,7 @@
 	species = "tomato"
 	plantname = "Tomato Plants"
 	product = /obj/item/reagent_containers/food/snacks/grown/tomato
+	instability = 25
 	maturation = 8
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "tomato-grow"

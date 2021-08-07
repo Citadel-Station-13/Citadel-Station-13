@@ -43,14 +43,13 @@
 	// This exists so Hardened/Silver Stake can't have a welding torch used on them.
 
 /obj/item/stake/basic/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weldingtool))
+	if(W.tool_behaviour == TOOL_WELDER)
 		//if (amWelded)
 		//	to_chat(user, "<span class='warning'>This stake has already been treated with fire.</span>")
 		//	return
 		//amWelded = TRUE
 		// Weld it
-		var/obj/item/weldingtool/WT = W
-		if(WT.use(0))//remove_fuel(0,user))
+		if(W.use(0))//remove_fuel(0,user))
 			user.visible_message("[user.name] scorched the pointy end of [src] with the welding tool.", \
 						 "<span class='notice'>You scorch the pointy end of [src] with the welding tool.</span>", \
 						 "<span class='italics'>You hear welding.</span>")

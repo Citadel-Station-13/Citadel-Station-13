@@ -28,10 +28,10 @@
 		if(!do_after(user, 30 SECONDS, TRUE, src))
 			to_chat(user, "<span class='warning'>Your fingers slip as you fail to pry the [stored] from the [src], clicking it right back into the slot!</span>")
 			return
-		if(user.put_in_hands(stored))
-			stored.forceMove(user.drop_location())
+		user.put_in_hands(stored)
+		to_chat(user, "<span class='warning'>You successfully pry the [stored] from the [src]\
+				[user.is_holding(stored) ? "" : ", and send its overwhelming weight tumbling onto the ground"]! The tapes on the [src] stop spinning...</span>")
 		stored = null
-		to_chat(user, "<span class='warning'>You successfully pry the [stored] from the [src], and send its overwhelming weight tumbling onto the ground! The tapes on the [src] stop spinning...</span>")
 		update_icon()
 		return
 	else
@@ -41,7 +41,7 @@
 /obj/machinery/blackbox_recorder/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 	if(istype(I, /obj/item/blackbox))
-		if(HAS_TRAIT(I, TRAIT_NODROP) || !user.transferItemToLoc(I, src))
+		if(!user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] clicks the [I] into the [src]!</span>", \

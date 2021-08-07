@@ -1,8 +1,11 @@
 //Charger
 /mob/living/simple_animal/hostile/guardian/charger
+	melee_damage_lower = 15
+	melee_damage_upper = 15
 	ranged = 1 //technically
 	ranged_message = "charges"
 	ranged_cooldown_time = 20
+	speed = -1
 	damage_coeff = list(BRUTE = 0.2, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5)
 	playstyle_string = "<span class='holoparasite'>As a <b>charger</b> type you do medium damage, take half damage, have near immunity to brute damage, move very fast, and can charge at a location, damaging any target hit and forcing them to drop any items they are holding.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Hunter, an alien master of rapid assault.</span>"

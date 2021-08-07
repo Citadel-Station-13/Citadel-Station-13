@@ -45,7 +45,7 @@
 		if(ANTIDOTE_NEEDED)
 			message = "Cargo: Your station has been chosen for an epidemiological research project. Send us your cargo shuttle to receive your research samples."
 			title = "CentCom Research Initiatives"
-		if (PIZZA_DELIVERY)
+		if(PIZZA_DELIVERY)
 			message = "Cargo: It looks like a neighbouring station accidentally delivered their pizza to you instead."
 			title = "CentCom Spacepizza Division"
 		if(ITS_HIP_TO)
@@ -57,7 +57,7 @@
 			title = "CentCom Security Division"
 			bonus_points = 45000 //If you mess up, people die and the shuttle gets turned into swiss cheese
 		if(DELTA_CRATES)
-			message = "Cargo: We have discovered a warehouse of DELTA locked crates, we cant store any more of them at CC can you take them for us?."
+			message = "Cargo: We have discovered a warehouse of DELTA locked crates. We can't store any more of them at CC, can you take them for us?"
 			title = "CentCom Security Division"
 			bonus_points = 25000 //If you mess up, people die and the shuttle gets turned into swiss cheese
 	if(prob(50))

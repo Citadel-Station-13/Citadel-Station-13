@@ -48,8 +48,8 @@
 	var/multiple_slots = istype(card_slot) && istype(card_slot2)
 	if(card_slot)
 		if(card_slot?.stored_card || card_slot2?.stored_card)
-			var/obj/item/card/id/first_ID = card_slot.stored_card
-			var/obj/item/card/id/second_ID = card_slot2.stored_card
+			var/obj/item/card/id/first_ID = card_slot?.stored_card
+			var/obj/item/card/id/second_ID = card_slot2?.stored_card
 			var/multiple_cards = istype(first_ID) && istype(second_ID)
 			if(user_is_adjacent)
 				. += "It has [multiple_slots ? "two slots" : "a slot"] for identification cards installed[multiple_cards ? " which contain [first_ID] and [second_ID]" : ", one of which contains [first_ID ? first_ID : second_ID]"]."
@@ -63,4 +63,4 @@
 	if(printer_slot)
 		. += "It has a printer installed."
 		if(user_is_adjacent)
-			. += "The printer's paper levels are at: [printer_slot.stored_paper]/[printer_slot.max_paper].</span>]"
+			. += "The printer's paper levels are at: [printer_slot.stored_paper]/[printer_slot.max_paper].</span>"

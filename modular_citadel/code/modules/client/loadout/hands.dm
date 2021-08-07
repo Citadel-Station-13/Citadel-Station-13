@@ -12,7 +12,7 @@
 
 /datum/gear/hands/dice
 	name = "Dice bag"
-	path = /obj/item/storage/box/dice
+	path = /obj/item/storage/dice
 
 /datum/gear/hands/eightball
 	name = "Magic eightball"

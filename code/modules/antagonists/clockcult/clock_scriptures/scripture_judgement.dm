@@ -20,7 +20,7 @@
 	usage_tip = "The gateway is completely vulnerable to attack during its five-minute duration. It will periodically give indication of its general position to everyone on the station \
 	as well as being loud enough to be heard throughout the entire sector. Defend it with your life!"
 	tier = SCRIPTURE_APPLICATION
-	sort_priority = 8
+	sort_priority = 1
 	requires_full_power = TRUE
 
 /datum/clockwork_scripture/create_object/ark_of_the_clockwork_justiciar/check_special_requirements()
@@ -34,7 +34,7 @@
 			return FALSE
 		var/area/A = get_area(invoker)
 		var/turf/T = get_turf(invoker)
-		if(!T || !is_station_level(T.z) || istype(A, /area/shuttle) || !A.blob_allowed)
+		if(!is_station_level(T.z) || isspaceturf(T) || !(A?.area_flags & CULT_PERMITTED) || isshuttleturf(T))
 			to_chat(invoker, "<span class='warning'>You must be on the station to activate the Ark!</span>")
 			return FALSE
 		if(GLOB.clockwork_gateway_activated)

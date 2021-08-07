@@ -1,6 +1,6 @@
 /datum/species/synth
 	name = "Synthetic" //inherited from the real species, for health scanners and things
-	id = "synth"
+	id = SPECIES_SYNTH
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0
 	species_traits = list(NOTRANSSTING,NOGENITALS,NOAROUSAL) //all of these + whatever we inherit from the real species
@@ -11,17 +11,17 @@
 	meat = null
 	gib_types = /obj/effect/gibspawner/robot
 	damage_overlay_type = "synth"
-	limbs_id = "synth"
+	limbs_id = SPECIES_SYNTH
 	var/list/initial_species_traits = list(NOTRANSSTING) //for getting these values back for assume_disguise()
 	var/list/initial_inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOLIMBDISABLE,TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
 	species_language_holder = /datum/language_holder/synthetic
-	species_type = "robotic"
+	species_category = SPECIES_CATEGORY_ROBOT
 
 /datum/species/synth/military
 	name = "Military Synth"
-	id = "military_synth"
+	id = SPECIES_SYNTH_MIL
 	armor = 25
 	punchdamagelow = 10
 	punchdamagehigh = 19
@@ -80,7 +80,7 @@
 		qdel(fake_species)
 		fake_species = null
 		meat = initial(meat)
-		limbs_id = "synth"
+		limbs_id = SPECIES_SYNTH
 		use_skintones = FALSE
 		sexes = 0
 		fixed_mut_color = ""

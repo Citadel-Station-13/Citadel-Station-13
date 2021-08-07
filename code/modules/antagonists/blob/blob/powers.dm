@@ -147,7 +147,7 @@
 	set category = "Blob"
 	set name = "Create Factory Blob (60)"
 	set desc = "Create a spore tower that will spawn spores to harass your enemies."
-	createSpecial(60, /obj/structure/blob/factory, 7, 1)
+	createSpecial(60, /obj/structure/blob/factory, 5, 1)
 
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
@@ -195,6 +195,7 @@
 		to_chat(blobber, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]")
 	else
 		to_chat(src, "<span class='warning'>You could not conjure a sentience for your blobbernaut. Your points have been refunded. Try again later.</span>")
+		B.naut = FALSE
 		add_points(40)
 
 /mob/camera/blob/verb/relocate_core()
@@ -210,7 +211,7 @@
 		to_chat(src, "<span class='userdanger'>You have no core and are about to die! May you rest in peace.</span>")
 		return
 	var/area/A = get_area(T)
-	if(isspaceturf(T) || A && !A.blob_allowed)
+	if(isspaceturf(T) || A && !(A.area_flags & BLOBS_ALLOWED))
 		to_chat(src, "<span class='warning'>You cannot relocate your core here!</span>")
 		return
 	if(!can_buy(80))

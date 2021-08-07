@@ -16,7 +16,7 @@
 	if(user.stat != DEAD)
 		user.emote("deathgasp")
 		user.tod = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
-	user.fakedeath("changeling") //play dead
+	user.fakedeath("changeling", TRUE) //play dead
 	user.update_stat()
 
 	addtimer(CALLBACK(src, .proc/ready_to_regenerate, user), LING_FAKEDEATH_TIME, TIMER_UNIQUE)

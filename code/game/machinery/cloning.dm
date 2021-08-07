@@ -173,10 +173,7 @@
 		clonemind.transfer_to(H)
 
 	else if(get_clone_mind == CLONEPOD_POLL_MIND)
-		var/list/candidates = pollCandidatesForMob("Do you want to play as [clonename]'s defective clone? (Don't ERP without permission from the original)", null, null, null, 100, H, POLL_IGNORE_CLONE)
-		if(LAZYLEN(candidates))
-			var/mob/C = pick(candidates)
-			H.key = C.key
+		poll_for_mind(H, clonename)
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		H.grab_ghost()
@@ -205,6 +202,13 @@
 		H.suiciding = FALSE
 	attempting = FALSE
 	return TRUE
+
+/obj/machinery/clonepod/proc/poll_for_mind(mob/living/carbon/human/H, clonename)
+	set waitfor = FALSE
+	var/list/candidates = pollCandidatesForMob("Do you want to play as [clonename]'s defective clone? (Don't ERP without permission from the original)", null, null, null, 100, H, POLL_IGNORE_CLONE)
+	if(LAZYLEN(candidates))
+		var/mob/C = pick(candidates)
+		H.key = C.key
 
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
@@ -297,22 +301,20 @@
 	if(default_deconstruction_crowbar(W))
 		return
 
-	if(istype(W, /obj/item/multitool))
-		var/obj/item/multitool/P = W
-
-		if(istype(P.buffer, /obj/machinery/computer/cloning))
-			if(get_area(P.buffer) != get_area(src))
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(istype(W.buffer, /obj/machinery/computer/cloning))
+			if(get_area(W.buffer) != get_area(src))
 				to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-				P.buffer = null
+				W.buffer = null
 				return
-			to_chat(user, "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>")
-			var/obj/machinery/computer/cloning/comp = P.buffer
+			to_chat(user, "<font color = #666633>-% Successfully linked [W.buffer] with [src] %-</font color>")
+			var/obj/machinery/computer/cloning/comp = W.buffer
 			if(connected)
 				connected.DetachCloner(src)
 			comp.AttachCloner(src)
 		else
-			P.buffer = src
-			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-</font color>")
+			W.buffer = src
+			to_chat(user, "<font color = #666633>-% Successfully stored [REF(W.buffer)] [W.buffer] in buffer %-</font color>")
 		return
 
 	var/mob/living/mob_occupant = occupant
@@ -386,7 +388,7 @@
 		to_chat(occupant, "<span class='notice'><b>There is a bright flash!</b><br><i>You feel like a new being.</i></span>")
 		mob_occupant.flash_act()
 
-	var/list/policies = CONFIG_GET(keyed_list/policyconfig)
+	var/list/policies = CONFIG_GET(keyed_list/policy)
 	var/policy = policies[POLICYCONFIG_ON_CLONE]
 	if(policy)
 		to_chat(occupant, policy)
@@ -431,7 +433,7 @@
 	. = ..()
 	if (!(. & EMP_PROTECT_SELF))
 		var/mob/living/mob_occupant = occupant
-		if(mob_occupant && prob(100/(severity*efficiency)))
+		if(mob_occupant && prob((25+severity/1.34)/efficiency))
 			connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
 			SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of, ERROR: John Doe, prematurely." ,0))
 			mob_occupant.copy_from_prefs_vr()

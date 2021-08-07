@@ -152,7 +152,6 @@
 		locate(min(T.x + width + 1, world.maxx), min(T.y + height + 1, world.maxy), T.z))
 	for(var/i in border)
 		var/turf/turf_to_disable = i
-		SSair.remove_from_active(turf_to_disable) //stop processing turfs along the border to prevent runtimes, we return it in initTemplateBounds()
 		turf_to_disable.atmos_adjacent_turfs?.Cut()
 
 	if(annihilate == MAP_TEMPLATE_ANNIHILATE_PRELOAD)
@@ -195,6 +194,9 @@
 			CHECK_TICK
 			deleted_atoms++
 	log_world("Annihilated [deleted_atoms] objects.")
+
+/datum/map_template/proc/post_load()
+	return
 
 //for your ever biggening badminnery kevinz000
 //❤ - Cyberboss

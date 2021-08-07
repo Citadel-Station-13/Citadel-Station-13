@@ -116,7 +116,10 @@
 		holder.remove_reagent(id, added_volume*temp_ratio)
 	if(St.purity < 1)
 		St.volume *= St.purity
+		added_volume *= St.purity
 		St.purity = 1
+	if(!N)
+		return
 	var/amount = clamp(0.002, 0, N.volume)
 	N.volume -= amount
 	St.data["grown_volume"] = St.data["grown_volume"] + added_volume
@@ -155,7 +158,7 @@
 	required_reagents = list(/datum/reagent/medicine/pen_acid = 1, /datum/reagent/toxin/slimejelly = 1)
 
 /datum/chemical_reaction/sal_acid
-	name = "Salicyclic Acid"
+	name = "Salicylic Acid"
 	id = /datum/reagent/medicine/sal_acid
 	results = list(/datum/reagent/medicine/sal_acid = 5)
 	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/phenol = 1, /datum/reagent/carbon = 1, /datum/reagent/oxygen = 1, /datum/reagent/toxin/acid = 1)
@@ -305,12 +308,6 @@
 	results = list(/datum/reagent/medicine/regen_jelly = 2)
 	required_reagents = list(/datum/reagent/medicine/tricordrazine = 1, /datum/reagent/toxin/slimejelly = 1)
 
-/datum/chemical_reaction/jelly_convert
-	name = "Blood Jelly Conversion"
-	id = /datum/reagent/toxin/slimejelly
-	results = list(/datum/reagent/toxin/slimejelly = 1)
-	required_reagents = list(/datum/reagent/toxin = 1, /datum/reagent/blood/jellyblood = 1)
-
 /datum/chemical_reaction/corazone
 	name = "Corazone"
 	id = /datum/reagent/medicine/corazone
@@ -338,7 +335,7 @@
 	required_reagents = list( /datum/reagent/medicine/mannitol = 2, /datum/reagent/water = 2, /datum/reagent/impedrezene = 1)
 
 /datum/chemical_reaction/medsuture
-	required_reagents = list(/datum/reagent/cellulose = 10, /datum/reagent/toxin/formaldehyde = 20, /datum/reagent/medicine/polypyr = 15) //This might be a bit much, reagent cost should be reviewed after implementation.
+	required_reagents = list(/datum/reagent/cellulose = 5, /datum/reagent/toxin/formaldehyde = 5, /datum/reagent/medicine/polypyr = 5) //This might be a bit much, reagent cost should be reviewed after implementation.
 
 /datum/chemical_reaction/medsuture/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -346,7 +343,7 @@
 		new /obj/item/stack/medical/suture/medicated(location)
 
 /datum/chemical_reaction/medmesh
-	required_reagents = list(/datum/reagent/cellulose = 20, /datum/reagent/consumable/aloejuice = 20, /datum/reagent/space_cleaner/sterilizine = 10)
+	required_reagents = list(/datum/reagent/cellulose = 5, /datum/reagent/consumable/aloejuice = 5, /datum/reagent/space_cleaner/sterilizine = 5)
 
 /datum/chemical_reaction/medmesh/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -368,3 +365,9 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/medical/mesh/(location)
+
+/datum/chemical_reaction/system_cleaner
+	name = "System Cleaner"
+	id = /datum/reagent/medicine/system_cleaner
+	results = list(/datum/reagent/medicine/system_cleaner = 4)
+	required_reagents = list(/datum/reagent/iron = 2, /datum/reagent/oil = 2, /datum/reagent/medicine/calomel = 2, /datum/reagent/acetone = 2)

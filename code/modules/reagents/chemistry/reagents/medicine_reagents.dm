@@ -36,6 +36,25 @@
 	taste_description = "badmins"
 	value = REAGENT_VALUE_GLORIOUS
 
+// The best stuff there is. For testing/debugging.
+/datum/reagent/medicine/adminordrazine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		mytray.adjustWater(round(chems.get_reagent_amount(type) * 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(type) * 1))
+		mytray.adjustPests(-rand(1,5))
+		mytray.adjustWeeds(-rand(1,5))
+	if(chems.has_reagent(type, 3))
+		switch(rand(100))
+			if(66  to 100)
+				mytray.mutatespecie()
+			if(33	to 65)
+				mytray.mutateweed()
+			if(1   to 32)
+				mytray.mutatepest(user)
+			else if(prob(20))
+				mytray.visible_message("<span class='warning'>Nothing happens...</span>")
+
 /datum/reagent/medicine/adminordrazine/on_mob_life(mob/living/carbon/M)
 	M.reagents.remove_all_type(/datum/reagent/toxin, 5*REM, 0, 1)
 	M.setCloneLoss(0, 0)
@@ -143,6 +162,12 @@
 /datum/reagent/medicine/cryoxadone/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L,TRAIT_HYPOTHERMIA_IMMUNE)
 	..()
+
+// Healing
+/datum/reagent/medicine/cryoxadone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	mytray.adjustHealth(round(chems.get_reagent_amount(type) * 3))
+	mytray.adjustToxic(-round(chems.get_reagent_amount(type) * 3))
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/carbon/M)
 	var/power = -0.00006 * (M.bodytemperature ** 2) + 6
@@ -277,10 +302,10 @@
 	overdose_threshold = 50
 
 /datum/reagent/medicine/silver_sulfadiazine/reaction_obj(obj/O, reac_volume)
-	if(istype(O, /obj/item/stack/medical/gauze))
+	if(istype(O, /obj/item/stack/medical/gauze/adv))
 		var/obj/item/stack/medical/gauze/G = O
-		reac_volume = min((reac_volume / 10), G.amount)
-		new/obj/item/stack/medical/mesh(get_turf(G), reac_volume)
+		reac_volume = min((reac_volume / 5), G.amount)
+		new /obj/item/stack/medical/mesh/five(get_turf(G), reac_volume)
 		G.use(reac_volume)
 
 /datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
@@ -363,10 +388,10 @@
 	..()
 
 /datum/reagent/medicine/styptic_powder/reaction_obj(obj/O, reac_volume)
-	if(istype(O, /obj/item/stack/medical/gauze))
+	if(istype(O, /obj/item/stack/medical/gauze/adv))
 		var/obj/item/stack/medical/gauze/G = O
-		reac_volume = min((reac_volume / 10), G.amount)
-		new/obj/item/stack/medical/suture(get_turf(G), reac_volume)
+		reac_volume = min((reac_volume / 5), G.amount)
+		new /obj/item/stack/medical/suture/five(get_turf(G), reac_volume)
 		G.use(reac_volume)
 
 /datum/reagent/medicine/styptic_powder/on_mob_life(mob/living/carbon/M)
@@ -504,7 +529,7 @@
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 			var/vol = reac_volume + M.reagents.get_reagent_amount(/datum/reagent/medicine/synthflesh)
 			//Has to be at less than THRESHOLD_UNHUSK burn damage and have 100 synthflesh before unhusking. Corpses dont metabolize.
-			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && M.getFireLoss() < THRESHOLD_UNHUSK && (vol > 100))
+			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && M.getFireLoss() < THRESHOLD_UNHUSK && (vol >= 100))
 				M.cure_husk("burn")
 				M.visible_message("<span class='nicegreen'>Most of [M]'s burnt off or charred flesh has been restored.")
 	..()
@@ -638,7 +663,7 @@
 	value = REAGENT_VALUE_RARE
 
 /datum/reagent/medicine/sal_acid
-	name = "Salicyclic Acid"
+	name = "Salicylic Acid"
 	description = "Stimulates the healing of severe bruises. Extremely rapidly heals severe bruising and slowly heals minor ones. Overdose will worsen existing bruising."
 	reagent_state = LIQUID
 	color = "#D2D2D2"
@@ -705,21 +730,42 @@
 	addiction_threshold = 30
 	pH = 12
 
-/datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/M)
-	M.AdjustAllImmobility(-20, FALSE)
-	M.AdjustUnconscious(-20, FALSE)
-	M.adjustStaminaLoss(-4.5*REM, FALSE)
-	M.Jitter(10)
-	if(prob(50))
-		M.confused = max(M.confused, 1)
+/datum/reagent/medicine/ephedrine/on_mob_metabolize(mob/living/L)
+	..()
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
+	ADD_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
+
+/datum/reagent/medicine/ephedrine/on_mob_end_metabolize(mob/living/L)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
+	REMOVE_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
+	..()
+
+/datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	// if(DT_PROB(10 * (1-creation_purity), delta_time) && iscarbon(M))
+	// 	var/obj/item/I = M.get_active_held_item()
+	// 	if(I && M.dropItemToGround(I))
+	// 		to_chat(M, span_notice("Your hands spaz out and you drop what you were holding!"))
+	// 		M.Jitter(10)
+
+	M.AdjustAllImmobility(-20 * REM * delta_time)
+	M.adjustStaminaLoss(-1 * REM * delta_time, FALSE)
 	..()
 	return TRUE
 
-/datum/reagent/medicine/ephedrine/overdose_process(mob/living/M)
-	if(prob(33))
-		M.adjustToxLoss(0.5*REM, 0)
+/datum/reagent/medicine/ephedrine/overdose_process(mob/living/M, delta_time, times_fired)
+	if(DT_PROB(1, delta_time) && iscarbon(M))
+		var/datum/disease/D = new /datum/disease/heart_failure
+		M.ForceContractDisease(D)
+		to_chat(M, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
+		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 100, 0)
+
+	if(DT_PROB(3.5, delta_time))
+		to_chat(M, span_notice("[pick("Your head pounds.", "You feel a tight pain in your chest.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]"))
+
+	if(DT_PROB(18, delta_time))
+		M.adjustToxLoss(1, 0)
 		M.losebreath++
-		. = 1
+		. = TRUE
 	return TRUE
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage1(mob/living/M)
@@ -940,6 +986,12 @@
 	pH = 0
 	value = REAGENT_VALUE_RARE
 
+// FEED ME SEYMOUR
+/datum/reagent/medicine/strange_reagent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		mytray.spawnplant()
+
 /datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(M.stat == DEAD)
 		if(M.suiciding || M.hellbound) //they are never coming back
@@ -974,8 +1026,8 @@
 					M.grab_ghost()
 					M.emote("gasp")
 					log_combat(M, M, "revived", src)
-					var/list/policies = CONFIG_GET(keyed_list/policyconfig)
-					var/timelimit = CONFIG_GET(number/defib_cmd_time_limit)
+					var/list/policies = CONFIG_GET(keyed_list/policy)
+					var/timelimit = CONFIG_GET(number/defib_cmd_time_limit) * 10 //the config is in seconds, not deciseconds
 					var/late = timelimit && (tplus > timelimit)
 					var/policy = late? policies[POLICYCONFIG_ON_DEFIB_LATE] : policies[POLICYCONFIG_ON_DEFIB_INTACT]
 					if(policy)
@@ -1192,6 +1244,11 @@
 	..()
 	. = 1
 
+// Antitoxin binds plants pretty well. So the tox goes significantly down
+/datum/reagent/medicine/antitoxin/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	mytray.adjustToxic(-round(chems.get_reagent_amount(type) * 2))
+
 /datum/reagent/medicine/inaprovaline
 	name = "Inaprovaline"
 	description = "Stabilizes the breathing of patients. Good for those in critical condition."
@@ -1321,6 +1378,21 @@
 	pH = 11
 	value = REAGENT_VALUE_COMMON //not any higher. Ambrosia is a milestone for hydroponics already.
 
+
+//Earthsblood is still a wonderdrug. Just... don't expect to be able to mutate something that makes plants so healthy.
+/datum/reagent/medicine/earthsblood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjustPests(-rand(1,3))
+		mytray.adjustWeeds (-rand(1,3))
+		if(myseed)
+			myseed.adjust_instability(-round(chems.get_reagent_amount(src.type) * 1.3))
+			myseed.adjust_potency(round(chems.get_reagent_amount(src.type) *1))
+			myseed.adjust_yield(round(chems.get_reagent_amount(src.type) * 1))
+			myseed.adjust_endurance(round(chems.get_reagent_amount(src.type) * 0.5))
+			myseed.adjust_production(-round(chems.get_reagent_amount(src.type) * 0.5))
+
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-3 * REM, FALSE)
 	M.adjustFireLoss(-3 * REM, FALSE)
@@ -1388,37 +1460,42 @@
 /datum/reagent/medicine/changelingadrenaline
 	name = "Changeling Adrenaline"
 	description = "Reduces the duration of unconciousness, knockdown and stuns. Restores stamina, but deals toxin damage when overdosed."
-	color = "#918e53"
+	color = "#C1151D"
 	overdose_threshold = 30
 	value = REAGENT_VALUE_VERY_RARE
 
-/datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/L)
+/datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
 	..()
-	ADD_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
-
-/datum/reagent/medicine/changelingadrenaline/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
-	..()
-
-/datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
-	M.AdjustUnconscious(-20, 0)
-	M.AdjustAllImmobility(-20, 0)
-	M.AdjustSleeping(-20, 0)
-	M.adjustStaminaLoss(-30, 0)
-	..()
+	metabolizer.AdjustAllImmobility(-20 * REM * delta_time)
+	metabolizer.adjustStaminaLoss(-10 * REM * delta_time, 0)
+	metabolizer.Jitter(10 * REM * delta_time)
+	metabolizer.Dizzy(10 * REM * delta_time)
 	return TRUE
 
-/datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/M as mob)
-	M.adjustToxLoss(5, 0) //let's make this mildly more toxic because of the stamina buff
+/datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/L)
+	..()
+	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	ADD_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
+	L.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
+
+/datum/reagent/medicine/changelingadrenaline/on_mob_end_metabolize(mob/living/L)
+	..()
+	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	REMOVE_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
+	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
+	L.Dizzy(0)
+	L.Jitter(0)
+
+/datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/metabolizer, delta_time, times_fired)
+	metabolizer.adjustToxLoss(1 * REM * delta_time, 0)
 	..()
 	return TRUE
 
 /datum/reagent/medicine/changelinghaste
 	name = "Changeling Haste"
 	description = "Drastically increases movement speed, but deals toxin damage."
-	color = "#669153"
-	metabolization_rate = 1
-	value = REAGENT_VALUE_VERY_RARE
+	color = "#AE151D"
+	metabolization_rate = 2.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/changelinghaste/on_mob_metabolize(mob/living/L)
 	..()
@@ -1428,10 +1505,11 @@
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/changelinghaste)
 	..()
 
-/datum/reagent/medicine/changelinghaste/on_mob_life(mob/living/carbon/M)
-	M.adjustToxLoss(2, 0)
+/datum/reagent/medicine/changelinghaste/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
+	metabolizer.adjustToxLoss(2 * REM * delta_time, 0)
 	..()
 	return TRUE
+
 
 /datum/reagent/medicine/corazone
 	// Heart attack code will not do damage if corazone is present
@@ -1678,3 +1756,26 @@
 	name = "Synthi-Sanguirite"
 	description = "A synthetic coagulant used to help bleeding wounds clot faster. Not quite as effective as name brand Sanguirite, especially on patients with lots of cuts."
 	clot_coeff_per_wound = 0.8
+
+//Sloowly heals system corruption in robotic organisms. Causes mild toxins damage in nonrobots.
+/datum/reagent/medicine/system_cleaner
+	name = "System Cleaner"
+	description = "A reagent with special properties causing it to slowly reduce corruption in robots. Mildly toxic for organics."
+	reagent_state = LIQUID
+	color = "#D7C9C6"
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+	overdose_threshold = 30
+
+/datum/reagent/medicine/system_cleaner/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	if(HAS_TRAIT(M, TRAIT_ROBOTIC_ORGANISM))
+		M.adjustToxLoss(-0.2, toxins_type = TOX_SYSCORRUPT)
+	else
+		M.adjustToxLoss(0.5)
+
+/datum/reagent/medicine/system_cleaner/overdose_process(mob/living/carbon/M)
+	. = ..()
+	if(HAS_TRAIT(M, TRAIT_ROBOTIC_ORGANISM))
+		M.adjustToxLoss(0.4, toxins_type = TOX_SYSCORRUPT) //inverts its positive effect on overdose, for organics it's just more toxic
+	else
+		M.adjustToxLoss(0.5)

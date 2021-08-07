@@ -97,12 +97,14 @@
 	SEND_SIGNAL(t_loc, COMSIG_TURF_MAKE_DRY, TURF_WET_WATER, TRUE, INFINITY)
 
 /obj/item/clothing/shoes/clown_shoes
-	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge!"
+	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge! Ctrl-click to toggle waddle dampeners."
 	name = "clown shoes"
 	icon_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN+1
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/clown
 	lace_time = 20 SECONDS // how the hell do these laces even work??
+	var/datum/component/waddle
+	var/enabled_waddle = TRUE
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
@@ -110,13 +112,30 @@
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
 	. = ..()
-	if(user.mind && HAS_TRAIT(user.mind, TRAIT_CLOWN_MENTALITY))
-		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "noshoes")
+	if(slot == SLOT_SHOES)
+		if(enabled_waddle)
+			waddle = user.AddComponent(/datum/component/waddling)
+		if(user.mind && HAS_TRAIT(user.mind, TRAIT_CLOWN_MENTALITY))
+			SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "noshoes")
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
 	. = ..()
+	QDEL_NULL(waddle)
 	if(user.mind && HAS_TRAIT(user.mind, TRAIT_CLOWN_MENTALITY))
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "noshoes", /datum/mood_event/noshoes)
+
+/obj/item/clothing/shoes/clown_shoes/CtrlClick(mob/living/user)
+	if(!isliving(user))
+		return
+	if(user.get_active_held_item() != src)
+		to_chat(user, "<span class='warning'>You must hold the [src] in your hand to do this!</span>")
+		return
+	if (!enabled_waddle)
+		to_chat(user, "<span class='notice'>You switch off the waddle dampeners!</span>")
+		enabled_waddle = TRUE
+	else
+		to_chat(user, "<span class='notice'>You switch on the waddle dampeners!</span>")
+		enabled_waddle = FALSE
 
 /obj/item/clothing/shoes/clown_shoes/jester
 	name = "jester shoes"
@@ -413,6 +432,22 @@
 	var/wallcharges = 4
 	var/newlocobject = null
 
+/obj/item/clothing/shoes/timidcostume
+	name = "timid woman boots"
+	desc = "Ready to rock your hips back and forth? These boots have a polychromic finish."
+	icon_state = "timidwoman"
+	item_state = "timidwoman"
+
+/obj/item/clothing/shoes/timidcostume/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#0094FF"), 1)
+
+/obj/item/clothing/shoes/timidcostume/man
+	name = "timid man shoes"
+	desc = "Ready to go kart racing? These shoes have a polychromic finish."
+	icon_state = "timidman"
+	item_state = "timidman"
+
 /obj/item/clothing/shoes/wallwalkers/equipped(mob/user,slot)
 	. = ..()
 	if(slot == SLOT_SHOES)
@@ -500,3 +535,9 @@
 	to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 	B.use(10)
 	icon_state = initial(icon_state)
+
+/obj/item/clothing/shoes/swagshoes
+	name = "swag shoes"
+	desc = "They got me for my foams!"
+	icon_state = "SwagShoes"
+	item_state = "SwagShoes"

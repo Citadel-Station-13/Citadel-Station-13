@@ -16,6 +16,10 @@
 		var/datum/wound/burn/burn_wound = targeted_bodypart.get_wound_type(targetable_wound)
 		return(burn_wound && burn_wound.infestation > 0)
 
+/datum/surgery/debride/biomech
+	name = "Debride infected synthetic flesh"
+	requires_bodypart_type = BODYPART_HYBRID
+
 //SURGERY STEPS
 
 ///// Debride

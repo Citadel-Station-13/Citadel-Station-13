@@ -50,7 +50,7 @@
 			oxygentanks++
 		else
 			full = TRUE
-	else if(istype(I, /obj/item/wrench))
+	else if(I.tool_behaviour == TOOL_WRENCH)
 		default_unfasten_wrench(user, I, time = 20)
 		return
 	else if(user.a_intent != INTENT_HARM)
@@ -66,6 +66,9 @@
 		return
 	to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 	update_icon()
+
+/obj/structure/tank_dispenser/attack_robot(mob/user)
+	return _try_interact(user)
 
 /obj/structure/tank_dispenser/ui_state(mob/user)
 	return GLOB.physical_state

@@ -32,14 +32,13 @@
 /obj/machinery/smoke_machine/Initialize()
 	. = ..()
 	create_reagents(REAGENTS_BASE_VOLUME)
-	// AddComponent(/datum/component/plumbing/simple_demand)
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		reagents.maximum_volume += REAGENTS_BASE_VOLUME * B.rating
+	AddComponent(/datum/component/plumbing/simple_demand)
 
 /obj/machinery/smoke_machine/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
-	AddComponent(/datum/component/plumbing/simple_demand) //this SURELY	 CANT' LEAD TO BAD THINGS HAPPENING.
 
 /obj/machinery/smoke_machine/proc/can_be_rotated(mob/user, rotation_type)
 	return !anchored

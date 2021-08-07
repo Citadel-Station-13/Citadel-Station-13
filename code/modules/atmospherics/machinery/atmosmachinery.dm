@@ -39,12 +39,13 @@
 	var/construction_type
 	var/pipe_state //icon_state as a pipe item
 	var/on = FALSE
+	var/interacts_with_air = FALSE
 
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
 	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && isliving(user))
 		var/mob/living/L = user
-		if(L.ventcrawler)
+		if(SEND_SIGNAL(L, COMSIG_CHECK_VENTCRAWL))
 			. += "<span class='notice'>Alt-click to crawl through it.</span>"
 
 /obj/machinery/atmospherics/New(loc, process = TRUE, setdir)
@@ -57,7 +58,10 @@
 		armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 70)
 	..()
 	if(process)
-		SSair.atmos_machinery += src
+		if(interacts_with_air)
+			SSair.atmos_air_machinery += src
+		else
+			SSair.atmos_machinery += src
 	SetInitDirections()
 
 /obj/machinery/atmospherics/Destroy()
@@ -65,6 +69,7 @@
 		nullifyNode(i)
 
 	SSair.atmos_machinery -= src
+	SSair.atmos_air_machinery -= src
 	SSair.pipenets_needing_rebuilt -= src
 
 	dropContents()
@@ -318,7 +323,7 @@
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)
 	if(is_type_in_typecache(src, GLOB.ventcrawl_machinery))
-		return L.handle_ventcrawl(src)
+		return SEND_SIGNAL(L, COMSIG_HANDLE_VENTCRAWL, src)
 	return ..()
 
 

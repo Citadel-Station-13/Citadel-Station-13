@@ -11,12 +11,25 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	resistance_flags = NONE
 	mutantrace_variation = STYLE_MUZZLE
+	visor_flags_inv = HIDEFACE
+	var/flavor_adjust = TRUE //can it do the heehoo alt click to hide/show identity
+
+/obj/item/clothing/mask/gas/examine(mob/user)
+	. = ..()
+	if(flavor_adjust)
+		. += "<span class='info'>Alt-click to toggle identity concealment. It's currently <b>[flags_inv & HIDEFACE ? "on" : "off"]</b>.</span>"
+
+/obj/item/clothing/mask/gas/AltClick(mob/user)
+	. = ..()
+	if(flavor_adjust && adjustmask(user, TRUE))
+		return TRUE
 
 /obj/item/clothing/mask/gas/glass
 	name = "glass gas mask"
 	desc = "A face-covering mask that can be connected to an air supply. This one doesn't obscure your face however." //More accurate
 	icon_state = "gas_clear"
 	flags_inv = HIDEEYES
+	flavor_adjust = FALSE
 
 
 // **** Welding gas mask ****
@@ -35,6 +48,7 @@
 	visor_flags_inv = HIDEEYES
 	visor_flags_cover = MASKCOVERSEYES
 	resistance_flags = FIRE_PROOF
+	flavor_adjust = FALSE
 
 /obj/item/clothing/mask/gas/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
@@ -73,17 +87,18 @@
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = /datum/dog_fashion/head/clown
-	var/list/clownmask_designs = list()
+	var/static/list/clownmask_designs
 
 /obj/item/clothing/mask/gas/clown_hat/Initialize(mapload)
 	.=..()
-	clownmask_designs = list(
-		"True Form" = image(icon = src.icon, icon_state = "clown"),
-		"The Feminist" = image(icon = src.icon, icon_state = "sexyclown"),
-		"The Jester" = image(icon = src.icon, icon_state = "chaos"),
-		"The Madman" = image(icon = src.icon, icon_state = "joker"),
-		"The Rainbow Color" = image(icon = src.icon, icon_state = "rainbow")
-		)
+	if(!clownmask_designs)
+		clownmask_designs = list(
+			"True Form" = image(icon = src.icon, icon_state = "clown"),
+			"The Feminist" = image(icon = src.icon, icon_state = "sexyclown"),
+			"The Jester" = image(icon = src.icon, icon_state = "chaos"),
+			"The Madman" = image(icon = src.icon, icon_state = "joker"),
+			"The Rainbow Color" = image(icon = src.icon, icon_state = "rainbow")
+			)
 
 /obj/item/clothing/mask/gas/clown_hat/ui_action_click(mob/user)
 	if(!istype(user) || user.incapacitated())
@@ -103,14 +118,12 @@
 		to_chat(user, "<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>")
 		return TRUE
 
-/obj/item/clothing/mask/gas/sexyclown
+/obj/item/clothing/mask/gas/clown_hat/sexy
 	name = "sexy-clown wig and mask"
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
-	clothing_flags = ALLOWINTERNALS
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
-	flags_cover = MASKCOVERSEYES
-	resistance_flags = FLAMMABLE
+	actions_types = list()
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
@@ -121,24 +134,26 @@
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
-	var/list/mimemask_designs = list()
-
+	var/static/list/mimemask_designs
 
 /obj/item/clothing/mask/gas/mime/Initialize(mapload)
 	.=..()
-	mimemask_designs = list(
-		"Blanc" = image(icon = src.icon, icon_state = "mime"),
-		"Excité" = image(icon = src.icon, icon_state = "sexymime"),
-		"Triste" = image(icon = src.icon, icon_state = "sadmime"),
-		"Effrayé" = image(icon = src.icon, icon_state = "scaredmime")
-		)
-
+	if(!mimemask_designs)
+		mimemask_designs = list(
+			"Blanc" = image(icon = src.icon, icon_state = "mime"),
+			"Excité" = image(icon = src.icon, icon_state = "sexymime"),
+			"Triste" = image(icon = src.icon, icon_state = "sadmime"),
+			"Effrayé" = image(icon = src.icon, icon_state = "scaredmime"),
+			"Timid Woman" = image(icon = src.icon, icon_state = "timidwoman"),
+			"Timid Man" = image(icon = src.icon, icon_state = "timidman")
+			)
 
 /obj/item/clothing/mask/gas/mime/ui_action_click(mob/user)
 	if(!istype(user) || user.incapacitated())
 		return
 
-	var/static/list/options = list("Blanc" = "mime", "Triste" = "sadmime", "Effrayé" = "scaredmime", "Excité" ="sexymime")
+	var/static/list/options = list("Blanc" = "mime", "Triste" = "sadmime", "Effrayé" = "scaredmime", "Excité" ="sexymime",
+	"Timid Woman" = "timidwoman", "Timid Man" = "timidman")
 
 	var/choice = show_radial_menu(user,src, mimemask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
 
@@ -151,21 +166,33 @@
 		to_chat(user, "<span class='notice'>Your Mime Mask has now morphed into [choice]!</span>")
 		return TRUE
 
+/obj/item/clothing/mask/gas/mime/sexy
+	name = "sexy mime mask"
+	desc = "A traditional female mime's mask."
+	icon_state = "sexymime"
+	item_state = "sexymime"
+	actions_types = list()
+
+/obj/item/clothing/mask/gas/timidcostume
+	name = "timid woman mask"
+	desc = "Most people who wear these are not really that timid."
+	clothing_flags = ALLOWINTERNALS
+	icon_state = "timidwoman"
+	item_state = "timidwoman"
+	flags_cover = MASKCOVERSEYES
+	resistance_flags = FLAMMABLE
+
+/obj/item/clothing/mask/gas/timidcostume/man
+	name = "timid man mask"
+	icon_state = "timidman"
+	item_state = "timidman"
+
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
 	desc = "A mask used when acting as a monkey."
 	clothing_flags = ALLOWINTERNALS
 	icon_state = "monkeymask"
 	item_state = "monkeymask"
-	flags_cover = MASKCOVERSEYES
-	resistance_flags = FLAMMABLE
-
-/obj/item/clothing/mask/gas/sexymime
-	name = "sexy mime mask"
-	desc = "A traditional female mime's mask."
-	clothing_flags = ALLOWINTERNALS
-	icon_state = "sexymime"
-	item_state = "sexymime"
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 

@@ -7,5 +7,10 @@
 	    "whiteship": "whiteship_pubby",
 	    "ferry": "ferry_fancy",
 	    "cargo": "cargo_box"
-    }
+	},
+	"job_access_add": {
+		"/datum/job/hos": [27],
+		"/datum/job/officer": [27],
+		"/datum/job/detective": [27]
+	}
 }

@@ -541,7 +541,7 @@
 	. = ..()
 	if(!(stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
 		for(var/datum/data/record/R in GLOB.data_core.medical)
-			if(prob(10/severity))
+			if(prob(severity/10))
 				switch(rand(1,6))
 					if(1)
 						if(prob(10))
@@ -560,7 +560,7 @@
 						R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
 				continue
 
-			else if(prob(1))
+			else if(prob(severity/80))
 				qdel(R)
 				continue
 

@@ -3,6 +3,7 @@
 	config_tag = "heresy"
 	antag_flag = ROLE_HERETIC
 	false_report_weight = 5
+	chaos = 5
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")	//citadel change - adds HoP, CE, CMO, and RD to heretic role blacklist
 	required_players = 15
@@ -41,7 +42,6 @@
 			break
 		var/datum/mind/cultie = antag_pick(antag_candidates)
 		antag_candidates -= cultie
-		cultie.special_role = ROLE_HERETIC
 		cultie.restricted_roles = restricted_jobs
 		culties += cultie
 

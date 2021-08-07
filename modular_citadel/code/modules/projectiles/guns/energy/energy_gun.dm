@@ -2,7 +2,7 @@
 							The Recolourable Energy Gun
 *//////////////////////////////////////////////////////////////////////////////////////////////
 
-obj/item/gun/energy/e_gun/cx
+/obj/item/gun/energy/e_gun/cx
 	name = "\improper CX Model D Energy Gun"
 	desc = "An overpriced hybrid energy gun with two settings: disable, and kill. Manufactured by CX Armories. Has a polychromic coating."
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
@@ -14,18 +14,18 @@ obj/item/gun/energy/e_gun/cx
 	flight_y_offset = 10
 	var/body_color = "#252528"
 
-obj/item/gun/energy/e_gun/cx/ComponentInitialize()
+/obj/item/gun/energy/e_gun/cx/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 
-obj/item/gun/energy/e_gun/cx/update_overlays()
+/obj/item/gun/energy/e_gun/cx/update_overlays()
 	. = ..()
 	var/mutable_appearance/body_overlay = mutable_appearance('modular_citadel/icons/obj/guns/cit_guns.dmi', "cxegun_body")
 	if(body_color)
 		body_overlay.color = body_color
 	. += body_overlay
 
-obj/item/gun/energy/e_gun/cx/AltClick(mob/living/user)
+/obj/item/gun/energy/e_gun/cx/AltClick(mob/living/user)
 	. = ..()
 	if(!in_range(src, user))	//Basic checks to prevent abuse
 		return
@@ -39,7 +39,7 @@ obj/item/gun/energy/e_gun/cx/AltClick(mob/living/user)
 			body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
 		update_icon()
 
-obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
+/obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(isinhands)
 		var/mutable_appearance/body_inhand = mutable_appearance(icon_file, "cxe_body")

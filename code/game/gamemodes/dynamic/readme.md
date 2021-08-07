@@ -1,14 +1,15 @@
 # DYNAMIC
 
+Tries to keep the round at a certain level of action, based on the round's "threat level".
+
 ## ROUNDSTART
 
 Dynamic rolls threat based on a special sauce formula:
-"dynamic_curve_width \* tan((3.1416 \* (rand() - 0.5) \* 57.2957795)) + dynamic_curve_centre"
+"dynamic_curve_width \* tan((rand() - 0.5) \* 180) + dynamic_curve_centre"
 
-Latejoin and midround injection cooldowns are set using exponential distribution between
-5 minutes and 25 for latejoin
-15 minutes and 35 for midround
-this value is then added to world.time and assigned to the injection cooldown variables.
+Midround injection cooldowns are set using exponential distribution between 15 minutes and 35 minutes. This value is then added to world.time and assigned to the injection cooldown variables.
+
+Latejoins are aggressively assigned whenever possible, to keep the round at a certain threat level.
 
 rigged_roundstart() is called instead if there are forced rules (an admin set the mode)
 
@@ -26,8 +27,6 @@ If midround injection time is lower than world.time, it updates playercounts aga
 make_antag_chance(newPlayer) -> [For each latespawn rule...]
 -> acceptable(living players, threat_level) -> trim_candidates() -> ready(forced=FALSE)
 **If true, add to drafted rules
-**NOTE that acceptable uses threat_level not threat!
-**NOTE Latejoin timer is ONLY reset if at least one rule was drafted.
 **NOTE the new_player.dm AttemptLateSpawn() calls OnPostSetup for all roles (unless assigned role is MODE)
 [After collecting all draftble rules...]
 -> picking_latejoin_ruleset(drafted_rules) -> spend threat -> ruleset.execute()

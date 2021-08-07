@@ -37,11 +37,14 @@
 /obj/item/flashlight/attack_self(mob/user)
 	on = !on
 	update_brightness(user)
-	playsound(user, on ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, 1)
+	playsound(src, on ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
-	return 1
+	return TRUE
+
+/obj/item/flashlight/DoRevenantThrowEffects(atom/target)
+	attack_self()
 
 /obj/item/flashlight/suicide_act(mob/living/carbon/human/user)
 	if (user.eye_blind)
@@ -366,6 +369,11 @@
 	flashlight_power = 0.8
 	custom_price = PRICE_CHEAP
 
+/obj/item/flashlight/lantern/heirloom_moth
+	name = "old lantern"
+	desc = "An old lantern that has seen plenty of use."
+	light_range = 4
+
 /obj/item/flashlight/lantern/jade
 	name = "jade lantern"
 	desc = "An ornate, green lantern."
@@ -428,7 +436,7 @@
 		else
 			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].")
 		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.")
-		A.emp_act(EMP_HEAVY)
+		A.emp_act(80)
 	else
 		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")
 	return

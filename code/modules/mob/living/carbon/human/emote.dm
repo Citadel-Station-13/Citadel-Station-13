@@ -190,6 +190,11 @@
 	message = "chimes."
 	sound = 'sound/machines/chime.ogg'
 
+/datum/emote/sound/human/squeak
+	key = "squeak"
+	message = "squeaks."
+	sound = 'sound/effects/mousesqueek.ogg'
+
 //rock paper scissors emote handling
 /mob/living/carbon/human/proc/beginRockPaperScissors(var/chosen_move)
 	GLOB.rockpaperscissors_players[src] = list(chosen_move, ROCKPAPERSCISSORS_NOT_DECIDED)

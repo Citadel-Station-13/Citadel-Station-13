@@ -55,7 +55,7 @@
 		return
 
 	user.log_message(msg, LOG_EMOTE)
-	msg = "<b>[user]</b> " + msg
+	msg = "<span class='emote'><b>[user]</b> [msg]</span>"
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		if(!M.client || isnewplayer(M))
@@ -66,8 +66,12 @@
 
 	if(emote_type == EMOTE_AUDIBLE)
 		user.audible_message(msg)
-	else
+	else if(emote_type == EMOTE_VISIBLE)
 		user.visible_message(msg)
+	else if(emote_type == EMOTE_BOTH)
+		user.visible_message(msg, blind_message = msg)
+	else if(emote_type == EMOTE_OMNI)
+		user.visible_message(msg, omni = TRUE)
 
 /datum/emote/proc/replace_pronoun(mob/user, message)
 	if(findtext(message, "their"))
@@ -140,7 +144,7 @@
 	var/sound //Sound to play when emote is called
 	var/vary = FALSE	//used for the honk borg emote
 	var/volume = 50
-	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
+	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon, /mob/camera/aiEye)
 
 /datum/emote/sound/run_emote(mob/user, params)
 	. = ..()

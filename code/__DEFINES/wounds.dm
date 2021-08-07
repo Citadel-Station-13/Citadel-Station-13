@@ -1,5 +1,5 @@
 
-#define WOUND_DAMAGE_EXPONENT	1.225
+#define WOUND_DAMAGE_EXPONENT	1.2
 
 /// an attack must do this much damage after armor in order to roll for being a wound (incremental pressure damage need not apply)
 #define WOUND_MINIMUM_DAMAGE		5

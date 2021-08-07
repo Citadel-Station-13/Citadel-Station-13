@@ -18,7 +18,6 @@
 
 	var/list/stored_profiles = list() //list of datum/changelingprofile
 	var/datum/changelingprofile/first_prof = null
-	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 0
 	/// did we get succed by another changeling
 	var/hostile_absorbed = FALSE
@@ -38,8 +37,9 @@
 	var/mimicing = ""
 	var/canrespec = 0
 	var/changeling_speak = 0
-	var/loudfactor = 0 //Used for blood tests. At 4, blood tests will succeed. At 10, blood tests will result in an explosion.
-	var/bloodtestwarnings = 0 //Used to track if the ling has been notified that they will pass blood tests.
+	var/loudfactor = 0 //Used for blood tests. This is is the average loudness of the ling's abilities calculated with the below two vars
+	var/loudtotal = 0 //Used to keep track of the sum of the ling's loudness
+	var/totalpurchases = 0 //Used to keep track of how many purchases the ling's made after free abilities have been added
 	var/datum/dna/chosen_dna
 	var/obj/effect/proc_holder/changeling/sting/chosen_sting
 	var/datum/cellular_emporium/cellular_emporium
@@ -125,6 +125,8 @@
 /datum/antagonist/changeling/proc/remove_changeling_powers()
 	if(ishuman(owner.current) || ismonkey(owner.current))
 		reset_properties()
+		QDEL_NULL(cellular_emporium)
+		QDEL_NULL(emporium_action)
 		for(var/obj/effect/proc_holder/changeling/p in purchasedpowers)
 			if(p.always_keep)
 				continue
@@ -139,8 +141,7 @@
 /datum/antagonist/changeling/proc/reset_powers()
 	if(purchasedpowers)
 		remove_changeling_powers()
-	loudfactor = 0
-	bloodtestwarnings = 0
+	create_actions()
 	//Repurchase free powers.
 	for(var/path in all_powers)
 		var/obj/effect/proc_holder/changeling/S = new path()
@@ -148,6 +149,9 @@
 			if(!has_sting(S))
 				purchasedpowers += S
 				S.on_purchase(owner.current,TRUE)
+	loudfactor = 0
+	loudtotal = 0
+	totalpurchases = 0
 
 /datum/antagonist/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
 	for(var/obj/effect/proc_holder/changeling/P in purchasedpowers)
@@ -192,13 +196,18 @@
 	geneticpoints -= thepower.dna_cost
 	purchasedpowers += thepower
 	thepower.on_purchase(owner.current)
-	loudfactor += thepower.loudness
-	if(loudfactor >= 4 && !bloodtestwarnings)
-		to_chat(owner.current, "<span class='warning'>Our blood is growing flammable. Our blood will react violently to heat.</span>")
-		bloodtestwarnings = 1
-	if(loudfactor >= 10 && bloodtestwarnings < 2)
-		to_chat(owner.current, "<span class='warning'>Our blood has grown extremely flammable. Our blood will react explosively to heat.</span>")
-		bloodtestwarnings = 2
+	loudtotal += thepower.loudness
+	totalpurchases++
+	var/oldloudness = loudfactor
+	loudfactor = loudtotal/max(totalpurchases,1)
+	if(loudfactor >= LINGBLOOD_DETECTION_THRESHOLD && oldloudness < LINGBLOOD_DETECTION_THRESHOLD)
+		to_chat(owner.current, "<span class='warning'>Our blood has grown flammable. Our blood will now react violently to heat.</span>")
+	else if(loudfactor < LINGBLOOD_DETECTION_THRESHOLD && oldloudness >= LINGBLOOD_DETECTION_THRESHOLD)
+		to_chat(owner.current, "<span class='notice'>Our blood has stabilized, and will no longer react violently to heat.</span>")
+	if(loudfactor > LINGBLOOD_EXPLOSION_THRESHOLD && oldloudness <= LINGBLOOD_EXPLOSION_THRESHOLD)
+		to_chat(owner.current, "<span class='warning'>Our blood has grown extremely flammable. Our blood will now react explosively to heat.</span>")
+	else if(loudfactor <= LINGBLOOD_EXPLOSION_THRESHOLD && oldloudness > LINGBLOOD_EXPLOSION_THRESHOLD)
+		to_chat(owner.current, "<span class='notice'>Our blood has slightly stabilized, and will no longer explode when exposed to heat.</span>")
 
 /datum/antagonist/changeling/proc/readapt()
 	if(!ishuman(owner.current))
@@ -207,7 +216,7 @@
 	if(canrespec)
 		to_chat(owner.current, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
 		reset_powers()
-		playsound(get_turf(owner.current), 'sound/effects/lingreadapt.ogg', 75, TRUE, 5, soundenvwet = 0)
+		playsound(get_turf(owner.current), 'sound/effects/lingreadapt.ogg', 75, TRUE, 5)
 		canrespec = 0
 		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
 		return 1
@@ -219,7 +228,8 @@
 /datum/antagonist/changeling/proc/regenerate()
 	var/mob/living/carbon/the_ling = owner.current
 	if(istype(the_ling))
-		emporium_action.Grant(the_ling)
+		if(emporium_action)
+			emporium_action.Grant(the_ling)
 		if(the_ling.stat == DEAD)
 			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), (chem_storage*0.5))
 			geneticdamage = max(LING_DEAD_GENETICDAMAGE_HEAL_CAP,geneticdamage-1)
@@ -245,12 +255,6 @@
 	var/mob/living/carbon/user = owner.current
 	if(!istype(user))
 		return
-	if(stored_profiles.len)
-		var/datum/changelingprofile/prof = stored_profiles[1]
-		if(prof.dna == user.dna && stored_profiles.len >= dna_max)//If our current DNA is the stalest, we gotta ditch it.
-			if(verbose)
-				to_chat(user, "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>")
-			return
 	if(!target)
 		return
 	if(NO_DNA_COPY in target.dna.species.species_traits)
@@ -310,9 +314,6 @@
 	return prof
 
 /datum/antagonist/changeling/proc/add_profile(datum/changelingprofile/prof)
-	if(stored_profiles.len > dna_max)
-		if(!push_out_profile())
-			return
 
 	if(!first_prof)
 		first_prof = prof
@@ -332,19 +333,6 @@
 				continue
 			stored_profiles -= prof
 			qdel(prof)
-
-/datum/antagonist/changeling/proc/get_profile_to_remove()
-	for(var/datum/changelingprofile/prof in stored_profiles)
-		if(!prof.protected)
-			return prof
-
-/datum/antagonist/changeling/proc/push_out_profile()
-	var/datum/changelingprofile/removeprofile = get_profile_to_remove()
-	if(removeprofile)
-		stored_profiles -= removeprofile
-		return 1
-	return 0
-
 
 /datum/antagonist/changeling/proc/create_initial_profile()
 	var/mob/living/carbon/C = owner.current	//only carbons have dna now, so we have to typecaste
@@ -449,30 +437,21 @@
 		destroy_objective.find_target()
 		objectives += destroy_objective
 	else
-		if(prob(70))
-			var/datum/objective/assassinate/once/kill_objective = new
-			kill_objective.owner = owner
-			if(team_mode) //No backstabbing while in a team
-				kill_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
-			else
-				kill_objective.find_target()
-			objectives += kill_objective
+		var/datum/objective/assassinate/once/kill_objective = new
+		kill_objective.owner = owner
+		if(team_mode) //No backstabbing while in a team
+			kill_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
 		else
-			var/datum/objective/maroon/maroon_objective = new
-			maroon_objective.owner = owner
-			if(team_mode)
-				maroon_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
-			else
-				maroon_objective.find_target()
-			objectives += maroon_objective
+			kill_objective.find_target()
+		objectives += kill_objective
 
-			if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
-				var/datum/objective/escape/escape_with_identity/identity_theft = new
-				identity_theft.owner = owner
-				identity_theft.target = maroon_objective.target
-				identity_theft.update_explanation_text()
-				objectives += identity_theft
-				escape_objective_possible = FALSE
+		if(!(locate(/datum/objective/escape) in objectives) && escape_objective_possible && prob(50))
+			var/datum/objective/escape/escape_with_identity/identity_theft = new
+			identity_theft.owner = owner
+			identity_theft.target = kill_objective.target
+			identity_theft.update_explanation_text()
+			objectives += identity_theft
+			escape_objective_possible = FALSE
 
 	if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
 		if(prob(50))

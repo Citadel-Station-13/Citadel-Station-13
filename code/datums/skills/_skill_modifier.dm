@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 		if(!mod_L)
 			mod_L = GLOB.potential_mods_per_skill[target_skills] = list()
 		else
-			BINARY_INSERT(identifier, mod_L, datum/skill_modifier, src, priority, COMPARE_VALUE)
+			BINARY_INSERT(identifier, mod_L, /datum/skill_modifier, src, priority, COMPARE_VALUE)
 		mod_L[identifier] = src
 		GLOB.potential_skills_per_mod[target_skills_key] = list(target_skills)
 	else //Should be a list.
@@ -66,7 +66,7 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 			if(!mod_L)
 				mod_L = GLOB.potential_mods_per_skill[path] = list()
 			else
-				BINARY_INSERT(identifier, mod_L, datum/skill_modifier, src, priority, COMPARE_VALUE)
+				BINARY_INSERT(identifier, mod_L, /datum/skill_modifier, src, priority, COMPARE_VALUE)
 			mod_L[identifier] = src
 
 /datum/skill_modifier/Destroy()

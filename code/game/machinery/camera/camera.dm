@@ -97,7 +97,7 @@
 	if(!status)
 		return
 	if(!(. & EMP_PROTECT_SELF))
-		if(prob(150/severity))
+		if(prob(severity/0.7))
 			update_icon()
 			var/list/previous_network = network
 			network = list()

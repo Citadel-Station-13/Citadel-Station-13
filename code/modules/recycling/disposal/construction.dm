@@ -14,12 +14,12 @@
 	var/obj/pipe_type = /obj/structure/disposalpipe/segment
 	var/pipename
 
-/obj/structure/disposalconstruct/Initialize(loc, _pipe_type, _dir = SOUTH, flip = FALSE, obj/make_from)
+/obj/structure/disposalconstruct/Initialize(mapload, _pipe_type, _dir = SOUTH, flip = FALSE, obj/make_from)
 	. = ..()
 	if(make_from)
 		pipe_type = make_from.type
 		setDir(make_from.dir)
-		anchored = TRUE
+		set_anchored(TRUE)
 
 	else
 		if(_pipe_type)
@@ -33,6 +33,8 @@
 		rotcomp.BaseRot(null,ROTATION_FLIP)
 
 	update_icon()
+
+	// AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
 /obj/structure/disposalconstruct/Move()
 	var/old_dir = dir

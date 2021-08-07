@@ -194,7 +194,9 @@ Nothing else in the console has ID requirements.
 	locked = FALSE
 	return TRUE
 
-/obj/machinery/computer/rdconsole/multitool_act(mob/user, obj/item/multitool/I)
+/obj/machinery/computer/rdconsole/multitool_act(mob/user, obj/item/I)
+	if(!I.tool_behaviour == TOOL_MULTITOOL)
+		return
 	var/lathe = linked_lathe && linked_lathe.multitool_act(user, I)
 	var/print = linked_imprinter && linked_imprinter.multitool_act(user, I)
 	return lathe || print

@@ -165,7 +165,7 @@
 /datum/action/innate/cult/blood_spell/emp/Activate()
 	owner.visible_message("<span class='warning'>[owner]'s hand flashes a bright blue!</span>", \
 						 "<span class='cultitalic'>You speak the cursed words, emitting an EMP blast from your hand.</span>")
-	empulse(owner, 2, 5)
+	empulse_using_range(owner, 8)
 	owner.whisper(invocation, language = /datum/language/common)
 	charges--
 	if(charges<=0)
@@ -385,8 +385,7 @@
 		qdel(src)
 		return
 	log_combat(user, M, "used a cult spell on", source.name, "")
-	M.lastattacker = user.real_name
-	M.lastattackerckey = user.ckey
+	M.set_last_attacker(user)
 
 /obj/item/melee/blood_magic/afterattack(atom/target, mob/living/carbon/user, proximity)
 	. = ..()
@@ -445,13 +444,13 @@
 					if(L.move_resist < MOVE_FORCE_STRONG)
 						var/atom/throw_target = get_edge_target_turf(L, user.dir)
 						L.throw_at(throw_target, 7, 1, user)
-			else if(!iscultist(L))
+			else if(!is_servant_of_ratvar(L))
 				L.DefaultCombatKnockdown(160)
 				L.adjustStaminaLoss(140) //Ensures hard stamcrit
 				L.flash_act(1,1)
 				if(issilicon(target))
 					var/mob/living/silicon/S = L
-					S.emp_act(EMP_HEAVY)
+					S.emp_act(80)
 				else if(iscarbon(target))
 					var/mob/living/carbon/C = L
 					C.silent += clamp(12 - C.silent, 0, 6)
@@ -465,7 +464,7 @@
 					C.drowsyness = max(10, C.drowsyness)
 					C.confused += clamp(20 - C.confused, 0, 10)
 				L.adjustBruteLoss(15)
-			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] [iscultist(L) ? "writhes in pain" : "falls to the ground!"]</span>")
+			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] [is_servant_of_ratvar(L) ? "writhes in pain!" : "falls to the ground!"]</span>")
 		uses--
 	..()
 
@@ -610,7 +609,7 @@
 				var/prev_color = candidate.color
 				candidate.color = "black"
 				if(do_after(user, 90, target = candidate))
-					candidate.emp_act(EMP_HEAVY)
+					candidate.emp_act(80)
 					var/construct_class = alert(user, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
 					user.visible_message("<span class='danger'>The dark cloud receedes from what was formerly [candidate], revealing a\n [construct_class]!</span>")
 					switch(construct_class)
@@ -717,9 +716,9 @@
 						uses = 0
 					ratio *= -1
 					H.adjustOxyLoss((overall_damage*ratio) * (H.getOxyLoss() / overall_damage), 0)
-					H.adjustToxLoss((overall_damage*ratio) * (H.getToxLoss() / overall_damage), 0)
-					H.adjustFireLoss((overall_damage*ratio) * (H.getFireLoss() / overall_damage), 0)
-					H.adjustBruteLoss((overall_damage*ratio) * (H.getBruteLoss() / overall_damage), 0)
+					H.adjustToxLoss((overall_damage*ratio) * (H.getToxLoss() / overall_damage), 0, toxins_type = TOX_OMNI)
+					H.adjustFireLoss((overall_damage*ratio) * (H.getFireLoss() / overall_damage), 0, only_organic = FALSE)
+					H.adjustBruteLoss((overall_damage*ratio) * (H.getBruteLoss() / overall_damage), 0, only_organic = FALSE)
 					H.updatehealth()
 					playsound(get_turf(H), 'sound/magic/staff_healing.ogg', 25)
 					new /obj/effect/temp_visual/cult/sparks(get_turf(H))

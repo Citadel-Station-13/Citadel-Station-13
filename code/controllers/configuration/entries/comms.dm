@@ -22,11 +22,10 @@
 
 /datum/config_entry/string/cross_comms_name
 
-/datum/config_entry/string/medal_hub_address
+/datum/config_entry/string/cross_comms_network
+	protection = CONFIG_ENTRY_LOCKED
 
-/datum/config_entry/string/medal_hub_password
-	protection = CONFIG_ENTRY_HIDDEN
-
+/// cit config
 /datum/config_entry/keyed_list/cross_server_bunker_override
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_TEXT

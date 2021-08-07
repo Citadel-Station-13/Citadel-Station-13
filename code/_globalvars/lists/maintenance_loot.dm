@@ -89,7 +89,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/effect/spawner/lootdrop/welder_tools = 3,
 	/obj/effect/spawner/lootdrop/low_tools = 5,
 	/obj/item/relic = 3,
-	/obj/item/weaponcrafting/improvised_parts/shotgun_receiver = 2,
+	/obj/item/weaponcrafting/receiver = 2,
 	/obj/item/clothing/head/cone = 2,
 	/obj/item/grenade/smokebomb = 2,
 	/obj/item/geiger_counter = 3,
@@ -112,6 +112,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/storage/box/marshmallow = 2,
 	/obj/item/clothing/gloves/tackler/offbrand = 1,
 	/obj/item/stack/sticky_tape = 1,
+	/obj/effect/spawner/lootdrop/grille_or_trash = 15,
 	"" = 3
 	))
 

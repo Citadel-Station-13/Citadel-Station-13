@@ -17,16 +17,16 @@
 	threat = 3
 
 /datum/antagonist/xeno/threat()
-	. = 1
+	. = 3
 	if(isalienhunter(owner))
-		. = 2
+		. = 6
 	else if(isaliensentinel(owner))
-		. = 4
+		. = 12
 	else if(isalienroyal(owner))
 		if(isalienqueen(owner))
-			. = 8
+			. = 24
 		else
-			. = 6
+			. = 18
 
 /datum/antagonist/xeno/create_team(datum/team/xeno/new_team)
 	if(!new_team)

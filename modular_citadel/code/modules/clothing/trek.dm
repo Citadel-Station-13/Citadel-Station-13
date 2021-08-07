@@ -51,58 +51,58 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(
-				/obj/item/tank/internals/emergency_oxygen,
-				/obj/item/flashlight,
-				/obj/item/analyzer,
-				/obj/item/radio,
-				/obj/item/gun,
-				/obj/item/melee/baton,
-				/obj/item/restraints/handcuffs,
-				/obj/item/reagent_containers/hypospray,
-				/obj/item/hypospray,
-				/obj/item/healthanalyzer,
-				/obj/item/reagent_containers/syringe,
-				/obj/item/reagent_containers/glass/bottle/vial,
-				/obj/item/reagent_containers/glass/beaker,
-				/obj/item/storage/pill_bottle,
-				/obj/item/taperecorder)
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/flashlight,
+		/obj/item/analyzer,
+		/obj/item/radio,
+		/obj/item/gun,
+		/obj/item/melee/baton,
+		/obj/item/restraints/handcuffs,
+		/obj/item/reagent_containers/hypospray,
+		/obj/item/hypospray,
+		/obj/item/healthanalyzer,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/glass/bottle/vial,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/storage/pill_bottle,
+		/obj/item/taperecorder)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
-	var/unbuttoned = 0
+	var/unbuttoned = FALSE
 
-	verb/toggle()
-		set name = "Toggle coat buttons"
-		set category = "Object"
-		set src in usr
+/obj/item/clothing/suit/storage/fluff/fedcoat/verb/toggle()
+	set name = "Toggle coat buttons"
+	set category = "Object"
+	set src in usr
 
-		var/mob/living/L = usr
-		if(!istype(L) || !CHECK_MOBILITY(L, MOBILITY_USE))
-			return FALSE
+	var/mob/living/L = usr
+	if(!istype(L) || !CHECK_MOBILITY(L, MOBILITY_USE))
+		return FALSE
 
-		switch(unbuttoned)
-			if(0)
-				icon_state = "[initial(icon_state)]_open"
-				item_state = "[initial(item_state)]_open"
-				unbuttoned = 1
-				to_chat(usr,"You unbutton the coat.")
-			if(1)
-				icon_state = "[initial(icon_state)]"
-				item_state = "[initial(item_state)]"
-				unbuttoned = 0
-				to_chat(usr,"You button up the coat.")
-		usr.update_inv_wear_suit()
+	switch(unbuttoned)
+		if(FALSE)
+			icon_state = "[initial(icon_state)]_open"
+			item_state = "[initial(item_state)]_open"
+			unbuttoned = TRUE
+			to_chat(usr,"You unbutton the coat.")
+		if(TRUE)
+			icon_state = "[initial(icon_state)]"
+			item_state = "[initial(item_state)]"
+			unbuttoned = FALSE
+			to_chat(usr,"You button up the coat.")
+	usr.update_inv_wear_suit()
 
-	//Variants
+//Variants
 /obj/item/clothing/suit/storage/fluff/fedcoat/medsci
-		icon_state = "fedblue"
-		item_state = "fedblue"
+	icon_state = "fedblue"
+	item_state = "fedblue"
 
 /obj/item/clothing/suit/storage/fluff/fedcoat/eng
-		icon_state = "fedeng"
-		item_state = "fedeng"
+	icon_state = "fedeng"
+	item_state = "fedeng"
 
 /obj/item/clothing/suit/storage/fluff/fedcoat/capt
-		icon_state = "fedcapt"
-		item_state = "fedcapt"
+	icon_state = "fedcapt"
+	item_state = "fedcapt"
 
 //"modern" ones for fancy
 
@@ -124,18 +124,18 @@
 		)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
-	//Variants
+//Variants
 /obj/item/clothing/suit/storage/fluff/modernfedcoat/medsci
-		icon_state = "fedmodernblue"
-		item_state = "fedmodernblue"
+	icon_state = "fedmodernblue"
+	item_state = "fedmodernblue"
 
 /obj/item/clothing/suit/storage/fluff/modernfedcoat/eng
-		icon_state = "fedmoderneng"
-		item_state = "fedmoderneng"
+	icon_state = "fedmoderneng"
+	item_state = "fedmoderneng"
 
 /obj/item/clothing/suit/storage/fluff/modernfedcoat/sec
-		icon_state = "fedmodernsec"
-		item_state = "fedmodernsec"
+	icon_state = "fedmodernsec"
+	item_state = "fedmodernsec"
 
 /obj/item/clothing/head/caphat/formal/fedcover
 	name = "Federation Officer's Cap"
@@ -146,22 +146,22 @@
 	mob_overlay_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	item_state = "fedcapofficer"
 
-	//Variants
+//Variants
 /obj/item/clothing/head/caphat/formal/fedcover/medsci
-		icon_state = "fedcapsci"
-		item_state = "fedcapsci"
+	icon_state = "fedcapsci"
+	item_state = "fedcapsci"
 
 /obj/item/clothing/head/caphat/formal/fedcover/eng
-		icon_state = "fedcapeng"
-		item_state = "fedcapeng"
+	icon_state = "fedcapeng"
+	item_state = "fedcapeng"
 
 /obj/item/clothing/head/caphat/formal/fedcover/sec
-		icon_state = "fedcapsec"
-		item_state = "fedcapsec"
+	icon_state = "fedcapsec"
+	item_state = "fedcapsec"
 
 /obj/item/clothing/head/caphat/formal/fedcover/black
-		icon_state = "fedcapblack"
-		item_state = "fedcapblack"
+	icon_state = "fedcapblack"
+	item_state = "fedcapblack"
 
 //orvilike caps
 /obj/item/clothing/head/kepi/orvi
@@ -172,8 +172,11 @@
 /obj/item/clothing/head/kepi/orvi/command
 	icon_state = "kepi_com"
 
-/obj/item/clothing/head/kepi/orvi/engsec
-	icon_state = "kepi_ops"
+/obj/item/clothing/head/kepi/orvi/sec
+	icon_state = "kepi_sec"
+
+/obj/item/clothing/head/kepi/orvi/eng
+	icon_state = "kepi_eng"
 
 /obj/item/clothing/head/kepi/orvi/medsci
 	icon_state = "kepi_medsci"

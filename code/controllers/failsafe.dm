@@ -1,7 +1,7 @@
- /**
-  * Failsafe
-  *
-  * Pretty much pokes the MC to make sure it's still alive.
+/**
+ * Failsafe
+ *
+ * Pretty much pokes the MC to make sure it's still alive.
  **/
 
 GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
@@ -31,7 +31,7 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 	Initialize()
 
 /datum/controller/failsafe/Initialize()
-	set waitfor = 0
+	set waitfor = FALSE
 	Failsafe.Loop()
 	if(!QDELETED(src))
 		qdel(src) //when Loop() returns, we delete ourselves and let the mc recreate us

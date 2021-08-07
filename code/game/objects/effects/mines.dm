@@ -16,7 +16,7 @@
 		return
 	. = ..()
 
-	if(AM.movement_type & FLYING)
+	if(AM.movement_type & FLYING || iseffect(AM))
 		return
 
 	triggermine(AM)

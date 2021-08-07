@@ -115,13 +115,20 @@
 				return FALSE
 			var/valid = FALSE
 			var/list/checked = program_cache.Copy()
-			if(obj_flags & EMAGGED)
-				checked |= emag_programs
 			for(var/prog in checked)
 				var/list/P = prog
 				if(P["type"] == program_to_load)
 					valid = TRUE
 					break
+			if(obj_flags & EMAGGED) //split up into separate for loops instead of together so we can adminlog it
+				checked = emag_programs.Copy()
+				for(var/prog in checked)
+					var/list/P = prog
+					if(P["type"] == program_to_load)
+						valid = TRUE
+						log_game("[key_name(usr)] has loaded the restricted holodeck program [program_to_load]")
+						message_admins("[ADMIN_LOOKUPFLW(usr)] has loaded the restricted holodeck program [program_to_load]")
+						break
 			if(!valid)
 				return FALSE
 
@@ -134,6 +141,14 @@
 			nerf(obj_flags & EMAGGED)
 			obj_flags ^= EMAGGED
 			say("Safeties restored. Restarting...")
+			if(obj_flags & EMAGGED)
+				to_chat(usr,"<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>")
+				log_game("[key_name(usr)] has disabled safeties on the holodeck computer")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] has disabled safeties on the holodeck computer")
+			else
+				to_chat(usr,"<span class='notice'>You restore the safeties to the holodeck.</span>")
+				log_game("[key_name(usr)] has reenabled safeties on the holodeck computer")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] has reenabled safeties on the holodeck computer")
 
 /obj/machinery/computer/holodeck/process()
 	if(damaged && prob(10))
@@ -179,6 +194,7 @@
 	to_chat(user, "<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>")
 	say("Warning. Automatic shutoff and derezzing protocols have been corrupted. Please call Nanotrasen maintenance and do not use the simulator.")
 	log_game("[key_name(user)] emagged the Holodeck Control Console")
+	message_admins("[ADMIN_LOOKUPFLW(user)] emagged the Holodeck Control Console.")
 	nerf(!(obj_flags & EMAGGED))
 
 /obj/machinery/computer/holodeck/emp_act(severity)

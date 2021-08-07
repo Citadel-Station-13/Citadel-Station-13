@@ -64,8 +64,6 @@
 			if(materials.use_amount_mat(coin_mat, chosen))
 				for(var/coin_to_make in 1 to 5)
 					create_coins()
-					produced_coins++
-					CHECK_TICK
 			else
 				var/found_new = FALSE
 				for(var/datum/material/inserted_material in materials.materials)
@@ -81,11 +79,10 @@
 		STOP_PROCESSING(SSmachines, src)
 		icon_state = "coinpress0"
 
-/obj/machinery/mineral/mint/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/mineral/mint/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Mint", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Mint", name)
 		ui.open()
 
 /obj/machinery/mineral/mint/ui_data()
@@ -132,6 +129,7 @@
 		return TRUE
 
 /obj/machinery/mineral/mint/proc/create_coins()
+	set waitfor = FALSE
 	var/turf/T = get_step(src,output_dir)
 	var/temp_list = list()
 	temp_list[chosen] = 400
@@ -144,3 +142,5 @@
 			O.forceMove(bag_to_use) //don't bother sending the signal, the new bag is empty and all that.
 
 		SSblackbox.record_feedback("amount", "coins_minted", 1)
+	produced_coins++
+	CHECK_TICK

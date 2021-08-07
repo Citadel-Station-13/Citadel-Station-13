@@ -261,13 +261,11 @@
 		set_pin_data(IC_OUTPUT, 12, H.pestlevel)
 		set_pin_data(IC_OUTPUT, 13, H.toxic)
 		set_pin_data(IC_OUTPUT, 14, H.waterlevel)
-		set_pin_data(IC_OUTPUT, 15, H.nutrilevel)
+		set_pin_data(IC_OUTPUT, 15, H.reagents.total_volume)
 		set_pin_data(IC_OUTPUT, 16, H.harvest)
 		set_pin_data(IC_OUTPUT, 17, H.dead)
 		set_pin_data(IC_OUTPUT, 18, H.plant_health)
 		set_pin_data(IC_OUTPUT, 19, H.self_sustaining)
-		set_pin_data(IC_OUTPUT, 20, H.using_irrigation)
-		set_pin_data(IC_OUTPUT, 21, H.FindConnected())
 	push_data()
 	activate_pin(2)
 
@@ -1165,7 +1163,7 @@
 	var/list/gas_names = list()
 	var/list/gas_amounts = list()
 	for(var/id in air_contents.get_gases())
-		var/name = GLOB.meta_gas_names[id]
+		var/name = GLOB.gas_data.names[id]
 		var/amt = round(air_contents.get_moles(id), 0.001)
 		gas_names.Add(name)
 		gas_amounts.Add(amt)

@@ -5,14 +5,19 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	valid_territory = FALSE
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
+	flags_1 = CAN_BE_DIRTY_1
+
+/area/survivalpod/nonpowered
+	name = "\proper Emergency Shelter"
+	requires_power = TRUE
 
 //Survival Capsule
 /obj/item/survivalcapsule
 	name = "bluespace shelter capsule"
 	desc = "An emergency shelter stored within a pocket of bluespace."
-	icon_state = "capsule"
 	icon = 'icons/obj/mining.dmi'
+	icon_state = "capsule"
 	w_class = WEIGHT_CLASS_TINY
 	var/template_id = "shelter_alpha"
 	var/datum/map_template/shelter/template
@@ -72,13 +77,23 @@
 /obj/item/survivalcapsule/luxury
 	name = "luxury bluespace shelter capsule"
 	desc = "An exorbitantly expensive luxury suite stored within a pocket of bluespace."
+	icon_state = "capsule-lux"
 	template_id = "shelter_beta"
 
-/obj/item/survivalcapsule/luxuryelite
+/obj/item/survivalcapsule/luxury/elitebar
 	name = "luxury elite bar capsule"
 	desc = "A luxury bar in a capsule. Bartender required and not included."
 	template_id = "shelter_charlie"
 
+/obj/item/survivalcapsule/luxury/empty
+	name = "large empty capsule"
+	desc = "An extremly large capsule which requires power. Useful for projects all over."
+	template_id = "shelter_delta"
+
+/obj/item/survivalcapsule/luxury/penthouse
+	name = "penthouse bluespace sheler capsule"
+	desc = "The absolute pinnacle of luxury in terms of survival capsules. While exuberantly expensive it has everything needed to make a small home in lavaland."
+	template_id = "shelter_epsilon"
 //Pod objects
 
 //Window
@@ -201,7 +216,7 @@
 		var/obj/item/reagent_containers/food/snacks/donkpocket/warm/W = new(src)
 		load(W)
 	if(prob(50))
-		var/obj/item/storage/box/dice/D = new(src)
+		var/obj/item/storage/dice/D = new(src)
 		load(D)
 	else
 		var/obj/item/instrument/guitar/G = new(src)
@@ -297,7 +312,7 @@
 						/obj/item/energy_katana,
 						/obj/item/hierophant_club,
 						/obj/item/his_grace,
-						/obj/item/gun/ballistic/minigun,
+						/obj/item/gun/energy/minigun,
 						/obj/item/gun/ballistic/automatic/l6_saw,
 						/obj/item/gun/magic/staff/chaos,
 						/obj/item/gun/magic/staff/spellblade,

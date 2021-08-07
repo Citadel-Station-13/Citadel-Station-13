@@ -16,8 +16,8 @@
 /area/template_noop)
 "ae" = (
 /obj/structure/fluff/broken_flooring{
-	icon_state = "plating";
-	dir = 4
+	dir = 4;
+	icon_state = "plating"
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -66,8 +66,8 @@
 "an" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	icon_state = "plating";
-	dir = 4
+	dir = 4;
+	icon_state = "plating"
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -78,8 +78,8 @@
 "ap" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	icon_state = "pile";
-	dir = 8
+	dir = 8;
+	icon_state = "pile"
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -98,7 +98,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Tiny Freighter APC";
-	pixel_x = -24;
+	pixel_x = -25;
 	req_access = null;
 	start_charge = 0
 	},
@@ -133,8 +133,8 @@
 /area/template_noop)
 "aE" = (
 /obj/structure/fluff/broken_flooring{
-	icon_state = "pile";
-	dir = 4
+	dir = 4;
+	icon_state = "pile"
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -244,7 +244,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Tiny Freighter APC";
-	pixel_x = -24;
+	pixel_x = -25;
 	req_access = null;
 	start_charge = 0
 	},
@@ -1054,6 +1054,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/secure/weapon,
 /obj/item/gun/ballistic/automatic/pistol/APS,
+/obj/item/tcg_card/special/spess_pirate,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter2)
 "js" = (

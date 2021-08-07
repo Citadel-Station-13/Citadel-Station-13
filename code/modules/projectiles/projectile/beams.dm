@@ -70,7 +70,7 @@
 	name = "\improper X-ray beam"
 	icon_state = "xray"
 	damage = 15
-	irradiate = 300
+	irradiate = 100
 	range = 15
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF
 

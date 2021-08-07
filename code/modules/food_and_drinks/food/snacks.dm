@@ -160,7 +160,7 @@ All foods are distributed among various categories. Use common sense.
 				SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user)
 				var/fraction = min(bitesize / reagents.total_volume, 1)
 				reagents.reaction(M, INGEST, fraction)
-				reagents.trans_to(M, bitesize)
+				reagents.trans_to(M, bitesize, log = TRUE)
 				bitecount++
 				On_Consume(M)
 				checkLiked(fraction, M)
@@ -359,7 +359,7 @@ All foods are distributed among various categories. Use common sense.
 		if(!M.is_drainable())
 			to_chat(user, "<span class='warning'>[M] is unable to be dunked in!</span>")
 			return
-		if(M.reagents.trans_to(src, dunk_amount))	//if reagents were transfered, show the message
+		if(M.reagents.trans_to(src, dunk_amount, log = TRUE))	//if reagents were transfered, show the message
 			to_chat(user, "<span class='notice'>You dunk the [M].</span>")
 			return
 		if(!M.reagents.total_volume)

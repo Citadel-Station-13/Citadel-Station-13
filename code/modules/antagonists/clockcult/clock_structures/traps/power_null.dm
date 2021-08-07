@@ -11,7 +11,7 @@
 /obj/structure/destructible/clockwork/trap/power_nullifier/activate()
 	if(!activated)
 		activated = TRUE
-		empulse(get_turf(src),1,1,TRUE)
+		empulse_using_range(get_turf(src),1,TRUE)
 
 /obj/structure/destructible/clockwork/trap/power_nullifier/emp_act(var/strength=1)
 	activate()

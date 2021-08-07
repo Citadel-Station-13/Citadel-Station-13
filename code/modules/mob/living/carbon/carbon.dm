@@ -191,8 +191,8 @@
 			if(HAS_TRAIT(src, TRAIT_PACIFISM))
 				to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
 				return
-
-			adjustStaminaLossBuffered(STAM_COST_THROW_MOB * ((throwable_mob.mob_size+1)**2))// throwing an entire person shall be very tiring
+			if(!UseStaminaBuffer(STAM_COST_THROW_MOB * ((throwable_mob.mob_size+1)**2), TRUE))
+				return
 			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 			var/turf/end_T = get_turf(target)
 			if(start_T && end_T)
@@ -206,7 +206,8 @@
 			to_chat(src, "<span class='notice'>You set [I] down gently on the ground.</span>")
 			return
 
-		adjustStaminaLossBuffered(I.getweight(src, STAM_COST_THROW_MULT, SKILL_THROW_STAM_COST))
+		if(!UseStaminaBuffer(I.getweight(src, STAM_COST_THROW_MULT, SKILL_THROW_STAM_COST), warn = TRUE))
+			return
 
 	if(thrown_thing)
 		var/power_throw = 0
@@ -357,10 +358,11 @@
 		return
 	I.item_flags |= BEING_REMOVED
 	breakouttime = I.breakouttime
+	var/datum/cuffbreak_checker/cuffbreak_checker = new(get_turf(src), istype(I, /obj/item/restraints)? I : null)
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
 		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)</span>")
-		if(do_after(src, breakouttime, 0, target = src, required_mobility_flags = MOBILITY_RESIST))
+		if(do_after_advanced(src, breakouttime, src, NONE, CALLBACK(cuffbreak_checker, /datum/cuffbreak_checker.proc/check_movement), required_mobility_flags = MOBILITY_RESIST))
 			clear_cuffs(I, cuff_break)
 		else
 			to_chat(src, "<span class='warning'>You fail to remove [I]!</span>")
@@ -369,14 +371,35 @@
 		breakouttime = 50
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
 		to_chat(src, "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>")
-		if(do_after(src, breakouttime, 0, target = src))
+		if(do_after_advanced(src, breakouttime, src, NONE, CALLBACK(cuffbreak_checker, /datum/cuffbreak_checker.proc/check_movement), required_mobility_flags = MOBILITY_RESIST))
 			clear_cuffs(I, cuff_break)
 		else
 			to_chat(src, "<span class='warning'>You fail to break [I]!</span>")
 
 	else if(cuff_break == INSTANT_CUFFBREAK)
 		clear_cuffs(I, cuff_break)
+
+	QDEL_NULL(cuffbreak_checker)
 	I.item_flags &= ~BEING_REMOVED
+
+/datum/cuffbreak_checker
+	var/turf/last
+	var/obj/item/restraints/cuffs
+
+/datum/cuffbreak_checker/New(turf/initial_turf, obj/item/restraints/R)
+	last = initial_turf
+	if(R)
+		cuffs = R
+
+/datum/cuffbreak_checker/proc/check_movement(atom/user, delay, atom/target, time_left, do_after_flags, required_mobility_flags, required_combat_flags, mob_redirect, stage, initially_held_item, tool, list/passed_in)
+	if(get_turf(user) != last)
+		last = get_turf(user)
+		passed_in[1] = 0.5
+		if(cuffs && !cuffs.allow_breakout_movement)
+			return DO_AFTER_STOP
+	else
+		passed_in[1] = 1
+	return DO_AFTER_CONTINUE
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
@@ -433,6 +456,9 @@
 			legcuffed.forceMove(drop_location())
 			legcuffed = null
 			I.dropped(src)
+			if(istype(I, /obj/item/restraints/legcuffs))
+				var/obj/item/restraints/legcuffs/lgcf = I
+				lgcf.on_removed()
 			update_inv_legcuffed()
 			return
 		else
@@ -454,10 +480,6 @@
 
 	if(HAS_TRAIT(src, TRAIT_CLUMSY))
 		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
-
-	//CIT CHANGES START HERE
-	else if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-		modifier -= 50
 
 	if(modifier < 100)
 		dropItemToGround(I)
@@ -498,17 +520,17 @@
 		return 0
 	return ..()
 
-/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE)
-	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
-		return 1
+/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
+	if(HAS_TRAIT(src, TRAIT_NOHUNGER) && !force)
+		return TRUE
 
-	if(nutrition < 100 && !blood)
+	if(nutrition < 100 && !blood && !force)
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
 			DefaultCombatKnockdown(200)
-		return 1
+		return TRUE
 
 	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
 		if(message)
@@ -521,30 +543,29 @@
 			visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
 			if(!isflyperson(src))
 				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "vomit", /datum/mood_event/vomit)
+
 	if(stun)
 		Stun(80)
 
-	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
 	var/turf/T = get_turf(src)
 	if(!blood)
 		adjust_nutrition(-lost_nutrition)
 		adjustToxLoss(-3)
+
 	for(var/i=0 to distance)
 		if(blood)
 			if(T)
 				add_splatter_floor(T)
-			if(stun)
+			if(harm)
 				adjustBruteLoss(3)
-			else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/blazaam))
-				if(T)
-					T.add_vomit_floor(src, VOMIT_PURPLE)
 		else
 			if(T)
-				T.add_vomit_floor(src, VOMIT_TOXIC)//toxic barf looks different
+				T.add_vomit_floor(src, vomit_type, purge_ratio) //toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
 		T = get_step(T, dir)
 		if (is_blocked_turf(T))
 			break
-	return 1
+	return TRUE
 
 /mob/living/carbon/proc/spew_organ(power = 5, amt = 1)
 	var/list/spillable_organs = list()
@@ -594,14 +615,22 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 
 /mob/living/carbon/update_stamina()
-	var/stam = getStaminaLoss()
-	if(stam > DAMAGE_PRECISION)
-		var/total_health = (maxHealth - stam)
-		if(total_health <= crit_threshold && !stat)
-			if(CHECK_MOBILITY(src, MOBILITY_STAND))
-				to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
-			KnockToFloor(TRUE)
-			update_health_hud()
+	var/total_health = getStaminaLoss()
+	if(total_health)
+		if(!(combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && total_health >= STAMINA_CRIT && !stat)
+			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
+			set_resting(TRUE, FALSE, FALSE)
+			SEND_SIGNAL(src, COMSIG_DISABLE_COMBAT_MODE)
+			ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT)
+			filters += CIT_FILTER_STAMINACRIT
+			update_mobility()
+	if((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && total_health <= STAMINA_CRIT_REMOVAL_THRESHOLD)
+		to_chat(src, "<span class='notice'>You don't feel nearly as exhausted anymore.</span>")
+		DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT)
+		filters -= CIT_FILTER_STAMINACRIT
+		update_mobility()
+	UpdateStaminaBuffer()
+	update_health_hud()
 
 /mob/living/carbon/update_sight()
 	if(!client)
@@ -830,6 +859,8 @@
 /mob/living/carbon/update_stat()
 	if(status_flags & GODMODE)
 		return
+	if(stat != CONSCIOUS)
+		clear_typing_indicator()
 	if(stat != DEAD)
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 			death()
@@ -936,7 +967,9 @@
 /mob/living/carbon/ExtinguishMob()
 	for(var/X in get_equipped_items())
 		var/obj/item/I = X
-		I.acid_level = 0 //washes off the acid on our clothes
+		var/datum/component/acid/acid = I.GetComponent(/datum/component/acid)
+		if(acid)
+			acid.level = 0
 		I.extinguish() //extinguishes our clothes
 	..()
 
@@ -979,30 +1012,15 @@
 			O.held_index = r_arm_index_next //2, 4, 6, 8...
 			hand_bodyparts += O
 
-/mob/living/carbon/do_after_coefficent()
-	. = ..()
-	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood) //Currently, only carbons or higher use mood, move this once that changes.
-	if(mood)
-		switch(mood.sanity) //Alters do_after delay based on how sane you are
-			if(SANITY_INSANE to SANITY_DISTURBED)
-				. *= 1.25
-			if(SANITY_NEUTRAL to SANITY_GREAT)
-				. *= 0.90
-
-	for(var/i in status_effects)
-		var/datum/status_effect/S = i
-		. *= S.interact_speed_modifier()
-
-
 /mob/living/carbon/proc/create_internal_organs()
 	for(var/X in internal_organs)
 		var/obj/item/organ/I = X
 		I.Insert(src)
 
-/mob/living/carbon/proc/update_disabled_bodyparts()
+/mob/living/carbon/proc/update_disabled_bodyparts(silent = FALSE)
 	for(var/B in bodyparts)
 		var/obj/item/bodypart/BP = B
-		BP.update_disabled()
+		BP.update_disabled(silent)
 
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
@@ -1233,3 +1251,25 @@
   */
 /mob/living/carbon/proc/get_biological_state()
 	return BIO_FLESH_BONE
+
+/mob/living/carbon/altattackby(obj/item/W, mob/living/carbon/user, params)
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	if(W && user.a_intent == INTENT_HELP && W.can_give())
+		user.give(src)
+		return TRUE
+
+/mob/living/carbon/verb/give_verb()
+	set src in oview(1)
+	set category = "IC"
+	set name = "Give"
+
+	if(usr.incapacitated() || !usr.Adjacent(src))
+		return
+
+	if(!usr.get_active_held_item()) // Let me know if this has any problems -Yota
+		return
+	var/obj/item/I = usr.get_active_held_item()
+	var/mob/living/carbon/C = usr
+	if(I.can_give())
+		C.give(src)

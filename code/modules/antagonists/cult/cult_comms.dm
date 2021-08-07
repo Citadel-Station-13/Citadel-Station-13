@@ -83,7 +83,7 @@
 	if(choice == "Yes" && IsAvailable())
 		var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 		if(!C.cult_team)
-			to_chat(owner, "<span class='cult bold'>Do you not alreaady lead yourself?</span>")
+			to_chat(owner, "<span class='cult bold'>Do you not already lead yourself?</span>")
 			return
 		pollCultists(owner,C.cult_team)
 

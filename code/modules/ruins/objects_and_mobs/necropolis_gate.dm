@@ -12,6 +12,7 @@
 	pixel_x = -32
 	pixel_y = -32
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	rad_flags = RAD_NO_CONTAMINATE | RAD_PROTECT_CONTENTS
 	light_range = 8
 	light_color = LIGHT_COLOR_LAVA
 	var/open = FALSE
@@ -71,6 +72,7 @@
 /obj/structure/opacity_blocker
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "gate_blocker"
+	rad_flags = RAD_NO_CONTAMINATE | RAD_PROTECT_CONTENTS
 	layer = EDGED_TURF_LAYER
 	pixel_x = -32
 	pixel_y = -32
@@ -252,6 +254,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	icon = 'icons/turf/boss_floors.dmi'
 	icon_state = "pristine_tile1"
 	layer = ABOVE_OPEN_TURF_LAYER
+	rad_flags = RAD_NO_CONTAMINATE | RAD_PROTECT_CONTENTS
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/tile_key = "pristine_tile"
@@ -274,6 +277,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	return
 
 /obj/structure/stone_tile/Crossed(atom/movable/AM)
+	. = ..()
 	if(falling || fallen)
 		return
 	var/turf/T = get_turf(src)

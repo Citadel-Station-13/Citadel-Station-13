@@ -21,27 +21,6 @@
 			new /obj/item/reagent_containers/food/snacks/candyheart(B)
 			new /obj/item/storage/fancy/heart_box(B)
 
-	var/list/valentines = list()
-	for(var/mob/living/M in GLOB.player_list)
-		if(!M.stat && M.client && M.mind && !HAS_TRAIT(M, TRAIT_NO_MIDROUND_ANTAG))
-			valentines |= M
-
-
-	while(valentines.len)
-		var/mob/living/L = pick_n_take(valentines)
-		if(valentines.len)
-			var/mob/living/date = pick_n_take(valentines)
-
-
-			forge_valentines_objective(L, date)
-			forge_valentines_objective(date, L)
-
-			if(valentines.len && prob(4))
-				var/mob/living/notgoodenough = pick_n_take(valentines)
-				forge_valentines_objective(notgoodenough, date)
-		else
-			L.mind.add_antag_datum(/datum/antagonist/heartbreaker)
-
 /proc/forge_valentines_objective(mob/living/lover,mob/living/date,var/chemLove = FALSE)
 	lover.mind.special_role = "valentine"
 	if (chemLove == TRUE)

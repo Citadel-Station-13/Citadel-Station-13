@@ -15,6 +15,7 @@
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_ENGINEERING
+	considered_combat_role = TRUE
 
 	outfit = /datum/outfit/job/ce
 	plasma_outfit = /datum/outfit/plasmaman/ce

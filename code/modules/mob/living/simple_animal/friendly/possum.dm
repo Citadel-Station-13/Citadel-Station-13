@@ -22,11 +22,14 @@
 	response_harm_continuous = "stamps on"
 	response_harm_simple = "stamp"
 	density = FALSE
-	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	gold_core_spawnable = FRIENDLY_SPAWN
+
+/mob/living/simple_animal/opossum/Initialize()
+	. = ..()
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/opossum/poppy
 	name = "Poppy the Safety Possum"

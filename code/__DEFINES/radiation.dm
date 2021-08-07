@@ -18,6 +18,8 @@ Ask ninjanomnom if they're around
 #define RAD_BURN_THRESHOLD 1000						// Applied radiation must be over this to burn
 
 #define RAD_MOB_SAFE 500							// How much stored radiation in a mob with no ill effects
+#define RAD_DEFAULT_ROBOT_SAFE 250					// Like above, except for robotic carbons. Far more susceptible to corruption from radiation.
+#define RAD_UPGRADED_ROBOT_SAFE 750					// If the robot has been upgraded via an implant, their radiation threshold is raised to be somewhat above that of organics.
 
 #define RAD_MOB_HAIRLOSS 800						// How much stored radiation to check for hair loss
 

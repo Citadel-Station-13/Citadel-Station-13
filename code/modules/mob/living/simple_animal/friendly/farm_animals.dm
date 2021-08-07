@@ -241,7 +241,6 @@
 	attack_verb_simple = "kick"
 	health = 3
 	maxHealth = 3
-	ventcrawler = VENTCRAWLER_ALWAYS
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
@@ -253,6 +252,7 @@
 	. = ..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/chick/BiologicalLife(seconds, times_fired)
 	if(!(. = ..()))
@@ -296,7 +296,6 @@
 	attack_verb_simple = "kick"
 	health = 15
 	maxHealth = 15
-	ventcrawler = VENTCRAWLER_ALWAYS
 	var/eggsleft = 0
 	var/eggsFertile = TRUE
 	var/body_color
@@ -321,6 +320,8 @@
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 	++chicken_count
+
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/chicken/Destroy()
 	--chicken_count
@@ -392,7 +393,6 @@
 	attack_verb_simple = "kick"
 	health = 25
 	maxHealth = 25
-	ventcrawler = VENTCRAWLER_ALWAYS
 	var/eggsleft = 0
 	var/eggsFertile = TRUE
 	pass_flags = PASSTABLE | PASSMOB
@@ -411,6 +411,8 @@
 /mob/living/simple_animal/kiwi/Initialize()
 	. = ..()
 	++kiwi_count
+
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/kiwi/BiologicalLife(seconds, times_fired)
 	if(!(. = ..()))
@@ -473,7 +475,6 @@
 	attack_verb_simple = "kick"
 	health = 10
 	maxHealth = 10
-	ventcrawler = VENTCRAWLER_ALWAYS
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
@@ -485,6 +486,8 @@
 	. = ..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
+
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/babyKiwi/BiologicalLife(seconds, times_fired)
 	if(!(. = ..()))

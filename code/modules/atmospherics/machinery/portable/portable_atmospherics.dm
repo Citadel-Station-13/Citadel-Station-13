@@ -16,7 +16,7 @@
 
 /obj/machinery/portable_atmospherics/New()
 	..()
-	SSair.atmos_machinery += src
+	SSair.atmos_air_machinery += src
 
 	air_contents = new(volume)
 	air_contents.set_temperature(T20C)
@@ -24,7 +24,7 @@
 	return 1
 
 /obj/machinery/portable_atmospherics/Destroy()
-	SSair.atmos_machinery -= src
+	SSair.atmos_air_machinery -= src
 
 	disconnect()
 	qdel(air_contents)
@@ -115,7 +115,7 @@
 			to_chat(user, "<span class='notice'>[holding ? "In one smooth motion you pop [holding] out of [src]'s connector and replace it with [T]" : "You insert [T] into [src]"].</span>")
 			replace_tank(user, FALSE, T)
 			update_icon()
-	else if(istype(W, /obj/item/wrench))
+	else if(W.tool_behaviour == TOOL_WRENCH)
 		if(!(stat & BROKEN))
 			if(connected_port)
 				disconnect()

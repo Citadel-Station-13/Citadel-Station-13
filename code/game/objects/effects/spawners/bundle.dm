@@ -160,16 +160,17 @@
 /obj/effect/spawner/bundle/costume/sexyclown
 	name = "sexy clown costume spawner"
 	items = list(
-		/obj/item/clothing/mask/gas/sexyclown,
+		/obj/item/clothing/mask/gas/clown_hat/sexy,
 		/obj/item/clothing/under/rank/civilian/clown/sexy)
 
 /obj/effect/spawner/bundle/costume/sexymime
 	name = "sexy mime costume spawner"
 	items = list(
-		/obj/item/clothing/mask/gas/sexymime,
+		/obj/item/clothing/mask/gas/mime/sexy,
 		/obj/item/clothing/under/rank/civilian/mime/sexy)
 
 /obj/effect/spawner/bundle/crate/Initialize(mapload)
+	SHOULD_CALL_PARENT(FALSE)
 	if(items && items.len)
 		var/turf/T = get_turf(src)
 		var/obj/structure/closet/LC = locate(/obj/structure/closet) in T

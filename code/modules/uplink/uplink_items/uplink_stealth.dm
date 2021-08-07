@@ -7,6 +7,12 @@
 	When adding new entries to the file, please keep them sorted by category.
 */
 
+/datum/uplink_item/stealthy_weapons/telescopicbat
+	name = "Telescopic Baseball Bat"
+	desc = "A robust telescopic baseball bat that hits like a truck and can be concealed when collapsed."
+	item = /obj/item/melee/baseball_bat/telescopic
+	cost = 2
+
 /datum/uplink_item/stealthy_weapons/combatglovesplus
 	name = "Combat Gloves Plus"
 	desc = "A pair of gloves that are fireproof and shock resistant, however unlike the regular Combat Gloves this one uses nanotechnology \
@@ -38,6 +44,26 @@
 			your hand before use so it knows not to kill you."
 	item = /obj/item/toy/plush/carpplushie/dehy_carp
 	cost = 1
+
+/datum/uplink_item/stealthy_weapons/derringerpack
+	name = "Compact Derringer"
+	desc = "An easily concealable handgun capable of firing .357 rounds. Comes in an inconspicuious packet of cigarettes with additional munitions."
+	item = /obj/item/storage/fancy/cigarettes/derringer
+	cost = 6
+	surplus = 30
+
+/datum/uplink_item/stealthy_weapons/derringerpack/purchase(mob/user, datum/component/uplink/U)
+	if(prob(1)) //For the 1%
+		item = /obj/item/storage/fancy/cigarettes/derringer/gold
+	..()
+
+/datum/uplink_item/stealthy_weapons/derringerpack_nukie
+	name = "Antique Derringer"
+	desc = "An easy to conceal, yet extremely deadly handgun, capable of firing .45-70 Govt rounds. Comes in a unique pack of cigarettes with additional munitions."
+	item = /obj/item/storage/fancy/cigarettes/derringer/midworld
+	include_modes = list(/datum/game_mode/nuclear)
+	cost = 10
+	surplus = 2
 
 /datum/uplink_item/stealthy_weapons/edagger
 	name = "Energy Dagger"
@@ -102,6 +128,7 @@
 			along with slurred speech, aggression, and the ability to infect others with this agent."
 	item = /obj/item/storage/box/syndie_kit/romerol
 	cost = 25
+	player_minimum = 25
 	cant_discount = TRUE
 	exclude_modes = list(/datum/game_mode/nuclear)
 
@@ -115,7 +142,7 @@
 	cost = 4
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
-datum/uplink_item/stealthy_weapons/taeclowndo_shoes
+/datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	name = "Tae-clown-do Shoes"
 	desc = "A pair of shoes for the most elite agents of the honkmotherland. They grant the mastery of taeclowndo with some honk-fu moves as long as they're worn."
 	cost = 12
