@@ -49,11 +49,11 @@ Bonus
 		to_chat(M, "<span class='warning'>[pick("You feel cold.", "You shiver.")]</span>")
 	else
 		to_chat(M, "<span class='userdanger'>[pick("You feel your blood run cold.", "You feel ice in your veins.", "You feel like you can't heat up.", "You shiver violently." )]</span>")
-	var/get_cold = M.bodytemp_normal + ((power*A.stage)*(M.hypothermia_limit/A.max_stages))
+	var/get_cold = M.bodytemp_normal + ((power*A.stage)*((M.bodytemp_normal - M.hypothermia_limit)/A.max_stages))
 	if(!unsafe)
 		M.thermoregulation_baseline = max(M.hypothermia_limit+0.1, get_cold)
 	else
-		M.thermoregulation_baseline(-get_cold)
+		M.thermoregulation_baseline = get_cold
 	return 1
 
 /datum/symptom/shivering/End(datum/disease/advance/A)

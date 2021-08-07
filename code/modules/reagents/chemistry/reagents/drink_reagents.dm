@@ -304,7 +304,7 @@
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.AdjustSleeping(-40, FALSE)
 	//310.15 is the normal bodytemp.
-	M.adjust_bodytemperature(25, 0, M.M.bodytemp_normal)
+	M.adjust_bodytemperature(25, 0, M.bodytemp_normal)
 	if(holder.has_reagent(/datum/reagent/consumable/frostoil))
 		holder.remove_reagent(/datum/reagent/consumable/frostoil, 5)
 	..()

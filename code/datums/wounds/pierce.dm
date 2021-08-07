@@ -50,7 +50,7 @@
 /datum/wound/pierce/handle_process()
 	blood_flow = min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW)
 
-	if(victim.bodytemperature < (M.bodytemp_normal -  1))
+	if(victim.bodytemperature < (victim.bodytemp_normal -  1))
 		blood_flow -= 0.2
 		if(prob(5))
 			to_chat(victim, "<span class='notice'>You feel the [lowertext(name)] in your [limb.name] firming up from the cold!</span>")

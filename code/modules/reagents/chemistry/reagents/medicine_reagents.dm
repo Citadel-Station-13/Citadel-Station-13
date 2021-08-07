@@ -156,11 +156,11 @@
 	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/medicine/cryoxadone/on_mob_metabolize(mob/living/L)
-	ADD_TRAIT(L,TRAIT_HYPOTHERMIA_IMMUNE)
+	ADD_TRAIT(L,TRAIT_HYPOTHERMIA_IMMUNE, type)
 	..()
 
 /datum/reagent/medicine/cryoxadone/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L,TRAIT_HYPOTHERMIA_IMMUNE)
+	REMOVE_TRAIT(L,TRAIT_HYPOTHERMIA_IMMUNE, type)
 	..()
 
 // Healing
@@ -195,11 +195,11 @@
 	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/medicine/clonexadone/on_mob_metabolize(mob/living/L)
-	ADD_TRAIT(L,TRAIT_HYPOTHERMIA_IMMUNE)
+	ADD_TRAIT(L,TRAIT_HYPOTHERMIA_IMMUNE, type)
 	..()
 
 /datum/reagent/medicine/clonexadone/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L,TRAIT_HYPOTHERMIA_IMMUNE)
+	REMOVE_TRAIT(L,TRAIT_HYPOTHERMIA_IMMUNE, type)
 	..()
 
 /datum/reagent/medicine/clonexadone/on_mob_life(mob/living/carbon/M)
@@ -219,11 +219,11 @@
 	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/medicine/pyroxadone/on_mob_metabolize(mob/living/L)
-	ADD_TRAIT(L,TRAIT_HYPERTHERMIA_IMMUNE)
+	ADD_TRAIT(L,TRAIT_HYPERTHERMIA_IMMUNE, type)
 	..()
 
 /datum/reagent/medicine/pyroxadone/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L,TRAIT_HYPERTHERMIA_IMMUNE)
+	REMOVE_TRAIT(L,TRAIT_HYPERTHERMIA_IMMUNE, type)
 	..()
 
 /datum/reagent/medicine/pyroxadone/on_mob_life(mob/living/carbon/M)

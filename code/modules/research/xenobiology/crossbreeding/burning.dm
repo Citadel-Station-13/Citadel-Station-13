@@ -68,7 +68,7 @@ Burning extracts:
 		T.MakeSlippery(TURF_WET_PERMAFROST, min_wet_time = 10, wet_time_to_add = 5)
 	for(var/mob/living/carbon/M in range(5, get_turf(user)))
 		if(M != user)
-			M.bodytemperature = H.hypothermia_limit + 0.1 //Not quite cold enough to hurt.
+			M.bodytemperature = M.hypothermia_limit + 0.1 //Not quite cold enough to hurt.
 			to_chat(M, "<span class='danger'>You feel a chill run down your spine, and the floor feels a bit slippery with frost...</span>")
 	..()
 

@@ -11,6 +11,8 @@
 	bubble_icon = "alien"
 	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 
+	specific_heat = 0.4
+
 	/// Whether they can ventcrawl; this is set individually for 'humanoid' and 'royal' types
 	/// 'royal' types (Praetorian, Queen) cannot ventcrawl
 	var/can_ventcrawl
@@ -72,11 +74,11 @@
 			//Place is hotter than we are
 			var/thermal_protection = heat_protection //This returns a 0 - 1 value, which corresponds to the percentage of heat protection.
 			if(thermal_protection < 1)
-				adjust_bodytemperature((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR))
+				bodytemperature = environment.temperature_share(null,(1-thermal_protection) * 0.1,bodytemperature,heat_capacity())
 		else
-			adjust_bodytemperature(1 * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR))
+			bodytemperature = environment.temperature_share(null,0.1,bodytemperature,heat_capacity())
 
-	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+	if(bodytemperature > bodytemp_normal + BODYTEMP_HEAT_DAMAGE_LIMIT)
 		//Body temperature is too hot.
 		throw_alert("alien_fire", /obj/screen/alert/alien_fire)
 		switch(bodytemperature)

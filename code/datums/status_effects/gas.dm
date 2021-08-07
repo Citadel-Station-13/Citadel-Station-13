@@ -22,7 +22,7 @@
 
 /datum/status_effect/freon/tick()
 	owner.update_mobility()
-	if(can_melt && owner.bodytemperature >= M.bodytemp_normal)
+	if(can_melt && owner.bodytemperature >= owner.bodytemp_normal)
 		qdel(src)
 
 /datum/status_effect/freon/proc/owner_resist()

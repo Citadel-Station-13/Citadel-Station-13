@@ -76,7 +76,7 @@
 	scan_things()
 	water_gas_holder = new
 	water_gas_holder.set_temperature(300)
-	water_gas_holder.set_moles(/datum/gas/water_vapor,55500*length(linked_turfs))
+	water_gas_holder.set_moles(GAS_H2O,55500*length(linked_turfs))
 
 /obj/machinery/pool/controller/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
@@ -246,8 +246,8 @@
 				target_temperature = 300
 			if(POOL_COOL)
 				target_temperature = 290
-			if(POOL_FREEZING)
-				target_temperature = T0C
+			if(POOL_FRIGID)
+				target_temperature = T0C + 4
 		var/heat = clamp((water_gas_holder.return_temperature() - target_temperature) * water_gas_holder.heat_capacity(),-10000,10000)
 		water_gas_holder.set_temperature(water_gas_holder.return_temperature() + heat/water_gas_holder.heat_capacity())
 		use_power(abs(heat))

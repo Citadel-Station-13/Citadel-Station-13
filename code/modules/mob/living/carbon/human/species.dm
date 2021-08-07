@@ -191,7 +191,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	/// CIT SPECIFIC Mutant tail
 	var/obj/item/organ/tail/mutanttail = null
 
-	var/datum/gas/sweat_gas = /datum/gas/water_vapor
+	var/sweat_gas = GAS_H2O
 	var/override_float = FALSE
 
 	//Citadel snowflake
@@ -629,9 +629,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			facialhair_hidden = TRUE
 
 	if(H.wear_mask && istype(H.wear_mask))
-		var/obj/item/clothing/mask/H = H.wear_mask
-		dynamic_fhair_suffix = H.dynamic_fhair_suffix //mask > head in terms of facial hair
-		if(H.flags_inv & HIDEFACIALHAIR)
+		var/obj/item/clothing/mask/M = H.wear_mask
+		dynamic_fhair_suffix = M.dynamic_fhair_suffix //mask > head in terms of facial hair
+		if(M.flags_inv & HIDEFACIALHAIR)
 			facialhair_hidden = TRUE
 
 	if(H.facial_hair_style && (FACEHAIR in species_traits) && (!facialhair_hidden || dynamic_fhair_suffix))
@@ -683,10 +683,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			hair_hidden = TRUE
 
 	if(H.wear_mask && istype(H.wear_mask))
-		var/obj/item/clothing/mask/H = H.wear_mask
+		var/obj/item/clothing/mask/M = H.wear_mask
 		if(!dynamic_hair_suffix) //head > mask in terms of head hair
-			dynamic_hair_suffix = H.dynamic_hair_suffix
-		if(H.flags_inv & HIDEHAIR)
+			dynamic_hair_suffix = M.dynamic_hair_suffix
+		if(M.flags_inv & HIDEHAIR)
 			hair_hidden = TRUE
 
 	if(!hair_hidden || dynamic_hair_suffix)
@@ -1160,8 +1160,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/takes_crit_damage = !HAS_TRAIT(H, TRAIT_NOCRITDAMAGE)
 		if((H.health < H.crit_threshold) && takes_crit_damage)
 			H.adjustBruteLoss(1)
-	if(dna?.species && GAINS_WEIGHT_WITH_NUTRITION in dna.species.species_traits)
-		H.mass = base_mass + ((nutrition-300)/10)
+	if(GAINS_WEIGHT_WITH_NUTRITION in species_traits)
+		H.mass = (base_mass + ((H.nutrition-300)/10)) * (H.resize ** 3)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -1922,23 +1922,23 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			H.forcesay(GLOB.hit_appends)	//forcesay checks stat already.
 	return TRUE
 
-/datum/species/proc/alt_spec_attack_hand(mob/living/carbon/human/H, mob/living/carbon/human/H, datum/martial_art/attacker_style)
-	if(!istype(H))
+/datum/species/proc/alt_spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
+	if(!istype(M))
 		return TRUE
+	CHECK_DNA_AND_SPECIES(M)
 	CHECK_DNA_AND_SPECIES(H)
-	CHECK_DNA_AND_SPECIES(H)
-	if(!H.CheckActionCooldown())
+	if(!M.CheckActionCooldown())
 		return
-	H.DelayNextAction(CLICK_CD_MELEE)
+	M.DelayNextAction(CLICK_CD_MELEE)
 
-	if(!istype(H)) //sanity check for drones.
+	if(!istype(M)) //sanity check for drones.
 		return TRUE
-	if(H.mind)
-		attacker_style = H.mind.martial_art
-	if((H != H) && H.a_intent != INTENT_HELP && (H.mob_run_block(H, 0, "[H]", ATTACK_TYPE_UNARMED, 0, H, H.zone_selected, null) & BLOCK_SUCCESS))
-		log_combat(H, H, "attempted to touch")
-		H.visible_message("<span class='warning'>[H] attempted to touch [H]!</span>", \
-			"<span class='warning'>[H] attempted to touch you!</span>", target = H, \
+	if(M.mind)
+		attacker_style = M.mind.martial_art
+	if((M != H) && M.a_intent != INTENT_HELP && (H.mob_run_block(M, 0, "[M]", ATTACK_TYPE_UNARMED, 0, M, M.zone_selected, null) & BLOCK_SUCCESS))
+		log_combat(M, H, "attempted to touch")
+		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>", \
+			"<span class='warning'>[M] attempted to touch you!</span>", target = M, \
 			target_message = "<span class='warning'>You attempted to touch [H]!</span>")
 		return TRUE
 	if(M == H)
@@ -1946,7 +1946,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return TRUE
 	switch(M.a_intent)
 		if(INTENT_DISARM)
-			altdisarm(H, H, attacker_style)
+			altdisarm(M, H, attacker_style)
 			return TRUE
 	return FALSE
 
@@ -2242,7 +2242,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
 			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 
-	if(H.bodytemperature > H.hyperthermia_limit && !HAS_TRAIT(H,TRAIT_HYPERTHERMIA_IMMUNE))
+	if(H.bodytemperature > H.hyperthermia_limit && !HAS_TRAIT(H,TRAIT_HYPERTHERMIA_IMMUNE) && !(H.status_flags & GODMODE))
 		var/severity = 1+((H.bodytemperature - H.hyperthermia_limit) / (H.hyperthermia_limit - H.bodytemp_normal))
 		switch(severity)
 			if(0 to 1)
@@ -2255,15 +2255,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			H.confused += 5
 		if(prob(severity*50))
 			H.hallucination += 5
-		if(prob(severity*20))
-			H.vomiting += 5
+		if(prob(severity*4))
+			H.vomit()
 		for(var/obj/item/organ/O in H.internal_organs)
-			if(!(O?.status_flags & GODMODE) || !prob(severity*50))
-				continue
-			var/maximum = O.maxHealth
-			O.applyOrganDamage(severity, maximum)
-			O.onDamage(severity, maximum)
-	else if(H.body_temperature < H.hypothermia_limit && !HAS_TRAIT(H,TRAIT_HYPOTHERMIA_IMMUNE))
+			if(prob(severity*50))
+				var/maximum = O.maxHealth
+				O.applyOrganDamage(severity, maximum)
+				O.onDamage(severity, maximum)
+	else if(H.bodytemperature < H.hypothermia_limit && !HAS_TRAIT(H,TRAIT_HYPOTHERMIA_IMMUNE) && !(H.status_flags & GODMODE))
 		var/severity = 1+((H.hypothermia_limit - H.bodytemperature) / (H.bodytemp_normal - H.hypothermia_limit))
 		switch(severity)
 			if(0 to 1)
@@ -2277,9 +2276,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(prob(severity*50))
 			H.confused += 5
 		if(prob(severity*30))
-			H.applyOrganDamage(ORGAN_SLOT_LIVER,5)
+			H.adjustOrganLoss(ORGAN_SLOT_LIVER, 5)
 		if(prob(severity*5))
-			H.applyOrganDamage(ORGAN_SLOT_HEART,10)
+			H.adjustOrganLoss(ORGAN_SLOT_HEART, 10)
 		//Apply cold slowdown
 		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((H.cold_damage_limit - H.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 	else
