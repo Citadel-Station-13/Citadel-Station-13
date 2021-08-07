@@ -1000,7 +1000,7 @@
 	floating_need_update = TRUE
 
 /mob/living/proc/get_temperature(datum/gas_mixture/environment)
-	var/loc_temp = environment ? environment.return_temperature() : T0C
+	var/loc_temp = environment ? environment.return_temperature() : T20C
 	if(isobj(loc))
 		var/obj/oloc = loc
 		var/obj_temp = oloc.return_temperature()

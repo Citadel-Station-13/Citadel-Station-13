@@ -65,12 +65,12 @@
 	if(!environment)
 		return
 
-	bodytemperature = environment.temperature_share(null,0.1,bodytemperature,heat_capacity())
+	bodytemperature = environment.temperature_share(null,BODY_CONDUCTION_COEFFICIENT,bodytemperature,heat_capacity())
 
 	if(stat != DEAD)
 		adjust_bodytemperature(natural_bodytemperature_stabilization())
 
-	if(bodytemperature > bodytemp_normal + BODYTEMP_HEAT_DAMAGE_LIMIT / 20 && !HAS_TRAIT(src, TRAIT_RESISTHEAT))
+	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !HAS_TRAIT(src, TRAIT_RESISTHEAT))
 		switch(bodytemperature)
 			if(360 to 400)
 				throw_alert("temp", /obj/screen/alert/hot, 1)
@@ -85,7 +85,7 @@
 				else
 					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
 
-	else if(bodytemperature < bodytemp_normal + BODYTEMP_COLD_DAMAGE_LIMIT / 20 && !HAS_TRAIT(src, TRAIT_RESISTCOLD))
+	else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(src, TRAIT_RESISTCOLD))
 		if(!istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 			switch(bodytemperature)
 				if(200 to 260)

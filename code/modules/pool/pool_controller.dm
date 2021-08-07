@@ -252,7 +252,7 @@
 		water_gas_holder.set_temperature(water_gas_holder.return_temperature() + heat/water_gas_holder.heat_capacity())
 		use_power(abs(heat))
 	for(var/mob/living/M in mobs_in_pool)
-		M.bodytemperature = water_gas_holder.temperature_share(null,0.4,M.bodytemperature,M.heat_capacity())
+		M.bodytemperature = water_gas_holder.temperature_share(null,BODY_CONDUCTION_COEFFICIENT * 4,M.bodytemperature,M.heat_capacity())
 		if(ishuman(M))
 			var/mob/living/carbon/human/drownee = M
 			if(!drownee || drownee.stat == DEAD)

@@ -74,9 +74,9 @@
 			//Place is hotter than we are
 			var/thermal_protection = heat_protection //This returns a 0 - 1 value, which corresponds to the percentage of heat protection.
 			if(thermal_protection < 1)
-				bodytemperature = environment.temperature_share(null,(1-thermal_protection) * 0.1,bodytemperature,heat_capacity())
+				bodytemperature = environment.temperature_share(null,(1-thermal_protection) * BODY_CONDUCTION_COEFFICIENT,bodytemperature,heat_capacity())
 		else
-			bodytemperature = environment.temperature_share(null,0.1,bodytemperature,heat_capacity())
+			bodytemperature = environment.temperature_share(null,BODY_CONDUCTION_COEFFICIENT,bodytemperature,heat_capacity())
 
 	if(bodytemperature > bodytemp_normal + BODYTEMP_HEAT_DAMAGE_LIMIT)
 		//Body temperature is too hot.

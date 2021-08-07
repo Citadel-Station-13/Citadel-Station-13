@@ -666,16 +666,21 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		else
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
 
+/mob/living/carbon/adjust_bodytemperature(amount,min_temp=0,max_temp=INFINITY)
+	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
+		bodytemperature = clamp(bodytemperature + (amount * TEMPERATURE_DAMAGE_COEFFICIENT) ,min_temp,max_temp)
+
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
 	if (HAS_TRAIT(src, TRAIT_COLDBLOODED))
 		return 0 //Return 0 as your natural temperature. Species proc handle_environment() will adjust your temperature based on this.
 
 	var/body_temperature_difference = thermoregulation_baseline - bodytemperature
-	if(body_temperature_difference > 0)
-		return max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, body_temperature_difference)
+	var/highest_temp_delta = BODYTEMP_AUTORECOVERY_MAXIMUM * metabolism_efficiency
+	if(body_temperature_difference < 0)
+		return max(body_temperature_difference, -highest_temp_delta)
 	else
-		return min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, body_temperature_difference)
+		return min(body_temperature_difference, highest_temp_delta)
 /////////
 //LIVER//
 /////////

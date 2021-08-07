@@ -19,7 +19,9 @@
 	var/base_knockout = 30 SECONDS
 	var/knockout_factor = 1
 	var/heat_capacity = 20000
-	var/conduction_coefficient = 0.3
+	var/conduction_coefficient = 0.01
+
+	var/stabilizing_temperature
 
 	var/obj/item/reagent_containers/glass/beaker = null
 	var/reagent_transfer = 0
@@ -60,7 +62,7 @@
 	efficiency = initial(efficiency) * C
 	knockout_factor = initial(knockout_factor) / max(1, (C * 0.33))
 	heat_capacity = initial(heat_capacity) / C
-	conduction_coefficient = initial(conduction_coefficient) * C
+	conduction_coefficient = min(1, initial(conduction_coefficient) * C)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user) //this is leaving out everything but efficiency since they follow the same idea of "better matter bin, better results"
 	. = ..()
@@ -174,7 +176,15 @@
 		return
 	if(mob_occupant.stat == DEAD) // We don't bother with dead people.
 		return
-
+	if(stabilizing_temperature)
+		if(mob_occupant.bodytemperature >= mob_occupant.hyperthermia_limit)
+			mob_occupant.adjust_bodytemperature(-80 * efficiency, mob_occupant.bodytemp_normal)
+			return
+		else if(mob_occupant.bodytemperature <= mob_occupant.hypothermia_limit)
+			mob_occupant.adjust_bodytemperature(80 * efficiency, 0, mob_occupant.bodytemp_normal)
+			return
+		else
+			stabilizing_temperature = FALSE
 	if(mob_occupant.health >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
 		if(iscarbon(mob_occupant))
 			var/mob/living/carbon/C = mob_occupant
@@ -188,6 +198,9 @@
 				treating_wounds = FALSE
 
 		if(!treating_wounds)
+			if(mob_occupant.bodytemperature <= mob_occupant.hypothermia_limit || mob_occupant.bodytemperature >= mob_occupant.hyperthermia_limit)
+				stabilizing_temperature = TRUE
+				return
 			on = FALSE
 			update_icon()
 			playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
@@ -229,14 +242,13 @@
 		update_icon()
 		return
 
-	if(occupant)
+	if(occupant && !stabilizing_temperature)
 		var/mob/living/mob_occupant = occupant
 		var/cold_protection = 0
 		if(ishuman(occupant))
 			var/mob/living/carbon/human/H = occupant
 			cold_protection = H.get_thermal_protection(air1.return_temperature(), TRUE)
-
-		mob_occupant.bodytemperature = air1.temperature_share(null,(1 - cold_protection) * 0.1 + conduction_coefficient,mob_occupant.bodytemperature,mob_occupant.heat_capacity())
+		mob_occupant.bodytemperature = air1.temperature_share(null,(1 - cold_protection) * conduction_coefficient,mob_occupant.bodytemperature,mob_occupant.heat_capacity())
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/power_change()
 	..()

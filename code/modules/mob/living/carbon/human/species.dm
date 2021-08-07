@@ -1788,30 +1788,30 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/spec_attack_hand(mob/living/carbon/human/H, mob/living/carbon/human/H, datum/martial_art/attacker_style, act_intent, attackchain_flags)
-	if(!istype(H))
+/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style, act_intent, attackchain_flags)
+	if(!istype(M))
 		return
-	CHECK_DNA_AND_SPECIES(H)
+	CHECK_DNA_AND_SPECIES(M)
 	CHECK_DNA_AND_SPECIES(H)
 
-	if(!istype(H)) //sanity check for drones.
+	if(!istype(M)) //sanity check for drones.
 		return
-	if(H.mind)
-		attacker_style = H.mind.martial_art
-		if(attacker_style?.pacifism_check && HAS_TRAIT(H, TRAIT_PACIFISM)) // most martial arts are quite harmful, alas.
+	if(M.mind)
+		attacker_style = M.mind.martial_art
+		if(attacker_style?.pacifism_check && HAS_TRAIT(M, TRAIT_PACIFISM)) // most martial arts are quite harmful, alas.
 			attacker_style = null
 	switch(act_intent)
 		if("help")
-			help(H, H, attacker_style)
+			help(M, H, attacker_style)
 
 		if("grab")
-			grab(H, H, attacker_style)
+			grab(M, H, attacker_style)
 
 		if("harm")
-			harm(H, H, attacker_style, attackchain_flags)
+			harm(M, H, attacker_style, attackchain_flags)
 
 		if("disarm")
-			disarm(H, H, attacker_style)
+			disarm(M, H, attacker_style)
 
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H, attackchain_flags = NONE, damage_multiplier = 1)
 	var/totitemdamage = H.pre_attacked_by(I, user) * damage_multiplier
@@ -2164,15 +2164,15 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/loc_temp = H.get_temperature(environment)
 	var/thermal_protection = H.get_thermal_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 
-	var/temp_variation = (loc_temp - H.bodytemperature)*thermal_protection
 	//Body temperature is adjusted in two parts: first there your body tries to naturally preserve homeostasis (shivering/sweating), then it reacts to the surrounding environment
 	//Thermal protection (insulation) has mixed benefits in two situations (hot in hot places, cold in hot places)
 	if(!H.on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
+		var/approx_heat_capacity = H.heat_capacity()
+		H.bodytemperature = environment.temperature_share(null,(1-thermal_protection)*BODY_CONDUCTION_COEFFICIENT,H.bodytemperature,approx_heat_capacity)
 		var/natural = 0
 		if(H.stat != DEAD)
 			natural = H.natural_bodytemperature_stabilization()
 
-		var/approx_heat_capacity = H.heat_capacity()
 		if(natural)
 			if(H.bodytemperature < H.bodytemp_normal)
 				var/delta = (thermal_protection+1)*natural
@@ -2180,7 +2180,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				H.adjust_nutrition(delta*-0.01)
 			else
 				var/delta = natural*(1-thermal_protection)
-				var/sweat_made = (approx_heat_capacity*delta)/(initial(sweat_gas.specific_heat)*H.bodytemperature)
+				var/sweat_made = (approx_heat_capacity*delta)/(GLOB.gas_data.specific_heats[sweat_gas] * H.bodytemperature)
 				var/max_vapor_capacity = (environment.return_volume())/(environment.return_temperature()*R_IDEAL_GAS_EQUATION)
 				// implicit 1* at the start there--i'm just using "1 kilopascal partial pressure" for this
 				var/original_sweat_made = sweat_made
@@ -2190,54 +2190,59 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					var/datum/gas_mixture/sweat = new
 					sweat.set_moles(sweat_gas,sweat_made)
 					sweat.set_temperature(H.bodytemperature)
-					environment.merge(sweat)
+					H.loc.assume_air(sweat)
 					H.nutrition -= sweat_made
-		H.bodytemperature = environment.temperature_share(null,(1-thermal_protection)*0.1,H.bodytemperature,approx_heat_capacity)
 		var/temp_good = TRUE
-		switch(temp_variation)
-			if(-INFINITY to H.cold_damage_limit)
-				temp_good = FALSE
-				H.throw_alert("tempfeel", /obj/screen/alert/cold, 3)
-				SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
-				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
-				if(!HAS_TRAIT(H,TRAIT_RESISTCOLD))
-					switch(temp_variation)
-						if(BODYTEMP_COLD_DAMAGE_LIMIT*2 to BODYTEMP_COLD_DAMAGE_LIMIT)
-							H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod*H.physiology.cold_mod, BURN)
-						if(BODYTEMP_COLD_DAMAGE_LIMIT*3 to BODYTEMP_COLD_DAMAGE_LIMIT*2)
-							H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod*H.physiology.cold_mod, BURN)
-						else
-							H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod*H.physiology.cold_mod, BURN)
-			if(H.cold_damage_limit to H.cold_damage_limit*0.7)
-				H.throw_alert("tempfeel", /obj/screen/alert/cold, 2)
-			if(H.cold_damage_limit*0.7 to H.cold_damage_limit*0.4)
-				H.throw_alert("tempfeel", /obj/screen/alert/cold, 1)
-			if(H.cold_damage_limit*0.4 to 0) //This is the sweet spot where air is considered normal
-				H.clear_alert("tempfeel")
-			if(0 to H.heat_damage_limit*0.5) //When the air around you matches your body's temperature, you'll start to feel warm.
-				H.throw_alert("tempfeel", /obj/screen/alert/hot, 1)
-			if(H.heat_damage_limit*0.5 to H.heat_damage_limit)
-				H.throw_alert("tempfeel", /obj/screen/alert/hot, 2)
-			if(H.heat_damage_limit to INFINITY)
-				temp_good = FALSE
-				H.throw_alert("tempfeel", /obj/screen/alert/hot, 3)
-				if(!!HAS_TRAIT(H, TRAIT_RESISTHEAT))
-					SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
-					SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
-
-					H.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
-
-					var/burn_damage
-					var/firemodifier = H.fire_stacks / 50
-					if (H.on_fire)
-						burn_damage = max(log(2-firemodifier,temp_variation)-5,0)
+		var/effective_temp = LERP(loc_temp, H.bodytemperature, thermal_protection)
+		var/temp_variation = effective_temp - H.bodytemperature
+		if(effective_temp < H.cold_damage_limit)
+			temp_good = FALSE
+			H.throw_alert("tempfeel", /obj/screen/alert/cold, 3)
+			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
+			if(!HAS_TRAIT(H,TRAIT_RESISTCOLD))
+				var/cold_diff = abs(H.bodytemp_normal - H.cold_damage_limit)
+				switch(abs(temp_variation))
+					if(cold_diff to cold_diff * 2)
+						H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod*H.physiology.cold_mod, BURN)
+					if(cold_diff * 2 to cold_diff * 3)
+						H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod*H.physiology.cold_mod, BURN)
 					else
-						firemodifier = min(firemodifier, 0)
-						burn_damage = max(log(2-firemodifier,temp_variation)-5,0) // this can go below 5 at log 2.5
-					burn_damage = burn_damage * heatmod * H.physiology.heat_mod
-					if (H.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4) //40% for level 3 damage on humans
-						H.emote("scream")
-					H.apply_damage(burn_damage, BURN)
+						H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod*H.physiology.cold_mod, BURN)
+		else if(effective_temp > H.heat_damage_limit)
+			temp_good = FALSE
+			H.throw_alert("tempfeel", /obj/screen/alert/hot, 3)
+			if(!!HAS_TRAIT(H, TRAIT_RESISTHEAT))
+				SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
+				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
+
+				H.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
+
+				var/burn_damage
+				var/firemodifier = H.fire_stacks / 50
+				if (H.on_fire)
+					burn_damage = max(log(2-firemodifier,temp_variation)-5,0)
+				else
+					firemodifier = min(firemodifier, 0)
+					burn_damage = max(log(2-firemodifier,temp_variation)-5,0) // this can go below 5 at log 2.5
+				burn_damage = burn_damage * heatmod * H.physiology.heat_mod
+				if (H.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4) //40% for level 3 damage on humans
+					H.emote("scream")
+				H.apply_damage(burn_damage, BURN)
+		var/cold_range = H.bodytemp_normal - H.cold_damage_limit
+		var/hot_range = H.heat_damage_limit - H.bodytemp_normal
+		switch(temp_variation)
+			if(cold_range to cold_range*0.7)
+				H.throw_alert("tempfeel", /obj/screen/alert/cold, 2)
+			if(cold_range*0.7 to cold_range*0.4)
+				H.throw_alert("tempfeel", /obj/screen/alert/cold, 1)
+			if(cold_range*0.4 to 0) //This is the sweet spot where air is considered normal
+				H.clear_alert("tempfeel")
+			if(0 to hot_range*0.5) //When the air around you matches your body's temperature, you'll start to feel warm.
+				H.throw_alert("tempfeel", /obj/screen/alert/hot, 1)
+			if(hot_range*0.5 to hot_range)
+				H.throw_alert("tempfeel", /obj/screen/alert/hot, 2)
+
 		if(temp_good)
 			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
 			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
