@@ -411,7 +411,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	H.bodytemp_normal = T20C
 	H.thermoregulation_baseline = T20C
 	H.hypothermia_limit = T20C - 2
-	H.hyperthermia_limit = T20C + 2
+	H.hyperthermia_limit = T20C + 18
 	H.bodytemperature = T20C // otherwise they'll start dying instantly, whoops
 
 /datum/quirk/coldblooded/remove()
