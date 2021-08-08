@@ -59,5 +59,3 @@ SUBSYSTEM_DEF(sun)
 
 /datum/controller/subsystem/sun/proc/complete_movement()
 	SEND_SIGNAL(src, COMSIG_SUN_MOVED, primary_sun, suns)
-
-#undef OCCLUSION_DISTANCE
