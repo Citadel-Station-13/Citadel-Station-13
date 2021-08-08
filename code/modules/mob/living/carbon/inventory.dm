@@ -183,7 +183,7 @@
 	if(!targets)
 		return
 	for(var/mob/living/carbon/C in targets)
-		var/obj/screen/alert/give/G = C.throw_alert("[src]", /obj/screen/alert/give)
+		var/atom/movable/screen/alert/give/G = C.throw_alert("[src]", /atom/movable/screen/alert/give)
 		if(!G)
 			return
 		G.setup(C, src, receiving)

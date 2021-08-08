@@ -116,7 +116,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///The portion of the gasmix we're on that we should remove
 	var/gasefficency = 0.15
 	///Used for changing icon states for diff base sprites
-	var/base_icon_state = "darkmatter"
+	base_icon_state = "darkmatter"
 
 	///Are we exploding?
 	var/final_countdown = FALSE

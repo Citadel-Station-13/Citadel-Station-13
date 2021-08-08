@@ -150,7 +150,7 @@
 /obj/item/organ/genital/proc/update_size()
 	return
 
-/obj/item/organ/genital/proc/update_appearance()
+/obj/item/organ/genital/proc/update_appearance_genitals()
 	if(!owner || owner.stat == DEAD)
 		aroused_state = FALSE
 
@@ -187,7 +187,7 @@
 	. = ..()
 	if(.)
 		update()
-		RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/update_appearance)
+		RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/update_appearance_genitals)
 		if(genital_flags & GENITAL_THROUGH_CLOTHES)
 			owner.exposed_genitals += src
 
