@@ -1,0 +1,4 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - bugfix: "Old gateway animation is back. Feedback is given that the gateway is open again."
