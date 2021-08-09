@@ -18,6 +18,8 @@
 	render_data[index] = data_to_add
 	if(attempt_add)
 		owner.add_overlay(data_to_add)
+	if(istype(owner, /mob/living/carbon/human/dummy))
+		message_admins("dummy found adding [data_to_add]")
 
 // removes a single item from render_data, removes its overlay if necessary
 /datum/appearance/proc/remove_data(var/index, attempt_remove = TRUE)
