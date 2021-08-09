@@ -24,3 +24,9 @@
 		text += ".</span>"
 		to_chat(user, text, confidential = TRUE)
 	qdel(query_get_jobban)
+
+/**
+ * Randomizes a character.
+ */
+/datum/preferences/proc/random_character(randomize_name = TRUE, randomize_gender = TRUE, randomize_species = TRUE, randomize_body = TRUE, randomize_underwear = TRUE, randomize_genitals = TRUE)
+#warn implement

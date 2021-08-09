@@ -8,12 +8,12 @@
 	L = SANITIZE_LIST(L)
 	SaveKey(prefs, key, L)
 
-/datum/preferences_collecttion/proc/auto_sanitize_integer(datum/preferences/prefs, key, min, max, default)
+/datum/preferences_collection/proc/auto_sanitize_integer(datum/preferences/prefs, key, min, max, default)
 	var/int = LoadKey(prefs, key)
 	int = sanitize_integer(int, min, max, default)
 	SaveKey(prefs, key, int)
 
-/datum/preferences_collecttion/proc/auto_sanitize_boolean(datum/preferences/prefs, key, default)
+/datum/preferences_collection/proc/auto_sanitize_boolean(datum/preferences/prefs, key, default)
 	var/int = LoadKey(prefs, key)
 	int = sanitize_integer(int, 0, 1, default)
 	SaveKey(prefs, key, int)
