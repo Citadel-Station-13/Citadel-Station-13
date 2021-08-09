@@ -16,7 +16,7 @@
 					dat += "<center>"
 					var/name
 					var/unspaced_slots = 0
-					for(var/i=1, i<=max_save_slots, i++)
+					// for(var/i=1, i<=max_save_slots, i++)
 						unspaced_slots++
 						if(unspaced_slots > 4)
 							dat += "<br>"
