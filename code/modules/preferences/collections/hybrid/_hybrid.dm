@@ -8,10 +8,10 @@
 	return CheckOverride(prefs)? prefs.LoadKeyCharacter(key) : prefs.LoadKeyGlobal(key)
 
 /datum/preferences_collection/hybrid/proc/CheckOverride(datum/preferences/prefs)
-	return prefs.LoadKeyCharacter("[path]_override")
+	return prefs.LoadKeyCharacter("__[save_key]_override")
 
 /datum/preferences_collection/hybrid/proc/SetOverride(datum/preferneces/prefs, value)
-	return prefs.SaveKeyCharacter("[path]_override", value)
+	return prefs.SaveKeyCharacter("__[save_key]_override", value)
 
 /datum/preferences_collection/hybrid/content(datum/preferences/prefs)
 	. = ..()

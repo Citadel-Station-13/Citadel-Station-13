@@ -9,6 +9,10 @@
  * Simple is best
  * Prefer IDs over typepaths
  * It'll make integration of crosssave functionality between our two servers much easier later.
+ *
+ * **EACH COLLECTION CAN EITHER BE CHARACTER, GLOBAL, OR HYBRID**
+ * Mixed are not allowed - they're either character-linked, global preferences, or global-with-override.
+ * Mixed can be done with current procs but it'll be more or less unmaintainable compared to the above 3.
  */
 /datum/preferences_collection
 	/// Name
@@ -102,14 +106,30 @@
 /**
  * Handles global migrations during loading. Must only be called from preferences datum. Should write DIRECTLY to datalist.
  * Savefile is also provided in cases where data isn't in the datalist for this key.
+ * NOTE: Sanitaization happens AFTER migrations - ensure your code can't be exploited!
  */
 /datum/preferences_collection/proc/handle_global_migration(datum/preferences/prefs, list/data, savefile/S, list/errors = list(), current_version)
 
 /**
  * Handles character slot migrations during loading. Must only be called from preferences datum. should write DIRECTLY to datalist.
  * Savefile is also provided in cases where data isn't in the datalist for this key.
+ * NOTE: Sanitaization happens AFTER migrations - ensure your code can't be exploited!
  */
 /datum/preferences_collection/proc/handle_character_migration(datum/preferences/prefs, list/data, savefile/S, list/errors = list(), current_version)
+
+/**
+ * DO NOT TOUCH THIS PROC:
+ * Updates an older savefile version to the new savefile/character setup system, as of 8/9/2021
+ * UNLESS YOU KNOW EXACTLY WHAT YOU ARE DOING, DO NOT EVER TOUCH THIS PROC.
+ */
+/datum/preferences_collection/proc/savefile_full_overhaul_character(datum/preferences/prefs, list/data, savefile/S, list/errors = list(), current_version)
+
+/**
+ * DO NOT TOUCH THIS PROC:
+ * Updates an older savefile version to the new savefile/character setup system, as of 8/9/2021
+ * UNLESS YOU KNOW EXACTLY WHAT YOU ARE DOING, DO NOT EVER TOUCH THIS PROC.
+ */
+/datum/preferences_collection/proc/savefile_full_overhaul_global(datum/preferences/prefs, list/data, savefile/S, list/errors = list(), current_version)
 
 /**
  * Called on full reset due to unreadable data or other reasons

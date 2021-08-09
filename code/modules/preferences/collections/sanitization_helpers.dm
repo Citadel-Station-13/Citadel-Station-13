@@ -1,0 +1,9 @@
+// A set of helpers to automatically sanitize values to save on the SaveKey LoadKey spam
+// WARNING: This file assumes you're using SaveKey and LoadKey standard behavior
+// Snowflake collections that are both character and global at the same time, that aren't hybrid, need to implement
+// their own behavior, as otherwise you might sanitize or write to the wrong areas.
+
+/datum/preferences_collection/proc/sanitize_list(datum/preferences/prefs, key)
+	var/list/L = LoadKey(prefs, key)
+	L = SANITIZE_LIST(L)
+	SaveKey(prefs, key, L)

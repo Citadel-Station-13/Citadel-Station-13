@@ -12,6 +12,23 @@
 #define PREFERENCES_SAVE_KEY_DEFAULT			"default"
 /// Metadata - used by preferences datum to store things like versioning.
 #define PREFERENCES_SAVE_KEY_METADATA			"metadata"
+// Characters
+#define PREFERENCES_SAVE_KEY_IDENTITY			"identity"
+#define PREFERENCES_SAVE_KEY_BODY				"body"
+#define PREFERENCES_SAVE_KEY_GENITALS			"genitals"
+#define PREFERENCES_SAVE_KEY_LOADOUT			"loadout"
+#define PREFERNECES_SAVE_KEY_OCCUPATION			"jobs"
+#define PREFERENCES_SAVE_KEY_QUIRKS				"quirks"
+#define PREFERENCES_SAVE_KEY_RECORDS			"records"
+#define PREFERENCES_SAVE_KEY_SILICON			"silicon"
+#define PREFERENCES_SAVE_KEY_SPEECH				"speech"
+// Globals
+#define PREFERENCES_SAVE_KEY_ADMIN				"admin"
+#define PREFERENCES_SAVE_KEY_GLOBAL				"global"
+#define PREFERENCES_SAVE_KEY_KEYBINDINGS		"keybindings"
+// Hybrids
+#define PREFERENCES_SAVE_KEY_ANTAGONISM			"antagonism"
+#define PREFERENCES_SAVE_KEY_FETISH				"fetish"
 
 // Preferences collection types
 #define COLLECTION_CHARACTER			1
@@ -46,6 +63,7 @@
 #define SOUND_LOBBY				(1<<3)
 #define MEMBER_PUBLIC			(1<<4)
 #define INTENT_STYLE			(1<<5)
+/// WARNING WARNING WARNING: DEPRECATED, ONLY KEPT AROUND FOR MIGRATION PURPOSES
 #define MIDROUND_ANTAG			(1<<6)
 #define SOUND_INSTRUMENTS		(1<<7)
 #define SOUND_SHIP_AMBIENCE		(1<<8)

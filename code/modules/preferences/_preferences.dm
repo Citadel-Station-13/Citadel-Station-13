@@ -35,7 +35,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	// Metadata end
 
 	// Other loaded settings begin - these aren't stored in [preferences] either because they're accessed super often, or for some other reason that makes the inherent slowness/access complexity unfavorable
-	// In reality, this means most things.
+	// Most things should use accessors in preferences/accessors to avoid this.
 
 	// End
 
@@ -81,18 +81,24 @@ GLOBAL_LIST_EMPTY(preferences_datums)
  * Directly sets to in-memory stores for a certain collection of a save key
  */
 /datum/preferences/proc/SetKeyCharacter(save_key, key, data)
+	if(ispath(key) || ispath(data))
+		CRASH("Attempted to use typepaths directly in savefiles. This is not allowed due to the volatility of BYOND savefile operations.")
 	LAZYSET(character_preferences[save_key], key, data)
 
 /**
  * Directly reads from in-memory stores for a certain collection of a save key
  */
 /datum/preferences/proc/LoadKeyCharacter(save_key, key)
+	if(ispath(key) || ispath(data))
+		CRASH("Attempted to use typepaths directly in savefiles. This is not allowed due to the volatility of BYOND savefile operations.")
 	return LAZYACCESS(character_preferences[save_key], key)
 
 /**
  * Directly reads from in-memory stores for a certain collection of a save key. Returns default if null.
  */
 /datum/preferences/proc/LoadKeyOrDefaultCharacter(save_key, key, default)
+	if(ispath(key) || ispath(data))
+		CRASH("Attempted to use typepaths directly in savefiles. This is not allowed due to the volatility of BYOND savefile operations.")
 	. = LAZYACCESS(character_preferences[save_key], key)
 	if(isnull(.))
 		return default
@@ -101,12 +107,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
  * Directly sets to in-memory stores for a certain collection of a save key
  */
 /datum/preferences/proc/SetKeyGlobal(save_key, key, data)
+	if(ispath(key) || ispath(data))
+		CRASH("Attempted to use typepaths directly in savefiles. This is not allowed due to the volatility of BYOND savefile operations.")
 	LAZYSET(global_preferences[save_key], key, data)
 
 /**
  * Directly reads from in-memory stores for a certain collection of a save key
  */
 /datum/preferences/proc/LoadKeyGlobal(save_key, key)
+	if(ispath(key) || ispath(data))
+		CRASH("Attempted to use typepaths directly in savefiles. This is not allowed due to the volatility of BYOND savefile operations.")
 	return LAZYACCESS(global_preferences[save_key], key)
 
 /**
@@ -189,15 +199,20 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			C.on_full_character_reset(src)
 		save_character(S)
 		return
-	else if(version < SAVEFILE_VERSION_MAX)
+	// Load
+	#warn deserialize character_data from disk
+	if(version < SAVEFILE_MODERN_START_VERSION)
+		for(var/i in SScharacter_setup.collections)
+			var/datum/preferences_collection/C = i
+			LAZYINITLIST(global_preferences[C.save_key])
+			C.savefile_full_overhaul_character(src, global_preferences[C.save_key], S, errors, version)
+	if(version < SAVEFILE_VERSION_MAX)
 		// handle migrations
 		for(var/i in SScharacter_setup.collections)
 			var/datum/preferences_collection/C = i
 			LAZYINITLIST(character_preferences[C.save_key])
 			C.handle_character_migration(src, character_preferences[C.save_key], S, errors, version)
 		S["version"] << SAVEFILE_VERSION_MAX
-	// Load
-	#warn deserialize character_data from disk
 	for(var/i in SScharacter_setup.collections)
 		var/datum/preferences_collection/C = i
 		C.sanitize_character(src)
@@ -231,6 +246,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			C.sanitize_preferences(src)
 			C.save_preferences(src, S)
 		return
+	// Load
+	#warn deserialize global_preferences from disk
+	if(version < SAVEFILE_MODERN_START_VERSION)
+		for(var/i in SScharacter_setup.collections)
+			var/datum/preferences_collection/C = i
+			LAZYINITLIST(global_preferences[C.save_key])
+			C.savefile_full_overhaul_global(src, global_preferences[C.save_key], S, errors, version)
 	if(version < SAVEFILE_VERSION_MAX)
 		// handle migrations
 		for(var/i in SScharacter_setup.collections)
@@ -238,8 +260,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			LAZYINITLIST(global_preferences[C.save_key])
 			C.handle_global_migration(src, global_preferences[C.save_key], S, errors, version)
 		S["version"] << SAVEFILE_VERSION_MAX
-	// Load
-	#warn deserialize global_preferences from disk
 	for(var/i in SScharacter_setup.collections)
 		var/datum/preferences_collection/C = i
 		C.sanitize_preferences(src)
