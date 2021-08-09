@@ -2,6 +2,7 @@
 
 /datum/preferences/proc/render_character_select(mob/user = parent?.mob)
 	ASSERT(user)
+	user.client.OpenPreferencesWindow()
 	var/savefile/S = new savefile(savefile_path)
 	var/list/charnames = list()
 	for(var/i in 1 to CONFIG_GET(number/max_save_slots))

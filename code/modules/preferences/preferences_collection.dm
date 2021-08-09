@@ -3,13 +3,15 @@
  * A global copy of these exist so we don't need to instantiate them for every player
  */
 /datum/preferences_collection
+	/// Name
+	var/name = "ERROR"
 	/// Sort order. Lower is in front.
 	var/sort_order = PREFERENCE_SORT_ORDER_DEFAULT
 	/// Save key. This should NEVER BE MODIFIED WITHOUT A MIGRATION! See _preferences.dm for how this works.
 	var/save_key = PREFERENCES_SAVE_KEY_DEFAULT
 	/// Preferences type - Character, hybrid, or global
 	/// Coontrols rendering/ordering. The actual save load, however, is agnostic - a proc must be overridden.
-	var/collection_type = COLLECTION_GLOBAL
+	var/collection_type = null
 
 /**
  * Renders HTML content

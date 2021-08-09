@@ -257,7 +257,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	user.client.OpenPreferencesWindow()
 	var/list/content = list()
 	content += "<head>"
-	#warn render header/tab selection
+	var/first = TRUE
+	for(var/list/ordered in SScharacter_setup.ordered_collections)
+		if(!first)
+			content += "  |  "
+		for(var/datum/preferences_collection/C in ordered)
+			if(C != selected_collection)
+				content += "[first? "" : "  "]<a href='?_src_=prefs;switch_collection=[REF(C)]'>[C.name]</a>  "
+			else
+				content += "[first? "" : "  "]<span class='linkOn'>[C.name]</span>  "
+		if(first)
+			first = FALSE
 	content += "</head>"
 	content += "<body>"
 	if(!selected_collection)
@@ -273,3 +283,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
  */
 /client/proc/OpenPreferencesWindow()
 #warn implement
+
+/datum/preferences/OnTopic(client/user, list/href_list)
+	. = ..()
+	if(href_list["switch_collection"])
+		var/datum/preferences_collection/C = locate(href_list["switch_collection"]) in SScharacter_setup.collections
+		if(istype(C))
+			selected_collection = C

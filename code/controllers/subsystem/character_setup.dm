@@ -23,3 +23,21 @@ SUBSYSTEM_DEF(character_setup)
 		collections += new subtype
 	sortTim(collections, /proc/cmp_preference_collection_priority)
 
+/datum/controller/subsystem/character_setup/proc/SortCollections()
+	// they're already sorted from SetupDatumLists()
+	var/list/g = list()
+	var/list/c = list()
+	var/list/h = list()
+	var/list/m = list()
+	// global, character, hybrid, misc/unsorted
+	for(var/datum/preferences_collection/collection in collections)
+		switch(collection.collection_type)
+			if(COLLECTION_GLOBAL)
+				g += collection
+			if(COLLECTION_CHARACTER)
+				c += collection
+			if(COLLECTION_HYBRID)
+				h += collection
+			else
+				m += collection
+	ordered_collections = list(g, c, h, m)
