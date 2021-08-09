@@ -95,7 +95,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_inv_w_uniform()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
-		remove_overlay(UNIFORM_LAYER)
+		full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(UNIFORM_LAYER))
 
 		if(client && hud_used)
 			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_W_UNIFORM]
@@ -140,10 +140,8 @@ There are several things that need to be remembered:
 			if(OFFSET_UNIFORM in dna.species.offset_features)
 				uniform_overlay.pixel_x += dna.species.offset_features[OFFSET_UNIFORM][1]
 				uniform_overlay.pixel_y += dna.species.offset_features[OFFSET_UNIFORM][2]
-			overlays_standing[UNIFORM_LAYER] = uniform_overlay
 
-		apply_overlay(UNIFORM_LAYER)
-		update_mutant_bodyparts()
+			full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(uniform_overlay, num2text(UNIFORM_LAYER))
 
 /mob/living/carbon/human/update_inv_wear_id()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))

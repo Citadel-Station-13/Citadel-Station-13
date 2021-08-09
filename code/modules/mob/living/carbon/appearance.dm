@@ -10,10 +10,8 @@
 
 // should be ran upon the carbon being initialized
 /mob/living/carbon/proc/init_full_appearance()
-	full_appearance = new /datum/appearance/full
-	full_appearance.owner = src
-	var/datum/appearance/limbs_appearance = new
-	limbs_appearance.owner = src
+	full_appearance = new /datum/appearance/full(src)
+	var/datum/appearance/limbs_appearance = new(src)
 	limbs_appearance.render_data = get_limb_appearance()
 	full_appearance.appearance_list = list(limbs_appearance)
 	full_appearance.render()
