@@ -80,3 +80,4 @@
 	/// Timer id of any transformation
 	var/transformation_timer
 
+	var/datum/appearance/full/full_appearance // appearance datum for rendering the mob

@@ -4,10 +4,10 @@
 /mob/living/carbon/Initialize()
 	. = ..()
 	create_reagents(1000, NONE, NO_REAGENTS_VALUE)
-	update_body_parts() //to update the carbon's new bodyparts appearance
 	GLOB.carbon_list += src
 	blood_volume = (BLOOD_VOLUME_NORMAL * blood_ratio)
 	add_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
+	init_full_appearance()
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled

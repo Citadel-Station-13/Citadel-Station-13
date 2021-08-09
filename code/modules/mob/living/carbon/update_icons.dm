@@ -2,23 +2,23 @@
 	var/list/overlays_standing[TOTAL_LAYERS]
 
 /mob/living/carbon/proc/apply_overlay(cache_index)
+	/*
 	if((. = overlays_standing[cache_index]))
 		add_overlay(.)
+	*/
 
 /mob/living/carbon/proc/remove_overlay(cache_index)
+	/*
 	var/I = overlays_standing[cache_index]
 	if(I)
 		cut_overlay(I)
 		overlays_standing[cache_index] = null
+	*/
 
 /mob/living/carbon/regenerate_icons()
 	if(mob_transforming)
 		return 1
-	update_inv_hands()
-	update_inv_handcuffed()
-	update_inv_legcuffed()
-	update_fire()
-
+	full_appearance.render()
 
 /mob/living/carbon/update_inv_hands()
 	remove_overlay(HANDS_LAYER)

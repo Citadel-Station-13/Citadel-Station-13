@@ -74,36 +74,6 @@ There are several things that need to be remembered:
 	..((fire_stacks > 3) ? "Standing" : "Generic_mob_burning")
 
 /* --------------------------------------- */
-//For legacy support.
-/mob/living/carbon/human/regenerate_icons()
-	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
-		if(!..())
-			icon_render_key = null //invalidate bodyparts cache
-			update_body(TRUE)
-			update_hair()
-			update_inv_w_uniform()
-			update_inv_wear_id()
-			update_inv_gloves()
-			update_inv_glasses()
-			update_inv_ears()
-			update_inv_shoes()
-			update_inv_s_store()
-			update_inv_wear_mask()
-			update_inv_head()
-			update_inv_belt()
-			update_inv_back()
-			update_inv_wear_suit()
-			update_inv_pockets()
-			update_inv_neck()
-			update_transform()
-			//mutations
-			update_mutations_overlay()
-			//damage overlays
-			update_damage_overlays()
-			//antagonism
-			update_antag_overlays()
-
-/* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
 
