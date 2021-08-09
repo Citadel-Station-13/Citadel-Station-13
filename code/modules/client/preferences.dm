@@ -2665,7 +2665,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					toggles ^= ANNOUNCE_LOGIN
 				if("combohud_lighting")
 					toggles ^= COMBOHUD_LIGHTING
-X				if("name")
+				if("name")
 					be_random_name = !be_random_name
 
 				if("all")

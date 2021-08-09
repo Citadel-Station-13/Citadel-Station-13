@@ -3,7 +3,17 @@
 // Snowflake collections that are both character and global at the same time, that aren't hybrid, need to implement
 // their own behavior, as otherwise you might sanitize or write to the wrong areas.
 
-/datum/preferences_collection/proc/sanitize_list(datum/preferences/prefs, key)
+/datum/preferences_collection/proc/auto_sanitize_list(datum/preferences/prefs, key)
 	var/list/L = LoadKey(prefs, key)
 	L = SANITIZE_LIST(L)
 	SaveKey(prefs, key, L)
+
+/datum/preferences_collecttion/proc/auto_sanitize_integer(datum/preferences/prefs, key, min, max, default)
+	var/int = LoadKey(prefs, key)
+	int = sanitize_integer(int, min, max, default)
+	SaveKey(prefs, key, int)
+
+/datum/preferences_collecttion/proc/auto_sanitize_boolean(datum/preferences/prefs, key, default)
+	var/int = LoadKey(prefs, key)
+	int = sanitize_integer(int, 0, 1, default)
+	SaveKey(prefs, key, int)

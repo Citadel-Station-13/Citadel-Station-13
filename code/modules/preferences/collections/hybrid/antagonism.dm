@@ -48,11 +48,11 @@
 
 /datum/preferences_collection/hybrid/antagonism/sanitize_global(datum/preferences/prefs)
 	. = ..()
-	sanitize_list(prefs, "be_special")
+	auto_sanitize_list(prefs, "be_special")
 
 /datum/preferences_collection/hybrid/antagonism/sanitize_character(datum/preferences/prefs)
 	. = ..()
-	sanitize_list(prefs, "be_special")
+	auto_sanitize_list(prefs, "be_special")
 
 /datum/preferences_collection/hybrid/antagonism/OnTopic(mob/user, datum/preferences/prefs, list/href_list)
 	. = ..()
