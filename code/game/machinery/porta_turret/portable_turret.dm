@@ -30,7 +30,7 @@
 	integrity_failure = 0.5
 	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 	/// Base turret icon state
-	var/base_icon_state = "standard"
+	base_icon_state = "standard"
 	/// Scan range of the turret for locating targets
 	var/scan_range = 7
 	/// For turrets inside other objects
@@ -283,9 +283,9 @@
 
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN)
-		if(istype(I, /obj/item/crowbar))
-			//If the turret is destroyed, you can remove it with a crowbar to
-			//try and salvage its components
+		if(I.tool_behaviour == TOOL_CROWBAR)
+			//If the turret is destroyed, you can remove it with something
+			//that acts like a crowbar to try and salvage its components
 			to_chat(user, "<span class='notice'>You begin prying the metal coverings off...</span>")
 			if(I.use_tool(src, user, 20))
 				if(prob(70))
@@ -302,7 +302,7 @@
 				qdel(src)
 				return
 
-	else if((istype(I, /obj/item/wrench)) && (!on))
+	else if((I.tool_behaviour == TOOL_WRENCH) && (!on))
 		if(raised)
 			return
 
@@ -329,12 +329,11 @@
 			to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
 		else
 			to_chat(user, "<span class='alert'>Access denied.</span>")
-	else if(istype(I, /obj/item/multitool) && !locked)
+	else if(I.tool_behaviour == TOOL_MULTITOOL && !locked)
 		if(!multitool_check_buffer(user, I))
 			return
-		var/obj/item/multitool/M = I
-		M.buffer = src
-		to_chat(user, "<span class='notice'>You add [src] to multitool buffer.</span>")
+		I.buffer = src
+		to_chat(user, "<span class='notice'>You add [src] to [I]'s buffer.</span>")
 	else
 		return ..()
 
@@ -460,11 +459,11 @@
 
 		else if(iscarbon(A))
 			var/mob/living/carbon/C = A
-			//If not emagged, only target carbons that can use items
-			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || !(C.mobility_flags & MOBILITY_USE)))
+			//If not on lethal, only target carbons that aren't cuffed nor stamcrit or just plain crit.
+			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || IS_STAMCRIT(C)))
 				continue
 
-			//If emagged, target all but dead carbons
+			//If on lethal, target all but dead carbons
 			if(mode == TURRET_LETHAL && C.stat == DEAD)
 				continue
 
@@ -504,6 +503,7 @@
 			return 1
 
 /obj/machinery/porta_turret/proc/popUp()	//pops the turret up
+	set waitfor = FALSE
 	if(!anchored)
 		return
 	if(raising || raised)
@@ -522,6 +522,7 @@
 	layer = MOB_LAYER
 
 /obj/machinery/porta_turret/proc/popDown()	//pops the turret down
+	set waitfor = FALSE
 	if(raising || !raised)
 		return
 	if(stat & BROKEN)
@@ -948,20 +949,19 @@
 	if(stat & BROKEN)
 		return
 
-	if (istype(I, /obj/item/multitool))
+	if(I.tool_behaviour == TOOL_MULTITOOL)
 		if(!multitool_check_buffer(user, I))
 			return
-		var/obj/item/multitool/M = I
-		if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
-			turrets |= M.buffer
-			to_chat(user, "<span class='notice'>You link \the [M.buffer] with \the [src].</span>")
+		if(I.buffer && istype(I.buffer, /obj/machinery/porta_turret))
+			turrets |= I.buffer
+			to_chat(user, "<span class='notice'>You link \the [I.buffer] with \the [src].</span>")
 			return
 
-	if (issilicon(user))
+	if(issilicon(user))
 		return attack_hand(user)
 
-	if ( get_dist(src, user) == 0 )		// trying to unlock the interface
-		if (allowed(usr))
+	if(get_dist(src, user) == 0 )		// trying to unlock the interface
+		if(allowed(usr))
 			if(obj_flags & EMAGGED)
 				to_chat(user, "<span class='warning'>The turret control is unresponsive!</span>")
 				return

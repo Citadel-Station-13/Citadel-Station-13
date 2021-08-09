@@ -12,6 +12,7 @@
 	recommended_enemies = 1
 	enemy_minimum_age = 7
 	round_ends_with_antag_death = 1
+	chaos = 9
 	announce_span = "danger"
 	announce_text = "There is a space wizard attacking the station!\n\
 	<span class='danger'>Wizard</span>: Accomplish your objectives and cause mayhem on the station.\n\

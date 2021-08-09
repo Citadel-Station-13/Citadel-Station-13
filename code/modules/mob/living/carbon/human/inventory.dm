@@ -164,7 +164,7 @@
 		var/obj/item/thing = sloties
 		. += thing?.slowdown
 
-/mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE)
+/mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	var/index = get_held_index_of_item(I)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
 	if(!. || !I)
@@ -209,7 +209,7 @@
 			update_tint()
 		if(G.vision_correction)
 			if(HAS_TRAIT(src, TRAIT_NEARSIGHT))
-				overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+				overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
 		if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
 			update_sight()
 		if(!QDELETED(src))

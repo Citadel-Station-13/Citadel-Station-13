@@ -199,8 +199,7 @@
 	return TRUE
 
 /obj/item/gun_control/attack(mob/living/M, mob/living/user)
-	M.lastattacker = user.real_name
-	M.lastattackerckey = user.ckey
+	M.set_last_attacker(user)
 	M.attacked_by(src, user)
 	add_fingerprint(user)
 

@@ -262,8 +262,6 @@ function tag_pr($payload, $opened) {
 			$tags[] = $tag;
 
 	check_tag_and_replace($payload, '[dnm]', 'Do Not Merge', $tags);
-	if(!check_tag_and_replace($payload, '[wip]', 'Work In Progress', $tags) && check_tag_and_replace($payload, '[ready]', 'Work In Progress', $remove))
-		$tags[] = 'Needs Review';
 
 	return array($tags, $remove);
 }
@@ -287,81 +285,11 @@ function get_reviews($payload){
 	return json_decode(github_apisend($payload['pull_request']['url'] . '/reviews'), true);
 }
 
-function check_ready_for_review($payload, $labels = null, $remove = array()){
-	$r4rlabel = 'Needs Review';
-	$labels_which_should_not_be_ready = array('Do Not Merge', 'Work In Progress', 'Merge Conflict');
-	$has_label_already = false;
-	$should_not_have_label = false;
-	if($labels == null)
-		$labels = get_labels($payload);
-	$returned = array($labels, $remove);
-	//if the label is already there we may need to remove it
-	foreach($labels as $L){
-		if(in_array($L, $labels_which_should_not_be_ready))
-			$should_not_have_label = true;
-		if($L == $r4rlabel)
-			$has_label_already = true;
-	}
-
-	if($has_label_already && $should_not_have_label){
-		$remove[] = $r4rlabel;
-		return $returned;
-	}
-
-	//find all reviews to see if changes were requested at some point
-	$reviews = get_reviews($payload);
-
-	$reviews_ids_with_changes_requested = array();
-	$dismissed_an_approved_review = false;
-
-	foreach($reviews as $R)
-		if(is_maintainer($payload, $R['user']['login'])){
-			$lower_state = strtolower($R['state']);
-			if($lower_state == 'changes_requested')
-				$reviews_ids_with_changes_requested[] = $R['id'];
-			else if ($lower_state == 'approved'){
-				dismiss_review($payload, $R['id'], 'Out of date review');
-				$dismissed_an_approved_review = true;
-			}
-		}
-
-	if(!$dismissed_an_approved_review && count($reviews_ids_with_changes_requested) == 0){
-		if($has_label_already)
-			$remove[] = $r4rlabel;
-		return $returned;	//no need to be here
-	}
-
-	if(count($reviews_ids_with_changes_requested) > 0){
-		//now get the review comments for the offending reviews
-
-		$review_comments = json_decode(github_apisend($payload['pull_request']['review_comments_url']), true);
-
-		foreach($review_comments as $C){
-			//make sure they are part of an offending review
-			if(!in_array($C['pull_request_review_id'], $reviews_ids_with_changes_requested))
-				continue;
-
-			//review comments which are outdated have a null position
-			if($C['position'] !== null){
-				if($has_label_already)
-					$remove[] = $r4rlabel;
-				return $returned;	//no need to tag
-			}
-		}
-	}
-
-	//finally, add it if necessary
-	if(!$has_label_already){
-		$labels[] = $r4rlabel;
-	}
-	return $returned;
-}
-
 function check_dismiss_changelog_review($payload){
-	global $require_changelog;
+	global $require_changelogs;
 	global $no_changelog;
 
-	if(!$require_changelog)
+	if(!$require_changelogs)
 		return;
 
 	if(!$no_changelog)
@@ -395,19 +323,19 @@ function handle_pr($payload) {
 			set_labels($payload, $labels, $remove);
 			if($no_changelog)
 				check_dismiss_changelog_review($payload);
+			/*
 			if(get_pr_code_friendliness($payload) <= 0){
 				$balances = pr_balances();
 				$author = $payload['pull_request']['user']['login'];
 				if(isset($balances[$author]) && $balances[$author] < 0 && !is_maintainer($payload, $author))
 					create_comment($payload, 'You currently have a negative Fix/Feature pull request delta of ' . $balances[$author] . '. Maintainers may close this PR at will. Fixing issues or improving the codebase will improve this score.');
 			}
+			*/
 			break;
 		case 'edited':
 			check_dismiss_changelog_review($payload);
 		case 'synchronize':
 			list($labels, $remove) = tag_pr($payload, false);
-			if($payload['action'] == 'synchronize')
-				list($labels, $remove) = check_ready_for_review($payload, $labels, $remove);
 			set_labels($payload, $labels, $remove);
 			return;
 		case 'reopened':
@@ -647,15 +575,16 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 		'Refactor' => 10,
 		'Code Improvement' => 2,
 		'Grammar and Formatting' => 1,
+		'Quality of Life' => 1,
 		'Priority: High' => 15,
 		'Priority: CRITICAL' => 20,
 		'Unit Tests' => 6,
 		'Logging' => 1,
 		'Feedback' => 2,
 		'Performance' => 12,
+		'Atomic' => 2,
 		'Feature' => -10,
 		'Balance/Rebalance' => -8,
-		'Tweak' => -2,
 		'Sound' => 1,
 		'Sprites' => 1,
 		'GBP: Reset' => $startingPRBalance - $oldbalance,
@@ -676,8 +605,7 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 		}
 	}
 
-	$affecting = abs($maxNegative) >= $maxPositive ? $maxNegative : $maxPositive;
-	return $affecting;
+	return $maxNegative + $maxPositive;
 }
 
 function is_maintainer($payload, $author){
@@ -819,6 +747,8 @@ function checkchangelog($payload, $compile = true) {
 		}
 
 		if (!strlen($firstword)) {
+			if (count($currentchangelogblock) <= 0)
+				continue;
 			$currentchangelogblock[count($currentchangelogblock)-1]['body'] .= "\n";
 			continue;
 		}
@@ -840,12 +770,10 @@ function checkchangelog($payload, $compile = true) {
 					$currentchangelogblock[] = array('type' => 'bugfix', 'body' => $item);
 				}
 				break;
-			case 'rsctweak':
-			case 'tweaks':
-			case 'tweak':
-				if($item != 'tweaked a few things') {
-					$tags[] = 'Tweak';
-					$currentchangelogblock[] = array('type' => 'tweak', 'body' => $item);
+			case 'qol':
+				if($item != 'made something easier to use') {
+					$tags[] = 'Quality of Life';
+					$currentchangelogblock[] = array('type' => 'qol', 'body' => $item);
 				}
 				break;
 			case 'soundadd':

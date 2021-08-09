@@ -153,7 +153,7 @@
 
 /obj/item/ammo_casing/energy/laser/pump
 	projectile_type = /obj/item/projectile/beam/pump
-	e_cost = 350
+	e_cost = 300
 	select_name = "kill"
 	pellets = 6
 	variance = 15
@@ -189,5 +189,5 @@
 	name = "disabling blast"
 	icon_state = "disablerslug"
 	color = null
-	stamina = 13
+	stamina = 15
 	range = 6

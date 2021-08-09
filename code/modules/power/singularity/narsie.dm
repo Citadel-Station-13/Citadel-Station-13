@@ -80,6 +80,9 @@
 	SSshuttle.lockdown = TRUE
 	SSpersistence.station_was_destroyed = TRUE
 	sleep(600)
+	if(QDELETED(src))
+		priority_announce("Accausal event alert rescinded. Eldritch presence no longer reading on sensors. Solution package disarmed. Reccomend immediate evacuation","Central Command Higher Dimensional Affairs")
+		return
 	if(resolved == FALSE)
 		resolved = TRUE
 		sound_to_playing_players('sound/machines/alarm.ogg')

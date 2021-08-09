@@ -146,7 +146,7 @@
 						return
 				reagents.clear_reagents()
 				// This also reacts them. No nitroglycerin deathpools, sorry gamers :(
-				W.reagents.trans_to(reagents, max_beaker_transfer)
+				W.reagents.trans_to(reagents, max_beaker_transfer, log = "pool fill from reagent container")
 				user.visible_message("<span class='notice'>[src] makes a slurping noise.</span>", "<span class='notice'>All of the contents of [W] are quickly suctioned out by the machine!</span")
 				updateUsrDialog()
 				var/list/reagent_names = list()
@@ -235,10 +235,10 @@
 			if(POOL_SCALDING) //Scalding
 				M.adjust_bodytemperature(50,0,500)
 			if(POOL_WARM) //Warm
-				M.adjust_bodytemperature(20,0,360) //Heats up mobs till the termometer shows up
+				M.adjust_bodytemperature(20,0,360) //Heats up mobs till the thermometer shows up
 			//Normal temp does nothing, because it's just room temperature water.
 			if(POOL_COOL)
-				M.adjust_bodytemperature(-20,250) //Cools mobs till the termometer shows up
+				M.adjust_bodytemperature(-20,250) //Cools mobs till the thermometer shows up
 			if(POOL_FRIGID) //Freezing
 				M.adjust_bodytemperature(-60) //cool mob at -35k per cycle, less would not affect the mob enough.
 				if(M.bodytemperature <= 50 && !M.stat)
@@ -290,10 +290,10 @@
 
 /obj/machinery/pool/controller/proc/update_temp()
 	if(mist_state)
-		if(temperature < POOL_SCALDING)
+		if(temperature < POOL_WARM)
 			mist_off()
 	else
-		if(temperature == POOL_SCALDING)
+		if(temperature >= POOL_WARM)
 			mist_on()
 	update_icon()
 

@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash
 	name = "Ashen Passage"
-	desc = "Low range spell allowing you to pass through a few walls."
+	desc = "A short range spell allowing you to pass unimpeded through a few walls."
 	school = "transmutation"
 	invocation = "DULK'ES PRE'ZIMAS"
 	invocation_type = "whisper"
@@ -31,7 +31,7 @@
 
 /obj/effect/proc_holder/spell/targeted/touch/mansus_grasp
 	name = "Mansus Grasp"
-	desc = "Touch spell that allows you to channel the power of the Old Gods through you."
+	desc = "A touch spell that lets you channel the power of the Old Gods through your grip."
 	hand_path = /obj/item/melee/touch_attack/mansus_fist
 	school = "evocation"
 	charge_max = 100
@@ -42,7 +42,7 @@
 
 /obj/item/melee/touch_attack/mansus_fist
 	name = "Mansus Grasp"
-	desc = "A sinister looking aura that distorts the flow of reality around it. Causes knockdown, major stamina damage aswell as some Brute. It gains additional beneficial effects with certain knowledges you can research."
+	desc = "A sinister looking aura that distorts the flow of reality around it. Causes knockdown and major stamina damage in addition to some brute. It gains additional beneficial effects as you expand your knowledge of the Mansus."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "mansus_grasp"
 	item_state = "mansus"
@@ -50,13 +50,13 @@
 
 /obj/item/melee/touch_attack/mansus_fist/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 
-	if(!proximity_flag || target == user)
+	if(!proximity_flag || (target == user))
 		return
 	playsound(user, 'sound/items/welder.ogg', 75, TRUE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/tar = target
 		if(tar.anti_magic_check())
-			tar.visible_message("<span class='danger'>Spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
+			tar.visible_message("<span class='danger'>The spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
 			return ..()
 	var/datum/mind/M = user.mind
 	var/datum/antagonist/heretic/cultie = M.has_antag_datum(/datum/antagonist/heretic)
@@ -79,7 +79,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
 	name = "Aggressive Spread"
-	desc = "Spreads rust onto nearby turfs."
+	desc = "Spreads rust onto nearby surfaces."
 	school = "transmutation"
 	charge_max = 300 //twice as long as mansus grasp
 	clothes_req = FALSE
@@ -101,7 +101,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion/small
 	name = "Rust Conversion"
-	desc = "Spreads rust onto nearby turfs."
+	desc = "Spreads rust onto nearby surfaces."
 	range = 2
 
 /obj/effect/proc_holder/spell/pointed/blood_siphon
@@ -162,7 +162,7 @@
 
 /obj/effect/proc_holder/spell/aimed/rust_wave
 	name = "Patron's Reach"
-	desc = "Channels energy into your gauntlet - firing it results in a wave of rust being created in it's wake."
+	desc = "Channels energy into your gauntlet- unleashing it creates a wave of rust in its wake."
 	projectile_type = /obj/item/projectile/magic/spell/rust_wave
 	charge_max = 350
 	clothes_req = FALSE
@@ -213,7 +213,7 @@
 
 /obj/effect/proc_holder/spell/pointed/cleave
 	name = "Cleave"
-	desc = "Causes severe bleeding on a target and people around them"
+	desc = "Causes severe bleeding on a target and several targets around them."
 	school = "transmutation"
 	charge_max = 350
 	clothes_req = FALSE
@@ -250,7 +250,8 @@
 		var/obj/item/bodypart/bodypart = pick(target.bodyparts)
 		var/datum/wound/slash/critical/crit_wound = new
 		crit_wound.apply_wound(bodypart)
-		target.adjustFireLoss(20)
+		crit_wound.apply_wound(bodypart)
+		target.adjustBruteLoss(20)
 		new /obj/effect/temp_visual/cleave(target.drop_location())
 
 /obj/effect/proc_holder/spell/pointed/cleave/can_target(atom/target, mob/user, silent)
@@ -292,7 +293,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/tar = target
 		if(tar.anti_magic_check())
-			tar.visible_message("<span class='danger'>Spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
+			tar.visible_message("<span class='danger'>The spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
 			return ..()
 
 	if(iscarbon(target))
@@ -331,7 +332,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/tar = target
 		if(tar.anti_magic_check())
-			tar.visible_message("<span class='danger'>Spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
+			tar.visible_message("<span class='danger'>The spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
 			return ..()
 
 	if(iscarbon(target))
@@ -343,7 +344,7 @@
 
 /obj/effect/proc_holder/spell/pointed/nightwatchers_rite
 	name = "Nightwatcher's Rite"
-	desc = "Powerful spell that releases 5 streams of fire away from you."
+	desc = "A powerful spell that releases 5 streams of fire away from you."
 	school = "transmutation"
 	invocation = "IGNIS'INTI"
 	invocation_type = "whisper"
@@ -390,13 +391,13 @@
 
 		for(var/mob/living/L in T.contents)
 			if(L.anti_magic_check())
-				L.visible_message("<span class='danger'>Spell bounces off of [L]!</span>","<span class='danger'>The spell bounces off of you!</span>")
+				L.visible_message("<span class='danger'>The spell bounces off of [L]!</span>","<span class='danger'>The spell bounces off of you!</span>")
 				continue
 			if(L in hit_list || L == source)
 				continue
 			hit_list += L
 			L.adjustFireLoss(15)
-			to_chat(L, "<span class='userdanger'>You're hit by a blast of fire!</span>")
+			to_chat(L, "<span class='userdanger'>You're hit by [source]'s eldritch flames!</span>")
 
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700,50,1)
@@ -433,7 +434,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/fire_cascade
 	name = "Fire Cascade"
-	desc = "creates hot turfs around you."
+	desc = "Heats the air around you."
 	school = "transmutation"
 	charge_max = 300 //twice as long as mansus grasp
 	clothes_req = FALSE
@@ -470,7 +471,7 @@
 
 /obj/effect/proc_holder/spell/targeted/fire_sworn
 	name = "Oath of Fire"
-	desc = "For a minute you will passively create a ring of fire around you."
+	desc = "For a minute, you will passively create a ring of fire around you."
 	invocation = "IGNIS'AISTRA'LISTRE"
 	invocation_type = "whisper"
 	clothes_req = FALSE
@@ -509,7 +510,7 @@
 
 /obj/effect/proc_holder/spell/targeted/worm_contract
 	name = "Force Contract"
-	desc = "Forces all the worm parts to collapse onto a single turf"
+	desc = "Forces your body to contract onto a single tile."
 	invocation_type = "none"
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
@@ -539,7 +540,7 @@
 
 /obj/effect/proc_holder/spell/targeted/fiery_rebirth
 	name = "Nightwatcher's Rebirth"
-	desc = "Drains nearby alive people that are engulfed in flames. It heals 10 of each damage type per person. If a person is in critical condition it finishes them off."
+	desc = "Drains nearby alive people that are engulfed in flames. It heals 10 of each damage type per person. If a target is in critical condition it drains the last of their vitality, killing them."
 	invocation = "PETHRO'MINO'IGNI"
 	invocation_type = "whisper"
 	clothes_req = FALSE
@@ -566,12 +567,12 @@
 		human_user.adjustBruteLoss(-10, FALSE)
 		human_user.adjustFireLoss(-10, FALSE)
 		human_user.adjustStaminaLoss(-10, FALSE)
-		human_user.adjustToxLoss(-10, FALSE)
+		human_user.adjustToxLoss(-10, FALSE, TRUE)
 		human_user.adjustOxyLoss(-10)
 
 /obj/effect/proc_holder/spell/pointed/manse_link
 	name = "Mansus Link"
-	desc = "Piercing through reality, connecting minds. This spell allows you to add people to a mansus net, allowing them to communicate with eachother"
+	desc = "Piercing through reality, connecting minds. This spell allows you to add people to a Mansus Net, allowing them to communicate with each other from afar."
 	school = "transmutation"
 	charge_max = 300
 	clothes_req = FALSE
@@ -605,7 +606,7 @@
 
 /datum/action/innate/mansus_speech
 	name = "Mansus Link"
-	desc = "Send a psychic message to everyone connected to your mansus link."
+	desc = "Send a psychic message to everyone connected to your Mansus Net."
 	button_icon_state = "link_speech"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_ecult"
@@ -747,3 +748,219 @@
 		return 3
 	else
 		return 2
+
+/obj/effect/proc_holder/spell/targeted/shed_human_form
+	name = "Shed form"
+	desc = "Shed your fragile form, become one with the arms, become one with the emperor."
+	invocation_type = "shout"
+	invocation = "REALITY UNCOIL!"
+	clothes_req = FALSE
+	action_background_icon_state = "bg_ecult"
+	range = -1
+	include_user = TRUE
+	charge_max = 100
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "worm_ascend"
+	var/segment_length = 10
+
+/obj/effect/proc_holder/spell/targeted/shed_human_form/cast(list/targets, mob/user)
+	. = ..()
+	var/mob/living/target = user
+	var/mob/living/mob_inside = locate() in target.contents - target
+
+	if(!mob_inside)
+		var/mob/living/simple_animal/hostile/eldritch/armsy/prime/outside = new(user.loc,TRUE,segment_length)
+		target.mind.transfer_to(outside, TRUE)
+		target.forceMove(outside)
+		target.apply_status_effect(STATUS_EFFECT_STASIS,STASIS_ASCENSION_EFFECT)
+		for(var/mob/living/carbon/human/humie in view(9,outside)-target)
+			if(IS_HERETIC(humie) || IS_HERETIC_MONSTER(humie))
+				continue
+			SEND_SIGNAL(humie, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
+			///They see the very reality uncoil before their eyes.
+			if(prob(25))
+				var/trauma = pick(subtypesof(BRAIN_TRAUMA_MILD) + subtypesof(BRAIN_TRAUMA_SEVERE))
+				humie.gain_trauma(new trauma(), TRAUMA_RESILIENCE_LOBOTOMY)
+		return
+
+	if(iscarbon(mob_inside))
+		var/mob/living/simple_animal/hostile/eldritch/armsy/prime/armsy = target
+		if(mob_inside.remove_status_effect(STATUS_EFFECT_STASIS,STASIS_ASCENSION_EFFECT))
+			mob_inside.forceMove(armsy.loc)
+		armsy.mind.transfer_to(mob_inside, TRUE)
+		segment_length = armsy.get_length()
+		qdel(armsy)
+		return
+
+/obj/effect/proc_holder/spell/pointed/void_blink
+	name = "Void Phase"
+	desc = "Let's you blink to your pointed destination, causes 3x3 aoe damage bubble around your pointed destination and your current location. It has a minimum range of 3 tiles and a maximum range of 9 tiles."
+	invocation_type = "whisper"
+	invocation = "PAS'VEIK"
+	clothes_req = FALSE
+	range = 9
+	action_background_icon_state = "bg_ecult"
+	charge_max = 300
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "voidblink"
+	selection_type = "range"
+
+/obj/effect/proc_holder/spell/pointed/void_blink/can_target(atom/target, mob/user, silent)
+	. = ..()
+	if(get_dist(get_turf(user),get_turf(target)) < 3 )
+		return FALSE
+
+/obj/effect/proc_holder/spell/pointed/void_blink/cast(list/targets, mob/user)
+	. = ..()
+	var/target = targets[1]
+	var/turf/targeted_turf = get_turf(target)
+
+	playsound(user,'sound/magic/voidblink.ogg',100)
+	playsound(targeted_turf,'sound/magic/voidblink.ogg',100)
+
+	new /obj/effect/temp_visual/voidin(user.drop_location())
+	new /obj/effect/temp_visual/voidout(targeted_turf)
+
+	for(var/mob/living/living_mob in range(1,user)-user)
+		if(IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
+			continue
+		living_mob.adjustBruteLoss(40)
+
+	for(var/mob/living/living_mob in range(1,targeted_turf)-user)
+		if(IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
+			continue
+		living_mob.adjustBruteLoss(40)
+
+	do_teleport(user,targeted_turf,0,TRUE,no_effects = TRUE,channel=TELEPORT_CHANNEL_MAGIC)
+
+/obj/effect/temp_visual/voidin
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "void_blink_in"
+	alpha = 150
+	duration = 6
+	pixel_x = -32
+	pixel_y = -32
+
+/obj/effect/temp_visual/voidout
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "void_blink_out"
+	alpha = 150
+	duration = 6
+	pixel_x = -32
+	pixel_y = -32
+
+/obj/effect/proc_holder/spell/targeted/void_pull
+	name = "Void Pull"
+	desc = "Call the void, this pulls all nearby people closer to you, damages people already around you. If they are 4 tiles or closer they are also knocked down and a micro-stun is applied."
+	invocation_type = "whisper"
+	invocation = "VISA'GALIS TRAUK'IMAS"
+	clothes_req = FALSE
+	action_background_icon_state = "bg_ecult"
+	range = -1
+	include_user = TRUE
+	charge_max = 400
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "voidpull"
+
+/obj/effect/proc_holder/spell/targeted/void_pull/cast(list/targets, mob/user)
+	. = ..()
+	for(var/mob/living/living_mob in range(1,user)-user)
+		if(IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
+			continue
+		living_mob.adjustBruteLoss(30)
+
+	playsound(user,'sound/magic/voidpull.ogg',75)
+	new /obj/effect/temp_visual/voidin(user.drop_location())
+	for(var/mob/living/livies in view(7,user)-user)
+
+		if(get_dist(user,livies) < 4)
+			livies.AdjustKnockdown(3 SECONDS)
+			livies.AdjustParalyzed(0.5 SECONDS)
+
+		for(var/i in 1 to 3)
+			livies.forceMove(get_step_towards(livies,user))
+
+
+/obj/effect/proc_holder/spell/pointed/boogie_woogie
+	name = "Void's Applause"
+	desc = "Swap positions with someone at the clap of your hands."
+	school = "transmutation"
+	charge_max = 100
+	clothes_req = FALSE
+	invocation = "BOOGIE WOOGIE"
+	invocation_type = "none"
+	range = 10
+	message = "The world around you suddenly shifts!"
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "mansus_link"
+	action_background_icon_state = "bg_ecult"
+
+/obj/effect/proc_holder/spell/pointed/boogie_woogie/cast(list/targets, mob/user)
+	. = ..()
+	var/target = targets[1]
+	user.emote("clap1")
+	playsound(user, 'sound/magic/voidblink.ogg', 75, TRUE)
+	var/turf/targeted_turf = get_turf(target)
+	var/turf/user_turf = get_turf(user)
+
+	new /obj/effect/temp_visual/voidswap(user.drop_location())
+	new /obj/effect/temp_visual/voidswap(targeted_turf)
+
+	if(isliving(target) || iscontainer(target))
+		do_teleport(user,targeted_turf,0,TRUE,no_effects = TRUE,channel=TELEPORT_CHANNEL_MAGIC)
+		do_teleport(target,user_turf,0,TRUE,no_effects = TRUE,channel=TELEPORT_CHANNEL_MAGIC)
+
+
+/obj/effect/proc_holder/spell/pointed/boogie_woogie/can_target(atom/target, mob/user, silent)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!isliving(target) && !iscontainer(target))
+		if(!silent)
+			to_chat(user, "<span class='warning'>You are unable to swap with the [target]!</span>")
+		return FALSE
+	return TRUE
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse/eldritch //placeholder spell
+	name = "Void's Push"
+	desc = "With the snap of your fingers, send your enemies away."
+	charge_max = 400
+	clothes_req = FALSE
+	invocation = "ISN'YKTI"
+	invocation_type = "shout"
+	range = 3
+	selection_type = "view"
+	sound = 'sound/magic/voidblink.ogg'
+	action_background_icon_state = "bg_ecult"
+	sparkle_path = /obj/effect/temp_visual/voidpush
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse/eldritch/cast(list/targets,mob/user = usr)
+	user.emote("snap")
+	..(targets, user, 60)
+
+/obj/effect/proc_holder/spell/aoe_turf/domain_expansion
+	name = "Infinite Void"
+	desc = "Create a domain that will slow down and mark all opponents with a void mark."
+	charge_max = 1200
+	clothes_req = FALSE
+	invocation = "RYO'IKI TEN'KAI"
+	invocation_type = "none"
+	range = 0
+	action_icon_state = "time"
+	action_background_icon_state = "bg_ecult"
+	var/timestop_range = 7
+	var/timestop_duration = 200
+	var/static/mutable_appearance/halo
+	var/sound/Snd // shamelessly ripped from lightning.
+
+/obj/effect/proc_holder/spell/aoe_turf/domain_expansion/cast(list/targets, mob/user = usr)
+	Snd = new/sound('sound/magic/clockwork/ratvar_attack.ogg',channel = 7)
+	halo = halo || mutable_appearance('icons/effects/effects.dmi', "at_shield2", EFFECTS_LAYER)
+	user.add_overlay(halo)
+	playsound(get_turf(user), Snd, 50, 0)
+	if(do_mob(user,user,50,1))
+		user.cut_overlay(halo)
+		user.emote("clap1")
+		user.say("DOM'ENO ISPLETIMAS")
+		playsound(user, 'sound/magic/domain.ogg', 125, TRUE)
+		new /obj/effect/domain_expansion(get_turf(user), timestop_range, timestop_duration, list(user))

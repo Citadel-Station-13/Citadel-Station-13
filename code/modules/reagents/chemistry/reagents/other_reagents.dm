@@ -287,7 +287,9 @@
 
 /datum/reagent/water/reaction_obj(obj/O, reac_volume)
 	O.extinguish()
-	O.acid_level = 0
+	var/datum/component/acid/acid = O.GetComponent(/datum/component/acid)
+	if(acid)
+		acid.level = 0
 	// cubes
 	if(istype(O, /obj/item/reagent_containers/food/snacks/cube))
 		var/obj/item/reagent_containers/food/snacks/cube/cube = O
@@ -330,7 +332,7 @@
 	name = "Hollow Water"
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen, but it looks kinda hollow."
 	color = "#88878777"
-	taste_description = "emptyiness"
+	taste_description = "emptiness"
 
 
 /datum/reagent/water/holywater
@@ -2362,6 +2364,12 @@
 		M.emote("nya")
 	if(prob(20))
 		to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "The feeling of a hairball...", "Backrubs would be nice.", "Whats behind those doors?")]</span>")
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/list/adjusted = H.adjust_arousal(2,"catnip", aphro = TRUE)
+		for(var/g in adjusted)
+			var/obj/item/organ/genital/G = g
+			to_chat(M, "<span class='userlove'>You feel like playing with your [G.name]!</span>")
 	..()
 
 /datum/reagent/preservahyde
@@ -2539,7 +2547,7 @@
 		M.drowsyness = max(M.drowsyness-5, 0)
 		M.AdjustAllImmobility(-40, FALSE)
 		M.adjustStaminaLoss(-15, FALSE)
-		M.adjustToxLoss(-3, FALSE)
+		M.adjustToxLoss(-3, FALSE, TRUE)
 		M.adjustOxyLoss(-3, FALSE)
 		M.adjustBruteLoss(-3, FALSE)
 		M.adjustFireLoss(-3, FALSE)
@@ -2663,3 +2671,32 @@
 	M.SetSleeping(0, 0)
 	..()
 
+//Nerdy card reagents
+
+/datum/reagent/card_powder
+	var/rarity = "Stoopid"
+
+/datum/reagent/card_powder/blue
+	name = "Blue Card Powder"
+	rarity = "Rare"
+	color = "#00B7EF" // blue
+
+/datum/reagent/card_powder/purple
+	name = "Purple Card Powder"
+	rarity = "Epic"
+	color = "#DA00FF" // purple
+
+/datum/reagent/card_powder/yellow
+	name = "Yellow Crayon Powder"
+	rarity = "Legendary"
+	color = "#FFF200" // yellow
+
+/datum/reagent/card_powder/green
+	name = "Green Crayon Powder"
+	rarity = "Common"
+	color = "#A8E61D" // green
+
+/datum/reagent/card_powder/black
+	name = "Black Crayon Powder"
+	rarity = "Exodia"
+	color = "#1C1C1C" // not quite black

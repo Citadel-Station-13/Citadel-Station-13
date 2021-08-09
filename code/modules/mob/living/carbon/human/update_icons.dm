@@ -100,16 +100,35 @@ There are several things that need to be remembered:
 			update_mutations_overlay()
 			//damage overlays
 			update_damage_overlays()
+			//antagonism
+			update_antag_overlays()
 
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
+
+
+/mob/living/carbon/human/update_antag_overlays()
+	remove_overlay(ANTAG_LAYER)
+	var/datum/antagonist/cult/D = src?.mind?.has_antag_datum(/datum/antagonist/cult) //check for cultism
+	if(D && D.cult_team?.cult_ascendent == TRUE)
+		var/istate = pick("halo1","halo2","halo3","halo4","halo5","halo6")
+		var/mutable_appearance/new_cult_overlay = mutable_appearance('icons/effects/32x64.dmi', istate, -ANTAG_LAYER)
+		overlays_standing[ANTAG_LAYER] = new_cult_overlay
+	var/datum/antagonist/clockcult/C = src?.mind?.has_antag_datum(/datum/antagonist/clockcult) //check for clockcultism - surely one can't be both cult and clockie, right?
+	if(C)
+		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
+		if(G && G.active && ishuman(src))
+			var/mutable_appearance/new_cult_overlay = mutable_appearance('icons/effects/genetics.dmi', "servitude", -ANTAG_LAYER)
+			overlays_standing[ANTAG_LAYER] = new_cult_overlay
+	apply_overlay(ANTAG_LAYER)
+
 
 /mob/living/carbon/human/update_inv_w_uniform()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		remove_overlay(UNIFORM_LAYER)
 
 		if(client && hud_used)
-			var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_W_UNIFORM]
+			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_W_UNIFORM]
 			inv.update_icon()
 
 		if(istype(w_uniform, /obj/item/clothing/under))
@@ -161,7 +180,7 @@ There are several things that need to be remembered:
 		remove_overlay(ID_LAYER)
 
 		if(client && hud_used)
-			var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_ID]
+			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_ID]
 			inv.update_icon()
 
 		var/mutable_appearance/id_overlay = overlays_standing[ID_LAYER]
@@ -186,7 +205,7 @@ There are several things that need to be remembered:
 		remove_overlay(GLOVES_LAYER)
 
 		if(client && hud_used && hud_used.inv_slots[SLOT_GLOVES])
-			var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_GLOVES]
+			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_GLOVES]
 			inv.update_icon()
 
 		if(!gloves && bloody_hands)
@@ -223,7 +242,7 @@ There are several things that need to be remembered:
 			return
 
 		if(client && hud_used)
-			var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_GLASSES]
+			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_GLASSES]
 			inv.update_icon()
 
 		if(glasses)
@@ -250,7 +269,7 @@ There are several things that need to be remembered:
 			return
 
 		if(client && hud_used)
-			var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_EARS]
+			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_EARS]
 			inv.update_icon()
 
 		if(ears)
@@ -276,7 +295,7 @@ There are several things that need to be remembered:
 			return
 
 		if(client && hud_used)
-			var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_SHOES]
+			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_SHOES]
 			inv.update_icon()
 
 		if(dna.species.mutant_bodyparts["taur"])
@@ -311,7 +330,7 @@ There are several things that need to be remembered:
 		remove_overlay(SUIT_STORE_LAYER)
 
 		if(client && hud_used)
-			var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_S_STORE]
+			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_S_STORE]
 			inv.update_icon()
 
 		if(s_store)
@@ -338,7 +357,7 @@ There are several things that need to be remembered:
 			return
 
 		if(client && hud_used)
-			var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_HEAD]
+			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_HEAD]
 			inv.update_icon()
 
 		if(head)
@@ -375,7 +394,7 @@ There are several things that need to be remembered:
 		remove_overlay(BELT_LAYER)
 
 		if(client && hud_used)
-			var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_BELT]
+			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_BELT]
 			inv.update_icon()
 
 		if(belt)
@@ -397,7 +416,7 @@ There are several things that need to be remembered:
 		remove_overlay(SUIT_LAYER)
 
 		if(client && hud_used)
-			var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_SUIT]
+			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_SUIT]
 			inv.update_icon()
 
 		if(wear_suit)
@@ -458,7 +477,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_inv_pockets()
 	if(client && hud_used)
-		var/obj/screen/inventory/inv
+		var/atom/movable/screen/inventory/inv
 
 		inv = hud_used.inv_slots[SLOT_L_STORE]
 		inv.update_icon()
@@ -487,7 +506,7 @@ There are several things that need to be remembered:
 			return
 
 		if(client && hud_used)
-			var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_MASK]
+			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_MASK]
 			inv.update_icon()
 
 		if(wear_mask)
@@ -710,11 +729,8 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 				. += "-[BP.digitigrade_type]"
 		if(BP.dmg_overlay_type)
 			. += "-[BP.dmg_overlay_type]"
-		if(BP.body_markings)
-			. += "-[BP.body_markings]"
-			if(length(BP.markings_color) && length(BP.markings_color[1]))
-				for(var/color in BP.markings_color[1])
-					. += "-[color]"
+		if(BP.body_markings_list)
+			. += "-[safe_json_encode(BP.body_markings_list)]"
 		if(BP.icon)
 			. += "-[BP.icon]"
 		else

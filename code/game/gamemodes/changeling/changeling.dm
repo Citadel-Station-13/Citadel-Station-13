@@ -10,6 +10,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	config_tag = "changeling"
 	antag_flag = ROLE_CHANGELING
 	false_report_weight = 10
+	chaos = 5
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")	//citadel change - adds HoP, CE, CMO, and RD to ling role blacklist
 	required_players = 15

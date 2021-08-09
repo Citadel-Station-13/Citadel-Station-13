@@ -40,11 +40,11 @@
 	if(iscyborg(hit_atom))
 		var/mob/living/silicon/robot/R = hit_atom
 		///hats in the borg's blacklist bounce off
-		if(!is_type_in_typecache(src, R.equippable_hats) || R.hat_offset == INFINITY)
-			R.visible_message("<span class='warning'>[src] bounces off [R]!", "<span class='warning'>[src] bounces off you, falling to the floor.</span>")
+		if(is_type_in_typecache(src, GLOB.blacklisted_borg_hats))
+			R.visible_message("<span class='warning'>[src] bounces off [R]!</span>", "<span class='warning'>[src] bounces off you, falling to the floor.</span>")
 			return
 		else
-			R.visible_message("<span class='notice'>[src] lands neatly on top of [R].", "<span class='notice'>[src] lands perfectly on top of you.</span>")
+			R.visible_message("<span class='notice'>[src] lands neatly on top of [R]!</span>", "<span class='notice'>[src] lands perfectly on top of you.</span>")
 			R.place_on_head(src) //hats aren't designed to snugly fit borg heads or w/e so they'll always manage to knock eachother off
 
 

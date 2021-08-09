@@ -85,7 +85,7 @@
 	name = "Machine Design (Automatic Hydroponics Tray Board)"
 	desc = "The circuit board for an automatic hydroponics tray. GIVE ME THE PLANT, CAPTAIN."
 	id = "autohydrotray"
-	build_path = /obj/machinery/hydroponics/constructable/automagic
+	build_path = /obj/item/circuitboard/machine/hydroponics/automagic
 	category = list ("Hydroponics Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE | DEPARTMENTAL_FLAG_MEDICAL
 

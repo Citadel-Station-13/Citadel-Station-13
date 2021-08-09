@@ -73,3 +73,15 @@
 	name = "wumborian fugu den"
 	desc = "A den housing a nest of wumborian fugus, how do they all even fit in there?"
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/fugu)
+
+/obj/structure/spawner/clown
+	name = "Laughing Larry"
+	desc = "A laughing, jovial figure. Something seems stuck in his throat."
+	icon_state = "clownbeacon"
+	icon = 'icons/obj/device.dmi'
+	max_integrity = 200
+	max_mobs = 15
+	spawn_time = 150
+	mob_types = list(/mob/living/simple_animal/hostile/retaliate/clown, /mob/living/simple_animal/hostile/retaliate/clown/fleshclown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk, /mob/living/simple_animal/hostile/retaliate/clown/longface, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/chlown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus, /mob/living/simple_animal/hostile/retaliate/clown/mutant/blob)
+	spawn_text = "climbs out of"
+	faction = list("clown")

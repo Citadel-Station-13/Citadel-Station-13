@@ -14,11 +14,11 @@
 	grind_results = list(/datum/reagent/cellulose = 10)
 	var/value = 0
 
-/obj/item/stack/spacecash/Initialize()
+/obj/item/stack/spacecash/Initialize(mapload, new_amount, merge = TRUE)
 	. = ..()
 	update_desc()
 
-/obj/item/stack/spacecash/proc/update_desc()
+/obj/item/stack/spacecash/update_desc()
 	var/total_worth = get_item_credit_value()
 	desc = "It's worth [total_worth] credit[( total_worth > 1 ) ? "s" : ""]"
 

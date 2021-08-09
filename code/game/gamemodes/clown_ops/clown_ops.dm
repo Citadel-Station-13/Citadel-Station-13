@@ -1,7 +1,7 @@
 /datum/game_mode/nuclear/clown_ops
 	name = "clown ops"
 	config_tag = "clownops"
-
+	chaos = 8
 	announce_span = "danger"
 	announce_text = "Clown empire forces are approaching the station in an attempt to HONK it!\n\
 	<span class='danger'>Operatives</span>: Secure the nuclear authentication disk and use your bananium fission explosive to HONK the station.\n\

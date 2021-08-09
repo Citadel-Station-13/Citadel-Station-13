@@ -208,9 +208,10 @@
 
 /datum/uplink_item/role_restricted/chemical_gun
 	name = "Reagent Dartgun"
-	desc = "A heavily modified syringe gun which is capable of synthesizing its own chemical darts using input reagents. Can hold 100u of reagents."
+	desc = "A heavily modified syringe gun which is capable of synthesizing its own chemical darts using input reagents. \
+			Synthesizes one piercing 10 unit dart every 30 seconds up to a maximum of five. Can hold 100u of reagents."
 	item = /obj/item/gun/chem
-	cost = 12
+	cost = 10
 	restricted_roles = list("Chemist", "Chief Medical Officer")
 
 /datum/uplink_item/role_restricted/reverse_bear_trap
@@ -257,4 +258,4 @@
 	item = /obj/item/storage/toolbox/emergency/turret
 	cost = 11
 	restricted_roles = list("Station Engineer")
-	
+

@@ -105,15 +105,14 @@ D [1]/  ||
 	push_data()
 
 /datum/integrated_io/proc/handle_wire(datum/integrated_io/linked_pin, obj/item/tool, action, mob/living/user)
-	if(istype(tool, /obj/item/multitool))
-		var/obj/item/multitool/multitool = tool
+	if(tool.tool_behaviour == TOOL_MULTITOOL)
 		switch(action)
 			if("wire")
-				multitool.wire(src, user)
+				tool.wire(src, user)
 				return TRUE
 			if("unwire")
 				if(linked_pin)
-					multitool.unwire(src, linked_pin, user)
+					tool.unwire(src, linked_pin, user)
 					return TRUE
 			if("data")
 				ask_for_pin_data(user)

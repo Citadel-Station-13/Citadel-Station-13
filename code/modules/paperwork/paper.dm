@@ -11,7 +11,6 @@
 #define MODE_WRITING 1
 #define MODE_STAMPING 2
 
-
 /**
  * Paper is now using markdown (like in github pull notes) for ALL rendering
  * so we do loose a bit of functionality but we gain in easy of use of
@@ -23,9 +22,6 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	item_state = "paper"
-	// inhand_icon_state = "paper"
-	// worn_icon_state = "paper"
-	// custom_fire_overlay = "paper_onfire_overlay"
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_range = 1
@@ -102,8 +98,8 @@
 
 /obj/item/paper/Initialize()
 	. = ..()
-	pixel_y = rand(-8, 8)
-	pixel_x = rand(-9, 9)
+	pixel_x = initial(pixel_x) + rand(-9, 9)
+	pixel_y = initial(pixel_y) + rand(-8, 8)
 	update_icon()
 
 /obj/item/paper/update_icon_state()
@@ -193,13 +189,6 @@
 	user.visible_message(ignition_message)
 	add_fingerprint(user)
 	fire_act(I.get_temperature())
-//I would have it become a paper plane before the throw, but that would risk runtimes
-/obj/item/paper/DoRevenantThrowEffects(atom/target)
-	sleep(10)
-	if(HAS_TRAIT(src, TRAIT_SPOOKY_THROW))
-		return
-	new /obj/item/paperplane(get_turf(src))
-	qdel(src)
 
 /obj/item/paper/attackby(obj/item/P, mob/living/user, params)
 	if(burn_paper_product_attackby_check(P, user))
@@ -253,6 +242,8 @@
 
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
+	data["edit_usr"] = "[user]"
+
 	var/obj/O = user.get_active_held_item()
 	if(istype(O, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/PEN = O
@@ -291,7 +282,8 @@
 	return data
 
 /obj/item/paper/ui_act(action, params,datum/tgui/ui)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("stamp")
@@ -317,7 +309,8 @@
 					LAZYADD(stamped, stamp_icon_state)
 
 				update_static_data(usr,ui)
-				ui.user.visible_message("<span class='notice'>[ui.user] stamps [src] with [stamp_class]!</span>", "<span class='notice'>You stamp [src] with [stamp_class]!</span>")
+				var/obj/O = ui.user.get_active_held_item()
+				ui.user.visible_message("<span class='notice'>[ui.user] stamps [src] with \the [O.name]!</span>", "<span class='notice'>You stamp [src] with \the [O.name]!</span>")
 			else
 				to_chat(usr, pick("You try to stamp but you miss!", "There is no where else you can stamp!"))
 			. = TRUE

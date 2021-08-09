@@ -7,6 +7,10 @@
 #Ignore byond config folder.
 /cfg/**/*
 
+#Ignore rust-g and auxmos libraries which are compiled with scripts
+*.so
+/tools/build/binaries/**/*
+
 #Ignore compiled files and other files generated during compilation.
 *.mdme
 *.dmb
@@ -231,3 +235,6 @@ tools/LinuxOneShot/Database
 tools/LinuxOneShot/TGS_Config
 tools/LinuxOneShot/TGS_Instances
 tools/LinuxOneShot/TGS_Logs
+
+# Common build tooling
+!/tools/build

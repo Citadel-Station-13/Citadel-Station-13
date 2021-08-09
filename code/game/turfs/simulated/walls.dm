@@ -6,6 +6,8 @@
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
 	explosion_block = 1
+	wave_explosion_block = EXPLOSION_BLOCK_WALL
+	wave_explosion_multiply = EXPLOSION_DAMPEN_WALL
 	flags_1 = DEFAULT_RICOCHET_1
 	flags_ricochet = RICOCHET_HARD
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
@@ -14,6 +16,14 @@
 	attack_hand_is_action = TRUE
 
 	baseturfs = /turf/open/floor/plating
+
+	explosion_flags = EXPLOSION_FLAG_HARD_OBSTACLE
+	/// Explosion power to disintegrate the wall
+	var/explosion_power_to_scrape = EXPLOSION_POWER_WALL_SCRAPE
+	/// Explosion power to dismantle the wall
+	var/explosion_power_to_dismantle = EXPLOSION_POWER_WALL_DISMANTLE
+	/// Explosion power to potentially dismantle the wall
+	var/explosion_power_minimum_chance_dismantle = EXPLOSION_POWER_WALL_MINIMUM_DISMANTLE
 
 	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/slicing_duration = 100  //default time taken to slice the wall
@@ -91,6 +101,13 @@
 	if(!density)
 		..()
 
+/turf/closed/wall/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	. = ..()
+	var/resultant_power = power * explosion.wall_destroy_mod
+	if(resultant_power >= explosion_power_to_scrape)
+		ScrapeAway()
+	else if((resultant_power >= explosion_power_to_dismantle) || ((resultant_power >= explosion_power_minimum_chance_dismantle) && prob(((resultant_power - explosion_power_minimum_chance_dismantle) / (explosion_power_to_dismantle - explosion_power_minimum_chance_dismantle)) * 100)))
+		dismantle_wall(prob((resultant_power - explosion_power_to_dismantle)/(explosion_power_to_scrape - explosion_power_to_dismantle)), TRUE)
 
 /turf/closed/wall/blob_act(obj/structure/blob/B)
 	if(prob(50))
@@ -199,7 +216,7 @@
 	if((user.a_intent != INTENT_HELP) || !LAZYLEN(dent_decals))
 		return FALSE
 
-	if(istype(W, /obj/item/weldingtool))
+	if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount=0))
 			return FALSE
 
@@ -233,7 +250,7 @@
 	return FALSE
 
 /turf/closed/wall/proc/try_decon(obj/item/I, mob/user, turf/T)
-	if(istype(I, /obj/item/weldingtool) || istype(I, /obj/item/gun/energy/plasmacutter))
+	if(I.tool_behaviour == TOOL_WELDER || istype(I, /obj/item/gun/energy/plasmacutter))
 		if(!I.tool_start_check(user, amount=0))
 			return FALSE
 

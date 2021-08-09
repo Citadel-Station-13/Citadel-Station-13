@@ -106,6 +106,7 @@
 			for(var/i in 1 to 3)
 				if(config_tag in saved_dynamic_rules[i])
 					weight_mult -= (repeated_mode_adjust[i]/100)
+	weight_mult = max(0,weight_mult)
 	if(config_tag in costs)
 		cost = costs[config_tag]
 	if(config_tag in requirementses)

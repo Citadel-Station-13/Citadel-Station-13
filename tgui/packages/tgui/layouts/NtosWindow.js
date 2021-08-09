@@ -14,7 +14,6 @@ export const NtosWindow = (props, context) => {
     title,
     width = 575,
     height = 700,
-    resizable,
     theme = 'ntos',
     children,
   } = props;
@@ -29,14 +28,14 @@ export const NtosWindow = (props, context) => {
     PC_stationtime,
     PC_programheaders = [],
     PC_showexitprogram,
+    PC_showpeneject,
   } = data;
   return (
     <Window
       title={title}
       width={width}
       height={height}
-      theme={theme}
-      resizable={resizable}>
+      theme={theme}>
       <div className="NtosWindow">
         <div className="NtosWindow__header NtosHeader">
           <div className="NtosHeader__left">
@@ -63,13 +62,11 @@ export const NtosWindow = (props, context) => {
                   src={resolveAsset(PC_ntneticon)} />
               )}
             </Box>
-            {!!PC_showbatteryicon && PC_batteryicon && (
+            {!!(PC_showbatteryicon && PC_batteryicon) && (
               <Box inline mr={1}>
-                {PC_batteryicon && (
-                  <img
-                    className="NtosHeader__icon"
-                    src={resolveAsset(PC_batteryicon)} />
-                )}
+                <img
+                  className="NtosHeader__icon"
+                  src={resolveAsset(PC_batteryicon)} />
                 {PC_batterypercent && (
                   PC_batterypercent
                 )}
@@ -81,6 +78,17 @@ export const NtosWindow = (props, context) => {
                   className="NtosHeader__icon"
                   src={resolveAsset(PC_apclinkicon)} />
               </Box>
+            )}
+            {!!PC_showpeneject && (
+              <Button
+                width="26px"
+                lineHeight="22px"
+                textAlign="center"
+                color="transparent"
+                icon="pen-alt"
+                tooltip="Eject pen"
+                tooltipPosition="bottom-left"
+                onClick={() => act('eject_pen')} />
             )}
             {!!PC_showexitprogram && (
               <Button

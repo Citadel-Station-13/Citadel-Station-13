@@ -188,6 +188,8 @@
 	///The Number of products produced by the plant, typically the yield.
 	var/product_count = getYield()
 
+	parent.investigate_log("manual harvest by [key_name(user)] of [getYield()] of [src], with seed traits [english_list(genes)] and reagents_add [english_list_assoc(reagents_add)] and potency [potency].", INVESTIGATE_BOTANY)
+
 	while(t_amount < product_count)
 		var/obj/item/reagent_containers/food/snacks/grown/t_prod
 		if(instability >= 30 && (seed_flags & MUTATE_EARLY) && LAZYLEN(mutatelist) && prob(instability/3))

@@ -7,6 +7,13 @@
 
 // Ammunition
 
+/datum/uplink_item/ammo/derringer
+	name = "Ammo Box - .45-70 GOVT"
+	desc = "Contains 10 additional .45-70 GOVT rounds. Caliber is exceedingly rare, and thus, comes at a premium."
+	item = /obj/item/ammo_box/g4570
+	cost = 5
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/ammo/pistol
 	name = "10mm Handgun Magazine"
 	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These rounds \

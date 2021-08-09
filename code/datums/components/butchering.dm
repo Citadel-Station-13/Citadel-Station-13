@@ -73,7 +73,7 @@
 
 /datum/component/butchering/proc/Butcher(mob/living/butcher, mob/living/meat)
 	var/meat_quality = 50 + (bonus_modifier/10) //increases through quality of butchering tool, and through if it was butchered in the kitchen or not
-	if(istype(get_area(butcher), /area/crew_quarters/kitchen))
+	if(istype(get_area(butcher), /area/service/kitchen))
 		meat_quality = meat_quality + 10
 	var/turf/T = meat.drop_location()
 	var/final_effectiveness = effectiveness - meat.butcher_difficulty

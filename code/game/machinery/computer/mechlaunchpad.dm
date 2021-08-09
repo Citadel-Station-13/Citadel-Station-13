@@ -55,11 +55,12 @@
 	return connected_mechpad
 
 /obj/machinery/computer/mechpad/multitool_act(mob/living/user, obj/item/tool)
+	if(!tool.tool_behaviour == TOOL_MULTITOOL)
+		return
 	if(!multitool_check_buffer(user, tool))
 		return
-	var/obj/item/multitool/multitool = tool
-	if(istype(multitool.buffer, /obj/machinery/mechpad))
-		var/obj/machinery/mechpad/buffered_console = multitool.buffer
+	if(istype(tool.buffer, /obj/machinery/mechpad))
+		var/obj/machinery/mechpad/buffered_console = tool.buffer
 		if(!(mechpads.len < maximum_pads))
 			to_chat(user, "<span class='warning'>[src] cannot handle any more connections!</span>")
 			return
@@ -69,13 +70,13 @@
 			connected_mechpad = buffered_console
 			connected_mechpad.connected_console = src
 			connected_mechpad.id = id
-			multitool.buffer = null
-			to_chat(user, "<span class='notice'>You connect the console to the pad with data from the [multitool.name]'s buffer.</span>")
+			tool.buffer = null
+			to_chat(user, "<span class='notice'>You connect the console to the pad with data from the [tool.name]'s buffer.</span>")
 		else
 			mechpads += buffered_console
 			LAZYADD(buffered_console.consoles, src)
-			multitool.buffer = null
-			to_chat(user, "<span class='notice'>You upload the data from the [multitool.name]'s buffer.</span>")
+			tool.buffer = null
+			to_chat(user, "<span class='notice'>You upload the data from the [tool.name]'s buffer.</span>")
 
 /**
   * Tries to call the launch proc on the connected mechpad, returns if there is no connected mechpad or there is no mecha on the pad
@@ -122,7 +123,7 @@
 			var/list/this_pad = list()
 			this_pad["name"] = pad.display_name
 			this_pad["id"] = i
-			if(pad.machine_stat & NOPOWER)
+			if(pad.stat & NOPOWER)
 				this_pad["inactive"] = TRUE
 			pad_list += list(this_pad)
 		else
@@ -134,7 +135,7 @@
 		var/obj/machinery/mechpad/current_pad = mechpads[selected_id]
 		data["pad_name"] = current_pad.display_name
 		data["selected_pad"] = current_pad
-		if(QDELETED(current_pad) || (current_pad.machine_stat & NOPOWER))
+		if(QDELETED(current_pad) || (current_pad.stat & NOPOWER))
 			data["pad_active"] = FALSE
 			return data
 		data["pad_active"] = TRUE

@@ -12,6 +12,7 @@
 	config_tag = "revolution"
 	antag_flag = ROLE_REV
 	false_report_weight = 10
+	chaos = 8
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
 	required_players = 20

@@ -80,10 +80,6 @@
 	},
 /turf/open/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
-"az" = (
-/obj/structure/destructible/clockwork/eminence_spire,
-/turf/open/floor/clockwork/reebe,
-/area/reebe/city_of_cogs)
 "aA" = (
 /obj/machinery/door/airlock/clockwork/brass{
 	name = "Infirmary"
@@ -168,21 +164,6 @@
 /obj/effect/clockwork/sigil/transmission,
 /turf/open/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
-"ew" = (
-/obj/structure/table/reinforced/brass,
-/obj/item/clockwork/construct_chassis/cogscarab{
-	pixel_y = 20
-	},
-/obj/item/clockwork/construct_chassis/cogscarab{
-	pixel_x = -7;
-	pixel_y = 6
-	},
-/obj/item/clockwork/construct_chassis/cogscarab{
-	pixel_x = 7;
-	pixel_y = 6
-	},
-/turf/open/floor/clockwork/reebe,
-/area/reebe/city_of_cogs)
 "hY" = (
 /obj/item/clockwork/alloy_shards/pinion_lock,
 /turf/open/floor/clockwork/reebe,
@@ -206,10 +187,6 @@
 /obj/item/storage/belt/utility/servant,
 /obj/item/storage/belt/utility/servant,
 /obj/item/storage/belt/utility/servant,
-/turf/open/floor/clockwork/reebe,
-/area/reebe/city_of_cogs)
-"vx" = (
-/obj/effect/clockwork/sigil/transmission,
 /turf/open/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "wV" = (
@@ -244,6 +221,10 @@
 /obj/item/clockwork/alloy_shards/small,
 /turf/open/indestructible/reebe_void/spawning/lattices,
 /area/reebe)
+"Ox" = (
+/obj/structure/destructible/clockwork/eminence_spire,
+/turf/open/floor/clockwork/reebe,
+/area/reebe/city_of_cogs)
 "OB" = (
 /obj/item/clockwork/component/geis_capacitor/fallen_armor,
 /turf/open/floor/clockwork/reebe,
@@ -32770,7 +32751,7 @@ ae
 ae
 ag
 ah
-ew
+aL
 aj
 aj
 aj
@@ -33284,8 +33265,8 @@ ab
 ab
 ae
 ai
-az
-vx
+Ox
+aj
 aj
 aj
 aE

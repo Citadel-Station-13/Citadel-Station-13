@@ -28,6 +28,8 @@ GLOBAL_PROTECT(href_token)
 
 	var/deadmined
 
+	var/datum/filter_editor/filteriffic
+
 /datum/admins/CanProcCall(procname)
 	. = ..()
 	if(!check_rights(R_SENSITIVE))

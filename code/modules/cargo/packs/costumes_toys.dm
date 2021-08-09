@@ -318,7 +318,7 @@
 					/obj/item/clothing/under/suit/white, // white is a weird color for a groom but some people are weird
 					/obj/item/clothing/under/suit/polychromic,
 					/obj/item/clothing/under/suit/polychromic, // in case you can't be satisfied with the most fitting choices, of course.
-					/obj/item/clothing/under/dress/wedding, 
+					/obj/item/clothing/under/dress/wedding,
 					/obj/item/clothing/under/dress/wedding, // this is what you actually bought the crate for. You can't get these anywhere else.
 					/obj/item/clothing/under/dress/wedding/orange,
 					/obj/item/clothing/under/dress/wedding/orange,
@@ -333,4 +333,22 @@
 					/obj/item/storage/fancy/ringbox/silver,
 					/obj/item/storage/fancy/ringbox/silver) //diamond rings cost the same price as this crate via cargo so we're not giving you two for free. Wedding rings are traditionally less valuable anyway.
 	crate_name = "wedding crate"
-	
+
+/datum/supply_pack/costumes_toys/randomised/tcg
+	name = "Big-Ass Booster Pack Pack"
+	desc = "A bumper load of NT TCG Booster Packs of varying series. Collect them all!"
+	cost = 3000
+	contains = list()
+	crate_name = "booster pack pack"
+
+/datum/supply_pack/costumes_toys/randomised/tcg/generate()
+	. = ..()
+	var/list/cardtypes = subtypesof(/obj/item/cardpack)
+	for(var/cardtype in cardtypes)
+		var/obj/item/cardpack/pack = new cardtype(.)
+		if(pack.illegal)
+			cardtypes.Remove(cardtype)
+		qdel(pack)
+	for(var/i in 1 to 10)
+		var/cardpacktype = pick(cardtypes)
+		new cardpacktype(.)

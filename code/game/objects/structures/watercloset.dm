@@ -47,14 +47,19 @@
 				if(open)
 					GM.visible_message("<span class='danger'>[user] starts to give [GM] a swirlie!</span>", "<span class='userdanger'>[user] starts to give you a swirlie...</span>")
 					swirlie = GM
-					if(do_after(user, 30, 0, target = src))
-						GM.visible_message("<span class='danger'>[user] gives [GM] a swirlie!</span>", "<span class='userdanger'>[user] gives you a swirlie!</span>", "<span class='italics'>You hear a toilet flushing.</span>")
+					var/was_alive = (swirlie.stat != DEAD)
+					if(do_after(user, 3 SECONDS, target = src))
+						GM.visible_message("<span class='danger'>[user] gives [GM] a swirlie!</span>", "<span class='userdanger'>[user] gives you a swirlie!</span>", "<span class='hear'>You hear a toilet flushing.</span>")
 						if(iscarbon(GM))
 							var/mob/living/carbon/C = GM
 							if(!C.internal)
+								log_combat(user, C, "swirlied (oxy)")
 								C.adjustOxyLoss(5)
 						else
+							log_combat(user, GM, "swirlied (oxy)")
 							GM.adjustOxyLoss(5)
+					if(was_alive && swirlie.stat == DEAD && swirlie.client)
+						swirlie.client.give_award(/datum/award/achievement/misc/swirlie, swirlie) // just like space high school all over again!
 					swirlie = null
 				else
 					playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
@@ -93,7 +98,7 @@
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user, params)
 	add_fingerprint(user)
-	if(istype(I, /obj/item/crowbar))
+	if(I.tool_behaviour == TOOL_CROWBAR)
 		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 		if(I.use_tool(src, user, 30))
@@ -349,10 +354,10 @@
 	. = SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	. = O.clean_blood()
 	O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	if(isitem(O))
-		var/obj/item/I = O
-		I.acid_level = 0
-		I.extinguish()
+	var/datum/component/acid/acid = O.GetComponent(/datum/component/acid)
+	if(acid)
+		acid.level = 0
+	O.extinguish()
 
 /obj/machinery/shower/proc/wash_turf()
 	if(isturf(loc))
@@ -549,7 +554,7 @@
 		if(B.cell)
 			if(B.cell.charge > 0 && B.turned_on)
 				flick("baton_active", src)
-				var/stunforce = B.stamforce
+				var/stunforce = B.stamina_loss_amount
 				user.DefaultCombatKnockdown(stunforce * 2)
 				user.stuttering = stunforce/20
 				B.deductcharge(B.hitcost)
@@ -596,7 +601,9 @@
 		busy = FALSE
 		SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 		O.clean_blood()
-		O.acid_level = 0
+		var/datum/component/acid/acid = O.GetComponent(/datum/component/acid)
+		if(acid)
+			acid.level = 0
 		create_reagents(5)
 		reagents.add_reagent(dispensedreagent, 5)
 		reagents.reaction(O, TOUCH)

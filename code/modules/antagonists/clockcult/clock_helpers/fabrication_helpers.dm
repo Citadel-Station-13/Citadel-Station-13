@@ -350,3 +350,22 @@
 // Winter coat
 /obj/item/clothing/suit/hooded/wintercoat/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent) //four sheets of metal
 	return list("operation_time" = 30, "new_obj_type" = /obj/item/clothing/suit/hooded/wintercoat/ratvar, "power_cost" = POWER_METAL * 4, "spawn_dir" = SOUTH)
+
+//tools
+/obj/item/crowbar/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent) //1 metal rod each
+	return list("operation_time" = 2, "new_obj_type" = /obj/item/crowbar/brass, "power_cost" = POWER_ROD * 1, "spawn_dir" = SOUTH)
+
+/obj/item/screwdriver/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
+	return list("operation_time" = 2, "new_obj_type" = /obj/item/screwdriver/brass, "power_cost" = POWER_ROD * 1, "spawn_dir" = SOUTH)
+
+/obj/item/weldingtool/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
+	return list("operation_time" = 2, "new_obj_type" = /obj/item/weldingtool/experimental/brass, "power_cost" = POWER_ROD * 1, "spawn_dir" = SOUTH)
+
+/obj/item/wirecutters/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
+	return list("operation_time" = 2, "new_obj_type" = /obj/item/wirecutters/brass, "power_cost" = POWER_ROD * 1, "spawn_dir" = SOUTH)
+
+/obj/item/wrench/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
+	return list("operation_time" = 2, "new_obj_type" = /obj/item/wrench/brass, "power_cost" = POWER_ROD * 1, "spawn_dir" = SOUTH)
+
+/obj/item/multitool/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
+	return list("operation_time" = 2, "new_obj_type" = /obj/item/multitool/advanced/brass, "power_cost" = POWER_ROD * 1, "spawn_dir" = SOUTH)

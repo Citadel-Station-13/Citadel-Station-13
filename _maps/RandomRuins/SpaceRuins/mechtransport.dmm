@@ -19,6 +19,7 @@
 /area/ruin/space/has_grav/powered/mechtransport)
 "g" = (
 /obj/structure/closet/crate/secure/loot,
+/obj/item/tcg_card/special/phazon,
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/powered/mechtransport)
 "h" = (

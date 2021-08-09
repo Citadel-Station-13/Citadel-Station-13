@@ -91,7 +91,7 @@
 
 
 	var/multicam_on = FALSE
-	var/obj/screen/movable/pic_in_pic/ai/master_multicam
+	var/atom/movable/screen/movable/pic_in_pic/ai/master_multicam
 	var/list/multicam_screens = list()
 	var/list/all_eyes = list()
 	var/max_multicams = 6
@@ -182,6 +182,7 @@
 	. = ..()
 
 /mob/living/silicon/ai/proc/set_core_display_icon(input, client/C)
+	set waitfor = FALSE
 	if(client && !C)
 		C = client
 	if(!input && !C?.prefs?.preferred_ai_core_display)
@@ -200,7 +201,7 @@
 		if(option == "Random")
 			iconstates[option] = image(icon = src.icon, icon_state = "ai-random")
 			continue
-		iconstates[option] = image(icon = src.icon, icon_state = resolve_ai_icon(option))
+		iconstates[option] = image(icon = src.icon, icon_state = resolve_ai_icon(option, radial_preview = TRUE))
 
 	view_core()
 	var/ai_core_icon = show_radial_menu(src, src , iconstates, radius = 42)

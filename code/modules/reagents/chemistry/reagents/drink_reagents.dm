@@ -505,11 +505,11 @@
 	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/consumable/nuka_cola/on_mob_metabolize(mob/living/carbon/M)
-	M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/meth)
+	M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nuka_cola)
 	return ..()
 
 /datum/reagent/consumable/nuka_cola/on_mob_end_metabolize(mob/living/carbon/M)
-	M.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/meth)
+	M.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nuka_cola)
 	return ..()
 
 /datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/carbon/M)
@@ -616,7 +616,7 @@
 	name = "Buzz Fuzz"
 	description = "~A Hive of Flavour!~ NOTICE: Addicting."
 	nutriment_factor = 0
-	addiction_threshold = 26 //A can and a sip
+	addiction_threshold = 31 //A can and a sip
 	color = "#8CFF00" // rgb: 135, 255, 0
 	taste_description = "carbonated honey and pollen"
 	glass_icon_state = "buzz_fuzz"

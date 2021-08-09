@@ -80,15 +80,15 @@
 
 /datum/supply_pack/security/russianclothing
 	name = "Russian Surplus Clothing"
-	desc = "An old russian crate full of surplus armor that they used to use! Has two sets of bulletproff armor, a few union suits and some warm hats!"
+	desc = "An old russian crate full of surplus armor that they used to use! Has two sets of bulletproof armor, a few union suits and some warm hats!"
 	contraband = TRUE
 	cost = 5750 // Its basicly sec suits, good boots/gloves
-	contains = list(/obj/item/clothing/suit/armor/navyblue/russian,
-					/obj/item/clothing/suit/armor/navyblue/russian,
+	contains = list(/obj/item/clothing/under/syndicate/rus_army,
+					/obj/item/clothing/under/syndicate/rus_army,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/shoes/combat,
-					/obj/item/clothing/head/ushanka,
-					/obj/item/clothing/head/ushanka,
+					/obj/item/clothing/head/helmet/rus_helmet,
+					/obj/item/clothing/head/helmet/rus_helmet,
 					/obj/item/clothing/suit/armor/bulletproof,
 					/obj/item/clothing/suit/armor/bulletproof,
 					/obj/item/clothing/head/helmet/alt,
@@ -98,23 +98,23 @@
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/mask/gas)
 	crate_name = "surplus russian clothing"
-	crate_type = /obj/structure/closet/crate/internals
+	crate_type = /obj/structure/closet/crate/secure/soviet
 
 /datum/supply_pack/security/russian_partisan
 	name = "Russian Partisan Gear"
 	desc = "An old russian partisan equipment crate, comes with a full russian outfit, a loaded surplus rifle and a second magazine."
 	contraband = TRUE
-	access = FALSE
 	cost = 6500
 	contains = list(/obj/item/clothing/suit/armor/navyblue/russian,
 					/obj/item/clothing/shoes/combat,
-					/obj/item/clothing/head/ushanka,
+					/obj/item/clothing/head/helmet/rus_helmet,
 					/obj/item/clothing/suit/armor/bulletproof,
 					/obj/item/clothing/head/helmet/alt,
 					/obj/item/clothing/gloves/tackler/combat/insulated,
+					/obj/item/clothing/under/syndicate/rus_army,
 					/obj/item/clothing/mask/gas)
 	crate_name = "surplus russian gear"
-	crate_type = /obj/structure/closet/crate/internals
+	crate_type = /obj/structure/closet/crate/secure/soviet
 
 /datum/supply_pack/security/russian_partisan/fill(obj/structure/closet/crate/C)
 	..()
@@ -241,7 +241,7 @@
 	access = FALSE
 	access_any = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
 	contains = list(/obj/item/ammo_box/c38/dumdum)
-	crate_name = ".38 match crate"
+	crate_name = ".38 dumdum crate"
 
 /datum/supply_pack/security/match
 	name = ".38 Match Grade Speedloader"

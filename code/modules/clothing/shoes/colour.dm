@@ -51,6 +51,17 @@
 	desc = "Very gay shoes."
 	icon_state = "rain_bow"
 
+/obj/item/clothing/shoes/sneakers/poly/polychromic
+	name = "polychromic shoes"
+	desc = "Every color."
+	icon_state = "poly"
+	item_state = "poly"
+	var/list/poly_colors = list("#FFFFFF", "#1D1D1D")
+
+/obj/item/clothing/shoes/sneakers/poly/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, poly_colors, 2)
+
 /obj/item/clothing/shoes/sneakers/orange
 	name = "orange shoes"
 	icon_state = "orange"

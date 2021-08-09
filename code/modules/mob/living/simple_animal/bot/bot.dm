@@ -15,7 +15,7 @@
 	maxbodytemp = INFINITY
 	minbodytemp = 0
 	blood_volume = 0
-	silicon_privileges = PRIVILEDGES_BOT
+	silicon_privileges = PRIVILEGES_BOT
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
 	verb_say = "states"
@@ -306,7 +306,7 @@
 	show_controls(user)
 
 /mob/living/simple_animal/bot/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!locked)
 			open = !open
 			to_chat(user, "<span class='notice'>The maintenance panel is now [open ? "opened" : "closed"].</span>")
@@ -335,7 +335,7 @@
 					user.visible_message("<span class='notice'>[user] uses [W] to pull [paicard] out of [bot_name]!</span>","<span class='notice'>You pull [paicard] out of [bot_name] with [W].</span>")
 					ejectpai(user)
 	else
-		if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
+		if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
 			if(health >= maxHealth)
 				to_chat(user, "<span class='warning'>[src] does not need a repair!</span>")
 				return
@@ -1059,5 +1059,5 @@ Pass a positive integer as an argument to override a bot's default speed.
 		I.icon_state = null
 	path.Cut(1, 2)
 
-/mob/living/silicon/rust_heretic_act()
+/mob/living/simple_animal/bot/rust_heretic_act()
 	adjustBruteLoss(500)

@@ -121,11 +121,14 @@
 	parry_time_perfect = 2.5		// first ds isn't perfect
 	parry_time_perfect_leeway = 1.5
 	parry_imperfect_falloff_percent = 5
-	parry_efficiency_to_counterattack = 100
+	parry_efficiency_to_counterattack = INFINITY
 	parry_efficiency_considered_successful = 65		// VERY generous
 	parry_efficiency_perfect = 100
 	parry_failed_stagger_duration = 4 SECONDS
 	parry_cooldown = 0.5 SECONDS
+	parry_automatic_enabled = TRUE
+	autoparry_single_efficiency = 65
+	autoparry_cooldown_absolute = 3 SECONDS
 
 /obj/item/melee/transforming/energy/sword/Initialize(mapload)
 	. = ..()
@@ -149,8 +152,8 @@
 
 /obj/item/melee/transforming/energy/sword/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
 	. = ..()
-	if(parry_efficiency >= 80)		// perfect parry
-		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_RETURN_TO_SENDER
+	if(parry_efficiency >= 100)		// perfect parry
+		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_DEFLECT
 		. |= BLOCK_SHOULD_REDIRECT
 
 /obj/item/melee/transforming/energy/sword/cyborg
@@ -279,7 +282,7 @@
 		to_chat(user, "<span class='notice'>[src] is now [choice].</span>")
 
 /obj/item/melee/transforming/energy/sword/saber/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/multitool))
+	if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(user.a_intent == INTENT_DISARM)
 			if(!active)
 				to_chat(user, "<span class='warning'>COLOR_SET</span>")
@@ -439,7 +442,9 @@
 	force_on = 15 //As strong a survival knife/bone dagger
 
 /obj/item/melee/transforming/energy/sword/cx/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/melee/transforming/energy/sword/cx))
+	if(istype(W, /obj/item/melee/transforming/energy/sword/cx/traitor))
+		return
+	else if(istype(W, /obj/item/melee/transforming/energy/sword/cx))
 		if(HAS_TRAIT(W, TRAIT_NODROP) || HAS_TRAIT(src, TRAIT_NODROP))
 			to_chat(user, "<span class='warning'>\the [HAS_TRAIT(src, TRAIT_NODROP) ? src : W] is stuck to your hand, you can't attach it to \the [HAS_TRAIT(src, TRAIT_NODROP) ? W : src]!</span>")
 			return

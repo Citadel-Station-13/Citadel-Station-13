@@ -58,13 +58,13 @@
 	/// The list of z-levels that this weather is actively affecting
 	var/impacted_z_levels
 
-	/// Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that. 
-	var/overlay_layer = AREA_LAYER 
+	/// Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
+	var/overlay_layer = AREA_LAYER
 	/// Plane for the overlay
 	var/overlay_plane = BLACKNESS_PLANE
-	/// If the weather has no purpose but aesthetics. 
+	/// If the weather has no purpose but aesthetics.
 	var/aesthetic = FALSE
-	/// Used by mobs to prevent them from being affected by the weather 
+	/// Used by mobs to prevent them from being affected by the weather
 	var/immunity_type = "storm"
 
 	/// The stage of the weather, from 1-4
@@ -79,6 +79,8 @@
 	var/barometer_predictable = FALSE
 	/// For barometers to know when the next storm will hit
 	var/next_hit_time = 0
+	/// This causes the weather to only end if forced to
+	var/perpetual = FALSE
 
 /datum/weather/New(z_levels)
 	..()
@@ -140,7 +142,8 @@
 				to_chat(M, weather_message)
 			if(weather_sound)
 				SEND_SOUND(M, sound(weather_sound))
-	addtimer(CALLBACK(src, .proc/wind_down), weather_duration)
+	if(!perpetual)
+		addtimer(CALLBACK(src, .proc/wind_down), weather_duration)
 
 /**
   * Weather enters the winding down phase, stops effects

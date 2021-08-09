@@ -516,7 +516,7 @@
 	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, Angle, pixel_increment_amount)
 	fired = TRUE
 	if(hitscan)
-		process_hitscan()
+		INVOKE_ASYNC(src, .proc/process_hitscan)
 		return
 	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)

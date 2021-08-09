@@ -1,5 +1,5 @@
 /datum/species/mush //mush mush codecuck
-	name = "Anthromorphic Mushroom"
+	name = "Anthropomorphic Mushroom"
 	id = SPECIES_MUSHROOM
 	mutant_bodyparts = list("caps" = "Round")
 

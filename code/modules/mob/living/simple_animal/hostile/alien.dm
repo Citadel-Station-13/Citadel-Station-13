@@ -24,6 +24,7 @@
 	melee_damage_upper = 25
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
+	gold_core_spawnable = HOSTILE_SPAWN
 	speak_emote = list("hisses")
 	bubble_icon = "alien"
 	a_intent = INTENT_HARM
@@ -36,7 +37,6 @@
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	unique_name = 1
-	gold_core_spawnable = NO_SPAWN
 	death_sound = 'sound/voice/hiss6.ogg'
 	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
 
@@ -78,6 +78,15 @@
 	projectiletype = /obj/item/projectile/neurotox
 	projectilesound = 'sound/weapons/pierce.ogg'
 
+/mob/living/simple_animal/hostile/alien/sentinel/cube
+	gold_core_spawnable = NO_SPAWN
+	health = 220
+	maxHealth = 220
+	melee_damage_lower = 20
+	melee_damage_upper = 20
+	del_on_death = TRUE
+	loot = list(/obj/effect/mob_spawn/alien/corpse/humanoid/sentinel)
+	
 
 /mob/living/simple_animal/hostile/alien/queen
 	name = "alien queen"
@@ -97,6 +106,7 @@
 							/obj/item/stack/sheet/animalhide/xeno = 1)
 	projectiletype = /obj/item/projectile/neurotox
 	projectilesound = 'sound/weapons/pierce.ogg'
+	gold_core_spawnable = NO_SPAWN
 	status_flags = 0
 	unique_name = 0
 	var/sterile = 1
@@ -139,6 +149,7 @@
 	icon_state = "alienq"
 	icon_living = "alienq"
 	icon_dead = "alienq_dead"
+	health_doll_icon = "alienq"
 	bubble_icon = "alienroyal"
 	move_to_delay = 4
 	maxHealth = 400

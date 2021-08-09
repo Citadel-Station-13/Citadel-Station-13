@@ -207,6 +207,7 @@
 	product_ads = "You turn me TRUE, use defines!;0110001101101100011011110111010001101000011001010111001101101000011001010111001001100101"
 	vend_reply = "Thank you for using the RoboDrobe!"
 	products = list(/obj/item/clothing/glasses/hud/diagnostic = 3,
+					/obj/item/stack/medical/nanogel = 5,
 					/obj/item/clothing/head/beret/robo = 3,
 					/obj/item/clothing/under/rank/rnd/roboticist = 3,
 					/obj/item/clothing/under/rank/rnd/roboticist/sleek = 3,

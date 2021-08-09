@@ -32,15 +32,11 @@
 					return
 				ban["message"] = "[reason]"
 
-			if(SSdbcore.Connect()) // todo: second wave
-				// var/datum/db_query/query_create_stickyban = SSdbcore.NewQuery({"
-				// 	INSERT INTO [format_table_name("stickyban")] (ckey, reason, banning_admin)
-				// 	VALUES (:ckey, :message, :banning_admin)
-				// "}, list("ckey" = ckey, "message" = ban["message"], "banning_admin" = usr.ckey))
-				var/datum/DBQuery/query_create_stickyban = SSdbcore.NewQuery({"
+			if(SSdbcore.Connect())
+				var/datum/db_query/query_create_stickyban = SSdbcore.NewQuery({"
 					INSERT INTO [format_table_name("stickyban")] (ckey, reason, banning_admin)
-					VALUES ([ckey], [ban["message"]], [usr.ckey])
-				"})
+					VALUES (:ckey, :message, :banning_admin)
+				"}, list("ckey" = ckey, "message" = ban["message"], "banning_admin" = usr.ckey))
 				if (query_create_stickyban.warn_execute())
 					ban["fromdb"] = TRUE
 				qdel(query_create_stickyban)
@@ -74,18 +70,13 @@
 			SSstickyban.cache -= ckey
 
 			if (SSdbcore.Connect())
-				// SSdbcore.QuerySelect(list(
-				// 	SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban")] WHERE ckey = :ckey", list("ckey" = ckey)),
-				// 	SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ckey")] WHERE stickyban = :ckey", list("ckey" = ckey)),
-				// 	SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_cid")] WHERE stickyban = :ckey", list("ckey" = ckey)),
-				// 	SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ip")] WHERE stickyban = :ckey", list("ckey" = ckey))
-				// ), warn = TRUE, qdel = TRUE)
 				SSdbcore.QuerySelect(list(
-					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban")] WHERE ckey = [ckey]"),
-					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ckey")] WHERE stickyban = [ckey]"),
-					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_cid")] WHERE stickyban = [ckey]"),
-					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ip")] WHERE stickyban = [ckey]")
+					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban")] WHERE ckey = :ckey", list("ckey" = ckey)),
+					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ckey")] WHERE stickyban = :ckey", list("ckey" = ckey)),
+					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_cid")] WHERE stickyban = :ckey", list("ckey" = ckey)),
+					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ip")] WHERE stickyban = :ckey", list("ckey" = ckey))
 				), warn = TRUE, qdel = TRUE)
+
 
 			log_admin_private("[key_name(usr)] removed [ckey]'s stickyban")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed [ckey]'s stickyban</span>")
@@ -128,12 +119,9 @@
 			SSstickyban.cache[ckey] = ban
 
 			if (SSdbcore.Connect())
-				// var/datum/db_query/query_remove_stickyban_alt = SSdbcore.NewQuery(
-				// 	"DELETE FROM [format_table_name("stickyban_matched_ckey")] WHERE stickyban = :ckey AND matched_ckey = :alt",
-				// 	list("ckey" = ckey, "alt" = alt)
-				// )
-				var/datum/DBQuery/query_remove_stickyban_alt = SSdbcore.NewQuery(
-					"DELETE FROM [format_table_name("stickyban_matched_ckey")] WHERE stickyban = [ckey] AND matched_ckey = [alt]"
+				var/datum/db_query/query_remove_stickyban_alt = SSdbcore.NewQuery(
+					"DELETE FROM [format_table_name("stickyban_matched_ckey")] WHERE stickyban = :ckey AND matched_ckey = :alt",
+					list("ckey" = ckey, "alt" = alt)
 				)
 				query_remove_stickyban_alt.warn_execute()
 				qdel(query_remove_stickyban_alt)
@@ -165,12 +153,9 @@
 			SSstickyban.cache[ckey] = ban
 
 			if (SSdbcore.Connect())
-				// var/datum/db_query/query_edit_stickyban = SSdbcore.NewQuery(
-				// 	"UPDATE [format_table_name("stickyban")] SET reason = :reason WHERE ckey = :ckey",
-				// 	list("reason" = reason, "ckey" = ckey)
-				// )
-				var/datum/DBQuery/query_edit_stickyban = SSdbcore.NewQuery(
-					"UPDATE [format_table_name("stickyban")] SET reason = [reason] WHERE ckey = [ckey]"
+				var/datum/db_query/query_edit_stickyban = SSdbcore.NewQuery(
+					"UPDATE [format_table_name("stickyban")] SET reason = :reason WHERE ckey = :ckey",
+					list("reason" = reason, "ckey" = ckey)
 				)
 				query_edit_stickyban.warn_execute()
 				qdel(query_edit_stickyban)
@@ -218,12 +203,9 @@
 			SSstickyban.cache[ckey] = ban
 
 			if (SSdbcore.Connect())
-				// var/datum/db_query/query_exempt_stickyban_alt = SSdbcore.NewQuery(
-				// 	"UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 1 WHERE stickyban = :ckey AND matched_ckey = :alt",
-				// 	list("ckey" = ckey, "alt" = alt)
-				// )
-				var/datum/DBQuery/query_exempt_stickyban_alt = SSdbcore.NewQuery(
-					"UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 1 WHERE stickyban = [ckey] AND matched_ckey = [alt]"
+				var/datum/db_query/query_exempt_stickyban_alt = SSdbcore.NewQuery(
+					"UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 1 WHERE stickyban = :ckey AND matched_ckey = :alt",
+					list("ckey" = ckey, "alt" = alt)
 				)
 				query_exempt_stickyban_alt.warn_execute()
 				qdel(query_exempt_stickyban_alt)
@@ -271,12 +253,9 @@
 			SSstickyban.cache[ckey] = ban
 
 			if (SSdbcore.Connect())
-				// var/datum/db_query/query_unexempt_stickyban_alt = SSdbcore.NewQuery(
-				// 	"UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 0 WHERE stickyban = :ckey AND matched_ckey = :alt",
-				// 	list("ckey" = ckey, "alt" = alt)
-				// )
-				var/datum/DBQuery/query_unexempt_stickyban_alt = SSdbcore.NewQuery(
-					"UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 0 WHERE stickyban = [ckey] AND matched_ckey = [alt]"
+				var/datum/db_query/query_unexempt_stickyban_alt = SSdbcore.NewQuery(
+					"UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 0 WHERE stickyban = :ckey AND matched_ckey = :alt",
+					list("ckey" = ckey, "alt" = alt)
 				)
 				query_unexempt_stickyban_alt.warn_execute()
 				qdel(query_unexempt_stickyban_alt)

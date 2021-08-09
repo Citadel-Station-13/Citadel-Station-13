@@ -311,7 +311,7 @@
 		to_chat(user, "<span class = 'danger'>Install a new flash in [src]!</span>")
 
 /obj/item/clothing/glasses/sunglasses/stunglasses/attackby(obj/item/W,mob/user)
-	if (istype(W,/obj/item/screwdriver))
+	if (W.tool_behaviour == TOOL_SCREWDRIVER)
 		if (installed)
 			installed.forceMove(get_turf(src))
 			to_chat(user, "<span class = 'notice'>You remove [installed] from [src].</span>")
@@ -357,6 +357,12 @@
 /obj/item/clothing/glasses/sunglasses/blindfold/dropped(mob/living/carbon/human/user)
 	..()
 	user.cure_blind("blindfold_[REF(src)]")
+
+/obj/item/clothing/glasses/fakeblindfold
+	name = "thin blindfold"
+	desc = "Covers the eyes, but not thick enough to obscure vision. Mostly for aesthetic."
+	icon_state = "blindfoldwhite"
+	item_state = "blindfoldwhite"
 
 /obj/item/clothing/glasses/sunglasses/blindfold/white
 	name = "blind personnel blindfold"

@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// This shouldn't be modified directly, use the helper procs.
 	var/list/baseturfs = /turf/baseturf_bottom
 
-	var/temperature = T20C
+	var/initial_temperature = T20C
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 
@@ -76,7 +76,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	if(requires_activation)
 		CALCULATE_ADJACENT_TURFS(src)
-		SSair.add_to_active(src)
 
 	if (light_power && light_range)
 		update_light()
@@ -96,8 +95,20 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	set_custom_materials(custom_materials)
 
 	ComponentInitialize()
+	if(isopenturf(src))
+		var/turf/open/O = src
+		__auxtools_update_turf_temp_info(isspaceturf(get_z_base_turf()) && !O.planetary_atmos)
+	else
+		update_air_ref(-1)
+		__auxtools_update_turf_temp_info(isspaceturf(get_z_base_turf()))
 
 	return INITIALIZE_HINT_NORMAL
+
+/turf/proc/__auxtools_update_turf_temp_info()
+
+/turf/return_temperature()
+
+/turf/proc/set_temperature()
 
 /turf/proc/Initalize_Atmos(times_fired)
 	CALCULATE_ADJACENT_TURFS(src)
@@ -120,7 +131,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		for(var/A in B.contents)
 			qdel(A)
 		return
-	SSair.remove_from_active(src)
 	visibilityChanged()
 	QDEL_LIST(blueprint_data)
 	flags_1 &= ~INITIALIZED_1
@@ -131,7 +141,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	user.Move_Pulled(src)
 
 /turf/proc/multiz_turf_del(turf/T, dir)
-	// SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_DEL, T, dir)
+	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_DEL, T, dir)
 
 /turf/proc/multiz_turf_new(turf/T, dir)
 	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_NEW, T, dir)
@@ -386,7 +396,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/list/things = src_object.contents()
 	var/datum/progressbar/progress = new(user, things.len, src)
-	while (do_after(usr, 1 SECONDS, TRUE, src, FALSE, CALLBACK(src_object, /datum/component/storage.proc/mass_remove_from_storage, src, things, progress)))
+	while (do_after(usr, 1 SECONDS, TRUE, src, FALSE, CALLBACK(src_object, /datum/component/storage.proc/mass_remove_from_storage, src, things, progress, TRUE, user)))
 		stoplag(1)
 	qdel(progress)
 
@@ -461,6 +471,24 @@ GLOBAL_LIST_EMPTY(station_turfs)
 					continue
 			A.ex_act(severity, target)
 			CHECK_TICK
+
+/turf/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	. = ..()
+	var/affecting_level
+	if(is_shielded())
+		affecting_level = 3
+	else if(intact)
+		affecting_level = 2
+	else
+		affecting_level = 1
+	var/atom/A
+	for(var/i in contents)
+		if(. <= 0)
+			return 0
+		A = i
+		if(!QDELETED(A) && A.level >= affecting_level)
+			.  = A.wave_explode(., explosion, dir)
+	maptext = "[.]"
 
 /turf/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)
@@ -561,7 +589,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/AllowDrop()
 	return TRUE
 
-/turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE)
+/turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE, purge_ratio = 0.1)
 
 	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
 	//if the vomit combined, apply toxicity and reagents to the old vomit
@@ -569,21 +597,24 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		V = locate() in src
 	if(!V) //the decal was spawned on a wall or groundless turf and promptly qdeleted.
 		return
-	// Make toxins and blazaam vomit look different
+	// Apply the proper icon set based on vomit type
 	if(toxvomit == VOMIT_PURPLE)
 		V.icon_state = "vomitpurp_[pick(1,4)]"
 	else if (toxvomit == VOMIT_TOXIC)
 		V.icon_state = "vomittox_[pick(1,4)]"
-	if (iscarbon(M))
-		var/mob/living/carbon/C = M
-		if(C.reagents)
-			clear_reagents_to_vomit_pool(C,V)
+	else if (toxvomit == VOMIT_NANITE)
+		V.name = "metallic slurry"
+		V.desc = "A puddle of metallic slurry that looks vaguely like very fine sand. It almost seems like it's moving..."
+		V.icon_state = "vomitnanite_[pick(1,4)]"
+	if (purge_ratio && iscarbon(M))
+		clear_reagents_to_vomit_pool(M, V, purge_ratio)
 
-/proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
+/proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge_ratio = 0.1)
 	for(var/datum/reagent/consumable/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
 		if(R.nutriment_factor > 0)
 			M.reagents.del_reagent(R.type)
-	M.reagents.trans_to(V, M.reagents.total_volume / 10)
+	var/chemicals_lost = M.reagents.total_volume * purge_ratio
+	M.reagents.trans_to(V, chemicals_lost)
 
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf
@@ -594,3 +625,16 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	. = ..()
 	if(. != BULLET_ACT_FORCE_PIERCE)
 		. =  BULLET_ACT_TURF
+
+/turf/proc/get_yelling_resistance(power)
+	. = 0
+	// don't bother checking fulltile, we don't need accuracy
+	var/obj/window = locate(/obj/structure/window) in src
+	if(!window)
+		window = locate(/obj/machinery/door/window) in src
+	if(window)
+		. += 4		// windows are minimally resistant
+	// if there's more than one someone fucked up as that shouldn't happen
+	var/obj/machinery/door/D = locate() in src
+	if(D?.density)
+		. += D.opacity? 29 : 19			// glass doors are slightly more resistant to screaming

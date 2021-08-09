@@ -7,7 +7,7 @@
 	descname = "Generates Power From Starlight"
 	name = "Stargazer"
 	desc = "Forms a weak structure that generates power every second while within three tiles of starlight."
-	invocations = list("Capture their inferior light for us!")
+	invocations = list("Capture their inferior light for us.")
 	channel_time = 50
 	power_cost = 200
 	object_path = /obj/structure/destructible/clockwork/stargazer
@@ -16,6 +16,7 @@
 	usage_tip = "For obvious reasons, make sure to place this near a window or somewhere else that can see space!"
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
+	whispered = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 1
 	quickbind = TRUE
@@ -23,7 +24,8 @@
 
 /datum/clockwork_scripture/create_object/stargazer/check_special_requirements()
 	var/area/A = get_area(invoker)
-	if(A.outdoors || A.map_name == "Space" || !A.blob_allowed)
+	var/turf/T = get_turf(invoker)
+	if(!is_station_level(invoker.z) || isspaceturf(T) || !(A?.area_flags & CULT_PERMITTED))
 		to_chat(invoker, "<span class='danger'>Stargazers can't be built off-station.</span>")
 		return
 	return ..()
@@ -34,7 +36,7 @@
 	descname = "Power Generation"
 	name = "Integration Cog"
 	desc = "Fabricates an integration cog, which can be used on an open APC to replace its innards and passively siphon its power."
-	invocations = list("Take that which sustains them!")
+	invocations = list("Take that which sustains them.")
 	channel_time = 10
 	power_cost = 10
 	whispered = TRUE
@@ -55,7 +57,7 @@
 	descname = "Trap, Stunning"
 	name = "Sigil of Transgression"
 	desc = "Wards a tile with a sigil, which will briefly stun the next non-Servant to cross it and apply Belligerent to them."
-	invocations = list("Divinity, smite...", "...those who trespass here!")
+	invocations = list("Divinity, smite...", "...those who trespass here.")
 	channel_time = 50
 	power_cost = 50
 	whispered = TRUE
@@ -75,7 +77,7 @@
 	descname = "Trap, Conversion"
 	name = "Sigil of Submission"
 	desc = "Places a luminous sigil that will convert any non-Servants that remain on it for 8 seconds."
-	invocations = list("Divinity, enlighten...", "...those who trespass here!")
+	invocations = list("Divinity, enlighten...", "...those who trespass here.")
 	channel_time = 60
 	power_cost = 125
 	whispered = TRUE
@@ -95,7 +97,7 @@
 	descname = "Short-Range Single-Target Stun"
 	name = "Kindle"
 	desc = "Charges your slab with divine energy, allowing you to overwhelm a target with Ratvar's light."
-	invocations = list("Divinity, show them your light!")
+	invocations = list("Divinity, show them your light.")
 	whispered = TRUE
 	channel_time = 25 //2.5 seconds should be a okay compromise between being able to use it when needed, and not being able to just pause in combat for a second and hardstunning your enemy
 	power_cost = 125
@@ -118,7 +120,7 @@
 	descname = "Handcuffs"
 	name = "Hateful Manacles"
 	desc = "Forms replicant manacles around a target's wrists that function like handcuffs."
-	invocations = list("Shackle the heretic!", "Break them in body and spirit!")
+	invocations = list("Shackle the heretic!", "Break them in body and spirit.")
 	channel_time = 15
 	power_cost = 25
 	whispered = TRUE
@@ -269,7 +271,7 @@
 	descname = "New Clockwork Slab"
 	name = "Replicant"
 	desc = "Creates a new clockwork slab."
-	invocations = list("Metal, become greater!")
+	invocations = list("Metal, become greater.")
 	channel_time = 10
 	power_cost = 25
 	whispered = TRUE
@@ -290,7 +292,7 @@
 	descname = "Limited Xray Vision Glasses"
 	name = "Wraith Spectacles"
 	desc = "Fabricates a pair of glasses which grant true sight but cause gradual vision loss."
-	invocations = list("Show the truth of this world to me!")
+	invocations = list("Show the truth of this world to me.")
 	channel_time = 10
 	power_cost = 50
 	whispered = TRUE
@@ -310,7 +312,7 @@
 	name = "Spatial Gateway"
 	desc = "Tears open a miniaturized gateway in spacetime to any conscious servant that can transport objects or creatures to its destination. \
 	Each servant assisting in the invocation adds one additional use and four additional seconds to the gateway's uses and duration."
-	invocations = list("Spatial Gateway...", "...activate!")
+	invocations = list("Spatial Gateway...", "...activate.")
 	channel_time = 30
 	power_cost = 400
 	whispered = TRUE

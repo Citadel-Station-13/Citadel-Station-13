@@ -179,7 +179,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		to_chat(usr, "<span class='notice'>Sorry, that function is not enabled on this server.</span>")
 		return
 
-	browse_messages(null, usr.ckey, null, TRUE, override = TRUE)
+	browse_messages(null, usr.ckey, null, TRUE)
 
 /client/proc/self_playtime()
 	set name = "View tracked playtime"
@@ -190,11 +190,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		to_chat(usr, "<span class='notice'>Sorry, tracking is currently disabled.</span>")
 		return
 
-	var/list/body = list()
-	body += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Playtime for [key]</title></head><BODY><BR>Playtime:"
-	body += get_exp_report()
-	body += "</BODY></HTML>"
-	usr << browse(body.Join(), "window=playerplaytime[ckey];size=550x615")
+	new /datum/job_report_menu(src, usr)
 
 /client/proc/ignore_key(client)
 	var/client/C = client
@@ -233,7 +229,14 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set category = "OOC"
 	set desc = "View the last round end report you've seen"
 
-	SSticker.show_roundend_report(src, TRUE)
+	SSticker.show_roundend_report(src, report_type = PERSONAL_LAST_ROUND)
+
+/client/proc/show_servers_last_roundend_report()
+	set name = "Server's Last Round"
+	set category = "OOC"
+	set desc = "View the last round end report from this server"
+
+	SSticker.show_roundend_report(src, report_type = SERVER_LAST_ROUND)
 
 /client/verb/fit_viewport()
 	set name = "Fit Viewport"
@@ -245,8 +248,20 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	var/aspect_ratio = view_size[1] / view_size[2]
 
 	// Calculate desired pixel width using window size and aspect ratio
-	var/sizes = params2list(winget(src, "mainwindow.split;mapwindow", "size"))
-	var/map_size = splittext(sizes["mapwindow.size"], "x")
+	var/list/sizes = params2list(winget(src, "mainwindow.split;mapwindow", "size"))
+
+	// Client closed the window? Some other error? This is unexpected behaviour, let's
+	// CRASH with some info.
+	if(!sizes["mapwindow.size"])
+		CRASH("sizes does not contain mapwindow.size key. This means a winget failed to return what we wanted. --- sizes var: [sizes] --- sizes length: [length(sizes)]")
+
+	var/list/map_size = splittext(sizes["mapwindow.size"], "x")
+
+	// Looks like we expect mapwindow.size to be "ixj" where i and j are numbers.
+	// If we don't get our expected 2 outputs, let's give some useful error info.
+	if(length(map_size) != 2)
+		CRASH("map_size of incorrect length --- map_size var: [map_size] --- map_size length: [length(map_size)]")
+
 	var/height = text2num(map_size[2])
 	var/desired_width = round(height * aspect_ratio)
 	if (text2num(map_size[1]) == desired_width)
@@ -255,6 +270,9 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 	var/split_size = splittext(sizes["mainwindow.split.size"], "x")
 	var/split_width = text2num(split_size[1])
+
+	// Avoid auto-resizing the statpanel and chat into nothing.
+	desired_width = min(desired_width, split_width - 300)
 
 	// Calculate and apply a best estimate
 	// +4 pixels are for the width of the splitter's handle

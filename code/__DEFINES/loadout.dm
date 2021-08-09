@@ -82,3 +82,12 @@
 #define LOADOUT_CAN_NAME					(1<<0) //renaming items
 #define LOADOUT_CAN_DESCRIPTION				(1<<1) //adding a custom description to items
 #define LOADOUT_CAN_COLOR_POLYCHROMIC		(1<<2)
+
+//the names of the customization tabs
+#define SETTINGS_TAB			0
+#define GAME_PREFERENCES_TAB	1
+#define APPEARANCE_TAB			2
+#define SPEECH_TAB				3
+#define LOADOUT_TAB				4
+#define CONTENT_PREFERENCES_TAB	5
+#define KEYBINDINGS_TAB			6

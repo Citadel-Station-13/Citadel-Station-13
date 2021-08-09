@@ -8,14 +8,13 @@
 	announceWhen = 50
 	endWhen = 20
 	var/list/area/areasToOpen = list()
-	var/list/potential_areas = list(/area/bridge,
-									/area/engine,
+	var/list/potential_areas = list(/area/command,
+									/area/engineering,
 									/area/medical,
 									/area/security,
-									/area/quartermaster,
+									/area/cargo,
 									/area/science)
 	var/severity = 1
-
 
 /datum/round_event/grey_tide/setup()
 	announceWhen = rand(50, 60)

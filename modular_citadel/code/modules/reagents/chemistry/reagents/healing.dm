@@ -217,6 +217,6 @@
 
 /datum/reagent/fermi/zeolites/reaction_obj(obj/O, reac_volume)
 	var/datum/component/radioactive/contamination = O.GetComponent(/datum/component/radioactive)
-	if(contamination && reac_volume >= 5 && purity >= 0.7) //you need at least 0.7 purity to instantly purge all contam on an object.
+	if(contamination && purity >= 0.7) //you need at least 0.7 purity to instantly purge all contam on an object.
 		qdel(contamination)
-		return
+	..()

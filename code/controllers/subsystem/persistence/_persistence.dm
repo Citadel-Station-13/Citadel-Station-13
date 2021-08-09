@@ -349,3 +349,15 @@ SUBSYSTEM_DEF(persistence)
 		if(!ending_human.client)
 			return
 		ending_human.client.prefs.save_character()
+
+/datum/controller/subsystem/persistence/proc/SaveTCGCards()
+	for(var/i in GLOB.joined_player_list)
+		var/mob/living/carbon/human/ending_human = get_mob_by_ckey(i)
+		if(!istype(ending_human) || !ending_human.mind || !ending_human.client || !ending_human.client.prefs || !ending_human.client.prefs.tcg_cards)
+			continue
+
+		var/mob/living/carbon/human/original_human = ending_human.mind.original_character
+		if(!original_human || original_human.stat == DEAD || !(original_human == ending_human))
+			continue
+
+		ending_human.SaveTCGCards()

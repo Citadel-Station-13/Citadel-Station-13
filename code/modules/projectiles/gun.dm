@@ -434,7 +434,7 @@
 		to_chat(user, "<span class='notice'>You attach \the [K] to the front of \the [src].</span>")
 		bayonet = K
 		update_icon()
-	else if(istype(I, /obj/item/screwdriver))
+	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(gun_light)
 			var/obj/item/flashlight/seclite/S = gun_light
 			to_chat(user, "<span class='notice'>You unscrew the seclite from \the [src].</span>")
@@ -569,11 +569,17 @@
 	. = ..()
 	if(!.)
 		var/obj/item/gun/G = target
+		G.zoom(owner, owner.dir, FALSE)
+
+/datum/action/item_action/toggle_scope_zoom/Trigger()
+	. = ..()
+	if(.)
+		var/obj/item/gun/G = target
 		G.zoom(owner, owner.dir)
 
 /datum/action/item_action/toggle_scope_zoom/Remove(mob/living/L)
 	var/obj/item/gun/G = target
-	G.zoom(L, L.dir)
+	G.zoom(L, L.dir, FALSE)
 	return ..()
 
 /obj/item/gun/proc/rotate(atom/thing, old_dir, new_dir)

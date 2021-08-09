@@ -590,7 +590,7 @@
 
 /obj/effect/mob_spawn/human/pirate
 	name = "space pirate sleeper"
-	desc = "A cryo sleeper smelling faintly of rum."
+	desc = "A cryo sleeper smelling faintly of rum. The sleeper looks unstable. <i>Perhaps the pirate within can be killed with the right tools...</i>"
 	job_description = "Space Pirate"
 	random = TRUE
 	icon = 'icons/obj/machines/sleeper.dmi'
@@ -607,6 +607,54 @@
 	flavour_text = "The station refused to pay for your protection, protect the ship, siphon the credits from the station and raid it for even more loot."
 	assignedrole = "Space Pirate"
 	var/rank = "Mate"
+
+/obj/effect/mob_spawn/human/pirate/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+	. = ..()
+	if(.)
+		return
+	if(user.mind.has_antag_datum(/datum/antagonist/pirate))
+		to_chat(user, "<span class='notice'>Your shipmate sails within their dreams for now. Perhaps they may wake up eventually.</span>")
+	else
+		to_chat(user, "<span class='notice'>If you want to kill the pirate off, something to pry open the sleeper might be the best way to do it.</span>")
+
+
+/obj/effect/mob_spawn/human/pirate/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_CROWBAR && user.a_intent != INTENT_HARM)
+		if(user.mind.has_antag_datum(/datum/antagonist/pirate))
+			to_chat(user,"<span class='warning'>Why would you want to do that to your shipmate? That'd kill them.</span>")
+			return
+		user.visible_message("<span class='warning'>[user] start to pry open [src]...</span>",
+				"<span class='notice'>You start to pry open [src]...</span>",
+				"<span class='italics'>You hear prying...</span>")
+		W.play_tool_sound(src)
+		if(do_after(user, 100*W.toolspeed, target = src))
+			user.visible_message("<span class='warning'>[user] pries open [src], disrupting the sleep of the pirate within and killing them.</span>",
+				"<span class='notice'>You pry open [src], disrupting the sleep of the pirate within and killing them.</span>",
+				"<span class='italics'>You hear prying, followed by the death rattling of bones.</span>")
+			log_game("[key_name(user)] has successfully pried open [src] and disabled a space pirate spawner.")
+			W.play_tool_sound(src)
+			playsound(src.loc, 'modular_citadel/sound/voice/scream_skeleton.ogg', 50, 1, 4, 1.2)
+			if(rank == "Captain") 
+				new /obj/effect/mob_spawn/human/pirate/corpse/captain(get_turf(src))
+			else 
+				new /obj/effect/mob_spawn/human/pirate/corpse(get_turf(src))
+			qdel(src)
+	else
+		..()
+
+/obj/effect/mob_spawn/human/pirate/corpse //occurs when someone pries a pirate out of their sleeper.
+	mob_name = "Dead Space Pirate"
+	death = TRUE
+	instant = TRUE
+	random = FALSE
+
+/obj/effect/mob_spawn/human/pirate/corpse/Destroy()
+	return ..()
+
+/obj/effect/mob_spawn/human/pirate/corpse/captain
+	rank = "Captain"
+	mob_name = "Dead Space Pirate Captain"
+	outfit = /datum/outfit/pirate/space/captain
 
 /obj/effect/mob_spawn/human/pirate/special(mob/living/new_spawn)
 	new_spawn.fully_replace_character_name(new_spawn.real_name,generate_pirate_name())
@@ -662,6 +710,72 @@
 		to_chat(M,"<span class='notice'>You're once again longer hearing deadchat.</span>")
 
 
+/datum/action/disguise
+	name = "Disguise"
+	button_icon_state = "ling_transform"
+	icon_icon = 'icons/mob/actions/actions_changeling.dmi'
+	background_icon_state = "bg_mime"
+	var/currently_disguised = FALSE
+	var/static/list/mob_blacklist = typecacheof(list(
+		/mob/living/simple_animal/pet,
+		/mob/living/simple_animal/hostile/retaliate/goose,
+		/mob/living/simple_animal/hostile/poison,
+		/mob/living/simple_animal/hostile/retaliate/goat,
+		/mob/living/simple_animal/cow,
+		/mob/living/simple_animal/chick,
+		/mob/living/simple_animal/chicken,
+		/mob/living/simple_animal/kiwi,
+		/mob/living/simple_animal/babyKiwi,
+		/mob/living/simple_animal/deer,
+		/mob/living/simple_animal/parrot,
+		/mob/living/simple_animal/hostile/lizard,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/cockroach,
+		/mob/living/simple_animal/butterfly,
+		/mob/living/simple_animal/mouse,
+		/mob/living/simple_animal/sloth,
+		/mob/living/simple_animal/opossum,
+		/mob/living/simple_animal/hostile/bear,
+		/mob/living/simple_animal/hostile/asteroid/polarbear,
+		/mob/living/simple_animal/hostile/asteroid/wolf,
+		/mob/living/carbon/monkey,
+		/mob/living/simple_animal/hostile/gorilla,
+		/mob/living/carbon/alien/larva,
+		/mob/living/simple_animal/hostile/retaliate/frog
+	))
+
+
+/datum/action/disguise/Trigger()
+	var/mob/living/carbon/human/H = owner
+	if(!currently_disguised)
+		var/user_object_type = input(H, "Disguising as OBJECT or MOB?") as null|anything in list("OBJECT", "MOB")
+		if(user_object_type)
+			var/search_term = stripped_input(H, "Enter the search term")
+			if(search_term)
+				var/list_to_search
+				if(user_object_type == "MOB")
+					list_to_search = subtypesof(/mob) - mob_blacklist
+				else
+					list_to_search = subtypesof(/obj)
+				var/list/filtered_results = list()
+				for(var/some_search_item in list_to_search)
+					if(findtext("[some_search_item]", search_term))
+						filtered_results += some_search_item
+				if(!length(filtered_results))
+					to_chat(H, "Nothing matched your search query!")
+				else
+					var/disguise_selection = input("Select item to disguise as") as null|anything in filtered_results
+					if(disguise_selection)
+						var/atom/disguise_item = disguise_selection
+						var/image/I = image(icon = initial(disguise_item.icon), icon_state = initial(disguise_item.icon_state), loc = H)
+						I.override = TRUE
+						I.layer = ABOVE_MOB_LAYER
+						H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "ghost_cafe_disguise", I)
+						currently_disguised = TRUE
+	else
+		H.remove_alt_appearance("ghost_cafe_disguise")
+		currently_disguised = FALSE
+
 /obj/effect/mob_spawn/human/ghostcafe/special(mob/living/carbon/human/new_spawn)
 	if(new_spawn.client)
 		new_spawn.client.prefs.copy_to(new_spawn)
@@ -676,10 +790,11 @@
 		ADD_TRAIT(new_spawn, TRAIT_SIXTHSENSE, GHOSTROLE_TRAIT)
 		ADD_TRAIT(new_spawn, TRAIT_EXEMPT_HEALTH_EVENTS, GHOSTROLE_TRAIT)
 		ADD_TRAIT(new_spawn, TRAIT_NO_MIDROUND_ANTAG, GHOSTROLE_TRAIT) //The mob can't be made into a random antag, they are still eligible for ghost roles popups.
-		ADD_TRAIT(new_spawn, TRAIT_PACIFISM, GHOSTROLE_TRAIT)
 		to_chat(new_spawn,"<span class='boldwarning'>Ghosting is free!</span>")
 		var/datum/action/toggle_dead_chat_mob/D = new(new_spawn)
 		D.Grant(new_spawn)
+		var/datum/action/disguise/disguise_action = new(new_spawn)
+		disguise_action.Grant(new_spawn)
 
 /datum/outfit/ghostcafe
 	name = "ID, jumpsuit and shoes"

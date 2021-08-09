@@ -68,6 +68,10 @@ SUBSYSTEM_DEF(vote)
 	//get the highest number of votes
 	var/greatest_votes = 0
 	var/total_votes = 0
+	if(mode == "gamemode" && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
+		for(var/mob/dead/new_player/P in GLOB.player_list)
+			if(P.ready != PLAYER_READY_TO_PLAY && voted[P.ckey])
+				choices[choices[voted[P.ckey]]]--
 	for(var/option in choices)
 		var/votes = choices[option]
 		total_votes += votes
@@ -101,6 +105,10 @@ SUBSYSTEM_DEF(vote)
 
 /datum/controller/subsystem/vote/proc/calculate_condorcet_votes(var/blackbox_text)
 	// https://en.wikipedia.org/wiki/Schulze_method#Implementation
+	if((mode == "gamemode" || mode == "dynamic") && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
+		for(var/mob/dead/new_player/P in GLOB.player_list)
+			if(P.ready != PLAYER_READY_TO_PLAY && voted[P.ckey])
+				voted -= P.ckey
 	var/list/d[][] = new/list(choices.len,choices.len) // the basic vote matrix, how many times a beats b
 	for(var/ckey in voted)
 		var/list/this_vote = voted[ckey]
@@ -147,6 +155,10 @@ SUBSYSTEM_DEF(vote)
 	for(var/choice in choices)
 		scores_by_choice += "[choice]"
 		scores_by_choice["[choice]"] = list()
+	if((mode == "gamemode" || mode == "dynamic") && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
+		for(var/mob/dead/new_player/P in GLOB.player_list)
+			if(P.ready != PLAYER_READY_TO_PLAY && voted[P.ckey])
+				voted -= P.ckey
 	for(var/ckey in voted)
 		var/list/this_vote = voted[ckey]
 		var/list/pretty_vote = list()

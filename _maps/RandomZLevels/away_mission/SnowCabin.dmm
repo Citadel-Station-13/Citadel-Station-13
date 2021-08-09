@@ -881,7 +881,7 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "cT" = (
-/obj/vehicle/ridden/atv,
+/obj/vehicle/ridden/atv/snowmobile,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -893,7 +893,7 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "cV" = (
-/obj/vehicle/ridden/atv,
+/obj/vehicle/ridden/atv/snowmobile,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "cW" = (

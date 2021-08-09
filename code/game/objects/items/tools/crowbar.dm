@@ -67,6 +67,12 @@
 	item_state = "crowbar"
 	toolspeed = 0.5
 
+/obj/item/crowbar/large/heavy
+	name = "heavy crowbar"
+	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It feels oddly heavy.."
+	force = 20
+	icon_state = "crowbar_powergame"
+
 /obj/item/crowbar/cyborg
 	name = "hydraulic crowbar"
 	desc = "A hydraulic prying tool, compact but powerful. Designed to replace crowbar in construction cyborgs."
@@ -88,6 +94,7 @@
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 15
 	toolspeed = 0.25
+	can_force_powered = TRUE
 
 /obj/item/crowbar/power/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting [user.p_their()] head in [src], it looks like [user.p_theyre()] trying to commit suicide!</span>")

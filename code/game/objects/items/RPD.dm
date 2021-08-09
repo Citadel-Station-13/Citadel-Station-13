@@ -375,12 +375,14 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 	. = TRUE
 
 	if((mode & DESTROY_MODE) && istype(A, /obj/item/pipe) || istype(A, /obj/structure/disposalconstruct) || istype(A, /obj/structure/c_transit_tube) || istype(A, /obj/structure/c_transit_tube_pod) || istype(A, /obj/item/pipe_meter))
-		to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
-		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-		if(do_after(user, destroy_speed, target = A))
-			activate()
-			qdel(A)
-		return
+		var/obj/item/pipe/P = A
+		if(!istype(P) || P.disposable)
+			to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+			if(do_after(user, destroy_speed, target = A))
+				activate()
+				qdel(A)
+			return
 
 	if((mode & PAINT_MODE))
 		if(istype(A, /obj/machinery/atmospherics/pipe) && !istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))

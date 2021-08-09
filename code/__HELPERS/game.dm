@@ -270,6 +270,20 @@
 			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing, .)
 		processing += A.contents
 
+/proc/get_hearers_in_range(R, atom/source)
+	var/turf/T = get_turf(source)
+	. = list()
+	if(!T)
+		return
+	var/list/processing = range(R, source)
+	var/i = 0
+	while(i < length(processing))
+		var/atom/A = processing[++i]
+		if(A.flags_1 & HEAR_1)
+			. += A
+			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing, .)
+		processing += A.contents
+
 //viewers() but with a signal, for blacklisting.
 /proc/fov_viewers(depth = world.view, atom/center)
 	if(!center)
@@ -381,7 +395,7 @@
 
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
 	if(!isobj(O))
-		O = new /obj/screen/text()
+		O = new /atom/movable/screen/text()
 	O.maptext = maptext
 	O.maptext_height = maptext_height
 	O.maptext_width = maptext_width

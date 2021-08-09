@@ -231,10 +231,10 @@
 		src_object = window.locked_by.src_object
 	// Insert src_object info
 	if(src_object)
-		entry += "\nUsing: [src_object.type] [REF(src_object)]"
+		entry += "Using: [src_object.type] [REF(src_object)]"
 	// Insert message
 	if(message)
-		entry += "\n[message]"
+		entry += "[message]"
 	WRITE_LOG(GLOB.tgui_log, entry)
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */

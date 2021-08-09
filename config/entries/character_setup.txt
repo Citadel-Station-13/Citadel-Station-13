@@ -1,0 +1,5 @@
+## Max save slots per person
+MAX_SAVE_SLOTS 32
+
+## Additional entries for BYOND members
+BYOND_MEMBER_ADD_SAVE_SLOTS 8

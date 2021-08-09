@@ -5,6 +5,7 @@
 	name = "ticket machine"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "ticketmachine"
+	// base_icon_state = "ticketmachine"
 	desc = "A marvel of bureaucratic engineering encased in an efficient plastic shell. It can be refilled with a hand labeler refill roll and linked to buttons with a multitool."
 	density = FALSE
 	maptext_height = 26
@@ -117,6 +118,10 @@
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
 /obj/machinery/ticket_machine/update_icon()
+	. = ..()
+	handle_maptext()
+
+/obj/machinery/ticket_machine/update_icon_state()
 	switch(ticket_number) //Gives you an idea of how many tickets are left
 		if(0 to 49)
 			icon_state = "ticketmachine_100"
@@ -124,7 +129,7 @@
 			icon_state = "ticketmachine_50"
 		if(100)
 			icon_state = "ticketmachine_0"
-	handle_maptext()
+	return ..()
 
 /obj/machinery/ticket_machine/proc/handle_maptext()
 	switch(ticket_number) //This is here to handle maptext offsets so that the numbers align.
@@ -161,9 +166,7 @@
 	ready = TRUE
 
 /obj/machinery/ticket_machine/on_attack_hand(mob/living/carbon/user)
-	INVOKE_ASYNC(src, .proc/attempt_ticket, user)
-
-/obj/machinery/ticket_machine/proc/attempt_ticket(mob/living/carbon/user)
+	// . = ..()
 	if(!ready)
 		to_chat(user,"<span class='warning'>You press the button, but nothing happens...</span>")
 		return

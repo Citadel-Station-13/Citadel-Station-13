@@ -16,19 +16,19 @@
 	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/airless,
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "ae" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
 /turf/template_noop,
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "af" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "ag" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -36,7 +36,7 @@
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "ah" = (
 /obj/machinery/power/solar{
 	id = "derelictsolar";
@@ -46,11 +46,11 @@
 	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/airless,
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "ai" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "aj" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -60,14 +60,14 @@
 	icon_state = "1-4"
 	},
 /turf/template_noop,
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "ak" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
 /turf/template_noop,
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "al" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -80,7 +80,7 @@
 	icon_state = "1-4"
 	},
 /turf/template_noop,
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "am" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -90,7 +90,7 @@
 	icon_state = "2-8"
 	},
 /turf/template_noop,
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "an" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -103,7 +103,7 @@
 	icon_state = "2-8"
 	},
 /turf/template_noop,
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "ao" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -113,7 +113,7 @@
 	icon_state = "2-8"
 	},
 /turf/template_noop,
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "ap" = (
 /obj/machinery/power/solar{
 	id = "derelictsolar";
@@ -121,19 +121,19 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "aq" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "ar" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
 /turf/template_noop,
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "as" = (
 /turf/closed/wall,
 /area/ruin/space/derelict/solar_control)
@@ -296,7 +296,7 @@
 	equipment = 0;
 	lighting = 0;
 	name = "Starboard Solar APC";
-	pixel_x = -24
+	pixel_x = -25
 	},
 /obj/structure/cable,
 /obj/structure/cable{
@@ -599,7 +599,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Worn-out APC";
-	pixel_x = -24
+	pixel_x = -25
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -2268,9 +2268,9 @@
 "hF" = (
 /obj/structure/table,
 /obj/machinery/computer/pod/old{
+	id = "derelict_gun";
 	name = "ProComp IIe";
-	pixel_y = 7;
-	id = "derelict_gun"
+	pixel_y = 7
 	},
 /turf/open/floor/plasteel/chapel,
 /area/ruin/space/derelict/medical/chapel)
@@ -3854,7 +3854,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Worn-out APC";
-	pixel_x = -24
+	pixel_x = -25
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/secondary)
@@ -3882,7 +3882,7 @@
 	areastring = "/area/ruin/space/derelict/atmospherics";
 	dir = 1;
 	name = "Worn-out APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -4207,7 +4207,7 @@
 	equipment = 0;
 	lighting = 0;
 	name = "Worn-out APC";
-	pixel_x = -24
+	pixel_x = -25
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/se_solar)
@@ -4277,14 +4277,14 @@
 /obj/structure/cable,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "om" = (
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "on" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -4294,14 +4294,14 @@
 	name = "Derelict Solar Array"
 	},
 /turf/open/floor/plasteel/airless,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "oo" = (
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "op" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -4313,12 +4313,12 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "oq" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "or" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -4328,7 +4328,7 @@
 	icon_state = "1-4"
 	},
 /turf/template_noop,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "os" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -4341,14 +4341,14 @@
 	icon_state = "2-4"
 	},
 /turf/template_noop,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "ot" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
 /turf/template_noop,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "ou" = (
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -4361,7 +4361,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "ov" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -4374,7 +4374,7 @@
 	icon_state = "1-8"
 	},
 /turf/template_noop,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "ow" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -4384,7 +4384,7 @@
 	icon_state = "1-8"
 	},
 /turf/template_noop,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "ox" = (
 /obj/structure/cable,
 /obj/machinery/power/solar{
@@ -4392,16 +4392,16 @@
 	name = "Derelict Solar Array"
 	},
 /turf/open/floor/plasteel/airless,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "oy" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "oz" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "oA" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -4411,14 +4411,14 @@
 	icon_state = "2-4"
 	},
 /turf/template_noop,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "oB" = (
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "oC" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -4428,12 +4428,12 @@
 	icon_state = "2-8"
 	},
 /turf/template_noop,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "oD" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "oE" = (
 /obj/structure/frame/computer{
 	dir = 1

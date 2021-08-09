@@ -16,7 +16,7 @@
 
 /datum/crafting_recipe/strobeshield
 	name = "Strobe Shield"
-	result = /obj/item/assembly/flash/shield
+	result = /obj/item/shield/riot/flash
 	reqs = list(/obj/item/wallframe/flasher = 1,
 				/obj/item/assembly/flash/handheld = 1,
 				/obj/item/shield/riot = 1)
@@ -68,6 +68,16 @@
 				/obj/item/stack/rods = 1,
 				/obj/item/assembly/igniter = 1,
 				/obj/item/stack/ore/bluespace_crystal = 1)
+	time = 40
+	category = CAT_WEAPONRY
+	subcategory = CAT_MELEE
+
+/datum/crafting_recipe/newsbaton
+	name = "Newspaper Baton"
+	result = /obj/item/melee/classic_baton/telescopic/newspaper
+	reqs = list(/obj/item/melee/classic_baton/telescopic = 1,
+				/obj/item/newspaper = 1,
+				/obj/item/stack/sticky_tape = 2)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_MELEE

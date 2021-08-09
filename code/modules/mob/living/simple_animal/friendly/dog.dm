@@ -381,6 +381,7 @@
 	..()
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/proc/Read_Memory()
+	set waitfor = FALSE
 	if(fexists("data/npc_saves/Ian.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
 		S["age"] 		>> age
@@ -425,7 +426,9 @@
 /mob/living/simple_animal/pet/dog/corgi/Ian/BiologicalLife()
 	if(!(. = ..()))
 		return
+	INVOKE_ASYNC(src, .proc/corgi_ai_behavior)
 
+/mob/living/simple_animal/pet/dog/corgi/Ian/proc/corgi_ai_behavior()
 	//Feeding, chasing food, FOOOOODDDD
 	if(!stat && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)
 		turns_since_scan++

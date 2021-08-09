@@ -735,7 +735,7 @@
 /datum/reagent/toxin/spewium/on_mob_life(mob/living/carbon/C)
 	.=..()
 	if(current_cycle >=11 && prob(min(50,current_cycle)))
-		C.vomit(10, prob(10), prob(50), rand(0,4), TRUE, prob(30))
+		C.vomit(10, prob(10), prob(50), rand(0,4), TRUE)
 		for(var/datum/reagent/toxin/R in C.reagents.reagent_list)
 			if(R != src)
 				C.reagents.remove_reagent(R.type,1)
@@ -827,7 +827,7 @@
 
 			if(prob(33)) // 1/3rd of the time, let's make it stack with the previous matrix! Mwhahahaha!
 				for(var/whole_screen in screens)
-					var/obj/screen/plane_master/PM = whole_screen
+					var/atom/movable/screen/plane_master/PM = whole_screen
 					newmatrix = skew * PM.transform
 
 			for(var/whole_screen in screens)

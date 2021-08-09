@@ -12,7 +12,7 @@
 	strip_delay = 50
 	alt_covers_chest = TRUE
 	sensor_mode = SENSOR_COORDS
-	random_sensor = FALSE
+	sensor_flags = NONE
 
 /obj/item/clothing/under/rank/security/officer
 	name = "security jumpsuit"

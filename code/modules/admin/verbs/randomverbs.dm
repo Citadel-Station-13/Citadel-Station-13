@@ -571,6 +571,26 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("[key_name_admin(src)] has created a command report")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Create Command Report") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_admin_make_priority_announcement()
+	set category = "Admin.Events"
+	set name = "Make Priority Announcement"
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	var/input = input(usr, "Enter a priority announcement. Ensure it makes sense IC.", "What?", "") as message|null
+	if(!input)
+		return
+
+	var/title = input(src, "What should the title be?", "What?","") as text|null
+
+	var/special_name = input(src, "Who is making the announcement?", "Who?", "") as text|null
+	priority_announce(input, title, sender_override = special_name)
+
+	log_admin("[key_name(src)] has sent a priority announcement: [input]")
+	message_admins("[key_name_admin(src)] has made a priority announcement")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make Priority Announcement") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/cmd_change_command_name()
 	set category = "Admin.Events"
 	set name = "Change Command Name"
@@ -878,8 +898,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	log_admin("[key_name(usr)] [N.timing ? "activated" : "deactivated"] a nuke at [AREACOORD(N)].")
 	message_admins("[ADMIN_LOOKUPFLW(usr)] [N.timing ? "activated" : "deactivated"] a nuke at [ADMIN_VERBOSEJMP(N)].")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Nuke", "[N.timing]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 /client/proc/create_outfits()
 	set category = "Debug"
@@ -1315,9 +1333,10 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		ADMIN_PUNISHMENT_SHOES,
 		ADMIN_PUNISHMENT_PICKLE,
 		ADMIN_PUNISHMENT_FRY,
-    ADMIN_PUNISHMENT_CRACK,
-    ADMIN_PUNISHMENT_BLEED,
-    ADMIN_PUNISHMENT_SCARIFY)
+		ADMIN_PUNISHMENT_CRACK,
+		ADMIN_PUNISHMENT_BLEED,
+		ADMIN_PUNISHMENT_SCARIFY,
+		ADMIN_PUNISHMENT_CLUWNE)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
@@ -1483,6 +1502,11 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 				to_chat(usr,"<span class='warning'>[C] does not have knottable shoes!</span>")
 				return
 			sick_kicks.adjust_laces(SHOES_KNOTTED)
+		if(ADMIN_PUNISHMENT_CLUWNE)
+			if(!iscarbon(target))
+				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>")
+				return
+			target.cluwneify()
 
 	punish_log(target, punishment)
 
@@ -1547,22 +1571,66 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	msg += "</UL></BODY></HTML>"
 	src << browse(msg.Join(), "window=Player_playtime_check")
 
-/datum/admins/proc/cmd_show_exp_panel(client/C)
+/obj/effect/temp_visual/fireball
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "fireball"
+	name = "fireball"
+	desc = "Get out of the way!"
+	layer = FLY_LAYER
+	randomdir = FALSE
+	duration = 9
+	pixel_z = 270
+
+/obj/effect/temp_visual/fireball/Initialize()
+	. = ..()
+	animate(src, pixel_z = 0, time = duration)
+
+/obj/effect/temp_visual/target
+	icon = 'icons/mob/actions/actions_items.dmi'
+	icon_state = "sniper_zoom"
+	layer = BELOW_MOB_LAYER
+	light_range = 2
+	duration = 9
+
+/obj/effect/temp_visual/target/ex_act()
+	return
+
+/obj/effect/temp_visual/target/Initialize(mapload, list/flame_hit)
+	. = ..()
+	INVOKE_ASYNC(src, .proc/fall, flame_hit)
+
+/obj/effect/temp_visual/target/proc/fall(list/flame_hit)
+	var/turf/T = get_turf(src)
+	playsound(T,'sound/magic/fleshtostone.ogg', 80, 1)
+	new /obj/effect/temp_visual/fireball(T)
+	sleep(duration)
+	if(ismineralturf(T))
+		var/turf/closed/mineral/M = T
+		M.gets_drilled()
+	playsound(T, "explosion", 80, 1)
+	new /obj/effect/hotspot(T)
+	T.hotspot_expose(700, 50, 1)
+	for(var/mob/living/L in T.contents)
+		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
+			continue
+		if(islist(flame_hit) && !flame_hit[L])
+			L.adjustFireLoss(40)
+			to_chat(L, "<span class='userdanger'>You're hit by the drake's fire breath!</span>")
+			flame_hit[L] = TRUE
+		else
+			L.adjustFireLoss(10) //if we've already hit them, do way less damage
+
+/datum/admins/proc/cmd_show_exp_panel(client/client_to_check)
 	if(!check_rights(R_ADMIN))
 		return
-	if(!C)
-		to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>")
+	if(!client_to_check)
+		to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>", confidential = TRUE)
 		return
 	if(!CONFIG_GET(flag/use_exp_tracking))
-		to_chat(usr, "<span class='warning'>Tracking is disabled in the server configuration file.</span>")
+		to_chat(usr, "<span class='warning'>Tracking is disabled in the server configuration file.</span>", confidential = TRUE)
 		return
 
-	var/list/body = list()
-	body += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Playtime for [C.key]</title></head><BODY><BR>Playtime:"
-	body += C.get_exp_report()
-	body += "<A href='?_src_=holder;[HrefToken()];toggleexempt=[REF(C)]'>Toggle Exempt status</a>"
-	body += "</BODY></HTML>"
-	usr << browse(body.Join(), "window=playerplaytime[C.ckey];size=550x615")
+	new /datum/job_report_menu(client_to_check, usr)
 
 /datum/admins/proc/toggle_exempt_status(client/C)
 	if(!check_rights(R_ADMIN))
@@ -1629,3 +1697,23 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 					if(!source)
 						return
 			REMOVE_TRAIT(D,chosen_trait,source)
+
+/client/proc/spawn_floor_cluwne()
+	set category = "Admin.Fun"
+	set name = "Unleash Floor Cluwne"
+	set desc = "Pick a specific target or just let it select randomly and spawn the floor cluwne mob on the station. Be warned: spawning more than one may cause issues!"
+	var/target
+
+	if(!check_rights(R_FUN))
+		return
+
+	var/turf/T = get_turf(usr)
+	target = input("Any specific target in mind? Please note only live, non cluwned, human targets are valid.", "Target", target) as null|anything in GLOB.player_list
+	if(target && ishuman(target))
+		var/mob/living/carbon/human/H = target
+		var/mob/living/simple_animal/hostile/floor_cluwne/FC = new /mob/living/simple_animal/hostile/floor_cluwne(T)
+		FC.Acquire_Victim(H)
+	else
+		new /mob/living/simple_animal/hostile/floor_cluwne(T)
+	log_admin("[key_name(usr)] spawned floor cluwne.")
+	message_admins("[key_name(usr)] spawned floor cluwne.")

@@ -134,8 +134,9 @@
 	if(status_effect_type)
 		linked_status_effect = victim.apply_status_effect(status_effect_type, src)
 	SEND_SIGNAL(victim, COMSIG_CARBON_GAIN_WOUND, src, limb)
+	victim.emote("pain")
 	if(!victim.alerts["wound"]) // only one alert is shared between all of the wounds
-		victim.throw_alert("wound", /obj/screen/alert/status_effect/wound)
+		victim.throw_alert("wound", /atom/movable/screen/alert/status_effect/wound)
 
 	var/demoted
 	if(old_wound)

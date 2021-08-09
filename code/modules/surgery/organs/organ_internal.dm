@@ -16,6 +16,7 @@
 	var/decay_factor 	= 0										//same as above but when without a living owner, set to 0 for generic organs
 	var/high_threshold	= STANDARD_ORGAN_THRESHOLD * 0.45		//when severe organ damage occurs
 	var/low_threshold	= STANDARD_ORGAN_THRESHOLD * 0.1		//when minor organ damage occurs
+	var/severe_cooldown	//cooldown for severe effects, used for synthetic organ emp effects.
 
 	///Organ variables for determining what we alert the owner with when they pass/clear the damage thresholds
 	var/prev_damage = 0
@@ -91,18 +92,18 @@
 	on_death() //Kinda hate doing it like this, but I really don't want to call process directly.
 
 //Sources; life.dm process_organs
-/obj/item/organ/proc/on_death() //Runs when outside AND inside.
-	decay()
+/obj/item/organ/proc/on_death(seconds, times_fired) //Runs when outside AND inside.
+	decay(seconds, times_fired)
 
 //Applys the slow damage over time decay
-/obj/item/organ/proc/decay()
+/obj/item/organ/proc/decay(seconds, times_fired)
 	if(!can_decay())
 		STOP_PROCESSING(SSobj, src)
 		return
 	is_cold()
 	if(organ_flags & ORGAN_FROZEN)
 		return
-	applyOrganDamage(maxHealth * decay_factor)
+	applyOrganDamage(maxHealth * decay_factor * (seconds * 0.5))
 
 /obj/item/organ/proc/can_decay()
 	if(CHECK_BITFIELD(organ_flags, ORGAN_NO_SPOIL | ORGAN_SYNTHETIC | ORGAN_FAILING))
@@ -150,9 +151,12 @@
 	organ_flags &= ~ORGAN_FROZEN
 	return FALSE
 
-/obj/item/organ/proc/on_life()	//repair organ damage if the organ is not failing or synthetic
+/obj/item/organ/proc/on_life(seconds, times_fired)	//repair organ damage if the organ is not failing or synthetic
 	if(organ_flags & ORGAN_FAILING || !owner)
 		return FALSE
+	if(organ_flags & ORGAN_SYNTHETIC_EMP) //Synthetic organ has been emped, is now failing.
+		applyOrganDamage(maxHealth * decay_factor)
+		return
 	if(!is_cold() && damage)
 		///Damage decrements by a percent of its maxhealth
 		var/healing_amount = -(maxHealth * healing_factor)

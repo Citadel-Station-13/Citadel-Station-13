@@ -105,6 +105,22 @@
 	gain_text = "<span class='notice'>You desire to be hurt.</span>"
 	lose_text = "<span class='notice'>Pain has become less exciting for you.</span>"
 
+/datum/quirk/libido
+	name = "Nymphomaniac"
+	desc = "You are much more sensitive to arousal."
+	value = 0
+	mob_trait = TRAIT_NYMPHO
+	gain_text = "<span class='notice'>You are feeling extra wild.</span>"
+	lose_text = "<span class='notice'>You don't feel that burning sensation anymore.</span>"
+
+/datum/quirk/libido/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.arousal_rate = 3 * initial(H.arousal_rate)
+
+/datum/quirk/libido/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.arousal_rate = initial(H.arousal_rate)
+
 /datum/quirk/alcohol_intolerance
 	name = "Alcohol Intolerance"
 	desc = "You take toxin damage from alcohol rather than getting drunk."
@@ -138,3 +154,11 @@
 /datum/quirk/longtimer/on_spawn()
 	var/mob/living/carbon/C = quirk_holder
 	C.generate_fake_scars(rand(min_scars, max_scars))
+
+/datum/quirk/trashcan
+	name = "Trashcan"
+	desc = "You are able to consume and digest trash."
+	value = 0
+	gain_text = "<span class='notice'>You feel like munching on a can of soda.</span>"
+	lose_text = "<span class='notice'>You no longer feel like you should be eating trash.</span>"
+	mob_trait = TRAIT_TRASHCAN

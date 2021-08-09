@@ -14,7 +14,7 @@
 "ai" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/closet/crate/secure/loot,
-/obj/item/clothing/head/collectable/paper,
+/obj/item/clothing/head/sombrero/shamebrero,
 /turf/open/floor/plating,
 /area/awaymission/jungleresort)
 "ak" = (
@@ -50,6 +50,10 @@
 "at" = (
 /obj/machinery/jukebox,
 /turf/open/floor/wood,
+/area/awaymission/jungleresort)
+"az" = (
+/obj/structure/stone_tile/center,
+/turf/open/floor/plating/dirt/jungle,
 /area/awaymission/jungleresort)
 "aA" = (
 /obj/machinery/light,
@@ -199,7 +203,7 @@
 /area/awaymission/jungleresort)
 "cK" = (
 /obj/structure/closet/crate,
-/obj/item/clothing/head/collectable/tophat,
+/obj/item/clothing/head/collectable/petehat/gang,
 /turf/open/floor/plating/rust,
 /area/awaymission/jungleresort)
 "cT" = (
@@ -216,6 +220,11 @@
 "cX" = (
 /obj/structure/flora/rock,
 /turf/open/floor/plating/dirt/jungle,
+/area/awaymission/jungleresort)
+"cY" = (
+/obj/structure/flora/grass/jungle/b,
+/mob/living/simple_animal/hostile/gorilla/jungle,
+/turf/open/floor/grass,
 /area/awaymission/jungleresort)
 "dm" = (
 /obj/structure/table/wood,
@@ -274,7 +283,6 @@
 	dir = 9
 	},
 /obj/structure/stone_tile/center/cracked,
-/obj/item/ammo_casing/shotgun/buckshot,
 /turf/open/floor/plating/dirt/jungle,
 /area/awaymission/jungleresort)
 "eB" = (
@@ -407,8 +415,8 @@
 /area/awaymission/jungleresort)
 "gK" = (
 /obj/structure/table/wood,
-/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted/riot,
-/obj/item/ammo_box/magazine/toy/m762/riot,
+/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted,
+/obj/item/ammo_box/magazine/toy/smgm45,
 /turf/open/floor/wood,
 /area/awaymission/jungleresort)
 "gL" = (
@@ -580,6 +588,9 @@
 	dir = 1
 	},
 /obj/structure/stone_tile/center/burnt,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 6
+	},
 /turf/open/floor/plating/dirt/jungle,
 /area/awaymission/jungleresort)
 "iE" = (
@@ -660,6 +671,11 @@
 	},
 /turf/open/floor/grass,
 /area/awaymission/jungleresort)
+"jw" = (
+/obj/structure/stone_tile/surrounding/cracked,
+/obj/structure/stone_tile/center/burnt,
+/turf/open/floor/plating/dirt/jungle,
+/area/awaymission/jungleresort)
 "jy" = (
 /obj/structure/flora/grass/jungle/b,
 /obj/effect/turf_decal/weather/dirt{
@@ -673,6 +689,16 @@
 	dir = 4
 	},
 /turf/open/floor/grass,
+/area/awaymission/jungleresort)
+"jD" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 9
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 6
+	},
+/turf/open/floor/plating/dirt/jungle,
 /area/awaymission/jungleresort)
 "jF" = (
 /obj/structure/flora/tree/jungle,
@@ -798,6 +824,11 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/jungleresort)
+"lF" = (
+/obj/structure/flora/junglebush,
+/mob/living/simple_animal/hostile/gorilla/jungle,
+/turf/open/floor/grass,
+/area/awaymission/jungleresort)
 "lJ" = (
 /obj/structure/flora/junglebush/c,
 /obj/machinery/light{
@@ -869,6 +900,8 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
+/obj/item/clothing/glasses/meson/engine,
+/obj/item/storage/belt/utility,
 /turf/open/floor/plating,
 /area/awaymission/jungleresort)
 "mE" = (
@@ -986,6 +1019,10 @@
 /obj/item/toy/crayon/spraycan,
 /turf/open/floor/plating/dirt/jungle,
 /area/awaymission/jungleresort)
+"ou" = (
+/obj/item/clothing/glasses/meson,
+/turf/open/floor/plating/asteroid,
+/area/awaymission/jungleresort)
 "ow" = (
 /obj/structure/flora/tree/jungle,
 /obj/effect/turf_decal/weather/dirt,
@@ -993,7 +1030,7 @@
 /area/awaymission/jungleresort)
 "oW" = (
 /obj/effect/decal/remains/human,
-/obj/item/clothing/head/collectable/petehat/gang,
+/obj/item/clothing/head/collectable/tophat,
 /turf/open/floor/plating,
 /area/awaymission/jungleresort)
 "oX" = (
@@ -1075,7 +1112,7 @@
 "qi" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/closet/crate/secure/loot,
-/obj/item/clothing/head/collectable/beret,
+/obj/item/clothing/head/rice_hat/cursed,
 /turf/open/floor/plating,
 /area/awaymission/jungleresort)
 "qr" = (
@@ -1254,6 +1291,15 @@
 "ti" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
+/area/awaymission/jungleresort)
+"tm" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 9
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/turf/open/floor/plating/dirt/jungle,
 /area/awaymission/jungleresort)
 "tn" = (
 /obj/structure/flora/rock/pile,
@@ -1478,6 +1524,15 @@
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/floor/grass,
 /area/awaymission/jungleresort)
+"vz" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 6
+	},
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 1
+	},
+/turf/open/floor/plating/dirt/jungle,
+/area/awaymission/jungleresort)
 "vK" = (
 /obj/structure/flora/ausbushes/stalkybush,
 /turf/open/floor/grass,
@@ -1496,6 +1551,10 @@
 	name = "Resort Bar"
 	},
 /turf/open/floor/wood,
+/area/awaymission/jungleresort)
+"wd" = (
+/obj/item/storage/bag/ore,
+/turf/open/floor/plating/asteroid,
 /area/awaymission/jungleresort)
 "wj" = (
 /obj/machinery/light{
@@ -1535,7 +1594,7 @@
 /area/awaymission/jungleresort)
 "ww" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/suit/hooded/wintercoat/captain,
+/obj/item/clothing/suit/hooded/wintercoat/captain/jungle,
 /turf/open/floor/carpet/blue,
 /area/awaymission/jungleresort)
 "wF" = (
@@ -1654,6 +1713,10 @@
 	dir = 9
 	},
 /turf/open/floor/grass,
+/area/awaymission/jungleresort)
+"yw" = (
+/obj/item/pickaxe/mini,
+/turf/open/floor/plating/asteroid,
 /area/awaymission/jungleresort)
 "yx" = (
 /obj/structure/flora/ausbushes/fullgrass,
@@ -1813,6 +1876,13 @@
 /obj/structure/flora/grass/jungle/b,
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/grass,
+/area/awaymission/jungleresort)
+"Ad" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/turf/open/floor/plating/dirt/jungle,
 /area/awaymission/jungleresort)
 "Ag" = (
 /obj/machinery/door/airlock/wood{
@@ -2016,6 +2086,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/structure/window/reinforced,
 /turf/open/floor/carpet,
 /area/awaymission/jungleresort)
 "CV" = (
@@ -2329,6 +2400,9 @@
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 9
 	},
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 1
+	},
 /turf/open/floor/plating/dirt/jungle,
 /area/awaymission/jungleresort)
 "GN" = (
@@ -2367,6 +2441,10 @@
 	dir = 9
 	},
 /turf/open/floor/grass,
+/area/awaymission/jungleresort)
+"Hr" = (
+/obj/structure/stone_tile/surrounding/cracked,
+/turf/open/floor/plating/dirt/jungle,
 /area/awaymission/jungleresort)
 "Hs" = (
 /obj/structure/flora/ausbushes/stalkybush,
@@ -2408,6 +2486,10 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
+/turf/open/floor/grass,
+/area/awaymission/jungleresort)
+"HT" = (
+/mob/living/simple_animal/hostile/gorilla/jungle,
 /turf/open/floor/grass,
 /area/awaymission/jungleresort)
 "Ih" = (
@@ -2897,6 +2979,15 @@
 /obj/item/storage/book/bible,
 /turf/open/floor/carpet,
 /area/awaymission/jungleresort)
+"ON" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/remains/human,
+/obj/structure/stone_tile/burnt,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/turf/open/floor/plating/dirt/jungle,
+/area/awaymission/jungleresort)
 "OU" = (
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/floor/grass,
@@ -3030,7 +3121,7 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 8
 	},
-/obj/structure/stone_tile/surrounding/cracked,
+/obj/structure/stone_tile/center/burnt,
 /turf/open/floor/plating/dirt/jungle,
 /area/awaymission/jungleresort)
 "QA" = (
@@ -3091,6 +3182,7 @@
 /obj/item/stack/sheet/mineral/uranium,
 /obj/item/stack/sheet/mineral/uranium,
 /obj/item/clothing/glasses/meson/engine,
+/obj/item/storage/belt/utility,
 /turf/open/floor/plating,
 /area/awaymission/jungleresort)
 "Rm" = (
@@ -3224,11 +3316,8 @@
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/stone_tile/surrounding/cracked,
-/obj/item/gun/ballistic/shotgun/sc_pump,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/head/helmet,
-/obj/item/ammo_casing/shotgun/buckshot,
-/obj/item/ammo_casing/shotgun/buckshot,
 /turf/open/floor/plating/dirt/jungle,
 /area/awaymission/jungleresort)
 "SV" = (
@@ -3246,6 +3335,7 @@
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 5
 	},
+/obj/structure/stone_tile/burnt,
 /turf/open/floor/plating/dirt/jungle,
 /area/awaymission/jungleresort)
 "Ta" = (
@@ -3290,6 +3380,7 @@
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 9
 	},
+/obj/structure/stone_tile/center,
 /turf/open/floor/plating/dirt/jungle,
 /area/awaymission/jungleresort)
 "TG" = (
@@ -3508,7 +3599,7 @@
 /area/awaymission/jungleresort)
 "WD" = (
 /obj/effect/decal/remains/human,
-/obj/item/clothing/head/collectable/slime,
+/obj/item/clothing/head/collectable/beret,
 /turf/open/floor/plating/rust,
 /area/awaymission/jungleresort)
 "WE" = (
@@ -3572,6 +3663,11 @@
 	dir = 1
 	},
 /turf/open/floor/plating/dirt/jungle,
+/area/awaymission/jungleresort)
+"Xu" = (
+/obj/structure/flora/junglebush/c,
+/mob/living/simple_animal/hostile/gorilla/jungle,
+/turf/open/floor/grass,
 /area/awaymission/jungleresort)
 "Xz" = (
 /turf/open/floor/carpet/red,
@@ -3639,6 +3735,7 @@
 "Ye" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/toy/figure/syndie,
+/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted,
 /turf/open/floor/carpet/red,
 /area/awaymission/jungleresort)
 "Yf" = (
@@ -3748,6 +3845,9 @@
 	dir = 8
 	},
 /obj/structure/stone_tile/surrounding_tile/burnt,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 9
+	},
 /turf/open/floor/plating/dirt/jungle,
 /area/awaymission/jungleresort)
 "ZH" = (
@@ -6362,8 +6462,8 @@ AR
 AR
 AR
 AR
-AR
 oZ
+jD
 aL
 fy
 Dr
@@ -6513,8 +6613,8 @@ AR
 AR
 AR
 AR
-AR
-AR
+oZ
+Gk
 AC
 GD
 oZ
@@ -6668,8 +6768,8 @@ AR
 oZ
 iv
 Qz
-AR
-AR
+tm
+oZ
 AR
 AR
 AR
@@ -6819,8 +6919,8 @@ AR
 oZ
 wS
 SZ
+Hr
 oZ
-AR
 AR
 AR
 AR
@@ -6967,11 +7067,11 @@ AR
 AR
 AR
 AR
-AR
-AR
-yJ
 oZ
-AR
+aL
+yJ
+TD
+oZ
 AR
 AR
 AR
@@ -7122,9 +7222,9 @@ AR
 AR
 oZ
 Yp
+az
+ON
 oZ
-AR
-AR
 AR
 AR
 AR
@@ -7166,7 +7266,7 @@ YQ
 YQ
 CN
 YQ
-YQ
+HT
 rd
 YQ
 YQ
@@ -7274,9 +7374,9 @@ AR
 AR
 oZ
 TD
+Ad
+jw
 oZ
-AR
-AR
 AR
 AR
 AR
@@ -7427,7 +7527,7 @@ AR
 oZ
 aL
 Xs
-AR
+oZ
 AR
 AR
 AR
@@ -7579,7 +7679,7 @@ AR
 AR
 oZ
 tH
-AR
+vz
 AR
 AR
 AR
@@ -8261,7 +8361,7 @@ YQ
 YQ
 MW
 CN
-AF
+lF
 Wl
 YQ
 YQ
@@ -9006,7 +9106,7 @@ YQ
 CN
 YQ
 YQ
-YQ
+HT
 Wl
 aP
 YQ
@@ -9807,7 +9907,7 @@ YQ
 YQ
 YQ
 YQ
-YQ
+HT
 YQ
 YQ
 YQ
@@ -10950,7 +11050,7 @@ YQ
 YQ
 Fz
 wH
-YQ
+HT
 YQ
 YQ
 VU
@@ -11390,9 +11490,9 @@ AR
 AR
 AR
 io
-uh
-pQ
-pQ
+VJ
+AV
+AV
 QA
 dF
 io
@@ -11544,8 +11644,8 @@ AR
 AR
 AR
 AR
-AR
-pQ
+io
+VJ
 AV
 QA
 QA
@@ -14218,7 +14318,7 @@ YQ
 cn
 ZV
 MW
-YQ
+HT
 rd
 aP
 vK
@@ -15051,7 +15151,7 @@ Wl
 YQ
 YQ
 YQ
-YQ
+HT
 rd
 YQ
 YQ
@@ -18177,8 +18277,8 @@ YQ
 YQ
 YQ
 AF
-AR
-AR
+yw
+ou
 AR
 AR
 AR
@@ -18329,9 +18429,9 @@ YQ
 YM
 Wl
 Pg
-AR
-AR
-AR
+wd
+Qp
+Qp
 AR
 AR
 AR
@@ -20699,7 +20799,7 @@ YQ
 YQ
 YQ
 MW
-rd
+cY
 Wl
 YQ
 YQ
@@ -22732,7 +22832,7 @@ AF
 ZV
 YQ
 YQ
-cn
+Xu
 YQ
 YQ
 YQ
@@ -23322,7 +23422,7 @@ YQ
 CN
 VU
 dY
-YQ
+HT
 YQ
 aP
 YQ
@@ -23577,7 +23677,7 @@ YQ
 YQ
 YQ
 vK
-YQ
+HT
 kr
 YQ
 AF

@@ -123,7 +123,9 @@
 /obj/machinery/door/firedoor/try_to_activate_door(mob/user)
 	return
 
-/obj/machinery/door/firedoor/try_to_weld(obj/item/weldingtool/W, mob/user)
+/obj/machinery/door/firedoor/try_to_weld(obj/item/W, mob/user)
+	if(!W.tool_behaviour == TOOL_WELDER)
+		return
 	if(!W.tool_start_check(user, amount=0))
 		return
 	user.visible_message("<span class='notice'>[user] starts [welded ? "unwelding" : "welding"] [src].</span>", "<span class='notice'>You start welding [src].</span>")

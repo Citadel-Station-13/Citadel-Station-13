@@ -252,7 +252,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	var/update = TRUE
 	var/update_to_assembly = FALSE
 
-	var/obj/held_item = usr.get_active_held_item()
+	var/obj/item/held_item = usr.get_active_held_item()
 
 	if(href_list["rename"])
 		rename_component(usr)
@@ -267,7 +267,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 			if(href_list["link"])
 				linked = locate(href_list["link"]) in pin.linked
 
-			if(istype(held_item, /obj/item/integrated_electronics) || istype(held_item, /obj/item/multitool))
+			if(istype(held_item, /obj/item/integrated_electronics) || held_item.tool_behaviour == TOOL_MULTITOOL)
 				pin.handle_wire(linked, held_item, href_list["act"], usr)
 			else
 				to_chat(usr, "<span class='warning'>You can't do a whole lot without the proper tools.</span>")

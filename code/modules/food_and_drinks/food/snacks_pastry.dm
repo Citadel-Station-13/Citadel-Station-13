@@ -466,6 +466,17 @@
 	foodtype = GRAIN | SUGAR
 	dunkable = TRUE
 
+/obj/item/reagent_containers/food/snacks/dogtreat
+	name = "dog treat"
+	desc = "It's a scooby-snack. Right?"
+	icon_state = "dogtreat"
+	bitesize = 1
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	filling_color = "#635444"
+	tastes = list("meat" = 1, "dough" = 1)
+	foodtype = GRAIN | MEAT
+
 /obj/item/reagent_containers/food/snacks/donkpocket
 	name = "\improper Donk-pocket"
 	desc = "The food of choice for the seasoned traitor."

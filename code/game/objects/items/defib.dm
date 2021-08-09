@@ -21,7 +21,7 @@
 	var/powered = FALSE //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
 	var/obj/item/shockpaddles/paddles
 	var/obj/item/stock_parts/cell/cell
-	var/combat = FALSE //can we revive through space suits?
+	var/combat = FALSE //if true, revive through hardsuits, allow for combat shocking, and tint paddles syndicate colors
 	var/grab_ghost = FALSE // Do we pull the ghost back into their body?
 	var/healdisk = FALSE // Does the unit have the healdisk upgrade?
 	var/pullshocksafely = FALSE // Will we shock people dragging the body?
@@ -99,8 +99,8 @@
 	. = ..()
 	if(!. && ismob(loc) && loc == usr)
 		var/mob/M = loc
-		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
-			var/obj/screen/inventory/hand/H = over_object
+		if(!M.incapacitated() && istype(over_object, /atom/movable/screen/inventory/hand))
+			var/atom/movable/screen/inventory/hand/H = over_object
 			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 /obj/item/defibrillator/attackby(obj/item/W, mob/user, params)
@@ -120,7 +120,7 @@
 			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
 			update_power()
 
-	else if(istype(W, /obj/item/screwdriver))
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(cell)
 			cell.update_icon()
 			cell.forceMove(get_turf(src))
@@ -176,7 +176,9 @@
 		A.UpdateButtonIcon()
 
 /obj/item/defibrillator/proc/make_paddles()
-	return new /obj/item/shockpaddles(src)
+	if(!combat)
+		return new /obj/item/shockpaddles(src)
+	return new /obj/item/shockpaddles/syndicate(src)
 
 /obj/item/defibrillator/equipped(mob/user, slot)
 	..()
@@ -245,6 +247,8 @@
 /obj/item/defibrillator/compact/combat
 	name = "combat defibrillator"
 	desc = "A belt-equipped blood-red defibrillator that can be rapidly deployed. Does not have the restrictions or safeties of conventional defibrillators and can revive through space suits."
+	icon_state = "defibcombat" //needs defib inhand sprites
+	item_state = "defibcombat"
 	combat = TRUE
 	safety = FALSE
 	always_emagged = TRUE
@@ -279,6 +283,7 @@
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
 	var/grab_ghost = FALSE
 	var/tlimit = DEFIB_TIME_LIMIT * 10
+	base_icon_state = "defibpaddles"
 	var/disarm_shock_time = 10
 	var/wielded = FALSE // track wielded status on item
 
@@ -352,10 +357,10 @@
 	return (OXYLOSS)
 
 /obj/item/shockpaddles/update_icon_state()
-	icon_state = "defibpaddles[wielded]"
-	item_state = "defibpaddles[wielded]"
+	icon_state = "[base_icon_state][wielded]"
+	item_state = icon_state
 	if(cooldown)
-		icon_state = "defibpaddles[wielded]_cooldown"
+		icon_state = "[base_icon_state][wielded]_cooldown"
 
 /obj/item/shockpaddles/dropped(mob/user)
 	if(!req_defib)
@@ -615,7 +620,7 @@
 					if(req_defib)
 						if(defib.healdisk)
 							H.heal_overall_damage(25, 25)
-					var/list/policies = CONFIG_GET(keyed_list/policyconfig)
+					var/list/policies = CONFIG_GET(keyed_list/policy)
 					var/timelimit = CONFIG_GET(number/defib_cmd_time_limit) * 10 //the config is in seconds, not deciseconds
 					var/late = timelimit && (tplus > timelimit)
 					var/policy = late? policies[POLICYCONFIG_ON_DEFIB_LATE] : policies[POLICYCONFIG_ON_DEFIB_INTACT]
@@ -704,8 +709,9 @@
 	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful shocks offensively."
 	combat = TRUE
 	icon = 'icons/obj/defibrillators.dmi'
-	icon_state = "defibpaddles0"
-	item_state = "defibpaddles0"
+	icon_state = "syndiepaddles0"
+	item_state = "syndiepaddles0"
+	base_icon_state = "syndiepaddles"
 	req_defib = FALSE
 
 ///////////////////////////////////////////
@@ -721,24 +727,24 @@
 
 /obj/item/disk/medical/defib_heal
 	name = "Defibrillator Healing Disk"
-	desc = "An upgrade which increases the healing power of the defibrillator"
+	desc = "An upgrade which increases the healing power of the defibrillator."
 	icon_state = "heal_disk"
 	custom_materials = list(/datum/material/iron=16000, /datum/material/glass = 18000, /datum/material/gold = 6000, /datum/material/silver = 6000)
 
 /obj/item/disk/medical/defib_shock
 	name = "Defibrillator Anti-Shock Disk"
-	desc = "A safety upgrade that guarantees only the patient will get shocked"
+	desc = "A safety upgrade that guarantees only the patient will get shocked."
 	icon_state = "zap_disk"
 	custom_materials = list(/datum/material/iron=16000, /datum/material/glass = 18000, /datum/material/gold = 6000, /datum/material/silver = 6000)
 
 /obj/item/disk/medical/defib_decay
 	name = "Defibrillator Body-Decay Extender Disk"
-	desc = "An upgrade allowing the defibrillator to work on more decayed bodies"
+	desc = "An upgrade allowing the defibrillator to work on bodies that have decayed further."
 	icon_state = "body_disk"
 	custom_materials = list(/datum/material/iron=16000, /datum/material/glass = 18000, /datum/material/gold = 16000, /datum/material/silver = 6000, /datum/material/titanium = 2000)
 
 /obj/item/disk/medical/defib_speed
 	name = "Defibrillator Fast Charge Disk"
-	desc = "An upgrade to the defibrillator capacitors, which let it charge faster"
+	desc = "An upgrade to the defibrillator capacitors, which lets it charge faster."
 	icon_state = "fast_disk"
 	custom_materials = list(/datum/material/iron=16000, /datum/material/glass = 8000, /datum/material/gold = 26000, /datum/material/silver = 26000)

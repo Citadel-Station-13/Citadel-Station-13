@@ -16,7 +16,7 @@
 /datum/export/weapon/riot_shield
 	cost = 70
 	unit_name = "flash shield"
-	export_types = list(/obj/item/assembly/flash/shield)
+	export_types = list(/obj/item/shield/riot/flash)
 
 /datum/export/weapon/tele_shield
 	cost = 100
@@ -138,7 +138,7 @@
 	export_types = list(/obj/item/gun/energy/xray)
 
 /datum/export/weapon/ioncarbine
-	cost = 200 
+	cost = 200
 	unit_name = "ion carbine"
 	export_types = list(/obj/item/gun/energy/ionrifle/carbine)
 

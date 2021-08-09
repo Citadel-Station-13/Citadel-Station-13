@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/ghost_role/abductor
 	weight = 10
 	max_occurrences = 1
-	min_players = 20
+	min_players = 30
 	gamemode_blacklist = list("nuclear","wizard","revolution","dynamic")
 
 /datum/round_event/ghost_role/abductor

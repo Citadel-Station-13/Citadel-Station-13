@@ -39,49 +39,14 @@
 	return NONE
 
 /**
- * Grabs data from a preferences datum of the specified key. This way, we don't need to define variables on the datum itself.
- */
-/datum/preferences_collection/proc/data_from_key(datum/preferences/prefs, key)
-	ASSERT(prefs)
-	return LAZYACCESS(prefs.preferences[save_key], key)
-
-/**
- * Saves data from a preferences datum to the specified key. This way, we don't need to define variables on the datum itself.
- */
-/datum/preferences_collection/proc/data_to_key(datum/preferences/prefs, key, data)
-	ASSERT(prefs)
-	LAZYSET(prefs.preferences[save_key], key, data)
-
-/**
- * Loads data from a preferences datum's global settings on disk. This MUST only be called from the preferences datum otherwise BAD THINGS WILL HAPPEN!
- */
-/datum/preferences_collection/proc/load_preferences(datum/preferences/prefs, savefile/S)
-
-/**
  * Sanitizes global settings held in memory for a preferences datum.
  */
-/datum/preferences_collection/proc/sanitize_preferences(datum/preferences/prefs)
-
-/**
- * Saves data to a preferences datum's global settings on disk. This MUST only be called from the preferences datum otherwise BAD THINGS WILL HAPPEN!
- */
-/datum/preferences_collection/proc/save_preferences(datum/preferences/prefs, savefile/S)
-
-
-/**
- * Saves data to a preferences datum's character slot on disk. This MUST only be called from the preferences datum otherwise BAD THINGS WILL HAPPEN!
- */
-/datum/preferences_collection/proc/save_character(datum/preferences/prefs, savefile/S)
+/datum/preferences_collection/proc/sanitize_global(datum/preferences/prefs)
 
 /**
  * Sanitizes character settings held in memory for a preferences datum.
  */
 /datum/preferences_collection/proc/sanitize_character(datum/preferences/prefs)
-
-/**
- * Loads data to a preferences datum's character slot on disk. This MUST only be called from the preferences datum otherwise BAD THINGS WILL HAPPEN!
- */
-/datum/preferences_collection/proc/load_character(datum/preferences/prefs, savefile/S)
 
 /**
  * Used post loading to apply settings. Usually used for global settings.

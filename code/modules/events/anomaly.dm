@@ -19,18 +19,21 @@
 		var/list/safe_area_types = typecacheof(list(
 		/area/ai_monitored/turret_protected/ai,
 		/area/ai_monitored/turret_protected/ai_upload,
-		/area/engine,
-		/area/solar,
+		/area/engineering,
+		/area/solars,
 		/area/holodeck,
-		/area/shuttle)
+		/area/shuttle,
+		/area/maintenance,
+		/area/science/test_area)
 		)
 
 		//Subtypes from the above that actually should explode.
-		var/list/unsafe_area_subtypes = typecacheof(list(/area/engine/break_room))
+		var/list/unsafe_area_subtypes = typecacheof(list(/area/engineering/break_room))
 
 		allowed_areas = make_associative(GLOB.the_station_areas) - safe_area_types + unsafe_area_subtypes
-
-	return safepick(typecache_filter_list(GLOB.sortedAreas,allowed_areas))
+	var/list/possible_areas = typecache_filter_list(GLOB.sortedAreas,allowed_areas)
+	if (length(possible_areas))
+		return pick(possible_areas)
 
 /datum/round_event/anomaly/setup()
 	impact_area = findEventArea()

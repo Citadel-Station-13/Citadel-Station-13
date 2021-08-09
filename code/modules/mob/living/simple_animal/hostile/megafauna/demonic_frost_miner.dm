@@ -26,11 +26,16 @@ Difficulty: Extremely Hard
 	speed = 20
 	move_to_delay = 20
 	ranged = TRUE
-	crusher_loot = list(/obj/effect/decal/remains/plasma, /obj/item/crusher_trophy/ice_block_talisman)
-	loot = list(/obj/effect/decal/remains/plasma)
+	crusher_loot = list(/obj/effect/decal/remains/plasma, /obj/item/crusher_trophy/ice_block_talisman, ,/obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe,
+	/obj/item/disk/design_disk/modkit_disc/bounty,/obj/item/disk/design_disk/modkit_disc/resonator_blast,/obj/item/disk/design_disk/modkit_disc/rapid_repeater)
+	loot = list(/obj/effect/decal/remains/plasma, ,/obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe,
+	/obj/item/disk/design_disk/modkit_disc/bounty,/obj/item/disk/design_disk/modkit_disc/resonator_blast,/obj/item/disk/design_disk/modkit_disc/rapid_repeater)
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
+	achievement_type = /datum/award/achievement/boss/demonic_miner_kill
+	crusher_achievement_type = /datum/award/achievement/boss/demonic_miner_crusher
+	score_achievement_type = /datum/award/score/demonic_miner_score
 	deathmessage = "falls to the ground, decaying into plasma particles."
 	deathsound = "bodyfall"
 	attack_action_types = list(/datum/action/innate/megafauna_attack/frost_orbs,
@@ -334,11 +339,11 @@ Difficulty: Extremely Hard
 	id = "ice_block_talisman"
 	duration = 25
 	status_type = STATUS_EFFECT_REFRESH
-	alert_type = /obj/screen/alert/status_effect/ice_block_talisman
+	alert_type = /atom/movable/screen/alert/status_effect/ice_block_talisman
 	/// Stored icon overlay for the hit mob, removed when effect is removed
 	var/icon/cube
 
-/obj/screen/alert/status_effect/ice_block_talisman
+/atom/movable/screen/alert/status_effect/ice_block_talisman
 	name = "Frozen Solid"
 	desc = "You're frozen inside an ice cube, and cannot move!"
 	icon_state = "frozen"

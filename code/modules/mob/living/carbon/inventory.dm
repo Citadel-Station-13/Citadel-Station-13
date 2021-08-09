@@ -104,7 +104,7 @@
 
 	return not_handled
 
-/mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE)
+/mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	. = ..() //Sets the default return value to what the parent returns.
 	if(!. || !I) //We don't want to set anything to null if the parent returned 0.
 		return
@@ -183,7 +183,7 @@
 	if(!targets)
 		return
 	for(var/mob/living/carbon/C in targets)
-		var/obj/screen/alert/give/G = C.throw_alert("[src]", /obj/screen/alert/give)
+		var/atom/movable/screen/alert/give/G = C.throw_alert("[src]", /atom/movable/screen/alert/give)
 		if(!G)
 			return
 		G.setup(C, src, receiving)

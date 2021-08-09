@@ -96,6 +96,10 @@ Class Procs:
 	flags_ricochet = RICOCHET_HARD
 	ricochet_chance_mod = 0.3
 
+	explosion_flags = EXPLOSION_FLAG_DENSITY_DEPENDENT
+	wave_explosion_block = EXPLOSION_BLOCK_MACHINE
+	wave_explosion_multiply = EXPLOSION_DAMPEN_MACHINE
+
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 
@@ -137,18 +141,22 @@ Class Procs:
 	GLOB.machines += src
 
 	if(ispath(circuit, /obj/item/circuitboard))
-		circuit = new circuit
+		circuit = new circuit(src)
 		circuit.apply_default_parts(src)
 
 	if(!speed_process && init_process)
 		START_PROCESSING(SSmachines, src)
 	else
 		START_PROCESSING(SSfastprocess, src)
-	power_change()
 	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
 
 	if (occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/LateInitialize()
+	. = ..()
+	power_change()
 
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
@@ -171,6 +179,17 @@ Class Procs:
 
 /obj/machinery/proc/process_atmos()//If you dont use process why are you here
 	return PROCESS_KILL
+
+///Called when we want to change the value of the stat variable. Holds bitflags.
+/obj/machinery/proc/set_machine_stat(new_value)
+	if(new_value == stat)
+		return
+	. = stat
+	stat = new_value
+	on_machine_stat_update(stat)
+
+/obj/machinery/proc/on_machine_stat_update(stat)
+	return
 
 /obj/machinery/emp_act(severity)
 	. = ..()
@@ -361,11 +380,11 @@ Class Procs:
 /obj/machinery/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		on_deconstruction()
-		if(component_parts && component_parts.len)
+		if(LAZYLEN(component_parts))
 			spawn_frame(disassembled)
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
-			component_parts.Cut()
+			LAZYCLEARLIST(component_parts)
 	qdel(src)
 
 /obj/machinery/proc/spawn_frame(disassembled)
@@ -379,8 +398,11 @@ Class Procs:
 	M.icon_state = "box_1"
 
 /obj/machinery/obj_break(damage_flag)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	. = ..()
+	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		stat |= BROKEN
+		SEND_SIGNAL(src, COMSIG_MACHINERY_BROKEN, damage_flag)
+		update_appearance()
 		return TRUE
 
 /obj/machinery/contents_explosion(severity, target)
@@ -519,6 +541,8 @@ Class Procs:
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/on_construction()
+	for(var/obj/I in contents)
+		I.moveToNullspace()
 	return
 
 //called on deconstruction before the final deletion
@@ -539,12 +563,17 @@ Class Procs:
 
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
+	// if(AM == occupant)
+	// 	set_occupant(null)
 	if (AM == occupant)
 		SEND_SIGNAL(src, COMSIG_MACHINE_EJECT_OCCUPANT, occupant)
 		occupant = null
+	if(AM == circuit && circuit.loc != src)
+		component_parts -= AM //TODO: make the cmp part functions use lazyX
+		circuit = null
 
-/obj/machinery/proc/adjust_item_drop_location(atom/movable/AM)	// Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
-	var/md5 = md5(AM.name)										// Oh, and it's deterministic too. A specific item will always drop from the same slot.
+/obj/machinery/proc/adjust_item_drop_location(atom/movable/AM) // Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
+	var/md5 = md5(AM.name) // Oh, and it's deterministic too. A specific item will always drop from the same slot.
 	for (var/i in 1 to 32)
 		. += hex2num(md5[i])
 	. = . % 9

@@ -70,7 +70,7 @@ while read f; do
 done < <(find . -type f -name '*.dm')
 # if grep -P '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm; then
 #     echo "changed files contains proc argument starting with 'var'"
-#     st=1 # annoy the coders instead of causing it to fail
+#     st=1
 # fi;
 if grep -i 'centcomm' code/**/*.dm; then
     echo "ERROR: Misspelling(s) of CENTCOM detected in code, please remove the extra M(s)."
@@ -90,6 +90,10 @@ if grep -ni 'nanotransen' _maps/**/*.dmm; then
 fi;
 if ls _maps/*.json | grep -P "[A-Z]"; then
     echo "Uppercase in a map json detected, these must be all lowercase."
+    st=1
+fi;
+if grep -i '/obj/effect/mapping_helpers/custom_icon' _maps/**/*.dmm; then
+    echo "Custom icon helper found. Please include dmis as standard assets instead for built-in maps."
     st=1
 fi;
 for json in _maps/*.json

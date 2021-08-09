@@ -129,7 +129,7 @@
 /datum/mutation/human/proc/get_spans()
 	return list()
 
-/mob/living/carbon/proc/update_mutations_overlay()
+/mob/living/proc/update_mutations_overlay()
 	return
 
 /mob/living/carbon/human/update_mutations_overlay()
@@ -142,13 +142,12 @@
 			if(overlays_standing[CM.layer_used])
 				mut_overlay = overlays_standing[CM.layer_used]
 			var/mutable_appearance/V = CM.get_visual_indicator()
-			if(!mut_overlay.Find(V)) //either we lack the visual indicator or we have the wrong one
-				remove_overlay(CM.layer_used)
-				for(var/mutable_appearance/MA in CM.visual_indicators[CM.type])
-					mut_overlay.Remove(MA)
-				mut_overlay |= V
-				overlays_standing[CM.layer_used] = mut_overlay
-				apply_overlay(CM.layer_used)
+			remove_overlay(CM.layer_used) //trying to find its existence defeats the point because if cut_overlays is called it doesn't bother reloading it.
+			for(var/mutable_appearance/MA in CM.visual_indicators[CM.type])
+				mut_overlay.Remove(MA)
+			mut_overlay |= V
+			overlays_standing[CM.layer_used] = mut_overlay
+			apply_overlay(CM.layer_used)
 
 /datum/mutation/human/proc/modify() //called when a genome is applied so we can properly update some stats without having to remove and reapply the mutation from someone
 	if(modified || !power || !owner)

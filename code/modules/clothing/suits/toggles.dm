@@ -4,6 +4,8 @@
 	actions_types = list(/datum/action/item_action/toggle_hood)
 	var/obj/item/clothing/head/hooded/hood
 	var/hoodtype = /obj/item/clothing/head/hooded/winterhood //so the chaplain hoodie or other hoodies can override this
+	///Alternative mode for hiding the hood, instead of storing the hood in the suit it qdels it, useful for when you deal with hooded suit with storage.
+	var/alternative_mode = FALSE
 
 /obj/item/clothing/suit/hooded/Initialize()
 	. = ..()
@@ -43,6 +45,8 @@
 		H.transferItemToLoc(hood, src, TRUE)
 		H.update_inv_wear_suit()
 	else
+		if(alternative_mode)
+			QDEL_NULL(hood)
 		hood.forceMove(src)
 	update_icon()
 
@@ -110,6 +114,9 @@
 	suit_toggle(user)
 	return TRUE
 
+/obj/item/clothing/suit/toggle/proc/on_toggle(mob/user) // override this, not suit_toggle, which does checks
+	to_chat(usr, "<span class='notice'>You toggle [src]'s [togglename].</span>")
+
 /obj/item/clothing/suit/toggle/ui_action_click()
 	suit_toggle()
 
@@ -119,7 +126,7 @@
 	if(!can_use(usr))
 		return 0
 
-	to_chat(usr, "<span class='notice'>You toggle [src]'s [togglename].</span>")
+	on_toggle(usr)
 	if(src.suittoggled)
 		src.icon_state = "[initial(icon_state)]"
 		src.suittoggled = FALSE

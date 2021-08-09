@@ -419,6 +419,15 @@
 		else
 			to_chat(user, "<span class='warning'>You need five lengths of cable to make a [G] battery!</span>")
 
+/datum/plant_gene/trait/eyes
+	name = "Oculary Mimicry"
+	/// Our googly eyes appearance.
+	var/mutable_appearance/googly
+
+/datum/plant_gene/trait/eyes/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
+	googly = mutable_appearance('icons/obj/hydroponics/harvest.dmi', "eyes")
+	googly.appearance_flags = RESET_COLOR
+	G.add_overlay(googly)
 
 /datum/plant_gene/trait/stinging
 	name = "Hypodermic Prickles"

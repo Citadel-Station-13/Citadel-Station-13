@@ -1,9 +1,9 @@
 //Almost copypaste of tend wounds, with some changes
 
 /datum/surgery/robot_healing
-	name = "Repair robotic limbs (basic)"
+	name = "Repair Robotic Limbs"
 	desc = "A surgical procedure that provides repairs and maintenance to robotic limbs. Is slightly more efficient when the patient is severely damaged."
-
+	replaced_by = /datum/surgery
 	steps = list(/datum/surgery_step/mechanic_open,
 				/datum/surgery_step/pry_off_plating,
 				/datum/surgery_step/cut_wires,
@@ -14,8 +14,28 @@
 	possible_locs = list(BODY_ZONE_CHEST)
 	requires_bodypart_type = 0 //You can do this on anyone, but it won't really be useful on people without augments.
 	ignore_clothes = TRUE
+	var/healing_step_type
 	var/antispam = FALSE
-	var/healing_step_type = /datum/surgery_step/robot_heal/basic
+
+/datum/surgery/robot_healing/basic
+	name = "Repair Robotic Limbs (Basic)"
+	replaced_by = /datum/surgery/robot_healing/upgraded
+	healing_step_type = /datum/surgery_step/robot_heal/basic
+	desc = "A surgical procedure that provides basic repairs and maintenance to a patient's robotic limbs. Heals slightly more when the patient is severely injured."
+
+/datum/surgery/robot_healing/upgraded
+	name = "Repair Robotic Limbs (Adv.)"
+	requires_tech = TRUE
+	replaced_by = /datum/surgery/robot_healing/upgraded/femto
+	healing_step_type = /datum/surgery_step/robot_heal/upgraded
+	desc = "A surgical procedure that provides advanced repairs and maintenance to a patient's robotic limbs. Heals more when the patient is severely injured."
+
+/datum/surgery/robot_healing/upgraded/femto
+	name = "Repair Robotic Limbs (Exp.)"
+	requires_tech = TRUE
+	replaced_by = null // as good as it gets
+	healing_step_type = /datum/surgery_step/robot_heal/upgraded/femto
+	desc = "A surgical procedure that provides experimental repairs and maintenance to a patient's robotic limbs. Heals considerably more when the patient is severely injured."
 
 /datum/surgery/robot_healing/New(surgery_target, surgery_location, surgery_bodypart)
 	..()
@@ -35,26 +55,21 @@
 	var/healsburn = FALSE
 	var/brutehealing = 0
 	var/burnhealing = 0
-	var/missinghpbonus = 0 //heals an extra point of damager per X missing damage of type (burn damage for burn healing, brute for brute). Smaller Number = More Healing!
+	var/missinghpbonus = 0 //heals an extra point of damage per X missing damage of type (burn damage for burn healing, brute for brute). Smaller Number = More Healing!
 
 /datum/surgery_step/robot_heal/tool_check(mob/user, obj/item/tool)
 	if(implement_type == TOOL_WELDER && !tool.tool_use_check(user, 1))
 		return FALSE
 	return TRUE
 
-/datum/surgery/robot_healing/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
-	var/possible = FALSE
+/datum/surgery/robot_healing/can_start(mob/user, mob/living/carbon/target, obj/item/tool) // hey delta? why is the check for this all the way down here
 	for(var/obj/item/bodypart/B in target.bodyparts)
 		if(B.is_robotic_limb())
-			possible = TRUE
-			break
-	if(!possible)
-		return FALSE
-	return TRUE
+			return ..()
 
 /datum/surgery_step/robot_heal/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/woundtype
-	if(implement_type  == TOOL_WELDER)
+	if(implement_type == TOOL_WELDER)
 		healsbrute = TRUE
 		healsburn = FALSE
 		woundtype = "dents"
@@ -133,3 +148,13 @@
 	brutehealing = 10
 	burnhealing = 10
 	missinghpbonus = 15
+
+/datum/surgery_step/robot_heal/upgraded
+	brutehealing = 10
+	burnhealing = 10
+	missinghpbonus = 10
+
+/datum/surgery_step/robot_heal/upgraded/femto
+	brutehealing = 10
+	burnhealing = 10
+	missinghpbonus = 5

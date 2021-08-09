@@ -52,8 +52,8 @@
 /mob/proc/update_blindness()
 	if(eye_blind) // UNCONSCIOUS or has blind trait, or has temporary blindness
 		if(stat == CONSCIOUS || stat == SOFT_CRIT)
-			throw_alert("blind", /obj/screen/alert/blind)
-		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+			throw_alert("blind", /atom/movable/screen/alert/blind)
+		overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blind)
 		// You are blind why should you be able to make out details like color, only shapes near you
 		// add_client_colour(/datum/client_colour/monochrome/blind)
 	else // CONSCIOUS no blind trait, no blindness
@@ -91,7 +91,7 @@
 	var/list/screens = list(hud_used.plane_masters["[GAME_PLANE]"], hud_used.plane_masters["[FLOOR_PLANE]"],
 							hud_used.plane_masters["[WALL_PLANE]"], hud_used.plane_masters["[ABOVE_WALL_PLANE]"])
 	for(var/A in screens)
-		var/obj/screen/plane_master/P = A
+		var/atom/movable/screen/plane_master/P = A
 		P.add_filter("blurry_eyes", 2, EYE_BLUR(clamp(eye_blurry*0.1,0.6,3)))
 
 /mob/proc/remove_eyeblur()
@@ -100,7 +100,7 @@
 	var/list/screens = list(hud_used.plane_masters["[GAME_PLANE]"], hud_used.plane_masters["[FLOOR_PLANE]"],
 							hud_used.plane_masters["[WALL_PLANE]"], hud_used.plane_masters["[ABOVE_WALL_PLANE]"])
 	for(var/A in screens)
-		var/obj/screen/plane_master/P = A
+		var/atom/movable/screen/plane_master/P = A
 		P.remove_filter("blurry_eyes")
 
 ///Adjust the drugginess of a mob

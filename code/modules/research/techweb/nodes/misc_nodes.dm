@@ -49,14 +49,6 @@
 	design_ids = list("ultra_micro_laser")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
-/datum/techweb_node/emp_super
-	id = "emp_super"
-	display_name = "Quantum Electromagnetic Technology"	//bs
-	description = "Even better electromagnetic technology."
-	prereq_ids = list("emp_adv")
-	design_ids = list("quadultra_micro_laser")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
-
 /////////////////////////Clown tech/////////////////////////
 /datum/techweb_node/clown
 	id = "clown"

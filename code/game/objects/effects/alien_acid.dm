@@ -9,6 +9,7 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = ABOVE_NORMAL_TURF_LAYER
 	var/turf/target
+	var/acid_level = 0 // Removed from obj, so it goes here now
 
 
 /obj/effect/acid/Initialize(mapload, acid_pwr, acid_amt)
@@ -42,7 +43,7 @@
 
 	for(var/obj/O in target)
 		if(prob(20) && !(resistance_flags & UNACIDABLE))
-			if(O.acid_level < acid_level*0.3)
+			if(O.acid_level() < acid_level*0.3)
 				var/acid_used = min(acid_level*0.05, 20)
 				O.acid_act(10, acid_used)
 				acid_level = max(0, acid_level - acid_used*10)

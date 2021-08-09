@@ -3,7 +3,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/space)
 "n" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/space)
 "B" = (
 /obj/item/toy/plush/borgplushie,

@@ -27,6 +27,7 @@
 		if(!is_station_level(H.z))
 			continue
 		traumatize(H)
+		announce_to_ghosts(H)
 		break
 
 /datum/round_event/brain_trauma/proc/traumatize(mob/living/carbon/human/H)

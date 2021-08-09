@@ -78,3 +78,16 @@
 	limited_stock = 1
 	cant_discount = TRUE
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/badass/gaming_cardpack
+	name = "TCG Card Operatives Bundle"
+	desc = "A bundle full of goodies required to work as a TCG Card Operative. A warm pajama, a mug of cocoa, a plushie and a two packs full of rare 2560 Core Set cards!"
+	item = /obj/item/storage/box/syndie_kit/sleepytime/cardpack
+	cost = 20
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/badass/cardpack
+	name = "TCG Nuclear Cardpack"
+	desc = "A cardpack filled with top-tier TCG cards."
+	item = /obj/item/cardpack/syndicate
+	cost = 4

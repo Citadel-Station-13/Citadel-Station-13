@@ -85,6 +85,7 @@
 	name = "trash bag of holding"
 	desc = "The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage."
 	icon_state = "bluetrashbag"
+	item_state = "bluetrashbag"
 	item_flags = NO_MAT_REDEMPTION
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 

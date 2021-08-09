@@ -14,10 +14,7 @@
 	//initialize limbs first
 	create_bodyparts()
 
-	//initialize dna. for spawned humans; overwritten by other code
-	create_dna(src)
-	randomize_human(src)
-	dna.initialize_dna()
+	setup_human_dna()
 
 	if(dna.species)
 		set_species(dna.species.type)
@@ -36,6 +33,11 @@
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, /atom.proc/clean_blood)
 	GLOB.human_list += src
 
+/mob/living/carbon/human/proc/setup_human_dna()
+	//initialize dna. for spawned humans; overwritten by other code
+	create_dna(src)
+	randomize_human(src)
+	dna.initialize_dna()
 
 /mob/living/carbon/human/ComponentInitialize()
 	. = ..()
@@ -281,11 +283,13 @@
 						dropItemToGround(pocket_item)
 						if(!usr.can_hold_items() || !usr.put_in_hands(pocket_item))
 							pocket_item.forceMove(drop_location())
+						log_combat(usr, src, "pickpocketed of item: [pocket_item]")
 				else
 					if(place_item)
 						if(place_item.mob_can_equip(src, usr, pocket_id, FALSE, TRUE))
 							usr.temporarilyRemoveItemFromInventory(place_item, TRUE)
 							equip_to_slot(place_item, pocket_id, TRUE)
+							log_combat(usr, src, "placed item [place_item] onto")
 						//do nothing otherwise
 
 				// Update strip window
@@ -293,8 +297,9 @@
 					show_inv(usr)
 			else
 				// Display a warning if the user mocks up
-				if (!strip_silence)
+				if(!strip_silence)
 					to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
+				log_combat(usr, src, "failed to [pocket_item ? "pickpocket item [pocket_item] from" : "place item [place_item] onto "]")
 
 	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY, null, FALSE))
 		// separate from first canusetopic
@@ -835,7 +840,7 @@
 		override = dna.species.override_float
 	..()
 
-/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = 0, stun = 1, distance = 0, message = 1, toxic = 0)
+/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
 	if(blood && dna?.species && (NOBLOOD in dna.species.species_traits))
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
@@ -1050,10 +1055,10 @@
 		return
 	if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))	//if we want to ignore slowdown from damage, but not from equipment
 		var/scaling = maxHealth / 100
-		var/health_deficiency = ((maxHealth / scaling) - (health / scaling) + (getStaminaLoss()*0.75))//CIT CHANGE - reduces the impact of staminaloss and makes stamina buffer influence it
+		var/health_deficiency = max(((maxHealth / scaling) - (health / scaling)), (getStaminaLoss()*0.75))
 		if(health_deficiency >= 40)
-			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, TRUE, (health_deficiency-39) / 75)
-			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, TRUE, (health_deficiency-39) / 25)
+			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, TRUE, (health_deficiency - 15) / 75)
+			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, TRUE, (health_deficiency - 15) / 25)
 		else
 			remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 			remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
@@ -1077,6 +1082,41 @@
 /mob/living/carbon/human/species/Initialize()
 	. = ..()
 	set_species(race)
+
+/**
+ * # `spec_trait_examine_font()`
+ *
+ * This gets a humanoid's special examine font, which is used to color their species name during examine / health analyzing.
+ * The first of these that applies is returned.
+ * Returns:
+ * * Metallic font if robotic
+ * * Cyan if a toxinlover
+ * * Purple if plasmaperson
+ * * Rock / Brownish if a golem
+ * * Green if none of the others apply (aka, generic organic)
+*/
+/mob/living/carbon/human/proc/spec_trait_examine_font()
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		return "<font color='#aaa9ad'>"
+	if(HAS_TRAIT(src, TRAIT_TOXINLOVER))
+		return "<font color='#00ffff'>"
+	if(isplasmaman(src))
+		return "<font color='#800080'>"
+	if(isgolem(src))
+		return "<font color='#8b4513'>"
+	return "<font color='#18d855'>"
+
+
+/mob/living/carbon/human/get_tooltip_data()
+	var/t_He = p_they(TRUE)
+	var/t_is = p_are()
+	. = list()
+	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
+	if(skipface || get_visible_name() == "Unknown")
+		. += "You can't make out what species they are."
+	else
+		. += "[t_He] [t_is] a [spec_trait_examine_font()][dna.custom_species ? dna.custom_species : dna.species.name]</font>"
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, usr, .)
 
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor

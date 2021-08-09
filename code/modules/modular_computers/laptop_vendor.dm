@@ -100,7 +100,7 @@
 		if(dev_apc_recharger)
 			total_price += 399
 			if(fabricate)
-				fabricated_laptop.install_component(new /obj/item/computer_hardware/recharger/APC)
+				fabricated_laptop.install_component(new /obj/item/computer_hardware/recharger/apc_recharger)
 		if(dev_printer)
 			total_price += 99
 			if(fabricate)
@@ -169,8 +169,9 @@
 
 
 /obj/machinery/lapvend/ui_act(action, params)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
 
 	switch(action)
 		if("pick_device")

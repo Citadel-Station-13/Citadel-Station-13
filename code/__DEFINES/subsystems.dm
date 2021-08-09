@@ -108,7 +108,7 @@
 #define INIT_ORDER_SOUNDS			83
 #define INIT_ORDER_INSTRUMENTS		82
 #define INIT_ORDER_VIS				80
-// #define INIT_ORDER_ACHIEVEMENTS		77
+#define INIT_ORDER_ACHIEVEMENTS		77
 #define INIT_ORDER_RESEARCH			75
 #define INIT_ORDER_EVENTS			70
 #define INIT_ORDER_JOBS				65
@@ -152,6 +152,7 @@
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 
 #define FIRE_PRIORITY_VORE			5
+#define FIRE_PRIORITY_ACTIVITY		10
 #define FIRE_PRIORITY_IDLE_NPC		10
 #define FIRE_PRIORITY_SERVER_MAINT	10
 #define FIRE_PRIORITY_RESEARCH		10
@@ -179,10 +180,12 @@
 #define FIRE_PRIORITY_PROJECTILES	200
 #define FIRE_PRIORITY_TICKER		200
 #define FIRE_PRIORITY_ATMOS_ADJACENCY	300
+#define FIRE_PRIORITY_EXPLOSIONS	350
 #define FIRE_PRIORITY_STATPANEL		390
 #define FIRE_PRIORITY_CHAT			400
 #define FIRE_PRIORITY_RUNECHAT		410
 #define FIRE_PRIORITY_OVERLAYS		500
+#define FIRE_PRIORITY_CALLBACKS		600
 // #define FIRE_PRIORITY_EXPLOSIONS	666
 #define FIRE_PRIORITY_TIMER			700
 #define FIRE_PRIORITY_INPUT			1000 // This must always always be the max highest priority. Player input must never be lost.
@@ -197,14 +200,34 @@
 
 #define RUNLEVELS_DEFAULT (RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME)
 
+// SSair run section
+#define SSAIR_PIPENETS 1
+#define SSAIR_ATMOSMACHINERY 2
+#define SSAIR_EXCITEDGROUPS 3
+#define SSAIR_HIGHPRESSURE 4
+#define SSAIR_HOTSPOTS 5
+#define SSAIR_TURF_CONDUCTION 6
+#define SSAIR_REBUILD_PIPENETS 7
+#define SSAIR_EQUALIZE 8
+#define SSAIR_ACTIVETURFS 9
+#define SSAIR_TURF_POST_PROCESS 10
+#define SSAIR_FINALIZE_TURFS 11
+#define SSAIR_ATMOSMACHINERY_AIR 12
+#define SSAIR_DEFERRED_AIRS 13
 
+// Subsystem delta times or tickrates, in seconds. I.e, how many seconds in between each process() call for objects being processed by that subsystem.
+// Only use these defines if you want to access some other objects processing delta_time, otherwise use the delta_time that is sent as a parameter to process()
+#define SSFLUIDS_DT (SSfluids.wait/10)
+#define SSMACHINES_DT (SSmachines.wait/10)
+#define SSMOBS_DT (SSmobs.wait/10)
+#define SSOBJ_DT (SSobj.wait/10)
 
 //! ## Overlays subsystem
 
 ///Compile all the overlays for an atom from the cache lists
 // |= on overlays is not actually guaranteed to not add same appearances but we're optimistically using it anyway.
 #define COMPILE_OVERLAYS(A)\
-	if (TRUE) {\
+	do {\
 		var/list/ad = A.add_overlays;\
 		var/list/rm = A.remove_overlays;\
 		if(LAZYLEN(rm)){\
@@ -216,8 +239,7 @@
 			ad.Cut();\
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
-	}
-
+	} while(FALSE)
 
 /**
 	Create a new timer and add it to the queue.
@@ -227,14 +249,3 @@
 	* * flags flags for this timer, see: code\__DEFINES\subsystems.dm
 */
 #define addtimer(args...) _addtimer(args, file = __FILE__, line = __LINE__)
-
-// SSair run section
-#define SSAIR_PIPENETS 1
-#define SSAIR_ATMOSMACHINERY 2
-#define SSAIR_EXCITEDGROUPS 3
-#define SSAIR_HIGHPRESSURE 4
-#define SSAIR_HOTSPOTS 5
-#define SSAIR_SUPERCONDUCTIVITY 6
-#define SSAIR_REBUILD_PIPENETS 7
-#define SSAIR_EQUALIZE 8
-#define SSAIR_ACTIVETURFS 9

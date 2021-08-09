@@ -6,6 +6,7 @@
 	icon_living = "clown"
 	icon_dead = "clown_dead"
 	icon_gib = "clown_gib"
+	health_doll_icon = "clown" //if >32x32, it will use this generic. for all the huge clown mobs that subtype from this
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	turns_per_move = 5
 	response_disarm_continuous = "gently pushes aside"
@@ -44,10 +45,10 @@
 /mob/living/simple_animal/hostile/retaliate/clown/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
 		adjustBruteLoss(10)
-		throw_alert("temp", /obj/screen/alert/cold, 2)
+		throw_alert("temp", /atom/movable/screen/alert/cold, 2)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(15)
-		throw_alert("temp", /obj/screen/alert/hot, 3)
+		throw_alert("temp", /atom/movable/screen/alert/hot, 3)
 	else
 		clear_alert("temp")
 

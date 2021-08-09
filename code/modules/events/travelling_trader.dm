@@ -200,7 +200,7 @@
 	return FALSE
 
 /mob/living/carbon/human/dummy/travelling_trader/animal_hunter/give_reward(mob/giver) //the reward is actually given in a jar, because releasing it onto the station might be a bad idea
-	var/obj/item/pet_carrier/bluespace/jar = new(get_turf(src))
+	var/obj/item/pet_carrier/bluespace/single_use/jar = new(get_turf(src))
 	var/chosen_animal = pickweight(possible_rewards)
 	var/mob/living/new_animal = new chosen_animal(jar)
 	if(giver && giver.tag)

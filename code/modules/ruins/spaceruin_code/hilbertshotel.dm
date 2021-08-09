@@ -302,7 +302,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 		user.reset_perspective(parentSphere)
 		user.set_machine(src)
 		var/datum/action/peepholeCancel/PHC = new
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
 		PHC.Grant(user)
 		return TRUE
 
@@ -329,9 +329,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	icon_state = "hilbertshotel"
 	requires_power = FALSE
 	has_gravity = TRUE
-	noteleport = TRUE
-	hidden = TRUE
-	unique = FALSE
+	area_flags = NOTELEPORT | HIDDEN_AREA
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	ambientsounds = list('sound/ambience/servicebell.ogg')
 	var/roomnumber = 0
@@ -408,8 +406,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	icon_state = "hilbertshotel"
 	requires_power = FALSE
 	has_gravity = TRUE
-	noteleport = TRUE
-	hidden = TRUE
+	area_flags = NOTELEPORT | HIDDEN_AREA
 
 /obj/item/abstracthotelstorage
 	anchored = TRUE

@@ -29,7 +29,7 @@
 	descname = "Structure, Turret"
 	name = "Ocular Warden"
 	desc = "Forms an automatic short-range turret which will automatically attack nearby unrestrained non-Servants that can see it."
-	invocations = list("Guardians of Engine...", "...judge those who would harm us!")
+	invocations = list("Guardians of Engine...", "...judge those who would harm us.")
 	channel_time = 100
 	power_cost = 250
 	object_path = /obj/structure/destructible/clockwork/ocular_warden
@@ -105,7 +105,7 @@
 	descname = "Delayed Area Knockdown Glasses"
 	name = "Judicial Visor"
 	desc = "Creates a visor that can smite an area, applying Belligerent and briefly stunning. The smote area will explode after 3 seconds."
-	invocations = list("Grant me the flames of Engine!")
+	invocations = list("Grant me the flames of Engine.")
 	channel_time = 10
 	power_cost = 400
 	whispered = TRUE
@@ -124,7 +124,7 @@
 	descname = "Shield with empowerable bashes"
 	name = "Nezbere's shield"
 	desc = "Creates a shield which generates charge from blocking damage, using it to empower its bashes tremendously. It is repaired with brass, and while very durable, extremely weak to lasers and, even more so, to energy weaponry."
-	invocations = list("Shield me...", "... from the coming dark!")
+	invocations = list("Shield me...", "... from the coming dark.")
 	channel_time = 20
 	power_cost = 600 //Shouldn't be too spammable but not too hard to get either
 	whispered = TRUE
@@ -143,7 +143,7 @@
 	descname = "Summonable Armor and Weapons"
 	name = "Clockwork Armaments"
 	desc = "Allows the invoker to summon clockwork armor and a Ratvarian spear at will. The spear's attacks will generate Vitality, used for healing."
-	invocations = list("Grant me armaments...", "...from the forge of Armorer!")
+	invocations = list("Grant me armaments...", "...from the forge of Armorer.")
 	channel_time = 20
 	power_cost = 250
 	whispered = TRUE

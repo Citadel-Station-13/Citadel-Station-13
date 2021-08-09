@@ -492,7 +492,9 @@
 		playsound(user.loc,'sound/weapons/pierce.ogg', rand(10,50), 1)
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)
 		crushed_can.icon_state = icon_state
-		qdel(src)
+		M.dropItemToGround(src)
+		M.put_in_active_hand(crushed_can)
+		return qdel(src)
 	..()
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)

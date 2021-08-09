@@ -1,21 +1,21 @@
 /datum/eldritch_knowledge/base_flesh
 	name = "Principle of Hunger"
-	desc = "Inducts you into the Path of Flesh. Allows you to transmute a pool of blood with your eldritch blade into a Blade of Flesh."
-	gain_text = "Hundred's of us starved, but I.. I found the strength in my greed."
-	banned_knowledge = list(/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/final/ash_final,/datum/eldritch_knowledge/final/rust_final)
+	desc = "Inducts you into the Path of Flesh. Allows you to transmute a pool of blood with a spear into a Blade of Flesh."
+	gain_text = "Hundreds of us starved, but not me... I found strength in my greed."
+	banned_knowledge = list(/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/final/ash_final,/datum/eldritch_knowledge/final/rust_final,/datum/eldritch_knowledge/final/void_final,/datum/eldritch_knowledge/base_void)
 	next_knowledge = list(/datum/eldritch_knowledge/flesh_grasp)
-	required_atoms = list(/obj/item/melee/sickly_blade,/obj/effect/decal/cleanable/blood)
+	required_atoms = list(/obj/item/spear,/obj/effect/decal/cleanable/blood)
 	result_atoms = list(/obj/item/melee/sickly_blade/flesh)
-	cost = 1
+	cost = 0
 	route = PATH_FLESH
 
 /datum/eldritch_knowledge/flesh_ghoul
 	name = "Imperfect Ritual"
 	desc = "Allows you to resurrect the dead as voiceless dead by sacrificing them on the transmutation rune with a poppy. Voiceless dead are mute and have 50 HP. You can only have 2 at a time."
-	gain_text = "I found notes... notes of a ritual, scraps, unfinished, and yet... I still did it."
+	gain_text = "I found notes of a dark ritual, unfinished... yet still, I pushed forward."
 	cost = 1
 	required_atoms = list(/mob/living/carbon/human,/obj/item/reagent_containers/food/snacks/grown/poppy)
-	next_knowledge = list(/datum/eldritch_knowledge/flesh_mark,/datum/eldritch_knowledge/armor,/datum/eldritch_knowledge/ashen_eyes)
+	next_knowledge = list(/datum/eldritch_knowledge/flesh_mark,/datum/eldritch_knowledge/void_cloak,/datum/eldritch_knowledge/ashen_eyes)
 	route = PATH_FLESH
 	var/max_amt = 2
 	var/current_amt = 0
@@ -66,8 +66,8 @@
 
 /datum/eldritch_knowledge/flesh_grasp
 	name = "Grasp of Flesh"
-	gain_text = "'My newfound desire, it drove me to do great things,' The Priest said."
-	desc = "Empowers your Mansus Grasp to be able to create a single ghoul out of a dead player. You cannot raise the same person twice. Ghouls have only 50 HP and look like husks."
+	gain_text = "My new found desires drove me to greater and greater heights."
+	desc = "Empowers your mansus grasp to be able to create a single ghoul out of a dead person. Ghouls are only half as sturdy as a regular person and look like husks to the heathens' eyes."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/flesh_ghoul)
 	var/ghoul_amt = 4
@@ -78,8 +78,12 @@
 	. = ..()
 	if(!ishuman(target) || target == user)
 		return
+
+	if(iscarbon(target))
+		user.reagents.add_reagent(/datum/reagent/eldritch, 5)
+
 	var/mob/living/carbon/human/human_target = target
-	var/datum/status_effect/eldritch/eldritch_effect = human_target.has_status_effect(/datum/status_effect/eldritch/rust) || human_target.has_status_effect(/datum/status_effect/eldritch/ash) || human_target.has_status_effect(/datum/status_effect/eldritch/flesh)
+	var/datum/status_effect/eldritch/eldritch_effect = human_target.has_status_effect(/datum/status_effect/eldritch/rust) || human_target.has_status_effect(/datum/status_effect/eldritch/ash) || human_target.has_status_effect(/datum/status_effect/eldritch/flesh)  || human_target.has_status_effect(/datum/status_effect/eldritch/void)
 	if(eldritch_effect)
 		. = TRUE
 		eldritch_effect.on_effect()
@@ -131,25 +135,26 @@
 /datum/eldritch_knowledge/flesh_mark
 	name = "Mark of Flesh"
 	gain_text = "I saw them, the marked ones. The screams... the silence."
-	desc = "Your sickly blade now applies a mark of flesh to those cut by it. Once marked, using your Mansus Grasp upon them will cause additional bleeding from the target."
+	desc = "Your Mansus Grasp now applies the Mark of Flesh on hit. Attack the afflicted with your Sickly Blade to detonate the mark. Upon detonation, the Mark of Flesh causes additional bleeding."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/summon/raw_prophet)
-	banned_knowledge = list(/datum/eldritch_knowledge/rust_mark,/datum/eldritch_knowledge/ash_mark)
+	banned_knowledge = list(/datum/eldritch_knowledge/rust_mark,/datum/eldritch_knowledge/ash_mark,/datum/eldritch_knowledge/void_mark)
 	route = PATH_FLESH
 
-/datum/eldritch_knowledge/flesh_mark/on_eldritch_blade(target,user,proximity_flag,click_parameters)
+/datum/eldritch_knowledge/flesh_mark/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(isliving(target))
+		. = TRUE
 		var/mob/living/living_target = target
 		living_target.apply_status_effect(/datum/status_effect/eldritch/flesh)
 
 /datum/eldritch_knowledge/flesh_blade_upgrade
 	name = "Bleeding Steel"
-	gain_text = "It rained blood, that's when I understood the gravekeeper's advice."
-	desc = "Your blade will now cause additional bleeding to those hit by it."
+	gain_text = "And then, blood rained from the heavens. That's when I finally understood the Marshal's teachings."
+	desc = "Your Sickly Blade will now cause additional bleeding."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/summon/stalker)
-	banned_knowledge = list(/datum/eldritch_knowledge/ash_blade_upgrade,/datum/eldritch_knowledge/rust_blade_upgrade)
+	banned_knowledge = list(/datum/eldritch_knowledge/ash_blade_upgrade,/datum/eldritch_knowledge/rust_blade_upgrade,/datum/eldritch_knowledge/void_blade_upgrade)
 	route = PATH_FLESH
 
 /datum/eldritch_knowledge/flesh_blade_upgrade/on_eldritch_blade(target,user,proximity_flag,click_parameters)
@@ -162,18 +167,18 @@
 
 /datum/eldritch_knowledge/summon/raw_prophet
 	name = "Raw Ritual"
-	gain_text = "The uncanny man walks alone in the valley, I was able to call his aid."
-	desc = "You can now summon a Raw Prophet using eyes, a left arm, right arm and a pool of blood using a transmutation circle. Raw prophets have increased seeing range, and can see through walls. They can jaunt long distances, though they are fragile."
+	gain_text = "The Uncanny Man, who walks alone in the valley between the worlds... I was able to summon his aid."
+	desc = "You can now summon a Raw Prophet by transmutating a pair of eyes, a left arm and a pool of blood. Raw prophets have increased seeing range, as well as X-Ray vision, but they are very fragile."
 	cost = 1
-	required_atoms = list(/obj/item/organ/eyes,/obj/item/bodypart/l_arm,/obj/item/bodypart/r_arm,/obj/effect/decal/cleanable/blood)
+	required_atoms = list(/obj/item/organ/eyes,/obj/item/bodypart/l_arm,/obj/effect/decal/cleanable/blood)
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/raw_prophet
-	next_knowledge = list(/datum/eldritch_knowledge/flesh_blade_upgrade,/datum/eldritch_knowledge/spell/blood_siphon,/datum/eldritch_knowledge/curse/paralysis)
+	next_knowledge = list(/datum/eldritch_knowledge/flesh_blade_upgrade,/datum/eldritch_knowledge/rune_carver,/datum/eldritch_knowledge/curse/paralysis)
 	route = PATH_FLESH
 
 /datum/eldritch_knowledge/summon/stalker
 	name = "Lonely Ritual"
-	gain_text = "I was able to combine my greed and desires to summon an eldritch beast I have not seen before."
-	desc = "You can now summon a Stalker using a knife, a candle, a pen and a piece of paper using a transmutation circle. Stalkers possess the ability to shapeshift into various forms while assuming the vigor and powers of that form."
+	gain_text = "I was able to combine my greed and desires to summon an eldritch beast I had never seen before. An ever shapeshifting mass of flesh, it knew well my goals."
+	desc = "You can now summon a Stalker by transmutating a kitchen knife, a candle, a pen and a piece of paper. Stalkers can shapeshift into harmless animals to get close to the victim."
 	cost = 1
 	required_atoms = list(/obj/item/kitchen/knife,/obj/item/candle,/obj/item/pen,/obj/item/paper)
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/stalker
@@ -182,7 +187,7 @@
 
 /datum/eldritch_knowledge/summon/ashy
 	name = "Ashen Ritual"
-	gain_text = "I combined principle of hunger with desire of destruction. The eyeful lords have noticed me."
+	gain_text = "I combined my principle of hunger with my desire for destruction. And the Nightwatcher knew my name."
 	desc = "You can now summon an Ashen One by transmuting a pile of ash, a head and a book using a transmutation circle. They possess the ability to jaunt short distances and create a cascade of flames."
 	cost = 1
 	required_atoms = list(/obj/effect/decal/cleanable/ash,/obj/item/bodypart/head,/obj/item/book)
@@ -191,63 +196,44 @@
 
 /datum/eldritch_knowledge/summon/rusty
 	name = "Rusted Ritual"
-	gain_text = "I combined principle of hunger with desire of corruption. The rusted hills call my name."
-	desc = "You can now summon a Rust Walker transmuting a vomit pool, a head, and a book using a transmutation circle. Rust Walkers possess the ability to spread rust and can fire bolts of rust to further corrode the area."
+	gain_text = "I combined my principle of hunger with my desire for corruption. And the Rusted Hills called my name."
+	desc = "You can now summon a Rust Walker by transmuting a vomit pool, a severed head, and a book using a transmutation circle. Rust Walkers possess the ability to spread rust and can fire bolts of rust to further corrode the area."
 	cost = 1
 	required_atoms = list(/obj/effect/decal/cleanable/vomit,/obj/item/bodypart/head,/obj/item/book)
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/rust_spirit
-	next_knowledge = list(/datum/eldritch_knowledge/summon/stalker,/datum/eldritch_knowledge/spell/entropic_plume)
+	next_knowledge = list(/datum/eldritch_knowledge/spell/voidpull,/datum/eldritch_knowledge/spell/entropic_plume)
 
 /datum/eldritch_knowledge/spell/blood_siphon
 	name = "Blood Siphon"
-	gain_text = "Our blood is all the same after all, the owl told me."
-	desc = "You are granted a spell that drains some of the targets health, and returns it to you. It also has a chance to transfer any wounds you possess onto the target."
+	gain_text = "No matter the man, we bleed all the same. That's what the Marshal told me."
+	desc = "You gain a spell that drains lifeforce from your enemies to restore your own."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/pointed/blood_siphon
-	next_knowledge = list(/datum/eldritch_knowledge/summon/raw_prophet,/datum/eldritch_knowledge/spell/area_conversion)
+	next_knowledge = list(/datum/eldritch_knowledge/summon/stalker,/datum/eldritch_knowledge/spell/voidpull)
 
 /datum/eldritch_knowledge/final/flesh_final
 	name = "Priest's Final Hymn"
-	gain_text = "Man of this world. Hear me! For the time of the lord of arms has come!"
-	desc = "Bring three corpses to a transmutation rune to either ascend as The Lord of the Night or summon a single Terror of the Night, however you cannot ascend more than once."
+	gain_text = "Men of this world. Hear me, for the time of the Lord of Arms has come! The Emperor of Flesh guides my army!"
+	desc = "Bring 3 bodies onto a transmutation rune to shed your human form and ascend to untold power."
 	required_atoms = list(/mob/living/carbon/human)
 	cost = 5
+	sacs_needed = 8
 	route = PATH_FLESH
 
 /datum/eldritch_knowledge/final/flesh_final/on_finished_recipe(mob/living/user, list/atoms, loc)
-	var/alert_ = alert(user,"Do you want to ascend as the lord of the night or just summon a terror of the night?","...","Yes","No")
-	user.SetImmobilized(10 HOURS) // no way someone will stand 10 hours in a spot, just so he can move while the alert is still showing.
-	switch(alert_)
-		if("No")
-			var/mob/living/summoned = new /mob/living/simple_animal/hostile/eldritch/armsy(loc)
-			message_admins("[summoned.name] is being summoned by [user.real_name] in [loc]")
-			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [summoned.real_name]", ROLE_HERETIC, null, ROLE_HERETIC, 100,summoned)
-			user.SetImmobilized(0)
-			if(LAZYLEN(candidates) == 0)
-				to_chat(user,"<span class='warning'>No ghost could be found...</span>")
-				qdel(summoned)
-				return FALSE
-			var/mob/dead/observer/ghost_candidate = pick(candidates)
-			priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the dark, for vassal of arms has ascended! Terror of the night has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/announcer/classic/spanomalies.ogg')
-			log_game("[key_name_admin(ghost_candidate)] has taken control of ([key_name_admin(summoned)]).")
-			summoned.ghostize(FALSE)
-			summoned.key = ghost_candidate.key
-			summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
-			var/datum/antagonist/heretic_monster/monster = summoned.mind.has_antag_datum(/datum/antagonist/heretic_monster)
-			var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
-			monster.set_owner(master)
-			master.ascended = TRUE
-		if("Yes")
-			var/mob/living/summoned = new /mob/living/simple_animal/hostile/eldritch/armsy/prime(loc,TRUE,10)
-			summoned.ghostize(0)
-			user.SetImmobilized(0)
-			priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the dark, for king of arms has ascended! Lord of the night has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/announcer/classic/spanomalies.ogg')
-			log_game("[user.real_name] ascended as [summoned.real_name]")
-			var/mob/living/carbon/carbon_user = user
-			var/datum/antagonist/heretic/ascension = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)
-			ascension.ascended = TRUE
-			carbon_user.mind.transfer_to(summoned, TRUE)
-			carbon_user.gib()
+	. = ..()
+	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Ever coiling vortex. Reality unfolded. THE LORD OF ARMS, [user.real_name] has ascended! Fear the ever twisting hand! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/announcer/classic/spanomalies.ogg')
+	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shed_human_form)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	H.physiology.brute_mod *= 0.5
+	H.physiology.burn_mod *= 0.5
+	var/datum/antagonist/heretic/heretic = user.mind.has_antag_datum(/datum/antagonist/heretic)
+	var/datum/eldritch_knowledge/flesh_grasp/ghoul1 = heretic.get_knowledge(/datum/eldritch_knowledge/flesh_grasp)
+	ghoul1.ghoul_amt *= 3
+	var/datum/eldritch_knowledge/flesh_ghoul/ghoul2 = heretic.get_knowledge(/datum/eldritch_knowledge/flesh_ghoul)
+	ghoul2.max_amt *= 3
 
 	return ..()
 
@@ -272,6 +258,11 @@
 	gain_text = "The ignorant mind that inhabits their feeble bodies will crumble when they acknowledge - willingly or not, the truth."
 	desc = "By forcing the knowledge of the Mansus upon my foes, I can show them things that would drive any normal man insane."
 	cost = 2
+	sacs_needed = 3
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/mad_touch
 	next_knowledge = list(/datum/eldritch_knowledge/final/flesh_final)
 	route = PATH_FLESH
+
+/datum/eldritch_knowledge/spell/touch_of_madness/on_gain(mob/user)
+	. = ..()
+	priority_announce("The stench of rotting flesh fills the air... An approaching abomination has been detected!", sound = 'sound/misc/notice1.ogg')

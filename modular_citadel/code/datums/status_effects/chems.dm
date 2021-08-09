@@ -500,12 +500,18 @@
 			else if (lowertext(customTriggers[trigger]) == "shock")
 				if (lewd && ishuman(C))
 					var/mob/living/carbon/human/H = C
-					H.adjust_arousal(5)
+					H.adjust_arousal(5, "MKUltra", aphro = TRUE)
 				C.jitteriness += 100
 				C.stuttering += 25
 				C.DefaultCombatKnockdown(60)
 				C.Stun(60)
 				to_chat(owner, "<span class='warning'><i>Your muscles seize up, then start spasming wildy!</i></span>")
+
+			else if (lewd && lowertext(customTriggers[trigger]) == "cum")//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+				if(ishuman(C))
+					var/mob/living/carbon/human/H = C
+					H.mob_climax(forced_climax=TRUE, cause = "MKUltra")
+				C.SetStun(10)//We got your stun effects in somewhere, Kev.
 
 			//kneel (knockdown)
 			else if (lowertext(customTriggers[trigger]) == "kneel")//as close to kneeling as you can get, I suppose.
@@ -588,6 +594,15 @@
 		deltaResist *= 1.25
 	if (owner.reagents.has_reagent(/datum/reagent/medicine/neurine))
 		deltaResist *= 1.5
+	if (!(owner.client?.prefs.cit_toggles & NO_APHRO) && lewd)
+		if (owner.reagents.has_reagent(/datum/reagent/drug/anaphrodisiac))
+			deltaResist *= 1.5
+		if (owner.reagents.has_reagent(/datum/reagent/drug/anaphrodisiacplus))
+			deltaResist *= 2
+		if (owner.reagents.has_reagent(/datum/reagent/drug/aphrodisiac))
+			deltaResist *= 0.75
+		if (owner.reagents.has_reagent(/datum/reagent/drug/aphrodisiacplus))
+			deltaResist *= 0.5
 	//Antag resistance
 	//cultists are already brainwashed by their god
 	if(iscultist(owner))

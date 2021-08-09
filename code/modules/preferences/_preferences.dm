@@ -16,8 +16,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// Currently loaded character
 	var/loaded_slot
 
-	/// Variable store for the actual preference collections. list(save_key = list(var1 = val1, ...), ...)
-	var/list/preferences
+	/// Current slot: Variable store for the actual preference collections. list(save_key = list(var1 = val1, ...), ...)
+	var/list/character_preferences
+	/// Global settings: Variable store for the actual preference collections. list(save_key = list(var1 = val1, ...), ...)
+	var/list/global_preferences
 
 	// Key bindings are stored directly for performance
 	/// Custom Keybindings
@@ -80,20 +82,40 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /**
  * Directly sets to in-memory stores for a certain collection of a save key
  */
-/datum/preferences/proc/set_data(save_key, key, data)
-	LAZYSET(preferences[save_key], key, data)
+/datum/preferences/proc/SetKeyCharacter(save_key, key, data)
+	LAZYSET(character_preferences[save_key], key, data)
 
 /**
  * Directly reads from in-memory stores for a certain collection of a save key
  */
-/datum/preferences/proc/load_data(save_key, key)
-	return LAZYACCESS(preferences[save_key], key)
+/datum/preferences/proc/LoadKeyCharacter(save_key, key)
+	return LAZYACCESS(character_preferences[save_key], key)
 
 /**
  * Directly reads from in-memory stores for a certain collection of a save key. Returns default if null.
  */
-/datum/preferences/proc/load_data_or_default(save_key, key, default)
-	. = LAZYACCESS(preferences[save_key], key)
+/datum/preferences/proc/LoadKeyOrDefaultCharacter(save_key, key, default)
+	. = LAZYACCESS(character_preferences[save_key], key)
+	if(isnull(.))
+		return default
+
+/**
+ * Directly sets to in-memory stores for a certain collection of a save key
+ */
+/datum/preferences/proc/SetKeyGlobal(save_key, key, data)
+	LAZYSET(global_preferences[save_key], key, data)
+
+/**
+ * Directly reads from in-memory stores for a certain collection of a save key
+ */
+/datum/preferences/proc/LoadKeyGlobal(save_key, key)
+	return LAZYACCESS(global_preferences[save_key], key)
+
+/**
+ * Directly reads from in-memory stores for a certain collection of a save key. Returns default if null.
+ */
+/datum/preferences/proc/LoadKeyOrDefaultGlobal(save_key, key, default)
+	. = LAZYACCESS(global_preferences[save_key], key)
 	if(isnull(.))
 		return default
 
@@ -149,7 +171,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	for(var/i in SScharacter_setup.collections)
 		var/datum/preferences_collection/C = i
 		C.sanitize_character(src)
-		C.save_character(src, S)
+	#warn serialize character_data to disk
 
 /**
  * Loads character
@@ -167,8 +189,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		S["version"] << SAVEFILE_VERSION_MAX
 		for(var/i in SScharacter_setup.collections)
 			C.on_full_character_reset(src)
-			C.sanitize_character(src)
-			C.save_character(src, S)
+		save_character(S)
 		return
 	else if(version < SAVEFILE_VERSION_MAX)
 		// handle migrations
@@ -177,10 +198,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			C.handle_character_migration(src, S, errors, version)
 		S["version"] << SAVEFILE_VERSION_MAX
 	// Load
+	#warn deserialize character_data from disk
 	for(var/i in SScharacter_setup.collections)
 		var/datum/preferences_collection/C = i
-		C.load_character(src, S)
-		// Sanitize
 		C.sanitize_character(src)
 	// If the player selected the slot, choose it properly and save metadata
 	if(select_slot)
@@ -194,8 +214,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	S.cd = "/global"
 	for(var/i in SScharacter_setup.collections)
 		var/datum/preferences_collection/C = i
-		C.sanitize_preferences(src)
-		C.save_preferences(src, S)
+		C.sanitize_global(src)
+	#warn serialize global_preferences to disk
 
 /**
  * Loads global settings
@@ -219,10 +239,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			C.handle_global_migration(src, S, errors, version)
 		S["version"] << SAVEFILE_VERSION_MAX
 	// Load
+	#warn deserialize global_preferences from disk
 	for(var/i in SScharacter_setup.collections)
 		var/datum/preferences_collection/C = i
-		C.load_preferences(src, S)
-		// Sanitize
 		C.sanitize_preferences(src)
 
 /datum/preferences/vv_edit_var(var_name, var_value)

@@ -144,7 +144,7 @@
 		to_chat(L, "<span class='heavy_brass'>\"You belong to me now.\"</span>")
 		if(!GLOB.application_scripture_unlocked)
 			GLOB.application_scripture_unlocked = TRUE
-			hierophant_message("<span class='large_brass bold'>With the conversion of a new servant the Ark's power grows. Application scriptures are now available.</span>")
+			hierophant_message("<span class='large_brass bold'>With the conversion of a new servant the Hierophant Network's power grows. Application scriptures are now available.</span>")
 	if(add_servant_of_ratvar(L))
 		L.log_message("conversion was done with a [sigil_name]", LOG_ATTACK, color="BE8700")
 		if(iscarbon(L))
@@ -225,18 +225,22 @@
 	return ..()
 
 /obj/effect/clockwork/sigil/transmission/process()
-    var/power_drained = 0
-    var/power_mod = 0.005
-    for(var/t in spiral_range_turfs(SIGIL_ACCESS_RANGE, src))
-        var/turf/T = t
-        for(var/M in T)
-            var/atom/movable/A = M
-            power_drained += A.power_drain(TRUE)
+	do_process()
 
-        CHECK_TICK
+/obj/effect/clockwork/sigil/transmission/proc/do_process()
+	set waitfor = FALSE
+	var/power_drained = 0
+	var/power_mod = 0.005
+	for(var/t in spiral_range_turfs(SIGIL_ACCESS_RANGE, src))
+		var/turf/T = t
+		for(var/M in T)
+			var/atom/movable/A = M
+			power_drained += A.power_drain(TRUE)
 
-    adjust_clockwork_power(power_drained * power_mod * 15)
-    new /obj/effect/temp_visual/ratvar/sigil/transmission(loc, 1 + (power_drained * 0.0035))
+		CHECK_TICK
+
+	adjust_clockwork_power(power_drained * power_mod * 15)
+	new /obj/effect/temp_visual/ratvar/sigil/transmission(loc, 1 + (power_drained * 0.0035))
 
 /obj/effect/clockwork/sigil/transmission/proc/charge_cyborg(mob/living/silicon/robot/cyborg)
 	if(!cyborg_checks(cyborg))

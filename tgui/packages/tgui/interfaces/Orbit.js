@@ -165,7 +165,7 @@ export const Orbit = (props, context) => {
           </Flex>
         </Section>
         {antagonists.length > 0 && (
-          <Section title="Ghost-Visible Antagonists">
+          <Section title="Visible Antagonists">
             {sortedAntagonists.map(([name, antags]) => (
               <Section key={name} title={name} level={2}>
                 {antags
@@ -195,11 +195,17 @@ export const Orbit = (props, context) => {
             ))}
         </Section>
 
-        <BasicSection
-          title={`Ghosts - (${ghosts.length})`}
-          source={ghosts}
-          searchText={searchText}
-        />
+        <Section title={`Ghosts - (${ghosts.length})`}>
+          {ghosts
+            .filter(searchFor(searchText))
+            .sort(compareNumberedText)
+            .map(thing => (
+              <OrbitedButton
+                key={thing.name}
+                color="grey"
+                thing={thing} />
+            ))}
+        </Section>
 
         <BasicSection
           title="Dead"
