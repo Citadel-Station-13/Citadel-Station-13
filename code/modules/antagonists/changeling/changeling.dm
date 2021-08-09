@@ -305,7 +305,7 @@
 	prof.profile_snapshot = entry
 
 	for(var/slot in GLOB.slots)
-		if(istype(H.vars[slot], GLOB.slot2type[slot]))
+		if(slot in H.vars)
 			var/obj/item/I = H.vars[slot]
 			if(!I)
 				continue
