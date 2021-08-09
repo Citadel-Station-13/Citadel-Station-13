@@ -245,7 +245,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		C.sanitize_preferences(src)
 
 /datum/preferences/vv_edit_var(var_name, var_value)
-	if((var_name == NAMEOF(src, ckey) || (var_name == NAMEOF(src, savefile_path))
+	if((var_name == NAMEOF(src, ckey)) || (var_name == NAMEOF(src, savefile_path)))
 		return			// OH NO NO NO NO NO NO.
 	. = ..()
 

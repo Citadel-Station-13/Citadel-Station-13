@@ -1,6 +1,14 @@
 /**
  * Preferences collection datums
  * A global copy of these exist so we don't need to instantiate them for every player
+ *
+ * NOTE ON CROSS-SAVES:
+ * Please be reasonable regarding naming.
+ * Like, for example, for a character data key for name, just.. put "name"
+ * Don't put something ridiculous like "c_name", etc
+ * Simple is best
+ * Prefer IDs over typepaths
+ * It'll make integration of crosssave functionality between our two servers much easier later.
  */
 /datum/preferences_collection
 	/// Name
@@ -36,6 +44,12 @@
 	if(returned & PREFERENCES_ONTOPIC_REGENERATE_PREVIEW)
 		#warn implement preview regeneration
 
+/datum/preferences_collection/proc/generate_topic(datum/preferences/prefs, text, key)
+	return "<a href='?src=[REF(src)];[key]=1;parent=[REF(prefs)]'>[text]</a>"
+
+/datum/preferences_collection/proc/generate_topic_key_value(datum/preferences/prefs, text, key, value)
+	return "<a href='?src=[REF(src)];[key]=[value];parent=[REF(prefs)]'>[text]</a>"
+
 /**
  * Handles topic.
  * Returns flags - check __DEFINES/preferences.dm
@@ -52,7 +66,7 @@
 /**
  * Loads data from a preferences datum
  */
-/datum/preferences_collection/proc/LoadKey(datum/preferences/prefs, key, value)
+/datum/preferences_collection/proc/LoadKey(datum/preferences/prefs, key)
 	CRASH("Base LoadKey() called on preferences_collection")
 
 /**
@@ -84,18 +98,6 @@
  * visuals_only - If true, we just need a visual render, don't do anything fancy.
  */
 /datum/preferences_collection/proc/copy_to_mob(datum/preferences/prefs, mob/M, visuals_only = FALSE)
-
-/**
- * Used to export crosssave data.
- */
-/datum/preferences_collection/proc/json_export(datum/preferences/prefs, list/json_list)
-
-/**
- * Used to import crosssave data.
- * WARNING: USER JSON DATA SHOULD NEVER BE TRUSTED. This should ONLY be ran from /datum/preferences,
- * where it is ensured that sanitization will be used right after loading!
- */
-/datum/preferences_collection/proc/json_import(datum/preferences/prefs, list/json_list)
 
 /**
  * Handles global migrations during loading. Must only be called from preferences datum. Should write DIRECTLY to datalist.

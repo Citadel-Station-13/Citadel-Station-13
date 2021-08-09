@@ -1,0 +1,1 @@
+/datum/preferences_collection
