@@ -24,6 +24,6 @@
 // removes a single item from render_data, removes its overlay if necessary
 /datum/appearance/proc/remove_data(var/index, attempt_remove = TRUE)
 	if(render_data[index])
-		render_data.Remove(render_data[index])
 		if(attempt_remove)
 			owner.cut_overlay(render_data[index])
+		. = render_data.Remove(index)
