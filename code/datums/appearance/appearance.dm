@@ -9,9 +9,13 @@
 
 // renders every overlay in render_data after first attempting to remove it if necessary
 /datum/appearance/proc/render(attempt_cut = TRUE)
+	// convert render data into a format byond prefers if using associations
+	var/list/true_render_data = list()
+	for(var/data in render_data)
+		true_render_data += render_data[data]
 	if(attempt_cut)
-		owner.cut_overlay(render_data)
-	owner.add_overlay(render_data)
+		owner.cut_overlay(true_render_data)
+	owner.add_overlay(true_render_data)
 
 // adds a single item to render_data, adds its overlay if necessary
 /datum/appearance/proc/add_data(var/data_to_add, var/index, attempt_add = TRUE)
@@ -26,4 +30,6 @@
 	if(render_data[index])
 		if(attempt_remove)
 			owner.cut_overlay(render_data[index])
+		if(istype(owner, /mob/living/carbon/human/dummy))
+			message_admins("dummy found removing [render_data[index]]")
 		. = render_data.Remove(index)

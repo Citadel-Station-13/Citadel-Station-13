@@ -4,5 +4,5 @@
 
 /datum/appearance/full/render()
 	owner.cut_overlays()
-	for(var/datum/appearance/appearance in appearance_list)
-		appearance.render() // technically a full appearance can be made from other full appearances but this shouldn't be done out of good practice
+	for(var/item in appearance_list)
+		appearance_list[item].render() // technically a full appearance can be made from other full appearances but this shouldn't be done out of good practice

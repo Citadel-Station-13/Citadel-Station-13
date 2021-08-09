@@ -4,7 +4,7 @@
 	for(var/obj/item/bodypart/bodypart in bodyparts)
 		// get_limb_icon returns a list of images for the limb and its markings if applicable
 		// the argument is for if the limb is dismembered or not
-		limb_appearances += bodypart.get_limb_icon(FALSE)
+		limb_appearances[num2text(bodypart.body_part)] = bodypart.get_limb_icon(FALSE)
 
 	return limb_appearances
 
@@ -13,5 +13,5 @@
 	full_appearance = new /datum/appearance/full(src)
 	var/datum/appearance/limbs_appearance = new(src)
 	limbs_appearance.render_data = get_limb_appearance()
-	full_appearance.appearance_list = list(limbs_appearance)
+	full_appearance.appearance_list = list(BODYPART_APPEARANCE = limbs_appearance)
 	full_appearance.render()

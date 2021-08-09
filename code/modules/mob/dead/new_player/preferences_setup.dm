@@ -48,12 +48,15 @@
 
 	if(current_tab == LOADOUT_TAB)
 		//give it its loadout if not on the appearance tab
+		message_admins("attempt to add loadout to dummy")
 		SSjob.equip_loadout(parent.mob, mannequin, FALSE, bypass_prereqs = TRUE, can_drop = FALSE)
+		message_admins("finish adding loadout to dummy")
 	else
 		if(previewJob && equip_job)
 			mannequin.job = previewJob.title
 			previewJob.equip(mannequin, TRUE, preference_source = parent)
 
+	message_admins("regenerating icons of dummy")
 	mannequin.regenerate_icons()
 
 	COMPILE_OVERLAYS(mannequin)
