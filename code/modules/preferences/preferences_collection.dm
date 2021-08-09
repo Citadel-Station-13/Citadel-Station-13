@@ -7,6 +7,9 @@
 	var/sort_order = PREFERENCE_SORT_ORDER_DEFAULT
 	/// Save key. This should NEVER BE MODIFIED WITHOUT A MIGRATION! See _preferences.dm for how this works.
 	var/save_key = PREFERENCES_SAVE_KEY_DEFAULT
+	/// Preferences type - Character, hybrid, or global
+	/// Coontrols rendering/ordering. The actual save load, however, is agnostic - a proc must be overridden.
+	var/collection_type = COLLECTION_GLOBAL
 
 /**
  * Renders HTML content
@@ -39,6 +42,26 @@
 	return NONE
 
 /**
+ * Saves data to a preferences datum
+ */
+/datum/preferences_collection/proc/SaveKey(datum/preferences/prefs, key, value)
+	CRASH("Base SaveKey() called on preferences_collection")
+
+/**
+ * Loads data from a preferences datum
+ */
+/datum/preferences_collection/proc/LoadKey(datum/preferences/prefs, key, value)
+	CRASH("Base LoadKey() called on preferences_collection")
+
+/**
+ * Loads or defaults data
+ */
+/datum/preferences/collection/proc/LoadOrDefault(datum/preferences/prefs, key, value, default)
+	. = LoadKey(prefs, key, value)
+	if(isnull(.))
+		return default
+
+/**
  * Sanitizes global settings held in memory for a preferences datum.
  */
 /datum/preferences_collection/proc/sanitize_global(datum/preferences/prefs)
@@ -56,8 +79,9 @@
 /**
  * Applies settings to a character when a mob is being made for a player on joining the round
  * MOB IS NOT NECESSARILY HUMAN! Always check type first.
+ * visuals_only - If true, we just need a visual render, don't do anything fancy.
  */
-/datum/preferences_collection/proc/copy_to_mob(datum/preferences/prefs, mob/M)
+/datum/preferences_collection/proc/copy_to_mob(datum/preferences/prefs, mob/M, visuals_only = FALSE)
 
 /**
  * Used to export crosssave data.
@@ -72,14 +96,16 @@
 /datum/preferences_collection/proc/json_import(datum/preferences/prefs, list/json_list)
 
 /**
- * Handles global migrations during loading. Must only be called from preferences datum. Should write DIRECTLY to savefile.
+ * Handles global migrations during loading. Must only be called from preferences datum. Should write DIRECTLY to datalist.
+ * Savefile is also provided in cases where data isn't in the datalist for this key.
  */
-/datum/preferences_collection/proc/handle_global_migration(datum/preferences/prefs, savefile/S, list/errors = list(), current_version)
+/datum/preferences_collection/proc/handle_global_migration(datum/preferences/prefs, list/data, savefile/S, list/errors = list(), current_version)
 
 /**
- * Handles character slot migrations during loading. Must only be called from preferences datum. should write DIRECTLY to savefile.
+ * Handles character slot migrations during loading. Must only be called from preferences datum. should write DIRECTLY to datalist.
+ * Savefile is also provided in cases where data isn't in the datalist for this key.
  */
-/datum/preferences_collection/proc/handle_character_migration(datum/preferences/prefs, savefile/S, list/errors = list(), current_version)
+/datum/preferences_collection/proc/handle_character_migration(datum/preferences/prefs, list/data, savefile/S, list/errors = list(), current_version)
 
 /**
  * Called on full reset due to unreadable data or other reasons

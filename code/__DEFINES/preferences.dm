@@ -13,6 +13,11 @@
 /// Metadata - used by preferences datum to store things like versioning.
 #define PREFERENCES_SAVE_KEY_METADATA			"metadata"
 
+// Preferences collection types
+#define COLLECTION_CHARACTER			1
+#define COLLECtion_HYBRID				2
+#define COLLECTION_GLOBAL				3
+
 // Collection OnTopic return flags
 /// Refresh view
 #define PREFERENCES_ONTOPIC_REFRESH					(1<<0)

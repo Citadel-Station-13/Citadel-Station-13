@@ -2,7 +2,6 @@
 
 /datum/preferences/proc/render_character_select(mob/user = parent?.mob)
 	ASSERT(user)
-	var/datum/browser/popup = new(user, PREFERNECES_SKIN_CHARACTER_SELECT, "Character Select")
 	var/savefile/S = new savefile(savefile_path)
 	var/list/charnames = list()
 	for(var/i in 1 to CONFIG_GET(number/max_save_slots))
@@ -28,6 +27,7 @@
 						dat += "<a style='white-space:nowrap;' href='?_src_=prefs;preference=changeslot;num=[i];' [i == default_slot ? "class='linkOn'" : ""]>[name]</a> "
 					dat += "</center>"
 */
+	user << browse(content.Join(""), "window=[PREFERENCES_SKIN_CHARACTER_SELECT]")
 
 /datum/preferences/OnTopic(mob/user, list/href_list)
 	. = ..()

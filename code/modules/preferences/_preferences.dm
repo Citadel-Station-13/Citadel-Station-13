@@ -15,6 +15,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/savefile_path
 	/// Currently loaded character
 	var/loaded_slot
+	/// Selected tab
+	var/datum/preferences_collection/selected_collection
 
 	/// Current slot: Variable store for the actual preference collections. list(save_key = list(var1 = val1, ...), ...)
 	var/list/character_preferences
@@ -64,10 +66,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		S["version"] << SAVEFILE_VERSION_MAX
 	// Load preferences - This will perform migrations if needed
 	load_preferences(S, migration_errors)
-	// If needed, migrate ALL character slots
-	if(migration_needed)
-		for(var/i in 1 to CONFIG_GET(number/max_save_slots))
-			load_character(S, i, null, migration_errors)		// will perform migrations
 	// Load default slot
 	S.cd = "/metadata"
 	S["selected_slot"] >> selected_slot
@@ -195,7 +193,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		// handle migrations
 		for(var/i in SScharacter_setup.collections)
 			var/datum/preferences_collection/C = i
-			C.handle_character_migration(src, S, errors, version)
+			LAZYINITLIST(character_preferences[C.save_key])
+			C.handle_character_migration(src, character_preferences[C.save_key], S, errors, version)
 		S["version"] << SAVEFILE_VERSION_MAX
 	// Load
 	#warn deserialize character_data from disk
@@ -236,7 +235,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		// handle migrations
 		for(var/i in SScharacter_setup.collections)
 			var/datum/preferences_collection/C = i
-			C.handle_global_migration(src, S, errors, version)
+			LAZYINITLIST(global_preferences[C.save_key])
+			C.handle_global_migration(src, global_preferences[C.save_key], S, errors, version)
 		S["version"] << SAVEFILE_VERSION_MAX
 	// Load
 	#warn deserialize global_preferences from disk
@@ -248,3 +248,28 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if((var_name == NAMEOF(src, ckey) || (var_name == NAMEOF(src, savefile_path))
 		return			// OH NO NO NO NO NO NO.
 	. = ..()
+
+/**
+ * Renders the current tab.
+ */
+/datum/preferences/proc/Render(mob/user = parent?.mob)
+	ASSERT(user)
+	user.client.OpenPreferencesWindow()
+	var/list/content = list()
+	content += "<head>"
+	#warn render header/tab selection
+	content += "</head>"
+	content += "<body>"
+	if(!selected_collection)
+		content += "<center><h1>Error: No selected collection. Something broke. Select a tab above.</h1></center>"
+	else
+		content += selected_collection.content(src)
+
+	content += "</body>"
+	user << browse(content.Join(""), "window=[PREFERENCES_SKIN_MAIN]")
+
+/**
+ * Forcefully opens the character setup/preferences window.
+ */
+/client/proc/OpenPreferencesWindow()
+#warn implement
