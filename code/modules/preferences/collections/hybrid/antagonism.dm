@@ -20,14 +20,14 @@
 			. += "<br>"
 			return
 		. += "<b>Be [capitalize(i)]:</b> "
-		if(jobban_isbanned(user, i))
+		if(jobban_isbanned(prefs.client?.mob, i))
 			. += generate_topic_key_value(prefs, "<font color='red'>BANNED</font>", "jobbancheck", i)
 		else
 			var/days_remaining = null
 			if(ispath(GLOB.special_roles[i]) && CONFIG_GET(flag/use_age_restriction_for_jobs)) //If it's a game mode antag, check if the player meets the minimum age
 				var/mode_path = GLOB.special_roles[i]
 				var/datum/game_mode/temp_mode = new mode_path
-				days_remaining = temp_mode.get_remaining_days(user.client)
+				days_remaining = temp_mode.get_remaining_days(prefs.client)
 			if(days_remaining)
 				. += "<font color='red'> \[IN [days_remaining] DAYS]</font><br>"
 			else
@@ -49,10 +49,12 @@
 /datum/preferences_collection/hybrid/antagonism/sanitize_global(datum/preferences/prefs)
 	. = ..()
 	auto_sanitize_list(prefs, "be_special")
+	auto_sanitize_boolean(prefs, "midround_antagonist")
 
 /datum/preferences_collection/hybrid/antagonism/sanitize_character(datum/preferences/prefs)
 	. = ..()
 	auto_sanitize_list(prefs, "be_special")
+	auto_sanitize_boolean(prefs, "midround_antagonist")
 
 /datum/preferences_collection/hybrid/antagonism/OnTopic(mob/user, datum/preferences/prefs, list/href_list)
 	. = ..()

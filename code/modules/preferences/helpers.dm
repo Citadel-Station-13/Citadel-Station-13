@@ -7,7 +7,7 @@
 	var/datum/db_query/query_get_jobban = SSdbcore.NewQuery({"
 		SELECT reason, bantime, duration, expiration_time, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].a_ckey), a_ckey)
 		FROM [format_table_name("ban")] WHERE ckey = :ckey AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned) AND job = :job
-		"}, list("ckey" = user.ckey, "job" = job))
+		"}, list("ckey" = ckey, "job" = job))
 	if(!query_get_jobban.warn_execute())
 		qdel(query_get_jobban)
 		return

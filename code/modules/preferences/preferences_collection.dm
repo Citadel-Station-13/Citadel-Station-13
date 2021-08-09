@@ -18,7 +18,7 @@
 	/// Name
 	var/name = "ERROR"
 	/// Sort order. Lower is in front.
-	var/sort_order = PREFERENCE_SORT_ORDER_DEFAULT
+	var/sort_order = 0
 	/// Save key. This should NEVER BE MODIFIED WITHOUT A MIGRATION! See _preferences.dm for how this works.
 	var/save_key = PREFERENCES_SAVE_KEY_DEFAULT
 	/// Preferences type - Character, hybrid, or global
@@ -39,12 +39,12 @@
 	if(!istype(prefs))
 		return
 	if(prefs.parent != usr)
-		log_admin("[key_name(usr)] sent a potentially preferences setup href! Expected: [prefs.ckey], actual: [usr.ckey]")
-		message_admin("[key_name(usr)] sent a potentially preferences setup href! Expected: [prefs.ckey], actual: [usr.ckey]")
+		log_admin("[key_name(usr)] sent a mismatched preferences setup href! Expected: [prefs.ckey], actual: [usr.ckey]")
+		message_admins("[key_name(usr)] sent a mismatched preferences setup href! Expected: [prefs.ckey], actual: [usr.ckey]")
 		return
 	var/returned = OnTopic(usr, prefs, href_list)
 	if(returned & PREFERENCES_ONTOPIC_REFRESH)
-		#warn implement refresh
+		prefs.Render()
 	if(returned & PREFERENCES_ONTOPIC_REGENERATE_PREVIEW)
 		#warn implement preview regeneration
 
@@ -76,7 +76,7 @@
 /**
  * Loads or defaults data
  */
-/datum/preferences/collection/proc/LoadOrDefault(datum/preferences/prefs, key, value, default)
+/datum/preferences_collection/proc/LoadOrDefault(datum/preferences/prefs, key, value, default)
 	. = LoadKey(prefs, key, value)
 	if(isnull(.))
 		return default

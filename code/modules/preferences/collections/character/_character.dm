@@ -5,4 +5,4 @@
 	return prefs.SetKeyCharacter(key, value)
 
 /datum/preferences_collection/character/LoadKey(datum/preferences/prefs, key)
-	return prefs.LoadKeyCharacter(key, value)
+	return prefs.LoadKeyCharacter(key)

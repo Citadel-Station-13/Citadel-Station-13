@@ -133,21 +133,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				belly_prefs = json_from_file["belly_prefs"]
 				vore_taste = json_from_file["vore_taste"]
 
-		for(var/V in all_quirks) // quirk migration
-			switch(V)
-				if("Acute hepatic pharmacokinesis")
-					DISABLE_BITFIELD(cit_toggles, PENIS_ENLARGEMENT)
-					DISABLE_BITFIELD(cit_toggles, BREAST_ENLARGEMENT)
-					ENABLE_BITFIELD(cit_toggles,FORCED_FEM)
-					ENABLE_BITFIELD(cit_toggles,FORCED_MASC)
-					all_quirks -= V
-				if("Crocin Immunity")
-					ENABLE_BITFIELD(cit_toggles,NO_APHRO)
-					all_quirks -= V
-				if("Buns of Steel")
-					ENABLE_BITFIELD(cit_toggles,NO_ASS_SLAP)
-					all_quirks -= V
-
 		if(features["meat_type"] == "Inesct")
 			features["meat_type"] = "Insect"
 
@@ -425,7 +410,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["screenshake"]		>> screenshake
 	S["damagescreenshake"]	>> damagescreenshake
 	S["autostand"]			>> autostand
-	S["cit_toggles"]		>> cit_toggles
 	S["preferred_chaos"]	>> preferred_chaos
 	S["auto_ooc"]			>> auto_ooc
 	S["no_tetris_storage"]		>> no_tetris_storage
@@ -483,7 +467,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	screenshake			= sanitize_integer(screenshake, 0, 800, initial(screenshake))
 	damagescreenshake	= sanitize_integer(damagescreenshake, 0, 2, initial(damagescreenshake))
 	autostand			= sanitize_integer(autostand, 0, 1, initial(autostand))
-	cit_toggles			= sanitize_integer(cit_toggles, 0, 16777215, initial(cit_toggles))
 	auto_ooc			= sanitize_integer(auto_ooc, 0, 1, initial(auto_ooc))
 	no_tetris_storage		= sanitize_integer(no_tetris_storage, 0, 1, initial(no_tetris_storage))
 	key_bindings 			= sanitize_islist(key_bindings, list())
@@ -598,7 +581,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["arousable"], arousable)
 	WRITE_FILE(S["widescreenpref"], widescreenpref)
 	WRITE_FILE(S["autostand"], autostand)
-	WRITE_FILE(S["cit_toggles"], cit_toggles)
 	WRITE_FILE(S["preferred_chaos"], preferred_chaos)
 	WRITE_FILE(S["auto_ooc"], auto_ooc)
 	WRITE_FILE(S["no_tetris_storage"], no_tetris_storage)

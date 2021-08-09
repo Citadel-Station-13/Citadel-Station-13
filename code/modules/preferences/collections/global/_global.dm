@@ -5,4 +5,4 @@
 	return prefs.SetKeyGlobal(key, value)
 
 /datum/preferences_collection/global/LoadKey(datum/preferences/prefs, key)
-	return prefs.LoadKeyGlobal(key, value)
+	return prefs.LoadKeyGlobal(key)

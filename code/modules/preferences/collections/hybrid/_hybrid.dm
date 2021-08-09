@@ -10,7 +10,7 @@
 /datum/preferences_collection/hybrid/proc/CheckOverride(datum/preferences/prefs)
 	return prefs.LoadKeyCharacter("__[save_key]_override")
 
-/datum/preferences_collection/hybrid/proc/SetOverride(datum/preferneces/prefs, value)
+/datum/preferences_collection/hybrid/proc/SetOverride(datum/preferences/prefs, value)
 	return prefs.SaveKeyCharacter("__[save_key]_override", value)
 
 /datum/preferences_collection/hybrid/content(datum/preferences/prefs)
