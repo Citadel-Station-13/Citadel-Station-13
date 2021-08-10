@@ -59,7 +59,7 @@
 /datum/preferences_collection/hybrid/antagonism/OnTopic(mob/user, datum/preferences/prefs, list/href_list)
 	. = ..()
 	if(href_list["midround_toggle"])
-		SaveKey(prefs, "midround_antagonist", !LoadKey(prefs, "midround_antagonist")))
+		SaveKey(prefs, "midround_antagonist", !LoadKey(prefs, "midround_antagonist"))
 		return PREFERENCES_ONTOPIC_REFRESH
 	if(href_list["be_special_toggle"])
 		var/list/current = LoadKey(prefs, "be_special")
