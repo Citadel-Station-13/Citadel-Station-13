@@ -41,9 +41,10 @@
 	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
 		if(integrating_blood > 0)
 			var/integrated_blood = max(integrating_blood - 1, 0)
+			var/blood_diff = integrating_blood - integrated_blood
 			integrating_blood = integrated_blood
 			if(blood_volume < BLOOD_VOLUME_MAXIMUM)
-				blood_volume ++
+				blood_volume += blood_diff
 		if(blood_volume < BLOOD_VOLUME_NORMAL)
 			var/nutrition_ratio = 0
 			if(!HAS_TRAIT(src, TRAIT_NOHUNGER))
