@@ -257,7 +257,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_inv_shoes()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
-		remove_overlay(SHOES_LAYER)
+		full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(SHOES_LAYER))
 
 		if(get_num_legs(FALSE) <2)
 			return
@@ -290,8 +290,7 @@ There are several things that need to be remembered:
 			if(OFFSET_SHOES in dna.species.offset_features)
 				shoes_overlay.pixel_x += dna.species.offset_features[OFFSET_SHOES][1]
 				shoes_overlay.pixel_y += dna.species.offset_features[OFFSET_SHOES][2]
-			overlays_standing[SHOES_LAYER] = shoes_overlay
-		apply_overlay(SHOES_LAYER)
+			full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(shoes_overlay, num2text(SHOES_LAYER))
 
 /mob/living/carbon/human/update_inv_s_store()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
