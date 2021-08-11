@@ -244,7 +244,7 @@
 
 	var/datum/persistent_client_variables/P
 	if(C)
-		P = C.PCV
+		P = C.persistent_variables
 	else
 		P = GLOB.persistent_client_variables[whom]
 	if(!P)

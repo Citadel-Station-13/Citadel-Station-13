@@ -2,11 +2,10 @@
 #define HANDS_SLOT_AMT		2
 #define BACKPACK_SLOT_AMT	4
 
-GLOBAL_LIST_EMPTY(preferences_datums)
-
 /datum/preferences
 	var/client/parent
 	//doohickeys for savefiles
+
 	var/path
 	var/vr_path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used

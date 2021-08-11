@@ -32,6 +32,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	// Metadata begin - stuff like current slot. Not important enough that we'll care about migrations, generally.
 	/// Selected character slot
 	var/selected_slot = 1
+	/// Queued messages to display to the player
+	var/list/debug_message_queue = list()
 	// Metadata end
 
 	// Other loaded settings begin - these aren't stored in [preferences] either because they're accessed super often, or for some other reason that makes the inherent slowness/access complexity unfavorable
@@ -40,7 +42,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	// End
 
 /datum/preferences/New(client/C)
-	var/ckey = istext(C)? C : C?.ckey
+	ckey = istext(C)? C : C?.ckey
 	if(!ckey)
 		CRASH("Preferences datum instantiated with no client or ckey. Aborting initialization.")
 	FullInitialize()
@@ -49,18 +51,42 @@ GLOBAL_LIST_EMPTY(preferences_datums)
  * Fully inits us, loading everything from disk.
  */
 /datum/preferences/proc/FullInitialize()
-	preferences = list()
+	character_preferences = list()
+	global_preferences = list()
 	initialize_savefile_path()
 	ASSERT(savefile_path)
 	var/list/migration_errors = list()
+	var/existing = fexists(savefile_path)
 	var/savefile/S = new savefile(savefile_path)
 	// Load metadata
 	load_metadata(S)
 	// Store if we need to do migrations first.
 	S.cd = "/"
+	var/mode = PREFERENCES_LOAD_NORMAL
+	if(!existing)
+		mode = PREFERENCES_LOAD_NEW_FILE
+	else
+		// litmus test
+		S.cd = "/global"
+		var/vtest
+		S["version"] >> vtest
+		if(isnull(vtest))
+			mode = PREFERENCES_LOAD_LEGACY_CONVERSION
+		S.cd = "/"
+	debug_message_queue += "Preferences initializing for [ckey]..."
+	switch(mode)
+		if(PREFERENCES_LOAD_NORMAL)
+			debug_message_queue += "Loading in normal mode."
+		if(PREFERENCES_LOAD_NEW_FILE)
+			debug_message_queue += "Creating new savefile."
+		if(PREFERENCES_LOAD_LEGACY_CONVERSION)
+			debug_message_queue += "Legacy savefile detected; Beginning full conversion."
+
+
 #warn rethink the initial modernization update as the old savefile format is too old to work with /global, etc
 #warn maybe if it detects the old format (by just renaming the file) it can do the load
 #warn that way we can reset savefile version to 0 too
+#warn maybe also detect if the savefile doesn't exist, and call special init procs if so.
 	// Load preferences - This will perform migrations if needed
 	load_preferences(S, migration_errors)
 	// Load default slot
@@ -217,11 +243,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return
 	// Load
 	#warn deserialize character_data from disk
-	if(version < SAVEFILE_MODERN_START_VERSION)
-		for(var/i in SScharacter_setup.collections)
-			var/datum/preferences_collection/C = i
-			LAZYINITLIST(global_preferences[C.save_key])
-			C.savefile_full_overhaul_character(src, global_preferences[C.save_key], S, errors, version)
 	if(version < SAVEFILE_VERSION_MAX)
 		// handle migrations
 		for(var/i in SScharacter_setup.collections)
@@ -268,11 +289,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return
 	// Load
 	#warn deserialize global_preferences from disk
-	if(version < SAVEFILE_MODERN_START_VERSION)
-		for(var/i in SScharacter_setup.collections)
-			var/datum/preferences_collection/C = i
-			LAZYINITLIST(global_preferences[C.save_key])
-			C.savefile_full_overhaul_global(src, global_preferences[C.save_key], S, errors, version)
 	if(version < SAVEFILE_VERSION_MAX)
 		// handle migrations
 		for(var/i in SScharacter_setup.collections)
@@ -337,3 +353,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		var/datum/preferences_collection/C = locate(href_list["switch_collection"]) in SScharacter_setup.collections
 		if(istype(C))
 			selected_collection = C
+
+/**
+ * Output to the player queued messages
+ */
+/datum/preferences/proc/flush_messages()
+	ASSERT(parent)
+	to_chat(parent, debug_message_queue.Join("<br>"))
+	debug_message_queue.Cut()

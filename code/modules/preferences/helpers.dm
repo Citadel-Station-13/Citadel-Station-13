@@ -3,7 +3,7 @@
 /**
  * Tell someone why they're jobbanned from a job
  */
-/datum/preferences/proc/jobbancheck(job)
+/datum/preferences/proc/jobbancheck(job, mob/user = parent?.mob)
 	var/datum/db_query/query_get_jobban = SSdbcore.NewQuery({"
 		SELECT reason, bantime, duration, expiration_time, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].a_ckey), a_ckey)
 		FROM [format_table_name("ban")] WHERE ckey = :ckey AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned) AND job = :job
@@ -30,3 +30,30 @@
  */
 /datum/preferences/proc/random_character(randomize_name = TRUE, randomize_gender = TRUE, randomize_species = TRUE, randomize_body = TRUE, randomize_underwear = TRUE, randomize_genitals = TRUE)
 #warn implement
+
+/*
+	if(gender_override)
+		gender = gender_override
+	else
+		gender = pick(MALE,FEMALE)
+	underwear = random_underwear(gender)
+	undie_color = random_short_color()
+	undershirt = random_undershirt(gender)
+	shirt_color = random_short_color()
+	socks = random_socks()
+	socks_color = random_short_color()
+	use_custom_skin_tone = FALSE
+	skin_tone = random_skin_tone()
+	hair_style = random_hair_style(gender)
+	facial_hair_style = random_facial_hair_style(gender)
+	hair_color = random_short_color()
+	facial_hair_color = hair_color
+	var/random_eye_color = random_eye_color()
+	left_eye_color = random_eye_color
+	right_eye_color = random_eye_color
+	if(!pref_species)
+		var/rando_race = pick(GLOB.roundstart_races)
+		pref_species = new rando_race()
+	features = random_features(pref_species?.id, gender)
+	age = rand(AGE_MIN,AGE_MAX)
+*/

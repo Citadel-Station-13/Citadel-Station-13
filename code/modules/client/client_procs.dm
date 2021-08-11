@@ -492,6 +492,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	view_size.setZoomMode()
 	fit_viewport()
 	Master.UpdateTickRate()
+	prefs.flush_messages()
 
 //////////////
 //DISCONNECT//
@@ -909,7 +910,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(persistent_variables.log_clicks)
 		log_click(object, location, control, params, src)
 
-	if (prefs.hotkeys)
+	if (prefs.get_hotkey_toggle())
 		// If hotkey mode is enabled, then clicking the map will automatically
 		// unfocus the text bar. This removes the red color from the text bar
 		// so that the visual focus indicator matches reality.

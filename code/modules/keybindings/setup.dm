@@ -30,7 +30,7 @@
 			set_text += "[macroset].*"
 		set_text = set_text.Join(";")
 	else
-		set_text = prefs_override.hotkeys? "[SKIN_MACROSET_HOTKEYS].*" : "[SKIN_MACROSET_CLASSIC_INPUT].*;[SKIN_MACROSET_CLASSIC_HOTKEYS].*"
+		set_text = prefs_override.get_hotkey_toggle()? "[SKIN_MACROSET_HOTKEYS].*" : "[SKIN_MACROSET_CLASSIC_INPUT].*;[SKIN_MACROSET_CLASSIC_HOTKEYS].*"
 	var/list/macro_set = params2list(winget(src, "[set_text]", "command"))
 	for(var/k in 1 to length(macro_set))
 		var/list/split_name = splittext(macro_set[k], ".")
@@ -48,7 +48,7 @@
 		winset(src, "[name]-[REF(key)]", "parent=[name];name=[key];command=[command]")
 
 /client/proc/set_hotkeys_preference(datum/preferences/prefs_override = prefs)
-	if(prefs_override.hotkeys)
+	if(prefs_override.get_hotkey_toggle())
 		winset(src, null, "map.focus=true input.background-color=[COLOR_INPUT_DISABLED] mainwindow.macro=[SKIN_MACROSET_HOTKEYS]")
 	else
 		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED] mainwindow.macro=[SKIN_MACROSET_CLASSIC_INPUT]")
@@ -66,7 +66,7 @@
 	erase_all_macros(prefs_override)
 	keys_held.Cut()
 	// First, collect sets. Make sure to COPY, as we are modifying these!
-	var/list/macrosets = prefs_override.hotkeys? list(
+	var/list/macrosets = prefs_override.get_hotkey_toggle()? list(
 			SKIN_MACROSET_HOTKEYS = SSinput.macroset_hotkey.Copy()
 		) : list(
 			SKIN_MACROSET_CLASSIC_INPUT = SSinput.macroset_classic_input.Copy(),
@@ -80,7 +80,7 @@
 	// Then, we set all the permutations BUT the actual binding to nonsensical things to force BYOND to not
 	// be "greedy" with key matching, aka matching Shift+T for T when Shift+T isn't EXPLICITLY defined.
 	// This is extremely ugly, but the alternative is arguably worse (manually binding every key instead of using ANY)
-	if(prefs_override.hotkeys)
+	if(prefs_override.get_hotkey_toggle())
 		for(var/keybind in clientside)
 			var/command = clientside[keybind]
 			var/alt = findtext(keybind, "Alt")

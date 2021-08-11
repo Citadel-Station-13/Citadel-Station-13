@@ -177,7 +177,6 @@
 	if(href_list["keybind_reset"])
 		var/choice = tgalert(user, "Would you prefer 'hotkey' or 'classic' defaults?", "Setup keybindings", "Hotkey", "Classic", "Cancel")
 		if(choice == "Cancel")
-			ShowChoices(user)
 			return
 		SaveKey(prefs, "hotkeys", choice == "Hotkey")
 		var/list/key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
@@ -194,13 +193,13 @@
 	if(!prefs.parent)
 		return
 	var/choice = tgalert(pref.parent.mob, "Your basic keybindings need to be reset, emotes will remain as before. Would you prefer 'hotkey' or 'classic' mode?", "Reset keybindings", "Hotkey", "Classic")
-	hotkeys = (choice != "Classic")
-	force_reset_keybindings_direct(prefs, hotkeys)
+	SaveKey(prefs, "hotkeys", choice != "Classic")
+	force_reset_keybindings_direct(prefs, choice != "Classic")
 
 /// Does the actual reset
 /datum/preferences_collection/global/keybindings/force_reset_keybindings_direct(datum/preferences/prefs, hotkeys = TRUE)
 	var/list/oldkeys = LoadKey(prefs, "keybinds")
-	key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
+	var/list/key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
 
 	for(var/key in oldkeys)
 		if(!key_bindings[key])
@@ -214,7 +213,7 @@
 	var/list/modless = LoadKey(prefs, "keybinds_modless")
 	binds = sanitize_islist(binds, list())
 	modless = sanitize_islist(modless, list())
-	auto_sanitize_keybindings(binds, moless)
+	auto_sanitize_keybindings(binds, modless)
 	SaveKey(prefs, "keybinds", binds)
 	SaveKey(prefs, "keybinds_modless", modless)
 	auto_sanitize_boolean("hotkeeys")
@@ -244,14 +243,26 @@
 	if(current_version < 46)
 		errors += "Version < 46, prior to keybindings update. Resetting keybindings; Please recheck your keybindings manually."
 		force_reset_keybindings_direct(prefs, TRUE)
-		addtimer(CALLBACK(src, .proc/force_reset_keybindings, prefs), 30)
+		addtimer(CALLBACK(src, .proc/keybind_reset_prompt, prefs), 30)
 
 /datum/preferences_collection/global/keybindings/on_full_preferences_reset(datum/preferences/prefs)
 	if(!length(LoadKey(prefs, "keybinds")))
 		to_chat(prefs.client, "<span class='danger'>Preferences Reset Error: No keybindings detected. Resetting. Please recheck your keybindings manually.</span>")
 		force_reset_keybindings_direct(prefs, TRUE)
-		addtimer(CALLBACK(src, .proc/force_reset_keybindings, prefs), 30)
+		addtimer(CALLBACK(src, .proc/keybind_reset_prompt, prefs), 30)
 
 /datum/preferences_collection/global/keybindings/post_global_load(datum/preferences/prefs)
 	. = ..()
 	prefs.resync_client_cache()
+
+/datum/preferences_collection/global/keybindings/savefile_full_overhaul_global(datum/preferences/prefs, list/data, savefile/S, list/errors, current_version)
+	. = ..()
+	var/list/binds
+	var/list/modless_binds
+	var/hotkeys
+	S["key_bindings"] >> binds
+	S["modless_key_bindings"] >> modless_binds
+	S["hotkeys"] >> hotkeys
+	SaveKey(prefs, "keybinds", binds)
+	SaveKey(prefs, "keybinds_modless", modless_binds)
+	SaveKey(prefs, "hotkeys", hotkeys)

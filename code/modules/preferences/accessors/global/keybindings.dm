@@ -11,3 +11,6 @@
 		return deepCopyList(L)
 	else
 		return list()
+
+/datum/preferences/proc/get_hotkey_toggle()
+	return LoadKeyGlobal(PREFERENCES_SAVE_KEY_KEYBINDINGS, "hotkeyS")

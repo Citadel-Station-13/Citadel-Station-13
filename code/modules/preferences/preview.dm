@@ -1,31 +1,4 @@
 
-	//The mob should have a gender you want before running this proc. Will run fine without H
-/datum/preferences/proc/random_character(gender_override)
-	if(gender_override)
-		gender = gender_override
-	else
-		gender = pick(MALE,FEMALE)
-	underwear = random_underwear(gender)
-	undie_color = random_short_color()
-	undershirt = random_undershirt(gender)
-	shirt_color = random_short_color()
-	socks = random_socks()
-	socks_color = random_short_color()
-	use_custom_skin_tone = FALSE
-	skin_tone = random_skin_tone()
-	hair_style = random_hair_style(gender)
-	facial_hair_style = random_facial_hair_style(gender)
-	hair_color = random_short_color()
-	facial_hair_color = hair_color
-	var/random_eye_color = random_eye_color()
-	left_eye_color = random_eye_color
-	right_eye_color = random_eye_color
-	if(!pref_species)
-		var/rando_race = pick(GLOB.roundstart_races)
-		pref_species = new rando_race()
-	features = random_features(pref_species?.id, gender)
-	age = rand(AGE_MIN,AGE_MAX)
-
 /datum/preferences/proc/update_preview_icon(current_tab)
 	var/equip_job = (current_tab != APPEARANCE_TAB)
 	// Determine what job is marked as 'High' priority, and dress them up as such.

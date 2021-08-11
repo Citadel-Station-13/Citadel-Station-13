@@ -20,14 +20,14 @@
 			. += "<br>"
 			return
 		. += "<b>Be [capitalize(i)]:</b> "
-		if(jobban_isbanned(prefs.client?.mob, i))
+		if(jobban_isbanned(prefs.parent?.mob, i))
 			. += generate_topic_key_value(prefs, "<font color='red'>BANNED</font>", "jobbancheck", i)
 		else
 			var/days_remaining = null
 			if(ispath(GLOB.special_roles[i]) && CONFIG_GET(flag/use_age_restriction_for_jobs)) //If it's a game mode antag, check if the player meets the minimum age
 				var/mode_path = GLOB.special_roles[i]
 				var/datum/game_mode/temp_mode = new mode_path
-				days_remaining = temp_mode.get_remaining_days(prefs.client)
+				days_remaining = temp_mode.get_remaining_days(prefs.parent)
 			if(days_remaining)
 				. += "<font color='red'> \[IN [days_remaining] DAYS]</font><br>"
 			else
@@ -41,9 +41,9 @@
 	. += "<b>Midround Antagonist:</b> "
 	if(LoadKey(prefs, "midround_antagonist"))
 		. += "<span class='linkOn'>Enabled</span> "
-		. += generate_topic_key_value(prefs, "Disabled", "midround_toggle", i)
+		. += generate_topic(prefs, "Disabled", "midround_toggle")
 	else
-		. += generate_topic_key_value(prefs, "Enabled", "midround_toggle", i)
+		. += generate_topic(prefs, "Enabled", "midround_toggle")
 		. += " <span class='linkOn'>Disabled</span>"
 
 /datum/preferences_collection/hybrid/antagonism/sanitize_any(datum/preferences/prefs)
@@ -58,7 +58,7 @@
 		return PREFERENCES_ONTOPIC_REFRESH
 	if(href_list["be_special_toggle"])
 		var/list/current = LoadKey(prefs, "be_special")
-		var/type = hreef_list["be_special_toggle"]
+		var/type = href_list["be_special_toggle"]
 		if(type in current)
 			current -= type
 		else
