@@ -176,7 +176,6 @@
 
 	var/screenshake = 100
 	var/damagescreenshake = 2
-	var/arousable = TRUE
 	var/autostand = TRUE
 	var/auto_ooc = FALSE
 
@@ -2353,8 +2352,6 @@
 				//CITADEL PREFERENCES EDIT - I can't figure out how to modularize these, so they have to go here. :c -Pooj
 				if("genital_colour")
 					features["genitals_use_skintone"] = !features["genitals_use_skintone"]
-				if("arousable")
-					arousable = !arousable
 				if("has_cock")
 					features["has_cock"] = !features["has_cock"]
 					if(features["has_cock"] == FALSE)

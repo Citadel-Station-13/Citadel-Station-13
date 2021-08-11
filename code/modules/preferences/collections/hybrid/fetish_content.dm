@@ -81,6 +81,9 @@
 
 			if("auto_wag")
 				auto_toggle_bitfield(prefs, "cit_toggles", NO_AUTO_WAG)
+
+			if("arousable")
+				auto_toggle_bitfield(prefs, "cit_toggles", AROUSABLE)
 		return PREFERENCES_ONTOPIC_REFRESH
 
 /datum/preferences_collection/hybrid/fetish_content/sanitize_any(datum/preferences/prefs)
@@ -94,3 +97,13 @@
 /datum/preferences_collection/hybrid/fetish_content/on_full_global_reset(datum/preferences/prefs)
 	. = ..()
 	prefs.SetKeyGlobal(PREFERENCES_SAVE_KEY_FETISH, "cit_toggles", CIT_TOGGLES)
+
+/datum/preferences_collection/hybrid/fetish_content/savefile_full_overhaul_global(datum/preferences/prefs, list/data, savefile/S, list/errors, current_version)
+	. = ..()
+	var/cit_toggles
+	var/arousable
+	S["cit_toggles"] >> cit_toggles
+	S["arousable"] >> arousable
+	if(arousable)
+		cit_toggles |= AROUSABLE
+	data["cit_toggles"] = cit_toggles
