@@ -86,7 +86,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
  * Directly reads from in-memory stores for a certain collection of a save key
  */
 /datum/preferences/proc/LoadKeyCharacter(save_key, key)
-	if(ispath(key) || ispath(data))
+	if(ispath(key))
 		CRASH("Attempted to use typepaths directly in savefiles. This is not allowed due to the volatility of BYOND savefile operations.")
 	return LAZYACCESS(character_preferences[save_key], key)
 
@@ -94,7 +94,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
  * Directly reads from in-memory stores for a certain collection of a save key. Returns default if null.
  */
 /datum/preferences/proc/LoadKeyOrDefaultCharacter(save_key, key, default)
-	if(ispath(key) || ispath(data))
+	if(ispath(key))
 		CRASH("Attempted to use typepaths directly in savefiles. This is not allowed due to the volatility of BYOND savefile operations.")
 	. = LAZYACCESS(character_preferences[save_key], key)
 	if(isnull(.))
@@ -111,8 +111,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /**
  * Directly reads from in-memory stores for a certain collection of a save key
  */
-/datum/preferences/proc/LowadKeyGlobal(save_key, key)
-	if(ispath(key) || ispath(data))
+/datum/preferences/proc/LoadKeyGlobal(save_key, key)
+	if(ispath(key))
 		CRASH("Attempted to use typepaths directly in savefiles. This is not allowed due to the volatility of BYOND savefile operations.")
 	return LAZYACCESS(global_preferences[save_key], key)
 
@@ -120,6 +120,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
  * Directly reads from in-memory stores for a certain collection of a save key. Returns default if null.
  */
 /datum/preferences/proc/LoadKeyOrDefaultGlobal(save_key, key, default)
+	if(ispath(key))
+		CRASH("Attempted to use typepaths directly in savefiles. This is not allowed due to the volatility of BYOND savefile operations.")
 	. = LAZYACCESS(global_preferences[save_key], key)
 	if(isnull(.))
 		return default

@@ -4,6 +4,7 @@
 
 /datum/preferences_collection/global/keybindings/content(datum/preferences/prefs)
 	. = ..()
+	var/hotkeys = LoadKey(prefs, "hotkeys")
 	var/list/key_bindings = LoadKey(prefs, "keybinds")
 	var/list/modless_key_bindings = LoadKey(prefs, "keybinds_modless")
 	. += "<b>Keybindings:</b> <a href='?src=[REF(src)];parent=[REF(prefs)];preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Input"]</a><br>"
@@ -101,12 +102,12 @@
 
 /datum/preferences_collection/global/keybindings/OnTopic(mob/user, datum/preferences/prefs, list/href_list)
 	. = ..()
-	if("keybind_capture")
+	if(href_list["keybind_capture"])
 		var/datum/keybinding/kb = GLOB.keybindings_by_name[href_list["keybinding"]]
 		CaptureKeybinding(prefs, user, kb, href_list["old_key"], text2num(href_list["independent"]), kb.special || kb.clientside)
 		return
 
-	if("keybind_set")
+	if(href_list["keybind_set"])
 		var/key_bindings = LoadKey(prefs, "keybinds")
 		var/modless_key_bindings = LoadKey(prefs, "keybinds_modless")
 		var/kb_name = href_list["keybinding"]
@@ -173,16 +174,20 @@
 		user << browse(null, "window=capturekeypress")
 		return
 
-	if("keybind_reset")
+	if(href_list["keybind_reset"])
 		var/choice = tgalert(user, "Would you prefer 'hotkey' or 'classic' defaults?", "Setup keybindings", "Hotkey", "Classic", "Cancel")
 		if(choice == "Cancel")
 			ShowChoices(user)
 			return
-		hotkeys = (choice == "Hotkey")
+		SaveKey(prefs, "hotkeys", choice == "Hotkey")
 		var/list/key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
 		SaveKey(prefs, "keybinds", key_bindings)
-		SaveKey(prefs, "keybinds_modless", lis())
+		SaveKey(prefs, "keybinds_modless", list())
 		return PREFERENCES_ONTOPIC_REFRESH | PREFERENCES_ONTOPIC_RESYNC_CACHE | PREFERENCES_ONTOPIC_KEYBIND_REASSERT
+
+	if(href_list["hotkeys"])
+		auto_boolean_toggle(prefs, "hotkeys")
+		return PREFERENCES_ONTOPIC_REFRESH  | PREFERENCES_ONTOPIC_RESYNC_CACHE | PREFERENCES_ONTOPIC_KEYBIND_REASSERT
 
 /// Resets the client's keybindings. Asks them for which
 /datum/preferences_collection/global/keybindings/proc/keybind_reset_prompt(datum/preferences/prefs)
@@ -212,6 +217,7 @@
 	auto_sanitize_keybindings(binds, moless)
 	SaveKey(prefs, "keybinds", binds)
 	SaveKey(prefs, "keybinds_modless", modless)
+	auto_sanitize_boolean("hotkeeys")
 
 /**
  * In place.

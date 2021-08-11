@@ -37,7 +37,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/UI_style = null
 	var/buttons_locked = FALSE
-	var/hotkeys = FALSE
 
 	///Runechat preference. If true, certain messages will be displayed on the map, not ust on the chat area. Boolean.
 	var/chat_on_map = TRUE
@@ -2437,10 +2436,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("body_model")
 					features["body_model"] = features["body_model"] == MALE ? FEMALE : MALE
-
-				if("hotkeys")
-					hotkeys = !hotkeys
-					user.client.ensure_keys_set(src)
 
 				if("chat_on_map")
 					chat_on_map = !chat_on_map
