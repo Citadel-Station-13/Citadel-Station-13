@@ -17,3 +17,6 @@
 	var/int = LoadKey(prefs, key)
 	int = sanitize_integer(int, 0, 1, default)
 	SaveKey(prefs, key, int)
+
+/datum/preferences_collection/proc/auto_sanitize_bitfield(datum/preferences/prefs, key)
+	return auto_sanitize_integer(prefs, key, NONE, SHORT_REAL_LIMIT - 1, NONE)

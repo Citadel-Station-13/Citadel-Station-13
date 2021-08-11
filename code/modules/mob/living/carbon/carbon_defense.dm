@@ -296,7 +296,7 @@
 						target_message = "<span class='notice'>[M] gives you a pat on the head to make you feel better!</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "headpat", /datum/mood_event/headpat)
 			friendly_check = TRUE
-			if(!(client?.prefs.cit_toggles & NO_AUTO_WAG))
+			if(!(client?.prefs.check_cit_toggle(NO_AUTO_WAG)))
 				if(S?.can_wag_tail(src) && !dna.species.is_wagging_tail())
 					var/static/list/many_tails = list("tail_human", "tail_lizard", "mam_tail")
 					for(var/T in many_tails)

@@ -30,6 +30,7 @@
  */
 /datum/preferences/proc/random_character(randomize_name = TRUE, randomize_gender = TRUE, randomize_species = TRUE, randomize_body = TRUE, randomize_underwear = TRUE, randomize_genitals = TRUE)
 #warn implement
+#warn call 3 stage randomization procs on collections
 
 /*
 	if(gender_override)

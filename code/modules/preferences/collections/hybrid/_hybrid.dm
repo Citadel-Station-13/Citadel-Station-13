@@ -29,4 +29,3 @@
 	if(href_list["__toggle_hybrid_override__"])
 		SetOverride(prefs, !CheckOverride(prefs))
 		return PREFERENCES_ONTOPIC_REFRESH | PREFERENCES_ONTOPIC_REGENERATE_PREVIEW
-

@@ -185,7 +185,7 @@
 		if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 			LAZYCLEARLIST(hearing_mobs)
 			for(var/mob/living/H in get_hearers_in_view(VORE_SOUND_RANGE, owner))
-				if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
+				if(!H.client || !(H.client.prefs.check_cit_toggle(EATING_NOISES)))
 					continue
 				LAZYADD(hearing_mobs, H)
 			last_hearcheck = world.time
@@ -241,7 +241,7 @@
 			if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 				LAZYCLEARLIST(hearing_mobs)
 				for(var/mob/living/H in get_hearers_in_view(VORE_SOUND_RANGE, owner))
-					if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
+					if(!H.client || !(H.client.prefs.check_cit_toggle(EATING_NOISES)))
 						continue
 					LAZYADD(hearing_mobs, H)
 				last_hearcheck = world.time
@@ -297,7 +297,7 @@
 			if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 				LAZYCLEARLIST(hearing_mobs)
 				for(var/mob/living/H in get_hearers_in_view(3, owner))
-					if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
+					if(!H.client || !(H.client.prefs.check_cit_toggle(EATING_NOISES)))
 						continue
 					LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
@@ -359,7 +359,7 @@
 		if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 			LAZYCLEARLIST(hearing_mobs)
 			for(var/mob/living/H in get_hearers_in_view(VORE_SOUND_RANGE, owner))
-				if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
+				if(!H.client || !(H.client.prefs.check_cit_toggle(EATING_NOISES)))
 					continue
 				LAZYADD(hearing_mobs, H)
 				last_hearcheck = world.time
@@ -578,7 +578,7 @@
 
 	LAZYCLEARLIST(hearing_mobs)
 	for(var/mob/living/H in get_hearers_in_view(VORE_SOUND_RANGE, owner))
-		if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
+		if(!H.client || !(H.client.prefs.check_cit_toggle(EATING_NOISES)))
 			continue
 		LAZYADD(hearing_mobs, H)
 

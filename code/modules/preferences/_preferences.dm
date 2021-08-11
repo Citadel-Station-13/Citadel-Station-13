@@ -5,6 +5,32 @@ GLOBAL_LIST_EMPTY(preferences_datums)
   * Preferences datums
   *
   * Holds character setup and global settings information for players.
+  *
+  * Init order:
+  * 1. reads ckey
+  * 2. gets path
+  * 3. If path is a legacy savefile, does full conversion and continues
+  * 4. Loads global preferences
+  * 5. Loads active slot
+  *
+  * Full conversion:
+  * 1. Legacy savefile is loaded
+  * 2. Global prefs are migrated and saved
+  * 3. Character slots 1 through 32 are migrated and saved
+  * 4. Savefile cd is restored to / and postloads are called
+  *
+  * Global preferences load:
+  * 1. If file doesn't exist or version is too low, all data is tossed and defaults are loaded
+  * 2. Preferences are loaded
+  * 3. Preferences are sanitized and postload is called
+  * 4. Client variables are synced, etc
+  *
+  * Character preferences load:
+  * 1. If file doesn't exist or version is too low, all data is tossed and a random character is generated
+  * 2. Preferneces are loaded
+  * 3. Preferences are sanitized
+  * 4. Previews are regenerated
+  * 5. On character creation, copy_to will generate the character from a human mob.
   */
 /datum/preferences
 	/// Owning client, if connected
@@ -232,13 +258,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	S.cd = "/character[slot]"
 	var/version = S["version"]
 	if(version < SAVEFILE_VERSION_MIN)
-		random_character()
 		errors += "Character slot [slot] either does not exist or was below minimum version [SAVEFILE_VERSION_MIN], and has been completely randomized."
 		S["version"] << SAVEFILE_VERSION_MAX
+		#warn better randomization process
+		#warn proper pipeline should be: 1. call full resets, and sanitize. 2. random proc is called 3. sanitize again and save
 		for(var/i in SScharacter_setup.collections)
 			C.on_full_character_reset(src)
-		C.sanitize_character(src)
-		C.sanitize_any(src)
+			C.sanitize_character(src)
+			C.sanitize_any(src)
 		save_character(S)
 		return
 	// Load
@@ -286,6 +313,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			C.sanitize_preferences(src)
 			C.sanitize_any(src)
 			C.save_preferences(src, S)
+			C.post_global_load(src)
 		return
 	// Load
 	#warn deserialize global_preferences from disk
@@ -312,6 +340,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
  */
 /datum/preferences/proc/Render(mob/user = parent?.mob)
 	ASSERT(user)
+	assert_character_selected()
 	user.client.OpenPreferencesWindow()
 	var/list/content = list()
 	content += "<head>"

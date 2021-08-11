@@ -565,7 +565,7 @@
 	can_synth = FALSE
 
 /datum/reagent/drug/aphrodisiac/on_mob_life(mob/living/M)
-	if(M && M.client?.prefs.arousable && !(M.client?.prefs.cit_toggles & NO_APHRO))
+	if(M && M.client?.prefs.arousable && !(M.client?.prefs.check_cit_toggle(NO_APHRO)))
 		if((prob(min(current_cycle/2,5))))
 			M.emote(pick("moan","blush"))
 		if(prob(min(current_cycle/4,10)))
@@ -591,7 +591,7 @@
 	can_synth = FALSE
 
 /datum/reagent/drug/aphrodisiacplus/on_mob_life(mob/living/M)
-	if(M && M.client?.prefs.arousable && !(M.client?.prefs.cit_toggles & NO_APHRO))
+	if(M && M.client?.prefs.arousable && !(M.client?.prefs.check_cit_toggle(NO_APHRO)))
 		if(prob(5))
 			if(prob(current_cycle))
 				M.say(pick("Hnnnnngghh...", "Ohh...", "Mmnnn..."))
@@ -628,8 +628,8 @@
 	..()
 
 /datum/reagent/drug/aphrodisiacplus/overdose_process(mob/living/M)
-	if(M && M.client?.prefs.arousable && !(M.client?.prefs.cit_toggles & NO_APHRO) && prob(33))
-		if(prob(5) && ishuman(M) && M.has_dna() && (M.client?.prefs.cit_toggles & BIMBOFICATION))
+	if(M && M.client?.prefs.arousable && !(M.client?.prefs.check_cit_toggle(NO_APHRO)) && prob(33))
+		if(prob(5) && ishuman(M) && M.has_dna() && (M.client?.prefs.check_cit_toggle(BIMBOFICATION)))
 			if(!HAS_TRAIT(M,TRAIT_PERMABONER))
 				to_chat(M, "<span class='userlove'>Your libido is going haywire!</span>")
 				M.log_message("Made perma-horny by hexacrocin.",LOG_EMOTE)

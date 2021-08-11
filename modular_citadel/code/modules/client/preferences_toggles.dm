@@ -5,9 +5,9 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggleeatingnoise)()
 	usr.client.prefs.cit_toggles ^= EATING_NOISES
 	usr.client.prefs.save_preferences()
 	usr.stop_sound_channel(CHANNEL_PRED)
-	to_chat(usr, "You will [(usr.client.prefs.cit_toggles & EATING_NOISES) ? "now" : "no longer"] hear eating noises.")
+	to_chat(usr, "You will [(usr.client.prefs.check_cit_toggle(EATING_NOISES)) ? "now" : "no longer"] hear eating noises.")
 /datum/verbs/menu/Settings/Sound/toggleeatingnoise/Get_checked(client/C)
-	return C.prefs.cit_toggles & EATING_NOISES
+	return C.prefs.check_cit_toggle(EATING_NOISES)
 
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggledigestionnoise)()
@@ -17,9 +17,9 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggledigestionnoise)()
 	usr.client.prefs.cit_toggles ^= DIGESTION_NOISES
 	usr.client.prefs.save_preferences()
 	usr.stop_sound_channel(CHANNEL_DIGEST)
-	to_chat(usr, "You will [(usr.client.prefs.cit_toggles & DIGESTION_NOISES) ? "now" : "no longer"] hear digestion noises.")
+	to_chat(usr, "You will [(usr.client.prefs.check_cit_toggle(DIGESTION_NOISES)) ? "now" : "no longer"] hear digestion noises.")
 /datum/verbs/menu/Settings/Sound/toggledigestionnoise/Get_checked(client/C)
-	return C.prefs.cit_toggles & DIGESTION_NOISES
+	return C.prefs.check_cit_toggle(DIGESTION_NOISES)
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, togglehoundsleeper)()
 	set name = "Toggle Voracious Hound Sleepers"
@@ -27,10 +27,10 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, togglehoundsleeper)()
 	set desc = "Toggles Voracious MediHound Sleepers"
 	usr.client.prefs.cit_toggles ^= MEDIHOUND_SLEEPER
 	usr.client.prefs.save_preferences()
-	if(usr.client.prefs.cit_toggles & MEDIHOUND_SLEEPER)
+	if(usr.client.prefs.check_cit_toggle(MEDIHOUND_SLEEPER))
 		to_chat(usr, "You have opted in for voracious medihound sleepers.")
 	else
 		to_chat(usr, "Medihound sleepers will no longer be voracious when you're involved.")
-	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle MediHound Sleeper", "[usr.client.prefs.cit_toggles & MEDIHOUND_SLEEPER ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle MediHound Sleeper", "[usr.client.prefs.check_cit_toggle(MEDIHOUND_SLEEPER) ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /datum/verbs/menu/Settings/Sound/togglehoundsleeper/Get_checked(client/C)
-	return C.prefs.cit_toggles & MEDIHOUND_SLEEPER
+	return C.prefs.check_cit_toggle(MEDIHOUND_SLEEPER)

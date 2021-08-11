@@ -55,7 +55,7 @@
 
 	var/mob/living/carbon/human/H = M
 	//If they've opted out, ignore and return early.
-	if(!(H.client?.prefs.cit_toggles & BREAST_ENLARGEMENT))
+	if(!(H.client?.prefs.check_cit_toggle(BREAST_ENLARGEMENT)))
 		return..()
 	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
 	//otherwise proceed as normal
@@ -79,7 +79,7 @@
 	return ..()
 
 /datum/reagent/fermi/breast_enlarger/overdose_process(mob/living/carbon/M) //Turns you into a female if male and ODing, doesn't touch nonbinary and object genders.
-	if(!(M.client?.prefs.cit_toggles & FORCED_FEM))
+	if(!(M.client?.prefs.check_cit_toggle(FORCED_FEM)))
 		return ..()
 
 	var/obj/item/organ/genital/penis/P = M.getorganslot(ORGAN_SLOT_PENIS)
@@ -113,7 +113,7 @@
 
 /datum/reagent/fermi/BEsmaller/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
-	if(!(M.client?.prefs.cit_toggles & BREAST_ENLARGEMENT) || !B)
+	if(!(M.client?.prefs.check_cit_toggle(BREAST_ENLARGEMENT)) || !B)
 		return ..()
 	B.modify_size(-0.05)
 	return ..()
@@ -191,7 +191,7 @@
 	if(!ishuman(M))
 		return ..()
 	var/mob/living/carbon/human/H = M
-	if(!(H.client?.prefs.cit_toggles & PENIS_ENLARGEMENT))
+	if(!(H.client?.prefs.check_cit_toggle(PENIS_ENLARGEMENT)))
 		return ..()
 	var/obj/item/organ/genital/penis/P = H.getorganslot(ORGAN_SLOT_PENIS)
 	//otherwise proceed as normal
@@ -211,7 +211,7 @@
 	if(!istype(M))
 		return ..()
 	// let's not kill them if they didn't consent.
-	if(!(M.client?.prefs.cit_toggles & FORCED_MASC))
+	if(!(M.client?.prefs.check_cit_toggle(FORCED_MASC)))
 		return..()
 
 	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
@@ -247,7 +247,7 @@
 		return ..()
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/penis/P = H.getorganslot(ORGAN_SLOT_PENIS)
-	if(!(H.client?.prefs.cit_toggles & PENIS_ENLARGEMENT) || !P)
+	if(!(H.client?.prefs.check_cit_toggle(PENIS_ENLARGEMENT)) || !P)
 		return..()
 
 	P.modify_size(-0.1)

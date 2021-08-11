@@ -38,7 +38,7 @@
 					if(!M.client)
 						continue
 					M.stop_sound_channel(CHANNEL_PREYLOOP) // sanity just in case
-					if(M.client.prefs.cit_toggles & DIGESTION_NOISES)
+					if(M.client.prefs.check_cit_toggle(DIGESTION_NOISES))
 						var/sound/preyloop = sound('sound/vore/prey/loop.ogg')
 						M.playsound_local(get_turf(src),preyloop, 80,0, channel = CHANNEL_PREYLOOP)
 						M.next_preyloop = (world.time + 52 SECONDS)
@@ -71,7 +71,7 @@
 
 			for (var/mob/living/M in contents)
 				if(prob(25))
-					if(M && M.client && M.client.prefs.cit_toggles & DIGESTION_NOISES)
+					if(M && M.client && M.client.prefs.check_cit_toggle(DIGESTION_NOISES))
 						SEND_SOUND(M,prey_digest)
 					play_sound = pick(pred_digest)
 
@@ -100,7 +100,7 @@
 
 					owner.adjust_nutrition(400) // so eating dead mobs gives you *something*.
 					play_sound = pick(pred_death)
-					if(M && M.client && M.client.prefs.cit_toggles & DIGESTION_NOISES)
+					if(M && M.client && M.client.prefs.check_cit_toggle(DIGESTION_NOISES))
 						SEND_SOUND(M,prey_death)
 					M.stop_sound_channel(CHANNEL_PREYLOOP)
 					digestion_death(M)
@@ -123,7 +123,7 @@
 		if(DM_HEAL)
 			for (var/mob/living/M in contents)
 				if(prob(25))
-					if(M && M.client && M.client.prefs.cit_toggles & DIGESTION_NOISES)
+					if(M && M.client && M.client.prefs.check_cit_toggle(DIGESTION_NOISES))
 						SEND_SOUND(M,prey_digest)
 					play_sound = pick(pred_digest)
 				if(M.stat != DEAD)
@@ -136,7 +136,7 @@
 		if(DM_NOISY)
 			if(prob(35))
 				for(var/mob/M in contents)
-					if(M && M.client && M.client.prefs.cit_toggles & DIGESTION_NOISES)
+					if(M && M.client && M.client.prefs.check_cit_toggle(DIGESTION_NOISES))
 						SEND_SOUND(M,prey_digest)
 					play_sound = pick(pred_digest)
 
@@ -146,7 +146,7 @@
 			for (var/mob/living/M in contents)
 
 				if(prob(10))//Less often than gurgles. People might leave this on forever.
-					if(M && M.client && M.client.prefs.cit_toggles & DIGESTION_NOISES)
+					if(M && M.client && M.client.prefs.check_cit_toggle(DIGESTION_NOISES))
 						SEND_SOUND(M,prey_digest)
 					play_sound = pick(pred_digest)
 
@@ -182,7 +182,7 @@
 					if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 						LAZYCLEARLIST(hearing_mobs)
 						for(var/mob/living/H in get_hearers_in_view(3, owner))
-							if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
+							if(!H.client || !(H.client.prefs.check_cit_toggle(DIGESTION_NOISES)))
 								continue
 							LAZYADD(hearing_mobs, H)
 						last_hearcheck = world.time
@@ -213,7 +213,7 @@
 					to_chat(M, "<span class='warning'>[digest_alert_prey]</span>")
 					M.visible_message("<span class='notice'>You watch as [owner]'s guts loudly rumble as it finishes off a meal.</span>")
 					play_sound = pick(pred_death)
-					if(M && M.client && M.client.prefs.cit_toggles & DIGESTION_NOISES)
+					if(M && M.client && M.client.prefs.check_cit_toggle(DIGESTION_NOISES))
 						SEND_SOUND(M,prey_death)
 					M.spill_organs(FALSE,TRUE,TRUE)
 					M.stop_sound_channel(CHANNEL_PREYLOOP)
@@ -239,7 +239,7 @@
 		if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 			LAZYCLEARLIST(hearing_mobs)
 			for(var/mob/M in hearers(VORE_SOUND_RANGE, owner))
-				if(!M.client || !(M.client.prefs.cit_toggles & DIGESTION_NOISES))
+				if(!M.client || !(M.client.prefs.check_cit_toggle(DIGESTION_NOISES)))
 					continue
 				LAZYADD(hearing_mobs, M)
 				last_hearcheck = world.time

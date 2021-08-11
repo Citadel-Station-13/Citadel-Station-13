@@ -159,11 +159,13 @@
 /**
  * Called on full reset due to unreadable data or other reasons
  * Use this to do things like force keybinding resets.
+ * Defaults should be loaded with this.
  */
 /datum/preferences_collection/proc/on_full_preferences_reset(datum/preferences/prefs)
 
 /**
- * Called on full reset due to unreadable character data or other reasons
+ * Called on full reset due to unreadable character data or other reasons.
+ * Defaults should be loaded with this.
  */
 /datum/preferences_collection/proc/on_full_character_reset(datum/preferences/prefs)
 
@@ -172,3 +174,21 @@
  */
 /datum/preferences_collection/proc/is_visible(client/C)
 	return TRUE
+
+/**
+ * Called during the first stage of character randomization. Use LoadKey and SaveKey.
+ * Creates gender and species
+ */
+/datum/preferences_collection/proc/randomize_character_stage_1(datum/preferences/prefs)
+
+/**
+ * Called during the second stage of character randomization. Use LoadKey and SaveKey.
+ * Creates body and name
+ */
+/datum/preferences_collection/proc/randomize_character_stage_2(datum/preferences/prefs)
+
+/**
+ * Called during the third stage of character randomization. Use LoadKey and SaveKey.
+ * Creates everything else.
+ */
+/datum/preferences_collection/proc/randomize_character_stage_3(datum/preferences/prefs)
