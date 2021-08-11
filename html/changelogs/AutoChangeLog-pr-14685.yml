@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes: 
+  - rscdel: "Nonslimes and nonvampires will no longer be able to increase their blood to stupid heights"
