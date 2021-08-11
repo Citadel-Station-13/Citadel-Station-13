@@ -5,97 +5,83 @@
 /datum/preferences_collection/hybrid/fetish_content/content(datum/preferences/prefs)
 	. = ..()
 	var/cit_toggles = LoadKey(prefs, "cit_toggles")
+	. += "<table><tr><td width='340px' height='300px' valign='top'>"
+	. += "<h2>Fetish content prefs</h2>"
+	. += "<b>Arousal:</b><a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
+	. += "<b>Genital examine text</b>:<a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=genital_examine'>[(check_cit_toggle(GENITAL_EXAMINE)) ? "Enabled" : "Disabled"]</a><BR>"
+	. += "<b>Vore examine text</b>:<a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=vore_examine'>[(check_cit_toggle(VORE_EXAMINE)) ? "Enabled" : "Disabled"]</a><BR>"
+	. += "<b>Voracious MediHound sleepers:</b> <a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=hound_sleeper'>[(check_cit_toggle(MEDIHOUND_SLEEPER)) ? "Yes" : "No"]</a><br>"
+	. += "<b>Hear Vore Sounds:</b> <a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=toggleeatingnoise'>[(check_cit_toggle(EATING_NOISES)) ? "Yes" : "No"]</a><br>"
+	. += "<b>Hear Vore Digestion Sounds:</b> <a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=toggledigestionnoise'>[(check_cit_toggle(DIGESTION_NOISES)) ? "Yes" : "No"]</a><br>"
+	. += "<b>Allow trash forcefeeding (requires Trashcan quirk)</b> <a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=toggleforcefeedtrash'>[(check_cit_toggle(TRASH_FORCEFEED)) ? "Yes" : "No"]</a><br>"
+	. += "<b>Forced Feminization:</b> <a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=feminization'>[(check_cit_toggle(FORCED_FEM)) ? "Allowed" : "Disallowed"]</a><br>"
+	. += "<b>Forced Masculinization:</b> <a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=masculinization'>[(check_cit_toggle(FORCED_MASC)) ? "Allowed" : "Disallowed"]</a><br>"
+	. += "<b>Lewd Hypno:</b> <a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=hypno'>[(check_cit_toggle(HYPNO)) ? "Allowed" : "Disallowed"]</a><br>"
+	. += "<b>Bimbofication:</b> <a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=bimbo'>[(check_cit_toggle(BIMBOFICATION)) ? "Allowed" : "Disallowed"]</a><br>"
+	. += "</td>"
+	. += "<td width='300px' height='300px' valign='top'>"
+	. += "<h2>Other content prefs</h2>"
+	. += "<b>Breast Enlargement:</b> <a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=breast_enlargement'>[(check_cit_toggle(BREAST_ENLARGEMENT)) ? "Allowed" : "Disallowed"]</a><br>"
+	. += "<b>Penis Enlargement:</b> <a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=penis_enlargement'>[(check_cit_toggle(PENIS_ENLARGEMENT)) ? "Allowed" : "Disallowed"]</a><br>"
+	. += "<b>Hypno:</b> <a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=never_hypno'>[(check_cit_toggle(NEVER_HYPNO)) ? "Disallowed" : "Allowed"]</a><br>"
+	. += "<b>Aphrodisiacs:</b> <a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=aphro'>[(check_cit_toggle(NO_APHRO)) ? "Disallowed" : "Allowed"]</a><br>"
+	. += "<b>Ass Slapping:</b> <a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=ass_slap'>[(check_cit_toggle(NO_ASS_SLAP)) ? "Disallowed" : "Allowed"]</a><br>"
+	. += "<b>Automatic Wagging:</b> <a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=auto_wag'>[(check_cit_toggle(NO_AUTO_WAG)) ? "Disabled" : "Enabled"]</a><br>"
+	. += "</tr></table>"
+	. += "<br>"
 
-/*
-	var/cit_toggles = TOGGLES_CITADEL
+/datum/preferences_collection/hybrid/fetish_content/OnTopic(mob/user, datum/preferences/prefs, list/href_list)
+	. = ..()
+	if(href_list["cit_toggle"])
+		switch(href_list["cit_toggle"])
+			if("genital_examine")
+				auto_toggle_bitfield(prefs, "cit_toggles", GENITAL_EXAMINE)
 
+			if("vore_examine")
+				auto_toggle_bitfield(prefs, "cit_toggles", VORE_EXAMINE)
 
-if(CONTENT_PREFERENCES_TAB) // Content preferences
-dat += "<table><tr><td width='340px' height='300px' valign='top'>"
-dat += "<h2>Fetish content prefs</h2>"
-dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
-dat += "<b>Genital examine text</b>:<a href='?_src_=prefs;preference=genital_examine'>[(check_cit_toggle(GENITAL_EXAMINE)) ? "Enabled" : "Disabled"]</a><BR>"
-dat += "<b>Vore examine text</b>:<a href='?_src_=prefs;preference=vore_examine'>[(check_cit_toggle(VORE_EXAMINE)) ? "Enabled" : "Disabled"]</a><BR>"
-dat += "<b>Voracious MediHound sleepers:</b> <a href='?_src_=prefs;preference=hound_sleeper'>[(check_cit_toggle(MEDIHOUND_SLEEPER)) ? "Yes" : "No"]</a><br>"
-dat += "<b>Hear Vore Sounds:</b> <a href='?_src_=prefs;preference=toggleeatingnoise'>[(check_cit_toggle(EATING_NOISES)) ? "Yes" : "No"]</a><br>"
-dat += "<b>Hear Vore Digestion Sounds:</b> <a href='?_src_=prefs;preference=toggledigestionnoise'>[(check_cit_toggle(DIGESTION_NOISES)) ? "Yes" : "No"]</a><br>"
-dat += "<b>Allow trash forcefeeding (requires Trashcan quirk)</b> <a href='?_src_=prefs;preference=toggleforcefeedtrash'>[(check_cit_toggle(TRASH_FORCEFEED)) ? "Yes" : "No"]</a><br>"
-dat += "<b>Forced Feminization:</b> <a href='?_src_=prefs;preference=feminization'>[(check_cit_toggle(FORCED_FEM)) ? "Allowed" : "Disallowed"]</a><br>"
-dat += "<b>Forced Masculinization:</b> <a href='?_src_=prefs;preference=masculinization'>[(check_cit_toggle(FORCED_MASC)) ? "Allowed" : "Disallowed"]</a><br>"
-dat += "<b>Lewd Hypno:</b> <a href='?_src_=prefs;preference=hypno'>[(check_cit_toggle(HYPNO)) ? "Allowed" : "Disallowed"]</a><br>"
-dat += "<b>Bimbofication:</b> <a href='?_src_=prefs;preference=bimbo'>[(check_cit_toggle(BIMBOFICATION)) ? "Allowed" : "Disallowed"]</a><br>"
-dat += "</td>"
-dat +="<td width='300px' height='300px' valign='top'>"
-dat += "<h2>Other content prefs</h2>"
-dat += "<b>Breast Enlargement:</b> <a href='?_src_=prefs;preference=breast_enlargement'>[(check_cit_toggle(BREAST_ENLARGEMENT)) ? "Allowed" : "Disallowed"]</a><br>"
-dat += "<b>Penis Enlargement:</b> <a href='?_src_=prefs;preference=penis_enlargement'>[(check_cit_toggle(PENIS_ENLARGEMENT)) ? "Allowed" : "Disallowed"]</a><br>"
-dat += "<b>Hypno:</b> <a href='?_src_=prefs;preference=never_hypno'>[(check_cit_toggle(NEVER_HYPNO)) ? "Disallowed" : "Allowed"]</a><br>"
-dat += "<b>Aphrodisiacs:</b> <a href='?_src_=prefs;preference=aphro'>[(check_cit_toggle(NO_APHRO)) ? "Disallowed" : "Allowed"]</a><br>"
-dat += "<b>Ass Slapping:</b> <a href='?_src_=prefs;preference=ass_slap'>[(check_cit_toggle(NO_ASS_SLAP)) ? "Disallowed" : "Allowed"]</a><br>"
-dat += "<b>Automatic Wagging:</b> <a href='?_src_=prefs;preference=auto_wag'>[(check_cit_toggle(NO_AUTO_WAG)) ? "Disabled" : "Enabled"]</a><br>"
-dat += "</tr></table>"
-dat += "<br>"
+			if("hound_sleeper")
+				auto_toggle_bitfield(prefs, "cit_toggles", MEDIHOUND_SLEEPER)
 
-	// Citadel edit - Prefs don't work outside of this. :c
+			if("toggleeatingnoise")
+				auto_toggle_bitfield(prefs, "cit_toggles", EATING_NOISES)
 
-	if("genital_examine")
-		cit_toggles ^= GENITAL_EXAMINE
+			if("toggledigestionnoise")
+				auto_toggle_bitfield(prefs, "cit_toggles", DIGESTION_NOISES)
 
-	if("vore_examine")
-		cit_toggles ^= VORE_EXAMINE
+			if("toggleforcefeedtrash")
+				auto_toggle_bitfield(prefs, "cit_toggles", TRASH_FORCEFEED)
 
-	if("hound_sleeper")
-		cit_toggles ^= MEDIHOUND_SLEEPER
+			if("breast_enlargement")
+				auto_toggle_bitfield(prefs, "cit_toggles", BREAST_ENLARGEMENT)
 
-	if("toggleeatingnoise")
-		cit_toggles ^= EATING_NOISES
+			if("penis_enlargement")
+				auto_toggle_bitfield(prefs, "cit_toggles", PENIS_ENLARGEMENT)
 
-	if("toggledigestionnoise")
-		cit_toggles ^= DIGESTION_NOISES
+			if("feminization")
+				auto_toggle_bitfield(prefs, "cit_toggles", FORCED_FEM)
 
-	if("toggleforcefeedtrash")
-		cit_toggles ^= TRASH_FORCEFEED
+			if("masculinization")
+				auto_toggle_bitfield(prefs, "cit_toggles", FORCED_MASC)
 
-	if("breast_enlargement")
-		cit_toggles ^= BREAST_ENLARGEMENT
+			if("hypno")
+				auto_toggle_bitfield(prefs, "cit_toggles", HYPNO)
 
-	if("penis_enlargement")
-		cit_toggles ^= PENIS_ENLARGEMENT
+			if("never_hypno")
+				auto_toggle_bitfield(prefs, "cit_toggles", NEVER_HYPNO)
 
-	if("feminization")
-		cit_toggles ^= FORCED_FEM
+			if("aphro")
+				auto_toggle_bitfield(prefs, "cit_toggles", NO_APHRO)
 
-	if("masculinization")
-		cit_toggles ^= FORCED_MASC
+			if("ass_slap")
+				auto_toggle_bitfield(prefs, "cit_toggles", NO_ASS_SLAP)
 
-	if("hypno")
-		cit_toggles ^= HYPNO
+			if("bimbo")
+				auto_toggle_bitfield(prefs, "cit_toggles", BIMBOFICATION)
 
-	if("never_hypno")
-		cit_toggles ^= NEVER_HYPNO
-
-	if("aphro")
-		cit_toggles ^= NO_APHRO
-
-	if("ass_slap")
-		cit_toggles ^= NO_ASS_SLAP
-
-	if("bimbo")
-		cit_toggles ^= BIMBOFICATION
-
-	if("auto_wag")
-		cit_toggles ^= NO_AUTO_WAG
-
-	//END CITADEL EDIT
-
-
-
-
-
-	S["cit_toggles"]		>> cit_toggles
-	cit_toggles			= sanitize_integer(cit_toggles, 0, 16777215, initial(cit_toggles))
-	WRITE_FILE(S["cit_toggles"], cit_toggles)
-*/
+			if("auto_wag")
+				auto_toggle_bitfield(prefs, "cit_toggles", NO_AUTO_WAG)
+		return PREFERENCES_ONTOPIC_REFRESH
 
 /datum/preferences_collection/hybrid/fetish_content/sanitize_any(datum/preferences/prefs)
 	. = ..()

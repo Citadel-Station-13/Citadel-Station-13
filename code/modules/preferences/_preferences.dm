@@ -260,12 +260,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(version < SAVEFILE_VERSION_MIN)
 		errors += "Character slot [slot] either does not exist or was below minimum version [SAVEFILE_VERSION_MIN], and has been completely randomized."
 		S["version"] << SAVEFILE_VERSION_MAX
-		#warn better randomization process
-		#warn proper pipeline should be: 1. call full resets, and sanitize. 2. random proc is called 3. sanitize again and save
+		// First, call reset procs
 		for(var/i in SScharacter_setup.collections)
 			C.on_full_character_reset(src)
-			C.sanitize_character(src)
-			C.sanitize_any(src)
+		// Then, randomize
+		random_character()
+		// Then save.
 		save_character(S)
 		return
 	// Load
