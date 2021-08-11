@@ -18,6 +18,7 @@
 /mob/living/carbon/regenerate_icons()
 	if(mob_transforming)
 		return 1
+	update_limbs(list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_ARM, BODY_ZONE_R_LEG))
 	full_appearance.render()
 
 /mob/living/carbon/update_inv_hands()
