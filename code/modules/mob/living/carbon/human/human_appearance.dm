@@ -1,3 +1,7 @@
+/mob/living/carbon/human/init_full_appearance()
+	..()
+	update_eyes()
+
 //update eyes
 /mob/living/carbon/human/proc/update_eyes()
 	if(!dna.species)
@@ -26,5 +30,5 @@
 				left_eye.pixel_y += offset_features[OFFSET_EYES][2]
 				right_eye.pixel_x += offset_features[OFFSET_EYES][1]
 				right_eye.pixel_y += offset_features[OFFSET_EYES][2]
-			eye_overlays = list(LEFT_EYE_APPEARANCE = left_eye, RIGHT_EYE_APPEARANCE = right_eye)
+			eye_overlays = list(left_eye, right_eye)
 			full_appearance.appearance_list[BODYPART_APPEARANCE].add_data(eye_overlays, EYES_APPEARANCE)

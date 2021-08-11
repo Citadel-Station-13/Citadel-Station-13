@@ -4,5 +4,5 @@
 
 // defines for overlays or lists of overlays in appearance datums that have no other unique identifier (i.e. bodyparts use body zone)
 #define EYES_APPEARANCE			"eyes"
-#define LEFT_EYE_APPEARANCE		"left_eye"
-#define RIGHT_EYE_APPEARANCE 	"right_eye"
+#define LEFT_EYE_APPEARANCE		1 // it's always the first of the two
+#define RIGHT_EYE_APPEARANCE 	2 // it's always the second of the two
