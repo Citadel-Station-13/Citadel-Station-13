@@ -1,0 +1,4 @@
+author: "cadyn"
+delete-after: True
+changes: 
+  - server: "precompile.sh and build.sh updated, auxmos set to 0.2.3 in dependencies.sh"
