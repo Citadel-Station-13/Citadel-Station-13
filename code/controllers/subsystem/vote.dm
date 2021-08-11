@@ -361,7 +361,7 @@ SUBSYSTEM_DEF(vote)
 				var/datum/dynamic_storyteller/picked
 				for(var/T in runnable_storytellers)
 					var/datum/dynamic_storyteller/S = T
-					if(stored_gamemode_votes[initial(S.name)] == 1 && CHECK_BITFIELD(initial(S.flags), FORCE_IF_WON))
+					if(stored_gamemode_votes[initial(S.name)] == 1 && (initial(S.flags) & FORCE_IF_WON))
 						picked = S
 					runnable_storytellers[S] *= round(stored_gamemode_votes[initial(S.name)]*100000,1)
 				if(!picked)

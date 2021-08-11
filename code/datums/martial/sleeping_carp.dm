@@ -66,7 +66,7 @@
 	var/damage = damage_roll(A,D)
 	A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
-	if((D.mobility_flags & MOBILITY_STAND))
+	if(D.mobility_flags & MOBILITY_STAND)
 		D.apply_damage(damage, BRUTE, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
 		D.DefaultCombatKnockdown(50, override_hardstun = 0.01, override_stamdmg = 0)
 		D.apply_damage(damage + 35, STAMINA, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND) //A cit specific change form the tg port to really punish anyone who tries to stand up

@@ -181,15 +181,15 @@
 
 	data["selected"] = selected_list
 	data["prefs"] = list(
-		"digestable" = CHECK_BITFIELD(host.vore_flags, DIGESTABLE),
-		"devourable" = CHECK_BITFIELD(host.vore_flags, DEVOURABLE),
-		"feeding" = CHECK_BITFIELD(host.vore_flags, FEEDING),
-		"absorbable" = CHECK_BITFIELD(host.vore_flags, ABSORBABLE),
-		"allowmobvore" = CHECK_BITFIELD(host.vore_flags, MOBVORE),
-		"vore_sounds" = CHECK_BITFIELD(host.client.prefs.cit_toggles, EATING_NOISES),
-		"digestion_sounds" = CHECK_BITFIELD(host.client.prefs.cit_toggles, DIGESTION_NOISES),
-		"lickable" = CHECK_BITFIELD(host.vore_flags, LICKABLE),
-		"smellable" = CHECK_BITFIELD(host.vore_flags, SMELLABLE),
+		"digestable" = (host.vore_flags & DIGESTABLE),
+		"devourable" = (host.vore_flags & DEVOURABLE),
+		"feeding" = (host.vore_flags & FEEDING),
+		"absorbable" = (host.vore_flags & ABSORBABLE),
+		"allowmobvore" = (host.vore_flags & MOBVORE),
+		"vore_sounds" = (host.client.prefs.cit_toggles & EATING_NOISES),
+		"digestion_sounds" = (host.client.prefs.cit_toggles & DIGESTION_NOISES),
+		"lickable" = (host.vore_flags & LICKABLE),
+		"smellable" = (host.vore_flags & SMELLABLE),
 	)
 
 	return data

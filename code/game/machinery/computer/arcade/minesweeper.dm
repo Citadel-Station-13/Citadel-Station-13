@@ -28,7 +28,7 @@
 	var/spark_spam = FALSE
 
 /obj/machinery/computer/arcade/minesweeper/interact(mob/user)
-	var/emagged = CHECK_BITFIELD(obj_flags, EMAGGED)
+	var/emagged = (obj_flags & EMAGGED)
 	var/dat
 	if(game_status == MINESWEEPER_GAME_MAIN_MENU)
 		dat += "<head><title>Minesweeper</title></head><div align='center'><b>Minesweeper[emagged ? " <font color='red'>EXTREME EDITION</font>: Iteration <font color='[randomcolour]'>#[randomnumber]</font>" : ""]</b><br>"	//Different colour mix for every random number made
@@ -61,7 +61,7 @@
 	var/static_web = "<head><title>Minesweeper</title></head><div align='center'><b>Minesweeper</b><br>"	//When we need to revert to the main menu we set web as this
 	web = static_web
 
-	if(CHECK_BITFIELD(obj_flags, EMAGGED))
+	if(obj_flags & EMAGGED)
 		web = "<head><title>Minesweeper</title></head><body><div align='center'><b>Minesweeper <font color='red'>EXTREME EDITION</font>: Iteration <font color='[randomcolour]'>#[randomnumber]</font></b><br>"	//Different colour mix for every random number made
 		if(!spark_spam)
 			do_sparks(5, 1, src)
@@ -69,7 +69,7 @@
 			addtimer(CALLBACK(src, .proc/reset_spark_spam), 30)
 
 
-	var/startup_sound = CHECK_BITFIELD(obj_flags, EMAGGED) ? 'sound/arcade/minesweeper_emag2.ogg' : 'sound/arcade/minesweeper_startup.ogg'
+	var/startup_sound = (obj_flags & EMAGGED) ? 'sound/arcade/minesweeper_emag2.ogg' : 'sound/arcade/minesweeper_startup.ogg'
 
 	if(href_list["Main_Menu"])
 		game_status = MINESWEEPER_GAME_MAIN_MENU
@@ -121,7 +121,7 @@
 			flag_text = "OFF"
 
 	if(game_status == MINESWEEPER_GAME_MAIN_MENU)
-		if(CHECK_BITFIELD(obj_flags, EMAGGED))
+		if(obj_flags & EMAGGED)
 			playsound(loc, 'sound/arcade/minesweeper_emag2.ogg', 50, FALSE, extrarange = -3)
 			web += "<font size='2'>Explode in the game, explode in real life!<br>What difficulty do you want to play?<br><br><br><br><b><a href='byond://?src=[REF(src)];Easy=1'><font color='#cc66ff'>Easy (9x9 board, 10 mines)</font></a><br><a href='byond://?src=[REF(src)];Intermediate=1'><font color='#cc66ff'>Intermediate (16x16 board, 40 mines)</font></a><br><a href='byond://?src=[REF(src)];Hard=1'><font color='#cc66ff'>Hard (16x30 board, 99 mines)</font></a><br><a href='byond://?src=[REF(src)];Custom=1'><font color='#cc66ff'>Custom</font>"
 		else
@@ -156,7 +156,7 @@
 								else
 									if(game_status != MINESWEEPER_GAME_LOST && game_status != MINESWEEPER_GAME_WON)
 										game_status = MINESWEEPER_GAME_LOST
-										if(CHECK_BITFIELD(obj_flags, EMAGGED) && !exploding_hell)
+										if((obj_flags & EMAGGED) && !exploding_hell)
 											exploding_hell  = TRUE
 											explode_EVERYTHING()
 											if(QDELETED(src))
@@ -248,7 +248,7 @@
 		else
 			playsound(loc, 'sound/arcade/minesweeper_win.ogg', 50, FALSE, extrarange = -3)
 			say("You cleared the board of all mines! Congratulations!")
-			if(CHECK_BITFIELD(obj_flags, EMAGGED))
+			if(obj_flags & EMAGGED)
 				var/itemname
 				switch(rand(1,3))
 					if(1)
@@ -290,13 +290,13 @@
 
 /obj/machinery/computer/arcade/minesweeper/emag_act(mob/user)
 	. = ..()
-	if(CHECK_BITFIELD(obj_flags, EMAGGED))
+	if(obj_flags & EMAGGED)
 		return
 	desc = "An arcade machine that generates grids. It's clunking and sparking everywhere, almost as if threatening to explode at any moment!"
 	do_sparks(5, 1, src)
 	randomnumber = rand(1,255)
 	randomcolour = rgb(randomnumber,randomnumber/2,randomnumber/3)
-	ENABLE_BITFIELD(obj_flags, EMAGGED)
+	obj_flags |= EMAGGED
 	if(game_status == MINESWEEPER_GAME_MAIN_MENU)
 		to_chat(user, "<span class='warning'>An ominous tune plays from the arcade's speakers!</span>")
 		playsound(user, 'sound/arcade/minesweeper_emag1.ogg', 100, FALSE, extrarange = 3)

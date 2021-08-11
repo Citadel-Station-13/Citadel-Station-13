@@ -326,7 +326,7 @@
 		cleaning_cycles--
 		cleaning = TRUE
 		for(var/mob/living/carbon/C in (touchable_items))
-			if((C.status_flags & GODMODE) || !CHECK_BITFIELD(C.vore_flags, DIGESTABLE))
+			if((C.status_flags & GODMODE) || !(C.vore_flags & DIGESTABLE))
 				items_preserved += C
 			else
 				C.adjustBruteLoss(2)
@@ -335,7 +335,7 @@
 			var/atom/target = pick(touchable_items)
 			if(iscarbon(target)) //Handle the target being a mob
 				var/mob/living/carbon/T = target
-				if(T.stat == DEAD && CHECK_BITFIELD(T.vore_flags, DIGESTABLE))	//Mob is now dead
+				if(T.stat == DEAD && (T.vore_flags & DIGESTABLE))	//Mob is now dead
 					message_admins("[key_name(hound)] has digested [key_name(T)] as a dogborg. ([hound ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[hound.x];Y=[hound.y];Z=[hound.z]'>JMP</a>" : "null"])")
 					to_chat(hound,"<span class='notice'>You feel your belly slowly churn around [T], breaking them down into a soft slurry to be used as power for your systems.</span>")
 					to_chat(T,"<span class='notice'>You feel [hound]'s belly slowly churn around your form, breaking you down into a soft slurry to be used as power for [hound]'s systems.</span>")
@@ -433,7 +433,7 @@
 	var/mob/living/silicon/robot/hound = get_host()
 	if(!hound || !istype(target) || !proximity || target.anchored)
 		return
-	if (!CHECK_BITFIELD(target.vore_flags,DEVOURABLE))
+	if (!(target.vore_flags & DEVOURABLE))
 		to_chat(user, "The target registers an error code. Unable to insert into [src].")
 		return
 	if(patient)

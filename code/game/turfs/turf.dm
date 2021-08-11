@@ -253,7 +253,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			if(!thing.Cross(mover))
 				if(QDELETED(mover))		//Mover deleted from Cross/CanPass, do not proceed.
 					return FALSE
-				if((mover.movement_type & UNSTOPPABLE))
+				if(mover.movement_type & UNSTOPPABLE)
 					mover.Bump(thing)
 					continue
 				else
@@ -512,7 +512,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/shove_act(mob/living/target, mob/living/user, pre_act = FALSE)
 	var/list/possibilities
 	for(var/obj/O in contents)
-		if(CHECK_BITFIELD(O.obj_flags, SHOVABLE_ONTO))
+		if(O.obj_flags & SHOVABLE_ONTO)
 			LAZYADD(possibilities, O)
 		else if(!O.CanPass(target, src))
 			return FALSE

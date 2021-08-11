@@ -21,7 +21,7 @@
 	density = !lying && !HAS_TRAIT(src, TRAIT_LIVING_NO_DENSITY)
 
 /mob/living/CanPass(atom/movable/mover, turf/target)
-	if((mover.pass_flags & PASSMOB))
+	if(mover.pass_flags & PASSMOB)
 		return TRUE
 	if(istype(mover, /obj/item/projectile))
 		var/obj/item/projectile/P = mover

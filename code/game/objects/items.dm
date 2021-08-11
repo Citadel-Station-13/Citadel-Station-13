@@ -1006,7 +1006,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
   */
 /obj/item/proc/set_slowdown(new_slowdown)
 	slowdown = new_slowdown
-	if(CHECK_BITFIELD(item_flags, IN_INVENTORY))
+	if(item_flags & IN_INVENTORY)
 		var/mob/living/L = loc
 		if(istype(L))
 			L.update_equipment_speed_mods()

@@ -117,7 +117,7 @@
 		for(var/obj/item/organ/genital/dicc in internal_organs)
 			if(istype(dicc) && dicc.is_exposed())
 				. += "[dicc.desc]"
-	if(CHECK_BITFIELD(user.client?.prefs.cit_toggles, VORE_EXAMINE))
+	if(user.client?.prefs.cit_toggles & VORE_EXAMINE)
 		var/cursed_stuff = attempt_vr(src,"examine_bellies",args) //vore Code
 		if(cursed_stuff)
 			. += cursed_stuff

@@ -384,7 +384,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 				qdel(A)
 			return
 
-	if((mode & PAINT_MODE))
+	if(mode & PAINT_MODE)
 		if(istype(A, /obj/machinery/atmospherics/pipe) && !istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
 			var/obj/machinery/atmospherics/pipe/P = A
 			to_chat(user, "<span class='notice'>You start painting \the [P] [paint_color]...</span>")

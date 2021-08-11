@@ -48,7 +48,7 @@
 		else
 			desc += " You estimate that they're [uppertext(size)]-cups."
 
-	if(CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION) && aroused_state)
+	if((genital_flags & GENITAL_FUID_PRODUCTION) && aroused_state)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[fluid_id]
 		if(R)
 			desc += " They're leaking [lowertext(R.name)]."

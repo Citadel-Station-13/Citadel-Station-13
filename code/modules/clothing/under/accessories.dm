@@ -280,7 +280,7 @@
 	if(ishuman(M) && (user.a_intent == INTENT_HELP))
 
 		if(M.wear_suit)
-			if((M.wear_suit.flags_inv & HIDEJUMPSUIT)) //Check if the jumpsuit is covered
+			if(M.wear_suit.flags_inv & HIDEJUMPSUIT) //Check if the jumpsuit is covered
 				to_chat(user, "<span class='warning'>Medals can only be pinned on jumpsuits.</span>")
 				return
 

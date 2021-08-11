@@ -102,7 +102,7 @@ Property weights are added to the config weight of the ruleset. They are:
 					if(property in rule.property_weights) // just treat it as 0 if it's not in there
 						property_weight += rule.property_weights[property] * property_weights[property]
 				var/calced_weight = (rule.get_weight() + property_weight) * rule.weight_mult
-				if(CHECK_BITFIELD(rule.flags, MINOR_RULESET))
+				if(rule.flags & MINOR_RULESET)
 					calced_weight *= minor_round_weight_mult
 				if(calced_weight > 0) // negatives in the list might cause problems
 					drafted_rules[rule] = calced_weight
@@ -129,7 +129,7 @@ Property weights are added to the config weight of the ruleset. They are:
 		// if there are antags OR the rule is an antag rule, antag_acceptable will be true.
 		if (rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level))
 			// Classic secret : only autotraitor/minor roles
-			if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET)))
+			if (GLOB.dynamic_classic_secret && !(rule.flags & TRAITOR_RULESET))
 				continue
 			rule.trim_candidates()
 			if (rule.ready())
@@ -162,7 +162,7 @@ Property weights are added to the config weight of the ruleset. They are:
 	for (var/datum/dynamic_ruleset/latejoin/rule in mode.latejoin_rules)
 		if (rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level - mode.threat))
 			// Classic secret : only autotraitor/minor roles
-			if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET)))
+			if (GLOB.dynamic_classic_secret && !(rule.flags & TRAITOR_RULESET))
 				continue
 			// No stacking : only one round-ender, unless threat level > stacking_limit.
 			if (mode.threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
@@ -291,7 +291,7 @@ Property weights are added to the config weight of the ruleset. They are:
 	for (var/datum/dynamic_ruleset/midround/rule in mode.midround_rules)
 		if (rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level))
 			// Classic secret : only autotraitor/minor roles
-			if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET)))
+			if (GLOB.dynamic_classic_secret && !(rule.flags & TRAITOR_RULESET))
 				continue
 			rule.trim_candidates()
 			if (rule.ready())
@@ -303,7 +303,7 @@ Property weights are added to the config weight of the ruleset. They are:
 	for (var/datum/dynamic_ruleset/latejoin/rule in mode.latejoin_rules)
 		if (rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level))
 			// Classic secret : only autotraitor/minor roles
-			if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET)))
+			if (GLOB.dynamic_classic_secret && !(rule.flags & TRAITOR_RULESET))
 				continue
 			// No stacking : only one round-ender, unless threat level > stacking_limit.
 			if (mode.threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)

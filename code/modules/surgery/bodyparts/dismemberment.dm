@@ -170,9 +170,9 @@
 
 	for(var/i in wounds)
 		var/datum/wound/iter_wound = i
-		if((iter_wound.wound_flags & MANGLES_BONE))
+		if(iter_wound.wound_flags & MANGLES_BONE)
 			. |= BODYPART_MANGLED_BONE
-		if((iter_wound.wound_flags & MANGLES_FLESH))
+		if(iter_wound.wound_flags & MANGLES_FLESH)
 			. |= BODYPART_MANGLED_FLESH
 
 /**

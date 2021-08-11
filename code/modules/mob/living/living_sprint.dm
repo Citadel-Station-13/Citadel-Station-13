@@ -30,7 +30,7 @@
 		return
 	if(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
 		return
-	ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_SPRINT_ACTIVE)
+	combat_flags |= COMBAT_FLAG_SPRINT_ACTIVE
 	add_movespeed_modifier(/datum/movespeed_modifier/sprinting)
 	if(update_icon)
 		update_sprint_icon()
@@ -46,7 +46,7 @@
 /mob/living/proc/enable_intentional_sprint_mode()
 	if((combat_flags & COMBAT_FLAG_SPRINT_TOGGLED) && (combat_flags & COMBAT_FLAG_SPRINT_ACTIVE))
 		return
-	ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_SPRINT_TOGGLED)
+	combat_flags |= COMBAT_FLAG_SPRINT_TOGGLED
 	if(!HAS_TRAIT(src, TRAIT_SPRINT_LOCKED) && !(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE))
 		enable_sprint_mode(FALSE)
 	update_sprint_icon()

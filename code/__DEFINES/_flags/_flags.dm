@@ -5,9 +5,7 @@
 #define NONE 0
 
 //for convenience
-#define ENABLE_BITFIELD(variable, flag) (variable |= (flag))
 #define DISABLE_BITFIELD(variable, flag) (variable &= ~(flag))
-#define CHECK_BITFIELD(variable, flag) (variable & (flag))
 #define TOGGLE_BITFIELD(variable, flag) (variable ^= (flag))
 #define COPY_SPECIFIC_BITFIELDS(a,b,flags)\
 	do{\
@@ -154,7 +152,7 @@ GLOBAL_LIST_INIT(bitflags, list(
 
 //Mob mobility var flags
 /// any flag
-#define CHECK_MOBILITY(target, flags) CHECK_BITFIELD(target.mobility_flags, flags)
+#define CHECK_MOBILITY(target, flags) (target.mobility_flags & flags)
 #define CHECK_ALL_MOBILITY(target, flags) CHECK_MULTIPLE_BITFIELDS(target.mobility_flags, flags)
 
 /// can move

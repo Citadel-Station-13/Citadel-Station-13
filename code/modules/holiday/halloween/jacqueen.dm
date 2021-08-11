@@ -471,7 +471,7 @@
 	if(busy)
 		DISABLE_BITFIELD(., MOBILITY_MOVE)
 	else
-		ENABLE_BITFIELD(., MOBILITY_MOVE)
+		. |= MOBILITY_MOVE
 	mobility_flags = .
 
 

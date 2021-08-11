@@ -125,7 +125,7 @@
 				if(IS_STAMCRIT(src))
 					to_chat(src, "<span class='warning'>You're too exhausted to crawl under [L].</span>")
 					return TRUE
-				ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_ATTEMPTING_CRAWL)
+				combat_flags |= COMBAT_FLAG_ATTEMPTING_CRAWL
 				visible_message("<span class='notice'>[src] is attempting to crawl under [L].</span>",
 					"<span class='notice'>You are now attempting to crawl under [L].</span>",
 					target = L, target_message = "<span class='notice'>[src] is attempting to crawl under you.</span>")

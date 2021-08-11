@@ -83,7 +83,7 @@
 		var/obj/structure/closet/C = container
 		ignore_this += C.lockerelectronics
 	for(var/atom/movable/AM in container.contents - ignore_this)
-		if((P.errors & MANIFEST_ERROR_CONTENTS))
+		if(P.errors & MANIFEST_ERROR_CONTENTS)
 			if(prob(50))
 				P.info += "<li>[AM.name]</li>"
 			else

@@ -145,7 +145,7 @@
 		. = TRUE
 	..()
 	if(.)
-		ENABLE_BITFIELD(item_flags, NOBLUDGEON)
+		item_flags |= NOBLUDGEON
 
 /obj/item/reagent_containers/rag/towel/equipped(mob/living/user, slot)
 	. = ..()
