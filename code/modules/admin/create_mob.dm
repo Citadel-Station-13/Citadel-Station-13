@@ -52,6 +52,4 @@
 
 	SEND_SIGNAL(H, COMSIG_HUMAN_ON_RANDOMIZE)
 
-	H.update_body(TRUE)
-	H.update_hair()
-	H.update_body_parts()
+	H.update_eyes() //note: new overlay system proc

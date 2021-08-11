@@ -149,7 +149,6 @@
 		H.dna?.update_ui_block(DNA_LEFT_EYE_COLOR_BLOCK)
 		H.dna?.update_ui_block(DNA_RIGHT_EYE_COLOR_BLOCK)
 		REMOVE_TRAIT(H, TRAIT_CULT_EYES, "valid_cultist")
-		H.update_body()
 		H.cut_overlays()
 		H.regenerate_icons()
 

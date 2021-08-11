@@ -30,7 +30,7 @@
 	H.right_eye_color = on ? "ff0" : right_eye_color
 	H.dna.update_ui_block(DNA_LEFT_EYE_COLOR_BLOCK)
 	H.dna.update_ui_block(DNA_RIGHT_EYE_COLOR_BLOCK)
-	H.update_body()
+	H.update_eyes()
 
 /obj/item/implant/hijack/implant(mob/living/target, mob/user, silent = FALSE)
 	if(..())

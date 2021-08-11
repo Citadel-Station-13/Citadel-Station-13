@@ -391,10 +391,7 @@
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()
 	if(icon_update)
-		update_body()
-		update_hair()
-		update_body_parts()
-		update_mutations_overlay()// no lizard with human hulk overlay please.
+		regenerate_icons()
 
 
 /mob/proc/has_dna()
@@ -438,10 +435,7 @@
 	SEND_SIGNAL(src, COMSIG_HUMAN_HARDSET_DNA, ui, mutation_index, newreal_name, newblood_type, mrace, newfeatures)
 
 	if(mrace || newfeatures || ui)
-		update_body()
-		update_hair()
-		update_body_parts()
-		update_mutations_overlay()
+		regenerate_icons()
 
 
 /mob/living/carbon/proc/create_dna()
@@ -476,12 +470,7 @@
 	facial_hair_style = GLOB.facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), GLOB.facial_hair_styles_list.len)]
 	hair_style = GLOB.hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), GLOB.hair_styles_list.len)]
 	if(icon_update)
-		update_body()
-		update_hair()
-		if(mutcolor_update)
-			update_body_parts()
-		if(mutations_overlay_update)
-			update_mutations_overlay()
+		regenerate_icons() //TODO: refactor this into new overlay system
 
 
 /mob/proc/domutcheck()

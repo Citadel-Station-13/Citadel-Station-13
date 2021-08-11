@@ -73,6 +73,11 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_fire()
 	..((fire_stacks > 3) ? "Standing" : "Generic_mob_burning")
 
+/mob/living/carbon/human/regenerate_icons()
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
+		if(!..())
+			update_eyes()
+
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
