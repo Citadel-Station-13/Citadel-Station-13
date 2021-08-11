@@ -13,7 +13,7 @@
 	full_appearance = new /datum/appearance/full(src)
 	var/datum/appearance/limbs_appearance = new(src)
 	limbs_appearance.render_data = get_limb_appearance()
-	full_appearance.appearance_list = list(BODYPART_APPEARANCE = limbs_appearance)
+	full_appearance.appearance_list += list(BODYPART_APPEARANCE = limbs_appearance)
 	full_appearance.render()
 
 // update a specific limb from its zone by removing it and adding it
