@@ -11,8 +11,8 @@
 // should be ran upon the carbon being initialized
 /mob/living/carbon/proc/init_full_appearance()
 	full_appearance = new /datum/appearance/full(src)
-	var/datum/appearance/limbs_appearance = new(src)
-	full_appearance.appearance_list[BODYPART_APPEARANCE] = limbs_appearance
+	full_appearance.appearance_list[BODYPART_APPEARANCE] = new /datum/appearance(src)
+	full_appearance.appearance_list[CLOTHING_APPEARANCE] = new /datum/appearance(src)
 	update_limbs(list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_ARM, BODY_ZONE_R_LEG))
 
 // update a specific limb from its zone by removing it and adding it

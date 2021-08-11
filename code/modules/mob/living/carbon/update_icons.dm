@@ -87,7 +87,7 @@
 
 
 /mob/living/carbon/update_inv_wear_mask()
-	remove_overlay(FACEMASK_LAYER)
+	full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(FACEMASK_LAYER))
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 		return
@@ -98,13 +98,12 @@
 
 	if(wear_mask)
 		if(!(head && (head.flags_inv & HIDEMASK)))
-			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi', override_state = wear_mask.icon_state)
+			var/mutable_appearance/mask_overlay = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi', override_state = wear_mask.icon_state)
+			full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(mask_overlay, num2text(FACEMASK_LAYER))
 		update_hud_wear_mask(wear_mask)
 
-	apply_overlay(FACEMASK_LAYER)
-
 /mob/living/carbon/update_inv_neck()
-	remove_overlay(NECK_LAYER)
+	full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(NECK_LAYER))
 
 	if(client && hud_used && hud_used.inv_slots[SLOT_NECK])
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_NECK]
@@ -112,10 +111,10 @@
 
 	if(wear_neck)
 		if(!(head && (head.flags_inv & HIDENECK)))
-			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = 'icons/mob/clothing/neck.dmi', override_state = wear_neck.icon_state)
+			var/mutable_appearance/neck_overlay = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = 'icons/mob/clothing/neck.dmi', override_state = wear_neck.icon_state)
+			full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(neck_overlay, num2text(NECK_LAYER))
 		update_hud_neck(wear_neck)
 
-	apply_overlay(NECK_LAYER)
 
 /mob/living/carbon/update_inv_back()
 	remove_overlay(BACK_LAYER)
@@ -128,10 +127,8 @@
 		overlays_standing[BACK_LAYER] = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/mob/clothing/back.dmi', override_state = back.icon_state)
 		update_hud_back(back)
 
-	apply_overlay(BACK_LAYER)
-
 /mob/living/carbon/update_inv_head()
-	remove_overlay(HEAD_LAYER)
+	full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(HEAD_LAYER))
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 		return
@@ -141,30 +138,27 @@
 		inv?.update_icon()
 
 	if(head)
-		overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head.dmi', override_state = head.icon_state)
+		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head.dmi', override_state = head.icon_state)
+		full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(head_overlay, num2text(HEAD_LAYER))
 		update_hud_head(head)
-
-	apply_overlay(HEAD_LAYER)
 
 
 /mob/living/carbon/update_inv_handcuffed()
-	remove_overlay(HANDCUFF_LAYER)
+	full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(HANDCUFF_LAYER))
 	if(handcuffed)
 		var/mutable_appearance/cuffs = mutable_appearance('icons/mob/clothing/restraints.dmi', handcuffed.item_state, -HANDCUFF_LAYER)
 		cuffs.color = handcuffed.color
 
-		overlays_standing[HANDCUFF_LAYER] = cuffs
-		apply_overlay(HANDCUFF_LAYER)
+		full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(cuffs, num2text(HANDCUFF_LAYER))
 
 /mob/living/carbon/update_inv_legcuffed()
-	remove_overlay(LEGCUFF_LAYER)
+	full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(LEGCUFF_LAYER))
 	clear_alert("legcuffed")
 	if(legcuffed)
 		var/mutable_appearance/legcuffs = mutable_appearance('icons/mob/clothing/restraints.dmi', legcuffed.item_state, -LEGCUFF_LAYER)
 		legcuffs.color = legcuffed.color
 
-		overlays_standing[LEGCUFF_LAYER] = legcuffs
-		apply_overlay(LEGCUFF_LAYER)
+		full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(legcuffs, num2text(LEGCUFF_LAYER))
 		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = legcuffed)
 
 //mob HUD updates for items in our inventory
