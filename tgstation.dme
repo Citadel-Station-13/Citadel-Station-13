@@ -3079,6 +3079,7 @@
 #include "code\modules\preferences\preview.dm"
 #include "code\modules\preferences\accessors\global\keybindings.dm"
 #include "code\modules\preferences\accessors\hybrid\antagonism.dm"
+#include "code\modules\preferences\accessors\hybrid\fetish_content.dm"
 #include "code\modules\preferences\collections\sanitization_helpers.dm"
 #include "code\modules\preferences\collections\toggle_helpers.dm"
 #include "code\modules\preferences\collections\character\_character.dm"

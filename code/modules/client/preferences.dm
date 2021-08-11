@@ -6,11 +6,6 @@
 	var/client/parent
 	//doohickeys for savefiles
 
-	var/path
-	var/vr_path
-	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
-	var/max_save_slots = 24
-
 	var/icon/custom_holoform_icon
 	var/list/cached_holoform_icons
 	var/last_custom_holoform = 0
