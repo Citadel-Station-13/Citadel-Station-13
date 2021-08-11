@@ -14,7 +14,7 @@
 	return prefs.LoadKeyCharacter("__[save_key]_override")
 
 /datum/preferences_collection/hybrid/proc/SetOverride(datum/preferences/prefs, value)
-	return prefs.SaveKeyCharacter("__[save_key]_override", value)
+	return prefs.SetKeyCharacter("__[save_key]_override", value)
 
 /datum/preferences_collection/hybrid/content(datum/preferences/prefs)
 	. = ..()

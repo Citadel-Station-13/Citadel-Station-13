@@ -179,7 +179,7 @@
 		if(choice == "Cancel")
 			return
 		SaveKey(prefs, "hotkeys", choice == "Hotkey")
-		var/list/key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
+		var/list/key_bindings = (choice == "Hotkeys") ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
 		SaveKey(prefs, "keybinds", key_bindings)
 		SaveKey(prefs, "keybinds_modless", list())
 		return PREFERENCES_ONTOPIC_REFRESH | PREFERENCES_ONTOPIC_RESYNC_CACHE | PREFERENCES_ONTOPIC_KEYBIND_REASSERT
@@ -192,7 +192,7 @@
 /datum/preferences_collection/global/keybindings/proc/keybind_reset_prompt(datum/preferences/prefs)
 	if(!prefs.parent)
 		return
-	var/choice = tgalert(pref.parent.mob, "Your basic keybindings need to be reset, emotes will remain as before. Would you prefer 'hotkey' or 'classic' mode?", "Reset keybindings", "Hotkey", "Classic")
+	var/choice = tgalert(prefs.parent.mob, "Your basic keybindings need to be reset, emotes will remain as before. Would you prefer 'hotkey' or 'classic' mode?", "Reset keybindings", "Hotkey", "Classic")
 	SaveKey(prefs, "hotkeys", choice != "Classic")
 	force_reset_keybindings_direct(prefs, choice != "Classic")
 
@@ -247,7 +247,7 @@
 
 /datum/preferences_collection/global/keybindings/on_full_preferences_reset(datum/preferences/prefs)
 	if(!length(LoadKey(prefs, "keybinds")))
-		to_chat(prefs.client, "<span class='danger'>Preferences Reset Error: No keybindings detected. Resetting. Please recheck your keybindings manually.</span>")
+		to_chat(prefs.parent, "<span class='danger'>Preferences Reset Error: No keybindings detected. Resetting. Please recheck your keybindings manually.</span>")
 		force_reset_keybindings_direct(prefs, TRUE)
 		addtimer(CALLBACK(src, .proc/keybind_reset_prompt, prefs), 30)
 

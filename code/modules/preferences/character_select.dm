@@ -35,7 +35,7 @@
 	if(href_list["load_character_slot"])
 		var/slot = sanitize_num_clamp(text2num(href_list["load_character_slot"], 1, CONFIG_GET(number/max_save_slots), 1, TRUE))
 		var/list/migration_errors = list()
-		load_character(S, slot, TRUE, migration_errors)
+		load_character(null, slot, TRUE, migration_errors)
 		if(migration_errors.len)
 			to_chat(user, "<span class='warning'>Error while loading character:<br>[migration_errors.Join("<br>")]")
 		return PREFERENCES_ONTOPIC_REFRESH | PREFERENCES_ONTOPIC_CHARACTER_SWAP

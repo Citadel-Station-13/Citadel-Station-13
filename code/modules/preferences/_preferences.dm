@@ -81,7 +81,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			debug_message_queue += "Creating new savefile."
 		if(PREFERENCES_LOAD_LEGACY_CONVERSION)
 			debug_message_queue += "Legacy savefile detected; Beginning full conversion."
-
+#warn call full savefile overhaul procs on global, then characters 1 through 32. should catch everything.
 
 #warn rethink the initial modernization update as the old savefile format is too old to work with /global, etc
 #warn maybe if it detects the old format (by just renaming the file) it can do the load
