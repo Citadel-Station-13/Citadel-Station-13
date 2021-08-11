@@ -7,7 +7,7 @@
 	var/cit_toggles = LoadKey(prefs, "cit_toggles")
 	. += "<table><tr><td width='340px' height='300px' valign='top'>"
 	. += "<h2>Fetish content prefs</h2>"
-	. += "<b>Arousal:</b><a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
+	. += "<b>Arousal:</b><a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=arousable'>[(cit_toggles & AROUSABLE) == TRUE ? "Enabled" : "Disabled"]</a><BR>"
 	. += "<b>Genital examine text</b>:<a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=genital_examine'>[(cit_toggles & GENITAL_EXAMINE) ? "Enabled" : "Disabled"]</a><BR>"
 	. += "<b>Vore examine text</b>:<a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=vore_examine'>[(cit_toggles & VORE_EXAMINE) ? "Enabled" : "Disabled"]</a><BR>"
 	. += "<b>Voracious MediHound sleepers:</b> <a href='?src=[REF(src)];parent=[REF(prefs)];cit_toggle=hound_sleeper'>[(cit_toggles & MEDIHOUND_SLEEPER) ? "Yes" : "No"]</a><br>"
@@ -96,7 +96,7 @@
 
 /datum/preferences_collection/hybrid/fetish_content/on_full_global_reset(datum/preferences/prefs)
 	. = ..()
-	prefs.SetKeyGlobal(PREFERENCES_SAVE_KEY_FETISH, "cit_toggles", CIT_TOGGLES)
+	prefs.SetKeyGlobal(PREFERENCES_SAVE_KEY_FETISH, "cit_toggles", TOGGLES_CITADEL)
 
 /datum/preferences_collection/hybrid/fetish_content/savefile_full_overhaul_global(datum/preferences/prefs, list/data, savefile/S, list/errors, current_version)
 	. = ..()
