@@ -492,15 +492,20 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_inv_back()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
-		..()
-		var/mutable_appearance/back_overlay = overlays_standing[BACK_LAYER]
-		if(back_overlay)
-			remove_overlay(BACK_LAYER)
+		full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(BACK_LAYER))
+
+		if(client && hud_used)
+			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_BACK]
+			inv?.update_icon()
+
+		if(back)
+			var/mutable_appearance/back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/mob/clothing/back.dmi', override_state = back.icon_state)
 			if(OFFSET_BACK in dna.species.offset_features)
 				back_overlay.pixel_x += dna.species.offset_features[OFFSET_BACK][1]
 				back_overlay.pixel_y += dna.species.offset_features[OFFSET_BACK][2]
-				overlays_standing[BACK_LAYER] = back_overlay
-			apply_overlay(BACK_LAYER)
+			full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(back_overlay, num2text(BACK_LAYER))
+			update_hud_back(back)
+
 
 /proc/wear_alpha_masked_version(state, icon, layer, female, alpha_mask)
 	var/mask = "-[alpha_mask]"

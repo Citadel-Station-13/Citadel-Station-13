@@ -117,14 +117,15 @@
 
 
 /mob/living/carbon/update_inv_back()
-	remove_overlay(BACK_LAYER)
+	full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(BACK_LAYER))
 
 	if(client && hud_used)
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_BACK]
 		inv?.update_icon()
 
 	if(back)
-		overlays_standing[BACK_LAYER] = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/mob/clothing/back.dmi', override_state = back.icon_state)
+		var/mutable_appearance/back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/mob/clothing/back.dmi', override_state = back.icon_state)
+		full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(back_overlay, num2text(BACK_LAYER))
 		update_hud_back(back)
 
 /mob/living/carbon/update_inv_head()
