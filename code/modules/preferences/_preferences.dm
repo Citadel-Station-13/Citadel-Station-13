@@ -58,6 +58,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	load_metadata(S)
 	// Store if we need to do migrations first.
 	S.cd = "/"
+#warn rethink the initial modernization update as the old savefile format is too old to work with /global, etc
+#warn maybe if it detects the old format (by just renaming the file) it can do the load
+#warn that way we can reset savefile version to 0 too
 	// Load preferences - This will perform migrations if needed
 	load_preferences(S, migration_errors)
 	// Load default slot
