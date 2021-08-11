@@ -150,7 +150,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_inv_wear_id()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
-		remove_overlay(ID_LAYER)
+		full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(ID_LAYER))
 
 		if(client && hud_used)
 			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_ID]
@@ -169,13 +169,12 @@ There are several things that need to be remembered:
 			if(OFFSET_ID in dna.species.offset_features)
 				id_overlay.pixel_x += dna.species.offset_features[OFFSET_ID][1]
 				id_overlay.pixel_y += dna.species.offset_features[OFFSET_ID][2]
-			overlays_standing[ID_LAYER] = id_overlay
-		apply_overlay(ID_LAYER)
+			full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(id_overlay, num2text(ID_LAYER))
 
 
 /mob/living/carbon/human/update_inv_gloves()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
-		remove_overlay(GLOVES_LAYER)
+		full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(GLOVES_LAYER))
 
 		if(client && hud_used && hud_used.inv_slots[SLOT_GLOVES])
 			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_GLOVES]
@@ -203,13 +202,12 @@ There are several things that need to be remembered:
 			if(OFFSET_GLOVES in dna.species.offset_features)
 				gloves_overlay.pixel_x += dna.species.offset_features[OFFSET_GLOVES][1]
 				gloves_overlay.pixel_y += dna.species.offset_features[OFFSET_GLOVES][2]
-		overlays_standing[GLOVES_LAYER] = gloves_overlay
-		apply_overlay(GLOVES_LAYER)
+			full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(gloves_overlay, num2text(GLOVES_LAYER))
 
 
 /mob/living/carbon/human/update_inv_glasses()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
-		remove_overlay(GLASSES_LAYER)
+		full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(GLASSES_LAYER))
 
 		if(!get_bodypart(BODY_ZONE_HEAD)) //decapitated
 			return
@@ -225,18 +223,16 @@ There are several things that need to be remembered:
 					client.screen += glasses				//Either way, add the item to the HUD
 			update_observer_view(glasses,1)
 			if(!(head && (head.flags_inv & HIDEEYES)) && !(wear_mask && (wear_mask.flags_inv & HIDEEYES)))
-				overlays_standing[GLASSES_LAYER] = glasses.build_worn_icon(default_layer = GLASSES_LAYER, default_icon_file = 'icons/mob/clothing/eyes.dmi', override_state = glasses.icon_state)
-			var/mutable_appearance/glasses_overlay = overlays_standing[GLASSES_LAYER]
-			if(glasses_overlay)
+				var/mutable_appearance/glasses_overlay = glasses.build_worn_icon(default_layer = GLASSES_LAYER, default_icon_file = 'icons/mob/clothing/eyes.dmi', override_state = glasses.icon_state)
 				if(OFFSET_GLASSES in dna.species.offset_features)
 					glasses_overlay.pixel_x += dna.species.offset_features[OFFSET_GLASSES][1]
 					glasses_overlay.pixel_y += dna.species.offset_features[OFFSET_GLASSES][2]
-				overlays_standing[GLASSES_LAYER] = glasses_overlay
-		apply_overlay(GLASSES_LAYER)
+				full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(glasses_overlay, num2text(GLASSES_LAYER))
+
 
 /mob/living/carbon/human/update_inv_ears()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
-		remove_overlay(EARS_LAYER)
+		full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(EARS_LAYER))
 
 		if(!get_bodypart(BODY_ZONE_HEAD)) //decapitated
 			return
@@ -252,13 +248,11 @@ There are several things that need to be remembered:
 					client.screen += ears					//add it to the client's screen
 			update_observer_view(ears,1)
 
-			overlays_standing[EARS_LAYER] = ears.build_worn_icon(default_layer = EARS_LAYER, default_icon_file = 'icons/mob/ears.dmi')
-			var/mutable_appearance/ears_overlay = overlays_standing[EARS_LAYER]
+			var/mutable_appearance/ears_overlay = ears.build_worn_icon(default_layer = EARS_LAYER, default_icon_file = 'icons/mob/ears.dmi')
 			if(OFFSET_EARS in dna.species.offset_features)
 				ears_overlay.pixel_x += dna.species.offset_features[OFFSET_EARS][1]
 				ears_overlay.pixel_y += dna.species.offset_features[OFFSET_EARS][2]
-			overlays_standing[EARS_LAYER] = ears_overlay
-		apply_overlay(EARS_LAYER)
+			full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(ears_overlay, num2text(EARS_LAYER))
 
 /mob/living/carbon/human/update_inv_shoes()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
@@ -290,8 +284,7 @@ There are several things that need to be remembered:
 				alt_icon = S.anthro_mob_worn_overlay || 'icons/mob/clothing/feet_digi.dmi'
 				variation_flag |= STYLE_DIGITIGRADE
 
-			overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(SHOES_LAYER, alt_icon, FALSE, NO_FEMALE_UNIFORM, S.icon_state, variation_flag, FALSE)
-			var/mutable_appearance/shoes_overlay = overlays_standing[SHOES_LAYER]
+			var/mutable_appearance/shoes_overlay = shoes.build_worn_icon(SHOES_LAYER, alt_icon, FALSE, NO_FEMALE_UNIFORM, S.icon_state, variation_flag, FALSE)
 			if(OFFSET_SHOES in dna.species.offset_features)
 				shoes_overlay.pixel_x += dna.species.offset_features[OFFSET_SHOES][1]
 				shoes_overlay.pixel_y += dna.species.offset_features[OFFSET_SHOES][2]
@@ -299,7 +292,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_inv_s_store()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
-		remove_overlay(SUIT_STORE_LAYER)
+		full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(SUIT_STORE_LAYER))
 
 		if(client && hud_used)
 			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_S_STORE]
@@ -313,17 +306,15 @@ There are several things that need to be remembered:
 			var/t_state = s_store.item_state
 			if(!t_state)
 				t_state = s_store.icon_state
-			overlays_standing[SUIT_STORE_LAYER]	= mutable_appearance(((s_store.mob_overlay_icon) ? s_store.mob_overlay_icon : 'icons/mob/clothing/belt_mirror.dmi'), t_state, -SUIT_STORE_LAYER)
-			var/mutable_appearance/s_store_overlay = overlays_standing[SUIT_STORE_LAYER]
+			var/mutable_appearance/s_store_overlay = mutable_appearance(((s_store.mob_overlay_icon) ? s_store.mob_overlay_icon : 'icons/mob/clothing/belt_mirror.dmi'), t_state, -SUIT_STORE_LAYER)
 			if(OFFSET_S_STORE in dna.species.offset_features)
 				s_store_overlay.pixel_x += dna.species.offset_features[OFFSET_S_STORE][1]
 				s_store_overlay.pixel_y += dna.species.offset_features[OFFSET_S_STORE][2]
-			overlays_standing[SUIT_STORE_LAYER] = s_store_overlay
-		apply_overlay(SUIT_STORE_LAYER)
+			full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(s_store_overlay, num2text(SUIT_STORE_LAYER))
 
 /mob/living/carbon/human/update_inv_head()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
-		remove_overlay(HEAD_LAYER)
+		full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(HEAD_LAYER))
 
 		if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 			return
@@ -351,19 +342,16 @@ There are several things that need to be remembered:
 				alt_icon = H.anthro_mob_worn_overlay || 'icons/mob/clothing/head_muzzled.dmi'
 				variation_flag |= STYLE_MUZZLE
 
-			overlays_standing[HEAD_LAYER] = H.build_worn_icon(HEAD_LAYER, alt_icon, FALSE, NO_FEMALE_UNIFORM, H.icon_state, variation_flag, FALSE)
-			var/mutable_appearance/head_overlay = overlays_standing[HEAD_LAYER]
+			var/mutable_appearance/head_overlay = H.build_worn_icon(HEAD_LAYER, alt_icon, FALSE, NO_FEMALE_UNIFORM, H.icon_state, variation_flag, FALSE)
 
 			if(OFFSET_HEAD in dna.species.offset_features)
 				head_overlay.pixel_x += dna.species.offset_features[OFFSET_HEAD][1]
 				head_overlay.pixel_y += dna.species.offset_features[OFFSET_HEAD][2]
-			overlays_standing[HEAD_LAYER] = head_overlay
-		apply_overlay(HEAD_LAYER)
-		update_mutant_bodyparts()
+			full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(head_overlay, num2text(HEAD_LAYER))
 
 /mob/living/carbon/human/update_inv_belt()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
-		remove_overlay(BELT_LAYER)
+		full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(BELT_LAYER))
 
 		if(client && hud_used)
 			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_BELT]
@@ -375,17 +363,15 @@ There are several things that need to be remembered:
 				client.screen += belt
 			update_observer_view(belt)
 
-			overlays_standing[BELT_LAYER] = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = 'icons/mob/clothing/belt.dmi')
-			var/mutable_appearance/belt_overlay = overlays_standing[BELT_LAYER]
+			var/mutable_appearance/belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = 'icons/mob/clothing/belt.dmi')
 			if(OFFSET_BELT in dna.species.offset_features)
 				belt_overlay.pixel_x += dna.species.offset_features[OFFSET_BELT][1]
 				belt_overlay.pixel_y += dna.species.offset_features[OFFSET_BELT][2]
-			overlays_standing[BELT_LAYER] = belt_overlay
-		apply_overlay(BELT_LAYER)
+			full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(belt_overlay, num2text(BELT_LAYER))
 
 /mob/living/carbon/human/update_inv_wear_suit()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
-		remove_overlay(SUIT_LAYER)
+		full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(SUIT_LAYER))
 
 		if(client && hud_used)
 			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_SUIT]
@@ -434,18 +420,13 @@ There are several things that need to be remembered:
 					worn_icon = S.anthro_mob_worn_overlay || 'icons/mob/clothing/suit_digi.dmi'
 					variation_flag |= STYLE_DIGITIGRADE
 
-			overlays_standing[SUIT_LAYER] = S.build_worn_icon(SUIT_LAYER, worn_icon, FALSE, NO_FEMALE_UNIFORM, worn_state, variation_flag, FALSE)
-			var/mutable_appearance/suit_overlay = overlays_standing[SUIT_LAYER]
+			var/mutable_appearance/suit_overlay = S.build_worn_icon(SUIT_LAYER, worn_icon, FALSE, NO_FEMALE_UNIFORM, worn_state, variation_flag, FALSE)
 			if(OFFSET_SUIT in dna.species.offset_features)
 				suit_overlay.pixel_x += dna.species.offset_features[OFFSET_SUIT][1]
 				suit_overlay.pixel_y += dna.species.offset_features[OFFSET_SUIT][2]
 			if(center)
 				suit_overlay = center_image(suit_overlay, dimension_x, dimension_y)
-			overlays_standing[SUIT_LAYER] = suit_overlay
-		update_hair()
-		update_mutant_bodyparts()
-
-		apply_overlay(SUIT_LAYER)
+			full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(suit_overlay, num2text(SUIT_LAYER))
 
 /mob/living/carbon/human/update_inv_pockets()
 	if(client && hud_used)
@@ -472,7 +453,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_inv_wear_mask()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
-		remove_overlay(FACEMASK_LAYER)
+		full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(FACEMASK_LAYER))
 
 		if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 			return
@@ -507,9 +488,7 @@ There are several things that need to be remembered:
 			if(OFFSET_FACEMASK in dna.species.offset_features)
 				mask_overlay.pixel_x += dna.species.offset_features[OFFSET_FACEMASK][1]
 				mask_overlay.pixel_y += dna.species.offset_features[OFFSET_FACEMASK][2]
-			overlays_standing[FACEMASK_LAYER] = mask_overlay
-			apply_overlay(FACEMASK_LAYER)
-		update_mutant_bodyparts() //e.g. upgate needed because mask now hides lizard snout
+			full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(mask_overlay, num2text(FACEMASK_LAYER))
 
 /mob/living/carbon/human/update_inv_back()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
