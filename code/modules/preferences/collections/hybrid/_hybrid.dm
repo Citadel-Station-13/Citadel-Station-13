@@ -1,8 +1,8 @@
 /datum/preferences_collection/hybrid
-	collection_type = COLLECtion_HYBRID
+	collection_type = COLLECTION_HYBRID
 
 /datum/preferences_collection/hybrid/SaveKey(datum/preferences/prefs, key, value)
-	return CheckOverride(prefs)? prefs.SetKeyCharacter(key value) : prefs.SetKeyGlobal(key, value)
+	return CheckOverride(prefs)? prefs.SetKeyCharacter(key, value) : prefs.SetKeyGlobal(key, value)
 
 /datum/preferences_collection/hybrid/LoadKey(datum/preferences/prefs, key, copy_lists)
 	. = CheckOverride(prefs)? prefs.LoadKeyCharacter(key) : prefs.LoadKeyGlobal(key)
