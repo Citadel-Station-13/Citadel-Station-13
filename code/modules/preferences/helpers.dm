@@ -31,7 +31,13 @@
 /datum/preferences/proc/random_character(randomize_name = TRUE, randomize_gender = TRUE, randomize_species = TRUE, randomize_body = TRUE, randomize_underwear = TRUE, randomize_genitals = TRUE)
 #warn implement
 #warn call 3 stage randomization procs on collections
-
+	var/list/collections = SScharacter_setup.collections
+	for(var/datum/preferences_collection/C in collections)
+		C.randomize_character_stage_1(src)
+	for(var/datum/preferences_collection/C in collections)
+		C.randomize_character_stage_2(src)
+	for(var/datum/preferences_collection/C in collections)
+		C.randomize_character_stage_3(src)
 /*
 	if(gender_override)
 		gender = gender_override
