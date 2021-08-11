@@ -366,7 +366,7 @@
 	message = ""
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
-	DISABLE_BITFIELD(obj_flags, EMAGGED)
+	obj_flags &= ~EMAGGED
 	message = ""
 
 /obj/machinery/computer/message_monitor/proc/ResetMessage()

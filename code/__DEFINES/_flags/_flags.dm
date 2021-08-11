@@ -5,8 +5,6 @@
 #define NONE 0
 
 //for convenience
-#define DISABLE_BITFIELD(variable, flag) (variable &= ~(flag))
-#define TOGGLE_BITFIELD(variable, flag) (variable ^= (flag))
 #define COPY_SPECIFIC_BITFIELDS(a,b,flags)\
 	do{\
 		var/_old = a & ~(flags);\

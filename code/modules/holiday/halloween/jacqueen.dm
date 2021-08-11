@@ -469,7 +469,7 @@
 /mob/living/simple_animal/jacq/update_mobility()
 	. = ..()
 	if(busy)
-		DISABLE_BITFIELD(., MOBILITY_MOVE)
+		. &= ~MOBILITY_MOVE
 	else
 		. |= MOBILITY_MOVE
 	mobility_flags = .

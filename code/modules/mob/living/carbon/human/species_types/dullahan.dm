@@ -31,7 +31,7 @@
 
 /datum/species/dullahan/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
-	DISABLE_BITFIELD(H.flags_1, HEAR_1)
+	H.flags_1 &= ~HEAR_1
 	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
 		if(pumpkin)//Pumpkinhead!

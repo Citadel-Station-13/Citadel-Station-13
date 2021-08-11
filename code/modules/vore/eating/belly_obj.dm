@@ -279,7 +279,7 @@
 		SEND_SIGNAL(ML, COMSIG_ADD_MOOD_EVENT, "emptyprey", /datum/mood_event/emptyprey)
 
 		if(ML.vore_flags & ABSORBED)
-			DISABLE_BITFIELD(ML.vore_flags,ABSORBED)
+			ML.vore_flags &= ~ABSORBED
 			if(ishuman(M) && ishuman(OW))
 				var/mob/living/carbon/human/Prey = M
 				var/mob/living/carbon/human/Pred = OW

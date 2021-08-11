@@ -442,7 +442,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 		if("select")
 			switch(value)
 				if("force_nulls")
-					DISABLE_BITFIELD(options, SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS)
+					options &= ~SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS
 		if("proccall")
 			switch(value)
 				if("blocking")

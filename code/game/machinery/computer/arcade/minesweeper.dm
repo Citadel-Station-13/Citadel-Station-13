@@ -266,7 +266,7 @@
 						new /obj/item/storage/backpack/duffelbag/syndie/x4(loc)
 				message_admins("[key_name_admin(user)] won emagged Minesweeper and got [itemname]!")
 				visible_message("<span class='notice'>[src] dispenses [itemname]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
-				DISABLE_BITFIELD(obj_flags, EMAGGED)
+				obj_flags &= ~EMAGGED
 			else
 				var/dope_prizes = (area >= 480) ? 6 : (area >= 256) ? 4 : 2
 				prizevend(user, dope_prizes)

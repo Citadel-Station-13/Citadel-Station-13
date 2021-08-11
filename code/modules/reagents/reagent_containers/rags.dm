@@ -141,7 +141,7 @@
 
 /obj/item/reagent_containers/rag/towel/attack(mob/living/M, mob/living/user)
 	if(user.a_intent == INTENT_HARM)
-		DISABLE_BITFIELD(item_flags, NOBLUDGEON)
+		item_flags &= ~NOBLUDGEON
 		. = TRUE
 	..()
 	if(.)

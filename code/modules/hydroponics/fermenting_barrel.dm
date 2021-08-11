@@ -59,11 +59,11 @@
 /obj/structure/fermenting_barrel/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	open = !open
 	if(open)
-		DISABLE_BITFIELD(reagents.reagents_holder_flags, DRAINABLE)
+		reagents.reagents_holder_flags &= ~DRAINABLE
 		reagents.reagents_holder_flags |= REFILLABLE
 		to_chat(user, "<span class='notice'>You open [src], letting you fill it.</span>")
 	else
-		DISABLE_BITFIELD(reagents.reagents_holder_flags, REFILLABLE)
+		reagents.reagents_holder_flags &= ~REFILLABLE
 		reagents.reagents_holder_flags |= DRAINABLE
 		to_chat(user, "<span class='notice'>You close [src], letting you draw from its tap.</span>")
 	update_icon()
@@ -96,11 +96,11 @@
 /obj/structure/custom_keg/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	open = !open
 	if(open)
-		DISABLE_BITFIELD(reagents.reagents_holder_flags, DRAINABLE)
+		reagents.reagents_holder_flags &= ~DRAINABLE
 		reagents.reagents_holder_flags |= REFILLABLE
 		to_chat(user, "<span class='notice'>You open [src], letting you fill it.</span>")
 	else
-		DISABLE_BITFIELD(reagents.reagents_holder_flags, REFILLABLE)
+		reagents.reagents_holder_flags &= ~REFILLABLE
 		reagents.reagents_holder_flags |= DRAINABLE
 		to_chat(user, "<span class='notice'>You close [src], letting you draw from its tap.</span>")
 	update_icon()

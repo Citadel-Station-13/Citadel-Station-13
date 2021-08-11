@@ -130,14 +130,14 @@
 					"<span class='notice'>You are now attempting to crawl under [L].</span>",
 					target = L, target_message = "<span class='notice'>[src] is attempting to crawl under you.</span>")
 				if(!do_after(src, CRAWLUNDER_DELAY, target = src) || CHECK_MOBILITY(src, MOBILITY_STAND))
-					DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_ATTEMPTING_CRAWL)
+					combat_flags &= ~COMBAT_FLAG_ATTEMPTING_CRAWL
 					return TRUE
 			var/src_passmob = (pass_flags & PASSMOB)
 			pass_flags |= PASSMOB
 			Move(origtargetloc)
 			if(!src_passmob)
 				pass_flags &= ~PASSMOB
-			DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_ATTEMPTING_CRAWL)
+			combat_flags &= ~COMBAT_FLAG_ATTEMPTING_CRAWL
 			return TRUE
 	//END OF CIT CHANGES
 

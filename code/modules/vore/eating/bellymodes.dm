@@ -165,7 +165,7 @@
 
 			for (var/mob/living/M in contents)
 				if(M.vore_flags & ABSORBED && owner.nutrition >= 100)
-					DISABLE_BITFIELD(M.vore_flags, ABSORBED)
+					M.vore_flags &= ~ABSORBED
 					to_chat(M,"<span class='notice'>You suddenly feel solid again </span>")
 					to_chat(owner,"<span class='notice'>You feel like a part of you is missing.</span>")
 					owner.adjust_nutrition(-100)
