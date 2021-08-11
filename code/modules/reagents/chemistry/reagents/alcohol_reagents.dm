@@ -586,7 +586,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(AmBloodsucker(C))
 		disgust_bloodsucker(FALSE, 1) //Bloodsuckers get SOME blood from it, for style reasons.
 	if(C.blood_volume < (BLOOD_VOLUME_NORMAL*C.blood_ratio))
-		C.blood_volume = min((BLOOD_VOLUME_NORMAL*C.blood_ratio), C.blood_volume + 3) //Bloody Mary quickly restores blood loss.
+		C.adjust_integration_blood(3) //Bloody Mary quickly restores blood loss.
 	..()
 
 /datum/reagent/consumable/ethanol/brave_bull
@@ -2593,7 +2593,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			alcohol_description = "sweet"
 		else
 			alcohol_description = "watery" //How the hell did you get negative boozepwr?
-			
+
 	var/list/fruits = list()
 	if(names_in_order.len <= 3)
 		fruits = names_in_order
