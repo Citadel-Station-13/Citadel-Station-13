@@ -41,11 +41,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 //This only really meant to avoid annoying frequent players
 //if your savefile is 3 months out of date, then 'tough shit'.
 
-/datum/preferences/proc/update_preferences(current_version, savefile/S)
-	if(current_version < 46)	//If you remove this, remove force_reset_keybindings() too.
-		force_reset_keybindings_direct(TRUE)
-		addtimer(CALLBACK(src, .proc/force_reset_keybindings), 30)	//No mob available when this is run, timer allows user choice.
-
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 19)
 		pda_style = "mono"
@@ -401,10 +396,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["pda_color"]			>> pda_color
 	S["pda_skin"]			>> pda_skin
 
-	// Custom hotkeys
-	S["key_bindings"]		>> key_bindings
-	S["modless_key_bindings"]		>> modless_key_bindings
-
 	//citadel code
 	S["arousable"]			>> arousable
 	S["screenshake"]		>> screenshake
@@ -469,11 +460,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	autostand			= sanitize_integer(autostand, 0, 1, initial(autostand))
 	auto_ooc			= sanitize_integer(auto_ooc, 0, 1, initial(auto_ooc))
 	no_tetris_storage		= sanitize_integer(no_tetris_storage, 0, 1, initial(no_tetris_storage))
-	key_bindings 			= sanitize_islist(key_bindings, list())
-	modless_key_bindings 	= sanitize_islist(modless_key_bindings, list())
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
-
-	verify_keybindings_valid()		// one of these days this will runtime and you'll be glad that i put it in a different proc so no one gets their saves wiped
 
 	if(S["unlockable_loadout"])
 		unlockable_loadout_data = safe_json_decode(S["unlockable_loadout"])
@@ -499,24 +486,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		save_preferences(TRUE)
 
 	return TRUE
-
-/datum/preferences/proc/verify_keybindings_valid()
-	// Sanitize the actual keybinds to make sure they exist.
-	for(var/key in key_bindings)
-		if(!islist(key_bindings[key]))
-			key_bindings -= key
-		var/list/binds = key_bindings[key]
-		for(var/bind in binds)
-			if(!GLOB.keybindings_by_name[bind])
-				binds -= bind
-		if(!length(binds))
-			key_bindings -= key
-	// End
-	// I hate copypaste but let's do it again but for modless ones
-	for(var/key in modless_key_bindings)
-		var/bindname = modless_key_bindings[key]
-		if(!GLOB.keybindings_by_name[bindname])
-			modless_key_bindings -= key
 
 /datum/preferences/proc/save_preferences(bypass_cooldown = FALSE)
 	if(!path)
@@ -571,8 +540,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["pda_style"], pda_style)
 	WRITE_FILE(S["pda_color"], pda_color)
 	WRITE_FILE(S["pda_skin"], pda_skin)
-	WRITE_FILE(S["key_bindings"], key_bindings)
-	WRITE_FILE(S["modless_key_bindings"], modless_key_bindings)
 	WRITE_FILE(S["favorite_outfits"], favorite_outfits)
 
 	//citadel code

@@ -1965,6 +1965,7 @@
 #include "code\modules\cargo\packs\service.dm"
 #include "code\modules\cargo\packs\vending.dm"
 #include "code\modules\chatter\chatter.dm"
+#include "code\modules\client\cached_preferences.dm"
 #include "code\modules\client\client_colour.dm"
 #include "code\modules\client\client_defines.dm"
 #include "code\modules\client\client_procs.dm"

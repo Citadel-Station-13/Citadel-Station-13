@@ -234,6 +234,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	/// Create or link persistent variables
 	persistent_variables = get_persistent_client_variables_for(ckey)
+	/// Create cached prefs
+	cached_prefs = new
 
 	// Instantiate tgui panel
 	tgui_panel = new(src)
@@ -276,13 +278,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if(isnull(address) || (address in localhost_addresses))
 			var/datum/admin_rank/localhost_rank = new("!localhost!", R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
 			new /datum/admins(localhost_rank, ckey, 1, 1)
-	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
+	// Init preferences
 	prefs = GLOB.preferences_datums[ckey]
 	if(prefs)
 		prefs.parent = src
 	else
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
+	/// Synchronizes preferences
+	cached_prefs.sync(prefs)
 
 	addtimer(CALLBACK(src, .proc/ensure_keys_set, prefs), 10)	//prevents possible race conditions
 

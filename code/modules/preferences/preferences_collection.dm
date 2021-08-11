@@ -48,11 +48,24 @@
 	if(returned & PREFERENCES_ONTOPIC_REGENERATE_PREVIEW)
 		#warn implement preview regeneration
 
-/datum/preferences_collection/proc/generate_topic(datum/preferences/prefs, text, key)
-	return "<a href='?src=[REF(src)];[key]=1;parent=[REF(prefs)]'>[text]</a>"
+/datum/preferences_collection/proc/generate_topic(datum/preferences/prefs, text, key, ...)
+	if(args.len > 3)
+		. = list()
+		for(var/i in 3 to args.len)
+			. += ";[args[i]]=1"
+		return "<a href='?src=[REF(src)];parent=[REF(prefs)][.]'>[text]</a>"
+	else
+		return "<a href='?src=[REF(src)];[key]=1;parent=[REF(prefs)]'>[text]</a>"
 
-/datum/preferences_collection/proc/generate_topic_key_value(datum/preferences/prefs, text, key, value)
-	return "<a href='?src=[REF(src)];[key]=[value];parent=[REF(prefs)]'>[text]</a>"
+/datum/preferences_collection/proc/generate_topic_key_value(datum/preferences/prefs, text, key, value, ...)
+	if(args.len > 4)
+		. = list()
+		ASSERT((args.len % 2) == 0)
+		for(var/i in 3 to args.len step 2)
+			. += ";[args[i]]=[args[i+1]]"
+		return "<a href='?src=[REF(src)];parent=[REF(prefs)][.]'>[text]</a>"
+	else
+		return "<a href='?src=[REF(src)];[key]=[value];parent=[REF(prefs)]'>[text]</a>"
 
 /**
  * Handles topic.
@@ -64,19 +77,21 @@
 /**
  * Saves data to a preferences datum
  */
-/datum/preferences_collection/proc/SaveKey(datum/preferences/prefs, key, value)
+/datum/preferences_collection/proc/SaveKey(datum/preferences/prefs, key, value, copy_lists)
 	CRASH("Base SaveKey() called on preferences_collection")
 
 /**
  * Loads data from a preferences datum
+ *
+ * If copy_lists is TRUE (DEFAULTS TO TRUE), and a list is loaded, it's copied using deepCopyList.
  */
-/datum/preferences_collection/proc/LoadKey(datum/preferences/prefs, key)
+/datum/preferences_collection/proc/LoadKey(datum/preferences/prefs, key, copy_lists = TRUE)
 	CRASH("Base LoadKey() called on preferences_collection")
 
 /**
  * Loads or defaults data
  */
-/datum/preferences_collection/proc/LoadOrDefault(datum/preferences/prefs, key, value, default)
+/datum/preferences_collection/proc/LoadOrDefault(datum/preferences/prefs, key, value, default, copy_lists)
 	. = LoadKey(prefs, key, value)
 	if(isnull(.))
 		return default
@@ -92,9 +107,19 @@
 /datum/preferences_collection/proc/sanitize_character(datum/preferences/prefs)
 
 /**
+ * Called to sanitize to make it easier for hybrid global/character collections. Always called regardless of save type.
+ */
+/datum/preferences_collection/proc/sanitize_any(datum/preferences/prefs)
+
+/**
  * Used post loading to apply settings. Usually used for global settings.
  */
-/datum/preferences_collection/proc/post_load(datum/preferences/prefs)
+/datum/preferences_collection/proc/post_global_load(datum/preferences/prefs)
+
+/**
+ * Used post loading to apply settings. Usually used for global settings.
+ */
+/datum/preferences_collection/proc/post_character_load(datum/preferences/prefs)
 
 /**
  * Applies settings to a character when a mob is being made for a player on joining the round
@@ -141,3 +166,9 @@
  * Called on full reset due to unreadable character data or other reasons
  */
 /datum/preferences_collection/proc/on_full_character_reset(datum/preferences/prefs)
+
+/**
+ * Determines if a client can see us.
+ */
+/datum/preferences_collection/proc/is_visible(client/C)
+	return TRUE

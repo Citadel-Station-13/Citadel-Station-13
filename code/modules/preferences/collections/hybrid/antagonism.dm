@@ -46,12 +46,7 @@
 		. += generate_topic_key_value(prefs, "Enabled", "midround_toggle", i)
 		. += " <span class='linkOn'>Disabled</span>"
 
-/datum/preferences_collection/hybrid/antagonism/sanitize_global(datum/preferences/prefs)
-	. = ..()
-	auto_sanitize_list(prefs, "be_special")
-	auto_sanitize_boolean(prefs, "midround_antagonist")
-
-/datum/preferences_collection/hybrid/antagonism/sanitize_character(datum/preferences/prefs)
+/datum/preferences_collection/hybrid/antagonism/sanitize_any(datum/preferences/prefs)
 	. = ..()
 	auto_sanitize_list(prefs, "be_special")
 	auto_sanitize_boolean(prefs, "midround_antagonist")

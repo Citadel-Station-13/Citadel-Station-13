@@ -4,5 +4,8 @@
 /datum/preferences_collection/character/SaveKey(datum/preferences/prefs, key, value)
 	return prefs.SetKeyCharacter(key, value)
 
-/datum/preferences_collection/character/LoadKey(datum/preferences/prefs, key)
-	return prefs.LoadKeyCharacter(key)
+/datum/preferences_collection/character/LoadKey(datum/preferences/prefs, key, copy_lists = TRUE)
+	. = prefs.LoadKeyCharacter(key)
+	if(copy_lists && islist(.))
+		var/list/L = .
+		. = deepCopyList(L)

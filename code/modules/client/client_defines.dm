@@ -31,7 +31,9 @@
 	/// Persistent variables like muting are stored in this datum
 	var/datum/persistent_client_variables/persistent_variables
 	/// Preferences datum
-	var/datum/preferences/prefs = null
+	var/datum/preferences/prefs
+	/// Cached preferences variables for high-speed access
+	var/datum/preferences_variable_cache/cached_prefs
 	var/last_turn = 0
 	var/move_delay = 0
 	var/last_move = 0

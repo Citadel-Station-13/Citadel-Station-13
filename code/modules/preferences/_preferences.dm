@@ -58,12 +58,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	load_metadata(S)
 	// Store if we need to do migrations first.
 	S.cd = "/"
-	var/current_version
-	S["version"] >> current_version
-	var/migration_needed = current_version < SAVEFILE_VERSION_MAX
-	if(migration_needed)
-		#warn todo: save backup of file
-		S["version"] << SAVEFILE_VERSION_MAX
 	// Load preferences - This will perform migrations if needed
 	load_preferences(S, migration_errors)
 	// Load default slot
@@ -114,7 +108,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /**
  * Directly reads from in-memory stores for a certain collection of a save key
  */
-/datum/preferences/proc/LoadKeyGlobal(save_key, key)
+/datum/preferences/proc/LowadKeyGlobal(save_key, key)
 	if(ispath(key) || ispath(data))
 		CRASH("Attempted to use typepaths directly in savefiles. This is not allowed due to the volatility of BYOND savefile operations.")
 	return LAZYACCESS(global_preferences[save_key], key)
@@ -141,6 +135,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		#warn implement preview regeneration
 	if(returned & PREFERENCES_ONTOPIC_CHARACTER_SWAP)
 		render_character_select(usr)
+	if(returned & PREFERENCES_ONTOPIC_RESYNC_CACHE)
+		resync_client_cache()
+	if(returned & PREFERENCES_ONTOPIC_KEYBIND_REASSERT)
+		if(parent)
+			parent.ensure_keys_set()
+
+/**
+ * Resyncs prefs cache on our client, if possible.
+ */
+/datum/preferences/proc/resync_client_cache()
+	if(!parent)
+		return
+	if(!parent.cached_prefs)
+		parent.cached_prefs = new
+	parent.cached_prefs.sync(src)
 
 /**
  * Handles topic input from a user.
@@ -197,6 +206,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		S["version"] << SAVEFILE_VERSION_MAX
 		for(var/i in SScharacter_setup.collections)
 			C.on_full_character_reset(src)
+		C.sanitize_character(src)
+		C.sanitize_any(src)
 		save_character(S)
 		return
 	// Load
@@ -216,6 +227,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	for(var/i in SScharacter_setup.collections)
 		var/datum/preferences_collection/C = i
 		C.sanitize_character(src)
+		C.sanitize_any(src)
+		C.post_character_load(src)
 	// If the player selected the slot, choose it properly and save metadata
 	if(select_slot)
 		selected_slot = slot
@@ -229,6 +242,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	for(var/i in SScharacter_setup.collections)
 		var/datum/preferences_collection/C = i
 		C.sanitize_global(src)
+		C.sanitize_any(src)
 	#warn serialize global_preferences to disk
 
 /**
@@ -244,6 +258,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/datum/preferences_collection/C = i
 			C.on_full_preferences_reset(src)
 			C.sanitize_preferences(src)
+			C.sanitize_any(src)
 			C.save_preferences(src, S)
 		return
 	// Load
@@ -263,6 +278,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	for(var/i in SScharacter_setup.collections)
 		var/datum/preferences_collection/C = i
 		C.sanitize_preferences(src)
+		C.sanitize_any(src)
+		C.post_global_load(src)
 
 /datum/preferences/vv_edit_var(var_name, var_value)
 	if((var_name == NAMEOF(src, ckey)) || (var_name == NAMEOF(src, savefile_path)))
@@ -278,14 +295,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/content = list()
 	content += "<head>"
 	var/first = TRUE
+	var/first_collection = TRUE
 	for(var/list/ordered in SScharacter_setup.ordered_collections)
 		if(!first)
 			content += "  |  "
 		for(var/datum/preferences_collection/C in ordered)
+			if(!C.is_visible(user.client))
+				continue
 			if(C != selected_collection)
-				content += "[first? "" : "  "]<a href='?_src_=prefs;switch_collection=[REF(C)]'>[C.name]</a>  "
+				content += "[first_collection? "" : "  "]<a href='?_src_=prefs;switch_collection=[REF(C)]'>[C.name]</a>  "
 			else
-				content += "[first? "" : "  "]<span class='linkOn'>[C.name]</span>  "
+				content += "[first_collection? "" : "  "]<span class='linkOn'>[C.name]</span>  "
+			if(first_collection)
+				first_collection = FALSE
 		if(first)
 			first = FALSE
 	content += "</head>"

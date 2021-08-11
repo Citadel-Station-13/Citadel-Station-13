@@ -42,6 +42,11 @@
 #define PREFERENCES_ONTOPIC_REGENERATE_PREVIEW		(1<<1)
 /// Character swapped
 #define PREFERENCES_ONTOPIC_CHARACTER_SWAP			(1<<2)
+/// Resync preferences variable cache, usually used for things like keybindings.
+#define PREFERENCES_ONTOPIC_RESYNC_CACHE			(1<<3)
+/// Force client to reassert all keys
+#define PREFERENCES_ONTOPIC_KEYBIND_REASSERT		(1<<4)
+
 
 // Savefile versioning
 //This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
