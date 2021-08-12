@@ -28,7 +28,7 @@
 		update()
 
 /obj/item/organ/genital/Destroy()
-	if(linked_organ.linked_organ == src)
+	if(linked_organ?.linked_organ == src)
 		linked_organ.linked_organ = null
 	linked_organ = null
 	. = ..()
