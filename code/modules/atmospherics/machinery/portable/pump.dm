@@ -11,7 +11,7 @@
 
 	var/on = FALSE
 	var/direction = PUMP_OUT
-	var/obj/machinery/atmospherics/components/binary/pump/pump
+	var/obj/machinery/atmospherics/component/binary/pump/pump
 
 	volume = 1000
 
@@ -20,7 +20,7 @@
 	pump = new(src, FALSE)
 	pump.on = TRUE
 	pump.stat = 0
-	SSair.add_to_rebuild_queue(pump)
+	pump.QueueRebuild()
 
 /obj/machinery/portable_atmospherics/pump/Destroy()
 	var/turf/T = get_turf(src)

@@ -1,42 +1,34 @@
-/obj/machinery/atmospherics/components/unary/relief_valve
+ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/relief_valve, "relief_valve-e-map")
+
+/obj/machinery/atmospherics/component/unary/relief_valve
 	name = "pressure relief valve"
 	desc = "A valve that opens to the air at a certain pressure, then closes once it goes below another."
-	icon = 'icons/obj/atmospherics/components/relief_valve.dmi'
+	icon = 'icons/obj/atmospherics/component/relief_valve.dmi'
 	icon_state = "relief_valve-e-map"
 	can_unwrench = TRUE
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
 	interacts_with_air = TRUE
+	shift_to_layer = TRUE
+	double_layer_shift = TRUE
 	var/opened = FALSE
 	var/open_pressure = ONE_ATMOSPHERE * 3
 	var/close_pressure = ONE_ATMOSPHERE
 	pipe_state = "relief_valve-e"
 
-/obj/machinery/atmospherics/components/unary/relief_valve/layer1
-	piping_layer = PIPING_LAYER_MIN
-	pixel_x = -PIPING_LAYER_P_X
-	pixel_y = -PIPING_LAYER_P_Y
-
-/obj/machinery/atmospherics/components/unary/relief_valve/layer3
-	piping_layer = PIPING_LAYER_MAX
-	pixel_x = PIPING_LAYER_P_X
-	pixel_y = PIPING_LAYER_P_Y
-
-/obj/machinery/atmospherics/components/unary/relief_valve/atmos
+/obj/machinery/atmospherics/component/unary/relief_valve/atmos
 	close_pressure = ONE_ATMOSPHERE * 2
 
-/obj/machinery/atmospherics/components/unary/relief_valve/atmos/atmos_waste
+/obj/machinery/atmospherics/component/unary/relief_valve/atmos/atmos_waste
 	name = "atmos waste relief valve"
 
-/obj/machinery/atmospherics/components/unary/relief_valve/update_icon_nopipes()
-	cut_overlays()
-
-	if(!nodes[1] || !opened || !is_operational())
+/obj/machinery/atmospherics/component/unary/relief_valve/update_icon_state()
+	if(!connected[1] || !opened || !is_operational())
 		icon_state = "relief_valve-e"
 		return
 
 	icon_state = "relief_valve-e-blown"
 
-/obj/machinery/atmospherics/components/unary/relief_valve/process_atmos()
+/obj/machinery/atmospherics/component/unary/relief_valve/process_atmos()
 	..()
 
 	if(!is_operational())
@@ -56,23 +48,22 @@
 		if(pressure_delta > 0.1)
 			equalize_all_gases_in_list(list(air_contents,environment))
 			air_update_turf()
+			MarkDirty()
 
-			update_parents()
-
-/obj/machinery/atmospherics/components/unary/relief_valve/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/atmospherics/component/unary/relief_valve/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "AtmosRelief", name)
 		ui.open()
 
-/obj/machinery/atmospherics/components/unary/relief_valve/ui_data()
+/obj/machinery/atmospherics/component/unary/relief_valve/ui_data()
 	var/list/data = list()
 	data["open_pressure"] = round(open_pressure)
 	data["close_pressure"] = round(close_pressure)
 	data["max_pressure"] = round(50*ONE_ATMOSPHERE)
 	return data
 
-/obj/machinery/atmospherics/components/unary/relief_valve/ui_act(action, params)
+/obj/machinery/atmospherics/component/unary/relief_valve/ui_act(action, params)
 	if(..())
 		return
 	switch(action)

@@ -23,6 +23,7 @@ Passive gate is similar to the regular pump except:
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
+	ui_pump_control_capabilities = ATMOS_UI_CONTROL_ACTIVE | ATMOS_UI_CONTROL_PRESSURE | ATMOS_UI_CONTROL_VOLUME | ATMOS_UI_FLOW_RATE
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "passivegate"
 
@@ -159,9 +160,9 @@ Passive gate is similar to the regular pump except:
 		return FALSE
 
 /obj/machinery/atmospherics/components/binary/passive_gate/layer1
-	piping_layer = 1
+	pipe_layer = 1
 	icon_state = "passgate_map-1"
 
 /obj/machinery/atmospherics/components/binary/passive_gate/layer3
-	piping_layer = 3
+	pipe_layer = 3
 	icon_state = "passgate_map-3"

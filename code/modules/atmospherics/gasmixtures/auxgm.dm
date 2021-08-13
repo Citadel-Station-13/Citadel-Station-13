@@ -35,6 +35,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GA
 	var/list/fire_enthalpies = list()
 	var/list/fire_products = list()
 	var/list/fire_burn_rates = list()
+	var/list/molar_masses = list()
 	var/list/supermatter = list()
 
 
@@ -56,6 +57,8 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GA
 	var/list/fire_products = null // what results when this gas is burned (oxidizer or fuel); null for none
 	var/fire_energy_released = 0 // how much energy is released per mole of fuel burned
 	var/fire_burn_rate = 1 // how many moles are burned per product released
+	/// Molar mass in g/mol, used for specific entropy calculations (gas pumping difficulty). Heavier gases are harder to pump.
+	var/molar_mass = 32
 	var/powermix = 0 // how much this gas contributes to the supermatter's powermix ratio
 	var/heat_penalty = 0 // heat and waste penalty from having the supermatter crystal surrounded by this gas; negative numbers reduce
 	var/transmit_modifier = 0 // bonus to supermatter power generation (multiplicative, since it's % based, and divided by 10)
@@ -86,6 +89,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GA
 		ids[g] = g
 		typepaths[g] = gas.type
 		fusion_powers[g] = gas.fusion_power
+		molar_masses = gas.molar_mass
 
 		if(gas.breath_alert_info)
 			breath_alert_info[g] = gas.breath_alert_info

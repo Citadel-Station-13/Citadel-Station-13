@@ -1,8 +1,12 @@
-//3-Way Manifold
+/**
+ * Simple 3 way manifolds.
+ */
+
+ATMOS_MAPPING_FULL_PX_DOUBLE(/obj/machinery/atmospherics/pipe/manifold)
 
 /obj/machinery/atmospherics/pipe/manifold
 	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
-	icon_state = "manifold-2"
+	icon_state = "manifold"
 
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes."
@@ -26,16 +30,13 @@
 	initialize_directions = NORTH|SOUTH|EAST|WEST
 	initialize_directions &= ~dir
 
-/obj/machinery/atmospherics/pipe/manifold/update_icon()
-	cut_overlays()
-	if(!center)
-		center = mutable_appearance(icon, "manifold_center")
-	PIPING_LAYER_DOUBLE_SHIFT(center, piping_layer)
-	add_overlay(center)
-
+/obj/machinery/atmospherics/pipe/manifold/update_overlays()
+	. = ..()
+	PIPE_LAYER_DOUBLE_SHIFT(center, pipe_layer)
+	. += center
 	//Add non-broken pieces
 	for(var/i in 1 to device_type)
-		if(nodes[i])
-			add_overlay( getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i])) )
-	update_layer()
-	update_alpha()
+		if(connected[i])
+			. += getpipeimage(icon, "pipe-[pipe_layer]", get_dir(src, connected[i]))
+
+

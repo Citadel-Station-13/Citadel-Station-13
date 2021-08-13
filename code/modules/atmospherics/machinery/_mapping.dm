@@ -1,3 +1,25 @@
+/// Fully registers a path for all 5 layers and every valid pipe color. Used for pipes that use pixel-shifting to visualize layers
+#define ATMOS_MAPPING_FULL_PX_DOUBLE(path)
+
+/// Fully registers a path for all 5 layers and every valid pipe color. Used for pipes that use icon-# state changes to visualize layers.
+#define ATMOS_MAPPING_FULL_IX(path, iconbase)
+
+/// Registers a path for every valid pipe color
+#define ATMOS_MAPPING_COLORS(path)
+
+/// Registers a path for every pipe layer. Used for pipes that use pixel-shifting to visualize layers
+#define ATMOS_MAPPING_LAYERS_PX_DOUBLE(path)
+
+/// Registers a path for every pipe layer. Used for pipes that use icon-# state changes to visualize layers.
+#define ATMOS_MAPPING_LAYERS_IX(path, iconbase)
+
+/// Registers a path for default layer and color only, without more colors/layers
+#define ATMOS_MAPPING_MINIMAL(path)
+
+#warn do IX for all components
+#warn sprites
+#warn implement lmao
+
 //Colored pipes, use these for mapping
 
 #define HELPER_PARTIAL(Fulltype, Iconbase, Color) \
@@ -10,22 +32,22 @@
 		layer = GAS_PIPE_VISIBLE_LAYER;	\
 	}									\
 	##Fulltype/visible/layer1 {			\
-		piping_layer = 1;				\
+		pipe_layer = 1;				\
 		icon_state = Iconbase + "-1";	\
 	}									\
 	##Fulltype/visible/layer3 {			\
-		piping_layer = 3;				\
+		pipe_layer = 3;				\
 		icon_state = Iconbase + "-3";	\
 	}									\
 	##Fulltype/hidden {					\
 		level = PIPE_HIDDEN_LEVEL;		\
 	}									\
 	##Fulltype/hidden/layer1 {			\
-		piping_layer = 1;				\
+		pipe_layer = 1;				\
 		icon_state = Iconbase + "-1";	\
 	}									\
 	##Fulltype/hidden/layer3 {			\
-		piping_layer = 3;				\
+		pipe_layer = 3;				\
 		icon_state = Iconbase + "-3";	\
 	}
 

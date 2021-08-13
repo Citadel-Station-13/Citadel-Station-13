@@ -11,6 +11,13 @@ GLOBAL_LIST_INIT(alldirs_multiz, list(
 	UP, UP|NORTH, UP|SOUTH, UP|EAST, UP|WEST, UP|NORTHEAST, UP|NORTHWEST, UP|SOUTHEAST, UP|SOUTHWEST,
 	DOWN, DOWN|NORTH, DOWN|SOUTH, DOWN|EAST, DOWN|WEST, DOWN|NORTHEAST, DOWN|NORTHWEST, DOWN|SOUTHEAST, DOWN|SOUTHWEST))
 GLOBAL_LIST_INIT(alldirs, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
+/// Trinary directions mapped to the flags it's **not**, used for atmos
+GLOBAL_LIST_INIT(atmos_trinary_lookup_dirs, list(
+	NORTH = list(SOUTH, EAST, WEST),
+	SOUTH = list(NORTH, EAST, WEST),
+	EAST = list(NORTH, WEST, SOUTH),
+	WEST = list(NORTH, SOUTH, EAST)
+))
 
 GLOBAL_LIST_EMPTY(landmarks_list)				//list of all landmarks created
 GLOBAL_LIST_EMPTY(start_landmarks_list)			//list of all spawn points created

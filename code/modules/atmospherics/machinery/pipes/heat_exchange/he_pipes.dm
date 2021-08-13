@@ -12,10 +12,10 @@
 	. = ..()
 	add_atom_colour("#404040", FIXED_COLOUR_PRIORITY)
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/isConnectable(obj/machinery/atmospherics/pipe/heat_exchanging/target, given_layer, HE_type_check = TRUE)
-	if(istype(target, /obj/machinery/atmospherics/pipe/heat_exchanging) != HE_type_check)
+/obj/machinery/atmospherics/pipe/heat_exchanging/CanConnect(obj/machinery/atmospherics/other, node, HE_type_check = TRUE)
+	if(istype(other, /obj/machinery/atmospherics/pipe/heat_exchanging) != HE_type_check)
 		return FALSE
-	. = ..()
+	return ..()
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/hide()
 	return
@@ -37,8 +37,7 @@
 		environment_temperature = T.return_temperature()
 
 	if(abs(environment_temperature-pipe_air.return_temperature()) > minimum_temperature_difference)
-		parent.temperature_interact(T, volume, thermal_conductivity)
-
+		pipeline.temperature_interact(T, volume, thermal_conductivity)
 
 	//heatup/cooldown any mobs buckled to ourselves based on our temperature
 	if(has_buckled_mobs())

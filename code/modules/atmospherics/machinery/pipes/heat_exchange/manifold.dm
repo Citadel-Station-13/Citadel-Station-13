@@ -1,7 +1,9 @@
 //3-Way Manifold
+ATMOS_MAPPING_LAYERS_PX_DOUBLE(/obj/machinery/atmospherics/pipe/heat_exchanging/manifold)
+
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold
 	icon = 'icons/obj/atmospherics/pipes/he-manifold.dmi'
-	icon_state = "manifold-2"
+	icon_state = "manifold"
 
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes."
@@ -25,23 +27,12 @@
 	initialize_directions = NORTH|SOUTH|EAST|WEST
 	initialize_directions &= ~dir
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/manifold/update_icon()
-	cut_overlays()
-	PIPING_LAYER_DOUBLE_SHIFT(center, piping_layer)
-	add_overlay(center)
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold/update_overlays()
+	. = ..()
+	PIPE_LAYER_DOUBLE_SHIFT(center, pipe_layer)
+	. += center
 
 	//Add non-broken pieces
 	for(var/i in 1 to device_type)
-		if(nodes[i])
-			add_overlay( getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i])) )
-
-	update_layer()
-	update_alpha()
-
-/obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer1
-	piping_layer = 1
-	icon_state = "manifold-1"
-
-/obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer3
-	piping_layer = 3
-	icon_state = "manifold-3"
+		if(connected[i])
+			. += getpipeimage(icon, "pipe-[pipe_layer]", get_dir(src, connected[i]))

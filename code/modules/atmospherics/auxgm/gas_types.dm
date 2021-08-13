@@ -3,6 +3,7 @@
 	specific_heat = 20
 	name = "Oxygen"
 	oxidation_temperature = T0C - 100 // it checks max of this and fire temperature, so rarely will things spontaneously combust
+	molar_mass = 32
 	powermix = 1
 	heat_penalty = 1
 	transmit_modifier = 1.5
@@ -23,6 +24,8 @@
 			alert_type = /atom/movable/screen/alert/too_much_nitro
 		)
 	)
+	name = "Nitrogen"
+	molar_mass = 28
 
 /datum/gas/carbon_dioxide //what the fuck is this?
 	id = GAS_CO2
@@ -43,6 +46,7 @@
 		)
 	)
 	fusion_power = 3
+	molar_mass = 44
 
 /datum/gas/plasma
 	id = GAS_PLASMA
@@ -51,6 +55,7 @@
 	gas_overlay = "plasma"
 	moles_visible = MOLES_GAS_VISIBLE
 	flags = GAS_FLAG_DANGEROUS
+	molar_mass = 400
 	heat_penalty = 15
 	transmit_modifier = 4
 	powermix = 1
@@ -66,6 +71,7 @@
 	heat_penalty = 8
 	powermix = 1
 	breath_reagent = /datum/reagent/water
+	molar_mass = 18
 
 /datum/gas/hypernoblium
 	id = GAS_HYPERNOB
@@ -73,6 +79,7 @@
 	name = "Hyper-noblium"
 	gas_overlay = "freon"
 	moles_visible = MOLES_GAS_VISIBLE
+	molar_mass = 600
 
 /datum/gas/nitrous_oxide
 	id = GAS_NITROUS
@@ -105,6 +112,7 @@
 	moles_visible = MOLES_GAS_VISIBLE
 	flags = GAS_FLAG_DANGEROUS
 	fusion_power = 1
+	molar_mass = 10
 	powermix = 1
 	heat_penalty = 10
 	transmit_modifier = 30

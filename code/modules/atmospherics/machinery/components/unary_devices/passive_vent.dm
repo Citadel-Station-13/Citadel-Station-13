@@ -1,5 +1,7 @@
-/obj/machinery/atmospherics/components/unary/passive_vent
-	icon_state = "passive_vent_map-2"
+ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/passive_vent, "passive_vent_map")
+
+/obj/machinery/atmospherics/component/unary/passive_vent
+	icon_state = "passive_vent_map"
 
 	name = "passive vent"
 	desc = "It is an open vent."
@@ -11,14 +13,14 @@
 
 	pipe_state = "pvent"
 
-/obj/machinery/atmospherics/components/unary/passive_vent/update_icon_nopipes()
+/obj/machinery/atmospherics/component/unary/passive_vent/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		var/image/cap = getpipeimage(icon, "vent_cap", initialize_directions, piping_layer = piping_layer)
+		var/image/cap = getpipeimage(icon, "vent_cap", initialize_directions, pipe_layer = pipe_layer)
 		add_overlay(cap)
 	icon_state = "passive_vent"
 
-/obj/machinery/atmospherics/components/unary/passive_vent/process_atmos()
+/obj/machinery/atmospherics/component/unary/passive_vent/process_atmos()
 	..()
 
 	var/active = FALSE
@@ -37,15 +39,7 @@
 
 	if(active)
 		air_update_turf()
-		update_parents()
+		MarkDirty()
 
-/obj/machinery/atmospherics/components/unary/passive_vent/can_crawl_through()
+/obj/machinery/atmospherics/component/unary/passive_vent/can_crawl_through()
 	return TRUE
-
-/obj/machinery/atmospherics/components/unary/passive_vent/layer1
-	piping_layer = 1
-	icon_state = "passive_vent_map-1"
-
-/obj/machinery/atmospherics/components/unary/passive_vent/layer3
-	piping_layer = 3
-	icon_state = "passive_vent_map-3"

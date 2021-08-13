@@ -1,48 +1,47 @@
-/obj/machinery/atmospherics/components/trinary
-	icon = 'icons/obj/atmospherics/components/trinary_devices.dmi'
+/obj/machinery/atmospherics/component/trinary
+	icon = 'icons/obj/atmospherics/component/trinary_devices.dmi'
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
 	use_power = IDLE_POWER_USE
 	device_type = TRINARY
 	layer = GAS_FILTER_LAYER
-	pipe_flags = PIPING_ONE_PER_TURF
+	pipe_flags = PIPE_ONE_PER_TURF
 
+	/// If this device is flipped
 	var/flipped = FALSE
+	/// Alternative layout
+	var/t_layout = FALSE
 
-/obj/machinery/atmospherics/components/trinary/SetInitDirections()
-	switch(dir)
-		if(NORTH)
-			initialize_directions = EAST|NORTH|SOUTH
-		if(SOUTH)
-			initialize_directions = SOUTH|WEST|NORTH
-		if(EAST)
-			initialize_directions = EAST|WEST|SOUTH
-		if(WEST)
-			initialize_directions = WEST|NORTH|EAST
+/obj/machinery/atmospherics/component/trinary/SetInitDirections()
+	if(!t_layout)
+		switch(dir)
+			if(NORTH)
+				initialize_directions = EAST|NORTH|SOUTH
+			if(SOUTH)
+				initialize_directions = SOUTH|WEST|NORTH
+			if(EAST)
+				initialize_directions = EAST|WEST|SOUTH
+			if(WEST)
+				initialize_directions = WEST|NORTH|EAST
+	else
+		initialize_directions = dir | turn(dir, 90) | turn(dir, -90)
 
-/*
-Housekeeping and pipe network stuff
-*/
-
-/obj/machinery/atmospherics/components/trinary/getNodeConnects()
-
-	//Mixer:
-	//1 and 2 is input
-	//Node 3 is output
-	//If we flip the mixer, 1 and 3 shall exchange positions
-
-	//Filter:
-	//Node 1 is input
-	//Node 2 is filtered output
-	//Node 3 is rest output
-	//If we flip the filter, 1 and 3 shall exchange positions
-
-	var/node1_connect = turn(dir, -180)
-	var/node2_connect = turn(dir, -90)
-	var/node3_connect = dir
-
-	if(flipped)
-		node1_connect = turn(node1_connect, 180)
-		node3_connect = turn(node3_connect, 180)
-
-	return list(node1_connect, node2_connect, node3_connect)
+/obj/machinery/atmospherics/component/trinary/GetNodeIndex(dir, layer)
+	// non t_layout: node 2 is side
+	if(!t_layout)
+		if(dir == turn(src.dir, -90))
+			. = 2
+		else if(dir == (flipped? src.dir : turn(src.dir, 180)))
+			. = 1
+		else if(dir == (flipped? turn(src.dir, 90) : turn(src.dir, -90)))
+			. = 3
+	// t_layout: node 2 is front, node 1 is left, node 3 is right, RELATIVE TO FRONT
+	else
+		if(dir == src.dir)
+			. = 2
+		else if(dir == (flipped? turn(src.dir, -90) : turn(src.dir, 90)))
+			. = 1
+		else if(dir == (flipped? turn(src.dir, 90) : turn(src.dir, -90)))
+			. = 3
+	if(pipe_flags & PIPE_ALL_LAYER)
+		layer + ((. - 1) * PIPE_LAYER_TOTAL)

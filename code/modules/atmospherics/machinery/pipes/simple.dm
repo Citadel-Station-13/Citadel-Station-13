@@ -1,16 +1,19 @@
-// Simple Pipe
-// The regular pipe you see everywhere, including bent ones.
+/**
+ * Simple 2-directional pipes
+ */
+
+ATMOS_MAPPING_FULL_IX(/obj/machinery/atmospherics/pipe/simple, "pipe11")
 
 /obj/machinery/atmospherics/pipe/simple
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
-	icon_state = "pipe11-2"
+	icon_state = "pipe11"
 
 	name = "pipe"
 	desc = "A one meter section of regular pipe."
 
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH
-	pipe_flags = PIPING_CARDINAL_AUTONORMALIZE
+	pipe_flags = PIPE_CARDINAL_AUTONORMALIZE
 
 	device_type = BINARY
 
@@ -27,7 +30,5 @@
 		if(EAST, WEST)
 			initialize_directions = EAST|WEST
 
-/obj/machinery/atmospherics/pipe/simple/update_icon()
-	icon_state = "pipe[nodes[1] ? "1" : "0"][nodes[2] ? "1" : "0"]-[piping_layer]"
-	update_layer()
-	update_alpha()
+/obj/machinery/atmospherics/pipe/simple/update_icon_state()
+	icon_state = "pipe[connected[1] ? "1" : "0"][connected[2] ? "1" : "0"]-[pipe_layer]"

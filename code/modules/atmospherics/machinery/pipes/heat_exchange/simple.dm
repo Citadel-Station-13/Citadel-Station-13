@@ -1,13 +1,15 @@
+ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/pipe/heat_exchanging/simple, "pipe11")
+
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple
 	icon = 'icons/obj/atmospherics/pipes/he-simple.dmi'
-	icon_state = "pipe11-2"
+	icon_state = "pipe11"
 
 	name = "pipe"
 	desc = "A one meter section of heat-exchanging pipe."
 
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH
-	pipe_flags = PIPING_CARDINAL_AUTONORMALIZE
+	pipe_flags = PIPE_CARDINAL_AUTONORMALIZE
 
 	device_type = BINARY
 
@@ -24,15 +26,5 @@
 		if(EAST, WEST)
 			initialize_directions = EAST|WEST
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple/update_icon()
-	icon_state = "pipe[nodes[1] ? "1" : "0"][nodes[2] ? "1" : "0"]-[piping_layer]"
-	update_layer()
-	update_alpha()
-
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer1
-	piping_layer = 1
-	icon_state = "pipe11-1"
-
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer3
-	piping_layer = 3
-	icon_state = "pipe11-3"
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple/update_icon_state()
+	icon_state = "pipe[connected[1] ? "1" : "0"][connected[2] ? "1" : "0"]-[pipe_layer]"

@@ -1,21 +1,29 @@
-/obj/machinery/atmospherics/components/binary
-	icon = 'icons/obj/atmospherics/components/binary_devices.dmi'
+/**
+ * "Straight" pipe-like binary devices
+ *
+ * NODE ORDER:
+ * Flow goes THROUGH dir, aka dir is output, turn(dir, 180) is input
+ * IF all layer, order *= layer.
+ */
+/obj/machinery/atmospherics/component/binary
+	icon = 'icons/obj/atmospherics/component/binary_devices.dmi'
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH
 	use_power = IDLE_POWER_USE
 	device_type = BINARY
 	layer = GAS_PUMP_LAYER
 
-/obj/machinery/atmospherics/components/binary/SetInitDirections()
+/obj/machinery/atmospherics/component/binary/SetInitDirections()
 	switch(dir)
 		if(NORTH, SOUTH)
 			initialize_directions = NORTH|SOUTH
 		if(EAST, WEST)
 			initialize_directions = EAST|WEST
 
-/obj/machinery/atmospherics/components/binary/hide(intact)
-	update_icon()
-	..()
-
-/obj/machinery/atmospherics/components/binary/getNodeConnects()
-	return list(turn(dir, 180), dir)
+/obj/machinery/atmospherics/component/binary/GetNodeIndex(dir, layer)
+	if(dir == src.dir)
+		. = 2
+	else
+		. = 1
+	if(pipe_flags & PIPE_ALL_LAYER)
+		. = layer + ((. - 1) * PIPE_LAYER_TOTAL)

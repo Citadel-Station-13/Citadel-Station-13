@@ -1,5 +1,6 @@
-/obj/machinery/atmospherics/components/trinary/filter
-	icon_state = "filter_off"
+ATMOS_MAPPING_LAYERS_PX_DOUBLE(/obj/machinery/atmospherics/component/trinary/filter)
+/obj/machinery/atmospherics/component/trinary/filter
+	icon_state = "filter_off_map"
 	density = FALSE
 
 	name = "gas filter"
@@ -14,43 +15,31 @@
 	construction_type = /obj/item/pipe/trinary/flippable
 	pipe_state = "filter"
 
-/obj/machinery/atmospherics/components/trinary/filter/examine(mob/user)
+	allow_alt_click_max_rate = TRUE
+	allow_ctrl_click_toggle_power = TRUE
+	ui_pump_control_capabilities = ATMOS_UI_CONTROL_POWER | ATMOS_UI_CONTROL_VOLUME | ATMOS_UI_CONTROL_PRESSURE | ATMOS_UI_CONTROL_ACTIVE | ATMOS_UI_POWER_USAGE | ATMOS_UI_FLOW_RATE
+
+ATMOS_MAPPING_LAYERS_PX_DOUBLE(/obj/machinery/atmospherics/component/trinary/filter/t_section)
+/obj/machinery/atmospherics/component/trinary/filter/t_section
+	icon_state = "filter_off_t_map"
+	t_layout = TRUE
+
+/obj/machinery/atmospherics/component/trinary/filter/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>You can hold <b>Ctrl</b> and click on it to toggle it on and off.</span>"
 	. += "<span class='notice'>You can hold <b>Alt</b> and click on it to maximize its flow rate.</span>"
 
-/obj/machinery/atmospherics/components/trinary/filter/CtrlClick(mob/user)
-	var/area/A = get_area(src)
-	var/turf/T = get_turf(src)
-	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
-		on = !on
-		update_icon()
-		investigate_log("Filter, [src.name], turned on by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
-		message_admins("Filter, [src.name], turned [on ? "on" : "off"] by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
-		return ..()
-
-/obj/machinery/atmospherics/components/trinary/filter/AltClick(mob/user)
-	. = ..()
-	var/area/A = get_area(src)
-	var/turf/T = get_turf(src)
-	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
-		transfer_rate = MAX_TRANSFER_RATE
-		to_chat(user,"<span class='notice'>You maximize the flow rate on the [src].</span>")
-		investigate_log("Filter, [src.name], was maximized by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
-		message_admins("Filter, [src.name], was maximized by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
-		return TRUE
-
-/obj/machinery/atmospherics/components/trinary/filter/proc/set_frequency(new_frequency)
+/obj/machinery/atmospherics/component/trinary/filter/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
 
-/obj/machinery/atmospherics/components/trinary/filter/Destroy()
+/obj/machinery/atmospherics/component/trinary/filter/Destroy()
 	SSradio.remove_object(src,frequency)
 	return ..()
 
-/obj/machinery/atmospherics/components/trinary/filter/update_icon()
+/obj/machinery/atmospherics/component/trinary/filter/update_icon()
 	cut_overlays()
 	for(var/direction in GLOB.cardinals)
 		if(!(direction & initialize_directions))
@@ -59,27 +48,27 @@
 
 		var/image/cap
 		if(node)
-			cap = getpipeimage(icon, "cap", direction, node.pipe_color, piping_layer = piping_layer)
+			cap = getpipeimage(icon, "cap", direction, node.pipe_color, pipe_layer = pipe_layer)
 		else
-			cap = getpipeimage(icon, "cap", direction, piping_layer = piping_layer)
+			cap = getpipeimage(icon, "cap", direction, pipe_layer = pipe_layer)
 
 		add_overlay(cap)
 
 	return ..()
 
-/obj/machinery/atmospherics/components/trinary/filter/update_icon_nopipes()
-	var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational()
-	icon_state = "filter_[on_state ? "on" : "off"][flipped ? "_f" : ""]"
+/obj/machinery/atmospherics/component/trinary/filter/update_icon_state()
+	var/on_state = on && connected[1] && connected[2] && connected[3] && is_operational()
+	icon_state = "filter_[on_state ? "on" : "off"][t_layout? "_t" : ""][flipped ? "_f" : ""]"
 
-/obj/machinery/atmospherics/components/trinary/filter/power_change()
+/obj/machinery/atmospherics/component/trinary/filter/power_change()
 	var/old_stat = stat
 	..()
 	if(stat != old_stat)
 		update_icon()
 
-/obj/machinery/atmospherics/components/trinary/filter/process_atmos()
+/obj/machinery/atmospherics/component/trinary/filter/process_atmos()
 	..()
-	if(!on || !(nodes[1] && nodes[2] && nodes[3]) || !is_operational())
+	if(!on || !(connected[1] && connected[2] && connected[3]) || !is_operational())
 		return
 
 	var/datum/gas_mixture/air1 = airs[1]
@@ -106,17 +95,17 @@
 
 	update_parents()
 
-/obj/machinery/atmospherics/components/trinary/filter/atmosinit()
+/obj/machinery/atmospherics/component/trinary/filter/atmosinit()
 	set_frequency(frequency)
 	return ..()
 
-/obj/machinery/atmospherics/components/trinary/filter/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/atmospherics/component/trinary/filter/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "AtmosFilter", name)
 		ui.open()
 
-/obj/machinery/atmospherics/components/trinary/filter/ui_data()
+/obj/machinery/atmospherics/component/trinary/filter/ui_data()
 	var/data = list()
 	data["on"] = on
 	data["rate"] = round(transfer_rate)
@@ -129,7 +118,7 @@
 
 	return data
 
-/obj/machinery/atmospherics/components/trinary/filter/ui_act(action, params)
+/obj/machinery/atmospherics/component/trinary/filter/ui_act(action, params)
 	if(..())
 		return
 	switch(action)
@@ -163,7 +152,7 @@
 			. = TRUE
 	update_icon()
 
-/obj/machinery/atmospherics/components/trinary/filter/can_unwrench(mob/user)
+/obj/machinery/atmospherics/component/trinary/filter/can_unwrench(mob/user)
 	. = ..()
 	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
@@ -171,88 +160,77 @@
 
 // Mapping
 
-/obj/machinery/atmospherics/components/trinary/filter/layer1
-	piping_layer = 1
-	icon_state = "filter_off_map-1"
-/obj/machinery/atmospherics/components/trinary/filter/layer3
-	piping_layer = 3
-	icon_state = "filter_off_map-3"
-
-/obj/machinery/atmospherics/components/trinary/filter/on
+ATMOS_MAPPING_LAYERS_PX_DOUBLE(/obj/machinery/atmospherics/component/trinary/filter/on)
+/obj/machinery/atmospherics/component/trinary/filter/on
 	on = TRUE
-	icon_state = "filter_on"
+	icon_state = "filter_on_map"
 
-/obj/machinery/atmospherics/components/trinary/filter/on/layer1
-	piping_layer = 1
-	icon_state = "filter_on_map-1"
-/obj/machinery/atmospherics/components/trinary/filter/on/layer3
-	piping_layer = 3
-	icon_state = "filter_on_map-3"
-
-/obj/machinery/atmospherics/components/trinary/filter/flipped
-	icon_state = "filter_off_f"
+ATMOS_MAPPING_LAYERS_PX_DOUBLE(/obj/machinery/atmospherics/component/trinary/filter/flipped)
+/obj/machinery/atmospherics/component/trinary/filter/flipped
+	icon_state = "filter_off_f_map"
 	flipped = TRUE
 
-/obj/machinery/atmospherics/components/trinary/filter/flipped/layer1
-	piping_layer = 1
-	icon_state = "filter_off_f_map-1"
-/obj/machinery/atmospherics/components/trinary/filter/flipped/layer3
-	piping_layer = 3
-	icon_state = "filter_off_f_map-3"
-
-/obj/machinery/atmospherics/components/trinary/filter/flipped/on
+ATMOS_MAPPING_LAYERS_PX_DOUBLE(/obj/machinery/atmospherics/component/trinary/filter/flipped/on)
+/obj/machinery/atmospherics/component/trinary/filter/flipped/on
 	on = TRUE
 	icon_state = "filter_on_f"
 
-/obj/machinery/atmospherics/components/trinary/filter/flipped/on/layer1
-	piping_layer = 1
-	icon_state = "filter_on_f_map-1"
-/obj/machinery/atmospherics/components/trinary/filter/flipped/on/layer3
-	piping_layer = 3
-	icon_state = "filter_on_f_map-3"
-
-/obj/machinery/atmospherics/components/trinary/filter/atmos //Used for atmos waste loops
+ATMOS_MAPPING_LAYERS_PX_DOUBLE(/obj/machinery/atmospherics/component/trinary/filter/t_section/on)
+/obj/machinery/atmospherics/component/trinary/filter/t_section/on
 	on = TRUE
-	icon_state = "filter_on"
-/obj/machinery/atmospherics/components/trinary/filter/atmos/n2
+
+/obj/machinery/atmospherics/component/trinary/filter/atmos //Used for atmos waste loops
+	on = TRUE
+	icon_state = "filter_on_map"
+
+/obj/machinery/atmospherics/component/trinary/filter/atmos/n2
 	name = "nitrogen filter"
 	filter_type = "n2"
-/obj/machinery/atmospherics/components/trinary/filter/atmos/o2
+
+/obj/machinery/atmospherics/component/trinary/filter/atmos/o2
 	name = "oxygen filter"
 	filter_type = "o2"
-/obj/machinery/atmospherics/components/trinary/filter/atmos/co2
+
+/obj/machinery/atmospherics/component/trinary/filter/atmos/co2
 	name = "carbon dioxide filter"
 	filter_type = "co2"
-/obj/machinery/atmospherics/components/trinary/filter/atmos/n2o
+
+/obj/machinery/atmospherics/component/trinary/filter/atmos/n2o
 	name = "nitrous oxide filter"
 	filter_type = "n2o"
-/obj/machinery/atmospherics/components/trinary/filter/atmos/plasma
+
+/obj/machinery/atmospherics/component/trinary/filter/atmos/plasma
 	name = "plasma filter"
 	filter_type = "plasma"
 
-/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped //This feels wrong, I know
+/obj/machinery/atmospherics/component/trinary/filter/atmos/flipped //This feels wrong, I know
 	icon_state = "filter_on_f"
 	flipped = TRUE
-/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/n2
+
+/obj/machinery/atmospherics/component/trinary/filter/atmos/flipped/n2
 	name = "nitrogen filter"
 	filter_type = "n2"
-/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/o2
+
+/obj/machinery/atmospherics/component/trinary/filter/atmos/flipped/o2
 	name = "oxygen filter"
 	filter_type = "o2"
-/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2
+
+/obj/machinery/atmospherics/component/trinary/filter/atmos/flipped/co2
 	name = "carbon dioxide filter"
 	filter_type = "co2"
-/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/n2o
+
+/obj/machinery/atmospherics/component/trinary/filter/atmos/flipped/n2o
 	name = "nitrous oxide filter"
 	filter_type = "n2o"
-/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/plasma
+
+/obj/machinery/atmospherics/component/trinary/filter/atmos/flipped/plasma
 	name = "plasma filter"
 	filter_type = "plasma"
 
 // These two filter types have critical_machine flagged to on and thus causes the area they are in to be exempt from the Grid Check event.
 
-/obj/machinery/atmospherics/components/trinary/filter/critical
+/obj/machinery/atmospherics/component/trinary/filter/critical
 	critical_machine = TRUE
 
-/obj/machinery/atmospherics/components/trinary/filter/flipped/critical
+/obj/machinery/atmospherics/component/trinary/filter/flipped/critical
 	critical_machine = TRUE
