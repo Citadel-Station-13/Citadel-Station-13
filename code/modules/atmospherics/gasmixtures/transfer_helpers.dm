@@ -160,10 +160,13 @@
  * One way
  * Returns the moles transferred.
  *
+ * Usually you'd call this proc with transfer_moles set to null and additional_volume set as an argument.
+ *
  * @params
  * * source - Source mixture
  * * sink - Destination mixture
  * * transfer_moles - moles to try to transfer
+ * * additional_volume - the additional volume passed into calculate_equalize_moles.
  */
 /proc/flow_gas(datum/gas_mixture/source, datum/gas_mixture/sink, transfer_moles, additional_volume = 0)
 	transfer_moles = min(calculate_equalize_moles(source, sink, FALSE, additional_volume), isnull(transfer_moles)? source.total_moles() : (min(source.total_moles(), transfer_moles)))
@@ -181,38 +184,87 @@
  * * gas1
  * * gas2
  * * volume - volume exposed
- * * dt - seconds to simulate
  * * conductivity - ratio of thermal energy difference exchanged
  * * minimum - Minimum joules to exchange, regardless of conductivity
  */
-/proc/heat_exchange_gas_to_gas(datum/gas_mixture/gas1, datum/gas_mixture/gas2, volume = 200, conductivity = 0.8, minimum = ATMOSMECH_MINIMUM_HEAT_EXCHANGE_JOULES)
+/proc/heat_exchange_gas_to_gas(datum/gas_mixture/gas1, datum/gas_mixture/gas2, volume = 200, conductivity = 1, minimum = ATMOSMECH_MINIMUM_HEAT_EXCHANGE_JOULES)
+	var/diff = (gas2.thermal_energy() * clamp(volume / gas2.return_volume(), 0, 1)) - (gas1.thermal_energy() * clamp(volume / gas1.return_volume(), 0, 1))
+	// what this does:
+	// if diff * conductivity is below minimum, raise to min, but, if that makes it over diff, ensure it doesn't exceed diff
+	var/transfer = min(diff, max(minimum, diff * conductivity)) * 0.5
+	gas1.adjust_heat(transfer)
+	gas2.adjust_heat(-transfer)
+	return abs(transfer)
 
-	update_cycle = SSair.times_fired
-	partner.update_cycle = SSair.times_fired
+/obj/machinery/power/generator/process(delta_time)
+	var/datum/gas_mixture/air1 = circ1.return_transfer_air()
+	var/datum/gas_mixture/air2 = circ2.return_transfer_air()
 
-	var/datum/gas_mixture/air_contents = airs[1]
-	var/datum/gas_mixture/partner_air_contents = partner.airs[1]
+	lastgen2 = lastgen1
+	lastgen1 = 0
+	last_thermal_gen = 0
+	last_circ1_gen = 0
+	last_circ2_gen = 0
 
-	var/air_heat_capacity = air_contents.heat_capacity()
-	var/other_air_heat_capacity = partner_air_contents.heat_capacity()
-	var/combined_heat_capacity = other_air_heat_capacity + air_heat_capacity
+	if(air1 && air2)
+		var/air1_heat_capacity = air1.heat_capacity()
+		var/air2_heat_capacity = air2.heat_capacity()
+		var/delta_temperature = abs(air2.temperature - air1.temperature)
 
+		if(delta_temperature > 0 && air1_heat_capacity > 0 && air2_heat_capacity > 0)
+			var/energy_transfer = delta_temperature*air2_heat_capacity*air1_heat_capacity/(air2_heat_capacity+air1_heat_capacity)
+			var/heat = energy_transfer*(1-thermal_efficiency)
+			last_thermal_gen = energy_transfer*thermal_efficiency
 
-	var/old_temperature = air_contents.return_temperature()
-	var/other_old_temperature = partner_air_contents.return_temperature()
+			if(air2.temperature > air1.temperature)
+				air2.temperature = air2.temperature - energy_transfer/air2_heat_capacity
+				air1.temperature = air1.temperature + heat/air1_heat_capacity
+			else
+				air2.temperature = air2.temperature + heat/air2_heat_capacity
+				air1.temperature = air1.temperature - energy_transfer/air1_heat_capacity
 
-	if(combined_heat_capacity > 0)
-		var/combined_energy = partner_air_contents.return_temperature()*other_air_heat_capacity + air_heat_capacity*air_contents.return_temperature()
+	//Transfer the air
+	if (air1)
+		circ1.air2.merge(air1)
+	if (air2)
+		circ2.air2.merge(air2)
 
-		var/new_temperature = combined_energy/combined_heat_capacity
-		air_contents.set_temperature(new_temperature)
-		partner_air_contents.set_temperature(new_temperature)
+	//Update the gas networks
+	if(circ1.network2)
+		circ1.network2.update = 1
+	if(circ2.network2)
+		circ2.network2.update = 1
 
-	if(abs(old_temperature-air_contents.return_temperature()) > 1)
-		update_parents()
+	//Exceeding maximum power leads to some power loss
+	if(effective_gen > max_power && prob(5))
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+		s.set_up(3, 1, src)
+		s.start()
+		stored_energy *= 0.5
 
-	if(abs(other_old_temperature-partner_air_contents.return_temperature()) > 1)
-		partner.update_parents()
+	//Power
+	last_circ1_gen = circ1.return_stored_energy()
+	last_circ2_gen = circ2.return_stored_energy()
+	stored_energy += last_thermal_gen + last_circ1_gen + last_circ2_gen
+	lastgen1 = stored_energy*0.4 //smoothened power generation to prevent slingshotting as pressure is equalized, then restored by pumps
+	stored_energy -= lastgen1
+	effective_gen = (lastgen1 + lastgen2) / 2
+
+	// Sounds.
+	if(effective_gen > (max_power * 0.05)) // More than 5% and sounds start.
+		soundloop.start()
+		soundloop.volume = LERP(1, 40, effective_gen / max_power)
+	else
+		soundloop.stop()
+
+	// update icon overlays and power usage only if displayed level has changed
+	var/genlev = max(0, min( round(11*effective_gen / max_power), 11))
+	if(effective_gen > 100 && genlev == 0)
+		genlev = 1
+	if(genlev != lastgenlev)
+		lastgenlev = genlev
+		updateicon()
+	add_avail(effective_gen)
 
 
 /**
@@ -221,11 +273,10 @@
  * Returns thermal energy in joules transferred
  *
  * @params
- * * gas
- * * T - trf
+ * * gas1 - gas
+ * * T - turf in question
  * * volume - volume exposed
- * * dt - seconds to simulate
- * * conductivity
+ * * conductivity - ratio of thermal energy difference to exchange
  * * minimum - Minimum joules to exchange, regardless of conductivity
  */
 /proc/heat_exchange_gas_to_turf(datum/gas_mixture/gas1, turf/T, volume = 200, conductivity = 0.8, minimum = ATMOSMECH_MINIMUM_HEAT_EXCHANGE_JOULES)
@@ -284,6 +335,47 @@
 			air.set_temperature(air.return_temperature() - heat/total_heat_capacity)
 	update = TRUE
 
+/**
+ * Heat exchange for gas radiating to space/vaccum
+ *
+ * Returns thermal energy in joules lost
+ *
+ * @params
+ * gas - gas mixture
+ * surface - surface area
+ * conductivity - thermal conductivity
+ */
+/proc/heat_exchange_gas_to_space(datum/gas_mixture/gas, surface = 1, conductivity = 0.8)
+	var/moles_per_liter = gas.total_moles() / gas.return_volume()
+
+
+// Radiation constants.
+#define STEFAN_BOLTZMANN_CONSTANT    5.6704e-8 // W/(m^2*K^4).
+#define COSMIC_RADIATION_TEMPERATURE 3.15      // K.
+#define AVERAGE_SOLAR_RADIATION      200       // W/m^2. Kind of arbitrary. Really this should depend on the sun position much like solars.
+#define RADIATOR_OPTIMUM_PRESSURE    3771      // kPa at 20 C. This should be higher as gases aren't great conductors until they are dense. Used the critical pressure for air.
+#define GAS_CRITICAL_TEMPERATURE     132.65    // K. The critical point temperature for air.
+
+#define RADIATOR_EXPOSED_SURFACE_AREA_RATIO 0.04 // (3 cm + 100 cm * sin(3deg))/(2*(3+100 cm)). Unitless ratio.
+#define HUMAN_EXPOSED_SURFACE_AREA          5.2 //m^2, surface area of 1.7m (H) x 0.46m (D) cylinder
+
+//surface must be the surface area in m^2
+/datum/pipeline/proc/radiate_heat_to_space(surface, thermal_conductivity)
+	var/gas_density = air.total_moles/air.volume
+	thermal_conductivity *= min(gas_density / ( RADIATOR_OPTIMUM_PRESSURE/(R_IDEAL_GAS_EQUATION*GAS_CRITICAL_TEMPERATURE) ), 1) //mult by density ratio
+
+	// We only get heat from the star on the exposed surface area.
+	// If the HE pipes gain more energy from AVERAGE_SOLAR_RADIATION than they can radiate, then they have a net heat increase.
+	var/heat_gain = AVERAGE_SOLAR_RADIATION * (RADIATOR_EXPOSED_SURFACE_AREA_RATIO * surface) * thermal_conductivity
+
+	// Previously, the temperature would enter equilibrium at 26C or 294K.
+	// Only would happen if both sides (all 2 square meters of surface area) were exposed to sunlight.  We now assume it aligned edge on.
+	// It currently should stabilise at 129.6K or -143.6C
+	heat_gain -= surface * STEFAN_BOLTZMANN_CONSTANT * thermal_conductivity * (air.temperature - COSMIC_RADIATION_TEMPERATURE) ** 4
+
+	air.add_thermal_energy(heat_gain)
+	if(network)
+		network.update = 1
 
 /**
  * Calculates the power in watts needed to move in one second one mole of gas from source to sink.
