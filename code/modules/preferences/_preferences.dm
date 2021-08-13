@@ -49,12 +49,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// Global settings: Variable store for the actual preference collections. list(save_key = list(var1 = val1, ...), ...)
 	var/list/global_preferences
 
-	// Key bindings are stored directly for performance
-	/// Custom Keybindings
-	var/list/key_bindings = list()
-	/// List with a key string associated to a list of keybindings. Unlike key_bindings, this one operates on raw key, allowing for binding a key that triggers regardless of if a modifier is depressed as long as the raw key is sent.
-	var/list/modless_key_bindings = list()
-
 	// Metadata begin - stuff like current slot. Not important enough that we'll care about migrations, generally.
 	/// Selected character slot
 	var/selected_slot = 1
@@ -66,6 +60,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	// Most things should use accessors in preferences/accessors to avoid this.
 
 	// End
+
+	// security
+	//Cooldowns for saving/loading. These are four are all separate due to loading code calling these one after another
+	var/saveprefcooldown
+	var/loadprefcooldown
+	var/savecharcooldown
+	var/loadcharcooldowns
 
 /datum/preferences/New(client/C)
 	ckey = istext(C)? C : C?.ckey

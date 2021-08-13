@@ -3,19 +3,6 @@
 #define BACKPACK_SLOT_AMT	4
 
 /datum/preferences
-	var/client/parent
-	//doohickeys for savefiles
-
-	var/icon/custom_holoform_icon
-	var/list/cached_holoform_icons
-	var/last_custom_holoform = 0
-
-	//Cooldowns for saving/loading. These are four are all separate due to loading code calling these one after another
-	var/saveprefcooldown
-	var/loadprefcooldown
-	var/savecharcooldown
-	var/loadcharcooldown
-
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = "#c43b23"

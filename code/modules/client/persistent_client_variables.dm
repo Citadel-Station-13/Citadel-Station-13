@@ -37,5 +37,10 @@ GLOBAL_LIST_EMPTY(persistent_client_variables)
 	/// did they cryo on their last ghost?
 	var/respawn_did_cryo = FALSE
 
+	// PAI stuff
+	var/icon/custom_holoform_icon
+	var/list/cached_holoform_icons
+	var/last_custom_holoform = 0
+
 /datum/persistent_client_variables/New(_ckey)
 	ckey = _ckey
