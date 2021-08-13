@@ -27,6 +27,12 @@
 	if(do_update)
 		update()
 
+/obj/item/organ/genital/Destroy()
+	if(linked_organ?.linked_organ == src)
+		linked_organ.linked_organ = null
+	linked_organ = null
+	. = ..()
+
 /obj/item/organ/genital/proc/set_aroused_state(new_state,cause = "manual toggle")
 	if(!(genital_flags & GENITAL_CAN_AROUSE))
 		return FALSE
