@@ -183,12 +183,13 @@
  * @params
  * * gas1
  * * gas2
- * * volume - volume exposed
+ * * volume - volume exposed, defaults to max. expensive to use.
  * * conductivity - ratio of thermal energy difference exchanged
  * * minimum - Minimum joules to exchange, regardless of conductivity
  */
-/proc/heat_exchange_gas_to_gas(datum/gas_mixture/gas1, datum/gas_mixture/gas2, volume = 200, conductivity = 1, minimum = ATMOSMECH_MINIMUM_HEAT_EXCHANGE_JOULES)
-	var/diff = (gas2.thermal_energy() * clamp(volume / gas2.return_volume(), 0, 1)) - (gas1.thermal_energy() * clamp(volume / gas1.return_volume(), 0, 1))
+/proc/heat_exchange_gas_to_gas(datum/gas_mixture/gas1, datum/gas_mixture/gas2, volume, conductivity = 1, minimum = ATMOSMECH_MINIMUM_HEAT_EXCHANGE_JOULES)
+	var/diff = isnull(volume)? (gas2.thermal_energy() - gas1.thermal_energy) :
+		(gas2.thermal_energy() * clamp(volume / gas2.return_volume(), 0, 1)) - (gas1.thermal_energy() * clamp(volume / gas1.return_volume(), 0, 1))
 	// what this does:
 	// if diff * conductivity is below minimum, raise to min, but, if that makes it over diff, ensure it doesn't exceed diff
 	var/transfer = min(diff, max(minimum, diff * conductivity)) * 0.5
@@ -196,76 +197,30 @@
 	gas2.adjust_heat(-transfer)
 	return abs(transfer)
 
-/obj/machinery/power/generator/process(delta_time)
-	var/datum/gas_mixture/air1 = circ1.return_transfer_air()
-	var/datum/gas_mixture/air2 = circ2.return_transfer_air()
-
-	lastgen2 = lastgen1
-	lastgen1 = 0
-	last_thermal_gen = 0
-	last_circ1_gen = 0
-	last_circ2_gen = 0
-
-	if(air1 && air2)
-		var/air1_heat_capacity = air1.heat_capacity()
-		var/air2_heat_capacity = air2.heat_capacity()
-		var/delta_temperature = abs(air2.temperature - air1.temperature)
-
-		if(delta_temperature > 0 && air1_heat_capacity > 0 && air2_heat_capacity > 0)
-			var/energy_transfer = delta_temperature*air2_heat_capacity*air1_heat_capacity/(air2_heat_capacity+air1_heat_capacity)
-			var/heat = energy_transfer*(1-thermal_efficiency)
-			last_thermal_gen = energy_transfer*thermal_efficiency
-
-			if(air2.temperature > air1.temperature)
-				air2.temperature = air2.temperature - energy_transfer/air2_heat_capacity
-				air1.temperature = air1.temperature + heat/air1_heat_capacity
-			else
-				air2.temperature = air2.temperature + heat/air2_heat_capacity
-				air1.temperature = air1.temperature - energy_transfer/air1_heat_capacity
-
-	//Transfer the air
-	if (air1)
-		circ1.air2.merge(air1)
-	if (air2)
-		circ2.air2.merge(air2)
-
-	//Update the gas networks
-	if(circ1.network2)
-		circ1.network2.update = 1
-	if(circ2.network2)
-		circ2.network2.update = 1
-
-	//Exceeding maximum power leads to some power loss
-	if(effective_gen > max_power && prob(5))
-		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		s.set_up(3, 1, src)
-		s.start()
-		stored_energy *= 0.5
-
-	//Power
-	last_circ1_gen = circ1.return_stored_energy()
-	last_circ2_gen = circ2.return_stored_energy()
-	stored_energy += last_thermal_gen + last_circ1_gen + last_circ2_gen
-	lastgen1 = stored_energy*0.4 //smoothened power generation to prevent slingshotting as pressure is equalized, then restored by pumps
-	stored_energy -= lastgen1
-	effective_gen = (lastgen1 + lastgen2) / 2
-
-	// Sounds.
-	if(effective_gen > (max_power * 0.05)) // More than 5% and sounds start.
-		soundloop.start()
-		soundloop.volume = LERP(1, 40, effective_gen / max_power)
-	else
-		soundloop.stop()
-
-	// update icon overlays and power usage only if displayed level has changed
-	var/genlev = max(0, min( round(11*effective_gen / max_power), 11))
-	if(effective_gen > 100 && genlev == 0)
-		genlev = 1
-	if(genlev != lastgenlev)
-		lastgenlev = genlev
-		updateicon()
-	add_avail(effective_gen)
-
+/**
+ * Heat exchange proc gas <--> gas for **energy conversion** in TEG-like devices
+ *
+ * Returns thermal energy in joules **converted**
+ *
+ * @params
+ * * gas1
+ * * gas2
+ * * volume - volume exposed, defaults to max. expensive to use.
+ * * conductivity - ratio of thermal energy difference exchanged
+ * * efficiency - ratio of **exchanged** energy converted, rather than being equalized
+ * * minimum - Minimum joules to exchange, regardless of conductivity
+ */
+/proc/thermoelectric_exchange_gas_to_gas(datum/gas_mixture/gas1, datum/gas_mixture/gas2, volume, conductivity = 1, efficiency = 1, minimum = ATMOSMECH_MINIMUM_HEAT_EXCHANGE_JOULES)
+	var/diff = isnull(volume)? (gas2.thermal_energy() - gas1.thermal_energy) :
+		(gas2.thermal_energy() * clamp(volume / gas2.return_volume(), 0, 1)) - (gas1.thermal_energy() * clamp(volume / gas1.return_volume(), 0, 1))
+	// what this does:
+	// if diff * conductivity is below minimum, raise to min, but, if that makes it over diff, ensure it doesn't exceed diff
+	var/transfer = min(diff, max(minimum, diff * conductivity))
+	var/converted = transfer * efficiency
+	transfer = (transfer - converted) * 0.5
+	gas1.adjust_heat(transfer)
+	gas2.adjust_heat(-transfer)
+	return abs(converted)
 
 /**
  * Heat exchange proc gas <--> turf

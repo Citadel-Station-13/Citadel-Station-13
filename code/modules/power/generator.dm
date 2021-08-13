@@ -1,3 +1,13 @@
+#warn completely overhaul this file, comment below
+#warn give them a thermal efficiency for ratio of energy converted vs equalizede
+#warn give them a boolean for if they're generating power by *converting heat to electricity*, or from the transfer itself
+#warn give them energy storage + storage for circulators
+#warn every tick, circulators generate power from kinetic motion of gas transfer
+#warn every tick, half of stored power is outputted
+#warn steal bay's sprites and make it spin up/down based on power generated
+#warn add max safe power output - going too far can result in power loss from sparks or worse(?)
+#warn investigate if it's possible to make these not directional without having the turbines see-saw (maybe only allow half the air in input to flow in return for high volume?)
+
 /obj/machinery/power/generator
 	name = "thermoelectric generator"
 	desc = "It's a high efficiency thermoelectric generator."
