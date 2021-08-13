@@ -124,9 +124,17 @@
 /**
  * Applies settings to a character when a mob is being made for a player on joining the round
  * MOB IS NOT NECESSARILY HUMAN! Always check type first.
- * visuals_only - If true, we just need a visual render, don't do anything fancy.
+ * flags - check preferences.dm in __DEFINES
  */
-/datum/preferences_collection/proc/copy_to_mob(datum/preferences/prefs, mob/M, visuals_only = FALSE)
+/datum/preferences_collection/proc/copy_to_mob(datum/preferences/prefs, mob/M, flags)
+
+/**
+ * Applies settings (i.e. PDA ringtones, suit sensors, etc, we don't necessarily have these or we might but these are examples)
+ * to a mob after it's instantiated and copy_to_mob as ran. Often times they'll already be at their spawnpoint.
+ * Mob is not necessarily human. Always check type first.
+ * flags - check preferences.dm in __DEFINES
+ */
+/datum/preferences_collection/proc/late_copy_to_mob(datum/preferences/prefs, mob/M, flags)
 
 /**
  * Handles global migrations during loading. Must only be called from preferences datum. Should write DIRECTLY to datalist.

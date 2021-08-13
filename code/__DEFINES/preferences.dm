@@ -65,6 +65,17 @@
 /// New player, initialize everything
 #define PREFERENCES_LOAD_NEW_FILE			3
 
+// Internal flags for copy_to_mob and late_copy_to_mob
+/// Visuals only, don't care about detailed things that won't be seen on a sprite
+#define COPY_TO_VISUALS_ONLY				(1<<0)
+/// Load them in with their custom loadout (instead of handling it elsewhere or not at all)
+#define COPY_TO_EQUIP_LOADOUT				(1<<1)
+/// The copy to operation is a roundstart load
+#define COPY_TO_ROUNDSTART					(1<<2)
+/// Write organs like prosthetic limbs and prosthetic internal organs
+#define COPY_TO_WRITE_ORGANS				(1<<3)
+
+
 //Preference toggles
 #define SOUND_ADMINHELP			(1<<0)
 #define SOUND_MIDI				(1<<1)

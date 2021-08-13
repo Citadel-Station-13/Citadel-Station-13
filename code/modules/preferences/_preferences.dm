@@ -390,3 +390,41 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	ASSERT(parent)
 	to_chat(parent, debug_message_queue.Join("<br>"))
 	debug_message_queue.Cut()
+
+/**
+ * Instantiates a mob.
+ * Uses flags because frankly you shouldn't use this proc if you dont' know what you're doing.
+ */
+/datum/preferences/proc/InstantiateHuman(atom/loc, defer_late_copy = FALSE, flags = COPY_TO_WRITE_ORGANS)
+	if(!istype(loc))
+		CRASH("Cannot instantiate human in nullspace.")
+	var/mob/living/carbon/human/H = new(loc)
+	_copy_to(H, defer_late_copy, flags)
+
+/**
+ * Applies to a mob.
+ *
+ * if defer_late_copy is TRUE, late copy to, which runs things like PDAs, ringtones, suit sensors, etc,
+ * will not run.
+ *
+ * if equip_loadout is TRUE, loadout will be equipped as well.
+ */
+/datum/preferences/proc/CopyTo(mob/M, defer_late_copy = FALSE, visuals_only = FALSE, roundstart = FALSE, equip_loadout = FALSE, apply_organs = FALSE)
+	return _copy_to(M, defer_late_copy, (
+		(visuals_only && COPY_TO_VISUALS_ONLY) |
+		(equip_loadout && COPY_TO_EQUIP_LOADOUT) |
+		(roundstart && COPY_TO_ROUNDSTART) |
+		(apply_organs && COPY_TO_WRITE_ORGANS)
+	))
+
+/**
+ * Creates a mob
+ * Advanced thing for VV proccalls
+ */
+/datum/preferences/proc/_copy_to(mob/M, defer = FALSE, flags)
+	for(var/datum/preferences_collection/C in SScharacter_setup.collections)
+		C.copy_to_mob(src, M, flags)
+	if(defer)
+		return
+	for(var/datum/preferences_collection/C in SScharacter_setup.collections)
+		C.late_copy_to_mob(src, M, flags)
