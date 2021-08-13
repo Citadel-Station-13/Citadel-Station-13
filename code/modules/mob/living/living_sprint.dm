@@ -3,7 +3,7 @@
 	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_SPRINT_LOCKED), .proc/update_sprint_lock)
 
 /mob/living/proc/update_sprint_icon()
-	var/obj/screen/sprintbutton/S = locate() in hud_used?.static_inventory
+	var/atom/movable/screen/sprintbutton/S = locate() in hud_used?.static_inventory
 	S?.update_icon()
 
 /mob/living/proc/update_hud_sprint_bar()

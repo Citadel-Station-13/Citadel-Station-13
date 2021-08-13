@@ -13,7 +13,7 @@ Configuration:
 
 Usage:
 - Define mouse event procs on your (probably HUD) object and simply call the show and hide procs respectively:
-	/obj/screen/hud
+	/atom/movable/screen/hud
 		MouseEntered(location, control, params)
 			usr.client.tooltip.show(params, title = src.name, content = src.desc)
 
@@ -138,12 +138,10 @@ Notes:
 	. = ..()
 	if(tooltips)
 		if(!QDELETED(src))
-			var/list/examine_list = examine(src)
-			var/get_tooltip_data = get_tooltip_data()
-			if(length(get_tooltip_data))
-				examine_list = get_tooltip_data
-			var/examine_data = examine_list.Join("<br />")
-			openToolTip(usr, src, params, title = name, content = examine_data)
+			var/list/tooltip_data = get_tooltip_data()
+			if(length(tooltip_data))
+				var/examine_data = tooltip_data.Join("<br />")
+				openToolTip(usr, src, params, title = name, content = examine_data)
 
 /atom/movable/MouseExited(location, control, params)
 	. = ..()

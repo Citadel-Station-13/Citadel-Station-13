@@ -94,7 +94,7 @@
 			L.SetUnconscious(0, FALSE)
 			L.adjustOxyLoss(-50)// do CPR first
 			if(L.blood_volume <= 500) //bandage them up and give em some blood if they're bleeding
-				L.blood_volume += 30
+				L.adjust_integration_blood(30)
 				L.bleedsuppress = 0
 			if(L.getBruteLoss() >= 50)// first, did we beat them into crit? if so, heal that
 				var/healing = min(L.getBruteLoss(), 120)
