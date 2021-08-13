@@ -32,11 +32,11 @@
 	var/last_transfer_rate
 	/// Last power usage, set by gas transfer procs [code/modules/atmospherics/gasmixtures/transfer_helpers.dm].
 	var/last_power_draw
-	/// Allow alt clicking to max everything out
+	/// Allow alt clicking to max everything out, that is also controllable from the UI. Reads ui_pump_control_capabilities.
 	var/allow_alt_click_max_rate = FALSE
 	/// Allow ctrl clicking to toggle on/off
 	var/allow_ctrl_click_toggle_power = FALSE
-	/// UI capabilities for power/pumping control
+	/// UI capabilities for power/pumping control. ALSO USED FOR ALLOW_ALT_CLICK_MAX_RATE!
 	var/ui_pump_control_capabilities = NONE
 
 	/// Pipelines this belongs to. This should have the same indices as [connected]
@@ -317,15 +317,18 @@
 		var/turf/T = get_turf(src)
 		// be close, require dexterity, allow TK
 		if(user.canUseTopic(src, BE_CLOSE, FALSE, FALSE))
-			pressure_setting = max_pressure_nominal
-			rate_setting = max_rate
-			power_setting = power_rating
-			to_chat(user,"<span class='notice'>You maximize the pressure, rate, and power limits on the [src].</span>")
+			if(ui_pump_control_capabilities & ATMOS_UI_CONTROL_PRESSURE)
+				pressure_setting = max_pressure_nominal
+			if(ui_pump_control_capabilities & ATMOS_UI_CONTROL_VOLUME)
+				rate_setting = max_rate
+			if(ui_pump_control_capabilities & ATMOS_UI_CONTROL_POWER)
+				power_setting = power_rating
+			to_chat(user,"<span class='notice'>You maximize the settings on \the [src].</span>")
 			investigate_log("[src]([type]), was maximized by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
 			message_admins("[src]([type]), was maximized by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
 			return TRUE
 
-/obj/machinery/atmospherics/component/binary/pump/CtrlClick(mob/user)
+/obj/machinery/atmospherics/component/CtrlClick(mob/user)
 	. = ..()
 	if(allow_ctrl_click_toggle_power)
 		var/area/A = get_area(src)

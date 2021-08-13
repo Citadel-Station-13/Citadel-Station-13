@@ -14,10 +14,9 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/portables_co
 
 	var/obj/machinery/portable_atmospherics/connected_device
 
-/obj/machinery/atmospherics/component/unary/portables_connector/New()
-	..()
+/obj/machinery/atmospherics/component/unary/portables_connector/InitAtmos()
+	. = ..()
 	var/datum/gas_mixture/air_contents = airs[1]
-
 	air_contents.set_volume(0)
 
 /obj/machinery/atmospherics/component/unary/portables_connector/Destroy()
@@ -34,7 +33,7 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/portables_co
 /obj/machinery/atmospherics/component/unary/portables_connector/process_atmos()
 	if(!connected_device)
 		return
-	update_parents()
+	MarkDirty()
 
 /obj/machinery/atmospherics/component/unary/portables_connector/can_unwrench(mob/user)
 	. = ..()
@@ -42,8 +41,5 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/portables_co
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], detach [connected_device] first!</span>")
 		return FALSE
 
-/obj/machinery/atmospherics/component/unary/portables_connector/portableConnectorReturnAir()
+/obj/machinery/atmospherics/component/unary/portables_connector/proc/portableConnectorReturnAir()
 	return connected_device.portableConnectorReturnAir()
-
-/obj/proc/portableConnectorReturnAir()
-	return

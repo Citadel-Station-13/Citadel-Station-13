@@ -7,7 +7,6 @@ ATMOS_MAPPING_LAYERS_PX_DOUBLE(/obj/machinery/atmospherics/component/trinary/fil
 	desc = "Very useful for filtering gasses."
 
 	can_unwrench = TRUE
-	var/transfer_rate = MAX_TRANSFER_RATE
 	var/filter_type = null
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection
@@ -39,63 +38,51 @@ ATMOS_MAPPING_LAYERS_PX_DOUBLE(/obj/machinery/atmospherics/component/trinary/fil
 	SSradio.remove_object(src,frequency)
 	return ..()
 
-/obj/machinery/atmospherics/component/trinary/filter/update_icon()
-	cut_overlays()
+/obj/machinery/atmospherics/component/trinary/filter/update_overlays()
+	. = ..()
+	var/list/connected_dirs = list()
+	for(var/i in connected)
+		connected_dirs |= get_dir(src, i)
 	for(var/direction in GLOB.cardinals)
-		if(!(direction & initialize_directions))
+		if(!(direction in connected_dirs))
 			continue
-		var/obj/machinery/atmospherics/node = findConnecting(direction)
-
+		var/obj/machinery/atmospherics/pipe/node = connected[GetNodeIndex(direction, pipe_layer)]
 		var/image/cap
 		if(node)
 			cap = getpipeimage(icon, "cap", direction, node.pipe_color, pipe_layer = pipe_layer)
 		else
 			cap = getpipeimage(icon, "cap", direction, pipe_layer = pipe_layer)
-
-		add_overlay(cap)
-
-	return ..()
+		. += cap
 
 /obj/machinery/atmospherics/component/trinary/filter/update_icon_state()
 	var/on_state = on && connected[1] && connected[2] && connected[3] && is_operational()
 	icon_state = "filter_[on_state ? "on" : "off"][t_layout? "_t" : ""][flipped ? "_f" : ""]"
 
-/obj/machinery/atmospherics/component/trinary/filter/power_change()
-	var/old_stat = stat
-	..()
-	if(stat != old_stat)
-		update_icon()
-
 /obj/machinery/atmospherics/component/trinary/filter/process_atmos()
-	..()
+	active_power_usage = idle_power_usage
+	last_power_draw = last_transfer_rate = 0
 	if(!on || !(connected[1] && connected[2] && connected[3]) || !is_operational())
 		return
 
-	var/datum/gas_mixture/air1 = airs[1]
-	var/datum/gas_mixture/air2 = airs[2]
-	var/datum/gas_mixture/air3 = airs[3]
-
-	var/input_starting_pressure = air1.return_pressure()
-
-	if((input_starting_pressure < 0.01))
+	var/datum/gas_mixture/sink_air = airs[3]
+	var/datum/gas_mixture/filter_air = airs[2]
+	// cheaper check. only pumps have precise checks
+	if(sink_air.return_pressure() > pressure_setting || filter_air.return_pressure() > pressure_setting)
 		return
+	var/datum/gas_mixture/source_air = airs[1]
+	var/old_moles = source_air.total_moles()
+	last_power_draw = active_power_usage = filter_gas(
+		list(filter_type = filter_air),
+		source_air,
+		sink_air,
+		(rate_setting / source_air.return_volume()) * source_air.total_moles(),
+		power_setting,
+		power_efficiency
+	)
+	MarkDirty()
+	last_transfer_rate = round((1 - (source_air.total_moles() / old_moles)) * source_air.return_volume(), 0.1)
 
-	//Calculate necessary moles to transfer using PV=nRT
-
-	var/transfer_ratio = transfer_rate/air1.return_volume()
-
-	//Actually transfer the gas
-
-	if(transfer_ratio > 0)
-
-		if(filter_type && air2.return_pressure() <= 9000)
-			air1.scrub_into(air2, transfer_ratio, list(filter_type))
-		if(air3.return_pressure() <= 9000)
-			air1.transfer_ratio_to(air3, transfer_ratio)
-
-	update_parents()
-
-/obj/machinery/atmospherics/component/trinary/filter/atmosinit()
+/obj/machinery/atmospherics/component/trinary/filter/InitAtmos()
 	set_frequency(frequency)
 	return ..()
 
@@ -106,41 +93,16 @@ ATMOS_MAPPING_LAYERS_PX_DOUBLE(/obj/machinery/atmospherics/component/trinary/fil
 		ui.open()
 
 /obj/machinery/atmospherics/component/trinary/filter/ui_data()
-	var/data = list()
-	data["on"] = on
-	data["rate"] = round(transfer_rate)
-	data["max_rate"] = round(MAX_TRANSFER_RATE)
-
-	data["filter_types"] = list()
-	data["filter_types"] += list(list("name" = "Nothing", "id" = "", "selected" = !filter_type))
+	. = ..()
+	.["filter_types"] = list()
+	.["filter_types"] += list(list("name" = "Nothing", "id" = "", "selected" = !filter_type))
 	for(var/id in GLOB.gas_data.ids)
-		data["filter_types"] += list(list("name" = GLOB.gas_data.names[id], "id" = id, "selected" = (id == filter_type)))
-
-	return data
+		.["filter_types"] += list(list("name" = GLOB.gas_data.names[id], "id" = id, "selected" = (id == filter_type)))
 
 /obj/machinery/atmospherics/component/trinary/filter/ui_act(action, params)
 	if(..())
 		return
 	switch(action)
-		if("power")
-			on = !on
-			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
-			. = TRUE
-		if("rate")
-			var/rate = params["rate"]
-			if(rate == "max")
-				rate = MAX_TRANSFER_RATE
-				. = TRUE
-			else if(rate == "input")
-				rate = input("New transfer rate (0-[MAX_TRANSFER_RATE] L/s):", name, transfer_rate) as num|null
-				if(!isnull(rate) && !..())
-					. = TRUE
-			else if(text2num(rate) != null)
-				rate = text2num(rate)
-				. = TRUE
-			if(.)
-				transfer_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
-				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("filter")
 			filter_type = null
 			var/filter_name = "nothing"
@@ -150,7 +112,7 @@ ATMOS_MAPPING_LAYERS_PX_DOUBLE(/obj/machinery/atmospherics/component/trinary/fil
 				filter_name	= GLOB.gas_data.names[gas]
 			investigate_log("was set to filter [filter_name] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/component/trinary/filter/can_unwrench(mob/user)
 	. = ..()

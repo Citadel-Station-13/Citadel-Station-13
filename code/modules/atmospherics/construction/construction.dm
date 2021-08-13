@@ -25,15 +25,20 @@ Buildable meters
 
 /obj/item/pipe/directional
 	RPD_type = PIPE_UNARY
+
 /obj/item/pipe/binary
 	RPD_type = PIPE_STRAIGHT
+
 /obj/item/pipe/binary/bendable
 	RPD_type = PIPE_BENDABLE
+
 /obj/item/pipe/trinary
 	RPD_type = PIPE_TRINARY
+
 /obj/item/pipe/trinary/flippable
 	RPD_type = PIPE_TRIN_M
 	var/flipped = FALSE
+
 /obj/item/pipe/quaternary
 	RPD_type = PIPE_ONEDIR
 

@@ -13,12 +13,12 @@
 
 	//Manifolds
 	for (var/obj/machinery/atmospherics/pipe/manifold/pipe in GLOB.machines)
-		if (!pipe.nodes[1] || !pipe.nodes[2] || !pipe.nodes[3])
+		if (!pipe.connected[1] || !pipe.connected[2] || !pipe.connected[3])
 			to_chat(usr, "Unconnected [pipe.name] located at [ADMIN_VERBOSEJMP(pipe)]")
 
 	//Pipes
 	for (var/obj/machinery/atmospherics/pipe/simple/pipe in GLOB.machines)
-		if (!pipe.nodes[1] || !pipe.nodes[2])
+		if (!pipe.connected[1] || !pipe.connected[2])
 			to_chat(usr, "Unconnected [pipe.name] located at [ADMIN_VERBOSEJMP(pipe)]")
 
 /client/proc/powerdebug()
@@ -30,10 +30,10 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Power") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	for (var/datum/powernet/PN in GLOB.powernets)
-		if (!PN.nodes || !PN.nodes.len)
+		if (!PN.connected || !PN.connected.len)
 			if(PN.cables && (PN.cables.len > 1))
 				var/obj/structure/cable/C = PN.cables[1]
-				to_chat(usr, "Powernet with no nodes! (number [PN.number]) - example cable at [ADMIN_VERBOSEJMP(C)]")
+				to_chat(usr, "Powernet with no connected! (number [PN.number]) - example cable at [ADMIN_VERBOSEJMP(C)]")
 
 		if (!PN.cables || (PN.cables.len < 10))
 			if(PN.cables && (PN.cables.len > 1))

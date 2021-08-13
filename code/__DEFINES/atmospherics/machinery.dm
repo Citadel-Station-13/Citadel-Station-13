@@ -72,6 +72,14 @@
 #define ATMOSMECH_PUMP_FREE_VOLUME				1
 /// Minimum joules to exchange per heat exchanger, regardless of the normal percentage. Used so it doesn't take forever to equalize gases.
 #define ATMOSMECH_MINIMUM_HEAT_EXCHANGE_JOULES	5000
+/// Base thermodynamic cheat factor for heaters/freezers
+#define ATMOSMECH_THERMOMACHINE_CHEAT_FACTOR	5
+/// Cheat factor increase per average tier of bin for heater/freezers via **efficiency**
+#define ATMOSMECH_THERMOMACHINE_BIN_FACTOR(avg)			(1 + avg * 1)
+/// Max enery usage increase per average tier of laser for heater/freezers via **thermal energy changed**
+#define ATMOSMECH_THERMOMACHINE_LASER_POWER(avg)		(10000 + avg * 15000)
+/// Max temperature heaters can heat to
+#define ATMOSMECH_THERMOMACHINE_MAX_TEMP		5000
 
 // Balancing - overrides
 

@@ -18,104 +18,51 @@ ATMOS_MAPPING_LAYERS_PX_DOUBLE(/obj/machinery/atmospherics/component/trinary/mix
 
 	allow_alt_click_max_rate = TRUE
 	allow_ctrl_click_toggle_power = TRUE
-	ui_pump_control_capabilities = ATMOS_UI_CONTROL_POWER | ATMOS_UI_CONTROL_VOLUME | ATMOS_UI_CONTROL_PRESSURE | ATMOS_UI_CONTROL_ACTIVE | ATMOS_UI_POWER_USAGE | ATMOS_UI_FLOW_RATE
+	ui_pump_control_capabilities = ATMOS_UI_CONTROL_POWER | ATMOS_UI_CONTROL_PRESSURE | ATMOS_UI_CONTROL_ACTIVE | ATMOS_UI_POWER_USAGE | ATMOS_UI_FLOW_RATE
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
 /obj/machinery/atmospherics/component/trinary/mixer/t_section
 	t_layout = TRUE
 	icon_state = "mixer_off_t_map"
 
-/obj/machinery/atmospherics/component/trinary/mixer/update_icon()
-	cut_overlays()
+/obj/machinery/atmospherics/component/trinary/mixer/update_overlays()
+	. = ..()
+	var/list/connected_dirs = list()
+	for(var/i in connected)
+		connected_dirs |= get_dir(src, i)
 	for(var/direction in GLOB.cardinals)
-		if(!(direction & initialize_directions))
+		if(!(direction in connected_dirs))
 			continue
-		var/obj/machinery/atmospherics/node = findConnecting(direction)
-
+		var/obj/machinery/atmospherics/pipe/node = connected[GetNodeIndex(direction, pipe_layer)]
 		var/image/cap
 		if(node)
 			cap = getpipeimage(icon, "cap", direction, node.pipe_color, pipe_layer = pipe_layer)
 		else
 			cap = getpipeimage(icon, "cap", direction, pipe_layer = pipe_layer)
-
-		add_overlay(cap)
-
-	return ..()
+		. += cap
 
 /obj/machinery/atmospherics/component/trinary/mixer/update_icon_state()
 	var/on_state = on && connected[1] && connected[2] && connected[3] && is_operational()
 	icon_state = "mixer_[on_state ? "on" : "off"][t_layout? "_t" : (flipped ? "_f" : "")]"
 
-/obj/machinery/atmospherics/component/trinary/mixer/New()
-	..()
+/obj/machinery/atmospherics/component/trinary/mixer/InitAtmos()
+	. = ..()
 	var/datum/gas_mixture/air3 = airs[3]
-	air3.set_volume(300)
-	airs[3] = air3
+	air3.set_volume(volume * 2)		// give output a volume bias
 
 /obj/machinery/atmospherics/component/trinary/mixer/process_atmos()
-	..()
-	if(!on || !(nodes[1] && nodes[2] && nodes[3]) && !is_operational())
+	active_power_usage = idle_power_usage
+	last_power_draw = 0
+	if(!on || !(connected[1] && connected[2] && connected[3]) || !is_operational())
 		return
-
-	//Get those gases, mah boiiii
-	var/datum/gas_mixture/air1 = airs[1]
-	var/datum/gas_mixture/air2 = airs[2]
-
-	if(!air1 || !air2)
+	var/datum/gas_mixture/output_air = airs[3]
+	var/datum/gas_mixture/input_one = airs[1]
+	var/old_moles = input_one.total_moles()
+	// cheap calculation instead of transfer_moles calculation
+	if(output_air.return_pressure() < pressure_setting)
 		return
-
-	var/datum/gas_mixture/air3 = airs[3]
-
-	var/output_starting_pressure = air3.return_pressure()
-
-	if(output_starting_pressure >= target_pressure)
-		//No need to mix if target is already full!
-		return
-
-	//Calculate necessary moles to transfer using PV=nRT
-	var/general_transfer = (target_pressure - output_starting_pressure) * air3.return_volume() / R_IDEAL_GAS_EQUATION
-
-	var/transfer_moles1 = air1.return_temperature() ? node1_concentration * general_transfer / air1.return_temperature() : 0
-	var/transfer_moles2 = air2.return_temperature() ? node2_concentration * general_transfer / air2.return_temperature() : 0
-
-	var/air1_moles = air1.total_moles()
-	var/air2_moles = air2.total_moles()
-
-	if(!node2_concentration)
-		if(air1.return_temperature() <= 0)
-			return
-		transfer_moles1 = min(transfer_moles1, air1_moles)
-		transfer_moles2 = 0
-	else if(!node1_concentration)
-		if(air2.return_temperature() <= 0)
-			return
-		transfer_moles2 = min(transfer_moles2, air2_moles)
-		transfer_moles1 = 0
-	else
-		if(air1.return_temperature() <= 0 || air2.return_temperature() <= 0)
-			return
-		if((transfer_moles2 <= 0) || (transfer_moles1 <= 0))
-			return
-		if((air1_moles < transfer_moles1) || (air2_moles < transfer_moles2))
-			var/ratio = 0
-			ratio = min(air1_moles / transfer_moles1, air2_moles / transfer_moles2)
-			transfer_moles1 *= ratio
-			transfer_moles2 *= ratio
-
-	//Actually transfer the gas
-
-	if(transfer_moles1)
-		air1.transfer_to(air3, transfer_moles1)
-		var/datum/pipeline/parent1 = parents[1]
-		parent1.update = TRUE
-
-	if(transfer_moles2)
-		air2.transfer_to(air3, transfer_moles2)
-		var/datum/pipeline/parent2 = parents[2]
-		parent2.update = TRUE
-
-	var/datum/pipeline/parent3 = parents[3]
-	parent3.update = TRUE
+	last_power_draw = active_power_usage = mix_gas(list(input_one = node1_concentration, airs[2] = node2_concentration), output_air, null, power_rating, power_efficiency)
+	last_transfer_rate = round((1 - (input_one.total_moles() / old_moles)) * input_one.return_volume(), 0.1)
 
 /obj/machinery/atmospherics/component/trinary/mixer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -124,37 +71,14 @@ ATMOS_MAPPING_LAYERS_PX_DOUBLE(/obj/machinery/atmospherics/component/trinary/mix
 		ui.open()
 
 /obj/machinery/atmospherics/component/trinary/mixer/ui_data()
-	var/data = list()
-	data["on"] = on
-	data["set_pressure"] = round(target_pressure)
-	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
-	data["node1_concentration"] = round(node1_concentration*100, 1)
-	data["node2_concentration"] = round(node2_concentration*100, 1)
-	return data
+	. = ..()
+	.["node1_concentration"] = round(node1_concentration*100, 1)
+	.["node2_concentration"] = round(node2_concentration*100, 1)
 
 /obj/machinery/atmospherics/component/trinary/mixer/ui_act(action, params)
 	if(..())
 		return
 	switch(action)
-		if("power")
-			on = !on
-			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
-			. = TRUE
-		if("pressure")
-			var/pressure = params["pressure"]
-			if(pressure == "max")
-				pressure = MAX_OUTPUT_PRESSURE
-				. = TRUE
-			else if(pressure == "input")
-				pressure = input("New output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", name, target_pressure) as num|null
-				if(!isnull(pressure) && !..())
-					. = TRUE
-			else if(text2num(pressure) != null)
-				pressure = text2num(pressure)
-				. = TRUE
-			if(.)
-				target_pressure = clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
-				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("node1")
 			var/value = text2num(params["concentration"])
 			adjust_node1_value(value)
@@ -204,7 +128,7 @@ ATMOS_MAPPING_LAYERS_PX_DOUBLE(/obj/machinery/atmospherics/component/trinary/mix
 	icon_state = "mixer_on_map"
 	node1_concentration = N2STANDARD
 	node2_concentration = O2STANDARD
-	target_pressure = MAX_OUTPUT_PRESSURE
+	pressure_setting = ATMOSMECH_PUMP_PRESSURE_SANE
 	on = TRUE
 
 /obj/machinery/atmospherics/component/trinary/mixer/airmix/inverse
