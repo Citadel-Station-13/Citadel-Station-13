@@ -14,12 +14,10 @@
 	//initialize limbs first
 	create_bodyparts()
 
-	. = ..()
-
 	setup_human_dna()
 
 	if(dna.species)
-		set_species(dna.species.type)
+		set_species(dna.species.type, icon_update = FALSE) //keep icon_update to FALSE because icons are NOT setup at this point, and are done later
 
 	//initialise organs
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
@@ -27,6 +25,7 @@
 
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, 2)
+	. = ..()
 
 	if(CONFIG_GET(flag/disable_stambuffer))
 		enable_intentional_sprint_mode()
