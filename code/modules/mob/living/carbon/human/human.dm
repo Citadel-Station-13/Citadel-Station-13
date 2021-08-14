@@ -14,9 +14,9 @@
 	//initialize limbs first
 	create_bodyparts()
 
-	setup_human_dna()
-
 	. = ..()
+
+	setup_human_dna()
 
 	if(dna.species)
 		set_species(dna.species.type)
