@@ -16,6 +16,8 @@
 
 	setup_human_dna()
 
+	. = ..()
+
 	if(dna.species)
 		set_species(dna.species.type)
 
@@ -25,7 +27,6 @@
 
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, 2)
-	. = ..()
 
 	if(CONFIG_GET(flag/disable_stambuffer))
 		enable_intentional_sprint_mode()
