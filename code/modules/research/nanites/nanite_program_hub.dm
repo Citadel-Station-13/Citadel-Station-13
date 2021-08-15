@@ -28,11 +28,10 @@
 
 /obj/machinery/nanite_program_hub/update_overlays()
 	. = ..()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if((stat & (NOPOWER|MAINT|BROKEN)) || panel_open)
 		return
-	SSvis_overlays.add_vis_overlay(src, icon, "nanite_program_hub_on", layer, plane)
-	SSvis_overlays.add_vis_overlay(src, icon, "nanite_program_hub_on", EMISSIVE_LAYER, EMISSIVE_PLANE)
+	. += mutable_appearance(icon, "nanite_program_hub_on")
+	. += emissive_appearance(icon, "nanite_program_hub_on")
 
 /obj/machinery/nanite_program_hub/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))
@@ -148,3 +147,7 @@
 				disk.program = null
 				disk.name = initial(disk.name)
 			. = TRUE
+
+/obj/machinery/nanite_program_hub/admin/Initialize()
+	. = ..()
+	linked_techweb = SSresearch.admin_tech

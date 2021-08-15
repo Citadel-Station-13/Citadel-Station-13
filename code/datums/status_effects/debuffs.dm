@@ -58,7 +58,7 @@
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping
 	id = "sleeping"
-	alert_type = /obj/screen/alert/status_effect/asleep
+	alert_type = /atom/movable/screen/alert/status_effect/asleep
 	needs_update_stat = TRUE
 	var/mob/living/carbon/carbon_owner
 	var/mob/living/carbon/human/human_owner
@@ -122,7 +122,7 @@
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/off_balance)
 	return ..()
 
-/obj/screen/alert/status_effect/asleep
+/atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
@@ -139,7 +139,7 @@
 
 /datum/status_effect/mesmerize
 	id = "Mesmerize"
-	alert_type = /obj/screen/alert/status_effect/mesmerized
+	alert_type = /atom/movable/screen/alert/status_effect/mesmerized
 
 /datum/status_effect/mesmerize/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
@@ -156,7 +156,7 @@
 		duration = set_duration
 	. = ..()
 
-/obj/screen/alert/status_effect/mesmerized
+/atom/movable/screen/alert/status_effect/mesmerized
 	name = "Mesmerized"
 	desc = "You can't tear your sight from who is in front of you... their gaze is simply too enthralling.."
 	icon = 'icons/mob/actions/bloodsucker.dmi'
@@ -222,9 +222,9 @@
 	id = "his_wrath"
 	duration = -1
 	tick_interval = 4
-	alert_type = /obj/screen/alert/status_effect/his_wrath
+	alert_type = /atom/movable/screen/alert/status_effect/his_wrath
 
-/obj/screen/alert/status_effect/his_wrath
+/atom/movable/screen/alert/status_effect/his_wrath
 	name = "His Wrath"
 	desc = "You fled from His Grace instead of feeding Him, and now you suffer."
 	icon_state = "his_grace"
@@ -243,11 +243,11 @@
 	duration = 70
 	tick_interval = 0 //tick as fast as possible
 	status_type = STATUS_EFFECT_REPLACE
-	alert_type = /obj/screen/alert/status_effect/belligerent
+	alert_type = /atom/movable/screen/alert/status_effect/belligerent
 	var/leg_damage_on_toggle = 2 //damage on initial application and when the owner tries to toggle to run
 	var/cultist_damage_on_toggle = 10 //damage on initial application and when the owner tries to toggle to run, but to cultists
 
-/obj/screen/alert/status_effect/belligerent
+/atom/movable/screen/alert/status_effect/belligerent
 	name = "Belligerent"
 	desc = "<b><font color=#880020>Kneel, her-eti'c.</font></b>"
 	icon_state = "belligerent"
@@ -768,7 +768,7 @@
 /datum/status_effect/necropolis_curse/proc/apply_curse(set_curse)
 	curse_flags |= set_curse
 	if(curse_flags & CURSE_BLINDING)
-		owner.overlay_fullscreen("curse", /obj/screen/fullscreen/curse, 1)
+		owner.overlay_fullscreen("curse", /atom/movable/screen/fullscreen/curse, 1)
 
 /datum/status_effect/necropolis_curse/proc/remove_curse(remove_curse)
 	if(remove_curse & CURSE_BLINDING)
@@ -827,7 +827,7 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	tick_interval = 5
 	duration = 100
-	alert_type = /obj/screen/alert/status_effect/kindle
+	alert_type = /atom/movable/screen/alert/status_effect/kindle
 	var/old_health
 	var/old_oxyloss
 
@@ -856,7 +856,7 @@
 	owner.visible_message("<span class='warning'>The light in [owner]'s eyes fades!</span>", \
 	"<span class='boldannounce'>You snap out of your daze!</span>")
 
-/obj/screen/alert/status_effect/kindle
+/atom/movable/screen/alert/status_effect/kindle
 	name = "Dazzling Lights"
 	desc = "Blinding light dances in your vision, stunning and silencing you. <i>Any damage taken will shorten the light's effects!</i>"
 	icon_state = "kindle"
@@ -869,7 +869,7 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = 600
 	examine_text = "<span class='warning'>SUBJECTPRONOUN is drenched in thick, blue ichor!</span>"
-	alert_type = /obj/screen/alert/status_effect/ichorial_stain
+	alert_type = /atom/movable/screen/alert/status_effect/ichorial_stain
 
 /datum/status_effect/ichorial_stain/on_apply()
 	. = ..()
@@ -882,7 +882,7 @@
 	owner.visible_message("<span class='danger'>The blue ichor on [owner]'s body dries out!</span>", \
 	"<span class='boldnotice'>The ichor on your body is dry - you can now be revived by vitality matrices again!</span>")
 
-/obj/screen/alert/status_effect/ichorial_stain
+/atom/movable/screen/alert/status_effect/ichorial_stain
 	name = "Ichorial Stain"
 	desc = "Your body is covered in blue ichor! You can't be revived by vitality matrices."
 	icon_state = "ichorial_stain"
@@ -908,7 +908,7 @@
 /datum/status_effect/strandling //get it, strand as in durathread strand + strangling = strandling hahahahahahahahahahhahahaha i want to die
 	id = "strandling"
 	status_type = STATUS_EFFECT_UNIQUE
-	alert_type = /obj/screen/alert/status_effect/strandling
+	alert_type = /atom/movable/screen/alert/status_effect/strandling
 
 /datum/status_effect/strandling/on_apply()
 	ADD_TRAIT(owner, TRAIT_MAGIC_CHOKE, "dumbmoron")
@@ -918,13 +918,13 @@
 	REMOVE_TRAIT(owner, TRAIT_MAGIC_CHOKE, "dumbmoron")
 	return ..()
 
-/obj/screen/alert/status_effect/strandling
+/atom/movable/screen/alert/status_effect/strandling
 	name = "Choking strand"
 	desc = "A magical strand of Durathread is wrapped around your neck, preventing you from breathing! Click this icon to remove the strand."
 	icon_state = "his_grace"
 	alerttooltipstyle = "hisgrace"
 
-/obj/screen/alert/status_effect/strandling/Click(location, control, params)
+/atom/movable/screen/alert/status_effect/strandling/Click(location, control, params)
 	. = ..()
 	to_chat(mob_viewer, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
 	if(do_after(mob_viewer, 35, null, mob_viewer))
@@ -961,9 +961,9 @@
 	tick_interval = 10
 	examine_text = "<span class='warning'>SUBJECTPRONOUN seems slow and unfocused.</span>"
 	var/stun = TRUE
-	alert_type = /obj/screen/alert/status_effect/trance
+	alert_type = /atom/movable/screen/alert/status_effect/trance
 
-/obj/screen/alert/status_effect/trance
+/atom/movable/screen/alert/status_effect/trance
 	name = "Trance"
 	desc = "Everything feels so distant, and you can feel your thoughts forming loops inside your head..."
 	icon_state = "high"
@@ -1069,7 +1069,7 @@
 	id = "dna_melt"
 	duration = 600
 	status_type = STATUS_EFFECT_REPLACE
-	alert_type = /obj/screen/alert/status_effect/dna_melt
+	alert_type = /atom/movable/screen/alert/status_effect/dna_melt
 	var/kill_either_way = FALSE //no amount of removing mutations is gonna save you now
 
 /datum/status_effect/dna_melt/on_creation(mob/living/new_owner, set_duration, updating_canmove)
@@ -1084,7 +1084,7 @@
 	H.something_horrible(kill_either_way)
 	return ..()
 
-/obj/screen/alert/status_effect/dna_melt
+/atom/movable/screen/alert/status_effect/dna_melt
 	name = "Genetic Breakdown"
 	desc = "I don't feel so good. Your body can't handle the mutations! You have one minute to remove your mutations, or you will be met with a horrible fate."
 	icon_state = "dna_melt"

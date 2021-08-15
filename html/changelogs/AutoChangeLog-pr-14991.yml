@@ -1,0 +1,4 @@
+author: "bunny232"
+delete-after: True
+changes: 
+  - bugfix: "Polyvitiligo actually changes your color now"

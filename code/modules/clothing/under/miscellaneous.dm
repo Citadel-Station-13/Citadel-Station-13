@@ -319,37 +319,46 @@
 
 /obj/item/clothing/under/misc/black_dress
 	name = "little black dress"
-	desc = "A small black dress"
+	desc = "A small black dress."
 	icon_state = "littleblackdress_s"
 	item_state = "littleblackdress_s"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
 
 /obj/item/clothing/under/misc/pinktutu
 	name = "pink tutu"
-	desc = "A pink tutu"
+	desc = "A pink tutu."
 	icon_state = "pinktutu_s"
 	item_state = "pinktutu_s"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
 
 /obj/item/clothing/under/misc/bathrobe
 	name = "bathrobe"
 	desc = "A blue bathrobe."
 	icon_state = "bathrobe"
 	item_state = "bathrobe"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
 
 /obj/item/clothing/under/misc/mechsuitred
 	name = "red mech suit"
 	desc = "What are you, stupid?"
 	icon_state = "red_mech_suit"
 	item_state = "red_mech_suit"
+	can_adjust = FALSE
 
 /obj/item/clothing/under/misc/mechsuitwhite
 	name = "white mech suit"
 	desc = "...Mom?"
 	icon_state = "white_mech_suit"
 	item_state = "white_mech_suit"
+	can_adjust = FALSE
 
 /obj/item/clothing/under/misc/mechsuitblue
 	name = "blue mech suit"
 	desc = "Get in the damn robot already!"
 	icon_state = "blue_mech_suit"
 	item_state = "blue_mech_suit"
+	can_adjust = FALSE
 

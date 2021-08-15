@@ -99,8 +99,8 @@
 	. = ..()
 	if(!. && ismob(loc) && loc == usr)
 		var/mob/M = loc
-		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
-			var/obj/screen/inventory/hand/H = over_object
+		if(!M.incapacitated() && istype(over_object, /atom/movable/screen/inventory/hand))
+			var/atom/movable/screen/inventory/hand/H = over_object
 			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 /obj/item/defibrillator/attackby(obj/item/W, mob/user, params)
@@ -283,7 +283,7 @@
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
 	var/grab_ghost = FALSE
 	var/tlimit = DEFIB_TIME_LIMIT * 10
-	var/base_icon_state = "defibpaddles"
+	base_icon_state = "defibpaddles"
 	var/disarm_shock_time = 10
 	var/wielded = FALSE // track wielded status on item
 

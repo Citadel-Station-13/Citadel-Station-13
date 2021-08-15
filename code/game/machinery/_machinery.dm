@@ -148,11 +148,15 @@ Class Procs:
 		START_PROCESSING(SSmachines, src)
 	else
 		START_PROCESSING(SSfastprocess, src)
-	power_change()
 	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
 
 	if (occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/LateInitialize()
+	. = ..()
+	power_change()
 
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
@@ -175,6 +179,17 @@ Class Procs:
 
 /obj/machinery/proc/process_atmos()//If you dont use process why are you here
 	return PROCESS_KILL
+
+///Called when we want to change the value of the stat variable. Holds bitflags.
+/obj/machinery/proc/set_machine_stat(new_value)
+	if(new_value == stat)
+		return
+	. = stat
+	stat = new_value
+	on_machine_stat_update(stat)
+
+/obj/machinery/proc/on_machine_stat_update(stat)
+	return
 
 /obj/machinery/emp_act(severity)
 	. = ..()
@@ -383,8 +398,11 @@ Class Procs:
 	M.icon_state = "box_1"
 
 /obj/machinery/obj_break(damage_flag)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	. = ..()
+	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		stat |= BROKEN
+		SEND_SIGNAL(src, COMSIG_MACHINERY_BROKEN, damage_flag)
+		update_appearance()
 		return TRUE
 
 /obj/machinery/contents_explosion(severity, target)

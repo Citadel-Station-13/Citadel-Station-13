@@ -1,0 +1,4 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - bugfix: "Incapacitated mobs are blacklisted from being human-level intelligence sentience event candidates. This is particularly important due to slimes in BZ stasis on the station."
