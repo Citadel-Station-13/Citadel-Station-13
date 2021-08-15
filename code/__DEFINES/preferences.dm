@@ -40,6 +40,14 @@
 #define PREFERENCES_SAVE_KEY_ANTAGONISM			"antagonism"
 #define PREFERENCES_SAVE_KEY_FETISH				"fetish"
 
+// What kind of preview to do
+/// Preview the character as fully naked except for underwear
+#define PREFERENCES_PREVIEW_MODE_BODY					0
+/// Preview the character in full loadout
+#define PREFERENCES_PREVIEW_MODE_LOADOUT_ONLY			1
+/// Preview the character as if they spawned as a job
+#define PREFERENCES_PREVIEW_MODE_ROUNDSTART_SPAWN		2
+
 // Preferences collection types
 #define COLLECTION_CHARACTER			1
 #define COLLECTION_HYBRID				2

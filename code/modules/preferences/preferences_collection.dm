@@ -24,6 +24,8 @@
 	/// Preferences type - Character, hybrid, or global
 	/// Coontrols rendering/ordering. The actual save load, however, is agnostic - a proc must be overridden.
 	var/collection_type = null
+	/// What kind of preview to display
+	var/preview_mode = PREFERENCES_PREVIEW_MODE_ROUNDSTART_SPAWN
 
 /**
  * Renders HTML content

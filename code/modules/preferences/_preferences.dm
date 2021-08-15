@@ -54,6 +54,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/selected_slot = 1
 	/// Queued messages to display to the player
 	var/list/debug_message_queue = list()
+	/// The current preview mode. If the collection we switch to is different, regenerate previews.
+	var/current_preview_mode
 	// Metadata end
 
 	// Other loaded settings begin - these aren't stored in [preferences] either because they're accessed super often, or for some other reason that makes the inherent slowness/access complexity unfavorable
@@ -190,7 +192,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(returned & PREFERENCES_ONTOPIC_REFRESH)
 		#warn implement refresh
 	if(returned & PREFERENCES_ONTOPIC_REGENERATE_PREVIEW)
-		#warn implement preview regeneration
+		regenerate_previews()
 	if(returned & PREFERENCES_ONTOPIC_CHARACTER_SWAP)
 		render_character_select(usr)
 	if(returned & PREFERENCES_ONTOPIC_RESYNC_CACHE)
@@ -381,8 +383,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	. = ..()
 	if(href_list["switch_collection"])
 		var/datum/preferences_collection/C = locate(href_list["switch_collection"]) in SScharacter_setup.collections
-		if(istype(C))
-			selected_collection = C
+		if(!istype(C))
+			return
+		selected_collection = C
+		if(current_preview_mode != selected_collection.preview_mode)
+			regenerate_previews()
 
 /**
  * Output to the player queued messages

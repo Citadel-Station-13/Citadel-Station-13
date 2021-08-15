@@ -1,3 +1,8 @@
+/**
+ * Regenerates a client's preview icons.
+ */
+/datum/preferences/proc/regenerate_previews()
+	#warn implement preview regeneration
 
 /datum/preferences/proc/update_preview_icon(current_tab)
 	var/equip_job = (current_tab != APPEARANCE_TAB)
