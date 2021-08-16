@@ -48,7 +48,7 @@
 		amount -= max_amount
 		new type(loc, max_amount, FALSE)
 	if(!merge_type)
-		merge_type = type
+		merge_type = src.type
 
 	if(LAZYLEN(mats_per_unit))
 		set_mats_per_unit(mats_per_unit, 1)

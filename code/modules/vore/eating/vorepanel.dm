@@ -466,8 +466,6 @@
 	if(!(target in host.vore_selected))
 		return TRUE // Not in our X anymore, update UI
 	var/list/available_options = list("Examine", "Eject", "Move")
-	if(ishuman(target))
-		available_options += "Transform"
 	intent = tgui_alert(user, "What would you like to do with [target]?", "Vore Pick", available_options)
 	switch(intent)
 		if("Examine")
@@ -496,17 +494,6 @@
 
 			to_chat(target,"<span class='warning'>You're squished from [host]'s [lowertext(host.vore_selected.name)] to their [lowertext(choice.name)]!</span>")
 			host.vore_selected.transfer_contents(target, choice)
-			return TRUE
-
-		if("Transform")
-			if(host.stat)
-				to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
-				return TRUE
-
-			var/mob/living/carbon/human/H = target
-			if(!istype(H))
-				return
-
 			return TRUE
 
 /datum/vore_look/proc/set_attr(mob/user, params)

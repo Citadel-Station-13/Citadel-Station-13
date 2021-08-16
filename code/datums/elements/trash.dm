@@ -1,5 +1,5 @@
 /datum/element/trash
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
+	element_flags = ELEMENT_DETACH
 
 /datum/element/trash/Attach(datum/target)
 	. = ..()
