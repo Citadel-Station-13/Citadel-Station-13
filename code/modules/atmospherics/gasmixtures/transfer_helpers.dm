@@ -211,7 +211,7 @@
  * * minimum - Minimum joules to exchange, regardless of conductivity
  */
 /proc/thermoelectric_exchange_gas_to_gas(datum/gas_mixture/gas1, datum/gas_mixture/gas2, volume, conductivity = 1, efficiency = 1, minimum = ATMOSMECH_MINIMUM_HEAT_EXCHANGE_JOULES)
-	var/diff = isnull(volume)? (gas2.thermal_energy() - gas1.thermal_energy) :
+	var/diff = isnull(volume)? (gas2.thermal_energy() - gas1.thermal_energy) : \
 		(gas2.thermal_energy() * clamp(volume / gas2.return_volume(), 0, 1)) - (gas1.thermal_energy() * clamp(volume / gas1.return_volume(), 0, 1))
 	// what this does:
 	// if diff * conductivity is below minimum, raise to min, but, if that makes it over diff, ensure it doesn't exceed diff
@@ -235,11 +235,16 @@
  * * minimum - Minimum joules to exchange, regardless of conductivity
  */
 /proc/heat_exchange_gas_to_turf(datum/gas_mixture/gas1, turf/T, volume = 200, conductivity = 0.8, minimum = ATMOSMECH_MINIMUM_HEAT_EXCHANGE_JOULES)
+	var/self_energy = isnull(volume)? (gas1.thermal()) : (gas1.thermal_energy() * clamp(volume / gas1.return_volume(), 0, 1))
+	if(isopenturf(T))
+		var/turf/open/O = T
+
+	else
+
 	var/total_heat_capacity = air.heat_capacity()
 	var/partial_heat_capacity = total_heat_capacity*(share_volume/air.return_volume())
 	var/target_temperature
 	var/target_heat_capacity
-
 	if(isopenturf(target))
 
 		var/turf/open/modeled_location = target
@@ -304,7 +309,7 @@
  *
  * @return the new temperature
  */
-/proc/radiate_heat_to_space(temperature, surface_area, heat_capacity, env_temperature)
+/proc/radiate_heat_to_space(temperature, surface_area = 1, heat_capacity, env_temperature)
 	CRASH("radiate_heat not hooked")
 
 /**
