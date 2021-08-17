@@ -1,4 +1,5 @@
 /datum/preferences_collection/global/keybindings
+	name = "Keybindings"
 	save_key = PREFERENCES_SAVE_KEY_KEYBINDINGS
 	sort_order = 2
 

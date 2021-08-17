@@ -520,147 +520,6 @@
 			dat +="<td width='220px' height='300px' valign='top'>"
 
 
-		if(GAME_PREFERENCES_TAB) // Game Preferences
-			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
-			dat += "<h2>General Settings</h2>"
-			dat += "<b>UI Style:</b> <a href='?_src_=prefs;task=input;preference=ui'>[UI_style]</a><br>"
-			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
-			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
-			dat += "<b>Show Runechat Chat Bubbles:</b> <a href='?_src_=prefs;preference=chat_on_map'>[chat_on_map ? "Enabled" : "Disabled"]</a><br>"
-			dat += "<b>Runechat message char limit:</b> <a href='?_src_=prefs;preference=max_chat_length;task=input'>[max_chat_length]</a><br>"
-			dat += "<b>See Runechat for non-mobs:</b> <a href='?_src_=prefs;preference=see_chat_non_mob'>[see_chat_non_mob ? "Enabled" : "Disabled"]</a><br>"
-			dat += "<br>"
-			dat += "<b>Action Buttons:</b> <a href='?_src_=prefs;preference=action_buttons'>[(buttons_locked) ? "Locked In Place" : "Unlocked"]</a><br>"
-			dat += "<br>"
-			dat += "<b>PDA Color:</b> <span style='border:1px solid #161616; background-color: [pda_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=pda_color;task=input'>Change</a><BR>"
-			dat += "<b>PDA Style:</b> <a href='?_src_=prefs;task=input;preference=pda_style'>[pda_style]</a><br>"
-			dat += "<b>PDA Reskin:</b> <a href='?_src_=prefs;task=input;preference=pda_skin'>[pda_skin]</a><br>"
-			dat += "<br>"
-			dat += "<b>Ghost Ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</a><br>"
-			dat += "<b>Ghost Radio:</b> <a href='?_src_=prefs;preference=ghost_radio'>[(chat_toggles & CHAT_GHOSTRADIO) ? "All Messages":"No Messages"]</a><br>"
-			dat += "<b>Ghost Sight:</b> <a href='?_src_=prefs;preference=ghost_sight'>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</a><br>"
-			dat += "<b>Ghost Whispers:</b> <a href='?_src_=prefs;preference=ghost_whispers'>[(chat_toggles & CHAT_GHOSTWHISPER) ? "All Speech" : "Nearest Creatures"]</a><br>"
-			dat += "<b>Ghost PDA:</b> <a href='?_src_=prefs;preference=ghost_pda'>[(chat_toggles & CHAT_GHOSTPDA) ? "All Messages" : "Nearest Creatures"]</a><br>"
-			dat += "<b>Window Flashing:</b> <a href='?_src_=prefs;preference=winflash'>[(windowflashing) ? "Enabled":"Disabled"]</a><br>"
-			dat += "<br>"
-			dat += "<b>Play Admin MIDIs:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Enabled":"Disabled"]</a><br>"
-			dat += "<b>Play Lobby Music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Enabled":"Disabled"]</a><br>"
-			dat += "<b>See Pull Requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(chat_toggles & CHAT_PULLR) ? "Enabled":"Disabled"]</a><br>"
-			dat += "<br>"
-			if(user.client)
-				if(unlock_content)
-					dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
-				if(unlock_content || check_rights_for(user.client, R_ADMIN))
-					dat += "<b>OOC Color:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : GLOB.normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
-					dat += "<b>Antag OOC Color:</b> <span style='border: 1px solid #161616; background-color: [aooccolor ? aooccolor : GLOB.normal_aooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=aooccolor;task=input'>Change</a><br>"
-
-			dat += "</td>"
-			if(user.client.holder)
-				dat +="<td width='300px' height='300px' valign='top'>"
-				dat += "<h2>Admin Settings</h2>"
-				dat += "<b>Adminhelp Sounds:</b> <a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"Enabled":"Disabled"]</a><br>"
-				dat += "<b>Announce Login:</b> <a href='?_src_=prefs;preference=announce_login'>[(toggles & ANNOUNCE_LOGIN)?"Enabled":"Disabled"]</a><br>"
-				dat += "<br>"
-				dat += "<b>Combo HUD Lighting:</b> <a href = '?_src_=prefs;preference=combohud_lighting'>[(toggles & COMBOHUD_LIGHTING)?"Full-bright":"No Change"]</a><br>"
-				dat += "</td>"
-
-			dat +="<td width='300px' height='300px' valign='top'>"
-			dat += "<h2>Citadel Preferences</h2>" //Because fuck me if preferences can't be fucking modularized and expected to update in a reasonable timeframe.
-			dat += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled (15x15)"]</a><br>"
-			dat += "<b>Auto stand:</b> <a href='?_src_=prefs;preference=autostand'>[autostand ? "Enabled" : "Disabled"]</a><br>"
-			dat += "<b>Auto OOC:</b> <a href='?_src_=prefs;preference=auto_ooc'>[auto_ooc ? "Enabled" : "Disabled"]</a><br>"
-			dat += "<b>Force Slot Storage HUD:</b> <a href='?_src_=prefs;preference=no_tetris_storage'>[no_tetris_storage ? "Enabled" : "Disabled"]</a><br>"
-			dat += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==100) ? "Full" : ((screenshake==0) ? "None" : "[screenshake]")]</a><br>"
-			if (user && user.client && !user.client.prefs.screenshake==0)
-				dat += "<b>Damage Screen Shake:</b> <a href='?_src_=prefs;preference=damagescreenshake'>[(damagescreenshake==1) ? "On" : ((damagescreenshake==0) ? "Off" : "Only when down")]</a><br>"
-			var/p_chaos
-			if (!preferred_chaos)
-				p_chaos = "No preference"
-			else
-				p_chaos = preferred_chaos
-			dat += "<b>Preferred Chaos Amount:</b> <a href='?_src_=prefs;preference=preferred_chaos;task=input'>[p_chaos]</a><br>"
-			dat += "<br>"
-			dat += "</td>"
-			dat += "</tr></table>"
-			if(unlock_content)
-				dat += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
-				dat += "<B>Ghost Orbit: </B> <a href='?_src_=prefs;task=input;preference=ghostorbit'>[ghost_orbit]</a><br>"
-			var/button_name = "If you see this something went wrong."
-			switch(ghost_accs)
-				if(GHOST_ACCS_FULL)
-					button_name = GHOST_ACCS_FULL_NAME
-				if(GHOST_ACCS_DIR)
-					button_name = GHOST_ACCS_DIR_NAME
-				if(GHOST_ACCS_NONE)
-					button_name = GHOST_ACCS_NONE_NAME
-
-			dat += "<b>Ghost Accessories:</b> <a href='?_src_=prefs;task=input;preference=ghostaccs'>[button_name]</a><br>"
-			switch(ghost_others)
-				if(GHOST_OTHERS_THEIR_SETTING)
-					button_name = GHOST_OTHERS_THEIR_SETTING_NAME
-				if(GHOST_OTHERS_DEFAULT_SPRITE)
-					button_name = GHOST_OTHERS_DEFAULT_SPRITE_NAME
-				if(GHOST_OTHERS_SIMPLE)
-					button_name = GHOST_OTHERS_SIMPLE_NAME
-
-			dat += "<b>Ghosts of Others:</b> <a href='?_src_=prefs;task=input;preference=ghostothers'>[button_name]</a><br>"
-			dat += "<br>"
-
-			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a><br>"
-
-			dat += "<b>Income Updates:</b> <a href='?_src_=prefs;preference=income_pings'>[(chat_toggles & CHAT_BANKCARD) ? "Allowed" : "Muted"]</a><br>"
-			dat += "<br>"
-
-			dat += "<b>Parallax (Fancy Space):</b> <a href='?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=parallaxup\";return false;'>"
-			switch (parallax)
-				if (PARALLAX_LOW)
-					dat += "Low"
-				if (PARALLAX_MED)
-					dat += "Medium"
-				if (PARALLAX_INSANE)
-					dat += "Insane"
-				if (PARALLAX_DISABLE)
-					dat += "Disabled"
-				else
-					dat += "High"
-			dat += "</a><br>"
-			dat += "<b>Ambient Occlusion:</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "Enabled" : "Disabled"]</a><br>"
-			dat += "<b>Fit Viewport:</b> <a href='?_src_=prefs;preference=auto_fit_viewport'>[auto_fit_viewport ? "Auto" : "Manual"]</a><br>"
-			dat += "<b>HUD Button Flashes:</b> <a href='?_src_=prefs;preference=hud_toggle_flash'>[hud_toggle_flash ? "Enabled" : "Disabled"]</a><br>"
-			dat += "<b>HUD Button Flash Color:</b> <span style='border: 1px solid #161616; background-color: [hud_toggle_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hud_toggle_color;task=input'>Change</a><br>"
-
-/* CITADEL EDIT - We're using top menu instead
-			button_name = pixel_size
-			dat += "<b>Pixel Scaling:</b> <a href='?_src_=prefs;preference=pixel_size'>[(button_name) ? "Pixel Perfect [button_name]x" : "Stretch to fit"]</a><br>"
-
-			switch(scaling_method)
-				if(SCALING_METHOD_NORMAL)
-					button_name = "Nearest Neighbor"
-				if(SCALING_METHOD_DISTORT)
-					button_name = "Point Sampling"
-				if(SCALING_METHOD_BLUR)
-					button_name = "Bilinear"
-			dat += "<b>Scaling Method:</b> <a href='?_src_=prefs;preference=scaling_method'>[button_name]</a><br>"
-*/
-
-			if (CONFIG_GET(flag/maprotation) && CONFIG_GET(flag/tgstyle_maprotation))
-				var/p_map = preferred_map
-				if (!p_map)
-					p_map = "Default"
-					if (config.defaultmap)
-						p_map += " ([config.defaultmap.map_name])"
-				else
-					if (p_map in config.maplist)
-						var/datum/map_config/VM = config.maplist[p_map]
-						if (!VM)
-							p_map += " (No longer exists)"
-						else
-							p_map = VM.map_name
-					else
-						p_map += " (No longer exists)"
-				if(CONFIG_GET(flag/allow_map_voting))
-					dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a><br>"
-
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
 
@@ -735,36 +594,7 @@
 
 
 			switch(href_list["preference"])
-				if("ghostform")
-					if(unlock_content)
-						var/new_form = input(user, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in GLOB.ghost_forms
-						if(new_form)
-							ghost_form = new_form
-				if("ghostorbit")
-					if(unlock_content)
-						var/new_orbit = input(user, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND", null) as null|anything in GLOB.ghost_orbits
-						if(new_orbit)
-							ghost_orbit = new_orbit
 
-				if("ghostaccs")
-					var/new_ghost_accs = alert("Do you want your ghost to show full accessories where possible, hide accessories but still use the directional sprites where possible, or also ignore the directions and stick to the default sprites?",,GHOST_ACCS_FULL_NAME, GHOST_ACCS_DIR_NAME, GHOST_ACCS_NONE_NAME)
-					switch(new_ghost_accs)
-						if(GHOST_ACCS_FULL_NAME)
-							ghost_accs = GHOST_ACCS_FULL
-						if(GHOST_ACCS_DIR_NAME)
-							ghost_accs = GHOST_ACCS_DIR
-						if(GHOST_ACCS_NONE_NAME)
-							ghost_accs = GHOST_ACCS_NONE
-
-				if("ghostothers")
-					var/new_ghost_others = alert("Do you want the ghosts of others to show up as their own setting, as their default sprites or always as the default white ghost?",,GHOST_OTHERS_THEIR_SETTING_NAME, GHOST_OTHERS_DEFAULT_SPRITE_NAME, GHOST_OTHERS_SIMPLE_NAME)
-					switch(new_ghost_others)
-						if(GHOST_OTHERS_THEIR_SETTING_NAME)
-							ghost_others = GHOST_OTHERS_THEIR_SETTING
-						if(GHOST_OTHERS_DEFAULT_SPRITE_NAME)
-							ghost_others = GHOST_OTHERS_DEFAULT_SPRITE
-						if(GHOST_OTHERS_SIMPLE_NAME)
-							ghost_others = GHOST_OTHERS_SIMPLE
 				if("age")
 					var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
 					if(new_age)
@@ -1319,15 +1149,6 @@
 						features["color_scheme"] = ADVANCED_CHARACTER_COLORING
 
 
-				if("ooccolor")
-					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference",ooccolor) as color|null
-					if(new_ooccolor)
-						ooccolor = new_ooccolor
-
-				if("aooccolor")
-					var/new_aooccolor = input(user, "Choose your Antag OOC colour:", "Game Preference",ooccolor) as color|null
-					if(new_aooccolor)
-						aooccolor = new_aooccolor
 
 				if("bag")
 					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in GLOB.backbaglist
@@ -1356,57 +1177,6 @@
 					if(department)
 						prefered_security_department = department
 
-				if ("preferred_map")
-					var/maplist = list()
-					var/default = "Default"
-					if (config.defaultmap)
-						default += " ([config.defaultmap.map_name])"
-					for (var/M in config.maplist)
-						var/datum/map_config/VM = config.maplist[M]
-						var/friendlyname = "[VM.map_name] "
-						if (VM.voteweight <= 0)
-							friendlyname += " (disabled)"
-						maplist[friendlyname] = VM.map_name
-					maplist[default] = null
-					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference")  as null|anything in maplist
-					if (pickedmap)
-						preferred_map = maplist[pickedmap]
-
-				if ("preferred_chaos")
-					var/pickedchaos = input(user, "Choose your preferred level of chaos. This will help with dynamic threat level ratings.", "Character Preference") as null|anything in list(CHAOS_NONE,CHAOS_LOW,CHAOS_MED,CHAOS_HIGH,CHAOS_MAX)
-					preferred_chaos = pickedchaos
-				if ("clientfps")
-					var/desiredfps = input(user, "Choose your desired fps. (0 = synced with server tick rate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
-					if (!isnull(desiredfps))
-						clientfps = desiredfps
-						parent.fps = desiredfps
-				if("ui")
-					var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style)  as null|anything in GLOB.available_ui_styles
-					if(pickedui)
-						UI_style = pickedui
-						if (parent && parent.mob && parent.mob.hud_used)
-							parent.mob.hud_used.update_ui_style(ui_style2icon(UI_style))
-				if("pda_style")
-					var/pickedPDAStyle = input(user, "Choose your PDA style.", "Character Preference", pda_style)  as null|anything in GLOB.pda_styles
-					if(pickedPDAStyle)
-						pda_style = pickedPDAStyle
-				if("pda_color")
-					var/pickedPDAColor = input(user, "Choose your PDA Interface color.", "Character Preference",pda_color) as color|null
-					if(pickedPDAColor)
-						pda_color = pickedPDAColor
-				if("pda_skin")
-					var/pickedPDASkin = input(user, "Choose your PDA reskin.", "Character Preference", pda_skin) as null|anything in GLOB.pda_reskins
-					if(pickedPDASkin)
-						pda_skin = pickedPDASkin
-				if ("max_chat_length")
-					var/desiredlength = input(user, "Choose the max character length of shown Runechat messages. Valid range is 1 to [CHAT_MESSAGE_MAX_LENGTH] (default: [initial(max_chat_length)]))", "Character Preference", max_chat_length)  as null|num
-					if (!isnull(desiredlength))
-						max_chat_length = clamp(desiredlength, 1, CHAT_MESSAGE_MAX_LENGTH)
-
-				if("hud_toggle_color")
-					var/new_toggle_color = input(user, "Choose your HUD toggle flash color:", "Game Preference",hud_toggle_color) as color|null
-					if(new_toggle_color)
-						hud_toggle_color = new_toggle_color
 
 				if("gender")
 					var/chosengender = input(user, "Select your character's gender.", "Gender Selection", gender) as null|anything in list(MALE,FEMALE,"nonbinary","object")
@@ -1540,90 +1310,19 @@
 		else
 			switch(href_list["preference"])
 
-				if("widescreenpref")
-					widescreenpref = !widescreenpref
-					user.client.view_size.setDefault(getScreenSize(widescreenpref))
 
-				if("pixel_size")
-					switch(pixel_size)
-						if(PIXEL_SCALING_AUTO)
-							pixel_size = PIXEL_SCALING_1X
-						if(PIXEL_SCALING_1X)
-							pixel_size = PIXEL_SCALING_1_2X
-						if(PIXEL_SCALING_1_2X)
-							pixel_size = PIXEL_SCALING_2X
-						if(PIXEL_SCALING_2X)
-							pixel_size = PIXEL_SCALING_3X
-						if(PIXEL_SCALING_3X)
-							pixel_size = PIXEL_SCALING_AUTO
-					user.client.view_size.apply() //Let's winset() it so it actually works
 
-				if("scaling_method")
-					switch(scaling_method)
-						if(SCALING_METHOD_NORMAL)
-							scaling_method = SCALING_METHOD_DISTORT
-						if(SCALING_METHOD_DISTORT)
-							scaling_method = SCALING_METHOD_BLUR
-						if(SCALING_METHOD_BLUR)
-							scaling_method = SCALING_METHOD_NORMAL
-					user.client.view_size.setZoomMode()
-
-				if("autostand")
-					autostand = !autostand
-				if("auto_ooc")
-					auto_ooc = !auto_ooc
-				if("no_tetris_storage")
-					no_tetris_storage = !no_tetris_storage
-				if ("screenshake")
-					var/desiredshake = input(user, "Set the amount of screenshake you want. \n(0 = disabled, 100 = full, 200 = maximum.)", "Character Preference", screenshake)  as null|num
-					if (!isnull(desiredshake))
-						screenshake = desiredshake
-				if("damagescreenshake")
-					switch(damagescreenshake)
-						if(0)
-							damagescreenshake = 1
-						if(1)
-							damagescreenshake = 2
-						if(2)
-							damagescreenshake = 0
-						else
-							damagescreenshake = 1
-				if("nameless")
-					nameless = !nameless
 				//END CITADEL EDIT
-				if("publicity")
-					if(unlock_content)
-						toggles ^= MEMBER_PUBLIC
 
 				if("body_model")
 					features["body_model"] = features["body_model"] == MALE ? FEMALE : MALE
 
-				if("chat_on_map")
-					chat_on_map = !chat_on_map
-				if("see_chat_non_mob")
-					see_chat_non_mob = !see_chat_non_mob
-				if("action_buttons")
-					buttons_locked = !buttons_locked
-				if("tgui_fancy")
-					tgui_fancy = !tgui_fancy
-				if("tgui_lock")
-					tgui_lock = !tgui_lock
-				if("winflash")
-					windowflashing = !windowflashing
-				if("hear_adminhelps")
-					toggles ^= SOUND_ADMINHELP
-				if("announce_login")
-					toggles ^= ANNOUNCE_LOGIN
-				if("combohud_lighting")
-					toggles ^= COMBOHUD_LIGHTING
-				if("name")
-					be_random_name = !be_random_name
+
+
 
 				if("all")
 					be_random_body = !be_random_body
 
-				if("hear_midis")
-					toggles ^= SOUND_MIDI
 
 				if("persistent_scars")
 					persistent_scars = !persistent_scars
@@ -1635,85 +1334,6 @@
 					scars_list["3"] = ""
 					scars_list["4"] = ""
 					scars_list["5"] = ""
-
-				if("lobby_music")
-					toggles ^= SOUND_LOBBY
-					if((toggles & SOUND_LOBBY) && user.client && isnewplayer(user))
-						user.client.playtitlemusic()
-					else
-						user.stop_sound_channel(CHANNEL_LOBBYMUSIC)
-
-				if("ghost_ears")
-					chat_toggles ^= CHAT_GHOSTEARS
-
-				if("ghost_sight")
-					chat_toggles ^= CHAT_GHOSTSIGHT
-
-				if("ghost_whispers")
-					chat_toggles ^= CHAT_GHOSTWHISPER
-
-				if("ghost_radio")
-					chat_toggles ^= CHAT_GHOSTRADIO
-
-				if("ghost_pda")
-					chat_toggles ^= CHAT_GHOSTPDA
-
-				if("income_pings")
-					chat_toggles ^= CHAT_BANKCARD
-
-				if("pull_requests")
-					chat_toggles ^= CHAT_PULLR
-
-				if("allow_midround_antag")
-					toggles ^= MIDROUND_ANTAG
-
-				if("parallaxup")
-					parallax = WRAP(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
-					if (parent && parent.mob && parent.mob.hud_used)
-						parent.mob.hud_used.update_parallax_pref(parent.mob)
-
-				if("parallaxdown")
-					parallax = WRAP(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
-					if (parent && parent.mob && parent.mob.hud_used)
-						parent.mob.hud_used.update_parallax_pref(parent.mob)
-
-
-
-				if("ambientocclusion")
-					ambientocclusion = !ambientocclusion
-					if(parent && parent.screen && parent.screen.len)
-						var/atom/movable/screen/plane_master/game_world/G = parent.mob.hud_used.plane_masters["[GAME_PLANE]"]
-						var/atom/movable/screen/plane_master/above_wall/A = parent.mob.hud_used.plane_masters["[ABOVE_WALL_PLANE]"]
-						var/atom/movable/screen/plane_master/wall/W = parent.mob.hud_used.plane_masters["[WALL_PLANE]"]
-						G.backdrop(parent.mob)
-						A.backdrop(parent.mob)
-						W.backdrop(parent.mob)
-
-				if("auto_fit_viewport")
-					auto_fit_viewport = !auto_fit_viewport
-					if(auto_fit_viewport && parent)
-						parent.fit_viewport()
-
-				if("hud_toggle_flash")
-					hud_toggle_flash = !hud_toggle_flash
-
-				if("save")
-					save_preferences()
-					save_character()
-
-				if("load")
-					load_preferences()
-					load_character()
-
-				if("changeslot")
-					if(!load_character(text2num(href_list["num"])))
-						random_character()
-						real_name = random_unique_name(gender)
-						save_character()
-
-				if("tab")
-					if(href_list["tab"])
-						current_tab = text2num(href_list["tab"])
 
 	ShowChoices(user)
 	return 1
@@ -1856,38 +1476,6 @@
 			wheels.setDir(spawn_chair.dir)
 		wheels.buckle_mob(character)
 
-/datum/preferences/proc/get_default_name(name_id)
-	switch(name_id)
-		if("human")
-			return random_unique_name()
-		if("ai")
-			return pick(GLOB.ai_names)
-		if("cyborg")
-			return DEFAULT_CYBORG_NAME
-		if("clown")
-			return pick(GLOB.clown_names)
-		if("mime")
-			return pick(GLOB.mime_names)
-	return random_unique_name()
-
-/datum/preferences/proc/ask_for_custom_name(mob/user,name_id)
-	var/namedata = GLOB.preferences_custom_names[name_id]
-	if(!namedata)
-		return
-
-	var/raw_name = input(user, "Choose your character's [namedata["qdesc"]]:","Character Preference") as text|null
-	if(!raw_name)
-		if(namedata["allow_null"])
-			custom_names[name_id] = get_default_name(name_id)
-		else
-			return
-	else
-		var/sanitized_name = reject_bad_name(raw_name,namedata["allow_numbers"])
-		if(!sanitized_name)
-			to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z,[namedata["allow_numbers"] ? ",0-9," : ""] -, ' and .</font>")
-			return
-		else
-			custom_names[name_id] = sanitized_name
 
 /datum/preferences/proc/get_filtered_holoform(filter_type)
 	if(!custom_holoform_icon)

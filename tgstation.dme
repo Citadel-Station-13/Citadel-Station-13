@@ -3094,6 +3094,7 @@
 #include "code\modules\preferences\collections\global\_global.dm"
 #include "code\modules\preferences\collections\global\admin.dm"
 #include "code\modules\preferences\collections\global\global.dm"
+#include "code\modules\preferences\collections\global\hidden.dm"
 #include "code\modules\preferences\collections\global\keybindings.dm"
 #include "code\modules\preferences\collections\hybrid\_hybrid.dm"
 #include "code\modules\preferences\collections\hybrid\antagonism.dm"

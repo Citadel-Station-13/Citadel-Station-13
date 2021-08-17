@@ -75,6 +75,11 @@
 					hide_ckey = !hide_ckey
 					if(user)
 						user.mind?.hide_ckey = hide_ckey
+				if("nameless")
+					nameless = !nameless
+				if("name")
+					be_random_name = !be_random_name
+
 
 	var/hide_ckey = FALSE //pref for hiding if your ckey shows round-end or not
 	real_name	= reject_bad_name(real_name)
@@ -98,3 +103,36 @@
 	for(var/custom_name_id in GLOB.preferences_custom_names)
 		var/savefile_slot_name = custom_name_id + "_name" //TODO remove this
 		S[savefile_slot_name] >> custom_names[custom_name_id]
+
+/datum/preferences/proc/get_default_name(name_id)
+	switch(name_id)
+		if("human")
+			return random_unique_name()
+		if("ai")
+			return pick(GLOB.ai_names)
+		if("cyborg")
+			return DEFAULT_CYBORG_NAME
+		if("clown")
+			return pick(GLOB.clown_names)
+		if("mime")
+			return pick(GLOB.mime_names)
+	return random_unique_name()
+
+/datum/preferences/proc/ask_for_custom_name(mob/user,name_id)
+	var/namedata = GLOB.preferences_custom_names[name_id]
+	if(!namedata)
+		return
+
+	var/raw_name = input(user, "Choose your character's [namedata["qdesc"]]:","Character Preference") as text|null
+	if(!raw_name)
+		if(namedata["allow_null"])
+			custom_names[name_id] = get_default_name(name_id)
+		else
+			return
+	else
+		var/sanitized_name = reject_bad_name(raw_name,namedata["allow_numbers"])
+		if(!sanitized_name)
+			to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z,[namedata["allow_numbers"] ? ",0-9," : ""] -, ' and .</font>")
+			return
+		else
+			custom_names[name_id] = sanitized_name

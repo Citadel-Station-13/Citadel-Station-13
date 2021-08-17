@@ -1,4 +1,5 @@
 /datum/preferences_collection/hybrid/fetish_content
+	name = "Content Preferences"
 	save_key = PREFERENCES_SAVE_KEY_FETISH
 	sort_order = 2
 
