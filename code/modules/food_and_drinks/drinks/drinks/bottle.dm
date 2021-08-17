@@ -502,6 +502,7 @@
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to it's contents."
 	icon_state = "glassbottle"
 	spillable = TRUE
+	obj_flags = UNIQUE_RENAME
 
 /obj/item/reagent_containers/food/drinks/bottle/blank/update_icon()
 	..()
