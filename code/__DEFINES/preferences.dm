@@ -36,6 +36,7 @@
 #define PREFERENCES_SAVE_KEY_ADMIN				"admin"
 #define PREFERENCES_SAVE_KEY_GLOBAL				"global"
 #define PREFERENCES_SAVE_KEY_KEYBINDINGS		"keybindings"
+#define PREFERENCES_SAVE_KEY_HIDDEN				"hidden"
 // Hybrids
 #define PREFERENCES_SAVE_KEY_ANTAGONISM			"antagonism"
 #define PREFERENCES_SAVE_KEY_FETISH				"fetish"
