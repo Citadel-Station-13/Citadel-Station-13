@@ -291,46 +291,21 @@
 	update = TRUE
 
 /**
- * Heat exchange for gas radiating to space/vaccum
+ * Proc for radiating heat using something akin to blackbody radiation
+ * Cheers and love to Putnam for helping <3
  *
- * Returns thermal energy in joules lost
+ * We don't take into account gas density directly like on baycode but we do care about heat capacity
  *
- * @params
- * gas - gas mixture
- * surface - surface area
- * conductivity - thermal conductivity
+ * @param
+ * * temperature - gas temperature
+ * * surface_arae - surface area of radiation
+ * * heat_capacity - heat capacity of the gas in question
+ * * env_temperature - environment temperaure of the surrounding gas
+ *
+ * @return the new temperature
  */
-/proc/heat_exchange_gas_to_space(datum/gas_mixture/gas, surface = 1, conductivity = 0.8)
-	var/moles_per_liter = gas.total_moles() / gas.return_volume()
-
-
-// Radiation constants.
-#define STEFAN_BOLTZMANN_CONSTANT    5.6704e-8 // W/(m^2*K^4).
-#define COSMIC_RADIATION_TEMPERATURE 3.15      // K.
-#define AVERAGE_SOLAR_RADIATION      200       // W/m^2. Kind of arbitrary. Really this should depend on the sun position much like solars.
-#define RADIATOR_OPTIMUM_PRESSURE    3771      // kPa at 20 C. This should be higher as gases aren't great conductors until they are dense. Used the critical pressure for air.
-#define GAS_CRITICAL_TEMPERATURE     132.65    // K. The critical point temperature for air.
-
-#define RADIATOR_EXPOSED_SURFACE_AREA_RATIO 0.04 // (3 cm + 100 cm * sin(3deg))/(2*(3+100 cm)). Unitless ratio.
-#define HUMAN_EXPOSED_SURFACE_AREA          5.2 //m^2, surface area of 1.7m (H) x 0.46m (D) cylinder
-
-//surface must be the surface area in m^2
-/datum/pipeline/proc/radiate_heat_to_space(surface, thermal_conductivity)
-	var/gas_density = air.total_moles/air.volume
-	thermal_conductivity *= min(gas_density / ( RADIATOR_OPTIMUM_PRESSURE/(R_IDEAL_GAS_EQUATION*GAS_CRITICAL_TEMPERATURE) ), 1) //mult by density ratio
-
-	// We only get heat from the star on the exposed surface area.
-	// If the HE pipes gain more energy from AVERAGE_SOLAR_RADIATION than they can radiate, then they have a net heat increase.
-	var/heat_gain = AVERAGE_SOLAR_RADIATION * (RADIATOR_EXPOSED_SURFACE_AREA_RATIO * surface) * thermal_conductivity
-
-	// Previously, the temperature would enter equilibrium at 26C or 294K.
-	// Only would happen if both sides (all 2 square meters of surface area) were exposed to sunlight.  We now assume it aligned edge on.
-	// It currently should stabilise at 129.6K or -143.6C
-	heat_gain -= surface * STEFAN_BOLTZMANN_CONSTANT * thermal_conductivity * (air.temperature - COSMIC_RADIATION_TEMPERATURE) ** 4
-
-	air.add_thermal_energy(heat_gain)
-	if(network)
-		network.update = 1
+/proc/radiate_heat_to_space(temperature, surface_area, heat_capacity, env_temperature)
+	CRASH("radiate_heat not hooked")
 
 /**
  * Calculates the power in watts needed to move in one second one mole of gas from source to sink.
