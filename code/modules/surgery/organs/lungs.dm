@@ -510,7 +510,6 @@
 	heat_level_2_threshold = 600 // up 200 from level 1, 1000 is silly but w/e for level 3
 
 /obj/item/organ/lungs/ashwalker/populate_gas_info()
-	..()
 	// humans usually breathe 21 but require 16/17, so 80% - 1, which is more lenient but it's fine
 	#define SAFE_THRESHOLD_RATIO 0.8
 	var/datum/gas_mixture/breath = SSair.planetary[LAVALAND_DEFAULT_ATMOS] // y'all know
@@ -532,6 +531,7 @@
 	var/o2_pp = PP(breath, GAS_O2)
 	safe_breath_min = 0.3 * o2_pp
 	safe_breath_max = 1.3 * o2_pp
+	..()
 	#undef SAFE_THRESHOLD_RATIO
 
 /obj/item/organ/lungs/slime
