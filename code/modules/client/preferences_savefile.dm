@@ -48,63 +48,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		pda_color = "#808000"
 	if((current_version < 21) && features["meat_type"] && (features["meat_type"] == null))
 		features["meat_type"] = "Mammalian"
-	if(current_version < 22)
-
-		job_preferences = list() //It loaded null from nonexistant savefile field.
-
-		var/job_civilian_high = 0
-		var/job_civilian_med = 0
-		var/job_civilian_low = 0
-
-		var/job_medsci_high = 0
-		var/job_medsci_med = 0
-		var/job_medsci_low = 0
-
-		var/job_engsec_high = 0
-		var/job_engsec_med = 0
-		var/job_engsec_low = 0
-
-		S["job_civilian_high"]	>> job_civilian_high
-		S["job_civilian_med"]	>> job_civilian_med
-		S["job_civilian_low"]	>> job_civilian_low
-		S["job_medsci_high"]	>> job_medsci_high
-		S["job_medsci_med"]		>> job_medsci_med
-		S["job_medsci_low"]		>> job_medsci_low
-		S["job_engsec_high"]	>> job_engsec_high
-		S["job_engsec_med"]		>> job_engsec_med
-		S["job_engsec_low"]		>> job_engsec_low
-
-		//Can't use SSjob here since this happens right away on login
-		for(var/job in subtypesof(/datum/job))
-			var/datum/job/J = job
-			var/new_value
-			var/fval = initial(J.flag)
-			switch(initial(J.department_flag))
-				if(CIVILIAN)
-					if(job_civilian_high & fval)
-						new_value = JP_HIGH
-					else if(job_civilian_med & fval)
-						new_value = JP_MEDIUM
-					else if(job_civilian_low & fval)
-						new_value = JP_LOW
-				if(MEDSCI)
-					if(job_medsci_high & fval)
-						new_value = JP_HIGH
-					else if(job_medsci_med & fval)
-						new_value = JP_MEDIUM
-					else if(job_medsci_low & fval)
-						new_value = JP_LOW
-				if(ENGSEC)
-					if(job_engsec_high & fval)
-						new_value = JP_HIGH
-					else if(job_engsec_med & fval)
-						new_value = JP_MEDIUM
-					else if(job_engsec_low & fval)
-						new_value = JP_LOW
-			if(new_value)
-				job_preferences["[initial(J.title)]"] = new_value
-	else if(current_version < 23) // we are fixing a gamebreaking bug.
-		job_preferences = list() //It loaded null from nonexistant savefile field.
 
 	if(current_version < 25)
 		var/digi
@@ -576,9 +519,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["backbag"]				>> backbag
 	S["jumpsuit_style"]			>> jumpsuit_style
 	S["uplink_loc"]				>> uplink_spawn_loc
-	S["custom_speech_verb"]		>> custom_speech_verb
-	S["custom_tongue"]			>> custom_tongue
-	S["additional_language"]	>> additional_language
 	S["feature_mcolor"]					>> features["mcolor"]
 	S["feature_lizard_tail"]			>> features["tail_lizard"]
 	S["feature_lizard_snout"]			>> features["snout"]
@@ -628,16 +568,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["chosen_limb_id"]					>> chosen_limb_id
 
 	S["preferred_ai_core_display"]		>> preferred_ai_core_display
-	S["prefered_security_department"]	>> prefered_security_department
 
-	//Jobs
-	S["joblessrole"]		>> joblessrole
 
-	//Load prefs
-	S["job_preferences"]	>> job_preferences
-
-	//Quirks
-	S["all_quirks"]			>> all_quirks
 
 	//Records
 	S["security_records"]			>>			security_records
@@ -753,11 +685,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		size_max = CONFIG_GET(number/body_size_max)
 	features["body_size"]			= sanitize_num_clamp(features["body_size"], size_min, size_max, RESIZE_DEFAULT_SIZE, 0.01)
 
-
-	custom_speech_verb				= sanitize_inlist(custom_speech_verb, GLOB.speech_verbs, "default")
-	custom_tongue					= sanitize_inlist(custom_tongue, GLOB.roundstart_tongues, "default")
-	additional_language				= sanitize_inlist(additional_language, GLOB.roundstart_languages, "None")
-
 	security_records				= copytext(security_records, 1, MAX_FLAVOR_LEN)
 	medical_records					= copytext(medical_records, 1, MAX_FLAVOR_LEN)
 
@@ -798,13 +725,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	scars_list["4"] = sanitize_text(scars_list["4"])
 	scars_list["5"] = sanitize_text(scars_list["5"])
 
-	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
-	//Validate job prefs
-	for(var/j in job_preferences)
-		if(job_preferences["[j]"] != JP_LOW && job_preferences["[j]"] != JP_MEDIUM && job_preferences["[j]"] != JP_HIGH)
-			job_preferences -= j
 
-	all_quirks = SANITIZE_LIST(all_quirks)
 
 	vore_flags						= sanitize_integer(vore_flags, 0, MAX_VORE_FLAG, 0)
 	vore_taste						= copytext(vore_taste, 1, MAX_TASTE_LEN)
@@ -857,9 +778,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["jumpsuit_style"]			, jumpsuit_style)
 	WRITE_FILE(S["uplink_loc"]				, uplink_spawn_loc)
 	WRITE_FILE(S["species"]					, pref_species.id)
-	WRITE_FILE(S["custom_speech_verb"]		, custom_speech_verb)
-	WRITE_FILE(S["custom_tongue"]			, custom_tongue)
-	WRITE_FILE(S["additional_language"]		, additional_language)
 
 	// records
 	WRITE_FILE(S["security_records"]		, security_records)
@@ -915,15 +833,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 						WRITE_FILE(S["feature_[tertiary_string]"], features[tertiary_string])
 
 	WRITE_FILE(S["preferred_ai_core_display"]		,  preferred_ai_core_display)
-	WRITE_FILE(S["prefered_security_department"]	, prefered_security_department)
 
-	//Jobs
-	WRITE_FILE(S["joblessrole"]		, joblessrole)
-	//Write prefs
-	WRITE_FILE(S["job_preferences"] , job_preferences)
 
-	//Quirks
-	WRITE_FILE(S["all_quirks"]			, all_quirks)
 
 	WRITE_FILE(S["vore_flags"]			, vore_flags)
 	WRITE_FILE(S["vore_taste"]			, vore_taste)
