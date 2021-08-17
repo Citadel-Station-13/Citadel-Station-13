@@ -21,7 +21,7 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/heat_exchang
 /obj/machinery/atmospherics/component/unary/heat_exchanger/update_icon_state()
 	if(connected[1])
 		icon_state = "he1"
-		var/obj/machinery/atmospherics/node = Connected[1]
+		var/obj/machinery/atmospherics/node = connected[1]
 		add_atom_colour(node.color, FIXED_COLOUR_PRIORITY)
 	else
 		icon_state = "he0"

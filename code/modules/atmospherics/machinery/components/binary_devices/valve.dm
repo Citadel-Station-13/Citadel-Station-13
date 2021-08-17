@@ -9,7 +9,7 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/binary/valve, "mva
 	desc = "A pipe with a valve that can be used to disable flow of gas through it."
 
 	can_unwrench = TRUE
-	shift_underlay_only = FALSE
+	shift_to_layer = TRUE
 
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_OPEN //Intentionally no allow_silicon flag
 	pipe_flags = PIPE_CARDINAL_AUTONORMALIZE
@@ -31,11 +31,11 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/binary/valve, "mva
 /obj/machinery/atmospherics/component/binary/valve/proc/toggle()
 	if(on)
 		on = FALSE
-		update_icon()
+		update_appearance()
 		investigate_log("was closed by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
 	else
 		on = TRUE
-		update_icon()
+		update_appearance()
 		MarkDirty()
 		ImmediatePipelineUpdate(1)
 		investigate_log("was opened by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)

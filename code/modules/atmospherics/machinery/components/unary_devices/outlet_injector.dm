@@ -31,28 +31,23 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmosphehrics/component/unary/outlet_inje
 	SSradio.remove_object(src,frequency)
 	return ..()
 
-/obj/machinery/atmospherics/component/unary/outlet_injector/update_icon_nopipes()
-	cut_overlays()
-	if(showpipe)
-		// everything is already shifted so don't shift the cap
-		add_overlay(getpipeimage(icon, "inje_cap", initialize_directions))
-
-	if(!nodes[1] || !on || !is_operational())
+/obj/machinery/atmospherics/component/unary/outlet_injector/update_icon_state()
+	. = ..()
+	if(!connected[1] || !on || !is_operational())
 		icon_state = "inje_off"
 	else
 		icon_state = "inje_on"
 
-/obj/machinery/atmospherics/component/unary/outlet_injector/power_change()
-	var/old_stat = stat
-	..()
-	if(old_stat != stat)
-		update_icon()
-
+/obj/machinery/atmospherics/component/unary/outlet_injector/update_overlays()
+	. = ..()
+	if(showpipe)
+		// everything is already shifted so don't shift the cap
+		. += getpipeimage(icon, "inje_cap", initialize_directions)
 
 /obj/machinery/atmospherics/component/unary/outlet_injector/process_atmos()
 	..()
 
-	injecting = 0
+	injecting = FALSE
 
 	if(!on || !is_operational())
 		return
@@ -62,8 +57,7 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmosphehrics/component/unary/outlet_inje
 	if(air_contents.return_temperature() > 0)
 		loc.assume_air_ratio(air_contents, volume_rate / air_contents.return_volume())
 		air_update_turf()
-
-		update_parents()
+		MarkDirty()
 
 /obj/machinery/atmospherics/component/unary/outlet_injector/proc/inject()
 
@@ -72,11 +66,11 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmosphehrics/component/unary/outlet_inje
 
 	var/datum/gas_mixture/air_contents = airs[1]
 
-	injecting = 1
+	injecting = TRUE
 
 	if(air_contents.return_temperature() > 0)
 		loc.assume_air_ratio(air_contents, volume_rate / air_contents.return_volume())
-		update_parents()
+		MarkDirty()
 
 	flick("inje_inject", src)
 
@@ -101,10 +95,10 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmosphehrics/component/unary/outlet_inje
 	))
 	radio_connection.post_signal(src, signal)
 
-/obj/machinery/atmospherics/component/unary/outlet_injector/atmosinit()
+/obj/machinery/atmospherics/component/unary/outlet_injector/InitAtmos()
+	. = ..()
 	set_frequency(frequency)
 	broadcast_status()
-	..()
 
 /obj/machinery/atmospherics/component/unary/outlet_injector/receive_signal(datum/signal/signal)
 
@@ -138,39 +132,9 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmosphehrics/component/unary/outlet_inje
 		ui = new(user, src, "AtmosPump", name)
 		ui.open()
 
-/obj/machinery/atmospherics/component/unary/outlet_injector/ui_data()
-	var/data = list()
-	data["on"] = on
-	data["rate"] = round(volume_rate)
-	data["max_rate"] = round(MAX_TRANSFER_RATE)
-	return data
-
 /obj/machinery/atmospherics/component/unary/outlet_injector/ui_act(action, params)
-	if(..())
-		return
-
-	switch(action)
-		if("power")
-			on = !on
-			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
-			. = TRUE
-		if("rate")
-			var/rate = params["rate"]
-			if(rate == "max")
-				rate = MAX_TRANSFER_RATE
-				. = TRUE
-			else if(rate == "input")
-				rate = input("New transfer rate (0-[MAX_TRANSFER_RATE] L/s):", name, volume_rate) as num|null
-				if(!isnull(rate) && !..())
-					. = TRUE
-			else if(text2num(rate) != null)
-				rate = text2num(rate)
-				. = TRUE
-			if(.)
-				volume_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
-				investigate_log("was set to [volume_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_icon()
-	broadcast_status()
+	if((. = ..()))
+		broadcast_status()
 
 /obj/machinery/atmospherics/component/unary/outlet_injector/can_unwrench(mob/user)
 	. = ..()
