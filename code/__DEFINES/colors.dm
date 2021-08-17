@@ -24,6 +24,7 @@
 #define COLOR_BEIGE				 "#CEB689"
 #define COLOR_BLUE_GRAY			 "#75A2BB"
 #define COLOR_BROWN				 "#BA9F6D"
+#define COLOR_SOFT_RED "#FA8282"
 #define COLOR_DARK_BROWN		 "#997C4F"
 #define COLOR_DARK_ORANGE		 "#C3630C"
 #define COLOR_GREEN_GRAY		 "#99BB76"

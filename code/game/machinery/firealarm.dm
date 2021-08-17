@@ -79,23 +79,33 @@
 
 	if(is_station_level(z))
 		. += "fire_[GLOB.security_level]"
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_[GLOB.security_level]", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
+		. += mutable_appearance(icon, "fire_[GLOB.security_level]")
+		. += emissive_appearance(icon, "fire_[GLOB.security_level]")
 	else
 		. += "fire_[SEC_LEVEL_GREEN]"
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_[SEC_LEVEL_GREEN]", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
+		. += mutable_appearance(icon, "fire_[SEC_LEVEL_GREEN]")
+		. += emissive_appearance(icon, "fire_[SEC_LEVEL_GREEN]")
 
 	var/area/A = src.loc
 	A = A.loc
 
 	if(!detecting || !A.fire)
 		. += "fire_off"
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_off", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
+		. += mutable_appearance(icon, "fire_off")
+		. += emissive_appearance(icon, "fire_off")
 	else if(obj_flags & EMAGGED)
 		. += "fire_emagged"
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_emagged", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
+		. += mutable_appearance(icon, "fire_emagged")
+		. += emissive_appearance(icon, "fire_emagged")
 	else
 		. += "fire_on"
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_on", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
+		. += mutable_appearance(icon, "fire_on")
+		. += emissive_appearance(icon, "fire_on")
+
+	if(!panel_open && detecting) //It just looks horrible with the panel open
+		. += "fire_detected"
+		. += mutable_appearance(icon, "fire_detected")
+		. += emissive_appearance(icon, "fire_detected") //Pain
 
 /obj/machinery/firealarm/emp_act(severity)
 	. = ..()

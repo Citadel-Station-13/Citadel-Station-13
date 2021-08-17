@@ -226,7 +226,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		M.adjustCloneLoss(-10, 0) //I don't want to make Rezadone obsolete.
 		M.adjustBruteLoss(-25, 0)// Note that this takes a long time to apply and makes you fat and useless when it's in you, I don't think this small burst of healing will be useful considering how long it takes to get there.
 		M.adjustFireLoss(-25, 0)
-		M.blood_volume += 250
+		M.adjust_integration_blood(250)
 		M.heal_bodypart_damage(1,1)
 		M.action_cooldown_mod = 1
 		if (M.nutrition < 1500)
@@ -236,7 +236,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		to_chat(M, "<span class='notice'>the cells fail to hold enough mass to generate a clone, instead diffusing into your system.</span>")
 		M.adjustBruteLoss(-10, 0)
 		M.adjustFireLoss(-10, 0)
-		M.blood_volume += 100
+		M.adjust_integration_blood(100)
 		M.action_cooldown_mod = 1
 		if (M.nutrition < 1500)
 			M.adjust_nutrition(500)
@@ -309,7 +309,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 /datum/reagent/fermi/SDGFheal/on_mob_life(mob/living/carbon/M)//Used to heal the clone after splitting, the clone spawns damaged. (i.e. insentivies players to make more than required, so their clone doesn't have to be treated)
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
-		M.blood_volume += 10
+		M.adjust_integration_blood(10)
 	M.adjustCloneLoss(-2, 0)
 	M.setOrganLoss(ORGAN_SLOT_BRAIN, -1)
 	M.adjust_nutrition(10)

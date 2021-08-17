@@ -2,6 +2,7 @@
 	name = "recharger"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger0"
+	base_icon_state = "recharger"
 	desc = "A charging dock for energy based weaponry."
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
@@ -187,16 +188,29 @@
 			if(B.cell)
 				B.cell.charge = 0
 
+/obj/machinery/recharger/update_appearance(updates)
+	. = ..()
+	if((stat & (NOPOWER|BROKEN)) || panel_open || !anchored)
+		luminosity = 0
+		return
+	luminosity = 1
 
-/obj/machinery/recharger/update_icon_state()
+/obj/machinery/recharger/update_overlays()
+	. = ..()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
-		icon_state = "rechargeroff"
-	else if(panel_open)
-		icon_state = "rechargeropen"
-	else if(charging)
-		if(using_power)
-			icon_state = "recharger1"
-		else
-			icon_state = "recharger2"
-	else
-		icon_state = "recharger0"
+		return
+	if(panel_open)
+		. += mutable_appearance(icon, "[base_icon_state]-open", alpha = src.alpha)
+		return
+
+	if(!charging)
+		. += mutable_appearance(icon, "[base_icon_state]-empty", alpha = src.alpha)
+		. += emissive_appearance(icon, "[base_icon_state]-empty", alpha = src.alpha)
+		return
+	if(using_power)
+		. += mutable_appearance(icon, "[base_icon_state]-charging", alpha = src.alpha)
+		. += emissive_appearance(icon, "[base_icon_state]-charging", alpha = src.alpha)
+		return
+
+	. += mutable_appearance(icon, "[base_icon_state]-full", alpha = src.alpha)
+	. += emissive_appearance(icon, "[base_icon_state]-full", alpha = src.alpha)
