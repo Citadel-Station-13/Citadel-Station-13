@@ -3,7 +3,7 @@
 	display_name = "License Bottling"
 	description = "Some Branded bottles to print and export."
 	starting_node = TRUE
-	design_ids = list("gin", "wine", "whiskey", "vodka", "tequila", "patron", "rum", "kahlua", "vermouth", "goldschlager", "hcider", "cognac", "absinthe", "grappa", "sake", "fernet", "applejack", "champagne", "blazaam", "trappist", "grenadine", "autobottler")
+	design_ids = list("gin", "wine", "whiskey", "vodka", "tequila", "patron", "rum", "kahlua", "vermouth", "goldschlager", "hcider", "cognac", "absinthe", "grappa", "sake", "fernet", "applejack", "champagne", "blazaam", "trappist", "grenadine", "autobottler", "emptyglassbottle", "largeemptyglassbottle", "emptypitcher")
 
 /datum/techweb_node/blueprinted_exports
 	id = "blueprinted_exports"
