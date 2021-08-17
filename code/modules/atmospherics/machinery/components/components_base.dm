@@ -13,7 +13,7 @@
 	/// Max operating pressure - cannot pressurize above this, but can accept above this
 	var/max_pressure = ATMOSMECH_PUMP_PRESSURE
 	/// What the pressure is set to on alt click, and the "nominal" maximum pressure
-	var/max_presure_nominal = ATMOSMECH_PUMP_PRESSURE_SANE
+	var/max_pressure_nominal = ATMOSMECH_PUMP_PRESSURE_SANE
 	/// Current pressure setting - defaults to max
 	var/pressure_setting = ATMOSMECH_PUMP_PRESSURE
 	/// Max operating rate - cannot pump faster than this (L/s)

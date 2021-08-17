@@ -6,12 +6,10 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmosphehrics/component/unary/outlet_inje
 	desc = "Has a valve and pump attached to it."
 	use_power = IDLE_POWER_USE
 	can_unwrench = TRUE
-	shift_underlay_only = FALSE
+	shift_to_layer = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
 
-	var/injecting = 0
-
-	var/volume_rate = 50
+	var/injecting = FALSE
 
 	var/frequency = 0
 	var/id = null
@@ -20,6 +18,7 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmosphehrics/component/unary/outlet_inje
 	level = 1
 	interacts_with_air = TRUE
 	layer = GAS_SCRUBBER_LAYER
+	power_efficiency = 2
 
 	pipe_state = "injector"
 
@@ -45,34 +44,42 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmosphehrics/component/unary/outlet_inje
 		. += getpipeimage(icon, "inje_cap", initialize_directions)
 
 /obj/machinery/atmospherics/component/unary/outlet_injector/process_atmos()
-	..()
-
+	active_power_usage = idle_power_usage
+	last_power_draw = last_transfer_rate = 0
 	injecting = FALSE
+	active_power_usage = idle_power_usage
 
 	if(!on || !is_operational())
 		return
 
 	var/datum/gas_mixture/air_contents = airs[1]
-
-	if(air_contents.return_temperature() > 0)
-		loc.assume_air_ratio(air_contents, volume_rate / air_contents.return_volume())
+	var/turf/T = loc
+	if(!istype(T))
+		return
+	if(air_contents.total_moles() > 0)
+		var/last_pressure = air_contents.return_pressure()
+		active_power_usage = last_power_draw = pump_gas(air_contents, T.return_air(), (rate_setting / air_contents.return_volume()) * air_contents.total_moles(), power_setting, power_efficiency)
+		last_transfer_rate = (air_contents.return_pressure() / last_pressure) * air_contents.return_volume()
 		air_update_turf()
 		MarkDirty()
 
 /obj/machinery/atmospherics/component/unary/outlet_injector/proc/inject()
-
 	if(on || injecting || !is_operational())
 		return
 
-	var/datum/gas_mixture/air_contents = airs[1]
-
 	injecting = TRUE
-
-	if(air_contents.return_temperature() > 0)
-		loc.assume_air_ratio(air_contents, volume_rate / air_contents.return_volume())
-		MarkDirty()
-
 	flick("inje_inject", src)
+
+	var/datum/gas_mixture/air_contents = airs[1]
+	var/turf/T = loc
+	if(!istype(T))
+		return
+	if(air_contents.total_moles() > 0)
+		var/last_pressure = air_contents.return_pressure()
+		active_power_usage = last_power_draw = pump_gas(air_contents, T.return_air(), (rate_setting / air_contents.return_volume()) * air_contents.total_moles(), power_setting, power_efficiency)
+		last_transfer_rate = (air_contents.return_pressure() / last_pressure) * air_contents.return_volume()
+		air_update_turf()
+		MarkDirty()
 
 /obj/machinery/atmospherics/component/unary/outlet_injector/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
@@ -89,7 +96,7 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmosphehrics/component/unary/outlet_inje
 		"tag" = id,
 		"device" = "AO",
 		"power" = on,
-		"volume_rate" = volume_rate,
+		"rate_setting" = rate_setting,
 		//"timestamp" = world.time,
 		"sigtype" = "status"
 	))
@@ -118,7 +125,7 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmosphehrics/component/unary/outlet_inje
 	if("set_volume_rate" in signal.data)
 		var/number = text2num(signal.data["set_volume_rate"])
 		var/datum/gas_mixture/air_contents = airs[1]
-		volume_rate = clamp(number, 0, air_contents.return_volume())
+		rate_setting = clamp(number, 0, air_contents.return_volume())
 
 	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 
@@ -152,7 +159,7 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/outlet_injec
 /obj/machinery/atmospherics/component/unary/outlet_injector/atmos
 	frequency = FREQ_ATMOS_STORAGE
 	on = TRUE
-	volume_rate = 200
+	rate_setting = 200
 
 /obj/machinery/atmospherics/component/unary/outlet_injector/atmos/atmos_waste
 	name = "atmos waste outlet injector"

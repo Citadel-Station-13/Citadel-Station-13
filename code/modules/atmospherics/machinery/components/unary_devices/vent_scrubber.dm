@@ -21,7 +21,6 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/vent_scrubbe
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
 
 	var/filter_types = list(GAS_CO2)
-	var/volume_rate = 200
 	var/widenet = 0 //is this scrubber acting on the 3x3 area around it.
 	var/list/turf/adjacent_turfs = list()
 
@@ -33,7 +32,7 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/vent_scrubbe
 	pipe_state = "scrubber"
 
 /obj/machinery/atmospherics/component/unary/vent_scrubber/New()
-	..()
+	. = ..()
 	if(!id_tag)
 		id_tag = assign_uid_vents()
 
@@ -121,14 +120,14 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/vent_scrubbe
 
 	return TRUE
 
-/obj/machinery/atmospherics/component/unary/vent_scrubber/atmosinit()
+/obj/machinery/atmospherics/component/unary/vent_scrubber/InitAtmos()
+	. = ..()
 	radio_filter_in = frequency==initial(frequency)?(RADIO_FROM_AIRALARM):null
 	radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
 	if(frequency)
 		set_frequency(frequency)
 	broadcast_status()
 	check_turfs()
-	..()
 
 /obj/machinery/atmospherics/component/unary/vent_scrubber/process_atmos()
 	..()
@@ -143,9 +142,10 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/vent_scrubbe
 			scrub(tile)
 	return TRUE
 
-/obj/machinery/atmospherics/component/unary/vent_scrubber/proc/scrub(var/turf/tile)
+/obj/machinery/atmospherics/component/unary/vent_scrubber/proc/scrub(turf/tile)
 	if(!istype(tile))
 		return FALSE
+	#warn hmm making this work with new scrub procs will be weird
 	var/datum/gas_mixture/environment = tile.return_air()
 	var/datum/gas_mixture/air_contents = airs[1]
 
@@ -153,16 +153,15 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/vent_scrubbe
 		return FALSE
 
 	if(scrubbing & SCRUBBING)
-		environment.scrub_into(air_contents, volume_rate/environment.return_volume(), filter_types)
+		environment.scrub_into(air_contents, rate_setting/environment.return_volume(), filter_types)
 
 		tile.air_update_turf()
 
 	else //Just siphoning all air
 
-		environment.transfer_ratio_to(air_contents, volume_rate/environment.return_volume())
+		environment.transfer_ratio_to(air_contents, rate_setting/environment.return_volume())
 		tile.air_update_turf()
-
-	update_parents()
+	MarkDirty()
 
 	return TRUE
 

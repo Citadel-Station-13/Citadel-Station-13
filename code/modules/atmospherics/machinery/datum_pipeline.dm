@@ -236,13 +236,11 @@
 			if (istype(atmosmch, /obj/machinery/atmospherics/component/binary/valve))
 				var/obj/machinery/atmospherics/component/binary/valve/V = atmosmch
 				if(V.on)
-					PL |= V.parents[1]
-					PL |= V.parents[2]
+					PL |= V.ReturnPipelines()
 			else if (istype(atmosmch,/obj/machinery/atmospherics/component/binary/relief_valve))
 				var/obj/machinery/atmospherics/component/binary/relief_valve/V = atmosmch
 				if(V.opened)
-					PL |= V.parents[1]
-					PL |= V.parents[2]
+					PL |= V.ReturnPipelines()
 			else if (istype(atmosmch, /obj/machinery/atmospherics/component/unary/portables_connector))
 				var/obj/machinery/atmospherics/component/unary/portables_connector/C = atmosmch
 				if(C.connected_device)
