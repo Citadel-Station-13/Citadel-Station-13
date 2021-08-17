@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - rscadd: "lets you select 4 prosthetic limbs instead of only 2"
