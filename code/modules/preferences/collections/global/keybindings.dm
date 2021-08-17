@@ -239,12 +239,6 @@
 		if(!GLOB.keybindings_by_name[bindname])
 			modless_key_bindings -= key
 
-/datum/preferences_collection/global/keybindings/handle_global_migration(datum/preferences/prefs, list/data, savefile/S, list/errors, current_version)
-	if(current_version < 46)
-		errors += "Version < 46, prior to keybindings update. Resetting keybindings; Please recheck your keybindings manually."
-		force_reset_keybindings_direct(prefs, TRUE)
-		addtimer(CALLBACK(src, .proc/keybind_reset_prompt, prefs), 30)
-
 /datum/preferences_collection/global/keybindings/on_full_preferences_reset(datum/preferences/prefs)
 	if(!length(LoadKey(prefs, "keybinds")))
 		to_chat(prefs.parent, "<span class='danger'>Preferences Reset Error: No keybindings detected. Resetting. Please recheck your keybindings manually.</span>")
