@@ -14,10 +14,10 @@
 	//initialize limbs first
 	create_bodyparts()
 
-	setup_human_dna()
+	setup_human_dna(icon_update = FALSE)
 
 	if(dna.species)
-		set_species(dna.species.type)
+		set_species(dna.species.type, icon_update = FALSE) //keep icon_update to FALSE because icons are NOT setup at this point, and are done later
 
 	//initialise organs
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
@@ -33,11 +33,11 @@
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, /atom.proc/clean_blood)
 	GLOB.human_list += src
 
-/mob/living/carbon/human/proc/setup_human_dna(randomize = TRUE)
+/mob/living/carbon/human/proc/setup_human_dna(randomize = TRUE, icon_update = TRUE)
 	//initialize dna. for spawned humans; overwritten by other code
 	create_dna(src)
 	if(randomize)
-		randomize_human(src)
+		randomize_human(src, icon_update)
 	dna.initialize_dna()
 
 /mob/living/carbon/human/ComponentInitialize()

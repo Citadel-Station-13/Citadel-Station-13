@@ -10,7 +10,7 @@
 
 	user << browse(create_panel_helper(create_mob_html), "window=create_mob;size=425x475")
 
-/proc/randomize_human(mob/living/carbon/human/H)
+/proc/randomize_human(mob/living/carbon/human/H, icon_update = TRUE)
 	H.gender = pick(MALE, FEMALE)
 	H.real_name = random_unique_name(H.gender)
 	H.name = H.real_name
@@ -52,4 +52,5 @@
 
 	SEND_SIGNAL(H, COMSIG_HUMAN_ON_RANDOMIZE)
 
-	H.update_eyes() //note: new overlay system proc
+	if(icon_update)
+		H.update_eyes() //note: new overlay system proc
