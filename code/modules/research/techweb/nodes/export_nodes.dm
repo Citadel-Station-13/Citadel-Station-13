@@ -1,7 +1,7 @@
 /datum/techweb_node/blueprinted_bottles
 	id = "blueprinted_bottles"
-	display_name = "License Bottling"
-	description = "Some Branded bottles to print and export."
+	display_name = "General Bottling"
+	description = "Some Branded and unbranded bottles to print."
 	starting_node = TRUE
 	design_ids = list("gin", "wine", "whiskey", "vodka", "tequila", "patron", "rum", "kahlua", "vermouth", "goldschlager", "hcider", "cognac", "absinthe", "grappa", "sake", "fernet", "applejack", "champagne", "blazaam", "trappist", "grenadine", "autobottler", "emptyglassbottle", "largeemptyglassbottle", "emptypitcher")
 
