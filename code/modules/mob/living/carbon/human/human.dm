@@ -33,7 +33,7 @@
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, /atom.proc/clean_blood)
 	GLOB.human_list += src
 
-/mob/living/carbon/human/proc/setup_human_dna(var/randomize = TRUE)
+/mob/living/carbon/human/proc/setup_human_dna(randomize = TRUE)
 	//initialize dna. for spawned humans; overwritten by other code
 	create_dna(src)
 	if(randomize)

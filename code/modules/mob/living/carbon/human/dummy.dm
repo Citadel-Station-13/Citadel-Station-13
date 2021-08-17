@@ -26,9 +26,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	icon_render_key = null
 	cut_overlays(TRUE)
 
-/mob/living/carbon/human/dummy/setup_human_dna()
+/mob/living/carbon/human/dummy/setup_human_dna(randomize = TRUE)
 	create_dna(src)
-	randomize_human(src)
+	if(randomize)
+		randomize_human(src)
 	dna.initialize_dna(skip_index = TRUE) //Skip stuff that requires full round init.
 
 //Inefficient pooling/caching way.
