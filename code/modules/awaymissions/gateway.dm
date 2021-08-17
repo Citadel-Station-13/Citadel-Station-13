@@ -205,6 +205,12 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 			deactivate()
 		return
 
+/obj/machinery/gateway/update_icon_state()
+	if(target)
+		icon_state = "on_old"
+	else
+		icon_state = "portal_frame"
+
 /obj/machinery/gateway/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return
 

@@ -10,15 +10,8 @@
 //Transform into a human.
 /obj/effect/proc_holder/changeling/humanform/sting_action(mob/living/carbon/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
-	var/list/names = list()
-	for(var/datum/changelingprofile/prof in changeling.stored_profiles)
-		names += "[prof.name]"
 
-	var/chosen_name = input("Select the target DNA: ", "Target DNA", null) as null|anything in names
-	if(!chosen_name)
-		return
-
-	var/datum/changelingprofile/chosen_prof = changeling.get_dna(chosen_name)
+	var/datum/changelingprofile/chosen_prof = changeling.select_dna()
 	if(!chosen_prof)
 		return
 	if(!user || user.mob_transforming)
