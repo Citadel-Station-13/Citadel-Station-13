@@ -14,7 +14,7 @@
 	//initialize limbs first
 	create_bodyparts()
 
-	setup_human_dna(update_icon = FALSE)
+	setup_human_dna(icon_update = FALSE)
 
 	if(dna.species)
 		set_species(dna.species.type, icon_update = FALSE) //keep icon_update to FALSE because icons are NOT setup at this point, and are done later
