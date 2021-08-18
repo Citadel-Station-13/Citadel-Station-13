@@ -32,6 +32,8 @@
 #define PREFERENCES_SAVE_KEY_RECORDS			"records"
 #define PREFERENCES_SAVE_KEY_SILICON			"silicon"
 #define PREFERENCES_SAVE_KEY_SPEECH				"speech"
+#define PREFERENCES_SAVE_KEY_VORE				"vore"
+#define PREFERENCES_SAVE_KEY_PERSIST			"persist"
 // Globals
 #define PREFERENCES_SAVE_KEY_ADMIN				"admin"
 #define PREFERENCES_SAVE_KEY_GLOBAL				"global"

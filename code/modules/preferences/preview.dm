@@ -4,6 +4,23 @@
 /datum/preferences/proc/regenerate_previews()
 	#warn implement preview regeneration
 
+
+
+
+
+
+	//backgrounds
+	var/mutable_appearance/character_background
+	var/icon/bgstate = "steel"
+	var/list/bgstate_options = list("000", "midgrey", "FFF", "white", "steel", "techmaint", "dark", "plating", "reinforced")
+
+				if("cycle_bg")
+					bgstate = next_list_item(bgstate, bgstate_options)
+
+
+
+
+
 /datum/preferences/proc/update_preview_icon(current_tab)
 	var/equip_job = (current_tab != APPEARANCE_TAB)
 	// Determine what job is marked as 'High' priority, and dress them up as such.

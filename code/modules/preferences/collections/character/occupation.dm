@@ -19,6 +19,8 @@
 	. = ..()
 
 
+
+	var/prefered_security_department = SEC_DEPT_RANDOM
 			dat += "<a href='?_src_=prefs;preference=sec_dept;task=input'><b>Preferred Security Department:</b> [prefered_security_department]</a><BR></td>"
 
 
@@ -35,6 +37,11 @@
 			job_preferences -= j
 	S["prefered_security_department"]	>> prefered_security_department
 	WRITE_FILE(S["prefered_security_department"]	, prefered_security_department)
+
+				if("sec_dept")
+					var/department = input(user, "Choose your preferred security department:", "Security Departments") as null|anything in GLOB.security_depts_prefs
+					if(department)
+						prefered_security_department = department
 
 
 /datum/preferences/proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), widthPerColumn = 295, height = 620)

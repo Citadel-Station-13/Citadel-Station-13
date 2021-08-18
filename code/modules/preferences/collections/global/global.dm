@@ -18,6 +18,66 @@
 /datum/preferences_collection/global/general/savefile_full_overhaul_global(datum/preferences/prefs, list/data, savefile/S, list/errors, current_version)
 	. = ..()
 
+	var/hud_toggle_flash = TRUE
+	var/hud_toggle_color = "#ffffff"
+	var/clientfps = 0
+	///The playtime_reward_cloak variable can be set to TRUE from the prefs menu only once the user has gained over 5K playtime hours. If true, it allows the user to get a cool looking roundstart cloak.
+	var/playtime_reward_cloak = FALSE
+	///What size should pixels be displayed as? 0 is strech to fit
+	var/pixel_size = 0
+	///What scaling method should we use?
+	var/scaling_method = "normal"
+
+	var/parallax
+
+	var/ambientocclusion = TRUE
+	///Should we automatically fit the viewport?
+	var/auto_fit_viewport = FALSE
+	///Should we be in the widescreen mode set by the config?
+	var/widescreenpref = TRUE
+	var/screenshake = 100
+	var/damagescreenshake = 2
+	var/autostand = TRUE
+	var/auto_ooc = FALSE
+
+	#warn implement ui toggle for this
+	var/enable_tips = TRUE
+	var/tip_delay = 500 //tip delay in milliseconds
+
+	///Runechat preference. If true, certain messages will be displayed on the map, not ust on the chat area. Boolean.
+	var/chat_on_map = TRUE
+	///Limit preference on the size of the message. Requires chat_on_map to have effect.
+	var/max_chat_length = CHAT_MESSAGE_MAX_LENGTH
+	///Whether non-mob messages will be displayed, such as machine vendor announcements. Requires chat_on_map to have effect. Boolean.
+	var/see_chat_non_mob = TRUE
+	///Whether emotes will be displayed on runechat. Requires chat_on_map to have effect. Boolean.
+	var/see_rc_emotes = TRUE
+	var/ooccolor = "#c43b23"
+	var/aooccolor = "#ce254f"
+	var/UI_style = null
+	var/buttons_locked = FALSE
+	///If we want to broadcast deadchat connect/disconnect messages
+	var/broadcast_login_logout = TRUE
+	var/chat_toggles = TOGGLES_DEFAULT_CHAT
+	var/ghost_form = "ghost"
+	var/ghost_orbit = GHOST_ORBIT_CIRCLE
+	var/ghost_accs = GHOST_ACCS_DEFAULT_OPTION
+	var/ghost_others = GHOST_OTHERS_DEFAULT_OPTION
+	var/ghost_hud = 1
+	var/inquisitive_ghost = 1
+	var/tgui_fancy = TRUE
+	var/tgui_lock = TRUE
+	var/windowflashing = TRUE
+	var/toggles = TOGGLES_DEFAULT
+	UI_style = GLOB.available_ui_styles[1]
+	var/preferred_map = null
+	var/preferred_chaos = null
+	var/pda_style = MONO
+	var/pda_color = "#808000"
+	var/pda_skin = PDA_SKIN_ALT
+
+	var/no_tetris_storage = FALSE
+
 				if ("preferred_map")
 					var/maplist = list()
 					var/default = "Default"

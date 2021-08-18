@@ -19,6 +19,9 @@
 	. = ..()
 
 
+#define DEFAULT_SLOT_AMT	2
+#define HANDS_SLOT_AMT		2
+#define BACKPACK_SLOT_AMT	4
 
 
 			//calculate your gear points from the chosen item

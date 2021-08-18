@@ -42,5 +42,19 @@ GLOBAL_LIST_EMPTY(persistent_client_variables)
 	var/list/cached_holoform_icons
 	var/last_custom_holoform = 0
 
+#warn comment these and put these in
+	var/db_flags
+	var/list/exp = list()
+
+
 /datum/persistent_client_variables/New(_ckey)
 	ckey = _ckey
+
+#warn put generation in here
+/datum/preferences/proc/get_filtered_holoform(filter_type)
+	if(!custom_holoform_icon)
+		return
+	LAZYINITLIST(cached_holoform_icons)
+	if(!cached_holoform_icons[filter_type])
+		cached_holoform_icons[filter_type] = process_holoform_icon_filter(custom_holoform_icon, filter_type)
+	return cached_holoform_icons[filter_type]

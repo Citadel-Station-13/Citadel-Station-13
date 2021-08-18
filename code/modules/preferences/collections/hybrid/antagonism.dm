@@ -78,3 +78,19 @@
 
 	data["be_special"] = be_special
 	data["midround_antagonist"] = midround_antag
+
+
+
+#warn put these in
+	S["uplink_loc"]				>> uplink_spawn_loc
+	var/uplink_spawn_loc = UPLINK_PDA
+
+
+	uplink_spawn_loc				= sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
+
+
+				if("uplink_loc")
+					var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference") as null|anything in GLOB.uplink_spawn_loc_list
+					if(new_loc)
+						uplink_spawn_loc = new_loc
+
