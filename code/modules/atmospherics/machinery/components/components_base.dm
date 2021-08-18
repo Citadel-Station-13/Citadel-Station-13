@@ -74,8 +74,8 @@
 	if(pipe_flags & PIPE_ALL_LAYER)
 		var/obj/machinery/atmospherics/other
 		for(var/d in GLOB.cardinals)
-			for(var/i in PIPE_LAYER_MIN to PIPE_LAYER_MAX)
-				if((other = connected[GetNodeIndex(d, i)]))
+			for(var/l in PIPE_LAYER_MIN to PIPE_LAYER_MAX)
+				if((other = connected[GetNodeIndex(d, l)]))
 					underlays += get_pipe_underlay("pipe_intact", d, other.pipe_color, l)
 				else
 					underlays += get_pipe_underlay("pipe_exposed", d, layer = l)
@@ -230,8 +230,6 @@
 /obj/machinery/atmospherics/component/attack_ghost(mob/dead/observer/O)
 	. = ..()
 	atmosanalyzer_scan(airs, O, src, FALSE)
-
-#warn standardize UI: pass UI capability flags with static data and use a standard <Section> in components/common in TGUI for rendering power, rate, and pressure settings
 
 // Standard ui_data
 /obj/machinery/atmospherics/component/ui_static_data(mob/user)
