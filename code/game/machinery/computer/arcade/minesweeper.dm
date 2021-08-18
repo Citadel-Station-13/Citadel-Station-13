@@ -8,7 +8,7 @@
 	name = "Minesweeper"
 	desc = "An arcade machine that generates grids. It seems that the machine sparks and screeches when a grid is generated, as if it cannot cope with the intensity of generating the grid."
 	icon_state = "arcade"
-	circuit = /obj/item/circuitboard/computer/arcade/minesweeper
+	circuit = /obj/item/circuitboard/computer/arcade/orion_trail
 	var/area
 	var/difficulty = ""	//To show what difficulty you are playing
 	var/flag_text = ""
