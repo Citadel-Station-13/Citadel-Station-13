@@ -22,8 +22,6 @@
 	var/rate_setting = ATMOSMECH_PUMP_RATE
 	/// Efficiency multiplier. This affects all machine ops, whether pumping/thermal operations for coolers/heaters and more.
 	var/power_efficiency = 1
-	/// Minimum volume to move per second before it gives up
-	var/futile_rate = ATMOSMECH_FUTILE_PUMP_RATE
 	/// Below this in moles, anything left is instantly moved. This ensures you can't require infinite power to drain something.
 	var/moles_to_instant_pump = ATMOSMECH_INSTANT_PUMP_MOLES
 	/// Below this in pressure, anything left is instantly moved. This ensures you can't require infinite power to drain something.
@@ -73,18 +71,27 @@
 	if((level != 2) && (istype(T) && !T.intact))
 		return
 
-	var/connected = 0 //Direction bitset
-
-	for(var/i in 1 to device_type) //adds intact pieces
-		if(connected[i])
-			var/obj/machinery/atmospherics/node = connected[i]
-			var/image/img = get_pipe_underlay("pipe_intact", get_dir(src, node), node.pipe_color)
-			underlays += img
-			connected |= img.dir
-
-	for(var/direction in GLOB.cardinals)
-		if((initialize_directions & direction) && !(connected & direction))
-			underlays += get_pipe_underlay("pipe_exposed", direction)
+	if(pipe_flags & PIPE_ALL_LAYER)
+		var/obj/machinery/atmospherics/other
+		for(var/d in GLOB.cardinals)
+			for(var/i in PIPE_LAYER_MIN to PIPE_LAYER_MAX)
+				if((other = connected[GetNodeIndex(d, i)]))
+					underlays += get_pipe_underlay("pipe_intact", d, other.pipe_color, l)
+				else
+					underlays += get_pipe_underlay("pipe_exposed", d, layer = l)
+	else
+		var/dirs_connected = NONE
+		// get the connected
+		for(var/i in 1 to device_type)
+			if(connected[i])
+				var/obj/machinery/atmospherics/other = connected[i]
+				var/image/I = get_pipe_underlay("pipe_intact", get_dir(src, other), other.pipe_color, layer = shift_to_layer? PIPE_LAYER_DEFAULT : pipe_layer)
+				underlays += I
+				connected |= I.dir
+		// get the disconnected
+		for(var/d in GLOB.cardinals)
+			if((initialize_directions & d) && !(dirs_connected & d))
+				underlays += get_pipe_underlay("pipe_exposed", d, layer = shift_to_layer? PIPE_LAYER_DEFAULT : pipe_layer)
 
 /obj/machinery/atmospherics/component/update_layer()
 	. = ..()
@@ -101,11 +108,11 @@
 		showpipe = FALSE
 		plane = FLOOR_PLANE
 
-/obj/machinery/atmospherics/component/proc/get_pipe_underlay(state, dir, color = null)
+/obj/machinery/atmospherics/component/proc/get_pipe_underlay(state, dir, color, layer)
 	if(color)
-		. = getpipeimage('icons/obj/atmospherics/component/binary_devices.dmi', state, dir, color, pipe_layer = shift_underlay_only ? pipe_layer : PIPE_LAYER_DEFAULT)
+		. = getpipeimage('icons/obj/atmospherics/component/binary_devices.dmi', state, dir, color, pipe_layer = layer)
 	else
-		. = getpipeimage('icons/obj/atmospherics/component/binary_devices.dmi', state, dir, pipe_layer = shift_underlay_only ? pipe_layer : PIPE_LAYER_DEFAULT)
+		. = getpipeimage('icons/obj/atmospherics/component/binary_devices.dmi', state, dir, pipe_layer = layer)
 
 /obj/machinery/atmospherics/component/Teardown()
 	for(var/i in 1 to pipelines.len)
