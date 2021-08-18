@@ -501,6 +501,7 @@
 	name = "glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to it's contents."
 	icon_state = "glassbottle"
+	volume = 90
 	spillable = TRUE
 	obj_flags = UNIQUE_RENAME
 
@@ -554,13 +555,13 @@
 	name = "small glass bottle"
 	desc = "This small bottle is unyieldingly anonymous, offering no clues to it's contents."
 	icon_state = "glassbottlesmall"
-	volume = 50
+	volume = 60
 
 /obj/item/reagent_containers/food/drinks/bottle/blank/pitcher
 	name = "glass pitcher"
 	desc = "This is a pitcher for large amounts of liquid of any kind."
 	icon_state = "unipitcher"
-	volume = 200
+	volume = 120
 
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/food/drinks/bottle/molotov
