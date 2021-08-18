@@ -64,15 +64,18 @@
 			SSair.atmos_air_machinery += src
 		else
 			SSair.atmos_machinery += src
-	if(!SSair.initialized && !constructed)
+	if(SSair.initialized && !mapload && !constructed)
 		// if not custom constructing, immediately init
+		// If mapload, we're in a template, wait for finish.
 		InitAtmos()
 
 /**
  * Called once on init.
  */
-/obj/machinery/atmospherics/proc/InitAtmos()
+/obj/machinery/atmospherics/proc/InitAtmos(immediate_join = TRUE)
 	connected = new /list(MaximumPossibleNodes())
+	if(!immediate_join)
+		return
 	Join()
 
 /**
@@ -91,7 +94,7 @@
 	level = T.intact ? 2 : 1
 	if(set_dir)
 		setDir(set_dir)
-	if(!SSair.initialized)
+	if(SSair.initialized)
 		InitAtmos()
 
 /**

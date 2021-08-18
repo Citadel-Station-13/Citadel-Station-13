@@ -188,8 +188,8 @@
  * * minimum - Minimum joules to exchange, regardless of conductivity
  */
 /proc/heat_exchange_gas_to_gas(datum/gas_mixture/gas1, datum/gas_mixture/gas2, volume, conductivity = 1, minimum = ATMOSMECH_MINIMUM_HEAT_EXCHANGE_JOULES)
-	var/diff = isnull(volume)? (gas2.thermal_energy() - gas1.thermal_energy) :
-		(gas2.thermal_energy() * clamp(volume / gas2.return_volume(), 0, 1)) - (gas1.thermal_energy() * clamp(volume / gas1.return_volume(), 0, 1))
+	var/diff = isnull(volume)? (gas2.thermal_energy() - gas1.thermal_energy()) : \
+		((gas2.thermal_energy() * clamp(volume / gas2.return_volume(), 0, 1)) - (gas1.thermal_energy() * clamp(volume / gas1.return_volume(), 0, 1)))
 	// what this does:
 	// if diff * conductivity is below minimum, raise to min, but, if that makes it over diff, ensure it doesn't exceed diff
 	var/transfer = min(diff, max(minimum, diff * conductivity)) * 0.5
@@ -211,7 +211,7 @@
  * * minimum - Minimum joules to exchange, regardless of conductivity
  */
 /proc/thermoelectric_exchange_gas_to_gas(datum/gas_mixture/gas1, datum/gas_mixture/gas2, volume, conductivity = 1, efficiency = 1, minimum = ATMOSMECH_MINIMUM_HEAT_EXCHANGE_JOULES)
-	var/diff = isnull(volume)? (gas2.thermal_energy() - gas1.thermal_energy) : \
+	var/diff = isnull(volume)? (gas2.thermal_energy() - gas1.thermal_energy()) : \
 		(gas2.thermal_energy() * clamp(volume / gas2.return_volume(), 0, 1)) - (gas1.thermal_energy() * clamp(volume / gas1.return_volume(), 0, 1))
 	// what this does:
 	// if diff * conductivity is below minimum, raise to min, but, if that makes it over diff, ensure it doesn't exceed diff
@@ -235,65 +235,27 @@
  * * minimum - Minimum joules to exchange, regardless of conductivity
  */
 /proc/heat_exchange_gas_to_turf(datum/gas_mixture/gas1, turf/T, volume = 200, conductivity = 0.8, minimum = ATMOSMECH_MINIMUM_HEAT_EXCHANGE_JOULES)
-	var/self_energy = isnull(volume)? (gas1.thermal()) : (gas1.thermal_energy() * clamp(volume / gas1.return_volume(), 0, 1))
+	var/self_energy = isnull(volume)? (gas1.thermal_energy()) : (gas1.thermal_energy() * clamp(volume / gas1.return_volume(), 0, 1))
 	if(isopenturf(T))
 		var/turf/open/O = T
-
+		var/turf_temperature = O.GetTemperature()
+		var/turf_capacity = O.GetHeatCapacity()
+		if(!turf_temperature || !turf_capacity)
+			return 0
+		var/other_energy = (turf_temperature * turf_capacity) * (isnull(volume)? 1 : (volume / CELL_VOLUME))
+		var/transfer_to_self = (other_energy - self_energy) * 0.5
+		gas1.adjust_heat(transfer_to_self)
+		O.TakeTemperature((-transfer_to_self) / turf_capacity)
+		return abs(transfer_to_self)
 	else
-
-	var/total_heat_capacity = air.heat_capacity()
-	var/partial_heat_capacity = total_heat_capacity*(share_volume/air.return_volume())
-	var/target_temperature
-	var/target_heat_capacity
-	if(isopenturf(target))
-
-		var/turf/open/modeled_location = target
-		target_temperature = modeled_location.GetTemperature()
-		target_heat_capacity = modeled_location.GetHeatCapacity()
-
-		if(modeled_location.blocks_air)
-
-			if((modeled_location.heat_capacity>0) && (partial_heat_capacity>0))
-				var/delta_temperature = air.return_temperature() - target_temperature
-
-				var/heat = thermal_conductivity*delta_temperature* \
-					(partial_heat_capacity*target_heat_capacity/(partial_heat_capacity+target_heat_capacity))
-
-				air.set_temperature(air.return_temperature() - heat/total_heat_capacity)
-				modeled_location.TakeTemperature(heat/target_heat_capacity)
-
-		else
-			var/delta_temperature = 0
-			var/sharer_heat_capacity = 0
-
-			delta_temperature = (air.return_temperature() - target_temperature)
-			sharer_heat_capacity = target_heat_capacity
-
-			var/self_temperature_delta = 0
-			var/sharer_temperature_delta = 0
-
-			if((sharer_heat_capacity>0) && (partial_heat_capacity>0))
-				var/heat = thermal_conductivity*delta_temperature* \
-					(partial_heat_capacity*sharer_heat_capacity/(partial_heat_capacity+sharer_heat_capacity))
-
-				self_temperature_delta = -heat/total_heat_capacity
-				sharer_temperature_delta = heat/sharer_heat_capacity
-			else
-				return 1
-
-			air.set_temperature(air.return_temperature() + self_temperature_delta)
-			modeled_location.TakeTemperature(sharer_temperature_delta)
-
-
-	else
-		if((target.heat_capacity>0) && (partial_heat_capacity>0))
-			var/delta_temperature = air.return_temperature() - target.return_temperature()
-
-			var/heat = thermal_conductivity*delta_temperature* \
-				(partial_heat_capacity*target.heat_capacity/(partial_heat_capacity+target.heat_capacity))
-
-			air.set_temperature(air.return_temperature() - heat/total_heat_capacity)
-	update = TRUE
+		var/turf_temperature = T.return_temperature()
+		var/turf_capacity = T.heat_capacity
+		if(!turf_temperature || !turf_capacity)
+			return 0
+		var/other_energy = (turf_temperature * turf_capacity) * (isnull(volume)? 1 : (volume / CELL_VOLUME))
+		var/transfer_to_self = (other_energy - self_energy) * 0.5
+		gas1.adjust_heat(transfer_to_self)
+		return abs(transfer_to_self)
 
 /**
  * Proc for radiating heat using something akin to blackbody radiation

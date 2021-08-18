@@ -424,7 +424,7 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/setup_atmos_machinery()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery + atmos_air_machinery)
-		AM.atmosinit()
+		AM.InitAtmos()
 		CHECK_TICK
 
 //this can't be done with setup_atmos_machinery() because
@@ -432,7 +432,7 @@ SUBSYSTEM_DEF(air)
 //	pipenet can be built.
 /datum/controller/subsystem/air/proc/setup_pipenets()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery + atmos_air_machinery)
-		AM.build_network()
+		AM.Join()
 		CHECK_TICK
 
 /datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
@@ -440,12 +440,12 @@ SUBSYSTEM_DEF(air)
 		return // yogs
 	for(var/A in atmos_machines)
 		var/obj/machinery/atmospherics/AM = A
-		AM.atmosinit()
+		AM.InitAtmos(FALSE)
 		CHECK_TICK
 
 	for(var/A in atmos_machines)
 		var/obj/machinery/atmospherics/AM = A
-		AM.build_network()
+		AM.Join()
 		CHECK_TICK
 
 /datum/controller/subsystem/air/proc/get_init_dirs(type, dir)

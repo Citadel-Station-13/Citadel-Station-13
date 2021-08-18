@@ -81,7 +81,7 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/thermomachin
 	if(!on || !nodes[1])
 		return
 	var/datum/gas_mixture/air_contents = airs[1]
-	if(!QUANTIZE(air_contents.return_temperature, target_temperature))
+	if(!QUANTIZE(air_contents.return_temperature - target_temperature))
 		return
 	var/heat_capacity = air_contents.heat_capacity()
 	var/energy_needed = ((target_temperature - air_contents.return_temperature()) * heat_capacity) / (ATMOSMECH_THERMOMACHINE_CHEAT_FACTOR * power_efficiency)
