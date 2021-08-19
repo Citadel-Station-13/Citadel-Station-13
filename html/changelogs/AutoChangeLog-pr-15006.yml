@@ -1,0 +1,6 @@
+author: "TripleShades"
+delete-after: True
+changes: 
+  - rscadd: "At least four or five space heaters spread across Pubby Station Maints"
+  - rscadd: "Missing decal in Pubby Station engineering"
+  - bugfix: "Moved an atmos alarm in the SM emitter chamber so it wont be destroyed"
