@@ -77,12 +77,7 @@
 		to_chat(H, text_gain_indication)
 	if(visual_indicators.len)
 		var/list/mut_overlay = list(get_visual_indicator())
-		if(H.overlays_standing[layer_used])
-			mut_overlay = H.overlays_standing[layer_used]
-			mut_overlay |= get_visual_indicator()
-		H.remove_overlay(layer_used)
-		H.overlays_standing[layer_used] = mut_overlay
-		H.apply_overlay(layer_used)
+		H.full_appearance.appearance_list[MISC_APPEARANCE].add_data(mut_overlay, alias)
 
 	grant_spell()
 	if(!modified)
@@ -108,13 +103,7 @@
 		if(text_lose_indication && owner.stat != DEAD)
 			to_chat(owner, text_lose_indication)
 		if(visual_indicators.len)
-			var/list/mut_overlay = list()
-			if(owner.overlays_standing[layer_used])
-				mut_overlay = owner.overlays_standing[layer_used]
-			owner.remove_overlay(layer_used)
-			mut_overlay.Remove(get_visual_indicator(owner))
-			owner.overlays_standing[layer_used] = mut_overlay
-			owner.apply_overlay(layer_used)
+			owner.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(alias)
 		if(power)
 			owner.RemoveSpell(power)
 			qdel(power)

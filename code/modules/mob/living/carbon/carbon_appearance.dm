@@ -13,6 +13,7 @@
 	full_appearance = new /datum/appearance/full(src)
 	full_appearance.appearance_list[BODYPART_APPEARANCE] = new /datum/appearance(src)
 	full_appearance.appearance_list[CLOTHING_APPEARANCE] = new /datum/appearance(src)
+	full_appearance.appearance_list[MISC_APPEARANCE] = new /datum/appearance(src)
 	update_limbs(list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_ARM, BODY_ZONE_R_LEG))
 
 // update a specific limb from its zone by removing it and adding it
