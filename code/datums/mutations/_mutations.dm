@@ -127,16 +127,7 @@
 			dna.force_lose(CM) //shouldn't have that mutation at all
 			continue
 		if(CM.visual_indicators.len)
-			var/list/mut_overlay = list()
-			if(overlays_standing[CM.layer_used])
-				mut_overlay = overlays_standing[CM.layer_used]
-			var/mutable_appearance/V = CM.get_visual_indicator()
-			remove_overlay(CM.layer_used) //trying to find its existence defeats the point because if cut_overlays is called it doesn't bother reloading it.
-			for(var/mutable_appearance/MA in CM.visual_indicators[CM.type])
-				mut_overlay.Remove(MA)
-			mut_overlay |= V
-			overlays_standing[CM.layer_used] = mut_overlay
-			apply_overlay(CM.layer_used)
+			H.full_appearance.appearance_list[MISC_APPEARANCE].add_data(mut_overlay, alias)
 
 /datum/mutation/human/proc/modify() //called when a genome is applied so we can properly update some stats without having to remove and reapply the mutation from someone
 	if(modified || !power || !owner)
