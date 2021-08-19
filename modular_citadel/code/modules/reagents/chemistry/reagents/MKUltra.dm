@@ -266,73 +266,23 @@ Creating a chem with a low purity will make you permanently fall in love with so
 //Creates a gas cloud when the reaction blows up, causing everyone in it to fall in love with someone/something while it's in their system.
 /datum/reagent/fermi/enthrallExplo//Created in a gas cloud when it explodes
 	name = "Gaseous MKUltra"
-	description = "A forbidden deep red gas that overwhelms a foreign body, causing the person they next lay their eyes on to become more interesting. Studies have shown that people are 66% more likely to make friends with this in the air. Produced when MKUltra explodes."
+	description = "A deep red gas that causes the mind to feel absentminded for as long as it is in their system. Produced when MKUltra explodes."
 	color = "#2C051A" // rgb: , 0, 255
-	metabolization_rate = 0.1
-	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses."
+	metabolization_rate = 1
+	taste_description = "extremely bitter chocolate"
 	chemical_flags = REAGENT_DONOTSPLIT
 	can_synth = FALSE
-	var/mob/living/carbon/love
-	var/lewd = FALSE
 
-/datum/reagent/fermi/enthrallExplo/on_mob_life(mob/living/carbon/M)//Love gas, only affects while it's in your system,Gives a positive moodlet if close, gives brain damagea and a negative moodlet if not close enough.
-	if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
-		return ..()
-	if(!M.has_status_effect(STATUS_EFFECT_INLOVE))
-		var/list/seen = (M.fov_view(M.client?.view || world.view) - M) | viewers(M.client?.view || world.view, M)
-		for(var/victim in seen)
-			if((isanimal(victim)) || (!isliving(victim)))
-				seen -= victim
-		if(!length(seen))
-			return
-		love = pick(seen)
-		M.apply_status_effect(STATUS_EFFECT_INLOVE, love)
-		lewd = (M.client?.prefs.cit_toggles & HYPNO) && (love.client?.prefs.cit_toggles & HYPNO)
-		to_chat(M, "[(lewd?"<span class='love'>":"<span class='warning'>")][(lewd?"You develop a sudden crush on [love], your heart beginning to race as you look upon them with new eyes.":"You suddenly feel like making friends with [love].")] You feel strangely drawn towards them.</span>")
-		log_reagent("FERMICHEM: [M] ckey: [M.key] has temporarily bonded with [love] ckey: [love.key]")
-		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times people have bonded")
-	else
-		if(get_dist(M, love) < 8)
-			var/message = "[(lewd?"I'm next to my crush..! Eee!":"I'm making friends with [love]!")]"
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "InLove", /datum/mood_event/InLove, message)
-			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "MissingLove")
-		else
-			var/message = "[(lewd?"I can't keep my crush off my mind, I need to see them again!":"I really want to make friends with [love]!")]"
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "MissingLove", /datum/mood_event/MissingLove, message)
-			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "InLove")
-			if(prob(5))
-				M.Stun(10)
-				M.emote("whimper")//does this exist?
-				to_chat(M, "[(lewd?"<span class='love'>":"<span class='warning'>")] You're overcome with a desire to see [love].</span>")
-				M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5)//I found out why everyone was so damaged!
+/datum/reagent/fermi/enthrallExplo/on_mob_life(mob/living/carbon/M) //Drug them, jitter them, dizzy them, confuse them
+	M.Dizzy(5)
+	M.Jitter(5)
+	M.set_drugginess(15)
+	if(!M.confused)
+		M.confused = 1
+	M.confused = max(M.confused, 20)
 	..()
 
-/datum/reagent/fermi/enthrallExplo/on_mob_delete(mob/living/carbon/M)
-	if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
-		return ..()
-	M.remove_status_effect(STATUS_EFFECT_INLOVE)
-	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "InLove")
-	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "MissingLove")
-	to_chat(M, "[(lewd?"<span class='love'>":"<span class='warning'>")]Your feelings for [love] suddenly vanish!")
-	log_reagent("FERMICHEM: [M] ckey: [M.key] is no longer in temp bond")
-	..()
 
-/datum/reagent/fermi/proc/FallInLove(mob/living/carbon/Lover, mob/living/carbon/Love)
-	if(Lover.client?.prefs.cit_toggles & NEVER_HYPNO)
-		return // doesn't even give a message, it's just ignored
-	if(Lover.has_status_effect(STATUS_EFFECT_INLOVE))
-		to_chat(Lover, "<span class='warning'>You are already fully devoted to someone else!</span>")
-		return
-	var/lewd = (Lover.client?.prefs.cit_toggles & HYPNO) && (Love.client?.prefs.cit_toggles & HYPNO)
-	to_chat(Lover, "[(lewd?"<span class='love'>":"<span class='warning'>")]You develop a deep and sudden bond with [Love][(lewd?", your heart beginning to race as your mind filles with thoughts about them.":".")] You are determined to keep them safe and happy, and feel drawn towards them.</span>")
-	if(Lover.mind)
-		Lover.mind.store_memory("You are in love with [Love].")
-	Lover.faction |= "[REF(Love)]"
-	Lover.apply_status_effect(STATUS_EFFECT_INLOVE, Love)
-	forge_valentines_objective(Lover, Love, TRUE)
-	SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times people have become infatuated.")
-	log_reagent("FERMICHEM: [Lover] ckey: [Lover.key] has been chemically made to fall for [Love] ckey: [Love.key]")
-	return
 
 //For addiction see chem.dm
 //For vocal commands see vocal_cords.dm
