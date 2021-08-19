@@ -1,0 +1,9 @@
+author: "EmeraldSundisk"
+delete-after: True
+changes: 
+  - rscadd: "Adds a law office/courtroom to OmegaStation"
+  - rscadd: "Adds a gateway to OmegaStation"
+  - rscadd: "Adds a pool/maintenance bar to OmegaStation"
+  - rscdel: "Removes the original maintenance garden in OmegaStation
+tweak: Relocates the bathrooms to the starboard hall
+tweak: Modifies port quarter maintenance to include some affected items"
