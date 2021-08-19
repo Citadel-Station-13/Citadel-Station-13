@@ -1,0 +1,5 @@
+author: "WanderingFox95"
+delete-after: True
+changes: 
+  - rscadd: "Empty bottles and pitchers are available to the bartender now."
+  - imageadd: "They even come with 10 different fillstates!"
