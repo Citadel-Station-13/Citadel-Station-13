@@ -127,7 +127,8 @@
 			dna.force_lose(CM) //shouldn't have that mutation at all
 			continue
 		if(CM.visual_indicators.len)
-			full_appearance.appearance_list[MISC_APPEARANCE].add_data(mut_overlay, alias)
+			var/mutable_appearance/mut_overlay = CM.get_visual_indicator()
+			full_appearance.appearance_list[MISC_APPEARANCE].add_data(mut_overlay, CM.alias)
 
 /datum/mutation/human/proc/modify() //called when a genome is applied so we can properly update some stats without having to remove and reapply the mutation from someone
 	if(modified || !power || !owner)
