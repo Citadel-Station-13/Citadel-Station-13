@@ -282,7 +282,22 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	M.confused = max(M.confused, 20)
 	..()
 
-
+/datum/reagent/fermi/proc/FallInLove(mob/living/carbon/Lover, mob/living/carbon/Love)
+	if(Lover.client?.prefs.cit_toggles & NEVER_HYPNO)
+		return // doesn't even give a message, it's just ignored
+	if(Lover.has_status_effect(STATUS_EFFECT_INLOVE))
+		to_chat(Lover, "<span class='warning'>You are already fully devoted to someone else!</span>")
+		return
+	var/lewd = (Lover.client?.prefs.cit_toggles & HYPNO) && (Love.client?.prefs.cit_toggles & HYPNO)
+	to_chat(Lover, "[(lewd?"<span class='love'>":"<span class='warning'>")]You develop a deep and sudden bond with [Love][(lewd?", your heart beginning to race as your mind filles with thoughts about them.":".")] You are determined to keep them safe and happy, and feel drawn towards them.</span>")
+	if(Lover.mind)
+		Lover.mind.store_memory("You are in love with [Love].")
+	Lover.faction |= "[REF(Love)]"
+	Lover.apply_status_effect(STATUS_EFFECT_INLOVE, Love)
+	forge_valentines_objective(Lover, Love, TRUE)
+	SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times people have become infatuated.")
+	log_reagent("FERMICHEM: [Lover] ckey: [Lover.key] has been chemically made to fall for [Love] ckey: [Love.key]")
+	return
 
 //For addiction see chem.dm
 //For vocal commands see vocal_cords.dm
