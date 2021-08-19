@@ -544,8 +544,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 // called when power status changes
 
 /area/proc/power_change()
+	set waitfor = FALSE
 	for(var/obj/machinery/M in src)	// for each machine in the area
 		M.power_change()				// reverify power status (to update icons etc.)
+		CHECK_TICK
 	if(sub_areas)
 		for(var/i in sub_areas)
 			var/area/A = i
@@ -553,6 +555,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			A.power_equip = power_equip
 			A.power_environ = power_environ
 			INVOKE_ASYNC(A, .proc/power_change)
+			CHECK_TICK
 	update_appearance()
 
 /area/proc/usage(chan)
