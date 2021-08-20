@@ -76,36 +76,11 @@
 	anchored = !anchored
 	move_resist = anchored? INFINITY : 100
 	I.play_tool_sound(src)
-	if(generator)
-		disconnectFromGenerator()
 	to_chat(user, "<span class='notice'>You [anchored?"secure":"unsecure"] [src].</span>")
-
-
-	var/obj/machinery/atmospherics/node1 = nodes[1]
-	var/obj/machinery/atmospherics/node2 = nodes[2]
-
-	if(node1)
-		node1.disconnect(src)
-		nodes[1] = null
-		nullifyPipenet(parents[1])
-	if(node2)
-		node2.disconnect(src)
-		nodes[2] = null
-		nullifyPipenet(parents[2])
-
-	if(anchored)
-		SetInitDirections()
-		atmosinit()
-		node1 = nodes[1]
-		if(node1)
-			node1.atmosinit()
-			node1.addMember(src)
-		node2 = nodes[2]
-		if(node2)
-			node2.atmosinit()
-			node2.addMember(src)
-		SSair.add_to_rebuild_queue(src)
-
+	if(!anchored)
+		Leave()
+	else
+		Join()
 	return TRUE
 
 /obj/machinery/atmospherics/component/binary/circulator/CanConnect(obj/machinery/atmospherics/other, node)
