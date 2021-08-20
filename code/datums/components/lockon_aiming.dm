@@ -158,6 +158,7 @@
 		autolock()
 
 /datum/component/lockon_aiming/proc/autolock()
+	set waitfor = FALSE
 	var/mob/M = parent
 	if(!M.client)
 		return FALSE

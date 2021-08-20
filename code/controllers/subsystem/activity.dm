@@ -11,6 +11,7 @@ SUBSYSTEM_DEF(activity)
 /datum/controller/subsystem/activity/Initialize(timeofday)
 	RegisterSignal(SSdcs,COMSIG_GLOB_EXPLOSION,.proc/on_explosion)
 	RegisterSignal(SSdcs,COMSIG_GLOB_MOB_DEATH,.proc/on_death)
+	return ..()
 
 /datum/controller/subsystem/activity/fire(resumed = 0)
 	calculate_threat()
@@ -54,7 +55,10 @@ SUBSYSTEM_DEF(activity)
 		var/weight = (text2num(threat_history[i+1])-text2num(threat_history[i]))
 		total_weight += weight
 		total_amt += weight * (threat_history[threat_history[i]])
-	return round(total_amt / total_weight,0.1)
+	if(total_weight == 0)
+		return total_amt
+	else
+		return round(total_amt / total_weight,0.1)
 
 /datum/controller/subsystem/activity/proc/get_max_threat()
 	. = 0

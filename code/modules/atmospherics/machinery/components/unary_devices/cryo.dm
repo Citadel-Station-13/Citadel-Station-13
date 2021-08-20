@@ -210,7 +210,7 @@
 			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
 				beaker.reagents.trans_to(occupant, 1, efficiency * 0.25) // Transfer reagents.
 				beaker.reagents.reaction(occupant, VAPOR)
-				air1.adjust_moles(/datum/gas/oxygen, -max(0,air1.get_moles(/datum/gas/oxygen) - 2 / efficiency)) //Let's use gas for this
+				air1.adjust_moles(GAS_O2, -max(0,air1.get_moles(GAS_O2) - 2 / efficiency)) //Let's use gas for this
 			if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
 				reagent_transfer = 0
 
@@ -224,7 +224,7 @@
 
 	var/datum/gas_mixture/air1 = airs[1]
 
-	if(!nodes[1] || !airs[1] || air1.get_moles(/datum/gas/oxygen) < 5) // Turn off if the machine won't work.
+	if(!nodes[1] || !airs[1] || air1.get_moles(GAS_O2) < 5) // Turn off if the machine won't work.
 		on = FALSE
 		update_icon()
 		return
@@ -439,7 +439,7 @@
 	return // we don't see the pipe network while inside cryo.
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/get_remote_view_fullscreens(mob/user)
-	user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
+	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_crawl_through()
 	return // can't ventcrawl in or out of cryo.

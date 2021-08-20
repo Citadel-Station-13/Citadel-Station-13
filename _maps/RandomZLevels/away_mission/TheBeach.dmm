@@ -1001,6 +1001,20 @@
 /obj/item/clothing/glasses/heat,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
+"np" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel/white,
+/area/awaymission/beach)
+"Vi" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel/white,
+/area/awaymission/beach)
 
 (1,1,1) = {"
 aa
@@ -7892,10 +7906,10 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
+Vi
+Vi
+Vi
+Vi
 ak
 ba
 ba
@@ -8213,10 +8227,10 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
+np
+np
+np
+np
 ak
 ba
 ba

@@ -91,7 +91,7 @@
 
 
 	var/multicam_on = FALSE
-	var/obj/screen/movable/pic_in_pic/ai/master_multicam
+	var/atom/movable/screen/movable/pic_in_pic/ai/master_multicam
 	var/list/multicam_screens = list()
 	var/list/all_eyes = list()
 	var/max_multicams = 6
@@ -182,6 +182,7 @@
 	. = ..()
 
 /mob/living/silicon/ai/proc/set_core_display_icon(input, client/C)
+	set waitfor = FALSE
 	if(client && !C)
 		C = client
 	if(!input && !C?.prefs?.preferred_ai_core_display)

@@ -81,6 +81,7 @@
 		return
 
 /obj/item/assembly/infra/proc/refreshBeam()
+	set waitfor = FALSE
 	QDEL_LIST(beams)
 	if(throwing || !on || !secured)
 		return

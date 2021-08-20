@@ -150,7 +150,7 @@
 						SEND_SOUND(M,prey_digest)
 					play_sound = pick(pred_digest)
 
-				if(M.vore_flags & ABSORBED)
+				if(M.vore_flags & ABSORBED || !(M.vore_flags & ABSORBABLE)) //Negative.
 					continue
 
 				if(M.nutrition >= 100) //Drain them until there's no nutrients left. Slowly "absorb" them.

@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// This shouldn't be modified directly, use the helper procs.
 	var/list/baseturfs = /turf/baseturf_bottom
 
-	var/temperature = T20C
+	var/initial_temperature = T20C
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 
@@ -76,7 +76,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	if(requires_activation)
 		CALCULATE_ADJACENT_TURFS(src)
-		SSair.add_to_active(src)
 
 	if (light_power && light_range)
 		update_light()
@@ -96,8 +95,20 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	set_custom_materials(custom_materials)
 
 	ComponentInitialize()
+	if(isopenturf(src))
+		var/turf/open/O = src
+		__auxtools_update_turf_temp_info(isspaceturf(get_z_base_turf()) && !O.planetary_atmos)
+	else
+		update_air_ref(-1)
+		__auxtools_update_turf_temp_info(isspaceturf(get_z_base_turf()))
 
 	return INITIALIZE_HINT_NORMAL
+
+/turf/proc/__auxtools_update_turf_temp_info()
+
+/turf/return_temperature()
+
+/turf/proc/set_temperature()
 
 /turf/proc/Initalize_Atmos(times_fired)
 	CALCULATE_ADJACENT_TURFS(src)
@@ -120,7 +131,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		for(var/A in B.contents)
 			qdel(A)
 		return
-	SSair.remove_from_active(src)
 	visibilityChanged()
 	QDEL_LIST(blueprint_data)
 	flags_1 &= ~INITIALIZED_1
@@ -615,3 +625,16 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	. = ..()
 	if(. != BULLET_ACT_FORCE_PIERCE)
 		. =  BULLET_ACT_TURF
+
+/turf/proc/get_yelling_resistance(power)
+	. = 0
+	// don't bother checking fulltile, we don't need accuracy
+	var/obj/window = locate(/obj/structure/window) in src
+	if(!window)
+		window = locate(/obj/machinery/door/window) in src
+	if(window)
+		. += 4		// windows are minimally resistant
+	// if there's more than one someone fucked up as that shouldn't happen
+	var/obj/machinery/door/D = locate() in src
+	if(D?.density)
+		. += D.opacity? 29 : 19			// glass doors are slightly more resistant to screaming

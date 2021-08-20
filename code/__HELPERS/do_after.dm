@@ -1,23 +1,24 @@
 /**
-  * Higher overhead "advanced" version of do_after.
-  * @params
-  * - atom/user is the atom doing the action or the "physical" user
-  * - delay is time in deciseconds
-  * - atom/target is the atom the action is being done to, defaults to user
-  * - do_after_flags see __DEFINES/flags/do_after.dm for details.
-  * - datum/callback/extra_checks - Every time this ticks, extra_checks() is invoked with (user, delay, target, time_left, do_after_flags, required_mobility_flags, required_combat_flags, mob_redirect, stage, initially_held_item, tool).
-  * 	Stage can be DO_AFTER_STARTING, DO_AFTER_PROGRESSING, DO_AFTER_FINISHING
-  * 	If it returns DO_AFTER_STOP, this breaks.
-  * 	If it returns nothing, all other checks are done.
-  * 	If it returns DO_AFTER_PROCEED, all other checks are ignored.
-  * - required_mobility_flags is checked with CHECK_ALL_MOBILITY. Will immediately fail if the user isn't a mob.
-  * - requried_combat_flags is checked with CHECK_MULTIPLE_BITFIELDS. Will immediately fail if the user isn't a mob.
-  * - mob/living/mob_redirect - advanced option: If this is specified, movement and mobility/combat flag checks will use this instead of user. Progressbars will also go to this.
-  * - obj/item/tool - The tool we're using. See do_after flags for details.
-  */
-#define INVOKE_CALLBACK cb_return = extra_checks?.Invoke(user, delay, target, world.time - starttime, do_after_flags, required_mobility_flags, required_combat_flags, mob_redirect, stage, initially_held_item, tool)
+ * Higher overhead "advanced" version of do_after.
+ * @params
+ * - atom/user is the atom doing the action or the "physical" user
+ * - delay is time in deciseconds
+ * - atom/target is the atom the action is being done to, defaults to user
+ * - do_after_flags see __DEFINES/flags/do_after.dm for details.
+ * - datum/callback/extra_checks - Every time this ticks, extra_checks() is invoked with (user, delay, target, time_left, do_after_flags, required_mobility_flags, required_combat_flags, mob_redirect, stage, initially_held_item, tool, passed_in).
+ * 	Stage can be DO_AFTER_STARTING, DO_AFTER_PROGRESSING, DO_AFTER_FINISHING
+ * 	If it returns DO_AFTER_STOP, this breaks.
+ * 	If it returns nothing, all other checks are done.
+ * 	If it returns DO_AFTER_PROCEED, all other checks are ignored.
+ *  passed_in is a list[PROGRESS_MULTIPLIER], for modification.
+ * - required_mobility_flags is checked with CHECK_ALL_MOBILITY. Will immediately fail if the user isn't a mob.
+ * - requried_combat_flags is checked with CHECK_MULTIPLE_BITFIELDS. Will immediately fail if the user isn't a mob.
+ * - mob/living/mob_redirect - advanced option: If this is specified, movement and mobility/combat flag checks will use this instead of user. Progressbars will also go to this.
+ * - obj/item/tool - The tool we're using. See do_after flags for details.
+ */
+#define INVOKE_CALLBACK cb_return = extra_checks?.Invoke(user, delay, target, timeleft, do_after_flags, required_mobility_flags, required_combat_flags, mob_redirect, stage, initially_held_item, tool, passed_in)
 #define CHECK_FLAG_FAILURE ((required_mobility_flags || required_combat_flags) && (!living_user || (required_mobility_flags && !CHECK_ALL_MOBILITY(living_user, required_mobility_flags)) || (required_combat_flags && !CHECK_MULTIPLE_BITFIELDS(living_user.combat_flags, required_combat_flags))))
-#define TIMELEFT (world.time - starttime)
+#define TIMELEFT (timeleft)
 /proc/do_after_advanced(atom/user, delay, atom/target, do_after_flags, datum/callback/extra_checks, required_mobility_flags, required_combat_flags, mob/living/mob_redirect, obj/item/tool)
 	// CHECK AND SET VARIABLES
 	if(!user)
@@ -40,8 +41,7 @@
 		return FALSE
 	if(!(do_after_flags & DO_AFTER_NO_COEFFICIENT) && living_user)
 		delay *= living_user.cached_multiplicative_actions_slowdown
-	var/starttime = world.time
-	var/endtime = world.time + delay
+	var/timeleft = delay
 	var/obj/item/initially_held_item = mob_redirect?.get_active_held_item()
 	var/atom/movable/AM_user = ismovable(user) && user
 	var/drifting = AM_user?.Process_Spacemove(NONE) && AM_user.inertia_dir
@@ -51,6 +51,7 @@
 	var/dy = initial_dy
 	// DO OUR STARTING CHECKS
 	var/cb_return
+	var/list/passed_in = list(1)
 	INVOKE_CALLBACK
 	if(cb_return == DO_AFTER_STOP)
 		return FALSE
@@ -70,13 +71,17 @@
 	var/locchanged
 	var/ctu
 	var/ctt
-	while(world.time < endtime)
+	var/tick_time = world.time
+	while(timeleft > 0)
 		stoplag(1)
+		var/timepassed = world.time - tick_time
+		tick_time = world.time
 		progbar?.update(TIMELEFT)
 		if(QDELETED(user) || QDELETED(target) || (user.loc == null) || (target.loc == null))
 			. = FALSE
 			break
 		INVOKE_CALLBACK
+		timeleft -= timepassed * passed_in[1]
 		if(cb_return == DO_AFTER_STOP)
 			. = FALSE
 			break

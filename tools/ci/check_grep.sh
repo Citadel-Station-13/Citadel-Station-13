@@ -6,6 +6,10 @@ shopt -s globstar
 
 st=0
 
+if git grep -P "\r\n"; then
+    echo "ERROR: CRLF line endings detected. Please stop using the webeditor, and fix it using a desktop Git client."
+	st = 1
+fi;
 if grep -El '^\".+\" = \(.+\)' _maps/**/*.dmm;	then
     echo "ERROR: Non-TGM formatted map detected. Please convert it using Map Merger!"
     st=1

@@ -45,3 +45,17 @@
 /datum/movespeed_modifier/status_effect/mkultra
 	multiplicative_slowdown = -2
 	blacklisted_movetypes= FLYING|FLOATING
+
+/datum/movespeed_modifier/status_effect/stagger
+	variable = TRUE
+
+/datum/movespeed_modifier/status_effect/off_balance
+	variable = TRUE
+
+/datum/movespeed_modifier/status_effect/slime/light_pink
+	// decently good painkiller + speedup effect
+	blacklisted_movetypes = FLYING | FLOATING
+	priority = -150		// someday we really need to make these defines lmao
+	multiplicative_slowdown = -2
+	complex_calculation = TRUE
+	absolute_max_tiles_per_second = 7

@@ -142,7 +142,7 @@
 	if(harmful)
 		victim.visible_message("<span class='danger'>[weapon] embeds itself in [victim]'s [limb.name]!</span>",ignored_mobs=victim)
 		to_chat(victim, "<span class='userdanger'>[weapon] embeds itself in your [limb.name]!</span>")
-		victim.throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
+		victim.throw_alert("embeddedobject", /atom/movable/screen/alert/embeddedobject)
 		playsound(victim,'sound/weapons/bladeslice.ogg', 40)
 		weapon.add_mob_blood(victim)//it embedded itself in you, of course it's bloody!
 		damage = weapon.w_class * impact_pain_mult
@@ -265,6 +265,7 @@
 /// Items embedded/stuck to carbons both check whether they randomly fall out (if applicable), as well as if the target mob and limb still exists.
 /// Items harmfully embedded in carbons have an additional check for random pain (if applicable)
 /datum/component/embedded/proc/processCarbon()
+	set waitfor = FALSE
 	var/mob/living/carbon/victim = parent
 
 	if(!victim || !limb) // in case the victim and/or their limbs exploded (say, due to a sticky bomb)

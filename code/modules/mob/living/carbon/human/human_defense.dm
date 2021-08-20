@@ -409,7 +409,7 @@
 		return
 	var/informed = FALSE
 	if(isrobotic(src))
-		apply_status_effect(/datum/status_effect/no_combat_mode/robotic_emp, severity / 20)
+		apply_status_effect(/datum/status_effect/robotic_emp, severity / 20)
 	severity *= 0.5
 	var/do_not_stun = FALSE
 	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))

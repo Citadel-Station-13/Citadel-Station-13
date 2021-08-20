@@ -236,10 +236,9 @@
 	parry_efficiency_considered_successful = 0.01
 	parry_efficiency_to_counterattack = INFINITY	// no auto counter
 	parry_max_attacks = INFINITY
-	parry_failed_cooldown_duration = 2.25 SECONDS
-	parry_failed_stagger_duration = 2.25 SECONDS
+	parry_failed_cooldown_duration = 1.5 SECONDS
+	parry_failed_stagger_duration = 1.5 SECONDS
 	parry_cooldown = 0
-	parry_failed_clickcd_duration = 0
 
 /obj/item/clothing/gloves/fingerless/pugilist/mauler
 	name = "mauler gauntlets"

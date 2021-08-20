@@ -63,6 +63,8 @@
 #define BLOCK_RETURN_MITIGATION_PERCENT							"partial_mitigation"
 /// Used internally by run_parry proc, use on an on_active_parry() proc to override parrying efficiency.
 #define BLOCK_RETURN_OVERRIDE_PARRY_EFFICIENCY					"override_parry_efficiency"
+/// Used internally by run_parry proc, use on an on_active_parry() proc to prevent counterattacks
+#define BLOCK_RETURN_FORCE_NO_PARRY_COUNTERATTACK				"no_parry_counterattack"
 /// Always set to 100 by run_block() if BLOCK_SUCCESS is in return value. Otherwise, defaults to mitigation percent if not set. Used by projectile/proc/on_hit().
 #define BLOCK_RETURN_PROJECTILE_BLOCK_PERCENTAGE				"projectile_block_percentage"
 

@@ -297,8 +297,14 @@
 	prof.socks = H.socks
 	prof.socks_color = H.socks_color
 
-	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
-	for(var/slot in slots)
+	var/datum/icon_snapshot/entry = new
+	entry.name = H.name
+	entry.icon = H.icon
+	entry.icon_state = H.icon_state
+	entry.overlays = H.get_overlays_copy(list(HANDS_LAYER, HANDCUFF_LAYER, LEGCUFF_LAYER))
+	prof.profile_snapshot = entry
+
+	for(var/slot in GLOB.slots)
 		if(slot in H.vars)
 			var/obj/item/I = H.vars[slot]
 			if(!I)
@@ -518,6 +524,9 @@
 	var/socks
 	var/socks_color
 
+	/// Icon snapshot of the profile
+	var/datum/icon_snapshot/profile_snapshot
+
 /datum/changelingprofile/Destroy()
 	qdel(dna)
 	. = ..()
@@ -535,13 +544,14 @@
 	newprofile.underwear = underwear
 	newprofile.undershirt = undershirt
 	newprofile.socks = socks
-
+	newprofile.profile_snapshot = profile_snapshot
 
 /datum/antagonist/changeling/xenobio
 	name = "Xenobio Changeling"
 	give_objectives = FALSE
 	show_in_roundend = FALSE //These are here for admin tracking purposes only
 	you_are_greet = FALSE
+	antag_moodlet = FALSE
 
 /datum/antagonist/changeling/roundend_report()
 	var/list/parts = list()

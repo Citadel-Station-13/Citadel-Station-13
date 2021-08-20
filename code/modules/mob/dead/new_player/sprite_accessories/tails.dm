@@ -436,13 +436,27 @@
 
 /datum/sprite_accessory/tails/human/shark
 	name = "Shark"
-	icon_state = "shark"
+	icon_state = "carp"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/tails_animated/human/shark
 	name = "Shark"
+	icon_state = "carp"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	matrixed_sections = MATRIX_RED
+
+/datum/sprite_accessory/tails/human/sharkalt
+	name = "Shark (alt)"
+	icon_state = "shark"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	matrixed_sections = MATRIX_RED
+
+/datum/sprite_accessory/tails_animated/human/sharkalt
+	name = "Shark (alt)"
 	icon_state = "shark"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
@@ -679,7 +693,7 @@
 	icon_state = "crow"
 	matrixed_sections = MATRIX_RED
 
-/datum/sprite_accessory/tails/mam_tail/cow
+/datum/sprite_accessory/tails/mam_tails/cow
 	name = "Cow"
 	icon_state = "cow"
 	matrixed_sections = MATRIX_RED
@@ -897,11 +911,21 @@
 
 /datum/sprite_accessory/tails/mam_tails/shark
 	name = "Shark"
-	icon_state = "shark"
+	icon_state = "carp"
 	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/tails_animated/mam_tails_animated/shark
 	name = "Shark"
+	icon_state = "carp"
+	matrixed_sections = MATRIX_RED
+
+/datum/sprite_accessory/tails/mam_tails/sharkalt
+	name = "Shark (alt)"
+	icon_state = "shark"
+	matrixed_sections = MATRIX_RED
+
+/datum/sprite_accessory/tails_animated/mam_tails_animated/sharkalt
+	name = "Shark (alt)"
 	icon_state = "shark"
 	matrixed_sections = MATRIX_RED
 

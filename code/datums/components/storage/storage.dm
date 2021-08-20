@@ -435,15 +435,15 @@
 			RevenantThrow(over_object, M, source)
 			return
 		if(!M.incapacitated())
-			if(!istype(over_object, /obj/screen))
+			if(!istype(over_object, /atom/movable/screen))
 				dump_content_at(over_object, M)
 				return
 			if(A.loc != M)
 				return
 			playsound(A, "rustle", 50, 1, -5)
 			A.do_jiggle()
-			if(istype(over_object, /obj/screen/inventory/hand))
-				var/obj/screen/inventory/hand/H = over_object
+			if(istype(over_object, /atom/movable/screen/inventory/hand))
+				var/atom/movable/screen/inventory/hand/H = over_object
 				M.putItemFromInventoryInHandIfPossible(A, H.held_index)
 				return
 			A.add_fingerprint(M)

@@ -57,7 +57,7 @@
 		/obj/mafia_game_board,
 		/obj/docking_port,
 		/obj/shapeshift_holder,
-		/obj/screen
+		/atom/movable/screen
 	))
 
 /mob/living/simple_animal/jacq/Initialize()
