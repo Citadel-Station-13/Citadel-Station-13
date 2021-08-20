@@ -1,88 +1,74 @@
-//node2, air2, network2 correspond to input
-//node1, air1, network1 correspond to output
-#define CIRCULATOR_HOT 0
-#define CIRCULATOR_COLD 1
-
 /obj/machinery/atmospherics/component/binary/circulator
 	name = "circulator/heat exchanger"
-	desc = "A gas circulator pump and heat exchanger."
-	icon_state = "circ-off-0"
+	desc = "A combination turbine and thermal exchanger usually part of a TEG."
+	icon = 'icons/obj/machinery/power/teg.dmi'
+	icon_state = "circ"
 	plane = GAME_PLANE
-
-	var/active = FALSE
-
-	var/last_pressure_delta = 0
 	pipe_flags = PIPE_ONE_PER_TURF | PIPE_DEFAULT_LAYER_ONLY
-
 	density = TRUE
 
+	circuit = /obj/item/circuitboard/machine/circulator
 
-	var/flipped = 0
-	var/mode = CIRCULATOR_HOT
+	// Circulators don't just exchange heat
+	// They're now fully simulated turbines.
+	// We generate power off gas movement,
+	// and store momentum.
+	// we obviously can't easily do this so, we'll just do friction as "kpa" and store turbine rotation speed
+
+	// this also lets us have circulators be bidirectional, as the friction + momentum will make it not flip-flop as hard.
+	// we'll assume that each revolution of the mechanism transfers <volume> of air.
+
+	/// J energy stored
+	var/stored_energy
+	/// static friction in the turbine in kpa
+	var/static_friction = 10
+	/// max RPM - at this speed, <volume> is exchanged per process.
+	var/max_rpm = 600
+	/// J energy release per revolution
+	var/generation_rate = (15000 / 600)
+	/// current RPM
+	var/rpm = 0
+	/// mass of the turbine - affects resistance.
+	var/turbine_mass = 10000
+	/// linked generator
 	var/obj/machinery/power/generator/generator
+	/// last process
+	var/last_process_cycle = 0
+	/// air currently inside - what the generator reads
+	var/datum/gas_mixture/gas_held
+	/// kpa difference needed per RPM of speed - this is because we really do not want to make this so complicated as to have to model force based on molar mass and pressure!
+	var/kinetic_friction = (2/3)
 
-//default cold circ for mappers
-/obj/machinery/atmospherics/component/binary/circulator/cold
-	mode = CIRCULATOR_COLD
+/obj/machinery/atmospherics/component/binary/circulator/process_atmos(seconds, times_fired)
 
-/obj/machinery/atmospherics/component/binary/circulator/Initialize(mapload)
-	.=..()
-	component_parts = list(new /obj/item/circuitboard/machine/circulator)
+	update_appearance()
 
 /obj/machinery/atmospherics/component/binary/circulator/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS )
 
 /obj/machinery/atmospherics/component/binary/circulator/Destroy()
-	if(generator)
-		disconnectFromGenerator()
+	DisconnectGenerator()
 	return ..()
 
-/obj/machinery/atmospherics/component/binary/circulator/proc/return_transfer_air()
-
-	var/datum/gas_mixture/air1 = airs[1]
-	var/datum/gas_mixture/air2 = airs[2]
-
-	var/output_starting_pressure = air1.return_pressure()
-	var/input_starting_pressure = air2.return_pressure()
-
-	if(output_starting_pressure >= input_starting_pressure-10)
-		//Need at least 10 KPa difference to overcome friction in the mechanism
-		last_pressure_delta = 0
-		return null
-
-	//Calculate necessary moles to transfer using PV = nRT
-	if(air2.return_temperature()>0)
-		var/pressure_delta = (input_starting_pressure - output_starting_pressure)/2
-
-		var/transfer_moles = pressure_delta*air1.return_volume()/(air2.return_temperature() * R_IDEAL_GAS_EQUATION)
-
-		last_pressure_delta = pressure_delta
-
-		//Actually transfer the gas
-		var/datum/gas_mixture/removed = air2.remove(transfer_moles)
-
-		update_parents()
-
-		return removed
-
+/obj/machinery/atmospherics/component/binary/circulator/GetNodeIndex(dir, layer)
+	if(dir == src.dir)
+		return 2
+	else if(dir == turn(src.dir, 180))
+		return 1
 	else
-		last_pressure_delta = 0
+		CRASH("Invalid node index for TEG")
 
-/obj/machinery/atmospherics/component/binary/circulator/process_atmos()
-	..()
-	update_icon()
+/obj/machinery/atmospherics/component/binary/circulator/GetInitDirections()
+	return dir | turn(dir, 180)
 
-/obj/machinery/atmospherics/component/binary/circulator/update_icon()
-	if(!is_operational())
-		icon_state = "circ-p-[flipped]"
-	else if(last_pressure_delta > 0)
-		if(last_pressure_delta > ONE_ATMOSPHERE)
-			icon_state = "circ-run-[flipped]"
-		else
-			icon_state = "circ-slow-[flipped]"
-	else
-		icon_state = "circ-off-[flipped]"
+/obj/machinery/atmospherics/component/binary/circulator/proc/GetGeneratorDirection()
+	// always RHS from dir
+	return turn(dir, -90)
+
+/obj/machinery/atmospherics/component/binary/circulator/update_overlays()
+	. = ..()
+
 
 /obj/machinery/atmospherics/component/binary/circulator/wrench_act(mob/living/user, obj/item/I)
 	if(!panel_open)
@@ -122,29 +108,33 @@
 
 	return TRUE
 
-/obj/machinery/atmospherics/component/binary/circulator/SetInitDirections()
-	switch(dir)
-		if(NORTH, SOUTH)
-			initialize_directions = EAST|WEST
-		if(EAST, WEST)
-			initialize_directions = NORTH|SOUTH
+/obj/machinery/atmospherics/component/binary/circulator/CanConnect(obj/machinery/atmospherics/other, node)
+	return anchored? ..() : FALSE
 
-/obj/machinery/atmospherics/component/binary/circulator/getNodeConnects()
-	if(flipped)
-		return list(turn(dir, 270), turn(dir, 90))
-	return list(turn(dir, 90), turn(dir, 270))
+/obj/machinery/atmospherics/component/binary/circulator/proc/IsReady()
+	return anchored
 
-/obj/machinery/atmospherics/component/binary/circulator/can_be_node(obj/machinery/atmospherics/target)
-	if(anchored)
-		return ..(target)
-	return FALSE
+/obj/machinery/atmospherics/component/binary/circulator/proc/DisconnectGenerator()
+	if(!generator)
+		return
+	generator.Disconnect(src)
+	generator = null
 
-/obj/machinery/atmospherics/component/binary/circulator/multitool_act(mob/living/user, obj/item/I)
-	if(generator)
-		disconnectFromGenerator()
-	mode = !mode
-	to_chat(user, "<span class='notice'>You set [src] to [mode?"cold":"hot"] mode.</span>")
-	return TRUE
+/obj/machinery/atmospherics/component/binary/circulator/proc/ConnectGenerator()
+	var/obj/machinery/power/generator/G = locate() in get_step(src, GetGeneratorDirection())
+	if(!G)
+		return
+	if(!G.Connect(src))
+		return
+	generator = G
+
+/obj/machinery/atmospherics/component/binary/circulator/Leave()
+	. = ..()
+	DisconnectGenerator()
+
+/obj/machinery/atmospherics/component/binary/circulator/Join()
+	. = ..()
+	ConnectGenerator()
 
 /obj/machinery/atmospherics/component/binary/circulator/screwdriver_act(mob/user, obj/item/I)
 	if(..())
@@ -157,36 +147,3 @@
 /obj/machinery/atmospherics/component/binary/circulator/crowbar_act(mob/user, obj/item/I)
 	default_deconstruction_crowbar(I)
 	return TRUE
-
-/obj/machinery/atmospherics/component/binary/circulator/on_deconstruction()
-	if(generator)
-		disconnectFromGenerator()
-
-/obj/machinery/atmospherics/component/binary/circulator/proc/disconnectFromGenerator()
-	if(mode)
-		generator.cold_circ = null
-	else
-		generator.hot_circ = null
-	generator.update_icon()
-	generator = null
-
-/obj/machinery/atmospherics/component/binary/circulator/setPipingLayer(new_layer)
-	..()
-	pixel_x = 0
-	pixel_y = 0
-
-/obj/machinery/atmospherics/component/binary/circulator/verb/circulator_flip()
-	set name = "Flip"
-	set category = "Object"
-	set src in oview(1)
-
-	if(!ishuman(usr))
-		return
-
-	if(anchored)
-		to_chat(usr, "<span class='danger'>[src] is anchored!</span>")
-		return
-
-	flipped = !flipped
-	to_chat(usr, "<span class='notice'>You flip [src].</span>")
-	update_icon()

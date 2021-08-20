@@ -177,7 +177,18 @@ Class Procs:
 /obj/machinery/process()//If you dont use process or power why are you here
 	return PROCESS_KILL
 
-/obj/machinery/proc/process_atmos()//If you dont use process why are you here
+/**
+ * Processing proc called by SSair to tick processing.
+ *
+ * Why is this different from process?
+ * Because air interactions need to happen consistently at the same speed as, say,
+ * air pumps and pipenet recalculations.
+ *
+ * Otherwise say you have the SM processing on machines, not atmos.
+ * Atmos lags/bugs out
+ * Congratulations, you now have a delamination due to the desync.
+ */
+/obj/machinery/proc/process_atmos(seconds, times_fired)
 	return PROCESS_KILL
 
 ///Called when we want to change the value of the stat variable. Holds bitflags.
