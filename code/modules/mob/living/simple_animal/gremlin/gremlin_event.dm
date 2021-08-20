@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/gremlin
 	weight = 15
 	max_occurrences = 2
-	earliest_start = 12000 //Meant to mix things up early-game.
+	earliest_start = 20 MINUTES
 	min_players = 5
 
 
