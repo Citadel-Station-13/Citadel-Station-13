@@ -59,7 +59,7 @@
 	SSair.atmos_machinery -= src
 	return ..()
 
-/obj/machinery/power/examine(mob/user)
+/obj/machinery/power/generator/examine(mob/user)
 	. = ..()
 	. += "This device is rated for a maximum output of [DisplayPower(maximum_output)]. Above this, it will spark and lose some of its efficiency."
 	. += "This device requires a [optimal_temperature_difference]K difference in temperature for optimal efficiency."
@@ -169,18 +169,19 @@
 			// no crash - some dumbass probably spawned two circulators
 			return FALSE
 		left = C
+		addtimer(CALLBACK(SStgui, /datum/controller/subsystem/tgui/proc/update_static_data_for, src), 0, TIMER_UNIQUE)
 		return TRUE
 	else if(d == turn(dir, -90))
 		if(right)
 			// no crash - some dumbass probably spawned two circulators
 			return FALSE
 		right = C
+		addtimer(CALLBACK(SStgui, /datum/controller/subsystem/tgui/proc/update_static_data_for, src), 0, TIMER_UNIQUE)
 		return TRUE
 	else
 		// crash - someone fucked up
 		. = FALSE
 		CRASH("Attempted to connect a generator that wasn't in a proper direction - expected left or right, got [d].")
-	addtimer(CALLBACK(SStgui, /datum/controller/subsystem/tgui/proc/update_static_data_for, src), 0, TIMER_UNIQUE)
 
 /obj/machinery/power/generator/proc/Disconnect(obj/machinery/atmospherics/component/binary/circulator/C)
 	if(C == left)
