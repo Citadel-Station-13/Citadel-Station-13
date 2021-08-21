@@ -51,7 +51,7 @@
 		pipe_air.set_temperature(avg_temp)
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/process()
-	if(!parent)
+	if(!pipeline)
 		return //machines subsystem fires before atmos is initialized so this prevents race condition runtimes
 
 	var/datum/gas_mixture/pipe_air = return_air()
