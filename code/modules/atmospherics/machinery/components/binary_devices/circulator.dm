@@ -74,13 +74,13 @@
 		else
 			rpm = clamp(rpm - max(difference / turbine_mass, min(mass_lenience, difference)), -max_rpm, max_rpm)
 
-	// expel previous air and darw in new air
+	// expel previous air and draw in new air
 	if(rpm > 0)
 		air2.merge(gas_held)
-		gas_held = air1.remove_ratio(max_flow / air1.return_volume())
+		gas_held = air1.remove_ratio((max_flow * (rpm / max_rpm)) / air1.return_volume())
 	else
 		air1.merge(gas_held)
-		gas_held = air2.remove_ratio(max_flow / air2.return_volume())
+		gas_held = air2.remove_ratio((max_flow * (-rpm / max_rpm)) / air2.return_volume())
 
 	// generate power based on turbine RPM
 	stored_energy += generation_rate * rpm
