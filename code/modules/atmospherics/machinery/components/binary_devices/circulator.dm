@@ -40,6 +40,9 @@
 	var/kinetic_friction = (2/3)
 
 /obj/machinery/atmospherics/component/binary/circulator/process_atmos(seconds, times_fired)
+	if(times_fired >= last_process_cycle)
+		return
+	last_process_cycle = times_fired
 	#warn impl
 	update_appearance()
 
@@ -74,11 +77,10 @@
 	. = ..()
 	// first, spin speed
 	if(rpm)
-		. += "spin_[CEILING(max_rpm / (max_rpm / 10), 1)]_[rpm > 0? "f":"r"]"
+		. += "circ_spin_[CEILING(max_rpm / (max_rpm / 10), 1)]_[rpm > 0? "f":"r"]"
 	// then, temperature
 	if(generator?.last_thermal_differential > 500)
-		. += generator.hot_side == src? "hot" : "cold"
-
+		. += generator.hot_side == src? "circ_hot" : "circ_cold"
 
 /obj/machinery/atmospherics/component/binary/circulator/wrench_act(mob/living/user, obj/item/I)
 	if(!panel_open)
@@ -106,6 +108,8 @@
 	generator = null
 
 /obj/machinery/atmospherics/component/binary/circulator/proc/ConnectGenerator()
+	if(!(pipe_flags & PIPE_NETWORK_JOINED))
+		return
 	var/obj/machinery/power/generator/G = locate() in get_step(src, GetGeneratorDirection())
 	if(!G)
 		return

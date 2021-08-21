@@ -1,221 +1,199 @@
-#warn completely overhaul this file, comment below
-#warn give them a thermal efficiency for ratio of energy converted vs equalizede
-#warn give them a boolean for if they're generating power by *converting heat to electricity*, or from the transfer itself
-#warn give them energy storage + storage for circulators
-#warn every tick, circulators generate power from kinetic motion of gas transfer
-#warn every tick, half of stored power is outputted
-#warn steal bay's sprites and make it spin up/down based on power generated
-#warn add max safe power output - going too far can result in power loss from sparks or worse(?)
-#warn investigate if it's possible to make these not directional without having the turbines see-saw (maybe only allow half the air in input to flow in return for high volume?)
-
 /obj/machinery/power/generator
 	name = "thermoelectric generator"
-	desc = "It's a high efficiency thermoelectric generator."
+	desc = "A high-efficiency thermoelectric generator."
+	icon = 'icons/obj/machinery/power/teg.dmi'
 	icon_state = "teg"
 	density = TRUE
 	use_power = NO_POWER_USE
+	circuit = /obj/item/circuitboard/machine/generator
 
-	var/obj/machinery/atmospherics/component/binary/circulator/cold_circ
-	var/obj/machinery/atmospherics/component/binary/circulator/hot_circ
+	/// first circulator
+	var/obj/machinery/atmospherics/component/binary/circulator/left
+	/// second circulator
+	var/obj/machinery/atmospherics/component/binary/circulator/right
+	/// stored energy to release per tick - lower values are smoother, higher values are more immediate
+	var/energy_release_ratio = 0.1
+	/// last energy output
+	var/last_output = 0
+	/// last energy output from left turbine
+	var/last_left_turbine_output = 0
+	/// last energy output from right turbine
+	var/last_right_turbine_output = 0
+	/// maximum output - not actually limited, but above this, annoying things can start to happen. 1 megawatt by default.
+	var/maximum_output = 1000000
+	/// stored energy
+	var/stored_energy = 0
+	/// current hot side
+	var/obj/machinery/atmospherics/component/binary/circulator/hot_side
 
-	var/lastgen = 0
-	var/lastgenlev = -1
-	var/lastcirc = "00"
+	/// required temperature differential for full efficiency
+	var/optimal_temperature_difference = 500
+	/// minimum efficiency
+	var/efficiency_min = 0.25
+	/// full efficiency
+	var/efficiency = 0.65
+	/// thermal conductivity - higher is better
+	var/conductivity = 1
 
+	// bad things happening
+	/// chance of spark per process when above maximum
+	var/spark_chance = 5
+	/// ratio of stored energy lost per spark
+	var/spark_loss_ratio = 0.35
 
 /obj/machinery/power/generator/Initialize(mapload)
 	. = ..()
-	find_circs()
+	Detect()
 	connect_to_network()
 	SSair.atmos_machinery += src
-	update_icon()
-	component_parts = list(new /obj/item/circuitboard/machine/generator)
+	update_appearance()
 
 /obj/machinery/power/generator/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS )
 
 /obj/machinery/power/generator/Destroy()
-	kill_circs()
+	left?.DisconnectGenerator()
+	right?.DisconnectGenerator()
+	hot_side = null
 	SSair.atmos_machinery -= src
 	return ..()
 
+/obj/machinery/power/generator/update_icon_state()
+	. = ..()
+	icon_state = anchored? "teg" : "teg_u"
+
 /obj/machinery/power/generator/update_overlays()
 	. = ..()
-	if(!(stat & (NOPOWER|BROKEN)))
-		var/L = min(round(lastgenlev/100000),11)
-		if(L != 0)
-			. += image('icons/obj/power.dmi', "teg-op[L]")
-
-		if(hot_circ && cold_circ)
-			. += "teg-oc[lastcirc]"
-
-
-#define GENRATE 800		// generator output coefficient from Q
-
-/obj/machinery/power/generator/process_atmos()
-
-	if(!cold_circ || !hot_circ)
+	if(!anchored)
 		return
-
-	if(powernet)
-		var/datum/gas_mixture/cold_air = cold_circ.return_transfer_air()
-		var/datum/gas_mixture/hot_air = hot_circ.return_transfer_air()
-
-		if(cold_air && hot_air)
-
-			var/cold_air_heat_capacity = cold_air.heat_capacity()
-			var/hot_air_heat_capacity = hot_air.heat_capacity()
-
-			var/delta_temperature = hot_air.return_temperature() - cold_air.return_temperature()
-
-
-			if(delta_temperature > 0 && cold_air_heat_capacity > 0 && hot_air_heat_capacity > 0)
-				var/efficiency = 0.45
-
-				var/energy_transfer = delta_temperature*hot_air_heat_capacity*cold_air_heat_capacity/(hot_air_heat_capacity+cold_air_heat_capacity)
-
-				var/heat = energy_transfer*(1-efficiency)
-				if(delta_temperature < 16800) // second point where derivative of below function = 1
-					lastgen += LOGISTIC_FUNCTION(500000,0.0009,delta_temperature,10000)
-				else
-					lastgen += delta_temperature + 482102 // value of above function at 16800, or very nearly so
-
-				hot_air.set_temperature(hot_air.return_temperature() - energy_transfer/hot_air_heat_capacity)
-				cold_air.set_temperature(cold_air.return_temperature() + heat/cold_air_heat_capacity)
-
-				//add_avail(lastgen) This is done in process now
-		// update icon overlays only if displayed level has changed
-
-		if(hot_air)
-			var/datum/gas_mixture/hot_circ_air1 = hot_circ.airs[1]
-			hot_circ_air1.merge(hot_air)
-
-		if(cold_air)
-			var/datum/gas_mixture/cold_circ_air1 = cold_circ.airs[1]
-			cold_circ_air1.merge(cold_air)
-
-		update_icon()
-
-	var/circ = "[cold_circ && cold_circ.last_pressure_delta > 0 ? "1" : "0"][hot_circ && hot_circ.last_pressure_delta > 0 ? "1" : "0"]"
-	if(circ != lastcirc)
-		lastcirc = circ
-		update_icon()
-
-	src.updateDialog()
+	if(stat & (BROKEN))
+		return
+	. += "teg_gen_[CEILING(last_output / (maximum_output / 5), 1)]"
 
 /obj/machinery/power/generator/process()
-	//Setting this number higher just makes the change in power output slower, it doesnt actualy reduce power output cause **math**
-	var/power_output = round(lastgen / 10)
-	add_avail(power_output)
-	lastgenlev = power_output
-	lastgen -= power_output
+	var/output = round(stored_energy * energy_release_ratio)
+	last_output = output
+	stored_energy -= output
+	if(left)
+		last_left_turbine_output = left.stored_energy * energy_release_ratio
+		left.stored_energy -= last_left_turbine_output
+		output += last_left_turbine_output
+	else
+		last_left_turbine_output = 0
+	if(right)
+		last_right_turbine_output = right.stored_energy * energy_release_ratio
+		right.stored_energy -= last_right_turbine_output
+		output += last_right_turbine_output
+	else
+		last_right_turbine_output = 0
+	add_avail(output)
+	if(output > maximum_output && prob(spark_chance))
+		stored_energy -= stored_energy * spark_loss_ratio
+		do_sparks(3, FALSE, src)
 	..()
 
-/obj/machinery/power/generator/proc/get_menu(include_link = TRUE)
-	var/t = ""
-	if(!powernet)
-		t += "<span class='bad'>Unable to connect to the power network!</span>"
-	else if(cold_circ && hot_circ)
-		var/datum/gas_mixture/cold_circ_air1 = cold_circ.airs[1]
-		var/datum/gas_mixture/cold_circ_air2 = cold_circ.airs[2]
-		var/datum/gas_mixture/hot_circ_air1 = hot_circ.airs[1]
-		var/datum/gas_mixture/hot_circ_air2 = hot_circ.airs[2]
-
-		t += "<div class='statusDisplay'>"
-
-		t += "Output: [DisplayPower(lastgenlev)]"
-
-		t += "<BR>"
-
-		t += "<B><font color='blue'>Cold loop</font></B><BR>"
-		t += "Temperature Inlet: [round(cold_circ_air2.return_temperature(), 0.1)] K / Outlet: [round(cold_circ_air1.return_temperature(), 0.1)] K<BR>"
-		t += "Pressure Inlet: [round(cold_circ_air2.return_pressure(), 0.1)] kPa /  Outlet: [round(cold_circ_air1.return_pressure(), 0.1)] kPa<BR>"
-
-		t += "<B><font color='red'>Hot loop</font></B><BR>"
-		t += "Temperature Inlet: [round(hot_circ_air2.return_temperature(), 0.1)] K / Outlet: [round(hot_circ_air1.return_temperature(), 0.1)] K<BR>"
-		t += "Pressure Inlet: [round(hot_circ_air2.return_pressure(), 0.1)] kPa / Outlet: [round(hot_circ_air1.return_pressure(), 0.1)] kPa<BR>"
-
-		t += "</div>"
-	else if(!hot_circ && cold_circ)
-		t += "<span class='bad'>Unable to locate hot circulator!</span>"
-	else if(hot_circ && !cold_circ)
-		t += "<span class='bad'>Unable to locate cold circulator!</span>"
+/obj/machinery/power/generator/process_atmos(seconds, times_fired)
+	if(!left?.gas_held || !right?.gas_held)
+		return	// nope
+	// ensure both circulators are synced on tick
+	left.process_atmos(seconds, times_fired)
+	right.process_atmos(seconds, times_fired)
+	// do the funny TEG action
+	var/effective_efficiency = efficiency_min + ((efficiency - efficiency_min) * (abs(right.gas_held.return_temperature() - left.gas_held.return_temperature()) / optimal_temperature_difference))
+	var/generated = thermoelectric_exchange_gas_to_gas(left.gas_held, right.gas_held, conductivity, effective_efficiency)
+	stored_energy += generated
+	if(left.gas_held.return_temperature() > right.gas_held.return_temperature())
+		hot_side = left
 	else
-		t += "<span class='bad'>Unable to locate any parts!</span>"
-	if(include_link)
-		t += "<BR><A href='?src=[REF(src)];close=1'>Close</A>"
+		hot_side = right
 
-	return t
+/obj/machinery/power/generator/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ThermoelectricGenerator", name)
+		ui.open()
 
-/obj/machinery/power/generator/ui_interact(mob/user)
+/obj/machinery/power/generator/ui_static_data(mob/user)
 	. = ..()
-	var/datum/browser/popup = new(user, "teg", "Thermo-Electric Generator", 460, 300)
-	popup.set_content(get_menu())
-	popup.open()
+	.["left"] = !!left
+	.["right"] = !!right
+	.["left_max_rpm"] = left?.max_rpm
+	.["right_max_rpm"] = right?.max_rpm
 
-/obj/machinery/power/generator/Topic(href, href_list)
-	if(..())
-		return
-	if( href_list["close"] )
-		usr << browse(null, "window=teg")
-		usr.unset_machine()
+/obj/machinery/power/generator/ui_data(mob/user)
+	. = ..()
+	.["output"] = last_output
+	.["left_gas"] = left.gas_held? left.gas_held.tgui_data() : null
+	.["right_gas"] = right.gas_held? right.gas_held.tgui_data() : null
+	.["left_rpm"] = left.rpm
+	.["right_rpm"] = right.rpm
+	.["left_gen"] = last_left_turbine_output
+	.["right_gen"] = last_right_turbine_output
+
+/obj/machinery/power/generator/proc/Detect()
+	if(!left)
+		var/obj/machinery/atmospherics/component/binary/circulator/L = locate() in get_step(src, turn(dir, 90))
+		if(L)
+			L.ConnectGenerator(src)
+	if(!right)
+		var/obj/machinery/atmospherics/component/binary/circulator/R = locate() in get_step(src, turn(dir, -90))
+		if(R)
+			R.ConnectGenerator(src)
+
+/obj/machinery/power/generator/proc/Connect(obj/machinery/atmospherics/component/binary/circulator/C)
+	if(!anchored)
+		// no crash - someone detected us when we were just passing through
 		return FALSE
-	return TRUE
-
-
-/obj/machinery/power/generator/power_change()
-	..()
-	update_icon()
-
-/obj/machinery/power/generator/proc/find_circs()
-	kill_circs()
-	var/list/circs = list()
-	var/obj/machinery/atmospherics/component/binary/circulator/C
-	var/circpath = /obj/machinery/atmospherics/component/binary/circulator
-	if(dir == NORTH || dir == SOUTH)
-		C = locate(circpath) in get_step(src, EAST)
-		if(C && C.dir == WEST)
-			circs += C
-
-		C = locate(circpath) in get_step(src, WEST)
-		if(C && C.dir == EAST)
-			circs += C
-
+	if(C.generator)
+		// this is never okay
+		. = FALSE
+		CRASH("Attempted to connect a circulator with a generator")
+	var/d = get_dir(src, C)
+	if(d == turn(dir, 90))
+		if(left)
+			// no crash - some dumbass probably spawned two circulators
+			return FALSE
+		left = C
+		return TRUE
+	else if(d == turn(dir, -90))
+		if(right)
+			// no crash - some dumbass probably spawned two circulators
+			return FALSE
+		right = C
+		return TRUE
 	else
-		C = locate(circpath) in get_step(src, NORTH)
-		if(C && C.dir == SOUTH)
-			circs += C
+		// crash - someone fucked up
+		. = FALSE
+		CRASH("Attempted to connect a generator that wasn't in a proper direction - expected left or right, got [d].")
+	addtimer(CALLBACK(SStgui, /datum/controller/subsystem/tgui/proc/update_static_data_for, src), 0, TIMER_UNIQUE)
 
-		C = locate(circpath) in get_step(src, SOUTH)
-		if(C && C.dir == NORTH)
-			circs += C
-
-	if(circs.len)
-		for(C in circs)
-			if(C.mode == CIRCULATOR_COLD && !cold_circ)
-				cold_circ = C
-				C.generator = src
-			else if(C.mode == CIRCULATOR_HOT && !hot_circ)
-				hot_circ = C
-				C.generator = src
+/obj/machinery/power/generator/proc/Disconnect(obj/machinery/atmospherics/component/binary/circulator/C)
+	if(C == left)
+		left = null
+		. = TRUE
+	else if(C == right)
+		right = null
+		. = TRUE
+	if(C == hot_side)
+		hot_side = null
+	if(!.)
+		CRASH("Attempted to disconnect a non-connected circulator")
+	addtimer(CALLBACK(SStgui, /datum/controller/subsystem/tgui/proc/update_static_data_for, src), 0, TIMER_UNIQUE)
 
 /obj/machinery/power/generator/wrench_act(mob/living/user, obj/item/I)
 	if(!panel_open)
 		return
 	anchored = !anchored
 	I.play_tool_sound(src)
+	to_chat(user, "<span class='notice'>You [anchored? "secure": "unsecure"] [src].</span>")
 	if(!anchored)
-		kill_circs()
-	connect_to_network()
-	to_chat(user, "<span class='notice'>You [anchored?"secure":"unsecure"] [src].</span>")
-	return TRUE
-
-/obj/machinery/power/generator/multitool_act(mob/living/user, obj/item/I)
-	if(!anchored)
-		return
-	find_circs()
-	to_chat(user, "<span class='notice'>You update [src]'s circulator links.</span>")
+		disconnect_from_network()
+		left?.DisconnectGenerator(src)
+		right?.DisconnectGenerator(src)
+	else
+		connect_to_network()
+		Detect()
 	return TRUE
 
 /obj/machinery/power/generator/screwdriver_act(mob/user, obj/item/I)
@@ -229,14 +207,3 @@
 /obj/machinery/power/generator/crowbar_act(mob/user, obj/item/I)
 	default_deconstruction_crowbar(I)
 	return TRUE
-
-/obj/machinery/power/generator/on_deconstruction()
-	kill_circs()
-
-/obj/machinery/power/generator/proc/kill_circs()
-	if(hot_circ)
-		hot_circ.generator = null
-		hot_circ = null
-	if(cold_circ)
-		cold_circ.generator = null
-		cold_circ = null
