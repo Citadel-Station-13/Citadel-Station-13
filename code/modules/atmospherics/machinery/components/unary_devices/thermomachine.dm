@@ -78,15 +78,15 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/thermomachin
 
 /obj/machinery/atmospherics/component/unary/thermomachine/process_atmos()
 	last_power_draw = 0
-	if(!on || !nodes[1])
+	if(!on || !connected[1])
 		return
 	var/datum/gas_mixture/air_contents = airs[1]
-	if(!QUANTIZE(air_contents.return_temperature - target_temperature))
+	if(!QUANTIZE(air_contents.return_temperature() - target_temperature))
 		return
 	var/heat_capacity = air_contents.heat_capacity()
 	var/energy_needed = ((target_temperature - air_contents.return_temperature()) * heat_capacity) / (ATMOSMECH_THERMOMACHINE_CHEAT_FACTOR * power_efficiency)
 	energy_needed = min(energy_needed, power_setting)
-	last_power_draw = active_power_draw = energy_needed
+	last_power_draw = active_power_usage = energy_needed
 	air_contents.adjust_heat(energy_needed * (ATMOSMECH_THERMOMACHINE_CHEAT_FACTOR * power_efficiency))
 	MarkDirty()
 
