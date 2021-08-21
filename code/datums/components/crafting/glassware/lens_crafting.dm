@@ -9,7 +9,7 @@
 //Laser pointers - 2600
 /obj/item/glasswork/glass_base/laserpointer_shell
 	name = "laser pointer assembly"
-	desc = "An empty of hull of a laser pointer. It's missing a capacitor."
+	desc = "An empty hull of a laser pointer. It's missing a capacitor."
 	icon_state = "laser_case"
 	icon = 'icons/obj/glass_ware.dmi'
 	next_step = /obj/item/glasswork/glass_base/laserpointer_shell_1
