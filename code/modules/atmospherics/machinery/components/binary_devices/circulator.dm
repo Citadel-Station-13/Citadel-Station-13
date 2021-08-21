@@ -40,7 +40,7 @@
 	var/kinetic_friction = (2/3)
 
 /obj/machinery/atmospherics/component/binary/circulator/process_atmos(seconds, times_fired)
-
+	#warn impl
 	update_appearance()
 
 /obj/machinery/atmospherics/component/binary/circulator/ComponentInitialize()
@@ -66,8 +66,18 @@
 	// always RHS from dir
 	return turn(dir, -90)
 
+/obj/machinery/atmospherics/component/binary/circulator/update_icon_state()
+	. = ..()
+	icon_state = anchored? "circ" : "circ_u"
+
 /obj/machinery/atmospherics/component/binary/circulator/update_overlays()
 	. = ..()
+	// first, spin speed
+	if(rpm)
+		. += "spin_[CEILING(max_rpm / (max_rpm / 10), 1)]_[rpm > 0? "f":"r"]"
+	// then, temperature
+	if(generator?.last_thermal_differential > 500)
+		. += generator.hot_side == src? "hot" : "cold"
 
 
 /obj/machinery/atmospherics/component/binary/circulator/wrench_act(mob/living/user, obj/item/I)

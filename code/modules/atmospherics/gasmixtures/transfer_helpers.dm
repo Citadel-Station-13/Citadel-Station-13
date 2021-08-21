@@ -178,49 +178,99 @@
 /**
  * Heat exchange proc gas <--> gas
  *
- * Returns thermal energy in joules transferred
+ * Returns thermal energy in joules transferred **from gas1 to gas2**. Use abs in your own proc if needed, as this can be negative - this proc isn't one-way.
+ *
+ * no auto calculation parameter for volume given - simply too expensive. find a different way or write a different proc.
  *
  * @params
  * * gas1
  * * gas2
- * * volume - volume exposed, defaults to max. expensive to use.
  * * conductivity - ratio of thermal energy difference exchanged
  * * minimum - Minimum joules to exchange, regardless of conductivity
  */
-/proc/heat_exchange_gas_to_gas(datum/gas_mixture/gas1, datum/gas_mixture/gas2, volume, conductivity = 1, minimum = ATMOSMECH_MINIMUM_HEAT_EXCHANGE_JOULES)
-	var/diff = isnull(volume)? (gas2.thermal_energy() - gas1.thermal_energy()) : \
-		((gas2.thermal_energy() * clamp(volume / gas2.return_volume(), 0, 1)) - (gas1.thermal_energy() * clamp(volume / gas1.return_volume(), 0, 1)))
-	// what this does:
-	// if diff * conductivity is below minimum, raise to min, but, if that makes it over diff, ensure it doesn't exceed diff
-	var/transfer = min(diff, max(minimum, diff * conductivity)) * 0.5
-	gas1.adjust_heat(transfer)
-	gas2.adjust_heat(-transfer)
-	return abs(transfer)
+/proc/heat_exchange_gas_to_gas(datum/gas_mixture/gas1, datum/gas_mixture/gas2, conductivity = 1, minimum = ATMOSMECH_MINIMUM_HEAT_EXCHANGE_JOULES)
+	// first, get final temperature we'll exchange to assuming 100% conductivity
+	// capacities
+	var/c1 = gas1.heat_capacity()
+	var/c2 = gas2.heat_capacity()
+	// temperatures
+	var/t1 = gas1.return_temperature()
+	var/t2 = gas2.return_temperature()
+	// sanity check
+	if(!t1 || !t2 || !c1 || !c2)
+		return
+	// transfer - ideal at 100% conduction, for gas1 to gas2 - we can use either 1 or 2 for this as this'll be the same
+	// if this value is negative, gas1 is increasing in temperature, gas2 is decreasing (negative energy from gas1 to gas2)
+	// if this value is positive, gas1 is decreasing in temperature, gas2 is increasing (energy going from gas1 to gas2)
+	// thanks to bay for this optimized equation - i won't explain how it works, just know that it does.
+	var/et = ((t1 - t2) * c1 * c2) / (c1 + c2)
+	// actual transfer: minimum if below, but do not exceed initial
+	if(conductivity < 1)
+		et = min(et, max(minimum, et * conductivity))
+	// if above value was positive, gas1 decreases in energy
+	gas1.adjust_heat(-et)
+	// opposite for gas2
+	gas2.adjust_heat(et)
+	return et
 
 /**
  * Heat exchange proc gas <--> gas for **energy conversion** in TEG-like devices
  *
- * Returns thermal energy in joules **converted**
+ * Returns thermal energy in joules **converted**. this value is already abs'd.
+ *
+ * internals:
+ * this operates the same way as heat_exchange_gas_to_gas but transfer * efficiency is converted
+ * the thermal energy transfered is taken away from the hotter gas
+ * but, transferred * efficiency is converted. what's left is given to the colder gas
+ * this simulates one "cycle" of, say, a TEG
+ * as would be obvious you'd immediately notice that this won't result in an equal temperature
+ * well, sucks
+ * i'm too lazy to grab the pen and paper to do this properly because to do this properly probably takes integration and i'm not smart enough to eyeball it
+ * if you want to make it work be my guest.
+ *
+ * **warning**: this means that efficiency directly impacts cooling power.
+ * if you want less realistic but also weaker cooling power (as all of the thermal energy would be transferred while generating power, not just what is left over after conversion),
+ * use heat_exchange_gas_to_gas and do your own work for abs() and calculations
+ * but with this, if you put in efficiency = 1, the cold side will never heat up, as **all** of the transferred equalization heat would become electricity.
+ *
+ * no auto calculation parameter for volume given - simply too expensive. find a different way or write a different proc.
  *
  * @params
  * * gas1
  * * gas2
- * * volume - volume exposed, defaults to max. expensive to use.
  * * conductivity - ratio of thermal energy difference exchanged
- * * efficiency - ratio of **exchanged** energy converted, rather than being equalized
+ * * efficiency - ratio of **exchanged** energy converted, rather than being equalized. The converted energy is **not** returned as heat - if you have 100% efficiency, this means the cold side will never heat up!
  * * minimum - Minimum joules to exchange, regardless of conductivity
  */
-/proc/thermoelectric_exchange_gas_to_gas(datum/gas_mixture/gas1, datum/gas_mixture/gas2, volume, conductivity = 1, efficiency = 1, minimum = ATMOSMECH_MINIMUM_HEAT_EXCHANGE_JOULES)
-	var/diff = isnull(volume)? (gas2.thermal_energy() - gas1.thermal_energy()) : \
-		(gas2.thermal_energy() * clamp(volume / gas2.return_volume(), 0, 1)) - (gas1.thermal_energy() * clamp(volume / gas1.return_volume(), 0, 1))
-	// what this does:
-	// if diff * conductivity is below minimum, raise to min, but, if that makes it over diff, ensure it doesn't exceed diff
-	var/transfer = min(diff, max(minimum, diff * conductivity))
-	var/converted = transfer * efficiency
-	transfer = (transfer - converted) * 0.5
-	gas1.adjust_heat(transfer)
-	gas2.adjust_heat(-transfer)
-	return abs(converted)
+/proc/thermoelectric_exchange_gas_to_gas(datum/gas_mixture/gas1, datum/gas_mixture/gas2, conductivity = 1, efficiency = 0.5, minimum = ATMOSMECH_MINIMUM_HEAT_EXCHANGE_JOULES)
+	// first, get final temperature we'll exchange to assuming 100% conductivity
+	// capacities
+	var/c1 = gas1.heat_capacity()
+	var/c2 = gas2.heat_capacity()
+	// temperatures
+	var/t1 = gas1.return_temperature()
+	var/t2 = gas2.return_temperature()
+	// sanity check
+	if(!t1 || !t2 || !c1 || !c2)
+		return
+	// transfer - ideal at 100% conduction, for gas1 to gas2 - we can use either 1 or 2 for this as this'll be the same
+	// if this value is negative, gas1 is increasing in temperature, gas2 is decreasing (negative energy from gas1 to gas2)
+	// if this value is positive, gas1 is decreasing in temperature, gas2 is increasing (energy going from gas1 to gas2)
+	// thanks to bay for this optimized equation - i won't explain how it works, just know that it does.
+	var/et = ((t1 - t2) * c1 * c2) / (c1 + c2)
+	// actual transfer: minimum if below, but do not exceed initial
+	if(conductivity < 1)
+		et = min(et, max(minimum, et * conductivity))
+	// if et was positive, gas1 was higher in temperature
+	if(et > 0)
+		gas1.adjust_heat(-et)
+		gas2.adjust_heat(et * (1 - efficiency))
+	// else, gas2 was
+	else
+		gas2.adjust_heat(-et)
+		gas1.adjust_heat(et * (1 - efficiency))
+	// return abs of efficiency * et
+	return abs(efficiency * et)
 
 /**
  * Heat exchange proc gas <--> turf
