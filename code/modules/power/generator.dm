@@ -59,6 +59,12 @@
 	SSair.atmos_machinery -= src
 	return ..()
 
+/obj/machinery/power/examine(mob/user)
+	. = ..()
+	. += "This device is rated for a maximum output of [DisplayPower(maximum_output)]. Above this, it will spark and lose some of its efficiency."
+	. += "This device requires a [optimal_temperature_difference]K difference in temperature for optimal efficiency."
+	. += "This device has a baseline efficiency of [efficiency_min*100]% and an optimal efficiency of [efficiency*100]%."
+
 /obj/machinery/power/generator/update_icon_state()
 	. = ..()
 	icon_state = anchored? "teg" : "teg_u"
@@ -113,6 +119,7 @@
 	if(!ui)
 		ui = new(user, src, "ThermoelectricGenerator", name)
 		ui.open()
+	#warn make the tgui
 
 /obj/machinery/power/generator/ui_static_data(mob/user)
 	. = ..()
@@ -124,12 +131,19 @@
 /obj/machinery/power/generator/ui_data(mob/user)
 	. = ..()
 	.["output"] = last_output
-	.["left_gas"] = left.gas_held? left.gas_held.tgui_data() : null
-	.["right_gas"] = right.gas_held? right.gas_held.tgui_data() : null
+	.["left_gas"] = gas_data_for(left?.gas_held)
+	.["right_gas"] = gas_data_for(right?.gas_held)
 	.["left_rpm"] = left.rpm
 	.["right_rpm"] = right.rpm
 	.["left_gen"] = last_left_turbine_output
 	.["right_gen"] = last_right_turbine_output
+
+/obj/machinery/power/generator/proc/gas_data_for(datum/gas_mixture/GM)
+	if(!GM)
+		return null
+	. = list()
+	.["temp"] = GM.return_temperature()
+	.["pressure"] = GM.return_pressure()
 
 /obj/machinery/power/generator/proc/Detect()
 	if(!left)
