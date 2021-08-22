@@ -266,7 +266,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 //Creates a gas cloud when the reaction blows up, causing everyone in it to fall in love with someone/something while it's in their system.
 /datum/reagent/fermi/enthrallExplo//Created in a gas cloud when it explodes
 	name = "Gaseous MKUltra"
-	description = "A deep red gas that causes the mind to feel absentminded for as long as it is in their system. Produced when MKUltra explodes."
+	description = "A deep red gas that when taken into a body, the recipient will experience a high and reduced control in their body for as long as it is in their system. Produced when MKUltra explodes."
 	color = "#2C051A" // rgb: , 0, 255
 	metabolization_rate = 1
 	taste_description = "extremely bitter chocolate"
