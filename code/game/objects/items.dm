@@ -878,6 +878,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		openToolTip(user,src,params,title = name,content = "[desc]<br><b>Force:</b> [force_string]",theme = "")
 
 /obj/item/MouseEntered(location, control, params)
+	SEND_SIGNAL(src, COMSIG_ITEM_MOUSE_ENTER, location, control, params)
 	if((item_flags & IN_INVENTORY || item_flags & IN_STORAGE) && usr.client.prefs.enable_tips && !QDELETED(src) || isobserver(usr))
 		var/timedelay = usr.client.prefs.tip_delay/100
 		var/user = usr
@@ -920,9 +921,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(outline_filter)
 		filters -= outline_filter
 		outline_filter = null
-
-//obj/item/MouseEntered(location,control,params)
-	//SEND_SIGNAL(src, COMSIG_ITEM_MOUSE_ENTER, location, control, params)
 
 // Called when a mob tries to use the item as a tool.
 // Handles most checks.
