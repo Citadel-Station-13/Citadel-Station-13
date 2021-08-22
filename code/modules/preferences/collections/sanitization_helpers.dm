@@ -20,3 +20,8 @@
 
 /datum/preferences_collection/proc/auto_sanitize_bitfield(datum/preferences/prefs, key)
 	return auto_sanitize_integer(prefs, key, NONE, SHORT_REAL_LIMIT - 1, NONE)
+
+/datum/preferences_collection/proc/auto_sanitize_in_list(datum/preferences/prefs, key, list/L, default)
+	var/val = LoadKey(prefs, key)
+	if(!(val in L))
+		SaveKey(prefs, key, default)

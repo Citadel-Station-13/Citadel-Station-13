@@ -46,10 +46,13 @@
 		. += generate_topic(prefs, "Enabled", "midround_toggle")
 		. += " <span class='linkOn'>Disabled</span>"
 
+	. += "<b>Uplink Location:</b> [generate_topic(prefs, LoadKey(prefs, "uplink_loc"), "uplink_loc")]"
+
 /datum/preferences_collection/hybrid/antagonism/sanitize_any(datum/preferences/prefs)
 	. = ..()
 	auto_sanitize_list(prefs, "be_special")
 	auto_sanitize_boolean(prefs, "midround_antagonist")
+	auto_sanitize_in_list(prefs, "uplink_loc", GLOB.uplink_spawn_loc_list, GLOB.uplink_spawn_loc_list[1])
 
 /datum/preferences_collection/hybrid/antagonism/OnTopic(mob/user, datum/preferences/prefs, list/href_list)
 	. = ..()
@@ -66,6 +69,11 @@
 		SaveKey(prefs, "be_special")
 	if(href_list["jobbancheck"])
 		prefs.jobbancheck(href_list["jobbancheck"])
+	if(href_list["uplink_loc"])
+		var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference") as null|anything in GLOB.uplink_spawn_loc_list
+		if(new_loc)
+			SaveKey(prefs, "uplink_loc", new_loc)
+
 
 /datum/preferences_collection/hybrid/antagonism/savefile_full_overhaul_character(datum/preferences/prefs, list/data, savefile/S, list/errors, current_version)
 	. = ..()
@@ -73,24 +81,11 @@
 	S["be_special"] >> be_special
 	var/midround_antag
 	S["toggles"] >> midround_antag
+	var/uplink_loc
+	S["uplink_loc"] >> uplink_loc
 	midround_antag &= MIDROUND_ANTAG
 	midround_antag = FORCE_BOOLEAN(midround_antag)
 
 	data["be_special"] = be_special
 	data["midround_antagonist"] = midround_antag
-
-
-
-#warn put these in
-	S["uplink_loc"]				>> uplink_spawn_loc
-	var/uplink_spawn_loc = UPLINK_PDA
-
-
-	uplink_spawn_loc				= sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
-
-
-				if("uplink_loc")
-					var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference") as null|anything in GLOB.uplink_spawn_loc_list
-					if(new_loc)
-						uplink_spawn_loc = new_loc
-
+	data["uplink_loc"] = uplink_loc
