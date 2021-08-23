@@ -40675,6 +40675,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/space_heater,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -45447,14 +45448,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/engineering/main)
@@ -45468,14 +45469,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engineering/main)
@@ -45492,14 +45493,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -45520,14 +45521,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engineering/main)
@@ -45539,6 +45540,12 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -45551,14 +45558,14 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -45578,13 +45585,13 @@
 /obj/machinery/firealarm{
 	pixel_y = 29
 	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -47271,6 +47278,10 @@
 /obj/machinery/light{
 	dir = 4;
 	light_color = "#e8eaff"
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 22
 	},
 /turf/open/floor/plasteel/dark,
 /area/engineering/main)
@@ -53466,10 +53477,6 @@
 	},
 /area/maintenance/department/engine)
 "dEy" = (
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /obj/structure/reflector/double/anchored{
 	dir = 9
 	},
@@ -55355,6 +55362,10 @@
 /obj/machinery/power/rad_collector/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
+"hKX" = (
+/obj/machinery/space_heater,
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
 "hMx" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/plating{
@@ -60884,6 +60895,10 @@
 /obj/item/pen,
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
+"tCJ" = (
+/obj/machinery/space_heater,
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/bar)
 "tCP" = (
 /obj/docking_port/stationary/public_mining_dock,
 /turf/open/floor/plating,
@@ -80222,7 +80237,7 @@ aiu
 xuv
 aoe
 ajD
-ajD
+hKX
 aiu
 apB
 aiu
@@ -91030,7 +91045,7 @@ aKT
 aLH
 aNf
 aKT
-aLL
+tCJ
 aQO
 aRO
 aSH
@@ -99781,7 +99796,7 @@ aPY
 bau
 aLf
 aFi
-aFi
+aMA
 beI
 beI
 bgD
@@ -107236,7 +107251,7 @@ aaa
 aEl
 aTx
 aFi
-aFi
+aMA
 aEj
 bhz
 lEn

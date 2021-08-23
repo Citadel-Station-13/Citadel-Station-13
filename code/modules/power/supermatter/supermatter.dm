@@ -12,33 +12,17 @@
 #define OBJECT (LOWEST + 1)
 #define LOWEST (1)
 
-#define PLASMA_HEAT_PENALTY 15     // Higher == Bigger heat and waste penalty from having the crystal surrounded by this gas. Negative numbers reduce penalty.
-#define OXYGEN_HEAT_PENALTY 1
-#define PLUOXIUM_HEAT_PENALTY -1
-#define TRITIUM_HEAT_PENALTY 10
-#define CO2_HEAT_PENALTY 0.1
-#define NITROGEN_HEAT_PENALTY -1.5
-#define BZ_HEAT_PENALTY 5
-#define H2O_HEAT_PENALTY 8
-//#define FREON_HEAT_PENALTY -10 //very good heat absorbtion and less plasma and o2 generation
-//#define HYDROGEN_HEAT_PENALTY 10 // similar heat penalty as tritium (dangerous)
-
-
-//All of these get divided by 10-bzcomp * 5 before having 1 added and being multiplied with power to determine rads
-//Keep the negative values here above -10 and we won't get negative rads
-#define OXYGEN_TRANSMIT_MODIFIER 1.5   //Higher == Bigger bonus to power generation.
-#define PLASMA_TRANSMIT_MODIFIER 4
-#define BZ_TRANSMIT_MODIFIER -2
-#define TRITIUM_TRANSMIT_MODIFIER 30 //We divide by 10, so this works out to 3
-#define PLUOXIUM_TRANSMIT_MODIFIER -5 //Should halve the power output
-#define H2O_TRANSMIT_MODIFIER 2
-//#define HYDROGEN_TRANSMIT_MODIFIER 25 //increase the radiation emission, but less than the trit (2.5)
-
-#define BZ_RADIOACTIVITY_MODIFIER 5 //Improves the effect of transmit modifiers
-
-#define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
-#define PLUOXIUM_HEAT_RESISTANCE 3
-//#define HYDROGEN_HEAT_RESISTANCE 2 // just a bit of heat resistance to spice it up
+/datum/auxgm/proc/add_supermatter_properties(datum/gas/gas)
+	var/g = gas.id
+	var/list/props = src.supermatter
+	if(gas.powermix || gas.heat_penalty || gas.transmit_modifier || gas.radioactivity_modifier || gas.heat_resistance || gas.powerloss_inhibition)
+		props[HEAT_PENALTY][g] = gas.heat_penalty
+		props[TRANSMIT_MODIFIER][g] = gas.transmit_modifier
+		props[RADIOACTIVITY_MODIFIER][g] = gas.radioactivity_modifier
+		props[HEAT_RESISTANCE][g] = gas.heat_resistance
+		props[POWERLOSS_INHIBITION][g] = gas.powerloss_inhibition
+		props[POWER_MIX][g] = gas.powermix
+		props[ALL_SUPERMATTER_GASES] += g
 
 #define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.20         //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
 #define POWERLOSS_INHIBITION_MOLE_THRESHOLD 20        //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.        //Scales powerloss inhibition down until this amount of moles is reached
@@ -148,90 +132,17 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/power = 0
 	///Determines the rate of positve change in gas comp values
 	var/gas_change_rate = 0.05
-	///The list of gases we will be interacting with in process_atoms()
-	var/list/gases_we_care_about = list(
-		GAS_O2,
-		GAS_H2O,
-		GAS_PLASMA,
-		GAS_CO2,
-		GAS_NITROUS,
-		GAS_N2,
-		GAS_PLUOXIUM,
-		GAS_TRITIUM,
-		GAS_BZ,
-//		/datum/gas/freon,
-//		/datum/gas/hydrogen,
-	)
-	///The list of gases mapped against their current comp. We use this to calculate different values the supermatter uses, like power or heat resistance. It doesn't perfectly match the air around the sm, instead moving up at a rate determined by gas_change_rate per call. Ranges from 0 to 1
-	var/list/gas_comp = list(
-		GAS_O2 = 0,
-		GAS_H2O = 0,
-		GAS_PLASMA = 0,
-		GAS_CO2 = 0,
-		GAS_NITROUS = 0,
-		GAS_N2 = 0,
-		GAS_PLUOXIUM = 0,
-		GAS_TRITIUM = 0,
-		GAS_BZ = 0,
-//		/datum/gas/freon = 0,
-//		/datum/gas/hydrogen = 0,
-	)
-	///The list of gases mapped against their transmit values. We use it to determine the effect different gases have on radiation
-	var/list/gas_trans = list(
-		GAS_O2 = OXYGEN_TRANSMIT_MODIFIER,
-		GAS_H2O = H2O_TRANSMIT_MODIFIER,
-		GAS_PLASMA = PLASMA_TRANSMIT_MODIFIER,
-		GAS_PLUOXIUM = PLUOXIUM_TRANSMIT_MODIFIER,
-		GAS_TRITIUM = TRITIUM_TRANSMIT_MODIFIER,
-		GAS_BZ = BZ_TRANSMIT_MODIFIER,
-//		/datum/gas/hydrogen = HYDROGEN_TRANSMIT_MODIFIER,
-	)
-	///The list of gases mapped against their heat penaltys. We use it to determin molar and heat output
-	var/list/gas_heat = list(
-		GAS_O2 = OXYGEN_HEAT_PENALTY,
-		GAS_H2O = H2O_HEAT_PENALTY,
-		GAS_PLASMA = PLASMA_HEAT_PENALTY,
-		GAS_CO2 = CO2_HEAT_PENALTY,
-		GAS_N2 = NITROGEN_HEAT_PENALTY,
-		GAS_PLUOXIUM = PLUOXIUM_HEAT_PENALTY,
-		GAS_TRITIUM = TRITIUM_HEAT_PENALTY,
-		GAS_BZ = BZ_HEAT_PENALTY,
-//		/datum/gas/freon = FREON_HEAT_PENALTY,
-//		/datum/gas/hydrogen = HYDROGEN_HEAT_PENALTY,
-	)
-	///The list of gases mapped against their heat resistance. We use it to moderate heat damage.
-	var/list/gas_resist = list(
-		GAS_NITROUS = N2O_HEAT_RESISTANCE,
-		GAS_PLUOXIUM = PLUOXIUM_HEAT_RESISTANCE,
-//		/datum/gas/hydrogen = HYDROGEN_HEAT_RESISTANCE,
-	)
-	///The list of gases mapped against their powermix ratio
-	var/list/gas_powermix = list(
-		GAS_O2 = 1,
-		GAS_H2O = 1,
-		GAS_PLASMA = 1,
-		GAS_CO2 = 1,
-		GAS_N2 = -1,
-		GAS_PLUOXIUM = -1,
-		GAS_TRITIUM = 1,
-		GAS_BZ = 1,
-//		/datum/gas/freon = -1,
-//		/datum/gas/hydrogen = 1,
-	)
+	var/list/gas_comp = list()
 	///The last air sample's total molar count, will always be above or equal to 0
 	var/combined_gas = 0
 	///Affects the power gain the sm experiances from heat
 	var/gasmix_power_ratio = 0
-	///Affects the amount of o2 and plasma the sm outputs, along with the heat it makes.
-	var/dynamic_heat_modifier = 1
 	///Affects the amount of damage and minimum point at which the sm takes heat damage
 	var/dynamic_heat_resistance = 1
 	///Uses powerloss_dynamic_scaling and combined_gas to lessen the effects of our powerloss functions
 	var/powerloss_inhibitor = 1
 	///Based on co2 percentage, slowly moves between 0 and 1. We use it to calc the powerloss_inhibitor
 	var/powerloss_dynamic_scaling= 0
-	///Affects the amount of radiation the sm makes. We multiply this with power to find the rads.
-	var/power_transmission_bonus = 0
 	///Used to increase or lessen the amount of damage the sm takes from heat based on molar counts.
 	var/mole_heat_penalty = 0
 	///Takes the energy throwing things into the sm generates and slowly turns it into actual power
@@ -481,6 +392,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		removed = new()
 	damage_archived = damage
 
+	var/list/gas_info = GLOB.gas_data.supermatter
+
+	var/list/gases_we_care_about = gas_info[ALL_SUPERMATTER_GASES]
+
 	/********
 	EXPERIMENTAL, HUGBOXY AS HELL CITADEL CHANGES: Even in a vaccum, update gas composition and modifiers.
 	This means that the SM will usually have a very small explosion if it ends up being breached to space,
@@ -491,7 +406,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(takes_damage)
 			damage += max((power / 1000) * DAMAGE_INCREASE_MULTIPLIER, 0.1) // always does at least some damage
 		combined_gas = max(0, combined_gas - 0.5)		// Slowly wear off.
-		for(var/gasID in gases_we_care_about)
+		for(var/gasID in gas_comp)
 			gas_comp[gasID] = max(0, gas_comp[gasID] - 0.05)		//slowly ramp down
 	else
 		if(takes_damage)
@@ -531,46 +446,49 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//Prevents huge bursts of gas/heat when a large amount of something is introduced
 			//They range between 0 and 1
 			for(var/gasID in gases_we_care_about)
+				if(!(gasID in gas_comp))
+					gas_comp[gasID] = 0
 				gas_comp[gasID] += clamp(max(removed.get_moles(gasID)/combined_gas, 0) - gas_comp[gasID], -1, gas_change_rate)
 
-	var/list/heat_mod = gases_we_care_about.Copy()
-	var/list/transit_mod = gases_we_care_about.Copy()
-	var/list/resistance_mod = gases_we_care_about.Copy()
+	var/list/threshold_mod = gases_we_care_about.Copy()
+
+	var/list/powermix = gas_info[POWER_MIX]
+	var/list/heat = gas_info[HEAT_PENALTY]
+	var/list/transmit = gas_info[TRANSMIT_MODIFIER]
+	var/list/resist = gas_info[HEAT_RESISTANCE]
+	var/list/radioactivity = gas_info[RADIOACTIVITY_MODIFIER]
+	var/list/inhibition = gas_info[POWERLOSS_INHIBITION]
 
 	//We're concerned about pluoxium being too easy to abuse at low percents, so we make sure there's a substantial amount.
 	var/pluoxiumbonus = (gas_comp[GAS_PLUOXIUM] >= 0.15) //makes pluoxium only work at 15%+
-	var/h2obonus = 1 - (gas_comp[GAS_H2O] * 0.25)//At max this value should be 0.75
+	var/h2obonus = 1 - (gas_comp[GAS_H2O] * 0.25)//At min this value should be 0.75
 //		var/freonbonus = (gas_comp[/datum/gas/freon] <= 0.03) //Let's just yeet power output if this shit is high
 
-	heat_mod[GAS_PLUOXIUM] = pluoxiumbonus
-	transit_mod[GAS_PLUOXIUM] = pluoxiumbonus
-	resistance_mod[GAS_PLUOXIUM] = pluoxiumbonus
+	threshold_mod[GAS_PLUOXIUM] = pluoxiumbonus
 
 	//No less then zero, and no greater then one, we use this to do explosions and heat to power transfer
 	//Be very careful with modifing this var by large amounts, and for the love of god do not push it past 1
 	gasmix_power_ratio = 0
-	for(var/gasID in gas_powermix)
-		gasmix_power_ratio += gas_comp[gasID] * gas_powermix[gasID]
-	gasmix_power_ratio = clamp(gasmix_power_ratio, 0, 1)
-
-	//Minimum value of -10, maximum value of 23. Effects plasma and o2 output and the output heat
-	dynamic_heat_modifier = 0
-	for(var/gasID in gas_heat)
-		dynamic_heat_modifier += gas_comp[gasID] * gas_heat[gasID] * (isnull(heat_mod[gasID]) ? 1 : heat_mod[gasID])
-	dynamic_heat_modifier *= h2obonus
-	dynamic_heat_modifier = max(dynamic_heat_modifier, 0.5)
-
-	//Value between 1 and 10. Effects the damage heat does to the crystal
+	//Affects the amount of o2 and plasma the sm outputs, along with the heat it makes.
+	var/dynamic_heat_modifier = 0
+	//Effects the damage heat does to the crystal.
 	dynamic_heat_resistance = 0
-	for(var/gasID in gas_resist)
-		dynamic_heat_resistance += gas_comp[gasID] * gas_resist[gasID] * (isnull(resistance_mod[gasID]) ? 1 : resistance_mod[gasID])
-	dynamic_heat_resistance = max(dynamic_heat_resistance, 1)
-
-	//Value between -5 and 30, used to determine radiation output as it concerns things like collectors.
-	power_transmission_bonus = 0
-	for(var/gasID in gas_trans)
-		power_transmission_bonus += gas_comp[gasID] * gas_trans[gasID] * (isnull(transit_mod[gasID]) ? 1 : transit_mod[gasID])
+	//We multiply this with power to find the rads.
+	var/power_transmission_bonus = 0
+	var/powerloss_inhibition_gas = 0
+	var/radioactivity_modifier = 0
+	for(var/gasID in gas_comp)
+		var/this_comp = gas_comp[gasID] * (isnull(threshold_mod[gasID] ? 1 : threshold_mod[gasID]))
+		gasmix_power_ratio += this_comp * powermix[gasID]
+		dynamic_heat_modifier += this_comp * heat[gasID]
+		dynamic_heat_resistance += this_comp * resist[gasID]
+		power_transmission_bonus += this_comp * transmit[gasID]
+		powerloss_inhibition_gas += this_comp * inhibition[gasID]
+		radioactivity_modifier += this_comp * radioactivity[gasID]
+	dynamic_heat_modifier *= h2obonus
 	power_transmission_bonus *= h2obonus
+	gasmix_power_ratio = clamp(gasmix_power_ratio, 0, 1)
+	dynamic_heat_modifier = max(dynamic_heat_modifier, 0.5)
 
 	//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 	mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
@@ -578,8 +496,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	//Ramps up or down in increments of 0.02 up to the proportion of co2
 	//Given infinite time, powerloss_dynamic_scaling = co2comp
 	//Some value between 0 and 1
-	if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && gas_comp[GAS_CO2] > POWERLOSS_INHIBITION_GAS_THRESHOLD) //If there are more then 20 mols, and more then 20% co2
-		powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling + clamp(gas_comp[GAS_CO2] - powerloss_dynamic_scaling, -0.02, 0.02), 0, 1)
+	if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && powerloss_inhibition_gas > POWERLOSS_INHIBITION_GAS_THRESHOLD) //If there are more then 20 mols, and more then 20% co2
+		powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling + clamp(powerloss_inhibition_gas - powerloss_dynamic_scaling, -0.02, 0.02), 0, 1)
 	else
 		powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling - 0.05, 0, 1)
 	//Ranges from 0 to 1(1-(value between 0 and 1 * ranges from 1 to 1.5(mol / 500)))
@@ -611,23 +529,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	if(prob(50))
 		//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
-		radiation_pulse(src, power * max(0, (1 + (power_transmission_bonus/(10-(gas_comp[GAS_BZ] * BZ_RADIOACTIVITY_MODIFIER)))) * 1))//freonbonus))// RadModBZ(500%)
-	if(gas_comp[GAS_BZ] >= 0.4 && prob(30 * gas_comp[GAS_BZ]))
-		src.fire_nuclear_particle()        // Start to emit radballs at a maximum of 30% chance per tick
+		radiation_pulse(src, power * max(0, (1 + (power_transmission_bonus/(10-radioactivity_modifier)))))//freonbonus))// RadModBZ(500%)
+	if(radioactivity_modifier >= 2 && prob(6 * radioactivity_modifier))
+		src.fire_nuclear_particle()
 
 	//Power * 0.55 * a value between 1 and 0.8
 	var/device_energy = power * REACTION_POWER_MODIFIER
 
-	//To figure out how much temperature to add each tick, consider that at one atmosphere's worth
-	//of pure oxygen, with all four lasers firing at standard energy and no N2 present, at room temperature
-	//that the device energy is around 2140. At that stage, we don't want too much heat to be put out
-	//Since the core is effectively "cold"
-
-	//Also keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock
-	//is on. An increase of 4*C @ 25% efficiency here results in an increase of 1*C / (#tilesincore) overall.
-	//Power * 0.55 * (some value between 1.5 and 23) / 5
 	removed.set_temperature(removed.return_temperature() + ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_MODIFIER))
-	//We can only emit so much heat, that being 57500
+	//We don't want our output to be too hot
 	removed.set_temperature(max(0, min(removed.return_temperature(), 2500 * dynamic_heat_modifier)))
 
 	//Calculate how much gas to release

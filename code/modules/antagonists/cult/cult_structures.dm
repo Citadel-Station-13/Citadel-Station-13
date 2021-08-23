@@ -219,7 +219,7 @@
 					if(M.health < M.maxHealth)
 						M.adjustHealth(-3)
 			if(ishuman(L) && L.blood_volume < (BLOOD_VOLUME_NORMAL * L.blood_ratio))
-				L.blood_volume += 1.0
+				L.adjust_integration_blood(1.0)
 		CHECK_TICK
 
 

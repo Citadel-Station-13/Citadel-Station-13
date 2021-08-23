@@ -1273,3 +1273,6 @@
 	var/mob/living/carbon/C = usr
 	if(I.can_give())
 		C.give(src)
+
+/mob/living/carbon/proc/functional_blood()
+	return blood_volume + integrating_blood

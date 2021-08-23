@@ -426,18 +426,21 @@ GENETICS SCANNER
 			if(ishuman(C))
 				if(H.is_bleeding())
 					msg += "<span class='danger'>Subject is bleeding!</span>\n"
-			var/blood_percent =  round((C.scan_blood_volume() / (BLOOD_VOLUME_NORMAL * C.blood_ratio))*100)
+			var/blood_percent = round((C.scan_blood_volume() / (BLOOD_VOLUME_NORMAL * C.blood_ratio))*100)
+			var/integrated_blood_percent = round((C.integrating_blood / (BLOOD_VOLUME_NORMAL * C.blood_ratio))*100)
 			var/blood_type = C.dna.blood_type
 			if(!(blood_typepath in GLOB.blood_reagent_types))
 				var/datum/reagent/R = GLOB.chemical_reagents_list[blood_typepath]
 				if(R)
 					blood_type = R.name
-			if(C.scan_blood_volume() <= (BLOOD_VOLUME_SAFE*C.blood_ratio) && C.scan_blood_volume() > (BLOOD_VOLUME_OKAY*C.blood_ratio))
-				msg += "<span class='danger'>LOW blood level [blood_percent] %, [C.scan_blood_volume()] cl,</span> <span class='info'>type: [blood_type]</span>\n"
-			else if(C.scan_blood_volume() <= (BLOOD_VOLUME_OKAY*C.blood_ratio))
-				msg += "<span class='danger'>CRITICAL blood level [blood_percent] %, [C.scan_blood_volume()] cl,</span> <span class='info'>type: [blood_type]</span>\n"
+
+			if((C.scan_blood_volume() + C.integrating_blood) <= (BLOOD_VOLUME_SAFE * C.blood_ratio) && (C.scan_blood_volume() + C.integrating_blood) > (BLOOD_VOLUME_OKAY*C.blood_ratio))
+				msg += "<span class='danger'>LOW blood level [blood_percent] %, [C.scan_blood_volume()] cl[C.integrating_blood? ", with [integrated_blood_percent] % of it integrating, [C.integrating_blood] cl " : ""].</span> <span class='info'>type: [blood_type]</span>\n"
+			else if((C.scan_blood_volume() + C.integrating_blood) <= (BLOOD_VOLUME_OKAY * C.blood_ratio))
+				msg += "<span class='danger'>CRITICAL blood level [blood_percent] %, [C.scan_blood_volume()] cl[C.integrating_blood? ", with [integrated_blood_percent] % of it integrating, [C.integrating_blood] cl " : ""].</span> <span class='info'>type: [blood_type]</span>\n"
 			else
-				msg += "<span class='info'>Blood level [blood_percent] %, [C.scan_blood_volume()] cl, type: [blood_type]</span>\n"
+				msg += "<span class='info'>Blood level [blood_percent] %, [C.scan_blood_volume()] cl[C.integrating_blood? ", with [integrated_blood_percent] % of it integrating, [C.integrating_blood] cl " : ""]. type: [blood_type]</span>\n"
+
 
 		var/cyberimp_detect
 		for(var/obj/item/organ/cyberimp/CI in C.internal_organs)

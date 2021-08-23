@@ -1,6 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes: 
-  - bugfix: "Nanite machinery overlays should now work properly"
-  - code_imp: "screen objects are now atom/movables instead"
-  - code_imp: "Update appearance is used for updating atoms now instead of update_icon and such"
