@@ -1,0 +1,4 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - balance: "MK ultra explosions (failures at making MKultra) are gone, and replaced with a gas that just causes a bunch of status effects to you."
