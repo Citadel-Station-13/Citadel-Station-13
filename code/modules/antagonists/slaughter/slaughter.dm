@@ -129,13 +129,12 @@
 /mob/living/simple_animal/slaughter/proc/release_victims()
 	if(!consumed_mobs)
 		return
-
+	var/turf/T = get_turf(src)
+	if(!T)
+		T = find_safe_turf()
 	for(var/mob/living/M in consumed_mobs)
 		if(!M)
 			continue
-		var/turf/T = find_safe_turf()
-		if(!T)
-			T = get_turf(src)
 		M.forceMove(T)
 
 /mob/living/simple_animal/slaughter/proc/refresh_consumed_buff()

@@ -109,7 +109,7 @@
 			continue
 		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 		visible_message("<span class='danger'>[src] vomits up [consumed_mob]!</span>")
-		consumed_mob.forceMove(loc)
+		consumed_mob.forceMove(get_turf(src))
 		consumed_mob.Paralyze(50)
 	if((rifts_charged == 3 || (SSshuttle.emergency.mode == SHUTTLE_DOCKED && rifts_charged > 0)) && !objective_complete)
 		victory()
@@ -351,7 +351,7 @@
   */
 /mob/living/simple_animal/hostile/space_dragon/proc/empty_contents()
 	for(var/atom/movable/AM in src)
-		AM.forceMove(loc)
+		AM.forceMove(get_turf(src))
 		if(prob(90))
 			step(AM, pick(GLOB.alldirs))
 
