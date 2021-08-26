@@ -123,6 +123,7 @@
 		to_chat(src, "<span class='boldwarning'>You've failed to summon the rift in a timely manner!  You're being pulled back from whence you came!</span>")
 		destroy_rifts()
 		playsound(src, 'sound/magic/demon_dies.ogg', 100, TRUE)
+		empty_contents()
 		QDEL_NULL(src)
 
 /mob/living/simple_animal/hostile/space_dragon/AttackingTarget()
