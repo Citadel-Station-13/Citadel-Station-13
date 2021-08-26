@@ -268,8 +268,6 @@
 	for(var/mob/living/M in consumed_mobs)
 		if(!M)
 			continue	
-		if(!T)
-			T = get_turf(src)
 		M.forceMove(T)
 		if(M.revive(full_heal = TRUE, admin_revive = TRUE))
 			M.grab_ghost(force = TRUE)
