@@ -198,6 +198,8 @@
 #define COMSIG_TURF_MULTIZ_DEL "turf_multiz_del"
 ///from base of turf/multiz_turf_new: (turf/source, direction)
 #define COMSIG_TURF_MULTIZ_NEW "turf_multiz_new"
+///from base of turf/proc/onShuttleMove(): (turf/new_turf)
+#define COMSIG_TURF_ON_SHUTTLE_MOVE "turf_on_shuttle_move"
 
 // /atom/movable signals
 #define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"					///from base of atom/movable/Moved(): (/atom)
