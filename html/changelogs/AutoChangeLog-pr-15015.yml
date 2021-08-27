@@ -1,0 +1,5 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - rscadd: "Gremlin"
+  - imageadd: "Gremlin sprites"
