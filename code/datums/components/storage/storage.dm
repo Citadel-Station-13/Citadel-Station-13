@@ -423,6 +423,9 @@
 	var/atom/A = parent
 	if(ismob(M)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
 		A.add_fingerprint(M)
+		if(istype(A, /obj/item))
+			var/obj/item/I = A
+			I.remove_outline()	//Removes the outline when we drag
 		if(!over_object)
 			return FALSE
 		if(ismecha(M.loc)) // stops inventory actions in a mech
