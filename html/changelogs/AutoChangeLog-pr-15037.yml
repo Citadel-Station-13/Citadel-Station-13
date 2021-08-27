@@ -1,0 +1,7 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - bugfix: "Demons now drop bodies on their own tile instead of scattering them across the station.
+tweak: Space dragon content ejection is now slightly safer."
+  - bugfix: "Space dragons no longer delete their contents if they die due to timeout, ejecting them instead."
+  - bugfix: "Carp rifts created by space dragons now have their armor work correctly."
