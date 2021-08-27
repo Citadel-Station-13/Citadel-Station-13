@@ -314,7 +314,7 @@
 				if(T.density) //no, you can't use your funny blue cube or red cube to clip into the fucking wall.
 					return
 				for(var/atom/C in T.contents) //nor can you clip into a window or a door/false wall that's not open.
-					if(C.flags_1 & PREVENT_CLICK_UNDER_1 || C.opacity || (istype(C,/obj/machinery/door) && C.density))
+					if(C.opacity || (((C.flags_1 & PREVENT_CLICK_UNDER_1) > 0) != (istype(C,/obj/machinery/door) && !C.density))) //XOR operation within because doors always have PREVENT_CLICK_UNDER_1 flag enabled. Dumb, I know.
 						return
 				if(L.transferItemToLoc(I, T))
 					var/list/click_params = params2list(params)
