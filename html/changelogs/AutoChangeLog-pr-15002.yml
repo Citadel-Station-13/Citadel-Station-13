@@ -1,0 +1,6 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - rscadd: "Adds Plague Rats"
+  - rscadd: "Gives Plague Rat spawn conditions for regular mice"
+  - imageadd: "Plague Rat sprite"
