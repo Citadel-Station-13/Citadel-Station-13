@@ -104,6 +104,7 @@
 
 	if(anchored && !charging)
 		if(default_deconstruction_screwdriver(user, "recharger", "recharger", G))
+			update_appearance()
 			return
 
 		if(panel_open && G.tool_behaviour == TOOL_CROWBAR)
