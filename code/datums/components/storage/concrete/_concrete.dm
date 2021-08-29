@@ -135,6 +135,8 @@
 		var/obj/item/I = AM
 		var/mob/M = parent.loc
 		I.dropped(M)
+		I.item_flags &= ~IN_STORAGE
+		I.remove_outline()
 	if(new_location)
 		AM.forceMove(new_location)		// exited comsig will handle removal reset.
 		//We don't want to call this if the item is being destroyed
@@ -180,6 +182,7 @@
 				I.forceMove(parent.drop_location())
 		return FALSE
 	I.on_enter_storage(master)
+	I.item_flags |= IN_STORAGE
 	refresh_mob_views()
 	I.mouse_opacity = MOUSE_OPACITY_OPAQUE //So you can click on the area around the item to equip it, instead of having to pixel hunt
 	if(M)
