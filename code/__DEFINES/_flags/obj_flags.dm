@@ -15,6 +15,7 @@
 #define BLOCK_Z_IN_UP			(1<<12) // Should this object block z uprise from below?
 #define SHOVABLE_ONTO			(1<<13)//called on turf.shove_act() to consider whether an object should have a niche effect (defined in their own shove_act()) when someone is pushed onto it, or do a sanity CanPass() check.
 #define EXAMINE_SKIP			(1<<14) /// Makes the Examine proc not read out this item.
+#define IN_STORAGE				(1<<15) //is this item in the storage item, such as backpack? used for tooltips
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE	0 // We have no damage on the clothing
