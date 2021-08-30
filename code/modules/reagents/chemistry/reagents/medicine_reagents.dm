@@ -1766,11 +1766,11 @@
 
 /datum/reagent/medicine/limb_regrowth
 	name = "Carcinisoprojection Jelly"
-	description = "Also known as \"limb regrowth jelly\", this crabby looking xenobiological jelly will rapidly regrow any missing limbs someone has. Do not overdose."
+	description = "Also known as \"limb regrowth jelly\", this crabby looking xenobiological jelly will rapidly regrow any missing limbs someone has at the cost of some of their blood. Do not overdose."
 	taste_description = "salty slime"
 	color = "#EF5428" //like cooked crab!
 	reagent_state = LIQUID
-	overdose_threshold = 65 //it takes more than two bluespace syringes to overdose someone with this given how nasty the OD is.
+	overdose_threshold = 65 //it takes more than one bluespace syringe to overdose someone with this given how nasty the OD is.
 	value = REAGENT_VALUE_RARE
 
 /datum/reagent/medicine/limb_regrowth/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
@@ -1780,7 +1780,8 @@
 	var/vol = reac_volume + C.reagents.get_reagent_amount(/datum/reagent/medicine/limb_regrowth)
 	if(vol < 5) //need at least 5 units.
 		return
-	if(C.get_missing_limbs().len < 1) //nothing happens if they already got all limbs.
+	var/list/limbs_to_heal = C.get_missing_limbs(exclude_head = TRUE)
+	if(limbs_to_heal.len < 1) //nothing happens if they already got all limbs.
 		return
 	if(HAS_TRAIT(C, TRAIT_ROBOTIC_ORGANISM)) //sorry synths, consider a visit to the roboticist. dunno how to justify regrowing robolimbs.
 		return
@@ -1795,6 +1796,12 @@
 		playsound(C, 'sound/magic/demon_consume.ogg', 50, 1)
 		C.emote("scream")
 	C.regenerate_limbs()
+	C.blood_volume = max(C.blood_volume - 30*limbs_to_heal.len,0)
+	//lose blood for each limb that was regained.
+	//10 units less expensive than slime limb regrowth, but doesn't check for low blood like the ability, so it could be dangerous.
+	to_chat(C,"<span class='warning'>The pain of the regained limbs fades away. You feel like this ordeal has made you a little paler... as well as made you feel a little thirsty.</span>")
+	//hint at the blood loss. (paler is a common symptom depicted in-game of low blood, but dehydration is another symptom of low blood.)
+
 
 /datum/reagent/medicine/limb_regrowth/overdose_start(mob/living/M)
 	M.ForceContractDisease(new /datum/disease/crabcancer, FALSE, TRUE) //it is now, time for crab.

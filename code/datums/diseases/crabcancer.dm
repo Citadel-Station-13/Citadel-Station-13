@@ -46,7 +46,7 @@
 				playsound(affected_mob, 'sound/items/poster_ripped.ogg', 50, TRUE)
 				playsound(get_turf(affected_mob), 'sound/effects/splat.ogg', 20, TRUE)
 				affected_mob.emote("scream")
-				affected_mob.take_bodypart_damage(rand(10,20))
+				affected_mob.take_bodypart_damage(rand(15,25))
 				var/humanmeatamount = rand(0,2)
 				var/crabmeatamount = rand(1,2)
 				var/meattype = /obj/item/reagent_containers/food/snacks/meat/slab/human
