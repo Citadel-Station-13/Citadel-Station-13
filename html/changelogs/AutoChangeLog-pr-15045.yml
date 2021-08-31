@@ -1,0 +1,4 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - bugfix: "The waddle component now takes size into account when running rotating animations, thus not reverting character sizes to default size."
