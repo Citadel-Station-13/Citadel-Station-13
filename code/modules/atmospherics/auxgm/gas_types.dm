@@ -157,6 +157,8 @@
 	id = GAS_METHANE
 	specific_heat = 30
 	name = "Methane"
+	powerloss_inhibition = 1
+	heat_resistance = 3
 	breath_results = GAS_METHYL_BROMIDE
 	fire_products = list(GAS_CO2 = 1, GAS_H2O = 2)
 	fire_burn_rate = 0.5
@@ -177,6 +179,8 @@
 	id = GAS_METHYL_BROMIDE
 	specific_heat = 42
 	name = "Methyl Bromide"
+	powermix = 1
+	heat_penalty = -1
 	flags = GAS_FLAG_DANGEROUS
 	breath_alert_info = list(
 		not_enough_alert = list(
