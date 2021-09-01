@@ -542,6 +542,20 @@
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	matrixed_sections = MATRIX_RED_GREEN
 
+/datum/sprite_accessory/tails/human/takahiro_kitsune
+	name = "Takahiro Kitsune Tails" //takahiro had five tails i just wanted to follow the 'T' naming convention vs. tamamo and triple
+	icon_state = "7sune"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/tails_animated/human/takahiro_kitsune
+	name = "Takahiro Kitsune Tails"
+	icon_state = "7sune"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	matrixed_sections = MATRIX_RED_GREEN
+
 /datum/sprite_accessory/tails/human/tentacle
 	name = "Tentacle"
 	icon_state = "tentacle"

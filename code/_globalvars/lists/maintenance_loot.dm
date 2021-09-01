@@ -112,7 +112,6 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/storage/box/marshmallow = 2,
 	/obj/item/clothing/gloves/tackler/offbrand = 1,
 	/obj/item/stack/sticky_tape = 1,
-	/obj/effect/spawner/lootdrop/grille_or_trash = 15,
 	"" = 3
 	))
 
