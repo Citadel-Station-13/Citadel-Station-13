@@ -387,9 +387,10 @@
 			var/species_holder = initial(mrace.species_language_holder)
 			language_holder = new species_holder(src)
 
+			var/mob/living/carbon/human/H = src
 			//provide the user's additional language to the new language holder even if they change species
-			if(additional_language && additional_language != "None")
-				var/language_entry = GLOB.roundstart_languages[additional_language]
+			if(H.additional_language && H.additional_language != "None")
+				var/language_entry = GLOB.roundstart_languages[H.additional_language]
 				if(language_entry)
 					grant_language(language_entry, TRUE, TRUE)
 
