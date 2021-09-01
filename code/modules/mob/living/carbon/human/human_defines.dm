@@ -81,6 +81,8 @@
 
 	tooltips = TRUE
 
+	var/additional_language //the additional language this human can speak from their preference selection
+
 /// Unarmed parry data for human
 /datum/block_parry_data/unarmed/human
 	parry_respect_clickdelay = TRUE

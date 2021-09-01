@@ -3070,6 +3070,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(additional_language && additional_language != "None")
 		var/language_entry = GLOB.roundstart_languages[additional_language]
 		if(language_entry)
+			character.additional_language = language_entry
 			character.grant_language(language_entry, TRUE, TRUE)
 
 	//limb stuff, only done when initially spawning in
