@@ -6,6 +6,7 @@
 	var/hoodtype = /obj/item/clothing/head/hooded/winterhood //so the chaplain hoodie or other hoodies can override this
 	///Alternative mode for hiding the hood, instead of storing the hood in the suit it qdels it, useful for when you deal with hooded suit with storage.
 	var/alternative_mode = FALSE
+	var/no_t //do not update sprites when pulling up hood so we can avoid oddities with certain mechanics
 
 /obj/item/clothing/suit/hooded/Initialize()
 	. = ..()
@@ -51,6 +52,8 @@
 	update_icon()
 
 /obj/item/clothing/suit/hooded/update_icon_state()
+	if(no_t)
+		return
 	icon_state = "[initial(icon_state)]"
 	if(ishuman(hood?.loc))
 		var/mob/living/carbon/human/H = hood.loc
