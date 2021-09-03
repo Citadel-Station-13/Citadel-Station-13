@@ -367,6 +367,7 @@ GLOBAL_LIST_INIT(job_heirlooms, list(
 	"Janitor" = list(/obj/item/mop),
 	"Scientist" = list(/obj/item/toy/plush/slimeplushie),
 	"Assistant" = list(/obj/item/clothing/gloves/cut/family),
+	"Prisoner" = list (/obj/item/pen/blue),
 	"Chaplain" = list(/obj/item/camera/spooky/family),
 	"Head of Personnel" = list(/obj/item/pinpointer/ian)
 	))
