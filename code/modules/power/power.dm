@@ -105,8 +105,8 @@
 	addStaticPower(-value, powerchannel)
 
 /obj/machinery/proc/power_change()
-	//SIGNAL_HANDLER
-	//SHOULD_CALL_PARENT(TRUE)
+	SIGNAL_HANDLER
+	SHOULD_CALL_PARENT(TRUE)
 
 	if(stat & BROKEN)
 		return

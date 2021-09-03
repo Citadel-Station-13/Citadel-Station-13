@@ -543,8 +543,8 @@
  * - updates: A set of bitflags dictating what should be updated. Defaults to [ALL]
  */
 /atom/proc/update_appearance(updates=ALL)
-	//SHOULD_NOT_SLEEP(TRUE)
-	//SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 
 	. = NONE
 	updates &= ~SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_APPEARANCE, updates)
@@ -557,18 +557,18 @@
 
 /// Updates the name of the atom
 /atom/proc/update_name(updates=ALL)
-	//SHOULD_CALL_PARENT(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_NAME, updates)
 
 /// Updates the description of the atom
 /atom/proc/update_desc(updates=ALL)
-	//SHOULD_CALL_PARENT(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_DESC, updates)
 
 /// Updates the icon of the atom
 /atom/proc/update_icon(updates=ALL)
 	SIGNAL_HANDLER
-	//SHOULD_CALL_PARENT(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 
 	. = NONE
 	updates &= ~SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON, updates)
@@ -593,12 +593,12 @@
 
 /// Updates the icon state of the atom
 /atom/proc/update_icon_state()
-	//SHOULD_CALL_PARENT(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON_STATE)
 
 /// Updates the overlays of the atom
 /atom/proc/update_overlays()
-	//SHOULD_CALL_PARENT(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
 
@@ -625,7 +625,7 @@
   */
 /atom/proc/wave_explode(power, datum/wave_explosion/explosion, dir)
 	set waitfor = FALSE
-	// SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_WAVE_EX_ACT, args)
 	. = wave_ex_act(power, explosion, dir)		// this must happen first for stuff like destruction/damage to tick.
@@ -643,7 +643,7 @@
   * Returns explosion power to "allow through". Standard handling and flag overrides in [wave_explode()].
   */
 /atom/proc/wave_ex_act(power, datum/wave_explosion/explosion, dir)
-	// SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
 	return power * wave_explosion_multiply - wave_explosion_block
 
 /atom/proc/blob_act(obj/structure/blob/B)
