@@ -1,0 +1,5 @@
+author: "WanderingFox95"
+delete-after: True
+changes: 
+  - bugfix: "Lavaland architects don't screw up so badly anymore and do in fact not somehow leave holes through the planet surface all the way into space under their bookshelves."
+  - bugfix: "Snow was removed from Lavaland Ruins."
