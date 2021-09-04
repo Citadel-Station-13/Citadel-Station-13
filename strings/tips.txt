@@ -136,7 +136,7 @@ As a Security Officer, your security HUDglasses can not only see crewmates' job 
 As a Security Officer, mindshield implants can only prevent someone from being turned into a cultist: unlike revolutionaries, it will not de-cult them if they have already been converted.
 As a Security Officer, examining someone while wearing your security HUDglasses can allow you to swiftly edit their records and criminal status. Be sure to set someone to WANTED if you can't catch up to them, as it'll alert other officers of who's the bad guy, and cause the little security droids to chase after them for you.
 As a Security Officer, you can take out the power cell on your baton to replace it with a better or fully charged one. Just use a screwdriver on your baton to remove the old cell.
-As a Security Officer, you can just about any firearm on your vest, this even works with other non-standard armor-substitutes like security winter coats!
+As a Security Officer, you can place just about any firearm on your vest slot, and this even works with other non-standard armor-substitutes like security winter coats!
 As the Detective, people leave fingerprints everywhere and on everything. With the exception of white latex, gloves will hide them. All is not lost, however, as gloves leave fibers specific to their kind such as black or nitrile, pointing to a general department.
 As the Detective, you can use your forensics scanner from a distance. Use this to scan boxes or other storage containers.
 As the Detective, your revolver can be loaded with .357 ammunition. Use a screwdriver to permanently modify your revolver into using this type of ammunition, be warned however, firing it has a decent chance to cause the revolver to misfire and shoot you in the foot.
