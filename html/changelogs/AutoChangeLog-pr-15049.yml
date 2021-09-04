@@ -1,4 +1,0 @@
-author: "keronshb"
-delete-after: True
-changes: 
-  - bugfix: "Fixes entering an occupied VR sleeper bug"
