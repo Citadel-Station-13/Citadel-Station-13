@@ -1,0 +1,4 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - bugfix: "Unreadied player gamemode votes now actually get ignored (if the config for this is enabled)."
