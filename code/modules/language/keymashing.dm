@@ -5,7 +5,7 @@
     exclaim_verb = "yelps"
     whisper_verb = "tildes"
 
-/datum/language/keymash/scramble(input)
+/datum/language/keymashing/scramble(input)
     . = list()
     for(var/i in 1 to length_char(input))
         . += ascii2text(rand(97, 122))
