@@ -11,8 +11,8 @@
 	gender = NEUTER
 	speak_chance = 1
 	turns_per_move = 5
-	maxHealth = 15
-	health = 15
+	maxHealth = 20
+	health = 20
 	see_in_dark = 6
 	obj_damage = 10
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1)
@@ -34,7 +34,6 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	var/datum/action/cooldown/scavenge
 	var/last_spawn_time = 0
-	///Number assigned to rats and mice, checked when determining infighting.
 
 /mob/living/simple_animal/hostile/plaguerat/Initialize()
 	. = ..()
@@ -66,9 +65,10 @@
 				playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
 				C.deconstruct()
 	for(var/obj/O in range(1,src))
-		if(istype(O, /obj/item/trash) || istype(O, /obj/effect/decal/cleanable/blood/gibs))
+		if((world.time - last_spawn_time) > 10 SECONDS && istype(O, /obj/item/trash) || istype(O, /obj/effect/decal/cleanable/blood/gibs))
 			qdel(O)
 			be_fruitful()
+			last_spawn_time = world.time
 
 /mob/living/simple_animal/hostile/plaguerat/CanAttack(atom/the_target)
 	if(istype(the_target,/mob/living/simple_animal))
