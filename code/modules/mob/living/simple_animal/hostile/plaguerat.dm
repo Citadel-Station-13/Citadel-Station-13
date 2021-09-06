@@ -112,7 +112,6 @@
 		return
 	var/turf/T = get_turf(owner)
 	var/loot = rand(1,100)
-	var/body = /obj/effect/mob_spawn/human/corpse/assistant
 	switch(loot)
 		if(1 to 3)
 			var/pickedtrash = pick(GLOB.ratking_trash)
@@ -123,12 +122,12 @@
 			new /obj/effect/decal/cleanable/blood/gibs(T)
 			new /obj/effect/decal/cleanable/blood/(T)
 		if(7 to 18)
-			if(locate(body) in T)
+			if(locate(/mob/living/carbon/human) in T)
 				to_chat(owner, "<span class='notice'>A corpse is blocking you from digging.</span>")
 				return
 			else
 				to_chat(owner, "<span class='notice'>A corpse rises from the ground. Best to leave it alone.</span>")
-				new body(T)
+				new /obj/effect/mob_spawn/human/corpse/assistant(T)
 		if(19 to 100)
 			to_chat(owner, "<span class='notice'>Drat. Nothing.</span>")
 	StartCooldown()
