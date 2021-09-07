@@ -147,6 +147,7 @@ GLOBAL_LIST(bad_gremlin_items)
 
 /mob/living/simple_animal/hostile/gremlin/death(gibbed)
 	walk(src,0)
+	QDEL_NULL(access_card)
 	return ..()
 
 /mob/living/simple_animal/hostile/gremlin/Life()
