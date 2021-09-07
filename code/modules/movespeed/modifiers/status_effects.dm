@@ -19,14 +19,14 @@
 
 /datum/movespeed_modifier/status_effect/tased
 	multiplicative_slowdown = 1.5
-	priority = 50
+	priority = 1500
 
 /datum/movespeed_modifier/status_effect/domain
 	multiplicative_slowdown = 3
 
 /datum/movespeed_modifier/status_effect/tased/no_combat_mode
 	multiplicative_slowdown = 8
-	priority = 100
+	priority = 1500
 
 /datum/movespeed_modifier/status_effect/electrostaff
 	multiplicative_slowdown = 1
