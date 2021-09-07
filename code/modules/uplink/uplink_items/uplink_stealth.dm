@@ -9,7 +9,7 @@
 
 /datum/uplink_item/stealthy_weapons/telescopicbat
 	name = "Telescopic Baseball Bat"
-	desc = "A robust telescopic baseball bat that hits like a truck and can be consealed when collapsed."
+	desc = "A robust telescopic baseball bat that hits like a truck and can be concealed when collapsed."
 	item = /obj/item/melee/baseball_bat/telescopic
 	cost = 2
 

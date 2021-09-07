@@ -146,6 +146,9 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
 
+	//the outline filter on hover
+	var/outline_filter
+
 	/* Our block parry data. Should be set in init, or something if you are using it.
 	 * This won't be accessed without ITEM_CAN_BLOCK or ITEM_CAN_PARRY so do not set it unless you have to to save memory.
 	 * If you decide it's a good idea to leave this unset while turning the flags on, you will runtime. Enjoy.
@@ -174,6 +177,12 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	if(force_string)
 		item_flags |= FORCE_STRING_OVERRIDE
+
+	if(istype(loc, /obj/item/storage))
+		item_flags |= IN_STORAGE
+
+	if(istype(loc, /obj/item/robot_module))
+		item_flags |= IN_INVENTORY
 
 	if(!hitsound)
 		if(damtype == "fire")
@@ -247,6 +256,14 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/turf/T = loc
 	loc = null
 	loc = T
+
+/obj/item/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	. = ..()
+	if(!anchored)
+		var/throw_dist = round(rand(3, max(3, 2.5 * sqrt(power))), 1)
+		throw_speed = EXPLOSION_THROW_SPEED
+		var/turf/target = get_ranged_target_turf(src, dir, throw_dist)
+		throw_at(target, throw_dist, EXPLOSION_THROW_SPEED)
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
 	. = ..()
@@ -344,15 +361,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 				C.update_damage_overlays()
 			return
 
-	if(acid_level > 20 && ismob(loc))// so we can still remove the clothes on us that have acid.
-		var/mob/living/carbon/C = user
-		if(istype(C))
-			if(!C.gloves || (!(C.gloves.resistance_flags & (UNACIDABLE|ACID_PROOF))))
-				to_chat(user, "<span class='warning'>The acid on [src] burns your hand!</span>")
-				var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-				if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
-					C.update_damage_overlays()
-
 	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP))		//See if we're supposed to auto pickup.
 		return
 
@@ -374,6 +382,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		if(!allow_attack_hand_drop(user) || !user.temporarilyRemoveItemFromInventory(src))
 			return
 
+	remove_outline()
 	pickup(user)
 	add_fingerprint(user)
 	if(!user.put_in_active_hand(src, FALSE, FALSE))
@@ -444,6 +453,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		qdel(src)
 	item_flags &= ~IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
+	remove_outline()
 	// if(!silent)
 	// 	playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE)
 	user?.update_equipment_speed_mods()
@@ -453,6 +463,21 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
 	item_flags |= IN_INVENTORY
+	if(item_flags & (ITEM_CAN_BLOCK | ITEM_CAN_PARRY) && user.client && !(type in user.client.block_parry_hinted))
+		var/list/dat = list("<span class='boldnotice'>You have picked up an item that can be used to block and/or parry:</span>")
+		// cit change - parry/block feedback
+		var/datum/block_parry_data/data = return_block_parry_datum(block_parry_data)
+		if(item_flags & ITEM_CAN_BLOCK)
+			dat += "[src] can be used to block damage using directional block. Press your active block keybind to use it."
+			if(data.block_automatic_enabled)
+				dat += "[src] is also capable of automatically blocking damage, if you are facing the right direction (usually towards your attacker)!"
+		if(item_flags & ITEM_CAN_PARRY)
+			dat += "[src] can be used to parry damage using active parry. Pressed your active parry keybind to initiate a timed parry sequence."
+			if(data.parry_automatic_enabled)
+				dat += "[src] is also capable of automatically parrying an incoming attack, if your mouse is over your attacker at the time if you being hit in a direct, melee attack."
+		dat += "Examine [src] to get a full readout of its block/parry stats."
+		to_chat(user, dat.Join("<br>"))
+		user.client.block_parry_hinted |= type
 
 // called when "found" in pockets and storage items. Returns 1 if the search should end.
 /obj/item/proc/on_found(mob/finder)
@@ -496,12 +521,13 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
  */
 /obj/item/proc/equipped(mob/user, slot, initial = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
+	var/signal_flags = SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	current_equipped_slot = slot
-	for(var/X in actions)
-		var/datum/action/A = X
-		if(item_action_slot_check(slot, user, A)) //some items only give their actions buttons when in a specific slot.
-			A.Grant(user)
+	if(!(signal_flags & COMPONENT_NO_GRANT_ACTIONS))
+		for(var/X in actions)
+			var/datum/action/A = X
+			if(item_action_slot_check(slot, user, A)) //some items only give their actions buttons when in a specific slot.
+				A.Grant(user)
 	item_flags |= IN_INVENTORY
 	// if(!initial)
 	// 	if(equip_sound && (slot_flags & slot))
@@ -852,18 +878,49 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		openToolTip(user,src,params,title = name,content = "[desc]<br><b>Force:</b> [force_string]",theme = "")
 
 /obj/item/MouseEntered(location, control, params)
-	if((item_flags & IN_INVENTORY) && usr.client.prefs.enable_tips && !QDELETED(src))
+	SEND_SIGNAL(src, COMSIG_ITEM_MOUSE_ENTER, location, control, params)
+	if((item_flags & IN_INVENTORY || item_flags & IN_STORAGE) && usr.client.prefs.enable_tips && !QDELETED(src) || isobserver(usr))
 		var/timedelay = usr.client.prefs.tip_delay/100
 		var/user = usr
 		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, user), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
+	var/mob/living/L = usr
+	if(istype(L) && L.incapacitated())
+		apply_outline(COLOR_RED_GRAY)
+	else
+		apply_outline()
+
+/obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+	. = ..()
+	remove_outline()
 
 /obj/item/MouseExited(location,control,params)
 	SEND_SIGNAL(src, COMSIG_ITEM_MOUSE_EXIT, location, control, params)
 	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
 	closeToolTip(usr)
+	remove_outline()
 
-/obj/item/MouseEntered(location,control,params)
-	SEND_SIGNAL(src, COMSIG_ITEM_MOUSE_ENTER, location, control, params)
+/obj/item/proc/apply_outline(colour = null)
+	if(!(item_flags & IN_INVENTORY || item_flags & IN_STORAGE) || QDELETED(src))
+		return
+	if(usr.client)
+		if(!usr.client.prefs.outline_enabled)
+			return
+	if(!colour)
+		if(usr.client)
+			colour = usr.client.prefs.outline_color
+			if(!colour)
+				colour = COLOR_BLUE_GRAY
+		else
+			colour = COLOR_BLUE_GRAY
+	if(outline_filter)
+		filters -= outline_filter
+	outline_filter = filter(type="outline", size=1, color=colour)
+	filters += outline_filter
+
+/obj/item/proc/remove_outline()
+	if(outline_filter)
+		filters -= outline_filter
+		outline_filter = null
 
 // Called when a mob tries to use the item as a tool.
 // Handles most checks.

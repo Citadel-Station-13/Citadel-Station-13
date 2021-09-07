@@ -357,6 +357,8 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 	animate(get_filter("portal_ripple"), time = 1.3 SECONDS, loop = -1, easing = LINEAR_EASING, radius = 32)
 
-	var/turf/center_turf = our_destination.get_target_turf()
+	/// DISABLED DUE TO BYOND BUG CAUSING STACK OVERFLOWS OF ANY HUMAN INSTANTIATION NEAR AN ACTIVATED GATEWAY.
+	/// Probably due to it referencing each other through the gateway (there's a deep loop, maybe BYOND isn't catching something when it usually would)
+	//var/turf/center_turf = our_destination.get_target_turf()
 
-	vis_contents += block(locate(center_turf.x - 1, center_turf.y - 1, center_turf.z), locate(center_turf.x + 1, center_turf.y + 1, center_turf.z))
+	//vis_contents += block(locate(center_turf.x - 1, center_turf.y - 1, center_turf.z), locate(center_turf.x + 1, center_turf.y + 1, center_turf.z))

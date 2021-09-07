@@ -28,6 +28,7 @@
 
 //Called when temperature is above a certain threshold, or if purity is too low.
 /datum/chemical_reaction/proc/FermiExplode(datum/reagents/R0, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
+	set waitfor = FALSE
 	if (Exploding == TRUE)
 		return
 
@@ -343,8 +344,13 @@
 	E.creatorID = B.data["ckey"]
 
 /datum/chemical_reaction/fermi/enthrall/FermiExplode(datum/reagents/R0, var/atom/my_atom, volume, temp, pH)
+	var/turf/T = get_turf(my_atom)
+	var/datum/reagents/R = new/datum/reagents(1000)
+	var/datum/effect_system/smoke_spread/chem/s = new()
+	R.add_reagent(/datum/reagent/fermi/enthrallExplo, volume)
+	s.set_up(R, volume/2, T)
+	s.start()
 	R0.clear_reagents()
-	..()
 
 /datum/chemical_reaction/fermi/hatmium // done
 	name = "Hat growth serum"

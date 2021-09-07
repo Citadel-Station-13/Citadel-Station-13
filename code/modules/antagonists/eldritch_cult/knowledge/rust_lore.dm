@@ -24,7 +24,7 @@
 	var/check = FALSE
 	if(ismob(target))
 		var/mob/living/mobster = target
-		if(!mobster.mob_biotypes & MOB_ROBOTIC)
+		if(!(mobster.mob_biotypes & MOB_ROBOTIC))
 			return FALSE
 		else
 			check = TRUE
@@ -159,15 +159,21 @@
 	desc = "Applying your knowledge of rust to the human body, a knowledge that could decay your foes from the inside out, resulting in organ failure, vomiting, or eventual death through the peeling of rotting flesh."
 	gain_text = "Rust, decay, it's all the same. All that remains is application."
 	cost = 2
+	sacs_needed = 3
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/grasp_of_decay
 	next_knowledge = list(/datum/eldritch_knowledge/final/rust_final)
 	route = PATH_RUST
+
+/datum/eldritch_knowledge/spell/grasp_of_decay/on_gain(mob/user)
+	. = ..()
+	priority_announce("A foul wind is blowing... The floor creaks with rust as something sinister approaches!", sound = 'sound/misc/notice1.ogg')
 
 /datum/eldritch_knowledge/final/rust_final
 	name = "Rustbringer's Oath"
 	desc = "Bring three corpses onto a transmutation rune. After you finish the ritual, rust will now automatically spread from the rune. Your healing on rust is also tripled, while you become more resilient overall."
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark for the Rustbringer has come! Rusted Hills, CALL MY NAME!"
 	cost = 5
+	sacs_needed = 8
 	required_atoms = list(/mob/living/carbon/human)
 	route = PATH_RUST
 

@@ -114,13 +114,21 @@
 	restricted_desc = "Heads of Staff"
 	restricted_roles = list("Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Research Director", "Chief Medical Officer", "Quartermaster")
 
-/datum/gear/head/orvkepiops
-	name = "Federation Kepi, ops/sec"
+/datum/gear/head/orvkepieng
+	name = "Federation Kepi, eng"
 	description = "A visored cap. Intended to be used with ORV uniform."
-	path = /obj/item/clothing/head/kepi/orvi/engsec
+	path = /obj/item/clothing/head/kepi/orvi/eng
 	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
-	restricted_desc = "Engineering, Security and Cargo"
-	restricted_roles = list("Chief Engineer", "Atmospheric Technician", "Station Engineer", "Warden", "Detective", "Security Officer", "Head of Security", "Cargo Technician", "Shaft Miner", "Quartermaster")
+	restricted_desc = "Engineering"
+	restricted_roles = list("Chief Engineer", "Atmospheric Technician", "Station Engineer")
+
+/datum/gear/head/orvkepisec
+	name = "Federation Kepi, sec"
+	description = "A visored cap. Intended to be used with ORV uniform."
+	path = /obj/item/clothing/head/kepi/orvi/sec
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
+	restricted_desc = "Security"
+	restricted_roles = list("Warden", "Detective", "Security Officer", "Head of Security")
 
 /datum/gear/head/orvkepimedsci
 	name = "Federation Kepi, medsci"
@@ -135,8 +143,8 @@
 	description = "A visored cap. Intended to be used with ORV uniform."
 	path = /obj/item/clothing/head/kepi/orvi/service
 	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
-	restricted_desc = "Service and Civilian, barring Clown, Mime and Lawyer"
-	restricted_roles = list("Assistant", "Bartender", "Botanist", "Cook", "Curator", "Janitor", "Chaplain")
+	restricted_desc = "Service, Cargo and Civilian, barring Clown, Mime and Lawyer"
+	restricted_roles = list("Bartender", "Botanist", "Cook", "Curator", "Janitor", "Chaplain", "Cargo Technician", "Shaft Miner")
 
 /datum/gear/head/orvkepiass
 	name = "Federation Kepi, assistant"

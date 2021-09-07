@@ -54,6 +54,8 @@
 	assemblytype = /obj/structure/door_assembly
 	normalspeed = 1
 	explosion_block = 1
+	wave_explosion_block = EXPLOSION_BLOCK_WALL
+	wave_explosion_multiply = EXPLOSION_DAMPEN_WALL
 	hud_possible = list(DIAG_AIRLOCK_HUD)
 
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
@@ -686,7 +688,7 @@
 		else
 			. += "It looks very robust."
 
-	if(hasSiliconAccessInArea(user) && (!stat & BROKEN))
+	if(hasSiliconAccessInArea(user) && !(stat & BROKEN))
 		. += "<span class='notice'>Shift-click [src] to [ density ? "open" : "close"] it.</span>"
 		. += "<span class='notice'>Ctrl-click [src] to [ locked ? "raise" : "drop"] its bolts.</span>"
 		. += "<span class='notice'>Alt-click [src] to [ secondsElectrified ? "un-electrify" : "permanently electrify"] it.</span>"

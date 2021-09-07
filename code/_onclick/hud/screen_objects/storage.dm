@@ -1,12 +1,12 @@
-/obj/screen/storage
+/atom/movable/screen/storage
 	name = "storage"
 	var/insertion_click = FALSE
 
-/obj/screen/storage/Initialize(mapload, new_master)
+/atom/movable/screen/storage/Initialize(mapload, new_master)
 	. = ..()
 	master = new_master
 
-/obj/screen/storage/Click(location, control, params)
+/atom/movable/screen/storage/Click(location, control, params)
 	if(!insertion_click)
 		return ..()
 	if(hud?.mymob && (hud.mymob != usr))
@@ -18,7 +18,7 @@
 			master.attackby(null, I, usr, params)
 	return TRUE
 
-/obj/screen/storage/boxes
+/atom/movable/screen/storage/boxes
 	name = "storage"
 	icon_state = "block"
 	screen_loc = "7,7 to 10,8"
@@ -26,83 +26,83 @@
 	plane = HUD_PLANE
 	insertion_click = TRUE
 
-/obj/screen/storage/close
+/atom/movable/screen/storage/close
 	name = "close"
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 	icon_state = "backpack_close"
 
-/obj/screen/storage/close/Click()
+/atom/movable/screen/storage/close/Click()
 	var/datum/component/storage/S = master
 	S.close(usr)
 	return TRUE
 
-/obj/screen/storage/left
+/atom/movable/screen/storage/left
 	icon_state = "storage_start"
 	insertion_click = TRUE
 
-/obj/screen/storage/right
+/atom/movable/screen/storage/right
 	icon_state = "storage_end"
 	insertion_click = TRUE
 
-/obj/screen/storage/continuous
+/atom/movable/screen/storage/continuous
 	icon_state = "storage_continue"
 	insertion_click = TRUE
 
-/obj/screen/storage/volumetric_box
+/atom/movable/screen/storage/volumetric_box
 	icon_state = "stored_continue"
 	layer = VOLUMETRIC_STORAGE_BOX_LAYER
 	plane = VOLUMETRIC_STORAGE_BOX_PLANE
 	var/obj/item/our_item
 
-/obj/screen/storage/volumetric_box/Initialize(mapload, new_master, obj/item/our_item)
+/atom/movable/screen/storage/volumetric_box/Initialize(mapload, new_master, obj/item/our_item)
 	src.our_item = our_item
 	RegisterSignal(our_item, COMSIG_ITEM_MOUSE_ENTER, .proc/on_item_mouse_enter)
 	RegisterSignal(our_item, COMSIG_ITEM_MOUSE_EXIT, .proc/on_item_mouse_exit)
 	return ..()
 
-/obj/screen/storage/volumetric_box/Destroy()
+/atom/movable/screen/storage/volumetric_box/Destroy()
 	makeItemInactive()
 	our_item = null
 	return ..()
 
-/obj/screen/storage/volumetric_box/Click(location, control, params)
+/atom/movable/screen/storage/volumetric_box/Click(location, control, params)
 	return our_item.Click(location, control, params)
 
-/obj/screen/storage/volumetric_box/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+/atom/movable/screen/storage/volumetric_box/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	return our_item.MouseDrop(over, src_location, over_location, src_control, over_control, params)
 
-/obj/screen/storage/volumetric_box/MouseExited(location, control, params)
+/atom/movable/screen/storage/volumetric_box/MouseExited(location, control, params)
 	makeItemInactive()
 
-/obj/screen/storage/volumetric_box/MouseEntered(location, control, params)
+/atom/movable/screen/storage/volumetric_box/MouseEntered(location, control, params)
 	makeItemActive()
 
-/obj/screen/storage/volumetric_box/proc/on_item_mouse_enter()
+/atom/movable/screen/storage/volumetric_box/proc/on_item_mouse_enter()
 	makeItemActive()
 
-/obj/screen/storage/volumetric_box/proc/on_item_mouse_exit()
+/atom/movable/screen/storage/volumetric_box/proc/on_item_mouse_exit()
 	makeItemInactive()
 
-/obj/screen/storage/volumetric_box/proc/makeItemInactive()
+/atom/movable/screen/storage/volumetric_box/proc/makeItemInactive()
 	return
 
-/obj/screen/storage/volumetric_box/proc/makeItemActive()
+/atom/movable/screen/storage/volumetric_box/proc/makeItemActive()
 	return
 
-/obj/screen/storage/volumetric_box/center
+/atom/movable/screen/storage/volumetric_box/center
 	icon_state = "stored_continue"
-	var/obj/screen/storage/volumetric_edge/stored_left/left
-	var/obj/screen/storage/volumetric_edge/stored_right/right
-	var/obj/screen/storage/item_holder/holder
+	var/atom/movable/screen/storage/volumetric_edge/stored_left/left
+	var/atom/movable/screen/storage/volumetric_edge/stored_right/right
+	var/atom/movable/screen/storage/item_holder/holder
 	var/pixel_size
 
-/obj/screen/storage/volumetric_box/center/Initialize(mapload, new_master, our_item)
+/atom/movable/screen/storage/volumetric_box/center/Initialize(mapload, new_master, our_item)
 	left = new(null, src, our_item)
 	right = new(null, src, our_item)
 	return ..()
 
-/obj/screen/storage/volumetric_box/center/Destroy()
+/atom/movable/screen/storage/volumetric_box/center/Destroy()
 	QDEL_NULL(left)
 	QDEL_NULL(right)
 	vis_contents.Cut()
@@ -110,13 +110,13 @@
 		QDEL_NULL(holder)
 	return ..()
 
-/obj/screen/storage/volumetric_box/center/proc/on_screen_objects()
+/atom/movable/screen/storage/volumetric_box/center/proc/on_screen_objects()
 	return list(src)
 
 /**
   * Sets the size of this box screen object and regenerates its left/right borders. This includes the actual border's size!
   */
-/obj/screen/storage/volumetric_box/center/proc/set_pixel_size(pixels)
+/atom/movable/screen/storage/volumetric_box/center/proc/set_pixel_size(pixels)
 	if(pixel_size == pixels)
 		return
 	pixel_size = pixels
@@ -139,59 +139,59 @@
 	add_overlay(left)
 	add_overlay(right)
 
-/obj/screen/storage/volumetric_box/center/makeItemInactive()
+/atom/movable/screen/storage/volumetric_box/center/makeItemInactive()
 	if(!holder)
 		return
 	holder.layer = VOLUMETRIC_STORAGE_ITEM_LAYER
 	holder.plane = VOLUMETRIC_STORAGE_ITEM_PLANE
 
-/obj/screen/storage/volumetric_box/center/makeItemActive()
+/atom/movable/screen/storage/volumetric_box/center/makeItemActive()
 	if(!holder)
 		return
 	holder.our_item.layer = VOLUMETRIC_STORAGE_ACTIVE_ITEM_LAYER		//make sure we display infront of the others!
 	holder.our_item.plane = VOLUMETRIC_STORAGE_ACTIVE_ITEM_PLANE
 
-/obj/screen/storage/volumetric_edge
+/atom/movable/screen/storage/volumetric_edge
 	layer = VOLUMETRIC_STORAGE_BOX_LAYER
 	plane = VOLUMETRIC_STORAGE_BOX_PLANE
 
-/obj/screen/storage/volumetric_edge/Initialize(mapload, master, our_item)
+/atom/movable/screen/storage/volumetric_edge/Initialize(mapload, master, our_item)
 	src.master = master
 	return ..()
 
-/obj/screen/storage/volumetric_edge/Click(location, control, params)
+/atom/movable/screen/storage/volumetric_edge/Click(location, control, params)
 	return master.Click(location, control, params)
 
-/obj/screen/storage/volumetric_edge/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+/atom/movable/screen/storage/volumetric_edge/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	return master.MouseDrop(over, src_location, over_location, src_control, over_control, params)
 
-/obj/screen/storage/volumetric_edge/MouseExited(location, control, params)
+/atom/movable/screen/storage/volumetric_edge/MouseExited(location, control, params)
 	return master.MouseExited(location, control, params)
 
-/obj/screen/storage/volumetric_edge/MouseEntered(location, control, params)
+/atom/movable/screen/storage/volumetric_edge/MouseEntered(location, control, params)
 	return master.MouseEntered(location, control, params)
 
-/obj/screen/storage/volumetric_edge/stored_left
+/atom/movable/screen/storage/volumetric_edge/stored_left
 	icon_state = "stored_start"
 	appearance_flags = APPEARANCE_UI | KEEP_APART | RESET_TRANSFORM // Yes I know RESET_TRANSFORM is in APPEARANCE_UI but we're hard-asserting this incase someone changes it.
 
-/obj/screen/storage/volumetric_edge/stored_right
+/atom/movable/screen/storage/volumetric_edge/stored_right
 	icon_state = "stored_end"
 	appearance_flags = APPEARANCE_UI | KEEP_APART | RESET_TRANSFORM
 
-/obj/screen/storage/item_holder
+/atom/movable/screen/storage/item_holder
 	var/obj/item/our_item
 	vis_flags = NONE
 
-/obj/screen/storage/item_holder/Initialize(mapload, new_master, obj/item/I)
+/atom/movable/screen/storage/item_holder/Initialize(mapload, new_master, obj/item/I)
 	. = ..()
 	our_item = I
 	vis_contents += I
 
-/obj/screen/storage/item_holder/Destroy()
+/atom/movable/screen/storage/item_holder/Destroy()
 	vis_contents.Cut()
 	our_item = null
 	return ..()
 
-/obj/screen/storage/item_holder/Click(location, control, params)
+/atom/movable/screen/storage/item_holder/Click(location, control, params)
 	return our_item.Click(location, control, params)

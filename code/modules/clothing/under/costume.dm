@@ -280,23 +280,21 @@
 	item_state = "qipao"
 	body_parts_covered = CHEST|GROIN
 	can_adjust = FALSE
+	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+	
 
 /obj/item/clothing/under/costume/qipao/white
 	name = "White Qipao"
 	desc = "A Qipao, traditionally worn in ancient Earth China by women during social events and lunar new years. This one is white."
 	icon_state = "qipao_white"
 	item_state = "qipao_white"
-	body_parts_covered = CHEST|GROIN
-	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/qipao/red
 	name = "Red Qipao"
 	desc = "A Qipao, traditionally worn in ancient Earth China by women during social events and lunar new years. This one is red."
 	icon_state = "qipao_red"
 	item_state = "qipao_red"
-	body_parts_covered = CHEST|GROIN
-	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/cheongsam
 	name = "Black Cheongsam"
@@ -332,9 +330,11 @@
 
 /obj/item/clothing/under/costume/kimono
 	name = "Kimono"
-	desc = "A traditional piece of clothing from japan"
+	desc = "A traditional piece of clothing from Japan."
 	icon_state = "kimono"
 	item_state = "kimono"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/kimono/black
 	name = "Black Kimono"
@@ -355,3 +355,10 @@
 	name = "Sakura Kimono'"
 	icon_state = "sakura_kimono"
 	item_state = "sakura_kimono"
+
+/obj/item/clothing/under/costume/swagoutfit
+	name = "Swag outfit"
+	desc = "Why don't you go secure some bitches?"
+	icon_state = "SwagOutfit"
+	item_state = "SwagOutfit"
+	can_adjust = FALSE

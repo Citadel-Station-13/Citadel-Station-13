@@ -542,8 +542,48 @@
 	update_stat()
 	med_hud_set_health()
 	med_hud_set_status()
+	update_health_hud()
 
-//proc used to ressuscitate a mob
+/mob/living/update_health_hud()
+	var/severity = 0
+	var/healthpercent = (health/maxHealth) * 100
+	if(hud_used?.healthdoll) //to really put you in the boots of a simplemob
+		var/atom/movable/screen/healthdoll/living/livingdoll = hud_used.healthdoll
+		switch(healthpercent)
+			if(100 to INFINITY)
+				livingdoll.icon_state = "living0"
+			if(80 to 100)
+				livingdoll.icon_state = "living1"
+				severity = 1
+			if(60 to 80)
+				livingdoll.icon_state = "living2"
+				severity = 2
+			if(40 to 60)
+				livingdoll.icon_state = "living3"
+				severity = 3
+			if(20 to 40)
+				livingdoll.icon_state = "living4"
+				severity = 4
+			if(1 to 20)
+				livingdoll.icon_state = "living5"
+				severity = 5
+			else
+				livingdoll.icon_state = "living6"
+				severity = 6
+		if(!livingdoll.filtered)
+			livingdoll.filtered = TRUE
+			var/icon/mob_mask = icon(icon, icon_state)
+			if(mob_mask.Height() > world.icon_size || mob_mask.Width() > world.icon_size)
+				var/health_doll_icon_state = health_doll_icon ? health_doll_icon : "megasprite"
+				mob_mask = icon('icons/mob/screen_gen.dmi', health_doll_icon_state) //swap to something generic if they have no special doll
+			UNLINT(livingdoll.filters += filter(type="alpha", icon = mob_mask))
+			livingdoll.filters += filter(type="drop_shadow", size = -1)
+	if(severity > 0)
+		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
+	else
+		clear_fullscreen("brute")
+
+//Proc used to resuscitate a mob, for full_heal see fully_heal()
 /mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
@@ -829,11 +869,11 @@
 			clear_alert("gravity")
 		else
 			if(has_gravity >= GRAVITY_DAMAGE_TRESHOLD)
-				throw_alert("gravity", /obj/screen/alert/veryhighgravity)
+				throw_alert("gravity", /atom/movable/screen/alert/veryhighgravity)
 			else
-				throw_alert("gravity", /obj/screen/alert/highgravity)
+				throw_alert("gravity", /atom/movable/screen/alert/highgravity)
 	else
-		throw_alert("gravity", /obj/screen/alert/weightless)
+		throw_alert("gravity", /atom/movable/screen/alert/weightless)
 	if(!override && !is_flying())
 		INVOKE_ASYNC(src, /atom/movable.proc/float, !has_gravity)
 
@@ -871,6 +911,12 @@
 					"<span class='userdanger'>[src] tries to remove your [what.name].</span>", target = src,
 					target_message = "<span class='danger'>You try to remove [who]'s [what.name].</span>")
 		what.add_fingerprint(src)
+		if(ishuman(who))
+			var/mob/living/carbon/human/victim_human = who
+			if(victim_human.key && !victim_human.client) // AKA braindead
+				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
+					var/list/new_entry = list(list(src.name, "tried unequipping your [what]", world.time))
+					LAZYADD(victim_human.afk_thefts, new_entry)
 	else
 		to_chat(src,"<span class='notice'>You try to remove [who]'s [what.name].</span>")
 		what.add_fingerprint(src)
@@ -917,6 +963,13 @@
 			to_chat(src, "<span class='warning'>\The [what.name] doesn't fit in that place!</span>")
 			return
 
+		if(ishuman(who))
+			var/mob/living/carbon/human/victim_human = who
+			if(victim_human.key && !victim_human.client) // AKA braindead
+				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
+					var/list/new_entry = list(list(src.name, "tried equipping you with [what]", world.time))
+					LAZYADD(victim_human.afk_thefts, new_entry)
+
 		who.visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>",
 			"<span class='notice'>[src] tries to put [what] on you.</span>", target = src,
 			target_message = "<span class='notice'>You try to put [what] on [who].</span>")
@@ -955,7 +1008,7 @@
 			loc_temp = obj_temp
 	else if(isspaceturf(get_turf(src)))
 		var/turf/heat_turf = get_turf(src)
-		loc_temp = heat_turf.temperature
+		loc_temp = heat_turf.return_temperature()
 	return loc_temp
 
 /mob/living/proc/get_standard_pixel_x_offset(lying = 0)
@@ -1106,7 +1159,7 @@
 		visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
-		throw_alert("fire", /obj/screen/alert/fire)
+		throw_alert("fire", /atom/movable/screen/alert/fire)
 		update_fire()
 		SEND_SIGNAL(src, COMSIG_LIVING_IGNITED,src)
 		return TRUE

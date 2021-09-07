@@ -84,6 +84,9 @@
 	if(slam_cooldown + slam_cooldown_time > world.time)
 		to_chat(src, "<span class='warning'>Your slam ability is still on cooldown!</span>")
 		return
+	if(!isopenturf(loc))
+		to_chat(src, "<span class='warning'>You need to be on open flooring to do that!")
+		return
 
 	face_atom(A)
 	var/mob/living/victim = A
@@ -126,13 +129,12 @@
 /mob/living/simple_animal/slaughter/proc/release_victims()
 	if(!consumed_mobs)
 		return
-
+	var/turf/T = get_turf(src)
+	if(!T)
+		T = find_safe_turf()
 	for(var/mob/living/M in consumed_mobs)
 		if(!M)
 			continue
-		var/turf/T = find_safe_turf()
-		if(!T)
-			T = get_turf(src)
 		M.forceMove(T)
 
 /mob/living/simple_animal/slaughter/proc/refresh_consumed_buff()
@@ -260,12 +262,12 @@
 	if(!consumed_mobs)
 		return
 
+	var/turf/T = get_turf(src)
+	if(!T)
+		T = find_safe_turf()
 	for(var/mob/living/M in consumed_mobs)
 		if(!M)
-			continue
-		var/turf/T = find_safe_turf()
-		if(!T)
-			T = get_turf(src)
+			continue	
 		M.forceMove(T)
 		if(M.revive(full_heal = TRUE, admin_revive = TRUE))
 			M.grab_ghost(force = TRUE)

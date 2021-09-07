@@ -7,6 +7,7 @@
 	///How much blud it has for bloodsucking
 	blood_volume = 550
 	rad_flags = RAD_NO_CONTAMINATE
+	hud_type = /datum/hud/living/simple_animal
 
 	status_flags = CANPUSH
 
@@ -263,10 +264,10 @@
 		var/turf/open/ST = src.loc
 		if(ST.air)
 
-			var/tox = ST.air.get_moles(/datum/gas/plasma)
-			var/oxy = ST.air.get_moles(/datum/gas/oxygen)
-			var/n2  = ST.air.get_moles(/datum/gas/nitrogen)
-			var/co2 = ST.air.get_moles(/datum/gas/carbon_dioxide)
+			var/tox = ST.air.get_moles(GAS_PLASMA)
+			var/oxy = ST.air.get_moles(GAS_O2)
+			var/n2  = ST.air.get_moles(GAS_N2)
+			var/co2 = ST.air.get_moles(GAS_CO2)
 
 			if(atmos_requirements["min_oxy"] && oxy < atmos_requirements["min_oxy"])
 				. = FALSE
@@ -553,7 +554,7 @@
 	var/oindex = active_hand_index
 	active_hand_index = hand_index
 	if(hud_used)
-		var/obj/screen/inventory/hand/H
+		var/atom/movable/screen/inventory/hand/H
 		H = hud_used.hand_slots["[hand_index]"]
 		if(H)
 			H.update_icon()

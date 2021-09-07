@@ -66,6 +66,16 @@
 
 ////////////////////////////////////////////////MISC RECIPE's////////////////////////////////////////////////
 
+/datum/crafting_recipe/food/meatslab
+	name = "Meat Slab"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/meat/rawcutlet = 3,
+	)
+	tools = list(/obj/item/kitchen/efink)
+	result = /obj/item/reagent_containers/food/snacks/meat/slab
+	subcategory = CAT_MEAT
+
+
 /datum/crafting_recipe/food/ribs
 	name = "BBQ Ribs"
 	reqs = list(
@@ -202,4 +212,13 @@
 		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/salad/gumbo
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/goliathcalamari
+	name = "Goliath Calamari"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/meat/slab/goliath = 2,
+		/datum/reagent/consumable/cooking_oil = 10
+	)
+	result = /obj/item/reagent_containers/food/snacks/goliathcalamari
 	subcategory = CAT_MEAT

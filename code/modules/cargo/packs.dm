@@ -22,8 +22,8 @@
 /datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
 	var/obj/structure/closet/crate/C
 	if(paying_account)
-		if(ispath(crate_type, /obj/structure/closet/secure_closet/goodies))	// lets ensure private orders don't come in crates when the original one comes in lockers
-			C = new /obj/structure/closet/secure_closet/goodies/owned(A, paying_account)	// that would lead to infinite money exploits
+		if(ispath(crate_type, /obj/structure/closet/secure_closet/cargo))	// lets ensure private orders don't come in crates when the original one comes in lockers
+			C = new /obj/structure/closet/secure_closet/cargo/owned(A, paying_account)	// that would lead to infinite money exploits
 		else
 			C = new /obj/structure/closet/crate/secure/owned(A, paying_account)
 		C.name = "[crate_name] - Purchased by [paying_account.account_holder]"

@@ -52,7 +52,7 @@
 				break
 	if(has_starlight && anchored)
 		var/area/A = get_area(src)
-		if(A.outdoors || A.map_name == "Space" || !(A.area_flags & VALID_TERRITORY))
+		if(A.outdoors || A.map_name == "Space" || !(A?.area_flags & CULT_PERMITTED))
 			has_starlight = FALSE
 	if(old_status != has_starlight)
 		if(has_starlight)

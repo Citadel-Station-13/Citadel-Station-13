@@ -4,7 +4,11 @@
 
 /datum/component/personal_crafting/proc/create_mob_button(mob/user, client/CL)
 	var/datum/hud/H = user.hud_used
-	var/obj/screen/craft/C = new()
+	for(var/huds in H.static_inventory)
+		if(istype(huds, /atom/movable/screen/craft))
+			return
+	//We don't want to be stacking multiple crafting huds on relogs
+	var/atom/movable/screen/craft/C = new()
 	C.icon = H.ui_style
 	H.static_inventory += C
 	CL.screen += C
@@ -20,7 +24,7 @@
 					CAT_AMMO,
 				),
 				CAT_ROBOT = CAT_NONE,
-				CAT_MISC = list(
+				CAT_MISCELLANEOUS = list(
 					CAT_MISCELLANEOUS,
 					CAT_TOOL,
 					CAT_FURNITURE,
@@ -319,7 +323,7 @@
 		Deletion.Cut(Deletion.len)
 		qdel(DL)
 
-/datum/component/personal_crafting/proc/component_ui_interact(obj/screen/craft/image, location, control, params, user)
+/datum/component/personal_crafting/proc/component_ui_interact(atom/movable/screen/craft/image, location, control, params, user)
 	if(user == parent)
 		ui_interact(user)
 

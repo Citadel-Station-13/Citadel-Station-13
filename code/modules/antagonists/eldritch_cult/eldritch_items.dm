@@ -44,46 +44,6 @@
 	if(target.stat == DEAD)
 		to_chat(user,"<span class='warning'>[target.real_name] is dead. Bring them onto a transmutation rune!</span>")
 
-/datum/action/innate/heretic_shatter
-	name = "Shattering Offer"
-	desc = "After a brief delay, you will be granted salvation from a dire situation at the cost of your blade. (Teleports you to a random safe turf on your current z level after a windup, but destroys your blade.)"
-	background_icon_state = "bg_ecult"
-	button_icon_state = "shatter"
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
-	check_flags = MOBILITY_HOLD|MOBILITY_MOVE|MOBILITY_USE
-	var/mob/living/carbon/human/holder
-	var/obj/item/melee/sickly_blade/sword
-
-/datum/action/innate/heretic_shatter/Grant(mob/user, obj/object)
-	sword = object
-	holder = user
-	//i know what im doing
-	return ..()
-
-/datum/action/innate/heretic_shatter/IsAvailable()
-	if(IS_HERETIC(holder) || IS_HERETIC_MONSTER(holder))
-		return ..()
-	else
-		return FALSE
-
-/datum/action/innate/heretic_shatter/Activate()
-	if(do_after(holder,10, target = holder))
-		if(!sword || QDELETED(sword))
-			return
-		if(!IsAvailable())	//Never trust the user.
-			return
-		var/swordz = (get_turf(sword))?.z	//SHOULD usually have a turf but if it doesn't better be prepared.
-		if(!swordz)
-			to_chat(holder, "<span class='warning'>[sword] flickers but remains in place, as do you...</span>")
-			return
-		var/turf/safe_turf = find_safe_turf(zlevels = swordz, extended_safety_checks = TRUE)
-		if(!safe_turf)
-			to_chat(holder, "<span class='warning'>[sword] flickers but remains in place, as do you...</span>")
-			return
-		do_teleport(holder,safe_turf,forceMove = TRUE,channel=TELEPORT_CHANNEL_MAGIC)
-		to_chat(holder,"<span class='warning'>You feel a gust of energy flow through your body... the Rusted Hills heard your call...</span>")
-		qdel(sword)
-
 /obj/item/melee/sickly_blade
 	name = "sickly blade"
 	desc = "A sickly green crescent blade, decorated with an ornamental eye. You feel like you're being watched..."
@@ -101,11 +61,6 @@
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "rended")
-	var/datum/action/innate/heretic_shatter/linked_action
-
-/obj/item/melee/sickly_blade/Initialize()
-	. = ..()
-	linked_action = new(src)
 
 /obj/item/melee/sickly_blade/attack(mob/living/target, mob/living/user)
 	if(!(IS_HERETIC(user) || IS_HERETIC_MONSTER(user)))
@@ -120,13 +75,17 @@
 		return
 	return ..()
 
-/obj/item/melee/sickly_blade/pickup(mob/user)
-	. = ..()
-	linked_action.Grant(user, src)
-
-/obj/item/melee/sickly_blade/dropped(mob/user, silent)
-	. = ..()
-	linked_action.Remove(user, src)
+/obj/item/melee/sickly_blade/attack_self(mob/user)
+	var/turf/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
+	if(IS_HERETIC(user) || IS_HERETIC_MONSTER(user))
+		if(do_teleport(user, safe_turf, forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC))
+			to_chat(user,"<span class='warning'>As you shatter [src], you feel a gust of energy flow through your body. The Rusted Hills heard your call...</span>")
+		else
+			to_chat(user,"<span class='warning'>You shatter [src], but your plea goes unanswered.</span>")
+	else
+		to_chat(user,"<span class='warning'>You shatter [src].</span>")
+	playsound(src, "shatter", 70, TRUE) //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
+	qdel(src)
 
 /obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -140,6 +99,11 @@
 			eldritch_knowledge_datum.on_eldritch_blade(target,user,proximity_flag,click_parameters)
 		else
 			eldritch_knowledge_datum.on_ranged_attack_eldritch_blade(target,user,click_parameters)
+
+/obj/item/melee/sickly_blade/examine(mob/user)
+	. = ..()
+	if(IS_HERETIC(user) || IS_HERETIC_MONSTER(user))
+		. += "<span class='notice'><B>A heretic (or a servant of one) can shatter this blade to teleport to a random, mostly safe location by activating it in-hand.</B></span>"
 
 /obj/item/melee/sickly_blade/rust
 	name = "rusted blade"
@@ -229,8 +193,8 @@
 	flags_inv = NONE
 	flags_cover = NONE
 	desc = "Black like tar, doesn't reflect any light. Runic symbols line the outside, with each flash you lose comprehension of what you are seeing."
-	item_flags = EXAMINE_SKIP
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30,"energy" = 30, "bomb" = 15, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	obj_flags = NONE | EXAMINE_SKIP
 
 /obj/item/clothing/suit/hooded/cultrobes/void
 	name = "void cloak"
@@ -243,6 +207,7 @@
 	// slightly worse than normal cult robes
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30,"energy" = 30, "bomb" = 15, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/void_cloak
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/hooded/cultrobes/void/ToggleHood()
 	if(!iscarbon(loc))
@@ -253,9 +218,10 @@
 		//We need to account for the hood shenanigans, and that way we can make sure items always fit, even if one of the slots is used by the fucking hood.
 		if(suittoggled)
 			to_chat(carbon_user,"<span class='notice'>The light shifts around you making the cloak invisible!</span>")
-		else
+			obj_flags |= EXAMINE_SKIP
+		else if(obj_flags & EXAMINE_SKIP) // ensures that it won't toggle visibility if raising the hood failed
 			to_chat(carbon_user,"<span class='notice'>The kaleidoscope of colours collapses around you, as the cloak shifts to visibility!</span>")
-		item_flags = suittoggled ? EXAMINE_SKIP : ~EXAMINE_SKIP
+			obj_flags ^= EXAMINE_SKIP
 	else
 		to_chat(carbon_user,"<span class='danger'>You can't force the hood onto your head!</span>")
 

@@ -201,6 +201,15 @@
 	build_path = /obj/item/storage/hypospraykit // let's not summon new hyposprays thanks
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	
+/datum/design/hypospray/mkii
+	name = "Hypospray Mk. II"
+	id = "hypospray_mkii"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1600, /datum/material/glass = 1000)
+	build_path = /obj/item/hypospray/mkii
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/blood_bag
 	name = "Empty Blood Bag"

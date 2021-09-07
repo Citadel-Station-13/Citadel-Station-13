@@ -271,20 +271,20 @@
 	var/turf/T = get_turf(A)
 	var/list/things = contents()
 	var/datum/progressbar/progress = new(M, length(things), T)
-	while (do_after(M, 10, TRUE, T, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress)))
+	while (do_after(M, 10, TRUE, T, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress, TRUE, M)))
 		stoplag(1)
 	qdel(progress)
 	A.do_squish(0.8, 1.2)
 
-/datum/component/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress, trigger_on_found = TRUE)
+/datum/component/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress, trigger_on_found = TRUE, mob/user)
 	var/atom/real_location = real_location()
 	for(var/obj/item/I in things)
 		things -= I
 		if(I.loc != real_location)
 			continue
-		remove_from_storage(I, target)
-		if(trigger_on_found && I.on_found())
+		if(trigger_on_found && user && (user.active_storage != src) && I.on_found(user))
 			return FALSE
+		remove_from_storage(I, target)
 		if(TICK_CHECK)
 			progress.update(progress.goal - length(things))
 			return TRUE
@@ -423,39 +423,55 @@
 	var/atom/A = parent
 	if(ismob(M)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
 		A.add_fingerprint(M)
+		if(istype(A, /obj/item))
+			var/obj/item/I = A
+			I.remove_outline()	//Removes the outline when we drag
 		if(!over_object)
 			return FALSE
 		if(ismecha(M.loc)) // stops inventory actions in a mech
 			return FALSE
 		// this must come before the screen objects only block, dunno why it wasn't before
 		if(over_object == M)
-			user_show_to_mob(M)
+			user_show_to_mob(M, trigger_on_found = TRUE)
 			return
 		if(isrevenant(M))
 			RevenantThrow(over_object, M, source)
 			return
 		if(!M.incapacitated())
-			if(!istype(over_object, /obj/screen))
+			if(!istype(over_object, /atom/movable/screen))
 				dump_content_at(over_object, M)
 				return
 			if(A.loc != M)
 				return
 			playsound(A, "rustle", 50, 1, -5)
 			A.do_jiggle()
-			if(istype(over_object, /obj/screen/inventory/hand))
-				var/obj/screen/inventory/hand/H = over_object
+			if(istype(over_object, /atom/movable/screen/inventory/hand))
+				var/atom/movable/screen/inventory/hand/H = over_object
 				M.putItemFromInventoryInHandIfPossible(A, H.held_index)
 				return
 			A.add_fingerprint(M)
 
-/datum/component/storage/proc/user_show_to_mob(mob/M, force = FALSE)
+/datum/component/storage/proc/user_show_to_mob(mob/M, force = FALSE, trigger_on_found = FALSE)
 	var/atom/A = parent
 	if(!istype(M))
 		return FALSE
 	A.add_fingerprint(M)
 	if(!force && (check_locked(null, M) || !M.CanReach(parent, view_only = TRUE)))
 		return FALSE
+	if(trigger_on_found)
+		if(check_on_found(M))
+			return
 	ui_show(M)
+
+/**
+ * Check if we should trigger on_found()
+ * If this returns TRUE, it means an on_found() returned TRUE and immediately broke the chain.
+ * In most contexts, this should mean to stop.
+ */
+/datum/component/storage/proc/check_on_found(mob/user)
+	for(var/obj/item/I in contents())
+		if(I.on_found(user))
+			return TRUE
 
 /datum/component/storage/proc/mousedrop_receive(datum/source, atom/movable/O, mob/M)
 	if(isitem(O))
@@ -579,8 +595,8 @@
 /datum/component/storage/proc/show_to_ghost(datum/source, mob/dead/observer/M)
 	return user_show_to_mob(M, TRUE)
 
-/datum/component/storage/proc/signal_show_attempt(datum/source, mob/showto, force = FALSE)
-	return user_show_to_mob(showto, force)
+/datum/component/storage/proc/signal_show_attempt(datum/source, mob/showto, force = FALSE, trigger_on_found = TRUE)
+	return user_show_to_mob(showto, force, trigger_on_found = trigger_on_found)
 
 /datum/component/storage/proc/on_check()
 	return TRUE
@@ -649,7 +665,7 @@
 	if(A.loc == user)
 		. = COMPONENT_NO_ATTACK_HAND
 		if(!check_locked(source, user, TRUE))
-			ui_show(user)
+			user_show_to_mob(user, trigger_on_found = TRUE)
 			A.do_jiggle()
 
 /datum/component/storage/proc/signal_on_pickup(datum/source, mob/user)
@@ -679,7 +695,7 @@
 	var/atom/A = parent
 	if(!quickdraw)
 		A.add_fingerprint(user)
-		user_show_to_mob(user)
+		user_show_to_mob(user, trigger_on_found = TRUE)
 		if(rustle_sound)
 			playsound(A, "rustle", 50, 1, -5)
 		return TRUE

@@ -50,7 +50,7 @@
 
 /obj/item/melee/touch_attack/mansus_fist/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 
-	if(!proximity_flag | target == user)
+	if(!proximity_flag || (target == user))
 		return
 	playsound(user, 'sound/items/welder.ogg', 75, TRUE)
 	if(ishuman(target))
@@ -147,7 +147,7 @@
 
 		carbon_target.blood_volume -= 20
 		if(carbon_user.blood_volume < BLOOD_VOLUME_MAXIMUM) //we dont want to explode after all
-			carbon_user.blood_volume += 20
+			carbon_user.adjust_integration_blood(20)
 		return
 
 /obj/effect/proc_holder/spell/pointed/blood_siphon/can_target(atom/target, mob/user, silent)

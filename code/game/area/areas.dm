@@ -13,7 +13,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
 
-	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA
+	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 	var/fire = null
 	///Whether there is an atmos alarm in this area
@@ -553,7 +553,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			A.power_equip = power_equip
 			A.power_environ = power_environ
 			INVOKE_ASYNC(A, .proc/power_change)
-	update_icon()
+	update_appearance()
 
 /area/proc/usage(chan)
 	switch(chan)

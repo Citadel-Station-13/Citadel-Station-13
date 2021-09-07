@@ -170,6 +170,7 @@
 /**
   * Used to rid ourselves
   */
+///Deletes nanites!
 /datum/component/nanites/proc/delete_nanites()
 	if(can_be_deleted)
 		qdel(src)
@@ -213,7 +214,7 @@
 /datum/component/nanites/proc/check_viral_prevention()
 	return SEND_SIGNAL(src, COMSIG_NANITE_INTERNAL_VIRAL_PREVENTION_CHECK)
 
-//Syncs the nanite component to another, making it so programs are the same with the same programming (except activation status)
+///Syncs the nanite component to another, making it so programs are the same with the same programming (except activation status)
 /datum/component/nanites/proc/sync(datum/signal_source, datum/component/nanites/source, full_overwrite = TRUE, copy_activation = FALSE)
 	var/list/programs_to_remove = programs.Copy() - permanent_programs
 	var/list/programs_to_add = source.programs.Copy()
@@ -233,6 +234,7 @@
 		var/datum/nanite_program/SNP = X
 		add_program(null, SNP.copy())
 
+///Syncs the nanites to their assigned cloud copy, if it is available. If it is not, there is a small chance of a software error instead.
 /datum/component/nanites/proc/cloud_sync()
 	if(cloud_id)
 		var/datum/nanite_cloud_backup/backup = SSnanites.get_cloud_backup(cloud_id)
@@ -246,6 +248,7 @@
 		var/datum/nanite_program/NP = pick(programs)
 		NP.software_error()
 
+///Adds a nanite program, replacing existing unique programs of the same type. A source program can be specified to copy its programming onto the new one.
 /datum/component/nanites/proc/add_program(datum/source, datum/nanite_program/new_program, datum/nanite_program/source_program)
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
@@ -268,11 +271,67 @@
 	adjust_nanites(null, -amount)
 	return (nanite_volume > 0)
 
+///Modifies the current nanite volume, then checks if the nanites are depleted or exceeding the maximum amount
 /datum/component/nanites/proc/adjust_nanites(datum/source, amount)
-	nanite_volume = clamp(nanite_volume + amount, 0, max_nanites)
+	SIGNAL_HANDLER
+
+	nanite_volume = max(nanite_volume + amount, 0)	//Lets not have negative nanite counts on permanent ones.
+	if(nanite_volume > max_nanites)
+		reject_excess_nanites()
 	if(nanite_volume <= 0) //oops we ran out
 		nanites_depleted()
 
+/**
+  *	Handles how nanites leave the host's body if they find out that they're currently exceeding the maximum supported amount
+  *
+  * IC explanation:
+  * Normally nanites simply discard excess volume by slowing replication or 'sweating' it out in imperceptible amounts,
+  * but if there is a large excess volume, likely due to a programming change that leaves them unable to support their current volume,
+  * the nanites attempt to leave the host as fast as necessary to prevent nanite poisoning. This can range from minor oozing to nanites
+  * rapidly bursting out from every possible pathway, causing temporary inconvenience to the host.
+  */
+/datum/component/nanites/proc/reject_excess_nanites()
+	var/excess = nanite_volume - max_nanites
+	nanite_volume = max_nanites
+
+	switch(excess)
+		if(0 to NANITE_EXCESS_MINOR) //Minor excess amount, the extra nanites are quietly expelled without visible effects
+			return
+		if((NANITE_EXCESS_MINOR + 0.1) to NANITE_EXCESS_VOMIT) //Enough nanites getting rejected at once to be visible to the naked eye
+			host_mob.visible_message("<span class='warning'>A grainy grey slurry starts oozing out of [host_mob].</span>", "<span class='warning'>A grainy grey slurry starts oozing out of your skin.</span>", null, 4);
+		if((NANITE_EXCESS_VOMIT + 0.1) to NANITE_EXCESS_BURST) //Nanites getting rejected in massive amounts, but still enough to make a semi-orderly exit through vomit
+			if(iscarbon(host_mob))
+				var/mob/living/carbon/C = host_mob
+				host_mob.visible_message("<span class='warning'>[host_mob] vomits a grainy grey slurry!</span>", "<span class='warning'>You suddenly vomit a metallic-tasting grainy grey slurry!</span>", null);
+				C.vomit(0, FALSE, TRUE, FLOOR(excess / 100, 1), FALSE, VOMIT_NANITE, FALSE, TRUE, 0)
+			else
+				host_mob.visible_message("<span class='warning'>A metallic grey slurry bursts out of [host_mob]'s skin!</span>", "<span class='userdanger'>A metallic grey slurry violently bursts out of your skin!</span>", null);
+				if(isturf(host_mob.drop_location()))
+					var/turf/T = host_mob.drop_location()
+					T.add_vomit_floor(host_mob, VOMIT_NANITE, 0)
+		if((NANITE_EXCESS_BURST + 0.1) to INFINITY) //Way too many nanites, they just leave through the closest exit before they harm/poison the host
+			host_mob.visible_message("<span class='warning'>A torrent of metallic grey slurry violently bursts out of [host_mob]'s face and floods out of [host_mob.p_their()] skin!</span>",
+								"<span class='userdanger'>A torrent of metallic grey slurry violently bursts out of your eyes, ears, and mouth, and floods out of your skin!</span>");
+
+			host_mob.blind_eyes(15) //nanites coming out of your eyes
+			host_mob.Paralyze(120)
+			if(iscarbon(host_mob))
+				var/mob/living/carbon/C = host_mob
+				var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
+				if(ears)
+					ears.adjustEarDamage(0, 30) //nanites coming out of your ears
+				C.vomit(0, FALSE, TRUE, 2, FALSE, VOMIT_NANITE, FALSE, TRUE, 0) //nanites coming out of your mouth
+
+			//nanites everywhere
+			if(isturf(host_mob.drop_location()))
+				var/turf/T = host_mob.drop_location()
+				T.add_vomit_floor(host_mob, VOMIT_NANITE, 0)
+				for(var/turf/adjacent_turf in oview(host_mob, 1))
+					if(adjacent_turf.density || !adjacent_turf.Adjacent(T))
+						continue
+					adjacent_turf.add_vomit_floor(host_mob, VOMIT_NANITE, 0)
+
+///Updates the nanite volume bar visible in diagnostic HUDs
 /datum/component/nanites/proc/set_nanite_bar(remove = FALSE)
 	var/image/holder = host_mob.hud_list[DIAG_NANITE_FULL_HUD]
 	var/icon/I = icon(host_mob.icon, host_mob.icon_state, host_mob.dir)
@@ -346,7 +405,9 @@
 	nanite_volume = clamp(amount, 0, max_nanites)
 
 /datum/component/nanites/proc/set_max_volume(datum/source, amount)
-	max_nanites = max(1, max_nanites)
+	SIGNAL_HANDLER
+
+	max_nanites = max(1, amount)
 
 /datum/component/nanites/proc/set_cloud(datum/source, amount)
 	cloud_id = clamp(amount, 0, 100)

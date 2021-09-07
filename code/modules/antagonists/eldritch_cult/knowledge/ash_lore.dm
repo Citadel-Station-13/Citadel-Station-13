@@ -109,9 +109,14 @@
 	gain_text = "When the Glory of the Lantern scorches and sears their skin, nothing will protect them from the ashes."
 	desc = "Fire off five streams of fire from your hand, each setting ablaze targets hit and scorching them upon contact."
 	cost = 2
+	sacs_needed = 3
 	spell_to_add = /obj/effect/proc_holder/spell/pointed/nightwatchers_rite
 	next_knowledge = list(/datum/eldritch_knowledge/final/ash_final)
 	route = PATH_ASH
+
+/datum/eldritch_knowledge/spell/nightwatchers_rite/on_gain(mob/user)
+	. = ..()
+	priority_announce("Large heat signatures discovered!  A swelling fiery horror is coming..", sound = 'sound/misc/notice1.ogg')
 
 /datum/eldritch_knowledge/ash_blade_upgrade
 	name = "Fiery Blade"
@@ -181,6 +186,7 @@
 	desc = "Bring 3 corpses onto a transmutation rune, you will become immune to fire, the vacuum of space, cold and other enviromental hazards and become overall sturdier to all other damages. You will gain a spell that passively creates ring of fire around you as well ,as you will gain a powerful ability that lets you create a wave of flames all around you."
 	required_atoms = list(/mob/living/carbon/human)
 	cost = 5
+	sacs_needed = 8
 	route = PATH_ASH
 	var/list/trait_list = list(TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE)
 

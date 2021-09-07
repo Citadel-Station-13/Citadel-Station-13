@@ -59,6 +59,13 @@
 		if(3)
 			adjustBruteLoss(110)
 
+/mob/living/simple_animal/hostile/asteroid/basilisk/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	. = ..()
+	if(power > EXPLOSION_POWER_NORMAL_MOB_GIB)
+		gib()
+	else
+		adjustBruteLoss(EXPLOSION_POWER_STANDARD_SCALE_MOB_DAMAGE(power, explosion.mob_damage_mod))
+
 //Watcher
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
 	name = "watcher"
@@ -68,6 +75,7 @@
 	icon_living = "watcher"
 	icon_aggro = "watcher"
 	icon_dead = "watcher_dead"
+	health_doll_icon = "watcher"
 	pixel_x = -10
 	throw_message = "bounces harmlessly off of"
 	melee_damage_lower = 15
@@ -94,23 +102,13 @@
 		consume_bait()
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/proc/consume_bait()
-	var/list/L = list()
-	for(var/obj/O in view(src, 9))
-		L += O
-	var/obj/item/stack/ore/diamond/diamonds = locate(/obj/item/stack/ore/diamond) in L
-	if(diamonds)
-		var/distanced = 0
-		distanced = get_dist(loc,diamonds.loc)
-		if(distanced <= 1 && diamonds)
-			qdel(diamonds)
-			src.visible_message("<span class='notice'>[src] consumes [diamonds], and it disappears! ...At least, you think.</span>")
-	var/obj/item/pen/survival/bait = locate(/obj/item/pen/survival) in L
-	if(bait)
-		var/distanceb = 0
-		distanceb = get_dist(loc,bait.loc)
-		if(distanceb <= 1 && bait)
-			qdel(bait)
-			visible_message("<span class='notice'>[src] examines [bait] closer, and telekinetically shatters the pen.</span>")
+	for(var/obj/O in view(1, src))
+		if(istype(O, /obj/item/stack/ore/diamond))
+			qdel(O)
+			src.visible_message("<span class='notice'>[src] consumes [O], and it disappears! ...At least, you think.</span>")
+		else if(istype(O, /obj/item/pen/survival))
+			qdel(O)
+			src.visible_message("<span class='notice'>[src] examines [O] closer, and telekinetically shatters the pen.</span>")
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize()
 	. = ..()

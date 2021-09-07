@@ -12,6 +12,11 @@
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/reinforced
 	explosion_block = 2
+	wave_explosion_block = EXPLOSION_BLOCK_BLAST_PROOF
+	wave_explosion_multiply = EXPLOSION_DAMPEN_BLAST_PROOF
+	explosion_power_to_scrape = EXPLOSION_POWER_RWALL_SCRAPE
+	explosion_power_to_dismantle = EXPLOSION_POWER_RWALL_DISMANTLE
+	explosion_power_minimum_chance_dismantle = EXPLOSION_POWER_RWALL_MINIMUM_DISMANTLE
 	rad_insulation = RAD_HEAVY_INSULATION
 
 /turf/closed/wall/r_wall/deconstruction_hints(mob/user)

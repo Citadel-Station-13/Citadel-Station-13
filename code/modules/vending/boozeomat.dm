@@ -5,6 +5,9 @@
 	icon_deny = "boozeomat-deny"
 	products = list(/obj/item/reagent_containers/food/drinks/drinkingglass = 30,
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 12,
+					/obj/item/reagent_containers/food/drinks/bottle/blank = 5,
+					/obj/item/reagent_containers/food/drinks/bottle/blank/small = 10,
+					/obj/item/reagent_containers/food/drinks/bottle/blank/pitcher = 2,
 					/obj/item/reagent_containers/food/drinks/bottle/gin = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/whiskey = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/tequila = 5,
@@ -18,6 +21,7 @@
 					/obj/item/reagent_containers/food/drinks/bottle/absinthe = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/grappa = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/sake = 5,
+					/obj/item/reagent_containers/food/drinks/bottle/amaretto = 5,
 					/obj/item/reagent_containers/food/drinks/ale = 6,
 					/obj/item/reagent_containers/food/drinks/bottle/orangejuice = 4,
 					/obj/item/reagent_containers/food/drinks/bottle/tomatojuice = 4,

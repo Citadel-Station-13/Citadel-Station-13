@@ -54,6 +54,8 @@
 			mannequin.job = previewJob.title
 			previewJob.equip(mannequin, TRUE, preference_source = parent)
 
+	mannequin.regenerate_icons()
+
 	COMPILE_OVERLAYS(mannequin)
 	parent.show_character_previews(new /mutable_appearance(mannequin))
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)

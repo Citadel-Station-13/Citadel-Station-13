@@ -34,7 +34,7 @@
 			return FALSE
 		var/area/A = get_area(invoker)
 		var/turf/T = get_turf(invoker)
-		if(!is_station_level(T.z) || isspaceturf(T) || !(A.area_flags & VALID_TERRITORY) || isshuttleturf(T))
+		if(!is_station_level(T.z) || isspaceturf(T) || !(A?.area_flags & CULT_PERMITTED) || isshuttleturf(T))
 			to_chat(invoker, "<span class='warning'>You must be on the station to activate the Ark!</span>")
 			return FALSE
 		if(GLOB.clockwork_gateway_activated)

@@ -165,6 +165,7 @@
 #define TRAIT_EXEMPT_HEALTH_EVENTS	"exempt-health-events"
 #define TRAIT_NO_MIDROUND_ANTAG	"no-midround-antag" //can't be turned into an antag by random events
 #define TRAIT_PUGILIST	"pugilist" //This guy punches people for a living
+#define TRAIT_NOPUGILIST "nopugilist" // for preventing ((((((((((extreme)))))))))) punch stacking
 #define TRAIT_KI_VAMPIRE	"ki-vampire" //when someone with this trait rolls maximum damage on a punch and stuns the target, they regain some stamina and do clone damage
 #define TRAIT_MAULER	"mauler" // this guy punches the shit out of people to hurt them, not to drain their stamina
 #define TRAIT_PASSTABLE			"passtable"
@@ -220,6 +221,7 @@
 #define TRAIT_LIVING_NO_DENSITY			"living_no_density"
 /// forces us to not render our overlays
 #define TRAIT_HUMAN_NO_RENDER			"human_no_render"
+#define TRAIT_TRASHCAN					"trashcan"
 
 // mobility flag traits
 // IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)
@@ -340,3 +342,4 @@
 #define ACTIVE_PARRY_TRAIT				"active_parry"
 #define STICKY_NODROP "sticky-nodrop" //sticky nodrop sounds like a bad soundcloud rapper's name
 #define TRAIT_SACRIFICED "sacrificed" //Makes sure that people cant be cult sacrificed twice.
+#define TRAIT_SPACEWALK "spacewalk"

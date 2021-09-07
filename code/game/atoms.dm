@@ -36,13 +36,20 @@
 	///Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
 
+	/// Flags for explosions
+	var/explosion_flags = NONE
+	/// Amount to decrease wave explosions by
+	var/wave_explosion_block = 0
+	/// Amount to multiply wave explosions by
+	var/wave_explosion_multiply = 1
+
+							//its inherent color, the colored paint applied on it, special color effect etc...
 	/**
 	  * used to store the different colors on an atom
 	  *
 	  * its inherent color, the colored paint applied on it, special color effect etc...
 	  */
 	var/list/atom_colours
-
 
 	/// a very temporary list of overlays to remove
 	var/list/remove_overlays
@@ -95,6 +102,9 @@
 	var/chat_color
 	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
 	var/chat_color_darkened
+
+	///Used for changing icon states for different base sprites.
+	var/base_icon_state
 
 	///Mobs that are currently do_after'ing this atom, to be cleared from on Destroy()
 	var/list/targeted_by
@@ -162,7 +172,7 @@
  * * [/turf/open/space/proc/Initialize]
  */
 /atom/proc/Initialize(mapload, ...)
-	// SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
@@ -371,10 +381,24 @@
 	return FALSE
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
-	qdel(giver)
+	return null
+
+/atom/proc/assume_air_moles(datum/gas_mixture/giver, moles)
+	return null
+
+/atom/proc/assume_air_ratio(datum/gas_mixture/giver, ratio)
 	return null
 
 /atom/proc/remove_air(amount)
+	return null
+
+/atom/proc/remove_air_ratio(ratio)
+	return null
+
+/atom/proc/transfer_air(datum/gas_mixture/taker, amount)
+	return null
+
+/atom/proc/transfer_air_ratio(datum/gas_mixture/taker, ratio)
 	return null
 
 /atom/proc/return_air()
@@ -510,36 +534,74 @@
 	if(!LAZYLEN(.)) // lol ..length
 		return list("<span class='notice'><i>You examine [src] closer, but find nothing of interest...</i></span>")
 
+/**
+ * Updates the appearence of the icon
+ *
+ * Mostly delegates to update_name, update_desc, and update_icon
+ *
+ * Arguments:
+ * - updates: A set of bitflags dictating what should be updated. Defaults to [ALL]
+ */
+/atom/proc/update_appearance(updates=ALL)
+	//SHOULD_NOT_SLEEP(TRUE)
+	//SHOULD_CALL_PARENT(TRUE)
+
+	. = NONE
+	updates &= ~SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_APPEARANCE, updates)
+	if(updates & UPDATE_NAME)
+		. |= update_name(updates)
+	if(updates & UPDATE_DESC)
+		. |= update_desc(updates)
+	if(updates & UPDATE_ICON)
+		. |= update_icon(updates)
+
+/// Updates the name of the atom
+/atom/proc/update_name(updates=ALL)
+	//SHOULD_CALL_PARENT(TRUE)
+	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_NAME, updates)
+
+/// Updates the description of the atom
+/atom/proc/update_desc(updates=ALL)
+	//SHOULD_CALL_PARENT(TRUE)
+	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_DESC, updates)
+
 /// Updates the icon of the atom
-/atom/proc/update_icon()
-	// I expect we're going to need more return flags and options in this proc
-	var/signalOut = SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON)
-	. = FALSE
+/atom/proc/update_icon(updates=ALL)
+	SIGNAL_HANDLER
+	//SHOULD_CALL_PARENT(TRUE)
 
-	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_ICON_STATE))
+	. = NONE
+	updates &= ~SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON, updates)
+	if(updates & UPDATE_ICON_STATE)
 		update_icon_state()
-		. = TRUE
+		. |= UPDATE_ICON_STATE
 
-	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_OVERLAYS))
-		var/list/new_overlays = update_overlays()
+	if(updates & UPDATE_OVERLAYS)
+		if(LAZYLEN(managed_vis_overlays))
+			SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+
+		var/list/new_overlays = update_overlays(updates)
 		if(managed_overlays)
 			cut_overlay(managed_overlays)
 			managed_overlays = null
 		if(length(new_overlays))
 			managed_overlays = new_overlays
 			add_overlay(new_overlays)
-		. = TRUE
+		. |= UPDATE_OVERLAYS
 
-	SEND_SIGNAL(src, COMSIG_ATOM_UPDATED_ICON, signalOut, .)
+	. |= SEND_SIGNAL(src, COMSIG_ATOM_UPDATED_ICON, updates, .)
 
 /// Updates the icon state of the atom
 /atom/proc/update_icon_state()
+	//SHOULD_CALL_PARENT(TRUE)
+	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON_STATE)
 
 /// Updates the overlays of the atom
 /atom/proc/update_overlays()
-	SHOULD_CALL_PARENT(TRUE)
+	//SHOULD_CALL_PARENT(TRUE)
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
+
 
 /atom/proc/relaymove(mob/living/user)
 	if(!istype(user))
@@ -555,6 +617,34 @@
 	set waitfor = FALSE
 	contents_explosion(severity, target)
 	SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
+
+/**
+  * Called when a wave explosion hits this atom. Do not override this.
+  *
+  * Returns explosion power to "allow through".
+  */
+/atom/proc/wave_explode(power, datum/wave_explosion/explosion, dir)
+	set waitfor = FALSE
+	// SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_WAVE_EX_ACT, args)
+	. = wave_ex_act(power, explosion, dir)		// this must happen first for stuff like destruction/damage to tick.
+	if(isnull(.))
+		stack_trace("wave_ex_act on [type] failed to return a number. defaulting to no blocking.")
+		return power
+	if((explosion_flags & EXPLOSION_FLAG_DENSITY_DEPENDENT) && !density)
+		return power	// no block
+	else if((explosion_flags & EXPLOSION_FLAG_HARD_OBSTACLE) && !QDELETED(src))
+		return 0		// fully blocked
+
+/**
+  * Called when a wave explosion hits this atom.
+  *
+  * Returns explosion power to "allow through". Standard handling and flag overrides in [wave_explode()].
+  */
+/atom/proc/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	// SHOULD_NOT_SLEEP(TRUE)
+	return power * wave_explosion_multiply - wave_explosion_block
 
 /atom/proc/blob_act(obj/structure/blob/B)
 	SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
@@ -765,6 +855,8 @@
 	var/list/things = src_object.contents()
 	var/datum/progressbar/progress = new(user, things.len, src)
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	if(STR == src_object)
+		return
 	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(STR, /datum/component/storage.proc/handle_mass_item_insertion, things, src_object, user, progress)))
 		stoplag(1)
 	qdel(progress)

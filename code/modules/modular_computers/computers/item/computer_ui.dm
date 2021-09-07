@@ -114,6 +114,12 @@
 			update_icon()
 			if(user && istype(user))
 				ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
+		if("eject_pen")
+			if(istype(src, /obj/item/modular_computer/tablet))
+				var/obj/item/modular_computer/tablet/self = src
+				if(self.can_have_pen)
+					self.remove_pen()
+				return
 
 		if("PC_killprogram")
 			var/prog = params["name"]

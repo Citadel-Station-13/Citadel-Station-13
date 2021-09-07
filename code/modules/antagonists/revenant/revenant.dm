@@ -177,6 +177,9 @@
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
 
+/mob/living/simple_animal/revenant/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	return power
+
 /mob/living/simple_animal/revenant/blob_act(obj/structure/blob/B)
 	return //blah blah blobs aren't in tune with the spirit world, or something.
 
@@ -489,7 +492,7 @@
 	var/targetAmount = 100
 
 /datum/objective/revenant/New()
-	targetAmount = rand(350,600)
+	targetAmount = rand(150,300)
 	explanation_text = "Absorb [targetAmount] points of essence from humans."
 	..()
 

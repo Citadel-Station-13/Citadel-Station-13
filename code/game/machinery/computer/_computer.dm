@@ -57,8 +57,8 @@
 	var/overlay_state = icon_screen
 	if(stat & BROKEN)
 		overlay_state = "[icon_state]_broken"
-	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha=128)
+	. += mutable_appearance(icon, overlay_state)
+	. += emissive_appearance(icon, overlay_state)
 
 /obj/machinery/computer/power_change()
 	..()

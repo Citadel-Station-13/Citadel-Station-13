@@ -136,7 +136,7 @@
 	SEND_SIGNAL(victim, COMSIG_CARBON_GAIN_WOUND, src, limb)
 	victim.emote("pain")
 	if(!victim.alerts["wound"]) // only one alert is shared between all of the wounds
-		victim.throw_alert("wound", /obj/screen/alert/status_effect/wound)
+		victim.throw_alert("wound", /atom/movable/screen/alert/status_effect/wound)
 
 	var/demoted
 	if(old_wound)

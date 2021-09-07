@@ -289,7 +289,7 @@
 	name = "Supermatter Engine Room";
 	req_access_txt = "10"
 	},
-/turf/open/floor/engine,
+/turf/open/floor/plasteel,
 /area/engineering/main)
 "kB" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -462,14 +462,6 @@
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction,
 /turf/open/floor/engine/vacuum,
-/area/engineering/main)
-"oS" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room";
-	req_access_txt = "10"
-	},
-/turf/open/floor/engine,
 /area/engineering/main)
 "pY" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
@@ -884,7 +876,7 @@
 	name = "Supermatter Engine Room";
 	req_access_txt = "10"
 	},
-/turf/open/floor/engine,
+/turf/open/floor/plasteel,
 /area/engineering/main)
 "AT" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
@@ -2344,7 +2336,7 @@ YZ
 yf
 "}
 (17,1,1) = {"
-oS
+CH
 TN
 Wm
 ou
@@ -2400,7 +2392,7 @@ YZ
 yf
 "}
 (19,1,1) = {"
-oS
+CH
 kd
 tP
 ou

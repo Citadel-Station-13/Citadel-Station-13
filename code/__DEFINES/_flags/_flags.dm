@@ -17,7 +17,11 @@
 	} while(0);
 #define CHECK_MULTIPLE_BITFIELDS(flagvar, flags) (((flagvar) & (flags)) == (flags))
 
-GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768))
+GLOBAL_LIST_INIT(bitflags, list(
+	1<<0, 1<<1, 1<<2, 1<<3, 1<<4, 1<<5, 1<<6, 1<<7,
+	1<<8, 1<<9, 1<<10, 1<<11, 1<<12, 1<<13, 1<<14, 1<<15,
+	1<<16, 1<<17, 1<<18, 1<<19, 1<<20, 1<<21, 1<<22, 1<<23
+))
 
 // for /datum/var/datum_flags
 #define DF_USE_TAG		(1<<0)
@@ -56,8 +60,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define UNUSED_RESERVATION_TURF_1 (1<<1)
 /// If a turf can be made dirty at roundstart. This is also used in areas.
 #define CAN_BE_DIRTY_1 (1<<2)
-/// If blood cultists can draw runes or build structures on this turf
-#define CULT_PERMITTED_1 (1<<3)
 /// Blocks lava rivers being generated on the turf
 #define NO_LAVA_GEN_1 (1<<6)
 /// Blocks ruins spawning on the turf
@@ -92,6 +94,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ABDUCTOR_PROOF (1<<11)
 /// If an area should be hidden from power consoles, power/atmosphere alerts, etc.
 #define NO_ALERTS (1<<12)
+/// If blood cultists can draw runes or build structures on this AREA.
+#define CULT_PERMITTED (1<<13)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

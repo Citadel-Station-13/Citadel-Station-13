@@ -149,6 +149,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	///
 	var/sound/attack_sound = 'sound/weapons/punch1.ogg'
 	var/sound/miss_sound = 'sound/weapons/punchmiss.ogg'
+	var/attack_sound_override = null
 
 	var/list/mob/living/ignored_by = list()	// list of mobs that will ignore this species
 	//Breathing!
@@ -438,6 +439,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
  * * pref_load - Preferences to be loaded from character setup, loads in preferred mutant things like bodyparts, digilegs, skin color, etc.
  */
 /datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	set waitfor = FALSE
 	// Drop the items the new species can't wear
 	for(var/slot_id in no_equip)
 		var/obj/item/thing = C.get_item_by_slot(slot_id)
@@ -569,12 +571,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/remove_blacklisted_quirks(mob/living/carbon/C)
 	var/mob/living/L = C.mind?.current
 	if(istype(L))
-		var/list/my_quirks = L.client?.prefs.all_quirks.Copy()
-		SSquirks.filter_quirks(my_quirks, blacklisted_quirks)
 		for(var/q in L.roundstart_quirks)
 			var/datum/quirk/Q = q
-			if(!(SSquirks.quirk_name_by_path(Q.type) in my_quirks))
-				L.remove_quirk(Q.type)
+			if(Q.type in blacklisted_quirks)
+				qdel(Q)
 				removed_quirks += Q.type
 
 // restore any quirks that we removed
@@ -680,7 +680,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/mutable_appearance/hair_overlay = mutable_appearance(layer = -HAIR_LAYER)
 		if(!hair_hidden && !H.getorgan(/obj/item/organ/brain)) //Applies the debrained overlay if there is no brain
 			if(!(NOBLOOD in species_traits))
-				hair_overlay.icon = 'icons/mob/hair.dmi'
+				hair_overlay.icon = 'icons/mob/human_parts.dmi'
 				hair_overlay.icon_state = "debrained"
 
 		else if(H.hair_style && (HAIR in species_traits))
@@ -1365,7 +1365,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 /datum/species/proc/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.type == exotic_blood && !istype(exotic_blood, /datum/reagent/blood))
-		H.blood_volume = min(H.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+		H.adjust_integration_blood(round(chem.volume, 0.1))
 		H.reagents.del_reagent(chem.type)
 		return TRUE
 	return FALSE
@@ -1459,13 +1459,13 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	switch(H.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
-			H.throw_alert("nutrition", /obj/screen/alert/fat)
+			H.throw_alert("nutrition", /atom/movable/screen/alert/fat)
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
 			H.clear_alert("nutrition")
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			H.throw_alert("nutrition", /obj/screen/alert/hungry)
+			H.throw_alert("nutrition", /atom/movable/screen/alert/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
-			H.throw_alert("nutrition", /obj/screen/alert/starving)
+			H.throw_alert("nutrition", /atom/movable/screen/alert/starving)
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
 	return 0
@@ -1590,12 +1590,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/punchedbrute = target.getBruteLoss()
 
 		//CITADEL CHANGES - makes resting and disabled combat mode reduce punch damage, makes being out of combat mode result in you taking more damage
-		if(!SEND_SIGNAL(target, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-			damage *= 1.2
 		if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 			damage *= 0.65
-		if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-			damage *= 0.8
 		//END OF CITADEL CHANGES
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
@@ -1615,7 +1611,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 
 		var/armor_block = target.run_armor_check(affecting, "melee")
-		playsound(target.loc, user.dna.species.attack_sound, 25, 1, -1)
+		playsound(target.loc, user.dna.species.attack_sound_override || attack_sound, 25, 1, -1)
 		target.visible_message("<span class='danger'>[user] [atk_verb]ed [target]!</span>", \
 					"<span class='userdanger'>[user] [atk_verb]ed you!</span>", null, COMBAT_MESSAGE_RANGE, null, \
 					user, "<span class='danger'>You [atk_verb]ed [target]!</span>")
@@ -1719,12 +1715,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 
-		if(HAS_TRAIT(user, TRAIT_PUGILIST))//CITADEL CHANGE - makes disarmspam cause staminaloss, pugilists can do it almost effortlessly
-			if(!user.UseStaminaBuffer(1, warn = TRUE))
-				return
-		else
-			if(!user.UseStaminaBuffer(1, warn = TRUE))
-				return
+		if(!user.UseStaminaBuffer(1, warn = TRUE))
+			return
 
 		if(attacker_style && attacker_style.disarm_act(user,target))
 			return TRUE
@@ -1742,12 +1734,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			log_combat(user, target, "disarmed out of grab from")
 			return
 		var/randn = rand(1, 100)
-		if(SEND_SIGNAL(target, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE)) // CITADEL CHANGE
-			randn += -10 //CITADEL CHANGE - being out of combat mode makes it easier for you to get disarmed
 		if(!CHECK_MOBILITY(user, MOBILITY_STAND)) //CITADEL CHANGE
 			randn += 100 //CITADEL CHANGE - No kosher disarming if you're resting
-		if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE)) //CITADEL CHANGE
-			randn += 25 //CITADEL CHANGE - Makes it harder to disarm outside of combat mode
 		if(user.pulling == target)
 			randn -= 20 //If you have the time to get someone in a grab, you should have a greater chance at snatching the thing in their hand. Will be made completely obsolete by the grab rework but i've got a poor track record for releasing big projects on time so w/e i guess
 		if(HAS_TRAIT(user, TRAIT_PUGILIST))
@@ -1952,9 +1940,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(IS_STAMCRIT(user))
 			to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")
 			return
-		if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-			to_chat(user, "<span class='warning'>You need combat mode to be active to that!</span>")
-			return
 		if(user.IsKnockdown() || user.IsParalyzed() || user.IsStun())
 			to_chat(user, "<span class='warning'>You can't seem to force yourself up right now!</span>")
 			return
@@ -1994,6 +1979,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		if(CHECK_MOBILITY(target, MOBILITY_STAND))
 			target.adjustStaminaLoss(5)
+		else
+			target.adjustStaminaLoss(target.getStaminaLoss() > 75? 5 : 75)
 
 		if(target.is_shove_knockdown_blocked())
 			return
@@ -2003,6 +1990,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/turf/target_shove_turf = get_step(target.loc, shove_dir)
 		var/mob/living/carbon/human/target_collateral_human
 		var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
+		var/targetatrest = !CHECK_MOBILITY(target, MOBILITY_STAND)
 
 		//Thank you based whoneedsspace
 		target_collateral_human = locate(/mob/living/carbon/human) in target_shove_turf.contents
@@ -2017,7 +2005,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/append_message = ""
 		if(shove_blocked && !target.buckled)
 			var/directional_blocked = !target.Adjacent(target_shove_turf)
-			var/targetatrest = !CHECK_MOBILITY(target, MOBILITY_STAND)
 			if((directional_blocked || !(target_collateral_human || target_shove_turf.shove_act(target, user))) && !targetatrest)
 				target.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_SOLID)
 				target.visible_message("<span class='danger'>[user.name] shoves [target.name], knocking them down!</span>",
@@ -2036,7 +2023,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			target.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
 				"<span class='danger'>[user.name] shoves you!</span>", null, COMBAT_MESSAGE_RANGE, null,
 				user, "<span class='danger'>You shove [target.name]!</span>")
-		target.Stagger(SHOVE_STAGGER_DURATION)
 		var/obj/item/target_held_item = target.get_active_held_item()
 		if(!target.has_status_effect(STATUS_EFFECT_OFF_BALANCE))
 			if(target_held_item)
@@ -2046,11 +2032,15 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					append_message += ", loosening their grip on [target_held_item]"
 				else
 					append_message += ", but couldn't loose their grip on [target_held_item]"
-		else if(target_held_item)
-			if(target.dropItemToGround(target_held_item))
-				target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!!</span>",
-					"<span class='danger'>You drop \the [target_held_item]!!</span>", null, COMBAT_MESSAGE_RANGE)
-				append_message += ", causing them to drop [target_held_item]"
+		else if(target.has_status_effect(STATUS_EFFECT_OFF_BALANCE))
+			if(target_held_item)
+				if(shove_blocked)
+					if (target.buckled)
+						return
+					else if(target.dropItemToGround(target_held_item))
+						target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!!</span>",
+							"<span class='danger'>You drop \the [target_held_item]!!</span>", null, COMBAT_MESSAGE_RANGE)
+						append_message += ", causing them to drop [target_held_item]"
 		target.ShoveOffBalance(SHOVE_OFFBALANCE_DURATION)
 		log_combat(user, target, "shoved", append_message)
 
@@ -2179,19 +2169,19 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				H.adjust_bodytemperature(natural*(1/(thermal_protection+1)) + min(thermal_protection * (loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX))
 		switch((loc_temp - H.bodytemperature)*thermal_protection)
 			if(-INFINITY to -50)
-				H.throw_alert("tempfeel", /obj/screen/alert/cold, 3)
+				H.throw_alert("tempfeel", /atom/movable/screen/alert/cold, 3)
 			if(-50 to -35)
-				H.throw_alert("tempfeel", /obj/screen/alert/cold, 2)
+				H.throw_alert("tempfeel", /atom/movable/screen/alert/cold, 2)
 			if(-35 to -20)
-				H.throw_alert("tempfeel", /obj/screen/alert/cold, 1)
+				H.throw_alert("tempfeel", /atom/movable/screen/alert/cold, 1)
 			if(-20 to 0) //This is the sweet spot where air is considered normal
 				H.clear_alert("tempfeel")
 			if(0 to 15) //When the air around you matches your body's temperature, you'll start to feel warm.
-				H.throw_alert("tempfeel", /obj/screen/alert/hot, 1)
+				H.throw_alert("tempfeel", /atom/movable/screen/alert/hot, 1)
 			if(15 to 30)
-				H.throw_alert("tempfeel", /obj/screen/alert/hot, 2)
+				H.throw_alert("tempfeel", /atom/movable/screen/alert/hot, 2)
 			if(30 to INFINITY)
-				H.throw_alert("tempfeel", /obj/screen/alert/hot, 3)
+				H.throw_alert("tempfeel", /atom/movable/screen/alert/hot, 3)
 
 	// +/- 50 degrees from 310K is the 'safe' zone, where no damage is dealt.
 	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !HAS_TRAIT(H, TRAIT_RESISTHEAT))
@@ -2212,11 +2202,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if (burn_damage)
 			switch(burn_damage)
 				if(0 to 2)
-					H.throw_alert("temp", /obj/screen/alert/sweat, 1)
+					H.throw_alert("temp", /atom/movable/screen/alert/sweat, 1)
 				if(2 to 4)
-					H.throw_alert("temp", /obj/screen/alert/sweat, 2)
+					H.throw_alert("temp", /atom/movable/screen/alert/sweat, 2)
 				else
-					H.throw_alert("temp", /obj/screen/alert/sweat, 3)
+					H.throw_alert("temp", /atom/movable/screen/alert/sweat, 3)
 		burn_damage = burn_damage * heatmod * H.physiology.heat_mod
 		if (H.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4) //40% for level 3 damage on humans
 			H.emote("scream")
@@ -2229,13 +2219,13 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 		switch(H.bodytemperature)
 			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
-				H.throw_alert("temp", /obj/screen/alert/shiver, 1)
+				H.throw_alert("temp", /atom/movable/screen/alert/shiver, 1)
 				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod*H.physiology.cold_mod, BURN)
 			if(120 to 200)
-				H.throw_alert("temp", /obj/screen/alert/shiver, 2)
+				H.throw_alert("temp", /atom/movable/screen/alert/shiver, 2)
 				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod*H.physiology.cold_mod, BURN)
 			else
-				H.throw_alert("temp", /obj/screen/alert/shiver, 3)
+				H.throw_alert("temp", /atom/movable/screen/alert/shiver, 3)
 				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod*H.physiology.cold_mod, BURN)
 
 	else
@@ -2250,21 +2240,21 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			if(!HAS_TRAIT(H, TRAIT_RESISTHIGHPRESSURE))
 				H.adjustBruteLoss(min(((adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * PRESSURE_DAMAGE_COEFFICIENT, MAX_HIGH_PRESSURE_DAMAGE) * H.physiology.pressure_mod)
-				H.throw_alert("pressure", /obj/screen/alert/highpressure, 2)
+				H.throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
 			else
 				H.clear_alert("pressure")
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			H.throw_alert("pressure", /obj/screen/alert/highpressure, 1)
+			H.throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
 		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
 			H.clear_alert("pressure")
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-			H.throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+			H.throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
 		else
 			if(HAS_TRAIT(H, TRAIT_RESISTLOWPRESSURE))
 				H.clear_alert("pressure")
 			else
 				H.adjustBruteLoss(LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod)
-				H.throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
+				H.throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
 
 //////////
 // FIRE //

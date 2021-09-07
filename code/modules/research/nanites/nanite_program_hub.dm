@@ -26,6 +26,13 @@
 	. = ..()
 	linked_techweb = SSresearch.science_tech
 
+/obj/machinery/nanite_program_hub/update_overlays()
+	. = ..()
+	if((stat & (NOPOWER|MAINT|BROKEN)) || panel_open)
+		return
+	. += mutable_appearance(icon, "nanite_program_hub_on")
+	. += emissive_appearance(icon, "nanite_program_hub_on")
+
 /obj/machinery/nanite_program_hub/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))
 		var/obj/item/disk/nanite_program/N = I
@@ -140,3 +147,7 @@
 				disk.program = null
 				disk.name = initial(disk.name)
 			. = TRUE
+
+/obj/machinery/nanite_program_hub/admin/Initialize()
+	. = ..()
+	linked_techweb = SSresearch.admin_tech

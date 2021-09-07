@@ -59,7 +59,7 @@
 #define LOADOUT_CATEGORY_UNLOCKABLE	"Unlockable"
 
 //how many prosthetics can we have
-#define MAXIMUM_LOADOUT_PROSTHETICS	2
+#define MAXIMUM_LOADOUT_PROSTHETICS	4
 
 //what limbs can be amputated or be prosthetic
 #define LOADOUT_ALLOWED_LIMB_TARGETS	list(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM,BODY_ZONE_L_LEG,BODY_ZONE_R_LEG)

@@ -7,7 +7,7 @@ import { Window } from '../layouts';
 export const ForbiddenLore = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    charges,
+    charges, total_sacs,
   } = data;
   const to_know = flow([
     sortBy(to_know => to_know.state !== "Research",
@@ -21,6 +21,8 @@ export const ForbiddenLore = (props, context) => {
       <Window.Content scrollable>
         <Section title="Research Eldritch Knowledge">
           Charges left : {charges}
+          <br />
+          Completed Sacrifices : {total_sacs}
           {to_know!== null ? (
             to_know.map(knowledge => (
               <Section
@@ -39,7 +41,8 @@ export const ForbiddenLore = (props, context) => {
                       cost: knowledge.cost,
                     })} />
                   {' '}
-                  Cost : {knowledge.cost}
+                  Cost : {knowledge.cost}  
+                  | Sacrifices Required : {knowledge.sacs}
                 </Box >
                 <Box italic my={1}>
                   {knowledge.flavour}
