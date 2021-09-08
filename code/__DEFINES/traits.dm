@@ -343,3 +343,7 @@
 #define STICKY_NODROP "sticky-nodrop" //sticky nodrop sounds like a bad soundcloud rapper's name
 #define TRAIT_SACRIFICED "sacrificed" //Makes sure that people cant be cult sacrificed twice.
 #define TRAIT_SPACEWALK "spacewalk"
+
+
+/// obtained from mapping helper
+#define MAPPING_HELPER_TRAIT "mapping-helper"
