@@ -15,6 +15,9 @@
 //#define REFERENCE_TRACKING
 #ifdef REFERENCE_TRACKING
 
+///alternate to reftracking, extool variant
+//#define EXTOOLS_REFERENCE_TRACKING
+
 ///Should we be logging our findings or not
 #define REFERENCE_TRACKING_LOG
 
