@@ -1,6 +1,0 @@
-author: "keronshb"
-delete-after: True
-changes: 
-  - imageadd: "Adds the parade outfit for the HoS and Centcomm"
-  - imageadd: "Recolors the parade outfit for the Captain"
-  - imageadd: "Adds a toggle option for the parade outfits"
