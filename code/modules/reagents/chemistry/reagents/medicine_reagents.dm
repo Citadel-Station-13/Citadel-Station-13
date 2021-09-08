@@ -1785,7 +1785,7 @@
 		return
 	if(HAS_TRAIT(C, TRAIT_ROBOTIC_ORGANISM)) //sorry synths, consider a visit to the roboticist. dunno how to justify regrowing robolimbs.
 		return
-	else if(ishuman(C) && !(HAS_BONE in C?.dna?.species?.species_traits)) //boneless have little trouble with the limb chemical.
+	else if(ishuman(C) && !(HAS_BONE in C.dna?.species?.species_traits)) //boneless have little trouble with the limb chemical.
 		C.visible_message("<span class='notice'>[C] suddenly regrows \his limbs!</span>",
 		"<span class='notice'>You suddenly regrow your limbs, sensation and all!</span>")
 	else //boneful beings get to scream.
@@ -1795,11 +1795,11 @@
 			"<span class='italics'>You hear a grotsque squelching noise and the sound of crunching bones.</span>")
 		playsound(C, 'sound/magic/demon_consume.ogg', 50, 1)
 		C.emote("scream")
-	C.regenerate_limbs()
+	C.regenerate_limbs(excluded_limbs = list(BODY_ZONE_HEAD)) //would be a little funky for dullahans if they suddenly sprouted a head.
 	C.blood_volume = max(C.blood_volume - 30*limbs_to_heal.len,0)
 	//lose blood for each limb that was regained.
 	//10 units less expensive than slime limb regrowth, but doesn't check for low blood like the ability, so it could be dangerous.
-	to_chat(C,"<span class='warning'>The pain of the regained limbs fades away. You feel like this ordeal has made you a little paler... as well as made you feel a little thirsty.</span>")
+	to_chat(C,"<span class='warning'>You feel like this ordeal of your limbs regrowing has made you a little paler... as well as made you feel a little thirsty.</span>")
 	//hint at the blood loss. (paler is a common symptom depicted in-game of low blood, but dehydration is another symptom of low blood.)
 
 
