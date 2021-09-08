@@ -310,11 +310,12 @@
  * Checks if the item is currently in a slot.
  *
  * If the item is found in a slot, this returns TRUE. Otherwise, it returns FALSE
+ * Modified to accept items inside of grippers, used for `code\modules\tgui\states\hands.dm:27`
  * Arguments
  * * item_module - the item being checked
  */
 /mob/living/silicon/robot/proc/activated(obj/item/item_module)
-	if(get_active_held_item() == item_module)
+	if(get_active_held_item() == item_module || (item_module in held_items))
 		return TRUE
 	return FALSE
 
