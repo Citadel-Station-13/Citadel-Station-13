@@ -20,5 +20,5 @@ datum/job/prisoner
 	uniform = /obj/item/clothing/under/rank/prisoner
 	shoes = /obj/item/clothing/shoes/sneakers/orange
 	id = /obj/item/card/id/prisoner
-	ears = null
+	ears = /obj/item/radio/headset/headset_prisoner
 	belt = null
