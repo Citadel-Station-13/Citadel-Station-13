@@ -45,5 +45,5 @@ GLOBAL_LIST_EMPTY(traitor_classes)
 /datum/traitor_class/proc/clean_up_traitor(datum/antagonist/traitor/T)
 	// Any effects that need to be cleaned up if traitor class is being swapped.
 
-/datum/traitor_class/proc/on_process(/datum/antagonist/traitor/T)
+/datum/traitor_class/proc/on_process(datum/antagonist/traitor/T)
 	// only for processing traitor classes; runs once an SSprocessing tick
