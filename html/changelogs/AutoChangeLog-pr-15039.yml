@@ -1,0 +1,7 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - rscadd: "Added the ability to dye your hair with gradients by using a hair dye spray."
+  - rscadd: "The new Colorist quirk, allowing you to spawn with a hair dye spray."
+  - rscadd: "Adds Hair gradients to preferences"
+  - imageadd: "Three new hair gradients, a pair of shorter fades and a spiky wave."
