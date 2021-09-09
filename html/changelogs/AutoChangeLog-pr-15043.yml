@@ -1,0 +1,4 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - rscadd: "CTRL + (combat mode) Right Click - positional dropping and item rotation."

@@ -98,6 +98,16 @@
 		qdel(bigcheese)
 		evolve()
 		return
+	for(var/obj/item/trash/garbage in range(1, src))
+		if(prob(2))
+			qdel(garbage)
+			evolve_plague()
+			return
+	for(var/obj/effect/decal/cleanable/blood/gibs/leftovers in range(1, src))
+		if(prob(2))
+			qdel(leftovers)
+			evolve_plague()
+			return
 
 /**
   *Checks the mouse cap, if it's above the cap, doesn't spawn a mouse. If below, spawns a mouse and adds it to cheeserats.
@@ -121,6 +131,13 @@
 	regalrat.say("RISE, MY SUBJECTS! SCREEEEEEE!")
 	if(mind)
 		mind.transfer_to(regalrat)
+	qdel(src)
+
+/mob/living/simple_animal/mouse/proc/evolve_plague()
+	var/mob/living/simple_animal/hostile/plaguerat = new /mob/living/simple_animal/hostile/plaguerat(loc)
+	visible_message("<span class='warning'>[src] devours the food! He rots into something worse!</span>")
+	if(mind)
+		mind.transfer_to(plaguerat)
 	qdel(src)
 
 /*
@@ -169,3 +186,16 @@ GLOBAL_VAR(tom_existed)
 /obj/item/reagent_containers/food/snacks/deadmouse/on_grind()
 	reagents.clear_reagents()
 
+/mob/living/simple_animal/mouse/proc/miasma(datum/gas_mixture/environment, check_temp = FALSE)
+	if(isturf(src.loc) && isopenturf(src.loc))
+		var/turf/open/ST = src.loc
+		var/miasma_moles = ST.air.get_moles(GAS_MIASMA)
+		if(prob(5) && miasma_moles >= 5)
+			evolve_plague()
+		else if(miasma_moles >= 20)
+			evolve_plague()
+			return
+
+/mob/living/simple_animal/mouse/handle_environment(datum/gas_mixture/environment)
+	. = ..()
+	miasma()

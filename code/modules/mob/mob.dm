@@ -238,6 +238,7 @@
 
 	if(istype(W))
 		if(equip_to_slot_if_possible(W, slot, FALSE, FALSE, FALSE, FALSE, TRUE))
+			W.apply_outline()
 			return TRUE
 
 	if(!W)

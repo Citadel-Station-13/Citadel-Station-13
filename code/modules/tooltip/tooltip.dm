@@ -137,7 +137,7 @@ Notes:
 /atom/movable/MouseEntered(location, control, params)
 	. = ..()
 	if(tooltips)
-		if(!QDELETED(src))
+		if(!QDELETED(src) && usr.client.prefs.enable_tips)
 			var/list/tooltip_data = get_tooltip_data()
 			if(length(tooltip_data))
 				var/examine_data = tooltip_data.Join("<br />")

@@ -10,6 +10,7 @@
 	var/mob/living/L = parent
 	if(L.incapacitated() || L.lying)
 		return
+	var/matrix/otransform = matrix(L.transform) //make a copy of the current transform
 	animate(L, pixel_z = 4, time = 0)
-	animate(pixel_z = 0, transform = turn(matrix(), pick(-12, 0, 12)), time=2)
-	animate(pixel_z = 0, transform = matrix(), time = 0)
+	animate(pixel_z = 0, transform = turn(L.transform, pick(-12, 0, 12)), time=2) //waddle.
+	animate(pixel_z = 0, transform = otransform, time = 0) //return to previous transform.
