@@ -502,6 +502,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 		new /datum/stack_recipe("sterile masks box", /obj/item/storage/box/masks),				\
 		new /datum/stack_recipe("body bag box", /obj/item/storage/box/bodybags),				\
 		new /datum/stack_recipe("prescription glasses box", /obj/item/storage/box/rxglasses),	\
+		new /datum/stack_recipe("oxygen tank box", /obj/item/storage/box/emergencytank),	\
+		new /datum/stack_recipe("extended oxygen tank box", /obj/item/storage/box/engitank),	\
 		null,																					\
 		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks),						\
 		new /datum/stack_recipe("light tubes box", /obj/item/storage/box/lights/tubes),			\
