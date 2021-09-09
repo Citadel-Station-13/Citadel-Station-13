@@ -26,8 +26,8 @@
 	var/hitcost = 750
 	var/throw_hit_chance = 35
 	var/preload_cell_type //if not empty the baton starts with this type of cell
-	var/cooldown_duration = 3.5 SECONDS //How long our baton rightclick goes on cooldown for after applying a knockdown
-	var/status_duration = 5 SECONDS //how long our status effects last for otherwise
+	var/cooldown_duration = 2.5 SECONDS //How long our baton rightclick goes on cooldown for after applying a knockdown
+	var/status_duration = 3 SECONDS //how long our status effects last for otherwise
 	COOLDOWN_DECLARE(shove_cooldown)
 
 /obj/item/melee/baton/examine(mob/user)
