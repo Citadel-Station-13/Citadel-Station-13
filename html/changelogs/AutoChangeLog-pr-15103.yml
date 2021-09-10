@@ -1,0 +1,8 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - rscadd: "Cyborg grippers now have a preview of the item you are holding.
+tweak: Cyborg grippers no longer drop using alt-click, instead, you try to drop the gripper to drop the item, and then you can drop the gripper.
+tweak: You can now use the \"Pick up\" verb on the right click menu to take items with a cyborg gripper."
+  - bugfix: "You should be able to access the interface of airlock electronics once again as a borg."
+  - refactor: "Reworks a lot of stuff that was being used on the grippers."
