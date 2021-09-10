@@ -103,13 +103,16 @@
 		var/_method = override[thing]
 		if(_method == ITEM_PARRY)
 			using_item = thing
+			tool = using_item
 			method = ITEM_PARRY
 			data = using_item.block_parry_data
 		else if(_method == UNARMED_PARRY)
 			method = UNARMED_PARRY
+			tool = src
 			data = thing
 	if(!using_item && !method && length(other_items))
 		using_item = other_items[1]
+		tool = using_item
 		method = ITEM_PARRY
 		data = using_item.block_parry_data
 	if(!method)
