@@ -32,7 +32,7 @@ Key procs
 	/// Unique ID. You can never have different modifications with the same ID. By default, this SHOULD NOT be set. Only set it for cases where you're dynamically making modifiers/need to have two types overwrite each other. If unset, uses path (converted to text) as ID.
 	var/id
 
-	/// Higher ones override lower priorities. This is NOT used for ID, ID must be unique, if it isn't unique the newer one overwrites automatically if overriding.
+	/// Determines order. Lower priorities are applied first.
 	var/priority = 0
 	var/flags = NONE
 
