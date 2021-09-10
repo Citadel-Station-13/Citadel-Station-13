@@ -1058,9 +1058,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(zapdir)
 			. = zapdir
 
-		//Going boom should be rareish
-		if(prob(80))
-			zap_flags &= ~ZAP_MACHINE_EXPLOSIVE
 		if(target_type == COIL)
 			//In the best situation we can expect this to grow up to 2120kw before a delam/IT'S GONE TOO FAR FRED SHUT IT DOWN
 			//The formula for power gen is zap_str * zap_mod / 2 * capacitor rating, between 1 and 4
