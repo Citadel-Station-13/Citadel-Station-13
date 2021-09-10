@@ -1365,8 +1365,6 @@
 	if(secondsElectrified != ELECTRIFIED_PERMANENT)
 		unelectrify_timerid = addtimer(CALLBACK(src, .proc/remove_electrify), secondsElectrified SECONDS, TIMER_STOPPABLE)
 	diag_hud_set_electrified()
-	if(secondsElectrified > NOT_ELECTRIFIED)
-		INVOKE_ASYNC(src, .proc/electrified_loop)
 
 	if(user)
 		var/message
