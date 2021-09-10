@@ -54557,8 +54557,8 @@
 	id = "xenoigniter";
 	luminosity = 2
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -55493,7 +55493,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "hVx" = (
@@ -55915,6 +55915,7 @@
 	id = "xenoigniter";
 	luminosity = 2
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "iPz" = (
@@ -59469,6 +59470,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "qAx" = (
@@ -60673,6 +60675,7 @@
 /area/maintenance/department/science)
 "tfP" = (
 /obj/item/beacon,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "tfZ" = (
@@ -114727,13 +114730,13 @@ abI
 aby
 aaa
 xKc
-blX
+lCN
 qAk
 iPj
 tfP
 geN
 qAk
-blX
+uzB
 xKc
 aaa
 aby

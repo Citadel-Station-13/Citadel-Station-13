@@ -528,21 +528,7 @@ Difficulty: Very Hard
 /obj/machinery/anomalous_crystal/emitter/ActivationReaction(mob/user, method)
 	if(..())
 		var/obj/item/projectile/P = new generated_projectile(get_turf(src))
-		P.setDir(dir)
-		switch(dir)
-			if(NORTH)
-				P.yo = 20
-				P.xo = 0
-			if(EAST)
-				P.yo = 0
-				P.xo = 20
-			if(WEST)
-				P.yo = 0
-				P.xo = -20
-			else
-				P.yo = -20
-				P.xo = 0
-		P.fire()
+		P.fire(angle2dir(dir))
 
 /obj/machinery/anomalous_crystal/dark_reprise //Revives anyone nearby, but turns them into shadowpeople and renders them uncloneable, so the crystal is your only hope of getting up again if you go down.
 	observer_desc = "When activated, this crystal revives anyone nearby, but turns them into Shadowpeople and makes them unclonable, making the crystal their only hope of getting up again."

@@ -39,7 +39,8 @@
 #define DAMAGE_INCREASE_MULTIPLIER 0.25
 
 
-#define THERMAL_RELEASE_MODIFIER 5         //Higher == less heat released during reaction, not to be confused with the above values
+#define THERMAL_RELEASE_MODIFIER 350         //Higher == more heat released during reaction, not to be confused with the above values
+#define THERMAL_RELEASE_CAP_MODIFIER 250     //Higher == lower cap on how much heat can be released per tick--currently 1.3x old value
 #define PLASMA_RELEASE_MODIFIER 750        //Higher == less plasma released by reaction
 #define OXYGEN_RELEASE_MODIFIER 325        //Higher == less oxygen released at high temperature/power
 
@@ -500,7 +501,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling + clamp(powerloss_inhibition_gas - powerloss_dynamic_scaling, -0.02, 0.02), 0, 1)
 	else
 		powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling - 0.05, 0, 1)
-	//Ranges from 0 to 1(1-(value between 0 and 1 * ranges from 1 to 1.5(mol / 500)))
+	//Ranges from 0 to 1 (1-(value between 0 and 1 * ranges from 1 to 1.5(mol / 500)))
+	//0 means full inhibition, 1 means no inhibition
 	//We take the mol count, and scale it to be our inhibitor
 	powerloss_inhibitor = clamp(1-(powerloss_dynamic_scaling * clamp(combined_gas/POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD, 1, 1.5)), 0, 1)
 
@@ -536,15 +538,19 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	//Power * 0.55 * a value between 1 and 0.8
 	var/device_energy = power * REACTION_POWER_MODIFIER
 
-	removed.set_temperature(removed.return_temperature() + ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_MODIFIER))
-	//We don't want our output to be too hot
-	removed.set_temperature(max(0, min(removed.return_temperature(), 2500 * dynamic_heat_modifier)))
+	var/effective_temperature = min(removed.return_temperature(), 2500 * dynamic_heat_modifier)
 
+	var/max_temp_increase = effective_temperature + ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_CAP_MODIFIER)
 	//Calculate how much gas to release
 	//Varies based on power and gas content
 	removed.adjust_moles(GAS_PLASMA, max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0))
 	//Varies based on power, gas content, and heat
-	removed.adjust_moles(GAS_O2, max(((device_energy + removed.return_temperature() * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0))
+	removed.adjust_moles(GAS_O2, max(((device_energy + effective_temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0))
+
+	if(removed.return_temperature() < max_temp_increase)
+		removed.adjust_heat(device_energy * dynamic_heat_modifier * THERMAL_RELEASE_MODIFIER)
+		removed.set_temperature(min(removed.return_temperature(), max_temp_increase))
+
 
 	if(produces_gas)
 		env.merge(removed)
