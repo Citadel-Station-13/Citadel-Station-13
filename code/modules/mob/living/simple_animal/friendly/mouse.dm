@@ -134,11 +134,15 @@
 	qdel(src)
 
 /mob/living/simple_animal/mouse/proc/evolve_plague()
+	return
+
+/*
 	var/mob/living/simple_animal/hostile/plaguerat = new /mob/living/simple_animal/hostile/plaguerat(loc)
 	visible_message("<span class='warning'>[src] devours the food! He rots into something worse!</span>")
 	if(mind)
 		mind.transfer_to(plaguerat)
 	qdel(src)
+*/
 
 /*
  * Mouse types
