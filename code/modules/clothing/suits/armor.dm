@@ -152,8 +152,8 @@
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
 	desc = "A suit of semi-flexible polycarbonate body armor with heavy padding to protect against melee attacks. Helps the wearer resist shoving in close quarters."
-	icon_state = "swat"
-	item_state = "swat_suit"
+	icon_state = "riot"
+	item_state = "riot"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
