@@ -66,8 +66,10 @@ Key procs
 	if(!complex_calculation || (multiplicative_slowdown > 0))		// we aren't limiting how much things can slowdown.. yet.
 		return existing + multiplicative_slowdown
 	var/current_tiles = 10 / max(existing, world.tick_lag)
-	var/minimum_speed = 10 / min(current_tiles + max_tiles_per_second_boost, max(current_tiles, absolute_max_tiles_per_second))
-	return max(minimum_speed, existing + multiplicative_slowdown)
+	// multiplicative_slowdown is negative due to our first check
+	var/max_buff_to = max(existing + multiplicative_slowdown, 10 / absolute_max_tiles_per_second, 10 / (current_tiles + max_tiles_per_second_boost))
+	// never slow the user
+	return min(existing, max_buff_to)
 
 GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 
