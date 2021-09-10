@@ -14,8 +14,8 @@ GLOBAL_LIST_EMPTY(plague_rats)
 	gender = NEUTER
 	speak_chance = 1
 	turns_per_move = 5
-	maxHealth = 20
-	health = 20
+	maxHealth = 100
+	health = 100
 	see_in_dark = 6
 	obj_damage = 10
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1)
@@ -25,8 +25,8 @@ GLOBAL_LIST_EMPTY(plague_rats)
 	response_disarm_simple = "skoff at"
 	response_harm_continuous = "slashes"
 	response_harm_simple = "slash"
-	melee_damage_lower = 5
-	melee_damage_upper = 7
+	melee_damage_lower = 6
+	melee_damage_upper = 8
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -137,7 +137,6 @@ GLOBAL_LIST_EMPTY(plague_rats)
 		visible_message("<span class='warning'>[src] gnaws into its food, [cap] rats are now on the station!</span>")
 		return
 	var/mob/living/newmouse = new /mob/living/simple_animal/hostile/plaguerat(loc)
-	GLOB.plague_rats += newmouse
 	visible_message("<span class='notice'>[src] gnaws into its food, attracting another rat!</span>")
 
 /mob/living/simple_animal/hostile/plaguerat/proc/exit_vents()
