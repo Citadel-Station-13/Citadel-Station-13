@@ -237,12 +237,28 @@
 /obj/item/clothing/head/helmet/space/hardsuit/mining/Initialize()
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
+	RegisterSignal(src, COMSIG_ARMOR_PLATED, .proc/upgrade_icon)
+
+/obj/item/clothing/head/helmet/space/hardsuit/mining/proc/upgrade_icon(datum/source, amount, maxamount)
+	SIGNAL_HANDLER
+
+	if(amount)
+		name = "reinforced [initial(name)]"
+		hardsuit_type = "mining_goliath"
+		if(amount == maxamount)
+			hardsuit_type = "mining_goliath_full"
+	icon_state = "hardsuit[on]-[hardsuit_type]"
+	if(ishuman(loc))
+		var/mob/living/carbon/human/wearer = loc
+		if(wearer.head == src)
+			wearer.update_inv_head()
 
 /obj/item/clothing/suit/space/hardsuit/mining
 	icon_state = "hardsuit-mining"
 	name = "mining hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters."
 	item_state = "mining_hardsuit"
+	hardsuit_type = "mining"
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 50, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 75, "wound" = 15)
@@ -254,6 +270,21 @@
 /obj/item/clothing/suit/space/hardsuit/mining/Initialize()
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
+	RegisterSignal(src, COMSIG_ARMOR_PLATED, .proc/upgrade_icon)
+
+/obj/item/clothing/suit/space/hardsuit/mining/proc/upgrade_icon(datum/source, amount, maxamount)
+	SIGNAL_HANDLER
+
+	if(amount)
+		name = "reinforced [initial(name)]"
+		hardsuit_type = "mining_goliath"
+		if(amount == maxamount)
+			hardsuit_type = "mining_goliath_full"
+	icon_state = "hardsuit-[hardsuit_type]"
+	if(ishuman(loc))
+		var/mob/living/carbon/human/wearer = loc
+		if(wearer.wear_suit == src)
+			wearer.update_inv_wear_suit()
 
 	//Syndicate hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi

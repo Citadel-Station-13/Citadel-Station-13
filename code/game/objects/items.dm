@@ -568,6 +568,12 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(usr.incapacitated() || !Adjacent(usr) || usr.lying)
 		return
 
+	if(iscyborg(usr))
+		var/obj/item/gripper/gripper = usr.get_active_held_item(TRUE)
+		if(istype(gripper))
+			gripper.pre_attack(src, usr, get_dist(src, usr))
+		return
+
 	if(usr.get_active_held_item() == null) // Let me know if this has any problems -Yota
 		usr.UnarmedAttack(src)
 
