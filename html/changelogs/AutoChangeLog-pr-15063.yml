@@ -1,6 +1,0 @@
-author: "zeroisthebiggay"
-delete-after: True
-changes: 
-  - imageadd: "reinforcing the mining hardsuit with goliath hide now makes the sprite cooler"
-  - imageadd: "The SWAT helmet is now consistent between its front, side and back sprites for coloration."
-  - imageadd: "new riot armor sprites"

@@ -1,7 +1,0 @@
-author: "LetterN"
-delete-after: True
-changes: 
-  - code_imp: "Tickers, GC, MC, FS updates"
-  - code_imp: "rust_g update. It is default that we use their urlencode/unencode now."
-  - code_imp: "updates CBT to juke"
-  - bugfix: "CI Cache works properly now"
