@@ -35,9 +35,9 @@
 	healable = 0
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	obj_damage = 50
-	melee_damage_lower = 22.5 // reduced from 30 to 22.5 with wounds since they get big buffs to slicing wounds
-	melee_damage_upper = 22.5
-	wound_bonus = -10
+	melee_damage_lower = 30 // buffed back to 30, the wounds don't do much
+	melee_damage_upper = 30
+	wound_bonus = 0
 	bare_wound_bonus = 0
 	sharpness = SHARP_EDGED
 	see_in_dark = 8
@@ -90,11 +90,14 @@
 
 	face_atom(A)
 	var/mob/living/victim = A
-	victim.take_bodypart_damage(brute=20, wound_bonus=wound_bonus) // don't worry, there's more punishment when they hit something
+	var/body_pick = pick(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_ARM, BODY_ZONE_R_LEG)
+	var/datum/wound/blunt/critical/wound_major = new
+	var/obj/item/bodypart/body_wound = victim.get_bodypart(body_pick)
+	wound_major.apply_wound(body_wound)
 	visible_message("<span class='danger'>[src] slams into [victim] with monstrous strength!</span>", "<span class='danger'>You slam into [victim] with monstrous strength!</span>", ignored_mobs=victim)
 	to_chat(victim, "<span class='userdanger'>[src] slams into you with monstrous strength, sending you flying like a ragdoll!</span>")
 	var/turf/yeet_target = get_edge_target_turf(victim, dir)
-	victim.throw_at(yeet_target, 10, 5, src)
+	victim.throw_at(yeet_target, 10, 14, src)
 	slam_cooldown = world.time
 	log_combat(src, victim, "slaughter slammed")
 
