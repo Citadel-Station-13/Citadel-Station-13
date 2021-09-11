@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - rscadd: "allows custom taste text and color on the custom ice cream setting in the ice cream vat"
