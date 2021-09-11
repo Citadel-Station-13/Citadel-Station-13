@@ -547,7 +547,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	// oxygen ratio increases as temperature does
 	var/oxy_ratio = HYPERBOLIC_GROWTH(MAX_OXY_MULT, 1 / OXY_POINT, cur_temp, (-OXY_POINT / 2))
 	// total moles also increases as temperature does
-	var/released_plasma = max((device_energy**2 * dynamic_heat_modifier + (cur_temp - T0C)) / GAS_RELEASE_MODIFIER ** 2, 0) / (1+oxy_ratio)
+	var/released_plasma = min(max((device_energy * dynamic_heat_modifier + (cur_temp - T0C)) / GAS_RELEASE_MODIFIER, 0) / (1+oxy_ratio), 3)
 
 	removed.adjust_moles(GAS_PLASMA, released_plasma)
 
