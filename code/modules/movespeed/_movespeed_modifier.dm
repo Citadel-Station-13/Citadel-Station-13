@@ -41,9 +41,9 @@ Key procs
 	/// Next two variables depend on this: Should we do advanced calculations?
 	var/complex_calculation = FALSE
 	/// Absolute max tiles we can boost to
-	var/absolute_max_tiles_per_second
+	var/absolute_max_tiles_per_second = INFINITY
 	/// Max tiles per second we can boost
-	var/max_tiles_per_second_boost
+	var/max_tiles_per_second_boost = INFINITY
 
 	/// Movetypes this applies to
 	var/movetypes = ALL
@@ -53,6 +53,8 @@ Key procs
 
 	/// Other modification datums this conflicts with.
 	var/conflicts_with
+
+
 
 /datum/movespeed_modifier/New()
 	. = ..()
