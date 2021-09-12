@@ -5,12 +5,6 @@
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics/automagic
 
-
-/obj/machinery/hydroponics/constructable/automagic/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/reagent_containers))
-		return FALSE //avoid fucky wuckies
-	..()
-
 /obj/machinery/hydroponics/constructable/automagic/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)

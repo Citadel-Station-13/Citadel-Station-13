@@ -218,19 +218,13 @@
 
 	to_chat(world, "<BR><BR><BR><span class='big bold'>The round has ended.</span>")
 	log_game("The round has ended.")
-	if(LAZYLEN(GLOB.round_end_notifiees))
-		world.TgsTargetedChatBroadcast("[GLOB.round_end_notifiees.Join(", ")] the round has ended.", FALSE)
+
+	CONFIG_SET(flag/suicide_allowed,TRUE) // EORG suicides allowed
 
 	for(var/I in round_end_events)
 		var/datum/callback/cb = I
 		cb.InvokeAsync()
 	LAZYCLEARLIST(round_end_events)
-
-	for(var/client/C in GLOB.clients)
-		if(!C.credits)
-			C.RollCredits()
-		C.playtitlemusic(40)
-	CONFIG_SET(flag/suicide_allowed,TRUE) // EORG suicides allowed
 
 	var/speed_round = FALSE
 	if(world.time - SSticker.round_start_time <= 300 SECONDS)
@@ -264,12 +258,15 @@
 
 	send2adminchat("Server", "A round of [mode.name] just ended[mode_result == "undefined" ? "." : " with a [mode_result]."] Survival rate: [survival_rate]")
 
+	if(LAZYLEN(GLOB.round_end_notifiees))
+		world.TgsTargetedChatBroadcast("[GLOB.round_end_notifiees.Join(", ")] the round has ended.", FALSE)
+
 	if(length(CONFIG_GET(keyed_list/cross_server)))
 		send_news_report()
 
 	//tell the nice people on discord what went on before the salt cannon happens.
 	world.TgsTargetedChatBroadcast("The current round has ended. Please standby for your shift interlude Nanotrasen News Network's report!", FALSE)
-	world.TgsTargetedChatBroadcast(send_news_report(),FALSE)
+	world.TgsTargetedChatBroadcast(send_news_report(), FALSE)
 
 	CHECK_TICK
 
@@ -543,21 +540,24 @@
 ///Generate a report for how much money is on station, as well as the richest crewmember on the station.
 /datum/controller/subsystem/ticker/proc/market_report()
 	var/list/parts = list()
-	parts += "<span class='header'>Station Economic Summary:</span>"
+
 	///This is the richest account on station at roundend.
 	var/datum/bank_account/mr_moneybags
 	///This is the station's total wealth at the end of the round.
 	var/station_vault = 0
 	///How many players joined the round.
 	var/total_players = GLOB.joined_player_list.len
-	var/list/typecache_bank = typecacheof(list(/datum/bank_account/department, /datum/bank_account/remote))
-	for(var/datum/bank_account/current_acc in SSeconomy.generated_accounts)
+	var/static/list/typecache_bank = typecacheof(list(/datum/bank_account/department, /datum/bank_account/remote))
+	for(var/i in SSeconomy.generated_accounts)
+		var/datum/bank_account/current_acc = SSeconomy.generated_accounts[i]
 		if(typecache_bank[current_acc.type])
 			continue
 		station_vault += current_acc.account_balance
 		if(!mr_moneybags || mr_moneybags.account_balance < current_acc.account_balance)
 			mr_moneybags = current_acc
-	parts += "<div class='panel stationborder'>There were [station_vault] credits collected by crew this shift.<br>"
+	parts += "<div class='panel stationborder'><span class='header'>Station Economic Summary:</span><br>"
+	parts += "<b>General Statistics:</b><br>"
+	parts += "There were [station_vault] credits collected by crew this shift.<br>"
 	if(total_players > 0)
 		parts += "An average of [station_vault/total_players] credits were collected.<br>"
 		// log_econ("Roundend credit total: [station_vault] credits. Average Credits: [station_vault/total_players]")

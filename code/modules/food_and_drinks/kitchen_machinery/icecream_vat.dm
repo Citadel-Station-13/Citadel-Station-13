@@ -8,8 +8,6 @@
 #define CONE_WAFFLE 8
 #define CONE_CHOC 9
 
-
-
 /obj/machinery/icecream_vat
 	name = "ice cream vat"
 	desc = "Ding-aling ding dong. Get your Nanotrasen-approved ice cream!"
@@ -35,6 +33,8 @@
 		/datum/reagent/consumable/ethanol/singulo = 6,
 		/datum/reagent/consumable/peachjuice = 6,
 		/datum/reagent/consumable/grapejuice = 6)
+	var/custom_taste
+	var/custom_color
 
 /obj/machinery/icecream_vat/proc/get_ingredient_list(type)
 	switch(type)
@@ -99,7 +99,10 @@
 	dat += "<b>Peach ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_PEACH]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_PEACH];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_PEACH];amount=5'><b>x5</b></a> [product_types[ICECREAM_PEACH]] dollops left. (Ingredients: milk, ice, peach juice)<br>"
 	dat += "<b>Grape ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_GRAPE]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_GRAPE];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_GRAPE];amount=5'><b>x5</b></a> [product_types[ICECREAM_GRAPE]] dollops left. (Ingredients: milk, ice, grape juice)<br>"
 	dat += "<b>Blue ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_BLUE]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_BLUE];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_BLUE];amount=5'><b>x5</b></a> [product_types[ICECREAM_BLUE]] dollops left. (Ingredients: milk, ice, singulo)<br>"
-	dat += "<b>Custom ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_CUSTOM]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_CUSTOM];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_CUSTOM];amount=5'><b>x5</b></a> [product_types[ICECREAM_CUSTOM]] dollops left. (Ingredients: milk, ice, optional flavoring)<br></div>"
+	dat += "<b>Custom ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_CUSTOM]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_CUSTOM];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_CUSTOM];amount=5'><b>x5</b></a> [product_types[ICECREAM_CUSTOM]] dollops left. (Ingredients: milk, ice, optional flavoring)<br>"
+	dat += "<a href='?src=[REF(src)];custom_taste=1;'><b>Change custom taste: [custom_taste ? custom_taste : "Default"]</b></a>"
+	dat += "<br><a href='?src=[REF(src)];custom_color=1;'><b>Change custom color: [custom_color ? custom_color : "Default"]</b></a>"
+	dat += "<br><a href='?src=[REF(src)];reset_custom=1;'><b>Reset custom ice cream taste and color to defaults</b></a></div>"
 	dat += "<br><b>CONES</b><br><div class='statusDisplay'>"
 	dat += "<b>Waffle cones:</b> <a href='?src=[REF(src)];cone=[CONE_WAFFLE]'><b>Dispense</b></a> <a href='?src=[REF(src)];make=[CONE_WAFFLE];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[CONE_WAFFLE];amount=5'><b>x5</b></a> [product_types[CONE_WAFFLE]] cones left. (Ingredients: flour, sugar)<br>"
 	dat += "<b>Chocolate cones:</b> <a href='?src=[REF(src)];cone=[CONE_CHOC]'><b>Dispense</b></a> <a href='?src=[REF(src)];make=[CONE_CHOC];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[CONE_CHOC];amount=5'><b>x5</b></a> [product_types[CONE_CHOC]] cones left. (Ingredients: flour, sugar, coco powder)<br></div>"
@@ -128,7 +131,7 @@
 				visible_message("[icon2html(src, viewers(src))] <span class='info'>[user] scoops delicious [flavour_name] ice cream into [I].</span>")
 				product_types[dispense_flavour] -= 1
 				if(beaker && beaker.reagents.total_volume)
-					I.add_ice_cream(flavour_name, beaker.reagents)
+					I.add_ice_cream(flavour_name, beaker.reagents, custom_color, custom_taste)
 				else
 					I.add_ice_cream(flavour_name)
 				if(I.reagents.total_volume < 10)
@@ -213,14 +216,25 @@
 	if(href_list["refill"])
 		RefillFromBeaker()
 
-	updateDialog()
-
 	if(href_list["refresh"])
 		updateDialog()
 
 	if(href_list["close"])
 		usr.unset_machine()
 		usr << browse(null,"window=icecreamvat")
+
+	if(href_list["custom_taste"])
+		custom_taste = stripped_input(usr, "Set a custom taste for the custom icecream. 50 characters max, leave blank to go back to the default option.", max_length = 50)
+
+	if(href_list["custom_color"])
+		custom_color = input(usr, "Choose a color for the custom icecream. Cancel to go back to the default option.") as color|null
+
+	if(href_list["reset_custom"])
+		custom_taste = null
+		custom_color = null
+
+	updateDialog() // i have no clue why we even have refresh when this is a thing but sure
+
 	return
 
 /obj/item/reagent_containers/food/snacks/icecream
@@ -251,7 +265,7 @@
 	desc = "Delicious [cone_name] cone, but no ice cream."
 
 
-/obj/item/reagent_containers/food/snacks/icecream/proc/add_ice_cream(flavour_name, datum/reagents/R)
+/obj/item/reagent_containers/food/snacks/icecream/proc/add_ice_cream(flavour_name, datum/reagents/R, custom_color, custom_taste)
 	name = "[flavour_name] icecream"
 	switch (flavour_name) // adding the actual reagents advertised in the ingredient list
 		if ("vanilla")
@@ -286,8 +300,11 @@
 			if(R && R.total_volume >= 4) //consumable reagents have stronger taste so higher volume will allow non-food flavourings to break through better.
 				var/mutable_appearance/flavoring = mutable_appearance(icon,"icecream_custom")
 				var/datum/reagent/master = R.get_master_reagent()
-				flavoring.color = master.color
-				filling_color = master.color
+				flavoring.color = custom_color ? custom_color : master.color
+				filling_color = custom_color ? custom_color : master.color
+				if(custom_taste)
+					tastes = list("[custom_taste]" = 1)
+					reagents.force_alt_taste = TRUE
 				name = "[master.name] icecream"
 				desc = "A delicious [cone_type] cone filled with artisanal icecream. Made with real [master.name]. Ain't that something."
 				R.trans_to(src, 4)
