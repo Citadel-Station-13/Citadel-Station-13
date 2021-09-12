@@ -41,8 +41,8 @@
 
 #define THERMAL_RELEASE_MODIFIER 350         //Higher == more heat released during reaction, not to be confused with the above values
 #define THERMAL_RELEASE_CAP_MODIFIER 250     //Higher == lower cap on how much heat can be released per tick--currently 1.3x old value
-#define GAS_RELEASE_MODIFIER 500        //Higher == less gas released by reaction
-#define MAX_OXY_MULT 1.5                  //The ratio between oxygen and plasma will approach this as temperature increases
+#define GAS_RELEASE_MODIFIER 800        //Higher == less gas released by reaction
+#define MAX_OXY_MULT 2                  //The ratio between oxygen and plasma will approach this as temperature increases
 #define OXY_POINT 80                    // the temperature above which oxygen output > plasma output
 
 #define REACTION_POWER_MODIFIER 0.55       //Higher == more overall power
@@ -547,7 +547,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	// oxygen ratio increases as temperature does
 	var/oxy_ratio = HYPERBOLIC_GROWTH(MAX_OXY_MULT, 1 / OXY_POINT, cur_temp, (-OXY_POINT / 2))
 	// total moles also increases as temperature does
-	var/released_plasma = min(max((device_energy * dynamic_heat_modifier) / GAS_RELEASE_MODIFIER, 0) / (1+oxy_ratio), 3)
+	var/released_plasma = min(max((device_energy * dynamic_heat_modifier) / GAS_RELEASE_MODIFIER, 0) / (1+oxy_ratio), 2)
 
 	removed.adjust_moles(GAS_PLASMA, released_plasma)
 
