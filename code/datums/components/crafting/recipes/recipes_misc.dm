@@ -62,7 +62,7 @@
 	result =/obj/structure/closet/crate/coffin/meatcoffin
 	tools = list(/obj/item/kitchen/knife,
 				 /obj/item/kitchen/rollingpin)
-	reqs = list(/obj/item/reagent_containers/food/meat/slab = 5,
+	reqs = list(/obj/item/food/meat/slab = 5,
 				/obj/item/restraints/handcuffs/cable = 1)
 	time = 150
 	subcategory = CAT_FURNITURE
@@ -243,7 +243,7 @@
 
 /datum/crafting_recipe/smallcarton
 	name = "Small Carton"
-	result = /obj/item/reagent_containers/food/drinks/sillycup/smallcarton
+	result = /obj/item/food/drinks/sillycup/smallcarton
 	time = 10
 	reqs = list(/obj/item/stack/sheet/cardboard = 1)
 	subcategory = CAT_TOOL

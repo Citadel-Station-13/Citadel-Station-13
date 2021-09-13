@@ -104,7 +104,7 @@
 					/obj/item/reagent_containers/rag,
 					/obj/item/book/manual/wiki/barman_recipes,
 					/obj/item/book/granter/action/drink_fling,
-					/obj/item/reagent_containers/food/drinks/shaker,
+					/obj/item/food/drinks/shaker,
 					/obj/item/circuitboard/machine/chem_dispenser/drinks/beer,
 					/obj/item/circuitboard/machine/chem_dispenser/drinks,
 					/obj/item/circuitboard/machine/dish_drive)
@@ -162,11 +162,11 @@
 					/obj/item/trash/plate,
 					/obj/item/trash/plate,
 					/obj/item/trash/plate,
-					/obj/item/reagent_containers/food/drinks/drinkingglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)
+					/obj/item/food/drinks/drinkingglass,
+					/obj/item/food/drinks/drinkingglass,
+					/obj/item/food/drinks/drinkingglass,
+					/obj/item/food/drinks/drinkingglass/shotglass,
+					/obj/item/food/drinks/drinkingglass/shotglass)
 	crate_name = "kitchen cutlery deluxe set"
 
 /datum/supply_pack/service/replacementdb

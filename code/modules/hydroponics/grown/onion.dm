@@ -25,7 +25,7 @@
 	filling_color = "#C0C9A0"
 	bitesize_mod = 2
 	tastes = list("onions" = 1)
-	slice_path = /obj/item/reagent_containers/food/onion_slice
+	slice_path = /obj/item/food/onion_slice
 	slices_num = 2
 	wine_power = 30
 
@@ -45,7 +45,7 @@
 	desc = "Purple despite the name."
 	icon_state = "onion_red"
 	filling_color = "#C29ACF"
-	slice_path = /obj/item/reagent_containers/food/onion_slice/red
+	slice_path = /obj/item/food/onion_slice/red
 	wine_power = 60
 
 /obj/item/food/grown/onion/slice(accuracy, obj/item/W, mob/user)
@@ -58,16 +58,16 @@
 		return TRUE
 	qdel(S)
 
-/obj/item/reagent_containers/food/onion_slice
+/obj/item/food/onion_slice
 	name = "onion slices"
 	desc = "Rings, not for wearing."
 	icon_state = "onionslice"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	filling_color = "#C0C9A0"
 	gender = PLURAL
-	cooked_type = /obj/item/reagent_containers/food/onionrings
+	cooked_type = /obj/item/food/onionrings
 
-/obj/item/reagent_containers/food/onion_slice/red
+/obj/item/food/onion_slice/red
 	name = "red onion slices"
 	desc = "They shine like exceptionally low quality amethyst."
 	icon_state = "onionslice_red"

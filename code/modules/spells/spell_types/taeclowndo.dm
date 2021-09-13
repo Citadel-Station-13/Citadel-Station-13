@@ -4,7 +4,7 @@
 	invocation_type = "none"
 	include_user = 1
 	range = -1
-	item_type = /obj/item/reagent_containers/food/pie/cream
+	item_type = /obj/item/food/pie/cream
 
 	charge_max = 30
 	cooldown_min = 30

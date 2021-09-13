@@ -122,8 +122,8 @@
 			w_items += I.w_class
 			to_chat(user, "<span class='notice'>You carefully place [I] into the cistern.</span>")
 
-	if(istype(I, /obj/item/reagent_containers/food/cube))
-		var/obj/item/reagent_containers/food/cube/cube = I
+	if(istype(I, /obj/item/food/cube))
+		var/obj/item/food/cube/cube = I
 		cube.Expand()
 		return
 	else if(istype(I, /obj/item/reagent_containers))
@@ -176,7 +176,7 @@
 
 /obj/structure/urinal/New()
 	..()
-	hiddenitem = new /obj/item/reagent_containers/food/urinalcake
+	hiddenitem = new /obj/item/food/urinalcake
 
 /obj/structure/urinal/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
@@ -231,7 +231,7 @@
 		exposed = !exposed
 	return TRUE
 
-/obj/item/reagent_containers/food/urinalcake
+/obj/item/food/urinalcake
 	name = "urinal cake"
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -239,7 +239,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	list_reagents = list(/datum/reagent/chlorine = 3, /datum/reagent/ammonia = 1)
 
-/obj/item/reagent_containers/food/urinalcake/attack_self(mob/living/user)
+/obj/item/food/urinalcake/attack_self(mob/living/user)
 	user.visible_message("<span class='notice'>[user] squishes [src]!</span>", "<span class='notice'>You squish [src].</span>", "<i>You hear a squish.</i>")
 	icon_state = "urinalcake_squish"
 	addtimer(VARSET_CALLBACK(src, icon_state, "urinalcake"), 8)

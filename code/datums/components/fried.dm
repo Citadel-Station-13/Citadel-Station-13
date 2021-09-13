@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 		fried_foodtypes |= TOXIC // junk tastes toxic too
 	else
 		if(isfood(owner))
-			var/obj/item/reagent_containers/food/food_item = owner
+			var/obj/item/food/food_item = owner
 			fried_tastes += food_item.tastes
 			fried_foodtypes |= food_item.foodtype
 

@@ -256,7 +256,7 @@
 		muck()
 		return
 	for(var/obj/O in ingredients)
-		if(istype(O, /obj/item/reagent_containers/food) || istype(O, /obj/item/grown))
+		if(istype(O, /obj/item/food) || istype(O, /obj/item/grown))
 			continue
 		if(prob(min(dirty * 5, 100)))
 			start_can_fail()

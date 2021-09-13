@@ -14,7 +14,7 @@
 	see_in_dark = 5
 	maxHealth = 15
 	health = 15
-	butcher_results = list(/obj/item/reagent_containers/food/meat/slab = 1)
+	butcher_results = list(/obj/item/food/meat/slab = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"

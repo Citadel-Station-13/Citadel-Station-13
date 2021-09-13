@@ -208,18 +208,18 @@
 		. += mutable_appearance('icons/obj/lavaland/ash_flora.dmi', "fullbowl", color = mix_color_from_reagents(reagents.reagent_list))
 
 /obj/item/reagent_containers/glass/bowl/mushroom_bowl/attackby(obj/item/I,mob/user, params)
-	if(istype(I, /obj/item/reagent_containers/food))
-		var/obj/item/reagent_containers/food/S = I
+	if(istype(I, /obj/item/food))
+		var/obj/item/food/S = I
 		if(I.w_class > WEIGHT_CLASS_SMALL)
 			to_chat(user, "<span class='warning'>The ingredient is too big for [src]!</span>")
 		else if(contents.len >= 20)
 			to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
 		else
 			if(reagents.has_reagent(/datum/reagent/water, 10)) //are we starting a soup or a salad?
-				var/obj/item/reagent_containers/food/customizable/A = new/obj/item/reagent_containers/food/customizable/soup/ashsoup(get_turf(src))
+				var/obj/item/food/customizable/A = new/obj/item/food/customizable/soup/ashsoup(get_turf(src))
 				A.initialize_custom_food(src, S, user)
 			else
-				var/obj/item/reagent_containers/food/customizable/A = new/obj/item/reagent_containers/food/customizable/salad/ashsalad(get_turf(src))
+				var/obj/item/food/customizable/A = new/obj/item/food/customizable/salad/ashsalad(get_turf(src))
 				A.initialize_custom_food(src, S, user)
 	else
 		. = ..()
@@ -304,13 +304,13 @@
 	time = 30
 	category = CAT_PRIMAL
 
-/obj/item/reagent_containers/food/customizable/salad/ashsalad
+/obj/item/food/customizable/salad/ashsalad
 	desc = "Very ashy."
 	trash = /obj/item/reagent_containers/glass/bowl/mushroom_bowl
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
 	icon_state = "mushroom_bowl"
 
-/obj/item/reagent_containers/food/customizable/soup/ashsoup
+/obj/item/food/customizable/soup/ashsoup
 	desc = "A bowl with ash and... stuff in it."
 	trash = /obj/item/reagent_containers/glass/bowl/mushroom_bowl
 	icon = 'icons/obj/lavaland/ash_flora.dmi'

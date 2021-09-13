@@ -915,8 +915,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/bong/attackby(obj/item/O, mob/user, params)
 	. = ..()
 	//If we're using a dried plant..
-	if(istype(O,/obj/item/reagent_containers/food))
-		var/obj/item/reagent_containers/food/DP = O
+	if(istype(O,/obj/item/food))
+		var/obj/item/food/DP = O
 		if (DP.dry)
 			//Nothing if our bong is full
 			if (reagents.holder_full())

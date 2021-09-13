@@ -36,7 +36,7 @@
 	var/co2overloadtime = null
 	var/o2overloadtime = null	//for Ash walker's weaker lungs, and future atmosia hazards
 	var/temperature_resistance = T0C+75
-	var/obj/item/reagent_containers/food/meat/slab/type_of_meat = /obj/item/reagent_containers/food/meat/slab
+	var/obj/item/food/meat/slab/type_of_meat = /obj/item/food/meat/slab
 
 	var/gib_type = /obj/effect/decal/cleanable/blood/gibs
 

@@ -153,7 +153,7 @@ GLOBAL_LIST_INIT(ore_probability, list(/obj/item/stack/ore/uranium = 50,
 		if(16)
 			new /obj/item/seeds/gatfruit(loc)
 		if(17)
-			new /obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola(loc)
+			new /obj/item/food/drinks/drinkingglass/filled/nuka_cola(loc)
 		if(18)
 			new /obj/item/assembly/signaler/anomaly/bluespace(loc)
 		if(19)

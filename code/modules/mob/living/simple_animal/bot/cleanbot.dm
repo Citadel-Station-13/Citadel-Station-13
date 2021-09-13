@@ -357,7 +357,7 @@
 
 	if(trash)
 		target_types += /obj/item/trash
-		target_types += /obj/item/reagent_containers/food/meat/slab/human
+		target_types += /obj/item/food/meat/slab/human
 
 	target_types = typecacheof(target_types)
 

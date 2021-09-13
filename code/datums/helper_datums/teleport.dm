@@ -92,7 +92,7 @@
 		for(var/obj/item/food/bread/bread in breadlist)
 			bread.bread_teleport()
 	else if(istype(teleatom, /obj/item/food/bread))
-		var/obj/item/reagent_containers/food/bread/bread = teleatom
+		var/obj/item/food/bread/bread = teleatom
 		bread.bread_teleport()
 
 	return TRUE

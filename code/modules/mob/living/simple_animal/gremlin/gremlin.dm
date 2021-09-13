@@ -24,7 +24,7 @@ GLOBAL_LIST(bad_gremlin_items)
 	//Tampering is handled by the 'npc_tamper()' obj proc
 	wanted_objects = list(
 		/obj/machinery,
-		/obj/item/reagent_containers/food,
+		/obj/item/food,
 		/obj/structure/sink
 	)
 
@@ -72,7 +72,7 @@ GLOBAL_LIST(bad_gremlin_items)
 
 /mob/living/simple_animal/hostile/gremlin/AttackingTarget()
 	var/is_hungry = world.time >= next_eat || prob(25)
-	if(istype(target, /obj/item/reagent_containers/food) && is_hungry) //eat food if we're hungry or bored
+	if(istype(target, /obj/item/food) && is_hungry) //eat food if we're hungry or bored
 		visible_message("<span class='danger'>[src] hungrily devours [target]!</span>")
 		playsound(src, 'sound/items/eatfood.ogg', 50, 1)
 		qdel(target)
@@ -217,7 +217,7 @@ GLOBAL_LIST(bad_gremlin_items)
 /mob/living/simple_animal/hostile/gremlin/UnarmedAttack(var/atom/A)
 	if(istype(A, /obj/machinery) || istype(A, /obj/structure))
 		tamper(A)
-	if(istype(target, /obj/item/reagent_containers/food)) //eat food
+	if(istype(target, /obj/item/food)) //eat food
 		visible_message("<span class='danger'>[src] hungrily devours [target]!</span>", "<span class='danger'>You hungrily devour [target]!</span>")
 		playsound(src, 'sound/items/eatfood.ogg', 50, 1)
 		qdel(target)

@@ -6,7 +6,7 @@
 /// get_random_food proc.
 ////////////////////////////////////////////////////////////////////////////////
 
-/obj/item/reagent_containers/food
+/obj/item/food
 	possible_transfer_amounts = list()
 	volume = 50 //Sets the default container amount for all food items.
 	reagent_flags = INJECTABLE
@@ -15,13 +15,13 @@
 	var/last_check_time
 	var/in_container = FALSE //currently just stops "was bitten X times!" messages on canned food
 
-/obj/item/reagent_containers/food/Initialize(mapload)
+/obj/item/food/Initialize(mapload)
 	. = ..()
 	if(!mapload)
 		pixel_x = rand(-5, 5)
 		pixel_y = rand(-5, 5)
 
-/obj/item/reagent_containers/food/proc/checkLiked(fraction, mob/M)
+/obj/item/food/proc/checkLiked(fraction, mob/M)
 	if(last_check_time + 50 < world.time)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M

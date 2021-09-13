@@ -239,7 +239,7 @@
 			visible_message("<span class='notice'>[src] roll perfectly.</span>")
 		if(11)
 			//Cookie
-			var/obj/item/reagent_containers/food/cookie/C = new(drop_location())
+			var/obj/item/food/cookie/C = new(drop_location())
 			C.name = "Cookie of Fate"
 		if(12)
 			//Healing

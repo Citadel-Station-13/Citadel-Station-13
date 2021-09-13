@@ -200,7 +200,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(length(table))
 		var/turf/food_turf = get_turf(pick(table))
 		new /obj/item/kitchen/knife(food_turf)
-		var/obj/item/reagent_containers/food/cake/birthday/iancake = new(food_turf)
+		var/obj/item/food/cake/birthday/iancake = new(food_turf)
 		iancake.desc = "Happy birthday, Ian!"
 	// remind me to give ian proper baloons!
 	//some balloons! this picks an open turf and pops a few balloons in and around that turf, yay.
@@ -259,7 +259,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		else if(isopenturf(thing))
 			if(locate(/obj/structure/bed/dogbed/ian) in thing)
 				new /obj/item/clothing/head/festive(thing)
-				var/obj/item/reagent_containers/food/drinks/bottle/champagne/iandrink = new(thing)
+				var/obj/item/food/drinks/bottle/champagne/iandrink = new(thing)
 				iandrink.name = "dog champagne"
 				iandrink.pixel_y += 8
 				iandrink.pixel_x += 8

@@ -161,7 +161,7 @@
 	desc = "Hello Comrade, we have the most modern Russian military equipment the black market can offer, for the right price of course. Sadly we couldn't remove the lock so it requires Armory access to open."
 	cost = 7500
 	contraband = TRUE
-	contains = list(/obj/item/reagent_containers/food/rationpack,
+	contains = list(/obj/item/food/rationpack,
 					/obj/item/clothing/suit/armor/vest/russian,
 					/obj/item/clothing/head/helmet/rus_helmet,
 					/obj/item/clothing/shoes/russian,

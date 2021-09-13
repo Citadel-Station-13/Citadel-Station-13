@@ -15,7 +15,7 @@
 	health = 15
 	see_in_dark = 6
 	obj_damage = 10
-	butcher_results = list(/obj/item/reagent_containers/food/meat/slab = 1)
+	butcher_results = list(/obj/item/food/meat/slab = 1)
 	response_help_continuous = "glares at"
 	response_help_simple = "glare at"
 	response_disarm_continuous = "skoffs at"

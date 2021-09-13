@@ -885,7 +885,7 @@
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 		return FALSE
 
-	if (D.type == /datum/reagent/water && !no_react && !istype(my_atom, /obj/item/reagent_containers/food)) //Do like an otter, add acid to water, but also don't blow up botany.
+	if (D.type == /datum/reagent/water && !no_react && !istype(my_atom, /obj/item/food)) //Do like an otter, add acid to water, but also don't blow up botany.
 		if (pH < 2)
 			SSblackbox.record_feedback("tally", "fermi_chem", 1, "water-acid explosions")
 			var/datum/effect_system/smoke_spread/chem/s = new
@@ -1167,7 +1167,7 @@
 	else
 		// alternate taste is to force the taste of the atom if its a food item
 		if(my_atom && isfood(my_atom))
-			var/obj/item/reagent_containers/food/F = my_atom
+			var/obj/item/food/F = my_atom
 			out = F.tastes
 
 	return english_list(out, "something indescribable")

@@ -226,7 +226,7 @@
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/ammo_box,
-		/obj/item/reagent_containers/food/donut,
+		/obj/item/food/donut,
 		/obj/item/kitchen/knife/combat,
 		/obj/item/flashlight/seclite,
 		/obj/item/melee/classic_baton/telescopic,
@@ -277,7 +277,7 @@
 		/obj/item/stack/sheet/bone,
 		/obj/item/lighter,
 		/obj/item/storage/fancy/cigarettes,
-		/obj/item/reagent_containers/food/drinks/bottle,
+		/obj/item/food/drinks/bottle,
 		/obj/item/stack/medical,
 		/obj/item/kitchen/knife,
 		/obj/item/reagent_containers/hypospray,
@@ -288,7 +288,7 @@
 		/obj/item/reagent_containers/pill,
 		/obj/item/storage/pill_bottle,
 		/obj/item/stack/ore,
-		/obj/item/reagent_containers/food/drinks,
+		/obj/item/food/drinks,
 		/obj/item/organ/regenerative_core,
 		/obj/item/wormhole_jaunter,
 		/obj/item/storage/bag/plants,
@@ -377,37 +377,37 @@
 	STR.max_items = 6
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.can_hold = typecacheof(list(
-		/obj/item/reagent_containers/food,
-		/obj/item/reagent_containers/food/drinks
+		/obj/item/food,
+		/obj/item/food/drinks
 		))
 
 	var/amount = 5
 	var/rig_snacks
 	while(contents.len <= amount)
 		rig_snacks = pick(list(
-		/obj/item/reagent_containers/food/candy,
-		/obj/item/reagent_containers/food/drinks/dry_ramen,
-		/obj/item/reagent_containers/food/chips,
-		/obj/item/reagent_containers/food/sosjerky,
-		/obj/item/reagent_containers/food/syndicake,
-		/obj/item/reagent_containers/food/spacetwinkie,
-		/obj/item/reagent_containers/food/cheesiehonkers,
-		/obj/item/reagent_containers/food/nachos,
-		/obj/item/reagent_containers/food/cheesynachos,
-		/obj/item/reagent_containers/food/cubannachos,
-		/obj/item/reagent_containers/food/nugget,
-		/obj/item/reagent_containers/food/pastatomato,
-		/obj/item/reagent_containers/food/rofflewaffles,
-		/obj/item/reagent_containers/food/donkpocket,
-		/obj/item/reagent_containers/food/drinks/soda_cans/cola,
-		/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind,
-		/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb,
-		/obj/item/reagent_containers/food/drinks/soda_cans/starkist,
-		/obj/item/reagent_containers/food/drinks/soda_cans/space_up,
-		/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game,
-		/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime,
-		/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola,
-		/obj/item/reagent_containers/food/drinks/drinkingglass/filled/syndicatebomb
+		/obj/item/food/candy,
+		/obj/item/food/drinks/dry_ramen,
+		/obj/item/food/chips,
+		/obj/item/food/sosjerky,
+		/obj/item/food/syndicake,
+		/obj/item/food/spacetwinkie,
+		/obj/item/food/cheesiehonkers,
+		/obj/item/food/nachos,
+		/obj/item/food/cheesynachos,
+		/obj/item/food/cubannachos,
+		/obj/item/food/nugget,
+		/obj/item/food/pastatomato,
+		/obj/item/food/rofflewaffles,
+		/obj/item/food/donkpocket,
+		/obj/item/food/drinks/soda_cans/cola,
+		/obj/item/food/drinks/soda_cans/space_mountain_wind,
+		/obj/item/food/drinks/soda_cans/dr_gibb,
+		/obj/item/food/drinks/soda_cans/starkist,
+		/obj/item/food/drinks/soda_cans/space_up,
+		/obj/item/food/drinks/soda_cans/pwr_game,
+		/obj/item/food/drinks/soda_cans/lemon_lime,
+		/obj/item/food/drinks/drinkingglass/filled/nuka_cola,
+		/obj/item/food/drinks/drinkingglass/filled/syndicatebomb
 		))
 		new rig_snacks(src)
 
@@ -505,7 +505,7 @@
 		/obj/item/screwdriver,
 		/obj/item/lighter,
 		/obj/item/multitool,
-		/obj/item/reagent_containers/food/drinks/bottle/molotov,
+		/obj/item/food/drinks/bottle/molotov,
 		/obj/item/grenade/plastic/c4,
 		))
 
@@ -840,7 +840,7 @@
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash/handheld,
 		/obj/item/clothing/glasses,
-		/obj/item/reagent_containers/food/donut,
+		/obj/item/food/donut,
 		/obj/item/flashlight/seclite,
 		/obj/item/radio,
 		/obj/item/clothing/gloves,

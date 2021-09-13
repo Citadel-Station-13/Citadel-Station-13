@@ -124,7 +124,7 @@
 	attack_hand_is_action = TRUE
 
 /obj/structure/spider/spiderling/Destroy()
-	new/obj/item/reagent_containers/food/spiderling(get_turf(src))
+	new/obj/item/food/spiderling(get_turf(src))
 	. = ..()
 
 /obj/structure/spider/spiderling/Initialize()

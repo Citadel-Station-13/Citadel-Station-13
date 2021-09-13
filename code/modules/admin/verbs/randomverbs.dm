@@ -1399,10 +1399,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				to_chat(usr,"<span class='warning'>Imprisonment failed!</span>")
 				return
 		if(ADMIN_PUNISHMENT_PIE)
-			var/obj/item/reagent_containers/food/pie/cream/nostun/creamy = new(get_turf(target))
+			var/obj/item/food/pie/cream/nostun/creamy = new(get_turf(target))
 			creamy.splat(target)
 		if(ADMIN_PUNISHMENT_CUSTOM_PIE)
-			var/obj/item/reagent_containers/food/pie/cream/nostun/A = new()
+			var/obj/item/food/pie/cream/nostun/A = new()
 			if(!A.reagents)
 				var/amount = input(usr, "Specify the reagent size of [A]", "Set Reagent Size", 50) as num|null
 				if(amount)

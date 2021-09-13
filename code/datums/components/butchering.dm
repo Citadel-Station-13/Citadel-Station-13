@@ -103,7 +103,7 @@
 		meat.guaranteed_butcher_results.Remove(sinew)
 	for(var/butchered_item in butchered_items)
 		if(isfood(butchered_item))
-			var/obj/item/reagent_containers/food/butchered_meat = butchered_item
+			var/obj/item/food/butchered_meat = butchered_item
 			butchered_meat.food_quality = meat_quality
 	if(butcher)
 		meat.visible_message("<span class='notice'>[butcher] butchers [meat].</span>")

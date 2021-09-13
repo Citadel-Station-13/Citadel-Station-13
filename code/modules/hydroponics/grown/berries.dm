@@ -215,7 +215,7 @@
 	name = "bunch of grapes"
 	desc = "Nutritious!"
 	icon_state = "grapes"
-	dried_type = /obj/item/reagent_containers/food/no_raisin/healthy
+	dried_type = /obj/item/food/no_raisin/healthy
 	filling_color = "#FF1493"
 	bitesize_mod = 2
 	foodtype = FRUIT

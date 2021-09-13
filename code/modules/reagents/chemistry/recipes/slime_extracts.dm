@@ -45,7 +45,7 @@
 
 /datum/chemical_reaction/slime/slimemonkey/on_reaction(datum/reagents/holder)
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/food/cube/monkey(get_turf(holder.my_atom))
+		new /obj/item/food/cube/monkey(get_turf(holder.my_atom))
 	..()
 
 //Green

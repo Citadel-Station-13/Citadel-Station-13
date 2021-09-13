@@ -97,7 +97,7 @@
 	switch(loot)
 		if(1 to 5)
 			to_chat(owner, "<span class='notice'>Score! You find some cheese!</span>")
-			new /obj/item/reagent_containers/food/cheesewedge(T)
+			new /obj/item/food/cheesewedge(T)
 		if(6 to 10)
 			var/pickedcoin = pick(GLOB.ratking_coins)
 			to_chat(owner, "<span class='notice'>You find some leftover coins. More for the royal treasury!</span>")
@@ -176,7 +176,7 @@
 	see_in_dark = 6
 	maxHealth = 15
 	health = 15
-	butcher_results = list(/obj/item/reagent_containers/food/meat/slab = 1)
+	butcher_results = list(/obj/item/food/meat/slab = 1)
 	density = FALSE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY

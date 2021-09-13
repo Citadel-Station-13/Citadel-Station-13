@@ -42,7 +42,7 @@
 	id = "mcube"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 250)
-	build_path = /obj/item/reagent_containers/food/cube/monkey
+	build_path = /obj/item/food/cube/monkey
 	category = list("initial", "Food")
 
 /datum/design/smeat
@@ -50,7 +50,7 @@
 	id = "smeat"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 175)
-	build_path = /obj/item/reagent_containers/food/meat/slab/synthmeat
+	build_path = /obj/item/food/meat/slab/synthmeat
 	category = list("initial", "Food")
 
 /datum/design/ez_nut
@@ -130,7 +130,7 @@
 	id = "empty_carton"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 15)
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/bio_carton
+	build_path = /obj/item/food/drinks/bottle/bio_carton
 	category = list("initial", "Organic Materials")
 
 /datum/design/cloth

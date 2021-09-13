@@ -2,8 +2,8 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 
 /proc/build_reagents_to_food()
 	. = list()
-	for (var/type in subtypesof(/obj/item/reagent_containers/food))
-		var/obj/item/reagent_containers/food/item = new type()
+	for (var/type in subtypesof(/obj/item/food))
+		var/obj/item/food/item = new type()
 		for(var/r in item.list_reagents)
 			if (!.[r])
 				.[r] = list()

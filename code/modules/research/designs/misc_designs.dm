@@ -251,7 +251,7 @@
 	id = "emptyglassbottle"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/glass = 400)
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/blank/small
+	build_path = /obj/item/food/drinks/bottle/blank/small
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
@@ -261,7 +261,7 @@
 	id = "largeemptyglassbottle"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/glass = 2000)
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/blank
+	build_path = /obj/item/food/drinks/bottle/blank
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
@@ -271,7 +271,7 @@
 	id = "emptypitcher"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/glass = 3600)
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/blank/pitcher
+	build_path = /obj/item/food/drinks/bottle/blank/pitcher
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 

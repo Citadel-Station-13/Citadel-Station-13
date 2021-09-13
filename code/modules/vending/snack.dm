@@ -4,25 +4,25 @@
 	product_slogans = "Try our new nougat bar!;Twice the calories for half the price!"
 	product_ads = "The healthiest!;Award-winning chocolate bars!;Mmm! So good!;Oh my god it's so juicy!;Have a snack.;Snacks are good for you!;Have some more Getmore!;Best quality snacks straight from mars.;We love chocolate!;Try our new jerky!"
 	icon_state = "snack"
-	products = list(/obj/item/reagent_containers/food/candy = 5,
-					/obj/item/reagent_containers/food/chocolatebar = 5,
-					/obj/item/reagent_containers/food/drinks/dry_ramen = 5,
-					/obj/item/reagent_containers/food/chips = 5,
-					/obj/item/reagent_containers/food/sosjerky = 5,
-					/obj/item/reagent_containers/food/no_raisin = 5,
-					/obj/item/reagent_containers/food/spacetwinkie = 5,
-					/obj/item/reagent_containers/food/cheesiehonkers = 5,
-					/obj/item/reagent_containers/food/cornchips = 5,
-					/obj/item/reagent_containers/food/energybar = 6)
+	products = list(/obj/item/food/candy = 5,
+					/obj/item/food/chocolatebar = 5,
+					/obj/item/food/drinks/dry_ramen = 5,
+					/obj/item/food/chips = 5,
+					/obj/item/food/sosjerky = 5,
+					/obj/item/food/no_raisin = 5,
+					/obj/item/food/spacetwinkie = 5,
+					/obj/item/food/cheesiehonkers = 5,
+					/obj/item/food/cornchips = 5,
+					/obj/item/food/energybar = 6)
 	contraband = list(
-					/obj/item/reagent_containers/food/cracker = 10,
-					/obj/item/reagent_containers/food/honeybar = 5,
-					/obj/item/reagent_containers/food/syndicake = 5,
-					/obj/item/reagent_containers/food/beans = 2)
+					/obj/item/food/cracker = 10,
+					/obj/item/food/honeybar = 5,
+					/obj/item/food/syndicake = 5,
+					/obj/item/food/beans = 2)
 	premium = list(
-					/obj/item/reagent_containers/food/lollipop = 2,
-					/obj/item/reagent_containers/food/spiderlollipop = 2,
-					/obj/item/reagent_containers/food/chococoin = 1,
+					/obj/item/food/lollipop = 2,
+					/obj/item/food/spiderlollipop = 2,
+					/obj/item/food/chococoin = 1,
 					/obj/item/storage/box/marshmallow = 1,
 					/obj/item/storage/box/donkpockets = 2)
 

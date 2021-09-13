@@ -214,7 +214,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	mutantrace_variation = NONE
 
-/obj/item/reagent_containers/food/drinks/flask/russian
+/obj/item/food/drinks/flask/russian
 	name = "russian flask"
 	desc = "Every good russian spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
 	icon = 'icons/obj/custom.dmi'
@@ -237,7 +237,7 @@
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	icon_state = "mgas"
 
-/obj/item/reagent_containers/food/drinks/flask/steel
+/obj/item/food/drinks/flask/steel
 	name = "The End"
 	desc = "A plain steel flask, sealed by lock and key. The front is inscribed with The End."
 	icon = 'icons/obj/custom.dmi'

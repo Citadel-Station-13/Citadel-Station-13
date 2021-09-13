@@ -51,7 +51,7 @@
 	description = "Apparently the company that makes Cheesie Honkers is going out of business soon. CentCom wants to stock up before it happens!"
 	reward = 1000
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/cheesiehonkers)
+	wanted_types = list(/obj/item/food/cheesiehonkers)
 
 /datum/bounty/item/assistant/baseball_bat
 	name = "Baseball Bat"
@@ -71,14 +71,14 @@
 // 	description = "CentCom's security forces are facing heavy losses against the Syndicate. Ship donuts to raise morale."
 // 	reward = 2000
 // 	required_count = 10
-// 	wanted_types = list(/obj/item/reagent_containers/food/donut)
+// 	wanted_types = list(/obj/item/food/donut)
 
 // /datum/bounty/item/assistant/donkpocket
 // 	name = "Donk-Pockets"
 // 	description = "Consumer safety recall: Warning. Donk-Pockets manufactured in the past year contain hazardous lizard biomatter. Return units to CentCom immediately."
 // 	reward = 1000
 // 	required_count = 10
-// 	wanted_types = list(/obj/item/reagent_containers/food/donkpocket)
+// 	wanted_types = list(/obj/item/food/donkpocket)
 
 /datum/bounty/item/assistant/briefcase
 	name = "Briefcase"
@@ -154,7 +154,7 @@
 	description = "Due to a recent genetics accident, Central Command is in serious need of monkeys. Your mission is to ship monkey cubes."
 	reward = 2000
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/monkeycube)
+	wanted_types = list(/obj/item/food/monkeycube)
 */
 /datum/bounty/item/assistant/chainsaw
 	name = "Chainsaw"
@@ -185,7 +185,7 @@
 	name = "Raw Corgi Meat"
 	description = "The Syndicate recently stole all of CentCom's corgi meat. Ship out a replacement immediately."
 	reward = 3000
-	wanted_types = list(/obj/item/reagent_containers/food/meat/slab/corgi)
+	wanted_types = list(/obj/item/food/meat/slab/corgi)
 
 /datum/bounty/item/assistant/tail_whip
 	name = "Nine Tails whip"

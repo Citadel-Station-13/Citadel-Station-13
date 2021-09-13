@@ -24,7 +24,7 @@
 	for(var/I2 in items_list)
 		if(istype(I, I2))
 			qdel(I)
-			new /obj/item/reagent_containers/food/special_candy(loc)
+			new /obj/item/food/special_candy(loc)
 			to_chat(user, "<span class='notice'>You add the [I.name] to the pot and watch as it melts into the mixture, a candy crystalising in it's wake.</span>")
 			say("Hooray! Thank you!")
 			items_list -= I2
@@ -105,7 +105,7 @@
 	/obj/item/stock_parts/cell = 3,
 	/obj/item/storage/belt/utility = 2,
 	/obj/item/storage/box = 4,
-	/obj/item/reagent_containers/food/drinks/sillycup = 1,
+	/obj/item/food/drinks/sillycup = 1,
 	/obj/item/storage/box/donkpockets = 1,
 	/obj/item/storage/box/lights/mixed = 1,
 	/obj/item/storage/box/hug/medical = 1,
@@ -130,11 +130,11 @@
 	/obj/item/reagent_containers/pill = 2,
 	/obj/item/clothing/shoes = 8,
 	/obj/item/clothing/head = 3,
-	/obj/item/reagent_containers/food = 5,
+	/obj/item/food = 5,
 	/obj/item/reagent_containers/syringe/dart = 2,
-	/obj/item/reagent_containers/food/drinks/soda_cans = 5,
-	/obj/item/reagent_containers/food/drinks/drinkingglass = 4,
-	/obj/item/reagent_containers/food/drinks = 6,
+	/obj/item/food/drinks/soda_cans = 5,
+	/obj/item/food/drinks/drinkingglass = 4,
+	/obj/item/food/drinks = 6,
 	/obj/item/food/grown/apple = 1,
 	/obj/item/food/grown/banana = 2)
 	if(length >= 5)

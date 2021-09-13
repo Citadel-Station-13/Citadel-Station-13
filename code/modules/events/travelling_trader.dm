@@ -138,10 +138,10 @@
 	//pick a random crafted food item as the requested item
 	var/datum/crafting_recipe/food_recipe = pick(subtypesof(/datum/crafting_recipe/food))
 	var/result = initial(food_recipe.result)
-	if(ispath(result, /obj/item/reagent_containers/food)) //not all food recipes make food objects (like cak/butterbear)
+	if(ispath(result, /obj/item/food)) //not all food recipes make food objects (like cak/butterbear)
 		requested_item = result
 	else
-		requested_item = /obj/item/reagent_containers/food/copypasta
+		requested_item = /obj/item/food/copypasta
 	..()
 
 //botanist

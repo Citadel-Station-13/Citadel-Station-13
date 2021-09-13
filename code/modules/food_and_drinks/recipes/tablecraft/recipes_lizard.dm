@@ -384,7 +384,7 @@
 /datum/crafting_recipe/food/korta_ice
 	name = "Korta ice"
 	reqs = list(
-		/obj/item/reagent_containers/food/drinks/sillycup = 1,
+		/obj/item/food/drinks/sillycup = 1,
 		/datum/reagent/consumable/ice = 15,
 		/datum/reagent/consumable/korta_nectar = 5,
 		/obj/item/food/grown/berries = 1

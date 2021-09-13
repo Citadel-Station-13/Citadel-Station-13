@@ -10,7 +10,7 @@
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	meat = /obj/item/reagent_containers/food/meat/slab/human/mutant/insect
+	meat = /obj/item/food/meat/slab/human/mutant/insect
 	liked_food = MEAT | FRUIT
 	disliked_food = TOXIC
 	exotic_bloodtype = "BUG"

@@ -5,79 +5,79 @@
 	description = "To quell the homeless uprising, Nanotrasen will be serving soup to all underpaid workers. Ship any type of soup. Do NOT ship bowls of water."
 	reward = 1200
 	required_count = 4
-	wanted_types = list(/obj/item/reagent_containers/food/soup)
-	exclude_types = list(/obj/item/reagent_containers/food/soup/wish)
+	wanted_types = list(/obj/item/food/soup)
+	exclude_types = list(/obj/item/food/soup/wish)
 
 /datum/bounty/item/chef/icecreamsandwich
 	name = "Ice Cream Sandwiches"
 	description = "Upper management has been screaming non-stop for ice cream. Please send some."
 	reward = 1200
 	required_count = 5
-	wanted_types = list(/obj/item/reagent_containers/food/icecreamsandwich)
+	wanted_types = list(/obj/item/food/icecreamsandwich)
 
 /datum/bounty/item/chef/bread
 	name = "Bread"
 	description = "Problems with central planning have led to bread prices skyrocketing. Ship some bread to ease tensions."
 	reward = 1000
-	wanted_types = list(/obj/item/reagent_containers/food/bread, /obj/item/reagent_containers/food/breadslice, /obj/item/reagent_containers/food/bun, /obj/item/reagent_containers/food/pizzabread, /obj/item/reagent_containers/food/rawpastrybase)
+	wanted_types = list(/obj/item/food/bread, /obj/item/food/breadslice, /obj/item/food/bun, /obj/item/food/pizzabread, /obj/item/food/rawpastrybase)
 
 /datum/bounty/item/chef/pie
 	name = "Pie"
 	description = "3.14159? No! CentCom management wants edible pie! Ship a whole one."
 	reward = 3142
-	wanted_types = list(/obj/item/reagent_containers/food/pie)
+	wanted_types = list(/obj/item/food/pie)
 
 /datum/bounty/item/gardencook/khinkali
 	name = "Khinkali"
 	description = "Requesting -some khinki stuff- for a private staff party at Centcom."
 	reward = 2400
 	required_count = 6
-	wanted_types = list(/obj/item/reagent_containers/food/khinkali)
+	wanted_types = list(/obj/item/food/khinkali)
 
 /datum/bounty/item/chef/salad
 	name = "Salad or Rice Bowls"
 	description = "CentCom management is going on a health binge. Your order is to ship salad or rice bowls."
 	reward = 1200
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/salad)
+	wanted_types = list(/obj/item/food/salad)
 
 // /datum/bounty/item/chef/cubancarp
 // 	name = "Cuban Carp"
 // 	description = "To celebrate the birth of Castro XXVII, ship one cuban carp to CentCom."
 // 	reward = 3000
-// 	wanted_types = list(/obj/item/reagent_containers/food/cubancarp)
+// 	wanted_types = list(/obj/item/food/cubancarp)
 
 /datum/bounty/item/chef/hotdog
 	name = "Hot Dog"
 	description = "Nanotrasen is conducting taste tests to determine the best hot dog recipe. Ship your station's version to participate."
 	reward = 4000
-	wanted_types = list(/obj/item/reagent_containers/food/hotdog)
+	wanted_types = list(/obj/item/food/hotdog)
 
 /datum/bounty/item/chef/muffin
 	name = "Muffins"
 	description = "The Muffin Man is visiting CentCom, but he's forgotten his muffins! Your order is to rectify this."
 	reward = 3000
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/muffin)
+	wanted_types = list(/obj/item/food/muffin)
 
 /datum/bounty/item/chef/chawanmushi
 	name = "Chawanmushi"
 	description = "Nanotrasen wants to improve relations with its sister company, Japanotrasen. Ship Chawanmushi immediately."
 	reward = 5000
-	wanted_types = list(/obj/item/reagent_containers/food/chawanmushi)
+	wanted_types = list(/obj/item/food/chawanmushi)
 
 /datum/bounty/item/chef/kebab
 	name = "Kebabs"
 	description = "Remove all kebab from station you are best food. Ship to CentCom to remove from the premises."
 	reward = 1500
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/kebab)
+	wanted_types = list(/obj/item/food/kebab)
 
 /datum/bounty/item/chef/soylentgreen
 	name = "Soylent Green"
 	description = "CentCom has heard wonderful things about the product 'Soylent Green', and would love to try some. If you endulge them, expect a pleasant bonus."
 	reward = 4000
-	wanted_types = list(/obj/item/reagent_containers/food/soylentgreen)
+	wanted_types = list(/obj/item/food/soylentgreen)
 
 /datum/bounty/item/chef/pancakes
 	name = "Pancakes"
@@ -91,49 +91,49 @@
 	description = "The vice president's son won't shut up about chicken nuggies. Would you mind shipping some?"
 	reward = 2500
 	required_count = 6
-	wanted_types = list(/obj/item/reagent_containers/food/nugget)
+	wanted_types = list(/obj/item/food/nugget)
 
 /datum/bounty/item/chef/khachapuri
 	name = "Khachapuri"
 	description = "Bread and eggs. Bread and eggs. Bread and eggs. Also, cheese."
 	reward = 2000
 	required_count = 2
-	wanted_types = list(/obj/item/reagent_containers/food/khachapuri)
+	wanted_types = list(/obj/item/food/khachapuri)
 
 /datum/bounty/item/chef/ratkebab
 	name = "Rat Kebabs"
 	description = "Centcom is requesting some -special- kebabs for it's service staff."
 	reward = 1800
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/kebab/rat)
+	wanted_types = list(/obj/item/food/kebab/rat)
 
 /datum/bounty/item/chef/benedict
 	name = "Eggs Benedict"
 	description = "Command requires a high-calory breakfast item. Ship it right away."
 	reward = 1750
-	wanted_types = list(/obj/item/reagent_containers/food/benedict)
+	wanted_types = list(/obj/item/food/benedict)
 
 /datum/bounty/item/chef/braincake
 	name = "Brain Cake"
 	description = "The science division requires a brain cake for testing purposes. Don't ask."
 	reward = 1200
-	wanted_types = list(/obj/item/reagent_containers/food/cake/brain)
+	wanted_types = list(/obj/item/food/cake/brain)
 
 /datum/bounty/item/chef/waffles
 	name = "Waffles"
 	description = "Security staff at Centcom are looking for a fun treat. Ship us some waffles so they can fill the cells."
 	reward = 1000
-	wanted_types = list(/obj/item/reagent_containers/food/waffles)
+	wanted_types = list(/obj/item/food/waffles)
 
 /datum/bounty/item/chef/sugarcookie
 	name = "Sugar Cookies"
 	description = "Everyone needs a little sugar in their life. Ship some sweets to Command so we can satiate our sweet tooth."
 	reward = 1200
 	required_count = 6
-	wanted_types = list(/obj/item/reagent_containers/food/sugarcookie)
+	wanted_types = list(/obj/item/food/sugarcookie)
 
 /datum/bounty/item/chef/bbqribs
 	description = "There's a debate around command as to weather or not ribs should be considered finger food, and we need a few delicious racks to process."
 	reward = 2250
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/bbqribs)
+	wanted_types = list(/obj/item/food/bbqribs)

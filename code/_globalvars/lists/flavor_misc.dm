@@ -345,7 +345,7 @@ GLOBAL_LIST_INIT(prosthetic_limb_types, list("xion","bishop","cybersolutions","g
 
 //species-heirloom list (we categorise them by the species id var)
 GLOBAL_LIST_INIT(species_heirlooms, list(
-	"dwarf" = list(25, list(/obj/item/reagent_containers/food/drinks/dwarf_mug)), //example: 25% chance for dwarves to get a dwarf mug as their heirloom (normal container but has manly dorf icon)
+	"dwarf" = list(25, list(/obj/item/food/drinks/dwarf_mug)), //example: 25% chance for dwarves to get a dwarf mug as their heirloom (normal container but has manly dorf icon)
 	"insect" = list(25, list(/obj/item/flashlight/lantern/heirloom_moth)),
 	"ipc" = list(25, list(/obj/item/stock_parts/cell/family)), //gives a broken powercell for flavor text!
 	"synthliz" = list(25, list(/obj/item/stock_parts/cell/family)), //they're also robots

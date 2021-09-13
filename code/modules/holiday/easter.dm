@@ -41,8 +41,8 @@
 	speak_emote = list("sniffles","twitches")
 	emote_hear = list("hops.")
 	emote_see = list("hops around","bounces up and down")
-	butcher_results = list(/obj/item/reagent_containers/food/meat/slab = 1)
-	egg_type = /obj/item/reagent_containers/food/egg/loaded
+	butcher_results = list(/obj/item/food/meat/slab = 1)
+	egg_type = /obj/item/food/egg/loaded
 	food_type = /obj/item/food/grown/carrot
 	eggsleft = 10
 	eggsFertile = FALSE
@@ -69,7 +69,7 @@
 /obj/item/storage/bag/easterbasket/Initialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/egg, /obj/item/reagent_containers/food/chocolateegg, /obj/item/reagent_containers/food/boiledegg))
+	STR.can_hold = typecacheof(list(/obj/item/food/egg, /obj/item/food/chocolateegg, /obj/item/food/boiledegg))
 
 /obj/item/storage/bag/easterbasket/proc/countEggs()
 	cut_overlays()
@@ -103,21 +103,21 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 //Egg prizes and egg spawns!
-/obj/item/reagent_containers/food/egg
+/obj/item/food/egg
 	var/containsPrize = FALSE
 
-/obj/item/reagent_containers/food/egg/loaded
+/obj/item/food/egg/loaded
 	containsPrize = TRUE
 
-/obj/item/reagent_containers/food/egg/loaded/Initialize()
+/obj/item/food/egg/loaded/Initialize()
 	. = ..()
 	var/eggcolor = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
 	icon_state = "egg-[eggcolor]"
-/obj/item/reagent_containers/food/egg/proc/dispensePrize(turf/where)
+/obj/item/food/egg/proc/dispensePrize(turf/where)
 	var/won = pick(/obj/item/clothing/head/bunnyhead,
 	/obj/item/clothing/suit/bunnysuit,
 	/obj/item/food/grown/carrot,
-	/obj/item/reagent_containers/food/chocolateegg,
+	/obj/item/food/chocolateegg,
 	/obj/item/toy/balloon,
 	/obj/item/toy/gun,
 	/obj/item/toy/sword,
@@ -128,9 +128,9 @@
 	/obj/item/toy/redbutton,
 	/obj/item/clothing/head/collectable/rabbitears)
 	new won(where)
-	new/obj/item/reagent_containers/food/chocolateegg(where)
+	new/obj/item/food/chocolateegg(where)
 
-/obj/item/reagent_containers/food/egg/attack_self(mob/user)
+/obj/item/food/egg/attack_self(mob/user)
 	..()
 	if(containsPrize)
 		to_chat(user, "<span class='notice'>You unwrap [src] and find a prize inside!</span>")

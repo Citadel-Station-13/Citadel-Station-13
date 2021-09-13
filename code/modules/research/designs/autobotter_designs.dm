@@ -20,127 +20,127 @@
 	name = "Bottle Design (Wine)"
 	desc = "Allows for the blowing of Wine bottles."
 	id = "wine"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/wine/empty
+	build_path = /obj/item/food/drinks/bottle/wine/empty
 
 /datum/design/bottle/rum
 	name = "Bottle Design (Rum)"
 	desc = "Allows for the blowing of Rum bottles."
 	id = "rum"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/rum/empty
+	build_path = /obj/item/food/drinks/bottle/rum/empty
 
 /datum/design/bottle/gin
 	name = "Bottle Design (Gin)"
 	desc = "Allows for the blowing of Gin bottles."
 	id = "gin"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/gin/empty
+	build_path = /obj/item/food/drinks/bottle/gin/empty
 
 /datum/design/bottle/whiskey
 	name = "Bottle Design (Whiskey)"
 	desc = "Allows for the blowing of Whiskey bottles."
 	id = "whiskey"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/whiskey/empty
+	build_path = /obj/item/food/drinks/bottle/whiskey/empty
 
 /datum/design/bottle/vodka
 	name = "Bottle Design (Vodka)"
 	desc = "Allows for the blowing of Vodka bottles."
 	id = "vodka"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/vodka/empty
+	build_path = /obj/item/food/drinks/bottle/vodka/empty
 
 /datum/design/bottle/tequila
 	name = "Bottle Design (Tequila)"
 	desc = "Allows for the blowing of Tequila bottles."
 	id = "tequila"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/tequila/empty
+	build_path = /obj/item/food/drinks/bottle/tequila/empty
 
 /datum/design/bottle/patron
 	name = "Bottle Design (Patron)"
 	desc = "Allows for the blowing of Patron bottles."
 	id = "patron"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/patron/empty
+	build_path = /obj/item/food/drinks/bottle/patron/empty
 
 /datum/design/bottle/kahlua
 	name = "Bottle Design (Kahlua)"
 	desc = "Allows for the blowing of Kahlua bottles."
 	id = "kahlua"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/kahlua/empty
+	build_path = /obj/item/food/drinks/bottle/kahlua/empty
 
 /datum/design/bottle/sake
 	name = "Bottle Design (Sake)"
 	desc = "Allows for the blowing of Sake bottles."
 	id = "sake"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/sake/empty
+	build_path = /obj/item/food/drinks/bottle/sake/empty
 
 /datum/design/bottle/vermouth
 	name = "Bottle Design (Vermouth)"
 	desc = "Allows for the blowing of Vermouth bottles."
 	id = "vermouth"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/vermouth/empty
+	build_path = /obj/item/food/drinks/bottle/vermouth/empty
 
 /datum/design/bottle/goldschlager
 	name = "Bottle Design (Goldschlager)"
 	desc = "Allows for the blowing of Goldschlager bottles."
 	id = "goldschlager"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/goldschlager/empty
+	build_path = /obj/item/food/drinks/bottle/goldschlager/empty
 
 /datum/design/bottle/hcider
 	name = "Bottle Design (Cider)"
 	desc = "Allows for the blowing of Cider bottles."
 	id = "hcider"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/hcider/empty
+	build_path = /obj/item/food/drinks/bottle/hcider/empty
 
 /datum/design/bottle/cognac
 	name = "Bottle Design (Cognac)"
 	desc = "Allows for the blowing of Cognac bottles."
 	id = "cognac"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/cognac/empty
+	build_path = /obj/item/food/drinks/bottle/cognac/empty
 
 /datum/design/bottle/absinthe
 	name = "Bottle Design (Absinthe)"
 	desc = "Allows for the blowing of Absinthe bottles."
 	id = "absinthe"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/absinthe/empty
+	build_path = /obj/item/food/drinks/bottle/absinthe/empty
 
 /datum/design/bottle/grappa
 	name = "Bottle Design (Grappa)"
 	desc = "Allows for the blowing of Grappa bottles."
 	id = "grappa"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/grappa/empty
+	build_path = /obj/item/food/drinks/bottle/grappa/empty
 
 /datum/design/bottle/fernet
 	name = "Bottle Design (Fernet)"
 	desc = "Allows for the blowing of Fernet bottles."
 	id = "fernet"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/fernet/empty
+	build_path = /obj/item/food/drinks/bottle/fernet/empty
 
 /datum/design/bottle/applejack
 	name = "Bottle Design (Applejack)"
 	desc = "Allows for the blowing of Applejack bottles."
 	id = "applejack"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/applejack/empty
+	build_path = /obj/item/food/drinks/bottle/applejack/empty
 
 /datum/design/bottle/champagne
 	name = "Bottle Design (Champagne)"
 	desc = "Allows for the blowing of Champagne bottles."
 	id = "champagne"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/champagne/empty
+	build_path = /obj/item/food/drinks/bottle/champagne/empty
 
 /datum/design/bottle/blazaam
 	name = "Bottle Design (Blazaam)"
 	desc = "Allows for the blowing of Blazaam bottles."
 	id = "blazaam"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/blazaam/empty
+	build_path = /obj/item/food/drinks/bottle/blazaam/empty
 
 /datum/design/bottle/trappist
 	name = "Bottle Design (Trappist)"
 	desc = "Allows for the blowing of Trappist bottles."
 	id = "trappist"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/trappist/empty
+	build_path = /obj/item/food/drinks/bottle/trappist/empty
 
 /datum/design/bottle/grenadine
 	name = "Bottle Design (Grenadine)"
 	desc = "Allows for the blowing of Grenadine bottles."
 	id = "grenadine"
-	build_path = /obj/item/reagent_containers/food/drinks/bottle/grenadine/empty
+	build_path = /obj/item/food/drinks/bottle/grenadine/empty
 
 /datum/design/bottle/export
 	materials = list(/datum/material/glass = 1200)

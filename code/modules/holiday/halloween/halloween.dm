@@ -10,9 +10,9 @@
 	name = "Sugar cookie"
 	reqs = list(
 		/datum/reagent/consumable/sugar = 5,
-		/obj/item/reagent_containers/food/pastrybase = 1
+		/obj/item/food/pastrybase = 1
 	)
-	result = /obj/item/reagent_containers/food/sugarcookie/spookyskull
+	result = /obj/item/food/sugarcookie/spookyskull
 	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/sugarcookie/spookycoffin
@@ -21,9 +21,9 @@
 	reqs = list(
 		/datum/reagent/consumable/sugar = 5,
 		/datum/reagent/consumable/coffee = 5,
-		/obj/item/reagent_containers/food/pastrybase = 1
+		/obj/item/food/pastrybase = 1
 	)
-	result = /obj/item/reagent_containers/food/sugarcookie/spookycoffin
+	result = /obj/item/food/sugarcookie/spookycoffin
 	subcategory = CAT_PASTRY
 
 

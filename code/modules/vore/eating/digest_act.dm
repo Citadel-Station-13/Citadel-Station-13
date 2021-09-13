@@ -72,7 +72,7 @@
 // Some special treatment
 /////////////
 
-/obj/item/reagent_containers/food/digest_act(var/atom/movable/item_storage = null)
+/obj/item/food/digest_act(var/atom/movable/item_storage = null)
 	if(isbelly(item_storage))
 		var/obj/belly/B = item_storage
 		if(ishuman(B.owner))

@@ -89,8 +89,8 @@
 				/obj/item/storage/pill_bottle/happy = 1,
 				/obj/item/storage/pill_bottle/lsd = 1,
 				/obj/item/storage/pill_bottle/psicodine = 1,
-				/obj/item/reagent_containers/food/drinks/beer = 4,
-				/obj/item/reagent_containers/food/drinks/bottle/whiskey = 1,
+				/obj/item/food/drinks/beer = 4,
+				/obj/item/food/drinks/bottle/whiskey = 1,
 				/obj/item/paper/fluff/jobs/prisoner/letter = 1,
 				/obj/item/grenade/smokebomb = 1,
 				/obj/item/flashlight/seclite = 1,
@@ -117,7 +117,7 @@
 			/obj/item/trash/cheesie = 1,
 			/obj/item/trash/candy = 1,
 			/obj/item/trash/chips = 1,
-			/obj/item/reagent_containers/food/deadmouse = 1,
+			/obj/item/food/deadmouse = 1,
 			/obj/item/trash/pistachios = 1,
 			/obj/item/trash/plate = 1,
 			/obj/item/trash/popcorn = 1,
@@ -130,25 +130,25 @@
 	lootcount = 3
 	lootdoubles = FALSE
 	var/soups = list(
-			/obj/item/reagent_containers/food/soup/beet,
-			/obj/item/reagent_containers/food/soup/sweetpotato,
-			/obj/item/reagent_containers/food/soup/stew,
-			/obj/item/reagent_containers/food/soup/hotchili,
-			/obj/item/reagent_containers/food/soup/nettle,
-			/obj/item/reagent_containers/food/soup/meatball)
+			/obj/item/food/soup/beet,
+			/obj/item/food/soup/sweetpotato,
+			/obj/item/food/soup/stew,
+			/obj/item/food/soup/hotchili,
+			/obj/item/food/soup/nettle,
+			/obj/item/food/soup/meatball)
 	var/salads = list(
-			/obj/item/reagent_containers/food/salad/herbsalad,
-			/obj/item/reagent_containers/food/salad/validsalad,
-			/obj/item/reagent_containers/food/salad/fruit,
-			/obj/item/reagent_containers/food/salad/jungle,
-			/obj/item/reagent_containers/food/salad/aesirsalad)
+			/obj/item/food/salad/herbsalad,
+			/obj/item/food/salad/validsalad,
+			/obj/item/food/salad/fruit,
+			/obj/item/food/salad/jungle,
+			/obj/item/food/salad/aesirsalad)
 	var/mains = list(
-			/obj/item/reagent_containers/food/bearsteak,
-			/obj/item/reagent_containers/food/enchiladas,
-			/obj/item/reagent_containers/food/stewedsoymeat,
-			/obj/item/reagent_containers/food/burger/bigbite,
-			/obj/item/reagent_containers/food/burger/superbite,
-			/obj/item/reagent_containers/food/burger/fivealarm)
+			/obj/item/food/bearsteak,
+			/obj/item/food/enchiladas,
+			/obj/item/food/stewedsoymeat,
+			/obj/item/food/burger/bigbite,
+			/obj/item/food/burger/superbite,
+			/obj/item/food/burger/fivealarm)
 
 /obj/effect/spawner/lootdrop/three_course_meal/Initialize(mapload)
 	loot = list(pick(soups) = 1,pick(salads) = 1,pick(mains) = 1)
@@ -532,7 +532,7 @@
 		/obj/item/screwdriver = 5,
 		/obj/item/crowbar/red = 1, //Dont you need a crowbar to open this?
 		/obj/item/stack/medical/suture = 3,
-		/obj/item/reagent_containers/food/drinks/bottle/vodka = 2,
+		/obj/item/food/drinks/bottle/vodka = 2,
 		/obj/item/radio = 5,
 		/obj/item/flashlight = 4,
 		/obj/item/clothing/mask/breath = 2,

@@ -10,72 +10,72 @@
 /datum/export/food/meat
 	cost = 5
 	unit_name = "protein based food"
-	export_types = list(/obj/item/reagent_containers/food/meat/slab)
+	export_types = list(/obj/item/food/meat/slab)
 
 /datum/export/food/raw_cutlets
 	cost = 3
 	unit_name = "protein based food"
-	export_types = list(/obj/item/reagent_containers/food/meat/rawcutlet)
+	export_types = list(/obj/item/food/meat/rawcutlet)
 
 /datum/export/food/cooked_cutlets
 	cost = 4
 	unit_name = "cooked protein based food"
-	export_types = list(/obj/item/reagent_containers/food/meat/cutlet)
+	export_types = list(/obj/item/food/meat/cutlet)
 
 /datum/export/food/cooked_meat
 	cost = 8
 	unit_name = "cooked protein based food"
-	export_types = list(/obj/item/reagent_containers/food/meat/steak)
+	export_types = list(/obj/item/food/meat/steak)
 
 /datum/export/food/dough
 	cost = 3
 	unit_name = "uncooked food base"
-	export_types = list(/obj/item/reagent_containers/food/dough, /obj/item/reagent_containers/food/flatdough)
+	export_types = list(/obj/item/food/dough, /obj/item/food/flatdough)
 
 /datum/export/food/cooked_dough
 	cost = 5
 	unit_name = "cooked food base"
-	export_types = list(/obj/item/reagent_containers/food/pizzabread)
+	export_types = list(/obj/item/food/pizzabread)
 
 /datum/export/food/buns
 	cost = 3
 	unit_name = "cooked food base"
-	export_types = list(/obj/item/reagent_containers/food/bun)
+	export_types = list(/obj/item/food/bun)
 
 /datum/export/food/buns
 	cost = 3
 	unit_name = "cooked food base"
-	export_types = list(/obj/item/reagent_containers/food/bun)
+	export_types = list(/obj/item/food/bun)
 
 /datum/export/food/eggs
 	cost = 4
 	unit_name = "cooked food base"
-	export_types = list(/obj/item/reagent_containers/food/friedegg)
+	export_types = list(/obj/item/food/friedegg)
 
 /datum/export/food/eggs_food
 	cost = 20
 	unit_name = "cooked egg based food"
-	export_types = list(/obj/item/reagent_containers/food/omelette, /obj/item/reagent_containers/food/benedict, /obj/item/reagent_containers/food/salad/eggbowl)
+	export_types = list(/obj/item/food/omelette, /obj/item/food/benedict, /obj/item/food/salad/eggbowl)
 
 /datum/export/food/sweets
 	cost = 4
 	unit_name = "pastery base"
-	export_types = list(/obj/item/reagent_containers/food/rawpastrybase, /obj/item/reagent_containers/food/pastrybase)
+	export_types = list(/obj/item/food/rawpastrybase, /obj/item/food/pastrybase)
 
 /datum/export/food/cake_pie_raw
 	cost = 12
 	unit_name = "uncooked food base"
-	export_types = list(/obj/item/reagent_containers/food/cakebatter, /obj/item/reagent_containers/food/piedough)
+	export_types = list(/obj/item/food/cakebatter, /obj/item/food/piedough)
 
 /datum/export/food/cooked_cake_pie
 	cost = 15
 	unit_name = "cooked food base"
-	export_types = list(/obj/item/reagent_containers/food/cake/plain, /obj/item/reagent_containers/food/pie/plain)
+	export_types = list(/obj/item/food/cake/plain, /obj/item/food/pie/plain)
 
 /datum/export/food/glassbottle
 	cost = 10
 	unit_name = "glass bottle"
-	export_types = list(/obj/item/reagent_containers/food/drinks/bottle)
+	export_types = list(/obj/item/food/drinks/bottle)
 
 /datum/export/food/produce
 	cost = 3
@@ -86,81 +86,81 @@
 /datum/export/food/egg
 	cost = 2
 	unit_name = "egg"
-	export_types = list(/obj/item/reagent_containers/food/egg)
+	export_types = list(/obj/item/food/egg)
 
 /datum/export/food/soup
 	cost = 30
 	unit_name = "bowl of soup"
-	export_types = list(/obj/item/reagent_containers/food/soup)
+	export_types = list(/obj/item/food/soup)
 
 /datum/export/food/bread
 	cost = 20
 	unit_name = "load of bread"
-	export_types = list(/obj/item/reagent_containers/food/bread)
+	export_types = list(/obj/item/food/bread)
 
 /datum/export/food/bread_slice
 	cost = 4
 	unit_name = "slice of bread"
-	export_types = list(/obj/item/reagent_containers/food/breadslice)
+	export_types = list(/obj/item/food/breadslice)
 
 /datum/export/food/burger
 	cost = 12
 	unit_name = "burger"
-	export_types = list(/obj/item/reagent_containers/food/burger)
+	export_types = list(/obj/item/food/burger)
 
 /datum/export/food/cake
 	cost = 50
 	unit_name = "cake"
-	export_types = list(/obj/item/reagent_containers/food/cake)
+	export_types = list(/obj/item/food/cake)
 
 /datum/export/food/cake_slice
 	cost = 10
 	unit_name = "cake slice"
-	export_types = list(/obj/item/reagent_containers/food/cakeslice)
+	export_types = list(/obj/item/food/cakeslice)
 
 /datum/export/food/cheese_wheel
 	cost = 70
 	unit_name = "cheese wheel"
-	export_types = list(/obj/item/reagent_containers/food/cheesewheel)
+	export_types = list(/obj/item/food/cheesewheel)
 
 /datum/export/food/cheese_wheel
 	cost = 20
 	unit_name = "cheese wedge"
-	export_types = list(/obj/item/reagent_containers/food/cheesewedge)
+	export_types = list(/obj/item/food/cheesewedge)
 
 /datum/export/food/candy
 	cost = 5
 	unit_name = "candy" //Not anything from the vender
-	export_types = list(/obj/item/reagent_containers/food/candy_corn, /obj/item/reagent_containers/food/chocolatebar, /obj/item/reagent_containers/food/candiedapple, /obj/item/reagent_containers/food/spiderlollipop, \
-						/obj/item/reagent_containers/food/chococoin, /obj/item/reagent_containers/food/fudgedice, /obj/item/reagent_containers/food/chocoorange, /obj/item/reagent_containers/food/lollipop, \
-						/obj/item/reagent_containers/food/gumball, /obj/item/reagent_containers/food/tinychocolate)
+	export_types = list(/obj/item/food/candy_corn, /obj/item/food/chocolatebar, /obj/item/food/candiedapple, /obj/item/food/spiderlollipop, \
+						/obj/item/food/chococoin, /obj/item/food/fudgedice, /obj/item/food/chocoorange, /obj/item/food/lollipop, \
+						/obj/item/food/gumball, /obj/item/food/tinychocolate)
 
 /datum/export/food/pastery
 	cost = 30
 	unit_name = "baked goods"
-	export_types = list(/obj/item/reagent_containers/food/donut, /obj/item/reagent_containers/food/muffin, /obj/item/reagent_containers/food/waffles, /obj/item/reagent_containers/food/plumphelmetbiscuit, \
-						/obj/item/reagent_containers/food/chococornet, /obj/item/reagent_containers/food/cherrycupcake, /obj/item/reagent_containers/food/bluecherrycupcake, /obj/item/reagent_containers/food/honeybun, /obj/item/reagent_containers/food/pancakes)
+	export_types = list(/obj/item/food/donut, /obj/item/food/muffin, /obj/item/food/waffles, /obj/item/food/plumphelmetbiscuit, \
+						/obj/item/food/chococornet, /obj/item/food/cherrycupcake, /obj/item/food/bluecherrycupcake, /obj/item/food/honeybun, /obj/item/food/pancakes)
 
 /datum/export/food/pasta
 	cost = 20
 	unit_name = "pasta based meal"
-	export_types = list(/obj/item/reagent_containers/food/spaghetti, /obj/item/reagent_containers/food/boiledspaghetti, /obj/item/reagent_containers/food/pastatomato, /obj/item/reagent_containers/food/copypasta, \
-						/obj/item/reagent_containers/food/meatballspaghetti, /obj/item/reagent_containers/food/spesslaw, /obj/item/reagent_containers/food/chowmein, /obj/item/reagent_containers/food/beefnoodle, /obj/item/reagent_containers/food/butternoodles)
+	export_types = list(/obj/item/food/spaghetti, /obj/item/food/boiledspaghetti, /obj/item/food/pastatomato, /obj/item/food/copypasta, \
+						/obj/item/food/meatballspaghetti, /obj/item/food/spesslaw, /obj/item/food/chowmein, /obj/item/food/beefnoodle, /obj/item/food/butternoodles)
 
 /datum/export/food/pizza
 	cost = 120
 	unit_name = "pizza"
-	export_types = list(/obj/item/reagent_containers/food/pizza)
+	export_types = list(/obj/item/food/pizza)
 
 /datum/export/food/sliced_pizza
 	cost = 12
 	unit_name = "pizza slice"
-	export_types = list(/obj/item/reagent_containers/food/pizzaslice)
+	export_types = list(/obj/item/food/pizzaslice)
 
 /datum/export/food/snowcone
 	cost = 3
 	unit_name = "snowcone"
-	export_types = list(/obj/item/reagent_containers/food/snowcones)
+	export_types = list(/obj/item/food/snowcones)
 
 /datum/export/booze/brands
 	cost = 200

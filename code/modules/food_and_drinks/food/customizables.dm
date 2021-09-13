@@ -11,7 +11,7 @@
 //**************************************************************
 
 
-/obj/item/reagent_containers/food/customizable
+/obj/item/food/customizable
 	bitesize = 4
 	w_class = WEIGHT_CLASS_SMALL
 	volume = 80
@@ -22,10 +22,10 @@
 	var/customname = "custom"
 	var/total_quality = 0 //quality of all ingredients added together
 
-/obj/item/reagent_containers/food/customizable/examine(mob/user)
+/obj/item/food/customizable/examine(mob/user)
 	. = ..()
 	var/ingredients_listed = ""
-	for(var/obj/item/reagent_containers/food/ING in ingredients)
+	for(var/obj/item/food/ING in ingredients)
 		ingredients_listed += "[ING.name], "
 	var/size = "standard"
 	if(ingredients.len<2)
@@ -38,14 +38,14 @@
 		size = "monster"
 	. += "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(name)]."
 
-/obj/item/reagent_containers/food/customizable/attackby(obj/item/I, mob/user, params)
-	if(!istype(I, /obj/item/reagent_containers/food/customizable) && istype(I, /obj/item/reagent_containers/food))
-		var/obj/item/reagent_containers/food/S = I
+/obj/item/food/customizable/attackby(obj/item/I, mob/user, params)
+	if(!istype(I, /obj/item/food/customizable) && istype(I, /obj/item/food))
+		var/obj/item/food/S = I
 		if(I.w_class > WEIGHT_CLASS_SMALL)
 			to_chat(user, "<span class='warning'>The ingredient is too big for [src]!</span>")
 		else if((ingredients.len >= ingMax) || (reagents.total_volume >= volume))
 			to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
-		else if(istype(I, /obj/item/reagent_containers/food/pizzaslice/custom) || istype(I, /obj/item/reagent_containers/food/cakeslice/custom))
+		else if(istype(I, /obj/item/food/pizzaslice/custom) || istype(I, /obj/item/food/cakeslice/custom))
 			to_chat(user, "<span class='warning'>Adding [I.name] to [src] would make a mess.</span>")
 		else
 			if(!user.transferItemToLoc(I, src))
@@ -66,14 +66,14 @@
 		. = ..()
 
 
-/obj/item/reagent_containers/food/customizable/update_name(obj/item/reagent_containers/food/snacks/S)
+/obj/item/food/customizable/update_name(obj/item/reagent_containers/food/snacks/S)
 	for(var/obj/item/I in ingredients)
 		if(!istype(S, I.type))
 			customname = "custom"
 			break
 	if(ingredients.len == 1) //first ingredient
-		if(istype(S, /obj/item/reagent_containers/food/meat))
-			var/obj/item/reagent_containers/food/meat/M = S
+		if(istype(S, /obj/item/food/meat))
+			var/obj/item/food/meat/M = S
 			if(M.subjectname)
 				customname = "[M.subjectname]"
 			else if(M.subjectjob)
@@ -84,7 +84,7 @@
 			customname = S.name
 	name = "[customname] [initial(name)]"
 
-/obj/item/reagent_containers/food/customizable/proc/initialize_custom_food(obj/item/BASE, obj/item/I, mob/user)
+/obj/item/food/customizable/proc/initialize_custom_food(obj/item/BASE, obj/item/I, mob/user)
 	if(istype(BASE, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RC = BASE
 		RC.reagents.trans_to(src,RC.reagents.total_volume)
@@ -94,7 +94,7 @@
 		attackby(I, user)
 	qdel(BASE)
 
-/obj/item/reagent_containers/food/customizable/proc/mix_filling_color(obj/item/reagent_containers/food/snacks/S)
+/obj/item/food/customizable/proc/mix_filling_color(obj/item/reagent_containers/food/snacks/S)
 	if(ingredients.len == 1)
 		filling_color = S.filling_color
 	else
@@ -107,7 +107,7 @@
 		rgbcolor[4] = (customcolor[4]+ingcolor[4])/2
 		filling_color = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3], rgbcolor[4])
 
-/obj/item/reagent_containers/food/customizable/update_snack_overlays(obj/item/reagent_containers/food/snacks/S)
+/obj/item/food/customizable/update_snack_overlays(obj/item/reagent_containers/food/snacks/S)
 	var/mutable_appearance/filling = mutable_appearance(icon, "[initial(icon_state)]_filling")
 	if(S.filling_color == "#FFFFFF")
 		filling.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
@@ -140,13 +140,13 @@
 	add_overlay(filling)
 
 
-/obj/item/reagent_containers/food/customizable/initialize_slice(obj/item/reagent_containers/food/snacks/slice, reagents_per_slice)
+/obj/item/food/customizable/initialize_slice(obj/item/reagent_containers/food/snacks/slice, reagents_per_slice)
 	..()
 	slice.filling_color = filling_color
 	slice.update_snack_overlays(src)
 
 
-/obj/item/reagent_containers/food/customizable/Destroy()
+/obj/item/food/customizable/Destroy()
 	for(. in ingredients)
 		qdel(.)
 	return ..()
@@ -159,7 +159,7 @@
 //////////////      Customizable Food Types     /////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 
-/obj/item/reagent_containers/food/customizable/burger
+/obj/item/food/customizable/burger
 	name = "burger"
 	desc = "A timeless classic."
 	ingredients_placement = INGREDIENTS_STACKPLUSTOP
@@ -168,27 +168,27 @@
 	foodtype = GRAIN
 
 
-/obj/item/reagent_containers/food/customizable/bread
+/obj/item/food/customizable/bread
 	name = "bread"
 	ingMax = 6
-	slice_path = /obj/item/reagent_containers/food/breadslice/custom
+	slice_path = /obj/item/food/breadslice/custom
 	slices_num = 5
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "tofubread"
 	foodtype = GRAIN
 
 
-/obj/item/reagent_containers/food/customizable/cake
+/obj/item/food/customizable/cake
 	name = "cake"
 	ingMax = 6
-	slice_path = /obj/item/reagent_containers/food/cakeslice/custom
+	slice_path = /obj/item/food/cakeslice/custom
 	slices_num = 5
 	icon = 'icons/obj/food/piecake.dmi'
 	icon_state = "plaincake"
 	foodtype = GRAIN | DAIRY
 
 
-/obj/item/reagent_containers/food/customizable/kebab
+/obj/item/food/customizable/kebab
 	name = "kebab"
 	desc = "Delicious food on a stick."
 	ingredients_placement = INGREDIENTS_LINE
@@ -197,7 +197,7 @@
 	ingMax = 6
 	icon_state = "rod"
 
-/obj/item/reagent_containers/food/customizable/pasta
+/obj/item/food/customizable/pasta
 	name = "spaghetti"
 	desc = "Noodles. With stuff. Delicious."
 	ingredients_placement = INGREDIENTS_SCATTER
@@ -207,7 +207,7 @@
 	foodtype = GRAIN
 
 
-/obj/item/reagent_containers/food/customizable/pie
+/obj/item/food/customizable/pie
 	name = "pie"
 	ingMax = 6
 	icon = 'icons/obj/food/piecake.dmi'
@@ -215,19 +215,19 @@
 	foodtype = GRAIN | DAIRY
 
 
-/obj/item/reagent_containers/food/customizable/pizza
+/obj/item/food/customizable/pizza
 	name = "pizza"
 	desc = "A personalized pan pizza meant for only one person."
 	ingredients_placement = INGREDIENTS_SCATTER
 	ingMax = 8
-	slice_path = /obj/item/reagent_containers/food/pizzaslice/custom
+	slice_path = /obj/item/food/pizzaslice/custom
 	slices_num = 6
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "pizzamargherita"
 	foodtype = GRAIN | DAIRY
 
 
-/obj/item/reagent_containers/food/customizable/salad
+/obj/item/food/customizable/salad
 	name = "salad"
 	desc = "Very tasty."
 	trash = /obj/item/reagent_containers/glass/bowl
@@ -236,7 +236,7 @@
 	icon_state = "bowl"
 
 
-/obj/item/reagent_containers/food/customizable/sandwich
+/obj/item/food/customizable/sandwich
 	name = "toast"
 	desc = "A timeless classic."
 	ingredients_placement = INGREDIENTS_STACK
@@ -245,13 +245,13 @@
 	var/finished = 0
 	foodtype = GRAIN
 
-/obj/item/reagent_containers/food/customizable/sandwich/initialize_custom_food(obj/item/reagent_containers/BASE, obj/item/I, mob/user)
+/obj/item/food/customizable/sandwich/initialize_custom_food(obj/item/reagent_containers/BASE, obj/item/I, mob/user)
 	icon_state = BASE.icon_state
 	..()
 
-/obj/item/reagent_containers/food/customizable/sandwich/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers/food/breadslice)) //we're finishing the custom food.
-		var/obj/item/reagent_containers/food/breadslice/BS = I
+/obj/item/food/customizable/sandwich/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/food/breadslice)) //we're finishing the custom food.
+		var/obj/item/food/breadslice/BS = I
 		if(finished)
 			return
 		to_chat(user, "<span class='notice'>You finish the [src.name].</span>")
@@ -262,7 +262,7 @@
 		var/mutable_appearance/TOP = mutable_appearance(icon, "[BS.icon_state]")
 		TOP.pixel_y = 2 * ingredients.len + 3
 		add_overlay(TOP)
-		if(istype(BS, /obj/item/reagent_containers/food/breadslice/custom))
+		if(istype(BS, /obj/item/food/breadslice/custom))
 			var/mutable_appearance/filling = new(icon, "[initial(BS.icon_state)]_filling")
 			filling.color = BS.filling_color
 			filling.pixel_y = 2 * ingredients.len + 3
@@ -273,7 +273,7 @@
 		..()
 
 
-/obj/item/reagent_containers/food/customizable/soup
+/obj/item/food/customizable/soup
 	name = "soup"
 	desc = "A bowl with liquid and... stuff in it."
 	trash = /obj/item/reagent_containers/glass/bowl
@@ -281,7 +281,7 @@
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "wishsoup"
 
-/obj/item/reagent_containers/food/customizable/soup/Initialize()
+/obj/item/food/customizable/soup/Initialize()
 	. = ..()
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 
@@ -301,18 +301,18 @@
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/reagent_containers/glass/bowl/attackby(obj/item/I,mob/user, params)
-	if(istype(I, /obj/item/reagent_containers/food))
-		var/obj/item/reagent_containers/food/S = I
+	if(istype(I, /obj/item/food))
+		var/obj/item/food/S = I
 		if(I.w_class > WEIGHT_CLASS_SMALL)
 			to_chat(user, "<span class='warning'>The ingredient is too big for [src]!</span>")
 		else if(contents.len >= 20)
 			to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
 		else
 			if(reagents.has_reagent(/datum/reagent/water, 10)) //are we starting a soup or a salad?
-				var/obj/item/reagent_containers/food/customizable/A = new/obj/item/reagent_containers/food/customizable/soup(get_turf(src))
+				var/obj/item/food/customizable/A = new/obj/item/food/customizable/soup(get_turf(src))
 				A.initialize_custom_food(src, S, user)
 			else
-				var/obj/item/reagent_containers/food/customizable/A = new/obj/item/reagent_containers/food/customizable/salad(get_turf(src))
+				var/obj/item/food/customizable/A = new/obj/item/food/customizable/salad(get_turf(src))
 				A.initialize_custom_food(src, S, user)
 	else
 		. = ..()

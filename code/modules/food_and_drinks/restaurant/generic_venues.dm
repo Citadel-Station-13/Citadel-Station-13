@@ -135,8 +135,8 @@
 
 ///The bar needs to have a minimum amount of the reagent
 /datum/venue/bar/is_correct_order(object_used, wanted_item)
-	if(istype(object_used, /obj/item/reagent_containers/food/drinks))
-		var/obj/item/reagent_containers/food/drinks/potential_drink = object_used
+	if(istype(object_used, /obj/item/food/drinks))
+		var/obj/item/food/drinks/potential_drink = object_used
 		return potential_drink.reagents.has_reagent(wanted_item, VENUE_BAR_MINIMUM_REAGENTS)
 /obj/machinery/restaurant_portal/bar
 	linked_venue = /datum/venue/bar

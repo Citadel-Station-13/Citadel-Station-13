@@ -165,10 +165,10 @@
 	var/list/containers_list = list()
 
 	for(var/obj/item/reagent_containers/C in held_items)
-		if(C.is_open_container() || istype(C, /obj/item/reagent_containers/food))
+		if(C.is_open_container() || istype(C, /obj/item/food))
 			containers_list += C
 	for(var/obj/item/reagent_containers/C in range(1, src))
-		if((C.is_open_container() || istype(C, /obj/item/reagent_containers/food)) && CanReach(C))
+		if((C.is_open_container() || istype(C, /obj/item/food)) && CanReach(C))
 			containers_list += C
 
 	if(containers_list.len)

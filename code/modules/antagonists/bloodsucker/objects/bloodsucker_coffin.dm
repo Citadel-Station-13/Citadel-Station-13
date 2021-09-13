@@ -66,7 +66,7 @@
 	breakout_time = 200
 	pryLidTimer = 200
 	resistance_flags = NONE
-	material_drop = /obj/item/reagent_containers/food/meat/slab
+	material_drop = /obj/item/food/meat/slab
 	material_drop_amount = 3
 	integrity_failure = 0.57
 	armor = list("melee" = 70, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 70, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 100)

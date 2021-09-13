@@ -138,7 +138,7 @@
 	new /obj/item/storage/pill_bottle/charcoal(src)
 	new /obj/item/reagent_containers/pill/mutadone(src)
 	new /obj/item/reagent_containers/pill/antirad(src)
-	new /obj/item/reagent_containers/food/drinks/bottle/vodka(src)
+	new /obj/item/food/drinks/bottle/vodka(src)
 	new /obj/item/healthanalyzer(src)
 
 

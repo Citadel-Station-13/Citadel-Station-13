@@ -4,7 +4,7 @@
 /datum/blackmarket_item/consumable/clown_tears
 	name = "Bowl of Clown's Tears"
 	desc = "Guaranteed fresh from Weepy Boggins Tragic Kitchen"
-	item = /obj/item/reagent_containers/food/soup/clownstears
+	item = /obj/item/food/soup/clownstears
 	stock = 1
 	price_min = 520
 	price_max = 600
@@ -60,7 +60,7 @@
 /datum/blackmarket_item/consumable/stray_drink
 	name = "A random drink"
 	desc = "A surprise drink direcly from the counter. No refunds if the glass breaks."	// it will always break if it's launched at the station
-	item = /obj/item/reagent_containers/food/drinks/drinkingglass
+	item = /obj/item/food/drinks/drinkingglass
 	stock_min = 10
 	stock_max = 15
 	price_min = 100
@@ -80,7 +80,7 @@
 
 // i found no other way to fill a glass with a random reagent at runtime. and i definitely was not going to do the same done in bottle.dm
 /datum/blackmarket_item/consumable/stray_drink/spawn_item(loc)
-	var/obj/item/reagent_containers/food/drinks/drinkingglass/drink = new item(loc)
+	var/obj/item/food/drinks/drinkingglass/drink = new item(loc)
 	var/picked = pick(counter)
 	drink.list_reagents = list()
 	drink.list_reagents[picked] = 50

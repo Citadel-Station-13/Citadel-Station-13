@@ -486,9 +486,9 @@
 		var/visi_msg = ""
 		var/transfer_amount
 
-		if(istype(reagent_source, /obj/item/reagent_containers/food) || istype(reagent_source, /obj/item/reagent_containers/pill))
-			if(istype(reagent_source, /obj/item/reagent_containers/food))
-				var/obj/item/reagent_containers/food/R = reagent_source
+		if(istype(reagent_source, /obj/item/food) || istype(reagent_source, /obj/item/reagent_containers/pill))
+			if(istype(reagent_source, /obj/item/food))
+				var/obj/item/food/R = reagent_source
 				if (R.trash)
 					R.generate_trash(get_turf(user))
 			visi_msg="[user] composts [reagent_source], spreading it through [target]"
@@ -516,7 +516,7 @@
 				H.adjustWater(round(water_amt))
 				reagent_source.reagents.remove_reagent(/datum/reagent/water, water_amt)
 			reagent_source.reagents.trans_to(H.reagents, transfer_amount)
-			if(istype(reagent_source, /obj/item/reagent_containers/food) || istype(reagent_source, /obj/item/reagent_containers/pill))
+			if(istype(reagent_source, /obj/item/food) || istype(reagent_source, /obj/item/reagent_containers/pill))
 				qdel(reagent_source)
 				lastuser = user
 				H.update_icon()

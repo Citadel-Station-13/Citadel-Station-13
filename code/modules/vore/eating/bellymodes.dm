@@ -117,7 +117,7 @@
 			//Contaminate or gurgle items
 			var/obj/item/T = pick(touchable_items)
 			if(istype(T))
-				if(istype(T,/obj/item/reagent_containers/food) || istype(T,/obj/item/organ))
+				if(istype(T,/obj/item/food) || istype(T,/obj/item/organ))
 					digest_item(T)
 
 		if(DM_HEAL)
@@ -231,7 +231,7 @@
 				//Contaminate or gurgle items
 			var/obj/item/T = pick(touchable_items)
 			if(istype(T))
-				if(istype(T,/obj/item/reagent_containers/food) || istype(T,/obj/item/organ))
+				if(istype(T,/obj/item/food) || istype(T,/obj/item/organ))
 					digest_item(T)
 
 	/////////////////////////// Make any noise ///////////////////////////

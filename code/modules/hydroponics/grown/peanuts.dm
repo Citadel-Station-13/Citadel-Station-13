@@ -18,10 +18,10 @@
 	filling_color = "#C4AE7A"
 	bitesize = 100
 	foodtype = VEGETABLES
-	dried_type = /obj/item/reagent_containers/food/roasted_peanuts
-	cooked_type = /obj/item/reagent_containers/food/roasted_peanuts
+	dried_type = /obj/item/food/roasted_peanuts
+	cooked_type = /obj/item/food/roasted_peanuts
 
-/obj/item/reagent_containers/food/roasted_peanuts
+/obj/item/food/roasted_peanuts
 	name = "roasted peanuts"
 	desc = "A handful of roasted peanuts, with or without salt."
 	icon_state = "roasted_peanuts"

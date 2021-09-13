@@ -25,14 +25,14 @@
 /datum/component/storage/concrete/pockets/small/collar/Initialize()
 	. = ..()
 	can_hold = typecacheof(list(
-	/obj/item/reagent_containers/food/cookie,
-	/obj/item/reagent_containers/food/sugarcookie))
+	/obj/item/food/cookie,
+	/obj/item/food/sugarcookie))
 
 /datum/component/storage/concrete/pockets/small/collar/locked/Initialize()
 	. = ..()
 	can_hold = typecacheof(list(
-	/obj/item/reagent_containers/food/cookie,
-	/obj/item/reagent_containers/food/sugarcookie,
+	/obj/item/food/cookie,
+	/obj/item/food/sugarcookie,
 	/obj/item/key/collar))
 
 /datum/component/storage/concrete/pockets/tiny

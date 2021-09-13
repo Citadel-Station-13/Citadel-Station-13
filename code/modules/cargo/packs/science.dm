@@ -15,7 +15,7 @@
 	desc = "Pss what a new test subject with supper strangth, speed, and love for bananas all at the same time? Say no more... Contains a single ape cube. Dont add water!"
 	contraband = TRUE
 	cost = 2500
-	contains = list (/obj/item/reagent_containers/food/cube/ape)
+	contains = list (/obj/item/food/cube/ape)
 	crate_name = "ape cube crate"
 	can_private_buy = FALSE
 

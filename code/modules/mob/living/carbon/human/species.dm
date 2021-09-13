@@ -66,7 +66,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	/// Assume human as the default blood colour, override this default by species subtypes
 	var/exotic_blood_color = BLOOD_COLOR_HUMAN
 	///What the species drops when gibbed by a gibber machine.
-	var/meat = /obj/item/reagent_containers/food/meat/slab/human //What the species drops on gibbing
+	var/meat = /obj/item/food/meat/slab/human //What the species drops on gibbing
 	var/list/gib_types = list(/obj/effect/gibspawner/human, /obj/effect/gibspawner/human/bodypartless)
 	///What skin the species drops when gibbed by a gibber machine.
 	var/skinned_type
