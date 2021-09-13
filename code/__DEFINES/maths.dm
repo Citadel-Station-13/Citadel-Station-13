@@ -222,10 +222,6 @@
 /// k is the rate at which is approaches L, x_0 is the point where the function = 0
 #define LOGISTIC_FUNCTION(L,k,x,x_0) (L/(1+(NUM_E**(-k*(x-x_0)))))
 // )
-/// A function that "linearly" approaches a maximum value of L
-/// k is the rate at which it approaches L (), x_0 is the point where the function = 0
-#define HYPERBOLIC_GROWTH(L,k,x,x_0) ((-(L * L) / ((k * x) + L - (k * x_0))) + L)
-// )
 /// Make sure something is a boolean TRUE/FALSE 1/0 value, since things like bitfield & bitflag doesn't always give 1s and 0s.
 #define FORCE_BOOLEAN(x) ((x)? TRUE : FALSE)
 // )
