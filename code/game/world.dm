@@ -16,7 +16,7 @@ GLOBAL_LIST(topic_status_cache)
 		call(debug_server, "auxtools_init")()
 		enable_debugging()
 	AUXTOOLS_CHECK(AUXMOS)
-#ifdef REFERENCE_TRACKING
+#ifdef EXTOOLS_REFERENCE_TRACKING
 	enable_reference_tracking()
 #endif
 	world.Profile(PROFILE_START)

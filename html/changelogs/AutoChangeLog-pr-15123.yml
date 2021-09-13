@@ -1,4 +1,4 @@
 author: "keronshb"
 delete-after: True
 changes: 
-  - rscadd: "Readds Reebe"
+  - bugfix: "Fixes hitby runtime."
