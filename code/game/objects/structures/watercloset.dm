@@ -122,8 +122,8 @@
 			w_items += I.w_class
 			to_chat(user, "<span class='notice'>You carefully place [I] into the cistern.</span>")
 
-	if(istype(I, /obj/item/reagent_containers/food/snacks/cube))
-		var/obj/item/reagent_containers/food/snacks/cube/cube = I
+	if(istype(I, /obj/item/reagent_containers/food/cube))
+		var/obj/item/reagent_containers/food/cube/cube = I
 		cube.Expand()
 		return
 	else if(istype(I, /obj/item/reagent_containers))

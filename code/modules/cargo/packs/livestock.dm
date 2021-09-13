@@ -14,15 +14,15 @@
 	name = "Animal Feed Crate"
 	desc = "Feed for livestock, like cows and hens. Contains fifty Wheat bundles and fifty Oat bundles."
 	cost = 1500
-	contains = list(/obj/item/reagent_containers/food/snacks/grown/wheat,
-					/obj/item/reagent_containers/food/snacks/grown/oat)
+	contains = list(/obj/item/food/grown/wheat,
+					/obj/item/food/grown/oat)
 	crate_name = "animal feed crate"
 	crate_type = /obj/structure/closet/crate/freezer
 
 /datum/supply_pack/critter/animal_feed/generate()
 	. = ..()
 	for(var/i in 1 to 49)
-		new /obj/item/reagent_containers/food/snacks/grown/wheat(.)
+		new /obj/item/food/grown/wheat(.)
 
 
 /datum/supply_pack/critter/parrot

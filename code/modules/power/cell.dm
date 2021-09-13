@@ -188,7 +188,7 @@
 	return rating * maxcharge
 
 // stuff so ipcs and synthlizards can eat power cells, taken from how moths can eat clothing
-/obj/item/reagent_containers/food/snacks/cell
+/obj/item/reagent_containers/food/cell
 	name = "oops"
 	desc = "If you're reading this it means I messed up. This is related to ipcs/synths eating cells and I didn't know a better way to do it than making a new food object."
 	list_reagents = list(/datum/reagent/consumable/nutriment = 0.5)
@@ -196,7 +196,7 @@
 
 /obj/item/stock_parts/cell/attack(mob/M, mob/user, def_zone)
 	if(user.a_intent != INTENT_HARM && isrobotic(M))
-		var/obj/item/reagent_containers/food/snacks/cell/cell_as_food = new
+		var/obj/item/reagent_containers/food/cell/cell_as_food = new
 		cell_as_food.name = name
 		if(cell_as_food.attack(M, user, def_zone))
 			take_damage(40, sound_effect=FALSE)

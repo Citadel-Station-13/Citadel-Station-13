@@ -600,7 +600,7 @@
 
 /datum/status_effect/stabilized/darkpurple/tick()
 	var/obj/item/I = owner.get_active_held_item()
-	var/obj/item/reagent_containers/food/snacks/F = I
+	var/obj/item/reagent_containers/food/F = I
 	if(istype(F))
 		if(F.cooked_type)
 			to_chat(owner, "<span class='warning'>[linked_extract] flares up brightly, and your hands alone are enough cook [F]!</span>")
@@ -630,9 +630,9 @@
 		if(acid)
 			acid.level = 0
 	// Monkey cube
-	if(istype(O, /obj/item/reagent_containers/food/snacks/cube))
+	if(istype(O, /obj/item/reagent_containers/food/cube))
 		to_chat(owner, "<span class='warning'>[linked_extract] kept your hands wet! It makes [O] expand!</span>")
-		var/obj/item/reagent_containers/food/snacks/cube/cube = O
+		var/obj/item/reagent_containers/food/cube/cube = O
 		cube.Expand()
 
 	// Dehydrated carp

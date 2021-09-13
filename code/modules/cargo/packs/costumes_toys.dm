@@ -52,9 +52,9 @@
 	num_contained = 5 //SOME
 	contains = list(/obj/item/poster/random_contraband,
 					/obj/item/poster/random_contraband,
-					/obj/item/reagent_containers/food/snacks/grown/cannabis,
-					/obj/item/reagent_containers/food/snacks/grown/cannabis/rainbow,
-					/obj/item/reagent_containers/food/snacks/grown/cannabis/white,
+					/obj/item/food/grown/cannabis,
+					/obj/item/food/grown/cannabis/rainbow,
+					/obj/item/food/grown/cannabis/white,
 					/obj/item/storage/pill_bottle/zoom,
 					/obj/item/storage/pill_bottle/happy,
 					/obj/item/storage/pill_bottle/lsd,
@@ -329,7 +329,7 @@
 					/obj/item/clothing/under/dress/wedding/red,
 					/obj/item/clothing/under/dress/wedding/red, // two of each
 					/obj/item/reagent_containers/food/drinks/bottle/champagne, //appropriate booze for a wedding
-					/obj/item/reagent_containers/food/snacks/store/cake/vanilla_cake, // we don't have a full wedding cake but this will do
+					/obj/item/reagent_containers/food/cake/vanilla_cake, // we don't have a full wedding cake but this will do
 					/obj/item/storage/fancy/ringbox/silver,
 					/obj/item/storage/fancy/ringbox/silver) //diamond rings cost the same price as this crate via cargo so we're not giving you two for free. Wedding rings are traditionally less valuable anyway.
 	crate_name = "wedding crate"

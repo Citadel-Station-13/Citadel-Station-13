@@ -1365,7 +1365,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			var/turf/endT = spaceDebrisFinishLoc(startside, T.z)
 			new /obj/effect/immovablerod(startT, endT,target)
 		if(ADMIN_PUNISHMENT_SUPPLYPOD_QUICK)
-			var/target_path = input(usr,"Enter typepath of an atom you'd like to send with the pod (type \"empty\" to send an empty pod):" ,"Typepath","/obj/item/reagent_containers/food/snacks/grown/harebell") as null|text
+			var/target_path = input(usr,"Enter typepath of an atom you'd like to send with the pod (type \"empty\" to send an empty pod):" ,"Typepath","/obj/item/food/grown/harebell") as null|text
 			var/area/pod_storage_area = locate(/area/centcom/supplypod/podStorage) in GLOB.sortedAreas
 			var/obj/structure/closet/supplypod/centcompod/pod = new(pick(get_area_turfs(pod_storage_area))) //Lets not runtime
 			pod.damage = 40
@@ -1399,10 +1399,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				to_chat(usr,"<span class='warning'>Imprisonment failed!</span>")
 				return
 		if(ADMIN_PUNISHMENT_PIE)
-			var/obj/item/reagent_containers/food/snacks/pie/cream/nostun/creamy = new(get_turf(target))
+			var/obj/item/reagent_containers/food/pie/cream/nostun/creamy = new(get_turf(target))
 			creamy.splat(target)
 		if(ADMIN_PUNISHMENT_CUSTOM_PIE)
-			var/obj/item/reagent_containers/food/snacks/pie/cream/nostun/A = new()
+			var/obj/item/reagent_containers/food/pie/cream/nostun/A = new()
 			if(!A.reagents)
 				var/amount = input(usr, "Specify the reagent size of [A]", "Set Reagent Size", 50) as num|null
 				if(amount)

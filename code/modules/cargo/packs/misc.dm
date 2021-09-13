@@ -288,12 +288,12 @@
 	contains = list(/obj/item/clothing/under/misc/burial,
 					/obj/item/storage/fancy/candle_box,
 					/obj/item/storage/fancy/candle_box,
-					/obj/item/reagent_containers/food/snacks/grown/harebell,
-					/obj/item/reagent_containers/food/snacks/grown/harebell,
-					/obj/item/reagent_containers/food/snacks/grown/poppy/geranium,
-					/obj/item/reagent_containers/food/snacks/grown/poppy/geranium,
-					/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
-					/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
+					/obj/item/food/grown/harebell,
+					/obj/item/food/grown/harebell,
+					/obj/item/food/grown/poppy/geranium,
+					/obj/item/food/grown/poppy/geranium,
+					/obj/item/food/grown/poppy/lily,
+					/obj/item/food/grown/poppy/lily,
 					/obj/item/storage/crayons,
 					/obj/item/paper_bin
 					)

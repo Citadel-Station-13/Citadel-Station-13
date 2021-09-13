@@ -62,7 +62,7 @@
 	result =/obj/structure/closet/crate/coffin/meatcoffin
 	tools = list(/obj/item/kitchen/knife,
 				 /obj/item/kitchen/rollingpin)
-	reqs = list(/obj/item/reagent_containers/food/snacks/meat/slab = 5,
+	reqs = list(/obj/item/reagent_containers/food/meat/slab = 5,
 				/obj/item/restraints/handcuffs/cable = 1)
 	time = 150
 	subcategory = CAT_FURNITURE
@@ -549,7 +549,7 @@
 	name = "Coconut Bong"
 	result = /obj/item/bong/coconut
 	reqs = list(/obj/item/stack/sheet/mineral/bamboo = 2,
-				/obj/item/reagent_containers/food/snacks/grown/coconut = 1)
+				/obj/item/food/grown/coconut = 1)
 	time = 70
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISCELLANEOUS

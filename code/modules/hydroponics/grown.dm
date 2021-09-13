@@ -4,7 +4,7 @@
 // ***********************************************************
 
 // Base type. Subtypes are found in /grown dir.
-/obj/item/reagent_containers/food/snacks/grown
+/obj/item/food/grown
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 	var/plantname = ""
@@ -22,7 +22,7 @@
 	var/wine_flavor //If NULL, this is automatically set to the fruit's flavor. Determines the flavor of the wine if distill_reagent is NULL.
 	var/wine_power = 10 //Determines the boozepwr of the wine if distill_reagent is NULL.
 
-/obj/item/reagent_containers/food/snacks/grown/Initialize(mapload, obj/item/seeds/new_seed)
+/obj/item/food/grown/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
 	if(!tastes)
 		tastes = list("[name]" = 1)
@@ -49,21 +49,21 @@
 
 
 
-/obj/item/reagent_containers/food/snacks/grown/proc/add_juice()
+/obj/item/food/grown/proc/add_juice()
 	if(reagents)
 		if(bitesize_mod)
 			bitesize = 1 + round(reagents.total_volume / bitesize_mod)
 		return 1
 	return 0
 
-/obj/item/reagent_containers/food/snacks/grown/examine(user)
+/obj/item/food/grown/examine(user)
 	. = ..()
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)
 			if(T.examine_line)
 				. += T.examine_line
 
-/obj/item/reagent_containers/food/snacks/grown/attackby(obj/item/O, mob/user, params)
+/obj/item/food/grown/attackby(obj/item/O, mob/user, params)
 	..()
 	if (istype(O, /obj/item/plant_analyzer))
 		var/msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.\n"
@@ -87,12 +87,12 @@
 
 
 // Various gene procs
-/obj/item/reagent_containers/food/snacks/grown/attack_self(mob/user)
+/obj/item/food/grown/attack_self(mob/user)
 	if(seed && seed.get_gene(/datum/plant_gene/trait/squash))
 		squash(user)
 	..()
 
-/obj/item/reagent_containers/food/snacks/grown/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/food/grown/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //was it caught by a mob?
 		if(seed)
 			for(var/datum/plant_gene/trait/T in seed.genes)
@@ -100,7 +100,7 @@
 			if(seed.get_gene(/datum/plant_gene/trait/squash))
 				squash(hit_atom)
 
-/obj/item/reagent_containers/food/snacks/grown/proc/squash(atom/target)
+/obj/item/food/grown/proc/squash(atom/target)
 	var/turf/T = get_turf(target)
 	if(ispath(splat_type, /obj/effect/decal/cleanable/plant_smudge))
 		if(filling_color)
@@ -124,27 +124,27 @@
 
 	qdel(src)
 
-/obj/item/reagent_containers/food/snacks/grown/On_Consume()
+/obj/item/food/grown/On_Consume()
 	if(iscarbon(usr))
 		if(seed)
 			for(var/datum/plant_gene/trait/T in seed.genes)
 				T.on_consume(src, usr)
 	..()
 
-/obj/item/reagent_containers/food/snacks/grown/generate_trash(atom/location)
-	if(trash && (ispath(trash, /obj/item/grown) || ispath(trash, /obj/item/reagent_containers/food/snacks/grown)))
+/obj/item/food/grown/generate_trash(atom/location)
+	if(trash && (ispath(trash, /obj/item/grown) || ispath(trash, /obj/item/food/grown)))
 		. = new trash(location, seed)
 		trash = null
 		return
 	return ..()
 
-/obj/item/reagent_containers/food/snacks/grown/grind_requirements()
+/obj/item/food/grown/grind_requirements()
 	if(dry_grind && !dry)
 		to_chat(usr, "<span class='warning'>[src] needs to be dry before it can be ground up!</span>")
 		return
 	return TRUE
 
-/obj/item/reagent_containers/food/snacks/grown/on_grind()
+/obj/item/food/grown/on_grind()
 	var/nutriment = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
 	if(grind_results&&grind_results.len)
 		for(var/i in 1 to grind_results.len)
@@ -152,7 +152,7 @@
 		reagents.del_reagent(/datum/reagent/consumable/nutriment)
 		reagents.del_reagent(/datum/reagent/consumable/nutriment/vitamin)
 
-/obj/item/reagent_containers/food/snacks/grown/on_juice()
+/obj/item/food/grown/on_juice()
 	var/nutriment = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
 	if(juice_results&&juice_results.len)
 		for(var/i in 1 to juice_results.len)
@@ -161,7 +161,7 @@
 		reagents.del_reagent(/datum/reagent/consumable/nutriment/vitamin)
 
 // For item-containing growns such as eggy or gatfruit
-/obj/item/reagent_containers/food/snacks/grown/shell/attack_self(mob/user)
+/obj/item/food/grown/shell/attack_self(mob/user)
 	var/obj/item/T
 	if(trash)
 		T = generate_trash()

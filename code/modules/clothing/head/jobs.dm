@@ -111,7 +111,7 @@
 	. = ..()
 	if(loc == user && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(candy_cooldown < world.time)
-			var/obj/item/reagent_containers/food/snacks/candy_corn/CC = new /obj/item/reagent_containers/food/snacks/candy_corn(src)
+			var/obj/item/reagent_containers/food/candy_corn/CC = new /obj/item/reagent_containers/food/candy_corn(src)
 			user.put_in_hands(CC)
 			to_chat(user, "You slip a candy corn from your hat.")
 			candy_cooldown = world.time+1200

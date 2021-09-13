@@ -224,7 +224,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isgun(A) (istype(A, /obj/item/gun))
 
-#define isfood(A) (istype(A, /obj/item/reagent_containers/food/snacks))
+#define isfood(A) (istype(A, /obj/item/reagent_containers/food))
 
 #define iscontainer(A) (istype(A, /obj/structure/reagent_dispensers))
 

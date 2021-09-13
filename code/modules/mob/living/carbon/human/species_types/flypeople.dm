@@ -7,7 +7,7 @@
 	mutanttongue = /obj/item/organ/tongue/fly
 	mutantliver = /obj/item/organ/liver/fly
 	mutantstomach = /obj/item/organ/stomach/fly
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/fly
+	meat = /obj/item/reagent_containers/food/meat/slab/human/mutant/fly
 	disliked_food = null
 	liked_food = GROSS
 	exotic_bloodtype = "BUG"

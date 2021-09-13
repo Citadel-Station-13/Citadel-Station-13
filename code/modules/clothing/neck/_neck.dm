@@ -173,7 +173,7 @@
 	var/poly_states = 1
 	var/poly_colors = list("#00BBBB")
 	var/tagname = null
-	var/treat_path = /obj/item/reagent_containers/food/snacks/cookie
+	var/treat_path = /obj/item/reagent_containers/food/cookie
 
 /obj/item/clothing/neck/petcollar/Initialize()
 	. = ..()

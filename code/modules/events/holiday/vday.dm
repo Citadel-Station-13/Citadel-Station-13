@@ -18,7 +18,7 @@
 		H.put_in_hands(new /obj/item/valentine)
 		var/obj/item/storage/backpack/B = locate() in H.contents
 		if(B)
-			new /obj/item/reagent_containers/food/snacks/candyheart(B)
+			new /obj/item/reagent_containers/food/candyheart(B)
 			new /obj/item/storage/fancy/heart_box(B)
 
 /proc/forge_valentines_objective(mob/living/lover,mob/living/date,var/chemLove = FALSE)
@@ -77,7 +77,7 @@
 /obj/item/valentine/attack_self(mob/user)
 	user.examinate(src)
 
-/obj/item/reagent_containers/food/snacks/candyheart
+/obj/item/reagent_containers/food/candyheart
 	name = "candy heart"
 	icon = 'icons/obj/holiday_misc.dmi'
 	icon_state = "candyheart"
@@ -85,7 +85,7 @@
 	list_reagents = list(/datum/reagent/consumable/sugar = 2)
 	junkiness = 5
 
-/obj/item/reagent_containers/food/snacks/candyheart/New()
+/obj/item/reagent_containers/food/candyheart/New()
 	..()
 	desc = pick("A heart-shaped candy that reads: HONK ME",
 				"A heart-shaped candy that reads: ERP",

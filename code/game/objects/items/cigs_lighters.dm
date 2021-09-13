@@ -441,8 +441,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 
 /obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/reagent_containers/food/snacks/grown))
-		var/obj/item/reagent_containers/food/snacks/grown/G = O
+	if(istype(O, /obj/item/food/grown))
+		var/obj/item/food/grown/G = O
 		if(!packeditem)
 			if(G.dry == 1)
 				to_chat(user, "<span class='notice'>You stuff [O] into [src].</span>")
@@ -703,8 +703,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	if(!proximity)
 		return
-	if(istype(target, /obj/item/reagent_containers/food/snacks/grown))
-		var/obj/item/reagent_containers/food/snacks/grown/O = target
+	if(istype(target, /obj/item/food/grown))
+		var/obj/item/food/grown/O = target
 		if(O.dry)
 			var/obj/item/clothing/mask/cigarette/rollie/R = new /obj/item/clothing/mask/cigarette/rollie(user.loc)
 			R.chem_volume = target.reagents.total_volume
@@ -915,8 +915,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/bong/attackby(obj/item/O, mob/user, params)
 	. = ..()
 	//If we're using a dried plant..
-	if(istype(O,/obj/item/reagent_containers/food/snacks))
-		var/obj/item/reagent_containers/food/snacks/DP = O
+	if(istype(O,/obj/item/reagent_containers/food))
+		var/obj/item/reagent_containers/food/DP = O
 		if (DP.dry)
 			//Nothing if our bong is full
 			if (reagents.holder_full())

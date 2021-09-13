@@ -12,7 +12,7 @@
 	mutant_brain = /obj/item/organ/brain/slime
 	mutant_bodyparts = list("mcolor" = "FFFFFF", "mam_tail" = "None", "mam_ears" = "None", "mam_snouts" = "None", "taur" = "None", "deco_wings" = "None", "legs" = "Plantigrade")
 	inherent_traits = list(TRAIT_TOXINLOVER)
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
+	meat = /obj/item/reagent_containers/food/meat/slab/human/mutant/slime
 	gib_types = list(/obj/effect/gibspawner/slime, /obj/effect/gibspawner/slime/bodypartless)
 	exotic_blood = /datum/reagent/blood/jellyblood
 	exotic_bloodtype = "GEL"

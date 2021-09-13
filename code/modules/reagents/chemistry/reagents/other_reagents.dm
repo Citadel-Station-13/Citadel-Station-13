@@ -291,8 +291,8 @@
 	if(acid)
 		acid.level = 0
 	// cubes
-	if(istype(O, /obj/item/reagent_containers/food/snacks/cube))
-		var/obj/item/reagent_containers/food/snacks/cube/cube = O
+	if(istype(O, /obj/item/reagent_containers/food/cube))
+		var/obj/item/reagent_containers/food/cube/cube = O
 		cube.Expand()
 
 	// Dehydrated carp

@@ -7,7 +7,7 @@
 	maxHealth = 1
 	turns_per_move = 5			//this isn't player speed =|
 	speed = 2				//this is player speed
-	loot = list(/obj/item/reagent_containers/food/snacks/deadbanana_spider)
+	loot = list(/obj/item/reagent_containers/food/deadbanana_spider)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 270
 	maxbodytemp = INFINITY
@@ -93,7 +93,7 @@
 /mob/living/simple_animal/banana_spider/start_pulling()
 	return FALSE			//No.
 
-/obj/item/reagent_containers/food/snacks/deadbanana_spider
+/obj/item/reagent_containers/food/deadbanana_spider
 	name = "dead banana spider"
 	desc = "Thank god it's gone...but it does look slippery."
 	icon_state = "bananaspider"
@@ -105,6 +105,6 @@
 	juice_results = list(/datum/reagent/consumable/banana = 0)
 
 
-/obj/item/reagent_containers/food/snacks/deadbanana_spider/Initialize()
+/obj/item/reagent_containers/food/deadbanana_spider/Initialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 20)

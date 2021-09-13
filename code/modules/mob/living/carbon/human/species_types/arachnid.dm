@@ -10,7 +10,7 @@
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/spider
+	meat = /obj/item/reagent_containers/food/meat/slab/spider
 	liked_food = MEAT | RAW
 	disliked_food = FRUIT | GROSS
 	toxic_food = VEGETABLES | DAIRY

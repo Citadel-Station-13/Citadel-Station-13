@@ -9,7 +9,7 @@
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
+	meat = /obj/item/reagent_containers/food/meat/slab/xeno
 	gib_types = list(/obj/effect/gibspawner/xeno/xenoperson, /obj/effect/gibspawner/xeno/xenoperson/bodypartless)
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 	exotic_bloodtype = "X*"

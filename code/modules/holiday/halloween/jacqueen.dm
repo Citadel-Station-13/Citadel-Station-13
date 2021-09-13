@@ -232,9 +232,9 @@
 			var/new_obj = pick(subtypesof(/obj))
 			for(var/item in blacklisted_items)
 				if(is_type_in_typecache(new_obj, blacklisted_items))
-					new_obj = /obj/item/reagent_containers/food/snacks/special_candy
+					new_obj = /obj/item/reagent_containers/food/special_candy
 			var/reward = new new_obj(C.loc)
-			if(new_obj == /obj/item/reagent_containers/food/snacks/special_candy)
+			if(new_obj == /obj/item/reagent_containers/food/special_candy)
 				new new_obj(C.loc)
 				new new_obj(C.loc) //Giving them back their candies in case it's something from the blacklist or if the game literally rolled candies. What rotten luck.
 			C.put_in_hands(reward)
@@ -391,7 +391,7 @@
 
 				if("Nevermind")
 					visible_message("<b>[src]</b> shrugs, <span class='spooky'>\"Suit yerself then, here's your candy back.\"</span>")
-					new /obj/item/reagent_containers/food/snacks/special_candy(loc)
+					new /obj/item/reagent_containers/food/special_candy(loc)
 
 
 /mob/living/simple_animal/jacq/proc/trick(mob/living/carbon/C, gender)
@@ -518,7 +518,7 @@
 	var/invs = C.get_contents()
 	var/candy_count = 0
 	for(var/item in invs)
-		if(istype(item, /obj/item/reagent_containers/food/snacks/special_candy))
+		if(istype(item, /obj/item/reagent_containers/food/special_candy))
 			candy_count++
 	return candy_count
 
@@ -526,7 +526,7 @@
 	var/inv = C.get_contents()
 	var/candies = list()
 	for(var/item in inv)
-		if(istype(item, /obj/item/reagent_containers/food/snacks/special_candy))
+		if(istype(item, /obj/item/reagent_containers/food/special_candy))
 			candies += item
 		if(LAZYLEN(candies) == candy_amount)
 			break
@@ -558,12 +558,12 @@
 	qdel(src)
 
 //Candies
-/obj/item/reagent_containers/food/snacks/special_candy
+/obj/item/reagent_containers/food/special_candy
 	name = "Magic candy"
 	icon = 'icons/obj/halloween_items.dmi'
 	icon_state = "jacq_candy"
 	desc = "A candy with strange magic within. Be careful, as the magic isn't always helpful."
 
-/obj/item/reagent_containers/food/snacks/special_candy/Initialize()
+/obj/item/reagent_containers/food/special_candy/Initialize()
 	.=..()
 	reagents.add_reagent(get_random_reagent_id(), 5)

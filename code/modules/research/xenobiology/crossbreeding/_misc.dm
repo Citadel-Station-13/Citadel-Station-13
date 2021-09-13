@@ -41,7 +41,7 @@
 	icon_state = "rainbowbarrier"
 
 //Ration pack - Chilling Silver
-/obj/item/reagent_containers/food/snacks/rationpack
+/obj/item/reagent_containers/food/rationpack
 	name = "ration pack"
 	desc = "A square bar that sadly <i>looks</i> like chocolate, packaged in a nondescript grey wrapper. Has saved soldiers' lives before - usually by stopping bullets."
 	icon_state = "rationpack"
@@ -52,7 +52,7 @@
 	foodtype = null //Don't ask what went into them. You're better off not knowing.
 	list_reagents = list(/datum/reagent/consumable/nutriment/stabilized = 10, /datum/reagent/consumable/nutriment = 2) //Won't make you fat. Will make you question your sanity.
 
-/obj/item/reagent_containers/food/snacks/rationpack/checkLiked(fraction, mob/M)	//Nobody likes rationpacks. Nobody.
+/obj/item/reagent_containers/food/rationpack/checkLiked(fraction, mob/M)	//Nobody likes rationpacks. Nobody.
 	if(last_check_time + 50 < world.time)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M

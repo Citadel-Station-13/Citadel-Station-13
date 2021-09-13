@@ -68,7 +68,7 @@
 	icon = 'icons/obj/food/donut.dmi'
 	icon_state = "donutbox_inner"
 	icon_type = "donut"
-	spawn_type = /obj/item/reagent_containers/food/snacks/donut
+	spawn_type = /obj/item/reagent_containers/food/donut
 	fancy_open = TRUE
 	custom_price = PRICE_NORMAL
 	appearance_flags = KEEP_TOGETHER
@@ -77,7 +77,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/donut))
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/donut))
 
 /obj/item/storage/fancy/donut_box/PopulateContents()
 	. = ..()
@@ -98,7 +98,7 @@
 	var/donuts = 0
 
 	for (var/_donut in contents)
-		var/obj/item/reagent_containers/food/snacks/donut/donut = _donut
+		var/obj/item/reagent_containers/food/donut/donut = _donut
 		if (!istype(donut))
 			continue
 
@@ -122,13 +122,13 @@
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	name = "egg box"
 	desc = "A carton for containing eggs."
-	spawn_type = /obj/item/reagent_containers/food/snacks/egg
+	spawn_type = /obj/item/reagent_containers/food/egg
 
 /obj/item/storage/fancy/egg_box/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 12
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/egg))
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/egg))
 
 /*
  * Candle Box
@@ -485,13 +485,13 @@
 	icon_type = "chocolate"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	spawn_type = /obj/item/reagent_containers/food/snacks/tinychocolate
+	spawn_type = /obj/item/reagent_containers/food/tinychocolate
 
 /obj/item/storage/fancy/heart_box/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 8
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/tinychocolate))
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/tinychocolate))
 
 /obj/item/storage/fancy/nugget_box
 	name = "nugget box"
@@ -499,13 +499,13 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "nuggetbox"
 	icon_type = "nugget"
-	spawn_type = /obj/item/reagent_containers/food/snacks/nugget
+	spawn_type = /obj/item/reagent_containers/food/nugget
 
 /obj/item/storage/fancy/nugget_box/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/nugget))
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/nugget))
 
 /obj/item/storage/fancy/treat_box
 	name = "treat box"
@@ -513,13 +513,13 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "treatbox"
 	icon_type = "treat"
-	spawn_type = /obj/item/reagent_containers/food/snacks/dogtreat
+	spawn_type = /obj/item/reagent_containers/food/dogtreat
 
 /obj/item/storage/fancy/treat_box/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/dogtreat))
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/dogtreat))
 
 /obj/item/storage/fancy/cracker_pack
 	name = "cracker pack"
@@ -527,13 +527,13 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "crackerbox"
 	icon_type = "cracker"
-	spawn_type = /obj/item/reagent_containers/food/snacks/cracker
+	spawn_type = /obj/item/reagent_containers/food/cracker
 
 /obj/item/storage/fancy/cracker_pack/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/cracker))
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/cracker))
 
 /*
  * Ring Box

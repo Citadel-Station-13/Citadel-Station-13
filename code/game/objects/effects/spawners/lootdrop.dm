@@ -117,7 +117,7 @@
 			/obj/item/trash/cheesie = 1,
 			/obj/item/trash/candy = 1,
 			/obj/item/trash/chips = 1,
-			/obj/item/reagent_containers/food/snacks/deadmouse = 1,
+			/obj/item/reagent_containers/food/deadmouse = 1,
 			/obj/item/trash/pistachios = 1,
 			/obj/item/trash/plate = 1,
 			/obj/item/trash/popcorn = 1,
@@ -130,25 +130,25 @@
 	lootcount = 3
 	lootdoubles = FALSE
 	var/soups = list(
-			/obj/item/reagent_containers/food/snacks/soup/beet,
-			/obj/item/reagent_containers/food/snacks/soup/sweetpotato,
-			/obj/item/reagent_containers/food/snacks/soup/stew,
-			/obj/item/reagent_containers/food/snacks/soup/hotchili,
-			/obj/item/reagent_containers/food/snacks/soup/nettle,
-			/obj/item/reagent_containers/food/snacks/soup/meatball)
+			/obj/item/reagent_containers/food/soup/beet,
+			/obj/item/reagent_containers/food/soup/sweetpotato,
+			/obj/item/reagent_containers/food/soup/stew,
+			/obj/item/reagent_containers/food/soup/hotchili,
+			/obj/item/reagent_containers/food/soup/nettle,
+			/obj/item/reagent_containers/food/soup/meatball)
 	var/salads = list(
-			/obj/item/reagent_containers/food/snacks/salad/herbsalad,
-			/obj/item/reagent_containers/food/snacks/salad/validsalad,
-			/obj/item/reagent_containers/food/snacks/salad/fruit,
-			/obj/item/reagent_containers/food/snacks/salad/jungle,
-			/obj/item/reagent_containers/food/snacks/salad/aesirsalad)
+			/obj/item/reagent_containers/food/salad/herbsalad,
+			/obj/item/reagent_containers/food/salad/validsalad,
+			/obj/item/reagent_containers/food/salad/fruit,
+			/obj/item/reagent_containers/food/salad/jungle,
+			/obj/item/reagent_containers/food/salad/aesirsalad)
 	var/mains = list(
-			/obj/item/reagent_containers/food/snacks/bearsteak,
-			/obj/item/reagent_containers/food/snacks/enchiladas,
-			/obj/item/reagent_containers/food/snacks/stewedsoymeat,
-			/obj/item/reagent_containers/food/snacks/burger/bigbite,
-			/obj/item/reagent_containers/food/snacks/burger/superbite,
-			/obj/item/reagent_containers/food/snacks/burger/fivealarm)
+			/obj/item/reagent_containers/food/bearsteak,
+			/obj/item/reagent_containers/food/enchiladas,
+			/obj/item/reagent_containers/food/stewedsoymeat,
+			/obj/item/reagent_containers/food/burger/bigbite,
+			/obj/item/reagent_containers/food/burger/superbite,
+			/obj/item/reagent_containers/food/burger/fivealarm)
 
 /obj/effect/spawner/lootdrop/three_course_meal/Initialize(mapload)
 	loot = list(pick(soups) = 1,pick(salads) = 1,pick(mains) = 1)
@@ -505,7 +505,7 @@
 		/obj/effect/spawner/lootdrop/cig_packs/no_turf = 10,
 		/obj/effect/spawner/lootdrop/cigars_cases/no_turf = 2,
 		/obj/effect/spawner/lootdrop/space_cash/no_turf = 5,
-		/obj/item/reagent_containers/food/snacks/grown/cannabis = 5,
+		/obj/item/food/grown/cannabis = 5,
 		/obj/item/storage/dice = 5,
 		/obj/item/toy/cards/deck = 5,
 		/obj/effect/spawner/lootdrop/druggie_pill/no_turf = 5
@@ -524,7 +524,7 @@
 		/obj/effect/spawner/lootdrop/coin/no_turf = 5,
 		/obj/effect/spawner/lootdrop/cig_packs/no_turf = 10,
 		/obj/effect/spawner/lootdrop/cigars_cases/no_turf = 5,
-		/obj/item/reagent_containers/food/snacks/grown/cannabis = 5,
+		/obj/item/food/grown/cannabis = 5,
 		/obj/item/storage/dice = 5,
 		/obj/item/toy/cards/deck = 5,
 		/obj/effect/spawner/lootdrop/druggie_pill/no_turf = 5,

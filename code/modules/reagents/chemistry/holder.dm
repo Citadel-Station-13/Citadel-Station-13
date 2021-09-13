@@ -1167,7 +1167,7 @@
 	else
 		// alternate taste is to force the taste of the atom if its a food item
 		if(my_atom && isfood(my_atom))
-			var/obj/item/reagent_containers/food/snacks/F = my_atom
+			var/obj/item/reagent_containers/food/F = my_atom
 			out = F.tastes
 
 	return english_list(out, "something indescribable")

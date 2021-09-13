@@ -226,7 +226,7 @@
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/ammo_box,
-		/obj/item/reagent_containers/food/snacks/donut,
+		/obj/item/reagent_containers/food/donut,
 		/obj/item/kitchen/knife/combat,
 		/obj/item/flashlight/seclite,
 		/obj/item/melee/classic_baton/telescopic,
@@ -377,7 +377,7 @@
 	STR.max_items = 6
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.can_hold = typecacheof(list(
-		/obj/item/reagent_containers/food/snacks,
+		/obj/item/reagent_containers/food,
 		/obj/item/reagent_containers/food/drinks
 		))
 
@@ -385,20 +385,20 @@
 	var/rig_snacks
 	while(contents.len <= amount)
 		rig_snacks = pick(list(
-		/obj/item/reagent_containers/food/snacks/candy,
+		/obj/item/reagent_containers/food/candy,
 		/obj/item/reagent_containers/food/drinks/dry_ramen,
-		/obj/item/reagent_containers/food/snacks/chips,
-		/obj/item/reagent_containers/food/snacks/sosjerky,
-		/obj/item/reagent_containers/food/snacks/syndicake,
-		/obj/item/reagent_containers/food/snacks/spacetwinkie,
-		/obj/item/reagent_containers/food/snacks/cheesiehonkers,
-		/obj/item/reagent_containers/food/snacks/nachos,
-		/obj/item/reagent_containers/food/snacks/cheesynachos,
-		/obj/item/reagent_containers/food/snacks/cubannachos,
-		/obj/item/reagent_containers/food/snacks/nugget,
-		/obj/item/reagent_containers/food/snacks/pastatomato,
-		/obj/item/reagent_containers/food/snacks/rofflewaffles,
-		/obj/item/reagent_containers/food/snacks/donkpocket,
+		/obj/item/reagent_containers/food/chips,
+		/obj/item/reagent_containers/food/sosjerky,
+		/obj/item/reagent_containers/food/syndicake,
+		/obj/item/reagent_containers/food/spacetwinkie,
+		/obj/item/reagent_containers/food/cheesiehonkers,
+		/obj/item/reagent_containers/food/nachos,
+		/obj/item/reagent_containers/food/cheesynachos,
+		/obj/item/reagent_containers/food/cubannachos,
+		/obj/item/reagent_containers/food/nugget,
+		/obj/item/reagent_containers/food/pastatomato,
+		/obj/item/reagent_containers/food/rofflewaffles,
+		/obj/item/reagent_containers/food/donkpocket,
 		/obj/item/reagent_containers/food/drinks/soda_cans/cola,
 		/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind,
 		/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb,
@@ -840,7 +840,7 @@
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash/handheld,
 		/obj/item/clothing/glasses,
-		/obj/item/reagent_containers/food/snacks/donut,
+		/obj/item/reagent_containers/food/donut,
 		/obj/item/flashlight/seclite,
 		/obj/item/radio,
 		/obj/item/clothing/gloves,

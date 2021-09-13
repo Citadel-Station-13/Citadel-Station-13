@@ -9,7 +9,7 @@
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/mammal
+	meat = /obj/item/reagent_containers/food/meat/slab/human/mutant/mammal
 	liked_food = MEAT | FRIED
 	disliked_food = TOXIC
 
@@ -27,7 +27,7 @@
 	inherent_traits = list(TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_NO_PROCESS_FOOD, TRAIT_ROBOTIC_ORGANISM)
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID|MOB_BEAST
 
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
+	meat = /obj/item/reagent_containers/food/meat/slab/human/mutant/ipc
 	gib_types = list(/obj/effect/gibspawner/ipc, /obj/effect/gibspawner/ipc/bodypartless)
 	//Just robo looking parts.
 	mutant_heart = /obj/item/organ/heart/ipc

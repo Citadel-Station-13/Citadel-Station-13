@@ -141,7 +141,7 @@
 	if(ispath(result, /obj/item/reagent_containers/food)) //not all food recipes make food objects (like cak/butterbear)
 		requested_item = result
 	else
-		requested_item = /obj/item/reagent_containers/food/snacks/copypasta
+		requested_item = /obj/item/reagent_containers/food/copypasta
 	..()
 
 //botanist
@@ -159,9 +159,9 @@
 
 
 /mob/living/carbon/human/dummy/travelling_trader/gardener/Initialize()
-	requested_item = pick(subtypesof(/obj/item/reagent_containers/food/snacks/grown) - list(/obj/item/reagent_containers/food/snacks/grown/shell,
-		/obj/item/reagent_containers/food/snacks/grown/shell/gatfruit,
-		/obj/item/reagent_containers/food/snacks/grown/cherry_bomb))
+	requested_item = pick(subtypesof(/obj/item/food/grown) - list(/obj/item/food/grown/shell,
+		/obj/item/food/grown/shell/gatfruit,
+		/obj/item/food/grown/cherry_bomb))
 	..()
 
 //animal hunter

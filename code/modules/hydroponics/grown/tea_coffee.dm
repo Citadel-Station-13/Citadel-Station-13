@@ -5,7 +5,7 @@
 	icon_state = "seed-teaaspera"
 	species = "teaaspera"
 	plantname = "Tea Aspera Plant"
-	product = /obj/item/reagent_containers/food/snacks/grown/tea
+	product = /obj/item/food/grown/tea
 	lifespan = 20
 	maturation = 5
 	production = 5
@@ -16,7 +16,7 @@
 	mutatelist = list(/obj/item/seeds/tea/astra)
 	reagents_add = list(/datum/reagent/toxin/teapowder = 0.1)
 
-/obj/item/reagent_containers/food/snacks/grown/tea
+/obj/item/food/grown/tea
 	seed = /obj/item/seeds/tea
 	name = "Tea Aspera tips"
 	desc = "These aromatic tips of the tea plant can be dried to make tea."
@@ -32,12 +32,12 @@
 	icon_state = "seed-teaastra"
 	species = "teaastra"
 	plantname = "Tea Astra Plant"
-	product = /obj/item/reagent_containers/food/snacks/grown/tea/astra
+	product = /obj/item/food/grown/tea/astra
 	mutatelist = list(/obj/item/seeds/tea/catnip)
 	reagents_add = list(/datum/reagent/medicine/synaptizine = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/toxin/teapowder = 0.1)
 	rarity = 20
 
-/obj/item/reagent_containers/food/snacks/grown/tea/astra
+/obj/item/food/grown/tea/astra
 	seed = /obj/item/seeds/tea/astra
 	name = "Tea Astra tips"
 	icon_state = "tea_astra_leaves"
@@ -55,11 +55,11 @@
 	icon_grow = "catnip-grow"
 	icon_harvest = "catnip-harvest"
 	icon_dead = "tea-dead"
-	product = /obj/item/reagent_containers/food/snacks/grown/tea/catnip
+	product = /obj/item/food/grown/tea/catnip
 	reagents_add = list(/datum/reagent/pax/catnip = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.06, /datum/reagent/toxin/teapowder = 0.3)
 	rarity = 50
 
-/obj/item/reagent_containers/food/snacks/grown/tea/catnip
+/obj/item/food/grown/tea/catnip
 	seed = /obj/item/seeds/tea/catnip
 	name = "Catnip buds"
 	icon_state = "catnip"
@@ -73,7 +73,7 @@
 	icon_state = "seed-coffeea"
 	species = "coffeea"
 	plantname = "Coffee Arabica Bush"
-	product = /obj/item/reagent_containers/food/snacks/grown/coffee
+	product = /obj/item/food/grown/coffee
 	lifespan = 30
 	endurance = 20
 	maturation = 5
@@ -86,7 +86,7 @@
 	mutatelist = list(/obj/item/seeds/coffee/robusta)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/toxin/coffeepowder = 0.1)
 
-/obj/item/reagent_containers/food/snacks/grown/coffee
+/obj/item/food/grown/coffee
 	seed = /obj/item/seeds/coffee
 	name = "coffee arabica beans"
 	desc = "Dry them out to make coffee."
@@ -104,12 +104,12 @@
 	icon_state = "seed-coffeer"
 	species = "coffeer"
 	plantname = "Coffee Robusta Bush"
-	product = /obj/item/reagent_containers/food/snacks/grown/coffee/robusta
+	product = /obj/item/food/grown/coffee/robusta
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/medicine/ephedrine = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/toxin/coffeepowder = 0.1)
 	rarity = 20
 
-/obj/item/reagent_containers/food/snacks/grown/coffee/robusta
+/obj/item/food/grown/coffee/robusta
 	seed = /obj/item/seeds/coffee/robusta
 	name = "coffee robusta beans"
 	desc = "Increases robustness by 37 percent!"

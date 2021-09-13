@@ -5,7 +5,7 @@
 	icon_state = "seed-peach"
 	species = "peach"
 	plantname = "Peach Tree"
-	product = /obj/item/reagent_containers/food/snacks/grown/peach
+	product = /obj/item/food/grown/peach
 	lifespan = 65
 	endurance = 40
 	yield = 3
@@ -15,7 +15,7 @@
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 
-/obj/item/reagent_containers/food/snacks/grown/peach
+/obj/item/food/grown/peach
 	seed = /obj/item/seeds/peach
 	name = "peach"
 	desc = "It's fuzzy!"

@@ -26,15 +26,15 @@
 	name = "Burger Combo #2"
 	desc = "We value our customers at the Greasy Griddle, so much so that we're willing to deliver -just for you.- This combo meal contains two burgers, a soda, fries, a toy, and some chicken nuggets."
 	cost = 3200
-	contains = list(/obj/item/reagent_containers/food/snacks/burger/bigbite,
-					/obj/item/reagent_containers/food/snacks/burger/cheese,
-					/obj/item/reagent_containers/food/snacks/fries,
+	contains = list(/obj/item/reagent_containers/food/burger/bigbite,
+					/obj/item/reagent_containers/food/burger/cheese,
+					/obj/item/reagent_containers/food/fries,
 					/obj/item/reagent_containers/food/condiment/pack/ketchup,
 					/obj/item/reagent_containers/food/condiment/pack/ketchup,
-					/obj/item/reagent_containers/food/snacks/nugget,
-					/obj/item/reagent_containers/food/snacks/nugget,
-					/obj/item/reagent_containers/food/snacks/nugget,
-					/obj/item/reagent_containers/food/snacks/nugget,
+					/obj/item/reagent_containers/food/nugget,
+					/obj/item/reagent_containers/food/nugget,
+					/obj/item/reagent_containers/food/nugget,
+					/obj/item/reagent_containers/food/nugget,
 					/obj/item/toy/plush/random)
 	crate_name = "combo meal w/toy"
 	crate_type = /obj/structure/closet/crate/wooden
@@ -44,30 +44,30 @@
 	desc = "For people that have an insatiable sweet tooth! Has ten candies to be eaten up.."
 	cost = 2500
 	num_contained = 10
-	contains = list(/obj/item/reagent_containers/food/snacks/candy,
-					/obj/item/reagent_containers/food/snacks/lollipop,
-					/obj/item/reagent_containers/food/snacks/gumball,
-					/obj/item/reagent_containers/food/snacks/chocolateegg,
-					/obj/item/reagent_containers/food/snacks/donut,
-					/obj/item/reagent_containers/food/snacks/cookie,
-					/obj/item/reagent_containers/food/snacks/sugarcookie,
-					/obj/item/reagent_containers/food/snacks/chococornet,
-					/obj/item/reagent_containers/food/snacks/mint,
-					/obj/item/reagent_containers/food/snacks/spiderlollipop,
-					/obj/item/reagent_containers/food/snacks/chococoin,
-					/obj/item/reagent_containers/food/snacks/fudgedice,
-					/obj/item/reagent_containers/food/snacks/chocoorange,
-					/obj/item/reagent_containers/food/snacks/honeybar,
-					/obj/item/reagent_containers/food/snacks/tinychocolate,
-					/obj/item/reagent_containers/food/snacks/spacetwinkie,
-					/obj/item/reagent_containers/food/snacks/syndicake,
-					/obj/item/reagent_containers/food/snacks/cheesiehonkers,
-					/obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull,
-					/obj/item/reagent_containers/food/snacks/sugarcookie/spookycoffin,
-					/obj/item/reagent_containers/food/snacks/candy_corn,
-					/obj/item/reagent_containers/food/snacks/candiedapple,
-					/obj/item/reagent_containers/food/snacks/chocolatebar,
-					/obj/item/reagent_containers/food/snacks/candyheart,
+	contains = list(/obj/item/reagent_containers/food/candy,
+					/obj/item/reagent_containers/food/lollipop,
+					/obj/item/reagent_containers/food/gumball,
+					/obj/item/reagent_containers/food/chocolateegg,
+					/obj/item/reagent_containers/food/donut,
+					/obj/item/reagent_containers/food/cookie,
+					/obj/item/reagent_containers/food/sugarcookie,
+					/obj/item/reagent_containers/food/chococornet,
+					/obj/item/reagent_containers/food/mint,
+					/obj/item/reagent_containers/food/spiderlollipop,
+					/obj/item/reagent_containers/food/chococoin,
+					/obj/item/reagent_containers/food/fudgedice,
+					/obj/item/reagent_containers/food/chocoorange,
+					/obj/item/reagent_containers/food/honeybar,
+					/obj/item/reagent_containers/food/tinychocolate,
+					/obj/item/reagent_containers/food/spacetwinkie,
+					/obj/item/reagent_containers/food/syndicake,
+					/obj/item/reagent_containers/food/cheesiehonkers,
+					/obj/item/reagent_containers/food/sugarcookie/spookyskull,
+					/obj/item/reagent_containers/food/sugarcookie/spookycoffin,
+					/obj/item/reagent_containers/food/candy_corn,
+					/obj/item/reagent_containers/food/candiedapple,
+					/obj/item/reagent_containers/food/chocolatebar,
+					/obj/item/reagent_containers/food/candyheart,
 					/obj/item/storage/fancy/heart_box,
 					/obj/item/storage/fancy/donut_box)
 	crate_name = "candy crate"
@@ -79,14 +79,14 @@
 	contains = list(/obj/item/clothing/head/sombrero,
 					/obj/item/clothing/suit/hooded/cloak/david,
 					/obj/item/clothing/mask/fakemoustache,
-					/obj/item/reagent_containers/food/snacks/taco,
-					/obj/item/reagent_containers/food/snacks/taco,
-					/obj/item/reagent_containers/food/snacks/taco/plain,
-					/obj/item/reagent_containers/food/snacks/taco/plain,
-					/obj/item/reagent_containers/food/snacks/enchiladas,
-					/obj/item/reagent_containers/food/snacks/enchiladas,
-					/obj/item/reagent_containers/food/snacks/carneburrito,
-					/obj/item/reagent_containers/food/snacks/cheesyburrito,
+					/obj/item/reagent_containers/food/taco,
+					/obj/item/reagent_containers/food/taco,
+					/obj/item/reagent_containers/food/taco/plain,
+					/obj/item/reagent_containers/food/taco/plain,
+					/obj/item/reagent_containers/food/enchiladas,
+					/obj/item/reagent_containers/food/enchiladas,
+					/obj/item/reagent_containers/food/carneburrito,
+					/obj/item/reagent_containers/food/cheesyburrito,
 					/obj/item/reagent_containers/glass/bottle/capsaicin,
 					/obj/item/reagent_containers/glass/bottle/capsaicin)
 	crate_name = "fiesta crate"
@@ -146,32 +146,32 @@
 					/obj/item/storage/fancy/egg_box,
 					/obj/item/reagent_containers/food/condiment/enzyme,
 					/obj/item/reagent_containers/food/condiment/sugar,
-					/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
-					/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
-					/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
-					/obj/item/reagent_containers/food/snacks/grown/banana,
-					/obj/item/reagent_containers/food/snacks/grown/banana,
-					/obj/item/reagent_containers/food/snacks/grown/banana)
+					/obj/item/reagent_containers/food/meat/slab/monkey,
+					/obj/item/reagent_containers/food/meat/slab/monkey,
+					/obj/item/reagent_containers/food/meat/slab/monkey,
+					/obj/item/food/grown/banana,
+					/obj/item/food/grown/banana,
+					/obj/item/food/grown/banana)
 	crate_name = "food crate"
 
 /datum/supply_pack/organic/randomized/fruits
 	name = "Fruit Crate"
 	desc = "Rich in vitamins and possibly sugar. Contains 15 assorted fruits."
 	cost = 1500
-	contains = list(/obj/item/reagent_containers/food/snacks/grown/citrus/lime,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
-					/obj/item/reagent_containers/food/snacks/grown/banana,
-					/obj/item/reagent_containers/food/snacks/grown/watermelon,
-					/obj/item/reagent_containers/food/snacks/grown/apple,
-					/obj/item/reagent_containers/food/snacks/grown/berries,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
-					/obj/item/reagent_containers/food/snacks/grown/pineapple,
-					/obj/item/reagent_containers/food/snacks/grown/cherries,
-					/obj/item/reagent_containers/food/snacks/grown/grapes,
-					/obj/item/reagent_containers/food/snacks/grown/grapes/green,
-					/obj/item/reagent_containers/food/snacks/grown/eggplant,
-					/obj/item/reagent_containers/food/snacks/grown/peach,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry)
+	contains = list(/obj/item/food/grown/citrus/lime,
+					/obj/item/food/grown/citrus/orange,
+					/obj/item/food/grown/banana,
+					/obj/item/food/grown/watermelon,
+					/obj/item/food/grown/apple,
+					/obj/item/food/grown/berries,
+					/obj/item/food/grown/citrus/lemon,
+					/obj/item/food/grown/pineapple,
+					/obj/item/food/grown/cherries,
+					/obj/item/food/grown/grapes,
+					/obj/item/food/grown/grapes/green,
+					/obj/item/food/grown/eggplant,
+					/obj/item/food/grown/peach,
+					/obj/item/food/grown/strawberry)
 	crate_name = "fruit crate"
 
 /datum/supply_pack/organic/cream_piee
@@ -188,16 +188,16 @@
 	name = "Meat Crate (Exotic)"
 	desc = "The best cuts in the whole galaxy. Contains 15 assorted exotic meats."
 	cost = 2000
-	contains = list(/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime,
-					/obj/item/reagent_containers/food/snacks/meat/slab/killertomato,
-					/obj/item/reagent_containers/food/snacks/meat/slab/bear,
-					/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
-					/obj/item/reagent_containers/food/snacks/meat/slab/spider,
-					/obj/item/reagent_containers/food/snacks/spidereggs,
-					/obj/item/reagent_containers/food/snacks/meat/rawcrab,
-					/obj/item/reagent_containers/food/snacks/spiderleg,
-					/obj/item/reagent_containers/food/snacks/carpmeat,
-					/obj/item/reagent_containers/food/snacks/meat/slab/human)
+	contains = list(/obj/item/reagent_containers/food/meat/slab/human/mutant/slime,
+					/obj/item/reagent_containers/food/meat/slab/killertomato,
+					/obj/item/reagent_containers/food/meat/slab/bear,
+					/obj/item/reagent_containers/food/meat/slab/xeno,
+					/obj/item/reagent_containers/food/meat/slab/spider,
+					/obj/item/reagent_containers/food/spidereggs,
+					/obj/item/reagent_containers/food/meat/rawcrab,
+					/obj/item/reagent_containers/food/spiderleg,
+					/obj/item/reagent_containers/food/carpmeat,
+					/obj/item/reagent_containers/food/meat/slab/human)
 	crate_name = "exotic meat crate"
 
 /datum/supply_pack/organic/monkeydripmeat
@@ -205,7 +205,7 @@
 	desc = "Need some meat? With this do-it-yourself kit you'll be swimming in it! Contains a monkey cube, an IV drip, and some cryoxadone!"
 	cost = 2150
 	contraband = TRUE
-	contains = list(/obj/item/reagent_containers/food/snacks/cube/monkey,
+	contains = list(/obj/item/reagent_containers/food/cube/monkey,
 					/obj/item/restraints/handcuffs/cable,
 					/obj/machinery/iv_drip,
 					/obj/item/reagent_containers/glass/beaker/cryoxadone,
@@ -216,22 +216,22 @@
 	name = "Meat Crate 'Synthetic'"
 	desc = "Run outta meat already? Keep the lizards content with this freezer filled with cruelty-free chemically compounded meat! Contains 12 slabs of meat product, and 4 slabs of *carp*."
 	cost = 1200 // Buying 3 food crates nets you 9 meat for 900 points, plus like, 6 bags of rice, flour, and egg boxes. This is 12 for 500, but you -only- get meat and carp.
-	contains = list(/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
-					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
-					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
-					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
-					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
-					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
-					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
-					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
-					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
-					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
-					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
-					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
-					/obj/item/reagent_containers/food/snacks/carpmeat/imitation,
-					/obj/item/reagent_containers/food/snacks/carpmeat/imitation,
-					/obj/item/reagent_containers/food/snacks/carpmeat/imitation,
-					/obj/item/reagent_containers/food/snacks/carpmeat/imitation)
+	contains = list(/obj/item/reagent_containers/food/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/carpmeat/imitation,
+					/obj/item/reagent_containers/food/carpmeat/imitation,
+					/obj/item/reagent_containers/food/carpmeat/imitation,
+					/obj/item/reagent_containers/food/carpmeat/imitation)
 	crate_name = "meaty crate"
 	crate_type = /obj/structure/closet/crate/freezer
 
@@ -250,14 +250,14 @@
 	name = "Vegetable Crate"
 	desc = "Grown in vats. Contains 15 assorted vegetables."
 	cost = 1300
-	contains = list(/obj/item/reagent_containers/food/snacks/grown/chili,
-					/obj/item/reagent_containers/food/snacks/grown/corn,
-					/obj/item/reagent_containers/food/snacks/grown/tomato,
-					/obj/item/reagent_containers/food/snacks/grown/potato,
-					/obj/item/reagent_containers/food/snacks/grown/carrot,
-					/obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle,
-					/obj/item/reagent_containers/food/snacks/grown/onion,
-					/obj/item/reagent_containers/food/snacks/grown/pumpkin)
+	contains = list(/obj/item/food/grown/chili,
+					/obj/item/food/grown/corn,
+					/obj/item/food/grown/tomato,
+					/obj/item/food/grown/potato,
+					/obj/item/food/grown/carrot,
+					/obj/item/food/grown/mushroom/chanterelle,
+					/obj/item/food/grown/onion,
+					/obj/item/food/grown/pumpkin)
 	crate_name = "veggie crate"
 
 //////////////////////////////////////////////////////////////////////////////
@@ -401,14 +401,14 @@
 	contraband = TRUE
 	contains = list(/obj/item/storage/fancy/heart_box,
 					/obj/item/storage/fancy/heart_box,
-					/obj/item/reagent_containers/food/snacks/grown/poppy,
-					/obj/item/reagent_containers/food/snacks/grown/poppy,
-					/obj/item/reagent_containers/food/snacks/grown/poppy,
-					/obj/item/reagent_containers/food/snacks/candyheart,
-					/obj/item/reagent_containers/food/snacks/candyheart,
-					/obj/item/reagent_containers/food/snacks/candyheart,
-					/obj/item/reagent_containers/food/snacks/candyheart,
-					/obj/item/reagent_containers/food/snacks/candyheart,
+					/obj/item/food/grown/poppy,
+					/obj/item/food/grown/poppy,
+					/obj/item/food/grown/poppy,
+					/obj/item/reagent_containers/food/candyheart,
+					/obj/item/reagent_containers/food/candyheart,
+					/obj/item/reagent_containers/food/candyheart,
+					/obj/item/reagent_containers/food/candyheart,
+					/obj/item/reagent_containers/food/candyheart,
 					/obj/item/valentine,
 					/obj/item/valentine,
 					/obj/item/valentine)

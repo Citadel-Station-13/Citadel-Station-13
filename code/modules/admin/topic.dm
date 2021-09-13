@@ -2202,15 +2202,15 @@
 			return
 		//let's keep it simple
 		//milk to plasmemes and skeletons, meat to lizards, electricity bars to ethereals, cookies to everyone else
-		var/cookiealt = /obj/item/reagent_containers/food/snacks/cookie
+		var/cookiealt = /obj/item/reagent_containers/food/cookie
 		if(isskeleton(H))
 			cookiealt = /obj/item/reagent_containers/food/condiment/milk
 		else if(isplasmaman(H))
 			cookiealt = /obj/item/reagent_containers/food/condiment/milk
 		else if(isethereal(H))
-			cookiealt = /obj/item/reagent_containers/food/snacks/energybar
+			cookiealt = /obj/item/reagent_containers/food/energybar
 		else if(islizard(H))
-			cookiealt = /obj/item/reagent_containers/food/snacks/meat/slab
+			cookiealt = /obj/item/reagent_containers/food/meat/slab
 		var/obj/item/cookie = new cookiealt(H)
 		if(H.put_in_hands(cookie))
 			H.update_inv_hands()

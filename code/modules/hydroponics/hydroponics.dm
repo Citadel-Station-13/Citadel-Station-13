@@ -486,9 +486,9 @@
 		var/visi_msg = ""
 		var/transfer_amount
 
-		if(istype(reagent_source, /obj/item/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/reagent_containers/pill))
-			if(istype(reagent_source, /obj/item/reagent_containers/food/snacks))
-				var/obj/item/reagent_containers/food/snacks/R = reagent_source
+		if(istype(reagent_source, /obj/item/reagent_containers/food) || istype(reagent_source, /obj/item/reagent_containers/pill))
+			if(istype(reagent_source, /obj/item/reagent_containers/food))
+				var/obj/item/reagent_containers/food/R = reagent_source
 				if (R.trash)
 					R.generate_trash(get_turf(user))
 			visi_msg="[user] composts [reagent_source], spreading it through [target]"
@@ -516,7 +516,7 @@
 				H.adjustWater(round(water_amt))
 				reagent_source.reagents.remove_reagent(/datum/reagent/water, water_amt)
 			reagent_source.reagents.trans_to(H.reagents, transfer_amount)
-			if(istype(reagent_source, /obj/item/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/reagent_containers/pill))
+			if(istype(reagent_source, /obj/item/reagent_containers/food) || istype(reagent_source, /obj/item/reagent_containers/pill))
 				qdel(reagent_source)
 				lastuser = user
 				H.update_icon()
@@ -582,7 +582,7 @@
 
 	else if(istype(O, /obj/item/storage/bag/plants))
 		attack_hand(user)
-		for(var/obj/item/reagent_containers/food/snacks/grown/G in locate(user.x,user.y,user.z))
+		for(var/obj/item/food/grown/G in locate(user.x,user.y,user.z))
 			SEND_SIGNAL(O, COMSIG_TRY_STORAGE_INSERT, G, user, TRUE)
 
 	else if(default_unfasten_wrench(user, O))

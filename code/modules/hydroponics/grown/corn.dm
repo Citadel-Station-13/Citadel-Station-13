@@ -5,7 +5,7 @@
 	icon_state = "seed-corn"
 	species = "corn"
 	plantname = "Corn Stalks"
-	product = /obj/item/reagent_containers/food/snacks/grown/corn
+	product = /obj/item/food/grown/corn
 	maturation = 8
 	potency = 20
 	instability = 50 // Corn used to be wheatgrass, but through generations of selective cultivation...
@@ -16,12 +16,12 @@
 	mutatelist = list(/obj/item/seeds/corn/snapcorn)
 	reagents_add = list(/datum/reagent/consumable/cornoil = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 
-/obj/item/reagent_containers/food/snacks/grown/corn
+/obj/item/food/grown/corn
 	seed = /obj/item/seeds/corn
 	name = "ear of corn"
 	desc = "Needs some butter!"
 	icon_state = "corn"
-	cooked_type = /obj/item/reagent_containers/food/snacks/popcorn
+	cooked_type = /obj/item/reagent_containers/food/popcorn
 	filling_color = "#FFFF00"
 	trash = /obj/item/grown/corncob
 	bitesize_mod = 2

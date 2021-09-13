@@ -14,7 +14,7 @@
 	see_in_dark = 6
 	maxHealth = 5
 	health = 5
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/meat/slab = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -50,7 +50,7 @@
 	if(!ckey)
 		..(1)
 		if(!gibbed)
-			var/obj/item/reagent_containers/food/snacks/deadmouse/M = new(loc)
+			var/obj/item/reagent_containers/food/deadmouse/M = new(loc)
 			M.icon_state = icon_dead
 			M.name = name
 			if(toast)
@@ -66,7 +66,7 @@
 		if(!stat)
 			var/mob/M = AM
 			to_chat(M, "<span class='notice'>[icon2html(src, M)] Squeak!</span>")
-	if(istype(AM, /obj/item/reagent_containers/food/snacks/royalcheese))
+	if(istype(AM, /obj/item/reagent_containers/food/royalcheese))
 		evolve()
 		qdel(AM)
 	..()
@@ -89,12 +89,12 @@
 					C.deconstruct()
 					visible_message("<span class='warning'>[src] chews through the [C].</span>")
 
-	for(var/obj/item/reagent_containers/food/snacks/cheesewedge/cheese in range(1, src))
+	for(var/obj/item/reagent_containers/food/cheesewedge/cheese in range(1, src))
 		if(prob(10))
 			be_fruitful()
 			qdel(cheese)
 			return
-	for(var/obj/item/reagent_containers/food/snacks/royalcheese/bigcheese in range(1, src))
+	for(var/obj/item/reagent_containers/food/royalcheese/bigcheese in range(1, src))
 		qdel(bigcheese)
 		evolve()
 		return
@@ -172,7 +172,7 @@ GLOBAL_VAR(tom_existed)
 	. = ..()
 	GLOB.tom_existed = TRUE
 
-/obj/item/reagent_containers/food/snacks/deadmouse
+/obj/item/reagent_containers/food/deadmouse
 	name = "dead mouse"
 	desc = "It looks like somebody dropped the bass on it. A lizard's favorite meal."
 	icon = 'icons/mob/animal.dmi'
@@ -183,7 +183,7 @@ GLOBAL_VAR(tom_existed)
 	foodtype = GROSS | MEAT | RAW
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
 
-/obj/item/reagent_containers/food/snacks/deadmouse/on_grind()
+/obj/item/reagent_containers/food/deadmouse/on_grind()
 	reagents.clear_reagents()
 
 /mob/living/simple_animal/mouse/proc/miasma(datum/gas_mixture/environment, check_temp = FALSE)

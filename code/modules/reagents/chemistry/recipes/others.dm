@@ -173,7 +173,7 @@
 /datum/chemical_reaction/meatification/on_reaction(datum/reagents/holder, multiplier)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= multiplier, i++)
-		new /obj/item/reagent_containers/food/snacks/meat/slab/meatproduct(location)
+		new /obj/item/reagent_containers/food/meat/slab/meatproduct(location)
 	return
 
 /datum/chemical_reaction/carbondioxide
@@ -745,7 +745,7 @@
 	name = "slimejelly"
 	results = list(/datum/reagent/toxin/slimejelly = 5)
 	required_reagents = list(/datum/reagent/oil = 3, /datum/reagent/radium = 2, /datum/reagent/consumable/tinlux = 1)
-	required_container = /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom
+	required_container = /obj/item/food/grown/mushroom/glowshroom
 	mix_message = "The mushroom's insides bubble and pop and it becomes very limp."
 
 /datum/chemical_reaction/slime_extractification

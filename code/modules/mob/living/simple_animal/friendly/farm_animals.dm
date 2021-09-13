@@ -12,7 +12,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 4)
+	butcher_results = list(/obj/item/reagent_containers/food/meat/slab = 4)
 	response_help_continuous  = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -125,7 +125,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 6)
+	butcher_results = list(/obj/item/reagent_containers/food/meat/slab = 6)
 	response_help_continuous  = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -205,7 +205,7 @@
 /mob/living/simple_animal/cow/wisdom
 	name = "wisdom cow"
 	desc = "Known for its wisdom, shares it with all"
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/wisdomcow = 1) //truly the best meat
+	butcher_results = list(/obj/item/reagent_containers/food/meat/slab/wisdomcow = 1) //truly the best meat
 	gold_core_spawnable = FALSE
 	speak_chance = 10 //the cow is eager to share its wisdom! //but is wise enough to not lag  the server too bad
 	milk_reagent = /datum/reagent/medicine/liquid_wisdom
@@ -230,7 +230,7 @@
 	density = FALSE
 	speak_chance = 2
 	turns_per_move = 2
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/chicken = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/meat/slab/chicken = 1)
 	response_help_continuous  = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -283,9 +283,9 @@
 	density = FALSE
 	speak_chance = 2
 	turns_per_move = 3
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/chicken = 2)
-	var/egg_type = /obj/item/reagent_containers/food/snacks/egg
-	var/food_type = /obj/item/reagent_containers/food/snacks/grown/wheat
+	butcher_results = list(/obj/item/reagent_containers/food/meat/slab/chicken = 2)
+	var/egg_type = /obj/item/reagent_containers/food/egg
+	var/food_type = /obj/item/food/grown/wheat
 	response_help_continuous  = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -352,8 +352,8 @@
 			if(chicken_count < MAX_CHICKENS && prob(25))
 				START_PROCESSING(SSobj, E)
 
-/obj/item/reagent_containers/food/snacks/egg/var/amount_grown = 0
-/obj/item/reagent_containers/food/snacks/egg/process()
+/obj/item/reagent_containers/food/egg/var/amount_grown = 0
+/obj/item/reagent_containers/food/egg/process()
 	if(isturf(loc))
 		amount_grown += rand(1,2)
 		if(amount_grown >= 100)
@@ -380,9 +380,9 @@
 	density = FALSE
 	speak_chance = 2
 	turns_per_move = 3
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 3)
-	var/egg_type = /obj/item/reagent_containers/food/snacks/egg/kiwiEgg
-	var/food_type = /obj/item/reagent_containers/food/snacks/grown/wheat
+	butcher_results = list(/obj/item/reagent_containers/food/meat/slab = 3)
+	var/egg_type = /obj/item/reagent_containers/food/egg/kiwiEgg
+	var/food_type = /obj/item/food/grown/wheat
 	response_help_continuous  = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -427,7 +427,7 @@
 			if(kiwi_count < MAX_CHICKENS && prob(25))
 				START_PROCESSING(SSobj, E)
 
-/obj/item/reagent_containers/food/snacks/egg/kiwiEgg/process()
+/obj/item/reagent_containers/food/egg/kiwiEgg/process()
 	if(isturf(loc))
 		amount_grown += rand(1,2)
 		if(amount_grown >= 100)
@@ -464,7 +464,7 @@
 	density = FALSE
 	speak_chance = 2
 	turns_per_move = 2
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
+	butcher_results = list(/obj/item/reagent_containers/food/meat/slab = 2)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -498,7 +498,7 @@
 			new /mob/living/simple_animal/kiwi(src.loc)
 			qdel(src)
 
-/obj/item/reagent_containers/food/snacks/egg/kiwiEgg
+/obj/item/reagent_containers/food/egg/kiwiEgg
 	name = "kiwi egg"
 	desc = "A slightly bigger egg!"
 	icon_state = "kiwiegg"
@@ -543,7 +543,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 3)
+	butcher_results = list(/obj/item/reagent_containers/food/meat/slab = 3)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently nudges"

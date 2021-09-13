@@ -88,10 +88,10 @@ GLOBAL_LIST_INIT(dildo_colors, list(//mostly neon colors
 		))
 
 GLOBAL_LIST_INIT(meat_types, list(
-	"Mammalian" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/mammal,
-	"Aquatic" = /obj/item/reagent_containers/food/snacks/carpmeat/aquatic,
-	"Avian" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/avian,
-	"Insect" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/insect))
+	"Mammalian" = /obj/item/food/meat/slab/human/mutant/mammal,
+	"Aquatic" = /obj/item/food/carpmeat/aquatic,
+	"Avian" = /obj/item/food/meat/slab/human/mutant/avian,
+	"Insect" = /obj/item/food/meat/slab/human/mutant/insect))
 
 //Crew objective and miscreants stuff
 GLOBAL_VAR_INIT(miscreants_allowed, FALSE)

@@ -5,7 +5,7 @@
 	icon_state = "seed-peas"
 	species = "peas"
 	plantname = "Pea Vines"
-	product = /obj/item/reagent_containers/food/snacks/grown/peas
+	product = /obj/item/food/grown/peas
 	maturation = 3
 	potency = 25
 	instability = 15
@@ -16,9 +16,9 @@
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/peas/laugh) // TODO: Add /obj/item/seeds/peas/shoot at a later date, for the peashooter mutation line
 	reagents_add = list (/datum/reagent/consumable/nutriment/vitamin = 0.1, /datum/reagent/consumable/nutriment = 0.05, /datum/reagent/water = 0.05)
-	
 
-/obj/item/reagent_containers/food/snacks/grown/peas
+
+/obj/item/food/grown/peas
 	seed = /obj/item/seeds/peas
 	name = "peapod"
 	desc = "Finally... peas."
@@ -39,7 +39,7 @@
 	icon_state = "seed-laughpeas"
 	species = "laughpeas"
 	plantname = "Laughin' Peas"
-	product = /obj/item/reagent_containers/food/snacks/grown/laugh
+	product = /obj/item/food/grown/laugh
 	maturation = 7
 	potency = 10
 	yield = 7
@@ -54,7 +54,7 @@
 	rarity = 25 //It actually might make Central Command Officials loosen up a smidge, eh?
 
 
-/obj/item/reagent_containers/food/snacks/grown/laugh
+/obj/item/food/grown/laugh
 	seed = /obj/item/seeds/peas/laugh
 	name = "pod of laughin' peas"
 	desc = "Ridens Cicer, guaranteed to improve your mood dramatically upon consumption!"
@@ -75,7 +75,7 @@
 	icon_state = "seed-worldpeas"
 	species = "worldpeas"
 	plantname = "World Peas"
-	product = /obj/item/reagent_containers/food/snacks/grown/peace
+	product = /obj/item/food/grown/peace
 	maturation = 20
 	potency = 75
 	yield = 1
@@ -90,7 +90,7 @@
 	rarity = 50 // This absolutely will make even the most hardened Syndicate Operators relax, and lay down their arms.
 
 
-/obj/item/reagent_containers/food/snacks/grown/peace
+/obj/item/food/grown/peace
 	seed = /obj/item/seeds/peas/laugh/peace
 	name = "cluster of world peas"
 	desc = "A plant discovered through extensive genetic engineering, and iterative graft work. It's rumored to bring peace to any who consume it. In the wider AgSci community, it's attained the nickname of 'Pax Mundi'." //at last... world peas. I'm not sorry.
