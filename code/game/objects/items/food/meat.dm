@@ -672,6 +672,13 @@
 /obj/item/food/meat/slab/human/mutant/lizard/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/human/lizard, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
 
+/obj/item/food/meat/slab/human/mutant/insect
+	icon_state = "mothmeat"
+	desc = "Unpleasantly powdery and dry. Kind of pretty, though."
+	filling_color = "#BF896B"
+	tastes = list("dust" = 1, "powder" = 1, "meat" = 2)
+	foodtype = MEAT | RAW
+
 /obj/item/food/meat/slab/human/mutant/plant
 	icon_state = "plantmeat"
 	desc = "All the joys of healthy eating with all the fun of cannibalism."
