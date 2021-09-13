@@ -83,7 +83,7 @@ As the AI, you can quickly open and close doors by holding shift while clicking 
 As the AI, you can take pictures with your camera and upload them to newscasters. Cyborgs also share from this pool of pictures.
 As a Cyborg, choose your module carefully, as only having your reset wire cut and mended by someone capable of manipulation will let you repick it. If possible, refrain from choosing a module until a situation that requires one occurs.
 As a Cyborg, you are immune to most forms of stuns, and excel at almost everything far better than humans. However, both flashes and EMPs can easily stunlock you and you fall short in performing most complex tasks involving hands.
-As a Cyborg, you are impervious to fires and heat. If you are feeling malfunction, you can release plasma fires all over and walk through them without a care in the world!
+As a Cyborg, you are impervious to fires and heat. If you are feeling malfunctional, you can release plasma fires all over and walk through them without a care in the world!
 As a Cyborg, you are extremely vulnerable to EMPs as EMPs both stun you and damage you. The ion rifle in the armory or a traitor with an EMP kit can kill you in seconds.
 As a Service Cyborg, your spray can knocks people down. However, it is blocked by gas masks.
 As an Engineering Cyborg, you can attach air alarm/fire alarm/APC frames to walls by placing them on the floor and using a screwdriver on them. Alternatively, you can use your manipulator to show those organics who's boss to perform other basic tasks such as removing cells from APCs or inserting plasma canisters into radiation collectors.
