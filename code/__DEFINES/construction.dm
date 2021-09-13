@@ -92,6 +92,7 @@
 #define CAT_CAKE	"Cakes"
 #define CAT_DONUT	"Donuts"
 #define CAT_EGG	"Egg-Based Food"
+#define CAT_LIZARD "Lizard Food"
 #define CAT_MEAT	"Meats"
 #define CAT_MEXICAN	"Mexican"
 #define CAT_MISCFOOD	"Misc. Food"
@@ -104,6 +105,7 @@
 #define CAT_SOUP	"Soups"
 #define CAT_SPAGHETTI	"Spaghettis"
 #define CAT_ICE	"Frozen"
+#define CAT_DRINK "Drinks"
 
 #define RCD_FLOORWALL 1
 #define RCD_AIRLOCK 2
