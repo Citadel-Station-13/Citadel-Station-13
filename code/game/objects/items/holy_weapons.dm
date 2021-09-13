@@ -780,17 +780,8 @@
 	if(iscarbon(loc))
 		var/mob/living/carbon/wielder = loc
 		if(wielder.is_holding(src))
-			var/datum/movespeed_modifier/M = wielder.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/item/arrythmic_knife,
-			update = FALSE,
-			multiplicative_slowdown = 
-				pick(
-					-10,
-					-10,
-					0,
-					((10 / max(wielder.cached_multiplicative_movespeed, world.tick_lag) - 2) / 10),
-					((10 / max(wielder.cached_multiplicative_movespeed, world.tick_lag) - 4) / 10)
-				)
-			)
+			var/current_tiles = 10 / max(wielder.cached_multiplicative_movespeed, world.tick_lag)
+			var/datum/movespeed_modifier/M = wielder.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/item/arrythmic_knife, update = FALSE, multiplicative_slowdown = pick(-10, -10, 0, (current_tiles - 2) / 10, (current_tiles - 4) / 10))
 			M.max_tiles_per_second_boost = pick(3, 6)
 			wielder.update_movespeed()		// update movespeed manually
 
