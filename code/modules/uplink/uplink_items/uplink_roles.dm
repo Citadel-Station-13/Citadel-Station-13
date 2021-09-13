@@ -191,6 +191,14 @@
 	restricted_roles = list("Cook", "Janitor")
 	item = /obj/item/ammo_box/magazine/m45/kitchengun
 
+/datum/uplink_item/role_restricted/meat_hook
+	name = "Meat Hook"
+	desc = "A meat hook on a chain.  Perfect to pull people into the kitchen and CQC them!"
+	cost = 10
+	surplus = 40
+	restricted_roles = list("Cook")
+	item = /obj/item/gun/magic/hook
+
 /datum/uplink_item/role_restricted/magillitis_serum
 	name = "Magillitis Serum Autoinjector"
 	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. \
