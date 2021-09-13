@@ -347,3 +347,5 @@
 
 /// obtained from mapping helper
 #define MAPPING_HELPER_TRAIT "mapping-helper"
+/// Trait associated with mafia
+#define MAFIA_TRAIT "mafia"
