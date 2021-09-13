@@ -776,7 +776,7 @@
 /obj/item/nullrod/tribal_knife/process()
 	reroll()
 
-/obj/item/nullrod/tribal_knife
+/obj/item/nullrod/tribal_knife/proc/reroll()
 	if(iscarbon(loc))
 		var/mob/living/carbon/wielder = loc
 		if(wielder.is_holding(src))
