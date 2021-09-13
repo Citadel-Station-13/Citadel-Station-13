@@ -70,7 +70,7 @@
 					/obj/item/clothing/head/fedora = 2,
 					/obj/item/clothing/gloves/color/black = 2,
 					/obj/item/clothing/gloves/color/latex = 2,
-					/obj/item/food/drinks/flask/det = 2,
+					/obj/item/food/reagent_containers/drinks/flask/det = 2,
 					/obj/item/storage/fancy/cigarettes = 5)
 	premium = list(/obj/item/clothing/head/flatcap = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/det_wardrobe

@@ -40,7 +40,7 @@
 
 /datum/gear/hands/flask
 	name = "Flask"
-	path = /obj/item/food/drinks/flask
+	path = /obj/item/food/reagent_containers/drinks/flask
 	cost = 2
 
 /datum/gear/hands/zippolighter

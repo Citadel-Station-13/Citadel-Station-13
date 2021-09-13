@@ -157,7 +157,7 @@
 /datum/gear/donator/russianflask
 	name = "Russian flask"
 	slot = SLOT_IN_BACKPACK
-	path = /obj/item/food/drinks/flask/russian
+	path = /obj/item/food/reagent_containers/drinks/flask/russian
 	cost = 2
 	ckeywhitelist = list("slomka")
 
@@ -272,7 +272,7 @@
 /datum/gear/donator/steelflask
 	name = "Steel Flask"
 	slot = SLOT_IN_BACKPACK
-	path = /obj/item/food/drinks/flask/steel
+	path = /obj/item/food/reagent_containers/drinks/flask/steel
 	cost = 2
 	ckeywhitelist = list("nik707")
 

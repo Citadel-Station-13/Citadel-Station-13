@@ -130,7 +130,7 @@
 	id = "empty_carton"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 15)
-	build_path = /obj/item/food/drinks/bottle/bio_carton
+	build_path = /obj/item/food/reagent_containers/drinks/bottle/bio_carton
 	category = list("initial", "Organic Materials")
 
 /datum/design/cloth

@@ -5,10 +5,10 @@
 	product_ads = "Sufficiently healthy.;Efficiently produced tofu!;Mmm! So good!;Have a meal.;You need food to live!;Have some more candy corn!;Try our new ice cups!"
 	icon_state = "sustenance"
 	products = list(/obj/item/food/tofu = 24,
-					/obj/item/food/drinks/ice/sustanance = 12,
+					/obj/item/food/reagent_containers/drinks/ice/sustanance = 12,
 					/obj/item/food/candy_corn = 6)
 	contraband = list(/obj/item/kitchen/knife = 6,
-					/obj/item/food/drinks/coffee = 12,
+					/obj/item/food/reagent_containers/drinks/coffee = 12,
 					/obj/item/tank/internals/emergency_oxygen = 6,
 					/obj/item/clothing/mask/breath = 6)
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)

@@ -425,7 +425,7 @@
 
 /obj/item/storage/box/drinkingglasses/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/food/drinks/drinkingglass(src)
+		new /obj/item/food/reagent_containers/drinks/drinkingglass(src)
 
 /obj/item/storage/box/condimentbottles
 	name = "box of condiment bottles"
@@ -441,7 +441,7 @@
 
 /obj/item/storage/box/cups/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/food/drinks/sillycup( src )
+		new /obj/item/food/reagent_containers/drinks/sillycup( src )
 
 /obj/item/storage/box/donkpockets
 	name = "box of donk-pockets"
@@ -1036,7 +1036,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/food/grown/tomato(src)
 		new /obj/item/food/meatball(src)
-	new /obj/item/food/drinks/bottle/wine(src)
+	new /obj/item/food/reagent_containers/drinks/bottle/wine(src)
 
 /obj/item/storage/box/ingredients/vegetarian
 	theme_name = "vegetarian"
@@ -1336,7 +1336,7 @@
 	new /obj/item/food/breadslice/plain(src)
 	new /obj/item/food/cubannachos(src)
 	new /obj/item/food/grown/chili(src)
-	new /obj/item/food/drinks/coffee/type2(src)
+	new /obj/item/food/reagent_containers/drinks/coffee/type2(src)
 	new /obj/item/tank/internals/emergency_oxygen(src)
 
 /obj/item/storage/box/mre/menu4

@@ -342,8 +342,8 @@
 	name = "Religious Supplies Crate"
 	desc = "Keep your local chaplain happy and well-supplied, lest they call down judgement upon your cargo bay. Contains two bottles of holywater, bibles, chaplain robes, and burial garmets."
 	cost = 4000	// it costs so much because the Space Church needs funding to build a cathedral
-	contains = list(/obj/item/food/drinks/bottle/holywater,
-					/obj/item/food/drinks/bottle/holywater,
+	contains = list(/obj/item/food/reagent_containers/drinks/bottle/holywater,
+					/obj/item/food/reagent_containers/drinks/bottle/holywater,
 					/obj/item/storage/book/bible/booze,
 					/obj/item/storage/book/bible/booze,
 					/obj/item/clothing/suit/hooded/chaplain_hoodie,

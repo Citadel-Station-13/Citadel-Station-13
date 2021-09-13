@@ -53,7 +53,7 @@
 	return mergeable_decal
 
 /obj/effect/decal/cleanable/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/food/drinks))
+	if(istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/food/reagent_containers/drinks))
 		if(src.reagents && W.reagents)
 			. = 1 //so the containers don't splash their content on the src while scooping.
 			if(!src.reagents.total_volume)

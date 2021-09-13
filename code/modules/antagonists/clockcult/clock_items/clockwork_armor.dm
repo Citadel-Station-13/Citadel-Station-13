@@ -69,7 +69,7 @@
 	heat_protection = CHEST|GROIN|LEGS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	armor = list("melee" = 60, "bullet" = 70, "laser" = 0, "energy" = 0, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100, "magic" = 60, "wound" = 65)
-	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/mmi/posibrain/soul_vessel, /obj/item/food/drinks/bottle/holyoil)
+	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/mmi/posibrain/soul_vessel, /obj/item/food/reagent_containers/drinks/bottle/holyoil)
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC
 
 /obj/item/clothing/suit/armor/clockwork/Initialize()

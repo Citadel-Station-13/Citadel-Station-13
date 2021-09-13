@@ -259,7 +259,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		else if(isopenturf(thing))
 			if(locate(/obj/structure/bed/dogbed/ian) in thing)
 				new /obj/item/clothing/head/festive(thing)
-				var/obj/item/food/drinks/bottle/champagne/iandrink = new(thing)
+				var/obj/item/food/reagent_containers/drinks/bottle/champagne/iandrink = new(thing)
 				iandrink.name = "dog champagne"
 				iandrink.pixel_y += 8
 				iandrink.pixel_x += 8

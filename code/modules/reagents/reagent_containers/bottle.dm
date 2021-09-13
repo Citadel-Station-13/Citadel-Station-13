@@ -1,4 +1,4 @@
-//Not to be confused with /obj/item/food/drinks/bottle
+//Not to be confused with /obj/item/food/reagent_containers/drinks/bottle
 
 /obj/item/reagent_containers/glass/bottle
 	name = "bottle"

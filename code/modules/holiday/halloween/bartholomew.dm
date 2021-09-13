@@ -105,7 +105,7 @@
 	/obj/item/stock_parts/cell = 3,
 	/obj/item/storage/belt/utility = 2,
 	/obj/item/storage/box = 4,
-	/obj/item/food/drinks/sillycup = 1,
+	/obj/item/food/reagent_containers/drinks/sillycup = 1,
 	/obj/item/storage/box/donkpockets = 1,
 	/obj/item/storage/box/lights/mixed = 1,
 	/obj/item/storage/box/hug/medical = 1,
@@ -132,9 +132,9 @@
 	/obj/item/clothing/head = 3,
 	/obj/item/food = 5,
 	/obj/item/reagent_containers/syringe/dart = 2,
-	/obj/item/food/drinks/soda_cans = 5,
-	/obj/item/food/drinks/drinkingglass = 4,
-	/obj/item/food/drinks = 6,
+	/obj/item/food/reagent_containers/drinks/soda_cans = 5,
+	/obj/item/food/reagent_containers/drinks/drinkingglass = 4,
+	/obj/item/food/reagent_containers/drinks = 6,
 	/obj/item/food/grown/apple = 1,
 	/obj/item/food/grown/banana = 2)
 	if(length >= 5)

@@ -88,7 +88,7 @@
 		to_chat(user, "<span class='warning'>There aren't any cups left!</span>")
 		return
 	user.visible_message("<span class='notice'>[user] takes a cup from [src].</span>", "<span class='notice'>You take a paper cup from [src].</span>")
-	var/obj/item/food/drinks/sillycup/S = new(get_turf(src))
+	var/obj/item/food/reagent_containers/drinks/sillycup/S = new(get_turf(src))
 	user.put_in_hands(S)
 	paper_cups--
 

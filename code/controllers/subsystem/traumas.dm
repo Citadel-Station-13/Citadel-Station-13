@@ -82,7 +82,7 @@ SUBSYSTEM_DEF(traumas)
 												 /obj/item/spear, /obj/item/clothing/mask/gas)),
 
 					"lizards"   = typecacheof(list(/obj/item/toy/plush/lizardplushie, /obj/item/food/kebab/tail,
-												 /obj/item/organ/tail/lizard, /obj/item/food/drinks/bottle/lizardwine)),
+												 /obj/item/organ/tail/lizard, /obj/item/food/reagent_containers/drinks/bottle/lizardwine)),
 
 					"skeletons" = typecacheof(list(/obj/item/organ/tongue/bone, /obj/item/clothing/suit/armor/bone, /obj/item/stack/sheet/bone,
 												 /obj/item/food/meat/slab/human/mutant/skeleton,
@@ -150,12 +150,12 @@ SUBSYSTEM_DEF(traumas)
 						/obj/item/clothing/head/helmet/space/freedom, /obj/item/clothing/suit/space/freedom)),
 
 					"anime" = typecacheof(list(/obj/item/clothing/under/costume/schoolgirl, /obj/item/katana, /obj/item/food/sashimi, /obj/item/food/chawanmushi,
-					   /obj/item/food/drinks/bottle/sake, /obj/item/throwing_star, /obj/item/clothing/head/kitty/genuine, /obj/item/clothing/suit/space/space_ninja,
+					   /obj/item/food/reagent_containers/drinks/bottle/sake, /obj/item/throwing_star, /obj/item/clothing/head/kitty/genuine, /obj/item/clothing/suit/space/space_ninja,
 					   /obj/item/clothing/mask/gas/space_ninja, /obj/item/clothing/shoes/space_ninja, /obj/item/clothing/gloves/space_ninja, /obj/item/vibro_weapon,
 					   /obj/item/nullrod/scythe/vibro, /obj/item/energy_katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana, /obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe)),
 
 					"mimes" = typecacheof(list(/obj/item/pda/mime, /obj/item/clothing/under/rank/civilian/mime, /obj/item/clothing/mask/gas/mime,
-						/obj/item/clothing/head/frenchberet, /obj/item/clothing/suit/suspenders, /obj/item/food/drinks/bottle/bottleofnothing,
+						/obj/item/clothing/head/frenchberet, /obj/item/clothing/suit/suspenders, /obj/item/food/reagent_containers/drinks/bottle/bottleofnothing,
 						/obj/item/storage/backpack/mime, /obj/item/food/grown/banana/mime,
 						/obj/item/grown/bananapeel/mimanapeel, /obj/item/cartridge/virus/mime, /obj/item/clothing/shoes/sneakers/mime,
 						/obj/item/bedsheet/mime, /obj/item/food/burger/mime, /obj/item/clothing/head/beret,

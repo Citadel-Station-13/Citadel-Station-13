@@ -101,9 +101,9 @@
 	reqs = list(
 		/datum/reagent/consumable/ethanol/vodka = 25,
 		/obj/item/food/grown/holymelon = 1,
-		/obj/item/food/drinks/bottle/vodka = 1
+		/obj/item/food/reagent_containers/drinks/bottle/vodka = 1
 	)
-	parts = list(/obj/item/food/drinks/bottle/vodka = 1)
+	parts = list(/obj/item/food/reagent_containers/drinks/bottle/vodka = 1)
 	result = /obj/item/food/melonkeg
 	subcategory = CAT_MISCFOOD
 

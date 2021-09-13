@@ -75,7 +75,7 @@
 /datum/export/food/glassbottle
 	cost = 10
 	unit_name = "glass bottle"
-	export_types = list(/obj/item/food/drinks/bottle)
+	export_types = list(/obj/item/food/reagent_containers/drinks/bottle)
 
 /datum/export/food/produce
 	cost = 3

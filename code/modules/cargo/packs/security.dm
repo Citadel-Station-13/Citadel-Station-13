@@ -225,7 +225,7 @@
 	contraband = TRUE
 	contains = list(/obj/item/clothing/head/flatcap,
 					/obj/item/clothing/suit/hooded/wintercoat/captain,
-					/obj/item/food/drinks/bottle/cognac,
+					/obj/item/food/reagent_containers/drinks/bottle/cognac,
 					/obj/item/storage/fancy/cigarettes/cigars/havana,
 					/obj/item/clothing/gloves/color/white,
 					/obj/item/clothing/under/rank/civilian/curator,

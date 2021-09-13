@@ -81,7 +81,7 @@ RSF
 	switch(mode)
 		if(1)
 			to_chat(user, "Dispensing Drinking Glass...")
-			new /obj/item/food/drinks/drinkingglass(T)
+			new /obj/item/food/reagent_containers/drinks/drinkingglass(T)
 			use_matter(20, user)
 		if(2)
 			to_chat(user, "Dispensing Paper Sheet...")

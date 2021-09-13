@@ -3,44 +3,44 @@
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
 	icon_state = "boozeomat"
 	icon_deny = "boozeomat-deny"
-	products = list(/obj/item/food/drinks/drinkingglass = 30,
-					/obj/item/food/drinks/drinkingglass/shotglass = 12,
-					/obj/item/food/drinks/bottle/blank = 5,
-					/obj/item/food/drinks/bottle/blank/small = 10,
-					/obj/item/food/drinks/bottle/blank/pitcher = 2,
-					/obj/item/food/drinks/bottle/gin = 5,
-					/obj/item/food/drinks/bottle/whiskey = 5,
-					/obj/item/food/drinks/bottle/tequila = 5,
-					/obj/item/food/drinks/bottle/vodka = 5,
-					/obj/item/food/drinks/bottle/vermouth = 5,
-					/obj/item/food/drinks/bottle/rum = 5,
-					/obj/item/food/drinks/bottle/wine = 5,
-					/obj/item/food/drinks/bottle/cognac = 5,
-					/obj/item/food/drinks/bottle/kahlua = 5,
-					/obj/item/food/drinks/bottle/hcider = 5,
-					/obj/item/food/drinks/bottle/absinthe = 5,
-					/obj/item/food/drinks/bottle/grappa = 5,
-					/obj/item/food/drinks/bottle/sake = 5,
-					/obj/item/food/drinks/bottle/amaretto = 5,
-					/obj/item/food/drinks/ale = 6,
-					/obj/item/food/drinks/bottle/orangejuice = 4,
-					/obj/item/food/drinks/bottle/tomatojuice = 4,
-					/obj/item/food/drinks/bottle/limejuice = 4,
-					/obj/item/food/drinks/bottle/grenadine = 4,
-					/obj/item/food/drinks/bottle/menthol = 4,
-					/obj/item/food/drinks/bottle/cream = 4,
-					/obj/item/food/drinks/soda_cans/tonic = 8,
-					/obj/item/food/drinks/soda_cans/cola = 8,
-					/obj/item/food/drinks/soda_cans/sodawater = 15,
-					/obj/item/food/drinks/soda_cans/sol_dry = 8,
-					/obj/item/food/drinks/ice = 10,
-					/obj/item/food/drinks/flask = 3,
-					/obj/item/food/drinks/beer = 6)
-	contraband = list(/obj/item/food/drinks/mug/tea = 12,
-					/obj/item/food/drinks/bottle/fernet = 5)
+	products = list(/obj/item/food/reagent_containers/drinks/drinkingglass = 30,
+					/obj/item/food/reagent_containers/drinks/drinkingglass/shotglass = 12,
+					/obj/item/food/reagent_containers/drinks/bottle/blank = 5,
+					/obj/item/food/reagent_containers/drinks/bottle/blank/small = 10,
+					/obj/item/food/reagent_containers/drinks/bottle/blank/pitcher = 2,
+					/obj/item/food/reagent_containers/drinks/bottle/gin = 5,
+					/obj/item/food/reagent_containers/drinks/bottle/whiskey = 5,
+					/obj/item/food/reagent_containers/drinks/bottle/tequila = 5,
+					/obj/item/food/reagent_containers/drinks/bottle/vodka = 5,
+					/obj/item/food/reagent_containers/drinks/bottle/vermouth = 5,
+					/obj/item/food/reagent_containers/drinks/bottle/rum = 5,
+					/obj/item/food/reagent_containers/drinks/bottle/wine = 5,
+					/obj/item/food/reagent_containers/drinks/bottle/cognac = 5,
+					/obj/item/food/reagent_containers/drinks/bottle/kahlua = 5,
+					/obj/item/food/reagent_containers/drinks/bottle/hcider = 5,
+					/obj/item/food/reagent_containers/drinks/bottle/absinthe = 5,
+					/obj/item/food/reagent_containers/drinks/bottle/grappa = 5,
+					/obj/item/food/reagent_containers/drinks/bottle/sake = 5,
+					/obj/item/food/reagent_containers/drinks/bottle/amaretto = 5,
+					/obj/item/food/reagent_containers/drinks/ale = 6,
+					/obj/item/food/reagent_containers/drinks/bottle/orangejuice = 4,
+					/obj/item/food/reagent_containers/drinks/bottle/tomatojuice = 4,
+					/obj/item/food/reagent_containers/drinks/bottle/limejuice = 4,
+					/obj/item/food/reagent_containers/drinks/bottle/grenadine = 4,
+					/obj/item/food/reagent_containers/drinks/bottle/menthol = 4,
+					/obj/item/food/reagent_containers/drinks/bottle/cream = 4,
+					/obj/item/food/reagent_containers/drinks/soda_cans/tonic = 8,
+					/obj/item/food/reagent_containers/drinks/soda_cans/cola = 8,
+					/obj/item/food/reagent_containers/drinks/soda_cans/sodawater = 15,
+					/obj/item/food/reagent_containers/drinks/soda_cans/sol_dry = 8,
+					/obj/item/food/reagent_containers/drinks/ice = 10,
+					/obj/item/food/reagent_containers/drinks/flask = 3,
+					/obj/item/food/reagent_containers/drinks/beer = 6)
+	contraband = list(/obj/item/food/reagent_containers/drinks/mug/tea = 12,
+					/obj/item/food/reagent_containers/drinks/bottle/fernet = 5)
 	premium = list(/obj/item/reagent_containers/glass/bottle/ethanol = 4,
-					/obj/item/food/drinks/bottle/champagne = 5,
-					/obj/item/food/drinks/bottle/trappist = 5)
+					/obj/item/food/reagent_containers/drinks/bottle/champagne = 5,
+					/obj/item/food/reagent_containers/drinks/bottle/trappist = 5)
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
 	refill_canister = /obj/item/vending_refill/boozeomat
@@ -50,23 +50,23 @@
 	cost_multiplier_per_dept = list(ACCOUNT_SRV = 0)
 
 /obj/machinery/vending/boozeomat/pubby_maint //abandoned bar on Pubbystation
-	products = list(/obj/item/food/drinks/bottle/whiskey = 1,
-			/obj/item/food/drinks/bottle/absinthe = 1,
-			/obj/item/food/drinks/bottle/limejuice = 1,
-			/obj/item/food/drinks/bottle/cream = 1,
-			/obj/item/food/drinks/soda_cans/tonic = 1,
-			/obj/item/food/drinks/drinkingglass = 10,
-			/obj/item/food/drinks/ice = 3,
-			/obj/item/food/drinks/drinkingglass/shotglass = 6,
-			/obj/item/food/drinks/flask = 1)
+	products = list(/obj/item/food/reagent_containers/drinks/bottle/whiskey = 1,
+			/obj/item/food/reagent_containers/drinks/bottle/absinthe = 1,
+			/obj/item/food/reagent_containers/drinks/bottle/limejuice = 1,
+			/obj/item/food/reagent_containers/drinks/bottle/cream = 1,
+			/obj/item/food/reagent_containers/drinks/soda_cans/tonic = 1,
+			/obj/item/food/reagent_containers/drinks/drinkingglass = 10,
+			/obj/item/food/reagent_containers/drinks/ice = 3,
+			/obj/item/food/reagent_containers/drinks/drinkingglass/shotglass = 6,
+			/obj/item/food/reagent_containers/drinks/flask = 1)
 
 /obj/machinery/vending/boozeomat/pubby_captain //Captain's quarters on Pubbystation
-	products = list(/obj/item/food/drinks/bottle/rum = 1,
-					/obj/item/food/drinks/bottle/wine = 1,
-					/obj/item/food/drinks/ale = 1,
-					/obj/item/food/drinks/drinkingglass = 6,
-					/obj/item/food/drinks/ice = 1,
-					/obj/item/food/drinks/drinkingglass/shotglass = 4);
+	products = list(/obj/item/food/reagent_containers/drinks/bottle/rum = 1,
+					/obj/item/food/reagent_containers/drinks/bottle/wine = 1,
+					/obj/item/food/reagent_containers/drinks/ale = 1,
+					/obj/item/food/reagent_containers/drinks/drinkingglass = 6,
+					/obj/item/food/reagent_containers/drinks/ice = 1,
+					/obj/item/food/reagent_containers/drinks/drinkingglass/shotglass = 4);
 
 /obj/machinery/vending/boozeomat/pubby_captain/Initialize()
 	. = ..()

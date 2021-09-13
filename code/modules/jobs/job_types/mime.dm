@@ -36,7 +36,7 @@
 	gloves = /obj/item/clothing/gloves/color/white
 	head = /obj/item/clothing/head/frenchberet
 	suit = /obj/item/clothing/suit/suspenders
-	backpack_contents = list(/obj/item/food/drinks/bottle/bottleofnothing=1)
+	backpack_contents = list(/obj/item/food/reagent_containers/drinks/bottle/bottleofnothing=1)
 
 	backpack = /obj/item/storage/backpack/mime
 	satchel = /obj/item/storage/backpack/mime

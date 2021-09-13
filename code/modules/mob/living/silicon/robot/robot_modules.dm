@@ -770,7 +770,7 @@
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/crowbar/cyborg,
-		/obj/item/food/drinks/drinkingglass,
+		/obj/item/food/reagent_containers/drinks/drinkingglass,
 		/obj/item/food/condiment/enzyme,
 		/obj/item/pen,
 		/obj/item/toy/crayon/spraycan/borg,

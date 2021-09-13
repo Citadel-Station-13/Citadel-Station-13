@@ -154,7 +154,7 @@
 /datum/clockwork_rite/treat_wounds
 	name = "Rite of Woundmending"
 	desc = "This rite is used to heal wounds of the servant on the rune. It causes toxins damage proportional to the amount of wounds healed. This can be lethal if performed on an critically injured target."
-	required_ingredients = list(/obj/item/stock_parts/cell, /obj/item/healthanalyzer, /obj/item/food/drinks/bottle/holyoil)
+	required_ingredients = list(/obj/item/stock_parts/cell, /obj/item/healthanalyzer, /obj/item/food/reagent_containers/drinks/bottle/holyoil)
 	power_cost = 300
 	requires_human = TRUE
 	must_be_servant = FALSE

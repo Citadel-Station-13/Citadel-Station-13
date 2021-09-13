@@ -213,7 +213,7 @@
 	desc = "A custom made large grenade. Larger splash range and increased ignition temperature compared to basic grenades. Fits exotic containers."
 	casedesc = "This casing affects a larger area than the basic model and can fit exotic containers, including slime cores. Heats contents by 25°K upon ignition."
 	icon_state = "large_grenade"
-	allowed_containers = list(/obj/item/reagent_containers/glass, /obj/item/food/condiment, /obj/item/food/drinks)
+	allowed_containers = list(/obj/item/reagent_containers/glass, /obj/item/food/condiment, /obj/item/food/reagent_containers/drinks)
 	affected_area = 5
 	ignition_temp = 25 // Large grenades are slightly more effective at setting off heat-sensitive mixtures than smaller grenades.
 	threatscale = 1.1	// 10% more effective.

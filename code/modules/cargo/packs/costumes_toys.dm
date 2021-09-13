@@ -61,7 +61,7 @@
 					/obj/item/storage/pill_bottle/aranesp,
 					/obj/item/storage/pill_bottle/stimulant,
 					/obj/item/toy/cards/deck/syndicate,
-					/obj/item/food/drinks/bottle/absinthe,
+					/obj/item/food/reagent_containers/drinks/bottle/absinthe,
 					/obj/item/clothing/under/syndicate/tacticool,
 					/obj/item/clothing/under/syndicate/skirt,
 					/obj/item/clothing/under/syndicate,
@@ -286,7 +286,7 @@
 					/obj/item/clothing/mask/gas/mime,
 					/obj/item/clothing/head/beret,
 					/obj/item/clothing/suit/suspenders,
-					/obj/item/food/drinks/bottle/bottleofnothing,
+					/obj/item/food/reagent_containers/drinks/bottle/bottleofnothing,
 					/obj/item/storage/backpack/mime)
 	crate_name = "standard costume crate"
 	crate_type = /obj/structure/closet/crate/wooden
@@ -328,7 +328,7 @@
 					/obj/item/clothing/under/dress/wedding/blue,
 					/obj/item/clothing/under/dress/wedding/red,
 					/obj/item/clothing/under/dress/wedding/red, // two of each
-					/obj/item/food/drinks/bottle/champagne, //appropriate booze for a wedding
+					/obj/item/food/reagent_containers/drinks/bottle/champagne, //appropriate booze for a wedding
 					/obj/item/food/cake/vanilla_cake, // we don't have a full wedding cake but this will do
 					/obj/item/storage/fancy/ringbox/silver,
 					/obj/item/storage/fancy/ringbox/silver) //diamond rings cost the same price as this crate via cargo so we're not giving you two for free. Wedding rings are traditionally less valuable anyway.

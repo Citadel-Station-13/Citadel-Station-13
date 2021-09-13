@@ -210,7 +210,7 @@
 /obj/item/organ/cyberimp/arm/service
 	name = "service toolset implant"
 	desc = "A set of miscellaneous gadgets hidden behind a concealed panel on the user's arm."
-	contents = newlist(/obj/item/extinguisher/mini, /obj/item/kitchen/knife/combat/bone/plastic, /obj/item/hand_labeler, /obj/item/pen, /obj/item/reagent_containers/dropper, /obj/item/kitchen/rollingpin, /obj/item/reagent_containers/glass/beaker/large, /obj/item/reagent_containers/syringe,/obj/item/food/drinks/shaker, /obj/item/radio/off, /obj/item/camera, /obj/item/modular_computer/tablet/preset/cargo)
+	contents = newlist(/obj/item/extinguisher/mini, /obj/item/kitchen/knife/combat/bone/plastic, /obj/item/hand_labeler, /obj/item/pen, /obj/item/reagent_containers/dropper, /obj/item/kitchen/rollingpin, /obj/item/reagent_containers/glass/beaker/large, /obj/item/reagent_containers/syringe,/obj/item/food/reagent_containers/drinks/shaker, /obj/item/radio/off, /obj/item/camera, /obj/item/modular_computer/tablet/preset/cargo)
 
 /obj/item/organ/cyberimp/arm/service/emag_act()
 	. = ..()

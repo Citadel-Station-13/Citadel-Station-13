@@ -101,7 +101,7 @@
 
 /obj/item/clothing/head/fedora/det_hat/Initialize()
 	. = ..()
-	new /obj/item/food/drinks/flask/det(src)
+	new /obj/item/food/reagent_containers/drinks/flask/det(src)
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
 	. = ..()

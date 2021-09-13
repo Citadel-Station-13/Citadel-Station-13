@@ -243,7 +243,7 @@
 
 /datum/crafting_recipe/smallcarton
 	name = "Small Carton"
-	result = /obj/item/food/drinks/sillycup/smallcarton
+	result = /obj/item/food/reagent_containers/drinks/sillycup/smallcarton
 	time = 10
 	reqs = list(/obj/item/stack/sheet/cardboard = 1)
 	subcategory = CAT_TOOL

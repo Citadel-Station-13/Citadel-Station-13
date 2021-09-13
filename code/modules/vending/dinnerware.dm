@@ -10,7 +10,7 @@
 					/obj/item/kitchen/efink = 2,
 					/obj/item/kitchen/rollingpin = 4,
 					/obj/item/kitchen/unrollingpin = 4,
-					/obj/item/food/drinks/drinkingglass = 8,
+					/obj/item/food/reagent_containers/drinks/drinkingglass = 8,
 					/obj/item/clothing/suit/apron/chef = 2,
 					/obj/item/storage/box/cups = 2,
 					/obj/item/food/condiment/pack/ketchup = 5,

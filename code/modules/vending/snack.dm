@@ -6,7 +6,7 @@
 	icon_state = "snack"
 	products = list(/obj/item/food/candy = 5,
 					/obj/item/food/chocolatebar = 5,
-					/obj/item/food/drinks/dry_ramen = 5,
+					/obj/item/food/reagent_containers/drinks/dry_ramen = 5,
 					/obj/item/food/chips = 5,
 					/obj/item/food/sosjerky = 5,
 					/obj/item/food/no_raisin = 5,
