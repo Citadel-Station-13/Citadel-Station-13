@@ -38,14 +38,14 @@
 	icon = 'modular_citadel/icons/mob/synthliz_body_markings.dmi'
 	name = "Synthetic Lizard - Pecs Light"
 	icon_state = "synthlizpecslight"
-	covered_limbs = list("Chest" = MATRIX_GREEN_BLUE)
+	covered_limbs = list("Chest" = MATRIX_GREEN_BLUE, "Left Arm" = MATRIX_BLUE, "Right Arm" = MATRIX_BLUE, "Left Leg" = MATRIX_GREEN, "Right Leg" = MATRIX_GREEN)
 
 /datum/sprite_accessory/mam_body_markings/synthliz
 	recommended_species = list("synthliz")
 	icon = 'modular_citadel/icons/mob/synthliz_body_markings.dmi'
 	name = "Synthetic Lizard - Plates"
 	icon_state = "synthlizscutes"
-	covered_limbs = list("Chest" = MATRIX_GREEN)
+	covered_limbs = list("Chest" = MATRIX_GREEN, "Left Leg" = MATRIX_GREEN, "Right Leg" = MATRIX_GREEN)
 
 //Synth tails
 /datum/sprite_accessory/tails/mam_tails/synthliz

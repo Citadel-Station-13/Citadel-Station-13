@@ -52,8 +52,12 @@ ANNOUNCE_ADMIN_LOGOUT
 ## Uncomment to have an admin message sent anytime an admin connects to a round in play, you can edit the messages in admin.dm
 #ANNOUNCE_ADMIN_LOGIN
 
+## Uncomment to enable global ban DB using the provided URL. The API should expect to receive a ckey at the end of the URL.
 ## More API details can be found here: https://centcom.melonmesa.com
-CENTCOM_BAN_DB https://centcom.melonmesa.com/ban/search
+#CENTCOM_BAN_DB https://centcom.melonmesa.com/ban/search
+## Uncomment to enable source whitelisting, a comma-separated list (no spaces) of CentCom sources (sourceName).
+## If enabled, only bans from these servers will be shown to admins using CentCom. The default sources list is an example.
+#CENTCOM_SOURCE_WHITELIST Beestation MRP,TGMC,FTL13
 
 ## AUTOADMIN
 ## The default admin rank

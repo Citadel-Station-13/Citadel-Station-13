@@ -53,8 +53,8 @@
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "m" = (
-/obj/structure/barricade/wooden/crude/snow,
 /obj/structure/mineral_door/wood,
+/obj/effect/decal/cleanable/trail_holder,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "n" = (
@@ -68,6 +68,7 @@
 /obj/machinery/light/broken{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/trail_holder,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "q" = (
@@ -95,6 +96,10 @@
 /obj/effect/decal/cleanable/trail_holder,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
+"N" = (
+/obj/effect/decal/cleanable/trail_holder,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 i
@@ -569,7 +574,7 @@ b
 l
 f
 f
-f
+s
 s
 b
 b
@@ -595,7 +600,7 @@ b
 b
 b
 f
-f
+s
 p
 b
 b
@@ -622,7 +627,7 @@ i
 b
 b
 b
-f
+s
 b
 b
 b
@@ -649,7 +654,7 @@ i
 i
 i
 b
-f
+s
 b
 i
 i
@@ -676,7 +681,7 @@ i
 i
 i
 b
-f
+s
 b
 i
 i
@@ -703,7 +708,7 @@ i
 i
 i
 b
-f
+s
 b
 i
 i
@@ -757,7 +762,7 @@ i
 i
 n
 h
-n
+N
 h
 n
 i
