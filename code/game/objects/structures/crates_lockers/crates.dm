@@ -106,6 +106,16 @@
 	name = "trash cart"
 	icon_state = "trashcart"
 
+/obj/structure/closet/crate/trashcart/Moved()
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
+
+/obj/structure/closet/crate/trashcart/laundry
+	name = "laundry cart"
+	desc = "A large cart for hauling around large amounts of laundry."
+	icon_state = "laundry"
+
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."
 	name = "medical crate"

@@ -2708,6 +2708,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "agN" = (
@@ -2736,6 +2737,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "agP" = (
@@ -53485,6 +53487,13 @@
 "dFJ" = (
 /turf/open/floor/engine,
 /area/engineering/supermatter)
+"dHg" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
+	},
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "dHo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -60988,6 +60997,10 @@
 	},
 /turf/closed/wall/r_wall,
 /area/science/xenobiology)
+"tVZ" = (
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/plasteel/dark,
+/area/security/prison)
 "tXn" = (
 /obj/structure/sink{
 	dir = 4;
@@ -83035,13 +83048,13 @@ aaa
 aem
 aeq
 aeE
-aeU
+tVZ
 afo
 afD
 aga
 aga
 agz
-aie
+dHg
 aiH
 ahm
 ahD

@@ -55924,6 +55924,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/prison)
 "bLR" = (
@@ -59245,6 +59246,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/prison)
 "bRc" = (
@@ -61866,6 +61868,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/prison)
 "bVq" = (
@@ -79329,6 +79332,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "czS" = (

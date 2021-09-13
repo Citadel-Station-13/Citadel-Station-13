@@ -105,6 +105,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	keyslot = new /obj/item/encryptionkey/binary
 	recalculateChannels()
 
+/obj/item/radio/headset/headset_prisoner
+	name = "prison radio headset"
+	desc = "An updated, modular intercom that fits over the head. Takes encryption keys. It looks like it has been modified to not broadcast."
+	icon_state = "prisoner_headset"
+	prison_radio = TRUE
+
 /obj/item/radio/headset/headset_sec
 	name = "security radio headset"
 	desc = "This is used by your elite security force."
