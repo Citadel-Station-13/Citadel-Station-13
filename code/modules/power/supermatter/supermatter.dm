@@ -41,8 +41,9 @@
 
 #define THERMAL_RELEASE_MODIFIER 350         //Higher == more heat released during reaction, not to be confused with the above values
 #define THERMAL_RELEASE_CAP_MODIFIER 250     //Higher == lower cap on how much heat can be released per tick--currently 1.3x old value
-#define PLASMA_RELEASE_MODIFIER 750        //Higher == less plasma released by reaction
-#define OXYGEN_RELEASE_MODIFIER 325        //Higher == less oxygen released at high temperature/power
+#define GAS_RELEASE_MODIFIER 800        //Higher == less gas released by reaction
+#define MAX_OXY_MULT 2                  //The ratio between oxygen and plasma will approach this as temperature increases
+#define OXY_POINT 80                    // the temperature above which oxygen output > plasma output
 
 #define REACTION_POWER_MODIFIER 0.55       //Higher == more overall power
 
@@ -538,14 +539,19 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	//Power * 0.55 * a value between 1 and 0.8
 	var/device_energy = power * REACTION_POWER_MODIFIER
 
-	var/effective_temperature = min(removed.return_temperature(), 2500 * dynamic_heat_modifier)
+	var/cur_temp = removed.return_temperature() // more readable, better-performing anyway
 
-	var/max_temp_increase = effective_temperature + ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_CAP_MODIFIER)
-	//Calculate how much gas to release
-	//Varies based on power and gas content
-	removed.adjust_moles(GAS_PLASMA, max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0))
-	//Varies based on power, gas content, and heat
-	removed.adjust_moles(GAS_O2, max(((device_energy + effective_temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0))
+	// we don't want to cap the temperature like the old supermatter but we do want to stop adding more when it's too hot
+	var/max_temp_increase = min(cur_temp, 2500 * dynamic_heat_modifier) + ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_CAP_MODIFIER)
+
+	// oxygen ratio increases as temperature does
+	var/oxy_ratio = HYPERBOLIC_GROWTH(MAX_OXY_MULT, 1 / OXY_POINT, cur_temp, (-OXY_POINT / 2))
+	// total moles also increases as temperature does
+	var/released_plasma = min(max((device_energy * dynamic_heat_modifier) / GAS_RELEASE_MODIFIER, 0) / (1+oxy_ratio), 2)
+
+	removed.adjust_moles(GAS_PLASMA, released_plasma)
+
+	removed.adjust_moles(GAS_O2, released_plasma * oxy_ratio)
 
 	if(removed.return_temperature() < max_temp_increase)
 		removed.adjust_heat(device_energy * dynamic_heat_modifier * THERMAL_RELEASE_MODIFIER)
