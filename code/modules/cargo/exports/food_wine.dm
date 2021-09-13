@@ -121,12 +121,12 @@
 /datum/export/food/cheese_wheel
 	cost = 70
 	unit_name = "cheese wheel"
-	export_types = list(/obj/item/food/cheesewheel)
+	export_types = list(/obj/item/food/cheese/wheel)
 
 /datum/export/food/cheese_wheel
 	cost = 20
 	unit_name = "cheese wedge"
-	export_types = list(/obj/item/food/cheesewedge)
+	export_types = list(/obj/item/food/cheese)
 
 /datum/export/food/candy
 	cost = 5

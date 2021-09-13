@@ -89,7 +89,7 @@
 					C.deconstruct()
 					visible_message("<span class='warning'>[src] chews through the [C].</span>")
 
-	for(var/obj/item/food/cheesewedge/cheese in range(1, src))
+	for(var/obj/item/food/cheese/cheese in range(1, src))
 		if(prob(10))
 			be_fruitful()
 			qdel(cheese)
