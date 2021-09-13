@@ -38,6 +38,7 @@
 	var/mode = MINEDRONE_COLLECT
 	var/light_on = 0
 	var/obj/item/gun/energy/kinetic_accelerator/minebot/stored_gun
+	var/emagged
 
 /mob/living/simple_animal/hostile/mining_drone/Initialize()
 	. = ..()
@@ -224,9 +225,9 @@
 
 /mob/living/simple_animal/hostile/mining_drone/emag_act(mob/user)
 	if(client && user)
-		if(obj_flags & EMAGGED)
+		if(emagged)
 			return
-		obj_flags |= EMAGGED
+		emagged = TRUE
 		to_chat(SM, "<span class='userdanger'>Core programming overridden. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
 
 		// still can't get upgraded, but they get way better upgrades than a regular sentient, resulting in a beefy minebot that costs an emag charge
