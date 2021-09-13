@@ -599,13 +599,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				zap_icon = SLIGHTLY_CHARGED_ZAP_ICON_STATE
 				//Uncaps the zap damage, it's maxed by the input power
 				//Objects take damage now
-				flags |= (ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE)
+				flags |= (ZAP_MOB_DAMAGE)
 				zap_count = 3
 			if(CRITICAL_POWER_PENALTY_THRESHOLD to INFINITY)
 				zap_icon = OVER_9000_ZAP_ICON_STATE
 				//It'll stun more now, and damage will hit harder, gloves are no garentee.
 				//Machines go boom
-				flags |= (ZAP_MOB_STUN | ZAP_MACHINE_EXPLOSIVE | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE)
+				flags |= (ZAP_MOB_STUN | ZAP_MOB_DAMAGE)
 				zap_count = 4
 		//Now we deal with damage shit
 		if (damage > damage_penalty_point && prob(20))
@@ -1058,9 +1058,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(zapdir)
 			. = zapdir
 
-		//Going boom should be rareish
-		if(prob(80))
-			zap_flags &= ~ZAP_MACHINE_EXPLOSIVE
 		if(target_type == COIL)
 			//In the best situation we can expect this to grow up to 2120kw before a delam/IT'S GONE TOO FAR FRED SHUT IT DOWN
 			//The formula for power gen is zap_str * zap_mod / 2 * capacitor rating, between 1 and 4
