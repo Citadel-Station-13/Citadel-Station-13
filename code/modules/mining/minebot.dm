@@ -228,14 +228,14 @@
 		if(emagged)
 			return
 		emagged = TRUE
-		to_chat(SM, "<span class='userdanger'>Core programming overridden. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
+		to_chat(src, "<span class='userdanger'>Core programming overridden. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
 
 		// still can't get upgraded, but they get way better upgrades than a regular sentient, resulting in a beefy minebot that costs an emag charge
-		M.maxHealth = initial(maxHealth) + 30 // 155 total health
-		M.melee_damage_lower = initial(melee_damage_lower) + 3 // 18 total damage
-		M.melee_damage_upper = initial(melee_damage_upper) + 3 //  also 18 total damage
-		M.move_to_delay = initial(move_to_delay) - 2 // they get faster speed instead of the slower sentience speed (regular speed: 10, sentience speed: 11, emag speed: 8, where lower is faster)
-		M.updatehealth()
+		maxHealth = initial(maxHealth) + 30 // 155 total health
+		melee_damage_lower = initial(melee_damage_lower) + 3 // 18 total damage
+		melee_damage_upper = initial(melee_damage_upper) + 3 //  also 18 total damage
+		move_to_delay = initial(move_to_delay) - 2 // they get faster speed instead of the slower sentience speed (regular speed: 10, sentience speed: 11, emag speed: 8, where lower is faster)
+		updatehealth()
 	else
 		to_chat(user, "<span class='notice'>Overriding the programming of a non-sentient minebot would be useless.</span>")
 
