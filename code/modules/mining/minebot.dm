@@ -222,6 +222,22 @@
 		else
 			SetOffenseBehavior()
 
+/mob/living/simple_animal/hostile/mining_drone/emag_act(mob/user)
+	if(client && user)
+		if(obj_flags & EMAGGED)
+			return
+		obj_flags |= EMAGGED
+		to_chat(SM, "<span class='userdanger'>Core programming overridden. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
+
+		// still can't get upgraded, but they get way better upgrades than a regular sentient, resulting in a beefy minebot that costs an emag charge
+		M.maxHealth = initial(maxHealth) + 30 // 155 total health
+		M.melee_damage_lower = initial(melee_damage_lower) + 3 // 18 total damage
+		M.melee_damage_upper = initial(melee_damage_upper) + 3 //  also 18 total damage
+		M.move_to_delay = initial(move_to_delay) - 2 // they get faster speed instead of the slower sentience speed (regular speed: 10, sentience speed: 11, emag speed: 8, where lower is faster)
+		M.updatehealth()
+	else
+		to_chat(user, "<span class='notice'>Overriding the programming of a non-sentient minebot would be useless.</span>")
+
 //Actions for sentient minebots
 
 /datum/action/innate/minedrone
@@ -305,6 +321,7 @@
 	icon_state = "door_electronics"
 	icon = 'icons/obj/module.dmi'
 	sentience_type = SENTIENCE_MINEBOT
+	obedience = FALSE // obedience is only gained by emagging the bot, so you can't get a cheap army of sentient mine bots
 	var/base_health_add = 5 //sentient minebots are penalized for beign sentient; they have their stats reset to normal plus these values
 	var/base_damage_add = 1 //this thus disables other minebot upgrades
 	var/base_speed_add = 1

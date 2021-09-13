@@ -655,6 +655,7 @@
 	var/list/not_interested = list()
 	var/being_used = FALSE
 	var/sentience_type = SENTIENCE_ORGANIC
+	var/obedience = TRUE
 
 /obj/item/slimepotion/slime/sentience/attack(mob/living/M, mob/user)
 	if(being_used || !ismob(M))
@@ -680,7 +681,10 @@
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
 		to_chat(SM, "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>")
-		to_chat(SM, "<span class='userdanger'>You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
+		if(obedience)
+			to_chat(SM, "<span class='userdanger'>You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
+		else
+			to_chat(SM, "<span class='userdanger'>You are not required to serve [user.real_name] and are free.</span>")
 		if(SM.flags_1 & HOLOGRAM_1) //Check to see if it's a holodeck creature
 			to_chat(SM, "<span class='userdanger'>You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck.</span>")
 		to_chat(user, "<span class='notice'>[SM] accepts [src] and suddenly becomes attentive and aware. It worked!</span>")
