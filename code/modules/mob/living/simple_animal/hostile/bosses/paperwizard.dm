@@ -73,6 +73,8 @@
 		summoned_minions += S
 
 /datum/action/boss/wizard_summon_minions/proc/remove_from_list(datum/source, forced)
+	SIGNAL_HANDLER
+
 	summoned_minions -= source
 
 //Mimic Ability

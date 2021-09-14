@@ -332,6 +332,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/removeAlert)
 
 /atom/movable/screen/alert/give/proc/removeAlert()
+	SIGNAL_HANDLER
+
 	to_chat(usr, "<span class='warning'>You moved out of range of [giver]!</span>")
 	usr.clear_alert("[giver]")
 

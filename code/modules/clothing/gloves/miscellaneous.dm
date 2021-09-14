@@ -189,6 +189,8 @@
 	var/wornonce = FALSE
 
 /obj/item/clothing/gloves/fingerless/ablative/proc/get_component_parry_data(datum/source, parrying_method, datum/parrying_item_mob_or_art, list/backup_items, list/override)
+	SIGNAL_HANDLER
+
 	if(parrying_method && !(parrying_method == UNARMED_PARRY))
 		return
 	override[src] = ITEM_PARRY

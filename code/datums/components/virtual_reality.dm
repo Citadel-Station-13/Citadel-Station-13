@@ -98,6 +98,8 @@
   * emag_act() hook. Makes the game deadlier, killing the mastermind mob too should the parent die.
   */
 /datum/component/virtual_reality/proc/you_only_live_once()
+	SIGNAL_HANDLER
+
 	if(you_die_in_the_game_you_die_for_real)
 		return FALSE
 	you_die_in_the_game_you_die_for_real = TRUE
@@ -108,6 +110,8 @@
   * This is pretty much just going to simply quit the session until machineries support polymorphed occupants etcetera.
   */
 /datum/component/virtual_reality/proc/switch_player(datum/source, mob/new_mob, mob/old_mob)
+	SIGNAL_HANDLER
+
 	if(session_paused)
 		return
 	if(!allow_mastermind_transfer)
@@ -125,6 +129,8 @@
   * This has to be done in a different signal proc than on_player_transfer(), by then the mastermind.current will be null.
   */
 /datum/component/virtual_reality/proc/pre_player_transfer(datum/source, mob/new_mob, mob/old_mob)
+	SIGNAL_HANDLER
+
 	if(!mastermind || session_paused)
 		return
 	if(new_mob == mastermind.current)
@@ -144,6 +150,8 @@
   * And potentially lock the player in a broken virtual reality plot. Not really something to be proud of.
   */
 /datum/component/virtual_reality/proc/player_hijacked(datum/source, mob/our_character, mob/their_character)
+	SIGNAL_HANDLER
+
 	if(session_paused)
 		return
 	if(!their_character)
@@ -164,6 +172,8 @@
   * The very reason this component even exists (else one would be stuck playing as a monky if monkyified)
   */
 /datum/component/virtual_reality/proc/on_player_transfer(datum/source, mob/new_mob, mob/old_mob)
+	SIGNAL_HANDLER
+
 	new_mob.TakeComponent(src)
 
 /**
@@ -177,22 +187,32 @@
   *The following procs simply acts as hooks for quit(), since components do not use callbacks anymore
   */
 /datum/component/virtual_reality/proc/action_trigger(datum/action/source, obj/target)
+	SIGNAL_HANDLER
+
 	quit()
 	return COMPONENT_ACTION_BLOCK_TRIGGER
 
 /datum/component/virtual_reality/proc/revert_to_reality(datum/source)
+	SIGNAL_HANDLER
+
 	quit()
 
 /datum/component/virtual_reality/proc/game_over(datum/source)
+	SIGNAL_HANDLER
+
 	quit(you_die_in_the_game_you_die_for_real, TRUE)
 	return COMPONENT_BLOCK_DEATH_BROADCAST
 
 /datum/component/virtual_reality/proc/be_a_quitter(datum/source, can_reenter_corpse, special = FALSE, penalize = FALSE)
+	SIGNAL_HANDLER
+
 	if(!special)
 		quit()
 		return COMPONENT_BLOCK_GHOSTING
 
 /datum/component/virtual_reality/proc/machine_destroyed(datum/source)
+	SIGNAL_HANDLER
+
 	quit(cleanup = TRUE)
 
 /**

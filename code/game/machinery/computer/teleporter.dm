@@ -186,6 +186,8 @@
 			target_station.teleporter_console.update_icon()
 
 /obj/machinery/computer/teleporter/proc/untarget_implant() //untargets from mob the racker was once implanted in to prevent issues.
+	SIGNAL_HANDLER
+
 	target = null
 	if(power_station)
 		power_station.engaged = FALSE

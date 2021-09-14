@@ -34,6 +34,8 @@
 	RegisterSignal(I, COMSIG_ITEM_DROPPED, .proc/magnetic_catch)
 
 /obj/item/organ/cyberimp/arm/proc/magnetic_catch(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	. = COMPONENT_DROPPED_RELOCATION
 	var/obj/item/I = source			//if someone is misusing the signal, just runtime
 	if(I in items_list)
@@ -291,6 +293,8 @@
 	return ..()
 
 /obj/item/organ/cyberimp/arm/shield/proc/on_signal(datum/source, obj/item/blocking_item, list/other_items)
+	SIGNAL_HANDLER
+
 	if(!blocking_item)		//if they don't have something
 		var/obj/item/shield/S = locate() in contents
 		if(!Extend(S, TRUE))

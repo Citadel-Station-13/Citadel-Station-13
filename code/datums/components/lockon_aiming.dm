@@ -118,6 +118,8 @@
 	LAZYREMOVE(immune_weakrefs, A.weak_reference)
 
 /datum/component/lockon_aiming/proc/onMouseMove(object,location,control,params)
+	SIGNAL_HANDLER
+
 	var/mob/M = parent
 	if(!istype(M) || !M.client)
 		return

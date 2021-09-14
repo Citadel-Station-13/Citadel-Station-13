@@ -64,6 +64,8 @@
 	RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/unset_target)
 
 /obj/item/pinpointer/proc/unset_target()
+	SIGNAL_HANDLER
+
 	if(!target)
 		return
 	UnregisterSignal(target, COMSIG_PARENT_QDELETING)

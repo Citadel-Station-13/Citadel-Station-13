@@ -108,6 +108,8 @@
 		SSvis_overlays.add_vis_overlay(holder, 'icons/effects/effects.dmi', to_add, layer, GAME_PLANE, holder.dir)
 
 /datum/component/shielded/proc/on_equip(obj/item/source, mob/living/equipper, slot)
+	SIGNAL_HANDLER
+
 	if(!(accepted_slots & slotdefine2slotbit(slot)))
 		return
 	holder = equipper
@@ -120,6 +122,8 @@
 		cached_vis_overlay = SSvis_overlays.add_vis_overlay(holder, 'icons/effects/effects.dmi', to_add, layer, GAME_PLANE, holder.dir)
 
 /datum/component/shielded/proc/on_drop(obj/item/source, mob/dropper)
+	SIGNAL_HANDLER
+
 	if(holder == dropper)
 		UnregisterSignal(holder, COMSIG_LIVING_GET_BLOCKING_ITEMS)
 		UnregisterSignal(parent, list(COMSIG_ITEM_RUN_BLOCK, COMSIG_ITEM_CHECK_BLOCK))
@@ -129,9 +133,13 @@
 		holder = null
 
 /datum/component/shielded/proc/include_shield(mob/source, list/items)
+	SIGNAL_HANDLER
+
 	items += parent
 
 /datum/component/shielded/proc/on_run_block(obj/item/source, mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	SIGNAL_HANDLER
+
 	if(block_return[BLOCK_RETURN_NORMAL_BLOCK_CHANCE] >= 100) //already blocked by another shielded item, don't do anything.
 		block_return[BLOCK_RETURN_BLOCK_CAPACITY] += round(charges)
 		return BLOCK_NONE
@@ -157,11 +165,15 @@
 	return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
 
 /datum/component/shielded/proc/on_check_block(obj/item/source, mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	SIGNAL_HANDLER
+
 	if(charges >= 1)
 		block_return[BLOCK_RETURN_NORMAL_BLOCK_CHANCE] = 100
 		block_return[BLOCK_RETURN_BLOCK_CAPACITY] += round(charges)
 
 /datum/component/shielded/proc/living_block(mob/living/source, real_attack, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)
+	SIGNAL_HANDLER
+
 	if(!real_attack)
 		if(charges >= 1)
 			return_list[BLOCK_RETURN_NORMAL_BLOCK_CHANCE] = 100

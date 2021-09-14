@@ -35,6 +35,8 @@
 	UnregisterSignal(source, COMSIG_MOB_ATTACK_HAND)
 
 /datum/element/wuv/proc/on_attack_hand(datum/source, mob/user, act_intent)
+	SIGNAL_HANDLER
+
 	var/mob/living/L = source
 
 	if(L.stat == DEAD)

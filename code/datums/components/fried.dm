@@ -32,6 +32,8 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 ))
 
 /datum/component/fried/proc/examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
 	examine_list += "[parent] has been [frying_examine_text]"
 
 /datum/component/fried/proc/setup_fried_item() //sets the name, colour and examine text and edibility up
@@ -101,6 +103,8 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 					owner.name = stored_name
 
 /datum/component/fried/proc/restore() //restore a fried mob to being not-fried
+	SIGNAL_HANDLER
+
 	if(ismob(owner))
 		//restore the name, the colour should wash off itself, and then remove the component
 		restore_name()

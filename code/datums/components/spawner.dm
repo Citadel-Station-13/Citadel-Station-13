@@ -29,6 +29,8 @@
 	try_spawn_mob()
 
 /datum/component/spawner/proc/stop_spawning(datum/source, force, hint)
+	SIGNAL_HANDLER
+
 	STOP_PROCESSING(SSprocessing, src)
 	for(var/mob/living/simple_animal/L in spawned_mobs)
 		if(L.nest == src)
@@ -37,6 +39,8 @@
 
 // Stopping clientless simple mobs' from indiscriminately bashing their own spawners due DestroySurroundings() et similars.
 /datum/component/spawner/proc/on_attack_generic(datum/source, mob/user, damage_amount, damage_type, damage_flag, sound_effect, armor_penetration)
+	SIGNAL_HANDLER
+
 	if(!user.client && ((user.faction & faction) || (user in spawned_mobs)))
 		return COMPONENT_STOP_GENERIC_ATTACK
 

@@ -47,6 +47,8 @@
 	return ..()
 
 /datum/component/mood/proc/stop_processing()
+	SIGNAL_HANDLER
+
 	STOP_PROCESSING(SSobj, src)
 
 /datum/component/mood/proc/print_mood(mob/user)
@@ -255,9 +257,13 @@
 	insanity_effect = newval
 
 /datum/component/mood/proc/modify_sanity(datum/source, amount, minimum = SANITY_INSANE, maximum = SANITY_AMAZING)
+	SIGNAL_HANDLER
+
 	setSanity(sanity + amount, minimum, maximum)
 
 /datum/component/mood/proc/add_event(datum/source, category, type, param) //Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
+	SIGNAL_HANDLER
+
 	var/datum/mood_event/the_event
 	if(mood_events[category])
 		the_event = mood_events[category]
@@ -276,6 +282,8 @@
 		addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /datum/component/mood/proc/clear_event(datum/source, category)
+	SIGNAL_HANDLER
+
 	var/datum/mood_event/event = mood_events[category]
 	if(!event)
 		return 0
@@ -294,6 +302,8 @@
 	update_mood()
 
 /datum/component/mood/proc/modify_hud(datum/source)
+	SIGNAL_HANDLER
+
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used
 	screen_obj = new
@@ -302,6 +312,8 @@
 	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
 
 /datum/component/mood/proc/unmodify_hud(datum/source)
+	SIGNAL_HANDLER
+
 	if(!screen_obj || !parent)
 		return
 	var/mob/living/owner = parent
@@ -311,8 +323,9 @@
 	QDEL_NULL(screen_obj)
 
 /datum/component/mood/proc/hud_click(datum/source, location, control, params, mob/user)
-	print_mood(user)
+	SIGNAL_HANDLER
 
+	print_mood(user)
 
 /datum/component/mood/proc/HandleNutrition(mob/living/L)
 	if(isethereal(L))
@@ -373,6 +386,8 @@
 
 ///Called when parent is revived.
 /datum/component/mood/proc/on_revive(datum/source, full_heal)
+	SIGNAL_HANDLER
+
 	START_PROCESSING(SSobj, src)
 	if(!full_heal)
 		return
@@ -381,6 +396,8 @@
 
 ///Causes direct drain of someone's sanity, call it with a numerical value corresponding how badly you want to hurt their sanity
 /datum/component/mood/proc/direct_sanity_drain(datum/source, amount)
+	SIGNAL_HANDLER
+
 	setSanity(sanity + amount)
 
 #undef ECSTATIC_SANITY_PEN

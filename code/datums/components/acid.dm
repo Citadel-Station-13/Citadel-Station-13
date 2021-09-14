@@ -15,6 +15,8 @@
 	O.update_icon()
 
 /datum/component/acid/proc/on_attack_hand(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	var/obj/item/I = parent
 	if(istype(I) && level > 20 && !ismob(I.loc))// so we can still remove the clothes on us that have acid.
 		var/mob/living/carbon/C = user
@@ -62,4 +64,6 @@
 		return TRUE
 
 /datum/component/acid/proc/add_acid_overlay(atom/source, list/overlay_list)
+	SIGNAL_HANDLER
+
 	overlay_list += GLOB.acid_overlay

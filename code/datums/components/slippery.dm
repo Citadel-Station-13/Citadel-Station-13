@@ -10,6 +10,8 @@
 	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED, COMSIG_ATOM_ENTERED, COMSIG_ITEM_WEARERCROSSED), .proc/Slip)
 
 /datum/component/slippery/proc/Slip(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+
 	var/mob/victim = AM
 	if(istype(victim) && victim.slip(intensity, parent, lube_flags) && callback)
 		callback.Invoke(victim)

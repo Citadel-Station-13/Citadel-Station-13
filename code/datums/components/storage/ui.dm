@@ -227,6 +227,8 @@
   * Proc triggered by signal to ensure logging out clients don't linger.
   */
 /datum/component/storage/proc/on_logout(datum/source, client/C)
+	SIGNAL_HANDLER
+
 	ui_hide(source)
 
 /**

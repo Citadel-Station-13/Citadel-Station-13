@@ -34,6 +34,8 @@
 		to_chat(user, "The storage unit will only unlock during a Red or Delta security alert.")
 
 /datum/component/storage/concrete/emergency/proc/unlock_me(datum/source)
+	SIGNAL_HANDLER
+
 	if(locked)
 		set_locked(source, FALSE)
 		return TRUE

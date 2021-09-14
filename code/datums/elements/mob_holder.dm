@@ -32,10 +32,14 @@
 	UnregisterSignal(source, COMSIG_PARENT_EXAMINE)
 
 /datum/element/mob_holder/proc/on_examine(mob/living/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
 	if(ishuman(user) && !istype(source.loc, /obj/item/clothing/head/mob_holder))
 		examine_list += "<span class='notice'>Looks like [source.p_they(TRUE)] can be picked up with <b>Alt+Click</b>!</span>"
 
 /datum/element/mob_holder/proc/mob_try_pickup(mob/living/source, mob/user)
+	SIGNAL_HANDLER
+
 	if(!ishuman(user) || !user.Adjacent(source) || user.incapacitated())
 		return FALSE
 	if(user.get_active_held_item())

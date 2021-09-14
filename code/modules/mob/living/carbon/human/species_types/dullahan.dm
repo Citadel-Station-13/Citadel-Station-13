@@ -130,18 +130,26 @@
 	RegisterSignal(owner, COMSIG_LIVING_REVIVE, .proc/retrieve_head)
 
 /obj/item/dullahan_relay/proc/examinate_check(mob/source, atom/target)
+	SIGNAL_HANDLER
+
 	if(source.client.eye == src)
 		return COMPONENT_ALLOW_EXAMINATE
 
 /obj/item/dullahan_relay/proc/include_owner(datum/source, list/processing_list, list/hearers)
+	SIGNAL_HANDLER
+
 	if(!QDELETED(owner))
 		hearers += owner
 
 /obj/item/dullahan_relay/proc/unlist_head(datum/source, noheal = FALSE, list/excluded_limbs)
+	SIGNAL_HANDLER
+
 	excluded_limbs |= BODY_ZONE_HEAD // So we don't gib when regenerating limbs.
 
 //Retrieving the owner's head for better ahealing.
 /obj/item/dullahan_relay/proc/retrieve_head(datum/source, full_heal, admin_revive)
+	SIGNAL_HANDLER
+
 	if(admin_revive)
 		var/obj/item/bodypart/head/H = loc
 		var/turf/T = get_turf(owner)

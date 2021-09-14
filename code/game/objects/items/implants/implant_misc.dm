@@ -64,6 +64,8 @@
 	clear_positions()
 
 /obj/item/implant/warp/proc/update_position(datum/source)
+	SIGNAL_HANDLER
+
 	if(!isatom(imp_in.loc))
 		return
 	positions[num2text(world.time)] = imp_in.loc

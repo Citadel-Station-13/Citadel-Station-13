@@ -51,6 +51,8 @@
 	..()
 
 /datum/brain_trauma/severe/split_personality/proc/revert_to_normal()
+	SIGNAL_HANDLER
+
 	qdel(src)
 
 /datum/brain_trauma/severe/split_personality/proc/switch_personalities(forced = FALSE)

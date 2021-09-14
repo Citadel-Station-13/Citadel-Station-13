@@ -47,6 +47,8 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 
 //Dwarf Speech handling - Basically a filter/forces them to say things. The IC helper
 /datum/species/dwarf/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(speech_args[SPEECH_LANGUAGE] != /datum/language/dwarf && message[1] != "*") // No accent if they speak their language
 		message = " [message]" //Credits to goonstation for the strings list.

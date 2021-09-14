@@ -79,9 +79,13 @@
 	makeItemActive()
 
 /atom/movable/screen/storage/volumetric_box/proc/on_item_mouse_enter()
+	SIGNAL_HANDLER
+
 	makeItemActive()
 
 /atom/movable/screen/storage/volumetric_box/proc/on_item_mouse_exit()
+	SIGNAL_HANDLER
+
 	makeItemInactive()
 
 /atom/movable/screen/storage/volumetric_box/proc/makeItemInactive()

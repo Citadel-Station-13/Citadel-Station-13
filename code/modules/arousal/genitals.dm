@@ -157,6 +157,8 @@
 	return
 
 /obj/item/organ/genital/proc/update_appearance_genitals()
+	SIGNAL_HANDLER
+
 	if(!owner || owner.stat == DEAD)
 		aroused_state = FALSE
 

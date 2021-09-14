@@ -2,6 +2,8 @@
 //Having them here also makes for a nice reference list of the various overlay-updating procs available
 
 /mob/proc/regenerate_icons()		//TODO: phase this out completely if possible
+	SIGNAL_HANDLER
+
 	return
 
 /mob/proc/update_icons()

@@ -178,6 +178,8 @@
 	M.ghostize(can_reenter_corpse = TRUE, voluntary = TRUE)
 
 /datum/action/proc/OnUpdatedIcon()
+	SIGNAL_HANDLER
+
 	addtimer(CALLBACK(src, .proc/UpdateButtonIcon), 1) //Hopefully runs after new icon overlays have been compiled.
 
 //Presets for item actions

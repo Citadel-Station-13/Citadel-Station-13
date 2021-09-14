@@ -7,6 +7,8 @@
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED), .proc/Waddle)
 
 /datum/component/waddling/proc/Waddle()
+	SIGNAL_HANDLER
+
 	var/mob/living/L = parent
 	if(L.incapacitated() || L.lying)
 		return

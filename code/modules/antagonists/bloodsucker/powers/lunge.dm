@@ -13,7 +13,7 @@
 
 /datum/action/bloodsucker/lunge/New()
 	. = ..()
-	
+
 
 /datum/action/bloodsucker/lunge/Destroy()
 	. = ..()
@@ -37,7 +37,9 @@
 		sleep(5)
 
 //Without this, the leap component would get removed too early, causing the normal crash into effects.
-/datum/action/bloodsucker/lunge/proc/DelayedDeactivatePower() 
+/datum/action/bloodsucker/lunge/proc/DelayedDeactivatePower()
+	SIGNAL_HANDLER
+
 	addtimer(CALLBACK(src, .proc/DeactivatePower), 1 SECONDS, TIMER_UNIQUE)
 
 /datum/action/bloodsucker/lunge/DeactivatePower(mob/living/user = owner)

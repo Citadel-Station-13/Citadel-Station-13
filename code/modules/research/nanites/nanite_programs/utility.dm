@@ -391,6 +391,8 @@
 	disable_time = max(disable_time, world.time + minor_shock_disable_time)
 
 /datum/nanite_program/lockout/proc/check_antivirus()
+	SIGNAL_HANDLER
+
 	return (world.time <= disable_time)? NANITE_CHANGES_LOCKED : NONE
 
 /datum/nanite_program/lockout/antiviral

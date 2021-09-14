@@ -6,6 +6,8 @@
 	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
 
 /datum/element/trash/proc/UseFromHand(obj/item/source, mob/living/M, mob/living/user)
+	SIGNAL_HANDLER
+
 	if((M == user || user.vore_flags & TRASH_FORCEFEED) && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(HAS_TRAIT(H, TRAIT_TRASHCAN))

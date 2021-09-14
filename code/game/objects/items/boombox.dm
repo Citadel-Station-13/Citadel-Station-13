@@ -53,6 +53,8 @@
 	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, .proc/start_party)
 
 /obj/item/boombox/raiq/proc/start_party()
+	SIGNAL_HANDLER
+
 	if(boomingandboxing)
 		START_PROCESSING(SSobj, src)
 	else

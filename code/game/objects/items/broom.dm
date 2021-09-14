@@ -27,11 +27,15 @@
 
 /// triggered on wield of two handed item
 /obj/item/broom/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	to_chat(user, "<span class='notice'>You brace the [src] against the ground in a firm sweeping stance.</span>")
 	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, .proc/sweep)
 
 /// triggered on unwield of two handed item
 /obj/item/broom/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
 
 /obj/item/broom/afterattack(atom/A, mob/user, proximity)
@@ -41,6 +45,8 @@
 	sweep(user, A)
 
 /obj/item/broom/proc/sweep(datum/source, atom/newLoc)
+	SIGNAL_HANDLER
+
 	if(!ismob(source) || !isturf(newLoc) || (get_dist(source, newLoc) > 1))
 		return
 	var/turf/target = newLoc

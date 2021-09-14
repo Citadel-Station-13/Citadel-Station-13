@@ -7,7 +7,13 @@
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_ATOM_UPDATED_ICON, .proc/update_onmob, override = TRUE)
 
+/datum/element/update_icon_updates_onmob/Detach(datum/source, force)
+	. = ..()
+	UnregisterSignal(source, COMSIG_ATOM_UPDATED_ICON)
+
 /datum/element/update_icon_updates_onmob/proc/update_onmob(obj/item/target)
+	SIGNAL_HANDLER
+
 	if(ismob(target.loc))
 		var/mob/M = target.loc
 		if(M.is_holding(target))

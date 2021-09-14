@@ -121,17 +121,25 @@
 		play_squeak()
 
 /datum/component/squeak/proc/delay_squeak()
+	SIGNAL_HANDLER
+
 	if(prob(cross_squeak_delay_chance))
 		last_squeak = world.time
 
 /datum/component/squeak/proc/on_equip(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+
 	RegisterSignal(equipper, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react, TRUE)
 
 /datum/component/squeak/proc/on_drop(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	UnregisterSignal(user, COMSIG_MOVABLE_DISPOSING)
 
 // Disposal pipes related shit
 /datum/component/squeak/proc/disposing_react(datum/source, obj/structure/disposalholder/holder, obj/machinery/disposal/source)
+	SIGNAL_HANDLER
+
 	//We don't need to worry about unregistering this signal as it will happen for us automaticaly when the holder is qdeleted
 	RegisterSignal(holder, COMSIG_ATOM_DIR_CHANGE, .proc/holder_dir_change)
 

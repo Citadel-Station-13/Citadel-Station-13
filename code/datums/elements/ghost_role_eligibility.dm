@@ -46,6 +46,8 @@ GLOBAL_LIST_EMPTY(client_ghost_timeouts)
 	return FALSE
 
 /datum/element/ghost_role_eligibility/proc/get_ghost_flags()
+	SIGNAL_HANDLER
+
 	. = 0
 	if(!penalizing)
 		. |= COMPONENT_DO_NOT_PENALIZE_GHOSTING

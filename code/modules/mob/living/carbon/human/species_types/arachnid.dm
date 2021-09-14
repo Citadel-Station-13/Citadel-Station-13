@@ -131,6 +131,8 @@
 		return
 
 /datum/action/innate/spin_cocoon/proc/cocoonAtom(mob/living/carbon/human/species/arachnid/H, atom/movable/A)
+	SIGNAL_HANDLER
+
 	UnregisterSignal(H, list(COMSIG_MOB_ALTCLICKON))
 	var/datum/species/arachnid/E = H.dna.species
 	if (!H || !isarachnid(H))

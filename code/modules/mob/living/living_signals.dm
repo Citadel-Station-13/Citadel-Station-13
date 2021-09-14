@@ -10,6 +10,8 @@
 	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_PUGILIST), .proc/update_pugilism)
 
 /mob/living/proc/update_pugilism()
+	SIGNAL_HANDLER
+
 	if(HAS_TRAIT(src, TRAIT_PUGILIST))
 		combat_flags |= COMBAT_FLAG_UNARMED_PARRY
 		block_parry_data = pugilist_block_parry_data

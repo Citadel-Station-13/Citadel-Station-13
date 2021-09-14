@@ -39,10 +39,14 @@
 
 /// triggered on wield of two handed item
 /obj/item/spear/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/spear/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = FALSE
 
 /obj/item/spear/rightclick_attack_self(mob/user)

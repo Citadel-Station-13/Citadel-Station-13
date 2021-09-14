@@ -795,6 +795,8 @@
 	return (blood_DNA && blood_DNA["color"]) || BLOOD_COLOR_HUMAN
 
 /atom/proc/clean_blood()
+	SIGNAL_HANDLER
+
 	. = blood_DNA? TRUE : FALSE
 	blood_DNA = null
 

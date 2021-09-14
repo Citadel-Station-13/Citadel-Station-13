@@ -154,6 +154,8 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 #undef REMOVE_MOD_STEP
 
 /datum/mind/proc/on_skill_modifier_deletion(datum/skill_modifier/source)
+	SIGNAL_HANDLER
+
 	remove_skill_modifier(source.identifier)
 
 /datum/skill_modifier/proc/apply_modifier(value, skillpath, datum/skill_holder/H, method = MODIFIER_TARGET_VALUE)
@@ -196,9 +198,13 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 
 ///Body bound modifier signal procs.
 /datum/skill_modifier/proc/on_mind_transfer(datum/mind/source, mob/new_character, mob/old_character)
+	SIGNAL_HANDLER
+
 	source.remove_skill_modifier(identifier, TRUE)
 	UnregisterSignal(source, COMSIG_MIND_TRANSFER)
 
 /datum/skill_modifier/proc/on_mob_new_mind(mob/source)
+	SIGNAL_HANDLER
+
 	source.mind.add_skill_modifier(identifier)
 	RegisterSignal(source.mind, COMSIG_MIND_TRANSFER, /datum/skill_modifier.proc/on_mind_transfer)

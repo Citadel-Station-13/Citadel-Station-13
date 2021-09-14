@@ -16,6 +16,8 @@
 	REMOVE_TRAIT(target, TRAIT_SWIMMING, TRAIT_SWIMMING)
 
 /datum/element/swimming/proc/check_valid(datum/source)
+	SIGNAL_HANDLER
+
 	var/mob/living/L = source
 	if(!istype(L.loc, /turf/open/pool))
 		source.RemoveElement(/datum/element/swimming)

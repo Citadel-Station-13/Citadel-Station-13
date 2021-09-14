@@ -292,6 +292,8 @@ Difficulty: Extremely Hard
 
 /// Resurrects the target when they die by cloning them into a new duplicate body and transferring their mind to the clone on a safe station turf
 /obj/item/resurrection_crystal/proc/resurrect(mob/living/carbon/user, gibbed)
+	SIGNAL_HANDLER
+
 	user.visible_message("<span class='notice'>You see [user]'s soul dragged out of their body!</span>", "<span class='notice'>You feel your soul dragged away to a fresh body!</span>")
 	var/typepath = user.type
 	var/turf/T = find_safe_turf()
@@ -360,6 +362,8 @@ Difficulty: Extremely Hard
 
 /// Blocks movement from the status effect owner
 /datum/status_effect/ice_block_talisman/proc/owner_moved()
+	SIGNAL_HANDLER
+
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 /datum/status_effect/ice_block_talisman/on_remove()

@@ -1,6 +1,6 @@
 /**
   * KILLER QUEEN
-  * 
+  *
   * Simple contact bomb component
   * Blows up the first person to touch it.
   */
@@ -26,7 +26,7 @@
 	var/flame = 0
 	/// only triggered by living mobs
 	var/living_only = TRUE
-	
+
 
 /datum/component/killerqueen/Initialize(ex_strength = EXPLODE_HEAVY, datum/callback/pre_explode, datum/callback/failure, examine_message, light = 0, heavy = 0, dev = 0, flame = 0, living_only = TRUE)
 	. = ..()
@@ -62,19 +62,27 @@
 	COMSIG_MOVABLE_BUMP, COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE))
 
 /datum/component/killerqueen/proc/attackby_detonate(datum/source, obj/item/I, mob/user)
+	SIGNAL_HANDLER
+
 	detonate(user)
 
 /datum/component/killerqueen/proc/bump_detonate(datum/source, atom/A)
+	SIGNAL_HANDLER
+
 	var/atom/us = parent
 	if(!us.density)		// lazy anti-item-throw-OHKO, we need something better at some point
 		return
 	detonate(A)
 
 /datum/component/killerqueen/proc/touch_detonate(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	detonate(user)
 	return COMPONENT_NO_ATTACK_HAND
 
 /datum/component/killerqueen/proc/on_examine(datum/source, mob/examiner, list/examine_return)
+	SIGNAL_HANDLER
+
 	if(examine_message)
 		examine_return += examine_message
 

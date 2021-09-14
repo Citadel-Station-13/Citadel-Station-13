@@ -471,6 +471,8 @@
 	return ..()
 
 /datum/status_effect/chem/enthrall/proc/owner_hear(datum/source, list/hearing_args)
+	SIGNAL_HANDLER
+
 	if(lewd == FALSE)
 		return
 	if (cTriggered > 0)
@@ -537,6 +539,8 @@
 	return
 
 /datum/status_effect/chem/enthrall/proc/owner_resist()
+	SIGNAL_HANDLER
+
 	var/mob/living/carbon/M = owner
 	to_chat(owner, "<span class='notice'><i>You attempt to fight against [master]'s influence!</i></span>")
 

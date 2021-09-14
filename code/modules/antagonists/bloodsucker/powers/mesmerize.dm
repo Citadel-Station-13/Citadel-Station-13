@@ -89,6 +89,8 @@
 	return TRUE
 
 /datum/action/bloodsucker/targeted/mesmerize/proc/ContinueTarget(atom/A)
+	SIGNAL_HANDLER
+
 	var/mob/living/carbon/target = A
 	var/mob/living/L = owner
 

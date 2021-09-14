@@ -116,6 +116,8 @@
 		addtimer(CALLBACK(src, .proc/rise), respawn_time, TIMER_UNIQUE)
 
 /obj/item/phylactery/proc/get_threat(list/threat_list)
+	SIGNAL_HANDLER
+
 	if(mind?.current?.stat == DEAD)
 		if(!("phylactery" in threat_list))
 			threat_list["phylactery"] = 0

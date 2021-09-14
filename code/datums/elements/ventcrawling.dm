@@ -26,6 +26,8 @@
 	return ..()
 
 /datum/element/ventcrawling/proc/handle_ventcrawl(datum/target,atom/A)
+	SIGNAL_HANDLER
+
 	var/mob/living/person = target
 	if(!istype(person))
 		return FALSE
@@ -33,4 +35,6 @@
 	person.handle_ventcrawl(A,tier)
 
 /datum/element/ventcrawling/proc/check_ventcrawl()
+	SIGNAL_HANDLER
+
 	return tier

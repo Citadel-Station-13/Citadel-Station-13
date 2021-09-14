@@ -101,6 +101,8 @@
 
 // This proc can receive signals by either the thing being directly orbited or anything holding it
 /datum/component/orbiter/proc/move_react(atom/orbited, atom/oldloc, direction)
+	SIGNAL_HANDLER
+
 	set waitfor = FALSE // Transfer calls this directly and it doesnt care if the ghosts arent done moving
 
 	var/atom/movable/master = parent
@@ -136,6 +138,8 @@
 
 
 /datum/component/orbiter/proc/orbiter_move_react(atom/movable/orbiter, atom/oldloc, direction)
+	SIGNAL_HANDLER
+
 	if(orbiter.loc == get_turf(parent))
 		return
 	end_orbit(orbiter)

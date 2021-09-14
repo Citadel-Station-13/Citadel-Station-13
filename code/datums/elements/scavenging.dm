@@ -61,6 +61,8 @@
 	UnregisterSignal(target, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE))
 
 /datum/element/scavenging/proc/on_examine(atom/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
 	var/methods = tool_types.Copy()
 	if(can_use_hands)
 		methods += list("bare handed")
@@ -70,10 +72,14 @@
 	examine_list += "<span class='notice'>Looks like [source.p_they()] can be scavenged [length(tool_types) ? "with" : ""][length(methods == 1) ? "" : "either "][length(tool_types) ? "a " : ""][text]</span>"
 
 /datum/element/scavenging/proc/scavenge_barehanded(atom/source, mob/user)
+	SIGNAL_HANDLER
+
 	scavenge(source, user, 1)
 	return COMPONENT_NO_ATTACK_HAND
 
 /datum/element/scavenging/proc/scavenge_tool(atom/source, obj/item/I, mob/user, params)
+	SIGNAL_HANDLER
+
 	if(user.a_intent == INTENT_HARM || !I.tool_behaviour) //Robust trash disposal techniques!
 		return
 	var/speed_multi = tool_types[I.tool_behaviour]

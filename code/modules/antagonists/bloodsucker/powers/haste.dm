@@ -83,6 +83,8 @@
 	user.update_mobility()
 
 /datum/action/bloodsucker/targeted/haste/proc/on_move()
+	SIGNAL_HANDLER
+
 	for(var/mob/living/L in dview(1, get_turf(owner)))
 		if(!hit[L] && (L != owner))
 			hit[L] = TRUE

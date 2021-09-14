@@ -14,5 +14,7 @@
 	UnregisterSignal(source, COMSIG_ITEM_ALT_AFTERATTACK)
 
 /datum/element/sword_point/proc/point(datum/source, atom/target, mob/user, proximity_flag, params)
+	SIGNAL_HANDLER
+
 	if(!proximity_flag && ismob(target))
 		user.visible_message("<span class='notice'>[user] points the tip of [source] at [target].</span>", "<span class='notice'>You point the tip of [source] at [target].</span>")

@@ -475,6 +475,8 @@
 	. += "<span class='warning'>It has [wallcharges] charges left.</span>"
 
 /obj/item/clothing/shoes/wallwalkers/proc/intercept_user_move(mob/living/m, client/client, dir, newloc, oldloc)
+	SIGNAL_HANDLER
+
 	if (walkcool >= world.time || m.m_intent != MOVE_INTENT_WALK || wallcharges <= 0)
 		return
 	walkcool = world.time + m.movement_delay()

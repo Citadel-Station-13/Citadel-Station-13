@@ -81,12 +81,16 @@
 	H.update_body()
 
 /datum/species/ethereal/proc/on_emp_act(mob/living/carbon/human/H, severity)
+	SIGNAL_HANDLER
+
 	EMPeffect = TRUE
 	spec_updatehealth(H)
 	to_chat(H, "<span class='notice'>You feel the light of your body leave you.</span>")
 	addtimer(CALLBACK(src, .proc/stop_emp, H), (severity/5) SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //lights out
 
 /datum/species/ethereal/proc/on_emag_act(mob/living/carbon/human/H, mob/user)
+	SIGNAL_HANDLER
+
 	if(emageffect)
 		return
 	emageffect = TRUE

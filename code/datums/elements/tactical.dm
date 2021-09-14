@@ -18,6 +18,8 @@
 	return ..()
 
 /datum/element/tactical/proc/modify(obj/item/source, mob/user, slot)
+	SIGNAL_HANDLER
+
 	if(allowed_slot && slot != allowed_slot)
 		unmodify(source, user)
 		return
@@ -29,6 +31,8 @@
 	I.layer = ABOVE_MOB_LAYER
 
 /datum/element/tactical/proc/unmodify(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	if(!user)
 		if(!ismob(source.loc))
 			return

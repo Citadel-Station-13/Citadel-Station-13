@@ -29,6 +29,8 @@
 	UnregisterSignal(parent, bounce_signals)
 
 /datum/component/bouncy/proc/bounce_up(datum/source)
+	SIGNAL_HANDLER
+
 	var/atom/movable/A = parent
 	switch(rand(1, 3))
 		if(1)

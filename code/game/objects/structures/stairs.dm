@@ -117,7 +117,7 @@
 		T.ChangeTurf(/turf/open/openspace, flags = CHANGETURF_INHERIT_AIR)
 
 /obj/structure/stairs/proc/on_multiz_new(turf/source, dir)
-	//SIGNAL_HANDLER
+	SIGNAL_HANDLER
 	SHOULD_NOT_SLEEP(TRUE) //the same thing.
 
 	if(dir == UP)

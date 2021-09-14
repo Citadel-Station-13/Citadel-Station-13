@@ -151,7 +151,7 @@
 				if(SOFT_CRIT)
 					status = "Barely Conscious"
 			data["vr_avatar"] += list("status" = status, "health" = vr_mob.health, "maxhealth" = vr_mob.maxHealth)
-	else 
+	else
 		data["can_delete_avatar"] = FALSE
 		data["vr_avatar"] = FALSE
 		data["isliving"] = FALSE
@@ -190,9 +190,13 @@
 		to_chat(M, "<span class='notice'>Transfer failed! virtual reality data likely corrupted!</span>")
 
 /obj/machinery/vr_sleeper/proc/unset_vr_mob(datum/component/virtual_reality/VR)
+	SIGNAL_HANDLER
+
 	vr_mob = null
 
 /obj/machinery/vr_sleeper/proc/set_vr_mob(datum/component/virtual_reality/VR)
+	SIGNAL_HANDLER
+
 	vr_mob = VR.parent
 
 /obj/machinery/vr_sleeper/proc/cleanup_vr_mob()

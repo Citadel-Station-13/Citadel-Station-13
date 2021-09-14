@@ -99,6 +99,8 @@
 		A.update_icon() //removing the overlays
 
 /datum/element/polychromic/proc/apply_overlays(atom/source, list/overlays)
+	SIGNAL_HANDLER
+
 	var/list/L = colors_by_atom[source]
 	var/f_icon = icon_file || source.icon
 	if(isnum(overlays_states))
@@ -108,6 +110,8 @@
 		overlays += colors_by_atom[source]
 
 /datum/element/polychromic/proc/apply_worn_overlays(obj/item/source, isinhands, icon, used_state, style_flags, list/overlays)
+	SIGNAL_HANDLER
+
 	if(poly_flags & (isinhands ? POLYCHROMIC_NO_HELD : POLYCHROMIC_NO_WORN))
 		return
 	var/f_icon = worn_file || icon
@@ -122,6 +126,8 @@
 			overlays += mutable_appearance(f_icon, overlays_states[i], color = M.color)
 
 /datum/element/polychromic/proc/set_color(atom/source, mob/user)
+	SIGNAL_HANDLER
+
 	var/choice = input(user,"Polychromic options", "Recolor [source]") as null|anything in overlays_names
 	if(!choice || QDELETED(source) || !user.canUseTopic(source, BE_CLOSE, NO_DEXTERY))
 		return
@@ -144,6 +150,8 @@
 	return TRUE
 
 /datum/element/polychromic/proc/grant_user_action(atom/source, mob/user, slot)
+	SIGNAL_HANDLER
+
 	if(slot == SLOT_IN_BACKPACK || slot == SLOT_LEGCUFFED || slot == SLOT_HANDCUFFED || slot == SLOT_GENERC_DEXTROUS_STORAGE)
 		return
 	var/datum/action/polychromic/P = actions_by_atom[source]
@@ -156,13 +164,19 @@
 	P.Grant(user)
 
 /datum/element/polychromic/proc/remove_user_action(atom/source, mob/user)
+	SIGNAL_HANDLER
+
 	var/datum/action/polychromic/P = actions_by_atom[source]
 	P?.Remove(user)
 
 /datum/element/polychromic/proc/activate_action(datum/action/source, atom/target)
+	SIGNAL_HANDLER
+
 	set_color(target, source.owner)
 
 /datum/element/polychromic/proc/on_examine(atom/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
 	examine_list += "<span class='notice'>Alt-click to recolor it.</span>"
 
 /datum/element/polychromic/proc/connect_helmet(atom/I, var/applycolor)
@@ -175,6 +189,8 @@
 			colors_by_atom[Isuit.helmet] = applycolor
 
 /datum/element/polychromic/proc/register_helmet(atom/source, obj/item/clothing/head/H)
+	SIGNAL_HANDLER
+
 	if(!isitem(H)) //backup in case if it messes up somehow
 		if(istype(source,/obj/item/clothing/suit/hooded)) //so how come it be like this, where toggleable headslots are named separately (helmet/hood) anyways?
 			var/obj/item/clothing/suit/hooded/sourcesuit = source
@@ -192,6 +208,8 @@
 	RegisterSignal(H, COMSIG_PARENT_QDELETING, .proc/unregister_helmet)
 
 /datum/element/polychromic/proc/unregister_helmet(atom/source)
+	SIGNAL_HANDLER
+
 	var/obj/item/clothing/suit/S = suit_by_helmet[source]
 	suit_by_helmet -= source
 	helmet_by_suit -= S

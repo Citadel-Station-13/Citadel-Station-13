@@ -201,6 +201,8 @@
 	return ..()
 
 /datum/action/item_action/stickmen/proc/give_infos(atom/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
 	examine_list += "<span class='notice'>Making sure you are properly wearing or holding it, \
 					point at whatever you want to rally your minions to its position."
 	examine_list += "While on <b>harm</b> intent, pointed mobs (minus you and the minions) \
@@ -251,6 +253,8 @@
 	addtimer(CALLBACK(src, .proc/ready_again), cooldown)
 
 /datum/action/item_action/stickmen/proc/remove_from_list(datum/source, forced)
+	SIGNAL_HANDLER
+
 	summoned_stickmen -= source
 
 /datum/action/item_action/stickmen/proc/ready_again()
@@ -265,6 +269,8 @@
   * This is designed so stickmen will move toward whatever you point at even when you don't want to, that's the downside.
   */
 /datum/action/item_action/stickmen/proc/rally(mob/source, atom/A)
+	SIGNAL_HANDLER
+
 	var/turf/T = get_turf(A)
 	var/list/surrounding_turfs = block(locate(T.x - 1, T.y - 1, T.z), locate(T.x + 1, T.y + 1, T.z))
 	if(!surrounding_turfs.len)
@@ -292,6 +298,8 @@
 		book_of_grudges -= L
 
 /datum/action/item_action/stickmen/proc/grudge_settled(mob/living/L)
+	SIGNAL_HANDLER
+
 	UnregisterSignal(L, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH))
 	book_of_grudges -= L
 

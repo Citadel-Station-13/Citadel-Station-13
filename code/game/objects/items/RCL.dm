@@ -36,10 +36,14 @@
 
 /// triggered on wield of two handed item
 /obj/item/rcl/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	active = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/rcl/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	active = FALSE
 
 /obj/item/rcl/attackby(obj/item/W, mob/user)
@@ -175,6 +179,8 @@
 	listeningTo = to_hook
 
 /obj/item/rcl/proc/trigger(mob/user)
+	SIGNAL_HANDLER
+
 	if(active)
 		layCable(user)
 	if(wiring_gui_menu) //update the wire options as you move

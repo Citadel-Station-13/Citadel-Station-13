@@ -138,6 +138,8 @@
 			qdel(src)	//How?
 
 /obj/item/grenade/plastic/proc/add_plastic_overlay(atom/source, list/overlay_list)
+	SIGNAL_HANDLER
+
 	overlay_list += plastic_overlay
 
 /obj/item/grenade/plastic/proc/shout_syndicate_crap(mob/M)

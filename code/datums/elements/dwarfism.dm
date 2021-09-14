@@ -24,6 +24,8 @@
 	RegisterSignal(target, comsig, .proc/check_loss) //Second arg of the signal will be checked against the comsig_target.
 
 /datum/element/dwarfism/proc/check_loss(mob/living/L, comsig_target)
+	SIGNAL_HANDLER
+
 	if(attached_targets[L] == comsig_target)
 		Detach(L)
 

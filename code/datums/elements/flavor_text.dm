@@ -56,6 +56,8 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 			remove_verb(M, /mob/proc/manage_flavor_tests)
 
 /datum/element/flavor_text/proc/show_flavor(atom/target, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
 	if(!always_show && isliving(target))
 		var/mob/living/L = target
 		var/unknown = L.get_visible_name() == "Unknown"
@@ -146,6 +148,8 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	return FALSE
 
 /datum/element/flavor_text/proc/update_prefs_flavor_text(mob/living/carbon/human/H, datum/preferences/P, icon_updates = TRUE, roundstart_checks = TRUE)
+	SIGNAL_HANDLER
+
 	if(P.features.Find(save_key))
 		texts_by_atom[H] = P.features[save_key]
 
@@ -172,6 +176,8 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	UnregisterSignal(C, list(COMSIG_CARBON_IDENTITY_TRANSFERRED_TO, COMSIG_MOB_ANTAG_ON_GAIN, COMSIG_HUMAN_PREFS_COPIED_TO, COMSIG_HUMAN_HARDSET_DNA, COMSIG_HUMAN_ON_RANDOMIZE))
 
 /datum/element/flavor_text/carbon/proc/update_dna_flavor_text(mob/living/carbon/C)
+	SIGNAL_HANDLER
+
 	texts_by_atom[C] = C.dna.features[save_key]
 
 /datum/element/flavor_text/carbon/set_flavor(mob/living/carbon/user)
@@ -180,6 +186,8 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		user.dna.features[save_key] = texts_by_atom[user]
 
 /datum/element/flavor_text/carbon/proc/unset_flavor(mob/living/carbon/user)
+	SIGNAL_HANDLER
+
 	texts_by_atom[user] = ""
 
 /datum/element/flavor_text/carbon/proc/on_antag_gain(mob/living/carbon/user, datum/antagonist/antag)

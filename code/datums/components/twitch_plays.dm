@@ -18,11 +18,15 @@
 	return ..()
 
 /datum/component/twitch_plays/proc/on_start_orbit(datum/source, atom/movable/orbiter)
+	SIGNAL_HANDLER
+
 	if(!isobserver(orbiter))
 		return
 	AttachPlayer(orbiter)
 
 /datum/component/twitch_plays/proc/on_end_orbit(datum/source, atom/movable/orbiter)
+	SIGNAL_HANDLER
+
 	if(!(orbiter in players))
 		return
 	DetachPlayer(orbiter)
@@ -57,6 +61,8 @@
 	UnregisterSignal(observer, COMSIG_MOVABLE_PRE_MOVE)
 
 /datum/component/twitch_plays/simple_movement/proc/pre_move(datum/source, turf/newLoc)
+	SIGNAL_HANDLER
+
 	if(get_dist(newLoc, parent) > 1)			// they're trying to escape orbit
 		return
 	. = COMPONENT_MOVABLE_BLOCK_PRE_MOVE
@@ -69,6 +75,8 @@
 		votes[source] = prob(50)? (dir & ~(dir - 1)) : (dir & (dir - 1))
 
 /datum/component/twitch_plays/simple_movement/proc/fetch_data(datum/source, wipe_votes)
+	SIGNAL_HANDLER
+
 	if(!votes.len)
 		return
 	var/list/total = list(TEXT_NORTH, TEXT_SOUTH, TEXT_EAST, TEXT_WEST)
