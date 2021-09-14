@@ -771,7 +771,7 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/crowbar/cyborg,
 		/obj/item/food/reagent_containers/drinks/drinkingglass,
-		/obj/item/food/condiment/enzyme,
+		/obj/item/reagent_containers/food/condiment/enzyme,
 		/obj/item/pen,
 		/obj/item/toy/crayon/spraycan/borg,
 		/obj/item/hand_labeler/borg,
@@ -800,7 +800,7 @@
 
 /obj/item/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
-	var/obj/item/reagent_containers/O = locate(/obj/item/food/condiment/enzyme) in basic_modules
+	var/obj/item/reagent_containers/O = locate(/obj/item/reagent_containers/food/condiment/enzyme) in basic_modules
 	var/obj/item/lightreplacer/LR = locate(/obj/item/lightreplacer) in basic_modules
 	if(O)
 		O.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)

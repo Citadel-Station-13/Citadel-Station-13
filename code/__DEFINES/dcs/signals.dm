@@ -623,3 +623,49 @@
 
 // /datum/component/identification signals
 #define COMSIG_IDENTIFICATION_KNOWLEDGE_CHECK "id_knowledge_check"			// (mob/user) - returns a value from ID_COMPONENT_KNOWLEDGE_NONE to ID_COMPONENT_KNOWLEDGE_FULL
+
+//Food
+
+///from Edible component: (mob/living/eater, mob/feeder, bitecount, bitesize)
+#define COMSIG_FOOD_EATEN "food_eaten"
+///from base of datum/component/edible/on_entered: (mob/crosser, bitecount)
+#define COMSIG_FOOD_CROSSED "food_crossed"
+
+///from base of Component/edible/On_Consume: (mob/living/eater, mob/living/feeder)
+#define COMSIG_FOOD_CONSUMED "food_consumed"
+
+#define COMSIG_ITEM_FRIED "item_fried"
+	#define COMSIG_FRYING_HANDLED (1<<0)
+
+//Drink
+
+///from base of obj/item/reagent_containers/food/drinks/attack(): (mob/living/M, mob/user)
+#define COMSIG_DRINK_DRANK "drink_drank"
+///from base of obj/item/reagent_containers/glass/attack(): (mob/M, mob/user)
+#define COMSIG_GLASS_DRANK "glass_drank"
+
+//Customizable
+
+///called when an atom with /datum/component/customizable_reagent_holder is customized (obj/item/I)
+#define COMSIG_ATOM_CUSTOMIZED "atom_customized"
+///called when an item is used as an ingredient: (atom/customized)
+#define COMSIG_ITEM_USED_AS_INGREDIENT "item_used_as_ingredient"
+///called when an edible ingredient is added: (datum/component/edible/ingredient)
+#define COMSIG_EDIBLE_INGREDIENT_ADDED "edible_ingredient_added"
+
+#define COMSIG_ITEM_MICROWAVE_ACT "microwave_act"
+	#define COMPONENT_SUCCESFUL_MICROWAVE (1<<0)
+///called on item when created through microwaving (): (obj/machinery/microwave/M, cooking_efficiency)
+#define COMSIG_ITEM_MICROWAVE_COOKED "microwave_cooked"
+///Called when an object is grilled ontop of a griddle
+#define COMSIG_ITEM_GRILLED "item_griddled"
+	#define COMPONENT_HANDLED_GRILLING (1<<0)
+///Called when an object is turned into another item through grilling ontop of a griddle
+#define COMSIG_GRILL_COMPLETED "item_grill_completed"
+//Called when an object is in an oven
+#define COMSIG_ITEM_BAKED "item_baked"
+	#define COMPONENT_HANDLED_BAKING (1<<0)
+	#define COMPONENT_BAKING_GOOD_RESULT (1<<1)
+	#define COMPONENT_BAKING_BAD_RESULT (1<<2)
+///Called when an object is turned into another item through baking in an oven
+#define COMSIG_BAKE_COMPLETED "item_bake_completed"

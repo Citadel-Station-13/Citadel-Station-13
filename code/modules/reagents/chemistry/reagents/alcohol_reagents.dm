@@ -96,8 +96,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "beerglass"
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
-	ph = 4
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	pH = 4
 	fallback_icon_state = "beer"
 	glass_price = DRINK_PRICE_STOCK
 
@@ -117,8 +116,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of light beer"
 	glass_desc = "A freezing pint of watery light beer."
 	ph = 5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	fallback_icon_state = "beer"
 
 /datum/reagent/consumable/ethanol/beer/maltliquor
 	name = "Malt Liquor"
@@ -128,7 +125,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of malt liquor"
 	glass_desc = "A freezing pint of malt liquor."
 	ph = 4.8
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/beer/green
 	name = "Green Beer"
@@ -139,7 +135,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of green beer"
 	glass_desc = "A freezing pint of green beer. Festive."
 	ph = 6
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 
 /datum/reagent/consumable/ethanol/beer/green/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -160,7 +155,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "DAMN, THIS THING LOOKS ROBUST!"
 	shot_glass_icon_state = "shotglasscream"
 	ph = 6
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
@@ -182,7 +176,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "The silky, smokey whiskey goodness inside the glass makes the drink look very classy."
 	shot_glass_icon_state = "shotglassbrown"
 	ph = 4.5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_STOCK
 
 /datum/reagent/consumable/ethanol/whiskey/kong
@@ -192,7 +185,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "the grip of a giant ape"
 	glass_name = "glass of Kong"
 	glass_desc = "Makes You Go Ape!&#174;"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 
 /datum/reagent/consumable/ethanol/whiskey/candycorn
@@ -203,7 +195,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of candy corn liquor"
 	glass_desc = "Good for your Imagination."
 	var/hal_amt = 4
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/whiskey/candycorn/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(5, delta_time))
@@ -222,7 +213,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "thirteen_loko_glass"
 	glass_name = "glass of Thirteen Loko"
 	glass_desc = "This is a glass of Thirteen Loko, it appears to be of the highest quality. The drink, not the glass."
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.drowsyness = max(M.drowsyness - (7 * REM * delta_time))
@@ -284,7 +274,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "The glass contain wodka. Xynta."
 	shot_glass_icon_state = "shotglassclear"
 	ph = 8.1
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/vodka/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.radiation = max(M.radiation - (2 * REM * delta_time),0)
@@ -300,7 +289,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "glass_brown"
 	glass_name = "glass of bilk"
 	glass_desc = "A brew of milk and beer. For those alcoholics who fear osteoporosis."
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/bilk/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getBruteLoss() && DT_PROB(5, delta_time))
@@ -319,7 +307,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Three Mile Island Ice Tea"
 	glass_desc = "A glass of this is sure to prevent a meltdown."
 	ph = 3.5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/threemileisland/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.set_drugginess(50 * REM * delta_time)
@@ -335,7 +322,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of gin"
 	glass_desc = "A crystal clear glass of Griffeater gin."
 	ph = 6.9
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_STOCK
 
 /datum/reagent/consumable/ethanol/rum
@@ -361,7 +347,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Now all that's missing is the weird colored shades!"
 	shot_glass_icon_state = "shotglassgold"
 	ph = 4
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_STOCK
 
 /datum/reagent/consumable/ethanol/vermouth

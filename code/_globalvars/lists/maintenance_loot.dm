@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/storage/toolbox/artistic = 2,
 	/obj/item/toy/eightball = 1,
 	/obj/item/reagent_containers/pill/floorpill = 1,
-	/obj/item/food/cannedpeaches/maint = 2,
+	/obj/item/food/canned/peaches/maint = 2,
 	/obj/item/clothing/shoes/wheelys = 1,
 	/obj/item/clothing/shoes/kindleKicks = 1,
 	/obj/item/storage/box/marshmallow = 2,
