@@ -1,11 +1,11 @@
-datum/job/prisoner
+/datum/job/prisoner
 	title = "Prisoner"
 	flag = PRISONER
 	department_head = list("The Security Team")
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the security team"
 
 	outfit = /datum/outfit/job/prisoner
