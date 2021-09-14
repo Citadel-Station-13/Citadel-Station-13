@@ -1999,7 +1999,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(CHECK_MOBILITY(target, MOBILITY_STAND))
 			target.adjustStaminaLoss(5)
 		else
-			target.adjustStaminaLoss(target.getStaminaLoss() > 75? 5 : 75)
+			target.adjustStaminaLoss(IS_STAMCRIT(target)? 2 : 10)
 
 		if(target.is_shove_knockdown_blocked())
 			return
