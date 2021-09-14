@@ -7,7 +7,7 @@ GLOBAL_LIST_EMPTY(gangs)
 	config_tag = "gang"
 	antag_flag = ROLE_GANG
 	chaos = 9
-	restricted_jobs = list("AI", "Cyborg")
+	restricted_jobs = list("Prisoner", "AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
 	required_players = 15
 	required_enemies = 0
