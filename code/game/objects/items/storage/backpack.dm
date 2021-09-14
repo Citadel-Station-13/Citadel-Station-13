@@ -259,8 +259,8 @@
 /obj/item/storage/backpack/satchel/bone
 	name = "bone satchel"
 	desc = "A grotesque satchel made of sinews and bones."
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "goliath_saddle"
+	icon_state = "satchel-bone"
+	item_state = "satchel-bone"
 	slot_flags = ITEM_SLOT_BACK
 
 /obj/item/storage/backpack/satchel/bone/ComponentInitialize()
