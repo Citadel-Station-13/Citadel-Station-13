@@ -686,6 +686,10 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Prison Gate";
+	name = "Prison Lockdown Shutters"
+	},
 /turf/open/floor/plating,
 /area/security/prison)
 "abE" = (
@@ -1172,6 +1176,10 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Prison Gate";
+	name = "Prison Lockdown Shutters"
 	},
 /turf/open/floor/plating,
 /area/security/prison/upper)
@@ -1902,6 +1910,10 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Prison Gate";
+	name = "Prison Lockdown Shutters"
+	},
 /turf/open/floor/plating,
 /area/security/prison)
 "aej" = (
@@ -2609,6 +2621,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Prison Gate";
+	name = "Prison Lockdown Shutters"
 	},
 /turf/open/floor/plating,
 /area/security/brig)
@@ -3408,7 +3424,11 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/turf/open/floor/plasteel,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Prison Gate";
+	name = "Prison Lockdown Shutters"
+	},
+/turf/open/floor/plasteel/dark,
 /area/security/brig)
 "agP" = (
 /obj/structure/cable{
@@ -3760,6 +3780,10 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Prison Gate";
+	name = "Prison Lockdown Shutters"
+	},
 /turf/open/floor/plating,
 /area/security/brig)
 "ahw" = (
@@ -3771,6 +3795,10 @@
 	icon_state = "1-4"
 	},
 /obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Prison Gate";
+	name = "Prison Lockdown Shutters"
+	},
 /turf/open/floor/plating,
 /area/security/brig)
 "ahx" = (
@@ -51766,6 +51794,10 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Prison Gate";
+	name = "Prison Lockdown Shutters"
+	},
 /turf/open/floor/plating,
 /area/security/prison/upper)
 "cNE" = (
@@ -51928,13 +51960,13 @@
 /obj/structure/sign/warning/securearea{
 	pixel_x = -32
 	},
-/obj/machinery/door/poddoor/preopen{
-	id = "Prison Gate";
-	name = "prison blast door"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Prison Gate";
+	name = "Prison Lockdown Shutters"
+	},
+/turf/open/floor/plasteel/dark,
 /area/security/prison)
 "cPb" = (
 /turf/open/floor/wood/wood_diagonal,
@@ -53772,13 +53804,13 @@
 /area/cargo/miningdock)
 "eWL" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/preopen{
-	id = "Prison Gate";
-	name = "prison blast door"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Prison Gate";
+	name = "Prison Lockdown Shutters"
+	},
+/turf/open/floor/plasteel/dark,
 /area/security/prison)
 "eXz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -57281,6 +57313,10 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Prison Gate";
+	name = "Prison Lockdown Shutters"
 	},
 /turf/open/floor/plating,
 /area/security/prison/upper)
@@ -66209,6 +66245,10 @@
 	name = "prison blast door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Prison Gate";
+	name = "Prison Lockdown Shutters"
+	},
 /turf/open/floor/plating,
 /area/security/prison/upper)
 "xiw" = (
@@ -66255,15 +66295,16 @@
 	icon_state = "1-2"
 	},
 /obj/structure/sign/warning/securearea{
-	pixel_x = -32
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "Prison Gate";
-	name = "prison blast door"
+	pixel_x = -32;
+	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Prison Gate";
+	name = "Prison Lockdown Shutters"
+	},
+/turf/open/floor/plasteel/dark,
 /area/security/range)
 "xlX" = (
 /obj/structure/table/reinforced,
@@ -66358,6 +66399,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
+"xuu" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Prison Gate";
+	name = "Prison Lockdown Shutters"
+	},
+/turf/open/floor/plating,
+/area/security/brig)
 "xwB" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
@@ -93013,7 +93065,7 @@ adI
 xKl
 omX
 afG
-aim
+xuu
 afL
 ahu
 aie
@@ -94041,7 +94093,7 @@ adJ
 aep
 aeT
 afG
-aim
+xuu
 ajL
 akj
 afM
