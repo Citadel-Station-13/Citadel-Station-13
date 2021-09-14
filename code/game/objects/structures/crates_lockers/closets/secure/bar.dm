@@ -10,4 +10,4 @@
 /obj/structure/closet/secure_closet/bar/PopulateContents()
 	..()
 	for(var/i in 1 to 10)
-		new /obj/item/food/reagent_containers/drinks/beer( src )
+		new /obj/item/food/reagent_containers/drinks/bottle/beer( src )

@@ -996,7 +996,7 @@
 							  /obj/item/food/meat/slab/bear,
 							  /obj/item/food/meat/slab/spider,
 							  /obj/item/food/spidereggs,
-							  /obj/item/food/carpmeat,
+							  /obj/item/food/fishmeat/carp,
 							  /obj/item/food/meat/slab/xeno,
 							  /obj/item/food/meat/slab/corgi,
 							  /obj/item/food/grown/oat,
@@ -1111,7 +1111,7 @@
 	new /obj/item/food/meat/slab/bear(src)
 	new /obj/item/food/meat/slab/spider(src)
 	new /obj/item/food/spidereggs(src)
-	new /obj/item/food/carpmeat(src)
+	new /obj/item/food/fishmeat/carp(src)
 	new /obj/item/food/meat/slab/xeno(src)
 	new /obj/item/food/meat/slab/corgi(src)
 	new /obj/item/food/meatball(src)
@@ -1121,7 +1121,7 @@
 
 /obj/item/storage/box/ingredients/exotic/PopulateContents()
 	for(var/i in 1 to 2)
-		new /obj/item/food/carpmeat(src)
+		new /obj/item/food/fishmeat/carp(src)
 		new /obj/item/food/grown/soybeans(src)
 		new /obj/item/food/grown/cabbage(src)
 	new /obj/item/food/grown/chili(src)
@@ -1132,7 +1132,7 @@
 /obj/item/storage/box/ingredients/sushi/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/food/sea_weed(src)
-		new /obj/item/food/carpmeat(src)
+		new /obj/item/food/fishmeat/carp(src)
 	new /obj/item/food/meat/rawcrab(src)
 
 /obj/item/storage/box/emptysandbags

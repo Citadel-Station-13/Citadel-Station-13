@@ -196,7 +196,7 @@
 					/obj/item/food/spidereggs,
 					/obj/item/food/meat/rawcrab,
 					/obj/item/food/spiderleg,
-					/obj/item/food/carpmeat,
+					/obj/item/food/fishmeat/carp,
 					/obj/item/food/meat/slab/human)
 	crate_name = "exotic meat crate"
 
@@ -228,10 +228,10 @@
 					/obj/item/food/meat/slab/meatproduct,
 					/obj/item/food/meat/slab/meatproduct,
 					/obj/item/food/meat/slab/meatproduct,
-					/obj/item/food/carpmeat/imitation,
-					/obj/item/food/carpmeat/imitation,
-					/obj/item/food/carpmeat/imitation,
-					/obj/item/food/carpmeat/imitation)
+					/obj/item/food/fishmeat/carp/imitation,
+					/obj/item/food/fishmeat/carp/imitation,
+					/obj/item/food/fishmeat/carp/imitation,
+					/obj/item/food/fishmeat/carp/imitation)
 	crate_name = "meaty crate"
 	crate_type = /obj/structure/closet/crate/freezer
 
@@ -379,12 +379,12 @@
 					/obj/item/food/reagent_containers/drinks/shaker,
 					/obj/item/food/reagent_containers/drinks/bottle/patron,
 					/obj/item/food/reagent_containers/drinks/bottle/goldschlager,
-					/obj/item/food/reagent_containers/drinks/ale,
-					/obj/item/food/reagent_containers/drinks/ale,
-					/obj/item/food/reagent_containers/drinks/beer,
-					/obj/item/food/reagent_containers/drinks/beer,
-					/obj/item/food/reagent_containers/drinks/beer,
-					/obj/item/food/reagent_containers/drinks/beer,
+					/obj/item/food/reagent_containers/drinks/bottle/ale,
+					/obj/item/food/reagent_containers/drinks/bottle/ale,
+					/obj/item/food/reagent_containers/drinks/bottle/beer,
+					/obj/item/food/reagent_containers/drinks/bottle/beer,
+					/obj/item/food/reagent_containers/drinks/bottle/beer,
+					/obj/item/food/reagent_containers/drinks/bottle/beer,
 					/obj/item/flashlight/glowstick,
 					/obj/item/flashlight/glowstick/red,
 					/obj/item/flashlight/glowstick/blue,

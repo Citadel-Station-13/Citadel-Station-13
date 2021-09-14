@@ -11,7 +11,7 @@
 	environment_smash = 0
 	speak_chance = 0
 	turns_per_move = 3
-	butcher_results = list(/obj/item/food/carpmeat = 3)
+	butcher_results = list(/obj/item/food/fishmeat/carp = 3)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"

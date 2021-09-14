@@ -139,13 +139,13 @@
 	cost = 30
 	unit_name = "baked goods"
 	export_types = list(/obj/item/food/donut, /obj/item/food/muffin, /obj/item/food/waffles, /obj/item/food/plumphelmetbiscuit, \
-						/obj/item/food/chococornet, /obj/item/food/cherrycupcake, /obj/item/food/bluecherrycupcake, /obj/item/food/honeybun, /obj/item/food/pancakes)
+						/obj/item/food/chococornet, /obj/item/food/cherrycupcake, /obj/item/food/cherrycupcake/blue, /obj/item/food/honeybun, /obj/item/food/pancakes)
 
 /datum/export/food/pasta
 	cost = 20
 	unit_name = "pasta based meal"
-	export_types = list(/obj/item/food/spaghetti, /obj/item/food/boiledspaghetti, /obj/item/food/pastatomato, /obj/item/food/copypasta, \
-						/obj/item/food/meatballspaghetti, /obj/item/food/spesslaw, /obj/item/food/chowmein, /obj/item/food/beefnoodle, /obj/item/food/butternoodles)
+	export_types = list(/obj/item/food/spaghetti, /obj/item/food/spaghetti/boiledspaghetti, /obj/item/food/spaghetti/pastatomato, /obj/item/food/spaghetti/copypasta, \
+						/obj/item/food/spaghetti/meatballspaghetti, /obj/item/food/spaghetti/spesslaw, /obj/item/food/spaghetti/chowmein, /obj/item/food/spaghetti/beefnoodle, /obj/item/food/spaghetti/butternoodles)
 
 /datum/export/food/pizza
 	cost = 120

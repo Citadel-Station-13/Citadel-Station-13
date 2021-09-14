@@ -9,19 +9,11 @@
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
 
 /datum/chemical_reaction/food
-	optimal_temp = 400
-	temp_exponent_factor = 1
-	optimal_ph_min = 2
-	optimal_ph_max = 10
-	thermic_constant = 0
-	H_ion_release = 0
-	reaction_tags = REACTION_TAG_FOOD | REACTION_TAG_EASY
 
 /datum/chemical_reaction/food/tofu
 	required_reagents = list(/datum/reagent/consumable/soymilk = 10)
 	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 	mob_react = FALSE
-	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/tofu/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -39,7 +31,6 @@
 
 /datum/chemical_reaction/food/chocolate_bar
 	required_reagents = list(/datum/reagent/consumable/soymilk = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/sugar = 2)
-	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/chocolate_bar/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -50,7 +41,6 @@
 /datum/chemical_reaction/food/chocolate_bar2
 	required_reagents = list(/datum/reagent/consumable/milk/chocolate_milk = 4, /datum/reagent/consumable/sugar = 2)
 	mob_react = FALSE
-	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/chocolate_bar2/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -60,7 +50,6 @@
 
 /datum/chemical_reaction/food/chocolate_bar3
 	required_reagents = list(/datum/reagent/consumable/milk = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/sugar = 2)
-	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/chocolate_bar3/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -81,15 +70,12 @@
 	results = list(/datum/reagent/consumable/caramel = 1)
 	required_reagents = list(/datum/reagent/consumable/sugar = 1)
 	required_temp = 413.15
-	optimal_temp = 600
 	mob_react = FALSE
 
 /datum/chemical_reaction/food/caramel_burned
 	results = list(/datum/reagent/carbon = 1)
 	required_reagents = list(/datum/reagent/consumable/caramel = 1)
 	required_temp = 483.15
-	optimal_temp = 1000
-	rate_up_lim = 10
 	mob_react = FALSE
 
 /datum/chemical_reaction/food/cheesewheel

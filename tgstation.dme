@@ -668,7 +668,6 @@
 #include "code\datums\elements\food\dunkable.dm"
 #include "code\datums\elements\food\food_trash.dm"
 #include "code\datums\elements\food\processable.dm"
-#include "code\datums\elements\food\venue_price.dm"
 #include "code\datums\helper_datums\events.dm"
 #include "code\datums\helper_datums\getrev.dm"
 #include "code\datums\helper_datums\icon_snapshot.dm"

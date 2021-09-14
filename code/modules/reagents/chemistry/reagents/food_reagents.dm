@@ -14,7 +14,6 @@
 	impure_chem = /datum/reagent/water
 	inverse_chem_val = 0.1
 	inverse_chem = null
-	failed_chem = /datum/reagent/consumable/nutriment
 	/// How much nutrition this reagent supplies
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
 	var/quality = 0 //affects mood, typically higher for mixed drinks with more complex recipes'
@@ -323,7 +322,6 @@
 	description = "A chemical agent used for self-defense and in police work."
 	color = "#B31008" // rgb: 179, 16, 8
 	taste_description = "scorching agony"
-	penetrates_skin = NONE
 	pH = 7.4
 
 
@@ -371,8 +369,6 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255,255,255
 	taste_description = "salt"
-	penetrates_skin = NONE
-
 
 /datum/reagent/consumable/salt/expose_turf(turf/exposed_turf, reac_volume) //Creates an umbra-blocking salt pile
 	. = ..()
@@ -850,7 +846,7 @@
 	color = "#C8C8C8"
 	taste_mult = 6
 	taste_description = "smoke"
-	overdose_threshold = 15a
+	overdose_threshold = 15
 
 /datum/reagent/consumable/char/overdose_process(mob/living/M, delta_time, times_fired)
 	if(DT_PROB(13, delta_time))

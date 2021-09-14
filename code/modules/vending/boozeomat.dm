@@ -22,7 +22,7 @@
 					/obj/item/food/reagent_containers/drinks/bottle/grappa = 5,
 					/obj/item/food/reagent_containers/drinks/bottle/sake = 5,
 					/obj/item/food/reagent_containers/drinks/bottle/amaretto = 5,
-					/obj/item/food/reagent_containers/drinks/ale = 6,
+					/obj/item/food/reagent_containers/drinks/bottle/ale = 6,
 					/obj/item/food/reagent_containers/drinks/bottle/orangejuice = 4,
 					/obj/item/food/reagent_containers/drinks/bottle/tomatojuice = 4,
 					/obj/item/food/reagent_containers/drinks/bottle/limejuice = 4,
@@ -35,7 +35,7 @@
 					/obj/item/food/reagent_containers/drinks/soda_cans/sol_dry = 8,
 					/obj/item/food/reagent_containers/drinks/ice = 10,
 					/obj/item/food/reagent_containers/drinks/flask = 3,
-					/obj/item/food/reagent_containers/drinks/beer = 6)
+					/obj/item/food/reagent_containers/drinks/bottle/beer = 6)
 	contraband = list(/obj/item/food/reagent_containers/drinks/mug/tea = 12,
 					/obj/item/food/reagent_containers/drinks/bottle/fernet = 5)
 	premium = list(/obj/item/reagent_containers/glass/bottle/ethanol = 4,
@@ -63,7 +63,7 @@
 /obj/machinery/vending/boozeomat/pubby_captain //Captain's quarters on Pubbystation
 	products = list(/obj/item/food/reagent_containers/drinks/bottle/rum = 1,
 					/obj/item/food/reagent_containers/drinks/bottle/wine = 1,
-					/obj/item/food/reagent_containers/drinks/ale = 1,
+					/obj/item/food/reagent_containers/drinks/bottle/ale = 1,
 					/obj/item/food/reagent_containers/drinks/drinkingglass = 6,
 					/obj/item/food/reagent_containers/drinks/ice = 1,
 					/obj/item/food/reagent_containers/drinks/drinkingglass/shotglass = 4);
