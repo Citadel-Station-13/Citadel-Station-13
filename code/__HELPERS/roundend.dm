@@ -390,20 +390,10 @@
 	parts += "[FOURSPACES]Max threat: [max_threat]"
 	if(istype(SSticker.mode, /datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
-		mode.update_playercounts() // ?
-		parts += "[FOURSPACES]Target threat: [mode.threat_level]"
+		parts += "[FOURSPACES]Threat left: [mode.mid_round_budget]"
 		parts += "[FOURSPACES]Executed rules:"
 		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
 			parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
-		parts += "[FOURSPACES]Other threat changes:"
-		for(var/str in mode.threat_log)
-			parts += "[FOURSPACES][FOURSPACES][str]"
-		for(var/entry in mode.threat_tallies)
-			parts += "[FOURSPACES][FOURSPACES][entry] added [mode.threat_tallies[entry]]"
-		SSblackbox.record_feedback("tally","threat",mode.threat_level,"Target threat")
-	SSblackbox.record_feedback("tally","threat",SSactivity.current_threat,"Final Threat")
-	SSblackbox.record_feedback("tally","threat",avg_threat,"Average Threat")
-	SSblackbox.record_feedback("tally","threat",max_threat,"Max Threat")
 	return parts.Join("<br>")
 
 /client/proc/roundend_report_file()

@@ -354,19 +354,6 @@ SUBSYSTEM_DEF(vote)
 					if(stored_modetier_results[score_name] <= raw_score_numbers[CONFIG_GET(number/dropped_modes)])
 						stored_modetier_results -= score_name
 				stored_modetier_results += "traitor"
-			if("dynamic")
-				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
-					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
-				var/list/runnable_storytellers = config.get_runnable_storytellers()
-				var/datum/dynamic_storyteller/picked
-				for(var/T in runnable_storytellers)
-					var/datum/dynamic_storyteller/S = T
-					if(stored_gamemode_votes[initial(S.name)] == 1 && CHECK_BITFIELD(initial(S.flags), FORCE_IF_WON))
-						picked = S
-					runnable_storytellers[S] *= round(stored_gamemode_votes[initial(S.name)]*100000,1)
-				if(!picked)
-					picked = pickweight(runnable_storytellers, 0)
-				GLOB.dynamic_storyteller_type = picked
 			if("map")
 				var/datum/map_config/VM = config.maplist[.]
 				message_admins("The map has been voted for and will change to: [VM.map_name]")
@@ -492,15 +479,6 @@ SUBSYSTEM_DEF(vote)
 						modes_to_add -= tag
 				modes_to_add -= "traitor" // makes it so that traitor is always available
 				choices.Add(modes_to_add)
-			if("dynamic")
-				GLOB.master_mode = "dynamic"
-				var/list/probabilities = CONFIG_GET(keyed_list/storyteller_weight)
-				for(var/T in config.get_runnable_storytellers())
-					var/datum/dynamic_storyteller/S = T
-					var/probability = ((initial(S.config_tag) in probabilities) ? probabilities[initial(S.config_tag)] : initial(S.weight))
-					if(probability > 0)
-						choices.Add(initial(S.name))
-						choice_descs.Add(initial(S.desc))
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
