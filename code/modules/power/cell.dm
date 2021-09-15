@@ -79,7 +79,7 @@
 		return 0
 	if(charge < amount)
 		return 0
-	charge = (charge - amount)
+	charge -= amount
 	if(!istype(loc, /obj/machinery/power/apc))
 		SSblackbox.record_feedback("tally", "cell_used", 1, type)
 	return 1
