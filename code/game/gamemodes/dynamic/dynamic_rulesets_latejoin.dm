@@ -41,6 +41,7 @@
 	assigned += M.mind
 	M.mind.special_role = antag_flag
 	M.mind.add_antag_datum(antag_datum)
+	log_admin("[M.name] was made into a [name] by dynamic.")
 	return TRUE
 
 //////////////////////////////////////////////
