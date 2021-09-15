@@ -61,7 +61,7 @@
 				..(target, blocked, TRUE)
 				for(var/datum/reagent/medicine/R in reagents.reagent_list) //OD prevention time!
 					if(R.type in GLOB.blacklisted_medchems)
-						return
+						continue
 					if(M.reagents.has_reagent(R.type))
 						if(R.overdose_threshold == 0 || emptrig == TRUE) //Is there a possible OD?
 							M.reagents.add_reagent(R.type, R.volume)
