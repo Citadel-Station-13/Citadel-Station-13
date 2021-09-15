@@ -470,14 +470,13 @@
 	for(var/datum/mind/M in assigned)
 		var/datum/antagonist/clockcult/new_cultist = new antag_datum()
 		new_cultist.clock_team = main_clockcult
-		new_cultist.equip_servant()
+		new_cultist.SSticker.mode.equip_servant()
 		M.add_antag_datum(new_cultist)
-	main_clockcult.setup_objectives()
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/clockcult/round_result()
 	..()
-	if(main_clockcult.check_cult_victory())
+	if(main_clockcult.check_clockwork_victory())
 		SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
 		SSticker.news_report = CLOCK_SUMMON
 	else
