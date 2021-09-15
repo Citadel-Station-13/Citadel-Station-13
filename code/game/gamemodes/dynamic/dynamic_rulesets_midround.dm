@@ -621,11 +621,10 @@
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			spawn_locs += spawn_turf
 	if(!spawn_locs.len)
-		message_admins("No valid spawn locations found in GLOB.xeno_spawn, aborting swarmer spawning...")
+		message_admins("No valid sspawn locations found in GLOB.xeno_spawn, aborting swarmer spawning...")
 		return MAP_ERROR
-	var/obj/structure/swarmer_beacon/new_beacon = new(pick(spawn_locs))
-	log_game("A Swarmer Beacon was spawned via Dynamic Mode.")
-	notify_ghosts("\A Swarmer Beacon has spawned!", source = new_beacon, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Swarmer Beacon Spawned")
+	new /obj/effect/mob_spawn/swarmer(get_turf(GLOB.the_gateway))
+	log_game("A Swarmer was spawned via Dynamic Mode.")
 	return ..()
 
 //////////////////////////////////////////////
@@ -760,7 +759,7 @@
 	return ..()
 
 /datum/dynamic_ruleset/midround/pirates/execute()
-	send_pirate_threat()
+	//send_pirate_threat()
 	return ..()
 
 /// Probability the AI going malf will be accompanied by an ion storm announcement and some ion laws.
