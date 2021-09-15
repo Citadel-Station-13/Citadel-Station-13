@@ -199,7 +199,7 @@
 			candidates.Remove(candidate_player)
 			continue
 
-		else if(!mode.check_age(client, minimum_required_age))
+		else if(!mode.check_age(candidate_client, minimum_required_age))
 			candidates.Remove(candidate_player)
 			continue
 

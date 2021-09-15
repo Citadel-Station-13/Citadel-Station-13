@@ -83,6 +83,9 @@
 		priority_announce("Too late to beg for mercy!",sender_override = ship_name)
 
 /datum/round_event/pirates/start()
+	send_pirate_threat()
+
+/datum/round_event/pirates/proc/send_pirate_threat()
 	if(threat_msg && !threat_msg.answered)
 		threat_msg.possible_answers = list("Too late")
 		threat_msg.answered = 1

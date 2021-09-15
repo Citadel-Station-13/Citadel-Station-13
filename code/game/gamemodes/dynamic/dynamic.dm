@@ -247,7 +247,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			return rule.round_result()
 	return ..()
 
-/datum/game_mode/dynamic/proc/send_intercept()
+/datum/game_mode/dynamic/proc/send_intercept_dynamic()
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
 	switch(round(shown_threat))
 		if(0 to 19)
@@ -396,7 +396,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
 
 	if (!CONFIG_GET(flag/no_intercept_report))
-		addtimer(CALLBACK(src, .proc/send_intercept), rand(waittime_l, waittime_h))
+		addtimer(CALLBACK(src, .proc/send_intercept_dynamic), rand(waittime_l, waittime_h))
 
 	..()
 
@@ -584,7 +584,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	for (var/datum/dynamic_ruleset/rule in current_rules)
 		if(rule.rule_process() == RULESET_STOP_PROCESSING) // If rule_process() returns 1 (RULESET_STOP_PROCESSING), stop processing.
 			current_rules -= rule
+	midround_rule_draft()
 
+/datum/game_mode/dynamic/proc/midround_rule_draft()
+	set waitfor = FALSE
 	if (midround_injection_cooldown < world.time)
 		if (GLOB.dynamic_forced_extended)
 			return
