@@ -53,7 +53,7 @@
 /datum/dynamic_ruleset/latejoin/infiltrator
 	name = "Syndicate Infiltrator"
 	antag_datum = /datum/antagonist/traitor
-	antag_flag = ROLE_TRAITOR
+	antag_flag = "traitor late"
 	protected_roles = list("Security Officer", "Warden", "Head of Personnel", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("AI","Cyborg")
 	required_candidates = 1
@@ -72,8 +72,8 @@
 	name = "Provocateur"
 	persistent = TRUE
 	antag_datum = /datum/antagonist/rev/head
-	antag_flag = ROLE_REV_HEAD
-	antag_flag_override = ROLE_REV
+	antag_flag = "rev head late"
+	antag_flag_override = "rev late"
 	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
 	enemy_roles = list("AI", "Cyborg", "Security Officer","Detective","Head of Security", "Captain", "Warden")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
@@ -148,7 +148,7 @@
 /datum/dynamic_ruleset/latejoin/heretic_smuggler
 	name = "Heretic Smuggler"
 	antag_datum = /datum/antagonist/heretic
-	antag_flag = ROLE_HERETIC
+	antag_flag = "heretic late"
 	protected_roles = list("Security Officer", "Warden", "Head of Personnel", "Detective", "Head of Security", "Captain","Prisoner")
 	restricted_roles = list("AI","Cyborg")
 	required_candidates = 1

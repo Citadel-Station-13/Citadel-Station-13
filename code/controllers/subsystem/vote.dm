@@ -68,10 +68,6 @@ SUBSYSTEM_DEF(vote)
 	//get the highest number of votes
 	var/greatest_votes = 0
 	var/total_votes = 0
-	if((mode == "gamemode" || mode == "roundtype") && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
-		for(var/mob/dead/new_player/P in GLOB.player_list)
-			if(P.ready != PLAYER_READY_TO_PLAY && voted[P.ckey])
-				choices[choices[voted[P.ckey]]]--
 	for(var/option in choices)
 		var/votes = choices[option]
 		total_votes += votes
@@ -90,11 +86,6 @@ SUBSYSTEM_DEF(vote)
 				choices["Continue Playing"] += non_voters.len
 				if(choices["Continue Playing"] >= greatest_votes)
 					greatest_votes = choices["Continue Playing"]
-			else if(mode == "gamemode")
-				if(GLOB.master_mode in choices)
-					choices[GLOB.master_mode] += non_voters.len
-					if(choices[GLOB.master_mode] >= greatest_votes)
-						greatest_votes = choices[GLOB.master_mode]
 	//get all options with that many votes and return them in a list
 	. = list()
 	if(greatest_votes)
@@ -104,11 +95,6 @@ SUBSYSTEM_DEF(vote)
 	return .
 
 /datum/controller/subsystem/vote/proc/calculate_condorcet_votes(var/blackbox_text)
-	// https://en.wikipedia.org/wiki/Schulze_method#Implementation
-	if((mode == "gamemode" || mode == "dynamic" || mode == "roundtype") && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
-		for(var/mob/dead/new_player/P in GLOB.player_list)
-			if(P.ready != PLAYER_READY_TO_PLAY && voted[P.ckey])
-				voted -= P.ckey
 	var/list/d[][] = new/list(choices.len,choices.len) // the basic vote matrix, how many times a beats b
 	for(var/ckey in voted)
 		var/list/this_vote = voted[ckey]
@@ -155,10 +141,6 @@ SUBSYSTEM_DEF(vote)
 	for(var/choice in choices)
 		scores_by_choice += "[choice]"
 		scores_by_choice["[choice]"] = list()
-	if((mode == "gamemode" || mode == "dynamic" || mode == "roundtype") && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
-		for(var/mob/dead/new_player/P in GLOB.player_list)
-			if(P.ready != PLAYER_READY_TO_PLAY && voted[P.ckey])
-				voted -= P.ckey
 	for(var/ckey in voted)
 		var/list/this_vote = voted[ckey]
 		var/list/pretty_vote = list()
@@ -251,7 +233,7 @@ SUBSYSTEM_DEF(vote)
 	if(vote_system == HIGHEST_MEDIAN_VOTING)
 		calculate_highest_median(vote_title_text) // nothing uses this at the moment
 	var/list/winners = vote_system == INSTANT_RUNOFF_VOTING ? get_runoff_results() : get_result()
-	var/was_roundtype_vote = mode == "roundtype" || mode == "dynamic"
+	var/was_roundtype_vote = mode == "dynamic"
 	if(winners.len > 0)
 		if(was_roundtype_vote)
 			stored_gamemode_votes = list()
@@ -322,38 +304,9 @@ SUBSYSTEM_DEF(vote)
 	var/restart = 0
 	if(.)
 		switch(mode)
-			if("roundtype") //CIT CHANGE - adds the roundstart extended/secret vote
-				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
-					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
-				GLOB.master_mode = .
-				SSticker.save_mode(.)
-				message_admins("The gamemode has been voted for, and has been changed to: [GLOB.master_mode]")
-				log_admin("Gamemode has been voted for and switched to: [GLOB.master_mode].")
-				if(CONFIG_GET(flag/modetier_voting))
-					reset()
-					started_time = 0
-					initiate_vote("mode tiers","server", votesystem=SCORE_VOTING, forced=TRUE, vote_time = 30 MINUTES)
-					to_chat(world,"<b>The vote will end right as the round starts.</b>")
-					return .
 			if("restart")
 				if(. == "Restart Round")
 					restart = 1
-			if("gamemode")
-				if(GLOB.master_mode != .)
-					SSticker.save_mode(.)
-					if(SSticker.HasRoundStarted())
-						restart = 1
-					else
-						GLOB.master_mode = .
-			if("mode tiers")
-				var/list/raw_score_numbers = list()
-				for(var/score_name in scores)
-					sorted_insert(raw_score_numbers,scores[score_name],/proc/cmp_numeric_asc)
-				stored_modetier_results = scores.Copy()
-				for(var/score_name in stored_modetier_results)
-					if(stored_modetier_results[score_name] <= raw_score_numbers[CONFIG_GET(number/dropped_modes)])
-						stored_modetier_results -= score_name
-				stored_modetier_results += "traitor"
 			if("map")
 				var/datum/map_config/VM = config.maplist[.]
 				message_admins("The map has been voted for and will change to: [VM.map_name]")
@@ -451,8 +404,6 @@ SUBSYSTEM_DEF(vote)
 		switch(vote_type)
 			if("restart")
 				choices.Add("Restart Round","Continue Playing")
-			if("gamemode")
-				choices.Add(config.votable_modes)
 			if("map")
 				var/players = GLOB.clients.len
 				var/list/lastmaps = SSpersistence.saved_maps?.len ? list("[SSmapping.config.map_name]") | SSpersistence.saved_maps : list("[SSmapping.config.map_name]")
@@ -469,16 +420,6 @@ SUBSYSTEM_DEF(vote)
 					choices |= M
 			if("transfer") // austation begin -- Crew autotranfer vote
 				choices.Add("Initiate Crew Transfer","Continue Playing") // austation end
-			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote
-				choices.Add("secret", "extended")
-			if("mode tiers")
-				var/list/modes_to_add = config.votable_modes
-				var/list/probabilities = CONFIG_GET(keyed_list/probability)
-				for(var/tag in modes_to_add)
-					if(probabilities[tag] <= 0)
-						modes_to_add -= tag
-				modes_to_add -= "traitor" // makes it so that traitor is always available
-				choices.Add(modes_to_add)
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
@@ -636,16 +577,6 @@ SUBSYSTEM_DEF(vote)
 		if(trialmin)
 			. += "\t(<a href='?src=[REF(src)];vote=toggle_restart'>[avr ? "Allowed" : "Disallowed"]</a>)"
 		. += "</li><li>"
-		//gamemode
-		var/avm = CONFIG_GET(flag/allow_vote_mode)
-		if(trialmin || avm)
-			. += "<a href='?src=[REF(src)];vote=gamemode'>GameMode</a>"
-		else
-			. += "<font color='grey'>GameMode (Disallowed)</font>"
-		if(trialmin)
-			. += "\t(<a href='?src=[REF(src)];vote=toggle_gamemode'>[avm ? "Allowed" : "Disallowed"]</a>)"
-
-		. += "</li>"
 		//custom
 		if(trialmin)
 			. += "<li><a href='?src=[REF(src)];vote=custom'>Custom</a></li>"
@@ -668,15 +599,9 @@ SUBSYSTEM_DEF(vote)
 		if("toggle_restart")
 			if(usr.client.holder)
 				CONFIG_SET(flag/allow_vote_restart, !CONFIG_GET(flag/allow_vote_restart))
-		if("toggle_gamemode")
-			if(usr.client.holder)
-				CONFIG_SET(flag/allow_vote_mode, !CONFIG_GET(flag/allow_vote_mode))
 		if("restart")
 			if(CONFIG_GET(flag/allow_vote_restart) || usr.client.holder)
 				initiate_vote("restart",usr.key)
-		if("gamemode")
-			if(CONFIG_GET(flag/allow_vote_mode) || usr.client.holder)
-				initiate_vote("gamemode",usr.key)
 		if("custom")
 			if(usr.client.holder)
 				initiate_vote("custom",usr.key)

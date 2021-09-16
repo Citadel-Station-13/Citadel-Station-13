@@ -184,7 +184,7 @@
 /datum/dynamic_ruleset/midround/autotraitor
 	name = "Syndicate Sleeper Agent"
 	antag_datum = /datum/antagonist/traitor
-	antag_flag = ROLE_TRAITOR
+	antag_flag = "traitor mid"
 	protected_roles = list("Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("Cyborg", "AI", "Positronic Brain")
 	required_candidates = 1
@@ -298,7 +298,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/wizard
 	name = "Wizard"
 	antag_datum = /datum/antagonist/wizard
-	antag_flag = ROLE_WIZARD
+	antag_flag = "wizard mid"
 	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
@@ -328,7 +328,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear
 	name = "Nuclear Assault"
-	antag_flag = ROLE_OPERATIVE
+	antag_flag = "nukie mid"
 	antag_datum = /datum/antagonist/nukeop
 	enemy_roles = list("AI", "Cyborg", "Security Officer", "Warden","Detective","Head of Security", "Captain")
 	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
@@ -388,7 +388,7 @@
 /datum/dynamic_ruleset/midround/blob_infection
 	name = "Blob Infection"
 	antag_datum = /datum/antagonist/blob
-	antag_flag = ROLE_BLOB
+	antag_flag = "blob mid"
 	protected_roles = list("Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("Cyborg", "AI", "Positronic Brain")
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
