@@ -118,7 +118,6 @@
 
 /obj/structure/stairs/proc/on_multiz_new(turf/source, dir)
 	SIGNAL_HANDLER
-	SHOULD_NOT_SLEEP(TRUE) //the same thing.
 
 	if(dir == UP)
 		var/turf/open/openspace/T = get_step_multiz(get_turf(src), UP)
