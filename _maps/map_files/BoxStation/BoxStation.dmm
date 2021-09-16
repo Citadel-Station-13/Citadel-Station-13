@@ -357,7 +357,7 @@
 /turf/open/floor/plating,
 /area/command/heads_quarters/hos)
 "aaN" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/window/fulltile,
 /turf/open/floor/plating,
 /area/security/prison/upper)
 "aaO" = (
@@ -498,9 +498,6 @@
 /turf/closed/wall,
 /area/security/execution/transfer)
 "abf" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Prison Laundry"
-	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -512,32 +509,21 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/airlock/grunge{
+	name = "Prison Laundry";
+	wiretypepath = /datum/wires/airlock/security
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison/upper)
 "abg" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security/glass{
-	name = "Cell Block"
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/dark,
 /area/security/prison/cells)
 "abh" = (
@@ -1143,10 +1129,6 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/prisoner,
-/obj/machinery/light/small{
-	dir = 1;
-	light_color = "#ffc1c1"
-	},
 /obj/machinery/button/door{
 	id = "permacells1";
 	name = "Privacy Shutters";
@@ -1362,22 +1344,6 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/clothing/under/rank/prisoner,
-/obj/item/clothing/under/rank/prisoner,
-/obj/item/clothing/under/rank/prisoner,
-/obj/item/clothing/under/rank/prisoner,
-/obj/item/clothing/shoes/sneakers/orange{
-	pixel_y = 8
-	},
-/obj/item/clothing/shoes/sneakers/orange{
-	pixel_y = 8
-	},
-/obj/item/clothing/shoes/sneakers/orange{
-	pixel_y = 8
-	},
-/obj/item/clothing/shoes/sneakers/orange{
-	pixel_y = 8
-	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "ada" = (
@@ -1404,21 +1370,30 @@
 /area/security/prison/upper)
 "add" = (
 /obj/structure/table,
-/obj/item/clothing/under/rank/prisoner/skirt,
-/obj/item/clothing/under/rank/prisoner/skirt,
-/obj/item/clothing/under/rank/prisoner/skirt,
-/obj/item/clothing/under/rank/prisoner/skirt,
 /obj/item/clothing/shoes/sneakers/orange{
-	pixel_y = 8
+	pixel_x = -6;
+	pixel_y = 10
 	},
 /obj/item/clothing/shoes/sneakers/orange{
-	pixel_y = 8
+	pixel_x = -6;
+	pixel_y = -2
 	},
 /obj/item/clothing/shoes/sneakers/orange{
-	pixel_y = 8
+	pixel_x = -6;
+	pixel_y = 4
 	},
 /obj/item/clothing/shoes/sneakers/orange{
-	pixel_y = 8
+	pixel_x = -6;
+	pixel_y = -8
+	},
+/obj/item/clothing/under/rank/prisoner{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/machinery/camera{
+	c_tag = "Permabrig Processing";
+	dir = 8;
+	network = list("ss13","prison")
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -2682,6 +2657,9 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "afy" = (
@@ -2695,9 +2673,6 @@
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "afA" = (
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -42036,7 +42011,8 @@
 /area/maintenance/port/aft)
 "bZm" = (
 /obj/structure/disposaloutlet{
-	dir = 8
+	dir = 8;
+	name = "Prisoner Outlet"
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -52875,10 +52851,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/light/small{
-	dir = 1;
-	light_color = "#ffc1c1"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/button/door{
@@ -53067,6 +53039,10 @@
 	icon_state = "1-4"
 	},
 /obj/effect/decal/cleanable/blood/old,
+/obj/machinery/button/electrochromatic{
+	id = "!permabrigshowers";
+	pixel_x = -25
+	},
 /turf/open/floor/plasteel/freezer,
 /area/security/prison/cells)
 "dYZ" = (
@@ -53853,10 +53829,6 @@
 /turf/open/floor/plasteel,
 /area/security/prison/upper)
 "eZS" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -54536,9 +54508,6 @@
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
 "fMF" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Prison Laundry"
-	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -54550,6 +54519,10 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/airlock/grunge{
+	name = "Prison Laundry";
+	wiretypepath = /datum/wires/airlock/security
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison/upper)
 "fMY" = (
@@ -54566,12 +54539,14 @@
 /turf/open/floor/plasteel,
 /area/security/prison/upper)
 "fNB" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
+	},
+/obj/effect/spawner/structure/window/reinforced/tinted/electrochromatic{
+	electrochromatic_id = "!permabrigshowers"
 	},
 /turf/open/floor/plating,
 /area/security/prison/cells)
@@ -54861,9 +54836,6 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/prisoner,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -55497,6 +55469,19 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "hkA" = (
+/obj/structure/table,
+/obj/item/clothing/under/rank/prisoner/skirt{
+	pixel_x = -13;
+	pixel_y = 5
+	},
+/obj/item/clothing/under/rank/prisoner/skirt{
+	pixel_x = 9;
+	pixel_y = 5
+	},
+/obj/item/clothing/under/rank/prisoner{
+	pixel_x = -2;
+	pixel_y = 5
+	},
 /obj/machinery/flasher{
 	id = "waitingflash";
 	pixel_y = -28
@@ -55725,9 +55710,11 @@
 /turf/open/floor/plating,
 /area/security/prison/upper)
 "hKo" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "0-2"
+	},
+/obj/effect/spawner/structure/window/reinforced/tinted/electrochromatic{
+	electrochromatic_id = "!permabrigshowers"
 	},
 /turf/open/floor/plating,
 /area/security/prison/cells)
@@ -56690,9 +56677,6 @@
 /turf/open/floor/plasteel,
 /area/service/hydroponics)
 "jxx" = (
-/obj/machinery/door/airlock/security{
-	name = "Prison Yard"
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral,
@@ -56710,6 +56694,9 @@
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/public/glass{
+	name = "Prison Yard"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison/upper)
@@ -57037,9 +57024,6 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "jOB" = (
-/obj/machinery/door/airlock/security{
-	name = "Prison Forestry"
-	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -57052,6 +57036,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Prison Forestry"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison/upper)
@@ -57257,10 +57244,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
-	},
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -57846,15 +57829,6 @@
 	dir = 4;
 	network = list("ss13","prison")
 	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -57865,7 +57839,9 @@
 	dir = 4;
 	name = "Prisoner Delivery"
 	},
-/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel/dark,
 /area/security/prison/upper)
 "kMt" = (
 /obj/machinery/computer/prisoner/gulag_teleporter_computer,
@@ -58441,9 +58417,6 @@
 	},
 /area/hallway/secondary/entry)
 "lBk" = (
-/obj/machinery/door/airlock/security{
-	name = "Prison Yard"
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -58457,6 +58430,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/public/glass{
+	name = "Prison Yard"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison/upper)
@@ -59234,6 +59210,18 @@
 /obj/item/clothing/under/rank/prisoner/skirt,
 /obj/item/clothing/under/rank/prisoner/skirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/shoes/sneakers/orange{
+	pixel_y = 8
+	},
+/obj/item/clothing/shoes/sneakers/orange{
+	pixel_y = 8
+	},
+/obj/item/clothing/shoes/sneakers/orange{
+	pixel_y = 8
+	},
+/obj/item/clothing/shoes/sneakers/orange{
+	pixel_y = 8
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison/upper)
 "myh" = (
@@ -59369,22 +59357,10 @@
 /area/maintenance/starboard/fore)
 "mIZ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security/glass{
-	name = "Cell Block"
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/dark,
 /area/security/prison/cells)
 "mJf" = (
@@ -59414,8 +59390,10 @@
 /turf/open/floor/plasteel/dark,
 /area/security/prison/upper)
 "mJH" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced/tinted/electrochromatic{
+	electrochromatic_id = "!permabrigshowers"
+	},
 /turf/open/floor/plating,
 /area/security/prison/cells)
 "mLS" = (
@@ -59710,10 +59688,6 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/prisoner,
-/obj/machinery/light/small{
-	dir = 1;
-	light_color = "#ffc1c1"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/button/door{
 	id = "permacells2";
@@ -60185,11 +60159,11 @@
 /turf/open/floor/wood,
 /area/service/bar)
 "obq" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/structure/window/fulltile,
 /turf/open/floor/plating,
 /area/security/prison/upper)
 "obs" = (
@@ -61826,12 +61800,14 @@
 /turf/open/space,
 /area/space/nearstation)
 "qLo" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
+	},
+/obj/effect/spawner/structure/window/reinforced/tinted/electrochromatic{
+	electrochromatic_id = "!permabrigshowers"
 	},
 /turf/open/floor/plating,
 /area/security/prison/cells)
@@ -62019,10 +61995,6 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "qYa" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -62504,6 +62476,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/light/small,
 /turf/open/floor/plasteel/dark,
 /area/security/prison/cells)
 "rBY" = (
@@ -64654,6 +64627,20 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison/upper)
+"uLB" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/prison/upper)
 "uOd" = (
 /turf/open/floor/plasteel/white/side{
 	dir = 4
@@ -64953,12 +64940,6 @@
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
-"vli" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "vmQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -65485,6 +65466,10 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison/cells)
 "vYY" = (
@@ -66977,9 +66962,6 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/prisoner,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -89186,7 +89168,7 @@ aaa
 eRz
 eRz
 eRz
-sMu
+eRz
 eRz
 eRz
 gXs
@@ -90992,7 +90974,7 @@ uJY
 vhC
 tLC
 aaN
-peD
+uLB
 kGj
 acG
 lux
@@ -91252,7 +91234,7 @@ pgq
 peD
 sBM
 acG
-acG
+aaN
 jOB
 acG
 acG
@@ -96391,7 +96373,7 @@ eRz
 eRz
 eRz
 eRz
-vli
+eRz
 eRz
 eRz
 eRz
