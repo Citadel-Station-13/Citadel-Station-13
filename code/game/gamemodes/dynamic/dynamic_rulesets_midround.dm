@@ -601,7 +601,6 @@
 
 /datum/dynamic_ruleset/midround/swarmers
 	name = "Swarmers"
-	antag_datum = /datum/antagonist/swarmer
 	antag_flag = "Swarmer"
 	antag_flag_override = ROLE_ALIEN
 	required_type = /mob/dead/observer

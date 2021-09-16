@@ -465,6 +465,9 @@ ECONOMY
 #Replaces standard extended/secret dichotomy with extended and calm/chaotic votes for dynamic.
 #DYNAMIC_VOTING
 
+## Uncomment to enable dynamic ruleset config file.
+DYNAMIC_CONFIG_ENABLED
+
 ## Choose which Engine to start the round with. Weight is after the comma. Setting the weight to 0 removes the engine from rotation.
 BOX_RANDOM_ENGINE Box SM,3
 BOX_RANDOM_ENGINE Box Tesla,3

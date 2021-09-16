@@ -20,7 +20,7 @@
 	var/list/mode_false_report_weight
 
 	var/motd
-	// var/policy
+	var/policy
 
 	var/static/regex/ic_filter_regex
 
@@ -51,7 +51,7 @@
 				break
 	loadmaplist(CONFIG_MAPS_FILE)
 	LoadMOTD()
-	// LoadPolicy()
+	LoadPolicy()
 	LoadChatFilter()
 
 	if (Master)
@@ -291,7 +291,7 @@ Example config:
 }
 
 */
-/*
+
 /datum/controller/configuration/proc/LoadPolicy()
 	policy = list()
 	var/rawpolicy = file2text("[directory]/policy.json")
@@ -302,7 +302,7 @@ Example config:
 			DelayedMessageAdmins("JSON parsing failure for policy.json")
 		else
 			policy = parsed
-*/
+
 /datum/controller/configuration/proc/loadmaplist(filename)
 	log_config("Loading config file [filename]...")
 	filename = "[directory]/[filename]"
