@@ -594,7 +594,8 @@
 		/obj/item/paint/paint_remover,
 		/obj/item/assembly/mousetrap,
 		/obj/item/screwdriver,
-		/obj/item/stack/cable_coil
+		/obj/item/stack/cable_coil,
+		/obj/item/storage/bag/trash
 		))
 
 /obj/item/storage/belt/bandolier
