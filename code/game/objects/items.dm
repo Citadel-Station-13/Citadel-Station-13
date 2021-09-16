@@ -890,7 +890,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		var/user = usr
 		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, user), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
 	var/mob/living/L = usr
-	if(istype(L) && L.incapacitated())
+	if(istype(L) && (L.incapacitated() || (current_equipped_slot in L.check_obscured_slots())))
 		apply_outline(COLOR_RED_GRAY)
 	else
 		apply_outline()
