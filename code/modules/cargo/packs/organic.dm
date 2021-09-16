@@ -205,7 +205,7 @@
 	desc = "Need some meat? With this do-it-yourself kit you'll be swimming in it! Contains a monkey cube, an IV drip, and some cryoxadone!"
 	cost = 2150
 	contraband = TRUE
-	contains = list(/obj/item/food/cube/monkey,
+	contains = list(/obj/item/food/monkeycube,
 					/obj/item/restraints/handcuffs/cable,
 					/obj/machinery/iv_drip,
 					/obj/item/reagent_containers/glass/beaker/cryoxadone,

@@ -105,7 +105,7 @@
 			if(prob(50))
 				new /obj/effect/decal/cleanable/egg_smudge(src)
 			else
-				new /obj/effect/decal/cleanable/flour(src)
+				new /obj/effect/decal/cleanable/food/flour(src)
 		return
 
 		//Medical areas. Mostly clean by space-OSHA standards, but has some blood and oil spread about.

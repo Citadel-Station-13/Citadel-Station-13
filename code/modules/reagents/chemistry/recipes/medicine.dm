@@ -34,7 +34,7 @@
 	name = "Charcoal"
 	id = /datum/reagent/medicine/charcoal
 	results = list(/datum/reagent/medicine/charcoal = 2)
-	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/sodiumchloride = 1)
+	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/salt = 1)
 	mix_message = "The mixture yields a fine black powder."
 	required_temp = 380
 
@@ -48,7 +48,7 @@
 	name = "Saline-Glucose Solution"
 	id = /datum/reagent/medicine/salglu_solution
 	results = list(/datum/reagent/medicine/salglu_solution = 3)
-	required_reagents = list(/datum/reagent/consumable/sodiumchloride = 1, /datum/reagent/water = 1, /datum/reagent/consumable/sugar = 1)
+	required_reagents = list(/datum/reagent/consumable/salt = 1, /datum/reagent/water = 1, /datum/reagent/consumable/sugar = 1)
 
 /datum/chemical_reaction/baked_banana_peel
 	results = list(/datum/reagent/consumable/baked_banana_peel = 1)

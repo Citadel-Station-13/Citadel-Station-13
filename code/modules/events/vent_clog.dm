@@ -43,7 +43,7 @@
 		/datum/reagent/colorful_reagent,
 		/datum/reagent/peaceborg_confuse,
 		/datum/reagent/peaceborg_tire,
-		/datum/reagent/consumable/sodiumchloride,
+		/datum/reagent/consumable/salt,
 		/datum/reagent/consumable/ethanol/beer,
 		/datum/reagent/hair_dye,
 		/datum/reagent/consumable/sugar,

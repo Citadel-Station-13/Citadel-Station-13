@@ -81,7 +81,6 @@
 /datum/chemical_reaction/food/cheesewheel
 	required_reagents = list(/datum/reagent/consumable/milk = 40)
 	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
-	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/cheesewheel/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -91,7 +90,6 @@
 /datum/chemical_reaction/food/synthmeat
 	required_reagents = list(/datum/reagent/blood = 5, /datum/reagent/medicine/cryoxadone = 1)
 	mob_react = FALSE
-	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/synthmeat/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -110,7 +108,6 @@
 	required_reagents = list(/datum/reagent/toxin/carpotoxin = 5)
 	required_container = /obj/item/food/tofu
 	mix_message = "The mixture becomes similar to carp meat."
-	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/imitationcarpmeat/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -121,7 +118,6 @@
 /datum/chemical_reaction/food/dough
 	required_reagents = list(/datum/reagent/water = 10, /datum/reagent/consumable/flour = 15)
 	mix_message = "The ingredients form a dough."
-	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/dough/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -131,7 +127,6 @@
 /datum/chemical_reaction/food/cakebatter
 	required_reagents = list(/datum/reagent/consumable/eggyolk = 6, /datum/reagent/consumable/eggwhite = 12, /datum/reagent/consumable/flour = 15, /datum/reagent/consumable/sugar = 5)
 	mix_message = "The ingredients form a cake batter."
-	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/cakebatter/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -149,35 +144,12 @@
 	required_reagents = list(/datum/reagent/consumable/rice = 10, /datum/reagent/water = 10)
 	required_container = /obj/item/reagent_containers/glass/bowl
 	mix_message = "The rice absorbs the water."
-	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/ricebowl/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	new /obj/item/food/salad/ricebowl(location)
 	if(holder?.my_atom)
 		qdel(holder.my_atom)
-
-/datum/chemical_reaction/food/nutriconversion
-	results = list(/datum/reagent/consumable/nutriment/peptides = 0.5)
-	required_reagents = list(/datum/reagent/consumable/nutriment/ = 0.5)
-	required_catalysts = list(/datum/reagent/medicine/metafactor = 0.5)
-
-/datum/chemical_reaction/food/protein_peptide
-	results = list(/datum/reagent/consumable/nutriment/peptides = 0.5)
-	required_reagents = list(/datum/reagent/consumable/nutriment/protein = 0.5)
-	required_catalysts = list(/datum/reagent/medicine/metafactor = 0.5)
-
-/datum/chemical_reaction/food/failed_nutriconversion
-	results = list(/datum/reagent/peptides_failed = 0.5)
-	required_reagents = list(/datum/reagent/consumable/nutriment/ = 0.5)
-	required_catalysts = list(/datum/reagent/impurity/probital_failed = 0.5)
-	thermic_constant = 100 // a tell
-
-/datum/chemical_reaction/food/failed_protein_peptide
-	results = list(/datum/reagent/peptides_failed = 0.5)
-	required_reagents = list(/datum/reagent/consumable/nutriment/protein = 0.5)
-	required_catalysts = list(/datum/reagent/impurity/probital_failed = 0.5)
-	thermic_constant = 100 // a tell
 
 /datum/chemical_reaction/food/bbqsauce
 	results = list(/datum/reagent/consumable/bbqsauce = 5)

@@ -324,7 +324,7 @@
 		/obj/effect/decal/cleanable/tomato_smudge,
 		/obj/effect/decal/cleanable/egg_smudge,
 		/obj/effect/decal/cleanable/pie_smudge,
-		/obj/effect/decal/cleanable/flour,
+		/obj/effect/decal/cleanable/food/flour,
 		/obj/effect/decal/cleanable/ash,
 		/obj/effect/decal/cleanable/greenglow,
 		/obj/effect/decal/cleanable/dirt,

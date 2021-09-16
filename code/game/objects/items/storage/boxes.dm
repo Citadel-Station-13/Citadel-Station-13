@@ -469,11 +469,11 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 7
-	STR.can_hold = typecacheof(list(/obj/item/food/cube/monkey))
+	STR.can_hold = typecacheof(list(/obj/item/food/monkeycube))
 
 /obj/item/storage/box/monkeycubes/PopulateContents()
 	for(var/i in 1 to 5)
-		new /obj/item/food/cube/monkey(src)
+		new /obj/item/food/monkeycube(src)
 
 /obj/item/storage/box/ids
 	name = "box of spare IDs"
