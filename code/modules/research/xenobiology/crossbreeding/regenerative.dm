@@ -20,10 +20,11 @@ Regenerative extracts:
 	if(!prox || !isliving(target))
 		return
 	var/mob/living/H = target
+	if(H.stat == DEAD)
+		to_chat(user, "<span class='warning'>[src] will not work on the dead!</span>")
+		return
+	to_chat(user, "<span class='warning'>You press [src] against [H], trying to keep it steady as it begins to thrum in your hands...</span>")
 	if(do_after(user,5 SECONDS,target = src))
-		if(H.stat == DEAD)
-			to_chat(user, "<span class='warning'>[src] will not work on the dead!</span>")
-			return
 		if(H != user)
 			user.visible_message("<span class='notice'>[user] crushes the [src] over [H], the milky goo quickly regenerating all of [H.p_their()] injuries and soaking into [H.p_their()] body!</span>",
 				"<span class='notice'>You squeeze the [src], and it bursts over [H], the milky goo regenerating [H.p_their()] injuries and soaking into their body.</span>")
