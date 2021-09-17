@@ -294,6 +294,6 @@
 
 			if(prob(25))
 				word = pick(list("<b>\[REDACTED]</b>", "<b>\[CLASSIFIED]</b>"))
-				new_message += word + suffix
+			new_message += word + suffix
 		message = jointext(new_message, " ")
 	speech_args[SPEECH_MESSAGE] = trim(message)
