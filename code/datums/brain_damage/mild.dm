@@ -293,7 +293,7 @@
 			word = html_decode(word)
 
 			if(prob(25))
-				word = pick(list("<b>\[REDACTED]</b>", "<b>\[CLASSIFIED]</b>"))
+				word = pick(list("<b>\[REDACTED]</b>", "<b>\[CLASSIFIED]</b>", "<b>\[EXPUNGED]</b>"))
 			new_message += word + suffix
 		message = jointext(new_message, " ")
 	speech_args[SPEECH_MESSAGE] = trim(message)
