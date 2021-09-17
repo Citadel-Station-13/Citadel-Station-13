@@ -15,22 +15,23 @@ Regenerative extracts:
 	return
 
 /obj/item/slimecross/regenerative/pre_attack(atom/A, mob/living/user, params, attackchain_flags, damage_multiplier)
-	if(!isliving(A))
-		return TRUE //returning TRUE preemptively ends the attack chain and thus doesn't call afterattack, this is noteworthy for below as well
-	var/mob/living/M = A
-	if(M.stat == DEAD)
-		to_chat(user, "<span class='warning'>[src] will not work on the dead!</span>")
-		return TRUE
-	//inform the target that they're about to have a regenerative extract used on them
-	if(M != user)
-		M.visible_message("<span class='notice'>[user] readies [src], holding it steady near [M] and guiding it to the center of [M.p_their()] mass...</span>",
-			"<span class='notice'>[user] readies [src], holding it steady near you and guiding it to the center of your mass...</span>")
+	if(isliving(A))
+		var/mob/living/M = A
+		if(M.stat == DEAD)
+			to_chat(user, "<span class='warning'>[src] will not work on the dead!</span>")
+			return TRUE //returning TRUE preemptively ends the attack chain and thus doesn't call afterattack, this is noteworthy for below as well
+		//inform the target that they're about to have a regenerative extract used on them
+		if(M != user)
+			M.visible_message("<span class='notice'>[user] readies [src], holding it steady near [M] and guiding it to the center of [M.p_their()] mass...</span>",
+				"<span class='notice'>[user] readies [src], holding it steady near you and guiding it to the center of your mass...</span>")
+		else
+			M.visible_message("<span class='notice'>[user] readies [src], holding it steady near [user.p_them()]self and guiding it to the center of [user.p_their()] mass...</span>",
+				"<span class='notice'>You ready [src], holding it steady near you and guiding it to the center of your mass...</span>")
+		if(!do_after(user, 50, target = M)) //5 seconds
+			return TRUE
+		. = ..()
 	else
-		M.visible_message("<span class='notice'>[user] readies [src], holding it steady near [user.p_them()]self and guiding it to the center of [user.p_their()] mass...</span>",
-			"<span class='notice'>You ready [src], holding it steady near you and guiding it to the center of your mass...</span>")
-	if(!do_after(user, 50, target = M)) //5 seconds
-		return TRUE
-	. = ..()
+		. = ..()
 
 /obj/item/slimecross/regenerative/afterattack(atom/target,mob/user,prox)
 	. = ..()
