@@ -59,11 +59,9 @@
 	if(on_fire)
 		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', fire_icon, -FIRE_LAYER)
 		new_fire_overlay.appearance_flags = RESET_COLOR
-		overlays_standing[FIRE_LAYER] = new_fire_overlay
-
-	apply_overlay(FIRE_LAYER)
-
-
+		full_appearance.appearance_list[MISC_APPEARANCE].add_date(new_fire_overlay, num2text(FIRE_LAYER))
+	else
+		full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(FIRE_LAYER))
 
 /mob/living/carbon/update_damage_overlays()
 	remove_overlay(DAMAGE_LAYER)
