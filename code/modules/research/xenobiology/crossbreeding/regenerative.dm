@@ -20,19 +20,21 @@ Regenerative extracts:
 	if(!prox || !isliving(target))
 		return
 	var/mob/living/H = target
-	if(H.stat == DEAD)
-		to_chat(user, "<span class='warning'>[src] will not work on the dead!</span>")
-		return
-	if(H != user)
-		user.visible_message("<span class='notice'>[user] crushes the [src] over [H], the milky goo quickly regenerating all of [H.p_their()] injuries!</span>",
-			"<span class='notice'>You squeeze the [src], and it bursts over [H], the milky goo regenerating [H.p_their()] injuries.</span>")
-	else
-		user.visible_message("<span class='notice'>[user] crushes the [src] over [user.p_them()]self, the milky goo quickly regenerating all of [user.p_their()] injuries!</span>",
-			"<span class='notice'>You squeeze the [src], and it bursts in your hand, splashing you with milky goo which quickly regenerates your injuries!</span>")
-	core_effect_before(H, user)
-	H.revive(full_heal = 1)
-	core_effect(H, user)
-	playsound(target, 'sound/effects/splat.ogg', 40, 1)
+	if(do_after(user,5 SECONDS,target = src))
+		if(H.stat == DEAD)
+			to_chat(user, "<span class='warning'>[src] will not work on the dead!</span>")
+			return
+		if(H != user)
+			user.visible_message("<span class='notice'>[user] crushes the [src] over [H], the milky goo quickly regenerating all of [H.p_their()] injuries and soaking into [H.p_their()] body!</span>",
+				"<span class='notice'>You squeeze the [src], and it bursts over [H], the milky goo regenerating [H.p_their()] injuries and soaking into their body.</span>")
+		else
+			user.visible_message("<span class='notice'>[user] crushes the [src] over [user.p_them()]self, the milky goo quickly regenerating [user.p_their()] injuries and soaking into [H.p_their()] body!</span>",
+				"<span class='notice'>You squeeze the [src], and it bursts in your hand, splashing you with milky goo which quickly regenerates your injuries and holds your body together!</span>")
+		core_effect_before(H, user)
+		// H.revive(full_heal = 1)
+		H.apply_status_effect(STATUS_EFFECT_REGENERATIVE_CORE)
+		core_effect(H, user)
+		playsound(target, 'sound/effects/splat.ogg', 40, 1)
 	qdel(src)
 
 /obj/item/slimecross/regenerative/grey
