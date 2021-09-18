@@ -21,14 +21,16 @@ Regenerative extracts:
 			to_chat(user, "<span class='warning'>[src] will not work on the dead!</span>")
 			return TRUE //returning TRUE preemptively ends the attack chain and thus doesn't call afterattack, this is noteworthy for below as well
 		//inform the target that they're about to have a regenerative extract used on them
-		if(M != user)
+		if(M != user) //targeting someone else
 			M.visible_message("<span class='notice'>[user] readies [src], holding it steady near [M] and guiding it to the center of [M.p_their()] mass...</span>",
 				"<span class='notice'>[user] readies [src], holding it steady near you and guiding it to the center of your mass...</span>")
-		else
+			if(!do_after(user, 50, target = M)) //5 seconds
+				return TRUE
+		else //targeting self
 			M.visible_message("<span class='notice'>[user] readies [src], holding it steady near [user.p_them()]self and guiding it to the center of [user.p_their()] mass...</span>",
 				"<span class='notice'>You ready [src], holding it steady near you and guiding it to the center of your mass...</span>")
-		if(!do_after(user, 50, target = M)) //5 seconds
-			return TRUE
+			if(!do_after(user, 10, target = M)) //1 second
+				return TRUE
 		. = ..()
 	else
 		. = ..()
@@ -58,6 +60,7 @@ Regenerative extracts:
 	playsound(target, 'sound/effects/splat.ogg', 40, 1)
 	//warn receivers of the extract about the disgust if they're carbon, making it clear that the regenerative extract is causing this.
 	if(iscarbon(M))
+		var/obj/item/organ/stomach/S = M.getorganslot(ORGAN_SLOT_STOMACH) //for getting the stummy name
 		switch(new_disgust_level)
 			if(0 to DISGUST_LEVEL_GROSS)
 				to_chat(M,"<span class='warning'>While you recovered from [src], you feel a little nauseous.</span>")
@@ -66,7 +69,7 @@ Regenerative extracts:
 			if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
 				to_chat(M,"<span class='warning'>While you recovered from [src], you feel like you're about to vomit!</span>")
 			if(DISGUST_LEVEL_DISGUSTED to INFINITY)
-				to_chat(M,"<span class='userdanger'>You feel absolutely sick. Maybe you should lay off the regenerative extracts until your stomach settles!</span>")
+				to_chat(M,"<span class='userdanger'>You feel absolutely sick. Maybe you should lay off the regenerative extracts until your [(S ? S.name : "stomach")] settles!</span>")
 	qdel(src)
 
 /obj/item/slimecross/regenerative/grey
