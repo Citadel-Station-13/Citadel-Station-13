@@ -232,15 +232,14 @@
 		return
 	for(var/mob/living/M in mobs_in_pool)
 		switch(temperature) //Apply different effects based on what the temperature is set to.
-			if(POOL_SCALDING) //Scalding
-				M.adjust_bodytemperature(50,0,500)
-			if(POOL_WARM) //Warm
-				M.adjust_bodytemperature(20,0,360) //Heats up mobs till the thermometer shows up
-			//Normal temp does nothing, because it's just room temperature water.
+			if(POOL_SCALDING)
+				M.adjust_bodytemperature(-60) //this will burn the mobs at the same rate as frigid but with heat damage
+			if(POOL_WARM)
+				M.adjust_bodytemperature(-20) //thermometer will vary between hot phases but never burn the mob
 			if(POOL_COOL)
-				M.adjust_bodytemperature(-20,250) //Cools mobs till the thermometer shows up
-			if(POOL_FRIGID) //Freezing
-				M.adjust_bodytemperature(-60) //cool mob at -35k per cycle, less would not affect the mob enough.
+				M.adjust_bodytemperature(20) //pretty regular temperature that doesnt proc any thermometer
+			if(POOL_FRIGID)
+				M.adjust_bodytemperature(60) //freezes the mob with the same sort of effect as the heat does but with cold damage
 				if(M.bodytemperature <= 50 && !M.stat)
 					M.apply_status_effect(/datum/status_effect/freon)
 		if(ishuman(M))
