@@ -8,7 +8,6 @@
 	outputs = list(
 		"registered name" = IC_PINTYPE_STRING,
 		"assignment" = IC_PINTYPE_STRING,
-		"passkey" = IC_PINTYPE_STRING
 	)
 	activators = list(
 		"on read" = IC_PINTYPE_PULSE_OUT
@@ -17,7 +16,6 @@
 /obj/item/integrated_circuit/input/card_reader/attackby_react(obj/item/I, mob/living/user, intent)
 	var/obj/item/card/id/card = I.GetID()
 	var/list/access = I.GetAccess()
-	var/passkey = strtohex(XorEncrypt(json_encode(access), SScircuit.cipherkey))
 
 	if(assembly)
 		assembly.access_card.access |= access
@@ -32,8 +30,6 @@
 
 	else
 		return FALSE
-
-	set_pin_data(IC_OUTPUT, 3, passkey)
 
 	push_data()
 	activate_pin(1)
