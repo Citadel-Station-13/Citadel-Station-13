@@ -29,10 +29,10 @@
 	var/required_applicants = 1
 
 /datum/dynamic_ruleset/midround/trim_candidates()
-	living_players = trim_list(GLOB.alive_player_list)
-	living_antags = trim_list(GLOB.current_living_antags)
-	dead_players = trim_list(GLOB.dead_player_list)
-	list_observers = trim_list(GLOB.current_observers_list)
+	living_players = trim_list(mode.current_players[CURRENT_LIVING_PLAYERS])
+	living_antags = trim_list(mode.current_players[CURRENT_LIVING_ANTAGS])
+	dead_players = trim_list(mode.current_players[CURRENT_DEAD_PLAYERS])
+	list_observers = trim_list(mode.current_players[CURRENT_OBSERVERS])
 
 /datum/dynamic_ruleset/midround/proc/trim_list(list/L = list())
 	var/list/trimmed_list = L.Copy()
@@ -75,7 +75,7 @@
 	if (!forced)
 		var/job_check = 0
 		if (enemy_roles.len > 0)
-			for (var/mob/M in GLOB.alive_player_list)
+			for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
 				if (M.stat == DEAD || !M.client)
 					continue // Dead/disconnected players cannot count as opponents
 				if (M.mind && (M.mind.assigned_role in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role in restricted_roles)))
@@ -198,8 +198,8 @@
 	var/has_failure_chance = TRUE
 
 /datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
-	var/player_count = GLOB.alive_player_list.len
-	var/antag_count = GLOB.current_living_antags.len
+	var/player_count = mode.current_players[CURRENT_LIVING_PLAYERS].len
+	var/antag_count = mode.current_players[CURRENT_LIVING_ANTAGS].len
 	var/max_traitors = round(player_count / 10) + 1
 
 	// adding traitors if the antag population is getting low
