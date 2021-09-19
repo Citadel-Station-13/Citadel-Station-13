@@ -758,7 +758,7 @@
 	return ..()
 
 /datum/dynamic_ruleset/midround/pirates/execute()
-	//send_pirate_threat()
+	send_pirate_threat()
 	return ..()
 
 /// Probability the AI going malf will be accompanied by an ion storm announcement and some ion laws.

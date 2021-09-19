@@ -7,7 +7,6 @@
 	earliest_start = 40 MINUTES
 	min_players = 35
 	dynamic_should_hijack = TRUE
-	gamemode_blacklist = list("blob")
 
 /datum/round_event/ghost_role/blob
 	announceWhen	= -1
