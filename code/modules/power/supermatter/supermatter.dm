@@ -525,9 +525,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		temp_factor = 30
 		icon_state = base_icon_state
 
+	var/effective_temperature = min(removed.return_temperature(), 2500 * dynamic_heat_modifier)
+
 	//if there is more pluox and n2 then anything else, we receive no power increase from heat
 	if(power_changes)
-		power = max((removed.return_temperature() * temp_factor / T0C) * gasmix_power_ratio + power, 0)
+		power = max((effective_temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0)
 
 	if(prob(50))
 		//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
@@ -537,8 +539,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	//Power * 0.55 * a value between 1 and 0.8
 	var/device_energy = power * REACTION_POWER_MODIFIER
-
-	var/effective_temperature = min(removed.return_temperature(), 2500 * dynamic_heat_modifier)
 
 	var/max_temp_increase = effective_temperature + ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_CAP_MODIFIER)
 	//Calculate how much gas to release
