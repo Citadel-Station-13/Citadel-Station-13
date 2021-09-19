@@ -1978,12 +1978,6 @@
 /obj/structure/stone_tile,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
-"DQ" = (
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "Ef" = (
 /obj/structure/stone_tile/block/cracked,
 /turf/open/lava/smooth{
@@ -57293,7 +57287,7 @@ jS
 jS
 KV
 ab
-DQ
+jx
 aa
 aa
 ab
