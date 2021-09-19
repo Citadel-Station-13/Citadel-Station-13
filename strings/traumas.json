@@ -70,7 +70,7 @@
 		"NO PRED CAN eVER CATCH MI",
 		"SCIENCE GIB SHINK RAY PLS",
 		"KILL PUNPUN 4 FUN xDD",
-		"i play @pick(roles) to only ORDER not DO",
+		"i play @pick(importantroles) to only ORDER not DO",
 		"CRAGO ORDER @pick(cargo) PLS",
 		"erp?",
 		"i want to digest u!!!",
@@ -98,6 +98,7 @@
 		"nerf blob!1",
 		"iM NOT A FUWRRYY!!!",
 		"FOURTEEN INCHES SOFT!!!",
+		"SPLUUUUUUUUUUUUUUUUUUUUUUURTS!!!!!!!!!!",
         "@pick(semicolon)N-NYAAAAAA~",
         "@pick(bug)",
         "@pick(semicolon)wtf??????????? @pick(bug)",
@@ -133,7 +134,10 @@
 		"@pick(semicolon)Assaltign a sec osficer aren't crime if ur @pick(roles)",
 		";SEC I SPILED MU JICE HELELPH HELPJ JLEP HELP",
 		"@pick(semicolon) atmos is chemistyr is radation fast air is FASTER cheemsitry and FASTER RADIATION AND FASTER DEATH!!!",
-		"@pick(semicolon) FUC'KING MuNKEY WAch TALKN SHIT"
+		"@pick(semicolon) FUC'KING MuNKEY WAch TALKN SHIT",
+        "@pick(semicolon)How do I set up the. SHow do I set u p the Singu. how I the scrungulartiy????",
+		"@pick(semicolon)@pick(roles) is suSpicious!!!",
+		"@pick(semicolon)NOOO!!!OOOOOOO!! @pick(roles) HALP!!"
     ],
 
     "mutations": [
@@ -184,7 +188,11 @@
 		"haylo",
 		"EEGEE",
         "mr terry",
-        "berry"
+        "berry",
+		"are pee",
+		"mayne",
+		"air ret",
+		"dise"
     ],
 
     "create_verbs": [
@@ -199,7 +207,8 @@
         "treaitors",
         "sheadow lings",
         "abdoocters",
-        "revinent"
+        "revinent",
+		"ninja"
     ],
 
     "bug": [
@@ -266,12 +275,52 @@
 	"YOUR LIFE IS IMPORTANT. KEEP IT."
     ],
 
-	"roles": [
+	"importantroles": [
 	"heds",
 	"ceptin",
 	"hop",
-	"arrdee",
+	"hos",
+	"see emo",
+	"cee ee",
+	"arr dee",
+	"q m",
 	"sek"
+	],
+
+	"roles": [
+	"ceptin",
+	"hop",
+	"hos",
+	"see emo",
+	"cee ee",
+	"arr dee",
+	"q m",
+	"assistent",
+	"cargo",
+	"mine r",
+	"bart ender",
+	"chef",
+	"botonist",
+	"janny",
+	"clon",
+	"mime",
+	"librarian",
+	"chap",
+	"ai",
+	"borg",
+	"egnineer",
+	"atmos",
+	"docter",
+	"paradocter",
+	"cheemsist",
+	"viroligist",
+	"genetocist",
+	"science",
+	"robotocist",
+	"wardon",
+	"det",
+	"shitcurity",
+	"prihsoner"
 	],
 
 	"cargo": [
@@ -279,7 +328,10 @@
 	"HATS",
 	"PIZEH",
 	"MEMES",
-	"GLOWY CYSTAL"
+	"GLOWY CYSTAL",
+	"SINGLO",
+	"TESLO",
+	"NULLZ"
 	],
 
 	"s_roles": [
@@ -289,6 +341,7 @@
 	"admen",
 	"mantor",
 	"bluh daymon",
-	"wizzerd"
+	"wizzerd",
+	"nookies"
 	]
 }

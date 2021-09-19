@@ -162,3 +162,20 @@
 	gain_text = "<span class='notice'>You feel like munching on a can of soda.</span>"
 	lose_text = "<span class='notice'>You no longer feel like you should be eating trash.</span>"
 	mob_trait = TRAIT_TRASHCAN
+
+/datum/quirk/colorist
+	name = "Colorist"
+	desc = "You like carrying around a hair dye spray to quickly apply color patterns to your hair."
+	value = 0
+	medical_record_text = "Patient enjoys dyeing their hair with pretty colors."
+
+/datum/quirk/colorist/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/dyespray/spraycan = new(get_turf(quirk_holder))
+	H.equip_to_slot(spraycan, SLOT_IN_BACKPACK)
+	H.regenerate_icons()
+
+/datum/quirk/colorist/post_add()
+	var/mob/living/carbon/human/H = quirk_holder
+	SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
+	to_chat(quirk_holder, "<span class='boldnotice'>You brought some extra dye with you! It's in your bag if you forgot.</span>")

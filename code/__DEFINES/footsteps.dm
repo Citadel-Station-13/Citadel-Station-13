@@ -8,6 +8,7 @@
 #define FOOTSTEP_LAVA "lava"
 #define FOOTSTEP_MEAT "meat"
 #define FOOTSTEP_RUST "rust"
+#define FOOTSTEP_CATWALK "catwalk"
 
 //barefoot sounds
 #define FOOTSTEP_WOOD_BAREFOOT "woodbarefoot"
@@ -94,6 +95,12 @@ GLOBAL_LIST_INIT(footstep, list(
 		'sound/effects/footstep/lava3.ogg'), 100, 0),
 	FOOTSTEP_MEAT = list(list(
 		'sound/effects/meatslap.ogg'), 100, 0),
+	FOOTSTEP_CATWALK = list(list(
+		'sound/effects/footstep/catwalk1.ogg',
+		'sound/effects/footstep/catwalk2.ogg',
+		'sound/effects/footstep/catwalk3.ogg',
+		'sound/effects/footstep/catwalk4.ogg',
+		'sound/effects/footstep/catwalk5.ogg'), 100, 1),
 	FOOTSTEP_RUST = list(list(
 		'sound/effects/footstep/rustystep1.ogg'), 100, 0)
 ))

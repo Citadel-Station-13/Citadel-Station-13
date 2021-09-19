@@ -68,7 +68,7 @@ SUBSYSTEM_DEF(vote)
 	//get the highest number of votes
 	var/greatest_votes = 0
 	var/total_votes = 0
-	if(mode == "gamemode" && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
+	if((mode == "gamemode" || mode == "roundtype") && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
 		for(var/mob/dead/new_player/P in GLOB.player_list)
 			if(P.ready != PLAYER_READY_TO_PLAY && voted[P.ckey])
 				choices[choices[voted[P.ckey]]]--
@@ -105,7 +105,7 @@ SUBSYSTEM_DEF(vote)
 
 /datum/controller/subsystem/vote/proc/calculate_condorcet_votes(var/blackbox_text)
 	// https://en.wikipedia.org/wiki/Schulze_method#Implementation
-	if((mode == "gamemode" || mode == "dynamic") && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
+	if((mode == "gamemode" || mode == "dynamic" || mode == "roundtype") && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
 		for(var/mob/dead/new_player/P in GLOB.player_list)
 			if(P.ready != PLAYER_READY_TO_PLAY && voted[P.ckey])
 				voted -= P.ckey
@@ -155,7 +155,7 @@ SUBSYSTEM_DEF(vote)
 	for(var/choice in choices)
 		scores_by_choice += "[choice]"
 		scores_by_choice["[choice]"] = list()
-	if((mode == "gamemode" || mode == "dynamic") && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
+	if((mode == "gamemode" || mode == "dynamic" || mode == "roundtype") && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
 		for(var/mob/dead/new_player/P in GLOB.player_list)
 			if(P.ready != PLAYER_READY_TO_PLAY && voted[P.ckey])
 				voted -= P.ckey

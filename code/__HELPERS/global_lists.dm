@@ -78,6 +78,12 @@
 		var/datum/emote/E = new path()
 		E.emote_list[E.key] = E
 
+	// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
+	for(var/path in subtypesof(/datum/sprite_accessory/hair_gradient))
+		var/datum/sprite_accessory/hair_gradient/H = new path()
+		GLOB.hair_gradients_list[H.name] = H
+
+	// Keybindings
 	init_keybindings()
 
 	//Uplink Items

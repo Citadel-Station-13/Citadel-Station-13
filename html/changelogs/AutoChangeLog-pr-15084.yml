@@ -1,0 +1,10 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - bugfix: "Plague Rats will no longer spawn thousands of dirt decals"
+  - bugfix: "Plague Rats will no longer spawn thousands of corpses"
+  - bugfix: "Plague Rats can't spawn or transform off station z anymore"
+  - bugfix: "Plague Rats shouldn't explosively grow instantly"
+  - bugfix: "Plague Rats won't spawn infinite miasma anymore."
+  - balance: "Plague Rats health is now 100."
+  - balance: "Plague Rats can now ventcrawl through everything to prevent farming."
