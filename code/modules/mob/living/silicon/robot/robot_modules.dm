@@ -1034,6 +1034,7 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/crowbar/cyborg,
 		/obj/item/reagent_containers/borghypo/syndicate,
+		/obj/item/gripper/medical
 		/obj/item/shockpaddles/syndicate,
 		/obj/item/healthanalyzer/advanced,
 		/obj/item/surgical_drapes/advanced,
@@ -1167,6 +1168,7 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/crowbar/cyborg,
 		/obj/item/reagent_containers/borghypo/syndicate,
+		/obj/item/gripper/medical
 		/obj/item/shockpaddles/syndicate,
 		/obj/item/healthanalyzer/advanced,
 		/obj/item/surgical_drapes/advanced,
@@ -1203,7 +1205,7 @@
 		/obj/item/multitool/cyborg,
 		/obj/item/storage/part_replacer/cyborg,
 		/obj/item/holosign_creator/atmos,
-		/obj/item/weapon/gripper,
+		/obj/item/gripper,
 		/obj/item/lightreplacer/cyborg,
 		/obj/item/stack/sheet/metal/cyborg,
 		/obj/item/stack/sheet/glass/cyborg,
