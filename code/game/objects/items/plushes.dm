@@ -446,7 +446,7 @@
 			mood_message = null
 	cheer_up()
 
-/obj/item/toy/plush/proc/update_desc()
+/obj/item/toy/plush/update_desc()
 	desc = normal_desc
 	if(mood_message)
 		desc += mood_message
@@ -466,7 +466,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	can_random_spawn = FALSE
 
 /obj/item/toy/plush/random/Initialize()
-	SHOULD_CALL_PARENT(FALSE)
+	..()
 	var/newtype
 	var/list/snowflake_list = CONFIG_GET(keyed_list/snowflake_plushies)
 

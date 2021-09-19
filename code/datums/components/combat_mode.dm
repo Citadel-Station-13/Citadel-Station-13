@@ -7,7 +7,7 @@
 	var/mode_flags = COMBAT_MODE_INACTIVE
 	var/combatmessagecooldown
 	var/lastmousedir
-	var/obj/screen/combattoggle/hud_icon
+	var/atom/movable/screen/combattoggle/hud_icon
 	var/hud_loc
 
 /datum/component/combat_mode/Initialize(hud_loc = ui_combat_toggle)
@@ -178,18 +178,18 @@
 	safe_disable_combat_mode(source)
 
 /// The screen button.
-/obj/screen/combattoggle
+/atom/movable/screen/combattoggle
 	name = "toggle combat mode"
 	icon = 'modular_citadel/icons/ui/screen_midnight.dmi'
 	icon_state = "combat_off"
 	var/mutable_appearance/flashy
 	var/combat_on = FALSE ///Wheter combat mode is enabled or not, so we don't have to store a reference.
 
-/obj/screen/combattoggle/Click()
+/atom/movable/screen/combattoggle/Click()
 	if(hud && usr == hud.mymob)
 		SEND_SIGNAL(hud.mymob, COMSIG_TOGGLE_COMBAT_MODE)
 
-/obj/screen/combattoggle/update_icon_state()
+/atom/movable/screen/combattoggle/update_icon_state()
 	var/mob/living/user = hud?.mymob
 	if(!user)
 		return
@@ -200,7 +200,7 @@
 	else
 		icon_state = "combat_off"
 
-/obj/screen/combattoggle/update_overlays()
+/atom/movable/screen/combattoggle/update_overlays()
 	. = ..()
 	var/mob/living/carbon/user = hud?.mymob
 	if(!(user?.client))

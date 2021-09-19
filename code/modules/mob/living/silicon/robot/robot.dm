@@ -23,9 +23,9 @@
 	robot_modules_background.layer = HUD_LAYER	//Objects that appear on screen are on layer ABOVE_HUD_LAYER, UI should be just below it.
 	robot_modules_background.plane = HUD_PLANE
 
-	inv1 = new /obj/screen/robot/module1()
-	inv2 = new /obj/screen/robot/module2()
-	inv3 = new /obj/screen/robot/module3()
+	inv1 = new /atom/movable/screen/robot/module1()
+	inv2 = new /atom/movable/screen/robot/module2()
+	inv3 = new /atom/movable/screen/robot/module3()
 
 	previous_health = health
 
@@ -598,7 +598,7 @@
 	if(wires.is_cut(WIRE_LOCKDOWN))
 		state = TRUE
 	if(state)
-		throw_alert("locked", /obj/screen/alert/locked)
+		throw_alert("locked", /atom/movable/screen/alert/locked)
 	else
 		clear_alert("locked")
 	locked_down = state
@@ -611,7 +611,7 @@
 	module.rebuild_modules()
 	update_icons()
 	if(emagged)
-		throw_alert("hacked", /obj/screen/alert/hacked)
+		throw_alert("hacked", /atom/movable/screen/alert/hacked)
 	else
 		clear_alert("hacked")
 
@@ -966,7 +966,8 @@
 
 	upgrades.Cut()
 
-	speed = 0
+	vtec = 0
+	vtec_disabled = FALSE
 	ionpulse = FALSE
 	revert_shell()
 

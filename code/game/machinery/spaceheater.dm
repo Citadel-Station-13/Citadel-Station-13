@@ -6,6 +6,7 @@
 	anchored = FALSE
 	density = TRUE
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN
+	use_power = NO_POWER_USE
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "sheater-off"
 	name = "space heater"
@@ -72,7 +73,7 @@
 			on = FALSE
 		return PROCESS_KILL
 
-	if(cell && cell.charge > 0)
+	if(cell && cell.charge > 1 / efficiency)
 		var/turf/L = loc
 		PerformHeating(L)
 
@@ -112,7 +113,9 @@
 	var/requiredPower = abs(env.return_temperature() - targetTemperature) * heat_capacity
 	requiredPower = min(requiredPower, heatingPower)
 
-	if(requiredPower < 1)
+	if(requiredPower < 1 || !cell.use(requiredPower / efficiency))
+		on = FALSE
+		update_icon()
 		return
 
 	var/deltaTemperature = requiredPower / heat_capacity
@@ -121,7 +124,6 @@
 	if(deltaTemperature)
 		env.set_temperature(env.return_temperature() + deltaTemperature)
 		air_update_turf()
-	cell.use(requiredPower / efficiency)
 
 /obj/machinery/space_heater/RefreshParts()
 	var/laser = 2

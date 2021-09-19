@@ -553,7 +553,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			A.power_equip = power_equip
 			A.power_environ = power_environ
 			INVOKE_ASYNC(A, .proc/power_change)
-	update_icon()
+	update_appearance()
 
 /area/proc/usage(chan)
 	switch(chan)

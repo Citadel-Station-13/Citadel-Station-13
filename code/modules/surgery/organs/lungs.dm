@@ -54,7 +54,8 @@
 
 	var/SA_para_min = 1 //nitrous values
 	var/SA_sleep_min = 5
-	var/BZ_trip_balls_min = 1 //BZ gas
+	var/BZ_trip_balls_min = 0.1 //BZ gas
+	var/BZ_brain_damage_min = 1
 	var/gas_stimulation_min = 0.002 //Nitryl and Stimulum
 
 	var/cold_message = "your face freezing and an icicle forming"
@@ -269,13 +270,13 @@
 	// BZ
 
 		var/bz_pp = PP(breath, GAS_BZ)
-		if(bz_pp > BZ_trip_balls_min)
+		if(bz_pp > BZ_brain_damage_min)
 			H.hallucination += 10
 			H.reagents.add_reagent(/datum/reagent/bz_metabolites,5)
 			if(prob(33))
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
 
-		else if(bz_pp > 0.01)
+		else if(bz_pp > BZ_trip_balls_min)
 			H.hallucination += 5
 			H.reagents.add_reagent(/datum/reagent/bz_metabolites,1)
 
@@ -476,7 +477,7 @@
 	)
 	SA_para_min = 30
 	SA_sleep_min = 50
-	BZ_trip_balls_min = 30
+	BZ_brain_damage_min = 30
 	emp_vulnerability = 3
 
 	cold_level_1_threshold = 200
@@ -509,8 +510,29 @@
 	heat_level_2_threshold = 600 // up 200 from level 1, 1000 is silly but w/e for level 3
 
 /obj/item/organ/lungs/ashwalker/populate_gas_info()
+	// humans usually breathe 21 but require 16/17, so 80% - 1, which is more lenient but it's fine
+	#define SAFE_THRESHOLD_RATIO 0.8
+	var/datum/gas_mixture/breath = SSair.planetary[LAVALAND_DEFAULT_ATMOS] // y'all know
+	var/pressure = breath.return_pressure()
+	var/total_moles = breath.total_moles()
+	for(var/id in breath.get_gases())
+		var/this_pressure = PP(breath, id)
+		var/req_pressure = (this_pressure * SAFE_THRESHOLD_RATIO) - 1
+		if(req_pressure > 0)
+			gas_min[id] = req_pressure
+		if(id in gas_max)
+			gas_max[id] += this_pressure
+	var/bz = breath.get_moles(GAS_BZ)
+	if(bz)
+		BZ_trip_balls_min += bz
+		BZ_brain_damage_min += bz
+
+	gas_max[GAS_N2] = PP(breath, GAS_N2) + 5
+	var/o2_pp = PP(breath, GAS_O2)
+	safe_breath_min = 0.3 * o2_pp
+	safe_breath_max = 1.3 * o2_pp
 	..()
-	gas_max[GAS_N2] = 28
+	#undef SAFE_THRESHOLD_RATIO
 
 /obj/item/organ/lungs/slime
 	name = "vacuole"
@@ -533,7 +555,7 @@
 		var/total_moles = breath.total_moles()
 		var/pressure = breath.return_pressure()
 		var/plasma_pp = PP(breath, GAS_PLASMA)
-		owner.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
+		owner.adjust_integration_blood(0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
 
 /obj/item/organ/lungs/yamerol
 	name = "Yamerol lungs"

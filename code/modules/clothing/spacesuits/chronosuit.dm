@@ -238,7 +238,7 @@
 	var/mob/holder = null
 	var/phase_time = 0
 	var/phase_time_length = 3
-	var/obj/screen/chronos_target/target_ui = null
+	var/atom/movable/screen/chronos_target/target_ui = null
 	var/obj/item/clothing/suit/space/chronos/chronosuit
 
 /obj/effect/chronos_cam/singularity_act()
@@ -299,13 +299,13 @@
 			holder.unset_machine()
 	return ..()
 
-/obj/screen/chronos_target
+/atom/movable/screen/chronos_target
 	name = "target display"
 	screen_loc = "CENTER,CENTER"
 	color = "#ff3311"
 	blend_mode = BLEND_SUBTRACT
 
-/obj/screen/chronos_target/New(loc, var/mob/living/carbon/human/user)
+/atom/movable/screen/chronos_target/New(loc, var/mob/living/carbon/human/user)
 	if(user)
 		var/icon/user_icon = getFlatIcon(user)
 		icon = user_icon

@@ -86,7 +86,7 @@
 		. += "off"
 		. += "sparking"
 	//Overlay is similar enough for both that we can use the same mask for both
-	SSvis_overlays.add_vis_overlay(src, icon, "locked", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+	. += emissive_appearance(icon, "locked", alpha = src.alpha)
 	. += locked ? "locked" : "unlocked"
 
 
@@ -356,7 +356,7 @@
 	return
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
-	if(!istype(O) || O.anchored || istype(O, /obj/screen))
+	if(!istype(O) || O.anchored || istype(O, /atom/movable/screen))
 		return
 	if(!istype(user) || user.incapacitated() || user.lying)
 		return
@@ -531,7 +531,7 @@
 
 /obj/structure/closet/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
 
 /obj/structure/closet/emp_act(severity)
 	. = ..()

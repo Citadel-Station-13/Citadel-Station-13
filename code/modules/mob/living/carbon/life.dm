@@ -1,6 +1,6 @@
 /mob/living/carbon/BiologicalLife(seconds, times_fired)
 	//Reagent processing needs to come before breathing, to prevent edge cases.
-	handle_organs()
+	handle_organs(seconds, times_fired)
 	. = ..()		// if . is false, we are dead.
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -23,7 +23,7 @@
 		handle_brain_damage()
 
 	if(stat != DEAD)
-		handle_liver()
+		handle_liver(seconds, times_fired)
 
 	if(stat != DEAD)
 		handle_corruption()
@@ -155,7 +155,7 @@
 		adjustOxyLoss(1)
 
 		failed_last_breath = 1
-		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+		throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
 		return 0
 
 	var/safe_oxy_min = 16
@@ -183,7 +183,7 @@
 				adjustOxyLoss(8)
 		if(prob(20))
 			emote("cough")
-		throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy)
+		throw_alert("too_much_oxy", /atom/movable/screen/alert/too_much_oxy)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
 
 	if(O2_partialpressure < safe_oxy_min) //Not enough oxygen
@@ -197,7 +197,7 @@
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
-		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+		throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
 
 	else //Enough oxygen
@@ -231,7 +231,7 @@
 	if(Toxins_partialpressure > safe_tox_max)
 		var/ratio = (breath.get_moles(GAS_PLASMA)/safe_tox_max) * 10
 		adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
-		throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
+		throw_alert("too_much_tox", /atom/movable/screen/alert/too_much_tox)
 	else
 		clear_alert("too_much_tox")
 
@@ -378,25 +378,25 @@
 /mob/living/carbon/proc/handle_blood()
 	return
 
-/mob/living/carbon/proc/handle_bodyparts()
+/mob/living/carbon/proc/handle_bodyparts(seconds, times_fired)
 	for(var/I in bodyparts)
 		var/obj/item/bodypart/BP = I
 		if(BP.needs_processing)
-			. |= BP.on_life()
+			. |= BP.on_life(seconds, times_fired)
 
-/mob/living/carbon/proc/handle_organs()
+/mob/living/carbon/proc/handle_organs(seconds, times_fired)
 	if(stat != DEAD)
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
 			if(O)
-				O.on_life()
+				O.on_life(seconds, times_fired)
 	else
 		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/preservahyde, 1)) // No organ decay if the body contains formaldehyde. Or preservahyde.
 			return
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
 			if(O)
-				O.on_death() //Needed so organs decay while inside the body.
+				O.on_death(seconds, times_fired) //Needed so organs decay while inside the body.
 
 /mob/living/carbon/handle_diseases()
 	for(var/thing in diseases)
@@ -687,16 +687,16 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 //LIVER//
 /////////
 
-/mob/living/carbon/proc/handle_liver()
+/mob/living/carbon/proc/handle_liver(seconds, times_fired)
 	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
 	if((!dna && !liver) || (NOLIVER in dna.species.species_traits))
 		return
 	if(!liver || liver.organ_flags & ORGAN_FAILING)
-		liver_failure()
+		liver_failure(seconds, times_fired)
 
-/mob/living/carbon/proc/liver_failure()
+/mob/living/carbon/proc/liver_failure(seconds, times_fired)
 	reagents.end_metabolization(src, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
-	reagents.metabolize(src, can_overdose=FALSE, liverless = TRUE)
+	reagents.metabolize(src, seconds, times_fired, can_overdose=FALSE, liverless = TRUE)
 	if(HAS_TRAIT(src, TRAIT_STABLELIVER))
 		return
 	adjustToxLoss(4, TRUE,  TRUE)

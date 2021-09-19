@@ -554,3 +554,9 @@
 	slot = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/smaiden
 	ckeywhitelist = list("ultimarifox")
+
+/datum/gear/donator/mgasmask
+	name = "Military Gas Mask"
+	slot = SLOT_IN_BACKPACK
+	path = /obj/item/clothing/mask/gas/military
+	ckeywhitelist = list("unclebourbon")

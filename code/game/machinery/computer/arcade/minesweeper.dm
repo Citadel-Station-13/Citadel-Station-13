@@ -191,6 +191,7 @@
 				var/x2 = x1
 				work_squares(y2, x2)	//Work squares while in this loop so there's less load
 				reset_board = FALSE
+				CHECK_TICK
 
 		web += "<table>"	//Start setting up the html table
 		web += "<tbody>"
@@ -235,6 +236,7 @@
 						web += "<td>[MINESWEEPERIMG(7)]</td>"
 					if(19)
 						web += "<td>[MINESWEEPERIMG(8)]</td>"
+				CHECK_TICK
 			web += "</tr>"
 		web += "</table>"
 		web += "</tbody>"

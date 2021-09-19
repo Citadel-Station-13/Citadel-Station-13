@@ -184,7 +184,7 @@
 	hitcost = 75 //Costs more than a standard cyborg esword
 	w_class = WEIGHT_CLASS_NORMAL
 	sharpness = SHARP_EDGED
-	light_color = "#40ceff"
+	light_color = LIGHT_COLOR_RED
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.7
 

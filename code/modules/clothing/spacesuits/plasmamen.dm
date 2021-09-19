@@ -169,6 +169,10 @@
 	icon_state = "hos_envirohelm"
 	item_state = "hos_envirohelm"
 
+/obj/item/clothing/head/helmet/space/plasmaman/prisoner
+	name = "prisoner's plasma envirosuit helmet"
+	desc = "A plasmaman containment helmet for prisoners."
+
 /obj/item/clothing/head/helmet/space/plasmaman/medical
 	name = "medical's plasma envirosuit helmet"
 	desc = "An envriohelmet designed for plasmaman medical doctors, having two stripes down it's length to denote as much."
