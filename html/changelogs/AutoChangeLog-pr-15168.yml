@@ -1,0 +1,4 @@
+author: "dapnee"
+delete-after: True
+changes: 
+  - bugfix: "attaches an air vent that was just there on the AI sat, changes some areas to what they'd logically be"
