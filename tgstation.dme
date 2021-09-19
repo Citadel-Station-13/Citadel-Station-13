@@ -464,11 +464,16 @@
 #include "code\datums\achievements\skill_achievements.dm"
 #include "code\datums\actions\beam_rifle.dm"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include "code\datums\actions\ninja.dm"
 #include "code\datums\atmosphere\_atmosphere.dm"
 #include "code\datums\atmosphere\planetary.dm"
 >>>>>>> 5aea7175ea7d3e53dee51c9a5fd7cfc6e59907b8
+=======
+#include "code\datums\atmosphere\_atmosphere.dm"
+#include "code\datums\atmosphere\planetary.dm"
+>>>>>>> a41258c7def6129040004d9aa51d46f6950acabe
 #include "code\datums\brain_damage\brain_trauma.dm"
 #include "code\datums\brain_damage\hypnosis.dm"
 #include "code\datums\brain_damage\imaginary_friend.dm"
