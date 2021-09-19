@@ -323,6 +323,7 @@
 		to_chat(user, "Encryption Key ports not configured.")
 
 /obj/item/paicard/emag_act(mob/user) // Emag to wipe the master DNA and supplemental directive
+	. = ..()
 	if(!pai)
 		return
 	to_chat(user, "<span class='notice'>You override [pai]'s directive system, clearing its master string and supplied directive.</span>")
