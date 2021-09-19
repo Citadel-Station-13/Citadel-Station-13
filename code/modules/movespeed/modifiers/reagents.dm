@@ -23,7 +23,7 @@
 	multiplicative_slowdown = -4
 	priority = 500
 	complex_calculation = TRUE
-	absolute_max_tiles_per_second = 8
+	absolute_max_tiles_per_second = 10
 
 /datum/movespeed_modifier/reagent/methamphetamine
 	// very strong painkiller effect that caps out at slightly above runspeed
