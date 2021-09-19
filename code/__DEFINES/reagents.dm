@@ -76,3 +76,8 @@
 //Chemical reaction flags, for determining reaction specialties
 #define REACTION_CLEAR_IMPURE       (1<<0)  //Convert into impure/pure on reaction completion
 #define REACTION_CLEAR_INVERSE      (1<<1)  //Convert into inverse on reaction completion when purity is low enough
+
+//Chemical blacklists for smartdarts
+GLOBAL_LIST_INIT(blacklisted_medchems, list(
+	/datum/reagent/medicine/morphine, /datum/reagent/medicine/haloperidol,	//harmful chemicals in medicine
+	))

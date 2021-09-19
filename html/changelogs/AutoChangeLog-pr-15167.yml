@@ -1,0 +1,4 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - balance: "Slime regenerative extracts now require five seconds of wait before they are used. They add 25 disgust when used."

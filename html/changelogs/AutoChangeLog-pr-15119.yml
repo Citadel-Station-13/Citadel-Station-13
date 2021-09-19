@@ -1,0 +1,8 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - bugfix: "Slaughter Demons Slam will now wound again on hit."
+  - balance: "Damage for demons back up to 30"
+  - balance: "Wound Bonus for demons now at 0.
+image_add: Adds a sprite for the action bar"
+  - refactor: "Changed the CTRL+SHIFT Click to an action button.  People can see the cooldown now too."

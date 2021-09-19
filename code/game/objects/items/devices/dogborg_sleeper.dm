@@ -172,7 +172,7 @@
 /obj/item/dogborg/sleeper/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "dogborg_sleeper", name, 375, 550) //UI DOES NOT EXIST
+		ui = new(user, src, "Sleeper", name)
 		ui.open()
 
 /obj/item/dogborg/sleeper/ui_data()

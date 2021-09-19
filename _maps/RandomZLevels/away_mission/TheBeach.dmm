@@ -272,7 +272,7 @@
 /obj/structure/mirror{
 	pixel_y = 28
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/wood_diagonal,
 /area/awaymission/beach)
 "bd" = (
 /turf/open/floor/wood,
@@ -312,7 +312,7 @@
 	pixel_x = 24;
 	specialfunctions = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/wood_diagonal,
 /area/awaymission/beach)
 "bj" = (
 /obj/machinery/button/door{
@@ -322,7 +322,7 @@
 	pixel_x = -24;
 	specialfunctions = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/wood_diagonal,
 /area/awaymission/beach)
 "bk" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
@@ -392,14 +392,14 @@
 	id_tag = "changlinhut2";
 	name = "changing room"
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/wood_diagonal,
 /area/awaymission/beach)
 "bt" = (
 /obj/machinery/door/airlock/sandstone{
 	id_tag = "changlinhut1";
 	name = "changing room"
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/wood_diagonal,
 /area/awaymission/beach)
 "bu" = (
 /obj/item/reagent_containers/food/drinks/bottle/wine,
@@ -477,9 +477,9 @@
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bF" = (
-/obj/structure/bedsheetbin,
 /obj/effect/turf_decal/sand,
 /obj/structure/table/wood,
+/obj/structure/bedsheetbin/towel,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bG" = (
@@ -773,7 +773,7 @@
 /area/awaymission/beach)
 "cv" = (
 /obj/effect/turf_decal/stripes/white/corner{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
@@ -1000,6 +1000,16 @@
 "dg" = (
 /obj/item/clothing/glasses/heat,
 /turf/open/floor/plating/beach/sand,
+/area/awaymission/beach)
+"iv" = (
+/obj/structure/dresser{
+	density = 0;
+	pixel_y = 18
+	},
+/turf/open/floor/wood/wood_diagonal,
+/area/awaymission/beach)
+"kr" = (
+/turf/open/floor/wood/wood_diagonal,
 /area/awaymission/beach)
 "np" = (
 /obj/machinery/shower{
@@ -7586,8 +7596,8 @@ ak
 ak
 ak
 aX
-bb
-bd
+iv
+kr
 aX
 ak
 ba
@@ -8442,7 +8452,7 @@ aJ
 aE
 ak
 aX
-bb
+iv
 bj
 bt
 ba
@@ -8550,7 +8560,7 @@ ak
 aS
 aX
 bc
-bd
+kr
 aX
 ak
 ba
@@ -9090,7 +9100,7 @@ ak
 ak
 ba
 ba
-ak
+bF
 ak
 ak
 ak
