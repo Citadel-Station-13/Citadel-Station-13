@@ -123,7 +123,7 @@
 			var/list/this_pad = list()
 			this_pad["name"] = pad.display_name
 			this_pad["id"] = i
-			if(pad.machine_stat & NOPOWER)
+			if(pad.stat & NOPOWER)
 				this_pad["inactive"] = TRUE
 			pad_list += list(this_pad)
 		else
@@ -135,7 +135,7 @@
 		var/obj/machinery/mechpad/current_pad = mechpads[selected_id]
 		data["pad_name"] = current_pad.display_name
 		data["selected_pad"] = current_pad
-		if(QDELETED(current_pad) || (current_pad.machine_stat & NOPOWER))
+		if(QDELETED(current_pad) || (current_pad.stat & NOPOWER))
 			data["pad_active"] = FALSE
 			return data
 		data["pad_active"] = TRUE

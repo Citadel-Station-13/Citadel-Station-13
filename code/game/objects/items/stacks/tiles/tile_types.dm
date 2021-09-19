@@ -555,3 +555,10 @@
 	color = "#92661A"
 	turf_type = /turf/open/floor/bronze
 	custom_materials = list(/datum/material/bronze = 250)
+
+/obj/item/stack/tile/catwalk
+	name = "catwalk tile"
+	singular_name = "catwalk floor tile"
+	desc = "Flooring that shows its contents underneath. Engineers love it!"
+	icon_state = "catwalk_tile"
+	turf_type = /turf/open/floor/plating/catwalk_floor

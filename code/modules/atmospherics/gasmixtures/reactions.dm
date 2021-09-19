@@ -648,7 +648,7 @@
 	//Replace miasma with oxygen
 	var/cleaned_air = min(air.get_moles(GAS_MIASMA), 20 + (air.return_temperature() - FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 70) / 20)
 	air.adjust_moles(GAS_MIASMA, -cleaned_air)
-	air.adjust_moles(GAS_O2, cleaned_air)
+	air.adjust_moles(GAS_METHANE, cleaned_air)
 
 	//Possibly burning a bit of organic matter through maillard reaction, so a *tiny* bit more heat would be understandable
 	air.set_temperature(air.return_temperature() + cleaned_air * 0.002)

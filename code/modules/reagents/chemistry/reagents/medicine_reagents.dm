@@ -396,26 +396,34 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
 	taste_description = "sweetness and salt"
+	var/extra_regen = 0.25 // in addition to acting as temporary blood, also add this much to their actual blood per tick
 	var/last_added = 0
 	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10	//So that normal blood regeneration can continue with salglu active
-	var/extra_regen = 0.25 // in addition to acting as temporary blood, also add this much to their actual blood per tick
 	pH = 5.5
 
-/datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/M)
-	if((HAS_TRAIT(M, TRAIT_NOMARROW)))
-		return
-	if(last_added)
-		M.blood_volume -= last_added
-		last_added = 0
-	if(M.blood_volume < maximum_reachable)	//Can only up to double your effective blood level.
-		var/amount_to_add = min(M.blood_volume, volume*5)
-		var/new_blood_level = min(M.blood_volume + amount_to_add, maximum_reachable)
-		last_added = new_blood_level - M.blood_volume
-		M.blood_volume = new_blood_level + extra_regen
+/datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/human/M)
 	if(prob(33))
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
 		. = TRUE
+	if((HAS_TRAIT(M, TRAIT_NOMARROW)))
+		return ..()
+	if(last_added)
+		M.adjust_integration_blood(-last_added, TRUE)
+		last_added = 0
+	if(M.functional_blood() < maximum_reachable) //Can only up to double your effective blood level.
+		var/new_blood_level = min(volume * 5, maximum_reachable)
+		last_added = new_blood_level
+		M.adjust_integration_blood(new_blood_level + (extra_regen * REM))
+	if(prob(33))
+		M.adjustBruteLoss(-0.5*REM, 0)
+		M.adjustFireLoss(-0.5*REM, 0)
+		. = TRUE
+	..()
+
+/datum/reagent/medicine/salglu_solution/on_mob_delete(mob/living/carbon/human/M)
+	if(last_added)
+		M.adjust_integration_blood(-last_added, TRUE)
 	..()
 
 /datum/reagent/medicine/salglu_solution/overdose_process(mob/living/M)
@@ -706,21 +714,42 @@
 	addiction_threshold = 30
 	pH = 12
 
-/datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/M)
-	M.AdjustAllImmobility(-20, FALSE)
-	M.AdjustUnconscious(-20, FALSE)
-	M.adjustStaminaLoss(-4.5*REM, FALSE)
-	M.Jitter(10)
-	if(prob(50))
-		M.confused = max(M.confused, 1)
+/datum/reagent/medicine/ephedrine/on_mob_metabolize(mob/living/L)
+	..()
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
+	ADD_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
+
+/datum/reagent/medicine/ephedrine/on_mob_end_metabolize(mob/living/L)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
+	REMOVE_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
+	..()
+
+/datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	// if(DT_PROB(10 * (1-creation_purity), delta_time) && iscarbon(M))
+	// 	var/obj/item/I = M.get_active_held_item()
+	// 	if(I && M.dropItemToGround(I))
+	// 		to_chat(M, span_notice("Your hands spaz out and you drop what you were holding!"))
+	// 		M.Jitter(10)
+
+	M.AdjustAllImmobility(-20 * REM * delta_time)
+	M.adjustStaminaLoss(-1 * REM * delta_time, FALSE)
 	..()
 	return TRUE
 
-/datum/reagent/medicine/ephedrine/overdose_process(mob/living/M)
-	if(prob(33))
-		M.adjustToxLoss(0.5*REM, 0)
+/datum/reagent/medicine/ephedrine/overdose_process(mob/living/M, delta_time, times_fired)
+	if(DT_PROB(1, delta_time) && iscarbon(M))
+		var/datum/disease/D = new /datum/disease/heart_failure
+		M.ForceContractDisease(D)
+		to_chat(M, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
+		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 100, 0)
+
+	if(DT_PROB(3.5, delta_time))
+		to_chat(M, span_notice("[pick("Your head pounds.", "You feel a tight pain in your chest.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]"))
+
+	if(DT_PROB(18, delta_time))
+		M.adjustToxLoss(1, 0)
 		M.losebreath++
-		. = 1
+		. = TRUE
 	return TRUE
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage1(mob/living/M)
@@ -981,7 +1010,7 @@
 					M.grab_ghost()
 					M.emote("gasp")
 					log_combat(M, M, "revived", src)
-					var/list/policies = CONFIG_GET(keyed_list/policyconfig)
+					var/list/policies = CONFIG_GET(keyed_list/policy)
 					var/timelimit = CONFIG_GET(number/defib_cmd_time_limit) * 10 //the config is in seconds, not deciseconds
 					var/late = timelimit && (tplus > timelimit)
 					var/policy = late? policies[POLICYCONFIG_ON_DEFIB_LATE] : policies[POLICYCONFIG_ON_DEFIB_INTACT]
@@ -1274,7 +1303,7 @@
 	M.adjustCloneLoss(-3*REM, FALSE)
 	M.adjustStaminaLoss(-25*REM,FALSE)
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
-		M.blood_volume += 40 // blood fall out man bad
+		M.adjust_integration_blood(40) // blood fall out man bad
 	..()
 	. = 1
 
@@ -1295,7 +1324,7 @@
 	M.adjustCloneLoss(-1.25*REM, FALSE)
 	M.adjustStaminaLoss(-4*REM,FALSE)
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
-		M.blood_volume += 3
+		M.adjust_integration_blood(3)
 	..()
 	. = 1
 
@@ -1415,37 +1444,42 @@
 /datum/reagent/medicine/changelingadrenaline
 	name = "Changeling Adrenaline"
 	description = "Reduces the duration of unconciousness, knockdown and stuns. Restores stamina, but deals toxin damage when overdosed."
-	color = "#918e53"
+	color = "#C1151D"
 	overdose_threshold = 30
 	value = REAGENT_VALUE_VERY_RARE
 
-/datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/L)
+/datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
 	..()
-	ADD_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
-
-/datum/reagent/medicine/changelingadrenaline/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
-	..()
-
-/datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
-	M.AdjustUnconscious(-20, 0)
-	M.AdjustAllImmobility(-20, 0)
-	M.AdjustSleeping(-20, 0)
-	M.adjustStaminaLoss(-30, 0)
-	..()
+	metabolizer.AdjustAllImmobility(-20 * REM * delta_time)
+	metabolizer.adjustStaminaLoss(-30 * REM * delta_time, 0)
+	metabolizer.Jitter(10 * REM * delta_time)
+	metabolizer.Dizzy(10 * REM * delta_time)
 	return TRUE
 
-/datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/M as mob)
-	M.adjustToxLoss(5, 0) //let's make this mildly more toxic because of the stamina buff
+/datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/L)
+	..()
+	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	ADD_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
+	L.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
+
+/datum/reagent/medicine/changelingadrenaline/on_mob_end_metabolize(mob/living/L)
+	..()
+	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	REMOVE_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
+	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
+	L.Dizzy(0)
+	L.Jitter(0)
+
+/datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/metabolizer, delta_time, times_fired)
+	metabolizer.adjustToxLoss(1 * REM * delta_time, 0)
 	..()
 	return TRUE
 
 /datum/reagent/medicine/changelinghaste
 	name = "Changeling Haste"
-	description = "Drastically increases movement speed, but deals toxin damage."
-	color = "#669153"
-	metabolization_rate = 1
-	value = REAGENT_VALUE_VERY_RARE
+	description = "Drastically increases movement speed."
+	color = "#AE151D"
+	metabolization_rate = 2.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/changelinghaste/on_mob_metabolize(mob/living/L)
 	..()
@@ -1454,11 +1488,6 @@
 /datum/reagent/medicine/changelinghaste/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/changelinghaste)
 	..()
-
-/datum/reagent/medicine/changelinghaste/on_mob_life(mob/living/carbon/M)
-	M.adjustToxLoss(2, 0)
-	..()
-	return TRUE
 
 /datum/reagent/medicine/corazone
 	// Heart attack code will not do damage if corazone is present
