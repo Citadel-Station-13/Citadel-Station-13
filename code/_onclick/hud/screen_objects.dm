@@ -154,8 +154,8 @@
 	if(hud?.mymob && slot_id)
 		var/obj/item/inv_item = hud.mymob.get_item_by_slot(slot_id)
 		if(inv_item)
-			if(hud?.mymob.incapacitated())
-				inv_item.apply_outline(COLOR_RED_GRAY)
+			if(hud?.mymob.incapacitated() || (slot_id in hud?.mymob.check_obscured_slots()) || !hud?.mymob.canUnEquip(inv_item))
+				inv_item.apply_outline(_size = 3)
 			else
 				inv_item.apply_outline()
 

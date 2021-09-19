@@ -35,9 +35,9 @@
 	healable = 0
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	obj_damage = 50
-	melee_damage_lower = 22.5 // reduced from 30 to 22.5 with wounds since they get big buffs to slicing wounds
-	melee_damage_upper = 22.5
-	wound_bonus = -10
+	melee_damage_lower = 30 // buffed back to 30, the wounds don't do much
+	melee_damage_upper = 30
+	wound_bonus = 0
 	bare_wound_bonus = 0
 	sharpness = SHARP_EDGED
 	see_in_dark = 8
@@ -49,17 +49,13 @@
 							Pulling a dead or unconscious mob while you enter a pool will pull them in with you, allowing you to feast and regain your health. \
 							You move quickly upon leaving a pool of blood, but the material world will soon sap your strength and leave you sluggish. \
 							You gain strength the more attacks you land on live humanoids, though this resets when you return to the blood zone. You can also \
-							launch a devastating slam attack with ctrl+shift+click, capable of smashing bones in one strike.</B>"
+							launch a devastating slam attack, capable of smashing bones in one strike.</B>"
 
 	loot = list(/obj/effect/decal/cleanable/blood, \
 				/obj/effect/decal/cleanable/blood/innards, \
 				/obj/item/organ/heart/demon)
 	del_on_death = 1
 	deathmessage = "screams in anger as it collapses into a puddle of viscera!"
-	// How long it takes for the alt-click slam attack to come off cooldown
-	var/slam_cooldown_time = 45 SECONDS
-	// The actual instance var for the cooldown
-	var/slam_cooldown = 0
 	// How many times we have hit humanoid targets since we last bloodcrawled, scaling wounding power
 	var/current_hitstreak = 0
 	// How much both our wound_bonus and bare_wound_bonus go up per hitstreak hit
@@ -70,37 +66,56 @@
 	var/list/consumed_mobs = list()
 	//buffs only happen when hearts are eaten, so this needs to be kept track separately
 	var/consumed_buff = 0
+	//slam mode for action button
+	var/slam_mode = FALSE
+	var/datum/action/cooldown/slam
 
 /mob/living/simple_animal/slaughter/Initialize()
 	..()
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
+	slam = new /datum/action/cooldown/slam
+	slam.Grant(src)
 	if(istype(loc, /obj/effect/dummy/phased_mob/slaughter))
 		bloodspell.phased = TRUE
 
-/mob/living/simple_animal/slaughter/CtrlShiftClickOn(atom/A)
-	if(!isliving(A))
-		return ..()
-	if(slam_cooldown + slam_cooldown_time > world.time)
-		to_chat(src, "<span class='warning'>Your slam ability is still on cooldown!</span>")
-		return
-	if(!isopenturf(loc))
-		to_chat(src, "<span class='warning'>You need to be on open flooring to do that!")
-		return
+/datum/action/cooldown/slam
+	name = "Slaughter Slam"
+	desc = "Launch enemies and break bones in one strike."
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	background_icon_state = "bg_demon"
+	button_icon_state = "slam"
+	cooldown_time = 45 SECONDS
 
-	face_atom(A)
-	var/mob/living/victim = A
-	victim.take_bodypart_damage(brute=20, wound_bonus=wound_bonus) // don't worry, there's more punishment when they hit something
-	visible_message("<span class='danger'>[src] slams into [victim] with monstrous strength!</span>", "<span class='danger'>You slam into [victim] with monstrous strength!</span>", ignored_mobs=victim)
-	to_chat(victim, "<span class='userdanger'>[src] slams into you with monstrous strength, sending you flying like a ragdoll!</span>")
-	var/turf/yeet_target = get_edge_target_turf(victim, dir)
-	victim.throw_at(yeet_target, 10, 5, src)
-	slam_cooldown = world.time
-	log_combat(src, victim, "slaughter slammed")
+/datum/action/cooldown/slam/Trigger()
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/simple_animal/slaughter/user = owner
+	user.slam_mode = !user.slam_mode
+	to_chat(user, user.slam_mode ? "Ready to slam!" : "Maybe not now.")
 
 /mob/living/simple_animal/slaughter/UnarmedAttack(atom/A, proximity)
 	if(iscarbon(A))
 		var/mob/living/carbon/target = A
+		if(slam_mode)
+			if(!isopenturf(loc))
+				to_chat(src, "<span class='warning'>You need to be on open flooring to do that!")
+				return
+			face_atom(A)
+			var/mob/living/victim = A
+			var/body_pick = pick(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_ARM, BODY_ZONE_R_LEG)
+			var/datum/wound/blunt/critical/wound_major = new
+			var/obj/item/bodypart/body_wound = victim.get_bodypart(body_pick)
+			wound_major.apply_wound(body_wound)
+			visible_message("<span class='danger'>[src] slams into [victim] with monstrous strength!</span>", "<span class='danger'>You slam into [victim] with monstrous strength!</span>", ignored_mobs=victim)
+			to_chat(victim, "<span class='userdanger'>[src] slams into you with monstrous strength, sending you flying like a ragdoll!</span>")
+			var/turf/yeet_target = get_edge_target_turf(victim, dir)
+			victim.throw_at(yeet_target, 10, 14, src)
+			slam_mode = FALSE
+			slam.StartCooldown()
+			log_combat(src, victim, "slaughter slammed")
+
 		if(target.stat != DEAD && target.mind && current_hitstreak < wound_bonus_hitstreak_max)
 			current_hitstreak++
 			wound_bonus += wound_bonus_per_hit
