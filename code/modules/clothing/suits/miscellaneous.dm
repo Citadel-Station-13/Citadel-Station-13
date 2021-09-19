@@ -464,6 +464,24 @@
 	icon_state = "heartcoat"
 	item_state = "heartcoat"
 
+/obj/item/clothing/suit/jacket/gothiccoat
+	name = "long black jacket"
+	desc = "A rugged looking coat with a TailorCo brand on the tag."
+	icon_state = "gothic_coat"
+	item_state = "gothic_coat"
+
+/obj/item/clothing/suit/jacket/gothicshirt
+	name = "black shirt with cuffs"
+	desc = "A black shirt with a collar and cuffs in a gothic style. A TailorCo brand is listed on the tag."
+	icon_state = "gothic_shirt"
+	item_state = "gothic_shirt"
+
+/obj/item/clothing/suit/jacket/gothicshirtcross
+	name = "elegant black shirt"
+	desc = "A black shirt with finely woven cross on the back. A TailorCo brand is listed on the tag."
+	icon_state = "gothic_shirtcross"
+	item_state = "gothic_shirtcross"
+
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"
 	desc = "Pompadour not included."

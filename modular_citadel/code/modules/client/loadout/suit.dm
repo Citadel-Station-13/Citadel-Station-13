@@ -114,6 +114,24 @@
 	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION
 	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
+/datum/gear/suit/jacketgothiccoat
+	name = "Long black coat with cuffs"
+	path = /obj/item/clothing/suit/jacket/gothiccoat
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
+
+/datum/gear/suit/jacketgothshirt
+	name = "Black shirt with cuffs"
+	path = /obj/item/clothing/suit/jacket/gothicshirt
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_GENERAL
+
+/datum/gear/suit/jacketgothshirtcross
+	name = "Black shirt with cross"
+	path = /obj/item/clothing/suit/jacket/gothicshirtcross
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_GENERAL
+
 /datum/gear/suit/coat/polycoat
 	name = "Polychromic winter coat"
 	path = /obj/item/clothing/suit/hooded/wintercoat/polychromic
