@@ -1,4 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - bugfix: "There is now a way to acquire nanite storage protocols (bepis, like the other protocols), as opposed to them existing with no way to acquire them."
