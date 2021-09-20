@@ -142,7 +142,7 @@
 	name = "Grey coat"
 	path = /obj/item/clothing/suit/jacket/gentlecoat
 	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION
-	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_COATS
 
 /datum/gear/suit/greenjacket
 	name = "Green outdoorsman jacket"
