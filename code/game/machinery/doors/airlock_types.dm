@@ -10,17 +10,23 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_com
 	wiretypepath = /datum/wires/airlock/command
 	normal_integrity = 450
+	open_sound_powered = 'sound/machines/door/cmd3o.ogg'
+	close_sound_powered = 'sound/machines/door/cmd3c.ogg'
 
 /obj/machinery/door/airlock/security
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec
 	wiretypepath = /datum/wires/airlock/security
 	normal_integrity = 450
+	open_sound_powered = 'sound/machines/door/sec1o.ogg'
+	close_sound_powered = 'sound/machines/door/sec1c.ogg'
 
 /obj/machinery/door/airlock/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_eng
 	wiretypepath = /datum/wires/airlock/engineering
+	open_sound_powered = 'sound/machines/door/eng1o.ogg'
+	close_sound_powered = 'sound/machines/door/eng1c.ogg'
 
 /obj/machinery/door/airlock/engineering/abandoned
 	abandoned = TRUE
@@ -29,13 +35,15 @@
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_med
 	wiretypepath = /datum/wires/airlock/medical
-
+	open_sound_powered = 'sound/machines/door/med1o.ogg'
+	close_sound_powered = 'sound/machines/door/med1c.ogg'
 /obj/machinery/door/airlock/maintenance
 	name = "maintenance access"
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mai
 	normal_integrity = 250
-
+	open_sound_powered = 'sound/machines/door/door2o.ogg'
+	close_sound_powered = 'sound/machines/door/door2c.ogg'
 /obj/machinery/door/airlock/maintenance/abandoned
 	abandoned = TRUE
 
@@ -43,19 +51,22 @@
 	name = "external airlock access"
 	icon = 'icons/obj/doors/airlocks/station/maintenanceexternal.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_extmai
-
+	open_sound_powered = 'sound/machines/door/space1o.ogg'
+	close_sound_powered = 'sound/machines/door/space1c.ogg'
 /obj/machinery/door/airlock/mining
 	name = "mining airlock"
 	icon = 'icons/obj/doors/airlocks/station/mining.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_min
 	wiretypepath = /datum/wires/airlock/cargo
-
+	open_sound_powered = 'sound/machines/door/eng1o.ogg'
+	close_sound_powered = 'sound/machines/door/eng1c.ogg'
 /obj/machinery/door/airlock/atmos
 	name = "atmospherics airlock"
 	icon = 'icons/obj/doors/airlocks/station/atmos.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_atmo
 	wiretypepath = /datum/wires/airlock/engineering
-
+	open_sound_powered = 'sound/machines/door/eng1o.ogg'
+	close_sound_powered = 'sound/machines/door/eng1c.ogg'
 /obj/machinery/door/airlock/atmos/abandoned
 	abandoned = TRUE
 
@@ -63,7 +74,8 @@
 	icon = 'icons/obj/doors/airlocks/station/research.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_research
 	wiretypepath = /datum/wires/airlock/science
-
+	open_sound_powered = 'sound/machines/door/sci1o.ogg'
+	close_sound_powered = 'sound/machines/door/sci1c.ogg'
 /obj/machinery/door/airlock/freezer
 	name = "freezer airlock"
 	icon = 'icons/obj/doors/airlocks/station/freezer.dmi'
@@ -73,12 +85,14 @@
 	icon = 'icons/obj/doors/airlocks/station/science.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_science
 	wiretypepath = /datum/wires/airlock/science
-
+	open_sound_powered = 'sound/machines/door/sci1o.ogg'
+	close_sound_powered = 'sound/machines/door/sci1c.ogg'
 /obj/machinery/door/airlock/virology
 	icon = 'icons/obj/doors/airlocks/station/virology.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_viro
 	wiretypepath = /datum/wires/airlock/medical
-
+	open_sound_powered = 'sound/machines/door/sci1o.ogg'
+	close_sound_powered = 'sound/machines/door/sci1c.ogg'
 //////////////////////////////////
 /*
 	Station Airlocks Glass
@@ -106,11 +120,13 @@
 	opacity = 0
 	glass = TRUE
 	normal_integrity = 400
-
+	open_sound_powered = 'sound/machines/door/cmd1o.ogg'
+	close_sound_powered = 'sound/machines/door/cmd1c.ogg'
 /obj/machinery/door/airlock/engineering/glass
 	opacity = 0
 	glass = TRUE
-
+	open_sound_powered = 'sound/machines/door/eng1o.ogg'
+	close_sound_powered = 'sound/machines/door/eng1c.ogg'
 /obj/machinery/door/airlock/engineering/glass/critical
 	critical_machine = TRUE //stops greytide virus from opening & bolting doors in critical positions, such as the SM chamber.
 
@@ -118,18 +134,21 @@
 	opacity = 0
 	glass = TRUE
 	normal_integrity = 400
-
+	open_sound_powered = 'sound/machines/door/sec1o.ogg'
+	close_sound_powered = 'sound/machines/door/sec1c.ogg'
 /obj/machinery/door/airlock/security/glass/abandoned
 	abandoned = TRUE
 
 /obj/machinery/door/airlock/medical/glass
 	opacity = 0
 	glass = TRUE
-
+	open_sound_powered = 'sound/machines/door/med1o.ogg'
+	close_sound_powered = 'sound/machines/door/med1c.ogg'
 /obj/machinery/door/airlock/research/glass
 	opacity = 0
 	glass = TRUE
-
+	open_sound_powered = 'sound/machines/door/sci1o.ogg'
+	close_sound_powered = 'sound/machines/door/sci1c.ogg'
 /obj/machinery/door/airlock/research/glass/incinerator
 	autoclose = FALSE
 	frequency = FREQ_AIRLOCK_CONTROL
@@ -147,22 +166,26 @@
 /obj/machinery/door/airlock/mining/glass
 	opacity = 0
 	glass = TRUE
-
+	open_sound_powered = 'sound/machines/door/cgo1o.ogg'
+	close_sound_powered = 'sound/machines/door/cgo1c.ogg'
 /obj/machinery/door/airlock/atmos/glass
 	opacity = 0
 	glass = TRUE
-
+	open_sound_powered = 'sound/machines/door/eng1o.ogg'
+	close_sound_powered = 'sound/machines/door/eng1c.ogg'
 /obj/machinery/door/airlock/atmos/glass/critical
 	critical_machine = TRUE //stops greytide virus from opening & bolting doors in critical positions, such as the SM chamber.
 
 /obj/machinery/door/airlock/science/glass
 	opacity = 0
 	glass = TRUE
-
+	open_sound_powered = 'sound/machines/door/sci1o.ogg'
+	close_sound_powered = 'sound/machines/door/sci1c.ogg'
 /obj/machinery/door/airlock/virology/glass
 	opacity = 0
 	glass = TRUE
-
+	open_sound_powered = 'sound/machines/door/med1o.ogg'
+	close_sound_powered = 'sound/machines/door/med1c.ogg'
 /obj/machinery/door/airlock/maintenance/glass
 	opacity = 0
 	glass = TRUE
@@ -171,7 +194,8 @@
 	opacity = 0
 	glass = TRUE
 	normal_integrity = 200
-
+	open_sound_powered = 'sound/machines/door/space1o.ogg'
+	close_sound_powered = 'sound/machines/door/space1c.ogg'
 //////////////////////////////////
 /*
 	Station Airlocks Mineral
@@ -274,7 +298,7 @@
 	desc = "Honkhonkhonk"
 	icon = 'icons/obj/doors/airlocks/station/bananium.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_bananium
-	doorOpen = 'sound/items/bikehorn.ogg'
+	open_sound_powered = 'sound/items/bikehorn.ogg'
 
 /obj/machinery/door/airlock/bananium/glass
 	opacity = 0
@@ -360,7 +384,8 @@
 	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	note_overlay_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_ext
-
+	open_sound_powered = 'sound/machines/door/space1o.ogg'
+	close_sound_powered = 'sound/machines/door/space1c.ogg'
 /obj/machinery/door/airlock/external/glass
 	opacity = 0
 	glass = TRUE
@@ -377,7 +402,8 @@
 	normal_integrity = 1000
 	security_level = 6
 	explosion_block = 2
-
+	open_sound_powered = 'sound/machines/door/cmd3o.ogg'
+	close_sound_powered = 'sound/machines/door/cmd3c.ogg'
 /obj/machinery/door/airlock/grunge
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
@@ -400,7 +426,8 @@
 	explosion_block = 2
 	normal_integrity = 400 // reverse engieneerd: 400 * 1.5 (sec lvl 6) = 600 = original
 	security_level = 6
-
+	open_sound_powered = 'sound/machines/door/vault1o.ogg'
+	close_sound_powered = 'sound/machines/door/vault1c.ogg'
 //////////////////////////////////
 /*
 	Hatch Airlocks
@@ -412,14 +439,18 @@
 	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_hatch
-
+	open_sound_powered = 'sound/machines/door/hatchopen.ogg'
+	close_sound_powered = 'sound/machines/door/hatchclose.ogg'
+	open_sound_unpowered = 'sound/machines/door/hatchforced.ogg'
 /obj/machinery/door/airlock/maintenance_hatch
 	name = "maintenance hatch"
 	icon = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mhatch
-
+	open_sound_powered = 'sound/machines/door/hatchopen.ogg'
+	close_sound_powered = 'sound/machines/door/hatchclose.ogg'
+	open_sound_unpowered = 'sound/machines/door/hatchforced.ogg'
 /obj/machinery/door/airlock/maintenance_hatch/abandoned
 	abandoned = TRUE
 

@@ -78,8 +78,9 @@
 	var/obj/item/note //Any papers pinned to the airlock
 	var/detonated = FALSE
 	var/abandoned = FALSE
-	var/doorOpen = 'sound/machines/airlock.ogg'
-	var/doorClose = 'sound/machines/airlockclose.ogg'
+	var/open_sound_powered = 'sound/machines/door/covert1o.ogg'
+	var/open_sound_unpowered = 'sound/machines/airlockforced.ogg'
+	var/close_sound_powered = 'sound/machines/door/covert1c.ogg'
 	var/doorDeni = 'sound/machines/deniedbeep.ogg' // i'm thinkin' Deni's
 	var/boltUp = 'sound/machines/boltsup.ogg'
 	var/boltDown = 'sound/machines/boltsdown.ogg'
@@ -102,7 +103,7 @@
 	rad_insulation = RAD_MEDIUM_INSULATION
 
 	var/static/list/airlock_overlays = list()
-	
+
 	/// sigh
 	var/unelectrify_timerid
 
@@ -1114,7 +1115,7 @@
 		if(obj_flags & EMAGGED)
 			return FALSE
 		use_power(50)
-		playsound(src, doorOpen, 30, 1)
+		playsound(src, open_sound_powered, 30, 1)
 		if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 			src.closeOther.close()
 	else
@@ -1161,7 +1162,7 @@
 		if(obj_flags & EMAGGED)
 			return
 		use_power(50)
-		playsound(src.loc, doorClose, 30, 1)
+		playsound(src.loc, close_sound_powered, 30, 1)
 	else
 		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
 
