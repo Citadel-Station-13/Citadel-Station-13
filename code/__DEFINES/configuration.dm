@@ -24,3 +24,11 @@
 #define POLICYCONFIG_ON_PYROCLASTIC_SENTIENT "PYROCLASTIC_SLIME"
 /// Displayed to pAIs on spawn
 #define POLICYCONFIG_PAI "PAI_SPAWN"
+/// displayed to lavaland elites on spawn, overriding the default if set
+#define POLICYCONFIG_ELITE_SPAWN "ELITE_FAUNA_SPAWN"
+/// displayed to lavaland elites on sentience potion, overriding the default if set
+#define POLICYCONFIG_ELITE_SENTIENCE "ELITE_FAUNA_SENTIENCE"
+/// displayed to lavaland elites on winning the fight, overriding the default if set
+#define POLICYCONFIG_ELITE_WIN "ELITE_FAUNA_WIN"
+/// displayed to prisoners on spawn, overriding the default if set
+#define POLICYCONFIG_JOB_PRISONER "JOB_PRISONER"
