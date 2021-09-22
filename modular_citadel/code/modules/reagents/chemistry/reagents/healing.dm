@@ -98,8 +98,8 @@
 	description = "Synthetic tissue used for grafting onto damaged organs during surgery, or for treating limb damage. Has a very tight growth window between 305-320, any higher and the temperature will cause the cells to die. Additionally, growth time is considerably long, so chemists are encouraged to leave beakers with said reaction ongoing, while they tend to their other duties."
 	pH = 7.6
 	metabolization_rate = 0.05 //Give them time to graft
-	data = list("grown_volume" = 0, "injected_vol" = 0)
-	var/borrowed_health
+	data = list("grown_volume" = 0, "injected_vol" = 0, "borrowed_health" = 0)
+	var/borrowed_health = 0
 	color = "#FFDADA"
 	value = REAGENT_VALUE_COMMON
 
@@ -107,31 +107,44 @@
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		var/healing_factor = (((data["grown_volume"] / 100) + 1)*reac_volume)
-		if(method in list(PATCH, TOUCH))
-			if (M.stat == DEAD)
-				M.visible_message("The synthetic tissue rapidly grafts into [M]'s wounds, attemping to repair the damage as quickly as possible.")
+		if(method == PATCH)	//Needs to actually be applied via patch / hypo / medspray and not just beakersplashed.
+			if (C.stat == DEAD)
+				C.visible_message("The synthetic tissue rapidly grafts into [M]'s wounds, attemping to repair the damage as quickly as possible.")
 				borrowed_health += healing_factor
-				M.adjustBruteLoss(-healing_factor*2)
-				M.adjustFireLoss(-healing_factor*2)
-				M.adjustToxLoss(-healing_factor)
-				M.adjustCloneLoss(-healing_factor)
-				M.updatehealth()
+				C.adjustBruteLoss(-healing_factor*2)
+				C.adjustFireLoss(-healing_factor*2)
+				C.adjustToxLoss(-healing_factor)
+				C.adjustCloneLoss(-healing_factor)
+				C.updatehealth()
 				if(data["grown_volume"] > 135 && ((C.health + C.oxyloss)>=80))
-					if(M.revive())
-						M.emote("gasp")
+					var/tplus = world.time - M.timeofdeath
+					if(C.can_revive(ignore_timelimit = TRUE, maximum_brute_dam = MAX_REVIVE_BRUTE_DAMAGE / 2, maximum_fire_dam = MAX_REVIVE_FIRE_DAMAGE / 2, ignore_heart = TRUE) && C.revive())
+						C.emote("gasp")
 						borrowed_health *= 2
 						if(borrowed_health < 100)
 							borrowed_health = 100
-						log_combat(M, M, "revived", src)
+						log_combat(C, C, "revived", src)
+						var/list/policies = CONFIG_GET(keyed_list/policy)
+						var/policy = policies[POLICYCONFIG_ON_DEFIB_LATE]	//Always causes memory loss due to the nature of synthtissue
+						if(policy)
+							to_chat(C, policy)
+						C.log_message("revived using synthtissue, [tplus] deciseconds from time of death, considered late revival due to usage of synthtissue.", LOG_GAME)
 			else
 				M.adjustBruteLoss(-healing_factor)
 				M.adjustFireLoss(-healing_factor)
-				to_chat(M, "<span class='danger'>You feel your flesh merge with the synthetic tissue! It stings like hell!</span>")
+				var/datum/reagent/synthtissue/active_tissue = M.reagents.has_reagent(/datum/reagent/synthtissue)
+				var/imperfect = FALSE 	//Merging with synthtissue that has borrowed health
+				if(active_tissue && active_tissue.borrowed_health)
+					borrowed_health += healing_factor
+					imperfect = TRUE
+				to_chat(M, "<span class='danger'>You feel your flesh [imperfect ? "partially and painfully" : ""] merge with the synthetic tissue! It stings like hell[imperfect ? " and is making you feel terribly sick." : ""]!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
+			data["borrowed_health"] += borrowed_health //Preserve health offset
+			borrowed_health = 0	//We are applying this to someone else, so this info will be transferred via data.
 		if(method==INJECT)
 			data["injected_vol"] = reac_volume
 			var/obj/item/organ/heart/H = C.getorganslot(ORGAN_SLOT_HEART)
-			if(data["grown_volume"] > 50 && H.organ_flags & ORGAN_FAILING)
+			if(H && data["grown_volume"] > 50 && H.organ_flags & ORGAN_FAILING)
 				H.applyOrganDamage(-20)
 	..()
 
@@ -145,7 +158,7 @@
 					C.reagents.remove_reagent(type, 15)
 					to_chat(C, "<span class='notice'>You feel something reform inside of you!</span>")
 
-	data["injected_vol"] -= metabolization_rate
+	data["injected_vol"] = max(0, data["injected_vol"] - metabolization_rate * C.metabolism_efficiency)	//No negatives.
 	if(borrowed_health)
 		C.adjustToxLoss(1)
 		C.adjustCloneLoss(1)
@@ -155,6 +168,7 @@
 /datum/reagent/synthtissue/on_merge(passed_data)
 	if(!passed_data)
 		return ..()
+	borrowed_health += passed_data["borrowed_health"]
 	if(passed_data["grown_volume"] > data["grown_volume"])
 		data["grown_volume"] = passed_data["grown_volume"]
 	if(iscarbon(holder.my_atom))
@@ -166,10 +180,15 @@
 /datum/reagent/synthtissue/on_new(passed_data)
 	if(!passed_data)
 		return ..()
+	borrowed_health += passed_data["borrowed_health"]
 	if(passed_data["grown_volume"] > data["grown_volume"])
 		data["grown_volume"] = passed_data["grown_volume"]
 	update_name()
 	..()
+
+/datum/reagent/synthtissue/post_copy_data()
+	data["borrowed_health"] = 0	//We passed this along to something that needed it, set it back to 0 so we don't do it twice.
+	return ..()
 
 /datum/reagent/synthtissue/proc/update_name() //They are but babes on creation and have to grow unto godhood
 	switch(data["grown_volume"])

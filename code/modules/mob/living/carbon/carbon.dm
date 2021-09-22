@@ -898,16 +898,16 @@
 	update_inv_handcuffed()
 	update_hud_handcuffed()
 
-/mob/living/carbon/proc/can_defib()
+/mob/living/carbon/proc/can_revive(ignore_timelimit = FALSE, maximum_brute_dam = MAX_REVIVE_BRUTE_DAMAGE, maximum_fire_dam = MAX_REVIVE_FIRE_DAMAGE, ignore_heart = FALSE)
 	var/tlimit = DEFIB_TIME_LIMIT * 10
 	var/obj/item/organ/heart = getorgan(/obj/item/organ/heart)
 	if(suiciding || hellbound || HAS_TRAIT(src, TRAIT_HUSK) || AmBloodsucker(src))
 		return
-	if((world.time - timeofdeath) > tlimit)
+	if(!ignore_timelimit && (world.time - timeofdeath) > tlimit)
 		return
 	if((getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
 		return
-	if(!heart || (heart.organ_flags & ORGAN_FAILING))
+	if(!ignore_heart && (!heart || (heart.organ_flags & ORGAN_FAILING)))
 		return
 	var/obj/item/organ/brain/BR = getorgan(/obj/item/organ/brain)
 	if(QDELETED(BR) || BR.brain_death || (BR.organ_flags & ORGAN_FAILING) || suiciding)
