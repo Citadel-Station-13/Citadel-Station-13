@@ -119,6 +119,7 @@
 				if(data["grown_volume"] > 135 && ((C.health + C.oxyloss)>=80))
 					var/tplus = world.time - M.timeofdeath
 					if(C.can_revive(ignore_timelimit = TRUE, maximum_brute_dam = MAX_REVIVE_BRUTE_DAMAGE / 2, maximum_fire_dam = MAX_REVIVE_FIRE_DAMAGE / 2, ignore_heart = TRUE) && C.revive())
+						C.grab_ghost()
 						C.emote("gasp")
 						borrowed_health *= 2
 						if(borrowed_health < 100)
