@@ -138,7 +138,7 @@
 				if(active_tissue && active_tissue.borrowed_health)
 					borrowed_health += healing_factor
 					imperfect = TRUE
-				to_chat(M, "<span class='danger'>You feel your flesh [imperfect ? "partially and painfully" : ""] merge with the synthetic tissue! It stings like hell[imperfect ? " and is making you feel terribly sick." : ""]!</span>")
+				to_chat(M, "<span class='danger'>You feel your flesh [imperfect ? "partially and painfully" : ""] merge with the synthetic tissue! It stings like hell[imperfect ? " and is making you feel terribly sick" : ""]!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 			data["borrowed_health"] += borrowed_health //Preserve health offset
 			borrowed_health = 0	//We are applying this to someone else, so this info will be transferred via data.
