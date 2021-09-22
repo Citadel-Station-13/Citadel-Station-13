@@ -905,7 +905,7 @@
 		return
 	if(!ignore_timelimit && (world.time - timeofdeath) > tlimit)
 		return
-	if((getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
+	if((getBruteLoss() >= maximum_brute_dam) || (getFireLoss() >= maximum_fire_dam))
 		return
 	if(!ignore_heart && (!heart || (heart.organ_flags & ORGAN_FAILING)))
 		return
