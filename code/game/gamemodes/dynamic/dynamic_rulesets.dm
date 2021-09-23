@@ -102,8 +102,10 @@
 	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 
 	if(minimum_players > population)
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to low pop")
 		return FALSE
 	if(maximum_players > 0 && population > maximum_players)
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to high pop")
 		return FALSE
 	return (threat_level >= requirements[indice_pop])
 
@@ -156,6 +158,7 @@
 /// IMPORTANT: If ready() returns TRUE, that means pre_execute() or execute() should never fail!
 /datum/dynamic_ruleset/proc/ready(forced = 0)
 	if (required_candidates > candidates.len)
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough candidates")
 		return FALSE
 	return TRUE
 

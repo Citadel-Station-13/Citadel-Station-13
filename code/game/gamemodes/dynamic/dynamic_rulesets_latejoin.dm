@@ -33,6 +33,7 @@
 
 		var/threat = round(mode.threat_level/10)
 		if (job_check < required_enemies[threat])
+			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough enemy roles")
 			return FALSE
 	return ..()
 
@@ -54,6 +55,7 @@
 	name = "Syndicate Infiltrator"
 	antag_datum = /datum/antagonist/traitor
 	antag_flag = "traitor late"
+	antag_flag_override = ROLE_TRAITOR
 	protected_roles = list("Security Officer", "Warden", "Head of Personnel", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("AI","Cyborg")
 	required_candidates = 1
@@ -73,7 +75,7 @@
 	persistent = TRUE
 	antag_datum = /datum/antagonist/rev/head
 	antag_flag = "rev head late"
-	antag_flag_override = "rev late"
+	antag_flag_override = ROLE_REV
 	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
 	enemy_roles = list("AI", "Cyborg", "Security Officer","Detective","Head of Security", "Captain", "Warden")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
@@ -149,6 +151,7 @@
 	name = "Heretic Smuggler"
 	antag_datum = /datum/antagonist/heretic
 	antag_flag = "heretic late"
+	antag_flag_override = ROLE_HERETIC
 	protected_roles = list("Security Officer", "Warden", "Head of Personnel", "Detective", "Head of Security", "Captain","Prisoner")
 	restricted_roles = list("AI","Cyborg")
 	required_candidates = 1

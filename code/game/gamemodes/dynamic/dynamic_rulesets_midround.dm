@@ -104,7 +104,7 @@
 	message_admins("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 	log_game("DYNAMIC: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 
-	candidates = pollGhostCandidates("The mode is looking for volunteers to become [antag_flag] for [name]", antag_flag, antag_flag_override ? antag_flag_override : antag_flag, poll_time = 300)
+	candidates = pollGhostCandidates("The mode is looking for volunteers to become [antag_flag] for [name]", antag_flag, be_special_flag = antag_flag_override ? antag_flag_override : antag_flag, poll_time = 300)
 
 	if(!candidates || candidates.len <= 0)
 		mode.dynamic_log("The ruleset [name] received no applications.")
@@ -299,6 +299,7 @@
 	name = "Wizard"
 	antag_datum = /datum/antagonist/wizard
 	antag_flag = "wizard mid"
+	antag_flag_override = ROLE_WIZARD
 	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
@@ -330,6 +331,7 @@
 	name = "Nuclear Assault"
 	antag_flag = "nukie mid"
 	antag_datum = /datum/antagonist/nukeop
+	antag_flag_override = ROLE_OPERATIVE
 	enemy_roles = list("AI", "Cyborg", "Security Officer", "Warden","Detective","Head of Security", "Captain")
 	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
 	required_candidates = 5
