@@ -136,17 +136,24 @@
 	icon_state = "syndievest"
 	mutantrace_variation = STYLE_DIGITIGRADE
 
-/obj/item/clothing/suit/armor/vest/capcarapace/alt
+/obj/item/clothing/suit/toggle/captains_parade
 	name = "captain's parade jacket"
 	desc = "For when an armoured vest isn't fashionable enough."
 	icon_state = "capformal"
 	item_state = "capspacesuit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	armor = list("melee" = 50, "bullet" = 40, "laser" = 50, "energy" = 50, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 90, "wound" = 10)
+	togglename = "buttons"
+
+/obj/item/clothing/suit/toggle/captains_parade/Initialize()
+	. = ..()
+	allowed = GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
 	desc = "A suit of semi-flexible polycarbonate body armor with heavy padding to protect against melee attacks. Helps the wearer resist shoving in close quarters."
-	icon_state = "swat"
-	item_state = "swat_suit"
+	icon_state = "riot"
+	item_state = "riot"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -319,3 +326,29 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	armor = list("melee" = 25, "bullet" = 20, "laser" = 20, "energy" = 10, "bomb" = 20, "bio" = 50, "rad" = 20, "fire" = -10, "acid" = 50,  "wound" = 10)
+
+/obj/item/clothing/suit/toggle/armor/vest/centcom_formal
+	name = "\improper CentCom formal coat"
+	desc = "A stylish coat given to CentCom Commanders. Perfect for sending ERTs to suicide missions with style!"
+	icon_state = "centcom_formal"
+	item_state = "centcom"
+	body_parts_covered = CHEST|GROIN|ARMS
+	armor = list("melee" = 35, "bullet" = 40, "laser" = 40, "energy" = 50, "bomb" = 35, "bio" = 10, "rad" = 10, "fire" = 10, "acid" = 60)
+	togglename = "buttons"
+
+/obj/item/clothing/suit/toggle/armor/vest/centcom_formal/Initialize()
+	. = ..()
+	allowed = GLOB.security_wintercoat_allowed
+
+/obj/item/clothing/suit/toggle/armor/hos/hos_formal
+	name = "\improper Head of Security's parade jacket"
+	desc = "For when an armoured vest isn't fashionable enough."
+	icon_state = "hosformal"
+	item_state = "hostrench"
+	body_parts_covered = CHEST|GROIN|ARMS
+	armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 40, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 90, "wound" = 10)
+	togglename = "buttons"
+
+/obj/item/clothing/suit/toggle/armor/hos/hos_formal/Initialize()
+	. = ..()
+	allowed = GLOB.security_wintercoat_allowed

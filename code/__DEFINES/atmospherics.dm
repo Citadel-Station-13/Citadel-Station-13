@@ -155,10 +155,10 @@
 
 //LAVALAND
 #define LAVALAND_EQUIPMENT_EFFECT_PRESSURE 50 //what pressure you have to be under to increase the effect of equipment meant for lavaland
-#define LAVALAND_DEFAULT_ATMOS "o2=14;n2=23;TEMP=300"
+#define LAVALAND_DEFAULT_ATMOS "LAVALAND_ATMOS"
 
 //SNOSTATION
-#define ICEMOON_DEFAULT_ATMOS "o2=17;n2=63;TEMP=180"
+#define ICEMOON_DEFAULT_ATMOS "ICEMOON_ATMOS"
 
 //ATMOSIA GAS MONITOR TAGS
 #define ATMOS_GAS_MONITOR_INPUT_O2 "o2_in"
@@ -267,6 +267,15 @@
 
 #define GAS_FLAG_DANGEROUS		(1<<0)
 #define GAS_FLAG_BREATH_PROC	(1<<1)
+
+//SUPERMATTER DEFINES
+#define HEAT_PENALTY "heat penalties"
+#define TRANSMIT_MODIFIER "transmit"
+#define RADIOACTIVITY_MODIFIER "radioactivity"
+#define HEAT_RESISTANCE "heat resistance"
+#define POWERLOSS_INHIBITION "powerloss inhibition"
+#define ALL_SUPERMATTER_GASES "gases we care about"
+#define POWER_MIX "gas powermix"
 
 //HELPERS
 #define PIPING_LAYER_SHIFT(T, PipingLayer) \

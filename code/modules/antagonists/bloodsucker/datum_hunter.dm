@@ -109,13 +109,13 @@
 
 
 /datum/status_effect/agent_pinpointer/hunter_edition
-	alert_type = /obj/screen/alert/status_effect/agent_pinpointer/hunter_edition
+	alert_type = /atom/movable/screen/alert/status_effect/agent_pinpointer/hunter_edition
 	minimum_range = HUNTER_SCAN_MIN_DISTANCE
 	tick_interval = HUNTER_SCAN_PING_TIME
 	duration = 160 // Lasts 10s
 	range_fuzz_factor = 5//PINPOINTER_EXTRA_RANDOM_RANGE
 
-/obj/screen/alert/status_effect/agent_pinpointer/hunter_edition
+/atom/movable/screen/alert/status_effect/agent_pinpointer/hunter_edition
 	name = "Monster Tracking"
 	desc = "You always know where the hellspawn are."
 

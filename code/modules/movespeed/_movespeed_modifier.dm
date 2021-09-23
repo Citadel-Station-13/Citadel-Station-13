@@ -32,7 +32,7 @@ Key procs
 	/// Unique ID. You can never have different modifications with the same ID. By default, this SHOULD NOT be set. Only set it for cases where you're dynamically making modifiers/need to have two types overwrite each other. If unset, uses path (converted to text) as ID.
 	var/id
 
-	/// Higher ones override lower priorities. This is NOT used for ID, ID must be unique, if it isn't unique the newer one overwrites automatically if overriding.
+	/// Determines order. Lower priorities are applied first.
 	var/priority = 0
 	var/flags = NONE
 
@@ -41,9 +41,9 @@ Key procs
 	/// Next two variables depend on this: Should we do advanced calculations?
 	var/complex_calculation = FALSE
 	/// Absolute max tiles we can boost to
-	var/absolute_max_tiles_per_second
+	var/absolute_max_tiles_per_second = INFINITY
 	/// Max tiles per second we can boost
-	var/max_tiles_per_second_boost
+	var/max_tiles_per_second_boost = INFINITY
 
 	/// Movetypes this applies to
 	var/movetypes = ALL
@@ -53,6 +53,8 @@ Key procs
 
 	/// Other modification datums this conflicts with.
 	var/conflicts_with
+
+
 
 /datum/movespeed_modifier/New()
 	. = ..()
@@ -66,8 +68,10 @@ Key procs
 	if(!complex_calculation || (multiplicative_slowdown > 0))		// we aren't limiting how much things can slowdown.. yet.
 		return existing + multiplicative_slowdown
 	var/current_tiles = 10 / max(existing, world.tick_lag)
-	var/minimum_speed = 10 / min(current_tiles + max_tiles_per_second_boost, max(current_tiles, absolute_max_tiles_per_second))
-	return max(minimum_speed, existing + multiplicative_slowdown)
+	// multiplicative_slowdown is negative due to our first check
+	var/max_buff_to = max(existing + multiplicative_slowdown, 10 / absolute_max_tiles_per_second, 10 / (current_tiles + max_tiles_per_second_boost))
+	// never slow the user
+	return min(existing, max_buff_to)
 
 GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 

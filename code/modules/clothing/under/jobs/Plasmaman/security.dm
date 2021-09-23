@@ -18,3 +18,9 @@
 	desc = "A slick black and red plasmaman containment suit designed for the head of security, also called the LAW."
 	icon_state = "hos_envirosuit"
 	item_state = "hos_envirosuit"
+
+/obj/item/clothing/under/plasmaman/prisoner
+	name = "prisoner envirosuit"
+	desc = "An orange envirosuit identifying and protecting a criminal plasmaman."
+	icon_state = "prisoner_envirosuit"
+	item_state = "prisoner_envirosuit"

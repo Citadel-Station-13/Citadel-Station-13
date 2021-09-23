@@ -364,11 +364,10 @@
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
 	SEND_SIGNAL(src, COMSIG_HOSTILE_ATTACKINGTARGET, target)
 	in_melee = TRUE
-	/* sorry for the simplemob vore fans
 	if(vore_active)
 		if(isliving(target))
 			var/mob/living/L = target
-			if(!client && L.Adjacent(src) && CHECK_BITFIELD(L.vore_flags,DEVOURABLE)) // aggressive check to ensure vore attacks can be made
+			if(!client && L.Adjacent(src) && CHECK_BITFIELD(L.vore_flags, DEVOURABLE) && CHECK_BITFIELD(L.vore_flags, MOBVORE)) // aggressive check to ensure vore attacks can be made
 				if(prob(voracious_chance))
 					vore_attack(src,L,src)
 				else
@@ -379,7 +378,6 @@
 			return target.attack_animal(src)
 	else
 		return target.attack_animal(src)
-	*/
 	return target.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/Aggro()

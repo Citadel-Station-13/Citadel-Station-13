@@ -827,7 +827,7 @@
 
 			if(prob(33)) // 1/3rd of the time, let's make it stack with the previous matrix! Mwhahahaha!
 				for(var/whole_screen in screens)
-					var/obj/screen/plane_master/PM = whole_screen
+					var/atom/movable/screen/plane_master/PM = whole_screen
 					newmatrix = skew * PM.transform
 
 			for(var/whole_screen in screens)

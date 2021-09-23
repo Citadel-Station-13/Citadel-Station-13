@@ -1,15 +1,15 @@
 //This file is for crafting using a lens!
 
 /obj/item/glasswork/glass_base/lens
-	name = "Optical lens"
-	desc = "Good for selling or crafting, by itself its useless"
+	name = "optical lens"
+	desc = "A glass lens. Useless by itself, but may prove useful in making something with a focus."
 	icon = 'icons/obj/glass_ware.dmi'
 	icon_state = "glass_optics"
 
 //Laser pointers - 2600
 /obj/item/glasswork/glass_base/laserpointer_shell
-	name = "Laser pointer assembly"
-	desc = "Good for selling or crafting, by itself its useless. Needs a power capactor."
+	name = "laser pointer assembly"
+	desc = "An empty hull of a laser pointer. It's missing a capacitor."
 	icon_state = "laser_case"
 	icon = 'icons/obj/glass_ware.dmi'
 	next_step = /obj/item/glasswork/glass_base/laserpointer_shell_1
@@ -21,8 +21,8 @@
 		qdel(src)
 
 /obj/item/glasswork/glass_base/laserpointer_shell_1
-	name = "Laser pointer assembly"
-	desc = "Good for selling or crafting, by itself its useless. Needs a glass lens."
+	name = "powered laser pointer assembly"
+	desc = "A laser pointer hull with a capacitor inside of it. It's missing a lens."
 	icon_state = "laser_wire"
 	icon_state = "laser_case"
 	next_step = /obj/item/glasswork/glass_base/laserpointer_shell_2
@@ -34,8 +34,8 @@
 		qdel(src)
 
 /obj/item/glasswork/glass_base/laserpointer_shell_2
-	name = "Laser pointer assembly"
-	desc = "Good for selling or crafting, by itself its useless. Needs to be screwed together."
+	name = "near-complete laser pointer assembly"
+	desc = "A laser pointer hull with a capacitor and a lens inside of it. It needs to be screwed together."
 	icon_state = "laser_wire"
 	icon_state = "laser_case"
 	next_step = /obj/item/laser_pointer/blue/handmade
@@ -50,8 +50,8 @@
 //NERD SHIT - 5000
 
 /obj/item/glasswork/glass_base/glasses_frame
-	name = "Glasses Frame"
-	desc = "Good for crafting a pare of glasses, by itself its useless. Just add a pare of lens."
+	name = "glasses frame"
+	desc = "A pair of glasses without the lenses. You could probably add them yourself, though."
 	icon = 'icons/obj/glass_ware.dmi'
 	icon_state = "frames"
 	next_step = /obj/item/glasswork/glass_base/glasses_frame_1
@@ -64,8 +64,8 @@
 			qdel(src)
 
 /obj/item/glasswork/glass_base/glasses_frame_1
-	name = "Glasses Frame"
-	desc = "Good for crafting a pare of glasses, by itself its useless. Just add a the other lens."
+	name = "glasses frame"
+	desc = "A pair of shoddily-assembled glasses with only one lens. You could probably add the second one yourself, though."
 	icon = 'icons/obj/glass_ware.dmi'
 	icon_state = "frames_1"
 	next_step = /obj/item/glasswork/glass_base/glasses_frame_2
@@ -78,8 +78,8 @@
 			qdel(src)
 
 /obj/item/glasswork/glass_base/glasses_frame_2
-	name = "Glasses Frame"
-	desc = "Good for crafting a pare of glasses, by itself its useless. Just adjust the pices into the frame with a screwdriver."
+	name = "glasses frame"
+	desc = "A pair of hastily-assembled unfitted glasses with both lenses intact. Use a screwdriver to fit them."
 	icon = 'icons/obj/glass_ware.dmi'
 	icon_state = "frames_2"
 	next_step = /obj/item/glasswork/glasses
@@ -92,7 +92,7 @@
 			qdel(src)
 
 /obj/item/glasswork/glasses
-	name = "Handmade Glasses"
-	desc = "Handmade glasses that have not been polished at all making them useless. Selling them could still be worth a few credits."
+	name = "handmade glasses"
+	desc = "A pair of poorly-assembled glasses clearly produced by someone with no qualifications in making glasses. They're smudged, ugly, and don't even fit you. They might be worth some money, though."
 	icon = 'icons/obj/glass_ware.dmi'
 	icon_state = "frames_2"

@@ -66,7 +66,7 @@
 		. = ..()
 
 
-/obj/item/reagent_containers/food/snacks/customizable/proc/update_name(obj/item/reagent_containers/food/snacks/S)
+/obj/item/reagent_containers/food/snacks/customizable/update_name(obj/item/reagent_containers/food/snacks/S)
 	for(var/obj/item/I in ingredients)
 		if(!istype(S, I.type))
 			customname = "custom"

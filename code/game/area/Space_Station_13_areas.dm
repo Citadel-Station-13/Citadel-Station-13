@@ -37,7 +37,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/ai_monitored/turret_protected/AIsatextAP
 	name = "AI Sat Ext"
 	icon_state = "storage"
-	
+
 /area/arrival
 	requires_power = FALSE
 
@@ -295,6 +295,28 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Xenobiology Maintenance"
 	icon_state = "xenomaint"
 	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | XENOBIOLOGY_COMPATIBLE | CULT_PERMITTED
+
+//Maintenance - Prison
+
+/area/maintenance/prison
+	name = "Prison Maintenance"
+	icon_state = "prison_maintenance"
+
+/area/maintenance/prison/fore
+	name = "Prison Fore Maintenance"
+	icon_state = "prison_maintenance"
+
+/area/maintenance/prison/starboard
+	name = "Prison Starboard Maintenance"
+	icon_state = "prison_maintenance"
+
+/area/maintenance/prison/aft
+	name = "Prison Aft Maintenance"
+	icon_state = "prison_maintenance"
+
+/area/maintenance/prison/port
+	name = "Prison Port Maintenance"
+	icon_state = "prison_maintenance"
 
 //Maintenance - Generic
 
@@ -1393,13 +1415,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Prison Wing"
 	icon_state = "sec_prison"
 
-/area/security/prison/toilet //radproof
-	name = "Prison Toilet"
-	icon_state = "sec_prison_safe"
-
-/area/security/prison/safe //radproof
+/area/security/prison/cells
 	name = "Prison Wing Cells"
-	icon_state = "sec_prison_safe"
+	icon_state = "prison_cells"
 
 /area/security/prison/upper
 	name = "Upper Prison Wing"

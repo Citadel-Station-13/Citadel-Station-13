@@ -23,9 +23,9 @@
 	robot_modules_background.layer = HUD_LAYER	//Objects that appear on screen are on layer ABOVE_HUD_LAYER, UI should be just below it.
 	robot_modules_background.plane = HUD_PLANE
 
-	inv1 = new /obj/screen/robot/module1()
-	inv2 = new /obj/screen/robot/module2()
-	inv3 = new /obj/screen/robot/module3()
+	inv1 = new /atom/movable/screen/robot/module1()
+	inv2 = new /atom/movable/screen/robot/module2()
+	inv3 = new /atom/movable/screen/robot/module3()
 
 	previous_health = health
 
@@ -598,7 +598,7 @@
 	if(wires.is_cut(WIRE_LOCKDOWN))
 		state = TRUE
 	if(state)
-		throw_alert("locked", /obj/screen/alert/locked)
+		throw_alert("locked", /atom/movable/screen/alert/locked)
 	else
 		clear_alert("locked")
 	locked_down = state
@@ -611,7 +611,7 @@
 	module.rebuild_modules()
 	update_icons()
 	if(emagged)
-		throw_alert("hacked", /obj/screen/alert/hacked)
+		throw_alert("hacked", /atom/movable/screen/alert/hacked)
 	else
 		clear_alert("hacked")
 
@@ -811,6 +811,32 @@
 						<i>Help the operatives secure the disk at all costs!</i></b>"
 	set_module = /obj/item/robot_module/saboteur
 
+/mob/living/silicon/robot/modules/syndicate/spider// used for space ninja and their cyborg hacking special objective
+	bubble_icon = "spider"
+	playstyle_string = "<span class='big bold'>You are a Spider Clan assault cyborg!</span><br>\
+							<b>You are armed with powerful offensive tools to aid you in your mission: obey your ninja masters by any means necessary. \
+							Your cyborg LMG will slowly produce ammunition from your power supply, and your pinpointer will find and locate fellow members of the Spider Clan.</b>"
+	set_module = /obj/item/robot_module/syndicate/spider
+
+/mob/living/silicon/robot/modules/syndicate_medical/spider// ditto
+	bubble_icon = "spider"
+	var/playstyle_string = "<span class='big bold'>You are a Spider Clan medical cyborg!</span><br>\
+						<b>You are armed with powerful medical tools to aid you in your mission: obey your ninja masters by any means necessary. \
+						Your hypospray will produce Restorative Nanites, a wonder-drug that will heal most types of bodily damages, including clone and brain damage. It also produces morphine for offense. \
+						Your defibrillator paddles can revive allies through their hardsuits, or can be used on harm intent to shock enemies! \
+						Your energy saw functions as a circular saw, but can be activated to deal more damage, and your pinpointer will find and locate fellow members of the Spider Clan.</b>"
+	set_module = /obj/item/robot_module/syndicate_medical/spider
+
+/mob/living/silicon/robot/modules/saboteur/spider// ditto
+	bubble_icon = "spider"
+	var/playstyle_string = "<span class='big bold'>You are a Spider Clan saboteur cyborg!</span><br>\
+						<b>You are armed with robust engineering tools to aid you in your mission: obey your ninja masters by any means necessary. \
+						Your destination tagger will allow you to stealthily traverse the disposal network across the station. \
+						Your welder will can be used to repair yourself or any allied silicon units, while serving as an impromptu melee weapon.  \
+						Your cyborg chameleon projector allows you to assume the appearance and registered name of a Nanotrasen engineering borg, and undertake covert actions on the station, \
+						be aware that almost any physical contact or incidental damage will break your camouflage.</b>"
+	set_module = /obj/item/robot_module/saboteur/spider
+
 /mob/living/silicon/robot/proc/notify_ai(notifytype, oldname, newname)
 	if(!connected_ai)
 		return
@@ -966,7 +992,8 @@
 
 	upgrades.Cut()
 
-	speed = 0
+	vtec = 0
+	vtec_disabled = FALSE
 	ionpulse = FALSE
 	revert_shell()
 

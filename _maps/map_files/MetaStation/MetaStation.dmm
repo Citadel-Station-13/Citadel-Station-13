@@ -1344,6 +1344,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "adw" = (
@@ -36739,14 +36740,12 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/science/misc_lab)
+/area/science/mixing)
 "cAJ" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/manifold4w/supplymain/hidden,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cAK" = (
@@ -36755,7 +36754,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/science/misc_lab)
+/area/science/mixing)
 "cAL" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -37139,7 +37138,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/science/misc_lab)
+/area/science/mixing)
 "cBE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
@@ -37149,7 +37148,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/science/misc_lab)
+/area/science/mixing)
 "cBF" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -37158,7 +37157,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
-/area/science/misc_lab)
+/area/science/mixing)
 "cBG" = (
 /obj/machinery/door/airlock/research{
 	name = "Toxins Launch Room";
@@ -37555,6 +37554,9 @@
 	},
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -45096,6 +45098,10 @@
 /obj/effect/landmark/start/scientist,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"cUU" = (
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "cUZ" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -54495,7 +54501,7 @@
 "gLC" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel,
-/area/science/misc_lab)
+/area/science/mixing)
 "gLD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -70548,11 +70554,11 @@
 /turf/open/floor/grass,
 /area/service/hydroponics/garden)
 "qqg" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/science/misc_lab)
+/area/science/mixing)
 "qqK" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -78267,7 +78273,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/science/misc_lab)
+/area/science/mixing)
 "vhM" = (
 /obj/machinery/teleport/hub,
 /turf/open/floor/plating,
@@ -81108,7 +81114,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
-/area/science/misc_lab)
+/area/science/mixing)
 "wRz" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -81317,6 +81323,13 @@
 	},
 /turf/open/floor/plating,
 /area/command/bridge)
+"wXA" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "wXC" = (
 /obj/machinery/light_switch{
 	pixel_y = 28
@@ -82282,8 +82295,12 @@
 /area/service/library)
 "xAp" = (
 /obj/structure/chair/comfy,
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -22
+	},
 /turf/open/floor/plasteel,
-/area/science/misc_lab)
+/area/science/mixing)
 "xAs" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/grunge{
@@ -82583,6 +82600,16 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/commons/dorms)
+"xHe" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "xHm" = (
 /obj/machinery/holopad,
 /obj/structure/cable/yellow{
@@ -105887,7 +105914,7 @@ abC
 acr
 acE
 adb
-aaR
+cUU
 aaR
 aem
 aeN
@@ -107166,7 +107193,7 @@ aaC
 aaI
 aaR
 abb
-aaI
+wXA
 abG
 acb
 acu
@@ -107943,7 +107970,7 @@ aaR
 aaR
 aaR
 ade
-aaR
+cUU
 aaR
 aeo
 aeV
@@ -118574,7 +118601,7 @@ cJa
 cJa
 gHh
 wRy
-wRy
+xHe
 wRy
 cBE
 cAJ

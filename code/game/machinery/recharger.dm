@@ -1,7 +1,8 @@
 /obj/machinery/recharger
 	name = "recharger"
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "recharger0"
+	icon_state = "recharger"
+	base_icon_state = "recharger"
 	desc = "A charging dock for energy based weaponry."
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
@@ -11,6 +12,8 @@
 	var/obj/item/charging = null
 	var/recharge_coeff = 1
 	var/using_power = FALSE //Did we put power into "charging" last process()?
+	///Did we finish recharging the currently inserted item?
+	var/finished_recharging = FALSE
 
 	var/static/list/allowed_devices = typecacheof(list(
 		/obj/item/gun/energy,
@@ -47,13 +50,14 @@
 	charging = new_charging
 	if (new_charging)
 		START_PROCESSING(SSmachines, src)
+		finished_recharging = FALSE
 		use_power = ACTIVE_POWER_USE
 		using_power = TRUE
-		update_icon()
+		update_appearance()
 	else
 		use_power = IDLE_POWER_USE
 		using_power = FALSE
-		update_icon()
+		update_appearance()
 
 /obj/machinery/recharger/Exited(atom/movable/M, atom/newloc)
 	. = ..()
@@ -99,7 +103,8 @@
 		return 1
 
 	if(anchored && !charging)
-		if(default_deconstruction_screwdriver(user, "rechargeropen", "recharger0", G))
+		if(default_deconstruction_screwdriver(user, "recharger", "recharger", G))
+			update_appearance()
 			return
 
 		if(panel_open && G.tool_behaviour == TOOL_CROWBAR)
@@ -132,7 +137,7 @@
 				C.give(C.chargerate * recharge_coeff)
 				use_power(250 * recharge_coeff)
 				using_power = TRUE
-			update_icon()
+			update_appearance()
 
 		if(istype(charging, /obj/item/ammo_box/magazine/recharge))
 			var/obj/item/ammo_box/magazine/recharge/R = charging
@@ -140,7 +145,7 @@
 				R.stored_ammo += new R.ammo_type(R)
 				use_power(200 * recharge_coeff)
 				using_power = TRUE
-			update_icon()
+			update_appearance()
 			return
 
 		if(istype(charging, /obj/item/ammo_casing/mws_batt))
@@ -151,7 +156,7 @@
 				using_power = 1
 			if(R.BB == null)
 				R.chargeshot()
-			update_icon(using_power)
+			update_appearance()
 
 		if(istype(charging, /obj/item/ammo_box/magazine/mws_mag))
 			var/obj/item/ammo_box/magazine/mws_mag/R = charging
@@ -163,14 +168,19 @@
 					using_power = 1
 				if(batt.BB == null)
 					batt.chargeshot()
-			update_icon(using_power)
+			update_appearance()
+
+		if(!using_power && !finished_recharging) //Inserted thing is at max charge/ammo, notify those around us
+			finished_recharging = TRUE
+			playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+			say("[charging] has finished recharging!")
 
 	else
 		return PROCESS_KILL
 
 /obj/machinery/recharger/power_change()
 	..()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/recharger/emp_act(severity)
 	. = ..()
@@ -187,16 +197,29 @@
 			if(B.cell)
 				B.cell.charge = 0
 
+/obj/machinery/recharger/update_appearance(updates)
+	. = ..()
+	if((stat & (NOPOWER|BROKEN)) || panel_open || !anchored)
+		luminosity = 0
+		return
+	luminosity = 1
 
-/obj/machinery/recharger/update_icon_state()
+/obj/machinery/recharger/update_overlays()
+	. = ..()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
-		icon_state = "rechargeroff"
-	else if(panel_open)
-		icon_state = "rechargeropen"
-	else if(charging)
-		if(using_power)
-			icon_state = "recharger1"
-		else
-			icon_state = "recharger2"
-	else
-		icon_state = "recharger0"
+		return
+	if(panel_open)
+		. += mutable_appearance(icon, "[base_icon_state]-open", alpha = src.alpha)
+		return
+
+	if(!charging)
+		. += mutable_appearance(icon, "[base_icon_state]-empty", alpha = src.alpha)
+		. += emissive_appearance(icon, "[base_icon_state]-empty", alpha = src.alpha)
+		return
+	if(using_power)
+		. += mutable_appearance(icon, "[base_icon_state]-charging", alpha = src.alpha)
+		. += emissive_appearance(icon, "[base_icon_state]-charging", alpha = src.alpha)
+		return
+
+	. += mutable_appearance(icon, "[base_icon_state]-full", alpha = src.alpha)
+	. += emissive_appearance(icon, "[base_icon_state]-full", alpha = src.alpha)

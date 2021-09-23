@@ -7,6 +7,10 @@
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 
+/obj/item/trash/Initialize()
+	. = ..()
+	AddElement(/datum/element/trash)
+
 /obj/item/trash/raisins
 	name = "\improper 4no raisins"
 	icon_state= "4no_raisins"
@@ -80,6 +84,3 @@
 	name = "boritos bag"
 	icon_state = "boritos"
 	grind_results = list(/datum/reagent/aluminium = 1) //from the mylar bag
-
-/obj/item/trash/attack(mob/M, mob/living/user)
-	return

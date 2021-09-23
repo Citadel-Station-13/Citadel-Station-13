@@ -67,8 +67,6 @@
 	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
 	var/incorporeal_move = FALSE //FALSE is off, INCORPOREAL_MOVE_BASIC is normal, INCORPOREAL_MOVE_SHADOW is for ninjas
 								 //and INCORPOREAL_MOVE_JAUNT is blocked by holy water/salt
-	/// Do we make floors dirty as we move?
-	var/causes_dirt_buildup_on_floor = FALSE
 
 	var/list/roundstart_quirks = list()
 
@@ -114,6 +112,7 @@
 	var/stun_absorption = null //converted to a list of stun absorption sources this mob has when one is added
 
 	var/blood_volume = 0 //how much blood the mob has
+	var/integrating_blood = 0 //this is the variable you want to affect if you want to give the mob blood, this will slowly turn into normal blood, preventing some cheesyness, use adjust_integration_blood() instead of modifying directly
 	var/blood_ratio = 1 //How much blood the mob needs, in terms of ratio (i.e 1.2 will require BLOOD_VOLUME_NORMAL of 672) DO NOT GO ABOVE 3.55 Well, actually you can but, then they can't get enough blood.
 	var/obj/effect/proc_holder/ranged_ability //Any ranged ability the mob has, as a click override
 

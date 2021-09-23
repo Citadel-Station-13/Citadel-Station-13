@@ -113,7 +113,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 				severity = 7
 		hud_used.healths.icon_state = "elite_health[severity]"
 		if(severity > 0)
-			overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
+			overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
 		else
 			clear_fullscreen("brute")
 
@@ -176,6 +176,12 @@ While using this makes the system rely on OnFire, it still gives options for tim
 					elitemind = pick(candidates)
 					elitemind.playsound_local(get_turf(elitemind), 'sound/effects/magic.ogg', 40, 0)
 					to_chat(elitemind, "<b>You have been chosen to play as a Lavaland Elite.\nIn a few seconds, you will be summoned on Lavaland as a monster to fight your activator, in a fight to the death.\nYour attacks can be switched using the buttons on the top left of the HUD, and used by clicking on targets or tiles similar to a gun.\nWhile the opponent might have an upper hand with  powerful mining equipment and tools, you have great power normally limited by AI mobs.\nIf you want to win, you'll have to use your powers in creative ways to ensure the kill.  It's suggested you try using them all as soon as possible.\nShould you win, you'll receive extra information regarding what to do after.  Good luck!</b>")
+					var/list/policies = CONFIG_GET(keyed_list/policy)
+					var/policy = policies[POLICYCONFIG_ELITE_SPAWN]
+					if(policy)
+						to_chat(elitemind, "<br><span class='userdanger'>!!READ THIS!!</span><br><span class='warning'>The following is server-specific policy configuration and overrides anything said above if conflicting.</span>")
+						to_chat(elitemind, "<br><br>")
+						to_chat(elitemind, "<span class='boldnotice'>[policy]</span>")
 					addtimer(CALLBACK(src, .proc/spawn_elite, elitemind), 100)
 				else
 					visible_message("<span class='boldwarning'>The stirring stops, and nothing emerges.  Perhaps try again later.</span>")
@@ -304,6 +310,12 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		to_chat(mychild, "<span class='boldwarning'>As the life in the activator's eyes fade, the forcefield around you dies out and you feel your power subside.\nDespite this inferno being your home, you feel as if you aren't welcome here anymore.\nWithout any guidance, your purpose is now for you to decide.</span>")
 		to_chat(mychild, "<b>Your max health has been halved, but can now heal by standing on your tumor.  Note, it's your only way to heal.\nBear in mind, if anyone interacts with your tumor, you'll be resummoned here to carry out another fight.  In such a case, you will regain your full max health.\nAlso, be weary of your fellow inhabitants, they likely won't be happy to see you!</b>")
 		to_chat(mychild, "<span class='big bold'>Note that you are a lavaland monster, and thus not allied to the station.  You should not cooperate or act friendly with any station crew unless under extreme circumstances!</span>")
+		var/list/policies = CONFIG_GET(keyed_list/policy)
+		var/policy = policies[POLICYCONFIG_ELITE_WIN]
+		if(policy)
+			to_chat(mychild, "<br><span class='userdanger'>!!READ THIS!!</span><br><span class='warning'>The following is server-specific policy configuration and overrides anything said above if conflicting.</span>")
+			to_chat(mychild, "<br><br>")
+			to_chat(mychild, "<span class='boldnotice'>[policy]</span>")
 
 /obj/item/tumor_shard
 	name = "tumor shard"
@@ -332,6 +344,12 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		E.playsound_local(get_turf(E), 'sound/effects/magic.ogg', 40, 0)
 		to_chat(E, "<span class='userdanger'>You have been revived by [user].  While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk.</span")
 		to_chat(E, "<span class='big bold'>Note that you now share the loyalties of [user].  You are expected not to intentionally sabotage their faction unless commanded to!</span>")
+		var/list/policies = CONFIG_GET(keyed_list/policy)
+		var/policy = policies[POLICYCONFIG_ELITE_SENTIENCE]
+		if(policy)
+			to_chat(E, "<br><span class='userdanger'>!!READ THIS!!</span><br><span class='warning'>The following is server-specific policy configuration and overrides anything said above if conflicting.</span>")
+			to_chat(E, "<br><br>")
+			to_chat(E, "<span class='boldnotice'>[policy]</span>")
 		E.maxHealth = E.maxHealth * 0.5
 		E.health = E.maxHealth
 		E.desc = "[E.desc]  However, this one appears appears less wild in nature, and calmer around people."

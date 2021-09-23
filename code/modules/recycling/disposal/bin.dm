@@ -401,12 +401,15 @@
 	//check for items in disposal - occupied light
 	if(contents.len > 0)
 		. += "dispover-full"
+		. += emissive_appearance(icon, "dispover-full", alpha = src.alpha)
 
 	//charging and ready light
 	if(pressure_charging)
 		. += "dispover-charge"
+		. += emissive_appearance(icon, "dispover-charge-glow", alpha = src.alpha)
 	else if(full_pressure)
 		. += "dispover-ready"
+		. += emissive_appearance(icon, "dispover-ready-glow", alpha = src.alpha)
 
 /obj/machinery/disposal/bin/proc/do_flush()
 	set waitfor = FALSE
@@ -462,7 +465,7 @@
 
 /obj/machinery/disposal/bin/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 2)
 
 //Delivery Chute
 

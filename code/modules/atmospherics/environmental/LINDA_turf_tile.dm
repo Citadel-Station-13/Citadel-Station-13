@@ -32,6 +32,11 @@
 	if(!blocks_air)
 		air = new(2500,src)
 		air.copy_from_turf(src)
+		if(planetary_atmos && !(initial_gas_mix in SSair.planetary))
+			var/datum/gas_mixture/mix = new
+			mix.parse_gas_string(initial_gas_mix)
+			mix.mark_immutable()
+			SSair.planetary[initial_gas_mix] = mix
 		update_air_ref(planetary_atmos ? 1 : 2)
 	. = ..()
 
