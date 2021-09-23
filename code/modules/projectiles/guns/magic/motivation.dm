@@ -8,8 +8,8 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	fire_sound = 'sound/weapons/judgementhit.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/judgement_cut
-	force = 20 //so it's worth that 20 tc
-	armour_penetration = 50
+	force = 25 // who the fuck thought the original 20 force was balanced for 20 tc please reconsider everything
+	armour_penetration = 100 // virgin pierce
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -21,7 +21,7 @@
 	recharge_rate = 5
 	var/datum/action/judgement_cut/judgementcut = new/datum/action/judgement_cut()
 	block_parry_data = /datum/block_parry_data/motivation
-	
+
 //to get this to toggle correctly
 /obj/item/gun/magic/staff/motivation/Initialize()
 	. = ..()
@@ -47,7 +47,6 @@
 /obj/item/gun/magic/staff/motivation/can_trigger_gun(mob/living/user)
 	. = ..()
 	if(!judgementcut.judgement_toggled)
-		to_chat(user, "<span class='notice'> Judgment Cut is disabled.</span>")
 		return FALSE
 
 //adds/removes judgement cut and judgement cut end upon pickup/drop
