@@ -314,6 +314,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	peaceful_percentage = round(LORENTZ_CUMULATIVE_DISTRIBUTION(relative_threat, threat_curve_centre, threat_curve_width), 0.01)*100
 
+	SSblackbox.record_feedback("tally","dynamic_threat",threat_level,"Initial threat level")
+	SSblackbox.record_feedback("tally","dynamic_threat",threat_curve_centre,"Curve centre")
+	SSblackbox.record_feedback("tally","dynamic_threat",threat_curve_width,"Curve width")
+	SSblackbox.record_feedback("tally","dynamic_threat",peaceful_percentage,"Percent of same-center rounds that are more peaceful")
+
 /// Generates the midround and roundstart budgets
 /datum/game_mode/dynamic/proc/generate_budgets()
 	var/relative_round_start_budget_scale = LORENTZ_DISTRIBUTION(roundstart_split_curve_centre, roundstart_split_curve_width)
@@ -377,6 +382,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if (candidates.len <= 0)
 		log_game("DYNAMIC: [candidates.len] candidates.")
 		return TRUE
+	SSblackbox.record_feedback("tally","dynamic",roundstart_rules.len,"Roundstart rules considered")
+	SSblackbox.record_feedback("tally","dynamic",roundstart_pop_ready,"Players readied up")
 
 	if(GLOB.dynamic_forced_roundstart_ruleset.len > 0)
 		rigged_roundstart()
@@ -588,6 +595,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	for (var/datum/dynamic_ruleset/rule in current_rules)
 		if(rule.rule_process() == RULESET_STOP_PROCESSING) // If rule_process() returns 1 (RULESET_STOP_PROCESSING), stop processing.
 			current_rules -= rule
+			SSblackbox.record_feedback("tally","dynamic",1,"Rulesets finished")
 	midround_rule_draft()
 
 /datum/game_mode/dynamic/proc/midround_rule_draft()
