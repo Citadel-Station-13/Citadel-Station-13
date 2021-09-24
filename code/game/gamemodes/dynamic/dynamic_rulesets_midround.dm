@@ -305,7 +305,7 @@
 	required_candidates = 1
 	weight = 1
 	cost = 20
-	requirements = list(90,90,90,80,60,40,30,20,10,10)
+	requirements = list(101,101,100,80,60,40,30,20,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
@@ -337,7 +337,7 @@
 	required_candidates = 5
 	weight = 5
 	cost = 35
-	requirements = list(90,90,90,80,60,40,30,20,10,10)
+	requirements = list(101,101,101,80,60,40,30,20,10,10)
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	var/datum/team/nuclear/nuke_team
 	flags = HIGH_IMPACT_RULESET

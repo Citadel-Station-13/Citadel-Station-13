@@ -620,7 +620,7 @@ SUBSYSTEM_DEF(ticker)
 	if(mode)
 		GLOB.master_mode = "dynamic"
 	else
-		GLOB.master_mode = "dynamic"
+		GLOB.master_mode = GLOB.dynamic_forced_extended
 	log_game("Saved mode is '[GLOB.master_mode]'")
 
 /datum/controller/subsystem/ticker/proc/save_mode(the_mode)

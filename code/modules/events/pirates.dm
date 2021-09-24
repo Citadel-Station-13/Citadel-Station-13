@@ -22,7 +22,7 @@
 
 /proc/send_pirate_threat()
 	var/pirate_type = PIRATES_ROGUES //pick(PIRATES_ROGUES, PIRATES_SILVERSCALES, PIRATES_DUTCHMAN)
-	var/datum/comm_message/threat_msg
+	var/datum/comm_message/threat_msg = new
 	var/payoff = 0
 	var/payoff_min = 10000
 	var/ship_template
@@ -38,7 +38,6 @@
 		// 	ship_name = "Flying Dutchman"
 
 	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", "commandreport")
-	var/datum/comm_message/threat = new
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
 		payoff = max(payoff_min, FLOOR(D.account_balance * 0.80, 1000))
@@ -58,15 +57,15 @@
 		// 	threat_msg.title = "Business proposition"
 		// 	threat_msg.content = "Ahoy! This be the [ship_name]. Cough up [payoff] credits or you'll walk the plank."
 		// 	threat_msg.possible_answers = list("We'll pay.","We will not be extorted.")
-	threat.answer_callback = CALLBACK(GLOBAL_PROC, .proc/pirates_answered, threat, payoff, ship_name, initial_send_time, response_max_time, ship_template)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/spawn_pirates, threat, ship_template, FALSE), response_max_time)
+	threat_msg.answer_callback = CALLBACK(GLOBAL_PROC, .proc/pirates_answered, threat_msg, payoff, ship_name, initial_send_time, response_max_time, ship_template)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/spawn_pirates, threat_msg, ship_template, FALSE), response_max_time)
 	SScommunications.send_message(threat_msg,unique = TRUE)
 
-/proc/pirates_answered(datum/comm_message/threat, payoff, ship_name, initial_send_time, response_max_time, ship_template)
+/proc/pirates_answered(datum/comm_message/threat_msg, payoff, ship_name, initial_send_time, response_max_time, ship_template)
 	if(world.time > initial_send_time + response_max_time)
 		priority_announce("Too late to beg for mercy!",sender_override = ship_name)
 		return
-	if(threat && threat.answered == 1)
+	if(threat_msg && threat_msg.answered == 1)
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
 			if(D.adjust_money(-payoff))
@@ -74,10 +73,10 @@
 				return
 			else
 				priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
-				spawn_pirates(threat, ship_template, TRUE)
+				spawn_pirates(threat_msg, ship_template, TRUE)
 
-/proc/spawn_pirates(datum/comm_message/threat, ship_template, skip_answer_check)
-	if(!skip_answer_check && threat?.answered == 1)
+/proc/spawn_pirates(datum/comm_message/threat_msg, ship_template, skip_answer_check)
+	if(!skip_answer_check && threat_msg?.answered == 1)
 		return
 
 	var/list/candidates = pollGhostCandidates("Do you wish to be considered for pirate crew?", ROLE_TRAITOR)

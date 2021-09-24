@@ -17,7 +17,7 @@
 	weight = 5
 	cost = 8 // Avoid raising traitor threat above 10, as it is the default low cost ruleset.
 	scaling_cost = 9
-	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	requirements = list(101,10,10,10,10,10,10,10,10,10)
 	antag_cap = list("denominator" = 24)
 	var/autotraitor_cooldown = (15 MINUTES)
 	COOLDOWN_DECLARE(autotraitor_cooldown_check)
@@ -103,7 +103,7 @@
 	weight = 3
 	cost = 16
 	scaling_cost = 10
-	requirements = list(70,70,60,50,40,20,20,10,10,10)
+	requirements = list(101,70,60,50,40,20,20,10,10,10)
 	antag_cap = list("denominator" = 29)
 
 /datum/dynamic_ruleset/roundstart/changeling/pre_execute(population)
@@ -179,7 +179,7 @@
 	required_candidates = 1
 	weight = 2
 	cost = 20
-	requirements = list(90,90,90,80,60,40,30,20,10,10)
+	requirements = list(101,101,100,80,60,40,30,20,10,10)
 	var/list/roundstart_wizards = list()
 
 /datum/dynamic_ruleset/roundstart/wizard/acceptable(population=0, threat=0)
@@ -222,7 +222,8 @@
 	required_candidates = 2
 	weight = 3
 	cost = 20
-	requirements = list(100,90,80,60,40,30,10,10,10,10)
+	//requirements = list(100,90,80,60,40,30,10,10,10,10)
+	requirements = list(101,101,101,101,40,30,10,10,10,10)
 	flags = HIGH_IMPACT_RULESET
 	antag_cap = list("denominator" = 20, "offset" = 1)
 	var/datum/team/cult/main_cult
@@ -278,7 +279,7 @@
 	required_candidates = 5
 	weight = 3
 	cost = 20
-	requirements = list(90,90,90,80,60,40,30,20,10,10)
+	requirements = list(101,101,101,80,60,40,30,20,10,10)
 	flags = HIGH_IMPACT_RULESET
 	antag_cap = list("denominator" = 18, "offset" = 1)
 	var/datum/team/nuclear/nuke_team
@@ -364,7 +365,8 @@
 	weight = 3
 	delay = 7 MINUTES
 	cost = 20
-	requirements = list(101,101,70,40,30,20,10,10,10,10)
+	//requirements = list(101,101,70,40,30,20,10,10,10,10)
+	requirements = list(101,101,101,101,30,20,10,10,10,10)
 	antag_cap = 3
 	flags = HIGH_IMPACT_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/latejoin/provocateur)
@@ -444,7 +446,8 @@
 	required_candidates = 2
 	weight = 3
 	cost = 20
-	requirements = list(100,90,80,60,40,30,10,10,10,10)
+	//requirements = list(100,90,80,60,40,30,10,10,10,10)
+	requirements = list(101,101,101,101,40,30,10,10,10,10)
 	flags = HIGH_IMPACT_RULESET
 	antag_cap = list("denominator" = 20, "offset" = 1)
 	var/datum/team/clockcult/main_clockcult

@@ -166,6 +166,7 @@
 	.["mode"] = "hidden"	//CIT CHANGE - hides the gamemode in topic() calls to prevent meta'ing the gamemode
 	.["respawn"] = config ? CONFIG_GET(flag/respawns_enabled) : FALSE
 	.["enter"] = GLOB.enter_allowed
+	.["vote"] = CONFIG_GET(flag/allow_vote_mode)
 	.["ai"] = CONFIG_GET(flag/allow_ai)
 	.["host"] = world.host ? world.host : null
 	.["round_id"] = GLOB.round_id
