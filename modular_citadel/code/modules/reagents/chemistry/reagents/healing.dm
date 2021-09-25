@@ -167,9 +167,10 @@
 
 	data["injected_vol"] = max(0, data["injected_vol"] - metabolization_rate * C.metabolism_efficiency)	//No negatives.
 	if(borrowed_health)
-		C.adjustToxLoss(1, forced = TRUE, toxins_type = TOX_OMNI)
-		C.adjustCloneLoss(1)
-		borrowed_health = max(borrowed_health - 2, 0)
+		var/payback = 2 * C.metabolism_efficiency	//How much borrowed health we are paying back. Half as clonedam, half as true omni toxdam
+		C.adjustToxLoss(payback / 2, forced = TRUE, toxins_type = TOX_OMNI)
+		C.adjustCloneLoss(payback / 2)
+		borrowed_health = max(borrowed_health - payback, 0)
 	..()
 
 /datum/reagent/synthtissue/on_merge(passed_data)
