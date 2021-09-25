@@ -997,9 +997,9 @@
 					var/mob/living/carbon/C = M
 					if(!(C.dna && C.dna.species && (NOBLOOD in C.dna.species.species_traits)))
 						C.blood_volume = max(C.blood_volume, BLOOD_VOLUME_BAD*C.blood_ratio) //so you don't instantly re-die from a lack of blood. You'll still need help if you had none though.
-						var/obj/item/organ/heart/H = C.getorganslot(ORGAN_SLOT_HEART)
-						if(H && H.organ_flags & ORGAN_FAILING)
-							H.applyOrganDamage(-15)
+					var/obj/item/organ/heart/H = C.getorganslot(ORGAN_SLOT_HEART)
+					if(H && H.organ_flags & ORGAN_FAILING)
+						H.applyOrganDamage(-15)
 				M.adjustOxyLoss(-20, 0)
 				M.adjustToxLoss(-20, 0)
 				M.updatehealth()
