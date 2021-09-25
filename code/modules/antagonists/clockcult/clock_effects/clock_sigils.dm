@@ -111,6 +111,19 @@
 	sigil_name = "Sigil of Submission"
 	var/glow_type = /obj/effect/temp_visual/ratvar/sigil/submission
 
+/obj/effect/clockwork/sigil/submission/Crossed(atom/movable/AM)
+	. = ..()
+	if(istype(AM, /obj/item/aicard))
+		var/obj/item/aicard/cardy = AM
+		if(!cardy.AI)
+			return
+		var/mob/living/silicon/ai/aiconvert = cardy.AI
+		if(aiconvert.stat > stat_affected)
+			return
+		if(is_servant_of_ratvar(aiconvert) || !(aiconvert.mind || aiconvert.has_status_effect(STATUS_EFFECT_SIGILMARK)))
+			return
+		sigil_effects(aiconvert)
+
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
 	var/turf/T = get_turf(src)
 	var/has_sigil = FALSE

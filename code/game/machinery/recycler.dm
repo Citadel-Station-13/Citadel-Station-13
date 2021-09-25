@@ -110,7 +110,7 @@
 
 	var/list/to_eat = AM0.GetAllContents()
 
-	var/living_detected = FALSE //technically includes silicons as well but eh
+	var/mob/living/living_detected //technically includes silicons as well but eh
 	var/list/nom = list()
 	var/list/crunchy_nom = list() //Mobs have to be handled differently so they get a different list instead of checking them multiple times.
 
@@ -120,10 +120,10 @@
 			var/obj/item/bodypart/head/as_head = AM
 			var/obj/item/mmi/as_mmi = AM
 			if(istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /obj/item/dullahan_relay))
-				living_detected = TRUE
+				living_detected = living_detected || AM
 			nom += AM
 		else if(isliving(AM))
-			living_detected = TRUE
+			living_detected = living_detected || TRUE
 			crunchy_nom += AM
 	var/not_eaten = to_eat.len - nom.len - crunchy_nom.len
 	if(living_detected) // First, check if we have any living beings detected.
@@ -132,7 +132,7 @@
 				if(isliving(CRUNCH)) // MMIs and brains will get eaten like normal items
 					crush_living(CRUNCH)
 		else // Stop processing right now without eating anything.
-			emergency_stop()
+			emergency_stop(living_detected)
 			return
 	for(var/nommed in nom)
 		recycle_item(nommed)
