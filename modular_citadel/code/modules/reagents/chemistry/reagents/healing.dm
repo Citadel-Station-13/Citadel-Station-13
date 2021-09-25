@@ -109,12 +109,16 @@
 		var/healing_factor = (((data["grown_volume"] / 100) + 1)*reac_volume)
 		if(method == PATCH)	//Needs to actually be applied via patch / hypo / medspray and not just beakersplashed.
 			if (C.stat == DEAD)
-				C.visible_message("The synthetic tissue rapidly grafts into [M]'s wounds, attemping to repair the damage as quickly as possible.")
-				borrowed_health += healing_factor
+				C.visible_message("The synthetic tissue rapidly grafts into [M]'s wounds, attempting to repair the damage as quickly as possible.")
+				var/preheal_brute = C.getBruteLoss()
+				var/preheal_burn = C.getFireLoss()
+				var/preheal_tox = C.getToxLoss()
+				var/preheal_oxy = C.getOxyLoss()
 				C.adjustBruteLoss(-healing_factor*2)
 				C.adjustFireLoss(-healing_factor*2)
 				C.adjustToxLoss(-healing_factor)
 				C.adjustCloneLoss(-healing_factor)
+				borrowed_health += (preheal_brute - C.getBruteLoss()) + (preheal_burn - C.getFireLoss()) + (preheal_tox - C.getToxLoss()) + ((preheal_oxy - C.getOxyLoss()) / 2)	//Ironically this means that while slimes get damaged by the toxheal, it will reduce borrowed health and longterm effects. Funky!
 				C.updatehealth()
 				if(data["grown_volume"] > 135 && ((C.health + C.oxyloss)>=80))
 					var/tplus = world.time - M.timeofdeath
@@ -131,12 +135,14 @@
 							to_chat(C, policy)
 						C.log_message("revived using synthtissue, [tplus] deciseconds from time of death, considered late revival due to usage of synthtissue.", LOG_GAME)
 			else
+				var/preheal_brute = C.getBruteLoss()
+				var/preheal_burn = C.getFireLoss()
 				M.adjustBruteLoss(-healing_factor)
 				M.adjustFireLoss(-healing_factor)
 				var/datum/reagent/synthtissue/active_tissue = M.reagents.has_reagent(/datum/reagent/synthtissue)
 				var/imperfect = FALSE 	//Merging with synthtissue that has borrowed health
 				if(active_tissue && active_tissue.borrowed_health)
-					borrowed_health += healing_factor
+					borrowed_health += (preheal_brute - C.getBruteLoss()) + (preheal_burn - C.getFireLoss())
 					imperfect = TRUE
 				to_chat(M, "<span class='danger'>You feel your flesh [imperfect ? "partially and painfully" : ""] merge with the synthetic tissue! It stings like hell[imperfect ? " and is making you feel terribly sick" : ""]!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
@@ -161,9 +167,9 @@
 
 	data["injected_vol"] = max(0, data["injected_vol"] - metabolization_rate * C.metabolism_efficiency)	//No negatives.
 	if(borrowed_health)
-		C.adjustToxLoss(1)
+		C.adjustToxLoss(1, forced = TRUE, toxins_type = TOX_OMNI)
 		C.adjustCloneLoss(1)
-		borrowed_health -= 1
+		borrowed_health = max(borrowed_health - 2, 0)
 	..()
 
 /datum/reagent/synthtissue/on_merge(passed_data)
