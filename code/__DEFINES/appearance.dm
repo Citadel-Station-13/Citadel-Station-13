@@ -1,7 +1,7 @@
 // defines specifically to represent the indexes for appearance datums in a full appearance datum
 #define BODYPART_APPEARANCE	"bodyparts" // for bodyparts (this includes eyes!)
 #define CLOTHING_APPEARANCE	"clothing" // for clothing
-#define MISC_APPEARANCE		"misc"		// anything that isn't the above (from hair to tails to effects!)
+#define MISC_APPEARANCE		"misc"		// anything that isn't the above (from hair to tails to effects and inhands!)
 
 // defines for overlays or lists of overlays in appearance datums that have no other unique identifier (i.e. bodyparts use body zone)
 #define EYES_APPEARANCE			"eyes"
