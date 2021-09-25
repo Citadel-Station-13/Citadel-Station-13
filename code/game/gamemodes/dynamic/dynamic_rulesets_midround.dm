@@ -190,7 +190,7 @@
 	required_candidates = 1
 	weight = 7
 	cost = 10
-	requirements = list(50,40,30,20,10,10,10,10,10,10)
+	requirements = list(101,40,30,20,10,10,10,10,10,10)
 	repeatable = TRUE
 
 	/// Whether or not this instance of sleeper agent should be randomly acceptable.
@@ -303,9 +303,9 @@
 	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
-	weight = 1
+	weight = 2
 	cost = 20
-	requirements = list(101,101,100,80,60,40,30,20,10,10)
+	requirements = list(101,101,100,80,50,30,20,10,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
@@ -335,10 +335,10 @@
 	enemy_roles = list("AI", "Cyborg", "Security Officer", "Warden","Detective","Head of Security", "Captain")
 	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
 	required_candidates = 5
-	weight = 5
+	weight = 3
 	cost = 35
-	requirements = list(101,101,101,80,60,40,30,20,10,10)
-	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
+	requirements = list(101,101,101,80,50,40,30,15,10,10)
+	var/list/operative_cap = list(2,2,3,3,3,4,5,5,5,5)
 	var/datum/team/nuclear/nuke_team
 	flags = HIGH_IMPACT_RULESET
 
@@ -379,7 +379,7 @@
 	required_candidates = 1
 	weight = 2
 	cost = 10
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	requirements = list(101,101,101,101,70,40,25,20,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob/generate_ruleset_body(mob/applicant)
@@ -398,7 +398,7 @@
 	required_candidates = 1
 	weight = 2
 	cost = 10
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	requirements = list(101,101,101,101,70,40,25,20,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/blob_infection/trim_candidates()
@@ -436,7 +436,7 @@
 	required_candidates = 1
 	weight = 3
 	cost = 10
-	requirements = list(101,101,101,70,50,40,20,15,10,10)
+	requirements = list(101,101,101,101,60,50,30,20,10,10)
 	repeatable = TRUE
 	var/list/vents = list()
 
@@ -480,9 +480,9 @@
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
-	weight = 3
+	weight = 4
 	cost = 10
-	requirements = list(101,101,101,70,50,40,20,15,10,10)
+	requirements = list(101,101,101,40,30,20,10,10,10,10)
 	repeatable = TRUE
 	var/list/spawn_locs = list()
 
@@ -526,9 +526,9 @@
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
-	weight = 4
+	weight = 3
 	cost = 10
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	requirements = list(101,101,101,101,60,50,30,20,10,10)
 	repeatable = TRUE
 	var/list/spawn_locs = list()
 
@@ -571,9 +571,9 @@
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 2
 	required_applicants = 2
-	weight = 4
+	weight = 3
 	cost = 10
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	requirements = list(101,101,101,101,101,40,25,20,10,10)
 	repeatable = TRUE
 	var/datum/team/abductor_team/new_team
 
@@ -611,7 +611,7 @@
 	required_candidates = 0
 	weight = 3
 	cost = 10
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	requirements = list(101,101,101,101,60,50,30,20,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/swarmers/execute()
@@ -622,7 +622,7 @@
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			spawn_locs += spawn_turf
 	if(!spawn_locs.len)
-		message_admins("No valid sspawn locations found in GLOB.xeno_spawn, aborting swarmer spawning...")
+		message_admins("No valid spawn locations found in GLOB.xeno_spawn, aborting swarmer spawning...")
 		return MAP_ERROR
 	new /obj/effect/mob_spawn/swarmer(get_turf(GLOB.the_gateway))
 	log_game("A Swarmer was spawned via Dynamic Mode.")
@@ -730,7 +730,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 10
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	requirements = list(101,101,101,70,50,40,20,15,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/generate_ruleset_body(mob/applicant)
@@ -751,7 +751,7 @@
 	required_candidates = 0
 	weight = 4
 	cost = 10
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	requirements = list(101,101,101,50,40,25,10,10,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/pirates/acceptable(population=0, threat=0)

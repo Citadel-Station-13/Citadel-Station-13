@@ -55,7 +55,7 @@
 	weight = 4
 	cost = 15
 	scaling_cost = 15
-	requirements = list(40,30,30,20,20,15,15,15,10,10)
+	requirements = list(101,101,101,101,101,101,101,101,101,101)//disabled for now
 	antag_cap = 2 // Can pick 3 per team, but rare enough it doesn't matter.
 	var/list/datum/team/brother_team/pre_brother_teams = list()
 	var/const/min_team_size = 2
@@ -138,7 +138,7 @@
 	weight = 3
 	cost = 15
 	scaling_cost = 9
-	requirements = list(101,101,101,40,35,20,20,15,10,10)
+	requirements = list(101,101,101,55,40,25,20,15,10,10)//higher because of 'round end'
 	antag_cap = list("denominator" = 24)
 
 
@@ -177,9 +177,9 @@
 	minimum_required_age = 14
 	restricted_roles = list("Head of Security", "Captain") // Just to be sure that a wizard getting picked won't ever imply a Captain or HoS not getting drafted
 	required_candidates = 1
-	weight = 2
+	weight = 3
 	cost = 20
-	requirements = list(101,101,100,80,60,40,30,20,10,10)
+	requirements = list(101,101,100,80,50,40,30,20,10,10)//100 because of configt, otherwise equal to nukies
 	var/list/roundstart_wizards = list()
 
 /datum/dynamic_ruleset/roundstart/wizard/acceptable(population=0, threat=0)
@@ -220,10 +220,10 @@
 	minimum_required_age = 14
 	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel")
 	required_candidates = 2
-	weight = 3
+	weight = 2 //lower weight because of easy steamroll potential
 	cost = 20
 	//requirements = list(100,90,80,60,40,30,10,10,10,10)
-	requirements = list(101,101,101,101,40,30,10,10,10,10)
+	requirements = list(101,101,101,101,60,40,20,10,10,10)
 	flags = HIGH_IMPACT_RULESET
 	antag_cap = list("denominator" = 20, "offset" = 1)
 	var/datum/team/cult/main_cult
@@ -279,7 +279,7 @@
 	required_candidates = 5
 	weight = 3
 	cost = 20
-	requirements = list(101,101,101,80,60,40,30,20,10,10)
+	requirements = list(101,101,101,80,50,40,30,15,10,10)
 	flags = HIGH_IMPACT_RULESET
 	antag_cap = list("denominator" = 18, "offset" = 1)
 	var/datum/team/nuclear/nuke_team
@@ -362,11 +362,10 @@
 	minimum_required_age = 14
 	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
 	required_candidates = 3
-	weight = 3
+	weight = 2
 	delay = 7 MINUTES
 	cost = 20
-	//requirements = list(101,101,70,40,30,20,10,10,10,10)
-	requirements = list(101,101,101,101,30,20,10,10,10,10)
+	requirements = list(101,101,101,101,60,40,20,10,10,10)
 	antag_cap = 3
 	flags = HIGH_IMPACT_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/latejoin/provocateur)
@@ -444,10 +443,9 @@
 	minimum_required_age = 14
 	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel")
 	required_candidates = 2
-	weight = 3
+	weight = 3 //higher weight than blood cult and revs because it's more balanced
 	cost = 20
-	//requirements = list(100,90,80,60,40,30,10,10,10,10)
-	requirements = list(101,101,101,101,40,30,10,10,10,10)
+	requirements = list(101,101,101,101,60,40,20,10,10,10) //slightly higher than nukies
 	flags = HIGH_IMPACT_RULESET
 	antag_cap = list("denominator" = 20, "offset" = 1)
 	var/datum/team/clockcult/main_clockcult

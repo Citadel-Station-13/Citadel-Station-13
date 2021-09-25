@@ -83,7 +83,7 @@
 	weight = 2
 	delay = 1 MINUTES // Prevents rule start while head is offstation.
 	cost = 20
-	requirements = list(101,101,70,40,30,20,20,20,20,20)
+	requirements = list(101,101,101,101,50,20,20,20,20,20)
 	flags = HIGH_IMPACT_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/revs)
 	var/required_heads_of_staff = 3
@@ -143,7 +143,7 @@
 
 //////////////////////////////////////////////
 //                                          //
-//           HERETIC SMUGGLER //
+//           HERETIC SMUGGLER               //
 //                                          //
 //////////////////////////////////////////////
 
@@ -157,5 +157,5 @@
 	required_candidates = 1
 	weight = 4
 	cost = 10
-	requirements = list(101,101,101,10,10,10,10,10,10,10)
+	requirements = list(101,101,101,50,40,10,10,10,10,10)
 	repeatable = TRUE
