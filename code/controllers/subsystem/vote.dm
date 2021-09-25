@@ -72,11 +72,11 @@ SUBSYSTEM_DEF(vote)
 		for(var/mob/dead/new_player/P in GLOB.player_list)
 			if(P.ready != PLAYER_READY_TO_PLAY && voted[P.ckey])
 				choices[choices[voted[P.ckey]]]--
-		for(var/option in choices)
-			var/votes = choices[option]
-			total_votes += votes
-			if(votes > greatest_votes)
-				greatest_votes = votes
+	for(var/option in choices)
+		var/votes = choices[option]
+		total_votes += votes
+		if(votes > greatest_votes)
+			greatest_votes = votes
 	//default-vote for everyone who didn't vote
 	if(!CONFIG_GET(flag/default_no_vote) && choices.len)
 		var/list/non_voters = GLOB.directory.Copy()
@@ -90,11 +90,11 @@ SUBSYSTEM_DEF(vote)
 				choices["Continue Playing"] += non_voters.len
 				if(choices["Continue Playing"] >= greatest_votes)
 					greatest_votes = choices["Continue Playing"]
-		else if(mode == "gamemode")
-			if(GLOB.master_mode in choices)
-				choices[GLOB.master_mode] += non_voters.len
-				if(choices[GLOB.master_mode] >= greatest_votes)
-					greatest_votes = choices[GLOB.master_mode]
+			else if(mode == "gamemode")
+				if(GLOB.master_mode in choices)
+					choices[GLOB.master_mode] += non_voters.len
+					if(choices[GLOB.master_mode] >= greatest_votes)
+						greatest_votes = choices[GLOB.master_mode]
 	//get all options with that many votes and return them in a list
 	. = list()
 	if(greatest_votes)
