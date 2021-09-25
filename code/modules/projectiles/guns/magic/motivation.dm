@@ -1,6 +1,6 @@
 /obj/item/gun/magic/staff/motivation
 	name = "Motivation"
-	desc = "Rumored to have the ability to open up a portal the depths of Lavaland."
+	desc = "Rumored to have the ability to open up a portal to the depths of Lavaland."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "motivation"
 	item_state = "motivation"
@@ -27,7 +27,7 @@
 	. = ..()
 	judgementcut = new(src)
 
-//lets the user know that their Judgement cuts are recharging
+//lets the user know that their judgement cuts are recharging
 /obj/item/gun/magic/staff/motivation/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='warning'>Judgement Cut is recharging.</span>")
 
