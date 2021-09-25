@@ -50,8 +50,7 @@
 
 		hands += I.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
 
-	overlays_standing[HANDS_LAYER] = hands
-	apply_overlay(HANDS_LAYER)
+	full_appearance.appearance_list[MISC_APPEARANCE].add_data(hands, num2text(HANDS_LAYER))
 
 
 /mob/living/carbon/update_fire(var/fire_icon = "Generic_mob_burning")
@@ -59,7 +58,7 @@
 	if(on_fire)
 		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', fire_icon, -FIRE_LAYER)
 		new_fire_overlay.appearance_flags = RESET_COLOR
-		full_appearance.appearance_list[MISC_APPEARANCE].add_date(new_fire_overlay, num2text(FIRE_LAYER))
+		full_appearance.appearance_list[MISC_APPEARANCE].add_data(new_fire_overlay, num2text(FIRE_LAYER))
 	else
 		full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(FIRE_LAYER))
 
