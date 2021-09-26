@@ -1,0 +1,4 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes: 
+  - bugfix: "code\\modules\\mob\\living\\simple_animal\\hostile\\plaguerat.dm:139:warning: newmouse: variable defined but not used"
