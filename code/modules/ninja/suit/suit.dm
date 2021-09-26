@@ -184,7 +184,7 @@
 	ADD_TRAIT(n_hood, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	n_shoes = ninja.shoes
 	ADD_TRAIT(n_shoes, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-	n_shoes.slowdown--
+	n_shoes.slowdown = -0.5
 	n_gloves = ninja.gloves
 	ADD_TRAIT(n_gloves, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	n_gloves.icon_state = "s-ninjan"
@@ -194,6 +194,7 @@
 	n_mask.item_state = "s-ninjan"
 
 	ADD_TRAIT(ninja, TRAIT_NOGUNS, NINJA_SUIT_TRAIT)
+	ADD_TRAIT(ninja, TRAIT_NOSLIPWATER, NINJA_SUIT_TRAIT)
 	return TRUE
 
 /**
@@ -214,7 +215,7 @@
 		n_hood.icon_state = "s-ninja"
 	if(n_shoes)
 		REMOVE_TRAIT(n_shoes, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-		n_shoes.slowdown++
+		n_shoes.slowdown = 0
 	if(n_gloves)
 		n_gloves.icon_state = "s-ninja"
 		n_gloves.item_state = "s-ninja"
@@ -226,6 +227,7 @@
 		n_mask.item_state = "s-ninja"
 
 		REMOVE_TRAIT(ninja, TRAIT_NOGUNS, NINJA_SUIT_TRAIT)
+		REMOVE_TRAIT(ninja, TRAIT_NOSLIPWATER, NINJA_SUIT_TRAIT)
 
 /**
   * Proc used to delete all the attachments and itself.
