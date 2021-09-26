@@ -7,9 +7,9 @@
 		GAS_N2=10,
 	)
 	normal_gases = list(
-		GAS_O2=10,
-		GAS_N2=10,
-		GAS_CO2=10,
+		GAS_O2=5,
+		GAS_N2=5,
+		GAS_CO2=5,
 	)
 	restricted_gases = list(
 		GAS_BZ=0.1,
