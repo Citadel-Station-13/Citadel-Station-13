@@ -166,7 +166,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Clickdelay duration post-parry if you fail to parry an attack
 	var/parry_failed_clickcd_duration = 0 SECONDS
 	/// Parry cooldown post-parry if failed. This is ADDED to parry_cooldown!!!
-	var/parry_failed_cooldown_duration = 0 SECONDS
+	var/parry_failed_cooldown_duration = 3.5 SECONDS
 
 	// Advanced
 	/// Flags added to return value
