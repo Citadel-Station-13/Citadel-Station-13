@@ -55559,6 +55559,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison/upper)
+"hvJ" = (
+/obj/item/toy/plush/beeplushie,
+/turf/open/floor/padded,
+/area/security/execution/transfer)
 "hxg" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -56544,8 +56548,6 @@
 /area/commons/arcade)
 "jqK" = (
 /obj/structure/rack,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/clothing/mask/breath,
 /obj/effect/spawner/lootdrop/prison_contraband,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -88085,7 +88087,7 @@ lJA
 mvV
 tso
 abc
-dIZ
+hvJ
 dIZ
 abc
 jvO
@@ -88350,9 +88352,9 @@ fbr
 mCm
 mbC
 mbC
-aaa
-aaa
-aaa
+gXs
+gXs
+gXs
 jge
 aaa
 aaa
