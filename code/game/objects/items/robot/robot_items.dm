@@ -745,9 +745,9 @@
 						Grippers oh god oh fuck
 ***********************************************************************/
 
-/obj/item/weapon/gripper
+/obj/item/gripper
 	name = "engineering gripper"
-	desc = "A simple grasping tool for interacting with various engineering related items, such as circuits, gas tanks, conveyer belts and more. Alt click to drop instead of use."
+	desc = "A simple grasping tool for interacting with various engineering related items, such as circuits, gas tanks, conveyer belts and more."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gripper"
 
@@ -776,18 +776,29 @@
 
 	var/obj/item/wrapped = null // Item currently being held.
 
-//Used to interact with UI's of held items, such as gas tanks and airlock electronics.
-/obj/item/weapon/gripper/AltClick(mob/user)
+// Used to drop whatever's in the gripper.
+/obj/item/gripper/proc/drop_held(silent = FALSE)
 	if(wrapped)
 		wrapped.forceMove(get_turf(wrapped))
-		to_chat(user, "<span class='notice'>You drop the [wrapped].</span>")
+		if(!silent)
+			to_chat(usr, "<span class='notice'>You drop the [wrapped].</span>")
+		modify_appearance(wrapped, FALSE)
 		wrapped = null
-	return ..()
+		update_appearance()
+		return TRUE
+	return FALSE
 
-/obj/item/weapon/gripper/pre_attack(var/atom/target, var/mob/living/silicon/robot/user, proximity, params)
+/obj/item/gripper/proc/takeitem(obj/item/item, silent = FALSE)
+	if(!silent)
+		to_chat(usr, "<span class='notice'>You collect \the [item].</span>")
+	item.loc = src
+	wrapped = item
+	update_appearance()
 
-	if(!proximity)
-		return
+/obj/item/gripper/pre_attack(atom/target, mob/living/silicon/robot/user, params)
+	var/proximity = get_dist(user, target)
+	if(proximity > 1)
+		return STOP_ATTACK_PROC_CHAIN
 
 	if(!wrapped)
 		for(var/obj/item/thing in src.contents)
@@ -795,21 +806,24 @@
 			break
 
 	if(wrapped) //Already have an item.
+		var/obj/item/item = wrapped
+		drop_held(TRUE)
 		//Temporary put wrapped into user so target's attackby() checks pass.
-		wrapped.loc = user
+		item.loc = user
 
 		//Pass the attack on to the target. This might delete/relocate wrapped.
-		var/resolved = target.attackby(wrapped,user)
-		if(!resolved && wrapped && target)
-			wrapped.afterattack(target,user,1)
+		var/resolved = target.attackby(item, user, params)
+		if(!resolved && item && target)
+			item.afterattack(target, user, proximity, params)
 		//If wrapped was neither deleted nor put into target, put it back into the gripper.
-		if(wrapped && user && (wrapped.loc == user))
-			wrapped.loc = src
-		else
-			wrapped = null
+		if(item && user && (item.loc == user))
+			takeitem(item, TRUE)
 			return
+		else
+			item = null
+		return STOP_ATTACK_PROC_CHAIN
 
-	else if(istype(target,/obj/item))
+	else if(isitem(target))
 		var/obj/item/I = target
 		var/grab = 0
 
@@ -824,24 +838,94 @@
 
 		//We can grab the item, finally.
 		if(grab)
-			to_chat(user, "<span class='notice'>You collect \the [I].</span>")
-			I.loc = src
-			wrapped = I
+			takeitem(I)
 			return
 		else
 			to_chat(user, "<span class='danger'>Your gripper cannot hold \the [target].</span>")
 
-/obj/item/weapon/gripper/mining
+// Rare cases - meant to be handled by code\modules\mob\living\silicon\robot\robot.dm:584 and the weirdness of get_active_held_item() of borgs.
+/obj/item/gripper/attack_self(mob/user)
+	if(wrapped)
+		wrapped.attack_self(user)
+		return
+	. = ..()
+
+// Splitable items
+/obj/item/gripper/AltClick(mob/user)
+	if(wrapped)
+		wrapped.AltClick(user)
+		return
+	. = ..()
+
+// Even rarer cases
+/obj/item/gripper/CtrlClick(mob/user)
+	if(wrapped)
+		wrapped.CtrlClick(user)
+		return
+	. = ..()
+
+// At this point you're just kidding me, but have this one as well.
+/obj/item/gripper/CtrlShiftClick(mob/user)
+	if(wrapped)
+		wrapped.CtrlShiftClick(user)
+		return
+	. = ..()
+
+// Make it clear what we can do with it.
+/obj/item/gripper/examine(mob/user)
+	. = ..()
+	if(wrapped)
+		. += "<span class='notice'>It is holding [icon2html(wrapped, user)] [wrapped].</span>"
+		. += "<span class='notice'>Examine the little preview to examine it.</span>"
+		. += "<span class='notice'>Attempting to drop the gripper will only drop [wrapped].</span>"
+
+// Resets vis_contents and if holding something, add it to vis_contents.
+/obj/item/gripper/update_appearance(updates)
+	. = ..()
+	vis_contents = list()
+	if(wrapped)
+		modify_appearance(wrapped, TRUE)
+		vis_contents += wrapped
+
+// Generates the "minified" version of the item being held and adjust it's position.
+/obj/item/gripper/proc/modify_appearance(obj/item, minify = FALSE)
+	if(minify)
+		var/matrix/new_transform = new
+		new_transform.Scale(0.5, 0.5)
+		item.transform = new_transform
+		item.pixel_x = 8
+		item.pixel_y = -8
+	else
+		item.pixel_x = initial(pixel_x)
+		item.pixel_y = initial(pixel_y)
+		item.transform = new
+
+// I kind of wanted the item to be held in the gripper when stored as well, but i realized "store" is just drop as well, so i'll do this for now.
+// This will handle cases where the borg runs out of power or is damaged enough so the module is forcefully stored.
+/obj/item/gripper/cyborg_unequip(mob/user)
+	. = ..()
+	if(wrapped)
+		drop_held()
+
+// Clear references on being destroyed
+/obj/item/Destroy()
+	for(var/obj/item/gripper/gripper in vis_locs)
+		if(gripper.wrapped == src)
+			gripper.wrapped = null
+		gripper.update_appearance()
+	. = ..()
+
+/obj/item/gripper/mining
 	name = "shelter capsule deployer"
-	desc = "A simple grasping tool for carrying and deploying shelter capsules. Alt click to drop instead of use."
+	desc = "A simple grasping tool for carrying and deploying shelter capsules."
 	icon_state = "gripper_mining"
 	can_hold = list(
 		/obj/item/survivalcapsule
 		)
 
-/obj/item/weapon/gripper/medical
+/obj/item/gripper/medical
 	name = "medical gripper"
-	desc = "A simple grasping tool for interacting with medical equipment, such as beakers, blood bags, chem bags and more. Alt click to drop instead of use."
+	desc = "A simple grasping tool for interacting with medical equipment, such as beakers, blood bags, chem bags and more."
 	icon_state = "gripper_medical"
 	can_hold = list(
 		/obj/item/storage/bag/bio,

@@ -1344,6 +1344,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "adw" = (
@@ -45097,6 +45098,10 @@
 /obj/effect/landmark/start/scientist,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"cUU" = (
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "cUZ" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -81318,6 +81323,13 @@
 	},
 /turf/open/floor/plating,
 /area/command/bridge)
+"wXA" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "wXC" = (
 /obj/machinery/light_switch{
 	pixel_y = 28
@@ -105902,7 +105914,7 @@ abC
 acr
 acE
 adb
-aaR
+cUU
 aaR
 aem
 aeN
@@ -107181,7 +107193,7 @@ aaC
 aaI
 aaR
 abb
-aaI
+wXA
 abG
 acb
 acu
@@ -107958,7 +107970,7 @@ aaR
 aaR
 aaR
 ade
-aaR
+cUU
 aaR
 aeo
 aeV

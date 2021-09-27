@@ -12,9 +12,7 @@
 		GAS_CO2=10,
 	)
 	restricted_gases = list(
-		GAS_PLASMA=0.1,
-		GAS_BZ=1.2,
-		GAS_METHANE=1.0,
+		GAS_BZ=0.1,
 		GAS_METHYL_BROMIDE=0.1,
 	)
 	restricted_chance = 30
@@ -23,7 +21,7 @@
 	maximum_pressure = LAVALAND_EQUIPMENT_EFFECT_PRESSURE - 1
 
 	minimum_temp = BODYTEMP_COLD_DAMAGE_LIMIT + 1
-	maximum_temp = 350
+	maximum_temp = 320
 
 /datum/atmosphere/icemoon
 	id = ICEMOON_DEFAULT_ATMOS
@@ -38,8 +36,6 @@
 		GAS_CO2=10,
 	)
 	restricted_gases = list(
-		GAS_PLASMA=0.1,
-		GAS_METHANE=1.0,
 		GAS_METHYL_BROMIDE=0.1,
 	)
 	restricted_chance = 10

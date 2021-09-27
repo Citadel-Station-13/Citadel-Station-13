@@ -265,7 +265,7 @@
 /datum/uplink_item/ammo/flechetteap
 	name = "Armor Piercing Flechette Magazine"
 	desc = "An additional 40-round flechette magazine; compatible with the Flechette Launcer. \
-			Loaded with armor piercing flechettes that very nearly ignore armor, but are not very effective agaisnt flesh."
+			Loaded with armor piercing flechettes that very nearly ignore armor, but are not very effective against flesh."
 	item = /obj/item/ammo_box/magazine/flechette
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
