@@ -97,7 +97,7 @@
 		for(var/obj/effect/mob_spawn/human/pirate/spawner in A)
 			if(candidates.len > 0)
 				var/mob/our_candidate = candidates[1]
-				spawner.create(our_candidate)
+				spawner.create(our_candidate.ckey)
 				candidates -= our_candidate
 				notify_ghosts("The pirate ship has an object of interest: [our_candidate]!", source=our_candidate, action=NOTIFY_ORBIT, header="Something's Interesting!")
 			else
