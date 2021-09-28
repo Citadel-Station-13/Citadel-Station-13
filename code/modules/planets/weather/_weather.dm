@@ -2,6 +2,10 @@
  * Weather datums for planets
  */
 /datum/weather
+	/// name
+	var/name = "Unknown Weather"
+	/// visual icon
+	var/icon = 'icons/modules/planets/weather/overlays.dmi'
 
 /**
  * Constructor

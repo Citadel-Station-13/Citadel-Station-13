@@ -23,6 +23,8 @@
 	var/humidity
 	/// Default, non-overridden zoom for perlin in 1 per tiles
 	var/zoom = 100 / 256
+	/// Variance - how high the humidity and temperatures vary from the above
+	var/variance
 	/// level seeds - order matters, depends on type for how many is needed
 	var/list/seeds
 

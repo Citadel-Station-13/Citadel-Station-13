@@ -6,7 +6,7 @@
 	desc = "You shouldn't see this. Contact a coder ASAP. This turf should be replaced by planetgen at init."
 	blocks_air = TRUE
 	density = TRUE
-	icon = 'icons/planetgen/turfs.dmi'
+	icon = 'icons/modules/planets/turfs.dmi'
 	icon_state = "marker"
 
 /**
