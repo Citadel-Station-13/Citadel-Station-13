@@ -310,6 +310,7 @@
 	cost = 20
 	requirements = list(101,101,100,80,50,30,20,10,10,10)
 	repeatable = TRUE
+	var/datum/mind/wizard
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
@@ -323,6 +324,20 @@
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/finish_setup(mob/new_character, index)
 	..()
 	new_character.forceMove(pick(GLOB.wizardstart))
+	wizard = new_character.mind
+
+/datum/dynamic_ruleset/midround/from_ghosts/wizard/rule_process()
+	if(isliving(wizard.current) && wizard.current.stat!=DEAD)
+		return FALSE
+	for(var/obj/item/phylactery/P in GLOB.poi_list) //TODO : IsProperlyDead()
+		if(P.mind && P.mind.has_antag_datum(/datum/antagonist/wizard))
+			return FALSE
+
+	if(SSevents.wizardmode) //If summon events was active, turn it off
+		SSevents.toggleWizardmode()
+		SSevents.resetFrequency()
+
+	return RULESET_STOP_PROCESSING
 
 //////////////////////////////////////////////
 //                                          //
