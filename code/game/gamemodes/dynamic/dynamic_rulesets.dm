@@ -210,12 +210,16 @@
 			candidates.Remove(candidate_player)
 			continue
 
+		if(ROLE_NO_ANTAGONISM in candidate_player.client.prefs.be_special)
+			candidates.Remove(candidate_player)
+			continue
+
 		if(antag_flag_override)
-			if(!(antag_flag_override in candidate_client.prefs.be_special) || jobban_isbanned(candidate_player.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
+			if(!(HAS_ANTAG_PREF(candidate_player.client, antag_flag_override)))
 				candidates.Remove(candidate_player)
 				continue
 		else
-			if(!(antag_flag in candidate_client.prefs.be_special) || jobban_isbanned(candidate_player.ckey, list(antag_flag, ROLE_SYNDICATE)))
+			if(!(HAS_ANTAG_PREF(candidate_player.client, antag_flag)))
 				candidates.Remove(candidate_player)
 				continue
 

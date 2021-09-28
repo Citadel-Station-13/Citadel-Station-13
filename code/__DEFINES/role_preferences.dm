@@ -45,6 +45,8 @@
 #define ROLE_RESPAWN				"respawnsystem"
 /// Not an actual antag. Lets players force all antags off.
 #define ROLE_NO_ANTAGONISM			"NO_ANTAGS"
+//Define for disabling individual antagonists for dynamic
+#define HAS_ANTAG_PREF(C,ROLE) (!(ROLE_NO_ANTAGONISM in C.prefs.be_special) && (ROLE in C.prefs.be_special))
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough
 //(in game days played) to play that role

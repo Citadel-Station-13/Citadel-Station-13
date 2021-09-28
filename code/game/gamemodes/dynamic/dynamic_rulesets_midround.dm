@@ -46,12 +46,15 @@
 		if(!mode.check_age(M.client, minimum_required_age))
 			trimmed_list.Remove(M)
 			continue
+		if(ROLE_NO_ANTAGONISM in M.client.prefs.be_special)
+			trimmed_list.Remove(M)
+			continue
 		if(antag_flag_override)
-			if(!(antag_flag_override in M.client.prefs.be_special) || jobban_isbanned(M.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
+			if(!(HAS_ANTAG_PREF(M.client, antag_flag_override)))
 				trimmed_list.Remove(M)
 				continue
 		else
-			if(!(antag_flag in M.client.prefs.be_special) || jobban_isbanned(M.ckey, list(antag_flag, ROLE_SYNDICATE)))
+			if(!(HAS_ANTAG_PREF(M.client, antag_flag)))
 				trimmed_list.Remove(M)
 				continue
 		if (M.mind)
