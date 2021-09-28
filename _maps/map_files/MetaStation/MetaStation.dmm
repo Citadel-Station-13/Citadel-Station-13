@@ -581,7 +581,6 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/structure/extinguisher_cabinet,
 /turf/open/floor/plasteel/dark/side{
 	dir = 4
 	},
@@ -61314,11 +61313,6 @@
 "kGI" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
-/obj/item/radio/intercom{
-	desc = "A station intercom. It looks like it has been modified to not broadcast.";
-	name = "prison intercom";
-	prison_radio = 1
-	},
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison/upper)
 "kGY" = (
