@@ -1,0 +1,7 @@
+author: "LetterN"
+delete-after: True
+changes: 
+  - rscadd: "clowncar railgun- i mean gun"
+  - rscadd: "more achivements"
+  - rscadd: "syndie carp can pick up the disky (and is smart now)"
+  - code_imp: "hooks most of the achivements, all of the heretics work now"
