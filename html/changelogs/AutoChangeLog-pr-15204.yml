@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - balance: "Reloading a shotgun with a shell clip now inflicts melee click delay."
