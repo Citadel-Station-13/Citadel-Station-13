@@ -1,0 +1,5 @@
+author: "buffyuwu"
+delete-after: True
+changes: 
+  - bugfix: "flannels can now be toggled in style from buttoned to unbuttoned"
+  - rscadd: "ports more rp and existing tg assets with minor edits into loadout selection"
