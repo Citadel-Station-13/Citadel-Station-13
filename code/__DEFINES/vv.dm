@@ -139,3 +139,6 @@
 
 //outfits
 #define VV_HK_TO_OUTFIT_EDITOR "outfit_editor"
+
+// /datum/procedural_generation
+#define VV_HK_PROCGEN_RENDER "procedural_generation_debug"

@@ -31,3 +31,4 @@
 	if (z_list && z >= 1 && z <= z_list.len)
 		return z_list[z]
 	CRASH("Unmanaged z-level [z]! maxz = [world.maxz], z_list.len = [z_list ? z_list.len : "null"]")
+
