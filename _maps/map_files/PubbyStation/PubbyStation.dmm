@@ -2750,7 +2750,6 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "agP" = (
@@ -61341,10 +61340,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
-"tVZ" = (
-/obj/effect/landmark/start/prisoner,
-/turf/open/floor/plasteel/dark,
-/area/security/prison)
 "tXn" = (
 /obj/structure/sink{
 	dir = 4;
@@ -83604,7 +83599,7 @@ aaa
 aem
 aeq
 aeE
-tVZ
+aeU
 afo
 afD
 aga
