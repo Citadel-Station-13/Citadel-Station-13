@@ -1,0 +1,5 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - balance: "Reports from other stations' Wardens blasting themselves in sensitive places due to mishandled firearms has led to the introduction of a folding-stock safety for their shotgun, rendering it inoperable while the stock is folded."
+  - balance: "Compact combat shotguns now stay compact when stored, by virtue of being unable to be extended while in a bag."
