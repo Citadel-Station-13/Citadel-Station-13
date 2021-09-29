@@ -37,10 +37,8 @@ export const Colormate = (props, context) => {
               </Section>
             </Flex>
             <Section>
-              <Tabs>
+              <Tabs fluid>
                 <Tabs.Tab
-                  fluid
-                  centered
                   key="0"
                   selected={!matrixactive}
                   onClick={() => act('switch_modes', {
@@ -49,8 +47,6 @@ export const Colormate = (props, context) => {
                   Regular coloring
                 </Tabs.Tab>
                 <Tabs.Tab
-                  fluid
-                  centered
                   key="1"
                   selected={matrixactive}
                   onClick={() => act('switch_modes', {
