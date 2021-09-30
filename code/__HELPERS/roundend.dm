@@ -351,6 +351,7 @@
 /datum/controller/subsystem/ticker/proc/survivor_report(popcount)
 	var/list/parts = list()
 	var/station_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
+	var/datum/game_mode/dynamic/mode = SSticker.mode
 
 	if(GLOB.round_id)
 		var/statspage = CONFIG_GET(string/roundstatsurl)
@@ -383,13 +384,10 @@
 			//ignore this comment, it fixes the broken sytax parsing caused by the " above
 			else
 				parts += "[FOURSPACES]<i>Nobody died this shift!</i>"
-	var/avg_threat = SSactivity.get_average_threat()
-	var/max_threat = SSactivity.get_max_threat()
-	parts += "[FOURSPACES]Threat at round end: [SSactivity.current_threat]"
-	parts += "[FOURSPACES]Average threat: [avg_threat]"
-	parts += "[FOURSPACES]Max threat: [max_threat]"
+	parts += "[FOURSPACES]Round start threat: [mode.initial_round_start_budget]"
+	parts += "[FOURSPACES]Average threat: [mode.shown_threat]"
+	parts += "[FOURSPACES]Max threat: [mode.threat_level]"
 	if(istype(SSticker.mode, /datum/game_mode/dynamic))
-		var/datum/game_mode/dynamic/mode = SSticker.mode
 		parts += "[FOURSPACES]Threat left: [mode.mid_round_budget]"
 		parts += "[FOURSPACES]Executed rules:"
 		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
