@@ -44,12 +44,6 @@ GLOBAL_LIST_EMPTY(mob_config_movespeed_type_lookup_floating)
 
 GLOBAL_LIST_EMPTY(latejoiners) //CIT CHANGE - All latejoining people, for traitor-target purposes.
 
-/// All alive mobs with clients.
-GLOBAL_LIST_EMPTY(alive_player_list)
-
-/// All dead mobs with clients. Does not include observers.
-GLOBAL_LIST_EMPTY(dead_player_list)
-
 /// All alive antags with clients.
 GLOBAL_LIST_EMPTY(current_living_antags)
 
