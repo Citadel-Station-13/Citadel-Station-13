@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, Flex, NoticeBox, NumberInput, Section, Tabs } from '../components';
+import { Button, Flex, Icon, NoticeBox, NumberInput, Section, Tabs } from '../components';
 import { Window } from '../layouts';
 
 export const Colormate = (props, context) => {
@@ -7,7 +7,7 @@ export const Colormate = (props, context) => {
   const { matrixactive, temp } = data;
   const item = data.item || [];
   return (
-    <Window width="700" height="600" resizable>
+    <Window width="700" height="620" resizable>
       <Window.Content overflow="auto">
         {temp ? (
           <NoticeBox>{temp}</NoticeBox>
@@ -83,7 +83,7 @@ export const ColormateNoMatrix = (props, context) => {
   return (
     <Section>
       <Flex grow={1} fill>
-        <Flex.Item width="50%">
+        <Flex.Item width="33%">
           <Button
             fluid
             content="Paint"
@@ -100,7 +100,7 @@ export const ColormateNoMatrix = (props, context) => {
             icon="eject"
             onClick={() => act('drop')} />
         </Flex.Item>
-        <Flex.Item width="50%">
+        <Flex.Item width="66%">
           <Button
             fluid
             height="100%"
@@ -119,7 +119,7 @@ export const ColormateMatrix = (props, context) => {
   return (
     <Section>
       <Flex>
-        <Flex.Item width="50%">
+        <Flex.Item width="33%">
           <Button
             fluid
             content="Paint"
@@ -287,6 +287,10 @@ export const ColormateMatrix = (props, context) => {
                 value,
               })} />
           </Flex.Item>
+        </Flex.Item>
+        <Flex.Item width="33%">
+          <Icon name="question-circle" color="blue" /> RG means red will become this much green.<br />
+          <Icon name="question-circle" color="blue" /> CR means that red will have this much constrast applied to it.
         </Flex.Item>
       </Flex>
     </Section>
