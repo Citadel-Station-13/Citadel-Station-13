@@ -384,11 +384,11 @@
 			//ignore this comment, it fixes the broken sytax parsing caused by the " above
 			else
 				parts += "[FOURSPACES]<i>Nobody died this shift!</i>"
-	parts += "[FOURSPACES]Round start threat: [mode.initial_round_start_budget]"
-	parts += "[FOURSPACES]Average threat: [mode.shown_threat]"
-	parts += "[FOURSPACES]Max threat: [mode.threat_level]"
 	if(istype(SSticker.mode, /datum/game_mode/dynamic))
-		parts += "[FOURSPACES]Threat left: [mode.mid_round_budget]"
+		parts += "[FOURSPACES]Initial threat level: [mode.threat_level]"
+		parts += "[FOURSPACES]Initial roundstart threat: [mode.initial_round_start_budget]"
+		parts += "[FOURSPACES]Roundstart budget after antags: [mode.round_start_budget]"
+		parts += "[FOURSPACES]Midround budget at round end: [mode.mid_round_budget]"
 		parts += "[FOURSPACES]Executed rules:"
 		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
 			parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
