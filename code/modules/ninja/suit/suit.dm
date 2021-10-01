@@ -121,9 +121,6 @@
 	if(s_coold > 0)
 		to_chat(user, "<span class='warning'><b>ERROR</b>: suit is on cooldown.</span>")
 		return FALSE
-	if(IS_NINJA_SUIT_STATUS(action))
-		ninjastatus()
-		return TRUE
 	if(IS_NINJA_SUIT_BOOST(action))
 		ninjaboost()
 		return TRUE

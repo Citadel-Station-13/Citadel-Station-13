@@ -25,9 +25,6 @@
 		else
 			emp_damage = max(emp_damage-1, 0)
 
-/mob/living/brain/handle_status_effects()
-	return
-
 /mob/living/brain/handle_traits()
 	return
 
