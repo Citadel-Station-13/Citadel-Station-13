@@ -176,7 +176,7 @@
 /datum/reagent/synthtissue/on_merge(passed_data)
 	if(!passed_data)
 		return ..()
-	borrowed_health += passed_data["borrowed_health"]
+	borrowed_health += max(0, passed_data["borrowed_health"])
 	if(passed_data["grown_volume"] > data["grown_volume"])
 		data["grown_volume"] = passed_data["grown_volume"]
 	if(iscarbon(holder.my_atom))
