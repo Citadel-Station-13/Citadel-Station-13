@@ -126,44 +126,70 @@
 	desc = "Honk your classy horn."
 	button_icon_state = "car_horn"
 	var/hornsound = 'sound/items/carhorn.ogg'
-	var/last_honk_time
 
 /datum/action/vehicle/sealed/horn/Trigger()
-	if(world.time - last_honk_time > 20)
-		vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] loudly honks</span>")
-		to_chat(owner, "<span class='notice'>You press the vehicle's horn.</span>")
-		playsound(vehicle_entered_target, hornsound, 75)
-		last_honk_time = world.time
+	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_CAR_HONK))
+		return
+	TIMER_COOLDOWN_START(src, COOLDOWN_CAR_HONK, 2 SECONDS)
+	vehicle_entered_target.visible_message(span_danger("[vehicle_entered_target] loudly honks!"))
+	to_chat(owner, span_notice("You press [vehicle_entered_target]'s horn."))
+	if(istype(vehicle_target.inserted_key, /obj/item/bikehorn))
+		vehicle_target.inserted_key.attack_self(owner) //The bikehorn plays a sound instead
+		return
+	playsound(vehicle_entered_target, hornsound, 75)
 
-/datum/action/vehicle/sealed/horn/clowncar/Trigger()
-	if(world.time - last_honk_time > 20)
-		vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] loudly honks</span>")
-		to_chat(owner, "<span class='notice'>You press the vehicle's horn.</span>")
-		last_honk_time = world.time
-		if(vehicle_target.inserted_key)
-			vehicle_target.inserted_key.attack_self(owner) //The key plays a sound
-		else
-			playsound(vehicle_entered_target, hornsound, 75)
-
-/datum/action/vehicle/sealed/DumpKidnappedMobs
-	name = "Dump kidnapped mobs"
+/datum/action/vehicle/sealed/dump_kidnapped_mobs
+	name = "Dump Kidnapped Mobs"
 	desc = "Dump all objects and people in your car on the floor."
 	button_icon_state = "car_dump"
 
-/datum/action/vehicle/sealed/DumpKidnappedMobs/Trigger()
-	vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] starts dumping the people inside of it.</span>")
+/datum/action/vehicle/sealed/dump_kidnapped_mobs/Trigger()
+	vehicle_entered_target.visible_message(span_danger("[vehicle_entered_target] starts dumping the people inside of it."))
 	vehicle_entered_target.DumpSpecificMobs(VEHICLE_CONTROL_KIDNAPPED)
 
 
-/datum/action/vehicle/sealed/RollTheDice
-	name = "Press a colorful button"
+/datum/action/vehicle/sealed/roll_the_dice
+	name = "Press Colorful Button"
 	desc = "Press one of those colorful buttons on your display panel!"
 	button_icon_state = "car_rtd"
 
-/datum/action/vehicle/sealed/RollTheDice/Trigger()
-	if(istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
-		var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
-		C.RollTheDice(owner)
+/datum/action/vehicle/sealed/roll_the_dice/Trigger()
+	if(!istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
+		return
+	var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
+	C.roll_the_dice(owner)
+
+/datum/action/vehicle/sealed/cannon
+	name = "Toggle Siege Mode"
+	desc = "Destroy them with their own fodder!"
+	button_icon_state = "car_cannon"
+
+/datum/action/vehicle/sealed/cannon/Trigger()
+	if(!istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
+		return
+	var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
+	C.toggle_cannon(owner)
+
+
+/datum/action/vehicle/sealed/thank
+	name = "Thank the Clown Car Driver"
+	desc = "They're just doing their job."
+	button_icon_state = "car_thanktheclown"
+	COOLDOWN_DECLARE(thank_time_cooldown)
+
+
+/datum/action/vehicle/sealed/thank/Trigger()
+	if(!istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
+		return
+	if(!COOLDOWN_FINISHED(src, thank_time_cooldown))
+		return
+	COOLDOWN_START(src, thank_time_cooldown, 6 SECONDS)
+	var/obj/vehicle/sealed/car/clowncar/clown_car = vehicle_entered_target
+	var/mob/living/carbon/human/clown = pick(clown_car.return_drivers())
+	if(!clown)
+		return
+	owner.say("Thank you for the fun ride, [clown.name]!")
+	clown_car.increment_thanks_counter()
 
 
 /datum/action/vehicle/ridden/scooter/skateboard/ollie
@@ -197,7 +223,9 @@
 			L.Move(landing_turf, vehicle_target.dir)
 			passtable_off(L, VEHICLE_TRAIT)
 			V.pass_flags &= ~PASSTABLE
-		if(locate(/obj/structure/table) in V.loc.contents)
+		if((locate(/obj/structure/table) in V.loc.contents) || (locate(/obj/structure/fluff/railing) in V.loc.contents))
+			if(locate(/obj/structure/fluff/railing) in V.loc.contents)
+				L.client.give_award(/datum/award/achievement/misc/tram_surfer, L)
 			V.grinding = TRUE
 			V.icon_state = "[V.board_icon]-grind"
 			addtimer(CALLBACK(V, /obj/vehicle/ridden/scooter/skateboard/.proc/grind), 2)

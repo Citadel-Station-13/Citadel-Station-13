@@ -15,7 +15,6 @@
 
 //Defines for the suit's unique abilities
 #define IS_NINJA_SUIT_INITIALIZATION(action) (istype(action, /datum/action/item_action/initialize_ninja_suit))
-#define IS_NINJA_SUIT_STATUS(action) (istype(action, /datum/action/item_action/ninjastatus))
 #define IS_NINJA_SUIT_BOOST(action) (istype(action, /datum/action/item_action/ninjaboost))
 #define IS_NINJA_SUIT_EMP(action) (istype(action, /datum/action/item_action/ninjapulse))
 #define IS_NINJA_SUIT_STAR_CREATION(action) (istype(action, /datum/action/item_action/ninjastar))

@@ -136,7 +136,7 @@ GLOBAL_LIST_EMPTY(plague_rats)
 	if(LAZYLEN(GLOB.plague_rats) >= cap)
 		visible_message("<span class='warning'>[src] gnaws into its food, [cap] rats are now on the station!</span>")
 		return
-	var/mob/living/newmouse = new /mob/living/simple_animal/hostile/plaguerat(loc)
+	new /mob/living/simple_animal/hostile/plaguerat(loc)
 	visible_message("<span class='notice'>[src] gnaws into its food, attracting another rat!</span>")
 
 /mob/living/simple_animal/hostile/plaguerat/proc/exit_vents()
