@@ -70208,7 +70208,7 @@
 	},
 /area/command/gateway)
 "pCQ" = (
-/obj/machinery/computer/arcade/minesweeper{
+/obj/machinery/computer/arcade/battle{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
