@@ -269,6 +269,10 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
+/obj/item/radio/headset/silicon/pai/emp_act(severity)
+	. = ..()
+	return EMP_PROTECT_SELF
+
 /obj/item/radio/headset/silicon/ai
 	name = "\proper Integrated Subspace Transceiver "
 	keyslot2 = new /obj/item/encryptionkey/ai
