@@ -7,7 +7,7 @@ export const Colormate = (props, context) => {
   const { matrixactive, temp } = data;
   const item = data.item || [];
   return (
-    <Window width="700" height="620" resizable>
+    <Window width="980" height="720" resizable>
       <Window.Content overflow="auto">
         {temp ? (
           <NoticeBox>{temp}</NoticeBox>
@@ -139,7 +139,6 @@ export const ColormateMatrix = (props, context) => {
         <Flex.Item>
           <Flex.Item>
             RR: <NumberInput
-              fluid
               width="50px"
               minValue={-1000}
               maxValue={1000}
@@ -151,7 +150,6 @@ export const ColormateMatrix = (props, context) => {
           </Flex.Item>
           <Flex.Item>
             GR: <NumberInput
-              fluid
               width="50px"
               minValue={-1000}
               maxValue={1000}
@@ -163,7 +161,6 @@ export const ColormateMatrix = (props, context) => {
           </Flex.Item>
           <Flex.Item>
             BR: <NumberInput
-              fluid
               width="50px"
               minValue={-1000}
               maxValue={1000}
@@ -177,7 +174,6 @@ export const ColormateMatrix = (props, context) => {
         <Flex.Item>
           <Flex.Item>
             RG: <NumberInput
-              fluid
               width="50px"
               minValue={-1000}
               maxValue={1000}
@@ -189,7 +185,6 @@ export const ColormateMatrix = (props, context) => {
           </Flex.Item>
           <Flex.Item>
             GG: <NumberInput
-              fluid
               width="50px"
               minValue={-1000}
               maxValue={1000}
@@ -201,7 +196,6 @@ export const ColormateMatrix = (props, context) => {
           </Flex.Item>
           <Flex.Item>
             BG: <NumberInput
-              fluid
               width="50px"
               minValue={-1000}
               maxValue={1000}
@@ -215,7 +209,6 @@ export const ColormateMatrix = (props, context) => {
         <Flex.Item>
           <Flex.Item>
             RB: <NumberInput
-              fluid
               width="50px"
               minValue={-1000}
               maxValue={1000}
@@ -227,7 +220,6 @@ export const ColormateMatrix = (props, context) => {
           </Flex.Item>
           <Flex.Item>
             GB: <NumberInput
-              fluid
               width="50px"
               minValue={-1000}
               maxValue={1000}
@@ -239,7 +231,6 @@ export const ColormateMatrix = (props, context) => {
           </Flex.Item>
           <Flex.Item>
             BB: <NumberInput
-              fluid
               width="50px"
               minValue={-1000}
               maxValue={1000}
@@ -253,7 +244,6 @@ export const ColormateMatrix = (props, context) => {
         <Flex.Item>
           <Flex.Item>
             CR: <NumberInput
-              fluid
               width="50px"
               minValue={-1000}
               maxValue={1000}
@@ -265,7 +255,6 @@ export const ColormateMatrix = (props, context) => {
           </Flex.Item>
           <Flex.Item>
             CG: <NumberInput
-              fluid
               width="50px"
               minValue={-1000}
               maxValue={1000}
@@ -277,7 +266,6 @@ export const ColormateMatrix = (props, context) => {
           </Flex.Item>
           <Flex.Item>
             CB: <NumberInput
-              fluid
               width="50px"
               minValue={-1000}
               maxValue={1000}
