@@ -541,8 +541,6 @@ Class Procs:
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/on_construction()
-	for(var/obj/I in contents)
-		I.moveToNullspace()
 	return
 
 //called on deconstruction before the final deletion
