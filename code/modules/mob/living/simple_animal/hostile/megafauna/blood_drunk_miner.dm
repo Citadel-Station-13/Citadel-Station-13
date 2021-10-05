@@ -113,8 +113,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/AttackingTarget()
 	if(QDELETED(target))
 		return
-	if(!CheckActionCooldown() || !Adjacent(target)) //some cheating
-		INVOKE_ASYNC(src, .proc/quick_attack_loop)
+	if(!CheckActionCooldown() || !Adjacent(target))
 		return
 	face_atom(target)
 	if(isliving(target))
@@ -134,7 +133,6 @@ Difficulty: Medium
 	if(guidance)
 		adjustHealth(-2)
 	transform_weapon()
-	INVOKE_ASYNC(src, .proc/quick_attack_loop)
 	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
@@ -148,7 +146,7 @@ Difficulty: Medium
 	if(. && target && !targets_the_same)
 		wander = TRUE
 		transform_weapon()
-		INVOKE_ASYNC(src, .proc/quick_attack_loop)
+		AttackingTarget()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire()
 	Goto(target, move_to_delay, minimum_distance)
@@ -166,21 +164,6 @@ Difficulty: Medium
 		new /obj/effect/temp_visual/dir_setting/firing_effect(loc, dir)
 		Shoot(target)
 		DelayNextAction(CLICK_CD_RANGE, flush = TRUE)
-
-//I'm still of the belief that this entire proc needs to be wiped from existence.
-//  do not take my touching of it to be endorsement of it. ~mso
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/quick_attack_loop()
-	while(!QDELETED(target) && !CheckActionCooldown()) //this is done this way because next_move can change to be sooner while we sleep.
-		stoplag(1)
-	sleep((next_action - world.time) * 1.5) //but don't ask me what the fuck this is about
-	if(QDELETED(target))
-		return
-	if(dashing || !CheckActionCooldown() || !Adjacent(target))
-		if(dashing && next_action <= world.time)
-			SetNextAction(1, considered_action = FALSE, immediate = FALSE, flush = TRUE)
-		INVOKE_ASYNC(src, .proc/quick_attack_loop) //lets try that again.
-		return
-	AttackingTarget()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/dash(atom/dash_target)
 	if(world.time < dash_cooldown)
