@@ -229,7 +229,7 @@ AI MODULES
 	laws = list("")
 
 /obj/item/aiModule/supplied/freeform/attack_self(mob/user)
-	var/newpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos) as num|null
+	var/newpos = tgui_input_num(user, "Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos)
 	if(newpos == null)
 		return
 	if(newpos < 15)
@@ -264,7 +264,7 @@ AI MODULES
 	var/lawpos = 1
 
 /obj/item/aiModule/remove/attack_self(mob/user)
-	lawpos = input("Please enter the law you want to delete.", "Law Number", lawpos) as num|null
+	lawpos = tgui_input_num(user, "Please enter the law you want to delete.", "Law Number", lawpos)
 	if(lawpos == null)
 		return
 	if(lawpos <= 0)

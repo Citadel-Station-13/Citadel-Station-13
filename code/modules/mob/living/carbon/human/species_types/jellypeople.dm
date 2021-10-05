@@ -663,7 +663,7 @@
 		Remove(H)
 		return
 
-	var/message = sanitize(input("Message:", "Slime Telepathy") as text|null)
+	var/message = sanitize(tgui_input_text(usr, "Message:", "Slime Telepathy"))
 
 	if(!species || !(H in species.linked_mobs))
 		to_chat(H, "<span class='warning'>The link seems to have been severed...</span>")
@@ -700,13 +700,13 @@
 	var/list/options = list()
 	for(var/mob/living/Ms in oview(H))
 		options += Ms
-	var/mob/living/M = input("Select who to send your message to:","Send thought to?",null) as null|mob in options
+	var/mob/living/M = tgui_input_list(usr, "Select who to send your message to:","Send thought to?", options)
 	if(!M)
 		return
 	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
 		to_chat(H, "<span class='notice'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
 		return
-	var/msg = sanitize(input("Message:", "Telepathy") as text|null)
+	var/msg = sanitize(tgui_input_text(usr, "Message:", "Telepathy"))
 	if(msg)
 		if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
 			to_chat(H, "<span class='notice'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")

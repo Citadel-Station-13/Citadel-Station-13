@@ -53,7 +53,7 @@ This file contains the cult dagger and rune list code
 
 	if(!check_rune_turf(Turf, user))
 		return
-	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in GLOB.rune_types
+	entered_rune_name = tgui_input_list(user, "Choose a rite to scribe.", "Sigils of Power", GLOB.rune_types)
 	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
 	rune_to_scribe = GLOB.rune_types[entered_rune_name]

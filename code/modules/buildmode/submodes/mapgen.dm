@@ -16,7 +16,7 @@
 	for(var/path in gen_paths)
 		var/datum/mapGenerator/MP = path
 		options[initial(MP.buildmode_name)] = path
-	var/type = input(c,"Select Generator Type","Type") as null|anything in options
+	var/type = tgui_input_list(c,"Select Generator Type","Type", options)
 	if(!type)
 		return
 

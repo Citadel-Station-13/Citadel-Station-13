@@ -130,7 +130,7 @@
 					message_admins("[key_name_admin(usr)] tried to create a death squad. Unfortunately, there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed to create a death squad.")
 			if("blob")
-				var/strength = input("Set Blob Resource Gain Rate","Set Resource Rate",1) as num|null
+				var/strength = tgui_input_num(usr, "Set Blob Resource Gain Rate","Set Resource Rate",1)
 				if(!strength)
 					return
 				message_admins("[key_name(usr)] spawned a blob with base resource gain [strength].")
@@ -331,7 +331,7 @@
 		if(!check_rights(R_SERVER))
 			return
 
-		var/timer = input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", SSshuttle.emergency.timeLeft() ) as num|null
+		var/timer = tgui_input_num(usr, "Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", SSshuttle.emergency.timeLeft())
 		if(!timer)
 			return
 		SSshuttle.emergency.setTimer(timer*10)
@@ -374,7 +374,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		var/timer = input("Enter new maximum time",, CONFIG_GET(number/midround_antag_time_check)) as num|null
+		var/timer = tgui_input_num(usr, "Enter new maximum time",, CONFIG_GET(number/midround_antag_time_check))
 		if(!timer)
 			return
 		CONFIG_SET(number/midround_antag_time_check, timer)
@@ -385,7 +385,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		var/ratio = input("Enter new life ratio",, CONFIG_GET(number/midround_antag_life_check) * 100) as num
+		var/ratio = tgui_input_num(usr, "Enter new life ratio",, CONFIG_GET(number/midround_antag_life_check) * 100)
 		if(!ratio)
 			return
 		CONFIG_SET(number/midround_antag_life_check, ratio / 100)
@@ -409,7 +409,7 @@
 		if(!check_rights(R_SERVER))
 			return
 		if(!SSticker.delay_end)
-			SSticker.admin_delay_notice = input(usr, "Enter a reason for delaying the round end", "Round Delay Reason") as null|text
+			SSticker.admin_delay_notice = tgui_input_text(usr, "Enter a reason for delaying the round end", "Round Delay Reason")
 			if(isnull(SSticker.admin_delay_notice))
 				return
 		else
@@ -550,19 +550,19 @@
 				var/mins = 0
 				if(minutes > GLOB.CMinutes)
 					mins = minutes - GLOB.CMinutes
-				mins = input(usr,"How long (in minutes)? (Default: 1440)","Ban time",mins ? mins : 1440) as num|null
+				mins = tgui_input_num(usr,"How long (in minutes)? (Default: 1440)","Ban time",mins ? mins : 1440)
 				if(mins <= 0)
 					to_chat(usr, "<span class='danger'>[mins] is not a valid duration.</span>")
 					return
 				minutes = GLOB.CMinutes + mins
 				duration = GetExp(minutes)
-				reason = input(usr,"Please State Reason For Banning [banned_key].","Reason",reason2) as message|null
+				reason = tgui_input_message(usr,"Please State Reason For Banning [banned_key].","Reason",reason2)
 				if(!reason)
 					return
 			if("No")
 				temp = 0
 				duration = "Perma"
-				reason = input(usr,"Please State Reason For Banning [banned_key].","Reason",reason2) as message|null
+				reason = tgui_input_message(usr,"Please State Reason For Banning [banned_key].","Reason",reason2)
 				if(!reason)
 					return
 
@@ -604,10 +604,10 @@
 
 		else switch(tgui_alert(usr, "Appearance ban [M.key]?",,list("Yes","No", "Cancel")))
 			if("Yes")
-				var/reason = input(usr,"Please State Reason.","Reason") as message|null
+				var/reason = tgui_input_message(usr,"Please State Reason.","Reason")
 				if(!reason)
 					return
-				var/severity = input("Set the severity of the note/ban.", "Severity", null, null) as null|anything in list("High", "Medium", "Minor", "None")
+				var/severity = tgui_input_list(usr, "Set the severity of the note/ban.", "Severity", list("High", "Medium", "Minor", "None"))
 				if(!severity)
 					return
 				if(!DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, "appearance"))
@@ -1027,14 +1027,14 @@
 			var/severity = null
 			switch(tgui_alert(usr, "Temporary Ban for [M.key]?",,list("Yes","No", "Cancel")))
 				if("Yes")
-					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
+					var/mins = tgui_input_num(usr,"How long (in minutes)?","Ban time",1440)
 					if(mins <= 0)
 						to_chat(usr, "<span class='danger'>[mins] is not a valid duration.</span>")
 						return
-					var/reason = input(usr,"Please State Reason For Banning [M.key].","Reason") as message|null
+					var/reason = tgui_input_message(usr,"Please State Reason For Banning [M.key].","Reason")
 					if(!reason)
 						return
-					severity = input("Set the severity of the note/ban.", "Severity", null, null) as null|anything in list("High", "Medium", "Minor", "None")
+					severity = tgui_input_list(usr, "Set the severity of the note/ban.", "Severity", list("High", "Medium", "Minor", "None"))
 					if(!severity)
 						return
 					var/msg
@@ -1058,8 +1058,8 @@
 					href_list["jobban2"] = 1 // lets it fall through and refresh
 					return 1
 				if("No")
-					var/reason = input(usr,"Please State Reason For Banning [M.key].","Reason") as message|null
-					severity = input("Set the severity of the note/ban.", "Severity", null, null) as null|anything in list("High", "Medium", "Minor", "None")
+					var/reason = tgui_input_message(usr,"Please State Reason For Banning [M.key].","Reason")
+					severity = tgui_input_list(usr, "Set the severity of the note/ban.", "Severity", list("High", "Medium", "Minor", "None"))
 					if(!severity)
 						return
 					if(reason)
@@ -1303,11 +1303,11 @@
 
 		switch(tgui_alert(usr, "Temporary Ban for [M.key]?",,list("Yes","No", "Cancel")))
 			if("Yes")
-				var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
+				var/mins = tgui_input_num(usr,"How long (in minutes)?","Ban time",1440)
 				if(mins <= 0)
 					to_chat(usr, "<span class='danger'>[mins] is not a valid duration.</span>")
 					return
-				var/reason = input(usr,"Please State Reason For Banning [M.key].","Reason") as message|null
+				var/reason = tgui_input_message(usr,"Please State Reason For Banning [M.key].","Reason")
 				if(!reason)
 					return
 				if(!DB_ban_record(BANTYPE_TEMP, M, mins, reason))
@@ -1330,7 +1330,7 @@
 					AH.Resolve()
 				qdel(M.client)
 			if("No")
-				var/reason = input(usr,"Please State Reason For Banning [M.key].","Reason") as message|null
+				var/reason = tgui_input_message(usr,"Please State Reason For Banning [M.key].","Reason")
 				if(!reason)
 					return
 				switch(tgui_alert(usr,"IP ban?",,list("Yes","No","Cancel")))
@@ -1383,7 +1383,7 @@
 		for (var/rule in subtypesof(/datum/dynamic_ruleset/roundstart))
 			var/datum/dynamic_ruleset/roundstart/newrule = new rule()
 			roundstart_rules[newrule.name] = newrule
-		var/added_rule = input(usr,"What ruleset do you want to force? This will bypass threat level and population restrictions.", "Rigging Roundstart", null) as null|anything in roundstart_rules
+		var/added_rule = tgui_input_list(usr,"What ruleset do you want to force? This will bypass threat level and population restrictions.", "Rigging Roundstart", roundstart_rules)
 		if (added_rule)
 			GLOB.dynamic_forced_roundstart_ruleset += roundstart_rules[added_rule]
 			log_admin("[key_name(usr)] set [added_rule] to be a forced roundstart ruleset.")
@@ -1418,7 +1418,7 @@
 		for(var/T in config.storyteller_cache)
 			var/datum/dynamic_storyteller/S = T
 			choices[initial(S.name)] = T
-		var/choice = choices[input("Select storyteller:", "Storyteller", "Classic") as null|anything in choices]
+		var/choice = choices[tgui_input_list(usr, "Select storyteller:", "Storyteller", choices)]
 		if(choice)
 			GLOB.dynamic_forced_storyteller = choice
 			log_admin("[key_name(usr)] forced the storyteller to [GLOB.dynamic_forced_storyteller].")
@@ -1444,7 +1444,7 @@
 		for (var/rule in subtypesof(/datum/dynamic_ruleset/latejoin))
 			var/datum/dynamic_ruleset/latejoin/newrule = new rule()
 			latejoin_rules[newrule.name] = newrule
-		var/added_rule = input(usr,"What ruleset do you want to force upon the next latejoiner? This will bypass threat level and population restrictions.", "Rigging Latejoin", null) as null|anything in latejoin_rules
+		var/added_rule = tgui_input_list(usr,"What ruleset do you want to force upon the next latejoiner? This will bypass threat level and population restrictions.", "Rigging Latejoin", latejoin_rules)
 		if (added_rule)
 			var/datum/game_mode/dynamic/mode = SSticker.mode
 			mode.forced_latejoin_rule = latejoin_rules[added_rule]
@@ -1473,7 +1473,7 @@
 		for (var/rule in subtypesof(/datum/dynamic_ruleset/midround))
 			var/datum/dynamic_ruleset/midround/newrule = new rule()
 			midround_rules[newrule.name] = rule
-		var/added_rule = input(usr,"What ruleset do you want to force right now? This will bypass threat level and population restrictions.", "Execute Ruleset", null) as null|anything in midround_rules
+		var/added_rule = tgui_input_list(usr,"What ruleset do you want to force right now? This will bypass threat level and population restrictions.", "Execute Ruleset", midround_rules)
 		if (added_rule)
 			var/datum/game_mode/dynamic/mode = SSticker.mode
 			log_admin("[key_name(usr)] executed the [added_rule] ruleset.")
@@ -1499,7 +1499,7 @@
 		if(GLOB.master_mode != "dynamic")
 			return tgui_alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
 
-		var/new_centre = input(usr,"Change the centre of the dynamic mode threat curve. A negative value will give a more peaceful round ; a positive value, a round with higher threat. Any number is allowed. This is adjusted by dynamic voting.", "Change curve centre", null) as num
+		var/new_centre = tgui_input_num(usr,"Change the centre of the dynamic mode threat curve. A negative value will give a more peaceful round ; a positive value, a round with higher threat. Any number is allowed. This is adjusted by dynamic voting.", "Change curve centre", null)
 
 		log_admin("[key_name(usr)] changed the distribution curve center to [new_centre].")
 		message_admins("[key_name(usr)] changed the distribution curve center to [new_centre]", 1)
@@ -1514,7 +1514,7 @@
 		if(GLOB.master_mode != "dynamic")
 			return tgui_alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
 
-		var/new_width = input(usr,"Change the width of the dynamic mode threat curve. A higher value will favour extreme rounds ; a lower value, a round closer to the average. Any Number between 0.5 and 4 are allowed.", "Change curve width", null) as num
+		var/new_width = tgui_input_num(usr,"Change the width of the dynamic mode threat curve. A higher value will favour extreme rounds ; a lower value, a round closer to the average. Any Number between 0.5 and 4 are allowed.", "Change curve width", null)
 		if (new_width < 0.5 || new_width > 4)
 			return tgui_alert(usr, "Only values between 0.5 and +2.5 are allowed.", null, null, null, null)
 
@@ -1530,7 +1530,7 @@
 			return tgui_alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return tgui_alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
-		var/new_min = input(usr,"Change the minimum delay of latejoin injection in minutes.", "Change latejoin injection delay minimum", null) as num
+		var/new_min = tgui_input_num(usr,"Change the minimum delay of latejoin injection in minutes.", "Change latejoin injection delay minimum", null)
 		if(new_min <= 0)
 			return tgui_alert(usr, "The minimum can't be zero or lower.", null, null, null, null)
 		if((new_min MINUTES) > GLOB.dynamic_latejoin_delay_max)
@@ -1548,7 +1548,7 @@
 			return tgui_alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return tgui_alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
-		var/new_max = input(usr,"Change the maximum delay of latejoin injection in minutes.", "Change latejoin injection delay maximum", null) as num
+		var/new_max = tgui_input_num(usr,"Change the maximum delay of latejoin injection in minutes.", "Change latejoin injection delay maximum", null)
 		if(new_max <= 0)
 			return tgui_alert(usr, "The maximum can't be zero or lower.", null, null, null, null)
 		if((new_max MINUTES) < GLOB.dynamic_latejoin_delay_min)
@@ -1566,7 +1566,7 @@
 			return tgui_alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return tgui_alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
-		var/new_min = input(usr,"Change the minimum delay of midround injection in minutes.", "Change midround injection delay minimum", null) as num
+		var/new_min = tgui_input_num(usr,"Change the minimum delay of midround injection in minutes.", "Change midround injection delay minimum", null)
 		if(new_min <= 0)
 			return tgui_alert(usr, "The minimum can't be zero or lower.", null, null, null, null)
 		if((new_min MINUTES) > GLOB.dynamic_midround_delay_max)
@@ -1584,7 +1584,7 @@
 			return tgui_alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return tgui_alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
-		var/new_max = input(usr,"Change the maximum delay of midround injection in minutes.", "Change midround injection delay maximum", null) as num
+		var/new_max = tgui_input_num(usr,"Change the maximum delay of midround injection in minutes.", "Change midround injection delay maximum", null)
 		if(new_max <= 0)
 			return tgui_alert(usr, "The maximum can't be zero or lower.", null, null, null, null)
 		if((new_max MINUTES) > GLOB.dynamic_midround_delay_max)
@@ -1638,7 +1638,7 @@
 		if(GLOB.master_mode != "dynamic")
 			return tgui_alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
 
-		GLOB.dynamic_stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
+		GLOB.dynamic_stacking_limit = tgui_input_num(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null)
 		log_admin("[key_name(usr)] set 'stacking_limit' to [GLOB.dynamic_stacking_limit].")
 		message_admins("[key_name(usr)] set 'stacking_limit' to [GLOB.dynamic_stacking_limit].")
 		dynamic_mode_options(usr)
@@ -1653,7 +1653,7 @@
 		if(GLOB.master_mode != "dynamic")
 			return tgui_alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
 
-		var/new_value = input(usr, "Enter the high-pop override threshold for dynamic mode.", "High pop override") as num
+		var/new_value = tgui_input_num(usr, "Enter the high-pop override threshold for dynamic mode.", "High pop override")
 		if (new_value < 0)
 			return tgui_alert(usr, "Only positive values allowed!", null, null, null, null)
 		GLOB.dynamic_high_pop_limit = new_value
@@ -1672,7 +1672,7 @@
 		if(GLOB.master_mode != "dynamic")
 			return tgui_alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
 
-		var/new_value = input(usr, "Enter the forced threat level for dynamic mode.", "Forced threat level") as num
+		var/new_value = tgui_input_num(usr, "Enter the forced threat level for dynamic mode.", "Forced threat level")
 		if (new_value > 100)
 			return tgui_alert(usr, "The value must be be under 100.", null, null, null, null)
 		GLOB.dynamic_forced_threat_level = new_value
@@ -1757,7 +1757,7 @@
 		if(!ismob(M))
 			to_chat(usr, "this can only be used on instances of type /mob.")
 
-		var/speech = input("What will [key_name(M)] say?", "Force speech", "")// Don't need to sanitize, since it does that in say(), we also trust our admins.
+		var/speech = tgui_input_text("What will [key_name(M)] say?", "Force speech", "")// Don't need to sanitize, since it does that in say(), we also trust our admins.
 		if(!speech)
 			return
 		M.say(speech, forced = "admin speech")
@@ -2143,7 +2143,7 @@
 		for(var/datum/job/job in SSjob.occupations)
 			if(job.title == Add)
 				var/newtime = null
-				newtime = input(usr, "How many jebs do you want?", "Add wanted posters", "[newtime]") as num|null
+				newtime = tgui_input_num(usr, "How many jebs do you want?", "Add wanted posters", "[newtime]")
 				if(!newtime)
 					to_chat(src.owner, "Setting to amount of positions filled for the job")
 					job.total_positions = job.current_positions
@@ -2550,7 +2550,7 @@
 		var/list/available_channels = list()
 		for(var/datum/news/feed_channel/F in GLOB.news_network.network_channels)
 			available_channels += F.channel_name
-		src.admincaster_feed_channel.channel_name = adminscrub(input(usr, "Choose receiving Feed Channel.", "Network Channel Handler") in available_channels )
+		src.admincaster_feed_channel.channel_name = adminscrub(tgui_input_list(usr, "Choose receiving Feed Channel.", "Network Channel Handler", available_channels))
 		src.access_news_network()
 
 	else if(href_list["ac_set_new_message"])
@@ -2730,7 +2730,7 @@
 	else if(href_list["ac_set_signature"])
 		if(!check_rights(R_ADMIN))
 			return
-		src.admin_signature = adminscrub(input(usr, "Provide your desired signature.", "Network Identity Handler", ""))
+		src.admin_signature = adminscrub(tgui_input_text(usr, "Provide your desired signature.", "Network Identity Handler", ""))
 		src.access_news_network()
 
 	else if(href_list["ac_del_comment"])
@@ -2812,16 +2812,16 @@
 		if(!check_rights(R_ADMIN))
 			return
 		var/list/type_choices = typesof(/datum/station_goal)
-		var/picked = input("Choose goal type") in type_choices|null
+		var/picked = tgui_input_list(usr, "Choose goal type", type_choices)
 		if(!picked)
 			return
 		var/datum/station_goal/G = new picked()
 		if(picked == /datum/station_goal)
-			var/newname = input("Enter goal name:") as text|null
+			var/newname = tgui_input_text(usr, "Enter goal name:")
 			if(!newname)
 				return
 			G.name = newname
-			var/description = input("Enter CentCom message contents:") as message|null
+			var/description = tgui_input_message(usr, "Enter CentCom message contents:")
 			if(!description)
 				return
 			G.report_message = description
@@ -2938,7 +2938,7 @@
 		if(answer == "yes")
 			log_query_debug("[usr.key] | Reported a server hang")
 			if(tgui_alert(usr, "Had you just press any admin buttons?", "Query server hang report", list("Yes", "No")) == "Yes")
-				var/response = input(usr,"What were you just doing?","Query server hang report") as null|text
+				var/response = tgui_input_text(usr,"What were you just doing?","Query server hang report")
 				if(response)
 					log_query_debug("[usr.key] | [response]")
 		else if(answer == "no")

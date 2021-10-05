@@ -742,7 +742,7 @@
 /datum/action/disguise/Trigger()
 	var/mob/living/carbon/human/H = owner
 	if(!currently_disguised)
-		var/user_object_type = input(H, "Disguising as OBJECT or MOB?") as null|anything in list("OBJECT", "MOB")
+		var/user_object_type = tgui_input_list(H, "Disguising as OBJECT or MOB?", "", list("OBJECT", "MOB"))
 		if(user_object_type)
 			var/search_term = stripped_input(H, "Enter the search term")
 			if(search_term)
@@ -758,7 +758,7 @@
 				if(!length(filtered_results))
 					to_chat(H, "Nothing matched your search query!")
 				else
-					var/disguise_selection = input("Select item to disguise as") as null|anything in filtered_results
+					var/disguise_selection = tgui_input_list(H, "Select item to disguise as", "", filtered_results)
 					if(disguise_selection)
 						var/atom/disguise_item = disguise_selection
 						var/image/I = image(icon = initial(disguise_item.icon), icon_state = initial(disguise_item.icon_state), loc = H)

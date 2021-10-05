@@ -110,19 +110,19 @@
 		return
 
 	if(href_list["settitle"])
-		var/newtitle = input("Enter a title to search for:") as text|null
+		var/newtitle = tgui_input_text(usr, "Enter a title to search for:")
 		if(newtitle)
 			title = sanitize(newtitle)
 		else
 			title = null
 	if(href_list["setcategory"])
-		var/newcategory = input("Choose a category to search for:") in list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
+		var/newcategory = tgui_input_list(usr, "Choose a category to search for:", "", list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion"))
 		if(newcategory)
 			category = sanitize(newcategory)
 		else
 			category = "Any"
 	if(href_list["setauthor"])
-		var/newauthor = input("Enter an author to search for:") as text|null
+		var/newauthor = tgui_input_text(usr, "Enter an author to search for:")
 		if(newauthor)
 			author = sanitize(newauthor)
 		else
@@ -407,13 +407,13 @@
 		if(newauthor)
 			scanner.cache.author = newauthor
 	if(href_list["setcategory"])
-		var/newcategory = input("Choose a category: ") in list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion","Technical")
+		var/newcategory = tgui_input_list(usr, "Choose a category: ", "", list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion","Technical"))
 		if(newcategory)
 			upload_category = newcategory
 	if(href_list["upload"])
 		if(scanner)
 			if(scanner.cache)
-				var/choice = input("Are you certain you wish to upload this title to the Archive?") in list("Confirm", "Abort")
+				var/choice = tgui_input_list(usr, "Are you certain you wish to upload this title to the Archive?", "", list("Confirm", "Abort"))
 				if(choice == "Confirm")
 					if (!SSdbcore.Connect())
 						tgui_alert(usr, "Connection to Archive has been severed. Aborting.")
@@ -447,7 +447,7 @@
 		if(printer_cooldown > world.time)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
-			var/orderid = input("Enter your order:") as num|null
+			var/orderid = tgui_input_num(usr, "Enter your order:")
 			if(orderid)
 				if(isnum(orderid) && ISINTEGER(orderid))
 					href_list["targetid"] = num2text(orderid)

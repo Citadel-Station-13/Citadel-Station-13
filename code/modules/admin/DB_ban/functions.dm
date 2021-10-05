@@ -289,7 +289,7 @@
 	switch(param)
 		if("reason")
 			if(!value)
-				value = input("Insert the new reason for [p_key]'s ban", "New Reason", "[reason]", null) as null|text
+				value = tgui_input_text(usr, "Insert the new reason for [p_key]'s ban", "New Reason", "[reason]", null)
 				if(!value)
 					to_chat(usr, "Cancelled")
 					return
@@ -302,7 +302,7 @@
 			message_admins("[key_name_admin(usr)] has edited a ban for [p_key]'s reason from [reason] to [value]")
 		if("duration")
 			if(!value)
-				value = input("Insert the new duration (in minutes) for [p_key]'s ban", "New Duration", "[duration]", null) as null|num
+				value = tgui_input_num(usr, "Insert the new duration (in minutes) for [p_key]'s ban", "New Duration", "[duration]", null)
 				if(!isnum(value) || !value)
 					to_chat(usr, "Cancelled")
 					return

@@ -156,7 +156,7 @@
 				commands += "Power This Structure"
 			if(P.obj_integrity < P.max_integrity)
 				commands += "Repair This Structure"
-	var/roma_invicta = input(src, "Choose a command to issue to your cult!", "Issue Commands") as null|anything in commands
+	var/roma_invicta = tgui_input_list(src, "Choose a command to issue to your cult!", "Issue Commands", commands)
 	if(!roma_invicta)
 		return
 	var/command_text = ""
@@ -290,7 +290,7 @@
 		to_chat(owner, "<span class='warning'>There are no Obelisks to warp to!</span>")
 		return
 
-	var/target_key = input(owner, "Choose an Obelisk to warp to.", "Obelisk Warp") as null|anything in possible_targets
+	var/target_key = tgui_input_list(owner, "Choose an Obelisk to warp to.", "Obelisk Warp", possible_targets)
 	var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/target = possible_targets[target_key]
 
 	if(!target_key || !owner)

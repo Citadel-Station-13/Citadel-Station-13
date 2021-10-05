@@ -101,7 +101,7 @@
 			updateUsrDialog()
 			return
 
-		var/obj/I = input(user, "Please choose which object to retrieve.","Object recovery",null) as null|anything in stored_packages
+		var/obj/I = tgui_input_list(user, "Please choose which object to retrieve.","Object recovery", stored_packages)
 		playsound(src, "terminal_type", 25, 0)
 		if(!I)
 			return

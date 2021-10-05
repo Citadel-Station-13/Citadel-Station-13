@@ -302,7 +302,7 @@
 	. = FALSE
 	var/datum/bank_account/old_account = registered_account
 
-	var/new_bank_id = input(user, "Enter your account ID number.", "Account Reclamation", 111111) as num | null
+	var/new_bank_id = tgui_input_num(user, "Enter your account ID number.", "Account Reclamation", 111111)
 
 	if (isnull(new_bank_id))
 		return
@@ -344,7 +344,7 @@
 		registered_account.bank_card_talk("<span class='warning'>ERROR: UNABLE TO LOGIN DUE TO SCHEDULED MAINTENANCE. MAINTENANCE IS SCHEDULED TO COMPLETE IN [(registered_account.withdrawDelay - world.time)/10] SECONDS.</span>", TRUE)
 		return
 
-	var/amount_to_remove =  input(user, "How much do you want to withdraw? Current Balance: [registered_account.account_balance]", "Withdraw Funds", 5) as num|null
+	var/amount_to_remove = tgui_input_num(user, "How much do you want to withdraw? Current Balance: [registered_account.account_balance]", "Withdraw Funds", 5)
 
 	if(!amount_to_remove || amount_to_remove < 0)
 		return

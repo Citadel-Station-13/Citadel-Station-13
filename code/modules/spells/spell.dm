@@ -376,11 +376,11 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 						continue
 					possible_targets += M
 
-				//targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
+				//targets += tgui_input_list(user, "Choose the target for the spell.", "Targeting", possible_targets)
 				//Adds a safety check post-input to make sure those targets are actually in range.
 				var/mob/M
 				if(!random_target)
-					M = input("Choose the target for the spell.", "Targeting") as null|mob in sortNames(possible_targets)
+					M = tgui_input_list(user, "Choose the target for the spell.", "Targeting", sortNames(possible_targets))
 				else
 					switch(random_target_priority)
 						if(TARGET_RANDOM)

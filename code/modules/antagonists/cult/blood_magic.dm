@@ -49,7 +49,7 @@
 			to_chat(owner, "<span class='cultitalic'>Your body has reached its limit, you cannot store more than [MAX_BLOODCHARGE] spells at once. <b>Pick a spell to nullify.</b></span>")
 		else
 			to_chat(owner, "<span class='cultitalic'>Your body has reached its limit, <b><u>you cannot have more than [RUNELESS_MAX_BLOODCHARGE] spells at once without an empowering rune! Pick a spell to nullify.</b></u></span>")
-		var/nullify_spell = input(owner, "Choose a spell to remove.", "Current Spells") as null|anything in spells
+		var/nullify_spell = tgui_input_list(owner, "Choose a spell to remove.", "Current Spells", spells)
 		if(nullify_spell)
 			qdel(nullify_spell)
 		return
@@ -61,9 +61,9 @@
 		var/cult_name = initial(J.name)
 		possible_spells[cult_name] = J
 	possible_spells += "(REMOVE SPELL)"
-	entered_spell_name = input(owner, "Pick a blood spell to prepare...", "Spell Choices") as null|anything in possible_spells
+	entered_spell_name = tgui_input_list(owner, "Pick a blood spell to prepare...", "Spell Choices", possible_spells)
 	if(entered_spell_name == "(REMOVE SPELL)")
-		var/nullify_spell = input(owner, "Choose a spell to remove.", "Current Spells") as null|anything in spells
+		var/nullify_spell = tgui_input_list(owner, "Choose a spell to remove.", "Current Spells", spells)
 		if(nullify_spell)
 			qdel(nullify_spell)
 		return
@@ -497,7 +497,7 @@
 			log_game("Teleport spell failed - user in away mission")
 			return
 
-		var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes //we know what key they picked
+		var/input_rune_key = tgui_input_list(user, "Choose a rune to teleport to.", "Rune to Teleport to", potential_runes) //we know what key they picked
 		var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
 		if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !actual_selected_rune || !proximity)
 			return
@@ -787,7 +787,7 @@
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
 	if(iscultist(user))
 		var/list/options = list("Blood Spear (150)", "Blood Bolt Barrage (300)", "Blood Beam (500)")
-		var/choice = input(user, "Choose a greater blood rite...", "Greater Blood Rites") as null|anything in options
+		var/choice = tgui_input_list(user, "Choose a greater blood rite...", "Greater Blood Rites", options)
 		if(!choice)
 			to_chat(user, "<span class='cultitalic'>You decide against conducting a greater blood rite.</span>")
 			return

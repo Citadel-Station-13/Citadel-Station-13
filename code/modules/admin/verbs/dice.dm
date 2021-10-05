@@ -4,8 +4,8 @@
 	if(!check_rights(R_FUN))
 		return
 
-	var/sum = input("How many times should we throw?") as num
-	var/side = input("Select the number of sides.") as num
+	var/sum = tgui_input_num(src, "How many times should we throw?")
+	var/side = tgui_input_num(src, "Select the number of sides.")
 	if(!side)
 		side = 6
 	if(!sum)

@@ -4,7 +4,7 @@
 
 	var/datum/map_template/template
 
-	var/map = input(src, "Choose a Map Template to place at your CURRENT LOCATION","Place Map Template") as null|anything in SSmapping.map_templates
+	var/map = tgui_input_list(src, "Choose a Map Template to place at your CURRENT LOCATION","Place Map Template", SSmapping.map_templates)
 	if(!map)
 		return
 	template = SSmapping.map_templates[map]
@@ -19,7 +19,7 @@
 		item.plane = ABOVE_LIGHTING_PLANE
 		preview += item
 	var/list/orientations = list("South" = SOUTH, "North" = NORTH, "East" = EAST, "West" = WEST)
-	var/choice = input(src, "Which orientation? Maps are normally facing SOUTH.", "Template Orientation", "South") as null|anything in orientations
+	var/choice = tgui_input_list(src, "Which orientation? Maps are normally facing SOUTH.", "Template Orientation", orientations)
 	var/orientation = orientations[choice]
 	images += preview
 	if(tgui_alert(src, "Confirm location.","Template Confirm",list("Yes","No")) == "Yes")

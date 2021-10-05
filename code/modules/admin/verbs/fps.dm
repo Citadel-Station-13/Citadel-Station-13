@@ -8,7 +8,7 @@
 		return
 
 	var/cfg_fps = CONFIG_GET(number/fps)
-	var/new_fps = round(input("Sets game frames-per-second. Can potentially break the game (default: [cfg_fps])","FPS", world.fps) as num|null)
+	var/new_fps = round(tgui_input_num(src, "Sets game frames-per-second. Can potentially break the game (default: [cfg_fps])","FPS", world.fps))
 
 	if(new_fps <= 0)
 		to_chat(src, "<span class='danger'>Error: set_server_fps(): Invalid world.fps value. No changes made.</span>")

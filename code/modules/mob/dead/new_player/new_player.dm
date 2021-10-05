@@ -251,7 +251,7 @@
 				var/list/days = list()
 				for(var/number in 1 to total_days_in_player_month)
 					days += number
-				var/player_day = input(src, "What day of the month were you born in.") as anything in days
+				var/player_day = tgui_input_list(src, "What day of the month were you born in.", "", days)
 				if(player_day <= current_day)
 					//their birthday has passed
 					age_gate_result = TRUE

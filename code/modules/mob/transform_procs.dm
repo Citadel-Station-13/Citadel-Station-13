@@ -538,7 +538,7 @@
 /mob/living/carbon/human/Animalize(mind_transfer = TRUE)
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
-	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") as null|anything in mobtypes
+	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", mobtypes)
 	if(!mobpath)
 		return
 	if(mind)
@@ -573,7 +573,7 @@
 /mob/proc/Animalize(mind_transfer = TRUE)
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
-	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") as null|anything in mobtypes
+	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", mobtypes)
 	if(!mobpath)
 		return
 	if(mind)

@@ -484,7 +484,7 @@
 		if(tgui_alert(usr, "Are you sure? An admin has already delayed the round end for the following reason: [SSticker.admin_delay_notice]", "Confirmation", list("Yes", "No")) != "Yes")
 			return FALSE
 
-	var/result = input(usr, "Select reboot method", "World Reboot", options[1]) as null|anything in options
+	var/result = tgui_input_list(usr, "Select reboot method", "World Reboot", options)
 	if(result)
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Reboot World") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		var/init_by = "Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]."
@@ -495,7 +495,7 @@
 						return FALSE
 				SSticker.Reboot(init_by, "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
 			if("Regular Restart (with delay)")
-				var/delay = input("What delay should the restart have (in seconds)?", "Restart Delay", 5) as num|null
+				var/delay = tgui_input_num(usr, "What delay should the restart have (in seconds)?", "Restart Delay", 5)
 				if(!delay)
 					return FALSE
 				if(!(isnull(usr.client.address) || (usr.client.address in localhost_addresses)))
@@ -534,7 +534,7 @@
 	if(!check_rights(0))
 		return
 
-	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
+	var/message = tgui_input_message(usr, "Global message to send:", "Admin Announce", null, null)
 	if(message)
 		if(!check_rights(R_SERVER,0))
 			message = adminscrub(message,500)
@@ -549,7 +549,7 @@
 	if(!check_rights(0))
 		return
 
-	var/new_admin_notice = input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",GLOB.admin_notice) as message|null
+	var/new_admin_notice = tgui_input_message(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",GLOB.admin_notice)
 	if(new_admin_notice == null)
 		return
 	if(new_admin_notice == GLOB.admin_notice)
@@ -695,7 +695,7 @@
 	set desc="Delay the game start"
 	set name="Delay Pre-Game"
 
-	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(SSticker.GetTimeLeft()/10)) as num|null
+	var/newtime = tgui_input_num(usr, "Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(SSticker.GetTimeLeft()/10))
 	if(SSticker.current_state > GAME_STATE_PREGAME)
 		return tgui_alert(usr, "Too late... The game has already started!")
 	if(newtime)

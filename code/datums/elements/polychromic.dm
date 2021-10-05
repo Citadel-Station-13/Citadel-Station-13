@@ -122,7 +122,7 @@
 			overlays += mutable_appearance(f_icon, overlays_states[i], color = M.color)
 
 /datum/element/polychromic/proc/set_color(atom/source, mob/user)
-	var/choice = input(user,"Polychromic options", "Recolor [source]") as null|anything in overlays_names
+	var/choice = tgui_input_list(user,"Polychromic options", "Recolor [source]", overlays_names)
 	if(!choice || QDELETED(source) || !user.canUseTopic(source, BE_CLOSE, NO_DEXTERY))
 		return
 	var/index = overlays_names.Find(choice)

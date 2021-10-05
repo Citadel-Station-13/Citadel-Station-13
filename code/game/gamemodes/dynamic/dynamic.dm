@@ -191,7 +191,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	else if (href_list["classic_secret"])
 		GLOB.dynamic_classic_secret = !GLOB.dynamic_classic_secret
 	else if (href_list["adjustthreat"])
-		var/threatadd = input("Specify how much threat to add (negative to subtract). This can inflate the threat level.", "Adjust Threat", 0) as null|num
+		var/threatadd = tgui_input_num(usr, "Specify how much threat to add (negative to subtract). This can inflate the threat level.", "Adjust Threat", 0)
 		if(!threatadd)
 			return
 		create_threat(threatadd)
@@ -206,13 +206,13 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	else if (href_list["threatlog"])
 		show_threatlog(usr)
 	else if (href_list["stacking_limit"])
-		GLOB.dynamic_stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
+		GLOB.dynamic_stacking_limit = tgui_input_num(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null)
 	else if (href_list["change_storyteller"])
 		var/list/choices = list()
 		for(var/T in config.storyteller_cache)
 			var/datum/dynamic_storyteller/S = T
 			choices[initial(S.name)] = T
-		var/selected_storyteller = choices[input("Select storyteller:", "Storyteller", storyteller.name) as null|anything in choices]
+		var/selected_storyteller = choices[tgui_input_list(usr, "Select storyteller:", "Storyteller", choices)]
 		storyteller = new selected_storyteller
 		storyteller.on_start()
 		message_admins("[key_name(usr)] changed the storyteller to [storyteller].", 1)

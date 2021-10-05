@@ -271,7 +271,7 @@
 		to_chat(usr, "<span class='warning'>Wireless control is disabled!</span>")
 		return
 
-	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as null|text
+	var/reason = tgui_input_text(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call")
 
 	if(incapacitated())
 		return
@@ -573,7 +573,7 @@
 			for(var/i in C.network)
 				cameralist[i] = i
 	var/old_network = network
-	network = input(U, "Which network would you like to view?") as null|anything in cameralist
+	network = tgui_input_list(U, "Which network would you like to view?", "", cameralist)
 
 	if(!U.eyeobj)
 		U.view_core()
@@ -605,7 +605,7 @@
 	if(incapacitated())
 		return
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Thinking", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
-	var/n_emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
+	var/n_emote = tgui_input_list(src, "Please, select a status!", "AI Status", ai_emotions)
 	if(!n_emote)
 		return
 	emote_display = n_emote
@@ -640,7 +640,7 @@
 				personnel_list["[t.fields["name"]]: [t.fields["rank"]]"] = t.fields["image"]//Pull names, rank, and image.
 
 			if(personnel_list.len)
-				input = input("Select a crew member:") as null|anything in personnel_list
+				input = tgui_input_list(src, "Select a crew member:", "", personnel_list)
 				var/icon/character_icon = personnel_list[input]
 				if(character_icon)
 					qdel(holo_icon)//Clear old icon so we're not storing it in memory.
@@ -665,7 +665,7 @@
 			"spider" = 'icons/mob/animal.dmi'
 			)
 
-			input = input("Please select a hologram:") as null|anything in icon_list
+			input = tgui_input_list(src, "Please select a hologram:", "", icon_list)
 			if(input)
 				qdel(holo_icon)
 				switch(input)
@@ -689,7 +689,7 @@
 				"custom"
 				)
 
-			input = input("Please select a hologram:") as null|anything in icon_list
+			input = tgui_input_list(src, "Please select a hologram:", "", icon_list)
 			if(input)
 				qdel(holo_icon)
 				switch(input)
@@ -949,7 +949,7 @@
 		to_chat(src, "No usable AI shell beacons detected.")
 
 	if(!target || !(target in possible)) //If the AI is looking for a new shell, or its pre-selected shell is no longer valid
-		target = input(src, "Which body to control?") as null|anything in possible
+		target = tgui_input_list(src, "Which body to control?", "", possible)
 
 	if (!target || target.stat == DEAD || target.deployed || !(!target.connected_ai ||(target.connected_ai == src)))
 		return

@@ -87,16 +87,16 @@
 	for(var/mob/C in GLOB.mob_list)
 		if(C.key)
 			available.Add(C)
-	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in available
+	var/mob/choice = tgui_input_list(src, "Choose a player to play the pAI", "Spawn pAI", available)
 	if(!choice)
 		return 0
 	if(!isobserver(choice))
-		var/confirm = input("[choice.key] isn't ghosting right now. Are you sure you want to yank him out of them out of their body and place them in this pAI?", "Spawn pAI Confirmation", "No") in list("Yes", "No")
+		var/confirm = tgui_input_list(src, "[choice.key] isn't ghosting right now. Are you sure you want to yank him out of them out of their body and place them in this pAI?", "Spawn pAI Confirmation", list("Yes", "No"))
 		if(confirm != "Yes")
 			return 0
 	var/obj/item/paicard/card = new(T)
 	var/mob/living/silicon/pai/pai = new(card)
-	pai.name = input(choice, "Enter your pAI name:", "pAI Name", "Personal AI") as text
+	pai.name = tgui_input_text(choice, "Enter your pAI name:", "pAI Name", "Personal AI")
 	pai.real_name = pai.name
 	choice.transfer_ckey(pai)
 	card.setPersonality(pai)
@@ -146,7 +146,7 @@
 
 	if(matches.len==0)
 		return
-	var/hsbitem = input(usr, "Choose an object to delete.", "Delete:") as null|anything in matches
+	var/hsbitem = tgui_input_list(usr, "Choose an object to delete.", "Delete:", matches)
 	if(hsbitem)
 		hsbitem = matches[hsbitem]
 		var/counter = 0
@@ -238,7 +238,7 @@
 	if(M.ckey)
 		if(tgui_alert(usr, "This mob is being controlled by [M.key]. Are you sure you wish to give someone else control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
 			return
-	var/client/newkey = input(src, "Pick the player to put in control.", "New player") as null|anything in sortList(GLOB.clients)
+	var/client/newkey = tgui_input_list(src, "Pick the player to put in control.", "New player", sortList(GLOB.clients))
 	var/mob/oldmob = newkey.mob
 	var/delmob = FALSE
 	if((isobserver(oldmob) || tgui_alert(usr, "Do you want to delete [newkey]'s old mob?","Delete?",list("Yes","No")) != "No"))
@@ -494,7 +494,7 @@
 		var/datum/outfit/O = path //not much to initalize here but whatever
 		outfits[initial(O.name)] = path
 
-	var/dresscode = input("Select outfit", "Robust quick dress shop") as null|anything in baseoutfits + sortList(outfits)
+	var/dresscode = tgui_input_list(src, "Select outfit", "Robust quick dress shop", baseoutfits + sortList(outfits))
 	if (isnull(dresscode))
 		return
 
@@ -508,7 +508,7 @@
 			var/datum/outfit/O = path
 			job_outfits[initial(O.name)] = path
 
-		dresscode = input("Select job equipment", "Robust quick dress shop") as null|anything in sortList(job_outfits)
+		dresscode = tgui_input_list(src, "Select job equipment", "Robust quick dress shop", sortList(job_outfits))
 		dresscode = job_outfits[dresscode]
 		if(isnull(dresscode))
 			return
@@ -520,7 +520,7 @@
 			var/datum/outfit/O = path
 			plasmaman_outfits[initial(O.name)] = path
 
-		dresscode = input("Select plasmeme equipment", "Robust quick dress shop") as null|anything in sortList(plasmaman_outfits)
+		dresscode = tgui_input_list(src, "Select plasmeme equipment", "Robust quick dress shop", sortList(plasmaman_outfits))
 		dresscode = plasmaman_outfits[dresscode]
 		if(isnull(dresscode))
 			return
@@ -529,7 +529,7 @@
 		var/list/custom_names = list()
 		for(var/datum/outfit/D in GLOB.custom_outfits)
 			custom_names[D.name] = D
-		var/selected_name = input("Select outfit", "Robust quick dress shop") as null|anything in sortList(custom_names)
+		var/selected_name = tgui_input_list(src, "Select outfit", "Robust quick dress shop", sortList(custom_names))
 		dresscode = custom_names[selected_name]
 		if(isnull(dresscode))
 			return
@@ -598,7 +598,7 @@
 	set name = "Debug Mob Lists"
 	set desc = "For when you just gotta know"
 
-	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
+	switch(tgui_input_list(src, "Which list?", "", list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients")))
 		if("Players")
 			to_chat(usr, jointext(GLOB.player_list,","))
 		if("Admins")
@@ -687,7 +687,7 @@
 
 		names[name] = ruin_landmark
 
-	var/ruinname = input("Select ruin", "Jump to Ruin") as null|anything in names
+	var/ruinname = tgui_input_list(src, "Select ruin", "Jump to Ruin", names)
 
 
 	var/obj/effect/landmark/ruin/landmark = names[ruinname]
@@ -725,7 +725,7 @@
 	for(var/name in SSmapping.ice_ruins_underground_templates)
 		names[name] = list(SSmapping.ice_ruins_underground_templates[name], ZTRAIT_ICE_RUINS_UNDERGROUND, list(/area/icemoon/underground/unexplored))
 
-	var/ruinname = input("Select ruin", "Spawn Ruin") as null|anything in names
+	var/ruinname = tgui_input_list(src, "Select ruin", "Spawn Ruin", names)
 	var/data = names[ruinname]
 	if (!data)
 		return
@@ -833,7 +833,7 @@
 		"Total Time"	=	/proc/cmp_profile_time_dsc,
 		"Call Count"	=	/proc/cmp_profile_count_dsc
 	)
-	var/sort = input(src, "Sort type?", "Sort Type", "Avg time") as null|anything in sortlist
+	var/sort = tgui_input_list(src, "Sort type?", "Sort Type", sortlist)
 	if (!sort)
 		return
 	sort = sortlist[sort]

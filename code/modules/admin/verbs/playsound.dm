@@ -5,7 +5,7 @@
 		return
 
 	var/freq = 1
-	var/vol = input(usr, "What volume would you like the sound to play at?",, 100) as null|num
+	var/vol = tgui_input_num(usr, "What volume would you like the sound to play at?",, 100)
 	if(!vol)
 		return
 	vol = clamp(vol, 1, 100)
@@ -61,7 +61,7 @@
 		to_chat(src, "<span class='boldwarning'>Youtube-dl was not configured, action unavailable</span>") //Check config.txt for the INVOKE_YOUTUBEDL value
 		return
 
-	var/web_sound_input = input("Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound via youtube-dl") as text|null
+	var/web_sound_input = tgui_input_text(src, "Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound via youtube-dl")
 	if(istext(web_sound_input))
 		var/web_sound_url = ""
 		var/stop_web_sounds = FALSE
@@ -139,7 +139,7 @@
 	if(!check_rights(R_SOUNDS))
 		return
 
-	var/web_sound_input = input("Enter content stream URL (must be a direct link)", "Play Internet Sound via direct URL") as text|null
+	var/web_sound_input = tgui_input_text(src, "Enter content stream URL (must be a direct link)", "Play Internet Sound via direct URL")
 	if(istext(web_sound_input))
 		if(!length(web_sound_input))
 			log_admin("[key_name(src)] stopped web sound")

@@ -654,7 +654,7 @@
 			display_vending_names_paths = list()
 			for(var/path in vending_names_paths)
 				display_vending_names_paths[vending_names_paths[path]] = path
-		var/choice =  input(user,"Choose a new brand","Select an Item") as null|anything in sortList(display_vending_names_paths)
+		var/choice = tgui_input_list(user,"Choose a new brand","Select an Item", sortList(display_vending_names_paths))
 		set_type(display_vending_names_paths[choice])
 	else
 		return ..()
@@ -856,7 +856,7 @@
 
 // /obj/item/circuitboard/machine/medical_kiosk/multitool_act(mob/living/user)
 // 	. = ..()
-// 	var/new_cost = input("Set a new cost for using this medical kiosk.","New cost", custom_cost) as num|null
+// 	var/new_cost = tgui_input_num(user, "Set a new cost for using this medical kiosk.","New cost", custom_cost)
 // 	if(!new_cost || (loc != user))
 // 		to_chat(user, "<span class='warning'>You must hold the circuitboard to change its cost!</span>")
 // 		return
@@ -1050,7 +1050,7 @@
 
 /obj/item/circuitboard/machine/public_nanite_chamber/multitool_act(mob/living/user)
 	. = ..()
-	var/new_cloud = input("Set the public nanite chamber's Cloud ID (1-100).", "Cloud ID", cloud_id) as num|null
+	var/new_cloud = tgui_input_num(user, "Set the public nanite chamber's Cloud ID (1-100).", "Cloud ID", cloud_id)
 	if(!new_cloud || (loc != user))
 		to_chat(user, "<span class='warning'>You must hold the circuitboard to change its Cloud ID!</span>")
 		return

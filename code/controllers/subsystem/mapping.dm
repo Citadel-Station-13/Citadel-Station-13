@@ -503,7 +503,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	var/away_name
 	var/datum/space_level/away_level
 
-	var/answer = input("What kind ? ","Away/VR") as null|anything in list(possible_options + "Custom")
+	var/answer = tgui_input_list(src, "What kind ? ","Away/VR", list(possible_options + "Custom"))
 	switch(answer)
 		if(null)
 			return

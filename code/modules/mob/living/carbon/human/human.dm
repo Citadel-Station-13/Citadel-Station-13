@@ -333,7 +333,7 @@
 				if(href_list["hud"] == "m")
 					if(istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(H.getorganslot(ORGAN_SLOT_HUD), /obj/item/organ/cyberimp/eyes/hud/medical))
 						if(href_list["p_stat"])
-							var/health_status = input(usr, "Specify a new physical status for this person.", "Medical HUD", R.fields["p_stat"]) in list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel")
+							var/health_status = tgui_input_list(usr, "Specify a new physical status for this person.", "Medical HUD", list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel"))
 							if(R)
 								if(!H.canUseHUD())
 									return
@@ -343,7 +343,7 @@
 									R.fields["p_stat"] = health_status
 							return
 						if(href_list["m_stat"])
-							var/health_status = input(usr, "Specify a new mental status for this person.", "Medical HUD", R.fields["m_stat"]) in list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel")
+							var/health_status = tgui_input_list(usr, "Specify a new mental status for this person.", "Medical HUD", list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel"))
 							if(R)
 								if(!H.canUseHUD())
 									return
@@ -419,7 +419,7 @@
 							R = find_record("name", perpname, GLOB.data_core.security)
 							if(R)
 								if(href_list["status"])
-									var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Paroled", "Discharged", "Cancel")
+									var/setcriminal = tgui_input_list(usr, "Specify a new criminal status for this person.", "Security HUD", list("None", "*Arrest*", "Incarcerated", "Paroled", "Discharged", "Cancel"))
 									if(setcriminal != "Cancel")
 										if(R)
 											if(H.canUseHUD())
@@ -878,7 +878,7 @@
 			var/qname = initial(T.name)
 			options[has_quirk(T) ? "[qname] (Remove)" : "[qname] (Add)"] = T
 
-		var/result = input(usr, "Choose quirk to add/remove","Quirk Mod") as null|anything in options
+		var/result = tgui_input_list(usr, "Choose quirk to add/remove","Quirk Mod", options)
 		if(result)
 			if(result == "Clear")
 				for(var/datum/quirk/q in roundstart_quirks)
@@ -916,7 +916,7 @@
 	if(href_list[VV_HK_SET_SPECIES])
 		if(!check_rights(R_SPAWN))
 			return
-		var/result = input(usr, "Please choose a new species","Species") as null|anything in GLOB.species_list
+		var/result = tgui_input_list(usr, "Please choose a new species","Species", GLOB.species_list)
 		if(result)
 			var/newtype = GLOB.species_list[result]
 			admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [src] to [result]")

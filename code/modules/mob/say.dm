@@ -73,7 +73,7 @@
 		return lowertext(copytext_char(input, 1, customsayverb))
 
 /mob/proc/whisper_keybind()
-	var/message = input(src, "", "whisper") as text|null
+	var/message = tgui_input_text(src, "", "whisper")
 	if(!length(message))
 		return
 	return whisper_verb(message)

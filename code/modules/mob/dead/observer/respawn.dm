@@ -21,7 +21,7 @@
 	if(!valid.len)
 		to_chat(src, "<span class='warning'>No player found that is either a ghost or is in lobby with restrictions active.</span>")
 		return
-	var/ckey = valid[input(src, "Choose a player (only showing logged in players who have restrictions)", "Unrestricted Respawn") as null|anything in valid]
+	var/ckey = valid[tgui_input_list(src, "Choose a player (only showing logged in players who have restrictions)", "Unrestricted Respawn", valid)]
 	var/client/player = GLOB.directory[ckey]
 	if(!player)
 		to_chat(src, "<span class='warning'>Client not found.</span>")
@@ -67,7 +67,7 @@
 	if(!valid.len)
 		to_chat(src, "<span class='warning'>No logged in ghosts found.</span>")
 		return
-	var/mob/dead/observer/O = valid[input(src, "Choose a player (only showing logged in)", "Remove Respawn Timer") as null|anything in valid]
+	var/mob/dead/observer/O = valid[tgui_input_list(src, "Choose a player (only showing logged in)", "Remove Respawn Timer", valid)]
 
 	if(!O.client)
 		to_chat(src, "<span class='warning'>[O] has no client.</span>")

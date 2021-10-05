@@ -120,7 +120,7 @@
 
 
 /obj/structure/sign/barsign/proc/pick_sign(mob/user)
-	var/picked_name = input(user, "Available Signage", "Bar Sign", name) as null|anything in barsigns
+	var/picked_name = tgui_input_list(user, "Available Signage", "Bar Sign", barsigns)
 	if(!picked_name)
 		return
 	set_sign(picked_name)

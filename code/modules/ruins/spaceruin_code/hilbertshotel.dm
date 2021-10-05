@@ -47,7 +47,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	promptAndCheckIn(user)
 
 /obj/item/hilbertshotel/proc/promptAndCheckIn(mob/user)
-	var/chosenRoomNumber = input(user, "What number room will you be checking into?", "Room Number") as null|num
+	var/chosenRoomNumber = tgui_input_num(user, "What number room will you be checking into?", "Room Number")
 	if(!chosenRoomNumber || !user.CanReach(src))
 		return
 	if(chosenRoomNumber > SHORT_REAL_LIMIT)

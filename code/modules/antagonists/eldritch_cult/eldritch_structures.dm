@@ -80,7 +80,7 @@
 	for(var/X in subtypesof(/obj/item/eldritch_potion))
 		var/obj/item/eldritch_potion/potion = X
 		lst[initial(potion.name)] = potion
-	var/type = lst[input(user,"Choose your brew","Brew") in lst]
+	var/type = lst[tgui_input_list(user,"Choose your brew","Brew", lst)]
 	playsound(src, 'sound/misc/desceration-02.ogg', 75, TRUE)
 	new type(drop_location())
 	current_mass = 0
