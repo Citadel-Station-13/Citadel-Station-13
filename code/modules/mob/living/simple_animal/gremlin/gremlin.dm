@@ -66,6 +66,7 @@ GLOBAL_LIST(bad_gremlin_items)
 /mob/living/simple_animal/hostile/gremlin/Initialize()
 	. = ..()
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
+	ADD_TRAIT(src, TRAIT_SHOCKIMMUNE, INNATE_TRAIT)
 	access_card = new /obj/item/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
