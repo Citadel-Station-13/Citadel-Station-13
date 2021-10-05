@@ -29,7 +29,7 @@
 	var/mob/M = player.mob
 	if(istype(M, /mob/dead/observer))
 		var/mob/dead/observer/O = M
-		var/confirm = alert(src, "Send [O]([ckey]) back to the lobby without respawn restrictions?", "Send to Lobby", "Yes", "No")
+		var/confirm = tgui_alert(src, "Send [O]([ckey]) back to the lobby without respawn restrictions?", "Send to Lobby", list("Yes", "No"))
 		if(confirm != "Yes")
 			return
 		message_admins("[key_name_admin(src)] gave [key_name_admin(O)] a full respawn and sent them back to the lobby.")
@@ -39,7 +39,7 @@
 		O.client.prefs.dnr_triggered = FALSE
 	else if(istype(M, /mob/dead/new_player))
 		var/mob/dead/new_player/NP = M
-		var/confirm = alert(src, "Remove [NP]'s respawn restrictions?", "Remove Restrictions", "Yes", "No")
+		var/confirm = tgui_alert(src, "Remove [NP]'s respawn restrictions?", "Remove Restrictions", list("Yes", "No"))
 		if(confirm != "Yes")
 			return
 		message_admins("[key_name_admin(src)] removed [ckey]'s respawn restrictions.")
@@ -165,7 +165,7 @@
 
 /**
  * Actual proc that removes us and puts us back on lobby
- * 
+ *
  * Returns the new mob.
  */
 /mob/dead/observer/proc/transfer_to_lobby()

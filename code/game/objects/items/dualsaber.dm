@@ -318,7 +318,7 @@
 	if(user.incapacitated() || !istype(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
-	if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
+	if(tgui_alert(user, "Are you sure you want to recolor your blade?", "Confirm Repaint", list("Yes", "No")) == "Yes")
 		var/energy_color_input = input(usr,"","Choose Energy Color",light_color) as color|null
 		if(!energy_color_input || !user.canUseTopic(src, BE_CLOSE, FALSE) || hacked)
 			return

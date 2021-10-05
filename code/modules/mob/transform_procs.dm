@@ -542,7 +542,7 @@
 	if(!mobpath)
 		return
 	if(mind)
-		mind_transfer = alert("Want to transfer their mind into the new mob", "Mind Transfer", "Yes", "No") == "Yes" ? TRUE : FALSE
+		mind_transfer = tgui_alert(usr, "Want to transfer their mind into the new mob", "Mind Transfer", list("Yes", "No")) == "Yes" ? TRUE : FALSE
 
 	if(mob_transforming)
 		return
@@ -577,7 +577,7 @@
 	if(!mobpath)
 		return
 	if(mind)
-		mind_transfer = alert("Want to transfer their mind into the new mob", "Mind Transfer", "Yes", "No") == "Yes" ? TRUE : FALSE
+		mind_transfer = tgui_alert(usr, "Want to transfer their mind into the new mob", "Mind Transfer", list("Yes", "No")) == "Yes" ? TRUE : FALSE
 
 	var/mob/new_mob = new mobpath(src.loc)
 

@@ -131,7 +131,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	log_admin("[key_name_admin(admin)] set [owner.current] devil ascendable to [ascendable])")
 
 /datum/antagonist/devil/admin_add(datum/mind/new_owner,mob/admin)
-	switch(alert(admin,"Should the devil be able to ascend",,"Yes","No","Cancel"))
+	switch(tgui_alert(admin, "Should the devil be able to ascend",,list("Yes","No","Cancel")))
 		if("Yes")
 			ascendable = TRUE
 		if("No")

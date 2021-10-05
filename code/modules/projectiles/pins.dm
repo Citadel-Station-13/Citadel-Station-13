@@ -259,7 +259,7 @@
 	. = TRUE
 	if(!can_toggle || !user.canUseTopic(src, BE_CLOSE))
 		return
-	var/selection = alert(user, "Which setting would you want to modify?", "Firing Pin Settings", "Minimum Level Setting", "Maximum Level Setting", "Lethals Only Toggle")
+	var/selection = tgui_alert(user, "Which setting would you want to modify?", "Firing Pin Settings", list("Minimum Level Setting", "Maximum Level Setting", "Lethals Only Toggle"))
 	if(QDELETED(src) || QDELETED(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	var/static/list/till_designs_pr_isnt_merged = list("green", "blue", "amber", "red", "delta")

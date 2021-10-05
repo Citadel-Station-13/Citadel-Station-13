@@ -465,7 +465,7 @@
 	var/datum/clockwork_rite/CR = possible_rites[input_key]
 	if(!CR)
 		return
-	var/choice = alert(user, "What to do with this rite?", "What to do?", "Cast", "Show Info", "Cancel")
+	var/choice = tgui_alert(user, "What to do with this rite?", "What to do?", list("Cast", "Show Info", "Cancel"))
 	switch(choice)
 		if("Cast")
 			CR.try_cast(src, user)

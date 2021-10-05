@@ -296,7 +296,7 @@ the new instance inside the host to be updated to the template's stats.
 
 /mob/camera/disease/proc/confirm_initial_infection(mob/living/carbon/human/H)
 	set waitfor = FALSE
-	if(alert(src, "Select [H.name] as your initial host?", "Select Host", "Yes", "No") != "Yes")
+	if(tgui_alert(src, "Select [H.name] as your initial host?", "Select Host", list("Yes", "No")) != "Yes")
 		return
 	if(!freemove)
 		return

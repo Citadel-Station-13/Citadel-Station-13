@@ -192,7 +192,7 @@
 	magic_path = "/obj/item/melee/blood_magic/armor"
 
 /datum/action/innate/cult/blood_spell/equipment/Activate()
-	var/choice = alert(owner,"Choose your equipment type",,"Combat Equipment","Ritual Dagger","Cancel")
+	var/choice = tgui_alert(owner, "Choose your equipment type",,"Combat Equipment",list("Ritual Dagger","Cancel"))
 	if(choice == "Ritual Dagger")
 		var/turf/T = get_turf(owner)
 		owner.visible_message("<span class='warning'>[owner]'s hand glows red for a moment.</span>", \
@@ -610,7 +610,7 @@
 				candidate.color = "black"
 				if(do_after(user, 90, target = candidate))
 					candidate.emp_act(80)
-					var/construct_class = alert(user, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
+					var/construct_class = tgui_alert(user, "Please choose which type of construct you wish to create.",,list("Juggernaut","Wraith","Artificer"))
 					user.visible_message("<span class='danger'>The dark cloud receedes from what was formerly [candidate], revealing a\n [construct_class]!</span>")
 					switch(construct_class)
 						if("Juggernaut")

@@ -37,7 +37,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	msg = emoji_parse(msg)
 
 	if((msg[1] in list(".",";",":","#")) || findtext_char(msg, "say", 1, 5))
-		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
+		if(tgui_alert(src, "Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", list("No", "Yes")) != "Yes")
 			return
 
 	if(!holder)

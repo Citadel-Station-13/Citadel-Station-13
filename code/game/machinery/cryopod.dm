@@ -439,7 +439,7 @@
 			to_chat(user, "<span class='danger'>You can't put [target] into [src]. They're conscious.</span>")
 		return
 	else if(target.client)
-		if(alert(target,"Would you like to enter cryosleep?",,"Yes","No") == "No")
+		if(tgui_alert(target,"Would you like to enter cryosleep?",,list("Yes","No")) == "No")
 			return
 
 	var/generic_plsnoleave_message = " Please adminhelp before leaving the round, even if there are no administrators online!"
@@ -462,7 +462,7 @@
 			LAZYADD(caught_string, "Revolutionary")
 
 		if(caught_string)
-			alert(target, "You're a [english_list(caught_string)]![generic_plsnoleave_message][addendum]")
+			tgui_alert(target, "You're a [english_list(caught_string)]![generic_plsnoleave_message][addendum]")
 			target.client.cryo_warned = world.time
 			return
 

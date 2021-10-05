@@ -478,9 +478,9 @@
 
 		var/popup_input
 		if(bank_support == ID_FREE_BANK_ACCOUNT)
-			popup_input = alert(user, "Choose Action", "Agent ID", "Show", "Forge/Reset", "Change Account ID")
+			popup_input = tgui_alert(user, "Choose Action", "Agent ID", list("Show", "Forge/Reset", "Change Account ID"))
 		else
-			popup_input = alert(user, "Choose Action", "Agent ID", "Show", "Forge/Reset")
+			popup_input = tgui_alert(user, "Choose Action", "Agent ID", list("Show", "Forge/Reset"))
 		if(!user.canUseTopic(src, BE_CLOSE, FALSE))
 			return
 		if(popup_input == "Forge/Reset" && !forged)
@@ -843,7 +843,7 @@
 	if(user.incapacitated() || !istype(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return TRUE
-	if(alert("Are you sure you want to recolor your id?", "Confirm Repaint", "Yes", "No") == "Yes")
+	if(tgui_alert(user, "Are you sure you want to recolor your id?", "Confirm Repaint", list("Yes", "No")) == "Yes")
 		var/energy_color_input = input(usr,"","Choose Energy Color",id_color) as color|null
 		if(!in_range(src, user) || !energy_color_input)
 			return TRUE

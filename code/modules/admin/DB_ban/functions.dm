@@ -92,7 +92,7 @@
 	qdel(query_add_ban_get_ckey)
 	if(!seen_before)
 		if(!had_banned_mob || (had_banned_mob && !banned_mob_guest_key))
-			if(alert(usr, "[bankey] has not been seen before, are you sure you want to create a ban for them?", "Unknown ckey", "Yes", "No", "Cancel") != "Yes")
+			if(tgui_alert(usr, "[bankey] has not been seen before, are you sure you want to create a ban for them?", "Unknown ckey", list("Yes", "No", "Cancel")) != "Yes")
 				return
 
 	var/a_key
@@ -314,7 +314,7 @@
 			qdel(query_edit_ban_duration)
 			message_admins("[key_name_admin(usr)] has edited a ban for [p_key]'s duration from [duration] to [value]")
 		if("unban")
-			if(alert("Unban [p_key]?", "Unban?", "Yes", "No") == "Yes")
+			if(tgui_alert(usr, "Unban [p_key]?", "Unban?", list("Yes", "No")) == "Yes")
 				DB_ban_unban_by_id(banid)
 				return
 			else

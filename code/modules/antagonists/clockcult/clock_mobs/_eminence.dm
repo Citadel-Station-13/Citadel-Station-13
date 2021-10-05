@@ -131,7 +131,7 @@
 	if(!G.recalls_remaining)
 		to_chat(src, "<span class='warning'>The Ark can no longer recall!</span>")
 		return
-	if(alert(src, "Initiate mass recall?", "Mass Recall", "Yes", "No") != "Yes" || QDELETED(src) || QDELETED(G) || !G.obj_integrity)
+	if(tgui_alert(src, "Initiate mass recall?", "Mass Recall", list("Yes", "No")) != "Yes" || QDELETED(src) || QDELETED(G) || !G.obj_integrity)
 		return
 	G.initiate_mass_recall() //wHOOPS LOOKS LIKE A HULK GOT THROUGH
 
@@ -334,6 +334,6 @@
 /datum/action/innate/eminence/mass_recall/Activate()
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
 	if(G && !G.recalling && G.recalls_remaining)
-		if(alert(owner, "Initiate mass recall?", "Mass Recall", "Yes", "No") != "Yes" || QDELETED(owner) || QDELETED(G) || !G.obj_integrity)
+		if(tgui_alert(owner, "Initiate mass recall?", "Mass Recall", list("Yes", "No")) != "Yes" || QDELETED(owner) || QDELETED(G) || !G.obj_integrity)
 			return
 		G.initiate_mass_recall()
