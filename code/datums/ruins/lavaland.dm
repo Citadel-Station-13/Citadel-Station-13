@@ -170,23 +170,6 @@
 	always_place = TRUE
 	allow_duplicates = FALSE
 
-/datum/map_template/ruin/lavaland/blood_drunk_miner
-	name = "Blood-Drunk Miner"
-	description = "An insane, beastly miner contemplating stone tiles..."
-	always_place = TRUE
-	allow_duplicates = FALSE
-	id = "blooddrunk"
-/datum/map_template/ruin/lavaland/blood_drunk_miner/New()
-	if(prob(25))
-		suffix = "lavaland_surface_blooddrunk1.dmm"
-	else if(prob(34))
-		suffix = "lavaland_surface_blooddrunk2.dmm"
-	else if(prob(50))
-		suffix = "lavaland_surface_blooddrunk3.dmm"
-	else
-		suffix = "lavaland_surface_mining_site.dmm"
-	. = ..()
-
 /datum/map_template/ruin/lavaland/ufo_crash
 	name = "UFO Crash"
 	id = "ufo-crash"
