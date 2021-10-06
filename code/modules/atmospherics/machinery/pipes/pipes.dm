@@ -85,6 +85,9 @@
 	atmosanalyzer_scan(pipeline.air, user, src)
 	return TRUE
 
+/obj/machinery/atmospherics/pipe/zap_act(power, zap_flags)
+	return 0 // they're not really machines in the normal sense, probably shouldn't explode
+
 /obj/machinery/atmospherics/pipe/Destroy()
 	ReleaseAirToTurf()
 	if(air_temporary)

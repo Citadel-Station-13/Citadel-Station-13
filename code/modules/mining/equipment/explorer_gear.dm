@@ -2,8 +2,9 @@
 /obj/item/clothing/suit/hooded/explorer
 	name = "explorer suit"
 	desc = "An armoured suit for exploring harsh environments."
-	icon_state = "explorer"
-	item_state = "explorer"
+	icon_state = "explorer-normal"
+	item_state = "explorer-normal"
+	var/suit_type = "normal"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
@@ -13,11 +14,15 @@
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
 	resistance_flags = FIRE_PROOF
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC
+	no_t = TRUE
 
 /obj/item/clothing/head/hooded/explorer
 	name = "explorer hood"
 	desc = "An armoured hood for exploring harsh environments."
-	icon_state = "explorer"
+	icon_state = "explorer-normal"
+	item_state = "explorer-normal"
+	var/suit_type = "normal"
+	var/basestate = "normal"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
@@ -33,10 +38,40 @@
 /obj/item/clothing/suit/hooded/explorer/standard/Initialize()
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
+	RegisterSignal(src, COMSIG_ARMOR_PLATED, .proc/upgrade_icon)
+
+/obj/item/clothing/suit/hooded/explorer/standard/proc/upgrade_icon(datum/source, amount, maxamount)
+	SIGNAL_HANDLER
+
+	if(amount)
+		name = "reinforced [initial(name)]"
+		suit_type = "normal_goliath"
+		if(amount == maxamount)
+			suit_type = "normal_goliath_full"
+	icon_state = "explorer-[suit_type]"
+	if(ishuman(loc))
+		var/mob/living/carbon/human/wearer = loc
+		if(wearer.wear_suit == src)
+			wearer.update_inv_wear_suit()
 
 /obj/item/clothing/head/hooded/explorer/standard/Initialize()
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
+	RegisterSignal(src, COMSIG_ARMOR_PLATED, .proc/upgrade_icon)
+
+/obj/item/clothing/head/hooded/explorer/standard/proc/upgrade_icon(datum/source, amount, maxamount)
+	SIGNAL_HANDLER
+
+	if(amount)
+		name = "reinforced [initial(name)]"
+		suit_type = "normal_goliath"
+		if(amount == maxamount)
+			suit_type = "normal_goliath_full"
+	icon_state = "explorer-[suit_type]"
+	if(ishuman(loc))
+		var/mob/living/carbon/human/wearer = loc
+		if(wearer.head == src)
+			wearer.update_inv_head()
 
 /obj/item/clothing/mask/gas/explorer
 	name = "explorer gas mask"

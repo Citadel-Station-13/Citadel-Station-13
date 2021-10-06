@@ -436,13 +436,27 @@
 
 /datum/sprite_accessory/tails/human/shark
 	name = "Shark"
-	icon_state = "shark"
+	icon_state = "carp"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/tails_animated/human/shark
 	name = "Shark"
+	icon_state = "carp"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	matrixed_sections = MATRIX_RED
+
+/datum/sprite_accessory/tails/human/sharkalt
+	name = "Shark (alt)"
+	icon_state = "shark"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	matrixed_sections = MATRIX_RED
+
+/datum/sprite_accessory/tails_animated/human/sharkalt
+	name = "Shark (alt)"
 	icon_state = "shark"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
@@ -524,6 +538,20 @@
 /datum/sprite_accessory/tails_animated/human/triple_kitsune
 	name = "Triple Kitsune Tails"
 	icon_state = "3sune"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/tails/human/takahiro_kitsune
+	name = "Takahiro Kitsune Tails" //takahiro had five tails i just wanted to follow the 'T' naming convention vs. tamamo and triple
+	icon_state = "7sune"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/tails_animated/human/takahiro_kitsune
+	name = "Takahiro Kitsune Tails"
+	icon_state = "7sune"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	matrixed_sections = MATRIX_RED_GREEN
@@ -897,11 +925,21 @@
 
 /datum/sprite_accessory/tails/mam_tails/shark
 	name = "Shark"
-	icon_state = "shark"
+	icon_state = "carp"
 	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/tails_animated/mam_tails_animated/shark
 	name = "Shark"
+	icon_state = "carp"
+	matrixed_sections = MATRIX_RED
+
+/datum/sprite_accessory/tails/mam_tails/sharkalt
+	name = "Shark (alt)"
+	icon_state = "shark"
+	matrixed_sections = MATRIX_RED
+
+/datum/sprite_accessory/tails_animated/mam_tails_animated/sharkalt
+	name = "Shark (alt)"
 	icon_state = "shark"
 	matrixed_sections = MATRIX_RED
 

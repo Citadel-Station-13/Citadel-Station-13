@@ -63,6 +63,8 @@
 		return ShiftClickOn(A)
 	if(modifiers["alt"]) // alt and alt-gr (rightalt)
 		return AltClickOn(A)
+	if(modifiers["ctrl"] && modifiers["right"]) //CIT CHANGE - right click ctrl for a new form of dropping items
+		return CtrlRightClickOn(A, params) //CIT CHANGE
 	if(modifiers["ctrl"])
 		return CtrlClickOn(A)
 
@@ -294,6 +296,46 @@
 	var/flags = SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user) | SEND_SIGNAL(user, COMSIG_MOB_CLICKED_SHIFT_ON, src)
 	if(!(flags & COMPONENT_DENY_EXAMINATE) && user.client && (user.client.eye == user || user.client.eye == user.loc || flags & COMPONENT_ALLOW_EXAMINATE))
 		user.examinate(src)
+
+/*
+	Ctrl + Right click
+	Combat mode feature
+	Drop item in hand at position.
+*/
+/atom/proc/CtrlRightClickOn(atom/A, params)
+	if(isliving(src) && Adjacent(A)) //honestly only humans can do this given it's combat mode but if it's implemented for any other mobs...
+		var/mob/living/L = src
+		if(L.incapacitated())
+			return
+		var/obj/item/I = L.get_active_held_item()
+		var/turf/T = get_turf(A)
+		if(T)
+			if(I) //drop item at cursor.
+				if(T.density) //no, you can't use your funny blue cube or red cube to clip into the fucking wall.
+					return
+				for(var/atom/C in T.contents) //nor can you clip into a window or a door/false wall that's not open.
+					if(C.opacity || (((C.flags_1 & PREVENT_CLICK_UNDER_1) > 0) != (istype(C,/obj/machinery/door) && !C.density))) //XOR operation within because doors always have PREVENT_CLICK_UNDER_1 flag enabled. Dumb, I know.
+						return
+				if(L.transferItemToLoc(I, T))
+					var/list/click_params = params2list(params)
+					//Center the icon where the user clicked. (shamelessly stole code from tables)
+					if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+						return
+					//Clamp it so that the icon never moves more than 16 pixels in either direction
+					I.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+					I.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+					return TRUE
+			else if(isitem(A) && L.has_active_hand()) //if they have an open hand they'll rotate the item instead.
+				var/obj/item/I2 = A
+				if(!I2.anchored)
+					var/matrix/ntransform = matrix(I2.transform)
+					ntransform.Turn(15)
+					animate(I2, transform = ntransform, time = 2)
+					return TRUE
+			else
+				A.CtrlClick(src)
+
+
 
 /*
 	Ctrl click

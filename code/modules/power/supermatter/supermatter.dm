@@ -39,7 +39,8 @@
 #define DAMAGE_INCREASE_MULTIPLIER 0.25
 
 
-#define THERMAL_RELEASE_MODIFIER 5         //Higher == less heat released during reaction, not to be confused with the above values
+#define THERMAL_RELEASE_MODIFIER 350         //Higher == more heat released during reaction, not to be confused with the above values
+#define THERMAL_RELEASE_CAP_MODIFIER 250     //Higher == lower cap on how much heat can be released per tick--currently 1.3x old value
 #define PLASMA_RELEASE_MODIFIER 750        //Higher == less plasma released by reaction
 #define OXYGEN_RELEASE_MODIFIER 325        //Higher == less oxygen released at high temperature/power
 
@@ -500,7 +501,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling + clamp(powerloss_inhibition_gas - powerloss_dynamic_scaling, -0.02, 0.02), 0, 1)
 	else
 		powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling - 0.05, 0, 1)
-	//Ranges from 0 to 1(1-(value between 0 and 1 * ranges from 1 to 1.5(mol / 500)))
+	//Ranges from 0 to 1 (1-(value between 0 and 1 * ranges from 1 to 1.5(mol / 500)))
+	//0 means full inhibition, 1 means no inhibition
 	//We take the mol count, and scale it to be our inhibitor
 	powerloss_inhibitor = clamp(1-(powerloss_dynamic_scaling * clamp(combined_gas/POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD, 1, 1.5)), 0, 1)
 
@@ -523,9 +525,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		temp_factor = 30
 		icon_state = base_icon_state
 
+	var/effective_temperature = min(removed.return_temperature(), 2500 * dynamic_heat_modifier)
+
 	//if there is more pluox and n2 then anything else, we receive no power increase from heat
 	if(power_changes)
-		power = max((removed.return_temperature() * temp_factor / T0C) * gasmix_power_ratio + power, 0)
+		power = max((effective_temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0)
 
 	if(prob(50))
 		//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
@@ -536,15 +540,17 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	//Power * 0.55 * a value between 1 and 0.8
 	var/device_energy = power * REACTION_POWER_MODIFIER
 
-	removed.set_temperature(removed.return_temperature() + ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_MODIFIER))
-	//We don't want our output to be too hot
-	removed.set_temperature(max(0, min(removed.return_temperature(), 2500 * dynamic_heat_modifier)))
-
+	var/max_temp_increase = effective_temperature + ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_CAP_MODIFIER)
 	//Calculate how much gas to release
 	//Varies based on power and gas content
 	removed.adjust_moles(GAS_PLASMA, max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0))
 	//Varies based on power, gas content, and heat
-	removed.adjust_moles(GAS_O2, max(((device_energy + removed.return_temperature() * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0))
+	removed.adjust_moles(GAS_O2, max(((device_energy + effective_temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0))
+
+	if(removed.return_temperature() < max_temp_increase)
+		removed.adjust_heat(device_energy * dynamic_heat_modifier * THERMAL_RELEASE_MODIFIER)
+		removed.set_temperature(min(removed.return_temperature(), max_temp_increase))
+
 
 	if(produces_gas)
 		env.merge(removed)
@@ -593,13 +599,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				zap_icon = SLIGHTLY_CHARGED_ZAP_ICON_STATE
 				//Uncaps the zap damage, it's maxed by the input power
 				//Objects take damage now
-				flags |= (ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE)
+				flags |= (ZAP_MOB_DAMAGE)
 				zap_count = 3
 			if(CRITICAL_POWER_PENALTY_THRESHOLD to INFINITY)
 				zap_icon = OVER_9000_ZAP_ICON_STATE
 				//It'll stun more now, and damage will hit harder, gloves are no garentee.
 				//Machines go boom
-				flags |= (ZAP_MOB_STUN | ZAP_MACHINE_EXPLOSIVE | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE)
+				flags |= (ZAP_MOB_STUN | ZAP_MOB_DAMAGE)
 				zap_count = 4
 		//Now we deal with damage shit
 		if (damage > damage_penalty_point && prob(20))
@@ -1052,9 +1058,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(zapdir)
 			. = zapdir
 
-		//Going boom should be rareish
-		if(prob(80))
-			zap_flags &= ~ZAP_MACHINE_EXPLOSIVE
 		if(target_type == COIL)
 			//In the best situation we can expect this to grow up to 2120kw before a delam/IT'S GONE TOO FAR FRED SHUT IT DOWN
 			//The formula for power gen is zap_str * zap_mod / 2 * capacitor rating, between 1 and 4

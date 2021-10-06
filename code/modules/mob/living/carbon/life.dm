@@ -570,23 +570,14 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "jittery")
 
-	if(stuttering)
-		stuttering = max(stuttering-1, 0)
+	if(druggy)
+		adjust_drugginess(-1)
 
-	if(slurring || drunkenness)
-		slurring = max(slurring-1,0,drunkenness)
-
-	if(cultslurring)
-		cultslurring = max(cultslurring-1, 0)
-
-	if(clockcultslurring)
-		clockcultslurring = max(clockcultslurring-1, 0)
+	if(drunkenness)
+		drunkenness = max(drunkenness-1,0)
 
 	if(silent)
 		silent = max(silent-1, 0)
-
-	if(druggy)
-		adjust_drugginess(-1)
 
 	if(hallucination)
 		handle_hallucinations()

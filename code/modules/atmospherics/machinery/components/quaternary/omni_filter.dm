@@ -34,6 +34,20 @@ ATMOS_MAPPING_LAYERS_PX(/obj/machinery/atmospherics/component/quaternary/filters
 /obj/machinery/atmospherics/component/quaternary/filter/update_overlays()
 	. = ..()
 
+/obj/machinery/atmospherics/component/quaternary/filter/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "OmniFilter")
+		ui.open()
+
+/obj/machinery/atmospherics/component/quaternary/filter/ui_static_data(mob/user)
+	. = ..()
+	.["gasids"] = SSair
+
+/obj/machinery/atmospherics/component/quaternary/filter/ui_data(mob/user)
+	. = ..()
+
 
 #warn impl
 

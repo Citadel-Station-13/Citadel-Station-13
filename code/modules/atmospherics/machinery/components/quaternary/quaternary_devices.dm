@@ -6,7 +6,6 @@
  * If all layers, *= layer.
  */
 /obj/machinery/atmospherics/component/quaternary
-	icon = 'icons/obj/atmospherics/component/quaternary_devices.dmi'
 	dir = SOUTH
 	initialize_directions = NORTH|SOUTH|EAST|WEST
 	use_power = IDLE_POWER_USE

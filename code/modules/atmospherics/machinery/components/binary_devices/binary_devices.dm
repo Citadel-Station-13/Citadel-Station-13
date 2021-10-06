@@ -6,7 +6,6 @@
  * IF all layer, order *= layer.
  */
 /obj/machinery/atmospherics/component/binary
-	icon = 'icons/obj/atmospherics/component/binary_devices.dmi'
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH
 	use_power = IDLE_POWER_USE

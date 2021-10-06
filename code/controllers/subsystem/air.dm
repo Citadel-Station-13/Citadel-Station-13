@@ -30,6 +30,7 @@ SUBSYSTEM_DEF(air)
 	var/list/networks = list()
 	var/list/pipenets_needing_rebuilt = list()
 	var/list/deferred_airs = list()
+	var/cur_deferred_airs = 0
 	var/max_deferred_airs = 0
 	var/list/obj/machinery/atmos_machinery = list()
 	var/list/obj/machinery/atmos_air_machinery = list()
@@ -37,7 +38,8 @@ SUBSYSTEM_DEF(air)
 
 	//atmos singletons
 	var/list/gas_reactions = list()
-
+	var/list/atmos_gen
+	var/list/planetary = list() //auxmos already caches static planetary mixes but could be convenient to do so here too
 	//Special functions lists
 	var/list/turf/open/high_pressure_delta = list()
 
@@ -53,14 +55,24 @@ SUBSYSTEM_DEF(air)
 	var/equalize_turf_limit = 10
 	// Max number of turfs to look for a space turf, and max number of turfs that will be decompressed.
 	var/equalize_hard_turf_limit = 2000
-	// Whether equalization should be enabled at all.
+	// Whether equalization is enabled. Can be disabled for performance reasons.
 	var/equalize_enabled = TRUE
+	// Whether equalization should be enabled.
+	var/should_do_equalization = TRUE
+	// When above 0, won't equalize; performance handling
+	var/eq_cooldown = 0
 	// Whether turf-to-turf heat exchanging should be enabled.
 	var/heat_enabled = FALSE
 	// Max number of times process_turfs will share in a tick.
 	var/share_max_steps = 3
+	// Target for share_max_steps; can go below this, if it determines the thread is taking too long.
+	var/share_max_steps_target = 3
 	// Excited group processing will try to equalize groups with total pressure difference less than this amount.
 	var/excited_group_pressure_goal = 1
+	// Target for excited_group_pressure_goal; can go below this, if it determines the thread is taking too long.
+	var/excited_group_pressure_goal_target = 1
+	// If this is set to 0, monstermos won't process planet atmos
+	var/planet_equalize_enabled = 0
 
 	/// Queued for rebuild
 	var/static/list/obj/machinery/atmospherics/rebuild_queue = list()
@@ -101,6 +113,7 @@ SUBSYSTEM_DEF(air)
 	setup_atmos_machinery()
 	setup_pipenets()
 	gas_reactions = init_gas_reactions()
+	should_do_equalization = CONFIG_GET(flag/atmos_equalize_enabled)
 	auxtools_update_reactions()
 	return ..()
 
@@ -207,6 +220,7 @@ SUBSYSTEM_DEF(air)
 	// This also happens to do all the commented out stuff below, all in a single separate thread. This is mostly so that the
 	// waiting is consistent.
 	if(currentpart == SSAIR_ACTIVETURFS)
+		run_delay_heuristics()
 		timer = TICK_USAGE_REAL
 		process_turfs(resumed)
 		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
@@ -261,7 +275,8 @@ SUBSYSTEM_DEF(air)
 			return
 
 /datum/controller/subsystem/air/proc/process_deferred_airs(resumed = 0)
-	max_deferred_airs = max(deferred_airs.len,max_deferred_airs)
+	cur_deferred_airs = deferred_airs.len
+	max_deferred_airs = max(cur_deferred_airs,max_deferred_airs)
 	while(deferred_airs.len)
 		var/list/cur_op = deferred_airs[deferred_airs.len]
 		deferred_airs.len--
@@ -362,6 +377,24 @@ SUBSYSTEM_DEF(air)
 			return
 	*/
 
+/datum/controller/subsystem/air/proc/run_delay_heuristics()
+	if(!equalize_enabled)
+		cost_equalize = 0
+		if(should_do_equalization)
+			eq_cooldown--
+			if(eq_cooldown <= 0)
+				equalize_enabled = TRUE
+	var/total_thread_time = cost_turfs + cost_equalize + cost_groups + cost_post_process
+	if(total_thread_time)
+		var/wait_ms = wait * 100
+		var/delay_threshold = 1-(total_thread_time/wait_ms + cur_deferred_airs / 50)
+		share_max_steps = max(1,round(share_max_steps_target * delay_threshold, 1))
+		eq_cooldown += (1-delay_threshold) * (cost_equalize / total_thread_time) * 2
+		if(eq_cooldown > 0.5)
+			equalize_enabled = FALSE
+		excited_group_pressure_goal = max(0,excited_group_pressure_goal_target * (1 - delay_threshold))
+
+
 /datum/controller/subsystem/air/proc/process_turfs(resumed = 0)
 	if(process_turfs_auxtools(resumed,TICK_REMAINING_MS))
 		pause()
@@ -386,7 +419,7 @@ SUBSYSTEM_DEF(air)
 		pause()
 
 /datum/controller/subsystem/air/proc/finish_turf_processing(resumed = 0)
-	if(finish_turf_processing_auxtools(TICK_REMAINING_MS))
+	if(finish_turf_processing_auxtools(TICK_REMAINING_MS) || thread_running())
 		pause()
 
 /datum/controller/subsystem/air/proc/post_process_turfs(resumed = 0)
@@ -473,6 +506,20 @@ SUBSYSTEM_DEF(air)
 		A.Rebuild()
 	rebuild_queue.len = 0
 	cost_rebuilds = TICK_USAGE_REAL - start
+
+/datum/controller/subsystem/air/proc/generate_atmos()
+	atmos_gen = list()
+	for(var/T in subtypesof(/datum/atmosphere))
+		var/datum/atmosphere/atmostype = T
+		atmos_gen[initial(atmostype.id)] = new atmostype
+
+/datum/controller/subsystem/air/proc/preprocess_gas_string(gas_string)
+	if(!atmos_gen)
+		generate_atmos()
+	if(!atmos_gen[gas_string])
+		return gas_string
+	var/datum/atmosphere/mix = atmos_gen[gas_string]
+	return mix.gas_string
 
 #undef SSAIR_PIPENETS
 #undef SSAIR_ATMOSMACHINERY
