@@ -457,6 +457,10 @@ as performing this in action() will cause the upgrade to end up in the borg inst
 	desc = "An upgrade to a cyborg's hypospray, allowing it to \
 		pierce armor and thick material."
 	icon_state = "cyborg_upgrade3"
+	module_type = list(/obj/item/robot_module/medical,
+		/obj/item/robot_module/syndicate_medical)
+	var/list/additional_reagents = list()
+	module_flags = BORG_MODULE_MEDICAL
 
 /obj/item/borg/upgrade/piercing_hypospray/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -514,6 +518,7 @@ as performing this in action() will cause the upgrade to end up in the borg inst
 	module_type = list(
 		/obj/item/robot_module/medical,
 		/obj/item/robot_module/syndicate_medical)
+	module_flags = BORG_MODULE_MEDICAL
 
 /obj/item/borg/upgrade/advhealth/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
