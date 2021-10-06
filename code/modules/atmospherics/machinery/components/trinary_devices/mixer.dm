@@ -1,12 +1,11 @@
 ATMOS_MAPPING_LAYERS_PX_DOUBLE(/obj/machinery/atmospherics/component/trinary/mixer)
 
 /obj/machinery/atmospherics/component/trinary/mixer
-	icon_state = "mixer_off_map"
-	density = FALSE
-
 	name = "gas mixer"
 	desc = "Very useful for mixing gasses."
-
+	icon_state = "mixer_off_map"
+	icon = 'icons/modules/atmospherics/mixer.dmi'
+	density = FALSE
 	can_unwrench = TRUE
 
 	var/target_pressure = ONE_ATMOSPHERE

@@ -42,3 +42,6 @@
 			return SOUTH
 		if(4)
 			return WEST
+
+/obj/machinery/atmospherics/component/quaternary/proc/DirToIndex(dir, layer = pipe_layer)
+	return GetNodeIndex(dir, layer)

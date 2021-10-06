@@ -1,11 +1,10 @@
 ATMOS_MAPPING_LAYERS_PX_DOUBLE(/obj/machinery/atmospherics/component/trinary/filter)
 /obj/machinery/atmospherics/component/trinary/filter
-	icon_state = "filter_off_map"
-	density = FALSE
-
 	name = "gas filter"
 	desc = "Very useful for filtering gasses."
-
+	icon = 'icons/modules/atmospherics/filter.dmi'
+	icon_state = "filter-map"
+	density = FALSE
 	can_unwrench = TRUE
 	var/filter_type = null
 	var/frequency = 0

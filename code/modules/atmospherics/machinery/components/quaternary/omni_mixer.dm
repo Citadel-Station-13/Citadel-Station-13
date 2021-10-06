@@ -1,7 +1,10 @@
-ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/quaternary/filter, "mixer_omni_map")
+ATMOS_MAPPING_LAYERS_PX(/obj/machinery/atmospherics/component/quaternary/filter)
 
 /obj/machinery/atmospherics/component/quaternary/mixer
-
+	name = "omni mixer"
+	icon = 'icons/modules/atmospherics/machinery/omni_mixer.dmi'
+	desc = "A 4-way mixer. Can be configured to take up to 3 inputs."
+	icon_state = "mixer-map"
 	allow_alt_click_max_rate = TRUE
 	allow_ctrl_click_toggle_power = TRUE
 	ui_pump_control_capabilities = ATMOS_UI_CONTROL_POWER | ATMOS_UI_CONTROL_VOLUME | ATMOS_UI_CONTROL_PRESSURE | ATMOS_UI_CONTROL_ACTIVE | ATMOS_UI_POWER_USAGE | ATMOS_UI_FLOW_RATE
@@ -12,6 +15,8 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/quaternary/filter,
 	var/output_side
 	/// inputs - "[index]" to concentration
 	var/list/inputs
+	/// locked input index - don't ever change this concentration while auto-rebalancing
+	var/locked_input
 
 	// mappers
 	/// initial output side - direction, not index
@@ -25,6 +30,53 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/quaternary/filter,
 	/// initial concentration west
 	var/input_west_preset
 
+/obj/machinery/atmospherics/component/quaternary/mixer/Initialize()
+	set_input_dir(NORTH, input_north_preset)
+	set_input_dir(SOUTH, input_south_preset)
+	set_input_dir(EAST, input_east_preset)
+	set_input_dir(WEST, input_west_preset)
+	set_output_dir(output_preset)
+	. = ..()
+	auto_balance()
+
+/obj/machinery/atmospherics/component/quaternary/mixer/update_overlays()
+	. = ..()
+	var/mutable_appearance/out = mutable_appearance(icon, "output[on? "":"-off"]")
+	out.dir = IndexToDir(output_side)
+	for(var/i in inputs)
+		var/mutable_appearance/in = mutable_appearance(icon, "input[on? "":"-off"]")
+		in.dir = IndexToDir(text2num(i))
+
+/obj/machinery/atmospherics/component/quaternary/mixer/proc/set_output(index)
+	if(index < 0 || index > MaximumPossibleNodes())
+		return
+	output_side = index
+	inputs -= "[index]"
+	auto_balance()
+
+/obj/machinery/atmospherics/component/quaternary/mixer/proc/set_output_dir(dir)
+	return set_output(DirToIndex(dir))
+
+/obj/machinery/atmospherics/component/quaternary/mixer/proc/set_input(index, concentration)
+	if(index < 0 || index > MaximumPossibleNodes())
+		return
+	inputs["[index]"] = concentration
+	auto_balance()
+
+/obj/machinery/atmospherics/component/quaternary/mixer/proc/set_input_dir(dir, concentration)
+	return set_input(DirToIndex(dir, concentration))
+
+/obj/machinery/atmospherics/component/quaternary/mixer/proc/set_locked_input(index)
+	if(index < 0 || index > MaximumPossibleNodes())
+		return
+	locked_input = index
+
+/obj/machinery/atmospherics/component/quaternary/mixer/proc/set_locked_input_dir(dir)
+	return set_locked_input(DirToIndex(dir))
+
+/obj/machinery/atmospherics/component/quaternary/mixer/proc/auto_balance()
+	if(!(flags_1 & INITIALIZED_1))
+		return		// we do this at end of init
 
 
 #warn imp

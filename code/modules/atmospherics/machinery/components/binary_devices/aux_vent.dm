@@ -14,7 +14,7 @@
 #define INPUT_MIN	2
 #define OUTPUT_MAX	4
 
-/obj/mcahinery/atmospherics/component/binary/aux_vent
+/obj/machinery/atmospherics/component/binary/aux_vent
 	name = "air vent"
 	desc = "Has a valve and pump attached to it."
 	icon = 'icons/obj/atmospherics/component/unary_devices.dmi' //We reuse the normal vent icons!
