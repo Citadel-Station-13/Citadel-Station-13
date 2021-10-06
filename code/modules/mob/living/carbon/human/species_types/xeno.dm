@@ -15,4 +15,5 @@
 	exotic_bloodtype = "X*"
 	damage_overlay_type = "xeno"
 	liked_food = MEAT
+	disliked_food = null
 	species_category = SPECIES_CATEGORY_ALIEN
