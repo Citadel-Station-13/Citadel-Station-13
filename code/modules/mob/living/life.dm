@@ -150,10 +150,25 @@
 /mob/living/proc/handle_stomach()
 	return
 
-//this updates all special effects: knockdown, druggy, stuttering, etc..
+/*
+ * this updates some effects: mostly old stuff such as drunkness, druggy, stuttering, etc.
+ * that should be converted to status effect datums one day.
+ */
 /mob/living/proc/handle_status_effects()
 	if(confused)
 		confused = max(0, confused - 1)
+
+	if(stuttering)
+		stuttering = max(stuttering-1, 0)
+
+	if(slurring)
+		slurring = max(slurring-1,0)
+
+	if(cultslurring)
+		cultslurring = max(cultslurring-1, 0)
+
+	if(clockcultslurring)
+		clockcultslurring = max(clockcultslurring-1, 0)
 
 /mob/living/proc/handle_traits()
 	//Eyes

@@ -427,25 +427,30 @@
 	desc = "Comfy and supposedly flammable."
 	icon_state = "flannel"
 	item_state = "flannel"
-
-/obj/item/clothing/suit/jacket/flannel/red
+/obj/item/clothing/suit/toggle/jacket/flannel/red
 	name = "red flannel jacket"
 	desc = "Comfy and supposedly flammable."
 	icon_state = "flannel_red"
 	item_state = "flannel_red"
-
-/obj/item/clothing/suit/jacket/flannel/aqua
+	togglename = "buttons"
+/obj/item/clothing/suit/toggle/jacket/flannel/aqua
 	name = "aqua flannel jacket"
 	desc = "Comfy and supposedly flammable."
 	icon_state = "flannel_aqua"
 	item_state = "flannel_aqua"
-
-/obj/item/clothing/suit/jacket/flannel/brown
+	togglename = "buttons"
+/obj/item/clothing/suit/toggle/jacket/flannel/brown
 	name = "brown flannel jacket"
 	desc = "Comfy and supposedly flammable."
 	icon_state = "flannel_brown"
 	item_state = "flannel_brown"
-
+	togglename = "buttons"
+/obj/item/clothing/suit/toggle/jacket/whitehoodie
+	name = "soft hoodie"
+	desc = "A soft hoodie with a TailorCo brand on the tag."
+	icon_state = "white_hoodie"
+	item_state = "white_hoodie"
+	togglename = "zipper"
 /obj/item/clothing/suit/jacket/purplehoodie
 	name = "purple hoodie"
 	desc = "A soft purple hoodie with a TailorCo brand on the tag."
@@ -482,6 +487,24 @@
 	icon_state = "gothic_shirtcross"
 	item_state = "gothic_shirtcross"
 
+/obj/item/clothing/suit/jacket/gentlecoat
+	name = "grey jacket"
+	desc = "A grey coat with a TailorCo brand on the tag. Looks expensive."
+	icon_state = "gentlecoat"
+	item_state = "gentlecoat"
+
+/obj/item/clothing/suit/toggle/jacket/greenjacket
+	name = "green outdoorsmans jacket"
+	desc = "A green jacket with a TailorCo brand on the tag. Looks expensive."
+	icon_state = "coatar"
+	item_state = "coatar"
+	togglename = "zipper"
+/obj/item/clothing/suit/toggle/jacket/fancytrench
+	name = "grey trenchcoat"
+	desc = "A custom-tailored trenchcoat with a TailorCo brand on the tag."
+	icon_state = "fancytrench"
+	item_state = "fancytrench"
+	togglename = "buttons"
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"
 	desc = "Pompadour not included."

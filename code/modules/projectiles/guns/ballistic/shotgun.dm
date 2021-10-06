@@ -24,6 +24,7 @@
 		playsound(user, 'sound/weapons/shotguninsert.ogg', 60, 1)
 		A.update_icon()
 		update_icon()
+		user.SetNextAction(CLICK_CD_MELEE)
 
 /obj/item/gun/ballistic/shotgun/process_chamber(mob/living/user, empty_chamber = 0)
 	return ..() //changed argument value
@@ -240,7 +241,7 @@
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 	name = "warden's combat shotgun"
-	desc = "A modified version of the semi automatic combat shotgun with a collapsible stock. For close encounters."
+	desc = "A modified version of the semi-automatic combat shotgun with a collapsible stock and a safety that prevents firing while folded. For close encounters."
 	icon_state = "cshotgunc"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_NORMAL
@@ -250,7 +251,7 @@
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact/AltClick(mob/living/user)
 	. = ..()
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)) || item_flags && IN_STORAGE)
 		return
 	toggle_stock(user)
 	return TRUE
@@ -275,6 +276,14 @@
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact/update_icon_state()
 	icon_state = "[current_skin ? unique_reskin[current_skin] : "cshotgun"][stock ? "" : "c"]"
+
+/obj/item/gun/ballistic/shotgun/automatic/combat/compact/afterattack(atom/target, mob/living/user, flag, params)
+	if(!stock)
+		shoot_with_empty_chamber(user)
+		to_chat(user, "<span class='warning'>[src] won't fire with a folded stock!</span>")
+	else
+		. = ..()
+		update_icon()
 
 //Dual Feed Shotgun
 

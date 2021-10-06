@@ -13,6 +13,15 @@
 
 	display_order = JOB_DISPLAY_ORDER_PRISONER
 
+/datum/job/prisoner/after_spawn(mob/living/carbon/human/H, mob/M)
+	var/list/policies = CONFIG_GET(keyed_list/policy)
+	var/policy = policies[POLICYCONFIG_JOB_PRISONER]
+	if(policy)
+		var/mob/found = (M?.client && M) || (H?.client && H)
+		to_chat(found, "<br><span class='userdanger'>!!READ THIS!!</span><br><span class='warning'>The following is server-specific policy configuration and overrides anything said above if conflicting.</span>")
+		to_chat(found, "<br><br>")
+		to_chat(found, "<span class='boldnotice'>[policy]</span>")
+
 /datum/outfit/job/prisoner
 	name = "Prisoner"
 	jobtype = /datum/job/prisoner
