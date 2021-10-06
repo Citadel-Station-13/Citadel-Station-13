@@ -14,8 +14,8 @@ ATMOS_MAPPING_LAYERS_PX(/obj/machinery/atmospherics/component/quaternary/filters
 	var/input_index
 	/// output index
 	var/output_index
-	/// index to gasid - "[index]" = gasid"
-	var/list/inputs
+	/// index to gasid - "[index]" = gasid
+	var/list/filter
 	/// preset for mapping
 	var/input_preset
 	/// preset for mapping
@@ -29,10 +29,68 @@ ATMOS_MAPPING_LAYERS_PX(/obj/machinery/atmospherics/component/quaternary/filters
 	/// initial gasid west
 	var/west_gasid_preset
 
-/obj/machinery/atmospherics/component/quaternary/filter/proc/
+/obj/machinery/atmospherics/component/quaternary/filter/Initialize()
+	set_filter_dir(NORTH, north_gasid_preset)
+	set_filter_dir(SOUTH, south_gasid_preset)
+	set_filter_dir(EAST, east_gasid_preset)
+	set_filter_dir(WEST, west_gasid_preset)
+	set_input_dir(input_preset)
+	set_output_dir(output_preset)
+	return ..()
+
+/obj/machinery/atmospherics/component/quaternary/filter/proc/set_input(index)
+	if(!isnum(index))
+		return
+	input_index = index
+	if(output_index == index)
+		output_index = null
+	filter -= "[index]"
+
+/obj/machinery/atmospherics/component/quaternary/filter/proc/set_input_dir(dir)
+	if(isnull(dir))
+		return
+	return set_input(DirToIndex(dir))
+
+/obj/machinery/atmospherics/component/quaternary/filter/proc/set_output(index)
+	if(!isnum(index))
+		return
+	ASSERT(isnum(index))
+	output_index = index
+	if(input_index == index)
+		input_index = null
+	filter -= "[index]"
+
+/obj/machinery/atmospherics/component/quaternary/filter/proc/set_output_dir(dir)
+	if(isnull(dir))
+		return
+	return set_output(DirToIndex(dir))
+
+/obj/machinery/atmospherics/component/quaternary/filter/proc/set_filter(index, gasid)
+	if(!isnum(index) || !istext(gasid))
+		return
+	filter["[index]"] = gasid
+	for(var/other in filter)
+		if(filter[other] == gasid)
+			filter -= other
+	if(input_index == index)
+		input_index = null
+	if(output_index == index)
+		output_index = null
+
+/obj/machinery/atmospherics/component/quaternary/filter/proc/set_filter_dir(dir, gasid)
+	if(!isnum(dir))
+		return
+	return set_filter(DirToIndex(dir), gasid)
 
 /obj/machinery/atmospherics/component/quaternary/filter/update_overlays()
 	. = ..()
+	var/mutable_appearance/out = mutable_appearance(icon, "output[on? "":"-off"]")
+	out.dir = IndexToDir(output_index)
+	var/mutable_appearance/in = mutable_appearance(icon, "input[on?"":"-off"]")
+	in.dir = IndexToDir(input_index)
+	for(var/i in filter)
+		var/mutable_appearance/filt = mutable_appearance(icon, "filter[on? "":"-off"]")
+		filt.dir = IndexToDir(text2num(i))
 
 /obj/machinery/atmospherics/component/quaternary/filter/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -43,10 +101,17 @@ ATMOS_MAPPING_LAYERS_PX(/obj/machinery/atmospherics/component/quaternary/filters
 
 /obj/machinery/atmospherics/component/quaternary/filter/ui_static_data(mob/user)
 	. = ..()
-	.["gasids"] = SSair
+	.["gasids"] = GLOB.gas_data.ids
+	.["north"] = DirToIndex(NORTH)
+	.["south"] = DirToIndex(SOUTH)
+	.["east"] = DirToIndex(EAST)
+	.["west"] = DirToIndex(WEST)
 
 /obj/machinery/atmospherics/component/quaternary/filter/ui_data(mob/user)
 	. = ..()
+	.["input"] = input_index
+	.["output"] = output_index
+
 
 
 #warn impl

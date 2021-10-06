@@ -30,6 +30,8 @@
 		. = pipe_layer + ((. - 1) * PIPE_LAYER_TOTAL)
 
 /obj/machinery/atmospherics/component/quaternary/proc/IndexToDir(index)
+	if(isnull(index))
+		return null
 	if(pipe_flags & PIPE_ALL_LAYER)
 		index = FLOOR((index / PIPE_LAYER_TOTAL) - 0.01, 1) + 1		// jank, sue me lol
 	switch(index)
@@ -43,4 +45,6 @@
 			return WEST
 
 /obj/machinery/atmospherics/component/quaternary/proc/DirToIndex(dir, layer = pipe_layer)
+	if(isnull(dir))
+		return null
 	return GetNodeIndex(dir, layer)

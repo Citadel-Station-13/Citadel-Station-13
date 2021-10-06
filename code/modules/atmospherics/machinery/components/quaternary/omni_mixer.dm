@@ -78,6 +78,23 @@ ATMOS_MAPPING_LAYERS_PX(/obj/machinery/atmospherics/component/quaternary/filter)
 	if(!(flags_1 & INITIALIZED_1))
 		return		// we do this at end of init
 
+/obj/machinery/atmospherics/component/quaternary/mixer/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "OmniMixer")
+		ui.open()
+
+/obj/machinery/atmospherics/component/quaternary/mixer/ui_static_data(mob/user)
+	. = ..()
+	.["north"] = DirToIndex(NORTH)
+	.["south"] = DirToIndex(SOUTH)
+	.["east"] = DirToIndex(EAST)
+	.["west"] = DirToIndex(WEST)
+
+/obj/machinery/atmospherics/component/quaternary/mixer/ui_data(mob/user)
+	. = ..()
+
 
 #warn imp
 
