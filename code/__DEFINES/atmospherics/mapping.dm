@@ -159,11 +159,11 @@
 	##path/layer5 {									\
 		pipe_layer = 5;								\
 		icon_state = iconbase + "-5"				\
-	}
-	ATMOS_MAPPING_COLORS(path/layer1)							\
-	ATMOS_MAPPING_COLORS(path/layer2)							\
-	ATMOS_MAPPING_COLORS(path/layer3)							\
-	ATMOS_MAPPING_COLORS(path/layer4)							\
+	}												\
+	ATMOS_MAPPING_COLORS(path/layer1)				\
+	ATMOS_MAPPING_COLORS(path/layer2)				\
+	ATMOS_MAPPING_COLORS(path/layer3)				\
+	ATMOS_MAPPING_COLORS(path/layer4)				\
 	ATMOS_MAPPING_COLORS(path/layer5)
 
 /// Registers a path for default layer and color only, without more colors/layers

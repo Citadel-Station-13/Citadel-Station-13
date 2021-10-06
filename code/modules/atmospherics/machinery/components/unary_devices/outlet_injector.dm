@@ -1,4 +1,4 @@
-ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmosphehrics/component/unary/outlet_injector, "inje_map")
+ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/outlet_injector, "inje_map")
 
 /obj/machinery/atmospherics/component/unary/outlet_injector
 	icon_state = "inje_map"
