@@ -35,13 +35,13 @@
 			. = 1
 		else if(dir == (flipped? turn(src.dir, 90) : turn(src.dir, -90)))
 			. = 3
-	// t_layout: node 2 is front, node 1 is left, node 3 is right, RELATIVE TO FRONT
+	// t_layout: node 3 is front, node 1 is left, node 2 is right, RELATIVE TO FRONT
 	else
 		if(dir == src.dir)
-			. = 2
+			. = 3
 		else if(dir == (flipped? turn(src.dir, -90) : turn(src.dir, 90)))
 			. = 1
 		else if(dir == (flipped? turn(src.dir, 90) : turn(src.dir, -90)))
-			. = 3
+			. = 2
 	if(pipe_flags & PIPE_ALL_LAYER)
-		layer + ((. - 1) * PIPE_LAYER_TOTAL)
+		. = pipe_layer + ((. - 1) * PIPE_LAYER_TOTAL)

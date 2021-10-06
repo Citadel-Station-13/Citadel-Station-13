@@ -4,9 +4,9 @@
  * Connect layers together without intermixing
  */
 
-ATMOS_MAPPING_COLORS(/obj/machinery/atmospherics/mains/pipe)
-ATMOS_MAPPING_COLORS(/obj/machinery/atmospherics/mains/manifold)
-ATMOS_MAPPING_COLORS(/obj/machinery/atmospherics/mains/manifold4)
+ATMOS_MAPPING_MINIMAL(/obj/machinery/atmospherics/mains/pipe)
+ATMOS_MAPPING_MINIMAL(/obj/machinery/atmospherics/mains/manifold)
+ATMOS_MAPPING_MINIMAL(/obj/machinery/atmospherics/mains/manifold4)
 
 /obj/machinery/atmospherics/mains/pipe
 	name = "mains pipe"

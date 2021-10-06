@@ -26,4 +26,4 @@
 	else
 		. = 1
 	if(pipe_flags & PIPE_ALL_LAYER)
-		. = layer + ((. - 1) * PIPE_LAYER_TOTAL)
+		. = pipe_layer + ((. - 1) * PIPE_LAYER_TOTAL)

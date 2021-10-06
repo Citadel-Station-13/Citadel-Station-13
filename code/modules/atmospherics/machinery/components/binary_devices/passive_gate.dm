@@ -1,7 +1,7 @@
 /*
 
 Passive gate is similar to the regular pump except:
-* It doesn't require power
+* It doesn't require powers
 * Can not transfer low pressure to higher pressure (so it's more like a valve where you can control the flow)
 
 */
