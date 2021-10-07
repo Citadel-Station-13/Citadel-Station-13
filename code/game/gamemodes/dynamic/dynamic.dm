@@ -598,8 +598,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /datum/game_mode/dynamic/proc/midround_rule_draft()
 	set waitfor = FALSE
 	if (midround_injection_cooldown < world.time)
-		if (GLOB.dynamic_forced_extended)
-			return
+		/*if (GLOB.dynamic_forced_extended)
+			return*/
 
 		// Somehow it managed to trigger midround multiple times so this was moved here.
 		// There is no way this should be able to trigger an injection twice now.
