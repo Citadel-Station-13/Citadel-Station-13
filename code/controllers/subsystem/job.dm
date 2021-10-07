@@ -719,7 +719,7 @@ SUBSYSTEM_DEF(job)
 				if(length(i[LOADOUT_COLOR])) //handle loadout colors
 				 	//handle polychromic items
 					if((G.loadout_flags & LOADOUT_CAN_COLOR_POLYCHROMIC) && length(G.loadout_initial_colors))
-						var/datum/element/polychromic/polychromic = I.comp_lookup["item_worn_overlays"] //stupid way to do it but GetElement does not work for this
+						var/datum/element/polychromic/polychromic = LAZYACCESS(I.comp_lookup, "item_worn_overlays") //stupid way to do it but GetElement does not work for this
 						if(polychromic && istype(polychromic))
 							var/list/polychromic_entry = polychromic.colors_by_atom[I]
 							if(polychromic_entry)
