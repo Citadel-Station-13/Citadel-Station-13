@@ -208,6 +208,7 @@
 	var/count = length(callbacks)
 	if (!count)
 		return
+	ASSERT(resolution > 0)
 	if (!callback_args)
 		callback_args = list()
 
