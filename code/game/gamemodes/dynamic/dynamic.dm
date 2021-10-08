@@ -1,13 +1,16 @@
 #define RULESET_STOP_PROCESSING 1
 
-#define FAKE_REPORT_CHANCE 8
+#define FAKE_REPORT_CHANCE 20
 #define REPORT_NEG_DIVERGENCE -15
 #define REPORT_POS_DIVERGENCE 15
+#define EXTENDED_CURVE_CENTER -7
 
 // Are HIGH_IMPACT_RULESETs allowed to stack?
 GLOBAL_VAR_INIT(dynamic_no_stacking, TRUE)
 // If enabled does not accept or execute any rulesets.
 GLOBAL_VAR_INIT(dynamic_forced_extended, FALSE)
+// Antags still allowed, but no roundstart antags + midrounds are low impact
+GLOBAL_VAR_INIT(dynamic_extended, FALSE)
 // How high threat is required for HIGH_IMPACT_RULESETs stacking.
 // This is independent of dynamic_no_stacking.
 GLOBAL_VAR_INIT(dynamic_stacking_limit, 90)
@@ -309,9 +312,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /// Generates the threat level using lorentz distribution and assigns peaceful_percentage.
 /datum/game_mode/dynamic/proc/generate_threat()
+	if(GLOB.dynamic_extended)
+		threat_curve_centre = EXTENDED_CURVE_CENTER
 	var/relative_threat = LORENTZ_DISTRIBUTION(threat_curve_centre, threat_curve_width)
 	threat_level = round(lorentz_to_amount(relative_threat), 0.1)
-
 	peaceful_percentage = round(LORENTZ_CUMULATIVE_DISTRIBUTION(relative_threat, threat_curve_centre, threat_curve_width), 0.01)*100
 
 	SSblackbox.record_feedback("tally","dynamic_threat",threat_level,"Initial threat level")
@@ -321,14 +325,18 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /// Generates the midround and roundstart budgets
 /datum/game_mode/dynamic/proc/generate_budgets()
-	var/relative_round_start_budget_scale = LORENTZ_DISTRIBUTION(roundstart_split_curve_centre, roundstart_split_curve_width)
-	round_start_budget = round((lorentz_to_amount(relative_round_start_budget_scale) / 100) * threat_level, 0.1)
-	initial_round_start_budget = round_start_budget
-	mid_round_budget = threat_level - round_start_budget
+	if(GLOB.dynamic_extended)
+		mid_round_budget = threat_level
+		round_start_budget = 0
+	else
+		var/relative_round_start_budget_scale = LORENTZ_DISTRIBUTION(roundstart_split_curve_centre, roundstart_split_curve_width)
+		round_start_budget = round((lorentz_to_amount(relative_round_start_budget_scale) / 100) * threat_level, 0.1)
+		initial_round_start_budget = round_start_budget
+		mid_round_budget = threat_level - round_start_budget
 
 /datum/game_mode/dynamic/proc/setup_parameters()
 	log_game("DYNAMIC: Dynamic mode parameters for the round:")
-	log_game("DYNAMIC: Centre is [threat_curve_centre], Width is [threat_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
+	log_game("DYNAMIC: Centre is [threat_curve_centre], Width is [threat_curve_width], Extended is [GLOB.dynamic_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
 	log_game("DYNAMIC: Stacking limit is [GLOB.dynamic_stacking_limit].")
 	if(GLOB.dynamic_forced_threat_level >= 0)
 		threat_level = round(GLOB.dynamic_forced_threat_level, 0.1)
@@ -346,10 +354,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		shown_threat = clamp(threat_level + rand(REPORT_NEG_DIVERGENCE, REPORT_POS_DIVERGENCE), 0, 100)
 
 /datum/game_mode/dynamic/proc/set_cooldowns()
-	var/latejoin_injection_cooldown_middle = 0.5*(latejoin_delay_max + latejoin_delay_min)
+	var/coeff = GLOB.dynamic_extended ? 2 : 1
+	var/latejoin_injection_cooldown_middle = 0.5*(latejoin_delay_max + latejoin_delay_min) * coeff
 	latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), latejoin_delay_min, latejoin_delay_max)) + world.time
 
-	var/midround_injection_cooldown_middle = 0.5*(midround_delay_max + midround_delay_min)
+	var/midround_injection_cooldown_middle = 0.5*(midround_delay_max + midround_delay_min) * coeff
 	midround_injection_cooldown = round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), midround_delay_min, midround_delay_max)) + world.time
 
 /datum/game_mode/dynamic/pre_setup()
@@ -455,6 +464,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /datum/game_mode/dynamic/proc/roundstart(list/roundstart_rules)
 	if (GLOB.dynamic_forced_extended)
 		log_game("DYNAMIC: Starting a round of forced extended.")
+		return TRUE
+	if (GLOB.dynamic_extended)
+		log_game("DYNAMIC: Starting a round of dynamic extended.")
 		return TRUE
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
@@ -563,9 +575,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			return FALSE
 		// Check if the ruleset is high impact and if a high impact ruleset has been executed
 		else if(new_rule.flags & HIGH_IMPACT_RULESET)
-			if(threat_level < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
-				if(high_impact_ruleset_executed)
-					return FALSE
+			if(GLOB.dynamic_extended)
+				return FALSE
+			if(high_impact_ruleset_executed && threat_level < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+				return FALSE
 
 	var/population = current_players[CURRENT_LIVING_PLAYERS].len
 	if((new_rule.acceptable(population, threat_level) && new_rule.cost <= mid_round_budget) || forced)
@@ -598,8 +611,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /datum/game_mode/dynamic/proc/midround_rule_draft()
 	set waitfor = FALSE
 	if (midround_injection_cooldown < world.time)
-		/*if (GLOB.dynamic_forced_extended)
-			return*/
+		if (GLOB.dynamic_forced_extended)
+			return
 
 		// Somehow it managed to trigger midround multiple times so this was moved here.
 		// There is no way this should be able to trigger an injection twice now.
@@ -620,6 +633,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
 				if (!rule.weight)
 					continue
+				if(rule.flags & HIGH_IMPACT_RULESET)
+					if (high_impact_ruleset_executed && threat_level < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+						continue
+					if(GLOB.dynamic_extended)
+						continue
 				if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && mid_round_budget >= rule.cost)
 					rule.trim_candidates()
 					if (rule.ready())
