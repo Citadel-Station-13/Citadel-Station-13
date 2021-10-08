@@ -345,3 +345,5 @@
 
 /datum/config_entry/flag/atmos_equalize_enabled
 	default = FALSE
+
+/datum/config_entry/flag/dynamic_config_enabled

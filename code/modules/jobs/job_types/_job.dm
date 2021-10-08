@@ -63,6 +63,9 @@
 	var/list/mind_traits // Traits added to the mind of the mob assigned this job
 	var/list/blacklisted_quirks		//list of quirk typepaths blacklisted.
 
+/// Should this job be allowed to be picked for the bureaucratic error event?
+	var/allow_bureaucratic_error = TRUE
+
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
 
 	//If a job complies with dresscodes, loadout items will not be equipped instead of the job's outfit, instead placing the items into the player's backpack.

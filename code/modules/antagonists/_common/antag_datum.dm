@@ -55,9 +55,15 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/specialization(datum/mind/new_owner)
 	return src
 
+ ///Called by the transfer_to() mind proc after the mind (mind.current and new_character.mind) has moved but before the player (key and client) is transfered.
 /datum/antagonist/proc/on_body_transfer(mob/living/old_body, mob/living/new_body)
+	SHOULD_CALL_PARENT(TRUE)
 	remove_innate_effects(old_body)
+	if(old_body.stat != DEAD && !LAZYLEN(old_body.mind?.antag_datums))
+		old_body.remove_from_current_living_antags()
 	apply_innate_effects(new_body)
+	if(new_body.stat != DEAD)
+		new_body.add_to_current_living_antags()
 
 //This handles the application of antag huds/special abilities
 /datum/antagonist/proc/apply_innate_effects(mob/living/mob_override)
@@ -94,8 +100,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/create_team(datum/team/team)
 	return
 
-//Proc called when the datum is given to a mind.
+ ///Called by the add_antag_datum() mind proc after the instanced datum is added to the mind's antag_datums list.
 /datum/antagonist/proc/on_gain()
+	SHOULD_CALL_PARENT(TRUE)
 	set waitfor = FALSE
 	if(!(owner?.current))
 		return
@@ -113,6 +120,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 			if(istype(M))
 				M.name = "[name] Training"
 	owner.current.AddComponent(/datum/component/activity)
+	if(owner.current.stat != DEAD)
+		owner.current.add_to_current_living_antags()
 	SEND_SIGNAL(owner.current, COMSIG_MOB_ANTAG_ON_GAIN, src)
 
 /datum/antagonist/proc/is_banned(mob/M)
@@ -131,13 +140,17 @@ GLOBAL_LIST_EMPTY(antagonists)
 		owner.current.ghostize(0)
 		C.transfer_ckey(owner.current, FALSE)
 
+///Called by the remove_antag_datum() and remove_all_antag_datums() mind procs for the antag datum to handle its own removal and deletion.
 /datum/antagonist/proc/on_removal()
+	SHOULD_CALL_PARENT(TRUE)
 	remove_innate_effects()
 	clear_antag_moodies()
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
 		for(var/A in skill_modifiers)
 			owner.remove_skill_modifier(GET_SKILL_MOD_ID(A, type))
+		if(!LAZYLEN(owner.antag_datums))
+			owner.current.remove_from_current_living_antags()
 		if(!silent && owner.current)
 			farewell()
 	var/datum/team/team = get_team()
