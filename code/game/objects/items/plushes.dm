@@ -238,72 +238,73 @@
 		return
 	return ..()
 
-/obj/item/toy/plush/proc/love(obj/item/toy/plush/Kisser, mob/living/user)	//~<3
-	var/chance = 100	//to steal a kiss, surely there's a 100% chance no-one would reject a plush such as I?
-	var/concern = 20	//perhaps something might cloud true love with doubt
-	var/loyalty = 30	//why should another get between us?
-	var/duty = 50		//conquering another's is what I live for
+/obj/item/toy/plush/proc/love(obj/item/toy/plush/Kisser, mob/living/user) //~<3
+	var/chance = 100 //to steal a kiss, surely there's a 100% chance no-one would reject a plush such as I?
+	var/concern = 20 //perhaps something might cloud true love with doubt
+	var/loyalty = 30 //why should another get between us?
+	var/duty = 50 //conquering another's is what I live for
 
 	//we are not catholic
 	if(young == TRUE || Kisser.young == TRUE)
-		user.show_message("<span class='notice'>[src] plays tag with [Kisser].</span>", MSG_VISUAL,
-			"<span class='notice'>They're happy.</span>", 0)
+		user.show_message(span_notice("[src] plays tag with [Kisser]."), MSG_VISUAL,
+			span_notice("They're happy."), NONE)
 		Kisser.cheer_up()
 		cheer_up()
 
 	//never again
 	else if(Kisser in scorned)
 		//message, visible, alternate message, neither visible nor audible
-		user.show_message("<span class='notice'>[src] rejects the advances of [Kisser]!</span>", MSG_VISUAL,
-			"<span class='notice'>That didn't feel like it worked.</span>", 0)
+		user.show_message(span_notice("[src] rejects the advances of [Kisser]!"), MSG_VISUAL,
+			span_notice("That didn't feel like it worked."), NONE)
 	else if(src in Kisser.scorned)
-		user.show_message("<span class='notice'>[Kisser] realises who [src] is and turns away.</span>", MSG_VISUAL,
-			"<span class='notice'>That didn't feel like it worked.</span>", 0)
+		user.show_message(span_notice("[Kisser] realises who [src] is and turns away."), MSG_VISUAL,
+			span_notice("That didn't feel like it worked."), NONE)
 
 	//first comes love
-	else if(Kisser.lover != src && Kisser.partner != src)	//cannot be lovers or married
-		if(Kisser.lover)	//if the initiator has a lover
-			Kisser.lover.heartbreak(Kisser)	//the old lover can get over the kiss-and-run whilst the kisser has some fun
-			chance -= concern	//one heart already broken, what does another mean?
-		if(lover)	//if the recipient has a lover
-			chance -= loyalty	//mustn't... but those lips
-		if(partner)	//if the recipient has a partner
-			chance -= duty	//do we mate for life?
+	else if(Kisser.lover != src && Kisser.partner != src) //cannot be lovers or married
+		if(Kisser.lover) //if the initiator has a lover
+			Kisser.lover.heartbreak(Kisser) //the old lover can get over the kiss-and-run whilst the kisser has some fun
+			chance -= concern //one heart already broken, what does another mean?
+		if(lover) //if the recipient has a lover
+			chance -= loyalty //mustn't... but those lips
+		if(partner) //if the recipient has a partner
+			chance -= duty //do we mate for life?
 
-		if(prob(chance))	//did we bag a date?
-			user.visible_message("<span class='notice'>[user] makes [Kisser] kiss [src]!</span>",
-									"<span class='notice'>You make [Kisser] kiss [src]!</span>")
-			if(lover)	//who cares for the past, we live in the present
+		if(prob(chance)) //did we bag a date?
+			user.visible_message(span_notice("[user] makes [Kisser] kiss [src]!"),
+									span_notice("You make [Kisser] kiss [src]!"))
+			if(lover) //who cares for the past, we live in the present
 				lover.heartbreak(src)
 			new_lover(Kisser)
 			Kisser.new_lover(src)
 		else
-			user.show_message("<span class='notice'>[src] rejects the advances of [Kisser], maybe next time?</span>", MSG_VISUAL,
-								"<span class='notice'>That didn't feel like it worked, this time.</span>", 0)
+			user.show_message(span_notice("[src] rejects the advances of [Kisser], maybe next time?"), MSG_VISUAL,
+								span_notice("That didn't feel like it worked, this time."), NONE)
 
 	//then comes marriage
-	else if(Kisser.lover == src && Kisser.partner != src)	//need to be lovers (assumes loving is a two way street) but not married (also assumes similar)
-		user.visible_message("<span class='notice'>[user] pronounces [Kisser] and [src] married! D'aw.</span>",
-									"<span class='notice'>You pronounce [Kisser] and [src] married!</span>")
+	else if(Kisser.lover == src && Kisser.partner != src) //need to be lovers (assumes loving is a two way street) but not married (also assumes similar)
+		user.visible_message(span_notice("[user] pronounces [Kisser] and [src] married! D'aw."),
+									span_notice("You pronounce [Kisser] and [src] married!"))
 		new_partner(Kisser)
 		Kisser.new_partner(src)
 
 	//then comes a baby in a baby's carriage, or an adoption in an adoption's orphanage
-	else if(Kisser.partner == src && !plush_child)	//the one advancing does not take ownership of the child and we have a one child policy in the toyshop
-		user.visible_message("<span class='notice'>[user] is going to break [Kisser] and [src] by bashing them like that.</span>",
-									"<span class='notice'>[Kisser] passionately embraces [src] in your hands. Look away you perv!</span>")
+	else if(Kisser.partner == src && !plush_child) //the one advancing does not take ownership of the child and we have a one child policy in the toyshop
+		user.visible_message(span_notice("[user] is going to break [Kisser] and [src] by bashing them like that."),
+									span_notice("[Kisser] passionately embraces [src] in your hands. Look away you perv!"))
+		user.client.give_award(/datum/award/achievement/misc/rule8, user)
 		if(plop(Kisser))
-			user.visible_message("<span class='notice'>Something drops at the feet of [user].</span>",
-								"<span class='notice'>The miracle of oh god did that just come out of [src]?!</span>")
+			user.visible_message(span_notice("Something drops at the feet of [user]."),
+							span_notice("The miracle of oh god did that just come out of [src]?!"))
 
 	//then comes protection, or abstinence if we are catholic
 	else if(Kisser.partner == src && plush_child)
-		user.visible_message("<span class='notice'>[user] makes [Kisser] nuzzle [src]!</span>",
-									"<span class='notice'>You make [Kisser] nuzzle [src]!</span>")
+		user.visible_message(span_notice("[user] makes [Kisser] nuzzle [src]!"),
+									span_notice("You make [Kisser] nuzzle [src]!"))
 
 	//then oh fuck something unexpected happened
 	else
-		user.show_message("<span class='warning'>[Kisser] and [src] don't know what to do with one another.</span>", 0)
+		user.show_message(span_warning("[Kisser] and [src] don't know what to do with one another."), NONE)
 
 /obj/item/toy/plush/proc/heartbreak(obj/item/toy/plush/Brutus)
 	if(lover != Brutus)

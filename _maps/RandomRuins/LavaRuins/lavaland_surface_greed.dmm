@@ -17,11 +17,11 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 "f" = (
 /obj/structure/cursed_slot_machine,
 /turf/open/floor/carpet/black,
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 "g" = (
 /obj/structure/table/wood/poker,
 /obj/item/coin/mythril,
@@ -31,48 +31,48 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 "h" = (
 /obj/structure/table/wood/poker,
 /obj/item/coin/diamond,
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 "j" = (
 /obj/structure/table/wood/poker,
 /obj/item/coin/adamantine,
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 "k" = (
 /obj/machinery/computer/arcade/battle{
 	set_obj_flags = "EMAGGED"
 	},
 /turf/open/floor/carpet/black,
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 "l" = (
 /obj/item/coin/gold,
 /turf/open/floor/carpet/black,
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 "m" = (
 /turf/open/floor/carpet/black,
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 "n" = (
 /obj/structure/table/wood/poker,
 /obj/item/stack/spacecash/c1000,
 /turf/open/floor/carpet,
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 "o" = (
 /obj/item/storage/bag/money,
 /turf/open/floor/carpet/black,
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 "p" = (
 /obj/structure/table/wood/poker,
 /obj/item/stack/ore/gold,
 /turf/open/floor/carpet,
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 "q" = (
 /obj/structure/table/wood/poker,
 /obj/item/stack/spacecash/c20,
@@ -82,19 +82,19 @@
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 "r" = (
 /obj/structure/table/wood/poker,
 /obj/item/stack/spacecash/c500,
 /obj/item/stack/spacecash/c100,
 /obj/item/stack/spacecash/c1000,
 /turf/open/floor/carpet,
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 "s" = (
 /obj/structure/table/wood/poker,
 /obj/item/stack/spacecash/c200,
 /turf/open/floor/carpet,
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 "u" = (
 /obj/structure/table/wood/poker,
 /obj/item/stack/spacecash/c500,
@@ -104,30 +104,30 @@
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 "v" = (
 /obj/item/coin/gold,
 /obj/machinery/light/small,
 /turf/open/floor/carpet/black,
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 "w" = (
 /obj/item/storage/bag/money,
 /obj/machinery/light/small,
 /turf/open/floor/carpet/black,
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 "H" = (
 /turf/open/floor/carpet/purple,
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 "J" = (
 /obj/machinery/door/airlock/gold,
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/carpet/purple,
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 "W" = (
 /turf/closed/wall/mineral/cult{
 	sheet_amount = 0
 	},
-/area/ruin/powered/greed)
+/area/ruin/lavaland/powered/greed)
 
 (1,1,1) = {"
 a
