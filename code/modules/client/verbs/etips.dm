@@ -15,6 +15,6 @@
 	var/indelay = stripped_input(usr, "Enter the tooltip delay in milliseconds (default: 500)", "Enter tooltip delay", "", 10)
 	indelay = text2num(indelay)
 	if(usr)//is this what you mean?
-		prefs.tip_delay = indelay
+		prefs.tip_delay = max(indelay, 0.01)
 		prefs.save_preferences()
 		to_chat(usr, "<span class='danger'>Tooltip delay set to [indelay] milliseconds.</span>")
