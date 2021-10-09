@@ -95,20 +95,78 @@
 
 /mob/living/simple_animal/hostile/carp/cayenne
 	name = "Cayenne"
+	real_name = "Cayenne"
 	desc = "A failed Syndicate experiment in weaponized space carp technology, it now serves as a lovable mascot."
 	gender = FEMALE
-	regen_amount = 8
-
 	speak_emote = list("squeaks")
-	maxHealth = 90
-	health = 90
-	gold_core_spawnable = NO_SPAWN
-	faction = list(ROLE_SYNDICATE, "carp") //They are still a carp
 	AIStatus = AI_OFF
+	gold_core_spawnable = NO_SPAWN
+	faction = list(ROLE_SYNDICATE)
+	/// Keeping track of the nuke disk for the functionality of storing it.
+	var/obj/item/disk/nuclear/disky
+	/// Location of the file storing disk overlays
+	// var/icon/disk_overlay_file = 'icons/mob/carp.dmi'
+	/// Colored disk mouth appearance for adding it as a mouth overlay
+	var/mutable_appearance/colored_disk_mouth
 
-	harm_intent_damage = 12
-	obj_damage = 70
-	melee_damage_lower = 15
-	melee_damage_upper = 18
+/mob/living/simple_animal/hostile/carp/cayenne/Initialize()
+	. = ..()
+	// AddElement(/datum/element/pet_bonus, "bloops happily!")
+	// colored_disk_mouth = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth")
+	ADD_TRAIT(src, TRAIT_DISK_VERIFIER, INNATE_TRAIT) //carp can verify disky
+
+/mob/living/simple_animal/hostile/carp/cayenne/IsAdvancedToolUser()
+	return TRUE //carp SMART
+
+/mob/living/simple_animal/hostile/carp/cayenne/death(gibbed)
+	if(disky)
+		disky.forceMove(drop_location())
+		disky = null
+	return ..()
+
+/mob/living/simple_animal/hostile/carp/cayenne/Destroy(force)
+	QDEL_NULL(disky)
+	return ..()
+
+/mob/living/simple_animal/hostile/carp/cayenne/examine(mob/user)
+	. = ..()
+	if(disky)
+		. += span_notice("Wait... is that [disky] in [p_their()] mouth?")
+
+/mob/living/simple_animal/hostile/carp/cayenne/AttackingTarget(atom/attacked_target)
+	if(istype(attacked_target, /obj/item/disk/nuclear))
+		var/obj/item/disk/nuclear/potential_disky = attacked_target
+		if(potential_disky.anchored)
+			return
+		potential_disky.forceMove(src)
+		disky = potential_disky
+		to_chat(src, span_nicegreen("YES!! You manage to pick up [disky]. (Click anywhere to place it back down.)"))
+		update_icon()
+		if(!disky.fake)
+			client.give_award(/datum/award/achievement/misc/cayenne_disk, src)
+		return
+	if(disky)
+		if(isopenturf(attacked_target))
+			to_chat(src, span_notice("You place [disky] on [attacked_target]"))
+			disky.forceMove(attacked_target.drop_location())
+			disky = null
+			update_icon()
+		else
+			disky.melee_attack_chain(src, attacked_target)
+		return
+	return ..()
+
+/mob/living/simple_animal/hostile/carp/cayenne/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(disky == gone)
+		disky = null
+		update_icon()
+
+/mob/living/simple_animal/hostile/carp/cayenne/update_overlays()
+	. = ..()
+	if(!disky || stat == DEAD)
+		return
+	// . += colored_disk_mouth
+	// . += mutable_appearance(disk_overlay_file, "disk_overlay")
 
 #undef REGENERATION_DELAY

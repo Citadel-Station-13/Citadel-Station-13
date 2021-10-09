@@ -102,12 +102,22 @@
 		new /obj/item/disk/nanite_program(src)
 
 // Ordinary survival box
+/obj/item/storage/box/survival
+	name = "survival box"
+	desc = "A box with the bare essentials of ensuring the survival of you and others."
+	icon_state = "internals"
+	illustration = "emergencytank"
+	var/mask_type = /obj/item/clothing/mask/breath
+	var/internal_type = /obj/item/tank/internals/emergency_oxygen
+	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
+
 /obj/item/storage/box/survival/PopulateContents()
-	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
+	new mask_type(src)
+	if(!isnull(medipen_type))
+		new medipen_type(src)
 
 	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen(src)
+		new internal_type(src)
 	else
 		new /obj/item/tank/internals/plasmaman/belt(src)
 
@@ -115,10 +125,13 @@
 	..() // we want the survival stuff too.
 	new /obj/item/radio/off(src)
 
-/obj/item/storage/box/survival_mining/PopulateContents()
-	new /obj/item/clothing/mask/gas/explorer(src)
+// Mining survival box
+/obj/item/storage/box/survival/mining
+	mask_type = /obj/item/clothing/mask/gas/explorer
+
+/obj/item/storage/box/survival/mining/PopulateContents()
+	..()
 	new /obj/item/crowbar/red(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
 
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen(src)
@@ -126,39 +139,30 @@
 		new /obj/item/tank/internals/plasmaman/belt(src)
 
 // Engineer survival box
-/obj/item/storage/box/engineer/PopulateContents()
-	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
+/obj/item/storage/box/survival/engineer
+	name = "extended-capacity survival box"
+	desc = "A box with the bare essentials of ensuring the survival of you and others. This one is labelled to contain an extended-capacity tank."
+	illustration = "extendedtank"
+	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
 
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen/engi(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
-
-/obj/item/storage/box/engineer/radio/PopulateContents()
+/obj/item/storage/box/survival/engineer/radio/PopulateContents()
 	..() // we want the regular items too.
 	new /obj/item/radio/off(src)
 
 // Syndie survival box
-/obj/item/storage/box/syndie/PopulateContents()
-	new /obj/item/clothing/mask/gas/syndicate(src)
-
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen/engi(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
+/obj/item/storage/box/survival/syndie //why is this its own thing if it's just the engi box with a syndie mask and medipen?
+	name = "extended-capacity survival box"
+	desc = "A box with the bare essentials of ensuring the survival of you and others. This one is labelled to contain an extended-capacity tank."
+	illustration = "extendedtank"
+	mask_type = /obj/item/clothing/mask/gas/syndicate
+	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
+	medipen_type = null
 
 // Security survival box
-/obj/item/storage/box/security/PopulateContents()
-	new /obj/item/clothing/mask/gas/sechailer(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
+/obj/item/storage/box/survival/security
+	mask_type = /obj/item/clothing/mask/gas/sechailer
 
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
-
-/obj/item/storage/box/security/radio/PopulateContents()
+/obj/item/storage/box/survival/security/radio/PopulateContents()
 	..() // we want the regular stuff too
 	new /obj/item/radio/off(src)
 
@@ -1243,6 +1247,26 @@
 /obj/item/storage/box/pink
 	icon_state = "box_pink"
 	illustration = null
+
+/obj/item/storage/box/emergencytank
+	name = "emergency oxygen tank box"
+	desc = "A box of emergency oxygen tanks."
+	illustration = "emergencytank"
+
+/obj/item/storage/box/emergencytank/PopulateContents()
+	..()
+	for(var/i in 1 to 7)
+		new /obj/item/tank/internals/emergency_oxygen(src) //in case anyone ever wants to do anything with spawning them, apart from crafting the box
+
+/obj/item/storage/box/engitank
+	name = "extended-capacity emergency oxygen tank box"
+	desc = "A box of extended-capacity emergency oxygen tanks."
+	illustration = "extendedtank"
+
+/obj/item/storage/box/engitank/PopulateContents()
+	..()
+	for(var/i in 1 to 7)
+		new /obj/item/tank/internals/emergency_oxygen/engi(src) //in case anyone ever wants to do anything with spawning them, apart from crafting the box
 
 /obj/item/storage/box/mre //base MRE type.
 	name = "Nanotrasen MRE Ration Kit Menu 0"

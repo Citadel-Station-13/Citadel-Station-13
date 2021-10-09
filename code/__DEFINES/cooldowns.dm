@@ -28,6 +28,11 @@
 //INDEXES
 #define COOLDOWN_EMPLOYMENT_CABINET	"employment cabinet"
 
+//car cooldowns
+#define COOLDOWN_CAR_HONK "car_honk"
+
+//clown car cooldowns
+#define COOLDOWN_CLOWNCAR_RANDOMNESS "clown_car_randomness"
 
 //TIMER COOLDOWN MACROS
 

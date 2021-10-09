@@ -264,3 +264,36 @@
 			speak_dejavu += speech_args[SPEECH_MESSAGE]
 	else
 		speak_dejavu += speech_args[SPEECH_MESSAGE]
+
+/datum/brain_trauma/mild/redacted
+	name = "Confidentiality Trauma"
+	desc = "Patient's language neurons seem to be warped in a strange manner, resulting in them being unable to speak properly."
+	scan_desc = "<b>\[REDACTED]</b>"
+	gain_text = "<span class='warning'>You feel the need to <b>\[REDACTED]</b></span>"
+	lose_text = "<span class='notice'>You no longer feel the need to <b>\[REDACTED]</b>.</span>"
+
+/datum/brain_trauma/mild/redacted/handle_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message)
+		var/list/message_split = splittext(message, " ")
+		var/list/new_message = list()
+
+		for(var/word in message_split)
+			var/suffix = ""
+			var/suffix_foundon = 0
+			for(var/potential_suffix in list("." , "," , ";" , "!" , ":" , "?"))
+				suffix_foundon = findtext(word, potential_suffix, -length(potential_suffix))
+				if(suffix_foundon)
+					suffix = potential_suffix
+					break
+
+			if(suffix_foundon)
+				word = copytext(word, 1, suffix_foundon)
+
+			word = html_decode(word)
+
+			if(prob(25))
+				word = pick(list("<b>\[REDACTED]</b>", "<b>\[CLASSIFIED]</b>", "<b>\[EXPUNGED]</b>"))
+			new_message += word + suffix
+		message = jointext(new_message, " ")
+	speech_args[SPEECH_MESSAGE] = trim(message)

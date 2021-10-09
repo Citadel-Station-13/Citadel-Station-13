@@ -82,6 +82,7 @@
 			. += ""
 			. += "Chemical Storage: [changeling.chem_charges]/[changeling.chem_storage]"
 			. += "Absorbed DNA: [changeling.absorbedcount]"
+
 	//NINJACODE
 	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)) //Only display if actually a ninja.
 		var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
@@ -90,7 +91,6 @@
 		if(SN.s_initialized)
 			//Suit gear
 			. += "Energy Charge: [round(SN.cell.charge/100)]%"
-			. += "Smoke Bombs: \Roman [SN.s_bombs]"
 			//Ninja status
 			. += "Fingerprints: [md5(dna.uni_identity)]"
 			. += "Unique Identity: [dna.unique_enzymes]"
@@ -109,7 +109,6 @@
 				for(var/thing in diseases)
 					var/datum/disease/D = thing
 					. += "* [D.name], Type: [D.spread_text], Stage: [D.stage]/[D.max_stages], Possible Cure: [D.cure_text]"
-
 
 /mob/living/carbon/human/show_inv(mob/user)
 	user.set_machine(src)

@@ -568,6 +568,12 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(usr.incapacitated() || !Adjacent(usr) || usr.lying)
 		return
 
+	if(iscyborg(usr))
+		var/obj/item/gripper/gripper = usr.get_active_held_item(TRUE)
+		if(istype(gripper))
+			gripper.pre_attack(src, usr, get_dist(src, usr))
+		return
+
 	if(usr.get_active_held_item() == null) // Let me know if this has any problems -Yota
 		usr.UnarmedAttack(src)
 
@@ -879,13 +885,13 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/MouseEntered(location, control, params)
 	SEND_SIGNAL(src, COMSIG_ITEM_MOUSE_ENTER, location, control, params)
-	if((item_flags & IN_INVENTORY || item_flags & IN_STORAGE) && usr.client.prefs.enable_tips && !QDELETED(src) || isobserver(usr))
+	if((item_flags & IN_INVENTORY || item_flags & IN_STORAGE) && usr.client.prefs.enable_tips && !QDELETED(src))
 		var/timedelay = usr.client.prefs.tip_delay/100
 		var/user = usr
 		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, user), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
 	var/mob/living/L = usr
-	if(istype(L) && L.incapacitated())
-		apply_outline(COLOR_RED_GRAY)
+	if(istype(L) && (L.incapacitated() || (current_equipped_slot in L.check_obscured_slots()) || !L.canUnEquip(src)))
+		apply_outline(_size = 3)
 	else
 		apply_outline()
 
@@ -899,8 +905,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	closeToolTip(usr)
 	remove_outline()
 
-/obj/item/proc/apply_outline(colour = null)
-	if(!(item_flags & IN_INVENTORY || item_flags & IN_STORAGE) || QDELETED(src))
+/obj/item/proc/apply_outline(colour = null, _size=1)
+	if(!(item_flags & IN_INVENTORY || item_flags & IN_STORAGE) || QDELETED(src) || isobserver(usr))
 		return
 	if(usr.client)
 		if(!usr.client.prefs.outline_enabled)
@@ -914,7 +920,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			colour = COLOR_BLUE_GRAY
 	if(outline_filter)
 		filters -= outline_filter
-	outline_filter = filter(type="outline", size=1, color=colour)
+	outline_filter = filter(type="outline", size=_size, color=colour)
 	filters += outline_filter
 
 /obj/item/proc/remove_outline()

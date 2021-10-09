@@ -1451,7 +1451,7 @@
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
 	..()
 	metabolizer.AdjustAllImmobility(-20 * REM * delta_time)
-	metabolizer.adjustStaminaLoss(-10 * REM * delta_time, 0)
+	metabolizer.adjustStaminaLoss(-30 * REM * delta_time, 0)
 	metabolizer.Jitter(10 * REM * delta_time)
 	metabolizer.Dizzy(10 * REM * delta_time)
 	return TRUE
@@ -1477,7 +1477,7 @@
 
 /datum/reagent/medicine/changelinghaste
 	name = "Changeling Haste"
-	description = "Drastically increases movement speed, but deals toxin damage."
+	description = "Drastically increases movement speed."
 	color = "#AE151D"
 	metabolization_rate = 2.5 * REAGENTS_METABOLISM
 
@@ -1488,12 +1488,6 @@
 /datum/reagent/medicine/changelinghaste/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/changelinghaste)
 	..()
-
-/datum/reagent/medicine/changelinghaste/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
-	metabolizer.adjustToxLoss(2 * REM * delta_time, 0)
-	..()
-	return TRUE
-
 
 /datum/reagent/medicine/corazone
 	// Heart attack code will not do damage if corazone is present
