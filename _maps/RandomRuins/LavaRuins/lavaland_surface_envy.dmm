@@ -10,7 +10,7 @@
 /area/lavaland/surface/outdoors)
 "d" = (
 /turf/closed/wall/rust,
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "f" = (
 /obj/structure/mirror{
 	broken = 1;
@@ -21,7 +21,7 @@
 /obj/item/clothing/suit/hooded/bloated_human,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "g" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/structure/mirror{
@@ -31,18 +31,18 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "h" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "i" = (
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "j" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "k" = (
 /obj/structure/mirror{
 	broken = 1;
@@ -53,7 +53,7 @@
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "l" = (
 /obj/structure/mirror{
 	broken = 1;
@@ -62,7 +62,7 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "m" = (
 /obj/structure/mirror{
 	broken = 1;
@@ -71,12 +71,12 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "n" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "o" = (
 /obj/structure/mirror{
 	broken = 1;
@@ -87,11 +87,11 @@
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "p" = (
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "A" = (
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -105,7 +105,7 @@
 	},
 /obj/item/kitchen/knife/envy,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 
 (1,1,1) = {"
 a

@@ -33,6 +33,13 @@
 
 	. = ..()
 
+	GLOB.new_player_list += src
+
+/mob/dead/new_player/Destroy()
+	GLOB.new_player_list -= src
+
+	return ..()
+
 /mob/dead/new_player/prepare_huds()
 	return
 
@@ -391,7 +398,7 @@
 				var/id_max = text2num(href_list["maxid"])
 
 				if( (id_max - id_min) > 100 )	//Basic exploit prevention
-					                            //(protip, this stops no exploits)
+												//(protip, this stops no exploits)
 					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
 					return
 

@@ -78,7 +78,7 @@
 	animate(effect, alpha = 0, pixel_x = px * 1.5, pixel_y = py * 1.5, time = 3, flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
 
 /obj/item/shield/proc/bash_target(mob/living/user, mob/living/target, bashdir, harmful)
-	if(!(target.status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE))	// should probably add stun absorption check at some point I guess..
+	if(!(HAS_TRAIT(target, CANKNOCKDOWN)) || HAS_TRAIT(target, TRAIT_STUNIMMUNE))	// should probably add stun absorption check at some point I guess..
 		// unified stun absorption system when lol
 		target.visible_message("<span class='warning'>[user] slams [target] with [src], but [target] doesn't falter!</span>", "<span class='userdanger'>[user] slams you with [src], but it barely fazes you!</span>")
 		return FALSE
