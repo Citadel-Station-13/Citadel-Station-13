@@ -246,15 +246,15 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_NORMAL
 	var/stock = FALSE
+	var/extend_sound = 'sound/weapons/batonextend.ogg'
 	recoil = 5
 	spread = 2
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact/AltClick(mob/living/user)
-	. = ..()
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)) || item_flags && IN_STORAGE)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)) || item_flags & IN_STORAGE)
 		return
 	toggle_stock(user)
-	return TRUE
+	. = ..()
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact/examine(mob/user)
 	. = ..()
@@ -272,6 +272,7 @@
 		to_chat(user, "You fold the stock.")
 		recoil = 5
 		spread = 2
+	playsound(src.loc, extend_sound, 50, 1)
 	update_icon()
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact/update_icon_state()
