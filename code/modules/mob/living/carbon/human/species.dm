@@ -586,7 +586,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
-	H.remove_overlay(HAIR_LAYER)
+	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(-HAIR_LAYER))
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 	if(!HD) //Decapitated
 		return
@@ -724,15 +724,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(hair_overlay.icon)
 			standing += hair_overlay
 
-	if(standing.len)
-		H.overlays_standing[HAIR_LAYER] = standing
-
-	H.apply_overlay(HAIR_LAYER)
+	H.full_appearance.appearance_list[MISC_APPEARANCE].add_data(hair_overlay, num2text(-HAIR_LAYER))
 
 /datum/species/proc/handle_body(mob/living/carbon/human/H)
-	H.remove_overlay(BODY_LAYER)
-
-	var/list/standing = list()
+	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(LIPS_APPEARANCE))
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 
@@ -746,31 +741,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				lip_overlay.pixel_x += H.dna.species.offset_features[OFFSET_LIPS][1]
 				lip_overlay.pixel_y += H.dna.species.offset_features[OFFSET_LIPS][2]
 
-			standing += lip_overlay
+			H.full_appearance.appearance_list[MISC_APPEARANCE].add_data(lip_overlay, LIPS_APPEARANCE)
 
 		// eyes
-		if(!(NOEYES in species_traits))
-			var/has_eyes = H.getorganslot(ORGAN_SLOT_EYES)
-			if(!has_eyes)
-				standing += mutable_appearance('icons/mob/eyes.dmi', "eyes_missing", -BODY_LAYER)
-			else
-				var/left_state = DEFAULT_LEFT_EYE_STATE
-				var/right_state = DEFAULT_RIGHT_EYE_STATE
-				if(eye_type in GLOB.eye_types)
-					left_state = eye_type + "_left_eye"
-					right_state = eye_type + "_right_eye"
-				var/mutable_appearance/left_eye = mutable_appearance('icons/mob/eyes.dmi', left_state, -BODY_LAYER)
-				var/mutable_appearance/right_eye = mutable_appearance('icons/mob/eyes.dmi', right_state, -BODY_LAYER)
-				if((EYECOLOR in species_traits) && has_eyes)
-					left_eye.color = "#" + H.left_eye_color
-					right_eye.color = "#" + H.right_eye_color
-				if(OFFSET_EYES in offset_features)
-					left_eye.pixel_x += offset_features[OFFSET_EYES][1]
-					left_eye.pixel_y += offset_features[OFFSET_EYES][2]
-					right_eye.pixel_x += offset_features[OFFSET_EYES][1]
-					right_eye.pixel_y += offset_features[OFFSET_EYES][2]
-				standing += left_eye
-				standing += right_eye
+		update_eyes()
 
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))
@@ -787,7 +761,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				var/mutable_appearance/MA = mutable_appearance(S.icon, "[S.icon_state][digilegs]", -BODY_LAYER)
 				if(S.has_color)
 					MA.color = "#[H.socks_color]"
-				standing += MA
+				H.full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(MA, SOCKS_APPEARANCE)
 
 		if(H.underwear && !H.hidden_underwear)
 			if(H.saved_underwear)
@@ -799,7 +773,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				var/mutable_appearance/MA = mutable_appearance(B.icon, "[B.icon_state][digilegs]", -BODY_LAYER)
 				if(B.has_color)
 					MA.color = "#[H.undie_color]"
-				standing += MA
+				H.full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(MA, UNDERWEAR_APPEARANCE)
 
 		if(H.undershirt && !H.hidden_undershirt)
 			if(H.saved_undershirt)
@@ -815,22 +789,19 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					MA = mutable_appearance(T.icon, state, -BODY_LAYER)
 				if(T.has_color)
 					MA.color = "#[H.shirt_color]"
-				standing += MA
+				H.full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(MA, UNDERSHIRT_APPEARANCE)
 
-	if(standing.len)
-		H.overlays_standing[BODY_LAYER] = standing
-
-	H.apply_overlay(BODY_LAYER)
 	handle_mutant_bodyparts(H)
 
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
 
-	H.remove_overlay(BODY_BEHIND_LAYER)
-	H.remove_overlay(BODY_ADJ_LAYER)
-	H.remove_overlay(BODY_ADJ_UPPER_LAYER)
-	H.remove_overlay(BODY_FRONT_LAYER)
-	H.remove_overlay(HORNS_LAYER)
+
+	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(-BODY_BEHIND_LAYER))
+	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(-BODY_ADJ_LAYER))
+	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(-BODY_ADJ_UPPER_LAYER))
+	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(-BODY_FRONT_LAYER))
+	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(-HORNS_LAYER))
 
 	if(!length(mutant_bodyparts))
 		return

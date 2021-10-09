@@ -1,7 +1,19 @@
 // carbon appearance, has helper procs that calculate appearances for things carbons have, specifically: limbs
 /mob/living/carbon/proc/get_limb_appearance()
 	var/list/limb_appearances = list()
+
+	// handles taur leg hiding
+	var/static/list/leg_day = typecacheof(list(/obj/item/bodypart/r_leg, /obj/item/bodypart/l_leg))
+	var/is_taur = FALSE
+	if(dna?.species.mutant_bodyparts["taur"])
+		var/datum/sprite_accessory/taur/T = GLOB.taur_list[dna.features["taur"]]
+		if(T?.hide_legs)
+			is_taur = TRUE
+
 	for(var/obj/item/bodypart/bodypart in bodyparts)
+		// hide legs if applicable
+		if(is_taur && leg_day[bodypart.type])
+			continue
 		// get_limb_icon returns a list of images for the limb and its markings if applicable
 		// the argument is for if the limb is dismembered or not
 		limb_appearances[bodypart.body_zone] = bodypart.get_limb_icon(FALSE)

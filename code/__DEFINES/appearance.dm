@@ -7,3 +7,7 @@
 #define EYES_APPEARANCE			"eyes"
 #define LEFT_EYE_APPEARANCE		1 // it's always the first of the two
 #define RIGHT_EYE_APPEARANCE 	2 // it's always the second of the two
+#define LIPS_APPEARANCE			"lips"
+#define SOCKS_APPEARANCE		"socks"
+#define UNDERWEAR_APPEARANCE	"underwear"
+#define UNDERSHIRT_APPEARANCE	"undershirt"

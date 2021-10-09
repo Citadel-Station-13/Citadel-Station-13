@@ -1,20 +1,3 @@
-/mob/living/carbon
-	var/list/overlays_standing[TOTAL_LAYERS]
-
-/mob/living/carbon/proc/apply_overlay(cache_index)
-	/*
-	if((. = overlays_standing[cache_index]))
-		add_overlay(.)
-	*/
-
-/mob/living/carbon/proc/remove_overlay(cache_index)
-	/*
-	var/I = overlays_standing[cache_index]
-	if(I)
-		cut_overlay(I)
-		overlays_standing[cache_index] = null
-	*/
-
 /mob/living/carbon/regenerate_icons()
 	if(mob_transforming)
 		return TRUE
@@ -70,7 +53,6 @@
 		dam_colors = H.dna.species.exotic_blood_color
 
 	var/mutable_appearance/damage_overlay = mutable_appearance('icons/mob/dam_mob.dmi', "blank", -DAMAGE_LAYER, color = dam_colors)
-	overlays_standing[DAMAGE_LAYER] = damage_overlay
 
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
@@ -80,7 +62,7 @@
 			if(BP.burnstate)
 				damage_overlay.add_overlay("[BP.dmg_overlay_type]_[BP.body_zone]_0[BP.burnstate]")
 
-	apply_overlay(DAMAGE_LAYER)
+	full_appearance.appearance_list[MISC_APPEARANCE].add_data(damage_overlay, num2text(-DAMAGE_LAYER))
 
 
 /mob/living/carbon/update_inv_wear_mask()
@@ -221,7 +203,7 @@
 			continue
 		new_limbs += BP.get_limb_icon()
 	if(new_limbs.len)
-		overlays_standing[BODYPARTS_LAYER] = new_limbs
+		full_appearance.appearance_list[BODYPART_APPEARANCE].add_data(
 		limb_icon_cache[icon_render_key] = new_limbs
 
 	apply_overlay(BODYPARTS_LAYER)
@@ -260,12 +242,3 @@
 
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += "-husk"
-
-
-//change the mob's icon to the one matching its key
-/mob/living/carbon/proc/load_limb_from_cache()
-	if(limb_icon_cache[icon_render_key])
-		remove_overlay(BODYPARTS_LAYER)
-		overlays_standing[BODYPARTS_LAYER] = limb_icon_cache[icon_render_key]
-		apply_overlay(BODYPARTS_LAYER)
-	update_damage_overlays()

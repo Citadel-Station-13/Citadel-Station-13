@@ -976,11 +976,10 @@
 /mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
 	var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', fire_icon, -FIRE_LAYER)
 	new_fire_overlay.appearance_flags = RESET_COLOR
-	overlays_standing[FIRE_LAYER] = new_fire_overlay
-	apply_overlay(FIRE_LAYER)
+	full_appearance.appearance_list[MISC_APPEARANCE].add_data(new_fire_overlay, "fakefire")
 
 /mob/living/carbon/fakefireextinguish()
-	remove_overlay(FIRE_LAYER)
+	full_appearance.appearance_list[MISC_APPEARANCE].remove_data("fakefire")
 
 
 /mob/living/carbon/proc/devour_mob(mob/living/carbon/C, devour_time = 130)

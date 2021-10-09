@@ -10,7 +10,7 @@
 		gorilla_overlays[cache_index] = null
 
 /mob/living/simple_animal/hostile/gorilla/update_inv_hands()
-	cut_overlays("standing_overlay")
+	cut_overlays("standing_overlay") // note: not part of the old standing overlay system, just the same name
 	remove_overlay(GORILLA_HANDS_LAYER)
 
 	var/standing = FALSE
