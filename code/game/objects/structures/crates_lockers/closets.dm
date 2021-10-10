@@ -541,7 +541,7 @@
 		for(var/obj/O in src)
 			O.emp_act(severity)
 	if(!secure || broken)
-		return ..()
+		return
 	if(prob(severity/2))
 		locked = !locked
 		update_icon()
