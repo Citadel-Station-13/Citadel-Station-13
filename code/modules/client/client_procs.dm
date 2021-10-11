@@ -83,6 +83,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
 		return
 
+	last_activity = world.time
+
 	//Logs all hrefs
 	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
 
@@ -222,6 +224,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	///////////
 
 /client/New(TopicData)
+	last_activity = world.time
 	world.SetConfig("APP/admin", ckey, "role=admin")
 	var/tdata = TopicData //save this for later use
 	TopicData = null							//Prevent calls to client.Topic from connect
@@ -851,6 +854,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/Click(atom/object, atom/location, control, params, ignore_spam = FALSE, extra_info)
 	if(last_click > world.time - world.tick_lag)
 		return
+	last_activity = world.time
 	last_click = world.time
 	var/ab = FALSE
 	var/list/L = params2list(params)
@@ -923,6 +927,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 //checks if a client is afk
 //3000 frames = 5 minutes
 /client/proc/is_afk(duration = CONFIG_GET(number/inactivity_period))
+	var/inactivity = world.time - last_activity
 	if(inactivity > duration)
 		return inactivity
 	return FALSE
