@@ -356,6 +356,90 @@
 	icon_state = "sakura_kimono"
 	item_state = "sakura_kimono"
 
+/obj/item/clothing/under/costume/irs
+	name = "internal revenue service outfit"
+	icon_state = "irs_jumpsuit"
+	item_state = "irs_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/osi
+	name = "O.S.I. jumpsuit"
+	icon_state = "osi_jumpsuit"
+	item_state = "osi_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/tmc
+	name = "Lost MC clothing"
+	icon_state = "tmc_jumpsuit"
+	item_state = "tmc_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/pg
+	name = "powder ganger prison jumpsuit"
+	icon_state = "pg_jumpsuit"
+	item_state = "pg_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/driscoll
+	name = "O'Driscoll outfit"
+	icon_state = "driscoll_jumpsuit"
+	item_state = "driscoll_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/deckers
+	name = "deckers outfit"
+	icon_state = "decker_jumpsuit"
+	item_state = "decker_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/morningstar
+	name = "Morningstar suit"
+	icon_state = "morningstar_jumpsuit"
+	item_state = "morningstar_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/saints
+	name = "Saints outfit"
+	icon_state = "saints_jumpsuit"
+	item_state = "saints_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/phantom
+	name = "Phantom Thief outfit"
+	icon_state = "phantom_jumpsuit"
+	item_state = "phantom_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/allies
+	name = "allies tanktop"
+	icon_state = "allies_uniform"
+	item_state = "allies_uniform"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/soviet_families
+	name = "soviet conscript uniform"
+	icon_state = "soviet_uniform"
+	item_state = "soviet_uniform"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/yuri
+	name = "yuri initiate jumpsuit"
+	icon_state = "yuri_uniform"
+	item_state = "yuri_uniform"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/sybil_slickers
+	name = "sybil slickers uniform"
+	icon_state = "football_blue"
+	item_state = "football_blue"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/basil_boys
+	name = "basil boys uniform"
+	icon_state = "football_red"
+	item_state = "football_red"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/costume/swagoutfit
 	name = "Swag outfit"
 	desc = "Why don't you go secure some bitches?"

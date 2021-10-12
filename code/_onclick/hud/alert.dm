@@ -340,6 +340,34 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/mob/living/carbon/C = usr
 	C.take(giver, receiving)
 
+	if(!iscarbon(usr))
+		CRASH("User for [src] is of type \[[usr.type]\]. This should never happen.")
+
+	handle_transfer()
+
+/// An overrideable proc used simply to hand over the item when claimed, this is a proc so that high-fives can override them since nothing is actually transferred
+/atom/movable/screen/alert/give/proc/handle_transfer()
+	var/mob/living/carbon/taker = owner
+	taker.take(offerer, receiving)
+
+/// Simply checks if the other person is still in range
+/atom/movable/screen/alert/give/proc/check_in_range(atom/taker)
+	SIGNAL_HANDLER
+
+	if(!offerer.CanReach(taker))
+		to_chat(owner, span_warning("You moved out of range of [offerer]!"))
+		owner.clear_alert("[offerer]")
+
+/atom/movable/screen/alert/give/secret_handshake/setup(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+	name = "[offerer] is offering a Handshake"
+	desc = "[offerer] wants to teach you the Secret Handshake for their Family and induct you! Click on this alert to accept."
+	icon_state = "template"
+	cut_overlays()
+	add_overlay(receiving)
+	src.receiving = receiving
+	src.offerer = offerer
+	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range, override = TRUE) //Override to prevent runtimes when people offer a item multiple times
+
 //ALIENS
 
 /atom/movable/screen/alert/alien_tox
