@@ -81,11 +81,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
 
-	wanted_lvl = new /obj/screen()
-	wanted_lvl.icon = 'icons/obj/gang/wanted_160x32.dmi'
-	wanted_lvl.icon_state = "wanted_0"
-	wanted_lvl.screen_loc = ui_wanted_lvl
-	infodisplay += wanted_lvl
+	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
 
 
 /datum/hud/Destroy()
