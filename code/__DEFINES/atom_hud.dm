@@ -61,8 +61,8 @@
 #define ANTAG_HUD_BLOODSUCKER   24
 #define ANTAG_HUD_FUGITIVE		25
 #define ANTAG_HUD_HERETIC	26
-#define ANTAG_HUD_GANGSTER	25
-#define ANTAG_HUD_SPACECOP	26
+#define ANTAG_HUD_GANGSTER	26
+#define ANTAG_HUD_SPACECOP	27
 
 
 // Notification action types

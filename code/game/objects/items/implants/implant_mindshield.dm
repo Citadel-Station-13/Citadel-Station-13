@@ -29,7 +29,7 @@
 		if(target.mind.has_antag_datum(ANTAG_DATUM_VASSAL))
 			SSticker.mode.remove_vassal(target.mind)
 
-		if(target.mind.has_antag_datum(/datum/antagonist/rev/head) || target.mind.unconvertable || target.mind.has_antag_datum(/datum/antagonist/gang/boss))
+		if(target.mind.has_antag_datum(/datum/antagonist/rev/head) || (target.mind.unconvertable))
 			if(!silent)
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 			var/obj/item/implanter/I = loc

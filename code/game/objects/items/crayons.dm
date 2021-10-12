@@ -835,26 +835,6 @@
 	post_noise = FALSE
 	reagent_contents = list(/datum/reagent/consumable/nothing = 1, /datum/reagent/toxin/mutetoxin = 1)
 
-/obj/item/toy/crayon/spraycan/gang
-	charges = 20 // Charges back to 20, which is the default value for them.
-	gang = TRUE
-	gang_tag_delay = 15 //Its 50% faster than a regular spraycan, for tagging. After-all they did spend points/meet the boss.
-
-	pre_noise = FALSE
-	post_noise = TRUE // Its even more stealthy just a tad.
-
-/obj/item/toy/crayon/spraycan/gang/Initialize(loc, datum/team/gang/G)
-	..()
-	if(G)
-		gang = G
-		paint_color = G.color
-		update_icon()
-
-/obj/item/toy/crayon/spraycan/gang/examine(mob/user)
-	. = ..()
-	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/gang) || isobserver(user))
-		. += "This spraycan has been specially modified with a stage 2 nozzle kit, making it faster."
-
 /obj/item/toy/crayon/spraycan/infinite
 	name = "infinite spraycan"
 	charges = -1
