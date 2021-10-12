@@ -11,6 +11,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
 	casing_ejector = FALSE
 	var/recentpump = 0 // to prevent spammage
+	var/clip_delay = CLICK_CD_MELEE
 	weapon_weight = WEAPON_HEAVY
 	sawn_item_state = "sawnshotgun"
 
@@ -24,7 +25,8 @@
 		playsound(user, 'sound/weapons/shotguninsert.ogg', 60, 1)
 		A.update_icon()
 		update_icon()
-		user.SetNextAction(CLICK_CD_MELEE)
+		if(istype(A, /obj/item/ammo_box))
+			user.SetNextAction(clip_delay)
 
 /obj/item/gun/ballistic/shotgun/process_chamber(mob/living/user, empty_chamber = 0)
 	return ..() //changed argument value
