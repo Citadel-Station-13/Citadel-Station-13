@@ -577,3 +577,15 @@
 	desc = "FOOTBALL! YEAH!"
 	icon_state = "sneakers_red"
 	item_state = "sneakers_red"
+
+/obj/item/clothing/shoes/yakuza
+	name = "tojo clan shoes"
+	desc = "Steel-toed and intimidating."
+	icon_state = "MajimaShoes"
+	item_state = "MajimaShoes_worn"
+
+/obj/item/clothing/shoes/jackbros
+	name = "frosty boots"
+	desc = "For when you're stepping on up to the plate."
+	icon_state = "JackFrostShoes"
+	item_state = "JackFrostShoes_worn"

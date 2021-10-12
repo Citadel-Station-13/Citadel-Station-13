@@ -367,7 +367,6 @@
 	name = "yuri initiate helmet"
 	icon_state = "yuri_helmet"
 	item_state = "yuri_helmet"
-	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/sybil_slickers

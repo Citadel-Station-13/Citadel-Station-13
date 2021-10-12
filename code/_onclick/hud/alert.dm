@@ -98,6 +98,7 @@
 	var/alerttooltipstyle = ""
 	var/override_alerts = FALSE //If it is overriding other alerts of the same type
 	var/mob/mob_viewer //the mob viewing this alert
+	var/mob/owner //Alert owner
 
 
 /atom/movable/screen/alert/MouseEntered(location,control,params)
@@ -348,24 +349,27 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /// An overrideable proc used simply to hand over the item when claimed, this is a proc so that high-fives can override them since nothing is actually transferred
 /atom/movable/screen/alert/give/proc/handle_transfer()
 	var/mob/living/carbon/taker = owner
-	taker.take(offerer, receiving)
+	taker.take(giver, receiving)
 
 /// Simply checks if the other person is still in range
 /atom/movable/screen/alert/give/proc/check_in_range(atom/taker)
 	SIGNAL_HANDLER
 
-	if(!offerer.CanReach(taker))
-		to_chat(owner, span_warning("You moved out of range of [offerer]!"))
-		owner.clear_alert("[offerer]")
+	if(!giver.CanReach(taker))
+		to_chat(owner, span_warning("You moved out of range of [giver]!"))
+		owner.clear_alert("[giver]")
 
-/atom/movable/screen/alert/give/secret_handshake/setup(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
-	name = "[offerer] is offering a Handshake"
-	desc = "[offerer] wants to teach you the Secret Handshake for their Family and induct you! Click on this alert to accept."
+/atom/movable/screen/alert/give/secret_handshake
+	icon_state = "default"
+
+/atom/movable/screen/alert/give/secret_handshake/setup(mob/living/carbon/taker, mob/living/carbon/giver, obj/item/receiving)
+	name = "[giver] is offering a Handshake"
+	desc = "[giver] wants to teach you the Secret Handshake for their Family and induct you! Click on this alert to accept."
 	icon_state = "template"
 	cut_overlays()
 	add_overlay(receiving)
 	src.receiving = receiving
-	src.offerer = offerer
+	src.giver = giver
 	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range, override = TRUE) //Override to prevent runtimes when people offer a item multiple times
 
 //ALIENS

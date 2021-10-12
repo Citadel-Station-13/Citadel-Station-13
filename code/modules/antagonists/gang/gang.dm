@@ -82,7 +82,7 @@
 		equip_gangster_in_inventory()
 	var/datum/atom_hud/gang_hud = GLOB.huds[ANTAG_HUD_GANGSTER]
 	gang_hud.add_hud_to(owner.current)
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE)
 	..()
 
 /datum/antagonist/gang/on_removal()

@@ -18,6 +18,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/antag_hud_name
 	/// If above 0, this is the multiplier for the speed at which we hijack the shuttle. Do not directly read, use hijack_speed().
 	var/hijack_speed = 0
+	/// The battlecry this antagonist shouts when suiciding with C4/X4.
+	var/suicide_cry = ""
+	/// The typepath for the outfit to show in the preview for the preferences menu.
+	var/preview_outfit
 
 	//Antag panel properties
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
@@ -28,6 +32,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/show_to_ghosts = FALSE // Should this antagonist be shown as antag to ghosts? Shouldn't be used for stealthy antagonists like traitors
 
 	var/list/skill_modifiers
+
+	//ANTAG UI
+
+	///name of the UI that will try to open, right now using a generic ui
+	var/ui_name = "AntagInfoGeneric"
+	///button to access antag interface
+	var/datum/action/antag_info/info_button
 
 /datum/antagonist/New()
 	GLOB.antagonists += src
@@ -106,8 +117,15 @@ GLOBAL_LIST_EMPTY(antagonists)
 	set waitfor = FALSE
 	if(!(owner?.current))
 		return
+	if(ui_name)//in the future, this should entirely replace greet.
+		info_button = new(owner.current, src)
+		info_button.Grant(owner.current)
 	if(!silent)
 		greet()
+		if(ui_name)
+			to_chat(owner.current, span_big("You are \a [src]."))
+			to_chat(owner.current, span_boldnotice("For more info, read the panel. you can always come back to it using the button in the top left."))
+			info_button.Trigger()
 	apply_innate_effects()
 	give_antag_moodies()
 	remove_blacklisted_quirks()
@@ -257,6 +275,43 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/get_admin_commands()
 	. = list()
 
+/// Creates an icon from the preview outfit.
+/// Custom implementors of `get_preview_icon` should use this, as the
+/// result of `get_preview_icon` is expected to be the completed version.
+/datum/antagonist/proc/render_preview_outfit(datum/outfit/outfit, mob/living/carbon/human/dummy)
+	dummy = dummy || new /mob/living/carbon/human/dummy/consistent
+	dummy.equipOutfit(outfit, visualsOnly = TRUE)
+	COMPILE_OVERLAYS(dummy)
+	var/icon = getFlatIcon(dummy)
+
+	// We don't want to qdel the dummy right away, since its items haven't initialized yet.
+	SSatoms.prepare_deletion(dummy)
+
+	return icon
+
+/// Given an icon, will crop it to be consistent of those in the preferences menu.
+/// Not necessary, and in fact will look bad if it's anything other than a human.
+/datum/antagonist/proc/finish_preview_icon(icon/icon)
+	// Zoom in on the top of the head and the chest
+	// I have no idea how to do this dynamically.
+	icon.Scale(115, 115)
+
+	// This is probably better as a Crop, but I cannot figure it out.
+	icon.Shift(WEST, 8)
+	icon.Shift(SOUTH, 30)
+
+	icon.Crop(1, 1, ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+
+	return icon
+
+/// Returns the icon to show on the preferences menu.
+/datum/antagonist/proc/get_preview_icon()
+	if (isnull(preview_outfit))
+		return null
+
+	return finish_preview_icon(render_preview_outfit(preview_outfit))
+
+
 /datum/antagonist/Topic(href,href_list)
 	if(!check_rights(R_ADMIN))
 		return
@@ -308,3 +363,22 @@ GLOBAL_LIST_EMPTY(antagonists)
 	else
 		return
 	..()
+
+//button for antags to review their descriptions/info
+
+/datum/action/antag_info
+	name = "Open Antag Information:"
+	button_icon_state = "round_end"
+	var/datum/antagonist/antag_datum
+
+/datum/action/antag_info/New(Target, datum/antagonist/antag_datum)
+	. = ..()
+	src.antag_datum = antag_datum
+	name += " [antag_datum.name]"
+
+/datum/action/antag_info/Trigger()
+	if(antag_datum)
+		antag_datum.ui_interact(owner)
+
+/datum/action/antag_info/IsAvailable()
+	return TRUE
