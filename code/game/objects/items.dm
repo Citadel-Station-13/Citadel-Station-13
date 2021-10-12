@@ -1195,3 +1195,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		pain_stam_pct = (!isnull(embedding["pain_stam_pct"]) ? embedding["pain_stam_pct"] : EMBEDDED_PAIN_STAM_PCT),\
 		embed_chance_turf_mod = (!isnull(embedding["embed_chance_turf_mod"]) ? embedding["embed_chance_turf_mod"] : EMBED_CHANCE_TURF_MOD))
 	return TRUE
+
+/obj/item/proc/on_offer_taken(mob/living/carbon/giver, mob/living/carbon/taker)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, giver, taker) & COMPONENT_OFFER_INTERRUPT)
+		return TRUE

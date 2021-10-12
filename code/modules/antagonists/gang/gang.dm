@@ -108,8 +108,11 @@
 	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	if(M.hud_used)
 		var/datum/hud/H = M.hud_used
-		H.wanted_lvl = new /obj/screen/wanted
-		H.infodisplay += H.wanted_lvl
+		var/atom/movable/screen/wanted/giving_wanted_lvl = new /atom/movable/screen/wanted()
+		H.wanted_lvl = giving_wanted_lvl
+		giving_wanted_lvl.hud = H
+		H.infodisplay += giving_wanted_lvl
+		H.mymob.client.screen += giving_wanted_lvl
 
 /datum/antagonist/gang/remove_innate_effects(mob/living/mob_override)
 	if(starter_gangster)
@@ -404,7 +407,6 @@
 	else
 		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
 
-
 /datum/antagonist/gang/dutch
 	show_in_antagpanel = TRUE
 	name = "Dutch van der Linde Outlaw"
@@ -538,11 +540,11 @@
 	acceptable_clothes = list(/obj/item/clothing/suit/driscoll,
 		/obj/item/clothing/under/costume/driscoll,
 		/obj/item/clothing/mask/gas/driscoll,
-		/obj/item/clothing/shoes/cowboy)
+		/obj/item/clothing/shoes/cowboyboots)
 	free_clothes = list(/obj/item/clothing/suit/driscoll,
 		/obj/item/clothing/under/costume/driscoll,
 		/obj/item/clothing/mask/gas/driscoll,
-		/obj/item/clothing/shoes/cowboy,
+		/obj/item/clothing/shoes/cowboyboots,
 		/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Drill"
 	gang_team_type = /datum/team/gang/driscoll

@@ -417,6 +417,8 @@
 	name = "cowboy boots"
 	desc = "A standard pair of brown cowboy boots."
 	icon_state = "cowboyboots"
+	permeability_coefficient = 0.05 //these are quite tall
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/cowboyboots/black

@@ -369,10 +369,6 @@
 		audible_message("<span class='notice'>You hear spraying.</span>")
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 
-	var/takes_time = !instant //For order purposes, since I'm maximum bad.
-	if(gang_mode)
-		takes_time = TRUE
-
 	var/wait_time = 50
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		wait_time *= 3

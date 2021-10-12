@@ -81,8 +81,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
 
-	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
-
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
