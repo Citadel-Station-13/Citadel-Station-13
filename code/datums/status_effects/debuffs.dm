@@ -194,6 +194,9 @@
 			C.adjustStaminaLoss(max(0, stamdmg_per_ds * diff)) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
 	last_tick = world.time
 
+/datum/status_effect/electrode/no_damage
+	stamdmg_per_ds = 0
+
 /datum/status_effect/electrode/no_combat_mode
 	id = "tased_strong"
 	movespeed_mod = /datum/movespeed_modifier/status_effect/tased/no_combat_mode

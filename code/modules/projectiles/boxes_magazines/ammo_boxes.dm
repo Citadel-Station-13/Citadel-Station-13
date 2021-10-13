@@ -60,6 +60,13 @@
 	desc = "Designed to quickly reload revolvers. These rounds are manufactured within extremely tight tolerances, making them easy to show off trickshots with."
 	ammo_type = /obj/item/ammo_casing/c38/match
 
+/obj/item/ammo_box/c38/pouch
+	name = "ammo packet (.38)"
+	desc = "A small ammunition packet made of synthleather. Not particularly useful for speedily reloading, but can hold a bit more."
+	multiload = FALSE
+	max_ammo = 8
+	icon_state = "38pch"
+
 /obj/item/ammo_box/g4570
 	name = "ammo box (.45-70 GOVT)"
 	desc = "Brought to you at great expense,this box contains 10 more .45-70 GOVT bullets."
