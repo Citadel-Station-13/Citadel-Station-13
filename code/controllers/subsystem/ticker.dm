@@ -182,12 +182,11 @@ SUBSYSTEM_DEF(ticker)
 				timeLeft = 0
 
 			if(!modevoted)
-				if(!CONFIG_GET(string/force_gamemode))
+				var/forcemode = CONFIG_GET(string/force_gamemode)
+				if(forcemode)
+					force_gamemode(forcemode)
+				if(!forcemode || (GLOB.master_mode == "dynamic" && CONFIG_GET(flag/dynamic_voting))
 					send_gamemode_vote()
-				else
-					force_gamemode(CONFIG_GET(string/force_gamemode))
-					if(GLOB.master_mode == "dynamic" && CONFIG_GET(flag/dynamic_voting))
-						send_gamemode_vote()
 			//countdown
 			if(timeLeft < 0)
 				return
