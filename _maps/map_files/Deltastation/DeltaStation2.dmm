@@ -3715,6 +3715,7 @@
 "alM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
+/obj/structure/loot_pile/maint,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/fore)
 "alN" = (
@@ -8243,6 +8244,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/loot_pile/maint,
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "aCE" = (
@@ -13713,8 +13715,8 @@
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "o2=0.01;n2=0.01";
-	luminosity = 2;
-	initial_temperature = 2.7
+	initial_temperature = 2.7;
+	luminosity = 2
 	},
 /area/security/prison)
 "ban" = (
@@ -14376,8 +14378,8 @@
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "o2=0.01;n2=0.01";
-	luminosity = 2;
-	initial_temperature = 2.7
+	initial_temperature = 2.7;
+	luminosity = 2
 	},
 /area/security/prison)
 "bdo" = (
@@ -31965,6 +31967,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/loot_pile/maint,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "clv" = (
@@ -35124,6 +35127,7 @@
 "cuI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red,
+/obj/structure/loot_pile/maint,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "cuJ" = (
@@ -36310,6 +36314,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port)
+"cCK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/loot_pile/maint,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "cCM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -38007,6 +38017,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/structure/loot_pile/maint,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "cLM" = (
@@ -38752,6 +38763,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/loot_pile/maint,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/aft)
 "cNJ" = (
@@ -57355,6 +57367,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
+/obj/structure/loot_pile/maint,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "dAv" = (
@@ -59204,6 +59217,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/loot_pile/maint,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -62652,6 +62666,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/loot_pile/maint,
 /turf/open/floor/plasteel,
 /area/maintenance/aft)
 "dLj" = (
@@ -62702,6 +62717,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/loot_pile/maint,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/aft)
 "dLn" = (
@@ -63084,6 +63100,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/loot_pile/maint,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -79161,6 +79178,10 @@
 "gWu" = (
 /turf/closed/wall,
 /area/cargo/warehouse)
+"gWF" = (
+/obj/structure/loot_pile/maint,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "gXc" = (
 /obj/structure/sign/painting/library{
 	pixel_y = 32
@@ -95240,6 +95261,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/service/library/abandoned)
+"mpB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/loot_pile/maint,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "mqb" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -97242,6 +97268,17 @@
 	},
 /turf/closed/wall/r_wall,
 /area/science/circuit)
+"mYR" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/loot_pile/maint,
+/turf/open/floor/plasteel,
+/area/maintenance/starboard/aft)
 "mYT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/cardboard,
@@ -109909,6 +109946,7 @@
 "rCr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/loot_pile/maint,
 /turf/open/floor/plating,
 /area/cargo/warehouse)
 "rCv" = (
@@ -109944,6 +109982,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/cargo/storage)
+"rCR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/loot_pile/maint,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "rDp" = (
 /obj/structure/table/glass,
 /obj/structure/cable/white{
@@ -114162,6 +114205,13 @@
 	},
 /turf/open/floor/carpet,
 /area/commons/vacant_room/office)
+"sWQ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/loot_pile/maint,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "sWY" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
@@ -119197,6 +119247,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/command/heads_quarters/hos)
+"uIT" = (
+/obj/structure/loot_pile/maint,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "uJd" = (
 /obj/item/kirbyplants/random,
 /obj/item/radio/intercom{
@@ -128561,6 +128615,21 @@
 	},
 /turf/open/floor/plasteel,
 /area/cargo/storage)
+"yia" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/loot_pile/maint,
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/maintenance/starboard/aft)
 "yiq" = (
 /obj/structure/reflector/single/anchored{
 	dir = 6
@@ -150094,7 +150163,7 @@ opi
 xbs
 qjg
 qjg
-ceb
+mpB
 cLv
 cMQ
 cOq
@@ -157015,7 +157084,7 @@ caE
 cdY
 cfR
 chI
-ceb
+mpB
 cfU
 cmi
 cnI
@@ -158117,7 +158186,7 @@ dOl
 ean
 dLW
 dZg
-dLW
+rCR
 ecv
 edf
 edl
@@ -158756,7 +158825,7 @@ lxH
 odN
 quN
 asF
-alg
+gWF
 avq
 awo
 axJ
@@ -159295,7 +159364,7 @@ qOV
 ary
 aKj
 bbQ
-alg
+gWF
 beK
 bgj
 alf
@@ -159345,7 +159414,7 @@ ojB
 roP
 uhj
 cCO
-cea
+uIT
 cJZ
 cLI
 cNg
@@ -160932,7 +161001,7 @@ dPG
 dQz
 dRy
 dSx
-dOS
+cCK
 dUg
 dUX
 dVL
@@ -164529,7 +164598,7 @@ dOY
 dPR
 dfm
 dRK
-dOl
+sWQ
 pPz
 sBt
 vSo
@@ -180428,7 +180497,7 @@ hYQ
 jjL
 pzu
 fzU
-cYj
+yia
 cZV
 dbC
 ddr
@@ -181206,7 +181275,7 @@ ddt
 ddt
 aaB
 dbD
-diW
+mYR
 aaR
 dbA
 dnU

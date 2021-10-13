@@ -46,17 +46,13 @@
 	traitor_kind.on_process(src)
 
 /proc/get_random_traitor_kind(var/list/blacklist = list())
-	var/chaos_weight = 0
-	if(istype(SSticker.mode,/datum/game_mode/dynamic))
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		chaos_weight = (mode.threat - 50)/50
 	var/list/weights = list()
 	for(var/C in GLOB.traitor_classes)
 		if(!(C in blacklist))
 			var/datum/traitor_class/class = GLOB.traitor_classes[C]
 			if(class.min_players > length(GLOB.joined_player_list))
 				continue
-			var/weight = LOGISTIC_FUNCTION(1.5*class.weight,chaos_weight,class.chaos,0)
+			var/weight = LOGISTIC_FUNCTION(1.5*class.weight,0,class.chaos,0)
 			weights[C] = weight * 1000
 	var/choice = pickweight(weights, 0)
 	if(!choice)
