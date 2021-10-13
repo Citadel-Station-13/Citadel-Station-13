@@ -68,7 +68,7 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 #ROUNDS_UNTIL_HARD_RESTART 10
 
 ## Force Gamemode ##
-## Disallows roundstart gamemode voting if not null or commented
+## Disallows roundstart gamemode voting if not null or uncommented
 ## Just input the gamemode lowercase in there, the thing will take a simple string for it
 ## Invalid gamemodes will default extended, have fun.
 #FORCE_GAMEMODE
