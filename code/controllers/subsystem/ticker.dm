@@ -186,6 +186,8 @@ SUBSYSTEM_DEF(ticker)
 					send_gamemode_vote()
 				else
 					force_gamemode(CONFIG_GET(string/force_gamemode))
+					if(GLOB.master_mode == "dynamic" && CONFIG_GET(flag/dynamic_voting))
+						send_gamemode_vote()
 			//countdown
 			if(timeLeft < 0)
 				return
@@ -640,7 +642,7 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/load_mode()
 	var/mode = trim(file2text("data/mode.txt"))
 	if(mode)
-		GLOB.master_mode = "dynamic"
+		GLOB.master_mode = mode
 	else
 		GLOB.master_mode = GLOB.dynamic_forced_extended
 	log_game("Saved mode is '[GLOB.master_mode]'")
