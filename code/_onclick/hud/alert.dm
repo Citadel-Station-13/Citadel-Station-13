@@ -97,6 +97,8 @@
 	var/override_alerts = FALSE //If it is overriding other alerts of the same type
 	var/mob/owner //Alert owner
 
+	/// Boolean. If TRUE, the Click() proc will attempt to Click() on the master first if there is a master.
+	var/click_master = TRUE
 
 /atom/movable/screen/alert/MouseEntered(location,control,params)
 	if(!QDELETED(src))
@@ -809,15 +811,17 @@ so as to remain in compliance with the most up-to-date laws."
 
 /atom/movable/screen/alert/Click(location, control, params)
 	if(!usr || !usr.client)
-		return
+		return FALSE
+	if(usr != owner)
+		return FALSE
 	var/paramslist = params2list(params)
 	if(paramslist["shift"]) // screen objects don't do the normal Click() stuff so we'll cheat
 		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
-		return
-	if(usr != owner)
-		return
-	if(master)
+		return FALSE
+	if(master && click_master)
 		return usr.client.Click(master, location, control, params)
+	
+	return TRUE
 
 /atom/movable/screen/alert/Destroy()
 	. = ..()
