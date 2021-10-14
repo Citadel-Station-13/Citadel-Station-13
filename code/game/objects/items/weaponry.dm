@@ -1105,7 +1105,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "madeyoulook"
 	force = 0
 	throwforce = 0
-	item_flags = DROPDEL | ABSTRACT // | HAND_ITEM
+	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
 	attack_verb = list("bopped")
 
 /obj/item/circlegame/Initialize()
@@ -1207,7 +1207,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	item_state = "nothing"
 	force = 0
 	throwforce = 0
-	item_flags = DROPDEL | ABSTRACT // | HAND_ITEM
+	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
 	attack_verb = list("slapped")
 	hitsound = 'sound/effects/snap.ogg'
 
@@ -1226,6 +1226,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(!user.can_use_guns(src))
 		return FALSE
 	return TRUE
+
+/obj/item/slapper/on_offered(mob/living/carbon/offerer)
+	. = TRUE
+
+/obj/item/slapper/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
+	. = TRUE
 
 /// Gangster secret handshakes.
 /obj/item/slapper/secret_handshake
@@ -1268,10 +1274,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		user.mind.remove_antag_datum(/datum/antagonist/gang)
 	add_to_gang(user, real_name_backup)
 
-/obj/item/slapper/secret_handshake/on_offer_taken(mob/living/carbon/giver, mob/living/carbon/taker)
+/obj/item/slapper/secret_handshake/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
 	. = TRUE
 	if (!(null in taker.held_items))
-		to_chat(taker, span_warning("You can't get taught the secret handshake if [giver] has no free hands!"))
+		to_chat(taker, span_warning("You can't get taught the secret handshake if [offerer] has no free hands!"))
 		return
 
 	if(HAS_TRAIT(taker, TRAIT_MINDSHIELD))
@@ -1286,9 +1292,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		to_chat(taker, "You started your family. You can't turn your back on it now.")
 		return
 
-	giver.visible_message(span_notice("[taker] is taught the secret handshake by [giver]!"), span_nicegreen("All right! You've taught the secret handshake to [taker]!"), span_hear("You hear a bunch of weird shuffling and flesh slapping sounds!"), ignored_mobs=taker)
-	to_chat(taker, span_nicegreen("You get taught the secret handshake by [giver]!"))
-	var/datum/antagonist/gang/owner_gang_datum = giver.mind.has_antag_datum(/datum/antagonist/gang)
+	offerer.visible_message(span_notice("[taker] is taught the secret handshake by [offerer]!"), span_nicegreen("All right! You've taught the secret handshake to [taker]!"), span_hear("You hear a bunch of weird shuffling and flesh slapping sounds!"), ignored_mobs=taker)
+	to_chat(taker, span_nicegreen("You get taught the secret handshake by [offerer]!"))
+	var/datum/antagonist/gang/owner_gang_datum = offerer.mind.has_antag_datum(/datum/antagonist/gang)
 	handler = owner_gang_datum.handler
 	gang_to_use = owner_gang_datum.type
 	team_to_use = owner_gang_datum.my_gang

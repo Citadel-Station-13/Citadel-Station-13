@@ -36,7 +36,7 @@
 #define ROLE_DEATHSQUAD             "deathsquad"
 #define ROLE_LAVALAND               "lavaland"
 #define ROLE_INTERNAL_AFFAIRS		"internal affairs agent"
-#define ROLE_FAMILIES 				"gangster"
+#define ROLE_FAMILIES 				"family boss"
 #define ROLE_FAMILY_HEAD_ASPIRANT 	"family head aspirant"
 #define ROLE_BLOODSUCKER			"bloodsucker"
 #define ROLE_SPACE_DRAGON			"Space Dragon"

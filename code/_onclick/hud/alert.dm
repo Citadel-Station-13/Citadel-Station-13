@@ -2,9 +2,6 @@
 
 //PUBLIC -  call these wherever you want
 
-
-/mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE)
-
 /* Proc to create or update an alert. Returns the alert if the alert is new or updated, 0 if it was thrown already
  category is a text string. Each mob may only have one alert per category; the previous one will be replaced
  path is a type path of the actual alert type to throw
@@ -14,6 +11,7 @@
  Clicks are forwarded to master
  Override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.
  */
+/mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE)
 
 	if(!category || QDELETED(src))
 		return
@@ -309,37 +307,33 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/give // information set when the give alert is made
 	icon_state = "default"
-	var/mob/living/carbon/giver
+	var/mob/living/carbon/offerer
 	var/obj/item/receiving
 
 /**
-  * Handles assigning most of the variables for the alert that pops up when an item is offered
-  *
-  * Handles setting the name, description and icon of the alert and tracking the person giving
-  * and the item being offered, also registers a signal that removes the alert from anyone who moves away from the giver
-  * Arguments:
-  * * taker - The person receiving the alert
-  * * giver - The person giving the alert and item
-  * * receiving - The item being given by the giver
-  */
-/atom/movable/screen/alert/give/proc/setup(mob/living/carbon/taker, mob/living/carbon/giver, obj/item/receiving)
-	name = "[giver] is offering [receiving]"
-	desc = "[giver] is offering [receiving]. Click this alert to take it."
+ * Handles assigning most of the variables for the alert that pops up when an item is offered
+ *
+ * Handles setting the name, description and icon of the alert and tracking the person giving
+ * and the item being offered, also registers a signal that removes the alert from anyone who moves away from the offerer
+ * Arguments:
+ * * taker - The person receiving the alert
+ * * offerer - The person giving the alert and item
+ * * receiving - The item being given by the offerer
+ */
+/atom/movable/screen/alert/give/proc/setup(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+	name = "[offerer] is offering [receiving]"
+	desc = "[offerer] is offering [receiving]. Click this alert to take it."
 	icon_state = "template"
 	cut_overlays()
 	add_overlay(receiving)
 	src.receiving = receiving
-	src.giver = giver
-	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/removeAlert)
-
-/atom/movable/screen/alert/give/proc/removeAlert()
-	to_chat(usr, "<span class='warning'>You moved out of range of [giver]!</span>")
-	usr.clear_alert("[giver]")
+	src.offerer = offerer
+	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range, override = TRUE) //Override to prevent runtimes when people offer a item multiple times
 
 /atom/movable/screen/alert/give/Click(location, control, params)
 	. = ..()
-	var/mob/living/carbon/C = usr
-	C.take(giver, receiving)
+	if(!.)
+		return
 
 	if(!iscarbon(usr))
 		CRASH("User for [src] is of type \[[usr.type]\]. This should never happen.")
@@ -349,27 +343,27 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /// An overrideable proc used simply to hand over the item when claimed, this is a proc so that high-fives can override them since nothing is actually transferred
 /atom/movable/screen/alert/give/proc/handle_transfer()
 	var/mob/living/carbon/taker = owner
-	taker.take(giver, receiving)
+	taker.take(offerer, receiving)
 
 /// Simply checks if the other person is still in range
 /atom/movable/screen/alert/give/proc/check_in_range(atom/taker)
 	SIGNAL_HANDLER
-
-	if(!giver.CanReach(taker))
-		to_chat(owner, span_warning("You moved out of range of [giver]!"))
-		owner.clear_alert("[giver]")
+	
+	if(!offerer.CanReach(taker))
+		to_chat(owner, span_warning("You moved out of range of [offerer]!"))
+		owner.clear_alert("[offerer]")
 
 /atom/movable/screen/alert/give/secret_handshake
 	icon_state = "default"
 
-/atom/movable/screen/alert/give/secret_handshake/setup(mob/living/carbon/taker, mob/living/carbon/giver, obj/item/receiving)
-	name = "[giver] is offering a Handshake"
-	desc = "[giver] wants to teach you the Secret Handshake for their Family and induct you! Click on this alert to accept."
+/atom/movable/screen/alert/give/secret_handshake/setup(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+	name = "[offerer] is offering a Handshake"
+	desc = "[offerer] wants to teach you the Secret Handshake for their Family and induct you! Click on this alert to accept."
 	icon_state = "template"
 	cut_overlays()
 	add_overlay(receiving)
 	src.receiving = receiving
-	src.giver = giver
+	src.offerer = offerer
 	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range, override = TRUE) //Override to prevent runtimes when people offer a item multiple times
 
 //ALIENS
