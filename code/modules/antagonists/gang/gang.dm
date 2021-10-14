@@ -241,12 +241,12 @@
 		qdel(secret_handshake_item)
 		to_chat(owner, span_warning("You're incapable of performing a handshake in your current state."))
 		return FALSE
-	owner.visible_message(span_notice("[src] is offering to induct people into the Family."),
+	owner.visible_message(span_notice("[owner] is offering to induct people into the Family."),
 		span_notice("You offer to induct people into the Family."), null, 2)
 	if(H.has_status_effect(STATUS_EFFECT_HANDSHAKE))
 		return FALSE
 	if(!(locate(/mob/living/carbon) in orange(1, owner)))
-		owner.visible_message(span_danger("[src] offers to induct people into the Family, but nobody was around."), \
+		owner.visible_message(span_danger("[owner] offers to induct people into the Family, but nobody was around."), \
 			span_warning("You offer to induct people into the Family, but nobody is around."), null, 2)
 		return FALSE
 
