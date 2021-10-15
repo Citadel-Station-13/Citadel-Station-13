@@ -169,6 +169,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 			owner.remove_skill_modifier(GET_SKILL_MOD_ID(A, type))
 		if(!LAZYLEN(owner.antag_datums))
 			owner.current.remove_from_current_living_antags()
+		if(info_button)
+			QDEL_NULL(info_button)
 		if(!silent && owner.current)
 			farewell()
 	var/datum/team/team = get_team()
@@ -363,6 +365,32 @@ GLOBAL_LIST_EMPTY(antagonists)
 	else
 		return
 	..()
+
+///ANTAGONIST UI STUFF
+
+/datum/antagonist/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, ui_name, name)
+		ui.open()
+
+/datum/antagonist/ui_state(mob/user)
+	return GLOB.always_state
+
+///generic helper to send objectives as data through tgui. supports smart objectives too!
+/datum/antagonist/proc/get_objectives()
+	var/objective_count = 1
+	var/list/objective_data = list()
+	//all obj
+	for(var/datum/objective/objective in objectives)
+		objective_data += list(list(
+			"count" = objective_count,
+			"name" = objective.objective_name,
+			"explanation" = objective.explanation_text,
+			"complete" = objective.completed,
+		))
+		objective_count++
+	return objective_data
 
 //button for antags to review their descriptions/info
 
