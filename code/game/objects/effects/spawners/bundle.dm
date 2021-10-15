@@ -169,14 +169,21 @@
 		/obj/item/clothing/mask/gas/mime/sexy,
 		/obj/item/clothing/under/rank/civilian/mime/sexy)
 
+/obj/effect/spawner/bundle/crate
+	var/pickone = FALSE
+
 /obj/effect/spawner/bundle/crate/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
 	if(items && items.len)
 		var/turf/T = get_turf(src)
 		var/obj/structure/closet/LC = locate(/obj/structure/closet) in T
 		if(LC)
-			for(var/path in items)
-				new path(LC)
+			if(pickone)
+				var/tospawn = pick(items)
+				new tospawn(LC)
+			else
+				for(var/path in items)
+					new path(LC)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/spawner/bundle/crate/mosin
@@ -191,4 +198,30 @@
 	items = list(
 		/obj/item/gun/ballistic/automatic/surplus,
 		/obj/item/ammo_box/magazine/m10mm/rifle
+	)
+
+/obj/effect/spawner/bundle/crate/levergun
+	name = "lever-action rifle spawner"
+	items = list(
+		/obj/item/gun/ballistic/shotgun/leveraction,
+		/obj/item/ammo_box/c38/pouch
+	)
+
+/obj/effect/spawner/bundle/crate/cowboyhat
+	name = "cowboy hat spawner"
+	pickone = TRUE
+	items = list(
+		/obj/item/clothing/head/cowboyhat,
+		/obj/item/clothing/head/cowboyhat/black,
+		/obj/item/clothing/head/cowboyhat/white,
+		/obj/item/clothing/head/cowboyhat/pink,
+		/obj/item/clothing/head/cowboyhat/sec
+	)
+
+/obj/effect/spawner/bundle/crate/cowboyboots
+	name = "cowboy boots spawner"
+	pickone = TRUE
+	items = list(
+		/obj/item/clothing/shoes/cowboyboots,
+		/obj/item/clothing/shoes/cowboyboots/black
 	)
