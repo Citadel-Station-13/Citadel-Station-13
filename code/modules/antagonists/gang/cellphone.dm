@@ -12,7 +12,7 @@ GLOBAL_LIST_EMPTY(gangster_cell_phones)
 /obj/item/gangster_cellphone/Initialize()
 	. = ..()
 	GLOB.gangster_cell_phones += src
-	become_hearing_sensitive()
+	flags_1 |= HEAR_1
 
 /obj/item/gangster_cellphone/Destroy()
 	GLOB.gangster_cell_phones -= src
