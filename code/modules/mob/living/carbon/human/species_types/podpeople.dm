@@ -1,6 +1,6 @@
 /datum/species/pod
 	// A mutation caused by a human being ressurected in a revival pod. These regain health in light, and begin to wither in darkness.
-	name = "Anthromorphic Plant"
+	name = "Anthropomorphic Plant"
 	id = SPECIES_POD
 	default_color = "59CE00"
 	species_traits = list(MUTCOLORS,EYECOLOR,CAN_SCAR,HAS_FLESH,HAS_BONE)
@@ -64,12 +64,17 @@
 				H.show_message("<span class='userdanger'>The radiation beam singes you!</span>")
 		if(/obj/item/projectile/energy/florayield)
 			H.adjust_nutrition(30, NUTRITION_LEVEL_FULL)
+		if(/obj/item/projectile/energy/florarevolution)
+			H.show_message("<span class='notice'>The radiation beam leaves you feeling disoriented!</span>")
+			H.Dizzy(15)
+			H.emote("flip")
+			H.emote("spin")
 
 /datum/species/pod/pseudo_weak
-	name = "Anthromorphic Plant"
+	name = "Anthropomorphic Plant"
 	id = SPECIES_POD_WEAK
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,MUTCOLORS)
-	mutant_bodyparts = list("mcolor" = "FFFFFF","mcolor2" = "FFFFFF","mcolor3" = "FFFFFF", "mam_snouts" = "Husky", "mam_tail" = "Husky", "mam_ears" = "Husky", "mam_body_markings" = "Husky", "taur" = "None", "legs" = "Normal Legs")
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,MUTCOLORS,CAN_SCAR,HAS_FLESH,HAS_BONE)
+	mutant_bodyparts = list("mcolor" = "FFFFFF","mcolor2" = "FFFFFF","mcolor3" = "FFFFFF", "mam_snouts" = "Husky", "mam_tail" = "Husky", "mam_ears" = "Husky", "mam_body_markings" = list(), "taur" = "None", "legs" = "Normal Legs")
 	limbs_id = SPECIES_POD
 	light_nutrition_gain_factor = 3
 	light_bruteheal = -0.2
