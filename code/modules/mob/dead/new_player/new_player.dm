@@ -762,8 +762,6 @@
 
 		client.prefs.scars_list["[cur_scar_index]"] = valid_scars
 		client.prefs.save_character()
-	if(mind in GLOB.pre_setup_antags)
-		var/is_antag = TRUE
 	
 	client.prefs.copy_to(H, initial_spawn = TRUE)
 	H.dna.update_dna_identity()

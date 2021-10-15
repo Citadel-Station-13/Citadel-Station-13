@@ -174,6 +174,7 @@
 	name = "Space Police Responder"
 	antag_hud_type = ANTAG_HUD_SPACECOP
 	antag_hud_name = "hud_spacecop"
+	suicide_cry = "FOR THE SPACE POLICE!!"
 
 /datum/antagonist/ert/families/apply_innate_effects(mob/living/mob_override)
 	..()
@@ -198,16 +199,23 @@
 	..()
 
 /datum/antagonist/ert/families/greet()
-	to_chat(owner, "<B><font size=3 color=red>You are the [name].</font></B>")
-
-	var/missiondesc = "After an uptick in gang violence on [station_name()], you are responding to emergency calls from the station for immediate SSC Police assistance!\n"
+	var/missiondesc =  "<span class='warningplain'><B><font size=6 color=red>You are the [name].</font></B>"
+	missiondesc += "<BR><B><font size=5 color=red>You are NOT a Nanotrasen Employee. You work for the local government.</font></B>"
+	missiondesc += "<BR><B><font size=5 color=red>You are NOT a deathsquad. You are here to help innocents escape violence, criminal activity, and other dangerous things.</font></B>"
+	missiondesc += "<BR>After an uptick in gang violence on [station_name()], you are responding to emergency calls from the station for immediate SSC Police assistance!\n"
 	missiondesc += "<BR><B>Your Mission</B>:"
-	missiondesc += "<BR> <B>1.</B> Secure the situation and crack down on any gang activity. You can view gangsters with your sunglasses."
-	missiondesc += "<BR> <B>2.</B> There is an undercover police officer on station. Secure him, receive his intel, and extract him safely."
-	missiondesc += "<BR> <B>3.</B> Minimize civilian casualties, but defend yourself and civilians from hostile gangsters."
-	missiondesc += "<BR> <B>3.</B> If Security is found to be violating the rights of citizens, detain them as per your authority as Spinward Stellar Coalition officers."
-	missiondesc += "<BR> <B>4.</B> If the situation demands it, evacuate the station. Otherwise, remain on station and keep the peace."
+	missiondesc += "<BR> <B>1.</B> Serve the public trust."
+	missiondesc += "<BR> <B>2.</B> Protect the innocent."
+	missiondesc += "<BR> <B>3.</B> Uphold the law."
+	missiondesc += "<BR> <B>4.</B> Find the Undercover Cops."
+	missiondesc += "<BR> <B>5.</B> Detain Nanotrasen Security personnel if they harm any citizen."
+	missiondesc += "<BR> You can <B>see gangsters</B> using your <B>special sunglasses</B>.</span>"
 	to_chat(owner,missiondesc)
+	var/policy = get_policy(ROLE_FAMILIES)
+	if(policy)
+		to_chat(owner, policy)
+	var/mob/living/M = owner.current
+	M.playsound_local(M, 'sound/effects/families_police.ogg', 100, FALSE, pressure_affected = FALSE)
 
 /datum/antagonist/ert/families/undercover_cop
 	name = "Undercover Cop"
@@ -221,30 +229,31 @@
 	random_names = FALSE
 
 /datum/antagonist/ert/families/undercover_cop/on_gain()
-	for(var/C in free_clothes)
-		var/obj/O = new C(owner.current)
-		var/list/slots = list (
-			"backpack" = ITEM_SLOT_BACKPACK,
-			"left pocket" = SLOT_L_STORE,
-			"right pocket" = SLOT_R_STORE
-		)
-		var/mob/living/carbon/human/H = owner.current
-		var/equipped = H.equip_in_one_of_slots(O, slots)
-		if(!equipped)
-			to_chat(owner.current, "Unfortunately, you could not bring your [O] to this shift. You will need to find one.")
-			qdel(O)
+	if(istype(owner.current, /mob/living/carbon/human))
+		for(var/C in free_clothes)
+			var/obj/O = new C(owner.current)
+			var/list/slots = list (
+				"backpack" = ITEM_SLOT_BACKPACK,
+				"left pocket" = SLOT_L_STORE,
+				"right pocket" = SLOT_R_STORE
+			)
+			var/mob/living/carbon/human/H = owner.current
+			var/equipped = H.equip_in_one_of_slots(O, slots)
+			if(!equipped)
+				to_chat(owner.current, "<span class='warningplain'>Unfortunately, you could not bring your [O] to this shift. You will need to find one.</span>")
+				qdel(O)
 	. = ..()
 
 
 /datum/antagonist/ert/families/undercover_cop/greet()
-	to_chat(owner, "<B><font size=3 color=red>You are the [name].</font></B>")
-
-	var/missiondesc = "You are an undercover police officer on board [station_name()]. You've been sent here by the Spinward Stellar Coalition because of suspected abusive behavior by the security department, and to keep tabs on a potential criminal organization operation."
+	var/missiondesc = "<span class='warningplain'><B><font size=3 color=red>You are the [name].</font></B>"
+	missiondesc += "<BR><B><font size=3 color=red>You are NOT a Nanotrasen Employee. You work for the local government.</font></B>"
+	missiondesc += "<BR>You are an undercover police officer on board [station_name()]. You've been sent here by the Spinward Stellar Coalition because of suspected abusive behavior by the security department, and to keep tabs on a potential criminal organization operation."
 	missiondesc += "<BR><B>Your Mission</B>:"
 	missiondesc += "<BR> <B>1.</B> Keep a close eye on any gangsters you spot. You can view gangsters using your sunglasses in your backpack."
 	missiondesc += "<BR> <B>2.</B> Keep an eye on how Security handles any gangsters, and watch for excessive security brutality."
 	missiondesc += "<BR> <B>3.</B> Remain undercover and do not get found out by Security or any gangs. Nanotrasen does not take kindly to being spied on."
-	missiondesc += "<BR> <B>4.</B> When your backup arrives to extract you in 1 hour, inform them of everything you saw of note, and assist them in securing the situation."
+	missiondesc += "<BR> <B>4.</B> When your backup arrives to extract you in 1 hour, inform them of everything you saw of note, and assist them in securing the situation.</span>"
 	to_chat(owner,missiondesc)
 
 /datum/antagonist/ert/families/beatcop
@@ -275,3 +284,23 @@
 /datum/antagonist/ert/families/beatcop/military/New()
 	. = ..()
 	name_source = GLOB.commando_names
+
+/datum/antagonist/ert/marine
+	name = "Marine Commander"
+	outfit = /datum/outfit/ert/commander/alert
+	role = "Commander"
+
+/datum/antagonist/ert/marine/security
+	name = "Marine Heavy"
+	outfit = /datum/outfit/ert/security/alert
+	role = "Trooper"
+
+/datum/antagonist/ert/marine/engineer
+	name = "Marine Engineer"
+	outfit = /datum/outfit/ert/engineer/alert
+	role = "Engineer"
+
+/datum/antagonist/ert/marine/medic
+	name = "Marine Medic"
+	outfit = /datum/outfit/ert/medic/alert
+	role = "Medical Officer"
