@@ -161,13 +161,14 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/client/initiator	//semi-misnomer, it's the person who ahelped/was bwoinked
 	var/initiator_ckey
 	var/initiator_key_name
-	var/heard_by_no_admins = FALSE
 
 	var/list/_interactions	//use AddInteraction() or, preferably, admin_ticket_log()
 
 	var/obj/effect/statclick/ahelp/statclick
 
 	var/static/ticket_counter = 0
+	/// did we send "answered" to irc yet
+	var/answered = FALSE
 
 //call this on its own to create a ticket, don't manually assign current_ticket
 //msg is the title of the ticket: usually the ahelp text
@@ -209,7 +210,6 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 		if(admin_number_present <= 0)
 			to_chat(C, "<span class='notice'>No active admins are online, your adminhelp was sent to the admin irc.</span>")
-			heard_by_no_admins = TRUE
 		else
 			// citadel edit: send anyways
 			send2adminchat(initiator_ckey, "Ticket #[id]: [name] - Heard by [admin_number_present] admins present with +BAN.")
@@ -223,9 +223,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	return ..()
 
 /datum/admin_help/proc/AddInteraction(formatted_message)
-	// if(heard_by_no_admins usr && usr.ckey != initiator_ckey)
-		// heard_by_no_admins = FALSE
-	if(usr && (usr.ckey != initiator_ckey))
+	if(usr && (usr.ckey != initiator_ckey) && !answered)
+		answered = TRUE
 		send2adminchat(initiator_ckey, "Ticket #[id]: Answered by [key_name(usr)]")
 	_interactions += "[TIME_STAMP("hh:mm:ss", FALSE)]: [formatted_message]"
 
