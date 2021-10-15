@@ -1248,6 +1248,7 @@
 	icon_state = "driscoll_suit"
 	item_state = "driscoll_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/irs
 	name = "internal revenue service jacket"
@@ -1255,6 +1256,7 @@
 	icon_state = "irs_suit"
 	item_state = "irs_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/osi
 	name = "\improper O.S.I. body armor"
@@ -1262,6 +1264,7 @@
 	icon_state = "osi_suit"
 	item_state = "osi_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/tmc
 	name = "\improper Lost M.C. cut"
@@ -1269,6 +1272,7 @@
 	icon_state = "tmc_suit"
 	item_state = "tmc_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/pg
 	name = "powder ganger jacket"
@@ -1276,6 +1280,7 @@
 	icon_state = "pg_suit"
 	item_state = "pg_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/deckers
 	name = "decker hoodie"
@@ -1283,6 +1288,7 @@
 	icon_state = "decker_suit"
 	item_state = "decker_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/morningstar
 	name = "morningstar coat"
@@ -1290,6 +1296,7 @@
 	icon_state = "morningstar_suit"
 	item_state = "morningstar_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/saints
 	name = "Third Street Saints fur coat"
@@ -1297,6 +1304,7 @@
 	icon_state = "saints_suit"
 	item_state = "saints_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/phantom
 	name = "phantom thief coat"
@@ -1304,6 +1312,7 @@
 	icon_state = "phantom_suit"
 	item_state = "phantom_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/allies
 	name = "allies body armor"
@@ -1311,6 +1320,7 @@
 	icon_state = "allies_armor"
 	item_state = "allies_armor"
 	body_parts_covered = CHEST|GROIN
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/soviet
 	name = "soviet armored coat"
@@ -1318,6 +1328,7 @@
 	icon_state = "soviet_suit"
 	item_state = "soviet_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/yuri
 	name = "yuri initiate coat"
@@ -1325,6 +1336,7 @@
 	icon_state = "yuri_coat"
 	item_state = "yuri_coat"
 	body_parts_covered = CHEST|GROIN|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/sybil_slickers
 	name = "sybil slickers protective gear"
@@ -1332,6 +1344,7 @@
 	icon_state = "football_armor_blue"
 	item_state = "football_armor_blue"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/basil_boys
 	name = "basil boys protective gear"
@@ -1339,6 +1352,7 @@
 	icon_state = "football_armor_red"
 	item_state = "football_armor_red"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/yakuza
 	name = "tojo clan jacket"
@@ -1346,6 +1360,7 @@
 	icon_state = "MajimaJacket"
 	item_state = "MajimaJacket"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/dutch
 	name = "dutch's jacket"
@@ -1353,4 +1368,5 @@
 	icon_state = "DutchJacket"
 	item_state = "DutchJacket"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
