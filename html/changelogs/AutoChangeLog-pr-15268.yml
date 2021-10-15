@@ -1,0 +1,4 @@
+author: "WanderingFox95"
+delete-after: True
+changes: 
+  - bugfix: "Removes the quick attack loop (like TG did it)"
