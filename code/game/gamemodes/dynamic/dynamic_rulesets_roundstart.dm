@@ -485,6 +485,47 @@
 		SSticker.mode_result = "loss - servants failed their objective (summon ratvar)"
 		SSticker.news_report = CULT_FAILURE
 
+//////////////////////////////////////////////
+//                                          //
+//                 FAMILIES                 //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/families
+	name = "Families"
+	persistent = TRUE
+	antag_datum = /datum/antagonist/gang
+	antag_flag = ROLE_FAMILIES
+	protected_roles = list("Prisoner", "Head of Personnel")
+	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel", "Quartermaster", "Chief Engineer", "Chief Medical Officer", "Research Director")
+	required_candidates = 9
+	weight = 3
+	cost = 15
+	requirements = list(101,101,101,50,30,20,10,10,10,10)
+	flags = HIGH_IMPACT_RULESET
+	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
+	var/datum/gang_handler/handler
+
+/datum/dynamic_ruleset/roundstart/families/pre_execute()
+	..()
+	handler = new /datum/gang_handler(candidates,restricted_roles)
+	handler.gangs_to_generate = (antag_cap[indice_pop] / 2)
+	handler.gang_balance_cap = clamp((indice_pop - 3), 2, 5) // gang_balance_cap by indice_pop: (2,2,2,2,2,3,4,5,5,5)
+	return handler.pre_setup_analogue()
+
+/datum/dynamic_ruleset/roundstart/families/execute()
+	return handler.post_setup_analogue(TRUE)
+
+/datum/dynamic_ruleset/roundstart/families/clean_up()
+	QDEL_NULL(handler)
+	..()
+
+/datum/dynamic_ruleset/roundstart/families/rule_process()
+	return handler.process_analogue()
+
+/datum/dynamic_ruleset/roundstart/families/round_result()
+	return handler.set_round_result_analogue()
+
 // Admin only rulesets. The threat requirement is 101 so it is not possible to roll them.
 
 //////////////////////////////////////////////

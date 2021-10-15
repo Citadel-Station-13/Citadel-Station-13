@@ -461,3 +461,6 @@ GLOBAL_LIST_EMPTY(species_datums)
 /// Gets the client of the mob, allowing for mocking of the client.
 /// You only need to use this if you know you're going to be mocking clients somewhere else.
 #define GET_CLIENT(mob) (##mob.client || ##mob.mock_client)
+
+//check if the person is dead, not sure where to put this
+#define IS_DEAD_OR_INCAP(source) (source.incapacitated() || source.stat)

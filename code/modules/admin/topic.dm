@@ -920,10 +920,10 @@
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=alien;jobban4=[REF(M)]'>Alien</a></td>"
 		//Gang
-		if(jobban_isbanned(M, ROLE_GANG) || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=gang;jobban4=[REF(M)]'><font color=red>Gang</font></a></td>"
+		if(jobban_isbanned(M, ROLE_FAMILIES) || isbanned_dept)
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=gang;jobban4=[REF(M)]'><font color=red>Families</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=gang;jobban4=[REF(M)]'>Gang</a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=gang;jobban4=[REF(M)]'>Families</a></td>"
 		//Bloodsucker
 		if(jobban_isbanned(M, ROLE_BLOODSUCKER) || isbanned_dept)
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=bloodsucker;jobban4=[REF(M)]'><font color=red>Bloodsucker</font></a></td>"
@@ -1008,7 +1008,7 @@
 			if("ghostroles")
 				joblist += list(ROLE_PAI, ROLE_POSIBRAIN, ROLE_DRONE , ROLE_DEATHSQUAD, ROLE_LAVALAND, ROLE_SENTIENCE)
 			if("teamantags")
-				joblist += list(ROLE_OPERATIVE, ROLE_REV, ROLE_CULTIST, ROLE_SERVANT_OF_RATVAR, ROLE_ABDUCTOR, ROLE_ALIEN, ROLE_GANG)
+				joblist += list(ROLE_OPERATIVE, ROLE_REV, ROLE_CULTIST, ROLE_SERVANT_OF_RATVAR, ROLE_ABDUCTOR, ROLE_ALIEN, ROLE_FAMILIES)
 			if("convertantags")
 				joblist += list(ROLE_REV, ROLE_CULTIST, ROLE_SERVANT_OF_RATVAR, ROLE_ALIEN)
 			if("otherroles")

@@ -90,23 +90,34 @@
 	item_state = "ushankadown"
 	alternate_screams = list('sound/voice/human/cyka1.ogg', 'sound/voice/human/cheekibreeki.ogg')
 	flags_inv = HIDEEARS|HIDEHAIR
-	var/earflaps = 1
+	var/earflaps = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+	///Sprite visible when the ushanka flaps are folded up.
+	var/upsprite = "ushankaup"
+	///Sprite visible when the ushanka flaps are folded down.
+	var/downsprite = "ushankadown"
 
 	dog_fashion = /datum/dog_fashion/head/ushanka
 
 /obj/item/clothing/head/ushanka/attack_self(mob/user)
 	if(earflaps)
-		src.icon_state = "ushankaup"
-		src.item_state = "ushankaup"
-		earflaps = 0
+		icon_state = upsprite
+		item_state = upsprite
 		to_chat(user, "<span class='notice'>You raise the ear flaps on the ushanka.</span>")
 	else
-		src.icon_state = "ushankadown"
-		src.item_state = "ushankadown"
-		earflaps = 1
+		icon_state = downsprite
+		item_state = downsprite
 		to_chat(user, "<span class='notice'>You lower the ear flaps on the ushanka.</span>")
+	earflaps = !earflaps
+
+/obj/item/clothing/head/ushanka/soviet
+	name = "soviet ushanka"
+	desc = "For the union!"
+	icon_state = "sovietushankadown"
+	item_state = "sovietushankadown"
+	upsprite = "sovietushankaup"
+	downsprite = "sovietushankadown"
 
 /*
  * Pumpkin head
@@ -315,3 +326,55 @@
 
 /datum/component/storage/concrete/pockets/tiny/spacenam
 	attack_hand_interact = TRUE		//So you can actually see what you stuff in there
+
+//families
+/obj/item/clothing/head/irs
+	name = "internal revenue service cap"
+	icon_state = "irs_hat"
+	item_state = "irs_hat"
+
+/obj/item/clothing/head/pg
+	name = "powder ganger beanie"
+	icon_state = "pg_hat"
+	item_state = "pg_hat"
+
+/obj/item/clothing/head/tmc
+	name = "Lost M.C. bandana"
+	icon_state = "tmc_hat"
+	item_state = "tmc_hat"
+
+/obj/item/clothing/head/deckers
+	name = "Decker headphones"
+	icon_state = "decker_hat"
+	item_state = "decker_hat"
+
+/obj/item/clothing/head/morningstar
+	name = "Morningstar beret"
+	icon_state = "morningstar_hat"
+	item_state = "morningstar_hat"
+
+/obj/item/clothing/head/saints
+	name = "Saints hat"
+	icon_state = "saints_hat"
+	item_state = "saints_hat"
+
+/obj/item/clothing/head/allies
+	name = "allies helmet"
+	icon_state = "allies_helmet"
+	item_state = "allies_helmet"
+
+/obj/item/clothing/head/yuri
+	name = "yuri initiate helmet"
+	icon_state = "yuri_helmet"
+	item_state = "yuri_helmet"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+
+/obj/item/clothing/head/sybil_slickers
+	name = "sybil slickers helmet"
+	icon_state = "football_helmet_blue"
+	item_state = "football_helmet_blue"
+
+/obj/item/clothing/head/basil_boys
+	name = "basil boys helmet"
+	icon_state = "football_helmet_red"
+	item_state = "football_helmet_red"

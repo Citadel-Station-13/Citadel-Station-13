@@ -1890,11 +1890,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 					if(H.stat == CONSCIOUS && H != user && prob(I.force + ((100 - H.health) * 0.5))) // rev deconversion through blunt trauma.
 						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
-						var/datum/antagonist/gang/gang = H.mind.has_antag_datum(/datum/antagonist/gang && !/datum/antagonist/gang/boss)
 						if(rev)
 							rev.remove_revolutionary(FALSE, user)
-						if(gang)
-							H.mind.remove_antag_datum(/datum/antagonist/gang)
 
 				if(bloody)	//Apply blood
 					if(H.wear_mask)
