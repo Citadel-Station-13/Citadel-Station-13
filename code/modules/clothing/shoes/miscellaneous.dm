@@ -417,6 +417,7 @@
 	name = "cowboy boots"
 	desc = "A standard pair of brown cowboy boots."
 	icon_state = "cowboyboots"
+	item_state = "cowboyboots"
 	permeability_coefficient = 0.05 //these are quite tall
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	can_be_tied = FALSE
@@ -425,6 +426,7 @@
 	name = "black cowboy boots"
 	desc = "A pair of black cowboy boots, pretty easy to scuff up."
 	icon_state = "cowboyboots_black"
+	item_state = "cowboyboots_black"
 
 /obj/item/clothing/shoes/wallwalkers
 	name = "wall walking boots"
