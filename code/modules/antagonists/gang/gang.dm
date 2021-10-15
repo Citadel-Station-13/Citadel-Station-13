@@ -1,6 +1,7 @@
 /datum/antagonist/gang
 	name = "Family Member"
 	roundend_category = "gangsters"
+	ui_enable = TRUE
 	ui_name = "AntagInfoGangmember"
 	antag_hud_type = ANTAG_HUD_GANGSTER
 	antag_hud_name = "hud_gangster"

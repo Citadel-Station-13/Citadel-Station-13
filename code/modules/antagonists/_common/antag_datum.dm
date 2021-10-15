@@ -39,6 +39,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/ui_name = "AntagInfoGeneric"
 	///button to access antag interface
 	var/datum/action/antag_info/info_button
+	//temporarily disable it for all antagonists other than families
+	var/ui_enable
 
 /datum/antagonist/New()
 	GLOB.antagonists += src
@@ -118,14 +120,16 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!(owner?.current))
 		return
 	if(ui_name)//in the future, this should entirely replace greet.
-		info_button = new(owner.current, src)
-		info_button.Grant(owner.current)
+		if(ui_enable == TRUE)
+			info_button = new(owner.current, src)
+			info_button.Grant(owner.current)
 	if(!silent)
 		greet()
 		if(ui_name)
-			to_chat(owner.current, span_big("You are \a [src]."))
-			to_chat(owner.current, span_boldnotice("For more info, read the panel. you can always come back to it using the button in the top left."))
-			info_button.Trigger()
+			if(ui_enable == TRUE)
+				to_chat(owner.current, span_big("You are \a [src]."))
+				to_chat(owner.current, span_boldnotice("For more info, read the panel. you can always come back to it using the button in the top left."))
+				info_button.Trigger()
 	apply_innate_effects()
 	give_antag_moodies()
 	remove_blacklisted_quirks()
