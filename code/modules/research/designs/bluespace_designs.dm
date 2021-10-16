@@ -106,6 +106,16 @@
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/bluespace_carrier
+	name = "Bluespace Jar"
+	desc = "A jar used to contain creatures, using the power of bluespace."
+	id = "bluespace_carrier"
+	build_type = PROTOLATHE
+	build_path = /obj/item/pet_carrier/bluespace
+	materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 600)
+	category = list("Bluespace Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/bluespace_pipe
 	name = "Bluespace Pipe"
 	desc = "A pipe that teleports gases."
