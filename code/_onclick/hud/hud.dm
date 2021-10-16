@@ -58,6 +58,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/healthdoll
 	var/atom/movable/screen/internals
 
+	var/atom/movable/screen/wanted/wanted_lvl
 	// subtypes can override this to force a specific UI style
 	var/ui_style
 
@@ -80,6 +81,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
 
+
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
 		mymob.hud_used = null
@@ -100,6 +102,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	healths = null
 	healthdoll = null
+	wanted_lvl = null
 	internals = null
 	lingchemdisplay = null
 	devilsouldisplay = null
@@ -190,7 +193,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)
 	screenmob.update_action_buttons(1)
-	reorganize_alerts()
+	reorganize_alerts(screenmob)
 	screenmob.reload_fullscreen()
 	update_parallax_pref(screenmob)
 
