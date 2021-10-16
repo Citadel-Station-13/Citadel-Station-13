@@ -1,5 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - bugfix: "Equip delays are a bit less weird now, only relevant for coders/people who use straight jackets... on themself, since that's the only thing that uses it right now."
-  - bugfix: "Toggling arousal will properly update your sprite."
