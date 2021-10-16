@@ -37,7 +37,7 @@
 	display_name = "Botanical Engineering"
 	description = "Botanical tools."
 	prereq_ids = list("adv_engi", "biotech")
-	design_ids = list("diskplantgene", "portaseeder", "plantgenes", "flora_gun", "hydro_tray", "biogenerator", "seed_extractor")
+	design_ids = list("diskplantgene", "portaseeder", "plantgenes", "flora_gun", "hydro_tray", "biogenerator", "seed_extractor", "autoloom")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2750)
 
 /datum/techweb_node/exp_tools
