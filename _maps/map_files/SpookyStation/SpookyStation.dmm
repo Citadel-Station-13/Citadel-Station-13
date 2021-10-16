@@ -15847,7 +15847,6 @@
 /area/eventmap/mountain)
 "aXo" = (
 /obj/item/toy/plush/borgplushie{
-	pixel_w = -6;
 	pixel_x = -3;
 	pixel_y = -4
 	},
