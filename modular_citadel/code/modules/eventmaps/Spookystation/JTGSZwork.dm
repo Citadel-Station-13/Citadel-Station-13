@@ -679,7 +679,7 @@
 	..()
 	icon_state = "tall_grass_[rand(1,8)]" //We have 8 states.
 
-/obj/structure/flora/grass/spookytime/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/flora/grass/spookytime/attackby(obj/item/W, mob/user, params)
 	if(W.sharpness && W.force > 0 && !(NODECONSTRUCT_1 in flags_1))
 		to_chat(user, "You begin to harvest [src]...")
 		if(do_after(user, 100/W.force, target = user))

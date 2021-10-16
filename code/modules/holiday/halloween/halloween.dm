@@ -329,5 +329,4 @@
 	del_on_death = 1
 	loot = list(/obj/effect/decal/remains/human)
 
-	do_footstep = TRUE
-	canmove = FALSE
+	stop_automated_movement = 1
