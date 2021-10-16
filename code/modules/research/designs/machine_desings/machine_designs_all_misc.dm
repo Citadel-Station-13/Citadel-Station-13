@@ -12,7 +12,7 @@
 
 /datum/design/board/autoloom
 	name = "Machine Design (Autoloom Board)"
-	desc = "The circuit board for a recycler."
+	desc = "The circuit board for an autoloom."
 	id = "autoloom"
 	build_path = /obj/item/circuitboard/machine/autoloom
 	category = list ("Misc. Machinery")
