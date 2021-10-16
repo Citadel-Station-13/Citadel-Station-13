@@ -1,0 +1,5 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - rscadd: "Adds the fat dart cigarette and to vendors"
+  - imageadd: "Adds the sprites for the fat dart"

@@ -1,0 +1,5 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - bugfix: "If a gamemode fails to load too many times, a safe gamemode will be loaded instead."
+  - code_imp: "Dynamic is no longer hardcoded, and you can now set a gamemode to be forced in the configs."
