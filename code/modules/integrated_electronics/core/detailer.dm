@@ -40,7 +40,7 @@
 
 
 /obj/item/integrated_electronics/detailer/attack_self(mob/user)
-	var/color_choice = input(user, "Select color.", "Assembly Detailer") as null|anything in color_list
+	var/color_choice = tgui_input_list(user, "Select color.", "Assembly Detailer", color_list)
 	if(!color_list[color_choice])
 		return
 	if(!in_range(src, user))

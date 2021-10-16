@@ -72,9 +72,9 @@
 	set name = "Run Dynamic Simulations"
 	set category = "Debug"
 
-	var/simulations = input(usr, "Enter number of simulations") as num
-	var/roundstart_players = input(usr, "Enter number of round start players") as num
-	var/forced_threat_level = input(usr, "Enter forced threat level, if you want one") as num | null
+	var/simulations = tgui_input_num(usr, "Enter number of simulations")
+	var/roundstart_players = tgui_input_num(usr, "Enter number of round start players")
+	var/forced_threat_level = tgui_input_num(usr, "Enter forced threat level, if you want one")
 
 	SSticker.mode = new /datum/game_mode/dynamic
 	message_admins("Running dynamic simulations...")

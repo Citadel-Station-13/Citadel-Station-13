@@ -107,7 +107,7 @@
 	if(href_list["edit_range"])
 		var/new_range
 		var/range_list = list("Radius (all mobs within a radius)" = SOUND_EMITTER_RADIUS, "Z-Level (all mobs on the same z)" = SOUND_EMITTER_ZLEVEL, "Global (all players)" = SOUND_EMITTER_GLOBAL)
-		new_range = input(user, "Choose a new range.", "Sound Emitter") as null|anything in range_list
+		new_range = tgui_input_list(user, "Choose a new range.", "Sound Emitter", range_list)
 		if(!new_range)
 			return
 		emitter_range = range_list[new_range]

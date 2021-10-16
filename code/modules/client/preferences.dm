@@ -2971,7 +2971,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				var/list/color_options = list()
 				for(var/i=1, i<=length(G.loadout_initial_colors), i++)
 					color_options += "Color [i]"
-				var/color_to_change = input(user, "Polychromic options", "Recolor [name]") as null|anything in color_options
+				var/color_to_change = tgui_input_list(user, "Polychromic options", "Recolor [name]", color_options)
 				if(color_to_change)
 					var/color_index = text2num(copytext(color_to_change, 7))
 					var/current_color = user_gear[LOADOUT_COLOR][color_index]
