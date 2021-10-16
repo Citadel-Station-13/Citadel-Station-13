@@ -101,6 +101,7 @@
 	max_integrity = 9999;
 	mouse_opacity = 0
 	},
+/obj/docking_port/mobile/arrivals,
 /turf/open/floor/plasteel/dark{
 	icon_state = "bus"
 	},
@@ -600,7 +601,6 @@
 /area/eventmap/inside)
 "acb" = (
 /obj/machinery/power/apc{
-	areastring = "/area/chapel/office";
 	name = "Chapel Office APC";
 	pixel_y = -24
 	},
@@ -1132,7 +1132,6 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/heads/cmo";
 	dir = 1;
 	name = "CM Quarters APC";
 	pixel_x = 24
@@ -6551,10 +6550,6 @@
 /turf/open/floor/spooktime/snow,
 /area/eventmap/inside)
 "atg" = (
-/obj/structure/reagent_dispensers/cooking_oil{
-	name = "Chilled vat of hatmium";
-	reagent_id = "hatmium"
-	},
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
@@ -7703,6 +7698,7 @@
 /area/eventmap/outside)
 "awi" = (
 /obj/structure/fluff/bus/dense,
+/obj/docking_port/mobile/arrivals,
 /turf/open/floor/spooktime/cobble/sideW{
 	icon_state = "cobble_side_n"
 	},
@@ -9451,6 +9447,7 @@
 	max_integrity = 9999;
 	mouse_opacity = 0
 	},
+/obj/docking_port/mobile/arrivals,
 /turf/open/floor/plasteel/dark{
 	icon_state = "bus"
 	},
@@ -10236,6 +10233,7 @@
 	max_integrity = 9999;
 	mouse_opacity = 0
 	},
+/obj/docking_port/mobile/arrivals,
 /turf/open/floor/plasteel/dark{
 	icon_state = "bus"
 	},
@@ -10253,6 +10251,7 @@
 	max_integrity = 9999;
 	mouse_opacity = 0
 	},
+/obj/docking_port/mobile/arrivals,
 /turf/open/floor/plasteel/dark{
 	icon_state = "bus"
 	},
@@ -10282,6 +10281,7 @@
 	max_integrity = 9999;
 	mouse_opacity = 0
 	},
+/obj/docking_port/mobile/arrivals,
 /turf/open/floor/plasteel/dark{
 	icon_state = "bus"
 	},
