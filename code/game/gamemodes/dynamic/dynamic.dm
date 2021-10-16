@@ -166,6 +166,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	dat += "Split parameters: centre = [roundstart_split_curve_centre] ; width = [roundstart_split_curve_width].<br/>"
 	dat += "<i>On average, <b>[peaceful_percentage]</b>% of the rounds are more peaceful.</i><br/>"
 	dat += "Forced extended: <a href='?src=\ref[src];[HrefToken()];forced_extended=1'><b>[GLOB.dynamic_forced_extended ? "On" : "Off"]</b></a><br/>"
+	dat += "Dynamic extended: <a href='?src=\ref[src];[HrefToken()];extended=1'><b>[GLOB.dynamic_extended ? "On" : "Off"]</b></a><br/>"
 	dat += "No stacking (only one round-ender): <a href='?src=\ref[src];[HrefToken()];no_stacking=1'><b>[GLOB.dynamic_no_stacking ? "On" : "Off"]</b></a><br/>"
 	dat += "Stacking limit: [GLOB.dynamic_stacking_limit] <a href='?src=\ref[src];[HrefToken()];stacking_limit=1'>\[Adjust\]</A>"
 	dat += "<br/>"
@@ -195,6 +196,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		return
 	if (href_list["forced_extended"])
 		GLOB.dynamic_forced_extended = !GLOB.dynamic_forced_extended
+	else if (href_list["extended"])
+		GLOB.dynamic_extended = !GLOB.dynamic_extended
 	else if (href_list["no_stacking"])
 		GLOB.dynamic_no_stacking = !GLOB.dynamic_no_stacking
 	else if (href_list["adjustthreat"])
