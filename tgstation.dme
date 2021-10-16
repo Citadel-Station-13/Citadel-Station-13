@@ -15,8 +15,6 @@
 
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
-#include "_maps\map_files\SpookyStation\halloweenPersiWork.dm"
-#include "_maps\map_files\SpookyStation\SpookyStation.dmm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_auxtools.dm"
@@ -2243,7 +2241,6 @@
 #include "code\modules\holiday\easter.dm"
 #include "code\modules\holiday\holidays.dm"
 #include "code\modules\holiday\halloween\bartholomew.dm"
-#include "code\modules\holiday\halloween\halloween.dm"
 #include "code\modules\holiday\halloween\jacqueen.dm"
 #include "code\modules\holodeck\area_copy.dm"
 #include "code\modules\holodeck\computer.dm"
