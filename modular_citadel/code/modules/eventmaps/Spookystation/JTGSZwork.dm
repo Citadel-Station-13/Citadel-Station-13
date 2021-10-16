@@ -440,7 +440,7 @@
 		turfDebris = new randDebris(src)
 
 //Make sure we delete the objects if we ever change turfs
-/turf/open/floor/spooktime/spooktimegrass/ChangeTurf()
+/turf/open/floor/spooktime/spooktimegrass/ChangeTurf(flags = CHANGETURF_INHERIT_AIR)
 	if(turfGrass)
 		qdel(turfGrass)
 	//if(turfTree)
