@@ -71,6 +71,9 @@ SUBSYSTEM_DEF(ticker)
 	var/station_integrity = 100				// stored at roundend for use in some antag goals
 	var/emergency_reason
 
+	/// If the gamemode fails to be run too many times, we swap to a preset gamemode, this should give admins time to set their preferred one
+	var/emergency_swap = 0
+
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 
@@ -179,7 +182,11 @@ SUBSYSTEM_DEF(ticker)
 				timeLeft = 0
 
 			if(!modevoted)
-				send_gamemode_vote()
+				var/forcemode = CONFIG_GET(string/force_gamemode)
+				if(forcemode)
+					force_gamemode(forcemode)
+				if(!forcemode || (GLOB.master_mode == "dynamic" && CONFIG_GET(flag/dynamic_voting)))
+					send_gamemode_vote()
 			//countdown
 			if(timeLeft < 0)
 				return
@@ -227,13 +234,15 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
 	var/init_start = world.timeofday
-	GLOB.master_mode = "dynamic"
+	if(emergency_swap >= 10)
+		force_gamemode("extended")	// If everything fails extended does not have hard requirements for starting, could be changed if needed.
 	mode = config.pick_mode(GLOB.master_mode)
 	if(!mode.can_start())
 		to_chat(world, "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players and [mode.required_enemies] eligible antagonists needed. Reverting to pre-game lobby.")
 		qdel(mode)
 		mode = null
 		SSjob.ResetOccupations()
+		emergency_swap++
 		return 0
 
 	CHECK_TICK
@@ -252,6 +261,7 @@ SUBSYSTEM_DEF(ticker)
 			QDEL_NULL(mode)
 			to_chat(world, "<B>Error setting up [GLOB.master_mode].</B> Reverting to pre-game lobby.")
 			SSjob.ResetOccupations()
+			emergency_swap++
 			return 0
 	else
 		message_admins("<span class='notice'>DEBUG: Bypassing prestart checks...</span>")
@@ -304,6 +314,19 @@ SUBSYSTEM_DEF(ticker)
 	SSshuttle.realtimeofstart = world.realtime
 
 	return TRUE
+
+/datum/controller/subsystem/ticker/proc/force_gamemode(gamemode)
+	if(gamemode)
+		if(!modevoted)
+			modevoted = TRUE
+		if(gamemode in config.modes)
+			GLOB.master_mode = gamemode
+			SSticker.save_mode(gamemode)
+			message_admins("The gamemode has been set to [gamemode].")
+		else
+			GLOB.master_mode = "extended"
+			SSticker.save_mode("extended")
+			message_admins("force_gamemode proc received an invalid gamemode, defaulting to extended.")
 
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = FALSE
@@ -618,7 +641,7 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/load_mode()
 	var/mode = trim(file2text("data/mode.txt"))
 	if(mode)
-		GLOB.master_mode = "dynamic"
+		GLOB.master_mode = mode
 	else
 		GLOB.master_mode = GLOB.dynamic_forced_extended
 	log_game("Saved mode is '[GLOB.master_mode]'")
