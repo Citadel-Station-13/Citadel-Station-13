@@ -1,5 +1,48 @@
 // Standard, hardcoded slots:
 
+// slots by ID
+
+// real slots
+#define INV_SLOT_HEAD				"head"
+#define INV_SLOT_GLOVES				"gloves"
+#define INV_SLOT_SHOES				"shoes"
+#define INV_SLOT_UNIFORM			"uniform"
+#define INV_SLOT_SUIT				"suit"
+#define INV_SLOT_BACK				"back"
+#define INV_SLOT_BELT				"belt"
+#define INV_SLOT_EYES				"eyes"
+#define INV_SLOT_MASK				"mask"
+#define INV_SLOT_NECK				"neck"
+#define INV_SLOT_SUIT_STORAGE		"suit_store"
+#define INV_SLOT_ID					"id"
+#define INV_SLOT_LEFT_POCKET		"pocket_left"
+#define INV_SLOT_RIGHT_POCKET		"pocket_right"
+#define INV_SLOT_HANDCUFFS			"handcuffs"
+#define INV_SLOT_LEGCUFFS			"legcuffs"
+#define INV_SLOT_DEXTROUS_STORAGE	"dextrous"
+
+// "virtual" special slots
+/// insertion-only: put item in any hand
+#define	INV_VIRTUALSLOT_HANDS				"hands"
+/// insertion-only: put item in belt
+#define INV_VIRTUALSLOT_BELT				"belt"
+/// insertion-only: put item in backpack
+#define INV_VIRTUALSLOT_BACKPACK			"backpack"
+/// insertion-only: put item in any pocket
+#define INV_VIRTUALSLOT_POCKETS				"pockets"
+
+// equip returns
+/// success
+#define EQUIP_SUCCESS				NONE
+/// no slot on mob
+#define EQUIP_FAIL_NO_SLOT			(1<<0)
+/// slot occupied
+#define EQUIP_FAIL_SLOT_OCCUPIED	(1<<1)
+/// item doesn't fit in slot - item refused
+#define EQUIP_FAIL_NOFIT_ITEM		(1<<2)
+/// item doesn't fit in slot - slot refused
+#define EQUIP_FAIL_NOFIT_SLOT		(1<<3)
+
 // /obj/item/slot_flags
 
 
@@ -34,32 +77,6 @@
 #define ITEM_SLOT_HANDS			(1<<14)
 #define ITEM_SLOT_BACKPACK		(1<<15)
 #define ITEM_SLOT_SUITSTORE		(1<<16)
-
-//SLOTS
-#define SLOT_BACK			1
-#define SLOT_WEAR_MASK		2
-#define SLOT_HANDCUFFED		3
-#define SLOT_HANDS			4 //wherever you provide a slot for hands you provide SLOT_HANDS
-								//SLOT_HANDS as a slot will pick ANY available hand
-#define SLOT_BELT			5
-#define SLOT_WEAR_ID		6
-#define SLOT_EARS			7
-#define SLOT_GLASSES		8
-#define SLOT_GLOVES			9
-#define SLOT_NECK			10
-#define SLOT_HEAD			11
-#define SLOT_SHOES			12
-#define SLOT_WEAR_SUIT		13
-#define SLOT_W_UNIFORM		14
-#define SLOT_L_STORE		15
-#define SLOT_R_STORE		16
-#define SLOT_S_STORE		17
-#define SLOT_IN_BACKPACK	18
-#define SLOT_LEGCUFFED		19
-#define SLOT_GENERC_DEXTROUS_STORAGE	20
-
-
-#define SLOTS_AMT			20 // Keep this up to date!
 
 //I hate that this has to exist
 /proc/slotdefine2slotbit(slotdefine) //Keep this up to date with the value of SLOT BITMASKS and SLOTS (the two define sections above)
