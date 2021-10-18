@@ -99,15 +99,17 @@
 		evolve()
 		return
 	for(var/obj/item/trash/garbage in range(1, src))
-		if(prob(2))
-			qdel(garbage)
-			evolve_plague()
-			return
+		if(is_station_level(z))
+			if(prob(2))
+				qdel(garbage)
+				evolve_plague()
+				return
 	for(var/obj/effect/decal/cleanable/blood/gibs/leftovers in range(1, src))
-		if(prob(2))
-			qdel(leftovers)
-			evolve_plague()
-			return
+		if(is_station_level(z))
+			if(prob(2))
+				qdel(leftovers)
+				evolve_plague()
+				return
 
 /**
   *Checks the mouse cap, if it's above the cap, doesn't spawn a mouse. If below, spawns a mouse and adds it to cheeserats.
@@ -202,4 +204,5 @@ GLOBAL_VAR(tom_existed)
 
 /mob/living/simple_animal/mouse/handle_environment(datum/gas_mixture/environment)
 	. = ..()
-	miasma()
+	if(is_station_level(z))
+		miasma()

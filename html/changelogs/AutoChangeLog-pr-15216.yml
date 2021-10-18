@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - rscdel: "The xenomorph infestation on Moon Outpost 19 is significantly less prone to outbreaks, theoretically."
