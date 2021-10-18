@@ -2369,6 +2369,7 @@
 #include "code\modules\inventory\item.dm"
 #include "code\modules\inventory\mobs.dm"
 #include "code\modules\inventory\on_screen.dm"
+#include "code\modules\inventory\render.dm"
 #include "code\modules\inventory\zone_checks.dm"
 #include "code\modules\jobs\access.dm"
 #include "code\modules\jobs\job_exp.dm"

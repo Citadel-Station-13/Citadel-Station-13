@@ -9,7 +9,11 @@
 	var/list/items_by_slot
 	/// list of all items in us
 	var/list/obj/item/holding
+	/// dynamic inventory screen cramming - slots without screen_loc are put here
+	var/list/screen_cream
 
 /datum/inventory/Destroy()
 	delete_inventory()
 	return ..()
+
+

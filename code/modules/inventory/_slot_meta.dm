@@ -26,6 +26,8 @@ GLOBAL_LIST_EMPTY(inventory_slot_meta)
 	var/screen_loc
 	/// screen object
 	var/obj/screen/inventory/screen
+	/// unequip by click rather than drag to hand
+	var/unequip_on_click = TRUE
 
 /datum/inventory_slot_meta/New()
 
@@ -41,4 +43,24 @@ GLOBAL_LIST_EMPTY(inventory_slot_meta)
 /**
  * Returns whether or not we can hold a certain item
  */
-/datum/inventory_slot_meta/proc/can_hold(obj/item/I)
+/datum/inventory_slot_meta/proc/can_hold(datum/inventory/inventory, obj/item/I)
+
+/**
+ * Returns whether or not a mob is allowed to insert an item
+ */
+/datum/inventory_slot_meta/proc/can_insert(datum/inventory/inventory, obj/item/I, mob/user)
+
+/**
+ * Returns whether or not a mob is allowed to remove an item
+ */
+/datum/inventory_slot_meta/proc/can_remove(datum/inventory/inventory, obj/item/I, mob/user)
+
+/**
+ * Called on item insertion
+ */
+/datum/inventory_slot_meta/proc/on_insert(datum/inventory/inventory, obj/item/I, mob/user)
+
+/**
+ * Called on item removal
+ */
+/datum/inventory_slot_meta/proc/on_removal(datum/inventory/inventory, obj/item/I, mob/user)
