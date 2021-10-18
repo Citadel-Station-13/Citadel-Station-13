@@ -176,15 +176,6 @@
 								table[y1][x1] -= 10
 							else if(table[y1][x1] < 0)	//If flagged, remove the flag
 								table[y1][x1] += 10
-				if(href_list["same_board"])	//Reset the board... kinda
-					if(game_status != MINESWEEPER_GAME_PLAYING)
-						mine_sound = TRUE
-						game_status = MINESWEEPER_GAME_PLAYING
-					if(table[y1][x1] >= 10)	//If revealed, become unrevealed!
-						if(mine_sound)
-							playsound(loc, 'sound/arcade/minesweeper_menuselect.ogg', 50, FALSE, extrarange = -3)
-							mine_sound = FALSE
-						table[y1][x1] -= 10
 				if(table[y1][x1] > 10 && !reset_board)
 					safe_squares_revealed += 1
 				var/y2 = y1
@@ -274,10 +265,10 @@
 				prizevend(user, dope_prizes)
 
 	if(game_status == MINESWEEPER_GAME_WON)
-		web += "[(rows < 10 || columns < 10) ? "<font size='4'>You won, but your board was too small! Pick a bigger board next time!" : "<font size='6'>Congratulations, you have won!"]<br><font size='3'>Want to play again?<br><b><a href='byond://?src=[REF(src)];Easy=1'><font color='#cc66ff'>Easy (9x9 board, 10 mines)</font></a><br><a href='byond://?src=[REF(src)];Intermediate=1'><font color='#cc66ff'>Intermediate (16x16 board, 40 mines)</font></a><br><a href='byond://?src=[REF(src)];Hard=1'><font color='#cc66ff'>Hard (16x30 board, 99 mines)</font></a><br><a href='byond://?src=[REF(src)];Custom=1'><font color='#cc66ff'>Custom</font></a></b><br><a href='byond://?src=[REF(src)];same_board=1'><font color='#cc66ff'>Play on the same board</font></a><br><a href='byond://?src=[REF(src)];Main_Menu=1'><font color='#cc66ff'>Return to Main Menu</font></a></b><br>"
+		web += "[(rows < 10 || columns < 10) ? "<font size='4'>You won, but your board was too small! Pick a bigger board next time!" : "<font size='6'>Congratulations, you have won!"]<br><font size='3'>Want to play again?<br><b><a href='byond://?src=[REF(src)];Easy=1'><font color='#cc66ff'>Easy (9x9 board, 10 mines)</font></a><br><a href='byond://?src=[REF(src)];Intermediate=1'><font color='#cc66ff'>Intermediate (16x16 board, 40 mines)</font></a><br><a href='byond://?src=[REF(src)];Hard=1'><font color='#cc66ff'>Hard (16x30 board, 99 mines)</font></a><br><a href='byond://?src=[REF(src)];Custom=1'><font color='#cc66ff'>Custom</font></a></b><br><a href='byond://?src=[REF(src)];Main_Menu=1'><font color='#cc66ff'>Return to Main Menu</font></a></b><br>"
 
 	if(game_status == MINESWEEPER_GAME_LOST)
-		web += "<font size='6'>You have lost!<br><font size='3'>Try again?<br><b><a href='byond://?src=[REF(src)];Easy=1'><font color='#cc66ff'>Easy (9x9 board, 10 mines)</font></a><br><a href='byond://?src=[REF(src)];Intermediate=1'><font color='#cc66ff'>Intermediate (16x16 board, 40 mines)</font></a><br><a href='byond://?src=[REF(src)];Hard=1'><font color='#cc66ff'>Hard (16x30 board, 99 mines)</font></a><br><a href='byond://?src=[REF(src)];Custom=1'><font color='#cc66ff'>Custom</font></a></b><br><a href='byond://?src=[REF(src)];same_board=1'><font color='#cc66ff'>Play on the same board</font></a><br><a href='byond://?src=[REF(src)];Main_Menu=1'><font color='#cc66ff'>Return to Main Menu</font></a></b><br>"
+		web += "<font size='6'>You have lost!<br><font size='3'>Try again?<br><b><a href='byond://?src=[REF(src)];Easy=1'><font color='#cc66ff'>Easy (9x9 board, 10 mines)</font></a><br><a href='byond://?src=[REF(src)];Intermediate=1'><font color='#cc66ff'>Intermediate (16x16 board, 40 mines)</font></a><br><a href='byond://?src=[REF(src)];Hard=1'><font color='#cc66ff'>Hard (16x30 board, 99 mines)</font></a><br><a href='byond://?src=[REF(src)];Custom=1'><font color='#cc66ff'>Custom</font></a></b><br><a href='byond://?src=[REF(src)];Main_Menu=1'><font color='#cc66ff'>Return to Main Menu</font></a></b><br>"
 
 	if(game_status == MINESWEEPER_GAME_PLAYING)
 		web += "<a href='byond://?src=[REF(src)];Main_Menu=1'><font color='#cc66ff'>Return to Main Menu</font></a><br>"

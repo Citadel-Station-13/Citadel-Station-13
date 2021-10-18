@@ -183,14 +183,14 @@
 	var/datum/weather/void_storm/storm
 
 /datum/eldritch_knowledge/final/void_final/on_finished_recipe(mob/living/user, list/atoms, loc)
-	var/mob/living/carbon/human/H = user
-	user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/eldritch)
-	H.physiology.brute_mod *= 0.5
-	H.physiology.burn_mod *= 0.5
-	ADD_TRAIT(H, TRAIT_RESISTLOWPRESSURE, MAGIC_TRAIT)
-	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# The nobleman of void [H.real_name] has arrived, step along the Waltz that ends worlds! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/announcer/classic/spanomalies.ogg')
-
-	sound_loop = new(list(user),TRUE,TRUE)
+	var/mob/living/carbon/human/waltzing = user
+	waltzing.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/eldritch)
+	waltzing.physiology.brute_mod *= 0.5
+	waltzing.physiology.burn_mod *= 0.5
+	ADD_TRAIT(waltzing, TRAIT_RESISTLOWPRESSURE, MAGIC_TRAIT)
+	waltzing.client?.give_award(/datum/award/achievement/misc/void_ascension, waltzing)
+	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# The nobleman of void [waltzing.real_name] has arrived, step along the Waltz that ends worlds! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/announcer/classic/spanomalies.ogg')
+	sound_loop = new(user, TRUE, TRUE)
 	return ..()
 
 /datum/eldritch_knowledge/final/void_final/on_death()

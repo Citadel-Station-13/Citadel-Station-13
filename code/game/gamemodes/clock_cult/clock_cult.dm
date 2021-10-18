@@ -196,7 +196,7 @@ Credit where due:
 	..()
 	return 1
 
-/datum/game_mode/clockwork_cult/proc/greet_servant(mob/M) //Description of their role
+/datum/game_mode/proc/greet_servant(mob/M) //Description of their role
 	if(!M)
 		return 0
 	to_chat(M, "<span class='bold large_brass'>You are a servant of Ratvar, the Clockwork Justiciar!</span>")

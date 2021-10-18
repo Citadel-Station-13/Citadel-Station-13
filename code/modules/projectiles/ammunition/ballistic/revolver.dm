@@ -39,7 +39,7 @@
 
 /obj/item/ammo_casing/c38/lethal
 	name = ".38 bullet casing"
-	desc = "A .38 bullet casing"
+	desc = "A .38 bullet casing."
 	projectile_type = /obj/item/projectile/bullet/c38
 
 /obj/item/ammo_casing/c38/trac

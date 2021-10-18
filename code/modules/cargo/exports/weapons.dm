@@ -211,11 +211,6 @@
 	unit_name = "arrow"
 	export_types = list(/obj/item/ammo_casing/caseless/arrow, /obj/item/ammo_casing/caseless/arrow/bone, /obj/item/ammo_casing/caseless/arrow/ash)
 
-/datum/export/weapon/bow_teaching
-	cost = 500
-	unit_name = "bowyery tablet"
-	export_types = list(/obj/item/book/granter/crafting_recipe/bone_bow)
-
 /datum/export/weapon/quiver
 	cost = 100
 	unit_name = "quiver"

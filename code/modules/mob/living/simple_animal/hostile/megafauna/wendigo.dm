@@ -32,6 +32,9 @@ Difficulty: Hard
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
+	achievement_type = /datum/award/achievement/boss/wendigo_kill
+	crusher_achievement_type = /datum/award/achievement/boss/wendigo_crusher
+	score_achievement_type = /datum/award/score/wendigo_score
 	deathmessage = "falls, shaking the ground around it"
 	deathsound = 'sound/effects/gravhit.ogg'
 	attack_action_types = list(/datum/action/innate/megafauna_attack/heavy_stomp,
