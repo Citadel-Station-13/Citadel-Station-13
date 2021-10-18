@@ -14,3 +14,13 @@
 #define AFK_THEFT_MESSAGE 2
 /// The index of the entry in 'afk_thefts' with the time it happened
 #define AFK_THEFT_TIME 3
+
+// inventory hide modes - if >= inventory_hide_level on a slot it'll show
+/// show all slots
+#define INVENTORY_HIDE_NONE		10
+/// show "static inventory"
+#define INVENTORY_HIDE_COMMON	5
+/// show nothing
+#define INVENTORY_HIDE_ALL		15
+/// absolute maximum - these slots never show on UI at all
+#define INVENTORY_HIDE_MAXIMUM	101
