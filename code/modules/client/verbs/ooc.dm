@@ -215,7 +215,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		else
 			choices[C] = C
 	choices = sortList(choices)
-	var/selection = tgui_input_list("Please, select a player!", "Ignore", choices)
+	var/selection = tgui_input_list(src, "Please, select a player!", "Ignore", choices)
 	if(!selection || !(selection in choices))
 		return
 	selection = choices[selection]

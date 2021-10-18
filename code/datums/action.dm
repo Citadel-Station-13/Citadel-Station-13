@@ -564,7 +564,7 @@
 	var/list/areas = list()
 	for (var/area/a in owner.siliconaccessareas)
 		areas[a.name] = a
-	var/removeAPC = tgui_input_list("Select an APC to remove:","Remove APC Control", areas)
+	var/removeAPC = tgui_input_list(owner, "Select an APC to remove:","Remove APC Control", areas)
 	if (!removeAPC)
 		return
 	var/area/area = areas[removeAPC]
@@ -586,7 +586,7 @@
 	var/list/areas = list()
 	for (var/area/a in owner.siliconaccessareas)
 		areas[a.name] = a
-	var/accessAPC = tgui_input_list("Select an APC to access:","Access APC Interface", areas)
+	var/accessAPC = tgui_input_list(owner, "Select an APC to access:","Access APC Interface", areas)
 	if (!accessAPC)
 		return
 	var/area/area = areas[accessAPC]

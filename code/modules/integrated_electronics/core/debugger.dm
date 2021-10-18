@@ -12,7 +12,7 @@
 	var/copy_values = FALSE
 
 /obj/item/integrated_electronics/debugger/attack_self(mob/user)
-	var/type_to_use = tgui_input_list("Please choose a type to use.","[src] type setting", list("string","number","ref","copy","null"))
+	var/type_to_use = tgui_input_list(user, "Please choose a type to use.","[src] type setting", list("string","number","ref","copy","null"))
 	if(!user.IsAdvancedToolUser())
 		return
 

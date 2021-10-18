@@ -21,7 +21,7 @@
 
 /obj/item/debug/human_spawner/attack_self(mob/user)
 	..()
-	var/choice = tgui_input_list("Select a species", "Human Spawner", null, GLOB.species_list)
+	var/choice = tgui_input_list(user, "Select a species", "Human Spawner", null, GLOB.species_list)
 	selected_species = GLOB.species_list[choice]
 
 /* Revive this once we purge all the istype checks for tools for tool_behaviour

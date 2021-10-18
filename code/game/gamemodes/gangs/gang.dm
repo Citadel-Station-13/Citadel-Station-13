@@ -141,7 +141,7 @@
 	promote()
 
 /datum/antagonist/gang/proc/admin_adjust_influence()
-	var/inf = tgui_input_num("Influence for [gang.name]","Gang influence", gang.influence)
+	var/inf = tgui_input_num(usr, "Influence for [gang.name]","Gang influence", gang.influence)
 	if(!isnull(inf))
 		gang.influence = inf
 		message_admins("[key_name_admin(usr)] changed [gang.name]'s influence to [inf].")

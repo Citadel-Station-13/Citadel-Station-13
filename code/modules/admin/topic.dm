@@ -1531,7 +1531,7 @@
 		if(!ismob(M))
 			to_chat(usr, "this can only be used on instances of type /mob.")
 
-		var/speech = tgui_input_text("What will [key_name(M)] say?", "Force speech", "")// Don't need to sanitize, since it does that in say(), we also trust our admins.
+		var/speech = tgui_input_text(usr, "What will [key_name(M)] say?", "Force speech", "")// Don't need to sanitize, since it does that in say(), we also trust our admins.
 		if(!speech)
 			return
 		M.say(speech, forced = "admin speech")
