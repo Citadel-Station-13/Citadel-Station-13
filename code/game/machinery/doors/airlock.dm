@@ -78,6 +78,8 @@
 	var/obj/item/note //Any papers pinned to the airlock
 	var/detonated = FALSE
 	var/abandoned = FALSE
+	var/open_sound_old = 'sound/machines/airlock.ogg'
+	var/close_sound_old = 'sound/machines/AirlockClose.ogg'
 	var/open_sound_powered = 'sound/machines/door/covert1o.ogg'
 	var/open_sound_unpowered = 'sound/machines/airlockforced.ogg'
 	var/close_sound_powered = 'sound/machines/door/covert1c.ogg'
@@ -1092,6 +1094,15 @@
 					to_chat(user, "<span class='warning'>Despite your attempts, [src] refuses to open.</span>")
 			prying_so_hard = FALSE
 
+/obj/machinery/door/airlock/proc/open_check()
+	//playsound uses the default SOUND_RANGE unless given an extrarange, so we determine who will hear it based on that.
+	//i think checking if theres a client somewhat optimizes this code by not playing sounds to clientless mobs but idk
+	for(var/mob/M in hearers(SOUND_RANGE, src)) //playsound uses the default SOUND_RANGE unless given an extrarange, so we determine who will hear it based on that.
+		if(!(M.client?.prefs?.toggles & SOUND_AIRLOCKS)) //does the client have the airlock pref checked?
+			M.playsound_local(src.loc, open_sound_old, 30, 1) //no pref indicated, so defaulting to old sounds
+		else
+			M.playsound_local(src.loc, open_sound_powered, 30, 1) //pref indicated, using new sounds
+
 /obj/machinery/door/airlock/open(forced=0)
 	if( operating || welded || locked )
 		return FALSE
@@ -1115,7 +1126,7 @@
 		if(obj_flags & EMAGGED)
 			return FALSE
 		use_power(50)
-		playsound(src, open_sound_powered, 30, 1)
+		open_check()
 		if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 			src.closeOther.close()
 	else
@@ -1143,6 +1154,12 @@
 		addtimer(CALLBACK(src, .proc/close), 1)
 	return TRUE
 
+/obj/machinery/door/airlock/proc/close_check()
+	for(var/mob/M in hearers(SOUND_RANGE, src))
+		if(!(M.client?.prefs?.toggles & SOUND_AIRLOCKS))
+			M.playsound_local(src.loc, close_sound_old, 30, 1)
+		else
+			M.playsound_local(src.loc, close_sound_powered, 30, 1)
 
 /obj/machinery/door/airlock/close(forced=0)
 	if(operating || welded || locked)
@@ -1162,7 +1179,7 @@
 		if(obj_flags & EMAGGED)
 			return
 		use_power(50)
-		playsound(src.loc, close_sound_powered, 30, 1)
+		close_check()
 	else
 		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
 

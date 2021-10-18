@@ -199,6 +199,20 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggle_ship_ambience)()
 /datum/verbs/menu/Settings/Sound/toggle_ship_ambience/Get_checked(client/C)
 	return C.prefs.toggles & SOUND_SHIP_AMBIENCE
 
+TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggle_airlock_sounds)()
+	set name = "Toggle Airlock Sound Type"
+	set category = "Preferences"
+	set desc = "Old or new."
+	usr.client.prefs.toggles ^= SOUND_AIRLOCKS
+	usr.client.prefs.save_preferences()
+	if(usr.client.prefs.toggles & SOUND_AIRLOCKS)
+		to_chat(usr, "You will now hear alternate airlock sounds.")
+	else
+		to_chat(usr, "You will no longer hear alternate airlock sounds.")
+	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Airlock Sounds", "[usr.client.prefs.toggles & SOUND_AIRLOCKS ? "Enabled" : "Disabled"]")) // im sorry this didnt get testmerged with the pref at the beginning
+/datum/verbs/menu/Settings/Sound/toggle_airlock_sounds/Get_checked(client/C)
+	return C.prefs.toggles & SOUND_AIRLOCKS
+
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggle_announcement_sound)()
 	set name = "Hear/Silence Announcements"
