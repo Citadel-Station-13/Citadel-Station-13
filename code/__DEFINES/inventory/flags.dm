@@ -1,2 +1,2 @@
-// /obj/item/flags_inv
+T// /obj/item/flags_inv
 
