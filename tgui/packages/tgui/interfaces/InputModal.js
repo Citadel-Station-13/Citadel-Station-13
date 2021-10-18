@@ -28,13 +28,14 @@ export const InputModal = (props, context) => {
     }
   };
 
-  let initialHeight, initialWidth;
+  let initialHeight, initialWidth, canResize;
   let modalBody;
   switch (input_type) {
     case 'text':
     case 'num':
       initialWidth = 325;
       initialHeight = message ? Math.max(150, message.length) : 110;
+      canResize = false;
       modalBody = (
         <Input
           value={initial}
@@ -54,6 +55,7 @@ export const InputModal = (props, context) => {
     case 'message':
       initialWidth = 450;
       initialHeight = 350;
+      canResize = true;
       modalBody = (
         <TextArea
           value={initial}
@@ -71,7 +73,7 @@ export const InputModal = (props, context) => {
   }
 
   return (
-    <Window title={title} theme="abstract" width={initialWidth} height={initialHeight}>
+    <Window title={title} theme="abstract" width={initialWidth} height={initialHeight} resizable={canResize}>
       {timeout !== undefined && <Loader value={timeout} />}
       <Window.Content>
         <Stack fill vertical>
