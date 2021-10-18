@@ -83,3 +83,55 @@
  */
 /mob/proc/drop_all_inventory_items()
 	return inventory?.DropEverything()
+
+/**
+ * Grabs an item from slot
+ */
+/mob/proc/unequip_from_slot(slot, force = FALSE, atom/new_location = drop_location())
+	EnsureInventory()
+	inventory?.UnequipFromSlot(slot, force, new_location)
+
+/**
+ * Checks if a slot exists
+ */
+/mob/proc/does_slot_exist(slot)
+	EnsureInventory()
+	return inventory?.SlotExists(slot)
+
+/**
+ * Checks if we can put an item in a slot
+ */
+/mob/proc/can_equip(obj/item/I, slot, mob/user, list/warnings)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	EnsureInventory()
+	return inventory?.CanEquip(I, slot, user, warnings)
+
+/**
+ * Checks if we can unequip an item from a slot
+ */
+/mob/proc/can_unequip(obj/item/I, slot, mob/user, list/warnings)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	EnsureInventory()
+	return inventory?.CanUnequip(I, slot, user, warnings)
+
+/**
+ * proc that can be overridden:
+ * can we use a certain slot?
+ */
+/mob/proc/check_item_equip(obj/item/I, slot, mob/user, list/warnings)
+	return TRUE
+
+/**
+ * proc that can be overridden:
+ * can we take an item out of a certain slot?
+ */
+/mob/proc/check_item_unequip(obj/item/I, slot, mob/user, list/warnings)
+	return TRUE
+
+/**
+ * update slots:
+ * override by mob
+ * used to enable/disable slots.
+ */
+/mob/proc/update_inventory_slots()
+	return

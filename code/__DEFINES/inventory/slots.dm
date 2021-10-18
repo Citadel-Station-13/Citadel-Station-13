@@ -20,16 +20,17 @@
 #define INV_SLOT_HANDCUFFS			"handcuffs"
 #define INV_SLOT_LEGCUFFS			"legcuffs"
 #define INV_SLOT_DEXTROUS_STORAGE	"dextrous"
+#define INV_SLOT_EARS				"ears"
 
 // "virtual" special slots
 /// insertion-only: put item in any hand
-#define	INV_VIRTUALSLOT_HANDS				"hands"
+#define	INV_VIRTUALSLOT_IN_HANDS			"hands"
 /// insertion-only: put item in belt
-#define INV_VIRTUALSLOT_BELT				"belt"
+#define INV_VIRTUALSLOT_IN_BELT				"belt"
 /// insertion-only: put item in backpack
-#define INV_VIRTUALSLOT_BACKPACK			"backpack"
+#define INV_VIRTUALSLOT_IN_BACKPACK			"backpack"
 /// insertion-only: put item in any pocket
-#define INV_VIRTUALSLOT_POCKETS				"pockets"
+#define INV_VIRTUALSLOT_IN_POCKETS			"pockets"
 
 // equip returns
 /// success

@@ -90,7 +90,8 @@
 	//held_items[active_hand_index] is the actively held item, but please use get_active_held_item() instead, because OOP
 	var/bloody_hands = 0
 
-	var/datum/component/storage/active_storage = null//Carbon
+	/// Opened storage
+	var/datum/component/storage/active_storage
 
 	var/datum/hud/hud_used = null
 

@@ -10,7 +10,9 @@
 	/// list of all items in us
 	var/list/obj/item/holding
 	/// dynamic inventory screen cramming - slots without screen_loc are put here
-	var/list/screen_cream
+	var/list/screen_cram
+	/// disabled slots - these exist but are grayed out. associated by id to the reason they're disabled. managed by the mob.
+	var/list/disabled_slots
 
 /datum/inventory/Destroy()
 	delete_inventory()

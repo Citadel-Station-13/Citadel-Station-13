@@ -16,6 +16,25 @@
 	block_parry_data = /datum/block_parry_data/unarmed/human
 	default_block_parry_data = /datum/block_parry_data/unarmed/human
 
+	inventory = list(
+		INV_SLOT_MASK,
+		INV_SLOT_UNIFORM,
+		INV_SLOT_NECK,
+		INV_SLOT_SUIT,
+		INV_SLOT_SUIT_STORAGE,
+		INV_SLOT_SHOES,
+		INV_SLOT_GLOVES,
+		INV_SLOT_EARS,
+		INV_SLOT_HEAD,
+		INV_SLOT_LEFT_POCKET,
+		INV_SLOT_RIGHT_POCKET,
+		INV_SLOT_LEGCUFFS,
+		INV_SLOT_HANDCUFFS,
+		INV_SLOT_BELT,
+		INV_SLOT_ID,
+		INV_SLOT_EYES
+	)
+
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hair_style = "Bald"
@@ -46,15 +65,6 @@
 	var/shirt_color = "FFFFFF"
 	var/socks = "Nude" //Which socks the player wants
 	var/socks_color = "FFFFFF"
-
-	//Equipment slots
-	var/obj/item/wear_suit = null
-	var/obj/item/w_uniform = null
-	var/obj/item/belt = null
-	var/obj/item/wear_id = null
-	var/obj/item/r_store = null
-	var/obj/item/l_store = null
-	var/obj/item/s_store = null
 
 	/// When an braindead player has their equipment fiddled with, we log that info here for when they come back so they know who took their ID while they were DC'd for 30 seconds
 	var/list/afk_thefts

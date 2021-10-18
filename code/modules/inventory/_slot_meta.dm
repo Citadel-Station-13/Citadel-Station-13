@@ -19,7 +19,11 @@ GLOBAL_LIST_EMPTY(inventory_slot_meta)
 	/// slot id
 	var/id
 	/// icon used for screen objects
-	var/icon = 'icons/core/inventory/screen.dmi'
+	var/icon = 'icons/screen/inventory.dmi'
+	/// themes
+	var/static/list/theme_icons = list(
+
+	)
 	/// icon state
 	var/icon_state = "generic"
 	/// screen loc
@@ -28,10 +32,16 @@ GLOBAL_LIST_EMPTY(inventory_slot_meta)
 	var/obj/screen/inventory/screen
 	/// unequip by click rather than drag to hand
 	var/unequip_on_click = TRUE
+	/// hide level
+	var/hide_level = INVENTORY_HIDE_COMMON
+	/// are we an "abstract" slot? These aren't ever shown to the player. Set to FALSE for those.
+	var/is_inventory = TRUE
 
 /datum/inventory_slot_meta/New()
 
 /datum/inventory_slot_meta/proc/get_screen()
+	if(!is_inventory)
+		return FALSE
 	if(!screen)
 		return instantiate_screen()
 	return screen
