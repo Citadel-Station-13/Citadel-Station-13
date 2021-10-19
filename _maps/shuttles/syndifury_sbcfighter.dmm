@@ -138,6 +138,7 @@
 	width = 5
 	},
 /obj/structure/cable,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/sbc/fighter1)
 

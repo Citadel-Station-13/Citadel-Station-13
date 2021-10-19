@@ -9,8 +9,13 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc/corvette)
 "c" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
-/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/effect/spawner/structure/window/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/sbc/corvette)
 "d" = (
@@ -25,8 +30,7 @@
 	pixel_x = 0;
 	pixel_y = -28
 	},
-/obj/structure/cable,
-/turf/open/floor/mineral/plastitanium,
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/shuttle/sbc/corvette)
 "g" = (
 /obj/structure/shuttle/engine/propulsion,
@@ -34,15 +38,23 @@
 /area/shuttle/sbc/corvette)
 "h" = (
 /obj/structure/chair/comfy/shuttle{
-	icon_state = "shuttle_chair";
-	dir = 4
+	dir = 4;
+	icon_state = "shuttle_chair"
+	},
+/obj/machinery/turretid{
+	ailock = 1;
+	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
+	icon_state = "control_stun";
+	name = "Ship Turret Control";
+	pixel_y = 32;
+	req_access = 150
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc/corvette)
 "i" = (
 /obj/structure/chair/comfy/shuttle{
-	icon_state = "shuttle_chair";
-	dir = 8
+	dir = 8;
+	icon_state = "shuttle_chair"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc/corvette)
@@ -51,9 +63,10 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc/corvette)
 "k" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/structure/cable,
-/turf/open/floor/mineral/plastitanium,
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/shuttle/sbc/corvette)
 "l" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate{
@@ -114,12 +127,73 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc/corvette)
 "s" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/sbc/corvette)
+"t" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/shuttle/sbc/corvette)
+"u" = (
+/obj/machinery/power/smes,
+/obj/structure/cable{
+	d1 = 0;
+	d2 = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/sbc/corvette)
+"v" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/sbc/corvette)
+"w" = (
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/effect/spawner/structure/window/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/sbc/corvette)
+"x" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	icon_state = "shuttle_chair"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/sbc/corvette)
+"A" = (
 /obj/machinery/door/airlock/external{
 	id_tag = "sbc_corvette_bolt";
 	name = "Syndicate Corvette Airlock";
 	req_access_txt = "150"
 	},
-/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/plastitanium,
+/area/space)
+"B" = (
+/obj/machinery/door/airlock/external{
+	id_tag = "sbc_corvette_bolt";
+	name = "Syndicate Corvette Airlock";
+	req_access_txt = "150"
+	},
 /obj/docking_port/mobile{
 	dwidth = 2;
 	height = 6;
@@ -128,53 +202,111 @@
 	name = "Syndicate Corvette";
 	width = 12
 	},
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/plastitanium,
+/area/space)
+"C" = (
+/obj/structure/cable{
+	d1 = 0;
+	d2 = 8
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/effect/spawner/structure/window/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/sbc/corvette)
-"t" = (
+"F" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/area/shuttle/sbc/corvette)
+"H" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/sbc/corvette)
+"K" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/area/shuttle/sbc/corvette)
+"L" = (
+/obj/machinery/porta_turret/syndicate/energy/heavy{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/sbc/corvette)
+"M" = (
 /obj/machinery/door/airlock/external{
 	id_tag = "sbc_corvette_bolt";
 	name = "Syndicate Corvette Airlock";
 	req_access_txt = "150"
 	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/sbc/corvette)
+"N" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/external{
+	id_tag = "sbc_corvette_bolt";
+	name = "Syndicate Corvette Airlock";
+	req_access_txt = "150"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/sbc/corvette)
+"O" = (
+/obj/machinery/porta_turret/syndicate/energy/heavy{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/sbc/corvette)
+"Q" = (
+/obj/structure/cable{
+	d1 = 0;
+	d2 = 8
+	},
+/obj/effect/spawner/structure/window/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/sbc/corvette)
-"u" = (
-/obj/structure/table/reinforced,
-/obj/structure/cable,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/sbc/corvette)
-"v" = (
-/obj/structure/cable,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/sbc/corvette)
-"w" = (
-/obj/structure/chair/comfy/shuttle{
-	icon_state = "shuttle_chair";
-	dir = 8
+"R" = (
+/obj/structure/cable{
+	icon_state = "1-4"
 	},
-/obj/structure/cable,
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/area/shuttle/sbc/corvette)
+"V" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc/corvette)
-"x" = (
-/obj/structure/chair/comfy/shuttle{
-	icon_state = "shuttle_chair";
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/mineral/plastitanium,
+"Y" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/shuttle/sbc/corvette)
 
 (1,1,1) = {"
 a
-b
-c
-c
+L
+C
+Q
 b
 g
 "}
 (2,1,1) = {"
-d
-d
+k
+F
 h
 x
 o
@@ -184,36 +316,36 @@ d
 c
 j
 e
-v
 d
-g
+d
+Y
 "}
 (4,1,1) = {"
 c
-k
-v
-v
+j
+e
+M
 s
-a
+B
 "}
 (5,1,1) = {"
 b
 r
-v
+e
 f
 d
-g
+Y
 "}
 (6,1,1) = {"
 c
 n
-v
+e
 e
 l
 d
 "}
 (7,1,1) = {"
-c
+w
 u
 v
 e
@@ -223,40 +355,40 @@ d
 (8,1,1) = {"
 b
 q
-v
-e
+H
 d
-g
+d
+Y
 "}
 (9,1,1) = {"
 c
-k
-v
-e
+j
+V
+N
 t
-a
+A
 "}
 (10,1,1) = {"
 c
 j
-v
 e
 d
-g
+d
+Y
 "}
 (11,1,1) = {"
-d
-d
-w
+K
+R
+i
 i
 p
 d
 "}
 (12,1,1) = {"
 a
-b
-c
-c
+O
+C
+Q
 b
 g
 "}

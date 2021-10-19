@@ -75,6 +75,8 @@
 				announce_to_ghosts(M)
 			else
 				announce_to_ghosts(spawner)
+		for(/obj/docking_port/stationary/S in A)
+			S.load_roundstart()
 
 	sleep(announcetime)
 	priority_announce("A Syndicate Battle Cruiser has been found near the station's sector, brace for impact.", sound = 'sound/machines/alarm.ogg')
