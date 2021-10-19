@@ -357,12 +357,12 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		shown_threat = clamp(threat_level + rand(REPORT_NEG_DIVERGENCE, REPORT_POS_DIVERGENCE), 0, 100)
 
 /datum/game_mode/dynamic/proc/set_cooldowns()
-	var/coeff = GLOB.dynamic_extended ? 2 : 1
-	var/latejoin_injection_cooldown_middle = 0.5*(latejoin_delay_max + latejoin_delay_min) * coeff
-	latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), latejoin_delay_min, latejoin_delay_max)) + world.time
+	var/coeff = GLOB.dynamic_extended ? 4 : 1
+	var/latejoin_injection_cooldown_middle = 0.5*(latejoin_delay_max + latejoin_delay_min)
+	latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), latejoin_delay_min, latejoin_delay_max)) * coeff + world.time
 
-	var/midround_injection_cooldown_middle = 0.5*(midround_delay_max + midround_delay_min) * coeff
-	midround_injection_cooldown = round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), midround_delay_min, midround_delay_max)) + world.time
+	var/midround_injection_cooldown_middle = 0.5*(midround_delay_max + midround_delay_min)
+	midround_injection_cooldown = round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), midround_delay_min, midround_delay_max)) * coeff + world.time
 
 /datum/game_mode/dynamic/pre_setup()
 	if(CONFIG_GET(flag/dynamic_config_enabled))
