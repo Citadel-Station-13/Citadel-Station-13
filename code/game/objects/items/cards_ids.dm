@@ -547,6 +547,9 @@
 /obj/item/card/id/no_banking
 	bank_support = ID_NO_BANK_ACCOUNT
 
+/obj/item/card/id/syndicate_command/crew_id
+	assignment = "Syndicate Operative"
+
 /obj/item/card/id/locked_banking
 	bank_support = ID_LOCKED_BANK_ACCOUNT
 
@@ -555,6 +558,22 @@
 
 /obj/item/card/id/pirate
 	access = list(ACCESS_SYNDICATE)
+/obj/item/card/id/syndicate_command/crew_id/med
+	assignment = "Syndicate Medical Doctor"
+
+/obj/item/card/id/syndicate_command/crew_id/engi
+	assignment = "Syndicate Engineer"
+
+/obj/item/card/id/syndicate_command/crew_id/sec
+	assignment = "Syndicate Assault Operative"
+
+/obj/item/card/id/syndicate_command/crew_id/cap
+	assignment = "Syndicate Captain"
+
+/obj/item/card/id/syndicate_command/captain_id
+	name = "syndicate captain ID card"
+	id_type_name = "syndicate captain ID card"
+	assignment = "Syndicate Ship Captain"
 
 /obj/item/card/id/captains_spare
 	name = "captain's spare ID"

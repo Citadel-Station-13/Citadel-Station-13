@@ -1289,3 +1289,13 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	var/area/user_area = get_area(user)
 	var/area/target_area = get_area(target)
 	return (istype(user_area, dropoff) && istype(target_area, dropoff))
+
+/datum/objective/syndicatesupermatter
+	name = "keep SM intact"
+	explanation_text = "Keep supermatter engine onboard the cruiser intact."
+
+/datum/objective/syndicatesupermatter/check_completion()
+	if(GLOB.syndicate_supermatter_engine)
+		return TRUE
+	else
+		return FALSE

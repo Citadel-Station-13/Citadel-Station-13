@@ -808,6 +808,10 @@
 		addtimer(CALLBACK(src, .proc/shootAt, target), 15)
 		return TRUE
 
+/obj/machinery/porta_turret/syndicate/starfury
+	shot_delay = 6
+	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 80, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+
 /obj/machinery/porta_turret/ai
 	faction = list("silicon")
 	nonlethal_projectile = /obj/item/projectile/beam/disabler
