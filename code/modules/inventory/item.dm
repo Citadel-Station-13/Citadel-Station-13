@@ -64,3 +64,17 @@
  * Builds our inventory worn icon. NOT inhand icons.
  */
 
+/**
+ * Updates our max/min temperature/pressure protects, as well as armor for inventory.
+ */
+/obj/item/proc/update_inventory_protections()
+	if(!inventory)
+		return
+	var/flags = NONE
+	if(flags_inv & INV_FLAG_PRESSURE_AFFECTING)
+		flags |= INVENTORY_UPDATE_PRESSURE
+	if(flags_inv & INV_FLAG_TEMPERATURE_AFFECTING)
+		flags |= INVENTORY_UPDATE_TEMPERATURE
+	if(flags_inv & INV_FLAG_ARMOR_AFFECTING)
+		flags |= INVENTORY_UPDATE_ARMOR
+	inventory.InvalidateCachedCalculations(flags)

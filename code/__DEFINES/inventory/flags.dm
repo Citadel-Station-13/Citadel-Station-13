@@ -28,3 +28,11 @@
 #define INV_HIDE_BODY_UPDATE			(HIDETAUR)
 /// sensitive inv_hide flags that require an identity update
 #define INV_HIDE_IDENTITY_UPDATE		(HIDEFACE)
+
+// /datum/inventory /update_flags
+/// Armor needs recalculation
+#define INVENTORY_UPDATE_ARMOR			(1<<0)
+/// pressure needs recalculation
+#define INVENTORY_UPDATE_PRESSURE		(1<<1)
+/// temperature needs recalculation
+#define INVENTORY_UPDATE_TEMPERATURE	(1<<2)

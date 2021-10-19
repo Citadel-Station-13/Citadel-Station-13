@@ -21,12 +21,43 @@
 	var/mob/owner
 	/// ordered inventory slots
 	VAR_PRIVATE/list/slots
-	/// list of all items in us
+	/// ordered list of all items in us
 	VAR_PRIVATE/list/obj/item/holding
 	/// dynamic inventory screen cramming - slots without screen_loc are put here
 	var/list/screen_cram
 	/// disabled slots - these exist but are grayed out. associated by id to the reason they're disabled. managed by the mob.
 	var/list/disabled_slots
+	/// ordered list cache of mutable_appearance datums needed to render.
+	VAR_PRIVATE/list/appearances
+	/// ordered list of max temperatures by body zone
+	VAR_PRIVATE/list/max_temperature
+	/// ordered list of min temperatures by body zonew
+	VAR_PRIVATE/list/min_temperature
+	/// ordered list of max pressures by body zone
+	VAR_PRIVATE/list/max_pressure
+	/// ordered list of min pressures by body zone
+	VAR_PRIVATE/list/min_pressure
+	/// ordered list of armor by body zone
+	VAR_PRIVATE/list/armor
+	/// Cached max temperature threshold - we know we don't need to check zones at all if something is below this
+	VAR_PRIVATE/high_temperature_threshold
+	/// Cached min temperature threshold - we know we don't need to check zones at all if something is above this
+	VAR_PRIVATE/low_temperature_threshold
+	/// Cached min pressure threshold - we don't need to check at all if above this
+	VAR_PRIVATE/low_pressure_threshold
+	/// Cached max pressure threshold - we don't need to check at all if below this
+	VAR_PRIVATE/high_pressure_threshold
+	/// update flags
+	var/update_flags = NONE
+	/// all body zones we care about. we calculate temperature, pressure, and armor for these
+	var/static/list/body_zones = list(
+		BODY_ZONE_CHEST,
+		BODY_ZONE_HEAD,
+		BODY_ZONE_L_ARM,
+		BODY_ZONE_R_ARM,
+		BODY_ZONE_L_LEG,
+		BODY_ZONE_R_LEG
+	)
 
 /datum/inventory/New(list/slots)
 	src.slots = list()
