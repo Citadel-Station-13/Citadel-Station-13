@@ -24,3 +24,6 @@
 #define INVENTORY_HIDE_ALL		15
 /// absolute maximum - these slots never show on UI at all
 #define INVENTORY_HIDE_MAXIMUM	101
+
+#define TINT_DARKENED 2			//Threshold of tint level to apply weld mask overlay
+#define TINT_BLIND 3			//Threshold of tint level to obscure vision fully

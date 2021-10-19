@@ -1,10 +1,12 @@
 // /obj/item/var/inv_flags
-/// Affects pressure resistance - requires recalculation
+/// Affects pressure resistance - requires recalculation - cached recalc
 #define INV_FLAG_PRESSURE_AFFECTING			(1<<0)
-/// Affects temperature resistance - requires recalculation
+/// Affects temperature resistance - requires recalculation - cached recalc
 #define INV_FLAG_TEMPERATURE_AFFECTING		(1<<1)
-/// Affects armor - requires recalculation
+/// Affects armor - requires recalculation - cached recalc
 #define INV_FLAG_ARMOR_AFFECTING			(1<<2)
+/// Affects tint - recalculate flash_protect on mob - instant recalc
+#define INV_FLAG_TINT_AFFECTING				(1<<3)
 
 // /obj/item/var/inv_hide - **these apply regardless of what the item's coverage zones are.** Be SMART with these.
 #define HIDEGLOVES		(1<<0)
