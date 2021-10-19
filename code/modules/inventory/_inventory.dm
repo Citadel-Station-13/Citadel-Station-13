@@ -23,6 +23,8 @@
 	VAR_PRIVATE/list/slots
 	/// ordered list of all items in us
 	VAR_PRIVATE/list/obj/item/holding
+	/// backup - list of items by slot, used for rebuild when someone's being a stupid
+	VAR_PRIVATE/list/items_by_slot
 	/// dynamic inventory screen cramming - slots without screen_loc are put here
 	var/list/screen_cram
 	/// disabled slots - these exist but are grayed out. associated by id to the reason they're disabled. managed by the mob.
@@ -76,4 +78,20 @@
 	disabled_slots = null
 	return ..()
 
-
+/**
+ * Rebuilds everything
+ * Used if an unmanaged slot addition/deletion happens (such as admin VV fuckery)
+ */
+/datum/inventory/proc/Rebuild()
+	var/list/viewing = src.viewing? src.viewing.Copy() : list()
+	for(var/i in viewing)
+		HideFrom(i)
+	holding = list()
+	LAZYINITLIST(slots)
+	for(var/i in items_by_slot)
+		var/index = slots.Find(i)
+		holding[index] = items_by_slot[i]
+	for(var/i in viewing)
+		ShowTo(i)
+	InvalidateCachedCalculations(ALL)
+	RebuildAllAppearances()

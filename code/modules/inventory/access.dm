@@ -1,12 +1,17 @@
 /**
  * Equips an item
  */
-/datum/inventory/proc/EquipToSlot(obj/item/I, slot, mob/user, force, delete_old_item, list/warnings)
+/datum/inventory/proc/EquipToSlot(obj/item/I, slot, mob/user, force, delete_old_item, list/warnings, move_item = TRUE)
 
 /**
  * Unequips an item
  */
-/datum/inventory/proc/UnequipFromSlot(slot, mob/user, force, atom/new_location, list/warnings)
+/datum/inventory/proc/UnequipFromSlot(slot, mob/user, force, atom/new_location, list/warnings, move_item = TRUE)
+
+/**
+ * Unequips an item
+ */
+/datum/inventory/proc/UnequipItem(obj/item/I, mob/user, force, atom/new_location, list/warnings, move_item = TRUE)
 
 /**
  * Does a slot exist?

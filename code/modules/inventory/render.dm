@@ -1,6 +1,4 @@
-/**
- * Rendering
- */
+// /obj/item
 /obj/item
 	// Dimensions - used by all
 	/// Dimension of worn icon files. Used for centering.
@@ -32,3 +30,15 @@
  * Returns a list **always**. Inventory will strip the list out if it determines it isn't necessary.
  */
 
+
+
+// /datum/inventory
+/**
+ * Rebuilds all appearances
+ */
+/datum/inventory/proc/RebuildAllAppearances()
+
+/**
+ * Rebuilds a slot
+ */
+/datum/inventory/proc/RebuildSlotAppearance()

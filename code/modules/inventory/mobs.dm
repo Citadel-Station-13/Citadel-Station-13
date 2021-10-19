@@ -62,20 +62,21 @@
 /**
  * gets all items in inventory, not including hands
  */
-/mob/proc/get_all_inventory_items()
-	return inventory?.AllItems()
+/mob/proc/get_all_inventory_items(include_abstract)
+	return inventory?.AllItems(include_abstract)
 
 /**
  * Equips an item to a slot
  *
  * @param
  * - I - item
+ * - user - who's doing this - can be null
  * - slot - slot ID
  * - force - ignore can equip checks
  * - delete_old_item - delete old item instead of drop
  * - warnings - list of reasons why it didn't work if we're not forcing it
  */
-/mob/proc/equip_to_slot(obj/item/I, slot, force = FALSE, delete_old_item = FALSE, list/warnings)
+/mob/proc/equip_to_slot(obj/item/I, mob/user, slot, force = FALSE, delete_old_item = FALSE, list/warnings)
 	switch(slot)
 		if(INV_VIRTUALSLOT_IN_BACKPACK)
 
@@ -85,7 +86,7 @@
 
 		if(INV_VIRTUALSLOT_IN_POCKETS)
 	EnsureInventory()
-	inventory?.EquipToSlot(I, slot, force, delete_old_item, warnings)
+	inventory?.EquipToSlot(I, user, slot, force, delete_old_item, warnings)
 
 /**
  * drops all inventory items
@@ -100,11 +101,33 @@
 
 /**
  * Grabs an item from slot
+ *
+ * @param
+ * - slot - slot
+ * - user - who's doing this - can be null
+ * - slot - slot ID
+ * - force - ignore can unequip checks
+ * - new_location - where to put it
+ * - warnings - list of reasons why it didn't work if we're not forcing it
+ * - move_item - do we actually move the item? new_location ignored if so
  */
-/mob/proc/unequip_from_slot(slot, force = FALSE, atom/new_location = drop_location(), list/warnings)
+/mob/proc/unequip_from_slot(slot, mob/user, force = FALSE, atom/new_location = drop_location(), list/warnings, move_item = TRUE)
+	return inventory?.UnequipFromSlot(slot, user, force, new_location, warnings, move_item)
 
-	EnsureInventory()
-	inventory?.UnequipFromSlot(slot, force, new_location, warnings)
+/**
+ * Unequips an item from a slot
+ *
+ * @param
+ * - I - item
+ * - user - who's doing this - can be null
+ * - slot - slot ID
+ * - force - ignore can unequip checks
+ * - new_location - where to put it
+ * - warnings - list of reasons why it didn't work if we're not forcing it
+ * - move_item - do we actually move the item? new_location ignored if so
+ */
+/mob/proc/unequip_item(obj/item/I, mob/user, force = FALSE, atom/new_location = drop_location(), list/warnings, move_item = TRUE)
+	return inventory?.UnequipItem(I, force, user, new_location, warnings, move_item)
 
 /**
  * Checks if a slot exists
@@ -112,6 +135,12 @@
 /mob/proc/does_slot_exist(slot)
 	EnsureInventory()
 	return inventory?.SlotExists(slot)
+
+/**
+ * Returns the slot if an item is equipped, null otherwise
+ */
+/mob/proc/is_equipped(obj/item/I)
+	return inventory?.HasItem(I)
 
 /**
  * Checks if we can put an item in a slot
@@ -150,3 +179,12 @@
  */
 /mob/proc/update_inventory_slots()
 	return
+
+/**
+ * Wraps Exited to ensure grabbing items out of mobs removes from inventory
+ */
+/mob/Exited(atom/movable/AM, atom/newLoc)
+	if(is_equipped(AM))
+		unequip_item(AM, force = TRUE, move_item = FALSE)
+	. = ..()
+
