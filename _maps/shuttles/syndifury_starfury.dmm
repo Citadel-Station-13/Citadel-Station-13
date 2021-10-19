@@ -32,7 +32,6 @@
 	},
 /turf/open/floor/plasteel/dark{
 	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
 	},
 /area/shuttle/sbc/starfury)
 "ag" = (
@@ -1285,7 +1284,8 @@
 "cV" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable{
-	dir = 8
+	d1 = 0;
+	d2 = 8
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/sbc/engi)
@@ -1295,7 +1295,8 @@
 	},
 /obj/machinery/power/smes,
 /obj/structure/cable{
-	dir = 8
+	d1 = 0;
+	d2 = 8
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/sbc/engi)
@@ -1320,7 +1321,8 @@
 "cY" = (
 /obj/machinery/power/smes,
 /obj/structure/cable{
-	dir = 8
+	d1 = 0;
+	d2 = 8
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/sbc/engi)
@@ -2950,6 +2952,9 @@
 	dir = 5;
 	icon_state = "pipe11-2"
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/engine,
 /area/shuttle/sbc/engi)
 "gq" = (
@@ -3522,19 +3527,6 @@
 /area/shuttle/sbc/crew)
 "hv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/bot/medbot{
-	damage_coeff = list("brute" = 1, "fire" = 1, "toxin" = 1, "clone" = 0, "stamina" = 0, "oxygen" = 1);
-	declare_crit = 1;
-	desc = "A medical bot of syndicate origins. Probably plots about how to stab you full of toxins in its free time.";
-	faction = list("neutral","silicon","turret","syndicate");
-	heal_amount = 10;
-	heal_threshold = 5;
-	locked = 0;
-	name = "Syndicate Medibot";
-	radio_channel = "Syndicate";
-	radio_key = /obj/item/encryptionkey/syndicate;
-	skin = "bezerk"
-	},
 /turf/open/floor/plasteel,
 /area/shuttle/sbc/med)
 "hw" = (
@@ -3563,7 +3555,6 @@
 	},
 /turf/open/floor/plasteel/dark{
 	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
 	},
 /area/shuttle/sbc/starfury)
 "hz" = (
@@ -6288,12 +6279,31 @@
 	},
 /turf/open/floor/pod/light,
 /area/shuttle/sbc/bay)
+"qy" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/engine,
+/area/shuttle/sbc/engi)
 "qV" = (
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/shuttle/sbc/supermatter)
+"sC" = (
+/mob/living/simple_animal/bot/medbot{
+	color = red;
+	desc = "A little medical robot. He looks somewhat underwhelmed. This one seems a bit tougher than the rest.";
+	health = 80;
+	name = "\improper Syndicate Medibot"
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/sbc/med)
 "sD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
@@ -6317,6 +6327,22 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/dark,
+/area/shuttle/sbc/engi)
+"uQ" = (
+/obj/machinery/atmospherics/components/trinary/filter{
+	dir = 4;
+	icon_state = "filter_off"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/engine,
 /area/shuttle/sbc/engi)
 "ya" = (
 /obj/effect/turf_decal/stripes/line{
@@ -6354,6 +6380,17 @@
 	},
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/shuttle/sbc/supermatter)
+"My" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Laser Room";
+	req_access_txt = "150"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/shuttle/sbc/engi)
 "VF" = (
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -7982,10 +8019,10 @@ kM
 eL
 fm
 fx
-fT
+uQ
 gp
-gH
-jz
+qy
+My
 Dy
 kc
 WQ
@@ -8010,7 +8047,7 @@ ac
 ac
 ab
 dl
-cq
+sC
 cq
 cE
 ab

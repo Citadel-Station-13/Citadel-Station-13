@@ -13,16 +13,16 @@
 	return ..()
 
 /datum/round_event/ghost_role/starfurybc
-	minimum_required = 6
+	minimum_required = 1
 	var/shuttle_spawned = FALSE
 	var/started = FALSE
-	var/preptime = 8 MINUTES
+	var/preptime = 1 MINUTES
 	var/announcetime = 4 MINUTES
 
 /datum/round_event/ghost_role/starfurybc/start()
 	started = TRUE
-	priority_announce("Syndicate Battle Cruiser detected on long range scanners. ETA 8 Minutes. Emergency Shuttle will be delayed by 14 minutes.")
-	sleep(preptime)
+	priority_announce("Syndicate Battle Cruiser detected on long range scanners. ETA [(preptime / 10 / 60)] minutes.")
+	addtimer(CALLBACK(src, .proc/spawn_shuttle), preptime)
 	spawn_shuttle()
 
 /*
@@ -52,7 +52,8 @@
 	var/list/candidates = pollGhostCandidates("Do you wish to be considered for syndicate battlecruiser crew?", ROLE_OPERATIVE)
 	shuffle_inplace(candidates)
 	if(candidates.len < minimum_required)
-		deadchat_broadcast("Starfury Battle Cruiser event did not get enough candidates ([minimum_required]) to spawn.")
+		deadchat_broadcast(span_deadsay("The Starfury Battle Cruiser event did not get the minimum [minimum_required] candidates needed for it to spawn."))
+		priority_announce("Our sensors indicate the Syndicate Cruiser has flown past[GLOB.station_name].")
 		return NOT_ENOUGH_PLAYERS
 
 	var/datum/map_template/shuttle/syndifury/starfury/ship = new
@@ -75,7 +76,7 @@
 				announce_to_ghosts(M)
 			else
 				announce_to_ghosts(spawner)
-		for(/obj/docking_port/stationary/S in A)
+		for(var/obj/docking_port/stationary/S in A)
 			S.load_roundstart()
 
 	sleep(announcetime)
