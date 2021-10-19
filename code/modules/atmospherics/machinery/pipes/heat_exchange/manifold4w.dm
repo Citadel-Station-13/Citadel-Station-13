@@ -2,7 +2,7 @@
 ATMOS_MAPPING_LAYERS_PX_DOUBLE(/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w)
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w
-	icon = 'icons/obj/atmospherics/pipes/he-manifold.dmi'
+	icon = 'icons/modules/atmospherics/pipes/he_manifold4.dmi'
 	icon_state = "manifold4w"
 
 	name = "4-way pipe manifold"

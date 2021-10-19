@@ -5,7 +5,7 @@
 ATMOS_MAPPING_FULL_PX_DOUBLE(/obj/machinery/atmospherics/pipe/manifold4w)
 
 /obj/machinery/atmospherics/pipe/manifold4w
-	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
+	icon = 'icons/modules/atmospherics/pipes/manifold4.dmi'
 	icon_state = "manifold4w"
 
 	name = "4-way pipe manifold"

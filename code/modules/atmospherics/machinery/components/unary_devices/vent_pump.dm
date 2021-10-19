@@ -8,6 +8,7 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/vent_pump, "
 #define RELEASING	1
 
 /obj/machinery/atmospherics/component/unary/vent_pump
+	icon = 'icons/modules/atmospherics/components/vent.dmi'
 	icon_state = "vent_map"
 	name = "air vent"
 	desc = "Has a valve and pump attached to it."

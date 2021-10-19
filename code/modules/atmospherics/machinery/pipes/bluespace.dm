@@ -4,7 +4,7 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/pipe/bluespace, "map")
 /obj/machinery/atmospherics/pipe/bluespace
 	name = "bluespace pipe"
 	desc = "Transmits gas across large distances of space. Developed using bluespace technology."
-	icon = 'icons/obj/atmospherics/pipes/bluespace.dmi'
+	icon = 'icons/modules/atmospherics/pipes/bluespace.dmi'
 	icon_state = "map"
 	pipe_state = "bluespace"
 	dir = SOUTH

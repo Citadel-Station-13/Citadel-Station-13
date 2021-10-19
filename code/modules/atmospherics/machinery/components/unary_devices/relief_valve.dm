@@ -3,7 +3,7 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/relief_valve
 /obj/machinery/atmospherics/component/unary/relief_valve
 	name = "pressure relief valve"
 	desc = "A valve that opens to the air at a certain pressure, then closes once it goes below another."
-	icon = 'icons/obj/atmospherics/component/relief_valve.dmi'
+	icon = 'icons/modules/atmospherics/components/relief.dmi'
 	icon_state = "relief_valve-e-map"
 	can_unwrench = TRUE
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE

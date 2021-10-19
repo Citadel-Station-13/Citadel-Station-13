@@ -7,6 +7,7 @@
  * Always will be a multiple of 5n + (l - 1), where l is layer, and n is any number.
  */
 /obj/machinery/atmospherics/mains
+	icon = 'icons/modules/atmospherics/pipes/mains.dmi'
 	/// Temporarily stores air while rebuilding pipeline. Index is layer
 	var/list/datum/gas_mixture/temporary_airs
 	/// Our volume per line.

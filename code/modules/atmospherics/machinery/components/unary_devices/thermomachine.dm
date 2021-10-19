@@ -1,7 +1,7 @@
 ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/thermomachine, "freezer_map")
 
 /obj/machinery/atmospherics/component/unary/thermomachine
-	icon = 'icons/obj/atmospherics/component/thermomachine.dmi'
+	icon = 'icons/modules/atmospherics/components/thermomachine.dmi'
 	icon_state = "freezer"
 
 	name = "thermomachine"

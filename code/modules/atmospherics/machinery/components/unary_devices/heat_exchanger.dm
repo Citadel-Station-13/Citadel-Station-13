@@ -1,7 +1,7 @@
 ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/heat_exchanger, "he_map")
 
 /obj/machinery/atmospherics/component/unary/heat_exchanger
-
+	icon = 'icons/modules/atmospherics/components/heat_exchanger.dmi'
 	icon_state = "he1"
 
 	name = "heat exchanger"

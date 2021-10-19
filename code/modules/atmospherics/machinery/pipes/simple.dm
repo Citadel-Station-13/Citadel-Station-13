@@ -5,7 +5,7 @@
 ATMOS_MAPPING_FULL_IX(/obj/machinery/atmospherics/pipe/simple, "pipe11")
 
 /obj/machinery/atmospherics/pipe/simple
-	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
+	icon = 'icons/modules/atmospherics/pipes/simple.dmi'
 	icon_state = "pipe11"
 
 	name = "pipe"

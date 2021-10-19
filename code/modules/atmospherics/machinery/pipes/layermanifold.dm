@@ -6,7 +6,7 @@ ATMOS_MAPPING_MINIMAL(/obj/machinery/atmospherics/pipe/layer_manifold)
 
 /obj/machinery/atmospherics/pipe/layer_manifold
 	name = "layer adaptor"
-	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
+	icon = 'icons/modules/atmospherics/pipes/layer_manifold.dmi'
 	icon_state = "manifoldlayer"
 	desc = "A special pipe to bridge pipe layers with."
 	dir = SOUTH

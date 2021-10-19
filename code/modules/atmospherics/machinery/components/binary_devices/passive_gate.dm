@@ -7,6 +7,7 @@ Passive gate is similar to the regular pump except:
 */
 
 /obj/machinery/atmospherics/components/binary/passive_gate
+	icon = 'icons/modules/atmospherics/components/passive_gate.dmi'
 	icon_state = "passgate_map-2"
 
 	name = "passive gate"

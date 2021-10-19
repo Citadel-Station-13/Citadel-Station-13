@@ -11,8 +11,8 @@ ATMOS_MAPPING_MINIMAL(/obj/machinery/atmospherics/mains/manifold4)
 /obj/machinery/atmospherics/mains/pipe
 	name = "mains pipe"
 	desc = "A massive pipe that connects every pipe layer at once, without intermixing them."
-	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
-	icon_state = "mains"
+	icon = 'icons/modules/atmospherics/pipes/mains.dmi'
+	icon_state = "simple"
 	pipe_flags = PIPE_ALL_LAYER | PIPE_CARDINAL_AUTONORMALIZE
 	device_type = BINARY
 
@@ -33,8 +33,8 @@ ATMOS_MAPPING_MINIMAL(/obj/machinery/atmospherics/mains/manifold4)
 /obj/machinery/atmospherics/mains/manifold
 	name = "mains manifold"
 	desc = "A massive pipe that connects every pipe layer at once, without intermixing them."
-	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
-	icon_state = "mains3"
+	icon = 'icons/modules/atmospherics/pipes/'
+	icon_state = "manifold"
 	pipe_flags = PIPE_ALL_LAYER
 	device_type = TRINARY
 
@@ -61,8 +61,8 @@ ATMOS_MAPPING_MINIMAL(/obj/machinery/atmospherics/mains/manifold4)
 /obj/machinery/atmospherics/mains/manifold4w
 	name = "mains 4-way manifold"
 	desc = "A massive pipe that connects every pipe layer at once, without intermixing them."
-	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
-	icon_state = "mains4"
+	icon = 'icons/modules/atmospherics/pipes/'
+	icon_state = "manifold4"
 	pipe_flags = PIPE_ALL_LAYER
 	device_type = QUATERNARY
 

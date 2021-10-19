@@ -12,7 +12,8 @@
 
 ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/binary/pump, "volpump_map")
 /obj/machinery/atmospherics/component/binary/pump
-	icon_state = "volpump_map-2"
+	icon = 'icons/modules/atmospherics/components/pump.dmi'
+	icon_state = "volpump_map"
 	name = "volumetric gas pump"
 	desc = "A pump that moves gas by volume."
 

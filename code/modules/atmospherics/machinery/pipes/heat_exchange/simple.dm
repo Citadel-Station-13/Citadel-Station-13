@@ -1,7 +1,7 @@
 ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/pipe/heat_exchanging/simple, "pipe11")
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple
-	icon = 'icons/obj/atmospherics/pipes/he-simple.dmi'
+	icon = 'icons/modules/atmospherics/pipes/he.dmi'
 	icon_state = "pipe11"
 
 	name = "pipe"

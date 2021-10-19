@@ -2,7 +2,7 @@
 ATMOS_MAPPING_LAYERS_PX_DOUBLE(/obj/machinery/atmospherics/pipe/heat_exchanging/manifold)
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold
-	icon = 'icons/obj/atmospherics/pipes/he-manifold.dmi'
+	icon = 'icons/modules/atmospherics/pipes/he_manifold.dmi'
 	icon_state = "manifold"
 
 	name = "pipe manifold"
