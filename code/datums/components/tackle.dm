@@ -259,7 +259,7 @@
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/T = target
-		var/suit_slot = T.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+		var/suit_slot = T.get_item_by_slot(SLOT_FLAG_SUIT)
 
 		if(isnull(T.wear_suit) && isnull(T.w_uniform)) // who honestly puts all of their effort into tackling a naked guy?
 			defense_mod += 2
@@ -297,7 +297,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/S = sacker
 
-		var/suit_slot = S.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+		var/suit_slot = S.get_item_by_slot(SLOT_FLAG_SUIT)
 		if(suit_slot && (istype(suit_slot,/obj/item/clothing/suit/armor/riot))) // tackling in riot armor is more effective, but tiring
 			attack_mod += 2
 			sacker.adjustStaminaLoss(20)
@@ -344,8 +344,8 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/S = user
-		var/head_slot = S.get_item_by_slot(ITEM_SLOT_HEAD)
-		var/suit_slot = S.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+		var/head_slot = S.get_item_by_slot(SLOT_FLAG_HEAD)
+		var/suit_slot = S.get_item_by_slot(SLOT_FLAG_SUIT)
 		if(head_slot && (istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
 			oopsie_mod -= 6
 		if(suit_slot && (istype(suit_slot,/obj/item/clothing/suit/armor/)))

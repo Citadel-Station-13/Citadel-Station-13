@@ -9,7 +9,7 @@
 	icon_state = "apron"
 	item_state = "apron"
 	blood_overlay_type = "armor"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	allowed = list(/obj/item/reagent_containers/spray/plantbgone, /obj/item/plant_analyzer, /obj/item/seeds, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/cultivator, /obj/item/reagent_containers/spray/pestspray, /obj/item/hatchet, /obj/item/storage/bag/plants)
 
 
@@ -19,7 +19,7 @@
 	desc = "Worn by a Captain to show their class."
 	icon_state = "captunic"
 	item_state = "bio_suit"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	inv_cover = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/disk, /obj/item/stamp, /obj/item/reagent_containers/food/drinks/flask, /obj/item/melee, /obj/item/storage/lockbox/medal, /obj/item/assembly/flash/handheld, /obj/item/storage/box/matches, /obj/item/lighter, /obj/item/clothing/mask/cigarette, /obj/item/storage/fancy/cigarettes, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
@@ -34,7 +34,7 @@
 	desc = "Maximum piety in this star system."
 	icon_state = "nun"
 	item_state = "nun"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
+	inv_cover = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
@@ -43,14 +43,14 @@
 	desc = "The uniform of a bygone institute of learning."
 	icon_state = "studentuni"
 	item_state = "studentuni"
-	body_parts_covered = ARMS|CHEST
+	inv_cover = ARMS|CHEST
 
 /obj/item/clothing/suit/chaplain/witchhunter
 	name = "witchunter garb"
 	desc = "This worn outfit saw much use back in the day."
 	icon_state = "witchhunter"
 	item_state = "witchhunter"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	inv_cover = CHEST|GROIN|LEGS|ARMS
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/chaplain/pharaoh
@@ -58,7 +58,7 @@
 	desc = "Lavish space tomb not included."
 	icon_state = "pharaoh"
 	icon_state = "pharaoh"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/chaplain/holidaypriest
@@ -66,7 +66,7 @@
 	desc = "This is a nice holiday, my son."
 	icon_state = "holidaypriest"
 	item_state = "w_suit"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	inv_cover = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
@@ -79,7 +79,7 @@
 	item_state = "chef"
 	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.5
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	allowed = list(/obj/item/kitchen)
 	togglename = "sleeves"
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -91,7 +91,7 @@
 	icon_state = "apronchef"
 	item_state = "apronchef"
 	blood_overlay_type = "armor"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	allowed = list(/obj/item/kitchen)
 
 //Detective
@@ -101,7 +101,7 @@
 	icon_state = "detective"
 	item_state = "det_suit"
 	blood_overlay_type = "coat"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	inv_cover = CHEST|GROIN|LEGS|ARMS
 	armor = list("melee" = 25, "bullet" = 10, "laser" = 25, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
@@ -158,7 +158,7 @@
 	icon_state = "suitjacket_blue"
 	item_state = "suitjacket_blue"
 	blood_overlay_type = "coat"
-	body_parts_covered = CHEST|ARMS
+	inv_cover = CHEST|ARMS
 	togglename = "buttons"
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
@@ -185,7 +185,7 @@
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
-	body_parts_covered = NONE
+	inv_cover = NONE
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 //Surgeon
@@ -202,7 +202,7 @@
 	icon_state = "curator"
 	item_state = "curator"
 	blood_overlay_type = "coat"
-	body_parts_covered = CHEST|ARMS
+	inv_cover = CHEST|ARMS
 	allowed = list(/obj/item/tank/internals, /obj/item/melee/curator_whip)
 	armor = list("melee" = 25, "bullet" = 10, "laser" = 25, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
 	cold_protection = CHEST|ARMS
@@ -217,7 +217,7 @@
 	desc = "For those who REALLY love their toasters."
 	icon_state = "techpriest"
 	item_state = "techpriest"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	inv_cover = CHEST|GROIN|LEGS|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/techpriest
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
@@ -226,7 +226,7 @@
 	desc = "A hood for those who REALLY love their toasters."
 	icon_state = "techpriesthood"
 	item_state = "techpriesthood"
-	body_parts_covered = HEAD
+	inv_cover = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 	mutantrace_variation = STYLE_MUZZLE
 

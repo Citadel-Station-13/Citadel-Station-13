@@ -11,7 +11,7 @@
 	desc = "A white suitskirt, suitable for an excellent host."
 	icon_state = "white_suit_skirt"
 	item_state = "scratch"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -108,7 +108,7 @@
 	desc = "Bright and red, hard to miss. Mostly warn by hotel staff or singing telegram."
 	icon_state = "telegram"
 	item_state = "telegram"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	can_adjust = FALSE
 
 /obj/item/clothing/under/suit/polychromic	//enables all three overlays to reduce copypasta and defines basic stuff

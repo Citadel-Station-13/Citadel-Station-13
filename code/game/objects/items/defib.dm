@@ -9,7 +9,7 @@
 	item_state = "defibunit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BACK
 	force = 5
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
@@ -79,13 +79,13 @@
 
 /obj/item/defibrillator/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc == user)
-		if(slot_flags == ITEM_SLOT_BACK)
+		if(slot_flags == SLOT_FLAG_BACK)
 			if(user.get_item_by_slot(SLOT_BACK) == src)
 				ui_action_click()
 			else
 				to_chat(user, "<span class='warning'>Put the defibrillator on your back first!</span>")
 
-		else if(slot_flags == ITEM_SLOT_BELT)
+		else if(slot_flags == SLOT_FLAG_BELT)
 			if(user.get_item_by_slot(SLOT_BELT) == src)
 				ui_action_click()
 			else
@@ -182,7 +182,7 @@
 
 /obj/item/defibrillator/equipped(mob/user, slot)
 	..()
-	if((slot_flags == ITEM_SLOT_BACK && slot != SLOT_BACK) || (slot_flags == ITEM_SLOT_BELT && slot != SLOT_BELT))
+	if((slot_flags == SLOT_FLAG_BACK && slot != SLOT_BACK) || (slot_flags == SLOT_FLAG_BELT && slot != SLOT_BELT))
 		remove_paddles(user)
 		update_power()
 
@@ -235,7 +235,7 @@
 	icon_state = "defibcompact"
 	item_state = "defibcompact"
 	w_class = WEIGHT_CLASS_NORMAL
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 
 /obj/item/defibrillator/compact/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == user.getBeltSlot())

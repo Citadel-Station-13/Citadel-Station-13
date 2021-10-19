@@ -4,7 +4,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "scanner"
 	w_class = WEIGHT_CLASS_SMALL
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	custom_price = PRICE_ABOVE_EXPENSIVE
 
 /obj/item/sensor_device/attack_self(mob/user)

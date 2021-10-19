@@ -32,6 +32,9 @@
 /// insertion-only: put item in any pocket
 #define INV_VIRTUALSLOT_IN_POCKETS			"pockets"
 
+/// Special "all" slot used in spritesheet/flags defines
+#define INV_SLOT_ANY				"_ANY_"
+
 // equip returns
 /// success
 #define EQUIP_SUCCESS				NONE
@@ -45,112 +48,59 @@
 #define EQUIP_FAIL_NOFIT_SLOT		(1<<3)
 
 // /obj/item/slot_flags
+#define SLOT_FLAG_SUIT			(1<<0)
+#define SLOT_FLAG_UNIFORM		(1<<1)
+#define SLOT_FLAG_GLOVES		(1<<2)
+#define SLOT_FLAG_EYES			(1<<3)
+#define SLOT_FLAG_EARS			(1<<4)
+#define SLOT_FLAG_MASK			(1<<5)
+#define SLOT_FLAG_HEAD			(1<<6)
+#define SLOT_FLAG_FEET			(1<<7)
+#define SLOT_FLAG_ID			(1<<8)
+#define SLOT_FLAG_BELT			(1<<9)
+#define SLOT_FLAG_BACK			(1<<10)
+#define SLOT_FLAG_POCKET		(1<<11) // this is to allow items with a w_class of WEIGHT_CLASS_NORMAL or WEIGHT_CLASS_BULKY to fit in pockets.
+#define SLOT_FLAG_DENYPOCKET	(1<<12) // this is to deny items with a w_class of WEIGHT_CLASS_SMALL or WEIGHT_CLASS_TINY to fit in pockets.
+#define SLOT_FLAG_NECK			(1<<13)
+#define SLOT_FLAG_SUIT_STORE	(1<<14)	// always wearable in suit storage
+
+/// **heuristic** for what slot flag a slot is
+/proc/inv_slot_to_flag(slot)
+	. = NONE
+	switch(slot)
+		if(INV_SLOT_HEAD)
+			return SLOT_FLAG_HEAD
+		if(INV_SLOT_EYES)
+			return SLOT_FLAG_EYES
+		if(INV_SLOT_UNIFORM)
+			return SLOT_FLAG_UNIFORM
+		if(INV_SLOT_SUIT)
+			return SLOT_FLAG_SUIT
+		if(INV_SLOT_BACK)
+			return SLOT_FLAG_BACK
+		if(INV_SLOT_MASK)
+			return SLOT_FLAG_MASK
+		if(INV_SLOT_NECK)
+			return SLOT_FLAG_NECK
+		if(INV_SLOT_BELT)
+			return SLOT_FLAG_BELT
+		if(INV_SLOT_ID)
+			return SLOT_FLAG_ID
+		if(INV_SLOT_GLOVES)
+			return SLOT_FLAG_GLOVES
+		if(INV_SLOT_BELT)
+			return SLOT_FLAG_BELT
+		if(INV_SLOT_LEFT_POCKET, INV_SLOT_RIGHT_POCKET, INV_VIRTUALSLOT_IN_POCKETS)
+			return SLOT_FLAG_POCKET
+		if(INV_SLOT_SUIT_STORAGE)
+			return SLOT_FLAG_SUIT_STORE
+		if(INV_SLOT_EARS)
+			return SLOT_FLAG_EARS
+		if(INV_SLOT_SHOES)
+			return SLOT_FLAG_FEET
 
 
 
-
-
-
-
-
-
-
-
-/*ALL DEFINES RELATED TO INVENTORY OBJECTS, MANAGEMENT, ETC, GO HERE*/
-
-
-
-//ITEM INVENTORY SLOT BITMASKS
-#define ITEM_SLOT_OCLOTHING		(1<<0)
-#define ITEM_SLOT_ICLOTHING		(1<<1)
-#define ITEM_SLOT_GLOVES		(1<<2)
-#define ITEM_SLOT_EYES			(1<<3)
-#define ITEM_SLOT_EARS			(1<<4)
-#define ITEM_SLOT_MASK			(1<<5)
-#define ITEM_SLOT_HEAD			(1<<6)
-#define ITEM_SLOT_FEET			(1<<7)
-#define ITEM_SLOT_ID			(1<<8)
-#define ITEM_SLOT_BELT			(1<<9)
-#define ITEM_SLOT_BACK			(1<<10)
-#define ITEM_SLOT_POCKET		(1<<11) // this is to allow items with a w_class of WEIGHT_CLASS_NORMAL or WEIGHT_CLASS_BULKY to fit in pockets.
-#define ITEM_SLOT_DENYPOCKET	(1<<12) // this is to deny items with a w_class of WEIGHT_CLASS_SMALL or WEIGHT_CLASS_TINY to fit in pockets.
-#define ITEM_SLOT_NECK			(1<<13)
-#define ITEM_SLOT_HANDS			(1<<14)
-#define ITEM_SLOT_BACKPACK		(1<<15)
-#define ITEM_SLOT_SUITSTORE		(1<<16)
-
-//I hate that this has to exist
-/proc/slotdefine2slotbit(slotdefine) //Keep this up to date with the value of SLOT BITMASKS and SLOTS (the two define sections above)
-	. = 0
-	switch(slotdefine)
-		if(SLOT_BACK)
-			. = ITEM_SLOT_BACK
-		if(SLOT_WEAR_MASK)
-			. = ITEM_SLOT_MASK
-		if(SLOT_NECK)
-			. = ITEM_SLOT_NECK
-		if(SLOT_BELT)
-			. = ITEM_SLOT_BELT
-		if(SLOT_WEAR_ID)
-			. = ITEM_SLOT_ID
-		if(SLOT_EARS)
-			. = ITEM_SLOT_EARS
-		if(SLOT_GLASSES)
-			. = ITEM_SLOT_EYES
-		if(SLOT_GLOVES)
-			. = ITEM_SLOT_GLOVES
-		if(SLOT_HEAD)
-			. = ITEM_SLOT_HEAD
-		if(SLOT_SHOES)
-			. = ITEM_SLOT_FEET
-		if(SLOT_WEAR_SUIT)
-			. = ITEM_SLOT_OCLOTHING
-		if(SLOT_W_UNIFORM)
-			. = ITEM_SLOT_ICLOTHING
-		if(SLOT_L_STORE, SLOT_R_STORE)
-			. = ITEM_SLOT_POCKET
-		if(SLOT_HANDS)
-			. = ITEM_SLOT_HANDS
-		if(SLOT_IN_BACKPACK)
-			. = ITEM_SLOT_BACKPACK
-		if(SLOT_S_STORE)
-			. = ITEM_SLOT_SUITSTORE
-
-
-//Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
-#define HIDEGLOVES		(1<<0)
-#define HIDESUITSTORAGE	(1<<1)
-#define HIDEJUMPSUIT	(1<<2)	//these first four are only used in exterior suits
-#define HIDESHOES		(1<<3)
-#define HIDEMASK		(1<<4)	//these last six are only used in masks and headgear.
-#define HIDEEARS		(1<<5)	// (ears means headsets and such)
-#define HIDEEYES		(1<<6)	// Whether eyes and glasses are hidden
-#define HIDEFACE		(1<<7)	// Whether we appear as unknown.
-#define HIDEHAIR		(1<<8)
-#define HIDEFACIALHAIR	(1<<9)
-#define HIDENECK		(1<<10)
-#define HIDETAUR		(1<<11) //gotta hide that snowflake
-#define HIDESNOUT		(1<<12) //or do we actually hide our snoots
-#define HIDEACCESSORY	(1<<13) //hides the jumpsuit accessory.
-
-//bitflags for clothing coverage - also used for limbs
-#define HEAD		(1<<0)
-#define CHEST		(1<<1)
-#define GROIN		(1<<2)
-#define LEG_LEFT	(1<<3)
-#define LEG_RIGHT	(1<<4)
-#define LEGS		(LEG_LEFT | LEG_RIGHT)
-#define FOOT_LEFT	(1<<5)
-#define FOOT_RIGHT	(1<<6)
-#define FEET		(FOOT_LEFT | FOOT_RIGHT)
-#define ARM_LEFT	(1<<7)
-#define ARM_RIGHT	(1<<8)
-#define ARMS		(ARM_LEFT | ARM_RIGHT)
-#define HAND_LEFT	(1<<9)
-#define HAND_RIGHT	(1<<10)
-#define HANDS		(HAND_LEFT | HAND_RIGHT)
-#define NECK		(1<<11)
-#define FULL_BODY	(~0)
 
 
 //flags for alternate styles: These are hard sprited so don't set this if you didn't put the effort in

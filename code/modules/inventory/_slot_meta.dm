@@ -19,17 +19,22 @@ GLOBAL_LIST_EMPTY(inventory_slot_meta)
 	/// slot id
 	var/id
 	/// icon used for screen objects
-	var/icon = 'icons/screen/inventory.dmi'
-	/// themes
+	var/fallback_icon = 'icons/screen/midnight/inventory.dmi'
+	/// themes - falls back to icon if not found
 	var/static/list/theme_icons = list(
-
+		UI_THEME_PLASMAFIRE = 'icons/screen/plasmafire/inventory.dmi',
+		UI_THEME_MIDNIGHT = 'icons/screen/midnight/inventory.dmi',
+		UI_THEME_SLIME = 'icons/screen/slimecore/inventory.dmi',
+		UI_THEME_RETRO = 'icons/screen/retro/inventory.dmi',
+		UI_THEME_SYNDICATE = 'icons/screen/syndicate/inventory.dmi',
+		UI_THEME_CLOCKWORK = 'icons/screen/clockwork/inventory.dmi'
 	)
 	/// icon state
 	var/icon_state = "generic"
 	/// screen loc
 	var/screen_loc
-	/// screen object
-	var/obj/screen/inventory/screen
+	/// screen object by theme
+	var/list/screen_objects
 	/// unequip by click rather than drag to hand
 	var/unequip_on_click = TRUE
 	/// hide level
@@ -37,18 +42,31 @@ GLOBAL_LIST_EMPTY(inventory_slot_meta)
 	/// are we an "abstract" slot? These aren't ever shown to the player. Set to FALSE for those.
 	var/is_inventory = TRUE
 
-/datum/inventory_slot_meta/New()
+/datum/inventory_slot_meta/New(id)
+	src.id = id
+	if(isnull(src.id))
+		src.id = "[type]"
 
-/datum/inventory_slot_meta/proc/get_screen()
+/datum/inventory_slot_meta/proc/get_screen(theme = UI_THEME_DEFAULT)
 	if(!is_inventory)
 		return FALSE
-	if(!screen)
-		return instantiate_screen()
-	return screen
+	if(!screen_objects[theme])
+		return instantiate_screen(theme)
+	return screen_objects[theme]
 
-/datum/inventory_slot_meta/proc/instantiate_screen()
-	screen = new(null, src, name, icon, icon_state)
-	return screen
+/datum/inventory_slot_meta/proc/instantiate_screen(theme = UI_THEME_DEFAULT)
+	if(screen_objects[theme])
+		qdel(screen_objects[theme])
+	screen_objects[theme] = new(null, src, name, get_icon(theme), icon_state, screen_loc)
+	return screen_objects[theme]
+
+/datum/inventory_slot_meta/proc/get_icon(theme = UI_THEME_DEFAULT)
+	if(!theme_icons[theme])
+		return fallback_icon
+	var/list/states = icon_states(theme_icons[theme])
+	if(icon_state in states)
+		return theme_icons[theme]
+	return fallback_icon
 
 /**
  * Returns whether or not we can hold a certain item
@@ -74,3 +92,8 @@ GLOBAL_LIST_EMPTY(inventory_slot_meta)
  * Called on item removal
  */
 /datum/inventory_slot_meta/proc/on_removal(datum/inventory/inventory, obj/item/I, mob/user)
+
+/**
+ * called on examine, return list
+ */
+/datum/inventory_slot_meta/proc/on_examine(mob/user)

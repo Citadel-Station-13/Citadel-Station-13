@@ -84,7 +84,7 @@
 			continue
 
 		var/obj/item/I = bp
-		if(I.body_parts_covered & bodypart.body_part)
+		if(I.inv_cover & bodypart.body_part)
 			return TRUE
 	return FALSE
 

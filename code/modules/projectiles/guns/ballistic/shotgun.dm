@@ -7,7 +7,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	flags_1 =  CONDUCT_1
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BACK
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
 	casing_ejector = FALSE
 	var/recentpump = 0 // to prevent spammage
@@ -117,7 +117,7 @@
 	desc = "This piece of junk looks like something that could have been used 700 years ago. It feels slightly moist."
 	icon_state = "moistnugget"
 	item_state = "moistnugget"
-	slot_flags = 0 //no ITEM_SLOT_BACK sprite, alas
+	slot_flags = 0 //no SLOT_FLAG_BACK sprite, alas
 	inaccuracy_modifier = 0.5
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
 	var/bolt_open = FALSE
@@ -159,7 +159,7 @@
 	..()
 	if(istype(A, /obj/item/stack/cable_coil) && !sawn_off)
 		if(A.use_tool(src, user, 0, 10, skill_gain_mult = EASY_USE_TOOL_MULT))
-			slot_flags = ITEM_SLOT_BACK
+			slot_flags = SLOT_FLAG_BACK
 			to_chat(user, "<span class='notice'>You tie the lengths of cable to the rifle, making a sling.</span>")
 			slung = TRUE
 			update_icon()

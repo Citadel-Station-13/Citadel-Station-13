@@ -3,7 +3,7 @@
 	desc = "An experimental device that can create several forcefields at a short distance."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "signmaker_forcefield"
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NOBLUDGEON
 	item_state = "electronic"

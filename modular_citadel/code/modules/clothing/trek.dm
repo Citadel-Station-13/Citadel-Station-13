@@ -17,7 +17,7 @@
 	icon_state = "trek_ds9_coat"
 	mob_overlay_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	item_state = "trek_ds9_coat"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 	permeability_coefficient = 0.50
 	allowed = list(
@@ -49,7 +49,7 @@
 	item_state = "fedcoat"
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 	blood_overlay_type = "coat"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	allowed = list(
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/flashlight,
@@ -114,7 +114,7 @@
 	icon_state = "fedmodern"
 	item_state = "fedmodern"
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	allowed = list(
 		/obj/item/flashlight, /obj/item/analyzer,
 		/obj/item/radio, /obj/item/tank/internals/emergency_oxygen,

@@ -17,7 +17,7 @@
 	desc = "A series of armwraps. Makes you pretty keen to start punching people."
 	icon_state = "armwraps"
 	item_state = "armwraps"
-	body_parts_covered = ARMS
+	inv_cover = ARMS
 	cold_protection = ARMS
 	strip_delay = 300 //you can't just yank them off
 	obj_flags = UNIQUE_RENAME
@@ -246,7 +246,7 @@
 	icon_state = "mauler_gauntlets"
 	item_state = "mauler_gauntlets"
 	transfer_prints = FALSE
-	body_parts_covered = ARMS|HANDS
+	inv_cover = ARMS|HANDS
 	cold_protection = ARMS|HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
@@ -322,7 +322,7 @@
 	transfer_prints = TRUE
 	strip_delay = 40
 	equip_delay_other = 20
-	body_parts_covered = ARMS
+	inv_cover = ARMS
 	cold_protection = ARMS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT

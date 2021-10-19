@@ -7,7 +7,7 @@
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BACK
 	throwforce = 20
 	throw_speed = 4
 	embedding = list("impact_pain_mult" = 3)
@@ -171,7 +171,7 @@
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
 	force = 11
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BACK
 	reach = 2
 	throwforce = 22
 	embedding = list("embedded_impact_pain_multiplier" = 3)

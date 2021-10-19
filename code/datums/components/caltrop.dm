@@ -37,7 +37,7 @@
 		if(O.is_robotic_limb())
 			return
 
-		var/feetCover = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) || (H.w_uniform && (H.w_uniform.body_parts_covered & FEET) || (H.shoes && (H.shoes.body_parts_covered & FEET)))
+		var/feetCover = (H.wear_suit && (H.wear_suit.inv_cover & FEET)) || (H.w_uniform && (H.w_uniform.inv_cover & FEET) || (H.shoes && (H.shoes.inv_cover & FEET)))
 
 		if(!(flags & CALTROP_BYPASS_SHOES) && feetCover)
 			return

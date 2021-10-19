@@ -12,7 +12,7 @@
 	desc = "It's a high visibility jumpskirt given to those engineers insane enough to achieve the rank of \"Chief Engineer\". It has minor radiation shielding."
 	icon_state = "chiefengineer_skirt"
 	item_state = "gy_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -29,7 +29,7 @@
 	desc = "It's a jumpskirt worn by atmospheric technicians."
 	icon_state = "atmos_skirt"
 	item_state = "atmos_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -76,7 +76,7 @@
 	desc = "It's an orange high visibility jumpskirt worn by engineers."
 	icon_state = "engine_skirt"
 	item_state = "engi_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON

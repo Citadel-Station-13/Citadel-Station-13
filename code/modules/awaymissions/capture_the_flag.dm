@@ -489,7 +489,7 @@
 
 // MELEE GANG
 /obj/item/claymore/ctf
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BACK
 	armour_penetration = 100
 	total_mass = 1
 
@@ -530,11 +530,11 @@
 	W.registered_name = H.real_name
 	W.update_label()
 
-	no_drops += H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
-	no_drops += H.get_item_by_slot(ITEM_SLOT_GLOVES)
-	no_drops += H.get_item_by_slot(ITEM_SLOT_FEET)
-	no_drops += H.get_item_by_slot(ITEM_SLOT_ICLOTHING)
-	no_drops += H.get_item_by_slot(ITEM_SLOT_EARS)
+	no_drops += H.get_item_by_slot(SLOT_FLAG_SUIT)
+	no_drops += H.get_item_by_slot(SLOT_FLAG_GLOVES)
+	no_drops += H.get_item_by_slot(SLOT_FLAG_FEET)
+	no_drops += H.get_item_by_slot(SLOT_FLAG_UNIFORM)
+	no_drops += H.get_item_by_slot(SLOT_FLAG_EARS)
 	for(var/i in no_drops)
 		var/obj/item/I = i
 		ADD_TRAIT(I, TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)

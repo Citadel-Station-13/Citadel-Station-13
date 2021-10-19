@@ -9,7 +9,7 @@
 	name = "mime's skirt"
 	desc = "It's not very colourful."
 	icon_state = "mime_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -19,7 +19,7 @@
 	desc = "The only time when you DON'T enjoy looking at someone's rack."
 	icon_state = "sexymime"
 	item_state = "sexymime"
-	body_parts_covered = CHEST|GROIN|LEGS
+	inv_cover = CHEST|GROIN|LEGS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 

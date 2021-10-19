@@ -117,7 +117,7 @@
 	desc = "The uniform of a bygone institute of learning."
 	icon_state = "studentuni"
 	item_state = "studentuni"
-	body_parts_covered = ARMS|CHEST
+	inv_cover = ARMS|CHEST
 
 /obj/item/clothing/head/helmet/chaplain/cage
 	name = "cage"
@@ -160,7 +160,7 @@
 	desc = "This worn outfit saw much use back in the day."
 	icon_state = "witchhunter"
 	item_state = "witchhunter"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	inv_cover = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/head/helmet/chaplain/witchunter_hat
 	name = "witchunter hat"
@@ -185,7 +185,7 @@
 	desc = "Hoodie made for acolytes of the chaplain."
 	icon_state = "chaplain_hoodie"
 	item_state = "chaplain_hoodie"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	inv_cover = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/storage/book/bible, HOLY_WEAPONS, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -194,7 +194,7 @@
 	name = "follower hood"
 	desc = "Hood made for acolytes of the chaplain."
 	icon_state = "chaplain_hood"
-	body_parts_covered = HEAD
+	inv_cover = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
 /obj/item/clothing/suit/hooded/chaplain_hoodie/leader
@@ -327,7 +327,7 @@
 	desc = "It has a mysterious, protective aura."
 	w_class = WEIGHT_CLASS_HUGE
 	force = 5
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BACK
 	block_chance = 50
 	var/shield_icon = "shield-red"
 
@@ -350,7 +350,7 @@
 	name = "holy claymore"
 	desc = "A weapon fit for a crusade!"
 	w_class = WEIGHT_CLASS_HUGE
-	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BACK|SLOT_FLAG_BELT
 	block_chance = 30
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -370,7 +370,7 @@
 	inhand_y_dimension = 64
 	name = "dark blade"
 	desc = "Spread the glory of the dark gods!"
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	hitsound = 'sound/hallucinations/growl1.ogg'
 
 /obj/item/nullrod/claymore/chainsaw_sword
@@ -378,7 +378,7 @@
 	item_state = "chainswordon"
 	name = "sacred chainsaw sword"
 	desc = "Suffer not a heretic to live."
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
@@ -389,21 +389,21 @@
 	item_state = "swordon"
 	name = "force weapon"
 	desc = "The blade glows with the power of faith. Or possibly a battery."
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 
 /obj/item/nullrod/claymore/katana
 	name = "\improper Hanzo steel"
 	desc = "Capable of cutting clean through a holy claymore."
 	icon_state = "katana"
 	item_state = "katana"
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BELT | SLOT_FLAG_BACK
 
 /obj/item/nullrod/claymore/multiverse
 	name = "extradimensional blade"
 	desc = "Once the harbinger of an interdimensional war, its sharpness fluctuates wildly."
 	icon_state = "multiverse"
 	item_state = "multiverse"
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 
 /obj/item/nullrod/claymore/multiverse/attack(mob/living/carbon/M, mob/living/carbon/user)
 	force = rand(1, 30)
@@ -415,7 +415,7 @@
 	icon_state = "swordblue"
 	item_state = "swordblue"
 	desc = "If you strike me down, I shall become more robust than you can possibly imagine."
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 
 /obj/item/nullrod/claymore/saber/red
 	name = "dark energy sword"
@@ -436,7 +436,7 @@
 	item_state = "sord"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	force = 4.13
 	throwforce = 1
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -451,7 +451,7 @@
 	desc = "Ask not for whom the bell tolls..."
 	w_class = WEIGHT_CLASS_BULKY
 	armour_penetration = 35
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BACK
 	sharpness = SHARP_EDGED
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 
@@ -549,7 +549,7 @@
 	desc = "Suffer not a heretic to live."
 	chaplain_spawnable = FALSE
 	force = 30
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
@@ -562,7 +562,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	name = "relic war hammer"
 	desc = "This war hammer cost the chaplain forty thousand space dollars."
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb = list("smashed", "bashed", "hammered", "crunched")
 
@@ -607,7 +607,7 @@
 	force = 16
 	throwforce = 15
 	w_class = 4
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BACK
 	attack_verb = list("attacked", "smashed", "crushed", "splattered", "cracked")
 	hitsound = 'sound/weapons/resonator_blast.ogg'
 
@@ -628,7 +628,7 @@
 	item_state = "chain"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	force = 12
 	reach = 2
 	attack_verb = list("whipped", "lashed")
@@ -639,7 +639,7 @@
 	desc = "The brim of the hat is as sharp as your wit. The edge would hurt almost as much as disproving the existence of God."
 	icon_state = "fedora"
 	item_state = "fedora"
-	slot_flags = ITEM_SLOT_HEAD
+	slot_flags = SLOT_FLAG_HEAD
 	icon = 'icons/obj/clothing/hats.dmi'
 	force = 0
 	throw_speed = 4
@@ -698,7 +698,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 15
 	block_chance = 40
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BACK
 	sharpness = SHARP_NONE
 	hitsound = "swing_hit"
 	attack_verb = list("smashed", "slammed", "whacked", "thwacked")
@@ -827,7 +827,7 @@
 	force = 4
 	throwforce = 0
 	attack_verb = list("whipped", "repented", "lashed", "flagellated")
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	var/praying = FALSE
 	var/deity_name = "Coderbus" //This is the default, hopefully won't actually appear if the religion subsystem is running properly
 

@@ -7,7 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BACK
 	w_class = WEIGHT_CLASS_HUGE
 	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=2500)
 
@@ -138,8 +138,8 @@
 	mob_overlay_icon = 'modular_citadel/icons/mob/citadel/neck.dmi'
 	icon_state = "shockcollar"
 	item_state = "shockcollar"
-	body_parts_covered = NECK
-	slot_flags = ITEM_SLOT_NECK //no more pocket shockers. Now done without lazyness
+	inv_cover = NECK
+	slot_flags = SLOT_FLAG_NECK //no more pocket shockers. Now done without lazyness
 	w_class = WEIGHT_CLASS_SMALL
 	strip_delay = 60
 	equip_delay_other = 60

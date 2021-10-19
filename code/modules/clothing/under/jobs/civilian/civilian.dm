@@ -18,7 +18,7 @@
 	desc = "It looks like it could use some more flair."
 	icon_state = "barman_skirt"
 	item_state = "bar_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -97,7 +97,7 @@
 	desc = "It's a black jumpskirt, often worn by religious folk."
 	icon_state = "chaplain_skirt"
 	item_state = "bl_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -112,7 +112,7 @@
 	name = "cook's skirt"
 	desc = "A skirt which is given only to the most <b>hardcore</b> cooks in space."
 	icon_state = "chef_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -135,7 +135,7 @@
 	desc = "It's a jumpskirt worn by someone who works in the position of \"Head of Personnel\"."
 	icon_state = "hop_skirt"
 	item_state = "b_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -152,7 +152,7 @@
 	desc = "A teal suitskirt and yellow necktie. An authoritative yet tacky ensemble."
 	icon_state = "teal_suit_skirt"
 	item_state = "g_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -169,7 +169,7 @@
 	desc = "It's a jumpskirt designed to protect against minor plant-related hazards."
 	icon_state = "hydroponics_skirt"
 	item_state = "g_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -184,7 +184,7 @@
 	name = "janitor's jumpskirt"
 	desc = "It's the official skirt of the station's janitor. It has minor protection from biohazards."
 	icon_state = "janitor_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -194,7 +194,7 @@
 	desc = "A simple maid uniform for housekeeping."
 	icon_state = "janimaid"
 	item_state = "janimaid"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -244,7 +244,7 @@
 	desc = "A formal black suitskirt and red tie, intended for the station's finest."
 	icon_state = "really_black_suit_skirt"
 	item_state = "bl_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -305,7 +305,7 @@
 	desc = "A classy suitskirt and tie."
 	icon_state = "bluesuit_skirt"
 	item_state = "b_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -322,7 +322,7 @@
 	name = "purple suitskirt"
 	icon_state = "lawyer_purp_skirt"
 	item_state = "p_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON

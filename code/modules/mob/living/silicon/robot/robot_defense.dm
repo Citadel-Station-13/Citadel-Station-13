@@ -6,7 +6,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 /mob/living/silicon/robot/attackby(obj/item/I, mob/living/user)
 	if(hat_offset != INFINITY && user.a_intent == INTENT_HELP && is_type_in_typecache(I, GLOB.blacklisted_borg_hats))
-		if(!(I.slot_flags & ITEM_SLOT_HEAD))
+		if(!(I.slot_flags & SLOT_FLAG_HEAD))
 			to_chat(user, "<span class='warning'>You can't quite fit [I] onto [src]'s head.</span>")
 			return
 		to_chat(user, "<span class='notice'>You begin to place [I] on [src]'s head...</span>")

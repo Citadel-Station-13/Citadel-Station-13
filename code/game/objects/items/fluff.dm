@@ -6,7 +6,7 @@
 //			1) Tennis balls, lines 39 - 99
 //			2) Chew bones, lines 101 - 138
 //			3) Frisbee, lines 140 - 166
-*/		
+*/
 
 /obj/item/toy/fluff
 	name = "Fluff Item"
@@ -17,7 +17,7 @@
 	lefthand_file = 'icons/mob/inhands/fluff_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fluff_righthand.dmi'
 	mob_overlay_icon = 'icons/mob/mouthfluff.dmi'
-	slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_NECK | ITEM_SLOT_EARS
+	slot_flags = SLOT_FLAG_HEAD | SLOT_FLAG_NECK | SLOT_FLAG_EARS
 	var/poly_states = 0
 	var/poly_colors = list()
 

@@ -1,10 +1,10 @@
 /obj/item/clothing/under
 	icon = 'icons/obj/clothing/uniforms.dmi'
 	name = "under"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	inv_cover = CHEST|GROIN|LEGS|ARMS
 	permeability_coefficient = 0.9
 	block_priority = BLOCK_PRIORITY_UNIFORM
-	slot_flags = ITEM_SLOT_ICLOTHING
+	slot_flags = SLOT_FLAG_UNIFORM
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0, "wound" = 5)
 	mutantrace_variation = STYLE_DIGITIGRADE|USE_TAUR_CLIP_MASK
 	limb_integrity = 120
@@ -112,7 +112,7 @@
 		adjusted = NORMAL_STYLE
 		fitted = initial(fitted)
 		if(!alt_covers_chest)
-			body_parts_covered |= CHEST
+			inv_cover |= CHEST
 
 	if(attached_accessory && slot != SLOT_HANDS && ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -342,13 +342,13 @@
 		if(fitted != FEMALE_UNIFORM_TOP)
 			fitted = NO_FEMALE_UNIFORM
 		if(!alt_covers_chest) // for the special snowflake suits that expose the chest when adjusted
-			body_parts_covered &= ~CHEST
+			inv_cover &= ~CHEST
 			mutantrace_variation &= ~USE_TAUR_CLIP_MASK //How are we supposed to see the uniform otherwise?
 	else
 		to_chat(usr, "<span class='notice'>You adjust the suit back to normal.</span>")
 		fitted = initial(fitted)
 		if(!alt_covers_chest)
-			body_parts_covered |= CHEST
+			inv_cover |= CHEST
 			if(initial(mutantrace_variation) & USE_TAUR_CLIP_MASK)
 				mutantrace_variation |= USE_TAUR_CLIP_MASK
 

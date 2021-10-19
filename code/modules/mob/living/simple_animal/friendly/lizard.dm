@@ -29,7 +29,7 @@
 
 /mob/living/simple_animal/hostile/lizard/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/mob_holder, worn_state = "lizard", inv_slots = ITEM_SLOT_HEAD) //you can hold lizards now.
+	AddElement(/datum/element/mob_holder, worn_state = "lizard", inv_slots = SLOT_FLAG_HEAD) //you can hold lizards now.
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/hostile/lizard/CanAttack(atom/the_target)//Can we actually attack a possible target?

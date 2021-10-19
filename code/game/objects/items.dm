@@ -83,7 +83,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	//Citadel Edit for digitigrade stuff
 	var/mutantrace_variation = NONE //Are there special sprites for specific situations? Don't use this unless you need to.
 
-	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
+	var/inv_cover = 0 //see setup.dm for appropriate bit flags
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
@@ -532,7 +532,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	// if(!initial)
 	// 	if(equip_sound && (slot_flags & slot))
 	// 		playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
-	// 	else if(slot == ITEM_SLOT_HANDS)
+	// 	else if(slot == SLOT_FLAG_HANDS)
 	// 		playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE)
 	user.update_equipment_speed_mods()
 
@@ -748,29 +748,29 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return
 	var/mob/owner = loc
 	var/flags = slot_flags
-	if(flags & ITEM_SLOT_OCLOTHING)
+	if(flags & SLOT_FLAG_SUIT)
 		owner.update_inv_wear_suit()
-	if(flags & ITEM_SLOT_ICLOTHING)
+	if(flags & SLOT_FLAG_UNIFORM)
 		owner.update_inv_w_uniform()
-	if(flags & ITEM_SLOT_GLOVES)
+	if(flags & SLOT_FLAG_GLOVES)
 		owner.update_inv_gloves()
-	if(flags & ITEM_SLOT_EYES)
+	if(flags & SLOT_FLAG_EYES)
 		owner.update_inv_glasses()
-	if(flags & ITEM_SLOT_EARS)
+	if(flags & SLOT_FLAG_EARS)
 		owner.update_inv_ears()
-	if(flags & ITEM_SLOT_MASK)
+	if(flags & SLOT_FLAG_MASK)
 		owner.update_inv_wear_mask()
-	if(flags & ITEM_SLOT_HEAD)
+	if(flags & SLOT_FLAG_HEAD)
 		owner.update_inv_head()
-	if(flags & ITEM_SLOT_FEET)
+	if(flags & SLOT_FLAG_FEET)
 		owner.update_inv_shoes()
-	if(flags & ITEM_SLOT_ID)
+	if(flags & SLOT_FLAG_ID)
 		owner.update_inv_wear_id()
-	if(flags & ITEM_SLOT_BELT)
+	if(flags & SLOT_FLAG_BELT)
 		owner.update_inv_belt()
-	if(flags & ITEM_SLOT_BACK)
+	if(flags & SLOT_FLAG_BACK)
 		owner.update_inv_back()
-	if(flags & ITEM_SLOT_NECK)
+	if(flags & SLOT_FLAG_NECK)
 		owner.update_inv_neck()
 
 /obj/item/proc/get_temperature()

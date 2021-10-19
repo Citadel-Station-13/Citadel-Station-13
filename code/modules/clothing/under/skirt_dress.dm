@@ -5,7 +5,7 @@
 	name = "black skirt"
 	desc = "A black skirt, very fancy!"
 	icon_state = "blackskirt"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -14,7 +14,7 @@
 	desc = "A blue, casual skirt."
 	icon_state = "blueskirt"
 	item_state = "b_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -23,7 +23,7 @@
 	desc = "A red, casual skirt."
 	icon_state = "redskirt"
 	item_state = "r_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -32,7 +32,7 @@
 	desc = "A purple, casual skirt."
 	icon_state = "purpleskirt"
 	item_state = "p_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -41,7 +41,7 @@
 	desc = "Makes you want to frolic in a field of daisies."
 	icon_state = "sundress"
 	item_state = "sundress"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -53,7 +53,7 @@
 	name = "green dress"
 	desc = "A tight green dress"
 	icon_state = "dress_green"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -61,7 +61,7 @@
 	name = "pink dress"
 	desc = "A tight pink dress"
 	icon_state = "dress_pink"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -94,7 +94,7 @@
 	desc = "Fashion in space."
 	icon_state = "striped_dress"
 	item_state = "stripeddress"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_FULL
 	can_adjust = FALSE
 
@@ -103,7 +103,7 @@
 	desc = "Formal wear for a leading lady."
 	icon_state = "sailor_dress"
 	item_state = "sailordress"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -112,7 +112,7 @@
 	desc = "Lovely dress."
 	icon_state = "flower_dress"
 	item_state = "sailordress"
-	body_parts_covered = CHEST|GROIN|LEGS
+	inv_cover = CHEST|GROIN|LEGS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -120,7 +120,7 @@
 	name = "swept skirt"
 	desc = "Formal skirt."
 	icon_state = "skirt_swept"
-	body_parts_covered = GROIN
+	inv_cover = GROIN
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -128,7 +128,7 @@
 	name = "black corset"
 	desc = "Nanotrasen is not resposible for any organ damage."
 	icon_state = "corset"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -223,5 +223,5 @@
 	desc = "A magnificent pleated skirt complements the woolen polychromatic sweater."
 	icon_state = "polypleat"
 	item_state = "rainbow"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	poly_colors = list("#8CC6FF", "#808080", "#FF3535")

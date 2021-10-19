@@ -205,7 +205,7 @@
 
 	// Update icons
 	parent_item.update_icon()
-	if(user.get_item_by_slot(ITEM_SLOT_BACK) == parent)
+	if(user.get_item_by_slot(SLOT_FLAG_BACK) == parent)
 		user.update_inv_back()
 	else
 		user.update_inv_hands()

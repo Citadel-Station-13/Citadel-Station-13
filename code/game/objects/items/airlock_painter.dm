@@ -11,7 +11,7 @@
 
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	usesound = 'sound/effects/spray2.ogg'
 
 	var/obj/item/toner/ink = null

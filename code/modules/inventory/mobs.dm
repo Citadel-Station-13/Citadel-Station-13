@@ -73,23 +73,29 @@
  * - slot - slot ID
  * - force - ignore can equip checks
  * - delete_old_item - delete old item instead of drop
+ * - warnings - list of reasons why it didn't work if we're not forcing it
  */
-/mob/proc/equip_to_slot(obj/item/I, slot, force = FALSE, delete_old_item = FALSE)
+/mob/proc/equip_to_slot(obj/item/I, slot, force = FALSE, delete_old_item = FALSE, list/warnings)
 	EnsureInventory()
-	inventory?.EquipToSlot(I, slot, force, delete_old_item)
+	inventory?.EquipToSlot(I, slot, force, delete_old_item, warnings)
 
 /**
  * drops all inventory items
+ *
+ * @param
+ * - force - forcefully unequips things that don't want to be/can't be
+ * - include_abstract - includes slots that aren't considered player inventory slots
+ * - new_location - where to put the items
  */
-/mob/proc/drop_all_inventory_items()
-	return inventory?.DropEverything()
+/mob/proc/drop_all_inventory_items(force = TRUE, include_abstract = TRUE, atom/new_location = drop_location())
+	return inventory?.DropEverything(force, include_abstract, new_location)
 
 /**
  * Grabs an item from slot
  */
-/mob/proc/unequip_from_slot(slot, force = FALSE, atom/new_location = drop_location())
+/mob/proc/unequip_from_slot(slot, force = FALSE, atom/new_location = drop_location(), list/warnings)
 	EnsureInventory()
-	inventory?.UnequipFromSlot(slot, force, new_location)
+	inventory?.UnequipFromSlot(slot, force, new_location, warnings)
 
 /**
  * Checks if a slot exists
@@ -109,10 +115,10 @@
 /**
  * Checks if we can unequip an item from a slot
  */
-/mob/proc/can_unequip(obj/item/I, slot, mob/user, list/warnings)
+/mob/proc/can_unequip(obj/item/I, mob/user, list/warnings)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	EnsureInventory()
-	return inventory?.CanUnequip(I, slot, user, warnings)
+	return inventory?.CanUnequip(I, user, warnings)
 
 /**
  * proc that can be overridden:

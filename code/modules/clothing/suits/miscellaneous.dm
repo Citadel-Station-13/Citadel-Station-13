@@ -14,7 +14,7 @@
 	icon_state = "bluetag"
 	item_state = "bluetag"
 	blood_overlay_type = "armor"
-	body_parts_covered = CHEST
+	inv_cover = CHEST
 	allowed = list (/obj/item/gun/energy/laser/bluetag)
 	resistance_flags = NONE
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -25,7 +25,7 @@
 	icon_state = "redtag"
 	item_state = "redtag"
 	blood_overlay_type = "armor"
-	body_parts_covered = CHEST
+	inv_cover = CHEST
 	allowed = list (/obj/item/gun/energy/laser/redtag)
 	resistance_flags = NONE
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -38,7 +38,7 @@
 	desc = "What did you expect?"
 	icon_state = "flashsuit"
 	item_state = "armor"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	hoodtype = /obj/item/clothing/head/hooded/flashsuit
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
@@ -46,7 +46,7 @@
 	name = "flash button"
 	desc = "You will learn to fear the flash."
 	icon_state = "flashsuit"
-	body_parts_covered = HEAD
+	inv_cover = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR|HIDEFACE|HIDEMASK
 
 /obj/item/clothing/suit/pirate
@@ -71,7 +71,7 @@
 	item_state = "death"
 	flags_1 = CONDUCT_1
 	fire_resist = T0C+5200
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS|FEET
+	inv_cover = CHEST|GROIN|LEGS|ARMS|HANDS|FEET
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
@@ -80,7 +80,7 @@
 	desc = "this pretty much looks ridiculous" //Needs no fixing
 	icon_state = "justice"
 	item_state = "justice"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS|FEET
+	inv_cover = CHEST|GROIN|LEGS|ARMS|HANDS|FEET
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
@@ -89,7 +89,7 @@
 	desc = "This robe commands authority."
 	icon_state = "judge"
 	item_state = "judge"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	inv_cover = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/storage/fancy/cigarettes, /obj/item/stack/spacecash)
 	flags_inv = HIDEJUMPSUIT
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -120,14 +120,14 @@
 	desc = "A set of denim overalls."
 	icon_state = "overalls"
 	item_state = "overalls"
-	body_parts_covered = CHEST|GROIN|LEGS
+	inv_cover = CHEST|GROIN|LEGS
 
 /obj/item/clothing/suit/apron/purple_bartender
 	name = "purple bartender apron"
 	desc = "A fancy purple apron for a stylish person."
 	icon_state = "purplebartenderapron"
 	item_state = "purplebartenderapron"
-	body_parts_covered = CHEST
+	inv_cover = CHEST
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/syndicatefake
@@ -135,7 +135,7 @@
 	icon_state = "syndicate-black-red"
 	item_state = "syndicate-black-red"
 	desc = "A plastic replica of the Syndicate space suit. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
-	body_parts_covered = CHEST|ARMS|GROIN|LEGS|FEET|HANDS
+	inv_cover = CHEST|ARMS|GROIN|LEGS|FEET|HANDS
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	resistance_flags = NONE
@@ -145,7 +145,7 @@
 	desc = "Robes not meant to be worn by man."
 	icon_state = "hastur"
 	item_state = "hastur"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	inv_cover = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	mutantrace_variation = NONE
 
@@ -154,7 +154,7 @@
 	desc = "Have YOU killed a xeno today?"
 	icon_state = "imperium_monk"
 	item_state = "imperium_monk"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	inv_cover = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen)
 	mutantrace_variation = NONE
@@ -164,7 +164,7 @@
 	desc = "A suit made long ago by the ancient empire KFC."
 	icon_state = "chickensuit"
 	item_state = "chickensuit"
-	body_parts_covered = CHEST|ARMS|GROIN|LEGS|FEET
+	inv_cover = CHEST|ARMS|GROIN|LEGS|FEET
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
 
@@ -173,7 +173,7 @@
 	desc = "A suit that looks like a primate."
 	icon_state = "monkeysuit"
 	item_state = "monkeysuit"
-	body_parts_covered = CHEST|ARMS|GROIN|LEGS|FEET|HANDS
+	inv_cover = CHEST|ARMS|GROIN|LEGS|FEET|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/suit/toggle/owlwings
@@ -182,7 +182,7 @@
 	icon_state = "owl_wings"
 	item_state = "owl_wings"
 	togglename = "wings"
-	body_parts_covered = ARMS
+	inv_cover = ARMS
 	actions_types = list(/datum/action/item_action/toggle_wings)
 
 /obj/item/clothing/suit/toggle/owlwings/Initialize()
@@ -200,7 +200,7 @@
 	desc = "An ordinary cardboard box with holes cut in the sides."
 	icon_state = "cardborg"
 	item_state = "cardborg"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	flags_inv = HIDEJUMPSUIT
 	dog_fashion = /datum/dog_fashion/back
 
@@ -229,7 +229,7 @@
 	desc = "Two white spheres covered in white glitter. 'Tis the season."
 	icon_state = "snowman"
 	item_state = "snowman"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	flags_inv = HIDEJUMPSUIT
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
@@ -238,7 +238,7 @@
 	desc = "Your classic, non-racist poncho."
 	icon_state = "classicponcho"
 	item_state = "classicponcho"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/poncho/green
@@ -268,7 +268,7 @@
 	desc = "A fancy white dress."
 	icon_state = "white_dress"
 	item_state = "w_suit"
-	body_parts_covered = CHEST|GROIN|LEGS|FEET
+	inv_cover = CHEST|GROIN|LEGS|FEET
 	flags_inv = HIDEJUMPSUIT|HIDESHOES
 	mutantrace_variation = NONE
 
@@ -277,7 +277,7 @@
 	desc = "A costume made from 'synthetic' carp scales, it smells."
 	icon_state = "carp_casual"
 	item_state = "labcoat"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
+	inv_cover = CHEST|GROIN|ARMS|LEGS|FEET
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT	//Space carp like space, so you should too
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/gun/ballistic/automatic/speargun, /obj/item/staff/bostaff)
@@ -287,7 +287,7 @@
 	name = "carp hood"
 	desc = "A hood attached to a carp costume."
 	icon_state = "carp_casual"
-	body_parts_covered = HEAD
+	inv_cover = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
@@ -297,7 +297,7 @@
 	desc = "A costume that looks like someone made a human-like corgi, it won't guarantee belly rubs."
 	icon_state = "ian"
 	item_state = "labcoat"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
+	inv_cover = CHEST|GROIN|ARMS|LEGS|FEET
 	allowed = list()
 	hoodtype = /obj/item/clothing/head/hooded/ian_hood
 	dog_fashion = /datum/dog_fashion/back
@@ -306,7 +306,7 @@
 	name = "corgi hood"
 	desc = "A hood that looks just like a corgi's head, it won't guarantee dog biscuits."
 	icon_state = "ian"
-	body_parts_covered = HEAD
+	inv_cover = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/suit/hooded/bee_costume // It's Hip!
@@ -314,7 +314,7 @@
 	desc = "Bee the true Queen!"
 	icon_state = "bee"
 	item_state = "labcoat"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	clothing_flags = THICKMATERIAL
 	hoodtype = /obj/item/clothing/head/hooded/bee_hood
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -323,7 +323,7 @@
 	name = "bee hood"
 	desc = "A hood attached to a bee costume."
 	icon_state = "bee"
-	body_parts_covered = HEAD
+	inv_cover = HEAD
 	clothing_flags = THICKMATERIAL
 	flags_inv = HIDEHAIR|HIDEEARS
 	dynamic_hair_suffix = ""
@@ -333,7 +333,7 @@
 	desc = "A horribly bloated suit made from human skins."
 	icon_state = "lingspacesuit"
 	item_state = "labcoat"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET|HANDS
+	inv_cover = CHEST|GROIN|ARMS|LEGS|FEET|HANDS
 	allowed = list()
 	actions_types = list(/datum/action/item_action/toggle_human_head)
 	hoodtype = /obj/item/clothing/head/hooded/human_head
@@ -343,7 +343,7 @@
 	name = "bloated human head"
 	desc = "A horribly bloated and mismatched human head."
 	icon_state = "lingspacehelmet"
-	body_parts_covered = HEAD
+	inv_cover = HEAD
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
@@ -352,7 +352,7 @@
 	desc = "This jacket is for those special occasions when a russian officer isn't required to wear their armor."
 	icon_state = "officertanjacket"
 	item_state = "officertanjacket"
-	body_parts_covered = CHEST|ARMS
+	inv_cover = CHEST|ARMS
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/ran
@@ -360,7 +360,7 @@
 	desc = "A costume that looks like a certain shikigami, is super fluffy."
 	icon_state = "ran_suit"
 	item_state = "ran_suit"
-	body_parts_covered = CHEST|GROIN|LEGS
+	inv_cover = CHEST|GROIN|LEGS
 	flags_inv = HIDEJUMPSUIT|HIDETAUR
 	heat_protection = CHEST|GROIN|LEGS //fluffy tails!
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -381,7 +381,7 @@
 	desc = "A suit that completely restrains the wearer. Manufactured by Antyphun Corp." //Straight jacket is antifun
 	icon_state = "straight_jacket"
 	item_state = "straight_jacket"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
+	inv_cover = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	equip_delay_self = 50
 	strip_delay = 60
@@ -392,7 +392,7 @@
 	desc = "A worn out, curiously comfortable t-shirt with a picture of Ian. You wouldn't go so far as to say it feels like being hugged when you wear it, but it's pretty close. Good for sleeping in."
 	icon_state = "ianshirt"
 	item_state = "ianshirt"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/nerdshirt
@@ -400,7 +400,7 @@
 	desc = "A baggy shirt with vintage game character Phanic the Weasel. Why would anyone wear this?"
 	icon_state = "nerdshirt"
 	item_state = "nerdshirt"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/vapeshirt //wearing this is asking to get beat.
@@ -408,7 +408,7 @@
 	desc = "A cheap white T-shirt with a big tacky \"VN\" on the front, Why would you wear this unironically?"
 	icon_state = "vapeshirt"
 	item_state = "vapeshirt"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/jacket
@@ -417,7 +417,7 @@
 	icon_state = "bomberjacket"
 	item_state = "brownjsuit"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/radio)
-	body_parts_covered = CHEST|ARMS
+	inv_cover = CHEST|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -518,7 +518,7 @@
 	name = "leather overcoat"
 	desc = "That's a damn fine coat."
 	icon_state = "leathercoat"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	inv_cover = CHEST|GROIN|ARMS|LEGS
 	cold_protection = CHEST|GROIN|ARMS|LEGS
 	mutantrace_variation = STYLE_DIGITIGRADE
 
@@ -527,7 +527,7 @@
 	desc = "A thick jacket with a rubbery, water-resistant shell."
 	icon_state = "pufferjacket"
 	item_state = "hostrench"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 50, "rad" = 0, "fire" = 0, "acid" = 0)
 
 /obj/item/clothing/suit/jacket/puffer/vest
@@ -535,7 +535,7 @@
 	desc = "A thick vest with a rubbery, water-resistant shell."
 	icon_state = "puffervest"
 	item_state = "armor"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	cold_protection = CHEST|GROIN
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 30, "rad" = 0, "fire" = 0, "acid" = 0)
 
@@ -586,28 +586,28 @@
 	desc = "Looks like this belongs in a very old movie set."
 	icon_state = "draculacoat"
 	item_state = "draculacoat"
-	body_parts_covered = CHEST|ARMS
+	inv_cover = CHEST|ARMS
 
 /obj/item/clothing/suit/drfreeze_coat
 	name = "doctor freeze's labcoat"
 	desc = "A labcoat imbued with the power of features and freezes."
 	icon_state = "drfreeze_coat"
 	item_state = "drfreeze_coat"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 
 /obj/item/clothing/suit/gothcoat
 	name = "gothic coat"
 	desc = "Perfect for those who want stalk in a corner of a bar."
 	icon_state = "gothcoat"
 	item_state = "gothcoat"
-	body_parts_covered = CHEST|ARMS|HAND_LEFT //peculiar
+	inv_cover = CHEST|ARMS|HAND_LEFT //peculiar
 
 /obj/item/clothing/suit/xenos
 	name = "xenos suit"
 	desc = "A suit made out of chitinous alien hide."
 	icon_state = "xenos"
 	item_state = "xenos_helm"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
+	inv_cover = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/clothing/mask/facehugger/toy)
 
@@ -622,7 +622,7 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	attack_verb = list("warned", "cautioned", "smashed")
 	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
@@ -631,7 +631,7 @@
 	desc = "For your pet! Or not! Has a little clip on the back."
 	icon_state = "petharness"
 	item_state = "petharness"
-	body_parts_covered = NONE
+	inv_cover = NONE
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 	allowed = /obj/item/toy/fluff
 
@@ -640,7 +640,7 @@
 	desc = "For your pet! Or not! Has some mesh to cover up your more sensitive bits and a little clip on the back."
 	icon_state = "petharness_mesh"
 	item_state = "petharness_mesh"
-	body_parts_covered = CHEST
+	inv_cover = CHEST
 
 /obj/item/clothing/suit/petharness/ComponentInitialize()
 	. = ..()
@@ -653,7 +653,7 @@
 	desc = "A heavy jacket made from 'synthetic' animal furs."
 	icon_state = "coatwinter"
 	item_state = "coatwinter"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0)
@@ -664,7 +664,7 @@
 	name = "winter hood"
 	desc = "A hood attached to a heavy winter jacket."
 	icon_state = "winterhood"
-	body_parts_covered = HEAD
+	inv_cover = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
@@ -1086,7 +1086,7 @@
 	name = "spooky ghost"
 	desc = "This is obviously just a bedsheet, but maybe try it on?"
 	icon_state = "bedsheet"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS|HEAD
+	inv_cover = CHEST|GROIN|LEGS|ARMS|HANDS|HEAD
 	user_vars_to_edit = list("name" = "Spooky Ghost", "real_name" = "Spooky Ghost" , "incorporeal_move" = INCORPOREAL_MOVE_BASIC, "appearance_flags" = KEEP_TOGETHER|TILE_BOUND, "alpha" = 150)
 	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER //so the bedsheet goes over everything but fire
 	mutantrace_variation = NONE
@@ -1096,7 +1096,7 @@
 	desc = "A big and clanky suit made of bronze that offers no protection and looks very unfashionable. Nice."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_cuirass_old"
-	body_parts_covered = CHEST|GROIN|LEGS
+	inv_cover = CHEST|GROIN|LEGS
 	armor = list("melee" = 5, "bullet" = 0, "laser" = -5, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
 
 /obj/item/clothing/suit/ghost_sheet
@@ -1109,7 +1109,7 @@
 	throw_range = 2
 	w_class = WEIGHT_CLASS_TINY
 	flags_inv = HIDEGLOVES|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS|HEAD
+	inv_cover = CHEST|GROIN|LEGS|ARMS|HANDS|HEAD
 	alternate_worn_layer = UNDER_HEAD_LAYER
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
@@ -1135,7 +1135,7 @@
 	icon_state = "flakjack"
 	item_state = "redtag"
 	blood_overlay_type = "armor"
-	body_parts_covered = CHEST
+	inv_cover = CHEST
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = -5, "acid" = -15) //nylon sucks against acid
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -1146,7 +1146,7 @@
 	icon_state = "assu_suit"
 	item_state = "assu_suit"
 	blood_overlay_type = "armor"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	inv_cover = CHEST|GROIN|ARMS|LEGS
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
 

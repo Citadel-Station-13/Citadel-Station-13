@@ -8,7 +8,7 @@
 	name = "riot suppression electrostaff"
 	desc = "A large quarterstaff, with massive silver electrodes mounted at the end."
 	w_class = WEIGHT_CLASS_HUGE
-	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_OCLOTHING
+	slot_flags = SLOT_FLAG_BACK | SLOT_FLAG_SUIT
 	throwforce = 15			//if you are a madman and finish someone off with this, power to you.
 	throw_speed = 1
 	item_flags = NO_MAT_REDEMPTION

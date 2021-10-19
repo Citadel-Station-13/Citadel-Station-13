@@ -32,7 +32,7 @@
 	desc = "It's just like one of my Japanese animes!"
 	icon_state = "schoolgirl"
 	item_state = "schoolgirl"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -78,7 +78,7 @@
 	desc = "Includes shoes and plaid."
 	icon_state = "kilt"
 	item_state = "kilt"
-	body_parts_covered = CHEST|GROIN|LEGS|FEET
+	inv_cover = CHEST|GROIN|LEGS|FEET
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -93,7 +93,7 @@
 	name = "polychromic kilt"
 	desc = "It's not a skirt!"
 	icon_state = "polykilt"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	inv_cover = CHEST|GROIN|ARMS|LEGS
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/under/costume/kilt/polychromic/ComponentInitialize()
@@ -105,7 +105,7 @@
 	desc = "Are you not entertained? Is that not why you are here?"
 	icon_state = "gladiator"
 	item_state = "gladiator"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
@@ -120,7 +120,7 @@
 	desc = "Maid in China."
 	icon_state = "maid"
 	item_state = "maid"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -133,7 +133,7 @@
 /obj/item/clothing/under/costume/singer
 	desc = "Just looking at this makes you want to sing."
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	alternate_worn_layer = ABOVE_SHOES_LAYER
 	can_adjust = FALSE
 
@@ -141,7 +141,7 @@
 	name = "yellow performer's outfit"
 	icon_state = "ysing"
 	item_state = "ysing"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 
@@ -156,7 +156,7 @@
 	name = "geisha suit"
 	desc = "Cute space ninja senpai not included."
 	icon_state = "geisha"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
@@ -184,7 +184,7 @@
 	desc = "Return the slab or suffer my stale references."
 	icon_state = "mummy"
 	item_state = "mummy"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	inv_cover = CHEST|GROIN|ARMS|LEGS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
@@ -194,7 +194,7 @@
 	desc = "Perfect camouflage for hiding in botany."
 	icon_state = "scarecrow"
 	item_state = "scarecrow"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	inv_cover = CHEST|GROIN|ARMS|LEGS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
@@ -204,7 +204,7 @@
 	desc = "A dress inspired by the ancient \"Victorian\" era."
 	icon_state = "draculass"
 	item_state = "draculass"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 	mutantrace_variation = USE_TAUR_CLIP_MASK
@@ -238,7 +238,7 @@
 	desc = "A black jumpsuit with a white bone pattern printed on it. Spooky!"
 	icon_state = "skeleton"
 	item_state = "skeleton"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	inv_cover = CHEST|GROIN|ARMS|LEGS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
@@ -263,7 +263,7 @@
 	desc = "A simple red christmas suit that doesn't quite looks like Mrs Claus'."
 	icon_state = "christmasfemaler"
 	item_state = "christmasfemaler"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON|USE_TAUR_CLIP_MASK
 
 /obj/item/clothing/under/costume/christmas/croptop/green
@@ -278,11 +278,11 @@
 	desc = "A Qipao, traditionally worn in ancient Earth China by women during social events and lunar new years. This one is black."
 	icon_state = "qipao"
 	item_state = "qipao"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
-	
+
 
 /obj/item/clothing/under/costume/qipao/white
 	name = "White Qipao"
@@ -301,7 +301,7 @@
 	desc = "A Cheongsam, traditionally worn in ancient Earth China by men during social events and lunar new years. This one is black."
 	icon_state = "cheong"
 	item_state = "cheong"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	can_adjust = FALSE
 	mutantrace_variation = USE_TAUR_CLIP_MASK
 
@@ -310,7 +310,7 @@
 	desc = "A Cheongsam, traditionally worn in ancient Earth China by men during social events and lunar new years. This one is white."
 	icon_state = "cheongw"
 	item_state = "cheongw"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	can_adjust = FALSE
 	mutantrace_variation = NONE
 
@@ -319,7 +319,7 @@
 	desc = "A Cheongsam, traditionally worn in ancient Earth China by men during social events and lunar new years. This one is red.."
 	icon_state = "cheongr"
 	item_state = "cheongr"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/cloud

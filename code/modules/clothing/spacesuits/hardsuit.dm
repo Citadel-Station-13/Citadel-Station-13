@@ -449,7 +449,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/wizard/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/spellcasting, SPELL_WIZARD_HAT, ITEM_SLOT_HEAD)
+	AddElement(/datum/element/spellcasting, SPELL_WIZARD_HAT, SLOT_FLAG_HEAD)
 
 /obj/item/clothing/suit/space/hardsuit/wizard
 	icon_state = "hardsuit-wiz"
@@ -467,8 +467,8 @@
 
 /obj/item/clothing/suit/space/hardsuit/wizard/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, FALSE, FALSE, ITEM_SLOT_OCLOTHING, INFINITY, FALSE)
-	AddElement(/datum/element/spellcasting, SPELL_WIZARD_ROBE, ITEM_SLOT_OCLOTHING)
+	AddComponent(/datum/component/anti_magic, TRUE, FALSE, FALSE, SLOT_FLAG_SUIT, INFINITY, FALSE)
+	AddElement(/datum/element/spellcasting, SPELL_WIZARD_ROBE, SLOT_FLAG_SUIT)
 
 	//Medical hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/medical
@@ -788,7 +788,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/shielded, current_charges, max_charges, recharge_delay, recharge_rate, ITEM_SLOT_OCLOTHING, shield_state)
+	AddComponent(/datum/component/shielded, current_charges, max_charges, recharge_delay, recharge_rate, SLOT_FLAG_SUIT, shield_state)
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded
 	resistance_flags = FIRE_PROOF | ACID_PROOF

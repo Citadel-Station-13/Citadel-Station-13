@@ -23,7 +23,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	sharpness = SHARP_EDGED
 	obj_flags = UNIQUE_RENAME // here is a shitpost and i cannot wait for ninjas naming their sword very rude things
 	max_integrity = 200

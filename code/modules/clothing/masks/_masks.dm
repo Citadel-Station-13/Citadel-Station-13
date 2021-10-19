@@ -1,8 +1,8 @@
 /obj/item/clothing/mask
 	name = "mask"
 	icon = 'icons/obj/clothing/masks.dmi'
-	body_parts_covered = HEAD
-	slot_flags = ITEM_SLOT_MASK
+	inv_cover = HEAD
+	slot_flags = SLOT_FLAG_MASK
 	strip_delay = 40
 	equip_delay_other = 40
 	var/modifies_speech = FALSE
@@ -32,7 +32,7 @@
 /obj/item/clothing/mask/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands)
-		if(body_parts_covered & HEAD)
+		if(inv_cover & HEAD)
 			if(damaged_clothes)
 				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
 			if(blood_DNA)

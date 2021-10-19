@@ -7,14 +7,14 @@
 	icon_state = "qmcloak"
 	item_state = "qmcloak"
 	w_class = WEIGHT_CLASS_SMALL
-	body_parts_covered = CHEST|LEGS|ARMS
+	inv_cover = CHEST|LEGS|ARMS
 
 /obj/item/clothing/head/cloakhood
 	name = "cloak hood"
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "golhood"
 	desc = "A hood for a cloak."
-	body_parts_covered = HEAD
+	inv_cover = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/neck/cloak/suicide_act(mob/user)
@@ -62,7 +62,7 @@
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/pickaxe, /obj/item/spear, /obj/item/spear/bonespear, /obj/item/organ/regenerative_core/legion, /obj/item/kitchen/knife/combat/bone, /obj/item/kitchen/knife/combat/survival)
 	armor = list("melee" = 35, "bullet" = 10, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60) //a fair alternative to bone armor, requiring alternative materials and gaining a suit slot
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
-	body_parts_covered = CHEST|ARMS|LEGS
+	inv_cover = CHEST|ARMS|LEGS
 
 /obj/item/clothing/head/hooded/cloakhood/goliath
 	name = "goliath cloak hood"
@@ -79,7 +79,7 @@
 	armor = list("melee" = 70, "bullet" = 20, "laser" = 35, "energy" = 25, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/drake
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	inv_cover = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF | GOLIATH_RESISTANCE
 

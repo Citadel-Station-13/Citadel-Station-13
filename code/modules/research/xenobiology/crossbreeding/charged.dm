@@ -331,7 +331,7 @@ Charged extracts:
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	C.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
 	C.min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	C.cold_protection = C.body_parts_covered
+	C.cold_protection = C.inv_cover
 	C.clothing_flags |= STOPSPRESSUREDAMAGE
 	uses--
 	if(!uses)

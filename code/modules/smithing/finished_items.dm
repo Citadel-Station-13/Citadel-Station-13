@@ -7,7 +7,7 @@
 	item_state = "claymore"
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON //yeah ok
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -115,7 +115,7 @@
 	icon_state = "halberd"
 	w_class = WEIGHT_CLASS_HUGE
 	overlay_state = "spearhandle"
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BACK
 	wielded_mult = 2.5
 
 /obj/item/melee/smith/twohand/halberd/ComponentInitialize()
@@ -127,7 +127,7 @@
 	icon_state = "javelin"
 	overlay_state = "longhandle"
 	wielded_mult = 1.5
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BACK
 	sharpness = SHARP_POINTY
 
 
@@ -139,7 +139,7 @@
 	name = "glaive"
 	icon_state = "glaive"
 	overlay_state = "longhandle"
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BACK
 	wielded_mult = 2
 
 /obj/item/melee/smith/twohand/glaive/ComponentInitialize()
@@ -153,7 +153,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	overlay_state = "longhandle"
 	reach = 2 //yeah ok
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BACK
 	sharpness = SHARP_POINTY
 
 //////////////////////////

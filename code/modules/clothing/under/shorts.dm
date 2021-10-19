@@ -2,7 +2,7 @@
 	name = "athletic shorts"
 	desc = "95% Polyester, 5% Spandex!"
 	gender = PLURAL
-	body_parts_covered = GROIN
+	inv_cover = GROIN
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	mutantrace_variation = STYLE_DIGITIGRADE //how do they show up on taurs otherwise?
@@ -48,7 +48,7 @@
 	desc = "Topless striped panties. Now with 120% more polychrome!"
 	icon_state = "polypantsu"
 	item_state = "rainbow"
-	body_parts_covered = GROIN
+	inv_cover = GROIN
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 	poly_colors = list("#FFFFFF", "#8CC6FF")

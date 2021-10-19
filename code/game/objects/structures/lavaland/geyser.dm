@@ -56,7 +56,7 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "plunger"
 
-	slot_flags = ITEM_SLOT_MASK
+	slot_flags = SLOT_FLAG_MASK
 
 	var/plunge_mod = 1 //time*plunge_mod = total time we take to plunge an object
 	var/reinforced = FALSE //whether we do heavy duty stuff like geysers
@@ -72,7 +72,7 @@
 	if(iscarbon(hit_atom))
 		var/mob/living/carbon/H = hit_atom
 		if(!H.wear_mask)
-			H.equip_to_slot_if_possible(src, ITEM_SLOT_MASK)
+			H.equip_to_slot_if_possible(src, SLOT_FLAG_MASK)
 			H.visible_message("<span class='warning'>The plunger slams into [H]'s face!</span>", "<span class='warning'>The plunger suctions to your face!</span>")
 
 /obj/item/plunger/reinforced

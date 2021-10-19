@@ -15,7 +15,7 @@
 /obj/item/clothing/head/wizard/ComponentInitialize()
 	. = ..()
 	if(magic_flags)
-		AddElement(/datum/element/spellcasting, magic_flags, ITEM_SLOT_HEAD)
+		AddElement(/datum/element/spellcasting, magic_flags, SLOT_FLAG_HEAD)
 
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
@@ -73,7 +73,7 @@
 	item_state = "wizrobe"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	inv_cover = CHEST|GROIN|ARMS|LEGS
 	armor = list("melee" = 30, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 20, "bio" = 20, "rad" = 20, "fire" = 100, "acid" = 100, "wound" = 20)
 	allowed = list(/obj/item/teleportation_scroll)
 	flags_inv = HIDEJUMPSUIT
@@ -86,7 +86,7 @@
 /obj/item/clothing/suit/wizrobe/ComponentInitialize()
 	. = ..()
 	if(magic_flags)
-		AddElement(/datum/element/spellcasting, magic_flags, ITEM_SLOT_OCLOTHING)
+		AddElement(/datum/element/spellcasting, magic_flags, SLOT_FLAG_SUIT)
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
@@ -315,7 +315,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/shielded/wizard/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/spellcasting, SPELL_WIZARD_HAT, ITEM_SLOT_HEAD)
+	AddElement(/datum/element/spellcasting, SPELL_WIZARD_HAT, SLOT_FLAG_HEAD)
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
 	name = "battlemage helmet"
@@ -330,7 +330,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/spellcasting, SPELL_WIZARD_ROBE, ITEM_SLOT_OCLOTHING)
+	AddElement(/datum/element/spellcasting, SPELL_WIZARD_ROBE, SLOT_FLAG_SUIT)
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard/attack_self(mob/user)
 	return

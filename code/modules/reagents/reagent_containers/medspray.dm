@@ -9,7 +9,7 @@
 	item_flags = NOBLUDGEON
 	obj_flags = UNIQUE_RENAME
 	reagent_flags = OPENCONTAINER
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3

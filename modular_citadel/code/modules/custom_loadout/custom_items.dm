@@ -11,7 +11,7 @@
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	item_state = "infcloak"
 	w_class = WEIGHT_CLASS_SMALL
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	inv_cover = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/neck/petcollar/inferno
 	name = "Kiara's Collar"
@@ -127,7 +127,7 @@
 	icon_state = "carrotcloak"
 	item_state = "carrotcloak"
 	w_class = WEIGHT_CLASS_SMALL
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	inv_cover = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/storage/backpack/satchel/carrot
 	name = "carrot satchel"
@@ -160,7 +160,7 @@
 	item_state = "festive"
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	inv_cover = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/mask/luchador/zigfie
 	name = "Alboroto Rosa mask"
@@ -211,7 +211,7 @@
 	icon_state = "hos-g"
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	item_state = "hos-g"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	inv_cover = CHEST|GROIN|ARMS|LEGS
 	mutantrace_variation = NONE
 
 /obj/item/reagent_containers/food/drinks/flask/russian
@@ -286,7 +286,7 @@
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	icon_state = "puffydress"
 	item_state = "puffydress"
-	body_parts_covered = CHEST|GROIN|LEGS
+	inv_cover = CHEST|GROIN|LEGS
 	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/vermillion
@@ -294,7 +294,7 @@
 	desc = "Some clothing."
 	icon_state = "vermillion"
 	item_state = "vermillion"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
+	inv_cover = CHEST|GROIN|LEGS|ARMS|HANDS
 	icon = 'icons/obj/custom.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
@@ -316,7 +316,7 @@
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	item_state = "wintergreencloak"
 	w_class = WEIGHT_CLASS_SMALL
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	inv_cover = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/head/paperhat
 	name = "paperhat"
@@ -403,8 +403,8 @@
 	icon = 'icons/obj/custom.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/zuliecloak
-	body_parts_covered = CHEST|GROIN|ARMS
-	slot_flags = SLOT_WEAR_SUIT | ITEM_SLOT_NECK //it's a cloak. it's cosmetic. so why the hell not? what could possibly go wrong?
+	inv_cover = CHEST|GROIN|ARMS
+	slot_flags = SLOT_WEAR_SUIT | SLOT_FLAG_NECK //it's a cloak. it's cosmetic. so why the hell not? what could possibly go wrong?
 	mutantrace_variation = NONE
 
 /obj/item/clothing/head/hooded/cloakhood/zuliecloak
@@ -424,7 +424,7 @@
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	icon_state = "redgoldjacket"
 	item_state = "redgoldjacket"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	inv_cover = CHEST|GROIN|LEGS|ARMS
 	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/kimono
@@ -434,7 +434,7 @@
 	item_state = "kimono"
 	icon = 'icons/obj/custom.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	inv_cover = CHEST|GROIN|LEGS|ARMS
 	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/commjacket
@@ -444,7 +444,7 @@
 	item_state = "commjacket"
 	icon = 'icons/obj/custom.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	inv_cover = CHEST|GROIN|LEGS|ARMS
 	mutantrace_variation = NONE
 
 /obj/item/clothing/under/custom/mw2_russian_para

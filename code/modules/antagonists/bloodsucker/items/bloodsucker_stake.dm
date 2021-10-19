@@ -25,7 +25,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi' // File for in-hand icon
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	attack_verb = list("staked")
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	force = 6

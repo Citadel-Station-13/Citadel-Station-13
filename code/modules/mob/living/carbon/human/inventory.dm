@@ -301,7 +301,7 @@
 		if(!thing)
 			to_chat(src, "<span class='warning'>You have no backpack to take something out of!</span>")
 			return
-		if(equip_to_slot_if_possible(thing, ITEM_SLOT_BACK))
+		if(equip_to_slot_if_possible(thing, SLOT_FLAG_BACK))
 			update_inv_hands()
 		return
 	if(!SEND_SIGNAL(equipped_back, COMSIG_CONTAINS_STORAGE)) // not a storage item
@@ -332,7 +332,7 @@
 		if(!thing)
 			to_chat(src, "<span class='warning'>You have no belt to take something out of!</span>")
 			return
-		if(equip_to_slot_if_possible(thing, ITEM_SLOT_BELT))
+		if(equip_to_slot_if_possible(thing, SLOT_FLAG_BELT))
 			update_inv_hands()
 		return
 	if(!SEND_SIGNAL(equipped_belt, COMSIG_CONTAINS_STORAGE)) // not a storage item

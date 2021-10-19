@@ -115,7 +115,7 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/user_H = owner
 		if(user_H.wear_suit && user_H.wear_suit.breakouttime)
-			var/obj/item/clothing/suit/straight_jacket/S = user_H.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+			var/obj/item/clothing/suit/straight_jacket/S = user_H.get_item_by_slot(SLOT_FLAG_UNIFORM)
 			if(istype(S))
 				user_C.visible_message("<span class='warning'>[user_C] attempts to remove [S]!</span>", \
 						 			"<span class='warning'>You rip through [S] like it's nothing!</span>")

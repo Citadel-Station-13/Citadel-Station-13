@@ -223,7 +223,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	new /obj/item/weldingtool/experimental/brass(src)
 
 /obj/item/storage/toolbox/brass/prefilled/servant
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	fabricator_type = null
 
 /obj/item/storage/toolbox/brass/prefilled/ratvar

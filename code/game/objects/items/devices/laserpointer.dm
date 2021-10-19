@@ -7,7 +7,7 @@
 	var/pointer_icon_state
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)
 	w_class = WEIGHT_CLASS_SMALL
 	var/turf/pointer_loc

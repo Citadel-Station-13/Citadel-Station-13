@@ -32,7 +32,7 @@
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "prisoner_skirt"
 	item_state = "prisoner_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -64,7 +64,7 @@
 	desc = "A cybernetically enhanced jumpsuit used for administrative duties."
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	inv_cover = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100,"energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100, "wound" = 1000) //wound defense at 100 wont stop wounds
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
@@ -107,7 +107,7 @@
 	name = "crop top"
 	desc = "We've saved money by giving you half a shirt!"
 	icon_state = "croptop"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -117,7 +117,7 @@
 	icon_state = "plasmaman"
 	item_state = "plasmaman"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 95, "acid" = 95)
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	inv_cover = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	mutantrace_variation = USE_TAUR_CLIP_MASK
 	can_adjust = FALSE
 	strip_delay = 80
@@ -169,15 +169,15 @@
 	icon_state = "gear_harness"
 	item_state = "gear_harness"
 	can_adjust = TRUE
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 
 /obj/item/clothing/under/misc/gear_harness/toggle_jumpsuit_adjust()
-	if(!body_parts_covered)
+	if(!inv_cover)
 		to_chat(usr, "<span class='notice'>Your gear harness is now covering your chest and groin.</span>")
-		body_parts_covered = CHEST|GROIN
+		inv_cover = CHEST|GROIN
 	else
 		to_chat(usr, "<span class='notice'>Your gear harness is no longer covering anything.</span>")
-		body_parts_covered = NONE
+		inv_cover = NONE
 	return TRUE
 
 /obj/item/clothing/under/misc/durathread
@@ -194,7 +194,7 @@
 	icon_state = "duraskirt"
 	item_state = "duraskirt"
 	can_adjust = FALSE
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/under/misc/squatter
@@ -225,7 +225,7 @@
 	name = "pink stripper outfit"
 	icon_state = "stripper_p"
 	item_state = "stripper_p"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	can_adjust = FALSE
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
@@ -264,7 +264,7 @@
 	icon_state = "polyshorts"
 	item_state = "rainbow"
 	can_adjust = FALSE
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 
 /obj/item/clothing/under/misc/polyshorts/ComponentInitialize()
 	. = ..()
@@ -287,7 +287,7 @@
 	desc = "Great for showing off your underwear in dubious style."
 	icon_state = "polybottomless"
 	item_state = "rainbow"
-	body_parts_covered = CHEST|ARMS	//Because there's no bottom included
+	inv_cover = CHEST|ARMS	//Because there's no bottom included
 	can_adjust = FALSE
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
@@ -300,7 +300,7 @@
 	desc = "For those lazy summer days."
 	icon_state = "polyshimatank"
 	item_state = "rainbow"
-	body_parts_covered = CHEST|GROIN
+	inv_cover = CHEST|GROIN
 	can_adjust = FALSE
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 	var/list/poly_states = 3

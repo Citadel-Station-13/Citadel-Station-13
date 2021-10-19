@@ -16,12 +16,12 @@
 		fibertext = "Material from \a [M.wear_suit]."
 		if(prob(10*item_multiplier) && !(fibertext in suit_fibers))
 			suit_fibers += fibertext
-		if(!(M.wear_suit.body_parts_covered & CHEST))
+		if(!(M.wear_suit.inv_cover & CHEST))
 			if(M.w_uniform)
 				fibertext = "Fibers from \a [M.w_uniform]."
 				if(prob(12*item_multiplier) && !(fibertext in suit_fibers)) //Wearing a suit means less of the uniform exposed.
 					suit_fibers += fibertext
-		if(!(M.wear_suit.body_parts_covered & HANDS))
+		if(!(M.wear_suit.inv_cover & HANDS))
 			if(M.gloves)
 				fibertext = "Material from a pair of [M.gloves.name]."
 				if(prob(20*item_multiplier) && !(fibertext in suit_fibers))

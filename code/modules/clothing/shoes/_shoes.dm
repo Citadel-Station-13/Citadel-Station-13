@@ -5,8 +5,8 @@
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	var/chained = 0
 
-	body_parts_covered = FEET
-	slot_flags = ITEM_SLOT_FEET
+	inv_cover = FEET
+	slot_flags = SLOT_FLAG_FEET
 
 	permeability_coefficient = 0.5
 	slowdown = SHOES_SLOWDOWN
@@ -87,7 +87,7 @@
 /obj/item/clothing/shoes/equipped(mob/user, slot)
 	. = ..()
 
-	if(offset && slot_flags & slotdefine2slotbit(slot))
+	if(offset && slot_flags & inv_slot_to_flag(slot))
 		user.pixel_y += offset
 		worn_y_dimension -= (offset * 2)
 		user.update_inv_shoes()

@@ -131,7 +131,7 @@
 /obj/item/tank/internals/plasmaman/belt
 	icon_state = "plasmaman_tank_belt"
 	item_state = "plasmaman_tank_belt"
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	force = 5
 	volume = 6
 	w_class = WEIGHT_CLASS_SMALL //thanks i forgot this
@@ -152,7 +152,7 @@
 	desc = "Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it."
 	icon_state = "emergency"
 	flags_1 = CONDUCT_1
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	force = 4
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
@@ -189,7 +189,7 @@
 	name = "mantid gas reactor"
 	desc = "A mantid gas processing plant that continuously synthesises 'breathable' atmosphere."
 	icon_state = "methyl_bromide"
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	force = 6
 	distribute_pressure = 14

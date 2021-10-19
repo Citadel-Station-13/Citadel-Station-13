@@ -1152,8 +1152,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/get_move_trail(var/mob/living/carbon/human/H)
 	if(H.lying)
 		return /obj/effect/decal/cleanable/blood/footprints/tracks/body
-	if(H.shoes || (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)))
-		var/obj/item/clothing/shoes/shoes = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) ? H.wear_suit : H.shoes // suits take priority over shoes
+	if(H.shoes || (H.wear_suit && (H.wear_suit.inv_cover & FEET)))
+		var/obj/item/clothing/shoes/shoes = (H.wear_suit && (H.wear_suit.inv_cover & FEET)) ? H.wear_suit : H.shoes // suits take priority over shoes
 		return shoes.move_trail
 	else
 		return move_trail */
@@ -1196,7 +1196,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(SLOT_WEAR_MASK)
 			if(H.wear_mask)
 				return FALSE
-			if(!(I.slot_flags & ITEM_SLOT_MASK))
+			if(!(I.slot_flags & SLOT_FLAG_MASK))
 				return FALSE
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
@@ -1204,25 +1204,25 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(SLOT_NECK)
 			if(H.wear_neck)
 				return FALSE
-			if( !(I.slot_flags & ITEM_SLOT_NECK) )
+			if( !(I.slot_flags & SLOT_FLAG_NECK) )
 				return FALSE
 			return TRUE
 		if(SLOT_BACK)
 			if(H.back)
 				return FALSE
-			if( !(I.slot_flags & ITEM_SLOT_BACK) )
+			if( !(I.slot_flags & SLOT_FLAG_BACK) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(SLOT_WEAR_SUIT)
 			if(H.wear_suit)
 				return FALSE
-			if( !(I.slot_flags & ITEM_SLOT_OCLOTHING) )
+			if( !(I.slot_flags & SLOT_FLAG_SUIT) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(SLOT_GLOVES)
 			if(H.gloves)
 				return FALSE
-			if( !(I.slot_flags & ITEM_SLOT_GLOVES) )
+			if( !(I.slot_flags & SLOT_FLAG_GLOVES) )
 				return FALSE
 			if(num_arms < 2)
 				return FALSE
@@ -1230,7 +1230,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(SLOT_SHOES)
 			if(H.shoes)
 				return FALSE
-			if( !(I.slot_flags & ITEM_SLOT_FEET) )
+			if( !(I.slot_flags & SLOT_FLAG_FEET) )
 				return FALSE
 			if(num_legs < 2)
 				return FALSE
@@ -1249,13 +1249,13 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					if(return_warning)
 						return_warning[1] = "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 					return FALSE
-			if(!(I.slot_flags & ITEM_SLOT_BELT))
+			if(!(I.slot_flags & SLOT_FLAG_BELT))
 				return
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(SLOT_GLASSES)
 			if(H.glasses)
 				return FALSE
-			if(!(I.slot_flags & ITEM_SLOT_EYES))
+			if(!(I.slot_flags & SLOT_FLAG_EYES))
 				return FALSE
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
@@ -1263,7 +1263,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(SLOT_HEAD)
 			if(H.head)
 				return FALSE
-			if(!(I.slot_flags & ITEM_SLOT_HEAD))
+			if(!(I.slot_flags & SLOT_FLAG_HEAD))
 				return FALSE
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
@@ -1271,7 +1271,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(SLOT_EARS)
 			if(H.ears)
 				return FALSE
-			if(!(I.slot_flags & ITEM_SLOT_EARS))
+			if(!(I.slot_flags & SLOT_FLAG_EARS))
 				return FALSE
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
@@ -1279,7 +1279,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(SLOT_W_UNIFORM)
 			if(H.w_uniform)
 				return FALSE
-			if( !(I.slot_flags & ITEM_SLOT_ICLOTHING) )
+			if( !(I.slot_flags & SLOT_FLAG_UNIFORM) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(SLOT_WEAR_ID)
@@ -1291,7 +1291,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					if(return_warning)
 						return_warning[1] = "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 					return FALSE
-			if( !(I.slot_flags & ITEM_SLOT_ID) )
+			if( !(I.slot_flags & SLOT_FLAG_ID) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(SLOT_L_STORE)
@@ -1306,9 +1306,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				if(return_warning)
 					return_warning[1] = "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return FALSE
-			if(I.slot_flags & ITEM_SLOT_DENYPOCKET)
+			if(I.slot_flags & SLOT_FLAG_DENYPOCKET)
 				return FALSE
-			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & ITEM_SLOT_POCKET) )
+			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & SLOT_FLAG_POCKET) )
 				return TRUE
 		if(SLOT_R_STORE)
 			if(HAS_TRAIT(I, TRAIT_NODROP))
@@ -1322,9 +1322,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				if(return_warning)
 					return_warning[1] = "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return FALSE
-			if(I.slot_flags & ITEM_SLOT_DENYPOCKET)
+			if(I.slot_flags & SLOT_FLAG_DENYPOCKET)
 				return FALSE
-			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & ITEM_SLOT_POCKET) )
+			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & SLOT_FLAG_POCKET) )
 				return TRUE
 			return FALSE
 		if(SLOT_S_STORE)
@@ -2314,9 +2314,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/obj/item/clothing/arm_clothes = null
 		if(H.gloves)
 			arm_clothes = H.gloves
-		if(H.w_uniform && ((H.w_uniform.body_parts_covered & HANDS) || (H.w_uniform.body_parts_covered & ARMS)))
+		if(H.w_uniform && ((H.w_uniform.inv_cover & HANDS) || (H.w_uniform.inv_cover & ARMS)))
 			arm_clothes = H.w_uniform
-		if(H.wear_suit && ((H.wear_suit.body_parts_covered & HANDS) || (H.wear_suit.body_parts_covered & ARMS)))
+		if(H.wear_suit && ((H.wear_suit.inv_cover & HANDS) || (H.wear_suit.inv_cover & ARMS)))
 			arm_clothes = H.wear_suit
 		if(arm_clothes)
 			burning_items |= arm_clothes
@@ -2325,9 +2325,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/obj/item/clothing/leg_clothes = null
 		if(H.shoes)
 			leg_clothes = H.shoes
-		if(H.w_uniform && ((H.w_uniform.body_parts_covered & FEET) || (H.w_uniform.body_parts_covered & LEGS)))
+		if(H.w_uniform && ((H.w_uniform.inv_cover & FEET) || (H.w_uniform.inv_cover & LEGS)))
 			leg_clothes = H.w_uniform
-		if(H.wear_suit && ((H.wear_suit.body_parts_covered & FEET) || (H.wear_suit.body_parts_covered & LEGS)))
+		if(H.wear_suit && ((H.wear_suit.inv_cover & FEET) || (H.wear_suit.inv_cover & LEGS)))
 			leg_clothes = H.wear_suit
 		if(leg_clothes)
 			burning_items |= leg_clothes

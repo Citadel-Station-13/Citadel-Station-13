@@ -10,7 +10,7 @@
 	desc = "It's a jumpskirt worn by the quartermaster. It's specially designed to prevent back injuries caused by pushing paper."
 	icon_state = "qm_skirt"
 	item_state = "lb_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -20,7 +20,7 @@
 	desc = "Shooooorts! They're comfy and easy to wear!"
 	icon_state = "cargo"
 	item_state = "lb_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/cargo/util
@@ -36,7 +36,7 @@
 	desc = "Skiiiiirts! They're comfy and easy to wear"
 	icon_state = "cargo_skirt"
 	item_state = "lb_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON

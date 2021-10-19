@@ -1,15 +1,15 @@
 /obj/item/clothing/neck
 	name = "necklace"
 	icon = 'icons/obj/clothing/neck.dmi'
-	body_parts_covered = NECK
-	slot_flags = ITEM_SLOT_NECK
+	inv_cover = NECK
+	slot_flags = SLOT_FLAG_NECK
 	strip_delay = 40
 	equip_delay_other = 40
 
 /obj/item/clothing/neck/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands)
-		if(body_parts_covered & HEAD)
+		if(inv_cover & HEAD)
 			if(damaged_clothes)
 				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
 			if(blood_DNA)

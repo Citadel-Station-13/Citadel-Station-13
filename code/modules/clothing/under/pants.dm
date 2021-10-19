@@ -1,6 +1,6 @@
 /obj/item/clothing/under/pants
 	gender = PLURAL
-	body_parts_covered = GROIN|LEGS
+	inv_cover = GROIN|LEGS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	mutantrace_variation = STYLE_DIGITIGRADE //how do they show up on taurs otherwise?
@@ -94,7 +94,7 @@
 
 /obj/item/clothing/under/pants/chaps
 	name = "black chaps"
-	body_parts_covered = LEGS
+	inv_cover = LEGS
 	desc = "Yeehaw"
 	icon_state = "chaps"
 

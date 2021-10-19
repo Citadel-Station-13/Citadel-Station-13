@@ -557,7 +557,7 @@
 	desc = "A tough, hard covering of black chitin."
 	icon_state = "lingarmor"
 	item_flags = DROPDEL
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	inv_cover = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list("melee" = 70, "bullet" = 60, "laser" = 30, "energy" = 40, "bomb" = 10, "bio" = 4, "rad" = 0, "fire" = 50, "acid" = 90)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0
@@ -649,7 +649,7 @@
 	icon_state = "bracers"
 	item_state = "bracers"
 	transfer_prints = TRUE
-	body_parts_covered = HANDS
+	inv_cover = HANDS
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
@@ -693,7 +693,7 @@
 	desc = "Rough bone and chitin, pulsing with an abomination barely called \"life\". Good for punching people, not so much for firearms."
 	transfer_prints = TRUE
 	item_flags = DROPDEL // whoops
-	body_parts_covered = ARMS|HANDS
+	inv_cover = ARMS|HANDS
 	cold_protection = ARMS|HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT

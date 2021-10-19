@@ -3,8 +3,8 @@
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "top_hat"
 	item_state = "that"
-	body_parts_covered = HEAD
-	slot_flags = ITEM_SLOT_HEAD
+	inv_cover = HEAD
+	slot_flags = SLOT_FLAG_HEAD
 	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
 	dynamic_hair_suffix = "+generic"

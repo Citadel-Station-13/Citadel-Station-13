@@ -12,14 +12,14 @@
 	icon_state = "hostrench"
 	item_state = "hostrench"
 	mutantrace_variation = STYLE_DIGITIGRADE
-	body_parts_covered = CHEST|ARMS|LEGS
+	inv_cover = CHEST|ARMS|LEGS
 
 /obj/item/clothing/suit/hooded/cloak/david
 	name = "red cloak"
 	icon_state = "goliath_cloak"
 	desc = "Ever wanted to look like a badass without ANY effort? Try this nanotrasen brand red cloak, perfect for kids"
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/david
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/head/hooded/cloakhood/david

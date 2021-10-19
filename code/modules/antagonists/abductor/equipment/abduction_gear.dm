@@ -437,7 +437,7 @@
 	var/mode = BATON_STUN
 	icon_state = "wonderprodStun"
 	item_state = "wonderprod"
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	force = 7
 	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list(/datum/action/item_action/toggle_mode)

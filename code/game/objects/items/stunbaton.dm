@@ -8,7 +8,7 @@
 	item_state = "baton"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	force = 10
 	throwforce = 7
 	w_class = WEIGHT_CLASS_NORMAL
@@ -328,7 +328,7 @@
 	armor_pen = 35
 	hitcost = 1000
 	throw_hit_chance = 10
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BACK
 	cooldown_duration = 7 SECONDS //It's a little on the weak side
 	status_duration = 3 //Slows someone for a tiny bit
 	var/obj/item/assembly/igniter/sparkler

@@ -76,7 +76,7 @@
 			item_module.screen_loc = inv3.screen_loc
 
 	held_items[module_num] = item_module
-	item_module.equipped(src, ITEM_SLOT_HANDS)
+	item_module.equipped(src, INV_VIRTUALSLOT_IN_HANDS)
 	item_module.mouse_opacity = initial(item_module.mouse_opacity)
 	item_module.layer = ABOVE_HUD_LAYER
 	item_module.plane = ABOVE_HUD_PLANE

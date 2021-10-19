@@ -636,7 +636,7 @@
 	icon_state = "matchbox"
 	item_state = "zippo"
 	w_class = WEIGHT_CLASS_TINY
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	custom_price = PRICE_REALLY_CHEAP
 
 /obj/item/storage/box/matches/ComponentInitialize()

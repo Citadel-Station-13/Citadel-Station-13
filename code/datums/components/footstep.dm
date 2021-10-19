@@ -121,7 +121,7 @@
 				return
 		special = TRUE
 	else
-		var/feetCover = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) || (H.w_uniform && (H.w_uniform.body_parts_covered & FEET) || (H.shoes && (H.shoes.body_parts_covered & FEET)))
+		var/feetCover = (H.wear_suit && (H.wear_suit.inv_cover & FEET)) || (H.w_uniform && (H.w_uniform.inv_cover & FEET) || (H.shoes && (H.shoes.inv_cover & FEET)))
 		if(feetCover) //are we wearing shoes
 			playsound(T, pick(GLOB.footstep[T.footstep][1]),
 				GLOB.footstep[T.footstep][2] * volume,

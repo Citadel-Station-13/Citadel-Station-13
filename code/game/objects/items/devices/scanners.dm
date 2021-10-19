@@ -25,7 +25,7 @@ GENETICS SCANNER
 	icon = 'icons/obj/device.dmi'
 	icon_state = "t-ray0"
 	var/on = FALSE
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -81,7 +81,7 @@ GENETICS SCANNER
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	throwforce = 3
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
@@ -590,7 +590,7 @@ GENETICS SCANNER
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -863,7 +863,7 @@ GENETICS SCANNER
 	desc = "A hand-held body scanner able to detect nanites and their programming."
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	throwforce = 3
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
@@ -889,7 +889,7 @@ GENETICS SCANNER
 	desc = "A hand-held scanner for analyzing someones gene sequence on the fly. Hold near a DNA console to update the internal database."
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	throwforce = 3
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3

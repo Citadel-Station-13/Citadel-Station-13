@@ -19,7 +19,7 @@
 	desc = "It's a blue jumpskirt with some gold markings denoting the rank of \"Captain\"."
 	icon_state = "captain_skirt"
 	item_state = "b_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -36,7 +36,7 @@
 	desc = "A green suitskirt and yellow necktie. Exemplifies authority."
 	icon_state = "green_suit_skirt"
 	item_state = "dg_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON

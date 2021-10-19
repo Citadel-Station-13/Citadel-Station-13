@@ -118,7 +118,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "towel"
 	item_state = "towel"
-	slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_BELT | ITEM_SLOT_OCLOTHING
+	slot_flags = SLOT_FLAG_HEAD | SLOT_FLAG_BELT | SLOT_FLAG_SUIT
 	item_flags = NOBLUDGEON | NO_UNIFORM_REQUIRED //so it can be worn on the belt slot even with no uniform.
 	force = 1
 	w_class = WEIGHT_CLASS_NORMAL
@@ -151,16 +151,16 @@
 	. = ..()
 	switch(slot)
 		if(SLOT_BELT)
-			body_parts_covered = GROIN|LEGS
+			inv_cover = GROIN|LEGS
 		if(SLOT_WEAR_SUIT)
-			body_parts_covered = CHEST|GROIN|LEGS
+			inv_cover = CHEST|GROIN|LEGS
 		if(SLOT_HEAD)
-			body_parts_covered = HEAD
+			inv_cover = HEAD
 			flags_inv = HIDEHAIR
 
 /obj/item/reagent_containers/rag/towel/dropped(mob/user)
 	. = ..()
-	body_parts_covered = NONE
+	inv_cover = NONE
 	flags_inv = NONE
 
 /obj/item/reagent_containers/rag/towel/attack_self(mob/user)

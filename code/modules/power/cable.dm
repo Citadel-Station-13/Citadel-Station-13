@@ -506,7 +506,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=5)
 	flags_1 = CONDUCT_1
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
 	full_w_class = WEIGHT_CLASS_SMALL

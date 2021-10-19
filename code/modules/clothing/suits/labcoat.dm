@@ -4,7 +4,7 @@
 	icon_state = "labcoat"
 	item_state = "labcoat"
 	blood_overlay_type = "coat"
-	body_parts_covered = CHEST|ARMS
+	inv_cover = CHEST|ARMS
 	allowed = list(
 		/obj/item/analyzer,
 		/obj/item/stack/medical,

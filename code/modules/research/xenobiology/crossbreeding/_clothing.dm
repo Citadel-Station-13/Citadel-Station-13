@@ -10,7 +10,7 @@ Slimecrossing Armor
 	desc = "A transparent mask, resembling a conventional breath mask, but made of bluish slime. Seems to lack any air supply tube, though."
 	icon_state = "slime"
 	item_state = "slime"
-	body_parts_covered = NONE
+	inv_cover = NONE
 	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0
 	permeability_coefficient = 0.5
@@ -100,8 +100,8 @@ Slimecrossing Armor
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "peaceflower"
 	item_state = "peaceflower"
-	slot_flags = ITEM_SLOT_HEAD
-	body_parts_covered = NONE
+	slot_flags = SLOT_FLAG_HEAD
+	inv_cover = NONE
 	dynamic_hair_suffix = ""
 	force = 0
 	throwforce = 0

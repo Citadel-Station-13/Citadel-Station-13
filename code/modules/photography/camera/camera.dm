@@ -13,7 +13,7 @@
 	light_power = FLASH_LIGHT_POWER
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
-	slot_flags = ITEM_SLOT_NECK
+	slot_flags = SLOT_FLAG_NECK
 	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 150)
 	custom_price = PRICE_NORMAL
 	var/flash_enabled = TRUE

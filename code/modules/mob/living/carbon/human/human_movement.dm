@@ -99,7 +99,7 @@
 	return ..()
 
 /mob/living/carbon/human/proc/dirt_buildup(strength = 1)
-	if(!shoes || !(shoes.body_parts_covered & FEET))
+	if(!shoes || !(shoes.inv_cover & FEET))
 		return	// barefoot advantage
 	var/turf/open/T = loc
 	if(!istype(T) || !T.dirt_buildup_allowed)

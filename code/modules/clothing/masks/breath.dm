@@ -3,7 +3,7 @@
 	name = "breath mask"
 	icon_state = "breath"
 	item_state = "m_mask"
-	body_parts_covered = 0
+	inv_cover = 0
 	clothing_flags = ALLOWINTERNALS
 	visor_flags = ALLOWINTERNALS
 	w_class = WEIGHT_CLASS_SMALL

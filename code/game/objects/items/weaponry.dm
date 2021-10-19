@@ -3,7 +3,7 @@
 	name = "banhammer"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "toyhammer"
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	throwforce = 0
 	force = 1
 	w_class = WEIGHT_CLASS_TINY
@@ -38,7 +38,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	item_state = "sord"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	force = 2
 	throwforce = 1
 	w_class = WEIGHT_CLASS_NORMAL
@@ -59,7 +59,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	flags_1 = CONDUCT_1
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BELT | SLOT_FLAG_BACK
 	force = 40
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
@@ -241,7 +241,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BELT | SLOT_FLAG_BACK
 	force = 40
 	throwforce = 10
 	w_class = WEIGHT_CLASS_HUGE
@@ -311,7 +311,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	item_state = "bokken"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BELT | SLOT_FLAG_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10 //how much harm mode damage we do
 	var/stamina_damage_increment = 5 //how much extra damage do we do when in non-harm mode
@@ -447,7 +447,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A space-Japanese training sword made of wood and shaped like a wakizashi."
 	icon_state = "wakibokken"
 	item_state = "wakibokken"
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
 	stamina_damage_increment = 4
@@ -1280,7 +1280,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = SHARP_EDGED
 	attack_verb = list("cut", "sliced", "diced")
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BACK
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/wielded = FALSE // track wielded status on item
 

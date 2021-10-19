@@ -723,7 +723,7 @@
 	var/list/tally = list()
 	for(var/obj/item/I in get_equipped_items())
 		for(var/zone in target_zones)
-			if(I.body_parts_covered & zone)
+			if(I.inv_cover & zone)
 				tally["[zone]"] = max(1 - I.permeability_coefficient, target_zones["[zone]"])
 	var/protection = 0
 	for(var/key in tally)

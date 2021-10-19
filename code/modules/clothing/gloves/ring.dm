@@ -6,7 +6,7 @@
 	icon = 'icons/obj/ring.dmi'
 	icon_state = "ringgold"
 	item_state = "gring"
-	body_parts_covered = 0
+	inv_cover = 0
 	attack_verb = list("proposed")
 	transfer_prints = TRUE
 	strip_delay = 40

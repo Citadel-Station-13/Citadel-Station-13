@@ -4,7 +4,7 @@
 	icon_state = "magrifle"
 	item_state = "arg"
 	force = 10
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = SLOT_FLAG_BACK
 	mag_type = /obj/item/ammo_box/magazine/mmag
 	fire_sound = 'sound/weapons/magrifle.ogg'
 	can_suppress = FALSE
@@ -80,7 +80,7 @@
 	desc = "A handgun utilizing maglev technologies to propel a ferromagnetic slug to extreme velocities."
 	icon_state = "magpistol"
 	w_class = WEIGHT_CLASS_NORMAL
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	fire_sound = 'sound/weapons/magpistol.ogg'
 	mag_type = /obj/item/ammo_box/magazine/mmag/small
 	fire_delay = 2

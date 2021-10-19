@@ -125,7 +125,7 @@
 	name = initial(name) // remove "tattered" or "shredded" if there's a prefix
 	if(upgrade_prefix)
 		name = upgrade_prefix + " " + initial(name)
-	body_parts_covered = initial(body_parts_covered)
+	inv_cover = initial(inv_cover)
 	slot_flags = initial(slot_flags)
 	damage_by_parts = null
 	if(user)
@@ -146,9 +146,9 @@
   * * armour_penetration: If the attack had armour_penetration
   */
 /obj/item/clothing/proc/take_damage_zone(def_zone, damage_amount, damage_type, armour_penetration)
-	if(!def_zone || !limb_integrity || (initial(body_parts_covered) in GLOB.bitflags)) // the second check sees if we only cover one bodypart anyway and don't need to bother with this
+	if(!def_zone || !limb_integrity || (initial(inv_cover) in GLOB.bitflags)) // the second check sees if we only cover one bodypart anyway and don't need to bother with this
 		return
-	var/list/covered_limbs = body_parts_covered2organ_names(body_parts_covered) // what do we actually cover?
+	var/list/covered_limbs = inv_cover2organ_names(inv_cover) // what do we actually cover?
 	if(!(def_zone in covered_limbs))
 		return
 
@@ -170,7 +170,7 @@
   * * damage_type: Only really relevant for the verb for describing the breaking, and maybe obj_destruction()
   */
 /obj/item/clothing/proc/disable_zone(def_zone, damage_type)
-	var/list/covered_limbs = body_parts_covered2organ_names(body_parts_covered)
+	var/list/covered_limbs = inv_cover2organ_names(inv_cover)
 	if(!(def_zone in covered_limbs))
 		return
 
@@ -183,10 +183,10 @@
 		RegisterSignal(C, COMSIG_MOVABLE_MOVED, .proc/bristle)
 
 	zones_disabled++
-	for(var/i in zone2body_parts_covered(def_zone))
-		body_parts_covered &= ~i
+	for(var/i in zone2inv_cover(def_zone))
+		inv_cover &= ~i
 
-	if(body_parts_covered == NONE) // if there are no more parts to break then the whole thing is kaput
+	if(inv_cover == NONE) // if there are no more parts to break then the whole thing is kaput
 		obj_destruction((damage_type == BRUTE ? "melee" : "laser")) // melee/laser is good enough since this only procs from direct attacks anyway and not from fire/bombs
 		return
 
@@ -221,7 +221,7 @@
 	..()
 	if (!istype(user))
 		return
-	if(slot_flags & slotdefine2slotbit(slot)) //Was equipped to a valid slot for this item?
+	if(slot_flags & inv_slot_to_flag(slot)) //Was equipped to a valid slot for this item?
 		if(iscarbon(user) && LAZYLEN(zones_disabled))
 			RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/bristle)
 		if(LAZYLEN(user_vars_to_edit))
@@ -325,7 +325,7 @@ BLIND     // can't see anything
 		deconstruct(FALSE)
 	else if(!(damage_flag in list("acid", "fire")))
 		damaged_clothes = CLOTHING_SHREDDED
-		body_parts_covered = NONE
+		inv_cover = NONE
 		name = "shredded [initial(name)]"
 		update_clothes_damaged_state(CLOTHING_SHREDDED)
 		if(ismob(loc))

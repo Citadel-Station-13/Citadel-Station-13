@@ -32,8 +32,8 @@
 
 	TEST_ASSERT_EQUAL((sugarcookie in test_tray.contents), TRUE, "The sugarcookie did not get picked up by the serving tray")
 
-	human.equip_to_slot(jumpsuit, ITEM_SLOT_ICLOTHING)
-	TEST_ASSERT(human.get_item_by_slot(ITEM_SLOT_ICLOTHING), "Human does not have jumpsuit on")
+	human.equip_to_slot(jumpsuit, SLOT_FLAG_UNIFORM)
+	TEST_ASSERT(human.get_item_by_slot(SLOT_FLAG_UNIFORM), "Human does not have jumpsuit on")
 
 	human.equip_to_slot(test_tray, ITEM_SLOT_LPOCKET)
 	TEST_ASSERT(human.get_item_by_slot(ITEM_SLOT_LPOCKET), "Serving tray failed to fit in the Left Pocket")

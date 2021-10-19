@@ -27,8 +27,8 @@
 	throw_range = 1
 	throw_speed = 1
 	pressure_resistance = 0
-	slot_flags = ITEM_SLOT_HEAD
-	body_parts_covered = HEAD
+	slot_flags = SLOT_FLAG_HEAD
+	inv_cover = HEAD
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 	dog_fashion = /datum/dog_fashion/head

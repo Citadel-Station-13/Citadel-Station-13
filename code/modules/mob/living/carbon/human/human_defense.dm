@@ -30,7 +30,7 @@
 			continue
 		if(istype(bp, /obj/item/clothing))
 			var/obj/item/clothing/C = bp
-			if(C.body_parts_covered & def_zone.body_part)
+			if(C.inv_cover & def_zone.body_part)
 				protection += C.armor.getRating(d_type)
 	protection += physiology.armor.getRating(d_type)
 	return protection
@@ -44,7 +44,7 @@
 			continue
 		if(bp && istype(bp , /obj/item/clothing))
 			var/obj/item/clothing/C = bp
-			if(C.body_parts_covered & def_zone.body_part)
+			if(C.inv_cover & def_zone.body_part)
 				covering_part += C
 	return covering_part
 
@@ -488,9 +488,9 @@
 		var/obj/item/clothing/arm_clothes = null
 		if(gloves)
 			arm_clothes = gloves
-		if(w_uniform && ((w_uniform.body_parts_covered & HANDS) || (w_uniform.body_parts_covered & ARMS)))
+		if(w_uniform && ((w_uniform.inv_cover & HANDS) || (w_uniform.inv_cover & ARMS)))
 			arm_clothes = w_uniform
-		if(wear_suit && ((wear_suit.body_parts_covered & HANDS) || (wear_suit.body_parts_covered & ARMS)))
+		if(wear_suit && ((wear_suit.inv_cover & HANDS) || (wear_suit.inv_cover & ARMS)))
 			arm_clothes = wear_suit
 
 		if(arm_clothes)
@@ -515,9 +515,9 @@
 		var/obj/item/clothing/leg_clothes = null
 		if(shoes)
 			leg_clothes = shoes
-		if(w_uniform && ((w_uniform.body_parts_covered & FEET) || (bodyzone_hit != "feet" && (w_uniform.body_parts_covered & LEGS))))
+		if(w_uniform && ((w_uniform.inv_cover & FEET) || (bodyzone_hit != "feet" && (w_uniform.inv_cover & LEGS))))
 			leg_clothes = w_uniform
-		if(wear_suit && ((wear_suit.body_parts_covered & FEET) || (bodyzone_hit != "feet" && (wear_suit.body_parts_covered & LEGS))))
+		if(wear_suit && ((wear_suit.inv_cover & FEET) || (bodyzone_hit != "feet" && (wear_suit.inv_cover & LEGS))))
 			leg_clothes = wear_suit
 		if(leg_clothes)
 			if(!(leg_clothes.resistance_flags & UNACIDABLE))
@@ -892,9 +892,9 @@
 		var/obj/item/clothing/arm_clothes = null
 		if(gloves)
 			arm_clothes = gloves
-		if(w_uniform && ((w_uniform.body_parts_covered & HANDS) || (w_uniform.body_parts_covered & ARMS)))
+		if(w_uniform && ((w_uniform.inv_cover & HANDS) || (w_uniform.inv_cover & ARMS)))
 			arm_clothes = w_uniform
-		if(wear_suit && ((wear_suit.body_parts_covered & HANDS) || (wear_suit.body_parts_covered & ARMS)))
+		if(wear_suit && ((wear_suit.inv_cover & HANDS) || (wear_suit.inv_cover & ARMS)))
 			arm_clothes = wear_suit
 		if(arm_clothes)
 			torn_items |= arm_clothes
@@ -904,9 +904,9 @@
 		var/obj/item/clothing/leg_clothes = null
 		if(shoes)
 			leg_clothes = shoes
-		if(w_uniform && ((w_uniform.body_parts_covered & FEET) || (w_uniform.body_parts_covered & LEGS)))
+		if(w_uniform && ((w_uniform.inv_cover & FEET) || (w_uniform.inv_cover & LEGS)))
 			leg_clothes = w_uniform
-		if(wear_suit && ((wear_suit.body_parts_covered & FEET) || (wear_suit.body_parts_covered & LEGS)))
+		if(wear_suit && ((wear_suit.inv_cover & FEET) || (wear_suit.inv_cover & LEGS)))
 			leg_clothes = wear_suit
 		if(leg_clothes)
 			torn_items |= leg_clothes

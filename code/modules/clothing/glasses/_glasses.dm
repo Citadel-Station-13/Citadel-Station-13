@@ -4,7 +4,7 @@
 	icon = 'icons/obj/clothing/glasses.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags_cover = GLASSESCOVERSEYES
-	slot_flags = ITEM_SLOT_EYES
+	slot_flags = SLOT_FLAG_EYES
 	strip_delay = 20
 	equip_delay_other = 25
 	resistance_flags = NONE
@@ -556,7 +556,7 @@
 
 /obj/item/clothing/glasses/debug/equipped(mob/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_EYES)
+	if(slot != SLOT_FLAG_EYES)
 		return
 	if(ishuman(user))
 		for(var/hud in hudlist)

@@ -129,7 +129,7 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 		L = get_equipped_items()
 	for(var/A in L)
 		var/obj/item/I = A
-		if(I.body_parts_covered & GROIN)
+		if(I.inv_cover & GROIN)
 			return FALSE
 	return TRUE
 
@@ -138,7 +138,7 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 		L = get_equipped_items()
 	for(var/A in L)
 		var/obj/item/I = A
-		if(I.body_parts_covered & CHEST)
+		if(I.inv_cover & CHEST)
 			return FALSE
 	return TRUE
 

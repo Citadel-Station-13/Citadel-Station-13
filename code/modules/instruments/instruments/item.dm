@@ -223,7 +223,7 @@
 	icon_state = "harmonica"
 	item_state = "harmonica"
 	allowed_instrument_ids = "harmonica"
-	slot_flags = ITEM_SLOT_MASK
+	slot_flags = SLOT_FLAG_MASK
 	force = 5
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/instrument)
@@ -270,7 +270,7 @@
 	desc = "A device for tuning musical instruments both manual and electronic alike."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "musicaltuner"
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'

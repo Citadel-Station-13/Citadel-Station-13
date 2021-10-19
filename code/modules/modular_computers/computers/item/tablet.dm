@@ -11,7 +11,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	max_bays = 3
 	steel_sheet_cost = 1
-	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_ID | SLOT_FLAG_BELT
 	has_light = TRUE //LED flashlight!
 	comp_light_luminosity = 2.3 //Same as the PDA
 	looping_sound = FALSE
@@ -95,7 +95,7 @@
 	icon_state_powered = "tablet"
 	icon_state_menu = "assign"
 	w_class = WEIGHT_CLASS_SMALL
-	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
+	slot_flags = SLOT_FLAG_ID | SLOT_FLAG_BELT
 	comp_light_luminosity = 6.3
 	has_variants = FALSE
 

@@ -3,7 +3,7 @@
 	desc = "Why trade style for comfort? Now you can go commando down south and still be cozy up north."
 	icon_state = "bb_turtle"
 	item_state = "w_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	inv_cover = CHEST|GROIN|ARMS
 	can_adjust = TRUE
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
