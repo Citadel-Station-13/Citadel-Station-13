@@ -36,6 +36,9 @@
 #define FIELD_OF_VISION_VISUAL_PLANE -2 //Yea, FoV does require quite a few planes to work with 513 filters to a decent degree.
 #define FIELD_OF_VISION_VISUAL_RENDER_TARGET "FIELD_OF_VISION_VISUAL_PLANE"
 
+///Popup Chat Messages
+#define BALLOON_CHAT_PLANE -1.5
+
 #define CHAT_PLANE -1 //We don't want heard messages to be hidden by FoV.
 
 #define CHAT_LAYER 12.0001 // Do not insert layers between these two values

@@ -7,7 +7,10 @@
 	antag_hud_name = "synd"
 	antag_moodlet = /datum/mood_event/focused
 	var/datum/team/starfuryop/sbccrew
-	can_hijack = HIJACK_HIJACKER
+	hijack_speed = 0.5
+
+/datum/antagonist/starfuryop/hijack_speed()
+	return hijack_speed
 
 /datum/antagonist/starfuryop/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current

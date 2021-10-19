@@ -122,6 +122,7 @@
 	new /obj/item/weldingtool/experimental/brass(src)
 	new /obj/item/multitool/advanced/brass(src)
 	new /obj/item/stack/cable_coil(src, 30, "yellow")
+
 /obj/item/storage/belt/utility/syndicate/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
 	new /obj/item/wrench/combat(src)
@@ -129,7 +130,6 @@
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
-	new /obj/item/inducer/syndicate(src)
 
 /obj/item/storage/belt/medical
 	name = "medical belt"

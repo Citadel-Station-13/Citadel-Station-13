@@ -463,7 +463,6 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/red
 	hud_type = DATA_HUD_SECURITY_ADVANCED
-	hud_trait = TRAIT_SECURITY_HUD
 
 /obj/item/clothing/glasses/cold
 	name = "cold goggles"

@@ -594,9 +594,23 @@
 #define COMSIG_TRY_STORAGE_RETURN_INVENTORY "storage_return_inventory"	//(list/list_to_inject_results_into, recursively_search_inside_storages = TRUE)
 #define COMSIG_TRY_STORAGE_CAN_INSERT "storage_can_equip"			//(obj/item/insertion_candidate, mob/user, silent) - returns bool
 
+// /datum/component/transforming signals
+
+/// From /datum/component/transforming/proc/on_attack_self(obj/item/source, mob/user): (obj/item/source, mob/user, active)
+#define COMSIG_TRANSFORMING_PRE_TRANSFORM "transforming_pre_transform"
+	/// Return COMPONENT_BLOCK_TRANSFORM to prevent the item from transforming.
+	#define COMPONENT_BLOCK_TRANSFORM (1<<0)
+/// From /datum/component/transforming/proc/do_transform(obj/item/source, mob/user): (obj/item/source, mob/user, active)
+#define COMSIG_TRANSFORMING_ON_TRANSFORM "transforming_on_transform"
+	/// Return COMPONENT_NO_DEFAULT_MESSAGE to prevent the transforming component from displaying the default transform message / sound.
+	#define COMPONENT_NO_DEFAULT_MESSAGE (1<<0)
+
 // /datum/component/two_handed signals
-#define COMSIG_TWOHANDED_WIELD "twohanded_wield"						//from base of datum/component/two_handed/proc/wield(mob/living/carbon/user): (/mob/user)
+
+///from base of datum/component/two_handed/proc/wield(mob/living/carbon/user): (/mob/user)
+#define COMSIG_TWOHANDED_WIELD "twohanded_wield"
 	#define COMPONENT_TWOHANDED_BLOCK_WIELD 1
+///from base of datum/component/two_handed/proc/unwield(mob/living/carbon/user): (/mob/user)
 #define COMSIG_TWOHANDED_UNWIELD "twohanded_unwield"					//from base of datum/component/two_handed/proc/unwield(mob/living/carbon/user): (/mob/user)
 
 // /datum/component/squeak signals
