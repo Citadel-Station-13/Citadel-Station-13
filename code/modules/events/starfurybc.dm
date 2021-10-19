@@ -49,10 +49,10 @@
 /datum/round_event/ghost_role/starfurybc/proc/spawn_shuttle()
 	shuttle_spawned = TRUE
 
-	var/list/candidates = pollGhostCandidates("Do you wish to be considered for syndicate battlecruiser crew?", ROLE_TRAITOR)
+	var/list/candidates = pollGhostCandidates("Do you wish to be considered for syndicate battlecruiser crew?", ROLE_OPERATIVE)
 	shuffle_inplace(candidates)
 	if(candidates.len < minimum_required)
-		deadchat_broadcast("Starfury Battle Cruiser event did not get enough candidates ([minimum_required]) to spawn.", message_type=DEADCHAT_ANNOUNCEMENT)
+		deadchat_broadcast("Starfury Battle Cruiser event did not get enough candidates ([minimum_required]) to spawn.")
 		return NOT_ENOUGH_PLAYERS
 
 	var/datum/map_template/shuttle/syndifury/starfury/ship = new
@@ -77,7 +77,7 @@
 				announce_to_ghosts(spawner)
 
 	sleep(announcetime)
-	priority_announce("Syndicate Battle Cruiser has been found near the station's sector, brace for impact.", sound = 'sound/machines/alarm.ogg')
+	priority_announce("A Syndicate Battle Cruiser has been found near the station's sector, brace for impact.", sound = 'sound/machines/alarm.ogg')
 
 /obj/machinery/computer/shuttle/starfurybc
 	name = "battle cruiser console"
