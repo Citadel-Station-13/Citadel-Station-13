@@ -36,9 +36,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	//Dimensions of the icon file used when this item is worn, eg: hats.dmi
 	//eg: 32x32 sprite, 64x64 sprite, etc.
-	//allows inhands/worn sprites to be of any size, but still centered on a mob properly
-	var/worn_x_dimension = 32
-	var/worn_y_dimension = 32
 	//Same as above but for inhands, uses the lefthand_ and righthand_ file vars
 	var/inhand_x_dimension = 32
 	var/inhand_y_dimension = 32
@@ -83,7 +80,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	//Citadel Edit for digitigrade stuff
 	var/mutantrace_variation = NONE //Are there special sprites for specific situations? Don't use this unless you need to.
 
-	var/inv_cover = 0 //see setup.dm for appropriate bit flags
+	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
+	var/gas_transfe	var/inv_cover = 0 //see setup.dm for appropriate bit flags
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
@@ -771,32 +769,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(flags & SLOT_FLAG_BACK)
 		owner.update_inv_back()
 	if(flags & SLOT_FLAG_NECK)
-		owner.update_inv_neck()
-
-/obj/item/proc/get_temperature()
-	return heat
-
-/obj/item/proc/get_sharpness()
-	return sharpness
-
-/obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
-	if(affecting.can_dismember(src))
-		if((sharpness || damtype == BURN) && w_class >= WEIGHT_CLASS_NORMAL && force >= 10)
-			. = force * (affecting.get_damage() / affecting.max_damage)
-
-/obj/item/proc/get_dismember_sound()
-	if(damtype == BURN)
-		. = 'sound/weapons/sear.ogg'
-	else
-		. = pick('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
-
-/obj/item/proc/open_flame(flame_heat=700)
-	var/turf/location = loc
-	if(ismob(location))
-		var/mob/M = location
-		var/success = FALSE
-		if(src == M.get_item_by_slot(SLOT_WEAR_MASK))
-			success = TRUE
+s = TRUE
 		if(success)
 			location = get_turf(M)
 	if(isturf(location))

@@ -45,3 +45,7 @@
 /datum/inventory_slot_meta/right_pocket
 	name = "right pocket"
 	icon_state = "pocket"
+
+/datum/inventory_slot_meta/back
+	name = "back"
+	icon_state = "back"

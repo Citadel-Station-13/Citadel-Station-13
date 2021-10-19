@@ -42,6 +42,14 @@ GLOBAL_LIST_EMPTY(inventory_slot_meta)
 	/// are we an "abstract" slot? These aren't ever shown to the player. Set to FALSE for those.
 	var/is_inventory = TRUE
 
+	// Rendering
+	/// default icon for new rendering system - should realistically never be used because the whole point of the new system is items define this
+	var/default_onmob_icon
+	/// default icon for old rendering system - used for legacy behavior
+	var/legacy_onmob_icon
+	/// default relative layer on the mob - in terms of MOB LAYERS, not GAME LAYERS.
+	var/onmob_layer
+
 /datum/inventory_slot_meta/New(id)
 	src.id = id
 	if(isnull(src.id))

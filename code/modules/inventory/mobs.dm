@@ -76,6 +76,14 @@
  * - warnings - list of reasons why it didn't work if we're not forcing it
  */
 /mob/proc/equip_to_slot(obj/item/I, slot, force = FALSE, delete_old_item = FALSE, list/warnings)
+	switch(slot)
+		if(INV_VIRTUALSLOT_IN_BACKPACK)
+
+		if(INV_VIRTUALSLOT_IN_BELT)
+
+		if(INV_VIRTUALSLOT_IN_HANDS)
+
+		if(INV_VIRTUALSLOT_IN_POCKETS)
 	EnsureInventory()
 	inventory?.EquipToSlot(I, slot, force, delete_old_item, warnings)
 
@@ -94,6 +102,7 @@
  * Grabs an item from slot
  */
 /mob/proc/unequip_from_slot(slot, force = FALSE, atom/new_location = drop_location(), list/warnings)
+
 	EnsureInventory()
 	inventory?.UnequipFromSlot(slot, force, new_location, warnings)
 

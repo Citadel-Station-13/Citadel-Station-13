@@ -23,7 +23,8 @@
  * Can we unequip an item?
  */
 /datum/inventory/proc/CanUnequip(obj/item/I, mob/user, list/warnings)
-	if(!(I in holding))
+	var/index = IndexItem(I)
+	if(!index)
 		CRASH("Asked if we can unequip an item we don't have")
 
 /**
@@ -35,3 +36,15 @@
 		if(!include_abstract && !slot.is_inventory)
 			continue
 		UnequipFromSlot(i, null, force, new_location)
+
+/**
+ * Do we have an item?
+ */
+/datum/inventory/proc/HasItem(obj/item/I)
+	return (I in holding)
+
+/**
+ * Find index of item
+ */
+/datum/inventory/proc/IndexItem(obj/item/I)
+	return holding.Find(I)
