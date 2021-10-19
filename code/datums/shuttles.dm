@@ -186,8 +186,8 @@
 	can_be_bought = FALSE
 	suffix = "taxi"
 
-/datum/map_template/shuttle/syndicate //Battle Cruiser event shuttles
-	port_id = "syndicate"
+/datum/map_template/shuttle/syndifury //Starfury Battle Cruiser event shuttles
+	port_id = "syndifury"
 	can_be_bought = FALSE
 
 // Shuttles start here:
@@ -736,10 +736,14 @@
 	suffix = "excavation"
 	name = "Snowdin Excavation Elevator"
 
-/datum/map_template/shuttle/syndicate/starfury
+/datum/map_template/shuttle/syndifury/starfury
 	suffix = "starfury"
 	name = "Syndicate Battle Cruiser"
 
-/datum/map_template/shuttle/syndicate/sbcfighter
+/datum/map_template/shuttle/syndifury/sbcfighter
 	suffix = "sbcfighter"
 	name = "Syndicate Fighter"
+
+/datum/map_template/shuttle/syndifury/sbccorvette
+	suffix = "sbccorvette"
+	name = "Syndicate Corvette"
