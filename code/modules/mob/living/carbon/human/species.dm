@@ -724,11 +724,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(hair_overlay.icon)
 			standing += hair_overlay
 
-	H.full_appearance.appearance_list[MISC_APPEARANCE].add_data(hair_overlay, num2text(-HAIR_LAYER))
+	H.full_appearance.appearance_list[MISC_APPEARANCE].add_data(standing, num2text(-HAIR_LAYER))
 
-/datum/species/proc/handle_body(mob/living/carbon/human/H)
+/datum/species/proc/update_lips(mob/living/carbon/human/H)
 	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(LIPS_APPEARANCE))
-
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 
 	if(HD && !(HAS_TRAIT(H, TRAIT_HUSK)))
@@ -743,10 +742,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 			H.full_appearance.appearance_list[MISC_APPEARANCE].add_data(lip_overlay, LIPS_APPEARANCE)
 
-		// eyes
-		update_eyes()
-
-	//Underwear, Undershirts & Socks
+/datum/species/proc/update_socks(mob/living/carbon/human/H)
 	if(!(NO_UNDERWEAR in species_traits))
 		var/datum/sprite_accessory/taur/TA
 		if(mutant_bodyparts["taur"] && H.dna.features["taur"])
@@ -763,6 +759,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					MA.color = "#[H.socks_color]"
 				H.full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(MA, SOCKS_APPEARANCE)
 
+/datum/species/proc/update_underwear(mob/living/carbon/human/H)
+	if(!(NO_UNDERWEAR in species_traits))
 		if(H.underwear && !H.hidden_underwear)
 			if(H.saved_underwear)
 				H.underwear = H.saved_underwear
@@ -775,6 +773,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					MA.color = "#[H.undie_color]"
 				H.full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(MA, UNDERWEAR_APPEARANCE)
 
+/datum/species/proc/update_undershirt(mob/living/carbon/human/H)
+	if(!(NO_UNDERWEAR in species_traits))
 		if(H.undershirt && !H.hidden_undershirt)
 			if(H.saved_undershirt)
 				H.undershirt = H.saved_undershirt
@@ -791,11 +791,16 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					MA.color = "#[H.shirt_color]"
 				H.full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(MA, UNDERSHIRT_APPEARANCE)
 
+/datum/species/proc/handle_body(mob/living/carbon/human/H)
+	update_lips(H)
+	H.update_eyes()
+	update_socks(H)
+	update_underwear(H)
+	update_undershirt(H)
 	handle_mutant_bodyparts(H)
 
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
-
 
 	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(-BODY_BEHIND_LAYER))
 	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(-BODY_ADJ_LAYER))

@@ -46,7 +46,7 @@
 		full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(FIRE_LAYER))
 
 /mob/living/carbon/update_damage_overlays()
-	remove_overlay(DAMAGE_LAYER)
+	full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(-DAMAGE_LAYER))
 	var/dam_colors = "#E62525"
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -169,47 +169,6 @@
 
 /mob/living/carbon/update_body()
 	update_body_parts()
-
-/mob/living/carbon/proc/update_body_parts()
-	//CHECK FOR UPDATE
-	var/oldkey = icon_render_key
-	icon_render_key = generate_icon_render_key()
-	if(oldkey == icon_render_key)
-		return
-
-	remove_overlay(BODYPARTS_LAYER)
-
-	var/is_taur = FALSE
-	if(dna?.species.mutant_bodyparts["taur"])
-		var/datum/sprite_accessory/taur/T = GLOB.taur_list[dna.features["taur"]]
-		if(T?.hide_legs)
-			is_taur = TRUE
-
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		BP.update_limb()
-
-	//LOAD ICONS
-	if(limb_icon_cache[icon_render_key])
-		load_limb_from_cache()
-		return
-
-	//GENERATE NEW LIMBS
-	var/static/list/leg_day = typecacheof(list(/obj/item/bodypart/r_leg, /obj/item/bodypart/l_leg))
-	var/list/new_limbs = list()
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		if(is_taur && leg_day[BP.type])
-			continue
-		new_limbs += BP.get_limb_icon()
-	if(new_limbs.len)
-		full_appearance.appearance_list[BODYPART_APPEARANCE].add_data(
-		limb_icon_cache[icon_render_key] = new_limbs
-
-	apply_overlay(BODYPARTS_LAYER)
-	update_damage_overlays()
-
-
 
 /////////////////////
 // Limb Icon Cache //

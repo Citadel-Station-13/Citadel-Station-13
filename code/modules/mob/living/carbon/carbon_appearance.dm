@@ -42,3 +42,4 @@
 /mob/living/carbon/proc/update_limbs(var/list/zones)
 	for(var/zone in zones)
 		update_limb(zone)
+	update_damage_overlays()
