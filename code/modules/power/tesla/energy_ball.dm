@@ -364,8 +364,8 @@
 				// assuming the rod is fully constructed the second part will always be a capacitor
 				var/obj/item/stock_parts/capacitor/capacitor = rod.component_parts[2]
 
-				qdel(closest_atom) // each rod removes tesla energy depending on the power of the capacitor,
 				tesla.energy = round(tesla.energy/(1 + 0.28125 * capacitor.rating))
+				qdel(closest_atom) // each rod removes tesla energy depending on the power of the capacitor,
 				// if there are no miniballs the rod stays and continues to pull the ball in
 
 	if(prob(20))//I know I know
