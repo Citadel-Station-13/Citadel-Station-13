@@ -45,6 +45,11 @@
 	return ((shoes && shoes.negates_gravity()) || (dna.species.negates_gravity(src)))
 
 /mob/living/carbon/human/Move(NewLoc, direct)
+	if(movementhell) //terrible awful worst admin smite ever made dear god this is hell
+		var/choice = alert(usr, "Are you sure you want to move?", "Confirmation", "Yes","No")
+		if(choice == "No")
+			return
+
 	var/oldpseudoheight = pseudo_z_axis
 	. = ..()
 	for(var/datum/mutation/human/HM in dna.mutations)

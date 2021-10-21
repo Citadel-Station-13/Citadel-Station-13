@@ -83,6 +83,7 @@
 #define ADMIN_PUNISHMENT_FRY "Fry"
 #define ADMIN_PUNISHMENT_PERFORATE ":B:erforate"
 #define ADMIN_PUNISHMENT_CLUWNE "Cluwne"
+#define ADMIN_PUNISHMENT_MOVEMENTHELL "Toggle Walk Confirmations (This is VERY annoying)"
 
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2

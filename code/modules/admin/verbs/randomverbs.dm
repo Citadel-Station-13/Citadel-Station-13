@@ -1336,7 +1336,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		ADMIN_PUNISHMENT_CRACK,
 		ADMIN_PUNISHMENT_BLEED,
 		ADMIN_PUNISHMENT_SCARIFY,
-		ADMIN_PUNISHMENT_CLUWNE)
+		ADMIN_PUNISHMENT_CLUWNE,
+		ADMIN_PUNISHMENT_MOVEMENTHELL
+		)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
@@ -1502,6 +1504,16 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				to_chat(usr,"<span class='warning'>[C] does not have knottable shoes!</span>")
 				return
 			sick_kicks.adjust_laces(SHOES_KNOTTED)
+		if(ADMIN_PUNISHMENT_MOVEMENTHELL)
+			if(!iscarbon(target))
+				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>")
+				return
+			if(target.movementhell)
+				target.movementhell = FALSE
+				to_chat(usr,"<span class='warning'>Turning off movement hell for [target.name].</span>")
+			else
+				target.movementhell = TRUE
+				to_chat(usr,"<span class='warning'>Turning on movement hell for [target.name].</span>")
 		if(ADMIN_PUNISHMENT_CLUWNE)
 			if(!iscarbon(target))
 				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>")

@@ -87,6 +87,7 @@
 	tooltips = TRUE
 
 	var/additional_language //the additional language this human can speak from their preference selection
+	var/movementhell = FALSE
 
 /// Unarmed parry data for human
 /datum/block_parry_data/unarmed/human
