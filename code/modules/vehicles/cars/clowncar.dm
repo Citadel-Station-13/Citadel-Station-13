@@ -238,8 +238,8 @@
 		busdriver.client.give_award(/datum/award/achievement/misc/the_best_driver, busdriver)
 
 /obj/vehicle/sealed/car/clowncar/driver_move(mob/user, direction) //Prevent it from moving onto space
-    if(isspaceturf(get_step(src, direction)))
-        return FALSE
+	if(isspaceturf(get_step(src, direction)))
+		return FALSE
 	return ..()
 
 /obj/vehicle/sealed/car/clowncar/twitch_plays
