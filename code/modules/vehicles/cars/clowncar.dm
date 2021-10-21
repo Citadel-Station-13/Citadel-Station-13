@@ -90,7 +90,7 @@
 		playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
 		log_combat(src, hittarget_living, "sucked up")
 		return
-	if(!istype(bumped, /turf/closed) || !istype(bumped, /obj/machinery/door/airlock/external))
+	if(!istype(bumped, /turf/closed) && !istype(bumped, /obj/machinery/door/airlock/external))
 		return
 	visible_message(span_warning("[src] rams into [bumped] and crashes!"))
 	playsound(src, pick('sound/vehicles/clowncar_crash1.ogg', 'sound/vehicles/clowncar_crash2.ogg'), 75)
