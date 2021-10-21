@@ -301,8 +301,8 @@
 	time = 200
 	reqs = list(/obj/item/stack/sheet/bone = 4,
 				 /obj/item/stack/sheet/sinew = 2,
-				 /obj/item/stack/sheet/animalhide/goliath_hide = 1)
-	tools = list(/obj/item/weldingtool/experimental/ashwalker, /obj/item/crowbar/ashwalker)
+				 /obj/item/stack/sheet/animalhide/goliath_hide = 2)
+	tools = list(/obj/item/weldingtool/experimental/ashwalker, /obj/item/clothing/gloves/tackler/combat/goliath)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/bone_glaive
