@@ -1,0 +1,4 @@
+author: "WanderingFox95"
+delete-after: True
+changes: 
+  - bugfix: "fixed the wielded sprites not showing up properly."
