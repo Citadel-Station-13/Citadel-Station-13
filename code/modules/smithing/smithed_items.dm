@@ -50,7 +50,7 @@
 	custom_materials = list(/datum/material/iron=12000)
 
 /obj/item/ingot/bone
-	custom_materials = list(/datum/material/bone=12000)
+	custom_materials = list(/datum/material/bone=4000)
 
 /obj/item/ingot/diamond
 	custom_materials = list(/datum/material/diamond=12000)
