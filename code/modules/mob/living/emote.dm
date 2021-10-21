@@ -389,14 +389,15 @@
 /datum/emote/living/surrender
 	key = "surrender"
 	key_third_person = "surrenders"
-	message = "puts their hands on their head and falls to the ground, they surrender!"
-	emote_type = EMOTE_AUDIBLE
+	message = "surrenders!"
 
 /datum/emote/living/surrender/run_emote(mob/user, params)
 	. = ..()
-	if(. && isliving(user))
-		var/mob/living/L = user
-		L.DefaultCombatKnockdown(200)
+	if(. && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.DefaultCombatKnockdown(amount = 800, ignore_canknockdown = TRUE)
+		H.UseStaminaBuffer(amount = H.stamina_buffer)
+		ENABLE_BITFIELD(H.combat_flags, COMBAT_FLAG_INTENTIONALLY_RESTING)
 
 /datum/emote/living/sway
 	key = "sway"

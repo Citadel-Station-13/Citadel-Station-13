@@ -320,3 +320,4 @@ EMPs can be created by mixing uranium and iron. The power of the pulse is determ
 Some lizardpeople start with an unactivated mutation that allows them to breath fire. This can be unlocked through the usage of genetics!
 Some loadout items can be unlocked through progress in parts of the game. The progress for these can be tracked in the loadout menu.
 It's easy to forget that everyone else you're playing with is a real person trying to have as much fun as you are. Be nice to your fellow spacemen.
+Want to surrender and avoid a fight? Alt+Shift+Y is the default hotkey for the *surrender emote, but be sure before you use it - you'll be helpless for a bit after you do!

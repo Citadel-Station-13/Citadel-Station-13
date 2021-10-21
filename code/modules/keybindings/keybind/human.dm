@@ -26,3 +26,15 @@
 	var/mob/living/carbon/human/H = user.mob
 	H.smart_equipbag()
 	return TRUE
+
+/datum/keybinding/human/surrender
+	hotkey_keys = list("AltShiftY")
+	name = "surrender"
+	full_name = "Surrender"
+	category = CATEGORY_COMBAT
+	description = "Briefly stuns and incapacitates you to show you're no longer a threat."
+
+/datum/keybinding/human/surrender/down(client/user)
+	. = ..()
+	var/mob/living/carbon/human/H = user.mob
+	return H.emote("surrender", intentional=TRUE)
