@@ -1,0 +1,5 @@
+author: "WanderingFox95"
+delete-after: True
+changes: 
+  - bugfix: "fixed a runtime in the bark box vendor"
+  - imageadd: "added a missing tennis ball sprite"
