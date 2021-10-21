@@ -90,7 +90,7 @@
 		playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
 		log_combat(src, hittarget_living, "sucked up")
 		return
-	if(!istype(bumped, /turf/closed))
+	if(!istype(bumped, /turf/closed) && !istype(bumped, /obj/machinery/door/airlock/external))
 		return
 	visible_message(span_warning("[src] rams into [bumped] and crashes!"))
 	playsound(src, pick('sound/vehicles/clowncar_crash1.ogg', 'sound/vehicles/clowncar_crash2.ogg'), 75)
@@ -236,6 +236,11 @@
 		return
 	for(var/mob/busdriver as anything in return_drivers())
 		busdriver.client.give_award(/datum/award/achievement/misc/the_best_driver, busdriver)
+
+/obj/vehicle/sealed/car/clowncar/driver_move(mob/user, direction) //Prevent it from moving onto space
+	if(isspaceturf(get_step(src, direction)))
+		return FALSE
+	return ..()
 
 /obj/vehicle/sealed/car/clowncar/twitch_plays
 	key_type = null
