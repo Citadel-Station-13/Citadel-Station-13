@@ -61,6 +61,12 @@
 	desc = "A Ripley APLU right leg. Contains somewhat complex servodrives and balance maintaining systems."
 	icon_state = "ripley_r_leg"
 
+
+//Firefighter
+/obj/item/mecha_parts/chassis/firefighter
+	name = "\improper Firefighter chassis"
+	construct_type = /datum/component/construction/unordered/mecha_chassis/firefighter
+
 ///////// Odysseus
 
 /obj/item/mecha_parts/chassis/odysseus
@@ -182,31 +188,6 @@
 	desc = "A set of armor plates for the Durand. Built heavy to resist an incredible amount of brute force."
 	icon_state = "durand_armor"
 
-////////// Clarke
-
-/obj/item/mecha_parts/chassis/clarke
-	name = "\improper Clarke chassis"
-	construct_type = /datum/component/construction/unordered/mecha_chassis/clarke
-
-/obj/item/mecha_parts/part/clarke_torso
-	name = "\improper Clarke torso"
-	desc = "A torso part of Clarke. Contains power unit, processing core and life support systems."
-	icon_state = "clarke_harness"
-
-/obj/item/mecha_parts/part/clarke_head
-	name = "\improper Clarke head"
-	desc = "A Clarke head. Contains an integrated diagnostic HUD scanner."
-	icon_state = "clarke_head"
-
-/obj/item/mecha_parts/part/clarke_left_arm
-	name = "\improper Clarke left arm"
-	desc = "A Clarke left arm. Data and power sockets are compatible with most exosuit tools."
-	icon_state = "clarke_l_arm"
-
-/obj/item/mecha_parts/part/clarke_right_arm
-	name = "\improper Clarke right arm"
-	desc = "A Clarke right arm. Data and power sockets are compatible with most exosuit tools."
-	icon_state = "clarke_r_arm"
 
 ////////// HONK
 

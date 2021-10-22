@@ -238,8 +238,8 @@
 		if(ismecha(the_target))
 			var/obj/vehicle/sealed/mecha/M = the_target
 			for(var/occupant in M.occupants)
-					if(CanAttack(occupant))
-						return TRUE
+				if(CanAttack(occupant))
+					return TRUE
 
 		if(istype(the_target, /obj/machinery/porta_turret))
 			var/obj/machinery/porta_turret/P = the_target

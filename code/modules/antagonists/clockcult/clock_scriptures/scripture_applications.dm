@@ -220,7 +220,7 @@
 	usage_tip = "Neovgre is a powerful mech that will crush your enemies!"
 	invokers_required = 5
 	multiple_invokers_used = TRUE
-	object_path = /obj/mecha/combat/neovgre
+	object_path = /obj/vehicle/sealed/mecha/combat/neovgre
 	tier = SCRIPTURE_APPLICATION
 	primary_component = BELLIGERENT_EYE
 	sort_priority = 8

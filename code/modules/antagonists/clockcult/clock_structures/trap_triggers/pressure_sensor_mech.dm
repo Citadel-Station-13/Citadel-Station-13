@@ -9,10 +9,10 @@
 
 /obj/structure/destructible/clockwork/trap/trigger/pressure_sensor/mech/Crossed(atom/movable/AM)
 	. = ..()
-	if(!istype(AM,/obj/mecha/))
+	if(!istype(AM,/obj/vehicle/sealed/mecha/))
 		return
 
-	var/obj/mecha/M = AM
+	var/obj/vehicle/sealed/mecha/M = AM
 	if(M.occupant && is_servant_of_ratvar(M.occupant))
 		return
 	audible_message("<i>*click*</i>")

@@ -152,8 +152,8 @@
 					category_override += "Ripley"
 				if(mech_types & EXOSUIT_MODULE_ODYSSEUS)
 					category_override += "Odysseus"
-				if(mech_types & EXOSUIT_MODULE_CLARKE)
-					category_override += "Clarke"
+				if(mech_types & EXOSUIT_MODULE_FIREFIGHTER)
+					category_override += "Firefighter"
 				if(mech_types & EXOSUIT_MODULE_GYGAX)
 					category_override += "Gygax"
 				if(mech_types & EXOSUIT_MODULE_DURAND)
@@ -349,8 +349,6 @@
   */
 /obj/machinery/mecha_part_fabricator/proc/dispense_built_part(datum/design/D)
 	var/obj/item/I = new D.build_path(src)
-	I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
-	I.set_custom_materials(build_materials)
 
 	being_built = null
 

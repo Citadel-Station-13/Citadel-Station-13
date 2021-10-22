@@ -70,6 +70,19 @@
 	enter_delay = 40
 	silicon_icon_state = null
 
+/obj/vehicle/sealed/mecha/working/ripley/firefighter
+	desc = "Autonomous Power Loader Unit MK-II-F. This model is refitted with additional thermal protection."
+	name = "\improper APLU \"Firefighter\""
+	icon_state = "firefighter"
+	movedelay = 4
+	fast_pressure_step_in = 2
+	slow_pressure_step_in = 4
+	max_temperature = 65000
+	max_integrity = 250
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 60, BIO = 0, RAD = 70, FIRE = 100, ACID = 100)
+	max_equip = 5 // More armor, less tools
+
 
 /obj/vehicle/sealed/mecha/working/ripley/deathripley
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE"

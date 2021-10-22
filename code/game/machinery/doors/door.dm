@@ -109,7 +109,7 @@
 			return
 
 	if(ismecha(AM))
-		var/obj/mecha/mecha = AM
+		var/obj/vehicle/sealed/mecha/mecha = AM
 		if(density)
 			if(mecha.occupant)
 				if(world.time - mecha.occupant.last_bumped <= 10)
@@ -362,7 +362,7 @@
 			C.bleed(DOOR_CRUSH_DAMAGE)
 		else
 			L.add_splatter_floor(location)
-	for(var/obj/mecha/M in get_turf(src))
+	for(var/obj/vehicle/sealed/mecha/M in get_turf(src))
 		M.take_damage(DOOR_CRUSH_DAMAGE)
 
 /obj/machinery/door/proc/autoclose()

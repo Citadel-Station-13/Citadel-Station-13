@@ -6,7 +6,7 @@
 	max_integrity = 300
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
 	density = TRUE
-	anchored = FALSE]
+	anchored = FALSE
 	COOLDOWN_DECLARE(cooldown_vehicle_move)
 	var/list/mob/occupants				//mob = bitflags of their control level.
 	var/max_occupants = 1

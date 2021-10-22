@@ -268,7 +268,7 @@
 	. = ..()
 	create_reagents(max_volume, NO_REACT)
 	syringes = new
-	known_reagents = list(/datum/reagent/medicine/epinephrine="Epinephrine",/datum/reagent/medicine/c2/multiver="Multiver")
+	known_reagents = list(/datum/reagent/medicine/epinephrine="Epinephrine")
 	processed_reagents = new
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/detach()
@@ -531,7 +531,6 @@
 	equip_cooldown = 0
 	var/obj/item/gun/medbeam/mech/medigun
 	custom_materials = list(/datum/material/iron = 15000, /datum/material/glass = 8000, /datum/material/plasma = 3000, /datum/material/gold = 8000, /datum/material/diamond = 2000)
-	material_flags = MATERIAL_NO_EFFECTS
 
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/Initialize()
 	. = ..()

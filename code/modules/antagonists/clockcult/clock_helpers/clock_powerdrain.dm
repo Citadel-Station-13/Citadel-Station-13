@@ -72,7 +72,7 @@ drain_amount: How much is drained by default; Influenced by a multiplier on most
 		cell.use(.)
 		spark_system.start()
 
-/obj/mecha/power_drain(clockcult_user, drain_weapons = FALSE, recursive = FALSE, drain_amount = MIN_CLOCKCULT_POWER)
+/obj/vehicle/sealed/mecha/power_drain(clockcult_user, drain_weapons = FALSE, recursive = FALSE, drain_amount = MIN_CLOCKCULT_POWER)
 	if(!clockcult_user || (occupant && !is_servant_of_ratvar(occupant)))
 		if(recursive)
 			var/succ = 0

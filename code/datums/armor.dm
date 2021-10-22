@@ -1,5 +1,18 @@
 #define ARMORID "armor-[melee]-[bullet]-[laser]-[energy]-[bomb]-[bio]-[rad]-[fire]-[acid]-[magic]-[wound]"
 
+#define MELEE "melee"
+#define BULLET "bullet"
+#define LASER "laser"
+#define ENERGY "energy"
+#define BOMB "bomb"
+#define BIO "bio"
+#define RAD "rad"
+#define FIRE "fire"
+#define ACID "acid"
+#define MAGIC "magic"
+#define WOUND "wound"
+
+
 /proc/getArmor(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0, magic = 0, wound = 0)
 	. = locate(ARMORID)
 	if (!.)

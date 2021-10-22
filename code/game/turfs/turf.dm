@@ -379,7 +379,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			continue//Will not harm U. Since null != M, can be excluded to kill everyone.
 		M.adjustBruteLoss(damage)
 		M.Unconscious(damage * 4)
-	for(var/obj/mecha/M in src)
+	for(var/obj/vehicle/sealed/mecha/M in src)
 		M.take_damage(damage*2, BRUTE, "melee", 1)
 
 /turf/proc/Bless()

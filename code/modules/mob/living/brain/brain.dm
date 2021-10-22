@@ -1,4 +1,4 @@
-	/mob/living/brain
+/mob/living/brain
 	var/obj/item/mmi/container = null
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
@@ -41,7 +41,7 @@
 	return ..()
 
 /mob/living/brain/update_mobility()
-	return ((mobility_flags = (container?.in_contents_of(obj/vehicle/sealed/mecha)? MOBILITY_FLAGS_DEFAULT : NONE)))
+	return ((mobility_flags = (container?.in_contents_of(/obj/vehicle/sealed/mecha)? MOBILITY_FLAGS_DEFAULT : NONE)))
 
 /mob/living/brain/ex_act() //you cant blow up brainmobs because it makes transfer_to() freak out when borgs blow up.
 	return

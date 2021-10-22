@@ -61,7 +61,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 			if(ismob(thing))
 				thing.investigate_log("deleted through cargo export",INVESTIGATE_CARGO)
 			if(ismecha(thing))
-				var/obj/mecha/mech = thing
+				var/obj/vehicle/sealed/mecha/mech = thing
 				mech.wreckage = null // why a mech left a wreck when sold i will never know
 			qdel(thing)
 
