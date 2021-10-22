@@ -14,7 +14,7 @@
 /area/planetgen_marker
 	name = "planetgen marker"
 	desc = "You shouldn't see this; The area should be replaced by planetgen during init. If you see this at runtime, tell a coder."
-	icon = 'icons/modules/planets/area.dmi'
+	icon = 'icons/planets/area.dmi'
 	icon_state = "marker"
 
 /**
@@ -24,7 +24,7 @@
 /area/planetary
 	name = "planetary area"
 	desc = "You shouldn't see this, but if you do, atleast things are working properly."
-	icon = 'icons/modules/planets/area.dmi'
+	icon = 'icons/planets/area.dmi'
 	icon_state = "default"
 	exterior = TRUE
 
