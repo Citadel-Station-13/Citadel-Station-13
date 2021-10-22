@@ -77,7 +77,7 @@
 		for(var/obj/effect/mob_spawn/human/syndicate/spawner in A)
 			SpawnCrew(spawner, candidates)
 
-	addtimer(CALLBACK(src, WarnTheCrew(), announcetime)
+	addtimer(CALLBACK(src, WarnTheCrew(), announcetime))
 
 /datum/round_event/ghost_role/starfurybc/proc/WarnTheCrew()
 	priority_announce("A Syndicate Battle Cruiser has been found near the station's sector, brace for impact.", sound = 'sound/machines/alarm.ogg')
