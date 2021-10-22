@@ -53,7 +53,7 @@
 	shuffle_inplace(candidates)
 	if(candidates.len < minimum_required)
 		deadchat_broadcast(span_deadsay("The Starfury Battle Cruiser event did not get the minimum [minimum_required] candidates needed for it to spawn."))
-		priority_announce("Our sensors indicate the Syndicate Cruiser has flown past[GLOB.station_name].")
+		priority_announce("Our sensors indicate that the Syndicate Cruiser has flown past [GLOB.station_name].")
 		return NOT_ENOUGH_PLAYERS
 
 	var/datum/map_template/shuttle/syndifury/starfury/ship = new
@@ -68,19 +68,28 @@
 		CRASH("Loading SBC Starfury cruiser failed!")
 
 	for(var/turf/A in ship.get_affected_turfs(T))
-		for(var/obj/effect/mob_spawn/human/syndicate/spawner in A)
-			if(candidates.len > 0)
-				var/mob/M = candidates[1]
-				spawner.create(M.ckey)
-				candidates -= M
-				announce_to_ghosts(M)
-			else
-				announce_to_ghosts(spawner)
 		for(var/obj/docking_port/stationary/S in A)
-			S.load_roundstart()
+			SSshuttle.action_load(S.roundstart_template, S)
 
-	sleep(announcetime)
+		for(var/obj/effect/mob_spawn/human/syndicate/battlecruiser/captain/C in A)
+			SpawnCrew(candidates) //We want the captain to spawn first
+
+		for(var/obj/effect/mob_spawn/human/syndicate/spawner in A)
+			SpawnCrew(spawner, candidates)
+
+	addtimer(CALLBACK(src, WarnTheCrew(), announcetime)
+
+/datum/round_event/ghost_role/starfurybc/proc/WarnTheCrew()
 	priority_announce("A Syndicate Battle Cruiser has been found near the station's sector, brace for impact.", sound = 'sound/machines/alarm.ogg')
+
+/datum/round_event/ghost_role/starfurybc/proc/SpawnCrew(obj/effect/mob_spawn/human/syndicate/spawner, list/candidates = list())
+	if(candidates.len > 0)
+		var/mob/M = candidates[1]
+		spawner.create(M.ckey)
+		announce_to_ghosts(M)
+		candidates -= candidates[1]
+	else
+		announce_to_ghosts(spawner)
 
 /obj/machinery/computer/shuttle/starfurybc
 	name = "battle cruiser console"

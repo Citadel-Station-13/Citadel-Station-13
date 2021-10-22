@@ -12,7 +12,6 @@
 	icon_state = "xraycamera";
 	name = "shuttle camera";
 	network = list("SBC_Fighter1");
-	pixel_x = 11;
 	pixel_y = 32
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -89,7 +88,6 @@
 	dir = 8
 	},
 /obj/machinery/power/apc{
-	dir = 2;
 	pixel_y = -28
 	},
 /obj/structure/cable,
@@ -130,12 +128,11 @@
 	req_access_txt = "150"
 	},
 /obj/docking_port/mobile{
-	dwidth = 2;
-	height = 6;
+	dwidth = 4+;
 	id = "sbcfighter";
 	movement_force = list("KNOCKDOWN" = 1, "THROW" = 0);
 	name = "Syndicate Fighter";
-	width = 5
+	port_direction = 2
 	},
 /obj/structure/cable,
 /obj/structure/fans/tiny,
