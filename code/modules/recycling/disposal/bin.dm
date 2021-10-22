@@ -524,7 +524,7 @@
 /obj/effect/CanEnterDisposals()
 	return
 
-/obj/mecha/CanEnterDisposals()
+/obj/vehicle/sealed/mecha/CanEnterDisposals()
 	return
 
 /obj/machinery/disposal/deliveryChute/newHolderDestination(obj/structure/disposalholder/H)

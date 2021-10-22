@@ -82,11 +82,6 @@
 	if(!modifiers["catcher"] && A.IsObscured())
 		return
 
-	if(ismecha(loc))
-		var/obj/mecha/M = loc
-		M.click_action(A,src,params)
-		return TRUE
-
 	if(restrained())
 		DelayNextAction(CLICK_CD_HANDCUFFED)
 		return RestrainedClickOn(A)

@@ -243,7 +243,7 @@
 	projectiles = 8
 	projectile_energy_cost = 1000
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/bombanana/can_attach(obj/mecha/combat/honker/M)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/bombanana/can_attach(obj/vehicle/sealed/mecha/combat/honker/M)
 	if(..())
 		if(istype(M))
 			return TRUE
@@ -261,13 +261,13 @@
 	equip_cooldown = 60
 	det_time = 20
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/tearstache/can_attach(obj/mecha/combat/honker/M)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/tearstache/can_attach(obj/vehicle/sealed/mecha/combat/honker/M)
 	if(..())
 		if(istype(M))
 			return TRUE
 	return FALSE
 
-/obj/mecha/combat/honker/dark
+/obj/vehicle/sealed/mecha/combat/honker/dark
 	desc = "Produced by \"Tyranny of Honk, INC\", this exosuit is designed as heavy clown-support. This one has been painted black for maximum fun. HONK!"
 	name = "\improper Dark H.O.N.K"
 	icon_state = "darkhonker"
@@ -280,23 +280,23 @@
 	wreckage = /obj/structure/mecha_wreckage/honker/dark
 	max_equip = 3
 
-/obj/mecha/combat/honker/dark/GrantActions(mob/living/user, human_occupant = 0)
+/obj/vehicle/sealed/mecha/combat/honker/dark/GrantActions(mob/living/user, human_occupant = 0)
 	..()
 	thrusters_action.Grant(user, src)
 
 
-/obj/mecha/combat/honker/dark/RemoveActions(mob/living/user, human_occupant = 0)
+/obj/vehicle/sealed/mecha/combat/honker/dark/RemoveActions(mob/living/user, human_occupant = 0)
 	..()
 	thrusters_action.Remove(user)
 
-/obj/mecha/combat/honker/dark/add_cell(obj/item/stock_parts/cell/C)
+/obj/vehicle/sealed/mecha/combat/honker/dark/add_cell(obj/item/stock_parts/cell/C)
 	if(C)
 		C.forceMove(src)
 		cell = C
 		return
 	cell = new /obj/item/stock_parts/cell/hyper(src)
 
-/obj/mecha/combat/honker/dark/loaded/Initialize()
+/obj/vehicle/sealed/mecha/combat/honker/dark/loaded/Initialize()
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/honker()
 	ME.attach(src)

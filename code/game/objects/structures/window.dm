@@ -90,13 +90,13 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	. = ..()
 	if(direct)
 		setDir(direct)
-	
+
 	if(extra_reinforced && anchored)
 		state = PRWINDOW_SECURE
 
 	else if(reinf && anchored)
 		state = WINDOW_SCREWED_TO_FRAME
-	
+
 
 	if(mapload && electrochromatic_id && electrochromatic_id[1] == "!")
 		electrochromatic_id = SSmapping.get_obfuscated_id(electrochromatic_id)
@@ -444,11 +444,6 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 
 /obj/structure/window/proc/check_state_and_anchored(checked_state, checked_anchored)
 	return check_state(checked_state) && check_anchored(checked_anchored)
-
-/obj/structure/window/mech_melee_attack(obj/mecha/M)
-	if(!can_be_reached())
-		return
-	..()
 
 /obj/structure/window/proc/can_be_reached(mob/user)
 	if(!fulltile)

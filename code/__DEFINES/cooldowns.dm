@@ -28,6 +28,12 @@
 //INDEXES
 #define COOLDOWN_EMPLOYMENT_CABINET	"employment cabinet"
 
+//Mecha cooldowns
+#define COOLDOWN_MECHA_MESSAGE "mecha_message"
+#define COOLDOWN_MECHA_EQUIPMENT "mecha_equipment"
+#define COOLDOWN_MECHA_ARMOR "mecha_armor"
+#define COOLDOWN_MECHA_MELEE_ATTACK "mecha_melee"
+#define COOLDOWN_MECHA_SMOKE "mecha_smoke"
 
 //TIMER COOLDOWN MACROS
 

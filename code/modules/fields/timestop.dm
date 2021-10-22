@@ -84,7 +84,7 @@
 		freeze_mob(A)
 	else if(istype(A, /obj/item/projectile))
 		freeze_projectile(A)
-	else if(istype(A, /obj/mecha))
+	else if(istype(A, obj/vehicle/sealed/mecha))
 		freeze_mecha(A)
 	else if((ismachinery(A) && !istype(A, /obj/machinery/light)) || isstructure(A)) //Special exception for light fixtures since recoloring causes them to change light
 		freeze_structure(A)
@@ -120,7 +120,7 @@
 		unfreeze_mob(A)
 	else if(istype(A, /obj/item/projectile))
 		unfreeze_projectile(A)
-	else if(istype(A, /obj/mecha))
+	else if(istype(A, obj/vehicle/sealed/mecha))
 		unfreeze_mecha(A)
 
 	UnregisterSignal(A, COMSIG_MOVABLE_PRE_MOVE)
