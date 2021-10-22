@@ -14,17 +14,19 @@
 
 	// New rendering system - state determined by "[slot_state_id]_[bodytype]_[worn_state]"
 	// Used if the above overrides are unset
+	/// "I know what I'm doing, and if this breaks, you may replace my eyelids with chili peppers" - Disable all sanity checking in unit tests that enforces the below, because this item custom-builds its worn icons.
+	var/worn_advanced_overlays = TRUE
 	/// worn state - if none, reads item_state instead
 	var/worn_state
 	/// worn icon - one per item, or at most one per group of items.
 	var/icon/worn_icon
-	/// multi slots? if false, no slot append
+	/// multi slots? if false, no slot append - you **MUST** have icon states for every slot_flag flag this has if set.
 	var/worn_multi_slot = FALSE
 	/// bodytypes supported
 	var/worn_bodytypes = BODY_TYPE_NORMAL
-	/// bodytypes support mode
+	/// bodytypes support mode - you **MUST** have icon states for every bodytype if not normal or ignore
 	var/worn_bodytype_support = BODYTYPE_SUPPORT_NONE
-	/// mutantrace support - **only** active on BODY_TYPE_NORMAL
+	/// mutantrace support - **only** active on BODY_TYPE_NORMAL - you **MUST** have icon states for every mutantrace flagged in this
 	var/mutantrace_support = NONE
 
 	/**
@@ -55,11 +57,11 @@
 	return "[worn_state][worn_multi_slot? "_[slot]" : ""][(bodytype == BODY_TYPE_NORMAL)? (mutantrace? mutantrace_support_define_to_state_append(mutantrace): "") : body_type_define_to_state_append(bodytype)]"
 
 /**
- * Builds worn icons - only should be called from inventory.
+ * Builds worn icons - only should be called from inventory. INHANDS ARE NOT INVENTORY.
  *
  * Returns a list **always**. Inventory will strip the list out if it determines it isn't necessary.
  */
-
+/obj/item/proc/build_worn_overlays(slotid_overide, bodytype_override, mutantrace_override)
 
 
 // /datum/inventory

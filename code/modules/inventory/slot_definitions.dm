@@ -49,3 +49,13 @@
 /datum/inventory_slot_meta/back
 	name = "back"
 	icon_state = "back"
+
+/datum/inventory_slot_meta/handcuffs
+	is_inventory = FALSE
+
+/datum/inventory_slot_meta/legcuffs
+	is_inventory = FALSE
+
+/datum/inventory_slot_meta/dextrous
+	name = "dextrous storage"
+	icon_state = "pocket"

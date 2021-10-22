@@ -3,24 +3,24 @@
 // slots by ID
 
 // real slots
-#define INV_SLOT_HEAD				"head"
-#define INV_SLOT_GLOVES				"gloves"
-#define INV_SLOT_SHOES				"shoes"
-#define INV_SLOT_UNIFORM			"uniform"
-#define INV_SLOT_SUIT				"suit"
-#define INV_SLOT_BACK				"back"
-#define INV_SLOT_BELT				"belt"
-#define INV_SLOT_EYES				"eyes"
-#define INV_SLOT_MASK				"mask"
-#define INV_SLOT_NECK				"neck"
-#define INV_SLOT_SUIT_STORAGE		"suit_store"
-#define INV_SLOT_ID					"id"
-#define INV_SLOT_LEFT_POCKET		"pocket_left"
-#define INV_SLOT_RIGHT_POCKET		"pocket_right"
-#define INV_SLOT_HANDCUFFS			"handcuffs"
-#define INV_SLOT_LEGCUFFS			"legcuffs"
-#define INV_SLOT_DEXTROUS_STORAGE	"dextrous"
-#define INV_SLOT_EARS				"ears"
+#define INV_SLOT_HEAD				/datum/inventory_slot_meta/head
+#define INV_SLOT_GLOVES				/datum/inventory_slot_meta/gloves
+#define INV_SLOT_SHOES				/datum/inventory_slot_meta/shoes
+#define INV_SLOT_UNIFORM			/datum/inventory_slot_meta/uniform
+#define INV_SLOT_SUIT				/datum/inventory_slot_meta/suit
+#define INV_SLOT_BACK				/datum/inventory_slot_meta/back
+#define INV_SLOT_BELT				/datum/inventory_slot_meta/belt
+#define INV_SLOT_EYES				/datum/inventory_slot_meta/eyes
+#define INV_SLOT_MASK				/datum/inventory_slot_meta/mask
+#define INV_SLOT_NECK				/datum/inventory_slot_meta/neck
+#define INV_SLOT_SUIT_STORAGE		/datum/inventory_slot_meta/suit_store
+#define INV_SLOT_ID					/datum/inventory_slot_meta/id
+#define INV_SLOT_LEFT_POCKET		/datum/inventory_slot_meta/left_pocket
+#define INV_SLOT_RIGHT_POCKET		/datum/inventory_slot_meta/right_pocket
+#define INV_SLOT_HANDCUFFS			/datum/inventory_slot_meta/handcuffs
+#define INV_SLOT_LEGCUFFS			/datum/inventory_slot_meta/legcuffs
+#define INV_SLOT_DEXTROUS_STORAGE	/datum/inventory_slot_meta/dextrous
+#define INV_SLOT_EARS				/datum/inventory_slot_meta/ears
 
 // "virtual" special slots
 /// insertion-only: put item in any hand
@@ -67,38 +67,69 @@
 /// **heuristic** for what slot flag a slot is
 /proc/inv_slot_to_flag(slot)
 	. = NONE
-	switch(slot)
-		if(INV_SLOT_HEAD)
+	// this is absolutely stupid
+	// but since we use paths, we need to flatten to text to ensure either the text or the path works.
+	switch("[slot]")
+		if("[INV_SLOT_HEAD]")
 			return SLOT_FLAG_HEAD
-		if(INV_SLOT_EYES)
+		if("[INV_SLOT_EYES]")
 			return SLOT_FLAG_EYES
-		if(INV_SLOT_UNIFORM)
+		if("[INV_SLOT_UNIFORM]")
 			return SLOT_FLAG_UNIFORM
-		if(INV_SLOT_SUIT)
+		if("[INV_SLOT_SUIT]")
 			return SLOT_FLAG_SUIT
-		if(INV_SLOT_BACK)
+		if("[INV_SLOT_BACK]")
 			return SLOT_FLAG_BACK
-		if(INV_SLOT_MASK)
+		if("[INV_SLOT_MASK]")
 			return SLOT_FLAG_MASK
-		if(INV_SLOT_NECK)
+		if("[INV_SLOT_NECK]")
 			return SLOT_FLAG_NECK
-		if(INV_SLOT_BELT)
+		if("[INV_SLOT_BELT]")
 			return SLOT_FLAG_BELT
-		if(INV_SLOT_ID)
+		if("[INV_SLOT_ID]")
 			return SLOT_FLAG_ID
-		if(INV_SLOT_GLOVES)
+		if("[INV_SLOT_GLOVES]")
 			return SLOT_FLAG_GLOVES
-		if(INV_SLOT_BELT)
+		if("[INV_SLOT_BELT]")
 			return SLOT_FLAG_BELT
-		if(INV_SLOT_LEFT_POCKET, INV_SLOT_RIGHT_POCKET, INV_VIRTUALSLOT_IN_POCKETS)
+		if("[INV_SLOT_LEFT_POCKET]", "[INV_SLOT_RIGHT_POCKET]", "[INV_VIRTUALSLOT_IN_POCKETS]")
 			return SLOT_FLAG_POCKET
-		if(INV_SLOT_SUIT_STORAGE)
+		if("[INV_SLOT_SUIT_STORAGE]")
 			return SLOT_FLAG_SUIT_STORE
-		if(INV_SLOT_EARS)
+		if("[INV_SLOT_EARS]")
 			return SLOT_FLAG_EARS
-		if(INV_SLOT_SHOES)
+		if("[INV_SLOT_SHOES]")
 			return SLOT_FLAG_FEET
 
+/// and the other way around
+/proc/flag_to_inv_slot(flag)
+	switch(flag)
+		if(SLOT_FLAG_BACK)
+			return INV_SLOT_BACK
+		if(SLOT_FLAG_HEAD)
+			return INV_SLOT_HEAD
+		if(SLOT_FLAG_UNIFORM)
+			return INV_SLOT_UNIFORM
+		if(SLOT_FLAG_SUIT)
+			return INV_SLOT_SUIT
+		if(SLOT_FLAG_MASK)
+			return INV_SLOT_MASK
+		if(SLOT_FLAG_BACK)
+			return INV_SLOT_BACK
+		if(SLOT_FLAG_BELT)
+			return INV_SLOT_BELT
+		if(SLOT_FLAG_ID)
+			return INV_SLOT_ID
+		if(SLOT_FLAG_GLOVES)
+			return INV_SLOT_GLOVES
+		if(SLOT_FLAG_BELT)
+			return INV_SLOT_BELT
+		if(SLOT_FLAG_SUIT_STORAGE)
+			return INV_SLOT_SUIT_STORAGE
+		if(SLOT_FLAG_EARS)
+			return INV_SLOT_EARS
+		if(SLOT_FLAG_FEET)
+			return INV_SLOT_SHOES
 
 
 
