@@ -5,7 +5,7 @@
 	max_occurrences = 1
 	min_players = 10
 	earliest_start = 30 MINUTES
-	gamemode_blacklist = list("nuclear")
+	dynamic_should_hijack = TRUE
 
 #define PIRATES_ROGUES "Rogues"
 // #define PIRATES_SILVERSCALES "Silverscales"
@@ -17,19 +17,18 @@
 
 	return ..()
 
-/datum/round_event/pirates
-	startWhen = 60 //2 minutes to answer
-	var/datum/comm_message/threat_msg
+/datum/round_event/pirates/start()
+	send_pirate_threat()
+
+/proc/send_pirate_threat()
+	var/pirate_type = PIRATES_ROGUES //pick(PIRATES_ROGUES, PIRATES_SILVERSCALES, PIRATES_DUTCHMAN)
+	var/datum/comm_message/threat_msg = new
 	var/payoff = 0
 	var/payoff_min = 1000
-	var/paid_off = FALSE
-	var/pirate_type
 	var/ship_template
 	var/ship_name = "Space Privateers Association"
-	var/shuttle_spawned = FALSE
-
-/datum/round_event/pirates/setup()
-	pirate_type = PIRATES_ROGUES //pick(PIRATES_ROGUES, PIRATES_SILVERSCALES, PIRATES_DUTCHMAN)
+	var/initial_send_time = world.time
+	var/response_max_time = 2 MINUTES
 	switch(pirate_type)
 		if(PIRATES_ROGUES)
 			ship_name = pick(strings(PIRATE_NAMES_FILE, "rogue_names"))
@@ -38,11 +37,7 @@
 		// if(PIRATES_DUTCHMAN)
 		// 	ship_name = "Flying Dutchman"
 
-/datum/round_event/pirates/announce(fake)
 	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", "commandreport")
-	if(fake)
-		return
-	threat_msg = new
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
 		payoff = max(payoff_min, FLOOR(D.account_balance * 0.80, 1000))
@@ -62,35 +57,27 @@
 		// 	threat_msg.title = "Business proposition"
 		// 	threat_msg.content = "Ahoy! This be the [ship_name]. Cough up [payoff] credits or you'll walk the plank."
 		// 	threat_msg.possible_answers = list("We'll pay.","We will not be extorted.")
-	threat_msg.answer_callback = CALLBACK(src,.proc/answered)
+	threat_msg.answer_callback = CALLBACK(GLOBAL_PROC, .proc/pirates_answered, threat_msg, payoff, ship_name, initial_send_time, response_max_time, ship_template)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/spawn_pirates, threat_msg, ship_template, FALSE), response_max_time)
 	SScommunications.send_message(threat_msg,unique = TRUE)
 
-/datum/round_event/pirates/proc/answered()
-	if(threat_msg?.answered == 1)
+/proc/pirates_answered(datum/comm_message/threat_msg, payoff, ship_name, initial_send_time, response_max_time, ship_template)
+	if(world.time > initial_send_time + response_max_time)
+		priority_announce("Too late to beg for mercy!",sender_override = ship_name)
+		return
+	if(threat_msg && threat_msg.answered == 1)
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
 			if(D.adjust_money(-payoff))
 				priority_announce("Thanks for the credits, landlubbers.",sender_override = ship_name)
-				paid_off = TRUE
 				return
 			else
 				priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
-	else if(threat_msg?.answered == 2)
-		priority_announce("You won't pay? Fine then, we'll take those credits by force!",sender_override = ship_name)
-	if(!shuttle_spawned)
-		spawn_shuttle()
-	else
-		priority_announce("Too late to beg for mercy!",sender_override = ship_name)
+				spawn_pirates(threat_msg, ship_template, TRUE)
 
-/datum/round_event/pirates/start()
-	if(threat_msg && !threat_msg.answered)
-		threat_msg.possible_answers = list("Too late")
-		threat_msg.answered = 1
-	if(!paid_off && !shuttle_spawned)
-		spawn_shuttle()
-
-/datum/round_event/pirates/proc/spawn_shuttle()
-	shuttle_spawned = TRUE
+/proc/spawn_pirates(datum/comm_message/threat_msg, ship_template, skip_answer_check)
+	if(!skip_answer_check && threat_msg?.answered == 1)
+		return
 
 	var/list/candidates = pollGhostCandidates("Do you wish to be considered for pirate crew?", ROLE_TRAITOR)
 	shuffle_inplace(candidates)
@@ -109,12 +96,12 @@
 	for(var/turf/A in ship.get_affected_turfs(T))
 		for(var/obj/effect/mob_spawn/human/pirate/spawner in A)
 			if(candidates.len > 0)
-				var/mob/M = candidates[1]
-				spawner.create(M.ckey)
-				candidates -= M
-				announce_to_ghosts(M)
+				var/mob/our_candidate = candidates[1]
+				spawner.create(our_candidate.ckey)
+				candidates -= our_candidate
+				notify_ghosts("The pirate ship has an object of interest: [our_candidate]!", source=our_candidate, action=NOTIFY_ORBIT, header="Something's Interesting!")
 			else
-				announce_to_ghosts(spawner)
+				notify_ghosts("The pirate ship has an object of interest: [spawner]!", source=spawner, action=NOTIFY_ORBIT, header="Something's Interesting!")
 
 	priority_announce("Unidentified armed ship detected near the station.")
 

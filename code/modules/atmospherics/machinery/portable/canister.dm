@@ -235,7 +235,7 @@
 		. += "can-open"
 	if(connected_port)
 		. += "can-connector"
-	var/pressure = air_contents.return_pressure()
+	var/pressure = air_contents?.return_pressure()
 	if(pressure >= 40 * ONE_ATMOSPHERE)
 		. += "can-o3"
 	else if(pressure >= 10 * ONE_ATMOSPHERE)
@@ -295,6 +295,7 @@
 	density = FALSE
 	playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	investigate_log("was destroyed.", INVESTIGATE_ATMOS)
+	update_icon_state()
 
 	if(holding)
 		holding.forceMove(T)

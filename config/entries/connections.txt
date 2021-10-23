@@ -2,8 +2,11 @@
 ##	Requires database
 #PANIC_BUNKER
 
-## If a player connects during a bunker with less then or this amount of living time (Minutes), we deny the connection
+## If a player connects during a bunker with less then or this amount of living time (Minutes), we deny the connection. Set to -1 to disable criteria.
 #PANIC_BUNKER_LIVING 90
+
+## The above but for VPN connections. Set to -1 to disable criteria. You can set the above to disabled and set this to only enforce bunker on VPNs.
+#PANIC_BUNKER_LIVING_VPN 120
 
 ## The message the Panic Bunker gives when someone is rejected by it
 ## %minutes% is replaced with PANIC_BUNKER_LIVING on runtime, remove it if you don't want this

@@ -27,22 +27,22 @@
 
 /datum/gear/suit/jacketflannelblack // all of these are reskins of bomber jackets but with the vibe to make you look like a true lumberjack
 	name = "Black flannel jacket"
-	path = /obj/item/clothing/suit/jacket/flannel
+	path = /obj/item/clothing/suit/toggle/jacket/flannel
 	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
 /datum/gear/suit/jacketflannelred
 	name = "Red flannel jacket"
-	path = /obj/item/clothing/suit/jacket/flannel/red
+	path = /obj/item/clothing/suit/toggle/jacket/flannel/red
 	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
 /datum/gear/suit/jacketflannelaqua
 	name = "Aqua flannel jacket"
-	path = /obj/item/clothing/suit/jacket/flannel/aqua
+	path = /obj/item/clothing/suit/toggle/jacket/flannel/aqua
 	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
 /datum/gear/suit/jacketflannelbrown
 	name = "Brown flannel jacket"
-	path = /obj/item/clothing/suit/jacket/flannel/brown
+	path = /obj/item/clothing/suit/toggle/jacket/flannel/brown
 	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
 /datum/gear/suit/jacketleather
@@ -96,6 +96,66 @@
 /datum/gear/suit/coat/brass
 	name = "Brass winter coat"
 	path = /obj/item/clothing/suit/hooded/wintercoat/ratvar/fake
+
+/datum/gear/suit/whitehoodie
+	name = "Soft hoodie"
+	path = /obj/item/clothing/suit/toggle/jacket/whitehoodie
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
+
+/datum/gear/suit/jacketbluehoodie
+	name = "Blue hoodie"
+	path = /obj/item/clothing/suit/jacket/bluehoodie
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
+/datum/gear/suit/jacketpurplehoodie
+	name = "Purple hoodie"
+	path = /obj/item/clothing/suit/jacket/purplehoodie
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
+
+/datum/gear/suit/jacketheartcoat
+	name = "Heart coat"
+	path = /obj/item/clothing/suit/jacket/heartcoat
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
+
+/datum/gear/suit/jacketgothiccoat
+	name = "Long black coat with cuffs"
+	path = /obj/item/clothing/suit/jacket/gothiccoat
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
+
+/datum/gear/suit/jacketgothshirt
+	name = "Black shirt with cuffs"
+	path = /obj/item/clothing/suit/jacket/gothicshirt
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_GENERAL
+
+/datum/gear/suit/jacketgothshirtcross
+	name = "Black shirt with cross"
+	path = /obj/item/clothing/suit/jacket/gothicshirtcross
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_GENERAL
+
+/datum/gear/suit/gentlecoat
+	name = "Grey coat"
+	path = /obj/item/clothing/suit/jacket/gentlecoat
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_COATS
+
+/datum/gear/suit/greenjacket
+	name = "Green outdoorsman jacket"
+	path = /obj/item/clothing/suit/toggle/jacket/greenjacket
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
+
+/datum/gear/suit/fancytrench
+	name = "Grey trenchcoat"
+	path = /obj/item/clothing/suit/toggle/jacket/fancytrench
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_COATS
+
 
 /datum/gear/suit/coat/polycoat
 	name = "Polychromic winter coat"

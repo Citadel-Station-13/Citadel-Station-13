@@ -44,6 +44,15 @@ GLOBAL_LIST_EMPTY(mob_config_movespeed_type_lookup_floating)
 
 GLOBAL_LIST_EMPTY(latejoiners) //CIT CHANGE - All latejoining people, for traitor-target purposes.
 
+/// All alive antags with clients.
+GLOBAL_LIST_EMPTY(current_living_antags)
+
+/// All observers with clients that joined as observers.
+GLOBAL_LIST_EMPTY(current_observers_list)
+
+//Dynamic Port
+GLOBAL_LIST_EMPTY(new_player_list) //all /mob/dead/new_player, in theory all should have clients and those that don't are in the process of spawning and get deleted when done.
+
 /proc/update_config_movespeed_type_lookup(update_mobs = TRUE)
 	// NOTE: This is entirely based on the fact that byond typesof/subtypesof gets longer/deeper paths before shallower ones.
 	// If that ever breaks this entire proc breaks.

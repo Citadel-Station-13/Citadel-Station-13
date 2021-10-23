@@ -154,8 +154,8 @@
 	if(hud?.mymob && slot_id)
 		var/obj/item/inv_item = hud.mymob.get_item_by_slot(slot_id)
 		if(inv_item)
-			if(hud?.mymob.incapacitated())
-				inv_item.apply_outline(COLOR_RED_GRAY)
+			if(hud?.mymob.incapacitated() || (slot_id in hud?.mymob.check_obscured_slots()) || !hud?.mymob.canUnEquip(inv_item))
+				inv_item.apply_outline(_size = 3)
 			else
 				inv_item.apply_outline()
 
@@ -189,7 +189,7 @@
 	var/image/item_overlay = image(holding)
 	item_overlay.alpha = 92
 
-	if(!user.can_equip(holding, slot_id, TRUE))
+	if(!user.can_equip(holding, slot_id, TRUE, TRUE))
 		item_overlay.color = "#FF0000"
 	else
 		item_overlay.color = "#00ff00"

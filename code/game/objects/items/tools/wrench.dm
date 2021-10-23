@@ -44,6 +44,13 @@
 /obj/item/wrench/brass/family
 	toolspeed = 1
 
+/obj/item/wrench/ashwalker
+	name = "bone wrench"
+	desc = "A shoddy wrench made out of bent bones and sinew."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "wrench_bone"
+	toolspeed = 0.75
+
 /obj/item/wrench/bronze
 	name = "bronze plated wrench"
 	desc = "A bronze plated wrench."

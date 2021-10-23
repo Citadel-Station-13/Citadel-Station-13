@@ -364,7 +364,7 @@ Difficulty: Normal
 	var/turf/T = get_turf(victim)
 	if(!istype(victim) || victim.stat == DEAD || !T || arena_cooldown > world.time)
 		return
-	if((istype(get_area(T), /area/ruin/unpowered/hierophant) || istype(get_area(src), /area/ruin/unpowered/hierophant)) && victim != src)
+	if((istype(get_area(T), /area/ruin/lavaland/unpowered/hierophant) || istype(get_area(src), /area/ruin/lavaland/unpowered/hierophant)) && victim != src)
 		return
 	arena_cooldown = world.time + initial(arena_cooldown)
 	for(var/d in GLOB.cardinals)
