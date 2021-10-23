@@ -119,6 +119,8 @@
 
 #define STATUS_EFFECT_CLOUDSTRUCK /datum/status_effect/cloudstruck //blinds and applies an overlay.
 
+#define STATUS_EFFECT_GAUNTLET_CONC /datum/status_effect/cgau_conc // it's a slowdown that really should only be applying to large simplemobs
+
 /// shoves inflict this to indicate the next shove while this is in effect should disarm guns
 #define STATUS_EFFECT_OFF_BALANCE /datum/status_effect/off_balance
 

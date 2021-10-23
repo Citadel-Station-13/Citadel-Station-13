@@ -187,6 +187,9 @@
 	if(istype(I, /obj/item/suit_voucher))
 		RedeemSVoucher(I, user)
 		return
+	if(istype(I, /obj/item/premium_crusher_voucher))
+		RedeemPCVoucher(I, user)
+		return
 	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
 		updateUsrDialog()
 		return
@@ -226,8 +229,44 @@
 			new /obj/item/kinetic_crusher(drop_location)
 		if("Mining Conscription Kit")
 			new /obj/item/storage/backpack/duffelbag/mining/conscript(drop_location)
-
+	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 	SSblackbox.record_feedback("tally", "mining_voucher_redeemed", 1, selection)
+	qdel(voucher)
+
+/obj/machinery/mineral/equipment_vendor/proc/RedeemSVoucher(obj/item/suit_voucher/voucher, mob/redeemer)
+	var/items = list(	"Exo-suit" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "exo"),
+						"SEVA suit" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "seva"))
+
+	var/selection = show_radial_menu(redeemer, src, items, require_near = TRUE, tooltips = TRUE)
+	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
+		return
+	var/drop_location = drop_location()
+	switch(selection)
+		if("Exo-suit")
+			new /obj/item/clothing/suit/hooded/explorer/exo(drop_location)
+			new /obj/item/clothing/mask/gas/exo(drop_location)
+		if("SEVA suit")
+			new /obj/item/clothing/suit/hooded/explorer/seva(drop_location)
+			new /obj/item/clothing/mask/gas/seva(drop_location)
+	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
+	SSblackbox.record_feedback("tally", "suit_voucher_redeemed", 1, selection)
+	qdel(voucher)
+
+/obj/machinery/mineral/equipment_vendor/proc/RedeemPCVoucher(obj/item/premium_crusher_voucher/voucher, mob/redeemer) // someone should REALLY just refactor this
+	var/items = list("Kinetic Glaive" = image(icon = 'icons/obj/mining.dmi', icon_state = "resonator"),
+					"Kinetic Gauntlets" = image(icon = 'icons/obj/mining.dmi', icon_state = "resonator"))
+
+	var/selection = show_radial_menu(redeemer, src, items, require_near = TRUE, tooltips = TRUE)
+	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
+		return
+	var/drop_location = drop_location()
+	switch(selection)
+		if("Kinetic Glaive")
+			new /obj/item/kinetic_crusher/glaive(drop_location)
+		if("Kinetic Gauntlets")
+			new /obj/item/kinetic_crusher/glaive/gauntlets(drop_location)
+	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
+	SSblackbox.record_feedback("tally", "crusher_voucher_redeemed", 1, selection)
 	qdel(voucher)
 
 /obj/machinery/mineral/equipment_vendor/ex_act(severity, target)
@@ -245,7 +284,7 @@
 	. = ..()
 	desc += "\nIt seems a few selections have been added."
 	prize_list += list(
-		new /datum/data/mining_equipment("Extra Id",       				/obj/item/card/id/mining, 				                   		250),
+		new /datum/data/mining_equipment("Extra ID",       				/obj/item/card/id/mining, 				                   		250),
 		new /datum/data/mining_equipment("Science Goggles",       		/obj/item/clothing/glasses/science,								250),
 		new /datum/data/mining_equipment("Monkey Cube",					/obj/item/reagent_containers/food/snacks/cube/monkey,        	300),
 		new /datum/data/mining_equipment("Toolbelt",					/obj/item/storage/belt/utility,	    							350),
@@ -269,6 +308,13 @@
 /obj/item/suit_voucher
 	name = "suit voucher"
 	desc = "A token to redeem a new suit. Use it on a mining equipment vendor."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "mining_voucher"
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/premium_crusher_voucher
+	name = "premium crusher voucher"
+	desc = "A token to redeem for a premium proto-kinetic melee weapon. Use it on a mining equipment vendor."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_voucher"
 	w_class = WEIGHT_CLASS_TINY
@@ -376,23 +422,4 @@
 
 /obj/item/storage/backpack/duffelbag/mining/glaivekit/PopulateContents()
 	new /obj/item/kinetic_crusher/glaive(src)
-	new /obj/item/kitchen/knife/combat/survival/knuckledagger(src)
-
-/obj/machinery/mineral/equipment_vendor/proc/RedeemSVoucher(obj/item/suit_voucher/voucher, mob/redeemer)
-	var/items = list(	"Exo-suit" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "exo"),
-						"SEVA suit" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "seva"))
-
-	var/selection = show_radial_menu(redeemer, src, items, require_near = TRUE, tooltips = TRUE)
-	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
-		return
-	var/drop_location = drop_location()
-	switch(selection)
-		if("Exo-suit")
-			new /obj/item/clothing/suit/hooded/explorer/exo(drop_location)
-			new /obj/item/clothing/mask/gas/exo(drop_location)
-		if("SEVA suit")
-			new /obj/item/clothing/suit/hooded/explorer/seva(drop_location)
-			new /obj/item/clothing/mask/gas/seva(drop_location)
-
-	SSblackbox.record_feedback("tally", "suit_voucher_redeemed", 1, selection)
-	qdel(voucher)
+	new /obj/item/premium_crusher_voucher(src)
