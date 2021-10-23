@@ -253,8 +253,8 @@
 	qdel(voucher)
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemPCVoucher(obj/item/premium_crusher_voucher/voucher, mob/redeemer) // someone should REALLY just refactor this
-	var/items = list("Kinetic Glaive" = image(icon = 'icons/obj/mining.dmi', icon_state = "resonator"),
-					"Kinetic Gauntlets" = image(icon = 'icons/obj/mining.dmi', icon_state = "resonator"))
+	var/items = list("Kinetic Glaive" = image(icon = 'icons/obj/mining.dmi', icon_state = "crusher-glaive"),
+					"Kinetic Gauntlets" = image(icon = 'icons/obj/mining.dmi', icon_state = "crusher-hands"))
 
 	var/selection = show_radial_menu(redeemer, src, items, require_near = TRUE, tooltips = TRUE)
 	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
