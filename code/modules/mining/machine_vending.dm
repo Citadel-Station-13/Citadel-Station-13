@@ -166,6 +166,7 @@
 				return
 			I.mining_points -= prize.cost
 			to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
+			playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 			new prize.equipment_path(loc)
 			SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
 			. = TRUE
