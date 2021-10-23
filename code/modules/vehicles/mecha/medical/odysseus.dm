@@ -10,7 +10,7 @@
 	internal_damage_threshold = 35
 	deflect_chance = 15
 	step_energy_drain = 6
-	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_MEDICAL)
+	internals_req_access = list(ACCESS_ROBOTICS, ACCESS_MEDICAL)
 
 /obj/vehicle/sealed/mecha/medical/odysseus/moved_inside(mob/living/carbon/human/H)
 	. = ..()

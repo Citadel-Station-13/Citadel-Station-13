@@ -9,9 +9,9 @@
 	active_power_usage = 5000
 	req_access = list(ACCESS_ROBOTICS)
 	circuit = /obj/item/circuitboard/machine/mechfab
-	processing_flags = START_PROCESSING_MANUALLY
+	// processing_flags = START_PROCESSING_MANUALLY
 
-	subsystem_type = /datum/controller/subsystem/processing/fastprocess
+	// subsystem_type = /datum/controller/subsystem/processing/fastprocess
 
 	/// Current items in the build queue.
 	var/list/queue = list()
@@ -47,9 +47,10 @@
 	var/list/part_sets = list(
 								"Cyborg",
 								"Ripley",
+								"Firefighter",
 								"Odysseus",
-								"Clarke",
 								"Gygax",
+								"Medical-Spec Gygax",
 								"Durand",
 								"H.O.N.K",
 								"Phazon",
@@ -64,7 +65,8 @@
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
 	stored_research = new
-	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init)
+	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init, _after_insert=CALLBACK(src, .proc/AfterMaterialInsert))
+
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
 	return ..()
 
@@ -150,10 +152,14 @@
 				category_override = list()
 				if(mech_types & EXOSUIT_MODULE_RIPLEY)
 					category_override += "Ripley"
-				if(mech_types & EXOSUIT_MODULE_ODYSSEUS)
-					category_override += "Odysseus"
 				if(mech_types & EXOSUIT_MODULE_FIREFIGHTER)
 					category_override += "Firefighter"
+				if(mech_types & EXOSUIT_MODULE_ODYSSEUS)
+					category_override += "Odysseus"
+				// if(mech_types & EXOSUIT_MODULE_CLARKE)
+				// 	category_override += "Clarke"
+				if(mech_types & EXOSUIT_MODULE_GYGAX_MED)
+					category_override += "Medical-Spec Gygax"
 				if(mech_types & EXOSUIT_MODULE_GYGAX)
 					category_override += "Gygax"
 				if(mech_types & EXOSUIT_MODULE_DURAND)
@@ -172,7 +178,7 @@
 		"id" = D.id,
 		"subCategory" = sub_category,
 		"categoryOverride" = category_override,
-		"searchMeta" = D.search_metadata
+		"searchMeta" = "UNKNOWN"//D.search_metadata
 	)
 
 	return part
@@ -328,7 +334,8 @@
 		// If we're not processing the queue anymore or there's nothing to build, end processing.
 		if(!process_queue || !build_next_in_queue())
 			on_finish_printing()
-			end_processing()
+			STOP_PROCESSING(SSfastprocess, src)
+			//end_processing()
 			return TRUE
 		on_start_printing()
 
@@ -349,6 +356,8 @@
   */
 /obj/machinery/mecha_part_fabricator/proc/dispense_built_part(datum/design/D)
 	var/obj/item/I = new D.build_path(src)
+	// I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
+	I.set_custom_materials(build_materials)
 
 	being_built = null
 
@@ -440,7 +449,7 @@
   * * resource - Material datum reference to the resource to calculate the cost of.
   * * roundto - Rounding value for round() proc
   */
-/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(datum/design/D, datum/material/resource, roundto = 1)
+/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(datum/design/D, var/datum/material/resource, roundto = 1)
 	return round(D.materials[resource]*component_coeff, roundto)
 
 /**
@@ -524,7 +533,7 @@
 
 	return data
 
-/obj/machinery/mecha_part_fabricator/ui_act(action, list/params)
+/obj/machinery/mecha_part_fabricator/ui_act(action, var/list/params)
 	if(..())
 		return TRUE
 
@@ -568,7 +577,8 @@
 			process_queue = TRUE
 
 			if(!being_built)
-				begin_processing()
+				START_PROCESSING(SSfastprocess, src)
+				//begin_processing()
 			return
 		if("stop_queue")
 			// Pause queue building. Also known as stop.
@@ -587,7 +597,8 @@
 
 			if(build_part(D))
 				on_start_printing()
-				begin_processing()
+				START_PROCESSING(SSfastprocess, src)
+				//begin_processing() teege has this as a helper proc. please port it!
 
 			return
 		if("move_queue_part")
@@ -661,4 +672,7 @@
 	return TRUE
 
 /obj/machinery/mecha_part_fabricator/maint
+	link_on_init = FALSE
+
+/obj/machinery/mecha_part_fabricator/offstation
 	link_on_init = FALSE

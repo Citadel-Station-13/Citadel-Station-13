@@ -67,7 +67,7 @@
 	SEND_SIGNAL(shield, COMSIG_MECHA_ACTION_TRIGGER, owner, signal_args)
 
 //Redirects projectiles to the shield if defense_check decides they should be blocked and returns true.
-/obj/vehicle/sealed/mecha/combat/durand/proc/prehit(obj/projectile/source, list/signal_args)
+/obj/vehicle/sealed/mecha/combat/durand/proc/prehit(obj/item/projectile/source, list/signal_args)
 	if(defense_check(source.loc) && shield)
 		signal_args[2] = shield
 
@@ -141,11 +141,9 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	max_integrity = 10000
 	obj_integrity = 10000
 	anchored = TRUE
-	light_system = MOVABLE_LIGHT
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_power = 5
-	light_color = LIGHT_COLOR_ELECTRIC_CYAN
-	light_on = FALSE
+	light_color = COLOR_CYAN
 	///Our link back to the durand
 	var/obj/vehicle/sealed/mecha/combat/durand/chassis
 	///To keep track of things during the animation
@@ -198,7 +196,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 		button.button_icon_state = "mech_defense_mode_[chassis.defense_mode ? "on" : "off"]"
 		button.UpdateButtonIcon()
 
-	set_light_on(chassis.defense_mode)
+	set_light(light_range, light_power, light_color)
 
 	if(chassis.defense_mode)
 		invisibility = 0

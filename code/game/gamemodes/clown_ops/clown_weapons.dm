@@ -280,15 +280,6 @@
 	wreckage = /obj/structure/mecha_wreckage/honker/dark
 	max_equip = 3
 
-/obj/vehicle/sealed/mecha/combat/honker/dark/GrantActions(mob/living/user, human_occupant = 0)
-	..()
-	thrusters_action.Grant(user, src)
-
-
-/obj/vehicle/sealed/mecha/combat/honker/dark/RemoveActions(mob/living/user, human_occupant = 0)
-	..()
-	thrusters_action.Remove(user)
-
 /obj/vehicle/sealed/mecha/combat/honker/dark/add_cell(obj/item/stock_parts/cell/C)
 	if(C)
 		C.forceMove(src)

@@ -205,11 +205,11 @@
 	if(istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(chassis,target) <= 1)
 		var/obj/structure/reagent_dispensers/watertank/WT = target
 		WT.reagents.trans_to(src, 1000)
-		to_chat(source, "[icon2html(src, source)]<span class='notice'>Extinguisher refilled.</span>")
-		playsound(chassis, 'sound/effects/refill.ogg', 50, TRUE, -6)
+		to_chat(chassis.occupants,"<span class='notice'>Extinguisher refilled.</span>")
+		playsound(chassis, 'sound/effects/refill.ogg', 50, 1, -6)
 	else
 		if(reagents.total_volume > 0)
-			playsound(chassis, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
+			playsound(chassis, 'sound/effects/extinguish.ogg', 75, 1, -3)
 			var/direction = get_dir(chassis,target)
 			var/turf/T = get_turf(target)
 			var/turf/T1 = get_step(T,turn(direction, 90))
@@ -225,7 +225,7 @@
 					var/datum/reagents/R = new/datum/reagents(5)
 					W.reagents = R
 					R.my_atom = W
-					reagents.trans_to(W,1, transfered_by = source)
+					reagents.trans_to(W,1)
 					for(var/b=0, b<4, b++)
 						if(!W)
 							return
@@ -233,13 +233,13 @@
 						if(!W)
 							return
 						var/turf/W_turf = get_turf(W)
-						W.reagents.expose(W_turf)
+						W.reagents.reaction(W_turf)
 						for(var/atom/atm in W_turf)
-							W.reagents.expose(atm)
+							W.reagents.reaction(atm)
 						if(W.loc == my_target)
 							break
 						sleep(2)
-		return ..()
+		return 1
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/get_equip_info()
 	return "[..()] \[[src.reagents.total_volume]\]"

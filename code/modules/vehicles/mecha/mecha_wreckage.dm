@@ -158,16 +158,6 @@
 	name = "\improper Ripley MK-II wreckage"
 	icon_state = "ripleymkii-broken"
 
-/obj/structure/mecha_wreckage/clarke
-	name = "\improper Clarke wreckage"
-	icon_state = "clarke-broken"
-	parts = list(
-				/obj/item/mecha_parts/part/clarke_torso,
-				/obj/item/mecha_parts/part/clarke_head,
-				/obj/item/mecha_parts/part/clarke_left_arm,
-				/obj/item/mecha_parts/part/clarke_right_arm,
-				/obj/item/stack/conveyor)
-
 /obj/structure/mecha_wreckage/ripley/deathripley
 	name = "\improper Death-Ripley wreckage"
 	icon_state = "deathripley-broken"

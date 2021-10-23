@@ -10,7 +10,7 @@
 	max_temperature = 15000
 	wreckage = /obj/structure/mecha_wreckage/reticence
 	operation_req_access = list(ACCESS_THEATRE)
-	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)
+	internals_req_access = list(ACCESS_ROBOTICS, ACCESS_THEATRE)
 	mecha_flags =  CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS
 	internal_damage_threshold = 25
 	max_equip = 2

@@ -28,7 +28,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.mind && HAS_TRAIT(H.mind, TRAIT_CLOWN_MENTALITY)) //Ensures only clowns can drive the car. (Including more at once)
-			add_control_flags(M, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_PERMISSION)
+			add_control_flags(M, VEHICLE_CONTROL_DRIVE)
 			return
 	add_control_flags(M, VEHICLE_CONTROL_KIDNAPPED)
 

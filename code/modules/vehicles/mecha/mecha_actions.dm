@@ -24,7 +24,7 @@
 		return
 	if(!chassis || !(owner in chassis.occupants))
 		return
-	chassis.container_resist_act(owner)
+	chassis.container_resist(owner)
 
 /datum/action/vehicle/sealed/mecha/mech_toggle_internals
 	name = "Toggle Internal Airtank Usage"
@@ -94,9 +94,10 @@
 	chassis.mecha_flags ^= LIGHTS_ON
 	if(chassis.mecha_flags & LIGHTS_ON)
 		button_icon_state = "mech_lights_on"
+		chassis.set_light(0)
 	else
 		button_icon_state = "mech_lights_off"
-	chassis.set_light_on(chassis.mecha_flags & LIGHTS_ON)
+		chassis.set_light(5, 5)
 	to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>Toggled lights [(chassis.mecha_flags & LIGHTS_ON)?"on":"off"].</span>")
 	chassis.log_message("Toggled lights [(chassis.mecha_flags & LIGHTS_ON)?"on":"off"].", LOG_MECHA)
 	UpdateButtonIcon()

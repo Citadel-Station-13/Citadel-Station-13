@@ -92,7 +92,7 @@
 				to_chat(L, "<span class='neovgre'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [GLOB.ratvar_awakens ? "melts you alive" : "burns you"]!</span>")
 			else if(ismecha(target))
 				var/obj/vehicle/sealed/mecha/M = target
-				to_chat(M.occupant, "<span class='neovgre'>\"I SEE YOU!\"</span>" )
+				to_chat(M.occupants, "<span class='neovgre'>\"I SEE YOU!\"</span>" )
 		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
 			if(prob(50))
 				visible_message("<span class='notice'>[src][pick(idle_messages)]</span>")
@@ -132,7 +132,10 @@
 	var/list/viewcache = list()
 	for(var/N in GLOB.mechas_list)
 		var/obj/vehicle/sealed/mecha/M = N
-		if(get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant))
+		if(get_dist(M, src) <= sight_range && LAZYLEN(M.occupants))
+			for(var/mob/living/MB in M.occupants)
+				if(is_servant_of_ratvar(MB))
+					return
 			if(!length(viewcache))
 				for (var/obj/Z in view(sight_range, src))
 					viewcache += Z

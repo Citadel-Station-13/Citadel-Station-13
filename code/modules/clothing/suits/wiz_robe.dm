@@ -275,7 +275,7 @@
 			L = A
 		else if(ismecha(A))
 			var/obj/vehicle/sealed/mecha/M = A
-			L = M.occupant
+			L = pick(M.occupants)
 		if(L && L.stat != DEAD && !HAS_TRAIT(L, TRAIT_DEATHCOMA)) //Taking revenge on the deads would be proposterous.
 			addtimer(CALLBACK(src, .proc/clear_grudge, L), 2 MINUTES, TIMER_OVERRIDE|TIMER_UNIQUE)
 			if(!book_of_grudges[L])

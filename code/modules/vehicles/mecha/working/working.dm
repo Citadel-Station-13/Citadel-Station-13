@@ -12,7 +12,7 @@
   * Checks for a hydraulic clamp or ore box manager and if it finds an ore box inside them puts ore in the ore box.
   */
 /obj/vehicle/sealed/mecha/working/proc/collect_ore()
-	if((locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in equipment) || (locate(/obj/item/mecha_parts/mecha_equipment/orebox_manager) in equipment))
+	if((locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in equipment))
 		var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in contents
 		if(ore_box)
 			for(var/obj/item/stack/ore/ore in range(1, src))
