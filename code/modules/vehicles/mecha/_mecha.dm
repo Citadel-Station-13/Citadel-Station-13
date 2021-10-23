@@ -231,7 +231,7 @@
 	GLOB.mechas_list -= src //global mech list
 	return ..()
 
-/obj/vehicle/sealed/mecha/update_icon_state()
+/obj/vehicle/sealed/mecha/update_icon()
 	icon_state = get_mecha_occupancy_state()
 	return ..()
 
@@ -242,14 +242,10 @@
 
 /obj/vehicle/sealed/mecha/proc/get_mecha_occupancy_state()
 	if((mecha_flags & SILICON_PILOT) && silicon_icon_state)
-		icon_state = silicon_icon_state
-		return ..()
 		return silicon_icon_state
 	if(LAZYLEN(occupants))
-		icon_state = initial(icon_state)
-		return ..()
-	icon_state = "[initial(icon_state)]-open"
-	return
+		return initial(icon_state)
+	return "[initial(icon_state)]-open"
 
 /obj/vehicle/sealed/mecha/get_cell()
 	return cell
@@ -1034,7 +1030,7 @@
 			return FALSE
 	to_chat(user, "<span class='notice'>You begin the ejection procedure. Equipment is disabled during this process. Hold still to finish ejecting.</span>")
 	is_currently_ejecting = TRUE
-	if(do_after(user, has_gravity() ? exit_delay : 0 , target = src))
+	if(do_after(user, exit_delay , target = src))
 		to_chat(user, "<span class='notice'>You exit the mech.</span>")
 		mob_exit(user, TRUE)
 	else

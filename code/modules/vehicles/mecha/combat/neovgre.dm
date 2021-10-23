@@ -9,6 +9,7 @@
 	internal_damage_threshold = 0
 	pixel_x = -16
 	layer = ABOVE_MOB_LAYER
+	max_occupants = 2
 	var/breach_time = 100 //ten seconds till all goes to shit
 	var/recharge_rate = 100
 	internals_req_access = list()
@@ -21,6 +22,26 @@
 	COOLDOWN_DECLARE(tesla_cooldown)
 	///cooldown time between tesla uses
 	var/tesla_cooldown_time = 20 SECONDS
+
+/obj/vehicle/sealed/mecha/combat/neovgre/auto_assign_occupant_flags(mob/new_occupant)
+	if(driver_amount() < max_drivers) //movement
+		add_control_flags(new_occupant, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_SETTINGS)
+	else //weapons
+		add_control_flags(new_occupant, VEHICLE_CONTROL_MELEE|VEHICLE_CONTROL_EQUIPMENT)
+
+/obj/vehicle/sealed/mecha/combat/neovgre/generate_actions()
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/swap_seat)
+	. = ..()
+	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/tesla_launch, VEHICLE_CONTROL_EQUIPMENT)
+
+/obj/vehicle/sealed/mecha/combat/neovgre/remove_occupant(mob/getting_out)
+	//gunner getting out ends any ivanov aiming
+	//while the gunner cannot leave we dont want to leave them 'aiming' if the mech dies
+	if(aiming_tesla && (getting_out in return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)))
+		end_tesla_targeting(getting_out)
+	. = ..()
+
+
 
 /obj/vehicle/sealed/mecha/mob_exit(mob/M, silent, forced)
 	if(forced)
