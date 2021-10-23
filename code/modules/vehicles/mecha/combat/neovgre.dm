@@ -6,6 +6,7 @@
 	max_integrity = 500 //This is THE ratvarian superweaon, its deployment is an investment
 	armor = list("melee" = 50, "bullet" = 40, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100) //Its similar to the clockwork armour albeit with a few buffs becuase RATVARIAN SUPERWEAPON!!
 	force = 50 //SMASHY SMASHY!!
+	move_delay = 3
 	internal_damage_threshold = 0
 	pixel_x = -16
 	layer = ABOVE_MOB_LAYER
@@ -35,7 +36,7 @@
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/tesla_launch, VEHICLE_CONTROL_EQUIPMENT)
 
 /obj/vehicle/sealed/mecha/combat/neovgre/remove_occupant(mob/getting_out)
-	//gunner getting out ends any ivanov aiming
+	//gunner getting out ends any tesla aiming
 	//while the gunner cannot leave we dont want to leave them 'aiming' if the mech dies
 	if(aiming_tesla && (getting_out in return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)))
 		end_tesla_targeting(getting_out)
@@ -148,7 +149,7 @@
 	A.preparePixelProjectile(target, src, spread = 0)
 	A.fire()
 	SEND_SOUND(gunner, 'sound/machines/triple_beep.ogg')
-
+	end_tesla_targeting(gunner)
 	var/datum/action/vehicle/sealed/mecha/acter = occupant_actions[gunner][/datum/action/vehicle/sealed/mecha/tesla_launch]
 	acter.button_icon_state = "mech_teslastrike_cooldown"
 	acter.UpdateButtonIcon()
