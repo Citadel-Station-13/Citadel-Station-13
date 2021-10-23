@@ -246,12 +246,10 @@
 		return ..()
 		return silicon_icon_state
 	if(LAZYLEN(occupants))
-		icon_state = inital(icon_state)
+		icon_state = initial(icon_state)
 		return ..()
-	icon_state = "[inital(icon_state)]-open"
-	return ..()
-		return inital(icon_state)
-	return "[inital(icon_state)]-open"
+	icon_state = "[initial(icon_state)]-open"
+	return
 
 /obj/vehicle/sealed/mecha/get_cell()
 	return cell
@@ -547,14 +545,14 @@
 			return
 	var/mob/living/L = user
 	if(selected)
-		if(!(livinguser in return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)))
+		if(!(L in return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)))
 			to_chat(user, "You can't control mech equipment from here!")
 			return
 		if(!Adjacent(target) && (selected.range & MECHA_RANGED))
 			if(HAS_TRAIT(L, TRAIT_PACIFISM) && selected.harmful)
 				to_chat(L, "<span class='warning'>You don't want to harm other living beings!</span>")
 				return
-			if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, livinguser, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
+			if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, L, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
 				return
 			selected.action(user, target, params)
 			return
@@ -562,16 +560,16 @@
 			if(isliving(target) && selected.harmful && HAS_TRAIT(L, TRAIT_PACIFISM))
 				to_chat(L, "<span class='warning'>You don't want to harm other living beings!</span>")
 				return
-			if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, livinguser, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
+			if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, L, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
 				return
 			selected.action(user, target, params)
 			return
-	if(!(livinguser in return_controllers_with_flag(VEHICLE_CONTROL_MELEE)))
-		to_chat(livinguser, "<span class='warning'>You're in the wrong seat to interact with your hands.</span>")
+	if(!(L in return_controllers_with_flag(VEHICLE_CONTROL_MELEE)))
+		to_chat(L, "<span class='warning'>You're in the wrong seat to interact with your hands.</span>")
 		return
 	var/on_cooldown = TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MELEE_ATTACK)
 	var/adjacent = Adjacent(target)
-	if(SEND_SIGNAL(src, COMSIG_MECHA_MELEE_CLICK, livinguser, target, on_cooldown, adjacent) & COMPONENT_CANCEL_MELEE_CLICK)
+	if(SEND_SIGNAL(src, COMSIG_MECHA_MELEE_CLICK, L, target, on_cooldown, adjacent) & COMPONENT_CANCEL_MELEE_CLICK)
 		return
 	if(on_cooldown || !adjacent)
 		return

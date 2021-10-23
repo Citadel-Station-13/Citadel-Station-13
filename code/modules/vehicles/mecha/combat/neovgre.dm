@@ -9,15 +9,18 @@
 	internal_damage_threshold = 0
 	pixel_x = -16
 	layer = ABOVE_MOB_LAYER
-	breach_time = 100 //ten seconds till all goes to shit
-	recharge_rate = 100
+	var/breach_time = 100 //ten seconds till all goes to shit
+	var/recharge_rate = 100
 	internals_req_access = list()
-	add_req_access = 0
 	wreckage = /obj/structure/mecha_wreckage/durand/neovgre
 	stepsound = 'sound/mecha/neostep2.ogg'
 	turnsound = 'sound/mecha/powerloader_step.ogg'
 	var/aiming_tesla
-	var/obj/item/projectile/tesla_shot = /obj/item/projectile/energy/tesla/sphere
+	var/obj/item/projectile/tesla_shot = /obj/item/projectile/energy/tesla/sphere //do YOU want to make Neo Vg Re shoot things other than tesla balls?
+
+	COOLDOWN_DECLARE(tesla_cooldown)
+	///cooldown time between tesla uses
+	var/tesla_cooldown_time = 20 SECONDS
 
 /obj/vehicle/sealed/mecha/mob_exit(mob/M, silent, forced)
 	if(forced)
@@ -49,7 +52,7 @@
 	explosion(get_turf(loc), 3, 5, 10, 20, 30)
 	Destroy(src)
 
-/obj/vehicle/sealed/mecha/combat//neovgre/container_resist(mob/living/user)
+/obj/vehicle/sealed/mecha/combat/neovgre/container_resist(mob/living/user)
 	to_chat(user, "<span class='brass'>Neovgre requires a lifetime commitment friend, no backing out now!</span>")
 	return
 
@@ -88,7 +91,7 @@
 	desc = "Please re-attach this to neovgre and stop asking questions about why it looks like a normal Nanotrasen issue Solaris laser cannon - Nezbere"
 	fire_sound = 'sound/weapons/neovgre_laser.ogg'
 
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy/neovgre/can_attach(obj/mecha/combat/neovgre/M)
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy/neovgre/can_attach(obj/vehicle/sealed/mecha/combat/neovgre/M)
 	if(istype(M))
 		return 1
 	return 0
@@ -99,15 +102,11 @@
 	aiming_tesla = TRUE
 	RegisterSignal(src, COMSIG_MECHA_MELEE_CLICK, .proc/on_melee_click)
 	RegisterSignal(src, COMSIG_MECHA_EQUIPMENT_CLICK, .proc/on_equipment_click)
-	gunner.client.mouse_override_icon = 'icons/effects/mouse_pointers/supplypod_down_target.dmi'
-	gunner.update_mouse_pointer()
 	SEND_SOUND(gunner, 'sound/machines/terminal_on.ogg') //spammable so I don't want to make it audible to anyone else
 
-/obj/vehicle/sealed/mecha/combat/neovgre/proc/end_missile_targeting(mob/gunner)
+/obj/vehicle/sealed/mecha/combat/neovgre/proc/end_tesla_targeting(mob/gunner)
 	aiming_tesla = FALSE
 	UnregisterSignal(src, list(COMSIG_MECHA_MELEE_CLICK, COMSIG_MECHA_EQUIPMENT_CLICK))
-	gunner.client.mouse_override_icon = null
-	gunner.update_mouse_pointer()
 
 ///signal called from clicking with no equipment
 /obj/vehicle/sealed/mecha/combat/neovgre/proc/on_melee_click(datum/source, mob/living/pilot, atom/target, on_cooldown, is_adjacent)
@@ -125,14 +124,14 @@
 
 /obj/vehicle/sealed/mecha/combat/neovgre/proc/tesla_fire(mob/gunner, atom/target)
 	var/obj/item/projectile/A = new tesla_shot(get_turf(src))
-	A.preparePixelProjectile(target, source, params, spread)
+	A.preparePixelProjectile(target, src, spread = 0)
 	A.fire()
 	SEND_SOUND(gunner, 'sound/machines/triple_beep.ogg')
 
 	var/datum/action/vehicle/sealed/mecha/acter = occupant_actions[gunner][/datum/action/vehicle/sealed/mecha/tesla_launch]
 	acter.button_icon_state = "mech_teslastrike_cooldown"
 	acter.UpdateButtonIcon()
-	addtimer(CALLBACK(acter, /datum/action/vehicle/sealed/mecha/tesla_launch.proc/reset_button_icon), strike_cooldown_time)
+	addtimer(CALLBACK(acter, /datum/action/vehicle/sealed/mecha/tesla_launch.proc/reset_button_icon), tesla_cooldown_time)
 
 
 /datum/action/vehicle/sealed/mecha/tesla_launch
@@ -143,8 +142,8 @@
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
 	var/obj/vehicle/sealed/mecha/combat/neovgre/animab = chassis
-	if(!COOLDOWN_FINISHED(animab, strike_cooldown))
-		var/timeleft = COOLDOWN_TIMELEFT(animab, strike_cooldown)
+	if(!COOLDOWN_FINISHED(animab, tesla_cooldown))
+		var/timeleft = COOLDOWN_TIMELEFT(animab, tesla_cooldown)
 		to_chat(owner, "<span class='warning'>You need to wait [DisplayTimeText(timeleft, 1)] before the tesla generator is recharged.</span>")
 		return
 	if(animab.aiming_tesla)
