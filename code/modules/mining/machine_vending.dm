@@ -422,5 +422,5 @@
 /obj/item/storage/backpack/duffelbag/mining/glaivekit
 
 /obj/item/storage/backpack/duffelbag/mining/glaivekit/PopulateContents()
-	new /obj/item/kinetic_crusher/glaive(src)
+	new /obj/item/kitchen/knife/combat/survival/knuckledagger(src)
 	new /obj/item/premium_crusher_voucher(src)
