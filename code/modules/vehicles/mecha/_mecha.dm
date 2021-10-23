@@ -1046,6 +1046,7 @@
 	var/atom/movable/mob_container
 	if(ishuman(M))
 		mob_container = M
+		return ..()
 	else if(isbrain(M))
 		var/mob/living/brain/brain = M
 		mob_container = brain.container
@@ -1071,21 +1072,20 @@
 		return ..()
 	var/mob/living/L = M
 	mecha_flags  &= ~SILICON_PILOT
-	if(mob_container.forceMove(newloc))//ejecting mob container
+	if(mob_container.forceMove(newloc))
 		log_message("[mob_container] moved out.", LOG_MECHA)
 		L << browse(null, "window=exosuit")
-
-		if(istype(mob_container, /obj/item/mmi))
-			var/obj/item/mmi/mmi = mob_container
-			if(mmi.brainmob)
-				L.forceMove(mmi)
-				L.reset_perspective()
-				remove_occupant(L)
-			mmi.mecha = null
-			mmi.update_icon()
-			L.mobility_flags = NONE
-		update_icon()
-		setDir(dir_in)
+	if(istype(mob_container, /obj/item/mmi))
+		var/obj/item/mmi/mmi = mob_container
+		if(mmi.brainmob)
+			L.forceMove(mmi)
+			L.reset_perspective()
+			remove_occupant(L)
+		mmi.mecha = null
+		mmi.update_icon()
+		L.mobility_flags = NONE
+	update_icon()
+	setDir(dir_in)
 	return ..()
 
 
