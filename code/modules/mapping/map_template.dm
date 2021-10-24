@@ -1,14 +1,26 @@
 /datum/map_template
+	/// Template name - used for interfaces
 	var/name = "Default Template Name"
-	var/width = 0				//all these are for SOUTH!
+	/// Template ID - must be unique
+	var/id
+	/// Width when facing south
+	var/width = 0
+	/// Height when facing south
 	var/height = 0
+	/// Z-height
 	var/zdepth = 1
+	/// Path to .dmm
 	var/mappath
-	var/loaded = 0 // Times loaded this round
+	/// Times loaded this round
+	var/loaded = 0
+	/// Cached parsed map - allows for quick re-loading or bounds checking.
 	var/datum/parsed_map/cached_map
+	/// Keep cached map by default?
 	var/keep_cached_map = FALSE
+	/// Annihilate bounds by default?
 	var/default_annihilate = FALSE
-	var/list/ztraits				//zlevel traits for load_new_z
+	/// Default zlevel traits for load_new_z
+	var/list/ztraits
 
 /datum/map_template/New(path = null, rename = null, cache = FALSE)
 	if(path)
@@ -17,6 +29,8 @@
 		preload_size(mappath, cache)
 	if(rename)
 		name = rename
+	if(!id)
+		id = "[type]"
 
 /datum/map_template/Destroy()
 	QDEL_NULL(cached_map)

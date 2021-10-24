@@ -53,6 +53,12 @@ SUBSYSTEM_DEF(mapping)
 	/// "secret" key
 	var/obfuscation_secret
 
+	// Map Templates
+	///
+
+	/// prefabs by group id - list()
+	var/list/prefab_groups
+
 //dlete dis once #39770 is resolved
 /datum/controller/subsystem/mapping/proc/HACK_LoadMapConfig()
 	if(!config)
