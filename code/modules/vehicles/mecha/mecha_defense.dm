@@ -251,6 +251,13 @@
 		var/obj/item/mecha_parts/P = W
 		P.try_attach_part(user, src)
 		return
+	if(istype(W, /obj/item/analyzer))
+		if(construction_state)
+			var/datum/gas_mixture/GasNux = internal_tank.return_air()
+			atmosanalyzer_scan(GasNux,user,src,TRUE)
+		else
+			atmosanalyzer_scan(cabin_air,user,src,TRUE)
+		return
 	log_message("Attacked by [W]. Attacker - [user]", LOG_MECHA)
 	return ..()
 

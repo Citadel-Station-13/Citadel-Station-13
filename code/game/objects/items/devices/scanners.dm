@@ -785,6 +785,7 @@ GENETICS SCANNER
 	name = "long-range analyzer"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "ranged_analyzer"
+	accuracy = 0
 
 /obj/item/analyzer/ranged/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
