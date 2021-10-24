@@ -668,16 +668,21 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		forced_injection = dry_run
 		return 100
 	var/chance = 0
-	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(current_players[CURRENT_LIVING_PLAYERS].len/5))
-	if(!GLOB.dynamic_extended) //we're allowed to spend a long time with no antags if extended is voted
-		if (!current_players[CURRENT_LIVING_ANTAGS].len)
-			chance += 50 // No antags at all? let's boost those odds!
+	var/effective_living_players = current_players[CURRENT_LIVING_PLAYERS].len
+	if(GLOB.dynamic_extended)
+		effective_living_players = min(effective_living_players, length(SSjob.get_living_sec())*2 + length(SSjob.get_living_heads())
+	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(effective_living_players/5))
+	if (!current_players[CURRENT_LIVING_ANTAGS].len)
+		if(GLOB.dynamic_extended)
+			chance += min(50,effective_living_players*5)
 		else
-			var/current_pop_per_antag = current_players[CURRENT_LIVING_PLAYERS].len / current_players[CURRENT_LIVING_ANTAGS].len
-			if (current_pop_per_antag > max_pop_per_antag)
-				chance += min(50, 25+10*(current_pop_per_antag-max_pop_per_antag))
-			else
-				chance += 25-10*(max_pop_per_antag-current_pop_per_antag)
+			chance += 50 // No antags at all? let's boost those odds!
+	else
+		var/current_pop_per_antag = effective_living_players / current_players[CURRENT_LIVING_ANTAGS].len
+		if (current_pop_per_antag > max_pop_per_antag)
+			chance += min(50, 25+10*(current_pop_per_antag-max_pop_per_antag))
+		else
+			chance += 25-10*(max_pop_per_antag-current_pop_per_antag)
 	if (current_players[CURRENT_DEAD_PLAYERS].len > current_players[CURRENT_LIVING_PLAYERS].len)
 		chance -= 30 // More than half the crew died? ew, let's calm down on antags
 	if (mid_round_budget > higher_injection_chance_minimum_threat)
