@@ -530,8 +530,8 @@
 	gas_max[GAS_N2] = PP(breath, GAS_N2) + 5
 	var/datum/breathing_class/class = GLOB.gas_data.breathing_classes[breathing_class]
 	var/o2_pp = class.get_effective_pp(breath)
-	safe_breath_min = 0.3 * o2_pp
-	safe_breath_max = 1.3 * o2_pp
+	safe_breath_min = min(3, 0.3 * o2_pp)
+	safe_breath_max = max(18, 1.3 * o2_pp + 1)
 	..()
 	#undef SAFE_THRESHOLD_RATIO
 
