@@ -4,8 +4,7 @@
 	name = "Oxygen"
 	oxidation_temperature = T0C - 100 // it checks max of this and fire temperature, so rarely will things spontaneously combust
 	powermix = 1
-	heat_penalty = 1
-	transmit_modifier = 1.5
+	transmit_modifier = 3
 
 /datum/gas/nitrogen
 	id = GAS_N2
@@ -51,8 +50,8 @@
 	gas_overlay = "plasma"
 	moles_visible = MOLES_GAS_VISIBLE
 	flags = GAS_FLAG_DANGEROUS
-	heat_penalty = 15
-	transmit_modifier = 4
+	heat_penalty = 30
+	transmit_modifier = 3
 	powermix = 1
 	// no fire info cause it has its own bespoke reaction for trit generation reasons
 

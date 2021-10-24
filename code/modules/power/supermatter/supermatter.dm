@@ -405,7 +405,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	if(!removed || !removed.total_moles() || isspaceturf(T)) //we're in space or there is no gas to process
 		if(takes_damage)
-			damage += max((power / 1000) * DAMAGE_INCREASE_MULTIPLIER, 0.1) // always does at least some damage
+			damage += max((power / 400) * DAMAGE_INCREASE_MULTIPLIER, 0.1) // always does at least some damage
 		combined_gas = max(0, combined_gas - 0.5)		// Slowly wear off.
 		for(var/gasID in gas_comp)
 			gas_comp[gasID] = max(0, gas_comp[gasID] - 0.05)		//slowly ramp down
