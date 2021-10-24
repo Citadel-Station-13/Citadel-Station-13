@@ -30,10 +30,6 @@
 	. = ..()
 	update_pressure()
 
-/obj/vehicle/sealed/mecha/working/ripley/mob_exit(mob/M, silent, forced)
-	..()
-	update_icon()
-
 /obj/vehicle/sealed/mecha/working/ripley/moved_inside(mob/living/carbon/human/H)
 	..()
 	update_icon()
@@ -82,7 +78,8 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 60, BIO = 0, RAD = 70, FIRE = 100, ACID = 100)
 	max_equip = 5 // More armor, less tools
-
+	enclosed = TRUE
+	enter_delay = 40
 
 /obj/vehicle/sealed/mecha/working/ripley/deathripley
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE"

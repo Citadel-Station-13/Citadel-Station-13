@@ -196,6 +196,8 @@
 	update_icon()
 
 /obj/vehicle/sealed/mecha/Destroy()
+	if(obj_integrity > 0) //no explody if we have hp remaining!
+		explode_on_death = FALSE
 	for(var/M in occupants)
 		var/mob/living/occupant = M
 		if(isAI(occupant))
@@ -483,7 +485,7 @@
 		var/mob/living/occupant = b
 		if(!enclosed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
 			visible_message("<span class='warning'>[occupant] tumbles out of the cockpit!</span>")
-			mob_exit(occupant)	//bye bye
+			mob_try_exit(occupant, TRUE, TRUE)	//bye bye
 
 //Diagnostic HUD updates
 	diag_hud_set_mechhealth()
@@ -1032,21 +1034,24 @@
 	is_currently_ejecting = TRUE
 	if(do_after(user, exit_delay , target = src))
 		to_chat(user, "<span class='notice'>You exit the mech.</span>")
-		mob_exit(user, TRUE)
+		mob_try_exit(user, silent = FALSE)
 	else
 		to_chat(user, "<span class='notice'>You stop exiting the mech. Weapons are enabled again.</span>")
 	is_currently_ejecting = FALSE
 
 /obj/vehicle/sealed/mecha/proc/ejectall()
 	for(var/ejectee in occupants)
-		mob_exit(ejectee, TRUE, TRUE)
+		mob_try_exit(ejectee, TRUE, TRUE)
+
+/obj/vehicle/sealed/mecha/mob_try_exit(mob/M, silent, randomstep)
+	mob_exit(M, silent, randomstep)
 
 /obj/vehicle/sealed/mecha/mob_exit(mob/M, silent, forced)
 	var/newloc = get_turf(src)
 	var/atom/movable/mob_container
 	if(ishuman(M))
-		mob_container = M
-		return ..()
+		..()
+		return
 	else if(isbrain(M))
 		var/mob/living/brain/brain = M
 		mob_container = brain.container

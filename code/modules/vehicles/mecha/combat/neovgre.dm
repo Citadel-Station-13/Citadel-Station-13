@@ -10,41 +10,16 @@
 	internal_damage_threshold = 0
 	pixel_x = -16
 	layer = ABOVE_MOB_LAYER
-	max_occupants = 2
 	var/breach_time = 100 //ten seconds till all goes to shit
 	var/recharge_rate = 100
 	internals_req_access = list()
 	wreckage = /obj/structure/mecha_wreckage/durand/neovgre
 	stepsound = 'sound/mecha/neostep2.ogg'
 	turnsound = 'sound/mecha/powerloader_step.ogg'
-	var/aiming_tesla
-	var/obj/item/projectile/tesla_shot = /obj/item/projectile/energy/tesla/sphere //do YOU want to make Neo Vg Re shoot things other than tesla balls?
-
-	COOLDOWN_DECLARE(tesla_cooldown)
-	///cooldown time between tesla uses
-	var/tesla_cooldown_time = 20 SECONDS
-
-/obj/vehicle/sealed/mecha/combat/neovgre/auto_assign_occupant_flags(mob/new_occupant)
-	if(driver_amount() < max_drivers) //movement
-		add_control_flags(new_occupant, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_SETTINGS)
-	else //weapons
-		add_control_flags(new_occupant, VEHICLE_CONTROL_MELEE|VEHICLE_CONTROL_EQUIPMENT)
-
-/obj/vehicle/sealed/mecha/combat/neovgre/generate_actions()
-	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/swap_seat)
-	. = ..()
-	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/tesla_launch, VEHICLE_CONTROL_EQUIPMENT)
-
-/obj/vehicle/sealed/mecha/combat/neovgre/remove_occupant(mob/getting_out)
-	//gunner getting out ends any tesla aiming
-	//while the gunner cannot leave we dont want to leave them 'aiming' if the mech dies
-	if(aiming_tesla && (getting_out in return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)))
-		end_tesla_targeting(getting_out)
-	. = ..()
 
 
 
-/obj/vehicle/sealed/mecha/mob_exit(mob/M, silent, forced)
+/obj/vehicle/sealed/mecha/neovgre/mob_exit(mob/M, silent, forced)
 	if(forced)
 		..()
 
@@ -117,63 +92,3 @@
 	if(istype(M))
 		return 1
 	return 0
-
-
-/obj/vehicle/sealed/mecha/combat/neovgre/proc/start_tesla_targeting(mob/gunner)
-	to_chat(gunner, "You begin preparing a firing solution for the tesla sphere generator.")
-	aiming_tesla = TRUE
-	RegisterSignal(src, COMSIG_MECHA_MELEE_CLICK, .proc/on_melee_click)
-	RegisterSignal(src, COMSIG_MECHA_EQUIPMENT_CLICK, .proc/on_equipment_click)
-	SEND_SOUND(gunner, 'sound/machines/terminal_on.ogg') //spammable so I don't want to make it audible to anyone else
-
-/obj/vehicle/sealed/mecha/combat/neovgre/proc/end_tesla_targeting(mob/gunner)
-	aiming_tesla = FALSE
-	UnregisterSignal(src, list(COMSIG_MECHA_MELEE_CLICK, COMSIG_MECHA_EQUIPMENT_CLICK))
-
-///signal called from clicking with no equipment
-/obj/vehicle/sealed/mecha/combat/neovgre/proc/on_melee_click(datum/source, mob/living/pilot, atom/target, on_cooldown, is_adjacent)
-	SIGNAL_HANDLER
-	if(!target)
-		return
-	tesla_fire(pilot, target)
-
-///signal called from clicking with equipment
-/obj/vehicle/sealed/mecha/combat/neovgre/proc/on_equipment_click(datum/source, mob/living/pilot, atom/target)
-	SIGNAL_HANDLER
-	if(!target)
-		return
-	tesla_fire(pilot, target)
-
-/obj/vehicle/sealed/mecha/combat/neovgre/proc/tesla_fire(mob/gunner, atom/target)
-	var/obj/item/projectile/A = new tesla_shot(get_turf(src))
-	A.preparePixelProjectile(target, src, spread = 0)
-	A.fire()
-	SEND_SOUND(gunner, 'sound/machines/triple_beep.ogg')
-	end_tesla_targeting(gunner)
-	var/datum/action/vehicle/sealed/mecha/acter = occupant_actions[gunner][/datum/action/vehicle/sealed/mecha/tesla_launch]
-	acter.button_icon_state = "mech_teslastrike_cooldown"
-	acter.UpdateButtonIcon()
-	addtimer(CALLBACK(acter, /datum/action/vehicle/sealed/mecha/tesla_launch.proc/reset_button_icon), tesla_cooldown_time)
-
-
-/datum/action/vehicle/sealed/mecha/tesla_launch
-	name = "Fire Tesla Generator"
-	button_icon_state = "mech_teslastrike"
-
-/datum/action/vehicle/sealed/mecha/tesla_launch/Trigger()
-	if(!owner || !chassis || !(owner in chassis.occupants))
-		return
-	var/obj/vehicle/sealed/mecha/combat/neovgre/animab = chassis
-	if(!COOLDOWN_FINISHED(animab, tesla_cooldown))
-		var/timeleft = COOLDOWN_TIMELEFT(animab, tesla_cooldown)
-		to_chat(owner, "<span class='warning'>You need to wait [DisplayTimeText(timeleft, 1)] before the tesla generator is recharged.</span>")
-		return
-	if(animab.aiming_tesla)
-		animab.end_tesla_targeting(owner)
-	else
-		animab.start_tesla_targeting(owner)
-
-
-/datum/action/vehicle/sealed/mecha/tesla_launch/proc/reset_button_icon()
-	button_icon_state = "mech_teslastrike"
-	UpdateButtonIcon()

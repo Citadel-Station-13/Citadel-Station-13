@@ -94,10 +94,10 @@
 	chassis.mecha_flags ^= LIGHTS_ON
 	if(chassis.mecha_flags & LIGHTS_ON)
 		button_icon_state = "mech_lights_on"
-		chassis.set_light(0)
+		chassis.set_light(5, 5)
 	else
 		button_icon_state = "mech_lights_off"
-		chassis.set_light(5, 5)
+		chassis.set_light(0)
 	to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>Toggled lights [(chassis.mecha_flags & LIGHTS_ON)?"on":"off"].</span>")
 	chassis.log_message("Toggled lights [(chassis.mecha_flags & LIGHTS_ON)?"on":"off"].", LOG_MECHA)
 	UpdateButtonIcon()
@@ -121,7 +121,6 @@
 /datum/action/vehicle/sealed/mecha/strafe/Trigger()
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
-
 	chassis.toggle_strafe()
 
 /obj/vehicle/sealed/mecha/AltClick(mob/living/user)
@@ -164,13 +163,14 @@
 		chassis.leg_overload_mode = forced_state
 	else
 		chassis.leg_overload_mode = !chassis.leg_overload_mode
-	button_icon_state = "mech_overload_[chassis.leg_overload_mode ? "on" : "off"]"
 	chassis.log_message("Toggled leg actuators overload.", LOG_MECHA)
 	if(!chassis.leg_overload_mode)
+		button_icon_state = "mech_overload_on"
 		chassis.movedelay = min(1, round(chassis.movedelay * 0.5))
 		chassis.step_energy_drain = max(chassis.overload_step_energy_drain_min,chassis.step_energy_drain*chassis.leg_overload_coeff)
 		to_chat(owner, "[icon2html(chassis, owner)]<span class='danger'>You enable leg actuators overload.</span>")
 	else
+		button_icon_state = "mech_overload_off"
 		chassis.movedelay = initial(chassis.movedelay)
 		chassis.step_energy_drain = chassis.normal_step_energy_drain
 		to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>You disable leg actuators overload.</span>")
