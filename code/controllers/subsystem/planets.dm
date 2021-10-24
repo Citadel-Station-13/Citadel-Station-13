@@ -1,11 +1,21 @@
-PROCESSING_SUBSYSTEM_DEF(planets)
+/**
+ * Planets subsystem
+ * Holds data and ticks planets
+ *
+ * Does NOT control planet zlevel allocation or hold submaps.
+ * That is the job of SSmapping.
+ */
+SUBSYSTEM_DEF(planets)
 	name = "Planets"
 	wait = 1 SECONDS
 	init_order = INIT_ORDER_PLANETS
 	fire_priority = FIRE_PRIORITY_PLANETS
+	flags = SS_BACKGROUND | SS_NO_TICK_CHECK
 
 	/// all planets
 	var/list/datum/planet/planets
+	/// active planets - these tick
+	var/list/datum/planet/active
 	/// zlevel to planet lookup for fast access - z = planet datum
 	var/list/z_to_planet
 	/// planet to zlevels lookup for fast access - planet datum = list(zs)
@@ -41,19 +51,21 @@ PROCESSING_SUBSYSTEM_DEF(planets)
 	/// planet lighting update per-cycles
 	var/cycles_update_lighting = 60
 
-/datum/controller/subsystem/processing/planets/Initialize()
+/datum/controller/subsystem/planets/Initialize()
 	init_biomes()
 	init_themes()
 	regenerate_z_tables()
 	return ..()
 
-/datum/controller/subsystem/processing/planets/Recover()
+/datum/controller/subsystem/planets/Recover()
 	. = ..()
 	if(!SSplanets)
 		return
 	// recover planets if possible
 	LAZYINITLIST(planets)
+	LAZYINITLIST(active)
 	planets |= SSplanets.planets
+	active |= SSplanets.active
 
 	// generate biomes and themes
 	init_biomes()
@@ -65,3 +77,17 @@ PROCESSING_SUBSYSTEM_DEF(planets)
 
 	// regenerate lookup tables
 	regenerate_z_tables()
+
+/datum/controller/subsystem/planets/fire(resumed)
+	var/dt = (flags & SS_TICKER)? wait * world.tick_lag * 0.1 : wait * 0.1
+	for(var/datum/planet/P as anything in active)
+		if(times_fired % cycles_update_time)
+			P.UpdateTime(dt)
+		if(times_fired % cycles_update_weather)
+			P.UpdateWeather(dt)
+		if(times_fired % cycles_tick_weather_fast)
+			P.FastWeatherTick(dt)
+		if(times_fired % cycles_tick_weather_slow)
+			P.SlowWeatherTick(dt)
+		if(times_fired % cycles_update_lighting)
+			P.UpdateLighting(dt)
