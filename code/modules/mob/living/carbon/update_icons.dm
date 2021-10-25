@@ -2,11 +2,10 @@
 	if(mob_transforming)
 		return TRUE
 	update_limbs(list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_ARM, BODY_ZONE_R_LEG))
-	//full_appearance.render()
 	return FALSE
 
 /mob/living/carbon/update_inv_hands()
-	remove_overlay(HANDS_LAYER)
+	full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(HANDS_LAYER))
 	if (handcuffed)
 		drop_all_held_items()
 		return
@@ -37,7 +36,7 @@
 
 
 /mob/living/carbon/update_fire(var/fire_icon = "Generic_mob_burning")
-	remove_overlay(FIRE_LAYER)
+	full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(FIRE_LAYER))
 	if(on_fire)
 		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', fire_icon, -FIRE_LAYER)
 		new_fire_overlay.appearance_flags = RESET_COLOR
@@ -168,7 +167,7 @@
 	return
 
 /mob/living/carbon/update_body()
-	update_body_parts()
+	update_limbs()
 
 /////////////////////
 // Limb Icon Cache //

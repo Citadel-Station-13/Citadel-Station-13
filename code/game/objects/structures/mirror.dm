@@ -205,7 +205,7 @@
 
 			H.update_body()
 			H.update_hair()
-			H.update_body_parts()
+			H.update_limbs()
 			H.update_mutations_overlay() // no hulk lizard
 
 		if("gender")

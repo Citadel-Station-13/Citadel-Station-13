@@ -1008,9 +1008,8 @@
 			var/mob/living/carbon/human/H = owner
 			var/mutable_appearance/badtime = mutable_appearance('icons/mob/human_parts.dmi', "b_golem_eyes", -FIRE_LAYER-0.5)
 			badtime.appearance_flags = RESET_COLOR
-			H.overlays_standing[FIRE_LAYER+0.5] = badtime
-			H.apply_overlay(FIRE_LAYER+0.5)
-			addtimer(CALLBACK(H, /mob/living/carbon/.proc/remove_overlay, FIRE_LAYER+0.5), 25)
+			H.full_appearance[MISC_APPEARANCE].add_data(badtime, "TEMP-BONECHILL")
+			addtimer(CALLBACK(H.full_appearance[MISC_APPEARANCE], /datum/appearance/.proc/remove_data, "TEMP-BONECHILL"), 25)
 	else
 		playsound(get_turf(owner),'sound/magic/RATTLEMEBONES.ogg', 100)
 	for(var/mob/living/L in orange(7, get_turf(owner)))

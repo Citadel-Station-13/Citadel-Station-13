@@ -240,8 +240,8 @@
 		for(var/L in relevant_layers)
 			LAZYSET(layers_num, L, text2num(L))
 	for(var/L in relevant_layers) //Less hardcode
-		remove_overlay(layers_num[L])
-	remove_overlay(GENITALS_EXPOSED_LAYER)
+		full_appearance.appearance_list[MISC_APPEARANCE].remove_data(L)
+	full_appearance.appearance_list[MISC_APPEARANCE].remove_data(GENITALS_EXPOSED_LAYER)
 	if(!LAZYLEN(internal_organs) || ((NOGENITALS in dna.species.species_traits) && !genital_override) || HAS_TRAIT(src, TRAIT_HUSK))
 		return
 
@@ -319,15 +319,10 @@
 				standing += genital_overlay
 
 		if(LAZYLEN(standing))
-			overlays_standing[layers_num[layer]] = standing
+			full_appearance.appearance_list[MISC_APPEARANCE].add_data(standing, layer)
 
 	if(LAZYLEN(fully_exposed))
-		overlays_standing[GENITALS_EXPOSED_LAYER] = fully_exposed
-		apply_overlay(GENITALS_EXPOSED_LAYER)
-
-	for(var/L in relevant_layers)
-		apply_overlay(layers_num[L])
-
+		full_appearance.appearance_list[MISC_APPEARANCE].add_data(fully_exposed, GENITALS_EXPOSED_LAYER)
 
 //Checks to see if organs are new on the mob, and changes their colours so that they don't get crazy colours.
 /mob/living/carbon/human/proc/emergent_genital_call()

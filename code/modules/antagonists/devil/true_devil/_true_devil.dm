@@ -198,7 +198,10 @@
 /mob/living/carbon/true_devil/update_body() //we don't use the bodyparts layer for devils.
 	return
 
-/mob/living/carbon/true_devil/update_body_parts()
+/mob/living/carbon/true_devil/update_limbs()
+	return
+
+/mob/living/carbon/true_devil/update_limb()
 	return
 
 /mob/living/carbon/true_devil/update_damage_overlays() //devils don't have damage overlays.

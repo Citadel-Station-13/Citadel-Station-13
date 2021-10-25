@@ -802,11 +802,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
 
-	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(-BODY_BEHIND_LAYER))
-	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(-BODY_ADJ_LAYER))
-	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(-BODY_ADJ_UPPER_LAYER))
-	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(-BODY_FRONT_LAYER))
-	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(-HORNS_LAYER))
+	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(BODY_BEHIND_LAYER))
+	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(BODY_ADJ_LAYER))
+	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(BODY_ADJ_UPPER_LAYER))
+	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(BODY_FRONT_LAYER))
+	H.full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(HORNS_LAYER))
 
 	if(!length(mutant_bodyparts))
 		return
@@ -849,7 +849,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			O.use_digitigrade = FULL_DIGITIGRADE
 			update_needed = TRUE
 	if(update_needed)
-		H.update_body_parts()
+		H.update_limbs()
 	if(not_digitigrade && (DIGITIGRADE in species_traits)) //Curse is lifted
 		species_traits -= DIGITIGRADE
 
@@ -1087,13 +1087,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 				standing += extra2_accessory_overlay
 
-		H.overlays_standing[layernum] = standing
-
-	H.apply_overlay(BODY_BEHIND_LAYER)
-	H.apply_overlay(BODY_ADJ_LAYER)
-	H.apply_overlay(BODY_ADJ_UPPER_LAYER)
-	H.apply_overlay(BODY_FRONT_LAYER)
-	H.apply_overlay(HORNS_LAYER)
+		H.full_appearance.appearance_list[MISC_APPEARANCE].add_data(standing, layer)
 
 /*
  * Equip the outfit required for life. Replaces items currently worn.

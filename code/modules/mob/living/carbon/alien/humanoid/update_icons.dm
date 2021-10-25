@@ -1,8 +1,7 @@
 
 /mob/living/carbon/alien/humanoid/update_icons()
 	cut_overlays()
-	for(var/I in overlays_standing)
-		add_overlay(I)
+	full_appearance.render()
 
 	var/asleep = IsSleeping()
 	if(stat == DEAD)
@@ -58,7 +57,7 @@
 	update_icons()
 
 /mob/living/carbon/alien/humanoid/update_inv_handcuffed()
-	remove_overlay(HANDCUFF_LAYER)
+	full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(HANDCUFF_LAYER))
 
 	if(handcuffed)
 		var/cuff_icon = handcuffed.item_state
@@ -71,13 +70,12 @@
 		var/mutable_appearance/cuffs = mutable_appearance(dmi_file, cuff_icon, -HANDCUFF_LAYER)
 		cuffs.color = handcuffed.color
 
-		overlays_standing[HANDCUFF_LAYER] = cuffs
-		apply_overlay(HANDCUFF_LAYER)
+		full_appearance.appearance_list[MISC_APPEARANCE].add_data(cuffs, num2text(HANDCUFF_LAYER))
 
 //Royals have bigger sprites, so inhand things must be handled differently.
 /mob/living/carbon/alien/humanoid/royal/update_inv_hands()
 	..()
-	remove_overlay(HANDS_LAYER)
+	full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(HANDS_LAYER))
 	var/list/hands = list()
 
 	var/obj/item/l_hand = get_item_for_held_index(1)
@@ -94,5 +92,4 @@
 			itm_state = r_hand.icon_state
 		hands += mutable_appearance(alt_inhands_file, "[itm_state][caste]_r", -HANDS_LAYER)
 
-	overlays_standing[HANDS_LAYER] = hands
-	apply_overlay(HANDS_LAYER)
+	full_appearance.appearance_list[MISC_APPEARANCE].add_data(hands, num2text(HANDS_LAYER))

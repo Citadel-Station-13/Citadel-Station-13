@@ -64,7 +64,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_body(update_genitals = FALSE)
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
-		remove_overlay(BODY_LAYER)
+		full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(BODY_LAYER))
 		dna.species.handle_body(src)
 		..()
 		if(update_genitals)
@@ -83,20 +83,18 @@ There are several things that need to be remembered:
 
 
 /mob/living/carbon/human/update_antag_overlays()
-	remove_overlay(ANTAG_LAYER)
+	full_appearance.appearance_list[MISC_APPEARANCE].remove_data(num2text(ANTAG_LAYER))
 	var/datum/antagonist/cult/D = src?.mind?.has_antag_datum(/datum/antagonist/cult) //check for cultism
 	if(D && D.cult_team?.cult_ascendent == TRUE)
 		var/istate = pick("halo1","halo2","halo3","halo4","halo5","halo6")
 		var/mutable_appearance/new_cult_overlay = mutable_appearance('icons/effects/32x64.dmi', istate, -ANTAG_LAYER)
-		overlays_standing[ANTAG_LAYER] = new_cult_overlay
+		full_appearance.appearance_list[MISC_APPEARANCE].add_data(new_cult_overlay, num2text(ANTAG_LAYER))
 	var/datum/antagonist/clockcult/C = src?.mind?.has_antag_datum(/datum/antagonist/clockcult) //check for clockcultism - surely one can't be both cult and clockie, right?
 	if(C)
 		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
 		if(G && G.active && ishuman(src))
 			var/mutable_appearance/new_cult_overlay = mutable_appearance('icons/effects/genetics.dmi', "servitude", -ANTAG_LAYER)
-			overlays_standing[ANTAG_LAYER] = new_cult_overlay
-	apply_overlay(ANTAG_LAYER)
-
+			full_appearance.appearance_list[MISC_APPEARANCE].add_data(new_cult_overlay, num2text(ANTAG_LAYER))
 
 /mob/living/carbon/human/update_inv_w_uniform()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
@@ -156,7 +154,7 @@ There are several things that need to be remembered:
 			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_ID]
 			inv.update_icon()
 
-		var/mutable_appearance/id_overlay = overlays_standing[ID_LAYER]
+		var/mutable_appearance/id_overlay
 
 		if(wear_id)
 			wear_id.screen_loc = ui_id
@@ -175,6 +173,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_gloves()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(GLOVES_LAYER))
+		var/list/overlays_to_add = list()
 
 		if(client && hud_used && hud_used.inv_slots[SLOT_GLOVES])
 			var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_GLOVES]
@@ -188,21 +187,21 @@ There are several things that need to be remembered:
 				else if(has_right_hand(FALSE))
 					bloody_overlay.icon_state = "bloodyhands_right"
 
-			overlays_standing[GLOVES_LAYER] = bloody_overlay
+			overlays_to_add += bloody_overlay
 
-		var/mutable_appearance/gloves_overlay = overlays_standing[GLOVES_LAYER]
+		var/mutable_appearance/gloves_overlay
 		if(gloves)
 			gloves.screen_loc = ui_gloves
 			if(client && hud_used && hud_used.hud_shown)
 				if(hud_used.inventory_shown)
 					client.screen += gloves
 			update_observer_view(gloves,1)
-			overlays_standing[GLOVES_LAYER] = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = 'icons/mob/clothing/hands.dmi')
-			gloves_overlay = overlays_standing[GLOVES_LAYER]
+			gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = 'icons/mob/clothing/hands.dmi')
 			if(OFFSET_GLOVES in dna.species.offset_features)
 				gloves_overlay.pixel_x += dna.species.offset_features[OFFSET_GLOVES][1]
 				gloves_overlay.pixel_y += dna.species.offset_features[OFFSET_GLOVES][2]
-			full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(gloves_overlay, num2text(GLOVES_LAYER))
+			overlays_to_add += gloves_overlay
+			full_appearance.appearance_list[CLOTHING_APPEARANCE].add_data(overlays_to_add, num2text(GLOVES_LAYER))
 
 
 /mob/living/carbon/human/update_inv_glasses()
@@ -329,7 +328,7 @@ There are several things that need to be remembered:
 				if(hud_used.inventory_shown)
 					client.screen += head
 			update_observer_view(head,1)
-			remove_overlay(HEAD_LAYER)
+			full_appearance.appearance_list[BODYPART_APPEARANCE].remove_data(num2text(HEAD_LAYER))
 			var/obj/item/clothing/head/H = head
 			var/alt_icon = H.mob_overlay_icon || 'icons/mob/clothing/head.dmi'
 			var/muzzled = FALSE
@@ -469,7 +468,7 @@ There are several things that need to be remembered:
 					client.screen += wear_mask
 			update_observer_view(wear_mask,1)
 			var/obj/item/clothing/mask/M = wear_mask
-			remove_overlay(FACEMASK_LAYER)
+			full_appearance.appearance_list[CLOTHING_APPEARANCE].remove_data(num2text(FACEMASK_LAYER))
 			var/alt_icon = M.mob_overlay_icon || 'icons/mob/clothing/mask.dmi'
 			var/muzzled = FALSE
 			var/variation_flag = NONE
@@ -520,13 +519,7 @@ There are several things that need to be remembered:
 	return mutable_appearance(., layer = -layer)
 
 /mob/living/carbon/human/proc/get_overlays_copy(list/unwantedLayers)
-	var/list/out = new
-	for(var/i in 1 to TOTAL_LAYERS)
-		if(overlays_standing[i])
-			if(i in unwantedLayers)
-				continue
-			out += overlays_standing[i]
-	return out
+	return // not supported currently, this honestly should never be needed in the first place
 
 //human HUD updates for items in our inventory
 
@@ -694,10 +687,6 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += "-husk"
-
-/mob/living/carbon/human/load_limb_from_cache()
-	..()
-	update_hair()
 
 /mob/living/carbon/human/proc/update_observer_view(obj/item/I, inventory)
 	if(observers && observers.len)

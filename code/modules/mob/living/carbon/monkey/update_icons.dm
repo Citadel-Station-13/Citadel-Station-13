@@ -1,7 +1,6 @@
 
 /mob/living/carbon/monkey/regenerate_icons()
 	if(!..())
-		update_body_parts()
 		update_hair()
 		update_inv_wear_mask()
 		update_inv_head()
@@ -13,7 +12,7 @@
 
 
 /mob/living/carbon/monkey/update_hair()
-	remove_overlay(HAIR_LAYER)
+	full_appearance.appearance_list[BODYPART_APPEARANCE].remove_data(num2text(HAIR_LAYER))
 
 	var/obj/item/bodypart/head/HD = get_bodypart(BODY_ZONE_HEAD)
 	if(!HD) //Decapitated
@@ -34,23 +33,21 @@
 			hair_hidden = 1
 	if(!hair_hidden)
 		if(!getorgan(/obj/item/organ/brain)) //Applies the debrained overlay if there is no brain
-			overlays_standing[HAIR_LAYER] = mutable_appearance('icons/mob/human_parts.dmi', "debrained", -HAIR_LAYER)
-			apply_overlay(HAIR_LAYER)
+			var/hair_overlay = mutable_appearance('icons/mob/human_parts.dmi', "debrained", -HAIR_LAYER)
+			full_appearance.appearance_list[BODYPART_APPEARANCE].add_data(hair_overlay, num2text(HAIR_LAYER))
 
 
 /mob/living/carbon/monkey/update_fire()
 	..("Monkey_burning")
 
 /mob/living/carbon/monkey/update_inv_legcuffed()
-	remove_overlay(LEGCUFF_LAYER)
+	full_appearance.appearance_list[BODYPART_APPEARANCE].remove_data(num2text(LEGCUFF_LAYER))
 	clear_alert("legcuffed")
 	if(legcuffed)
 		var/mutable_appearance/legcuffs = mutable_appearance('icons/mob/clothing/restraints.dmi', legcuffed.item_state, -LEGCUFF_LAYER)
 		legcuffs.color = handcuffed.color
 		legcuffs.pixel_y = 8
-
-		overlays_standing[HANDCUFF_LAYER] = legcuffs
-		apply_overlay(LEGCUFF_LAYER)
+		full_appearance.appearance_list[BODYPART_APPEARANCE].add_data(legcuffs, num2text(LEGCUFF_LAYER))
 		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = legcuffed)
 
 //monkey HUD updates for items in our inventory

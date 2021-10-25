@@ -99,7 +99,7 @@
 	H.update_body(TRUE) // Outfit and underwear, also body and privates.
 	//H.update_mutant_bodyparts() // Lizard tails etc
 	H.update_hair()
-	H.update_body_parts()
+	H.update_limbs()
 
 	// Wait here until we deactivate power or go unconscious
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
@@ -145,7 +145,7 @@
 		// Apply Appearance
 		H.update_body(TRUE) // Outfit and underwear, also body and privates.
 		H.update_hair()
-		H.update_body_parts()	// Body itself, maybe skin color?
+		H.update_limbs()	// Body itself, maybe skin color?
 		cast_effect() // POOF
 
 	// CAST EFFECT //	// General effect (poof, splat, etc) when you cast. Doesn't happen automatically!
