@@ -11,6 +11,7 @@
 	shape					= "Pair" //turn this into a default constant if for some inexplicable reason we get more than one butt type but I doubt it.
 	genital_flags = UPDATE_OWNER_APPEARANCE|GENITAL_UNDIES_HIDDEN
 	masturbation_verb 		= "massage"
+	var/size_cached			= 0
 	var/prev_size //former size value, to allow update_size() to early return should be there no significant changes.
 	layer_index = BUTT_LAYER_INDEX
 
@@ -21,17 +22,18 @@
 		return
 
 /obj/item/organ/genital/butt/modify_size(modifier, min = -INFINITY, max = BUTT_SIZE_MAX)
-	var/new_value = clamp(size + modifier, min, max)
-	if(new_value == size)
+	var/new_value = clamp(size_cached + modifier, min, max)
+	if(new_value == size_cached)
 		return
-	prev_size = size
-	size = new_value
+	prev_size = size_cached
+	size_cached = new_value
+	size = floor(size)
 	update()
 	..()
 
 /obj/item/organ/genital/butt/update_size()//wah
 	var/rounded_size = round(size)
-	if(size <= 0)//I don't actually know what round() does to negative numbers, so to be safe!!fixed
+	if(size < 0)//I don't actually know what round() does to negative numbers, so to be safe!!fixed
 		if(owner)
 			to_chat(owner, "<span class='warning'>You feel your asscheeks shrink down to an ordinary size.</span>")
 		QDEL_IN(src, 1)
