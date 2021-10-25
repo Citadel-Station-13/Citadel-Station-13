@@ -64,6 +64,10 @@
 	icon_state = "single"
 	name = "Single" //Single as "single pair", for clarity.
 
+/datum/sprite_accessory/testicles/hidden
+	icon_state = "hidden"
+	name = "Hidden" //not sure why these were missing, but I'm pretty certain people might want these.
+
 //Vaginas
 /datum/sprite_accessory/vagina
 	icon = 'icons/obj/genitals/vagina_onmob.dmi'
