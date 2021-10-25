@@ -103,6 +103,11 @@
 	icon_state = "hypovial-pink"
 	list_reagents = list(/datum/reagent/fermi/PEsmaller_hypo = 30)
 
+/obj/item/reagent_containers/glass/bottle/vial/small/buttreduction
+	name = "pink hypovial (butt treatment)"
+	icon_state = "hypovial-pink"
+	list_reagents = list(/datum/reagent/fermi/AEsmaller_hypo = 30)
+
 /obj/item/reagent_containers/glass/bottle/vial/large/CMO
 	name = "deluxe hypovial"
 	icon_state = "hypoviallarge-cmos"
