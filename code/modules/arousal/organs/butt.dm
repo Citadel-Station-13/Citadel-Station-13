@@ -27,7 +27,7 @@
 		return
 	prev_size = size_cached
 	size_cached = new_value
-	size = floor(size)
+	size = round(size_cached)
 	update()
 	..()
 
