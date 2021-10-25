@@ -364,7 +364,7 @@
 
 /datum/holiday/jacqueen //Subset of halloween
 	name = "jacqueen"
-	begin_day = 27
+	begin_day = 25
 	begin_month = OCTOBER
 	end_day = 2
 	end_month = NOVEMBER
