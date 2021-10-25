@@ -883,6 +883,12 @@
 		return cabin_air.remove(amount)
 	return ..()
 
+/obj/vehicle/sealed/mecha/remove_air_ratio(ratio)
+	if(use_internal_tank)
+		return cabin_air.remove_ratio(ratio)
+	return ..()
+
+
 /obj/vehicle/sealed/mecha/return_air()
 	if(use_internal_tank)
 		return cabin_air
@@ -892,12 +898,14 @@
 /obj/vehicle/sealed/mecha/proc/return_pressure()
 	var/datum/gas_mixture/t_air = return_air()
 	if(t_air)
-		return t_air.return_pressure()
+		. = t_air.return_pressure()
+	return
 
 /obj/vehicle/sealed/mecha/return_temperature()
 	var/datum/gas_mixture/t_air = return_air()
 	if(t_air)
-		return t_air.return_temperature()
+		. = t_air.return_temperature()
+	return
 
 /obj/vehicle/sealed/mecha/mob_try_enter(mob/M)
 	if(!ishuman(M)) // no silicons or drones in mechas.
