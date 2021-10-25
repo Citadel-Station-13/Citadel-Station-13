@@ -163,6 +163,17 @@
 	icon_state = "deathripley-broken"
 	parts = null
 
+/obj/structure/mecha_wreckage/ripley/firefighter
+	name = "\improper Firefighter wreckage"
+	icon_state = "firefighter-broken"
+	parts = list(
+				/obj/item/mecha_parts/part/ripley_torso,
+				/obj/item/mecha_parts/part/ripley_left_arm,
+				/obj/item/mecha_parts/part/ripley_right_arm,
+				/obj/item/mecha_parts/part/ripley_left_leg,
+				/obj/item/mecha_parts/part/ripley_right_leg)
+
+
 /obj/structure/mecha_wreckage/honker
 	name = "\improper H.O.N.K wreckage"
 	icon_state = "honker-broken"
