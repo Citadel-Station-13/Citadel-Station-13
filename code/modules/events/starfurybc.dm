@@ -23,7 +23,6 @@
 	started = TRUE
 	priority_announce("Syndicate Battle Cruiser detected on long range scanners. ETA [(preptime / 10 / 60)] minutes.")
 	addtimer(CALLBACK(src, .proc/spawn_shuttle), preptime)
-	spawn_shuttle()
 
 /*
 /datum/round_event/ghost_role/starfurybc/process()
@@ -72,14 +71,14 @@
 			SSshuttle.action_load(S.roundstart_template, S)
 
 		for(var/obj/effect/mob_spawn/human/syndicate/battlecruiser/captain/C in A)
-			SpawnCrew(candidates) //We want the captain to spawn first
+			SpawnCrew(spawner, candidates) //We want the captain to spawn first
 
-		for(var/obj/effect/mob_spawn/human/syndicate/spawner in A)
+		for(var/obj/effect/mob_spawn/human/syndicate/spawner in A) 
 			SpawnCrew(spawner, candidates)
 
-	addtimer(CALLBACK(src, WarnTheCrew(), announcetime))
+	addtimer(CALLBACK(src, .proc/warn_the_crew(), announcetime))
 
-/datum/round_event/ghost_role/starfurybc/proc/WarnTheCrew()
+/datum/round_event/ghost_role/starfurybc/proc/warn_the_crew()
 	priority_announce("A Syndicate Battle Cruiser has been found near the station's sector, brace for impact.", sound = 'sound/machines/alarm.ogg')
 
 /datum/round_event/ghost_role/starfurybc/proc/SpawnCrew(obj/effect/mob_spawn/human/syndicate/spawner, list/candidates = list())
