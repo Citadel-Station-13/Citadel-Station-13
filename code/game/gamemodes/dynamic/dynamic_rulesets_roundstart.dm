@@ -138,7 +138,7 @@
 	weight = 3
 	cost = 15
 	scaling_cost = 9
-	requirements = list(101,101,60,50,40,20,20,15,10,10)//higher because of 'round end'
+	requirements = list(101,101,80,50,40,20,20,15,10,10)//higher because of 'round end'
 	antag_cap = list("denominator" = 24)
 
 

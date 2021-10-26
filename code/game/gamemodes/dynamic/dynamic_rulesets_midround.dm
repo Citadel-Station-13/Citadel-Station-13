@@ -662,7 +662,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 10
-	requirements = list(101,101,101,50,40,30,10,10,10,10)
+	requirements = list(101,101,101,60,50,30,10,10,10,10)
 	repeatable = TRUE
 	var/list/spawn_locs = list()
 
@@ -703,7 +703,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 10
-	requirements = list(101,101,50,30,35,20,10,10,10,10)
+	requirements = list(101,101,50,30,25,20,10,10,10,10)
 	repeatable = TRUE
 	var/dead_mobs_required = 20
 	var/need_extra_spawns_value = 15
@@ -748,7 +748,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 10
-	requirements = list(101,101,50,30,35,20,10,10,10,10)
+	requirements = list(101,101,50,30,25,20,10,10,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/generate_ruleset_body(mob/applicant)

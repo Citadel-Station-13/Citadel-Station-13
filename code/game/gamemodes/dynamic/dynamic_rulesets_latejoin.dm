@@ -159,5 +159,5 @@
 	required_candidates = 1
 	weight = 4
 	cost = 10
-	requirements = list(101,101,60,50,40,20,20,15,10,10)
+	requirements = list(101,101,80,50,40,20,20,15,10,10)
 	repeatable = TRUE
