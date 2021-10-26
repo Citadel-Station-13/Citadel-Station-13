@@ -335,7 +335,7 @@
 			M.reagents.remove_reagent(type, 5)
 			B = nB
 	//If they have, increase size.
-	if(B.size < BUTT_SIZE_MAX) //just in case
+	if(B.size_cached < BUTT_SIZE_MAX) //just in case
 		B.modify_size(0.05)
 	..()
 
