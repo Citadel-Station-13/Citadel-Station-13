@@ -1,6 +1,6 @@
 /obj/item/gun/magic/staff/motivation
 	name = "Motivation"
-	desc = "Rumored to have the ability to open up a portal the depths of Lavaland."
+	desc = "Rumored to have the ability to open up a portal to the depths of Lavaland."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "motivation"
 	item_state = "motivation"
@@ -21,15 +21,15 @@
 	recharge_rate = 5
 	var/datum/action/judgement_cut/judgementcut = new/datum/action/judgement_cut()
 	block_parry_data = /datum/block_parry_data/motivation
-	
+
 //to get this to toggle correctly
 /obj/item/gun/magic/staff/motivation/Initialize()
 	. = ..()
 	judgementcut = new(src)
 
-//lets the user know that their judgment cuts are recharging
+//lets the user know that their judgement cuts are recharging
 /obj/item/gun/magic/staff/motivation/shoot_with_empty_chamber(mob/living/user as mob|obj)
-	to_chat(user, "<span class='warning'>Judgment Cut is recharging.</span>")
+	to_chat(user, "<span class='warning'>Judgement Cut is recharging.</span>")
 
 //action button to toggle judgement cuts on/off
 /datum/action/judgement_cut
@@ -47,7 +47,7 @@
 /obj/item/gun/magic/staff/motivation/can_trigger_gun(mob/living/user)
 	. = ..()
 	if(!judgementcut.judgement_toggled)
-		to_chat(user, "<span class='notice'> Judgment Cut is disabled.</span>")
+		to_chat(user, "<span class='notice'>Judgement Cut is disabled.</span>")
 		return FALSE
 
 //adds/removes judgement cut and judgement cut end upon pickup/drop

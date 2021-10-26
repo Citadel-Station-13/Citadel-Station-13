@@ -39,7 +39,9 @@
 
 /datum/config_entry/flag/announce_admin_login
 
-/datum/config_entry/string/centcom_ban_db	// URL for the CentCom Galactic Ban DB API
+/datum/config_entry/string/centcom_ban_db // URL for the CentCom Galactic Ban DB API
+
+/datum/config_entry/string/centcom_source_whitelist
 
 /datum/config_entry/flag/autoadmin  // if autoadmin is enabled
 	protection = CONFIG_ENTRY_LOCKED

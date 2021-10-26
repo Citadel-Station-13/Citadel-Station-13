@@ -20,6 +20,13 @@
 	cost = 300 //thrice their export value
 	contains = list(/obj/item/stack/sheet/cardboard/fifty)
 
+/datum/supply_pack/materials/license50
+	name = "50 Empty License Plates"
+	desc = "Create a bunch of boxes."
+	cost = 1000  // 50 * 25 + 700 - 1000 = 950 credits profit
+	contains = list(/obj/item/stack/license_plates/empty/fifty)
+	crate_name = "empty license plate crate"
+
 /datum/supply_pack/materials/glass50
 	crate_type = /obj/structure/closet/secure_closet/cargo
 	name = "50 Glass Sheets"

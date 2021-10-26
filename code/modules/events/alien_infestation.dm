@@ -2,9 +2,9 @@
 	name = "Alien Infestation"
 	typepath = /datum/round_event/ghost_role/alien_infestation
 	weight = 5
-	gamemode_blacklist = list("dynamic")
 	min_players = 25
 	max_occurrences = 1
+	dynamic_should_hijack = TRUE
 
 /datum/round_event/ghost_role/alien_infestation
 	announceWhen	= 400

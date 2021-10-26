@@ -160,12 +160,14 @@ If not set, defaults to check_completion instead. Set it. It's used by cryo.
 
 /datum/objective/proc/give_special_equipment(special_equipment)
 	var/datum/mind/receiver = pick(get_owners())
+	. = list()
 	if(receiver && receiver.current)
 		if(ishuman(receiver.current))
 			var/mob/living/carbon/human/H = receiver.current
 			var/list/slots = list("backpack" = SLOT_IN_BACKPACK)
 			for(var/eq_path in special_equipment)
 				var/obj/O = new eq_path
+				. += O
 				H.equip_in_one_of_slots(O, slots, critical = TRUE)
 
 /datum/objective/assassinate
@@ -560,6 +562,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 	name = "steal"
 	var/datum/objective_item/targetinfo = null //Save the chosen item datum so we can access it later.
 	var/obj/item/steal_target = null //Needed for custom objectives (they're just items, not datums).
+	var/list/special_items_given = list()
 	martyr_compatible = 0
 
 /datum/objective/steal/get_target()
@@ -570,6 +573,11 @@ GLOBAL_LIST_EMPTY(possible_items)
 	if(!GLOB.possible_items.len)//Only need to fill the list when it's needed.
 		for(var/I in subtypesof(/datum/objective_item/steal))
 			new I
+
+/datum/objective/steal/Destroy(force, ...)
+	if(length(special_items_given))
+		QDEL_LIST(special_items_given)
+	. = ..()
 
 /datum/objective/steal/find_target(dupe_search_range, blacklist)
 	var/list/datum/mind/owners = get_owners()
@@ -589,7 +597,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 		targetinfo = item
 		steal_target = targetinfo.targetitem
 		explanation_text = "Steal [targetinfo.name]"
-		give_special_equipment(targetinfo.special_equipment)
+		special_items_given = give_special_equipment(targetinfo.special_equipment)
 		return steal_target
 	else
 		explanation_text = "Free objective"
@@ -1180,6 +1188,7 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 /datum/objective/sabotage
 	name = "sabotage"
 	var/datum/sabotage_objective/targetinfo = null //composition > inheritance.
+	var/list/special_items_given = list()
 
 /datum/objective/sabotage/get_target()
 	return targetinfo.sabotage_type
@@ -1189,6 +1198,11 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	if(!GLOB.possible_sabotages.len)//Only need to fill the list when it's needed.
 		for(var/I in subtypesof(/datum/sabotage_objective))
 			new I
+
+/datum/objective/sabotage/Destroy()
+	if(length(special_items_given))
+		QDEL_LIST(special_items_given)
+	. = ..()
 
 /datum/objective/sabotage/find_target(dupe_search_range, blacklist)
 	var/list/datum/mind/owners = get_owners()
@@ -1207,7 +1221,7 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	if(sabo)
 		targetinfo = sabo
 		explanation_text = "[targetinfo.name]"
-		give_special_equipment(targetinfo.special_equipment)
+		special_items_given = give_special_equipment(targetinfo.special_equipment)
 		return sabo
 	else
 		explanation_text = "Free objective"

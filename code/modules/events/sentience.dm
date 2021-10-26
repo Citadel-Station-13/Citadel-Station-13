@@ -37,7 +37,7 @@
 			continue
 		if(L.mob_biotypes & blacklisted_biotypes)		//hey can you don't
 			continue
-		if(!(L in GLOB.player_list) && !L.mind)
+		if(!(L in GLOB.player_list) && !L.mind && !L.incapacitated())
 			potential += L
 
 	if(!potential.len)

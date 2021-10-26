@@ -253,7 +253,7 @@
 	purpose_fulfilled = TRUE
 	make_glow()
 	animate(glow, transform = matrix() * 1.5, alpha = 255, time = 125)
-	sound_to_playing_players(volume = 100, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/ratvar_rises.ogg')) //End the sounds
+	sound_to_playing_players('sound/effects/ratvar_rises.ogg', 90, FALSE, channel = CHANNEL_JUSTICAR_ARK)
 	sleep(125)
 	make_glow()
 	animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
@@ -318,19 +318,19 @@
 		if(-INFINITY to GATEWAY_REEBE_FOUND)
 			if(!second_sound_played)
 				sound_to_playing_players('sound/magic/clockwork/invoke_general.ogg', 30, FALSE)
-				sound_to_playing_players(volume = 10, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg', TRUE))
+				sound_to_playing_players('sound/effects/clockcult_gateway_charging.ogg', 10, FALSE, channel = CHANNEL_JUSTICAR_ARK)
 				second_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_charging"
 		if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 			if(!third_sound_played)
-				sound_to_playing_players(volume = 30, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_active.ogg', TRUE))
+				sound_to_playing_players('sound/effects/clockcult_gateway_active.ogg', 30, FALSE, channel = CHANNEL_JUSTICAR_ARK)
 				third_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_active"
 		if(GATEWAY_RATVAR_COMING to GATEWAY_RATVAR_ARRIVAL)
 			if(!fourth_sound_played)
-				sound_to_playing_players(volume = 70, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_closing.ogg', TRUE))
+				sound_to_playing_players('sound/effects/clockcult_gateway_closing.ogg', 70, FALSE, channel = CHANNEL_JUSTICAR_ARK)
 				fourth_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_closing"

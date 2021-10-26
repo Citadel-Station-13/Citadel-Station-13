@@ -1,5 +1,3 @@
-#define PAI_EMP_SILENCE_DURATION 3 MINUTES
-
 /mob/living/silicon/pai/blob_act(obj/structure/blob/B)
 	return FALSE
 
@@ -9,7 +7,7 @@
 		return
 	take_holo_damage(severity/2)
 	DefaultCombatKnockdown(severity*4)
-	silent = max(silent, (PAI_EMP_SILENCE_DURATION) / SSmobs.wait / severity)
+	short_radio()
 	if(holoform)
 		fold_in(force = TRUE)
 	emitter_next_use = world.time + emitter_emp_cd

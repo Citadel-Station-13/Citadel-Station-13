@@ -1,19 +1,17 @@
-#define CURRENT_LIVING_PLAYERS	1
-#define CURRENT_LIVING_ANTAGS	2
-#define CURRENT_DEAD_PLAYERS	3
-#define CURRENT_OBSERVERS		4
+/// This is the only ruleset that should be picked this round, used by admins and should not be on rulesets in code.
+#define ONLY_RULESET (1 << 0)
 
-#define NO_ASSASSIN				(1<<0)
-#define WAROPS_ALWAYS_ALLOWED	(1<<1)
-#define USE_PREF_WEIGHTS		(1<<2)
-#define FORCE_IF_WON			(1<<3)
-#define USE_PREV_ROUND_WEIGHTS	(1<<4)
+/// Only one ruleset with this flag will be picked.
+#define HIGH_IMPACT_RULESET (1 << 1)
 
-#define ONLY_RULESET				(1<<0)
-#define HIGHLANDER_RULESET			(1<<1)
-#define TRAITOR_RULESET				(1<<2)
-#define MINOR_RULESET				(1<<3)
-#define FAKE_ANTAG_RULESET			(1<<4)
-#define ALWAYS_MAX_WEIGHT_RULESET	(1<<5)
+/// This ruleset can only be picked once. Anything that does not have a scaling_cost MUST have this.
+#define LONE_RULESET (1 << 2)
 
-#define RULESET_STOP_PROCESSING 1
+/// No round event was hijacked this cycle
+#define HIJACKED_NOTHING "HIJACKED_NOTHING"
+
+/// This cycle, a round event was hijacked when the last midround event was too recent.
+#define HIJACKED_TOO_RECENT "HIJACKED_TOO_RECENT"
+
+/// This cycle, a round event was hijacked when the next midround event is too soon.
+#define HIJACKED_TOO_SOON "HIJACKED_TOO_SOON"
