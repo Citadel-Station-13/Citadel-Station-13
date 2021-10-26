@@ -308,7 +308,7 @@
 	required_candidates = 1
 	weight = 2
 	cost = 20
-	requirements = list(101,101,100,80,50,30,20,10,10,10)
+	requirements = list(101,101,80,60,40,20,20,20,10,10)
 	repeatable = TRUE
 	var/datum/mind/wizard
 
@@ -355,7 +355,7 @@
 	required_candidates = 5
 	weight = 3
 	cost = 35
-	requirements = list(101,101,101,80,50,40,30,15,10,10)
+	requirements = list(101,101,101,60,40,30,20,15,10,10)
 	var/list/operative_cap = list(2,2,3,3,3,4,5,5,5,5)
 	var/datum/team/nuclear/nuke_team
 	flags = HIGH_IMPACT_RULESET
@@ -397,7 +397,7 @@
 	required_candidates = 1
 	weight = 2
 	cost = 10
-	requirements = list(101,101,101,101,70,40,25,20,10,10)
+	requirements = list(101,101,101,101,50,40,30,20,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob/generate_ruleset_body(mob/applicant)
@@ -416,7 +416,7 @@
 	required_candidates = 1
 	weight = 2
 	cost = 10
-	requirements = list(101,101,101,101,70,40,25,20,10,10)
+	requirements = list(101,101,101,101,50,40,30,20,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/blob_infection/trim_candidates()
@@ -454,7 +454,7 @@
 	required_candidates = 1
 	weight = 3
 	cost = 10
-	requirements = list(101,101,101,101,60,50,30,20,10,10)
+	requirements = list(101,101,101,101,50,40,30,20,10,10)
 	repeatable = TRUE
 	var/list/vents = list()
 
@@ -500,7 +500,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 10
-	requirements = list(101,101,101,40,30,20,10,10,10,10)
+	requirements = list(101,101,50,30,25,20,10,10,10,10)
 	repeatable = TRUE
 	var/list/spawn_locs = list()
 
@@ -546,7 +546,7 @@
 	required_candidates = 1
 	weight = 3
 	cost = 10
-	requirements = list(101,101,101,101,60,50,30,20,10,10)
+	requirements = list(101,101,101,101,50,40,30,20,10,10)
 	repeatable = TRUE
 	var/list/spawn_locs = list()
 
@@ -591,7 +591,7 @@
 	required_applicants = 2
 	weight = 3
 	cost = 10
-	requirements = list(101,101,101,101,101,40,25,20,10,10)
+	requirements = list(101,101,101,101,101,30,20,15,10,10)
 	repeatable = TRUE
 	var/datum/team/abductor_team/new_team
 
@@ -629,7 +629,7 @@
 	required_candidates = 0
 	weight = 3
 	cost = 10
-	requirements = list(101,101,101,101,60,50,30,20,10,10)
+	requirements = list(101,101,101,101,50,40,30,20,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/swarmers/execute()
@@ -662,7 +662,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 10
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	requirements = list(101,101,101,50,40,30,10,10,10,10)
 	repeatable = TRUE
 	var/list/spawn_locs = list()
 
@@ -703,7 +703,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 10
-	requirements = list(101,101,101,70,50,40,20,15,10,10)
+	requirements = list(101,101,50,30,35,20,10,10,10,10)
 	repeatable = TRUE
 	var/dead_mobs_required = 20
 	var/need_extra_spawns_value = 15
@@ -748,7 +748,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 10
-	requirements = list(101,101,101,70,50,40,20,15,10,10)
+	requirements = list(101,101,50,30,35,20,10,10,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/generate_ruleset_body(mob/applicant)
@@ -769,7 +769,7 @@
 	required_candidates = 0
 	weight = 4
 	cost = 10
-	requirements = list(101,101,101,50,40,25,10,10,10,10)
+	requirements = list(101,101,101,40,30,20,10,10,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/pirates/acceptable(population=0, threat=0)
