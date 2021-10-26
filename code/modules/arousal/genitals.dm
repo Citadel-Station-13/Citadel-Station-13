@@ -358,7 +358,7 @@
 	if(organCheck == FALSE)
 		if(ishuman(src) && dna.species.use_skintones)
 			dna.features["genitals_use_skintone"] = TRUE
-		if(src.dna.species.fixed_mut_color)
+		if(dna.species.fixed_mut_color)
 			dna.features["cock_color"] = "[dna.species.fixed_mut_color]"
 			dna.features["breasts_color"] = "[dna.species.fixed_mut_color]"
 			dna.features["butt_color"] = "[dna.species.fixed_mut_color]"
