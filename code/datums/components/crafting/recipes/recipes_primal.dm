@@ -295,6 +295,16 @@
 				 /obj/item/stack/sheet/sinew = 1)
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/bone_anvil
+	name = "Bone Anvil"
+	result = /obj/structure/anvil/obtainable/bone
+	time = 200
+	reqs = list(/obj/item/stack/sheet/bone = 6,
+				 /obj/item/stack/sheet/sinew = 2,
+				 /obj/item/stack/sheet/animalhide/goliath_hide = 2)
+	tools = list(/obj/item/weldingtool/experimental/ashwalker, /obj/item/wirecutters/ashwalker, /obj/item/crowbar/ashwalker)
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/bone_glaive
 	name = "Necropolis Glaive"
 	result = /obj/item/kinetic_crusher/glaive/bone
