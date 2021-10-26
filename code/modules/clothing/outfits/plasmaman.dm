@@ -71,12 +71,6 @@
 	head = /obj/item/clothing/head/helmet/space/plasmaman/security/hos
 	uniform = /obj/item/clothing/under/plasmaman/security/hos
 
-/datum/outfit/plasmaman/prisoner
-	name = "Prisoner Plasmaman"
-
-	head = /obj/item/clothing/head/helmet/space/plasmaman/prisoner
-	uniform = /obj/item/clothing/under/plasmaman/prisoner
-
 /datum/outfit/plasmaman/cargo
 	name = "Cargo Plasmaman"
 

@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(fail2topic)
 		while(i <= length(rate_limiting))
 			var/ip = rate_limiting[i]
 			var/last_attempt = rate_limiting[ip]
-			if(REALTIMEOFDAY - last_attempt > rate_limit)
+			if(world.time - last_attempt > rate_limit)
 				rate_limiting -= ip
 				fail_counts -= ip
 			else		//if we remove that, and the next element is in its place. check that instead of incrementing.
@@ -58,12 +58,12 @@ SUBSYSTEM_DEF(fail2topic)
 	if (active_bans[ip])
 		return TRUE
 
-	rate_limiting[ip] = REALTIMEOFDAY
+	rate_limiting[ip] = world.time
 
 	if (isnull(last_attempt))
 		return FALSE
 
-	if (REALTIMEOFDAY - last_attempt > rate_limit)
+	if (world.time - last_attempt > rate_limit)
 		fail_counts -= ip
 		return FALSE
 	else
@@ -83,7 +83,7 @@ SUBSYSTEM_DEF(fail2topic)
 	if (!enabled)
 		return
 
-	active_bans[ip] = REALTIMEOFDAY
+	active_bans[ip] = world.time
 	fail_counts -= ip
 	rate_limiting -= ip
 

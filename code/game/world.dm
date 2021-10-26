@@ -2,6 +2,8 @@
 
 GLOBAL_VAR(restart_counter)
 
+GLOBAL_VAR_INIT(tgs_initialized, FALSE)
+
 GLOBAL_VAR(topic_status_lastcache)
 GLOBAL_LIST(topic_status_cache)
 
@@ -14,7 +16,7 @@ GLOBAL_LIST(topic_status_cache)
 		call(debug_server, "auxtools_init")()
 		enable_debugging()
 	AUXTOOLS_CHECK(AUXMOS)
-#ifdef EXTOOLS_REFERENCE_TRACKING
+#ifdef REFERENCE_TRACKING
 	enable_reference_tracking()
 #endif
 	world.Profile(PROFILE_START)
@@ -74,6 +76,7 @@ GLOBAL_LIST(topic_status_cache)
 /world/proc/InitTgs()
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	GLOB.revdata.load_tgs_info()
+	GLOB.tgs_initialized = TRUE
 
 /world/proc/HandleTestRun()
 	//trigger things to run the whole process

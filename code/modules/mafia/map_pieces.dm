@@ -33,7 +33,7 @@
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
-	area_flags = BLOCK_SUICIDE | UNIQUE_AREA
+	// block_suicide = TRUE
 
 /datum/map_template/mafia
 	var/description = ""
@@ -75,5 +75,5 @@
 
 /datum/map_template/mafia/reebe
 	name = "Reebe"
-	description = "Based of the place known as <i>reebee</i>. Syndicate spies have infiltrated and everyone has to find out who's who before they destroy the ark!"
+	description = "Trouble in Reebe station! Copypaste guranteed by ClockCo&trade;"
 	mappath = "_maps/map_files/Mafia/mafia_reebe.dmm"

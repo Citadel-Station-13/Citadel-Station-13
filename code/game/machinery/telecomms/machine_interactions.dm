@@ -86,9 +86,6 @@
 	.["machine"]["chang_freq_value"] = change_freq_value
 
 /obj/machinery/telecomms/ui_act(action, params, datum/tgui/ui)
-	. = ..()
-	if(.)
-		return
 	if(!canInteract(usr))
 		if(ui)
 			ui.close() //haha no.

@@ -41,13 +41,6 @@
 /obj/item/crowbar/brass/family
 	toolspeed = 1
 
-/obj/item/crowbar/ashwalker
-	name = "bone crowbar"
-	desc = "A rudimentary crowbar made of bones."
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "crowbar_bone"
-	toolspeed = 0.75
-
 /obj/item/crowbar/bronze
 	name = "bronze plated crowbar"
 	desc = "A bronze plated crowbar."

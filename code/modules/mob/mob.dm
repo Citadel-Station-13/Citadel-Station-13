@@ -1,8 +1,9 @@
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
-	remove_from_mob_list()
-	remove_from_dead_mob_list()
-	remove_from_alive_mob_list()
+	GLOB.mob_list -= src
+	GLOB.dead_mob_list -= src
+	GLOB.alive_mob_list -= src
 	GLOB.all_clockwork_mobs -= src
+	GLOB.mob_directory -= tag
 	focus = null
 	LAssailant = null
 	movespeed_modification = null
@@ -21,11 +22,12 @@
 	return QDEL_HINT_HARDDEL
 
 /mob/Initialize()
-	add_to_mob_list()
+	GLOB.mob_list += src
+	GLOB.mob_directory[tag] = src
 	if(stat == DEAD)
-		add_to_dead_mob_list()
+		GLOB.dead_mob_list += src
 	else
-		add_to_alive_mob_list()
+		GLOB.alive_mob_list += src
 	set_focus(src)
 	prepare_huds()
 	for(var/v in GLOB.active_alternate_appearances)
@@ -236,7 +238,6 @@
 
 	if(istype(W))
 		if(equip_to_slot_if_possible(W, slot, FALSE, FALSE, FALSE, FALSE, TRUE))
-			W.apply_outline()
 			return TRUE
 
 	if(!W)

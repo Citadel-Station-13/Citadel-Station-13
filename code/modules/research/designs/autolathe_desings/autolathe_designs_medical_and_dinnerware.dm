@@ -30,19 +30,11 @@
 	category = list("initial","Dinnerware")
 
 /datum/design/tray
-	name = "Serving Tray"
-	id = "servingtray"
+	name = "Tray"
+	id = "tray"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 3000)
 	build_path = /obj/item/storage/bag/tray
-	category = list("initial","Dinnerware")
-
-/datum/design/cafeteria_tray
-	name = "Cafeteria Tray"
-	id = "foodtray"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 3000)
-	build_path = /obj/item/storage/bag/tray/cafeteria
 	category = list("initial","Dinnerware")
 
 /datum/design/bowl

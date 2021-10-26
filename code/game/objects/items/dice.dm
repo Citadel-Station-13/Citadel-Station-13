@@ -17,11 +17,6 @@
 				/obj/item/dice/d100
 				)
 
-/obj/item/storage/dice/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.can_hold = single_path_typecache_immutable(/obj/item/dice)
-
 /obj/item/storage/dice/PopulateContents()
 	new /obj/item/dice/d4(src)
 	new /obj/item/dice/d6(src)

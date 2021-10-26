@@ -135,6 +135,7 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/client/proc/everyone_random,
 	/datum/admins/proc/toggleAI,
 	/datum/admins/proc/toggleMulticam,		//CIT
+	/datum/admins/proc/toggledynamicvote,	//CIT
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
 	/client/proc/toggle_random_events,
@@ -189,14 +190,12 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	// /client/proc/validate_cards,
 	// /client/proc/test_cardpack_distribution,
 	// /client/proc/print_cards,
-	#ifdef TESTING
+	// #ifdef TESTING
 	// /client/proc/check_missing_sprites,
-	// /client/proc/export_dynamic_json,
-	/client/proc/run_dynamic_simulations,
-	#endif
+	// #endif
 	/datum/admins/proc/create_or_modify_area,
 	/datum/admins/proc/fixcorruption,
-#ifdef EXTOOLS_REFERENCE_TRACKING
+#ifdef REFERENCE_TRACKING
 	/datum/admins/proc/view_refs,
 	/datum/admins/proc/view_del_failures,
 #endif

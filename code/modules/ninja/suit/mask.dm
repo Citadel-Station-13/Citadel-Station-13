@@ -1,11 +1,15 @@
-/**
-  * # Ninja Mask
-  *
-  * Space ninja's mask.  Makes you sound like a real anime girl.  Barely able to be considered a real upside.
-  *
-  * A mask which only spawns as a part of space ninja's starting kit.  Functions as a gas mask.
-  *
-  */
+
+/*
+
+Contents:
+- The Ninja Space Mask
+- Ninja Space Mask speech modification
+
+*/
+
+
+
+
 /obj/item/clothing/mask/gas/space_ninja
 	name = "ninja mask"
 	desc = "A close-fitting mask that acts both as an air filter and a post-modern fashion statement."

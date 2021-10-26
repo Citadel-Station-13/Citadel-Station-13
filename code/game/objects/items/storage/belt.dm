@@ -312,7 +312,7 @@
 /obj/item/storage/belt/mining/primitive/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 8
+	STR.max_items = 5
 
 /obj/item/storage/belt/soulstone
 	name = "soul stone belt"

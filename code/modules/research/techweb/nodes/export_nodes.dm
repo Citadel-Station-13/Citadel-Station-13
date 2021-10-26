@@ -14,8 +14,8 @@
 
 /datum/techweb_node/bottle_exports
 	id = "bottle_exports"
-	display_name = "Advanced Bottling"
+	display_name = "Legal Bottling"
 	prereq_ids = list("blueprinted_bottles")
-	description = "New bottles for printing, storage and selling."
-	design_ids = list("minikeg", "blooddrop", "slim_gold", "white_bloodmoon", "greenroad", "emptyglassbottle", "largeemptyglassbottle", "emptypitcher")
+	description = "New bottles for printing and selling."
+	design_ids = list("minikeg", "blooddrop", "slim_gold", "white_bloodmoon", "greenroad")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 250)

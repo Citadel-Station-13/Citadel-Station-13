@@ -45,9 +45,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 46)	//If you remove this, remove force_reset_keybindings() too.
 		force_reset_keybindings_direct(TRUE)
 		addtimer(CALLBACK(src, .proc/force_reset_keybindings), 30)	//No mob available when this is run, timer allows user choice.
-	if(current_version < 30)
-		outline_enabled = TRUE
-		outline_color = COLOR_BLUE_GRAY
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 19)
@@ -380,8 +377,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooccolor"]			>> ooccolor
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
-	S["outline_color"]		>> outline_color
-	S["outline_enabled"]	>> outline_enabled
 	S["hotkeys"]			>> hotkeys
 	S["chat_on_map"]		>> chat_on_map
 	S["max_chat_length"]	>> max_chat_length
@@ -560,8 +555,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["ooccolor"], ooccolor)
 	WRITE_FILE(S["lastchangelog"], lastchangelog)
 	WRITE_FILE(S["UI_style"], UI_style)
-	WRITE_FILE(S["outline_enabled"], outline_enabled)
-	WRITE_FILE(S["outline_color"], outline_color)
 	WRITE_FILE(S["hotkeys"], hotkeys)
 	WRITE_FILE(S["chat_on_map"], chat_on_map)
 	WRITE_FILE(S["max_chat_length"], max_chat_length)
@@ -683,8 +676,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["skin_tone"]				>> skin_tone
 	S["hair_style_name"]		>> hair_style
 	S["facial_style_name"]		>> facial_hair_style
-	S["grad_style"]				>> grad_style
-	S["grad_color"]				>> grad_color
 	S["underwear"]				>> underwear
 	S["undie_color"]			>> undie_color
 	S["undershirt"]				>> undershirt
@@ -877,8 +868,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	age								= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	hair_color						= sanitize_hexcolor(hair_color, 6, FALSE)
 	facial_hair_color				= sanitize_hexcolor(facial_hair_color, 6, FALSE)
-	grad_style						= sanitize_inlist(grad_style, GLOB.hair_gradients_list, "None")
-	grad_color						= sanitize_hexcolor(grad_color, 6, FALSE)
 	eye_type						= sanitize_inlist(eye_type, GLOB.eye_types, DEFAULT_EYES_TYPE)
 	left_eye_color					= sanitize_hexcolor(left_eye_color, 6, FALSE)
 	right_eye_color					= sanitize_hexcolor(right_eye_color, 6, FALSE)
@@ -1048,8 +1037,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["skin_tone"]				, skin_tone)
 	WRITE_FILE(S["hair_style_name"]			, hair_style)
 	WRITE_FILE(S["facial_style_name"]		, facial_hair_style)
-	WRITE_FILE(S["grad_style"]				, grad_style)
-	WRITE_FILE(S["grad_color"]				, grad_color)
 	WRITE_FILE(S["underwear"]				, underwear)
 	WRITE_FILE(S["undie_color"]				, undie_color)
 	WRITE_FILE(S["undershirt"]				, undershirt)

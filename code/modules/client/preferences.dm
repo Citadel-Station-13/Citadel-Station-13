@@ -60,8 +60,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 										//autocorrected this round, not that you'd need to check that.
 
 	var/UI_style = null
-	var/outline_enabled = TRUE
-	var/outline_color = COLOR_BLUE_GRAY
 	var/buttons_locked = FALSE
 	var/hotkeys = FALSE
 
@@ -119,8 +117,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/hair_color = "000000"				//Hair color
 	var/facial_hair_style = "Shaved"	//Face hair type
 	var/facial_hair_color = "000000"		//Facial hair color
-	var/grad_style						//Hair gradient style
-	var/grad_color = "FFFFFF"			//Hair gradient color
 	var/skin_tone = "caucasian1"		//Skin color
 	var/use_custom_skin_tone = FALSE
 	var/left_eye_color = "000000"		//Eye color
@@ -507,12 +503,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<a href='?_src_=prefs;preference=previous_facehair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_facehair_style;task=input'>&gt;</a><BR>"
 				dat += "<span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
 
-				dat += "<h3>Hair Gradient</h3>"
-
-				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=grad_style;task=input'>[grad_style]</a>"
-				dat += "<a href='?_src_=prefs;preference=previous_grad_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_grad_style;task=input'>&gt;</a><BR>"
-				dat += "<span style='border: 1px solid #161616; background-color: #[grad_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=grad_color;task=input'>Change</a><BR>"
-
 				dat += "</td>"
 			//Mutant stuff
 			var/mutant_category = 0
@@ -784,8 +774,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>General Settings</h2>"
 			dat += "<b>UI Style:</b> <a href='?_src_=prefs;task=input;preference=ui'>[UI_style]</a><br>"
-			dat += "<b>Outline:</b> <a href='?_src_=prefs;preference=outline_enabled'>[outline_enabled ? "Enabled" : "Disabled"]</a><br>"
-			dat += "<b>Outline Color:</b> <span style='border:1px solid #161616; background-color: [outline_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=outline_color'>Change</a><BR>"
 			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
 			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
 			dat += "<b>Show Runechat Chat Bubbles:</b> <a href='?_src_=prefs;preference=chat_on_map'>[chat_on_map ? "Enabled" : "Disabled"]</a><br>"
@@ -1718,23 +1706,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("previous_facehair_style")
 					facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_list)
-
-				if("grad_color")
-					var/new_grad_color = input(user, "Choose your character's gradient colour:", "Character Preference","#"+grad_color) as color|null
-					if(new_grad_color)
-						grad_color = sanitize_hexcolor(new_grad_color, 6)
-
-				if("grad_style")
-					var/new_grad_style
-					new_grad_style = input(user, "Choose your character's hair gradient style:", "Character Preference") as null|anything in GLOB.hair_gradients_list
-					if(new_grad_style)
-						grad_style = new_grad_style
-
-				if("next_grad_style")
-					grad_style = next_list_item(grad_style, GLOB.hair_gradients_list)
-
-				if("previous_grad_style")
-					grad_style = previous_list_item(grad_style, GLOB.hair_gradients_list)
 
 				if("cycle_bg")
 					bgstate = next_list_item(bgstate, bgstate_options)
@@ -2735,12 +2706,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					buttons_locked = !buttons_locked
 				if("tgui_fancy")
 					tgui_fancy = !tgui_fancy
-				if("outline_enabled")
-					outline_enabled = !outline_enabled
-				if("outline_color")
-					var/pickedOutlineColor = input(user, "Choose your outline color.", "General Preference", outline_color) as color|null
-					if(pickedOutlineColor)
-						outline_color = pickedOutlineColor
 				if("tgui_lock")
 					tgui_lock = !tgui_lock
 				if("winflash")
@@ -3041,8 +3006,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.skin_tone_override = use_custom_skin_tone ? skin_tone : null
 	character.hair_style = hair_style
 	character.facial_hair_style = facial_hair_style
-	character.grad_style = grad_style
-	character.grad_color = grad_color
 	character.underwear = underwear
 
 	character.saved_underwear = underwear
@@ -3107,7 +3070,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(additional_language && additional_language != "None")
 		var/language_entry = GLOB.roundstart_languages[additional_language]
 		if(language_entry)
-			character.additional_language = language_entry
 			character.grant_language(language_entry, TRUE, TRUE)
 
 	//limb stuff, only done when initially spawning in

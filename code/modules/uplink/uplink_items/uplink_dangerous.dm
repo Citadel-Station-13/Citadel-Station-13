@@ -292,5 +292,7 @@
 	desc = "An ancient blade said to have ties with Lavaland's most inner demons. \
 			Allows you to cut from a far distance!"
 	item = /obj/item/gun/magic/staff/motivation
-	cost = 10
+	cost = 20
+	player_minimum = 20
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
+	cant_discount = TRUE

@@ -6,7 +6,6 @@ GLOBAL_LIST_EMPTY(hair_styles_female_list)	//stores only hair names
 GLOBAL_LIST_EMPTY(facial_hair_styles_list)	//stores /datum/sprite_accessory/facial_hair indexed by name
 GLOBAL_LIST_EMPTY(facial_hair_styles_male_list)	//stores only hair names
 GLOBAL_LIST_EMPTY(facial_hair_styles_female_list)	//stores only hair names
-GLOBAL_LIST_EMPTY(hair_gradients_list) //stores /datum/sprite_accessory/hair_gradient indexed by name
 	//Underwear
 GLOBAL_LIST_EMPTY_TYPED(underwear_list, /datum/sprite_accessory/underwear/bottom)		//stores bottoms indexed by name
 GLOBAL_LIST_EMPTY(underwear_m)	//stores only underwear name
@@ -368,7 +367,6 @@ GLOBAL_LIST_INIT(job_heirlooms, list(
 	"Janitor" = list(/obj/item/mop),
 	"Scientist" = list(/obj/item/toy/plush/slimeplushie),
 	"Assistant" = list(/obj/item/clothing/gloves/cut/family),
-	"Prisoner" = list (/obj/item/pen/blue),
 	"Chaplain" = list(/obj/item/camera/spooky/family),
 	"Head of Personnel" = list(/obj/item/pinpointer/ian)
 	))

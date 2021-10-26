@@ -3664,8 +3664,7 @@
 /area/awaymission/moonoutpost19/research)
 "hk" = (
 /obj/structure/alien/weeds,
-/obj/structure/bed/nest,
-/obj/item/clothing/mask/facehugger/impregnated,
+/obj/structure/alien/egg,
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -26667,7 +26666,7 @@ ac
 ad
 ad
 ad
-ag
+hk
 ag
 ad
 ad
@@ -26926,7 +26925,7 @@ ai
 ag
 ag
 ai
-ag
+hk
 ai
 ad
 ad
@@ -27179,10 +27178,10 @@ ac
 ac
 ad
 ad
-ag
+hk
 ai
 ai
-ag
+hk
 aM
 ai
 ag
@@ -27438,7 +27437,7 @@ ad
 ai
 ai
 aD
-hk
+aj
 ai
 ai
 aD
@@ -27694,7 +27693,7 @@ ac
 ad
 ai
 ai
-hk
+aj
 ai
 aT
 av

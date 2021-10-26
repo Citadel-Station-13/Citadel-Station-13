@@ -63,10 +63,10 @@
 	name = "DNA Sampler"
 	desc = "Can be used to take chemical and genetic samples of pretty much anything."
 	icon = 'icons/obj/syringe.dmi'
-	item_state = "sampler"
+	item_state = "hypo"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	icon_state = "sampler"
+	icon_state = "hypo"
 	item_flags = NOBLUDGEON
 	var/list/animals = list()
 	var/list/plants = list()

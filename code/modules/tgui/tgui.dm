@@ -58,15 +58,10 @@
 	src.interface = interface
 	if(title)
 		src.title = title
-	src.state = src_object.ui_state(user)
+	src.state = src_object.ui_state()
 	// Deprecated
 	if(ui_x && ui_y)
 		src.window_size = list(ui_x, ui_y)
-
-/datum/tgui/Destroy()
-	user = null
-	src_object = null
-	return ..()
 
 /**
  * public
@@ -300,7 +295,6 @@
 		process_status()
 		if(src_object.ui_act(act_type, payload, src, state))
 			SStgui.update_uis(src_object)
-		usr?.client?.last_activity = world.time
 		return FALSE
 	switch(type)
 		if("ready")

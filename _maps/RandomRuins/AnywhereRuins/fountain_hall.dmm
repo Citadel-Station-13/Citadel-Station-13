@@ -5,45 +5,45 @@
 "c" = (
 /obj/structure/healingfountain,
 /turf/open/floor/carpet/purple,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "d" = (
 /obj/structure/fluff/divine/conduit,
 /turf/open/floor/mineral/plasma,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "e" = (
 /obj/structure/sacrificealtar,
 /turf/open/floor/carpet/purple,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "f" = (
 /mob/living/simple_animal/butterfly,
 /turf/open/floor/carpet/purple,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "g" = (
 /mob/living/simple_animal/butterfly,
 /turf/open/floor/carpet/red,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "h" = (
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/carpet/red,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "u" = (
 /turf/open/floor/carpet/purple,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "G" = (
 /turf/closed/wall/mineral/cult{
 	sheet_amount = 0
 	},
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "J" = (
 /mob/living/simple_animal/butterfly,
 /turf/open/floor/carpet/royalblack,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "T" = (
 /turf/open/floor/carpet/royalblack,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "U" = (
 /turf/open/floor/carpet/red,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 
 (1,1,1) = {"
 a

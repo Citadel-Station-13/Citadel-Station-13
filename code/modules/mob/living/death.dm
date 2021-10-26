@@ -65,9 +65,9 @@
 		I.on_mob_death(src, gibbed)
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
-	remove_from_alive_mob_list()
+	GLOB.alive_mob_list -= src
 	if(!gibbed)
-		add_to_dead_mob_list()
+		GLOB.dead_mob_list += src
 	if(ckey)
 		var/datum/preferences/P = GLOB.preferences_datums[ckey]
 		if(P)

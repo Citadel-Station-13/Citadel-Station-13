@@ -24,8 +24,7 @@
 		/area/holodeck,
 		/area/shuttle,
 		/area/maintenance,
-		/area/science/test_area,
-		/area/commons/cryopod)
+		/area/science/test_area)
 		)
 
 		//Subtypes from the above that actually should explode.

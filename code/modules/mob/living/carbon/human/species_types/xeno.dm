@@ -14,6 +14,5 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 	exotic_bloodtype = "X*"
 	damage_overlay_type = "xeno"
-	disliked_food = JUNKFOOD
-	liked_food = GROSS | MEAT
+	liked_food = MEAT
 	species_category = SPECIES_CATEGORY_ALIEN

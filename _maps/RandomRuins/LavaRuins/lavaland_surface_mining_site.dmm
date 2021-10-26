@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "b" = (
 /turf/closed/wall/mineral/wood/nonmetal,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "c" = (
 /obj/structure/closet/toolcloset,
 /obj/item/wrench,
@@ -11,7 +11,7 @@
 /obj/item/wirecutters,
 /obj/item/radio/off,
 /turf/open/floor/wood,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "d" = (
 /turf/open/openspace/icemoon,
 /area/template_noop)
@@ -25,14 +25,14 @@
 /obj/structure/closet,
 /obj/item/clothing/shoes/jackboots,
 /turf/open/floor/wood,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "f" = (
 /turf/open/floor/wood,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "g" = (
 /obj/structure/fireplace,
 /turf/open/floor/wood,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "h" = (
 /obj/structure/flora/ash/cacti,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -43,34 +43,33 @@
 "j" = (
 /obj/structure/sink/kitchen,
 /turf/open/floor/wood,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "k" = (
 /obj/structure/closet/crate/freezer,
 /turf/open/floor/wood,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "l" = (
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/wood,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "m" = (
+/obj/structure/barricade/wooden/crude/snow,
 /obj/structure/mineral_door/wood,
-/obj/effect/decal/cleanable/trail_holder,
 /turf/open/floor/wood,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "n" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "o" = (
 /obj/item/reagent_containers/food/drinks/beer,
 /turf/open/floor/wood,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "p" = (
 /obj/machinery/light/broken{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/trail_holder,
 /turf/open/floor/wood,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "q" = (
 /obj/structure/table/wood,
 /obj/item/pen,
@@ -82,7 +81,7 @@
 	text = ""
 	},
 /turf/open/floor/wood,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "r" = (
 /obj/item/chair/wood,
 /obj/effect/decal/cleanable/blood/splatter,
@@ -91,15 +90,11 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/ruin/lavaland/unpowered)
+/area/ruin/unpowered)
 "s" = (
 /obj/effect/decal/cleanable/trail_holder,
 /turf/open/floor/wood,
-/area/ruin/lavaland/unpowered)
-"N" = (
-/obj/effect/decal/cleanable/trail_holder,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered)
 
 (1,1,1) = {"
 i
@@ -574,7 +569,7 @@ b
 l
 f
 f
-s
+f
 s
 b
 b
@@ -600,7 +595,7 @@ b
 b
 b
 f
-s
+f
 p
 b
 b
@@ -627,7 +622,7 @@ i
 b
 b
 b
-s
+f
 b
 b
 b
@@ -654,7 +649,7 @@ i
 i
 i
 b
-s
+f
 b
 i
 i
@@ -681,7 +676,7 @@ i
 i
 i
 b
-s
+f
 b
 i
 i
@@ -708,7 +703,7 @@ i
 i
 i
 b
-s
+f
 b
 i
 i
@@ -762,7 +757,7 @@ i
 i
 n
 h
-N
+n
 h
 n
 i

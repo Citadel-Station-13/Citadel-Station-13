@@ -75,9 +75,6 @@
 /obj/machinery/atmospherics/pipe/setPipenet(datum/pipeline/P)
 	parent = P
 
-/obj/machinery/atmospherics/pipe/zap_act(power, zap_flags)
-	return 0 // they're not really machines in the normal sense, probably shouldn't explode
-
 /obj/machinery/atmospherics/pipe/Destroy()
 	QDEL_NULL(parent)
 

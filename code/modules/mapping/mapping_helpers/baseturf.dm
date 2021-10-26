@@ -30,8 +30,8 @@
 	qdel(src)
 
 /obj/effect/baseturf_helper/proc/replace_baseturf(turf/thing)
-	if(length(thing.baseturfs))
-		var/list/baseturf_cache = thing.baseturfs.Copy()
+	var/list/baseturf_cache = thing.baseturfs
+	if(length(baseturf_cache))
 		for(var/i in baseturf_cache)
 			if(baseturf_to_replace[i])
 				baseturf_cache -= i
@@ -43,8 +43,6 @@
 		thing.assemble_baseturfs(baseturf)
 	else
 		thing.PlaceOnBottom(null, baseturf)
-
-
 
 /obj/effect/baseturf_helper/space
 	name = "space baseturf editor"
@@ -81,3 +79,4 @@
 /obj/effect/baseturf_helper/lava_land/surface
 	name = "lavaland baseturf editor"
 	baseturf = /turf/open/lava/smooth/lava_land_surface
+

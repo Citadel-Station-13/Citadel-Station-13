@@ -109,7 +109,7 @@
 /datum/nanite_program/blood_restoring/active_effect()
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		C.adjust_integration_blood(2)
+		C.blood_volume += 2
 
 /datum/nanite_program/repairing
 	name = "Mechanical Repair"
@@ -242,24 +242,13 @@
 	sleep(30)
 	playsound(C, 'sound/machines/defib_zap.ogg', 50, FALSE)
 	if(check_revivable())
-		var/tplus = world.time - C.timeofdeath
 		playsound(C, 'sound/machines/defib_success.ogg', 50, FALSE)
 		C.set_heartattack(FALSE)
-		var/oxydamage = C.getOxyLoss()
-		if(C.health < HEALTH_THRESHOLD_FULLCRIT && oxydamage)
-			var/diff = C.health - HEALTH_THRESHOLD_FULLCRIT
-			C.adjustOxyLoss(diff)	//Heal their oxydamage up to hardcrit (or if less, as much as they have, since the proc has sanity)
 		C.revive(full_heal = FALSE, admin_revive = FALSE)
 		C.emote("gasp")
 		C.Jitter(100)
 		SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)
-		var/list/policies = CONFIG_GET(keyed_list/policy)
-		var/timelimit = CONFIG_GET(number/defib_cmd_time_limit) * 10 //the config is in seconds, not deciseconds
-		var/late = timelimit && (tplus > timelimit)
-		var/policy = late? policies[POLICYCONFIG_ON_DEFIB_LATE] : policies[POLICYCONFIG_ON_DEFIB_INTACT]
-		if(policy)
-			to_chat(C, policy)
-		C.log_message("has been successfully defibrillated by nanites, [tplus] deciseconds from time of death, considered [late? "late" : "memory-intact"] revival under configured policy limits.", LOG_GAME)
+		log_game("[C] has been successfully defibrillated by nanites.")
 	else
 		playsound(C, 'sound/machines/defib_failed.ogg', 50, FALSE)
 

@@ -3,15 +3,12 @@
 
 /**
  * Returns the thing in our active hand (whatever is in our active module-slot, in this case)
- *
- * Arguments
- * * get_gripper - If the active module is a gripper, should we return the gripper or the contained item? (if the gripper contains nothing, returns the gripper anyways)
  */
-/mob/living/silicon/robot/get_active_held_item(get_gripper = FALSE)
+/mob/living/silicon/robot/get_active_held_item()
 	var/item = module_active
 	// snowflake handler for the gripper
-	if(istype(item, /obj/item/gripper) && !get_gripper)
-		var/obj/item/gripper/G = item
+	if(istype(item, /obj/item/weapon/gripper))
+		var/obj/item/weapon/gripper/G = item
 		if(G.wrapped)
 			if(G.wrapped.loc != G)
 				G.wrapped = null
@@ -287,14 +284,9 @@
 
 /**
  * Unequips the active held item, if there is one.
- *
- * Will always consider dropping gripper contents first.
  */
 /mob/living/silicon/robot/proc/uneq_active()
 	if(module_active)
-		var/obj/item/gripper/gripper = get_active_held_item(TRUE)
-		if(istype(gripper) && gripper.drop_held())
-			return
 		unequip_module_from_slot(module_active, get_selected_module())
 
 /**
@@ -310,12 +302,11 @@
  * Checks if the item is currently in a slot.
  *
  * If the item is found in a slot, this returns TRUE. Otherwise, it returns FALSE
- * Modified to accept items inside of grippers, used for `code\modules\tgui\states\hands.dm:27`
  * Arguments
  * * item_module - the item being checked
  */
 /mob/living/silicon/robot/proc/activated(obj/item/item_module)
-	if(get_active_held_item() == item_module || (item_module in held_items))
+	if(item_module in held_items)
 		return TRUE
 	return FALSE
 

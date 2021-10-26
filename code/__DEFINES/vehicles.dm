@@ -1,20 +1,9 @@
-//Vehicle control flags. control flags describe access to actions in a vehicle.
+//Vehicle control flags
 
-///controls the vehicles movement
-#define VEHICLE_CONTROL_DRIVE (1<<0)
-///Can't leave vehicle voluntarily, has to resist.
-#define VEHICLE_CONTROL_KIDNAPPED (1<<1)
-///melee attacks/shoves a vehicle may have
-#define VEHICLE_CONTROL_MELEE (1<<2)
-///using equipment/weapons on the vehicle
-#define VEHICLE_CONTROL_EQUIPMENT (1<<3)
-///changing around settings and the like.
-#define VEHICLE_CONTROL_SETTINGS (1<<4)
+#define VEHICLE_CONTROL_PERMISSION 1
+#define VEHICLE_CONTROL_DRIVE 2
+#define VEHICLE_CONTROL_KIDNAPPED 4 //Can't leave vehicle voluntarily, has to resist.
 
-//car_traits flags
-///Will this car kidnap people by ramming into them?
-#define CAN_KIDNAP (1<<0)
 
-#define CLOWN_CANNON_INACTIVE 0
-#define CLOWN_CANNON_BUSY 1
-#define CLOWN_CANNON_READY 2
+//Car trait flags
+#define CAN_KIDNAP 1

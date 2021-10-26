@@ -6,7 +6,6 @@
 	set hidden = TRUE
 
 	client_keysend_amount += 1
-	last_activity = world.time
 
 	var/cache = client_keysend_amount
 
@@ -90,7 +89,6 @@
 	set hidden = TRUE
 
 	keys_held -= _key
-	last_activity = world.time
 	var/movement = movement_keys[_key]
 	if(!(next_move_dir_add & movement))
 		next_move_dir_sub |= movement
