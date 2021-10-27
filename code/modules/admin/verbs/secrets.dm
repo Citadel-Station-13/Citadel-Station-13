@@ -336,7 +336,7 @@
 					SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Activate"))
 
 			else
-				switch(tgui_alert(holder, alert("What would you like to do?",,"Intensify Summon Events",list("Turn Off Summon Events","Nothing"))))
+				switch(tgui_alert(holder, "What would you like to do?","Intensify Summon Events",list("Turn Off Summon Events","Nothing")))
 					if("Intensify Summon Events")
 						summonevents()
 						SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Intensify"))

@@ -119,7 +119,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		if(!O.can_reenter_round())
 			return FALSE
 
-	var/posi_ask = alert("Become a [name]? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
+	var/posi_ask = tgui_alert(user, "Become a [name]? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?",list("Yes","No"))
 	if(posi_ask == "No" || QDELETED(src))
 		return
 	transfer_personality(user)
