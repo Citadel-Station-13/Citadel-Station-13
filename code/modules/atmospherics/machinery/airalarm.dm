@@ -403,6 +403,9 @@
 		if("incheck")
 			send_signal(device_id, list("checks" = text2num(params["val"])^2), usr)
 			. = TRUE
+		if("direction")
+			send_signal(device_id, list("direction" = text2num(params["val"])), usr)
+			. = TRUE
 		if("set_external_pressure", "set_internal_pressure")
 
 			var/target = params["value"]

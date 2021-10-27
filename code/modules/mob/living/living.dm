@@ -116,19 +116,19 @@
 						to_chat(src, "<span class='warning'>[L] is restraining [P], you cannot push past.</span>")
 					return 1
 
-	//CIT CHANGES START HERE - makes it so resting stops you from moving through standing folks without a short delay
-		if(!CHECK_MOBILITY(src, MOBILITY_STAND) && CHECK_MOBILITY(L, MOBILITY_STAND))
+	//CIT CHANGES START HERE - makes it so resting stops you from moving through standing folks or over prone bodies without a short delay
+		if(!CHECK_MOBILITY(src, MOBILITY_STAND))
 			var/origtargetloc = L.loc
 			if(!pulledby)
 				if(combat_flags & COMBAT_FLAG_ATTEMPTING_CRAWL)
 					return TRUE
 				if(IS_STAMCRIT(src))
-					to_chat(src, "<span class='warning'>You're too exhausted to crawl under [L].</span>")
+					to_chat(src, "<span class='warning'>You're too exhausted to crawl [(CHECK_MOBILITY(L, MOBILITY_STAND)) ? "under": "over"] [L].</span>")
 					return TRUE
 				ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_ATTEMPTING_CRAWL)
-				visible_message("<span class='notice'>[src] is attempting to crawl under [L].</span>",
-					"<span class='notice'>You are now attempting to crawl under [L].</span>",
-					target = L, target_message = "<span class='notice'>[src] is attempting to crawl under you.</span>")
+				visible_message("<span class='notice'>[src] is attempting to crawl [(CHECK_MOBILITY(L, MOBILITY_STAND)) ? "under" : "over"] [L].</span>",
+					"<span class='notice'>You are now attempting to crawl [(CHECK_MOBILITY(L, MOBILITY_STAND)) ? "under": "over"] [L].</span>",
+					target = L, target_message = "<span class='notice'>[src] is attempting to crawl [(CHECK_MOBILITY(L, MOBILITY_STAND)) ? "under" : "over"] you.</span>")
 				if(!do_after(src, CRAWLUNDER_DELAY, target = src) || CHECK_MOBILITY(src, MOBILITY_STAND))
 					DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_ATTEMPTING_CRAWL)
 					return TRUE
