@@ -8,13 +8,13 @@
 		return
 
 	var/cfg_fps = CONFIG_GET(number/fps)
-	var/new_fps = round(input("Sets game frames-per-second. Can potentially break the game (default: [cfg_fps])","FPS", world.fps) as num|null)
+	var/new_fps = round(tgui_input_num(src, "Sets game frames-per-second. Can potentially break the game (default: [cfg_fps])","FPS", world.fps))
 
 	if(new_fps <= 0)
 		to_chat(src, "<span class='danger'>Error: set_server_fps(): Invalid world.fps value. No changes made.</span>")
 		return
 	if(new_fps > cfg_fps * 1.5)
-		if(alert(src, "You are setting fps to a high value:\n\t[new_fps] frames-per-second\n\tconfig.fps = [cfg_fps]","Warning!","Confirm","ABORT-ABORT-ABORT") != "Confirm")
+		if(tgui_alert(src, "You are setting fps to a high value:\n\t[new_fps] frames-per-second\n\tconfig.fps = [cfg_fps]","Warning!",list("Confirm","ABORT-ABORT-ABORT")) != "Confirm")
 			return
 
 	var/msg = "[key_name(src)] has modified world.fps to [new_fps]"

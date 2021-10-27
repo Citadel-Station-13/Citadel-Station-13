@@ -82,7 +82,7 @@
 				pressure = 50*ONE_ATMOSPHERE
 				. = TRUE
 			else if(pressure == "input")
-				pressure = input("New output pressure ([close_pressure]-[50*ONE_ATMOSPHERE] kPa):", name, open_pressure) as num|null
+				pressure = tgui_input_num(usr, "New output pressure ([close_pressure]-[50*ONE_ATMOSPHERE] kPa):", name, open_pressure)
 				if(!isnull(pressure) && !..())
 					. = TRUE
 			else if(text2num(pressure) != null)
@@ -97,7 +97,7 @@
 				pressure = open_pressure
 				. = TRUE
 			else if(pressure == "input")
-				pressure = input("New output pressure (0-[open_pressure] kPa):", name, close_pressure) as num|null
+				pressure = tgui_input_num(usr, "New output pressure (0-[open_pressure] kPa):", name, close_pressure)
 				if(!isnull(pressure) && !..())
 					. = TRUE
 			else if(text2num(pressure) != null)

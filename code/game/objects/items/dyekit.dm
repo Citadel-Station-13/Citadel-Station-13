@@ -23,7 +23,7 @@
 		return
 	var/mob/living/carbon/human/human_target = target
 
-	var/new_grad_style = input(usr, "Choose a color pattern:", "Character Preference")  as null|anything in GLOB.hair_gradients_list
+	var/new_grad_style = tgui_input_list(usr, "Choose a color pattern:", "Character Preference", GLOB.hair_gradients_list)
 	if(!new_grad_style)
 		return
 

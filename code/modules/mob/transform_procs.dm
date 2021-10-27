@@ -538,11 +538,11 @@
 /mob/living/carbon/human/Animalize(mind_transfer = TRUE)
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
-	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") as null|anything in mobtypes
+	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", mobtypes)
 	if(!mobpath)
 		return
 	if(mind)
-		mind_transfer = alert("Want to transfer their mind into the new mob", "Mind Transfer", "Yes", "No") == "Yes" ? TRUE : FALSE
+		mind_transfer = tgui_alert(usr, "Want to transfer their mind into the new mob", "Mind Transfer", list("Yes", "No")) == "Yes" ? TRUE : FALSE
 
 	if(mob_transforming)
 		return
@@ -573,11 +573,11 @@
 /mob/proc/Animalize(mind_transfer = TRUE)
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
-	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") as null|anything in mobtypes
+	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", mobtypes)
 	if(!mobpath)
 		return
 	if(mind)
-		mind_transfer = alert("Want to transfer their mind into the new mob", "Mind Transfer", "Yes", "No") == "Yes" ? TRUE : FALSE
+		mind_transfer = tgui_alert(usr, "Want to transfer their mind into the new mob", "Mind Transfer", list("Yes", "No")) == "Yes" ? TRUE : FALSE
 
 	var/mob/new_mob = new mobpath(src.loc)
 

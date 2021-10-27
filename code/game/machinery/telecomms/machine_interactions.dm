@@ -177,7 +177,7 @@
 			links.Remove(T)
 		if("freq")
 			if("add" in params)
-				var/newfreq = input("Specify a new frequency to filter (GHz). Decimals assigned automatically.", src.name, null) as null|num
+				var/newfreq = tgui_input_num(usr, "Specify a new frequency to filter (GHz). Decimals assigned automatically.", src.name, null)
 				if(!canAccess(usr) || !newfreq || isnull(newfreq))
 					return
 

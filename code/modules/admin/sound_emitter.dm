@@ -90,7 +90,7 @@
 		sound_file = new_file
 		to_chat(user, "<span class='notice'>New sound file set to [sound_file].</span>", confidential = TRUE)
 	if(href_list["edit_volume"])
-		var/new_volume = input(user, "Choose a volume.", "Sound Emitter", sound_volume) as null|num
+		var/new_volume = tgui_input_num(user, "Choose a volume.", "Sound Emitter", sound_volume)
 		if(isnull(new_volume))
 			return
 		new_volume = clamp(new_volume, 0, 100)
@@ -99,7 +99,7 @@
 	if(href_list["edit_mode"])
 		var/new_mode
 		var/mode_list = list("Local (normal sound)" = SOUND_EMITTER_LOCAL, "Direct (not affected by environment/location)" = SOUND_EMITTER_DIRECT)
-		new_mode = input(user, "Choose a new mode.", "Sound Emitter") as null|anything in mode_list
+		new_mode = tgui_input_list(user, "Choose a new mode.", "Sound Emitter", mode_list)
 		if(!new_mode)
 			return
 		motus_operandi = mode_list[new_mode]
@@ -107,13 +107,13 @@
 	if(href_list["edit_range"])
 		var/new_range
 		var/range_list = list("Radius (all mobs within a radius)" = SOUND_EMITTER_RADIUS, "Z-Level (all mobs on the same z)" = SOUND_EMITTER_ZLEVEL, "Global (all players)" = SOUND_EMITTER_GLOBAL)
-		new_range = input(user, "Choose a new range.", "Sound Emitter") as null|anything in range_list
+		new_range = tgui_input_list(user, "Choose a new range.", "Sound Emitter", range_list)
 		if(!new_range)
 			return
 		emitter_range = range_list[new_range]
 		to_chat(user, "<span class='notice'>Range set to [emitter_range].</span>", confidential = TRUE)
 	if(href_list["edit_radius"])
-		var/new_radius = input(user, "Choose a radius.", "Sound Emitter", sound_volume) as null|num
+		var/new_radius = tgui_input_num(user, "Choose a radius.", "Sound Emitter", sound_volume)
 		if(isnull(new_radius))
 			return
 		new_radius = clamp(new_radius, 0, 127)

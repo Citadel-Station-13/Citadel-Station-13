@@ -8,14 +8,14 @@
 	max_integrity = 200
 	var/obj/item/bodypart/storedpart
 	var/initial_icon_state
-	var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', 
-											"engineer" = 'icons/mob/augmentation/augments_engineer.dmi', 
-											"security" = 'icons/mob/augmentation/augments_security.dmi', 
-											"mining" = 'icons/mob/augmentation/augments_mining.dmi', 
-											"Talon" = 'icons/mob/augmentation/cosmetic_prosthetic/talon.dmi', 
-											"Nanotrasen" = 'icons/mob/augmentation/cosmetic_prosthetic/nanotrasen.dmi', 
-											"Hephaesthus" = 'icons/mob/augmentation/cosmetic_prosthetic/hephaestus.dmi', 
-											"Bishop" = 'icons/mob/augmentation/cosmetic_prosthetic/bishop.dmi', 
+	var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi',
+											"engineer" = 'icons/mob/augmentation/augments_engineer.dmi',
+											"security" = 'icons/mob/augmentation/augments_security.dmi',
+											"mining" = 'icons/mob/augmentation/augments_mining.dmi',
+											"Talon" = 'icons/mob/augmentation/cosmetic_prosthetic/talon.dmi',
+											"Nanotrasen" = 'icons/mob/augmentation/cosmetic_prosthetic/nanotrasen.dmi',
+											"Hephaesthus" = 'icons/mob/augmentation/cosmetic_prosthetic/hephaestus.dmi',
+											"Bishop" = 'icons/mob/augmentation/cosmetic_prosthetic/bishop.dmi',
 											"Xion" = 'icons/mob/augmentation/cosmetic_prosthetic/xion.dmi',
 											"Grayson" = 'icons/mob/augmentation/cosmetic_prosthetic/grayson.dmi',
 											"Cybersolutions" = 'icons/mob/augmentation/cosmetic_prosthetic/cybersolutions.dmi',
@@ -116,7 +116,7 @@
 	add_fingerprint(user)
 
 	if(storedpart)
-		var/augstyle = input(user, "Select style.", "Augment Custom Fitting") as null|anything in style_list_icons
+		var/augstyle = tgui_input_list(user, "Select style.", "Augment Custom Fitting", style_list_icons)
 		if(!augstyle)
 			return
 		if(!in_range(src, user))

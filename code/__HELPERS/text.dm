@@ -42,7 +42,7 @@
 
 /proc/sanitize_name(t,list/repl_chars = null)
 	if(t == "space" || t == "floor" || t == "wall" || t == "r-wall" || t == "monkey" || t == "unknown" || t == "inactive ai")	//prevents these common metagamey names
-		alert("Invalid name.")
+		tgui_alert(usr, "Invalid name.")
 		return ""
 	return sanitize(t)
 
@@ -93,7 +93,7 @@
 // Used to get a properly sanitized input, of max_length
 // no_trim is self explanatory but it prevents the input from being trimed if you intend to parse newlines or whitespace.
 /proc/stripped_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
-	var/name = input(user, message, title, default) as text|null
+	var/name = tgui_input_text(user, message, title, default)
 	if(no_trim)
 		return copytext(html_encode(name), 1, max_length)
 	else
@@ -101,7 +101,7 @@
 
 // Used to get a properly sanitized multiline input, of max_length
 /proc/stripped_multiline_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
-	var/name = input(user, message, title, default) as message|null
+	var/name = tgui_input_message(user, message, title, default)
 	if(isnull(name)) // Return null if canceled.
 		return null
 	if(no_trim)
@@ -113,7 +113,7 @@
   * stripped_multiline_input but reflects to the user instead if it's too big and returns null.
   */
 /proc/stripped_multiline_input_or_reflect(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
-	var/name = input(user, message, title, default) as message|null
+	var/name = tgui_input_message(user, message, title, default)
 	if(isnull(name)) // Return null if canceled.
 		return null
 	if(length(name) > max_length)

@@ -43,7 +43,7 @@
 	if(!I.tool_behaviour == TOOL_MULTITOOL)
 		return
 	if(panel_open)
-		var/new_name = "Beacon_[input("Enter the custom name for this beacon", "It be Beacon ..your input..") as text]"
+		var/new_name = "Beacon_[tgui_input_list(user, "Enter the custom name for this beacon", "It be Beacon ..your input..")]"
 		if(new_name && Adjacent(user))
 			name = new_name
 			to_chat(user, "<span class='notice'>You change beacon name to [name].</span>")

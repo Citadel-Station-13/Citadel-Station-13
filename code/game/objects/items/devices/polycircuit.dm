@@ -18,7 +18,7 @@
 	else
 		if(zero_amount())
 			return
-		chosen_circuit = input("What type of circuit would you like to remove?", "Choose a Circuit Type", chosen_circuit) as null|anything in list("airlock","firelock","fire alarm","air alarm","APC")
+		chosen_circuit = tgui_input_list(user, "What type of circuit would you like to remove?", "Choose a Circuit Type", list("airlock","firelock","fire alarm","air alarm","APC"))
 		if(zero_amount() || !chosen_circuit || !in_range(src,user))
 			return
 		switch(chosen_circuit)

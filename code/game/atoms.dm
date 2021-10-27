@@ -985,14 +985,14 @@
 	. = ..()
 	if(href_list[VV_HK_ADD_REAGENT] && check_rights(R_VAREDIT))
 		if(!reagents)
-			var/amount = input(usr, "Specify the reagent size of [src]", "Set Reagent Size", 50) as num
+			var/amount = tgui_input_num(usr, "Specify the reagent size of [src]", "Set Reagent Size", 50)
 			if(amount)
 				create_reagents(amount)
 
 		if(reagents)
 			var/chosen_id = choose_reagent_id(usr)
 			if(chosen_id)
-				var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", reagents.maximum_volume) as num
+				var/amount = tgui_input_num(usr, "Choose the amount to add.", "Choose the amount.", reagents.maximum_volume)
 				if(amount)
 					reagents.add_reagent(chosen_id, amount)
 					log_admin("[key_name(usr)] has added [amount] units of [chosen_id] to [src]")
@@ -1002,25 +1002,25 @@
 	if(href_list[VV_HK_TRIGGER_EMP] && check_rights(R_FUN))
 		usr.client.cmd_admin_emp(src)
 	if(href_list[VV_HK_MODIFY_TRANSFORM] && check_rights(R_VAREDIT))
-		var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate")
+		var/result = tgui_input_list(usr, "Choose the transformation to apply","Transform Mod", list("Scale","Translate","Rotate"))
 		var/matrix/M = transform
 		switch(result)
 			if("Scale")
-				var/x = input(usr, "Choose x mod","Transform Mod") as null|num
-				var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+				var/x = tgui_input_num(usr, "Choose x mod","Transform Mod")
+				var/y = tgui_input_num(usr, "Choose y mod","Transform Mod")
 				if(!isnull(x) && !isnull(y))
 					transform = M.Scale(x,y)
 			if("Translate")
-				var/x = input(usr, "Choose x mod","Transform Mod") as null|num
-				var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+				var/x = tgui_input_num(usr, "Choose x mod","Transform Mod")
+				var/y = tgui_input_num(usr, "Choose y mod","Transform Mod")
 				if(!isnull(x) && !isnull(y))
 					transform = M.Translate(x,y)
 			if("Rotate")
-				var/angle = input(usr, "Choose angle to rotate","Transform Mod") as null|num
+				var/angle = tgui_input_num(usr, "Choose angle to rotate","Transform Mod")
 				if(!isnull(angle))
 					transform = M.Turn(angle)
 	if(href_list[VV_HK_AUTO_RENAME] && check_rights(R_VAREDIT))
-		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
+		var/newname = tgui_input_text(usr, "What do you want to rename this to?", "Automatic Rename")
 		if(newname)
 			vv_auto_rename(newname)
 	if(href_list[VV_HK_EDIT_FILTERS] && check_rights(R_VAREDIT))

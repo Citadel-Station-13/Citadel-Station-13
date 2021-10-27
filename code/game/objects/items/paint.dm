@@ -56,7 +56,7 @@
 	icon_state = "paint_neutral"
 
 /obj/item/paint/anycolor/attack_self(mob/user)
-	var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "pink", "blue", "cyan", "green", "lime", "yellow", "orange", "violet", "purple", "black", "gray", "white")
+	var/t1 = tgui_input_list(user, "Please select a color:", "Locking Computer", list( "red", "pink", "blue", "cyan", "green", "lime", "yellow", "orange", "violet", "purple", "black", "gray", "white"))
 	if ((user.get_active_held_item() != src || user.stat || user.restrained()))
 		return
 	switch(t1)

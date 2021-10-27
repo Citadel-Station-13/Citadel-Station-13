@@ -17,7 +17,7 @@
 
 
 	var/prefix = "|Name | Reagents | Reaction vars | Description | Chem properties |\n|---|---|---|-----------|---|\n"
-	var/input_reagent = replacetext(lowertext(input("Input the name/type of a reagent to get it's description on it's own, or leave blank to parse every chem.", "Input") as text), " ", "") //95% of the time, the reagent type is a lowercase, no spaces / underscored version of the name
+	var/input_reagent = replacetext(lowertext(tgui_input_text(src, "Input the name/type of a reagent to get it's description on it's own, or leave blank to parse every chem.", "Input")), " ", "") //95% of the time, the reagent type is a lowercase, no spaces / underscored version of the name
 	if(input_reagent)
 		var/input_reagent2 = find_reagent(input_reagent)
 		if(!input_reagent2)

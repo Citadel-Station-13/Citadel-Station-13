@@ -1,0 +1,6 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - balance: "-40 wound bonus for DSword"
+  - balance: "-20 Wound bonus for Hyper Eu"
+  - bugfix: "Fixes hyper eu's slowdown when it's not wielded"
