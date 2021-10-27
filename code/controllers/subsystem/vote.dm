@@ -453,7 +453,7 @@ SUBSYSTEM_DEF(vote)
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
 					return 0
-				var/system_string = input(usr,"Which voting type?",GLOB.vote_type_names[1]) in GLOB.vote_type_names
+				var/system_string = tgui_input_list(usr,"Which voting type?",GLOB.vote_type_names[1], GLOB.vote_type_names)
 				vote_system = GLOB.vote_type_names[system_string]
 				for(var/i=1,i<=10,i++)
 					var/option = capitalize(stripped_input(usr,"Please enter an option or hit cancel to finish"))
@@ -469,7 +469,7 @@ SUBSYSTEM_DEF(vote)
 						var/bitflag = GLOB.display_vote_settings[A]
 						toggletext = "[toggles & bitflag ? "Show" : "Hide"] [A]"
 						choices[toggletext] = bitflag
-					var/chosen = input(usr, "Toggle vote display settings. Cancel to finalize.", toggles) as null|anything in choices
+					var/chosen = tgui_input_list(usr, "Toggle vote display settings. Cancel to finalize.", toggles, choices)
 					if(!chosen)
 						keep_going = FALSE
 					else

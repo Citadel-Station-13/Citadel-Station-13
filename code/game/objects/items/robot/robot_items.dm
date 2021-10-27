@@ -997,7 +997,7 @@
 			to_chat(user, "<span class='warning'>[target] is firmly secured!</span>")
 
 /obj/item/cyborg_clamp/attack_self(mob/user)
-	var/obj/chosen_cargo = input(user, "Drop what?") as null|anything in cargo
+	var/obj/chosen_cargo = tgui_input_list(user, "Drop what?", cargo)
 	if(!chosen_cargo)
 		return
 	chosen_cargo.forceMove(get_turf(chosen_cargo))

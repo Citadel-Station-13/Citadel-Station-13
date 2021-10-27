@@ -66,7 +66,7 @@
 		if(animation_playing)
 			to_chat(user, "<span class='notice'>\the [src] is recharging.</span>")
 			return
-		var/borg_icon = input(user, "Select an icon!", "Robot Icon", null) as null|anything in engymodels
+		var/borg_icon = tgui_input_list(user, "Select an icon!", "Robot Icon", engymodels)
 		if(!borg_icon)
 			return FALSE
 		switch(borg_icon)

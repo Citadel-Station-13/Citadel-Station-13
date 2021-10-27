@@ -84,7 +84,7 @@
 	var/list/keys = list()
 	for(var/mob/M in GLOB.player_list)
 		keys += M.client
-	var/client/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
+	var/client/selection = tgui_input_list(src, "Please, select a player!", "Admin Jumping", sortKey(keys))
 	if(!selection)
 		to_chat(src, "No keys found.", confidential = TRUE)
 		return
@@ -124,7 +124,7 @@
 	var/list/keys = list()
 	for(var/mob/M in GLOB.player_list)
 		keys += M.client
-	var/client/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
+	var/client/selection = tgui_input_list(src, "Please, select a player!", "Admin Jumping", sortKey(keys))
 	if(!selection)
 		return
 	var/mob/M = selection.mob
@@ -146,7 +146,7 @@
 	if(!src.holder)
 		to_chat(src, "Only administrators may use this command.", confidential = TRUE)
 		return
-	var/area/A = input(usr, "Pick an area.", "Pick an area") in GLOB.sortedAreas|null
+	var/area/A = tgui_input_list(usr, "Pick an area.", "Pick an area", GLOB.sortedAreas)
 	if(A && istype(A))
 		var/list/turfs = get_area_turfs(A)
 		if(length(turfs) && M.forceMove(pick(turfs)))

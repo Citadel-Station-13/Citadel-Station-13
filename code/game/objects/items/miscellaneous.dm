@@ -26,7 +26,7 @@
 		stored_options = generate_display_names()
 	if(!stored_options.len)
 		return
-	var/choice = input(M,"Which item would you like to order?","Select an Item") as null|anything in stored_options
+	var/choice = tgui_input_list(M,"Which item would you like to order?","Select an Item", stored_options)
 	if(!choice || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 
@@ -182,7 +182,7 @@
 	return carrier
 
 /obj/item/choice_beacon/pet/spawn_option(atom/choice,mob/living/M)
-	pet_name = input(M, "What would you like to name the pet? (leave blank for default name)", "Pet Name")
+	pet_name = tgui_input_text(M, "What would you like to name the pet? (leave blank for default name)", "Pet Name")
 	..()
 
 //choice boxes (they just open in your hand instead of making a pod)

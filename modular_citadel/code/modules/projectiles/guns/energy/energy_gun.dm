@@ -33,7 +33,7 @@
 	if(user.incapacitated() || !istype(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
-	if(alert("Are you sure you want to repaint your gun?", "Confirm Repaint", "Yes", "No") == "Yes")
+	if(tgui_alert(user, "Are you sure you want to repaint your gun?", "Confirm Repaint", list("Yes", "No")) == "Yes")
 		var/body_color_input = input(usr,"","Choose Body Color",body_color) as color|null
 		if(body_color_input)
 			body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)

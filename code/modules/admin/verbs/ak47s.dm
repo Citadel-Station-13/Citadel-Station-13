@@ -1,7 +1,7 @@
 GLOBAL_VAR_INIT(terrorism, FALSE)
 /client/proc/ak47s() // For when you just can't summon guns worthy of a firefight
 	if(!SSticker.HasRoundStarted())
-		alert("The game hasn't started yet!")
+		tgui_alert(usr, "The game hasn't started yet!")
 		return
 	GLOB.terrorism = TRUE
 

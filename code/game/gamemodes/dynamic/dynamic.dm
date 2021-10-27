@@ -201,7 +201,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else if (href_list["no_stacking"])
 		GLOB.dynamic_no_stacking = !GLOB.dynamic_no_stacking
 	else if (href_list["adjustthreat"])
-		var/threatadd = input("Specify how much threat to add (negative to subtract). This can inflate the threat level.", "Adjust Threat", 0) as null|num
+		var/threatadd = tgui_input_num(usr, "Specify how much threat to add (negative to subtract). This can inflate the threat level.", "Adjust Threat", 0)
 		if(!threatadd)
 			return
 		if(threatadd > 0)
@@ -221,9 +221,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else if (href_list["threatlog"])
 		show_threatlog(usr)
 	else if (href_list["stacking_limit"])
-		GLOB.dynamic_stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
+		GLOB.dynamic_stacking_limit = tgui_input_num(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null)
 	else if(href_list["force_latejoin_rule"])
-		var/added_rule = input(usr,"What ruleset do you want to force upon the next latejoiner? This will bypass threat level and population restrictions.", "Rigging Latejoin", null) as null|anything in sortNames(init_rulesets(/datum/dynamic_ruleset/latejoin))
+		var/added_rule = tgui_input_list(usr,"What ruleset do you want to force upon the next latejoiner? This will bypass threat level and population restrictions.", "Rigging Latejoin", sortNames(init_rulesets(/datum/dynamic_ruleset/latejoin)))
 		if (!added_rule)
 			return
 		forced_latejoin_rule = added_rule
@@ -234,7 +234,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		log_admin("[key_name(usr)] cleared the forced latejoin ruleset.")
 		message_admins("[key_name(usr)] cleared the forced latejoin ruleset.")
 	else if(href_list["force_midround_rule"])
-		var/added_rule = input(usr,"What ruleset do you want to force right now? This will bypass threat level and population restrictions.", "Execute Ruleset", null) as null|anything in sortNames(init_rulesets(/datum/dynamic_ruleset/midround))
+		var/added_rule = tgui_input_list(usr,"What ruleset do you want to force right now? This will bypass threat level and population restrictions.", "Execute Ruleset", sortNames(init_rulesets(/datum/dynamic_ruleset/midround)))
 		if (!added_rule)
 			return
 		log_admin("[key_name(usr)] executed the [added_rule] ruleset.")

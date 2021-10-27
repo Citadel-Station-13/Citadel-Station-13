@@ -102,7 +102,7 @@
 	rad_insulation = RAD_MEDIUM_INSULATION
 
 	var/static/list/airlock_overlays = list()
-	
+
 	/// sigh
 	var/unelectrify_timerid
 
@@ -1212,7 +1212,7 @@
 	else
 		optionlist = list("Standard", "Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Freezer", "Science", "Virology", "Mining", "Maintenance", "External", "External Maintenance")
 
-	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
+	var/paintjob = tgui_input_list(user, "Please select a paintjob for this airlock.", "", optionlist)
 	if((!in_range(src, usr) && src.loc != usr) || !W.use_paint(user))
 		return
 	switch(paintjob)

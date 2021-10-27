@@ -31,5 +31,5 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Asay") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/get_admin_say()
-	var/msg = input(src, null, "asay \"text\"") as text
+	var/msg = tgui_input_text(src, null, "asay \"text\"")
 	cmd_admin_say(msg)

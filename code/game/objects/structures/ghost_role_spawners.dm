@@ -184,7 +184,7 @@
 
 /obj/effect/mob_spawn/human/golem/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(isgolem(user) && can_transfer)
-		var/transfer_choice = alert("Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
+		var/transfer_choice = tgui_alert(user, "Transfer your soul to [src]? (Warning, your old body will die!)",,list("Yes","No"))
 		if(transfer_choice != "Yes" || QDELETED(src) || uses <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERY, NO_TK))
 			return
 		log_game("[key_name(user)] golem-swapped into [src]")
@@ -742,7 +742,7 @@
 /datum/action/disguise/Trigger()
 	var/mob/living/carbon/human/H = owner
 	if(!currently_disguised)
-		var/user_object_type = input(H, "Disguising as OBJECT or MOB?") as null|anything in list("OBJECT", "MOB")
+		var/user_object_type = tgui_input_list(H, "Disguising as OBJECT or MOB?", "", list("OBJECT", "MOB"))
 		if(user_object_type)
 			var/search_term = stripped_input(H, "Enter the search term")
 			if(search_term)
@@ -758,7 +758,7 @@
 				if(!length(filtered_results))
 					to_chat(H, "Nothing matched your search query!")
 				else
-					var/disguise_selection = input("Select item to disguise as") as null|anything in filtered_results
+					var/disguise_selection = tgui_input_list(H, "Select item to disguise as", "", filtered_results)
 					if(disguise_selection)
 						var/atom/disguise_item = disguise_selection
 						var/image/I = image(icon = initial(disguise_item.icon), icon_state = initial(disguise_item.icon_state), loc = H)

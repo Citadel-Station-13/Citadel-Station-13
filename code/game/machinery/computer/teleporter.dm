@@ -139,7 +139,7 @@
 				if(is_eligible(M))
 					L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = M
 
-		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
+		var/desc = tgui_input_list(user, "Please select a location to lock in.", "Locking Computer", L)
 		if(!user.canUseTopic(src, !hasSiliconAccessInArea(user), NO_DEXTERY)) //check if we are still around
 			return
 		target = L[desc]
@@ -167,7 +167,7 @@
 		if(!L.len)
 			to_chat(user, "<span class='alert'>No active connected stations located.</span>")
 			return
-		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in L
+		var/desc = tgui_input_list(user, "Please select a station to lock in.", "Locking Computer", L)
 		if(!user.canUseTopic(src, !hasSiliconAccessInArea(user), NO_DEXTERY)) //again, check if we are still around
 			return
 		var/obj/machinery/teleport/station/target_station = L[desc]

@@ -170,7 +170,7 @@
 		to_chat(user, "<span class='warning'>These items don't possess the required fingerprints or DNA.</span>")
 		return FALSE
 
-	var/chosen_mob = input("Select the person you wish to curse","Your target") as null|anything in sortList(compiled_list, /proc/cmp_mob_realname_dsc)
+	var/chosen_mob = tgui_input_list(user, "Select the person you wish to curse","Your target", sortList(compiled_list, /proc/cmp_mob_realname_dsc))
 	if(!chosen_mob)
 		return FALSE
 	curse(compiled_list[chosen_mob])
@@ -296,7 +296,7 @@
 				if(!targeted)
 					break
 				targets["[targeted.current.real_name] the [targeted.assigned_role]"] = targeted.current
-			LH.target = targets[input(user,"Choose your next target","Target") in targets]
+			LH.target = targets[tgui_input_list(user,"Choose your next target","Target", targets)]
 
 			if(!LH.target && targets.len)
 				LH.target = pick(targets)	//Tsk tsk, you can and will get another target if you want it or not.

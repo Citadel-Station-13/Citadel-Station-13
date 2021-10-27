@@ -38,7 +38,7 @@
 			to_chat(user, "You have a very great feeling about this!")
 		else
 			to_chat(user, "The Wish Granter awaits your wish.")
-			var/wish = input("You want...","Wish") as null|anything in list("Power","Wealth","The Station To Disappear","To Kill","Nothing")
+			var/wish = tgui_input_list(user, "You want...","Wish", list("Power","Wealth","The Station To Disappear","To Kill","Nothing"))
 			switch(wish)
 				if("Power")	//Gives infinite power in exchange for infinite power going off in your face!
 					if(charges <= 0)

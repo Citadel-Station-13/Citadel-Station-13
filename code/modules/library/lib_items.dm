@@ -140,7 +140,7 @@
 		create_random_books(books_to_load, src, FALSE, random_category)
 		load_random_books = FALSE
 	if(contents.len)
-		var/obj/item/book/choice = input(user, "Which book would you like to remove from the shelf?") as null|obj in sortNames(contents.Copy())
+		var/obj/item/book/choice = tgui_input_list(user, "Which book would you like to remove from the shelf?", "", sortNames(contents.Copy()))
 		if(choice)
 			if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || !in_range(loc, user))
 				return
@@ -239,7 +239,7 @@
 		if(!literate)
 			to_chat(user, "<span class='notice'>You scribble illegibly on the cover of [src]!</span>")
 			return
-		var/choice = input("What would you like to change?") in list("Title", "Contents", "Author", "Cancel")
+		var/choice = tgui_input_list(user, "What would you like to change?", "", list("Title", "Contents", "Author", "Cancel"))
 		if(!user.canUseTopic(src, BE_CLOSE, literate))
 			return
 		switch(choice)

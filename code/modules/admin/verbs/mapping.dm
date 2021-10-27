@@ -110,7 +110,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	set name = "Camera Report"
 
 	if(!Master)
-		alert(usr,"Master_controller not found.","Sec Camera Report")
+		tgui_alert(usr, "Master_controller not found.","Sec Camera Report")
 		return 0
 
 	var/list/obj/machinery/camera/CL = list()
@@ -219,7 +219,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 /client/proc/count_objects_on_z_level()
 	set category = "Mapping"
 	set name = "Count Objects On Level"
-	var/level = input("Which z-level?","Level?") as text
+	var/level = tgui_input_text(src, "Which z-level?","Level?")
 	if(!level)
 		return
 	var/num_level = text2num(level)
@@ -228,7 +228,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	if(!isnum(num_level))
 		return
 
-	var/type_text = input("Which type path?","Path?") as text
+	var/type_text = tgui_input_text(src, "Which type path?","Path?")
 	if(!type_text)
 		return
 	var/type_path = text2path(type_text)
@@ -259,7 +259,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	set category = "Mapping"
 	set name = "Count Objects All"
 
-	var/type_text = input("Which type path?","") as text
+	var/type_text = tgui_input_text(src, "Which type path?","")
 	if(!type_text)
 		return
 	var/type_path = text2path(type_text)

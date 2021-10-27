@@ -46,7 +46,7 @@
 /datum/action/item_action/organ_action/use/adamantine_vocal_cords/Trigger()
 	if(!IsAvailable())
 		return
-	var/message = input(owner, "Resonate a message to all nearby golems.", "Resonate")
+	var/message = tgui_input_text(owner, "Resonate a message to all nearby golems.", "Resonate")
 	if(QDELETED(src) || QDELETED(owner) || !message)
 		return
 	owner.say(".x[message]")
@@ -100,7 +100,7 @@
 		if(world.time < cords.next_command)
 			to_chat(owner, "<span class='notice'>You must wait [DisplayTimeText(cords.next_command - world.time)] before Speaking again.</span>")
 		return
-	var/command = input(owner, "Speak with the Voice of God", "Command")
+	var/command = tgui_input_text(owner, "Speak with the Voice of God", "Command")
 	if(QDELETED(src) || QDELETED(owner))
 		return
 	if(!command)
@@ -644,7 +644,7 @@
 
 /datum/action/item_action/organ_action/velvet/Trigger()
 	. = ..()
-	var/command = input(owner, "Speak in a sultry tone", "Command")
+	var/command = tgui_input_text(owner, "Speak in a sultry tone", "Command")
 	if(QDELETED(src) || QDELETED(owner))
 		return
 	if(!command)
@@ -1220,7 +1220,7 @@
 					if (E.mental_capacity >= 5)
 						var/trigger = html_decode(stripped_input(user, "Enter the trigger phrase", MAX_MESSAGE_LEN))
 						var/custom_words_words_list = list("Speak", "Echo", "Shock", "Cum", "Kneel", "Strip", "Trance", "Cancel")
-						var/trigger2 = input(user, "Pick an effect", "Effects") in custom_words_words_list
+						var/trigger2 = tgui_input_list(user, "Pick an effect", "Effects", custom_words_words_list)
 						trigger2 = lowertext(trigger2)
 						if ((findtext(trigger2, custom_words_words)))
 							if (trigger2 == "speak" || trigger2 == "echo")
@@ -1260,7 +1260,7 @@
 					H.SetStun(1000)
 					var/trigger = stripped_input(user, "Enter the loop phrase", MAX_MESSAGE_LEN)
 					var/customSpan = list("Notice", "Warning", "Hypnophrase", "Love", "Velvet")
-					var/trigger2 = input(user, "Pick the style", "Style") in customSpan
+					var/trigger2 = tgui_input_list(user, "Pick the style", "Style", customSpan)
 					trigger2 = lowertext(trigger2)
 					E.customEcho = trigger
 					E.customSpan = trigger2

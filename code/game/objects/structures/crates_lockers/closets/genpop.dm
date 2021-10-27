@@ -40,13 +40,13 @@
 	return TRUE
 
 /obj/structure/closet/secure_closet/genpop/proc/handle_edit_sentence(mob/user)
-	var/prisoner_name = input(user, "Please input the name of the prisoner.", "Prisoner Name", registered_id.registered_name) as text|null
+	var/prisoner_name = tgui_input_text(user, "Please input the name of the prisoner.", "Prisoner Name", registered_id.registered_name)
 	if(prisoner_name == null | !user.Adjacent(src))
 		return FALSE
-	var/sentence_length = input(user, "Please input the length of their sentence in minutes (0 for perma).", "Sentence Length", registered_id.sentence) as num|null
+	var/sentence_length = tgui_input_num(user, "Please input the length of their sentence in minutes (0 for perma).", "Sentence Length", registered_id.sentence)
 	if(sentence_length == null | !user.Adjacent(src))
 		return FALSE
-	var/crimes = input(user, "Please input their crimes.", "Crimes", registered_id.crime) as text|null
+	var/crimes = tgui_input_text(user, "Please input their crimes.", "Crimes", registered_id.crime)
 	if(crimes == null | !user.Adjacent(src))
 		return FALSE
 
@@ -71,7 +71,7 @@
 
 	if(!broken && locked && registered_id != null)
 		var/name = registered_id.registered_name
-		var/result = alert(user, "This locker currently contains [name]'s personal belongings ","Locker In Use","Reset","Amend ID", "Open")
+		var/result = tgui_alert(user, "This locker currently contains [name]'s personal belongings ","Locker In Use",list("Reset","Amend ID", "Open"))
 		if(!user.Adjacent(src))
 			return
 		if(result == "Reset")

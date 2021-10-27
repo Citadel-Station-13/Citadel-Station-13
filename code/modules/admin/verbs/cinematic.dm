@@ -6,6 +6,6 @@
 	if(!SSticker)
 		return
 
-	var/datum/cinematic/choice = input(src,"Cinematic","Choose",null) as anything in subtypesof(/datum/cinematic)
+	var/datum/cinematic/choice = tgui_input_list(src,"Cinematic","Choose", subtypesof(/datum/cinematic))
 	if(choice)
 		Cinematic(initial(choice.id),world,null)

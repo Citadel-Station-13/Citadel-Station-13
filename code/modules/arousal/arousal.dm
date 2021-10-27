@@ -16,7 +16,7 @@
 	set name = "Toggle undergarments"
 	set category = "IC"
 
-	var/confirm = input(src, "Select what part of your form to alter", "Undergarment Toggling") as null|anything in list("Top", "Bottom", "Socks", "All")
+	var/confirm = tgui_input_list(src, "Select what part of your form to alter", "Undergarment Toggling", list("Top", "Bottom", "Socks", "All"))
 	if(!confirm)
 		return
 	if(confirm == "Top")
@@ -127,7 +127,7 @@
 		if(CHECK_BITFIELD(G.genital_flags, CAN_CLIMAX_WITH) && G.is_exposed(worn_stuff)) //filter out what you can't masturbate with
 			LAZYADD(genitals_list, G)
 	if(LAZYLEN(genitals_list))
-		var/obj/item/organ/genital/ret_organ = input(src, "with what?", "Climax", null) as null|obj in genitals_list
+		var/obj/item/organ/genital/ret_organ = tgui_input_list(src, "with what?", "Climax", genitals_list)
 		return ret_organ
 	else if(!silent)
 		to_chat(src, "<span class='warning'>You cannot climax without available genitals.</span>")
@@ -151,10 +151,10 @@
 		if(!silent)
 			to_chat(src, "<span class='warning'>You cannot do this alone.</span>")
 		return //No one left.
-	var/mob/living/target = input(src, "With whom?", "Sexual partner", null) as null|anything in partners //pick one, default to null
+	var/mob/living/target = tgui_input_list(src, "With whom?", "Sexual partner", partners) //pick one, default to null
 	if(target && in_range(src, target))
 		to_chat(src,"<span class='notice'>Waiting for consent...</span>")
-		var/consenting = input(target, "Do you want [src] to climax with you?","Climax mechanics","No") in list("Yes","No")
+		var/consenting = tgui_input_list(target, "Do you want [src] to climax with you?","Climax mechanics", list("Yes","No"))
 		if(consenting == "Yes")
 			return target
 		else
@@ -172,7 +172,7 @@
 			containers_list += C
 
 	if(containers_list.len)
-		var/obj/item/reagent_containers/SC = input(src, "Into or onto what?(Cancel for nowhere)", null)  as null|obj in containers_list
+		var/obj/item/reagent_containers/SC = tgui_input_list(src, "Into or onto what?(Cancel for nowhere)", "", containers_list)
 		if(SC && CanReach(SC))
 			return SC
 	else if(!silent)
@@ -226,7 +226,7 @@
 		return
 
 	//Ok, now we check what they want to do.
-	var/choice = input(src, "Select sexual activity", "Sexual activity:") as null|anything in list("Climax alone","Climax with partner", "Fill container")
+	var/choice = tgui_input_list(src, "Select sexual activity", "Sexual activity:", list("Climax alone","Climax with partner", "Fill container"))
 	if(!choice)
 		return
 
@@ -243,7 +243,7 @@
 			if(picked_organ)
 				var/mob/living/partner = pick_partner() //Get someone
 				if(partner)
-					var/spillage = input(src, "Would your fluids spill outside?", "Choose overflowing option", "Yes") as null|anything in list("Yes", "No")
+					var/spillage = tgui_input_list(src, "Would your fluids spill outside?", "Choose overflowing option", list("Yes", "No"))
 					if(spillage && in_range(src, partner))
 						mob_climax_partner(picked_organ, partner, spillage == "Yes" ? TRUE : FALSE)
 		if("Fill container")

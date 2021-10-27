@@ -31,7 +31,7 @@
 	set name = "Make Robot"
 
 	if(!SSticker.HasRoundStarted())
-		alert("Wait until the game starts")
+		tgui_alert(usr, "Wait until the game starts")
 		return
 	if(ishuman(M))
 		log_admin("[key_name(src)] has robotized [M.key].")
@@ -40,21 +40,21 @@
 			H.Robotize()
 
 	else
-		alert("Invalid mob")
+		tgui_alert(usr, "Invalid mob")
 
 /client/proc/cmd_admin_blobize(mob/M in GLOB.mob_list)
 	set category = "Admin.Fun"
 	set name = "Make Blob"
 
 	if(!SSticker.HasRoundStarted())
-		alert("Wait until the game starts")
+		tgui_alert(usr, "Wait until the game starts")
 		return
 	if(ishuman(M))
 		log_admin("[key_name(src)] has blobized [M.key].")
 		var/mob/living/carbon/human/H = M
 		H.become_overmind()
 	else
-		alert("Invalid mob")
+		tgui_alert(usr, "Invalid mob")
 
 
 /client/proc/cmd_admin_animalize(mob/M in GLOB.mob_list)
@@ -62,15 +62,15 @@
 	set name = "Make Simple Animal"
 
 	if(!SSticker.HasRoundStarted())
-		alert("Wait until the game starts")
+		tgui_alert(usr, "Wait until the game starts")
 		return
 
 	if(!M)
-		alert("That mob doesn't seem to exist, close the panel and try again.")
+		tgui_alert(usr, "That mob doesn't seem to exist, close the panel and try again.")
 		return
 
 	if(isnewplayer(M))
-		alert("The mob must not be a new_player.")
+		tgui_alert(usr, "The mob must not be a new_player.")
 		return
 
 	log_admin("[key_name(src)] has animalized [M.key].")
@@ -87,16 +87,16 @@
 	for(var/mob/C in GLOB.mob_list)
 		if(C.key)
 			available.Add(C)
-	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in available
+	var/mob/choice = tgui_input_list(src, "Choose a player to play the pAI", "Spawn pAI", available)
 	if(!choice)
 		return 0
 	if(!isobserver(choice))
-		var/confirm = input("[choice.key] isn't ghosting right now. Are you sure you want to yank him out of them out of their body and place them in this pAI?", "Spawn pAI Confirmation", "No") in list("Yes", "No")
+		var/confirm = tgui_input_list(src, "[choice.key] isn't ghosting right now. Are you sure you want to yank him out of them out of their body and place them in this pAI?", "Spawn pAI Confirmation", list("Yes", "No"))
 		if(confirm != "Yes")
 			return 0
 	var/obj/item/paicard/card = new(T)
 	var/mob/living/silicon/pai/pai = new(card)
-	pai.name = input(choice, "Enter your pAI name:", "pAI Name", "Personal AI") as text
+	pai.name = tgui_input_text(choice, "Enter your pAI name:", "pAI Name", "Personal AI")
 	pai.real_name = pai.name
 	choice.transfer_ckey(pai)
 	card.setPersonality(pai)
@@ -110,7 +110,7 @@
 	set name = "Make Alien"
 
 	if(!SSticker.HasRoundStarted())
-		alert("Wait until the game starts")
+		tgui_alert(usr, "Wait until the game starts")
 		return
 	if(ishuman(M))
 		INVOKE_ASYNC(M, /mob/living/carbon/human/proc/Alienize)
@@ -118,14 +118,14 @@
 		log_admin("[key_name(usr)] made [key_name(M)] into an alien at [AREACOORD(M)].")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [ADMIN_LOOKUPFLW(M)] into an alien.</span>")
 	else
-		alert("Invalid mob")
+		tgui_alert(usr, "Invalid mob")
 
 /client/proc/cmd_admin_slimeize(mob/M in GLOB.mob_list)
 	set category = "Admin.Fun"
 	set name = "Make slime"
 
 	if(!SSticker.HasRoundStarted())
-		alert("Wait until the game starts")
+		tgui_alert(usr, "Wait until the game starts")
 		return
 	if(ishuman(M))
 		INVOKE_ASYNC(M, /mob/living/carbon/human/proc/slimeize)
@@ -133,7 +133,7 @@
 		log_admin("[key_name(usr)] made [key_name(M)] into a slime at [AREACOORD(M)].")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [ADMIN_LOOKUPFLW(M)] into a slime.</span>")
 	else
-		alert("Invalid mob")
+		tgui_alert(usr, "Invalid mob")
 
 //TODO: merge the vievars version into this or something maybe mayhaps
 /client/proc/cmd_debug_del_all(object as text)
@@ -146,7 +146,7 @@
 
 	if(matches.len==0)
 		return
-	var/hsbitem = input(usr, "Choose an object to delete.", "Delete:") as null|anything in matches
+	var/hsbitem = tgui_input_list(usr, "Choose an object to delete.", "Delete:", matches)
 	if(hsbitem)
 		hsbitem = matches[hsbitem]
 		var/counter = 0
@@ -173,7 +173,7 @@
 	set name = "Grant Full Access"
 
 	if(!SSticker.HasRoundStarted())
-		alert("Wait until the game starts")
+		tgui_alert(usr, "Wait until the game starts")
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -205,7 +205,7 @@
 				H.equip_to_slot(id,SLOT_WEAR_ID)
 
 	else
-		alert("Invalid mob")
+		tgui_alert(usr, "Invalid mob")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Grant Full Access") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(src)] has granted [M.key] full access.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has granted [M.key] full access.</span>")
@@ -216,7 +216,7 @@
 	set desc = "Direct intervention"
 
 	if(M.ckey)
-		if(alert("This mob is being controlled by [M.key]. Are you sure you wish to assume control of it? [M.key] will be made a ghost.",,"Yes","No") != "Yes")
+		if(tgui_alert(src, "This mob is being controlled by [M.key]. Are you sure you wish to assume control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
 			return
 		else
 			var/mob/dead/observer/ghost = new/mob/dead/observer(get_turf(M), M)
@@ -236,12 +236,12 @@
 	if(!M)
 		return
 	if(M.ckey)
-		if(alert("This mob is being controlled by [M.key]. Are you sure you wish to give someone else control of it? [M.key] will be made a ghost.",,"Yes","No") != "Yes")
+		if(tgui_alert(usr, "This mob is being controlled by [M.key]. Are you sure you wish to give someone else control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
 			return
-	var/client/newkey = input(src, "Pick the player to put in control.", "New player") as null|anything in sortList(GLOB.clients)
+	var/client/newkey = tgui_input_list(src, "Pick the player to put in control.", "New player", sortList(GLOB.clients))
 	var/mob/oldmob = newkey.mob
 	var/delmob = FALSE
-	if((isobserver(oldmob) || alert("Do you want to delete [newkey]'s old mob?","Delete?","Yes","No") != "No"))
+	if((isobserver(oldmob) || tgui_alert(usr, "Do you want to delete [newkey]'s old mob?","Delete?",list("Yes","No")) != "No"))
 		delmob = TRUE
 	if(!M || QDELETED(M))
 		to_chat(usr, "<span class='warning'>The target mob no longer exists, aborting.</span>")
@@ -494,7 +494,7 @@
 		var/datum/outfit/O = path //not much to initalize here but whatever
 		outfits[initial(O.name)] = path
 
-	var/dresscode = input("Select outfit", "Robust quick dress shop") as null|anything in baseoutfits + sortList(outfits)
+	var/dresscode = tgui_input_list(src, "Select outfit", "Robust quick dress shop", baseoutfits + sortList(outfits))
 	if (isnull(dresscode))
 		return
 
@@ -508,7 +508,7 @@
 			var/datum/outfit/O = path
 			job_outfits[initial(O.name)] = path
 
-		dresscode = input("Select job equipment", "Robust quick dress shop") as null|anything in sortList(job_outfits)
+		dresscode = tgui_input_list(src, "Select job equipment", "Robust quick dress shop", sortList(job_outfits))
 		dresscode = job_outfits[dresscode]
 		if(isnull(dresscode))
 			return
@@ -520,7 +520,7 @@
 			var/datum/outfit/O = path
 			plasmaman_outfits[initial(O.name)] = path
 
-		dresscode = input("Select plasmeme equipment", "Robust quick dress shop") as null|anything in sortList(plasmaman_outfits)
+		dresscode = tgui_input_list(src, "Select plasmeme equipment", "Robust quick dress shop", sortList(plasmaman_outfits))
 		dresscode = plasmaman_outfits[dresscode]
 		if(isnull(dresscode))
 			return
@@ -529,7 +529,7 @@
 		var/list/custom_names = list()
 		for(var/datum/outfit/D in GLOB.custom_outfits)
 			custom_names[D.name] = D
-		var/selected_name = input("Select outfit", "Robust quick dress shop") as null|anything in sortList(custom_names)
+		var/selected_name = tgui_input_list(src, "Select outfit", "Robust quick dress shop", sortList(custom_names))
 		dresscode = custom_names[selected_name]
 		if(isnull(dresscode))
 			return
@@ -542,7 +542,7 @@
 	set name = "Start Singularity"
 	set desc = "Sets up the singularity and all machines to get power flowing through the station"
 
-	if(alert("Are you sure? This will start up the engine. Should only be used during debug!",,"Yes","No") != "Yes")
+	if(tgui_alert(usr, "Are you sure? This will start up the engine. Should only be used during debug!",,list("Yes","No")) != "Yes")
 		return
 
 	for(var/obj/machinery/power/emitter/E in GLOB.machines)
@@ -598,7 +598,7 @@
 	set name = "Debug Mob Lists"
 	set desc = "For when you just gotta know"
 
-	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
+	switch(tgui_input_list(src, "Which list?", "", list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients")))
 		if("Players")
 			to_chat(usr, jointext(GLOB.player_list,","))
 		if("Admins")
@@ -687,7 +687,7 @@
 
 		names[name] = ruin_landmark
 
-	var/ruinname = input("Select ruin", "Jump to Ruin") as null|anything in names
+	var/ruinname = tgui_input_list(src, "Select ruin", "Jump to Ruin", names)
 
 
 	var/obj/effect/landmark/ruin/landmark = names[ruinname]
@@ -725,13 +725,13 @@
 	for(var/name in SSmapping.ice_ruins_underground_templates)
 		names[name] = list(SSmapping.ice_ruins_underground_templates[name], ZTRAIT_ICE_RUINS_UNDERGROUND, list(/area/icemoon/underground/unexplored))
 
-	var/ruinname = input("Select ruin", "Spawn Ruin") as null|anything in names
+	var/ruinname = tgui_input_list(src, "Select ruin", "Spawn Ruin", names)
 	var/data = names[ruinname]
 	if (!data)
 		return
 	var/datum/map_template/ruin/template = data[1]
 	if (exists[template])
-		var/response = alert("There is already a [template] in existence.", "Spawn Ruin", "Jump", "Place Another", "Cancel")
+		var/response = tgui_alert(usr, "There is already a [template] in existence.", "Spawn Ruin", list("Jump", "Place Another", "Cancel"))
 		if (response == "Jump")
 			usr.forceMove(get_turf(exists[template]))
 			return
@@ -755,7 +755,7 @@
 	set desc = "Deallocates all reserved space, restoring it to round start conditions."
 	if(!holder)
 		return
-	var/answer = alert("WARNING: THIS WILL WIPE ALL RESERVED SPACE TO A CLEAN SLATE! ANY MOVING SHUTTLES, ELEVATORS, OR IN-PROGRESS PHOTOGRAPHY WILL BE DELETED!", "Really wipe dynamic turfs?", "YES", "NO")
+	var/answer = tgui_alert(usr, "WARNING: THIS WILL WIPE ALL RESERVED SPACE TO A CLEAN SLATE! ANY MOVING SHUTTLES, ELEVATORS, OR IN-PROGRESS PHOTOGRAPHY WILL BE DELETED!", "Really wipe dynamic turfs?", list("YES", "NO"))
 	if(answer != "YES")
 		return
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] cleared dynamic transit space.</span>")
@@ -833,7 +833,7 @@
 		"Total Time"	=	/proc/cmp_profile_time_dsc,
 		"Call Count"	=	/proc/cmp_profile_count_dsc
 	)
-	var/sort = input(src, "Sort type?", "Sort Type", "Avg time") as null|anything in sortlist
+	var/sort = tgui_input_list(src, "Sort type?", "Sort Type", sortlist)
 	if (!sort)
 		return
 	sort = sortlist[sort]
@@ -845,5 +845,5 @@
 	set desc = "Force config reload to world default"
 	if(!check_rights(R_DEBUG))
 		return
-	if(alert(usr, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modificatoins?", "Really reset?", "No", "Yes") == "Yes")
+	if(tgui_alert(usr, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modificatoins?", "Really reset?", list("No", "Yes")) == "Yes")
 		config.admin_reload()

@@ -77,19 +77,19 @@
 	if(CONFIG_GET(flag/pai_custom_holoforms))
 		choices += "Custom"
 	var/old_chassis = chassis
-	var/choicetype = input(src, "What type of chassis do you want to use?") as null|anything in choices
+	var/choicetype = tgui_input_list(src, "What type of chassis do you want to use?", "", choices)
 	if(!choicetype)
 		return FALSE
 	switch(choicetype)
 		if("Custom")
 			chassis = "custom"
 		if("Preset - Basic")
-			var/choice = input(src, "What would you like to use for your holochassis composite?") as null|anything in possible_chassis
+			var/choice = tgui_input_list(src, "What would you like to use for your holochassis composite?", "", possible_chassis)
 			if(!choice)
 				return FALSE
 			chassis = choice
 		if("Preset - Dynamic")
-			var/choice = input(src, "What would you like to use for your holochassis composite?") as null|anything in dynamic_chassis_icons
+			var/choice = tgui_input_list(src, "What would you like to use for your holochassis composite?", "", dynamic_chassis_icons)
 			if(!choice)
 				return FALSE
 			chassis = "dynamic"

@@ -30,7 +30,7 @@
 				targets["[T.mob.real_name](as [T.mob.name]) - [T]"] = T
 		else
 			targets["(No Mob) - [T]"] = T
-	var/target = input(src,"To whom shall we send a message?","Admin PM",null) as null|anything in sortList(targets)
+	var/target = tgui_input_list(src,"To whom shall we send a message?","Admin PM", sortList(targets))
 	cmd_admin_pm(targets[target],null)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -54,7 +54,7 @@
 
 	if(AH)
 		message_admins("[key_name_admin(src)] has started replying to [key_name_admin(C, 0, 0)]'s admin help.")
-	var/msg = input(src,"Message:", "Private message to [C.holder?.fakekey ? "an Administrator" : key_name(C, 0, 0)].") as message|null
+	var/msg = tgui_input_message(src,"Message:", "Private message to [C.holder?.fakekey ? "an Administrator" : key_name(C, 0, 0)].")
 	if (!msg)
 		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name_admin(C, 0, 0)]'s admin help.")
 		return
@@ -105,7 +105,7 @@
 		if(!ircreplyamount)	//to prevent people from spamming irc/discord
 			return
 		if(!msg)
-			msg = input(src,"Message:", "Private message to Administrator") as message|null
+			msg = tgui_input_message(src,"Message:", "Private message to Administrator")
 
 		if(!msg)
 			return
@@ -116,7 +116,7 @@
 	else
 		//get message text, limit it's length.and clean/escape html
 		if(!msg)
-			msg = input(src,"Message:", "Private message to [recipient.holder?.fakekey ? "an Administrator" : key_name(recipient, 0, 0)].") as message|null
+			msg = tgui_input_message(src,"Message:", "Private message to [recipient.holder?.fakekey ? "an Administrator" : key_name(recipient, 0, 0)].")
 			msg = trim(msg)
 			if(!msg)
 				return
@@ -238,7 +238,7 @@
 /client/proc/popup_admin_pm(client/recipient, msg)
 	var/sender = src
 	var/sendername = key
-	var/reply = input(recipient, msg,"Admin PM from-[sendername]", "") as message|null	//show message and await a reply
+	var/reply = tgui_input_message(recipient, msg,"Admin PM from-[sendername]", "") //show message and await a reply
 	if(recipient && reply)
 		if(sender)
 			recipient.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them

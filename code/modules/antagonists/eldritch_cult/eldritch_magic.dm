@@ -621,7 +621,7 @@
 	if(!originator?.linked_mobs[living_owner])
 		CRASH("Uh oh the mansus link got somehow activated without it being linked to a raw prophet or the mob not being in a list of mobs that should be able to do it.")
 
-	var/message = sanitize(input("Message:", "Telepathy from the Manse") as text|null)
+	var/message = sanitize(tgui_input_text(usr, "Message:", "Telepathy from the Manse"))
 
 	if(QDELETED(living_owner))
 		return
