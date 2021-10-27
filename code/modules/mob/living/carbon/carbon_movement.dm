@@ -35,5 +35,5 @@
 	. = ..()
 	if(!.)		//we failed earlier don't need to fail again
 		return
-	if(!other.lying && lying)		//they're up, we're down.
+	if(lying)						// need to crawl under them - citadel balance update. old was if !other.lying && lying
 		return FALSE
