@@ -936,7 +936,6 @@
 #include "code\game\machinery\computer\telecrystalconsoles.dm"
 #include "code\game\machinery\computer\teleporter.dm"
 #include "code\game\machinery\computer\arcade\battle.dm"
-#include "code\game\machinery\computer\arcade\minesweeper.dm"
 #include "code\game\machinery\computer\arcade\misc_arcade.dm"
 #include "code\game\machinery\computer\arcade\orion_trail.dm"
 #include "code\game\machinery\computer\prisoner\_prisoner.dm"
