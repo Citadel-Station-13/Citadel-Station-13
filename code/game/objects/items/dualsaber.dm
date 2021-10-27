@@ -23,7 +23,7 @@
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
 	resistance_flags = FIRE_PROOF
-	wound_bonus = -110
+	wound_bonus = -40
 	bare_wound_bonus = 20
 	block_parry_data = /datum/block_parry_data/dual_esword
 	block_chance = 60
@@ -133,7 +133,7 @@
 	total_mass = initial(total_mass)
 	wielded = FALSE
 	hitsound = "swing_hit"
-	slowdown_wielded -= slowdown_wielded
+	slowdown -= slowdown_wielded
 	STOP_PROCESSING(SSobj, src)
 	set_light(0)
 	RemoveElement(/datum/element/sword_point)
@@ -278,6 +278,7 @@
 	desc = "A supermassive weapon envisioned to cleave the very fabric of space and time itself in twain, the hypereutactic blade dynamically flash-forges a hypereutactic crystaline nanostructure capable of passing through most known forms of matter like a hot knife through butter."
 	force = 7
 	hitsound_on = 'sound/weapons/nebhit.ogg'
+	wound_bonus = -20
 	armour_penetration = 60
 	light_color = "#37FFF7"
 	rainbow_colors = list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF","#FF00FF", "#3399ff", "#ff9900", "#fb008b", "#9800ff", "#00ffa3", "#ccff00")
