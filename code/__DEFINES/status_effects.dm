@@ -65,6 +65,8 @@
 /// Blocks sprint
 #define STATUS_EFFECT_STAGGERED /datum/status_effect/staggered
 
+#define STATUS_EFFECT_TASED_WEAK_NODMG /datum/status_effect/electrode/no_damage     // no damage
+
 #define STATUS_EFFECT_TASED_WEAK /datum/status_effect/electrode				//not as crippling, just slows down
 
 #define STATUS_EFFECT_TASED /datum/status_effect/electrode/no_combat_mode //the affected has been tased, preventing fine muscle control

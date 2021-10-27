@@ -1,6 +1,12 @@
 /datum/config_entry/flag/panic_bunker	// prevents people the server hasn't seen before from connecting
 
-/datum/config_entry/number/panic_bunker_living // living time in minutes that a player needs to pass the panic bunker
+/datum/config_entry/number/panic_bunker_living // living time in minutes that a player needs to pass the panic bunker. they pass **if they are above this amount**
+	config_entry_value = 0		// default: <= 0 meaning any playtime works. -1 to disable criteria.
+	integer = TRUE
+
+/datum/config_entry/number/panic_bunker_living_vpn
+	config_entry_value = 0		// default: <= 0 meaning anytime works. -1 to disable criteria.
+	integer = TRUE
 
 /datum/config_entry/string/panic_bunker_message
 	config_entry_value = "Sorry but the server is currently not accepting connections from never before seen players."

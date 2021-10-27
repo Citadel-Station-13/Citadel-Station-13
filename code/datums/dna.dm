@@ -386,6 +386,14 @@
 			qdel(language_holder)
 			var/species_holder = initial(mrace.species_language_holder)
 			language_holder = new species_holder(src)
+
+			var/mob/living/carbon/human/H = src
+			//provide the user's additional language to the new language holder even if they change species
+			if(H.additional_language && H.additional_language != "None")
+				var/language_entry = GLOB.roundstart_languages[H.additional_language]
+				if(language_entry)
+					grant_language(language_entry, TRUE, TRUE)
+
 		update_atom_languages()
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)

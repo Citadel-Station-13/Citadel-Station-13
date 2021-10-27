@@ -3,21 +3,21 @@
 /datum/asset/simple/tgui_common
 	keep_local_name = TRUE
 	assets = list(
-		"tgui-common.bundle.js" = 'tgui/public/tgui-common.bundle.js',
+		"tgui-common.bundle.js" = file("tgui/public/tgui-common.bundle.js"),
 	)
 
 /datum/asset/simple/tgui
 	keep_local_name = TRUE
 	assets = list(
-		"tgui.bundle.js" = 'tgui/public/tgui.bundle.js',
-		"tgui.bundle.css" = 'tgui/public/tgui.bundle.css',
+		"tgui.bundle.js" = file("tgui/public/tgui.bundle.js"),
+		"tgui.bundle.css" = file("tgui/public/tgui.bundle.css"),
 	)
 
 /datum/asset/simple/tgui_panel
 	keep_local_name = TRUE
 	assets = list(
-		"tgui-panel.bundle.js" = 'tgui/public/tgui-panel.bundle.js',
-		"tgui-panel.bundle.css" = 'tgui/public/tgui-panel.bundle.css',
+		"tgui-panel.bundle.js" = file("tgui/public/tgui-panel.bundle.js"),
+		"tgui-panel.bundle.css" = file("tgui/public/tgui-panel.bundle.css"),
 	)
 
 /datum/asset/simple/headers
@@ -168,10 +168,12 @@
 
 /datum/asset/simple/namespaced/tgfont
 	assets = list(
-		"tgfont.eot" = 'tgui/packages/tgfont/dist/tgfont.eot',
-		"tgfont.woff2" = 'tgui/packages/tgfont/dist/tgfont.woff2',
+		"tgfont.eot" = file("tgui/packages/tgfont/dist/tgfont.eot"),
+		"tgfont.woff2" = file("tgui/packages/tgfont/dist/tgfont.woff2"),
 	)
-	parents = list("tgfont.css" = 'tgui/packages/tgfont/dist/tgfont.css')
+	parents = list(
+		"tgfont.css" = file("tgui/packages/tgfont/dist/tgfont.css"),
+	)
 
 /datum/asset/spritesheet/chat
 	name = "chat"
@@ -269,24 +271,6 @@
 		"hated" = 'icons/UI_Icons/Achievements/Mafia/hated.png',
 		"basemafia" ='icons/UI_Icons/Achievements/basemafia.png',
 		"frenching" = 'icons/UI_Icons/Achievements/Misc/frenchingthebubble.png'
-	)
-
-/datum/asset/spritesheet/simple/minesweeper
-	name = "minesweeper"
-	assets = list(
-		"1" = 'icons/UI_Icons/minesweeper_tiles/one.png',
-		"2" = 'icons/UI_Icons/minesweeper_tiles/two.png',
-		"3" = 'icons/UI_Icons/minesweeper_tiles/three.png',
-		"4" = 'icons/UI_Icons/minesweeper_tiles/four.png',
-		"5" = 'icons/UI_Icons/minesweeper_tiles/five.png',
-		"6" = 'icons/UI_Icons/minesweeper_tiles/six.png',
-		"7" = 'icons/UI_Icons/minesweeper_tiles/seven.png',
-		"8" = 'icons/UI_Icons/minesweeper_tiles/eight.png',
-		"empty" = 'icons/UI_Icons/minesweeper_tiles/empty.png',
-		"flag" = 'icons/UI_Icons/minesweeper_tiles/flag.png',
-		"hidden" = 'icons/UI_Icons/minesweeper_tiles/hidden.png',
-		"mine" = 'icons/UI_Icons/minesweeper_tiles/mine.png',
-		"minehit" = 'icons/UI_Icons/minesweeper_tiles/minehit.png'
 	)
 
 /datum/asset/spritesheet/simple/pills

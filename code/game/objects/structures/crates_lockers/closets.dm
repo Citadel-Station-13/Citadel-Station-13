@@ -540,18 +540,19 @@
 	if (!(. & EMP_PROTECT_CONTENTS))
 		for(var/obj/O in src)
 			O.emp_act(severity)
-	if(secure && !broken && !(. & EMP_PROTECT_SELF))
-		if(prob(50 / severity))
-			locked = !locked
-			update_icon()
-		if(prob(20 / severity) && !opened)
-			if(!locked)
-				open()
-			else
-				req_access = list()
-				req_access += pick(get_all_accesses())
-				if(!QDELETED(lockerelectronics))
-					lockerelectronics.accesses = req_access
+	if(!secure || broken)
+		return
+	if(prob(severity/2))
+		locked = !locked
+		update_icon()
+	if(prob(severity/5) && !opened)
+		if(!locked)
+			open()
+		else
+			req_access = list()
+			req_access += pick(get_all_accesses())
+			if(!QDELETED(lockerelectronics))
+				lockerelectronics.accesses = req_access
 
 /obj/structure/closet/contents_explosion(severity, target)
 	for(var/atom/A in contents)

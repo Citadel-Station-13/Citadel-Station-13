@@ -75,6 +75,9 @@
 /obj/machinery/vr_sleeper/MouseDrop_T(mob/target, mob/user)
 	if(user.lying || !iscarbon(target) || !Adjacent(target) || !user.canUseTopic(src, BE_CLOSE, TRUE, NO_TK))
 		return
+	if(occupant)
+		to_chat(user, "<span class='boldnotice'>The VR Sleeper is already occupied!</span>")
+		return
 	close_machine(target)
 	ui_interact(user)
 

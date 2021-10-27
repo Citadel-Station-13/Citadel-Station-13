@@ -66,12 +66,6 @@
 
 //Ash walkers on birth understand how to make bone bows, bone arrows and ashen arrows
 
-	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bone_arrow)
-	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bone_bow)
-	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/ashen_arrow)
-	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/quiver)
-	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bow_tablet)
-
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
@@ -634,9 +628,9 @@
 			log_game("[key_name(user)] has successfully pried open [src] and disabled a space pirate spawner.")
 			W.play_tool_sound(src)
 			playsound(src.loc, 'modular_citadel/sound/voice/scream_skeleton.ogg', 50, 1, 4, 1.2)
-			if(rank == "Captain") 
+			if(rank == "Captain")
 				new /obj/effect/mob_spawn/human/pirate/corpse/captain(get_turf(src))
-			else 
+			else
 				new /obj/effect/mob_spawn/human/pirate/corpse(get_turf(src))
 			qdel(src)
 	else
@@ -806,6 +800,13 @@
 
 /datum/outfit/ghostcafe/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
+	if (isplasmaman(H))
+		head = /obj/item/clothing/head/helmet/space/plasmaman
+		uniform = /obj/item/clothing/under/plasmaman
+		l_hand= /obj/item/tank/internals/plasmaman/belt/full
+		mask = /obj/item/clothing/mask/breath
+		return
+
 	var/suited = !preference_source || preference_source.prefs.jumpsuit_style == PREF_SUIT
 	if (CONFIG_GET(flag/grey_assistants))
 		uniform = suited ? /obj/item/clothing/under/color/grey : /obj/item/clothing/under/color/jumpskirt/grey
@@ -814,6 +815,10 @@
 			uniform = suited ? /obj/item/clothing/under/color/rainbow : /obj/item/clothing/under/color/jumpskirt/rainbow
 		else
 			uniform = suited ? /obj/item/clothing/under/color/random : /obj/item/clothing/under/color/jumpskirt/random
+
+/datum/outfit/ghostcafe/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+	H.internal = H.get_item_for_held_index(1)
+	H.update_internals_hud_icon(1)
 
 /obj/item/storage/box/syndie_kit/chameleon/ghostcafe
 	name = "ghost cafe costuming kit"

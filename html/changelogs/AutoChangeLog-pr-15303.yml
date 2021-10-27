@@ -1,0 +1,4 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - bugfix: "plasmamen now spawn in their proper outfit in the ghostcafe"

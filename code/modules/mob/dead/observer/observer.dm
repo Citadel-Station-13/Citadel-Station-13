@@ -123,7 +123,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	animate(src, pixel_y = 2, time = 10, loop = -1)
 
-	GLOB.dead_mob_list += src
+	add_to_dead_mob_list()
 
 	for(var/v in GLOB.active_alternate_appearances)
 		if(!v)
@@ -176,7 +176,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
  * Hair will always update its dir, so if your sprite has no dirs the haircut will go all over the place.
  * |- Ricotez
  */
-/mob/dead/observer/update_icon(new_form)
+/mob/dead/observer/update_icon(updates=ALL, new_form=null)
 	. = ..()
 	if(client) //We update our preferences in case they changed right before update_icon was called.
 		ghost_accs = client.prefs.ghost_accs
