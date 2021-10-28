@@ -259,11 +259,6 @@
 
 	build_path = /obj/machinery/computer/arcade/orion_trail
 
-/obj/item/circuitboard/computer/arcade/minesweeper
-	name = "Minesweeper (Computer Board)"
-	icon_state = "generic"
-	build_path = /obj/machinery/computer/arcade/minesweeper
-
 /obj/item/circuitboard/computer/holodeck// Not going to let people get this, but it's just here for future
 	name = "Holodeck Control (Computer Board)"
 	icon_state = "generic"

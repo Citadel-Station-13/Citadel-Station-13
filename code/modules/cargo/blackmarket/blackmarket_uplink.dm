@@ -1,6 +1,6 @@
 /obj/item/blackmarket_uplink
 	name = "Black Market Uplink"
-	desc = "A mishmash of a subspace amplifier, a radio, and an analyzer.  Somehow able to access the black market, with a variable inventory in limited stock at inflated prices. No refunds, customer responsible for pick-ups." 
+	desc = "A mishmash of a subspace amplifier, a radio, and an analyzer.  Somehow able to access the black market, with a variable inventory in limited stock at inflated prices. No refunds, customer responsible for pick-ups."
 	icon = 'icons/obj/blackmarket.dmi'
 	icon_state = "uplink"
 	// UI variables.
@@ -35,7 +35,7 @@
 /obj/item/blackmarket_uplink/AltClick(mob/user)
 	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	var/amount_to_remove =  FLOOR(input(user, "How much do you want to withdraw? Current Amount: [money]", "Withdraw Funds", 5) as num|null, 1)
+	var/amount_to_remove =  FLOOR(tgui_input_num(user, "How much do you want to withdraw? Current Amount: [money]", "Withdraw Funds", 5), 1)
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	if(!amount_to_remove || amount_to_remove < 0)

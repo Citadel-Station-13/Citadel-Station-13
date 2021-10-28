@@ -518,7 +518,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set desc = "Cause an explosion of varying strength at your location."
 
 	var/list/choices = list("Small Bomb (1, 2, 3, 3)", "Medium Bomb (2, 3, 4, 4)", "Big Bomb (3, 5, 7, 5)", "Maxcap", "Custom Bomb")
-	var/choice = input("What size explosion would you like to produce? NOTE: You can do all this rapidly and in an IC manner (using cruise missiles!) with the Config/Launch Supplypod verb. WARNING: These ignore the maxcap") as null|anything in choices
+	var/choice = tgui_input_list(src, "What size explosion would you like to produce? NOTE: You can do all this rapidly and in an IC manner (using cruise missiles!) with the Config/Launch Supplypod verb. WARNING: These ignore the maxcap", choices)
 	var/turf/epicenter = mob.loc
 
 	switch(choice)
@@ -533,20 +533,20 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		if("Maxcap")
 			explosion(epicenter, GLOB.MAX_EX_DEVESTATION_RANGE, GLOB.MAX_EX_HEAVY_RANGE, GLOB.MAX_EX_LIGHT_RANGE, GLOB.MAX_EX_FLASH_RANGE)
 		if("Custom Bomb")
-			var/devastation_range = input("Devastation range (in tiles):") as null|num
+			var/devastation_range = tgui_input_num(src, "Devastation range (in tiles):")
 			if(devastation_range == null)
 				return
-			var/heavy_impact_range = input("Heavy impact range (in tiles):") as null|num
+			var/heavy_impact_range = tgui_input_num(src, "Heavy impact range (in tiles):")
 			if(heavy_impact_range == null)
 				return
-			var/light_impact_range = input("Light impact range (in tiles):") as null|num
+			var/light_impact_range = tgui_input_num(src, "Light impact range (in tiles):")
 			if(light_impact_range == null)
 				return
-			var/flash_range = input("Flash range (in tiles):") as null|num
+			var/flash_range = tgui_input_num(src, "Flash range (in tiles):")
 			if(flash_range == null)
 				return
 			if(devastation_range > GLOB.MAX_EX_DEVESTATION_RANGE || heavy_impact_range > GLOB.MAX_EX_HEAVY_RANGE || light_impact_range > GLOB.MAX_EX_LIGHT_RANGE || flash_range > GLOB.MAX_EX_FLASH_RANGE)
-				if(alert("Bomb is bigger than the maxcap. Continue?",,"Yes","No") != "Yes")
+				if(tgui_alert(src, "Bomb is bigger than the maxcap. Continue?",,list("Yes","No")) != "Yes")
 					return
 			epicenter = mob.loc //We need to reupdate as they may have moved again
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, TRUE, TRUE)
@@ -559,34 +559,34 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Drop Wave Explosion"
 	set desc = "Cause an explosive shockwave at your location."
 
-	var/power = input(src, "Wave initial power", "Power", 50) as num|null
+	var/power = tgui_input_num(src, "Wave initial power", "Power", 50)
 	if(isnull(power))
 		return
-	var/falloff = input(src, "Wave innate falloff factor", "Falloff", EXPLOSION_DEFAULT_FALLOFF_MULTIPLY) as num|null
+	var/falloff = tgui_input_num(src, "Wave innate falloff factor", "Falloff", EXPLOSION_DEFAULT_FALLOFF_MULTIPLY)
 	if(isnull(falloff))
 		return
 	falloff = max(0, falloff)
 	if(falloff > 1)
 		to_chat(src, "<span class='danger'>Aborting: Falloff cannot be higher tahn 1.")
 		return
-	var/constant = input(src, "Wave innate falloff constant", "Constant", EXPLOSION_DEFAULT_FALLOFF_SUBTRACT) as num|null
+	var/constant = tgui_input_num(src, "Wave innate falloff constant", "Constant", EXPLOSION_DEFAULT_FALLOFF_SUBTRACT)
 	if(isnull(constant))
 		return
 	if(constant < 0)
 		to_chat(src, "<span class='danger'>Aborting: Falloff constant cannot be less than 0.")
 		return
-	var/fire = input(src, "Probability per tile of fire?", "Fire Probability", 0) as num|null
+	var/fire = tgui_input_num(src, "Probability per tile of fire?", "Fire Probability", 0)
 	if(isnull(fire))
 		return
-	var/speed = input(src, "Speed in ticks to wait between cycles? 0 for fast as possible", "Wait", 0) as num|null
+	var/speed = tgui_input_num(src, "Speed in ticks to wait between cycles? 0 for fast as possible", "Wait", 0)
 	if(isnull(speed))
 		return
-	var/block_resistance = input(src, "DANGEROUS: Block resistance? USE 1 IF YOU DO NOT KNOW WHAT YOU ARE DOING.", "Block Negation", 1) as num|null
+	var/block_resistance = tgui_input_num(src, "DANGEROUS: Block resistance? USE 1 IF YOU DO NOT KNOW WHAT YOU ARE DOING.", "Block Negation", 1)
 	if(isnull(block_resistance))
 		return
 	block_resistance = max(0, block_resistance)
 	if(power > 500)
-		var/sure = alert(src, "Explosion power is extremely high. Are you absolutely sure?", "Uhh...", "No", "Yes")
+		var/sure = tgui_alert(src, "Explosion power is extremely high. Are you absolutely sure?", "Uhh...", list("No", "Yes"))
 		if(sure != "Yes")
 			return
 	// point of no return
@@ -604,7 +604,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Drop DynEx Bomb"
 	set desc = "Cause an explosion of varying strength at your location."
 
-	var/ex_power = input("Explosive Power:") as null|num
+	var/ex_power = tgui_input_num(src, "Explosive Power:")
 	var/turf/epicenter = mob.loc
 	if(ex_power && epicenter)
 		dyn_explosion(epicenter, ex_power)
@@ -617,7 +617,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Get DynEx Range"
 	set desc = "Get the estimated range of a bomb, using explosive power."
 
-	var/ex_power = input("Explosive Power:") as null|num
+	var/ex_power = tgui_input_num(src, "Explosive Power:")
 	if (isnull(ex_power))
 		return
 	var/range = round((2 * ex_power)**GLOB.DYN_EX_SCALE)
@@ -628,7 +628,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Get DynEx Power"
 	set desc = "Get the estimated required power of a bomb, to reach a specific range."
 
-	var/ex_range = input("Light Explosion Range:") as null|num
+	var/ex_range = tgui_input_num(src, "Light Explosion Range:")
 	if (isnull(ex_range))
 		return
 	var/power = (0.5 * ex_range)**(1/GLOB.DYN_EX_SCALE)
@@ -639,7 +639,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Set DynEx Scale"
 	set desc = "Set the scale multiplier of dynex explosions. The default is 0.5."
 
-	var/ex_scale = input("New DynEx Scale:") as null|num
+	var/ex_scale = tgui_input_num(src, "New DynEx Scale:")
 	if(!ex_scale)
 		return
 	GLOB.DYN_EX_SCALE = ex_scale
@@ -684,10 +684,10 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 // 	if(!SStrading_card_game.loaded)
 // 		message_admins("The card subsystem is not currently loaded")
 // 		return
-// 	var/pack = input("Which pack should we test?", "You fucked it didn't you") as null|anything in sortList(SStrading_card_game.card_packs)
-// 	var/batchCount = input("How many times should we open it?", "Don't worry, I understand") as null|num
-// 	var/batchSize = input("How many cards per batch?", "I hope you remember to check the validation") as null|num
-// 	var/guar = input("Should we use the pack's guaranteed rarity? If so, how many?", "We've all been there. Man you should have seen the old system") as null|num
+// 	var/pack = tgui_input_list(src, "Which pack should we test?", "You fucked it didn't you", sortList(SStrading_card_game.card_packs))
+// 	var/batchCount = tgui_input_num(src, "How many times should we open it?", "Don't worry, I understand")
+// 	var/batchSize = tgui_input_num(src, "How many cards per batch?", "I hope you remember to check the validation")
+// 	var/guar = tgui_input_num(src, "Should we use the pack's guaranteed rarity? If so, how many?", "We've all been there. Man you should have seen the old system")
 // 	checkCardDistribution(pack, batchSize, batchCount, guar)
 
 // /client/proc/print_cards()
@@ -704,7 +704,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	var/type_length = length_char("/obj/effect/proc_holder/spell") + 2
 	for(var/A in GLOB.spells)
 		spell_list[copytext_char("[A]", type_length)] = A
-	var/obj/effect/proc_holder/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in sortList(spell_list)
+	var/obj/effect/proc_holder/spell/S = tgui_input_list(src, "Choose the spell to give to that guy", "ABRAKADABRA", sortList(spell_list))
 	if(!S)
 		return
 
@@ -725,7 +725,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set desc = "Remove a spell from the selected mob."
 
 	if(T?.mind)
-		var/obj/effect/proc_holder/spell/S = input("Choose the spell to remove", "NO ABRAKADABRA") as null|anything in sortList(T.mind.spell_list)
+		var/obj/effect/proc_holder/spell/S = tgui_input_list(src, "Choose the spell to remove", "NO ABRAKADABRA", sortList(T.mind.spell_list))
 		if(S)
 			T.mind.RemoveSpell(S)
 			log_admin("[key_name(usr)] removed the spell [S] from [key_name(T)].")
@@ -739,7 +739,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if(!istype(T))
 		to_chat(src, "<span class='notice'>You can only give a disease to a mob of type /mob/living.</span>", confidential = TRUE)
 		return
-	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in sortList(SSdisease.diseases, /proc/cmp_typepaths_asc)
+	var/datum/disease/D = tgui_input_list(src, "Choose the disease to give to that guy", "ACHOO", sortList(SSdisease.diseases, /proc/cmp_typepaths_asc))
 	if(!D)
 		return
 	T.ForceContractDisease(new D, FALSE, TRUE)
@@ -751,7 +751,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set category = "Admin.Events"
 	set name = "OSay"
 	set desc = "Makes an object say something."
-	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
+	var/message = tgui_input_text(usr, "What do you want the message to be?", "Make Sound")
 	if(!message)
 		return
 	O.say(message)

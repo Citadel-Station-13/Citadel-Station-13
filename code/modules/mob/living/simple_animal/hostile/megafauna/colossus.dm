@@ -426,7 +426,7 @@ Difficulty: Very Hard
 
 /obj/machinery/anomalous_crystal/honk //Strips and equips you as a clown. I apologize for nothing
 	observer_desc = "This crystal strips and equips its targets as clowns."
-	possible_methods = list(ACTIVATE_TOUCH)  //Because We love AOE transformations!  
+	possible_methods = list(ACTIVATE_TOUCH)  //Because We love AOE transformations!
 	activation_sound = 'sound/items/bikehorn.ogg'
 
 /obj/machinery/anomalous_crystal/honk/ActivationReaction(mob/user)
@@ -574,7 +574,7 @@ Difficulty: Very Hard
 	if(ready_to_deploy)
 		if(!user.can_reenter_round())
 			return FALSE
-		var/be_helper = alert("Become a Lightgeist? (Warning, You can no longer be cloned!)",,"Yes","No")
+		var/be_helper = tgui_alert(user, "Become a Lightgeist? (Warning, You can no longer be cloned!)",,list("Yes","No"))
 		if(be_helper == "Yes" && !QDELETED(src) && isobserver(user))
 			var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
 			user.transfer_ckey(W, FALSE)

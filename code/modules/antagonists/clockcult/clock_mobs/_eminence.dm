@@ -131,7 +131,7 @@
 	if(!G.recalls_remaining)
 		to_chat(src, "<span class='warning'>The Ark can no longer recall!</span>")
 		return
-	if(alert(src, "Initiate mass recall?", "Mass Recall", "Yes", "No") != "Yes" || QDELETED(src) || QDELETED(G) || !G.obj_integrity)
+	if(tgui_alert(src, "Initiate mass recall?", "Mass Recall", list("Yes", "No")) != "Yes" || QDELETED(src) || QDELETED(G) || !G.obj_integrity)
 		return
 	G.initiate_mass_recall() //wHOOPS LOOKS LIKE A HULK GOT THROUGH
 
@@ -156,7 +156,7 @@
 				commands += "Power This Structure"
 			if(P.obj_integrity < P.max_integrity)
 				commands += "Repair This Structure"
-	var/roma_invicta = input(src, "Choose a command to issue to your cult!", "Issue Commands") as null|anything in commands
+	var/roma_invicta = tgui_input_list(src, "Choose a command to issue to your cult!", "Issue Commands", commands)
 	if(!roma_invicta)
 		return
 	var/command_text = ""
@@ -290,7 +290,7 @@
 		to_chat(owner, "<span class='warning'>There are no Obelisks to warp to!</span>")
 		return
 
-	var/target_key = input(owner, "Choose an Obelisk to warp to.", "Obelisk Warp") as null|anything in possible_targets
+	var/target_key = tgui_input_list(owner, "Choose an Obelisk to warp to.", "Obelisk Warp", possible_targets)
 	var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/target = possible_targets[target_key]
 
 	if(!target_key || !owner)
@@ -334,6 +334,6 @@
 /datum/action/innate/eminence/mass_recall/Activate()
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
 	if(G && !G.recalling && G.recalls_remaining)
-		if(alert(owner, "Initiate mass recall?", "Mass Recall", "Yes", "No") != "Yes" || QDELETED(owner) || QDELETED(G) || !G.obj_integrity)
+		if(tgui_alert(owner, "Initiate mass recall?", "Mass Recall", list("Yes", "No")) != "Yes" || QDELETED(owner) || QDELETED(G) || !G.obj_integrity)
 			return
 		G.initiate_mass_recall()

@@ -54,7 +54,7 @@
 		if("resetid")
 			payments_acc = null
 		if("setsplit")
-			var/potential_cut = input("How much would you like to payout to the registered card?","Percentage Profit") as num|null
+			var/potential_cut = tgui_input_num(usr, "How much would you like to payout to the registered card?","Percentage Profit")
 			percent_cut = potential_cut ? clamp(round(potential_cut, 1), 1, 50) : 20
 		if("print")
 			if(!printer)

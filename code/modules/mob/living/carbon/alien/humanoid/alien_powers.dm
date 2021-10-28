@@ -61,7 +61,7 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/proc/check_vent_block(mob/living/user)
 	var/obj/machinery/atmospherics/components/unary/atmos_thing = locate() in user.loc
 	if(atmos_thing)
-		var/rusure = alert(user, "Laying eggs and shaping resin here would block access to [atmos_thing]. Do you want to continue?", "Blocking Atmospheric Component", "Yes", "No")
+		var/rusure = tgui_alert(user, "Laying eggs and shaping resin here would block access to [atmos_thing]. Do you want to continue?", "Blocking Atmospheric Component", list("Yes", "No"))
 		if(rusure != "Yes")
 			return FALSE
 	return TRUE
@@ -91,13 +91,13 @@ Doesn't work on other aliens/AI.*/
 	var/list/options = list()
 	for(var/mob/living/Ms in oview(user))
 		options += Ms
-	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as null|mob in options
+	var/mob/living/M = tgui_input_list(user, "Select who to whisper to:","Whisper to?", options)
 	if(!M)
 		return 0
 	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
 		to_chat(user, "<span class='noticealien'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
 		return FALSE
-	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
+	var/msg = sanitize(tgui_input_text(user, "Message:", "Alien Whisper"))
 	if(msg)
 		if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
 			to_chat(user, "<span class='notice'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
@@ -126,10 +126,10 @@ Doesn't work on other aliens/AI.*/
 	for(var/mob/living/carbon/A  in oview(user))
 		if(A.getorgan(/obj/item/organ/alien/plasmavessel))
 			aliens_around.Add(A)
-	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null) as mob in aliens_around
+	var/mob/living/carbon/M = tgui_input_list(user, "Select who to transfer to:","Transfer plasma to?", aliens_around)
 	if(!M)
 		return 0
-	var/amount = input("Amount:", "Transfer Plasma to [M]") as num
+	var/amount = tgui_input_num(user, "Amount:", "Transfer Plasma to [M]")
 	if (amount)
 		amount = min(abs(round(amount)), user.getPlasma())
 		if (get_dist(user,M) <= 1)
@@ -169,7 +169,7 @@ Doesn't work on other aliens/AI.*/
 
 
 /obj/effect/proc_holder/alien/acid/fire(mob/living/carbon/alien/user)
-	var/O = input("Select what to dissolve:","Dissolve",null) as obj|turf in oview(1,user)
+	var/O = tgui_input_list(user, "Select what to dissolve:","Dissolve", oview(1,user))
 	if(!O || user.incapacitated())
 		return 0
 	else
@@ -272,7 +272,7 @@ Doesn't work on other aliens/AI.*/
 	if(!check_vent_block(user))
 		return FALSE
 
-	var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in structures
+	var/choice = tgui_input_list(user, "Choose what you wish to shape.","Resin building", structures)
 	if(!choice)
 		return FALSE
 	if (!cost_check(check_turf,user))

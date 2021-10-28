@@ -1138,7 +1138,7 @@
 		var/mob/living/L = I
 		da_list[L.real_name] = L
 
-	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in da_list
+	var/choice = tgui_input_list(user,"Who do you want dead?","Choose Your Victim", da_list)
 
 	choice = da_list[choice]
 

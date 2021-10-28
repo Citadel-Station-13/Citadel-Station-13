@@ -185,7 +185,7 @@
 			to_chat(user, "<span class='warning'>This machine already has bags attached.</span>")
 
 		if(!bag && !outbag)
-			var/choice = alert(user, "Choose where to place [O]", "", "Input", "Cancel", "Output")
+			var/choice = tgui_alert(user, "Choose where to place [O]", "", list("Input", "Cancel", "Output"))
 			switch(choice)
 				if("Cancel")
 					return FALSE

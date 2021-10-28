@@ -51,7 +51,7 @@
 	if(!SSticker.mode)
 		to_chat(user, "Can't become a banana spider before the game has started.")
 		return
-	var/be_spider = alert("Become a banana spider? (Warning, You can no longer be cloned!)",,"Yes","No")
+	var/be_spider = tgui_alert(user, "Become a banana spider? (Warning, You can no longer be cloned!)",,list("Yes","No"))
 	if(be_spider == "No" || QDELETED(src) || !isobserver(user))
 		return
 	if(key)

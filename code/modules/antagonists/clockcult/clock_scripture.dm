@@ -276,7 +276,7 @@ Judgement 80k power or nine converts
 		return
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
 	if(G && !G.active && combat_construct && is_reebe(invoker.z) && !confirmed) //Putting marauders on the base during the prep phase is a bad idea mmkay
-		if(alert(invoker, "This is a combat construct, and you cannot easily get it to the station. Are you sure you want to make one here?", "Construct Alert", "Yes", "Cancel") == "Cancel")
+		if(tgui_alert(invoker, "This is a combat construct, and you cannot easily get it to the station. Are you sure you want to make one here?", "Construct Alert", list("Yes", "Cancel")) == "Cancel")
 			return
 		if(!is_servant_of_ratvar(invoker) || !invoker.canUseTopic(slab))
 			return
