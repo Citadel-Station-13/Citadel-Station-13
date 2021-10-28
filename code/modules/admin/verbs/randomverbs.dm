@@ -4,7 +4,7 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/confirm = alert(src, "Make [M] drop everything?", "Message", "Yes", "No")
+	var/confirm = tgui_alert(src, "Make [M] drop everything?", "Message", list("Yes", "No"))
 	if(confirm != "Yes")
 		return
 
@@ -29,7 +29,7 @@
 		return
 
 	message_admins("[key_name_admin(src)] has started answering [ADMIN_LOOKUPFLW(M)]'s prayer.")
-	var/msg = input("Message:", text("Subtle PM to [M.key]")) as text|null
+	var/msg = tgui_input_text(src, "Message:", text("Subtle PM to [M.key]"))
 
 	if (!msg)
 		message_admins("[key_name_admin(src)] decided not to answer [ADMIN_LOOKUPFLW(M)]'s prayer")
@@ -65,12 +65,12 @@
 		return
 
 	if (!sender)
-		sender = input("Who is the message from?", "Sender") as null|anything in list(RADIO_CHANNEL_CENTCOM,RADIO_CHANNEL_SYNDICATE)
+		sender = tgui_input_list(src, "Who is the message from?", "Sender", list(RADIO_CHANNEL_CENTCOM,RADIO_CHANNEL_SYNDICATE))
 		if(!sender)
 			return
 
 	message_admins("[key_name_admin(src)] has started answering [key_name_admin(H)]'s [sender] request.")
-	var/input = input("Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from [sender]", "") as text|null
+	var/input = tgui_input_text(src, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from [sender]", "")
 	if(!input)
 		message_admins("[key_name_admin(src)] decided not to answer [key_name_admin(H)]'s [sender] request.")
 		return
@@ -100,7 +100,7 @@
 		if(operation == "set")
 			prompt = "Please enter the new reputation value:"
 
-		msg = input("Message:", prompt) as num|null
+		msg = tgui_input_num(src, "Message:", prompt)
 
 		if (!msg)
 			return
@@ -134,7 +134,7 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/msg = input("Message:", text("Enter the text you wish to appear to everyone:")) as text|null
+	var/msg = tgui_input_text(src, "Message:", text("Enter the text you wish to appear to everyone:"))
 
 	if (!msg)
 		return
@@ -151,12 +151,12 @@
 		return
 
 	if(!M)
-		M = input("Direct narrate to whom?", "Active Players") as null|anything in GLOB.player_list
+		M = tgui_input_list(src, "Direct narrate to whom?", "Active Players", GLOB.player_list)
 
 	if(!M)
 		return
 
-	var/msg = input("Message:", text("Enter the text you wish to appear to your target:")) as text|null
+	var/msg = tgui_input_text(src, "Message:", text("Enter the text you wish to appear to your target:"))
 
 	if( !msg )
 		return
@@ -176,10 +176,10 @@
 		return
 	if(!A)
 		return
-	var/range = input("Range:", "Narrate to mobs within how many tiles:", 7) as num|null
+	var/range = tgui_input_num(src, "Range:", "Narrate to mobs within how many tiles:", 7)
 	if(!range)
 		return
-	var/msg = input("Message:", text("Enter the text you wish to appear to everyone within view:")) as text|null
+	var/msg = tgui_input_text(src, "Message:", text("Enter the text you wish to appear to everyone within view:"))
 	if (!msg)
 		return
 	for(var/mob/M in view(range,A))
@@ -296,13 +296,13 @@
 				continue	//we have a live body we are tied to
 			candidates += M.ckey
 		if(candidates.len)
-			ckey = input("Pick the player you want to respawn as a xeno.", "Suitable Candidates") as null|anything in candidates
+			ckey = tgui_input_list(usr, "Pick the player you want to respawn as a xeno.", "Suitable Candidates", candidates)
 		else
 			to_chat(usr, "<span class='danger'>Error: create_xeno(): no suitable candidates.</span>")
 	if(!istext(ckey))
 		return 0
 
-	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Praetorian","Hunter","Sentinel","Drone","Larva")
+	var/alien_caste = tgui_input_list(usr, "Please choose which caste to spawn.","Pick a caste", list("Queen","Praetorian","Hunter","Sentinel","Drone","Larva"))
 	var/obj/effect/landmark/spawn_here = GLOB.xeno_spawn.len ? pick(GLOB.xeno_spawn) : null
 	var/mob/living/carbon/alien/new_xeno
 	switch(alien_caste)
@@ -341,7 +341,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/input = ckey(input(src, "Please specify which key will be respawned.", "Key", ""))
+	var/input = ckey(tgui_input_text(src, "Please specify which key will be respawned.", "Key", ""))
 	if(!input)
 		return
 
@@ -358,7 +358,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(G_found.mind && !G_found.mind.active)	//mind isn't currently in use by someone/something
 		//Check if they were an alien
 		if(G_found.mind.assigned_role == ROLE_ALIEN)
-			if(alert("This character appears to have been an alien. Would you like to respawn them as such?",,"Yes","No")=="Yes")
+			if(tgui_alert(usr, "This character appears to have been an alien. Would you like to respawn them as such?",,list("Yes","No"))=="Yes")
 				var/turf/T
 				if(GLOB.xeno_spawn.len)
 					T = pick(GLOB.xeno_spawn)
@@ -393,7 +393,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 		//check if they were a monkey
 		else if(findtext(G_found.real_name,"monkey"))
-			if(alert("This character appears to have been a monkey. Would you like to respawn them as such?",,"Yes","No")=="Yes")
+			if(tgui_alert(usr, "This character appears to have been a monkey. Would you like to respawn them as such?",,list("Yes","No"))=="Yes")
 				var/mob/living/carbon/monkey/new_monkey = new
 				SSjob.SendToLateJoin(new_monkey)
 				G_found.mind.transfer_to(new_monkey)	//be careful when doing stuff like this! I've already checked the mind isn't in use
@@ -487,10 +487,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!issilicon(new_character))//If they are not a cyborg/AI.
 		if(!record_found&&new_character.mind.assigned_role!=new_character.mind.special_role)//If there are no records for them. If they have a record, this info is already in there. MODE people are not announced anyway.
 			//Power to the user!
-			if(alert(new_character,"Warning: No data core entry detected. Would you like to announce the arrival of this character by adding them to various databases, such as medical records?",,"No","Yes")=="Yes")
+			if(tgui_alert(new_character,"Warning: No data core entry detected. Would you like to announce the arrival of this character by adding them to various databases, such as medical records?",,list("No","Yes"))=="Yes")
 				GLOB.data_core.manifest_inject(new_character)
 
-			if(alert(new_character,"Would you like an active AI to announce this character?",,"No","Yes")=="Yes")
+			if(tgui_alert(new_character,"Would you like an active AI to announce this character?",,list("No","Yes"))=="Yes")
 				AnnounceArrival(new_character, new_character.mind.assigned_role)
 
 	var/msg = "<span class='adminnotice'>[admin] has respawned [player_key] as [new_character.real_name].</span>"
@@ -509,14 +509,14 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/input = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null
+	var/input = tgui_input_text(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "")
 	if(!input)
 		return
 
 	log_admin("Admin [key_name(usr)] has added a new AI law - [input]")
 	message_admins("Admin [key_name_admin(usr)] has added a new AI law - [input]")
 
-	var/show_log = alert(src, "Show ion message?", "Message", "Yes", "No")
+	var/show_log = tgui_alert(src, "Show ion message?", "Message", list("Yes", "No"))
 	var/announce_ion_laws = (show_log == "Yes" ? 1 : -1)
 
 	var/datum/round_event/ion_storm/add_law_only/ion = new()
@@ -535,7 +535,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!mob)
 		return
 	if(!istype(M))
-		alert("Cannot revive a ghost")
+		tgui_alert(src, "Cannot revive a ghost")
 		return
 	M.revive(full_heal = 1, admin_revive = 1)
 
@@ -552,11 +552,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/input = input(usr, "Enter a Command Report. Ensure it makes sense IC.", "What?", "") as message|null
+	var/input = tgui_input_message(usr, "Enter a Command Report. Ensure it makes sense IC.", "What?", "")
 	if(!input)
 		return
 
-	var/confirm = alert(src, "Do you want to announce the contents of the report to the crew?", "Announce", "Yes", "No", "Cancel")
+	var/confirm = tgui_alert(src, "Do you want to announce the contents of the report to the crew?", "Announce", list("Yes", "No", "Cancel"))
 	var/announce_command_report = TRUE
 	switch(confirm)
 		if("Yes")
@@ -578,13 +578,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/input = input(usr, "Enter a priority announcement. Ensure it makes sense IC.", "What?", "") as message|null
+	var/input = tgui_input_message(src, "Enter a priority announcement. Ensure it makes sense IC.", "What?", "")
 	if(!input)
 		return
 
-	var/title = input(src, "What should the title be?", "What?","") as text|null
+	var/title = tgui_input_text(src, "What should the title be?", "What?","")
 
-	var/special_name = input(src, "Who is making the announcement?", "Who?", "") as text|null
+	var/special_name = tgui_input_text(src, "Who is making the announcement?", "Who?", "")
 	priority_announce(input, title, sender_override = special_name)
 
 	log_admin("[key_name(src)] has sent a priority announcement: [input]")
@@ -598,7 +598,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/input = input(usr, "Please input a new name for Central Command.", "What?", "") as text|null
+	var/input = tgui_input_text(usr, "Please input a new name for Central Command.", "What?", "")
 	if(!input)
 		return
 	change_command_name(input)
@@ -630,25 +630,25 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/devastation = input("Range of total devastation. -1 to none", text("Input"))  as num|null
+	var/devastation = tgui_input_num(src, "Range of total devastation. -1 to none", text("Input"))
 	if(devastation == null)
 		return
-	var/heavy = input("Range of heavy impact. -1 to none", text("Input"))  as num|null
+	var/heavy = tgui_input_num(src, "Range of heavy impact. -1 to none", text("Input"))
 	if(heavy == null)
 		return
-	var/light = input("Range of light impact. -1 to none", text("Input"))  as num|null
+	var/light = tgui_input_num(src, "Range of light impact. -1 to none", text("Input"))
 	if(light == null)
 		return
-	var/flash = input("Range of flash. -1 to none", text("Input"))  as num|null
+	var/flash = tgui_input_num(src, "Range of flash. -1 to none", text("Input"))
 	if(flash == null)
 		return
-	var/flames = input("Range of flames. -1 to none", text("Input"))  as num|null
+	var/flames = tgui_input_num(src, "Range of flames. -1 to none", text("Input"))
 	if(flames == null)
 		return
 
 	if ((devastation != -1) || (heavy != -1) || (light != -1) || (flash != -1) || (flames != -1))
 		if ((devastation > 20) || (heavy > 20) || (light > 20) || (flames > 20))
-			if (alert(src, "Are you sure you want to do this? It will laaag.", "Confirmation", "Yes", "No") == "No")
+			if (tgui_alert(src, "Are you sure you want to do this? It will laaag.", "Confirmation", list("Yes", "No")) == "No")
 				return
 
 		explosion(O, devastation, heavy, light, flash, null, null,flames)
@@ -666,7 +666,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/range = input("Range.", text("Input"))  as num|null
+	var/range = tgui_input_num(src, "Range.", text("Input"))
 	if(!range)
 		return
 	log_admin("[key_name(usr)] created an EM Pulse - log below") //because we'll just log the empulse itself
@@ -682,7 +682,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/confirm = alert(src, "Drop a brain?", "Confirm", "Yes", "No","Cancel")
+	var/confirm = tgui_alert(src, "Drop a brain?", "Confirm", list("Yes", "No","Cancel"))
 	if(confirm == "Cancel")
 		return
 	//Due to the delay here its easy for something to have happened to the mob
@@ -705,7 +705,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set name = "Gibself"
 	set category = "Admin.Fun"
 
-	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
+	var/confirm = tgui_alert(src, "You sure?", "Confirm", list("Yes", "No"))
 	if(confirm == "Yes")
 		log_admin("[key_name(usr)] used gibself.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] used gibself.</span>")
@@ -727,7 +727,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set desc = "switches between 1x and custom views"
 
 	if(view_size.getView() == view_size.default)
-		view_size.setTo(input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128) - 7)
+		view_size.setTo(tgui_input_list(src, "Select view range:", "FUCK YE", list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128) - 7))
 	else
 		view_size.resetToDefault(getScreenSize(prefs.widescreenpref))
 
@@ -746,7 +746,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
+	var/confirm = tgui_alert(src, "You sure?", "Confirm", list("Yes", "No"))
 	if(confirm != "Yes")
 		return
 
@@ -761,7 +761,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set name = "Cancel Shuttle"
 	if(!check_rights(0))
 		return
-	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes")
+	if(tgui_alert(src, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
 		return
 
 	if(EMERGENCY_AT_LEAST_DOCKED)
@@ -783,7 +783,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(SSshuttle.emergency.mode == SHUTTLE_DISABLED)
 		to_chat(usr, "<span class='warning'>Error, shuttle is already disabled.</span>")
 		return
-	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes")
+	if(tgui_alert(src, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
 		return
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] disabled the shuttle.</span>")
 	SSshuttle.lastMode = SSshuttle.emergency.mode
@@ -803,7 +803,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(SSshuttle.emergency.mode != SHUTTLE_DISABLED)
 		to_chat(usr, "<span class='warning'>Error, shuttle not disabled.</span>")
 		return
-	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes")
+	if(tgui_alert(src, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
 		return
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] enabled the emergency shuttle.</span>")
 	SSshuttle.adminEmergencyNoRecall = FALSE
@@ -833,7 +833,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 
-	var/notifyplayers = alert(src, "Do you want to notify the players?", "Options", "Yes", "No", "Cancel")
+	var/notifyplayers = tgui_alert(src, "Do you want to notify the players?", "Options", list("Yes", "No", "Cancel"))
 	if(notifyplayers == "Cancel")
 		return
 
@@ -872,7 +872,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/level = input("Select security level to change to","Set Security Level") as null|anything in list("green","blue","amber","red","delta")
+	var/level = tgui_input_list(src, "Select security level to change to","Set Security Level", list("green","blue","amber","red","delta"))
 	if(level)
 		set_security_level(level)
 
@@ -888,7 +888,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	if(!N.timing)
-		var/newtime = input(usr, "Set activation timer.", "Activate Nuke", "[N.timer_set]") as num|null
+		var/newtime = tgui_input_num(usr, "Set activation timer.", "Activate Nuke", "[N.timer_set]")
 		if(!newtime)
 			return
 		N.timer_set = newtime
@@ -1117,11 +1117,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		return
 
-	var/weather_type = input("Choose a weather", "Weather")  as null|anything in subtypesof(/datum/weather)
+	var/weather_type = tgui_input_list(src, "Choose a weather", "Weather", subtypesof(/datum/weather))
 	if(!weather_type)
 		return
 
-	var/z_level = input("Z-Level to target? Leave blank to target current Z-Level.", "Z-Level")  as num|null
+	var/z_level = tgui_input_num(src, "Z-Level to target? Leave blank to target current Z-Level.", "Z-Level")
 	if(!isnum(z_level))
 		if(!src.mob)
 			return
@@ -1142,7 +1142,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/confirm = alert(src, "Please confirm you want to add latent zombie organs in all humans?", "Confirm Zombies", "Yes", "No")
+	var/confirm = tgui_alert(src, "Please confirm you want to add latent zombie organs in all humans?", "Confirm Zombies", list("Yes", "No"))
 	if(confirm != "Yes")
 		return
 
@@ -1160,7 +1160,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/confirm = alert(src, "Please confirm you want to cure all zombies?", "Confirm Zombie Cure", "Yes", "No")
+	var/confirm = tgui_alert(src, "Please confirm you want to cure all zombies?", "Confirm Zombie Cure", list("Yes", "No"))
 	if(confirm != "Yes")
 		return
 
@@ -1179,7 +1179,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/confirm = alert(src, "Please confirm you want polymorph all mobs?", "Confirm Polymorph", "Yes", "No")
+	var/confirm = tgui_alert(src, "Please confirm you want polymorph all mobs?", "Confirm Polymorph", list("Yes", "No"))
 	if(confirm != "Yes")
 		return
 
@@ -1213,7 +1213,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/input = input(usr, "Please specify your tip that you want to send to the players.", "Tip", "") as message|null
+	var/input = tgui_input_message(usr, "Please specify your tip that you want to send to the players.", "Tip", "")
 	if(!input)
 		return
 
@@ -1338,7 +1338,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		ADMIN_PUNISHMENT_SCARIFY,
 		ADMIN_PUNISHMENT_CLUWNE)
 
-	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
+	var/punishment = tgui_input_list(usr, "Choose a punishment", "DIVINE SMITING", punishment_list)
 
 	if(QDELETED(target) || !punishment)
 		return
@@ -1365,7 +1365,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			var/turf/endT = spaceDebrisFinishLoc(startside, T.z)
 			new /obj/effect/immovablerod(startT, endT,target)
 		if(ADMIN_PUNISHMENT_SUPPLYPOD_QUICK)
-			var/target_path = input(usr,"Enter typepath of an atom you'd like to send with the pod (type \"empty\" to send an empty pod):" ,"Typepath","/obj/item/reagent_containers/food/snacks/grown/harebell") as null|text
+			var/target_path = tgui_input_text(usr,"Enter typepath of an atom you'd like to send with the pod (type \"empty\" to send an empty pod):" ,"Typepath","/obj/item/reagent_containers/food/snacks/grown/harebell")
 			var/area/pod_storage_area = locate(/area/centcom/supplypod/podStorage) in GLOB.sortedAreas
 			var/obj/structure/closet/supplypod/centcompod/pod = new(pick(get_area_turfs(pod_storage_area))) //Lets not runtime
 			pod.damage = 40
@@ -1378,7 +1378,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				if(!ispath(delivery))
 					delivery = pick_closest_path(target_path)
 					if(!delivery)
-						alert("ERROR: Incorrect / improper path given.")
+						tgui_alert(src, "ERROR: Incorrect / improper path given.")
 				new delivery(pod)
 			new /obj/effect/pod_landingzone(get_turf(target), pod)
 		if(ADMIN_PUNISHMENT_SUPPLYPOD)
@@ -1404,13 +1404,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if(ADMIN_PUNISHMENT_CUSTOM_PIE)
 			var/obj/item/reagent_containers/food/snacks/pie/cream/nostun/A = new()
 			if(!A.reagents)
-				var/amount = input(usr, "Specify the reagent size of [A]", "Set Reagent Size", 50) as num|null
+				var/amount = tgui_input_num(usr, "Specify the reagent size of [A]", "Set Reagent Size", 50)
 				if(amount)
 					A.create_reagents(amount)
 			if(A.reagents)
 				var/chosen_id = choose_reagent_id(usr)
 				if(chosen_id)
-					var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume) as num|null
+					var/amount = tgui_input_num(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume)
 					if(amount)
 						A.reagents.add_reagent(chosen_id, amount)
 						A.splat(target)
@@ -1449,7 +1449,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				return
 
 			var/list/how_fucked_is_this_dude = list("A little", "A lot", "So fucking much", "FUCK THIS DUDE")
-			var/hatred = input("How much do you hate this guy?") in how_fucked_is_this_dude
+			var/hatred = tgui_input_list(usr, "How much do you hate this guy?", "", how_fucked_is_this_dude)
 			var/repetitions
 			var/shots_per_limb_per_rep = 2
 			var/damage
@@ -1545,7 +1545,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 	var/message = pick(GLOB.admiral_messages)
-	message = input("Enter message from the on-call admiral to be put in the recall report.", "Admiral Message", message) as text|null
+	message = tgui_input_text(src, "Enter message from the on-call admiral to be put in the recall report.", "Admiral Message", message)
 
 	if(!message)
 		return
@@ -1659,7 +1659,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!D)
 		return
 
-	var/add_or_remove = input("Remove/Add?", "Trait Remove/Add") as null|anything in list("Add","Remove")
+	var/add_or_remove = tgui_input_list(usr, "Remove/Add?", "Trait Remove/Add", list("Add","Remove"))
 	if(!add_or_remove)
 		return
 	var/list/availible_traits = list()
@@ -1676,7 +1676,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				var/name = GLOB.trait_name_map[trait] || trait
 				availible_traits[name] = trait
 
-	var/chosen_trait = input("Select trait to modify", "Trait") as null|anything in sortList(availible_traits)
+	var/chosen_trait = tgui_input_list(src, "Select trait to modify", "Trait", sortList(availible_traits))
 	if(!chosen_trait)
 		return
 	chosen_trait = availible_traits[chosen_trait]
@@ -1686,14 +1686,14 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if("Add") //Not doing source choosing here intentionally to make this bit faster to use, you can always vv it.
 			ADD_TRAIT(D,chosen_trait,source)
 		if("Remove")
-			var/specific = input("All or specific source ?", "Trait Remove/Add") as null|anything in list("All","Specific")
+			var/specific = tgui_input_list(src, "All or specific source ?", "Trait Remove/Add", list("All","Specific"))
 			if(!specific)
 				return
 			switch(specific)
 				if("All")
 					source = null
 				if("Specific")
-					source = input("Source to be removed","Trait Remove/Add") as null|anything in sortList(D.status_traits[chosen_trait])
+					source = tgui_input_list(src, "Source to be removed","Trait Remove/Add", sortList(D.status_traits[chosen_trait]))
 					if(!source)
 						return
 			REMOVE_TRAIT(D,chosen_trait,source)
@@ -1708,7 +1708,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	var/turf/T = get_turf(usr)
-	target = input("Any specific target in mind? Please note only live, non cluwned, human targets are valid.", "Target", target) as null|anything in GLOB.player_list
+	target = tgui_input_list(src, "Any specific target in mind? Please note only live, non cluwned, human targets are valid.", "Target", GLOB.player_list)
 	if(target && ishuman(target))
 		var/mob/living/carbon/human/H = target
 		var/mob/living/simple_animal/hostile/floor_cluwne/FC = new /mob/living/simple_animal/hostile/floor_cluwne(T)

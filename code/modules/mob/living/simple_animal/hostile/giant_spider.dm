@@ -93,7 +93,7 @@
 		var/mob/dead/observer/O = user
 		if(!O.can_reenter_round())
 			return FALSE
-	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
+	var/spider_ask = tgui_alert(user, "Become a spider?", "Are you australian?", list("Yes", "No"))
 	if(spider_ask == "No" || !src || QDELETED(src))
 		return TRUE
 	if(key)

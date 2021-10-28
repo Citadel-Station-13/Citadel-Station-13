@@ -24,7 +24,7 @@
 	options += "Delete Shuttle"
 	options += "Into The Sunset (delete & greentext 'escape')"
 
-	var/selection = input(user, "Select where to fly [name || id]:", "Fly Shuttle") as null|anything in options
+	var/selection = tgui_input_list(user, "Select where to fly [name || id]:", "Fly Shuttle", options)
 	if(!selection)
 		return
 
@@ -35,12 +35,12 @@
 			setTimer(ignitionTime)
 
 		if("Delete Shuttle")
-			if(alert(user, "Really delete [name || id]?", "Delete Shuttle", "Cancel", "Really!") != "Really!")
+			if(tgui_alert(user, "Really delete [name || id]?", "Delete Shuttle", list("Cancel", "Really!")) != "Really!")
 				return
 			jumpToNullSpace()
 
 		if("Into The Sunset (delete & greentext 'escape')")
-			if(alert(user, "Really delete [name || id] and greentext escape objectives?", "Delete Shuttle", "Cancel", "Really!") != "Really!")
+			if(tgui_alert(user, "Really delete [name || id] and greentext escape objectives?", "Delete Shuttle", list("Cancel", "Really!")) != "Really!")
 				return
 			intoTheSunset()
 
@@ -52,7 +52,7 @@
 	return  // use the existing verbs for this
 
 /obj/docking_port/mobile/arrivals/admin_fly_shuttle(mob/user)
-	switch(alert(user, "Would you like to fly the arrivals shuttle once or change its destination?", "Fly Shuttle", "Fly", "Retarget", "Cancel"))
+	switch(tgui_alert(user, "Would you like to fly the arrivals shuttle once or change its destination?", "Fly Shuttle", list("Fly", "Retarget", "Cancel")))
 		if("Cancel")
 			return
 		if("Fly")
@@ -67,7 +67,7 @@
 		if (canDock(S) == SHUTTLE_CAN_DOCK)
 			options[S.name || S.id] = S
 
-	var/selection = input(user, "Select the new arrivals destination:", "Fly Shuttle") as null|anything in options
+	var/selection = tgui_input_list(user, "Select the new arrivals destination:", "Fly Shuttle", options)
 	if(!selection)
 		return
 	target_dock = options[selection]

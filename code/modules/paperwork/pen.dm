@@ -123,7 +123,7 @@
 		desc = "It's an expensive [current_skin] fountain pen. The nib is quite sharp."
 
 /obj/item/pen/attack_self(mob/living/carbon/user)
-	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num
+	var/deg = tgui_input_num(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head")
 	if(deg && (deg > 0 && deg <= 360))
 		degrees = deg
 		to_chat(user, "<span class='notice'>You rotate the top of the pen to [degrees] degrees.</span>")
@@ -149,7 +149,7 @@
 	. = ..()
 	//Changing name/description of items. Only works if they have the UNIQUE_RENAME object flag set
 	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
-		var/penchoice = input(user, "What would you like to edit?", "Rename, change description or reset both?") as null|anything in list("Rename","Change description","Reset")
+		var/penchoice = tgui_input_list(user, "What would you like to edit?", "Rename, change description or reset both?", list("Rename","Change description","Reset"))
 		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 			return
 		if(penchoice == "Rename")

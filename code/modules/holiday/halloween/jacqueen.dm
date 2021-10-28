@@ -183,7 +183,7 @@
 		progression["[C.real_name]"] = progression["[C.real_name]"] | JACQ_HELLO
 
 	var/choices = list("Trick", "Treat", "How do I get candies?", "Do I know you from somewhere?")
-	var/choice = input(C, "Trick or Treat?", "Trick or Treat?") in choices
+	var/choice = tgui_input_list(C, "Trick or Treat?", "Trick or Treat?", choices)
 	switch(choice)
 		if("Trick")
 			trick(C)
@@ -207,7 +207,7 @@
 	visible_message("<b>[src]</b> gives off a glowing smile, <span class='spooky'>\"What ken Ah offer ye? I can magic up an object, a potion or a plushie fer ye.\"</span>")
 	jacqrunes("What ken Ah offer ye? I can magic up an object, a potion or a plushie fer ye.", C)
 	var/choices_reward = list("Object - 3 candies", "Potion - 2 candies", "Jacqueline Tracker - 2 candies", "Plushie - 1 candy", "Can I get to know you instead?", "Become a pumpkinhead dullahan (perma) - 4 candies")
-	var/choice_reward = input(usr, "Trick or Treat?", "Trick or Treat?") in choices_reward
+	var/choice_reward = tgui_input_list(usr, "Trick or Treat?", "Trick or Treat?", choices_reward)
 
 	//rewards
 	switch(choice_reward)
@@ -320,7 +320,7 @@
 			jacqrunes("A question? Sure, it'll cost you a candy though!", C)
 			choices += "Nevermind"
 			//Candies for chitchats
-			var/choice = input(C, "What do you want to ask?", "What do you want to ask?") in choices
+			var/choice = tgui_input_list(C, "What do you want to ask?", "What do you want to ask?", choices)
 			if(!take_candies(C, 1))
 				visible_message("<b>[src]</b> raises an eyebrow, <span class='spooky'>\"It's a candy per question [gender]! Thems the rules!\"</span>")
 				jacqrunes("It's a candy per question [gender]! Thems the rules!", C)

@@ -259,20 +259,20 @@
 	. = TRUE
 	if(!can_toggle || !user.canUseTopic(src, BE_CLOSE))
 		return
-	var/selection = alert(user, "Which setting would you want to modify?", "Firing Pin Settings", "Minimum Level Setting", "Maximum Level Setting", "Lethals Only Toggle")
+	var/selection = tgui_alert(user, "Which setting would you want to modify?", "Firing Pin Settings", list("Minimum Level Setting", "Maximum Level Setting", "Lethals Only Toggle"))
 	if(QDELETED(src) || QDELETED(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	var/static/list/till_designs_pr_isnt_merged = list("green", "blue", "amber", "red", "delta")
 	switch(selection)
 		if("Minimum Level Setting")
-			var/input = input(user, "Input the new minimum level setting.", "Firing Pin Settings", NUM2SECLEVEL(min_sec_level)) as null|anything in till_designs_pr_isnt_merged
+			var/input = tgui_input_list(user, "Input the new minimum level setting.", "Firing Pin Settings", till_designs_pr_isnt_merged)
 			if(!input)
 				return
 			min_sec_level = till_designs_pr_isnt_merged.Find(input) - 1
 			if(min_sec_level > max_sec_level)
 				max_sec_level = SEC_LEVEL_DELTA
 		if("Maximum Level Setting")
-			var/input = input(user, "Input the new maximum level setting.", "Firing Pin Settings", NUM2SECLEVEL(max_sec_level)) as null|anything in till_designs_pr_isnt_merged
+			var/input = tgui_input_list(user, "Input the new maximum level setting.", "Firing Pin Settings", till_designs_pr_isnt_merged)
 			if(!input)
 				return
 			max_sec_level = till_designs_pr_isnt_merged.Find(input) - 1

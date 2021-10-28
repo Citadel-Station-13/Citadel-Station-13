@@ -444,7 +444,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	usr << browse(dat.Join(), "window=ahelp[id];size=620x480")
 
 /datum/admin_help/proc/Retitle()
-	var/new_title = input(usr, "Enter a title for the ticket", "Rename Ticket", name) as text|null
+	var/new_title = tgui_input_text(usr, "Enter a title for the ticket", "Rename Ticket", name)
 	if(new_title)
 		name = new_title
 		//not saying the original name cause it could be a long ass message
@@ -508,7 +508,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 // Used for methods where input via arg doesn't work
 /client/proc/get_adminhelp()
-	var/msg = input(src, "Please describe your problem concisely and an admin will help as soon as they're able.", "Adminhelp contents") as text
+	var/msg = tgui_input_text(src, "Please describe your problem concisely and an admin will help as soon as they're able.", "Adminhelp contents")
 	adminhelp(msg)
 
 /client/verb/adminhelp(msg as text)
@@ -533,7 +533,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	if(current_ticket)
-		if(alert(usr, "You already have a ticket open. Is this for the same issue?",,"Yes","No") != "No")
+		if(tgui_alert(usr, "You already have a ticket open. Is this for the same issue?",,list("Yes","No")) != "No")
 			if(current_ticket)
 				current_ticket.MessageNoRecipient(msg)
 				current_ticket.TimeoutVerb()

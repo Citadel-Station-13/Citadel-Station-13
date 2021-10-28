@@ -12,7 +12,7 @@
 	var/copy_values = FALSE
 
 /obj/item/integrated_electronics/debugger/attack_self(mob/user)
-	var/type_to_use = input("Please choose a type to use.","[src] type setting") as null|anything in list("string","number","ref","copy","null")
+	var/type_to_use = tgui_input_list(user, "Please choose a type to use.","[src] type setting", list("string","number","ref","copy","null"))
 	if(!user.IsAdvancedToolUser())
 		return
 
@@ -28,7 +28,7 @@
 		if("number")
 			accepting_refs = FALSE
 			copy_values = FALSE
-			new_data = input(user, "Now type in a number.","[src] number writing") as null|num
+			new_data = tgui_input_num(user, "Now type in a number.","[src] number writing")
 			if(isnum(new_data) && user.IsAdvancedToolUser())
 				data_to_write = new_data
 				to_chat(user, "<span class='notice'>You set \the [src]'s memory to [new_data].</span>")

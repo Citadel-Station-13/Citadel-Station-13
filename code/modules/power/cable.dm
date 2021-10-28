@@ -520,7 +520,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	cost = 1
 
 /obj/item/stack/cable_coil/cyborg/attack_self(mob/user)
-	var/cable_color = input(user,"Pick a cable color.","Cable Color") in list("red","yellow","green","blue","pink","orange","cyan","white")
+	var/cable_color = tgui_input_list(user,"Pick a cable color.","Cable Color", list("red","yellow","green","blue","pink","orange","cyan","white"))
 	color = cable_color
 	update_icon()
 

@@ -24,7 +24,7 @@
 	set hidden = 1
 	var/forumurl = CONFIG_GET(string/forumurl)
 	if(forumurl)
-		if(alert("This will open the forum in your browser. Are you sure?",,"Yes","No")!="Yes")
+		if(tgui_alert(src, "This will open the forum in your browser. Are you sure?",,list("Yes","No"))!="Yes")
 			return
 		src << link(forumurl)
 	else
@@ -37,7 +37,7 @@
 	set hidden = 1
 	var/rulesurl = CONFIG_GET(string/rulesurl)
 	if(rulesurl)
-		if(alert("This will open the rules in your browser. Are you sure?",,"Yes","No")!="Yes")
+		if(tgui_alert(src, "This will open the rules in your browser. Are you sure?",,list("Yes","No"))!="Yes")
 			return
 		src << link(rulesurl)
 	else
@@ -50,7 +50,7 @@
 	set hidden = 1
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(githuburl)
-		if(alert("This will open the Github repository in your browser. Are you sure?",,"Yes","No")!="Yes")
+		if(tgui_alert(src, "This will open the Github repository in your browser. Are you sure?",,list("Yes","No"))!="Yes")
 			return
 		src << link(githuburl)
 	else
@@ -67,7 +67,7 @@
 		if(GLOB.revdata.testmerge.len)
 			message += "<br>The following experimental changes are active and are probably the cause of any new or sudden issues you may experience. If possible, please try to find a specific thread for your issue instead of posting to the general issue tracker:<br>"
 			message += GLOB.revdata.GetTestMergeInfo(FALSE)
-		if(tgalert(src, message, "Report Issue","Yes","No")!="Yes")
+		if(tgalert(src, message, "Report Issue","Yes","No")!="Yes") //Untouched, issues must be reported at all costs.
 			return
 		var/static/issue_template = file2text(".github/ISSUE_TEMPLATE.md")
 		var/servername = CONFIG_GET(string/servername)

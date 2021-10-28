@@ -286,7 +286,7 @@
 	var/list/options = gps_locators
 	if(area_aim)
 		options += GLOB.teleportlocs
-	var/V = input(user,"Select target", "Select target",null) in options|null
+	var/V = tgui_input_list(user,"Select target", "Select target", options)
 	target = options[V]
 
 

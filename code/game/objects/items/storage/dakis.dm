@@ -24,7 +24,7 @@
 	var/custom_name
 
 	if(icon_state == "daki_base")
-		body_choice = input("Pick a body.") in dakimakura_options
+		body_choice = tgui_input_list(user, "Pick a body.", "", dakimakura_options)
 		icon_state = "daki_[body_choice]"
 		custom_name = stripped_input(user, "What's her name?")
 		if(length(custom_name) > MAX_NAME_LEN)

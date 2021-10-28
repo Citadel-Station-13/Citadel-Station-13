@@ -52,8 +52,8 @@
 	. = ..()
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
-	var/desired_x = input(user, "How high do you want the camera to shoot, between [picture_size_x_min] and [picture_size_x_max]?", "Zoom", picture_size_x) as num
-	var/desired_y = input(user, "How wide do you want the camera to shoot, between [picture_size_y_min] and [picture_size_y_max]?", "Zoom", picture_size_y) as num
+	var/desired_x = tgui_input_num(user, "How high do you want the camera to shoot, between [picture_size_x_min] and [picture_size_x_max]?", "Zoom", picture_size_x)
+	var/desired_y = tgui_input_num(user, "How wide do you want the camera to shoot, between [picture_size_y_min] and [picture_size_y_max]?", "Zoom", picture_size_y)
 	picture_size_x = min(clamp(desired_x, picture_size_x_min, picture_size_x_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	picture_size_y = min(clamp(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	return TRUE
@@ -204,7 +204,7 @@
 		to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 		var/customise = "No"
 		if(can_customise)
-			customise = alert(user, "Do you want to customize the photo?", "Customization", "Yes", "No")
+			customise = tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
 		if(customise == "Yes")
 			var/name1 = stripped_input(user, "Set a name for this photo, or leave blank. 32 characters max.", "Name", max_length = 32)
 			var/desc1 = stripped_input(user, "Set a description to add to photo, or leave blank. 128 characters max.", "Caption", max_length = 128)

@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		dat += "\n[V]: <span class='reallybig'>[output]</span>"
 	to_chat(M, dat)
 
-	var/choice = input(M, "Choose the a reskin for [src]","Reskin Object") as null|anything in GLOB.pda_reskins
+	var/choice = tgui_input_list(M, "Choose the a reskin for [src]","Reskin Object", GLOB.pda_reskins)
 	var/new_icon = GLOB.pda_reskins[choice]
 	if(QDELETED(src) || isnull(new_icon) || new_icon == icon || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
@@ -619,7 +619,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
 
 			if("Drone Phone")
-				var/alert_s = input(U,"Alert severity level","Ping Drones",null) as null|anything in list("Low","Medium","High","Critical")
+				var/alert_s = tgui_input_list(U,"Alert severity level","Ping Drones", list("Low","Medium","High","Critical"))
 				var/area/A = get_area(U)
 				if(A && alert_s && !QDELETED(U))
 					var/msg = "<span class='boldnotice'>NON-DRONE PING: [U.name]: [alert_s] priority alert in [A.name]!</span>"
@@ -1147,7 +1147,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 		plist[avoid_assoc_duplicate_keys(P.owner, namecounts)] = P
 
-	var/c = input(user, "Please select a PDA") as null|anything in sortList(plist)
+	var/c = tgui_input_list(user, "Please select a PDA", "", sortList(plist))
 
 	if (!c)
 		return
@@ -1155,7 +1155,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/selected = plist[c]
 
 	if(aicamera.stored.len)
-		var/add_photo = input(user,"Do you want to attach a photo?","Photo","No") as null|anything in list("Yes","No")
+		var/add_photo = tgui_input_list(user,"Do you want to attach a photo?","Photo","No", list("Yes","No"))
 		if(add_photo=="Yes")
 			var/datum/picture/Pic = aicamera.selectpicture(user)
 			aiPDA.picture = Pic

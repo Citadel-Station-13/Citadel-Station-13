@@ -284,11 +284,11 @@
 			var/list/expNames = list("Devastation", "Heavy Damage", "Light Damage", "Flame") //Explosions have a range of different types of damage
 			var/list/boomInput = list()
 			for (var/i=1 to expNames.len) //Gather input from the user for the value of each type of damage
-				boomInput.Add(input("Enter the [expNames[i]] range of the explosion. WARNING: This ignores the bomb cap!", "[expNames[i]] Range",  0) as null|num)
+				boomInput.Add(tgui_input_num(usr, "Enter the [expNames[i]] range of the explosion. WARNING: This ignores the bomb cap!", "[expNames[i]] Range",  0))
 				if (isnull(boomInput[i]))
 					return
 				if (!isnum(boomInput[i])) //If the user doesn't input a number, set that specific explosion value to zero
-					alert(usr, "That wasn't a number! Value set to default (zero) instead.")
+					tgui_alert(usr, "That wasn't a number! Value set to default (zero) instead.")
 					boomInput = 0
 			explosionChoice = 1
 			temp_pod.explosionSize = boomInput
@@ -306,11 +306,11 @@
 				damageChoice = 0
 				temp_pod.damage = 0
 				return
-			var/damageInput = input("Enter the amount of brute damage dealt by getting hit","How much damage to deal",  0) as null|num
+			var/damageInput = tgui_input_num(usr, "Enter the amount of brute damage dealt by getting hit","How much damage to deal",  0)
 			if (isnull(damageInput))
 				return
 			if (!isnum(damageInput)) //Sanitize the input for damage to deal.s
-				alert(usr, "That wasn't a number! Value set to default (zero) instead.")
+				tgui_alert(usr, "That wasn't a number! Value set to default (zero) instead.")
 				damageInput = 0
 			damageChoice = 1
 			temp_pod.damage = damageInput
@@ -330,10 +330,10 @@
 				temp_pod.adminNamed = FALSE
 				temp_pod.setStyle(temp_pod.style) //This resets the name of the pod based on it's current style (see supplypod/setStyle() proc)
 				return
-			var/nameInput= input("Custom name", "Enter a custom name", GLOB.podstyles[temp_pod.style][POD_NAME]) as null|text //Gather input for name and desc
+			var/nameInput= tgui_input_text(usr, "Custom name", "Enter a custom name", GLOB.podstyles[temp_pod.style][POD_NAME])
 			if (isnull(nameInput))
 				return
-			var/descInput = input("Custom description", "Enter a custom desc", GLOB.podstyles[temp_pod.style][POD_DESC]) as null|text //The GLOB.podstyles is used to get the name, desc, or icon state based on the pod's style
+			var/descInput = tgui_input_text(usr, "Custom description", "Enter a custom desc", GLOB.podstyles[temp_pod.style][POD_DESC]) //The GLOB.podstyles is used to get the name, desc, or icon state based on the pod's style
 			if (isnull(descInput))
 				return
 			temp_pod.name = nameInput
@@ -344,14 +344,14 @@
 			if (temp_pod.effectShrapnel == TRUE) //If already doing custom damage, set back to default (no shrapnel)
 				temp_pod.effectShrapnel = FALSE
 				return
-			var/shrapnelInput = input("Please enter the type of pellet cloud you'd like to create on landing (Can be any projectile!)", "Projectile Typepath",  0) in sortList(subtypesof(/obj/item/projectile), /proc/cmp_typepaths_asc)
+			var/shrapnelInput = tgui_input_list(usr, "Please enter the type of pellet cloud you'd like to create on landing (Can be any projectile!)", "Projectile Typepath", sortList(subtypesof(/obj/item/projectile), /proc/cmp_typepaths_asc))
 			if (isnull(shrapnelInput))
 				return
-			var/shrapnelMagnitude = input("Enter the magnitude of the pellet cloud. This is usually a value around 1-5. Please note that Ryll-Ryll has asked me to tell you that if you go too crazy with the projectiles you might crash the server. So uh, be gentle!", "Shrapnel Magnitude", 0) as null|num
+			var/shrapnelMagnitude = tgui_input_num(usr, "Enter the magnitude of the pellet cloud. This is usually a value around 1-5. Please note that Ryll-Ryll has asked me to tell you that if you go too crazy with the projectiles you might crash the server. So uh, be gentle!", "Shrapnel Magnitude", 0)
 			if (isnull(shrapnelMagnitude))
 				return
 			if (!isnum(shrapnelMagnitude))
-				alert(usr, "That wasn't a number! Value set to 3 instead.")
+				tgui_alert(usr, "That wasn't a number! Value set to 3 instead.")
 				shrapnelMagnitude = 3
 			temp_pod.shrapnel_type = shrapnelInput
 			temp_pod.shrapnel_magnitude = shrapnelMagnitude
@@ -403,7 +403,7 @@
 				specificTarget = null
 				return
 			var/list/mobs = getpois()//code stolen from observer.dm
-			var/inputTarget = input("Select a mob! (Smiting does this automatically)", "Target", null, null) as null|anything in mobs
+			var/inputTarget = tgui_input_list(usr, "Select a mob! (Smiting does this automatically)", "Target", mobs)
 			if (isnull(inputTarget))
 				return
 			var/mob/target = mobs[inputTarget]
@@ -448,11 +448,11 @@
 				if (found.file == tempSound.file)
 					soundLen = found.len
 			if (!soundLen)
-				soundLen =  input(holder, "Couldn't auto-determine sound file length. What is the exact length of the sound file, in seconds. This number will be used to line the sound up so that it finishes right as the pod lands!", "Pick a Sound File", 0.3) as null|num
+				soundLen = tgui_input_num(holder, "Couldn't auto-determine sound file length. What is the exact length of the sound file, in seconds. This number will be used to line the sound up so that it finishes right as the pod lands!", "Pick a Sound File", 0.3)
 				if (isnull(soundLen))
 					return
 				if (!isnum(soundLen))
-					alert(usr, "That wasn't a number! Value set to default ([initial(temp_pod.fallingSoundLength)*0.1]) instead.")
+					tgui_alert(usr, "That wasn't a number! Value set to default ([initial(temp_pod.fallingSoundLength)*0.1]) instead.")
 			temp_pod.fallingSound = soundInput
 			temp_pod.fallingSoundLength = 10 * soundLen
 			. = TRUE
@@ -487,7 +487,7 @@
 			if (temp_pod.soundVolume != initial(temp_pod.soundVolume))
 				temp_pod.soundVolume = initial(temp_pod.soundVolume)
 				return
-			var/soundInput = input(holder, "Please pick a volume. Default is between 1 and 100 with 50 being average, but pick whatever. I'm a notification, not a cop. If you still cant hear your sound, consider turning on the Quiet effect. It will silence all pod sounds except for the custom admin ones set by the previous three buttons.", "Pick Admin Sound Volume") as null|num
+			var/soundInput = tgui_input_num(holder, "Please pick a volume. Default is between 1 and 100 with 50 being average, but pick whatever. I'm a notification, not a cop. If you still cant hear your sound, consider turning on the Quiet effect. It will silence all pod sounds except for the custom admin ones set by the previous three buttons.", "Pick Admin Sound Volume")
 			if (isnull(soundInput))
 				return
 			temp_pod.soundVolume = soundInput
@@ -521,7 +521,7 @@
 			updateSelector()
 			. = TRUE
 		if("clearBay") //Delete all mobs and objs in the selected bay
-			if(alert(usr, "This will delete all objs and mobs in [bay]. Are you sure?", "Confirmation", "Delete that shit", "No") == "Delete that shit")
+			if(tgui_alert(usr, "This will delete all objs and mobs in [bay]. Are you sure?", "Confirmation", list("Delete that shit", "No")) == "Delete that shit")
 				clearBay()
 				refreshBay()
 			. = TRUE

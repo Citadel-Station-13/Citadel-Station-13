@@ -626,7 +626,7 @@
 			for(var/muties in myseed.mutatelist)
 				var/obj/item/seeds/another_mut = new muties
 				fresh_mut_list[another_mut.plantname] =  muties
-			var/locked_mutation = (input(user, "Select a mutation to lock.", "Plant Mutation Locks") as null|anything in sortList(fresh_mut_list))
+			var/locked_mutation = (tgui_input_list(user, "Select a mutation to lock.", "Plant Mutation Locks", sortList(fresh_mut_list)))
 			if(!user.canUseTopic(src, BE_CLOSE) || !locked_mutation)
 				return
 			myseed.mutatelist = list(fresh_mut_list[locked_mutation])
@@ -684,7 +684,7 @@
 	if(!anchored)
 		update_icon()
 		return FALSE
-	var/warning = alert(user, "Are you sure you wish to empty the tray's nutrient beaker?","Empty Tray Nutrients?", "Yes", "No")
+	var/warning = tgui_alert(user, "Are you sure you wish to empty the tray's nutrient beaker?","Empty Tray Nutrients?", list("Yes", "No"))
 	if(warning == "Yes" && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		reagents.clear_reagents()
 		to_chat(user, "<span class='warning'>You empty [src]'s nutrient tank.</span>")

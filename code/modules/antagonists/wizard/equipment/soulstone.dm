@@ -222,7 +222,7 @@
 			var/obj/structure/constructshell/T = target
 			var/mob/living/simple_animal/hostile/construct/shade/A = locate() in src
 			if(A)
-				var/construct_class = alert(user, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
+				var/construct_class = tgui_alert(user, "Please choose which type of construct you wish to create.",,list("Juggernaut","Wraith","Artificer"))
 				if(!T || !T.loc)
 					return
 				switch(construct_class)
