@@ -63,7 +63,7 @@
 			continue
 		candidates[L.mind.name] = L.mind
 
-	var/choice = tgui_input_list(admin,"Choose the blood brother.", "Brother", candidates)
+	var/choice = input(admin,"Choose the blood brother.", "Brother") as null|anything in candidates
 	if(!choice)
 		return
 	var/datum/mind/bro = candidates[choice]

@@ -9501,7 +9501,7 @@
 /obj/machinery/camera/autoname{
 	dir = 4
 	},
-/obj/machinery/computer/arcade/orion_trail{
+/obj/machinery/computer/arcade/minesweeper{
 	dir = 4
 	},
 /turf/open/floor/plasteel,

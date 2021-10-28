@@ -403,9 +403,6 @@
 		if("incheck")
 			send_signal(device_id, list("checks" = text2num(params["val"])^2), usr)
 			. = TRUE
-		if("direction")
-			send_signal(device_id, list("direction" = text2num(params["val"])), usr)
-			. = TRUE
 		if("set_external_pressure", "set_internal_pressure")
 
 			var/target = params["value"]
@@ -428,7 +425,7 @@
 			var/datum/tlv/tlv = TLV[env]
 			if(isnull(tlv))
 				return
-			var/value = tgui_input_num(usr, "New [name] for [env]:", name, tlv.vars[name])
+			var/value = input("New [name] for [env]:", name, tlv.vars[name]) as num|null
 			if(!isnull(value) && !..())
 				if(value < 0)
 					tlv.vars[name] = -1

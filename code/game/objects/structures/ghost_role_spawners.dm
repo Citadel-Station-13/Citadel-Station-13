@@ -184,7 +184,7 @@
 
 /obj/effect/mob_spawn/human/golem/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(isgolem(user) && can_transfer)
-		var/transfer_choice = tgui_alert(user, "Transfer your soul to [src]? (Warning, your old body will die!)",,list("Yes","No"))
+		var/transfer_choice = alert("Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
 		if(transfer_choice != "Yes" || QDELETED(src) || uses <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERY, NO_TK))
 			return
 		log_game("[key_name(user)] golem-swapped into [src]")
@@ -742,7 +742,7 @@
 /datum/action/disguise/Trigger()
 	var/mob/living/carbon/human/H = owner
 	if(!currently_disguised)
-		var/user_object_type = tgui_input_list(H, "Disguising as OBJECT or MOB?", "", list("OBJECT", "MOB"))
+		var/user_object_type = input(H, "Disguising as OBJECT or MOB?") as null|anything in list("OBJECT", "MOB")
 		if(user_object_type)
 			var/search_term = stripped_input(H, "Enter the search term")
 			if(search_term)
@@ -758,7 +758,7 @@
 				if(!length(filtered_results))
 					to_chat(H, "Nothing matched your search query!")
 				else
-					var/disguise_selection = tgui_input_list(H, "Select item to disguise as", "", filtered_results)
+					var/disguise_selection = input("Select item to disguise as") as null|anything in filtered_results
 					if(disguise_selection)
 						var/atom/disguise_item = disguise_selection
 						var/image/I = image(icon = initial(disguise_item.icon), icon_state = initial(disguise_item.icon_state), loc = H)
@@ -800,13 +800,6 @@
 
 /datum/outfit/ghostcafe/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
-	if (isplasmaman(H))
-		head = /obj/item/clothing/head/helmet/space/plasmaman
-		uniform = /obj/item/clothing/under/plasmaman
-		l_hand= /obj/item/tank/internals/plasmaman/belt/full
-		mask = /obj/item/clothing/mask/breath
-		return
-
 	var/suited = !preference_source || preference_source.prefs.jumpsuit_style == PREF_SUIT
 	if (CONFIG_GET(flag/grey_assistants))
 		uniform = suited ? /obj/item/clothing/under/color/grey : /obj/item/clothing/under/color/jumpskirt/grey
@@ -815,10 +808,6 @@
 			uniform = suited ? /obj/item/clothing/under/color/rainbow : /obj/item/clothing/under/color/jumpskirt/rainbow
 		else
 			uniform = suited ? /obj/item/clothing/under/color/random : /obj/item/clothing/under/color/jumpskirt/random
-
-/datum/outfit/ghostcafe/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
-	H.internal = H.get_item_for_held_index(1)
-	H.update_internals_hud_icon(1)
 
 /obj/item/storage/box/syndie_kit/chameleon/ghostcafe
 	name = "ghost cafe costuming kit"
