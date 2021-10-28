@@ -1,0 +1,349 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav)
+"h" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav)
+"i" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/structure/spider/stickyweb,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav)
+"k" = (
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/spider,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav)
+"q" = (
+/obj/structure/shuttle/engine/propulsion/burst,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav)
+"r" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav)
+"v" = (
+/turf/template_noop,
+/area/template_noop)
+"x" = (
+/obj/structure/spider/stickyweb,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav)
+"C" = (
+/obj/effect/decal/remains/human,
+/obj/item/spear,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav)
+"F" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Shuttle Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav)
+"J" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space)
+"O" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav)
+"P" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/spider,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav)
+"R" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"S" = (
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/has_grav)
+"U" = (
+/turf/closed/mineral/random,
+/area/ruin/space)
+"W" = (
+/obj/structure/spider/stickyweb,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space)
+
+(1,1,1) = {"
+v
+v
+v
+v
+v
+v
+J
+J
+J
+v
+v
+v
+v
+v
+v
+"}
+(2,1,1) = {"
+v
+v
+v
+v
+J
+J
+U
+U
+U
+J
+J
+J
+J
+v
+v
+"}
+(3,1,1) = {"
+v
+v
+J
+J
+U
+U
+U
+U
+U
+U
+U
+U
+U
+J
+v
+"}
+(4,1,1) = {"
+v
+J
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+J
+"}
+(5,1,1) = {"
+v
+J
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+"}
+(6,1,1) = {"
+v
+J
+U
+U
+U
+U
+h
+R
+h
+q
+W
+U
+U
+J
+v
+"}
+(7,1,1) = {"
+J
+U
+U
+U
+U
+U
+r
+i
+i
+q
+W
+W
+J
+J
+v
+"}
+(8,1,1) = {"
+J
+U
+U
+U
+S
+x
+C
+k
+x
+F
+J
+J
+J
+J
+v
+"}
+(9,1,1) = {"
+J
+U
+U
+U
+h
+h
+P
+O
+a
+q
+W
+W
+J
+J
+v
+"}
+(10,1,1) = {"
+J
+U
+U
+U
+U
+h
+h
+R
+h
+q
+W
+U
+U
+U
+v
+"}
+(11,1,1) = {"
+J
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+"}
+(12,1,1) = {"
+v
+J
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+J
+"}
+(13,1,1) = {"
+v
+J
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+J
+"}
+(14,1,1) = {"
+v
+v
+J
+J
+J
+J
+J
+J
+J
+J
+U
+U
+U
+U
+J
+"}
+(15,1,1) = {"
+v
+v
+v
+v
+v
+v
+v
+v
+v
+v
+J
+J
+J
+J
+v
+"}

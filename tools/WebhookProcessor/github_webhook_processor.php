@@ -250,7 +250,7 @@ function tag_pr($payload, $opened) {
 	else if ($mergeable === FALSE)
 		$tags[] = 'Merge Conflict';
 
-	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL', '.github' => 'GitHub');
+	$treetags = array('maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL', '.github' => 'GitHub');
 	$addonlytags = array('icons' => 'Sprites', 'sound' => 'Sound', 'config' => 'Config Update', 'code/controllers/configuration/entries' => 'Config Update', 'tgui' => 'UI');
 	foreach($treetags as $tree => $tag)
 		if(has_tree_been_edited($payload, $tree))
@@ -687,8 +687,8 @@ function auto_update($payload){
 function has_tree_been_edited($payload, $tree){
 	global $github_diff;
 	get_diff($payload);
-	//find things in the _maps/map_files tree
-	//e.g. diff --git a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm
+	//find things in the maps/map_files tree
+	//e.g. diff --git a/maps/map_files/Cerestation/cerestation.dmm b/maps/map_files/Cerestation/cerestation.dmm
 	return ($github_diff !== FALSE) && (preg_match('/^diff --git a\/' . preg_quote($tree, '/') . '/m', $github_diff) !== 0);
 }
 

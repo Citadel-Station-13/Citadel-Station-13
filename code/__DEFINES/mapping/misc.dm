@@ -3,7 +3,7 @@ The /tg/ codebase allows mixing of hardcoded and dynamically-loaded z-levels.
 Z-levels can be reordered as desired and their properties are set by "traits".
 See map_config.dm for how a particular station's traits may be chosen.
 The list DEFAULT_MAP_TRAITS at the bottom of this file should correspond to
-the maps that are hardcoded, as set in _maps/_basemap.dm. SSmapping is
+the maps that are hardcoded, as set in maps/_basemap.dm. SSmapping is
 responsible for loading every non-hardcoded z-level.
 
 As of 2018-02-04, the typical z-levels for a single-level station are:

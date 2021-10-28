@@ -10,7 +10,7 @@ if [[ $# -eq 2 ]] ; then
 fi
 
 mkdir -p \
-    $1/_maps \
+    $1/maps \
     $1/icons/runtime \
     $1/sound/runtime \
     $1/strings
@@ -21,13 +21,13 @@ if [ -d ".git" ]; then
 fi
 
 cp tgstation.dmb tgstation.rsc $1/
-cp -r _maps/* $1/_maps/
+cp -r maps/* $1/maps/
 cp -r strings/* $1/strings/
 
-#remove .dm files from _maps
+#remove .dm files from maps
 
 #this regrettably doesn't work with windows find
-#find $1/_maps -name "*.dm" -type f -delete
+#find $1/maps -name "*.dm" -type f -delete
 
 #dlls on windows
 if [ "$(uname -o)" = "Msys"  ]; then

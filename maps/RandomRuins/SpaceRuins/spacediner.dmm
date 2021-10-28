@@ -1,0 +1,2917 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/template_noop,
+/area/template_noop)
+"ab" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"ac" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "Shuttle Dock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"ad" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"ae" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"af" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"ag" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/diner/interior)
+"ah" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external/glass{
+	name = "Shuttle Dock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"ai" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1;
+	icon_state = "hrwindow_spawner_end"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"aj" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"ak" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"al" = (
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"am" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/solar,
+/turf/open/floor/plasteel/solarpanel,
+/area/ruin/space/diner/solars)
+"an" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end,
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"ao" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"ap" = (
+/obj/structure/sign/poster/official/pda_ad600{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"aq" = (
+/obj/structure/sign/poster/official/nanotrasen_logo{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"ar" = (
+/obj/structure/sign/poster/official/cohiba_robusto_ad{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"as" = (
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"at" = (
+/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/solar,
+/turf/open/floor/plasteel/solarpanel,
+/area/ruin/space/diner/solars)
+"au" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"av" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/diner)
+"aw" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4;
+	icon_state = "hrwindow_spawner_end"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/diner)
+"ax" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/diner)
+"ay" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/all_access{
+	dir = 4;
+	icon_state = "alarm0";
+	pixel_x = -24
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"az" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/coffee,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"aA" = (
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/diner/interior)
+"aB" = (
+/obj/structure/reagent_dispensers/beerkeg,
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"aC" = (
+/obj/structure/table/reinforced,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"aD" = (
+/obj/structure/kitchenspike,
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"aE" = (
+/obj/structure/closet/crate,
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"aF" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/closet/crate/freezer,
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"aG" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/template_noop,
+/area/ruin/space/diner/solars)
+"aH" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/template_noop,
+/area/ruin/space/diner/solars)
+"aI" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/template_noop,
+/area/ruin/space/diner/solars)
+"aJ" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/template_noop,
+/area/ruin/space/diner/solars)
+"aK" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/template_noop,
+/area/ruin/space/diner/solars)
+"aL" = (
+/turf/open/floor/engine/airless,
+/area/ruin/space/diner)
+"aM" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/diner)
+"aN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"aO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/cola/red,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"aP" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"aQ" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 10;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"aR" = (
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/space/diner/interior)
+"aS" = (
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"aT" = (
+/obj/structure/cable,
+/obj/machinery/power/solar,
+/turf/open/floor/plasteel/solarpanel,
+/area/ruin/space/diner/solars)
+"aU" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/template_noop,
+/area/ruin/space/diner/solars)
+"aV" = (
+/obj/machinery/door/firedoor,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/public/glass{
+	name = "Fore Docking Area"
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"aW" = (
+/obj/machinery/door/firedoor,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/public/glass{
+	name = "Fore Docking Area"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"aX" = (
+/obj/machinery/vending/boozeomat/pubby_maint,
+/turf/closed/wall/r_wall,
+/area/ruin/space/diner/interior)
+"aY" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"aZ" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"ba" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"bb" = (
+/obj/machinery/gibber,
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"bc" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/space/diner/interior)
+"bd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/public/glass{
+	name = "Fore Pod Bay"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/firedoor/closed,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"be" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/plasteel/stairs/old,
+/area/ruin/space/diner/interior)
+"bf" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/diner/interior)
+"bg" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/diner/interior)
+"bh" = (
+/obj/machinery/light/small/broken,
+/turf/open/floor/engine/airless,
+/area/ruin/space/diner)
+"bi" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/button{
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/diner)
+"bj" = (
+/obj/effect/spawner/structure/window/hollow/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"bk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bl" = (
+/obj/structure/table/reinforced,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/chem_dispenser/drinks/beer,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bm" = (
+/obj/structure/table/reinforced,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/chem_dispenser/drinks,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bo" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/secure_closet/freezer/kitchen{
+	req_access = null;
+	req_access_txt = "200"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bp" = (
+/obj/structure/table/reinforced,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/food/condiment/rice{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/processor,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"br" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bs" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sink/kitchen{
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/grill,
+/obj/machinery/light/small/broken{
+	dir = 1;
+	icon_state = "bulb-broken"
+	},
+/obj/machinery/power/apc/highcap/five_k{
+	name = "Space Diner APC";
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bu" = (
+/obj/machinery/deepfryer,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bv" = (
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/obj/structure/table/reinforced,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bw" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/diner/interior)
+"bx" = (
+/obj/structure/toilet/secret/low_loot{
+	dir = 4;
+	icon_state = "toilet00"
+	},
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/window/eastright,
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/space/diner/interior)
+"by" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/rebels_unite{
+	pixel_y = 32
+	},
+/obj/item/reagent_containers/food/urinalcake,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bz" = (
+/obj/structure/urinal{
+	pixel_y = 28
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bA" = (
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/closet/crate/bin,
+/obj/machinery/airalarm/all_access{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bB" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 8;
+	icon_state = "hrwindow_spawner_end"
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"bC" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"bD" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4;
+	icon_state = "hrwindow_spawner_end"
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"bE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/manifold/general/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bI" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/grunge/abandoned{
+	name = "Staff Entrance"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/manifold/general/hidden,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 10;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/secure_closet/freezer/meat{
+	req_access_txt = "200"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bO" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/diner/interior)
+"bP" = (
+/obj/structure/toilet/secret/low_loot{
+	dir = 4;
+	icon_state = "toilet00"
+	},
+/obj/structure/window/reinforced/spawner/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/window/eastright,
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/space/diner/interior)
+"bQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 6;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 11
+	},
+/obj/structure/sign/poster/official/cleanliness{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bT" = (
+/obj/structure/rack,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/diner/interior)
+"bU" = (
+/obj/structure/table,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/diner/interior)
+"bV" = (
+/obj/structure/table,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/diner/interior)
+"bW" = (
+/obj/structure/table,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/item/storage/toolbox/electrical,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/diner/interior)
+"bX" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1;
+	icon_state = "hrwindow_spawner_end"
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"bY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"bZ" = (
+/obj/machinery/icecream_vat,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/all_access{
+	dir = 4;
+	icon_state = "alarm0";
+	pixel_x = -24
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"ca" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/manifold/general/hidden{
+	dir = 8;
+	icon_state = "manifold-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 10;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cd" = (
+/obj/structure/table/reinforced,
+/obj/machinery/microwave{
+	pixel_y = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"ce" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/mirror{
+	icon_state = "mirror_broke";
+	pixel_x = 24
+	},
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 11
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cg" = (
+/obj/structure/sign/warning/vacuum/external{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/diner/interior)
+"ch" = (
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/diner/interior)
+"ci" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/diner/interior)
+"cj" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end,
+/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"ck" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/holopad,
+/obj/effect/turf_decal/bot,
+/obj/item/radio/intercom{
+	pixel_x = 26
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cl" = (
+/obj/structure/grille/broken,
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"cm" = (
+/obj/machinery/light{
+	dir = 8;
+	light_color = "#e8eaff"
+	},
+/obj/structure/table/wood/bar,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/snacks/stewedsoymeat,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cn" = (
+/obj/structure/table/wood/bar,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"co" = (
+/obj/structure/table/wood/bar,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/item/trash/plate,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cp" = (
+/obj/structure/table/wood/bar,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cq" = (
+/obj/structure/table/wood/bar,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/condiment/peppermill{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/obj/structure/frame,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cs" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood/bar,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"ct" = (
+/obj/machinery/light{
+	dir = 4;
+	light_color = "#e8eaff"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood/bar,
+/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/west,
+/obj/machinery/dish_drive,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cu" = (
+/obj/structure/sign/barsign,
+/turf/closed/wall/r_wall,
+/area/ruin/space/diner/interior)
+"cv" = (
+/obj/machinery/door/airlock/grunge/abandoned{
+	name = "Restrooms"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cw" = (
+/obj/machinery/airalarm/all_access{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/diner/interior)
+"cx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/airalarm/all_access{
+	dir = 4;
+	icon_state = "alarm0";
+	pixel_x = -24
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cy" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/diner/interior)
+"cz" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4;
+	icon_state = "pipe11-2"
+	},
+/obj/item/beacon,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/diner/interior)
+"cA" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/diner/interior)
+"cB" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass{
+	name = "Teleporter Room"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/diner/interior)
+"cC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/general/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cE" = (
+/obj/structure/chair/stool/bar,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"cF" = (
+/obj/structure/chair/stool/bar,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"cG" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cH" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cI" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/machinery/computer/slot_machine,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cJ" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"cK" = (
+/obj/structure/table/wood,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass,
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"cL" = (
+/obj/structure/table/wood,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/trash/plate,
+/obj/item/kitchen/fork,
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"cM" = (
+/obj/machinery/light/broken{
+	dir = 1;
+	icon_state = "tube-broken"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/chair,
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"cN" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cO" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/sign/departments/restroom{
+	pixel_y = 32
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cP" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/computer/arcade{
+	dir = 8;
+	icon_state = "arcade"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cQ" = (
+/obj/structure/sign/warning/vacuum/external{
+	pixel_x = 32;
+	pixel_y = 32
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"cS" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1;
+	icon_state = "hrwindow_spawner_end"
+	},
+/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"cT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/report_crimes{
+	pixel_y = 32
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cW" = (
+/obj/machinery/door/firedoor,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/public/glass{
+	name = "Diner"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cX" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cY" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"cZ" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 5;
+	icon_state = "pipe11-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"da" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4;
+	icon_state = "pipe11-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"db" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/general/hidden,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"dc" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4;
+	icon_state = "pipe11-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"dd" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 9;
+	icon_state = "pipe11-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"de" = (
+/obj/machinery/door/airlock/external{
+	name = "Mining Shuttle Dock"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"df" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"dg" = (
+/obj/machinery/door/airlock/external/glass,
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"dh" = (
+/obj/machinery/teleport/hub,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/diner/interior)
+"di" = (
+/obj/machinery/light/small/broken,
+/obj/machinery/teleport/station,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/diner/interior)
+"dj" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/computer/teleporter{
+	dir = 1;
+	icon_state = "computer"
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/diner/interior)
+"dk" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/space/nearstation)
+"dm" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"dn" = (
+/obj/machinery/light/small,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"do" = (
+/obj/machinery/door/firedoor,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/public/glass{
+	name = "Diner"
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"dp" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"dq" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"dr" = (
+/obj/structure/sign/mining{
+	pixel_x = 32
+	},
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/reagent_containers/rag,
+/obj/item/kitchen/fork,
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"ds" = (
+/obj/structure/cable,
+/obj/machinery/power/solar_control{
+	dir = 4;
+	icon_state = "computer"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"dt" = (
+/obj/structure/sign/poster/ripped{
+	pixel_x = 32
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"dv" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4;
+	icon_state = "hrwindow_spawner_end"
+	},
+/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"dx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/manifold/general/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"dy" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/machinery/light/broken{
+	dir = 8;
+	icon_state = "tube-broken"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"dz" = (
+/obj/structure/chair,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"dA" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/chair,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"dB" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"dC" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/chair{
+	dir = 1;
+	icon_state = "chair_toppled"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"dD" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/reagent_containers/food/snacks/sushi_rice,
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"dE" = (
+/obj/machinery/light/small/broken{
+	dir = 1;
+	icon_state = "bulb-broken"
+	},
+/turf/open/floor/engine/airless,
+/area/ruin/space/diner)
+"dF" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/button{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/diner)
+"dG" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/machinery/vending/cola/blue,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"dH" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/trash/plate,
+/obj/item/reagent_containers/food/condiment/pack/ketchup{
+	pixel_x = -4
+	},
+/obj/item/reagent_containers/food/condiment/pack/mustard{
+	pixel_x = 4
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"dI" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/item/trash/plate,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"dJ" = (
+/obj/machinery/light,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"dK" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/whiskey,
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"dL" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/trash/plate{
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/snacks/burger/mcguffin,
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"dM" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/jukebox,
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"dN" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/kitchen/fork,
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"dO" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/trash/plate,
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"dP" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"dQ" = (
+/obj/machinery/light,
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"dR" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/reagent_containers/food/drinks/coffee,
+/turf/open/floor/carpet,
+/area/ruin/space/diner/interior)
+"dS" = (
+/obj/item/storage/wallet/random,
+/turf/open/floor/engine/airless,
+/area/ruin/space/diner)
+"dT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/diner)
+"dU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/public/glass{
+	name = "Aft Pod Bay"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/firedoor/closed,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"dV" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 10;
+	icon_state = "hrwindow_spawner_directional"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"dW" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"dX" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4;
+	icon_state = "hrwindow_spawner_end"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"dY" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 8;
+	icon_state = "hrwindow_spawner_end"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"dZ" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 6;
+	icon_state = "hrwindow_spawner_directional"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/diner/interior)
+"ea" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"eb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/public/glass{
+	name = "Aft Docking Area"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/firedoor/closed,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"ec" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/public/glass{
+	name = "Aft Docking Area"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/firedoor/closed,
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/plasteel,
+/area/ruin/space/diner/interior)
+"ed" = (
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/diner)
+"ee" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/diner)
+"ef" = (
+/obj/machinery/light/small/broken{
+	dir = 1;
+	icon_state = "bulb-broken"
+	},
+/obj/machinery/vending/snack,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/diner)
+"eg" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1;
+	icon_state = "hrwindow_spawner_end"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/diner)
+"eh" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/plating/airless,
+/area/ruin/space/diner)
+"ei" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/diner)
+"ej" = (
+/obj/structure/girder/reinforced,
+/turf/open/floor/plating/airless,
+/area/ruin/space/diner)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+af
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+af
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+af
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+af
+af
+af
+af
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+af
+af
+dk
+dk
+dk
+af
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+af
+af
+av
+ax
+af
+dk
+dk
+dk
+af
+ej
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+av
+aL
+aL
+ag
+ag
+ag
+dg
+ag
+ag
+ag
+af
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+af
+aL
+aL
+aL
+aL
+bB
+bT
+cg
+ch
+ch
+dh
+bB
+av
+af
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+av
+aL
+aL
+aL
+bh
+bC
+bU
+ch
+cy
+ch
+di
+bC
+dE
+aL
+af
+aa
+aa
+aa
+aa
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+af
+aa
+aw
+aL
+aL
+aL
+aL
+bD
+bV
+ci
+cz
+ci
+dj
+dv
+aL
+dS
+av
+af
+aa
+aa
+aa
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+aa
+aa
+af
+af
+af
+ax
+aM
+aM
+aM
+bi
+ag
+bW
+ch
+cA
+ch
+cw
+ag
+dF
+dT
+av
+af
+aa
+aa
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+aa
+ag
+ai
+an
+ag
+ag
+ag
+ag
+bd
+bj
+ag
+bX
+cj
+cB
+cS
+dm
+ag
+bj
+dU
+ag
+ax
+ax
+ej
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+ag
+aj
+aj
+aj
+ay
+aj
+aV
+aj
+aj
+bE
+aj
+aj
+cC
+cT
+aj
+cx
+aj
+aj
+eb
+ed
+ed
+av
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+ag
+ak
+ao
+au
+au
+aN
+aW
+au
+au
+bF
+bY
+bY
+cD
+cU
+au
+dx
+au
+aN
+ec
+ee
+eh
+ed
+af
+aa
+"}
+(16,1,1) = {"
+aa
+ab
+ab
+ab
+al
+al
+ag
+az
+aO
+ag
+ag
+bc
+bG
+aj
+ck
+aj
+bL
+dn
+ag
+ag
+ag
+ag
+ef
+ei
+af
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+ac
+ad
+ah
+al
+ap
+ag
+ag
+ag
+ag
+ae
+ag
+bH
+ag
+ag
+ag
+cV
+aj
+ag
+af
+af
+ax
+eg
+av
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+ab
+ab
+ab
+al
+al
+ag
+aA
+aP
+aX
+ag
+ag
+bI
+ag
+cl
+ag
+cW
+do
+ag
+af
+af
+aa
+aa
+af
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+af
+ab
+al
+aq
+ag
+aB
+aQ
+aY
+be
+bk
+bJ
+ag
+ag
+ag
+cX
+cH
+ag
+ai
+dV
+aa
+aa
+af
+aa
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+ab
+ab
+ab
+al
+al
+ag
+aC
+aR
+aZ
+ag
+bl
+bH
+bZ
+cm
+cE
+cX
+cH
+dy
+dG
+dW
+aa
+aa
+af
+aa
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+ac
+ad
+ah
+al
+ar
+ag
+aD
+aS
+ba
+ag
+bm
+bH
+aj
+cn
+cF
+cX
+cH
+dz
+dH
+dX
+af
+af
+af
+aa
+aa
+aa
+"}
+(22,1,1) = {"
+aa
+ab
+ab
+ab
+al
+as
+ag
+aE
+aS
+ba
+bc
+bn
+bK
+ca
+co
+cF
+cY
+dp
+dA
+dI
+bw
+ea
+ea
+ea
+aa
+aa
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+ag
+ak
+al
+ag
+aF
+aS
+bb
+bc
+bo
+bL
+cb
+cp
+cF
+cX
+cH
+dq
+dJ
+ag
+af
+af
+af
+aa
+aa
+aa
+"}
+(24,1,1) = {"
+aa
+aa
+aa
+ag
+ai
+an
+ag
+ag
+ag
+bc
+ag
+bp
+bL
+cb
+cq
+cF
+cX
+cH
+dz
+dK
+dY
+aa
+aa
+af
+aa
+aa
+aa
+"}
+(25,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+af
+af
+af
+aa
+ag
+bq
+bL
+cc
+cr
+cG
+cZ
+cH
+dz
+dL
+dW
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(26,1,1) = {"
+aa
+aa
+aa
+af
+am
+at
+at
+aG
+aT
+af
+ag
+br
+bL
+aj
+cs
+cH
+da
+cH
+dq
+dq
+dW
+aa
+af
+aa
+aa
+aa
+aa
+"}
+(27,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+af
+aH
+af
+aa
+ag
+bs
+bL
+aj
+ct
+cH
+da
+cH
+dq
+dM
+dW
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(28,1,1) = {"
+aa
+aa
+aa
+af
+am
+at
+at
+aI
+aT
+af
+ag
+bt
+bM
+aj
+cu
+cI
+da
+cH
+dz
+dN
+dW
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(29,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+af
+aH
+af
+aa
+bc
+bu
+bL
+aj
+ag
+cJ
+da
+cH
+dz
+dO
+dW
+aa
+aa
+aa
+af
+aa
+aa
+"}
+(30,1,1) = {"
+aa
+aa
+aa
+af
+am
+at
+at
+aI
+aT
+af
+ag
+bv
+bN
+cd
+ag
+cK
+db
+cH
+dq
+dq
+dW
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(31,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+af
+aH
+af
+af
+bf
+bw
+bO
+bw
+bw
+cL
+dc
+cH
+dz
+dP
+dX
+aa
+aa
+af
+aa
+aa
+aa
+"}
+(32,1,1) = {"
+aa
+aa
+aa
+aa
+af
+am
+at
+aJ
+aU
+aU
+bg
+bx
+bP
+bP
+bc
+cM
+da
+cH
+dz
+dQ
+ag
+af
+af
+af
+aa
+aa
+aa
+"}
+(33,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+af
+aH
+af
+af
+bc
+by
+bQ
+ce
+cv
+cN
+dd
+dp
+dB
+dB
+bw
+ea
+ea
+aa
+aa
+aa
+aa
+"}
+(34,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+af
+am
+aK
+aT
+af
+ag
+bz
+bR
+bL
+ag
+cO
+cX
+dq
+dC
+dq
+dY
+af
+af
+aa
+aa
+aa
+aa
+"}
+(35,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+af
+af
+af
+aa
+ag
+bA
+bS
+cf
+ag
+cP
+cX
+dr
+dD
+dR
+dW
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(36,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ag
+ag
+ag
+ag
+ag
+bc
+de
+ag
+ag
+ai
+dZ
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(37,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+af
+ag
+aS
+df
+ds
+ag
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(38,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+af
+ag
+cQ
+aS
+dt
+ag
+af
+af
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(39,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+af
+ag
+dg
+dg
+ag
+ag
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(40,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

@@ -1,0 +1,174 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/indestructible/riveted/uranium,
+/area/icemoon/surface/outdoors)
+"b" = (
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors)
+"c" = (
+/turf/open/water/cursed_spring,
+/area/icemoon/surface/outdoors)
+"d" = (
+/obj/item/paper/crumpled{
+	info = "When one falls into this hot spring, they shall forever be turned into..."
+	},
+/turf/open/floor/plating/beach/sand,
+/area/icemoon/surface/outdoors)
+"l" = (
+/obj/item/tcg_card/special/morph,
+/turf/open/floor/plating/beach/sand,
+/area/icemoon/surface/outdoors)
+"I" = (
+/turf/closed/indestructible/fakeglass,
+/area/icemoon/surface/outdoors)
+"L" = (
+/obj/structure/fluff/beach_umbrella,
+/turf/open/floor/plating/beach/sand,
+/area/icemoon/surface/outdoors)
+"U" = (
+/turf/open/floor/plating/beach/sand,
+/area/icemoon/surface/outdoors)
+
+(1,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(2,1,1) = {"
+b
+b
+b
+a
+a
+I
+a
+a
+b
+b
+b
+"}
+(3,1,1) = {"
+b
+b
+a
+U
+U
+U
+U
+U
+a
+b
+b
+"}
+(4,1,1) = {"
+b
+a
+U
+L
+c
+c
+c
+l
+U
+a
+b
+"}
+(5,1,1) = {"
+b
+a
+U
+c
+c
+c
+c
+c
+U
+a
+b
+"}
+(6,1,1) = {"
+b
+I
+U
+c
+c
+c
+c
+c
+U
+I
+b
+"}
+(7,1,1) = {"
+b
+a
+U
+c
+c
+c
+c
+c
+U
+a
+b
+"}
+(8,1,1) = {"
+b
+a
+U
+L
+c
+c
+c
+U
+U
+a
+b
+"}
+(9,1,1) = {"
+b
+b
+a
+U
+U
+d
+U
+U
+a
+b
+b
+"}
+(10,1,1) = {"
+b
+b
+b
+a
+a
+I
+a
+a
+b
+b
+b
+"}
+(11,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}

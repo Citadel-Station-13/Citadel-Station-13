@@ -1,0 +1,5549 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/open/space/basic,
+/area/space)
+"ab" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/service/cafeteria)
+"ac" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"ad" = (
+/obj/structure/lattice,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "plating"
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
+"ae" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter)
+"af" = (
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"ag" = (
+/turf/closed/wall/mineral/titanium,
+/area/service/cafeteria)
+"ah" = (
+/turf/template_noop,
+/area/template_noop)
+"ai" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/crew)
+"aj" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"ak" = (
+/turf/closed/mineral,
+/area/ruin/unpowered/no_grav)
+"al" = (
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/crew)
+"am" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Crew Quarters APC";
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/crew)
+"an" = (
+/obj/structure/bed,
+/obj/item/bedsheet/blue,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/crew)
+"ao" = (
+/obj/structure/bed,
+/obj/item/bedsheet/black,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/crew)
+"ap" = (
+/obj/structure/bed,
+/obj/item/bedsheet,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/crew)
+"aq" = (
+/obj/structure/bed,
+/obj/item/bedsheet/yellow,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/crew)
+"ar" = (
+/obj/structure/bed,
+/obj/item/bedsheet/brown,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8;
+	icon_state = "scrub_map_on-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/crew)
+"as" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/engine/upper)
+"at" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space/has_grav/skelter/engine/upper)
+"au" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/crew)
+"av" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/crew)
+"aw" = (
+/obj/structure/bed,
+/obj/item/bedsheet/grey,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/crew)
+"ax" = (
+/obj/structure/bed,
+/obj/item/bedsheet/green,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/crew)
+"ay" = (
+/obj/structure/fluff/broken_flooring{
+	dir = 8;
+	icon_state = "pile"
+	},
+/turf/template_noop,
+/area/template_noop)
+"az" = (
+/obj/structure/bed,
+/obj/item/bedsheet/orange,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/crew)
+"aA" = (
+/turf/open/floor/plating/airless,
+/area/service/cafeteria)
+"aB" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"aC" = (
+/obj/structure/bed,
+/obj/item/bedsheet/purple,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/crew)
+"aD" = (
+/obj/structure/bed,
+/obj/item/bedsheet/red,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/crew)
+"aE" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Cafeteria APC";
+	pixel_x = -25;
+	pixel_y = 1
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"aF" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Port Engine APC";
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/upper)
+"aG" = (
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/upper)
+"aH" = (
+/obj/structure/shuttle/engine/large{
+	dir = 8;
+	icon_state = "large_engine"
+	},
+/turf/open/space/basic,
+/area/space)
+"aI" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/upper)
+"aJ" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space/has_grav/skelter/crew)
+"aK" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/crew)
+"aL" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/maintenance/abandoned,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/crew)
+"aM" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/upper)
+"aN" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6;
+	icon_state = "pipe11-2"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/upper)
+"aO" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/upper)
+"aP" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1;
+	icon_state = "warninglinecorner"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/upper)
+"aQ" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/maintenance/external{
+	name = "Engine Room"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/upper)
+"aR" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/crew)
+"aS" = (
+/obj/item/stack/rods,
+/turf/template_noop,
+/area/template_noop)
+"aT" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/crew)
+"aU" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube"
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"aV" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/crew)
+"aW" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/crew)
+"aX" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"aY" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/crew)
+"aZ" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"ba" = (
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
+/turf/template_noop,
+/area/template_noop)
+"bb" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1;
+	icon_state = "manifold-2"
+	},
+/obj/machinery/camera{
+	c_tag = "North Hall";
+	network = list("skelter")
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/crew)
+"bc" = (
+/obj/machinery/door/firedoor/closed,
+/obj/machinery/door/airlock/public/glass{
+	name = "Cafeteria"
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"bd" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4;
+	icon_state = "trimline_fill"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/crew)
+"be" = (
+/obj/item/stack/rods,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"bf" = (
+/obj/structure/chair{
+	dir = 1;
+	icon_state = "chair"
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"bg" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/service/cafeteria)
+"bh" = (
+/obj/structure/fluff/railing{
+	dir = 1;
+	icon_state = "railing"
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/upper)
+"bi" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/fluff/railing{
+	dir = 1;
+	icon_state = "railing"
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/upper)
+"bj" = (
+/obj/structure/fluff/railing{
+	dir = 5;
+	icon_state = "railing"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/upper)
+"bk" = (
+/obj/item/trash/can,
+/turf/template_noop,
+/area/template_noop)
+"bl" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/upper)
+"bm" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance/external{
+	name = "Engine Room"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/upper)
+"bn" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9;
+	icon_state = "pipe11-2"
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/crew)
+"bo" = (
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/crew)
+"bp" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/crew)
+"bq" = (
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/template_noop,
+/area/template_noop)
+"br" = (
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/crew)
+"bs" = (
+/obj/structure/sign/departments/medbay{
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/trimline/blue/corner,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/crew)
+"bt" = (
+/obj/item/chair{
+	dir = 1;
+	icon_state = "chair_toppled"
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"bu" = (
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/crew)
+"bv" = (
+/obj/structure/table,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/item/reagent_containers/food/snacks/pizzaslice/margherita{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"bw" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4;
+	icon_state = "trimline_fill"
+	},
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 8;
+	icon_state = "trimline_corner"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/crew)
+"bx" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/space/has_grav/skelter)
+"by" = (
+/obj/structure/fluff/railing,
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/upper)
+"bz" = (
+/obj/structure/disposalpipe/broken,
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/service/cafeteria)
+"bA" = (
+/obj/item/chair{
+	dir = 1;
+	icon_state = "chair_toppled"
+	},
+/turf/template_noop,
+/area/template_noop)
+"bB" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"bC" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/fluff/railing,
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/upper)
+"bD" = (
+/obj/structure/fluff/railing{
+	dir = 6;
+	icon_state = "railing"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/upper)
+"bE" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/upper)
+"bF" = (
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
+/turf/template_noop,
+/area/template_noop)
+"bG" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space/has_grav/skelter/sec)
+"bH" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/sec)
+"bI" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/med)
+"bJ" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/trimline/blue/filled/end{
+	dir = 1;
+	icon_state = "trimline_end_fill"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/airlock/medical{
+	name = "Med Bay"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/med)
+"bK" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space/has_grav/skelter/med)
+"bL" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space/has_grav/skelter)
+"bM" = (
+/obj/effect/turf_decal/weather,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/has_grav/skelter)
+"bN" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4;
+	icon_state = "scrub_map_on-2"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1;
+	icon_state = "warningline"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/upper)
+"bO" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4;
+	icon_state = "manifold-2"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1;
+	icon_state = "warningline"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/upper)
+"bP" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1;
+	icon_state = "warningline"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/upper)
+"bQ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9;
+	icon_state = "pipe11-2"
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4;
+	icon_state = "warninglinecorner"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/upper)
+"bR" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"bS" = (
+/obj/machinery/computer/security{
+	network = list("skelter")
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"bT" = (
+/obj/structure/table,
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Security Office APC";
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"bU" = (
+/obj/structure/bed,
+/obj/item/bedsheet/blue,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/skelter/med)
+"bV" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4;
+	icon_state = "trimline_fill"
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/med)
+"bW" = (
+/obj/structure/bed,
+/obj/item/bedsheet/blue,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8;
+	icon_state = "scrub_map_on-2"
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/skelter/med)
+"bX" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/effect/turf_decal/weather,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/has_grav/skelter)
+"bY" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/space/has_grav/skelter)
+"bZ" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/space/has_grav/skelter)
+"ca" = (
+/obj/effect/turf_decal/weather,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/skelter)
+"cb" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space/has_grav/skelter/nav)
+"cc" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/nav)
+"cd" = (
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"ce" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/nav)
+"cf" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/engine)
+"cg" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/airlock/maintenance/external{
+	name = "Engine Room"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/upper)
+"ch" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/maintenance/external{
+	name = "Engine Room"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/upper)
+"ci" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"cj" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/clothing/suit/space/syndicate/green/dark,
+/obj/item/clothing/head/helmet/space/syndicate/green/dark,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"ck" = (
+/obj/structure/chair/office/dark{
+	dir = 1;
+	icon_state = "officechair_dark"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"cl" = (
+/obj/item/shard{
+	icon_state = "small"
+	},
+/turf/template_noop,
+/area/template_noop)
+"cm" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"cn" = (
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/service/cafeteria)
+"co" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4;
+	icon_state = "trimline_fill"
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/med)
+"cp" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/oxy)
+"cq" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space/has_grav/skelter/oxy)
+"cr" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/firedoor/closed,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/engineering{
+	name = "Weapons"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"cs" = (
+/obj/machinery/door/firedoor/closed,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/airlock/engineering{
+	name = "Weapons"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"ct" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/forehall)
+"cu" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/space/has_grav/skelter/nav)
+"cv" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 8;
+	icon_state = "trimline"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Navigation APC";
+	pixel_y = 23
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/has_grav/skelter/nav)
+"cw" = (
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 4;
+	icon_state = "trimline"
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/has_grav/skelter/nav)
+"cx" = (
+/obj/machinery/computer,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav/skelter/nav)
+"cy" = (
+/obj/machinery/computer,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/skelter/engine)
+"cz" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1;
+	icon_state = "manifold-2"
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"cA" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/skelter/engine)
+"cB" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/afthall)
+"cC" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1;
+	icon_state = "trimline_fill"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/afthall)
+"cD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1;
+	icon_state = "trimline_fill"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/afthall)
+"cE" = (
+/obj/machinery/door/firedoor/closed,
+/obj/machinery/door/airlock/public/glass{
+	name = "Cafeteria"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"cF" = (
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"cG" = (
+/obj/machinery/light/broken{
+	dir = 4;
+	icon_state = "tube-broken"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"cH" = (
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube"
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/skelter/med)
+"cI" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/skelter/med)
+"cJ" = (
+/obj/machinery/atmospherics/components/unary/tank/air,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/oxy)
+"cK" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/service/cafeteria)
+"cL" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10;
+	icon_state = "pipe11-2"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/oxy)
+"cM" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "O2 APC";
+	pixel_x = -25;
+	pixel_y = 1
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"cN" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"cO" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"cP" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"cQ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"cR" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space/has_grav/skelter/forehall)
+"cS" = (
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 8;
+	icon_state = "trimline"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/has_grav/skelter/nav)
+"cT" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1;
+	icon_state = "shuttle_chair"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav/skelter/nav)
+"cU" = (
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/skelter/engine)
+"cV" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/skelter/engine)
+"cW" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space/has_grav/skelter/engine)
+"cX" = (
+/obj/machinery/light/broken{
+	dir = 8;
+	icon_state = "tube-broken"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/afthall)
+"cY" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/afthall)
+"cZ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/skelter/med)
+"da" = (
+/obj/effect/turf_decal/trimline/blue/filled/end,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/med)
+"db" = (
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/skelter/med)
+"dc" = (
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/skelter/med)
+"dd" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4;
+	icon_state = "connector_map-2"
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/oxy)
+"de" = (
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 4;
+	icon_state = "mvalve_map-2"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/oxy)
+"df" = (
+/obj/machinery/atmospherics/pipe/manifold4w/general/visible,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/oxy)
+"dg" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/atmos/abandoned{
+	name = "02"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/oxy)
+"dh" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"di" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"dj" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/obj/machinery/light,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"dk" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1;
+	icon_state = "manifold-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"dl" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"dm" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/camera{
+	c_tag = "East Hall";
+	network = list("skelter")
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"dn" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4;
+	icon_state = "trimline_fill"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Fore Hallway APC";
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"do" = (
+/obj/item/shard,
+/turf/template_noop,
+/area/template_noop)
+"dp" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1;
+	icon_state = "trimline_fill"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/maintenance/external{
+	name = "Navigation"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/nav)
+"dq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9;
+	icon_state = "pipe11-2"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1;
+	icon_state = "trimline_fill"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/nav)
+"dr" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1;
+	icon_state = "trimline_fill"
+	},
+/mob/living/simple_animal/hostile/syndicate/melee/sword/space{
+	name = "Impostrous Commando"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/nav)
+"ds" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5;
+	icon_state = "trimline_fill"
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	icon_state = "shuttle_chair"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/nav)
+"dt" = (
+/obj/machinery/computer{
+	dir = 8;
+	icon_state = "computer"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav/skelter/nav)
+"du" = (
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/engine)
+"dv" = (
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 5;
+	icon_state = "trimline"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/engine)
+"dw" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/skelter/engine)
+"dx" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Reactor Room APC";
+	pixel_y = 23
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/skelter/engine)
+"dy" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/engine)
+"dz" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/trimline/purple/corner{
+	dir = 8;
+	icon_state = "trimline_corner"
+	},
+/obj/machinery/camera{
+	c_tag = "Reactor Hall";
+	dir = 5;
+	icon_state = "camera";
+	network = list("skelter")
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/afthall)
+"dA" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/trimline/green/corner,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Aft Hallway APC";
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/afthall)
+"dB" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"dC" = (
+/obj/structure/table/wood,
+/obj/item/pen/fountain{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"dD" = (
+/obj/structure/table/wood,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/item/paper_bin,
+/obj/item/folder/yellow,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"dE" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"dF" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/med)
+"dG" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"dH" = (
+/obj/machinery/clonepod,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1;
+	icon_state = "warningline"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/med)
+"dI" = (
+/obj/machinery/computer{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1;
+	icon_state = "warningline"
+	},
+/obj/item/paper/fluff/ruins/skelter/cloner,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/med)
+"dJ" = (
+/obj/machinery/dna_scannernew,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1;
+	icon_state = "warningline"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/med)
+"dK" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"dL" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/admin)
+"dM" = (
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/admin)
+"dN" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/admin)
+"dO" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/space/has_grav/skelter/admin)
+"dP" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/space/has_grav/skelter/admin)
+"dQ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"dR" = (
+/obj/structure/table/reinforced,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/button{
+	desc = "It appears to read 'EMERGENCY MEETING'.";
+	pixel_y = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"dS" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space/has_grav/skelter/admin)
+"dT" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/item/stack/cable_coil/cut/yellow,
+/turf/template_noop,
+/area/space/nearstation)
+"dU" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/space/has_grav/skelter/forehall)
+"dV" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/space/has_grav/skelter/forehall)
+"dW" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"dX" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"dY" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8;
+	icon_state = "manifold-2"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"dZ" = (
+/obj/effect/decal/cleanable/glass{
+	dir = 8;
+	icon_state = "tiny"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/service/cafeteria)
+"ea" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"eb" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"ec" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"ed" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4;
+	icon_state = "trimline_fill"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"ee" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/door/airlock/maintenance/external{
+	name = "Navigation"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/nav)
+"ef" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10;
+	icon_state = "pipe11-2"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/nav)
+"eg" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/nav)
+"eh" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 6;
+	icon_state = "trimline_fill"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/nav)
+"ei" = (
+/obj/effect/turf_decal/weather,
+/turf/open/floor/plating/airless,
+/area/service/cafeteria)
+"ej" = (
+/obj/machinery/power/port_gen/pacman/super,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/engine)
+"ek" = (
+/obj/effect/turf_decal/trimline/purple/corner{
+	dir = 4;
+	icon_state = "trimline_corner"
+	},
+/obj/effect/turf_decal/trimline/purple/corner,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/engine)
+"el" = (
+/obj/structure/table,
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 4;
+	icon_state = "scrub_map-2"
+	},
+/obj/item/trash/plate,
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"em" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5;
+	icon_state = "pipe11-2"
+	},
+/obj/effect/turf_decal/trimline/purple/line,
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 1;
+	icon_state = "trimline"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/engine)
+"en" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/weather,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/service/cafeteria)
+"eo" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/effect/turf_decal/trimline/purple/line,
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 1;
+	icon_state = "trimline"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/engine)
+"ep" = (
+/obj/item/chair,
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"eq" = (
+/obj/structure/chair{
+	dir = 8;
+	icon_state = "chair"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"er" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4;
+	icon_state = "manifold-2"
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"es" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/research{
+	name = "Reactor"
+	},
+/obj/effect/turf_decal/trimline/purple/end{
+	dir = 4;
+	icon_state = "trimline_end"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/engine)
+"et" = (
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 8;
+	icon_state = "trimline"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/afthall)
+"eu" = (
+/obj/effect/turf_decal/trimline/green/line{
+	dir = 4;
+	icon_state = "trimline"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/afthall)
+"ev" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/abandoned{
+	name = "Security"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"ew" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"ex" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"ey" = (
+/obj/structure/chair/stool,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"ez" = (
+/obj/structure/table/wood,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"eA" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"eB" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/clothing/suit/space/syndicate/blue{
+	desc = "Wait, don't these normally come with a helmet?"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/item/clothing/head/helmet/space/syndicate/blue,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"eC" = (
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/admin)
+"eD" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Administration APC";
+	pixel_y = 23
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/skelter/admin)
+"eE" = (
+/obj/machinery/computer,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/skelter/admin)
+"eF" = (
+/obj/machinery/airalarm/all_access{
+	pixel_y = 24
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/admin)
+"eG" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4;
+	icon_state = "vent_map_on-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"eH" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1;
+	icon_state = "manifold-2"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"eI" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"eJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"eK" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"eL" = (
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 8;
+	icon_state = "trimline"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/has_grav/skelter/nav)
+"eM" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav/skelter/nav)
+"eN" = (
+/obj/machinery/power/port_gen/pacman,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/engine)
+"eO" = (
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 6;
+	icon_state = "trimline"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/skelter/engine)
+"eP" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/skelter/engine)
+"eQ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/skelter/engine)
+"eR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/engine)
+"eS" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/purple/corner{
+	dir = 1;
+	icon_state = "trimline_corner"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/afthall)
+"eT" = (
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 4;
+	icon_state = "trimline_corner"
+	},
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/afthall)
+"eU" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/sec)
+"eV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"eW" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"eX" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1;
+	icon_state = "manifold-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"eY" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance_hatch/abandoned,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/sec)
+"eZ" = (
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"fa" = (
+/obj/machinery/door/airlock/maintenance_hatch/abandoned,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/service/cafeteria)
+"fb" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"fc" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Med Bay APC";
+	pixel_y = 23
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"fd" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"fe" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"ff" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/admin)
+"fg" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/admin)
+"fh" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/admin)
+"fi" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/obj/machinery/camera{
+	c_tag = "Central Hall";
+	network = list("skelter")
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/admin)
+"fj" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/airlock/security{
+	name = "Administration"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/admin)
+"fk" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1;
+	icon_state = "manifold-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/skelter/admin)
+"fl" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/chair/comfy/brown{
+	dir = 1;
+	icon_state = "comfychair"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/skelter/admin)
+"fm" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/chair/comfy/brown{
+	dir = 4;
+	icon_state = "comfychair"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/skelter/admin)
+"fn" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/skelter/admin)
+"fo" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"fp" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"fq" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"fr" = (
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 8;
+	icon_state = "trimline"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1;
+	icon_state = "scrub_map_on-2"
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/has_grav/skelter/nav)
+"fs" = (
+/obj/machinery/computer{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav/skelter/nav)
+"ft" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/skelter/engine)
+"fu" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/afthall)
+"fv" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/afthall)
+"fw" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"fx" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"fy" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"fz" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"fA" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"fB" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8;
+	icon_state = "manifold-2"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/admin)
+"fC" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/admin)
+"fD" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/machinery/door/airlock/security{
+	name = "Administration"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/admin)
+"fE" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/skelter/admin)
+"fF" = (
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/skelter/admin)
+"fG" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"fH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"fI" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/forehall)
+"fJ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/skelter/engine)
+"fK" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/trimline/red/filled/line,
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/afthall)
+"fL" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/trimline/red/filled/line,
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/afthall)
+"fM" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"fN" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"fO" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/space/has_grav/skelter/sec)
+"fP" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"fQ" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/clothing/suit/space/syndicate{
+	desc = "Wait, don't these normally come with a helmet?"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/item/clothing/head/helmet/space/syndicate,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"fR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/item/kitchen/knife/combat,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"fS" = (
+/obj/structure/disposalconstruct,
+/turf/template_noop,
+/area/template_noop)
+"fT" = (
+/obj/machinery/door/airlock/maintenance_hatch/abandoned,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/storage)
+"fU" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/storage)
+"fV" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/mining{
+	name = "Storage"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"fW" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/mining{
+	name = "Storage"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"fX" = (
+/obj/machinery/door/firedoor/closed,
+/obj/machinery/door/airlock/public/glass{
+	name = "Cafeteria"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"fY" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/skelter/admin)
+"fZ" = (
+/obj/structure/table/glass,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/skelter/admin)
+"ga" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"gb" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/forehall)
+"gc" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/space/has_grav/skelter/forehall)
+"gd" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/forehall)
+"ge" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/forehall)
+"gf" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/clothing/suit/space/syndicate/orange{
+	desc = "Wait, don't these normally come with a helmet?"
+	},
+/obj/item/clothing/head/helmet/space/syndicate/orange,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/forehall)
+"gg" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space/has_grav/skelter/engine/lower)
+"gh" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/airlock/maintenance/external{
+	name = "Engine Room"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/lower)
+"gi" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/maintenance/external{
+	name = "Engine Room"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/lower)
+"gj" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1;
+	icon_state = "warningline"
+	},
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"gk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1;
+	icon_state = "warningline"
+	},
+/obj/machinery/door/window/northleft{
+	name = "Armory"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"gl" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/space/has_grav/skelter/sec)
+"gm" = (
+/obj/machinery/power/smes,
+/obj/structure/cable/white,
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"gn" = (
+/obj/machinery/power/smes,
+/obj/structure/cable/white,
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/structure/cable/yellow,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"go" = (
+/obj/machinery/power/terminal{
+	dir = 8;
+	icon_state = "term"
+	},
+/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"gp" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"gq" = (
+/obj/structure/closet/crate,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Storage APC";
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"gr" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"gs" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"gt" = (
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/mop,
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"gu" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/skelter/admin)
+"gv" = (
+/obj/machinery/light,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/skelter/admin)
+"gw" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/clothing/suit/space/syndicate/green{
+	desc = "Wait, don't these normally come with a helmet?"
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/obj/item/clothing/head/helmet/space/syndicate/green,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/skelter/admin)
+"gx" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/engineering{
+	name = "Shields"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/shields)
+"gy" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/airlock/engineering{
+	name = "Shields"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/shields)
+"gz" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space/has_grav/skelter/shields)
+"gA" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/space/has_grav/skelter/shields)
+"gB" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/forehall)
+"gC" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/engine/lower)
+"gD" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4;
+	icon_state = "scrub_map_on-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Starboard Engine APC";
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/lower)
+"gE" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4;
+	icon_state = "manifold-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/lower)
+"gF" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5;
+	icon_state = "pipe11-2"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/lower)
+"gG" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1;
+	icon_state = "warninglinecorner"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/lower)
+"gH" = (
+/obj/structure/rack,
+/obj/item/dnainjector/tonguespike{
+	desc = "It's a little suspicious.";
+	name = "suspicious serum"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"gI" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/item/ammo_casing/c10mm,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"gJ" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"gK" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"gL" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"gM" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"gN" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"gO" = (
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"gP" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"gQ" = (
+/obj/machinery/shieldgen,
+/obj/structure/fluff/railing{
+	dir = 6;
+	icon_state = "railing"
+	},
+/turf/open/floor/circuit,
+/area/ruin/space/has_grav/skelter/shields)
+"gR" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8;
+	icon_state = "manifold-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/space/has_grav/skelter/shields)
+"gS" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/space/has_grav/skelter/shields)
+"gT" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	cell_type = null;
+	dir = 1;
+	name = "Shield Room APC";
+	pixel_y = 23
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/space/has_grav/skelter/shields)
+"gU" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/shields)
+"gV" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/forehall)
+"gW" = (
+/obj/structure/fluff/railing{
+	dir = 1;
+	icon_state = "railing"
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/lower)
+"gX" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/fluff/railing{
+	dir = 1;
+	icon_state = "railing"
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/lower)
+"gY" = (
+/obj/structure/fluff/railing{
+	dir = 5;
+	icon_state = "railing"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/lower)
+"gZ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/lower)
+"ha" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"hb" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"hc" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"hd" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/effect/turf_decal/bot,
+/obj/structure/ore_box,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"he" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"hf" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"hg" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"hh" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/mining{
+	name = "Storage"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"hi" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"hj" = (
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"hk" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1;
+	icon_state = "manifold-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"hl" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4;
+	icon_state = "trimline_fill"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"hm" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/engineering{
+	name = "Shields"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/shields)
+"hn" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/space/has_grav/skelter/shields)
+"ho" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav/skelter/shields)
+"hp" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/space/has_grav/skelter/shields)
+"hq" = (
+/obj/machinery/shieldgen,
+/obj/structure/fluff/railing{
+	dir = 9;
+	icon_state = "railing"
+	},
+/turf/open/floor/circuit/airless,
+/area/ruin/space/has_grav/skelter/shields)
+"hr" = (
+/obj/structure/fluff/railing,
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/lower)
+"hs" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/fluff/railing,
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/lower)
+"ht" = (
+/obj/structure/fluff/railing{
+	dir = 6;
+	icon_state = "railing"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/lower)
+"hu" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/lower)
+"hv" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/maintenance/external{
+	name = "Engine Room"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/lower)
+"hw" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4;
+	icon_state = "trimline_fill"
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"hx" = (
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"hy" = (
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"hz" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"hA" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"hB" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"hC" = (
+/obj/structure/closet/crate/critter,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"hD" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/structure/closet,
+/obj/effect/turf_decal/bot,
+/obj/item/circlegame,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"hE" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"hF" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"hG" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/mining{
+	name = "Storage"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"hH" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"hI" = (
+/obj/effect/turf_decal/trimline/blue/corner,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"hJ" = (
+/obj/structure/rack,
+/obj/item/ammo_box/magazine/m10mm,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"hK" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4;
+	icon_state = "trimline_fill"
+	},
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 8;
+	icon_state = "trimline_corner"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"hL" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/airlock/engineering{
+	name = "Shields"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/shields)
+"hM" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/space/has_grav/skelter/shields)
+"hN" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/has_grav/skelter/shields)
+"hO" = (
+/obj/machinery/shieldgen,
+/obj/structure/fluff/railing{
+	dir = 8;
+	icon_state = "railing"
+	},
+/turf/open/floor/circuit/airless,
+/area/ruin/space/has_grav/skelter/shields)
+"hP" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1;
+	icon_state = "warningline"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/lower)
+"hQ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1;
+	icon_state = "warningline"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/lower)
+"hR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1;
+	icon_state = "warningline"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/lower)
+"hS" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4;
+	icon_state = "warninglinecorner"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/lower)
+"hT" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/maintenance/external{
+	name = "Engine Room"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/lower)
+"hU" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4;
+	icon_state = "trimline_fill"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"hV" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"hW" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/maintenance/abandoned{
+	name = "Electrical"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"hX" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space/has_grav/skelter/storage)
+"hY" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"hZ" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"ia" = (
+/obj/structure/closet/crate/trashcart,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"ib" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"ic" = (
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube"
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"id" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/light/broken{
+	dir = 4;
+	icon_state = "tube-broken"
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"ie" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"if" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space/has_grav/skelter/comms)
+"ig" = (
+/obj/machinery/light/broken,
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"ih" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/space/has_grav/skelter/comms)
+"ii" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/space/has_grav/skelter/comms)
+"ij" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command{
+	name = "Communications"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"ik" = (
+/turf/open/floor/circuit,
+/area/ruin/space/has_grav/skelter/shields)
+"il" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/skelter/shields)
+"im" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1
+	},
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/has_grav/skelter/shields)
+"in" = (
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/lower)
+"io" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/lower)
+"ip" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel{
+	icon_state = "sepia"
+	},
+/area/ruin/space/has_grav/skelter/engine/lower)
+"iq" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"ir" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8;
+	icon_state = "manifold-2"
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"is" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"it" = (
+/obj/effect/turf_decal/trimline/yellow/corner{
+	dir = 4;
+	icon_state = "trimline_corner"
+	},
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"iu" = (
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 1;
+	icon_state = "trimline"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"iv" = (
+/obj/structure/sign/warning/electricshock{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/trimline/yellow/corner{
+	dir = 1;
+	icon_state = "trimline_corner"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4;
+	icon_state = "trimline_fill"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"iw" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4;
+	icon_state = "trimline_fill"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"ix" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"iy" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"iz" = (
+/obj/structure/closet/crate/freezer,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8;
+	icon_state = "scrub_map_on-2"
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"iA" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"iB" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"iC" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Electrical APC";
+	pixel_x = 24
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"iD" = (
+/obj/structure/table,
+/obj/item/trash/waffles{
+	pixel_y = 5
+	},
+/turf/open/floor/plasteel/airless/cafeteria,
+/area/service/cafeteria)
+"iE" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4;
+	icon_state = "scrub_map_on-2"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"iF" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"iG" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/blackbox_recorder,
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"iH" = (
+/obj/machinery/computer{
+	dir = 4;
+	icon_state = "computer"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/space/has_grav/skelter/shields)
+"iI" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"iJ" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8;
+	icon_state = "trimline_fill"
+	},
+/obj/effect/turf_decal/trimline/blue/corner,
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"iK" = (
+/obj/effect/turf_decal/trimline/blue/line,
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"iL" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4;
+	icon_state = "trimline_fill"
+	},
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 8;
+	icon_state = "trimline_corner"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"iM" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4;
+	icon_state = "trimline_fill"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"iN" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"iO" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"iP" = (
+/obj/structure/rack,
+/obj/item/book/granter/martial/cqc{
+	name = "dusty manual";
+	used = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"iQ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"iR" = (
+/obj/machinery/door/airlock/medical{
+	name = "Restroom"
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"iS" = (
+/obj/structure/disposalpipe/junction/flip,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"iT" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 8;
+	icon_state = "pipe-t"
+	},
+/obj/machinery/disposal/bin,
+/obj/machinery/button/massdriver{
+	id = "skeltermass";
+	pixel_x = 24;
+	pixel_y = 8
+	},
+/obj/machinery/button/door{
+	id = "skelterdoor";
+	pixel_x = 24;
+	pixel_y = -8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"iV" = (
+/obj/structure/chair/comfy/teal,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"iW" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/clothing/suit/space/syndicate/black{
+	desc = "Wait, don't these normally come with a helmet?"
+	},
+/obj/item/clothing/head/helmet/space/syndicate/black,
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"iX" = (
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/item/ammo_casing/c10mm,
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"iY" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter)
+"iZ" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/obj/structure/mirror{
+	pixel_x = -26
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"ja" = (
+/obj/structure/toilet{
+	dir = 8;
+	icon_state = "toilet00"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"jb" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6;
+	icon_state = "pipe"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/storage)
+"jc" = (
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/storage)
+"jd" = (
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"je" = (
+/obj/machinery/door/window/eastright,
+/obj/structure/disposalpipe/segment{
+	dir = 9;
+	icon_state = "pipe"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/storage)
+"jf" = (
+/obj/effect/turf_decal/stripes/end{
+	dir = 1;
+	icon_state = "warn_end"
+	},
+/obj/machinery/mass_driver,
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/storage)
+"jg" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"jh" = (
+/obj/machinery/computer{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"ji" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
+	dir = 1;
+	icon_state = "inje_map-2"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/skelter/oxy)
+"jj" = (
+/obj/structure/disposaloutlet,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/skelter/storage)
+"jk" = (
+/obj/machinery/door/poddoor,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/storage)
+"jl" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/skelter/comms)
+"jm" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Communications APC";
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"jn" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/syndicate/melee/space{
+	name = "Impostrous Commando"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"jo" = (
+/obj/item/stack/cable_coil/cut/yellow,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"jp" = (
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 4;
+	icon_state = "trimline"
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/has_grav/skelter/nav)
+"jq" = (
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 4;
+	icon_state = "trimline"
+	},
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/has_grav/skelter/nav)
+"jr" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8;
+	icon_state = "pipe11-2"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/skelter/admin)
+"js" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/skelter/admin)
+"jt" = (
+/obj/machinery/light/small/broken{
+	dir = 4;
+	icon_state = "bulb-broken"
+	},
+/obj/item/stack/cable_coil/blue,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"ju" = (
+/obj/structure/table/glass,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1;
+	icon_state = "scrub_map_on-2"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/skelter/admin)
+"jv" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/item/gun/ballistic/automatic/pistol/no_mag,
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"jy" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/item/ammo_casing/c10mm,
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
+"sg" = (
+/obj/effect/turf_decal/weather,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/skelter/shields)
+"vv" = (
+/mob/living/simple_animal/hostile/syndicate/melee/space{
+	name = "Impostrous Commando"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
+"vz" = (
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/has_grav/skelter/shields)
+"AJ" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav/skelter/shields)
+"AR" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/shotgun/space{
+	name = "Impostrous Commando"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
+"JR" = (
+/obj/effect/turf_decal/weather,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/has_grav/skelter/shields)
+"Li" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/skelter/shields)
+"OA" = (
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
+/turf/template_noop,
+/area/template_noop)
+"WM" = (
+/obj/effect/turf_decal/weather,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"Zs" = (
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/obj/structure/fluff/broken_flooring{
+	dir = 8;
+	icon_state = "pile"
+	},
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+cf
+cf
+cf
+cf
+cf
+cf
+cf
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+"}
+(2,1,1) = {"
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+cf
+cf
+cU
+du
+ej
+eN
+cU
+cf
+cf
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+"}
+(3,1,1) = {"
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+cf
+cy
+cU
+dv
+ek
+eO
+cU
+cU
+cf
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+"}
+(4,1,1) = {"
+ah
+ah
+ah
+ah
+ah
+ah
+aa
+aH
+ah
+cf
+cA
+cV
+dw
+em
+eP
+ft
+fJ
+cf
+ah
+aa
+aH
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+"}
+(5,1,1) = {"
+ah
+ah
+ah
+ah
+as
+as
+as
+as
+as
+cf
+cf
+cW
+dx
+eo
+eQ
+cW
+cf
+cf
+gC
+gC
+gC
+gC
+gC
+ah
+ah
+ah
+ah
+ah
+"}
+(6,1,1) = {"
+ah
+ah
+ah
+as
+as
+aM
+bh
+by
+bN
+at
+cB
+cf
+dy
+es
+eR
+cf
+cB
+gg
+gD
+gW
+hr
+hP
+gC
+gC
+ah
+ah
+ah
+ah
+"}
+(7,1,1) = {"
+ah
+ah
+ae
+at
+aF
+aN
+bi
+bC
+bO
+cg
+cC
+cX
+dz
+et
+eS
+fu
+fK
+gh
+gE
+gX
+hs
+hQ
+in
+gg
+ae
+ah
+ah
+ah
+"}
+(8,1,1) = {"
+ah
+ae
+ae
+as
+aG
+aO
+bj
+bD
+bP
+ch
+cD
+cY
+dA
+eu
+eT
+fv
+fL
+gi
+gF
+gY
+ht
+hR
+io
+gC
+ae
+ae
+ah
+ah
+"}
+(9,1,1) = {"
+ah
+ae
+ae
+at
+aI
+aP
+bl
+bE
+bQ
+bG
+bH
+bH
+bH
+ev
+eU
+bH
+bH
+bG
+gG
+gZ
+hu
+hS
+ip
+gg
+ae
+ae
+ae
+ah
+"}
+(10,1,1) = {"
+ah
+ai
+ai
+ai
+aJ
+aQ
+bm
+bG
+bH
+bH
+cF
+cF
+dB
+ew
+eV
+fw
+fM
+bG
+bH
+bG
+hv
+hT
+gg
+gC
+ae
+ae
+ae
+ah
+"}
+(11,1,1) = {"
+ah
+ai
+al
+au
+aK
+aR
+bn
+bH
+bR
+cj
+cF
+cF
+cF
+ex
+eW
+AR
+fN
+gj
+hJ
+gl
+hw
+hU
+iq
+eA
+iq
+ae
+ae
+ah
+"}
+(12,1,1) = {"
+ah
+ai
+am
+av
+aL
+aT
+bo
+bH
+bS
+ck
+cF
+cF
+dC
+ey
+eW
+cF
+fN
+gk
+gH
+gl
+hx
+hV
+ir
+iI
+iQ
+iY
+ji
+ah
+"}
+(13,1,1) = {"
+ah
+ai
+an
+aw
+ai
+aV
+bp
+bH
+bT
+cm
+cG
+cm
+dD
+ez
+eX
+fx
+fN
+gj
+iP
+gl
+hx
+vv
+is
+hx
+eA
+ae
+ae
+ah
+"}
+(14,1,1) = {"
+ah
+ai
+ao
+ax
+ai
+aW
+br
+bH
+bH
+bH
+bH
+bH
+bH
+bG
+eY
+bG
+fO
+gl
+gl
+bG
+fA
+fA
+it
+iJ
+iq
+eA
+eA
+ah
+"}
+(15,1,1) = {"
+ah
+ai
+ap
+az
+ai
+aY
+bs
+bI
+bU
+bU
+cH
+cZ
+dF
+dF
+eZ
+fy
+fP
+gm
+gJ
+ha
+hy
+hW
+iu
+iK
+iR
+iZ
+eA
+ah
+"}
+(16,1,1) = {"
+ah
+ai
+aq
+aC
+ai
+bb
+bu
+bJ
+bV
+co
+co
+da
+dH
+bI
+fb
+fz
+fQ
+gn
+gK
+hb
+hz
+fA
+iv
+iL
+eA
+ja
+eA
+ah
+"}
+(17,1,1) = {"
+ah
+ai
+ar
+aD
+ai
+bd
+bw
+bI
+bW
+bU
+cI
+db
+dI
+bI
+fc
+fA
+gI
+go
+gL
+iC
+fA
+fA
+iw
+iM
+eA
+eA
+eA
+ah
+"}
+(18,1,1) = {"
+ah
+ai
+ai
+ai
+aJ
+cE
+bc
+bK
+bI
+bI
+bI
+dc
+dJ
+bI
+fd
+fA
+jt
+fA
+fA
+fA
+fA
+hX
+hh
+fV
+hX
+jb
+jj
+ah
+"}
+(19,1,1) = {"
+ah
+ag
+ag
+aE
+aU
+bB
+af
+af
+ic
+af
+bI
+bI
+bI
+eA
+fR
+fA
+fA
+fA
+gM
+gO
+hA
+hY
+ix
+gO
+gO
+jc
+fU
+ah
+"}
+(20,1,1) = {"
+ah
+ag
+af
+af
+bt
+dE
+ea
+ea
+ec
+ea
+ea
+fa
+dK
+eB
+fe
+dK
+fT
+gp
+gN
+hc
+hB
+hZ
+iy
+gO
+gO
+jd
+fU
+ah
+"}
+(21,1,1) = {"
+ah
+ab
+aA
+aX
+bv
+dG
+dW
+aj
+el
+bf
+af
+ag
+dL
+dL
+ff
+dL
+fU
+gq
+gO
+hd
+hC
+ia
+iz
+iA
+gO
+jd
+fU
+ah
+"}
+(22,1,1) = {"
+ah
+aZ
+aZ
+cn
+af
+ci
+dQ
+af
+eq
+af
+af
+bc
+dM
+eC
+fg
+dM
+fV
+gr
+gO
+he
+hD
+ib
+iA
+iA
+gO
+jd
+fU
+ah
+"}
+(23,1,1) = {"
+ah
+ba
+ah
+ad
+bz
+cz
+dR
+eb
+er
+eb
+eb
+fX
+dN
+dN
+fh
+fB
+fW
+gs
+gP
+hf
+hE
+ie
+ie
+ie
+iS
+je
+fU
+ah
+"}
+(24,1,1) = {"
+ah
+ah
+ah
+ah
+aZ
+cK
+dQ
+af
+aB
+af
+ig
+bg
+dO
+dO
+fi
+fC
+fU
+gt
+gN
+hg
+hF
+gO
+iB
+gO
+iT
+jf
+jk
+ah
+"}
+(25,1,1) = {"
+ay
+ah
+bA
+ah
+cl
+dT
+dZ
+af
+iD
+bf
+af
+ag
+dO
+dS
+fj
+fD
+dS
+dO
+dS
+hh
+hG
+if
+ii
+ii
+ii
+ii
+hX
+ah
+"}
+(26,1,1) = {"
+ah
+ah
+ah
+bF
+ah
+fS
+aZ
+ei
+cd
+af
+af
+ag
+dO
+eD
+fk
+fE
+fY
+gu
+dO
+hi
+hH
+ih
+iG
+iN
+iO
+ii
+jl
+ah
+"}
+(27,1,1) = {"
+ah
+bk
+ah
+ah
+ah
+be
+ac
+en
+id
+ep
+cp
+cp
+dO
+eE
+fl
+jr
+fZ
+gv
+dO
+hj
+hI
+ii
+iE
+iO
+iV
+jg
+jl
+ah
+"}
+(28,1,1) = {"
+ah
+ac
+ak
+ak
+ak
+ak
+ak
+bg
+ag
+cp
+cp
+dd
+dO
+eE
+fm
+js
+ju
+gw
+dO
+hk
+iX
+ij
+iF
+jv
+iW
+jh
+jl
+ah
+"}
+(29,1,1) = {"
+ah
+ak
+ak
+ak
+ak
+ak
+ak
+bL
+ae
+cp
+cJ
+de
+dO
+eE
+fl
+fF
+fF
+fF
+dO
+hl
+hK
+ii
+jm
+jn
+jy
+ii
+jl
+ah
+"}
+(30,1,1) = {"
+ah
+ak
+ak
+ak
+ak
+ak
+ak
+ak
+aZ
+cp
+cL
+df
+dP
+eF
+fn
+fF
+fF
+dO
+dS
+hm
+hL
+if
+ii
+if
+ii
+ii
+ae
+ah
+"}
+(31,1,1) = {"
+ah
+ak
+ak
+ak
+ak
+ak
+ak
+ak
+bX
+cq
+cp
+dg
+dS
+dO
+dO
+dO
+dO
+dO
+gQ
+hn
+hM
+ik
+iH
+gz
+bL
+bL
+ak
+ah
+"}
+(32,1,1) = {"
+ac
+ac
+ak
+ak
+ak
+ak
+ak
+ak
+bY
+cr
+cM
+dh
+dU
+eG
+fo
+fG
+ga
+gx
+gR
+ho
+Li
+vz
+il
+sg
+bL
+ak
+ak
+ah
+"}
+(33,1,1) = {"
+ah
+ac
+ak
+ak
+ak
+ak
+ak
+ak
+bZ
+cs
+cN
+di
+dV
+eH
+fp
+fH
+gb
+gy
+gS
+hp
+hN
+im
+sg
+JR
+ac
+ak
+ak
+bq
+"}
+(34,1,1) = {"
+ah
+ah
+ak
+ak
+ak
+ak
+jo
+bM
+ca
+ct
+cO
+dj
+dV
+eI
+cO
+cR
+gc
+gz
+gT
+hq
+hO
+gz
+sg
+WM
+ac
+ak
+ak
+cl
+"}
+(35,1,1) = {"
+aS
+ah
+ac
+cl
+ak
+ak
+bx
+bx
+bx
+ct
+cP
+dk
+dX
+eJ
+cP
+dV
+gd
+gA
+gU
+gz
+AJ
+gz
+ac
+ac
+ac
+ac
+ak
+aZ
+"}
+(36,1,1) = {"
+ah
+bq
+ah
+ah
+ah
+ae
+ae
+bx
+bx
+ct
+cQ
+dl
+dY
+eK
+fq
+fI
+ge
+gB
+gV
+aZ
+ac
+ak
+ak
+ac
+ac
+ac
+ac
+aZ
+"}
+(37,1,1) = {"
+ah
+ah
+ah
+ah
+do
+aZ
+aZ
+ae
+bx
+ct
+cR
+dm
+cO
+cR
+dV
+cR
+gf
+ct
+cR
+aZ
+ak
+ak
+ak
+ak
+ac
+ac
+ac
+Zs
+"}
+(38,1,1) = {"
+ah
+ah
+ah
+aS
+ah
+ah
+aZ
+aZ
+ae
+bx
+ct
+dn
+ed
+dV
+bx
+dV
+ct
+ct
+aZ
+aZ
+ac
+ak
+ak
+ak
+ak
+ak
+ac
+aZ
+"}
+(39,1,1) = {"
+ah
+ah
+aZ
+ah
+ah
+aZ
+aS
+aZ
+cb
+cu
+cb
+dp
+ee
+cb
+cu
+cb
+ae
+ah
+OA
+cl
+do
+ac
+ak
+ak
+ak
+ac
+aZ
+aS
+"}
+(40,1,1) = {"
+ah
+ah
+ah
+ah
+ah
+aZ
+ah
+aZ
+cc
+cv
+cS
+dq
+ef
+eL
+fr
+cc
+ah
+ah
+do
+aS
+bq
+ah
+aZ
+aZ
+ah
+aZ
+aS
+ah
+"}
+(41,1,1) = {"
+ah
+ah
+ah
+aZ
+ah
+ah
+ah
+ah
+cc
+jp
+cw
+dr
+eg
+cw
+jq
+cc
+ah
+ah
+ah
+aZ
+do
+ah
+ah
+do
+aZ
+ba
+ah
+ah
+"}
+(42,1,1) = {"
+ah
+ah
+ah
+ah
+ah
+aS
+ah
+ah
+ce
+cx
+cT
+ds
+eh
+eM
+fs
+ce
+ah
+ah
+ah
+ah
+ah
+bF
+ah
+ah
+ah
+ah
+aZ
+ah
+"}
+(43,1,1) = {"
+ah
+ah
+ah
+ah
+ah
+aZ
+ah
+ah
+ce
+ce
+ce
+dt
+dt
+ce
+ce
+ce
+ah
+aZ
+cl
+ah
+ah
+ah
+aZ
+aS
+ah
+cl
+ah
+ah
+"}
+(44,1,1) = {"
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ce
+ce
+ce
+ce
+ah
+ah
+ah
+ah
+bq
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+"}

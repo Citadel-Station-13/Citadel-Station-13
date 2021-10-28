@@ -34,7 +34,7 @@ Map Titles:
 
 Map titles are tied to a specific in game map. To make a map title you format the name like this "(name of a map)+(name of your title)"
 
-The spelling of the map name is important. It must match exactly the define MAP_NAME found in the relevant .DM file in the /_maps folder in 
+The spelling of the map name is important. It must match exactly the define MAP_NAME found in the relevant .DM file in the /maps folder in 
 the root directory. It can also be seen in game in the status menu. Note that there are no spaces between the two names.
 
 It is absolutely fine to have more than one title tied to the same map.

@@ -137,4 +137,4 @@ GLOBAL_VAR(test_log)
 
 // /datum/map_template/unit_tests
 // 	name = "Unit Tests Zone"
-// 	mappath = "_maps/templates/unit_tests.dmm"
+// 	mappath = "maps/templates/unit_tests.dmm"

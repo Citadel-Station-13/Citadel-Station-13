@@ -12,7 +12,7 @@ if defined MAPROTATE set MAPFILE=%MAPROTATE%
 if not defined MAPFILE goto BUILD
 
 echo #define MAP_OVERRIDE >>%MDME_LOCATION%
-echo #include "_maps\%MAPFILE%.dm" >>%MDME_LOCATION%
+echo #include "maps\%MAPFILE%.dm" >>%MDME_LOCATION%
 
 :BUILD
 echo #define SERVERTOOLS 1 >>%MDME_LOCATION%

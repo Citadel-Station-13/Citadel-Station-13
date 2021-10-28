@@ -10,7 +10,8 @@
 /**
  * Prefab landmarks
  *
- * Used to load in a prefab map template of a certain group with x probability
+ * Used to load in a prefab map template of a certain group with x probability.
+ * **Loads the template with this object being the bottom right by default!**
  */
 /obj/effect/landmark/prefab_loader
 	name = "prefab loader"
@@ -22,12 +23,14 @@
 	VAR_FINAL/probability_paramslist
 	/// annihilate bounds to pass in
 	var/annihilate = FALSE
+	/// center?
+	var/center = FALSE
 
 /obj/effect/landmark/prefab_loader/Initialize(mapload)
 	name = "prefab loader: \"[group_id]\""
 	if(!mapload)
 		return ..()
-	if(!loaded && !(flags_1 &))
+	if(!loaded && !(flags_1 & INITIALIZED_1))
 		Load()
 
 /**
@@ -40,7 +43,7 @@
 	if(!group_id)
 		return
 	var/datum/map_template/template = SSmapping.TemplateByID(PickTemplate())
-	template.load(get_turf(src), TRUE, orientation, annihilate, FALSE)
+	template.load(get_turf(src), center, orientation, annihilate, FALSE)
 
 /obj/effect/landmark/prefab_loader/proc/PickTemplate()
 	var/list/templates = GetTemplate()

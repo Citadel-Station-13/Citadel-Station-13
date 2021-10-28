@@ -1,0 +1,582 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/powered/advancedlab)
+"c" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"d" = (
+/obj/machinery/vending/assist,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"e" = (
+/obj/machinery/vending/snack/random,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"f" = (
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"g" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"h" = (
+/obj/structure/table/glass,
+/obj/item/crowbar/advanced,
+/obj/item/multitool/advanced{
+	pixel_x = 4;
+	pixel_y = -1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"i" = (
+/obj/machinery/computer/rdconsole,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"j" = (
+/obj/structure/chair/comfy/beige,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"k" = (
+/obj/structure/table/glass,
+/obj/item/screwdriver/advanced{
+	pixel_y = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"l" = (
+/obj/structure/table/glass,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"m" = (
+/obj/structure/table/glass,
+/obj/item/gps{
+	gpstag = "Abductor Replication Lab";
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"n" = (
+/obj/structure/chair/comfy/beige{
+	dir = 8;
+	icon_state = "comfychair"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"o" = (
+/obj/structure/table/glass,
+/obj/item/weldingtool/advanced{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"p" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/table/glass,
+/obj/item/paper{
+	info = "As of yet, our experiments have seen a fair bit of success. Unfortunately, our business partners have stopped funding us as they realised they utterly hate each other. To whoever finds this place, they are yours. Use them how you will. I leave you with the next generation of greytiding.";
+	name = "Note to finder";
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"q" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/table/glass,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"r" = (
+/obj/structure/table/glass,
+/obj/item/wirecutters/advanced{
+	pixel_y = 7
+	},
+/obj/item/wrench/advanced{
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"s" = (
+/obj/structure/chair/comfy/beige{
+	dir = 1;
+	icon_state = "comfychair"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"t" = (
+/obj/machinery/light/small,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"u" = (
+/obj/machinery/light/small{
+	dir = 4;
+	icon_state = "bulb"
+	},
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat/miner,
+/obj/item/clothing/shoes/sneakers/brown,
+/obj/item/clothing/under/pants/classicjeans,
+/obj/item/clothing/neck/scarf,
+/obj/item/clothing/neck/stripedgreenscarf,
+/obj/item/toy/fluff/tennis_poly/tri/squeak/rainbow,
+/obj/item/toy/fluff/tennis_poly,
+/obj/item/clothing/suit/hooded/wintercoat/miner,
+/obj/item/clothing/shoes/sneakers/brown,
+/obj/item/clothing/under/pants/classicjeans,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"v" = (
+/obj/machinery/vending/boozeomat{
+	req_access = null;
+	shut_up = 1
+	},
+/turf/closed/wall,
+/area/ruin/space/has_grav/powered/advancedlab)
+"w" = (
+/obj/machinery/door/airlock/command{
+	name = "Dorms"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"x" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/table/glass,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"y" = (
+/obj/machinery/light/small{
+	dir = 1;
+	icon_state = "bulb"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/advancedlab)
+"z" = (
+/obj/machinery/door/airlock/security{
+	name = "Visiting Business Partners"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/advancedlab)
+"A" = (
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/advancedlab)
+"B" = (
+/obj/structure/bed,
+/obj/item/bedsheet/syndie,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/advancedlab)
+"C" = (
+/obj/structure/closet{
+	name = "Clothes"
+	},
+/obj/item/clothing/head/chameleon,
+/obj/item/clothing/gloves/tackler/combat/insulated,
+/obj/item/clothing/suit/chameleon,
+/obj/item/clothing/under/chameleon,
+/obj/item/clothing/shoes/chameleon,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/advancedlab)
+"D" = (
+/obj/machinery/light/small,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/advancedlab)
+"E" = (
+/obj/structure/table/wood,
+/obj/item/radio/headset/chameleon,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/advancedlab)
+"F" = (
+/obj/structure/falsewall,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/advancedlab)
+"G" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/advancedlab)
+"H" = (
+/obj/structure/table/wood,
+/obj/item/radio/headset/headset_cent/alt{
+	keyslot2 = null
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/advancedlab)
+"I" = (
+/obj/structure/closet{
+	name = "Official Clothing"
+	},
+/obj/item/clothing/under/rank/centcom/commander,
+/obj/item/clothing/head/centhat,
+/obj/item/clothing/gloves/tackler/combat/insulated,
+/obj/item/clothing/suit/armor/vest,
+/obj/item/clothing/shoes/sneakers/brown,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/advancedlab)
+"J" = (
+/obj/machinery/door/airlock/command{
+	name = "Dorms"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/advancedlab)
+"K" = (
+/obj/machinery/door/airlock/command{
+	name = "Visiting Officials"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/advancedlab)
+"L" = (
+/obj/structure/bed,
+/obj/item/bedsheet/centcom,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/advancedlab)
+"M" = (
+/obj/structure/lattice,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/powered/advancedlab)
+"N" = (
+/obj/structure/extinguisher_cabinet,
+/turf/closed/wall,
+/area/ruin/space/has_grav/powered/advancedlab)
+"O" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"P" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"Q" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"R" = (
+/obj/machinery/light/small{
+	dir = 1;
+	icon_state = "bulb"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/advancedlab)
+"T" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/advancedlab)
+
+(1,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+d
+j
+l
+q
+s
+O
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+b
+e
+j
+m
+l
+s
+f
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+c
+f
+j
+l
+l
+s
+f
+M
+M
+M
+M
+M
+M
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+b
+f
+f
+n
+n
+f
+f
+w
+f
+Q
+f
+f
+M
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+b
+f
+f
+f
+f
+f
+f
+M
+M
+M
+M
+f
+M
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+b
+g
+f
+f
+f
+f
+f
+b
+P
+P
+M
+R
+M
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+N
+f
+f
+f
+f
+f
+u
+b
+P
+P
+M
+f
+M
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+b
+f
+f
+f
+f
+f
+b
+b
+b
+b
+M
+J
+M
+b
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+b
+h
+k
+o
+r
+f
+b
+y
+A
+A
+F
+T
+A
+b
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+b
+i
+f
+f
+f
+t
+b
+z
+v
+b
+b
+b
+K
+b
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+b
+p
+f
+f
+f
+f
+b
+A
+C
+b
+G
+A
+A
+b
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+b
+l
+l
+x
+l
+f
+b
+A
+D
+b
+H
+A
+D
+b
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+B
+E
+b
+I
+A
+L
+b
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+"}

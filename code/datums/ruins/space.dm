@@ -1,7 +1,7 @@
 // Hey! Listen! Update \config\spaceruinblacklist.txt with your new ruins!
 
 /datum/map_template/ruin/space
-	prefix = "_maps/RandomRuins/SpaceRuins/"
+	prefix = "maps/RandomRuins/SpaceRuins/"
 	cost = 1
 	allow_duplicates = FALSE
 
@@ -339,7 +339,7 @@
 
 //Space ruins for the station z
 /datum/map_template/ruin/spacenearstation
-	prefix = "_maps/RandomRuins/SpaceRuinsStation/"
+	prefix = "maps/RandomRuins/SpaceRuinsStation/"
 	cost = 1
 	allow_duplicates = FALSE
 

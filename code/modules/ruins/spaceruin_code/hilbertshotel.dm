@@ -196,21 +196,21 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 //Template Stuff
 /datum/map_template/hilbertshotel
 	name = "Hilbert's Hotel Room"
-	mappath = '_maps/templates/hilbertshotel.dmm'
+	mappath = 'maps/templates/hilbertshotel.dmm'
 	var/landingZoneRelativeX = 2
 	var/landingZoneRelativeY = 8
 
 /datum/map_template/hilbertshotel/empty
 	name = "Empty Hilbert's Hotel Room"
-	mappath = '_maps/templates/hilbertshotelempty.dmm'
+	mappath = 'maps/templates/hilbertshotelempty.dmm'
 
 /datum/map_template/hilbertshotel/lore
 	name = "Doctor Hilbert's Deathbed"
-	mappath = '_maps/templates/hilbertshotellore.dmm'
+	mappath = 'maps/templates/hilbertshotellore.dmm'
 
 /datum/map_template/hilbertshotelstorage
 	name = "Hilbert's Hotel Storage"
-	mappath = '_maps/templates/hilbertshotelstorage.dmm'
+	mappath = 'maps/templates/hilbertshotelstorage.dmm'
 
 //Turfs and Areas
 /turf/closed/indestructible/hotelwall

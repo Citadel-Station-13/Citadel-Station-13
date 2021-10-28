@@ -5,7 +5,7 @@
 
 /datum/map_config
 	// Metadata
-	var/config_filename = "_maps/boxstation.json"
+	var/config_filename = "maps/boxstation.json"
 	var/defaulted = TRUE  // set to FALSE by LoadConfig() succeeding
 	// Config from maps.txt
 	var/config_max_users = 0
@@ -113,13 +113,13 @@
 
 	// "map_file": "BoxStation.dmm"
 	if (istext(map_file))
-		if (!fexists("_maps/[map_path]/[map_file]"))
+		if (!fexists("maps/[map_path]/[map_file]"))
 			log_world("Map file ([map_path]/[map_file]) does not exist!")
 			return
 	// "map_file": ["Lower.dmm", "Upper.dmm"]
 	else if (islist(map_file))
 		for (var/file in map_file)
-			if (!fexists("_maps/[map_path]/[file]"))
+			if (!fexists("maps/[map_path]/[file]"))
 				log_world("Map file ([map_path]/[file]) does not exist!")
 				return
 	else
@@ -257,10 +257,10 @@
 
 /datum/map_config/proc/GetFullMapPaths()
 	if (istext(map_file))
-		return list("_maps/[map_path]/[map_file]")
+		return list("maps/[map_path]/[map_file]")
 	. = list()
 	for (var/file in map_file)
-		. += "_maps/[map_path]/[file]"
+		. += "maps/[map_path]/[file]"
 
 /datum/map_config/proc/MakeNextMap()
 	return config_filename == "data/next_map.json" || fcopy(config_filename, "data/next_map.json")

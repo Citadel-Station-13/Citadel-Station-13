@@ -1,6 +1,6 @@
 /datum/map_template/shuttle
 	name = "Base Shuttle Template"
-	var/prefix = "_maps/shuttles/"
+	var/prefix = "maps/shuttles/"
 	var/suffix
 	var/port_id
 	var/shuttle_id
@@ -283,7 +283,7 @@
 
 // /datum/map_template/arena
 // 	name = "The Arena"
-// 	mappath = "_maps/templates/the_arena.dmm"
+// 	mappath = "maps/templates/the_arena.dmm"
 
 /datum/map_template/shuttle/emergency/birdboat
 	suffix = "birdboat"

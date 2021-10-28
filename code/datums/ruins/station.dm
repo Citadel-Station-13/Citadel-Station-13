@@ -1,5 +1,5 @@
 /datum/map_template/ruin/station
-	prefix = "_maps/RandomRuins/StationRuins/"
+	prefix = "maps/RandomRuins/StationRuins/"
 	cost = 0
 
 // Boxstation
