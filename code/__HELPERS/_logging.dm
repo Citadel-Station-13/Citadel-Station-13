@@ -211,6 +211,9 @@
 /proc/log_reagent_transfer(text)
 	log_reagent("TRANSFER: [text]")
 
+/proc/log_worldgen(text)
+	WRITE_LOG(GLOB.world_generation_log, "[text]")
+
 /* For logging round startup. */
 /proc/start_log(log)
 	WRITE_LOG(log, "Starting up round ID [GLOB.round_id].\n-------------------------")

@@ -151,6 +151,7 @@ GLOBAL_LIST(topic_status_cache)
 	start_log(GLOB.reagent_log)
 	start_log(GLOB.world_crafting_log)
 	start_log(GLOB.click_log)
+	start_log(GLOB.world_generation_log)
 
 	GLOB.changelog_hash = md5('html/changelog.html') //for telling if the changelog has changed recently
 	if(fexists(GLOB.config_error_log))

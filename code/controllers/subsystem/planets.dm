@@ -25,6 +25,11 @@ SUBSYSTEM_DEF(planets)
 	/// theme lookup by id
 	var/list/themes_by_id
 
+	/// Total zlevels instantiated so far
+	var/static/planet_zlevel_count = 0
+	/// Maximum safe zlevels - will never go past this when instantiating planets. For 255x255, 25-30 is safe under LAA. For 140x140, we could probably get away with 80 on LAA.
+	var/static/planet_zlevel_limit = 30
+
 	/**
 	 * Why do we store by ID?
 	 * GC purposes.
