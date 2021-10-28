@@ -158,7 +158,7 @@
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
 			if(target == "input")
-				target = tgui_input_num(usr, "Set new target ([min_temperature]-[max_temperature] K):", name, target_temperature)
+				target = input("Set new target ([min_temperature]-[max_temperature] K):", name, target_temperature) as num|null
 				if(!isnull(target))
 					. = TRUE
 			else if(adjust)

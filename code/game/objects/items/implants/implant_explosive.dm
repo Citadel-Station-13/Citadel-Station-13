@@ -33,7 +33,7 @@
 		return FALSE
 	if(cause == "action_button" && !popup)
 		popup = TRUE
-		var/response = tgui_alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to explode!", "[name] Confirmation", list("Yes", "No"))
+		var/response = alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to explode!", "[name] Confirmation", "Yes", "No")
 		popup = FALSE
 		if(response == "No")
 			return FALSE
