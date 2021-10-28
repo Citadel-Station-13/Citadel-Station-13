@@ -5,7 +5,7 @@
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 0
-	spawn_positions = 4
+	spawn_positions = 0
 	supervisors = "the security team"
 
 	outfit = /datum/outfit/job/prisoner

@@ -235,6 +235,9 @@
 	icon_state = "crusher-bone"
 	item_state = "crusher0-bone"
 
+/obj/item/kinetic_crusher/glaive/bone/update_icon_state()
+	item_state = "crusher[wielded]-bone"
+
 //destablizing force
 /obj/item/projectile/destabilizer
 	name = "destabilizing force"
