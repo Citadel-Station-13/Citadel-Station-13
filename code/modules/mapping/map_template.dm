@@ -9,8 +9,14 @@
 	var/height = 0
 	/// Z-height
 	var/zdepth = 1
+	/// Abstract type
+	var/abstract_type = /datum/map_template
 	/// Path to .dmm
 	var/mappath
+	/// Prefix to path - used if mappath null
+	var/prefix = "maps/"
+	/// Suffix to path - used if mappath null
+	var/suffix
 	/// Times loaded this round
 	var/loaded = 0
 	/// Cached parsed map - allows for quick re-loading or bounds checking.
@@ -25,6 +31,8 @@
 /datum/map_template/New(path = null, rename = null, cache = FALSE)
 	if(path)
 		mappath = path
+	if(!mappath && prefix && suffix)
+		mappath = "[prefix][suffix]"
 	if(mappath)
 		preload_size(mappath, cache)
 	if(rename)

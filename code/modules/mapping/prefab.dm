@@ -4,6 +4,8 @@
  * Map templates loaded in by prefab landmarks
  */
 /datum/map_template/prefab
+	abstract_type = /datum/map_template/prefab
+	prefix = "maps/prefabs/"
 	/// prefab group/type id
 	var/group_id
 
@@ -36,7 +38,7 @@
 /**
  * returns template IDs in a list
  */
-/obj/effect/landmark/prefab_loader/proc/GetTemplate()
+/obj/effect/landmark/prefab_loader/proc/GetTemplates()
 	return SSmapping.prefab_groups[group_id] || list()
 
 /obj/effect/landmark/prefab_loader/proc/Load()
@@ -46,7 +48,7 @@
 	template.load(get_turf(src), center, orientation, annihilate, FALSE)
 
 /obj/effect/landmark/prefab_loader/proc/PickTemplate()
-	var/list/templates = GetTemplate()
+	var/list/templates = GetTemplates()
 	var/list/weighted = list()
 	for(var/i in templates)
 		weighted[i] = w
