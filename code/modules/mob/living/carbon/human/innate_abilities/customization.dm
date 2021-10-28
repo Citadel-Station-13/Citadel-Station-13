@@ -210,7 +210,7 @@
 			qdel(X)
 		var/min_B = CONFIG_GET(number/butt_min_size_prefs)
 		var/max_B = CONFIG_GET(number/butt_max_size_prefs)
-		var/new_length = input(owner, "Butt size:\n([min_B]-[max_B])", "Genital Alteration") as num|null
+		var/new_length = tgui_input_num(owner, "Butt size:\n([min_B]-[max_B])", "Genital Alteration", H.dna.features["butt_size"])
 		if(new_length)
 			H.dna.features["butt_size"] = clamp(round(new_length), min_B, max_B)
 		H.update_genitals()
