@@ -8,7 +8,7 @@
 	anchored = TRUE
 	var/items_list = list()
 	speech_span = "spooky"
-	resistance_flags = INDESTRUCTIBLE //Barth is immortal you know
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF //Barth is immortal you know
 	var/active = TRUE
 
 /obj/item/barthpot/Destroy()
