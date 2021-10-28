@@ -4,8 +4,7 @@
  * Represents an entire zlevel
  */
 /datum/planet_level
-
-	/// the procedural generator we used
-	var/datum/procedural_generation/generator
-
-
+	/// name
+	var/name = "Unknown Planet Level"
+	/// desc
+	var/desc = "A bugged level. You shouldn't be seeing this."
