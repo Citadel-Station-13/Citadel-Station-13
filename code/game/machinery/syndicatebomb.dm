@@ -193,11 +193,11 @@
 	playsound(loc, 'sound/machines/click.ogg', 30, 1)
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
-	var/new_timer = input(user, "Please set the timer.", "Timer", "[timer_set]") as num
+	var/new_timer = tgui_input_num(user, "Please set the timer.", "Timer", "[timer_set]")
 	if(in_range(src, user) && isliving(user)) //No running off and setting bombs from across the station
 		timer_set = clamp(new_timer, minimum_timer, maximum_timer)
 		loc.visible_message("<span class='notice'>[icon2html(src, viewers(src))] timer set for [timer_set] seconds.</span>")
-	if(alert(user,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, user) && isliving(user))
+	if(tgui_alert(user,"Would you like to start the countdown now?",,list("Yes","No")) == "Yes" && in_range(src, user) && isliving(user))
 		if(defused || active)
 			if(defused)
 				visible_message("<span class='warning'>[icon2html(src, viewers(src))] Device error: User intervention required.</span>")

@@ -99,7 +99,7 @@
 					if("reset")
 						contained_id.points = 0
 					if("setgoal")
-						var/num = round(input(usr, "Choose prisoner's goal:", "Input an Integer", null) as num|null)
+						var/num = round(tgui_input_num(usr, "Choose prisoner's goal:", "Input an Integer", contained_id.goal))
 						if(num >= 0)
 							num = min(num,1000) //Cap the quota to the equivilent of 10 minutes.
 							contained_id.goal = num

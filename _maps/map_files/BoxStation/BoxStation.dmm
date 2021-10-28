@@ -17830,7 +17830,7 @@
 /turf/open/floor/wood,
 /area/service/bar)
 "aRx" = (
-/obj/machinery/computer/arcade/minesweeper,
+/obj/machinery/computer/arcade/orion_trail,
 /turf/open/floor/wood,
 /area/service/bar)
 "aRy" = (
@@ -60122,7 +60122,7 @@
 /turf/open/floor/plasteel,
 /area/commons/dorms)
 "nZL" = (
-/obj/machinery/computer/arcade/minesweeper,
+/obj/machinery/computer/arcade/orion_trail,
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain)
 "oax" = (
@@ -64938,7 +64938,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison/upper)
 "vim" = (
-/obj/machinery/computer/arcade/minesweeper,
+/obj/machinery/computer/arcade/battle,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
 	icon_state = "1-2"

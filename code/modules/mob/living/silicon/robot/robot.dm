@@ -150,7 +150,7 @@
 	if(BORG_SEC_AVAILABLE)
 		modulelist["Security"] = /obj/item/robot_module/security
 
-	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in sortList(modulelist)
+	var/input_module = tgui_input_list(src, "Please, select a module!", "Robot", sortList(modulelist))
 	if(!input_module || module.type != /obj/item/robot_module)
 		return
 
@@ -516,7 +516,7 @@
 	if(stat == DEAD)
 		return //won't work if dead
 	if(locked)
-		switch(alert("You cannot lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
+		switch(tgui_alert(src, "You cannot lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", list("Yes", "No")))
 			if("Yes")
 				locked = FALSE
 				update_icons()
@@ -1298,7 +1298,7 @@
 	set desc = "Select your resting pose."
 	sitting = 0
 	bellyup = 0
-	var/choice = alert(src, "Select resting pose", "", "Resting", "Sitting", "Belly up")
+	var/choice = tgui_alert(src, "Select resting pose", "", list("Resting", "Sitting", "Belly up"))
 	switch(choice)
 		if("Resting")
 			update_icons()

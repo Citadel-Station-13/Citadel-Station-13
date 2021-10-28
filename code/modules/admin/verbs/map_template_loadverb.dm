@@ -4,7 +4,7 @@
 
 	var/datum/map_template/template
 
-	var/map = input(src, "Choose a Map Template to place at your CURRENT LOCATION","Place Map Template") as null|anything in SSmapping.map_templates
+	var/map = tgui_input_list(src, "Choose a Map Template to place at your CURRENT LOCATION","Place Map Template", SSmapping.map_templates)
 	if(!map)
 		return
 	template = SSmapping.map_templates[map]
@@ -19,10 +19,10 @@
 		item.plane = ABOVE_LIGHTING_PLANE
 		preview += item
 	var/list/orientations = list("South" = SOUTH, "North" = NORTH, "East" = EAST, "West" = WEST)
-	var/choice = input(src, "Which orientation? Maps are normally facing SOUTH.", "Template Orientation", "South") as null|anything in orientations
+	var/choice = tgui_input_list(src, "Which orientation? Maps are normally facing SOUTH.", "Template Orientation", orientations)
 	var/orientation = orientations[choice]
 	images += preview
-	if(alert(src,"Confirm location.","Template Confirm","Yes","No") == "Yes")
+	if(tgui_alert(src, "Confirm location.","Template Confirm",list("Yes","No")) == "Yes")
 		if(template.load(T, centered = TRUE, orientation = orientation))
 			message_admins("<span class='adminnotice'>[key_name_admin(src)] has placed a map template ([template.name]) at [ADMIN_COORDJMP(T)]</span>")
 		else
@@ -40,7 +40,7 @@
 		to_chat(src, "<span class='warning'>Filename must end in '.dmm': [map]</span>")
 		return
 	var/datum/map_template/M
-	switch(alert(src, "What kind of map is this?", "Map type", "Normal", "Shuttle", "Cancel"))
+	switch(tgui_alert(src, "What kind of map is this?", "Map type", list("Normal", "Shuttle", "Cancel")))
 		if("Normal")
 			M = new /datum/map_template(map, "[map]", TRUE)
 		if("Shuttle")
@@ -58,11 +58,11 @@
 		report_link = " - <a href='?src=[REF(report)];[HrefToken(TRUE)];show=1'>validation report</a>"
 		to_chat(src, "<span class='warning'>Map template '[map]' <a href='?src=[REF(report)];[HrefToken()];show=1'>failed validation</a>.</span>")
 		if(report.loadable)
-			var/response = alert(src, "The map failed validation, would you like to load it anyways?", "Map Errors", "Cancel", "Upload Anyways")
+			var/response = tgui_alert(src, "The map failed validation, would you like to load it anyways?", "Map Errors", list("Cancel", "Upload Anyways"))
 			if(response != "Upload Anyways")
 				return
 		else
-			alert(src, "The map failed validation and cannot be loaded.", "Map Errors", "Oh Darn")
+			tgui_alert(src, "The map failed validation and cannot be loaded.", "Map Errors", list("Oh Darn"))
 			return
 
 	SSmapping.map_templates[M.name] = M

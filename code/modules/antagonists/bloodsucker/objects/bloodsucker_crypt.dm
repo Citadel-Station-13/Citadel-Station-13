@@ -232,7 +232,7 @@
 		if(B.lair != get_area(src))
 			to_chat(user, "<span class='danger'>You may only activate this structure in your lair: [B.lair].</span>")
 			return
-		switch(alert(user,"Do you wish to afix this structure here? Be aware you wont be able to unsecure it anymore", "Secure [src]", "Yes", "No"))
+		switch(tgui_alert(user, "Do you wish to afix this structure here? Be aware you wont be able to unsecure it anymore", "Secure [src]", list("Yes", "No")))
 			if("Yes")
 				owner = user
 				density = FALSE
@@ -398,7 +398,7 @@
 				alert_text += "\n\nYou will no longer be loyal to the station!"
 			if(SSticker.mode.AmValidAntag(target.mind))  */
 			alert_text += "\n\nYou will not lose your current objectives, but they come second to the will of your new master!"
-			switch(alert(target, alert_text,"THE HORRIBLE PAIN! WHEN WILL IT END?!","Yes, Master!", "NEVER!"))
+			switch(tgui_alert(target, alert_text,"THE HORRIBLE PAIN! WHEN WILL IT END?!",list("Yes, Master!", "NEVER!")))
 				if("Yes, Master!")
 					disloyalty_accept(target)
 				else

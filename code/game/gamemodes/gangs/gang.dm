@@ -108,11 +108,11 @@
 		.["Set domination time left"] = CALLBACK(src, .proc/set_dom_time_left)
 
 /datum/antagonist/gang/admin_add(datum/mind/new_owner,mob/admin)
-	var/new_or_existing = input(admin, "Which gang do you want to be assigned to the user?", "Gangs") as null|anything in list("New","Existing")
+	var/new_or_existing = tgui_input_list(admin, "Which gang do you want to be assigned to the user?", "Gangs", list("New","Existing"))
 	if(isnull(new_or_existing))
 		return
 	else if(new_or_existing == "New")
-		var/newgang = input(admin, "Select a gang, or select random to pick a random one.", "New gang") as null|anything in GLOB.possible_gangs + "Random"
+		var/newgang = tgui_input_list(admin, "Select a gang, or select random to pick a random one.", "New gang", GLOB.possible_gangs + "Random")
 		if(isnull(newgang))
 			return
 		else if(newgang == "Random")
@@ -125,7 +125,7 @@
 		if(!GLOB.gangs.len) // no gangs exist
 			to_chat(admin, "<span class='danger'>No gangs exist, please create a new one instead.</span>")
 			return
-		var/existinggang = input(admin, "Select a gang, or select random to pick a random one.", "Existing gang") as null|anything in GLOB.gangs + "Random"
+		var/existinggang = tgui_input_list(admin, "Select a gang, or select random to pick a random one.", "Existing gang", GLOB.gangs + "Random")
 		if(isnull(existinggang))
 			return
 		else if(existinggang == "Random")
@@ -141,7 +141,7 @@
 	promote()
 
 /datum/antagonist/gang/proc/admin_adjust_influence()
-	var/inf = input("Influence for [gang.name]","Gang influence", gang.influence) as null | num
+	var/inf = tgui_input_num(usr, "Influence for [gang.name]","Gang influence", gang.influence)
 	if(!isnull(inf))
 		gang.influence = inf
 		message_admins("[key_name_admin(usr)] changed [gang.name]'s influence to [inf].")
@@ -158,7 +158,7 @@
 /datum/antagonist/gang/proc/set_dom_time_left(mob/admin)
 	if(gang.domination_time == NOT_DOMINATING)
 		return // an admin shouldn't need this
-	var/seconds = input(admin, "Set the time left for the gang to win, in seconds", "Domination time left") as null|num
+	var/seconds = tgui_input_num(admin, "Set the time left for the gang to win, in seconds", "Domination time left", (gang.domination_time - world.time) * 0.1)
 	if(seconds && seconds > 0)
 		gang.domination_time = world.time + seconds*10
 		gang.message_gangtools("Takeover shortened to [gang.domination_time_remaining()] seconds by your Syndicate benefactors.")

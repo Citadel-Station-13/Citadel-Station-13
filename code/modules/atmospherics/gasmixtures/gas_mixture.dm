@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT(auxtools_atmos_initialized,FALSE)
 	if(!.)
 		return
 	if(href_list[VV_HK_PARSE_GASSTRING])
-		var/gasstring = input(usr, "Input Gas String (WARNING: Advanced. Don't use this unless you know how these work.", "Gas String Parse") as text|null
+		var/gasstring = tgui_input_text(usr, "Input Gas String (WARNING: Advanced. Don't use this unless you know how these work.)", "Gas String Parse")
 		if(!istext(gasstring))
 			return
 		log_admin("[key_name(usr)] modified gas mixture [REF(src)]: Set to gas string [gasstring].")
@@ -77,10 +77,10 @@ GLOBAL_LIST_INIT(auxtools_atmos_initialized,FALSE)
 		var/list/gases = get_gases()
 		for(var/gas in gases)
 			gases[gas] = get_moles(gas)
-		var/gasid = input(usr, "What kind of gas?", "Set Gas") as null|anything in GLOB.gas_data.ids
+		var/gasid = tgui_input_list(usr, "What kind of gas?", "Set Gas", GLOB.gas_data.ids)
 		if(!gasid)
 			return
-		var/amount = input(usr, "Input amount", "Set Gas", gases[gasid] || 0) as num|null
+		var/amount = tgui_input_num(usr, "Input amount", "Set Gas", gases[gasid] || 0)
 		if(!isnum(amount))
 			return
 		amount = max(0, amount)
@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(auxtools_atmos_initialized,FALSE)
 		message_admins("[key_name(usr)] modified gas mixture [REF(src)]: Set gas [gasid] to [amount] moles.")
 		set_moles(gasid, amount)
 	if(href_list[VV_HK_SET_TEMPERATURE])
-		var/temp = input(usr, "Set the temperature of this mixture to?", "Set Temperature", return_temperature()) as num|null
+		var/temp = tgui_input_num(usr, "Set the temperature of this mixture to?", "Set Temperature", return_temperature())
 		if(!isnum(temp))
 			return
 		temp = max(2.7, temp)
@@ -96,7 +96,7 @@ GLOBAL_LIST_INIT(auxtools_atmos_initialized,FALSE)
 		message_admins("[key_name(usr)] modified gas mixture [REF(src)]: Changed temperature to [temp].")
 		set_temperature(temp)
 	if(href_list[VV_HK_SET_VOLUME])
-		var/volume = input(usr, "Set the volume of this mixture to?", "Set Volume", return_volume()) as num|null
+		var/volume = tgui_input_num(usr, "Set the volume of this mixture to?", "Set Volume", return_volume())
 		if(!isnum(volume))
 			return
 		volume = max(0, volume)

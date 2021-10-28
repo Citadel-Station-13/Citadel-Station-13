@@ -421,7 +421,7 @@
 		A.admin_remove(usr)
 
 	if (href_list["role_edit"])
-		var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in get_all_jobs()
+		var/new_role = tgui_input_list(usr, "Select new role", "Assigned role", get_all_jobs())
 		if (!new_role)
 			return
 		assigned_role = new_role
@@ -434,7 +434,6 @@
 
 	else if (href_list["obj_edit"] || href_list["obj_add"])
 		var/objective_pos //Edited objectives need to keep same order in antag objective list
-		var/def_value
 		var/datum/antagonist/target_antag
 		var/datum/objective/old_objective //The old objective we're replacing/editing
 		var/datum/objective/new_objective //New objective we're be adding
@@ -462,7 +461,7 @@
 					if(1)
 						target_antag = antag_datums[1]
 					else
-						var/datum/antagonist/target = input("Which antagonist gets the objective:", "Antagonist", "(new custom antag)") as null|anything in antag_datums + "(new custom antag)"
+						var/datum/antagonist/target = tgui_input_list(usr, "Which antagonist gets the objective:", "Antagonist", list(antag_datums + "(new custom antag)"))
 						if (QDELETED(target))
 							return
 						else if(target == "(new custom antag)")
@@ -496,11 +495,7 @@
 				var/datum/objective/X = T
 				choices[initial(X.name)] = T
 
-		if(old_objective)
-			if(old_objective.name in choices)
-				def_value = old_objective.name
-
-		var/selected_type = input("Select objective type:", "Objective type", def_value) as null|anything in choices
+		var/selected_type = tgui_input_list(usr, "Select objective type:", "Objective type", choices)
 		selected_type = choices[selected_type]
 		if (!selected_type)
 			return
@@ -538,7 +533,7 @@
 				choices[initial(t.employer)] = C
 		var/datum/antagonist/traitor/T = locate(href_list["target_antag"]) in antag_datums
 		if(T)
-			var/selected_type = input("Select traitor class:", "Traitor class", T.traitor_kind.employer) as null|anything in choices
+			var/selected_type = tgui_input_list(usr, "Select traitor class:", "Traitor class", choices)
 			selected_type = choices[selected_type]
 			T.set_traitor_kind(selected_type)
 
@@ -599,7 +594,7 @@
 				if(check_rights(R_FUN, 0))
 					var/datum/component/uplink/U = find_syndicate_uplink()
 					if(U)
-						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.telecrystals) as null | num
+						var/crystals = tgui_input_num(usr, "Amount of telecrystals for [key]","Syndicate uplink", U.telecrystals)
 						if(!isnull(crystals))
 							U.telecrystals = crystals
 							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")

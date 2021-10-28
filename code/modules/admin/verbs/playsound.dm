@@ -5,7 +5,7 @@
 		return
 
 	var/freq = 1
-	var/vol = input(usr, "What volume would you like the sound to play at?",, 100) as null|num
+	var/vol = tgui_input_num(usr, "What volume would you like the sound to play at?",, 100)
 	if(!vol)
 		return
 	vol = clamp(vol, 1, 100)
@@ -20,7 +20,7 @@
 	admin_sound.status = SOUND_STREAM
 	admin_sound.volume = vol
 
-	var/res = alert(usr, "Show the title of this song to the players?",, "Yes","No", "Cancel")
+	var/res = tgui_alert(usr, "Show the title of this song to the players?",, list("Yes","No", "Cancel"))
 	switch(res)
 		if("Yes")
 			to_chat(world, "<span class='boldannounce'>An admin played: [S]</span>", confidential = TRUE)
@@ -61,7 +61,7 @@
 		to_chat(src, "<span class='boldwarning'>Youtube-dl was not configured, action unavailable</span>") //Check config.txt for the INVOKE_YOUTUBEDL value
 		return
 
-	var/web_sound_input = input("Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound via youtube-dl") as text|null
+	var/web_sound_input = tgui_input_text(src, "Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound via youtube-dl")
 	if(istext(web_sound_input))
 		var/web_sound_url = ""
 		var/stop_web_sounds = FALSE
@@ -98,7 +98,7 @@
 					music_extra_data["link"] = data["webpage_url"]
 					music_extra_data["title"] = data["title"]
 
-					var/res = alert(usr, "Show the title of and link to this song to the players?\n[title]",, "No", "Yes", "Cancel")
+					var/res = tgui_alert(usr, "Show the title of and link to this song to the players?\n[title]",, list("No", "Yes", "Cancel"))
 					switch(res)
 						if("Yes")
 							to_chat(world, "<span class='boldannounce'>An admin played: [webpage_url]</span>")
@@ -139,7 +139,7 @@
 	if(!check_rights(R_SOUNDS))
 		return
 
-	var/web_sound_input = input("Enter content stream URL (must be a direct link)", "Play Internet Sound via direct URL") as text|null
+	var/web_sound_input = tgui_input_text(src, "Enter content stream URL (must be a direct link)", "Play Internet Sound via direct URL")
 	if(istext(web_sound_input))
 		if(!length(web_sound_input))
 			log_admin("[key_name(src)] stopped web sound")

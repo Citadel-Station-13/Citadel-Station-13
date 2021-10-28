@@ -316,7 +316,7 @@
 				// Get out list of viable PDAs
 				var/list/obj/item/pda/sendPDAs = get_viewable_pdas()
 				if(GLOB.PDAs && LAZYLEN(GLOB.PDAs) > 0)
-					customrecepient = input(usr, "Select a PDA from the list.") as null|anything in sortNames(sendPDAs)
+					customrecepient = tgui_input_list(usr, "Select a PDA from the list.", "", sortNames(sendPDAs))
 				else
 					customrecepient = null
 				return

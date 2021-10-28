@@ -289,7 +289,7 @@
 								active1.fields["gender"] = "Male"
 					if("age")
 						if(active1)
-							var/t1 = input("Please input age:", "Med. records", active1.fields["age"], null)  as num
+							var/t1 = tgui_input_num(usr, "Please input age:", "Med. records", active1.fields["age"])
 							if(!canUseMedicalRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["age"] = t1

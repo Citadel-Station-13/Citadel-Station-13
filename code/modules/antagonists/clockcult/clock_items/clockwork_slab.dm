@@ -371,7 +371,7 @@
 				update_quickbind()
 			else
 				// todo: async this due to ((input)) but its fine for now
-				var/target_index = input("Position of [initial(path.name)], 1 to [maximum_quickbound]?", "Input")  as num|null
+				var/target_index = tgui_input_num(usr, "Position of [initial(path.name)], 1 to [maximum_quickbound]?", "Input")
 				if(isnum(target_index) && target_index > 0 && target_index <= maximum_quickbound && !..())
 					var/datum/clockwork_scripture/S
 					if(LAZYLEN(quickbound) >= target_index)

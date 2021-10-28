@@ -99,7 +99,7 @@
 	if(!chosen_color)
 		dragon_name()
 		color_selection()
-	
+
 
 /mob/living/simple_animal/hostile/space_dragon/Life()
 	. = ..()
@@ -666,7 +666,7 @@
 /obj/structure/carp_rift/proc/summon_carp(mob/user)
 	if(carp_stored <= 0)//Not enough carp points
 		return FALSE
-	var/carp_ask = alert("Become a carp?", "Help bring forth the horde?", "Yes", "No")
+	var/carp_ask = tgui_alert(user, "Become a carp?", "Help bring forth the horde?", list("Yes", "No"))
 	if(carp_ask == "No" || !src || QDELETED(src) || QDELETED(user))
 		return FALSE
 	if(carp_stored <= 0)

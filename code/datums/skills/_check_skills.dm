@@ -21,7 +21,7 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "SkillPanel", "[owner.name]'s Skills")
-		ui.set_autoupdate(FALSE) 
+		ui.set_autoupdate(FALSE)
 		ui.open()
 	else if(need_static_data_update)
 		update_static_data(user)
@@ -57,7 +57,7 @@
 			if(!check_rights(R_DEBUG))
 				return
 			var/skill = text2path(params["skill"])
-			var/number = input("Please insert the amount of experience/progress you'd like to add/subtract:") as num|null
+			var/number = tgui_input_num(usr, "Please insert the amount of experience/progress you'd like to add/subtract:")
 			if (number)
 				owner.set_skill_value(skill, owner.get_skill_value(skill, FALSE) + number)
 			return TRUE
@@ -65,7 +65,7 @@
 			if(!check_rights(R_DEBUG))
 				return
 			var/skill = text2path(params["skill"])
-			var/number = input("Please insert the number you want to set the player's exp/progress to:") as num|null
+			var/number = tgui_input_num(usr, "Please insert the number you want to set the player's exp/progress to:")
 			if (!isnull(number))
 				owner.set_skill_value(skill, number)
 			return TRUE
@@ -73,7 +73,7 @@
 			if(!check_rights(R_DEBUG))
 				return
 			var/datum/skill/level/S = GLOB.skill_datums[text2path(params["skill"])]
-			var/number = input("Please insert a whole number between 0[S.associative ? " ([S.unskilled_tier])" : ""] and [S.max_levels][S.associative ? " ([S.levels[S.max_levels]])" : ""] corresponding to the level you'd like to set the player to.") as num|null
+			var/number = tgui_input_num(usr, "Please insert a whole number between 0[S.associative ? " ([S.unskilled_tier])" : ""] and [S.max_levels][S.associative ? " ([S.levels[S.max_levels]])" : ""] corresponding to the level you'd like to set the player to.")
 			if (number >= 0 && number <= S.max_levels)
 				owner.set_skill_value(S.type, S.get_skill_level_value(number))
 			return TRUE

@@ -147,7 +147,7 @@
 			radio.attack_self(src)
 
 		if("image")
-			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What" , "Exclamation" ,"Question", "Sunglasses")
+			var/newImage = tgui_input_list(usr, "Select your new display image.", "Display Image", list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What" , "Exclamation" ,"Question", "Sunglasses"))
 			var/pID = 1
 
 			switch(newImage)
@@ -222,7 +222,7 @@
 					pda.silent = !pda.silent
 				else if(href_list["target"])
 					if(silent)
-						return alert("Communications circuits remain uninitialized.")
+						return tgui_alert(src, "Communications circuits remain uninitialized.")
 
 					var/target = locate(href_list["target"])
 					pda.create_message(src, target)
@@ -395,7 +395,7 @@
 	return dat
 
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
-	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
+	var/answer = tgui_input_list(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", list("Yes", "No"))
 	if(answer == "Yes")
 		M.visible_message("<span class='notice'>[M] presses [M.p_their()] thumb against [P].</span>",\
 						"<span class='notice'>You press your thumb against [P].</span>",\

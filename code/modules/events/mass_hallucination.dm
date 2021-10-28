@@ -10,7 +10,7 @@
 	if(!check_rights(R_FUN))
 		return
 
-	forced_hallucination = input(usr, "Choose the hallucination to apply","Send Hallucination") as null|anything in subtypesof(/datum/hallucination)
+	forced_hallucination = tgui_input_list(usr, "Choose the hallucination to apply","Send Hallucination", subtypesof(/datum/hallucination))
 
 /datum/round_event/mass_hallucination
 	fakeable = FALSE

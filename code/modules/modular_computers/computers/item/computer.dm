@@ -137,7 +137,7 @@
 	if(enabled)
 		ui_interact(user)
 	else if(IsAdminGhost(user))
-		var/response = alert(user, "This computer is turned off. Would you like to turn it on?", "Admin Override", "Yes", "No")
+		var/response = tgui_alert(user, "This computer is turned off. Would you like to turn it on?", "Admin Override", list("Yes", "No"))
 		if(response == "Yes")
 			turn_on(user)
 
@@ -425,7 +425,7 @@
 		var/obj/item/computer_hardware/H = all_components[h]
 		component_names.Add(H.name)
 
-	var/choice = input(user, "Which component do you want to uninstall?", "Computer maintenance", null) as null|anything in sortList(component_names)
+	var/choice = tgui_input_list(user, "Which component do you want to uninstall?", "Computer maintenance", sortList(component_names))
 
 	if(!choice)
 		return

@@ -42,7 +42,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/on_attack_hand(mob/user, act_intent, unarmed_attack_flags)
 	if(!active  && is_servant_of_ratvar(user) && user.canUseTopic(src, !issilicon(user), NO_DEXTERY))
-		if(alert(user, "Are you sure you want to activate the ark? Once enabled, there will be no turning back.", "Enabling the ark", "Activate!", "Cancel") == "Activate!")
+		if(tgui_alert(user, "Are you sure you want to activate the ark? Once enabled, there will be no turning back.", "Enabling the ark", list("Activate!", "Cancel")) == "Activate!")
 			if(active)
 				return
 			log_game("[key_name(user)] has activated an Ark of the Clockwork Justicar at [COORD(src)].")
@@ -356,9 +356,9 @@
 	if(GLOB.servants_active)
 		to_chat(user, "<span class='danger'>The Ark is already counting down.</span>")
 		return ..()
-	if(alert(user, "Activate the Ark's countdown?", name, "Yes", "No") == "Yes")
-		if(alert(user, "REALLY activate the Ark's countdown?", name, "Yes", "No") == "Yes")
-			if(alert(user, "You're REALLY SURE? This cannot be undone.", name, "Yes - Activate the Ark", "No") == "Yes - Activate the Ark")
+	if(tgui_alert(user, "Activate the Ark's countdown?", name, list("Yes", "No")) == "Yes")
+		if(tgui_alert(user, "REALLY activate the Ark's countdown?", name, list("Yes", "No")) == "Yes")
+			if(tgui_alert(user, "You're REALLY SURE? This cannot be undone.", name, list("Yes - Activate the Ark", "No")) == "Yes - Activate the Ark")
 				message_admins("<span class='danger'>Admin [key_name_admin(user)] started the Ark's countdown!</span>")
 				log_admin("Admin [key_name(user)] started the Ark's countdown on a non-clockcult mode!")
 				to_chat(user, "<span class='userdanger'>The gamemode is now being treated as clockwork cult, and the Ark is counting down from 5 \

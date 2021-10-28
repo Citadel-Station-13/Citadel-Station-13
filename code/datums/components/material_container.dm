@@ -125,7 +125,7 @@
 		//try to get ammount to use
 		var/requested_amount
 		if(precise_insertion)
-			requested_amount = input(user, "How much do you want to insert?", "Inserting [S.singular_name]s") as num|null
+			requested_amount = tgui_input_num(user, "How much do you want to insert?", "Inserting [S.singular_name]s")
 		else
 			requested_amount= S.amount
 

@@ -159,7 +159,7 @@
 	if (!can_rotate || admin)
 		to_chat(user, "<span class='warning'>The rotation is locked!</span>")
 		return FALSE
-	var/new_angle = input(user, "Input a new angle for primary reflection face.", "Reflector Angle", rotation_angle) as null|num
+	var/new_angle = tgui_input_num(user, "Input a new angle for primary reflection face.", "Reflector Angle", rotation_angle)
 	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	if(!isnull(new_angle))

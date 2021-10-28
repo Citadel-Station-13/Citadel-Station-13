@@ -53,7 +53,7 @@
 	if(!is_servant_of_ratvar(user) || !can_access_clockwork_power(src, hierophant_cost) || !anchored)
 		to_chat(user, "<span class='warning'>You place your hand on [src], but it doesn't react.</span>")
 		return
-	var/choice = alert(user,"You place your hand on [src]...",,"Hierophant Broadcast","Spatial Gateway","Cancel") //Will create a stable gateway instead if between two obelisks one of which is onstation and the other on reebe
+	var/choice = tgui_alert(user, "You place your hand on [src]...",,list("Hierophant Broadcast","Spatial Gateway","Cancel")) //Will create a stable gateway instead if between two obelisks one of which is onstation and the other on reebe
 	switch(choice)
 		if("Hierophant Broadcast")
 			if(active)

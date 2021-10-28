@@ -29,7 +29,7 @@
 	if(!can_change_id)
 		return
 	var/new_id
-	new_id = input(user, "Set ID", "Set ID", show_id? id : null) as text|null
+	new_id = tgui_input_text(user, "Set ID", "Set ID", show_id? id : null)
 	if(!isnull(new_id))		//0/"" is considered !, so check null instead of just !.
 		id = new_id
 

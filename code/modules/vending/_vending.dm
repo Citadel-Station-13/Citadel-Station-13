@@ -1141,7 +1141,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	var/price = 1
 
 /obj/item/price_tagger/attack_self(mob/user)
-	price = max(1, round(input(user,"set price","price") as num|null, 1))
+	price = max(1, round(tgui_input_num(user,"set price","price"), 1))
 	to_chat(user, "<span class='notice'> The [src] will now give things a [price] cr tag.</span>")
 
 /obj/item/price_tagger/afterattack(atom/target, mob/user, proximity)
