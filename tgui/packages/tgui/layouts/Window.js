@@ -9,7 +9,7 @@ import { useDispatch } from 'common/redux';
 import { decodeHtmlEntities, toTitleCase } from 'common/string';
 import { Component } from 'inferno';
 import { backendSuspendStart, useBackend } from '../backend';
-import { Icon } from '../components';
+import { Icon, Flex } from '../components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
 import { useDebug } from '../debug';
 import { toggleKitchenSink } from '../debug/actions';
@@ -24,9 +24,13 @@ const DEFAULT_SIZE = [400, 600];
 export class Window extends Component {
   componentDidMount() {
     const { suspended } = useBackend(this.context);
+    const { canClose = true } = this.props;
     if (suspended) {
       return;
     }
+    Byond.winset(window.__windowId__, {
+      'can-close': Boolean(canClose),
+    });
     logger.log('mounting');
     this.updateGeometry();
   }
@@ -58,11 +62,11 @@ export class Window extends Component {
 
   render() {
     const {
-      noClose,
+      canClose = true,
       theme,
       title,
       children,
-      resizable,
+      buttons,
     } = this.props;
     const {
       config,
@@ -91,7 +95,9 @@ export class Window extends Component {
             logger.log('pressed close');
             dispatch(backendSuspendStart());
           }}
-          noClose={noClose} />
+          canClose={canClose}>
+          {buttons}
+        </TitleBar>
         <div
           className={classes([
             'Window__rest',
@@ -102,7 +108,7 @@ export class Window extends Component {
             <div className="Window__dimmer" />
           )}
         </div>
-        {fancy && resizable && (
+        {fancy && (
           <>
             <div className="Window__resizeHandle__e"
               onMousedown={resizeStartHandler(1, 0)} />
@@ -159,10 +165,11 @@ const TitleBar = (props, context) => {
     className,
     title,
     status,
-    noClose,
+    canClose,
     fancy,
     onDragStart,
     onClose,
+    children,
   } = props;
   const dispatch = useDispatch(context);
   return (
@@ -182,15 +189,20 @@ const TitleBar = (props, context) => {
           color={statusToColor(status)}
           name="eye" />
       )}
+      <div
+        className="TitleBar__dragZone"
+        onMousedown={e => fancy && onDragStart(e)} />
       <div className="TitleBar__title">
         {typeof title === 'string'
           && title === title.toLowerCase()
           && toTitleCase(title)
           || title}
+        {!!children && (
+          <div className="TitleBar__buttons">
+            {children}
+          </div>
+        )}
       </div>
-      <div
-        className="TitleBar__dragZone"
-        onMousedown={e => fancy && onDragStart(e)} />
       {process.env.NODE_ENV !== 'production' && (
         <div
           className="TitleBar__devBuildIndicator"
@@ -198,7 +210,7 @@ const TitleBar = (props, context) => {
           <Icon name="bug" />
         </div>
       )}
-      {!!fancy && !noClose && (
+      {Boolean(fancy && canClose) && (
         <div
           className="TitleBar__close TitleBar__clickable"
           // IE8: Synthetic onClick event doesn't work on IE8.

@@ -125,7 +125,7 @@
 
 	// Append radio icon if from a virtual speaker
 	if (extra_classes.Find("virtual-speaker"))
-		var/image/r_icon = image('icons/UI_Icons/chat/chat_icons.dmi', icon_state = "radio")
+		var/image/r_icon = image('icons/ui_icons/chat/chat_icons.dmi', icon_state = "radio")
 		text =  "\icon[r_icon]&nbsp;" + text
 
 	// We dim italicized text to make it more distinguishable from regular text

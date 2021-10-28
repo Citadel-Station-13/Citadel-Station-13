@@ -417,6 +417,12 @@
 ///from /obj/machinery/obj_break(damage_flag): (damage_flag)
 #define COMSIG_MACHINERY_BROKEN "machinery_broken"
 
+// /obj/machinery/power/supermatter_crystal signals
+/// from /obj/machinery/power/supermatter_crystal/process_atmos(); when the SM delam reaches the point of sounding alarms
+#define COMSIG_SUPERMATTER_DELAM_START_ALARM "sm_delam_start_alarm"
+/// from /obj/machinery/power/supermatter_crystal/process_atmos(); when the SM sounds an audible alarm
+#define COMSIG_SUPERMATTER_DELAM_ALARM "sm_delam_alarm"
+
 // /obj/item signals
 #define COMSIG_ITEM_ATTACK "item_attack"						//from base of obj/item/attack(): (/mob/living/target, /mob/living/user)
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"				//from base of obj/item/attack_self(): (/mob)

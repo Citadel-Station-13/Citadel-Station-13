@@ -372,11 +372,11 @@
 /obj/machinery/bci_implanter/update_overlays()
 	var/list/overlays = ..()
 
-	if ((machine_stat & MAINT) || panel_open)
+	if ((stat & MAINT) || panel_open)
 		overlays += "maint"
 		return overlays
 
-	if (machine_stat & (NOPOWER|BROKEN))
+	if (stat & (NOPOWER|BROKEN))
 		return overlays
 
 	if (busy || locked)
@@ -448,9 +448,9 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/bci_implanter/proc/start_process()
-	if (machine_stat & (NOPOWER|BROKEN))
+	if (stat & (NOPOWER|BROKEN))
 		return
-	if ((machine_stat & MAINT) || panel_open)
+	if ((stat & MAINT) || panel_open)
 		return
 	if (!occupant || busy)
 		return
