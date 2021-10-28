@@ -1,4 +1,8 @@
 /**
+ * THIS FILE DOES NOT EXIST ON TG, THIS IS PORTED FROM VIRGO.
+ */
+
+/**
  * Creates a TGUI input text window and returns the user's response.
  *
  * This proc should be used to create alerts that the caller will wait for a response from.
@@ -21,13 +25,14 @@
 			user = client.mob
 		else
 			return
-	var/datum/tgui_input_dialog/input = new(user, message, title, default, timeout)
-	input.input_type = "text"
-	input.ui_interact(user)
-	input.wait()
-	if (input)
-		. = input.choice
-		qdel(input)
+	. = input(user, message, title, default)
+	// var/datum/tgui_input_dialog/input = new(user, message, title, default, timeout)
+	// input.input_type = "text"
+	// input.ui_interact(user)
+	// input.wait()
+	// if (input)
+	// 	. = input.choice
+	// 	qdel(input)
 
 /**
  * Creates a TGUI input message window and returns the user's response.
@@ -52,13 +57,15 @@
 			user = client.mob
 		else
 			return
-	var/datum/tgui_input_dialog/input = new(user, message, title, default, timeout)
-	input.input_type = "message"
-	input.ui_interact(user)
-	input.wait()
-	if (input)
-		. = input.choice
-		qdel(input)
+
+	. = input(user, message, title, default)
+	// var/datum/tgui_input_dialog/input = new(user, message, title, default, timeout)
+	// input.input_type = "message"
+	// input.ui_interact(user)
+	// input.wait()
+	// if (input)
+	// 	. = input.choice
+	// 	qdel(input)
 
 /**
  * Creates a TGUI input num window and returns the user's response.
@@ -83,13 +90,15 @@
 			user = client.mob
 		else
 			return
-	var/datum/tgui_input_dialog/input = new(user, message, title, default, timeout)
-	input.input_type = "num"
-	input.ui_interact(user)
-	input.wait()
-	if (input)
-		. = input.choice
-		qdel(input)
+
+	. = input(user, message, title, default)
+	// var/datum/tgui_input_dialog/input = new(user, message, title, default, timeout)
+	// input.input_type = "num"
+	// input.ui_interact(user)
+	// input.wait()
+	// if (input)
+	// 	. = input.choice
+	// 	qdel(input)
 
 /**
  * Creates an asynchronous TGUI input text window with an associated callback.
@@ -115,6 +124,7 @@
 			user = client.mob
 		else
 			return
+	// . = input(user, message, title, default)
 	var/datum/tgui_input_dialog/async/input = new(user, message, title, default, callback, timeout)
 	input.input_type = "text"
 	input.ui_interact(user)

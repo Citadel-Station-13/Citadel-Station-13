@@ -418,38 +418,38 @@
 	return TRUE
 
 /datum/component/storage/proc/mousedrop_onto(datum/source, atom/over_object, mob/M)
+	SIGNAL_HANDLER
+
 	set waitfor = FALSE
 	. = COMPONENT_NO_MOUSEDROP
+	if(!ismob(M))
+		return
+	if(!over_object)
+		return
+	if(ismecha(M.loc)) // stops inventory actions in a mech
+		return
+	if(M.incapacitated() || !M.canUseStorage())
+		return
 	var/atom/A = parent
-	if(ismob(M)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
-		A.add_fingerprint(M)
-		if(istype(A, /obj/item))
-			var/obj/item/I = A
-			I.remove_outline()	//Removes the outline when we drag
-		if(!over_object)
-			return FALSE
-		if(ismecha(M.loc)) // stops inventory actions in a mech
-			return FALSE
-		// this must come before the screen objects only block, dunno why it wasn't before
-		if(over_object == M)
-			user_show_to_mob(M, trigger_on_found = TRUE)
-			return
-		if(isrevenant(M))
-			RevenantThrow(over_object, M, source)
-			return
-		if(!M.incapacitated())
-			if(!istype(over_object, /atom/movable/screen))
-				dump_content_at(over_object, M)
-				return
-			if(A.loc != M)
-				return
-			playsound(A, "rustle", 50, 1, -5)
-			A.do_jiggle()
-			if(istype(over_object, /atom/movable/screen/inventory/hand))
-				var/atom/movable/screen/inventory/hand/H = over_object
-				M.putItemFromInventoryInHandIfPossible(A, H.held_index)
-				return
-			A.add_fingerprint(M)
+	A.add_fingerprint(M)
+	// this must come before the screen objects only block, dunno why it wasn't before
+	if(over_object == M)
+		user_show_to_mob(M, trigger_on_found = TRUE)
+	if(isrevenant(M))
+		INVOKE_ASYNC(GLOBAL_PROC, .proc/RevenantThrow, over_object, M, source)
+		return
+	if(!istype(over_object, /atom/movable/screen))
+		INVOKE_ASYNC(src, .proc/dump_content_at, over_object, M)
+		return
+	if(A.loc != M)
+		return
+	playsound(A, "rustle", 50, TRUE, -5)
+	A.do_jiggle()
+	if(istype(over_object, /atom/movable/screen/inventory/hand))
+		var/atom/movable/screen/inventory/hand/H = over_object
+		M.putItemFromInventoryInHandIfPossible(A, H.held_index)
+		return
+	A.add_fingerprint(M)
 
 /datum/component/storage/proc/user_show_to_mob(mob/M, force = FALSE, trigger_on_found = FALSE)
 	var/atom/A = parent

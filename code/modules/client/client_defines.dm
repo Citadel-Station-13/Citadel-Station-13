@@ -34,6 +34,9 @@
 	var/last_move = 0
 	var/area			= null
 
+	/// Timers are now handled by clients, not by doing a mess on the item and multiple people overwriting a single timer on the object, have fun.
+	var/tip_timer = null
+
 	/// Last time we Click()ed. No clicking twice in one tick!
 	var/last_click = 0
 
