@@ -13,15 +13,27 @@
 	/// count of disjoint areas
 	var/disjoint_logical_zones = 1
 	/// READ ONLY - Generated from level_zones
-	PROTECTED_VAR/list/zone_levels
+	VAR_PROTECTED/list/zone_levels
 	///  READ ONLY - List of PLANET LEVEL INDICES, not real z-indices, to each zone
-	PROTECTED_VAR/list/level_zones = list(1)
+	VAR_PROTECTED/list/level_zones = list(
+		1
+	)
 	/// Width of a zone in **ZLEVELS** at its widest plane
-	PROTECTED_VAR/list/zone_widths = list(1)
+	VAR_PROTECTED/list/zone_widths = list(
+		1
+	)
 	/// Height of a zone in **ZLEVELS** at its tallest plane
-	PROTECTED_VAR/list/zone_heights = list(1)
+	VAR_PROTECTED/list/zone_heights = list(
+		1
+	)
 	/// Level transit lookup. Each level needs to either be a blank list, or a list of TEXT_NORTH, TEXT_SOUTH, TEXT_EAST, TEXT_WEST.
-	PROTECTED_VAR/list/level_transits = list(list())
+	VAR_PROTECTED/list/level_transits = list(
+		list()
+	)
+	/// Level offsets for procedural generation. List of list(x, y) indexed by level. Must be >= 0, as this is *added* to what a level grabs from a /datum/procedural_generation, which goes from 1 to width or height.
+	VAR_PROTECTED/list/level_offsets = list(
+		list(0, 0)
+	)
 	/// which logical surface is considered the planetary surface
 	var/surface_zone = 1
 	/// when requested, this will instantiate to a datum/procedural_generation. indiced by zone
@@ -70,6 +82,22 @@
  */
 /datum/planet_type/proc/LevelTransitMapping(level)
 	return level_transits[level]
+
+/**
+ * Gets procedural generation x offset of a level
+ */
+/datum/planet_type/proc/LevelOffsetX(level)
+	if(!level_offsets || level_offsets.len < level)
+		return 0
+	return level_offsets[level][1]
+
+/**
+ * Gets procedural generation y offset of a level
+ */
+/datum/planet_type/proc/LevelOffsetY(level)
+	if(!level_offsets || level_offsets.len < level)
+		return 0
+	return level_offsets[level][2]
 
 /datum/planet_type/New()
 	if(istype(src, /datum/planet_type))
