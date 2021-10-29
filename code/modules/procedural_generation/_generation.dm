@@ -11,11 +11,11 @@
 	/// height
 	var/height
 	/// is generation complete
-	PROTECTED_VAR/complete = FALSE
+	VAR_PROTECTED/complete = FALSE
 	/// constant - do we generate 0 to 1's or 0 OR 1's
-	PROTECTED_VAR/binary = FALSE
+	VAR_PROTECTED/binary = FALSE
 	/// generated data cache if any
-	PROTECTED_VAR/cache
+	VAR_PROTECTED/cache
 
 /**
  * Public proc - inits with these args

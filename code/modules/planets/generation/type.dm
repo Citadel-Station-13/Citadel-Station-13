@@ -128,8 +128,11 @@
 		perlin_generators.len = disjoint_logical_zones
 	var/zone = LevelToZone(index)
 	if(!perlin_generators[index])
-		perlin_generators[index] = new /datum/procedural_generation/perlin("seed" = seeds["perlin_seed_[zone]"])
-	return automata_generators[index]
+		var/datum/procedural_generation/perlin/perlin = new
+		perlin.Initialize("seed" = seeds["perlin_seed_[zone]"])
+		perlin_generators[zone] = perlin
+		return perlin
+	return perlin_generators[zone]
 
 /**
  * Requests a cellular automata generator for a level index
@@ -140,8 +143,11 @@
 		automata_generators.len = disjoint_logical_zones
 	var/zone = LevelToZone(index)
 	if(!automata_generators[index])
-		automata_generators[index] = new /datum/procedural_generation/cellular_automata("seed" = seeds["perlin_seed_[zone]"])
-	return automata_generators[index]
+		var/datum/procedural_generation/cellular_automata/automata = new
+		automata.Initialize("seed" = seeds["perlin_seed_[zone]"])
+		automata_generators[zone] = automata
+		return automata
+	return automata_generators[zone]
 
 /**
  * Generation stage 1: Called from planet datum, allocates ourselves.
