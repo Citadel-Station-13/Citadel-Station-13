@@ -119,7 +119,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		if(!O.can_reenter_round())
 			return FALSE
 
-	var/posi_ask = alert("Become a [name]? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
+	var/posi_ask = tgui_alert(user, "Become a [name]? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?",list("Yes","No"))
 	if(posi_ask == "No" || QDELETED(src))
 		return
 	transfer_personality(user)
@@ -159,8 +159,8 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	to_chat(brainmob, welcome_message)
 	brainmob.mind.assigned_role = new_role
 	brainmob.stat = CONSCIOUS
-	GLOB.dead_mob_list -= brainmob
-	GLOB.alive_mob_list += brainmob
+	brainmob.remove_from_dead_mob_list()
+	brainmob.add_to_alive_mob_list()
 
 	visible_message(new_mob_message)
 	check_success()

@@ -165,7 +165,7 @@
 				to_chat(usr, "<span class='danger'>Unable to connect to database, changes are temporary only.</span>", confidential = TRUE)
 				use_db = FALSE
 			else
-				use_db = alert("Permanent changes are saved to the database for future rounds, temporary changes will affect only the current round", "Permanent or Temporary?", "Permanent", "Temporary", "Cancel")
+				use_db = tgui_alert(usr, "Permanent changes are saved to the database for future rounds, temporary changes will affect only the current round", "Permanent or Temporary?", list("Permanent", "Temporary", "Cancel"))
 				if(use_db == "Cancel")
 					return
 				if(use_db == "Permanent")
@@ -208,7 +208,7 @@
 	if(admin_ckey)
 		. = admin_ckey
 	else
-		admin_key = input("New admin's key","Admin key") as text|null
+		admin_key = tgui_input_text(usr, "New admin's key","Admin key")
 		. = ckey(admin_key)
 	if(!.)
 		return FALSE
@@ -247,7 +247,7 @@
 		qdel(query_add_admin_log)
 
 /datum/admins/proc/remove_admin(admin_ckey, admin_key, use_db, datum/admins/D)
-	if(alert("Are you sure you want to remove [admin_ckey]?","Confirm Removal","Do it","Cancel") == "Do it")
+	if(tgui_alert(usr, "Are you sure you want to remove [admin_ckey]?","Confirm Removal",list("Do it","Cancel")) == "Do it")
 		GLOB.admin_datums -= admin_ckey
 		GLOB.deadmins -= admin_ckey
 		if(D)
@@ -305,9 +305,9 @@
 	for(R in GLOB.admin_ranks)
 		if((R.rights & usr.client.holder.rank.can_edit_rights) == R.rights)
 			rank_names[R.name] = R
-	var/new_rank = input("Please select a rank", "New rank") as null|anything in rank_names
+	var/new_rank = tgui_input_list(usr, "Please select a rank", "New rank", rank_names)
 	if(new_rank == "*New Rank*")
-		new_rank = input("Please input a new rank", "New custom rank") as text|null
+		new_rank = tgui_input_text(usr, "Please input a new rank", "New custom rank")
 	if(!new_rank)
 		return
 	R = rank_names[new_rank]
@@ -492,7 +492,7 @@
 		to_chat(usr, "<span class='danger'>Error: Rank deletion attempted while rank still used; Tell a coder, this shouldn't happen.</span>", confidential = TRUE)
 		return
 	qdel(query_admins_with_rank)
-	if(alert("Are you sure you want to remove [admin_rank]?","Confirm Removal","Do it","Cancel") == "Do it")
+	if(tgui_alert(usr, "Are you sure you want to remove [admin_rank]?","Confirm Removal",list("Do it","Cancel")) == "Do it")
 		var/m1 = "[key_name_admin(usr)] removed rank [admin_rank] permanently"
 		var/m2 = "[key_name(usr)] removed rank [admin_rank] permanently"
 		var/datum/db_query/query_add_rank = SSdbcore.NewQuery(

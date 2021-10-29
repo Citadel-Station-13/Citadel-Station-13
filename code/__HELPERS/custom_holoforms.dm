@@ -60,7 +60,7 @@
 				S["real_name"] >> name
 				if(name)
 					characters[name] = i
-			var/chosen_name = input(C, "Which character do you wish to use as your appearance.") as anything in characters
+			var/chosen_name = tgui_input_list(C, "Which character do you wish to use as your appearance.", "", characters)
 			if(chosen_name)
 				if(C.prefs.last_custom_holoform > world.time - CUSTOM_HOLOFORM_DELAY)
 					to_chat(C.mob, "<span class='boldwarning'>You are attempting to set your custom holoform too fast!</span>")

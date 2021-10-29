@@ -17,11 +17,7 @@
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
-
 	power_change()
-
-/obj/machinery/computer/Destroy()
-	. = ..()
 
 /obj/machinery/computer/process()
 	if(stat & (NOPOWER|BROKEN))
@@ -119,6 +115,9 @@
 			A.circuit = circuit
 			// Circuit removal code is handled in /obj/machinery/Exited()
 			circuit.forceMove(A)
+			// no it's not 4head the circuit's in nullspace which means this won't be called!!
+			circuit = null
+			component_parts -= circuit
 			A.set_anchored(TRUE)
 			if(stat & BROKEN)
 				if(user)

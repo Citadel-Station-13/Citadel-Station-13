@@ -19,8 +19,8 @@
 				   "60"='sound/instruments/synthesis_samples/organ/crisis_hammond/c4.ogg',
 				   "72"='sound/instruments/synthesis_samples/organ/crisis_hammond/c5.ogg')
 
-/datum/instrument/organ/crisis_accordian
-	name = "Crisis Accordian"
+/datum/instrument/organ/crisis_accordion
+	name = "Crisis Accordion"
 	id = "crack"
 	real_samples = list("36"='sound/instruments/synthesis_samples/organ/crisis_accordian/c2.ogg',
 				   "48"='sound/instruments/synthesis_samples/organ/crisis_accordian/c3.ogg',
@@ -34,8 +34,8 @@
 				   "60"='sound/instruments/synthesis_samples/organ/crisis_harmonica/c4.ogg',
 				   "72"='sound/instruments/synthesis_samples/organ/crisis_harmonica/c5.ogg')
 
-/datum/instrument/organ/crisis_tango_accordian
-	name = "Crisis Tango Accordian"
+/datum/instrument/organ/crisis_tango_accordion
+	name = "Crisis Tango Accordion"
 	id = "crtango"
 	real_samples = list("36"='sound/instruments/synthesis_samples/organ/crisis_tangaccordian/c2.ogg',
 				   "48"='sound/instruments/synthesis_samples/organ/crisis_tangaccordian/c3.ogg',

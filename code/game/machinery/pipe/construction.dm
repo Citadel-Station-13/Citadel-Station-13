@@ -245,7 +245,7 @@ Buildable meters
 	disposable = FALSE
 
 /obj/item/pipe/bluespace/attack_self(mob/user)
-	var/new_name = input(user, "Enter identifier for bluespace pipe network", "bluespace pipe", bluespace_network_name) as text|null
+	var/new_name = tgui_input_text(user, "Enter identifier for bluespace pipe network", "bluespace pipe", bluespace_network_name)
 	if(!isnull(new_name))
 		bluespace_network_name = new_name
 

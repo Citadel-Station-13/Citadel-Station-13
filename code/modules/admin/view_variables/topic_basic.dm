@@ -47,7 +47,7 @@
 				usr.client.debug_variables(src)
 				return
 
-		#ifdef REFERENCE_TRACKING
+		#ifdef EXTOOLS_REFERENCE_TRACKING
 		if(href_list[VV_HK_VIEW_REFERENCES])
 			var/datum/D = locate(href_list[VV_HK_TARGET])
 			if(!D)
@@ -68,7 +68,7 @@
 		names += componentsubtypes
 		names += "---Elements---"
 		names += sortList(subtypesof(/datum/element), /proc/cmp_typepaths_asc)
-		var/result = input(usr, "Choose a component/element to add","better know what ur fuckin doin pal") as null|anything in names
+		var/result = tgui_input_list(usr, "Choose a component/element to add","better know what ur fuckin doin pal",names)
 		if(!usr || !result || result == "---Components---" || result == "---Elements---")
 			return
 		if(QDELETED(src))

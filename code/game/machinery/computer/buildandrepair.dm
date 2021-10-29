@@ -151,6 +151,7 @@
 
 					new_computer.RefreshParts()
 					new_computer.on_construction()
+					new_computer.circuit.moveToNullspace()
 
 				qdel(src)
 				return

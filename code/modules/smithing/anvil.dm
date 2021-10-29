@@ -115,7 +115,7 @@
 	currentquality += qualitychange
 	var/list/shapingsteps = list("weak hit", "strong hit", "heavy hit", "fold", "draw", "shrink", "bend", "punch", "upset") //weak/strong/heavy hit affect strength. All the other steps shape.
 	workpiece_state = WORKPIECE_INPROGRESS
-	var/stepdone = input(user, "How would you like to work the metal?") in shapingsteps
+	var/stepdone = tgui_input_list(user, "How would you like to work the metal?", "", shapingsteps)
 	var/steptime = 50
 	if(user.mind.skill_holder)
 		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dwarfy/blacksmithing)/10 + 1
@@ -283,6 +283,13 @@
 /obj/structure/anvil/obtainable/basic
 	name = "anvil"
 	desc = "An anvil. It's got wheels bolted to the bottom."
+	anvilquality = 0
+	itemqualitymax = 6
+
+/obj/structure/anvil/obtainable/bone
+	name = "bone anvil"
+	desc = "An anvil. It's made of goliath bones and hide and held together by watcher sinews."
+	icon_state = "bonevil"
 	anvilquality = 0
 	itemqualitymax = 6
 

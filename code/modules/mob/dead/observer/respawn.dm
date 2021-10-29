@@ -21,7 +21,7 @@
 	if(!valid.len)
 		to_chat(src, "<span class='warning'>No player found that is either a ghost or is in lobby with restrictions active.</span>")
 		return
-	var/ckey = valid[input(src, "Choose a player (only showing logged in players who have restrictions)", "Unrestricted Respawn") as null|anything in valid]
+	var/ckey = valid[tgui_input_list(src, "Choose a player (only showing logged in players who have restrictions)", "Unrestricted Respawn", valid)]
 	var/client/player = GLOB.directory[ckey]
 	if(!player)
 		to_chat(src, "<span class='warning'>Client not found.</span>")
@@ -29,7 +29,7 @@
 	var/mob/M = player.mob
 	if(istype(M, /mob/dead/observer))
 		var/mob/dead/observer/O = M
-		var/confirm = alert(src, "Send [O]([ckey]) back to the lobby without respawn restrictions?", "Send to Lobby", "Yes", "No")
+		var/confirm = tgui_alert(src, "Send [O]([ckey]) back to the lobby without respawn restrictions?", "Send to Lobby", list("Yes", "No"))
 		if(confirm != "Yes")
 			return
 		message_admins("[key_name_admin(src)] gave [key_name_admin(O)] a full respawn and sent them back to the lobby.")
@@ -39,7 +39,7 @@
 		O.client.prefs.dnr_triggered = FALSE
 	else if(istype(M, /mob/dead/new_player))
 		var/mob/dead/new_player/NP = M
-		var/confirm = alert(src, "Remove [NP]'s respawn restrictions?", "Remove Restrictions", "Yes", "No")
+		var/confirm = tgui_alert(src, "Remove [NP]'s respawn restrictions?", "Remove Restrictions", list("Yes", "No"))
 		if(confirm != "Yes")
 			return
 		message_admins("[key_name_admin(src)] removed [ckey]'s respawn restrictions.")
@@ -67,7 +67,7 @@
 	if(!valid.len)
 		to_chat(src, "<span class='warning'>No logged in ghosts found.</span>")
 		return
-	var/mob/dead/observer/O = valid[input(src, "Choose a player (only showing logged in)", "Remove Respawn Timer") as null|anything in valid]
+	var/mob/dead/observer/O = valid[tgui_input_list(src, "Choose a player (only showing logged in)", "Remove Respawn Timer", valid)]
 
 	if(!O.client)
 		to_chat(src, "<span class='warning'>[O] has no client.</span>")
@@ -165,7 +165,7 @@
 
 /**
  * Actual proc that removes us and puts us back on lobby
- * 
+ *
  * Returns the new mob.
  */
 /mob/dead/observer/proc/transfer_to_lobby()

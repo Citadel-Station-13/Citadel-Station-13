@@ -483,7 +483,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	if(!holder ||!check_rights(R_FUN))
 		return
 
-	var/choice = alert(src, "What kind of level would you like to load?", "Load Away/VR", AWAY_MISSION_NAME, VIRT_REALITY_NAME, "Cancel")
+	var/choice = tgui_alert(src, "What kind of level would you like to load?", "Load Away/VR", list(AWAY_MISSION_NAME, VIRT_REALITY_NAME, "Cancel"))
 
 	var/list/possible_options
 	var/list/ztraits
@@ -493,7 +493,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			ztraits = list(ZTRAIT_AWAY = TRUE, ZTRAIT_VR = TRUE)
 		if(AWAY_MISSION_NAME)
 			if(!GLOB.the_gateway)
-				if(alert("There's no home gateway on the station. You sure you want to continue ?", "Uh oh", "Yes", "No") != "Yes")
+				if(tgui_alert(src, "There's no home gateway on the station. You sure you want to continue ?", "Uh oh", list("Yes", "No")) != "Yes")
 					return
 			possible_options = GLOB.potential_away_levels
 			ztraits = list(ZTRAIT_AWAY = TRUE)
@@ -503,7 +503,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	var/away_name
 	var/datum/space_level/away_level
 
-	var/answer = input("What kind ? ","Away/VR") as null|anything in list(possible_options + "Custom")
+	var/answer = tgui_input_list(src, "What kind ? ","Away/VR", list(possible_options + "Custom"))
 	switch(answer)
 		if(null)
 			return

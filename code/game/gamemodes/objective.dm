@@ -39,16 +39,11 @@ GLOBAL_LIST_EMPTY(objectives)
 //Shared by few objective types
 /datum/objective/proc/admin_simple_target_pick(mob/admin)
 	var/list/possible_targets = list("Free objective")
-	var/def_value
 	for(var/datum/mind/possible_target in SSticker.minds)
 		if ((possible_target != src) && ishuman(possible_target.current))
 			possible_targets += possible_target.current
 
-
-	if(target && target.current)
-		def_value = target.current
-
-	var/mob/new_target = input(admin,"Select target:", "Objective target", def_value) as null|anything in possible_targets
+	var/mob/new_target = tgui_input_list(admin,"Select target:", "Objective target", possible_targets)
 	if (!new_target)
 		return
 
@@ -160,12 +155,14 @@ If not set, defaults to check_completion instead. Set it. It's used by cryo.
 
 /datum/objective/proc/give_special_equipment(special_equipment)
 	var/datum/mind/receiver = pick(get_owners())
+	. = list()
 	if(receiver && receiver.current)
 		if(ishuman(receiver.current))
 			var/mob/living/carbon/human/H = receiver.current
 			var/list/slots = list("backpack" = SLOT_IN_BACKPACK)
 			for(var/eq_path in special_equipment)
 				var/obj/O = new eq_path
+				. += O
 				H.equip_in_one_of_slots(O, slots, critical = TRUE)
 
 /datum/objective/assassinate
@@ -560,6 +557,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 	name = "steal"
 	var/datum/objective_item/targetinfo = null //Save the chosen item datum so we can access it later.
 	var/obj/item/steal_target = null //Needed for custom objectives (they're just items, not datums).
+	var/list/special_items_given = list()
 	martyr_compatible = 0
 
 /datum/objective/steal/get_target()
@@ -570,6 +568,11 @@ GLOBAL_LIST_EMPTY(possible_items)
 	if(!GLOB.possible_items.len)//Only need to fill the list when it's needed.
 		for(var/I in subtypesof(/datum/objective_item/steal))
 			new I
+
+/datum/objective/steal/Destroy(force, ...)
+	if(length(special_items_given))
+		QDEL_LIST(special_items_given)
+	. = ..()
 
 /datum/objective/steal/find_target(dupe_search_range, blacklist)
 	var/list/datum/mind/owners = get_owners()
@@ -589,7 +592,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 		targetinfo = item
 		steal_target = targetinfo.targetitem
 		explanation_text = "Steal [targetinfo.name]"
-		give_special_equipment(targetinfo.special_equipment)
+		special_items_given = give_special_equipment(targetinfo.special_equipment)
 		return steal_target
 	else
 		explanation_text = "Free objective"
@@ -597,12 +600,12 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/steal/admin_edit(mob/admin)
 	var/list/possible_items_all = GLOB.possible_items+"custom"
-	var/new_target = input(admin,"Select target:", "Objective target", steal_target) as null|anything in possible_items_all
+	var/new_target = tgui_input_list(admin,"Select target:", "Objective target", possible_items_all)
 	if (!new_target)
 		return
 
 	if (new_target == "custom") //Can set custom items.
-		var/custom_path = input(admin,"Search for target item type:","Type") as null|text
+		var/custom_path = tgui_input_text(admin,"Search for target item type:","Type")
 		if (!custom_path)
 			return
 		var/obj/item/custom_target = pick_closest_path(custom_path, make_types_fancy(subtypesof(/obj/item)))
@@ -719,7 +722,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	return checking.researched_nodes.len >= target_amount
 
 /datum/objective/download/admin_edit(mob/admin)
-	var/count = input(admin,"How many nodes ?","Nodes",target_amount) as num|null
+	var/count = tgui_input_num(admin,"How many nodes ?","Nodes",target_amount)
 	if(count)
 		target_amount = count
 	update_explanation_text()
@@ -765,7 +768,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	return captured_amount >= target_amount
 
 /datum/objective/capture/admin_edit(mob/admin)
-	var/count = input(admin,"How many mobs to capture ?","capture",target_amount) as num|null
+	var/count = tgui_input_num(admin,"How many mobs to capture ?","capture",target_amount)
 	if(count)
 		target_amount = count
 	update_explanation_text()
@@ -797,7 +800,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	explanation_text = "Extract [target_amount] compatible genome\s."
 
 /datum/objective/absorb/admin_edit(mob/admin)
-	var/count = input(admin,"How many people to absorb?","absorb",target_amount) as num|null
+	var/count = tgui_input_num(admin,"How many people to absorb?","absorb",target_amount)
 	if(count)
 		target_amount = count
 	update_explanation_text()
@@ -887,7 +890,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/destroy/admin_edit(mob/admin)
 	var/list/possible_targets = active_ais(1)
 	if(possible_targets.len)
-		var/mob/new_target = input(admin,"Select target:", "Objective target") as null|anything in possible_targets
+		var/mob/new_target = tgui_input_list(admin,"Select target:", "Objective target", possible_targets)
 		target = new_target.mind
 	else
 		to_chat(admin, "No active AIs with minds")
@@ -1180,6 +1183,7 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 /datum/objective/sabotage
 	name = "sabotage"
 	var/datum/sabotage_objective/targetinfo = null //composition > inheritance.
+	var/list/special_items_given = list()
 
 /datum/objective/sabotage/get_target()
 	return targetinfo.sabotage_type
@@ -1189,6 +1193,11 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	if(!GLOB.possible_sabotages.len)//Only need to fill the list when it's needed.
 		for(var/I in subtypesof(/datum/sabotage_objective))
 			new I
+
+/datum/objective/sabotage/Destroy()
+	if(length(special_items_given))
+		QDEL_LIST(special_items_given)
+	. = ..()
 
 /datum/objective/sabotage/find_target(dupe_search_range, blacklist)
 	var/list/datum/mind/owners = get_owners()
@@ -1207,7 +1216,7 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	if(sabo)
 		targetinfo = sabo
 		explanation_text = "[targetinfo.name]"
-		give_special_equipment(targetinfo.special_equipment)
+		special_items_given = give_special_equipment(targetinfo.special_equipment)
 		return sabo
 	else
 		explanation_text = "Free objective"

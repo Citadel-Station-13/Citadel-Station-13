@@ -18,7 +18,7 @@
 			if(act_intent == INTENT_HELP || act_intent == INTENT_GRAB)
 				return
 		if(buckled_mobs.len > 1)
-			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in buckled_mobs
+			var/unbuckled = tgui_input_list(user, "Who do you wish to unbuckle?","Unbuckle Who?", buckled_mobs)
 			if(user_unbuckle_mob(unbuckled,user))
 				return 1
 		else
@@ -161,6 +161,6 @@
 	else if(length(buckled_mobs) == 1)
 		return user_unbuckle_mob(buckled_mobs[1], user)
 	else
-		var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in buckled_mobs
+		var/unbuckled = tgui_input_list(user, "Who do you wish to unbuckle?","Unbuckle Who?", buckled_mobs)
 		return user_unbuckle_mob(unbuckled, user)
 

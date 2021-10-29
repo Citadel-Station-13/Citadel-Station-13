@@ -573,6 +573,10 @@
 	if(batteries.len)
 		var/obj/item/stock_parts/cell/ToCharge = pick(batteries)
 		ToCharge.charge += min(ToCharge.maxcharge - ToCharge.charge, ToCharge.maxcharge/10) //10% of the cell, or to maximum.
+		ToCharge.update_appearance() //make sure the cell gets their appearance updated.
+		var/atom/l = ToCharge.loc
+		if(isgun(l)) //updates the gun appearance as well if the cell is inside one.
+			l.update_appearance()
 		to_chat(owner, "<span class='notice'>[linked_extract] discharges some energy into a device you have.</span>")
 	return ..()
 

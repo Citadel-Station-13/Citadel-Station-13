@@ -11,6 +11,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
 	casing_ejector = FALSE
 	var/recentpump = 0 // to prevent spammage
+	var/clip_delay = CLICK_CD_MELEE
 	weapon_weight = WEAPON_HEAVY
 	sawn_item_state = "sawnshotgun"
 
@@ -24,6 +25,8 @@
 		playsound(user, 'sound/weapons/shotguninsert.ogg', 60, 1)
 		A.update_icon()
 		update_icon()
+		if(istype(A, /obj/item/ammo_box))
+			user.SetNextAction(clip_delay)
 
 /obj/item/gun/ballistic/shotgun/process_chamber(mob/living/user, empty_chamber = 0)
 	return ..() //changed argument value
@@ -240,20 +243,20 @@
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 	name = "warden's combat shotgun"
-	desc = "A modified version of the semi automatic combat shotgun with a collapsible stock. For close encounters."
+	desc = "A modified version of the semi-automatic combat shotgun with a collapsible stock and a safety that prevents firing while folded. For close encounters."
 	icon_state = "cshotgunc"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_NORMAL
 	var/stock = FALSE
+	var/extend_sound = 'sound/weapons/batonextend.ogg'
 	recoil = 5
 	spread = 2
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact/AltClick(mob/living/user)
-	. = ..()
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)) || item_flags & IN_STORAGE)
 		return
 	toggle_stock(user)
-	return TRUE
+	. = ..()
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact/examine(mob/user)
 	. = ..()
@@ -271,10 +274,19 @@
 		to_chat(user, "You fold the stock.")
 		recoil = 5
 		spread = 2
+	playsound(src.loc, extend_sound, 50, 1)
 	update_icon()
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact/update_icon_state()
 	icon_state = "[current_skin ? unique_reskin[current_skin] : "cshotgun"][stock ? "" : "c"]"
+
+/obj/item/gun/ballistic/shotgun/automatic/combat/compact/afterattack(atom/target, mob/living/user, flag, params)
+	if(!stock)
+		shoot_with_empty_chamber(user)
+		to_chat(user, "<span class='warning'>[src] won't fire with a folded stock!</span>")
+	else
+		. = ..()
+		update_icon()
 
 //Dual Feed Shotgun
 
@@ -349,9 +361,13 @@
 	icon_state = "levercarabine"
 	item_state = "leveraction"
 	sawn_item_state = "maresleg"
+	var/can_cut = TRUE
 
 /obj/item/gun/ballistic/shotgun/leveraction/attackby(obj/item/A, mob/user, params)
 	..()
+	if(!can_cut)
+		to_chat(user, "<span class='warning'>You can't cut \the [src] down!</span>")
+		return
 	if(A.tool_behaviour == TOOL_SAW || istype(A, /obj/item/gun/energy/plasmacutter))
 		sawoff(user)
 	if(istype(A, /obj/item/melee/transforming/energy))
@@ -367,3 +383,11 @@
 		icon_state = "[unique_reskin[current_skin]][sawn_off ? "-sawn" : ""][chambered ? "" : "-e"]"
 	else
 		icon_state = "[initial(icon_state)][sawn_off ? "-sawn" : ""][chambered ? "" : "-e"]"
+
+/obj/item/gun/ballistic/shotgun/leveraction/brush
+	name = "brush gun"
+	desc = "While lever-actions have been horribly out of date for hundreds of years now, \
+	putting a nicely sized hole in a man-sized target with a .45-70 round has stayed relatively timeless."
+	icon_state = "brushgun"
+	can_cut = FALSE
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/levergun/brush

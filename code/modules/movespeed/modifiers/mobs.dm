@@ -113,6 +113,7 @@
 	multiplicative_slowdown = CRAWLING_ADD_SLOWDOWN
 	movetypes = CRAWLING
 	flags = IGNORE_NOSLOW
+	priority = 20000
 
 /datum/movespeed_modifier/mob_config_speedmod
 	variable = TRUE
@@ -165,4 +166,7 @@
 	multiplicative_slowdown = -0.5
 
 /datum/movespeed_modifier/dragon_depression
+	multiplicative_slowdown = 5
+
+/datum/movespeed_modifier/gauntlet_concussion
 	multiplicative_slowdown = 5

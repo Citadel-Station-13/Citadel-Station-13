@@ -173,7 +173,7 @@
 /obj/structure/bonfire/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/rods) && !can_buckle && !grill)
 		var/obj/item/stack/rods/R = W
-		var/choice = input(user, "What would you like to construct?", "Bonfire") as null|anything in list("Stake","Grill")
+		var/choice = tgui_input_list(user, "What would you like to construct?", "Bonfire", list("Stake","Grill"))
 		switch(choice)
 			if("Stake")
 				R.use(1)
@@ -226,7 +226,7 @@
 		var/turf/open/O = loc
 		if(O.air)
 			var/datum/gas_mixture/loc_air = O.air
-			if(loc_air.get_moles(GAS_O2) > 13)
+			if(loc_air.get_moles(GAS_O2) > 3)
 				return TRUE
 	return FALSE
 

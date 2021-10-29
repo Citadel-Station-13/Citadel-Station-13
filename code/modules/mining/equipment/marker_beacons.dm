@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	. = TRUE
-	var/input_color = input(user, "Choose a color.", "Beacon Color") as null|anything in GLOB.marker_beacon_colors
+	var/input_color = tgui_input_list(user, "Choose a color.", "Beacon Color", GLOB.marker_beacon_colors)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	if(input_color)
@@ -133,7 +133,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	. = TRUE
-	var/input_color = input(user, "Choose a color.", "Beacon Color") as null|anything in GLOB.marker_beacon_colors
+	var/input_color = tgui_input_list(user, "Choose a color.", "Beacon Color", GLOB.marker_beacon_colors)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	if(input_color)

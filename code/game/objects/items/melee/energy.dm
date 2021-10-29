@@ -184,7 +184,7 @@
 	hitcost = 75 //Costs more than a standard cyborg esword
 	w_class = WEIGHT_CLASS_NORMAL
 	sharpness = SHARP_EDGED
-	light_color = "#40ceff"
+	light_color = LIGHT_COLOR_RED
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.7
 
@@ -415,7 +415,7 @@
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return TRUE
 
-	if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
+	if(tgui_alert(user, "Are you sure you want to recolor your blade?", "Confirm Repaint", list("Yes", "No")) == "Yes")
 		var/energy_color_input = input(usr,"","Choose Energy Color",light_color) as color|null
 		if(energy_color_input)
 			light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
