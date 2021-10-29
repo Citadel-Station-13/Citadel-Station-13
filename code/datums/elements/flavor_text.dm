@@ -112,7 +112,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		var/datum/element/flavor_text/F = i
 		choices[F.flavor_name] = F
 
-	var/chosen = input(src, "Which flavor text would you like to modify?") as null|anything in choices
+	var/chosen = tgui_input_list(src, "Which flavor text would you like to modify?", "", choices)
 	if(!chosen)
 		return
 	var/datum/element/flavor_text/F = choices[chosen]

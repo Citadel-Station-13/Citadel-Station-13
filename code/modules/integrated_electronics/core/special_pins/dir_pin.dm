@@ -3,7 +3,7 @@
 	name = "dir pin"
 
 /datum/integrated_io/dir/ask_for_pin_data(mob/user)
-	var/new_data = input("Please type in a valid dir number.  \
+	var/new_data = tgui_input_num(user, "Please type in a valid dir number.  \
 	Valid dirs are;\n\
 	North/Fore = [NORTH],\n\
 	South/Aft = [SOUTH],\n\
@@ -12,7 +12,7 @@
 	Northeast = [NORTHEAST],\n\
 	Northwest = [NORTHWEST],\n\
 	Southeast = [SOUTHEAST],\n\
-	Southwest = [SOUTHWEST]","[src] dir writing") as null|num
+	Southwest = [SOUTHWEST]","[src] dir writing")
 	if(isnum(new_data) && holder.check_interactivity(user) )
 		to_chat(user, "<span class='notice'>You input [new_data] into the pin.</span>")
 		write_data_to_pin(new_data)

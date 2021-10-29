@@ -48,7 +48,7 @@
 		to_chat(user, "<span class='danger'>You were too late! Better luck next time.</span>")
 		return
 	user.forceMove(get_turf(src)) //If we attack through the alert, jump to the chassis so we know what we're getting into
-	if(alert(user, "Become a [construct_name]? You can no longer be cloned!", construct_name, "Yes", "Cancel") == "Cancel")
+	if(tgui_alert(user, "Become a [construct_name]? You can no longer be cloned!", construct_name, list("Yes", "Cancel")) == "Cancel")
 		return
 	if(QDELETED(src))
 		to_chat(user, "<span class='danger'>You were too late! Better luck next time.</span>")

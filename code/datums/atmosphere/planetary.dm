@@ -7,9 +7,9 @@
 		GAS_N2=10,
 	)
 	normal_gases = list(
-		GAS_O2=10,
-		GAS_N2=10,
-		GAS_CO2=10,
+		GAS_O2=5,
+		GAS_N2=5,
+		GAS_CO2=5,
 	)
 	restricted_gases = list(
 		GAS_BZ=0.1,
@@ -22,6 +22,12 @@
 
 	minimum_temp = 270
 	maximum_temp = 320
+
+/datum/atmosphere/lavaland/check_for_sanity(datum/gas_mixture/mix)
+	var/datum/breathing_class/o2_class = GLOB.gas_data.breathing_classes[BREATH_OXY]
+	while(o2_class.get_effective_pp(mix) < 10)
+		mix.adjust_moles(GAS_CO2, -0.5)
+		mix.adjust_moles(GAS_O2, 0.5)
 
 /datum/atmosphere/icemoon
 	id = ICEMOON_DEFAULT_ATMOS

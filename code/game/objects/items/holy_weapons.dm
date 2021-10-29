@@ -769,12 +769,33 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
+/obj/item/nullrod/tribal_knife/pickup(mob/user)
+	. = ..()
+	reroll()
+
 /obj/item/nullrod/tribal_knife/process()
-	slowdown = rand(-2, 2)
+	reroll()
+
+/obj/item/nullrod/tribal_knife/proc/reroll()
 	if(iscarbon(loc))
 		var/mob/living/carbon/wielder = loc
 		if(wielder.is_holding(src))
-			wielder.update_equipment_speed_mods()
+			var/current_tiles = 10 / max(wielder.cached_multiplicative_slowdown, world.tick_lag)
+			var/datum/movespeed_modifier/M = wielder.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/item/arrhythmic_knife, update = FALSE, multiplicative_slowdown = pick(-10, -10, 0, (current_tiles - 2) / 10, (current_tiles - 4) / 10))
+			M.max_tiles_per_second_boost = pick(3, 6)
+			wielder.update_movespeed()		// update movespeed manually
+
+/obj/item/nullrod/tribal_knife/dropped(mob/user)
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/item/arrhythmic_knife)
+	return ..()
+
+/datum/movespeed_modifier/item/arrhythmic_knife
+	variable = TRUE
+	flags = IGNORE_NOSLOW
+	movetypes = ~FLOATING
+	priority = 750
+	absolute_max_tiles_per_second = 20
+	max_tiles_per_second_boost = 6
 
 /obj/item/nullrod/pitchfork
 	icon_state = "pitchfork0"

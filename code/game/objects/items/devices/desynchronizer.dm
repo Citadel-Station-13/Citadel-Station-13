@@ -36,7 +36,7 @@
 	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
-	var/new_duration = input(user, "Set the duration (5-300):", "Desynchronizer", duration / 10) as null|num
+	var/new_duration = tgui_input_num(user, "Set the duration (5-300):", "Desynchronizer", duration / 10)
 	if(new_duration)
 		new_duration = new_duration SECONDS
 		new_duration = clamp(new_duration, 50, max_duration)

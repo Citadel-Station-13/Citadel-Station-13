@@ -33,7 +33,7 @@
 		var/datum/picture/p = i
 		nametemp += p.picture_name
 		temp[p.picture_name] = p
-	find = input(user, "Select image") in nametemp|null
+	find = tgui_input_list(user, "Select image", "", nametemp)
 	if(!find)
 		return
 	return temp[find]

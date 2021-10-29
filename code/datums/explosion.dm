@@ -385,7 +385,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	set name = "Check Bomb Impact"
 	set category = "Debug"
 
-	var/newmode = alert("Use reactionary explosions?","Check Bomb Impact", "Yes", "No")
+	var/newmode = tgui_alert(src, "Use reactionary explosions?","Check Bomb Impact", list("Yes", "No"))
 	var/turf/epicenter = get_turf(mob)
 	if(!epicenter)
 		return
@@ -394,7 +394,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/heavy = 0
 	var/light = 0
 	var/list/choices = list("Small Bomb","Medium Bomb","Big Bomb","Custom Bomb")
-	var/choice = input("Bomb Size?") in choices
+	var/choice = tgui_input_list(src, "Bomb Size?", "", choices)
 	switch(choice)
 		if(null)
 			return 0
@@ -411,9 +411,9 @@ GLOBAL_LIST_EMPTY(explosions)
 			heavy = 5
 			light = 7
 		if("Custom Bomb")
-			dev = input("Devastation range (Tiles):") as num
-			heavy = input("Heavy impact range (Tiles):") as num
-			light = input("Light impact range (Tiles):") as num
+			dev = tgui_input_num(src, "Devastation range (Tiles):")
+			heavy = tgui_input_num(src, "Heavy impact range (Tiles):")
+			light = tgui_input_num(src, "Light impact range (Tiles):")
 
 	var/max_range = max(dev, heavy, light)
 	var/x0 = epicenter.x

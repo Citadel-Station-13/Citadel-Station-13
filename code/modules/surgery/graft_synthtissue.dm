@@ -37,7 +37,7 @@
 				O.on_find(user)
 				organs -= O
 				organs[O.name] = O
-			chosen_organ = input("Target which organ?", "Surgery", null, null) as null|anything in organs
+			chosen_organ = tgui_input_list(user, "Target which organ?", "Surgery", organs)
 			chosen_organ = organs[chosen_organ]
 			if(!chosen_organ)
 				return -1

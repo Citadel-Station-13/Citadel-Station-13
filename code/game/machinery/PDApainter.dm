@@ -112,7 +112,7 @@
 	if(!storedpda)
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 		return
-	var/choice = input(user, "Select the new skin!", "PDA Painting") as null|anything in colorlist
+	var/choice = tgui_input_list(user, "Select the new skin!", "PDA Painting", colorlist)
 	if(!choice || !storedpda || !in_range(src, user))
 		return
 	var/list/P = colorlist[choice]

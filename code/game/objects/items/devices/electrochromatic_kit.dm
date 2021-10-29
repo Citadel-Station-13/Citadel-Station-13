@@ -8,7 +8,7 @@
 	. = ..()
 	if(.)
 		return
-	var/new_id = input(user, "Set this kit's electrochromatic ID", "Set ID", id) as text|null
+	var/new_id = tgui_input_text(user, "Set this kit's electrochromatic ID", "Set ID", id)
 	if(isnull(new_id))
 		return
 	id = new_id

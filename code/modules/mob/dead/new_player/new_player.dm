@@ -33,6 +33,13 @@
 
 	. = ..()
 
+	GLOB.new_player_list += src
+
+/mob/dead/new_player/Destroy()
+	GLOB.new_player_list -= src
+
+	return ..()
+
 /mob/dead/new_player/prepare_huds()
 	return
 
@@ -251,7 +258,7 @@
 				var/list/days = list()
 				for(var/number in 1 to total_days_in_player_month)
 					days += number
-				var/player_day = input(src, "What day of the month were you born in.") as anything in days
+				var/player_day = tgui_input_list(src, "What day of the month were you born in.", "", days)
 				if(player_day <= current_day)
 					//their birthday has passed
 					age_gate_result = TRUE
@@ -391,7 +398,7 @@
 				var/id_max = text2num(href_list["maxid"])
 
 				if( (id_max - id_min) > 100 )	//Basic exploit prevention
-					                            //(protip, this stops no exploits)
+												//(protip, this stops no exploits)
 					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
 					return
 
@@ -448,7 +455,7 @@
 
 	var/mintime = max(CONFIG_GET(number/respawn_delay), (SSticker.round_start_time + (CONFIG_GET(number/respawn_minimum_delay_roundstart) * 600)) - world.time, 0)
 
-	var/this_is_like_playing_right = alert(src,"Are you sure you wish to observe? You will not be able to respawn for [round(mintime / 600, 0.1)] minutes!!","Player Setup","Yes","No")
+	var/this_is_like_playing_right = tgui_alert(src, "Are you sure you wish to observe? You will not be able to respawn for [round(mintime / 600, 0.1)] minutes!!","Player Setup",list("Yes","No"))
 
 	if(QDELETED(src) || !src.client || this_is_like_playing_right != "Yes")
 		ready = PLAYER_NOT_READY
@@ -530,11 +537,11 @@
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	var/error = IsJobUnavailable(rank)
 	if(error != JOB_AVAILABLE)
-		alert(src, get_job_unavailable_error_message(error, rank))
+		tgui_alert(src, get_job_unavailable_error_message(error, rank))
 		return FALSE
 
 	if(SSticker.late_join_disabled)
-		alert(src, "An administrator has disabled late join spawning.")
+		tgui_alert(src, "An administrator has disabled late join spawning.")
 		return FALSE
 
 	if(!respawn_latejoin_check(notify = TRUE))
@@ -544,7 +551,7 @@
 	if(SSshuttle.arrivals)
 		close_spawn_windows()	//In case we get held up
 		if(SSshuttle.arrivals.damaged && CONFIG_GET(flag/arrivals_shuttle_require_safe_latejoin))
-			src << alert("The arrivals shuttle is currently malfunctioning! You cannot join.")
+			tgui_alert(src, "The arrivals shuttle is currently malfunctioning! You cannot join.")
 			return FALSE
 
 		if(CONFIG_GET(flag/arrivals_shuttle_require_undocked))

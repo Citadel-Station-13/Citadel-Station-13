@@ -84,6 +84,7 @@
 	else
 		reagents.trans_to(D, amount_per_transfer_from_this, 1/range)
 	D.add_atom_colour(mix_color_from_reagents(D.reagents.reagent_list), TEMPORARY_COLOUR_PRIORITY)
+	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 	last_spray = world.time
 	INVOKE_ASYNC(D, /obj/effect/decal/chempuff/proc/run_puff, A)
 
@@ -110,7 +111,7 @@
 	set src in usr
 	if(usr.incapacitated())
 		return
-	if (alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", "Yes", "No") != "Yes")
+	if (tgui_alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", list("Yes", "No")) != "Yes")
 		return
 	if(isturf(usr.loc) && src.loc == usr)
 		to_chat(usr, "<span class='notice'>You empty \the [src] onto the floor.</span>")

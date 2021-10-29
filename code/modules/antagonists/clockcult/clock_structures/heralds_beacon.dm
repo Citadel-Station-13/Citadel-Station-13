@@ -71,7 +71,7 @@
 		to_chat(user, "<span class='danger'>You can no longer vote with [src].</span>")
 		return
 	var/voting = !(user.key in voters)
-	if(alert(user, "[voting ? "Cast a" : "Undo your"] vote to activate the beacon?", "Herald's Beacon", "Change Vote", "Cancel") == "Cancel")
+	if(tgui_alert(user, "[voting ? "Cast a" : "Undo your"] vote to activate the beacon?", "Herald's Beacon", list("Change Vote", "Cancel")) == "Cancel")
 		return
 	if(!user.canUseTopic(src) || !is_servant_of_ratvar(user) || !available)
 		return

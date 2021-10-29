@@ -6,7 +6,7 @@
 	if(!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
-	var/polltype = input("Choose poll type.","Poll Type") as null|anything in list("Single Option","Text Reply","Rating","Multiple Choice", "Instant Runoff Voting")
+	var/polltype = tgui_input_list(src, "Choose poll type.","Poll Type", list("Single Option","Text Reply","Rating","Multiple Choice", "Instant Runoff Voting"))
 	var/choice_amount = 0
 	switch(polltype)
 		if("Single Option")
@@ -17,7 +17,7 @@
 			polltype = POLLTYPE_RATING
 		if("Multiple Choice")
 			polltype = POLLTYPE_MULTI
-			choice_amount = input("How many choices should be allowed?","Select choice amount") as num|null
+			choice_amount = tgui_input_num(src, "How many choices should be allowed?","Select choice amount")
 			switch(choice_amount)
 				if(0)
 					to_chat(src, "Multiple choice poll must have at least one choice allowed.")
@@ -31,7 +31,7 @@
 		else
 			return 0
 	var/starttime = SQLtime()
-	var/endtime = input("Set end time for poll as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than starting time for obvious reasons.", "Set end time", SQLtime()) as text
+	var/endtime = tgui_input_text(src, "Set end time for poll as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than starting time for obvious reasons.", "Set end time", SQLtime())
 	if(!endtime)
 		return
 	var/datum/db_query/query_validate_time = SSdbcore.NewQuery({"
@@ -49,7 +49,7 @@
 		endtime = query_validate_time.item[1]
 	qdel(query_validate_time)
 	var/adminonly
-	switch(alert("Admin only poll?",,"Yes","No","Cancel"))
+	switch(tgui_alert(usr, "Admin only poll?",,list("Yes","No","Cancel")))
 		if("Yes")
 			adminonly = 1
 		if("No")
@@ -57,26 +57,26 @@
 		else
 			return
 	var/dontshow
-	switch(alert("Hide poll results from tracking until completed?",,"Yes","No","Cancel"))
+	switch(tgui_alert(usr, "Hide poll results from tracking until completed?",,list("Yes","No","Cancel")))
 		if("Yes")
 			dontshow = 1
 		if("No")
 			dontshow = 0
 		else
 			return
-	var/question = input("Write your question","Question") as message|null
+	var/question = tgui_input_message(src, "Write your question","Question")
 	if(!question)
 		return
 	var/list/sql_option_list = list()
 	if(polltype != POLLTYPE_TEXT)
 		var/add_option = 1
 		while(add_option)
-			var/option = input("Write your option","Option") as message|null
+			var/option = tgui_input_message(src, "Write your option","Option")
 			if(!option)
 				return
 			var/default_percentage_calc = 0
 			if(polltype != POLLTYPE_IRV)
-				switch(alert("Should this option be included by default when poll result percentages are generated?",,"Yes","No","Cancel"))
+				switch(tgui_alert(usr, "Should this option be included by default when poll result percentages are generated?",,list("Yes","No","Cancel")))
 					if("Yes")
 						default_percentage_calc = 1
 					if("No")
@@ -89,29 +89,29 @@
 			var/descmid = ""
 			var/descmax = ""
 			if(polltype == POLLTYPE_RATING)
-				minval = input("Set minimum rating value.","Minimum rating") as num|null
+				minval = tgui_input_num(src, "Set minimum rating value.","Minimum rating")
 				if(minval == null)
 					return
-				maxval = input("Set maximum rating value.","Maximum rating") as num|null
+				maxval = tgui_input_num(src, "Set maximum rating value.","Maximum rating")
 				if(minval >= maxval)
 					to_chat(src, "Maximum rating value can't be less than or equal to minimum rating value")
 					continue
 				if(maxval == null)
 					return
-				descmin = input("Optional: Set description for minimum rating","Minimum rating description") as message|null
+				descmin = tgui_input_message(src, "Optional: Set description for minimum rating","Minimum rating description")
 				if(descmin == null)
 					return
-				descmid = input("Optional: Set description for median rating","Median rating description") as message|null
+				descmid = tgui_input_message(src, "Optional: Set description for median rating","Median rating description")
 				if(descmid == null)
 					return
-				descmax = input("Optional: Set description for maximum rating","Maximum rating description") as message|null
+				descmax = tgui_input_message(src, "Optional: Set description for maximum rating","Maximum rating description")
 				if(descmax == null)
 					return
 			sql_option_list += list(list(
 				"text" = option, "minval" = minval, "maxval" = maxval,
 				"descmin" = descmin, "descmid" = descmid, "descmax" = descmax,
 				"default_percentage_calc" = default_percentage_calc))
-			switch(alert(" ",,"Add option","Finish", "Cancel"))
+			switch(tgui_alert(usr, " ",,list("Add option","Finish", "Cancel")))
 				if("Add option")
 					add_option = 1
 				if("Finish")

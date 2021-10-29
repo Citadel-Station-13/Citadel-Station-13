@@ -27,9 +27,12 @@
 	. = ..()
 	if(!ishuman(user))
 		return
-	if(slot == ITEM_SLOT_GLOVES)
-		var/mob/living/carbon/human/H = user
-		tackler = H.AddComponent(/datum/component/tackler, stamina_cost=tackle_stam_cost, base_knockdown = base_knockdown, range = tackle_range, speed = tackle_speed, skill_mod = skill_mod, min_distance = min_distance)
+	switch(slot) // I didn't like how it looked
+		if(SLOT_GLOVES)
+			var/mob/living/carbon/human/H = user
+			tackler = H.AddComponent(/datum/component/tackler, stamina_cost=tackle_stam_cost, base_knockdown = base_knockdown, range = tackle_range, speed = tackle_speed, skill_mod = skill_mod, min_distance = min_distance)
+		else
+			qdel(tackler) // Only wearing it!
 
 /obj/item/clothing/gloves/tackler/dropped(mob/user)
 	. = ..()
@@ -66,6 +69,20 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	strip_mod = 1.2 // because apparently black gloves had this
+
+/obj/item/clothing/gloves/tackler/combat/goliath
+	name = "goliath gloves"
+	desc = "Rudimentary tackling gloves. The goliath hide makes it great for grappling with targets, while also being fireproof."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "goligloves"
+	item_state = "goligloves"
+
+	tackle_stam_cost = 25
+	base_knockdown = 1 SECONDS
+	tackle_range = 5
+	tackle_speed = 2
+	min_distance = 2
+	skill_mod = 1
 
 /obj/item/clothing/gloves/tackler/combat/insulated
 	name = "guerrilla gloves"

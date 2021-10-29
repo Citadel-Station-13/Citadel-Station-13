@@ -92,7 +92,7 @@
 	qdel(query_add_ban_get_ckey)
 	if(!seen_before)
 		if(!had_banned_mob || (had_banned_mob && !banned_mob_guest_key))
-			if(alert(usr, "[bankey] has not been seen before, are you sure you want to create a ban for them?", "Unknown ckey", "Yes", "No", "Cancel") != "Yes")
+			if(tgui_alert(usr, "[bankey] has not been seen before, are you sure you want to create a ban for them?", "Unknown ckey", list("Yes", "No", "Cancel")) != "Yes")
 				return
 
 	var/a_key
@@ -289,7 +289,7 @@
 	switch(param)
 		if("reason")
 			if(!value)
-				value = input("Insert the new reason for [p_key]'s ban", "New Reason", "[reason]", null) as null|text
+				value = tgui_input_text(usr, "Insert the new reason for [p_key]'s ban", "New Reason", "[reason]", null)
 				if(!value)
 					to_chat(usr, "Cancelled")
 					return
@@ -302,7 +302,7 @@
 			message_admins("[key_name_admin(usr)] has edited a ban for [p_key]'s reason from [reason] to [value]")
 		if("duration")
 			if(!value)
-				value = input("Insert the new duration (in minutes) for [p_key]'s ban", "New Duration", "[duration]", null) as null|num
+				value = tgui_input_num(usr, "Insert the new duration (in minutes) for [p_key]'s ban", "New Duration", "[duration]", null)
 				if(!isnum(value) || !value)
 					to_chat(usr, "Cancelled")
 					return
@@ -314,7 +314,7 @@
 			qdel(query_edit_ban_duration)
 			message_admins("[key_name_admin(usr)] has edited a ban for [p_key]'s duration from [duration] to [value]")
 		if("unban")
-			if(alert("Unban [p_key]?", "Unban?", "Yes", "No") == "Yes")
+			if(tgui_alert(usr, "Unban [p_key]?", "Unban?", list("Yes", "No")) == "Yes")
 				DB_ban_unban_by_id(banid)
 				return
 			else

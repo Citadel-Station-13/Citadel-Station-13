@@ -222,7 +222,7 @@
 			if(host.vore_organs.len >= BELLIES_MAX)
 				return FALSE
 
-			var/new_name = html_encode(input(usr,"New belly's name:","New Belly") as text|null)
+			var/new_name = html_encode(tgui_input_text(usr,"New belly's name:","New Belly"))
 
 			var/failure_msg
 			if(length(new_name) > BELLIES_NAME_MAX || length(new_name) < BELLIES_NAME_MIN)
@@ -283,7 +283,7 @@
 				unsaved_changes = FALSE
 			return TRUE
 		if("setflavor")
-			var/new_flavor = html_encode(input(usr,"What your character tastes like (400ch limit). This text will be printed to the pred after 'X tastes of...' so just put something like 'strawberries and cream':","Character Flavor",host.vore_taste) as text|null)
+			var/new_flavor = html_encode(tgui_input_message(usr,"What your character tastes like (400ch limit). This text will be printed to the pred after 'X tastes of...' so just put something like 'strawberries and cream':","Character Flavor",host.vore_taste))
 			if(!new_flavor)
 				return FALSE
 
@@ -295,7 +295,7 @@
 			unsaved_changes = TRUE
 			return TRUE
 		if("setsmell")
-			var/new_smell = html_encode(input(usr,"What your character smells like (400ch limit). This text will be printed to the pred after 'X smells of...' so just put something like 'strawberries and cream':","Character Smell",host.vore_smell) as text|null)
+			var/new_smell = html_encode(tgui_input_message(usr,"What your character smells like (400ch limit). This text will be printed to the pred after 'X smells of...' so just put something like 'strawberries and cream':","Character Smell",host.vore_smell))
 			if(!new_smell)
 				return FALSE
 
@@ -504,7 +504,7 @@
 	var/attr = params["attribute"]
 	switch(attr)
 		if("b_name")
-			var/new_name = html_encode(input(usr,"Belly's new name:","New Name") as text|null)
+			var/new_name = html_encode(tgui_input_text(usr,"Belly's new name:","New Name", host.vore_selected.name))
 
 			var/failure_msg
 			if(length(new_name) > BELLIES_NAME_MAX || length(new_name) < BELLIES_NAME_MIN)
@@ -538,7 +538,7 @@
 			host.vore_selected.digest_mode = new_mode
 			. = TRUE
 		if("b_desc")
-			var/new_desc = html_encode(input(usr,"Belly Description ([BELLIES_DESC_MAX] char limit):","New Description",host.vore_selected.desc) as message|null)
+			var/new_desc = html_encode(tgui_input_message(usr,"Belly Description ([BELLIES_DESC_MAX] char limit):","New Description",host.vore_selected.desc))
 
 			if(new_desc)
 				new_desc = readd_quotes(new_desc)
@@ -552,27 +552,27 @@
 			var/help = " Press enter twice to separate messages. '%pred' will be replaced with your name. '%prey' will be replaced with the prey's name. '%belly' will be replaced with your belly's name. '%count' will be replaced with the number of anything in your belly (will not work for absorbed examine). '%countprey' will be replaced with the number of living prey in your belly (or absorbed prey for absorbed examine)."
 			switch(params["msgtype"])
 				if("dmp")
-					var/new_message = input(user,"These are sent to prey when they expire. Write them in 2nd person ('you feel X'). Avoid using %prey in this type."+help,"Digest Message (to prey)",host.vore_selected.get_messages("dmp")) as message
+					var/new_message = tgui_input_message(user,"These are sent to prey when they expire. Write them in 2nd person ('you feel X'). Avoid using %prey in this type."+help,"Digest Message (to prey)",host.vore_selected.get_messages("dmp"))
 					if(new_message)
 						host.vore_selected.set_messages(new_message,"dmp")
 
 				if("dmo")
-					var/new_message = input(user,"These are sent to you when prey expires in you. Write them in 2nd person ('you feel X'). Avoid using %pred in this type."+help,"Digest Message (to you)",host.vore_selected.get_messages("dmo")) as message
+					var/new_message = tgui_input_message(user,"These are sent to you when prey expires in you. Write them in 2nd person ('you feel X'). Avoid using %pred in this type."+help,"Digest Message (to you)",host.vore_selected.get_messages("dmo"))
 					if(new_message)
 						host.vore_selected.set_messages(new_message,"dmo")
 
 				if("smo")
-					var/new_message = input(user,"These are sent to those nearby when prey struggles. Write them in 3rd person ('X's Y bulges')."+help,"Struggle Message (outside)",host.vore_selected.get_messages("smo")) as message
+					var/new_message = tgui_input_message(user,"These are sent to those nearby when prey struggles. Write them in 3rd person ('X's Y bulges')."+help,"Struggle Message (outside)",host.vore_selected.get_messages("smo"))
 					if(new_message)
 						host.vore_selected.set_messages(new_message,"smo")
 
 				if("smi")
-					var/new_message = input(user,"These are sent to prey when they struggle. Write them in 2nd person ('you feel X'). Avoid using %prey in this type."+help,"Struggle Message (inside)",host.vore_selected.get_messages("smi")) as message
+					var/new_message = tgui_input_message(user,"These are sent to prey when they struggle. Write them in 2nd person ('you feel X'). Avoid using %prey in this type."+help,"Struggle Message (inside)",host.vore_selected.get_messages("smi"))
 					if(new_message)
 						host.vore_selected.set_messages(new_message,"smi")
 
 				if("em")
-					var/new_message = input(user,"These are sent to people who examine you when this belly has contents. Write them in 3rd person ('Their %belly is bulging')."+help,"Examine Message (when full)",host.vore_selected.get_messages("em")) as message
+					var/new_message = tgui_input_message(user,"These are sent to people who examine you when this belly has contents. Write them in 3rd person ('Their %belly is bulging')."+help,"Examine Message (when full)",host.vore_selected.get_messages("em"))
 					if(new_message)
 						host.vore_selected.set_messages(new_message,"em")
 
@@ -587,7 +587,7 @@
 						host.vore_selected.emote_lists = initial(host.vore_selected.emote_lists)
 			. = TRUE
 		if("b_verb")
-			var/new_verb = html_encode(input(usr,"New verb when eating (infinitive tense, e.g. nom or swallow):","New Verb") as text|null)
+			var/new_verb = html_encode(tgui_input_text(usr,"New verb when eating (infinitive tense, e.g. nom or swallow):","New Verb", host.vore_selected.vore_verb))
 
 			if(length(new_verb) > BELLIES_NAME_MAX || length(new_verb) < BELLIES_NAME_MIN)
 				tgui_alert_async(usr, "Entered verb length invalid (must be longer than [BELLIES_NAME_MIN], no longer than [BELLIES_NAME_MAX]).","Error")
@@ -626,7 +626,7 @@
 			host.vore_selected.can_taste = !host.vore_selected.can_taste
 			. = TRUE
 		if("b_bulge_size")
-			var/new_bulge = input(user, "Choose the required size prey must be to show up on examine, ranging from 25% to 200% Set this to 0 for no text on examine.", "Set Belly Examine Size.") as num|null
+			var/new_bulge = tgui_input_num(user, "Choose the required size prey must be to show up on examine, ranging from 25% to 200% Set this to 0 for no text on examine.", "Set Belly Examine Size.", host.vore_selected.bulge_size)
 			if(new_bulge == null)
 				return FALSE
 			if(new_bulge == 0) //Disable.
@@ -650,17 +650,17 @@
 				host.vore_selected.escapable = 0
 			. = TRUE
 		if("b_escapechance")
-			var/escape_chance_input = input(user, "Set prey escape chance on resist (as %)", "Prey Escape Chance") as num|null
+			var/escape_chance_input = tgui_input_num(user, "Set prey escape chance on resist (as %)", "Prey Escape Chance", host.vore_selected.escapechance)
 			if(!isnull(escape_chance_input)) //These have to be 'null' because both cancel and 0 are valid, separate options
 				host.vore_selected.escapechance = sanitize_integer(escape_chance_input, 0, 100, initial(host.vore_selected.escapechance))
 			. = TRUE
 		if("b_escapetime")
-			var/escape_time_input = input(user, "Set number of seconds for prey to escape on resist (1-60)", "Prey Escape Time") as num|null
+			var/escape_time_input = tgui_input_num(user, "Set number of seconds for prey to escape on resist (1-60)", "Prey Escape Time", host.vore_selected.escapetime)
 			if(!isnull(escape_time_input))
 				host.vore_selected.escapetime = sanitize_integer(escape_time_input*10, 10, 600, initial(host.vore_selected.escapetime))
 			. = TRUE
 		if("b_transferchance")
-			var/transfer_chance_input = input(user, "Set belly transfer chance on resist (as %). You must also set the location for this to have any effect.", "Prey Escape Time") as num|null
+			var/transfer_chance_input = tgui_input_num(user, "Set belly transfer chance on resist (as %). You must also set the location for this to have any effect.", "Prey Escape Time", host.vore_selected.transferchance)
 			if(!isnull(transfer_chance_input))
 				host.vore_selected.transferchance = sanitize_integer(transfer_chance_input, 0, 100, initial(host.vore_selected.transferchance))
 			. = TRUE
@@ -675,12 +675,12 @@
 				host.vore_selected.transferlocation = choice.name
 			. = TRUE
 		if("b_absorbchance")
-			var/absorb_chance_input = input(user, "Set belly absorb mode chance on resist (as %)", "Prey Absorb Chance") as num|null
+			var/absorb_chance_input = tgui_input_num(user, "Set belly absorb mode chance on resist (as %)", "Prey Absorb Chance", host.vore_selected.absorbchance)
 			if(!isnull(absorb_chance_input))
 				host.vore_selected.absorbchance = sanitize_integer(absorb_chance_input, 0, 100, initial(host.vore_selected.absorbchance))
 			. = TRUE
 		if("b_digestchance")
-			var/digest_chance_input = input(user, "Set belly digest mode chance on resist (as %)", "Prey Digest Chance") as num|null
+			var/digest_chance_input = tgui_input_num(user, "Set belly digest mode chance on resist (as %)", "Prey Digest Chance", host.vore_selected.digestchance)
 			if(!isnull(digest_chance_input))
 				host.vore_selected.digestchance = sanitize_integer(digest_chance_input, 0, 100, initial(host.vore_selected.digestchance))
 			. = TRUE

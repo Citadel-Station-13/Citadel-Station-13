@@ -26,7 +26,7 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 		return
 
 	declaring_war = TRUE
-	var/are_you_sure = alert(user, "Consult your team carefully before you declare war on [station_name()]]. Are you sure you want to alert the enemy crew? You have [DisplayTimeText(world.time-SSticker.round_start_time - CHALLENGE_TIME_LIMIT)] to decide", "Declare war?", "Yes", "No")
+	var/are_you_sure = tgui_alert(user, "Consult your team carefully before you declare war on [station_name()]]. Are you sure you want to alert the enemy crew? You have [DisplayTimeText(world.time-SSticker.round_start_time - CHALLENGE_TIME_LIMIT)] to decide", "Declare war?", list("Yes", "No"))
 	declaring_war = FALSE
 
 	if(!check_allowed(user))
@@ -39,7 +39,7 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 	var/war_declaration = "[user.real_name] has declared [user.p_their()] intent to utterly destroy [station_name()] with a nuclear device, and dares the crew to try and stop [user.p_them()]."
 
 	declaring_war = TRUE
-	var/custom_threat = alert(user, "Do you want to customize your declaration?", "Customize?", "Yes", "No")
+	var/custom_threat = tgui_alert(user, "Do you want to customize your declaration?", "Customize?", list("Yes", "No"))
 	declaring_war = FALSE
 
 	if(!check_allowed(user))
@@ -94,15 +94,6 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 		if(board.moved)
 			to_chat(user, "The shuttle has already been moved! You have forfeit the right to declare war.")
 			return FALSE
-	if(istype(SSticker.mode, /datum/game_mode/dynamic))
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if(!(mode.storyteller.flags & WAROPS_ALWAYS_ALLOWED))
-			if(mode.threat_level < CONFIG_GET(number/dynamic_warops_requirement))
-				to_chat(user, "Due to the dynamic space in which the station resides, you are too deep into Nanotrasen territory to reasonably go loud.")
-				return FALSE
-			else if(mode.threat < CONFIG_GET(number/dynamic_warops_cost))
-				to_chat(user, "Due to recent threats on the station, Nanotrasen is looking too closely for a war declaration to be wise.")
-				return FALSE
 	return TRUE
 
 /obj/item/nuclear_challenge/clownops

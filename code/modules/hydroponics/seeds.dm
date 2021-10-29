@@ -444,7 +444,7 @@
 		return
 
 	if(istype(O, /obj/item/pen))
-		var/choice = input("What would you like to change?") in list("Plant Name", "Seed Description", "Product Description", "Cancel")
+		var/choice = tgui_input_list(user, "What would you like to change?", "", list("Plant Name", "Seed Description", "Product Description", "Cancel"))
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		switch(choice)

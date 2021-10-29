@@ -143,7 +143,7 @@
 			A = get_area(src)
 			// Claim?
 			if(!bloodsuckerdatum.coffin && !resident && (is_station_level(Turf.z) || !A.map_name == "Space"))
-				switch(alert(user,"Do you wish to claim this as your coffin? [get_area(src)] will be your lair.","Claim Lair","Yes", "No"))
+				switch(tgui_alert(user, "Do you wish to claim this as your coffin? [get_area(src)] will be your lair.","Claim Lair",list("Yes", "No")))
 					if("Yes")
 						ClaimCoffin(user)
 			if (user.AmStaked()) // Stake? No Heal!

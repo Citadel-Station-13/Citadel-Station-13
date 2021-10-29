@@ -470,7 +470,7 @@
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 				return
 
-			var/new_price_input = input(usr,"Set the sale price for this vend-a-tray.","new price",0) as num|null
+			var/new_price_input = tgui_input_num(usr,"Set the sale price for this vend-a-tray.","new price",sale_price)
 			if(isnull(new_price_input) || (payments_acc != potential_acc.registered_account))
 				to_chat(usr, "<span class='warning'>[src] rejects your new price.</span>")
 				return

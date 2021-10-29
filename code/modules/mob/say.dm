@@ -4,8 +4,14 @@
 	set name = "say_indicator"
 	set hidden = TRUE
 	set category = "IC"
+	client?.last_activity = world.time
+	for(var/datum/tgui/window in tgui_open_uis)
+		if(istype(window.src_object, /datum/tgui_input_dialog))
+			var/datum/tgui_input_dialog/say_box = window.src_object
+			if(say_box.title == "say") // Yes, i am dead serious.
+				return
 	display_typing_indicator()
-	var/message = input(usr, "", "say") as text|null
+	var/message = tgui_input_text(usr, null, "say")
 	// If they don't type anything just drop the message.
 	clear_typing_indicator()		// clear it immediately!
 	if(!length(message))
@@ -21,14 +27,23 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 	clear_typing_indicator()		// clear it immediately!
+
+	client?.last_activity = world.time
+
 	say(message)
 
 /mob/verb/me_typing_indicator()
 	set name = "me_indicator"
 	set hidden = TRUE
 	set category = "IC"
+	client?.last_activity = world.time
+	for(var/datum/tgui/window in tgui_open_uis)
+		if(istype(window.src_object, /datum/tgui_input_dialog))
+			var/datum/tgui_input_dialog/emote_box = window.src_object
+			if(emote_box.title == "me") // Yes, i am dead serious.
+				return
 	display_typing_indicator()
-	var/message = input(usr, "", "me") as message|null
+	var/message = tgui_input_message(usr, null, "me")
 	// If they don't type anything just drop the message.
 	clear_typing_indicator()		// clear it immediately!
 	if(!length(message))
@@ -52,6 +67,8 @@
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	clear_typing_indicator()		// clear it immediately!
 
+	client?.last_activity = world.time
+
 	usr.emote("me",1,message,TRUE)
 
 /mob/say_mod(input, message_mode)
@@ -73,7 +90,8 @@
 		return lowertext(copytext_char(input, 1, customsayverb))
 
 /mob/proc/whisper_keybind()
-	var/message = input(src, "", "whisper") as text|null
+	client?.last_activity = world.time
+	var/message = tgui_input_text(src, "", "whisper")
 	if(!length(message))
 		return
 	return whisper_verb(message)
@@ -89,6 +107,7 @@
 	whisper(message)
 
 /mob/proc/whisper(message, datum/language/language=null)
+	client?.last_activity = world.time
 	say(message, language) //only living mobs actually whisper, everything else just talks
 
 /mob/proc/say_dead(var/message)
@@ -132,6 +151,7 @@
 	message = emoji_parse(message)
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[emoji_parse(spanned)]</span></span>"
 	log_talk(message, LOG_SAY, tag="DEAD")
+	client?.last_activity = world.time
 	deadchat_broadcast(rendered, follow_target = src, speaker_key = key)
 
 /mob/proc/check_emote(message)

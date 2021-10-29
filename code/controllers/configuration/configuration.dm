@@ -20,7 +20,7 @@
 	var/list/mode_false_report_weight
 
 	var/motd
-	// var/policy
+	var/policy
 
 	var/static/regex/ic_filter_regex
 
@@ -41,7 +41,6 @@
 		CRASH("/datum/controller/configuration/Load() called more than once!")
 	InitEntries()
 	LoadModes()
-	storyteller_cache = typecacheof(/datum/dynamic_storyteller, TRUE)
 	if(fexists("[directory]/config.txt") && LoadEntries("config.txt") <= 1)
 		var/list/legacy_configs = list("game_options.txt", "dbconfig.txt", "comms.txt")
 		for(var/I in legacy_configs)
@@ -52,7 +51,7 @@
 				break
 	loadmaplist(CONFIG_MAPS_FILE)
 	LoadMOTD()
-	// LoadPolicy()
+	LoadPolicy()
 	LoadChatFilter()
 
 	if (Master)
@@ -266,7 +265,7 @@
 				if(M.votable)
 					votable_modes += M.config_tag
 		qdel(M)
-	votable_modes += "secret"
+	votable_modes += "dynamic"
 
 /datum/controller/configuration/proc/LoadMOTD()
 	motd = file2text("[directory]/motd.txt")
@@ -292,7 +291,7 @@ Example config:
 }
 
 */
-/*
+
 /datum/controller/configuration/proc/LoadPolicy()
 	policy = list()
 	var/rawpolicy = file2text("[directory]/policy.json")
@@ -303,7 +302,7 @@ Example config:
 			DelayedMessageAdmins("JSON parsing failure for policy.json")
 		else
 			policy = parsed
-*/
+
 /datum/controller/configuration/proc/loadmaplist(filename)
 	log_config("Loading config file [filename]...")
 	filename = "[directory]/[filename]"
@@ -371,53 +370,7 @@ Example config:
 		var/ct = initial(M.config_tag)
 		if(ct && ct == mode_name)
 			return new T
-	return new /datum/game_mode/extended()
-
-/// For dynamic.
-/datum/controller/configuration/proc/pick_storyteller(storyteller_name)
-	for(var/T in storyteller_cache)
-		var/datum/dynamic_storyteller/S = T
-		var/name = initial(S.name)
-		if(name && name == storyteller_name)
-			return T
-	return /datum/dynamic_storyteller/classic
-
-/// Same with this
-/datum/controller/configuration/proc/get_runnable_storytellers()
-	var/list/datum/dynamic_storyteller/runnable_storytellers = new
-	var/list/probabilities = Get(/datum/config_entry/keyed_list/storyteller_weight)
-	var/list/repeated_mode_adjust = Get(/datum/config_entry/number_list/repeated_mode_adjust)
-	var/list/min_player_counts = Get(/datum/config_entry/keyed_list/storyteller_min_players)
-	var/list/storyteller_min_chaos = Get(/datum/config_entry/keyed_list/storyteller_min_chaos)
-	var/list/storyteller_max_chaos = Get(/datum/config_entry/keyed_list/storyteller_max_chaos)
-	for(var/T in storyteller_cache)
-		var/datum/dynamic_storyteller/S = T
-		var/config_tag = initial(S.config_tag)
-		if(!config_tag)
-			continue
-		var/probability = (config_tag in probabilities) ? probabilities[config_tag] : initial(S.weight)
-		var/min_players = (config_tag in min_player_counts) ? min_player_counts[config_tag] : initial(S.min_players)
-		if(probability <= 0)
-			continue
-		if(length(GLOB.player_list) < min_players)
-			continue
-		if(!Get(/datum/config_entry/flag/no_storyteller_threat_removal))
-			var/min_chaos = (probabilities in storyteller_min_chaos) ? storyteller_min_chaos[config_tag] : initial(S.min_chaos)
-			var/max_chaos = (probabilities in storyteller_max_chaos) ? storyteller_max_chaos[config_tag] : initial(S.max_chaos)
-			if(SSpersistence.average_threat + 50 < min_chaos)
-				continue
-			if(SSpersistence.average_threat + 50 > max_chaos)
-				continue
-		if(SSpersistence.saved_storytellers.len == repeated_mode_adjust.len)
-			var/name = initial(S.name)
-			var/recent_round = min(SSpersistence.saved_storytellers.Find(name),3)
-			var/adjustment = 0
-			while(recent_round)
-				adjustment += repeated_mode_adjust[recent_round]
-				recent_round = SSpersistence.saved_modes.Find(name,recent_round+1,0)
-			probability *= max(0,((100-adjustment)/100))
-		runnable_storytellers[S] = probability
-	return runnable_storytellers
+	return new /datum/game_mode/dynamic
 
 /datum/controller/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new

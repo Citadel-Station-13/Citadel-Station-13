@@ -104,12 +104,12 @@
 
 /mob/living/proc/feed_self_to_grabbed(var/mob/living/user, var/mob/living/pred)
 	pred.lazy_init_belly()
-	var/belly = input("Choose Belly") in pred.vore_organs
+	var/belly = tgui_input_list(user, "Choose Belly", "", pred.vore_organs)
 	return perform_the_nom(user, user, pred, belly)
 
 /mob/living/proc/feed_grabbed_to_other(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
 	pred.lazy_init_belly()
-	var/belly = input("Choose Belly") in pred.vore_organs
+	var/belly = tgui_input_list(user, "Choose Belly", "", pred.vore_organs)
 	return perform_the_nom(user, prey, pred, belly)
 
 //
@@ -226,7 +226,7 @@
 	//You're in a belly!
 	if(isbelly(loc))
 		var/obj/belly/B = loc
-		var/confirm = alert(src, "You're in a mob. If you're otherwise unable to escape from a pred AFK for a long time, use this.", "Confirmation", "Okay", "Cancel")
+		var/confirm = tgui_alert(src, "You're in a mob. If you're otherwise unable to escape from a pred AFK for a long time, use this.", "Confirmation", list("Okay", "Cancel"))
 		if(!confirm == "Okay" || loc != B)
 			return
 		//Actual escaping
@@ -246,7 +246,7 @@
 	else if(istype(loc, /obj/item/dogborg/sleeper))
 		var/obj/item/dogborg/sleeper/belly = loc //The belly!
 
-		var/confirm = alert(src, "You're in a dogborg sleeper. This is for escaping from preference-breaking or if your predator disconnects/AFKs. You can also resist out naturally too.", "Confirmation", "Okay", "Cancel")
+		var/confirm = tgui_alert(src, "You're in a dogborg sleeper. This is for escaping from preference-breaking or if your predator disconnects/AFKs. You can also resist out naturally too.", "Confirmation", list("Okay", "Cancel"))
 		if(!confirm == "Okay" || loc != belly)
 			return
 		//Actual escaping
