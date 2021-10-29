@@ -29,6 +29,8 @@ SUBSYSTEM_DEF(planets)
 	var/static/planet_zlevel_count = 0
 	/// Maximum safe zlevels - will never go past this when instantiating planets. For 255x255, 25-30 is safe under LAA. For 140x140, we could probably get away with 80 on LAA.
 	var/static/planet_zlevel_limit = 30
+	/// counter
+	var/static/next_planet_z_name = 0
 
 	/**
 	 * Why do we store by ID?
@@ -96,3 +98,20 @@ SUBSYSTEM_DEF(planets)
 			P.SlowWeatherTick(dt)
 		if(times_fired % cycles_update_lighting)
 			P.UpdateLighting(dt)
+
+/**
+ * Allocates a specific amount of zlevels
+ * Returns list of real z indices
+ */
+/datum/controller/subsystem/planets/proc/_allocate_planetary_zlevels(amount)
+	ASSERT(amount >= 0)
+	if(amount == 0)
+		return list()
+	if(planet_zlevel_count + amount > planet_zlevel_limit)
+		stack_trace("SSplanets ran out of zlevels attempting to allocate [amount] with [planet_zlevel_count] existing, which would go over [planet_zlevel_limit]")
+		return null
+	. = list()
+	planet_zlevel_count += amount
+	for(var/i in 1 to amount)
+		var/datum/space_level/S = SSmapping.add_new_zlevel("Planet Level [++next_planet_z_name]", list())
+		. += S.z_value

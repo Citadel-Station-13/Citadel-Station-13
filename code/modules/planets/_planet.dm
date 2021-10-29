@@ -5,6 +5,12 @@
 	// basic data
 	/// name
 	var/name
+	/// desc
+	var/desc
+	/// uid
+	var/id
+	/// uid next
+	var/static/id_next = 0
 
 	// instantiation/terrain
 	/// planet type
@@ -71,3 +77,5 @@
 
 	// lighting
 
+/datum/planet/New()
+	id = ++id_next

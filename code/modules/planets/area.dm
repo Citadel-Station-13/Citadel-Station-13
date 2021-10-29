@@ -20,6 +20,7 @@
 /**
  * Basetype of planet areas.
  * These are instanced per level biome/type.
+ * The reason we use tags is to not need to pass around area-by-biome lookups per level later. 
  */
 /area/planetary
 	name = "planetary area"
@@ -27,8 +28,17 @@
 	icon = 'icons/planets/area.dmi'
 	icon_state = "default"
 	exterior = TRUE
+	datum_flags = DF_USE_TAG
 
 	/// our biome ID
-	var/biome
-	/// our theme ID
-	var/theme
+	var/biome_id
+	/// our planet ID
+	var/planet_id
+
+/area/planetary/New(loc, datum/planet/planet, datum/planet_biome/biome, planetary_z_index)
+	ASSERT(planet)
+	ASSERT(biome)
+	ASSERT(planetary_z_index)
+	biome_id = biome?.id
+	planet_id = planet?.id
+	tag = "planet_area_[planet_id]-[planetary_z_index]_[biome]"
