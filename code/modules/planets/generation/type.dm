@@ -135,7 +135,7 @@
 	if(!allocated)
 		CRASH("Failed to allocate enough zlevels")
 	. |= allocated
-w
+
 /**
  * Generation stage 2: Called from planet datum, must already have z_indices
  * Performs biome generation.
