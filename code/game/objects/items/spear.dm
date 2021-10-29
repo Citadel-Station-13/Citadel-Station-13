@@ -185,3 +185,89 @@
 /obj/item/spear/bonespear/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=11, force_wielded=20, icon_wielded="[icon_prefix]1")
+
+//Ridiculously large Syringe, HAPPY HALLOWEEN
+/obj/item/spear/syringe
+	icon_state = "big_syringe0"
+	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
+	name = "comically large syringe"
+	desc = "A ridiculously big syringe. Draining anything with it would be taking forever but you can use it to stab people. Apparently first used by a lizard."
+	force = 0
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	reach = 2
+	throwforce = 20
+	embedding = list("embedded_impact_pain_multiplier" = 3)
+	armour_penetration = 10
+	custom_materials = null
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("stabbed", "poked", "jabbed", "penetrated", "gored")
+	sharpness = SHARP_EDGED
+	icon_prefix = "big_syringe"
+
+/obj/item/spear/syringe/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=25, icon_wielded="[icon_prefix]1")
+
+/obj/item/spear/syringe/attack(mob/living/carbon/M, mob/living/carbon/user)
+	. = ..()
+	var/target_zone = "head"
+	var/obj/item/bodypart/target_limb = M.get_bodypart(target_zone)
+	if(!wielded)
+		to_chat(user, "<span class='warning'>[src] is too heavy to use like this with one hand.")
+		return
+	if(!get_turf(M))
+		return
+	if(!istype(M))
+		return
+	if(M == user)
+		return
+	if(user.zone_selected != "head")
+		return
+	if(!target_limb)
+		to_chat(user, "<span class='notice'>[M] has no [parse_zone(target_zone)]!</span>")
+		return
+	if(!get_location_accessible(M, target_zone))
+		to_chat(user, "<span class='notice'>Expose [M]\s head before trying to drain them!</span>")
+		return
+
+	M.visible_message("<span class='warning'>[user] is trying to drain [M]\s blood with \the [src]!</span>")
+
+	var/drain_time = max(0, 100 - ((1/(530-M.blood_volume))*100))
+	if(do_mob(user, M, drain_time))
+		if(get_location_accessible(M, target_zone))
+			if(target_limb)
+				M.visible_message("<span class='warning'>[M]\s body now looks like an empty juice box! You dropped the syringe</span>")
+				M.syringedrain()
+				new /obj/item/spear/bloodysyringe(user.loc)
+				qdel(src)
+		else
+			to_chat(user, "<span class='notice'>Expose [M]\s head before trying to drain them!</span>")
+
+/obj/item/spear/bloodysyringe
+	icon_state = "bloody_syringe0"
+	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
+	name = "comically large syringe"
+	desc = "A ridiculously big syringe. Draining anything with it would be taking forever but you can use it to stab people. Apparently first used by a lizard."
+	force = 0
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	reach = 1
+	throwforce = 20
+	embedding = list("embedded_impact_pain_multiplier" = 3)
+	armour_penetration = 10
+	custom_materials = null
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("stabbed", "poked", "jabbed", "penetrated", "gored")
+	sharpness = SHARP_EDGED
+	icon_prefix = "bloody_syringe"
+
+/obj/item/spear/bloodysyringe/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=25, icon_wielded="[icon_prefix]1")
+
+/obj/item/spear/bloodysyringe/machine_wash(obj/machinery/washing_machine/WM)
+	new /obj/item/spear/syringe(loc)
+	qdel(src)

@@ -69,3 +69,7 @@
 	ADD_TRAIT(src, TRAIT_NOCLONE, MADE_UNCLONEABLE)
 	blood_volume = 0
 	return TRUE
+
+/mob/living/carbon/proc/syringedrain()
+	blood_volume = 0
+	return TRUE
