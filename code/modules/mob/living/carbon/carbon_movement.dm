@@ -26,10 +26,9 @@
 		if(HAS_TRAIT(src, TRAIT_NOHUNGER))
 			set_nutrition(NUTRITION_LEVEL_FED - 1)	//just less than feeling vigorous
 		else if(nutrition && stat != DEAD)
-			var/loss = HUNGER_FACTOR/10
+			nutrition -= HUNGER_FACTOR/10
 			if(m_intent == MOVE_INTENT_RUN)
-				loss *= 2
-			adjust_nutrition(loss)
+				nutrition -= HUNGER_FACTOR/10
 
 /mob/living/carbon/can_move_under_living(mob/living/other)
 	. = ..()
