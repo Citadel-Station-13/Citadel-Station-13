@@ -54,12 +54,12 @@
 
 	if(current_tick_amount)
 		grace = RAD_GRACE_PERIOD
-			last_tick_amount = current_tick_amount
+		last_tick_amount = current_tick_amount
 
-		else if(!(obj_flags & EMAGGED))
-			grace--
-			if(grace <= 0)
-				radiation_count = 0
+	else if(!(obj_flags & EMAGGED))
+		grace--
+		if(grace <= 0)
+			radiation_count = 0
 
 	current_tick_amount = 0
 
