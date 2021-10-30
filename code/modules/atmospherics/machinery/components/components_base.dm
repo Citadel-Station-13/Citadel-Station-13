@@ -196,6 +196,13 @@
 // Helpers
 
 /**
+ * Toggles power
+ */
+/obj/machinery/atmospherics/component/proc/toggle_power()
+	on = !on
+	update_appearance()
+
+/**
  * Marks all pipelines as needing to update
  */
 /obj/machinery/atmospherics/component/proc/MarkDirty()
@@ -256,7 +263,7 @@
 		if("toggle")
 			if(!(ui_pump_control_capabilities & ATMOS_UI_CONTROL_ACTIVE))
 				return
-			on = !on
+			toggle_power()
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("power")
@@ -346,7 +353,7 @@
 		var/area/A = get_area(src)
 		var/turf/T = get_turf(src)
 		if(user.canUseTopic(src, BE_CLOSE, FALSE, FALSE))
-			on = !on
+			toggle_power()
 			update_icon()
 			investigate_log("[src]([type]), turned on by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
 			message_admins("[src]([type]), turned [on ? "on" : "off"] by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")

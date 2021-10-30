@@ -3,29 +3,29 @@
 
 /obj/machinery/atmospherics/component/binary/passive_gate/npc_tamper_act(mob/living/L)
 	if(prob(50)) //Turn on/off
-		on = !on
+		toggle_power()
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(L)]", INVESTIGATE_ATMOS)
 	else //Change pressure
-		target_pressure = rand(0, MAX_OUTPUT_PRESSURE)
-		investigate_log("was set to [target_pressure] kPa by [key_name(L)]", INVESTIGATE_ATMOS)
+		pressure_setting = rand(0, max_pressure_nominal)
+		investigate_log("was set to [pressure_setting] kPa by [key_name(L)]", INVESTIGATE_ATMOS)
 	update_icon()
 
 /obj/machinery/atmospherics/component/binary/pump/npc_tamper_act(mob/living/L)
 	if(prob(50)) //Turn on/off
-		on = !on
+		toggle_power()
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(L)]", INVESTIGATE_ATMOS)
 	else //Change pressure
-		target_pressure = rand(0, MAX_OUTPUT_PRESSURE)
-		investigate_log("was set to [target_pressure] kPa by [key_name(L)]", INVESTIGATE_ATMOS)
+		pressure_setting = rand(0, max_pressure_nominal)
+		investigate_log("was set to [pressure_setting] kPa by [key_name(L)]", INVESTIGATE_ATMOS)
 	update_icon()
 
 /obj/machinery/atmospherics/component/binary/volume_pump/npc_tamper_act(mob/living/L)
 	if(prob(50)) //Turn on/off
-		on = !on
+		toggle_power()
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(L)]", INVESTIGATE_ATMOS)
 	else //Change pressure
-		transfer_rate = rand(0, MAX_TRANSFER_RATE)
-		investigate_log("was set to [transfer_rate] L/s by [key_name(L)]", INVESTIGATE_ATMOS)
+		rate_setting = rand(0, max_rate)
+		investigate_log("was set to [rate_setting] L/s by [key_name(L)]", INVESTIGATE_ATMOS)
 	update_icon()
 
 /obj/machinery/atmospherics/component/binary/valve/npc_tamper_act(mob/living/L)

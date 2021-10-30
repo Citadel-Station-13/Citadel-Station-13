@@ -130,10 +130,10 @@ ATMOS_MAPPING_LAYERS_PX(/obj/machinery/atmospherics/component/quaternary/filters
 	. = ..()
 	active_power_usage = idle_power_usage
 	last_power_draw = last_transfer_rate = 0
-	if(!on || !is_operational() || !output_side || !input_side)
+	if(!on || !is_operational() || !output_index || !input_index)
 		return
-	var/datum/gas_mixture/output_air = airs[output_side]
-	var/datum/gas_mixture/input_air = airs[input_side]
+	var/datum/gas_mixture/output_air = airs[output_index]
+	var/datum/gas_mixture/input_air = airs[input_index]
 	if(output_air.return_pressure() > pressure_setting)
 		return
 	var/list/directed = list()
