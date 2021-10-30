@@ -1665,10 +1665,6 @@
 	},
 /turf/open/floor/wood,
 /area/eventmap/inside)
-"afb" = (
-/obj/machinery/computer/arcade/orion_trail,
-/turf/open/floor/wood,
-/area/eventmap/inside)
 "afc" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -30231,7 +30227,7 @@ aaN
 aaN
 aaN
 aqr
-afb
+aip
 aIh
 aby
 agR
@@ -31617,8 +31613,8 @@ awk
 awk
 awk
 awk
-awk
-awk
+apR
+apR
 awk
 awk
 awk
@@ -31874,8 +31870,8 @@ aaN
 aaN
 aaN
 aaN
-aaN
-aaN
+aph
+ayO
 aLU
 aLU
 aXy
@@ -32131,8 +32127,8 @@ aaN
 aaN
 aaN
 aaN
-aaN
-aaN
+aph
+ayO
 aaN
 aaN
 aLU
@@ -32388,8 +32384,8 @@ aaN
 aaN
 aaN
 aaN
-aaN
-aaN
+aph
+ayO
 aaN
 aaN
 aLU
@@ -32645,8 +32641,8 @@ aaN
 aaN
 aaN
 aaN
-aaN
-aaN
+aph
+ayO
 aaN
 aaN
 aaN
@@ -32901,10 +32897,10 @@ aaN
 aaN
 aaN
 aaN
-aaN
-aaN
-aaN
-aaN
+aQl
+aph
+ayO
+aQl
 aaN
 aaN
 aLU
@@ -33159,8 +33155,8 @@ aaN
 aaN
 aaN
 aaN
-aaN
-aaN
+aph
+ayO
 aaN
 aaN
 aaN
@@ -33416,8 +33412,8 @@ aaN
 aaN
 aaN
 aaN
-aaN
-aaN
+aph
+ayO
 aaN
 aaN
 aaN
@@ -33673,8 +33669,8 @@ aaN
 aaN
 aaN
 aaN
-aaN
-aaN
+aph
+ayO
 aaN
 aaN
 aaN
@@ -33930,8 +33926,8 @@ aaN
 aaN
 aaN
 aaN
-aaN
-aaN
+aph
+ayO
 aaN
 aaN
 aaN
@@ -34187,8 +34183,8 @@ aaN
 aaN
 aaN
 aaN
-aaN
-aaN
+aph
+ayO
 aaN
 aaN
 aaN
@@ -34444,8 +34440,8 @@ aaN
 aaN
 aaN
 aaN
-aaN
-aaN
+aph
+ayO
 aaN
 aaN
 aaN
@@ -34701,8 +34697,8 @@ aaN
 aaN
 aaN
 aaN
-aaN
-aaN
+aph
+ayO
 aaN
 aaN
 aaN
@@ -34958,8 +34954,8 @@ aaN
 aaN
 aaN
 aaN
-aaN
-aaN
+aph
+ayO
 aaN
 aaN
 aaN
@@ -35215,8 +35211,8 @@ aaN
 aaN
 aaN
 aaN
-aaN
-aaN
+aph
+ayO
 aQl
 aac
 aac
@@ -35472,8 +35468,8 @@ aaN
 aaN
 aaN
 aaN
-aaN
-aaN
+aph
+ayO
 aaN
 ags
 ags
@@ -35729,8 +35725,8 @@ aaN
 aaN
 aaN
 aaN
-aaN
-aaN
+aKS
+awn
 ags
 ags
 ags
