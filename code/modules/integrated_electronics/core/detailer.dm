@@ -26,7 +26,7 @@
 		"light blue" = COLOR_ASSEMBLY_LBLUE,
 		"blue" = COLOR_ASSEMBLY_BLUE,
 		"purple" = COLOR_ASSEMBLY_PURPLE,
-		"pink" = COLOR_ASSEMBLY_PINK,
+		"pink" = LIGHT_COLOR_PINK,
 		"custom" = COLOR_ASSEMBLY_WHITE
 		)
 

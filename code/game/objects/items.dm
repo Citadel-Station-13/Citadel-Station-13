@@ -1220,3 +1220,14 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		pain_stam_pct = (!isnull(embedding["pain_stam_pct"]) ? embedding["pain_stam_pct"] : EMBEDDED_PAIN_STAM_PCT),\
 		embed_chance_turf_mod = (!isnull(embedding["embed_chance_turf_mod"]) ? embedding["embed_chance_turf_mod"] : EMBED_CHANCE_TURF_MOD))
 	return TRUE
+
+/**
+ * Updates all action buttons associated with this item
+ *
+ * Arguments:
+ * * status_only - Update only current availability status of the buttons to show if they are ready or not to use
+ * * force - Force buttons update even if the given button icon state has not changed
+ */
+/obj/item/proc/update_action_buttons(status_only = FALSE, force = FALSE)
+	for(var/datum/action/current_action as anything in actions)
+		current_action.UpdateButtonIcon(status_only, force)

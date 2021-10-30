@@ -6,6 +6,7 @@
 	job_rank = ROLE_SERVANT_OF_RATVAR
 	antag_moodlet = /datum/mood_event/cult
 	skill_modifiers = list(/datum/skill_modifier/job/level/wiring, /datum/skill_modifier/job/level/dwarfy/blacksmithing)
+	ui_name = "AntagInfoClockwork"
 	var/datum/action/innate/hierophant/hierophant_network = new
 	threat = 3
 	var/datum/team/clockcult/clock_team
@@ -13,6 +14,12 @@
 	var/neutered = FALSE			//can not use round ending, gibbing, converting, or similar things with unmatched round impact
 	var/ignore_eligibility_check = FALSE
 	var/ignore_holy_water = FALSE
+
+/datum/antagonist/brainwashed/ui_static_data(mob/user)
+	. = ..()
+	var/list/data = list()
+	data["objectives"] = get_objectives()
+	return data
 
 /datum/antagonist/clockcult/silent
 	name = "Silent Clock Cultist"
@@ -22,6 +29,8 @@
 /datum/antagonist/clockcult/neutered
 	name = "Neutered Clock Cultist"
 	neutered = TRUE
+	soft_antag = TRUE
+	ui_name = null // no.
 
 /datum/antagonist/clockcult/neutered/traitor
 	name = "Traitor Clock Cultist"

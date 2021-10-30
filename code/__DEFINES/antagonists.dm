@@ -111,3 +111,12 @@ GLOBAL_LIST_EMPTY(living_heart_cache)	//A list of all living hearts in existance
 #define BLOB_SPREAD_COST 4
 #define BLOB_ATTACK_REFUND 2 //blob refunds this much if it attacks and doesn't spread
 #define BLOB_REFLECTOR_COST 15
+
+/// How many telecrystals a normal traitor starts with
+#define TELECRYSTALS_DEFAULT 20
+/// How many telecrystals mapper/admin only "precharged" uplink implant
+#define TELECRYSTALS_PRELOADED_IMPLANT 10
+/// The normal cost of an uplink implant; used for calcuating how many
+/// TC to charge someone if they get a free implant through choice or
+/// because they have nothing else that supports an implant.
+#define UPLINK_IMPLANT_TELECRYSTAL_COST 4

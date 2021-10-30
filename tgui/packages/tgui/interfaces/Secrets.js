@@ -95,7 +95,7 @@ const HelpfulTab = (props, context) => {
             <Button
               icon="eye"
               lineHeight={lineHeightNormal}
-              fluid
+              width={buttonWidthNormal}
               content="Show Gamemode"
               onClick={() => act("showgm")} />
           </Stack.Item>
@@ -243,27 +243,27 @@ const HelpfulTab = (props, context) => {
       </Stack.Item>
       <Stack.Item>
         <Stack fill>
-          <Stack.Item grow={1}>
+          <Stack.Item>
             <Button
               icon="plane-departure"
               lineHeight={lineHeightNormal}
-              fluid
+              width={buttonWidthNormal}
               content="Move Ferry"
               onClick={() => act("moveferry")} />
           </Stack.Item>
-          <Stack.Item grow={1} mx={0.5}>
+          <Stack.Item>
             <Button
               icon="plane"
               lineHeight={lineHeightNormal}
-              fluid
+              width={buttonWidthNormal}
               content="Toggle Arrivals"
               onClick={() => act("togglearrivals")} />
           </Stack.Item>
-          <Stack.Item grow={1}>
+          <Stack.Item>
             <Button
               icon="plane-arrival"
               lineHeight={lineHeightNormal}
-              fluid
+              width={buttonWidthNormal}
               content="Move Labor"
               onClick={() => act("movelaborshuttle")} />
           </Stack.Item>
@@ -426,31 +426,19 @@ const FunForYouTab = (props, context) => {
   return (
     <Stack fill vertical>
       <Stack.Item>
-        <Stack>
-          <Stack.Item>
-            <NoticeBox
-              mb={-0.5}
-              width={buttonWidthNormal}
-              height={lineHeightNormal}>
-              Your admin button here, coder!
-            </NoticeBox>
-          </Stack.Item>
-          <Stack.Item>
-            <NoticeBox danger width={19.6} mb={0}>
-              <Button
-                color="red"
-                icon="user-secret"
-                fluid
-                content="AK-47s For Everyone!"
-                onClick={() => act("ak47s")} />
-            </NoticeBox>
-          </Stack.Item>
-        </Stack>
+        <NoticeBox danger mb={0}>
+          <Button
+            color="red"
+            icon="user-secret"
+            fluid
+            content="AK-47s For Everyone!"
+            onClick={() => act("ak47s")} />
+        </NoticeBox>
       </Stack.Item>
       <Stack.Item>
         <Stack>
           <Stack.Item>
-            <NoticeBox danger mb={0} width={19.6}>
+            <NoticeBox danger width={19.6} mb={0}>
               <Button
                 color="red"
                 icon="user-secret"
@@ -470,16 +458,6 @@ const FunForYouTab = (props, context) => {
             </NoticeBox>
           </Stack.Item>
         </Stack>
-      </Stack.Item>
-      <Stack.Item>
-          <Stack.Item>
-            <NoticeBox
-              mb={-0.5}
-              width={buttonWidthNormal}
-              height={lineHeightNormal}>
-              Species change button here.
-            </NoticeBox>
-          </Stack.Item>
       </Stack.Item>
       <Stack.Item>
         <NoticeBox danger mb={0}>
@@ -596,11 +574,11 @@ export const Secrets = (props, context) => {
                     icon="eye"
                     content="Show Admins"
                     onClick={() => act("show_admins")} />
-                    <Button
-                      color="blue"
-                      icon="address-card"
-                      content="Mentor Log"
-                      onClick={() => act("mentor_log")} />
+                  <Button
+                    color="blue"
+                    icon="address-card"
+                    content="Mentor Log"
+                    onClick={() => act("mentor_log")} />
                 </>
               )}>
               <Flex

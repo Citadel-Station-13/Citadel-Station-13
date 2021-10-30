@@ -12,7 +12,7 @@
 
 /datum/computer_file/program/crew_manifest/ui_static_data(mob/user)
 	var/list/data = list()
-	data["manifest"] = GLOB.data_core.get_manifest()
+	data["manifest"] = GLOB.data_core.get_manifest_tg()
 	return data
 
 /datum/computer_file/program/crew_manifest/ui_data(mob/user)

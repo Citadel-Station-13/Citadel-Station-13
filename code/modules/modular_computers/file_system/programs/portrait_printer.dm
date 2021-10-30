@@ -25,7 +25,7 @@
 	var/list/data = list()
 	data["library"] = SSpersistence.paintings["library"] ? SSpersistence.paintings["library"] : 0
 	data["library_secure"] = SSpersistence.paintings["library_secure"] ? SSpersistence.paintings["library_secure"] : 0
-	data["library_private"] = SSpersistence.paintings["library_private"] ? SSpersistence.paintings["library_private"] : 0 //i'm gonna regret this, won't i?
+	data["library_private"] = SSpersistence.paintings["library_private"] ? SSpersistence.paintings["library_private"] : 0 //i'm gonna regret this, won't i? Yes you should.
 	return data
 
 /datum/computer_file/program/portrait_printer/ui_assets(mob/user)

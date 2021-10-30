@@ -18,6 +18,7 @@
 	var/list/blacklisted = list(
 		"AI",
 		"Assistant",
+		"Prisoner",
 		"Cyborg",
 		"Captain",
 		"Head of Personnel",
@@ -98,7 +99,7 @@
 		if("PRG_priority")
 			var/priority_target = params["target"]
 			var/datum/job/j = SSjob.GetJob(priority_target)
-			if(!j || (job?.title in blacklisted))
+			if(!j || (j?.title in blacklisted))
 				return
 			if(j.total_positions <= j.current_positions)
 				return

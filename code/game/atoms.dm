@@ -1287,9 +1287,7 @@
 
 /obj/item/update_filters()
 	. = ..()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /atom/proc/get_filter(name)
 	if(filter_data && filter_data[name])
