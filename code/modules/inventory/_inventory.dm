@@ -11,10 +11,6 @@
  * As such, every sensitive var is marked privae. Only one type of thsi datum should ever exist, and only this datum should ever touch them, using its own procs.
  */
 /datum/inventory
-	/// all screen objects currently shown to a user, ORDERED LIST
-	VAR_PRIVATE/list/atom/movable/screen/inventory/showing
-	/// if a user is viewing full inventory, ORDERED LIST, FALSE = static inventory only
-	VAR_PRIVATE/list/viewing_full
 	/// all users currently viewing us
 	var/mob/viewing
 	/// mob that owns us
@@ -117,6 +113,7 @@
 	appearances.len++
 	if(!requires_hide_button && !meta.static_inventory)
 		RecalcHideable()
+	RecalcScreen()
 	return TRUE
 
 /**
@@ -127,3 +124,4 @@
 	if(!(id in slots))
 		return FALSE
 	RecalcHideable()
+	RecalcScreen()

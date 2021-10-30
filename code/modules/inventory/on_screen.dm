@@ -1,6 +1,13 @@
-/datum/inventory/proc/ShowTo(mob/user)
+/datum/inventory/proc/ShowTo(mob/user, static_only = TRUE)
+	if(user in showing)
+		HideFrom(user)
+
 
 /datum/inventory/proc/HideFrom(mob/user)
+
+/datum/inventory/proc/HideFromAll()
+	for(var/mob/user as anything in showing)
+		HideFrom(user)
 
 /atom/movable/screen/inventory
 	name = "unknown slot"
