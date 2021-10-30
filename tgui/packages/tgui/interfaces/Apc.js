@@ -213,7 +213,7 @@ const ApcContent = (props, context) => {
             <LabeledList.Item
               title="Hijacking"
               buttons={(
-                <Fragment>
+                <>
                   <Button
                     icon="unlock"
                     content="Hijack"
@@ -229,7 +229,7 @@ const ApcContent = (props, context) => {
                     content="Drain"
                     disabled={!data.drainavail && data.hijacked === 1}
                     onClick={() => act('drain')} />
-                </Fragment>
+                </>
               )} />
           )}
         </LabeledList>
