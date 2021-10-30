@@ -79,13 +79,6 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/binary/pump, "volp
 		ui = new(user, src, "AtmosPowerControl", name)
 		ui.open()
 
-/obj/machinery/atmospherics/component/binary/pump/ui_data()
-	var/data = list()
-	data["on"] = on
-	data["rate"] = round(transfer_rate)
-	data["max_rate"] = round(MAX_TRANSFER_RATE)
-	return data
-
 /obj/machinery/atmospherics/component/binary/pump/atmosinit()
 	. = ..()
 	set_frequency(frequency)
