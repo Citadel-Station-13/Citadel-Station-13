@@ -22,7 +22,7 @@
 
 /mob/living/carbon/Moved()
 	. = ..()
-	if(. && !CHECK_BITFIELD(movement_type, FLOATING)) //floating is easy
+	if(. && !(movement_type & FLOATING)) //floating is easy
 		if(HAS_TRAIT(src, TRAIT_NOHUNGER))
 			set_nutrition(NUTRITION_LEVEL_FED - 1)	//just less than feeling vigorous
 		else if(nutrition && stat != DEAD)
