@@ -6,41 +6,41 @@
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "c" = (
 /turf/open/lava/smooth/lava_land_surface,
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "d" = (
 /turf/closed/wall/mineral/cult,
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "e" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "f" = (
 /obj/structure/destructible/cult/pylon,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "g" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "i" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "k" = (
 /obj/effect/decal/remains/human,
 /obj/item/melee/cultblade,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "l" = (
 /obj/effect/decal/remains/human,
 /obj/item/clothing/shoes/cult,
@@ -48,13 +48,13 @@
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "m" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "o" = (
 /obj/effect/rune/narsie{
 	color = "#ff0000";
@@ -76,7 +76,7 @@
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "q" = (
 /obj/effect/decal/remains/human,
 /obj/item/clothing/shoes/cult,
@@ -85,10 +85,10 @@
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "s" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 
 (1,1,1) = {"
 a

@@ -184,6 +184,7 @@
 	icon_state = "crusher-glaive"
 	item_state = "crusher0-glaive"
 	block_parry_data = /datum/block_parry_data/crusherglaive
+	obj_flags = UNIQUE_RENAME
 	//ideas: altclick that lets you pummel people with the handguard/handle?
 	//parrying functionality?
 
@@ -234,6 +235,39 @@
 	Although it does take a lot of effort and luck to create, it was a success."
 	icon_state = "crusher-bone"
 	item_state = "crusher0-bone"
+
+/obj/item/kinetic_crusher/glaive/bone/update_icon_state()
+	item_state = "crusher[wielded]-bone"
+
+/obj/item/kinetic_crusher/glaive/gauntlets
+	name = "proto-kinetic gauntlets"
+	desc = "A pair of scaled-down proto-kinetic crusher destabilizer modules shoved into gauntlets and greaves, often used by \
+	those who wish to spit in the eyes of God. Sacrifices outright damage for \
+	a reliance on backstabs and the ability to give fauna concussions on a parry."
+	attack_verb = list("pummeled", "punched", "jabbed", "hammer-fisted", "uppercut", "slammed")
+	icon_state = "crusher-hands"
+	item_state = "crusher0-fist"
+	unique_reskin = list("Gauntlets" = "crusher-hands",
+						"Fingerless" = "crusher-hands-bare")
+	detonation_damage = 45 // 60 on wield, compared to normal crusher's 70
+	backstab_bonus = 70 // 130 on backstab though
+
+/obj/item/kinetic_crusher/glaive/gauntlets/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=15)
+
+/obj/item/kinetic_crusher/glaive/gauntlets/active_parry_reflex_counter(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list, parry_efficiency, list/effect_text)
+	. = ..()
+	if(isliving(attacker))
+		var/mob/living/liv_atk = attacker
+		if(liv_atk.mob_size >= MOB_SIZE_LARGE && !ismegafauna(liv_atk))
+			liv_atk.apply_status_effect(STATUS_EFFECT_GAUNTLET_CONC)
+
+/obj/item/kinetic_crusher/glaive/gauntlets/update_icon_state()
+	if(current_skin == "Fingerless")
+		item_state = "crusher[wielded]-fistbare"
+	else
+		item_state = "crusher[wielded]-fist"
 
 //destablizing force
 /obj/item/projectile/destabilizer

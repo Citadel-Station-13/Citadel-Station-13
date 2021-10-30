@@ -21,3 +21,6 @@
 		var/obj/item/clothing/suit/space/space_ninja/S = H.wear_suit
 		if(istype(H.belt, belt))
 			S.energyKatana = H.belt
+	H.grant_language(/datum/language/neokanji)
+	var/datum/language_holder/LH = H.get_language_holder()
+	LH.selected_language = /datum/language/neokanji

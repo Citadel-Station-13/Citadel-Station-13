@@ -247,7 +247,13 @@ GLOBAL_LIST_EMPTY(crematoriums)
 
 		locked = TRUE
 		update_icon()
-
+		for(var/mob/living/simple_animal/jacq/J in conts)
+			visible_message("<b>[src]</b> cackles, <span class='spooky'>\"You'll nae get rid a me that easily!\"</span>")
+			playsound(loc, 'sound/spookoween/ahaha.ogg', 100, 0.25)
+			J.poof()
+			locked = FALSE
+			update_icon()
+			return
 		for(var/mob/living/M in conts)
 			if (M.stat != DEAD)
 				M.emote("scream")

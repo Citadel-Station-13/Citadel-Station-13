@@ -194,6 +194,9 @@
 			C.adjustStaminaLoss(max(0, stamdmg_per_ds * diff)) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
 	last_tick = world.time
 
+/datum/status_effect/electrode/no_damage
+	stamdmg_per_ds = 0
+
 /datum/status_effect/electrode/no_combat_mode
 	id = "tased_strong"
 	movespeed_mod = /datum/movespeed_modifier/status_effect/tased/no_combat_mode
@@ -1129,3 +1132,16 @@
 	else if(fake_msg)
 		to_chat(owner, fake_msg)
 	msg_stage++
+
+/datum/status_effect/cgau_conc
+	id = "cgau_conc"
+	examine_text = "<span class='warning'>SUBJECTPRONOUN rocks from side to side, confused.</span>"
+	duration = 5 SECONDS
+
+/datum/status_effect/cgau_conc/on_creation(mob/living/new_owner, ...)
+	. = ..()
+	new_owner.add_movespeed_modifier(/datum/movespeed_modifier/gauntlet_concussion)
+
+/datum/status_effect/cgau_conc/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/gauntlet_concussion)
+	. = ..()

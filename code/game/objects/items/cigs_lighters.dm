@@ -300,6 +300,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A Xeno Filtered brand cigarette."
 	list_reagents = list (/datum/reagent/drug/nicotine = 20, /datum/reagent/medicine/regen_jelly = 15, /datum/reagent/drug/krokodil = 4)
 
+/obj/item/clothing/mask/cigarette/dart
+	name = "fat dart"
+	desc = "Chuff back this fat dart"
+	icon_state = "bigoff"
+	icon_on = "bigon"
+	icon_off = "bigoff"
+	w_class = WEIGHT_CLASS_BULKY
+	smoketime = 10000
+	chem_volume = 50
+	list_reagents = list(/datum/reagent/drug/nicotine = 15)
+
 // Rollies.
 
 /obj/item/clothing/mask/cigarette/rollie

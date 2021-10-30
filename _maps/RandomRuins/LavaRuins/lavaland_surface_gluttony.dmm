@@ -10,115 +10,115 @@
 /area/lavaland/surface/outdoors)
 "e" = (
 /turf/open/lava/smooth,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "f" = (
 /obj/item/reagent_containers/syringe/gluttony,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "g" = (
 /obj/effect/gluttony,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "h" = (
 /obj/item/trash/boritos,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "i" = (
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "j" = (
 /obj/item/trash/plate,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "l" = (
 /obj/item/trash/candy,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "m" = (
 /obj/item/trash/raisins,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "n" = (
 /obj/item/trash/pistachios,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "o" = (
 /obj/item/trash/popcorn,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "p" = (
 /obj/item/trash/semki,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "q" = (
 /obj/item/trash/syndi_cakes,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "r" = (
 /obj/effect/gluttony,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "t" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/item/trash/plate/alt,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "v" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "z" = (
 /obj/item/trash/plate,
 /obj/machinery/light/small{
 	dir = 8
 	},
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "A" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "B" = (
 /obj/item/veilrender/vealrender,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "E" = (
 /obj/machinery/light/small,
 /obj/item/trash/cheesie,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "G" = (
 /obj/item/trash/waffles,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "L" = (
 /obj/machinery/light/small,
 /obj/item/trash/plate/alt,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "N" = (
 /obj/item/trash/cheesie,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "R" = (
 /turf/closed/indestructible/riveted/uranium,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "S" = (
 /obj/machinery/door/airlock/uranium,
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 "Z" = (
 /obj/item/trash/plate/alt,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
+/area/ruin/lavaland/powered/gluttony)
 
 (1,1,1) = {"
 a

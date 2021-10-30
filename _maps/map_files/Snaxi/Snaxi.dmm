@@ -870,7 +870,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/computer/arcade/minesweeper{
+/obj/machinery/computer/arcade/orion_trail{
 	dir = 8
 	},
 /obj/structure/sign/poster/official/nanomichi_ad{
@@ -5842,7 +5842,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft/secondary)
 "akQ" = (
-/obj/machinery/computer/arcade/minesweeper,
+/obj/machinery/computer/arcade/battle,
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "akR" = (
@@ -34938,7 +34938,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/machinery/computer/arcade/minesweeper{
+/obj/machinery/computer/arcade/orion_trail{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,

@@ -147,7 +147,7 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/vent_pump, "
 		"device" = "VP",
 		"timestamp" = world.time,
 		"power" = on,
-		"direction" = pump_direction ? "release" : "siphon",
+		"direction" = pump_direction,
 		"checks" = pressure_checks,
 		"internal" = internal_pressure_bound,
 		"external" = external_pressure_bound,

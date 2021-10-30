@@ -21,14 +21,6 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
-/datum/design/board/minesweeper
-	name = "Computer Design (Minesweeper Arcade Machine)"
-	desc = "Allows for the construction of circuit boards used to build a new Minesweeper machine."
-	id = "arcade_minesweeper"
-	build_path = /obj/item/circuitboard/computer/arcade/minesweeper
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
-
 /datum/design/board/slot_machine
 	name = "Computer Design (Slot Machine)"
 	desc = "Allows for the construction of circuit boards used to build a new slot machine."

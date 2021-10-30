@@ -15,6 +15,8 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/heat_exchang
 
 	var/obj/machinery/atmospherics/component/unary/heat_exchanger/partner = null
 	var/update_cycle
+	var/old_temperature = 0
+	var/other_old_temperature = 0
 
 	pipe_state = "heunary"
 

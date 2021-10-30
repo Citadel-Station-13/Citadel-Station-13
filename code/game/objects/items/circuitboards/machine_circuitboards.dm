@@ -1295,6 +1295,15 @@
 		/obj/item/stock_parts/manipulator = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/autoloom
+	name = "Autoloom (Machine Board)"
+	icon_state = "service"
+	build_path = /obj/machinery/autoloom
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/stock_parts/manipulator = 1)
+	needs_anchored = FALSE
+
 /obj/item/circuitboard/machine/seed_extractor
 	name = "Seed Extractor (Machine Board)"
 	icon_state = "service"
