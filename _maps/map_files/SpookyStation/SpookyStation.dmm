@@ -156,10 +156,6 @@
 /obj/structure/flora/tree/jungle,
 /turf/open/floor/spooktime/nonspooktimegrass,
 /area/eventmap/outside)
-"aaC" = (
-/obj/structure/signpost,
-/turf/open/floor/spooktime/nonspooktimegrass,
-/area/eventmap/outside)
 "aaD" = (
 /obj/structure/flora/junglebush,
 /turf/open/floor/spooktime/nonspooktimegrass,
@@ -53870,7 +53866,7 @@ aaN
 aaN
 aaN
 aaN
-aaC
+aab
 apR
 apR
 apR
