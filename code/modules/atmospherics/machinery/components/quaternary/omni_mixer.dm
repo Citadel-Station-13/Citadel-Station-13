@@ -87,6 +87,7 @@ ATMOS_MAPPING_LAYERS_PX(/obj/machinery/atmospherics/component/quaternary/filter)
 
 /obj/machinery/atmospherics/component/quaternary/mixer/ui_static_data(mob/user)
 	. = ..()
+	.["gasids"] = GLOB.gas_data.ids
 	.["north"] = DirToIndex(NORTH)
 	.["south"] = DirToIndex(SOUTH)
 	.["east"] = DirToIndex(EAST)
