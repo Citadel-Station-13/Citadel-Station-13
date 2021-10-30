@@ -309,6 +309,13 @@
 				pressure_setting = clamp(pressure, 0, max_pressure)
 				investigate_log("was set to [pressure_setting] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 
+/obj/machinery/atmospherics/component/examine(mob/user)
+	. = ..()
+	if(allow_alt_click_max_rate)
+		. += "<span class='notice'>You can hold <b>Alt</b> and click on it to maximize its pressure.</span>"
+	if(allow_ctrl_click_toggle_power)
+		. += "<span class='notice'>You can hold <b>Ctrl</b> and click on it to toggle it on and off.</span>"
+
 // Tool acts
 
 /obj/machinery/atmospherics/component/analyzer_act(mob/living/user, obj/item/I)
