@@ -55,7 +55,7 @@
 		id = "[type]"
 
 /datum/instrument/proc/Initialize()
-	if(CHECK_BITFIELD(instrument_flags, INSTRUMENT_LEGACY | INSTRUMENT_DO_NOT_AUTOSAMPLE))
+	if(instrument_flags & (INSTRUMENT_LEGACY | INSTRUMENT_DO_NOT_AUTOSAMPLE))
 		return
 	calculate_samples()
 

@@ -119,7 +119,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 /obj/machinery/telecomms/proc/update_power()
 	if(toggled)
 		// if powered, on. if not powered, off. if too damaged, off
-		if(CHECK_BITFIELD(stat, (BROKEN | NOPOWER | EMPED)))
+		if(stat &(BROKEN | NOPOWER | EMPED))
 			on = FALSE
 		else
 			on = TRUE
