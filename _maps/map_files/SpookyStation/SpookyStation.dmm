@@ -1666,7 +1666,7 @@
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "afb" = (
-/obj/machinery/computer/arcade/minesweeper,
+/obj/machinery/computer/arcade/orion_trail,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "afc" = (
@@ -2733,7 +2733,7 @@
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "ain" = (
-/obj/machinery/computer/arcade/minesweeper,
+/obj/machinery/computer/arcade/orion_trail,
 /turf/open/floor/wood{
 	icon_state = "wood-broken4"
 	},
