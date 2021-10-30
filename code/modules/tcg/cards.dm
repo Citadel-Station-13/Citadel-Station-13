@@ -214,11 +214,11 @@
 			result = show_radial_menu(user, src, possible_actions, require_near = TRUE, tooltips = TRUE)
 			switch(result)
 				if("Health")
-					card_datum.health = tgui_input_num(user, "What do you want health to be?", "Changing [src]'s health", card_datum.health)
+					card_datum.health = input(user, "What do you want health to be?", "Changing [src]'s health") as num|null
 				if("Attack")
-					card_datum.attack = tgui_input_num(user, "What do you want attack to be?", "Changing [src]'s attack", card_datum.attack)
+					card_datum.attack = input(user, "What do you want attack to be?", "Changing [src]'s attack") as num|null
 				if("Mana")
-					card_datum.mana_cost = tgui_input_num(user, "What do you want mana cost to be?", "Changing [src]'s mana cost", card_datum.mana_cost)
+					card_datum.mana_cost = input(user, "What do you want mana cost to be?", "Changing [src]'s mana cost") as num|null
 			user.visible_message("<span class='notice'>[user] changes [src]'s [result].</span>")
 
 /obj/item/tcg_card/equipped(mob/user, slot, initial)
@@ -575,7 +575,7 @@
 		qdel(I)
 	if(istype(I, /obj/item/tcgcard_deck))
 		var/obj/item/tcgcard_deck/deck = I
-		var/named = tgui_input_text(user, "How will this deck be named? Leave this field empty if you don't want to save this deck.")
+		var/named = input(user, "How will this deck be named? Leave this field empty if you don't want to save this deck.")
 		if(named)
 			decks[named] = list()
 		for(var/obj/item/tcg_card/card in deck.contents)

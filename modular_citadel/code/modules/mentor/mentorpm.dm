@@ -10,7 +10,7 @@
 		targets["[T]"] = T
 
 	var/list/sorted = sortList(targets)
-	var/target = tgui_input_list(src,"To whom shall we send a message?","Mentor PM",sorted)
+	var/target = input(src,"To whom shall we send a message?","Mentor PM",null) in sorted|null
 	cmd_mentor_pm(targets[target],null)
 	SSblackbox.record_feedback("tally", "Mentor_verb", 1, "APM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -36,7 +36,7 @@
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
-		msg = tgui_input_text(src,"Message:", "Private message")
+		msg = input(src,"Message:", "Private message") as text|null
 
 		if(!msg)
 			if (is_mentor(whom))

@@ -232,7 +232,7 @@
 			if("load")
 				if(cloning)
 					return
-				var/input = tgui_input_message(usr, "Put your code there:", "loading", null, null)
+				var/input = input("Put your code there:", "loading", null, null) as message | null
 				if(!check_interactivity(usr) || cloning)
 					return
 				if(!input)
