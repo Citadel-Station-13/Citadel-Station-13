@@ -33,22 +33,27 @@
 /datum/inventory_slot_meta/id
 	name = "id"
 	icon_state = "id"
+	static_inventory = TRUE
 
 /datum/inventory_slot_meta/belt
 	name = "belt"
 	icon_state = "belt"
+	static_inventory = TRUE
 
 /datum/inventory_slot_meta/left_pocket
 	name = "left pocket"
 	icon_state = "pocket"
+	static_inventory = TRUE
 
 /datum/inventory_slot_meta/right_pocket
 	name = "right pocket"
 	icon_state = "pocket"
+	static_inventory = TRUE
 
 /datum/inventory_slot_meta/back
 	name = "back"
 	icon_state = "back"
+	static_inventory = TRUE
 
 /datum/inventory_slot_meta/handcuffs
 	is_inventory = FALSE
@@ -59,3 +64,13 @@
 /datum/inventory_slot_meta/dextrous
 	name = "dextrous storage"
 	icon_state = "pocket"
+	static_inventory = TRUE
+
+/datum/inventory_slot_meta/neck
+	name = "neck"
+	icon_state = "neck"
+
+/datum/inventory_slot_meta/suit_storage
+	name = "suit storage"
+	icon_state = "pocket"
+	static_inventory = TRUE

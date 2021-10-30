@@ -15,15 +15,5 @@
 /// The index of the entry in 'afk_thefts' with the time it happened
 #define AFK_THEFT_TIME 3
 
-// inventory hide modes - if >= inventory_hide_level on a slot it'll show
-/// show all slots
-#define INVENTORY_HIDE_NONE		10
-/// show "static inventory"
-#define INVENTORY_HIDE_COMMON	5
-/// show nothing
-#define INVENTORY_HIDE_ALL		15
-/// absolute maximum - these slots never show on UI at all
-#define INVENTORY_HIDE_MAXIMUM	101
-
 #define TINT_DARKENED 2			//Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3			//Threshold of tint level to obscure vision fully

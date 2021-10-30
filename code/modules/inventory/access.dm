@@ -4,6 +4,7 @@
  * Returns TRUE or FALSE
  */
 /datum/inventory/proc/EquipToSlot(obj/item/I, slot, mob/user, force, delete_old_item, list/warnings, move_item = TRUE)
+	slot = "[slot]"
 
 /**
  * Unequips an item
@@ -11,6 +12,7 @@
  * Returns item that was unequipped if successful
  */
 /datum/inventory/proc/UnequipFromSlot(slot, mob/user, force, atom/new_location, list/warnings, move_item = TRUE)
+	slot = "[slot]"
 
 /**
  * Unequips an item
@@ -23,7 +25,7 @@
  * Does a slot exist?
  */
 /datum/inventory/proc/SlotExists(slot)
-	return (slot in items_by_slot)
+	return ("[slot]" in slots)
 
 /**
  * Can we equip an item?

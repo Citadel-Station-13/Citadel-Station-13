@@ -731,3 +731,11 @@
 /proc/safe_json_decode(string, default = list())
 	. = default
 	return json_decode(string)
+
+/**
+ * Flattens the keys of a list to strings
+ */
+/proc/list_flatten_keys_to_strings(list/L)
+	. = list()
+	for(var/key in L)
+		.["[key]"] = L[key]

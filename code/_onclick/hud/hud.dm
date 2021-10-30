@@ -6,12 +6,12 @@
 
 // The default UI style is the first one in the list
 GLOBAL_LIST_INIT(available_ui_styles, list(
-	"Midnight" = 'icons/mob/screen_midnight.dmi',
-	"Retro" = 'icons/mob/screen_retro.dmi',
-	"Plasmafire" = 'icons/mob/screen_plasmafire.dmi',
-	"Slimecore" = 'icons/mob/screen_slimecore.dmi',
-	"Operative" = 'icons/mob/screen_operative.dmi',
-	"Clockwork" = 'icons/mob/screen_clockwork.dmi'
+	UI_THEME_MIDNIGHT = 'icons/mob/screen_midnight.dmi',
+	UI_THEME_RETRO = 'icons/mob/screen_retro.dmi',
+	UI_THEME_PLASMAFIRE = 'icons/mob/screen_plasmafire.dmi',
+	UI_THEME_SLIME = 'icons/mob/screen_slimecore.dmi',
+	UI_THEME_SYNDICATE = 'icons/mob/screen_operative.dmi',
+	UI_THEME_CLOCKWORK = 'icons/mob/screen_clockwork.dmi'
 ))
 
 /proc/ui_style2icon(ui_style)

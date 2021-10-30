@@ -37,8 +37,8 @@ GLOBAL_LIST_EMPTY(inventory_slot_meta)
 	var/list/screen_objects
 	/// unequip by click rather than drag to hand
 	var/unequip_on_click = TRUE
-	/// hide level
-	var/hide_level = INVENTORY_HIDE_COMMON
+	/// If TRUE, we're considered "static" inventory and always show, rather than needing the inventory to be expanded.
+	var/static_inventory = FALSE
 	/// are we an "abstract" slot? These aren't ever shown to the player. Set to FALSE for those.
 	var/is_inventory = TRUE
 

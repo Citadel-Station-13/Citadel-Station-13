@@ -16,11 +16,11 @@
 
 /obj/item/Initialize()
 	if(islist(inv_hide))
-		inv_hide = typelist(NAMEOF(src, inv_hide), inv_hide)
+		inv_hide = typelist(NAMEOF(src, inv_hide), list_flatten_keys_to_strings(inv_hide))
 	if(islist(inv_flags))
-		inv_flags = typelist(NAMEOF(src, inv_flags), inv_flags)
+		inv_flags = typelist(NAMEOF(src, inv_flags), list_flatten_keys_to_strings(inv_flags))
 	if(islist(inv_cover))
-		inv_cover = typelist(NAMEOF(src, inv_cover), inv_cover)
+		inv_cover = typelist(NAMEOF(src, inv_cover), list_flatten_keys_to_strings(inv_cover))
 	return ..()
 
 /**

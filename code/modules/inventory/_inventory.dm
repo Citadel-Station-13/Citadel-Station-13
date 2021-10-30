@@ -11,14 +11,16 @@
  * As such, every sensitive var is marked privae. Only one type of thsi datum should ever exist, and only this datum should ever touch them, using its own procs.
  */
 /datum/inventory
-	/// inventory hide level
-	var/slot_hide_mode = INVENTORY_HIDE_COMMON
-	/// all screen objects currently shown to the user
-	var/list/atom/movable/screen/inventory/showing
+	/// all screen objects currently shown to a user, ORDERED LIST
+	VAR_PRIVATE/list/atom/movable/screen/inventory/showing
+	/// if a user is viewing full inventory, ORDERED LIST, FALSE = static inventory only
+	VAR_PRIVATE/list/viewing_full
 	/// all users currently viewing us
 	var/mob/viewing
 	/// mob that owns us
 	var/mob/owner
+	/// Do we need the inventory hide button?
+	var/requires_hide_button = FALSE
 	/// ordered inventory slots
 	VAR_PRIVATE/list/slots
 	/// ordered list of all items in us
@@ -70,6 +72,7 @@
 		AddSlot(i)
 
 /datum/inventory/Destroy()
+	HideFromAll()
 	for(var/i in AllItems(TRUE))
 		qdel(i)	// this handles removal
 	for(var/i in slots)
@@ -97,3 +100,30 @@
 		ShowTo(i)
 	InvalidateCachedCalculations(ALL)
 	RebuildAllAppearances()
+
+/**
+ * Adds a slot
+ */
+/datum/inventory/proc/AddSlot(id)
+	id = "[id]"
+	if(id in slots)
+		return FALSE
+	var/datum/inventory_slot_meta/meta = get_inventory_slot_datum(id)
+	if(!meta)
+		return FALSE
+	slots += id
+	holding.len++
+	items_by_slot[slot] = null
+	appearances.len++
+	if(!requires_hide_button && !meta.static_inventory)
+		RecalcHideable()
+	return TRUE
+
+/**
+ * Removes a slot
+ */
+/datum/inventory/proc/RemoveSlot(id)
+	id = "[id]"
+	if(!(id in slots))
+		return FALSE
+	RecalcHideable()
