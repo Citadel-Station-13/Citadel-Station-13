@@ -53,3 +53,22 @@
  */
 /datum/inventory/proc/IndexItem(obj/item/I)
 	return holding.Find(I)
+
+/**
+ * Gets all items
+ */
+/datum/inventory/proc/AllItems(include_abstract = FALSE)
+	if(!include_abstract)
+		. = list()
+		for(var/index in 1 to slots.len)
+			var/id = slots[index]
+			var/datum/inventory_slot_meta/SM = get_inventory_slot_datum(id)
+			if(SM && SM.abstract)
+				continue
+			if(holding[index])
+				. += holding[index]
+	else
+		. = list()
+		for(var/i in holding)
+			if(i)
+				. += i

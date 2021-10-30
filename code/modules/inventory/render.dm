@@ -1,6 +1,6 @@
 // /obj/item
 /obj/item
-	// Dimensions - used by all
+	// WORN RENDERING - Handles rendering in inventory slots. INHANDS ARE NOT PART OF THIS.
 	/// Dimension of worn icon files. Used for centering.
 	var/worn_x_dimension = 32
 	/// Dimension of worn icon files. Used for centering.
@@ -15,7 +15,7 @@
 	// New rendering system - state determined by "[slot_state_id]_[bodytype]_[worn_state]"
 	// Used if the above overrides are unset
 	/// "I know what I'm doing, and if this breaks, you may replace my eyelids with chili peppers" - Disable all sanity checking in unit tests that enforces the below, because this item custom-builds its worn icons.
-	var/worn_advanced_overlays = TRUE
+	var/worn_advanced_overlays = FALSE
 	/// worn state - if none, reads item_state instead
 	var/worn_state
 	/// worn icon - one per item, or at most one per group of items.
@@ -43,11 +43,35 @@
 	 * one-slot gas mask with snout mutantrace = "mask_snout"
 	 */
 
+	// INHAND RENDERING
+	/// Dimension of inhand icon files. Used for centering.
+	var/inhand_x_dimension = 32
+	/// Dimension of inhand icon files. Used for centering.
+	var/inhand_y_dimension = 32
+
+	// Overrides - funny adminbus only, DO NOT USE THESE IN CODE. To enforce this, these are VAR_PRIVATE.
+	/// Overrides inhand state. Defaults to inhand_state, then item_state if nonexistant.
+	VAR_PRIVATE/inhand_state_override
+	/// Overrides inhand icon. If this is used, the above is automatically used.
+	VAR_PRIVATE/icon/inhand_icon_override
+
+	/// inhand state
+	var/inhand_state
+	/// Icon file for inhands
+	var/icon/inhand_icon
+	/// If not null, will use [inhand_state]_[index] up to index, instead of [inhand_state]_["left" | "right"].
+	var/inhand_icon_indices
+
 
 /**
  * Forces an update for ourselves. Use this when you change worn_state while it's being worn, or otherwise need it to update overlays.
  */
 /obj/item/proc/update_worn_icon()
+
+/**
+ * Forces an update for ourselves. Use this when you change inhand_state while it's being held, or otherwise need it to update overlays.
+ */
+/obj/item/proc/update_inhand_icon()
 
 /**
  * New rendering system - get the state to use from worn_icon
@@ -57,12 +81,24 @@
 	return "[worn_state][worn_multi_slot? "_[slot]" : ""][(bodytype == BODY_TYPE_NORMAL)? (mutantrace? mutantrace_support_define_to_state_append(mutantrace): "") : body_type_define_to_state_append(bodytype)]"
 
 /**
+ * New rendering system - get the state to use from inhand_icon
+ */
+/obj/item/proc/effective_inhand_state(hand_index)
+	return "[inhand_state]_[hand_index <= inhand_icon_indices? hand_index : "[hand_index % 2? "left" : "right"]"]"
+
+/**
  * Builds worn icons - only should be called from inventory. INHANDS ARE NOT INVENTORY.
  *
  * Returns a list **always**. Inventory will strip the list out if it determines it isn't necessary.
  */
 /obj/item/proc/build_worn_overlays(slotid_overide, bodytype_override, mutantrace_override)
 
+/**
+ * Builds inhand icons - only should be called from mob. INVENTORY/SLOTS ARE NOT INHANDS.
+ *
+ * Returns a list **always**. Mob render will strip the list out if it determines it isn't necessary.
+ */
+/obj/item/proc/build_held_overlays(hand_index)
 
 // /datum/inventory
 /**

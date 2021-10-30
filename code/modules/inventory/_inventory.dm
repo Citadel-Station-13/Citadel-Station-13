@@ -49,6 +49,8 @@
 	VAR_PRIVATE/low_pressure_threshold
 	/// Cached max pressure threshold - we don't need to check at all if below this
 	VAR_PRIVATE/high_pressure_threshold
+	/// Cached inv_hide
+	VAR_PRIVATE/inv_hide = NONE
 	/// update flags
 	var/update_flags = NONE
 	/// all body zones we care about. we calculate temperature, pressure, and armor for these

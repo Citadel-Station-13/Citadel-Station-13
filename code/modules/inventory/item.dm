@@ -41,7 +41,7 @@
  */
 /obj/item/proc/get_inv_hide(slot)
 	if(islist(inv_hide))
-		return isnull(inv_hide[slot])? inv_hide[INV_SLOT_ANY] : inv_hide[slot]
+		return isnull(inv_hide[slot])? inv_hide[INV_SLOT_ANY] : inv_hide["[slot]"]
 	return inv_hide
 
 /**
@@ -49,7 +49,7 @@
  */
 /obj/item/proc/get_inv_flags(slot)
 	if(islist(inv_flags))
-		return isnull(inv_flags[slot])? inv_flags[INV_SLOT_ANY] : inv_flags[slot]
+		return isnull(inv_flags[slot])? inv_flags[INV_SLOT_ANY] : inv_flags["[slot]"]
 	return inv_flags
 
 /**
@@ -57,7 +57,7 @@
  */
 /obj/item/proc/get_inv_cover(slot)
 	if(islist(inv_cover))
-		return isnull(inv_cover[slot])? inv_cover[INV_SLOT_ANY] : inv_cover[slot]
+		return isnull(inv_cover[slot])? inv_cover[INV_SLOT_ANY] : inv_cover["[slot]"]
 	return inv_cover
 
 /**
@@ -77,4 +77,6 @@
 		flags |= INVENTORY_UPDATE_TEMPERATURE
 	if(flags_inv & INV_FLAG_ARMOR_AFFECTING)
 		flags |= INVENTORY_UPDATE_ARMOR
+	if(inv_hide)
+		flags |= INVENTORY_UPDATE_HIDE
 	inventory.InvalidateCachedCalculations(flags)

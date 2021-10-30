@@ -38,3 +38,5 @@
 #define INVENTORY_UPDATE_PRESSURE		(1<<1)
 /// temperature needs recalculation
 #define INVENTORY_UPDATE_TEMPERATURE	(1<<2)
+/// inv_hide needs recalculation
+#define INVENTORY_UPDATE_HIDE			(1<<3)

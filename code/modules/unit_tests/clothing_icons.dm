@@ -20,3 +20,10 @@
 		SLOT_FLAG_BELT,
 		SLOT_FLAG_BACK
 	)
+	. = list()
+	for(var/i in what_matters)
+		if(slot_flags & i)
+			var/slotid = flag_to_inv_slot(i)
+
+#warn impl
+

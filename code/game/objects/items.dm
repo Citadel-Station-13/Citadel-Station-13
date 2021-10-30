@@ -16,6 +16,9 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	attack_hand_is_action = FALSE
 	attack_hand_unwieldlyness = 0
 
+	/**
+	 * Legacy mob overlay system - DO NOT USE THIS FOR ANY NEW ITEMS. This is BANNED.
+	 */
 	///icon state name for inhand overlays
 	var/item_state = null
 	///Icon file for left hand inhand overlays
@@ -29,16 +32,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	//Forced mob worn layer instead of the standard preferred size.
 	var/alternate_worn_layer
 
-	var/icon/anthro_mob_worn_overlay //Version of the above dedicated to muzzles/digitigrade
-	var/icon/taur_mob_worn_overlay // Idem but for taurs. Currently only used by suits.
-
 	var/list/alternate_screams = list() //REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-
-	//Dimensions of the icon file used when this item is worn, eg: hats.dmi
-	//eg: 32x32 sprite, 64x64 sprite, etc.
-	//Same as above but for inhands, uses the lefthand_ and righthand_ file vars
-	var/inhand_x_dimension = 32
-	var/inhand_y_dimension = 32
 
 	max_integrity = 200
 
@@ -49,11 +43,17 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/usesound = null
 	var/throwhitsound = null
 
+	/**
+	 * Storage Variables
+	 */
 	/// Weight class for how much storage capacity it uses and how big it physically is meaning storages can't hold it if their maximum weight class isn't as high as it.
 	var/w_class = WEIGHT_CLASS_NORMAL
 	/// Volume override for the item, otherwise automatically calculated from w_class.
 	var/w_volume
 
+	/**
+	 * Combat Variables
+	 */
 	/// The amount of stamina it takes to swing an item in a normal melee attack do not lie to me and say it's for realism because it ain't. If null it will autocalculate from w_class.
 	var/total_mass //Total mass in arbitrary pound-like values. If there's no balance reasons for an item to have otherwise, this var should be the item's weight in pounds.
 	/// How long, in deciseconds, this staggers for, if null it will autocalculate from w_class and force. Unlike total mass this supports 0 and negatives.
@@ -81,7 +81,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/mutantrace_variation = NONE //Are there special sprites for specific situations? Don't use this unless you need to.
 
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
-	var/gas_transfe	var/inv_cover = 0 //see setup.dm for appropriate bit flags
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
@@ -129,7 +128,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	//Tooltip vars
 	var/force_string //string form of an item's force. Edit this var only to set a custom force string
 	var/last_force_string_check = 0
-	var/tip_timer
 
 	var/trigger_guard = TRIGGER_GUARD_NONE
 
@@ -449,7 +447,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		A.Remove(user)
 	if(item_flags & DROPDEL)
 		qdel(src)
-	item_flags &= ~IN_INVENTORY
+	DISABLE_BITFIELD(item_flags, IN_INVENTORY)
+	DISABLE_BITFIELD(item_flags, IN_STORAGE)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
 	remove_outline()
 	// if(!silent)
@@ -527,10 +526,12 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			if(item_action_slot_check(slot, user, A)) //some items only give their actions buttons when in a specific slot.
 				A.Grant(user)
 	item_flags |= IN_INVENTORY
+	if(CHECK_BITFIELD(item_flags, IN_STORAGE)) // Left storage item but somehow has the bitfield active still.
+		DISABLE_BITFIELD(item_flags, IN_STORAGE)
 	// if(!initial)
 	// 	if(equip_sound && (slot_flags & slot))
 	// 		playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
-	// 	else if(slot == SLOT_FLAG_HANDS)
+	// 	else if(slot == ITEM_SLOT_HANDS)
 	// 		playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE)
 	user.update_equipment_speed_mods()
 
@@ -746,30 +747,55 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return
 	var/mob/owner = loc
 	var/flags = slot_flags
-	if(flags & SLOT_FLAG_SUIT)
+	if(flags & ITEM_SLOT_OCLOTHING)
 		owner.update_inv_wear_suit()
-	if(flags & SLOT_FLAG_UNIFORM)
+	if(flags & ITEM_SLOT_ICLOTHING)
 		owner.update_inv_w_uniform()
-	if(flags & SLOT_FLAG_GLOVES)
+	if(flags & ITEM_SLOT_GLOVES)
 		owner.update_inv_gloves()
-	if(flags & SLOT_FLAG_EYES)
+	if(flags & ITEM_SLOT_EYES)
 		owner.update_inv_glasses()
-	if(flags & SLOT_FLAG_EARS)
+	if(flags & ITEM_SLOT_EARS)
 		owner.update_inv_ears()
-	if(flags & SLOT_FLAG_MASK)
+	if(flags & ITEM_SLOT_MASK)
 		owner.update_inv_wear_mask()
-	if(flags & SLOT_FLAG_HEAD)
+	if(flags & ITEM_SLOT_HEAD)
 		owner.update_inv_head()
-	if(flags & SLOT_FLAG_FEET)
+	if(flags & ITEM_SLOT_FEET)
 		owner.update_inv_shoes()
-	if(flags & SLOT_FLAG_ID)
+	if(flags & ITEM_SLOT_ID)
 		owner.update_inv_wear_id()
-	if(flags & SLOT_FLAG_BELT)
+	if(flags & ITEM_SLOT_BELT)
 		owner.update_inv_belt()
-	if(flags & SLOT_FLAG_BACK)
+	if(flags & ITEM_SLOT_BACK)
 		owner.update_inv_back()
-	if(flags & SLOT_FLAG_NECK)
-s = TRUE
+	if(flags & ITEM_SLOT_NECK)
+		owner.update_inv_neck()
+
+/obj/item/proc/get_temperature()
+	return heat
+
+/obj/item/proc/get_sharpness()
+	return sharpness
+
+/obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
+	if(affecting.can_dismember(src))
+		if((sharpness || damtype == BURN) && w_class >= WEIGHT_CLASS_NORMAL && force >= 10)
+			. = force * (affecting.get_damage() / affecting.max_damage)
+
+/obj/item/proc/get_dismember_sound()
+	if(damtype == BURN)
+		. = 'sound/weapons/sear.ogg'
+	else
+		. = pick('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
+
+/obj/item/proc/open_flame(flame_heat=700)
+	var/turf/location = loc
+	if(ismob(location))
+		var/mob/M = location
+		var/success = FALSE
+		if(src == M.get_item_by_slot(SLOT_WEAR_MASK))
+			success = TRUE
 		if(success)
 			location = get_turf(M)
 	if(isturf(location))
@@ -858,10 +884,9 @@ s = TRUE
 
 /obj/item/MouseEntered(location, control, params)
 	SEND_SIGNAL(src, COMSIG_ITEM_MOUSE_ENTER, location, control, params)
-	if((item_flags & IN_INVENTORY || item_flags & IN_STORAGE) && usr.client.prefs.enable_tips && !QDELETED(src))
-		var/timedelay = usr.client.prefs.tip_delay/100
-		var/user = usr
-		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, user), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
+	if((item_flags & IN_INVENTORY || item_flags & IN_STORAGE) && usr?.client.prefs.enable_tips && !QDELETED(src))
+		var/timedelay = max(usr.client.prefs.tip_delay * 0.01, 0.01) // I heard multiplying is faster, also runtimes from very low/negative numbers
+		usr.client.tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, usr), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
 	var/mob/living/L = usr
 	if(istype(L) && (L.incapacitated() || (current_equipped_slot in L.check_obscured_slots()) || !L.canUnEquip(src)))
 		apply_outline(_size = 3)
@@ -874,7 +899,6 @@ s = TRUE
 
 /obj/item/MouseExited(location,control,params)
 	SEND_SIGNAL(src, COMSIG_ITEM_MOUSE_EXIT, location, control, params)
-	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
 	closeToolTip(usr)
 	remove_outline()
 
