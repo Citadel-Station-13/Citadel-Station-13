@@ -179,7 +179,7 @@
 	required_candidates = 1
 	weight = 3
 	cost = 20
-	requirements = list(101,101,90,60,40,20,20,20,10,10)//100 because of configt, otherwise equal to nukies
+	requirements = list(101,101,100,60,40,20,20,20,10,10)//100 because of configt, otherwise equal to nukies
 	var/list/roundstart_wizards = list()
 
 /datum/dynamic_ruleset/roundstart/wizard/acceptable(population=0, threat=0)
