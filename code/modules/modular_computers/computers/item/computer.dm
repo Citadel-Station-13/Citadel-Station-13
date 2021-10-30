@@ -172,7 +172,7 @@
 	if(enabled)
 		ui_interact(user)
 	else if(IsAdminGhost(user))
-		var/response = tgui_alert(user, "This computer is turned off. Would you like to turn it on?", "Admin Override", list("Yes", "No"))
+		var/response = alert(user, "This computer is turned off. Would you like to turn it on?", "Admin Override", "Yes", "No")
 		if(response == "Yes")
 			turn_on(user)
 

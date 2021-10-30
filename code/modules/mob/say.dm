@@ -5,13 +5,8 @@
 	set hidden = TRUE
 	set category = "IC"
 	client?.last_activity = world.time
-	for(var/datum/tgui/window in tgui_open_uis)
-		if(istype(window.src_object, /datum/tgui_input_dialog))
-			var/datum/tgui_input_dialog/say_box = window.src_object
-			if(say_box.title == "say") // Yes, i am dead serious.
-				return
 	display_typing_indicator()
-	var/message = tgui_input_text(usr, null, "say")
+	var/message = input(usr, "", "say") as text|null
 	// If they don't type anything just drop the message.
 	clear_typing_indicator()		// clear it immediately!
 	if(!length(message))
@@ -37,13 +32,8 @@
 	set hidden = TRUE
 	set category = "IC"
 	client?.last_activity = world.time
-	for(var/datum/tgui/window in tgui_open_uis)
-		if(istype(window.src_object, /datum/tgui_input_dialog))
-			var/datum/tgui_input_dialog/emote_box = window.src_object
-			if(emote_box.title == "me") // Yes, i am dead serious.
-				return
 	display_typing_indicator()
-	var/message = tgui_input_message(usr, null, "me")
+	var/message = input(usr, "", "me") as message|null
 	// If they don't type anything just drop the message.
 	clear_typing_indicator()		// clear it immediately!
 	if(!length(message))
@@ -91,7 +81,7 @@
 
 /mob/proc/whisper_keybind()
 	client?.last_activity = world.time
-	var/message = tgui_input_text(src, "", "whisper")
+	var/message = input(src, "", "whisper") as text|null
 	if(!length(message))
 		return
 	return whisper_verb(message)

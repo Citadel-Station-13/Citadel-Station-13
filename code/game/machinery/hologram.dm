@@ -292,7 +292,7 @@ Possible to do for anyone motivated enough:
 					if(A)
 						LAZYADD(callnames[A], I)
 				callnames -= get_area(src)
-				var/result = tgui_input_list(usr, "Choose an area to call", "Holocall", sortNames(callnames))
+				var/result = input(usr, "Choose an area to call", "Holocall") as null|anything in sortNames(callnames)
 				if(QDELETED(usr) || !result || outgoing_call)
 					return
 				if(usr.loc == loc)

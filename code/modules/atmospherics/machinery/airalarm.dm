@@ -428,7 +428,7 @@
 			var/datum/tlv/tlv = TLV[env]
 			if(isnull(tlv))
 				return
-			var/value = tgui_input_num(usr, "New [name] for [env]:", name, tlv.vars[name])
+			var/value = input("New [name] for [env]:", name, tlv.vars[name]) as num|null
 			if(!isnull(value) && !..())
 				if(value < 0)
 					tlv.vars[name] = -1
