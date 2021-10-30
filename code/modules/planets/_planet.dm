@@ -15,8 +15,6 @@
 	// instantiation/terrain
 	/// planet type
 	var/datum/planet_type/planet_type
-	/// planet levels list - order matters based on type!
-	var/list/datum/planet_level/planet_levels
 	/// physical zlevels. order matters based on type! null if not instantiated
 	var/list/zlevels
 	/// Are we instantiated fully?

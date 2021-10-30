@@ -4,6 +4,8 @@
  * Represents a type of planet
  */
 /datum/planet_type
+	/// abstract type
+	var/abstract_type = /datum/planet_type
 	/// name
 	var/name = "Unknown Planet Type"
 	/// desc
@@ -14,25 +16,29 @@
 	var/disjoint_logical_zones = 1
 	/// READ ONLY - Generated from level_zones
 	VAR_PROTECTED/list/zone_levels
-	///  READ ONLY - List of PLANET LEVEL INDICES, not real z-indices, to each zone
+	/// READ ONLY - List of PLANET LEVEL INDICES, not real z-indices, to each zone
 	VAR_PROTECTED/list/level_zones = list(
 		1
 	)
-	/// Width of a zone in **ZLEVELS** at its widest plane
+	/// READ ONLY - Width of a zone in **ZLEVELS** at its widest plane
 	VAR_PROTECTED/list/zone_widths = list(
 		1
 	)
-	/// Height of a zone in **ZLEVELS** at its tallest plane
+	/// READ ONLY - Height of a zone in **ZLEVELS** at its tallest plane
 	VAR_PROTECTED/list/zone_heights = list(
 		1
 	)
-	/// Level transit lookup. Each level needs to either be a blank list, or a list of TEXT_NORTH, TEXT_SOUTH, TEXT_EAST, TEXT_WEST.
+	/// READ ONLY - Level transit lookup. Each level needs to either be a blank list, or a list of TEXT_NORTH, TEXT_SOUTH, TEXT_EAST, TEXT_WEST.
 	VAR_PROTECTED/list/level_transits = list(
 		list()
 	)
-	/// Level offsets for procedural generation. List of list(x, y) indexed by level. Must be >= 0, as this is *added* to what a level grabs from a /datum/procedural_generation, which goes from 1 to width or height.
+	/// READ ONLY - Level offsets for procedural generation. List of list(x, y) indexed by level. Must be >= 0, as this is *added* to what a level grabs from a /datum/procedural_generation, which goes from 1 to width or height.
 	VAR_PROTECTED/list/level_offsets = list(
 		list(0, 0)
+	)
+	/// Level types to instantiate - types put here will be made into real instances. associate to a list to put in parameters for New().
+	var/list/level_types = list(
+		/datum/planet_level/monobiome
 	)
 	/// which logical surface is considered the planetary surface
 	var/surface_zone = 1
@@ -100,7 +106,7 @@
 	return level_offsets[level][2]
 
 /datum/planet_type/New()
-	if(istype(src, /datum/planet_type))
+	if(type == abstract_type)
 		CRASH("Abstract planet_type made")
 	LAZYINITLIST(seeds)
 	if(islist(seeds))
@@ -112,6 +118,18 @@
 		default_seeds["perlin_seed_[i]"] = GenerateUniqueSeed()
 		default_seeds["automata_seed_[i]"] = GenerateUniqueSeed()
 	GenerateZoneLookup()
+	var/list/construct_levels = list()
+	for(var/i in level_types)
+		ASSERT(ispath(i))
+		if(level_types[i])
+			construct_levels += new i(arglist(level_types[i]))
+		else
+			construct_levels += new i
+	level_types = construct_levels
+
+/datum/planet_type/Destroy()
+	QDEL_LIST(level_types)
+	return ..()
 
 /**
  * Gets a randomized, unique seed
@@ -151,18 +169,18 @@
 
 /**
  * Generation stage 1: Called from planet datum, allocates ourselves.
- * Returns a list of ordered z_indices.
+ * Returns a list of ordered real zlevels.
  */
-/datum/planet_type/proc/Allocate(list/existing_levels, datum/planet/planet)
+/datum/planet_type/proc/Allocate(list/existing_zlevels, datum/planet/planet)
 	var/needed = level_count
-	if(!islist(existing_levels))
+	if(!islist(existing_zlevels))
 		. = list()
 	else
-		for(var/i in existing_levels)
+		for(var/i in existing_zlevels)
 			if(!isnum(i))
 				CRASH("Invalid Z index passed into existing levels of planet_type allocation.")
-		. = existing_levels.Copy()
-		needed -= existing_levels.len
+		. = existing_zlevels.Copy()
+		needed -= existing_zlevels.len
 	if(needed < 0)
 		CRASH("Too many existing levels for planet type")
 	var/list/allocated = SSplanets._allocate_planetary_zlevels(needed)
@@ -175,7 +193,7 @@
  * Performs biome generation.
  * Returns list of biomes that require ruin seeding.
  */
-/datum/planet_type/proc/Generate(list/levels, datum/planet/planet)
+/datum/planet_type/proc/Generate(list/zlevels, datum/planet/planet)
 
 /**
  * Generation stage 3: Called from planet datum, must already have z_indices.

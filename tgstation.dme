@@ -3092,8 +3092,6 @@
 #include "code\modules\planets\generation\themes\wildwest.dm"
 #include "code\modules\planets\generation\types\1by2.dm"
 #include "code\modules\planets\generation\types\2by2.dm"
-#include "code\modules\planets\generation\types\aerostat.dm"
-#include "code\modules\planets\generation\types\connected_cave.dm"
 #include "code\modules\planets\generation\types\single_level.dm"
 #include "code\modules\planets\weather\_weather.dm"
 #include "code\modules\planets\weather\cloudy.dm"
