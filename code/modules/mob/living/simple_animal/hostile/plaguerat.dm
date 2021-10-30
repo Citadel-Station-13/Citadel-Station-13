@@ -39,8 +39,8 @@ GLOBAL_LIST_EMPTY(plague_rats)
 	var/last_spawn_time = 0
 	var/in_vent = FALSE
 	var/min_next_vent = 0
-	var/obj/machinery/atmospherics/components/unary/entry_vent
-	var/obj/machinery/atmospherics/components/unary/exit_vent
+	var/obj/machinery/atmospherics/component/unary/entry_vent
+	var/obj/machinery/atmospherics/component/unary/exit_vent
 
 /mob/living/simple_animal/hostile/plaguerat/Initialize()
 	. = ..()
@@ -64,7 +64,7 @@ GLOBAL_LIST_EMPTY(plague_rats)
 		if(entry_vent && get_dist(src, entry_vent) <= 1)
 			var/list/vents = list()
 			var/datum/pipeline/entry_vent_parent = entry_vent.parents[1]
-			for(var/obj/machinery/atmospherics/components/unary/temp_vent in entry_vent_parent.other_atmosmch)
+			for(var/obj/machinery/atmospherics/component/unary/temp_vent in entry_vent_parent.other_atmosmch)
 				vents += temp_vent
 			if(!vents.len)
 				entry_vent = null
@@ -79,7 +79,7 @@ GLOBAL_LIST_EMPTY(plague_rats)
 
 
 		if(world.time > min_next_vent && !entry_vent && !in_vent && prob(RAT_VENT_CHANCE)) //small chance to go into a vent
-			for(var/obj/machinery/atmospherics/components/unary/v in view(7,src))
+			for(var/obj/machinery/atmospherics/component/unary/v in view(7,src))
 				if(!v.welded)
 					entry_vent = v
 					in_vent = TRUE

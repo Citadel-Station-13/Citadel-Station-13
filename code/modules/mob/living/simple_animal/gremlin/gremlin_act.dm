@@ -1,7 +1,7 @@
 /obj/proc/npc_tamper_act(mob/living/L)
 	return NPC_TAMPER_ACT_FORGET
 
-/obj/machinery/atmospherics/components/binary/passive_gate/npc_tamper_act(mob/living/L)
+/obj/machinery/atmospherics/component/binary/passive_gate/npc_tamper_act(mob/living/L)
 	if(prob(50)) //Turn on/off
 		on = !on
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(L)]", INVESTIGATE_ATMOS)
@@ -10,7 +10,7 @@
 		investigate_log("was set to [target_pressure] kPa by [key_name(L)]", INVESTIGATE_ATMOS)
 	update_icon()
 
-/obj/machinery/atmospherics/components/binary/pump/npc_tamper_act(mob/living/L)
+/obj/machinery/atmospherics/component/binary/pump/npc_tamper_act(mob/living/L)
 	if(prob(50)) //Turn on/off
 		on = !on
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(L)]", INVESTIGATE_ATMOS)
@@ -19,7 +19,7 @@
 		investigate_log("was set to [target_pressure] kPa by [key_name(L)]", INVESTIGATE_ATMOS)
 	update_icon()
 
-/obj/machinery/atmospherics/components/binary/volume_pump/npc_tamper_act(mob/living/L)
+/obj/machinery/atmospherics/component/binary/volume_pump/npc_tamper_act(mob/living/L)
 	if(prob(50)) //Turn on/off
 		on = !on
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(L)]", INVESTIGATE_ATMOS)
@@ -28,7 +28,7 @@
 		investigate_log("was set to [transfer_rate] L/s by [key_name(L)]", INVESTIGATE_ATMOS)
 	update_icon()
 
-/obj/machinery/atmospherics/components/binary/valve/npc_tamper_act(mob/living/L)
+/obj/machinery/atmospherics/component/binary/valve/npc_tamper_act(mob/living/L)
 	attack_hand(L)
 
 /obj/machinery/space_heater/npc_tamper_act(mob/living/L)
@@ -67,7 +67,7 @@
 	if(wires)
 		wires.npc_tamper(L)
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/npc_tamper_act(mob/living/L)
+/obj/machinery/atmospherics/component/unary/cryo_cell/npc_tamper_act(mob/living/L)
 	if(prob(50))
 		if(beaker)
 			beaker.forceMove(loc)

@@ -8,7 +8,7 @@
  */
 ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/binary/pump, "volpump_map")
 /obj/machinery/atmospherics/component/binary/pump
-	icon = 'icons/modules/atmospherics/components/pump.dmi'
+	icon = 'icons/modules/atmospherics/component/pump.dmi'
 	icon_state = "volpump_map"
 	name = "gas pump"
 	desc = "A powered gas pump."

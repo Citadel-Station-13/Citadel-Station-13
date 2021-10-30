@@ -28,8 +28,8 @@ GLOBAL_LIST(bad_gremlin_items)
 		/obj/structure/sink
 	)
 
-	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
-	var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent
+	var/obj/machinery/atmospherics/component/unary/vent_pump/entry_vent
+	var/obj/machinery/atmospherics/component/unary/vent_pump/exit_vent
 
 	dextrous = TRUE
 	possible_a_intents = list(INTENT_HELP, INTENT_GRAB, INTENT_DISARM, INTENT_HARM)
@@ -162,7 +162,7 @@ GLOBAL_LIST(bad_gremlin_items)
 		if(entry_vent && get_dist(src, entry_vent) <= 1)
 			var/list/vents = list()
 			var/datum/pipeline/entry_vent_parent = entry_vent.parents[1]
-			for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmosmch)
+			for(var/obj/machinery/atmospherics/component/unary/vent_pump/temp_vent in entry_vent_parent.other_atmosmch)
 				vents += temp_vent
 			if(!vents.len)
 				entry_vent = null
@@ -177,7 +177,7 @@ GLOBAL_LIST(bad_gremlin_items)
 
 
 		if(world.time > min_next_vent && !entry_vent && !in_vent && prob(GREMLIN_VENT_CHANCE)) //small chance to go into a vent
-			for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(7,src))
+			for(var/obj/machinery/atmospherics/component/unary/vent_pump/v in view(7,src))
 				if(!v.welded)
 					entry_vent = v
 					in_vent = TRUE

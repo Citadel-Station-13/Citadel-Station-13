@@ -4,7 +4,7 @@ ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/vent_scrubbe
 #define SCRUBBING	1
 
 /obj/machinery/atmospherics/component/unary/vent_scrubber
-	icon = 'icons/modules/atmospherics/components/scrubber.dmi'
+	icon = 'icons/modules/atmospherics/component/scrubber.dmi'
 	icon_state = "scrub_map"
 	name = "air scrubber"
 	desc = "Has a valve and pump attached to it."

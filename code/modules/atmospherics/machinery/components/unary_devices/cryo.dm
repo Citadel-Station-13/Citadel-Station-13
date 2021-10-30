@@ -439,7 +439,7 @@
 /obj/machinery/atmospherics/component/unary/cryo_cell/update_remote_sight(mob/living/user)
 	return // we don't see the pipe network while inside cryo.
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/get_remote_view_fullscreens(mob/user)
+/obj/machinery/atmospherics/component/unary/cryo_cell/get_remote_view_fullscreens(mob/user)
 	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
 
 /obj/machinery/atmospherics/component/unary/cryo_cell/can_crawl_through()

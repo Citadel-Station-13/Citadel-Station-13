@@ -2,7 +2,7 @@ ATMOS_MAPPING_LAYERS_PX_DOUBLE(/obj/machinery/atmospherics/component/binary/reli
 /obj/machinery/atmospherics/component/binary/relief_valve
 	name = "binary pressure relief valve"
 	desc = "Like a manual valve, but opens at a certain pressure rather than being toggleable."
-	icon = 'icons/modules/atmospherics/components/relief.dmi'
+	icon = 'icons/modules/atmospherics/component/relief.dmi'
 	icon_state = "relief_valve-t-map"
 	can_unwrench = TRUE
 	construction_type = /obj/item/pipe/binary

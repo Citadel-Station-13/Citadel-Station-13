@@ -95,18 +95,19 @@ ATMOS_MAPPING_LAYERS_PX(/obj/machinery/atmospherics/component/quaternary/filter)
 	var/datum/gas_mixture/output_air = airs[output_side]
 	if(output_air.return_pressure() > pressure_setting)
 		return
-	var/list/input_airs = list()
+	var/list/datum/gas_mixture/input_airs = list()
 	for(var/str in inputs)
 		input_airs[airs[text2num(str)]] = inputs[str]
+	var/old_moles = input_airs[1].total_moles()
 	last_power_draw = active_power_usage = mix_gas()
 		input_airs,
 		output_air,
-		(rate_setting / source_air.return_volume()) * source_air.total_moles(),
+		(rate_setting / input_airs[1].return_volume()) * input_airs[1].total_moles(),
 		power_setting,
 		power_efficiency
 	)
 	MarkDirty()
-	last_transfer_rate = round((1 - (source_air.total_moles() / old_moles)) * source_air.return_volume(), 0.1)
+	last_transfer_rate = round((1 - (input_airs[1].total_moles() / old_moles)) * input_airs[1].return_volume(), 0.1)
 
 /obj/machinery/atmospherics/component/quaternary/mixer/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()

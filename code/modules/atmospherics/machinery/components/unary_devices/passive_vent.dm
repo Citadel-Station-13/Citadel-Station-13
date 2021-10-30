@@ -1,7 +1,7 @@
 ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/passive_vent, "passive_vent_map")
 
 /obj/machinery/atmospherics/component/unary/passive_vent
-	icon = 'icons/modules/atmospherics/components/vent.dmi'
+	icon = 'icons/modules/atmospherics/component/vent.dmi'
 	icon_state = "passive_vent_map"
 
 	name = "passive vent"

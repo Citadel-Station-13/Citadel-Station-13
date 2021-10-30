@@ -1,7 +1,7 @@
 ATMOS_MAPPING_LAYERS_IX(/obj/machinery/atmospherics/component/unary/outlet_injector, "inje_map")
 
 /obj/machinery/atmospherics/component/unary/outlet_injector
-	icon = 'icons/modules/atmospherics/components/injector.dmi'
+	icon = 'icons/modules/atmospherics/component/injector.dmi'
 	icon_state = "inje_map"
 	name = "air injector"
 	desc = "Has a valve and pump attached to it."

@@ -144,13 +144,14 @@ ATMOS_MAPPING_LAYERS_PX(/obj/machinery/atmospherics/component/quaternary/filters
 		var/datum/gas_mixture/GM = i
 		if(GM.return_pressure() > pressure_setting)
 			return
+	var/old_moles = input_air.total_moles()
 	last_power_draw = active_power_usage = filter_gas(
 		directed,
-		intput_air,
+		input_air,
 		output_air,
-		(rate_setting / source_air.return_volume()) * source_air.total_moles(),
+		(rate_setting / input_air.return_volume()) * input_air.total_moles(),
 		power_setting,
 		power_efficiency
 	)
 	MarkDirty()
-	last_transfer_rate = round((1 - (source_air.total_moles() / old_moles)) * source_air.return_volume(), 0.1)
+	last_transfer_rate = round((1 - (input_air.total_moles() / old_moles)) * input_air.return_volume(), 0.1)

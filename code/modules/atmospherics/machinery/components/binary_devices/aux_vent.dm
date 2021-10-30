@@ -17,7 +17,7 @@
 /obj/machinery/atmospherics/component/binary/aux_vent
 	name = "air vent"
 	desc = "Has a valve and pump attached to it."
-	icon = 'icons/modules/atmospherics/components/vent.dmi'
+	icon = 'icons/modules/atmospherics/component/vent.dmi'
 
 	level = 1
 	interacts_with_air = 1
