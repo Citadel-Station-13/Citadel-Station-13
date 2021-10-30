@@ -269,7 +269,7 @@
 			T["[netcam.c_tag][netcam.can_use() ? null : " (Deactivated)"]"] = netcam
 
 	playsound(origin, 'sound/machines/terminal_prompt.ogg', 25, 0)
-	var/camera = tgui_input_list(usr, "Choose which camera you want to view", "Cameras", T)
+	var/camera = input("Choose which camera you want to view", "Cameras") as null|anything in T
 	var/obj/machinery/camera/final = T[camera]
 	playsound(src, "terminal_type", 25, 0)
 	if(final)

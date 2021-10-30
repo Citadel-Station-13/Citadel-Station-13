@@ -79,7 +79,7 @@
 	return ..()
 
 /datum/action/innate/cult/mastervote/Activate()
-	var/choice = tgui_alert(owner, "The mantle of leadership is heavy. Success in this role requires an expert level of communication and experience. Are you sure?",, list("Yes", "No"))
+	var/choice = alert(owner, "The mantle of leadership is heavy. Success in this role requires an expert level of communication and experience. Are you sure?",, "Yes", "No")
 	if(choice == "Yes" && IsAvailable())
 		var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 		if(!C.cult_team)
