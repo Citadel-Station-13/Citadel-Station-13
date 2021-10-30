@@ -127,12 +127,12 @@
 	else if(href_list["import"])
 		var/t = ""
 		do
-			t = html_encode(tgui_input_message(usr, "Please paste the entire song, formatted:", text("[]", name), t))
+			t = html_encode(input(usr, "Please paste the entire song, formatted:", text("[]", name), t)  as message)
 			if(!in_range(parent, usr))
 				return
 
 			if(length_char(t) >= MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
-				var/cont = tgui_input_list(usr, "Your message is too long! Would you like to continue editing it?", "", list("yes", "no"))
+				var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
 				if(cont == "no")
 					break
 		while(length_char(t) > MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
@@ -160,7 +160,7 @@
 		INVOKE_ASYNC(src, .proc/start_playing, usr)
 
 	else if(href_list["newline"])
-		var/newline = html_encode(tgui_input_text(usr, "Enter your line: ", parent.name))
+		var/newline = html_encode(input("Enter your line: ", parent.name) as text|null)
 		if(!newline || !in_range(parent, usr))
 			return
 		if(lines.len > MUSIC_MAXLINES)
@@ -188,22 +188,22 @@
 		stop_playing()
 
 	else if(href_list["setlinearfalloff"])
-		var/amount = tgui_input_num(usr, "Set linear sustain duration in seconds", "Linear Sustain Duration")
+		var/amount = input(usr, "Set linear sustain duration in seconds", "Linear Sustain Duration") as null|num
 		if(!isnull(amount))
 			set_linear_falloff_duration(round(amount * 10, world.tick_lag))
 
 	else if(href_list["setexpfalloff"])
-		var/amount = tgui_input_num(usr, "Set exponential sustain factor", "Exponential sustain factor")
+		var/amount = input(usr, "Set exponential sustain factor", "Exponential sustain factor") as null|num
 		if(!isnull(amount))
 			set_exponential_drop_rate(round(amount, 0.00001))
 
 	else if(href_list["setvolume"])
-		var/amount = tgui_input_num(usr, "Set volume", "Volume")
+		var/amount = input(usr, "Set volume", "Volume") as null|num
 		if(!isnull(amount))
 			set_volume(round(amount, 1))
 
 	else if(href_list["setdropoffvolume"])
-		var/amount = tgui_input_num(usr, "Set dropoff threshold", "Dropoff Threshold Volume")
+		var/amount = input(usr, "Set dropoff threshold", "Dropoff Threshold Volume") as null|num
 		if(!isnull(amount))
 			set_dropoff_volume(round(amount, 0.01))
 
@@ -218,11 +218,11 @@
 			var/datum/instrument/I = SSinstruments.get_instrument(i)
 			if(I)
 				LAZYSET(categories[I.category || "ERROR CATEGORY"], I.name, I.id)
-		var/cat = tgui_input_list(usr, "Select Category", "Instrument Category", categories)
+		var/cat = input(usr, "Select Category", "Instrument Category") as null|anything in categories
 		if(!cat)
 			return
 		var/list/instruments = categories[cat]
-		var/choice = tgui_input_list(usr, "Select Instrument", "Instrument Selection", instruments)
+		var/choice = input(usr, "Select Instrument", "Instrument Selection") as null|anything in instruments
 		if(!choice)
 			return
 		choice = instruments[choice]		//get id
@@ -230,12 +230,12 @@
 			set_instrument(choice)
 
 	else if(href_list["setnoteshift"])
-		var/amount = tgui_input_num(usr, "Set note shift", "Note Shift", note_shift)
+		var/amount = input(usr, "Set note shift", "Note Shift") as null|num
 		if(!isnull(amount))
 			note_shift = clamp(amount, note_shift_min, note_shift_max)
 
 	else if(href_list["setsustainmode"])
-		var/choice = tgui_input_list(usr, "Choose a sustain mode", "Sustain Mode", list("Linear", "Exponential"))
+		var/choice = input(usr, "Choose a sustain mode", "Sustain Mode") as null|anything in list("Linear", "Exponential")
 		switch(choice)
 			if("Linear")
 				sustain_mode = SUSTAIN_LINEAR

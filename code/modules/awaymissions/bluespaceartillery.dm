@@ -38,7 +38,7 @@
 	if(..())
 		return
 	var/A
-	A = tgui_input_list(usr, "Area to bombard", "Open Fire", GLOB.teleportlocs)
+	A = input("Area to bombard", "Open Fire", A) in GLOB.teleportlocs
 	var/area/thearea = GLOB.teleportlocs[A]
 	if(usr.stat || usr.restrained())
 		return

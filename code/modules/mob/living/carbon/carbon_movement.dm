@@ -29,7 +29,7 @@
 			var/loss = HUNGER_FACTOR/10
 			if(m_intent == MOVE_INTENT_RUN)
 				loss *= 2
-			adjust_nutrition(loss)
+			adjust_nutrition(-loss)
 
 /mob/living/carbon/can_move_under_living(mob/living/other)
 	. = ..()
