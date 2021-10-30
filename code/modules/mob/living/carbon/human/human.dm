@@ -1111,7 +1111,7 @@
 	var/t_He = p_they(TRUE)
 	var/t_is = p_are()
 	. = list()
-	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
+	var/skipface = (inventory?.InvHide() & HIDEFACE)
 	if(skipface || get_visible_name() == "Unknown")
 		. += "You can't make out what species they are."
 	else

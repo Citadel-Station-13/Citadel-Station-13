@@ -1,15 +1,21 @@
 /**
  * Equips an item
+ *
+ * Returns TRUE or FALSE
  */
 /datum/inventory/proc/EquipToSlot(obj/item/I, slot, mob/user, force, delete_old_item, list/warnings, move_item = TRUE)
 
 /**
  * Unequips an item
+ *
+ * Returns item that was unequipped if successful
  */
 /datum/inventory/proc/UnequipFromSlot(slot, mob/user, force, atom/new_location, list/warnings, move_item = TRUE)
 
 /**
  * Unequips an item
+ *
+ * Returns slot it was in if successful
  */
 /datum/inventory/proc/UnequipItem(obj/item/I, mob/user, force, atom/new_location, list/warnings, move_item = TRUE)
 

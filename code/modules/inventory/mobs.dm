@@ -1,6 +1,6 @@
 /mob
 	/// inventory - starts out as a list of ids or typepaths, made into datum on init. Hand items/held items are NOT in this!
-	var/datum/inventory
+	var/datum/inventory/inventory
 
 /mob/Initialize()
 	if(islist(inventory))
@@ -56,17 +56,19 @@
 /**
  * gets item by slot id
  */
-/mob/proc/get_item_by_slot(id)
+/mob/proc/ItemBySlot(id)
 	return inventory?.ItemBySlot(id)
 
 /**
  * gets all items in inventory, not including hands
  */
-/mob/proc/get_all_inventory_items(include_abstract)
+/mob/proc/GetAllInventoryItems(include_abstract)
 	return inventory?.AllItems(include_abstract)
 
 /**
  * Equips an item to a slot
+ *
+ * Returns TRUE or FALSE.
  *
  * @param
  * - I - item
@@ -76,7 +78,7 @@
  * - delete_old_item - delete old item instead of drop
  * - warnings - list of reasons why it didn't work if we're not forcing it
  */
-/mob/proc/equip_to_slot(obj/item/I, mob/user, slot, force = FALSE, delete_old_item = FALSE, list/warnings)
+/mob/proc/EquipToSlot(obj/item/I, mob/user, slot, force = FALSE, delete_old_item = FALSE, list/warnings)
 	switch(slot)
 		if(INV_VIRTUALSLOT_IN_BACKPACK)
 
@@ -89,6 +91,38 @@
 	inventory?.EquipToSlot(I, user, slot, force, delete_old_item, warnings)
 
 /**
+ * Grabs an item from slot
+ *
+ * Returns the item unequipped if successful.
+ *
+ * @param
+ * - slot - slot
+ * - user - who's doing this - can be null
+ * - force - ignore can unequip checks
+ * - new_location - where to put it
+ * - warnings - list of reasons why it didn't work if we're not forcing it
+ * - move_item - do we actually move the item? new_location ignored if so
+ */
+/mob/proc/UnequipFromSlot(slot, mob/user, force = FALSE, atom/new_location = drop_location(), list/warnings, move_item = TRUE)
+	return inventory?.UnequipFromSlot(slot, user, force, new_location, warnings, move_item)
+
+/**
+ * Unequips an item from a slot
+ *
+ * Returns the slot it was in if successful.
+ *
+ * @param
+ * - I - item
+ * - user - who's doing this - can be null
+ * - force - ignore can unequip checks
+ * - new_location - where to put it
+ * - warnings - list of reasons why it didn't work if we're not forcing it
+ * - move_item - do we actually move the item? new_location ignored if so
+ */
+/mob/proc/UnequipItem(obj/item/I, mob/user, force = FALSE, atom/new_location = drop_location(), list/warnings, move_item = TRUE)
+	return inventory?.UnequipItem(I, force, user, new_location, warnings, move_item)
+
+/**
  * drops all inventory items
  *
  * @param
@@ -96,56 +130,26 @@
  * - include_abstract - includes slots that aren't considered player inventory slots
  * - new_location - where to put the items
  */
-/mob/proc/drop_all_inventory_items(force = TRUE, include_abstract = TRUE, atom/new_location = drop_location())
+/mob/proc/DropAllInventoryItems(force = TRUE, include_abstract = TRUE, atom/new_location = drop_location())
 	return inventory?.DropEverything(force, include_abstract, new_location)
-
-/**
- * Grabs an item from slot
- *
- * @param
- * - slot - slot
- * - user - who's doing this - can be null
- * - slot - slot ID
- * - force - ignore can unequip checks
- * - new_location - where to put it
- * - warnings - list of reasons why it didn't work if we're not forcing it
- * - move_item - do we actually move the item? new_location ignored if so
- */
-/mob/proc/unequip_from_slot(slot, mob/user, force = FALSE, atom/new_location = drop_location(), list/warnings, move_item = TRUE)
-	return inventory?.UnequipFromSlot(slot, user, force, new_location, warnings, move_item)
-
-/**
- * Unequips an item from a slot
- *
- * @param
- * - I - item
- * - user - who's doing this - can be null
- * - slot - slot ID
- * - force - ignore can unequip checks
- * - new_location - where to put it
- * - warnings - list of reasons why it didn't work if we're not forcing it
- * - move_item - do we actually move the item? new_location ignored if so
- */
-/mob/proc/unequip_item(obj/item/I, mob/user, force = FALSE, atom/new_location = drop_location(), list/warnings, move_item = TRUE)
-	return inventory?.UnequipItem(I, force, user, new_location, warnings, move_item)
 
 /**
  * Checks if a slot exists
  */
-/mob/proc/does_slot_exist(slot)
+/mob/proc/InventorySlotExists(slot)
 	EnsureInventory()
 	return inventory?.SlotExists(slot)
 
 /**
  * Returns the slot if an item is equipped, null otherwise
  */
-/mob/proc/is_equipped(obj/item/I)
+/mob/proc/IsEquipped(obj/item/I)
 	return inventory?.HasItem(I)
 
 /**
  * Checks if we can put an item in a slot
  */
-/mob/proc/can_equip(obj/item/I, slot, mob/user, list/warnings)
+/mob/proc/CanEquip(obj/item/I, slot, mob/user, list/warnings)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	EnsureInventory()
 	return inventory?.CanEquip(I, slot, user, warnings)
@@ -153,7 +157,7 @@
 /**
  * Checks if we can unequip an item from a slot
  */
-/mob/proc/can_unequip(obj/item/I, mob/user, list/warnings)
+/mob/proc/CanUnequip(obj/item/I, mob/user, list/warnings)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	EnsureInventory()
 	return inventory?.CanUnequip(I, user, warnings)
@@ -162,14 +166,14 @@
  * proc that can be overridden:
  * can we use a certain slot?
  */
-/mob/proc/check_item_equip(obj/item/I, slot, mob/user, list/warnings)
+/mob/proc/CheckItemEquip(obj/item/I, slot, mob/user, list/warnings)
 	return TRUE
 
 /**
  * proc that can be overridden:
  * can we take an item out of a certain slot?
  */
-/mob/proc/check_item_unequip(obj/item/I, slot, mob/user, list/warnings)
+/mob/proc/CheckItemUnequip(obj/item/I, slot, mob/user, list/warnings)
 	return TRUE
 
 /**
@@ -177,7 +181,7 @@
  * override by mob
  * used to enable/disable slots.
  */
-/mob/proc/update_inventory_slots()
+/mob/proc/UpdateInventorySlots()
 	return
 
 /**
@@ -185,6 +189,6 @@
  */
 /mob/Exited(atom/movable/AM, atom/newLoc)
 	if(is_equipped(AM))
-		unequip_item(AM, force = TRUE, move_item = FALSE)
-	. = ..()
+		UnequipItem(AM, force = TRUE, move_item = FALSE)
+	return ..()
 

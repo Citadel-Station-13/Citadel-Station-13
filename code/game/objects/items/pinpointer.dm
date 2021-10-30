@@ -104,8 +104,8 @@
 
 /obj/item/pinpointer/crew/proc/trackable(mob/living/carbon/human/H)
 	var/turf/here = get_turf(src)
-	if(H && (H.z == 0 || H.z == here.z) && istype(H.w_uniform, /obj/item/clothing/under))
-		var/obj/item/clothing/under/U = H.w_uniform
+	if(H && (H.z == 0 || H.z == here.z) && istype(H.ItemBySlot(/datum/inventory_slot_meta/uniform), /obj/item/clothing/under))
+		var/obj/item/clothing/under/U = H.ItemBySlot(/datum/inventory_slot_meta/uniform)
 
 		// Suit sensors must be on maximum.
 		if(!U.has_sensor || U.sensor_mode < SENSOR_COORDS && !ignore_suit_sensor_level)

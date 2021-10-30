@@ -8,11 +8,37 @@
  * Gets a list of zones by inv_cover
  */
 /datum/inventory/proc/GetCoveredZones(inv_cover)
+	. = list()
+	if(inv_cover & (HEAD))
+		. += BODY_ZONE_HEAD
+	if(inv_cover & (CHEST))
+		. += BODY_ZONE_CHEST
+	if(inv_cover & (ARM_LEFT))
+		. += BODY_ZONE_L_ARM
+	if(inv_cover & (ARM_RIGHT))
+		. += BODY_ZONE_R_ARM
+	if(inv_cover & (LEG_LEFT))
+		. += BODY_ZONE_L_LEG
+	if(inv_cover & (LEG_RIGHT))
+		. += BODY_ZONE_R_LEG
 
 /**
  * Gets a list of inv_cover flags for a zone
  */
 /datum/inventory/proc/GetZoneCoverage(zone)
+	switch(zone)
+		if(BODY_ZONE_HEAD)
+			return HEAD
+		if(BODY_ZONE_CHEST)
+			return CHEST
+		if(BODY_ZONE_L_ARM)
+			return ARM_LEFT
+		if(BODY_ZONE_R_ARM)
+			return ARM_RIGHT
+		if(BODY_ZONE_L_LEG)
+			return LEG_LEFT
+		if(BODY_ZONE_R_LEG)
+			return LEG_RIGHT
 
 /**
  * Rebuilds our temperature protect
