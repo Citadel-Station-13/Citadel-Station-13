@@ -88,6 +88,11 @@
 	gender = PLURAL //THE GENDER IS PLURAL
 	tiled_dirt = 0 //NO TILESMOOTHING DIRT/DIRT SPAWNS OR SOME SHIT
 
+/turf/open/floor/spooktime/break_tile()
+	return
+/turf/open/floor/spooktime/burn_tile()
+	return
+
 /turf/open/floor/spooktime/pry_tile(obj/item/I, mob/user, silent = FALSE)
 	return //No prying these tiles, you instead shovel it if avail.
 

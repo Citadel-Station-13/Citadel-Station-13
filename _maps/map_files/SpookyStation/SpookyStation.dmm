@@ -6821,8 +6821,7 @@
 /area/eventmap/inside)
 "atR" = (
 /obj/machinery/door/window/northleft{
-	name = "Cloning Shower";
-	req_access_txt = "24"
+	name = "Cloning Shower"
 	},
 /obj/structure/mirror{
 	pixel_y = -32
