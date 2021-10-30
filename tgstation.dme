@@ -3435,6 +3435,7 @@
 #include "code\modules\rigsuits\pieces\_piece.dm"
 #include "code\modules\rigsuits\pieces\_piece_component.dm"
 #include "code\modules\rigsuits\styles\_style.dm"
+#include "code\modules\rigsuits\theme\_theme.dm"
 #include "code\modules\ruins\lavaland_ruin_code.dm"
 #include "code\modules\ruins\icemoonruin_code\hotsprings.dm"
 #include "code\modules\ruins\icemoonruin_code\library.dm"

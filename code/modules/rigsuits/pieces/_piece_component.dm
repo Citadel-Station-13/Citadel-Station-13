@@ -5,6 +5,8 @@
  * **CURRENTLY DOES NOT SUPPORT DETACHING/SWAPPING**.
  */
 /datum/component/rig_piece
+	dupe_mode = COMPONENT_DUPE_HIGHLANDER
+	dupe_type = /datum/component/rig_piece
 	can_transfer = FALSE		// hahaha no.
 	/// Our host rig piece, if it exists.
 	var/obj/item/rig/rig
