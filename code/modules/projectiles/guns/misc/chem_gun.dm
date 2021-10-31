@@ -21,14 +21,12 @@
 	var/list/allowed_containers = list(/obj/item/reagent_containers/glass/bottle/vial/small, /obj/item/reagent_containers/glass/bottle/vial/large)
 	var/spawnwithvial = TRUE
 	var/start_vial = null
-	var/quickload = TRUE
+	var/quickload = FALSE
 
 /obj/item/gun/chem/Initialize()
 	. = ..()
 	chambered = new /obj/item/ammo_casing/chemgun(src)
 	START_PROCESSING(SSobj, src)
-	create_reagents(100, OPENCONTAINER)
-
 
 /obj/item/gun/chem/Destroy()
 	. = ..()
@@ -48,7 +46,8 @@
 		user.put_in_hands(V)
 		to_chat(user, "<span class='notice'>You remove [vial] from [src].</span>")
 		vial = null
-		//playsound(loc, 'sound/weapons/empty.ogg', 50, 1)
+		update_icon()
+		playsound(loc, 'sound/weapons/empty.ogg', 50, 1)
 	else
 		to_chat(user, "<span class='notice'>The weapon isn't loaded!</span>")
 		return
@@ -68,7 +67,8 @@
 			return FALSE
 		vial = V
 		user.visible_message("<span class='notice'>[user] has loaded a vial into [src].</span>","<span class='notice'>You have loaded [vial] into [src].</span>")
-		//playsound(loc, 'sound/weapons/autoguninsert.ogg', 35, 1)
+		update_icon()
+		playsound(loc, 'sound/weapons/autoguninsert.ogg', 35, 1)
 		return TRUE
 	else
 		to_chat(user, "<span class='notice'>This doesn't fit in [src].</span>")
@@ -76,6 +76,19 @@
 
 /obj/item/gun/chem/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..() //Don't bother changing this or removing it from containers will break.
+
+/obj/item/gun/chem/attack_self(mob/living/user)
+	if(user)
+		if(user.incapacitated())
+			return
+		else if(!vial)
+			to_chat(user, "This Hypo needs to be loaded first!")
+			return
+		else
+			unload_hypo(vial,user)
+
+/obj/item/gun/chem/attack(obj/item/I, mob/user, params)
+	return
 
 /obj/item/gun/chem/can_shoot()
 	return syringes_left
