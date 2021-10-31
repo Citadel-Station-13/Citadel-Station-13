@@ -17,6 +17,11 @@
 	var/syringes_left = 5
 	var/max_syringes = 5
 	var/last_synth = 0
+	var/obj/item/reagent_containers/glass/bottle/vial/vial
+	var/list/allowed_containers = list(/obj/item/reagent_containers/glass/bottle/vial/small, /obj/item/reagent_containers/glass/bottle/vial/large)
+	var/spawnwithvial = TRUE
+	var/start_vial = null
+	var/quickload = TRUE
 
 /obj/item/gun/chem/Initialize()
 	. = ..()
@@ -27,6 +32,49 @@
 /obj/item/gun/chem/Destroy()
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
+
+/obj/item/gun/chem/examine(mob/user)
+	. = ..()
+	if(vial)
+		. += "[vial] has [vial.reagents.total_volume]u remaining."
+	else
+		. += "It has no vial loaded in."
+
+/obj/item/gun/chem/proc/unload_hypo(obj/item/I, mob/user)
+	if((istype(I, /obj/item/reagent_containers/glass/bottle/vial)))
+		var/obj/item/reagent_containers/glass/bottle/vial/V = I
+		V.forceMove(user.loc)
+		user.put_in_hands(V)
+		to_chat(user, "<span class='notice'>You remove [vial] from [src].</span>")
+		vial = null
+		//playsound(loc, 'sound/weapons/empty.ogg', 50, 1)
+	else
+		to_chat(user, "<span class='notice'>The weapon isn't loaded!</span>")
+		return
+
+/obj/item/gun/chem/attackby(obj/item/I, mob/living/user)
+	if((istype(I, /obj/item/reagent_containers/glass/bottle/vial) && vial != null))
+		if(!quickload)
+			to_chat(user, "<span class='warning'>[src] can not hold more than one vial!</span>")
+			return FALSE
+		unload_hypo(vial, user)
+	if((istype(I, /obj/item/reagent_containers/glass/bottle/vial)))
+		var/obj/item/reagent_containers/glass/bottle/vial/V = I
+		if(!is_type_in_list(V, allowed_containers))
+			to_chat(user, "<span class='notice'>[src] doesn't accept this type of vial.</span>")
+			return FALSE
+		if(!user.transferItemToLoc(V,src))
+			return FALSE
+		vial = V
+		user.visible_message("<span class='notice'>[user] has loaded a vial into [src].</span>","<span class='notice'>You have loaded [vial] into [src].</span>")
+		//playsound(loc, 'sound/weapons/autoguninsert.ogg', 35, 1)
+		return TRUE
+	else
+		to_chat(user, "<span class='notice'>This doesn't fit in [src].</span>")
+		return FALSE
+
+/obj/item/gun/chem/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+	. = ..() //Don't bother changing this or removing it from containers will break.
 
 /obj/item/gun/chem/can_shoot()
 	return syringes_left
