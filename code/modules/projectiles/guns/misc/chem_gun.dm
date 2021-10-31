@@ -29,6 +29,7 @@
 	START_PROCESSING(SSobj, src)
 	create_reagents(100, OPENCONTAINER)
 
+
 /obj/item/gun/chem/Destroy()
 	. = ..()
 	STOP_PROCESSING(SSobj, src)

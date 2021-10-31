@@ -35,7 +35,11 @@
 		var/obj/item/gun/chem/CG = loc
 		if(CG.syringes_left <= 0)
 			return
-		CG.reagents.trans_to(BB, 10)
+		//vial.reagents.trans_to(target, vial.amount_per_transfer_from_this, log = "hypospray fill")
+		//CG.reagents.trans_to(BB, 10)
+		if (CG.vial == null)
+			return
+		CG.vial.reagents.trans_to(BB,10)
 		BB.name = "chemical dart"
 		CG.syringes_left--
 	..()
