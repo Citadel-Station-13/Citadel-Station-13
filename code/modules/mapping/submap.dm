@@ -39,4 +39,5 @@
 		var/prob = themes[theme]
 		themes -= theme
 		themes["[theme]"] = prob
-		
+
+#warn procs for checking where to spawn
