@@ -38,7 +38,7 @@
 		if (CG.vial == null)
 			CG.syringes_left--
 			return
-		CG.vial.reagents.trans_to(BB, 10)
+		CG.vial.reagents.trans_to(BB,10)
 		BB.name = "chemical dart"
 		CG.syringes_left--
 	..()
@@ -48,23 +48,23 @@
 	name = "smartdart synthesiser"
 	desc = "A high-power spring, linked to an energy-based smartdart synthesiser."
 	projectile_type = /obj/item/projectile/bullet/dart/syringe/dart
+	firing_effect_type = null
 	harmful = FALSE
 
-/obj/item/ammo_casing/chemgun/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
+/obj/item/ammo_casing/chemgun/smart/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	if(!BB)
 		return
-	if(istype(loc, /obj/item/gun/chem))
-		var/obj/item/gun/chem/CG = loc
+	if(istype(loc, /obj/item/gun/chem/smart))
+		var/obj/item/gun/chem/smart/CG = loc
 		if(CG.syringes_left <= 0)
 			return
 		if (CG.vial == null)
 			CG.syringes_left--
 			return
-		CG.vial.reagents.trans_to(BB, 20)
+		CG.vial.reagents.trans_to(BB,20)
 		BB.name = "smart chemical dart"
 		CG.syringes_left--
 	..()
-
 /obj/item/ammo_casing/dnainjector
 	name = "rigged syringe gun spring"
 	desc = "A high-power spring that throws DNA injectors."
