@@ -40,6 +40,26 @@
 		CG.syringes_left--
 	..()
 
+//smart dart test
+/obj/item/ammo_casing/chemgun/smart
+	name = "smart dart synthesiser"
+	desc = "test."
+	projectile_type = /obj/item/projectile/bullet/dart/syringe/dart
+	firing_effect_type = null
+	harmful = FALSE
+
+/obj/item/ammo_casing/chemgun/smart/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
+	if(!BB)
+		return
+	if(istype(loc, /obj/item/gun/chem/smart))
+		var/obj/item/gun/chem/smart/SG = loc
+		if(SG.syringes_left <= 0)
+			return
+		SG.reagents.trans_to(BB, 10)
+		BB.name = "Smart chemical dart"
+		SG.syringes_left--
+	..()
+
 /obj/item/ammo_casing/dnainjector
 	name = "rigged syringe gun spring"
 	desc = "A high-power spring that throws DNA injectors."

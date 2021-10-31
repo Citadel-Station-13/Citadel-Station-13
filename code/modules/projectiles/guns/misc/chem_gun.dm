@@ -45,3 +45,16 @@
 	if(chambered && !chambered.BB)
 		chambered.newshot()
 	last_synth = world.time
+
+/obj/item/gun/chem/smart
+	name = "improved smartdart gun"
+	desc = "A Nanotrasen syringe gun, modified to automatically synthesise smart chemical darts, and instead hold reagents."
+	icon_state = "chemgun"
+	item_state = "chemgun"
+
+obj/item/gun/chem/smart/Initialize()
+	. = ..()
+	chambered = new /obj/item/ammo_casing/chemgun/smart(src)
+	START_PROCESSING(SSobj, src)
+	create_reagents(100, OPENCONTAINER)
+
