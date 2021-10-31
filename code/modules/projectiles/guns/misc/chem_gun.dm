@@ -1,8 +1,8 @@
 //his isn't a subtype of the syringe gun because the syringegun subtype is made to hold syringes
 //this is meant to hold reagents/obj/item/gun/syringe
 /obj/item/gun/chem
-	name = "reagent gun"
-	desc = "A Nanotrasen syringe gun, modified to automatically synthesise chemical darts, and instead hold reagents."
+	name = "Reagent Repeater"
+	desc = "A Nanotrasen smartdart repeater rifle, modified to automatically synthesize piercing."
 	icon_state = "chemgun"
 	item_state = "chemgun"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -32,6 +32,7 @@
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 
+//bunch of hypospray copy paste
 /obj/item/gun/chem/examine(mob/user)
 	. = ..()
 	if(vial)
@@ -108,9 +109,10 @@
 		chambered.newshot()
 	last_synth = world.time
 
+//Smart dart version of the reagent launcher
 /obj/item/gun/chem/smart
-	name = "improved smartdart gun"
-	desc = "A Nanotrasen syringe gun, modified to automatically synthesise smart chemical darts, and instead hold reagents."
+	name = "smartdart repeater rifle"
+	desc = "An experimental version of the repeater rifle. It synthesizes medicinal smart darts which it fills using an inserted hypovial. It can accommodate both large and small hypovials."
 	icon_state = "chemgun"
 	item_state = "chemgun"
 
@@ -118,5 +120,4 @@ obj/item/gun/chem/smart/Initialize()
 	. = ..()
 	chambered = new /obj/item/ammo_casing/chemgun/smart(src)
 	START_PROCESSING(SSobj, src)
-	create_reagents(100, OPENCONTAINER)
 

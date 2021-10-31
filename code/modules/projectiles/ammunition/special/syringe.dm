@@ -24,7 +24,7 @@
 
 /obj/item/ammo_casing/chemgun
 	name = "dart synthesiser"
-	desc = "A high-power spring, linked to an energy-based dart synthesiser."
+	desc = "A high-power spring, linked to an energy-based piercing synthesiser."
 	projectile_type = /obj/item/projectile/bullet/dart/piercing
 	firing_effect_type = null
 
@@ -44,10 +44,10 @@
 		CG.syringes_left--
 	..()
 
-//smart dart test
+//Smart dart version of reagent launcher.
 /obj/item/ammo_casing/chemgun/smart
-	name = "smart dart synthesiser"
-	desc = "test."
+	name = "smartdart synthesiser"
+	desc = "A high-power spring, linked to an energy-based smartdart synthesiser."
 	projectile_type = /obj/item/projectile/bullet/dart/syringe/dart
 	firing_effect_type = null
 	harmful = FALSE
@@ -59,7 +59,7 @@
 		var/obj/item/gun/chem/smart/SG = loc
 		if(SG.syringes_left <= 0)
 			return
-		SG.reagents.trans_to(BB, 10)
+		SG.reagents.trans_to(BB, 20) //change to set syringe transfer
 		BB.name = "Smart chemical dart"
 		SG.syringes_left--
 	..()
