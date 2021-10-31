@@ -13,15 +13,13 @@
 	custom_materials = list(/datum/material/iron=2000)
 	clumsy_check = FALSE
 	fire_sound = 'sound/items/syringeproj.ogg'
-	var/time_per_syringe = 300
-	var/syringes_left = 5
-	var/max_syringes = 5
+	var/time_per_syringe = 200
+	var/syringes_left = 3
+	var/max_syringes = 6
 	var/last_synth = 0
 	var/obj/item/reagent_containers/glass/bottle/vial/vial
 	var/list/allowed_containers = list(/obj/item/reagent_containers/glass/bottle/vial/small, /obj/item/reagent_containers/glass/bottle/vial/large)
-	var/spawnwithvial = TRUE
-	var/start_vial = null
-	var/quickload = FALSE
+	var/quickload = TRUE //
 
 /obj/item/gun/chem/Initialize()
 	. = ..()
