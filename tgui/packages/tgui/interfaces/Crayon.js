@@ -48,7 +48,6 @@ export const Crayon = (props, context) => {
               <>
                 <LabeledList.Item label="X">
                   <Slider
-                    animated
                     value={x}
                     unit="px"
                     minValue={min_offset}
@@ -61,7 +60,6 @@ export const Crayon = (props, context) => {
                 </LabeledList.Item>
                 <LabeledList.Item label="Y">
                   <Slider
-                    animated
                     value={y}
                     unit="px"
                     minValue={min_offset}
