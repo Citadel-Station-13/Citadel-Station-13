@@ -379,7 +379,7 @@
 
 	else
 		to_chat(user, "<span class='notice'>You return the wisp to the lantern.</span>")
-		icon_state = initial(icon_state)
+		icon_state = "lantern-blue"
 		wisp.forceMove(src)
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 

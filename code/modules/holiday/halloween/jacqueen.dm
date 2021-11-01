@@ -50,7 +50,7 @@
 	var/cached_z
 	/// I'm busy, don't move.
 	var/busy = FALSE
-	var/spawn_cars = TRUE
+	var/spawn_cars = FALSE
 
 	var/static/blacklisted_items = typecacheof(list(
 		/obj/effect,

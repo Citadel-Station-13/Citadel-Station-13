@@ -251,11 +251,11 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mech_missile_rack
-	name = "Exosuit Weapon (SRM-8 Missile Rack)"
-	desc = "Allows for the construction of an SRM-8 Missile Rack."
+	name = "Exosuit Weapon (BRM-6 Missile Rack)"
+	desc = "Allows for the construction of an BRM-6 Breaching Missile Rack."
 	id = "mech_missile_rack"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/breaching
 	materials = list(/datum/material/iron=22000,/datum/material/gold=6000,/datum/material/silver=8000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
@@ -265,7 +265,7 @@
 	desc = "Ammunition for the SRM-8 Missile Rack."
 	id = "mech_missile_rack_ammo"
 	build_type = PROTOLATHE | MECHFAB
-	build_path = /obj/item/mecha_ammo/missiles_he
+	build_path = /obj/item/mecha_ammo/missiles_br
 	materials = list(/datum/material/iron=8000,/datum/material/gold=500,/datum/material/silver=500)
 	construction_time = 20
 	category = list("Exosuit Ammunition", "Ammo")
@@ -297,7 +297,7 @@
 	desc = "An exosuit module that allows generating of small quasi-stable wormholes."
 	id = "mech_wormhole_gen"
 	build_type = MECHFAB
-	build_path = /obj/item/reagent_containers/food/snacks/pie/cream //Temporary fix for the ball so someone doesn't griff
+	build_path = /obj/item/mecha_parts/mecha_equipment/wormhole_generator
 	materials = list(/datum/material/iron=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
@@ -307,7 +307,7 @@
 	desc = "An exosuit module that allows exosuits to teleport to any position in view."
 	id = "mech_teleporter"
 	build_type = MECHFAB
-	build_path = /obj/item/reagent_containers/food/snacks/pie/cream //Temporary fix for the ball so someone doesn't griff
+	build_path = /obj/item/mecha_parts/mecha_equipment/teleporter
 	materials = list(/datum/material/iron=10000,/datum/material/diamond=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
