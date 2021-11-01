@@ -5625,7 +5625,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -61634,7 +61633,6 @@
 /area/security/prison/upper)
 "qtw" = (
 /obj/machinery/door/airlock/external{
-	dir = 2;
 	name = "Port Docking Bay 4"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
