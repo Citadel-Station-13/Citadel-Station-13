@@ -272,6 +272,7 @@
 		if("set_precision_x")
 			var/x = text2num(params["x"])
 			precision_x = x
+			. = TRUE
 		if("set_precision_y")
 			var/y = text2num(params["y"])
 			precision_y = y
