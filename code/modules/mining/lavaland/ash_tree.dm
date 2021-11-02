@@ -25,13 +25,18 @@
 		sap = TRUE
 		icon_state = sap_icon_state
 		desc = "A once large tree now burnt like the lands around it. This one seems to have a sap still inside."
-		sap_amount = rand(60,120) //good amout of honey
+		sap_amount = rand(20,60) //good amout of honey
 	coal_amount = rand(5,15) //We give a random amout
 
 //So we dont lose are bowls, stolen form closet code
 /obj/structure/flora/ashtree/Destroy()
 	dump_contents(override = FALSE)
 	return ..()
+
+/obj/structure/flora/ashtree/proc/dump_contents(override = TRUE) //Override is for not revealing the locker electronics when you open the locker, for example
+	var/atom/L = drop_location()
+	for(var/atom/movable/AM in src)
+		AM.forceMove(L)
 
 /obj/structure/flora/ashtree/proc/harvest_sap()
 	desc = "A once large tree now burnt like the lands around it."
