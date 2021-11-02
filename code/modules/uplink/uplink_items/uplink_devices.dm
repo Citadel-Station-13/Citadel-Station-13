@@ -31,6 +31,7 @@
 	desc = "A cheap plastic mask fitted with an adrenaline autoinjector, which can be used by simply tensing your muscles"
 	item = /obj/item/clothing/glasses/phantomthief/syndicate
 	cost = 2
+	limited_stock = 1
 
 /datum/uplink_item/device_tools/cutouts
 	name = "Adaptive Cardboard Cutouts"
