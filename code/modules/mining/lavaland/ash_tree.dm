@@ -28,6 +28,11 @@
 		sap_amount = rand(60,120) //good amout of honey
 	coal_amount = rand(5,15) //We give a random amout
 
+//So we dont lose are bowls, stolen form closet code
+/obj/structure/flora/ashtree/Destroy()
+	dump_contents(override = FALSE)
+	return ..()
+
 /obj/structure/flora/ashtree/proc/harvest_sap()
 	desc = "A once large tree now burnt like the lands around it."
 	icon_state = "ashtree"
@@ -47,7 +52,7 @@
 			icon_state = tabbed_icon_state
 			sap = FALSE
 			container_used = W
-			W.forceMove(src) //Sadly when cutting down the tree we get deleted with it, otherwise this allows us to get sap!
+			W.forceMove(src) //So we dont lose are bowl when cutting it down + needed for the harvest sap proc
 			addtimer(CALLBACK(src, .proc/harvest_sap), harvest_sap_time SECONDS)
 		else
 			to_chat(user, "<span class='notice'>There is no sap to collect.</span>")
