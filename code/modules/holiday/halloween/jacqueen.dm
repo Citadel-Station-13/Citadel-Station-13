@@ -65,6 +65,10 @@
 	cached_z = z
 	poof()
 
+/mob/living/simple_animal/jacq/ComponentInitialize() //she just wants to bring halloween to the station
+	. = ..()
+	AddComponent(/datum/component/stationloving)
+
 /mob/living/simple_animal/jacq/BiologicalLife(seconds, times_fired)
 	if(!(. = ..()))
 		return

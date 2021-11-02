@@ -858,7 +858,7 @@
 /turf/open/floor/plating/airless,
 /area/router/aux)
 "acf" = (
-/obj/machinery/computer/arcade/minesweeper,
+/obj/machinery/computer/arcade/battle,
 /turf/open/floor/carpet/arcade,
 /area/commons/arcade)
 "acg" = (
@@ -4505,7 +4505,7 @@
 /area/maintenance/solars/starboard/fore)
 "alg" = (
 /obj/structure/frame/machine,
-/obj/item/circuitboard/computer/arcade/minesweeper,
+/obj/item/circuitboard/computer/arcade/orion_trail,
 /turf/open/floor/plating,
 /area/construction/secondary)
 "alh" = (

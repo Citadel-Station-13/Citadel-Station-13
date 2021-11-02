@@ -8,13 +8,8 @@
 	anchored = TRUE
 	var/items_list = list()
 	speech_span = "spooky"
+	resistance_flags = INDESTRUCTIBLE
 	var/active = TRUE
-
-/obj/item/barthpot/Destroy()
-	var/obj/item/barthpot/n = new src(loc)
-	n.items_list = items_list
-	..()
-
 
 /obj/item/barthpot/attackby(obj/item/I, mob/user, params)
 	if(!active)

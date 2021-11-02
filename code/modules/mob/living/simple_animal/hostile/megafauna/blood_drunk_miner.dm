@@ -59,6 +59,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Initialize()
 	. = ..()
+	internal = new/obj/item/gps/internal/miner(src)
 	miner_saw = new(src)
 
 /datum/action/innate/megafauna_attack/dash
