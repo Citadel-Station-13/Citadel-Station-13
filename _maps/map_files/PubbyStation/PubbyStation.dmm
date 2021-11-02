@@ -9261,9 +9261,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "axH" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 30
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
@@ -10269,6 +10266,9 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aAg" = (
@@ -80969,7 +80969,7 @@ aaa
 aaa
 aaa
 aaa
-syn
+aaa
 aaa
 aaa
 aaa
@@ -81226,7 +81226,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+syn
 aaa
 aaa
 aaa
