@@ -18,16 +18,23 @@
 	/// level count
 	var/levels = 1
 	/// post-instantiation - will have ordered z list of our levels
-	var/list/z_levels
+	var/list/ordered_z_indices
 	/// which level indices are considered surface
-	var/list/surface_levels = list(
+	var/list/levels_surface = list(
 		1
 	)
 	/// ordered list of biomes used
 	var/list/planet_biome/level_biomes = list(
 		/datum/planet_biome/debug
 	)
+	/// ordered number bitflags for cardinals AND up/down - determines Z linkage
+	var/list/level_linkage = list(
+		NORTH|SOUTH|EAST|WEST
+	}
 
+#warn support for atmos override
+
+#warn support for skyfall/deep chasm/etc
 
 #warn weather
 
