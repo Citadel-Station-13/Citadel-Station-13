@@ -155,6 +155,7 @@
 #include "code\__DEFINES\mapping\maploader.dm"
 #include "code\__DEFINES\material\worth.dm"
 #include "code\__DEFINES\mobs\innate_abilities.dm"
+#include "code\__DEFINES\mobs\overlay_index.dm"
 #include "code\__DEFINES\mobs\slowdowns.dm"
 #include "code\__DEFINES\research\anomalies.dm"
 #include "code\__DEFINES\research\stock_parts.dm"

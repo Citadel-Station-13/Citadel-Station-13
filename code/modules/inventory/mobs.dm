@@ -166,14 +166,14 @@
  * proc that can be overridden:
  * can we use a certain slot?
  */
-/mob/proc/CheckItemEquip(obj/item/I, slot, mob/user, list/warnings)
+/mob/proc/CheckItemEquip(obj/item/I, datum/inventory_slot_meta/slot, mob/user, list/warnings)
 	return TRUE
 
 /**
  * proc that can be overridden:
  * can we take an item out of a certain slot?
  */
-/mob/proc/CheckItemUnequip(obj/item/I, slot, mob/user, list/warnings)
+/mob/proc/CheckItemUnequip(obj/item/I, datum/inventory_slot_meta/slot, mob/user, list/warnings)
 	return TRUE
 
 /**
@@ -188,7 +188,7 @@
  * Wraps Exited to ensure grabbing items out of mobs removes from inventory
  */
 /mob/Exited(atom/movable/AM, atom/newLoc)
-	if(is_equipped(AM))
+	if(IsEquipped(AM))
 		UnequipItem(AM, force = TRUE, move_item = FALSE)
 	return ..()
 

@@ -8,10 +8,14 @@ GLOBAL_LIST_EMPTY(inventory_slot_meta)
 /proc/get_inventory_slot_datum(id)
 	if(ispath(id))
 		id = "[id]"
-		return inventory_slot_meta[id] || (((inventory_slot_meta[id] = new text2path(id))) && inventory_slot_meta[id])
+		if(!GLOB.inventory_slot_meta[id])
+			var/datum/inventory_slot_meta/meta = new textpath(id)
+			GLOB.inventory_slot_meta[meta.id] = meta
+			GLOB.inventory_slot_meta[id] = meta
+		return GLOB.inventory_slot_meta[id]
 	if(istype(id, /datum/inventory_slot_meta))
 		return id
-	return inventory_slot_meta[id]
+	return GLOB.inventory_slot_meta[id]
 
 /datum/inventory_slot_meta
 	/// slot name
@@ -84,12 +88,14 @@ GLOBAL_LIST_EMPTY(inventory_slot_meta)
 /**
  * Returns whether or not a mob is allowed to insert an item
  */
-/datum/inventory_slot_meta/proc/can_insert(datum/inventory/inventory, obj/item/I, mob/user)
+/datum/inventory_slot_meta/proc/can_insert(datum/inventory/inventory, obj/item/I, mob/user, list/warnings)
+	return inventory.owner.CheckItemEquip(I, src, user, warnings)
 
 /**
  * Returns whether or not a mob is allowed to remove an item
  */
-/datum/inventory_slot_meta/proc/can_remove(datum/inventory/inventory, obj/item/I, mob/user)
+/datum/inventory_slot_meta/proc/can_remove(datum/inventory/inventory, obj/item/I, mob/user, list/warnings)
+	return inventory.owner.CheckItemUnequip(I, src, user, warnings)
 
 /**
  * Called on item insertion

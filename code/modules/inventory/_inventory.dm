@@ -98,7 +98,7 @@
 	RebuildAllAppearances()
 
 /**
- * Adds a slot
+ * Adds a slot.
  */
 /datum/inventory/proc/AddSlot(id)
 	id = "[id]"
@@ -117,11 +117,17 @@
 	return TRUE
 
 /**
- * Removes a slot
+ * Removes a slot. Destroys any item in it.
  */
 /datum/inventory/proc/RemoveSlot(id)
 	id = "[id]"
 	if(!(id in slots))
 		return FALSE
+	var/index = slots.Find(id)
+	ASSERT(index)
+	qdel(holding[index])
+	slots -= id
+	items_by_slot -= id
+	holding.Cut(index, index+1)
 	RecalcHideable()
 	RecalcScreen()
