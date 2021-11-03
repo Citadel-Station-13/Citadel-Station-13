@@ -25,8 +25,9 @@
 		sap = TRUE
 		icon_state = sap_icon_state
 		desc = "A once large tree now burnt like the lands around it. This one seems to have a sap still inside."
-		sap_amount = rand(10,30) //good amout of honey
+		sap_amount = rand(5,15) //good amout of honey
 	coal_amount = rand(5,15) //We give a random amout
+	SSblackbox.record_feedback("tally", "Honey Tree", 1, "Trees Spawned") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 //So we dont lose are bowls, stolen form closet code
 /obj/structure/flora/ashtree/Destroy()
@@ -46,6 +47,7 @@
 		if(!RG.reagents.holder_full()) //Make sure that its not filling something thats full
 			RG.reagents.add_reagent(are_sap, min(RG.volume - RG.reagents.total_volume, sap_amount))
 	RG.forceMove(drop_location()) //We drop are used beaker and try to fill it with sap
+	SSblackbox.record_feedback("tally", "Honey Tree", 1, "Harvested Honey") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 //Proc stolen from Trees
 //If you hit it with a sharp force aboe 0 item it chops it down, unlike trees tho it dosnt give wood as its already charcoal
@@ -73,6 +75,7 @@
 				for(var/i=1 to coal_amount)
 					new /obj/item/stack/sheet/mineral/coal(get_turf(src))
 				qdel(src)
+				SSblackbox.record_feedback("tally", "Honey Tree", 1, "Cutted Tree") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	else
 		return ..()
