@@ -491,7 +491,7 @@
 		return
 
 	var/fp_verb = mode == HYPO_SPRAY ? "spray" : "inject"
-	var/method = mode == HYPO_SPRAY ? TOUCH : INJECT
+	var/method = mode == HYPO_SPRAY ? PATCH : INJECT	//Medsprays use patch when spraying, feels like an inconsistancy here.
 
 	if(L != user)
 		L.visible_message("<span class='danger'>[user] is trying to [fp_verb] [L] with [src]!</span>", \
