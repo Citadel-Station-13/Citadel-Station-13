@@ -168,7 +168,8 @@
 	icon_state = "syndipen"
 	item_state = "syndipen"
 	volume = 50
-	amount_per_transfer_from_this = 50
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,25,50)
 	list_reagents = list(/datum/reagent/medicine/stimulants = 50)
 
 /obj/item/reagent_containers/hypospray/medipen/stimulants/baseball
