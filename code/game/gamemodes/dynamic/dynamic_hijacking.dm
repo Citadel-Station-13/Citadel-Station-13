@@ -14,12 +14,6 @@
 
 	var/time_range = rand(random_event_hijack_minimum, random_event_hijack_maximum)
 
-	if (world.time - last_midround_injection_attempt < time_range)
-		random_event_hijacked = HIJACKED_TOO_RECENT
-		dynamic_log("Random event [round_event_control.name] tried to roll, but the last midround injection \
-			was too recent. Injection chance has been raised to [get_midround_injection_chance(dry_run = TRUE)]%.")
-		return CANCEL_PRE_RANDOM_EVENT
-
 	if (midround_injection_cooldown - world.time < time_range)
 		random_event_hijacked = HIJACKED_TOO_SOON
 		dynamic_log("Random event [round_event_control.name] tried to roll, but the next midround injection \

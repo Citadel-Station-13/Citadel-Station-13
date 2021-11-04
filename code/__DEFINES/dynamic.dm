@@ -10,8 +10,5 @@
 /// No round event was hijacked this cycle
 #define HIJACKED_NOTHING "HIJACKED_NOTHING"
 
-/// This cycle, a round event was hijacked when the last midround event was too recent.
-#define HIJACKED_TOO_RECENT "HIJACKED_TOO_RECENT"
-
 /// This cycle, a round event was hijacked when the next midround event is too soon.
 #define HIJACKED_TOO_SOON "HIJACKED_TOO_SOON"
