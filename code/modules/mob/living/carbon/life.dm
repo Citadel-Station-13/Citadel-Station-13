@@ -39,7 +39,7 @@
 //Procs called while dead
 /mob/living/carbon/proc/handle_death()
 	for(var/datum/reagent/R in reagents.reagent_list)
-		if(R.chemical_flags & REAGENT_DEAD_PROCESS)
+		if(R.chemical_flags & REAGENT_DEAD_PROCESS && ((HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM) && (R.chemical_flags & REAGENT_ROBOTIC_PROCESS)) || (!HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM) && (R.chemical_flags & REAGENT_ORGANIC_PROCESS))))
 			R.on_mob_dead(src)
 
 ///////////////

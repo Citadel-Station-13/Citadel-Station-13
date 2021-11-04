@@ -17,6 +17,7 @@
 /datum/reagent/medicine/leporazine
 	name = "Leporazine"
 	description = "Leporazine will effectively regulate a patient's body temperature, ensuring it never leaves safe levels."
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	pH = 8.4
 	color = "#82b8aa"
 	value = REAGENT_VALUE_COMMON
@@ -32,6 +33,7 @@
 	name = "Adminordrazine"
 	description = "It's magic. We don't have to explain it."
 	color = "#ffffff"
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	can_synth = FALSE
 	taste_description = "badmins"
 	value = REAGENT_VALUE_GLORIOUS
@@ -103,6 +105,7 @@
 	name = "Synaptizine"
 	description = "Increases resistance to stuns as well as reducing drowsiness and hallucinations."
 	color = "#FF00FF"
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	pH = 4
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/carbon/M)
@@ -121,6 +124,7 @@
 	name = "Diphen-Synaptizine"
 	description = "Reduces drowsiness, hallucinations, and Histamine from body."
 	color = "#EC536D" // rgb: 236, 83, 109
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	pH = 5.2
 	value = REAGENT_VALUE_COMMON
 
@@ -140,6 +144,7 @@
 	name = "Inacusiate"
 	description = "Instantly restores all hearing to the patient, but does not cure deafness."
 	color = "#6600FF" // rgb: 100, 165, 255
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	pH = 2
 	value = 10
 
@@ -152,6 +157,7 @@
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 270K for it to metabolise correctly."
 	color = "#0000C8"
 	taste_description = "sludge"
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	pH = 11
 	value = REAGENT_VALUE_COMMON
 
@@ -183,6 +189,7 @@
 	color = "#0000C8"
 	taste_description = "muscle"
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	pH = 13
 	value = REAGENT_VALUE_COMMON
 
@@ -199,6 +206,7 @@
 	description = "A mixture of cryoxadone and slime jelly, that apparently inverses the requirement for its activation."
 	color = "#f7832a"
 	taste_description = "spicy jelly"
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	pH = 12
 	value = REAGENT_VALUE_UNCOMMON
 
@@ -232,6 +240,7 @@
 	description = "A powder derived from fish toxin, Rezadone can effectively treat genetic damage as well as restoring minor wounds. Overdose will cause intense nausea and minor toxin damage."
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	overdose_threshold = 30
 	taste_description = "fish"
 	pH = 12.2
@@ -265,6 +274,7 @@
 	description = "Spaceacillin will prevent a patient from conventionally spreading any diseases they are currently infected with. Also reduces infection in serious burns."
 	color = "#f2f2f2"
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	pH = 8.1
 
 //Goon Chems. Ported mainly from Goonstation. Easily mixable (or not so easily) and provide a variety of effects.
@@ -394,6 +404,7 @@
 	reagent_state = LIQUID
 	color = "#DCDCDC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	overdose_threshold = 60
 	taste_description = "sweetness and salt"
 	var/extra_regen = 0.25 // in addition to acting as temporary blood, also add this much to their actual blood per tick
@@ -527,6 +538,7 @@
 	reagent_state = LIQUID
 	color = "#000000"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	taste_description = "ash"
 	pH = 5
 
@@ -578,6 +590,7 @@
 	reagent_state = LIQUID
 	color = "#19C832"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	taste_description = "acid"
 	pH = 1.5
 
@@ -597,6 +610,7 @@
 	reagent_state = LIQUID
 	color = "#14FF3C"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	pH = 12 //It's a reducing agent
 
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/carbon/M)
@@ -610,6 +624,7 @@
 	reagent_state = LIQUID
 	color = "#003153" // RGB 0, 49, 83
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	pH = 8.9
 	value = REAGENT_VALUE_COMMON //uncraftable
 
@@ -624,6 +639,7 @@
 	reagent_state = LIQUID
 	color = "#E6FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	pH = 1 //One of the best buffers, NEVERMIND!
 	value = REAGENT_VALUE_UNCOMMON
 	var/healtoxinlover = FALSE
@@ -677,6 +693,7 @@
 	reagent_state = LIQUID
 	color = "#00FFFF"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	pH = 2
 
 /datum/reagent/medicine/salbutamol/on_mob_life(mob/living/carbon/M)
@@ -693,6 +710,7 @@
 	reagent_state = LIQUID
 	color = "#FF6464"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	pH = 11
 
 /datum/reagent/medicine/perfluorodecalin/on_mob_life(mob/living/carbon/human/M)
@@ -871,6 +889,7 @@
 	reagent_state = LIQUID
 	color = "#FFFFFF"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	taste_description = "dull toxin"
 	pH = 10
 
@@ -901,6 +920,7 @@
 	reagent_state = LIQUID
 	color = "#000000"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	overdose_threshold = 35
 	pH = 12
 	value = REAGENT_VALUE_UNCOMMON
@@ -931,6 +951,7 @@
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	overdose_threshold = 30
 	pH = 10.2
 
@@ -966,6 +987,7 @@
 	reagent_state = LIQUID
 	color = "#A0E85E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	taste_description = "magnets"
 	pH = 0
 	value = REAGENT_VALUE_RARE
@@ -1031,6 +1053,7 @@
 	description = "Efficiently restores brain damage."
 	color = "#DCDCFF"
 	pH = 10.4
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/C)
 	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2*REM)
@@ -1042,6 +1065,7 @@
 	name = "Neurine"
 	description = "Reacts with neural tissue, helping reform damaged connections. Can cure minor traumas."
 	color = "#EEFF8F"
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 
 /datum/reagent/medicine/neurine/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!(method == INJECT))
@@ -1071,6 +1095,7 @@
 	color = "#5096C8"
 	taste_description = "acid"
 	pH = 2
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/M)
 	M.jitteriness = 0
@@ -1106,6 +1131,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
 	pH = 8.7
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	value = REAGENT_VALUE_RARE
 
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/L)
@@ -1144,6 +1170,7 @@
 	reagent_state = LIQUID
 	color = "#FFFFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	pH = 6.7
 
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/carbon/M)
@@ -1176,6 +1203,7 @@
 	description = "Restores oxygen loss. Overdose causes it instead."
 	reagent_state = LIQUID
 	color = "#13d2f0"
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	overdose_threshold = 30
 	pH = 9.7
 
@@ -1239,6 +1267,7 @@
 	reagent_state = LIQUID
 	pH = 8.5
 	color = "#5dc1f0"
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 
 /datum/reagent/medicine/inaprovaline/on_mob_life(mob/living/carbon/M)
 	if(M.losebreath >= 5)
@@ -1292,6 +1321,7 @@
 	reagent_state = SOLID
 	color = "#555555"
 	pH = 11
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	value = REAGENT_VALUE_EXCEPTIONAL
 
 /datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/carbon/M)
@@ -1313,6 +1343,7 @@
 	reagent_state = SOLID
 	color = "#555555"
 	pH = 11
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/medicine/lesser_syndicate_nanites/on_mob_life(mob/living/carbon/M)
@@ -1447,6 +1478,7 @@
 	color = "#C1151D"
 	overdose_threshold = 30
 	value = REAGENT_VALUE_VERY_RARE
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
 	..()
@@ -1480,6 +1512,7 @@
 	description = "Drastically increases movement speed."
 	color = "#AE151D"
 	metabolization_rate = 2.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 
 /datum/reagent/medicine/changelinghaste/on_mob_metabolize(mob/living/L)
 	..()
@@ -1495,6 +1528,7 @@
 	name = "Corazone"
 	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
 	color = "#F5F5F5"
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	self_consuming = TRUE
 	pH = 12.5
 
@@ -1594,6 +1628,7 @@
 	reagent_state = LIQUID
 	color = "#07E79E"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	overdose_threshold = 30
 	pH = 9.12
 	value = REAGENT_VALUE_COMMON
@@ -1629,6 +1664,7 @@
 	reagent_state = SOLID
 	color = "#FFFFD0"
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/medicine/silibinin/on_mob_life(mob/living/carbon/M)
@@ -1642,6 +1678,7 @@
 	reagent_state = SOLID
 	color = "#9423FF"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	overdose_threshold = 50
 	taste_description = "numbing bitterness"
 	value = REAGENT_VALUE_RARE
@@ -1671,6 +1708,7 @@
 	taste_mult = 4
 	can_synth = FALSE
 	overdose_threshold = 30
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	value = REAGENT_VALUE_UNCOMMON // while it's 'rare', it can be milked from the wisdom cow
 
 /datum/reagent/medicine/liquid_wisdom/on_mob_life(mob/living/carbon/C) //slightly stronger mannitol, from the wisdom cow
@@ -1688,6 +1726,7 @@
 	reagent_state = LIQUID
 	color = "#bb2424"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	overdose_threshold = 20
 	/// How much base clotting we do per bleeding wound, multiplied by the below number for each bleeding wound
 	var/clot_rate = 0.25
@@ -1742,18 +1781,21 @@
 	reagent_state = LIQUID
 	color = "#D7C9C6"
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	overdose_threshold = 30
 
 /datum/reagent/medicine/system_cleaner/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	if(HAS_TRAIT(M, TRAIT_ROBOTIC_ORGANISM))
-		M.adjustToxLoss(-0.2, toxins_type = TOX_SYSCORRUPT)
+		M.adjustToxLoss(-0.4, toxins_type = TOX_SYSCORRUPT)
 	else
 		M.adjustToxLoss(0.5)
+	. = 1
 
 /datum/reagent/medicine/system_cleaner/overdose_process(mob/living/carbon/M)
 	. = ..()
 	if(HAS_TRAIT(M, TRAIT_ROBOTIC_ORGANISM))
-		M.adjustToxLoss(0.4, toxins_type = TOX_SYSCORRUPT) //inverts its positive effect on overdose, for organics it's just more toxic
+		M.adjustToxLoss(0.8, toxins_type = TOX_SYSCORRUPT) //inverts its positive effect on overdose, for organics it's just more toxic
 	else
 		M.adjustToxLoss(0.5)
+	. = 1
