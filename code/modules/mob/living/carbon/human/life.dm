@@ -214,7 +214,7 @@
 	var/missing_body_parts_flags = ~get_body_parts_flags()
 	var/max_protection = 1
 	if(missing_body_parts_flags) //I don't like copypasta as much as proc overhead. Do you want me to make these into a macro?
-		DISABLE_BITFIELD(thermal_protection_flags, missing_body_parts_flags)
+		thermal_protection_flags &= ~(missing_body_parts_flags)
 		if(missing_body_parts_flags & HEAD)
 			max_protection -= THERMAL_PROTECTION_HEAD
 		if(missing_body_parts_flags & CHEST)

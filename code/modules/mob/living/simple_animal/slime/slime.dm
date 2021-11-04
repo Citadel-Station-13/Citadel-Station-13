@@ -466,7 +466,7 @@
 
 	SStun = world.time + rand(20,60)
 	spawn(0)
-		DISABLE_BITFIELD(mobility_flags, MOBILITY_MOVE)
+		mobility_flags &= ~(MOBILITY_MOVE)
 		if(user)
 			step_away(src,user,15)
 		sleep(3)
