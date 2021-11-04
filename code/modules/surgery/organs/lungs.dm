@@ -201,9 +201,9 @@
 			mole_adjustments[entry] = -required_moles
 			mole_adjustments[breath_results[entry]] = required_moles
 		if(required_pp < safe_min)
-			var/multiplier = 0
+			var/multiplier = handle_too_little_breath(H, required_pp, safe_min, required_moles)
 			if(required_moles > 0)
-				multiplier = handle_too_little_breath(H, required_pp, safe_min, required_moles) / required_moles
+				multiplier /= required_moles
 			for(var/adjustment in mole_adjustments)
 				mole_adjustments[adjustment] *= multiplier
 			if(alert_category)
