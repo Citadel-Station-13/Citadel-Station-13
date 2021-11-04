@@ -9,7 +9,7 @@
 	var/datum/game_mode/dynamic/mode
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		mode = SSticker.mode
-		assassin_prob = max(0,mode.threat_level-40)
+		assassin_prob = max(0,mode.threat_level-20)
 	if(prob(assassin_prob))
 		var/datum/objective/assassinate/once/kill_objective = new
 		kill_objective.owner = T.owner
