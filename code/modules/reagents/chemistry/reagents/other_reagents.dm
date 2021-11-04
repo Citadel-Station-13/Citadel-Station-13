@@ -2401,6 +2401,7 @@
 	description = "A powerful preservation agent, utilizing the preservative effects of formaldehyde with significantly less of the histamine."
 	reagent_state = LIQUID
 	color = "#f7685e"
+	processing_flags = REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
 	metabolization_rate = REAGENTS_METABOLISM * 0.25
 
 
