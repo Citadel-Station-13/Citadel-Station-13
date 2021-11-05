@@ -422,6 +422,10 @@
 			candidates -= player //no ghost roles
 			continue
 
+		if(!is_eligible_servant(player))
+			candidates -= player
+			continue
+
 		if(player.mind && (player.mind.special_role || length(player.mind.antag_datums) > 0))
 			candidates -= player //no double dipping
 
