@@ -512,7 +512,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/shove_act(mob/living/target, mob/living/user, pre_act = FALSE)
 	var/list/possibilities
 	for(var/obj/O in contents)
-		if(CHECK_BITFIELD(O.obj_flags, SHOVABLE_ONTO))
+		if((O.obj_flags & SHOVABLE_ONTO))
 			LAZYADD(possibilities, O)
 		else if(!O.CanPass(target, src))
 			return FALSE
