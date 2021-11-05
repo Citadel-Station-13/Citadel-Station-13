@@ -62,7 +62,6 @@ export class Window extends Component {
       theme,
       title,
       children,
-      resizable,
     } = this.props;
     const {
       config,
@@ -102,7 +101,7 @@ export class Window extends Component {
             <div className="Window__dimmer" />
           )}
         </div>
-        {fancy && resizable && (
+        {fancy && (
           <>
             <div className="Window__resizeHandle__e"
               onMousedown={resizeStartHandler(1, 0)} />

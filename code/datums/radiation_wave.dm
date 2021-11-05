@@ -112,7 +112,7 @@
 			))
 		if(!can_contaminate || blacklisted[thing.type])
 			continue
-		if(CHECK_BITFIELD(thing.rad_flags, RAD_NO_CONTAMINATE) || SEND_SIGNAL(thing, COMSIG_ATOM_RAD_CONTAMINATING, strength) & COMPONENT_BLOCK_CONTAMINATION)
+		if((thing.rad_flags & RAD_NO_CONTAMINATE) || SEND_SIGNAL(thing, COMSIG_ATOM_RAD_CONTAMINATING, strength) & COMPONENT_BLOCK_CONTAMINATION)
 			continue
 		contam_atoms += thing
 	var/did_contam = 0

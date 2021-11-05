@@ -254,7 +254,7 @@
 		show_controls(user)
 
 	else if(istype(W, /obj/item/reagent_containers/syringe/piercing))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_PIERERCING))
+		if(bot_core.allowed(user) && open && !(upgrades & UPGRADE_MEDICAL_PIERERCING))
 			to_chat(user, "<span class='notice'>You replace \the [src] syringe with a diamond-tipped one!</span>")
 			upgrades |= UPGRADE_MEDICAL_PIERERCING
 			qdel(W)
@@ -268,7 +268,7 @@
 			to_chat(user, "<span class='notice'>The [src] already has a diamond-tipped syringe!</span>")
 
 	else if(istype(W, /obj/item/hypospray/mkii))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_HYPOSPRAY))
+		if(bot_core.allowed(user) && open && !(upgrades & UPGRADE_MEDICAL_HYPOSPRAY))
 			to_chat(user, "<span class='notice'>You replace \the [src] syringe base with a DeForest Medical MK.II Hypospray!</span>")
 			upgrades |= UPGRADE_MEDICAL_HYPOSPRAY
 			injection_time = 15 //Half the time half the death!
@@ -284,7 +284,7 @@
 			to_chat(user, "<span class='notice'>The [src] already has a DeForest Medical Hypospray base!</span>")
 
 	else if(istype(W, /obj/item/circuitboard/machine/chem_dispenser))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_CHEM_BOARD))
+		if(bot_core.allowed(user) && open && !(upgrades & UPGRADE_MEDICAL_CHEM_BOARD))
 			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
 			upgrades |= UPGRADE_MEDICAL_CHEM_BOARD
 			treatment_oxy = /datum/reagent/medicine/salbutamol //Replaces Dex with salbutamol "better" healing of o2
@@ -299,7 +299,7 @@
 			to_chat(user, "<span class='notice'>The [src] already has this upgrade!</span>")
 
 	else if(istype(W, /obj/item/circuitboard/machine/cryo_tube))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_CRYO_BOARD))
+		if(bot_core.allowed(user) && open && !(upgrades & UPGRADE_MEDICAL_CRYO_BOARD))
 			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
 			upgrades |= UPGRADE_MEDICAL_CRYO_BOARD
 			treatment_fire = /datum/reagent/medicine/oxandrolone //Replaces Kep with oxandrolone "better" healing of burns
@@ -314,7 +314,7 @@
 			to_chat(user, "<span class='notice'>The [src] already has this upgrade!</span>")
 
 	else if(istype(W, /obj/item/circuitboard/machine/chem_master))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_CHEM_MASTER))
+		if(bot_core.allowed(user) && open && !(upgrades & UPGRADE_MEDICAL_CHEM_MASTER))
 			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
 			upgrades |= UPGRADE_MEDICAL_CHEM_MASTER
 			treatment_brute = /datum/reagent/medicine/sal_acid //Replaces Bic with Sal Acid "better" healing of brute
@@ -329,7 +329,7 @@
 			to_chat(user, "<span class='notice'>the [src] already has this upgrade!</span>")
 
 	else if(istype(W, /obj/item/circuitboard/machine/sleeper))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_SLEEP_BOARD))
+		if(bot_core.allowed(user) && open && !(upgrades & UPGRADE_MEDICAL_SLEEP_BOARD))
 			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
 			upgrades |= UPGRADE_MEDICAL_SLEEP_BOARD
 			treatment_tox = /datum/reagent/medicine/pen_acid //replaces charcoal with pen acid a "better" healing of toxins
@@ -359,7 +359,7 @@
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		flick("medibot_spark", src)
 		playsound(src, "sparks", 75, 1)
-		if(!CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_PIERERCING))
+		if(!(upgrades & UPGRADE_MEDICAL_PIERERCING))
 			upgrades |= UPGRADE_MEDICAL_PIERERCING //Jabs even harder through the clothing!
 		if(user)
 			oldpatient = user
@@ -558,7 +558,7 @@
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if (H.wear_suit && H.head && istype(H.wear_suit, /obj/item/clothing) && istype(H.head, /obj/item/clothing) && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_PIERERCING))
+		if (H.wear_suit && H.head && istype(H.wear_suit, /obj/item/clothing) && istype(H.head, /obj/item/clothing) && !(upgrades & UPGRADE_MEDICAL_PIERERCING))
 			var/obj/item/clothing/CS = H.wear_suit
 			var/obj/item/clothing/CH = H.head
 			if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)

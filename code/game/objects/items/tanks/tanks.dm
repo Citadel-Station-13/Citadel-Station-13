@@ -48,7 +48,7 @@
 					var/obj/item/clothing/mask/M = check
 					if(M.mask_adjusted)
 						M.adjustmask(H)
-				if(CHECK_BITFIELD(check.clothing_flags, ALLOWINTERNALS))
+				if((check.clothing_flags & ALLOWINTERNALS))
 					internals = TRUE
 
 			if(!internals)

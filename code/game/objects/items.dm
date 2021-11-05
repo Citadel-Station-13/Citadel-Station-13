@@ -450,8 +450,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		A.Remove(user)
 	if(item_flags & DROPDEL)
 		qdel(src)
-	DISABLE_BITFIELD(item_flags, IN_INVENTORY)
-	DISABLE_BITFIELD(item_flags, IN_STORAGE)
+	item_flags &= ~(IN_INVENTORY)
+	item_flags &= ~(IN_STORAGE)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
 	remove_outline()
 	// if(!silent)
@@ -529,8 +529,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			if(item_action_slot_check(slot, user, A)) //some items only give their actions buttons when in a specific slot.
 				A.Grant(user)
 	item_flags |= IN_INVENTORY
-	if(CHECK_BITFIELD(item_flags, IN_STORAGE)) // Left storage item but somehow has the bitfield active still.
-		DISABLE_BITFIELD(item_flags, IN_STORAGE)
+	if((item_flags & IN_STORAGE)) // Left storage item but somehow has the bitfield active still.
+		item_flags &= ~(IN_STORAGE)
 	// if(!initial)
 	// 	if(equip_sound && (slot_flags & slot))
 	// 		playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
@@ -1054,7 +1054,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
   */
 /obj/item/proc/set_slowdown(new_slowdown)
 	slowdown = new_slowdown
-	if(CHECK_BITFIELD(item_flags, IN_INVENTORY))
+	if((item_flags & IN_INVENTORY))
 		var/mob/living/L = loc
 		if(istype(L))
 			L.update_equipment_speed_mods()
