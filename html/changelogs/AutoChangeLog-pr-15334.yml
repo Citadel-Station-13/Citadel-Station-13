@@ -1,0 +1,5 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - bugfix: "Ashwalkers should no longer suffocate on lavaland (and hypothetical other future problems)"
+  - bugfix: "A gas mix with 0 oxygen should now properly suffocate you (or 0 plasma, for ashwalkers)"
