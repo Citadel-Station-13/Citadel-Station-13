@@ -90,6 +90,11 @@
 		max = safe_breath_dam_max,
 		damage_type = safe_damage_type
 	)
+	if(ispath(breathing_class))
+		var/datum/breathing_class/class = GLOB.gas_data.breathing_classes[breathing_class]
+		for(var/g in class.gases)
+			if(class.gases[g] > 0)
+				gas_min -= g
 
 //TODO: lung health affects lung function
 /obj/item/organ/lungs/onDamage(damage_mod) //damage might be too low atm.
@@ -196,9 +201,9 @@
 			mole_adjustments[entry] = -required_moles
 			mole_adjustments[breath_results[entry]] = required_moles
 		if(required_pp < safe_min)
-			var/multiplier = 0
+			var/multiplier = handle_too_little_breath(H, required_pp, safe_min, required_moles)
 			if(required_moles > 0)
-				multiplier = handle_too_little_breath(H, required_pp, safe_min, required_moles) / required_moles
+				multiplier /= required_moles
 			for(var/adjustment in mole_adjustments)
 				mole_adjustments[adjustment] *= multiplier
 			if(alert_category)
@@ -517,17 +522,20 @@
 	var/total_moles = breath.total_moles()
 	for(var/id in breath.get_gases())
 		var/this_pressure = PP(breath, id)
-		var/req_pressure = (this_pressure * SAFE_THRESHOLD_RATIO) - 1
-		if(req_pressure > 0)
-			gas_min[id] = req_pressure
+		if(id in gas_min)
+			var/req_pressure = (this_pressure * SAFE_THRESHOLD_RATIO) - 1
+			if(req_pressure > 0)
+				gas_min[id] = req_pressure
+			else
+				gas_min -= id // if there's not even enough of the gas to register, we shouldn't need it
 		if(id in gas_max)
 			gas_max[id] += this_pressure
-	var/bz = breath.get_moles(GAS_BZ)
+	var/bz = breath.get_moles(GAS_BZ) // snowflaked cause it's got special behavior, of course
 	if(bz)
 		BZ_trip_balls_min += bz
 		BZ_brain_damage_min += bz
 
-	gas_max[GAS_N2] = PP(breath, GAS_N2) + 5
+	gas_max[GAS_N2] = max(15, PP(breath, GAS_N2) + 3) // don't want ash lizards breathing on station; sometimes they might be able to, though
 	var/datum/breathing_class/class = GLOB.gas_data.breathing_classes[breathing_class]
 	var/o2_pp = class.get_effective_pp(breath)
 	safe_breath_min = min(3, 0.3 * o2_pp)
