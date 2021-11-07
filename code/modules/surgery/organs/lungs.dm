@@ -159,8 +159,6 @@
 
 	#define PP_MOLES(X) ((X / total_moles) * pressure)
 
-	#define PP(air, gas) PP_MOLES(air.get_moles(gas))
-
 	var/gas_breathed = 0
 
 	var/pressure = breath.return_pressure()
@@ -227,8 +225,7 @@
 			alert_category = breathing_class.high_alert_category
 			alert_type = breathing_class.high_alert_datum
 			danger_reagent = breathing_class.danger_reagent
-			for(var/gas in gases)
-				found_pp += PP(breath, gas)
+			found_pp = breathing_class.get_effective_pp(breath)
 		else
 			danger_reagent = danger_reagents[entry]
 			if(entry in breath_alert_info)
@@ -577,5 +574,4 @@
 	if(.)
 		applyOrganDamage(2) //Yamerol lungs are temporary
 
-#undef PP
 #undef PP_MOLES
