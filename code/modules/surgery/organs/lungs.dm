@@ -159,6 +159,8 @@
 
 	#define PP_MOLES(X) ((X / total_moles) * pressure)
 
+	#define PP(air, gas) PP_MOLES(air.get_moles(gas))
+
 	var/gas_breathed = 0
 
 	var/pressure = breath.return_pressure()
@@ -574,4 +576,5 @@
 	if(.)
 		applyOrganDamage(2) //Yamerol lungs are temporary
 
+#undef PP
 #undef PP_MOLES
