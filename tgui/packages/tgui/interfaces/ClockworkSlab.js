@@ -46,13 +46,18 @@ export const ClockworkSlab = (props, context) => {
   const testSearch = createSearch(searchText, script => {
     return script.name + script.descname;
   });
+  
+  let bucketOfScriptures = [];
+  // merge it, no need to throw a var.
 
-  const scriptInTab = searchText.length > 0
+  const scriptInTab = (searchText.length > 0)
     // Flatten all categories and apply search to it
-    && map((v, k) => {
-      return v.filter(testSearch)
-        .filter((item, i) => i < MAX_SEARCH_RESULTS); // overflow limit
-    })(scripture)[0] // it's getting doublewrapped FOR SOME REASON
+    // truthy because WE DO NOT WANT TO RETURN THIS!
+    && !!map((v, k) => {
+        bucketOfScriptures = v.concat(bucketOfScriptures);
+      })(scripture)
+    && bucketOfScriptures.filter(testSearch)
+        .filter((item, i) => i < MAX_SEARCH_RESULTS)
     // Return the default one
     || scripture[tab]
     || null; // this is nullable, it's recommended that you null it.
