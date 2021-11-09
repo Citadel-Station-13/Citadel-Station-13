@@ -296,6 +296,7 @@
 	name = "pot of face hugger jambalaya"
 	desc = "An entire pot of an extremely spicy dish made using extremely exotic ingredients. Highly recommend by an interdimensional businessman."
 	icon_state = "facehuggerpot"
+	bitesize = 9
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("face huggers" = 1)
