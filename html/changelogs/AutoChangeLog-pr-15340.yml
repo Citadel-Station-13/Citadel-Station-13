@@ -1,0 +1,7 @@
+author: "Ethan4303"
+delete-after: True
+changes: 
+  - rscadd: "Added two wire nodes under the engineering PA room Apc and under the HOS office APC"
+  - rscadd: "Added cables to connect the second floor relay to the power grid"
+  - rscdel: "Removed the generic broken computer from Hos Office"
+  - bugfix: "Fixed Hos office not having the Security records console"
