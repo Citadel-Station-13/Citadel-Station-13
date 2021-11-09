@@ -94,9 +94,9 @@
 	if(istype(S) && S.hack_software)
 		data_out["canhack"] = TRUE
 
-	data_out["hacking"] = (hacking || CHECK_BITFIELD(obj_flags, EMAGGED))
+	data_out["hacking"] = (hacking || (obj_flags & EMAGGED))
 	if(hacking)
-		data_out["borg"] = ((isAI(user) || iscyborg(user)) && !CHECK_BITFIELD(obj_flags, EMAGGED)) //even borgs can't read emag
+		data_out["borg"] = ((isAI(user) || iscyborg(user)) && !(obj_flags & EMAGGED)) //even borgs can't read emag
 		return data_out
 
 	data_out["servers"] = list()
@@ -324,7 +324,7 @@
 			update_static_data(usr)
 
 /obj/machinery/computer/message_monitor/attackby(obj/item/O, mob/living/user, params)
-	if(O.tool_behaviour == TOOL_SCREWDRIVER && CHECK_BITFIELD(obj_flags, EMAGGED))
+	if(O.tool_behaviour == TOOL_SCREWDRIVER && (obj_flags & EMAGGED))
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
 		//Why this though, you should make it emag to a board level. (i wont do it)
 		to_chat(user, "<span class='warning'>It is too hot to mess with!</span>")
@@ -333,12 +333,12 @@
 
 /obj/machinery/computer/message_monitor/emag_act(mob/user)
 	. = ..()
-	if(CHECK_BITFIELD(obj_flags, EMAGGED))
+	if((obj_flags & EMAGGED))
 		return
 	if(isnull(linkedServer))
 		to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
 		return
-	ENABLE_BITFIELD(obj_flags, EMAGGED)
+	obj_flags |= EMAGGED
 	spark_system.set_up(5, 0, src)
 	spark_system.start()
 	var/obj/item/paper/monitorkey/MK = new(loc, linkedServer)
@@ -366,7 +366,7 @@
 	message = ""
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
-	DISABLE_BITFIELD(obj_flags, EMAGGED)
+	obj_flags &= ~(EMAGGED)
 	message = ""
 
 /obj/machinery/computer/message_monitor/proc/ResetMessage()

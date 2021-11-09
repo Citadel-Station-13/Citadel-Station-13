@@ -1504,7 +1504,6 @@
 	areastring = "/area/security/prison/upper";
 	damage_deflection = 21;
 	desc = "A control terminal for the area's electrical systems. It's secured with a durable antitampering plasteel cage.";
-	dir = 2;
 	name = "Armored Prison Wing Cells APC";
 	pixel_y = -26
 	},
@@ -12552,9 +12551,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aWV" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aWW" = (
@@ -43635,7 +43632,8 @@
 	idDoor = "xeno_airlock_exterior";
 	idSelf = "xeno_airlock_control";
 	name = "Access Button";
-	pixel_x = -24
+	pixel_x = -24;
+	req_access_txt = "47"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -45280,7 +45278,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "dbl" = (
-/obj/structure/easel,
+/obj/structure/loot_pile/maint,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dbo" = (
@@ -45465,7 +45463,8 @@
 	idSelf = "xeno_airlock_control";
 	name = "Access Button";
 	pixel_x = 29;
-	pixel_y = -8
+	pixel_y = -8;
+	req_access_txt = "47"
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -45640,7 +45639,8 @@
 	idSelf = "xeno_airlock_control";
 	name = "Access Console";
 	pixel_x = -25;
-	pixel_y = -25
+	pixel_y = -25;
+	req_access_txt = "47"
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -46619,10 +46619,10 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "dht" = (
-/obj/item/cigbutt,
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
+/obj/structure/loot_pile/maint,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "dhu" = (
@@ -52041,6 +52041,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
+/obj/structure/loot_pile/maint,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "fpg" = (
@@ -56725,6 +56726,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/service/hydroponics)
+"iaH" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/obj/structure/loot_pile/maint,
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "ibn" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -65226,6 +65234,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/cargo/storage)
+"mKY" = (
+/obj/structure/loot_pile/maint,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "mLh" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -67942,6 +67954,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
 /area/security/brig)
+"osn" = (
+/obj/structure/loot_pile/maint,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "osB" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
@@ -73549,7 +73565,6 @@
 /area/commons/fitness/recreation)
 "rta" = (
 /obj/machinery/door/airlock/external{
-	dir = 2;
 	name = "Public Mining Dock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -74329,6 +74344,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/command/bridge)
+"rPp" = (
+/obj/structure/loot_pile/maint,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "rPB" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -78146,7 +78165,6 @@
 /obj/structure/bed/roller,
 /obj/machinery/camera{
 	c_tag = "Prison Hallway Fore";
-	dir = 2;
 	network = list("ss13","prison")
 	},
 /turf/open/floor/plasteel,
@@ -99568,7 +99586,7 @@ arX
 dne
 dne
 dne
-aRG
+rPp
 aoc
 drQ
 dne
@@ -99866,7 +99884,7 @@ auF
 bCJ
 tUa
 alK
-apz
+mKY
 aob
 alC
 aqK
@@ -104958,7 +104976,7 @@ aji
 dnd
 alE
 vhj
-aRG
+rPp
 alE
 dou
 dne
@@ -122203,7 +122221,7 @@ nQW
 yeJ
 pSY
 avD
-dnR
+osn
 dtS
 tMD
 eoN
@@ -125064,7 +125082,7 @@ alq
 diu
 bWZ
 bYs
-bZB
+iaH
 bZE
 ccG
 ceb
