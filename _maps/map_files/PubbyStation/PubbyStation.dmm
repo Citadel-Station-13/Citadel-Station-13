@@ -7981,11 +7981,11 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel,
 /area/security/courtroom)
 "auC" = (
 /obj/structure/table/wood,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel,
 /area/security/courtroom)
 "auD" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -50823,7 +50823,7 @@
 "cxX" = (
 /obj/structure/table/wood,
 /obj/item/folder/red,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel,
 /area/security/courtroom)
 "cym" = (
 /turf/closed/wall,
@@ -56064,18 +56064,6 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
-"kOB" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 2;
-	height = 5;
-	id = "laborcamp_home";
-	name = "fore bay 1";
-	roundstart_template = /datum/map_template/shuttle/labour/box;
-	width = 9
-	},
-/turf/open/space/basic,
-/area/space)
 "kOW" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -56371,6 +56359,18 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
+"llx" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 2;
+	height = 5;
+	id = "laborcamp_home";
+	name = "fore bay 1";
+	roundstart_template = /datum/map_template/shuttle/labour/box;
+	width = 9
+	},
+/turf/open/space/basic,
+/area/space)
 "lms" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -81177,7 +81177,7 @@ aaa
 aaa
 aaa
 aaa
-kOB
+llx
 aaa
 aaa
 aaa
