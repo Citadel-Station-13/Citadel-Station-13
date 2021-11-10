@@ -56,7 +56,7 @@
 				mytray.visible_message("<span class='warning'>Nothing happens...</span>")
 
 /datum/reagent/medicine/adminordrazine/on_mob_life(mob/living/carbon/M)
-	M.reagents.remove_all_type(/datum/reagent/toxin, 5*REM, 0, 1)
+	M.reagents.remove_all_type(/datum/reagent/toxin, 5*REAGENTS_EFFECT_MULTIPLIER, 0, 1)
 	M.setCloneLoss(0, 0)
 	M.setOxyLoss(0, 0)
 	M.radiation = 0
@@ -299,7 +299,7 @@
 	..()
 
 /datum/reagent/medicine/silver_sulfadiazine/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(-2*REM, 0)
+	M.adjustFireLoss(-2*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
@@ -309,7 +309,7 @@
 	. = 1
 
 /datum/reagent/medicine/silver_sulfadiazine/overdose_process(mob/living/M)
-	M.adjustFireLoss(2*REM, 0)
+	M.adjustFireLoss(2*REAGENTS_EFFECT_MULTIPLIER, 0)
 	var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(L)
 		L.applyOrganDamage(1)
@@ -328,15 +328,15 @@
 
 /datum/reagent/medicine/oxandrolone/on_mob_life(mob/living/carbon/M)
 	if(M.getFireLoss() > 25)
-		M.adjustFireLoss(-4*REM, 0) //Twice as effective as silver sulfadiazine for severe burns
+		M.adjustFireLoss(-4*REAGENTS_EFFECT_MULTIPLIER, 0) //Twice as effective as silver sulfadiazine for severe burns
 	else
-		M.adjustFireLoss(-0.5*REM, 0) //But only a quarter as effective for more minor ones
+		M.adjustFireLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 0) //But only a quarter as effective for more minor ones
 	..()
 	. = 1
 
 /datum/reagent/medicine/oxandrolone/overdose_process(mob/living/M)
 	if(M.getFireLoss()) //It only makes existing burns worse
-		M.adjustFireLoss(4.5*REM, 0) // it's going to be healing either 4 or 0.5
+		M.adjustFireLoss(4.5*REAGENTS_EFFECT_MULTIPLIER, 0) // it's going to be healing either 4 or 0.5
 		. = 1
 	..()
 
@@ -371,7 +371,7 @@
 		G.use(reac_volume)
 
 /datum/reagent/medicine/styptic_powder/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-2*REM, 0)
+	M.adjustBruteLoss(-2*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
@@ -381,7 +381,7 @@
 	. = 1
 
 /datum/reagent/medicine/styptic_powder/overdose_process(mob/living/M)
-	M.adjustBruteLoss(2*REM, 0)
+	M.adjustBruteLoss(2*REAGENTS_EFFECT_MULTIPLIER, 0)
 	var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(L)
 		L.applyOrganDamage(1)
@@ -403,8 +403,8 @@
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/human/M)
 	if(prob(33))
-		M.adjustBruteLoss(-0.5*REM, 0)
-		M.adjustFireLoss(-0.5*REM, 0)
+		M.adjustBruteLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustFireLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
 		. = TRUE
 	if((HAS_TRAIT(M, TRAIT_NOMARROW)))
 		return ..()
@@ -414,10 +414,10 @@
 	if(M.functional_blood() < maximum_reachable) //Can only up to double your effective blood level.
 		var/new_blood_level = min(volume * 5, maximum_reachable)
 		last_added = new_blood_level
-		M.adjust_integration_blood(new_blood_level + (extra_regen * REM))
+		M.adjust_integration_blood(new_blood_level + (extra_regen * REAGENTS_EFFECT_MULTIPLIER))
 	if(prob(33))
-		M.adjustBruteLoss(-0.5*REM, 0)
-		M.adjustFireLoss(-0.5*REM, 0)
+		M.adjustBruteLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustFireLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
 		. = TRUE
 	..()
 
@@ -436,8 +436,8 @@
 		holder.add_reagent(/datum/reagent/consumable/sugar, 1)
 		holder.remove_reagent(/datum/reagent/medicine/salglu_solution, 0.5)
 	if(prob(33))
-		M.adjustBruteLoss(0.5*REM, 0)
-		M.adjustFireLoss(0.5*REM, 0)
+		M.adjustBruteLoss(0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustFireLoss(0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
 		. = TRUE
 	..()
 
@@ -452,9 +452,9 @@
 
 /datum/reagent/medicine/mine_salve/on_mob_life(mob/living/carbon/C)
 	C.hal_screwyhud = SCREWYHUD_HEALTHY
-	C.adjustBruteLoss(-0.25*REM, 0)
-	C.adjustFireLoss(-0.25*REM, 0)
-	C.adjustStaminaLoss(-0.5*REM, 0)
+	C.adjustBruteLoss(-0.25*REAGENTS_EFFECT_MULTIPLIER, 0)
+	C.adjustFireLoss(-0.25*REAGENTS_EFFECT_MULTIPLIER, 0)
+	C.adjustStaminaLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	return TRUE
 
@@ -531,7 +531,7 @@
 	pH = 5
 
 /datum/reagent/medicine/charcoal/on_mob_life(mob/living/carbon/M)
-	M.adjustToxLoss(-2*REM, 0)
+	M.adjustToxLoss(-2*REAGENTS_EFFECT_MULTIPLIER, 0)
 	. = 1
 	for(var/A in M.reagents.reagent_list)
 		var/datum/reagent/R = A
@@ -551,18 +551,18 @@
 	var/healing = 0.5
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/carbon/M)
-	M.adjustToxLoss(-healing*REM, 0)
-	M.adjustOxyLoss(-healing*REM, 0)
-	M.adjustBruteLoss(-healing*REM, 0)
-	M.adjustFireLoss(-healing*REM, 0)
+	M.adjustToxLoss(-healing*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(-healing*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustBruteLoss(-healing*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustFireLoss(-healing*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
 /datum/reagent/medicine/omnizine/overdose_process(mob/living/M)
-	M.adjustToxLoss(1.5*REM, 0)
-	M.adjustOxyLoss(1.5*REM, 0)
-	M.adjustBruteLoss(1.5*REM, 0)
-	M.adjustFireLoss(1.5*REM, 0)
+	M.adjustToxLoss(1.5*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(1.5*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustBruteLoss(1.5*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustFireLoss(1.5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
@@ -587,7 +587,7 @@
 		if(R != src)
 			M.reagents.remove_reagent(R.type,2.5)
 	if(M.health > 20)
-		M.adjustToxLoss(2.5*REM, 0)
+		M.adjustToxLoss(2.5*REAGENTS_EFFECT_MULTIPLIER, 0)
 		. = 1
 	..()
 
@@ -630,7 +630,7 @@
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/carbon/M)
 	M.radiation -= max(M.radiation-RAD_MOB_SAFE, 0)/50
-	M.adjustToxLoss(-2*REM, 0, healtoxinlover)
+	M.adjustToxLoss(-2*REAGENTS_EFFECT_MULTIPLIER, 0, healtoxinlover)
 	for(var/A in M.reagents.reagent_list)
 		var/datum/reagent/R = A
 		if(R != src)
@@ -659,15 +659,15 @@
 
 /datum/reagent/medicine/sal_acid/on_mob_life(mob/living/carbon/M)
 	if(M.getBruteLoss() > 25)
-		M.adjustBruteLoss(-4*REM, 0) //Twice as effective as styptic powder for severe bruising
+		M.adjustBruteLoss(-4*REAGENTS_EFFECT_MULTIPLIER, 0) //Twice as effective as styptic powder for severe bruising
 	else
-		M.adjustBruteLoss(-0.5*REM, 0) //But only a quarter as effective for more minor ones
+		M.adjustBruteLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 0) //But only a quarter as effective for more minor ones
 	..()
 	. = 1
 
 /datum/reagent/medicine/sal_acid/overdose_process(mob/living/M)
 	if(M.getBruteLoss()) //It only makes existing bruises worse
-		M.adjustBruteLoss(4.5*REM, 0) // it's going to be healing either 4 or 0.5
+		M.adjustBruteLoss(4.5*REAGENTS_EFFECT_MULTIPLIER, 0) // it's going to be healing either 4 or 0.5
 		. = 1
 	..()
 
@@ -680,7 +680,7 @@
 	pH = 2
 
 /datum/reagent/medicine/salbutamol/on_mob_life(mob/living/carbon/M)
-	M.adjustOxyLoss(-3*REM, 0)
+	M.adjustOxyLoss(-3*REAGENTS_EFFECT_MULTIPLIER, 0)
 	if(M.losebreath >= 4)
 		M.losebreath -= 2
 	M.Jitter(5)
@@ -696,11 +696,11 @@
 	pH = 11
 
 /datum/reagent/medicine/perfluorodecalin/on_mob_life(mob/living/carbon/human/M)
-	M.adjustOxyLoss(-12*REM, 0)
+	M.adjustOxyLoss(-12*REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.silent = max(M.silent, 5)
 	if(prob(33))
-		M.adjustBruteLoss(-0.5*REM, 0)
-		M.adjustFireLoss(-0.5*REM, 0)
+		M.adjustBruteLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustFireLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	return TRUE
 
@@ -731,8 +731,8 @@
 	// 		to_chat(M, span_notice("Your hands spaz out and you drop what you were holding!"))
 	// 		M.Jitter(10)
 
-	M.AdjustAllImmobility(-20 * REM * delta_time)
-	M.adjustStaminaLoss(-1 * REM * delta_time, FALSE)
+	M.AdjustAllImmobility(-20 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+	M.adjustStaminaLoss(-1 * REAGENTS_EFFECT_MULTIPLIER * delta_time, FALSE)
 	..()
 	return TRUE
 
@@ -754,28 +754,28 @@
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage1(mob/living/M)
 	if(prob(33))
-		M.adjustToxLoss(2*REM, 0)
+		M.adjustToxLoss(2*REAGENTS_EFFECT_MULTIPLIER, 0)
 		M.losebreath += 2
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage2(mob/living/M)
 	if(prob(33))
-		M.adjustToxLoss(3*REM, 0)
+		M.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER, 0)
 		M.losebreath += 3
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage3(mob/living/M)
 	if(prob(33))
-		M.adjustToxLoss(4*REM, 0)
+		M.adjustToxLoss(4*REAGENTS_EFFECT_MULTIPLIER, 0)
 		M.losebreath += 4
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage4(mob/living/M)
 	if(prob(33))
-		M.adjustToxLoss(5*REM, 0)
+		M.adjustToxLoss(5*REAGENTS_EFFECT_MULTIPLIER, 0)
 		M.losebreath += 5
 		. = 1
 	..()
@@ -841,7 +841,7 @@
 /datum/reagent/medicine/morphine/addiction_act_stage2(mob/living/M)
 	if(prob(33))
 		M.drop_all_held_items()
-		M.adjustToxLoss(1*REM, 0)
+		M.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER, 0)
 		. = 1
 		M.Dizzy(3)
 		M.Jitter(3)
@@ -850,7 +850,7 @@
 /datum/reagent/medicine/morphine/addiction_act_stage3(mob/living/M)
 	if(prob(33))
 		M.drop_all_held_items()
-		M.adjustToxLoss(2*REM, 0)
+		M.adjustToxLoss(2*REAGENTS_EFFECT_MULTIPLIER, 0)
 		. = 1
 		M.Dizzy(4)
 		M.Jitter(4)
@@ -859,7 +859,7 @@
 /datum/reagent/medicine/morphine/addiction_act_stage4(mob/living/M)
 	if(prob(33))
 		M.drop_all_held_items()
-		M.adjustToxLoss(3*REM, 0)
+		M.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER, 0)
 		. = 1
 		M.Dizzy(5)
 		M.Jitter(5)
@@ -907,10 +907,10 @@
 
 /datum/reagent/medicine/atropine/on_mob_life(mob/living/carbon/M)
 	if(M.health < 0)
-		M.adjustToxLoss(-2*REM, 0)
-		M.adjustBruteLoss(-2*REM, 0)
-		M.adjustFireLoss(-2*REM, 0)
-		M.adjustOxyLoss(-5*REM, 0)
+		M.adjustToxLoss(-2*REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustBruteLoss(-2*REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustFireLoss(-2*REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustOxyLoss(-5*REAGENTS_EFFECT_MULTIPLIER, 0)
 		. = 1
 	M.losebreath = 0
 	if(prob(20))
@@ -919,7 +919,7 @@
 	..()
 
 /datum/reagent/medicine/atropine/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.5*REM, 0)
+	M.adjustToxLoss(0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	. = 1
 	M.Dizzy(1)
 	M.Jitter(1)
@@ -936,16 +936,16 @@
 
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/carbon/M)
 	if(M.health < 0)
-		M.adjustToxLoss(-0.5*REM, 0)
-		M.adjustBruteLoss(-0.5*REM, 0)
-		M.adjustFireLoss(-0.5*REM, 0)
+		M.adjustToxLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustBruteLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustFireLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	if(M.oxyloss > 35)
 		M.setOxyLoss(35, 0)
 	if(M.losebreath >= 4)
 		M.losebreath -= 2
 	if(M.losebreath < 0)
 		M.losebreath = 0
-	M.adjustStaminaLoss(-0.5*REM, 0)
+	M.adjustStaminaLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	. = 1
 	if(prob(20))
 		M.AdjustAllImmobility(-20, 0)
@@ -954,8 +954,8 @@
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M)
 	if(prob(33))
-		M.adjustStaminaLoss(2.5*REM, 0)
-		M.adjustToxLoss(1*REM, 0)
+		M.adjustStaminaLoss(2.5*REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER, 0)
 		M.losebreath++
 		. = 1
 	..()
@@ -1021,8 +1021,8 @@
 
 
 /datum/reagent/medicine/strange_reagent/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(0.5*REM, 0)
-	M.adjustFireLoss(0.5*REM, 0)
+	M.adjustBruteLoss(0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustFireLoss(0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
@@ -1033,7 +1033,7 @@
 	pH = 10.4
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/C)
-	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2*REM)
+	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2*REAGENTS_EFFECT_MULTIPLIER)
 	if(prob(10))
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 	..()
@@ -1091,8 +1091,8 @@
 	M.drowsyness = 0
 	M.slurring = 0
 	M.confused = 0
-	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3*REM, 0, 1)
-	M.adjustToxLoss(-0.2*REM, 0)
+	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3*REAGENTS_EFFECT_MULTIPLIER, 0, 1)
+	M.adjustToxLoss(-0.2*REAGENTS_EFFECT_MULTIPLIER, 0)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.drunkenness = max(H.drunkenness - 10, 0)
@@ -1120,20 +1120,20 @@
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/carbon/M)
 	if(M.health < 50 && M.health > 0)
-		M.adjustOxyLoss(-1*REM, FALSE)
-		M.adjustToxLoss(-1*REM, FALSE)
-		M.adjustBruteLoss(-1*REM, FALSE)
-		M.adjustFireLoss(-1*REM, FALSE)
+		M.adjustOxyLoss(-1*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+		M.adjustToxLoss(-1*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+		M.adjustBruteLoss(-1*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+		M.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	M.AdjustAllImmobility(-60, FALSE)
 	M.AdjustUnconscious(-60, FALSE)
-	M.adjustStaminaLoss(-20*REM, FALSE)
+	M.adjustStaminaLoss(-20*REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	. = 1
 
 /datum/reagent/medicine/stimulants/overdose_process(mob/living/M)
 	if(prob(33))
-		M.adjustStaminaLoss(2.5*REM, FALSE)
-		M.adjustToxLoss(1*REM, FALSE)
+		M.adjustStaminaLoss(2.5*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+		M.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER, FALSE)
 		M.losebreath++
 		. = 1
 	..()
@@ -1162,12 +1162,12 @@
 	pH = 5
 
 /datum/reagent/medicine/bicaridine/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-2*REM, FALSE)
+	M.adjustBruteLoss(-2*REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	. = 1
 
 /datum/reagent/medicine/bicaridine/overdose_process(mob/living/M)
-	M.adjustBruteLoss(4*REM, FALSE)
+	M.adjustBruteLoss(4*REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	. = 1
 
@@ -1180,12 +1180,12 @@
 	pH = 9.7
 
 /datum/reagent/medicine/dexalin/on_mob_life(mob/living/carbon/M)
-	M.adjustOxyLoss(-2*REM, FALSE)
+	M.adjustOxyLoss(-2*REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	. = 1
 
 /datum/reagent/medicine/dexalin/overdose_process(mob/living/M)
-	M.adjustOxyLoss(4*REM, FALSE)
+	M.adjustOxyLoss(4*REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	. = 1
 
@@ -1198,12 +1198,12 @@
 	pH = 9
 
 /datum/reagent/medicine/kelotane/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(-2*REM, FALSE)
+	M.adjustFireLoss(-2*REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	. = 1
 
 /datum/reagent/medicine/kelotane/overdose_process(mob/living/M)
-	M.adjustFireLoss(4*REM, FALSE)
+	M.adjustFireLoss(4*REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	. = 1
 
@@ -1217,14 +1217,14 @@
 	pH = 10
 
 /datum/reagent/medicine/antitoxin/on_mob_life(mob/living/carbon/M)
-	M.adjustToxLoss(-2*REM, FALSE)
+	M.adjustToxLoss(-2*REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type,1)
 	..()
 	. = 1
 
 /datum/reagent/medicine/antitoxin/overdose_process(mob/living/M)
-	M.adjustToxLoss(4*REM, FALSE) // End result is 2 toxin loss taken, because it heals 2 and then removes 4.
+	M.adjustToxLoss(4*REAGENTS_EFFECT_MULTIPLIER, FALSE) // End result is 2 toxin loss taken, because it heals 2 and then removes 4.
 	..()
 	. = 1
 
@@ -1255,18 +1255,18 @@
 
 /datum/reagent/medicine/tricordrazine/on_mob_life(mob/living/carbon/M)
 	if(prob(80))
-		M.adjustBruteLoss(-1*REM, FALSE)
-		M.adjustFireLoss(-1*REM, FALSE)
-		M.adjustOxyLoss(-1*REM, FALSE)
-		M.adjustToxLoss(-1*REM, FALSE)
+		M.adjustBruteLoss(-1*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+		M.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+		M.adjustOxyLoss(-1*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+		M.adjustToxLoss(-1*REAGENTS_EFFECT_MULTIPLIER, FALSE)
 		. = 1
 	..()
 
 /datum/reagent/medicine/tricordrazine/overdose_process(mob/living/M)
-	M.adjustToxLoss(2*REM, FALSE)
-	M.adjustOxyLoss(2*REM, FALSE)
-	M.adjustBruteLoss(2*REM, FALSE)
-	M.adjustFireLoss(2*REM, FALSE)
+	M.adjustToxLoss(2*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOxyLoss(2*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustBruteLoss(2*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustFireLoss(2*REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	. = 1
 
@@ -1279,10 +1279,10 @@
 	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-1.5*REM, FALSE)
-	M.adjustFireLoss(-1.5*REM, FALSE)
-	M.adjustOxyLoss(-1.5*REM, FALSE)
-	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
+	M.adjustBruteLoss(-1.5*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustFireLoss(-1.5*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOxyLoss(-1.5*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustToxLoss(-1.5*REAGENTS_EFFECT_MULTIPLIER, 0, TRUE) //heals TOXINLOVERs
 	. = 1
 	..()
 
@@ -1295,13 +1295,13 @@
 	value = REAGENT_VALUE_EXCEPTIONAL
 
 /datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-5*REM, FALSE) //A ton of healing - this is a 50 telecrystal investment.
-	M.adjustFireLoss(-5*REM, FALSE)
+	M.adjustBruteLoss(-5*REAGENTS_EFFECT_MULTIPLIER, FALSE) //A ton of healing - this is a 50 telecrystal investment.
+	M.adjustFireLoss(-5*REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	M.adjustOxyLoss(-15, FALSE)
-	M.adjustToxLoss(-5*REM, FALSE)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -15*REM)
-	M.adjustCloneLoss(-3*REM, FALSE)
-	M.adjustStaminaLoss(-25*REM,FALSE)
+	M.adjustToxLoss(-5*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -15*REAGENTS_EFFECT_MULTIPLIER)
+	M.adjustCloneLoss(-3*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustStaminaLoss(-25*REAGENTS_EFFECT_MULTIPLIER,FALSE)
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
 		M.adjust_integration_blood(40) // blood fall out man bad
 	..()
@@ -1316,13 +1316,13 @@
 	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/medicine/lesser_syndicate_nanites/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-2*REM, FALSE)
-	M.adjustFireLoss(-2*REM, FALSE)
-	M.adjustOxyLoss(-5*REM, FALSE)
-	M.adjustToxLoss(-2*REM, FALSE)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
-	M.adjustCloneLoss(-1.25*REM, FALSE)
-	M.adjustStaminaLoss(-4*REM,FALSE)
+	M.adjustBruteLoss(-2*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustFireLoss(-2*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOxyLoss(-5*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustToxLoss(-2*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REAGENTS_EFFECT_MULTIPLIER)
+	M.adjustCloneLoss(-1.25*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustStaminaLoss(-4*REAGENTS_EFFECT_MULTIPLIER,FALSE)
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
 		M.adjust_integration_blood(3)
 	..()
@@ -1340,17 +1340,17 @@
 	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/medicine/neo_jelly/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-1.5*REM, FALSE)
-	M.adjustFireLoss(-1.5*REM, FALSE)
-	M.adjustOxyLoss(-1.5*REM, FALSE)
-	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
+	M.adjustBruteLoss(-1.5*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustFireLoss(-1.5*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOxyLoss(-1.5*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustToxLoss(-1.5*REAGENTS_EFFECT_MULTIPLIER, 0, TRUE) //heals TOXINLOVERs
 	. = 1
 	..()
 
 /datum/reagent/medicine/neo_jelly/overdose_process(mob/living/M)
-	M.adjustOxyLoss(2.6*REM, FALSE)
-	M.adjustBruteLoss(3.5*REM, FALSE)
-	M.adjustFireLoss(3.5*REM, FALSE)
+	M.adjustOxyLoss(2.6*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustBruteLoss(3.5*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustFireLoss(3.5*REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	. = 1
 
@@ -1378,13 +1378,13 @@
 			myseed.adjust_production(-round(chems.get_reagent_amount(src.type) * 0.5))
 
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-3 * REM, FALSE)
-	M.adjustFireLoss(-3 * REM, FALSE)
-	M.adjustOxyLoss(-15 * REM, FALSE)
-	M.adjustToxLoss(-3 * REM, FALSE, TRUE) //Heals TOXINLOVERS
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
-	M.adjustCloneLoss(-1 * REM, FALSE)
-	M.adjustStaminaLoss(-13 * REM, FALSE)
+	M.adjustBruteLoss(-3 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustFireLoss(-3 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOxyLoss(-15 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustToxLoss(-3 * REAGENTS_EFFECT_MULTIPLIER, FALSE, TRUE) //Heals TOXINLOVERS
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REAGENTS_EFFECT_MULTIPLIER, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
+	M.adjustCloneLoss(-1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustStaminaLoss(-13 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	M.jitteriness = min(max(0, M.jitteriness + 3), 30)
 	M.druggy = min(max(0, M.druggy + 10), 15) //See above
 	..()
@@ -1392,7 +1392,7 @@
 
 /datum/reagent/medicine/earthsblood/overdose_process(mob/living/M)
 	M.hallucination = min(max(0, M.hallucination + 5), 60)
-	M.adjustToxLoss(8 * REM, FALSE, TRUE) //Hurts TOXINLOVERS
+	M.adjustToxLoss(8 * REAGENTS_EFFECT_MULTIPLIER, FALSE, TRUE) //Hurts TOXINLOVERS
 	..()
 	. = 1
 
@@ -1414,8 +1414,8 @@
 	if (M.hallucination >= 5)
 		M.hallucination -= 5
 	if(prob(20))
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 50)
-	M.adjustStaminaLoss(2.5*REM, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REAGENTS_EFFECT_MULTIPLIER, 50)
+	M.adjustStaminaLoss(2.5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	return TRUE
 
@@ -1434,9 +1434,9 @@
 	return TRUE
 
 /datum/reagent/medicine/lavaland_extract/overdose_process(mob/living/M)
-	M.adjustBruteLoss(3*REM, 0)
-	M.adjustFireLoss(3*REM, 0)
-	M.adjustToxLoss(3*REM, 0)
+	M.adjustBruteLoss(3*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustFireLoss(3*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	return TRUE
 
@@ -1450,10 +1450,10 @@
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
 	..()
-	metabolizer.AdjustAllImmobility(-20 * REM * delta_time)
-	metabolizer.adjustStaminaLoss(-30 * REM * delta_time, 0)
-	metabolizer.Jitter(10 * REM * delta_time)
-	metabolizer.Dizzy(10 * REM * delta_time)
+	metabolizer.AdjustAllImmobility(-20 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+	metabolizer.adjustStaminaLoss(-30 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
+	metabolizer.Jitter(10 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+	metabolizer.Dizzy(10 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 	return TRUE
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/L)
@@ -1471,7 +1471,7 @@
 	L.Jitter(0)
 
 /datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/metabolizer, delta_time, times_fired)
-	metabolizer.adjustToxLoss(1 * REM * delta_time, 0)
+	metabolizer.adjustToxLoss(1 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
 	..()
 	return TRUE
 
@@ -1546,7 +1546,7 @@
 		overdose_threshold = overdose_threshold + rand(-10,10)/10 // for extra fun
 		M.AdjustAllImmobility(-5, 0)
 		M.AdjustUnconscious(-5, 0)
-		M.adjustStaminaLoss(-1*REM, 0)
+		M.adjustStaminaLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 0)
 		M.Jitter(1)
 		metabolization_rate = 0.01 * REAGENTS_METABOLISM * rand(5,20) // randomizes metabolism between 0.02 and 0.08 per tick
 		. = TRUE
@@ -1566,8 +1566,8 @@
 			if(prob(50))
 				M.losebreath++
 		if(41 to 80)
-			M.adjustOxyLoss(0.1*REM, 0)
-			M.adjustStaminaLoss(0.1*REM, 0)
+			M.adjustOxyLoss(0.1*REAGENTS_EFFECT_MULTIPLIER, 0)
+			M.adjustStaminaLoss(0.1*REAGENTS_EFFECT_MULTIPLIER, 0)
 			M.jitteriness = min(M.jitteriness+1, 20)
 			M.stuttering = min(M.stuttering+1, 20)
 			M.Dizzy(10)
@@ -1579,12 +1579,12 @@
 				M.DefaultCombatKnockdown(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
 		if(81)
 			to_chat(M, "You feel too exhausted to continue!") // at this point you will eventually die unless you get charcoal
-			M.adjustOxyLoss(0.1*REM, 0)
-			M.adjustStaminaLoss(0.1*REM, 0)
+			M.adjustOxyLoss(0.1*REAGENTS_EFFECT_MULTIPLIER, 0)
+			M.adjustStaminaLoss(0.1*REAGENTS_EFFECT_MULTIPLIER, 0)
 		if(82 to INFINITY)
 			M.Sleeping(100, 0, TRUE)
-			M.adjustOxyLoss(1.5*REM, 0)
-			M.adjustStaminaLoss(1.5*REM, 0)
+			M.adjustOxyLoss(1.5*REAGENTS_EFFECT_MULTIPLIER, 0)
+			M.adjustStaminaLoss(1.5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	return TRUE
 
@@ -1674,7 +1674,7 @@
 	value = REAGENT_VALUE_UNCOMMON // while it's 'rare', it can be milked from the wisdom cow
 
 /datum/reagent/medicine/liquid_wisdom/on_mob_life(mob/living/carbon/C) //slightly stronger mannitol, from the wisdom cow
-	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3*REM)
+	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3*REAGENTS_EFFECT_MULTIPLIER)
 	if(prob(20))
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 	if(prob(3))
