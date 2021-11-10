@@ -51,6 +51,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/ooccolor = "#c43b23"
 	var/aooccolor = "#ce254f"
 	var/enable_tips = TRUE
+	var/itemoutline_pref = TRUE
 	var/tip_delay = 500 //tip delay in milliseconds
 
 	//Antag preferences

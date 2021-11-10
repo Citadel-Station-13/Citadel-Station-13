@@ -17,7 +17,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "cellconsole_1"
 	icon_keyboard = null
-	// circuit = /obj/item/circuitboard/cryopodcontrol
+	circuit = /obj/item/circuitboard/cryopodcontrol
 	density = FALSE
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE
 	req_one_access = list(ACCESS_HEADS, ACCESS_ARMORY) // Heads of staff or the warden can go here to claim recover items from their department that people went were cryodormed with.
@@ -321,7 +321,6 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		if(caught_string)
 			tgui_alert(target, "You're a [english_list(caught_string)]! [AHELP_FIRST_MESSAGE][addendum]")
 			target.client.cryo_warned = world.time
-			return
 
 	if(!istype(target) || !can_interact(user) || !target.Adjacent(user) || !ismob(target) || isanimal(target) || !istype(user.loc, /turf) || target.buckled)
 		return
@@ -350,3 +349,13 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	return // Sorta gamey, but we don't really want these to be destroyed.
 
 #undef AHELP_FIRST_MESSAGE
+
+/obj/item/circuitboard/cryopodcontrol
+	name = "Circuit board (Cryogenic Oversight Console)"
+	build_path = /obj/machinery/computer/cryopod
+
+/obj/machinery/computer/cryopod/contents_explosion()
+	return
+
+/obj/machinery/computer/cryopod/contents_explosion()
+	return			//don't blow everyone's shit up.
