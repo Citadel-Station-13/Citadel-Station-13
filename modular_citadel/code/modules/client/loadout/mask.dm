@@ -30,4 +30,8 @@
 	name = "Paper mask"
 	path = /obj/item/clothing/mask/paper
 	cost = 2
-	
+
+/datum/gear/mask/polychromic_clown
+	name = "polychromic clown wig and mask"
+	path = /obj/item/clothing/mask/gas/clown_hat_polychromic
+	restricted_roles = list("Clown")
