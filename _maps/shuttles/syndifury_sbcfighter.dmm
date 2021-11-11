@@ -128,11 +128,12 @@
 	req_access_txt = "150"
 	},
 /obj/docking_port/mobile{
-	dwidth = 4;
+	height = 7;
 	id = "sbcfighter";
 	movement_force = list("KNOCKDOWN" = 1, "THROW" = 0);
 	name = "Syndicate Fighter";
-	port_direction = 2
+	port_direction = 2;
+	width = 5
 	},
 /obj/structure/cable,
 /obj/structure/fans/tiny,

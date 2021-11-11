@@ -25,12 +25,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc/corvette)
 "f" = (
-/obj/machinery/power/apc/syndicate{
-	dir = 2;
-	pixel_x = 0;
-	pixel_y = -28
-	},
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/obj/machinery/light,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc/corvette)
 "g" = (
 /obj/structure/shuttle/engine/propulsion,
@@ -38,8 +34,7 @@
 /area/shuttle/sbc/corvette)
 "h" = (
 /obj/structure/chair/comfy/shuttle{
-	dir = 4;
-	icon_state = "shuttle_chair"
+	dir = 4
 	},
 /obj/machinery/turretid{
 	ailock = 1;
@@ -53,8 +48,7 @@
 /area/shuttle/sbc/corvette)
 "i" = (
 /obj/structure/chair/comfy/shuttle{
-	dir = 8;
-	icon_state = "shuttle_chair"
+	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc/corvette)
@@ -71,7 +65,6 @@
 "l" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate{
 	dir = 1;
-	icon_state = "computer";
 	jumpto_ports = list("sbcfighter_BAY2" = 1, "syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1);
 	name = "Syndicate Corvette Navigation Console";
 	shuttleId = "sbccorvette";
@@ -83,7 +76,6 @@
 "m" = (
 /obj/machinery/computer/shuttle/syndicate{
 	dir = 1;
-	icon_state = "computer";
 	name = "Syndicate Corvette Console";
 	possible_destinations = "sbcfighter_BAY2;sbccorvette_custom;syndicate_nw";
 	shuttleId = "sbccorvette"
@@ -127,19 +119,23 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc/corvette)
 "s" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
+/obj/machinery/power/apc/syndicate{
+	pixel_y = -28
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc/corvette)
 "t" = (
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc/corvette)
 "u" = (
 /obj/machinery/power/smes,
 /obj/structure/cable{
-	d1 = 0;
 	d2 = 8
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -150,6 +146,9 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc/corvette)
@@ -171,8 +170,7 @@
 /area/shuttle/sbc/corvette)
 "x" = (
 /obj/structure/chair/comfy/shuttle{
-	dir = 4;
-	icon_state = "shuttle_chair"
+	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc/corvette)
@@ -187,7 +185,7 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/mineral/plastitanium,
-/area/space)
+/area/shuttle/sbc/corvette)
 "B" = (
 /obj/machinery/door/airlock/external{
 	id_tag = "sbc_corvette_bolt";
@@ -195,19 +193,18 @@
 	req_access_txt = "150"
 	},
 /obj/docking_port/mobile{
-	dwidth = 2;
 	height = 6;
 	id = "sbccorvette";
 	movement_force = list("KNOCKDOWN" = 1, "THROW" = 0);
 	name = "Syndicate Corvette";
+	port_direction = 2;
 	width = 12
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/mineral/plastitanium,
-/area/space)
+/area/shuttle/sbc/corvette)
 "C" = (
 /obj/structure/cable{
-	d1 = 0;
 	d2 = 8
 	},
 /obj/structure/cable{
@@ -273,7 +270,6 @@
 /area/shuttle/sbc/corvette)
 "Q" = (
 /obj/structure/cable{
-	d1 = 0;
 	d2 = 8
 	},
 /obj/effect/spawner/structure/window/plastitanium,
@@ -315,7 +311,7 @@ d
 (3,1,1) = {"
 c
 j
-e
+f
 d
 d
 Y
@@ -325,21 +321,21 @@ c
 j
 e
 M
-s
+e
 B
 "}
 (5,1,1) = {"
 b
 r
-e
-f
+s
+d
 d
 Y
 "}
 (6,1,1) = {"
 c
 n
-e
+H
 e
 l
 d
@@ -371,7 +367,7 @@ A
 (10,1,1) = {"
 c
 j
-e
+f
 d
 d
 Y

@@ -101,8 +101,7 @@
 		pin = new pin(src)
 	if(gun_light)
 		alight = new (src)
-	if(zoomable)
-		azoom = new (src)
+	build_zooming()
 
 /obj/item/gun/Destroy()
 	if(pin)
@@ -642,3 +641,13 @@
 	. = recoil
 	if(user && !user.has_gravity())
 		. = recoil*5
+
+
+//Proc, so that gun accessories/scopes/etc. can easily add zooming.
+/obj/item/gun/proc/build_zooming()
+	if(azoom)
+		return
+
+	if(zoomable)
+		azoom = new()
+		azoom.gun = src

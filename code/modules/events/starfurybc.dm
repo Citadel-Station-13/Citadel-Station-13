@@ -56,8 +56,8 @@
 		return NOT_ENOUGH_PLAYERS
 
 	var/datum/map_template/shuttle/syndifury/starfury/ship = new
-	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
-	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
+	var/x = rand(TRANSITIONEDGE, world.maxx - TRANSITIONEDGE - ship.width)
+	var/y = rand(TRANSITIONEDGE, world.maxy - TRANSITIONEDGE - ship.height)
 	var/z = SSmapping.empty_space.z_value
 	var/turf/T = locate(x,y,z)
 	if(!T)
@@ -65,18 +65,22 @@
 
 	if(!ship.load(T))
 		CRASH("Loading SBC Starfury cruiser failed!")
-
+	var/list/spawners = list()
 	for(var/turf/A in ship.get_affected_turfs(T))
 		for(var/obj/docking_port/stationary/S in A)
-			SSshuttle.action_load(S.roundstart_template, S)
+			if(S.roundstart_template)
+				S.load_roundstart()
+		for(var/obj/effect/mob_spawn/human/syndicate/battlecruiser/S in A)
+			spawners += S
 
-		for(var/obj/effect/mob_spawn/human/syndicate/battlecruiser/captain/C in A)
-			SpawnCrew(spawner, candidates) //We want the captain to spawn first
-
-		for(var/obj/effect/mob_spawn/human/syndicate/spawner in A) 
-			SpawnCrew(spawner, candidates)
-
-	addtimer(CALLBACK(src, .proc/warn_the_crew(), announcetime))
+	//We do this twice so the captain is spawned first
+	for(var/C in spawners)
+		if(istype(C, /obj/effect/mob_spawn/human/syndicate/battlecruiser/captain))
+			SpawnCrew(C, candidates)
+	for(var/syndie in spawners)
+		SpawnCrew(syndie, candidates)
+	
+	addtimer(CALLBACK(src, .proc/warn_the_crew, announcetime))
 
 /datum/round_event/ghost_role/starfurybc/proc/warn_the_crew()
 	priority_announce("A Syndicate Battle Cruiser has been found near the station's sector, brace for impact.", sound = 'sound/machines/alarm.ogg')
