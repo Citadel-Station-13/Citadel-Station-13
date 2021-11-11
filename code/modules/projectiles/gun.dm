@@ -84,7 +84,7 @@
 	var/zoomed = FALSE //Zoom toggle
 	var/zoom_amt = 3 //Distance in TURFs to move the user's screen forward (the "zoom" effect)
 	var/zoom_out_amt = 0
-	var/datum/action/item_action/toggle_scope_zoom/azoom
+	var/datum/action/toggle_scope_zoom/azoom
 
 	var/dualwield_spread_mult = 1		//dualwield spread multiplier
 
@@ -452,7 +452,7 @@
 		return ..()
 
 /obj/item/gun/ui_action_click(mob/user, action)
-	if(istype(action, /datum/action/item_action/toggle_scope_zoom))
+	if(istype(action, /datum/action/toggle_scope_zoom))
 		zoom(user, user.dir)
 	else if(istype(action, alight))
 		toggle_gunlight()
@@ -506,7 +506,7 @@
 		. += knife_overlay
 
 /obj/item/gun/item_action_slot_check(slot, mob/user, datum/action/A)
-	if(istype(A, /datum/action/item_action/toggle_scope_zoom) && slot != SLOT_HANDS)
+	if(istype(A, /datum/action/toggle_scope_zoom) && slot != SLOT_HANDS)
 		return FALSE
 	return ..()
 
@@ -559,50 +559,77 @@
 // ZOOMING //
 /////////////
 
-/datum/action/item_action/toggle_scope_zoom
+/datum/action/toggle_scope_zoom
 	name = "Toggle Scope"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
+	var/obj/item/gun/gun = null
 
-/datum/action/item_action/toggle_scope_zoom/IsAvailable(silent = FALSE)
+/datum/action/toggle_scope_zoom/Trigger()
 	. = ..()
 	if(!.)
-		var/obj/item/gun/G = target
-		G.zoom(owner, owner.dir, FALSE)
+		return
+	gun.zoom(owner, owner.dir)
 
-/datum/action/item_action/toggle_scope_zoom/Trigger()
+/datum/action/toggle_scope_zoom/IsAvailable()
 	. = ..()
-	if(.)
-		var/obj/item/gun/G = target
-		G.zoom(owner, owner.dir)
+	if(owner.get_active_held_item() != gun)
+		. = FALSE
+	if(!. && gun)
+		gun.zoom(owner, owner.dir, FALSE)
 
-/datum/action/item_action/toggle_scope_zoom/Remove(mob/living/L)
-	var/obj/item/gun/G = target
-	G.zoom(L, L.dir, FALSE)
+/datum/action/toggle_scope_zoom/Remove(mob/living/L)
+	gun.zoom(L, L.dir, FALSE)
 	return ..()
 
 /obj/item/gun/proc/rotate(atom/thing, old_dir, new_dir)
+	SIGNAL_HANDLER
+
 	if(ismob(thing))
 		var/mob/lad = thing
 		lad.client.view_size.zoomOut(zoom_out_amt, zoom_amt, new_dir)
 
-/obj/item/gun/proc/zoom(mob/living/user, direct, forced_zoom)
-	if(!(user?.client))
+/obj/item/gun/proc/zoom(mob/living/user, direc, forced_zoom)
+	if(!user || !user.client)
 		return
 
-	if(!isnull(forced_zoom))
-		if(zoomed == forced_zoom)
-			return
-		zoomed = forced_zoom
-	else
+	if(isnull(forced_zoom))
 		zoomed = !zoomed
+	else
+		zoomed = forced_zoom
 
 	if(zoomed)
 		RegisterSignal(user, COMSIG_ATOM_DIR_CHANGE, .proc/rotate)
-		user.client.view_size.zoomOut(zoom_out_amt, zoom_amt, direct)
+		user.client.view_size.zoomOut(zoom_out_amt, zoom_amt, direc)
 	else
 		UnregisterSignal(user, COMSIG_ATOM_DIR_CHANGE)
 		user.client.view_size.zoomIn()
+	return zoomed
+
+/obj/item/gun/proc/zoom(mob/living/user, direc, forced_zoom)
+	if(!user || !user.client)
+		return
+
+	if(isnull(forced_zoom))
+		zoomed = !zoomed
+	else
+		zoomed = forced_zoom
+
+	if(zoomed)
+		RegisterSignal(user, COMSIG_ATOM_DIR_CHANGE, .proc/rotate)
+		user.client.view_size.zoomOut(zoom_out_amt, zoom_amt, direc)
+	else
+		UnregisterSignal(user, COMSIG_ATOM_DIR_CHANGE)
+		user.client.view_size.zoomIn()
+	return zoomed
+
+/obj/item/gun/proc/build_zooming()
+	if(azoom)
+		return
+
+	if(zoomable)
+		azoom = new()
+		azoom.gun = src
 
 /obj/item/gun/handle_atom_del(atom/A)
 	if(A == chambered)
@@ -641,13 +668,3 @@
 	. = recoil
 	if(user && !user.has_gravity())
 		. = recoil*5
-
-
-//Proc, so that gun accessories/scopes/etc. can easily add zooming.
-/obj/item/gun/proc/build_zooming()
-	if(azoom)
-		return
-
-	if(zoomable)
-		azoom = new()
-		azoom.gun = src
