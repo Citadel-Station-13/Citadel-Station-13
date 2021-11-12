@@ -467,7 +467,8 @@ GENETICS SCANNER
 				if(length(reagents))
 					msg += "<span class='notice'>Subject contains the following reagents:</span>\n"
 					for(var/datum/reagent/R in reagents)
-						msg += "<span class='notice'>[R.volume] units of [R.name][R.overdosed == 1 ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]\n"
+						var/invalid_reagent = is_reagent_processing_invalid(R, M)
+						msg += "<span class='notice'>[invalid_reagent ? "<font color='grey'>" : ""][R.volume] units of [R.name][invalid_reagent ? "</font>" : ""][R.overdosed == 1 ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]\n"
 				else
 					msg += "<span class='notice'>Subject contains no reagents.</span>\n"
 

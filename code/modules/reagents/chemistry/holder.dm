@@ -345,7 +345,7 @@
 	if(owner && reagent)
 		if(!owner.reagent_check(reagent, delta_time, times_fired) != TRUE)
 			return
-		if((HAS_TRAIT(owner, TRAIT_ROBOTIC_ORGANISM) && !(reagent.chemical_flags & REAGENT_ROBOTIC_PROCESS)) || (!HAS_TRAIT(owner, TRAIT_ROBOTIC_ORGANISM) && !(reagent.chemical_flags & REAGENT_ORGANIC_PROCESS)))
+		if(is_reagent_processing_invalid(reagent, owner))
 			return reagent.on_invalid_process(owner, delta_time, times_fired)
 		if(liverless && !reagent.self_consuming) //need to be metabolized
 			return
