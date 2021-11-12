@@ -183,6 +183,29 @@
 		var/item = pick(contains)
 		new item(C)
 
+/datum/supply_pack/security/armory/frontier
+	name = "Old West Surplus Crate"
+	desc = "Do you have a fauna problem? Do you want to live out your frontier-taming fantasies on a state-of-the-art plasma research and mining station? Do you want to pretend you lived in the Old West of Earthen fame? Well, this box - and its many hats - may be for you."
+	cost = 7500
+	contraband = TRUE
+	contains = list(/obj/effect/spawner/bundle/crate/cowboyhat,
+					/obj/effect/spawner/bundle/crate/cowboyboots,
+					/obj/item/clothing/under/pants/chaps,
+					/obj/item/reagent_containers/food/snacks/butterbiscuit,
+					/obj/item/reagent_containers/food/snacks/butterbiscuit,
+					/obj/item/reagent_containers/food/snacks/plumphelmetbiscuit,
+					/obj/item/reagent_containers/food/snacks/plumphelmetbiscuit,
+					/obj/item/ammo_box/c38/pouch,
+					/obj/item/ammo_box/c38/pouch,
+					/obj/item/ammo_box/c38/pouch,
+					/obj/effect/spawner/bundle/crate/levergun
+					)
+
+/datum/supply_pack/security/armory/frontier/fill(obj/structure/closet/crate/C)
+	for(var/i in 1 to 5)
+		var/item = pick(contains)
+		new item(C)
+
 /datum/supply_pack/security/armory/swat
 	name = "SWAT Crate"
 	desc = "Contains two fullbody sets of tough, fireproof, pressurized suits designed in a joint effort by IS-ERI and Nanotrasen. Each set contains a suit, helmet, mask, combat belt, and combat gloves. Requires Armory access to open."

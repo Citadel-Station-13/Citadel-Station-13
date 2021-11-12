@@ -112,7 +112,7 @@
 
 	var/list/genital_list = list()
 	for(var/obj/item/organ/genital/G in internal_organs)
-		if(!CHECK_BITFIELD(G.genital_flags, GENITAL_INTERNAL))
+		if(!(G.genital_flags & GENITAL_INTERNAL))
 			genital_list += G
 	if(!genital_list.len) //There is nothing to expose
 		return
@@ -145,6 +145,9 @@
 		else
 			to_chat(src,"<span class='userlove'>You can't make that genital [picked_organ.aroused_state ? "unaroused" : "aroused"]!</span>")
 		picked_organ.update_appearance()
+		if(ishuman(src))
+			var/mob/living/carbon/human/human = src
+			human.update_genitals()
 	return
 
 

@@ -1290,9 +1290,9 @@
 			var/toxic_risk = min(round(spess_current_year - expiration_date * 0.01), 1)
 			for(var/obj/item/reagent_containers/food/snacks/S in contents)
 				if(prob(gross_risk))
-					ENABLE_BITFIELD(S.foodtype, GROSS)
+					S.foodtype |= GROSS
 				if(prob(toxic_risk))
-					ENABLE_BITFIELD(S.foodtype, TOXIC)
+					S.foodtype |= TOXIC
 
 /obj/item/storage/box/mre/menu1
 	name = "\improper Nanotrasen MRE Ration Kit Menu 1"

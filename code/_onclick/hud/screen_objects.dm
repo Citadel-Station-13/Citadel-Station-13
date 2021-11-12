@@ -189,7 +189,7 @@
 	var/image/item_overlay = image(holding)
 	item_overlay.alpha = 92
 
-	if(!user.can_equip(holding, slot_id, TRUE))
+	if(!user.can_equip(holding, slot_id, TRUE, TRUE))
 		item_overlay.color = "#FF0000"
 	else
 		item_overlay.color = "#00ff00"
@@ -323,7 +323,7 @@
 					var/obj/item/clothing/mask/M = check
 					if(M.mask_adjusted)
 						M.adjustmask(C)
-				if(CHECK_BITFIELD(check.clothing_flags, ALLOWINTERNALS))
+				if((check.clothing_flags & ALLOWINTERNALS))
 					internals = TRUE
 			if(!internals)
 				to_chat(C, "<span class='warning'>You are not wearing an internals mask!</span>")

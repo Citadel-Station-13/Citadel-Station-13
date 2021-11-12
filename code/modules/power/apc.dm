@@ -300,7 +300,7 @@
 	area.power_equip = FALSE
 	area.power_environ = FALSE
 	area.power_change()
-	area.poweralert(FALSE, src)
+	area.poweralert(TRUE, src)
 	if(occupier)
 		malfvacate(1)
 	qdel(wires)
@@ -1444,8 +1444,6 @@
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
 			area.poweralert(FALSE, src)
-			if(cell.percent() > 75)
-				area.poweralert(FALSE, src)
 
 		// now trickle-charge the cell
 		if(chargemode && charging == APC_CHARGING && operating)

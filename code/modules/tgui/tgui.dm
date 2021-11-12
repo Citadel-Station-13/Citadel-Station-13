@@ -300,6 +300,7 @@
 		process_status()
 		if(src_object.ui_act(act_type, payload, src, state))
 			SStgui.update_uis(src_object)
+		usr?.client?.last_activity = world.time
 		return FALSE
 	switch(type)
 		if("ready")

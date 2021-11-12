@@ -37,6 +37,8 @@
 		if(mover in buckled_mobs)
 			return TRUE
 	var/mob/living/L = mover		//typecast first, check isliving and only check this if living using short circuit
+	if(isliving(L) && lying && L.lying)		//if we're both lying down and aren't already being thrown/shipped around, don't pass
+		return FALSE
 	return (!density || (isliving(mover)? L.can_move_under_living(src) : !mover.density))
 
 /mob/living/toggle_move_intent()

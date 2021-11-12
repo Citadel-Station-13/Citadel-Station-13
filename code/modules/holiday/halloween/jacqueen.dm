@@ -65,6 +65,10 @@
 	cached_z = z
 	poof()
 
+/mob/living/simple_animal/jacq/ComponentInitialize() //she just wants to bring halloween to the station
+	. = ..()
+	AddComponent(/datum/component/stationloving)
+
 /mob/living/simple_animal/jacq/BiologicalLife(seconds, times_fired)
 	if(!(. = ..()))
 		return
@@ -469,9 +473,9 @@
 /mob/living/simple_animal/jacq/update_mobility()
 	. = ..()
 	if(busy)
-		DISABLE_BITFIELD(., MOBILITY_MOVE)
+		. &= ~(MOBILITY_MOVE)
 	else
-		ENABLE_BITFIELD(., MOBILITY_MOVE)
+		. |= MOBILITY_MOVE
 	mobility_flags = .
 
 

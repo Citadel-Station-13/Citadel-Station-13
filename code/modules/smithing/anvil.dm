@@ -286,6 +286,13 @@
 	anvilquality = 0
 	itemqualitymax = 6
 
+/obj/structure/anvil/obtainable/bone
+	name = "bone anvil"
+	desc = "An anvil. It's made of goliath bones and hide and held together by watcher sinews."
+	icon_state = "bonevil"
+	anvilquality = 0
+	itemqualitymax = 6
+
 /obj/structure/anvil/obtainable/ratvar
 	name = "brass anvil"
 	desc = "A big block of what appears to be brass. Useable as an anvil, if whatever's holding the brass together lets you."
