@@ -124,7 +124,7 @@
 
 /datum/design/smartdartrepeater
 	name = "Smartdart Repeater"
-	desc = "An experimental smart dart rifle, it can make its own smart darts and is instead loaded with a hypovial.."
+	desc = "An experimental smartdart rifle. It can make its own smart darts and is loaded with a hypovial."
 	id = "smartdartrepeater"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/glass = 2000, /datum/material/plastic = 1000, /datum/material/iron = 2000,/datum/material/titanium = 1000 )
