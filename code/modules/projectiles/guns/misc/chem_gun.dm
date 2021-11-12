@@ -57,7 +57,7 @@
 			to_chat(user, "<span class='warning'>[src] can not hold more than one vial!</span>")
 			return FALSE
 		unload_hypo(vial, user)
-	if((istype(I, /obj/item/reagent_containers/glass/bottle/vial)))
+	else
 		var/obj/item/reagent_containers/glass/bottle/vial/V = I
 		if(!is_type_in_list(V, allowed_containers))
 			to_chat(user, "<span class='notice'>[src] doesn't accept this type of vial.</span>")
