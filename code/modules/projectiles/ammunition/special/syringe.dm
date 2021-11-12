@@ -36,7 +36,7 @@
 		var/obj/item/gun/chem/CG = loc
 		if(CG.syringes_left <= 0)
 			return
-		if (CG.vial == null)
+		if (!CG.vial)
 			CG.syringes_left--
 			return
 		CG.vial.reagents.trans_to(BB, dartvolume)
