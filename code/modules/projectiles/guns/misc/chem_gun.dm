@@ -78,7 +78,7 @@
 	. = ..() //Don't bother changing this or removing it from containers will break.
 
 /obj/item/gun/chem/attack_self(mob/living/user)
-	if(user)
+	if(user && user.incapacitated())
 		if(user.incapacitated())
 			return
 		else if(!vial)
