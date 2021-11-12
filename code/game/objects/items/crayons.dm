@@ -406,7 +406,7 @@
 
 
 	if(actually_paints)
-		var/obj/effect/decal/cleanable/crayon/C
+		var/obj/effect/decal/cleanable/crayon/C = new(target, paint_color, drawing, temp, graf_rot)
 		if(gang_mode)
 			if(!can_claim_for_gang(user, target))
 				return
@@ -415,7 +415,6 @@
 		else
 			switch(paint_mode)
 				if(PAINT_NORMAL)
-					var/obj/effect/decal/cleanable/crayon/C = new(target, paint_color, drawing, temp, graf_rot)
 					C.add_hiddenprint(user)
 					if(precision_mode)
 						C.pixel_x = clamp(precision_x, -(world.icon_size/2), world.icon_size/2)
