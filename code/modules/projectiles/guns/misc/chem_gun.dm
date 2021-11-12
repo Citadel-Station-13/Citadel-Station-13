@@ -117,5 +117,4 @@
 obj/item/gun/chem/smart/Initialize()
 	. = ..()
 	chambered = new /obj/item/ammo_casing/chemgun/smart(src)
-	START_PROCESSING(SSobj, src)
 
