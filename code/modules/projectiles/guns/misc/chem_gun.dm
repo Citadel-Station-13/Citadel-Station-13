@@ -2,7 +2,7 @@
 //this is meant to hold reagents/obj/item/gun/syringe
 /obj/item/gun/chem
 	name = "Reagent Repeater"
-	desc = "A Nanotrasen smartdart repeater rifle, modified to automatically synthesize piercing."
+	desc = "A Nanotrasen smartdart repeater rifle, modified to automatically synthesize piercing darts."
 	icon_state = "chemgun"
 	item_state = "chemgun"
 	w_class = WEIGHT_CLASS_NORMAL
