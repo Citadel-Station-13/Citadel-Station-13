@@ -123,7 +123,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/smartdartrepeater
-	name = "smartdart repeater"
+	name = "Smartdart Repeater"
 	desc = "An experimental smart dart rifle, it can make its own smart darts and is instead loaded with a hypovial.."
 	id = "smartdartrepeater"
 	build_type = PROTOLATHE
