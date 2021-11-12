@@ -61,7 +61,7 @@
 	. = ..()
 	. += "<span class='notice'>The thermostat is set to [target_temperature]K ([target_temperature-T0C]C).</span>"
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Effective heat capacity <b>[(heat_capacity] J/K</b>.</span>"
+		. += "<span class='notice'>The status display reads: Effective heat capacity <b>[heat_capacity] J/K</b>.</span>"
 		. += "<span class='notice'>Temperature range <b>[min_temperature]K - [max_temperature]K ([min_temperature-T0C]C - [max_temperature-T0C]C)</b>.</span>"
 
 /obj/machinery/atmospherics/components/unary/thermomachine/process_atmos()
