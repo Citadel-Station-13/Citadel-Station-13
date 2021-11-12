@@ -52,6 +52,7 @@
 	firing_effect_type = null
 	harmful = FALSE
 	dartvolume = 20
+
 /obj/item/ammo_casing/dnainjector
 	name = "rigged syringe gun spring"
 	desc = "A high-power spring that throws DNA injectors."
