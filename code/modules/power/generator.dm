@@ -63,7 +63,7 @@
 
 
 			if(delta_temperature > 0 && cold_air_heat_capacity > 0 && hot_air_heat_capacity > 0)
-				var/efficiency =  LOGISTIC_FUNCTION(max_efficiency,0.0009,delta_temperature,10000)
+				var/efficiency = LOGISTIC_FUNCTION(max_efficiency,0.0009,delta_temperature,10000)
 
 				var/energy_transfer = delta_temperature*hot_air_heat_capacity*cold_air_heat_capacity/(hot_air_heat_capacity+cold_air_heat_capacity)
 
