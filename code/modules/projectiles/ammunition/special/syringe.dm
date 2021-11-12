@@ -24,7 +24,7 @@
 
 /obj/item/ammo_casing/chemgun
 	name = "dart synthesiser"
-	desc = "A high-power spring, linked to an energy-based piercing synthesiser."
+	desc = "A high-power spring, linked to an energy-based piercing dart synthesiser."
 	projectile_type = /obj/item/projectile/bullet/dart/piercing
 	firing_effect_type = null
 	var/dartvolume = 10
