@@ -110,7 +110,7 @@
 //Smart dart version of the reagent launcher
 /obj/item/gun/chem/smart
 	name = "Smartdart repeater rifle"
-	desc = "An experimental improved version of the smart dart rifle. It synthesizes medicinal smart darts which it fills using an inserted hypovial. It can accommodate both large and small hypovials."
+	desc = "An experimental improved version of the smartdart rifle. It synthesizes medicinal smart darts which it fills using an inserted hypovial. It can accommodate both large and small hypovials."
 	icon_state = "chemgunrepeater"
 	item_state = "syringegun"
 
