@@ -58,6 +58,7 @@
 	desc = "A wondrous decorated Christmas tree."
 	icon_state = "pine_c"
 	icon_states = null
+	resistance_flags = INDESTRUCTIBLE  //Sorry grinch, not this time
 
 /obj/structure/flora/tree/pine/xmas/presents
 	icon_state = "pinepresents"

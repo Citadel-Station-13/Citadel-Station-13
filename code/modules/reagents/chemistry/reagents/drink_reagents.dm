@@ -47,7 +47,7 @@
 
 /datum/reagent/consumable/limejuice/on_mob_life(mob/living/carbon/M)
 	if(M.getToxLoss() && prob(20))
-		M.adjustToxLoss(-1*REM, 0)
+		M.adjustToxLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 0)
 		. = 1
 	..()
 

@@ -124,7 +124,7 @@
 	modifies_speech = TRUE
 
 /obj/item/clothing/mask/pig/handle_speech(datum/source, list/speech_args)
-	if(!CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED))
+	if(!(clothing_flags & VOICEBOX_DISABLED))
 		speech_args[SPEECH_MESSAGE] = pick("Oink!","Squeeeeeeee!","Oink Oink!")
 
 /obj/item/clothing/mask/pig/cursed //needs to be different otherwise you could turn the speedmodification off and on
@@ -150,7 +150,7 @@
 	modifies_speech = TRUE
 
 /obj/item/clothing/mask/frog/handle_speech(datum/source, list/speech_args) //whenever you speak
-	if(!CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED))
+	if(!(clothing_flags & VOICEBOX_DISABLED))
 		if(prob(5)) //sometimes, the angry spirit finds others words to speak.
 			speech_args[SPEECH_MESSAGE] = pick("HUUUUU!!","SMOOOOOKIN'!!","Hello my baby, hello my honey, hello my rag-time gal.", "Feels bad, man.", "GIT DIS GUY OFF ME!!" ,"SOMEBODY STOP ME!!", "NORMIES, GET OUT!!")
 		else
@@ -180,7 +180,7 @@
 	modifies_speech = TRUE
 
 /obj/item/clothing/mask/cowmask/handle_speech(datum/source, list/speech_args)
-	if(!CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED))
+	if(!(clothing_flags & VOICEBOX_DISABLED))
 		speech_args[SPEECH_MESSAGE] = pick("Moooooooo!","Moo!","Moooo!")
 
 
@@ -205,7 +205,7 @@
 	clothing_flags = VOICEBOX_TOGGLABLE
 
 /obj/item/clothing/mask/horsehead/handle_speech(datum/source, list/speech_args)
-	if(!CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED))
+	if(!(clothing_flags & VOICEBOX_DISABLED))
 		speech_args[SPEECH_MESSAGE] = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 
 

@@ -190,8 +190,7 @@
 /proc/typecache_filter_list(list/atoms, list/typecache)
 	RETURN_TYPE(/list)
 	. = list()
-	for(var/thing in atoms)
-		var/atom/A = thing
+	for(var/atom/A as anything in atoms)
 		if (typecache[A.type])
 			. += A
 
