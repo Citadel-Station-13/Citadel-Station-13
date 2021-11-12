@@ -52,7 +52,8 @@
 		return
 
 /obj/item/gun/chem/attackby(obj/item/I, mob/living/user)
-	if((istype(I, /obj/item/reagent_containers/glass/bottle/vial) && vial != null))
+	if((istype(I, /obj/item/reagent_containers/glass/bottle/vial)))
+		if(vial)
 		if(!quickload)
 			to_chat(user, "<span class='warning'>[src] can not hold more than one vial!</span>")
 			return FALSE
