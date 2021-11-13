@@ -29395,7 +29395,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
 	id_tag = "medbaybolts";
-	name = "Medbay"
+	name = "Medbay";
+	req_access_txt = "5"
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -29407,12 +29408,13 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	id_tag = "medbaybolts";
-	name = "Medbay"
-	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/mapping_helpers/airlock/unres,
+/obj/machinery/door/airlock/public/glass{
+	id_tag = "medbaybolts";
+	name = "Medbay";
+	req_access_txt = "5"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bsJ" = (
