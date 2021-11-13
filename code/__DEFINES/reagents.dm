@@ -75,6 +75,7 @@
 #define REAGENT_ORGANIC_PROCESS		(1<<8)	//Can be processed by organic carbons - will otherwise slowly dissipate
 #define REAGENT_ROBOTIC_PROCESS		(1<<9)	//Can be processed by robotic carbons - will otherwise slowly dissipate
 
+#define REAGENT_ALL_PROCESS REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS	//expand this if you for some reason add more process flags
 
 #define INVALID_REAGENT_DISSIPATION 1		//How much of a reagent is removed per reagent tick if invalid processing-flag wise
 

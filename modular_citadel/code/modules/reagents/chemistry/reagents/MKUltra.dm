@@ -142,7 +142,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	var/creatorName
 	var/mob/living/creator
 	pH = 10
-	chemical_flags = REAGENT_ONMOBMERGE | REAGENT_DONOTSPLIT | REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS //Procs on_mob_add when merging into a human
+	chemical_flags = REAGENT_ONMOBMERGE | REAGENT_DONOTSPLIT | REAGENT_ALL_PROCESS //Procs on_mob_add when merging into a human
 	can_synth = FALSE
 	value = REAGENT_VALUE_EXCEPTIONAL
 

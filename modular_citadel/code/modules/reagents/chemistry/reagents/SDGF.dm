@@ -336,7 +336,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/startHunger
 	can_synth = TRUE
 	taste_description = "a weird chemical fleshy flavour"
-	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS
+	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_ALL_PROCESS
 	value = REAGENT_VALUE_RARE
 
 /datum/reagent/impure/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
