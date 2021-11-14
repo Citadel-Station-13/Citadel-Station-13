@@ -253,7 +253,7 @@ GLOBAL_LIST_EMPTY(explosions)
 		if(dist > EXPLODE_NONE)
 			T.explosion_level = max(T.explosion_level, dist)	//let the bigger one have it
 			T.explosion_id = id
-			T.ex_act(dist)
+			T.ex_act(dist, origin = src)
 			exploded_this_tick += T
 
 		//--- THROW ITEMS AROUND ---

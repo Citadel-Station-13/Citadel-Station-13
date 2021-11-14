@@ -80,7 +80,7 @@
 	if(girder_type)
 		new /obj/item/stack/sheet/metal(src)
 
-/turf/closed/wall/ex_act(severity, target)
+/turf/closed/wall/ex_act(severity, target, origin)
 	if(target == src)
 		dismantle_wall(1,1)
 		return
