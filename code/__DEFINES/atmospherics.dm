@@ -265,6 +265,8 @@
 #define GAS_METHANE				"methane"
 #define GAS_METHYL_BROMIDE		"methyl_bromide"
 #define GAS_BROMINE				"bromine"
+#define GAS_AMMONIA				"ammonia"
+#define GAS_FLUORINE			"fluorine"
 
 #define GAS_GROUP_CHEMICALS		"Chemicals"
 
