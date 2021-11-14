@@ -405,9 +405,9 @@ Class Procs:
 		update_appearance()
 		return TRUE
 
-/obj/machinery/contents_explosion(severity, target)
+/obj/machinery/contents_explosion(severity, target, origin)
 	if(occupant)
-		occupant.ex_act(severity, target)
+		occupant.ex_act(severity, target, origin)
 
 /obj/machinery/handle_atom_del(atom/A)
 	if(A == occupant)

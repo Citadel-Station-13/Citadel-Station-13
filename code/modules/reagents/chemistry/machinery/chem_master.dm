@@ -50,12 +50,12 @@
 	if(severity < 3)
 		..()
 
-/obj/machinery/chem_master/contents_explosion(severity, target)
+/obj/machinery/chem_master/contents_explosion(severity, target, origin)
 	..()
 	if(beaker)
-		beaker.ex_act(severity, target)
+		beaker.ex_act(severity, target, origin)
 	if(bottle)
-		bottle.ex_act(severity, target)
+		bottle.ex_act(severity, target, origin)
 
 /obj/machinery/chem_master/Exited(atom/movable/A, atom/newloc)
 	. = ..()

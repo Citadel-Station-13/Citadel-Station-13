@@ -169,10 +169,10 @@
 	if(severity < 3)
 		..()
 
-/obj/machinery/chem_dispenser/contents_explosion(severity, target)
+/obj/machinery/chem_dispenser/contents_explosion(severity, target, origin)
 	..()
 	if(beaker)
-		beaker.ex_act(severity, target)
+		beaker.ex_act(severity, target, origin)
 
 /obj/machinery/chem_dispenser/Exited(atom/movable/A, atom/newloc)
 	. = ..()

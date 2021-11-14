@@ -190,7 +190,7 @@
 /obj/structure/closet/supplypod/ex_act(severity, target, origin) //Explosions dont do SHIT TO US! This is because supplypods create explosions when they land.
 	return
 
-/obj/structure/closet/supplypod/contents_explosion() //Supplypods also protect their contents from the harmful effects of fucking exploding.
+/obj/structure/closet/supplypod/contents_explosion(severity, target, origin) //Supplypods also protect their contents from the harmful effects of fucking exploding.
 	return
 
 /obj/structure/closet/supplypod/toggle(mob/living/user)

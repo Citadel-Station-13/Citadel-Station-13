@@ -894,7 +894,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	CALCULATE_ADJACENT_TURFS(T)
 
 //Do not blow up our internal radio
-/obj/machinery/power/supermatter_crystal/contents_explosion(severity, target)
+/obj/machinery/power/supermatter_crystal/contents_explosion(severity, target, origin)
 	return
 
 /obj/machinery/power/supermatter_crystal/engine

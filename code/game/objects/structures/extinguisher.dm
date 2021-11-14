@@ -32,9 +32,9 @@
 		stored_extinguisher = null
 	return ..()
 
-/obj/structure/extinguisher_cabinet/contents_explosion(severity, target)
+/obj/structure/extinguisher_cabinet/contents_explosion(severity, target, origin)
 	if(stored_extinguisher)
-		stored_extinguisher.ex_act(severity, target)
+		stored_extinguisher.ex_act(severity, target, origin)
 
 /obj/structure/extinguisher_cabinet/handle_atom_del(atom/A)
 	if(A == stored_extinguisher)
