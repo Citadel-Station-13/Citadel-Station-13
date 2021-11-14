@@ -255,4 +255,4 @@
 	for(var/datum/parsed_map/PM in reebes)	//Temporarily commented because of z-level loading reliably segfaulting the server.
 		PM.initTemplateBounds()
 	GLOB.reebe_loaded = TRUE
-	return errorList
+	return TRUE
