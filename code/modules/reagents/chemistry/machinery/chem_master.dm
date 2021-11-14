@@ -46,7 +46,7 @@
 	for(var/obj/item/reagent_containers/glass/beaker/B in component_parts)
 		reagents.maximum_volume += B.reagents.maximum_volume
 
-/obj/machinery/chem_master/ex_act(severity, target)
+/obj/machinery/chem_master/ex_act(severity, target, origin)
 	if(severity < 3)
 		..()
 

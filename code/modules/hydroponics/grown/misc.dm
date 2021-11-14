@@ -224,7 +224,7 @@
 	if(!QDELETED(src))
 		qdel(src)
 
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/ex_act(severity)
+/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/ex_act(severity, target, origin)
 	qdel(src) //Ensuring that it's deleted by its own explosion. Also prevents mass chain reaction with piles of cherry bombs
 
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime(mob/living/lanced_by)
@@ -500,7 +500,7 @@
 	log_game("Coconut bomb detonation at [AREACOORD(T)], location [loc]")
 	qdel(src)
 
-/obj/item/reagent_containers/food/snacks/grown/coconut/ex_act(severity)
+/obj/item/reagent_containers/food/snacks/grown/coconut/ex_act(severity, target, origin)
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/grown/coconut/deconstruct(disassembled = TRUE)

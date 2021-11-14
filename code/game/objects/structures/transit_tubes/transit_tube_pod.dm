@@ -50,7 +50,7 @@
 		empty_pod(location)
 	qdel(src)
 
-/obj/structure/transit_tube_pod/ex_act(severity, target)
+/obj/structure/transit_tube_pod/ex_act(severity, target, origin)
 	..()
 	if(!QDELETED(src))
 		empty_pod()

@@ -197,7 +197,7 @@
 		glow = new /obj/effect/clockwork/overlay/gateway_glow(get_turf(src))
 		glow.linked = src
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/ex_act(severity)
+/obj/structure/destructible/clockwork/massive/celestial_gateway/ex_act(severity, target, origin)
 	var/damage = max((obj_integrity * 0.7) / severity, 100) //requires multiple bombs to take down
 	take_damage(damage, BRUTE, "bomb", 0)
 

@@ -111,7 +111,7 @@
 	mecha_log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).", color="red")
 	. = ..()
 
-/obj/mecha/ex_act(severity, target)
+/obj/mecha/ex_act(severity, target, origin)
 	mecha_log_message("Affected by explosion of severity: [severity].", color="red")
 	if(prob(deflect_chance))
 		severity++

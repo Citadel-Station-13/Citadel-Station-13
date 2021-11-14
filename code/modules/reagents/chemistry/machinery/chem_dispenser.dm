@@ -165,7 +165,7 @@
 	obj_flags |= EMAGGED
 	return TRUE
 
-/obj/machinery/chem_dispenser/ex_act(severity, target)
+/obj/machinery/chem_dispenser/ex_act(severity, target, origin)
 	if(severity < 3)
 		..()
 
