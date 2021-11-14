@@ -100,7 +100,10 @@
 	if(transfer_ratio > 0)
 
 		if(filter_type && air2.return_pressure() <= 9000)
-			air1.scrub_into(air2, transfer_ratio, list(filter_type))
+			if(filter_type in GLOB.gas_data.groups)
+				air1.scrub_into(air2, transfer_ratio, GLOB.gas_data.groups[filter_type])
+			else
+				air1.scrub_into(air2, transfer_ratio, list(filter_type))
 		if(air3.return_pressure() <= 9000)
 			air1.transfer_ratio_to(air3, transfer_ratio)
 
@@ -125,8 +128,10 @@
 	data["filter_types"] = list()
 	data["filter_types"] += list(list("name" = "Nothing", "id" = "", "selected" = !filter_type))
 	for(var/id in GLOB.gas_data.ids)
-		data["filter_types"] += list(list("name" = GLOB.gas_data.names[id], "id" = id, "selected" = (id == filter_type)))
-
+		if(!(id in GLOB.gas_data.groups_by_gas))
+			data["filter_types"] += list(list("name" = GLOB.gas_data.names[id], "id" = id, "selected" = (id == filter_type)))
+	for(var/group in GLOB.gas_data.groups)
+		data["filter_types"] += list(list("name" = group, "id" = group, "selected" = (group == filter_type)))
 	return data
 
 /obj/machinery/atmospherics/components/trinary/filter/ui_act(action, params)

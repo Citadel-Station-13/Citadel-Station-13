@@ -43,6 +43,7 @@
 		)
 	)
 	fusion_power = 3
+	enthalpy = -393500
 
 /datum/gas/plasma
 	id = GAS_PLASMA
@@ -54,7 +55,10 @@
 	heat_penalty = 15
 	transmit_modifier = 4
 	powermix = 1
-	// no fire info cause it has its own bespoke reaction for trit generation reasons
+	fire_burn_rate = OXYGEN_BURN_RATE_BASE // named when plasma fires were the only fires, surely
+	fire_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
+	fire_products = "plasma_fire"
+	enthalpy = FIRE_PLASMA_ENERGY_RELEASED // 3000000, 3 megajoules, 3000 kj
 
 /datum/gas/water_vapor
 	id = GAS_H2O
@@ -64,6 +68,7 @@
 	moles_visible = MOLES_GAS_VISIBLE
 	fusion_power = 8
 	heat_penalty = 8
+	enthalpy = -241800 // FIRE_HYDROGEN_ENERGY_RELEASED is actually what this was supposed to be
 	powermix = 1
 	breath_reagent = /datum/reagent/water
 
@@ -84,6 +89,7 @@
 	fire_products = list(GAS_N2 = 1)
 	oxidation_rate = 0.5
 	oxidation_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100
+	enthalpy = 81600
 	heat_resistance = 6
 
 /datum/gas/nitryl
@@ -95,6 +101,7 @@
 	flags = GAS_FLAG_DANGEROUS
 	fusion_power = 15
 	fire_products = list(GAS_N2 = 0.5)
+	enthalpy = 33200
 	oxidation_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 50
 
 /datum/gas/tritium
@@ -108,13 +115,10 @@
 	powermix = 1
 	heat_penalty = 10
 	transmit_modifier = 30
-	/*
-	these are for when we add hydrogen, trit gets to keep its hardcoded fire for legacy reasons
-	fire_provides = list(GAS_H2O = 2)
+	fire_products = list(GAS_H2O = 2)
 	fire_burn_rate = 2
-	fire_energy_released = FIRE_HYDROGEN_ENERGY_RELEASED
+	fire_radiation_released = 50 // arbitrary number, basically 60 moles of trit burning will just barely start to harm you
 	fire_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 50
-	*/
 
 /datum/gas/bz
 	id = GAS_BZ
@@ -124,6 +128,7 @@
 	fusion_power = 8
 	powermix = 1
 	heat_penalty = 5
+	enthalpy = FIRE_CARBON_ENERGY_RELEASED // it is a mystery
 	transmit_modifier = -2
 	radioactivity_modifier = 5
 
@@ -139,7 +144,8 @@
 	name = "Pluoxium"
 	fusion_power = 10
 	oxidation_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 1000 // it is VERY stable
-	oxidation_rate = 8
+	oxidation_rate = 8 // when it can oxidize, it can oxidize a LOT
+	enthalpy = -50000 // but it reduces the heat output a bit
 	powermix = -1
 	heat_penalty = -1
 	transmit_modifier = -5
@@ -172,7 +178,7 @@
 			alert_type = /atom/movable/screen/alert/too_much_ch4
 		)
 	)
-	fire_energy_released = FIRE_CARBON_ENERGY_RELEASED
+	enthalpy = -74600
 	fire_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 
 /datum/gas/methyl_bromide
@@ -192,7 +198,16 @@
 			alert_type = /atom/movable/screen/alert/too_much_ch3br
 		)
 	)
-	fire_products = list(GAS_CO2 = 1, GAS_H2O = 1.5, GAS_BZ = 0.5)
-	fire_energy_released = FIRE_CARBON_ENERGY_RELEASED
-	fire_burn_rate = 0.5
+	fire_products = list(GAS_CO2 = 1, GAS_H2O = 1.5, GAS_BROMINE = 0.5)
+	enthalpy = -35400
+	fire_burn_rate = 4 / 7 // oh no
 	fire_temperature = 808 // its autoignition, it apparently doesn't spark readily, so i don't put it lower
+
+/datum/gas/bromine
+	id = GAS_BROMINE
+	specific_heat = 76
+	name = "Bromine"
+	flags = GAS_FLAG_DANGEROUS
+	group = GAS_GROUP_CHEMICALS
+	enthalpy = 193 // yeah it's small but it's good to include it
+	breath_reagent = /datum/reagent/bromine

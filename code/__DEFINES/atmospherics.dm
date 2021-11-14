@@ -264,9 +264,13 @@
 #define GAS_MIASMA				"miasma"
 #define GAS_METHANE				"methane"
 #define GAS_METHYL_BROMIDE		"methyl_bromide"
+#define GAS_BROMINE				"bromine"
+
+#define GAS_GROUP_CHEMICALS		"Chemicals"
 
 #define GAS_FLAG_DANGEROUS		(1<<0)
 #define GAS_FLAG_BREATH_PROC	(1<<1)
+#define GAS_FLAG_CHEMICAL		(1<<2)
 
 //SUPERMATTER DEFINES
 #define HEAT_PENALTY "heat penalties"

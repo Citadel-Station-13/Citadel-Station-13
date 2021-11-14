@@ -32,10 +32,12 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GA
 	var/list/oxidation_temperatures = list()
 	var/list/oxidation_rates = list()
 	var/list/fire_temperatures = list()
-	var/list/fire_enthalpies = list()
+	var/list/enthalpies = list()
 	var/list/fire_products = list()
 	var/list/fire_burn_rates = list()
 	var/list/supermatter = list()
+	var/list/groups_by_gas = list()
+	var/list/groups = list()
 
 
 /datum/gas
@@ -45,6 +47,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GA
 	var/gas_overlay = "" //icon_state in icons/effects/atmospherics.dmi
 	var/moles_visible = null
 	var/flags = NONE //currently used by canisters
+	var/group = null // groups for scrubber/filter listing
 	var/fusion_power = 0 // How much the gas destabilizes a fusion reaction
 	var/breath_results = GAS_CO2 // what breathing this breathes out
 	var/breath_reagent = null // what breathing this adds to your reagents
@@ -54,8 +57,9 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GA
 	var/oxidation_rate = 1 // how many moles of this can oxidize how many moles of material
 	var/fire_temperature = null // temperature above which gas may catch fire; null for none
 	var/list/fire_products = null // what results when this gas is burned (oxidizer or fuel); null for none
-	var/fire_energy_released = 0 // how much energy is released per mole of fuel burned
+	var/enthalpy = 0 // Standard enthalpy of formation in joules, used for fires
 	var/fire_burn_rate = 1 // how many moles are burned per product released
+	var/fire_radiation_released = 0 // How much radiation is released when this gas burns
 	var/powermix = 0 // how much this gas contributes to the supermatter's powermix ratio
 	var/heat_penalty = 0 // heat and waste penalty from having the supermatter crystal surrounded by this gas; negative numbers reduce
 	var/transmit_modifier = 0 // bonus to supermatter power generation (multiplicative, since it's % based, and divided by 10)
@@ -100,13 +104,18 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GA
 			oxidation_rates[g] = gas.oxidation_rate
 			if(gas.fire_products)
 				fire_products[g] = gas.fire_products
-			fire_enthalpies[g] = gas.fire_energy_released
+			enthalpies[g] = gas.enthalpy
 		else if(gas.fire_temperature)
 			fire_temperatures[g] = gas.fire_temperature
 			fire_burn_rates[g] = gas.fire_burn_rate
 			if(gas.fire_products)
 				fire_products[g] = gas.fire_products
-			fire_enthalpies[g] = gas.fire_energy_released
+			enthalpies[g] = gas.enthalpy
+		if(gas.group)
+			if(!(gas.group in groups))
+				groups[gas.group] = list()
+			groups[gas.group] += gas
+			groups_by_gas[g] = gas.group
 		add_supermatter_properties(gas)
 		_auxtools_register_gas(gas)
 
