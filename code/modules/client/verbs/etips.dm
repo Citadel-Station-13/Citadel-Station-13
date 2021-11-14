@@ -24,6 +24,6 @@
 	set desc = "Toggles hover-over item outline"
 	set category = "Preferences"
 
-	prefs.itemoutline_pref = !prefs.itemoutline_pref
+	prefs.outline_enabled = !prefs.outline_enabled
 	prefs.save_preferences()
 	to_chat(usr, "<span class='danger'>Item outline [prefs.itemoutline_pref ? "en" : "dis"]abled.</span>")
