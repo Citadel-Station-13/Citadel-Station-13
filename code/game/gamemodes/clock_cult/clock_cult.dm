@@ -151,8 +151,8 @@ Credit where due:
 	var/datum/team/clockcult/main_clockcult
 
 /datum/game_mode/clockwork_cult/pre_setup() //Gamemode and job code is pain. Have fun codediving all of that stuff, whoever works on this next - Delta
-	var/list/errorList = list()
-	load_reebe(errorList)
+	if(!load_reebe())
+		return FALSE
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
