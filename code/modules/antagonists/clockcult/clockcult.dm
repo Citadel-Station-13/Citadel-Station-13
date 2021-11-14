@@ -251,7 +251,7 @@
 		message_admins("Reebe failed to load!")
 		log_game("Reebe failed to load!")
 		return FALSE
-	for(var/datum/parsed_map/PM in reebes)	//Temporarily commented because of z-level loading reliably segfaulting the server.
+	for(var/datum/parsed_map/PM in reebes)
 		PM.initTemplateBounds()
 	GLOB.reebe_loaded = TRUE
 	return TRUE
