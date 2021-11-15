@@ -13476,24 +13476,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
-"ayl" = (
-/obj/structure/table/wood,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/item/storage/secure/briefcase{
-	pixel_x = -2
-	},
-/obj/item/book/manual/wiki/security_space_law,
-/obj/item/cartridge/detective,
-/obj/machinery/power/apc{
-	areastring = "/area/command/heads_quarters/hos";
-	dir = 1;
-	name = "Head of Security's Office APC";
-	pixel_y = 23
-	},
-/turf/open/floor/plasteel/dark,
-/area/command/heads_quarters/hos)
 "aym" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/red{
@@ -14823,15 +14805,6 @@
 	},
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel/dark,
-/area/command/heads_quarters/hos)
-"aAy" = (
-/obj/machinery/computer/prisoner{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
 /turf/open/floor/plasteel/dark,
 /area/command/heads_quarters/hos)
 "aAz" = (
@@ -34520,13 +34493,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
-"bpO" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/exit/departure_lounge)
 "bpP" = (
 /obj/structure/lattice/catwalk,
 /obj/item/wrench,
@@ -49053,18 +49019,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engineering/main)
-"cgv" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/power/apc/highcap/fifteen_k{
-	areastring = "/area/engineering/main";
-	dir = 1;
-	name = "Engine Room APC";
-	pixel_y = 23
-	},
-/turf/open/floor/plasteel,
-/area/engineering/main)
 "cgw" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -63058,6 +63012,37 @@
 /obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"cZR" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
+"dbH" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/item/storage/secure/briefcase{
+	pixel_x = -2
+	},
+/obj/item/book/manual/wiki/security_space_law,
+/obj/item/cartridge/detective,
+/obj/machinery/power/apc{
+	areastring = "/area/command/heads_quarters/hos";
+	dir = 1;
+	name = "Head of Security's Office APC";
+	pixel_y = 23
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plasteel/dark,
+/area/command/heads_quarters/hos)
 "dcB" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -64982,6 +64967,21 @@
 /obj/structure/stairs/south,
 /turf/open/floor/plasteel,
 /area/maintenance/department/cargo)
+"gci" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/power/apc/highcap/fifteen_k{
+	areastring = "/area/engineering/main";
+	dir = 1;
+	name = "Engine Room APC";
+	pixel_y = 23
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plasteel,
+/area/engineering/main)
 "gcM" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -66100,6 +66100,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"igd" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/machinery/computer/secure_data{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/command/heads_quarters/hos)
 "igf" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -117845,7 +117854,7 @@ axW
 awm
 axd
 axF
-ayl
+dbH
 azp
 aAr
 aBS
@@ -119645,7 +119654,7 @@ ayO
 aCD
 axF
 ays
-aAy
+igd
 aBz
 cAp
 cJw
@@ -120782,7 +120791,7 @@ lQs
 ceh
 ceP
 cXQ
-cgv
+gci
 chh
 cia
 cku
@@ -128946,7 +128955,7 @@ bnL
 bot
 boJ
 blZ
-bpO
+cZR
 bqG
 brm
 blZ
@@ -129202,7 +129211,7 @@ jqb
 bnL
 bot
 eec
-bpO
+cZR
 bip
 bqH
 brn

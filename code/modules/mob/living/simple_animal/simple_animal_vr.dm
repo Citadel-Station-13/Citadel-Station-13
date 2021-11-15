@@ -49,10 +49,10 @@
 
 // Simple animals have only one belly.  This creates it (if it isn't already set up)
 /mob/living/simple_animal/init_vore()
-	ENABLE_BITFIELD(vore_flags, VORE_INIT)
-	if(CHECK_BITFIELD(flags_1, HOLOGRAM_1))
+	vore_flags |= VORE_INIT
+	if((flags_1 & HOLOGRAM_1))
 		return
-	if(!vore_active || CHECK_BITFIELD(vore_flags, NO_VORE)) //If it can't vore, let's not give it a stomach.
+	if(!vore_active || (vore_flags & NO_VORE)) //If it can't vore, let's not give it a stomach.
 		return
 	if(vore_active && !IsAdvancedToolUser()) //vore active, but doesn't have thumbs to grab people with.
 		verbs |= /mob/living/simple_animal/proc/animal_nom
@@ -133,6 +133,6 @@
 
 	if (stat != CONSCIOUS)
 		return
-	if(!CHECK_BITFIELD(T.vore_flags,DEVOURABLE))
+	if(!(T.vore_flags & DEVOURABLE))
 		return
 	return vore_attack(src,T,src)

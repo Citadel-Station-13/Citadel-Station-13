@@ -124,7 +124,7 @@
 			to_chat(user, "<span class='warning'>You need at least one floor tile to put into [src]!</span>")
 
 	else if(istype(W, /obj/item/storage/toolbox/artistic))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_FLOOR_ARTBOX))
+		if(bot_core.allowed(user) && open && !(upgrades & UPGRADE_FLOOR_ARTBOX))
 			to_chat(user, "<span class='notice'>You upgrade \the [src] case to hold more!</span>")
 			upgrades |= UPGRADE_FLOOR_ARTBOX
 			maxtiles += 100 //Double the storage!
@@ -139,7 +139,7 @@
 			to_chat(user, "<span class='notice'>The [src] already has a upgraded case!</span>")
 
 	else if(istype(W, /obj/item/storage/toolbox/syndicate))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_FLOOR_SYNDIBOX))
+		if(bot_core.allowed(user) && open && !(upgrades & UPGRADE_FLOOR_SYNDIBOX))
 			to_chat(user, "<span class='notice'>You upgrade \the [src] case to hold more!</span>")
 			upgrades |= UPGRADE_FLOOR_SYNDIBOX
 			maxtiles += 200 //Double bse storage
@@ -433,4 +433,4 @@
 			if(robot.mode == BOT_REPAIRING)
 				return TRUE
 	return FALSE
-	
+
