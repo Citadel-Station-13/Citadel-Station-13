@@ -370,7 +370,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	desc = replacetext(desc, "Danger", "Bouncy")
 	desc = replacetext(desc, "robust", "safe")
 	desc = replacetext(desc, "heavier", "bouncier")
-	DISABLE_BITFIELD(flags_1, CONDUCT_1)
+	flags_1 &= ~(CONDUCT_1)
 	custom_materials = null
 	damtype = STAMINA
 	force += 3 //to compensate the higher stamina K.O. threshold compared to actual health.

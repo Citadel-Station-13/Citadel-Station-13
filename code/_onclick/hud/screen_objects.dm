@@ -323,7 +323,7 @@
 					var/obj/item/clothing/mask/M = check
 					if(M.mask_adjusted)
 						M.adjustmask(C)
-				if(CHECK_BITFIELD(check.clothing_flags, ALLOWINTERNALS))
+				if((check.clothing_flags & ALLOWINTERNALS))
 					internals = TRUE
 			if(!internals)
 				to_chat(C, "<span class='warning'>You are not wearing an internals mask!</span>")

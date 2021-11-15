@@ -113,11 +113,11 @@
 		. += effects_exam
 
 	//CIT CHANGES START HERE - adds genital details to examine text
-	if(LAZYLEN(internal_organs) && CHECK_BITFIELD(user.client?.prefs.cit_toggles, GENITAL_EXAMINE))
+	if(LAZYLEN(internal_organs) && (user.client?.prefs.cit_toggles & GENITAL_EXAMINE))
 		for(var/obj/item/organ/genital/dicc in internal_organs)
 			if(istype(dicc) && dicc.is_exposed())
 				. += "[dicc.desc]"
-	if(CHECK_BITFIELD(user.client?.prefs.cit_toggles, VORE_EXAMINE))
+	if(user.client?.prefs.cit_toggles & VORE_EXAMINE)
 		var/cursed_stuff = attempt_vr(src,"examine_bellies",args) //vore Code
 		if(cursed_stuff)
 			. += cursed_stuff

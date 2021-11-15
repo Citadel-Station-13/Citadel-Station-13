@@ -181,15 +181,15 @@
 
 	data["selected"] = selected_list
 	data["prefs"] = list(
-		"digestable" = CHECK_BITFIELD(host.vore_flags, DIGESTABLE),
-		"devourable" = CHECK_BITFIELD(host.vore_flags, DEVOURABLE),
-		"feeding" = CHECK_BITFIELD(host.vore_flags, FEEDING),
-		"absorbable" = CHECK_BITFIELD(host.vore_flags, ABSORBABLE),
-		"allowmobvore" = CHECK_BITFIELD(host.vore_flags, MOBVORE),
-		"vore_sounds" = CHECK_BITFIELD(host.client.prefs.cit_toggles, EATING_NOISES),
-		"digestion_sounds" = CHECK_BITFIELD(host.client.prefs.cit_toggles, DIGESTION_NOISES),
-		"lickable" = CHECK_BITFIELD(host.vore_flags, LICKABLE),
-		"smellable" = CHECK_BITFIELD(host.vore_flags, SMELLABLE),
+		"digestable" = (host.vore_flags & DIGESTABLE),
+		"devourable" = (host.vore_flags & DEVOURABLE),
+		"feeding" = (host.vore_flags & FEEDING),
+		"absorbable" = (host.vore_flags & ABSORBABLE),
+		"allowmobvore" = (host.vore_flags & MOBVORE),
+		"vore_sounds" = (host.client.prefs.cit_toggles & EATING_NOISES),
+		"digestion_sounds" = (host.client.prefs.cit_toggles & DIGESTION_NOISES),
+		"lickable" = (host.vore_flags & LICKABLE),
+		"smellable" = (host.vore_flags & SMELLABLE),
 	)
 
 	return data
@@ -307,49 +307,49 @@
 			unsaved_changes = TRUE
 			return TRUE
 		if("toggle_digest")
-			TOGGLE_BITFIELD(host.vore_flags, DIGESTABLE)
+			(host.vore_flags ^= DIGESTABLE)
 			if(host.client.prefs)
 				COPY_SPECIFIC_BITFIELDS(host.client.prefs.vore_flags, host.vore_flags, DIGESTABLE)
 			unsaved_changes = TRUE
 			return TRUE
 		if("toggle_devour")
-			TOGGLE_BITFIELD(host.vore_flags, DEVOURABLE)
+			(host.vore_flags ^= DEVOURABLE)
 			if(host.client.prefs)
 				COPY_SPECIFIC_BITFIELDS(host.client.prefs.vore_flags, host.vore_flags, DEVOURABLE)
 			unsaved_changes = TRUE
 			return TRUE
 		if("toggle_feed")
-			TOGGLE_BITFIELD(host.vore_flags, FEEDING)
+			(host.vore_flags ^= FEEDING)
 			if(host.client.prefs)
 				COPY_SPECIFIC_BITFIELDS(host.client.prefs.vore_flags, host.vore_flags, FEEDING)
 			unsaved_changes = TRUE
 			return TRUE
 		if("toggle_absorbable")
-			TOGGLE_BITFIELD(host.vore_flags, ABSORBABLE)
+			(host.vore_flags ^= ABSORBABLE)
 			if(host.client.prefs)
 				COPY_SPECIFIC_BITFIELDS(host.client.prefs.vore_flags, host.vore_flags, ABSORBABLE)
 			unsaved_changes = TRUE
 			return TRUE
 		if("toggle_mobvore")
-			TOGGLE_BITFIELD(host.vore_flags, MOBVORE)
+			(host.vore_flags ^= MOBVORE)
 			if(host.client.prefs)
 				COPY_SPECIFIC_BITFIELDS(host.client.prefs.vore_flags, host.vore_flags, MOBVORE)
 			unsaved_changes = TRUE
 			return TRUE
 		if("toggle_vore_sounds")
-			TOGGLE_BITFIELD(host.client.prefs.cit_toggles, EATING_NOISES)
+			(host.client.prefs.cit_toggles ^= EATING_NOISES)
 			unsaved_changes = TRUE
 			return TRUE
 		if("toggle_digestion_sounds")
-			TOGGLE_BITFIELD(host.client.prefs.cit_toggles, DIGESTION_NOISES)
+			(host.client.prefs.cit_toggles ^= DIGESTION_NOISES)
 			unsaved_changes = TRUE
 			return TRUE
 		if("toggle_lickable")
-			TOGGLE_BITFIELD(host.vore_flags, LICKABLE)
+			(host.vore_flags ^= LICKABLE)
 			unsaved_changes = TRUE
 			return TRUE
 		if("toggle_smellable")
-			TOGGLE_BITFIELD(host.vore_flags, SMELLABLE)
+			(host.vore_flags ^= SMELLABLE)
 			unsaved_changes = TRUE
 			return TRUE
 

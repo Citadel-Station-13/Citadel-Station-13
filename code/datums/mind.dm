@@ -141,7 +141,7 @@
 	if(isliving(new_character)) //New humans and such are by default enabled arousal. Let's always use the new mind's prefs.
 		var/mob/living/L = new_character
 		if(L.client?.prefs && L.client.prefs.auto_ooc && L.client.prefs.chat_toggles & CHAT_OOC)
-			DISABLE_BITFIELD(L.client.prefs.chat_toggles,CHAT_OOC)
+			L.client.prefs.chat_toggles &= ~(CHAT_OOC)
 
 	hide_ckey = current.client?.prefs?.hide_ckey
 

@@ -198,7 +198,7 @@
 			if(start_T && end_T)
 				log_combat(src, throwable_mob, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
 
-	else if(!CHECK_BITFIELD(I.item_flags, ABSTRACT) && !HAS_TRAIT(I, TRAIT_NODROP))
+	else if(!(I.item_flags & ABSTRACT) && !HAS_TRAIT(I, TRAIT_NODROP))
 		thrown_thing = I
 		dropItemToGround(I)
 
@@ -621,12 +621,12 @@
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			set_resting(TRUE, FALSE, FALSE)
 			SEND_SIGNAL(src, COMSIG_DISABLE_COMBAT_MODE)
-			ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT)
+			combat_flags |= COMBAT_FLAG_HARD_STAMCRIT
 			filters += CIT_FILTER_STAMINACRIT
 			update_mobility()
 	if((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && total_health <= STAMINA_CRIT_REMOVAL_THRESHOLD)
 		to_chat(src, "<span class='notice'>You don't feel nearly as exhausted anymore.</span>")
-		DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT)
+		combat_flags &= ~(COMBAT_FLAG_HARD_STAMCRIT)
 		filters -= CIT_FILTER_STAMINACRIT
 		update_mobility()
 	UpdateStaminaBuffer()
