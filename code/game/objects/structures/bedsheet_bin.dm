@@ -7,6 +7,38 @@ LINEN BINS
 #define BEDSHEET_SINGLE "single"
 #define BEDSHEET_DOUBLE "double"
 
+GLOBAL_LIST_INIT(double_bedsheets, list(/obj/item/bedsheet/double,
+										/obj/item/bedsheet/blue/double,
+										/obj/item/bedsheet/green/double,
+										/obj/item/bedsheet/grey/double,
+										/obj/item/bedsheet/orange/double,
+										/obj/item/bedsheet/purple/double,
+										/obj/item/bedsheet/patriot/double,
+										/obj/item/bedsheet/rainbow/double,
+										/obj/item/bedsheet/red/double,
+										/obj/item/bedsheet/yellow/double,
+										/obj/item/bedsheet/mime/double,
+										/obj/item/bedsheet/clown/double,
+										/obj/item/bedsheet/captain/double,
+										/obj/item/bedsheet/rd/double,
+										/obj/item/bedsheet/medical/double,
+										/obj/item/bedsheet/cmo/double,
+										/obj/item/bedsheet/hos/double,
+										/obj/item/bedsheet/hop/double,
+										/obj/item/bedsheet/ce/double,
+										/obj/item/bedsheet/qm/double,
+										/obj/item/bedsheet/chaplain/double,
+										/obj/item/bedsheet/brown/double,
+										/obj/item/bedsheet/black/double,
+										/obj/item/bedsheet/centcom/double,
+										/obj/item/bedsheet/syndie/double,
+										/obj/item/bedsheet/cult/double,
+										/obj/item/bedsheet/wiz/double,
+										/obj/item/bedsheet/nanotrasen/double,
+										/obj/item/bedsheet/ian/double,
+										/obj/item/bedsheet/cosmos/double
+										))
+
 /obj/item/bedsheet
 	name = "bedsheet"
 	desc = "A surprisingly soft linen bedsheet."
@@ -255,9 +287,10 @@ LINEN BINS
 
 /obj/item/bedsheet/random/Initialize()
 	..()
-	var/type = pick(typesof(/obj/item/bedsheet) - (list(/obj/item/bedsheet/random, /obj/item/bedsheet/chameleon) + typesof(/obj/item/bedsheet/unlockable)))
-	new type(loc)
-	return INITIALIZE_HINT_QDEL
+	if(bedsheet_type == BEDSHEET_SINGLE)
+		var/type = pick(typesof(/obj/item/bedsheet) - (list(/obj/item/bedsheet/random, /obj/item/bedsheet/chameleon) + typesof(/obj/item/bedsheet/unlockable) + GLOB.double_bedsheets))
+		new type(loc)
+		return INITIALIZE_HINT_QDEL
 
 /obj/item/bedsheet/double
 	icon_state = "double_sheetwhite"
@@ -411,12 +444,14 @@ LINEN BINS
 
 /obj/item/bedsheet/random/double
 	icon_state = "random_bedsheet"
+	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/random/double/Initialize()
 	..()
-	var/type = pick(typesof(/obj/item/bedsheet) - /obj/item/bedsheet/random)
-	new type(loc)
-	return INITIALIZE_HINT_QDEL
+	if(bedsheet_type == BEDSHEET_DOUBLE)
+		var/type = pick(GLOB.double_bedsheets)
+		new type(loc)
+		return INITIALIZE_HINT_QDEL
 
 /obj/item/bedsheet/chameleon //donator chameleon bedsheet
 	name = "chameleon bedsheet"
