@@ -73,12 +73,13 @@ const VendingRow = (props, context) => {
     onstation,
     department,
     user,
-    jobDiscount,
   } = data;
   const free = (
     !onstation
     || (product.price === 0)
-    || ((department === user.department) && !product.premium)
+    || ((department && user) // department AND user MUST exist
+      && (department === user.department)
+      && !product.premium)
   );
 
   return (

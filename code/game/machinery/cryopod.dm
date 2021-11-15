@@ -25,9 +25,18 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 	// Used for logging people entering cryosleep and important items they are carrying.
 	var/list/frozen_crew = list()
+	var/list/stored_packages = list()
+	/// Does this console store items? if NOT, will dump all items when the user cryo's instead
+	var/allow_items = TRUE
 
 	var/storage_type = "crewmembers"
 	var/storage_name = "Cryogenic Oversight Control"
+
+/obj/machinery/computer/cryopod/deconstruct()
+	. = ..()
+	for(var/i in stored_packages)
+		var/obj/O = i
+		O.forceMove(drop_location())
 
 /obj/machinery/computer/cryopod/Initialize()
 	. = ..()
@@ -58,6 +67,11 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 /obj/machinery/computer/cryopod/ui_data(mob/user)
 	var/list/data = list()
 	data["frozen_crew"] = frozen_crew
+	var/list/item_meta = list()
+
+	for(var/obj/item/storage/box/blue/cryostorage_items/O as anything in stored_packages)
+		item_meta += list(list("name" = O.real_name, "ref" = REF(O))) // i am truely livid about byond lists
+	data["item_meta"] = item_meta
 
 	var/obj/item/card/id/id_card
 	var/datum/bank_account/current_user
@@ -67,9 +81,46 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	if(id_card?.registered_account)
 		current_user = id_card.registered_account
 	if(current_user)
-		data["account_name"] = current_user.account_holder
+		data["account_name"] = current_user.account_holder // i do not know why but this uses budget?
 
 	return data
+
+/obj/machinery/computer/cryopod/ui_act(action, params)
+	if(..())
+		return
+
+	if(action == "item")
+		if(!allowed(usr) && !(obj_flags & EMAGGED))
+			to_chat(usr, "<span class='warning'>Access Denied.</span>")
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			return
+
+		if(!allow_items)
+			return
+
+		if(stored_packages.len == 0)
+			to_chat(usr, "<span class='notice'>There is nothing to recover from storage.</span>")
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			return
+
+		var/obj/I = locate(params["item"])
+		playsound(src, "terminal_type", 25, 0)
+
+		if(!I)
+			return
+
+		if(!(I in stored_packages))
+			to_chat(usr, "<span class='notice'>\The [I] is no longer in storage.</span>")
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			return
+
+		visible_message("<span class='notice'>The console beeps happily as it disgorges \the [I].</span>")
+		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+
+		I.forceMove(drop_location())
+		if(usr && Adjacent(usr) && usr.can_hold_items())
+			usr.put_in_hands(I)
+		stored_packages -= I
 
 // Cryopods themselves.
 /obj/machinery/cryopod
@@ -84,7 +135,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	var/on_store_message = "has entered long-term storage."
 	var/on_store_name = "Cryogenic Oversight"
 
-	/// Time until despawn when a mob enters a cryopod. You cannot other people in pods unless they're catatonic.
+	/// Time until despawn when a mob enters a cryopod. You can cryo other people in pods.
 	var/time_till_despawn = 30 SECONDS
 	/// Cooldown for when it's now safe to try an despawn the player.
 	COOLDOWN_DECLARE(despawn_world_time)
@@ -268,14 +319,97 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 	visible_message(span_notice("[src] hums and hisses as it moves [mob_occupant.real_name] into storage."))
 
-	for(var/obj/item/item_content as anything in mob_occupant)
-		if(!istype(item_content) || HAS_TRAIT(item_content, TRAIT_NODROP))
-			continue
+	/* ============================= */
+	var/list/obj/item/storing = list()
+	var/list/obj/item/destroying = list()
+	var/list/obj/item/destroy_later = list()
+	var/drop_to_ground = !istype(control_computer, /obj/machinery/computer/cryopod) || !control_computer.allow_items
+	var/mind_identity = mob_occupant.mind?.name
+	var/occupant_identity = mob_occupant.real_name
 
-		mob_occupant.transferItemToLoc(item_content, drop_location(), force = TRUE, silent = TRUE)
+	if(iscyborg(mob_occupant))
+		var/mob/living/silicon/robot/R = mob_occupant
+		if(R.mmi?.brain)
+			destroy_later += R.mmi
+			destroy_later += R.mmi.brain
+		for(var/i in R.module)
+			if(!isitem(i))
+				destroying += i
+				continue
+			var/obj/item/I = i
+			// let's be honest we only care about the trash bag don't beat around the bush
+			if(SEND_SIGNAL(I, COMSIG_CONTAINS_STORAGE))
+				storing += I.contents
+				for(var/atom/movable/AM in I.contents)
+					AM.forceMove(src)
+			R.module.remove_module(I, TRUE)
+	else
+		if(ishuman(mob_occupant))
+			var/mob/living/carbon/human/H = mob_occupant
+			if(H.mind && H.client && H.client.prefs && H == H.mind.original_character)
+				H.SaveTCGCards()
 
+		var/list/gear = list()
+		if(iscarbon(mob_occupant))		// sorry simp-le-mobs deserve no mercy
+			var/mob/living/carbon/C = mob_occupant
+			gear = C.get_all_gear()
+
+		for(var/obj/item/item_content as anything in gear)
+			if(!istype(item_content) || HAS_TRAIT(item_content, TRAIT_NODROP))
+				destroying += item_content
+				continue
+			if(item_content.item_flags & (DROPDEL | ABSTRACT))
+				destroying += item_content
+				continue
+
+			// destroying stays in mob for a bit
+			item_content.forceMove(src)
+
+			// WEE WOO SNOWFLAKE TIME
+			if(istype(item_content, /obj/item/pda))
+				var/obj/item/pda/P = item_content
+				if((P.owner == mind_identity) || (P.owner == occupant_identity))
+					destroying += P
+				else
+					storing += P
+			else if(istype(item_content, /obj/item/card/id))
+				var/obj/item/card/id/idcard = item_content
+				if((idcard.registered_name == mind_identity) || (idcard.registered_name == occupant_identity))
+					destroying += idcard
+				else
+					storing += idcard
+			else
+				storing += item_content
+
+	// get rid of mobs
+	for(var/mob/living/L in mob_occupant.GetAllContents() - mob_occupant)
+		L.forceMove(drop_location())
+
+	if(storing.len)
+		var/obj/item/storage/box/blue/cryostorage_items/O = new /obj/item/storage/box/blue/cryostorage_items
+		O.name = "cryogenic retrieval package: [mob_occupant.real_name]"
+		O.real_name = mob_occupant.real_name
+		for(var/i in storing)
+			var/obj/item/I = i
+			I.forceMove(O)
+		O.forceMove(drop_to_ground ? control_computer.drop_location() : control_computer)
+		if((control_computer == control_computer) && !drop_to_ground)
+			control_computer.stored_packages += O
+	/* ============================= */
+
+	// Ghost and delete the mob.
+	// they already did ghost verb
+	var/mob/dead/observer/G = mob_occupant.get_ghost(TRUE)
+	if(G)
+		G.voluntary_ghosted = TRUE
+	// they did not ghost verb
+	else
+		mob_occupant.ghostize(FALSE, penalize = TRUE, voluntary = TRUE, cryo = TRUE)
+
+	QDEL_LIST(destroying)
 	handle_objectives()
 	QDEL_NULL(occupant)
+	QDEL_LIST(destroy_later)
 	open_machine()
 	name = initial(name)
 
@@ -291,38 +425,39 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		to_chat(user, span_notice("Dead people can not be put into cryo."))
 		return
 
-	if(target.key && user != target)
+	if(user != target)
 		// if(iscyborg(target))
 		// 	to_chat(user, span_danger("You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] online."))
 		// else
 		// 	to_chat(user, span_danger("You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] conscious."))
-		if(tgalert(target, "Would you like to enter cryosleep?", "Enter Cryopod?", "Yes", "No") != "Yes")
-			to_chat(user, span_danger("You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] [iscyborg(target) ? "conscious" : "online"] and has selected 'No'."))
-			return
+		if(target.key)
+			// key exists, ask them
+			if(tgalert(target, "Would you like to enter cryosleep?", "Enter Cryopod?", "Yes", "No") != "Yes")
+				to_chat(user, span_danger("You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] [iscyborg(target) ? "conscious" : "online"] and has selected 'No'."))
+				return
 	// target is us
-	else if(tgalert(target, "Would you like to enter cryosleep?", "Enter Cryopod?", "Yes", "No") != "Yes")
+	else if(user == target && tgalert(target, "Would you like to enter cryosleep?", "Enter Cryopod?", "Yes", "No") != "Yes")
 		return
 
-	if(target == user)
-		var/list/caught_string
-		var/addendum = ""
-		if(target.mind.assigned_role in GLOB.command_positions)
-			LAZYADD(caught_string, "Head of Staff")
-			addendum = " Be sure to put your locker items back into your locker!"
-		if(iscultist(target) || is_servant_of_ratvar(target))
-			LAZYADD(caught_string, "Cultist")
-		if(is_devil(target))
-			LAZYADD(caught_string, "Devil")
-		if(target.mind.has_antag_datum(/datum/antagonist/gang))
-			LAZYADD(caught_string, "Gangster")
-		if(target.mind.has_antag_datum(/datum/antagonist/rev/head))
-			LAZYADD(caught_string, "Head Revolutionary")
-		if(target.mind.has_antag_datum(/datum/antagonist/rev))
-			LAZYADD(caught_string, "Revolutionary")
+	var/list/caught_string
+	var/addendum = ""
+	if(target.mind.assigned_role in GLOB.command_positions)
+		LAZYADD(caught_string, "Head of Staff")
+		addendum = " Be sure to put your locker items back into your locker!"
+	if(iscultist(target) || is_servant_of_ratvar(target))
+		LAZYADD(caught_string, "Cultist")
+	if(is_devil(target))
+		LAZYADD(caught_string, "Devil")
+	if(target.mind.has_antag_datum(/datum/antagonist/gang))
+		LAZYADD(caught_string, "Gangster")
+	if(target.mind.has_antag_datum(/datum/antagonist/rev/head))
+		LAZYADD(caught_string, "Head Revolutionary")
+	if(target.mind.has_antag_datum(/datum/antagonist/rev))
+		LAZYADD(caught_string, "Revolutionary")
 
-		if(caught_string)
-			tgui_alert(target, "You're a [english_list(caught_string)]! [AHELP_FIRST_MESSAGE][addendum]")
-			target.client.cryo_warned = world.time
+	if(caught_string)
+		tgui_alert(target, "You're a [english_list(caught_string)]! [AHELP_FIRST_MESSAGE][addendum]")
+		target.client.cryo_warned = world.time
 
 	if(!istype(target) || !can_interact(user) || !target.Adjacent(user) || !ismob(target) || isanimal(target) || !istype(user.loc, /turf) || target.buckled)
 		return
@@ -361,3 +496,8 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 /obj/machinery/computer/cryopod/contents_explosion()
 	return			//don't blow everyone's shit up.
+
+/// The box
+/obj/item/storage/box/blue/cryostorage_items
+	w_class = WEIGHT_CLASS_HUGE
+	var/real_name = "fire coderbus"
