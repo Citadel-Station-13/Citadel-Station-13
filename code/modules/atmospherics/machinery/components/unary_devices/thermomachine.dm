@@ -217,16 +217,11 @@
 	min_temperature = max(T0C - (initial(min_temperature) + L * 15), TCMB) //73.15K with T1 stock parts
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/AltClick(mob/living/user)
-	. = ..()
-	var/area/A = get_area(src)
-	var/turf/T = get_turf(src)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!can_interact(user))
 		return
 	target_temperature = min_temperature
-	to_chat(user,"<span class='notice'>You minimize the temperature on the [src].</span>")
-	investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
-	message_admins("[src.name] was minimized by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
-	return TRUE
+	investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
+	balloon_alert(user, "temperature reset to [target_temperature] K")
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater
 	name = "heater"

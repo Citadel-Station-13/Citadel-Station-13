@@ -1,17 +1,10 @@
 import { BooleanLike } from 'common/react';
-import { useBackend, useLocalState } from '../backend';
-import { BlockQuote, Button, Dimmer, Section, Stack } from '../components';
+import { useBackend } from '../backend';
+import { Section, Stack } from '../components';
 import { Window } from '../layouts';
-
-interface Objective {
-  count: number;
-  name: string;
-  explanation: string;
-}
 
 interface Info {
   HONOR_RATVAR: BooleanLike;
-  objectives: Objective[];
 }
 
 let REC_RATVAR = "";
@@ -77,32 +70,5 @@ export const AntagInfoClockwork = (props, context) => {
         </Section>
       </Window.Content>
     </Window>
-  );
-};
-
-const ObjectivePrintout = (props, context) => {
-  const { data } = useBackend<Info>(context);
-  const {
-    objectives,
-  } = data;
-  return (
-    <Stack vertical>
-      <Stack.Item bold>
-        Your current objectives:
-      </Stack.Item>
-      <Stack.Item>
-        {!objectives && "None!"
-        || objectives.map((objective: Objective) => (
-          <>
-            <Stack.Item key={objective.count}>
-              #{objective.count}: {objective.explanation}
-            </Stack.Item>
-            <Stack.Item textColor="red">
-              This Directive must be followed.
-            </Stack.Item>
-          </>
-        )) }
-      </Stack.Item>
-    </Stack>
   );
 };

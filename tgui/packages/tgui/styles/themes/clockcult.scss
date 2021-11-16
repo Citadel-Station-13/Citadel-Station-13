@@ -6,6 +6,12 @@
 @use 'sass:color';
 @use 'sass:meta';
 
+
+@use '../base.scss' with (
+  $color-bg: #c9b12a,
+  $color-bg-grad-spread: 6%,
+  $border-radius: 2px,
+);
 @use '../colors.scss' with (
   $primary: #B18B25,
   $good: #CFBA47,
@@ -14,16 +20,8 @@
   $fg-map-keys: (),
   $bg-map-keys: (),
 );
-@use '../base.scss' with (
-  $color-bg: #c9b12a,
-  $color-bg-grad-spread: 6%,
-  $border-radius: 2px,
-);
 
 .theme-clockcult {
-  // Atomic classes
-  @include meta.load-css('../atomic/color.scss');
-
   // Components
   @include meta.load-css('../components/Button.scss', $with: (
     'color-default': #5F380E, //wrong.

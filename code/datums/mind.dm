@@ -272,7 +272,6 @@
  *
  * A mind proc for giving anyone an uplink.
  * arguments:
- * * traitor_class: (cit specific) the type of antag the user is.
  * * silent: if this should send a message to the mind getting the uplink. traitors do not use this silence, but the silence var on their antag datum.
  * * antag_datum: the antag datum of the uplink owner, for storing it in antag memory. optional!
  */

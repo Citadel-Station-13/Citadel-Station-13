@@ -25,7 +25,7 @@
 /obj/machinery/manned_turret/Destroy()
 	target = null
 	target_turf = null
-	..()
+	return ..()
 
 //BUCKLE HOOKS
 
