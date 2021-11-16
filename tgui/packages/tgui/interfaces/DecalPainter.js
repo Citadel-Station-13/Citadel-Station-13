@@ -23,7 +23,6 @@ export const DecalPainter = (props, context) => {
                 padding: 0,
               }}
               selected={decal.decal === data.decal_style}
-              content={decal.name}
               onClick={() => act('select decal', {
                 decals: decal.decal,
               })}>

@@ -425,39 +425,36 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		to_chat(user, span_notice("Dead people can not be put into cryo."))
 		return
 
-	if(user != target)
-		// if(iscyborg(target))
-		// 	to_chat(user, span_danger("You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] online."))
-		// else
-		// 	to_chat(user, span_danger("You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] conscious."))
-		if(target.key)
-			// key exists, ask them
-			if(tgalert(target, "Would you like to enter cryosleep?", "Enter Cryopod?", "Yes", "No") != "Yes")
-				to_chat(user, span_danger("You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] [iscyborg(target) ? "conscious" : "online"] and has selected 'No'."))
-				return
-	// target is us
-	else if(user == target && tgalert(target, "Would you like to enter cryosleep?", "Enter Cryopod?", "Yes", "No") != "Yes")
+	if(user != target && target.client)
+		if(iscyborg(target))
+			to_chat(user, span_danger("You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] online."))
+		else
+			to_chat(user, span_danger("You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] conscious."))
 		return
+	else if(target.client) // mob has client
+		if(tgalert(target, "Would you like to enter cryosleep?", "Enter Cryopod?", "Yes", "No") != "Yes")
+			return
 
-	var/list/caught_string
-	var/addendum = ""
-	if(target.mind.assigned_role in GLOB.command_positions)
-		LAZYADD(caught_string, "Head of Staff")
-		addendum = " Be sure to put your locker items back into your locker!"
-	if(iscultist(target) || is_servant_of_ratvar(target))
-		LAZYADD(caught_string, "Cultist")
-	if(is_devil(target))
-		LAZYADD(caught_string, "Devil")
-	if(target.mind.has_antag_datum(/datum/antagonist/gang))
-		LAZYADD(caught_string, "Gangster")
-	if(target.mind.has_antag_datum(/datum/antagonist/rev/head))
-		LAZYADD(caught_string, "Head Revolutionary")
-	if(target.mind.has_antag_datum(/datum/antagonist/rev))
-		LAZYADD(caught_string, "Revolutionary")
+	if(target == user && world.time - target.client.cryo_warned > 5 MINUTES)
+		var/list/caught_string
+		var/addendum = ""
+		if(target.mind.assigned_role in GLOB.command_positions)
+			LAZYADD(caught_string, "Head of Staff")
+			addendum = " Be sure to put your locker items back into your locker!"
+		if(iscultist(target) || is_servant_of_ratvar(target))
+			LAZYADD(caught_string, "Cultist")
+		if(is_devil(target))
+			LAZYADD(caught_string, "Devil")
+		if(target.mind.has_antag_datum(/datum/antagonist/gang))
+			LAZYADD(caught_string, "Gangster")
+		if(target.mind.has_antag_datum(/datum/antagonist/rev/head))
+			LAZYADD(caught_string, "Head Revolutionary")
+		if(target.mind.has_antag_datum(/datum/antagonist/rev))
+			LAZYADD(caught_string, "Revolutionary")
 
-	if(caught_string)
-		tgui_alert(target, "You're a [english_list(caught_string)]! [AHELP_FIRST_MESSAGE][addendum]")
-		target.client.cryo_warned = world.time
+		if(caught_string)
+			tgui_alert(target, "You're a [english_list(caught_string)]! [AHELP_FIRST_MESSAGE][addendum]")
+			target.client.cryo_warned = world.time
 
 	if(!istype(target) || !can_interact(user) || !target.Adjacent(user) || !ismob(target) || isanimal(target) || !istype(user.loc, /turf) || target.buckled)
 		return
