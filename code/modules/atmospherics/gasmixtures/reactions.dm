@@ -78,7 +78,7 @@
 	exclude = TRUE
 	var/datum/reagent/condensing_reagent
 
-/datum/gas_reaction/condensation/New(var/datum/reagent/R)
+/datum/gas_reaction/condensation/New(datum/reagent/R)
 	. = ..()
 	if(!istype(R))
 		return
