@@ -71,49 +71,45 @@
 
 // no test cause it's entirely based on location
 
-/datum/gas_reaction/reagent_stuff
+/datum/gas_reaction/condensation
 	priority = 0
 	name = "Condensation"
 	id = "condense"
+	exclude = TRUE
+	var/datum/reagent/condensing_reagent
 
-/datum/gas_reaction/condensation/init_reqs()
-	var/highest_condensation_temp = -INFINITY
-	var/list/reagents = GLOB.gas_data.turf_reagents
-	for(var/gas in reagents)
-		var/datum/reagent/R = reagents[gas]
-		highest_condensation_temp = max(highest_condensation_temp, initial(R.boiling_point))
+/datum/gas_reaction/condensation/New(var/datum/reagent/R)
+	. = ..()
+	if(!istype(R))
+		return
 	min_requirements = list(
-		"MAX_TEMP" = highest_condensation_temp,
-		"ANY_REAGENT" = 1
+		"MAX_TEMP" = initial(R.boiling_point)
 	)
+	min_requirements[R.get_gas()] = MOLES_GAS_VISIBLE
+	name = "[R.name] condensation"
+	id = "[R.type] condensation"
+	condensing_reagent = R
+	exclude = FALSE
 
 /datum/gas_reaction/condensation/react(datum/gas_mixture/air, datum/holder)
+	. = NO_REACTION
 	var/turf/open/location = holder
 	if(!istype(location))
-		return NO_REACTION
-	var/list/gas_reagents = GLOB.gas_data.turf_reagents
+		return
 	var/temperature = air.return_temperature()
-	. = NO_REACTION
 	var/static/datum/reagents/reagents_holder = new
 	reagents_holder.clear_reagents()
 	reagents_holder.chem_temp = temperature
-	for(var/G in air.get_gases())
-		if(G in gas_reagents)
-			var/datum/reagent/R = gas_reagents[G]
-			if(temperature < initial(R.boiling_point))
-				var/amt = air.get_moles(G)
-				air.adjust_moles(G, -min(initial(R.condensation_amount), amt))
-				reagents_holder.add_reagent(R, amt)
-				. = REACTING
-	if(. == REACTING)
-		for(var/atom/movable/AM in location)
-			if(location.intact && AM.level == 1) //hidden under the floor
-				continue
-			reagents_holder.reaction(AM, TOUCH)
-
-		reagents_holder.reaction(location, TOUCH)
-
-
+	var/G = condensing_reagent.get_gas()
+	var/amt = air.get_moles(G)
+	air.adjust_moles(G, -min(initial(condensing_reagent.condensation_amount), amt))
+	reagents_holder.add_reagent(condensing_reagent, amt)
+	. = REACTING
+	for(var/atom/movable/AM in location)
+		if(location.intact && AM.level == 1)
+			continue
+		reagents_holder.reaction(AM, TOUCH)
+	reagents_holder.reaction(location, TOUCH)
 
 //tritium combustion: combustion of oxygen and tritium (treated as hydrocarbons). creates hotspots. exothermic
 /datum/gas_reaction/tritfire

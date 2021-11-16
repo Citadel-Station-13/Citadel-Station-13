@@ -36,6 +36,7 @@
 	if(!id_tag)
 		id_tag = assign_uid_vents()
 	generate_clean_filter_types()
+	RegisterSignal(SSdcs,COMSIG_GLOB_NEW_GAS,.proc/generate_clean_filter_types)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/generate_clean_filter_types()
 	clean_filter_types = list()

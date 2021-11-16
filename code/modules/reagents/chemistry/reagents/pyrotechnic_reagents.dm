@@ -45,7 +45,9 @@
 	color = "#FFC8C8"
 	metabolization_rate = 4
 	taste_description = "burning"
+	/* no gaseous CLF3 until i can think of a good way to get it to burn that doesn't destroy matter in mysterious ways
 	boiling_point = 289.4
+	*/
 	condensation_amount = 2
 	value = REAGENT_VALUE_COMMON
 
@@ -86,10 +88,8 @@
 
 /datum/reagent/clf3/define_gas()
 	var/datum/gas/G = ..()
-	G.fire_energy_released = 123000
-	G.oxidation_rate = 4
+	G.enthalpy = -163200
 	G.oxidation_temperature = T0C - 50
-	G.turf_reagent = src.type
 	return G
 
 /datum/reagent/sorium
@@ -164,7 +164,8 @@
 
 /datum/reagent/phlogiston/define_gas()
 	var/datum/gas/G = ..()
-	G.fire_energy_released = FIRE_PLASMA_ENERGY_RELEASED / 100
+	G.enthalpy = FIRE_PLASMA_ENERGY_RELEASED / 100
+	G.fire_products = list(GAS_O2 = 0.25, GAS_METHANE = 0.75) // meanwhile this is just magic
 	G.fire_burn_rate = 1
 	G.fire_temperature = T20C+1
 	return G

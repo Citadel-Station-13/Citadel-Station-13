@@ -104,6 +104,19 @@
 	enthalpy = 33200
 	oxidation_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 50
 
+/datum/gas/hydrogen
+	id = GAS_HYDROGEN
+	specific_heat = 10
+	name = "Hydrogen"
+	flags = GAS_FLAG_DANGEROUS
+	fusion_power = 0
+	powermix = 1
+	heat_penalty = 3
+	transmit_modifier = 10
+	fire_products = list(GAS_H2O = 2)
+	fire_burn_rate = 2
+	fire_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 50
+
 /datum/gas/tritium
 	id = GAS_TRITIUM
 	specific_heat = 10
@@ -211,3 +224,15 @@
 	group = GAS_GROUP_CHEMICALS
 	enthalpy = 193 // yeah it's small but it's good to include it
 	breath_reagent = /datum/reagent/bromine
+
+/datum/gas/ammonia
+	id = GAS_AMMONIA
+	specific_heat = 35
+	name = "Ammonia"
+	flags = GAS_FLAG_DANGEROUS
+	group = GAS_GROUP_CHEMICALS
+	enthalpy = -45900
+	breath_reagent = /datum/reagent/ammonia
+	fire_products = list(GAS_H2O = 1.5, GAS_N2 = 0.5)
+	fire_burn_rate = 4/3
+	fire_temperature = 924

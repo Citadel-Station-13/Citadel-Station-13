@@ -25,7 +25,6 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GA
 	var/list/ids = list()
 	var/list/typepaths = list()
 	var/list/fusion_powers = list()
-	var/list/turf_reagents = list()
 	var/list/breathing_classes = list()
 	var/list/breath_results = list()
 	var/list/breath_reagents = list()
@@ -52,7 +51,6 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GA
 	var/group = null // groups for scrubber/filter listing
 	var/fusion_power = 0 // How much the gas destabilizes a fusion reaction
 	var/breath_results = GAS_CO2 // what breathing this breathes out
-	var/datum/reagent/turf_reagent = null
 	var/datum/reagent/breath_reagent = null // what breathing this adds to your reagents
 	var/datum/reagent/breath_reagent_dangerous = null // what breathing this adds to your reagents IF it's above a danger threshold
 	var/list/breath_alert_info = null // list for alerts that pop up when you have too much/not enough of something
@@ -101,8 +99,6 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GA
 			breath_reagents[g] = gas.breath_reagent
 		if(gas.breath_reagent_dangerous)
 			breath_reagents_dangerous[g] = gas.breath_reagent_dangerous
-		if(gas.turf_reagent)
-			turf_reagents[g] = gas.turf_reagent
 		if(gas.oxidation_temperature)
 			oxidation_temperatures[g] = gas.oxidation_temperature
 			oxidation_rates[g] = gas.oxidation_rate
@@ -127,6 +123,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GA
 				var/datum/gas_reaction/R = r
 				R.init_reqs()
 			SSair.auxtools_update_reactions()
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_GAS, g)
 
 /proc/finalize_gas_refs()
 
