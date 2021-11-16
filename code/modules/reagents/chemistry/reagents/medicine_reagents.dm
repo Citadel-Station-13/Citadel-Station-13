@@ -1787,15 +1787,15 @@
 /datum/reagent/medicine/system_cleaner/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	if(HAS_TRAIT(M, TRAIT_ROBOTIC_ORGANISM))
-		M.adjustToxLoss(-0.4, toxins_type = TOX_SYSCORRUPT)
+		M.adjustToxLoss(-0.4*REAGENTS_EFFECT_MULTIPLIER, toxins_type = TOX_SYSCORRUPT)
 	else
-		M.adjustToxLoss(0.5)
+		M.adjustToxLoss(0.5*REAGENTS_EFFECT_MULTIPLIER)
 	. = 1
 
 /datum/reagent/medicine/system_cleaner/overdose_process(mob/living/carbon/M)
 	. = ..()
 	if(HAS_TRAIT(M, TRAIT_ROBOTIC_ORGANISM))
-		M.adjustToxLoss(0.8, toxins_type = TOX_SYSCORRUPT) //inverts its positive effect on overdose, for organics it's just more toxic
+		M.adjustToxLoss(0.8*REAGENTS_EFFECT_MULTIPLIER, toxins_type = TOX_SYSCORRUPT) //inverts its positive effect on overdose, for organics it's just more toxic
 	else
-		M.adjustToxLoss(0.5)
+		M.adjustToxLoss(0.5*REAGENTS_EFFECT_MULTIPLIER)
 	. = 1
