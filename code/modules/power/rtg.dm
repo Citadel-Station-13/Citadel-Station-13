@@ -115,7 +115,7 @@
 /obj/machinery/power/rtg/abductor/blob_act(obj/structure/blob/B)
 	overload()
 
-/obj/machinery/power/rtg/abductor/ex_act()
+/obj/machinery/power/rtg/abductor/ex_act(severity, target, origin)
 	if(going_kaboom)
 		qdel(src)
 	else

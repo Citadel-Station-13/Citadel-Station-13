@@ -56,7 +56,7 @@
 			throwdamage = 0
 	take_damage(throwdamage, BRUTE, "melee", 1, get_dir(src, AM))
 
-/obj/ex_act(severity, target)
+/obj/ex_act(severity, target, origin)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
 	..() //contents explosion

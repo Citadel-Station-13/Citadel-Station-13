@@ -132,10 +132,10 @@
 
 
 // pipe affected by explosion
-/obj/structure/disposalpipe/contents_explosion(severity, target)
+/obj/structure/disposalpipe/contents_explosion(severity, target, origin)
 	var/obj/structure/disposalholder/H = locate() in src
 	if(H)
-		H.contents_explosion(severity, target)
+		H.contents_explosion(severity, target, origin)
 
 
 /obj/structure/disposalpipe/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)

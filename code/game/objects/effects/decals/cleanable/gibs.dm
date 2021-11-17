@@ -36,7 +36,7 @@
 	. = ..()
 	return /obj/effect/decal/cleanable/blood/gibs/old
 
-/obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
+/obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target, origin)
 	return
 
 /obj/effect/decal/cleanable/blood/gibs/Crossed(mob/living/L)

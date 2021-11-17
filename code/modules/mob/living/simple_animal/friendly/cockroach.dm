@@ -60,5 +60,5 @@
 		else
 			visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
 
-/mob/living/simple_animal/cockroach/ex_act() //Explosions are a terrible way to handle a cockroach.
+/mob/living/simple_animal/cockroach/ex_act(severity, target, origin) //Explosions are a terrible way to handle a cockroach.
 	return

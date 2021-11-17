@@ -84,7 +84,7 @@ FLOOR SAFES
 /obj/structure/safe/blob_act(obj/structure/blob/B)
 	return
 
-/obj/structure/safe/ex_act(severity, target)
+/obj/structure/safe/ex_act(severity, target, origin)
 	if(((severity == 2 && target == src) || severity == 1) && explosion_count < BROKEN_THRESHOLD)
 		explosion_count++
 		switch(explosion_count)

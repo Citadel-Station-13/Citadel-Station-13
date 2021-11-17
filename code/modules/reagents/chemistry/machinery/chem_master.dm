@@ -46,16 +46,16 @@
 	for(var/obj/item/reagent_containers/glass/beaker/B in component_parts)
 		reagents.maximum_volume += B.reagents.maximum_volume
 
-/obj/machinery/chem_master/ex_act(severity, target)
+/obj/machinery/chem_master/ex_act(severity, target, origin)
 	if(severity < 3)
 		..()
 
-/obj/machinery/chem_master/contents_explosion(severity, target)
+/obj/machinery/chem_master/contents_explosion(severity, target, origin)
 	..()
 	if(beaker)
-		beaker.ex_act(severity, target)
+		beaker.ex_act(severity, target, origin)
 	if(bottle)
-		bottle.ex_act(severity, target)
+		bottle.ex_act(severity, target, origin)
 
 /obj/machinery/chem_master/Exited(atom/movable/A, atom/newloc)
 	. = ..()
