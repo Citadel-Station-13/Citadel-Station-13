@@ -1,0 +1,5 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - bugfix: "Devastation level explosions no longer delete your organs after gibbing you."
+  - code_imp: "Adjusted all overrides of ex_act() and contents_explosion() to take account of current args for them."
