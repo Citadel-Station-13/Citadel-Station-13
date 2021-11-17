@@ -1,0 +1,5 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - rscadd: "When your statpanel doesn't load, you'll get a message with a button to fix it."
+  - bugfix: "The fix chat message button now works."
