@@ -54,7 +54,7 @@ export const ClockworkSlab = (props, context) => {
     // Flatten all categories and apply search to it
     // truthy because WE DO NOT WANT TO RETURN THIS!
     && !!map((v, k) => {
-        bucketOfScriptures = v.concat(bucketOfScriptures);
+        bucketOfScriptures = bucketOfScriptures.concat(v);
       })(scripture)
     && bucketOfScriptures.filter(testSearch)
         .filter((item, i) => i < MAX_SEARCH_RESULTS)
