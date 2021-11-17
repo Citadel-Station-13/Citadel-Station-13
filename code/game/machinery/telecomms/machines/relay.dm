@@ -84,6 +84,8 @@
 	icon = 'icons/obj/clockwork_objects.dmi'
 	hide = TRUE
 	autolinkers = list("h_relay")
+	flags_1 = DEFAULT_RICOCHET_1 | NODECONSTRUCT_1
+	resistance_flags = INDESTRUCTIBLE
 
 //Generic preset relay
 /obj/machinery/telecomms/relay/preset/auto
