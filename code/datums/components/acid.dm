@@ -38,9 +38,11 @@
 
 /datum/component/acid/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
-	var/obj/O = parent
 	level = 0
-	O.update_overlays()
+	if(parent) // So, this is how you get runtimes fellas.
+		UnregisterSignal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_ATTACK_HAND)) // Don't worry about isitem checks, we don't need them.
+		var/atom/O = parent
+		O.update_icon(UPDATE_OVERLAYS)
 	return ..()
 
 /datum/component/acid/process()
