@@ -127,7 +127,7 @@
 /obj/item/gun/syringe/dart/rapiddart
 	name = "Repeating dart gun"
 	icon_state = "rapiddartgun"
-	item_state = "rapiddartgun"
+	item_state = "syringegun"
 
 /obj/item/gun/syringe/dart/rapiddart/CheckParts(list/parts_list)
 	var/obj/item/reagent_containers/glass/beaker/B = locate(/obj/item/reagent_containers/glass/beaker) in parts_list
@@ -157,7 +157,7 @@
 	name = "blowgun"
 	desc = "Fire syringes at a short distance."
 	icon_state = "blowgun"
-	item_state = "blowgun"
+	item_state = "syringegun"
 	fire_sound = 'sound/items/syringeproj.ogg'
 
 /obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, stam_cost = 0)
