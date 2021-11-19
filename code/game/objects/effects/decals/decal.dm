@@ -17,7 +17,7 @@
 /obj/effect/decal/proc/NeverShouldHaveComeHere(turf/T)
 	return isclosedturf(T) || isgroundlessturf(T)
 
-/obj/effect/decal/ex_act(severity, target)
+/obj/effect/decal/ex_act(severity, target, origin)
 	qdel(src)
 
 /obj/effect/decal/fire_act(exposed_temperature, exposed_volume)

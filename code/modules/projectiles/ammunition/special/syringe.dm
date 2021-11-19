@@ -24,9 +24,10 @@
 
 /obj/item/ammo_casing/chemgun
 	name = "dart synthesiser"
-	desc = "A high-power spring, linked to an energy-based dart synthesiser."
+	desc = "A high-power spring, linked to an energy-based piercing dart synthesiser."
 	projectile_type = /obj/item/projectile/bullet/dart/piercing
 	firing_effect_type = null
+	var/dartvolume = 10
 
 /obj/item/ammo_casing/chemgun/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	if(!BB)
@@ -35,10 +36,22 @@
 		var/obj/item/gun/chem/CG = loc
 		if(CG.syringes_left <= 0)
 			return
-		CG.reagents.trans_to(BB, 10)
+		if (!CG.vial)
+			CG.syringes_left--
+			return
+		CG.vial.reagents.trans_to(BB, dartvolume)
 		BB.name = "chemical dart"
 		CG.syringes_left--
 	..()
+
+//Smart dart version of reagent launcher.
+/obj/item/ammo_casing/chemgun/smart
+	name = "smartdart synthesiser"
+	desc = "A high-power spring, linked to an energy-based smartdart synthesiser."
+	projectile_type = /obj/item/projectile/bullet/dart/syringe/dart
+	firing_effect_type = null
+	harmful = FALSE
+	dartvolume = 20
 
 /obj/item/ammo_casing/dnainjector
 	name = "rigged syringe gun spring"

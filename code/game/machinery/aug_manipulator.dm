@@ -55,9 +55,9 @@
 		storedpart.forceMove(loc)
 		storedpart = null
 
-/obj/machinery/aug_manipulator/contents_explosion(severity, target)
+/obj/machinery/aug_manipulator/contents_explosion(severity, target, origin)
 	if(storedpart)
-		storedpart.ex_act(severity, target)
+		storedpart.ex_act(severity, target, origin)
 
 /obj/machinery/aug_manipulator/handle_atom_del(atom/A)
 	if(A == storedpart)

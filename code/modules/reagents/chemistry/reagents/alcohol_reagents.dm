@@ -47,7 +47,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/C)
 	if(HAS_TRAIT(C, TRAIT_TOXIC_ALCOHOL))
-		C.adjustToxLoss((boozepwr/25)*REM,forced = TRUE)
+		C.adjustToxLoss((boozepwr/25)*REAGENTS_EFFECT_MULTIPLIER,forced = TRUE)
 	else if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER)
 		var/booze_power = boozepwr
 		if(HAS_TRAIT(C, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
@@ -1365,7 +1365,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(50)
 	M.dizziness +=2
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 150)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REAGENTS_EFFECT_MULTIPLIER, 150)
 	if(prob(20) && !holder.has_reagent(/datum/reagent/consumable/ethanol/neuroweak))
 		M.adjustStaminaLoss(10)
 		M.drop_all_held_items()
@@ -1376,7 +1376,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			ADD_TRAIT(M, t, type)
 			M.adjustStaminaLoss(10)
 		if(current_cycle > 30)
-			M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
+			M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REAGENTS_EFFECT_MULTIPLIER)
 			if(current_cycle > 50 && prob(15))
 				if(!M.undergoing_cardiac_arrest() && M.can_heartattack())
 					M.set_heartattack(TRUE)
@@ -1401,13 +1401,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/neuroweak/on_mob_life(mob/living/carbon/M)
 	if(holder.has_reagent(/datum/reagent/consumable/ethanol/neurotoxin))
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1*REM, 150)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1*REAGENTS_EFFECT_MULTIPLIER, 150)
 		M.reagents.remove_reagent(/datum/reagent/consumable/ethanol/neurotoxin, 1.5 * REAGENTS_METABOLISM, FALSE)
 	else if(holder.has_reagent(/datum/reagent/toxin/fentanyl))
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1*REM, 150)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1*REAGENTS_EFFECT_MULTIPLIER, 150)
 		M.reagents.remove_reagent(/datum/reagent/toxin/fentanyl, 0.75 * REAGENTS_METABOLISM, FALSE)
 	else
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.5*REM, 150)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.5*REAGENTS_EFFECT_MULTIPLIER, 150)
 		M.dizziness +=2
 	..()
 
@@ -1925,7 +1925,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/fernet/on_mob_life(mob/living/carbon/M)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
-		M.adjustToxLoss(1*REM, 0)
+		M.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjust_nutrition(-5)
 	M.overeatduration = 0
 	return ..()
@@ -1943,7 +1943,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/fernet_cola/on_mob_life(mob/living/carbon/M)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
-		M.adjustToxLoss(0.5*REM, 0)
+		M.adjustToxLoss(0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjust_nutrition(-3)
 	M.overeatduration = 0
 	return ..()

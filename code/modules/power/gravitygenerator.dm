@@ -31,7 +31,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 /obj/machinery/gravity_generator/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return FALSE
 
-/obj/machinery/gravity_generator/ex_act(severity, target)
+/obj/machinery/gravity_generator/ex_act(severity, target, origin)
 	if(severity >= EXPLODE_DEVASTATE) // Very sturdy.
 		set_broken()
 

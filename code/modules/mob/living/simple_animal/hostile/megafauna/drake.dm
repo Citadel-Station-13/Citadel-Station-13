@@ -79,7 +79,7 @@ Difficulty: Medium
 	. = ..()
 	internal = new/obj/item/gps/internal/dragon(src)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
+/mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target, origin)
 	if(severity == 3)
 		return
 	..()
@@ -387,7 +387,7 @@ Difficulty: Medium
 	light_range = 2
 	duration = 13
 
-/obj/effect/temp_visual/lava_warning/ex_act()
+/obj/effect/temp_visual/lava_warning/ex_act(severity, target, origin)
 	return
 
 /obj/effect/temp_visual/lava_warning/Initialize(mapload, var/reset_time = 10)

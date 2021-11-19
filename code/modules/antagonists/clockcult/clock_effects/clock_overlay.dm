@@ -8,7 +8,7 @@
 		linked.examine(user)
 	return ..()
 
-/obj/effect/clockwork/overlay/ex_act()
+/obj/effect/clockwork/overlay/ex_act(severity, target, origin)
 	return FALSE
 
 /obj/effect/clockwork/overlay/singularity_act()

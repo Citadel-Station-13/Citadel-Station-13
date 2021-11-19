@@ -266,7 +266,7 @@
 /obj/effect/chrono_field/singularity_pull()
 	return
 
-/obj/effect/chrono_field/ex_act()
+/obj/effect/chrono_field/ex_act(severity, target, origin)
 	return
 
 /obj/effect/chrono_field/blob_act(obj/structure/blob/B)

@@ -173,7 +173,7 @@
 		var/mob/M = loc
 		M.dropItemToGround(src)
 
-/obj/item/reagent_containers/food/snacks/grown/firelemon/ex_act(severity)
+/obj/item/reagent_containers/food/snacks/grown/firelemon/ex_act(severity, target, origin)
 	qdel(src) //Ensuring that it's deleted by its own explosion
 
 /obj/item/reagent_containers/food/snacks/grown/firelemon/proc/prime(mob/living/lanced_by)

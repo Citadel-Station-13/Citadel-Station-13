@@ -179,7 +179,7 @@
 /mob/living/carbon/true_devil/is_literate()
 	return 1
 
-/mob/living/carbon/true_devil/ex_act(severity, ex_target)
+/mob/living/carbon/true_devil/ex_act(severity, target, origin)
 	if(!ascended)
 		var/b_loss
 		switch (severity)

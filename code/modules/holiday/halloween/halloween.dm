@@ -268,3 +268,65 @@
 	category = "Holiday"
 	item = /obj/item/card/emag/halloween
 	surplus = 0
+
+/////////////////////////
+// Ball map Items      //
+/////////////////////////
+
+
+/obj/item/wisp_lantern/pumpkin
+	name = "Pumpkin lantern"
+	desc = "This lantern gives off no light, but is home to a friendly Jacq o' latern."
+	icon_state = "lantern-on"
+	var/obj/effect/wisp/pumpkin/wisp2
+
+//Hoooo boy that's some wild code there.
+/obj/item/wisp_lantern/pumpkin/Initialize()
+	. = ..()
+	qdel(wisp)
+	wisp2 = new(src)
+	wisp = wisp2
+
+/obj/effect/wisp/pumpkin
+	name = "Friendly pumpkin"
+	desc = "Happy to spook your way."
+	icon = 'icons/obj/clothing/hats.dmi'
+	icon_state = "hardhat1_pumpkin_j"
+	light_range = 5
+	light_color = "#EE9933"
+	layer = 0
+	sight_flags = SEE_MOBS
+	lighting_alpha = 0
+
+/obj/effect/wisp/pumpkin/update_user_sight(mob/user) //Disables SUPERLIGHTS
+	return
+
+//Damnit LazyBones
+/mob/living/simple_animal/lazy_bones
+	name = "Lazy Bones"
+	desc = "Simply refuses to get out of bed!"
+	icon = 'icons/mob/simple_human.dmi'
+	icon_state = "skeleton"
+	icon_living = "skeleton"
+	icon_dead = "skeleton"
+	gender = NEUTER
+	mob_biotypes = list(MOB_UNDEAD, MOB_HUMANOID)
+	turns_per_move = 5
+	speak_emote = list("rattles")
+	emote_see = list("rattles")
+	maxHealth = 40
+	health = 40
+	speed = 0
+	harm_intent_damage = 0
+	melee_damage_lower = 0
+	melee_damage_upper = 0
+	minbodytemp = 0
+	maxbodytemp = 1500
+	faction = list("skeleton")
+	see_in_dark = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	deathmessage = "collapses into a pile of bones!"
+	del_on_death = 1
+	loot = list(/obj/effect/decal/remains/human)
+
+	stop_automated_movement = 1

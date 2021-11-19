@@ -195,7 +195,7 @@
 		return TRUE
 	return FALSE
 
-/turf/open/floor/plating/foam/ex_act()
+/turf/open/floor/plating/foam/ex_act(severity, target, origin)
 	..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 

@@ -138,7 +138,7 @@
 		add_overlay(load)
 	return
 
-/mob/living/simple_animal/bot/mulebot/ex_act(severity)
+/mob/living/simple_animal/bot/mulebot/ex_act(severity, target, origin)
 	unload(0)
 	switch(severity)
 		if(1)

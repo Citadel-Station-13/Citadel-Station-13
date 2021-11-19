@@ -78,7 +78,7 @@
 	GLOB.silicon_mobs -= src
 	return ..()
 
-/mob/living/silicon/contents_explosion(severity, target)
+/mob/living/silicon/contents_explosion(severity, target, origin)
 	return
 
 /mob/living/silicon/proc/cancelAlarm()

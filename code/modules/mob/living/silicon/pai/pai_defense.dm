@@ -13,7 +13,7 @@
 	emitter_next_use = world.time + emitter_emp_cd
 	//Need more effects that aren't instadeath or permanent law corruption.
 
-/mob/living/silicon/pai/ex_act(severity, target)
+/mob/living/silicon/pai/ex_act(severity, target, origin)
 	take_holo_damage(severity * 50)
 	switch(severity)
 		if(1)	//RIP
