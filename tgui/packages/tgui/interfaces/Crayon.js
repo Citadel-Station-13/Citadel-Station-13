@@ -1,11 +1,18 @@
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
+import { Button, LabeledList, Section, Slider } from '../components';
 import { Window } from '../layouts';
 
 export const Crayon = (props, context) => {
   const { act, data } = useBackend(context);
   const capOrChanges = data.has_cap || data.can_change_colour;
   const drawables = data.drawables || [];
+  const {
+    precision_mode,
+    x,
+    y,
+    min_offset,
+    max_offset,
+  } = data;
   return (
     <Window
       width={600}
@@ -28,6 +35,45 @@ export const Crayon = (props, context) => {
               onClick={() => act('select_colour')} />
           </Section>
         )}
+        <Section title="Precision">
+          <LabeledList>
+            <LabeledList.Item label="Active">
+              <Button
+                icon={precision_mode ? 'power-off' : 'times'}
+                content={precision_mode ? 'On' : 'Off'}
+                selected={precision_mode}
+                onClick={() => act('toggle_precision')} />
+            </LabeledList.Item>
+            {!!precision_mode && (
+              <>
+                <LabeledList.Item label="X">
+                  <Slider
+                    value={x}
+                    unit="px"
+                    minValue={min_offset}
+                    maxValue={max_offset}
+                    step={1}
+                    stepPixelSize={10}
+                    onChange={(e, value) => act('set_precision_x', {
+                      x: value,
+                    })} />
+                </LabeledList.Item>
+                <LabeledList.Item label="Y">
+                  <Slider
+                    value={y}
+                    unit="px"
+                    minValue={min_offset}
+                    maxValue={max_offset}
+                    step={1}
+                    stepPixelSize={10}
+                    onChange={(e, value) => act('set_precision_y', {
+                      y: value,
+                    })} />
+                </LabeledList.Item>
+              </>
+            )}
+          </LabeledList>
+        </Section>
         <Section title="Stencil">
           <LabeledList>
             {drawables.map(drawable => {

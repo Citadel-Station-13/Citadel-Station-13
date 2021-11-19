@@ -1132,3 +1132,16 @@
 	else if(fake_msg)
 		to_chat(owner, fake_msg)
 	msg_stage++
+
+/datum/status_effect/cgau_conc
+	id = "cgau_conc"
+	examine_text = "<span class='warning'>SUBJECTPRONOUN rocks from side to side, confused.</span>"
+	duration = 5 SECONDS
+
+/datum/status_effect/cgau_conc/on_creation(mob/living/new_owner, ...)
+	. = ..()
+	new_owner.add_movespeed_modifier(/datum/movespeed_modifier/gauntlet_concussion)
+
+/datum/status_effect/cgau_conc/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/gauntlet_concussion)
+	. = ..()

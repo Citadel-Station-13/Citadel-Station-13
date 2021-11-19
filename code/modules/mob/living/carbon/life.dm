@@ -324,7 +324,7 @@
 
 	if(!HAS_TRAIT(src, TRAIT_NO_INTERNALS))
 		for(check in GET_INTERNAL_SLOTS(src))
-			if(CHECK_BITFIELD(check.clothing_flags, ALLOWINTERNALS))
+			if((check.clothing_flags & ALLOWINTERNALS))
 				internals = TRUE
 	if(internal)
 		if(internal.loc != src)

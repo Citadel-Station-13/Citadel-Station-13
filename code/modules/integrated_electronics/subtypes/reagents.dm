@@ -77,7 +77,7 @@
 
 /obj/item/integrated_circuit/reagent/injector/Initialize()
 	. = ..()
-	ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+	reagents.reagents_holder_flags |= OPENCONTAINER
 
 /obj/item/integrated_circuit/reagent/injector/on_reagent_change(changetype)
 	push_vol()
@@ -273,7 +273,7 @@
 
 /obj/item/integrated_circuit/reagent/storage/Initialize()
 	. = ..()
-	ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+	reagents.reagents_holder_flags |= OPENCONTAINER
 
 /obj/item/integrated_circuit/reagent/storage/do_work()
 	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
@@ -303,7 +303,7 @@
 
 /obj/item/integrated_circuit/reagent/storage/cryo/Initialize()
 	. = ..()
-	ENABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
+	reagents.reagents_holder_flags |= NO_REACT
 
 /obj/item/integrated_circuit/reagent/storage/grinder
 	name = "reagent grinder"
@@ -574,7 +574,7 @@
 
 /obj/item/integrated_circuit/reagent/smoke/Initialize()
 	. = ..()
-	ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+	reagents.reagents_holder_flags |= OPENCONTAINER
 
 /obj/item/integrated_circuit/reagent/smoke/on_reagent_change(changetype)
 	//reset warning only if we have reagents now
@@ -632,7 +632,7 @@
 
 /obj/item/integrated_circuit/reagent/extinguisher/Initialize()
 	.=..()
-	ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+	reagents.reagents_holder_flags |= OPENCONTAINER
 	set_pin_data(IC_OUTPUT,2, src)
 
 /obj/item/integrated_circuit/reagent/extinguisher/on_reagent_change(changetype)

@@ -9261,9 +9261,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "axH" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 30
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
@@ -9274,11 +9271,15 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "axI" = (
-/obj/machinery/airalarm{
-	pixel_y = 22
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
-	dir = 4
+	dir = 8
+	},
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
@@ -10265,6 +10266,9 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aAg" = (
@@ -80965,7 +80969,7 @@ aaa
 aaa
 aaa
 aaa
-syn
+aaa
 aaa
 aaa
 aaa
@@ -81222,7 +81226,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+syn
 aaa
 aaa
 aaa
@@ -85595,7 +85599,7 @@ avv
 xgz
 gZF
 ayL
-pFy
+axI
 aBd
 aCi
 aDo
@@ -86364,7 +86368,7 @@ ajM
 quY
 uFZ
 nDM
-axI
+axL
 axG
 aAh
 aBf

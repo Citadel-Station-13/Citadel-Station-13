@@ -273,24 +273,6 @@
 		"frenching" = 'icons/UI_Icons/Achievements/Misc/frenchingthebubble.png'
 	)
 
-/datum/asset/spritesheet/simple/minesweeper
-	name = "minesweeper"
-	assets = list(
-		"1" = 'icons/UI_Icons/minesweeper_tiles/one.png',
-		"2" = 'icons/UI_Icons/minesweeper_tiles/two.png',
-		"3" = 'icons/UI_Icons/minesweeper_tiles/three.png',
-		"4" = 'icons/UI_Icons/minesweeper_tiles/four.png',
-		"5" = 'icons/UI_Icons/minesweeper_tiles/five.png',
-		"6" = 'icons/UI_Icons/minesweeper_tiles/six.png',
-		"7" = 'icons/UI_Icons/minesweeper_tiles/seven.png',
-		"8" = 'icons/UI_Icons/minesweeper_tiles/eight.png',
-		"empty" = 'icons/UI_Icons/minesweeper_tiles/empty.png',
-		"flag" = 'icons/UI_Icons/minesweeper_tiles/flag.png',
-		"hidden" = 'icons/UI_Icons/minesweeper_tiles/hidden.png',
-		"mine" = 'icons/UI_Icons/minesweeper_tiles/mine.png',
-		"minehit" = 'icons/UI_Icons/minesweeper_tiles/minehit.png'
-	)
-
 /datum/asset/spritesheet/simple/pills
 	name = "pills"
 	assets = list(
