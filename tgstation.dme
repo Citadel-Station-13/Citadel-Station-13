@@ -2148,7 +2148,7 @@
 #include "code\modules\events\spacevine.dm"
 #include "code\modules\events\spider_infestation.dm"
 #include "code\modules\events\spontaneous_appendicitis.dm"
-#include "code\modules\events\starfurybc.dm"
+#include "code\modules\events\starfury_battle_cruiser.dm"
 #include "code\modules\events\stray_cargo.dm"
 #include "code\modules\events\supermatter_surge.dm"
 #include "code\modules\events\supernova.dm"
