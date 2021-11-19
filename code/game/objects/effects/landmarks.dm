@@ -11,7 +11,7 @@
 	return
 
 // Please stop bombing the Observer-Start landmark.
-/obj/effect/landmark/ex_act()
+/obj/effect/landmark/ex_act(severity, target, origin)
 	return
 
 /obj/effect/landmark/singularity_pull()

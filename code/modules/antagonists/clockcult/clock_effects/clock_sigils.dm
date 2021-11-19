@@ -36,7 +36,7 @@
 		return TRUE
 	. = ..()
 
-/obj/effect/clockwork/sigil/ex_act(severity)
+/obj/effect/clockwork/sigil/ex_act(severity, target, origin)
 	visible_message("<span class='warning'>[src] scatters into thousands of particles.</span>")
 	qdel(src)
 
@@ -204,7 +204,7 @@
 	. = ..()
 	update_icon()
 
-/obj/effect/clockwork/sigil/transmission/ex_act(severity)
+/obj/effect/clockwork/sigil/transmission/ex_act(severity, target, origin)
 	if(severity == 3)
 		adjust_clockwork_power(500) //Light explosions charge the network!
 		visible_message("<span class='warning'>[src] flares a brilliant orange!</span>")

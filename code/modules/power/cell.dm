@@ -142,7 +142,7 @@
 	if(charge < 0)
 		charge = 0
 
-/obj/item/stock_parts/cell/ex_act(severity, target)
+/obj/item/stock_parts/cell/ex_act(severity, target, origin)
 	..()
 	if(!QDELETED(src))
 		switch(severity)

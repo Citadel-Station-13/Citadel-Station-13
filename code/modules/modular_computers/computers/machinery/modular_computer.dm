@@ -124,9 +124,9 @@
 
 // Stronger explosions cause serious damage to internal components
 // Minor explosions are mostly mitigitated by casing.
-/obj/machinery/modular_computer/ex_act(severity)
+/obj/machinery/modular_computer/ex_act(severity, target, origin)
 	if(cpu)
-		cpu.ex_act(severity)
+		cpu.ex_act(severity, target, origin)
 		// switch(severity)
 		// 	if(EXPLODE_DEVASTATE)
 		// 		SSexplosions.high_mov_atom += cpu

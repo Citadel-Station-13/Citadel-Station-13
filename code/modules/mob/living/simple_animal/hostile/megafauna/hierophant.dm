@@ -674,7 +674,7 @@ Difficulty: Normal
 	layer = LOW_OBJ_LAYER
 	anchored = TRUE
 
-/obj/effect/hierophant/ex_act()
+/obj/effect/hierophant/ex_act(severity, target, origin)
 	return
 
 /obj/effect/hierophant/attackby(obj/item/I, mob/user, params)

@@ -47,7 +47,7 @@
 	. = ..()
 	setDir(pick(GLOB.cardinals))
 
-/obj/effect/decal/cleanable/glass/ex_act()
+/obj/effect/decal/cleanable/glass/ex_act(severity, target, origin)
 	qdel(src)
 
 /obj/effect/decal/cleanable/glass/wave_ex_act(power, datum/wave_explosion/explosion, dir)

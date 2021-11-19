@@ -11,7 +11,7 @@
 /obj/effect/dummy/phased_mob/slaughter/relaymove(mob/user, direction)
 	forceMove(get_step(src,direction))
 
-/obj/effect/dummy/phased_mob/slaughter/ex_act()
+/obj/effect/dummy/phased_mob/slaughter/ex_act(severity, target, origin)
 	return
 
 /obj/effect/dummy/phased_mob/slaughter/wave_ex_act(power, datum/wave_explosion/explosion, dir)

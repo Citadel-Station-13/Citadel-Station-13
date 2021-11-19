@@ -72,7 +72,7 @@
 	if(mapload && prob(66)) // 2/3 instead of 1/3 (default)
 		MakeDirty()
 
-/turf/open/floor/ex_act(severity, target)
+/turf/open/floor/ex_act(severity, target, origin)
 	var/shielded = is_shielded()
 	..()
 	if(severity != 1 && shielded && target != src)

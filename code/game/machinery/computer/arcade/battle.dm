@@ -258,8 +258,8 @@
 
 	//heccing chonker passive, only gives more HP at the start of a new game but has one of the hardest weakpoint to trigger.
 	if(LAZYACCESS(enemy_passive, "chonker"))
-		if(weakpoint_check("chonker","power_attack","power_attack","power_attack"))
-			list_temp += "<br><center><h3>After a lot of power attacks you manage to tip over [enemy_name] as they fall over their enormous weight<center><h3> "
+		if(weakpoint_check("chonker","attack","attack","power_attack"))
+			list_temp += "<br><center><h3>After attacking twice, your power attack manages to tip over [enemy_name] as they fall over their enormous weight<center><h3> "
 			enemy_hp -= 30
 
 	//smart passive trait, mainly works in tandem with other traits, makes the enemy unable to be counter_attacked
@@ -302,7 +302,7 @@
 		else if(!enemy_stance)
 			var/added_temp
 
-			if(rand())
+			if(prob(80))
 				added_temp = "you for [attack_amount + 5] damage!"
 				player_hp -= attack_amount + 5
 				enemy_stance = "attack"
@@ -451,7 +451,7 @@
 	msg += "\t<span class='info'>shotgun -> defend, defend, power attack</span>"
 	msg += "\t<span class='info'>short temper -> counter, counter, counter</span>"
 	msg += "\t<span class='info'>poisonous -> light attack, light attack, light attack</span>"
-	msg += "\t<span class='info'>chonker -> power attack, power attack, power attack</span>"
+	msg += "\t<span class='info'>chonker -> light attack, light attack, power attack</span>"
 	return msg
 
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)

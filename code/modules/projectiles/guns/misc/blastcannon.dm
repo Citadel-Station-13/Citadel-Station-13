@@ -156,5 +156,5 @@
 	mediumr = max(mediumr - 1, 0)
 	lightr = max(lightr - 1, 0)
 
-/obj/item/projectile/blastwave/ex_act()
+/obj/item/projectile/blastwave/ex_act(severity, target, origin)
 	return

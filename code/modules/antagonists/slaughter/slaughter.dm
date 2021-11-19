@@ -249,7 +249,7 @@
 	released and fully healed, because in the end it's just a jape, \
 	sibling!</B>"
 
-/mob/living/simple_animal/slaughter/laughter/ex_act(severity)
+/mob/living/simple_animal/slaughter/laughter/ex_act(severity, target, origin)
 	switch(severity)
 		if(1)
 			death()

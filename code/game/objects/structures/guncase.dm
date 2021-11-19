@@ -91,9 +91,9 @@
 /obj/structure/guncase/handle_atom_del(atom/A)
 	update_icon()
 
-/obj/structure/guncase/contents_explosion(severity, target)
+/obj/structure/guncase/contents_explosion(severity, target, origin)
 	for(var/atom/A in contents)
-		A.ex_act(severity++, target)
+		A.ex_act(severity++, target, origin)
 		CHECK_TICK
 
 /obj/structure/guncase/shotgun

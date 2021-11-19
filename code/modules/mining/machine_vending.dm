@@ -270,7 +270,7 @@
 	SSblackbox.record_feedback("tally", "crusher_voucher_redeemed", 1, selection)
 	qdel(voucher)
 
-/obj/machinery/mineral/equipment_vendor/ex_act(severity, target)
+/obj/machinery/mineral/equipment_vendor/ex_act(severity, target, origin)
 	do_sparks(5, TRUE, src)
 	if(prob(50 / severity) && severity < 3)
 		qdel(src)
