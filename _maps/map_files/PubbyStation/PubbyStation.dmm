@@ -37421,7 +37421,7 @@
 	name = "Recovery Room"
 	},
 /obj/machinery/door/firedoor,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "bJr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
