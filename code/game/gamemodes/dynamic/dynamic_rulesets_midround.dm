@@ -430,6 +430,7 @@
 			candidates -= player //no double dipping
 
 /datum/dynamic_ruleset/midround/ratvar_awakening/execute()
+	load_reebe()
 	if(!candidates || !candidates.len)
 		return FALSE
 	for(var/i = 0; i < required_candidates; i++)
