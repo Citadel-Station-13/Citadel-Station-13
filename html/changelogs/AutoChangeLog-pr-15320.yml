@@ -1,9 +1,0 @@
-author: "shellspeed1"
-delete-after: True
-changes: 
-  - rscadd: "An experimental smart dart repeater rifle has been added by NT. It accepts both a large and small hypovials and uses it to fill the smart darts it synthesizes. It can hold 6 smart darts and makes a new one every 20 seconds.  To research it, grab the medical weaponry node.
-tweak: Reagent gun renamed to reagent repeater"
-  - balance: "reagent repeater now holds 6 syringes."
-  - balance: "Reagent repeater and smart dart repeater rifle start with 4 syringes instead of a full clip."
-  - balance: "reagent repeater synthesizes a new syringe every 20 seconds.
-tweak: smart dart guns now use the syringe gun as an inhands sprite."
