@@ -37455,6 +37455,7 @@
 	name = "Operating Theatre";
 	req_access_txt = "45"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "bJv" = (
