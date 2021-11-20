@@ -430,7 +430,6 @@
 			candidates -= player //no double dipping
 
 /datum/dynamic_ruleset/midround/ratvar_awakening/execute()
-	load_reebe()
 	if(!candidates || !candidates.len)
 		return FALSE
 	for(var/i = 0; i < required_candidates; i++)
@@ -444,6 +443,7 @@
 		SSticker.mode.greet_servant(M.current)
 		message_admins("[ADMIN_LOOKUPFLW(M.current)] was selected by the [name] ruleset and has been made into a midround clock cultist.")
 		log_game("DYNAMIC: [key_name(M.current)] was selected by the [name] ruleset and has been made into a midround clock cultist.")
+		load_reebe()
 	return ..()
 
 //////////////////////////////////////////////
