@@ -1,5 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - bugfix: "Acid will disappear when not existant."
-  - code_imp: "Updates component Destroy code, might result in less component related runtimes."
