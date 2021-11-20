@@ -24,8 +24,12 @@
 /// Show fullscreen effect
 #define SHOW_VORE_FX	(1<<11)
 
-/// Change this whenever you add a vore flag, must be largest vore flag*2-1
-#define MAX_VORE_FLAG	(1<<12)-1
+/*
+ * # Used for sanitizing saves
+ *
+ * - Add the new flag to the end of the list when adding a new flag
+ */
+#define ALL_VORE_FLAGS	DIGESTABLE | DEVOURABLE | FEEDING | NO_VORE | ABSORBED | VORE_INIT | VOREPREF_INIT | LICKABLE | SMELLABLE | ABSORBABLE | MOBVORE | SHOW_VORE_FX
 
 #define isbelly(A) istype(A, /obj/belly)
 

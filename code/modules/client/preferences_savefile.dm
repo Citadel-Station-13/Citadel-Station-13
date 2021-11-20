@@ -1004,7 +1004,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	all_quirks = SANITIZE_LIST(all_quirks)
 
-	vore_flags						= sanitize_integer(vore_flags, 0, MAX_VORE_FLAG, 0)
+	vore_flags						= sanitize_integer(vore_flags, 0, ALL_VORE_FLAGS, 0)
 	vore_taste						= copytext(vore_taste, 1, MAX_TASTE_LEN)
 	vore_smell						= copytext(vore_smell, 1, MAX_TASTE_LEN)
 	belly_prefs 					= SANITIZE_LIST(belly_prefs)
