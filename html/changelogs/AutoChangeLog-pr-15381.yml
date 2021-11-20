@@ -1,0 +1,5 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - rscadd: "Power cord implants can now also be connected to cells to recharge."
+  - rscdel: "Synthetics can no longer bite power cells."
