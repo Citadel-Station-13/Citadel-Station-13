@@ -21,9 +21,11 @@
 #define ABSORBABLE		(1<<9)
 /// Can get simplemob vored?
 #define MOBVORE			(1<<10)
+/// Show fullscreen effect
+#define SHOW_VORE_FX	(1<<11)
 
 /// Change this whenever you add a vore flag, must be largest vore flag*2-1
-#define MAX_VORE_FLAG	(1<<11)-1
+#define MAX_VORE_FLAG	(1<<12)-1
 
 #define isbelly(A) istype(A, /obj/belly)
 

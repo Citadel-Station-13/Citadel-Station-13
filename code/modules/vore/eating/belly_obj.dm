@@ -108,6 +108,11 @@
 	//List has indexes that are the digestion mode strings, and keys that are lists of strings.
 	var/tmp/list/emote_lists = list()
 
+	// Lets you do a fullscreen overlay. Set to an icon_state string.
+	var/belly_fullscreen = ""
+	var/belly_fullscreen_color = "#823232"
+	var/disable_hud = FALSE
+
 //For serialization, keep this updated AND IN ORDER OF VARS LISTED ABOVE AND IN DUPE AT THE BOTTOM!!, required for bellies to save correctly.
 /obj/belly/vars_to_save()
 	return ..() + list(
@@ -142,7 +147,10 @@
 		"examine_messages",
 		"emote_lists",
 		"is_wet",
-		"wet_loop"
+		"wet_loop",
+		"belly_fullscreen",
+		"belly_fullscreen_color",
+		"disable_hud"
 		)
 
 		//ommitted list
@@ -173,7 +181,7 @@
 	var/mob/living/L //for chat messages and blindness
 	if(isliving(thing))
 		L = thing
-		L.become_blind("belly_[REF(src)]")
+		vore_fx(L)
 	if(OldLoc in contents)
 		return //Someone dropping something (or being stripdigested)
 
@@ -205,7 +213,31 @@
 	. = ..()
 	if(isliving(AM))
 		var/mob/living/L = AM
-		L.cure_blind("belly_[REF(src)]")
+		L.clear_fullscreen("belly")
+		if(L.hud_used)
+			if(!L.hud_used.hud_shown)
+				L.hud_used.show_hud(HUD_STYLE_STANDARD, L)
+
+/obj/belly/proc/vore_fx(mob/living/L)
+	if(!istype(L))
+		return
+	if(!L.client)
+		return
+	if(!(L.vore_flags & SHOW_VORE_FX))
+		L.clear_fullscreen("belly")
+		return
+
+	if(belly_fullscreen)
+		var/atom/movable/screen/fullscreen/F = L.overlay_fullscreen("belly", /atom/movable/screen/fullscreen/belly)
+		F.icon_state = belly_fullscreen
+		F.color = belly_fullscreen_color
+	else
+		L.clear_fullscreen("belly")
+
+	if(disable_hud)
+		if(L?.hud_used?.hud_shown)
+			to_chat(L, "<span class='notice'>((Your pred has disabled huds in their belly. Turn off vore FX and hit F12 to get it back; or relax, and enjoy the serenity.))</span>")
+			L.hud_used.show_hud(HUD_STYLE_NOHUD, L)
 
 // Release all contents of this belly into the owning mob's location.
 // If that location is another mob, contents are transferred into whichever of its bellies the owning mob is in.
@@ -694,6 +726,10 @@
 	dupe.transferchance = transferchance
 	dupe.autotransferchance = autotransferchance
 	dupe.autotransferwait = autotransferwait
+
+	dupe.belly_fullscreen = belly_fullscreen
+	dupe.belly_fullscreen_color = belly_fullscreen_color
+	dupe.disable_hud = disable_hud
 	dupe.swallow_time = swallow_time
 	dupe.vore_capacity = vore_capacity
 	dupe.is_wet = is_wet

@@ -41,9 +41,15 @@
 	host = null
 	. = ..()
 
+/datum/vore_look/ui_assets(mob/user)
+	. = ..()
+	. += get_asset_datum(/datum/asset/spritesheet/vore)
+
 /datum/vore_look/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
+		update_preview_icon()
+		give_client_previews(user.client)
 		ui = new(user, src, "VorePanel", "Vore Panel")
 		ui.open()
 
@@ -148,6 +154,11 @@
 			"release_sound" = selected.release_sound,
 			"can_taste" = selected.can_taste,
 			"bulge_size" = selected.bulge_size,
+			"belly_fullscreen" = selected.belly_fullscreen,
+			"belly_fullscreen_color" = selected.belly_fullscreen_color,
+			"mapRef" = map_name,
+			"disable_hud" = selected.disable_hud,
+			"possible_fullscreens" = icon_states('icons/mob/screen_preview_vore.dmi'),
 		)
 
 		selected_list["escapable"] = selected.escapable
@@ -190,6 +201,7 @@
 		"digestion_sounds" = (host.client.prefs.cit_toggles & DIGESTION_NOISES),
 		"lickable" = (host.vore_flags & LICKABLE),
 		"smellable" = (host.vore_flags & SMELLABLE),
+		"show_vore_fx" = (host.vore_flags & SHOW_VORE_FX),
 	)
 
 	return data
@@ -343,6 +355,19 @@
 		if("toggle_digestion_sounds")
 			(host.client.prefs.cit_toggles ^= DIGESTION_NOISES)
 			unsaved_changes = TRUE
+			return TRUE
+		if("toggle_vore_fx")
+			(host.vore_flags ^= SHOW_VORE_FX) /// Bring back the defines, i hate you.
+			unsaved_changes = TRUE
+			if(isbelly(host.loc))
+				var/obj/belly/belly = host.loc
+				if(host.vore_flags & SHOW_VORE_FX)
+					belly.vore_fx(host)
+				else
+					host.clear_fullscreen("belly")
+					if(host.hud_used)
+						if(!host.hud_used.hud_shown)
+							host.hud_used.show_hud(HUD_STYLE_STANDARD, host)
 			return TRUE
 		if("toggle_lickable")
 			(host.vore_flags ^= LICKABLE)
@@ -683,6 +708,19 @@
 			var/digest_chance_input = input(user, "Set belly digest mode chance on resist (as %)", "Prey Digest Chance") as num|null
 			if(!isnull(digest_chance_input))
 				host.vore_selected.digestchance = sanitize_integer(digest_chance_input, 0, 100, initial(host.vore_selected.digestchance))
+			. = TRUE
+		if("b_fullscreen")
+			host.vore_selected.belly_fullscreen = params["val"]
+			update_preview_icon()
+			. = TRUE
+		if("b_fullscreen_color")
+			var/newcolor = input(usr, "Choose a color.", "", host.vore_selected.belly_fullscreen_color) as color|null
+			if(newcolor)
+				host.vore_selected.belly_fullscreen_color = newcolor
+			update_preview_icon()
+			. = TRUE
+		if("b_disable_hud")
+			host.vore_selected.disable_hud = !host.vore_selected.disable_hud
 			. = TRUE
 		if("b_del")
 			var/alert = tgui_alert(usr, "Are you sure you want to delete your [lowertext(host.vore_selected.name)]?","Confirmation",list("Cancel","Delete"))

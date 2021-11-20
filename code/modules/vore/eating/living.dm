@@ -284,7 +284,7 @@
 		to_chat(src,"<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs variable. Tell a dev.</span>")
 		return FALSE
 	vore_flags |= VOREPREF_INIT
-	COPY_SPECIFIC_BITFIELDS(vore_flags, client.prefs.vore_flags, DIGESTABLE | DEVOURABLE | FEEDING | LICKABLE | SMELLABLE | ABSORBABLE | MOBVORE)
+	COPY_SPECIFIC_BITFIELDS(vore_flags, client.prefs.vore_flags, DIGESTABLE | DEVOURABLE | FEEDING | LICKABLE | SMELLABLE | ABSORBABLE | MOBVORE | SHOW_VORE_FX)
 	vore_taste = client.prefs.vore_taste
 	vore_smell = client.prefs.vore_smell
 
@@ -448,3 +448,8 @@
 			return TRUE
 
 	return FALSE
+
+// Full screen belly overlays!
+/atom/movable/screen/fullscreen/belly
+	icon = 'icons/mob/screen_full_vore.dmi'
+	icon_state = ""

@@ -336,6 +336,15 @@
 		InsertAll("", each, GLOB.alldirs)
 	..()
 
+/datum/asset/spritesheet/vore
+	name = "vore"
+
+/datum/asset/spritesheet/vore/register()
+	var/icon/downscaled = icon('icons/mob/screen_full_vore.dmi')
+	downscaled.Scale(240, 240)
+	InsertAll("", downscaled)
+	..()
+
 /datum/asset/spritesheet/decals
 	name = "decals"
 
