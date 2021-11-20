@@ -7,13 +7,21 @@
 #define DM_ABSORB "Absorb"
 #define DM_UNABSORB "Un-absorb"
 
+/// Can be digested?
 #define DIGESTABLE 		(1<<0)
+/// Can be devoured?
 #define DEVOURABLE		(1<<1)
+/// Can be fed to someone / Can have someone fed to?
 #define FEEDING			(1<<2)
+/// Cannot do vore at all
 #define NO_VORE			(1<<3)
+/// Was absorbed by someone
 #define ABSORBED		(1<<4)
+/// Vore initializing
 #define VORE_INIT		(1<<5)
+/// Initializing vore prefs
 #define VOREPREF_INIT	(1<<6)
+/// Can be licked?
 #define LICKABLE		(1<<7)
 /// Can be smelled?
 #define SMELLABLE		(1<<8)
