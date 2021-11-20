@@ -36662,31 +36662,31 @@
 /area/service/library)
 "bxG" = (
 /turf/closed/wall,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bxH" = (
 /obj/structure/table,
 /obj/item/storage/crayons,
 /turf/open/floor/wood,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bxI" = (
 /obj/machinery/vending/games,
 /turf/open/floor/wood,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bxJ" = (
 /obj/machinery/photocopier,
 /turf/open/floor/wood,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bxK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/carpet,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bxL" = (
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
 /turf/open/floor/carpet,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bxM" = (
 /obj/structure/grille,
 /turf/closed/wall/r_wall,
@@ -36902,7 +36902,7 @@
 /area/service/library)
 "byQ" = (
 /turf/open/floor/wood,
-/area/service/library/lounge)
+/area/commons/lounge)
 "byR" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -36920,14 +36920,14 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/service/library/lounge)
+/area/commons/lounge)
 "byT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 9
 	},
 /turf/open/floor/carpet,
-/area/service/library/lounge)
+/area/commons/lounge)
 "byU" = (
 /obj/structure/chair{
 	dir = 4
@@ -37071,18 +37071,18 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bzP" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bzQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bzR" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -37091,7 +37091,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bzT" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -37334,7 +37334,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bAP" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -37342,7 +37342,7 @@
 	pixel_y = 9
 	},
 /turf/open/floor/wood,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bAQ" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -37617,13 +37617,13 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bBT" = (
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bBU" = (
 /obj/structure/table,
 /obj/machinery/light/small{
@@ -37935,22 +37935,22 @@
 	pixel_y = -24
 	},
 /turf/open/floor/wood,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bCL" = (
 /obj/machinery/camera/autoname{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bCM" = (
 /turf/open/floor/carpet,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bCN" = (
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
 /turf/open/floor/carpet,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bCO" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Library Maintenance";
@@ -38403,7 +38403,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bEb" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -39760,7 +39760,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/service/library/lounge";
+	areastring = "/area/commons/lounge";
 	dir = 4;
 	name = "Library Lounge APC";
 	pixel_x = 24
@@ -39769,7 +39769,7 @@
 	icon_state = "0-2"
 	},
 /turf/open/floor/carpet,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bHp" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -45616,7 +45616,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bWB" = (
 /obj/machinery/requests_console{
 	department = "AI";
@@ -60035,7 +60035,7 @@
 	name = "library camera"
 	},
 /turf/open/floor/carpet,
-/area/service/library/lounge)
+/area/commons/lounge)
 "cNb" = (
 /obj/machinery/light/small{
 	dir = 4;
