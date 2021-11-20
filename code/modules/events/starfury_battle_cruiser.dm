@@ -13,10 +13,10 @@
 	return ..()
 
 /datum/round_event/ghost_role/starfurybc
-	minimum_required = 1
+	minimum_required = 5
 	var/shuttle_spawned = FALSE
 	var/started = FALSE
-	var/preptime = 1 MINUTES
+	var/preptime = 10 MINUTES
 	var/announcetime = 4 MINUTES
 
 /datum/round_event/ghost_role/starfurybc/start()
