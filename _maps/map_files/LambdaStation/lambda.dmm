@@ -36662,31 +36662,31 @@
 /area/service/library)
 "bxG" = (
 /turf/closed/wall,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bxH" = (
 /obj/structure/table,
 /obj/item/storage/crayons,
 /turf/open/floor/wood,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bxI" = (
 /obj/machinery/vending/games,
 /turf/open/floor/wood,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bxJ" = (
 /obj/machinery/photocopier,
 /turf/open/floor/wood,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bxK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/carpet,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bxL" = (
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
 /turf/open/floor/carpet,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bxM" = (
 /obj/structure/grille,
 /turf/closed/wall/r_wall,
@@ -36902,7 +36902,7 @@
 /area/service/library)
 "byQ" = (
 /turf/open/floor/wood,
-/area/commons/lounge)
+/area/service/library/lounge)
 "byR" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -36920,14 +36920,14 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/commons/lounge)
+/area/service/library/lounge)
 "byT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 9
 	},
 /turf/open/floor/carpet,
-/area/commons/lounge)
+/area/service/library/lounge)
 "byU" = (
 /obj/structure/chair{
 	dir = 4
@@ -37071,18 +37071,18 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bzP" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bzQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bzR" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -37091,7 +37091,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bzT" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -37334,7 +37334,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bAP" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -37342,7 +37342,7 @@
 	pixel_y = 9
 	},
 /turf/open/floor/wood,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bAQ" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -37617,13 +37617,13 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bBT" = (
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bBU" = (
 /obj/structure/table,
 /obj/machinery/light/small{
@@ -37935,22 +37935,22 @@
 	pixel_y = -24
 	},
 /turf/open/floor/wood,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bCL" = (
 /obj/machinery/camera/autoname{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bCM" = (
 /turf/open/floor/carpet,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bCN" = (
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
 /turf/open/floor/carpet,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bCO" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Library Maintenance";
@@ -38403,7 +38403,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bEb" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -39769,7 +39769,7 @@
 	icon_state = "0-2"
 	},
 /turf/open/floor/carpet,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bHp" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -45616,7 +45616,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet,
-/area/commons/lounge)
+/area/service/library/lounge)
 "bWB" = (
 /obj/machinery/requests_console{
 	department = "AI";
@@ -60035,7 +60035,7 @@
 	name = "library camera"
 	},
 /turf/open/floor/carpet,
-/area/commons/lounge)
+/area/service/library/lounge)
 "cNb" = (
 /obj/machinery/light/small{
 	dir = 4;
