@@ -25042,7 +25042,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/grimy,
-/area/service/library/lounge)
+/area/commons/lounge)
 "biO" = (
 /obj/structure/table/glass,
 /obj/item/healthanalyzer{
