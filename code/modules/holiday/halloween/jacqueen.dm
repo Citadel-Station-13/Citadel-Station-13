@@ -517,7 +517,6 @@
 	name = "Jacqueline cars terminal"
 	icon_state = "jacq_cars_spawner"
 	AIStatus = AI_OFF
-	anchored = TRUE
 	spawn_cars = TRUE
 	active = FALSE
 
