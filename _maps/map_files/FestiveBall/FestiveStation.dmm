@@ -21334,9 +21334,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bcG" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -21349,9 +21347,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bcH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
@@ -21359,9 +21355,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bcI" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -21373,9 +21367,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bcJ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1{
 	dir = 4
@@ -21383,9 +21375,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bcK" = (
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
@@ -21794,17 +21784,13 @@
 "bdV" = (
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /turf/open/floor/plating,
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bdW" = (
 /obj/structure/table/wood/fancy/green,
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bdX" = (
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
@@ -21819,9 +21805,7 @@
 	dir = 1;
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bdY" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -21834,9 +21818,7 @@
 	dir = 4;
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bdZ" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -21848,9 +21830,7 @@
 	dir = 1;
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bea" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -21859,9 +21839,7 @@
 	dir = 4;
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "beb" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -21870,9 +21848,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bec" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -21888,33 +21864,25 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bed" = (
 /turf/open/indestructible{
 	dir = 1;
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bee" = (
 /turf/open/indestructible{
 	dir = 4;
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bef" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "beg" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -22365,16 +22333,12 @@
 	dir = 8;
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bfr" = (
 /turf/open/indestructible{
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bfs" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -22384,9 +22348,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bft" = (
 /obj/structure/chair/wood/wings{
 	dir = 8
@@ -22395,9 +22357,7 @@
 	dir = 8;
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bfu" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -22431,9 +22391,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bfy" = (
 /turf/closed/wall/mineral/iron,
 /area/service/chapel/main)
@@ -23044,9 +23002,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bgM" = (
 /obj/structure/chair/wood/wings{
 	dir = 8
@@ -23055,9 +23011,7 @@
 	dir = 1;
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bgN" = (
 /obj/structure/table/wood/fancy/red,
 /turf/open/indestructible/hotelwood,
@@ -23131,9 +23085,7 @@
 /area/service/chapel/main)
 "bgY" = (
 /turf/open/floor/festive/cobblestone,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bgZ" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -23391,9 +23343,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bhR" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/flashlight/lantern{
@@ -23402,9 +23352,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bhS" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/flashlight/lantern{
@@ -23694,9 +23642,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "biQ" = (
 /obj/structure/table/wood/fancy/red,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -23705,9 +23651,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "biR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -23715,9 +23659,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "biS" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -23747,9 +23689,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "biW" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
@@ -23762,9 +23702,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "biX" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1{
 	dir = 8
@@ -23775,9 +23713,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "biY" = (
 /obj/structure/mineral_door/wood,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
@@ -23965,17 +23901,13 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bjB" = (
 /obj/effect/landmark/start/chaplain,
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bjC" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/storage/book/bible{
@@ -23984,9 +23916,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bjD" = (
 /obj/structure/disposalpipe/junction/yjunction{
 	dir = 4
@@ -24004,9 +23934,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bjE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -24018,9 +23946,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bjF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -24031,9 +23957,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bjG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -24045,9 +23969,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bjH" = (
 /obj/structure/mineral_door/wood,
 /obj/structure/disposalpipe/segment{
@@ -24330,9 +24252,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bkr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -24340,9 +24260,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bks" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -24351,9 +24269,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bkt" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
@@ -24363,9 +24279,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bku" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -24386,9 +24300,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bkx" = (
 /obj/structure/mineral_door/wood,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -24951,9 +24863,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "blA" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/flashlight/lantern{
@@ -25374,9 +25284,7 @@
 	dir = 8
 	},
 /turf/open/floor/festive/alleyway,
-/area/service/abandoned_gambling_den/secondary{
-	name = "Arcade"
-	})
+/area/service/abandoned_gambling_den/secondary)
 "bmw" = (
 /turf/closed/festive/creambrick,
 /area/edina/crew_quarters/store/clothes)
@@ -25808,9 +25716,7 @@
 /area/command/heads_quarters/rd)
 "bnw" = (
 /turf/closed/festive/greybrick/greybrickcornernw,
-/area/service/abandoned_gambling_den/secondary{
-	name = "Arcade"
-	})
+/area/service/abandoned_gambling_den/secondary)
 "bnB" = (
 /obj/structure/grille,
 /obj/structure/festive/greybrick/windowNSLeftEnd,
@@ -26450,9 +26356,7 @@
 /turf/open/indestructible{
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bpg" = (
 /obj/machinery/door/airlock/wood,
 /obj/machinery/door/firedoor,
@@ -26463,9 +26367,7 @@
 /area/commons/fitness/recreation)
 "bph" = (
 /turf/closed/wall/mineral/iron,
-/area/service/chapel/asteroid/monastery{
-	name = "Chapel Kitchen"
-	})
+/area/service/chapel/asteroid/monastery)
 "bpi" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -26474,9 +26376,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery{
-	name = "Chapel Kitchen"
-	})
+/area/service/chapel/asteroid/monastery)
 "bpj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -26489,9 +26389,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery{
-	name = "Chapel Kitchen"
-	})
+/area/service/chapel/asteroid/monastery)
 "bpk" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
@@ -26500,9 +26398,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery{
-	name = "Chapel Kitchen"
-	})
+/area/service/chapel/asteroid/monastery)
 "bpl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -26998,9 +26894,7 @@
 /area/cargo/miningoffice)
 "bqA" = (
 /turf/closed/wall/mineral/iron,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bqB" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -27013,9 +26907,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bqC" = (
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
@@ -27024,9 +26916,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bqD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 9
@@ -27034,17 +26924,13 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/dock{
-	name = "Chapel Hall"
-	})
+/area/service/chapel/dock)
 "bqE" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery{
-	name = "Chapel Kitchen"
-	})
+/area/service/chapel/asteroid/monastery)
 "bqF" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -27056,9 +26942,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery{
-	name = "Chapel Kitchen"
-	})
+/area/service/chapel/asteroid/monastery)
 "bqG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -27067,15 +26951,11 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery{
-	name = "Chapel Kitchen"
-	})
+/area/service/chapel/asteroid/monastery)
 "bqH" = (
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /turf/open/floor/plating,
-/area/service/chapel/asteroid/monastery{
-	name = "Chapel Kitchen"
-	})
+/area/service/chapel/asteroid/monastery)
 "bqI" = (
 /obj/effect/festive/street/sidewalknsm,
 /obj/effect/festive/street/streetliftedtile2,
@@ -27683,9 +27563,7 @@
 /area/edina)
 "brH" = (
 /turf/closed/festive/greybrick,
-/area/service/abandoned_gambling_den/secondary{
-	name = "Arcade"
-	})
+/area/service/abandoned_gambling_den/secondary)
 "brI" = (
 /obj/machinery/door/airlock/silver/glass,
 /turf/open/floor/festive/wooden/wooden1,
@@ -27890,9 +27768,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bsl" = (
 /obj/structure/dresser,
 /obj/machinery/airalarm{
@@ -27901,9 +27777,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bsm" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -27913,18 +27787,14 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bsn" = (
 /obj/structure/bed,
 /obj/item/bedsheet/black,
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bso" = (
 /obj/structure/fence/corner{
 	dir = 4
@@ -27948,9 +27818,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery{
-	name = "Chapel Kitchen"
-	})
+/area/service/chapel/asteroid/monastery)
 "bsr" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -27959,9 +27827,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery{
-	name = "Chapel Kitchen"
-	})
+/area/service/chapel/asteroid/monastery)
 "bss" = (
 /obj/structure/sink/kitchen{
 	dir = 8;
@@ -27970,9 +27836,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery{
-	name = "Chapel Kitchen"
-	})
+/area/service/chapel/asteroid/monastery)
 "bst" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -28678,33 +28542,25 @@
 /obj/structure/curtain,
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /turf/open/floor/plating,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "btS" = (
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "btT" = (
 /obj/effect/landmark/start/chaplain,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "btU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "btV" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
@@ -28716,9 +28572,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "btW" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -28734,9 +28588,7 @@
 	light_color = "#ffc1c1"
 	},
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "btX" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -28748,9 +28600,7 @@
 	dir = 4
 	},
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "btY" = (
 /obj/structure/chair/sofa/right,
 /obj/structure/cable/yellow{
@@ -28761,9 +28611,7 @@
 	},
 /obj/effect/landmark/start/chaplain,
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "btZ" = (
 /obj/structure/chair/sofa,
 /obj/structure/cable/yellow{
@@ -28777,9 +28625,7 @@
 	dir = 8
 	},
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bua" = (
 /obj/structure/chair/sofa/left,
 /obj/structure/cable/yellow{
@@ -28789,9 +28635,7 @@
 	pixel_y = 22
 	},
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bub" = (
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
@@ -28807,15 +28651,11 @@
 	pixel_y = 2
 	},
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "buc" = (
 /obj/structure/bookcase/random/religion,
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bud" = (
 /obj/structure/curtain,
 /obj/machinery/shower{
@@ -28823,9 +28663,7 @@
 	},
 /obj/item/soap/deluxe,
 /turf/open/indestructible/hoteltile,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bue" = (
 /obj/structure/table/wood,
 /obj/structure/cable/yellow{
@@ -28840,9 +28678,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery{
-	name = "Chapel Kitchen"
-	})
+/area/service/chapel/asteroid/monastery)
 "buf" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
@@ -28851,16 +28687,12 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery{
-	name = "Chapel Kitchen"
-	})
+/area/service/chapel/asteroid/monastery)
 "bug" = (
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery{
-	name = "Chapel Kitchen"
-	})
+/area/service/chapel/asteroid/monastery)
 "buh" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Circuitry Lab";
@@ -29290,9 +29122,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bvg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
@@ -29300,9 +29130,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bvh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
@@ -29313,9 +29141,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bvi" = (
 /obj/machinery/door/airlock/wood,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
@@ -29325,9 +29151,7 @@
 	dir = 4
 	},
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bvj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
@@ -29336,9 +29160,7 @@
 	dir = 4
 	},
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bvk" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -29348,9 +29170,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bvl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -29359,44 +29179,32 @@
 	dir = 4
 	},
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bvm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bvn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/carpet/green,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bvo" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bvp" = (
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bvq" = (
 /obj/machinery/door/airlock/wood,
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bvr" = (
 /obj/structure/mirror{
 	pixel_x = 28
@@ -29406,9 +29214,7 @@
 	pixel_x = 11
 	},
 /turf/open/indestructible/hoteltile,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bvs" = (
 /turf/open/floor/carpet/green,
 /area/service/cafeteria)
@@ -29417,9 +29223,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery{
-	name = "Chapel Kitchen"
-	})
+/area/service/chapel/asteroid/monastery)
 "bvu" = (
 /obj/structure/table/wood,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -29428,9 +29232,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery{
-	name = "Chapel Kitchen"
-	})
+/area/service/chapel/asteroid/monastery)
 "bvv" = (
 /obj/structure/table/wood,
 /obj/machinery/microwave{
@@ -29439,9 +29241,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery{
-	name = "Chapel Kitchen"
-	})
+/area/service/chapel/asteroid/monastery)
 "bvw" = (
 /obj/structure/table,
 /obj/item/pen/fountain,
@@ -29878,29 +29678,21 @@
 	},
 /obj/machinery/disposal/bin,
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bwu" = (
 /obj/structure/table/wood,
 /obj/item/storage/fancy/candle_box{
 	pixel_y = 4
 	},
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bwv" = (
 /turf/open/floor/carpet/green,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bww" = (
 /obj/machinery/light/small,
 /turf/open/floor/carpet/green,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bwx" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
@@ -29915,9 +29707,7 @@
 	dir = 8
 	},
 /turf/open/indestructible/hoteltile,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bwz" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Kitchen";
@@ -31003,9 +30793,7 @@
 /turf/closed/festive/whitebrick{
 	color = "#967832"
 	},
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bzA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -31258,9 +31046,7 @@
 /area/edina/street/intersection/princessprogress)
 "bAc" = (
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bAd" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -31275,9 +31061,7 @@
 	dir = 1
 	},
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bAf" = (
 /obj/structure/closet/crate/freezer,
 /obj/structure/sign/poster/official/random{
@@ -31704,23 +31488,17 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/festive/cobblestone,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bAY" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bAZ" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bBa" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -32162,9 +31940,7 @@
 	dir = 8
 	},
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bBM" = (
 /obj/machinery/button/door{
 	id = "qm_warehouse";
@@ -32953,17 +32729,13 @@
 	pixel_y = 16
 	},
 /turf/open/floor/festive/cobblestone,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bCO" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bCP" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "qm_warehouse";
@@ -33060,9 +32832,7 @@
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bCY" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
@@ -33759,9 +33529,7 @@
 /turf/closed/festive/whitebrick{
 	color = "#967832"
 	},
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bEp" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Loading Garage";
@@ -33769,9 +33537,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bEq" = (
 /obj/structure/fence,
 /turf/open/floor/grass/snow/edina{
@@ -34017,9 +33783,7 @@
 	id = "cargocars"
 	},
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bEU" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/festive/alleyway,
@@ -34434,9 +34198,7 @@
 /turf/closed/festive/whitebrick{
 	color = "#967832"
 	},
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bGi" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/festive/wooden/wooden1,
@@ -34461,18 +34223,14 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bGm" = (
 /obj/machinery/conveyor{
 	id = "garbage"
 	},
 /obj/structure/plasticflaps,
 /turf/open/floor/plating,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bGn" = (
 /obj/structure/chair/sofa/right{
 	dir = 1
@@ -35053,9 +34811,7 @@
 	pixel_y = 32
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bHE" = (
 /obj/structure/chair,
 /obj/effect/turf_decal/tile/brown{
@@ -35069,9 +34825,7 @@
 	pixel_y = 32
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bHF" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -35088,9 +34842,7 @@
 	},
 /obj/effect/decal/festive/mistletoe,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bHG" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -35107,18 +34859,14 @@
 	light_color = "#d1dfff"
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bHH" = (
 /obj/effect/turf_decal/caution/stand_clear{
 	pixel_y = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bHI" = (
 /obj/machinery/autolathe{
 	name = "public autolathe"
@@ -35136,9 +34884,7 @@
 	pixel_y = 24
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bHJ" = (
 /obj/machinery/computer/cargo/request,
 /obj/effect/turf_decal/tile/brown{
@@ -35154,9 +34900,7 @@
 	pixel_y = 32
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bHK" = (
 /obj/structure/table/wood/fancy/green,
 /obj/effect/turf_decal/tile/brown{
@@ -35180,9 +34924,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bHL" = (
 /obj/machinery/computer/cargo,
 /obj/effect/turf_decal/tile/brown{
@@ -35196,9 +34938,7 @@
 	},
 /obj/effect/decal/festive/red_stockings,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bHM" = (
 /obj/effect/festive/street/streetlinenorth,
 /obj/effect/turf_decal/arrows/white{
@@ -35239,9 +34979,7 @@
 	},
 /obj/effect/decal/festive/fairylights,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bHP" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -35249,9 +34987,7 @@
 /turf/closed/festive/whitebrick{
 	color = "#967832"
 	},
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bHQ" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -35266,9 +35002,7 @@
 /turf/closed/festive/whitebrick{
 	color = "#967832"
 	},
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bHS" = (
 /obj/structure/chair/stool,
 /obj/machinery/requests_console{
@@ -35280,9 +35014,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bHT" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -35298,9 +35030,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bHU" = (
 /obj/structure/chair/sofa/corner{
 	dir = 8
@@ -35318,9 +35048,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bHW" = (
 /obj/structure/table,
 /obj/item/stack/wrapping_paper,
@@ -35365,9 +35093,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/white/corner,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bHX" = (
 /obj/item/storage/box,
 /obj/structure/table,
@@ -35390,15 +35116,11 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white/corner,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bHY" = (
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /turf/open/floor/plating,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bHZ" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/festive/alleyway,
@@ -35926,9 +35648,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/decal/festive/christmas_reef,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bJj" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -35947,38 +35667,28 @@
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bJl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bJm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bJn" = (
 /obj/effect/turf_decal/bot,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bJo" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bJp" = (
 /obj/structure/table/wood/fancy/green,
 /obj/effect/turf_decal/tile/brown{
@@ -35993,27 +35703,21 @@
 	req_access_txt = "50"
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bJq" = (
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
 /obj/effect/landmark/start/cargo_technician,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bJr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bJs" = (
 /obj/effect/festive/street/sidewalkn,
 /turf/open/floor/festive/cobblestone,
@@ -36025,9 +35729,7 @@
 	req_access_txt = "27"
 	},
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bJu" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -36040,9 +35742,7 @@
 	req_access_txt = "27"
 	},
 /turf/open/indestructible/hotelwood,
-/area/service/chapel/main/monastery{
-	name = "Chaplain's Quarters"
-	})
+/area/service/chapel/main/monastery)
 "bJv" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -36058,9 +35758,7 @@
 "bJw" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bJx" = (
 /obj/structure/sign/departments/botany{
 	pixel_x = 32;
@@ -36079,9 +35777,7 @@
 	name = "Reclaiming center"
 	},
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bJz" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -36616,9 +36312,7 @@
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /obj/structure/sign/poster/official/foam_force_ad,
 /turf/open/floor/plating,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bKG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -36627,9 +36321,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bKH" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -36638,9 +36330,7 @@
 	dir = 8
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bKI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment{
@@ -36650,9 +36340,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bKJ" = (
 /obj/machinery/holopad,
 /obj/structure/disposalpipe/segment{
@@ -36662,9 +36350,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bKK" = (
 /obj/effect/landmark/start/quartermaster,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -36675,9 +36361,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bKL" = (
 /obj/structure/table/wood/fancy/green,
 /obj/effect/turf_decal/tile/brown{
@@ -36697,9 +36381,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bKM" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -36714,9 +36396,7 @@
 	pixel_y = 6
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bKN" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -36745,9 +36425,7 @@
 	dir = 8
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bKP" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -36758,9 +36436,7 @@
 	},
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/plating,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bKQ" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -36772,9 +36448,7 @@
 	pixel_y = -22
 	},
 /turf/open/floor/plating,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bKR" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -36785,9 +36459,7 @@
 	light_color = "#e8eaff"
 	},
 /turf/open/floor/plating,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bKS" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -36795,9 +36467,7 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bKT" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -36808,9 +36478,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bKU" = (
 /obj/machinery/disposal/deliveryChute{
 	dir = 8
@@ -36822,9 +36490,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bKV" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -37066,9 +36732,7 @@
 /turf/closed/festive/whitebrick{
 	color = "#967832"
 	},
-/area/commons/locker{
-	name = "Cargo Locker Room"
-	})
+/area/commons/locker)
 "bLv" = (
 /obj/machinery/button/door{
 	id = "idquarters";
@@ -37321,30 +36985,22 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bLW" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bLX" = (
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bLY" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bLZ" = (
 /obj/structure/table/wood/fancy/green,
 /obj/effect/turf_decal/tile/brown{
@@ -37362,9 +37018,7 @@
 	req_access_txt = "50"
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bMa" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -37373,9 +37027,7 @@
 	dir = 8
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bMb" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -37417,30 +37069,22 @@
 /turf/closed/festive/whitebrick{
 	color = "#967832"
 	},
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bMf" = (
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowNSRightEnd,
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bMg" = (
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowNSMiddle,
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bMh" = (
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowNSLeftEnd,
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "bMi" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/structure/disposalpipe/segment{
@@ -37924,9 +37568,7 @@
 	},
 /obj/effect/turf_decal/tile/brown,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bNk" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/tile/brown{
@@ -37937,16 +37579,12 @@
 	dir = 1
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bNl" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bNm" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -37957,9 +37595,7 @@
 	pixel_y = -32
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bNn" = (
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 1;
@@ -37967,9 +37603,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bNo" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -37977,9 +37611,7 @@
 /obj/effect/turf_decal/tile/brown,
 /obj/machinery/vending/donksofttoyvendor,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bNp" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -37987,9 +37619,7 @@
 /obj/effect/turf_decal/tile/brown,
 /obj/machinery/vending/toyliberationstation,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bNq" = (
 /obj/structure/table/wood/fancy/green,
 /obj/effect/turf_decal/tile/brown{
@@ -38008,9 +37638,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bNr" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -38021,9 +37649,7 @@
 	},
 /obj/machinery/photocopier,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bNs" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/autolathe,
@@ -38031,9 +37657,7 @@
 	pixel_x = 32
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bNt" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -38643,9 +38267,7 @@
 /obj/structure/plasticflaps/opaque,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bOH" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Delivery Office";
@@ -38653,15 +38275,11 @@
 	req_one_access_txt = "48;50"
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bOI" = (
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bOJ" = (
 /turf/open/floor/carpet/royalblue,
 /area/edina/crew_quarters/store/clothes)
@@ -38670,9 +38288,7 @@
 /turf/closed/festive/whitebrick{
 	color = "#967832"
 	},
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "bOL" = (
 /obj/structure/closet/secure_closet/quartermaster,
 /obj/item/clothing/suit/hooded/wintercoat/cargo,
@@ -43523,9 +43139,7 @@
 /obj/item/clothing/neck/scarf/orange,
 /obj/effect/decal/festive/red_stockings,
 /turf/open/indestructible,
-/area/commons/locker{
-	name = "Cargo Locker Room"
-	})
+/area/commons/locker)
 "bZG" = (
 /obj/structure/closet/wardrobe/cargotech,
 /obj/item/clothing/suit/hooded/wintercoat/cargo,
@@ -43540,9 +43154,7 @@
 /obj/structure/closet/secure_closet/quartermaster,
 /obj/effect/decal/festive/red_stockings,
 /turf/open/indestructible,
-/area/commons/locker{
-	name = "Cargo Locker Room"
-	})
+/area/commons/locker)
 "bZH" = (
 /obj/machinery/vending/wardrobe/cargo_wardrobe,
 /obj/machinery/light/small{
@@ -43554,9 +43166,7 @@
 	dir = 8
 	},
 /turf/open/indestructible,
-/area/commons/locker{
-	name = "Cargo Locker Room"
-	})
+/area/commons/locker)
 "bZI" = (
 /obj/structure/closet/wardrobe/cargotech,
 /obj/item/clothing/suit/hooded/wintercoat/cargo,
@@ -43569,9 +43179,7 @@
 /obj/item/radio,
 /obj/item/clothing/neck/scarf/orange,
 /turf/open/indestructible,
-/area/commons/locker{
-	name = "Cargo Locker Room"
-	})
+/area/commons/locker)
 "bZJ" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
@@ -44026,9 +43634,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/commons/locker{
-	name = "Cargo Locker Room"
-	})
+/area/commons/locker)
 "caD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/indestructible,
@@ -44045,9 +43651,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/indestructible,
-/area/commons/locker{
-	name = "Cargo Locker Room"
-	})
+/area/commons/locker)
 "caF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -44056,9 +43660,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/indestructible,
-/area/commons/locker{
-	name = "Cargo Locker Room"
-	})
+/area/commons/locker)
 "caG" = (
 /obj/effect/landmark/start/cargo_technician,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -44071,9 +43673,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/indestructible,
-/area/commons/locker{
-	name = "Cargo Locker Room"
-	})
+/area/commons/locker)
 "caH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -44087,9 +43687,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/indestructible,
-/area/commons/locker{
-	name = "Cargo Locker Room"
-	})
+/area/commons/locker)
 "caI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -44620,9 +44218,7 @@
 /obj/machinery/light/small,
 /obj/structure/closet/secure_closet/quartermaster,
 /turf/open/indestructible,
-/area/commons/locker{
-	name = "Cargo Locker Room"
-	})
+/area/commons/locker)
 "cbE" = (
 /obj/item/clothing/suit/hooded/wintercoat/cargo,
 /obj/item/clothing/shoes/winterboots,
@@ -44641,9 +44237,7 @@
 /obj/structure/closet/wardrobe/cargotech,
 /obj/item/clothing/neck/scarf/orange,
 /turf/open/indestructible,
-/area/commons/locker{
-	name = "Cargo Locker Room"
-	})
+/area/commons/locker)
 "cbF" = (
 /obj/structure/closet/wardrobe/cargotech,
 /obj/item/clothing/suit/hooded/wintercoat/cargo,
@@ -44659,9 +44253,7 @@
 /obj/item/clothing/neck/scarf/orange,
 /obj/structure/closet/secure_closet/quartermaster,
 /turf/open/indestructible,
-/area/commons/locker{
-	name = "Cargo Locker Room"
-	})
+/area/commons/locker)
 "cbG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -45542,9 +45134,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "cdZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/start/paramedic,
@@ -46877,9 +46467,7 @@
 	light_color = "#e8eaff"
 	},
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "chb" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plating,
@@ -47404,9 +46992,7 @@
 "cir" = (
 /obj/effect/turf_decal/bot,
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "cis" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -47420,9 +47006,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "cit" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -47433,9 +47017,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "ciu" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -47448,9 +47030,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "civ" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/festive/whitebrick{
@@ -47477,9 +47057,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "ciz" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Office";
@@ -47488,9 +47066,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "ciA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposaloutlet,
@@ -47503,9 +47079,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/plasteel,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "ciB" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -47574,9 +47148,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "ciJ" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -47649,9 +47221,7 @@
 	dir = 5
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "ciT" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -47660,9 +47230,7 @@
 	dir = 8
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "ciU" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -47672,9 +47240,7 @@
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "ciV" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Office";
@@ -47685,9 +47251,7 @@
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "ciW" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -47705,36 +47269,28 @@
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "ciY" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "ciZ" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "cja" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "cjb" = (
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/stripes/line,
@@ -47742,9 +47298,7 @@
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "cjc" = (
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/stripes/line,
@@ -47755,9 +47309,7 @@
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "cjd" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -47880,9 +47432,7 @@
 	dir = 6
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "cjq" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -47895,9 +47445,7 @@
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "cjr" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -47907,15 +47455,11 @@
 	dir = 8
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "cjs" = (
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /turf/open/floor/plating,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "cjt" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/structure/disposalpipe/segment{
@@ -52468,9 +52012,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/indestructible,
-/area/cargo/office{
-	name = "Post Office Lobby"
-	})
+/area/cargo/office)
 "cuO" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
@@ -53076,9 +52618,7 @@
 	dir = 8
 	},
 /turf/open/indestructible,
-/area/commons/locker{
-	name = "Cargo Locker Room"
-	})
+/area/commons/locker)
 "cwl" = (
 /turf/open/floor/wood,
 /area/maintenance/bar)
@@ -53249,9 +52789,7 @@
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/commons/locker{
-	name = "Cargo Locker Room"
-	})
+/area/commons/locker)
 "cwP" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	color = "#FFFFFE";
@@ -55067,9 +54605,7 @@
 	dir = 8
 	},
 /turf/open/floor/festive/alleyway,
-/area/service/abandoned_gambling_den/secondary{
-	name = "Arcade"
-	})
+/area/service/abandoned_gambling_den/secondary)
 "gzG" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/reagent_containers/food/snacks/taco,
@@ -56607,9 +56143,7 @@
 "sMS" = (
 /obj/effect/decal/festive/fairylights,
 /turf/open/indestructible,
-/area/cargo{
-	name = "Reclaiming center and Garage"
-	})
+/area/cargo
 "sQo" = (
 /turf/open/floor/plasteel/white/side{
 	dir = 4
@@ -56631,9 +56165,7 @@
 	dir = 9
 	},
 /turf/open/floor/festive/alleyway,
-/area/service/abandoned_gambling_den/secondary{
-	name = "Arcade"
-	})
+/area/service/abandoned_gambling_den/secondary)
 "sVS" = (
 /obj/structure/table/wood,
 /obj/machinery/light{
