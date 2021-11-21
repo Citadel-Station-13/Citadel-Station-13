@@ -19099,16 +19099,12 @@
 /area/edina/street/secondary/command)
 "aWv" = (
 /turf/closed/wall/mineral/iron,
-/area/medical/morgue{
-	name = "Chapel Morgue"
-	})
+/area/medical/morgue)
 "aWw" = (
 /obj/structure/curtain,
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /turf/open/floor/plating,
-/area/medical/morgue{
-	name = "Chapel Morgue"
-	})
+/area/medical/morgue)
 "aWx" = (
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/bin,
@@ -19185,15 +19181,11 @@
 /area/service/chapel/office)
 "aWH" = (
 /turf/closed/wall/mineral/iron,
-/area/service/chapel/asteroid{
-	name = "Chapel Dining Room"
-	})
+/area/service/chapel/asteroid)
 "aWI" = (
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /turf/open/floor/plating,
-/area/service/chapel/asteroid{
-	name = "Chapel Dining Room"
-	})
+/area/service/chapel/asteroid)
 "aWJ" = (
 /obj/structure/fluff/lightpost/light,
 /turf/open/floor/festive/alleyway,
@@ -19503,9 +19495,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/medical/morgue{
-	name = "Chapel Morgue"
-	})
+/area/medical/morgue)
 "aXG" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -19514,9 +19504,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/medical/morgue{
-	name = "Chapel Morgue"
-	})
+/area/medical/morgue)
 "aXH" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -19540,9 +19528,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/medical/morgue{
-	name = "Chapel Morgue"
-	})
+/area/medical/morgue)
 "aXI" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -19556,9 +19542,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/medical/morgue{
-	name = "Chapel Morgue"
-	})
+/area/medical/morgue)
 "aXJ" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -19576,9 +19560,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/medical/morgue{
-	name = "Chapel Morgue"
-	})
+/area/medical/morgue)
 "aXK" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -19741,9 +19723,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/asteroid{
-	name = "Chapel Dining Room"
-	})
+/area/service/chapel/asteroid)
 "aYc" = (
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = -32
@@ -20241,9 +20221,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/medical/morgue{
-	name = "Chapel Morgue"
-	})
+/area/medical/morgue)
 "aZw" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -20252,9 +20230,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/medical/morgue{
-	name = "Chapel Morgue"
-	})
+/area/medical/morgue)
 "aZx" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -20316,9 +20292,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/asteroid{
-	name = "Chapel Dining Room"
-	})
+/area/service/chapel/asteroid)
 "aZH" = (
 /obj/effect/festive/street/streetlinenorth,
 /obj/effect/turf_decal/arrows/white{
@@ -20829,9 +20803,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/medical/morgue{
-	name = "Chapel Morgue"
-	})
+/area/medical/morgue)
 "bbj" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 1
@@ -20843,9 +20815,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/medical/morgue{
-	name = "Chapel Morgue"
-	})
+/area/medical/morgue)
 "bbk" = (
 /obj/effect/turf_decal/caution,
 /turf/open/floor/plasteel/freezer,
@@ -20877,9 +20847,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/medical/morgue{
-	name = "Chapel Morgue"
-	})
+/area/medical/morgue)
 "bbo" = (
 /obj/structure/bodycontainer/crematorium{
 	dir = 1
@@ -20887,9 +20855,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/medical/morgue{
-	name = "Chapel Morgue"
-	})
+/area/medical/morgue)
 "bbp" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Chapel Office";
@@ -20931,18 +20897,14 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/asteroid{
-	name = "Chapel Dining Room"
-	})
+/area/service/chapel/asteroid)
 "bbt" = (
 /obj/structure/table/wood/fancy/green,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/asteroid{
-	name = "Chapel Dining Room"
-	})
+/area/service/chapel/asteroid)
 "bbu" = (
 /obj/structure/table/wood/fancy/green,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -20953,9 +20915,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/asteroid{
-	name = "Chapel Dining Room"
-	})
+/area/service/chapel/asteroid)
 "bbv" = (
 /obj/effect/festive/street/streetlinenorth,
 /obj/effect/festive/street/streetliftedtile2,
@@ -21389,9 +21349,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/asteroid{
-	name = "Chapel Dining Room"
-	})
+/area/service/chapel/asteroid)
 "bcL" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
@@ -21403,9 +21361,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/asteroid{
-	name = "Chapel Dining Room"
-	})
+/area/service/chapel/asteroid)
 "bcM" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
@@ -21414,9 +21370,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/asteroid{
-	name = "Chapel Dining Room"
-	})
+/area/service/chapel/asteroid)
 "bcN" = (
 /obj/structure/closet/crate/trashcart,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -21895,9 +21849,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/asteroid{
-	name = "Chapel Dining Room"
-	})
+/area/service/chapel/asteroid)
 "beh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -21905,9 +21857,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/asteroid{
-	name = "Chapel Dining Room"
-	})
+/area/service/chapel/asteroid)
 "bei" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -41810,9 +41760,7 @@
 /turf/closed/festive/whitebrick{
 	color = "#967832"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "bWz" = (
 /turf/closed/festive/whitebrick,
 /area/commons/dorms)
@@ -42213,9 +42161,7 @@
 	pixel_y = 32
 	},
 /turf/open/indestructible/hoteltile,
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "bXy" = (
 /obj/structure/sign/poster/official/cleanliness{
 	pixel_x = 32
@@ -42224,9 +42170,7 @@
 	dir = 4
 	},
 /turf/open/indestructible/hoteltile,
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "bXz" = (
 /obj/effect/landmark/start/geneticist,
 /turf/open/floor/plasteel/white,
@@ -42493,14 +42437,10 @@
 	dir = 4
 	},
 /turf/open/indestructible/hoteltile,
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "bYl" = (
 /turf/open/indestructible/hoteltile,
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "bYm" = (
 /obj/structure/fence{
 	dir = 4
@@ -42726,15 +42666,11 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "bYN" = (
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /turf/open/floor/plating,
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "bYO" = (
 /obj/machinery/light{
 	dir = 8
@@ -43025,9 +42961,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "bZx" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -43036,9 +42970,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "bZy" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -43051,9 +42983,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "bZz" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -43070,9 +43000,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "bZA" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -43083,9 +43011,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "bZB" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -43095,9 +43021,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "bZC" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -43107,9 +43031,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "bZD" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -43505,9 +43427,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "cat" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -43517,9 +43437,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "cau" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -43531,9 +43449,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "cav" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -43549,9 +43465,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "caw" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -43569,9 +43483,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "cax" = (
 /obj/structure/chair/office/light,
 /obj/structure/disposalpipe/segment{
@@ -44104,9 +44016,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "cbw" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -44118,9 +44028,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "cbx" = (
 /obj/machinery/light/small,
 /obj/effect/turf_decal/tile/brown,
@@ -44133,9 +44041,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "cby" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -44151,9 +44057,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "cbz" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -44166,9 +44070,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "cbA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -44451,9 +44353,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "ccj" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -45626,9 +45526,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "cfa" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -52552,9 +52450,7 @@
 /turf/open/indestructible{
 	icon_state = "sepia"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "cwd" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	color = "#FFFFFF";
@@ -56271,9 +56167,7 @@
 /turf/closed/festive/whitebrick{
 	color = "#967832"
 	},
-/area/cargo{
-	name = "Cargo Break Room"
-	})
+/area/cargo)
 "tHL" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
