@@ -5878,9 +5878,6 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=270"
 	},
 /area/edina)
-"aoD" = (
-/turf/open/floor/festive/alleyway,
-/area/science/research)
 "aoE" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -9057,7 +9054,7 @@
 /turf/open/floor/grass/snow/edina{
 	initial_gas_mix = "o2=22;n2=82;TEMP=270"
 	},
-/area/science/research)
+/area/science)
 "awp" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -9096,9 +9093,7 @@
 /turf/open/floor/grass/snow/edina{
 	initial_gas_mix = "o2=22;n2=82;TEMP=270"
 	},
-/area/science/research{
-	name = "Science Street"
-	})
+/area/science)
 "awt" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -11729,7 +11724,7 @@
 /turf/open/floor/grass/snow/edina{
 	initial_gas_mix = "o2=22;n2=82;TEMP=270"
 	},
-/area/science/research)
+/area/science)
 "aDT" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/floor/plasteel,
@@ -11912,7 +11907,7 @@
 /turf/open/floor/grass/snow/edina{
 	initial_gas_mix = "o2=22;n2=82;TEMP=270"
 	},
-/area/science/research)
+/area/science)
 "aEA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/festive/sidewalk,
@@ -13745,7 +13740,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aIV" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -14273,7 +14268,7 @@
 /area/service/bar/atrium)
 "aKg" = (
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aKh" = (
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
@@ -14489,7 +14484,7 @@
 	dir = 8
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aKJ" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/closet/wardrobe/mixed,
@@ -14539,31 +14534,17 @@
 	dir = 8
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research{
-	name = "Science Street"
-	})
-"aKS" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 1
-	},
-/turf/open/floor/festive/alleyway,
-/area/science/research{
-	name = "Science Street"
-	})
+/area/science)
 "aKT" = (
 /turf/open/floor/festive/alleyway,
-/area/science/research{
-	name = "Science Street"
-	})
+/area/science)
 "aKU" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
 /obj/effect/festive/street/streetlineem,
 /turf/open/floor/festive/alleyway,
-/area/science/research{
-	name = "Science Street"
-	})
+/area/science)
 "aKV" = (
 /obj/structure/fluff/lightpost/light,
 /turf/open/floor/grass/snow/edina{
@@ -14700,14 +14681,14 @@
 	dir = 8
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aLp" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aLq" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -14717,7 +14698,7 @@
 	dir = 6
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aLr" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -14727,7 +14708,7 @@
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aLs" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -14736,7 +14717,7 @@
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aLt" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -14746,7 +14727,7 @@
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aLu" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/structure/fence/door/opened{
@@ -14759,20 +14740,16 @@
 	dir = 10
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aLv" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/festive/alleyway,
-/area/science/research{
-	name = "Science Street"
-	})
+/area/science)
 "aLw" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/festive/street/streetlineem,
 /turf/open/floor/festive/alleyway,
-/area/science/research{
-	name = "Science Street"
-	})
+/area/science)
 "aLx" = (
 /turf/closed/festive/redbrick/redbrickns,
 /area/edina/crew_quarters/store/plushies)
@@ -14939,7 +14916,7 @@
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aLY" = (
 /turf/closed/festive/redbrick,
 /area/security/checkpoint/science)
@@ -14952,14 +14929,10 @@
 /turf/open/floor/grass/snow/edina{
 	initial_gas_mix = "o2=22;n2=82;TEMP=270"
 	},
-/area/science/research{
-	name = "Science Street"
-	})
+/area/science)
 "aMb" = (
 /turf/closed/festive/whitebrick,
-/area/science/research{
-	name = "Science Street"
-	})
+/area/science)
 "aMc" = (
 /obj/structure/reagent_dispensers/beerkeg{
 	reagent_id = /datum/reagent/consumable/ethanol/beer/light
@@ -15063,7 +15036,7 @@
 	dir = 8
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aMs" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -15072,7 +15045,7 @@
 	dir = 6
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aMt" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -15082,7 +15055,7 @@
 	dir = 8
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aMu" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -15092,20 +15065,20 @@
 	dir = 10
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aMv" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aMw" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aMx" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	color = "#FFFFFF";
@@ -15115,7 +15088,7 @@
 	dir = 1
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aMy" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 6
@@ -15452,14 +15425,14 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aNe" = (
 /turf/closed/festive/whitebrick,
 /area/science/research)
 "aNf" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction,
 /turf/closed/festive/whitebrick,
-/area/science/research)
+/area/science)
 "aNg" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Science Maintenance";
@@ -15467,7 +15440,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aNh" = (
 /turf/closed/festive/whitebrick,
 /area/science/nanite)
@@ -15481,7 +15454,7 @@
 	dir = 8
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aNj" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/floor/engine,
@@ -15729,23 +15702,23 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aNQ" = (
 /obj/machinery/door/airlock{
 	name = "Borg Charger"
 	},
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aNR" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aNS" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold,
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aNT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -15754,7 +15727,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aNU" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
@@ -15818,7 +15791,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aOe" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
@@ -15880,7 +15853,7 @@
 /turf/closed/festive/whitebrick{
 	color = "#555555"
 	},
-/area/science/research)
+/area/science)
 "aOj" = (
 /obj/structure/fence{
 	dir = 4
@@ -15888,9 +15861,7 @@
 /turf/open/floor/grass/snow/edina{
 	initial_gas_mix = "o2=22;n2=82;TEMP=270"
 	},
-/area/science/research{
-	name = "Science Street"
-	})
+/area/science)
 "aOk" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
@@ -16089,12 +16060,12 @@
 "aOP" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aOQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aOR" = (
 /obj/structure/sink{
 	dir = 4;
@@ -16104,7 +16075,7 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aOS" = (
 /obj/structure/table,
 /obj/item/folder/white,
@@ -16438,18 +16409,18 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aPL" = (
 /obj/machinery/door/airlock{
 	name = "Toilet Unit"
 	},
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aPM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small,
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aPN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sink{
@@ -16460,7 +16431,7 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aPO" = (
 /obj/structure/chair/office/light{
 	dir = 4
@@ -17200,7 +17171,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aRu" = (
 /obj/structure/rack,
 /obj/item/clothing/shoes/winterboots,
@@ -17390,14 +17361,14 @@
 	name = "Bathroom"
 	},
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aRV" = (
 /turf/open/floor/festive/alleyway,
 /area/edina/backstreet)
 "aRW" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/closed/festive/whitebrick,
-/area/science/research)
+/area/science)
 "aRX" = (
 /obj/machinery/vending/wardrobe/science_wardrobe,
 /turf/open/floor/plasteel/white,
@@ -17687,7 +17658,7 @@
 	pixel_x = -26
 	},
 /turf/open/floor/wood,
-/area/science/research)
+/area/science)
 "aSE" = (
 /obj/structure/table/wood,
 /obj/structure/sign/poster/official/report_crimes{
@@ -17695,21 +17666,21 @@
 	},
 /obj/item/storage/box/donkpockets,
 /turf/open/floor/wood,
-/area/science/research)
+/area/science)
 "aSF" = (
 /obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_y = 26
 	},
 /turf/open/floor/wood,
-/area/science/research)
+/area/science)
 "aSG" = (
 /turf/open/floor/wood,
-/area/science/research)
+/area/science)
 "aSH" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/floor/wood,
-/area/science/research)
+/area/science)
 "aSI" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -17882,7 +17853,7 @@
 "aTf" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/wood,
-/area/science/research)
+/area/science)
 "aTg" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -17895,7 +17866,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aTh" = (
 /turf/open/floor/carpet/red,
 /area/service/bar)
@@ -17907,7 +17878,7 @@
 	},
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/floor/wood,
-/area/science/research)
+/area/science)
 "aTj" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/festive/alleyway,
@@ -17927,14 +17898,14 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aTm" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aTn" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -17961,7 +17932,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aTq" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -17973,7 +17944,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aTr" = (
 /obj/structure/fence,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -17986,7 +17957,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aTs" = (
 /obj/effect/festive/street/streetlinesw,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -17997,9 +17968,7 @@
 	dir = 1
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "aTu" = (
 /obj/effect/festive/street/streetlinese,
 /turf/open/floor/festive/cobblestone,
@@ -18180,7 +18149,7 @@
 	},
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aTP" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb,
@@ -18192,7 +18161,7 @@
 	},
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/floor/wood,
-/area/science/research)
+/area/science)
 "aTQ" = (
 /turf/closed/festive/whitebrick,
 /area/science/server)
@@ -18216,7 +18185,7 @@
 	},
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aTU" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -18275,7 +18244,7 @@
 "aUe" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/wood,
-/area/science/research)
+/area/science)
 "aUf" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -18289,7 +18258,7 @@
 	},
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science)
 "aUg" = (
 /obj/structure/table/wood,
 /obj/machinery/newscaster{
@@ -18300,13 +18269,11 @@
 /obj/item/clothing/head/beret/sci,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/floor/wood,
-/area/science/research)
+/area/science)
 "aUh" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "aUi" = (
 /obj/machinery/rnd/server,
 /turf/open/floor/circuit/telecomms/server,
@@ -18462,13 +18429,13 @@
 "aUH" = (
 /obj/machinery/disposal/bin,
 /turf/open/floor/wood,
-/area/science/research)
+/area/science)
 "aUI" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 5
 	},
 /turf/open/floor/wood,
-/area/science/research)
+/area/science)
 "aUJ" = (
 /obj/machinery/status_display{
 	pixel_y = -32
@@ -18479,14 +18446,14 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/science/research)
+/area/science)
 "aUK" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/science/research)
+/area/science)
 "aUL" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -18495,7 +18462,7 @@
 	dir = 9
 	},
 /turf/open/floor/wood,
-/area/science/research)
+/area/science)
 "aUM" = (
 /obj/structure/flora/tree/pine/xmas,
 /turf/open/floor/grass/snow/edina{
@@ -18703,18 +18670,14 @@
 	dir = 8
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "aVq" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	color = "#FFFFFF";
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "aVr" = (
 /obj/effect/festive/street/streetlinenorth,
 /obj/effect/turf_decal/arrows/white{
@@ -18729,9 +18692,7 @@
 /turf/open/floor/grass/snow/edina{
 	initial_gas_mix = "o2=22;n2=82;TEMP=270"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "aVu" = (
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/research{
@@ -19096,7 +19057,7 @@
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "aWo" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/floor/plasteel/white,
@@ -20325,9 +20286,7 @@
 /area/service/chapel/office)
 "aZB" = (
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "aZC" = (
 /obj/machinery/light/small,
 /turf/open/indestructible/hotelwood,
@@ -21020,7 +20979,7 @@
 	dir = 8
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "bby" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
 	dir = 4
@@ -21130,7 +21089,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "bbN" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -21139,7 +21098,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "bbO" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -21712,7 +21671,7 @@
 /area/commons/storage/tools)
 "bdA" = (
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bdD" = (
 /obj/structure/sink{
 	dir = 8;
@@ -22105,7 +22064,7 @@
 	},
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "bew" = (
 /obj/effect/festive/street/sidewalkwem,
 /obj/structure/cable/yellow{
@@ -22120,7 +22079,7 @@
 	},
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "bey" = (
 /obj/effect/festive/street/sidewalkwem,
 /obj/structure/cable/yellow{
@@ -22200,7 +22159,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/wood,
-/area/science/research)
+/area/science)
 "beJ" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -22371,7 +22330,7 @@
 /area/edina/street/primary/perimeter)
 "bfm" = (
 /turf/closed/festive/whitebrick,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bfn" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -22688,7 +22647,7 @@
 /turf/open/floor/grass/snow/edina{
 	initial_gas_mix = "o2=22;n2=82;TEMP=270"
 	},
-/area/science/research)
+/area/science)
 "bfT" = (
 /obj/structure/table/reinforced,
 /obj/item/stock_parts/cell/high,
@@ -22785,7 +22744,7 @@
 	dir = 8
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "bgd" = (
 /obj/structure/fence{
 	dir = 4
@@ -22795,7 +22754,7 @@
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "bge" = (
 /obj/structure/bodycontainer/morgue,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -23270,7 +23229,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "bhm" = (
 /obj/machinery/mech_bay_recharge_port{
 	dir = 1
@@ -23883,7 +23842,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "bjg" = (
 /turf/closed/festive/whitebrick,
 /area/commons/storage/tools)
@@ -24412,17 +24371,13 @@
 	dir = 8
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bkv" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bkw" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -24830,9 +24785,7 @@
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bli" = (
 /turf/closed/wall/r_wall,
 /area/command/heads_quarters/cmo)
@@ -26275,27 +26228,21 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "boF" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "boG" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "boH" = (
 /obj/structure/fireplace{
 	dir = 4;
@@ -26794,9 +26741,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bpO" = (
 /obj/structure/fluff/lightpost/light,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -26804,9 +26749,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bpP" = (
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
@@ -26816,16 +26759,12 @@
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bpR" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bpS" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -26833,9 +26772,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bpT" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/structure/fluff/lightpost/light,
@@ -26843,17 +26780,13 @@
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bpU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bpV" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -26862,9 +26795,7 @@
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bpW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -27457,9 +27388,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "brj" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -27472,9 +27401,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "brk" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -27483,7 +27410,7 @@
 	icon_state = "4-8"
 	},
 /turf/closed/festive/whitebrick/whitebrickcornernw,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "brl" = (
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowNSRightEnd,
@@ -27494,7 +27421,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "brm" = (
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowNSMiddle,
@@ -27505,7 +27432,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "brn" = (
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowNSLeftEnd,
@@ -27516,7 +27443,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bro" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -27525,7 +27452,7 @@
 	icon_state = "4-8"
 	},
 /turf/closed/festive/whitebrick,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "brp" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -27540,7 +27467,7 @@
 	icon_state = "4-8"
 	},
 /turf/closed/festive/whitebrick,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "brq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -27550,7 +27477,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/festive/whitebrick,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "brr" = (
 /obj/structure/disposalpipe/junction{
 	dir = 4
@@ -27559,7 +27486,7 @@
 	icon_state = "4-8"
 	},
 /turf/closed/festive/whitebrick,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "brs" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -27571,9 +27498,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "brt" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -28101,9 +28026,7 @@
 /turf/open/floor/grass/snow/edina{
 	initial_gas_mix = "o2=22;n2=82;TEMP=270"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bsz" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -28113,9 +28036,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bsA" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -28124,17 +28045,13 @@
 	dir = 9
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bsB" = (
 /obj/structure/flora/tree/pine/xmas,
 /turf/open/floor/grass/snow/edina{
 	initial_gas_mix = "o2=22;n2=82;TEMP=270"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bsC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -28339,18 +28256,14 @@
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bsT" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bsU" = (
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowWERightEnd,
@@ -28358,21 +28271,21 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bsV" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bsW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/effect/decal/festive/green_stockings,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bsX" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -28393,7 +28306,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bsY" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -28418,7 +28331,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bsZ" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -28440,7 +28353,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bta" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/red{
@@ -28456,7 +28369,7 @@
 /obj/machinery/vending/snack/random,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "btb" = (
 /obj/machinery/disposal/bin,
 /obj/machinery/camera{
@@ -28474,13 +28387,13 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "btc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/festive/whitebrick,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "btd" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -28489,9 +28402,7 @@
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bte" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -29045,9 +28956,7 @@
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "buq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -29056,9 +28965,7 @@
 	dir = 9
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bur" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -29067,9 +28974,7 @@
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bus" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen,
@@ -29079,15 +28984,15 @@
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowWELeftEnd,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "buu" = (
 /obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "buv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "buw" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -29100,7 +29005,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bux" = (
 /obj/effect/landmark/start/medical_doctor,
 /obj/effect/turf_decal/tile/red{
@@ -29114,17 +29019,17 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "buy" = (
 /obj/machinery/light{
 	dir = 4;
 	light_color = "#e8eaff"
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "buz" = (
 /turf/closed/festive/whitebrick/whitebrickwe,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "buA" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
@@ -29604,31 +29509,23 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bvC" = (
 /obj/structure/fluff/lightpost/light,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bvD" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/structure/fluff/lightpost/light,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bvE" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
 /obj/effect/decal/festive/fairylights,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bvF" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
@@ -29642,9 +29539,7 @@
 /obj/effect/decal/festive/fairylights,
 /obj/effect/decal/festive/fairylights,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bvH" = (
 /obj/machinery/newscaster{
 	pixel_x = -32
@@ -29654,12 +29549,12 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bvI" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bvJ" = (
 /obj/structure/chair/wood/normal{
 	dir = 4
@@ -29675,7 +29570,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bvK" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/spray/cleaner{
@@ -29694,7 +29589,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bvL" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/red,
@@ -29709,7 +29604,7 @@
 	},
 /obj/item/clothing/head/beret/med,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bvM" = (
 /obj/structure/chair/wood/normal{
 	dir = 8
@@ -29725,18 +29620,18 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bvN" = (
 /obj/machinery/newscaster{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bvO" = (
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowWERightEnd,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bvP" = (
 /obj/machinery/door/airlock/command{
 	name = "Chief Medical Officer's Office";
@@ -30074,20 +29969,18 @@
 	},
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bwG" = (
 /obj/structure/sign/poster/official/help_others{
 	pixel_x = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bwH" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bwI" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/red,
@@ -30101,7 +29994,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bwJ" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -30117,7 +30010,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bwK" = (
 /obj/effect/festive/street/sidewalkn,
 /obj/structure/disposalpipe/segment,
@@ -30302,9 +30195,7 @@
 /turf/open/floor/grass/snow/edina{
 	initial_gas_mix = "o2=22;n2=82;TEMP=270"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bxm" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -30317,9 +30208,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bxn" = (
 /obj/structure/chair/wood/normal,
 /obj/effect/decal/festive/christmas_ivy_string,
@@ -30403,11 +30292,11 @@
 /area/medical/exam_room)
 "bxA" = (
 /turf/closed/festive/whitebrick/whitebrickcornernw,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bxB" = (
 /obj/effect/decal/festive/fairylights,
 /turf/closed/festive/whitebrick,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bxC" = (
 /obj/effect/landmark/start/roboticist,
 /turf/open/floor/plasteel/white,
@@ -30421,7 +30310,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bxE" = (
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
@@ -30434,20 +30323,20 @@
 /obj/structure/extinguisher_cabinet,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/festive/whitebrick,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bxF" = (
 /turf/closed/festive/whitebrick/whitebrickns,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bxG" = (
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowNSRightEnd,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bxH" = (
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowNSMiddle,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bxI" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -30465,11 +30354,11 @@
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowNSLeftEnd,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bxK" = (
 /obj/structure/sign/departments/medbay/alt,
 /turf/closed/festive/whitebrick/whitebrickcornerse,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bxL" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -30479,18 +30368,14 @@
 	},
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bxM" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
 /obj/structure/fence/door/opened,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bxN" = (
 /turf/closed/festive/bluebrick/bluebrickcornersw,
 /area/command/heads_quarters/cmo)
@@ -30639,9 +30524,7 @@
 /turf/open/floor/grass/snow/edina{
 	initial_gas_mix = "o2=22;n2=82;TEMP=270"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "byh" = (
 /obj/structure/flora/tree/pine/xmas,
 /obj/structure/cable/yellow{
@@ -30650,9 +30533,7 @@
 /turf/open/floor/grass/snow/edina{
 	initial_gas_mix = "o2=22;n2=82;TEMP=270"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "byi" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -30660,9 +30541,7 @@
 /turf/open/floor/grass/snow/edina{
 	initial_gas_mix = "o2=22;n2=82;TEMP=270"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "byj" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -30681,9 +30560,7 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/dark,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "byk" = (
 /obj/structure/chair/wood/normal,
 /turf/open/floor/carpet/green,
@@ -30866,7 +30743,7 @@
 "byJ" = (
 /obj/machinery/computer/crew,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "byK" = (
 /obj/structure/bed,
 /obj/effect/spawner/lootdrop/bedsheet,
@@ -30890,22 +30767,22 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "byN" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "byO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "byP" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "byQ" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -31037,18 +30914,18 @@
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowWEMiddle,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bzm" = (
 /obj/structure/chair/office/light{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bzn" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/drinks/britcup,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bzo" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -31056,7 +30933,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bzp" = (
 /obj/structure/chair/wood/normal{
 	dir = 8
@@ -31069,7 +30946,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bzq" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -31344,7 +31221,7 @@
 /obj/structure/table/reinforced,
 /obj/effect/decal/festive/holly,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bzY" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -31358,7 +31235,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bzZ" = (
 /obj/machinery/door/airlock/command{
 	name = "Research Director's Quarters";
@@ -31571,9 +31448,7 @@
 /turf/open/floor/festive/white_alleyway{
 	color = "#bae3ff"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bAB" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -31765,13 +31640,11 @@
 /turf/open/floor/festive/white_alleyway{
 	color = "#bae3ff"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bAP" = (
 /obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bAQ" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -31787,7 +31660,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bAR" = (
 /obj/structure/chair/wood/normal{
 	dir = 8
@@ -31799,11 +31672,11 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bAS" = (
 /obj/structure/sign/departments/medbay,
 /turf/closed/festive/whitebrick,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bAT" = (
 /obj/effect/festive/street/streetlinesw,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -31943,9 +31816,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bBl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -31954,9 +31825,7 @@
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bBm" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -32065,9 +31934,7 @@
 /turf/open/floor/festive/white_alleyway{
 	color = "#bae3ff"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bBu" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -32183,15 +32050,13 @@
 /turf/open/floor/festive/white_alleyway{
 	color = "#bae3ff"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bBB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/festive/whitebrick/whitebrickwe,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bBC" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medbay Desk";
@@ -32201,7 +32066,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bBD" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -32223,7 +32088,7 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bBE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -32233,7 +32098,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bBF" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -32250,7 +32115,7 @@
 /obj/effect/decal/festive/mistletoe,
 /obj/effect/decal/festive/christmas_reef,
 /turf/open/floor/plasteel,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bBG" = (
 /obj/effect/festive/street/sidewalknsm,
 /obj/structure/cable/yellow{
@@ -32468,9 +32333,7 @@
 /turf/open/floor/festive/white_alleyway{
 	color = "#bae3ff"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bCc" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -32484,9 +32347,7 @@
 /turf/open/floor/festive/white_alleyway{
 	color = "#bae3ff"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bCd" = (
 /obj/machinery/door/airlock/medical{
 	name = "Operating Theatre";
@@ -32649,9 +32510,7 @@
 	pixel_x = 3
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bCl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -32662,9 +32521,7 @@
 /turf/open/floor/festive/white_alleyway{
 	color = "#bae3ff"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bCm" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -32937,9 +32794,7 @@
 /turf/open/floor/festive/white_alleyway{
 	color = "#bae3ff"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bCz" = (
 /obj/structure/extinguisher_cabinet,
 /obj/structure/disposalpipe/segment{
@@ -32949,7 +32804,7 @@
 	icon_state = "4-8"
 	},
 /turf/closed/festive/whitebrick,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bCA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -32958,7 +32813,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bCB" = (
 /obj/vehicle/ridden/wheelchair,
 /obj/structure/disposalpipe/segment{
@@ -32975,7 +32830,7 @@
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bCC" = (
 /obj/vehicle/ridden/wheelchair,
 /obj/structure/disposalpipe/segment{
@@ -32985,7 +32840,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bCD" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -33007,7 +32862,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bCE" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -33028,7 +32883,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bCF" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -33047,7 +32902,7 @@
 	},
 /obj/effect/decal/festive/christmas_reef,
 /turf/open/floor/plasteel,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bCG" = (
 /obj/effect/festive/street/streetlinesw,
 /turf/open/floor/festive/cobblestone,
@@ -33239,9 +33094,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bDb" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	color = "#FFFFFF";
@@ -33254,9 +33107,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bDc" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -33364,9 +33215,7 @@
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bDk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -33375,9 +33224,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bDl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -33455,9 +33302,7 @@
 /turf/open/floor/festive/white_alleyway{
 	color = "#bae3ff"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bDw" = (
 /obj/structure/closet/crate/trashcart,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -33477,9 +33322,7 @@
 /turf/open/floor/festive/white_alleyway{
 	color = "#bae3ff"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bDy" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Aft Primary Hallway"
@@ -33499,7 +33342,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bDz" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -33515,7 +33358,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bDA" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -33534,7 +33377,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bDB" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	color = "#FFFFFE";
@@ -33552,7 +33395,7 @@
 	dir = 4
 	},
 /turf/closed/festive/whitebrick,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bDE" = (
 /obj/effect/festive/street/streetlinewest,
 /obj/effect/turf_decal/arrows/white,
@@ -33809,16 +33652,12 @@
 /turf/open/floor/festive/white_alleyway{
 	color = "#bae3ff"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bEg" = (
 /turf/open/floor/festive/white_alleyway{
 	color = "#bae3ff"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bEh" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Aft Primary Hallway"
@@ -33835,7 +33674,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bEi" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -33848,7 +33687,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bEj" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -33862,7 +33701,7 @@
 	},
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bEk" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -33879,7 +33718,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bEl" = (
 /obj/structure/chair/wood/normal{
 	dir = 8
@@ -33895,7 +33734,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bEm" = (
 /obj/effect/festive/street/sidewalkw,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -34080,9 +33919,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bEI" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -34091,13 +33928,11 @@
 	pixel_y = 2
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bEJ" = (
 /obj/structure/flora/tree/pine/xmas,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bEK" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -34113,13 +33948,13 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bEL" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bEM" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -34154,7 +33989,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/power/apc{
-	areastring = "/area/medical/medbay/central";
+	areastring = "/area/medical/medbay/lobby";
 	dir = 8;
 	name = "Medbay Reception APC";
 	pixel_x = 26
@@ -34162,7 +33997,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "bER" = (
 /obj/effect/festive/street/sidewalkwem,
 /obj/structure/cable/yellow{
@@ -34219,9 +34054,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bEY" = (
 /turf/closed/festive/greybrick,
 /area/edina)
@@ -34376,9 +34209,7 @@
 	dir = 8
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bFw" = (
 /turf/closed/festive/whitebrick/whitebrickns,
 /area/medical/cryo)
@@ -35903,7 +35734,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "bIH" = (
 /obj/item/radio/intercom{
 	dir = 8;
@@ -36411,9 +36242,7 @@
 	dir = 6
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bJS" = (
 /obj/machinery/door/airlock/medical{
 	name = "Cyrostasis"
@@ -36533,9 +36362,7 @@
 	dir = 10
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bKa" = (
 /obj/machinery/shower{
 	pixel_y = 8
@@ -37120,9 +36947,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bLn" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -37363,9 +37188,7 @@
 	dir = 1
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bLE" = (
 /turf/closed/festive/whitebrick{
 	color = "#ffe6a8"
@@ -37885,9 +37708,7 @@
 	},
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bMI" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -38366,9 +38187,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bNL" = (
 /obj/machinery/door/airlock/medical{
 	name = "Ambulance Bay"
@@ -38421,9 +38240,7 @@
 "bNP" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bNQ" = (
 /obj/machinery/shower{
 	pixel_y = 8
@@ -39093,9 +38910,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bPq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -39105,9 +38920,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bPr" = (
 /obj/machinery/door/airlock/medical{
 	name = "Ambulance Bay"
@@ -40104,9 +39917,7 @@
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bRi" = (
 /obj/structure/fence{
 	dir = 4
@@ -40117,9 +39928,7 @@
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bRj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -40168,9 +39977,7 @@
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bRp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -40344,9 +40151,7 @@
 	dir = 4
 	},
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bRE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -40789,9 +40594,7 @@
 	},
 /obj/structure/fence/door/opened,
 /turf/open/floor/festive/alleyway,
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bSJ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -40942,12 +40745,6 @@
 /obj/effect/festive/street/streetlinenw,
 /turf/open/floor/festive/cobblestone,
 /area/edina/street/primary/progress)
-"bTd" = (
-/obj/structure/flora/grass/green,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=22;n2=82;TEMP=270"
-	},
-/area/science/research)
 "bTe" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/festive/alleyway,
@@ -41087,9 +40884,7 @@
 /turf/open/floor/grass/snow/edina{
 	initial_gas_mix = "o2=22;n2=82;TEMP=270"
 	},
-/area/science/research{
-	name = "Science Street"
-	})
+/area/science)
 "bTu" = (
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowNSRightEnd,
@@ -41921,9 +41716,7 @@
 /turf/open/floor/grass/snow/edina{
 	initial_gas_mix = "o2=22;n2=82;TEMP=270"
 	},
-/area/medical/medbay/aft{
-	name = "Hospital"
-	})
+/area/medical/medbay/aft)
 "bVs" = (
 /obj/structure/table/wood,
 /obj/machinery/light,
@@ -45502,7 +45295,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "cdx" = (
 /obj/structure/fence,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -45606,7 +45399,7 @@
 	},
 /obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "cdI" = (
 /obj/structure/chair/comfy/teal,
 /obj/effect/landmark/start/chief_medical_officer,
@@ -45630,7 +45423,7 @@
 	},
 /obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "cdM" = (
 /obj/structure/chair/wood/normal{
 	dir = 8
@@ -45644,7 +45437,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "cdN" = (
 /obj/structure/chair/wood/normal{
 	dir = 8
@@ -45655,7 +45448,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "cdO" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
@@ -45667,7 +45460,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/lobby)
 "cdP" = (
 /obj/structure/grille,
 /obj/structure/festive/redbrick/windowNSRightEnd,
@@ -45742,7 +45535,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "cdY" = (
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /obj/structure/disposalpipe/segment{
@@ -48484,7 +48277,7 @@
 /turf/closed/festive/whitebrick{
 	color = "#555555"
 	},
-/area/science/research)
+/area/science)
 "ckc" = (
 /obj/effect/festive/street/streetlineem{
 	pixel_x = 1
@@ -48505,7 +48298,7 @@
 	dir = 8
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "cke" = (
 /obj/effect/festive/street/streetlineeast,
 /obj/effect/festive/street/streetliftedtile2,
@@ -48533,7 +48326,7 @@
 	dir = 1
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "cki" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -52574,7 +52367,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "cuC" = (
 /obj/effect/festive/street/sidewalkwem,
 /obj/effect/festive/street/streetliftedtile2,
@@ -52722,7 +52515,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "cuT" = (
 /obj/structure/grille,
 /obj/structure/festive/redbrick/windowWELeftEnd,
@@ -52792,7 +52585,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "cva" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -52804,7 +52597,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/festive/alleyway,
-/area/science/research)
+/area/science)
 "cvb" = (
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "meddoor";
@@ -55017,6 +54810,13 @@
 /obj/effect/overlay/palmtree_r,
 /turf/open/floor/plating/beach/sand,
 /area/edina)
+"ezS" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	color = "#FFFFFE";
+	dir = 8
+	},
+/turf/open/floor/festive/alleyway,
+/area/science)
 "ezY" = (
 /obj/machinery/light/small,
 /turf/open/floor/wood,
@@ -55222,6 +55022,16 @@
 	},
 /turf/open/floor/grass/fakebasalt,
 /area/edina)
+"gia" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	color = "#FFFFFE";
+	dir = 8
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/festive/alleyway,
+/area/science)
 "giH" = (
 /obj/structure/statue/gold/cmo{
 	anchored = 1
@@ -55379,6 +55189,15 @@
 /obj/structure/mineral_door/wood,
 /turf/closed/wall/mineral/wood,
 /area/edina)
+"hya" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/festive/alleyway,
+/area/science)
 "hzc" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -55871,6 +55690,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/edina)
+"lEK" = (
+/obj/structure/flora/tree/pine/xmas,
+/turf/open/floor/grass/snow/edina{
+	initial_gas_mix = "o2=22;n2=82;TEMP=270"
+	},
+/area/science)
 "lIt" = (
 /obj/item/flashlight/glowstick/cyan,
 /turf/open/floor/wood,
@@ -55995,6 +55820,12 @@
 "mua" = (
 /turf/open/floor/carpet/royalblack,
 /area/edina)
+"mwL" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/open/floor/festive/alleyway,
+/area/science)
 "mIf" = (
 /obj/structure/festive/trainplatform/edge_east,
 /mob/living/simple_animal/jacq/car_spawner,
@@ -56146,6 +55977,12 @@
 	},
 /turf/open/floor/holofloor/beach,
 /area/edina)
+"nZW" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/floor/festive/alleyway,
+/area/science)
 "oeX" = (
 /obj/machinery/mecha_part_fabricator,
 /obj/effect/decal/festive/christmas_ivy_string,
@@ -56335,6 +56172,12 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel,
 /area/edina)
+"pqA" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/festive/alleyway,
+/area/science)
 "pqW" = (
 /obj/structure/fluff/broken_flooring,
 /turf/open/space/basic,
@@ -56616,6 +56459,16 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/edina)
+"rEg" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/festive/alleyway,
+/area/science)
 "rKc" = (
 /obj/structure/sign/poster/contraband/lusty_xenomorph{
 	pixel_x = 32
@@ -56694,6 +56547,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/service/hydroponics)
+"slt" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/festive/alleyway,
+/area/science)
 "snc" = (
 /obj/machinery/portable_atmospherics/canister/water_vapor,
 /turf/open/floor/plasteel/white/corner{
@@ -56883,6 +56742,15 @@
 /area/cargo{
 	name = "Cargo Break Room"
 	})
+"tHL" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/festive/alleyway,
+/area/science)
 "tOA" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -57117,6 +56985,12 @@
 	},
 /turf/open/floor/plating/beach/sand,
 /area/edina)
+"vIN" = (
+/obj/structure/statue/snow/snowman,
+/turf/open/floor/grass/snow/edina{
+	initial_gas_mix = "o2=22;n2=82;TEMP=270"
+	},
+/area/science)
 "vLq" = (
 /obj/machinery/vending/boozeomat{
 	pixel_x = 32;
@@ -76687,7 +76561,7 @@ aHH
 aVs
 aVv
 bhd
-aVv
+aMb
 aVv
 aVv
 aVv
@@ -77435,8 +77309,8 @@ bnD
 bWz
 bhh
 bia
-aoX
-aoX
+aws
+aws
 aKN
 aNc
 aNO
@@ -77692,8 +77566,8 @@ bGn
 bWz
 bhh
 bij
-aoX
-aoX
+aws
+aws
 aKN
 aKN
 aKN
@@ -77949,11 +77823,11 @@ bqf
 bWz
 bhh
 bij
-aoX
-aoX
-aoX
-aoX
-aoX
+aws
+aws
+aws
+aws
+aws
 aMw
 aPJ
 aQs
@@ -78206,11 +78080,11 @@ bWz
 bWz
 bhh
 bij
-aoX
-aoX
-aoX
-aUM
-aoX
+aws
+aws
+aws
+lEK
+aws
 aMw
 aPJ
 aQt
@@ -78463,11 +78337,11 @@ bqg
 bWz
 bhh
 bij
-aoX
-aoX
-aoX
-aoX
-aoX
+aws
+aws
+aws
+aws
+aws
 aMw
 aPJ
 aQu
@@ -78720,11 +78594,11 @@ bHx
 bWz
 bhh
 bij
-aoX
-aoX
-aoX
-aoX
-aoX
+aws
+aws
+aws
+aws
+aws
 aMw
 aPJ
 aQv
@@ -78977,11 +78851,11 @@ bHU
 bWz
 bhh
 bij
-aoX
-aoX
-aUM
-aoX
-aKQ
+aws
+aws
+lEK
+aws
+aMa
 aMw
 aPJ
 aQw
@@ -79234,11 +79108,11 @@ bWz
 bWz
 bhh
 bik
-aoX
-aoX
-aoX
-aoX
-aoX
+aws
+aws
+aws
+aws
+aws
 aMw
 aPJ
 aPJ
@@ -79494,28 +79368,28 @@ ckb
 awo
 ckb
 aMr
-aLW
-aLW
-aoD
-aLW
-aLW
-aLW
-aLW
+ezS
+ezS
+aKT
+ezS
+ezS
+ezS
+ezS
 bbM
-bgB
-bgB
-bgB
-bgB
-bgB
+gia
+gia
+gia
+gia
+gia
 bIG
 cdw
-aLW
-aLW
-aLW
 cdw
-aLW
-aoD
-aLW
+cdw
+cdw
+cdw
+ezS
+aKT
+ezS
 cdw
 cdw
 bFu
@@ -80008,20 +79882,20 @@ bdO
 bdO
 ckb
 aMt
-aNe
-aNe
-aNe
-aNe
-aNe
-aNe
-aNe
-aoX
-aoX
-bTd
-aoX
-aoX
-aoX
-bgE
+aMb
+aMb
+aMb
+aMb
+aMb
+aMb
+aMb
+aws
+aws
+bTt
+aws
+aws
+aws
+rEg
 aVO
 aWf
 aWS
@@ -80265,20 +80139,20 @@ bim
 bim
 aNi
 ckd
-aNe
+aMb
 aNP
-aNe
+aMb
 aPK
-aNe
+aMb
 aRt
-aNe
-aNe
-aNe
-aNe
-aNe
-aNe
-aNe
-bgE
+aMb
+aMb
+aMb
+aMb
+aMb
+aMb
+aMb
+rEg
 aVP
 aWg
 aWT
@@ -80522,20 +80396,20 @@ bdO
 bdO
 ckb
 ckh
-aNe
+aMb
 aNQ
-aNe
+aMb
 aPL
-aNe
+aMb
 aPL
-aNe
+aMb
 aSD
 aTf
 aSG
 aUe
 aUH
-aNe
-bgE
+aMb
+rEg
 aVQ
 aWh
 aWU
@@ -80779,13 +80653,13 @@ bdO
 bdO
 biE
 aMt
-aNe
+aMb
 aNR
 aOP
 aOP
 aOP
 aOP
-aNe
+aMb
 aSE
 aTg
 aTg
@@ -81042,14 +80916,14 @@ aOQ
 aKg
 aKg
 aKg
-aNe
+aMb
 aSF
 aTg
 aTg
 aTg
 aUJ
-aNe
-bgE
+aMb
+rEg
 aVO
 aWj
 aWW
@@ -81279,25 +81153,25 @@ bdS
 bgl
 aGk
 aGk
-aCH
-aoX
-aoX
-aoX
-aoX
-aoX
-aoX
-aoX
-aoX
-aoX
-aoX
-aoX
-aCH
+aOj
+aws
+aws
+aws
+aws
+aws
+aws
+aws
+aws
+aws
+aws
+aws
+aOj
 aMv
 aNg
 aIU
 aKg
 aPM
-aNe
+aMb
 aKg
 aRU
 aSG
@@ -81305,7 +81179,7 @@ aTg
 aTO
 aTO
 aUK
-aNe
+aMb
 cva
 bfi
 bib
@@ -81536,8 +81410,8 @@ bdS
 bgl
 aGk
 aRa
-aCH
-aoX
+aOj
+aws
 aCn
 aCn
 aCn
@@ -81547,14 +81421,14 @@ aCn
 aCn
 aCn
 aCn
-aoX
-aCH
+aws
+aOj
 aMw
-aNe
+aMb
 aNT
 aOR
 aPN
-aNe
+aMb
 aNR
 aRW
 aSH
@@ -81562,8 +81436,8 @@ aTi
 aTP
 aUg
 aUL
-aNe
-bgE
+aMb
+rEg
 aVO
 aWl
 aWY
@@ -81793,8 +81667,8 @@ bdS
 bgl
 aGk
 aGk
-aCH
-aoX
+aOj
+aws
 aCn
 aGA
 aGA
@@ -81804,8 +81678,8 @@ aGA
 aGA
 aGA
 aCn
-aoX
-aCH
+aws
+aOj
 aMw
 aNh
 aNU
@@ -81815,12 +81689,12 @@ aNh
 aNU
 aNh
 aNh
-aNe
-aNe
-aNe
-aNe
-aNe
-bgE
+aMb
+aMb
+aMb
+aMb
+aMb
+rEg
 aVO
 aWm
 aVO
@@ -82050,8 +81924,8 @@ bdT
 bgm
 aGk
 aGk
-aCH
-aoX
+aOj
+aws
 aCn
 aGB
 aHx
@@ -82061,8 +81935,8 @@ aDU
 aDU
 aKF
 aCn
-aoX
-aCH
+aws
+aOj
 aLp
 aNh
 aNV
@@ -82072,14 +81946,14 @@ aQx
 aRu
 aRX
 aNh
-aoX
-aoX
-aoX
-aoX
-aoX
-bgE
-aKQ
-aoX
+aws
+aws
+aws
+aws
+aws
+rEg
+aMa
+aws
 aWZ
 aYm
 aZW
@@ -82307,8 +82181,8 @@ bdS
 bgm
 aGk
 aRa
-aCH
-aoX
+aOj
+aws
 aCn
 aGA
 aGA
@@ -82318,8 +82192,8 @@ aGA
 aGA
 aGA
 aCn
-aoX
-aCH
+aws
+aOj
 aLp
 aNh
 aNW
@@ -82329,14 +82203,14 @@ aQy
 aRv
 aOU
 aNh
-aoX
-aoX
-aoX
-aoX
-aoX
-bgE
-aoX
-aoX
+aws
+aws
+aws
+aws
+aws
+rEg
+aws
+aws
 aVO
 aWf
 aWS
@@ -82564,8 +82438,8 @@ bdS
 bgm
 aGk
 aGk
-aCH
-aoX
+aOj
+aws
 aCn
 aCn
 aHy
@@ -82575,8 +82449,8 @@ aJA
 aHy
 aCn
 aCn
-aoX
-aCH
+aws
+aOj
 aLp
 aNh
 aOa
@@ -82586,22 +82460,22 @@ aOa
 aNh
 aRY
 aNh
-aoX
-aoX
-aoX
-aoX
-aoX
-aTo
-aOc
-aOc
-aOc
-aOc
-aOc
-aOc
-aOc
+aws
+aws
+aws
+aws
+aws
+hya
+nZW
+nZW
+nZW
+nZW
+nZW
+nZW
+nZW
 bev
 bfS
-aCH
+aOj
 bFZ
 bHZ
 bjZ
@@ -82821,8 +82695,8 @@ bdS
 bgm
 aGk
 aGk
-aCH
-aoX
+aOj
+aws
 aCn
 aGC
 aHz
@@ -82832,8 +82706,8 @@ aJB
 aKm
 aKG
 aCn
-aoX
-aCH
+aws
+aOj
 aLp
 aNh
 aNY
@@ -82842,23 +82716,23 @@ aOU
 aOa
 aNh
 aMv
-aLW
-aOc
-aOc
-aOc
-aOc
-aOc
+ezS
+nZW
+nZW
+nZW
+nZW
+nZW
 bbM
-bgK
-aoD
-aNn
-aNn
-aNn
-aNn
-aNn
+mwL
+aKT
+pqA
+pqA
+pqA
+pqA
+pqA
 bex
 bfS
-aCH
+aOj
 bFZ
 bHZ
 bjZ
@@ -83078,8 +82952,8 @@ bdS
 bgm
 aGk
 aRa
-aCH
-aoX
+aOj
+aws
 aCn
 aGD
 aHA
@@ -83089,8 +82963,8 @@ aJC
 aKn
 aGD
 aCn
-aoX
-aCH
+aws
+aOj
 aLp
 aNh
 aNZ
@@ -83099,15 +82973,15 @@ aOU
 aOa
 aRw
 aMv
-aoD
-aoD
+aKT
+aKT
 aLX
 aLX
 aLX
 aLX
 aLX
-aTn
-aTj
+slt
+aLv
 aXa
 aXa
 aZX
@@ -83335,8 +83209,8 @@ bdS
 bgm
 aGk
 aGk
-aCH
-aoX
+aOj
+aws
 aCn
 aGG
 aHB
@@ -83346,8 +83220,8 @@ aHB
 aHB
 aKH
 aCn
-aoX
-aCH
+aws
+aOj
 aLp
 aNh
 aOa
@@ -83356,15 +83230,15 @@ aPO
 aQz
 aRx
 aMv
-aoD
-aTj
-aKQ
-aoX
-aoX
-aoX
-aoX
-aTo
-aTj
+aKT
+aLv
+aMa
+aws
+aws
+aws
+aws
+hya
+aLv
 aXb
 aYn
 aZY
@@ -83603,8 +83477,8 @@ aIi
 aDT
 aDT
 aKP
-aoX
-aCH
+aws
+aOj
 aLp
 aNh
 aOb
@@ -83613,15 +83487,15 @@ aPP
 aQA
 aNh
 aMv
-aoD
-aTj
-aoX
-aoX
-aoX
-cgF
-aoX
-aTo
-aTj
+aKT
+aLv
+aws
+aws
+aws
+vIN
+aws
+hya
+aLv
 aXc
 aYo
 aZZ
@@ -83849,8 +83723,8 @@ bdS
 bgl
 aGk
 aRa
-aCH
-aoX
+aOj
+aws
 aCn
 aCn
 aCn
@@ -83860,8 +83734,8 @@ aCn
 aCn
 aCn
 aCn
-aoX
-aCH
+aws
+aOj
 aLp
 aNh
 aNh
@@ -83870,15 +83744,15 @@ aNh
 aNh
 aRy
 aMv
-aoD
-aTj
-aoX
-aoX
-aUM
-aoX
-aoX
-aTo
-aTj
+aKT
+aLv
+aws
+aws
+lEK
+aws
+aws
+hya
+aLv
 aXd
 aYp
 baa
@@ -84106,36 +83980,36 @@ bdS
 bgl
 aGk
 aGk
-aCH
-aoX
-aoX
-aoX
-aoX
+aOj
+aws
+aws
+aws
+aws
 aCn
 aIS
 aCn
-aoX
-aoX
-aoX
-aoX
-aCH
+aws
+aws
+aws
+aws
+aOj
 aMx
 aNi
 aKI
 aKI
 aKI
 aKI
-aOc
+nZW
 aLX
 aLX
-aTj
-aoX
-aoX
-aoX
-aoX
-aoX
-aTo
-aTj
+aLv
+aws
+aws
+aws
+aws
+aws
+hya
+aLv
 aXa
 aYq
 baa
@@ -84386,11 +84260,11 @@ aRz
 aRZ
 aLU
 aLp
-aoX
-aoX
-aoX
-aoX
-bTd
+aws
+aws
+aws
+aws
+bTt
 bhl
 bjf
 buh
@@ -84629,9 +84503,9 @@ aIj
 aIQ
 aJD
 aCn
-aoX
-aoX
-aoX
+aws
+aws
+aws
 aLU
 aMy
 aNj
@@ -84643,13 +84517,13 @@ aQH
 aSa
 aLU
 aLp
-aoX
-aoX
-aoX
-aoX
-aoX
-aTo
-aTj
+aws
+aws
+aws
+aws
+aws
+hya
+aLv
 aXa
 aYs
 baa
@@ -84905,8 +84779,8 @@ aTQ
 aTQ
 aTQ
 aTQ
-aTo
-aTj
+hya
+aLv
 aXb
 aYr
 baa
@@ -85143,8 +85017,8 @@ aDV
 aIX
 aCY
 aKo
-aoX
-aKQ
+aws
+aMa
 aLp
 aLU
 aMz
@@ -85162,8 +85036,8 @@ aUi
 aUN
 aUi
 aTQ
-aTo
-aTj
+hya
+aLv
 aXc
 aYt
 baa
@@ -85400,8 +85274,8 @@ aDV
 aIX
 aCY
 aKp
-aoX
-aoX
+aws
+aws
 aLp
 aLU
 aMA
@@ -85419,8 +85293,8 @@ aUj
 aUO
 aVg
 aTQ
-aTo
-aTj
+hya
+aLv
 aXd
 aYu
 bab
@@ -85657,8 +85531,8 @@ aDV
 aIX
 aCY
 aKp
-aoX
-aoX
+aws
+aws
 aLp
 aLU
 aMz
@@ -85676,8 +85550,8 @@ aUk
 aUP
 aVh
 aTQ
-aTo
-aTj
+hya
+aLv
 aXa
 aXa
 aXa
@@ -85914,8 +85788,8 @@ aHB
 aIV
 aCY
 aKq
-aoX
-aoX
+aws
+aws
 aLq
 aLV
 aMB
@@ -85933,14 +85807,14 @@ bcS
 aUQ
 aVi
 aTQ
-aTo
-aoD
-aOc
-aOc
-aOc
-aOc
-aOc
-aOc
+hya
+aKT
+nZW
+nZW
+nZW
+nZW
+nZW
+nZW
 bgc
 bEr
 bGk
@@ -86171,8 +86045,8 @@ aDV
 aIX
 aJE
 aCn
-aoX
-aoX
+aws
+aws
 aLr
 aLU
 aMC
@@ -86192,12 +86066,12 @@ aVj
 aTQ
 bhl
 bjf
-buE
-buE
-buE
-buE
-bgK
-aNn
+tHL
+tHL
+tHL
+tHL
+mwL
+pqA
 bgd
 bEM
 bGk
@@ -86428,8 +86302,8 @@ aDV
 aIX
 aCY
 aKo
-aoX
-aoX
+aws
+aws
 aLr
 aLU
 aLU
@@ -86447,9 +86321,9 @@ aUn
 aUS
 aVk
 aTQ
-aTo
-aTj
-aoX
+hya
+aLv
+aws
 aXf
 aXf
 aXf
@@ -86685,28 +86559,28 @@ aDV
 aIX
 aCY
 aKp
-aoX
-aoX
+aws
+aws
 aLs
-aLW
-aLW
-aLW
-aOc
-aOc
-aOc
-aOc
-aTn
-aOc
-aOc
+ezS
+ezS
+ezS
+nZW
+nZW
+nZW
+nZW
+slt
+nZW
+nZW
 aTm
 aTQ
 aTQ
 aTQ
 aTQ
 aTQ
-aTo
-aTj
-aKQ
+hya
+aLv
+aMa
 aXf
 bac
 bbK
@@ -86942,28 +86816,28 @@ aHB
 aIV
 aCY
 aKp
-bTd
-aoX
+bTt
+aws
 aLs
 aLX
 aLX
-aNn
+pqA
 aOd
-buE
-buE
-buE
+tHL
+tHL
+tHL
 cuB
 cuS
 cuS
 cuZ
-aLW
-aLW
-aLW
-aLW
-aLW
-aTn
-aTj
-aoX
+ezS
+ezS
+ezS
+ezS
+ezS
+slt
+aLv
+aws
 aXf
 bad
 bal
@@ -87199,8 +87073,8 @@ aDV
 aIX
 aCY
 aKq
-aoX
-aoX
+aws
+aws
 aLt
 aLY
 aLY
@@ -87212,15 +87086,15 @@ aSI
 cuQ
 cuT
 cuV
-aTo
-aoD
-aNn
+hya
+aKT
+pqA
 aLX
 aLX
 aLX
-aTn
+slt
 aWn
-aoX
+aws
 aXf
 bae
 bal
@@ -87456,8 +87330,8 @@ aCW
 aIY
 aJG
 aCn
-aoX
-aoX
+aws
+aws
 aLt
 aLY
 aMD
@@ -87469,8 +87343,8 @@ aSJ
 aRC
 aSh
 cuW
-aTo
-aTj
+hya
+aLv
 aUo
 aUo
 aUo
@@ -87727,7 +87601,7 @@ aRD
 aPW
 cuX
 aTp
-aTj
+aLv
 aUo
 aUT
 aVl
@@ -87984,7 +87858,7 @@ aRE
 aSi
 cuY
 aTq
-aTj
+aLv
 aUo
 aUU
 aVm
@@ -88228,7 +88102,7 @@ aJb
 aJI
 aKs
 aCn
-aKS
+aMv
 aLv
 aLY
 aLY
@@ -88485,7 +88359,7 @@ aJc
 aJI
 aKt
 aCn
-aKS
+aMv
 aLv
 aws
 aws
@@ -88742,7 +88616,7 @@ aIZ
 aJJ
 aKu
 aCn
-aKS
+aMv
 aLv
 aMa
 aws
@@ -88999,7 +88873,7 @@ aJd
 aJK
 aCn
 aCn
-aKS
+aMv
 aLv
 aws
 aMG
@@ -89256,7 +89130,7 @@ aJe
 aJL
 aKv
 aKo
-aKS
+aMv
 aLv
 aws
 aMG
@@ -89513,7 +89387,7 @@ aJf
 aJM
 aKw
 aKq
-aKS
+aMv
 aLv
 aws
 aMG
@@ -89770,7 +89644,7 @@ aJg
 aJN
 aKx
 aCn
-aKS
+aMv
 aLv
 aws
 aMG
@@ -90027,7 +89901,7 @@ aJh
 aJO
 aKw
 aKo
-aKS
+aMv
 aKT
 aws
 aMH
@@ -90284,7 +90158,7 @@ aJi
 aJP
 aKy
 aKq
-aKS
+aMv
 aLv
 aws
 aMI
@@ -90541,7 +90415,7 @@ aJj
 aJQ
 aKz
 aCn
-aKS
+aMv
 aLv
 aws
 aMJ
@@ -90798,7 +90672,7 @@ aJk
 aJR
 aKA
 aCn
-aKS
+aMv
 aLv
 aws
 aMG
@@ -91055,7 +90929,7 @@ aJl
 aCZ
 aCn
 aCn
-aKS
+aMv
 aLv
 aws
 aMG
@@ -91312,7 +91186,7 @@ aJm
 aJS
 aDW
 aCn
-aKS
+aMv
 aLv
 aws
 aMK
@@ -91826,7 +91700,7 @@ aJn
 aJT
 aDW
 aCn
-aKS
+aMv
 aLv
 bTt
 aMK
