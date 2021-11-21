@@ -59,10 +59,10 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>The thermostat is set to [target_temperature]K ([(T0C-target_temperature)*-1]C).</span>"
+	. += "<span class='notice'>The thermostat is set to [target_temperature]K ([target_temperature-T0C]C).</span>"
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Efficiency <b>[(heat_capacity/5000)*100]%</b>.</span>"
-		. += "<span class='notice'>Temperature range <b>[min_temperature]K - [max_temperature]K ([(T0C-min_temperature)*-1]C - [(T0C-max_temperature)*-1]C)</b>.</span>"
+		. += "<span class='notice'>The status display reads: Effective heat capacity <b>[heat_capacity] J/K</b>.</span>"
+		. += "<span class='notice'>Temperature range <b>[min_temperature]K - [max_temperature]K ([min_temperature-T0C]C - [max_temperature-T0C]C)</b>.</span>"
 
 /obj/machinery/atmospherics/components/unary/thermomachine/process_atmos()
 	..()

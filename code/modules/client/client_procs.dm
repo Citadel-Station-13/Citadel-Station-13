@@ -1118,6 +1118,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 	to_chat(src, span_userdanger("Statpanel failed to load, click <a href='?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel "))
 
+/client/proc/check_panel_loaded()
+	if(statbrowser_ready)
+		return
+	to_chat(src, span_userdanger("Statpanel failed to load, click <a href='?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel "))
+
 //increment progress for an unlockable loadout item
 /client/proc/increment_progress(key, amount)
 	if(prefs)

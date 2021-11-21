@@ -9,6 +9,7 @@
 	icon_state = "randompile"
 	density = FALSE
 	anchored = TRUE
+	max_integrity = 100
 	var/loot_amount = 5
 	var/delete_on_depletion = FALSE
 	var/can_use_hands = TRUE

@@ -122,6 +122,17 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/smartdartrepeater
+	name = "Smartdart Repeater"
+	desc = "An experimental smartdart rifle. It can make its own smart darts and is loaded with a hypovial."
+	id = "smartdartrepeater"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/glass = 2000, /datum/material/plastic = 1000, /datum/material/iron = 2000,/datum/material/titanium = 1000 )
+	build_path = /obj/item/gun/chem/smart
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+
 /datum/design/plasmarefiller
 	name = "Plasma-Man Jumpsuit Refill"
 	desc = "A refill pack for the auto-extinguisher on Plasma-man suits."
@@ -201,7 +212,7 @@
 	build_path = /obj/item/storage/hypospraykit // let's not summon new hyposprays thanks
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-	
+
 /datum/design/hypospray/mkii
 	name = "Hypospray Mk. II"
 	id = "hypospray_mkii"

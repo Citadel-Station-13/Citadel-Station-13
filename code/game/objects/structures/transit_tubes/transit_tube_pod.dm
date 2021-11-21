@@ -50,14 +50,14 @@
 		empty_pod(location)
 	qdel(src)
 
-/obj/structure/transit_tube_pod/ex_act(severity, target)
+/obj/structure/transit_tube_pod/ex_act(severity, target, origin)
 	..()
 	if(!QDELETED(src))
 		empty_pod()
 
-/obj/structure/transit_tube_pod/contents_explosion(severity, target)
+/obj/structure/transit_tube_pod/contents_explosion(severity, target, origin)
 	for(var/atom/movable/AM in contents)
-		AM.ex_act(severity, target)
+		AM.ex_act(severity, target, origin)
 
 /obj/structure/transit_tube_pod/singularity_pull(S, current_size)
 	..()
