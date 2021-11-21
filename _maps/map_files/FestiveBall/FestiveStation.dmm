@@ -6974,7 +6974,7 @@
 /area/engineering/main)
 "arh" = (
 /obj/machinery/power/apc/highcap/fifteen_k{
-	areastring = "/area/engineering";
+	areastring = "/area/engineering/main";
 	dir = 1;
 	name = "Engineering APC";
 	pixel_y = 25
@@ -26108,7 +26108,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	areastring = "area/commons/storage/tools";
+	areastring = "/area/commons/storage/tools";
 	dir = 8;
 	name = "Primary Tool Storage APC";
 	pixel_x = -26;
@@ -40184,7 +40184,6 @@
 	},
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowNSRightEnd,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
@@ -54687,7 +54686,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/highcap/fifteen_k{
-	areastring = "/area/engineering";
+	areastring = "/area/engineering/main";
 	dir = 1;
 	name = "Antimatter Engine APC";
 	pixel_y = 25
