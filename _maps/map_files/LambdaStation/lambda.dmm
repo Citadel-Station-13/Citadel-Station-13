@@ -39760,7 +39760,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/commons/lounge";
+	areastring = "/area/service/library/lounge";
 	dir = 4;
 	name = "Library Lounge APC";
 	pixel_x = 24

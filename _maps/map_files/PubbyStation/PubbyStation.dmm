@@ -23913,7 +23913,7 @@
 /area/hallway/secondary/entry)
 "bfZ" = (
 /turf/closed/wall/r_wall,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bga" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -23921,7 +23921,7 @@
 	name = "privacy shutters"
 	},
 /turf/open/floor/plating,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bgb" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -23931,7 +23931,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bgc" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -23940,10 +23940,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bgd" = (
 /turf/closed/wall,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bge" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/sign/directions/security{
@@ -24272,10 +24272,10 @@
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/grimy,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bgV" = (
 /turf/open/floor/plasteel/grimy,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bgW" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -24284,13 +24284,13 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/grimy,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bgX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
 /turf/open/floor/plasteel/grimy,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bgY" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
@@ -24303,7 +24303,7 @@
 	pixel_y = 25
 	},
 /turf/open/floor/plasteel/grimy,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bgZ" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -24618,16 +24618,16 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/grimy,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bhG" = (
 /turf/open/floor/carpet,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bhH" = (
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
 /turf/open/floor/carpet,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bhI" = (
 /obj/structure/chair/comfy/beige{
 	dir = 8
@@ -24637,7 +24637,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bhJ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -24754,20 +24754,20 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/grimy,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bic" = (
 /obj/effect/landmark/start/assistant,
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
 /turf/open/floor/carpet,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bid" = (
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
 /turf/open/floor/carpet,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bie" = (
 /obj/structure/chair/comfy/beige{
 	dir = 8
@@ -24776,7 +24776,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/grimy,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bif" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -25001,7 +25001,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/service/library/lounge)
+/area/commons/lounge)
 "biK" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
@@ -25016,19 +25016,19 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/grimy,
-/area/service/library/lounge)
+/area/commons/lounge)
 "biL" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/grimy,
-/area/service/library/lounge)
+/area/commons/lounge)
 "biM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
-/area/service/library/lounge)
+/area/commons/lounge)
 "biN" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
@@ -25314,15 +25314,15 @@
 "bjI" = (
 /obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/wood,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bjJ" = (
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/wood,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bjK" = (
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/wood,
-/area/service/library/lounge)
+/area/commons/lounge)
 "bjL" = (
 /turf/closed/wall,
 /area/commons/storage/emergency/port)
