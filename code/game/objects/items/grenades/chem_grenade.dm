@@ -59,9 +59,6 @@
 				I.play_tool_sound(src, 25)
 			else
 				to_chat(user, "<span class='warning'>You need to add at least one beaker before locking the [initial(name)] assembly!</span>")
-		else if(stage == READY && !nadeassembly)
-			det_time = det_time == 50 ? 30 : 50	//toggle between 30 and 50
-			to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
 		else if(stage == EMPTY)
 			to_chat(user, "<span class='warning'>You need to add an activation mechanism!</span>")
 
