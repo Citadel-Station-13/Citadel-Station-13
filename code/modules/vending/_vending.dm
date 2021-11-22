@@ -888,9 +888,15 @@ GLOBAL_LIST_EMPTY(vending_products)
 		// 	vend_ready = TRUE
 		// 	return
 		var/datum/bank_account/account = C.registered_account
-		// || cost_multiplier_per_dept[account.account_job.access] != null
-		// var/list/difflist = uniquemergelist(cost_multiplier_per_dept, account.account_job.access)
-		if(account.account_job && account.account_job.paycheck_department == payment_department || (cost_multiplier_per_dept.len > 0 && (cost_multiplier_per_dept & account.account_job.access) > 0))
+
+		var/discounts = FALSE
+		try // too lazy, and i do NOT want to use for() to check, as & is faster
+			discounts = !!(cost_multiplier_per_dept.len > 0 && (cost_multiplier_per_dept & account.account_job.access) > 0)
+		catch
+			// L
+			discounts = FALSE
+
+		if(account.account_job && account.account_job.paycheck_department == payment_department || discounts)
 			price_to_use = 0 // it's free shut up
 		if(coin_records.Find(R) || hidden_records.Find(R))
 			price_to_use = R.custom_premium_price ? R.custom_premium_price : extra_price
