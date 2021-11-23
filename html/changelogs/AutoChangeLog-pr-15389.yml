@@ -1,6 +1,0 @@
-author: "TripleShades"
-delete-after: True
-changes: 
-  - rscadd: "(Pubby) Paramedic Office
-tweak: (Pubby) Moved Medbay delivery to the south hall entrance"
-  - bugfix: "(Pubby) Morgue wall being labeled as Bar"
