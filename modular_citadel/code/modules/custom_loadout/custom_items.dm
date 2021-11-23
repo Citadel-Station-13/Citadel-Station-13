@@ -627,3 +627,4 @@
 	icon = 'icons/obj/custom.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
+	
