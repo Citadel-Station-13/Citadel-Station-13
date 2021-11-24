@@ -57241,11 +57241,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/button/door{
-	id = "permacells3";
-	name = "Privacy Shutters";
-	pixel_y = -25
-	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison/cells)
 "kdF" = (
@@ -61620,6 +61615,28 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"qsq" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/light/small,
+/obj/machinery/button/door{
+	id = "permacells3";
+	name = "Privacy Shutters";
+	pixel_y = -25
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/prison/cells)
 "qto" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/shovel/spade,
@@ -89695,7 +89712,7 @@ gZT
 hQw
 qCc
 kcR
-rBK
+qsq
 lJA
 weW
 xNV
