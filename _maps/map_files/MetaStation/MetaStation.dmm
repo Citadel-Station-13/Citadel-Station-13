@@ -28970,6 +28970,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"ckg" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/meter,
+/turf/closed/wall/r_wall,
+/area/engineering/atmos)
 "ckh" = (
 /obj/machinery/light{
 	dir = 4
@@ -69641,6 +69648,13 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/service/chapel/office)
+"pnD" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/meter,
+/turf/closed/wall/r_wall,
+/area/engineering/atmos)
 "pnF" = (
 /obj/machinery/light{
 	dir = 4
@@ -125583,8 +125597,8 @@ ieJ
 nGn
 uoM
 lUn
-dlF
-uhB
+ckg
+pnD
 qxd
 qtO
 qtO
