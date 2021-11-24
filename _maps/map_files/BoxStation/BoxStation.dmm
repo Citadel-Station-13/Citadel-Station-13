@@ -23,7 +23,7 @@
 "aac" = (
 /obj/machinery/camera{
 	c_tag = "Bar";
-	dir = 8
+	dir = 9
 	},
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks{
@@ -54942,6 +54942,7 @@
 /area/security/brig)
 "gyy" = (
 /obj/machinery/door/airlock/security{
+	aiControlDisabled = 1;
 	name = "Isolation Cell";
 	req_access_txt = "2"
 	},
