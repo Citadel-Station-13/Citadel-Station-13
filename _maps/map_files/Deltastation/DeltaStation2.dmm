@@ -43290,6 +43290,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "cWx" = (
@@ -75535,7 +75536,6 @@
 	name = "medbay camera";
 	network = list("ss13","medbay")
 	},
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
