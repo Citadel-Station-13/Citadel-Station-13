@@ -16790,13 +16790,6 @@
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"bmP" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/meter,
-/turf/closed/wall/r_wall,
-/area/engineering/atmos)
 "bmQ" = (
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;25;46"
@@ -42568,6 +42561,10 @@
 	},
 /obj/structure/chair/stool,
 /obj/machinery/light/small,
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -28
+	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
 "cNq" = (
@@ -65562,6 +65559,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/service/chapel/main)
+"mXg" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/meter,
+/turf/closed/wall/r_wall,
+/area/engineering/atmos)
 "mXi" = (
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain/private)
@@ -70406,6 +70410,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/commons/cryopod)
+"pHM" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/meter,
+/turf/closed/wall/r_wall,
+/area/engineering/atmos)
 "pHS" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -84265,13 +84276,6 @@
 	},
 /turf/open/floor/wood,
 /area/service/lawoffice)
-"xxH" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/meter,
-/turf/closed/wall/r_wall,
-/area/engineering/atmos)
 "xyp" = (
 /obj/docking_port/stationary{
 	dheight = 1;
@@ -125598,8 +125602,8 @@ ieJ
 nGn
 uoM
 lUn
-bmP
-xxH
+pHM
+mXg
 qxd
 qtO
 qtO
