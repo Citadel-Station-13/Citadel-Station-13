@@ -50834,7 +50834,6 @@
 /turf/open/floor/plasteel,
 /area/security/prison/upper)
 "eFn" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/atmospherics/miner/oxygen,
 /turf/open/floor/engine/o2,
 /area/engineering/atmos)
@@ -54567,13 +54566,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/cargo/warehouse)
-"gQh" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/meter,
-/turf/closed/wall/r_wall,
-/area/engineering/atmos)
 "gQq" = (
 /obj/structure/sink{
 	dir = 4;
@@ -57710,9 +57702,6 @@
 /turf/closed/wall/r_wall,
 /area/engineering/main)
 "iFl" = (
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide{
-	valve_open = 1
-	},
 /obj/machinery/atmospherics/miner/n2o,
 /turf/open/floor/engine/n2o,
 /area/engineering/atmos)
@@ -63212,7 +63201,6 @@
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "lIs" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/machinery/atmospherics/miner/carbon_dioxide,
 /turf/open/floor/engine/co2,
 /area/engineering/atmos)
@@ -67135,6 +67123,13 @@
 	dir = 1
 	},
 /area/service/chapel/main)
+"nYV" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/meter,
+/turf/closed/wall/r_wall,
+/area/engineering/atmos)
 "nZd" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -69370,7 +69365,6 @@
 	},
 /area/command/heads_quarters/rd)
 "pgT" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
 /obj/machinery/atmospherics/miner/toxins,
 /turf/open/floor/engine/plasma,
 /area/engineering/atmos)
@@ -76263,7 +76257,6 @@
 /turf/closed/wall,
 /area/service/bar)
 "sTB" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/atmospherics/miner/nitrogen,
 /turf/open/floor/engine/n2,
 /area/engineering/atmos)
@@ -82540,13 +82533,6 @@
 	dir = 5
 	},
 /area/service/kitchen)
-"wCt" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/meter,
-/turf/closed/wall/r_wall,
-/area/engineering/atmos)
 "wCQ" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -82703,8 +82689,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "wFX" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/engine/air,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/meter,
+/turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "wGp" = (
 /obj/structure/cable/white{
@@ -125605,8 +125594,8 @@ ieJ
 nGn
 uoM
 lUn
-gQh
-wCt
+wFX
+nYV
 qxd
 qtO
 qtO
@@ -129480,7 +129469,7 @@ uKL
 aaf
 dYX
 htG
-wFX
+uLh
 rjT
 dPI
 aaf
