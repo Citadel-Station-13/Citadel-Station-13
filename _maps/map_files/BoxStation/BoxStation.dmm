@@ -14653,6 +14653,9 @@
 	pixel_x = 5;
 	pixel_y = 24
 	},
+/obj/structure/sign/painting/library{
+	pixel_x = -32
+	},
 /turf/open/floor/wood,
 /area/service/library)
 "aIs" = (
@@ -14666,6 +14669,9 @@
 /obj/machinery/light{
 	dir = 1;
 	light_color = "#c1caff"
+	},
+/obj/structure/sign/painting/library{
+	pixel_y = 32
 	},
 /turf/open/floor/wood,
 /area/service/library)
@@ -14696,6 +14702,9 @@
 	dir = 4
 	},
 /obj/structure/chair/sofa/left,
+/obj/structure/sign/painting/library{
+	pixel_y = 32
+	},
 /turf/open/floor/wood,
 /area/service/library)
 "aIx" = (
@@ -14704,6 +14713,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
+	},
+/obj/structure/sign/painting/library{
+	pixel_x = 32
 	},
 /turf/open/floor/wood,
 /area/service/library)
@@ -17411,11 +17423,17 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/structure/sign/painting/library{
+	pixel_x = -32
+	},
 /turf/open/floor/wood,
 /area/service/library)
 "aQq" = (
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/structure/sign/painting/library{
+	pixel_x = 32
 	},
 /turf/open/floor/wood,
 /area/service/library)
@@ -21366,6 +21384,9 @@
 "bav" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
+	},
+/obj/structure/sign/painting/library{
+	pixel_x = -32
 	},
 /turf/open/floor/wood,
 /area/service/library)
@@ -59645,6 +59666,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"nkh" = (
+/obj/structure/sign/painting/library{
+	pixel_x = -32
+	},
+/turf/open/floor/wood,
+/area/service/library)
 "nko" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -65921,6 +65948,28 @@
 	},
 /turf/closed/wall,
 /area/hallway/secondary/service)
+"wCu" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/light/small,
+/obj/machinery/button/door{
+	id = "permacells3";
+	name = "Privacy Shutters";
+	pixel_y = -25
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/prison/cells)
 "wCQ" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -66889,28 +66938,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/prison/upper)
-"ybo" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/light/small,
-/obj/machinery/button/door{
-	id = "permacells3";
-	name = "Privacy Shutters";
-	pixel_y = -25
-	},
-/turf/open/floor/plasteel/dark,
-/area/security/prison/cells)
 "ycd" = (
 /obj/structure/toilet/secret/low_loot{
 	dir = 4
@@ -88425,7 +88452,7 @@ giE
 rBK
 lJA
 fgy
-ybo
+wCu
 abc
 obs
 rBY
@@ -89707,7 +89734,7 @@ gZT
 hQw
 qCc
 kcR
-ybo
+wCu
 lJA
 weW
 xNV
@@ -109804,7 +109831,7 @@ qfD
 aRO
 aQp
 aRN
-aIt
+nkh
 aUB
 aFu
 aVN
