@@ -44586,6 +44586,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
+/obj/machinery/camera{
+	c_tag = "Atmospherics - Incinerator";
+	name = "atmospherics camera"
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "cga" = (
@@ -52572,28 +52576,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
-"diT" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/light/small,
-/obj/machinery/button/door{
-	id = "permacells3";
-	name = "Privacy Shutters";
-	pixel_y = -25
-	},
-/turf/open/floor/plasteel/dark,
-/area/security/prison/cells)
 "dkM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -55698,6 +55680,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"hIi" = (
+/obj/structure/sign/painting/library{
+	pixel_x = -32
+	},
+/turf/open/floor/wood,
+/area/service/library)
 "hIL" = (
 /obj/structure/sign/poster/contraband/space_up{
 	pixel_x = -32;
@@ -55854,6 +55842,28 @@
 	},
 /turf/open/floor/plasteel,
 /area/commons/fitness)
+"hWm" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/light/small,
+/obj/machinery/button/door{
+	id = "permacells3";
+	name = "Privacy Shutters";
+	pixel_y = -25
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/prison/cells)
 "hYd" = (
 /obj/machinery/door/airlock/medical{
 	name = "Morgue";
@@ -60650,12 +60660,6 @@
 	},
 /turf/closed/wall,
 /area/medical/medbay/central)
-"oTe" = (
-/obj/structure/sign/painting/library{
-	pixel_x = -32
-	},
-/turf/open/floor/wood,
-/area/service/library)
 "oTx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/spawner/structure/window/reinforced,
@@ -88452,7 +88456,7 @@ giE
 rBK
 lJA
 fgy
-diT
+hWm
 abc
 obs
 rBY
@@ -89734,7 +89738,7 @@ gZT
 hQw
 qCc
 kcR
-diT
+hWm
 lJA
 weW
 xNV
@@ -109831,7 +109835,7 @@ qfD
 aRO
 aQp
 aRN
-oTe
+hIi
 aUB
 aFu
 aVN

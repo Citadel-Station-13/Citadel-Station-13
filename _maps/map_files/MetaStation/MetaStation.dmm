@@ -25296,6 +25296,10 @@
 /obj/structure/sign/warning/deathsposal{
 	pixel_y = 32
 	},
+/obj/machinery/camera{
+	c_tag = "Atmospherics - Incinerator";
+	name = "atmospherics camera"
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "cba" = (
@@ -56850,6 +56854,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/commons/fitness/recreation)
+"ify" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/meter,
+/turf/closed/wall/r_wall,
+/area/engineering/atmos)
 "ifM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -67123,13 +67134,6 @@
 	dir = 1
 	},
 /area/service/chapel/main)
-"nYV" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/meter,
-/turf/closed/wall/r_wall,
-/area/engineering/atmos)
 "nZd" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -125595,7 +125599,7 @@ nGn
 uoM
 lUn
 wFX
-nYV
+ify
 qxd
 qtO
 qtO
