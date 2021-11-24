@@ -16790,6 +16790,13 @@
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"bmP" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/meter,
+/turf/closed/wall/r_wall,
+/area/engineering/atmos)
 "bmQ" = (
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;25;46"
@@ -28970,13 +28977,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
-"ckg" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/meter,
-/turf/closed/wall/r_wall,
-/area/engineering/atmos)
 "ckh" = (
 /obj/machinery/light{
 	dir = 4
@@ -42567,6 +42567,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/chair/stool,
+/obj/machinery/light/small,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
 "cNq" = (
@@ -69648,13 +69649,6 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/service/chapel/office)
-"pnD" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/meter,
-/turf/closed/wall/r_wall,
-/area/engineering/atmos)
 "pnF" = (
 /obj/machinery/light{
 	dir = 4
@@ -84271,6 +84265,13 @@
 	},
 /turf/open/floor/wood,
 /area/service/lawoffice)
+"xxH" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/meter,
+/turf/closed/wall/r_wall,
+/area/engineering/atmos)
 "xyp" = (
 /obj/docking_port/stationary{
 	dheight = 1;
@@ -125597,8 +125598,8 @@ ieJ
 nGn
 uoM
 lUn
-ckg
-pnD
+bmP
+xxH
 qxd
 qtO
 qtO
