@@ -66161,6 +66161,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/bedsheetbin/color,
 /turf/open/floor/plasteel/cafeteria,
 /area/commons/dorms)
 "nry" = (
