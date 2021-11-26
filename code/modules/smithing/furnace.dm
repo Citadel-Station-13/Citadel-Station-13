@@ -8,6 +8,7 @@
 	var/debug = FALSE //debugging only
 	var/working = TRUE
 	var/fueluse = 1
+	var/maxheat = 8//should be a multiple of 2
 
 
 /obj/structure/furnace/Initialize()
@@ -36,7 +37,7 @@
 		var/obj/item/ingot/notsword = I
 		if(working)
 			to_chat(user, "You heat the [notsword] in the [src].")
-			notsword.workability = "shapeable"
+			notsword.worktemp = maxheat
 		else
 			to_chat(user, "The furnace isn't working!.")
 	else
@@ -64,12 +65,15 @@
 	name = "fuelless furnace"
 	debug = TRUE
 	icon_state = "ratfurnace"
+	maxheat = 100
 
 
 /obj/structure/furnace/infinite/ratvar
 	name = "brass furnace"
-	desc = "A brass furnace. Powered by... something, but seems otherwise safe." //todo:sprites they're safe for noncultists because you're just putting ingots in them. also there';s a reason to steal them ig
+	desc = "A brass furnace. Powered by divine magic, but seems otherwise safe."
+	maxheat = 12
 
 /obj/structure/furnace/infinite/narsie
 	name = "rune furnace"
-	desc = "A runed furnace. Powered by... something, but seems otherwise safe."
+	desc = "A runed furnace. Powered by bloody magicks, but seems otherwise safe."
+	maxheat = 12

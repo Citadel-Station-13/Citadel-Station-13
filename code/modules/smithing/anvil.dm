@@ -1,33 +1,4 @@
-#define WORKPIECE_PRESENT 1
-#define WORKPIECE_INPROGRESS 2
-#define WORKPIECE_FINISHED 3
-#define WORKPIECE_SLAG 5
 
-#define RECIPE_SMALLPICK "dbp" //draw bend punch
-#define RECIPE_LARGEPICK "ddbp" //draw draw bend punch
-#define RECIPE_SHOVEL "dfup" //draw fold upset punch
-#define RECIPE_HAMMER "sfp" //shrink fold punch
-
-
-#define RECIPE_SMALLKNIFE "sdd" //shrink draw draw
-#define RECIPE_SHORTSWORD "dff" //draw fold fold
-#define RECIPE_WAKI "dfsf" //draw  fold shrink fold
-#define RECIPE_SCIMITAR "dfb" //draw fold bend
-#define RECIPE_SABRE "ddsf" //draw draw shrink fold
-#define RECIPE_RAPIER "sdfd" //shrink draw  fold draw
-#define RECIPE_BROADSWORD "dfuf" //draw fold upset fold
-#define RECIPE_ZWEIHANDER "udfsf" //upset draw fold shrink fold
-#define RECIPE_KATANA "fffff" //fold fold fold fold fold
-
-
-#define RECIPE_SCYTHE "bdf" //bend draw fold
-#define RECIPE_COGHEAD "bsf" //bend shrink fold.
-
-
-#define RECIPE_JAVELIN "dbf" //draw bend fold
-#define RECIPE_HALBERD "duffp" //draw upset fold fold punch
-#define RECIPE_GLAIVE "usfp" //upset shrink fold punch
-#define RECIPE_PIKE "ddbf" //draw draw bend fold
 
 /obj/structure/anvil
 	name = "anvil"
@@ -38,85 +9,77 @@
 	anchored = TRUE
 	var/busy = FALSE //If someone is already interacting with this anvil
 	var/workpiece_state = FALSE
-	var/datum/material/workpiece_material
-	var/anvilquality = 0
-	var/currentquality = 0 //lolman? what the fuck do these vars do?
-	var/currentsteps = 0 //even i don't know
-	var/outrightfailchance = 1 //todo: document this shit
-	var/stepsdone = ""
-	var/rng = FALSE
+	var/obj/item/ingot/workpiece
 	var/debug = FALSE //vv this if you want an artifact
-	var/artifactrolled = FALSE
-	var/itemqualitymax = 20
-	var/list/smithrecipes = list(RECIPE_HAMMER = /obj/item/smithing/hammerhead,
-	RECIPE_SCYTHE = /obj/item/smithing/scytheblade,
-	RECIPE_SHOVEL = /obj/item/smithing/shovelhead,
-	RECIPE_COGHEAD = /obj/item/smithing/cogheadclubhead,
-	RECIPE_JAVELIN = /obj/item/smithing/javelinhead,
-	RECIPE_LARGEPICK = /obj/item/smithing/pickaxehead,
-	RECIPE_SMALLPICK = /obj/item/smithing/prospectingpickhead,
-	RECIPE_SHORTSWORD = /obj/item/smithing/shortswordblade,
-	RECIPE_SCIMITAR = /obj/item/smithing/scimitarblade,
-	RECIPE_WAKI = /obj/item/smithing/wakiblade,
-	RECIPE_RAPIER = /obj/item/smithing/rapierblade,
-	RECIPE_SABRE = /obj/item/smithing/sabreblade,
-	RECIPE_SMALLKNIFE = /obj/item/smithing/knifeblade,
-	RECIPE_BROADSWORD = /obj/item/smithing/broadblade,
-	RECIPE_ZWEIHANDER = /obj/item/smithing/zweiblade,
-	RECIPE_KATANA = /obj/item/smithing/katanablade,
-	RECIPE_HALBERD = /obj/item/smithing/halberdhead,
-	RECIPE_GLAIVE = /obj/item/smithing/glaivehead,
-	RECIPE_PIKE = /obj/item/smithing/pikehead)
-
-/obj/structure/anvil/Initialize()
-	..()
-	currentquality = anvilquality
+	var/variance = 0
+	var/anvilqualityadd = 0
 
 /obj/structure/anvil/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/ingot))
 		var/obj/item/ingot/notsword = I
 		if(workpiece_state)
-			to_chat(user, "There's already a workpiece! Finish it or take it off.")
+			to_chat(user, "<span class='danger'>There's already a workpiece! Finish it or take it off.</span>")
 			return FALSE
-		if(notsword.workability == "shapeable")
-			workpiece_state = WORKPIECE_PRESENT
-			workpiece_material = notsword.custom_materials
+		if(notsword.worktemp > 0)
+			var/datum/smith_recipe/todone
+			if(!notsword.plan)
+				todone = input(user, "What do you plan to make?") as null|anything in GLOB.smith_recipes //todo radial
+				if(!todone)
+					return FALSE
+				else
+					notsword.plan = todone
+					to_chat(user, "<span class='notice'>You decide to make a [todone.initial(displayname)].</notice>")
+			workpiece_state = TRUE
 			to_chat(user, "You place the [notsword] on the [src].")
-			currentquality = anvilquality
-			var/skillmod = 0
-			if(user.mind.skill_holder)
-				skillmod = user.mind.get_skill_level(/datum/skill/level/dwarfy/blacksmithing)/2
-			currentquality += skillmod
-			qdel(notsword)
+			workpiece = notsword
+			notsword.forceMove(src)
 		else
-			to_chat(user, "The ingot isn't workable yet!")
+			to_chat(user, "<span class='danger'>The ingot isn't hot enough to work yet!</span>")
 			return FALSE
 		return
 	else if(istype(I, /obj/item/melee/smith/hammer))
 		var/obj/item/melee/smith/hammer/hammertime = I
-		if(!(workpiece_state == WORKPIECE_PRESENT || workpiece_state == WORKPIECE_INPROGRESS))
-			to_chat(user, "You can't work an empty anvil!")
+		if(!workpiece)
+			to_chat(user, "<span class='danger'>You can't work an empty anvil!</span>")
+			return FALSE
+		if(workpiece && workpiece.worktemp == 0)
+			to_chat(user, "<span class='danger'>The piece is too cold to work!</span>")
 			return FALSE
 		if(busy)
-			to_chat(user, "This anvil is already being worked!")
+			to_chat(user, "<span class='danger'>This anvil is already being worked!</span>")
 			return FALSE
-		do_shaping(user, hammertime.qualitymod)
+		do_shaping(user, hammertime)
 		return
 	return ..()
+
+/obj/structure/anvil/examine(mob/user)
+	. = ..()
+	if(workpiece)
+		. += "<span class='notice'> It looks like the ingot is around [workpiece.height]." //wow it's really hard to both quantify and qualify a value so here we are, magic numbers
 
 /obj/structure/anvil/wrench_act(mob/living/user, obj/item/I)
 	..()
 	default_unfasten_wrench(user, I, 5)
 	return TRUE
 
+/obj/structure/anvil/AltClick(mob/living/user)
+	..()
+	if(busy)
+		to_chat(user, "<span class='notice'>You can't move the ingot, it's being worked on!</span>")
+	if(workpiece && workpiece_state)
+		user.visible_message("<span class='notice'>[user] pushes the [workpiece] off the anvil!!</span>")
+		workpiece.forceMove(get_turf(src))
+		workpiece_state = FALSE
+		workpiece = null
+	else
+		to_chat(user, "<span class='notice'>There's nothing there.</span>")
 
-/obj/structure/anvil/proc/do_shaping(mob/user, var/qualitychange)
+
+/obj/structure/anvil/proc/do_shaping(mob/user, var/obj/item/melee/smith/hammer/ham)
 	busy = TRUE
-	currentquality += qualitychange
-	var/list/shapingsteps = list("weak hit", "strong hit", "heavy hit", "fold", "draw", "shrink", "bend", "punch", "upset") //weak/strong/heavy hit affect strength. All the other steps shape.
-	workpiece_state = WORKPIECE_INPROGRESS
-	var/stepdone = input(user, "How would you like to work the metal?") in shapingsteps
-	var/steptime = 50
+	var/list/shapingsteps = list(STEP_HIT_LIGHT, STEP_HIT_MODERATE, STEP_HIT_HEAVY, STEP_DRAW, STEP_PUNCH, STEP_BEND, STEP_UPSET, STEP_FOLD)
+	var/stepdone = input(user, "How would you like to work the metal?") in shapingsteps //todo radial
+	var/steptime = 50 * ham.toolspeed
 	if(user.mind.skill_holder)
 		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dwarfy/blacksmithing)/10 + 1
 		steptime = 50 / skillmod
@@ -125,133 +88,98 @@
 		busy = FALSE
 		return FALSE
 	switch(stepdone)
-		if("weak hit")
-			currentsteps += 1
-			outrightfailchance += 5
-			currentquality += 1
-		if("strong hit")
-			currentsteps += 2
-			outrightfailchance += 9.5
-			currentquality += 2
-		if("heavy hit")
-			currentsteps += 3
-			outrightfailchance += 12.5
-			currentquality += 3
-		if("fold")
-			stepsdone += "f"
-			currentsteps += 1
-			currentquality -= 1
-		if("draw")
-			stepsdone += "d"
-			currentsteps += 1
-			currentquality -= 1
-		if("shrink")
-			stepsdone += "s"
-			currentsteps += 1
-			currentquality -= 1
-		if("bend")
-			stepsdone += "b"
-			currentsteps += 1
-			currentquality -= 1
-		if("punch")
-			stepsdone += "p"
-			currentsteps += 1
-			currentquality -= 1
-		if("upset")
-			stepsdone += "u"
-			currentsteps += 1
-			currentquality -= 1
+		if(STEP_HIT_LIGHT)
+			workpiece.height -= 2
+		if(STEP_HIT_MODERATE)
+			workpiece.height -= 8
+		if(STEP_HIT_HEAVY)
+			workpiece.height -= 16
+		if(STEP_DRAW)
+			workpiece.height -= 24
+		if(STEP_PUNCH)
+			workpiece.height += 3
+		if(STEP_BEND)
+			workpiece.height += 6
+		if(STEP_UPSET)
+			workpiece.height += 12
+		if(STEP_FOLD)
+			workpiece.height += 24
+	workpiece.worktemp--
+	workpiece.add_step(stepdone)
 	user.visible_message("<span class='notice'>[user] works the metal on the anvil with their hammer with a loud clang!</span>", \
-						"<span class='notice'>You [stepdone] the metal with a loud clang!</span>")
+						"<span class='notice'>You work the metal with a loud clang!</span>")
 	playsound(src, 'sound/effects/clang2.ogg',40, 2)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/clang2.ogg', 40, 2), 15)
-	if(length(stepsdone) >= 3)
-		tryfinish(user)
+	tryfinish(user)
 	busy = FALSE
 
+	tryfinish(user)
+
+
 /obj/structure/anvil/proc/tryfinish(mob/user)
-	var/artifactchance = 0
-	if(!artifactrolled)
-		artifactchance = (1+(user.mind.get_skill_level(/datum/skill/level/dwarfy/blacksmithing)/4))/2500
-		artifactrolled = TRUE
-	var/artifact = max(prob(artifactchance), debug)
-	var/finalfailchance = outrightfailchance
-	if(user.mind.skill_holder)
-		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dwarfy/blacksmithing)/10 + 1
-		finalfailchance = max(0, finalfailchance / skillmod) //lv 2 gives 20% less to fail, 3 30%, etc
-	if((currentsteps > 10 || (rng && prob(finalfailchance))) && !artifact)
-		to_chat(user, "<span class='warning'>You overwork the metal, causing it to turn into useless slag!</span>")
-		var/turf/T = get_turf(user)
+	var/datum/smith_recipe/recipe = workpiece.plan
+	var/list/pls = pls = recipe.initial(planlaststeps)
+	if(!recipe)
+		return FALSE
+	if(workpiece.height > recipe.initial(target_height_min) && workpiece.height < recipe.initial(target_height_max))
+		switch(recipe.planlaststeps.len)
+			if(1)
+				if(pls[STEP_LAST] != workpiece.last3steps[STEP_LAST])
+					return FALSE
+			if(2)
+				if(pls[STEP_LAST] != workpiece.last3steps[STEP_LAST] && pls[STEP_SECOND_LAST] != workpiece.last3steps[STEP_SECOND_LAST])
+					return FALSE
+			if(3)
+				if(pls != workpiece.last3steps)
+					return FALSE
+		generateitem(user)
+	else if(workpiece.height > 144 || workpiece.height < 0)
+		to_chat(user, "<span class='danger'> You ruin the [workpiece] by overworking it!</span>")
+		qdel(workpiece)
 		workpiece_state = FALSE
-		new /obj/item/stack/ore/slag(T)
-		currentquality = anvilquality
-		stepsdone = ""
-		currentsteps = 0
-		outrightfailchance = 1
-		artifactrolled = FALSE
-		if(user.mind.skill_holder)
-			user.mind.auto_gain_experience(/datum/skill/level/dwarfy/blacksmithing, 25, 400, silent = FALSE)
-	for(var/i in smithrecipes)
-		if(i == stepsdone)
-			var/turf/T = get_turf(user)
-			var/obj/item/smithing/create = smithrecipes[stepsdone]
-			var/obj/item/smithing/finisheditem = new create(T)
-			to_chat(user, "You finish your [finisheditem]!")
-			if(artifact)
-				to_chat(user, "It is an artifact, a creation whose legacy shall live on forevermore.") //todo: SSblackbox
-				currentquality = max(currentquality, 2)
-				finisheditem.quality = currentquality * 3//this is insane i know it's 1/2500 for most of the time and 0.8% at best
-				finisheditem.artifact = TRUE
-			else
-				finisheditem.quality = min(currentquality, itemqualitymax)
-			switch(finisheditem.quality)
-				if(-1000 to -8)
-					finisheditem.desc =  "It looks to be the most awfully made object you've ever seen."
-				if(-8)
-					finisheditem.desc =  "It looks to be the second most awfully made object you've ever seen."
-				if(-8 to 0)
-					finisheditem.desc =  "It looks to be barely passable as... whatever it's trying to pass for."
-				if(0)
-					finisheditem.desc =  "It looks to be totally average."
-				if(0 to INFINITY)
-					finisheditem.desc =  "It looks to be better than average."
-			workpiece_state = FALSE
-			finisheditem.set_custom_materials(workpiece_material)
-			currentquality = anvilquality
-			stepsdone = ""
-			currentsteps = 0
-			outrightfailchance = 1
-			artifactrolled = FALSE
-			if(user.mind.skill_holder)
-				user.mind.auto_gain_experience(/datum/skill/level/dwarfy/blacksmithing, 50, 10000000, silent = FALSE)
-			break
+		workpiece = null
+	else
+		return FALSE
+
+
+
+/obj/structure/anvil/proc/generateitem(mob/user)
+	var/skillmod = 0
+	var/finalquality = 0
+	var/_artifact = FALSE
+	if(user.mind.skill_holder)
+		skillmod = user.mind.get_skill_level(/datum/skill/level/dwarfy/blacksmithing)/2
+	if(workpiece.height == workpiece.plan.target_height_perfect)
+		finalquality++
+	finalquality += workpiece.currentquality + skillmod + anvilqualityadd
+	if(debug || prob(0.5*finalquality))
+		_artifact = TRUE
+
+	var/obj/item/smithing/output = new(workpiece.plan.output_type)
+	output.quality = finalquality
+	output.artifact = _artifact
+	output.forceMove(get_turf(src))
 
 /obj/structure/anvil/debugsuper
 	name = "super ultra epic anvil of debugging."
 	desc = "WOW. A DEBUG <del>ITEM</DEL> STRUCTURE. EPIC."
 	icon_state = "anvil"
-	anvilquality = 10
-	itemqualitymax = 9001
-	outrightfailchance = 0
+	anvilqualityadd = 9001
 
 /obj/structure/anvil/obtainable
 	name = "anvil"
 	desc = "Base class of anvil. This shouldn't exist, but is useable."
-	anvilquality = 0
-	outrightfailchance = 5
-	rng = TRUE
 
 /obj/structure/anvil/obtainable/table
 	name = "table anvil"
 	desc = "A slightly reinforced table. Good luck."
 	icon_state = "tablevil"
-	anvilquality = -2
-	itemqualitymax = 0
+	variance = 4
 
 
 /obj/structure/anvil/obtainable/table/do_shaping(mob/user, var/qualitychange)
 	if(prob(5))
-		to_chat(user, "The [src] breaks under the strain!")
+		to_chat(user, "<span class='danger'>The [src] breaks under the strain!</span>")
 		take_damage(max_integrity)
 		return FALSE
 	else
@@ -262,50 +190,36 @@
 	desc = "A big block of bronze. Useable as an anvil."
 	custom_materials = list(/datum/material/bronze=8000)
 	icon_state = "ratvaranvil"
-	anvilquality = -0.5
-	itemqualitymax = 2
 
 /obj/structure/anvil/obtainable/sandstone
 	name = "sandstone brick anvil"
 	desc = "A big block of sandstone. Useable as an anvil."
 	custom_materials = list(/datum/material/sandstone=8000)
 	icon_state = "sandvil"
-	anvilquality = -1
-	itemqualitymax = 2
+	variance = 2
 
 /obj/structure/anvil/obtainable/basalt
 	name = "basalt brick anvil"
 	desc = "A big block of basalt. Useable as an anvil, better than sandstone. Igneous!"
 	icon_state = "sandvilnoir"
-	anvilquality = -0.5
-	itemqualitymax = 4
 
 /obj/structure/anvil/obtainable/basic
 	name = "anvil"
 	desc = "An anvil. It's got wheels bolted to the bottom."
-	anvilquality = 0
-	itemqualitymax = 6
-
-/obj/structure/anvil/obtainable/bone
-	name = "bone anvil"
-	desc = "An anvil. It's made of goliath bones and hide and held together by watcher sinews."
-	icon_state = "bonevil"
-	anvilquality = 0
-	itemqualitymax = 6
+	anvilqualityadd = 1
 
 /obj/structure/anvil/obtainable/ratvar
 	name = "brass anvil"
-	desc = "A big block of what appears to be brass. Useable as an anvil, if whatever's holding the brass together lets you."
-	custom_materials = list(/datum/material/bronze=8000)
+	desc = "A big block of what appears to be brass. Useable as an anvil. May contain traces of clock magic."
+	custom_materials = list(/datum/material/brass=8000)
 	icon_state = "ratvaranvil"
-	anvilquality = 1
-	itemqualitymax = 8
+	anvilqualityadd = 2
 
 /obj/structure/anvil/obtainable/ratvar/attackby(obj/item/I, mob/user)
 	if(is_servant_of_ratvar(user))
 		return ..()
 	else
-		to_chat(user, "<span class='neovgre'>KNPXWN, QNJCQNW!</span>") //rot13 then rot22 if anyone wants to decode
+		to_chat(user, "<span class='neovgre'>KNPXWN, QNJCQNW!</span>")
 
 /obj/structure/anvil/obtainable/narsie
 	name = "runic anvil"
@@ -313,16 +227,10 @@
 	custom_materials = list(/datum/material/runedmetal=8000)
 	icon = 'icons/obj/smith.dmi'
 	icon_state = "evil"
-	anvilquality = 1
-	itemqualitymax = 8
+	anvilqualityadd = 2
 
 /obj/structure/anvil/obtainable/narsie/attackby(obj/item/I, mob/user)
 	if(iscultist(user))
 		return ..()
 	else
 		to_chat(user, "<span class='narsiesmall'>That is not yours to use!</span>")
-
-#undef WORKPIECE_PRESENT
-#undef WORKPIECE_INPROGRESS
-#undef WORKPIECE_FINISHED
-#undef WORKPIECE_SLAG

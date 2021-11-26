@@ -181,7 +181,7 @@
 	if(istype(I, /obj/item/ingot))
 		var/obj/item/ingot/notsword = I
 		to_chat(user, "You heat the [notsword] in the [src].")
-		notsword.workability = "shapeable"
+		notsword.worktemp = 12
 
 /obj/structure/destructible/cult/pylon
 	name = "pylon"
