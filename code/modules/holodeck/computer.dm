@@ -203,7 +203,7 @@
 		return
 	emergency_shutdown()
 
-/obj/machinery/computer/holodeck/ex_act(severity, target)
+/obj/machinery/computer/holodeck/ex_act(severity, target, origin)
 	emergency_shutdown()
 	return ..()
 

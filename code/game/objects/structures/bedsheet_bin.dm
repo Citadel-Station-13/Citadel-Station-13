@@ -4,6 +4,41 @@ BEDSHEETS
 LINEN BINS
 */
 
+#define BEDSHEET_SINGLE "single"
+#define BEDSHEET_DOUBLE "double"
+
+GLOBAL_LIST_INIT(double_bedsheets, list(/obj/item/bedsheet/double,
+										/obj/item/bedsheet/blue/double,
+										/obj/item/bedsheet/green/double,
+										/obj/item/bedsheet/grey/double,
+										/obj/item/bedsheet/orange/double,
+										/obj/item/bedsheet/purple/double,
+										/obj/item/bedsheet/patriot/double,
+										/obj/item/bedsheet/rainbow/double,
+										/obj/item/bedsheet/red/double,
+										/obj/item/bedsheet/yellow/double,
+										/obj/item/bedsheet/mime/double,
+										/obj/item/bedsheet/clown/double,
+										/obj/item/bedsheet/captain/double,
+										/obj/item/bedsheet/rd/double,
+										/obj/item/bedsheet/medical/double,
+										/obj/item/bedsheet/cmo/double,
+										/obj/item/bedsheet/hos/double,
+										/obj/item/bedsheet/hop/double,
+										/obj/item/bedsheet/ce/double,
+										/obj/item/bedsheet/qm/double,
+										/obj/item/bedsheet/chaplain/double,
+										/obj/item/bedsheet/brown/double,
+										/obj/item/bedsheet/black/double,
+										/obj/item/bedsheet/centcom/double,
+										/obj/item/bedsheet/syndie/double,
+										/obj/item/bedsheet/cult/double,
+										/obj/item/bedsheet/wiz/double,
+										/obj/item/bedsheet/nanotrasen/double,
+										/obj/item/bedsheet/ian/double,
+										/obj/item/bedsheet/cosmos/double
+										))
+
 /obj/item/bedsheet
 	name = "bedsheet"
 	desc = "A surprisingly soft linen bedsheet."
@@ -21,10 +56,15 @@ LINEN BINS
 
 	dog_fashion = /datum/dog_fashion/head/ghost
 	var/list/dream_messages = list("white")
+	var/stack_amount = 3
+	var/bedsheet_type = BEDSHEET_SINGLE
 
 /obj/item/bedsheet/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/bed_tuckable, 0, 0, 0)
+	if(bedsheet_type == BEDSHEET_DOUBLE)
+		stack_amount *= 2
+		dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
 
 /obj/item/bedsheet/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))
@@ -46,7 +86,7 @@ LINEN BINS
 
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(!(flags_1 & HOLOGRAM_1) && (I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness()))
-		var/obj/item/stack/sheet/cloth/C = new (get_turf(src), 3)
+		var/obj/item/stack/sheet/cloth/C = new (get_turf(src), stack_amount)
 		transfer_fingerprints_to(C)
 		C.add_fingerprint(user)
 		qdel(src)
@@ -247,9 +287,171 @@ LINEN BINS
 
 /obj/item/bedsheet/random/Initialize()
 	..()
-	var/type = pick(typesof(/obj/item/bedsheet) - (list(/obj/item/bedsheet/random, /obj/item/bedsheet/chameleon) + typesof(/obj/item/bedsheet/unlockable)))
-	new type(loc)
-	return INITIALIZE_HINT_QDEL
+	if(bedsheet_type == BEDSHEET_SINGLE)
+		var/type = pick(typesof(/obj/item/bedsheet) - (list(/obj/item/bedsheet/random, /obj/item/bedsheet/chameleon) + typesof(/obj/item/bedsheet/unlockable) + GLOB.double_bedsheets))
+		new type(loc)
+		return INITIALIZE_HINT_QDEL
+
+/obj/item/bedsheet/double
+	icon_state = "double_sheetwhite"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/blue/double
+	icon_state = "double_sheetblue"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/green/double
+	icon_state = "double_sheetgreen"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/grey/double
+	icon_state = "double_sheetgrey"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/orange/double
+	icon_state = "double_sheetorange"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/purple/double
+	icon_state = "double_sheetpurple"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/patriot/double
+	icon_state = "double_sheetUSA"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/rainbow/double
+	icon_state = "double_sheetrainbow"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/red/double
+	icon_state = "double_sheetred"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/yellow/double
+	icon_state = "double_sheetyellow"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/mime/double
+	icon_state = "double_sheetmime"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/clown/double
+	icon_state = "double_sheetclown"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/captain/double
+	icon_state = "double_sheetcaptain"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/rd/double
+	icon_state = "double_sheetrd"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/medical/double
+	icon_state = "double_sheetmedical"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/cmo/double
+	icon_state = "double_sheetcmo"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/hos/double
+	icon_state = "double_sheethos"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/hop/double
+	icon_state = "double_sheethop"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/ce/double
+	icon_state = "double_sheetce"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/qm/double
+	icon_state = "double_sheetqm"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/chaplain/double
+	icon_state = "double_sheetchap"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/brown/double
+	icon_state = "double_sheetbrown"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/black/double
+	icon_state = "double_sheetblack"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/centcom/double
+	icon_state = "double_sheetcentcom"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/syndie/double
+	icon_state = "double_sheetsyndie"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/cult/double
+	icon_state = "double_sheetcult"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/wiz/double
+	icon_state = "double_sheetwiz"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/nanotrasen/double
+	icon_state = "double_sheetNT"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/ian/double
+	icon_state = "double_sheetian"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/cosmos/double
+	icon_state = "double_sheetcosmos"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/random/double
+	icon_state = "random_bedsheet"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/random/double/Initialize()
+	..()
+	if(bedsheet_type == BEDSHEET_DOUBLE)
+		var/type = pick(GLOB.double_bedsheets)
+		new type(loc)
+		return INITIALIZE_HINT_QDEL
 
 /obj/item/bedsheet/chameleon //donator chameleon bedsheet
 	name = "chameleon bedsheet"

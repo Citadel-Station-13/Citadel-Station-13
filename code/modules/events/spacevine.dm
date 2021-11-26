@@ -507,7 +507,7 @@
 			if(master)
 				master.spawn_spacevine_piece(stepturf, src)
 
-/obj/structure/spacevine/ex_act(severity, target)
+/obj/structure/spacevine/ex_act(severity, target, origin)
 	if(istype(target, type)) //if its agressive spread vine dont do anything
 		return
 	var/i

@@ -158,11 +158,8 @@
 	name = "Circuit board (Cryogenic Oversight Console)"
 	build_path = "/obj/machinery/computer/cryopod"
 
-/obj/machinery/computer/cryopod/contents_explosion()
+/obj/machinery/computer/cryopod/contents_explosion(severity, target, origin)
 	return
-
-/obj/machinery/computer/cryopod/contents_explosion()
-	return			//don't blow everyone's shit up.
 
 /// The box
 /obj/item/storage/box/blue/cryostorage_items

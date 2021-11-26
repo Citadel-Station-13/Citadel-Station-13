@@ -154,7 +154,7 @@ Difficulty: Hard
 		return 0
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/ex_act(severity, target)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/ex_act(severity, target, origin)
 	if(severity >= EXPLODE_LIGHT)
 		return
 	severity = EXPLODE_LIGHT // puny mortals

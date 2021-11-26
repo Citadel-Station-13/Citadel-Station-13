@@ -48,3 +48,4 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 
 	allowed_limb_ids = list("mammal","aquatic","avian", "human")
+	species_category = "robot"

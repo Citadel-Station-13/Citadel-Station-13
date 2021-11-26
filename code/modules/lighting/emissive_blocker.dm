@@ -26,7 +26,7 @@
 	color = GLOB.em_block_color
 
 
-/atom/movable/emissive_blocker/ex_act(severity)
+/atom/movable/emissive_blocker/ex_act(severity, target, origin)
 	return FALSE
 
 /atom/movable/emissive_blocker/singularity_act()

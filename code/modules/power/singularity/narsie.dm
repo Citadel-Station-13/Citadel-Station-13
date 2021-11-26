@@ -143,7 +143,7 @@
 		A.narsie_act()
 
 
-/obj/singularity/narsie/ex_act() //No throwing bombs at her either.
+/obj/singularity/narsie/ex_act(severity, target, origin) //No throwing bombs at her either.
 	return
 
 

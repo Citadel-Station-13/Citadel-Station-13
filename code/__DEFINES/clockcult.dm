@@ -17,6 +17,7 @@ GLOBAL_LIST_EMPTY(all_clockwork_mobs) //All clockwork SERVANTS (not creatures) i
 GLOBAL_VAR_INIT(ratvar_approaches, 0) //The servants can choose to "herald" Ratvar, permanently buffing them but announcing their presence to the crew.
 GLOBAL_VAR_INIT(ratvar_awakens, 0) //If Ratvar has been summoned; not a boolean, for proper handling of multiple Ratvars
 GLOBAL_VAR_INIT(ark_of_the_clockwork_justiciar, FALSE) //The Ark on the Reebe z-level
+GLOBAL_VAR_INIT(reebe_loaded, FALSE)    //Is reebe loaded right now? If two seperate things in one round try loading reebe.
 
 GLOBAL_VAR_INIT(clockwork_gateway_activated, FALSE) //if a gateway to the celestial derelict has ever been successfully activated
 GLOBAL_VAR_INIT(script_scripture_unlocked, FALSE) //If script scripture is available, through converting at least one crewmember

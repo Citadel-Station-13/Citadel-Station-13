@@ -319,7 +319,10 @@
 					var/atom/A = I
 					if(!QDELETED(A))
 						A.ex_act(severity)
-				gib()
+				if(istype(origin, /datum/explosion))
+					gib(was_explosion = origin)
+				else
+					gib()
 				return
 			else
 				brute_loss = 500

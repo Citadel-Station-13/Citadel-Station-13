@@ -249,7 +249,7 @@
 	P.setAngle(rotation_angle)
 	return ..()
 
-/obj/structure/reflector/ex_act()
+/obj/structure/reflector/ex_act(severity, target, origin)
 	if(admin)
 		return
 	else

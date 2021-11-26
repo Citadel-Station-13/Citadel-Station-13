@@ -94,7 +94,7 @@
 /obj/machinery/am_shielding/emp_act()//Immune due to not really much in the way of electronics.
 	return
 
-/obj/machinery/am_shielding/ex_act(severity, target)
+/obj/machinery/am_shielding/ex_act(severity, target, origin)
 	stability -= (80 - (severity * 20))
 	check_stability()
 	return

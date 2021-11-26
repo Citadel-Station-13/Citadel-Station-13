@@ -152,7 +152,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	C.forcesay("*scream")
 	qdel(src)
 
-/obj/item/stack/ore/glass/ex_act(severity, target)
+/obj/item/stack/ore/glass/ex_act(severity, target, origin)
 	if (severity == EXPLODE_NONE)
 		return
 	qdel(src)
@@ -314,7 +314,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	GibtoniteReaction(P.firer)
 	. = ..()
 
-/obj/item/gibtonite/ex_act()
+/obj/item/gibtonite/ex_act(severity, target, origin)
 	GibtoniteReaction(null, 1)
 
 /obj/item/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
@@ -356,7 +356,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	pixel_x = initial(pixel_x) + rand(0, 16) - 8
 	pixel_y = initial(pixel_y) + rand(0, 8) - 8
 
-/obj/item/stack/ore/ex_act(severity, target)
+/obj/item/stack/ore/ex_act(severity, target, origin)
 	if (!severity || severity >= 2)
 		return
 	qdel(src)
