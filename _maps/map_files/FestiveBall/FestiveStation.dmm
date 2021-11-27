@@ -12500,6 +12500,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
 /turf/open/floor/wood,
 /area/service/bar/atrium)
 "aGb" = (
@@ -16886,8 +16889,15 @@
 /turf/open/floor/festive/alleyway,
 /area/edina)
 "aQV" = (
-/turf/closed/wall/mineral/wood,
-/area/commons/dorms)
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/auto_name/west,
+/turf/open/floor/festive/sidewalk,
+/area/edina/street/secondary/command)
 "aQW" = (
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel/dark,
@@ -17212,8 +17222,15 @@
 /turf/closed/festive/whitebrick,
 /area/science/research/lobby)
 "aRJ" = (
-/turf/closed/festive/greybrick,
-/area/edina/street/primary/perimeter)
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/turf/open/floor/festive/sidewalk,
+/area/edina/street/secondary/command)
 "aRK" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /obj/machinery/meter,
@@ -17533,11 +17550,12 @@
 /turf/open/floor/festive/alleyway,
 /area/edina/backstreet)
 "aSy" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
+/obj/machinery/power/apc/auto_name/east,
+/obj/structure/cable/yellow,
+/turf/open/floor/grass/snow/edina{
+	initial_gas_mix = "o2=22;n2=82;TEMP=270"
 	},
-/turf/open/floor/wood,
-/area/maintenance/bar)
+/area/edina/street/secondary/castle)
 "aSz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -18251,24 +18269,33 @@
 /turf/open/floor/festive/alleyway,
 /area/edina)
 "aUu" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/turf/open/floor/festive/trainplatform,
-/area/maintenance/bar)
+/obj/machinery/power/apc/auto_name/west,
+/obj/structure/cable/yellow,
+/turf/open/floor/festive/sidewalk,
+/area/edina/street/primary/princess)
 "aUv" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/open/floor/wood,
-/area/maintenance/bar)
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/open/floor/festive/sidewalk,
+/area/edina/street/primary/progress)
 "aUw" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/open/floor/wood,
-/area/maintenance/bar)
+/turf/closed/wall/mineral/wood,
+/area/commons/dorms)
 "aUx" = (
 /obj/effect/festive/street/streetlineeast,
 /obj/structure/cable/yellow{
@@ -19087,26 +19114,49 @@
 	},
 /area/service/chapel/office)
 "aWJ" = (
-/obj/structure/festive/trainplatform/edge_west,
-/obj/structure/chair/stool/bar,
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/open/floor/light,
-/area/maintenance/bar)
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/turf/open/floor/festive/sidewalk,
+/area/edina/street/intersection/progcastaux)
 "aWK" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/weather/snow/corner{
+	color = "#FFFFFE";
+	dir = 8
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/festive/sidewalk,
+/area/edina/street/secondary/aux)
+"aWL" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	color = "#FFFFFE";
+	dir = 8
+	},
+/obj/structure/cable/yellow,
+/obj/machinery/power/apc/auto_name/west,
+/turf/open/floor/festive/sidewalk,
+/area/edina/street/secondary/aux)
+"aWM" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/open/floor/festive/trainplatform,
-/area/maintenance/bar)
-"aWL" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/turf/open/floor/festive/trainplatform,
-/area/maintenance/bar)
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/auto_name/north,
+/turf/open/floor/festive/sidewalk,
+/area/edina/street/primary/servitor)
 "aWN" = (
 /obj/machinery/sparker/toxmix{
 	pixel_x = 25
@@ -19528,6 +19578,9 @@
 /obj/effect/decal/festive/fairylights,
 /turf/open/floor/festive/wooden/wooden1,
 /area/commons/dorms)
+"aXQ" = (
+/turf/closed/festive/greybrick,
+/area/edina/street/primary/perimeter)
 "aXR" = (
 /obj/structure/chair/comfy/black,
 /obj/effect/decal/festive/large_green_stocking,
@@ -19958,11 +20011,36 @@
 "aYZ" = (
 /turf/closed/festive/greybrick/greybrickns,
 /area/maintenance/bar)
+"aZa" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	color = "#FFFFFF";
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow,
+/obj/machinery/power/apc/auto_name/east,
+/turf/open/floor/festive/sidewalk,
+/area/edina/street/secondary/supply)
+"aZb" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/wood,
+/area/maintenance/bar)
 "aZg" = (
 /obj/machinery/vending/assist,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/commons/storage/tools)
+"aZh" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/festive/trainplatform,
+/area/maintenance/bar)
 "aZi" = (
 /turf/closed/festive/whitebrick,
 /area/service/hydroponics)
@@ -20423,6 +20501,19 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
+"bah" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/wood,
+/area/maintenance/bar)
+"bai" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/wood,
+/area/maintenance/bar)
 "baj" = (
 /obj/structure/table/wood/fancy/monochrome,
 /obj/machinery/light/small{
@@ -21104,6 +21195,21 @@
 /obj/effect/decal/festive/christmas_reef,
 /turf/open/floor/carpet/royalblue,
 /area/edina/crew_quarters/store/pet)
+"bcB" = (
+/obj/structure/festive/trainplatform/edge_west,
+/obj/structure/chair/stool/bar,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/light,
+/area/maintenance/bar)
+"bcC" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/festive/trainplatform,
+/area/maintenance/bar)
 "bcD" = (
 /obj/machinery/chem_master/condimaster,
 /turf/open/floor/plasteel,
@@ -21403,6 +21509,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/commons/fitness/recreation)
+"bdu" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/open/floor/festive/trainplatform,
+/area/maintenance/bar)
 "bdv" = (
 /obj/machinery/light{
 	dir = 8
@@ -23759,6 +23871,9 @@
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
 	},
 /turf/open/floor/festive/sidewalk,
 /area/edina/street/primary/perimeter)
@@ -68587,33 +68702,33 @@ bvU
 bvU
 bvU
 bvU
-aRJ
+aXQ
 bGE
 bKg
 bGE
 bKg
-aRJ
+aXQ
 bvU
 bvU
 bvU
 bvU
 bvU
-aRJ
+aXQ
 bGE
 bIs
 bKg
-aRJ
+aXQ
 bvU
 bvU
 bvU
 bvU
 bvU
-aRJ
+aXQ
 bGE
 bKg
 bGE
 bKg
-aRJ
+aXQ
 bvU
 bvU
 bvU
@@ -68844,33 +68959,33 @@ bvU
 bvU
 bvU
 bvU
-aRJ
+aXQ
 bGF
 bvU
 bvU
 bKh
-aRJ
+aXQ
 bvU
 bvU
 bvU
 bvU
 bvU
-aRJ
+aXQ
 bGF
 bvU
 bKh
-aRJ
+aXQ
 bvU
 bvU
 bvU
 bvU
 bvU
-aRJ
+aXQ
 bGF
 bvU
 bvU
 bKh
-aRJ
+aXQ
 bvU
 bvU
 bvU
@@ -69872,33 +69987,33 @@ bvU
 bvU
 bvU
 bvU
-aRJ
+aXQ
 bGF
 bvU
 bvU
 bKh
-aRJ
+aXQ
 bvU
 bvU
 bvU
 bvU
 bvU
-aRJ
+aXQ
 bGF
 bvU
 bKh
-aRJ
+aXQ
 bvU
 bvU
 bvU
 bvU
 bvU
-aRJ
+aXQ
 bGF
 bvU
 bvU
 bKh
-aRJ
+aXQ
 bvU
 bvU
 bvU
@@ -70129,33 +70244,33 @@ bvU
 bAE
 bvU
 bvU
-aRJ
+aXQ
 bGE
 bKg
 bGE
 bKg
-aRJ
+aXQ
 bvU
 bvU
 bAE
 bvU
 bvU
-aRJ
+aXQ
 bGE
 bIs
 bKg
-aRJ
+aXQ
 bvU
 bvU
 bAE
 bvU
 bvU
-aRJ
+aXQ
 bGE
 bKg
 bGE
 bKg
-aRJ
+aXQ
 bvU
 bvU
 bAE
@@ -78512,7 +78627,7 @@ akg
 aBV
 aCF
 aCF
-aCF
+aQV
 aCF
 aCF
 act
@@ -78769,7 +78884,7 @@ bcm
 bNA
 bQV
 bTF
-bTF
+aRJ
 bTF
 bTF
 aCP
@@ -88927,7 +89042,7 @@ cdB
 bvU
 bvU
 bvU
-aRJ
+aXQ
 cAx
 cAJ
 cAM
@@ -90212,7 +90327,7 @@ cdC
 bvU
 bvU
 bvU
-aRJ
+aXQ
 cAy
 cAJ
 cAM
@@ -91154,7 +91269,7 @@ bxI
 aHF
 aHF
 aEO
-aEO
+aUu
 aEO
 aEO
 aEO
@@ -91754,7 +91869,7 @@ cdB
 bvU
 bvU
 bvU
-aRJ
+aXQ
 cAx
 cAJ
 cAM
@@ -93039,7 +93154,7 @@ cdC
 bvU
 bvU
 bvU
-aRJ
+aXQ
 cAy
 cAJ
 cAM
@@ -93988,7 +94103,7 @@ bmw
 bnM
 boR
 bmw
-bGv
+aUv
 ccu
 byp
 bAF
@@ -95305,7 +95420,7 @@ bVo
 che
 ckr
 bVo
-ccr
+aWM
 cli
 cnZ
 bQG
@@ -95796,9 +95911,9 @@ bYE
 bxq
 bRw
 avu
-ccH
-cdy
-cdy
+aWJ
+aWK
+aWL
 cdy
 cdy
 cdy
@@ -98400,7 +98515,7 @@ cuK
 cuF
 cuL
 cuM
-cuM
+aZa
 cuO
 cuP
 cmz
@@ -98849,7 +98964,7 @@ aFK
 aVo
 bff
 bjP
-bgV
+aSy
 bgV
 aEl
 aEU
@@ -105883,7 +105998,7 @@ cwj
 cwo
 cvS
 cwG
-aUv
+bah
 cxG
 cyl
 cwl
@@ -106140,7 +106255,7 @@ cvU
 cwp
 cwA
 cwH
-aUw
+bai
 cvU
 cyw
 cwl
@@ -106397,7 +106512,7 @@ ccR
 cwo
 cvS
 cwI
-aWJ
+bcB
 cwI
 cwI
 cwI
@@ -106654,7 +106769,7 @@ cwl
 cwq
 cwB
 cwJ
-aWK
+bcC
 cwV
 cwV
 cwV
@@ -106907,11 +107022,11 @@ amF
 cvS
 cvS
 ccP
-aSy
+aZb
 cwr
 cwC
-aUu
-aWL
+aZh
+bdu
 cxH
 cyx
 cwK
@@ -113267,13 +113382,13 @@ aal
 aal
 aad
 aad
-aQV
-aQV
-aQV
-aQV
-aQV
-aQV
-aQV
+aUw
+aUw
+aUw
+aUw
+aUw
+aUw
+aUw
 aad
 aad
 aad
@@ -113524,13 +113639,13 @@ aal
 aal
 aal
 aal
-aQV
+aUw
 iwy
 ycr
 apa
 sEK
 apa
-aQV
+aUw
 aad
 aad
 aad
@@ -113787,7 +113902,7 @@ sEK
 lIt
 eGN
 euK
-aQV
+aUw
 aad
 aad
 aad
@@ -114044,7 +114159,7 @@ apa
 dSL
 rxI
 apa
-aQV
+aUw
 aad
 aad
 aad
@@ -114295,13 +114410,13 @@ aal
 aal
 aal
 aal
-aQV
+aUw
 oua
 apa
 apa
 apa
 sEK
-aQV
+aUw
 aad
 aad
 aad
@@ -114552,13 +114667,13 @@ aad
 aal
 aal
 aal
-aQV
+aUw
 olL
 rxI
 apa
 hqN
 apa
-aQV
+aUw
 aad
 aad
 aad
@@ -114809,13 +114924,13 @@ aad
 aal
 aal
 aal
-aQV
+aUw
 apa
 apa
 apa
 lyO
 apa
-aQV
+aUw
 aad
 aad
 aad
@@ -115072,7 +115187,7 @@ apa
 uma
 apa
 apa
-aQV
+aUw
 aad
 aad
 aad
@@ -115323,13 +115438,13 @@ aad
 aad
 aal
 aal
-aQV
+aUw
 apa
 egT
 apa
 sEK
 eGN
-aQV
+aUw
 aad
 aad
 aad
@@ -115580,13 +115695,13 @@ aad
 aal
 aal
 aad
-aQV
-aQV
-aQV
+aUw
+aUw
+aUw
 gMa
 gMa
-aQV
-aQV
+aUw
+aUw
 aad
 aad
 aad
