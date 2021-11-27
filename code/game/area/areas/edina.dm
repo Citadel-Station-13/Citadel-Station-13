@@ -48,6 +48,7 @@
 	name = "Nova Edina Streets"
 	icon_state = "edina_street"
 	ambientsounds = null //TODO:add ?
+	always_unpowered = FALSE //Sure you can have power if you want
 
 /area/edina/street/primary
 	name = "Nova Edina Streets"
