@@ -945,6 +945,7 @@
 	description = "A colorless, odorless, nonmetallic, tasteless, highly combustible diatomic gas."
 	reagent_state = GAS
 	gas = GAS_HYDROGEN
+	boiling_point = 20.271
 	color = "#808080" // rgb: 128, 128, 128
 	taste_mult = 0
 	pH = 0.1//Now I'm stuck in a trap of my own design. Maybe I should make -ve pHes? (not 0 so I don't get div/0 errors)
