@@ -51787,6 +51787,9 @@
 /obj/effect/festive/street/sidewalknsm,
 /obj/effect/festive/street/streetliftedtile1,
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
 /turf/open/floor/festive/cobblestone,
 /area/edina/street/intersection/princessperimeter/north)
 "cvA" = (
@@ -51811,6 +51814,9 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
 /turf/open/floor/festive/cobblestone,
 /area/edina/street/intersection/princessperimeter/north)
 "cvD" = (
@@ -51843,6 +51849,9 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
 /turf/open/floor/festive/sidewalk,
 /area/edina/street/intersection/princessperimeter/north)
 "cvH" = (
@@ -51868,6 +51877,9 @@
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/junction,
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
 /turf/open/floor/festive/sidewalk,
 /area/edina/street/intersection/princessperimeter/north)
 "cvK" = (
