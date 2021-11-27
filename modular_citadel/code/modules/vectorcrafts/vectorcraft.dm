@@ -27,8 +27,20 @@
 	var/gear
 	var/boost_cooldown
 
+	//Changes for custom
+	var/i_m_acell
+	var/i_m_decell
+	var/i_boost
+	var/i_acell
 
 	var/mob/living/carbon/human/driver
+
+/obj/vehicle/sealed/vectorcraft/Initialize()
+	..()
+	i_m_acell = max_acceleration
+	i_m_decell = max_deceleration
+	i_boost = boost_power
+	i_acell = acceleration
 
 /obj/vehicle/sealed/vectorcraft/mob_enter(mob/living/M)
 	if(!driver)

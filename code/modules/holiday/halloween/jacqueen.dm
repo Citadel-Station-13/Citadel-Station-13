@@ -511,7 +511,150 @@
 		. |= MOBILITY_MOVE
 	mobility_flags = .
 
+//Christmas car spawner
 
+/mob/living/simple_animal/jacq/car_spawner
+	name = "Jacqueline cars terminal"
+	icon_state = "jacq_cars_spawner"
+	AIStatus = AI_OFF
+	spawn_cars = TRUE
+	active = FALSE
+
+/mob/living/simple_animal/jacq/car_spawner/Destroy()
+	visible_message("The <b>[src]</b> gives out an error sound, <span class='spooky'>\"Ey! Bugger off!\"</span>")
+	fully_heal(FALSE)
+	return ..()
+
+/mob/living/simple_animal/jacq/car_spawner/death()
+	visible_message("The <b>[src]</b> gives out an error sound, <span class='spooky'>\"Ey! Bugger off!\"</span>")
+	fully_heal(FALSE)
+
+/mob/living/simple_animal/jacq/car_spawner/poof()
+	if(!active)//if disabled, don't poof
+		return
+	var/datum/reagents/R = new/datum/reagents(100)//Hey, just in case.
+	var/datum/effect_system/smoke_spread/chem/s = new()
+	R.add_reagent(/datum/reagent/fermi/secretcatchem, 10)
+	s.set_up(R, 0, loc)
+	s.start()
+	stopmove()
+	health = 25
+
+/mob/living/simple_animal/jacq/car_spawner/spawn_cars(mob/living/carbon/C)
+	visible_message("<b>[src]</b> boots up and displays jacq's glowing smile, <span class='spooky'>\"Hallo there user! Merry Christmas! What ken type o' craft ken Ah offer ye? I can magic up a vectorcraft in manual, automatic or customise it if yer feeling technical.\"</span>")
+	jacqrunes("Hallo there user! What ken type o' craft ken Ah offer ye? I can magic up a vectorcraft in manual, automatic or customise it if yer feeling technical.", C)
+
+	var/choices_reward = list("Manual", "Automatic", "Customise", "Are you a computer now Jacq?", "Nothing, thanks")
+	var/choice_reward = input(usr, "Merry Trick_or_Treat.exe initiated!", "Merry Trick_or_Treat.exe initiated!") in choices_reward
+
+	switch(choice_reward)
+		if("Manual")
+			visible_message("The <b>[src]</b> makes a magical booping sound, <span class='spooky'>\"Great choice! 'Ere's yer car.\"</span>")
+			jacqrunes("Great choice! 'Ere's yer car.", C)
+			new /obj/vehicle/sealed/vectorcraft(loc)
+		if("Automatic")
+			visible_message("<b>[src]</b> makes a magical booping sound, <span class='spooky'>\"'Ere's yer car. Not as fast as an automatic mind.\"</span>")
+			jacqrunes("'Ere's yer car. Not as fast as an automatic mind.", C)
+			new /obj/vehicle/sealed/vectorcraft/auto(loc)
+		if("Are you a computer now Jacq?")
+			visible_message("<b>[src]</b> makes a frustrated error sound, <span class='spooky'>\"Nae, are ye daft? Ah built these thingies tae magic up cars fer ye. Well, I got a speccy four eyes tae do it fer me, but me names on it like cause it was me idea.\"</span>")
+			jacqrunes("Nae, are ye daft? Ah built these thingies tae magic up cars fer ye. Well, I got a speccy four eyes tae do it fer me, but me names on it like cause it was me idea.", C)
+		if("Customise")
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Arright, Manual or Automatic?\"</span>")
+			var/choices_transm = list("Manual", "Automatic")
+			var/choice_transm = input(usr, "Choose transmission", "Choose transmission") in choices_transm
+			var/points = 0
+			var/obj/vehicle/sealed/vectorcraft/VC
+			switch(choice_transm)
+				if("Manual")
+					VC = new /obj/vehicle/sealed/vectorcraft(loc)
+				if("Automatic")
+					VC = new /obj/vehicle/sealed/vectorcraft/auto(loc)
+					points += 500
+
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Maximum acceleration? (default [VC.max_acceleration], max 10)\"</span>")
+			var/max_accl = text2num(input(usr, "Maximum acceleration? (default [VC.max_acceleration], max 10)", "[VC.max_acceleration]"))
+			max_accl = clamp(max_accl, 0, 10)
+			VC.max_acceleration = max_accl
+			VC.i_m_acell = max_accl
+			points += max_accl*10
+
+			/* This is internally used
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Acceleration step? (default 0.3, max 1)\"</span>")
+			var/max_accl_s = text2num(input(usr, "Acceleration step? (default 0.3, max 1)", "[VC.accel_step]"))
+			max_accl_s = clamp(max_accl_s, 0, 1)
+			VC.max_acceleration = max_accl_s
+			points += max_accl_s*100
+			*/
+
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Acceleration? (default [VC.acceleration], max 2)\"</span>")
+			var/accl = text2num(input(usr, "Acceleration? (default [VC.acceleration], max 2)", "[VC.acceleration]"))
+			accl = clamp(accl, 0, 2)
+			VC.acceleration = accl
+			VC.i_acell = accl
+			points += accl*100
+
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Maximum deceleration? (default [VC.max_deceleration], max 15)\"</span>")
+			var/deaccl = text2num(input(usr, "Max_deceleration? (default [VC.max_deceleration], max 15)", "[VC.max_deceleration]"))
+			deaccl = clamp(deaccl, 0, 15)
+			VC.max_deceleration = deaccl
+			VC.i_m_decell = deaccl
+			points += deaccl*10
+
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Maximum velocity? (default [VC.max_velocity], max 200)\"</span>")
+			var/m_velo = text2num(input(usr, "Maximum velocity? (default [VC.max_velocity], max 200)", "[VC.max_velocity]"))
+			m_velo = clamp(m_velo, 0, 200)
+			VC.max_velocity = m_velo
+			points += m_velo
+
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Boost power? (default [VC.boost_power], max 200)\"</span>")
+			var/boost = text2num(input(usr, "Boost power? (default [VC.boost_power], max 200)", "[VC.boost_power]"))
+			boost = clamp(boost, 0, 200)
+			VC.boost_power = boost
+			VC.i_boost = boost
+			points += boost
+
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Health points? (default [VC.max_integrity], max 1000)\"</span>")
+			var/health = text2num(input(usr, "Health points? (default [VC.max_integrity], max 1000)", "[VC.max_integrity]"))
+			health = clamp(health, 0, 500)
+			VC.max_integrity = health
+			points += health/2
+
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Arright, 'ow do ye want it tae look?\"</span>")
+			var/choices_icon = list("Racer", "Truck", "Cyber", "Ambulance", "Pod", "Clown")
+			var/choice_icon = input(usr, "Choose body", "Choose body") in choices_icon
+			switch(choice_icon)
+				if("Truck")
+					VC.icon_state = "truck"
+
+				if("Cyber")
+					VC.icon_state = "cyber"
+
+				if("Ambulance")
+					VC.icon_state = "ambutruck"
+
+				if("Pod")
+					VC.icon_state = "engineering_pod"
+
+				if("Clown")
+					VC.icon_state = "clowncar"
+
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Finally; what name are ye gonna give it?\"</span>")
+			var/choice_name = input(usr, "Pick a name!", "")
+			choice_name += " (Points cost:[points])"
+			VC.name = choice_name
+
+			visible_message("The <b>[src]</b> gives a final boop, <span class='spooky'>\"There ye be, enjoy!\"</span>")
+
+		if("How do Automatics work?")
+			visible_message("The image of Jacq on the <b>[src]</b> smiles, <span class='spooky'>\"Hold wasd to gain speed in a direction, c to enable/disable the clutch, 1 2 3 4 to change gears (help is gear 1, disarm is gear 2, grab is gear 3 and harm is gear 4) while holding a direction (make sure the clutch is enabled when you change gears, you should hear a sound when you've successfully changed gears), r to toggle handbrake, hold alt for brake and press shift for boost (the machine will beep when the boost is recharged)! If you hear an ebbing sound like \"brbrbrbrbr\" you need to gear down, the whining sound means you need to gear up. Hearing a pleasant \"whumwhumwhum\" is optimal gearage! It can be a lil slow to start, so make sure you're in the 1st gear, andusing a boost to get you started is a good idea. If you've got a good speed you'll likely never need to dip down to gear 1 again, and make sure to hold the acceleration pedal down while changing gears (hold a direction). 1st gear is for slow movement, and it's a good idea to mvoe to 2nd gear as quick as you can, you can coldstart a car from gear one by slowly moving, then using the boost to jump you up to gear 2 speeds. The upper gears are for unlimiting your top speed.\"</span>")
+			jacqrunes("They're a bit tricky, aye. Basically;", C)
+		if("Nothing, thanks")
+			visible_message("The image of Jacq on the <b>[src]</b> shrugs, <span class='spooky'>\"Suit yerself.\"</span>")
+			jacqrunes("Suit yerself.", C)
+
+	visible_message("The <b>[src]</b> beeps, <span class='spooky'>\"Oh and look after the crafts, aye? They can get a wee bit... explosive if banged up a tad too much. They move slower damaged too like. Ye can repair 'em with the welders o'er there.\"</span>")
+	jacqrunes("Oh and look after the crafts, aye? They can get a wee bit... explosive if banged up a tad too much. They move slower damaged too like. Ye can repair 'em with the welders o'er there. ", C)
 
 /obj/item/clothing/head/hardhat/pumpkinhead/jaqc
 	name = "Jacq o' latern"
