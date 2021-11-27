@@ -130,7 +130,7 @@
 		if(isalien(target))
 			new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target.drop_location(), splatter_dir)
 		else
-			if(ishuman(target)
+			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 				new /obj/effect/temp_visual/dir_setting/bloodsplatter(target.drop_location(), splatter_dir, H.dna.species.exotic_blood_color)
 			else	

@@ -119,7 +119,7 @@
 				victim.bleed(blood_bled, TRUE)
 			if(14 to 19)
 				victim.visible_message("<span class='smalldanger'>[victim] spits out a string of blood from the blow to [victim.p_their()] chest!</span>", "<span class='danger'>You spit out a string of blood from the blow to your chest!</span>", vision_distance=COMBAT_MESSAGE_RANGE)
-				if(ishuman(victim)
+				if(ishuman(victim))
 					var/mob/living/carbon/human/H = victim
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir, H.dna.species.exotic_blood_color)
 				else	
@@ -128,7 +128,7 @@
 			if(20 to INFINITY)
 				victim.visible_message("<span class='danger'>[victim] chokes up a spray of blood from the blow to [victim.p_their()] chest!</span>", "<span class='danger'><b>You choke up on a spray of blood from the blow to your chest!</b></span>", vision_distance=COMBAT_MESSAGE_RANGE)
 				victim.bleed(blood_bled)
-				if(ishuman(victim)
+				if(ishuman(victim))
 					var/mob/living/carbon/human/H = victim
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir, H.dna.species.exotic_blood_color)
 				else	
