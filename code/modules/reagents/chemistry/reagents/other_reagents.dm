@@ -900,21 +900,10 @@
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	gas = GAS_O2
+	boiling_point = 90.188
 	taste_mult = 0 // oderless and tasteless
 	pH = 9.2//It's acutally a huge range and very dependant on the chemistry but pH is basically a made up var in it's implementation anyways
 	molarity = 2
-
-/datum/reagent/oxygen/reaction_obj(obj/O, reac_volume)
-	if((!O) || (!reac_volume))
-		return 0
-	var/temp = holder ? holder.chem_temp : T20C
-	O.atmos_spawn_air("o2=[reac_volume/2];TEMP=[temp]")
-
-/datum/reagent/oxygen/reaction_turf(turf/open/T, reac_volume)
-	if(istype(T))
-		var/temp = holder ? holder.chem_temp : T20C
-		T.atmos_spawn_air("o2=[reac_volume/2];TEMP=[temp]")
-	return
 
 /datum/reagent/copper
 	name = "Copper"
@@ -936,6 +925,7 @@
 	description = "A colorless, odorless, tasteless gas. A simple asphyxiant that can silently displace vital oxygen."
 	reagent_state = GAS
 	gas = GAS_N2
+	boiling_point = 77.355
 	color = "#808080" // rgb: 128, 128, 128
 	taste_mult = 0
 	molarity = 2
