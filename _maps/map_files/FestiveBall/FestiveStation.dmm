@@ -19179,13 +19179,6 @@
 	icon_state = "darkfull"
 	},
 /area/service/chapel/office)
-"aWH" = (
-/turf/closed/wall/mineral/iron,
-/area/service/chapel/asteroid)
-"aWI" = (
-/obj/effect/spawner/structure/window/reinforced/indestructable,
-/turf/open/floor/plating,
-/area/service/chapel/asteroid)
 "aWJ" = (
 /obj/structure/fluff/lightpost/light,
 /turf/open/floor/festive/alleyway,
@@ -19707,7 +19700,7 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "/area/service/chapel/office";
-	dir = 8;
+	dir = 4;
 	name = "Chapel Office APC";
 	pixel_x = 26
 	},
@@ -19719,11 +19712,6 @@
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/plating,
 /area/service/chapel/office)
-"aYb" = (
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
-/area/service/chapel/asteroid)
 "aYc" = (
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = -32
@@ -20292,7 +20280,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/asteroid)
+/area/service/chapel/main/monastery)
 "aZH" = (
 /obj/effect/festive/street/streetlinenorth,
 /obj/effect/turf_decal/arrows/white{
@@ -20897,14 +20885,14 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/asteroid)
+/area/service/chapel/main/monastery)
 "bbt" = (
 /obj/structure/table/wood/fancy/green,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/asteroid)
+/area/service/chapel/main/monastery)
 "bbu" = (
 /obj/structure/table/wood/fancy/green,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -20915,7 +20903,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/asteroid)
+/area/service/chapel/main/monastery)
 "bbv" = (
 /obj/effect/festive/street/streetlinenorth,
 /obj/effect/festive/street/streetliftedtile2,
@@ -21294,7 +21282,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bcG" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -21307,7 +21295,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bcH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
@@ -21315,7 +21303,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bcI" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -21327,7 +21315,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bcJ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1{
 	dir = 4
@@ -21335,13 +21323,13 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bcK" = (
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/service/chapel/asteroid";
+	areastring = "/area/service/chapel/main/monastery";
 	dir = 8;
 	name = "Chapel Dining Room APC";
 	pixel_x = -26
@@ -21349,7 +21337,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/asteroid)
+/area/service/chapel/main/monastery)
 "bcL" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
@@ -21361,7 +21349,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/asteroid)
+/area/service/chapel/main/monastery)
 "bcM" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
@@ -21370,7 +21358,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/asteroid)
+/area/service/chapel/main/monastery)
 "bcN" = (
 /obj/structure/closet/crate/trashcart,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -21735,22 +21723,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/festive/cobblestone,
 /area/edina/street/intersection/princessperimeter/north)
-"bdV" = (
-/obj/effect/spawner/structure/window/reinforced/indestructable,
-/turf/open/floor/plating,
-/area/service/chapel/dock)
-"bdW" = (
-/obj/structure/table/wood/fancy/green,
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/service/chapel/dock)
 "bdX" = (
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/service/chapel/dock";
+	areastring = "/area/service/chapel/main/monastery";
 	dir = 8;
 	name = "Chapel Hall APC";
 	pixel_y = 24
@@ -21759,7 +21737,7 @@
 	dir = 1;
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bdY" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -21772,7 +21750,7 @@
 	dir = 4;
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bdZ" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -21784,7 +21762,7 @@
 	dir = 1;
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bea" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -21793,7 +21771,7 @@
 	dir = 4;
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "beb" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -21802,7 +21780,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bec" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -21818,25 +21796,25 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bed" = (
 /turf/open/indestructible{
 	dir = 1;
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bee" = (
 /turf/open/indestructible{
 	dir = 4;
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bef" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "beg" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -21849,7 +21827,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/asteroid)
+/area/service/chapel/main/monastery)
 "beh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -21857,7 +21835,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/asteroid)
+/area/service/chapel/main/monastery)
 "bei" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -22277,18 +22255,18 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/main)
+/area/service/chapel/main/monastery)
 "bfq" = (
 /turf/open/indestructible{
 	dir = 8;
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bfr" = (
 /turf/open/indestructible{
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bfs" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -22298,7 +22276,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bft" = (
 /obj/structure/chair/wood/wings{
 	dir = 8
@@ -22307,7 +22285,7 @@
 	dir = 8;
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bfu" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -22341,7 +22319,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bfy" = (
 /turf/closed/wall/mineral/iron,
 /area/service/chapel/main)
@@ -22948,11 +22926,6 @@
 	},
 /turf/open/floor/festive/alleyway,
 /area/science/research)
-"bgL" = (
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
-/area/service/chapel/dock)
 "bgM" = (
 /obj/structure/chair/wood/wings{
 	dir = 8
@@ -22961,7 +22934,7 @@
 	dir = 1;
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bgN" = (
 /obj/structure/table/wood/fancy/red,
 /turf/open/indestructible/hotelwood,
@@ -23035,7 +23008,7 @@
 /area/service/chapel/main)
 "bgY" = (
 /turf/open/floor/festive/cobblestone,
-/area/cargo
+/area/cargo)
 "bgZ" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -23293,7 +23266,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bhR" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/flashlight/lantern{
@@ -23302,7 +23275,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bhS" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/flashlight/lantern{
@@ -23592,7 +23565,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "biQ" = (
 /obj/structure/table/wood/fancy/red,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -23601,7 +23574,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "biR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -23609,7 +23582,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "biS" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -23639,7 +23612,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "biW" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
@@ -23652,7 +23625,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "biX" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1{
 	dir = 8
@@ -23663,7 +23636,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "biY" = (
 /obj/structure/mineral_door/wood,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
@@ -23851,13 +23824,13 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bjB" = (
 /obj/effect/landmark/start/chaplain,
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bjC" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/storage/book/bible{
@@ -23866,7 +23839,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bjD" = (
 /obj/structure/disposalpipe/junction/yjunction{
 	dir = 4
@@ -23884,7 +23857,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bjE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -23896,7 +23869,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bjF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -23907,7 +23880,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bjG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -23919,7 +23892,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bjH" = (
 /obj/structure/mineral_door/wood,
 /obj/structure/disposalpipe/segment{
@@ -24202,7 +24175,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bkr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -24210,7 +24183,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bks" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -24219,7 +24192,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bkt" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
@@ -24229,7 +24202,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bku" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -24250,7 +24223,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bkx" = (
 /obj/structure/mineral_door/wood,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -24813,7 +24786,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "blA" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/flashlight/lantern{
@@ -25362,7 +25335,7 @@
 "bmL" = (
 /obj/machinery/light/small,
 /obj/machinery/power/apc{
-	areastring = "/area/service/chapel/main";
+	areastring = "/area/service/chapel/main/monastery";
 	dir = 8;
 	name = "Chapel APC";
 	pixel_y = -26
@@ -26306,7 +26279,7 @@
 /turf/open/indestructible{
 	icon_state = "chapel"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bpg" = (
 /obj/machinery/door/airlock/wood,
 /obj/machinery/door/firedoor,
@@ -26315,9 +26288,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/commons/fitness/recreation)
-"bph" = (
-/turf/closed/wall/mineral/iron,
-/area/service/chapel/asteroid/monastery)
 "bpi" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -26326,7 +26296,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery)
+/area/service/chapel/main/monastery)
 "bpj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -26339,7 +26309,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery)
+/area/service/chapel/main/monastery)
 "bpk" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
@@ -26348,7 +26318,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery)
+/area/service/chapel/main/monastery)
 "bpl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -26857,7 +26827,7 @@
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bqC" = (
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
@@ -26866,7 +26836,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bqD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 9
@@ -26874,13 +26844,13 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/dock)
+/area/service/chapel/main/monastery)
 "bqE" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery)
+/area/service/chapel/main/monastery)
 "bqF" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -26892,7 +26862,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery)
+/area/service/chapel/main/monastery)
 "bqG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -26901,11 +26871,11 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery)
+/area/service/chapel/main/monastery)
 "bqH" = (
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /turf/open/floor/plating,
-/area/service/chapel/asteroid/monastery)
+/area/service/chapel/main/monastery)
 "bqI" = (
 /obj/effect/festive/street/sidewalknsm,
 /obj/effect/festive/street/streetliftedtile2,
@@ -27768,7 +27738,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery)
+/area/service/chapel/main/monastery)
 "bsr" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -27777,7 +27747,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery)
+/area/service/chapel/main/monastery)
 "bss" = (
 /obj/structure/sink/kitchen{
 	dir = 8;
@@ -27786,7 +27756,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery)
+/area/service/chapel/main/monastery)
 "bst" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -28620,7 +28590,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/service/chapel/asteroid/monastery";
+	areastring = "/area/service/chapel/main/monastery";
 	dir = 8;
 	name = "Chapel Kitchen APC";
 	pixel_x = -26
@@ -28628,7 +28598,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery)
+/area/service/chapel/main/monastery)
 "buf" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
@@ -28637,12 +28607,12 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery)
+/area/service/chapel/main/monastery)
 "bug" = (
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery)
+/area/service/chapel/main/monastery)
 "buh" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Circuitry Lab";
@@ -29173,7 +29143,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery)
+/area/service/chapel/main/monastery)
 "bvu" = (
 /obj/structure/table/wood,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -29182,7 +29152,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery)
+/area/service/chapel/main/monastery)
 "bvv" = (
 /obj/structure/table/wood,
 /obj/machinery/microwave{
@@ -29191,7 +29161,7 @@
 /turf/open/indestructible{
 	icon_state = "darkfull"
 	},
-/area/service/chapel/asteroid/monastery)
+/area/service/chapel/main/monastery)
 "bvw" = (
 /obj/structure/table,
 /obj/item/pen/fountain,
@@ -30739,11 +30709,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/festive/cobblestone,
 /area/edina/street/intersection/princessprogress)
-"bzz" = (
-/turf/closed/festive/whitebrick{
-	color = "#967832"
-	},
-/area/cargo
 "bzA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -30996,7 +30961,7 @@
 /area/edina/street/intersection/princessprogress)
 "bAc" = (
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "bAd" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -31011,7 +30976,7 @@
 	dir = 1
 	},
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "bAf" = (
 /obj/structure/closet/crate/freezer,
 /obj/structure/sign/poster/official/random{
@@ -31438,17 +31403,17 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/festive/cobblestone,
-/area/cargo
+/area/cargo)
 "bAY" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "bAZ" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "bBa" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -31890,7 +31855,7 @@
 	dir = 8
 	},
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "bBM" = (
 /obj/machinery/button/door{
 	id = "qm_warehouse";
@@ -32679,13 +32644,13 @@
 	pixel_y = 16
 	},
 /turf/open/floor/festive/cobblestone,
-/area/cargo
+/area/cargo)
 "bCO" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "bCP" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "qm_warehouse";
@@ -33342,7 +33307,7 @@
 	dir = 8
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/medical/medbay/central";
+	areastring = "/area/medical/exam_room";
 	dir = 8;
 	name = "Medbay APC";
 	pixel_x = -26
@@ -33479,7 +33444,7 @@
 /turf/closed/festive/whitebrick{
 	color = "#967832"
 	},
-/area/cargo
+/area/cargo)
 "bEp" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Loading Garage";
@@ -33487,7 +33452,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "bEq" = (
 /obj/structure/fence,
 /turf/open/floor/grass/snow/edina{
@@ -33733,7 +33698,7 @@
 	id = "cargocars"
 	},
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "bEU" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/festive/alleyway,
@@ -34173,14 +34138,14 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/cargo
+/area/cargo)
 "bGm" = (
 /obj/machinery/conveyor{
 	id = "garbage"
 	},
 /obj/structure/plasticflaps,
 /turf/open/floor/plating,
-/area/cargo
+/area/cargo)
 "bGn" = (
 /obj/structure/chair/sofa/right{
 	dir = 1
@@ -34952,7 +34917,7 @@
 /turf/closed/festive/whitebrick{
 	color = "#967832"
 	},
-/area/cargo
+/area/cargo)
 "bHS" = (
 /obj/structure/chair/stool,
 /obj/machinery/requests_console{
@@ -34964,7 +34929,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/cargo
+/area/cargo)
 "bHT" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -34980,7 +34945,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/cargo
+/area/cargo)
 "bHU" = (
 /obj/structure/chair/sofa/corner{
 	dir = 8
@@ -34998,7 +34963,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/cargo
+/area/cargo)
 "bHW" = (
 /obj/structure/table,
 /obj/item/stack/wrapping_paper,
@@ -35043,7 +35008,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/white/corner,
-/area/cargo
+/area/cargo)
 "bHX" = (
 /obj/item/storage/box,
 /obj/structure/table,
@@ -35066,11 +35031,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white/corner,
-/area/cargo
-"bHY" = (
-/obj/effect/spawner/structure/window/reinforced/indestructable,
-/turf/open/floor/plating,
-/area/cargo
+/area/cargo)
 "bHZ" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/festive/alleyway,
@@ -35708,7 +35669,7 @@
 "bJw" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "bJx" = (
 /obj/structure/sign/departments/botany{
 	pixel_x = 32;
@@ -35727,7 +35688,7 @@
 	name = "Reclaiming center"
 	},
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "bJz" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -36386,7 +36347,7 @@
 	},
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/plating,
-/area/cargo
+/area/cargo)
 "bKQ" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -36398,7 +36359,7 @@
 	pixel_y = -22
 	},
 /turf/open/floor/plating,
-/area/cargo
+/area/cargo)
 "bKR" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -36409,7 +36370,7 @@
 	light_color = "#e8eaff"
 	},
 /turf/open/floor/plating,
-/area/cargo
+/area/cargo)
 "bKS" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -36417,7 +36378,7 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
-/area/cargo
+/area/cargo)
 "bKT" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -36428,7 +36389,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/cargo
+/area/cargo)
 "bKU" = (
 /obj/machinery/disposal/deliveryChute{
 	dir = 8
@@ -36440,7 +36401,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/cargo
+/area/cargo)
 "bKV" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -37019,22 +36980,22 @@
 /turf/closed/festive/whitebrick{
 	color = "#967832"
 	},
-/area/cargo
+/area/cargo)
 "bMf" = (
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowNSRightEnd,
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "bMg" = (
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowNSMiddle,
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "bMh" = (
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowNSLeftEnd,
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "bMi" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/structure/disposalpipe/segment{
@@ -43959,42 +43920,42 @@
 	},
 /obj/item/reagent_containers/food/condiment/flour{
 	desc = "A large sack of flour for restaurants, not the home-baker!";
-	list_reagents = list("flour" = 90);
+	list_reagents = list(/datum/reagent/consumable/flour = 90);
 	name = "Large Flour Sack"
 	},
 /obj/item/reagent_containers/food/condiment/flour{
 	desc = "A large sack of flour for restaurants, not the home-baker!";
-	list_reagents = list("flour" = 90);
+	list_reagents = list(/datum/reagent/consumable/flour = 90);
 	name = "Large Flour Sack"
 	},
 /obj/item/reagent_containers/food/condiment/flour{
 	desc = "A large sack of flour for restaurants, not the home-baker!";
-	list_reagents = list("flour" = 90);
+	list_reagents = list(/datum/reagent/consumable/flour = 90);
 	name = "Large Flour Sack"
 	},
 /obj/item/reagent_containers/food/condiment/flour{
 	desc = "A large sack of flour for restaurants, not the home-baker!";
-	list_reagents = list("flour" = 90);
+	list_reagents = list(/datum/reagent/consumable/flour = 90);
 	name = "Large Flour Sack"
 	},
 /obj/item/reagent_containers/food/condiment/rice{
 	desc = "A huge sack of rice. Probably for restaurants that actually go through such a huge volume of it easily, not for the home cook.";
-	list_reagents = list("rice" = 90);
+	list_reagents = list(/datum/reagent/consumable/rice = 90);
 	name = "Large Rice Sack"
 	},
 /obj/item/reagent_containers/food/condiment/rice{
 	desc = "A huge sack of rice. Probably for restaurants that actually go through such a huge volume of it easily, not for the home cook.";
-	list_reagents = list("rice" = 90);
+	list_reagents = list(/datum/reagent/consumable/rice = 90);
 	name = "Large Rice Sack"
 	},
 /obj/item/reagent_containers/food/condiment/rice{
 	desc = "A huge sack of rice. Probably for restaurants that actually go through such a huge volume of it easily, not for the home cook.";
-	list_reagents = list("rice" = 90);
+	list_reagents = list(/datum/reagent/consumable/rice = 90);
 	name = "Large Rice Sack"
 	},
 /obj/item/reagent_containers/food/condiment/rice{
 	desc = "A huge sack of rice. Probably for restaurants that actually go through such a huge volume of it easily, not for the home cook.";
-	list_reagents = list("rice" = 90);
+	list_reagents = list(/datum/reagent/consumable/rice = 90);
 	name = "Large Rice Sack"
 	},
 /turf/open/floor/plasteel/freezer,
@@ -45034,7 +44995,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/cargo
+/area/cargo)
 "cdZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/start/paramedic,
@@ -46365,7 +46326,7 @@
 	light_color = "#e8eaff"
 	},
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "chb" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plating,
@@ -46890,7 +46851,7 @@
 "cir" = (
 /obj/effect/turf_decal/bot,
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "cis" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -46904,7 +46865,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
-/area/cargo
+/area/cargo)
 "cit" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -46915,7 +46876,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
-/area/cargo
+/area/cargo)
 "ciu" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -46928,7 +46889,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
-/area/cargo
+/area/cargo)
 "civ" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/festive/whitebrick{
@@ -46977,7 +46938,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/plasteel,
-/area/cargo
+/area/cargo)
 "ciB" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -47046,7 +47007,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
-/area/cargo
+/area/cargo)
 "ciJ" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -47167,28 +47128,28 @@
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "ciY" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "ciZ" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "cja" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "cjb" = (
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/stripes/line,
@@ -47196,7 +47157,7 @@
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "cjc" = (
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/stripes/line,
@@ -47207,7 +47168,7 @@
 	dir = 4
 	},
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "cjd" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -56039,7 +56000,7 @@
 "sMS" = (
 /obj/effect/decal/festive/fairylights,
 /turf/open/indestructible,
-/area/cargo
+/area/cargo)
 "sQo" = (
 /turf/open/floor/plasteel/white/side{
 	dir = 4
@@ -63396,15 +63357,15 @@ aal
 aal
 aal
 aal
-bdV
-bdV
-bdV
-bdV
-bdV
-bdV
-bdV
-bdV
-bdV
+bqH
+bqH
+bqH
+bqH
+bqH
+bqH
+bqH
+bqH
+bqH
 aal
 aal
 aal
@@ -63652,17 +63613,17 @@ aWv
 aWw
 aWv
 aWv
-bdV
-bdV
-bgL
-bgL
-bgL
-bgL
-bgL
-bgL
-bgL
-bdV
-bdV
+bqH
+bqH
+btS
+btS
+btS
+btS
+btS
+btS
+btS
+bqH
+bqH
 bqA
 bqA
 btR
@@ -63909,17 +63870,17 @@ aXF
 aZv
 bbi
 aWv
-bdW
 bfp
-bgL
-bgL
-bgL
+bfp
+btS
+btS
+btS
 bjA
-bgL
-bgL
-bgL
-bdW
-bdW
+btS
+btS
+btS
+bfp
+bfp
 bqA
 bsk
 btS
@@ -64168,13 +64129,13 @@ bbj
 aWv
 bdX
 bfq
-bgL
-bgL
-bgL
-bgL
-bgL
-bgL
-bgL
+btS
+btS
+btS
+btS
+btS
+btS
+btS
 bed
 bfq
 bqA
@@ -64425,13 +64386,13 @@ bbn
 aWv
 bdY
 bfr
-bgL
+btS
 bhQ
 biP
 bjB
 biP
 blz
-bgL
+btS
 bee
 bpf
 bqA
@@ -64682,13 +64643,13 @@ bbo
 aWv
 bdZ
 bfq
-bgL
+btS
 bhR
 biQ
 bjC
 bkq
 bhR
-bgL
+btS
 bed
 bft
 bqA
@@ -64939,13 +64900,13 @@ aWv
 aWv
 bea
 bfr
-bgL
-bgL
+btS
+btS
 biR
-bgL
+btS
 bkr
-bgL
-bgL
+btS
+btS
 bee
 bfr
 bqA
@@ -68018,10 +67979,10 @@ aal
 aVV
 aVV
 aVV
-aWH
-aWH
-aWH
-aWH
+bqA
+bqA
+bqA
+bqA
 bfy
 bfy
 bfy
@@ -68031,8 +67992,8 @@ bkx
 bfy
 bfy
 bfy
-bph
-bph
+bqA
+bqA
 bqA
 bqA
 bqA
@@ -68273,12 +68234,12 @@ aal
 aal
 aal
 aal
-aWH
-aYb
-aYb
+bqA
+btS
+btS
 bbs
 bcK
-aYb
+btS
 bfy
 bgN
 bhS
@@ -68293,7 +68254,7 @@ bqE
 bsq
 bue
 bvt
-bph
+bqA
 aal
 aal
 brL
@@ -68530,8 +68491,8 @@ aal
 acZ
 aal
 aal
-aWI
-aYb
+bqH
+btS
 aZG
 bbt
 bcL
@@ -68787,8 +68748,8 @@ aal
 aal
 aal
 aal
-aWH
-aYb
+bqA
+btS
 aZG
 bbu
 bcM
@@ -68807,7 +68768,7 @@ bqG
 bss
 bug
 bvv
-bph
+bqA
 aal
 aal
 alN
@@ -69044,12 +69005,12 @@ aal
 aal
 aal
 aal
-aWH
-aWH
-aWI
-aWH
-aWI
-aWH
+bqA
+bqA
+bqH
+bqA
+bqH
+bqA
 bfy
 bgZ
 bhT
@@ -69059,12 +69020,12 @@ bkA
 bhT
 bmL
 bfy
-bph
+bqA
 bqH
-bph
+bqA
 bqH
-bph
-bph
+bqA
+bqA
 aal
 aal
 aal
@@ -102743,11 +102704,11 @@ bQG
 crb
 ckO
 csd
-bzz
+bWy
 bHR
 ciX
-bzz
-bzz
+bWy
+bWy
 bKV
 bOM
 cjE
@@ -103261,7 +103222,7 @@ bGm
 bHT
 bJw
 bKQ
-bzz
+bWy
 bKV
 bOM
 cjG
@@ -103505,20 +103466,20 @@ bUx
 bNi
 bNi
 cjt
-bzz
-bzz
+bWy
+bWy
 bAX
 bAX
 bAX
 bAX
 bEo
-bzz
-bzz
+bWy
+bWy
 ciA
 ciI
 ciZ
 bKR
-bzz
+bWy
 bKV
 bOM
 cjH
@@ -103762,7 +103723,7 @@ bxc
 bTM
 bTM
 bKV
-bzz
+bWy
 sMS
 bgY
 bgY
@@ -103771,7 +103732,7 @@ bgY
 bAc
 cha
 cir
-bzz
+bWy
 bHV
 cja
 bKS
@@ -104019,7 +103980,7 @@ cdJ
 cbs
 bTM
 bKV
-bzz
+bWy
 sMS
 bgY
 bgY
@@ -104028,7 +103989,7 @@ bgY
 bAc
 bAc
 bAY
-bzz
+bWy
 bHW
 cjb
 bKT
@@ -104276,7 +104237,7 @@ cdK
 cbt
 bTM
 bKV
-bzz
+bWy
 bAe
 bAY
 bBL
@@ -104285,7 +104246,7 @@ bBL
 bAc
 bAc
 cis
-bzz
+bWy
 bHX
 cjc
 bKU
@@ -104533,7 +104494,7 @@ bUp
 bUp
 bTM
 bKV
-bzz
+bWy
 sMS
 bAZ
 bAZ
@@ -104542,11 +104503,11 @@ bAZ
 bAc
 bET
 cit
-bzz
-bHY
+bWy
+bYN
 bJy
 cdY
-bzz
+bWy
 ciB
 bDF
 cjI
@@ -104790,7 +104751,7 @@ bTM
 bTM
 bTM
 bKV
-bzz
+bWy
 sMS
 bAc
 bAc
@@ -104799,7 +104760,7 @@ bAc
 bAc
 bAc
 cit
-bzz
+bWy
 byD
 bZE
 cay
@@ -105047,16 +105008,16 @@ bDB
 bDB
 bDB
 bMi
-bzz
-bzz
-bzz
-bzz
-bzz
-bzz
+bWy
+bWy
+bWy
+bWy
+bWy
+bWy
 bEp
 bEp
 ciu
-bzz
+bWy
 bDN
 bEP
 bUb
