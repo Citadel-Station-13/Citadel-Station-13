@@ -194,11 +194,13 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 
 	/*****The Point Calculator*****/
 
-	if(orig_light < 1)
+	if(orig_light < 5)
 		say("Explosion not large enough for research calculations.")
 		return
-	else
-		point_gain = (TECHWEB_BOMB_MIDPOINT * 2 * orig_light) / (orig_light + TECHWEB_BOMB_SIZE)
+	else if(orig_light < BOMB_TARGET_SIZE) // we want to give fewer points if below the target; this curve does that
+		point_gain = (BOMB_TARGET_POINTS * orig_light ** BOMB_SUB_TARGET_EXPONENT) / (BOMB_TARGET_SIZE**BOMB_SUB_TARGET_EXPONENT)
+	else // once we're at the target, switch to a hyperbolic function so we can't go too far above it, but bigger bombs always get more points
+		point_gain = (BOMB_TARGET_POINTS * 2 * orig_light) / (orig_light + BOMB_TARGET_SIZE)
 
 	/*****The Point Capper*****/
 	if(point_gain > linked_techweb.largest_bomb_value)
