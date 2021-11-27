@@ -55006,6 +55006,13 @@
 	},
 /turf/open/floor/festive/alleyway,
 /area/science)
+"mGF" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/landmark/observer_start,
+/turf/open/floor/festive/sidewalk,
+/area/edina/street/primary/perimeter)
 "mIf" = (
 /obj/structure/festive/trainplatform/edge_east,
 /mob/living/simple_animal/jacq/car_spawner,
@@ -85679,7 +85686,7 @@ aal
 aal
 aal
 apn
-aEY
+mGF
 aEY
 aEY
 aEY
