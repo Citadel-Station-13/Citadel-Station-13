@@ -198,7 +198,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		say("Explosion not large enough for research calculations.")
 		return
 	else
-		point_gain = (TECHWEB_BOMB_POINTCAP * 2 * orig_light) / (orig_light + TECHWEB_BOMB_SIZE)
+		point_gain = (TECHWEB_BOMB_MIDPOINT * 2 * orig_light) / (orig_light + TECHWEB_BOMB_SIZE)
 
 	/*****The Point Capper*****/
 	if(point_gain > linked_techweb.largest_bomb_value)

@@ -73,5 +73,5 @@
 	TECHWEB_POINT_TYPE_GENERIC = "General Research"\
 	)
 
-#define TECHWEB_BOMB_POINTCAP		50000 //Adjust as needed; Stops toxins from nullifying RND progression mechanics. Current Value Cap Radius: 100
-#define TECHWEB_BOMB_SIZE			160 // The shockwave radius required for a bomb to get TECHWEB_BOMB_POINTCAP points.
+#define TECHWEB_BOMB_MIDPOINT		50000 //Adjust as needed. Actual hard cap is double this, but will never be reached due to hyperbolic curve.
+#define TECHWEB_BOMB_SIZE			200 // The shockwave radius required for a bomb to get TECHWEB_BOMB_MIDPOINT points.
