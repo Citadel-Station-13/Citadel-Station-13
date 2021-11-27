@@ -53,9 +53,7 @@
 /turf/open/floor/festive/alleyway,
 /area/edina)
 "aal" = (
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "aam" = (
 /mob/living/simple_animal/pet/redpanda,
@@ -65,23 +63,17 @@
 /obj/structure/chair/wood{
 	dir = 4
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "aao" = (
 /obj/structure/table/wood,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "aap" = (
 /obj/structure/chair/wood{
 	dir = 8
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "aaq" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -189,26 +181,20 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "aaH" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/flora/tree/pine/xmas,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "aaI" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "aaJ" = (
 /obj/structure/window/reinforced{
@@ -218,9 +204,7 @@
 	dir = 4;
 	layer = 2.9
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "aaK" = (
 /obj/structure/window/reinforced{
@@ -228,9 +212,7 @@
 	layer = 2.9
 	},
 /obj/structure/flora/tree/pine/xmas,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "aaL" = (
 /turf/closed/festive/whitebrick,
@@ -268,9 +250,7 @@
 	dir = 8
 	},
 /obj/structure/flora/tree/pine/xmas,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "aaT" = (
 /obj/structure/table,
@@ -804,9 +784,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "acg" = (
 /turf/closed/festive/whitebrick,
@@ -918,9 +896,7 @@
 	dir = 4;
 	layer = 2.9
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "acx" = (
 /obj/structure/table/wood,
@@ -1023,9 +999,7 @@
 /obj/structure/fence{
 	dir = 4
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "acP" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -1098,9 +1072,7 @@
 /area/command/meeting_room/council)
 "acZ" = (
 /obj/structure/flora/tree/pine/xmas,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "ada" = (
 /obj/structure/chair/comfy{
@@ -4100,9 +4072,7 @@
 /turf/open/floor/festive/sidewalk,
 /area/edina/street/secondary/command)
 "akg" = (
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/secondary/command)
 "akh" = (
 /obj/machinery/power/tesla_coil,
@@ -4133,9 +4103,7 @@
 	dir = 4;
 	layer = 2.9
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/secondary/command)
 "akm" = (
 /turf/open/floor/festive/alleyway,
@@ -4265,9 +4233,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/secondary/command)
 "akC" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -4401,9 +4367,7 @@
 /area/edina/street/secondary/command)
 "akU" = (
 /obj/structure/streetdecor/lampfestive,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/secondary/command)
 "akV" = (
 /turf/open/floor/plasteel/stairs/left,
@@ -4786,9 +4750,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "amb" = (
 /obj/structure/streetdecor/lampfestive,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "amc" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
@@ -5014,9 +4976,7 @@
 /area/engineering/main)
 "amF" = (
 /obj/structure/fence,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "amG" = (
 /obj/structure/cable{
@@ -5282,9 +5242,7 @@
 /area/engineering/main)
 "anj" = (
 /obj/structure/flora/grass/both,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "ank" = (
 /obj/structure/cable/yellow{
@@ -5430,9 +5388,7 @@
 /area/edina)
 "anC" = (
 /obj/structure/flora/grass/brown,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "anD" = (
 /turf/open/floor/wood,
@@ -5860,9 +5816,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "aoC" = (
 /obj/structure/flora/grass/green,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "aoE" = (
 /obj/effect/turf_decal/tile/red{
@@ -5889,9 +5843,7 @@
 /turf/open/floor/holofloor,
 /area/security/prison)
 "aoG" = (
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/backstreet)
 "aoH" = (
 /obj/structure/holohoop{
@@ -6022,9 +5974,7 @@
 /turf/closed/wall/r_wall,
 /area/science/research)
 "aoX" = (
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/science/research)
 "aoY" = (
 /obj/item/radio/intercom{
@@ -7616,9 +7566,7 @@
 	pixel_x = 16;
 	pixel_y = 10
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "asM" = (
 /obj/effect/turf_decal/tile/green{
@@ -7908,9 +7856,7 @@
 "atu" = (
 /obj/structure/fence,
 /obj/structure/fence,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "atv" = (
 /obj/structure/ice_stasis,
@@ -8828,9 +8774,7 @@
 /obj/structure/streetdecor/bigtree{
 	pixel_x = -16
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "avQ" = (
 /obj/effect/spawner/lootdrop/maintenance,
@@ -9041,9 +8985,7 @@
 /area/security/brig)
 "awo" = (
 /obj/structure/fence,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/science)
 "awp" = (
 /obj/structure/cable/yellow{
@@ -9080,9 +9022,7 @@
 /turf/open/floor/wood,
 /area/security/brig)
 "aws" = (
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/science)
 "awt" = (
 /obj/structure/cable/yellow{
@@ -10012,9 +9952,7 @@
 	roundstart_template = /datum/map_template/shuttle/labour/delta;
 	width = 9
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "ayM" = (
 /obj/machinery/door/airlock/security/glass,
@@ -10142,9 +10080,7 @@
 "aze" = (
 /obj/structure/table/wood,
 /obj/item/candle,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "azf" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/plasma,
@@ -10188,9 +10124,7 @@
 /obj/structure/statue/sandstone/venus{
 	dir = 8
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "azm" = (
 /obj/effect/turf_decal/weather/snow/corner,
@@ -11053,9 +10987,7 @@
 /obj/structure/statue/snow/snowman{
 	name = "Condom"
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/secondary/command)
 "aBT" = (
 /obj/effect/festive/street/streetlineeast,
@@ -11186,9 +11118,7 @@
 /area/engineering/atmos)
 "aCl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/primary/perimeter)
 "aCm" = (
 /obj/structure/sign/departments/xenobio,
@@ -11345,9 +11275,7 @@
 /obj/structure/fence{
 	dir = 4
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/science/research)
 "aCI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrous_output{
@@ -11706,9 +11634,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/science)
 "aDT" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
@@ -11884,9 +11810,7 @@
 /area/engineering/atmos)
 "aEz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/science)
 "aEA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -11910,9 +11834,7 @@
 /turf/open/floor/festive/sidewalk,
 /area/edina/street/primary/princess)
 "aED" = (
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/primary/princess)
 "aEE" = (
 /obj/structure/table/wood,
@@ -11925,9 +11847,7 @@
 /area/commons/fitness/recreation)
 "aEG" = (
 /obj/structure/streetdecor/lampfestive,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/primary/princess)
 "aEH" = (
 /obj/effect/festive/street/streetlineeast,
@@ -12203,9 +12123,7 @@
 /obj/structure/fence/corner{
 	dir = 9
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "aFt" = (
 /obj/effect/festive/street/streetlinewest,
@@ -12585,9 +12503,7 @@
 /turf/open/floor/festive/sidewalk,
 /area/edina/street/primary/princess)
 "aGk" = (
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/primary/perimeter)
 "aGl" = (
 /turf/open/floor/festive/sidewalk,
@@ -12598,9 +12514,7 @@
 /area/commons/fitness/recreation)
 "aGn" = (
 /obj/structure/fence/door,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "aGo" = (
 /obj/structure/table/wood/fancy/royalblue,
@@ -13149,9 +13063,7 @@
 /turf/open/floor/festive/cobblestone,
 /area/edina/street/intersection/princessperimeter/north)
 "aHH" = (
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/science/mixing/chamber)
 "aHI" = (
 /obj/effect/turf_decal/tile/purple{
@@ -14480,9 +14392,7 @@
 /area/science/xenobiology)
 "aKQ" = (
 /obj/structure/fluff/lightpost/light,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/science/research)
 "aKR" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -14886,9 +14796,7 @@
 /area/security/checkpoint/science)
 "aMa" = (
 /obj/structure/fluff/lightpost/light,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/science)
 "aMb" = (
 /turf/closed/festive/whitebrick,
@@ -15812,9 +15720,7 @@
 /obj/structure/fence{
 	dir = 4
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/science)
 "aOk" = (
 /obj/structure/table,
@@ -16949,9 +16855,7 @@
 /area/service/bar/atrium)
 "aRa" = (
 /obj/structure/flora/tree/pine/xmas,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/primary/perimeter)
 "aRb" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
@@ -17572,9 +17476,7 @@
 "aSy" = (
 /obj/machinery/power/apc/auto_name/east,
 /obj/structure/cable/yellow,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/secondary/castle)
 "aSz" = (
 /obj/effect/decal/cleanable/dirt,
@@ -18419,9 +18321,7 @@
 /area/science)
 "aUM" = (
 /obj/structure/flora/tree/pine/xmas,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/science/research)
 "aUN" = (
 /obj/machinery/airalarm/server{
@@ -18643,9 +18543,7 @@
 /turf/closed/festive/whitebrick,
 /area/science/mixing/chamber)
 "aVt" = (
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/medical/medbay/aft)
 "aVu" = (
 /obj/machinery/door/firedoor/heavy,
@@ -21130,9 +21028,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/secondary/command)
 "bcn" = (
 /obj/effect/festive/street/streetlinewest,
@@ -21570,9 +21466,7 @@
 /area/edina/street/primary/perimeter)
 "bdF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/secondary/command)
 "bdG" = (
 /obj/effect/festive/street/streetlineeast,
@@ -21626,9 +21520,7 @@
 /turf/open/floor/festive/wooden/wooden1,
 /area/commons/dorms)
 "bdO" = (
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/backstreet/research)
 "bdQ" = (
 /obj/effect/festive/street/streetlinewest,
@@ -21969,9 +21861,7 @@
 /obj/structure/fence/corner{
 	dir = 10
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/primary/progress)
 "beG" = (
 /obj/structure/chair/office/light{
@@ -22465,9 +22355,7 @@
 	lootcount = 2;
 	name = "2maintenance loot spawner"
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/science)
 "bfT" = (
 /obj/structure/table/reinforced,
@@ -22926,9 +22814,7 @@
 /turf/open/floor/festive/sidewalk,
 /area/edina/street/primary/perimeter)
 "bgV" = (
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/secondary/castle)
 "bgW" = (
 /obj/effect/festive/street/streetlinewest,
@@ -23395,9 +23281,7 @@
 /obj/structure/fence{
 	dir = 4
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/backstreet/research)
 "biF" = (
 /obj/effect/landmark/start/assistant,
@@ -27562,9 +27446,7 @@
 /obj/structure/fence/corner{
 	dir = 4
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/primary/progress)
 "bsp" = (
 /obj/machinery/light/small,
@@ -27650,9 +27532,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/medical/medbay/aft)
 "bsz" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -27675,9 +27555,7 @@
 /area/medical/medbay/aft)
 "bsB" = (
 /obj/structure/flora/tree/pine/xmas,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/medical/medbay/aft)
 "bsC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -28728,15 +28606,11 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "buP" = (
 /obj/structure/festive/trainplatform/edge_north,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "buQ" = (
 /obj/structure/streetdecor/lampfestive{
@@ -29717,9 +29591,7 @@
 /area/cargo/miningoffice)
 "bxl" = (
 /obj/structure/fence,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/medical/medbay/aft)
 "bxm" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -30036,35 +29908,27 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/backstreet)
 "byg" = (
 /obj/structure/fence,
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/medical/medbay/aft)
 "byh" = (
 /obj/structure/flora/tree/pine/xmas,
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/medical/medbay/aft)
 "byi" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/medical/medbay/aft)
 "byj" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -30476,15 +30340,11 @@
 /turf/open/floor/festive/alleyway,
 /area/edina/street/primary/progress)
 "bzs" = (
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/primary/progress)
 "bzt" = (
 /obj/structure/statue/snow/snowman,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/primary/progress)
 "bzu" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -33257,9 +33117,7 @@
 /area/cargo)
 "bEq" = (
 /obj/structure/fence,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/backstreet/supply)
 "bEr" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -33651,9 +33509,7 @@
 /area/edina/street/primary/progress)
 "bFq" = (
 /obj/structure/fence,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/primary/progress)
 "bFr" = (
 /obj/machinery/door/airlock{
@@ -36222,9 +36078,7 @@
 /area/edina/backstreet/supply)
 "bKW" = (
 /obj/structure/fluff/lightpost/light,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "bKX" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -36887,9 +36741,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/medical/chemistry)
 "bMs" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -37396,9 +37248,7 @@
 /turf/open/floor/festive/alleyway,
 /area/edina/backstreet/med)
 "bNu" = (
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/backstreet/med)
 "bNv" = (
 /obj/structure/sign/poster/contraband/kudzu{
@@ -37410,9 +37260,7 @@
 /area/service/hydroponics)
 "bNw" = (
 /obj/structure/flora/tree/pine/xmas,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/backstreet/med)
 "bNx" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -37431,9 +37279,7 @@
 /area/cargo/storage)
 "bNz" = (
 /obj/structure/fence/end,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "bNA" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -37466,9 +37312,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/medical/chemistry)
 "bNE" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -37699,9 +37543,7 @@
 /area/medical/storage)
 "bNX" = (
 /obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "bNY" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -38031,9 +37873,7 @@
 /area/cargo/sorting)
 "bON" = (
 /obj/structure/flora/grass/green,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/backstreet/med)
 "bOO" = (
 /obj/structure/closet/crate/medical,
@@ -38092,9 +37932,7 @@
 /area/cargo/storage)
 "bOX" = (
 /obj/structure/lattice,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "bOY" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -39771,9 +39609,7 @@
 /turf/open/floor/wood,
 /area/service/cafeteria/lunchroom)
 "bSl" = (
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/backstreet/supply)
 "bSm" = (
 /obj/structure/fence{
@@ -40228,9 +40064,7 @@
 /area/edina/crew_quarters/store/pet)
 "bTt" = (
 /obj/structure/flora/grass/green,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/science)
 "bTu" = (
 /obj/structure/grille,
@@ -40709,9 +40543,7 @@
 /area/cargo/storage)
 "bUz" = (
 /obj/structure/statue/snow/snowman,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "bUA" = (
 /obj/effect/festive/street/streetlinese,
@@ -41062,9 +40894,7 @@
 /area/edina/street/primary/progress)
 "bVr" = (
 /obj/structure/flora/grass/green,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/medical/medbay/aft)
 "bVs" = (
 /obj/structure/table/wood,
@@ -41549,9 +41379,7 @@
 /area/commons/dorms)
 "bWA" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/backstreet/supply)
 "bWB" = (
 /obj/effect/turf_decal/weather/snow/corner,
@@ -42228,9 +42056,7 @@
 /obj/structure/fence{
 	dir = 4
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/backstreet/supply)
 "bYn" = (
 /obj/structure/disposalpipe/segment{
@@ -43859,9 +43685,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/backstreet/supply)
 "cbB" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -44565,9 +44389,7 @@
 /obj/structure/fence{
 	dir = 4
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/primary/progress)
 "cdv" = (
 /obj/structure/sign/departments/security,
@@ -45291,9 +45113,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/backstreet/supply)
 "ceX" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -45980,9 +45800,7 @@
 /area/edina/street/primary/perimeter)
 "cgF" = (
 /obj/structure/statue/snow/snowman,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/science/research)
 "cgG" = (
 /obj/structure/cable/yellow{
@@ -46680,9 +46498,7 @@
 /obj/structure/fence{
 	dir = 4
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "cir" = (
 /obj/effect/turf_decal/bot,
@@ -47118,9 +46934,7 @@
 	lootcount = 2;
 	name = "2maintenance loot spawner"
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/backstreet/med)
 "cjp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -48776,9 +48590,7 @@
 /area/edina/street/secondary/supply)
 "cmO" = (
 /obj/structure/flora/grass/green,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/secondary/supply)
 "cmP" = (
 /obj/effect/festive/street/streetlinewest,
@@ -48786,9 +48598,7 @@
 /turf/open/floor/festive/cobblestone,
 /area/edina/street/secondary/supply)
 "cmQ" = (
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/secondary/supply)
 "cmR" = (
 /obj/effect/festive/street/streetlineeast,
@@ -49454,9 +49264,7 @@
 /area/commons/dorms)
 "cos" = (
 /obj/structure/festive/trainplatform/edge_east,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "cot" = (
 /obj/structure/streetdecor/lampfestive{
@@ -49928,9 +49736,7 @@
 /area/commons/dorms)
 "cpT" = (
 /obj/structure/flora/grass/green,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/street/primary/perimeter)
 "cpU" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -50012,15 +49818,11 @@
 /area/commons/dorms)
 "cqg" = (
 /obj/structure/festive/trainplatform/edge_south,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "cqh" = (
 /obj/structure/festive/trainplatform/nwcorner,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "cqi" = (
 /turf/open/floor/festive/white_alleyway{
@@ -50211,9 +50013,7 @@
 /area/commons/dorms)
 "cqK" = (
 /obj/structure/flora/tree/pine/xmas,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/backstreet/supply)
 "cqL" = (
 /obj/structure/chair/sofa/right,
@@ -50923,9 +50723,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/backstreet/supply)
 "csG" = (
 /obj/structure/disposalpipe/segment,
@@ -50961,9 +50759,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/backstreet/supply)
 "csL" = (
 /obj/effect/turf_decal/weather/snow/corner,
@@ -51449,15 +51245,11 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/backstreet/supply)
 "cug" = (
 /obj/structure/statue/snow/snowman,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina/backstreet/supply)
 "cuh" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -51856,16 +51648,12 @@
 /area/security/checkpoint/medical)
 "cve" = (
 /obj/effect/decal/festive/christmas_ivy_string,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "cvf" = (
 /obj/structure/fence,
 /obj/effect/decal/festive/christmas_ivy_string,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "cvg" = (
 /obj/effect/festive/street/sidewalkw,
@@ -52095,9 +51883,7 @@
 /obj/structure/fence/post{
 	dir = 8
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "cvN" = (
 /obj/structure/disposalpipe/junction/flip{
@@ -52346,9 +52132,7 @@
 /area/edina)
 "cwv" = (
 /obj/machinery/icecream_vat,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "cww" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -52531,17 +52315,13 @@
 /area/maintenance/bar)
 "cwX" = (
 /obj/structure/spacevine,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "cwY" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "cwZ" = (
 /obj/effect/festive/street/sidewalknsm,
@@ -52624,9 +52404,7 @@
 /area/maintenance/department/medical)
 "cxm" = (
 /obj/structure/festive/trainplatform/edge_west,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "cxn" = (
 /obj/structure/festive/trainplatform/edge_west,
@@ -53690,9 +53468,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "cAZ" = (
 /turf/closed/wall,
@@ -54061,9 +53837,7 @@
 /area/edina/crew_quarters/store/pet)
 "eKC" = (
 /obj/vehicle/sealed/vectorcraft/rideable/wheelchair,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "ePE" = (
 /obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb{
@@ -54197,9 +53971,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "fRf" = (
 /mob/living/simple_animal/crab/kreb,
@@ -54550,9 +54322,7 @@
 /area/science)
 "iFP" = (
 /mob/living/simple_animal/jacq/car_spawner,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "iIf" = (
 /mob/living/simple_animal/babyKiwi,
@@ -54872,9 +54642,7 @@
 /area/edina)
 "lEK" = (
 /obj/structure/flora/tree/pine/xmas,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/science)
 "lIt" = (
 /obj/item/flashlight/glowstick/cyan,
@@ -54910,9 +54678,7 @@
 /area/science)
 "lTb" = (
 /obj/machinery/door/airlock/maintenance,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "lUa" = (
 /obj/item/storage/box/handcuffs,
@@ -55141,9 +54907,7 @@
 /area/science)
 "nSS" = (
 /obj/structure/statue/sandstone/venus,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "nTN" = (
 /obj/structure/dresser{
@@ -55810,9 +55574,7 @@
 /obj/structure/chair/sofa/corp/right{
 	dir = 4
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "sYK" = (
 /obj/structure/chair/sofa/left{
@@ -56142,9 +55904,7 @@
 /area/edina)
 "vIN" = (
 /obj/structure/statue/snow/snowman,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/science)
 "vLq" = (
 /obj/machinery/vending/boozeomat{
@@ -56183,9 +55943,7 @@
 /area/science)
 "wgK" = (
 /obj/structure/dead_ratvar,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "whG" = (
 /obj/structure/sink/kitchen{
@@ -56486,9 +56244,7 @@
 	pixel_x = 16;
 	pixel_y = 10
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
-	},
+/turf/open/floor/grass/snow/edina,
 /area/edina)
 "xVS" = (
 /obj/structure/reagent_dispensers/keg/gargle,
