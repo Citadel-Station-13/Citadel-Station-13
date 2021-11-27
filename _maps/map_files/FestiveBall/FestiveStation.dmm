@@ -12502,9 +12502,6 @@
 	},
 /turf/open/floor/festive/sidewalk,
 /area/edina/street/primary/princess)
-"aGk" = (
-/turf/open/floor/grass/snow/edina,
-/area/edina/street/primary/perimeter)
 "aGl" = (
 /turf/open/floor/festive/sidewalk,
 /area/edina/street/primary/perimeter)
@@ -55125,7 +55122,7 @@
 /area/science)
 "pqW" = (
 /obj/structure/fluff/broken_flooring,
-/turf/open/space/basic,
+/turf/open/floor/grass/fakebasalt,
 /area/edina)
 "prz" = (
 /mob/living/simple_animal/crab,
@@ -55806,7 +55803,7 @@
 /area/maintenance/bar)
 "uSq" = (
 /obj/structure/bookcase/random/adult,
-/turf/open/space/basic,
+/turf/open/floor/grass/fakebasalt,
 /area/edina)
 "uVF" = (
 /obj/machinery/computer/mech_bay_power_console,
@@ -56214,9 +56211,6 @@
 /mob/living/simple_animal/jacq/car_spawner,
 /turf/open/floor/festive/sidewalk,
 /area/edina/street/intersection/servsuppaux)
-"xMH" = (
-/turf/open/space/basic,
-/area/edina)
 "xQh" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
@@ -61917,7 +61911,7 @@ aad
 aad
 aad
 aad
-xMH
+aal
 brL
 cAM
 cAQ
@@ -72866,7 +72860,7 @@ aFK
 bcw
 bdS
 bgl
-aGk
+cnB
 byU
 byU
 bAm
@@ -73123,7 +73117,7 @@ aFK
 bdE
 bdT
 bgm
-aGk
+cnB
 byU
 beT
 bAn
@@ -73380,7 +73374,7 @@ aFK
 bdE
 bdS
 bgm
-aGk
+cnB
 byU
 sgh
 bAn
@@ -73637,7 +73631,7 @@ aFK
 bdE
 bdS
 bgm
-aGk
+cnB
 byU
 bzI
 bAn
@@ -73894,7 +73888,7 @@ aFK
 bdE
 bdS
 bgm
-aGk
+cnB
 byU
 beT
 bAn
@@ -74151,7 +74145,7 @@ aFK
 bdE
 bdS
 bgm
-aGk
+cnB
 byU
 beT
 bAo
@@ -74408,7 +74402,7 @@ aFK
 bdE
 bdS
 bgm
-aGk
+cnB
 byU
 byU
 byU
@@ -74665,7 +74659,7 @@ aFK
 bdE
 bdS
 bgl
-aGk
+cnB
 aal
 aal
 aal
@@ -74922,7 +74916,7 @@ aFK
 bdE
 bdS
 bgl
-aGk
+cnB
 bWz
 bWz
 bWz
@@ -75179,7 +75173,7 @@ aFK
 bdE
 bdS
 bgl
-aGk
+cnB
 bWz
 bwV
 bWz
@@ -75436,7 +75430,7 @@ aFK
 bdE
 bdS
 bgl
-aGk
+cnB
 bWz
 bjq
 cyK
@@ -75693,7 +75687,7 @@ aFK
 bdE
 bdT
 bgm
-aGk
+cnB
 bWz
 bwW
 bWz
@@ -78263,7 +78257,7 @@ aFK
 bdE
 bdT
 bgm
-aGk
+cnB
 bWz
 bwV
 bWz
@@ -78520,7 +78514,7 @@ aFK
 bdE
 bdS
 bgm
-aGk
+cnB
 bWz
 bjq
 cyK
@@ -78777,7 +78771,7 @@ cvy
 cvA
 cvF
 bgC
-aGk
+cnB
 bWz
 bwW
 bWz
@@ -79034,7 +79028,7 @@ cvt
 cvB
 bdS
 bgm
-aGk
+cnB
 bWz
 bWz
 bWz
@@ -79548,7 +79542,7 @@ aFK
 bdE
 bdS
 bgm
-aGk
+cnB
 aRa
 bdO
 bdO
@@ -79805,8 +79799,8 @@ aFK
 bdE
 bdS
 bgl
-aGk
-aGk
+cnB
+cnB
 aOi
 awo
 awo
@@ -80062,8 +80056,8 @@ aFK
 bdE
 bdS
 bgl
-aGk
-aGk
+cnB
+cnB
 aOj
 aws
 aws
@@ -80319,7 +80313,7 @@ aFK
 bdE
 bdS
 bgl
-aGk
+cnB
 aRa
 aOj
 aws
@@ -80576,8 +80570,8 @@ aFK
 bdE
 bdS
 bgl
-aGk
-aGk
+cnB
+cnB
 aOj
 aws
 aCn
@@ -80833,8 +80827,8 @@ aFK
 bdE
 bdT
 bgm
-aGk
-aGk
+cnB
+cnB
 aOj
 aws
 aCn
@@ -81090,7 +81084,7 @@ aFK
 bdE
 bdS
 bgm
-aGk
+cnB
 aRa
 aOj
 aws
@@ -81347,8 +81341,8 @@ aUY
 bdE
 bdS
 bgm
-aGk
-aGk
+cnB
+cnB
 aOj
 aws
 aCn
@@ -81604,8 +81598,8 @@ aFK
 bdE
 bdS
 bgm
-aGk
-aGk
+cnB
+cnB
 aOj
 aws
 aCn
@@ -81861,7 +81855,7 @@ aFK
 bdE
 bdS
 bgm
-aGk
+cnB
 aRa
 aOj
 aws
@@ -82118,8 +82112,8 @@ aFK
 bdE
 bdS
 bgm
-aGk
-aGk
+cnB
+cnB
 aOj
 aws
 aCn
@@ -82632,7 +82626,7 @@ aUm
 bdE
 bdS
 bgl
-aGk
+cnB
 aRa
 aOj
 aws
@@ -82889,8 +82883,8 @@ aFK
 bdE
 bdS
 bgl
-aGk
-aGk
+cnB
+cnB
 aOj
 aws
 aws
@@ -93672,7 +93666,7 @@ alo
 akz
 akQ
 azH
-aGk
+cnB
 aFq
 aGl
 aQG
@@ -93929,7 +93923,7 @@ alo
 ame
 akR
 akJ
-aGk
+cnB
 aFq
 aGl
 aQG
@@ -94186,7 +94180,7 @@ axZ
 ayH
 alP
 aln
-aGk
+cnB
 aFq
 aGl
 aQG
@@ -94443,7 +94437,7 @@ alo
 amg
 alo
 alo
-aGk
+cnB
 aFq
 aGl
 aQG
@@ -94699,8 +94693,8 @@ anl
 alo
 amh
 azp
-aGk
-aGk
+cnB
+cnB
 aFq
 aGl
 aQG
@@ -94956,8 +94950,8 @@ anl
 amm
 amh
 azp
-aGk
-aGk
+cnB
+cnB
 aFq
 aGl
 aQG
@@ -95213,8 +95207,8 @@ anl
 amW
 amh
 azp
-aGk
-aGk
+cnB
+cnB
 aFq
 aGl
 aQG
@@ -95470,8 +95464,8 @@ anl
 aya
 ayI
 azp
-aGk
-aGk
+cnB
+cnB
 aFq
 aGl
 aQG
@@ -95727,8 +95721,8 @@ axB
 ayb
 ayJ
 azp
-aGk
-aGk
+cnB
+cnB
 aFq
 aGl
 aQG
@@ -95984,8 +95978,8 @@ axB
 ayc
 amh
 azp
-aGk
-aGk
+cnB
+cnB
 aFq
 aGl
 aQG
@@ -96241,8 +96235,8 @@ axB
 ayd
 amh
 azp
-aGk
-aGk
+cnB
+cnB
 aFq
 aGl
 aQG
@@ -96498,8 +96492,8 @@ axB
 ayd
 amh
 azp
-aGk
-aGk
+cnB
+cnB
 aFq
 aGl
 aQG
@@ -96755,8 +96749,8 @@ axB
 aye
 amh
 azp
-aGk
-aGk
+cnB
+cnB
 aFq
 aGl
 aQG
@@ -97012,8 +97006,8 @@ axB
 ayf
 ayK
 azp
-aGk
-aGk
+cnB
+cnB
 aFq
 aLG
 aQG
@@ -97269,8 +97263,8 @@ axB
 ayg
 amh
 azp
-aGk
-aGk
+cnB
+cnB
 aFq
 aGl
 aQG
@@ -97526,8 +97520,8 @@ anl
 ayh
 amh
 azp
-aGk
-aGk
+cnB
+cnB
 aFq
 aGl
 aQG
@@ -97783,8 +97777,8 @@ anl
 ayi
 ayJ
 azp
-aGk
-aGk
+cnB
+cnB
 aFq
 aGl
 aQG
@@ -97891,7 +97885,7 @@ aFK
 aVo
 beB
 cpF
-aGk
+cnB
 cxA
 cyM
 cyM
@@ -98040,8 +98034,8 @@ anl
 ayj
 amh
 azp
-aGk
-aGk
+cnB
+cnB
 aFq
 aGl
 aSB
@@ -98148,7 +98142,7 @@ aFK
 aVo
 cxs
 cpF
-aGk
+cnB
 cxA
 cyN
 czj
@@ -98297,8 +98291,8 @@ anl
 ayk
 amh
 azp
-aGk
-aGk
+cnB
+cnB
 aAe
 bnX
 bol
@@ -98405,7 +98399,7 @@ aTV
 cpw
 beB
 cpF
-aGk
+cnB
 cxA
 cyO
 cyM
@@ -98554,8 +98548,8 @@ anl
 amm
 amh
 azp
-aGk
-aGk
+cnB
+cnB
 aAf
 aGl
 aQG
@@ -98662,7 +98656,7 @@ aFK
 bdM
 beB
 cpF
-aGk
+cnB
 cxA
 cxA
 czk
@@ -98812,7 +98806,7 @@ alo
 ayM
 azp
 aBP
-aGk
+cnB
 aAf
 aPf
 aQG
@@ -98919,7 +98913,7 @@ aFK
 aVo
 beB
 cpF
-aGk
+cnB
 cxA
 cyM
 cyM
@@ -99433,7 +99427,7 @@ aFK
 aVo
 beB
 cpF
-aGk
+cnB
 cxA
 cxA
 cxA
@@ -99690,7 +99684,7 @@ aFK
 aVo
 beB
 cpF
-aGk
+cnB
 aal
 aal
 aal
@@ -105591,7 +105585,7 @@ bQQ
 bQQ
 ceI
 ccl
-aGk
+cnB
 coP
 cvS
 cvS
