@@ -12502,6 +12502,14 @@
 	},
 /turf/open/floor/festive/sidewalk,
 /area/edina/street/primary/princess)
+"aGk" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/closed/festive/whitebrick{
+	color = "#967832"
+	},
+/area/cargo/miningoffice)
 "aGl" = (
 /turf/open/floor/festive/sidewalk,
 /area/edina/street/primary/perimeter)
@@ -34687,6 +34695,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/white/corner,
 /area/cargo)
 "bHZ" = (
@@ -37875,6 +37886,9 @@
 "bOO" = (
 /obj/structure/closet/crate/medical,
 /obj/effect/decal/festive/fairylights,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/indestructible,
 /area/cargo/warehouse)
 "bOP" = (
@@ -53775,6 +53789,22 @@
 	},
 /turf/open/floor/festive/alleyway,
 /area/edina)
+"epO" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "cargocars"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/festive/alleyway,
+/area/edina/backstreet/supply)
 "eqs" = (
 /obj/structure/fence{
 	dir = 4
@@ -53964,6 +53994,13 @@
 /obj/effect/decal/festive/christmas_ivy_string,
 /turf/open/floor/carpet/blue,
 /area/commons/cryopod)
+"fIm" = (
+/obj/structure/fence,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/grass/snow/edina,
+/area/edina/backstreet/supply)
 "fKS" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -54060,6 +54097,15 @@
 /mob/living/simple_animal/chick,
 /turf/open/floor/grass,
 /area/edina/crew_quarters/store/pet)
+"gBV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/festive/alleyway,
+/area/edina/backstreet/supply)
 "gCJ" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/reagent_containers/food/snacks/sausage,
@@ -54512,6 +54558,13 @@
 /obj/item/bedsheet,
 /turf/open/floor/wood,
 /area/maintenance/bar)
+"kmK" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/grass/snow/edina,
+/area/edina/backstreet/supply)
 "knK" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/ale,
@@ -54857,6 +54910,15 @@
 "nlJ" = (
 /turf/closed/wall,
 /area/edina)
+"nma" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/festive/alleyway,
+/area/edina/backstreet/supply)
 "noa" = (
 /obj/structure/mineral_door/wood{
 	name = "bar"
@@ -55205,6 +55267,17 @@
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/dark,
 /area/service/hydroponics)
+"pQk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/festive/white_alleyway{
+	color = "#967832"
+	},
+/area/edina/backstreet/supply)
 "pRU" = (
 /obj/structure/table/plasmaglass,
 /obj/item/integrated_electronics/analyzer,
@@ -55235,6 +55308,14 @@
 	},
 /turf/open/floor/festive/wooden/wooden1,
 /area/maintenance/bar)
+"pZT" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/closed/festive/whitebrick{
+	color = "#967832"
+	},
+/area/cargo/warehouse)
 "qaU" = (
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass,
@@ -55255,6 +55336,16 @@
 /obj/machinery/door/airlock/wood/glass,
 /turf/open/floor/plasteel/dark,
 /area/service/cafeteria/lunchroom)
+"qvz" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	color = "#FFFFFE";
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/festive/alleyway,
+/area/edina/backstreet/supply)
 "qvZ" = (
 /obj/structure/closet/l3closet/janitor,
 /obj/effect/decal/festive/christmas_ivy_string,
@@ -55334,6 +55425,19 @@
 /obj/item/gun/magic/staff/healing,
 /turf/open/floor/circuit/off,
 /area/science)
+"rgC" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	color = "#FFFFFE";
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/festive/alleyway,
+/area/edina/backstreet/supply)
 "rhc" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/syndicate,
@@ -55370,6 +55474,13 @@
 	},
 /turf/open/floor/holofloor/beach,
 /area/edina/crew_quarters/store/pet)
+"rvS" = (
+/obj/effect/spawner/structure/window/reinforced/indestructable,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/cargo)
 "rvT" = (
 /turf/closed/indestructible/riveted/boss,
 /area/science)
@@ -55399,6 +55510,17 @@
 "ryV" = (
 /turf/closed/wall/rust,
 /area/edina)
+"rCM" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/festive/white_alleyway{
+	color = "#967832"
+	},
+/area/edina/backstreet/supply)
 "rDE" = (
 /obj/structure/table,
 /obj/machinery/microwave{
@@ -55911,6 +56033,14 @@
 	},
 /turf/open/floor/plating/beach/sand,
 /area/edina)
+"vCT" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/festive/white_alleyway{
+	color = "#967832"
+	},
+/area/edina/backstreet/supply)
 "vIN" = (
 /obj/structure/statue/snow/snowman,
 /turf/open/floor/grass/snow/edina,
@@ -56159,6 +56289,17 @@
 /mob/living/simple_animal/jacq/car_spawner,
 /turf/open/floor/festive/cobblestone,
 /area/edina/street/primary/perimeter)
+"xpf" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/festive/white_alleyway{
+	color = "#967832"
+	},
+/area/edina/backstreet/supply)
 "xpl" = (
 /obj/structure/closet/secure_closet/freezer/kitchen{
 	req_access = list(25)
@@ -56190,6 +56331,9 @@
 /area/edina)
 "xyu" = (
 /obj/effect/decal/festive/fairylights,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/indestructible,
 /area/cargo/warehouse)
 "xzs" = (
@@ -56223,6 +56367,12 @@
 /mob/living/simple_animal/jacq/car_spawner,
 /turf/open/floor/festive/sidewalk,
 /area/edina/street/intersection/servsuppaux)
+"xMH" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/grass/snow/edina,
+/area/edina/backstreet/supply)
 "xQh" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
@@ -56264,6 +56414,12 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/carpet/royalblue,
 /area/edina/crew_quarters/store/pet)
+"ygB" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/grass/snow/edina,
+/area/edina)
 "ygQ" = (
 /turf/open/floor/plasteel/cafeteria,
 /area/maintenance/bar/cafe)
@@ -104034,7 +104190,7 @@ bAc
 bET
 cit
 bWy
-bYN
+rvS
 bJy
 cdY
 bWy
@@ -104291,7 +104447,7 @@ bAc
 bAc
 cit
 bWy
-byD
+rgC
 bZE
 cay
 ceV
@@ -104548,7 +104704,7 @@ bEp
 bEp
 ciu
 bWy
-bDN
+nma
 bEP
 bUb
 bMi
@@ -104805,7 +104961,7 @@ bUE
 bUH
 bVE
 bWv
-bWv
+epO
 bWv
 cbb
 cbb
@@ -105062,7 +105218,7 @@ bUF
 bUI
 bVH
 bWA
-bWA
+kmK
 bWA
 cbA
 ceW
@@ -105319,7 +105475,7 @@ bUE
 bUH
 bUC
 bDB
-bDB
+qvz
 bDB
 cbB
 ceX
@@ -105571,12 +105727,12 @@ bAf
 bBa
 bBM
 bCP
-bUC
-bUE
-bUH
-bVL
-bVL
-bVL
+gBV
+xpf
+vCT
+pQk
+pQk
+rCM
 bVL
 cbX
 bVL
@@ -107105,8 +107261,8 @@ bsi
 btN
 bve
 bws
-bnY
-bSl
+aGk
+xMH
 byT
 bOO
 bzG
@@ -107363,7 +107519,7 @@ btO
 bsj
 bnY
 bnY
-bEq
+fIm
 byT
 xyu
 bzG
@@ -107620,8 +107776,8 @@ btP
 bsj
 aal
 aal
-aal
-byT
+ygB
+pZT
 bzH
 bAl
 bEs
