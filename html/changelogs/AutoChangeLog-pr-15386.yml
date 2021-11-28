@@ -1,6 +1,0 @@
-author: "keronshb"
-delete-after: True
-changes: 
-  - rscadd: "FestiveMap"
-  - rscadd: "Specific Truck and Ambulance vector cars"
-  - rscadd: "Radials for those cars"
