@@ -16,7 +16,28 @@ import { Box, Flex, Tabs, TextArea } from '../components';
 import { Window } from '../layouts';
 import { clamp } from 'common/math';
 import { sanitizeText } from '../sanitize';
+import katex from 'katex';
+
 const MAX_PAPER_LENGTH = 5000; // Question, should we send this with ui_data?
+
+// Find where people put in equations inside two $ symbols and convert them to proper LaTeX
+const equationRegex = (text) => {
+  logger.log("Starting to convert:", text)
+  const find_equation_formatting = /\$.*\$/igm;
+  const find_regex = find_equation_formatting.exec(text);
+  if (find_regex) {
+    for (let i = 0; i < find_regex.length; i++) {
+      const removeDollarSigns = find_regex[i].replace(/\$/g, '');
+      const convertToLatex = katex.renderToString(removeDollarSigns, {
+        throwOnError: false,
+      });
+      text = text.replace(find_regex[i], convertToLatex);
+      logger.log("Converting:", convertToLatex, i);
+    }
+  }
+  logger.log("Replaced Result", text)
+  return text;
+}
 
 // Hacky, yes, works?...yes
 const textWidth = (text, font, fontsize) => {
@@ -384,10 +405,11 @@ const createPreview = (
       signed_text, font, 12, color, field_counter);
     // Fourth, parse the text using markup
     const formatted_text = run_marked_default(fielded_text.text);
+    const replacedEquations = equationRegex(formatted_text)
     // Fifth, we wrap the created text in the pin color, and font.
     // crayon is bold (<b> tags), maybe make fountain pin italic?
     const fonted_text = setFontinText(
-      formatted_text, font, color, is_crayon);
+      replacedEquations, font, color, is_crayon);
     out.text += fonted_text;
     out.field_counter = fielded_text.counter;
   }

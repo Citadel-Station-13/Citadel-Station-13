@@ -3036,6 +3036,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"commander@npm:^8.0.0":
+  version: 8.3.0
+  resolution: "commander@npm:8.3.0"
+  checksum: 0b818d97ca9c8ad461ff05f873082af0c1895e49984a2abf1090e4a85c3537c3c0f9921e38314a9de7e71941f00f710c204d3560e3a7bc0b1023eef92d6bbfc0
+  languageName: node
+  linkType: hard
+
 "common@workspace:*, common@workspace:packages/common":
   version: 0.0.0-use.local
   resolution: "common@workspace:packages/common"
@@ -5826,6 +5833,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"katex@npm:^0.15.1":
+  version: 0.15.1
+  resolution: "katex@npm:0.15.1"
+  dependencies:
+    commander: ^8.0.0
+  bin:
+    katex: cli.js
+  checksum: d1db044d8b2f37c70adb4c331dfe55b453f2fc4a0cc72e050e76ff372a7f74201a3ac96998bda3f63cafac3622b2e2e89aecc4b2ed960c5fdd2dda2d8bfe5757
+  languageName: node
+  linkType: hard
+
 "kind-of@npm:^3.0.2, kind-of@npm:^3.0.3, kind-of@npm:^3.2.0":
   version: 3.2.2
   resolution: "kind-of@npm:3.2.2"
@@ -8369,6 +8387,7 @@ resolve@^2.0.0-next.3:
     dompurify: ^2.2.7
     inferno: ^7.4.8
     inferno-vnode-flags: ^7.4.8
+    katex: ^0.15.1
     marked: ^2.0.3
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
