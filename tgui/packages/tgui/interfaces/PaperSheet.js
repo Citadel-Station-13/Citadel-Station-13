@@ -22,7 +22,6 @@ const MAX_PAPER_LENGTH = 5000; // Question, should we send this with ui_data?
 
 // Find where people put in equations inside two $ symbols and convert them to proper LaTeX
 const equationRegex = (text) => {
-  logger.log("Starting to convert:", text)
   const find_equation_formatting = /\$.*\$/igm;
   const find_regex = find_equation_formatting.exec(text);
   if (find_regex) {
@@ -32,10 +31,8 @@ const equationRegex = (text) => {
         throwOnError: false,
       });
       text = text.replace(find_regex[i], convertToLatex);
-      logger.log("Converting:", convertToLatex, i);
     }
   }
-  logger.log("Replaced Result", text)
   return text;
 }
 
