@@ -20,7 +20,8 @@ import katex from 'katex';
 
 const MAX_PAPER_LENGTH = 5000; // Question, should we send this with ui_data?
 
-// Find where people put in equations inside two $ symbols and convert them to proper LaTeX
+// Find where people put in equations inside two $ symbols
+//  and convert them to proper LaTeX
 const equationRegex = (text) => {
   const find_equation_formatting = /\$.*\$/igm;
   const find_regex = find_equation_formatting.exec(text);
@@ -34,7 +35,7 @@ const equationRegex = (text) => {
     }
   }
   return text;
-}
+};
 
 // Hacky, yes, works?...yes
 const textWidth = (text, font, fontsize) => {
@@ -402,7 +403,7 @@ const createPreview = (
       signed_text, font, 12, color, field_counter);
     // Fourth, parse the text using markup
     const formatted_text = run_marked_default(fielded_text.text);
-    const replacedEquations = equationRegex(formatted_text)
+    const replacedEquations = equationRegex(formatted_text);
     // Fifth, we wrap the created text in the pin color, and font.
     // crayon is bold (<b> tags), maybe make fountain pin italic?
     const fonted_text = setFontinText(
