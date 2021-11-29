@@ -1069,9 +1069,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	return !HAS_TRAIT(src, TRAIT_NODROP) && !(item_flags & ABSTRACT)
 
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
-	owner.dropItemToGround(src)
-	stripper.put_in_hands(src)
-	return TRUE // Must be forced true because the item got stripped and it's dropped to the floor, it'll be false
+	if(owner.dropItemToGround(src))
+		stripper.put_in_hands(src)
+		return TRUE
+	else
+		return FALSE
 
 /**
  * Does the current embedding var meet the criteria for being harmless? Namely, does it explicitly define the pain multiplier and jostle pain mult to be 0? If so, return true.
