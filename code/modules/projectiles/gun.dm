@@ -64,7 +64,7 @@
 	var/obj/item/firing_pin/pin = /obj/item/firing_pin //standard firing pin for most guns
 	var/no_pin_required = FALSE //whether the gun can be fired without a pin
 
-	var/obj/item/flashlight/gun_light
+	var/obj/item/flashlight/seclite/gun_light
 	var/can_flashlight = FALSE
 	var/gunlight_state = "flight"
 	var/obj/item/kitchen/knife/bayonet
