@@ -477,7 +477,7 @@
 /datum/strip_menu/ui_status(mob/user, datum/ui_state/state)
 	. = ..()
 
-	if(iscarbon(user))
+	if(iscarbon(user) || iscyborg(user))
 		var/mob/living/carbon/carbon_user = user
 
 		if (
