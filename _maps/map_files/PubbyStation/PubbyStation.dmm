@@ -37562,6 +37562,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/dark/side{
 	dir = 4
 	},
