@@ -1070,7 +1070,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
 	if(owner.dropItemToGround(src))
-		stripper.put_in_hands(src)
+		if(stripper.can_hold_items())
+			stripper.put_in_hands(src)
 		return TRUE
 	else
 		return FALSE

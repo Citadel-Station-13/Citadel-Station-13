@@ -24,13 +24,14 @@
 	src.items = items
 	src.should_strip_proc_path = should_strip_proc_path
 
-/datum/element/strippable/Detach(datum/source, force)
+/datum/element/strippable/Detach(datum/source)
 	. = ..()
 
 	UnregisterSignal(source, COMSIG_MOUSEDROP_ONTO)
 
 	if (!isnull(strip_menus))
-		QDEL_NULL(strip_menus[source])
+		qdel(strip_menus[source])
+		strip_menus -= source
 
 /datum/element/strippable/proc/mouse_drop_onto(datum/source, atom/over, mob/user)
 	SIGNAL_HANDLER
@@ -75,8 +76,9 @@
 /// It should not perform the equipping itself.
 /datum/strippable_item/proc/try_equip(atom/source, obj/item/equipping, mob/user)
 	if (HAS_TRAIT(equipping, TRAIT_NODROP))
-		to_chat(user, "<span class='warning'>You can't put [equipping] on [source], it's stuck to your hand!</span>")
+		to_chat(user, span_warning("You can't put [equipping] on [source], it's stuck to your hand!"))
 		return FALSE
+
 	return TRUE
 
 /// Start the equipping process. This is the proc you should yield in.
@@ -84,30 +86,29 @@
 /datum/strippable_item/proc/start_equip(atom/source, obj/item/equipping, mob/user)
 	if (warn_dangerous_clothing && isclothing(source))
 		source.visible_message(
-			"<span class='notice'>[user] tries to put [equipping] on [source].</span>",
-			"<span class='notice'>[user] tries to put [equipping] on you.</span>",
+			span_notice("[user] tries to put [equipping] on [source]."),
+			span_notice("[user] tries to put [equipping] on you."),
 			ignored_mobs = user,
 		)
 
-	to_chat(user, "<span class='notice'>You try to put [equipping] on [source]...</span>")
+		if(ishuman(source))
+			var/mob/living/carbon/human/victim_human = source
+			if(victim_human.key && !victim_human.client) // AKA braindead
+				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
+					var/list/new_entry = list(list(user.name, "tried equipping you with [equipping]", world.time))
+					LAZYADD(victim_human.afk_thefts, new_entry)
+
+	to_chat(user, span_notice("You try to put [equipping] on [source]..."))
 
 	var/log = "[key_name(source)] is having [equipping] put on them by [key_name(user)]"
-	source.log_message(log, LOG_ATTACK, color="red")
-	user.log_message(log, LOG_ATTACK, color="red", log_globally=FALSE)
+	user.log_message(log, LOG_ATTACK, color="red")
+	source.log_message(log, LOG_VICTIM, color="red", log_globally=FALSE)
 
 	return TRUE
 
 /// The proc that places the item on the source. This should not yield.
 /datum/strippable_item/proc/finish_equip(atom/source, obj/item/equipping, mob/user)
-	//SHOULD_NOT_SLEEP(TRUE)
-	SHOULD_CALL_PARENT(TRUE)
-
-	if(ishuman(source))
-		var/mob/living/carbon/human/victim_human = source
-		if(victim_human.key && !victim_human.client) // AKA braindead
-			if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
-				var/list/new_entry = list(list(user, "tried equipping you with [equipping]", world.time))
-				LAZYADD(victim_human.afk_thefts, new_entry)
+	SHOULD_NOT_SLEEP(TRUE)
 
 /// Tries to unequip the item from the given source.
 /// Returns TRUE/FALSE depending on if it is allowed.
@@ -135,29 +136,27 @@
 		return FALSE
 
 	source.visible_message(
-		"<span class='warning'>[user] tries to remove [source]'s [item].</span>",
-		"<span class='userdanger'>[user] tries to remove your [item].</span>",
+		span_warning("[user] tries to remove [source]'s [item.name]."),
+		span_userdanger("[user] tries to remove your [item.name]."),
 		ignored_mobs = user,
 	)
 
-	to_chat(user, "<span class='danger'>You try to remove [source]'s [item]...</span>")
-	source.log_message("[key_name(source)] is being stripped of [item] by [key_name(src)]", LOG_ATTACK, color="red")
-	user.log_message("[key_name(source)] is being stripped of [item] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
+	to_chat(user, span_danger("You try to remove [source]'s [item]..."))
+	user.log_message("[key_name(source)] is being stripped of [item] by [key_name(user)]", LOG_ATTACK, color="red")
+	source.log_message("[key_name(source)] is being stripped of [item] by [key_name(user)]", LOG_VICTIM, color="red", log_globally=FALSE)
 	item.add_fingerprint(source)
-
-	return TRUE
-
-/// The proc that unequips the item from the source. This should not yield.
-/datum/strippable_item/proc/finish_unequip(atom/source, obj/item/unequipping, mob/user)
-	//SHOULD_NOT_SLEEP(TRUE)
-	SHOULD_CALL_PARENT(TRUE)
 
 	if(ishuman(source))
 		var/mob/living/carbon/human/victim_human = source
 		if(victim_human.key && !victim_human.client) // AKA braindead
 			if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
-				var/list/new_entry = list(list(user, "tried unequipping your [unequipping]", world.time))
+				var/list/new_entry = list(list(user.name, "tried unequipping your [item.name]", world.time))
 				LAZYADD(victim_human.afk_thefts, new_entry)
+
+	return TRUE
+
+/// The proc that unequips the item from the source. This should not yield.
+/datum/strippable_item/proc/finish_unequip(atom/source, mob/user)
 
 /// Returns a STRIPPABLE_OBSCURING_* define to report on whether or not this is obscured.
 /datum/strippable_item/proc/get_obscuring(atom/source)
@@ -205,7 +204,7 @@
 		disable_warning = TRUE,
 		bypass_equip_delay_self = TRUE,
 	))
-		to_chat(user, "<span class='warning'>\The [equipping] doesn't fit in that place!</span>")
+		to_chat(user, span_warning("\The [equipping] doesn't fit in that place!"))
 		return FALSE
 
 	return TRUE
@@ -236,7 +235,6 @@
 	return TRUE
 
 /datum/strippable_item/mob_item_slot/finish_equip(atom/source, obj/item/equipping, mob/user)
-	..()
 	if (!ismob(source))
 		return FALSE
 
@@ -259,8 +257,7 @@
 
 	return start_unequip_mob(get_item(source), source, user)
 
-/datum/strippable_item/mob_item_slot/finish_unequip(atom/source, obj/item/unequipping, mob/user)
-	..()
+/datum/strippable_item/mob_item_slot/finish_unequip(atom/source, mob/user)
 	var/obj/item/item = get_item(source)
 	if (isnull(item))
 		return FALSE
@@ -286,8 +283,8 @@
 	if (!item.doStrip(user, source))
 		return FALSE
 
-	source.log_message("[key_name(source)] has been stripped of [item] by [key_name(user)]", LOG_ATTACK, color="red")
-	user.log_message("[key_name(source)] has been stripped of [item] by [key_name(user)]", LOG_ATTACK, color="red", log_globally=FALSE)
+	user.log_message("[key_name(source)] has been stripped of [item] by [key_name(user)]", LOG_ATTACK, color="red")
+	source.log_message("[key_name(source)] has been stripped of [item] by [key_name(user)]", LOG_VICTIM, color="red", log_globally=FALSE)
 
 	// Updates speed in case stripped speed affecting item
 	source.update_equipment_speed_mods()
@@ -423,7 +420,6 @@
 
 					strippable_item.finish_equip(owner, held_item, user)
 			else if (strippable_item.try_unequip(owner, user))
-				var/obj/item/stolen_item = strippable_item.get_item(owner)
 				LAZYORASSOCLIST(interactions, user, key)
 
 				var/should_unequip = strippable_item.start_unequip(owner, user)
@@ -438,13 +434,13 @@
 					return
 
 				// They changed the item in the meantime
-				if (stolen_item != item)
+				if (strippable_item.get_item(owner) != item)
 					return
 
 				if (!user.Adjacent(owner))
 					return
 
-				strippable_item.finish_unequip(owner, stolen_item, user)
+				strippable_item.finish_unequip(owner, user)
 		if ("alt")
 			var/key = params["key"]
 			var/datum/strippable_item/strippable_item = strippable.items[key]
@@ -475,19 +471,23 @@
 /datum/strip_menu/ui_host(mob/user)
 	return owner
 
+/datum/strip_menu/ui_state(mob/user)
+	return GLOB.always_state
+
 /datum/strip_menu/ui_status(mob/user, datum/ui_state/state)
 	. = ..()
 
-	if (isliving(user))
-		var/mob/living/living_user = user
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
 
 		if (
-			. == UI_UPDATE \
-			&& user.stat == CONSCIOUS \
-			&& living_user.resting == TRUE \
-			&& user.Adjacent(owner)
+			carbon_user.stat == CONSCIOUS \
+			&& carbon_user.Adjacent(owner)
 		)
 			return UI_INTERACTIVE
+	if(IsAdminGhost(user))
+		return UI_INTERACTIVE
+	return UI_UPDATE
 
 /// Creates an assoc list of keys to /datum/strippable_item
 /proc/create_strippable_list(types)
