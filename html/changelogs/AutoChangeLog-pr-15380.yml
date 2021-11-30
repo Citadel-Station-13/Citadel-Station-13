@@ -1,0 +1,7 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - balance: "Pellets now care about block woundwise"
+  - balance: "Pellet wound-bonus no longer stacks for the final calculation"
+  - balance: "Embeds no longer bypass full blocking."
+  - bugfix: "Shields now work properly against unarmed / mob attacks."
