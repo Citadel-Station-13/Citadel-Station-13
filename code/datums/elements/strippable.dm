@@ -478,11 +478,11 @@
 	. = ..()
 
 	if(iscarbon(user) || iscyborg(user))
-		var/mob/living/carbon/carbon_user = user
+		var/mob/living/living_user = user
 
 		if (
-			carbon_user.stat == CONSCIOUS \
-			&& carbon_user.Adjacent(owner)
+			living_user.stat == CONSCIOUS \
+			&& living_user.Adjacent(owner)
 		)
 			return UI_INTERACTIVE
 	if(IsAdminGhost(user))
