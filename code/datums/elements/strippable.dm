@@ -477,7 +477,7 @@
 /datum/strip_menu/ui_status(mob/user, datum/ui_state/state)
 	. = ..()
 
-	if(iscarbon(user) || iscyborg(user))
+	if(isliving(user))
 		var/mob/living/living_user = user
 
 		if (
@@ -487,7 +487,10 @@
 			return UI_INTERACTIVE
 	if(IsAdminGhost(user))
 		return UI_INTERACTIVE
-	return UI_UPDATE
+	if(user.Adjacent(owner))
+		return UI_UPDATE
+	else
+		return UI_DISABLED
 
 /// Creates an assoc list of keys to /datum/strippable_item
 /proc/create_strippable_list(types)
