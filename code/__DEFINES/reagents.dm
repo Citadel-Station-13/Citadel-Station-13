@@ -72,6 +72,12 @@
 #define REAGENT_FORCEONNEW			(1<<5)  //Forces a on_new() call without a data overhead
 #define REAGENT_SNEAKYNAME          (1<<6)  //When inverted, the inverted chem uses the name of the original chem
 #define REAGENT_SPLITRETAINVOL      (1<<7)  //Retains initial volume of chem when splitting
+#define REAGENT_ORGANIC_PROCESS		(1<<8)	//Can be processed by organic carbons - will otherwise slowly dissipate
+#define REAGENT_ROBOTIC_PROCESS		(1<<9)	//Can be processed by robotic carbons - will otherwise slowly dissipate
+
+#define REAGENT_ALL_PROCESS (REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS)	//expand this if you for some reason add more process flags
+
+#define INVALID_REAGENT_DISSIPATION 1		//How much of a reagent is removed per reagent tick if invalid processing-flag wise
 
 //Chemical reaction flags, for determining reaction specialties
 #define REACTION_CLEAR_IMPURE       (1<<0)  //Convert into impure/pure on reaction completion
