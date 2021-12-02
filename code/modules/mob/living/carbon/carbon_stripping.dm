@@ -111,7 +111,7 @@
 
 	return start_unequip_mob(get_item(source), source, user)
 
-/datum/strippable_item/hand/finish_unequip(atom/source, obj/item/unequipping, mob/user)
+/datum/strippable_item/hand/finish_unequip(atom/source, mob/user)
 	..()
 	var/obj/item/item = get_item(source)
 	if (isnull(item))
