@@ -184,7 +184,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	if (!istype(corgi_source))
 		return
 
-	user.put_in_hands(corgi_source.inventory_back)
+	finish_unequip_mob(corgi_source.inventory_back, corgi_source, user)
 	corgi_source.inventory_back = null
 	corgi_source.update_corgi_fluff()
 	corgi_source.regenerate_icons()
@@ -225,7 +225,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	if (!istype(corgi_source))
 		return
 
-	user.put_in_hands(corgi_source.pcollar)
+	finish_unequip_mob(corgi_source.pcollar, corgi_source, user)
 	corgi_source.pcollar = null
 	corgi_source.update_corgi_fluff()
 	corgi_source.regenerate_icons()
@@ -266,7 +266,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	if (!istype(corgi_source))
 		return
 
-	user.put_in_hands(corgi_source.access_card)
+	finish_unequip_mob(corgi_source.access_card, corgi_source, user)
 	corgi_source.access_card = null
 	corgi_source.update_corgi_fluff()
 	corgi_source.regenerate_icons()
