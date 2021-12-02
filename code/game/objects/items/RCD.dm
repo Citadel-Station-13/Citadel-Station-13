@@ -688,12 +688,11 @@ RLD
 	has_ammobar = TRUE
 
 	var/wallcost = 20
-	var/floorcost = 25
-	var/launchcost = 10
-	var/deconcost = 20
+	var/floorcost = 15
+	var/deconcost = 15
 
-	var/walldelay = 10
-	var/floordelay = 10
+	var/walldelay = 20
+	var/floordelay = 15
 	var/decondelay = 10
 
 	var/color_choice = null
@@ -721,9 +720,6 @@ RLD
 			mode = LIGHT_MODE
 			to_chat(user, "<span class='notice'>You change RLD's mode to 'Permanent Light Construction'.</span>")
 		if(LIGHT_MODE)
-			mode = GLOW_MODE
-			to_chat(user, "<span class='notice'>You change RLD's mode to 'Light Launcher'.</span>")
-		if(GLOW_MODE)
 			mode = REMOVE_MODE
 			to_chat(user, "<span class='notice'>You change RLD's mode to 'Deconstruct'.</span>")
 
@@ -820,19 +816,6 @@ RLD
 						FL.color = color_choice
 						FL.light_color = FL.color
 						return TRUE
-				return FALSE
-
-		if(GLOW_MODE)
-			if(useResource(launchcost, user))
-				activate()
-				to_chat(user, "<span class='notice'>You fire a glowstick!</span>")
-				var/obj/item/flashlight/glowstick/G  = new /obj/item/flashlight/glowstick(start)
-				G.color = color_choice
-				G.light_color = G.color
-				G.throw_at(A, 9, 3, user)
-				G.on = TRUE
-				G.update_brightness()
-				return TRUE
 			return FALSE
 
 /obj/item/construction/rld/mini

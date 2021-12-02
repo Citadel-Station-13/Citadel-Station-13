@@ -842,8 +842,8 @@
 	icon = 'icons/obj/lighting.dmi'
 	base_state = "floor"		// base description and icon_state
 	icon_state = "floor"
-	brightness = 5
-	nightshift_brightness = 4
-	layer = 2.5
+	brightness = 3
+	nightshift_brightness = 2
+	layer = 4.25
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"
