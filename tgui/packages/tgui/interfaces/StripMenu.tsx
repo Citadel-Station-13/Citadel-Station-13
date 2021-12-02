@@ -8,6 +8,9 @@ import { Window } from "../layouts";
 const ROWS = 5;
 const COLUMNS = 6;
 
+const ROWS_LONG = 4;
+const COLUMNS_LONG = 11;
+
 const BUTTON_DIMENSIONS = "50px";
 
 type GridSpotKey = string;
@@ -217,6 +220,142 @@ const SLOTS: Record<
   },
 };
 
+const SLOTS_LONG: Record<
+  string,
+  {
+    displayName: string;
+    gridSpot: GridSpotKey;
+    image?: string;
+    additionalComponent?: JSX.Element;
+  }
+> = {
+  eyes: {
+    displayName: "eyewear",
+    gridSpot: getGridSpotKey([0, 0]),
+    image: "inventory-glasses.png",
+  },
+
+  head: {
+    displayName: "headwear",
+    gridSpot: getGridSpotKey([0, 1]),
+    image: "inventory-head.png",
+  },
+
+  neck: {
+    displayName: "neckwear",
+    gridSpot: getGridSpotKey([1, 0]),
+    image: "inventory-neck.png",
+  },
+
+  mask: {
+    displayName: "mask",
+    gridSpot: getGridSpotKey([1, 1]),
+    image: "inventory-mask.png",
+  },
+
+  corgi_collar: {
+    displayName: "collar",
+    gridSpot: getGridSpotKey([1, 1]),
+    image: "inventory-collar.png",
+  },
+
+  ears: {
+    displayName: "earwear",
+    gridSpot: getGridSpotKey([1, 2]),
+    image: "inventory-ears.png",
+  },
+
+  parrot_headset: {
+    displayName: "headset",
+    gridSpot: getGridSpotKey([1, 2]),
+    image: "inventory-ears.png",
+  },
+
+  jumpsuit: {
+    displayName: "uniform",
+    gridSpot: getGridSpotKey([2, 0]),
+    image: "inventory-uniform.png",
+  },
+
+  suit: {
+    displayName: "suit",
+    gridSpot: getGridSpotKey([2, 1]),
+    image: "inventory-suit.png",
+  },
+
+  gloves: {
+    displayName: "gloves",
+    gridSpot: getGridSpotKey([2, 2]),
+    image: "inventory-gloves.png",
+  },
+
+  handcuffs: {
+    displayName: "handcuffs",
+    gridSpot: getGridSpotKey([2, 8]),
+  },
+
+  shoes: {
+    displayName: "shoes",
+    gridSpot: getGridSpotKey([3, 1]),
+    image: "inventory-shoes.png",
+  },
+
+  legcuffs: {
+    displayName: "legcuffs",
+    gridSpot: getGridSpotKey([3, 2]),
+  },
+
+  suit_storage: {
+    displayName: "suit storage item",
+    gridSpot: getGridSpotKey([3, 3]),
+    image: "inventory-suit_storage.png",
+  },
+
+  id: {
+    displayName: "ID",
+    gridSpot: getGridSpotKey([3, 4]),
+    image: "inventory-id.png",
+  },
+
+  belt: {
+    displayName: "belt",
+    gridSpot: getGridSpotKey([3, 5]),
+    image: "inventory-belt.png",
+  },
+
+  back: {
+    displayName: "backpack",
+    gridSpot: getGridSpotKey([3, 6]),
+    image: "inventory-back.png",
+  },
+
+  right_hand: {
+    displayName: "right hand",
+    gridSpot: getGridSpotKey([3, 7]),
+    image: "inventory-hand_r.png",
+    additionalComponent: <CornerText align="left">R</CornerText>,
+  },
+
+  left_hand: {
+    displayName: "left hand",
+    gridSpot: getGridSpotKey([3, 8]),
+    image: "inventory-hand_l.png",
+    additionalComponent: <CornerText align="right">L</CornerText>,
+  },
+
+  left_pocket: {
+    displayName: "left pocket",
+    gridSpot: getGridSpotKey([3, 9]),
+    image: "inventory-pocket.png",
+  },
+
+  right_pocket: {
+    displayName: "right pocket",
+    gridSpot: getGridSpotKey([3, 10]),
+    image: "inventory-pocket.png",
+  },
+};
+
 enum ObscuringLevel {
   Completely = 1,
   Hidden = 2,
@@ -254,24 +393,35 @@ type StripMenuItem =
 type StripMenuData = {
   items: Record<keyof typeof SLOTS, StripMenuItem>;
   name: string;
+  long_strip_menu: boolean;
 };
 
 export const StripMenu = (props, context) => {
   const { act, data } = useBackend<StripMenuData>(context);
 
   const gridSpots = new Map<GridSpotKey, string>();
-  for (const key of Object.keys(data.items)) {
-    gridSpots.set(SLOTS[key].gridSpot, key);
+  if (data.long_strip_menu) {
+    for (const key of Object.keys(data.items)) {
+      gridSpots.set(SLOTS_LONG[key].gridSpot, key);
+    }
+  } else {
+    for (const key of Object.keys(data.items)) {
+      gridSpots.set(SLOTS[key].gridSpot, key);
+    }
   }
 
   return (
-    <Window title={`Stripping ${data.name}`} width={400} height={400}>
+    <Window
+      title={`Stripping ${data.name}`}
+      width={data.long_strip_menu ? 620 : 400}
+      height={data.long_strip_menu ? 300 : 400}>
       <Window.Content>
         <Stack fill vertical>
-          {range(0, ROWS).map(row => (
+          {range(0, data.long_strip_menu ? ROWS_LONG : ROWS).map(row => (
             <Stack.Item key={row}>
               <Stack fill>
-                {range(0, COLUMNS).map(column => {
+                {range(0, data.long_strip_menu ? COLUMNS_LONG
+                  : COLUMNS).map(column => {
                   const key = getGridSpotKey([row, column]);
                   const keyAtSpot = gridSpots.get(key);
 

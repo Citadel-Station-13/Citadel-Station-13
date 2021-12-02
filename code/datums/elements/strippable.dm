@@ -366,6 +366,9 @@
 	// Human names will still show without "the", as they are proper nouns.
 	data["name"] = "\the [owner]"
 
+	/// Customize the strip menu
+	data["long_strip_menu"] = user.client.prefs.long_strip_menu
+
 	return data
 
 /datum/strip_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
