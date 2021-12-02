@@ -136,7 +136,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	if (!istype(corgi_source))
 		return
 
-	user.put_in_hands(corgi_source.inventory_head)
+	finish_unequip_mob(corgi_source.inventory_head, corgi_source, user)
 	corgi_source.inventory_head = null
 	corgi_source.update_corgi_fluff()
 	corgi_source.regenerate_icons()

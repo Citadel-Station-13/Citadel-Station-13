@@ -276,7 +276,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if (!istype(parrot_source))
 		return
 
-	parrot_source.ears.forceMove(parrot_source.drop_location())
+	finish_unequip_mob(parrot_source.ears, parrot_source, user)
 	parrot_source.ears = null
 
 /*
