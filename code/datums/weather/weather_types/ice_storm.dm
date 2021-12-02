@@ -19,7 +19,7 @@
 
 	area_type = /area/edina
 	protected_areas = list(/area/edina/protected)
-	target_trait = ZTRAIT_STATION
+	target_trait = ZTRAIT_ICESTORM
 
 	immunity_type = "rad"
 
