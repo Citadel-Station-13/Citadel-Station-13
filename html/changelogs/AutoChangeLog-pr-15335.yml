@@ -1,7 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - balance: "Synthetics gained quasi-immunity to most chemicals, excluding some core medical chems and a few specific disruptive ones."
-  - rscadd: "Health analyzer, ChemMaster and chemical analyzer interactions with the chemical processing flag system."
-  - bugfix: "System Cleaner should now always update health as opposed to before."
-  - balance: "system cleaner is now twice as effective."
