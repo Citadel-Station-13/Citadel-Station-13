@@ -36,6 +36,8 @@
 	if(ismob(mover))
 		if(mover in buckled_mobs)
 			return TRUE
+		if(HAS_TRAIT(mover, TRAIT_BEING_CARRIED))
+			return TRUE	//We're being carried and our carrier managed to pass, ergo, let us pass aswell.
 	var/mob/living/L = mover		//typecast first, check isliving and only check this if living using short circuit
 	if(isliving(L) && lying && L.lying)		//if we're both lying down and aren't already being thrown/shipped around, don't pass
 		return FALSE
