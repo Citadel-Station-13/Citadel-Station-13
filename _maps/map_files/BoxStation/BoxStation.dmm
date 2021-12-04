@@ -55990,7 +55990,9 @@
 /obj/item/wrench,
 /obj/item/clothing/head/helmet,
 /obj/item/assembly/signaler,
-/obj/machinery/light/small,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -61095,9 +61097,9 @@
 "pBd" = (
 /obj/machinery/power/apc{
 	areastring = "/area/maintenance/prison/starboard";
-	dir = 4;
+	dir = 8;
 	name = "Prison Central Maintenance APC";
-	pixel_x = 24
+	pixel_x = -24
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
