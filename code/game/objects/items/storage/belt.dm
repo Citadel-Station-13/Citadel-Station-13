@@ -125,7 +125,7 @@
 
 /obj/item/storage/belt/utility/syndicate/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
-	new /obj/item/wrench/combat(src)
+	new /obj/item/wrench(src)
 	new /obj/item/weldingtool/largetank(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)

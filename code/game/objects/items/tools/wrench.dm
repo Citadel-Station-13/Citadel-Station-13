@@ -130,39 +130,6 @@
 
 	return OXYLOSS
 
-/obj/item/wrench/combat
-	name = "combat wrench"
-	desc = "It's like a normal wrench but edgier. Can be found on the battlefield."
-	icon_state = "wrench_combat"
-	attack_verb = list("devastate", "brutalize", "commit a war crime against", "obliterate", "humiliate")
-	tool_behaviour = null
-	toolspeed = null
-
-/obj/item/wrench/combat/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/transforming, \
-		force_on = 6, \
-		throwforce_on = 10, \
-		hitsound_on = hitsound, \
-		w_class_on = WEIGHT_CLASS_NORMAL, \
-		clumsy_check = FALSE)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
-
-/obj/item/wrench/combat/proc/on_transform(obj/item/source, mob/user, active)
-	SIGNAL_HANDLER
-
-	if(active)
-		tool_behaviour = TOOL_WRENCH
-		toolspeed = 0.7
-
-	else
-		tool_behaviour = initial(tool_behaviour)
-		toolspeed = initial(toolspeed)
-
-	balloon_alert(user, "[name] [active ? "active, woe!":"restrained"]")
-	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
-	return COMPONENT_NO_DEFAULT_MESSAGE
-
 /obj/item/wrench/advanced
 	name = "advanced wrench"
 	desc = "A wrench that uses the same magnetic technology that abductor tools use, but slightly more ineffeciently."
