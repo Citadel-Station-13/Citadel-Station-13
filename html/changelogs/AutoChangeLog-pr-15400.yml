@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes: 
+  - rscadd: "You can now put in LaTeX equations in TGUI paper if you insert them between two $ dollar signs"
