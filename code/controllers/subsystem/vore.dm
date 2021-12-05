@@ -14,14 +14,14 @@ SUBSYSTEM_DEF(bellies)
 
 	var/static/list/belly_list = list()
 	var/list/currentrun = list()
-	var/ignored_bellies = 0
+	var/list/ignored_bellies = list()
 
 /datum/controller/subsystem/bellies/stat_entry()
-	..("#: [belly_list.len] | P: [ignored_bellies]")
+	..("#: [belly_list.len] | P: [ignored_bellies.len]")
 
 /datum/controller/subsystem/bellies/fire(resumed = 0)
 	if (!resumed)
-		ignored_bellies = 0
+		ignored_bellies = list()
 		src.currentrun = belly_list.Copy()
 
 	//cache for sanic speed (lists are references anyways)
@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(bellies)
 			belly_list -= B
 		else
 			if(B.process_belly(times_fired,wait) == SSBELLIES_IGNORED)
-				ignored_bellies++
+				ignored_bellies |= B
 
 		if (MC_TICK_CHECK)
 			return

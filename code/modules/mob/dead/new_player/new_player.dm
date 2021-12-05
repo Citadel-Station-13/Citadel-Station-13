@@ -547,11 +547,30 @@
 	if(!respawn_latejoin_check(notify = TRUE))
 		return FALSE
 
+	var/spawn_location
+	var/spawn_method
+	switch(client.prefs.spawn_preference)
+		if(SPAWN_VORE)
+			spawn_location = SSjob.vore_late_spawn(src)
+			spawn_method = SPAWN_VORE
+			if(!spawn_location)
+				to_chat(src, "<span class='warning'>You have failed to late-spawn using this method, please try another one.</span>")
+				return FALSE
+		if(SPAWN_CRYO)
+			spawn_location = SSjob.cryo_late_spawn(src)
+			spawn_method = SPAWN_CRYO
+			if(!spawn_location)
+				to_chat(src, "<span class='warning'>You have failed to late-spawn using this method, please try another one.</span>")
+				return FALSE
+		else
+			spawn_location = SSjob.arrivals_late_spawn(src)
+			spawn_method = SPAWN_ARRIVALS
+
 	var/arrivals_docked = TRUE
-	if(SSshuttle.arrivals)
+	if(SSshuttle.arrivals && (spawn_method == SPAWN_ARRIVALS))
 		close_spawn_windows()	//In case we get held up
 		if(SSshuttle.arrivals.damaged && CONFIG_GET(flag/arrivals_shuttle_require_safe_latejoin))
-			src << alert("The arrivals shuttle is currently malfunctioning! You cannot join.")
+			alert(src, "The arrivals shuttle is currently malfunctioning! You cannot join.")
 			return FALSE
 
 		if(CONFIG_GET(flag/arrivals_shuttle_require_undocked))
@@ -572,7 +591,7 @@
 	var/datum/job/job = SSjob.GetJob(rank)
 
 	if(job && !job.override_latejoin_spawn(character))
-		SSjob.SendToLateJoin(character)
+		SSjob.SendToLateJoin(character, TRUE, spawn_location)
 		if(!arrivals_docked)
 			var/atom/movable/screen/splash/Spl = new(character.client, TRUE)
 			Spl.Fade(TRUE)
@@ -590,10 +609,11 @@
 
 	if(humanc)	//These procs all expect humans
 		GLOB.data_core.manifest_inject(humanc, humanc.client, humanc.client.prefs)
-		if(SSshuttle.arrivals)
-			SSshuttle.arrivals.QueueAnnounce(humanc, rank)
+		/// This... i don't like this, it's a check to announce only if the shuttle is docked
+		if(SSshuttle.arrivals && spawn_method == SPAWN_ARRIVALS)
+			SSshuttle.arrivals.QueueAnnounce(humanc, rank, spawn_method)
 		else
-			AnnounceArrival(humanc, rank)
+			AnnounceArrival(humanc, rank, spawn_method)
 		AddEmploymentContract(humanc)
 		if(GLOB.highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")

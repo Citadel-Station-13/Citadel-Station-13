@@ -646,11 +646,30 @@ SUBSYSTEM_DEF(job)
 		return
 	..()
 
-/datum/controller/subsystem/job/proc/SendToLateJoin(mob/M, buckle = TRUE)
+/obj/belly/JoinPlayerHere(mob/M, buckle)
+	if(M.forceMove(src))
+		return
+	..()
+
+/obj/machinery/cryopod/JoinPlayerHere(mob/M, buckle)
+	if(M.forceMove(src))
+		occupant = M
+		name = "[name] ([occupant.name])"
+		add_fingerprint(M)
+		close_machine(M)
+		return
+	..()
+
+/datum/controller/subsystem/job/proc/SendToLateJoin(mob/M, buckle = TRUE, location)
 	var/atom/destination
 	if(M.mind && M.mind.assigned_role && length(GLOB.jobspawn_overrides[M.mind.assigned_role])) //We're doing something special today.
 		destination = pick(GLOB.jobspawn_overrides[M.mind.assigned_role])
 		destination.JoinPlayerHere(M, FALSE)
+		return
+
+	if(location)
+		destination = location
+		destination.JoinPlayerHere(M, buckle)
 		return
 
 	if(latejoin_trackers.len)
@@ -658,14 +677,72 @@ SUBSYSTEM_DEF(job)
 		destination.JoinPlayerHere(M, buckle)
 		return
 
+/datum/controller/subsystem/job/proc/vore_late_spawn(mob/M)
+	var/list/preds = list()
+	for(var/mob/living/pred in GLOB.mob_living_list)
+		if(pred.client && (pred.vore_flags & VORE_SPAWN) && is_station_level(pred.z))
+			preds += pred
+	if(!preds.len)
+		to_chat(M, "<b>No vore spawns available.</b>")
+		return FALSE
+	else
+		var/obj/belly/vore_spawn_gut
+		var/mob/living/pred = input(M, "Choose a Predator.", "Pred Spawnpoint") as null|anything in preds
+		if(!pred)
+			return FALSE
+		var/list/available_bellies = list()
+		for(var/obj/belly/belly in pred.vore_organs)
+			if(belly.vorespawn_blacklist)
+				continue
+			available_bellies += belly
+		vore_spawn_gut = input(M, "Choose a Belly.", "Belly Spawnpoint") as null|anything in available_bellies
+		if(!vore_spawn_gut)
+			return FALSE
+		to_chat(M, "<b><span class='warning'>[pred] has received your spawn request. Please wait.</span></b>")
+		log_admin("[key_name(M)] has requested to vore spawn into [key_name(pred)]")
+		message_admins("[key_name(M)] has requested to vore spawn into [key_name(pred)]")
+
+		var/confirm = alert(pred, "[M.client.prefs.real_name] is attempting to spawn into your [vore_spawn_gut]. Let them?", "Confirm", "No", "Yes")
+		var/message = strip_html(input(pred,"Do you want to leave them a message?")as text|null)
+		if(message)
+			to_chat(M, "<span class='notice'>[pred] message : [message]</span>")
+		if(confirm != "Yes")
+			to_chat(M, "<span class='warning'>[pred] has declined your spawn request.</span>")
+			return FALSE
+		if(!vore_spawn_gut || QDELETED(vore_spawn_gut))
+			to_chat(M, "<span class='warning'>Somehow, the belly you were trying to enter no longer exists.</span>")
+			return FALSE
+		if(pred.stat == UNCONSCIOUS || pred.stat == DEAD)
+			to_chat(M, "<span class='warning'>[pred] is not conscious.</span>")
+			to_chat(pred, "<span class='warning'>You must be conscious to accept.</span>")
+			return FALSE
+		if(!(is_station_level(pred.z)))
+			to_chat(M, "<span class='warning'>[pred] is no longer in station grounds.</span>")
+			to_chat(pred, "<span class='warning'>You must be within station grounds to accept.</span>")
+			return FALSE
+		log_admin("[key_name(M)] has vore spawned into [key_name(pred)]")
+		message_admins("[key_name(M)] has vore spawned into [key_name(pred)]")
+		to_chat(M, "<span class='notice'>You have been spawned via vore. You are free to roleplay how you got there as you please, such as teleportation or having had already been there.</span>")
+		to_chat(pred, "<span class='notice'>Your prey has spawned via vore. You are free to roleplay this how you please, such as teleportation or having had already been there.</span>")
+		return vore_spawn_gut
+
+/datum/controller/subsystem/job/proc/cryo_late_spawn(mob/M)
+	for(var/obj/machinery/cryopod/cryopod in GLOB.machines)
+		var/area/pod_area = get_area(cryopod)
+		if(cryopod.occupant || !is_station_level(cryopod.z) || (cryopod.stat & NOPOWER) || !(pod_area.area_flags & BLOBS_ALLOWED) || istype(pod_area, /area/security/prison))
+			continue
+		return cryopod
+	to_chat(M, "<span class='boldwarning'>No cryopods available.</span>")
+
+/datum/controller/subsystem/job/proc/arrivals_late_spawn(mob/M, buckle = TRUE)
+	var/atom/destination
 	//bad mojo
 	var/area/shuttle/arrival/A = GLOB.areas_by_type[/area/shuttle/arrival]
 	if(A)
 		//first check if we can find a chair
 		var/obj/structure/chair/C = locate() in A
 		if(C)
-			C.JoinPlayerHere(M, buckle)
-			return
+			return C
 
 		//last hurrah
 		var/list/avail = list()
@@ -674,19 +751,17 @@ SUBSYSTEM_DEF(job)
 				avail += T
 		if(avail.len)
 			destination = pick(avail)
-			destination.JoinPlayerHere(M, FALSE)
-			return
+			return destination
 
 	//pick an open spot on arrivals and dump em
 	var/list/arrivals_turfs = shuffle(get_area_turfs(/area/shuttle/arrival))
 	if(arrivals_turfs.len)
 		for(var/turf/T in arrivals_turfs)
 			if(!is_blocked_turf(T, TRUE))
-				T.JoinPlayerHere(M, FALSE)
-				return
+				return T
 		//last chance, pick ANY spot on arrivals and dump em
 		destination = arrivals_turfs[1]
-		destination.JoinPlayerHere(M, FALSE)
+		return destination
 	else
 		var/msg = "Unable to send mob [M] to late join!"
 		message_admins(msg)

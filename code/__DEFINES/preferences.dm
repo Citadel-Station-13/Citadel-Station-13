@@ -95,3 +95,8 @@
 #define CHAOS_MED "Medium"
 #define CHAOS_HIGH "High"
 #define CHAOS_MAX "Maximum"
+
+/// Custom Late-Spawn Locations
+#define SPAWN_ARRIVALS	"Arrivals"
+#define SPAWN_CRYO		"Cryogenics"
+#define SPAWN_VORE		"A predator's belly"

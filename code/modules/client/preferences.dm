@@ -192,6 +192,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/belly_prefs = list()
 	var/vore_taste = "nothing in particular"
 	var/vore_smell = null
+	var/vore_skull = "human skull"
 	var/toggleeatingnoise = TRUE
 	var/toggledigestionnoise = TRUE
 	var/hound_sleeper = TRUE
@@ -243,6 +244,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/list/tcg_cards = list()
 	var/list/tcg_decks = list()
+
+	var/spawn_preference = SPAWN_ARRIVALS
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -318,6 +321,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<center><h2>Occupation Choices</h2>"
 			dat += "<a href='?_src_=prefs;preference=job;task=menu'>Set Occupation Preferences</a><br></center>"
+			dat += "<center><h2>Latejoin Location Choice</h2>"
+			dat += "<a href ='?_src_=prefs;preference=spawn_preference;task=input'>[spawn_preference]</a><br></center>"
 			if(CONFIG_GET(flag/roundstart_traits))
 				dat += "<center><h2>Quirk Setup</h2>"
 				dat += "<a href='?_src_=prefs;preference=trait;task=menu'>Configure Quirks</a><br></center>"
@@ -2351,6 +2356,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					else
 						jumpsuit_style = PREF_SUIT
 
+				if("spawn_preference")
+					var/new_spawn_preference = input(user, "Choose your character's spawn preference:", "Character Preference") as null|anything in GLOB.possible_spawns
+					if(new_spawn_preference)
+						spawn_preference = new_spawn_preference
 
 				if("uplink_loc")
 					var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference") as null|anything in GLOB.uplink_spawn_loc_list

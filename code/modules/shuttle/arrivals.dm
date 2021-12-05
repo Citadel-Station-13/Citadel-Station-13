@@ -193,11 +193,11 @@
 	while(mode != SHUTTLE_CALL && !damaged)
 		stoplag()
 
-/obj/docking_port/mobile/arrivals/proc/QueueAnnounce(mob, rank)
+/obj/docking_port/mobile/arrivals/proc/QueueAnnounce(mob, rank, spawned_at)
 	if(mode != SHUTTLE_CALL)
-		AnnounceArrival(mob, rank)
+		AnnounceArrival(mob, rank, spawned_at)
 	else
-		LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
+		LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank, spawned_at))
 
 /obj/docking_port/mobile/arrivals/vv_edit_var(var_name, var_value)
 	switch(var_name)

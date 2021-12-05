@@ -33,9 +33,11 @@
 	var/autotransferchance = 0 				// % Chance of prey being autotransferred to transfer location
 	var/autotransferwait = 10 				// Time between trying to transfer.
 	var/can_taste = FALSE					// If this belly prints the flavor of prey when it eats someone.
+	var/bulge_size = 0.25					// The minimum size the prey has to be in order to show up on examine.
+	var/shrink_grow_size = 1				// This horribly named variable determines the minimum/maximum size it will shrink/grow prey to.
 
 	var/tmp/digest_mode = DM_HOLD			// Whether or not to digest. Default to not digest.
-	var/tmp/list/digest_modes = list(DM_HOLD,DM_DIGEST,DM_HEAL,DM_NOISY)	// Possible digest modes
+	var/tmp/list/digest_modes = list(DM_HOLD,DM_DIGEST,DM_HEAL,DM_NOISY,DM_ABSORB,DM_UNABSORB,DM_DRAIN,DM_SHRINK,DM_GROW,DM_SIZE_STEAL)	// Possible digest modes
 	var/tmp/mob/living/owner				// The mob whose belly this is.
 	var/tmp/list/internal_contents = list()	// People/Things you've eaten into this belly!
 	var/tmp/is_full							// Flag for if digested remeans are present. (for disposal messages)
@@ -92,6 +94,10 @@
 		"They have something solid in their %belly!",
 		"It looks like they have something in their %belly!")
 
+	var/list/examine_messages_absorbed = list(
+		"Their body looks somewhat larger than usual around the area of their %belly.",
+		"Their %belly looks larger than usual.")
+
 	//Mostly for being overridden on precreated bellies on mobs. Could be VV'd into
 	//a carbon's belly if someone really wanted. No UI for carbons to adjust this.
 	//List has indexes that are the digestion mode strings, and keys that are lists of strings.
@@ -119,6 +125,8 @@
 	new_belly.escapechance = escapechance
 	new_belly.transferchance = transferchance
 	new_belly.transferlocation = transferlocation
+	new_belly.bulge_size = bulge_size
+	new_belly.shrink_grow_size = shrink_grow_size
 
 	//// Object-holding variables
 	//struggle_messages_outside - strings

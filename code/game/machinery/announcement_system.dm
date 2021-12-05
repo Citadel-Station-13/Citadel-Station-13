@@ -21,6 +21,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	var/arrivalToggle = TRUE
 	var/newhead = "%PERSON, %RANK, is the department head."
 	var/newheadToggle = TRUE
+	var/latecryo = "%PERSON, %RANK, has completed cryogenic revival."
+	var/latecryoToggle = TRUE
+	var/latevore = "%PERSON, %RANK, has joined the shift via unknown means."
+	var/latevoreToggle = TRUE
 	var/cryostorage = "%PERSON, %RANK, has been moved into cryogenic storage." // this shouldnt be changed
 
 	var/greenlight = "Light_Green"
@@ -83,6 +87,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 	if(message_type == "ARRIVAL" && arrivalToggle)
 		message = CompileText(arrival, user, rank)
+	else if(message_type == "LATECRYO" && latecryoToggle)
+		message = CompileText(latecryo, user, rank)
+	else if(message_type == "LATEVORE" && latevoreToggle)
+		message = CompileText(latevore, user, rank)
 	else if(message_type == "NEWHEAD" && newheadToggle)
 		message = CompileText(newhead, user, rank)
 	else if(message_type == "CRYOSTORAGE")
@@ -108,6 +116,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	data["arrivalToggle"] = arrivalToggle
 	data["newhead"] = newhead
 	data["newheadToggle"] = newheadToggle
+	data["latecryo"] = latecryo
+	data["latecryoToggle"] = latecryoToggle
+	data["latevore"] = latevore
+	data["latevoreToggle"] = latevoreToggle
 	return data
 
 /obj/machinery/announcement_system/ui_act(action, param)
@@ -135,12 +147,30 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 			if(NewMessage)
 				newhead = NewMessage
 				log_game("The head announcement was updated: [NewMessage] by:[key_name(usr)]")
+		if("LateCryoText")
+			var/NewMessage = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
+			if(!usr.canUseTopic(src, !issilicon(usr)))
+				return
+			if(NewMessage)
+				latecryo = NewMessage
+				log_game("The cryo arrival announcement was updated: [NewMessage] by:[key_name(usr)]")
+		if("LateVoreText")
+			var/NewMessage = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
+			if(!usr.canUseTopic(src, !issilicon(usr)))
+				return
+			if(NewMessage)
+				latevore = NewMessage
+				log_game("The vore arrival announcement was updated: [NewMessage] by:[key_name(usr)]")
 		if("NewheadToggle")
 			newheadToggle = !newheadToggle
 			update_icon()
 		if("ArrivalToggle")
 			arrivalToggle = !arrivalToggle
 			update_icon()
+		if("LateCryoToggle")
+			latecryoToggle = !latecryoToggle
+		if("LateVoreToggle")
+			latevoreToggle = !latevoreToggle
 	add_fingerprint(usr)
 
 /obj/machinery/announcement_system/attack_robot(mob/living/silicon/user)
@@ -160,6 +190,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 	arrival = pick("#!@%ERR-34%2 CANNOT LOCAT@# JO# F*LE!", "CRITICAL ERROR 99.", "ERR)#: DA#AB@#E NOT F(*ND!")
 	newhead = pick("OV#RL()D: \[UNKNOWN??\] DET*#CT)D!", "ER)#R - B*@ TEXT F*O(ND!", "AAS.exe is not responding. NanoOS is searching for a solution to the problem.")
+	latecryo = pick("#!@%ERR-34%2 CANNOT LOCAT@# JO# F*LE!", "CRITICAL ERROR 99.", "ERR)#: DA#AB@#E NOT F(*ND!")
+	latevore = pick("#!@%ERR-34%2 CANNOT LOCAT@# JO# F*LE!", "CRITICAL ERROR 99.", "ERR)#: DA#AB@#E NOT F(*ND!")
 
 /obj/machinery/announcement_system/emp_act(severity)
 	. = ..()

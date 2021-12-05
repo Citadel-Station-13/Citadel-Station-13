@@ -563,7 +563,7 @@
 
 	return A.loc
 
-/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
+/proc/AnnounceArrival(mob/living/carbon/human/character, rank, spawned_at)
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))
 		return
 	var/area/A = get_area(character)
@@ -576,8 +576,17 @@
 	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
 		return
 
+	var/announce_type
+	switch(spawned_at)
+		if(SPAWN_ARRIVALS)
+			announce_type = "ARRIVAL"
+		if(SPAWN_CRYO)
+			announce_type = "LATECRYO"
+		if(SPAWN_VORE)
+			announce_type = "LATEVORE"
+
 	var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
-	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
+	announcer.announce(announce_type, character.real_name, rank, list()) //make the list empty to make it announce it in common
 
 /proc/lavaland_equipment_pressure_check(turf/T)
 	. = FALSE

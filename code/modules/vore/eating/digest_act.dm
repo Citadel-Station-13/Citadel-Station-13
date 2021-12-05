@@ -3,7 +3,7 @@
 //return non-negative integer: Amount of nutrition/charge gained (scaled to nutrition, other end can multiply for charge scale).
 
 // Ye default implementation.
-/obj/item/proc/digest_act(var/atom/movable/item_storage = null)
+/obj/item/proc/digest_act(atom/movable/item_storage = null)
 	for(var/obj/item/O in contents)
 		if(istype(O,/obj/item/storage)) //Dump contents from dummy pockets.
 			for(var/obj/item/SO in O)
@@ -67,12 +67,14 @@
 	return FALSE
 /obj/item/storage/digest_act(...)
 	return FALSE
+/obj/item/digestion_remains/digest_act(...)
+	return FALSE
 
 /////////////
 // Some special treatment
 /////////////
 
-/obj/item/reagent_containers/food/digest_act(var/atom/movable/item_storage = null)
+/obj/item/reagent_containers/food/digest_act(atom/movable/item_storage = null)
 	if(isbelly(item_storage))
 		var/obj/belly/B = item_storage
 		if(ishuman(B.owner))
@@ -84,11 +86,11 @@
 
 	. = ..()
 
-/obj/item/organ/digest_act(var/atom/movable/item_storage = null)
+/obj/item/organ/digest_act(atom/movable/item_storage = null)
 	if((. = ..()))
 		. += 70 //Organs give a little more
 
-/obj/item/storage/digest_act(var/atom/movable/item_storage = null)
+/obj/item/storage/digest_act(atom/movable/item_storage = null)
 	for(var/obj/item/I in contents)
 		I.screen_loc = null
 
@@ -97,6 +99,6 @@
 /////////////
 // Some more complicated stuff
 /////////////
-/obj/item/mmi/digital/posibrain/digest_act(var/atom/movable/item_storage = null)
+/obj/item/mmi/digital/posibrain/digest_act(atom/movable/item_storage = null)
 	//Replace this with a VORE setting so all types of posibrains can/can't be digested on a whim
 	return FALSE

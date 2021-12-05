@@ -212,6 +212,9 @@ GLOBAL_LIST_INIT(backbaglist, list(DBACKPACK, DSATCHEL, DDUFFELBAG, //everything
 #define PREF_SKIRT "Jumpskirt"
 GLOBAL_LIST_INIT(jumpsuitlist, list(PREF_SUIT, PREF_SKIRT))
 
+/// Spawns locs
+GLOBAL_LIST_INIT(possible_spawns, list(SPAWN_ARRIVALS, SPAWN_CRYO, SPAWN_VORE))
+
 //Uplink spawn loc
 #define UPLINK_PDA		"PDA"
 #define UPLINK_RADIO	"Radio"

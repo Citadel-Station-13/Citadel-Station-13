@@ -15,12 +15,16 @@ export const AutomatedAnnouncement = (props, context) => {
     arrival,
     newheadToggle,
     newhead,
+    latecryoToggle,
+    latecryo,
+    latevoreToggle,
+    latevore,
   } = data;
   return (
     <Window
       title="Automated Announcement System"
       width={500}
-      height={225}>
+      height={330}>
       <Window.Content>
         <Section
           title="Arrival Announcement"
@@ -71,6 +75,60 @@ export const AutomatedAnnouncement = (props, context) => {
                 fluid
                 value={newhead}
                 onChange={(e, value) => act('NewheadText', {
+                  newText: value,
+                })} />
+            </LabeledList.Item>
+          </LabeledList>
+        </Section>
+        <Section
+          title="Cryogenic Awakening Announcement"
+          buttons={(
+            <Button
+              icon={latecryoToggle ? 'power-off' : 'times'}
+              selected={latecryoToggle}
+              content={latecryoToggle ? 'On' : 'Off'}
+              onClick={() => act('LateCryoToggle')} />
+          )}>
+          <LabeledList>
+            <LabeledList.Item
+              label="Message"
+              buttons={(
+                <Button
+                  icon="info"
+                  tooltip={TOOLTIP_TEXT}
+                  tooltipPosition="left" />
+              )}>
+              <Input
+                fluid
+                value={latecryo}
+                onChange={(e, value) => act('LateCryoText', {
+                  newText: value,
+                })} />
+            </LabeledList.Item>
+          </LabeledList>
+        </Section>
+        <Section
+          title="Unknown Method Announcement"
+          buttons={(
+            <Button
+              icon={latevoreToggle ? 'power-off' : 'times'}
+              selected={latevoreToggle}
+              content={latevoreToggle ? 'On' : 'Off'}
+              onClick={() => act('LateVoreToggle')} />
+          )}>
+          <LabeledList>
+            <LabeledList.Item
+              label="Message"
+              buttons={(
+                <Button
+                  icon="info"
+                  tooltip={TOOLTIP_TEXT}
+                  tooltipPosition="left" />
+              )}>
+              <Input
+                fluid
+                value={latevore}
+                onChange={(e, value) => act('LateVoreText', {
                   newText: value,
                 })} />
             </LabeledList.Item>

@@ -252,6 +252,18 @@ const VoreSelectedBellyControls = (props, context) => {
       }>
         {desc}
       </LabeledList.Item>
+      <LabeledList.Item label="Mode Addons">
+        {addons.length && addons.join(", ") || "None"}
+        <Button
+          onClick={() => act("set_attribute", { attribute: "b_addons" })}
+          ml={1}
+          icon="plus" />
+      </LabeledList.Item>
+      <LabeledList.Item label="Item Mode">
+        <Button
+          onClick={() => act("set_attribute", { attribute: "b_item_mode" })}
+          content={item_mode} />
+      </LabeledList.Item>
       <LabeledList.Item label="Vore Verb">
         <Button
           onClick={() => act("set_attribute", { attribute: "b_verb" })}
@@ -273,6 +285,39 @@ const VoreSelectedBellyControls = (props, context) => {
         <Button
           onClick={() => act("set_attribute", { attribute: "b_msgs", msgtype: "em" })}
           content="Examine Message (when full)" />
+        <Button
+          onClick={() => act("set_attribute", { attribute: "b_msgs", msgtype: "ema" })}
+          content="Examine Message (with absorbed victims)" />
+        <Button
+          onClick={() => act("set_attribute", { attribute: "b_msgs", msgtype: "im_hold" })}
+          content="Idle Messages (Hold)" />
+        <Button
+          onClick={() => act("set_attribute", { attribute: "b_msgs", msgtype: "im_digest" })}
+          content="Idle Messages (Digest)" />
+        <Button
+          onClick={() => act("set_attribute", { attribute: "b_msgs", msgtype: "im_absorb" })}
+          content="Idle Messages (Absorb)" />
+        <Button
+          onClick={() => act("set_attribute", { attribute: "b_msgs", msgtype: "im_unabsorb" })}
+          content="Idle Messages (Unabsorb)" />
+        <Button
+          onClick={() => act("set_attribute", { attribute: "b_msgs", msgtype: "im_drain" })}
+          content="Idle Messages (Drain)" />
+        <Button
+          onClick={() => act("set_attribute", { attribute: "b_msgs", msgtype: "im_heal" })}
+          content="Idle Messages (Heal)" />
+        <Button
+          onClick={() => act("set_attribute", { attribute: "b_msgs", msgtype: "im_steal" })}
+          content="Idle Messages (Size Steal)" />
+        <Button
+          onClick={() => act("set_attribute", { attribute: "b_msgs", msgtype: "im_shrink" })}
+          content="Idle Messages (Shrink)" />
+        <Button
+          onClick={() => act("set_attribute", { attribute: "b_msgs", msgtype: "im_grow" })}
+          content="Idle Messages (Grow)" />
+        <Button
+          onClick={() => act("set_attribute", { attribute: "b_msgs", msgtype: "im_egg" })}
+          content="Idle Messages (Encase In Egg)" />
         <Button
           color="red"
           onClick={() => act("set_attribute", { attribute: "b_msgs", msgtype: "reset" })}
@@ -358,6 +403,25 @@ const VoreSelectedBellyOptions = (props, context) => {
             <Button
               onClick={() => act("set_attribute", { attribute: "b_bulge_size" })}
               content={bulge_size * 100 + "%"} />
+          </LabeledList.Item>
+          <LabeledList.Item label="Display Absorbed Examines">
+            <Button
+              onClick={() => act("set_attribute", { attribute: "b_display_absorbed_examine" })}
+              icon={display_absorbed_examine ? "toggle-on" : "toggle-off"}
+              selected={display_absorbed_examine}
+              content={display_absorbed_examine ? "True" : "False"} />
+          </LabeledList.Item>
+          <LabeledList.Item label="Shrink/Grow Size">
+            <Button
+              onClick={() => act("set_attribute", { attribute: "b_grow_shrink" })}
+              content={shrink_grow_size * 100 + "%"} />
+          </LabeledList.Item>
+          <LabeledList.Item label="Vore Spawn Blacklist">
+            <Button
+              onClick={() => act("set_attribute", { attribute: "b_vorespawn_blacklist" })}
+              icon={vorespawn_blacklist ? "toggle-on" : "toggle-off"}
+              selected={vorespawn_blacklist}
+              content={vorespawn_blacklist ? "Yes" : "No"} />
           </LabeledList.Item>
         </LabeledList>
       </Flex.Item>
@@ -505,6 +569,43 @@ const VoreSelectedBellyInteractions = (props, context) => {
           </LabeledList.Item>
         </LabeledList>
       ) : "These options only display while interactions are turned on."}
+      <Section title="Auto-Transfer Options" buttons={
+        <Button
+          onClick={() => act("set_attribute", { attribute: "b_autotransfer_enabled" })}
+          icon={autotransfer_enabled ? "toggle-on" : "toggle-off"}
+          selected={autotransfer_enabled}
+          content={autotransfer_enabled ? "Auto-Transfer Enabled" : "Auto-Transfer Disabled"} />
+      }>
+        {autotransfer_enabled ? (
+          <LabeledList>
+            <LabeledList.Item label="Auto-Transfer Chance">
+              <Button
+                content={autotransfer.autotransferchance + "%"}
+                onClick={() => act("set_attribute", { attribute: "b_autotransferchance" })} />
+            </LabeledList.Item>
+            <LabeledList.Item label="Auto-Transfer Time">
+              <Button
+                content={autotransfer.autotransferwait / 10 + "s"}
+                onClick={() => act("set_attribute", { attribute: "b_autotransferwait" })} />
+            </LabeledList.Item>
+            <LabeledList.Item label="Auto-Transfer Location">
+              <Button
+                content={autotransfer.autotransferlocation ? autotransfer.autotransferlocation : "Disabled"}
+                onClick={() => act("set_attribute", { attribute: "b_autotransferlocation" })} />
+            </LabeledList.Item>
+            <LabeledList.Item label="Auto-Transfer Min Amount">
+              <Button
+                content={autotransfer.autotransfer_min_amount}
+                onClick={() => act("set_attribute", { attribute: "b_autotransfer_min_amount" })} />
+            </LabeledList.Item>
+            <LabeledList.Item label="Auto-Transfer Max Amount">
+              <Button
+                content={autotransfer.autotransfer_max_amount}
+                onClick={() => act("set_attribute", { attribute: "b_autotransfer_max_amount" })} />
+            </LabeledList.Item>
+          </LabeledList>
+        ) : "These options only display while Auto-Transfer is enabled."}
+      </Section>
     </Section>
   );
 };
@@ -791,6 +892,9 @@ const VoreUserPreferences = (props, context) => {
     show_vore_fx,
     lickable,
     smellable,
+    skull_type,
+    digest_leave_remains,
+    latejoin_vore,
   } = data.prefs;
 
   const {
@@ -884,7 +988,31 @@ const VoreUserPreferences = (props, context) => {
               : "Click here to turn on digestion sounds.")}
             content={digestion_sounds ? "Digestion Sounds Enabled" : "Digestion Sounds Disabled"} />
         </Flex.Item>
-        <Flex.Item basis="100%">
+        <Flex.Item basis="33%">
+          <Button
+            onClick={() => act("toggle_latejoin_vore")}
+            icon={latejoin_vore ? "toggle-on" : "toggle-off"}
+            selected={latejoin_vore}
+            fluid
+            tooltip={!latejoin_vore
+              ? "Click here to turn off vorish spawnpoint."
+              : "Click here to turn on vorish spawnpoint."}
+            content={latejoin_vore ? "Vore Spawn Enabled" : "Vore Spawn Disabled"} />
+        </Flex.Item>
+        <Flex.Item basis="33%">
+          <Button
+            onClick={() => act("toggle_leaveremains")}
+            icon={digest_leave_remains ? "toggle-on" : "toggle-off"}
+            selected={digest_leave_remains}
+            fluid
+            tooltip={!digest_leave_remains
+              ? "Regardless of Predator Setting, you will not leave remains behind."
+            + " Click this to allow leaving remains."
+              : "Your Predator must have this setting enabled in their belly modes to allow remains to show up,"
+            + " if they do not, they will not leave your remains behind, even with this on. Click to disable remains."}
+            content={digest_leave_remains ? "Allow Leaving Remains" : "Do Not Allow Leaving Remains"} />
+        </Flex.Item>
+        <Flex.Item basis="33%">
           <Button
             onClick={() => act("toggle_vore_fx")}
             icon={show_vore_fx ? "expand" : "toggle-off"}
@@ -935,6 +1063,15 @@ const VoreUserPreferences = (props, context) => {
             content="Set Smell"
             icon="wind"
             onClick={() => act("setsmell")} />
+        </Flex.Item>
+      </Flex>
+      <Flex>
+        <Flex.Item basis="100%">
+          <Button
+            fluid
+            content={"Choose skull, Current: " + (skull_type ? skull_type : "ERROR")}
+            icon="skull"
+            onClick={() => act("set_skull")} />
         </Flex.Item>
       </Flex>
       <Section>

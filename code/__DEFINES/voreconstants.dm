@@ -1,11 +1,36 @@
 // Overhauled vore system
-#define DM_HOLD "Hold"
-#define DM_DIGEST "Digest"
-#define DM_HEAL "Heal"
-#define DM_NOISY "Noisy"
-#define DM_DRAGON "Dragon"
-#define DM_ABSORB "Absorb"
-#define DM_UNABSORB "Un-absorb"
+#define DM_HOLD 		"Hold"
+#define DM_DIGEST 		"Digest"
+#define DM_HEAL 		"Heal"
+#define DM_NOISY 		"Noisy"
+#define DM_DRAGON 		"Dragon"
+#define DM_ABSORB 		"Absorb"
+#define DM_UNABSORB 	"Un-absorb"
+#define DM_DRAIN		"Drain"
+#define DM_SHRINK		"Shrink"
+#define DM_GROW			"Grow"
+#define DM_SIZE_STEAL	"Size Steal"
+#define DM_EGG 			"Encase In Egg"
+
+//Belly Reagents mode flags
+#define DM_FLAG_REAGENTSNUTRI	(1<<0)
+#define DM_FLAG_REAGENTSDIGEST	(1<<1)
+#define DM_FLAG_REAGENTSABSORB	(1<<2)
+#define DM_FLAG_REAGENTSDRAIN	(1<<3)
+
+//Addon mode flags
+#define DM_FLAG_NUMBING			(1<<0)
+#define DM_FLAG_STRIPPING		(1<<1)
+#define DM_FLAG_LEAVEREMAINS	(1<<2)
+#define DM_FLAG_THICKBELLY		(1<<3)
+#define DM_FLAG_AFFECTWORN		(1<<4)
+#define DM_FLAG_JAMSENSORS		(1<<5)
+
+//Item related modes
+#define IM_HOLD									"Hold"
+#define IM_DIGEST_FOOD							"Digest (Food Only)"
+#define IM_DIGEST								"Digest"
+#define IM_DIGEST_PARALLEL						"Digest (Dispersed Damage)" //CHOMPedit
 
 /// Can be digested?
 #define DIGESTABLE 		(1<<0)
@@ -31,13 +56,17 @@
 #define MOBVORE			(1<<10)
 /// Show fullscreen effect
 #define SHOW_VORE_FX	(1<<11)
+/// Leave remains after death?
+#define LEAVE_REMAINS	(1<<12)
+/// Am i a valid spot for late-spawning?
+#define VORE_SPAWN		(1<<13)
 
 /*
  * # Used for sanitizing saves
  *
  * - Add the new flag to the end of the list when adding a new flag
  */
-#define ALL_VORE_FLAGS	DIGESTABLE | DEVOURABLE | FEEDING | NO_VORE | ABSORBED | VORE_INIT | VOREPREF_INIT | LICKABLE | SMELLABLE | ABSORBABLE | MOBVORE | SHOW_VORE_FX
+#define ALL_VORE_FLAGS	DIGESTABLE | DEVOURABLE | FEEDING | NO_VORE | ABSORBED | VORE_INIT | VOREPREF_INIT | LICKABLE | SMELLABLE | ABSORBABLE | MOBVORE | SHOW_VORE_FX | LEAVE_REMAINS | VORE_SPAWN
 
 #define isbelly(A) istype(A, /obj/belly)
 
@@ -115,3 +144,12 @@ GLOBAL_LIST_INIT(prey_release_sounds, list(
 		"Splatter" = 'sound/effects/splat.ogg',
 		"None" = null
 		))
+
+/proc/init_digest_modes()
+	for(var/datum/digest_mode/iteration as anything in typesof(/datum/digest_mode))
+		var/datum/digest_mode/DM = new iteration()
+		GLOB.digest_modes[DM.id] = DM
+
+/proc/init_skull_types()
+	for(var/obj/item/digestion_remains/skull/skull as anything in typesof(/obj/item/digestion_remains/skull))
+		GLOB.skull_types[initial(skull.name)] = skull

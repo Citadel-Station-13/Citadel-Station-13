@@ -1,3 +1,7 @@
+/atom/movable
+	/// Counting current belly process cycles for autotransfer.
+	var/belly_cycles = 0
+
 ///////////////////// Mob Living /////////////////////
 /mob/living
 	var/vore_flags = 0
@@ -11,6 +15,8 @@
 	var/vore_taste = null
 	/// What the character smells like
 	var/vore_smell = null
+	/// What is the character's skull type
+	var/vore_skull = "human skull"
 	/// Next time vore sounds get played for the prey, do not change manually as it is intended to be set automatically
 	var/next_preyloop
 
@@ -18,7 +24,7 @@
 // Hook for generic creation of stuff on new creatures
 //
 /hook/living_new/proc/vore_setup(mob/living/M)
-	add_verb(M, list(/mob/living/proc/preyloop_refresh, /mob/living/proc/lick, /mob/living/proc/smell, /mob/living/proc/escapeOOC))
+	add_verb(M, list(/mob/living/proc/preyloop_refresh, /mob/living/proc/vore_bellyrub, /mob/living/proc/lick, /mob/living/proc/smell, /mob/living/proc/escapeOOC))
 
 	if(M.vore_flags & NO_VORE) //If the mob isn't supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
 		return TRUE
@@ -65,7 +71,7 @@
 
 			// Critical adjustments due to TG grab changes - Poojawa
 
-/mob/living/proc/vore_attack(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
+/mob/living/proc/vore_attack(mob/living/user, mob/living/prey, mob/living/pred)
 	set waitfor = FALSE
 	if(!user || !prey || !pred)
 		return
@@ -97,17 +103,17 @@
 //
 // Eating procs depending on who clicked what
 //
-/mob/living/proc/feed_grabbed_to_self(var/mob/living/user, var/mob/living/prey)
+/mob/living/proc/feed_grabbed_to_self(mob/living/user, mob/living/prey)
 	user.lazy_init_belly()
 	var/belly = user.vore_selected
 	return perform_the_nom(user, prey, user, belly)
 
-/mob/living/proc/feed_self_to_grabbed(var/mob/living/user, var/mob/living/pred)
+/mob/living/proc/feed_self_to_grabbed(mob/living/user, mob/living/pred)
 	pred.lazy_init_belly()
 	var/belly = input("Choose Belly") in pred.vore_organs
 	return perform_the_nom(user, user, pred, belly)
 
-/mob/living/proc/feed_grabbed_to_other(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
+/mob/living/proc/feed_grabbed_to_other(mob/living/user, mob/living/prey, mob/living/pred)
 	pred.lazy_init_belly()
 	var/belly = input("Choose Belly") in pred.vore_organs
 	return perform_the_nom(user, prey, pred, belly)
@@ -116,7 +122,7 @@
 // Master vore proc that actually does vore procedures
 //
 
-/mob/living/proc/perform_the_nom(var/mob/living/user, var/mob/living/prey, var/mob/living/pred, var/obj/belly/belly, var/delay)
+/mob/living/proc/perform_the_nom(mob/living/user, mob/living/prey, mob/living/pred, obj/belly/belly, delay)
 	//Sanity
 	if(!user || !prey || !pred || !istype(belly) || !(belly in pred.vore_organs))
 		testing("[user] attempted to feed [prey] to [pred], via [lowertext(belly.name)] but it went wrong.")
@@ -264,6 +270,7 @@
 	client.prefs.vore_flags = vore_flags // there's garbage data in here, but it doesn't matter
 	client.prefs.vore_taste = vore_taste
 	client.prefs.vore_smell = vore_smell
+	client.prefs.vore_skull = vore_skull
 
 	var/list/serialized = list()
 	for(var/belly in vore_organs)
@@ -284,9 +291,10 @@
 		to_chat(src,"<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs variable. Tell a dev.</span>")
 		return FALSE
 	vore_flags |= VOREPREF_INIT
-	COPY_SPECIFIC_BITFIELDS(vore_flags, client.prefs.vore_flags, DIGESTABLE | DEVOURABLE | FEEDING | LICKABLE | SMELLABLE | ABSORBABLE | MOBVORE | SHOW_VORE_FX)
+	COPY_SPECIFIC_BITFIELDS(vore_flags, client.prefs.vore_flags, ALL_VORE_FLAGS)
 	vore_taste = client.prefs.vore_taste
 	vore_smell = client.prefs.vore_smell
+	vore_skull = client.prefs.vore_skull
 
 	release_vore_contents(silent = TRUE)
 	QDEL_LIST(vore_organs)
@@ -298,7 +306,7 @@
 //
 // Release everything in every vore organ
 //
-/mob/living/proc/release_vore_contents(var/include_absorbed = TRUE, var/silent = FALSE)
+/mob/living/proc/release_vore_contents(include_absorbed = TRUE, silent = FALSE)
 	for(var/belly in vore_organs)
 		var/obj/belly/B = belly
 		B.release_all_contents(include_absorbed, silent)
@@ -440,9 +448,48 @@
 			smell_message += "a plain old normal [src]"
 	return smell_message
 
+/mob/living/proc/vore_bellyrub()
+	set name = "Give Bellyrubs"
+	set category = "Vore"
+	set desc = "Provide bellyrubs to either yourself or another mob with a belly."
+
+	if(incapacitated(ignore_restraints = TRUE))
+		to_chat(src, "<span class='warning'>You can't do that while incapacitated.</span>")
+		return
+	if(!CheckActionCooldown())
+		to_chat(src, "<span class='warning'>You can't do that so fast, slow down.</span>")
+		return
+
+	DelayNextAction(CLICK_CD_MELEE, flush = TRUE)
+
+	var/list/candidates = list()
+	for(var/mob/living/L in view(1))
+		if((L.ckey && Adjacent(L) && L.vore_selected))
+			LAZYADD(candidates, L)
+	for(var/mob/living/listed in candidates)
+		candidates[listed] = new /mutable_appearance(listed)
+
+	if(!candidates)
+		return
+
+	var/mob/living/candidate = show_radial_menu(src, src, candidates, radius = 40, require_near = TRUE)
+
+	if(candidate.vore_selected)
+		var/obj/belly/B = candidate.vore_selected
+		if(istype(B))
+			if(candidate == src)
+				visible_message("<span class='notice'>[src] rubs [p_their()] [lowertext(B.name)].</span>")
+			else
+				visible_message("<span class='notice'>[src] gives some rubs over [candidate]'s [lowertext(B.name)].</span>")
+			B.quick_cycle()
+			return TRUE
+	to_chat(src, "<span class='warning'>There is no suitable belly for rubs.</span>")
+	return FALSE
+
+
 //	Check if an object is capable of eating things, based on vore_organs
 //
-/proc/has_vore_belly(var/mob/living/O)
+/proc/has_vore_belly(mob/living/O)
 	if(istype(O))
 		if(O.vore_organs.len > 0)
 			return TRUE

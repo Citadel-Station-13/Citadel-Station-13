@@ -100,6 +100,11 @@
 
 	INVOKE_ASYNC(GLOBAL_PROC, /proc/init_ref_coin_values) //so the current procedure doesn't sleep because of UNTIL()
 
+	// VOREStation Add - Vore Modes!
+	init_digest_modes()
+	init_skull_types()
+	// VOREStation Add End
+
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.
 /proc/init_subtypes(prototype, list/L)

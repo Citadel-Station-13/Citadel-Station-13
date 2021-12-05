@@ -693,6 +693,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks_color"]			>> socks_color
 	S["backbag"]				>> backbag
 	S["jumpsuit_style"]			>> jumpsuit_style
+	S["spawn_preference"]		>> spawn_preference
 	S["uplink_loc"]				>> uplink_spawn_loc
 	S["custom_speech_verb"]		>> custom_speech_verb
 	S["custom_tongue"]			>> custom_tongue
@@ -831,6 +832,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["vore_flags"]						>> vore_flags
 	S["vore_taste"]						>> vore_taste
 	S["vore_smell"]						>> vore_smell
+	S["vore_skull"]						>> vore_skull
 	var/char_vr_path = "[vr_path]/character_[default_slot]_v2.json"
 	if(fexists(char_vr_path))
 		var/list/json_from_file = json_decode(file2text(char_vr_path))
@@ -896,6 +898,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["wings_color"]			= sanitize_hexcolor(features["wings_color"], 6, FALSE, "FFFFFF")
 	backbag							= sanitize_inlist(backbag, GLOB.backbaglist, initial(backbag))
 	jumpsuit_style					= sanitize_inlist(jumpsuit_style, GLOB.jumpsuitlist, initial(jumpsuit_style))
+	spawn_preference				= sanitize_inlist(spawn_preference, GLOB.possible_spawns, initial(spawn_preference))
 	uplink_spawn_loc				= sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
 	features["mcolor"]				= sanitize_hexcolor(features["mcolor"], 6, FALSE)
 	features["tail_lizard"]			= sanitize_inlist(features["tail_lizard"], GLOB.tails_list_lizard)
@@ -1007,6 +1010,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	vore_flags						= sanitize_integer(vore_flags, 0, ALL_VORE_FLAGS, 0)
 	vore_taste						= copytext(vore_taste, 1, MAX_TASTE_LEN)
 	vore_smell						= copytext(vore_smell, 1, MAX_TASTE_LEN)
+	vore_skull						= sanitize_inlist(vore_skull, GLOB.skull_types, initial(vore_skull))
 	belly_prefs 					= SANITIZE_LIST(belly_prefs)
 
 	cit_character_pref_load(S)
@@ -1058,6 +1062,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["socks_color"]				, socks_color)
 	WRITE_FILE(S["backbag"]					, backbag)
 	WRITE_FILE(S["jumpsuit_style"]			, jumpsuit_style)
+	WRITE_FILE(S["spawn_preference"]		, spawn_preference)
 	WRITE_FILE(S["uplink_loc"]				, uplink_spawn_loc)
 	WRITE_FILE(S["species"]					, pref_species.id)
 	WRITE_FILE(S["custom_speech_verb"]		, custom_speech_verb)
@@ -1163,6 +1168,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["vore_flags"]			, vore_flags)
 	WRITE_FILE(S["vore_taste"]			, vore_taste)
 	WRITE_FILE(S["vore_smell"]			, vore_smell)
+	WRITE_FILE(S["vore_skull"]			, vore_skull)
 	var/char_vr_path = "[vr_path]/character_[default_slot]_v2.json"
 	var/belly_prefs_json = safe_json_encode(list("belly_prefs" = belly_prefs))
 	if(fexists(char_vr_path))
