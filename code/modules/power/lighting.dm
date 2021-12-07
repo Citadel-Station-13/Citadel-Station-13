@@ -844,6 +844,6 @@
 	icon_state = "floor"
 	brightness = 3
 	nightshift_brightness = 2
-	layer = 4.25
+	layer = BELOW_MOB_LAYER
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"

@@ -679,8 +679,8 @@ RLD
 	icon_state = "rld"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	matter = 200
-	max_matter = 200
+	matter = 350
+	max_matter = 350
 	sheetmultiplier = 5
 	var/mode = LIGHT_MODE
 	actions_types = list(/datum/action/item_action/pick_color)
@@ -691,8 +691,8 @@ RLD
 	var/floorcost = 15
 	var/deconcost = 15
 
-	var/walldelay = 20
-	var/floordelay = 15
+	var/walldelay = 50
+	var/floordelay = 35
 	var/decondelay = 10
 
 	var/color_choice = null
@@ -821,8 +821,8 @@ RLD
 /obj/item/construction/rld/mini
 	name = "mini-rapid-light-device (MRLD)"
 	desc = "A device used to rapidly provide lighting sources to an area. Reload with metal, plasteel, glass or compressed matter cartridges."
-	matter = 100
-	max_matter = 100
+	matter = 150
+	max_matter = 150
 
 /obj/item/rcd_upgrade
 	name = "RCD advanced design disk"
