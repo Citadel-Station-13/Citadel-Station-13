@@ -29558,6 +29558,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/item/cautery{
+	pixel_y = 16
+	},
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "btb" = (
