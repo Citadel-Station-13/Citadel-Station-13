@@ -687,12 +687,12 @@ RLD
 	ammo_sections = 5
 	has_ammobar = TRUE
 
-	var/delay_mod = 1.2
+	delay_mod = 1.2
 	var/wallcost = 20
 	var/floorcost = 15
 	var/deconcost = 15
 
-	var/walldelay = 50
+	var/walldelay = 35
 	var/floordelay = 35
 	var/decondelay = 10
 
