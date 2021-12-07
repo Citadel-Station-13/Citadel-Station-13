@@ -183,18 +183,6 @@
 /////////////////////////////// Janitor //////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-/datum/supply_pack/service/advlighting
-	name = "Advanced Lighting crate"
-	desc = "Thanks to advanced lighting tech we here at the Lamp Factory have be able to produce more lamps and lamp items! This crate has three lamps, a box of lights and a state of the art rapid-light-device!"
-	cost = 2750
-	contains = list(/obj/item/construction/rld,
-					/obj/item/flashlight/lamp,
-					/obj/item/flashlight/lamp,
-					/obj/item/flashlight/lamp/green,
-					/obj/item/storage/box/lights/mixed)
-	crate_name = "advanced lighting crate"
-	crate_type = /obj/structure/closet/crate/secure
-
 /datum/supply_pack/service/lightbulbs
 	name = "Replacement Lights" //Subgrouping this with Advanced Lighting Crate, they're both lighting related.
 	desc = "May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs as well as a light replacer."
