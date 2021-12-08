@@ -370,7 +370,7 @@
 	return (H.dna.features["wings"] != "None") //true wings will override decorative wings
 
 //non insect wings
-/datum/sprite_accessory/deco_wings/bat
+/datum/sprite_accessory/insect_wings/bat
 	name = "Bat"
 	icon_state = "bat"
 	upgrade_to = SPECIES_WINGS_DRAGON
