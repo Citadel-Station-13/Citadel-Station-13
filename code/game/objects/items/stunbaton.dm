@@ -368,11 +368,15 @@
 		if(ishuman(hit_atom) && !caught && prob(throw_hit_chance) && thrownby)//if they are a carbon and they didn't catch it
 			baton_stun(hit_atom, thrownby, shoving = TRUE)
 		if(thrownby && !caught)
-			sleep(1)
-			if(!QDELETED(src))
-				throw_at(thrownby, throw_range+2, throw_speed, null, TRUE)
+			throw_back()
 	else
 		return ..()
+
+/obj/item/melee/baton/boomerang/proc/throw_back()
+	set waitfor = FALSE
+	sleep(1)
+	if(!QDELETED(src))
+		throw_at(thrownby, throw_range+2, throw_speed, null, TRUE)
 
 /obj/item/melee/baton/boomerang/update_icon()
 	if(turned_on)
