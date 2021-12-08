@@ -172,6 +172,7 @@
 /// Performs an alternative action on this strippable_item.
 /// `has_alternate_action` needs to be TRUE.
 /datum/strippable_item/proc/alternate_action(atom/source, mob/user)
+	return TRUE
 
 /// Returns whether or not this item should show.
 /datum/strippable_item/proc/should_show(atom/source, mob/user)
