@@ -734,6 +734,7 @@
 	delayed_release_smoke()
 
 /obj/item/reagent_containers/potion_container/proc/delayed_release_smoke()
+	set waitfor = FALSE
 	sleep(20)
 	var/datum/effect_system/smoke_spread/chem/s = new()
 	s.set_up(src.reagents, 3, get_turf(src))
