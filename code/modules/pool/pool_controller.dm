@@ -238,7 +238,7 @@
 				M.adjust_bodytemperature(20,0,360) //Heats up mobs till the thermometer shows up
 			//Normal temp does nothing, because it's just room temperature water.
 			if(POOL_COOL)
-				M.adjust_bodytemperature(-20,260.16) //Cools mobs till the thermometer shows up
+				M.adjust_bodytemperature(-20,261) //Cools mobs till the thermometer shows up
 			if(POOL_FRIGID) //Freezing
 				M.adjust_bodytemperature(-60) //cool mob at -35k per cycle, less would not affect the mob enough.
 				if(M.bodytemperature <= 50 && !M.stat)
