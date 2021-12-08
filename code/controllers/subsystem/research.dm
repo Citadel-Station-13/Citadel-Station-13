@@ -351,7 +351,7 @@ SUBSYSTEM_DEF(research)
 		for(var/i in last_bitcoins)
 			var/old_weighted = last_bitcoins[i] * (1 MINUTE - income_time_difference)
 			var/new_weighted = science_tech.research_points[i] * income_time_difference
-			last_bitcoins[i] = (old_weighted + new_weighted) / (1 MINUTE)
+			last_bitcoins[i] = round((old_weighted + new_weighted) / (1 MINUTE))
 	last_income = world.time
 
 /datum/controller/subsystem/research/proc/calculate_server_coefficient()	//Diminishing returns.
