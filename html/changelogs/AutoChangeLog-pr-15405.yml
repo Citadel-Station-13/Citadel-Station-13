@@ -1,0 +1,5 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - bugfix: "it now only snows on festivestation instead of every map"
+  - bugfix: "rain now triggers properly on spookystation"
