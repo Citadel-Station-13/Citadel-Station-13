@@ -1,0 +1,4 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - rscadd: "Lets dynamic pick clock cultists midround"
