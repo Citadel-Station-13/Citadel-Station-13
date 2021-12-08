@@ -380,6 +380,8 @@ GENETICS SCANNER
 			mutant = TRUE
 		else if (S.mutantstomach != initial(S.mutantstomach))
 			mutant = TRUE
+		else if (S.flying_species != initial(S.flying_species))
+			mutant = TRUE
 
 		msg += "\t<span class='info'>Reported Species: [H.spec_trait_examine_font()][H.dna.custom_species ? H.dna.custom_species : S.name]</font></span>\n"
 		msg += "\t<span class='info'>Base Species: [H.spec_trait_examine_font()][S.name]</font></span>\n"

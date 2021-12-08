@@ -28,3 +28,4 @@
 	tail_type = "mam_tail"
 	wagging_type = "mam_waggingtail"
 	species_category = SPECIES_CATEGORY_ROBOT
+	wings_icons = SPECIES_WINGS_ROBOT

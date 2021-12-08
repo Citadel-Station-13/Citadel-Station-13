@@ -29,6 +29,7 @@
 	exotic_bloodtype = "HF"
 	exotic_blood_color = BLOOD_COLOR_OIL
 	species_category = SPECIES_CATEGORY_ROBOT
+	wings_icons = SPECIES_WINGS_ROBOT
 
 	var/datum/action/innate/monitor_change/screen
 

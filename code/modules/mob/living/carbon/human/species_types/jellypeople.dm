@@ -29,6 +29,7 @@
 	tail_type = "mam_tail"
 	wagging_type = "mam_waggingtail"
 	species_category = SPECIES_CATEGORY_JELLY
+	wings_icons = SPECIES_WINGS_JELLY
 	ass_image = 'icons/ass/assslime.png'
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)

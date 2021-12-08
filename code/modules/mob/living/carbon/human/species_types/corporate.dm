@@ -19,3 +19,4 @@
 	sexes = 0
 	gib_types = /obj/effect/gibspawner/robot
 	species_category = SPECIES_CATEGORY_ROBOT
+	wings_icons = SPECIES_WINGS_ROBOT
