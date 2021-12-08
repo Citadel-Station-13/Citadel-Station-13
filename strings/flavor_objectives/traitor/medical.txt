@@ -1,0 +1,1 @@
+There are no flavor objectives for this job so you got this one because it's needed for Github to stop screaming. If you get this because someone enabled flavor objectives without rechecking them, yell at coders.
