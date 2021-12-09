@@ -115,7 +115,7 @@
 	SIGNAL_HANDLER
 	var/scarf_type = pick(scarves)
 
-	spawned.equip_to_slot_or_del(new scarf_type(spawned), ITEM_SLOT_NECK, initial = FALSE)
+	spawned.equip_to_slot_or_del(new scarf_type(spawned), ITEM_SLOT_NECK)
 
 
 /datum/station_trait/filled_maint
