@@ -357,15 +357,16 @@
 			return get_latejoin_spawn_point()
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_ARRIVALS))
 			return get_safe_random_station_turf(typesof(/area/hallway)) || get_latejoin_spawn_point()
-		if(HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER) && (!M || !HAS_TRAIT(M, TRAIT_TOXIC_ALCOHOL)))
-			var/obj/effect/landmark/start/hangover_spawn_point
-			for(var/obj/effect/landmark/start/hangover/hangover_landmark in GLOB.start_landmarks_list)
-				hangover_spawn_point = hangover_landmark
-				if(hangover_landmark.used) //so we can revert to spawning them on top of eachother if something goes wrong
-					continue
-				hangover_landmark.used = TRUE
-				break
-			return hangover_spawn_point || get_latejoin_spawn_point()
+		if(HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER))
+			if(!M || (!HAS_TRAIT(M, TRAIT_TOXIC_ALCOHOL) && !(HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE) && prob(70))))
+				var/obj/effect/landmark/start/hangover_spawn_point
+				for(var/obj/effect/landmark/start/hangover/hangover_landmark in GLOB.start_landmarks_list)
+					hangover_spawn_point = hangover_landmark
+					if(hangover_landmark.used) //so we can revert to spawning them on top of eachother if something goes wrong
+						continue
+					hangover_landmark.used = TRUE
+					break
+				return hangover_spawn_point || get_latejoin_spawn_point()
 	if(length(GLOB.jobspawn_overrides[title]))
 		return pick(GLOB.jobspawn_overrides[title])
 	var/obj/effect/landmark/start/spawn_point = get_default_roundstart_spawn_point()
