@@ -157,6 +157,8 @@
 	if(organ_flags & ORGAN_SYNTHETIC_EMP) //Synthetic organ has been emped, is now failing.
 		applyOrganDamage(maxHealth * decay_factor)
 		return FALSE
+	if(organ_flags & ORGAN_SYNTHETIC)
+		return TRUE
 	if(!is_cold() && damage)
 		///Damage decrements by a percent of its maxhealth
 		var/healing_amount = -(maxHealth * healing_factor)
