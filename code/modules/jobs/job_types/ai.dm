@@ -15,6 +15,7 @@
 	exp_type_department = EXP_TYPE_SILICON
 	display_order = JOB_DISPLAY_ORDER_AI
 	allow_bureaucratic_error = FALSE
+	random_spawns_possible = FALSE
 	var/do_special_check = TRUE
 	threat = 5
 	considered_combat_role = TRUE

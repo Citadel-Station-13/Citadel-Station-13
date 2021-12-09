@@ -82,12 +82,14 @@
 	var/move_delay = 2
 	var/last_move = 0
 
-/datum/component/twitch_plays/simple_movement/auto/Initialize(...)
+/datum/component/twitch_plays/simple_movement/auto/Initialize(move_delay)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	. = ..()
 	if(. & COMPONENT_INCOMPATIBLE)
 		return
+	if(!isnull(move_delay))
+		src.move_delay = move_delay
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/component/twitch_plays/simple_movement/auto/Destroy(force, silent)
@@ -95,10 +97,10 @@
 	return ..()
 
 /datum/component/twitch_plays/simple_movement/auto/process()
+	if(world.time < (last_move + move_delay))
+		return
 	var/dir = fetch_data(null, TRUE)
 	if(!dir)
-		return
-	if(world.time < (last_move + move_delay))
 		return
 	last_move = world.time
 	step(parent, dir)

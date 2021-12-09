@@ -66,6 +66,9 @@
 /// Should this job be allowed to be picked for the bureaucratic error event?
 	var/allow_bureaucratic_error = TRUE
 
+	///Is this job affected by weird spawns like the ones from station traits
+	var/random_spawns_possible = TRUE
+
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
 
 	//If a job complies with dresscodes, loadout items will not be equipped instead of the job's outfit, instead placing the items into the player's backpack.
@@ -109,14 +112,16 @@
 
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
-/datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
+/datum/job/proc/after_spawn(mob/living/spawned, client/player_client, latejoin = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
 	//do actions on H but send messages to M as the key may not have been transferred_yet
 	if(mind_traits)
 		for(var/t in mind_traits)
-			ADD_TRAIT(H.mind, t, JOB_TRAIT)
+			ADD_TRAIT(spawned.mind, t, JOB_TRAIT)
 	if(/datum/quirk/paraplegic in blacklisted_quirks)
-		H.regenerate_limbs() //if you can't be a paraplegic, attempt to regenerate limbs to stop amputated limb selection
-		H.set_resting(FALSE, TRUE) //they probably shouldn't be on the floor because they had no legs then suddenly had legs
+		spawned.regenerate_limbs() //if you can't be a paraplegic, attempt to regenerate limbs to stop amputated limb selection
+		spawned.set_resting(FALSE, TRUE) //they probably shouldn't be on the floor because they had no legs then suddenly had legs
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
 	if(head_announce)
@@ -323,3 +328,65 @@
 	if(CONFIG_GET(flag/security_has_maint_access))
 		return list(ACCESS_MAINT_TUNNELS)
 	return list()
+
+/// Handles finding and picking a valid roundstart effect landmark spawn point, in case no uncommon different spawning events occur.
+/datum/job/proc/get_default_roundstart_spawn_point()
+	for(var/obj/effect/landmark/start/spawn_point as anything in GLOB.start_landmarks_list)
+		if(spawn_point.name != title)
+			continue
+		. = spawn_point
+		if(spawn_point.used) //so we can revert to spawning them on top of eachother if something goes wrong
+			continue
+		spawn_point.used = TRUE
+		break
+	if(!.)
+		log_world("Couldn't find a round start spawn point for [title]")
+
+/// Finds a valid latejoin spawn point, checking for events and special conditions.
+/datum/job/proc/get_latejoin_spawn_point()
+	if(length(GLOB.jobspawn_overrides[title])) //We're doing something special today.
+		return pick(GLOB.jobspawn_overrides[title])
+	if(length(SSjob.latejoin_trackers))
+		return pick(SSjob.latejoin_trackers)
+	return SSjob.get_last_resort_spawn_points()
+
+/// Returns an atom where the mob should spawn in.
+/datum/job/proc/get_roundstart_spawn_point(var/mob/M)
+	if(random_spawns_possible)
+		if(HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS))
+			return get_latejoin_spawn_point()
+		if(HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_ARRIVALS))
+			return get_safe_random_station_turf(typesof(/area/hallway)) || get_latejoin_spawn_point()
+		if(HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER) && (!M || !HAS_TRAIT(M, TRAIT_TOXIC_ALCOHOL)))
+			var/obj/effect/landmark/start/hangover_spawn_point
+			for(var/obj/effect/landmark/start/hangover/hangover_landmark in GLOB.start_landmarks_list)
+				hangover_spawn_point = hangover_landmark
+				if(hangover_landmark.used) //so we can revert to spawning them on top of eachother if something goes wrong
+					continue
+				hangover_landmark.used = TRUE
+				break
+			return hangover_spawn_point || get_latejoin_spawn_point()
+	if(length(GLOB.jobspawn_overrides[title]))
+		return pick(GLOB.jobspawn_overrides[title])
+	var/obj/effect/landmark/start/spawn_point = get_default_roundstart_spawn_point()
+	if(!spawn_point) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
+		return get_latejoin_spawn_point()
+	return spawn_point
+
+/**
+ * Called after a successful roundstart spawn.
+ * Client is not yet in the mob.
+ * This happens after after_spawn()
+ */
+/datum/job/proc/after_roundstart_spawn(mob/living/spawning, client/player_client)
+	SHOULD_CALL_PARENT(TRUE)
+
+
+/**
+ * Called after a successful latejoin spawn.
+ * Client is in the mob.
+ * This happens after after_spawn()
+ */
+/datum/job/proc/after_latejoin_spawn(mob/living/spawning)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, src, spawning)
