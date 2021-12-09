@@ -13,8 +13,7 @@
 	)
 	restricted_gases = list(
 		GAS_BZ = 0.1,
-		GAS_METHYL_BROMIDE= 0.1,
-		GAS_AMMONIA = 0.1
+		GAS_METHYL_BROMIDE= 0.1
 	)
 
 	minimum_pressure = HAZARD_LOW_PRESSURE + 10
@@ -42,8 +41,7 @@
 		GAS_CO2=10,
 	)
 	restricted_gases = list(
-		GAS_METHYL_BROMIDE=0.1,
-		GAS_AMMONIA=0.1
+		GAS_METHYL_BROMIDE=0.1
 	)
 	restricted_chance = 5
 
