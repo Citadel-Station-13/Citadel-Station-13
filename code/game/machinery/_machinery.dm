@@ -405,9 +405,9 @@ Class Procs:
 		update_appearance()
 		return TRUE
 
-/obj/machinery/contents_explosion(severity, target)
+/obj/machinery/contents_explosion(severity, target, origin)
 	if(occupant)
-		occupant.ex_act(severity, target)
+		occupant.ex_act(severity, target, origin)
 
 /obj/machinery/handle_atom_del(atom/A)
 	if(A == occupant)
@@ -582,3 +582,14 @@ Class Procs:
 
 /obj/machinery/rust_heretic_act()
 	take_damage(500, BRUTE, "melee", 1)
+
+/**
+ * Alerts the AI that a hack is in progress.
+ *
+ * Sends all AIs a message that a hack is occurring.  Specifically used for space ninja tampering as this proc was originally in the ninja files.
+ * However, the proc may also be used elsewhere.
+ */
+/obj/machinery/proc/AI_notify_hack()
+	var/alertstr = "<span class='userdanger'>Network Alert: Hacking attempt detected[get_area(src)?" in [get_area_name(src, TRUE)]":". Unable to pinpoint location"].</span>"
+	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
+		to_chat(AI, alertstr)

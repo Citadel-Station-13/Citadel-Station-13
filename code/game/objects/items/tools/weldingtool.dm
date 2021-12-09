@@ -291,10 +291,10 @@
 	status = !status
 	if(status)
 		to_chat(user, "<span class='notice'>You resecure [src] and close the fuel tank.</span>")
-		DISABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+		reagents.reagents_holder_flags &= ~(OPENCONTAINER)
 	else
 		to_chat(user, "<span class='notice'>[src] can now be attached, modified, and refuelled.</span>")
-		ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+		reagents.reagents_holder_flags |= OPENCONTAINER
 	add_fingerprint(user)
 
 /obj/item/weldingtool/proc/flamethrower_rods(obj/item/I, mob/user)
@@ -384,6 +384,16 @@
 	refueling_interval = 5
 	icon_state = "clockwelder"
 	item_state = "brasswelder"
+
+/obj/item/weldingtool/experimental/ashwalker
+	name = "necropolis welding torch"
+	desc = "A mysterious welding tool with its origins in the depths of the necropolis. A mysterious force keeps replenishing its fuel."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	refueling_interval = 5
+	toolspeed = 0.75
+	max_fuel = 20
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "ashwelder"
 
 /obj/item/weldingtool/abductor
 	name = "alien welding tool"

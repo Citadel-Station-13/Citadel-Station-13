@@ -131,7 +131,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	//Tooltip vars
 	var/force_string //string form of an item's force. Edit this var only to set a custom force string
 	var/last_force_string_check = 0
-	var/tip_timer
 
 	var/trigger_guard = TRIGGER_GUARD_NONE
 
@@ -451,7 +450,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		A.Remove(user)
 	if(item_flags & DROPDEL)
 		qdel(src)
-	item_flags &= ~IN_INVENTORY
+	item_flags &= ~(IN_INVENTORY)
+	item_flags &= ~(IN_STORAGE)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
 	remove_outline()
 	// if(!silent)
@@ -529,6 +529,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			if(item_action_slot_check(slot, user, A)) //some items only give their actions buttons when in a specific slot.
 				A.Grant(user)
 	item_flags |= IN_INVENTORY
+	if((item_flags & IN_STORAGE)) // Left storage item but somehow has the bitfield active still.
+		item_flags &= ~(IN_STORAGE)
 	// if(!initial)
 	// 	if(equip_sound && (slot_flags & slot))
 	// 		playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
@@ -566,6 +568,12 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	set name = "Pick up"
 
 	if(usr.incapacitated() || !Adjacent(usr) || usr.lying)
+		return
+
+	if(iscyborg(usr))
+		var/obj/item/gripper/gripper = usr.get_active_held_item(TRUE)
+		if(istype(gripper))
+			gripper.pre_attack(src, usr, get_dist(src, usr))
 		return
 
 	if(usr.get_active_held_item() == null) // Let me know if this has any problems -Yota
@@ -879,13 +887,12 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/MouseEntered(location, control, params)
 	SEND_SIGNAL(src, COMSIG_ITEM_MOUSE_ENTER, location, control, params)
-	if((item_flags & IN_INVENTORY || item_flags & IN_STORAGE) && usr.client.prefs.enable_tips && !QDELETED(src) || isobserver(usr))
-		var/timedelay = usr.client.prefs.tip_delay/100
-		var/user = usr
-		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, user), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
+	if((item_flags & IN_INVENTORY || item_flags & IN_STORAGE) && usr?.client.prefs.enable_tips && !QDELETED(src))
+		var/timedelay = max(usr.client.prefs.tip_delay * 0.01, 0.01) // I heard multiplying is faster, also runtimes from very low/negative numbers
+		usr.client.tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, usr), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
 	var/mob/living/L = usr
-	if(istype(L) && L.incapacitated())
-		apply_outline(COLOR_RED_GRAY)
+	if(istype(L) && (L.incapacitated() || (current_equipped_slot in L.check_obscured_slots()) || !L.canUnEquip(src)))
+		apply_outline(_size = 3)
 	else
 		apply_outline()
 
@@ -895,12 +902,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/MouseExited(location,control,params)
 	SEND_SIGNAL(src, COMSIG_ITEM_MOUSE_EXIT, location, control, params)
-	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
 	closeToolTip(usr)
 	remove_outline()
 
-/obj/item/proc/apply_outline(colour = null)
-	if(!(item_flags & IN_INVENTORY || item_flags & IN_STORAGE) || QDELETED(src))
+/obj/item/proc/apply_outline(colour = null, _size=1)
+	if(!(item_flags & IN_INVENTORY || item_flags & IN_STORAGE) || QDELETED(src) || isobserver(usr))
 		return
 	if(usr.client)
 		if(!usr.client.prefs.outline_enabled)
@@ -914,7 +920,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			colour = COLOR_BLUE_GRAY
 	if(outline_filter)
 		filters -= outline_filter
-	outline_filter = filter(type="outline", size=1, color=colour)
+	outline_filter = filter(type="outline", size=_size, color=colour)
 	filters += outline_filter
 
 /obj/item/proc/remove_outline()
@@ -1048,7 +1054,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
   */
 /obj/item/proc/set_slowdown(new_slowdown)
 	slowdown = new_slowdown
-	if(CHECK_BITFIELD(item_flags, IN_INVENTORY))
+	if((item_flags & IN_INVENTORY))
 		var/mob/living/L = loc
 		if(istype(L))
 			L.update_equipment_speed_mods()

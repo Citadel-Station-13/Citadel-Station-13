@@ -540,22 +540,23 @@
 	if (!(. & EMP_PROTECT_CONTENTS))
 		for(var/obj/O in src)
 			O.emp_act(severity)
-	if(secure && !broken && !(. & EMP_PROTECT_SELF))
-		if(prob(50 / severity))
-			locked = !locked
-			update_icon()
-		if(prob(20 / severity) && !opened)
-			if(!locked)
-				open()
-			else
-				req_access = list()
-				req_access += pick(get_all_accesses())
-				if(!QDELETED(lockerelectronics))
-					lockerelectronics.accesses = req_access
+	if(!secure || broken)
+		return
+	if(prob(severity/2))
+		locked = !locked
+		update_icon()
+	if(prob(severity/5) && !opened)
+		if(!locked)
+			open()
+		else
+			req_access = list()
+			req_access += pick(get_all_accesses())
+			if(!QDELETED(lockerelectronics))
+				lockerelectronics.accesses = req_access
 
-/obj/structure/closet/contents_explosion(severity, target)
+/obj/structure/closet/contents_explosion(severity, target, origin)
 	for(var/atom/A in contents)
-		A.ex_act(severity, target)
+		A.ex_act(severity, target, origin)
 		CHECK_TICK
 
 /obj/structure/closet/singularity_act()
@@ -671,3 +672,15 @@
 	if(allowed(user))
 		return TRUE
 	to_chat(user, "<span class='notice'>Access denied.</span>")
+
+/obj/structure/closet/on_object_saved(depth)
+	if(depth >= 10)
+		return ""
+	var/dat = ""
+	for(var/obj/item in contents)
+		var/metadata = generate_tgm_metadata(item)
+		dat += "[dat ? ",\n" : ""][item.type][metadata]"
+		//Save the contents of things inside the things inside us, EG saving the contents of bags inside lockers
+		var/custom_data = item.on_object_saved(depth++)
+		dat += "[custom_data ? ",\n[custom_data]" : ""]"
+	return dat

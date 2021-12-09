@@ -226,7 +226,7 @@
 	invisibility = INVISIBILITY_ABSTRACT
 	var/obj/machinery/parent
 
-/obj/structure/filler/ex_act()
+/obj/structure/filler/ex_act(severity, target, origin)
 	return
 
 /obj/machinery/computer/bsa_control

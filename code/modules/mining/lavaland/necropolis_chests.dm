@@ -484,7 +484,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 
-/obj/effect/warp_cube/ex_act(severity, target)
+/obj/effect/warp_cube/ex_act(severity, target, origin)
 	return
 
 //Meat Hook
@@ -607,7 +607,7 @@
 /obj/effect/immortality_talisman/attackby()
 	return
 
-/obj/effect/immortality_talisman/ex_act()
+/obj/effect/immortality_talisman/ex_act(severity, target, origin)
 	return
 
 /obj/effect/immortality_talisman/singularity_pull()

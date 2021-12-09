@@ -11,7 +11,7 @@
 	return
 
 // Please stop bombing the Observer-Start landmark.
-/obj/effect/landmark/ex_act()
+/obj/effect/landmark/ex_act(severity, target, origin)
 	return
 
 /obj/effect/landmark/singularity_pull()
@@ -63,6 +63,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/assistant
 	name = "Assistant"
 	icon_state = "Assistant"
+
+/obj/effect/landmark/start/prisoner
+	name = "Prisoner"
+	icon_state = "Prisoner"
 
 /obj/effect/landmark/start/assistant/override
 	jobspawn_override = TRUE

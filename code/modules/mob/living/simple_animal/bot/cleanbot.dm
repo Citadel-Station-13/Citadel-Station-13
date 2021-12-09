@@ -182,7 +182,7 @@
 			deputize(W, user)
 
 	else if(istype(W, /obj/item/mop/advanced))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_CLEANER_ADVANCED_MOP))
+		if(bot_core.allowed(user) && open && !(upgrades & UPGRADE_CLEANER_ADVANCED_MOP))
 			to_chat(user, "<span class='notice'>You replace \the [src] old mop with a new better one!</span>")
 			upgrades |= UPGRADE_CLEANER_ADVANCED_MOP
 			clean_time = 20 //2.5 the speed!
@@ -198,7 +198,7 @@
 			to_chat(user, "<span class='notice'>The [src] already has this mop!</span>")
 
 	else if(istype(W, /obj/item/broom))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_CLEANER_BROOM))
+		if(bot_core.allowed(user) && open && !(upgrades & UPGRADE_CLEANER_BROOM))
 			to_chat(user, "<span class='notice'>You add to \the [src] a broom speeding it up!</span>")
 			upgrades |= UPGRADE_CLEANER_BROOM
 			base_speed = 1 //2x faster!

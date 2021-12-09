@@ -59,7 +59,7 @@
 
 	for(var/gpath in subtypesof(/obj/item/organ/genital))
 		var/obj/item/organ/genital/G = gpath
-		if(!CHECK_BITFIELD(initial(G.genital_flags), GENITAL_BLACKLISTED))
+		if(!(initial(G.genital_flags) & GENITAL_BLACKLISTED))
 			GLOB.genitals_list[initial(G.name)] = gpath
 //END OF CIT CHANGES
 
@@ -78,6 +78,12 @@
 		var/datum/emote/E = new path()
 		E.emote_list[E.key] = E
 
+	// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
+	for(var/path in subtypesof(/datum/sprite_accessory/hair_gradient))
+		var/datum/sprite_accessory/hair_gradient/H = new path()
+		GLOB.hair_gradients_list[H.name] = H
+
+	// Keybindings
 	init_keybindings()
 
 	//Uplink Items

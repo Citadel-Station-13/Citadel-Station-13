@@ -6,12 +6,14 @@
  * @license MIT
  */
 
-import { useBackend, useSharedState } from '../backend';
+import { useBackend, useLocalState, useSharedState } from '../backend';
+import { createSearch } from 'common/string';
 import { map } from 'common/collections';
-import { Section, Tabs, Table, Button, Box, NoticeBox, Divider } from '../components';
+import { Section, Tabs, Table, Button, Box, NoticeBox, Divider, Input } from '../components';
 import { Fragment } from 'inferno';
 import { Window } from '../layouts';
 
+const MAX_SEARCH_RESULTS = 25;
 let REC_RATVAR = "";
 // You may ask "why is this not inside ClockworkSlab"
 // It's because cslab gets called every time. Lag is bad.
@@ -31,12 +33,34 @@ export const ClockworkSlab = (props, context) => {
     tab,
     setTab,
   ] = useSharedState(context, 'tab', 'Application');
-  const scriptInTab = scripture
-  && scripture[tab]
-  || [];
+
   const tierInfo = tier_infos
   && tier_infos[tab]
   || {};
+
+  const [
+    searchText,
+    setSearchText,
+  ] = useLocalState(context, 'searchText', '');
+
+  const testSearch = createSearch(searchText, script => {
+    return script.name + script.descname;
+  });
+  
+  let bucketOfScriptures = [];
+  // merge it, no need to throw a var.
+
+  const scriptInTab = (searchText.length > 0)
+    // Flatten all categories and apply search to it
+    // truthy because WE DO NOT WANT TO RETURN THIS!
+    && !!map((v, k) => {
+        bucketOfScriptures = bucketOfScriptures.concat(v);
+      })(scripture)
+    && bucketOfScriptures.filter(testSearch)
+        .filter((item, i) => i < MAX_SEARCH_RESULTS)
+    // Return the default one
+    || scripture[tab]
+    || null; // this is nullable, it's recommended that you null it.
 
   return (
     <Window
@@ -50,13 +74,21 @@ export const ClockworkSlab = (props, context) => {
           <Section
             title="Power"
             buttons={(
-              <Button
-                icon="book"
-                tooltip={"Tutorial"}
-                tooltipPosition={"left"}
-                onClick={() => act('toggle')}>
-                Recollection
-              </Button>
+              <Fragment>
+                Search
+                <Input
+                  autoFocus
+                  value={searchText}
+                  onInput={(e, value) => setSearchText(value)}
+                  mx={1} />
+                <Button
+                  icon="book"
+                  tooltip={"Tutorial"}
+                  tooltipPosition={"left"}
+                  onClick={() => act('toggle')}>
+                  Recollection
+                </Button>
+              </Fragment>
             )}>
             <b>{power}</b> power is available for scripture
             and other consumers.
@@ -67,13 +99,13 @@ export const ClockworkSlab = (props, context) => {
                     key={name}
                     selected={tab === name}
                     onClick={() => setTab(name)}>
-                    {name}
+                    {name} ({scriptures?.length || 0})
                   </Tabs.Tab>
                 ))(scripture)}
               </Tabs>
               <Box
                 as={'span'}
-                textColor={'#B18B25'}
+                textColor={'#dab44d'}
                 bold={!!tierInfo.ready} // muh booleans
                 italic={!tierInfo.ready}>
                 {tierInfo.ready ? (
@@ -125,16 +157,16 @@ export const CSScripture = (props, context) => {
     power_unformatted = 0,
   } = data;
   const {
-    scriptInTab,
+    scriptInTab = [],
   } = props;
 
   return (
-    scriptInTab?.map(script => (
+    scriptInTab?.length > 0 ? scriptInTab.map(script => (
       <Table.Row
         key={script.name}
         className="candystripe">
         <Table.Cell
-          italic={!!script.important}
+          italic={!!script?.important}
           color={script.fontcolor}>
           <b>
             {script.name}
@@ -176,7 +208,14 @@ export const CSScripture = (props, context) => {
           </Button>
         </Table.Cell>
       </Table.Row>
-    ))
+    )) : (
+      <Box
+        as="span"
+        textColor={'#BE8700'}
+        fontSize={2.3}>
+        Nothing here!
+      </Box>
+    )
   );
 };
 
@@ -209,7 +248,7 @@ export const CSTutorial = (props, context) => {
             {REC_RATVAR}
           </Box>
         ) : (
-          <Fragment>
+          <>
             <Box
               as="span"
               textColor="#BE8700"
@@ -237,7 +276,7 @@ export const CSTutorial = (props, context) => {
               not let it confuse you! You are free to use the names
               in pronoun form when speaking in normal languages.
             </NoticeBox>
-          </Fragment>
+          </>
         )}
       </Box>
       {recollection_categories?.map(cat => (

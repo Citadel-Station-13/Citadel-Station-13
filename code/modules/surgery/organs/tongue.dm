@@ -26,6 +26,7 @@
 		/datum/language/vampiric,
 		/datum/language/dwarf,
 		/datum/language/signlanguage,
+		/datum/language/neokanji,
 	))
 	healing_factor = STANDARD_ORGAN_HEALING*5 //Fast!!
 	decay_factor = STANDARD_ORGAN_DECAY/2
@@ -253,7 +254,8 @@
 		/datum/language/beachbum,
 		/datum/language/aphasia,
 		/datum/language/sylvan,
-		/datum/language/voltaic
+		/datum/language/voltaic,
+		/datum/language/neokanji,
 	))
 
 /obj/item/organ/tongue/ethereal/Initialize(mapload)

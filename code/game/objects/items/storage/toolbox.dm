@@ -79,6 +79,8 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	name = "mechanical toolbox"
 	icon_state = "blue"
 	item_state = "toolbox_blue"
+	/// If FALSE, someone with a ensouled soulstone can sacrifice a spirit to change the sprite of this toolbox.
+	var/has_soul = FALSE
 
 /obj/item/storage/toolbox/mechanical/PopulateContents()
 	new /obj/item/screwdriver(src)
@@ -93,6 +95,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	icon_state = "toolbox_blue_old"
 	has_latches = FALSE
 	can_rubberify = FALSE
+	has_soul = TRUE
 
 /obj/item/storage/toolbox/mechanical/old/heirloom
 	name = "old, robust toolbox" //this will be named "X family toolbox"
@@ -126,7 +129,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 /obj/item/storage/toolbox/mechanical/old/clean/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	calc_damage()
 	..()
-	
+
 /obj/item/storage/toolbox/mechanical/old/clean/PopulateContents()
 	new /obj/item/screwdriver(src)
 	new /obj/item/wrench(src)
@@ -367,7 +370,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	desc = replacetext(desc, "Danger", "Bouncy")
 	desc = replacetext(desc, "robust", "safe")
 	desc = replacetext(desc, "heavier", "bouncier")
-	DISABLE_BITFIELD(flags_1, CONDUCT_1)
+	flags_1 &= ~(CONDUCT_1)
 	custom_materials = null
 	damtype = STAMINA
 	force += 3 //to compensate the higher stamina K.O. threshold compared to actual health.

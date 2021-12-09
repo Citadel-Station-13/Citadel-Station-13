@@ -400,6 +400,9 @@ const AnalysisResults = (props, context) => {
         <LabeledList.Item label="Addiction Threshold">
           {analyzeVars.addicD}
         </LabeledList.Item>
+        <LabeledList.Item label="Metabolized by">
+          {analyzeVars.processType}
+        </LabeledList.Item>
         <LabeledList.Item label="Purity">
           {analyzeVars.purityF}
         </LabeledList.Item>

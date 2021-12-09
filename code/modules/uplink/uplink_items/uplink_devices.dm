@@ -213,7 +213,7 @@
 	name = "Stimpack"
 	desc = "Stimpacks, the tool of many great heroes. Makes you nearly immune to non-lethal weaponry for about \
 			5 minutes after injection."
-	item = /obj/item/reagent_containers/syringe/stimulants
+	item = /obj/item/reagent_containers/hypospray/medipen/stimulants
 	cost = 5
 	surplus = 90
 

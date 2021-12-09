@@ -97,7 +97,7 @@
 		return
 	return ..()
 
-/obj/singularity/ex_act(severity, target)
+/obj/singularity/ex_act(severity, target, origin)
 	switch(severity)
 		if(1)
 			if(current_size <= STAGE_TWO)

@@ -214,5 +214,5 @@
 	sleep(3) //so the animation completes properly
 	qdel(src)
 
-/obj/effect/clockwork/judicial_marker/ex_act(severity)
+/obj/effect/clockwork/judicial_marker/ex_act(severity, target, origin)
 	return

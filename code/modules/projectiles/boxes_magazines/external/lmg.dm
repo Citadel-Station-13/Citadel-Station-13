@@ -23,4 +23,10 @@
 
 /obj/item/ammo_box/magazine/mm712x82/match
 	name = "box magazine (Match 7.12x82mm)"
+	icon_state = "a762-50"
 	ammo_type = /obj/item/ammo_casing/mm712x82/match
+	max_ammo = 50
+
+/obj/item/ammo_box/magazine/mm712x82/update_icon()
+	..()
+	icon_state = "a762-[round(ammo_count(),10)]"

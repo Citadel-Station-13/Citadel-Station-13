@@ -366,10 +366,16 @@ SUBSYSTEM_DEF(research)
 			techweb_categories[I.category] = list(I.id = TRUE)
 
 /datum/controller/subsystem/research/proc/techweb_node_by_id(id)
-	return techweb_nodes[id] || error_node
+	if(techweb_nodes[id])
+		return techweb_nodes[id]
+	stack_trace("Attempted to access node ID [id] which didn't exist")
+	return error_node
 
 /datum/controller/subsystem/research/proc/techweb_design_by_id(id)
-	return techweb_designs[id] || error_design
+	if(techweb_designs[id])
+		return techweb_designs[id]
+	stack_trace("Attempted to access design ID [id] which didn't exist")
+	return error_design
 
 /datum/controller/subsystem/research/proc/on_design_deletion(datum/design/D)
 	for(var/i in techweb_nodes)

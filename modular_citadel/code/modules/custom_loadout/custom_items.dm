@@ -618,3 +618,12 @@
 	icon = 'icons/obj/custom.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
+
+/obj/item/clothing/suit/spacehoodie
+	name = "space hoodie"
+	desc = "You are not sure why this hoodie exists... but it does and it is comfortable."
+	icon_state = "starhoodie"
+	item_state = "starhoodie"
+	icon = 'icons/obj/custom.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	mutantrace_variation = NONE

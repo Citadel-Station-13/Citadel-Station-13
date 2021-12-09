@@ -43,7 +43,7 @@
 		INVOKE_ASYNC(aicamera, /obj/item/camera.proc/captureimage, A, usr)
 		return
 
-	var/obj/item/W = get_active_held_item()
+	var/obj/item/W = get_active_held_item(TRUE)
 
 	if(!W && A.Adjacent(src) && (isobj(A) || ismob(A)))
 		var/atom/movable/C = A

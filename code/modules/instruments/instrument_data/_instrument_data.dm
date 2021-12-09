@@ -55,14 +55,14 @@
 		id = "[type]"
 
 /datum/instrument/proc/Initialize()
-	if(CHECK_BITFIELD(instrument_flags, INSTRUMENT_LEGACY | INSTRUMENT_DO_NOT_AUTOSAMPLE))
+	if(instrument_flags & (INSTRUMENT_LEGACY | INSTRUMENT_DO_NOT_AUTOSAMPLE))
 		return
 	calculate_samples()
 
 /datum/instrument/proc/ready()
-	if(CHECK_BITFIELD(instrument_flags, INSTRUMENT_LEGACY))
+	if((instrument_flags & INSTRUMENT_LEGACY))
 		return legacy_instrument_path && legacy_instrument_ext
-	else if(CHECK_BITFIELD(instrument_flags, INSTRUMENT_DO_NOT_AUTOSAMPLE))
+	else if((instrument_flags & INSTRUMENT_DO_NOT_AUTOSAMPLE))
 		return length(samples)
 	return (length(samples) >= 128)
 

@@ -151,7 +151,7 @@
 /obj/structure/reagent_dispensers/fueltank/blob_act(obj/structure/blob/B)
 	boom()
 
-/obj/structure/reagent_dispensers/fueltank/ex_act()
+/obj/structure/reagent_dispensers/fueltank/ex_act(severity, target, origin)
 	boom()
 
 /obj/structure/reagent_dispensers/fueltank/fire_act(exposed_temperature, exposed_volume)
@@ -232,6 +232,14 @@
 	icon_state = "vat"
 	anchored = TRUE
 	reagent_id = /datum/reagent/consumable/cooking_oil
+
+/obj/structure/reagent_dispensers/servingdish
+	name = "serving dish"
+	desc = "A dish full of food slop for your bowl."
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "serving"
+	anchored = TRUE
+	reagent_id = /datum/reagent/consumable/nutraslop
 
 ////////
 //Kegs//

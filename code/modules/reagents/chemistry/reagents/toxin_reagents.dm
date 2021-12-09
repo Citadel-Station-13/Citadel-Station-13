@@ -18,7 +18,7 @@
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/M)
 	if(toxpwr)
-		M.adjustToxLoss(toxpwr*REM, 0)
+		M.adjustToxLoss(toxpwr*REAGENTS_EFFECT_MULTIPLIER, 0)
 		. = TRUE
 	..()
 
@@ -35,6 +35,7 @@
 	name = "Unstable mutagen"
 	description = "Might cause unpredictable mutations. Keep away from children."
 	color = "#00FF00"
+	chemical_flags = REAGENT_ALL_PROCESS
 	toxpwr = 0
 	taste_description = "slime"
 	taste_mult = 0.9
@@ -79,7 +80,7 @@
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
-		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
+		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REAGENTS_EFFECT_MULTIPLIER)
 	C.adjustPlasma(20)
 	return ..()
 
@@ -136,10 +137,10 @@
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/M)
 	if(prob(10))
 		to_chat(M, "<span class='danger'>Your insides are burning!</span>")
-		M.adjustToxLoss(rand(20,60)*REM, 0)
+		M.adjustToxLoss(rand(20,60)*REAGENTS_EFFECT_MULTIPLIER, 0)
 		. = 1
 	else if(prob(40))
-		M.heal_bodypart_damage(5*REM)
+		M.heal_bodypart_damage(5*REAGENTS_EFFECT_MULTIPLIER)
 		. = 1
 	..()
 
@@ -191,7 +192,7 @@
 	..()
 
 /datum/reagent/toxin/zombiepowder/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
-	L.adjustOxyLoss(0.5*REM, 0)
+	L.adjustOxyLoss(0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	if(method == INGEST)
 		fakedeath_active = TRUE
 		L.fakedeath(type)
@@ -230,7 +231,7 @@
 	..()
 
 /datum/reagent/toxin/ghoulpowder/on_mob_life(mob/living/carbon/M)
-	M.adjustOxyLoss(1*REM, 0)
+	M.adjustOxyLoss(1*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
@@ -365,7 +366,7 @@
 			. = 1
 		if(51 to INFINITY)
 			M.Sleeping(40, 0)
-			M.adjustToxLoss((current_cycle - 50)*REM, 0)
+			M.adjustToxLoss((current_cycle - 50)*REAGENTS_EFFECT_MULTIPLIER, 0)
 			. = 1
 	..()
 
@@ -387,7 +388,7 @@
 			M.Sleeping(40, 0)
 		if(51 to INFINITY)
 			M.Sleeping(40, 0)
-			M.adjustToxLoss((current_cycle - 50)*REM, 0)
+			M.adjustToxLoss((current_cycle - 50)*REAGENTS_EFFECT_MULTIPLIER, 0)
 	return ..()
 
 /datum/reagent/toxin/coffeepowder
@@ -437,7 +438,7 @@
 	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/M)
-	M.adjustStaminaLoss(REM * data, 0)
+	M.adjustStaminaLoss(REAGENTS_EFFECT_MULTIPLIER * data, 0)
 	data = max(data - 1, 5)
 	..()
 	. = 1
@@ -448,6 +449,7 @@
 	reagent_state = LIQUID
 	color = "#787878"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ALL_PROCESS
 	toxpwr = 0
 	value = REAGENT_VALUE_VERY_RARE
 
@@ -478,14 +480,14 @@
 			if(4)
 				if(prob(75))
 					to_chat(M, "You scratch at an itch.")
-					M.adjustBruteLoss(2*REM, 0)
+					M.adjustBruteLoss(2*REAGENTS_EFFECT_MULTIPLIER, 0)
 					. = 1
 	..()
 
 /datum/reagent/toxin/histamine/overdose_process(mob/living/M)
-	M.adjustOxyLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, 0)
-	M.adjustToxLoss(2*REM, 0)
+	M.adjustOxyLoss(2*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustBruteLoss(2*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustToxLoss(2*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
@@ -495,6 +497,7 @@
 	reagent_state = LIQUID
 	color = "#B4004B"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ALL_PROCESS
 	toxpwr = 1
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/M)
@@ -515,7 +518,7 @@
 
 /datum/reagent/toxin/venom/on_mob_life(mob/living/carbon/M)
 	toxpwr = 0.2*volume
-	M.adjustBruteLoss((0.3*volume)*REM, 0)
+	M.adjustBruteLoss((0.3*volume)*REAGENTS_EFFECT_MULTIPLIER, 0)
 	. = 1
 	if(prob(15))
 		M.reagents.add_reagent(/datum/reagent/toxin/histamine, pick(5,10))
@@ -532,9 +535,9 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/fentanyl/on_mob_life(mob/living/carbon/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM, 150)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REAGENTS_EFFECT_MULTIPLIER, 150)
 	if(M.toxloss <= 60)
-		M.adjustToxLoss(1*REM, 0)
+		M.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER, 0)
 	if(current_cycle >= 18)
 		M.Sleeping(40, 0)
 	..()
@@ -555,7 +558,7 @@
 	if(prob(8))
 		to_chat(M, "You feel horrendously weak!")
 		M.Stun(40, 0)
-		M.adjustToxLoss(2*REM, 0)
+		M.adjustToxLoss(2*REAGENTS_EFFECT_MULTIPLIER, 0)
 	return ..()
 
 /datum/reagent/toxin/bad_food
@@ -583,15 +586,15 @@
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/M)
 	if(prob(15))
 		to_chat(M, "You scratch at your head.")
-		M.adjustBruteLoss(0.2*REM, 0)
+		M.adjustBruteLoss(0.2*REAGENTS_EFFECT_MULTIPLIER, 0)
 		. = 1
 	if(prob(15))
 		to_chat(M, "You scratch at your leg.")
-		M.adjustBruteLoss(0.2*REM, 0)
+		M.adjustBruteLoss(0.2*REAGENTS_EFFECT_MULTIPLIER, 0)
 		. = 1
 	if(prob(15))
 		to_chat(M, "You scratch at your arm.")
-		M.adjustBruteLoss(0.2*REM, 0)
+		M.adjustBruteLoss(0.2*REAGENTS_EFFECT_MULTIPLIER, 0)
 		. = 1
 	if(prob(3))
 		M.reagents.add_reagent(/datum/reagent/toxin/histamine,rand(1,3))
@@ -660,7 +663,7 @@
 /datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 10)
 		M.Sleeping(40, 0)
-	M.adjustStaminaLoss(10*REM, 0)
+	M.adjustStaminaLoss(10*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	return TRUE
 
@@ -687,7 +690,7 @@
 	value = REAGENT_VALUE_RARE
 
 /datum/reagent/toxin/amanitin/on_mob_end_metabolize(mob/living/M)
-	var/toxdamage = current_cycle*3*REM
+	var/toxdamage = current_cycle*3*REAGENTS_EFFECT_MULTIPLIER
 	M.log_message("has taken [toxdamage] toxin damage from amanitin toxin", LOG_ATTACK)
 	M.adjustToxLoss(toxdamage)
 	..()
@@ -703,7 +706,7 @@
 
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/carbon/M)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
-		M.adjustToxLoss(1*REM, 0)
+		M.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjust_nutrition(-3) // making the chef more valuable, one meme trap at a time
 	M.overeatduration = 0
 	return ..()
@@ -759,7 +762,7 @@
 /datum/reagent/toxin/curare/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 11)
 		M.DefaultCombatKnockdown(60, 0)
-	M.adjustOxyLoss(1*REM, 0)
+	M.adjustOxyLoss(1*REAGENTS_EFFECT_MULTIPLIER, 0)
 	. = 1
 	..()
 
@@ -869,6 +872,7 @@
 	description = "A strong mineral acid with the molecular formula H2SO4."
 	color = "#00FF32"
 	toxpwr = 1
+	chemical_flags = REAGENT_ALL_PROCESS	//Ever injected acid into a robot?
 	var/acidpwr = 10 //the amount of protection removed from the armour
 	taste_description = "acid"
 	self_consuming = TRUE
@@ -942,7 +946,7 @@
 /datum/reagent/toxin/delayed/on_mob_life(mob/living/carbon/M)
 	if(current_cycle > delay)
 		holder.remove_reagent(type, actual_metaboliztion_rate * M.metabolism_efficiency)
-		M.adjustToxLoss(actual_toxpwr*REM, 0)
+		M.adjustToxLoss(actual_toxpwr*REAGENTS_EFFECT_MULTIPLIER, 0)
 		if(prob(10))
 			M.DefaultCombatKnockdown(20, 0)
 		. = 1

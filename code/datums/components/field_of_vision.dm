@@ -327,7 +327,7 @@
 /atom/movable/fov_holder/has_gravity(turf/T)
 	return FALSE
 
-/atom/movable/fov_holder/ex_act(severity)
+/atom/movable/fov_holder/ex_act(severity, target, origin)
 	return FALSE
 
 /atom/movable/fov_holder/singularity_act()

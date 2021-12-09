@@ -70,6 +70,7 @@
 	icon_state = "wood"
 	baseturfs = /turf/closed/indestructible/wood
 	smooth = SMOOTH_TRUE
+	canSmoothWith = list(/obj/structure/falsewall/wood, /turf/closed/wall/mineral/wood, /turf/closed/indestructible/wood)
 
 /turf/closed/indestructible/oldshuttle/corner
 	icon_state = "corner"

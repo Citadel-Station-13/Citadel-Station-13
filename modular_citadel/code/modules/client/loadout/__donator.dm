@@ -560,3 +560,15 @@
 	slot = SLOT_IN_BACKPACK
 	path = /obj/item/clothing/mask/gas/military
 	ckeywhitelist = list("unclebourbon")
+
+/datum/gear/donator/clownmask
+	name = "Clown Mask"
+	path = SLOT_WEAR_MASK
+	path = /obj/item/clothing/mask/gas/clown_hat
+	ckeywhitelist = list("djkouta")
+
+/datum/gear/donator/spacehoodie
+	name = "Space Hoodie"
+	path = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/spacehoodie
+	ckeywhitelist = list("bidlink2")

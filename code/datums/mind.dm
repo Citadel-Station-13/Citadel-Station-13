@@ -71,6 +71,8 @@
 	///What character we spawned in as- either at roundstart or latejoin, so we know for persistent scars if we ended as the same person or not
 	var/mob/original_character
 
+	/// A lazy list of statuses to add next to this mind in the traitor panel
+	var/list/special_statuses
 
 /datum/mind/New(var/key)
 	skill_holder = new(src)
@@ -139,7 +141,7 @@
 	if(isliving(new_character)) //New humans and such are by default enabled arousal. Let's always use the new mind's prefs.
 		var/mob/living/L = new_character
 		if(L.client?.prefs && L.client.prefs.auto_ooc && L.client.prefs.chat_toggles & CHAT_OOC)
-			DISABLE_BITFIELD(L.client.prefs.chat_toggles,CHAT_OOC)
+			L.client.prefs.chat_toggles &= ~(CHAT_OOC)
 
 	hide_ckey = current.client?.prefs?.hide_ckey
 

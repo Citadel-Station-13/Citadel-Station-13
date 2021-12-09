@@ -1,1 +1,0 @@
-This directory is used to store temporary files to create binaries on linux

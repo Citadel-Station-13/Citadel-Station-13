@@ -12,7 +12,7 @@
 	///Are you actually placing orders with it?
 	var/requestonly = TRUE
 	///Can the tablet see or buy illegal stuff?
-	var/contraband = FALSE
+	var/contraband_view = FALSE
 	///Is it being bought from a personal account, or is it being done via a budget/cargo?
 	var/self_paid = FALSE
 	///Can this console approve purchase requests?
@@ -27,10 +27,15 @@
 /datum/computer_file/program/budgetorders/proc/get_export_categories()
 	. = EXPORT_CARGO
 
+/datum/computer_file/program/budgetorders/run_emag()
+	if(!contraband_view)
+		contraband_view = TRUE
+		return TRUE
+
 /datum/computer_file/program/budgetorders/proc/is_visible_pack(mob/user, paccess_to_check, list/access, contraband)
 	if(issilicon(user)) //Borgs can't buy things.
 		return FALSE
-	if(computer.obj_flags & EMAGGED)
+	if((computer.obj_flags & EMAGGED) || contraband_view)
 		return TRUE
 	else if(contraband) //Hide contrband when non-emagged.
 		return FALSE
@@ -80,14 +85,14 @@
 	data["supplies"] = list()
 	for(var/pack in SSshuttle.supply_packs)
 		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-		if(!is_visible_pack(usr, P.access , null, P.contraband) || P.hidden)
+		if(!is_visible_pack(usr, P.access , null, P.contraband))
 			continue
 		if(!data["supplies"][P.group])
 			data["supplies"][P.group] = list(
 				"name" = P.group,
 				"packs" = list()
 			)
-		if((P.hidden && (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.DropPodOnly))
+		if(((P.hidden || P.contraband) && !contraband_view) || (P.special && !P.special_enabled) || P.DropPodOnly)
 			continue
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
@@ -179,7 +184,7 @@
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				return
-			if((pack.hidden && (pack.contraband && !contraband) || pack.DropPodOnly))
+			if(((pack.hidden || pack.contraband) && !contraband_view) || pack.DropPodOnly)
 				return
 
 			var/name = "*None Provided*"

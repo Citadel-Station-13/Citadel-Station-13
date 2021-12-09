@@ -39,7 +39,7 @@
 //Procs called while dead
 /mob/living/carbon/proc/handle_death()
 	for(var/datum/reagent/R in reagents.reagent_list)
-		if(R.chemical_flags & REAGENT_DEAD_PROCESS)
+		if(R.chemical_flags & REAGENT_DEAD_PROCESS && !is_reagent_processing_invalid(R, src))
 			R.on_mob_dead(src)
 
 ///////////////
@@ -324,7 +324,7 @@
 
 	if(!HAS_TRAIT(src, TRAIT_NO_INTERNALS))
 		for(check in GET_INTERNAL_SLOTS(src))
-			if(CHECK_BITFIELD(check.clothing_flags, ALLOWINTERNALS))
+			if((check.clothing_flags & ALLOWINTERNALS))
 				internals = TRUE
 	if(internal)
 		if(internal.loc != src)
@@ -570,23 +570,14 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "jittery")
 
-	if(stuttering)
-		stuttering = max(stuttering-1, 0)
+	if(druggy)
+		adjust_drugginess(-1)
 
-	if(slurring || drunkenness)
-		slurring = max(slurring-1,0,drunkenness)
-
-	if(cultslurring)
-		cultslurring = max(cultslurring-1, 0)
-
-	if(clockcultslurring)
-		clockcultslurring = max(clockcultslurring-1, 0)
+	if(drunkenness)
+		drunkenness = max(drunkenness-1,0)
 
 	if(silent)
 		silent = max(silent-1, 0)
-
-	if(druggy)
-		adjust_drugginess(-1)
 
 	if(hallucination)
 		handle_hallucinations()

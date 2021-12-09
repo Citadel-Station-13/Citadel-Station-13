@@ -1,5 +1,5 @@
 /*
-	The log console for viewing the entire telecomms 
+	The log console for viewing the entire telecomms
 	network log
 */
 
@@ -15,7 +15,7 @@
 
 	var/network = "NULL"		// the network to probe
 	var/notice = ""
-	var/universal_translate = FALSE // set to TRUE(1) if it can translate nonhuman speech	
+	var/universal_translate = FALSE // set to TRUE(1) if it can translate nonhuman speech
 
 /obj/machinery/computer/telecomms/server/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -53,7 +53,7 @@
 
 	if(!LAZYLEN(SelectedMachine.log_entries))
 		return data_out
-	
+
 	for(var/datum/comm_log_entry/C in SelectedMachine.log_entries)
 		var/list/data = list()
 		data["name"] = C.name	//name of the file
@@ -104,7 +104,7 @@
 			data["message"] = C.parameters["message"]
 		else
 			data["message"] = "(unintelligible)"
-		
+
 		data_out["selected_logs"] += list(data)
 	return data_out
 
@@ -133,7 +133,7 @@
 			if(LAZYLEN(machinelist) > 0)
 				notice = "FAILED: Cannot probe when buffer full"
 				return
-			
+
 			for(var/obj/machinery/telecomms/T in GLOB.telecomms_list) //telecomms just went global!
 				if(T.network == network)
 					LAZYADD(machinelist, T)
@@ -147,7 +147,7 @@
 					SelectedMachine = T
 					break
 		if("delete")
-			if(!src.allowed(usr) && !CHECK_BITFIELD(obj_flags, EMAGGED))
+			if(!src.allowed(usr) && !(obj_flags & EMAGGED))
 				to_chat(usr, "<span class='danger'>ACCESS DENIED.</span>")
 				return
 
@@ -156,7 +156,7 @@
 				return
 			var/datum/comm_log_entry/D = locate(params["value"])
 			if(!istype(D))
-				notice = "NOTICE: Object not found"		
+				notice = "NOTICE: Object not found"
 				return
 			notice = "Deleted entry: [D.name]"
 			LAZYREMOVE(SelectedMachine.log_entries, D)

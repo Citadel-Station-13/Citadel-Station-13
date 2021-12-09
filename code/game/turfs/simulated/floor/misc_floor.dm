@@ -263,7 +263,7 @@
 
 /turf/open/floor/padded
 	name = "padded floor"
-	desc = "Keeps crazy people from hurting themselves. It's soft, plush, and very nice to get shoved agaisnt."
+	desc = "Keeps crazy people from hurting themselves. It's soft, plush, and very nice to get shoved against."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor_padded"
 	floor_tile = /obj/item/stack/tile/padded

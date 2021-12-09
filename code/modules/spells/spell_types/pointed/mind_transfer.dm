@@ -44,6 +44,13 @@
 		to_chat(user, "<span class='warning'>The devilish contract doesn't include the 'mind swappable' package, please try again another lifetime.</span>")
 		return
 
+	// lets not have people be mindswapped to/from people who have people currently in their vore bellies
+	if(has_vore_belly(user))
+		user.release_vore_contents(include_absorbed = TRUE, silent = TRUE)
+
+	if(has_vore_belly(victim))
+		victim.release_vore_contents(include_absorbed = TRUE, silent = TRUE)
+
 	//MIND TRANSFER BEGIN
 	var/mob/dead/observer/ghost = victim.ghostize()
 	user.mind.transfer_to(victim)
