@@ -178,7 +178,7 @@
 
 	var/mob/living/silicon/robot/R = target
 	if(iscyborg(R))
-		if(R.module.dogborg == TRUE || R.dogborg == TRUE) //I hate whoever that thought that putting two types of dogborg that don't even sync up properly was good
+		if((R.module.dogborg == TRUE || R.dogborg == TRUE) && isturf(R.loc)) //I hate whoever that thought that putting two types of dogborg that don't even sync up properly was good
 			message.pixel_x = 16
 
 /**
