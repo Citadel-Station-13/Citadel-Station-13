@@ -1,4 +1,0 @@
-author: "bunny232"
-delete-after: True
-changes: 
-  - bugfix: "Cold blooded critters won't worry too much about the air around them being too hot even though their body temperature is the same as it."
