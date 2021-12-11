@@ -667,6 +667,7 @@
 		to_chat(user, "<span class='warning'>\The [src] can only transport items!</span>")
 
 /obj/item/flashlight/flare/culttorch/proc/transmit_item(atom/movable/A, mob/user, proximity)
+	set waitfor = FALSE
 	var/list/cultists = list()
 	for(var/datum/mind/M in SSticker.mode.cult)
 		if(M.current && M.current.stat != DEAD)
