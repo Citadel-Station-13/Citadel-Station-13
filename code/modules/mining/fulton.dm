@@ -60,83 +60,86 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			return
 		if(A.anchored || (A.move_resist > max_force_fulton))
 			return
-		to_chat(user, "<span class='notice'>You start attaching the pack to [A]...</span>")
-		if(do_after(user,50,target=A))
-			to_chat(user, "<span class='notice'>You attach the pack to [A] and activate it.</span>")
-			if(loc == user && istype(user.back, /obj/item/storage/backpack))
-				var/obj/item/storage/backpack/B = user.back
-				SEND_SIGNAL(B, COMSIG_TRY_STORAGE_INSERT, src, user, FALSE, FALSE)
-			uses_left--
-			if(uses_left <= 0)
-				user.transferItemToLoc(src, A, TRUE)
-			var/mutable_appearance/balloon
-			var/mutable_appearance/balloon2
-			var/mutable_appearance/balloon3
-			if(isliving(A))
-				var/mob/living/M = A
-				M.DefaultCombatKnockdown(320) // Keep them from moving during the duration of the extraction
-				M.buckled = 0 // Unbuckle them to prevent anchoring problems
-			else
-				A.anchored = TRUE
-				A.density = FALSE
-			var/obj/effect/extraction_holder/holder_obj = new(A.loc)
-			holder_obj.appearance = A.appearance
-			A.forceMove(holder_obj)
-			balloon2 = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_expand")
-			balloon2.pixel_y = 10
-			balloon2.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-			holder_obj.add_overlay(balloon2)
-			sleep(4)
-			balloon = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_balloon")
-			balloon.pixel_y = 10
-			balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-			holder_obj.cut_overlay(balloon2)
-			holder_obj.add_overlay(balloon)
-			playsound(holder_obj.loc, 'sound/items/fulext_deploy.wav', 50, 1, -3)
-			animate(holder_obj, pixel_z = 10, time = 20)
-			sleep(20)
-			animate(holder_obj, pixel_z = 15, time = 10)
-			sleep(10)
-			animate(holder_obj, pixel_z = 10, time = 10)
-			sleep(10)
-			animate(holder_obj, pixel_z = 15, time = 10)
-			sleep(10)
-			animate(holder_obj, pixel_z = 10, time = 10)
-			sleep(10)
-			playsound(holder_obj.loc, 'sound/items/fultext_launch.wav', 50, 1, -3)
-			animate(holder_obj, pixel_z = 1000, time = 30)
-			if(ishuman(A))
-				var/mob/living/carbon/human/L = A
-				L.SetUnconscious(0)
-				L.drowsyness = 0
-				L.SetSleeping(0)
-			sleep(30)
-			var/list/flooring_near_beacon = list()
-			for(var/turf/open/floor in orange(1, beacon))
-				flooring_near_beacon += floor
-			holder_obj.forceMove(pick(flooring_near_beacon))
-			animate(holder_obj, pixel_z = 10, time = 50)
-			sleep(50)
-			animate(holder_obj, pixel_z = 15, time = 10)
-			sleep(10)
-			animate(holder_obj, pixel_z = 10, time = 10)
-			sleep(10)
-			balloon3 = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_retract")
-			balloon3.pixel_y = 10
-			balloon3.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-			holder_obj.cut_overlay(balloon)
-			holder_obj.add_overlay(balloon3)
-			sleep(4)
-			holder_obj.cut_overlay(balloon3)
-			A.anchored = FALSE // An item has to be unanchored to be extracted in the first place.
-			A.density = initial(A.density)
-			animate(holder_obj, pixel_z = 0, time = 5)
-			sleep(5)
-			A.forceMove(holder_obj.loc)
-			qdel(holder_obj)
-			if(uses_left <= 0)
-				qdel(src)
+		attach_fulton(A, user, flag, params)
 
+/obj/item/extraction_pack/proc/attach_fulton(atom/movable/A, mob/living/carbon/human/user, flag, params)
+	set waitfor = FALSE
+	to_chat(user, "<span class='notice'>You start attaching the pack to [A]...</span>")
+	if(do_after(user,50,target=A))
+		to_chat(user, "<span class='notice'>You attach the pack to [A] and activate it.</span>")
+		if(loc == user && istype(user.back, /obj/item/storage/backpack))
+			var/obj/item/storage/backpack/B = user.back
+			SEND_SIGNAL(B, COMSIG_TRY_STORAGE_INSERT, src, user, FALSE, FALSE)
+		uses_left--
+		if(uses_left <= 0)
+			user.transferItemToLoc(src, A, TRUE)
+		var/mutable_appearance/balloon
+		var/mutable_appearance/balloon2
+		var/mutable_appearance/balloon3
+		if(isliving(A))
+			var/mob/living/M = A
+			M.DefaultCombatKnockdown(320) // Keep them from moving during the duration of the extraction
+			M.buckled = 0 // Unbuckle them to prevent anchoring problems
+		else
+			A.anchored = TRUE
+			A.density = FALSE
+		var/obj/effect/extraction_holder/holder_obj = new(A.loc)
+		holder_obj.appearance = A.appearance
+		A.forceMove(holder_obj)
+		balloon2 = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_expand")
+		balloon2.pixel_y = 10
+		balloon2.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		holder_obj.add_overlay(balloon2)
+		sleep(4)
+		balloon = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_balloon")
+		balloon.pixel_y = 10
+		balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		holder_obj.cut_overlay(balloon2)
+		holder_obj.add_overlay(balloon)
+		playsound(holder_obj.loc, 'sound/items/fulext_deploy.wav', 50, 1, -3)
+		animate(holder_obj, pixel_z = 10, time = 20)
+		sleep(20)
+		animate(holder_obj, pixel_z = 15, time = 10)
+		sleep(10)
+		animate(holder_obj, pixel_z = 10, time = 10)
+		sleep(10)
+		animate(holder_obj, pixel_z = 15, time = 10)
+		sleep(10)
+		animate(holder_obj, pixel_z = 10, time = 10)
+		sleep(10)
+		playsound(holder_obj.loc, 'sound/items/fultext_launch.wav', 50, 1, -3)
+		animate(holder_obj, pixel_z = 1000, time = 30)
+		if(ishuman(A))
+			var/mob/living/carbon/human/L = A
+			L.SetUnconscious(0)
+			L.drowsyness = 0
+			L.SetSleeping(0)
+		sleep(30)
+		var/list/flooring_near_beacon = list()
+		for(var/turf/open/floor in orange(1, beacon))
+			flooring_near_beacon += floor
+		holder_obj.forceMove(pick(flooring_near_beacon))
+		animate(holder_obj, pixel_z = 10, time = 50)
+		sleep(50)
+		animate(holder_obj, pixel_z = 15, time = 10)
+		sleep(10)
+		animate(holder_obj, pixel_z = 10, time = 10)
+		sleep(10)
+		balloon3 = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_retract")
+		balloon3.pixel_y = 10
+		balloon3.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		holder_obj.cut_overlay(balloon)
+		holder_obj.add_overlay(balloon3)
+		sleep(4)
+		holder_obj.cut_overlay(balloon3)
+		A.anchored = FALSE // An item has to be unanchored to be extracted in the first place.
+		A.density = initial(A.density)
+		animate(holder_obj, pixel_z = 0, time = 5)
+		sleep(5)
+		A.forceMove(holder_obj.loc)
+		qdel(holder_obj)
+		if(uses_left <= 0)
+			qdel(src)
 
 /obj/item/fulton_core
 	name = "extraction beacon signaller"

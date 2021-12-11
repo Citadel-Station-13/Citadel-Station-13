@@ -223,7 +223,6 @@
 		var/alert_type = null
 		if(ispath(breathing_class))
 			breathing_class = breathing_classes[breathing_class]
-			var/list/gases = breathing_class.gases
 			alert_category = breathing_class.high_alert_category
 			alert_type = breathing_class.high_alert_datum
 			danger_reagent = breathing_class.danger_reagent
