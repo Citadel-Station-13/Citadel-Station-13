@@ -109,6 +109,8 @@
 /// The proc that places the item on the source. This should not yield.
 /datum/strippable_item/proc/finish_equip(atom/source, obj/item/equipping, mob/user)
 	SHOULD_NOT_SLEEP(TRUE)
+	if(get_obscuring(source) == STRIPPABLE_OBSCURING_COMPLETELY)
+		return FALSE
 
 /// Tries to unequip the item from the given source.
 /// Returns TRUE/FALSE depending on if it is allowed.
@@ -167,11 +169,15 @@
 /// Return `null` if there is no alternate action.
 /// Any return value of this must be in StripMenu.
 /datum/strippable_item/proc/get_alternate_action(atom/source, mob/user)
+	if(get_obscuring(source) == STRIPPABLE_OBSCURING_COMPLETELY)
+		return null
 	return null
 
 /// Performs an alternative action on this strippable_item.
 /// `has_alternate_action` needs to be TRUE.
 /datum/strippable_item/proc/alternate_action(atom/source, mob/user)
+	if(get_obscuring(source) == STRIPPABLE_OBSCURING_COMPLETELY)
+		return null
 	return TRUE
 
 /// Returns whether or not this item should show.
@@ -236,6 +242,8 @@
 	return TRUE
 
 /datum/strippable_item/mob_item_slot/finish_equip(atom/source, obj/item/equipping, mob/user)
+	if(!..())
+		return FALSE
 	if (!ismob(source))
 		return FALSE
 

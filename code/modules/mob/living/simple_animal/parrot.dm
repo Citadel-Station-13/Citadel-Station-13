@@ -213,17 +213,18 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	return TRUE
 
 /datum/strippable_item/parrot_headset/finish_equip(atom/source, obj/item/equipping, mob/user)
-	..()
+	if(!..())
+		return FALSE
 	var/obj/item/radio/headset/radio = equipping
 	if (!istype(radio))
-		return
+		return FALSE
 
 	var/mob/living/simple_animal/parrot/parrot_source = source
 	if (!istype(parrot_source))
-		return
+		return FALSE
 
 	if (!user.transferItemToLoc(radio, source))
-		return
+		return FALSE
 
 	parrot_source.ears = radio
 

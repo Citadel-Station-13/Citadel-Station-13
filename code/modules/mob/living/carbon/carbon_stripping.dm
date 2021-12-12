@@ -97,7 +97,8 @@
 	return TRUE
 
 /datum/strippable_item/hand/finish_equip(atom/source, obj/item/equipping, mob/user)
-	..()
+	if(!..())
+		return FALSE
 	if (!iscarbon(source))
 		return FALSE
 

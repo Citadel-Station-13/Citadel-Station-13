@@ -46,6 +46,8 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	item_slot = SLOT_W_UNIFORM
 
 /datum/strippable_item/mob_item_slot/jumpsuit/get_alternate_action(atom/source, mob/user)
+	if(!..())
+		return null
 	var/obj/item/clothing/under/jumpsuit = get_item(source)
 	if (!istype(jumpsuit))
 		return null
@@ -53,7 +55,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 
 /datum/strippable_item/mob_item_slot/jumpsuit/alternate_action(atom/source, mob/user)
 	if (!..())
-		return
+		return null
 	var/obj/item/clothing/under/jumpsuit = get_item(source)
 	if (!istype(jumpsuit))
 		return null
@@ -64,17 +66,20 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	jumpsuit.toggle_jumpsuit_adjust()
 
 	if (!ismob(source))
-		return
+		return null
 
 	var/mob/mob_source = source
 	mob_source.update_inv_w_uniform()
 	mob_source.update_body()
+	return TRUE
 
 /datum/strippable_item/mob_item_slot/suit
 	key = STRIPPABLE_ITEM_SUIT
 	item_slot = SLOT_WEAR_SUIT
 
 /datum/strippable_item/mob_item_slot/suit/get_alternate_action(atom/source, mob/user)
+	if(!..())
+		return null
 	var/obj/item/clothing/suit/space/hardsuit/suit = get_item(source)
 	if(istype(suit))
 		if(!suit.helmettype)
@@ -83,6 +88,8 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	return null
 
 /datum/strippable_item/mob_item_slot/suit/alternate_action(mob/living/carbon/human/source, mob/user)
+	if(!..())
+		return null
 	if(ishuman(source))
 		var/obj/item/clothing/suit/space/hardsuit/hardsuit = get_item(source)
 		var/obj/item/clothing/head/helmet/space/hardsuit/hardsuit_head = hardsuit.helmet
@@ -90,14 +97,14 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 							"<span class='userdanger'>[user] tries to [hardsuit.suittoggled ? "retract" : "extend"] [source]'s helmet.</span>", \
 							target = user, target_message = "<span class='danger'>You try to [hardsuit.suittoggled ? "retract" : "extend"] [source]'s helmet.</span>")
 		if(!do_mob(user, source, hardsuit_head ? hardsuit_head.strip_delay : POCKET_STRIP_DELAY, ignorehelditem = TRUE))
-			return
+			return null
 		if((source.head != hardsuit_head) && source.head)
-			return
+			return null
 		if(hardsuit.ToggleHelmet(FALSE))
 			source.visible_message("<span class='danger'>[user] [hardsuit_head ? "retract" : "extend"] [source]'s helmet</span>", \
 									"<span class='userdanger'>[user] [hardsuit_head ? "retract" : "extend"] [source]'s helmet</span>", \
 									target = user, target_message = "<span class='danger'>You [hardsuit_head ? "retract" : "extend"] [source]'s helmet.</span>")
-		return
+		return TRUE
 
 /datum/strippable_item/mob_item_slot/gloves
 	key = STRIPPABLE_ITEM_GLOVES
@@ -108,6 +115,8 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	item_slot = SLOT_SHOES
 
 /datum/strippable_item/mob_item_slot/feet/get_alternate_action(atom/source, mob/user)
+	if(!..())
+		return null
 	var/obj/item/clothing/shoes/shoes = get_item(source)
 	if (!istype(shoes) || !shoes.can_be_tied)
 		return null
@@ -122,24 +131,27 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 
 /datum/strippable_item/mob_item_slot/feet/alternate_action(atom/source, mob/user)
 	if(!..())
-		return
+		return null
 	var/obj/item/clothing/shoes/shoes = get_item(source)
 	if (!istype(shoes))
-		return
+		return null
 
 	shoes.handle_tying(user)
+	return TRUE
 
 /datum/strippable_item/mob_item_slot/suit_storage
 	key = STRIPPABLE_ITEM_SUIT_STORAGE
 	item_slot = SLOT_S_STORE
 
 /datum/strippable_item/mob_item_slot/suit_storage/get_alternate_action(atom/source, mob/user)
+	if(!..())
+		return null
 	return get_strippable_alternate_action_internals(get_item(source), source)
 
 /datum/strippable_item/mob_item_slot/suit_storage/alternate_action(atom/source, mob/user)
 	if (!..())
-		return
-	strippable_alternate_action_internals(get_item(source), source, user)
+		return null
+	return strippable_alternate_action_internals(get_item(source), source, user)
 
 /datum/strippable_item/mob_item_slot/id
 	key = STRIPPABLE_ITEM_ID
@@ -150,12 +162,14 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	item_slot = SLOT_BELT
 
 /datum/strippable_item/mob_item_slot/belt/get_alternate_action(atom/source, mob/user)
+	if(!..())
+		return null
 	return get_strippable_alternate_action_internals(get_item(source), source)
 
 /datum/strippable_item/mob_item_slot/belt/alternate_action(atom/source, mob/user)
 	if (!..())
-		return
-	strippable_alternate_action_internals(get_item(source), source, user)
+		return null
+	return strippable_alternate_action_internals(get_item(source), source, user)
 
 /datum/strippable_item/mob_item_slot/pocket
 	/// Which pocket we're referencing. Used for visible text.
@@ -208,7 +222,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 
 /proc/get_strippable_alternate_action_internals(obj/item/item, atom/source)
 	if (!iscarbon(source))
-		return
+		return null
 
 	var/mob/living/carbon/carbon_source = source
 	var/obj/item/clothing/mask
@@ -234,11 +248,11 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 /proc/strippable_alternate_action_internals(obj/item/item, atom/source, mob/user)
 	var/obj/item/tank/tank = item
 	if (!istype(tank))
-		return
+		return null
 
 	var/mob/living/carbon/carbon_source = source
 	if (!istype(carbon_source))
-		return
+		return null
 
 	var/obj/item/clothing/mask
 	var/internals = FALSE
@@ -255,7 +269,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 			internals = TRUE
 
 	if(!internals)
-		return
+		return null
 
 	carbon_source.visible_message(
 		span_danger("[user] tries to [isnull(carbon_source.internal) ? "open": "close"] the valve on [source]'s [item.name]."),
@@ -266,7 +280,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	to_chat(user, span_notice("You try to [isnull(carbon_source.internal) ? "open": "close"] the valve on [source]'s [item.name]..."))
 
 	if(!do_mob(user, carbon_source, INTERNALS_TOGGLE_DELAY, ignorehelditem = TRUE))
-		return
+		return null
 
 	if(carbon_source.internal)
 		carbon_source.internal = null
@@ -285,6 +299,8 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	)
 
 	to_chat(user, span_notice("You [isnull(carbon_source.internal) ? "close" : "open"] the valve on [source]'s [item.name]."))
+
+	return TRUE
 
 #undef INTERNALS_TOGGLE_DELAY
 #undef POCKET_EQUIP_DELAY
