@@ -218,7 +218,7 @@
 	if (!ismob(source))
 		return FALSE
 
-	if (!do_mob(user, source, get_equip_delay(equipping), ignorehelditem = TRUE))
+	if (!do_mob(user, source, get_equip_delay(equipping))
 		return FALSE
 
 	if (!equipping.mob_can_equip(

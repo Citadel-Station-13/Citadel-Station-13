@@ -85,7 +85,7 @@
 
 	var/mob/mob_source = source
 
-	if (!do_mob(user, source, equipping.equip_delay_other, ignorehelditem = TRUE))
+	if (!do_mob(user, source, equipping.equip_delay_other))
 		return FALSE
 
 	if (!mob_source.can_put_in_hand(equipping, hand_index))
