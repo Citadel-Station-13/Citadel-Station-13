@@ -210,6 +210,8 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 // There is no delay for putting a headset on a parrot.
 /datum/strippable_item/parrot_headset/start_equip(atom/source, obj/item/equipping, mob/user)
+	if(get_obscuring(source) == STRIPPABLE_OBSCURING_COMPLETELY)
+		return FALSE
 	return TRUE
 
 /datum/strippable_item/parrot_headset/finish_equip(atom/source, obj/item/equipping, mob/user)

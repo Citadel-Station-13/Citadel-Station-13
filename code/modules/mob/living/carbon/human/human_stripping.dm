@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	item_slot = SLOT_W_UNIFORM
 
 /datum/strippable_item/mob_item_slot/jumpsuit/get_alternate_action(atom/source, mob/user)
-	if(!..())
+	if(..() == FALSE)
 		return null
 	var/obj/item/clothing/under/jumpsuit = get_item(source)
 	if (!istype(jumpsuit))
@@ -78,7 +78,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	item_slot = SLOT_WEAR_SUIT
 
 /datum/strippable_item/mob_item_slot/suit/get_alternate_action(atom/source, mob/user)
-	if(!..())
+	if(..() == FALSE)
 		return null
 	var/obj/item/clothing/suit/space/hardsuit/suit = get_item(source)
 	if(istype(suit))
@@ -115,7 +115,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	item_slot = SLOT_SHOES
 
 /datum/strippable_item/mob_item_slot/feet/get_alternate_action(atom/source, mob/user)
-	if(!..())
+	if(..() == FALSE)
 		return null
 	var/obj/item/clothing/shoes/shoes = get_item(source)
 	if (!istype(shoes) || !shoes.can_be_tied)
@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	item_slot = SLOT_S_STORE
 
 /datum/strippable_item/mob_item_slot/suit_storage/get_alternate_action(atom/source, mob/user)
-	if(!..())
+	if(..() == FALSE)
 		return null
 	return get_strippable_alternate_action_internals(get_item(source), source)
 
@@ -162,7 +162,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	item_slot = SLOT_BELT
 
 /datum/strippable_item/mob_item_slot/belt/get_alternate_action(atom/source, mob/user)
-	if(!..())
+	if(..() == FALSE)
 		return null
 	return get_strippable_alternate_action_internals(get_item(source), source)
 

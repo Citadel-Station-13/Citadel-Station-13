@@ -88,6 +88,9 @@
 	if (!do_mob(user, source, equipping.equip_delay_other))
 		return FALSE
 
+	if(get_obscuring(source) == STRIPPABLE_OBSCURING_COMPLETELY)
+		return FALSE
+
 	if (!mob_source.can_put_in_hand(equipping, hand_index))
 		return FALSE
 
