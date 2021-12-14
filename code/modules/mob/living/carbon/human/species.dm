@@ -331,7 +331,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	var/should_have_brain = TRUE
 	var/should_have_heart = !(NOBLOOD in species_traits)
-	var/should_have_lungs = !(TRAIT_NOBREATH in inherent_traits)
+	var/should_have_lungs = ((TRAIT_AUXILIARY_LUNGS in inherent_traits) || !(TRAIT_NOBREATH in inherent_traits))
 	var/should_have_appendix = !(TRAIT_NOHUNGER in inherent_traits)
 	var/should_have_eyes = TRUE
 	var/should_have_ears = TRUE
@@ -1165,7 +1165,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		var/takes_crit_damage = !HAS_TRAIT(H, TRAIT_NOCRITDAMAGE)
 		if((H.health < H.crit_threshold) && takes_crit_damage)
-			H.adjustBruteLoss(1)
+			if(!HAS_TRAIT(H, TRAIT_ROBOTIC_ORGANISM))
+				H.adjustBruteLoss(1)
+			else
+				H.adjustFireLoss(1)	//Robots melt instead of taking brute.
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -1874,7 +1877,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(BODY_ZONE_HEAD)
 				if(!I.get_sharpness() && armor_block < 50)
 					if(prob(I.force))
-						if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+						if(HAS_TRAIT(H, TRAIT_ROBOTIC_ORGANISM))
 							H.adjustToxLoss(5, toxins_type = TOX_SYSCORRUPT) //Bonk! - Effectively 5 bonus damage
 						else
 							H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
@@ -2171,15 +2174,20 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	//Thermal protection (insulation) has mixed benefits in two situations (hot in hot places, cold in hot places)
 	if(!H.on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
 		var/natural = 0
+		var/cooling_efficiency = 1
 		if(H.stat != DEAD)
 			natural = H.natural_bodytemperature_stabilization()
+			cooling_efficiency = H.get_cooling_efficiency()
+
+		if(HAS_TRAIT(H, TRAIT_ROBOTIC_ORGANISM))	//Synths by default slowly heat up and need to lose said heat to the environment or active cooling.
+			H.adjust_bodytemperature(SYNTH_PASSIVE_HEAT_GAIN * (1 - cooling_efficiency), max_temp = T0C + 200)
 		var/thermal_protection = 1
 		if(loc_temp < H.bodytemperature) //Place is colder than we are
 			thermal_protection -= H.get_thermal_protection(loc_temp, TRUE) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 			if(H.bodytemperature < BODYTEMP_NORMAL) //we're cold, insulation helps us retain body heat and will reduce the heat we lose to the environment
-				H.adjust_bodytemperature((thermal_protection+1)*natural + max(thermal_protection * (loc_temp - H.bodytemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX))
+				H.adjust_bodytemperature((thermal_protection+1)*natural + max((thermal_protection * (loc_temp - H.bodytemperature) * cooling_efficiency) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX))
 			else //we're sweating, insulation hinders our ability to reduce heat - and it will reduce the amount of cooling you get from the environment
-				H.adjust_bodytemperature(natural*(1/(thermal_protection+1)) + max((thermal_protection * (loc_temp - H.bodytemperature) + BODYTEMP_NORMAL - H.bodytemperature) / BODYTEMP_COLD_DIVISOR , BODYTEMP_COOLING_MAX)) //Extra calculation for hardsuits to bleed off heat
+				H.adjust_bodytemperature(natural*(1/(thermal_protection+1)) + max(((thermal_protection * (loc_temp - H.bodytemperature) + BODYTEMP_NORMAL - H.bodytemperature) * cooling_efficiency) / BODYTEMP_COLD_DIVISOR , BODYTEMP_COOLING_MAX)) //Extra calculation for hardsuits to bleed off heat
 		else //Place is hotter than we are
 			thermal_protection -= H.get_thermal_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 			if(H.bodytemperature < BODYTEMP_NORMAL) //and we're cold, insulation enhances our ability to retain body heat but reduces the heat we get from the environment

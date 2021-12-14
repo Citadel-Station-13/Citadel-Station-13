@@ -68,6 +68,12 @@
 
 #define TEMPERATURE_DAMAGE_COEFFICIENT		1.5		//This is used in handle_temperature_damage() for humans, and in reagents that affect body temperature. Temperature damage is multiplied by this amount.
 
+#define SYNTH_PASSIVE_HEAT_GAIN 10						//Degrees C per handle_environment() Synths passively heat up. Mitigated by cooling efficiency. Can lead to overheating if not managed.
+#define SYNTH_HEAT_EFFICIENCY_COEFF 0.005				//How quick the difference between the Synth and the environment starts to matter. The smaller the higher the difference has to be for the same change.
+#define SYNTH_SINGLE_INFLUENCE_COOLING_EFFECT_CAP 3		//How big can the multiplier for heat / pressure cooling be in an optimal environment
+#define SYNTH_TOTAL_ENVIRONMENT_EFFECT_CAP 2			//How big of an multiplier can the environment give in an optimal scenario (maximum efficiency in the end is 1, this just counters low coolant levels)
+#define SYNTH_ACTIVE_COOLING_TEMP_BOUNDARY 10			//The minimum distance from room temperature a Synth needs to have for active cooling to actively cool.
+
 #define BODYTEMP_NORMAL						310.15			//The natural temperature for a body
 #define BODYTEMP_AUTORECOVERY_DIVISOR		11		//This is the divisor which handles how much of the temperature difference between the current body temperature and 310.15K (optimal temperature) humans auto-regenerate each tick. The higher the number, the slower the recovery. This is applied each tick, so long as the mob is alive.
 #define BODYTEMP_AUTORECOVERY_MINIMUM		12		//Minimum amount of kelvin moved toward 310K per tick. So long as abs(310.15 - bodytemp) is more than 50.

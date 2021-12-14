@@ -17,7 +17,6 @@
 /datum/reagent/medicine/leporazine
 	name = "Leporazine"
 	description = "Leporazine will effectively regulate a patient's body temperature, ensuring it never leaves safe levels."
-	chemical_flags = REAGENT_ALL_PROCESS
 	pH = 8.4
 	color = "#82b8aa"
 	value = REAGENT_VALUE_COMMON
