@@ -582,8 +582,6 @@
 	if(HAS_TRAIT(owner, TRAIT_ROBOTIC_ORGANISM))	//Robots can heal from cores, but only get 1/5th of the healing. They can use this to get past the damage threshhold however, and then regularely heal from there.
 		heal_amount *= 0.2
 	owner.adjustBruteLoss(-heal_amount, only_organic = FALSE)
-	if(!AmBloodsucker(owner))	//use your coffin you lazy bastard
-		owner.adjustFireLoss(-heal_amount, only_organic = FALSE)
 	owner.remove_CC()
 	owner.bodytemperature = BODYTEMP_NORMAL
 	return TRUE

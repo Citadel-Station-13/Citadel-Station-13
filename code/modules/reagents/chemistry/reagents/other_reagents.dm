@@ -32,22 +32,10 @@
 			else //ingest, patch or inject
 				L.ForceContractDisease(D)
 
-	if(data["blood_type"] == "SY")
-		//Synthblood is very disgusting to bloodsuckers. They will puke it out to expel it, unless they have masquarade on
-		switch(reac_volume)
-			if(0 to 3)
-				disgust_bloodsucker(L, 3, FALSE, FALSE, FALSE)
-			if(3 to 6)
-				//If theres more than 8 units, they will start expelling it, even if they are masquarading.
-				disgust_bloodsucker(L, 5, FALSE, FALSE, TRUE)
-			else
-				//If they have too much in them, they will also puke out their blood.
-				disgust_bloodsucker(L, 7, -5, TRUE, TRUE)
-
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		var/blood_id = C.get_blood_id()
-		if((HAS_TRAIT(C, TRAIT_NOMARROW) || blood_id == /datum/reagent/blood || blood_id == /datum/reagent/blood/jellyblood) && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
+		if((blood_id == /datum/reagent/blood || blood_id == /datum/reagent/blood/jellyblood) && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
 			C.adjust_integration_blood(round(reac_volume, 0.1))
 			// we don't care about bloodtype here, we're just refilling the mob
 

@@ -46,11 +46,6 @@
 	for(var/array in GLOB.doppler_arrays)
 		var/obj/machinery/doppler_array/A = array
 		A.sense_explosion(epicenter, explosion_size/2, explosion_size, 0, 107000000 / power, explosion_size/2, explosion_size, 0)
-	if(power > 1 && SSticker.mode.bloodsucker_sunlight?.time_til_cycle > 90)
-		var/obj/effect/sunlight/sucker_light = SSticker.mode.bloodsucker_sunlight
-		sucker_light.time_til_cycle = 90
-		sucker_light.warn_daylight(1,"<span class = 'danger'>A supernova will bombard the station with dangerous UV in [90 / 60] minutes. <b>Prepare to seek cover in a coffin or closet.</b></span>")
-		sucker_light.give_home_power()
 
 /datum/round_event/supernova/tick()
 	var/midpoint = round((endWhen-startWhen)/2)

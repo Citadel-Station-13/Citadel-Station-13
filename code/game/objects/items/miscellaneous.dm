@@ -173,7 +173,7 @@
 	new_choice.mob_size = MOB_SIZE_TINY //yeah we're not letting you use this roundstart pet to hurt people / knock them down
 	new_choice.pass_flags = PASSTABLE | PASSMOB //your pet is not a bullet/person shield
 	new_choice.density = FALSE
-	new_choice.blood_volume = 0 //your pet cannot be used to drain blood from for a bloodsucker
+	new_choice.blood_volume = 0
 	new_choice.desc = "A pet [initial(choice.name)], owned by [owner]!"
 	new_choice.can_have_ai = FALSE //no it cant be sentient damnit
 	if(pet_name)

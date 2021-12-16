@@ -156,12 +156,6 @@
 		duration = set_duration
 	. = ..()
 
-/atom/movable/screen/alert/status_effect/mesmerized
-	name = "Mesmerized"
-	desc = "You can't tear your sight from who is in front of you... their gaze is simply too enthralling.."
-	icon = 'icons/mob/actions/bloodsucker.dmi'
-	icon_state = "power_mez"
-
 /datum/status_effect/electrode
 	id = "tased"
 	alert_type = null

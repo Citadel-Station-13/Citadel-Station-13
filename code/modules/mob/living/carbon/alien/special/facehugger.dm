@@ -252,8 +252,6 @@
 		return FALSE
 	if(M.getorgan(/obj/item/organ/alien/hivenode))
 		return FALSE
-	if(AmBloodsucker(M))
-		return FALSE
 
 	if(ismonkey(M))
 		return 1

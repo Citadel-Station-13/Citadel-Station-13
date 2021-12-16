@@ -20,7 +20,6 @@
 	if(!HAS_TRAIT(M, TRAIT_NO_PROCESS_FOOD))
 		current_cycle++
 		M.adjust_nutrition(nutriment_factor, max_nutrition)
-	M.CheckBloodsuckerEatFood(nutriment_factor)
 	holder.remove_reagent(type, metabolization_rate)
 
 /datum/reagent/consumable/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -473,26 +472,6 @@
 				. = 1
 	..()
 
-/datum/reagent/consumable/garlic/reaction_mob(mob/living/M, method, reac_volume)
-	if(AmBloodsucker(M, TRUE)) //Theyll be immune to garlic as long as they masquarade, but they cant do it if they already have it.
-		switch(method)
-			if(INGEST)
-				if(prob(min(30, current_cycle)))
-					to_chat(M, "<span class='warning'>You cant get the smell of garlic out of your nose! You cant think straight because of it!</span>")
-					M.Jitter(15)
-				if(prob(min(15, current_cycle)))
-					M.visible_message("<span class='danger'>Something you ate is burning your stomach!</span>", "<span class='warning'>[M] clutches their stomach and falls to the ground!</span>")
-					M.Knockdown(20)
-					M.emote("scream")
-				if(prob(min(5, current_cycle)) && iscarbon(M))
-					var/mob/living/carbon/C
-					C.vomit()
-			if(INJECT)
-				if(prob(min(20, current_cycle)))
-					to_chat(M, "<span class='warning'>You feel like your veins are boiling!</span>")
-					M.emote("scream")
-					M.adjustFireLoss(5)
-	..()
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
 	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
