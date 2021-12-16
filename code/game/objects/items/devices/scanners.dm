@@ -426,7 +426,7 @@ GENETICS SCANNER
 			if(ishuman(C))
 				if(H.is_bleeding())
 					msg += "<span class='danger'>Subject is bleeding!</span>\n"
-			var/blood_percent = round((C.scan_blood_volume() / (BLOOD_VOLUME_NORMAL * C.blood_ratio))*100)
+			var/blood_percent = round((C.blood_volume / (BLOOD_VOLUME_NORMAL * C.blood_ratio))*100)
 			var/integrated_blood_percent = round((C.integrating_blood / (BLOOD_VOLUME_NORMAL * C.blood_ratio))*100)
 			var/blood_type = C.dna.blood_type
 			if(!(blood_typepath in GLOB.blood_reagent_types))
@@ -434,9 +434,9 @@ GENETICS SCANNER
 				if(R)
 					blood_type = R.name
 
-			if((C.scan_blood_volume() + C.integrating_blood) <= (BLOOD_VOLUME_SAFE * C.blood_ratio) && (C.scan_blood_volume() + C.integrating_blood) > (BLOOD_VOLUME_OKAY*C.blood_ratio))
+			if((C.blood_volume + C.integrating_blood) <= (BLOOD_VOLUME_SAFE * C.blood_ratio) && (C.scan_blood_volume() + C.integrating_blood) > (BLOOD_VOLUME_OKAY*C.blood_ratio))
 				msg += "<span class='danger'>LOW blood level [blood_percent] %, [C.scan_blood_volume()] cl[C.integrating_blood? ", with [integrated_blood_percent] % of it integrating, [C.integrating_blood] cl " : ""].</span> <span class='info'>type: [blood_type]</span>\n"
-			else if((C.scan_blood_volume() + C.integrating_blood) <= (BLOOD_VOLUME_OKAY * C.blood_ratio))
+			else if((C.blood_volume + C.integrating_blood) <= (BLOOD_VOLUME_OKAY * C.blood_ratio))
 				msg += "<span class='danger'>CRITICAL blood level [blood_percent] %, [C.scan_blood_volume()] cl[C.integrating_blood? ", with [integrated_blood_percent] % of it integrating, [C.integrating_blood] cl " : ""].</span> <span class='info'>type: [blood_type]</span>\n"
 			else
 				msg += "<span class='info'>Blood level [blood_percent] %, [C.scan_blood_volume()] cl[C.integrating_blood? ", with [integrated_blood_percent] % of it integrating, [C.integrating_blood] cl " : ""]. type: [blood_type]</span>\n"
@@ -902,7 +902,7 @@ GENETICS SCANNER
 
 /obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if (!HAS_TRAIT(M, TRAIT_GENELESS) && !HAS_TRAIT(M, TRAIT_BADDNA))) //no scanning if its a husk or DNA-less Species
+	if (!HAS_TRAIT(M, TRAIT_GENELESS)) //no scanning if its a husk or DNA-less Species
 		user.visible_message(span_notice("[user] analyzes [M]'s genetic sequence."), \
 							span_notice("You analyze [M]'s genetic sequence."))
 		gene_scan(M, user)

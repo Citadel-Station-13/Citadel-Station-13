@@ -137,25 +137,6 @@
 /datum/status_effect/robotic_emp
 	id = "emp_no_combat_mode"
 
-/datum/status_effect/mesmerize
-	id = "Mesmerize"
-	alert_type = /atom/movable/screen/alert/status_effect/mesmerized
-
-/datum/status_effect/mesmerize/on_creation(mob/living/new_owner, set_duration)
-	. = ..()
-	ADD_TRAIT(owner, TRAIT_MUTE, "mesmerize")
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/mesmerize)
-
-/datum/status_effect/mesmerize/on_remove()
-	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_MUTE, "mesmerize")
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/mesmerize)
-
-/datum/status_effect/mesmerize/on_creation(mob/living/new_owner, set_duration)
-	if(isnum(set_duration))
-		duration = set_duration
-	. = ..()
-
 /datum/status_effect/electrode
 	id = "tased"
 	alert_type = null
