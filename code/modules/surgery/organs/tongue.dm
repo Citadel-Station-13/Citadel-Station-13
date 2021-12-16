@@ -23,7 +23,6 @@
 		/datum/language/ratvar,
 		/datum/language/aphasia,
 		/datum/language/slime,
-		/datum/language/vampiric,
 		/datum/language/dwarf,
 		/datum/language/signlanguage,
 		/datum/language/neokanji,
