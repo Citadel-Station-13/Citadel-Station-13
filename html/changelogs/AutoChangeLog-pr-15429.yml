@@ -1,4 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - bugfix: "The time for admins to cancel events is 30 seconds again."
