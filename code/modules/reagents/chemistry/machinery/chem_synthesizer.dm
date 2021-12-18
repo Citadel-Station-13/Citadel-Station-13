@@ -53,8 +53,8 @@
 				return
 			beaker = new /obj/item/reagent_containers/glass/beaker/bluespace(src)
 			visible_message("<span class='notice'>[src] dispenses a bluespace beaker.</span>")
-		if("amount")
-			var/input = text2num(params["amount"])
+		if("synth_amount")
+			var/input = text2num(params["synth_amount"])
 			if(input)
 				amount = input
 	update_icon()
