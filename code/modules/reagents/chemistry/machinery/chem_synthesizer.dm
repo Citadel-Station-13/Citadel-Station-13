@@ -56,7 +56,7 @@
 		if("synth_amount")
 			var/input = text2num(params["synth_amount"])
 			if(input)
-				amount = input
+				amount = max(input, 0)
 	update_icon()
 
 /obj/machinery/chem_dispenser/chem_synthesizer/proc/find_reagent(input)
