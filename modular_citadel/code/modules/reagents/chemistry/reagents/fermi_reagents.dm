@@ -9,6 +9,7 @@
 	impure_chem 			= /datum/reagent/impure/fermiTox // What chemical is metabolised with an inpure reaction
 	inverse_chem_val 		= 0.25		// If the impurity is below 0.5, replace ALL of the chem with inverse_chemupon metabolising
 	inverse_chem			= /datum/reagent/impure/fermiTox
+	chemical_flags = REAGENT_ALL_PROCESS	//Lets just default to robots being able to process these funky chems.
 
 
 //This should process fermichems to find out how pure they are and what effect to do.
@@ -36,7 +37,7 @@
 	taste_description = "like jerky, whiskey and an off aftertaste of a crypt."
 	metabolization_rate = 0.2
 	overdose_threshold = 25
-	chemical_flags = REAGENT_DONOTSPLIT
+	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_ALL_PROCESS
 	pH = 4
 	can_synth = TRUE
 
@@ -84,7 +85,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	inverse_chem_val 		= 0
 	var/obj/item/organ/tongue/nT
-	chemical_flags = REAGENT_DONOTSPLIT
+	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_ALL_PROCESS
 	pH = 5
 	var/obj/item/organ/tongue/T
 	can_synth = TRUE
@@ -240,7 +241,7 @@
 	name = "Electromagnetic crystals"
 	description = "Causes items upon the patient to sometimes short out, as well as causing a shock in the patient, if the residual charge between the crystals builds up to sufficient quantities"
 	metabolization_rate = 0.5
-	chemical_flags = REAGENT_INVISIBLE
+	chemical_flags = REAGENT_INVISIBLE | REAGENT_ALL_PROCESS
 
 //Increases shock events.
 /datum/reagent/fermi/nanite_b_goneTox/on_mob_life(mob/living/carbon/C)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
@@ -303,7 +304,7 @@
 /datum/reagent/fermi/fermiTest
 	name = "Fermis Test Reagent"
 	description = "You should be really careful with this...! Also, how did you get this?"
-	chemical_flags = REAGENT_FORCEONNEW
+	chemical_flags = REAGENT_FORCEONNEW | REAGENT_ALL_PROCESS
 	can_synth = FALSE
 
 /datum/reagent/fermi/fermiTest/on_new(datum/reagents/holder)
@@ -338,7 +339,7 @@
 	description = "This reagent will consume itself and move the pH of a beaker towards acidity when added to another."
 	color = "#fbc314"
 	pH = 0
-	chemical_flags = REAGENT_FORCEONNEW
+	chemical_flags = REAGENT_FORCEONNEW | REAGENT_ALL_PROCESS
 	can_synth = TRUE
 	var/strength = 1.5
 
@@ -376,7 +377,7 @@
 	description = "This reagent will consume itself and move the pH of a beaker towards alkalinity when added to another."
 	color = "#3853a4"
 	pH = 14
-	chemical_flags = REAGENT_FORCEONNEW
+	chemical_flags = REAGENT_FORCEONNEW | REAGENT_ALL_PROCESS
 	can_synth = TRUE
 	var/strength = 1.5
 

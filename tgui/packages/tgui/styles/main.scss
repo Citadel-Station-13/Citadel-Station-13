@@ -16,6 +16,8 @@
 @include meta.load-css('./atomic/links.scss');
 @include meta.load-css('./atomic/outline.scss');
 @include meta.load-css('./atomic/text.scss');
+@include meta.load-css('./atomic/TexMath.scss');
+@include meta.load-css('./atomic/KaTeX.scss');
 
 // Components
 @include meta.load-css('./components/BlockQuote.scss');

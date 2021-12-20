@@ -247,21 +247,27 @@
 	var/final_damage = damage
 
 	if(attack_type & ATTACK_TYPE_MELEE)
-		var/obj/hittingthing = object
-		if(hittingthing.damtype == BURN)
-			if((shield_flags & SHIELD_ENERGY_WEAK))
-				final_damage *= 2
-			else if((shield_flags & SHIELD_ENERGY_STRONG))
-				final_damage *= 0.5
+		if(istype(object, /obj))	//Assumption: non-object attackers are a meleeing mob. Therefore: Assuming physical attack in this case.
+			var/obj/hittingthing = object
+			if(hittingthing.damtype == BURN)
+				if((shield_flags & SHIELD_ENERGY_WEAK))
+					final_damage *= 2
+				else if((shield_flags & SHIELD_ENERGY_STRONG))
+					final_damage *= 0.5
 
-		if(hittingthing.damtype == BRUTE)
+			if(hittingthing.damtype == BRUTE)
+				if((shield_flags & SHIELD_KINETIC_WEAK))
+					final_damage *= 2
+				else if((shield_flags & SHIELD_KINETIC_STRONG))
+					final_damage *= 0.5
+
+			if(hittingthing.damtype == STAMINA || hittingthing.damtype == TOX || hittingthing.damtype == CLONE || hittingthing.damtype == BRAIN || hittingthing.damtype == OXY)
+				final_damage = 0
+		else
 			if((shield_flags & SHIELD_KINETIC_WEAK))
 				final_damage *= 2
 			else if((shield_flags & SHIELD_KINETIC_STRONG))
 				final_damage *= 0.5
-
-		if(hittingthing.damtype == STAMINA || hittingthing.damtype == TOX || hittingthing.damtype == CLONE || hittingthing.damtype == BRAIN || hittingthing.damtype == OXY)
-			final_damage = 0
 
 	if(attack_type & ATTACK_TYPE_PROJECTILE)
 		var/obj/item/projectile/shootingthing = object

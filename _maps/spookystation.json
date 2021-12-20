@@ -7,5 +7,8 @@
 	    "whiteship": "whiteship_pubby",
 	    "ferry": "ferry_fancy",
 	    "cargo": "cargo_box"
-    }
+    },
+	"traits": [
+		{ "Weather_Longrain":true }
+	]
 }

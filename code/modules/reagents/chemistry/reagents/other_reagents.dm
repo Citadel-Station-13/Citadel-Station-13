@@ -1,6 +1,7 @@
 /datum/reagent/blood
 	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"= null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null,"quirks"=null)
 	name = "Blood"
+	chemical_flags = REAGENT_ALL_PROCESS
 	value = REAGENT_VALUE_UNCOMMON // $$$ blood ""donations"" $$$
 	color = BLOOD_COLOR_HUMAN // rgb: 200, 0, 0
 	description = "Blood from some creature."
@@ -223,6 +224,7 @@
 /datum/reagent/vaccine
 	//data must contain virus type
 	name = "Vaccine"
+	chemical_flags = REAGENT_ALL_PROCESS
 	color = "#C81040" // rgb: 200, 16, 64
 	taste_description = "slime"
 
@@ -243,6 +245,7 @@
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen."
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
 	taste_description = "water"
+	chemical_flags = REAGENT_ALL_PROCESS
 	overdose_threshold = 150 //Imagine drinking a gallon of water
 	var/cooling_temperature = 2
 	glass_icon_state = "glass_clear"
@@ -339,6 +342,7 @@
 	name = "Holy Water"
 	description = "Water blessed by some deity."
 	color = "#E0E8EF" // rgb: 224, 232, 239
+	chemical_flags = REAGENT_ALL_PROCESS
 	glass_icon_state  = "glass_clear"
 	glass_name = "glass of holy water"
 	glass_desc = "A glass of holy water."
@@ -474,6 +478,7 @@
 	name = "Hell Water"
 	description = "YOUR FLESH! IT BURNS!"
 	taste_description = "burning"
+	chemical_flags = REAGENT_ALL_PROCESS
 	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/hellwater/on_mob_life(mob/living/carbon/M)
@@ -533,6 +538,7 @@
 /datum/reagent/lube
 	name = "Space Lube"
 	description = "Lubricant is a substance introduced between two moving surfaces to reduce the friction and wear between them. giggity."
+	chemical_flags = REAGENT_ALL_PROCESS
 	color = "#009CA8" // rgb: 0, 156, 168
 	taste_description = "cherry" // by popular demand
 	var/lube_kind = TURF_WET_LUBE ///What kind of slipperiness gets added to turfs.
@@ -644,6 +650,7 @@
 	description = "A humanizing toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = INFINITY //So it instantly removes all of itself
+	chemical_flags = REAGENT_ALL_PROCESS
 	taste_description = "slime"
 	value = REAGENT_VALUE_RARE
 	var/datum/species/race = /datum/species/human
@@ -808,6 +815,7 @@
 /datum/reagent/slime_toxin
 	name = "Slime Mutation Toxin"
 	description = "A toxin that turns organic material into slime."
+	chemical_flags = REAGENT_ALL_PROCESS
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	taste_description = "slime"
 	metabolization_rate = 0.2
@@ -847,6 +855,7 @@
 	description = "This toxin will rapidly change the DNA of human beings. Commonly used by Syndicate spies and assassins in need of an emergency ID change."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = INFINITY
+	chemical_flags = REAGENT_ALL_PROCESS
 	taste_description = "slime"
 	value = REAGENT_VALUE_RARE
 
@@ -873,6 +882,7 @@
 	name = "Gluttony's Blessing"
 	description = "An advanced corruptive toxin produced by something terrible."
 	color = "#5EFF3B" //RGB: 94, 255, 59
+	chemical_flags = REAGENT_ALL_PROCESS
 	can_synth = FALSE
 	taste_description = "decay"
 	value = REAGENT_VALUE_GLORIOUS
@@ -1086,6 +1096,7 @@
 /datum/reagent/radium
 	name = "Radium"
 	description = "Radium is an alkaline earth metal. It is extremely radioactive."
+	chemical_flags = REAGENT_ALL_PROCESS
 	reagent_state = SOLID
 	color = "#C7C7C7" // rgb: 199,199,199
 	taste_description = "the colour blue and regret"
@@ -1112,6 +1123,7 @@
 /datum/reagent/space_cleaner/sterilizine
 	name = "Sterilizine"
 	description = "Sterilizes wounds in preparation for surgery."
+	chemical_flags = REAGENT_ALL_PROCESS
 	color = "#e6f1f5" // rgb: 200, 165, 220
 	taste_description = "bitterness"
 	pH = 10.5
@@ -1138,6 +1150,7 @@
 	reagent_state = SOLID
 	taste_description = "iron"
 	pH = 6
+	chemical_flags = REAGENT_ALL_PROCESS
 	overdose_threshold = 30
 	color = "#c2391d"
 	material = /datum/material/iron
@@ -1190,6 +1203,7 @@
 /datum/reagent/uranium
 	name ="Uranium"
 	description = "A silvery-white metallic chemical element in the actinide series, weakly radioactive."
+	chemical_flags = REAGENT_ALL_PROCESS
 	reagent_state = SOLID
 	color = "#B8B8C0" // rgb: 184, 184, 192
 	taste_description = "the inside of a reactor"
@@ -1219,6 +1233,7 @@
 /datum/reagent/bluespace
 	name = "Bluespace Dust"
 	description = "A dust composed of microscopic bluespace crystals, with minor space-warping properties."
+	chemical_flags = REAGENT_ALL_PROCESS
 	reagent_state = SOLID
 	color = "#0000CC"
 	taste_description = "fizzling blue"
@@ -1245,6 +1260,7 @@
 /datum/reagent/telecrystal
 	name = "Telecrystal Dust"
 	description = "A blood-red dust comprised of something that was much more useful when it was intact."
+	chemical_flags = REAGENT_ALL_PROCESS	//Sure?
 	reagent_state = SOLID
 	color = "#660000" // rgb: 102, 0, 0.
 	taste_description = "contraband"
@@ -1269,6 +1285,7 @@
 	name = "Welding fuel"
 	description = "Required for welders. Flamable."
 	color = "#660000" // rgb: 102, 0, 0
+	chemical_flags = REAGENT_ALL_PROCESS
 	taste_description = "gross metal"
 	glass_icon_state = "dr_gibb_glass"
 	glass_name = "glass of welder fuel"
@@ -1357,6 +1374,7 @@
 	name = "EZ Clean"
 	description = "A powerful, acidic cleaner sold by Waffle Co. Affects organic matter while leaving other objects unaffected."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ALL_PROCESS
 	taste_description = "acid"
 	pH = 2
 	value = REAGENT_VALUE_RARE
@@ -1559,6 +1577,7 @@
 	description = "An unstable experimental gas that greatly increases the energy of those that inhale it"
 	reagent_state = GAS
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ALL_PROCESS
 	color = "E1A116"
 	taste_description = "sourness"
 	value = REAGENT_VALUE_EXCEPTIONAL
@@ -1827,6 +1846,7 @@
 /datum/reagent/colorful_reagent
 	name = "Colorful Reagent"
 	description = "Thoroughly sample the rainbow."
+	chemical_flags = REAGENT_ALL_PROCESS
 	reagent_state = LIQUID
 	color = "#FFFF00"
 	var/list/random_color_list = list("#00aedb","#a200ff","#f47835","#d41243","#d11141","#00b159","#00aedb","#f37735","#ffc425","#008744","#0057e7","#d62d20","#ffa700")
@@ -2117,6 +2137,7 @@
 	color = "#123524" // RGB (18, 53, 36)
 	metabolization_rate = INFINITY
 	can_synth = FALSE
+	chemical_flags = REAGENT_ALL_PROCESS
 	taste_description = "brains"
 	pH = 0.5
 	value = REAGENT_VALUE_GLORIOUS
@@ -2132,6 +2153,7 @@
 	name = "Magillitis"
 	description = "An experimental serum which causes rapid muscular growth in Hominidae. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
 	reagent_state = LIQUID
+	chemical_flags = REAGENT_ALL_PROCESS
 	color = "#00f041"
 	value = REAGENT_VALUE_EXCEPTIONAL
 
@@ -2145,6 +2167,7 @@
 	description = "A commercial chemical designed to help older men in the bedroom."//not really it just makes you a giant
 	color = "#ff0000"//strong red. rgb 255, 0, 0
 	var/current_size = RESIZE_DEFAULT_SIZE
+	chemical_flags = REAGENT_ALL_PROCESS
 	value = REAGENT_VALUE_COMMON
 	taste_description = "bitterness" // apparently what viagra tastes like
 
@@ -2233,6 +2256,7 @@
 	color = "#FAFF00"
 	taste_description = "acrid cinnamon"
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ALL_PROCESS	//Sorry robot lings, but you still get this.
 	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/bz_metabolites/on_mob_metabolize(mob/living/L)
@@ -2320,7 +2344,7 @@
 	can_synth = FALSE
 	var/datum/dna/original_dna
 	var/reagent_ticks = 0
-	chemical_flags = REAGENT_INVISIBLE
+	chemical_flags = REAGENT_INVISIBLE | REAGENT_ALL_PROCESS
 	value = REAGENT_VALUE_GLORIOUS
 
 /datum/reagent/changeling_string/on_mob_metabolize(mob/living/carbon/C)
@@ -2377,6 +2401,7 @@
 	description = "A powerful preservation agent, utilizing the preservative effects of formaldehyde with significantly less of the histamine."
 	reagent_state = LIQUID
 	color = "#f7685e"
+	chemical_flags = REAGENT_ALL_PROCESS
 	metabolization_rate = REAGENTS_METABOLISM * 0.25
 
 
@@ -2428,6 +2453,7 @@
 	color = "#050096" // rgb: 5, 0, 150
 	taste_mult = 0 // oderless and tasteless
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM //20 times as long, so it's actually viable to use
+	chemical_flags = REAGENT_ALL_PROCESS
 	var/time_multiplier = 1 MINUTES //1 minute per unit of gravitum on objects. Seems overpowered, but the whole thing is very niche
 
 /datum/reagent/gravitum/reaction_obj(obj/O, volume)
@@ -2507,6 +2533,7 @@
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM // 5u (WOUND_DETERMINATION_CRITICAL) will last for ~17 ticks
+	chemical_flags = REAGENT_ALL_PROCESS
 	/// Whether we've had at least WOUND_DETERMINATION_SEVERE (2.5u) of determination at any given time. No damage slowdown immunity or indication we're having a second wind if it's just a single moderate wound
 	var/significant = FALSE
 	self_consuming = TRUE
@@ -2540,6 +2567,7 @@
 	name = "Eldritch Essence"
 	description = "Strange liquid that defies the laws of physics"
 	taste_description = "Ag'hsj'saje'sh"
+	chemical_flags = REAGENT_ALL_PROCESS
 	color = "#1f8016"
 
 /datum/reagent/eldritch/on_mob_life(mob/living/carbon/M)
@@ -2624,6 +2652,7 @@
 	description = "A unknown red liquid, linked to healing of most moral wounds."
 	color = "#c10000"
 	metabolization_rate = REAGENTS_METABOLISM * 2.5
+	chemical_flags = REAGENT_ALL_PROCESS
 
 /datum/reagent/red_ichor/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-50)
@@ -2641,6 +2670,7 @@
 	description = "A unknown green liquid, linked to healing of most internal wounds."
 	color = "#158c00"
 	metabolization_rate = REAGENTS_METABOLISM * 2.5
+	chemical_flags = REAGENT_ALL_PROCESS
 
 /datum/reagent/green_ichor/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, -100)
@@ -2658,6 +2688,7 @@
 	description = "A unknown blue liquid, linked to healing the mind."
 	color = "#0914e0"
 	metabolization_rate = REAGENTS_METABOLISM * 2.5
+	chemical_flags = REAGENT_ALL_PROCESS
 
 /datum/reagent/blue_ichor/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -100)

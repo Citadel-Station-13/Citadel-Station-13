@@ -2,6 +2,7 @@
 /datum/reagent/thermite
 	name = "Thermite"
 	description = "Thermite produces an aluminothermic reaction known as a thermite reaction. Can be used to melt walls."
+	chemical_flags = REAGENT_ALL_PROCESS
 	reagent_state = SOLID
 	color = "#550000"
 	taste_description = "sweet tasting metal"
@@ -44,6 +45,7 @@
 	reagent_state = LIQUID
 	color = "#FFC8C8"
 	metabolization_rate = 4
+	chemical_flags = REAGENT_ALL_PROCESS
 	taste_description = "burning"
 	value = REAGENT_VALUE_COMMON
 
@@ -146,6 +148,7 @@
 /datum/reagent/phlogiston
 	name = "Phlogiston"
 	description = "Catches you on fire and makes you ignite."
+	chemical_flags = REAGENT_ALL_PROCESS
 	reagent_state = LIQUID
 	color = "#FA00AF"
 	taste_description = "burning"
@@ -168,6 +171,7 @@
 /datum/reagent/napalm
 	name = "Napalm"
 	description = "Very flammable."
+	chemical_flags = REAGENT_ALL_PROCESS
 	reagent_state = LIQUID
 	color = "#FA00AF"
 	taste_description = "burning"
@@ -197,6 +201,7 @@
 	color = "#0000DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
+	chemical_flags = REAGENT_ALL_PROCESS
 	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/cryostylane/on_mob_life(mob/living/carbon/M) //TODO: code freezing into an ice cube
@@ -215,6 +220,7 @@
 	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Pyrosium slowly heats all other reagents in the container."
 	color = "#64FAC8"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ALL_PROCESS
 	taste_description = "bitterness"
 	value = REAGENT_VALUE_COMMON
 
@@ -230,6 +236,7 @@
 	reagent_state = LIQUID
 	color = "#20324D" //RGB: 32, 50, 77
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ALL_PROCESS
 	taste_description = "charged metal"
 	var/shock_timer = 0
 	value = REAGENT_VALUE_VERY_RARE

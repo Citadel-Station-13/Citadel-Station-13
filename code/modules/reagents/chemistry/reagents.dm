@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/inverse_chem_val 		= 0			// If the impurity is below 0.5, replace ALL of the chem with inverse_chemupon metabolising
 	var/inverse_chem					// What chem is metabolised when purity is below inverse_chem_val, this shouldn't be made, but if it does, well, I guess I'll know about it.
 	var/metabolizing = FALSE
-	var/chemical_flags // See fermi/readme.dm REAGENT_DEAD_PROCESS, REAGENT_DONOTSPLIT, REAGENT_ONLYINVERSE, REAGENT_ONMOBMERGE, REAGENT_INVISIBLE, REAGENT_FORCEONNEW, REAGENT_SNEAKYNAME
+	var/chemical_flags = REAGENT_ORGANIC_PROCESS // See fermi/readme.dm REAGENT_DEAD_PROCESS, REAGENT_DONOTSPLIT, REAGENT_ONLYINVERSE, REAGENT_ONMOBMERGE, REAGENT_INVISIBLE, REAGENT_FORCEONNEW, REAGENT_SNEAKYNAME, REAGENT_ORGANIC_PROCESS, REAGENT_ROBOTIC_PROCESS
 	var/value = REAGENT_VALUE_NONE //How much does it sell for in cargo?
 	var/datum/material/material //are we made of material?
 
@@ -86,6 +86,11 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	current_cycle++
 	if(holder)
 		holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
+
+//Called when an reagent is incompatible with its processing carbon (e.g. robot carbon and reagent with only organic processing)
+/datum/reagent/proc/on_invalid_process(mob/living/carbon/M)
+	if(holder)
+		holder.remove_reagent(type, INVALID_REAGENT_DISSIPATION)	//Not influenced by normal metab rate nor efficiency.
 
 //called when a mob processes chems when dead.
 /datum/reagent/proc/on_mob_dead(mob/living/carbon/M)

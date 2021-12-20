@@ -488,7 +488,8 @@ GLOBAL_LIST_EMPTY(rain_sounds)
 	end_message = "<span class='notice'>The downpour gradually slows until it stops.</span>"
 
 	area_type = /area/eventmap/outside
-	target_trait = ZTRAIT_STATION
+	target_trait = ZTRAIT_LONGRAIN
+	probability = 90
 
 	barometer_predictable = TRUE
 

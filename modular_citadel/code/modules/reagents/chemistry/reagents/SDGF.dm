@@ -169,17 +169,17 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 						if(21)
 							to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
 						if(22 to 29)
-							M.adjust_nutrition(M.nutrition/10)
+							M.adjust_nutrition(10)
 						if(30)
 							to_chat(M, "<span class='notice'>You feel the synethic cells grow and expand within yourself, bloating your body outwards.</span>")
 						if(31 to 49)
-							M.adjust_nutrition(M.nutrition/5)
+							M.adjust_nutrition(20)
 						if(50)
 							to_chat(M, "<span class='notice'>The synthetic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
 							M.action_cooldown_mod += 4//If this makes you fast then please fix it, it should make you slow!!
 							//candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
 						if(51 to 79)
-							M.adjust_nutrition(M.nutrition/2)
+							M.adjust_nutrition(50)
 						if(80)
 							to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, you feel like you'll split soon...</span>")
 							if (M.nutrition < 20000)
@@ -336,7 +336,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/startHunger
 	can_synth = TRUE
 	taste_description = "a weird chemical fleshy flavour"
-	chemical_flags = REAGENT_SNEAKYNAME
+	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_ALL_PROCESS
 	value = REAGENT_VALUE_RARE
 
 /datum/reagent/impure/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.

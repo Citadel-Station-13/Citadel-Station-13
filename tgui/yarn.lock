@@ -3013,6 +3013,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"commander@npm:^8.0.0":
+  version: 8.3.0
+  resolution: "commander@npm:8.3.0"
+  checksum: 0f82321821fc27b83bd409510bb9deeebcfa799ff0bf5d102128b500b7af22872c0c92cb6a0ebc5a4cf19c6b550fba9cedfa7329d18c6442a625f851377bacf0
+  languageName: node
+  linkType: hard
+
 "common@workspace:*, common@workspace:packages/common":
   version: 0.0.0-use.local
   resolution: "common@workspace:packages/common"
@@ -5511,6 +5518,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"katex@npm:^0.15.1":
+  version: 0.15.1
+  resolution: "katex@npm:0.15.1"
+  dependencies:
+    commander: ^8.0.0
+  bin:
+    katex: cli.js
+  checksum: eab97bbe292cc60b15fec264cba86d110e5e089045de084cd3a0f27b21ef65857a4d296c418ec3b397ff987671a20c6a9a1fd30f1862b86a0e6b7dbe3fb893f6
+  languageName: node
+  linkType: hard
+
 "kind-of@npm:^6.0.2":
   version: 6.0.3
   resolution: "kind-of@npm:6.0.3"
@@ -7676,6 +7694,7 @@ resolve@^2.0.0-next.3:
     jest: ^27.0.6
     jest-circus: ^27.0.6
     jsdom: ^16.7.0
+    katex: ^0.15.1
     mini-css-extract-plugin: ^1.6.2
     sass: ^1.37.5
     sass-loader: ^11.1.1

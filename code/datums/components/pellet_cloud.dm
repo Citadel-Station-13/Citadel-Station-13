@@ -198,7 +198,7 @@
 			break
 
 ///One of our pellets hit something, record what it was and check if we're done (terminated == num_pellets)
-/datum/component/pellet_cloud/proc/pellet_hit(obj/item/projectile/P, atom/movable/firer, atom/target, Angle, hit_zone)
+/datum/component/pellet_cloud/proc/pellet_hit(obj/item/projectile/P, atom/movable/firer, atom/target, Angle, hit_zone, blocked)
 	pellets -= P
 	terminated++
 	hits++
@@ -208,14 +208,14 @@
 		hit_part = hit_carbon.get_bodypart(hit_zone)
 		if(hit_part)
 			target = hit_part
-			if(P.wound_bonus != CANT_WOUND) // handle wounding
+			if(P.wound_bonus != CANT_WOUND && (blocked < 100)) // handle wounding
 				// unfortunately, due to how pellet clouds handle finalizing only after every pellet is accounted for, that also means there might be a short delay in dealing wounds if one pellet goes wide
 				// while buckshot may reach a target or miss it all in one tick, we also have to account for possible ricochets that may take a bit longer to hit the target
 				if(isnull(wound_info_by_part[hit_part]))
 					wound_info_by_part[hit_part] = list(0, 0, 0)
-				wound_info_by_part[hit_part][CLOUD_POSITION_DAMAGE] += P.damage // these account for decay
-				wound_info_by_part[hit_part][CLOUD_POSITION_W_BONUS] += P.wound_bonus
-				wound_info_by_part[hit_part][CLOUD_POSITION_BW_BONUS] += P.bare_wound_bonus
+				wound_info_by_part[hit_part][CLOUD_POSITION_DAMAGE] += (P.damage * ((100 - blocked) * 0.01))// these account for decay and now block
+				wound_info_by_part[hit_part][CLOUD_POSITION_W_BONUS] = max(wound_info_by_part[hit_part][CLOUD_POSITION_W_BONUS], P.wound_bonus)
+				wound_info_by_part[hit_part][CLOUD_POSITION_BW_BONUS] = max(wound_info_by_part[hit_part][CLOUD_POSITION_W_BONUS], P.bare_wound_bonus)
 				P.wound_bonus = CANT_WOUND // actual wounding will be handled aggregate
 
 	targets_hit[target]++
@@ -259,7 +259,7 @@
 		var/num_hits = targets_hit[target]
 		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
 		var/obj/item/bodypart/hit_part
-		if(isbodypart(target))
+		if(isbodypart(target) && wound_info_by_part[hit_part])
 			hit_part = target
 			target = hit_part.owner
 			var/damage_dealt = wound_info_by_part[hit_part][CLOUD_POSITION_DAMAGE]

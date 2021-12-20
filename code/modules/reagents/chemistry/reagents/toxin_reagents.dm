@@ -35,6 +35,7 @@
 	name = "Unstable mutagen"
 	description = "Might cause unpredictable mutations. Keep away from children."
 	color = "#00FF00"
+	chemical_flags = REAGENT_ALL_PROCESS
 	toxpwr = 0
 	taste_description = "slime"
 	taste_mult = 0.9
@@ -448,6 +449,7 @@
 	reagent_state = LIQUID
 	color = "#787878"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ALL_PROCESS
 	toxpwr = 0
 	value = REAGENT_VALUE_VERY_RARE
 
@@ -495,6 +497,7 @@
 	reagent_state = LIQUID
 	color = "#B4004B"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ALL_PROCESS
 	toxpwr = 1
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/M)
@@ -869,6 +872,7 @@
 	description = "A strong mineral acid with the molecular formula H2SO4."
 	color = "#00FF32"
 	toxpwr = 1
+	chemical_flags = REAGENT_ALL_PROCESS	//Ever injected acid into a robot?
 	var/acidpwr = 10 //the amount of protection removed from the armour
 	taste_description = "acid"
 	self_consuming = TRUE

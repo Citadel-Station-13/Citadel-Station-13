@@ -30,6 +30,7 @@
     "jest": "^27.0.6",
     "jest-circus": "^27.0.6",
     "jsdom": "^16.7.0",
+    "katex": "^0.15.1",
     "mini-css-extract-plugin": "^1.6.2",
     "sass": "^1.37.5",
     "sass-loader": "^11.1.1",
