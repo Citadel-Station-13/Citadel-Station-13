@@ -32,9 +32,6 @@
 	if(A)
 		if(isliving(A))
 			toxmob(A)
-		else if(istype(A, /obj/machinery/the_singularitygen))
-			var/obj/machinery/the_singularitygen/S = A
-			S.energy += energy
 		else if(istype(A, /obj/singularity))
 			var/obj/singularity/S = A
 			S.energy += energy

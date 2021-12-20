@@ -99,17 +99,6 @@
 	unit_name = "grounding rod"
 	export_types = list(/obj/machinery/power/grounding_rod)
 
-/datum/export/large/tesla_gen
-	cost = 4000
-	unit_name = "energy ball generator"
-	export_types = list(/obj/machinery/the_singularitygen/tesla)
-
-/datum/export/large/singulo_gen
-	cost = 4000
-	unit_name = "gravitational singularity generator"
-	export_types = list(/obj/machinery/the_singularitygen)
-	include_subtypes = FALSE
-
 /datum/export/large/am_control_unit
 	cost = 2000
 	unit_name = "antimatter control unit"
