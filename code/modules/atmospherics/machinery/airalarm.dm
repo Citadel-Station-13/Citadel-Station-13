@@ -554,6 +554,7 @@
 						GAS_MIASMA,
 						GAS_PLASMA,
 						GAS_H2O,
+						GAS_HYDROGEN,
 						GAS_HYPERNOB,
 						GAS_NITROUS,
 						GAS_NITRYL,
