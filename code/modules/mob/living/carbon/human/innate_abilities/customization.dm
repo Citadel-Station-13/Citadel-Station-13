@@ -42,7 +42,8 @@
 				H.dna.features["mcolor"] = sanitize_hexcolor(new_color, 6)
 				H.left_eye_color = "mcolor"
 				H.right_eye_color = "mcolor"
-				H.update_body()
+				H.dna?.update_ui_block(DNA_LEFT_EYE_COLOR_BLOCK)
+				H.dna?.update_ui_block(DNA_RIGHT_EYE_COLOR_BLOCK)
 			else
 				to_chat(H, "<span class='notice'>Invalid color. Your color is not bright enough.</span>")
 	else if(select_alteration == "Hair Style")
