@@ -22,7 +22,7 @@
 
 /datum/action/innate/ability/humanoid_customization/proc/change_form()
 	var/mob/living/carbon/human/H = owner
-	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Body Color","Hair Style", "Genitals", "Tail", "Snout", "Markings", "Ears", "Taur body", "Penis", "Vagina", "Penis Length", "Breast Size", "Breast Shape", "Cancel")
+	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Body Color", "Eye Color","Hair Style", "Genitals", "Tail", "Snout", "Markings", "Ears", "Taur body", "Penis", "Vagina", "Penis Length", "Breast Size", "Breast Shape", "Cancel")
 
 	if(select_alteration == "Body Color")
 		var/new_color = input(owner, "Choose your skin color:", "Race change","#"+H.dna.features["mcolor"]) as color|null
@@ -32,6 +32,15 @@
 				H.dna.features["mcolor"] = sanitize_hexcolor(new_color, 6)
 				H.update_body()
 				H.update_hair()
+			else
+				to_chat(H, "<span class='notice'>Invalid color. Your color is not bright enough.</span>")
+	else if(select_alteration == "Eye Color")
+		var/new_color = input(owner, "Choose your eye color:", "Race change","#"+H.dna.features["mcolor"]) as color|null
+		if(new_color)
+			var/temp_hsv = RGBtoHSV(new_color)
+			if(ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3]) // mutantcolors must be bright
+				H.dna.features["mcolor"] = sanitize_hexcolor(new_color, 6)
+				H.update_body()
 			else
 				to_chat(H, "<span class='notice'>Invalid color. Your color is not bright enough.</span>")
 	else if(select_alteration == "Hair Style")
