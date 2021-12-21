@@ -33,8 +33,8 @@ export const ChemDebugSynthesizer = (props, context) => {
                 maxValue={beakerMaxVolume}
                 step={1}
                 stepPixelSize={2}
-                onChange={(e, value) => act('amount', {
-                  amount: value,
+                onChange={(e, value) => act('synth_amount', {
+                  synth_amount: value,
                 })} />
               <Button
                 icon="plus"
