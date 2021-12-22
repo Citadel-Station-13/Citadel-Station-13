@@ -282,13 +282,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		var/datum/auxgm/cached_gas_data = GLOB.gas_data
 		. = "[src.type]"
 		if(!(. in cached_gas_data.ids))
-			var/datum/gas/G = create_gas()
-			if(istype(G))
-				cached_gas_data.add_gas(G)
-			else // this codepath should probably not happen at all, since we never use get_gas() on anything with no boiling point
-				return null
-
-
+			create_gas()
 
 
 //For easy bloodsucker disgusting and blood removal
