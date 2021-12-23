@@ -9,7 +9,9 @@
 	light_color = "#00111a" //The light can technically cycle on a timer worldwide, but no daynight cycle.
 	baseturfs = /turf/open/floor/grass/snow/edina //If we explode or die somehow, we just make more! Ahahaha!!!
 	tiled_dirt = 0 //NO TILESMOOTHING DIRT/DIRT SPAWNS OR SOME SHIT
-	initial_gas_mix = OPENTURF_DEFAULT_ATMOS //DO NOT FREEZE EVERYONE TO DEATH ON CHRISTMAS
+	//initial_gas_mix = OPENTURF_DEFAULT_ATMOS //DO NOT FREEZE EVERYONE TO DEATH ON CHRISTMAS
+	initial_gas_mix = FESTIVE_ATMOS
+	planetary_atmos = 1	//Uses new!!! planetmos wow!!! maybe?
 
 //lets people build
 /turf/open/floor/grass/snow/edina/attackby(obj/item/C, mob/user, params)

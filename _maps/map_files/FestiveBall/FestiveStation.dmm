@@ -3886,13 +3886,6 @@
 /turf/open/floor/festive/cobblestone,
 /area/edina/street/secondary/command)
 "ajN" = (
-/obj/machinery/button/door{
-	id = "parkcomm";
-	name = "Command Parking";
-	pixel_x = 28;
-	pixel_y = 7;
-	req_one_access_txt = "2;19"
-	},
 /obj/machinery/light/small{
 	dir = 4;
 	light_color = "#d8b1b1"
@@ -17390,6 +17383,7 @@
 	pixel_y = 32
 	},
 /obj/item/storage/box/donkpockets,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/floor/wood,
 /area/science)
 "aSF" = (
@@ -33656,20 +33650,14 @@
 /area/commons/dorms)
 "bGo" = (
 /obj/machinery/button/door{
-	id = "rdgarage";
-	name = "Director's Garage Door";
-	pixel_x = -7;
-	pixel_y = 26;
-	req_access_txt = "30"
+	id = "parkcomm";
+	name = "Command Parking";
+	pixel_x = -4;
+	pixel_y = 7;
+	req_one_access_txt = "2;19"
 	},
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 8
-	},
-/turf/open/floor/festive/alleyway,
-/area/edina/backstreet/med)
+/turf/closed/festive/whitebrick,
+/area/edina/street)
 "bGp" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -37862,6 +37850,13 @@
 "bPj" = (
 /obj/effect/festive/street/streetlineem,
 /obj/effect/festive/street/streetlinewm,
+/obj/machinery/button/door{
+	id = "chemistry_shutters";
+	name = "chemical factory garage";
+	pixel_x = 24;
+	pixel_y = 7;
+	req_access_txt = "5; 33"
+	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
 "bPk" = (
@@ -38895,6 +38890,7 @@
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/power/apc/auto_name{
+	dir = 4;
 	pixel_x = 30
 	},
 /obj/structure/cable/yellow{
@@ -39810,20 +39806,15 @@
 /turf/open/floor/festive/alleyway,
 /area/edina/backstreet/med)
 "bTk" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 1
-	},
 /obj/machinery/button/door{
-	id = "weewoo";
-	name = "Ambulance Garage button";
-	pixel_y = 28;
-	req_access_txt = "5"
+	id = "rdgarage";
+	name = "Director's Garage Door";
+	pixel_x = -7;
+	pixel_y = -6;
+	req_access_txt = "30"
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/festive/alleyway,
-/area/medical/cryo)
+/turf/closed/festive/whitebrick,
+/area/command/heads_quarters/rd)
 "bTl" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -40303,16 +40294,12 @@
 /area/commons/dorms)
 "bUs" = (
 /obj/machinery/button/door{
-	id = "qm_warehouse";
-	name = "Warehouse Door Control";
-	pixel_y = 24;
-	req_access_txt = "31"
+	id = "QMgarage";
+	name = "Garage door button";
+	pixel_y = -4
 	},
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 1
-	},
-/turf/open/floor/festive/alleyway,
-/area/edina/backstreet/supply)
+/turf/closed/festive/greybrick,
+/area/service/kitchen)
 "bUt" = (
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowWELeftEnd,
@@ -45912,22 +45899,16 @@
 /turf/open/floor/festive/sidewalk,
 /area/edina/street/primary/servitor)
 "cho" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 1
-	},
 /obj/machinery/button/door{
-	id = "QMgarage";
-	name = "Garage door button";
-	pixel_y = 28
+	id = "qm_warehouse";
+	name = "Warehouse Door Control";
+	pixel_y = -8;
+	req_access_txt = "31"
 	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
+/turf/closed/festive/whitebrick{
+	color = "#967832"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/festive/sidewalk,
-/area/edina/street/primary/servitor)
+/area/cargo/warehouse)
 "chp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -48849,22 +48830,17 @@
 /turf/open/floor/festive/sidewalk,
 /area/edina/street/primary/perimeter)
 "cnS" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 1
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
 /obj/machinery/button/door{
-	id = "clowngarage";
-	name = "Garage Door";
-	pixel_y = 28
+	id = "chemistry_shutters";
+	name = "chemical factory garage";
+	pixel_x = -8;
+	pixel_y = -6;
+	req_access_txt = "5; 33"
 	},
-/turf/open/floor/festive/sidewalk,
-/area/edina/street/primary/perimeter)
+/turf/closed/festive/whitebrick{
+	color = "#ffe6a8"
+	},
+/area/medical/chemistry)
 "cnT" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -52628,10 +52604,7 @@
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "cyx" = (
-/mob/living/simple_animal/hostile/tree/festivus{
-	pixel_x = -17;
-	pixel_y = -13
-	},
+/obj/effect/landmark/xmastree/rdrod,
 /turf/open/floor/festive/trainplatform,
 /area/maintenance/bar)
 "cyA" = (
@@ -52854,13 +52827,11 @@
 /turf/open/floor/light,
 /area/maintenance/bar)
 "czq" = (
-/obj/structure/festive/trainplatform/edge_south,
 /obj/structure/chair/stool/bar,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/light,
 /area/maintenance/bar)
 "czr" = (
-/obj/structure/festive/trainplatform/edge_south,
 /obj/structure/chair/stool/bar,
 /turf/open/floor/light,
 /area/maintenance/bar)
@@ -54600,6 +54571,15 @@
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
+"kJH" = (
+/obj/machinery/button/door{
+	id = "weewoo";
+	name = "Ambulance Garage button";
+	pixel_y = -5;
+	req_access_txt = "5"
+	},
+/turf/closed/festive/whitebrick,
+/area/medical/cryo)
 "kSC" = (
 /obj/structure/toilet{
 	dir = 4
@@ -54632,6 +54612,12 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
+/area/maintenance/bar)
+"kYC" = (
+/obj/structure/festive/trainplatform/edge_north{
+	pixel_y = -7
+	},
+/turf/open/floor/festive/trainplatform,
 /area/maintenance/bar)
 "kZN" = (
 /obj/machinery/light,
@@ -54962,6 +54948,16 @@
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade,
 /turf/open/floor/wood,
 /area/maintenance/bar)
+"nxe" = (
+/obj/machinery/button/door{
+	id = "clowngarage";
+	name = "Garage Door";
+	pixel_y = -4
+	},
+/turf/closed/festive/whitebrick{
+	color = "#fff200"
+	},
+/area/service/theater)
 "nzc" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -55498,6 +55494,13 @@
 /obj/item/gun/magic/staff/healing,
 /turf/open/floor/circuit/off,
 /area/science)
+"rgc" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/festive/trainplatform/edge_north{
+	pixel_y = -7
+	},
+/turf/open/floor/festive/trainplatform,
+/area/maintenance/bar)
 "rgC" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -76142,7 +76145,7 @@ bIi
 bIi
 bIi
 bIi
-bIi
+cnS
 cjY
 bHZ
 bUJ
@@ -79483,8 +79486,8 @@ bFw
 bNM
 bPs
 bRk
-bnJ
-bTk
+kJH
+bTl
 akc
 cub
 aGl
@@ -79946,10 +79949,10 @@ aOP
 aOP
 aOP
 aOP
-aMb
+aRW
 aSE
-aTg
-aTg
+aUf
+aUf
 aUf
 aUI
 beI
@@ -81505,8 +81508,8 @@ aYf
 aVO
 aVO
 aVO
-aVO
-bGo
+bTk
+bFZ
 bHZ
 bjZ
 bkO
@@ -83093,8 +83096,8 @@ bUd
 ecw
 bUd
 ecw
-bUd
-cnS
+nxe
+cnO
 bdS
 coU
 aFK
@@ -83207,7 +83210,7 @@ aal
 aba
 acj
 acj
-aba
+bGo
 aba
 aba
 aeG
@@ -101822,8 +101825,8 @@ bWs
 bWs
 bwz
 bWs
-bWs
-cho
+bUs
+ccr
 ckO
 cmv
 bQG
@@ -105683,8 +105686,8 @@ byT
 byT
 byT
 byT
-byT
-bUs
+cho
+bDN
 bUE
 bUH
 bUC
@@ -107007,7 +107010,7 @@ cwJ
 bcC
 cwV
 cwV
-cwV
+rgc
 czq
 czT
 cAq
@@ -107264,7 +107267,7 @@ aZh
 bdu
 cxH
 cyx
-cwK
+kYC
 czr
 cwl
 cAn
@@ -107521,7 +107524,7 @@ cwL
 cwK
 cwK
 cwK
-cwK
+kYC
 czr
 cwl
 cwl
