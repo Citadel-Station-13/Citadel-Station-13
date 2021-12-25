@@ -811,14 +811,14 @@
 	id = "parkcomm";
 	name = "Command Parking"
 	},
-/turf/open/floor/festive/cobblestone,
+/turf/open/floor/festive/cobblestone/safe,
 /area/edina/street)
 "ack" = (
 /obj/machinery/light/small{
 	dir = 1;
 	light_color = "#ffc1c1"
 	},
-/turf/open/floor/festive/cobblestone,
+/turf/open/floor/festive/cobblestone/safe,
 /area/edina/street)
 "acl" = (
 /obj/structure/table/reinforced,
@@ -1064,7 +1064,7 @@
 	dir = 4;
 	light_color = "#c1caff"
 	},
-/turf/open/floor/festive/cobblestone,
+/turf/open/floor/festive/cobblestone/safe,
 /area/edina/street)
 "acY" = (
 /obj/machinery/light/floor,
@@ -1163,7 +1163,7 @@
 /area/command/heads_quarters/hop/private)
 "adr" = (
 /obj/effect/festive/street/streetlinenm,
-/turf/open/floor/festive/cobblestone,
+/turf/open/floor/festive/cobblestone/safe,
 /area/edina/street)
 "ads" = (
 /obj/machinery/light{
@@ -1302,7 +1302,7 @@
 /obj/vehicle/sealed/vectorcraft/auto{
 	dir = 8
 	},
-/turf/open/floor/festive/cobblestone,
+/turf/open/floor/festive/cobblestone/safe,
 /area/edina/street)
 "adS" = (
 /obj/machinery/airalarm/directional/west,
@@ -1401,7 +1401,7 @@
 "aeh" = (
 /obj/effect/festive/street/streetlinenm,
 /obj/effect/festive/street/streetlinesm,
-/turf/open/floor/festive/cobblestone,
+/turf/open/floor/festive/cobblestone/safe,
 /area/edina/street)
 "aei" = (
 /obj/structure/table/wood/fancy/black,
@@ -1508,11 +1508,11 @@
 /obj/vehicle/sealed/vectorcraft/hop{
 	dir = 1
 	},
-/turf/open/floor/festive/cobblestone,
+/turf/open/floor/festive/cobblestone/safe,
 /area/edina/street)
 "aev" = (
 /obj/effect/turf_decal/delivery/white,
-/turf/open/floor/festive/cobblestone,
+/turf/open/floor/festive/cobblestone/safe,
 /area/edina/street)
 "aew" = (
 /obj/structure/reagent_dispensers/water_cooler,
@@ -4622,7 +4622,7 @@
 /turf/open/floor/wood,
 /area/maintenance/starboard/fore)
 "alT" = (
-/turf/open/floor/festive/cobblestone,
+/turf/open/floor/festive/cobblestone/safe,
 /area/edina/street)
 "alU" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -4706,7 +4706,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "ami" = (
 /obj/structure/cable/yellow{
@@ -4715,7 +4715,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amj" = (
 /obj/structure/cable/yellow{
@@ -4727,14 +4727,14 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amk" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/security/glass,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "aml" = (
 /obj/structure/cable/yellow{
@@ -4743,20 +4743,20 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amm" = (
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amn" = (
 /obj/machinery/door/airlock/security/glass,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amo" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amp" = (
 /obj/effect/festive/street/sidewalkw,
@@ -4926,12 +4926,12 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/table,
 /obj/item/poster/random_official,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amM" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/closet/wardrobe/mixed,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amN" = (
 /obj/structure/cable/yellow{
@@ -4940,7 +4940,7 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/table,
 /obj/item/poster/random_official,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amO" = (
 /obj/structure/cable/yellow{
@@ -4951,7 +4951,7 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/closet/emcloset,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amP" = (
 /obj/structure/cable/yellow{
@@ -4963,7 +4963,7 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/table,
 /obj/item/poster/random_official,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amQ" = (
 /obj/structure/cable/yellow{
@@ -4974,7 +4974,7 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/closet/wardrobe/mixed,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amR" = (
 /obj/structure/cable/yellow{
@@ -4987,7 +4987,7 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amS" = (
 /obj/structure/cable/yellow{
@@ -4995,13 +4995,13 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/closet/wardrobe/mixed,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amT" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amU" = (
 /obj/structure/cable/yellow,
@@ -5011,36 +5011,36 @@
 	name = "Starboard Bow Maintenance APC";
 	pixel_y = -24
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amV" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amW" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/rack,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amX" = (
 /obj/machinery/space_heater,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amY" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/closet/firecloset,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "amZ" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/closet/emcloset,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "ana" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "anb" = (
 /turf/open/floor/plasteel/dark,
@@ -5116,7 +5116,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "anl" = (
 /turf/closed/wall/mineral/iron,
@@ -5512,7 +5512,7 @@
 /obj/structure/sign/poster/contraband/donut_corp{
 	pixel_y = -32
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "aoe" = (
 /turf/closed/wall/mineral/iron,
@@ -5540,7 +5540,7 @@
 "aoh" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/rack,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/service/bar/atrium)
 "aoi" = (
 /obj/structure/closet/secure_closet/detective,
@@ -6001,13 +6001,13 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "app" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "apq" = (
 /obj/machinery/light{
@@ -6325,7 +6325,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "aqj" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -6922,7 +6922,7 @@
 	name = "8maintenance loot spawner"
 	},
 /obj/structure/table,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "arx" = (
 /obj/structure/weightmachine/weightlifter,
@@ -7769,7 +7769,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/closet/toolcloset,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "atD" = (
 /obj/machinery/washing_machine,
@@ -8072,14 +8072,14 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "aus" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
 /obj/structure/closet/toolcloset,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "aut" = (
 /obj/effect/turf_decal/tile/green,
@@ -8642,7 +8642,7 @@
 "avQ" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/table,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "avR" = (
 /obj/effect/turf_decal/tile/green{
@@ -9535,7 +9535,7 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/rack,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "ayb" = (
 /obj/structure/cable/yellow{
@@ -9548,7 +9548,7 @@
 /obj/structure/closet/wardrobe/mixed,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "ayc" = (
 /obj/structure/cable/yellow{
@@ -9559,7 +9559,7 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/closet/cardboard,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "ayd" = (
 /obj/structure/cable/yellow{
@@ -9568,7 +9568,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "aye" = (
 /obj/structure/cable/yellow{
@@ -9579,7 +9579,7 @@
 	},
 /obj/structure/table,
 /obj/item/flashlight/lamp,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "ayf" = (
 /obj/structure/cable/yellow{
@@ -9591,7 +9591,7 @@
 /obj/structure/table,
 /obj/item/folder/white,
 /obj/item/pen,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "ayg" = (
 /obj/structure/cable/yellow{
@@ -9603,7 +9603,7 @@
 	pixel_y = 5
 	},
 /obj/item/storage/fancy/donut_box,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "ayh" = (
 /obj/effect/spawner/lootdrop/maintenance,
@@ -9612,32 +9612,32 @@
 	lootcount = 8;
 	name = "8maintenance loot spawner"
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "ayi" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/closet/wardrobe/mixed,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "ayj" = (
 /obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "ayk" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "ayl" = (
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/security/brig)
 "aym" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/security/brig)
 "ayn" = (
 /obj/structure/closet/secure_closet/brig{
@@ -9786,14 +9786,14 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "ayJ" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/machinery/light,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "ayK" = (
 /obj/structure/cable/yellow{
@@ -9802,7 +9802,7 @@
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "ayL" = (
 /obj/machinery/door/airlock/external{
@@ -9817,13 +9817,13 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/maintenance/starboard/fore)
 "ayN" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/security/brig)
 "ayO" = (
 /obj/structure/cable/yellow{
@@ -9836,7 +9836,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/security/brig)
 "ayP" = (
 /obj/item/radio/intercom{
@@ -10274,7 +10274,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/security/brig)
 "aAb" = (
 /obj/machinery/door/poddoor/preopen{
@@ -10296,7 +10296,7 @@
 	name = "Labor Shuttle";
 	req_access_txt = "63"
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/security/processing)
 "aAd" = (
 /obj/effect/turf_decal/delivery,
@@ -10380,7 +10380,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/security/processing)
 "aAp" = (
 /obj/effect/turf_decal/delivery,
@@ -10439,7 +10439,7 @@
 /turf/open/floor/festive/cobblestone,
 /area/science/robotics/mechbay)
 "aAy" = (
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/security/processing)
 "aAz" = (
 /obj/machinery/light,
@@ -10472,7 +10472,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/service/bar/atrium)
 "aAF" = (
 /obj/effect/festive/street/streetlinenorth,
@@ -10521,7 +10521,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/security/processing)
 "aAL" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -10604,7 +10604,7 @@
 /obj/item/radio/intercom{
 	pixel_x = -26
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/security/processing)
 "aBb" = (
 /obj/machinery/light,
@@ -10906,7 +10906,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/security/office)
 "aCa" = (
 /turf/open/floor/engine/n2o,
@@ -11052,7 +11052,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/service/bar/atrium)
 "aCx" = (
 /obj/machinery/door/airlock/security/glass,
@@ -11580,7 +11580,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/service/bar/atrium)
 "aEn" = (
 /obj/structure/disposalpipe/segment{
@@ -11607,7 +11607,7 @@
 /area/edina/street/secondary/command)
 "aEr" = (
 /obj/effect/festive/street/sidewalknsm,
-/turf/open/floor/festive/cobblestone,
+/turf/open/floor/festive/cobblestone/safe,
 /area/edina/street)
 "aEs" = (
 /obj/structure/chair/stool,
@@ -13693,7 +13693,7 @@
 /turf/open/floor/festive/sidewalk,
 /area/edina/street/primary/perimeter)
 "aJr" = (
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/service/bar/atrium)
 "aJs" = (
 /obj/structure/table/wood,
@@ -13956,7 +13956,7 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/service/bar/atrium)
 "aJZ" = (
 /obj/structure/table/wood,
@@ -14216,7 +14216,7 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/closet/wardrobe/mixed,
 /obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/service/bar/atrium)
 "aKK" = (
 /obj/machinery/chem_dispenser/drinks,
@@ -14282,7 +14282,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/service/bar/atrium)
 "aKX" = (
 /obj/machinery/chem_dispenser/drinks/beer,
@@ -14525,7 +14525,7 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/rack,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/service/bar/atrium)
 "aLG" = (
 /obj/structure/streetdecor/lampfestive{
@@ -15665,12 +15665,12 @@
 "aOy" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/table,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/service/bar/atrium)
 "aOz" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/closet/firecloset,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/service/bar/atrium)
 "aOA" = (
 /obj/effect/festive/street/streetliftedtile2,
@@ -15678,7 +15678,7 @@
 /area/edina/street/intersection/princessperimeter/north)
 "aOB" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/service/bar/atrium)
 "aOC" = (
 /obj/effect/spawner/lootdrop/maintenance,
@@ -15687,16 +15687,16 @@
 	lootcount = 8;
 	name = "8maintenance loot spawner"
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/service/bar/atrium)
 "aOD" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/service/bar/atrium)
 "aOE" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/closet/wardrobe/mixed,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/service/bar/atrium)
 "aOF" = (
 /obj/structure/cable/yellow{
@@ -15995,14 +15995,14 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/service/bar/atrium)
 "aPt" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/light,
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/service/bar/atrium)
 "aPu" = (
 /obj/machinery/door/airlock/security/glass{
@@ -16013,7 +16013,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/festive/alleyway/safe,
 /area/service/bar/atrium)
 "aPv" = (
 /obj/effect/festive/street/streetlinene,
@@ -19812,7 +19812,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/turf/open/floor/festive/trainplatform,
+/turf/open/floor/festive/trainplatform/safe,
 /area/maintenance/bar)
 "aZi" = (
 /turf/closed/festive/whitebrick,
@@ -20979,7 +20979,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/open/floor/festive/trainplatform,
+/turf/open/floor/festive/trainplatform/safe,
 /area/maintenance/bar)
 "bcD" = (
 /obj/machinery/chem_master/condimaster,
@@ -21284,7 +21284,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
-/turf/open/floor/festive/trainplatform,
+/turf/open/floor/festive/trainplatform/safe,
 /area/maintenance/bar)
 "bdv" = (
 /obj/machinery/light{
@@ -22683,7 +22683,7 @@
 /turf/open/indestructible/hotelwood,
 /area/service/chapel/main)
 "bgY" = (
-/turf/open/floor/festive/cobblestone,
+/turf/open/floor/festive/cobblestone/safe,
 /area/cargo)
 "bgZ" = (
 /obj/machinery/light/small{
@@ -29044,7 +29044,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/service/kitchen)
 "bwk" = (
-/turf/open/floor/festive/cobblestone,
+/turf/open/floor/festive/cobblestone/safe,
 /area/cargo/qm)
 "bwl" = (
 /obj/machinery/door/airlock/mining/glass{
@@ -29694,7 +29694,7 @@
 	id = "QMgarage";
 	name = "QM's Garage"
 	},
-/turf/open/floor/festive/cobblestone,
+/turf/open/floor/festive/cobblestone/safe,
 /area/cargo/qm)
 "bxZ" = (
 /obj/effect/festive/street/streetlinenw,
@@ -30915,7 +30915,7 @@
 	name = "Cargo Loading dock"
 	},
 /obj/machinery/door/firedoor,
-/turf/open/floor/festive/cobblestone,
+/turf/open/floor/festive/cobblestone/safe,
 /area/cargo)
 "bAY" = (
 /obj/effect/turf_decal/loading_area{
@@ -32140,7 +32140,7 @@
 	pixel_x = 6;
 	pixel_y = 16
 	},
-/turf/open/floor/festive/cobblestone,
+/turf/open/floor/festive/cobblestone/safe,
 /area/cargo)
 "bCO" = (
 /obj/machinery/light{
@@ -36132,16 +36132,14 @@
 	},
 /area/commons/locker)
 "bLv" = (
-/obj/machinery/button/door{
-	id = "idquarters";
-	name = "Privacy Control";
-	pixel_x = -26;
-	pixel_y = -26;
-	req_access_txt = "30"
-	},
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
+	},
+/obj/machinery/button/door{
+	id = "patientA";
+	name = "Privacy Shutters";
+	pixel_y = -25
 	},
 /turf/open/floor/carpet/purple,
 /area/medical/storage)
@@ -37298,7 +37296,7 @@
 "bNT" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "loungeshutters";
+	id = "patientB";
 	name = "privacy shutters"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -45958,7 +45956,7 @@
 	pixel_x = -28
 	},
 /obj/effect/festive/street/streetlinenm,
-/turf/open/floor/festive/cobblestone,
+/turf/open/floor/festive/cobblestone/safe,
 /area/cargo/qm)
 "chv" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -46443,7 +46441,7 @@
 /obj/vehicle/sealed/vectorcraft/auto{
 	dir = 8
 	},
-/turf/open/floor/festive/cobblestone,
+/turf/open/floor/festive/cobblestone/safe,
 /area/cargo/qm)
 "ciI" = (
 /obj/structure/window/reinforced{
@@ -52022,7 +52020,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/turf/open/floor/festive/trainplatform,
+/turf/open/floor/festive/trainplatform/safe,
 /area/maintenance/bar)
 "cwD" = (
 /turf/open/floor/plating/beach/sand,
@@ -52060,17 +52058,17 @@
 	dir = 1
 	},
 /obj/effect/decal/festive/christmas_ivy_string,
-/turf/open/floor/festive/trainplatform,
+/turf/open/floor/festive/trainplatform/safe,
 /area/maintenance/bar)
 "cwK" = (
-/turf/open/floor/festive/trainplatform,
+/turf/open/floor/festive/trainplatform/safe,
 /area/maintenance/bar)
 "cwL" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/effect/decal/festive/christmas_ivy_string,
-/turf/open/floor/festive/trainplatform,
+/turf/open/floor/festive/trainplatform/safe,
 /area/maintenance/bar)
 "cwM" = (
 /obj/structure/festive/trainplatform/edge_east,
@@ -52151,7 +52149,7 @@
 /area/edina/street/primary/perimeter)
 "cwV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/festive/trainplatform,
+/turf/open/floor/festive/trainplatform/safe,
 /area/maintenance/bar)
 "cwW" = (
 /obj/structure/festive/trainplatform/edge_east,
@@ -52184,7 +52182,7 @@
 /area/maintenance/bar)
 "cxb" = (
 /obj/effect/festive/street/streetlineem,
-/turf/open/floor/festive/cobblestone,
+/turf/open/floor/festive/cobblestone/safe,
 /area/edina/street)
 "cxc" = (
 /obj/effect/festive/street/sidewalknsm,
@@ -52347,7 +52345,7 @@
 /area/maintenance/bar)
 "cxH" = (
 /obj/effect/landmark/start/assistant,
-/turf/open/floor/festive/trainplatform,
+/turf/open/floor/festive/trainplatform/safe,
 /area/maintenance/bar)
 "cxI" = (
 /obj/structure/grille,
@@ -52605,7 +52603,7 @@
 /area/maintenance/bar)
 "cyx" = (
 /obj/effect/landmark/xmastree/rdrod,
-/turf/open/floor/festive/trainplatform,
+/turf/open/floor/festive/trainplatform/safe,
 /area/maintenance/bar)
 "cyA" = (
 /obj/structure/grille,
@@ -54617,7 +54615,7 @@
 /obj/structure/festive/trainplatform/edge_north{
 	pixel_y = -7
 	},
-/turf/open/floor/festive/trainplatform,
+/turf/open/floor/festive/trainplatform/safe,
 /area/maintenance/bar)
 "kZN" = (
 /obj/machinery/light,
@@ -55499,7 +55497,7 @@
 /obj/structure/festive/trainplatform/edge_north{
 	pixel_y = -7
 	},
-/turf/open/floor/festive/trainplatform,
+/turf/open/floor/festive/trainplatform/safe,
 /area/maintenance/bar)
 "rgC" = (
 /obj/effect/turf_decal/weather/snow/corner{

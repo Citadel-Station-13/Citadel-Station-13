@@ -40,6 +40,13 @@
 	icon_state = "unsmooth"
 	smooth = SMOOTH_MORE | SMOOTH_BORDER
 	canSmoothWith = list(/turf/open/floor/festive/cobblestone)
+	initial_gas_mix = FESTIVE_ATMOS
+	planetary_atmos = 1
+
+/turf/open/floor/festive/cobblestone/safe	//this is literally cobblestone but safe for inside use because I don't want to fuck with aesthetics
+	baseturfs = /turf/open/floor/festive/cobblestone/safe
+    initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+    planetary_atmos = FALSE
 
 /turf/open/floor/festive/sidewalk
 	name = "sidewalk"
@@ -48,6 +55,8 @@
 	icon_state = "unsmooth"
 	smooth = SMOOTH_MORE | SMOOTH_BORDER
 	canSmoothWith = list(/turf/open/floor/festive/sidewalk)
+	initial_gas_mix = FESTIVE_ATMOS
+	planetary_atmos = 1
 
 /turf/open/floor/festive/alleyway
 	name = "alleyway bricks"
@@ -56,6 +65,13 @@
 	icon_state = "unsmooth"
 	smooth = SMOOTH_MORE | SMOOTH_BORDER
 	canSmoothWith = list(/turf/open/floor/festive/alleyway, /turf/open/floor/festive/white_alleyway)
+	initial_gas_mix = FESTIVE_ATMOS
+	planetary_atmos = 1
+
+/turf/open/floor/festive/alleyway/safe	//this is literally alleyway but safe for inside use because I don't want to fuck with aesthetics
+	baseturfs = /turf/open/floor/festive/alleyway/safe
+    initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+    planetary_atmos = FALSE
 
 /turf/open/floor/festive/white_alleyway
 	name = "alleyway bricks"
@@ -64,6 +80,8 @@
 	icon_state = "unsmooth"
 	smooth = SMOOTH_MORE | SMOOTH_BORDER
 	canSmoothWith = list(/turf/open/floor/festive/alleyway, /turf/open/floor/festive/white_alleyway)
+	initial_gas_mix = FESTIVE_ATMOS
+	planetary_atmos = 1
 
 /turf/open/floor/festive/trainplatform
 	name = "trainplatform"
@@ -72,6 +90,13 @@
 	icon_state = "unsmooth"
 	smooth = SMOOTH_MORE | SMOOTH_BORDER
 	canSmoothWith = list(/turf/open/floor/festive/trainplatform)
+	initial_gas_mix = FESTIVE_ATMOS
+	planetary_atmos = 1
+
+/turf/open/floor/festive/trainplatform/safe	//this is literally train platform but safe for inside use because I don't want to remap the strip club
+	baseturfs = /turf/open/floor/festive/trainplatform/safe
+    initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+    planetary_atmos = FALSE
 
 /turf/open/floor/festive/stairs/stairsnorth
 	name = "stairs north"
