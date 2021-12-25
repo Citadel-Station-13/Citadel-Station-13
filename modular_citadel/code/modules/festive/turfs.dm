@@ -45,8 +45,8 @@
 
 /turf/open/floor/festive/cobblestone/safe	//this is literally cobblestone but safe for inside use because I don't want to fuck with aesthetics
 	baseturfs = /turf/open/floor/festive/cobblestone/safe
-    initial_gas_mix = OPENTURF_DEFAULT_ATMOS
-    planetary_atmos = FALSE
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	planetary_atmos = FALSE
 
 /turf/open/floor/festive/sidewalk
 	name = "sidewalk"
@@ -70,8 +70,8 @@
 
 /turf/open/floor/festive/alleyway/safe	//this is literally alleyway but safe for inside use because I don't want to fuck with aesthetics
 	baseturfs = /turf/open/floor/festive/alleyway/safe
-    initial_gas_mix = OPENTURF_DEFAULT_ATMOS
-    planetary_atmos = FALSE
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	planetary_atmos = FALSE
 
 /turf/open/floor/festive/white_alleyway
 	name = "alleyway bricks"
@@ -95,8 +95,8 @@
 
 /turf/open/floor/festive/trainplatform/safe	//this is literally train platform but safe for inside use because I don't want to remap the strip club
 	baseturfs = /turf/open/floor/festive/trainplatform/safe
-    initial_gas_mix = OPENTURF_DEFAULT_ATMOS
-    planetary_atmos = FALSE
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	planetary_atmos = FALSE
 
 /turf/open/floor/festive/stairs/stairsnorth
 	name = "stairs north"
