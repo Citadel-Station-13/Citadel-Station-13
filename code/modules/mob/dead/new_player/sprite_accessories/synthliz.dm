@@ -121,6 +121,13 @@
 	icon_state = "synth_thicklight"
 	matrixed_sections = MATRIX_RED_BLUE
 
+/datum/sprite_accessory/antenna/synthliz/synthliz_integrator
+	icon = 'modular_citadel/icons/mob/ipc_antennas.dmi'
+	color_src = MATRIXED
+	name = "Synthetic Lizard - Integrator Horns"
+	icon_state = "synth_integrator"
+	matrixed_sections = MATRIX_RED_GREEN
+
 //Synth Taurs (Ported from Virgo)
 /datum/sprite_accessory/taur/synthliz
 	name = "Virgo - Synthetic Lizard"
