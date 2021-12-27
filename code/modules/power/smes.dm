@@ -43,6 +43,8 @@
 	. = ..()
 	if(!terminal)
 		. += "<span class='warning'>This SMES has no power terminal!</span>"
+	if(check_loop())
+		. += "<span class='warning'>This SMES' output loops back to the input, it cannot release any power!</span>"
 
 /obj/machinery/power/smes/Initialize()
 	. = ..()
@@ -265,7 +267,7 @@
 		if(outputting)
 			output_used = min( charge/SMESRATE, output_level)		//limit output to that stored
 
-			if (add_avail(output_used))				// add output to powernet if it exists (smes side)
+			if (!check_loop() && add_avail(output_used))				// add output to powernet if it exists (smes side)
 				charge -= output_used*SMESRATE		// reduce the storage (may be recovered in /restore() if excessive)
 			else
 				outputting = FALSE
@@ -425,6 +427,10 @@
 	charge = INFINITY
 	..()
 
+/obj/machinery/power/smes/proc/check_loop()
+	if(terminal && (powernet == terminal.powernet) && !isnull(powernet))
+		return TRUE
+	return FALSE
 
 #undef SMESRATE
 
