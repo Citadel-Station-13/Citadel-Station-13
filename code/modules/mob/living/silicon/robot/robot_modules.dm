@@ -827,6 +827,7 @@
 		"(Service) Tophat" = image(icon = 'icons/mob/robots.dmi', icon_state = "tophat"),
 		"(Service) Sleek" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "sleekserv"),
 		"(Service) Heavy" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "heavyserv"),
+		"(Service) mekajani" = image(icon = 'modular_citadel/icons/mob/robots_tall.dmi', icon_state = "mekajani"),
 		"(Janitor) Default" = image(icon = 'icons/mob/robots.dmi', icon_state = "janitor"),
 		"(Janitor) Marina" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "marinajan"),
 		"(Janitor) Sleek" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "sleekjan"),
@@ -849,6 +850,9 @@
 		if("(Service) Waitress")
 			cyborg_base_icon = "service_f"
 			special_light_key = "service"
+		if("(Service) mekajani")
+			cyborg_base_icon = "mekajani"
+			cyborg_icon_override = 'modular_citadel/icons/mob/robots_tall.dmi'
 		if("(Service) Butler")
 			cyborg_base_icon = "service_m"
 			special_light_key = "service"
