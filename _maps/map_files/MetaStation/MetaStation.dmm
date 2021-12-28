@@ -47284,6 +47284,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engineering/storage/tech)
+"dlw" = (
+/obj/machinery/power/floodlight,
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/engineering/atmos)
 "dlA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -51574,13 +51581,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/engineering/break_room)
-"faa" = (
-/obj/machinery/power/floodlight,
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
-/turf/open/floor/plating,
-/area/engineering/atmos)
 "faG" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -52525,8 +52525,7 @@
 /area/science/circuit)
 "fFR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/engineering/atmos)
 "fFY" = (
 /obj/structure/cable,
@@ -55009,6 +55008,12 @@
 "hhA" = (
 /turf/open/floor/plasteel,
 /area/cargo/warehouse)
+"hhD" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/engineering/atmos)
 "hhN" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -55428,6 +55433,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engineering/main)
+"hta" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/dark/visible,
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel,
+/area/engineering/atmos)
 "htx" = (
 /obj/structure/closet/secure_closet/miner,
 /obj/structure/extinguisher_cabinet{
@@ -61967,7 +61982,9 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
@@ -71537,16 +71554,6 @@
 	},
 /turf/open/space/basic,
 /area/solars/port/fore)
-"qnr" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/dark/visible,
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plasteel,
-/area/engineering/atmos)
 "qnv" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
@@ -81315,12 +81322,6 @@
 	},
 /turf/open/floor/plating,
 /area/command/heads_quarters/rd)
-"vXf" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/engineering/atmos)
 "vXi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line{
@@ -127702,7 +127703,7 @@ ooB
 ibJ
 ibJ
 ibJ
-qnr
+hta
 ibJ
 ibJ
 omb
@@ -127959,7 +127960,7 @@ eCZ
 mMn
 mMn
 mMn
-vXf
+hhD
 mMn
 mMn
 eWY
@@ -128216,7 +128217,7 @@ pcs
 mMn
 mMn
 mMn
-vXf
+hhD
 mMn
 mMn
 mMn
@@ -128473,7 +128474,7 @@ mMn
 mMn
 mMn
 mMn
-vXf
+hhD
 mMn
 mMn
 mMn
@@ -128730,7 +128731,7 @@ mMn
 mMn
 mMn
 mMn
-faa
+dlw
 mMn
 mMn
 mMn
