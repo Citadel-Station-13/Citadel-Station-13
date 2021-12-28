@@ -341,6 +341,7 @@
 		"outputLevel_text" = DisplayPower(output_level),
 		"outputLevelMax" = output_level_max,
 		"outputUsed" = output_used,
+		"looping" = check_loop(),
 	)
 	return data
 

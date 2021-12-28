@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, Flex, LabeledList, ProgressBar, Section, Slider } from '../components';
+import { Blink, Box, Button, Flex, LabeledList, ProgressBar, Section, Slider } from '../components';
 import { formatPower } from '../format';
 import { Window } from '../layouts';
 
@@ -22,6 +22,7 @@ export const Smes = (props, context) => {
     outputLevel,
     outputLevelMax,
     outputUsed,
+    looping,
   } = data;
   const inputState = (
     capacityPercent >= 100 && 'good'
@@ -36,7 +37,7 @@ export const Smes = (props, context) => {
   return (
     <Window
       width={340}
-      height={350}>
+      height={looping ? 380 : 350}>
       <Window.Content>
         <Section title="Stored Energy">
           <ProgressBar
@@ -128,13 +129,24 @@ export const Smes = (props, context) => {
                 </Button>
               }>
               <Box color={outputState}>
-                {outputting
-                  ? 'Sending'
-                  : charge > 0
-                    ? 'Not Sending'
-                    : 'No Charge'}
+                {looping
+                  ? <font color="red">Error</font>
+                  : outputting
+                    ? 'Sending'
+                    : charge > 0
+                      ? 'Not Sending'
+                      : 'No Charge'}
               </Box>
             </LabeledList.Item>
+            {looping ? (
+              <LabeledList.Item label="Info">
+                <Box backgroundColor="#4972a1" p="1px">
+                  <Box color="green" backgroundColor="black">
+                    The output is connected to the input.<Blink>▍</Blink>
+                  </Box>
+                </Box>
+              </LabeledList.Item>
+            ) : (null)}
             <LabeledList.Item label="Target Output">
               <Flex inline width="100%">
                 <Flex.Item>
