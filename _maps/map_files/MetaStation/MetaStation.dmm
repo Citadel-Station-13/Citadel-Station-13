@@ -24661,13 +24661,13 @@
 /turf/closed/wall,
 /area/maintenance/disposal/incinerator)
 "bZD" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Incinerator Access";
-	req_access_txt = "12"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/atmos{
+	name = "Turbine Access";
+	req_access_txt = "32"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
@@ -25285,7 +25285,10 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
 "caZ" = (
 /obj/structure/cable/yellow{
@@ -25300,7 +25303,7 @@
 	c_tag = "Atmospherics - Incinerator";
 	name = "atmospherics camera"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
 "cba" = (
 /obj/machinery/power/smes{
@@ -25310,7 +25313,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
 "cbp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -25905,7 +25908,7 @@
 /obj/machinery/atmospherics/pipe/simple/dark/visible{
 	dir = 6
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
 "ccU" = (
 /obj/structure/table/wood/poker,
@@ -47284,13 +47287,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engineering/storage/tech)
-"dlw" = (
-/obj/machinery/power/floodlight,
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
-/turf/open/floor/plating,
-/area/engineering/atmos)
 "dlA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -53101,6 +53097,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/service/hydroponics)
+"fYL" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/engineering/atmos)
 "fZR" = (
 /obj/machinery/seed_extractor,
 /obj/effect/turf_decal/stripes/line{
@@ -55008,12 +55010,6 @@
 "hhA" = (
 /turf/open/floor/plasteel,
 /area/cargo/warehouse)
-"hhD" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/engineering/atmos)
 "hhN" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -55433,16 +55429,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engineering/main)
-"hta" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/dark/visible,
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plasteel,
-/area/engineering/atmos)
 "htx" = (
 /obj/structure/closet/secure_closet/miner,
 /obj/structure/extinguisher_cabinet{
@@ -60795,6 +60781,7 @@
 	name = "Atmospherics Monitoring";
 	req_access_txt = "24"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "kuk" = (
@@ -67758,6 +67745,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "olW" = (
@@ -68979,6 +68967,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "oWR" = (
@@ -77293,6 +77282,13 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solars/starboard/fore)
+"tzt" = (
+/obj/machinery/power/floodlight,
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/engineering/atmos)
 "tAp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -77444,6 +77440,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/office)
+"tGd" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/dark/visible,
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel,
+/area/engineering/atmos)
 "tGD" = (
 /obj/structure/closet/crate,
 /obj/structure/extinguisher_cabinet{
@@ -127703,7 +127709,7 @@ ooB
 ibJ
 ibJ
 ibJ
-hta
+tGd
 ibJ
 ibJ
 omb
@@ -127960,7 +127966,7 @@ eCZ
 mMn
 mMn
 mMn
-hhD
+fYL
 mMn
 mMn
 eWY
@@ -128217,7 +128223,7 @@ pcs
 mMn
 mMn
 mMn
-hhD
+fYL
 mMn
 mMn
 mMn
@@ -128474,7 +128480,7 @@ mMn
 mMn
 mMn
 mMn
-hhD
+fYL
 mMn
 mMn
 mMn
@@ -128731,7 +128737,7 @@ mMn
 mMn
 mMn
 mMn
-dlw
+tzt
 mMn
 mMn
 mMn
