@@ -16,6 +16,15 @@
 	attack_hand_unwieldlyness = CLICK_CD_MELEE
 	attack_hand_speed = 0
 
+	// Rendering
+	/// Planes are held here
+	var/datum/plane_holder/plane_holder
+	/// HUDs to display - associative list of hud id to list of sources, much like traits.
+	var/list/atom_huds_shown
+	/// Parallax holder
+	var/datum/parallax_holder/parallax_holder
+	// Rendering end
+
 	/// What receives our keyboard input. src by default.
 	var/datum/focus
 
