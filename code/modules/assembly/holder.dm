@@ -88,14 +88,14 @@
 	if(a_right)
 		a_right.dropped(user)
 
-/obj/item/assembly_holder/on_attack_hand()//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
+/obj/item/assembly_holder/on_attack_hand(user, act_intent)//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
 	. = ..()
 	if(.)
 		return
 	if(a_left)
-		a_left.attack_hand()
+		a_left.attack_hand(user, act_intent)
 	if(a_right)
-		a_right.attack_hand()
+		a_right.attack_hand(user, act_intent)
 
 /obj/item/assembly_holder/screwdriver_act(mob/user, obj/item/tool)
 	if(..())

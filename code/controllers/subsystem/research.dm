@@ -346,12 +346,13 @@ SUBSYSTEM_DEF(research)
 		for(var/i in bitcoins)
 			bitcoins[i] *= income_time_difference / 10
 		science_tech.add_point_list(bitcoins)
-		if(!length(science_tech.last_bitcoins))
-			science_tech.last_bitcoins = science_tech.research_points
-		for(var/i in science_tech.last_bitcoins)
+		var/list/income = science_tech.commit_income()
+		for(var/i in income)
 			var/old_weighted = science_tech.last_bitcoins[i] * (1 MINUTES - income_time_difference)
-			var/new_weighted = science_tech.research_points[i] * income_time_difference
-			science_tech.last_bitcoins[i] = round((old_weighted + new_weighted) / (1 MINUTES))
+			var/new_weighted = income[i] * income_time_difference
+			science_tech.last_bitcoins[i] = (old_weighted + new_weighted) / (1 MINUTES)
+	else
+		science_tech.last_bitcoins = bitcoins.Copy()
 	last_income = world.time
 
 /datum/controller/subsystem/research/proc/calculate_server_coefficient()	//Diminishing returns.
