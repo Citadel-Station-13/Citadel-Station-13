@@ -3,14 +3,8 @@
 	icon_state = "blank"
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	blend_mode = BLEND_OVERLAY
-	var/show_alpha = 255
-	var/hide_alpha = 0
-
-/atom/movable/screen/plane_master/proc/Show(override)
-	alpha = override || show_alpha
-
-/atom/movable/screen/plane_master/proc/Hide(override)
-	alpha = override || hide_alpha
+	/// Abstract type
+	var/abstract_type = /atom/movable/screen/plane_master
 
 //Why do plane masters need a backdrop sometimes? Read https://secure.byond.com/forum/?post=2141928
 //Trust me, you need one. Period. If you don't think you do, you're doing something extremely wrong.
@@ -174,10 +168,26 @@
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 
-
 //Reserved to chat messages, so they are still displayed above the field of vision masking.
 /atom/movable/screen/plane_master/chat_messages
 	name = "runechat plane master"
 	plane = CHAT_PLANE
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
+
+// Admin fuckery planes
+// Invisible by default
+/atom/movable/screen/plane_master/admin
+	abstract_type = /atom/movable/screen/plane_master/admin
+
+/atom/movable/screen/plane_master/admin/floor
+	name = "admin overfloor plane"
+	plane = ADMIN_PLANE_FLOOR
+
+/atom/movable/screen/plane_master/admin/game
+	name = "admin overgame plane"
+	plane = ADMIN_PLANE_GAME
+
+/atom/movable/screen/plane_master/admin/above
+	name = "admin overlighting plane"
+	plane = ADMIN_PLANE_OVER

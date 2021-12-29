@@ -441,9 +441,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	send_resources()
 
-	generate_clickcatcher()
-	apply_clickcatcher()
-
 	if(prefs.lastchangelog != GLOB.changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
 		if(CONFIG_GET(flag/aggressive_changelog))
@@ -1011,25 +1008,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/list/old_view = getviewsize(view)
 	view = new_size
 	var/list/actualview = getviewsize(view)
-	apply_clickcatcher(actualview)
 	mob.reload_fullscreen()
 	if (isliving(mob))
 		var/mob/living/M = mob
 		M.update_damage_hud()
 	if (prefs.auto_fit_viewport)
 		addtimer(CALLBACK(src,.verb/fit_viewport,10)) //Delayed to avoid wingets from Login calls.
+	if(click_catcher)
+		update_clickcatcher()
 	SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_CHANGE_VIEW, src, old_view, actualview)
-
-/client/proc/generate_clickcatcher()
-	if(!void)
-		void = new()
-		screen += void
-
-/client/proc/apply_clickcatcher(list/actualview)
-	generate_clickcatcher()
-	if(!actualview)
-		actualview = getviewsize(view)
-	void.UpdateGreed(actualview[1],actualview[2])
 
 /client/proc/AnnouncePR(announcement)
 	if(prefs && prefs.chat_toggles & CHAT_PULLR)

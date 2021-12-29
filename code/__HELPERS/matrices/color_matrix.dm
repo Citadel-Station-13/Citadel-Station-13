@@ -1,85 +1,3 @@
-/matrix/proc/TurnTo(old_angle, new_angle)
-	. = new_angle - old_angle
-	Turn(.) //BYOND handles cases such as -270, 360, 540 etc. DOES NOT HANDLE 180 TURNS WELL, THEY TWEEN AND LOOK LIKE SHIT
-
-/atom/proc/SpinAnimation(speed = 10, loops = -1, clockwise = 1, segments = 3, parallel = TRUE)
-	if(!segments)
-		return
-	var/segment = 360/segments
-	if(!clockwise)
-		segment = -segment
-	var/list/matrices = list()
-	for(var/i in 1 to segments-1)
-		var/matrix/M = matrix(transform)
-		M.Turn(segment*i)
-		matrices += M
-	var/matrix/last = matrix(transform)
-	matrices += last
-
-	speed /= segments
-
-	if(parallel)
-		animate(src, transform = matrices[1], time = speed, loops , flags = ANIMATION_PARALLEL)
-	else
-		animate(src, transform = matrices[1], time = speed, loops)
-
-	for(var/i in 2 to segments) //2 because 1 is covered above
-		animate(transform = matrices[i], time = speed)
-		//doesn't have an object argument because this is "Stacking" with the animate call above
-		//3 billion% intentional
-
-//Dumps the matrix data in format a-f
-/matrix/proc/tolist()
-	. = list()
-	. += a
-	. += b
-	. += c
-	. += d
-	. += e
-	. += f
-
-//Dumps the matrix data in a matrix-grid format
-/*
-  a d 0
-  b e 0
-  c f 1
-*/
-/matrix/proc/togrid()
-	. = list()
-	. += a
-	. += d
-	. += 0
-	. += b
-	. += e
-	. += 0
-	. += c
-	. += f
-	. += 1
-
-//The X pixel offset of this matrix
-/matrix/proc/get_x_shift()
-	. = c
-
-//The Y pixel offset of this matrix
-/matrix/proc/get_y_shift()
-	. = f
-
-/matrix/proc/get_x_skew()
-	. = b
-
-/matrix/proc/get_y_skew()
-	. = d
-
-//Skews a matrix in a particular direction
-//Missing arguments are treated as no skew in that direction
-
-//As Rotation is defined as a scale+skew, these procs will break any existing rotation
-//Unless the result is multiplied against the current matrix
-/matrix/proc/set_skew(x = 0, y = 0)
-	b = x
-	d = y
-
-
 /////////////////////
 // COLOUR MATRICES //
 /////////////////////
@@ -114,11 +32,63 @@ list(0.393,0.349,0.272,0, 0.769,0.686,0.534,0, 0.189,0.168,0.131,0, 0,0,0,1, 0,0
 
 	return list(R + value,R,R,0, G,G + value,G,0, B,B,B + value,0, 0,0,0,1, 0,0,0,0)
 
+/**
+ * Exxagerates or removes colors
+ */
+/proc/color_matrix_saturation_percent(percent)
+	if(value == 0)
+		return color_identity()
+	value = clamp(value, -100, 100)
+	if(value > 0)
+		value *= 3
+	var/x = 1 + value / 100
+	var/inv = 1 - x
+	var/R = LUMR * inv
+	var/G = LUMG * inv
+	var/B = LUMB * inv
+
+	return list(R + x,R,R, G,G + x,G, B,B,B + x)
+
 //Changes distance colors have from rgb(127,127,127) grey
 //1 is identity. 0 makes everything grey >1 blows out colors and greys
 /proc/color_matrix_contrast(value)
 	var/add = (1 - value) / 2
 	return list(value,0,0,0, 0,value,0,0, 0,0,value,0, 0,0,0,1, add,add,add,0)
+
+/**
+ * Exxagerates or removes brightness
+ */
+/proc/color_matrix_contrast_percent(percent)
+	var/static/list/delta_index = list(
+		0,    0.01, 0.02, 0.04, 0.05, 0.06, 0.07, 0.08, 0.1,  0.11,
+		0.12, 0.14, 0.15, 0.16, 0.17, 0.18, 0.20, 0.21, 0.22, 0.24,
+		0.25, 0.27, 0.28, 0.30, 0.32, 0.34, 0.36, 0.38, 0.40, 0.42,
+		0.44, 0.46, 0.48, 0.5,  0.53, 0.56, 0.59, 0.62, 0.65, 0.68,
+		0.71, 0.74, 0.77, 0.80, 0.83, 0.86, 0.89, 0.92, 0.95, 0.98,
+		1.0,  1.06, 1.12, 1.18, 1.24, 1.30, 1.36, 1.42, 1.48, 1.54,
+		1.60, 1.66, 1.72, 1.78, 1.84, 1.90, 1.96, 2.0,  2.12, 2.25,
+		2.37, 2.50, 2.62, 2.75, 2.87, 3.0,  3.2,  3.4,  3.6,  3.8,
+		4.0,  4.3,  4.7,  4.9,  5.0,  5.5,  6.0,  6.5,  6.8,  7.0,
+		7.3,  7.5,  7.8,  8.0,  8.4,  8.7,  9.0,  9.4,  9.6,  9.8,
+		10.0)
+	value = clamp(value, -100, 100)
+	if(value == 0)
+		return color_identity()
+
+	var/x = 0
+	if (value < 0)
+		x = 127 + value / 100 * 127;
+	else
+		x = value % 1
+		if(x == 0)
+			x = delta_index[value]
+		else
+			x = delta_index[value] * (1-x) + delta_index[value+1] * x//use linear interpolation for more granularity.
+		x = x * 127 + 127
+
+	var/mult = x / 127
+	var/add = 0.5 * (127-x) / 255
+	return list(mult,0,0, 0,mult,0, 0,0,mult, add,add,add)
 
 //Moves all colors angle degrees around the color wheel while maintaining intensity of the color and not affecting greys
 //0 is identity, 120 moves reds to greens, 240 moves reds to blues
@@ -133,6 +103,26 @@ round(cos_inv_third-sqrt3_sin, 0.001), round(cos+cos_inv_third, 0.001), round(co
 round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), round(cos+cos_inv_third, 0.001), 0,
 0,0,0,1,
 0,0,0,0)
+
+/**
+ * Moves all colors angle degrees around the color wheel while maintaining intensity of the color and not affecting whites
+ * TODO: Need a version that only affects one color (ie shift red to blue but leave greens and blues alone)
+ */
+/proc/color_matrix_rotation(angle)
+	if(angle == 0)
+		return color_identity()
+	angle = clamp(angle, -180, 180)
+	var/cos = cos(angle)
+	var/sin = sin(angle)
+
+	var/constA = 0.143
+	var/constB = 0.140
+	var/constC = -0.283
+	return list(
+	LUMR + cos * (1-LUMR) + sin * -LUMR, LUMR + cos * -LUMR + sin * constA, LUMR + cos * -LUMR + sin * -(1-LUMR),
+	LUMG + cos * -LUMG + sin * -LUMG, LUMG + cos * (1-LUMG) + sin * constB, LUMG + cos * -LUMG + sin * LUMG,
+	LUMB + cos * -LUMB + sin * (1-LUMB), LUMB + cos * -LUMB + sin * constC, LUMB + cos * (1-LUMB) + sin * LUMB
+	)
 
 //These next three rotate values about one axis only
 //x is the red axis, y is the green axis, z is the blue axis.
@@ -183,3 +173,9 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
  */
 /proc/rgb_construct_color_matrix(rr = 1, rg, rb, gr, gg = 1, gb, br, bg, bb = 1, cr, cg, cb)
 	return list(rr, rg, rb, gr, gg, gb, br, bg, bb, cr, cg, cb)
+
+/**
+ * Assembles a color matrix, defaulting to identity
+ */
+/proc/rgba_construct_color_matrix(rr = 1, rg, rb, ra, gr, gg = 1, gb, ga, br, bg, bb = 1, ba, ar, ag, ab, aa = 1, cr, cg, cb, ca)
+	return list(rr, rg, rb, ra, gr, gg, gb, ga, br, bg, bb, ba, ar, ag, ab, aa, cr, cg, cb, ca)

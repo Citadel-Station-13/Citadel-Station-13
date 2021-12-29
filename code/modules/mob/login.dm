@@ -25,8 +25,6 @@
 
 	reload_fullscreen() // Reload any fullscreen overlays this mob has.
 
-	add_click_catcher()
-
 	sync_mind()
 
 	//Reload alternate appearances
@@ -56,3 +54,15 @@
 
 	if(has_field_of_vision && CONFIG_GET(flag/use_field_of_vision))
 		LoadComponent(/datum/component/field_of_vision, field_of_vision_type)
+
+	// Lastly, load screen
+	// (The proper /datum/hud for mobs won't be refactored until later)
+
+	// first clickcatcher
+	client.update_clickcatcher()
+
+	// then planemasters
+	#warn duh
+
+	// then atom huds
+	#warn duh

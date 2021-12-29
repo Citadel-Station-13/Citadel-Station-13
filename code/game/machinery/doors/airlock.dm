@@ -102,7 +102,7 @@
 	rad_insulation = RAD_MEDIUM_INSULATION
 
 	var/static/list/airlock_overlays = list()
-	
+
 	/// sigh
 	var/unelectrify_timerid
 

@@ -3,7 +3,16 @@
 		//////////////////////
 		//BLACK MAGIC THINGS//
 		//////////////////////
+
 	parent_type = /datum
+
+		///////////////
+		// Rendering //
+		///////////////
+
+	/// Click catcher
+	var/atom/movable/screen/click_catcher/click_catcher
+
 		////////////////
 		//ADMIN THINGS//
 		////////////////
@@ -59,8 +68,6 @@
 	var/account_age = -1	//Age of byond account in days
 
 	preload_rsc = PRELOAD_RSC
-
-	var/atom/movable/screen/click_catcher/void
 
 	//These two vars are used to make a special mouse cursor, with a unique icon for clicking
 	var/mouse_up_icon = null

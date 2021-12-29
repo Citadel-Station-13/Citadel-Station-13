@@ -11,30 +11,36 @@
 #define PLANE_SPACE_PARALLAX_RENDER_TARGET "PLANE_SPACE_PARALLAX"
 
 #define OPENSPACE_LAYER 17 //Openspace layer over all
-#define OPENSPACE_PLANE -10 //Openspace plane below all turfs
-#define OPENSPACE_BACKDROP_PLANE -9 //Black square just over openspace plane to guaranteed cover all in openspace turf
+#define OPENSPACE_PLANE -16 //Openspace plane below all turfs
+#define OPENSPACE_BACKDROP_PLANE -15 //Black square just over openspace plane to guaranteed cover all in openspace turf
 
-#define FLOOR_PLANE -8
+#define FLOOR_PLANE -10
 #define FLOOR_PLANE_RENDER_TARGET "FLOOR_PLANE"
 
-#define WALL_PLANE -7
+#define WALL_PLANE -9
 #define WALL_PLANE_RENDER_TARGET "WALL_PLANE"
 
-#define ABOVE_WALL_PLANE -6
+#define ABOVE_WALL_PLANE -8
 #define ABOVE_WALL_PLANE_RENDER_TARGET "ABOVE_WALL_PLANE"
 
-#define FIELD_OF_VISION_BLOCKER_PLANE -5
+#define FIELD_OF_VISION_BLOCKER_PLANE -7
 #define FIELD_OF_VISION_BLOCKER_RENDER_TARGET "*FIELD_OF_VISION_BLOCKER_PLANE"
 
-#define FIELD_OF_VISION_PLANE -4
+#define FIELD_OF_VISION_PLANE -6
 #define FIELD_OF_VISION_RENDER_TARGET "*FIELD_OF_VISION_PLANE"
 #define FIELD_OF_VISION_LAYER 17 //used to place the visual (not the mask) shadow cone above any other floor plane stuff.
 
-#define GAME_PLANE -3
+// Admin fuckery plane - no objects on this by default
+#define ADMIN_PLANE_FLOOR			-5
+
+#define GAME_PLANE -4
 #define GAME_PLANE_RENDER_TARGET "GAME_PLANE"
 
-#define FIELD_OF_VISION_VISUAL_PLANE -2 //Yea, FoV does require quite a few planes to work with 513 filters to a decent degree.
+#define FIELD_OF_VISION_VISUAL_PLANE -3 //Yea, FoV does require quite a few planes to work with 513 filters to a decent degree.
 #define FIELD_OF_VISION_VISUAL_RENDER_TARGET "FIELD_OF_VISION_VISUAL_PLANE"
+
+// Admin fuckery plane - no objects on this by default
+#define ADMIN_PLANE_GAME			-2
 
 #define CHAT_PLANE -1 //We don't want heard messages to be hidden by FoV.
 
@@ -144,6 +150,9 @@
 #define ABOVE_LIGHTING_PLANE 16
 #define ABOVE_LIGHTING_LAYER 16
 #define ABOVE_LIGHTING_RENDER_TARGET "ABOVE_LIGHTING_PLANE"
+
+// Admin fuckery plane - no objects on this by default
+#define ADMIN_PLANE_ABOVE		17
 
 #define BYOND_LIGHTING_PLANE 18
 #define BYOND_LIGHTING_LAYER 18
