@@ -42,9 +42,11 @@
 
 /datum/plane_holder/proc/ApplyToClient(client/C)
 	C.screen |= planes
+	clients |= C
 	RegisterSignal(C, COMSIG_PARENT_QDELETING, .proc/RemoveFromClient)
 
 /datum/plane_holder/proc/RemoveFromClient(client/C)
+	clients -= C
 	C.screen -= planes
 
 /datum/plane_holder/proc/SetAlpha(plane, alpha, override = FALSE)

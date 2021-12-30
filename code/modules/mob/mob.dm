@@ -34,6 +34,7 @@
 	else
 		add_to_alive_mob_list()
 	set_focus(src)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_CREATED, src)
 	prepare_huds()
 	for(var/v in GLOB.active_alternate_appearances)
 		if(!v)
@@ -45,6 +46,9 @@
 	update_config_movespeed()
 	update_movespeed(TRUE)
 	initialize_actionspeed()
+	if(innate_atom_huds)
+		innate_atom_huds = typelist(NAMEOF(src, innate_atom_huds), innate_atom_huds)
+		initialize_innate_atom_huds()
 	hook_vr("mob_new",list(src))
 
 /mob/GenerateTag()
@@ -252,8 +256,9 @@
 // reset_perspective(thing) set the eye to the thing (if it's equal to current default reset to mob perspective)
 // reset_perspective() set eye to common default : mob on turf, loc otherwise
 /mob/proc/reset_perspective(atom/A)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!client)
-		return
+		return FALSE
 	if(A)
 		if(ismovable(A))
 			//Set the the thing unless it's us
@@ -282,6 +287,7 @@
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = loc
 	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE, A)
+	client.parallax_holder.Reset()
 	return TRUE
 
 /mob/proc/show_inv(mob/user)

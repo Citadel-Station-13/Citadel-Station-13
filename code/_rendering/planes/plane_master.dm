@@ -154,7 +154,7 @@
 ///Contains space parallax
 /atom/movable/screen/plane_master/parallax
 	name = "parallax plane master"
-	plane = PLANE_SPACE_PARALLAX
+	plane = PLANE_PARALLAX
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 

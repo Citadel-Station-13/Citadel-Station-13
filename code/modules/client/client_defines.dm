@@ -14,6 +14,25 @@
 	var/atom/movable/screen/click_catcher/click_catcher
 	/// HUD suppliers currently shown - on client because images are on client.
 	var/list/hud_suppliers_shown
+	/// Parallax holder
+	var/datum/parallax_holder/parallax_holder
+	/// Atom the parallax holder was following
+	var/atom/parallax_eye_anchor
+
+
+	var/list/parallax_layers
+	var/list/parallax_layers_cached
+	var/atom/movable/movingmob
+	var/turf/previous_turf
+	///world.time of when we can state animate()ing parallax again
+	var/dont_animate_parallax
+	///world.time of last parallax update
+	var/last_parallax_shift
+	///ds between parallax updates
+	var/parallax_throttle = 0
+	var/parallax_movedir = 0
+	var/parallax_layers_max = 3
+	var/parallax_animate_timer
 
 		////////////////
 		//ADMIN THINGS//
@@ -158,20 +177,6 @@
 	var/list/recent_examines
 	///When was the last time we warned them about not cryoing without an ahelp, set to -5 minutes so that rounstart cryo still warns
 	var/cryo_warned = -5 MINUTES
-
-	var/list/parallax_layers
-	var/list/parallax_layers_cached
-	var/atom/movable/movingmob
-	var/turf/previous_turf
-	///world.time of when we can state animate()ing parallax again
-	var/dont_animate_parallax
-	///world.time of last parallax update
-	var/last_parallax_shift
-	///ds between parallax updates
-	var/parallax_throttle = 0
-	var/parallax_movedir = 0
-	var/parallax_layers_max = 3
-	var/parallax_animate_timer
 
 	/**
 	 * Assoc list with all the active maps - when a screen obj is added to

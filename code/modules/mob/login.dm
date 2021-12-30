@@ -6,8 +6,9 @@
 	computer_id	= client.computer_id
 	log_access("Mob Login: [key_name(src)] was assigned to a [type]")
 	world.update_status()
-	client.screen = list()				//remove hud items just in case
-	client.images = list()
+
+	// wipe - hud_used will call this in build mode instead of teardown
+	ResetRendering(FALSE)
 
 	if(!hud_used)
 		create_mob_hud()

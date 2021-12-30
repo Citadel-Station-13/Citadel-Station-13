@@ -154,6 +154,7 @@
 #include "code\__DEFINES\mobs\slowdowns.dm"
 #include "code\__DEFINES\rendering\atom_hud.dm"
 #include "code\__DEFINES\rendering\hud.dm"
+#include "code\__DEFINES\rendering\parallax.dm"
 #include "code\__DEFINES\rendering\screen_loc.dm"
 #include "code\__DEFINES\research\anomalies.dm"
 #include "code\__DEFINES\research\stock_parts.dm"

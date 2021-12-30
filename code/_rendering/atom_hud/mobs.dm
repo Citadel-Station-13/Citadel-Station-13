@@ -60,3 +60,10 @@
 		if(!H)
 			continue
 		. |= H.suppliers
+
+/**
+ * Add innate atom HUDs
+ */
+/mob/proc/initialize_innate_atom_huds()
+	for(var/id in innate_atom_huds)
+		AddAtomHUD(id, HUD_SOURCE_INNATE)

@@ -5,11 +5,11 @@ SUBSYSTEM_DEF(atom_huds)
 	/// all HUDs
 	var/list/datum/atom_hud/huds
 	/// hud by id
-	var/list/hud_by_id
+	var/list/huds_by_id
 	/// all HUd suppliers
 	var/list/datum/hud_supplier/suppliers
 	/// hud suppliers by id
-	var/list/supplier_by_id
+	var/list/suppliers_by_id
 
 /datum/controller/subsystem/atom_huds/proc/GetHUD(id_or_path)
 	if(huds_by_id[id_or_path])

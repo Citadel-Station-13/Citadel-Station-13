@@ -4,6 +4,7 @@
 	layer = MOB_LAYER
 	animate_movement = 2
 	flags_1 = HEAR_1
+
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
@@ -26,6 +27,9 @@
 	/// Fullscreen objects we should be seeing
 	var/list/atom/movable/screen/fullscreen/fullscreens
 	// Rendering end
+
+	/// Innate atom HUDs to add
+	var/list/atom_huds_innate
 
 	/// What receives our keyboard input. src by default.
 	var/datum/focus

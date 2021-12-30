@@ -1,3 +1,17 @@
+/**
+ * Holds parallax information.
+ */
+/datum/parallax
+	/// List of
+
+	/// Parallax layers
+	var/layers = 0
+	/// Parallax is scroll/animate compatible
+	var/scroll_compatible = FALSE
+	/// Parallax pixelshifts on move
+	var/shift_on_move = FALSE
+
+
 
 /datum/hud/proc/create_parallax(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob

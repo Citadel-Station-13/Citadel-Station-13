@@ -875,7 +875,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				UNSETEMPTY(target.observers)
 	if(..())
 		if(hud_used)
-			client.screen = list()
 			hud_used.show_hud(hud_used.hud_version)
 
 /mob/dead/observer/verb/observe()
@@ -900,7 +899,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(client && mob_eye && istype(mob_eye))
 		client.eye = mob_eye
 		if(mob_eye.hud_used)
-			client.screen = list()
+			// todo : refactor /datum/hud so screen wipe isn't needed
 			LAZYINITLIST(mob_eye.observers)
 			mob_eye.observers |= src
 			mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)
