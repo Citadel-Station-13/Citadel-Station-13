@@ -12,6 +12,8 @@
 	var/datum/parallax/parallax
 	/// Eye we were last anchored to - used to detect eye changes
 	var/atom/eye
+	/// view that we're calibrated to
+	var/view_size
 
 
 /datum/parallax_holder/New(client/C)

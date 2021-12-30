@@ -1019,6 +1019,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		addtimer(CALLBACK(src,.verb/fit_viewport,10)) //Delayed to avoid wingets from Login calls.
 	if(click_catcher)
 		update_clickcatcher()
+	if(parallax_holder)
+		parallax_holder.Reset()
 	SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_CHANGE_VIEW, src, old_view, actualview)
 
 /client/proc/AnnouncePR(announcement)
