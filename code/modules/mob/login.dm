@@ -73,4 +73,6 @@
 	ReloadAtomHUDs()
 
 	// then parallax
-	#warn impl
+	if(!client.parallax_holder)
+		client.parallax_holder = new(client)
+		client.parallax_holder.Reset()

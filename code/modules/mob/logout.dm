@@ -1,7 +1,7 @@
 /mob/Logout()
 	SHOULD_CALL_PARENT(TRUE)
 
-	// build
+	// teardown
 	ResetRendering(FALSE)
 
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGOUT, client)

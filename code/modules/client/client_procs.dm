@@ -331,7 +331,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		player_details.byond_version = full_version
 		GLOB.player_details[ckey] = player_details
 
-
 	. = ..()	//calls mob.Login()
 	// if (length(GLOB.stickybanadminexemptions))
 	// 	GLOB.stickybanadminexemptions -= ckey
@@ -505,6 +504,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)
 	SSserver_maint.UpdateHubStatus()
+	if(parallax_holder)
+		QDEL_NULL(parallax_holder)
+	if(click_catcher)
+		QDEL_NULL(click_catcher)
 	if(credits)
 		QDEL_LIST(credits)
 	if(holder)

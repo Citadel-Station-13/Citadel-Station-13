@@ -16,7 +16,9 @@
 	var/list/hud_suppliers_shown
 	/// Parallax holder
 	var/datum/parallax_holder/parallax_holder
-	/// Atom the parallax holder was following
+
+
+	///Atom the parallax holder was following
 	var/atom/parallax_eye_anchor
 
 
