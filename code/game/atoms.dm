@@ -28,10 +28,8 @@
 	///Reagents holder
 	var/datum/reagents/reagents = null
 
-	///This atom's HUD (med/sec, etc) images. Associative list.
-	var/list/image/hud_list = null
-	///HUD images that this atom can provide.
-	var/list/hud_possible
+	/// This atom's HUD images. hud id = image | list(images)
+	var/list/image/hud_images
 
 	///Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0

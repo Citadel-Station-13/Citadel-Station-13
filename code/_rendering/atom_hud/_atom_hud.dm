@@ -10,17 +10,17 @@
 	/// Atoms that show this HUD
 	var/list/atom/atoms = list()
 	/// Users that see this HUD
-	var/list/mob/users = list()
+	var/list/mob/viewing = list()
 	/// Queued to show
-	var/list/mob/queue_show
+	var/list/mob/queue_show = list()
 	/// Queued to hide
-	var/list/mob/queue_hide
+	var/list/mob/queue_hide = list()
 	/// Queued to add
-	var/list/atom/queue_add
+	var/list/atom/queue_add = list()
 	/// Queued to remove
-	var/list/atom/queue_remove
+	var/list/atom/queue_remove = list()
 	/// Queued to update
-	var/list/atom/queue_update
+	var/list/atom/queue_update = list()
 	/// Queue flush queued?
 	var/queued = FALSE
 	/// unique ID
@@ -31,7 +31,8 @@
 	var/entry_type
 
 /datum/atom_hud/New(id)
-	src.id = id || ++id_next
+	if(isnull(src.id))
+		src.id = id || ++id_next
 	SSatom_huds.Register(src)
 
 /datum/atom_hud/Destroy()
@@ -46,20 +47,28 @@
 
 /datum/atom_hud/proc/RegisterAtom(atom/A, immediate)
 	if(!immediate)
-		LAZYOR(queue_add, A)
-		LAZYREMOVE(queue_remove, A)
+		queue_add |= A
+		queue_remove -= A
 		Queue()
 		return
 	RegisterSignal(A, COMSIG_PARENT_QDELETING, .proc/AtomDel, TRUE)
+	LAZYINITLIST(A.hud_images)
+	Update(A, TRUE)
 
 /datum/atom_hud/proc/UnregisterAtom(atom/A, immediate)
 	if(!immediate)
-		LAZYOR(queue_remove, A)
-		LAZYREMOVE(queue_add, A)
+		queue_remove |= A
+		queue_add -= A
+		queue_update -= A
 		Queue()
 		return
-	UnregisterSignal(A, COMSIG_PARENT_QDELETING)
-
+	if(!(A in viewing))
+		UnregisterSignal(A, COMSIG_PARENT_QDELETING)
+	for(var/mob/M as anything in viewing)
+		if(!M.client)
+			continue
+		M.client.images -= A.hud_images[id]
+	LAZYREMOVE(A.hud_images, id)
 
 /**
  * Called to update our entry in an atom's HUD images list.
@@ -68,11 +77,13 @@
  *
  * The return value is used as the new image.
  *
+ * Note: This proc is very optimized if you act in-place on an image rather than return a new one.
+ *
  * @params
  * - A - atom
  * - old - what was there before
  */
-/datum/atom_hud/proc/UpdateList(atom/A, image/old)
+/datum/atom_hud/proc/UpdateImage(atom/A, image/old)
 
 /**
  * Called to update our list in an atom's HUD images list.
@@ -97,8 +108,23 @@
 		return
 	switch(entry_type)
 		if(HUD_ENTRY_IMAGE)
-
+			var/image/existing = A.hud_images[id]
+			var/image/use = UpdateImage(A, existing)
+			if(existing == use)
+				return
+			for(var/mob/M as anything in viewing)
+				if(!M.client)
+					continue
+				M.client.images -= existing
+				M.client.images |= use
 		if(HUD_ENTRY_LIST)
+			var/list/existing = A.hud_images[id]
+			var/list/use = UpdateList(A, existing)
+			for(var/mob/M as anything in viewing)
+				if(!M.client)
+					continue
+				M.client.images -= existing
+				M.client.images |= use
 
 /datum/atom_hud/proc/Show(mob/M, immediate)
 	if(!immediate)
@@ -107,7 +133,11 @@
 		Queue()
 		return
 	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/AtomDel, TRUE)
-
+	viewing |= M
+	if(!M.client)
+		return
+	for(var/atom/A as anything in atoms)
+		M.client.images |= A.hud_images[id]
 
 /datum/atom_hud/proc/Hide(mob/M, immediate)
 	if(!immediate)
@@ -115,8 +145,19 @@
 		LAZYREMOVE(queue_show, M)
 		Queue()
 		return
-	UnregisterSignal(M, COMSIG_PARENT_QDELETING)
-	for(var/atom/A as )
+	if(!(M in atoms))
+		UnregisterSignal(M, COMSIG_PARENT_QDELETING)
+	viewing -= M
+	if(!M.client)
+		return
+	for(var/atom/A as anything in atoms)
+		M.client.images -= A.hud_images[id]
+
+/datum/atom_hud/proc/Refresh(mob/M)
+	if(!M.client)
+		return
+	for(var/atom/A as anything in atoms)
+		M.client.images |= A.hud_images[id]
 
 /datum/atom_hud/proc/Queue()
 	if(queued)
@@ -145,78 +186,3 @@
 /datum/atom_hud/proc/AtomDel(atom/A)
 	Hide(A, TRUE)
 	UnregisterAtom(A, TRUE)
-
-/datum/atom_hud/proc/remove_hud_from(mob/M)
-	if(!M || !hudusers[M])
-		return
-	if (!--hudusers[M])
-		hudusers -= M
-		if(queued_to_see[M])
-			queued_to_see -= M
-		else
-			for(var/atom/A in hudatoms)
-				remove_from_single_hud(M, A)
-
-/datum/atom_hud/proc/remove_from_hud(atom/A)
-	if(!A)
-		return FALSE
-	for(var/mob/M in hudusers)
-		remove_from_single_hud(M, A)
-	hudatoms -= A
-	return TRUE
-
-/datum/atom_hud/proc/remove_from_single_hud(mob/M, atom/A) //unsafe, no sanity apart from client
-	if(!M || !M.client || !A)
-		return
-	for(var/i in hud_icons)
-		M.client.images -= A.hud_list[i]
-
-/datum/atom_hud/proc/add_hud_to(mob/M)
-	if(!M)
-		return
-	if(!hudusers[M])
-		hudusers[M] = 1
-		if(next_time_allowed[M] > world.time)
-			if(!queued_to_see[M])
-				addtimer(CALLBACK(src, .proc/show_hud_images_after_cooldown, M), next_time_allowed[M] - world.time)
-				queued_to_see[M] = TRUE
-		else
-			next_time_allowed[M] = world.time + ADD_HUD_TO_COOLDOWN
-			for(var/atom/A in hudatoms)
-				add_to_single_hud(M, A)
-	else
-		hudusers[M]++
-
-/datum/atom_hud/proc/show_hud_images_after_cooldown(M)
-	if(queued_to_see[M])
-		queued_to_see -= M
-		next_time_allowed[M] = world.time + ADD_HUD_TO_COOLDOWN
-		for(var/atom/A in hudatoms)
-			add_to_single_hud(M, A)
-
-/datum/atom_hud/proc/add_to_hud(atom/A)
-	if(!A)
-		return FALSE
-	hudatoms |= A
-	for(var/mob/M in hudusers)
-		if(!queued_to_see[M])
-			add_to_single_hud(M, A)
-	return TRUE
-
-/datum/atom_hud/proc/add_to_single_hud(mob/M, atom/A) //unsafe, no sanity apart from client
-	if(!M || !M.client || !A)
-		return
-	for(var/i in hud_icons)
-		if(A.hud_list[i])
-			M.client.images |= A.hud_list[i]
-
-//MOB PROCS
-/mob/proc/reload_huds()
-	for(var/datum/atom_hud/hud in GLOB.all_huds)
-		if(hud && hud.hudusers[src])
-			for(var/atom/A in hud.hudatoms)
-				hud.add_to_single_hud(src, A)
-
-/mob/dead/new_player/reload_huds()
-	return
-

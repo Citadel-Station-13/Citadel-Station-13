@@ -36,16 +36,16 @@ list(0.393,0.349,0.272,0, 0.769,0.686,0.534,0, 0.189,0.168,0.131,0, 0,0,0,1, 0,0
  * Exxagerates or removes colors
  */
 /proc/color_matrix_saturation_percent(percent)
-	if(value == 0)
+	if(percent == 0)
 		return color_identity()
-	value = clamp(value, -100, 100)
-	if(value > 0)
-		value *= 3
-	var/x = 1 + value / 100
+	percent = clamp(percent, -100, 100)
+	if(percent > 0)
+		percent *= 3
+	var/x = 1 + percent / 100
 	var/inv = 1 - x
-	var/R = LUMR * inv
-	var/G = LUMG * inv
-	var/B = LUMB * inv
+	var/R = LUMA_R * inv
+	var/G = LUMA_G * inv
+	var/B = LUMA_B * inv
 
 	return list(R + x,R,R, G,G + x,G, B,B,B + x)
 
@@ -71,19 +71,19 @@ list(0.393,0.349,0.272,0, 0.769,0.686,0.534,0, 0.189,0.168,0.131,0, 0,0,0,1, 0,0
 		4.0,  4.3,  4.7,  4.9,  5.0,  5.5,  6.0,  6.5,  6.8,  7.0,
 		7.3,  7.5,  7.8,  8.0,  8.4,  8.7,  9.0,  9.4,  9.6,  9.8,
 		10.0)
-	value = clamp(value, -100, 100)
-	if(value == 0)
+	percent = clamp(percent, -100, 100)
+	if(percent == 0)
 		return color_identity()
 
 	var/x = 0
-	if (value < 0)
-		x = 127 + value / 100 * 127;
+	if (percent < 0)
+		x = 127 + percent / 100 * 127;
 	else
-		x = value % 1
+		x = percent % 1
 		if(x == 0)
-			x = delta_index[value]
+			x = delta_index[percent]
 		else
-			x = delta_index[value] * (1-x) + delta_index[value+1] * x//use linear interpolation for more granularity.
+			x = delta_index[percent] * (1-x) + delta_index[percent+1] * x//use linear interpolation for more granularity.
 		x = x * 127 + 127
 
 	var/mult = x / 127
@@ -119,9 +119,9 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
 	var/constB = 0.140
 	var/constC = -0.283
 	return list(
-	LUMR + cos * (1-LUMR) + sin * -LUMR, LUMR + cos * -LUMR + sin * constA, LUMR + cos * -LUMR + sin * -(1-LUMR),
-	LUMG + cos * -LUMG + sin * -LUMG, LUMG + cos * (1-LUMG) + sin * constB, LUMG + cos * -LUMG + sin * LUMG,
-	LUMB + cos * -LUMB + sin * (1-LUMB), LUMB + cos * -LUMB + sin * constC, LUMB + cos * (1-LUMB) + sin * LUMB
+	LUMA_R + cos * (1-LUMA_R) + sin * -LUMA_R, LUMA_R + cos * -LUMA_R + sin * constA, LUMA_R + cos * -LUMA_R + sin * -(1-LUMA_R),
+	LUMA_G + cos * -LUMA_G + sin * -LUMA_G, LUMA_G + cos * (1-LUMA_G) + sin * constB, LUMA_G + cos * -LUMA_G + sin * LUMA_G,
+	LUMA_B + cos * -LUMA_B + sin * (1-LUMA_B), LUMA_B + cos * -LUMA_B + sin * constC, LUMA_B + cos * (1-LUMA_B) + sin * LUMA_B
 	)
 
 //These next three rotate values about one axis only

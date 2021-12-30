@@ -1,4 +1,6 @@
 /mob/Login()
+	SHOULD_CALL_PARENT(TRUE)
+
 	add_to_player_list()
 	lastKnownIP	= client.address
 	computer_id	= client.computer_id
@@ -58,10 +60,16 @@
 	// first clickcatcher
 	client.update_clickcatcher()
 
+	// then fullscreen
+	#warn impl
+
 	// then planemasters
 	if(!plane_holder)
 		plane_holder = new
 	plane_holder.ApplyToClient(client)
 
 	// then atom huds
-	ReloadHUDs()
+	ReloadAtomHUDs()
+
+	// then parallax
+	#warn impl
