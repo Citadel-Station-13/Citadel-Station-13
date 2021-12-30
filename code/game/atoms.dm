@@ -30,6 +30,8 @@
 
 	/// This atom's HUD images. hud id = image | list(images)
 	var/list/image/hud_images
+	/// HUD suppliers to initialize - do NOT modify at runtime, this is a typelist.
+	var/list/initial_hud_suppliers
 
 	///Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
@@ -195,6 +197,10 @@
 
 	// apply materials properly from the default custom_materials value
 	set_custom_materials(custom_materials)
+
+	if(initial_hud_suppliers)
+		initial_hud_suppliers = typelist(NAMEOF(src, initial_hud_suppliers), initial_hud_suppliers)
+		InitializeHUDSuppliers()
 
 	ComponentInitialize()
 

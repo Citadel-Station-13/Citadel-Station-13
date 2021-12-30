@@ -1,12 +1,15 @@
+/**
+ * Registers us to all of our default HUD suppliers.
+ */
+/atom/proc/InitailizeHUDSuppliers()
+	for(var/id in initial_hud_suppliers)
+		var/datum/hud_supplier/H = SSatom_huds.GetSupplier(id)
+		H.RegisterAtom(src)
 
-/atom/proc/prepare_huds()
-	hud_list = list()
-	for(var/hud in hud_possible)
-		var/hint = hud_possible[hud]
-		switch(hint)
-			if(HUD_LIST_LIST)
-				hud_list[hud] = list()
-			else
-				var/image/I = image('icons/mob/hud.dmi', src, "")
-				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
-				hud_list[hud] = I
+/**
+ * Create a blank HUD image slate - used by suppliers
+ */
+/atom/proc/MakeBlankHUDImage(icon_file = 'icons/screen/atom_hud.dmi', icon_state = "")
+	var/image/I = image(icon_file, src, icon_state)
+	I.appearance_flags = RESET_COLOR | RESET_TRANSFORM
+	return I

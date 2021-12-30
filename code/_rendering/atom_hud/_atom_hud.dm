@@ -10,12 +10,11 @@
 	/// Users that see this HUD
 	var/list/mob/viewing = list()
 	/// Queued to show
-	var/list/mob/queue_show = list()
+	var/list/mob/queue_add = list()
 	/// Queued to hide
-	var/list/mob/queue_hide = list()
+	var/list/mob/queue_remove = list()
 	/// Supplier IDs
-
-
+	var/list/suppliers = list()
 	/// Queue flush queued?
 	var/queued = FALSE
 	/// unique ID
@@ -28,55 +27,61 @@
 /datum/atom_hud/New(id)
 	if(isnull(src.id))
 		src.id = id || ++id_next
-	SSatom_huds.Register(src)
+	SSatom_huds.RegisterHUD(src)
 
 /datum/atom_hud/Destroy()
 	queue_show = null
 	queue_hide = null
 	for(var/mob/M in users)
-		Hide(M, TRUE)
-	for(var/atom/A in atoms)
-		UnregisterAtom(A, TRUE)
-	SSatom_huds.Unregister(src)
+		Remove(M, TRUE)
+	SSatom_huds.UnregisterHUD(src)
 	return ..()
 
-
-/datum/atom_hud/proc/Show(mob/M, immediate)
-	if(!M)
+/datum/atom_hud/proc/Add(mob/M, immediate)
+	if(!M || (M in viewing))
 		return
 	if(!immediate)
-		queue_show += M
-		queue_hide -= M
+		queue_add += M
+		queue_remove -= M
 		Queue()
 		return
-	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/AtomDel, TRUE)
+	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/MobDel)
 	viewing |= M
 	if(!M.client)
 		return
-	for(var/atom/A as anything in atoms)
-		M.client.images |= A.hud_images[id]
+	for(var/id in suppliers)
+		if(id in M.client.hud_suppliers_shown)
+			continue
+		var/datum/hud_supplier/H = SSatom_huds.GetSupplier(id)
+		H.Show(M.client)
 
-/datum/atom_hud/proc/Hide(mob/M, immediate)
-	if(!M)
+/datum/atom_hud/proc/Remove(mob/M, immediate)
+	if(!M || !(M in viewing))
 		return
 	if(!immediate)
-		queue_hide += M
-		queue_show -= M
+		queue_remove += M
+		queue_add -= M
 		Queue()
 		return
-	if(!(M in atoms))
-		UnregisterSignal(M, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(M, COMSIG_PARENT_QDELETING)
 	viewing -= M
 	if(!M.client)
 		return
-	for(var/atom/A as anything in atoms)
-		M.client.images -= A.hud_images[id]
+	var/list/removing = suppliers - M.NeededHUDSuppliers()
+	for(var/id in removing)
+		if(!(id in M.client.hud_suppliers_shown))
+			continue
+		var/datum/hud_supplier/H = SSatom_huds.GetSupplier(id)
+		H.Hide(M.client)
 
 /datum/atom_hud/proc/Refresh(mob/M)
-	if(!M.client)
+	if(!M?.client || !(M in viewing))
 		return
-	for(var/atom/A as anything in atoms)
-		M.client.images |= A.hud_images[id]
+	for(var/id in suppliers)
+		if(id in M.client.hud_suppliers_shown)
+			continue
+		var/datum/hud_supplier/H = SSatom_huds.GetSupplier(id)
+		H.Show(M.client)
 
 /datum/atom_hud/proc/Queue()
 	if(queued)
@@ -86,11 +91,11 @@
 
 /datum/atom_hud/proc/Process()
 	queued = FALSE
-	if(queue_show.len)
-		for(var/i in queue_show)
-			Show(i, TRUE)
-		queue_show.len = 0
-	if(queue_hide.len)
-		for(var/i in queue_hide)
-			Hide(i, TRUE)
-		queue_hdie.len = 0
+	if(queue_add.len)
+		for(var/i in queue_add)
+			Add(i, TRUE)
+		queue_add.len = 0
+	if(queue_remove.len)
+		for(var/i in queue_remove)
+			Remove(i, TRUE)
+		queue_remove.len = 0
