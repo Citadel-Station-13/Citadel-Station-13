@@ -31,4 +31,4 @@
 	var/image/holder = M.hud_list[ANTAG_HUD]
 	if(holder)
 		holder.color = null
-	..()
+

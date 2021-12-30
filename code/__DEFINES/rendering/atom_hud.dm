@@ -1,5 +1,15 @@
+// Entry type
+/// Entries are individual images
+#define HUD_ENTRY_IMAGE		1
+/// Entries are lists of images
+#define HUD_ENTRY_LIST		2
+
+
 // Unique IDs for HUD icons
 
+// Hud sources
+/// Admins
+#define HUD_SOURCE_ADMINBUS		"admin"
 
 // for secHUDs and medHUDs and variants. The number is the location of the image on the list hud_list
 // note: if you add more HUDs, even for non-human atoms, make sure to use unique numbers for the defines!
@@ -30,9 +40,7 @@
 //for antag huds. these are used at the /mob level
 #define ANTAG_HUD		"23"
 
-//by default everything in the hud_list of an atom is an image
-//a value in hud_list with one of these will change that behavior
-#define HUD_LIST_LIST 1
+
 
 //data HUD (medhud, sechud) defines
 //Don't forget to update human/New() if you change these!

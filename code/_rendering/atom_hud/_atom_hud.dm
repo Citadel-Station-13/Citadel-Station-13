@@ -1,55 +1,150 @@
-/* HUD DATUMS */
-
-GLOBAL_LIST_EMPTY(all_huds)
-
-//GLOBAL HUD LIST
-GLOBAL_LIST_INIT(huds, list(
-	DATA_HUD_SECURITY_BASIC = new/datum/atom_hud/data/human/security/basic(),
-	DATA_HUD_SECURITY_ADVANCED = new/datum/atom_hud/data/human/security/advanced(),
-	DATA_HUD_MEDICAL_BASIC = new/datum/atom_hud/data/human/medical/basic(),
-	DATA_HUD_MEDICAL_ADVANCED = new/datum/atom_hud/data/human/medical/advanced(),
-	DATA_HUD_DIAGNOSTIC_BASIC = new/datum/atom_hud/data/diagnostic/basic(),
-	DATA_HUD_DIAGNOSTIC_ADVANCED = new/datum/atom_hud/data/diagnostic/advanced(),
-	DATA_HUD_ABDUCTOR = new/datum/atom_hud/abductor(),
-	DATA_HUD_SENTIENT_DISEASE = new/datum/atom_hud/sentient_disease(),
-	DATA_HUD_AI_DETECT = new/datum/atom_hud/ai_detector(),
-	ANTAG_HUD_CULT = new/datum/atom_hud/antag(),
-	ANTAG_HUD_REV = new/datum/atom_hud/antag(),
-	ANTAG_HUD_OPS = new/datum/atom_hud/antag(),
-	ANTAG_HUD_WIZ = new/datum/atom_hud/antag(),
-	ANTAG_HUD_SHADOW = new/datum/atom_hud/antag(),
-	ANTAG_HUD_TRAITOR = new/datum/atom_hud/antag/hidden(),
-	ANTAG_HUD_NINJA = new/datum/atom_hud/antag/hidden(),
-	ANTAG_HUD_CHANGELING = new/datum/atom_hud/antag/hidden(),
-	ANTAG_HUD_ABDUCTOR = new/datum/atom_hud/antag/hidden(),
-	ANTAG_HUD_DEVIL = new/datum/atom_hud/antag(),
-	ANTAG_HUD_SINTOUCHED = new/datum/atom_hud/antag/hidden(),
-	ANTAG_HUD_SOULLESS = new/datum/atom_hud/antag/hidden(),
-	ANTAG_HUD_CLOCKWORK = new/datum/atom_hud/antag(),
-	ANTAG_HUD_BROTHER = new/datum/atom_hud/antag/hidden(),
-	ANTAG_HUD_BLOODSUCKER = new/datum/atom_hud/antag/bloodsucker(),
-	ANTAG_HUD_FUGITIVE = new/datum/atom_hud/antag(),
-	ANTAG_HUD_HERETIC = new/datum/atom_hud/antag/hidden()
-	))
-
+/**
+ * # Atom HUDs
+ *
+ * Atom HUDs are used to overlay images on mobs.
+ *
+ * Each has an unique ID.
+ * This ID is used to store its images in a mob's hud_images.
+ */
 /datum/atom_hud
-	var/list/atom/hudatoms = list() //list of all atoms which display this hud
-	var/list/hudusers = list() //list with all mobs who can see the hud
-	var/list/hud_icons = list() //these will be the indexes for the atom's hud_list
+	/// Atoms that show this HUD
+	var/list/atom/atoms = list()
+	/// Users that see this HUD
+	var/list/mob/users = list()
+	/// Queued to show
+	var/list/mob/queue_show
+	/// Queued to hide
+	var/list/mob/queue_hide
+	/// Queued to add
+	var/list/atom/queue_add
+	/// Queued to remove
+	var/list/atom/queue_remove
+	/// Queued to update
+	var/list/atom/queue_update
+	/// Queue flush queued?
+	var/queued = FALSE
+	/// unique ID
+	var/id
+	/// next automated ID
+	var/static/id_next = 0
+	/// Entry type - this affects what functions are called
+	var/entry_type
 
-	var/list/next_time_allowed = list() //mobs associated with the next time this hud can be added to them
-	var/list/queued_to_see = list() //mobs that have triggered the cooldown and are queued to see the hud, but do not yet
-
-/datum/atom_hud/New()
-	GLOB.all_huds += src
+/datum/atom_hud/New(id)
+	src.id = id || ++id_next
+	SSatom_huds.Register(src)
 
 /datum/atom_hud/Destroy()
-	for(var/v in hudusers)
-		remove_hud_from(v)
-	for(var/v in hudatoms)
-		remove_from_hud(v)
-	GLOB.all_huds -= src
+	queue_show = null
+	queue_hide = null
+	for(var/mob/M in users)
+		Hide(M, TRUE)
+	for(var/atom/A in atoms)
+		UnregisterAtom(A, TRUE)
+	SSatom_huds.Unregister(src)
 	return ..()
+
+/datum/atom_hud/proc/RegisterAtom(atom/A, immediate)
+	if(!immediate)
+		LAZYOR(queue_add, A)
+		LAZYREMOVE(queue_remove, A)
+		Queue()
+		return
+	RegisterSignal(A, COMSIG_PARENT_QDELETING, .proc/AtomDel, TRUE)
+
+/datum/atom_hud/proc/UnregisterAtom(atom/A, immediate)
+	if(!immediate)
+		LAZYOR(queue_remove, A)
+		LAZYREMOVE(queue_add, A)
+		Queue()
+		return
+	UnregisterSignal(A, COMSIG_PARENT_QDELETING)
+
+
+/**
+ * Called to update our entry in an atom's HUD images list.
+ *
+ * Only used if entry_type is HUD_ENTRY_IMAGE
+ *
+ * The return value is used as the new image.
+ *
+ * @params
+ * - A - atom
+ * - old - what was there before
+ */
+/datum/atom_hud/proc/UpdateList(atom/A, image/old)
+
+/**
+ * Called to update our list in an atom's HUD images list.
+ *
+ * Only used if entry_type is HUD_ENTRY_LIST
+ *
+ * The return value is used as the new list
+ *
+ * @params
+ * - A - atom
+ * - old - what was there before
+ */
+/datum/atom_hud/proc/UpdateList(atom/A, list/old)
+
+/**
+ * Updates an atom
+ */
+/datum/atom_hud/proc/Update(atom/A, immediate)
+	if(!immediate)
+		LAZYOR(queue_add)
+		Queue()
+		return
+	switch(entry_type)
+		if(HUD_ENTRY_IMAGE)
+
+		if(HUD_ENTRY_LIST)
+
+/datum/atom_hud/proc/Show(mob/M, immediate)
+	if(!immediate)
+		LAZYOR(queue_show)
+		LAZYREMOVE(queue_hide, M))
+		Queue()
+		return
+	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/AtomDel, TRUE)
+
+
+/datum/atom_hud/proc/Hide(mob/M, immediate)
+	if(!immediate)
+		LAZYOR(queue_hide)
+		LAZYREMOVE(queue_show, M)
+		Queue()
+		return
+	UnregisterSignal(M, COMSIG_PARENT_QDELETING)
+	for(var/atom/A as )
+
+/datum/atom_hud/proc/Queue()
+	if(queued)
+		return
+	addtimer(CALLBACK(src, .proc/Process), 0, TIMER_UNIQUE)
+	queued = TRUE
+
+/datum/atom_hud/proc/Process()
+	queued = FALSE
+	if(LAZYLEN(queue_show))
+		for(var/i in queue_show)
+			Show(i, TRUE)
+	if(LAZYLEN(queue_hide))
+		for(var/i in queue_hide)
+			Hide(i, TRUE)
+	if(LAZYLEN(queue_add))
+		for(var/i in queue_add)
+			RegisterAtom(i)
+	if(LAZYLEN(queue_remove))
+		for(var/i in queue_remove)
+			UnregisterAtom(i)
+	if(LAZYLEN(queue_update))
+		for(var/i in queue_update)
+			Update(i, TRUE)
+
+/datum/atom_hud/proc/AtomDel(atom/A)
+	Hide(A, TRUE)
+	UnregisterAtom(A, TRUE)
 
 /datum/atom_hud/proc/remove_hud_from(mob/M)
 	if(!M || !hudusers[M])

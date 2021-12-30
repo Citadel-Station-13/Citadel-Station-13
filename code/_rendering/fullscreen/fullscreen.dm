@@ -1,3 +1,7 @@
+
+#warn new var name is fullscreens not screens
+
+
 /mob/proc/overlay_fullscreen(category, type, severity)
 	var/atom/movable/screen/fullscreen/screen = screens[category]
 	if (!screen || screen.type != type)

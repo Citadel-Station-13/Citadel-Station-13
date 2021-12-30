@@ -20,9 +20,6 @@
 	if(loc)
 		loc.on_log(TRUE)
 
-	//readd this mob's HUDs (antag, med, etc)
-	reload_huds()
-
 	reload_fullscreen() // Reload any fullscreen overlays this mob has.
 
 	sync_mind()
@@ -62,7 +59,9 @@
 	client.update_clickcatcher()
 
 	// then planemasters
-	#warn duh
+	if(!plane_holder)
+		plane_holder = new
+	plane_holder.ApplyToClient(client)
 
 	// then atom huds
-	#warn duh
+	ReloadHUDs()
