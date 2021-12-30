@@ -167,9 +167,10 @@
 
 	data["injected_vol"] = max(0, data["injected_vol"] - metabolization_rate * C.metabolism_efficiency)	//No negatives.
 	if(borrowed_health)
-		var/payback = 2 * C.metabolism_efficiency	//How much borrowed health we are paying back. Half as clonedam, half as true omni toxdam
-		C.adjustToxLoss(payback / 2, forced = TRUE, toxins_type = TOX_OMNI)
-		C.adjustCloneLoss(payback / 2)
+		var/ratio = (current_cycle > SYNTHTISSUE_DAMAGE_FLIP_CYCLES) ? 0 : (1 - (current_cycle / SYNTHTISSUE_DAMAGE_FLIP_CYCLES))
+		var/payback = 2 * C.metabolism_efficiency	//How much borrowed health we are paying back. Starts as cloneloss, slowly flips over to toxloss.
+		C.adjustToxLoss((1 - ratio) * payback * REAGENTS_EFFECT_MULTIPLIER, forced = TRUE, toxins_type = TOX_OMNI)
+		C.adjustCloneLoss(ratio * payback * REAGENTS_EFFECT_MULTIPLIER)
 		borrowed_health = max(borrowed_health - payback, 0)
 	..()
 
@@ -188,7 +189,7 @@
 /datum/reagent/synthtissue/on_new(passed_data)
 	if(!passed_data)
 		return ..()
-	borrowed_health += passed_data["borrowed_health"]
+	borrowed_health = min(passed_data["borrowed_health"] + borrowed_health, SYNTHTISSUE_BORROW_CAP)
 	if(passed_data["grown_volume"] > data["grown_volume"])
 		data["grown_volume"] = passed_data["grown_volume"]
 	update_name()
@@ -220,9 +221,9 @@
 	C.adjustCloneLoss(borrowed_health*1.25)
 	C.adjustAllOrganLoss(borrowed_health*0.25)
 	M.updatehealth()
-	if(borrowed_health && C.health < -20)
-		M.stat = DEAD
+	if(C.stat != DEAD && borrowed_health && C.health < -20)
 		M.visible_message("The synthetic tissue degrades off [M]'s wounds as they collapse to the floor.")
+		M.death()
 //NEEDS ON_MOB_DEAD()
 
 /datum/reagent/fermi/zeolites

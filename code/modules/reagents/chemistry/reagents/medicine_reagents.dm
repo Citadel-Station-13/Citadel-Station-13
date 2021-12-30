@@ -1000,6 +1000,10 @@
 					var/obj/item/organ/heart/H = C.getorganslot(ORGAN_SLOT_HEART)
 					if(H && H.organ_flags & ORGAN_FAILING)
 						H.applyOrganDamage(-15)
+					for(var/obj/item/organ/O as anything in C.internal_organs)
+						if(O.organ_flags & ORGAN_FAILING)
+							O.applyOrganDamage(-5)
+
 				M.adjustOxyLoss(-20, 0)
 				M.adjustToxLoss(-20, 0)
 				M.updatehealth()
