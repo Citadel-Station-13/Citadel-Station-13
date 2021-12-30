@@ -633,7 +633,7 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/clown
 	mutantrace_variation = STYLE_DIGITIGRADE
 
-/obj/item/clothing/suit/space/hardsuit/clown/mob_can_equip(mob/M, slot)
+/obj/item/clothing/suit/space/hardsuit/clown/mob_can_equip(mob/M, equipper, slot, disable_warning, bypass_equip_delay_self)
 	if(!..() || !ishuman(M))
 		return FALSE
 	if(M.mind && HAS_TRAIT(M.mind, TRAIT_CLOWN_MENTALITY))
