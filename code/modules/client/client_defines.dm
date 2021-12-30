@@ -12,6 +12,8 @@
 
 	/// Click catcher
 	var/atom/movable/screen/click_catcher/click_catcher
+	/// HUD suppliers currently shown - on client because images are on client.
+	var/list/hud_suppliers_shown
 
 		////////////////
 		//ADMIN THINGS//
