@@ -13,3 +13,14 @@
 	var/image/I = image(icon_file, src, icon_state)
 	I.appearance_flags = RESET_COLOR | RESET_TRANSFORM
 	return I
+
+/**
+ * Manually queue HUD supplier updates
+ */
+/atom/proc/QueueHUDSuppliers(list/ids)
+	if(!islist(ids))
+		SSatom_huds.GetSupplier(ids)?.Update(src)
+	else
+		for(var/id in ids)
+			var/datum/hud_supplier/H = SSatom_huds.GetSupplier(id)
+			H.Update(src)
