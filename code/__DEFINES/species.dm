@@ -62,3 +62,4 @@
 #define SPECIES_WINGS_SKELETAL		list("Skeleton")
 #define SPECIES_WINGS_MOTH			list("Megamoth","Mothra")
 #define SPECIES_WINGS_JELLY			list("Angel") //no actual slime wings present right now, but I'm making this in the event someone wants to sprite slime wings.
+#define SPECIES_WINGS_ALL			list("Angel","Dragon","Robotic","Fly","Skeleton","Megamoth","Mothra") //keep this updated

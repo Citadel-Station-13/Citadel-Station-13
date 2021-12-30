@@ -70,6 +70,7 @@
 			to_chat(H, "<span class='danger'>You feel drained!</span>")
 	if(H.blood_volume < (BLOOD_VOLUME_BAD*H.blood_ratio))
 		Cannibalize_Body(H)
+	..()
 
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
 	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()

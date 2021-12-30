@@ -578,11 +578,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			qdel(F)
 
 	if(flying_species)
+		if(C.movement_type & FLYING)
+			ToggleFlight(C)
 		fly.Remove(C)
 		QDEL_NULL(fly)
-		if(C.movement_type & FLYING)
-			C.setMovetype(C.movement_type & ~FLYING)
-		ToggleFlight(C,0)
 	if(C.dna && C.dna.species && (C.dna.features["wings"] == wings_icon))
 		if("wings" in C.dna.species.mutant_bodyparts)
 			C.dna.species.mutant_bodyparts -= "wings"
@@ -1190,6 +1189,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/takes_crit_damage = !HAS_TRAIT(H, TRAIT_NOCRITDAMAGE)
 		if((H.health < H.crit_threshold) && takes_crit_damage)
 			H.adjustBruteLoss(1)
+	if(flying_species) //turns off flight automatically if they can't.
+		HandleFlight(H)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -2396,10 +2397,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 //////////////
 
 /datum/species/proc/space_move(mob/living/carbon/human/H)
-	return 0
+	if(H.movement_type & FLYING)
+		return TRUE
+	return FALSE
 
 /datum/species/proc/negates_gravity(mob/living/carbon/human/H)
-	return 0
+	if(H.movement_type & FLYING)
+		return TRUE
+	return FALSE
 
 ////////////////
 //Tail Wagging//
@@ -2438,21 +2443,24 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 //FLIGHT SHIT//
 ///////////////
 
-/datum/species/proc/GiveSpeciesFlight(mob/living/carbon/human/H)
-	if(flying_species) //species that already have flying traits should not work with this proc
-		return
+/datum/species/proc/GiveSpeciesFlight(mob/living/carbon/human/H, all_wings = FALSE)
+	if(flying_species) //grant them the choice of all wings if they don't have them
+		all_wings = TRUE
 	flying_species = TRUE
 	//CITADEL CHANGE: check if they already have wings, and "evolve" them based off of the wings they have. If they have none, use their species wings basis.
 	var/list/wingslist
-	//why the fuck do we have two different wing types anyways? they're literally almost both using the same wing shit too.
-	var/datum/sprite_accessory/deco_wings/D = GLOB.deco_wings_list[H.dna.features["deco_wings"]]
-	var/datum/sprite_accessory/insect_wings/I = GLOB.insect_wings_list[H.dna.features["insect_wings"]]
-	if(mutant_bodyparts["deco_wings"] && D?.upgrade_to.len) //species check to see if they were allowed to have deco wings
-		wingslist = D.upgrade_to
-	else if(mutant_bodyparts["insect_wings"] && I?.upgrade_to.len) //species check to see if they were allowed to have insect wings
-		wingslist = I.upgrade_to
+	if(all_wings) //give them the full list of wing choices to pick from, typically if they drink a second flight potion
+		wingslist = SPECIES_WINGS_ALL
 	else
-		wingslist = wings_icons
+		//why the fuck do we have two different wing types anyways? they're literally almost both using the same wing shit too.
+		var/datum/sprite_accessory/deco_wings/D = GLOB.deco_wings_list[H.dna.features["deco_wings"]]
+		var/datum/sprite_accessory/insect_wings/I = GLOB.insect_wings_list[H.dna.features["insect_wings"]]
+		if(mutant_bodyparts["deco_wings"] && D?.upgrade_to.len) //species check to see if they were allowed to have deco wings
+			wingslist = D.upgrade_to
+		else if(mutant_bodyparts["insect_wings"] && I?.upgrade_to.len) //species check to see if they were allowed to have insect wings
+			wingslist = I.upgrade_to
+		else
+			wingslist = wings_icons
 
 	if(wingslist.len > 1)
 		if(!H.client)
