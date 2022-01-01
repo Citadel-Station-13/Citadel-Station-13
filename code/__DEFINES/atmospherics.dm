@@ -69,6 +69,7 @@
 #define TEMPERATURE_DAMAGE_COEFFICIENT		1.5		//This is used in handle_temperature_damage() for humans, and in reagents that affect body temperature. Temperature damage is multiplied by this amount.
 
 #define SYNTH_PASSIVE_HEAT_GAIN 10						//Degrees C per handle_environment() Synths passively heat up. Mitigated by cooling efficiency. Can lead to overheating if not managed.
+#define SYNTH_MAX_PASSIVE_GAIN_TEMP 250					//Degrees C above 0 that a synth can be heated up to by their internal heat gain, provided their cooling is insufficient to mitigate it.
 #define SYNTH_HEAT_EFFICIENCY_COEFF 0.005				//How quick the difference between the Synth and the environment starts to matter. The smaller the higher the difference has to be for the same change.
 #define SYNTH_SINGLE_INFLUENCE_COOLING_EFFECT_CAP 3		//How big can the multiplier for heat / pressure cooling be in an optimal environment
 #define SYNTH_TOTAL_ENVIRONMENT_EFFECT_CAP 2			//How big of an multiplier can the environment give in an optimal scenario (maximum efficiency in the end is 1, this just counters low coolant levels)

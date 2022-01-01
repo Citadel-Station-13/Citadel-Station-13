@@ -2188,7 +2188,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			cooling_efficiency = H.get_cooling_efficiency()
 
 		if(HAS_TRAIT(H, TRAIT_ROBOTIC_ORGANISM))	//Synths by default slowly heat up and need to lose said heat to the environment or active cooling.
-			H.adjust_bodytemperature(SYNTH_PASSIVE_HEAT_GAIN * (1 - cooling_efficiency), max_temp = T0C + 200)
+			H.adjust_bodytemperature(SYNTH_PASSIVE_HEAT_GAIN * (1 - cooling_efficiency), max_temp = (T0C + SYNTH_MAX_PASSIVE_GAIN_TEMP))
 		var/thermal_protection = 1
 		if(loc_temp < H.bodytemperature) //Place is colder than we are
 			thermal_protection -= H.get_thermal_protection(loc_temp, TRUE) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
