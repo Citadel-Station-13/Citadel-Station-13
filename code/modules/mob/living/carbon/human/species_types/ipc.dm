@@ -15,6 +15,8 @@
 
 	coldmod = 0.5
 	heatmod = 1.2
+	blacklisted_quirks = list(/datum/quirk/coldblooded)
+	balance_point_values = TRUE
 
 	//Just robo looking parts.
 	mutant_heart = /obj/item/organ/heart/ipc
@@ -29,7 +31,7 @@
 	//special cybernetic organ for getting power from apcs
 	mutant_organs = list(/obj/item/organ/cyberimp/arm/power_cord)
 
-	exotic_bloodtype = "HF"
+	exotic_bloodtype = "S"
 	exotic_blood_color = BLOOD_COLOR_OIL
 	species_category = SPECIES_CATEGORY_ROBOT
 

@@ -32,6 +32,8 @@
 
 	coldmod = 0.5
 	heatmod = 1.2
+	blacklisted_quirks = list(/datum/quirk/coldblooded)
+	balance_point_values = TRUE
 
 	//Just robo looking parts.
 	mutant_heart = /obj/item/organ/heart/ipc
@@ -51,5 +53,7 @@
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 
+	exotic_bloodtype = "S"
+	exotic_blood_color = BLOOD_COLOR_OIL
 	allowed_limb_ids = list("mammal","aquatic","avian", "human")
-	species_category = "robot"
+	species_category = SPECIES_CATEGORY_ROBOT

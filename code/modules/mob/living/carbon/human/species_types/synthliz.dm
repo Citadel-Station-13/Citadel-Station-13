@@ -12,6 +12,8 @@
 
 	coldmod = 0.5
 	heatmod = 1.2
+	blacklisted_quirks = list(/datum/quirk/coldblooded)
+	balance_point_values = TRUE
 
 	//Just robo looking parts.
 	mutant_heart = /obj/item/organ/heart/ipc

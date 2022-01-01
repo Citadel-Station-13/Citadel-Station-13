@@ -147,6 +147,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	var/list/blacklisted_quirks = list() // Quirks that will be removed upon gaining this species, to be defined by species
 	var/list/removed_quirks = list() // Quirks that got removed due to being blacklisted, and will be restored when on_species_loss() is called
+	var/balance_point_values = FALSE	//If true, will balance point values on species gain after removing blacklisted quirks. Use this for roundstart species with blacklisted quirks that people may attempt to use to powergame trait points.
 
 	///Punch-specific attack verb.
 	var/attack_verb = "punch"
@@ -575,11 +576,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/remove_blacklisted_quirks(mob/living/carbon/C)
 	var/mob/living/L = C.mind?.current
 	if(istype(L))
-		for(var/q in L.roundstart_quirks)
-			var/datum/quirk/Q = q
-			if(Q.type in blacklisted_quirks)
-				qdel(Q)
-				removed_quirks += Q.type
+		if(!balance_point_values)
+			for(var/q in L.roundstart_quirks)
+				var/datum/quirk/Q = q
+				if(Q.type in blacklisted_quirks)
+					qdel(Q)
+					removed_quirks += Q.type
+		else
+			removed_quirks += SSquirks.filter_quirks(L.roundstart_quirks, blacklisted_quirks)
 
 // restore any quirks that we removed
 /datum/species/proc/restore_quirks(mob/living/carbon/C)
