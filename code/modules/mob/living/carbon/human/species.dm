@@ -108,6 +108,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/burnmod = 1
 	///multiplier for damage from cold temperature
 	var/coldmod = 1
+	///moves their safe minimum temp by this value.
+	var/cold_offset = 0
+	///moves their safe maximum temp by this value.
+	var/hot_offset = 0
 	///multiplier for damage from hot temperature
 	var/heatmod = 1
 	///multiplier for stun durations
@@ -2215,7 +2219,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				H.throw_alert("tempfeel", /atom/movable/screen/alert/hot, 3)
 
 	// +/- 50 degrees from 310K is the 'safe' zone, where no damage is dealt.
-	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !HAS_TRAIT(H, TRAIT_RESISTHEAT))
+	if(H.bodytemperature > (BODYTEMP_HEAT_DAMAGE_LIMIT + hot_offset) && !HAS_TRAIT(H, TRAIT_RESISTHEAT))
 		//Body temperature is too hot.
 
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
@@ -2243,11 +2247,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			H.emote("scream")
 		H.apply_damage(burn_damage, BURN)
 
-	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(H, TRAIT_RESISTCOLD))
+	else if(H.bodytemperature < (BODYTEMP_COLD_DAMAGE_LIMIT + cold_offset) && !HAS_TRAIT(H, TRAIT_RESISTCOLD))
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
 		//Apply cold slowdown
-		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR))
+		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = (((BODYTEMP_COLD_DAMAGE_LIMIT + cold_offset) - H.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 		switch(H.bodytemperature)
 			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
 				H.throw_alert("temp", /atom/movable/screen/alert/shiver, 1)
