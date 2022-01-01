@@ -347,3 +347,5 @@
 	default = FALSE
 
 /datum/config_entry/flag/dynamic_config_enabled
+
+/datum/config_entry/flag/station_name_needs_approval
