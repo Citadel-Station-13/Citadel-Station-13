@@ -415,7 +415,7 @@
 	if(!.)
 		return
 	if(!failed && organ_flags & ORGAN_FAILING)
-		if(owner && owner.stat == CONSCIOUS)
+		if(owner && owner.stat == CONSCIOUS && !HAS_TRAIT(owner, TRAIT_NOBREATH))
 			owner.visible_message("<span class='danger'>[owner] grabs [owner.p_their()] throat, struggling for breath!</span>", \
 								"<span class='userdanger'>You suddenly feel like you can't breathe!</span>")
 		failed = TRUE
