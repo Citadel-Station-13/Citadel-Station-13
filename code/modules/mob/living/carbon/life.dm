@@ -687,8 +687,10 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 
 
 /mob/living/carbon/proc/get_environment_cooling_efficiency()
-	if(istype(get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/helmet/space) && istype(get_item_by_slot(SLOT_WEAR_SUIT), /obj/item/clothing/suit/space))
-		return 1 //If you are wearing full EVA gear, assume it has been made to accomodate your cooling needs.
+	var/suit_item = get_item_by_slot(SLOT_WEAR_SUIT)
+	var/head_item = get_item_by_slot(SLOT_HEAD)
+	if((istype(head_item, /obj/item/clothing/head/helmet/space) && istype(suit_item, /obj/item/clothing/suit/space)) || (istype(head_item, /obj/item/clothing/head/hooded/explorer) && istype(suit_item, /obj/item/clothing/suit/hooded/explorer)))
+		return 1 //If you are wearing full EVA or lavaland hazard gear, assume it has been made to accomodate your cooling needs.
 	var/datum/gas_mixture/environment = loc.return_air()
 	if(!environment)
 		return 0
