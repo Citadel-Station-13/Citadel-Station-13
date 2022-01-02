@@ -1,0 +1,8 @@
+author: "TripleShades"
+delete-after: True
+changes: 
+  - rscadd: "(Meta) Floodlight to Atmospherics
+tweak: (Meta) Atmospherics Entryway layout change
+tweak: (Meta) Atmospherics Monitoring room layout tweak
+tweak: (Meta) Atmospherics Supply Line room airlock location change"
+  - bugfix: "(Meta) Incinerator Access airlock now has the correct access"
