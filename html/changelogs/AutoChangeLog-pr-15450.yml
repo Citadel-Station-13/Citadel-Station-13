@@ -1,4 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - admin: "Station names now require admin approval instead of autoaccepting."
