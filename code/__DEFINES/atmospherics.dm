@@ -74,6 +74,8 @@
 #define SYNTH_SINGLE_INFLUENCE_COOLING_EFFECT_CAP 3		//How big can the multiplier for heat / pressure cooling be in an optimal environment
 #define SYNTH_TOTAL_ENVIRONMENT_EFFECT_CAP 2			//How big of an multiplier can the environment give in an optimal scenario (maximum efficiency in the end is 1, this just counters low coolant levels)
 #define SYNTH_ACTIVE_COOLING_TEMP_BOUNDARY 10			//The minimum distance from room temperature a Synth needs to have for active cooling to actively cool.
+#define SYNTH_ACTIVE_COOLING_LOW_PRESSURE_THRESHOLD 0.05	//At how much percentage of default pressure (or lower) active cooling gets a massive cost penalty.
+#define SYNTH_ACTIVE_COOLING_LOW_PRESSURE_PENALTY 2.5		//By how much is active cooling cost multiplied if in a very-low-pressure environment?
 
 #define BODYTEMP_NORMAL						310.15			//The natural temperature for a body
 #define BODYTEMP_AUTORECOVERY_DIVISOR		11		//This is the divisor which handles how much of the temperature difference between the current body temperature and 310.15K (optimal temperature) humans auto-regenerate each tick. The higher the number, the slower the recovery. This is applied each tick, so long as the mob is alive.

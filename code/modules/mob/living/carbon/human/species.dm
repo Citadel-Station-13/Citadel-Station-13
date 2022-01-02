@@ -574,6 +574,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		for(var/obj/item/bodypart/B in C.bodyparts)
 			B.change_bodypart_status(initial(B.status), FALSE, TRUE)
 
+	if((TRAIT_ROBOTIC_ORGANISM in inherent_traits) && C.hud_used)
+		C.hud_used.coolant_display.clear()
+
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
 // shamelessly inspired by antag_datum.remove_blacklisted_quirks()

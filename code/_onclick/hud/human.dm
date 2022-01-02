@@ -80,6 +80,59 @@
 	icon_state = "power_display"
 	screen_loc = ui_lingchemdisplay
 
+#define ui_coolant_display "EAST,SOUTH+3:15"
+
+/atom/movable/screen/synth
+	invisibility = INVISIBILITY_ABSTRACT
+
+
+/atom/movable/screen/synth/proc/clear()
+	invisibility = INVISIBILITY_ABSTRACT
+
+/atom/movable/screen/synth/proc/update_counter(value, mob/living/carbon/human/owner)
+	invisibility = 0
+
+/atom/movable/screen/synth/coolant_counter
+	icon = 'icons/mob/screen_synth.dmi'
+	name = "Coolant System Readout"
+	icon_state = "coolant-3"
+	screen_loc = ui_coolant_display
+
+/atom/movable/screen/synth/coolant_counter/update_counter(value, mob/living/carbon/owner)
+	..()
+	var/valuecolor = "#FF6666"
+	if(owner.stat == DEAD)
+		maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>ERR-0F</font></div>"
+		icon_state = "coolant-3"
+		return
+	if(owner.blood_volume > BLOOD_VOLUME_SAFE * owner.blood_ratio)
+		valuecolor =  "#FFDDDD"
+	else if(owner.blood_volume > BLOOD_VOLUME_BAD * owner.blood_ratio)
+		valuecolor =  "#FFAAAA"
+	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[round(value,1)]</font></div>"
+
+	var/coolant_efficiency = owner.get_cooling_efficiency()
+	switch(coolant_efficiency)
+		if(-INFINITY to 0.4)
+			icon_state = "coolant-1"
+		if(0.4 to 0.75)
+			icon_state = "coolant-2"
+		if(0.75 to 0.95)
+			icon_state = "coolant-3"
+		if(0.95 to 1.3)
+			icon_state = "coolant-4"
+		else
+			icon_state = "coolant-5"
+
+/atom/movable/screen/synth/coolant_counter/examine(mob/user)
+	. = ..()
+	var/mob/living/carbon/human/owner = hud.mymob
+	if(owner.stat == DEAD)
+		return
+	. += "<span class='notice'>Performing internal cooling system diagnostics:</span>"
+	. += "<span class='notice'>Coolant level: [owner.blood_volume] units, [round((owner.blood_volume / (BLOOD_VOLUME_NORMAL * owner.blood_ratio)) * 100, 0.1)] percent</span>"
+	. += "<span class='notice'>Current Cooling Efficiency: [round(owner.get_cooling_efficiency() * 100, 0.1)] percent, environment viability: [round(owner.get_environment_cooling_efficiency() * 100, 0.1)] percent.</span>"
+
 /datum/hud/human/New(mob/living/carbon/human/owner)
 	..()
 	owner.overlay_fullscreen("see_through_darkness", /atom/movable/screen/fullscreen/see_through_darkness)
@@ -358,6 +411,10 @@
 	sunlight_display = new /atom/movable/screen/bloodsucker/sunlight_counter	// Sunlight
 	sunlight_display.hud = src
 	infodisplay += sunlight_display
+
+	coolant_display = new /atom/movable/screen/synth/coolant_counter	//Coolant & cooling efficiency readouts for Synths.
+	coolant_display.hud = src
+	infodisplay += coolant_display
 
 	zone_select =  new /atom/movable/screen/zone_sel()
 	zone_select.icon = ui_style

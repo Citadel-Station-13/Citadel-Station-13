@@ -30,6 +30,8 @@
 /mob/living/carbon/human/PhysicalLife(seconds, times_fired)
 	if(!(. = ..()))
 		return
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM) && hud_used)
+		hud_used.coolant_display.update_counter(blood_volume, src)
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
