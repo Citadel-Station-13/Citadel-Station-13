@@ -89,7 +89,7 @@
 /atom/movable/screen/synth/proc/clear()
 	invisibility = INVISIBILITY_ABSTRACT
 
-/atom/movable/screen/synth/proc/update_counter(value, mob/living/carbon/human/owner)
+/atom/movable/screen/synth/proc/update_counter(mob/living/carbon/human/owner)
 	invisibility = 0
 
 /atom/movable/screen/synth/coolant_counter
@@ -97,21 +97,30 @@
 	name = "Coolant System Readout"
 	icon_state = "coolant-3"
 	screen_loc = ui_coolant_display
+	var/jammed = 0
 
-/atom/movable/screen/synth/coolant_counter/update_counter(value, mob/living/carbon/owner)
+/atom/movable/screen/synth/coolant_counter/update_counter(mob/living/carbon/owner)
 	..()
 	var/valuecolor = "#FF6666"
 	if(owner.stat == DEAD)
 		maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>ERR-0F</font></div>"
 		icon_state = "coolant-3"
 		return
-	if(owner.blood_volume > BLOOD_VOLUME_SAFE * owner.blood_ratio)
+	var/coolant_efficiency
+	var/coolant
+	if(!jammed)
+		coolant_efficiency = owner.get_cooling_efficiency()
+		coolant = owner.blood_volume
+	else
+		coolant_efficiency = rand(1, 15) / 10
+		coolant = rand(1, 600)
+		jammed--
+	if(coolant > BLOOD_VOLUME_SAFE * owner.blood_ratio)
 		valuecolor =  "#FFDDDD"
-	else if(owner.blood_volume > BLOOD_VOLUME_BAD * owner.blood_ratio)
+	else if(coolant > BLOOD_VOLUME_BAD * owner.blood_ratio)
 		valuecolor =  "#FFAAAA"
-	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[round(value,1)]</font></div>"
+	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[round(coolant,1)]</font></div>"
 
-	var/coolant_efficiency = owner.get_cooling_efficiency()
 	switch(coolant_efficiency)
 		if(-INFINITY to 0.4)
 			icon_state = "coolant-1"
@@ -129,9 +138,20 @@
 	var/mob/living/carbon/human/owner = hud.mymob
 	if(owner.stat == DEAD)
 		return
+	var/coolant
+	var/total_efficiency
+	var/environ_efficiency
+	if(!jammed)
+		coolant = owner.blood_volume
+		total_efficiency = owner.get_cooling_efficiency()
+		environ_efficiency = owner.get_environment_cooling_efficiency()
+	else
+		coolant = rand(1, 600)
+		total_efficiency = rand(1, 15) / 10
+		environ_efficiency = rand(1, 20) / 10
 	. += "<span class='notice'>Performing internal cooling system diagnostics:</span>"
-	. += "<span class='notice'>Coolant level: [owner.blood_volume] units, [round((owner.blood_volume / (BLOOD_VOLUME_NORMAL * owner.blood_ratio)) * 100, 0.1)] percent</span>"
-	. += "<span class='notice'>Current Cooling Efficiency: [round(owner.get_cooling_efficiency() * 100, 0.1)] percent, environment viability: [round(owner.get_environment_cooling_efficiency() * 100, 0.1)] percent.</span>"
+	. += "<span class='notice'>Coolant level: [coolant] units, [round((coolant / (BLOOD_VOLUME_NORMAL * owner.blood_ratio)) * 100, 0.1)] percent</span>"
+	. += "<span class='notice'>Current Cooling Efficiency: [round(total_efficiency * 100, 0.1)] percent, environment viability: [round(environ_efficiency * 100, 0.1)] percent.</span>"
 
 /datum/hud/human/New(mob/living/carbon/human/owner)
 	..()

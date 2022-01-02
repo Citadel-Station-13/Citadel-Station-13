@@ -683,7 +683,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	var/coolant_efficiency = min(blood_effective_volume / BLOOD_VOLUME_SAFE, 1)	//Low coolant is only a negative, adding more than needed will not help you.
 	var/environment_efficiency = get_environment_cooling_efficiency()
 
-	return min(coolant_efficiency * environment_efficiency, 1)
+	return min(coolant_efficiency * environment_efficiency, SYNTH_MAX_COOLING_EFFICIENCY)
 
 
 /mob/living/carbon/proc/get_environment_cooling_efficiency()

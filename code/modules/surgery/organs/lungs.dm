@@ -484,9 +484,9 @@
 	var/actual_drain = cooling_coolant_drain * max(1 - cooling_efficiency, 0.2)	//Being in a suitable environment reduces drain by up to 80%
 	var/temp_diff = owner.bodytemperature - T20C
 	if(temp_diff > 0)
-		owner.adjust_bodytemperature(max(((T0C - owner.bodytemperature) * max(cooling_efficiency, 0.5) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX))
+		owner.adjust_bodytemperature(clamp(((T0C - owner.bodytemperature) * max(cooling_efficiency, 0.5) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX, -SYNTH_ACTIVE_COOLING_MIN_ADJUSTMENT))
 	else
-		owner.adjust_bodytemperature(min(((T20C - owner.bodytemperature) * max(cooling_efficiency, 0.5) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX))
+		owner.adjust_bodytemperature(clamp(((T20C - owner.bodytemperature) * max(cooling_efficiency, 0.5) / BODYTEMP_HEAT_DIVISOR), SYNTH_ACTIVE_COOLING_MIN_ADJUSTMENT, BODYTEMP_HEATING_MAX))
 	var/datum/gas_mixture/air = owner.loc.return_air()
 	if(!air || air.return_pressure() < ONE_ATMOSPHERE * SYNTH_ACTIVE_COOLING_LOW_PRESSURE_THRESHOLD)
 		actual_drain *= SYNTH_ACTIVE_COOLING_LOW_PRESSURE_PENALTY	//Our cooling system can handle hot places okayish, but starts to cry at low pressures (reads: Effectively vents hot coolant thats been warmed up via internal heat-exchange as emergency measure and with very low efficiency)
