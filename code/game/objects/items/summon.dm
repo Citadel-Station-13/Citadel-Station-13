@@ -23,16 +23,15 @@
 /obj/item/summon/Initialize()
 	. = ..()
 	if(host_type)
-		host = new host_type(summon_count)
-		#warn stack and range
+		host = new host_type(summon_count, range)
 
 /obj/item/summon/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!host)
 		return
-	if(proximity_flag || !melee_only || !host.CheckTarget(target))
+	if(!proximity_flag && melee_only)
 		return
-	#warn lock
+	Target(victim)
 
 /obj/item/summon/dropped(mob/user, silent)
 	. = ..()
@@ -42,8 +41,20 @@
 	. = ..()
 	addtimer(CALLBACK(src, .proc/check_activation), 0, TIMER_UNIQUE)
 
-/obj/item/summon/proc/
+/obj/item/summon/proc/check_activation()
+	if(!host)
+		return
+	if(!isliving(loc))
+		host.SetMaster(null)
+	var/mob/living/L = loc
+	if(!L.is_holding(src))
+		host.SetMaster(null)
+	host.SetMaster(L)
 
+/obj/item/summon/proc/Target(atom/victim)
+	if(!host?.CheckTarget(victim))
+		return
+	host.AutoTarget(victim, stack_duration)
 
 /obj/item/summon/sword
 	name = "spectral blade"
@@ -55,8 +66,90 @@
  * Serves as the master datum for summon weapons
  */
 /datum/summon_weapon_host
+	/// master atom
+	var/atom/master
+	/// actual projectiles
+	var/list/datum/summon_weapon/controlled
+	/// active projectiles - refreshing a projectile reorders the list, so if they all have the same stack durations, you can trust the list to have last-refreshed at [1]
+	var/list/datum/summon_weapon/attacking
+	/// idle projectiles
+	var/list/datum/summon_weapon/idle
+	/// projectile type
+	var/weapon_type
+	/// default stack time
+	var/stack_time = 5 SECONDS
+	/// range
+	var/range = 7
+
+/datum/summon_weapon_host/New(atom/master, count, range)
+	src.master = master
+	src.range = range
+	controlled = list()
+	attacking = list()
+	idle = list()
+	Create(count)
+
+/datum/summon_weapon_host/Destroy()
+	QDEL_LIST(controlled)
+	master = null
+	return ..()
+
+/datum/summon_weapon_host/proc/SetMaster(atom/master)
+	src.master = master
+	if(!master)
+		return
+
+/datum/summon_weapon_host/proc/Create(count)
+	if(!weapon_type)
+		return
+	for(var/i in 1 to min(count, clamp(controlled.len - count, 0, 20)))
+		var/datum/summon_weapon/weapon = new weapon_type(src)
+		Associate(weapon)
+
+/datum/summon_weapon_host/proc/Associate(datum/summon_weapon/linking)
+	if(linking.host && linking.host != src)
+		linking.host.Disassociate(linking)
+	linking.host = src
+	controlled |= linking
+	linking.Reset()
+
+/datum/summon_weapon_host/proc/Disassociate(datum/summon_weapon/unlinking, reset = TRUE)
+	if(unlinking.host == src)
+		unlinking.host = null
+	controlled -= unlinking
+	if(reset)
+		unlinking.Reset()
+	idle -= unlinking
+	active -= unlinking
+
+/datum/summon_wepaon_host/proc/AutoTarget(atom/victim)
+	var/datum/summon_weapon/weapon = (idle.len && idle[1]) || (active.len && active[1])
+	if(!weapon)
+		return
+	if(!CheckTarget(victim))
+		return
+	weapon.Target(victim)
+
+/datum/summon_weapon_host/proc/OnTarget(datum/summon_weapon/weapon, atom/victim)
+	attacking -= weapon
+	idle -= weapon
+	attacking += weapon
+
+/datum/summon_weapon_host/proc/OnReset(datum/summon_weapon/weapon, atom/victim)
+	attacking -= weapon
+	idle += weapon
+
+/datum/summon_weapon_host/proc/CheckTarget(atom/victim)
+	if(!isobj(victim) && !ismob(victim))
+		return FALSE
+	if(QDELETED(victim))
+		return FALSE
+	if(victim == master)
+		return FALSE
+	return TRUE
 
 /datum/summon_weapon_host/sword
+	weapon_type = /datum/summon_weapon/sword
 
 /**
  * A singular summoned object
@@ -87,9 +180,9 @@
 	/// orbit distance variation from victim
 	var/orbit_dist_vary = 5
 	/// attack delay in deciseconds - this is time spent between attacks
-	var/attack_speed = 1
+	var/attack_speed = 2
 	/// attack length in deciseconds - this is the attack animation speed in total
-	var/attack_length = 1
+	var/attack_length = 2
 	/// attack damage
 	var/attack_damage = 5
 	/// attack damtype
@@ -110,6 +203,13 @@
 	if(appearance_override)
 		appearance = appearance_override
 	Setup()
+
+/datum/summon_weapon/Destroy()
+	Reset()
+	QDEL_NULL(atom)
+	QDEL_NULL(appearance)
+	host.Disassociate(src)
+	return ..()
 
 /datum/summon_weapon/proc/Setup()
 	summon_weapon_effect = new
@@ -133,7 +233,7 @@
 			emissive_appearance(icon, icon_state)
 		)
 
-/datum/summon_weapon/proc/Reset()
+/datum/summon_weapon/proc/Reset(del_no_host = TRUE)
 	angle = null
 	victim = null
 	if(reset_timerid)
@@ -142,6 +242,9 @@
 	if(attack_timerid)
 		deltimer(attack_timerid)
 		attack_timerid = null
+	host?.OnReset(src)
+
+
 
 /datum/summon_weapon/proc/ResetIn(ds)
 	addtimer(CALLBACK(src, .proc/Reset), ds, TIMER_STOPPABLE)
@@ -151,6 +254,7 @@
 		Reset()
 		return
 	src.victim = victim
+	Host.OnTarget(src, victim)
 
 
 
