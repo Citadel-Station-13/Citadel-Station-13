@@ -581,16 +581,32 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 // shamelessly inspired by antag_datum.remove_blacklisted_quirks()
 /datum/species/proc/remove_blacklisted_quirks(mob/living/carbon/C)
-	var/mob/living/L = C.mind?.current
-	if(istype(L))
+	. = 0
+	if(istype(C))
 		if(!balance_point_values)
-			for(var/q in L.roundstart_quirks)
+			for(var/q in C.roundstart_quirks)
 				var/datum/quirk/Q = q
 				if(Q.type in blacklisted_quirks)
-					qdel(Q)
 					removed_quirks += Q.type
+					. += 1
+					qdel(Q)			
 		else
-			removed_quirks += SSquirks.filter_quirks(L.roundstart_quirks, blacklisted_quirks)
+			var/point_overhead = 0
+			for(var/datum/quirk/Q as anything in C.roundstart_quirks)
+				if(Q.type in blacklisted_quirks)
+					point_overhead -= Q.value
+					removed_quirks += Q.type
+					. += 1
+					qdel(Q)
+			if(point_overhead)
+				for(var/datum/quirk/Q as anything in C.roundstart_quirks)
+					if(Q.value > 0)
+						point_overhead -= Q.value
+						removed_quirks += Q.type
+						. += 1
+						qdel(Q)
+						if(!point_overhead)
+							break
 
 // restore any quirks that we removed
 /datum/species/proc/restore_quirks(mob/living/carbon/C)
