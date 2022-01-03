@@ -13,7 +13,7 @@
 	name = "Nitrogen"
 	powermix = -1
 	heat_penalty = -1.5
-	//breath_results = GAS_AMMONIA Uncomment when chem gasses are in. https://github.com/Citadel-Station-13/Citadel-Station-13/pull/15370
+	breath_results = GAS_AMMONIA
 	breath_alert_info = list(
 		not_enough_alert = list(
 			alert_category = "not_enough_nitro",
