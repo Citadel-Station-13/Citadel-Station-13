@@ -1,0 +1,15 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - rscadd: "Hydrogen gas (no way to get yet)"
+  - rscadd: "Gas groups, such as..."
+  - rscadd: "Chemical gases, starting with ethanol, bromine, diethylamine, ammonia, phlogiston"
+  - rscadd: "Bromine gas (can make it by tossing hot bromine on the ground OR by burning methyl bromide)"
+  - rscadd: "Ammonia gas (toss hot ammonia on the ground OR burn diethylamine)"
+  - rscdel: "Snowflake trit/plasma fires fires
+tweak: Generic fires are now more accurate energy-wise
+tweak: Water vapor condensation no longer happens below 40 C
+tweak: Methyl bromide now burns properly"
+  - balance: "Massive fusion nerf"
+  - balance: "Due to the removal of snowflake trit fires, trit fires are much, much less hot"
+  - balance: "Due to the previous, bombs are now easier to reach 50,000 points on (2 : 1 plasma : oxy at 160 kelvins cold side should be fine)"

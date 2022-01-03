@@ -116,6 +116,11 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/auxtools_update_reactions()
 
+/datum/controller/subsystem/air/proc/add_reaction(datum/gas_reaction/r)
+	gas_reactions += r
+	sortTim(gas_reactions, /proc/cmp_gas_reaction)
+	auxtools_update_reactions()
+
 /proc/reset_all_air()
 	SSair.can_fire = 0
 	message_admins("Air reset begun.")

@@ -21,7 +21,7 @@ export SPACEMAN_DMM_VERSION=suite-1.7
 export PYTHON_VERSION=3.6.8
 
 # Auxmos git tag
-export AUXMOS_VERSION=v0.2.3
+export AUXMOS_VERSION=v0.3.0
 
 # Extools git tag
 export EXTOOLS_VERSION=v0.0.7
