@@ -331,6 +331,9 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	return ..()
 
 /obj/item/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+	. = ..()
+	if(.)
+		return
 	if(!user)
 		return
 	if(anchored)
@@ -339,6 +342,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		if(current_equipped_slot in user.check_obscured_slots())
 			to_chat(user, "<span class='warning'>You are unable to unequip that while wearing other garments over it!</span>")
 			return FALSE
+
+	. = TRUE
 
 	if(resistance_flags & ON_FIRE)
 		var/mob/living/carbon/C = user
@@ -374,6 +379,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	//If the item is in a storage item, take it out
 	SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
+	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
+		return
 
 	if(throwing)
 		throwing.finalize(FALSE)
@@ -386,6 +393,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	add_fingerprint(user)
 	if(!user.put_in_active_hand(src, FALSE, FALSE))
 		user.dropItemToGround(src)
+		return TRUE
 
 /obj/item/proc/allow_attack_hand_drop(mob/user)
 	return TRUE
@@ -1063,6 +1071,19 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	. = ..()
 	if(var_name == NAMEOF(src, slowdown))
 		set_slowdown(var_value)			//don't care if it's a duplicate edit as slowdown'll be set, do it anyways to force normal behavior.
+
+/obj/item/proc/canStrip(mob/stripper, mob/owner)
+	SHOULD_BE_PURE(TRUE)
+	return !HAS_TRAIT(src, TRAIT_NODROP) && !(item_flags & ABSTRACT)
+
+/obj/item/proc/doStrip(mob/stripper, mob/owner)
+	if(owner.dropItemToGround(src))
+		if(stripper.can_hold_items())
+			stripper.put_in_hands(src)
+		return TRUE
+	else
+		return FALSE
+
 /**
  * Does the current embedding var meet the criteria for being harmless? Namely, does it explicitly define the pain multiplier and jostle pain mult to be 0? If so, return true.
  *

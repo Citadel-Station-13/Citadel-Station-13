@@ -458,6 +458,18 @@ GLOBAL_LIST_EMPTY(species_datums)
 	if(!HAS_TRAIT(L, TRAIT_PASSTABLE))
 		L.pass_flags &= ~PASSTABLE
 
+/proc/dance_rotate(atom/movable/AM, datum/callback/callperrotate, set_original_dir=FALSE)
+	set waitfor = FALSE
+	var/originaldir = AM.dir
+	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
+		if(!AM)
+			return
+		AM.setDir(i)
+		callperrotate?.Invoke()
+		sleep(1)
+	if(set_original_dir)
+		AM.setDir(originaldir)
+
 /// Gets the client of the mob, allowing for mocking of the client.
 /// You only need to use this if you know you're going to be mocking clients somewhere else.
 #define GET_CLIENT(mob) (##mob.client || ##mob.mock_client)

@@ -223,7 +223,6 @@
 		var/alert_type = null
 		if(ispath(breathing_class))
 			breathing_class = breathing_classes[breathing_class]
-			var/list/gases = breathing_class.gases
 			alert_category = breathing_class.high_alert_category
 			alert_type = breathing_class.high_alert_datum
 			danger_reagent = breathing_class.danger_reagent
@@ -249,7 +248,7 @@
 	for(var/gas in breath.get_gases())
 		if(gas in breath_reagents)
 			var/datum/reagent/R = breath_reagents[gas]
-			H.reagents.add_reagent(R, PP(breath,gas))
+			H.reagents.add_reagent(R, breath.get_moles(gas) * initial(R.molarity))
 			mole_adjustments[gas] = (gas in mole_adjustments) ? mole_adjustments[gas] - breath.get_moles(gas) : -breath.get_moles(gas)
 
 	for(var/gas in mole_adjustments)

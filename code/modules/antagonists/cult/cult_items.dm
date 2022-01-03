@@ -660,40 +660,42 @@
 		return
 
 	if(istype(A, /obj/item))
-
-		var/list/cultists = list()
-		for(var/datum/mind/M in SSticker.mode.cult)
-			if(M.current && M.current.stat != DEAD)
-				cultists |= M.current
-		var/mob/living/cultist_to_receive = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in (cultists - user)
-		if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
-			return
-		if(!cultist_to_receive)
-			to_chat(user, "<span class='cult italic'>You require a destination!</span>")
-			log_game("Void torch failed - no target")
-			return
-		if(cultist_to_receive.stat == DEAD)
-			to_chat(user, "<span class='cult italic'>[cultist_to_receive] has died!</span>")
-			log_game("Void torch failed  - target died")
-			return
-		if(!iscultist(cultist_to_receive))
-			to_chat(user, "<span class='cult italic'>[cultist_to_receive] is not a follower of the Geometer!</span>")
-			log_game("Void torch failed - target was deconverted")
-			return
-		if(A in user.GetAllContents())
-			to_chat(user, "<span class='cult italic'>[A] must be on a surface in order to teleport it!</span>")
-			return
-		to_chat(user, "<span class='cult italic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!")
-		cultist_to_receive.put_in_hands(A)
-		charges--
-		to_chat(user, "\The [src] now has [charges] charge\s.")
-		if(charges == 0)
-			qdel(src)
+		transmit_item(A, user, proximity)
 
 	else
 		..()
 		to_chat(user, "<span class='warning'>\The [src] can only transport items!</span>")
 
+/obj/item/flashlight/flare/culttorch/proc/transmit_item(atom/movable/A, mob/user, proximity)
+	set waitfor = FALSE
+	var/list/cultists = list()
+	for(var/datum/mind/M in SSticker.mode.cult)
+		if(M.current && M.current.stat != DEAD)
+			cultists |= M.current
+	var/mob/living/cultist_to_receive = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in (cultists - user)
+	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
+		return
+	if(!cultist_to_receive)
+		to_chat(user, "<span class='cult italic'>You require a destination!</span>")
+		log_game("Void torch failed - no target")
+		return
+	if(cultist_to_receive.stat == DEAD)
+		to_chat(user, "<span class='cult italic'>[cultist_to_receive] has died!</span>")
+		log_game("Void torch failed  - target died")
+		return
+	if(!iscultist(cultist_to_receive))
+		to_chat(user, "<span class='cult italic'>[cultist_to_receive] is not a follower of the Geometer!</span>")
+		log_game("Void torch failed - target was deconverted")
+		return
+	if(A in user.GetAllContents())
+		to_chat(user, "<span class='cult italic'>[A] must be on a surface in order to teleport it!</span>")
+		return
+	to_chat(user, "<span class='cult italic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!")
+	cultist_to_receive.put_in_hands(A)
+	charges--
+	to_chat(user, "\The [src] now has [charges] charge\s.")
+	if(charges == 0)
+		qdel(src)
 
 /obj/item/cult_spear
 	name = "blood halberd"

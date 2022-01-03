@@ -1010,7 +1010,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 						if(base64_cache[T.type])
 							base64 = base64_cache[T.type]
 						else
-							base64 = icon2base64(icon(T.icon, T.icon_state))
+							base64 = icon2base64(icon(T.icon, T.icon_state, SOUTH, 1))
 							base64_cache[T.type] = base64
 					break
 			var/list/data = list(

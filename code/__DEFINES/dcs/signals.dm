@@ -25,6 +25,9 @@
 	/// Do not allow this random event to continue.
 	#define CANCEL_PRE_RANDOM_EVENT (1<<0)
 
+/// called by auxgm add_gas: (gas_id)
+#define COMSIG_GLOB_NEW_GAS "!new_gas"
+
 // signals from globally accessible objects
 /// from SSsun when the sun changes position : (primary_sun, suns)
 #define COMSIG_SUN_MOVED "sun_moved"
