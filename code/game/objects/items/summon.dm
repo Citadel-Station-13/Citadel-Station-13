@@ -1,3 +1,12 @@
+/// doing nothing/orbiting idly
+#define STATE_IDLE		0
+/// performing reset animation
+#define STATE_RESET		1
+/// performing attack animation
+#define STATE_ATTACK	2
+/// performing animation between attacks
+#define STATE_RECOVER	3
+
 /**
  * Simple summon weapon code in this file
  *
@@ -23,7 +32,7 @@
 /obj/item/summon/Initialize()
 	. = ..()
 	if(host_type)
-		host = new host_type(summon_count, range)
+		host = new host_type(src, summon_count, range)
 
 /obj/item/summon/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -31,7 +40,7 @@
 		return
 	if(!proximity_flag && melee_only)
 		return
-	Target(victim)
+	Target(target)
 
 /obj/item/summon/dropped(mob/user, silent)
 	. = ..()
@@ -94,10 +103,15 @@
 	master = null
 	return ..()
 
-/datum/summon_weapon_host/proc/SetMaster(atom/master)
+/datum/summon_weapon_host/proc/SetMaster(atom/master, reset_on_failure = TRUE)
+	var/changed = src.master == master
 	src.master = master
 	if(!master)
+		if(reset_on_failure)
+			for(var/datum/summon_weapon/weapon as anything in attacking)
+				weapon.Reset()
 		return
+	#warn move to position
 
 /datum/summon_weapon_host/proc/Create(count)
 	if(!weapon_type)
@@ -113,22 +127,24 @@
 	controlled |= linking
 	linking.Reset()
 
-/datum/summon_weapon_host/proc/Disassociate(datum/summon_weapon/unlinking, reset = TRUE)
+/datum/summon_weapon_host/proc/Disassociate(datum/summon_weapon/unlinking, reset = TRUE, autodel)
 	if(unlinking.host == src)
 		unlinking.host = null
 	controlled -= unlinking
 	if(reset)
-		unlinking.Reset()
+		unlinking.Reset(del_no_host = autodel)
 	idle -= unlinking
 	active -= unlinking
 
-/datum/summon_wepaon_host/proc/AutoTarget(atom/victim)
+/datum/summon_wepaon_host/proc/AutoTarget(atom/victim, duration = stack_duration)
 	var/datum/summon_weapon/weapon = (idle.len && idle[1]) || (active.len && active[1])
 	if(!weapon)
 		return
 	if(!CheckTarget(victim))
 		return
 	weapon.Target(victim)
+	if(duration)
+		weapon.ResetIn(duration)
 
 /datum/summon_weapon_host/proc/OnTarget(datum/summon_weapon/weapon, atom/victim)
 	attacking -= weapon
@@ -146,6 +162,10 @@
 		return FALSE
 	if(victim == master)
 		return FALSE
+	if(isliving(victim))
+		var/mob/living/L = victim
+		if(L.stat == DEAD)
+			return FALSE
 	return TRUE
 
 /datum/summon_weapon_host/sword
@@ -153,6 +173,26 @@
 
 /**
  * A singular summoned object
+ *
+ * How summon weapons work:
+ *
+ * Reset() - makes it go back to its master.
+ * Target() - locks onto a target for a duration
+ *
+ * The biggest challenge is synchronizing animations.
+ * Variables keep track of when things tick, but,
+ * animations are client-timed, and not server-timed
+ *
+ * Animations:
+ * The weapon can only track its "intended" angle and dist
+ * "Current" pixel x/y are always calculated relative to a target from the current orbiting atom the physical effect is on
+ * There's 3 animations,
+ * MoveTo(location, angle, dist, rotation)
+ * Orbit(location)
+ * Rotate(degrees)
+ *
+ * And an non-animation that just snaps it to a location,
+ * HardReset(location)
  */
 /datum/summon_weapon
 	/// host
@@ -163,10 +203,6 @@
 	var/icon_state
 	/// mutable_appearance to use, will skip making from icon/icon state if so
 	var/mutable_appearance/appearance
-	/// can rotate at all
-	var/can_rotate = TRUE
-	/// rotate to face target during attacks
-	var/rotate_during_attack = TRUE
 	/// the actual effect
 	var/atom/movable/summon_weapon_effect/atom
 	/// currently locked attack target
@@ -185,6 +221,10 @@
 	var/attack_length = 2
 	/// attack damage
 	var/attack_damage = 5
+	/// reset animation duration
+	var/reset_speed = 2.5
+	/// initial attack moveto duration
+	var/target_speed = 2.5
 	/// attack damtype
 	var/attack_type = BRUTE
 	/// attack sound
@@ -192,10 +232,12 @@
 		'sound/weapons/bladeslice.ogg',
 		'sound/weapons/bladesliceb.ogg'
 	)
-	/// reset timerid
-	var/reset_timerid
-	/// attack timerid
-	var/attack_timerid
+	/// current state
+	var/state = STATE_IDLE
+	/// animation locked until
+	var/animation_lock
+	/// animation lock timer
+	var/animation_timerid
 
 /datum/summon_weapon/New(datum/summon_weapon_host/host, mutable_appearance/appearance_override)
 	if(host)
@@ -205,10 +247,9 @@
 	Setup()
 
 /datum/summon_weapon/Destroy()
-	Reset()
+	host.Disassociate(src, autodel = FALSE)
 	QDEL_NULL(atom)
 	QDEL_NULL(appearance)
-	host.Disassociate(src)
 	return ..()
 
 /datum/summon_weapon/proc/Setup()
@@ -233,18 +274,28 @@
 			emissive_appearance(icon, icon_state)
 		)
 
-/datum/summon_weapon/proc/Reset(del_no_host = TRUE)
+/datum/summon_weapon/proc/Reset(immediate = FALSE, del_no_host = TRUE)
 	angle = null
 	victim = null
 	if(reset_timerid)
 		deltimer(reset_timerid)
 		reset_timerid = null
-	if(attack_timerid)
-		deltimer(attack_timerid)
-		attack_timerid = null
 	host?.OnReset(src)
-
-
+	atom.Release()
+	state = STATE_RESET
+	if(!host)
+		if(del_no_host)
+			qdel(src)
+			return
+		HardlReset(null)
+		atom.moveToNullspace()
+		return
+	if(immediate)
+		if(animation_timerid)
+			deltimer(animation_timerid)
+		Act()
+	else
+		Wake()
 
 /datum/summon_weapon/proc/ResetIn(ds)
 	addtimer(CALLBACK(src, .proc/Reset), ds, TIMER_STOPPABLE)
@@ -255,27 +306,52 @@
 		return
 	src.victim = victim
 	Host.OnTarget(src, victim)
+	state = STATE_ATTACK
 
+/datum/summon_weapon/proc/Wake()
+	if(!animation_timerid)
+		Act()
 
+/datum/summon_weapon/proc/AnimationLock(duration)
+	if(animation_timerid)
+		deltimer(animation_timerid)
+	animation_timerid = addtimer(CALLBACK(src, .proc/Act), duration, TIMER_CLIENT_TIME | TIMER_STOPPABLE)
 
+/datum/summon_weapon/proc/Act()
+	switch(state)
+		if(STATE_IDLE)
+			return
+		if(STATE_ATTACK)
 
+		if(STATE_RESET)
 
-/datum/summon_weapon/proc/AttackLoop()
-	if(!victim || !host.CheckTarget(victim))
-		deltimer(attack_timerid)
-		return
-	var/new_angle = angle + 180
-	Animate(angle, SIMPLIFY_DEGREES(new_angle))
-	Hit(victim)
+		if(STATE_RECOVER)
+
 
 /datum/summon_weapon/proc/Hit(atom/victim)
+	if(!isobj && !isliving(victim))
+		return
+	if(isliving(victim))
+		var/mob/living/L = victim
+		L.apply_damage(attack_damage, attack_type)
+	else if(isobj(victim))
+		var/obj/O = victim
+		O.take_damage(attack_damage, attack_type)
+	playsound(victim, pick(attack_sound), 75)
 
-/datum/summon_weapon/proc/MoveToAngle()
+/datum/summon_weapon/proc/MoveTo(atom/destination, atom/relative_to, angle, dist, rotation, time)
 
-/datum/summon_weapon/proc/Recall(atom/to_orbit, )
+/datum/summon_weapon/proc/Rotate(degrees, time)
 
-/datum/summon_weapon/proc/Animate(from_angle, to_angle)
+/datum/summon_weapon/proc/Orbit(atom/destination, initial_degrees = rand(0, 360))
 
+
+/datum/summon_weapon/proc/HardReset(atom/snap_to)
+	if(animation_timerid)
+		deltimer(animation_timerid)
+	atom.Release()
+	atom.forceMove(snap_to)
+	atom.transform = null
 
 /datum/summon_weapon/sword
 	icon_state = "sword"
@@ -286,3 +362,33 @@
 	layer = ABOVE_MOB_LAYER
 	opacity = FALSE
 	density = FALSE
+	/// locked atom
+	var/atom/locked
+
+/atom/movable/summon_weapon_effect/Destroy()
+	Release()
+	return ..()
+
+/atom/movable/summon_weapon_effect/proc/Lock(atom/target)
+	if(locked)
+		Release()
+	if(!target)
+		return
+	locked = target
+	forceMove(locked.loc)
+	if(ismovable(loked))
+		RegisterSignal(locked, COMSIG_MOVABLE_MOVED, .proc/Update)
+
+/atom/movable/summon_weapon_effect/proc/Release()
+	if(ismovable(locked))
+		UnregisterSignal(locked, COMSIG_MOVABLE_MOVED)
+	locked = null
+
+/atom/movable/summon_weapon_effect/proc/Update()
+	if(loc != locked.loc)
+		forceMove(locked.loc)
+
+#undef STATE_IDLE
+#undef STATE_ATTACK
+#undef STATE_RECOVER
+#undef STATE_RESET
