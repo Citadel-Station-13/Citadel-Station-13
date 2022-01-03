@@ -101,10 +101,10 @@
 
 /atom/movable/screen/synth/coolant_counter/update_counter(mob/living/carbon/owner)
 	..()
-	var/valuecolor = "#FF6666"
+	var/valuecolor = "#ff2525"
 	if(owner.stat == DEAD)
 		maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>ERR-0F</font></div>"
-		icon_state = "coolant-3"
+		icon_state = "coolant-31"
 		return
 	var/coolant_efficiency
 	var/coolant
@@ -115,23 +115,35 @@
 		coolant_efficiency = rand(1, 15) / 10
 		coolant = rand(1, 600)
 		jammed--
-	if(coolant > BLOOD_VOLUME_SAFE * owner.blood_ratio)
-		valuecolor =  "#FFDDDD"
+	if(coolant > BLOOD_VOLUME_SAFE * owner.blood_ratio)	//I unfortunately have to use this else-if stack because switch doesn't support variables.
+		valuecolor =  "#4bbd34"
+	else if(coolant > BLOOD_VOLUME_OKAY * owner.blood_ratio)
+		valuecolor = "#dabb0d"
 	else if(coolant > BLOOD_VOLUME_BAD * owner.blood_ratio)
-		valuecolor =  "#FFAAAA"
-	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[round(coolant,1)]</font></div>"
+		valuecolor =  "#dd8109"
+	else if(coolant > BLOOD_VOLUME_SURVIVE * owner.blood_ratio)
+		valuecolor = "#e7520d"
+	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[round((coolant / (BLOOD_VOLUME_NORMAL * owner.blood_ratio)) * 100, 1)]</font></div>"
 
+	var/efficiency_suffix
+	var/state_suffix
 	switch(coolant_efficiency)
 		if(-INFINITY to 0.4)
-			icon_state = "coolant-1"
+			efficiency_suffix = "1"
 		if(0.4 to 0.75)
-			icon_state = "coolant-2"
+			efficiency_suffix = "2"
 		if(0.75 to 0.95)
-			icon_state = "coolant-3"
+			efficiency_suffix = "3"
 		if(0.95 to 1.3)
-			icon_state = "coolant-4"
+			efficiency_suffix = "4"
 		else
-			icon_state = "coolant-5"
+			efficiency_suffix = "5"
+	var/obj/item/organ/lungs/ipc/L = owner.getorganslot(ORGAN_SLOT_LUNGS)
+	if(istype(L) && L.is_cooling)
+		state_suffix = "2"
+	else
+		state_suffix = "1"
+	icon_state = "coolant-[efficiency_suffix]-[state_suffix]"
 
 /atom/movable/screen/synth/coolant_counter/examine(mob/user)
 	. = ..()
