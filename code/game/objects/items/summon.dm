@@ -34,6 +34,14 @@
 		return
 	#warn lock
 
+/obj/item/summon/dropped(mob/user, silent)
+	. = ..()
+	addtimer(CALLBACK(src, .proc/check_activation), 0, TIMER_UNIQUE)
+
+/obj/item/summon/equipped(mob/user, slot)
+	. = ..()
+	addtimer(CALLBACK(src, .proc/check_activation), 0, TIMER_UNIQUE)
+
 /obj/item/summon/proc/
 
 
@@ -78,8 +86,10 @@
 	var/orbit_dist = 30
 	/// orbit distance variation from victim
 	var/orbit_dist_vary = 5
-	/// attack delay in deciseconds
+	/// attack delay in deciseconds - this is time spent between attacks
 	var/attack_speed = 1
+	/// attack length in deciseconds - this is the attack animation speed in total
+	var/attack_length = 1
 	/// attack damage
 	var/attack_damage = 5
 	/// attack damtype
