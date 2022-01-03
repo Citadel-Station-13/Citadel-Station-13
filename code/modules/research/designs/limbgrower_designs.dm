@@ -83,7 +83,55 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/synthflesh = 25)
 	build_path = /obj/item/organ/lungs
-	category = list("initial","human","lizard","fly","insect","plasmaman","mammal","xeno")
+	category = list("initial","human","lizard","fly","insect","mammal","xeno")
+
+/datum/design/lungsplasma
+	name = "Plasma Filter"
+	id = "plasma_lungs"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/synthflesh = 25)
+	build_path = /obj/item/organ/lungs/plasmaman
+	category = list("initial","plasmaman")
+
+/datum/design/lungsashliz
+	name = "Ash Lungs"
+	id = "ash_lungs"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/synthflesh = 25)
+	build_path = /obj/item/organ/lungs/ashwalker
+	category = list("initial","lizard") //Can change inital to "emagged" if concerns of balance are involved
+
+/datum/design/lungsn2
+	name = "Nitrogen Vacuole"
+	id = "lungs_n2"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/synthflesh = 25)
+	build_path = /obj/item/organ/lungs/nitrogen
+	category = list("initial","other")
+
+/datum/design/lungsco2
+	name = "Carbon Dioxide Vacuole"
+	id = "lungs_co2"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/synthflesh = 25)
+	build_path = /obj/item/organ/lungs/carbondioxide
+	category = list("initial","other")
+
+/datum/design/lungsmethane
+	name = "Methane Vacuole"
+	id = "lungs_methane"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/synthflesh = 25)
+	build_path = /obj/item/organ/lungs/methane
+	category = list("initial","other")
+
+/datum/design/lungsmethyl
+	name = "Methyl Bromide Vacuole"
+	id = "lungs_methyl"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/synthflesh = 25)
+	build_path = /obj/item/organ/lungs/methyl
+	category = list("initial","other")
 
 /datum/design/liver
 	name = "Liver"
@@ -115,7 +163,15 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/synthflesh = 25)
 	build_path = /obj/item/organ/tail
-	category = list("initial","human","lizard","fly","insect","plasmaman","mammal","xeno")
+	category = list("initial","human","fly","insect","plasmaman","mammal","xeno")
+
+/datum/design/tail
+	name = "Lizard Tail"
+	id = "lizard_tail"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/synthflesh = 25)
+	build_path = /obj/item/organ/tail/lizard
+	category = list("initial","lizard") //Can change inital to "emagged" if concerns of balance are involved
 
 /datum/design/ears
 	name = "Ears"
