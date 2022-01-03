@@ -95,7 +95,7 @@
 /atom/movable/screen/synth/coolant_counter
 	icon = 'icons/mob/screen_synth.dmi'
 	name = "Coolant System Readout"
-	icon_state = "coolant-3"
+	icon_state = "coolant-3-1"
 	screen_loc = ui_coolant_display
 	var/jammed = 0
 
@@ -104,7 +104,7 @@
 	var/valuecolor = "#ff2525"
 	if(owner.stat == DEAD)
 		maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>ERR-0F</font></div>"
-		icon_state = "coolant-31"
+		icon_state = "coolant-3-1"
 		return
 	var/coolant_efficiency
 	var/coolant
