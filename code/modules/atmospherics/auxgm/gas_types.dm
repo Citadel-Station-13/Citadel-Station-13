@@ -13,6 +13,7 @@
 	name = "Nitrogen"
 	powermix = -1
 	heat_penalty = -1.5
+	//breath_results = GAS_AMMONIA Uncomment when chem gasses are in. https://github.com/Citadel-Station-13/Citadel-Station-13/pull/15370
 	breath_alert_info = list(
 		not_enough_alert = list(
 			alert_category = "not_enough_nitro",
@@ -192,7 +193,7 @@
 			alert_type = /atom/movable/screen/alert/too_much_ch3br
 		)
 	)
-	fire_products = list(GAS_CO2 = 1, GAS_H2O = 1.5, GAS_BZ = 0.5)
+	fire_products = list(GAS_CO2 = 1, GAS_H2O = 1.5, GAS_BROMINE = 0.5)
 	fire_energy_released = FIRE_CARBON_ENERGY_RELEASED
 	fire_burn_rate = 0.5
 	fire_temperature = 808 // its autoignition, it apparently doesn't spark readily, so i don't put it lower

@@ -41,3 +41,17 @@
 	low_alert_datum = /atom/movable/screen/alert/not_enough_tox
 	high_alert_category = "too_much_tox"
 	high_alert_datum = /atom/movable/screen/alert/too_much_tox
+	
+/datum/breathing_class/methyl
+	gases = list(
+		GAS_METHYL_BROMIDE = 1
+	)
+	products = list(
+		GAS_CO2 = 1, 
+		GAS_H2O = 1.5, 
+		//GAS_BROMINE = 0.5 waiting for chem gasses 
+	)
+	low_alert_category = "not_enough_ch3br"
+	low_alert_datum = /atom/movable/screen/alert/not_enough_ch3br
+	high_alert_category = "too_much_ch3br"
+	high_alert_datum = /atom/movable/screen/alert/too_much_ch3br
