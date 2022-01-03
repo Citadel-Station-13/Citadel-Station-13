@@ -102,7 +102,7 @@
 	category = list("initial","lizard") //Can change inital to "emagged" if concerns of balance are involved
 /datum/design/lungso2
 	name = "Oxygen Vacuole"
-	id = "lungs_n2"
+	id = "lungs_o2"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/synthflesh = 25)
 	build_path = /obj/item/organ/lungs/slime
