@@ -245,7 +245,7 @@
 	those who wish to spit in the eyes of God. Sacrifices outright damage for \
 	a reliance on backstabs and the ability to give fauna concussions on a parry."
 	attack_verb = list("pummeled", "punched", "jabbed", "hammer-fisted", "uppercut", "slammed")
-	hitsound = 'sound/weapons/resonator_fire.ogg'
+	hitsound = 'sound/weapons/resonator_blast.ogg'
 	sharpness = SHARP_NONE // use your survival dagger or smth
 	icon_state = "crusher-hands"
 	item_state = "crusher0-fist"
