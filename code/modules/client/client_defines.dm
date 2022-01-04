@@ -4,6 +4,14 @@
 		//BLACK MAGIC THINGS//
 		//////////////////////
 	parent_type = /datum
+
+		///////////////
+		// Rendering //
+		///////////////
+
+	/// Click catcher
+	var/atom/movable/screen/click_catcher/click_catcher
+
 		////////////////
 		//ADMIN THINGS//
 		////////////////
