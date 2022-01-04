@@ -248,7 +248,7 @@
 	/// orbit distance from victim - pixels
 	var/orbit_dist = 72
 	/// orbit distance variation from victim
-	var/orbit_dist_vary = 32
+	var/orbit_dist_vary = 24
 	/// attack delay in deciseconds - this is time spent between attacks
 	var/attack_speed = 1.5
 	/// attack length in deciseconds - this is the attack animation speed in total
@@ -434,8 +434,8 @@
 		return 0
 
 	// grab source
-	var/rel_x = (destination.x - relative_to.x) * world.icon_size + dist * sin(angle)
-	var/rel_y = (destination.y - relative_to.y) * world.icon_size + dist * cos(angle)
+	var/rel_x = (destination.x - relative_to.x) * world.icon_size + src.dist * sin(src.angle)
+	var/rel_y = (destination.y - relative_to.y) * world.icon_size + src.dist * cos(src.angle)
 
 	// construct source matrix
 	var/matrix/source = new
@@ -450,7 +450,7 @@
 
 	// animate
 	atom.transform = source
-	animate(atom, transform = dest, time, FALSE, CUBIC_EASING, ANIMATION_LINEAR_TRANSFORM | ANIMATION_END_NOW)
+	animate(atom, transform = dest, time, FALSE, LINEAR_EASING, ANIMATION_LINEAR_TRANSFORM | ANIMATION_END_NOW)
 
 /**
  * rotation defaults to facing towards locked atom
@@ -463,7 +463,7 @@
 	if(rotation)
 		src.rotation = rotation
 	angle += degrees
-	animate(atom, transform = M, time, FALSE, CUBIC_EASING, ANIMATION_END_NOW | ANIMATION_LINEAR_TRANSFORM)
+	animate(atom, transform = M, time, FALSE, LINEAR_EASING, ANIMATION_END_NOW | ANIMATION_LINEAR_TRANSFORM)
 
 /datum/summon_weapon/proc/Orbit(atom/destination, initial_degrees = rand(0, 360), dist, speed)
 	. = 0
