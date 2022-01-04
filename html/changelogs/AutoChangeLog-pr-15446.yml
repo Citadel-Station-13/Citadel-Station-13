@@ -1,5 +1,0 @@
-author: "MrJWhit"
-delete-after: True
-changes: 
-  - rscadd: "Adds pipes to the SM to make omega better"
-  - bugfix: "Various omega fixes"
