@@ -26,6 +26,11 @@
  */
 /datum/parallax/proc/Reset(x, y)
 
+/**
+ * Set parallax scroll for things like shuttle transits
+ */
+/datum/parallax/proc/
+
 /datum/parallax/proc/GetObjects()
 	return objects.Copy()
 
@@ -38,3 +43,5 @@
 	for(var/atom/movable/screen/parallax_layer/layer in objects)
 		P.objects += layer.Clone()
 	P.layers = P.objects.len
+	P.scroll_compatible = scroll_compatible
+	P.shift_on_move = shift_on_move

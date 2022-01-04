@@ -2,7 +2,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	// teardown
-	ResetRendering(FALSE)
+	ResetRendering()
 
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGOUT, client)
 	log_message("[key_name(src)] is no longer owning mob [src]([src.type])", LOG_OWNERSHIP)

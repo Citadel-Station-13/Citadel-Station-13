@@ -1007,7 +1007,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
 		CRASH("change_view called without argument.")
-
 	var/list/old_view = getviewsize(view)
 	view = new_size
 	var/list/actualview = getviewsize(view)

@@ -579,7 +579,7 @@
 			UNLINT(livingdoll.filters += filter(type="alpha", icon = mob_mask))
 			livingdoll.filters += filter(type="drop_shadow", size = -1)
 	if(severity > 0)
-		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
+		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/scaled/brute, severity)
 	else
 		clear_fullscreen("brute")
 

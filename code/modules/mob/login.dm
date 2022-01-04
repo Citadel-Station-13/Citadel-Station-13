@@ -7,9 +7,6 @@
 	log_access("Mob Login: [key_name(src)] was assigned to a [type]")
 	world.update_status()
 
-	// wipe - hud_used will call this in build mode instead of teardown
-	ResetRendering(FALSE)
-
 	if(!hud_used)
 		create_mob_hud()
 	if(hud_used)
@@ -20,10 +17,10 @@
 
 	reset_perspective(loc)
 
+	ConstructRendering()
+
 	if(loc)
 		loc.on_log(TRUE)
-
-	reload_fullscreen() // Reload any fullscreen overlays this mob has.
 
 	sync_mind()
 

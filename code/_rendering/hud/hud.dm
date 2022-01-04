@@ -129,7 +129,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if(!screenmob.client)
 		return FALSE
 
-	screenmob.client.ResetRendering(TRUE)
+	// have them rebuild everything
+	screenmob.ResetRendering()
+	screenmob.ConstructRendering()
 
 	var/display_hud_version = version
 	if(!display_hud_version)	//If 0 or blank, display the next hud version
@@ -189,7 +191,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	persistent_inventory_update(screenmob)
 	screenmob.update_action_buttons(1)
 	reorganize_alerts()
-	screenmob.reload_fullscreen()
 	update_parallax_pref(screenmob)
 
 	// ensure observers get an accurate and up-to-date view

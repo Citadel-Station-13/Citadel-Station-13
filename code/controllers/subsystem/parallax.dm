@@ -6,6 +6,30 @@ SUBSYSTEM_DEF(parallax)
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
 
+	/// keyed list - category = list(state = object) of parallax objects
+	var/static/list/parallax_objects
+	/// just putting this like a static list for speed, icon = name
+	var/static/list/parallax_icons = list(
+		'icons/screen/parallax.dmi' = "default"
+	)
+
+/datum/controller/subsystem/parallax/PreInit()
+	. = ..()
+	InitParallaxObjects()
+
+/datum/controller/subsystem/parallax/proc/InitParallaxObjects()
+	// wipe old if any
+	for(var/cat in parallax_objects)
+		var/list/L = parallax_objects[cat]
+		for(var/state in L)
+			qdel(L[state])
+	// make new
+	parallax_objects = list()
+	for(var/iconfile in parallax_icons)
+		var/list/states
+	if(initialized)
+		HardReset()
+
 /datum/controller/subsystem/parallax/Initialize()
 	InitSpaceParallax()
 	return ..()
@@ -53,3 +77,13 @@ SUBSYSTEM_DEF(parallax)
 		if (MC_TICK_CHECK)
 			return
 	currentrun = null
+
+/**
+ * For whwen admins are IDIOTS
+ *
+ * Forcefully resets everyone's parallax
+ */
+/datum/controller/subsystem/parallax/proc/HardReset()
+	for(var/client/C in GLOB.clients)
+		QDEL_NULL(C.parallax_holder)
+		C.parallax_holder = new(C)
