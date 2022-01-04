@@ -366,8 +366,8 @@
 		if(STATE_IDLE)
 			return
 		if(STATE_ATTACK)
-			if(!isturf(victim.loc))
-				Reset(TRUE)	// someone fucked up, reset now
+			if(!isturf(victim.loc) || (host && !host.CheckTarget(victim)))
+				Reset(TRUE)
 				return
 			state = STATE_RECOVER
 			// register hit at the halfway mark
@@ -384,7 +384,7 @@
 			AnimationLock(MoveTo(victim, null, outgoing_angle, orbit_dist + rand(-orbit_dist_vary, orbit_dist_vary), outgoing_angle, attack_length))
 		if(STATE_RESET)
 			state = STATE_IDLE
-			if(!host.active || !get_turf(host.master))
+			if(!host || !host.active || !get_turf(host.master))
 				atom.moveToNullspace()
 				src.angle = null
 				src.dist = null
