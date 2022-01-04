@@ -116,7 +116,7 @@
 	return ..()
 
 /datum/summon_weapon_host/proc/SetMaster(atom/master, reset_on_failure = TRUE)
-	var/changed = src.master == master
+	var/changed = src.master != master
 	src.master = master
 	if(changed)
 		for(var/datum/summon_weapon/weapon as anything in idle)
@@ -170,7 +170,7 @@
 	idle |= weapon
 
 /datum/summon_weapon_host/proc/CheckTarget(atom/victim)
-	if(!isobj(victim) && !ismob(victim))
+	if(isitem(victim))
 		return FALSE
 	if(QDELETED(victim))
 		return FALSE
@@ -180,7 +180,11 @@
 		var/mob/living/L = victim
 		if(L.stat == DEAD)
 			return FALSE
-	return TRUE
+		return TRUE
+	if(isobj(victim))
+		var/obj/O = victim
+		return (O.flags & CAN_BE_HIT)
+	return FALSE
 
 /datum/summon_weapon_host/proc/Suppress()
 	active = FALSE
@@ -339,7 +343,7 @@
 	reset_timerid = addtimer(CALLBACK(src, .proc/Reset), ds, TIMER_STOPPABLE)
 
 /datum/summon_weapon/proc/Target(atom/victim)
-	if(!istype(victim) || !isturf(victim.loc) || !host.CheckTarget(victim))
+	if(!istype(victim) || !isturf(victim.loc) || (host && !host.CheckTarget(victim)))
 		Reset()
 		return
 	src.victim = victim
@@ -395,14 +399,15 @@
 
 /datum/summon_weapon/proc/Hit(atom/victim)
 	if(!isobj(victim) && !isliving(victim))
-		return
+		return FALSE
 	if(isliving(victim))
 		var/mob/living/L = victim
 		L.apply_damage(attack_damage, attack_type)
+		playsound(victim, pick(attack_sound), 75)
 	else if(isobj(victim))
 		var/obj/O = victim
 		O.take_damage(attack_damage, attack_type)
-	playsound(victim, pick(attack_sound), 75)
+	return TRUE
 
 /**
  * relative to defaults to current location
@@ -415,9 +420,6 @@
 	// move to
 	atom.Lock(destination)
 
-	// end animations
-	animate(atom, time = 0, flags = ANIMATION_END_NOW)
-
 	// get relative first positions
 	relative_to = get_turf(relative_to || atom.locked)
 	destination = get_turf(destination)
@@ -427,6 +429,8 @@
 		src.angle = angle
 		src.dist = dist
 		src.rotation = rotation
+		// end animations
+		animate(atom, time = 0, flags = ANIMATION_END_NOW)
 		return 0
 
 	// grab source
@@ -446,7 +450,7 @@
 
 	// animate
 	atom.transform = source
-	animate(atom, transform = dest, time, FALSE, CUBIC_EASING, ANIMATION_END_NOW | ANIMATION_LINEAR_TRANSFORM)
+	animate(atom, transform = dest, time, FALSE, CUBIC_EASING, ANIMATION_LINEAR_TRANSFORM | ANIMATION_END_NOW)
 
 /**
  * rotation defaults to facing towards locked atom
