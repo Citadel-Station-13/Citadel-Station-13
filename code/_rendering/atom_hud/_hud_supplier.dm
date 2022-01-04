@@ -115,7 +115,7 @@
 				C.images |= use
 		if(HUD_ENTRY_LIST)
 			var/list/existing = A.hud_images[id]
-			var/list/use = UpdateList(A, existing)
+			var/list/use = UpdateList(A, islist(existing) && existing.Copy())
 			for(var/client/C as anything in clients)
 				C.images -= existing
 				C.images |= use
