@@ -157,7 +157,7 @@
 /atom/movable/screen/fullscreen/tiled/blurry
 	icon = 'icons/mob/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
-	icon_state = "blurry"
+	icon_state = "cloudy"
 
 /atom/movable/screen/fullscreen/tiled/flash
 	icon = 'icons/mob/screen_gen.dmi'

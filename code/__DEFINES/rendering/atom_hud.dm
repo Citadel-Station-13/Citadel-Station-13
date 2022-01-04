@@ -62,9 +62,4 @@
 #define ANTAG_HUD_FUGITIVE		25
 #define ANTAG_HUD_HERETIC	26
 
-// Notification action types
-#define NOTIFY_JUMP "jump"
-#define NOTIFY_ATTACK "attack"
-#define NOTIFY_ORBIT "orbit"
-
 #define ADD_HUD_TO_COOLDOWN 20 //cooldown for being shown the images for any particular data hud
