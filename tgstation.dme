@@ -248,7 +248,6 @@
 #include "code\_onclick\right_item_attack.dm"
 #include "code\_onclick\right_other_mobs.dm"
 #include "code\_onclick\telekinesis.dm"
-#include "code\_rendering\atom_hud\_atom_hud.dm"
 #include "code\_rendering\hud\action_button.dm"
 #include "code\_rendering\hud\ai.dm"
 #include "code\_rendering\hud\alert.dm"
