@@ -183,7 +183,7 @@
 		return TRUE
 	if(isobj(victim))
 		var/obj/O = victim
-		return (O.flags & CAN_BE_HIT)
+		return (O.obj_flags & CAN_BE_HIT)
 	return FALSE
 
 /datum/summon_weapon_host/proc/Suppress()
@@ -392,7 +392,7 @@
 				return
 			var/reset_angle = rand(0, 360)
 			AnimationLock(MoveTo(host.master, null, reset_angle, 30, 90, reset_speed))
-			Orbit(host.master, reset_angle, 30, 3 SECONDS)
+			addtimer(CALLBACK(src, .proc/Orbit, host.master, reset_angle, 30, 3 SECONDS), reset_speed, TIMER_CLIENT_TIME)
 		if(STATE_RECOVER)
 			state = STATE_ATTACK
 			AnimationLock(Rotate(rand(-angle_vary, angle_vary), attack_speed, null))
