@@ -65646,6 +65646,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/commons/fitness/pool)
+"vBY" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plasteel,
+/area/medical/medbay/central)
 "vCb" = (
 /obj/machinery/rnd/production/techfab/department/service,
 /turf/open/floor/plasteel,
@@ -104931,7 +104935,7 @@ bwz
 brg
 btZ
 bzd
-bxQ
+vBY
 bxQ
 bxQ
 bAv
