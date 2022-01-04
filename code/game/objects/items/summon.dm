@@ -493,12 +493,6 @@
 	attack_speed = 1.5
 	attack_length = 1.5
 
-/datum/summon_weapon/sword/GenerateAppearance()
-	. = ..()
-	var/mutable_appearance/funny_2d_block_game = new('icons/effects/summon.dmi', "memerainbow")
-	funny_2d_block_game.blend_mode = BLEND_MULTIPLY
-	appearance.overlays += funny_2d_block_game
-
 /atom/movable/summon_weapon_effect
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	plane = GAME_PLANE
