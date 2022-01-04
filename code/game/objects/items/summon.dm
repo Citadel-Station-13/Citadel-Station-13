@@ -68,7 +68,11 @@
 /obj/item/summon/sword
 	name = "spectral blade"
 	desc = "An eldritch blade that summons phantasms to attack one's enemies."
-	#warn icons
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "spectral"
+	item_state = "spectral"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	host_type = /datum/summon_weapon_host/sword
 
 /**
@@ -111,7 +115,8 @@
 			for(var/datum/summon_weapon/weapon as anything in attacking)
 				weapon.Reset()
 		return
-	#warn move to position
+	for(var/datum/summon_weapon/weapon as anything in idle)
+		weapon.Reset()
 
 /datum/summon_weapon_host/proc/Create(count)
 	if(!weapon_type)
@@ -134,10 +139,10 @@
 	if(reset)
 		unlinking.Reset(del_no_host = autodel)
 	idle -= unlinking
-	active -= unlinking
+	attacking -= unlinking
 
-/datum/summon_wepaon_host/proc/AutoTarget(atom/victim, duration = stack_duration)
-	var/datum/summon_weapon/weapon = (idle.len && idle[1]) || (active.len && active[1])
+/datum/summon_weapon_host/proc/AutoTarget(atom/victim, duration = stack_duration)
+	var/datum/summon_weapon/weapon = (idle.len && idle[1]) || (attacking.len && attacking[1])
 	if(!weapon)
 		return
 	if(!CheckTarget(victim))
@@ -211,20 +216,20 @@
 	var/angle
 	/// current distance from victim - pixels
 	var/dist
+	/// rand dist to rotate during reattack phase
+	var/angle_vary = 30
 	/// orbit distance from victim - pixels
 	var/orbit_dist = 30
 	/// orbit distance variation from victim
 	var/orbit_dist_vary = 5
 	/// attack delay in deciseconds - this is time spent between attacks
-	var/attack_speed = 2
+	var/attack_speed = 1.5
 	/// attack length in deciseconds - this is the attack animation speed in total
-	var/attack_length = 2
+	var/attack_length = 1.5
 	/// attack damage
 	var/attack_damage = 5
 	/// reset animation duration
-	var/reset_speed = 2.5
-	/// initial attack moveto duration
-	var/target_speed = 2.5
+	var/reset_speed = 2
 	/// attack damtype
 	var/attack_type = BRUTE
 	/// attack sound
@@ -238,6 +243,8 @@
 	var/animation_lock
 	/// animation lock timer
 	var/animation_timerid
+	/// reset timerid
+	var/reset_timerid
 
 /datum/summon_weapon/New(datum/summon_weapon_host/host, mutable_appearance/appearance_override)
 	if(host)
@@ -253,11 +260,11 @@
 	return ..()
 
 /datum/summon_weapon/proc/Setup()
-	summon_weapon_effect = new
+	atom = new
 	if(!appearance)
 		GenerateAppearance()
-	summon_weapon_effect.appearance = appearance
-	summon_weapon_effect.moveToNullspace()
+	atom.appearance = appearance
+	atom.moveToNullspace()
 	if(host)
 		Reset()
 
@@ -287,7 +294,7 @@
 		if(del_no_host)
 			qdel(src)
 			return
-		HardlReset(null)
+		HardReset(null)
 		atom.moveToNullspace()
 		return
 	if(immediate)
@@ -298,15 +305,16 @@
 		Wake()
 
 /datum/summon_weapon/proc/ResetIn(ds)
-	addtimer(CALLBACK(src, .proc/Reset), ds, TIMER_STOPPABLE)
+	reset_timerid = addtimer(CALLBACK(src, .proc/Reset), ds, TIMER_STOPPABLE)
 
 /datum/summon_weapon/proc/Target(atom/victim)
 	if(!istype(victim) || !isturf(victim.loc) || !host.CheckTarget(victim))
 		Reset()
 		return
 	src.victim = victim
-	Host.OnTarget(src, victim)
+	host.OnTarget(src, victim)
 	state = STATE_ATTACK
+	Wake()
 
 /datum/summon_weapon/proc/Wake()
 	if(!animation_timerid)
@@ -322,14 +330,35 @@
 		if(STATE_IDLE)
 			return
 		if(STATE_ATTACK)
-
+			if(!isturf(victim.loc))
+				Reset(TRUE)	// someone fucked up, reset now
+				return
+			state = STATE_RECOVER
+			// register hit at the halfway mark
+			// we can do better math to approximate when the attack will hit but i'm too tired to bother
+			addtimer(CALLBACK(src, .proc/Hit, victim), attack_length / 2, TIMER_CLIENT_TIME)
+			// we need to approximate our incoming angle - again, better math exists but why bother
+			var/incoming_angle = angle
+			if(isturf(atom.loc) && (atom.loc != victim.loc))
+				incoming_angle = Get_Angle(atom.loc, victim.loc)
+			// pierce through target
+			// we do not want to turn while doing this so we pierce through them visually
+			incoming_angle += 180
+			var/outgoing_angle = SIMPLIFY_DEGREES(incoming_angle)
+			AnimationLock(MoveTo(victim, null, outgoing_angle, orbit_dist + rand(-orbit_dist_vary, orbit_dist_vary), outgoing_angle, attack_length))
 		if(STATE_RESET)
-
+			state = STATE_IDLE
+			if(!get_turf(host.master))
+				return		// someone fucked up, just drop on the floor lol
+			var/reset_angle = rand(0, 360)
+			AnimationLock(MoveTo(host.master, null, reset_angle, 15, 90, reset_speed))
+			Orbit(host.master, reset_angle, 15, 3 SECONDS)
 		if(STATE_RECOVER)
-
+			state = STATE_ATTACK
+			AnimationLock(Rotate(rand(-angle_vary, angle_vary), attack_speed, null))
 
 /datum/summon_weapon/proc/Hit(atom/victim)
-	if(!isobj && !isliving(victim))
+	if(!isobj(victim) && !isliving(victim))
 		return
 	if(isliving(victim))
 		var/mob/living/L = victim
@@ -339,12 +368,73 @@
 		O.take_damage(attack_damage, attack_type)
 	playsound(victim, pick(attack_sound), 75)
 
+/**
+ * relative to defaults to current location
+ */
 /datum/summon_weapon/proc/MoveTo(atom/destination, atom/relative_to, angle, dist, rotation, time)
+	. = time
+	var/matrix/dest = new
 
-/datum/summon_weapon/proc/Rotate(degrees, time)
+	// set up dest
+	dest.Turn(rotation)
+	dest.Translate(0 , dist)
+	dest.Turn(angle)
 
-/datum/summon_weapon/proc/Orbit(atom/destination, initial_degrees = rand(0, 360))
+	// end animations
+	animate(atom, time = 0, flags = ANIMATION_END_NOW)
 
+	relative_to = get_turf(relative_to || atom.locked)
+	destination = get_turf(destination)
+	if(!relative_to)
+		atom.transform = dest
+		src.angle = angle
+		src.dist = dist
+		return
+
+	var/matrix/source = new
+
+	// grab source
+	var/rel_x = (destination.x - relative_to.x) * world.icon_size + dist * sin(angle)
+	var/rel_y = (destination.y - relative_to.y) * world.icon_size + dist * cos(angle)
+	source.Translate(rel_x, rel_y)
+
+	// set vars
+	src.angle = angle
+	src.dist = dist
+
+	// animate
+	atom.Lock(destination)
+	atom.transform = source
+	animate(atom, transform = dest, time, FALSE, CUBIC_EASING, ANIMATION_END_NOW | ANIMATION_LINEAR_TRANSFORM)
+
+/**
+ * rotation defaults to facing towards locked atom
+ */
+/datum/summon_weapon/proc/Rotate(degrees, time, rotation)
+	. = time
+	if(!dist)
+		return 0
+	var/matrix/M = new
+	var/new_angle = angle + degrees
+	M.Turn(isnull(rotation)? 180 : rotation)
+	M.Translate(0, dist)
+	M.Turn(new_angle)
+	angle = new_angle
+	animate(atom, transform = M, time, FALSE, CUBIC_EASING, ANIMATION_END_NOW | ANIMATION_LINEAR_TRANSFORM)
+
+/datum/summon_weapon/proc/Orbit(atom/destination, initial_degrees = rand(0, 360), dist, speed)
+	. = 0
+	atom.Lock(destination)
+	var/matrix/M = new
+	M.Turn(90)
+	M.Translate(0, dist)
+	M.Turn(initial_degrees)
+	atom.transform = M
+	atom.SpinAnimation(speed, parallel = FALSE)
+	// we can't predict dist/angle anymre because clienttime vs servertime.
+	// well, we can, but, let's not be bothered with timeofday math eh.
+	dist = 0
+	angle = 0
 
 /datum/summon_weapon/proc/HardReset(atom/snap_to)
 	if(animation_timerid)
@@ -370,13 +460,15 @@
 	return ..()
 
 /atom/movable/summon_weapon_effect/proc/Lock(atom/target)
+	if(locked == target)
+		return
 	if(locked)
 		Release()
 	if(!target)
 		return
 	locked = target
 	forceMove(locked.loc)
-	if(ismovable(loked))
+	if(ismovable(locked))
 		RegisterSignal(locked, COMSIG_MOVABLE_MOVED, .proc/Update)
 
 /atom/movable/summon_weapon_effect/proc/Release()
@@ -385,6 +477,8 @@
 	locked = null
 
 /atom/movable/summon_weapon_effect/proc/Update()
+	if(!locked)
+		return
 	if(loc != locked.loc)
 		forceMove(locked.loc)
 
