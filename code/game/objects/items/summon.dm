@@ -487,7 +487,7 @@
 	atom.transform = null
 
 /datum/summon_weapon/sword
-	name = "spectral blade""
+	name = "spectral blade"
 	icon_state = "sword"
 	attack_damage = 5
 	attack_speed = 1.5
