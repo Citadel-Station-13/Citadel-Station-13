@@ -25,8 +25,6 @@
 
 	reload_fullscreen() // Reload any fullscreen overlays this mob has.
 
-	add_click_catcher()
-
 	sync_mind()
 
 	//Reload alternate appearances
@@ -56,3 +54,10 @@
 
 	if(has_field_of_vision && CONFIG_GET(flag/use_field_of_vision))
 		LoadComponent(/datum/component/field_of_vision, field_of_vision_type)
+
+	// load rendering
+	if(!client.parallax_holder)
+		client.CreateParallax()
+	else
+		client.parallax_holder.Reset()
+	client.update_clickcatcher()

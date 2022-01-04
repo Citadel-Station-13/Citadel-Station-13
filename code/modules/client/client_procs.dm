@@ -441,7 +441,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	send_resources()
 
-	client.update_clickcatcher()
+	update_clickcatcher()
 
 	if(prefs.lastchangelog != GLOB.changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
@@ -1011,6 +1011,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	view = new_size
 	var/list/actualview = getviewsize(view)
 	update_clickcatcher()
+	parallax_holder.Reset()
 	mob.reload_fullscreen()
 	if (isliving(mob))
 		var/mob/living/M = mob

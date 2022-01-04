@@ -37,7 +37,7 @@ list(0.393,0.349,0.272,0, 0.769,0.686,0.534,0, 0.189,0.168,0.131,0, 0,0,0,1, 0,0
  */
 /proc/color_matrix_saturation_percent(percent)
 	if(percent == 0)
-		return color_identity()
+		return color_matrix_identity()
 	percent = clamp(percent, -100, 100)
 	if(percent > 0)
 		percent *= 3
@@ -73,7 +73,7 @@ list(0.393,0.349,0.272,0, 0.769,0.686,0.534,0, 0.189,0.168,0.131,0, 0,0,0,1, 0,0
 		10.0)
 	percent = clamp(percent, -100, 100)
 	if(percent == 0)
-		return color_identity()
+		return color_matrix_identity()
 
 	var/x = 0
 	if (percent < 0)
@@ -110,7 +110,7 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
  */
 /proc/color_matrix_rotation(angle)
 	if(angle == 0)
-		return color_identity()
+		return color_matrix_identity()
 	angle = clamp(angle, -180, 180)
 	var/cos = cos(angle)
 	var/sin = sin(angle)
