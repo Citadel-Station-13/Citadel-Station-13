@@ -122,8 +122,8 @@
 /datum/summon_weapon_host/proc/Create(count)
 	if(!weapon_type)
 		return
-	for(var/i in 1 to min(count, clamp(controlled.len - count, 0, 20)))
-		var/datum/summon_weapon/weapon = new weapon_type(src)
+	for(var/i in 1 to min(count, clamp(20 - controlled.len - count, 0, 20)))
+		var/datum/summon_weapon/weapon = new weapon_type
 		Associate(weapon)
 
 /datum/summon_weapon_host/proc/Associate(datum/summon_weapon/linking)
@@ -218,11 +218,11 @@
 	/// current distance from victim - pixels
 	var/dist
 	/// rand dist to rotate during reattack phase
-	var/angle_vary = 30
+	var/angle_vary = 45
 	/// orbit distance from victim - pixels
-	var/orbit_dist = 30
+	var/orbit_dist = 72
 	/// orbit distance variation from victim
-	var/orbit_dist_vary = 5
+	var/orbit_dist_vary = 32
 	/// attack delay in deciseconds - this is time spent between attacks
 	var/attack_speed = 1.5
 	/// attack length in deciseconds - this is the attack animation speed in total
@@ -247,9 +247,7 @@
 	/// reset timerid
 	var/reset_timerid
 
-/datum/summon_weapon/New(datum/summon_weapon_host/host, mutable_appearance/appearance_override)
-	if(host)
-		src.host = host
+/datum/summon_weapon/New(mutable_appearance/appearance_override)
 	if(appearance_override)
 		appearance = appearance_override
 	Setup()
@@ -352,7 +350,7 @@
 			if(!get_turf(host.master))
 				return		// someone fucked up, just drop on the floor lol
 			var/reset_angle = rand(0, 360)
-			AnimationLock(MoveTo(host.master, null, reset_angle, 15, 90, reset_speed))
+			AnimationLock(MoveTo(host.master, null, reset_angle, 30, 90, reset_speed))
 			Orbit(host.master, reset_angle, 15, 3 SECONDS)
 		if(STATE_RECOVER)
 			state = STATE_ATTACK
@@ -431,7 +429,7 @@
 	M.Translate(0, dist)
 	M.Turn(initial_degrees)
 	atom.transform = M
-	atom.SpinAnimation(speed, parallel = FALSE)
+	atom.SpinAnimation(speed, parallel = FALSE, segments = 10)
 	// we can't predict dist/angle anymre because clienttime vs servertime.
 	// well, we can, but, let's not be bothered with timeofday math eh.
 	dist = 0
