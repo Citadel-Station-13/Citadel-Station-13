@@ -7,7 +7,7 @@
  * - severity - severity - different screen objects have differing severities
  */
 /mob/proc/overlay_fullscreen(category, type, severity)
-	ASSERT(type))
+	ASSERT(type)
 	if(!category)
 		cateogry = type
 	var/atom/movable/screen/fullscreen/screen = screens[category]
@@ -113,7 +113,7 @@
 	/// size of sprite in tiles
 	var/size_x = 15
 	/// size of sprite in tiles
-	var/size_y = 15s
+	var/size_y = 15
 
 /atom/movable/screen/fullscreen/scaled/SetView(client_view)
 	. = ..()
