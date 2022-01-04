@@ -6,6 +6,16 @@
 	key = STRIPPABLE_ITEM_BACK
 	item_slot = SLOT_BACK
 
+/datum/strippable_item/mob_item_slot/back/get_alternate_action(atom/source, mob/user)
+	if(..() == FALSE)
+		return null
+	return get_strippable_alternate_action_internals(get_item(source), source)
+
+/datum/strippable_item/mob_item_slot/back/alternate_action(atom/source, mob/user)
+	if (!..())
+		return null
+	return strippable_alternate_action_internals(get_item(source), source, user)
+
 /datum/strippable_item/mob_item_slot/mask
 	key = STRIPPABLE_ITEM_MASK
 	item_slot = SLOT_WEAR_MASK
