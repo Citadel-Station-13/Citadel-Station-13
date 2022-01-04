@@ -99,3 +99,6 @@
 		for(var/i in queue_remove)
 			Remove(i, TRUE)
 		queue_remove.len = 0
+
+/datum/atom_hud/proc/MobDel(datum/source)
+	Remove(source)

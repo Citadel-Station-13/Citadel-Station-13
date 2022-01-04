@@ -30,14 +30,14 @@
 /datum/hud_supplier/New(id)
 	if(isnull(src.id))
 		src.id = id || ++id_next
-	SShud_suppliers.RegisterSupplier(src)
+	SSatom_huds.RegisterSupplier(src)
 
 /datum/hud_supplier/Destroy()
 	for(var/client/C as anything in clients)
 		Hide(C, TRUE)
 	for(var/atom/A in atoms)
 		UnregisterAtom(A, TRUE)
-	SShud_suppliers.UnregisterSupplier(src)
+	SSatom_huds.UnregisterSupplier(src)
 	return ..()
 
 /datum/hud_supplier/proc/RegisterAtom(atom/A, immediate)

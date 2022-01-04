@@ -6,6 +6,7 @@
 	screen_loc = "CENTER-7,CENTER-7"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+	// notice - all parallax layers are 15x15 tiles. They roll over every 240 pixels.
 	/// pixel x/y shift per real x/y
 	var/speed = 1
 	/// current cached offset x
@@ -14,14 +15,42 @@
 	var/offset_y = 0
 	/// absolute - always determine shift x/y as a function of real x/y instead of allowing for relative scroll.
 	var/absolute = FALSE
+	/// parallax level required to see this
+	var/parallax_intensity = PARALLAX_INSANE
+	/// current view we're adapted to
+	var/view_current
+	/// dynamic self tile - tile to our view size. set this to false for static parallax layers.
+	var/dynamic_self_tile = TRUE
 
-	var/view_sized
+/atom/movable/screen/parallax_layer/proc/SetView(client_view = world.view)
+	if(current_view == client_view)
+		return
+	current_view = client_view
+	if(!dynamic_self_tile)
+		return
+	var/list/real_view = getviewsize(client_view)
+	var/count_x = CEILING((real_view[1] / 2) / 15, 1) + 1
+	var/count_y = CEILING((real_view[2] / 2) / 15, 1) + 1
+	cut_overlays()
+	var/list/new_overlays = list()
+	for(var/x in -count_x to count_x)
+		for(var/y in -count_y to count_y)
+			if(!x && !y)
+				continue
+			var/mutable_appearance/clone = new
+			// appearance clone
+			clone.appearance = src
+			// do NOT inherit our overlays! parallax layers should never have overlays,
+			// because if it inherited us it'll result in exponentially increasing overlays
+			// due to cut_overlays() above over there being a queue operation and not instant!
+			clone.overlays = list()
+			// shift to position
+			clone.transform = matrix(1, 0, x * 480, 0, 1, y * 480)
+			new_overlays += clone
+	add_overlay(new_overlays)
 
-/atom/movable/screen/parallax_layer/Initialize(mapload, view)
-	. = ..()
-	if (!view)
-		view = world.view
-	update_o(view)
+/atom/movable/screen/parallax_layer/proc/ShouldSee(client/C, atom/location)
+	return
 
 /atom/movable/screen/parallax_layer/proc/Clone()
 	var/atom/movable/screen/parallax_layer/layer = new type
@@ -29,73 +58,6 @@
 	layer.offset_x = offset_x
 	layer.offset_y = offset_y
 	layer.absolute = absolute
+	layer.parallax_intensity = parallax_intensity
+	layer.view_current = view_current
 	layer.appearance = appearance
-
-/atom/movable/screen/parallax_layer/proc/update_o(view)
-	if (!view)
-		view = world.view
-
-	var/list/viewscales = getviewsize(view)
-	var/countx = CEILING((viewscales[1]/2)/(480/world.icon_size), 1)+1
-	var/county = CEILING((viewscales[2]/2)/(480/world.icon_size), 1)+1
-	var/list/new_overlays = new
-	for(var/x in -countx to countx)
-		for(var/y in -county to county)
-			if(x == 0 && y == 0)
-				continue
-			var/mutable_appearance/texture_overlay = mutable_appearance(icon, icon_state)
-			texture_overlay.transform = matrix(1, 0, x*480, 0, 1, y*480)
-			new_overlays += texture_overlay
-	cut_overlays()
-	add_overlay(new_overlays)
-	view_sized = view
-
-/atom/movable/screen/parallax_layer/proc/update_status(mob/M)
-	return
-
-/atom/movable/screen/parallax_layer/layer_1
-	icon_state = "layer1"
-	speed = 0.6
-	layer = 1
-
-/atom/movable/screen/parallax_layer/layer_2
-	icon_state = "layer2"
-	speed = 1
-	layer = 2
-
-/atom/movable/screen/parallax_layer/layer_3
-	icon_state = "layer3"
-	speed = 1.4
-	layer = 3
-
-/atom/movable/screen/parallax_layer/random
-	blend_mode = BLEND_OVERLAY
-	speed = 3
-	layer = 3
-
-/atom/movable/screen/parallax_layer/random/space_gas
-	icon_state = "space_gas"
-
-/atom/movable/screen/parallax_layer/random/space_gas/Initialize(mapload, view)
-	. = ..()
-	src.add_atom_colour(SSparallax.random_parallax_color, ADMIN_COLOUR_PRIORITY)
-
-/atom/movable/screen/parallax_layer/random/asteroids
-	icon_state = "asteroids"
-
-/atom/movable/screen/parallax_layer/planet
-	icon_state = "planet"
-	blend_mode = BLEND_OVERLAY
-	absolute = TRUE //Status of seperation
-	speed = 3
-	layer = 30
-
-/atom/movable/screen/parallax_layer/planet/update_status(mob/M)
-	var/client/C = M.client
-	var/turf/posobj = get_turf(C.eye)
-	if(!posobj)
-		return
-	invisibility = is_station_level(posobj.z) ? 0 : INVISIBILITY_ABSTRACT
-
-/atom/movable/screen/parallax_layer/planet/update_o()
-	return //Shit won't move
