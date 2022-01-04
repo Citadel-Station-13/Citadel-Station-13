@@ -28,10 +28,10 @@
 	///Reagents holder
 	var/datum/reagents/reagents = null
 
-	/// This atom's HUD images. hud id = image | list(images)
-	var/list/image/hud_images
-	/// HUD suppliers to initialize - do NOT modify at runtime, this is a typelist.
-	var/list/initial_hud_suppliers
+	///This atom's HUD (med/sec, etc) images. Associative list.
+	var/list/image/hud_list = null
+	///HUD images that this atom can provide.
+	var/list/hud_possible
 
 	///Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
@@ -198,10 +198,6 @@
 	// apply materials properly from the default custom_materials value
 	set_custom_materials(custom_materials)
 
-	if(initial_hud_suppliers)
-		initial_hud_suppliers = typelist(NAMEOF(src, initial_hud_suppliers), initial_hud_suppliers)
-		InitializeHUDSuppliers()
-
 	ComponentInitialize()
 
 	return INITIALIZE_HINT_NORMAL
@@ -235,6 +231,11 @@
  * * clears the light object
  */
 /atom/Destroy()
+	if(alternate_appearances)
+		for(var/K in alternate_appearances)
+			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[K]
+			AA.remove_from_hud(src)
+
 	if(reagents)
 		qdel(reagents)
 

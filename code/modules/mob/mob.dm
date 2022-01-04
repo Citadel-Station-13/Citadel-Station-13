@@ -1,10 +1,10 @@
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	// cleanup rendering
 	QDEL_NULL(plane_holder)
-	QDEL_NULL(parallax_holder)
-	#warn fullscreen
-	// atom huds cleanup via signal
+	wipe_fullscreens()
 	// clickcatcher can be ignored as it's a client thing
+	// so can parallax
+	// atom huds use their own things
 
 	remove_from_mob_list()
 	remove_from_dead_mob_list()
@@ -54,22 +54,17 @@
 /mob/GenerateTag()
 	tag = "mob_[next_mob_id++]"
 
-/mob/proc/Cell()
-	set category = "Admin"
-	set hidden = 1
-
-	if(!loc)
-		return 0
-
-	var/datum/gas_mixture/environment = loc.return_air()
-
-	var/t =	"<span class='notice'>Coordinates: [x],[y] \n</span>"
-	t +=	"<span class='danger'>Temperature: [environment.return_temperature()] \n</span>"
-	for(var/id in environment.get_gases())
-		if(environment.get_moles(id))
-			t+="<span class='notice'>[GLOB.gas_data.names[id]]: [environment.get_moles(id)] \n</span>"
-
-	to_chat(usr, t)
+/atom/proc/prepare_huds()
+	hud_list = list()
+	for(var/hud in hud_possible)
+		var/hint = hud_possible[hud]
+		switch(hint)
+			if(HUD_LIST_LIST)
+				hud_list[hud] = list()
+			else
+				var/image/I = image('icons/mob/hud.dmi', src, "")
+				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
+				hud_list[hud] = I
 
 /mob/proc/get_photo_description(obj/item/camera/camera)
 	return "a ... thing?"

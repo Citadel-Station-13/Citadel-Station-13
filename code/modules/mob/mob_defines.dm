@@ -20,8 +20,6 @@
 	// Rendering
 	/// Planes are held here
 	var/datum/plane_holder/plane_holder
-	/// HUDs to display - associative list of hud id to list of sources, much like traits.
-	var/list/atom_huds
 	/// Parallax holder
 	var/datum/parallax_holder/parallax_holder
 	/// Fullscreen objects we should be seeing

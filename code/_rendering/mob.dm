@@ -6,8 +6,8 @@
 		return
 	// planes
 	plane_holder?.RemoveFromClient(client)
-	// huds
-	CleanupAtomHUDs()
+	// huds - not until they refactored, just like /datum/hud
+
 	// clickcatcher
 	client.screen -= clickcatcher
 
@@ -30,7 +30,7 @@
 		plane_holder = new
 	plane_holder.ApplyToClient(client)
 	// huds
-	ReloadAtomHUDs()
+	reload_huds()
 	// clickcatcher
 	client.update_clickcatcher()
 	// fullscreen
