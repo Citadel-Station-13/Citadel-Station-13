@@ -35833,7 +35833,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/medical/patients_rooms/room_a)
 "bJD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -60674,7 +60674,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/medical/surgery)
 "oTx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
