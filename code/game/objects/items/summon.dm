@@ -115,8 +115,9 @@
 			for(var/datum/summon_weapon/weapon as anything in attacking)
 				weapon.Reset()
 		return
-	for(var/datum/summon_weapon/weapon as anything in idle)
-		weapon.Reset()
+	if(changed)
+		for(var/datum/summon_weapon/weapon as anything in idle)
+			weapon.Reset()
 
 /datum/summon_weapon_host/proc/Create(count)
 	if(!weapon_type)
@@ -141,7 +142,7 @@
 	idle -= unlinking
 	attacking -= unlinking
 
-/datum/summon_weapon_host/proc/AutoTarget(atom/victim, duration = stack_duration)
+/datum/summon_weapon_host/proc/AutoTarget(atom/victim, duration = stack_time)
 	var/datum/summon_weapon/weapon = (idle.len && idle[1]) || (attacking.len && attacking[1])
 	if(!weapon)
 		return
