@@ -56,9 +56,13 @@
 	if(!isliving(loc))
 		host.SetMaster(null)
 	var/mob/living/L = loc
+	if(!istype(L))
+		return
 	if(!L.is_holding(src))
-		host.SetMaster(null)
+		host.SetMaster(src)
+		host.Suppress()
 	host.SetMaster(L)
+	host.Wake()
 
 /obj/item/summon/proc/Target(atom/victim)
 	if(!host?.CheckTarget(victim))
@@ -74,6 +78,8 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	host_type = /datum/summon_weapon_host/sword
+	force = 15
+	sharpness = SHARP_EDGED
 
 /**
  * Serves as the master datum for summon weapons
@@ -81,6 +87,8 @@
 /datum/summon_weapon_host
 	/// master atom
 	var/atom/master
+	/// suppressed?
+	var/active = TRUE
 	/// actual projectiles
 	var/list/datum/summon_weapon/controlled
 	/// active projectiles - refreshing a projectile reorders the list, so if they all have the same stack durations, you can trust the list to have last-refreshed at [1]
@@ -110,13 +118,11 @@
 /datum/summon_weapon_host/proc/SetMaster(atom/master, reset_on_failure = TRUE)
 	var/changed = src.master == master
 	src.master = master
-	if(!master)
-		if(reset_on_failure)
-			for(var/datum/summon_weapon/weapon as anything in attacking)
-				weapon.Reset()
-		return
 	if(changed)
 		for(var/datum/summon_weapon/weapon as anything in idle)
+			weapon.Reset()
+	if(!master && reset_on_failure)
+		for(var/datum/summon_weapon/weapon as anything in attacking)
 			weapon.Reset()
 
 /datum/summon_weapon_host/proc/Create(count)
@@ -143,6 +149,8 @@
 	attacking -= unlinking
 
 /datum/summon_weapon_host/proc/AutoTarget(atom/victim, duration = stack_time)
+	if(!active)
+		return
 	var/datum/summon_weapon/weapon = (idle.len && idle[1]) || (attacking.len && attacking[1])
 	if(!weapon)
 		return
@@ -155,11 +163,11 @@
 /datum/summon_weapon_host/proc/OnTarget(datum/summon_weapon/weapon, atom/victim)
 	attacking -= weapon
 	idle -= weapon
-	attacking += weapon
+	attacking |= weapon
 
 /datum/summon_weapon_host/proc/OnReset(datum/summon_weapon/weapon, atom/victim)
 	attacking -= weapon
-	idle += weapon
+	idle |= weapon
 
 /datum/summon_weapon_host/proc/CheckTarget(atom/victim)
 	if(!isobj(victim) && !ismob(victim))
@@ -173,6 +181,16 @@
 		if(L.stat == DEAD)
 			return FALSE
 	return TRUE
+
+/datum/summon_weapon_host/proc/Suppress()
+	active = FALSE
+	for(var/datum/summon_weapon/weapon as anything in controlled)
+		weapon.Reset()
+
+/datum/summon_weapon_host/proc/Wake()
+	active = TRUE
+	for(var/datum/summon_weapon/weapon as anything in controlled)
+		weapon.Reset()
 
 /datum/summon_weapon_host/sword
 	weapon_type = /datum/summon_weapon/sword
@@ -201,6 +219,8 @@
  * HardReset(location)
  */
 /datum/summon_weapon
+	/// name
+	var/name = "summoned weapon"
 	/// host
 	var/datum/summon_weapon_host/host
 	/// icon file
@@ -217,6 +237,8 @@
 	var/angle
 	/// current distance from victim - pixels
 	var/dist
+	/// current rotation - angles clockwise from north
+	var/rotation
 	/// rand dist to rotate during reattack phase
 	var/angle_vary = 45
 	/// orbit distance from victim - pixels
@@ -238,6 +260,13 @@
 		'sound/weapons/bladeslice.ogg',
 		'sound/weapons/bladesliceb.ogg'
 	)
+	/// attack verb
+	var/attack_verb = list(
+		"rended",
+		"pierced",
+		"penetrated",
+		"sliced"
+	)
 	/// current state
 	var/state = STATE_IDLE
 	/// animation locked until
@@ -251,6 +280,8 @@
 	if(appearance_override)
 		appearance = appearance_override
 	Setup()
+	attack_verb = typelist(NAMEOF(src, attack_verb), attack_verb)
+	attack_sound = typelist(NAMEOF(src, attack_sound), attack_sound)
 
 /datum/summon_weapon/Destroy()
 	host.Disassociate(src, autodel = FALSE)
@@ -326,6 +357,7 @@
 	animation_timerid = addtimer(CALLBACK(src, .proc/Act), duration, TIMER_CLIENT_TIME | TIMER_STOPPABLE)
 
 /datum/summon_weapon/proc/Act()
+	animation_timerid = null
 	switch(state)
 		if(STATE_IDLE)
 			return
@@ -348,11 +380,15 @@
 			AnimationLock(MoveTo(victim, null, outgoing_angle, orbit_dist + rand(-orbit_dist_vary, orbit_dist_vary), outgoing_angle, attack_length))
 		if(STATE_RESET)
 			state = STATE_IDLE
-			if(!get_turf(host.master))
-				return		// someone fucked up, just drop on the floor lol
+			if(!host.active || !get_turf(host.master))
+				atom.moveToNullspace()
+				src.angle = null
+				src.dist = null
+				src.rotation = null
+				return
 			var/reset_angle = rand(0, 360)
 			AnimationLock(MoveTo(host.master, null, reset_angle, 30, 90, reset_speed))
-			Orbit(host.master, reset_angle, 15, 3 SECONDS)
+			Orbit(host.master, reset_angle, 30, 3 SECONDS)
 		if(STATE_RECOVER)
 			state = STATE_ATTACK
 			AnimationLock(Rotate(rand(-angle_vary, angle_vary), attack_speed, null))
@@ -371,39 +407,44 @@
 /**
  * relative to defaults to current location
  */
-/datum/summon_weapon/proc/MoveTo(atom/destination, atom/relative_to, angle, dist, rotation, time)
+/datum/summon_weapon/proc/MoveTo(atom/destination, atom/relative_to, angle = 0, dist = 64, rotation = 180, time)
 	. = time
-	var/matrix/dest = new
+	// construct final transform
+	var/matrix/dest = ConstructMatrix(angle, dist, rotation)
 
-	// set up dest
-	dest.Turn(rotation)
-	dest.Translate(0 , dist)
-	dest.Turn(angle)
+	// move to
+	atom.Lock(destination)
 
 	// end animations
 	animate(atom, time = 0, flags = ANIMATION_END_NOW)
 
+	// get relative first positions
 	relative_to = get_turf(relative_to || atom.locked)
 	destination = get_turf(destination)
+	// if none, move to immediately and end
 	if(!relative_to)
 		atom.transform = dest
 		src.angle = angle
 		src.dist = dist
-		return
-
-	var/matrix/source = new
+		src.rotation = rotation
+		return 0
 
 	// grab source
 	var/rel_x = (destination.x - relative_to.x) * world.icon_size + dist * sin(angle)
 	var/rel_y = (destination.y - relative_to.y) * world.icon_size + dist * cos(angle)
+
+	// construct source matrix
+	var/matrix/source = new
+
+	source.Turn((relative_to == get_turf(atom.locked))? src.rotation : Get_Angle(relative_to, destination))
 	source.Translate(rel_x, rel_y)
 
 	// set vars
 	src.angle = angle
 	src.dist = dist
+	src.rotation = rotation
 
 	// animate
-	atom.Lock(destination)
 	atom.transform = source
 	animate(atom, transform = dest, time, FALSE, CUBIC_EASING, ANIMATION_END_NOW | ANIMATION_LINEAR_TRANSFORM)
 
@@ -414,27 +455,29 @@
 	. = time
 	if(!dist)
 		return 0
-	var/matrix/M = new
-	var/new_angle = angle + degrees
-	M.Turn(isnull(rotation)? 180 : rotation)
-	M.Translate(0, dist)
-	M.Turn(new_angle)
-	angle = new_angle
+	var/matrix/M = ConstructMatrix(angle + degrees, dist, rotation || src.rotation)
+	if(rotation)
+		src.rotation = rotation
+	angle += degrees
 	animate(atom, transform = M, time, FALSE, CUBIC_EASING, ANIMATION_END_NOW | ANIMATION_LINEAR_TRANSFORM)
 
 /datum/summon_weapon/proc/Orbit(atom/destination, initial_degrees = rand(0, 360), dist, speed)
 	. = 0
 	atom.Lock(destination)
-	var/matrix/M = new
-	M.Turn(90)
-	M.Translate(0, dist)
-	M.Turn(initial_degrees)
-	atom.transform = M
+	animate(atom, 0, FALSE, flags = ANIMATION_END_NOW)
+	atom.transform = ConstructMatrix(initial_degrees, dist, 90)
 	atom.SpinAnimation(speed, parallel = FALSE, segments = 10)
 	// we can't predict dist/angle anymre because clienttime vs servertime.
 	// well, we can, but, let's not be bothered with timeofday math eh.
 	dist = 0
 	angle = 0
+
+/datum/summon_weapon/proc/ConstructMatrix(angle = 0, dist = 64, rotation = 0)
+	var/matrix/M = new
+	M.Turn(rotation)
+	M.Translate(0, dist)
+	M.Turn(angle)
+	return M
 
 /datum/summon_weapon/proc/HardReset(atom/snap_to)
 	if(animation_timerid)
@@ -444,7 +487,11 @@
 	atom.transform = null
 
 /datum/summon_weapon/sword
+	name = "spectral blade""
 	icon_state = "sword"
+	attack_damage = 5
+	attack_speed = 1.5
+	attack_length = 1.5
 
 /datum/summon_weapon/sword/GenerateAppearance()
 	. = ..()
