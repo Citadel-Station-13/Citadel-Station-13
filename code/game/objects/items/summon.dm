@@ -276,6 +276,7 @@
 		appearance.opacity = FALSE
 		appearance.plane = GAME_PLANE
 		appearance.layer = ABOVE_MOB_LAYER
+		appearance.appearance_flags = KEEP_TOGETHER
 		appearance.overlays = list(
 			emissive_appearance(icon, icon_state)
 		)
@@ -444,6 +445,12 @@
 
 /datum/summon_weapon/sword
 	icon_state = "sword"
+
+/datum/summon_weapon/sword/GenerateAppearance()
+	. = ..()
+	var/mutable_appearance/funny_2d_block_game = new('icons/effects/summon.dmi', "memerainbow")
+	funny_2d_block_game.blend_mode = BLEND_MULTIPLY
+	appearance.overlays += funny_2d_block_game
 
 /atom/movable/summon_weapon_effect
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
