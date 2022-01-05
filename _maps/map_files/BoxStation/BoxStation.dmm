@@ -30541,7 +30541,6 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "bwZ" = (
-/obj/structure/chair,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -30560,6 +30559,8 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
+/obj/structure/chair,
+/obj/item/reagent_containers/rag,
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "bxb" = (
@@ -30571,7 +30572,6 @@
 /area/medical/surgery)
 "bxc" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/chair,
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
@@ -31494,7 +31494,10 @@
 /area/hallway/primary/central)
 "byY" = (
 /obj/structure/chair,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/cigbutt/roach{
+	pixel_x = 8;
+	pixel_y = -6
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "byZ" = (
@@ -31514,6 +31517,9 @@
 "bzb" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/chair,
+/obj/effect/decal/cleanable/vomit/old{
+	pixel_x = -10
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "bzc" = (
@@ -62973,7 +62979,7 @@
 	req_access_txt = "45"
 	},
 /turf/open/floor/plating,
-/area/medical/surgery)
+/area/maintenance/aft)
 "rJw" = (
 /obj/structure/table/glass,
 /obj/item/hemostat,
@@ -67407,6 +67413,9 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
+"yaQ" = (
+/turf/open/floor/plasteel/dark,
+/area/medical/surgery)
 "yaW" = (
 /obj/machinery/hydroponics/soil{
 	pixel_y = 8
@@ -101617,7 +101626,7 @@ bui
 bvi
 bww
 bwZ
-byY
+bww
 bCD
 ivJ
 bCE
@@ -102387,7 +102396,7 @@ bxV
 bof
 bDa
 asM
-bAl
+byY
 bAl
 bCG
 bBc
@@ -102645,7 +102654,7 @@ bof
 bDU
 asM
 iVH
-bAl
+yaQ
 bCH
 kSi
 jex
