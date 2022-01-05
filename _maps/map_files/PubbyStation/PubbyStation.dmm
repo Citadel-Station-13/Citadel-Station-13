@@ -37972,6 +37972,7 @@
 /obj/structure/curtain{
 	layer = 4.5
 	},
+/obj/item/toy/plush/mothplushie,
 /turf/open/floor/plasteel/freezer,
 /area/medical/exam_room)
 "bKw" = (

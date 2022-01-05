@@ -32860,6 +32860,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/toy/plush/mothplushie,
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms/room_a)
 "cts" = (

@@ -35237,6 +35237,7 @@
 /obj/structure/sign/poster/official/no_erp{
 	pixel_x = 32
 	},
+/obj/item/toy/plush/mothplushie,
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms/room_a)
 "bIl" = (
