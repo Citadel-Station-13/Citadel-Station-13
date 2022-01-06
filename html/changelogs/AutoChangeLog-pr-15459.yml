@@ -1,0 +1,4 @@
+author: "MrJWhit"
+delete-after: True
+changes: 
+  - rscadd: "Adds an airlock between atmos and engineering on omega."
