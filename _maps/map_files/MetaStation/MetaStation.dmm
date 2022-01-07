@@ -25296,6 +25296,10 @@
 /obj/structure/sign/warning/deathsposal{
 	pixel_y = 32
 	},
+/obj/machinery/camera{
+	c_tag = "Atmospherics - Incinerator";
+	name = "atmospherics camera"
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "cba" = (
@@ -40889,6 +40893,9 @@
 	name = "Station Intercom (General)";
 	pixel_x = -29
 	},
+/obj/item/cautery{
+	pixel_y = 15
+	},
 /turf/open/floor/plasteel/white/corner{
 	dir = 4
 	},
@@ -42560,6 +42567,11 @@
 	icon_state = "4-8"
 	},
 /obj/structure/chair/stool,
+/obj/machinery/light/small,
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -28
+	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
 "cNq" = (
@@ -50826,7 +50838,6 @@
 /turf/open/floor/plasteel,
 /area/security/prison/upper)
 "eFn" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/atmospherics/miner/oxygen,
 /turf/open/floor/engine/o2,
 /area/engineering/atmos)
@@ -56843,6 +56854,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/commons/fitness/recreation)
+"ify" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/meter,
+/turf/closed/wall/r_wall,
+/area/engineering/atmos)
 "ifM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -57695,9 +57713,6 @@
 /turf/closed/wall/r_wall,
 /area/engineering/main)
 "iFl" = (
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide{
-	valve_open = 1
-	},
 /obj/machinery/atmospherics/miner/n2o,
 /turf/open/floor/engine/n2o,
 /area/engineering/atmos)
@@ -63197,7 +63212,6 @@
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "lIs" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/machinery/atmospherics/miner/carbon_dioxide,
 /turf/open/floor/engine/co2,
 /area/engineering/atmos)
@@ -66147,6 +66161,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/bedsheetbin/color,
 /turf/open/floor/plasteel/cafeteria,
 /area/commons/dorms)
 "nry" = (
@@ -69355,7 +69370,6 @@
 	},
 /area/command/heads_quarters/rd)
 "pgT" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
 /obj/machinery/atmospherics/miner/toxins,
 /turf/open/floor/engine/plasma,
 /area/engineering/atmos)
@@ -76248,7 +76262,6 @@
 /turf/closed/wall,
 /area/service/bar)
 "sTB" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/atmospherics/miner/nitrogen,
 /turf/open/floor/engine/n2,
 /area/engineering/atmos)
@@ -82681,8 +82694,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "wFX" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/engine/air,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/meter,
+/turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "wGp" = (
 /obj/structure/cable/white{
@@ -125583,8 +125599,8 @@ ieJ
 nGn
 uoM
 lUn
-dlF
-uhB
+wFX
+ify
 qxd
 qtO
 qtO
@@ -129458,7 +129474,7 @@ uKL
 aaf
 dYX
 htG
-wFX
+uLh
 rjT
 dPI
 aaf

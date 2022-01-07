@@ -41,10 +41,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(!iscarbon(L))
 		return
 
-	var/mob/living/carbon/C = L
-	if(HAS_TRAIT(C, TRAIT_ROBOTIC_ORGANISM))
-		C.reagents.remove_reagent(type, amount, FALSE)
-
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/C)
 	if(HAS_TRAIT(C, TRAIT_TOXIC_ALCOHOL))
 		C.adjustToxLoss((boozepwr/25)*REAGENTS_EFFECT_MULTIPLIER,forced = TRUE)

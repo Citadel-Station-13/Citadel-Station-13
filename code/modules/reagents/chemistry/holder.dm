@@ -345,6 +345,8 @@
 	if(owner && reagent)
 		if(!owner.reagent_check(reagent, delta_time, times_fired) != TRUE)
 			return
+		if(is_reagent_processing_invalid(reagent, owner))
+			return reagent.on_invalid_process(owner, delta_time, times_fired)
 		if(liverless && !reagent.self_consuming) //need to be metabolized
 			return
 		if(!reagent.metabolizing)
