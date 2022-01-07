@@ -28,7 +28,7 @@
 					return FALSE
 				else
 					notsword.plan = todone
-					to_chat(user, "<span class='notice'>You decide to make a [todone.initial(displayname)].</notice>")
+					to_chat(user, "<span class='notice'>You decide to make a [initial(todone.displayname)].</notice>")
 			workpiece_state = TRUE
 			to_chat(user, "You place the [notsword] on the [src].")
 			workpiece = notsword
@@ -81,8 +81,8 @@
 	var/stepdone = input(user, "How would you like to work the metal?") in shapingsteps //todo radial
 	var/steptime = 50 * ham.toolspeed
 	if(user.mind.skill_holder)
-		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dwarfy/blacksmithing)/10 + 1
-		steptime = 50 / skillmod
+		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dwarfy/blacksmithing)/2 + 1
+		steptime /= skillmod
 	playsound(src, 'sound/effects/clang2.ogg',40, 2)
 	if(!do_after(user, steptime, target = src))
 		busy = FALSE
@@ -113,43 +113,38 @@
 	tryfinish(user)
 	busy = FALSE
 
-	tryfinish(user)
-
 
 /obj/structure/anvil/proc/tryfinish(mob/user)
-	var/datum/smith_recipe/recipe = workpiece.plan
-	var/list/pls = pls = recipe.initial(planlaststeps)
-	if(!recipe)
-		return FALSE
-	if(workpiece.height > recipe.initial(target_height_min) && workpiece.height < recipe.initial(target_height_max))
-		switch(recipe.planlaststeps.len)
-			if(1)
-				if(pls[STEP_LAST] != workpiece.last3steps[STEP_LAST])
-					return FALSE
-			if(2)
-				if(pls[STEP_LAST] != workpiece.last3steps[STEP_LAST] && pls[STEP_SECOND_LAST] != workpiece.last3steps[STEP_SECOND_LAST])
-					return FALSE
-			if(3)
-				if(pls != workpiece.last3steps)
-					return FALSE
-		generateitem(user)
-	else if(workpiece.height > 144 || workpiece.height < 0)
+	if(workpiece.height > 144 || workpiece.height < 0)
 		to_chat(user, "<span class='danger'> You ruin the [workpiece] by overworking it!</span>")
 		qdel(workpiece)
 		workpiece_state = FALSE
 		workpiece = null
+	var/datum/smith_recipe/recipe = workpiece.plan
+	var/list/pls = initial(recipe.planlaststeps)
+	if(!recipe)
+		to_chat(user, "No recipe")
+		return FALSE
+	if(workpiece.height > initial(recipe.target_height_min) && workpiece.height < initial(recipe.target_height_max))
+		if(pls ~= workpiece.last3steps) //the fuck is 'quivelance'
+			generateitem(user)
+		else
+			to_chat(user, "WRONG3STEP")
+			return FALSE
 	else
 		return FALSE
 
 
 
 /obj/structure/anvil/proc/generateitem(mob/user)
+	to_chat(user, "generating item")
 	var/skillmod = 0
 	var/finalquality = 0
 	var/_artifact = FALSE
 	if(user.mind.skill_holder)
 		skillmod = user.mind.get_skill_level(/datum/skill/level/dwarfy/blacksmithing)/2
-	if(workpiece.height == workpiece.plan.target_height_perfect)
+	var/datum/smith_recipe/darec = workpiece.plan
+	if(workpiece.height == initial(darec.target_height_perfect))
 		finalquality++
 	finalquality += workpiece.currentquality + skillmod + anvilqualityadd
 	if(debug || prob(0.5*finalquality))
@@ -159,6 +154,9 @@
 	output.quality = finalquality
 	output.artifact = _artifact
 	output.forceMove(get_turf(src))
+	qdel(workpiece)
+	workpiece_state = FALSE
+	workpiece = null
 
 /obj/structure/anvil/debugsuper
 	name = "super ultra epic anvil of debugging."
