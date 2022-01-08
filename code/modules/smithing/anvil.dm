@@ -121,7 +121,7 @@
 		to_chat(user, "<span class='danger'> You ruin the [workpiece] by overworking it!</span>")
 		qdel(workpiece)
 		workpiece_state = FALSE
-		workpiece = null
+		workpiecea = null
 	var/datum/smith_recipe/recipe = workpiece.plan
 	var/list/pls = recipe.planlaststeps
 	for(var/i in pls)
