@@ -14,7 +14,6 @@ GLOBAL_LIST_INIT_TYPED(smith_recipes, /datum/smith_recipe, subtypesof(/datum/smi
 /datum/smith_recipe/scimitar
 	displayname = "scimitar blade"
 	planlaststeps = list(STEP_BEND, STEP_HIT_MODERATE, STEP_HIT_MODERATE)
-	laststepsneeded = 2
 	target_height_min = 10
 	target_height_perfect = 12
 	target_height_max = 16

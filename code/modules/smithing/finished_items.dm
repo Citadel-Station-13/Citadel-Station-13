@@ -171,7 +171,7 @@
 	icon_state = "rapier"
 	sharpness = SHARP_EDGED
 	overlay_state = "rapierhilt"
-	force = 12 //less force, stronger parry
+	force = 10 //less force, stronger parry
 	sharpness = SHARP_POINTY
 	armour_penetration = 30
 	block_parry_data = /datum/block_parry_data/smithrapier
