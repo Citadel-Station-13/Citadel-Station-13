@@ -573,9 +573,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(druggy)
 		adjust_drugginess(-1)
 
-	if(drunkenness)
-		drunkenness = max(drunkenness-1,0)
-
 	if(silent)
 		silent = max(silent-1, 0)
 
@@ -583,7 +580,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		handle_hallucinations()
 
 	if(drunkenness)
-		drunkenness = max(drunkenness - (drunkenness * 0.04), 0)
+		drunkenness *= 0.96
 		if(drunkenness >= 6)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
 			if(prob(25))
@@ -598,6 +595,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
 			clear_alert("drunk")
 			sound_environment_override = SOUND_ENVIRONMENT_NONE
+			drunkenness = max(drunkenness - 0.2, 0)
 
 		if(mind && (mind.assigned_role == "Scientist" || mind.assigned_role == "Research Director"))
 			if(SSresearch.science_tech)
