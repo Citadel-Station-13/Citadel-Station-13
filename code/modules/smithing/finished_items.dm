@@ -9,7 +9,7 @@
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON //yeah ok
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	force = 15
+	force = 12
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	var/quality
@@ -33,7 +33,7 @@
 	item_flags = NEEDS_PERMIT //it's a bigass sword/spear. beepsky is going to give you shit for it.
 	sharpness = SHARP_EDGED
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
-	force = 12
+	force = 10
 	wielded_mult = 1.8
 	w_class = WEIGHT_CLASS_BULKY
 

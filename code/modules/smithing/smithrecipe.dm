@@ -3,7 +3,6 @@ GLOBAL_LIST_INIT_TYPED(smith_recipes, /datum/smith_recipe, subtypesof(/datum/smi
 /datum/smith_recipe
 	var/displayname = "base smithing recipe type"
 	var/list/planlaststeps = list(null, null, null)
-	var/laststepsneeded = 3
 	var/target_height_min = 72
 	var/target_height_perfect = 76
 	var/target_height_max = 82
@@ -24,9 +23,9 @@ GLOBAL_LIST_INIT_TYPED(smith_recipes, /datum/smith_recipe, subtypesof(/datum/smi
 /datum/smith_recipe/rapier
 	displayname = "rapier blade"
 	planlaststeps = list(STEP_DRAW, STEP_UPSET, STEP_FOLD)
-	target_height_min = 8
-	target_height_perfect = 12
-	target_height_max = 12
+	target_height_min = 30
+	target_height_perfect = 32
+	target_height_max = 38
 	output_type = /obj/item/smithing/rapierblade
 
 /datum/smith_recipe/broadsword
@@ -88,7 +87,6 @@ GLOBAL_LIST_INIT_TYPED(smith_recipes, /datum/smith_recipe, subtypesof(/datum/smi
 /datum/smith_recipe/miningscanner
 	displayname = "prospector's pickaxe head"
 	planlaststeps = list(STEP_PUNCH, STEP_DRAW, STEP_BEND)
-	laststepsneeded = 2
 	target_height_min = 24
 	target_height_perfect = 26
 	target_height_max = 28
