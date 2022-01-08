@@ -8,11 +8,11 @@
 	density = TRUE
 	anchored = TRUE
 	var/busy = FALSE //If someone is already interacting with this anvil
-	var/workpiece_state = FALSE
-	var/obj/item/ingot/workpiece
+	var/workpiece_state = FALSE //do we have a workpiece or not
+	var/obj/item/ingot/workpiece //the ingot we're working on
 	var/debug = FALSE //vv this if you want an artifact
-	var/variance = 0
-	var/anvilqualityadd = 0
+	var/variance = 0 //how much the height varies when doing a step (only for shitty anvils)
+	var/anvilqualityadd = 0 //how much the item quality is buffed based on this anvil (only for good anvils)
 
 /obj/structure/anvil/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/ingot))
@@ -27,8 +27,10 @@
 				if(!todone)
 					return FALSE
 				else
-					notsword.plan = todone
+					notsword.plan = new todone
 					to_chat(user, "<span class='notice'>You decide to make a [initial(todone.displayname)].</notice>")
+					to_chat(user, "<span class='notice'>The height range required is [notsword.plan.target_height_min]-[notsword.plan.target_height_max].")
+					to_chat(user, "<span class='notice'>The steps required are: [notsword.plan.planlaststeps[1]] last, [notsword.plan.planlaststeps[2]] second last, [notsword.plan.planlaststeps[3]] third from last.")
 			workpiece_state = TRUE
 			to_chat(user, "You place the [notsword] on the [src].")
 			workpiece = notsword
@@ -55,7 +57,7 @@
 /obj/structure/anvil/examine(mob/user)
 	. = ..()
 	if(workpiece)
-		. += "<span class='notice'> It looks like the ingot is around [workpiece.height]." //wow it's really hard to both quantify and qualify a value so here we are, magic numbers
+		. += "<span class='notice'> It looks like the ingot is around [workpiece.height]mm tall." //wow it's really hard to both quantify and qualify a value so here we are, magic numbers
 
 /obj/structure/anvil/wrench_act(mob/living/user, obj/item/I)
 	..()
@@ -121,11 +123,13 @@
 		workpiece_state = FALSE
 		workpiece = null
 	var/datum/smith_recipe/recipe = workpiece.plan
-	var/list/pls = initial(recipe.planlaststeps)
+	var/list/pls = recipe.planlaststeps
+	for(var/i in pls)
+		to_chat(user, i)
 	if(!recipe)
 		to_chat(user, "No recipe")
 		return FALSE
-	if(workpiece.height > initial(recipe.target_height_min) && workpiece.height < initial(recipe.target_height_max))
+	if(workpiece.height >= recipe.target_height_min && workpiece.height <= recipe.target_height_max)
 		if(pls ~= workpiece.last3steps) //the fuck is 'quivelance'
 			generateitem(user)
 		else
@@ -144,15 +148,16 @@
 	if(user.mind.skill_holder)
 		skillmod = user.mind.get_skill_level(/datum/skill/level/dwarfy/blacksmithing)/2
 	var/datum/smith_recipe/darec = workpiece.plan
-	if(workpiece.height == initial(darec.target_height_perfect))
+	if(workpiece.height == darec.target_height_perfect)
 		finalquality++
 	finalquality += workpiece.currentquality + skillmod + anvilqualityadd
 	if(debug || prob(0.5*finalquality))
 		_artifact = TRUE
-
-	var/obj/item/smithing/output = new(workpiece.plan.output_type)
+	var/outputtypeless = new darec.output_type
+	var/obj/item/smithing/output = outputtypeless
 	output.quality = finalquality
 	output.artifact = _artifact
+	output.set_custom_materials(workpiece.custom_materials)
 	output.forceMove(get_turf(src))
 	qdel(workpiece)
 	workpiece_state = FALSE
@@ -184,7 +189,7 @@
 		..()
 
 /obj/structure/anvil/obtainable/bronze
-	name = "slab of bronze"
+	name = "bronze anvil"
 	desc = "A big block of bronze. Useable as an anvil."
 	custom_materials = list(/datum/material/bronze=8000)
 	icon_state = "ratvaranvil"

@@ -11,8 +11,3 @@
 #define STEP_BEND "bend"
 #define STEP_UPSET "upset"
 #define STEP_FOLD "fold"
-
-//recipe
-#define STEP_LAST "firststep"
-#define STEP_SECOND_LAST "secondstep"
-#define STEP_THIRD_LAST "thirdstep"

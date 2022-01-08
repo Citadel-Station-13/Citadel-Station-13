@@ -24,14 +24,14 @@
 	var/worktemp = 0 //how many steps can be done before we cool down?
 	var/height = 72
 	var/datum/smith_recipe/plan
-	var/list/last3steps = list(STEP_LAST = null, STEP_SECOND_LAST = null, STEP_THIRD_LAST = null)
+	var/list/last3steps = list(null,null,null)
 
 /obj/item/ingot/proc/add_step(var/stepdone)
 	if(!stepdone)
 		return FALSE
-	last3steps[STEP_THIRD_LAST] = last3steps[STEP_SECOND_LAST]
-	last3steps[STEP_SECOND_LAST] = last3steps[STEP_LAST]
-	last3steps[STEP_LAST] = stepdone
+	last3steps[3] = last3steps[2]
+	last3steps[2] = last3steps[1]
+	last3steps[1] = stepdone
 
 /obj/item/ingot/on_attack_hand(mob/user)
 	var/mob/living/carbon/human/H
