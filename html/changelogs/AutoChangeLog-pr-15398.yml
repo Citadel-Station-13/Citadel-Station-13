@@ -1,0 +1,5 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - bugfix: "bloodsplatter effects no longer white in certain cases"
+  - bugfix: "the blood in the BDM ruin is no longer white"
