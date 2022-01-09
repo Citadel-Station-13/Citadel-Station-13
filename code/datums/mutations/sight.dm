@@ -41,6 +41,7 @@
 	difficulty = 18
 	text_gain_indication = "<span class='notice'>You can see the heat rising off of your skin...</span>"
 	time_coeff = 2
+	instability = 40
 	locked = TRUE
 	var/visionflag = TRAIT_THERMAL_VISION
 
@@ -74,6 +75,7 @@
 	desc = "A strange genome that allows the user to see between the spaces of walls." //actual x-ray would mean you'd constantly be blasting rads, wich might be fun for later //hmb
 	text_gain_indication = "<span class='notice'>The walls suddenly disappear!</span>"
 	locked = TRUE
+	instability = 50
 	visionflag = TRAIT_XRAY_VISION
 
 
