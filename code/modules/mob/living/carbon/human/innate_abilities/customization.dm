@@ -35,8 +35,10 @@
 			else
 				to_chat(H, "<span class='notice'>Invalid color. Your color is not bright enough.</span>")
 	else if(select_alteration == "Eye Color")
+		if(iscultist(H) && HAS_TRAIT(H, TRAIT_CULT_EYES))
+			to_chat(H, "<span class='notice'>The power of the cult overrules your eyes, do not be ashamed of your power!</span>")
 		var/new_color = input(owner, "Choose your eye color:", "Race change","#"+H.dna.features["mcolor"]) as color|null
-		if(new_color)
+		else if(new_color)
 			var/temp_hsv = RGBtoHSV(new_color)
 			if(ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3]) // mutantcolors must be bright
 				H.dna.features["mcolor"] = sanitize_hexcolor(new_color, 6)
