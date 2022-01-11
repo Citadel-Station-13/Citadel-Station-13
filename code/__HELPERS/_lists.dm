@@ -41,12 +41,6 @@
 	LAZYINITLIST(lazy_list[key]); \
 	lazy_list[key] |= value;
 
-/// Performs an insertion on the given lazy list with the given key and value. If the value already exists, a new one will not be made.
-#define LAZYORASSOCLIST(lazy_list, key, value) \
-	LAZYINITLIST(lazy_list); \
-	LAZYINITLIST(lazy_list[key]); \
-	lazy_list[key] |= value;
-
 /// Passed into BINARY_INSERT to compare keys
 #define COMPARE_KEY __BIN_LIST[__BIN_MID]
 /// Passed into BINARY_INSERT to compare values
