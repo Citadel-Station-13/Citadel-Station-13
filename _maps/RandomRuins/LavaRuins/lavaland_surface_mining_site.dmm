@@ -54,7 +54,10 @@
 /area/ruin/lavaland/unpowered)
 "m" = (
 /obj/structure/mineral_door/wood,
-/obj/effect/decal/cleanable/trail_holder,
+/obj/effect/decal/cleanable/trail_holder{
+	color = "#dc0000";
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/ruin/lavaland/unpowered)
 "n" = (
@@ -68,7 +71,10 @@
 /obj/machinery/light/broken{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/trail_holder,
+/obj/effect/decal/cleanable/trail_holder{
+	color = "#dc0000";
+	dir = 6
+	},
 /turf/open/floor/wood,
 /area/ruin/lavaland/unpowered)
 "q" = (
@@ -93,13 +99,33 @@
 /turf/open/floor/wood,
 /area/ruin/lavaland/unpowered)
 "s" = (
-/obj/effect/decal/cleanable/trail_holder,
+/obj/effect/decal/cleanable/trail_holder{
+	color = "#dc0000";
+	dir = 9
+	},
+/turf/open/floor/wood,
+/area/ruin/lavaland/unpowered)
+"x" = (
+/obj/effect/decal/cleanable/trail_holder{
+	color = "#dc0000";
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/ruin/lavaland/unpowered)
 "N" = (
-/obj/effect/decal/cleanable/trail_holder,
+/obj/effect/decal/cleanable/trail_holder{
+	color = "#dc0000";
+	dir = 8
+	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"Q" = (
+/obj/effect/decal/cleanable/trail_holder{
+	color = "#dc0000";
+	dir = 6
+	},
+/turf/open/floor/wood,
+/area/ruin/lavaland/unpowered)
 
 (1,1,1) = {"
 i
@@ -440,7 +466,7 @@ f
 f
 f
 f
-s
+x
 b
 b
 i
@@ -467,7 +493,7 @@ g
 f
 f
 f
-s
+x
 b
 b
 i
@@ -494,7 +520,7 @@ f
 f
 f
 f
-s
+x
 b
 b
 i
@@ -521,7 +547,7 @@ j
 f
 f
 f
-s
+x
 b
 b
 i
@@ -548,7 +574,7 @@ k
 f
 f
 f
-s
+x
 b
 b
 i
@@ -575,7 +601,7 @@ l
 f
 f
 s
-s
+Q
 b
 b
 i
@@ -627,7 +653,7 @@ i
 b
 b
 b
-s
+x
 b
 b
 b
@@ -654,7 +680,7 @@ i
 i
 i
 b
-s
+x
 b
 i
 i
@@ -681,7 +707,7 @@ i
 i
 i
 b
-s
+x
 b
 i
 i
@@ -708,7 +734,7 @@ i
 i
 i
 b
-s
+x
 b
 i
 i

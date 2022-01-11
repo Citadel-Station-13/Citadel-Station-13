@@ -53,23 +53,68 @@
 	id = "vapor"
 
 /datum/gas_reaction/water_vapor/init_reqs()
-	min_requirements = list(GAS_H2O = MOLES_GAS_VISIBLE)
+	min_requirements = list(
+		GAS_H2O = MOLES_GAS_VISIBLE,
+		"MAX_TEMP" = T0C + 40
+	)
 
 /datum/gas_reaction/water_vapor/react(datum/gas_mixture/air, datum/holder)
-	var/turf/open/location = isturf(holder) ? holder : null
-	. = NO_REACTION
+	var/turf/open/location = holder
+	if(!istype(location))
+		return NO_REACTION
 	if (air.return_temperature() <= WATER_VAPOR_FREEZE)
 		if(location && location.freon_gas_act())
-			. = REACTING
+			return REACTING
 	else if(location && location.water_vapor_gas_act())
 		air.adjust_moles(GAS_H2O,-MOLES_GAS_VISIBLE)
-		. = REACTING
+		return REACTING
 
 // no test cause it's entirely based on location
+
+/datum/gas_reaction/condensation
+	priority = 0
+	name = "Condensation"
+	id = "condense"
+	exclude = TRUE
+	var/datum/reagent/condensing_reagent
+
+/datum/gas_reaction/condensation/New(datum/reagent/R)
+	. = ..()
+	if(!istype(R))
+		return
+	min_requirements = list(
+		"MAX_TEMP" = initial(R.boiling_point)
+	)
+	min_requirements[R.get_gas()] = MOLES_GAS_VISIBLE
+	name = "[R.name] condensation"
+	id = "[R.type] condensation"
+	condensing_reagent = R
+	exclude = FALSE
+
+/datum/gas_reaction/condensation/react(datum/gas_mixture/air, datum/holder)
+	. = NO_REACTION
+	var/turf/open/location = holder
+	if(!istype(location))
+		return
+	var/temperature = air.return_temperature()
+	var/static/datum/reagents/reagents_holder = new
+	reagents_holder.clear_reagents()
+	reagents_holder.chem_temp = temperature
+	var/G = condensing_reagent.get_gas()
+	var/amt = air.get_moles(G)
+	air.adjust_moles(G, -min(initial(condensing_reagent.condensation_amount), amt))
+	reagents_holder.add_reagent(condensing_reagent, amt)
+	. = REACTING
+	for(var/atom/movable/AM in location)
+		if(location.intact && AM.level == 1)
+			continue
+		reagents_holder.reaction(AM, TOUCH)
+	reagents_holder.reaction(location, TOUCH)
 
 //tritium combustion: combustion of oxygen and tritium (treated as hydrocarbons). creates hotspots. exothermic
 /datum/gas_reaction/tritfire
 	priority = -1 //fire should ALWAYS be last, but tritium fires happen before plasma fires
+	exclude = TRUE // generic fire now takes care of this
 	name = "Tritium Combustion"
 	id = "tritfire"
 
@@ -88,9 +133,9 @@
 			item.temperature_expose(air, temperature, CELL_VOLUME)
 		location.temperature_expose(air, temperature, CELL_VOLUME)
 
-/proc/radiation_burn(turf/open/location, energy_released)
+/proc/radiation_burn(turf/open/location, rad_power)
 	if(istype(location) && prob(10))
-		radiation_pulse(location, energy_released/TRITIUM_BURN_RADIOACTIVITY_FACTOR)
+		radiation_pulse(location, rad_power)
 
 /datum/gas_reaction/tritfire/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
@@ -151,6 +196,7 @@
 /datum/gas_reaction/plasmafire
 	priority = -2 //fire should ALWAYS be last, but plasma fires happen after tritium fires
 	name = "Plasma Combustion"
+	exclude = TRUE // generic fire now takes care of this
 	id = "plasmafire"
 
 /datum/gas_reaction/plasmafire/init_reqs()
@@ -300,7 +346,7 @@
 			fuels[fuel] *= oxidation_ratio
 	fuels += oxidizers
 	var/list/fire_products = GLOB.gas_data.fire_products
-	var/list/fire_enthalpies = GLOB.gas_data.fire_enthalpies
+	var/list/fire_enthalpies = GLOB.gas_data.enthalpies
 	for(var/fuel in fuels + oxidizers)
 		var/amt = fuels[fuel]
 		if(!burn_results[fuel])
