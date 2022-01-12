@@ -210,3 +210,4 @@
 	description = "<span class='nicegreen'>The gods are pleased with this offering!</span>\n"
 	mood_change = 5
 	timeout = 3 MINUTES
+	
