@@ -29356,14 +29356,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bul" = (
-/obj/structure/closet/wardrobe/grey,
-/obj/item/clothing/under/dress/skirt,
-/obj/item/clothing/under/dress/skirt,
-/obj/item/clothing/under/misc/assistantformal,
-/obj/item/clothing/head/beret,
-/obj/item/clothing/head/beret,
-/obj/item/clothing/head/beret/black,
-/obj/item/clothing/head/beret/black,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
@@ -34775,6 +34767,14 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/closet/wardrobe/grey,
+/obj/item/clothing/head/beret/black,
+/obj/item/clothing/head/beret/black,
+/obj/item/clothing/head/beret,
+/obj/item/clothing/head/beret,
+/obj/item/clothing/under/misc/assistantformal,
+/obj/item/clothing/under/dress/skirt,
+/obj/item/clothing/under/dress/skirt,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "bHa" = (
@@ -52631,10 +52631,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
-"dMI" = (
-/obj/structure/grille/broken,
-/turf/open/floor/plating,
-/area/medical/virology)
 "dMZ" = (
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
@@ -55353,7 +55349,7 @@
 	pixel_y = 7
 	},
 /turf/open/floor/plating,
-/area/medical/virology)
+/area/maintenance/aft)
 "hiV" = (
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plating,
@@ -58100,10 +58096,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/security/brig)
-"lal" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/medical/virology)
 "laq" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -58371,9 +58363,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"lsT" = (
-/turf/open/floor/plating,
-/area/medical/virology)
 "ltm" = (
 /obj/structure/chair/comfy/brown{
 	color = "#66b266";
@@ -59383,7 +59372,7 @@
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
-/area/medical/virology)
+/area/maintenance/aft)
 "mAH" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 8
@@ -60044,7 +60033,7 @@
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
-/area/medical/virology)
+/area/maintenance/aft)
 "nAH" = (
 /obj/structure/light_construct/small{
 	dir = 4
@@ -107803,7 +107792,7 @@ bKN
 bKN
 fTg
 sKL
-lal
+sxg
 bNd
 bOr
 qEs
@@ -108574,7 +108563,7 @@ bAw
 bZM
 gXM
 bAw
-lsT
+bAw
 bNd
 eoO
 bOr
@@ -108831,7 +108820,7 @@ nAH
 bzs
 bzs
 ccF
-dMI
+sKL
 bNd
 bPt
 qEs
