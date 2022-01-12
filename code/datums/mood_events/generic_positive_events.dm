@@ -205,3 +205,8 @@
 /datum/mood_event/cleared_stomach
 	description = "<span class='nicegreen'>Feels nice to get that out of the way!</span>\n"
 	mood_change = 3
+
+/datum/mood_event/sacrifice_good
+	description = "<span class='nicegreen'>The gods are pleased with this offering!</span>\n"
+	mood_change = 5
+	timeout = 3 MINUTES
