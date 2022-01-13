@@ -13,6 +13,7 @@
 	var/debug = FALSE //vv this if you want an artifact
 	var/variance = 0 //how much the height varies when doing a step (only for shitty anvils)
 	var/anvilqualityadd = 0 //how much the item quality is buffed based on this anvil (only for good anvils)
+	var/list/customrecipes = null //custom recipies (if we dont want to use the glob for whateer reason, special anvils etc)
 
 /obj/structure/anvil/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/ingot))
@@ -23,7 +24,10 @@
 		if(notsword.worktemp > 0)
 			var/datum/smith_recipe/todone
 			if(!notsword.plan)
-				todone = input(user, "What do you plan to make?") as null|anything in GLOB.smith_recipes //todo radial
+				if(customrecipes)
+					todone = input(user, "What do you plan to make?") as null|anything in customrecipes 
+				else
+					todone = input(user, "What do you plan to make?") as null|anything in GLOB.smith_recipes //todo radial
 				if(!todone)
 					return FALSE
 				else
@@ -106,6 +110,8 @@
 			workpiece.height += 12
 		if(STEP_FOLD)
 			workpiece.height += 24
+	var/tovary = ham.hamvariance + variance
+	workpiece.height + pick(tovary, 0-tovary)
 	workpiece.worktemp--
 	workpiece.add_step(stepdone)
 	user.visible_message("<span class='notice'>[user] works the metal on the anvil with their hammer with a loud clang!</span>", \
@@ -178,6 +184,7 @@
 	desc = "A slightly reinforced table. Good luck."
 	icon_state = "tablevil"
 	variance = 4
+	anvilqualityadd = -1
 
 
 /obj/structure/anvil/obtainable/table/do_shaping(mob/user, var/qualitychange)
@@ -190,7 +197,7 @@
 
 /obj/structure/anvil/obtainable/bronze
 	name = "bronze anvil"
-	desc = "A big block of bronze. Useable as an anvil."
+	desc = "An anvil made from bronze."
 	custom_materials = list(/datum/material/bronze=8000)
 	icon_state = "ratvaranvil"
 
@@ -200,23 +207,26 @@
 	custom_materials = list(/datum/material/sandstone=8000)
 	icon_state = "sandvil"
 	variance = 2
+	anvilqualityadd = -1
 
 /obj/structure/anvil/obtainable/basalt
 	name = "basalt brick anvil"
 	desc = "A big block of basalt. Useable as an anvil, better than sandstone. Igneous!"
 	icon_state = "sandvilnoir"
+	variance = 2
+	anvilqualityadd = 2
 
 /obj/structure/anvil/obtainable/basic
 	name = "anvil"
 	desc = "An anvil. It's got wheels bolted to the bottom."
-	anvilqualityadd = 1
+	anvilqualityadd = 0
 
 /obj/structure/anvil/obtainable/ratvar
 	name = "brass anvil"
 	desc = "A big block of what appears to be brass. Useable as an anvil. May contain traces of clock magic."
 	custom_materials = list(/datum/material/brass=8000)
 	icon_state = "ratvaranvil"
-	anvilqualityadd = 2
+	anvilqualityadd = 3
 
 /obj/structure/anvil/obtainable/ratvar/attackby(obj/item/I, mob/user)
 	if(is_servant_of_ratvar(user))
@@ -230,7 +240,7 @@
 	custom_materials = list(/datum/material/runedmetal=8000)
 	icon = 'icons/obj/smith.dmi'
 	icon_state = "evil"
-	anvilqualityadd = 2
+	anvilqualityadd = 3
 
 /obj/structure/anvil/obtainable/narsie/attackby(obj/item/I, mob/user)
 	if(iscultist(user))

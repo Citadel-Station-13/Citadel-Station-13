@@ -11,6 +11,14 @@ GLOBAL_LIST_INIT_TYPED(smith_recipes, /datum/smith_recipe, subtypesof(/datum/smi
 
 //sords
 
+/datum/smith_recipe/dagger
+	displayname = "dagger blade"
+	planlaststeps = list(STEP_HIT_HEAVY, STEP_DRAW, STEP_UPSET)
+	target_height_min = 10
+	target_height_perfect = 12
+	target_height_max = 16
+	output_type = /obj/item/smithing/knifeblade
+
 /datum/smith_recipe/scimitar
 	displayname = "scimitar blade"
 	planlaststeps = list(STEP_BEND, STEP_HIT_MODERATE, STEP_HIT_MODERATE)
@@ -27,11 +35,35 @@ GLOBAL_LIST_INIT_TYPED(smith_recipes, /datum/smith_recipe, subtypesof(/datum/smi
 	target_height_max = 38
 	output_type = /obj/item/smithing/rapierblade
 
+/datum/smith_recipe/sabre
+	displayname = "sabre blade"
+	planlaststeps = list(STEP_HIT_HEAVY, STEP_UPSET, STEP_FOLD)
+	target_height_min = 30
+	target_height_perfect = 32
+	target_height_max = 38
+	output_type = /obj/item/smithing/sabreblade
+
+/datum/smith_recipe/wakizashi
+	displayname = "wakizashi blade"
+	planlaststeps = list(STEP_FOLD, STEP_HIT_MODERATE, STEP_HIT_MODERATE)
+	target_height_min = 14
+	target_height_perfect = 19
+	target_height_max = 22
+	output_type = /obj/item/smithing/wakiblade
+
 /datum/smith_recipe/broadsword
 	displayname = "broadsword blade"
 	planlaststeps = list(STEP_HIT_LIGHT, STEP_BEND, STEP_BEND)
 	target_height_min = 14
 	target_height_perfect = 18
+	target_height_max = 20
+	output_type = /obj/item/smithing/broadblade
+
+/datum/smith_recipe/zweihander
+	displayname = "zweihander blade"
+	planlaststeps = list(STEP_HIT_LIGHT, STEP_HIT_HEAVY, STEP_FOLD)
+	target_height_min = 12
+	target_height_perfect = 15
 	target_height_max = 20
 	output_type = /obj/item/smithing/broadblade
 
@@ -68,8 +100,21 @@ GLOBAL_LIST_INIT_TYPED(smith_recipes, /datum/smith_recipe, subtypesof(/datum/smi
 	target_height_max = 30
 	output_type = /obj/item/smithing/pikehead
 
+/datum/smith_recipe/glaive
+	displayname = "glaive head"
+	planlaststeps = list(STEP_PUNCH, STEP_FOLD, STEP_UPSET)
+	target_height_min = 34
+	target_height_perfect = 36
+	target_height_max = 40
+	output_type = /obj/item/smithing/glaivehead
 
-
+/datum/smith_recipe/halberd
+	displayname = "halberd head"
+	planlaststeps = list(STEP_HIT_HEAVY, STEP_DRAW, STEP_PUNCH)
+	target_height_min = 18
+	target_height_perfect = 24
+	target_height_max = 26
+	output_type = /obj/item/smithing/halberdhead
 
 
 

@@ -158,6 +158,13 @@
 /obj/item/smithing/hammerhead/startfinish()
 	var/obj/item/melee/smith/hammer/finalforreal = new /obj/item/melee/smith/hammer(src)
 	finalforreal.force += quality/2
+	finalforreal.hamvariance = 1
+	if(quality > 0)
+		finalforreal.toolspeed = 1/quality
+		finalforreal.hamvariance = 0
+	else if(quality < 0)
+		finalforreal.toolspeed = quality * -2
+		finalforreal.hamvariance = 2
 	finalitem = finalforreal
 	..()
 
@@ -247,7 +254,27 @@
 	finalitem = finalforreal
 	..()
 
+/obj/item/smithing/wakiblade
+	name = "smithed wakizashi blade"
+	finishingitem = /obj/item/swordhandle
+	finalitem = /obj/item/melee/smith/wakizashi
+	icon_state = "waki"
 
+/obj/item/smithing/wakiblade/startfinish()
+	finalitem = new /obj/item/melee/smith/wakizashi(src)
+	finalitem.force += quality
+	..()
+
+/obj/item/smithing/sabreblade
+	name = "smithed sabre blade"
+	finishingitem = /obj/item/swordhandle
+	finalitem = /obj/item/melee/smith/sabre
+	icon_state = "sabre"
+
+/obj/item/smithing/sabreblade/startfinish()
+	finalitem = new /obj/item/melee/smith/sabre(src)
+	finalitem.force += quality
+	..()
 
 /obj/item/smithing/scimitarblade
 	name = "smithed scimitar blade"
@@ -285,6 +312,48 @@
 	finalitem = finalforreal
 	..()
 
+/obj/item/smithing/zweiblade
+	name = "smithed zweihander blade"
+	finishingitem = /obj/item/swordhandle
+	finalitem = /obj/item/melee/smith/twohand/zweihander
+	icon_state = "zwei"
+
+/obj/item/smithing/zweiblade/startfinish()
+	var/obj/item/melee/smith/twohand/zweihander/finalforreal = new /obj/item/melee/smith/twohand/zweihander(src)
+	finalforreal.force += quality
+	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
+	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]")
+	finalitem = finalforreal
+	..()
+
+/obj/item/smithing/halberdhead
+	name = "smithed halberd head"
+	finalitem = /obj/item/melee/smith/twohand/halberd
+	icon_state = "halberd"
+
+/obj/item/smithing/halberdhead/startfinish()
+	var/obj/item/melee/smith/twohand/halberd/finalforreal = new /obj/item/melee/smith/twohand/halberd(src)
+	finalforreal.force += quality
+	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
+	finalforreal.throwforce = finalforreal.force/3
+	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]")
+	finalitem = finalforreal
+	..()
+
+/obj/item/smithing/glaivehead
+	name = "smithed glaive head"
+	finalitem = /obj/item/melee/smith/twohand/glaive
+	icon_state = "glaive"
+
+/obj/item/smithing/glaivehead/startfinish()
+	var/obj/item/melee/smith/twohand/glaive/finalforreal = new /obj/item/melee/smith/twohand/glaive(src)
+	finalforreal.force += quality
+	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
+	finalforreal.throwforce = finalforreal.force
+	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]")
+	finalitem = finalforreal
+	..()
+
 /obj/item/smithing/katanablade
 	name = "smithed katana blade"
 	finishingitem = /obj/item/swordhandle
@@ -299,6 +368,29 @@
 	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]")
 	finalitem = finalforreal
 	..()
+
+/obj/item/smithing/knifeblade
+	name = "smithed knife blade"
+	finishingitem = /obj/item/swordhandle
+	finalitem = /obj/item/kitchen/knife
+	icon_state = "dagger"
+
+/obj/item/smithing/knifeblade/startfinish()
+	finalitem = new /obj/item/kitchen/knife(src)
+	finalitem.force = 4 + quality/2
+	finalitem.icon = 'icons/obj/smith.dmi'
+	finalitem.icon_state = "dagger"
+	finalitem.name = "dagger"
+	finalitem.desc = "A dagger."
+	var/mutable_appearance/overlay = mutable_appearance('icons/obj/smith.dmi', "daggerhilt")
+	overlay.appearance_flags = RESET_COLOR
+	finalitem.add_overlay(overlay)
+	if(finalitem.force < 0)
+		finalitem.force = 0
+	finalitem.material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	..()
+
+
 
 /obj/item/stick
 	name = "wooden rod"
