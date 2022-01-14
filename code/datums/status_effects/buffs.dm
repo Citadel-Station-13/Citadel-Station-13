@@ -578,9 +578,6 @@
 /datum/status_effect/regenerative_core/on_apply()
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
-
-	if(HAS_TRAIT(owner, TRAIT_ROBOTIC_ORGANISM))	//Robots can heal from cores, but only get 1/5th of the healing. They can use this to get past the damage threshhold however, and then regularely heal from there.
-		heal_amount *= 0.2
 	owner.adjustBruteLoss(-heal_amount, only_organic = FALSE)
 	if(!AmBloodsucker(owner))	//use your coffin you lazy bastard
 		owner.adjustFireLoss(-heal_amount, only_organic = FALSE)
