@@ -1,5 +1,5 @@
 //Objects that spawn ghosts in as a certain role when they click on it, i.e. away mission bartenders.
-
+#define spawnOverride TRUE
 //Preserved terrarium/seed vault: Spawns in seed vault structures in lavaland. Ghosts become plantpeople and are advised to begin growing plants in the room near them.
 /obj/effect/mob_spawn/human/seed_vault
 	name = "preserved terrarium"
@@ -101,7 +101,7 @@
 	return ..()
 
 /obj/effect/mob_spawn/human/ash_walker/allow_spawn(mob/user, silent = FALSE)
-	if(!(user.key in team.players_spawned))//one per person unless you get a bonus spawn
+	if(!(user.key in team.players_spawned) || spawnOverride)//one per person unless you get a bonus spawn
 		return TRUE
 	to_chat(user, span_warning("<b>You have exhausted your usefulness to the Necropolis</b>."))
 	return FALSE
