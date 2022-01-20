@@ -84,9 +84,6 @@
 	if(H.stat == DEAD)
 		to_chat(user, "<span class='notice'>[src] are useless on the dead.</span>")
 		return
-	if(!area == lavaland)
-		to_chat(user, "<span class='notice'>[src] is useless off Lavaland.</span>")
-		return
 	if(H != user)
 		H.visible_message("[user] forces [H] to apply [src]... Black tendrils entangle and reinforce [H.p_them()]!")
 		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "other"))
