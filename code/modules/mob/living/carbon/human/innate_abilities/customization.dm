@@ -36,18 +36,25 @@
 				to_chat(H, "<span class='notice'>Invalid color. Your color is not bright enough.</span>")
 	else if(select_alteration == "Eye Color")
 		if(iscultist(H) && HAS_TRAIT(H, TRAIT_CULT_EYES))
-			to_chat(H, "<span class='notice'>The power of the cult overrules your eyes, do not be ashamed of your power!</span>")
-		var/new_color = input(owner, "Choose your eye color:", "Race change","#"+H.dna.features["mcolor"]) as color|null
-		else if(new_color)
-			var/temp_hsv = RGBtoHSV(new_color)
-			if(ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3]) // mutantcolors must be bright
-				H.dna.features["mcolor"] = sanitize_hexcolor(new_color, 6)
-				H.left_eye_color = "mcolor"
-				H.right_eye_color = "mcolor"
-				H.dna?.update_ui_block(DNA_LEFT_EYE_COLOR_BLOCK)
-				H.dna?.update_ui_block(DNA_RIGHT_EYE_COLOR_BLOCK)
-			else
-				to_chat(H, "<span class='notice'>Invalid color. Your color is not bright enough.</span>")
+			to_chat(H, "<span class='cultlarge'>\"I do not need you to hide yourself anymore, relish my gift.\"</span>")
+			return
+
+		var/heterochromia = input(owner, "Do you want to have heterochromia?", "Confirm Multicolors") in list("Yes", "No")
+		if(heterochromia == "Yes")
+			var/new_color1 = input(owner, "Choose your left eye color:", "Eye Color Change","#"+H.dna?.features["left_eye_color"]) as color|null
+			if(new_color1)
+				H.left_eye_color = sanitize_hexcolor(new_color1, 6)
+			var/new_color2 = input(owner, "Choose your right eye color:",  "Eye Color Change","#"+H.dna?.features["right_eye_color"]) as color|null
+			if(new_color2)
+				H.right_eye_color = sanitize_hexcolor(new_color2, 6)
+		else
+			var/new_eyes = input(owner, "Choose your eye color:", "Character Preference","#"+H.dna?.features["left_eye_color"]) as color|null
+			if(new_eyes)
+				H.left_eye_color = sanitize_hexcolor(new_eyes, 6)
+				H.right_eye_color = sanitize_hexcolor(new_eyes, 6)
+		H.dna?.update_ui_block(DNA_LEFT_EYE_COLOR_BLOCK)
+		H.dna?.update_ui_block(DNA_RIGHT_EYE_COLOR_BLOCK)
+		H.update_body()
 	else if(select_alteration == "Hair Style")
 		if(H.gender == MALE)
 			var/new_style = input(owner, "Select a facial hair style", "Hair Alterations")  as null|anything in GLOB.facial_hair_styles_list
