@@ -108,6 +108,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/burnmod = 1
 	///multiplier for damage from cold temperature
 	var/coldmod = 1
+	///moves their safe minimum temp by this value.
+	var/cold_offset = 0
+	///moves their safe maximum temp by this value.
+	var/hot_offset = 0
 	///multiplier for damage from hot temperature
 	var/heatmod = 1
 	///multiplier for stun durations
@@ -147,6 +151,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	var/list/blacklisted_quirks = list() // Quirks that will be removed upon gaining this species, to be defined by species
 	var/list/removed_quirks = list() // Quirks that got removed due to being blacklisted, and will be restored when on_species_loss() is called
+	var/balance_point_values = FALSE	//If true, will balance point values on species gain after removing blacklisted quirks. Use this for roundstart species with blacklisted quirks that people may attempt to use to powergame trait points.
 
 	///Punch-specific attack verb.
 	var/attack_verb = "punch"
@@ -331,7 +336,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	var/should_have_brain = TRUE
 	var/should_have_heart = !(NOBLOOD in species_traits)
-	var/should_have_lungs = !(TRAIT_NOBREATH in inherent_traits)
+	var/should_have_lungs = ((TRAIT_AUXILIARY_LUNGS in inherent_traits) || !(TRAIT_NOBREATH in inherent_traits))
 	var/should_have_appendix = !(TRAIT_NOHUNGER in inherent_traits)
 	var/should_have_eyes = TRUE
 	var/should_have_ears = TRUE
@@ -569,17 +574,39 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		for(var/obj/item/bodypart/B in C.bodyparts)
 			B.change_bodypart_status(initial(B.status), FALSE, TRUE)
 
+	if((TRAIT_ROBOTIC_ORGANISM in inherent_traits) && C.hud_used)
+		C.hud_used.coolant_display.clear()
+
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
 // shamelessly inspired by antag_datum.remove_blacklisted_quirks()
 /datum/species/proc/remove_blacklisted_quirks(mob/living/carbon/C)
-	var/mob/living/L = C.mind?.current
-	if(istype(L))
-		for(var/q in L.roundstart_quirks)
-			var/datum/quirk/Q = q
-			if(Q.type in blacklisted_quirks)
-				qdel(Q)
-				removed_quirks += Q.type
+	. = 0
+	if(istype(C))
+		if(!balance_point_values)
+			for(var/q in C.roundstart_quirks)
+				var/datum/quirk/Q = q
+				if(Q.type in blacklisted_quirks)
+					removed_quirks += Q.type
+					. += 1
+					qdel(Q)			
+		else
+			var/point_overhead = 0
+			for(var/datum/quirk/Q as anything in C.roundstart_quirks)
+				if(Q.type in blacklisted_quirks)
+					point_overhead -= Q.value
+					removed_quirks += Q.type
+					. += 1
+					qdel(Q)
+			if(point_overhead)
+				for(var/datum/quirk/Q as anything in C.roundstart_quirks)
+					if(Q.value > 0)
+						point_overhead -= Q.value
+						removed_quirks += Q.type
+						. += 1
+						qdel(Q)
+						if(!point_overhead)
+							break
 
 // restore any quirks that we removed
 /datum/species/proc/restore_quirks(mob/living/carbon/C)
@@ -1165,7 +1192,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		var/takes_crit_damage = !HAS_TRAIT(H, TRAIT_NOCRITDAMAGE)
 		if((H.health < H.crit_threshold) && takes_crit_damage)
-			H.adjustBruteLoss(1)
+			if(!HAS_TRAIT(H, TRAIT_ROBOTIC_ORGANISM))
+				H.adjustBruteLoss(1)
+			else
+				H.adjustFireLoss(1) //Robots melt instead of taking brute.	
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -1874,7 +1904,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(BODY_ZONE_HEAD)
 				if(!I.get_sharpness() && armor_block < 50)
 					if(prob(I.force))
-						if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+						if(HAS_TRAIT(H, TRAIT_ROBOTIC_ORGANISM))
 							H.adjustToxLoss(5, toxins_type = TOX_SYSCORRUPT) //Bonk! - Effectively 5 bonus damage
 						else
 							H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
@@ -2171,15 +2201,20 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	//Thermal protection (insulation) has mixed benefits in two situations (hot in hot places, cold in hot places)
 	if(!H.on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
 		var/natural = 0
+		var/cooling_efficiency = 1
 		if(H.stat != DEAD)
 			natural = H.natural_bodytemperature_stabilization()
+			cooling_efficiency = H.get_cooling_efficiency()
+
+		if(HAS_TRAIT(H, TRAIT_ROBOTIC_ORGANISM))	//Synths by default slowly heat up and need to lose said heat to the environment or active cooling. If you have very high cooling efficiency, you instead passively cool.
+			H.adjust_bodytemperature(SYNTH_PASSIVE_HEAT_GAIN * (1 - cooling_efficiency), (T0C + SYNTH_MIN_PASSIVE_COOLING_TEMP), (T0C + SYNTH_MAX_PASSIVE_GAIN_TEMP))
 		var/thermal_protection = 1
 		if(loc_temp < H.bodytemperature) //Place is colder than we are
 			thermal_protection -= H.get_thermal_protection(loc_temp, TRUE) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 			if(H.bodytemperature < BODYTEMP_NORMAL) //we're cold, insulation helps us retain body heat and will reduce the heat we lose to the environment
-				H.adjust_bodytemperature((thermal_protection+1)*natural + max(thermal_protection * (loc_temp - H.bodytemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX))
+				H.adjust_bodytemperature((thermal_protection+1)*natural + max((thermal_protection * (loc_temp - H.bodytemperature) * cooling_efficiency) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX))
 			else //we're sweating, insulation hinders our ability to reduce heat - and it will reduce the amount of cooling you get from the environment
-				H.adjust_bodytemperature(natural*(1/(thermal_protection+1)) + max((thermal_protection * (loc_temp - H.bodytemperature) + BODYTEMP_NORMAL - H.bodytemperature) / BODYTEMP_COLD_DIVISOR , BODYTEMP_COOLING_MAX)) //Extra calculation for hardsuits to bleed off heat
+				H.adjust_bodytemperature(natural*(1/(thermal_protection+1)) + max(((thermal_protection * (loc_temp - H.bodytemperature) + BODYTEMP_NORMAL - H.bodytemperature) * cooling_efficiency) / BODYTEMP_COLD_DIVISOR , BODYTEMP_COOLING_MAX)) //Extra calculation for hardsuits to bleed off heat
 		else //Place is hotter than we are
 			thermal_protection -= H.get_thermal_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 			if(H.bodytemperature < BODYTEMP_NORMAL) //and we're cold, insulation enhances our ability to retain body heat but reduces the heat we get from the environment
@@ -2203,7 +2238,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				H.throw_alert("tempfeel", /atom/movable/screen/alert/hot, 3)
 
 	// +/- 50 degrees from 310K is the 'safe' zone, where no damage is dealt.
-	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !HAS_TRAIT(H, TRAIT_RESISTHEAT))
+	if(H.bodytemperature > (BODYTEMP_HEAT_DAMAGE_LIMIT + hot_offset) && !HAS_TRAIT(H, TRAIT_RESISTHEAT))
 		//Body temperature is too hot.
 
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
@@ -2231,11 +2266,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			H.emote("scream")
 		H.apply_damage(burn_damage, BURN)
 
-	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(H, TRAIT_RESISTCOLD))
+	else if(H.bodytemperature < (BODYTEMP_COLD_DAMAGE_LIMIT + cold_offset) && !HAS_TRAIT(H, TRAIT_RESISTCOLD))
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
 		//Apply cold slowdown
-		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR))
+		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = (((BODYTEMP_COLD_DAMAGE_LIMIT + cold_offset) - H.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 		switch(H.bodytemperature)
 			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
 				H.throw_alert("temp", /atom/movable/screen/alert/shiver, 1)

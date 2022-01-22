@@ -37,7 +37,7 @@
 	var/list/whatmighthappen = list()
 	whatmighthappen += list("avoided" = 3, "dropthing" = 1, "movetile" = 1, "shortdeaf" = 1, "flopover" = 1, "nutriloss" = 1, "selfflash" = 1, "harmies" = 1)
 	if(corruption >= CORRUPTION_THRESHHOLD_MAJOR)
-		whatmighthappen += list("longdeaf" = 1, "longknockdown" = 1, "shortlimbdisable" = 1, "shortblind" = 1, "shortstun" = 1, "shortmute" = 1, "vomit" = 1, "halluscinate" = 1)
+		whatmighthappen += list("longdeaf" = 1, "longknockdown" = 1, "shortlimbdisable" = 1, "shortblind" = 1, "shortstun" = 1, "shortmute" = 1, "vomit" = 1, "hallucinate" = 1, "jamcoolanthud" = 1)
 	if(corruption >= CORRUPTION_THRESHHOLD_CRITICAL)
 		whatmighthappen += list("receporgandamage" = 1, "longlimbdisable" = 1, "blindmutedeaf" = 1, "longstun" = 1, "sleep" = 1, "inducetrauma" = 1, "amplifycorrupt" = 1, "changetemp" = 1)
 	var/event = pickweight(whatmighthappen)
@@ -97,8 +97,10 @@
 		if("vomit")
 			to_chat(src, "<span class='notice'>Ejecting contaminant.</span>")
 			vomit()
-		if("halluscinate")
+		if("hallucinate")
 			hallucination += 20 //Doesn't give a cue
+		if("jamcoolanthud")
+			hud_used.coolant_display.jam(10)
 		if("receporgandamage")
 			adjustOrganLoss(ORGAN_SLOT_EARS, rand(10, 20))
 			adjustOrganLoss(ORGAN_SLOT_EYES, rand(10, 20))
@@ -159,7 +161,7 @@
 
 /mob/living/carbon/proc/forcesleep(time = 100)
 	to_chat(src, "<span class='notice'>Preparations complete, powering down.</span>")
-	Sleeping(time, 0)
+	Sleeping(time)
 
 
 #undef CORRUPTION_CHECK_INTERVAL

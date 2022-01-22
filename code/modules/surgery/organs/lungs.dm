@@ -415,7 +415,7 @@
 	if(!.)
 		return
 	if(!failed && organ_flags & ORGAN_FAILING)
-		if(owner && owner.stat == CONSCIOUS)
+		if(owner && owner.stat == CONSCIOUS && !HAS_TRAIT(owner, TRAIT_NOBREATH))
 			owner.visible_message("<span class='danger'>[owner] grabs [owner.p_their()] throat, struggling for breath!</span>", \
 								"<span class='userdanger'>You suddenly feel like you can't breathe!</span>")
 		failed = TRUE
@@ -425,6 +425,10 @@
 /obj/item/organ/lungs/ipc
 	name = "ipc cooling system"
 	icon_state = "lungs-c"
+	var/is_cooling = 0
+	var/cooling_coolant_drain = 5	//Coolant (blood) use per tick of active cooling.
+	var/next_warn = BLOOD_VOLUME_NORMAL
+	actions_types = list(/datum/action/item_action/organ_action/toggle)
 
 /obj/item/organ/lungs/ipc/emp_act(severity) //Should probably put it somewhere else later
 	. = ..()
@@ -432,11 +436,65 @@
 		return
 	to_chat(owner, "<span class='warning'>Alert: Critical cooling system failure!</span>")
 	switch(severity)
-		if(1)
-			owner.adjust_bodytemperature(100*TEMPERATURE_DAMAGE_COEFFICIENT)
-		if(2)
+		if(1 to 50)
 			owner.adjust_bodytemperature(30*TEMPERATURE_DAMAGE_COEFFICIENT)
+		if(50 to INFINITY)
+			owner.adjust_bodytemperature(100*TEMPERATURE_DAMAGE_COEFFICIENT)
+	
+/obj/item/organ/lungs/ipc/ui_action_click(mob/user, actiontype)
+	if(!owner)
+		return
+	if(!HAS_TRAIT(user, TRAIT_ROBOTIC_ORGANISM))
+		to_chat(user, "<span class='notice'>Biotype incompatible with cooling system. Activation signal suppressed.</span>")
+		return
+	if(!is_cooling && owner.blood_volume < cooling_coolant_drain)
+		to_chat(user, "<span class='warning'>Coolant levels insufficient to enable active cooling - Replenish immediately.</span>")
+		return
 
+	is_cooling = !is_cooling
+	to_chat(user, "<span class='notice'>Active cooling [is_cooling ? "enabled" : "disabled"] - current coolant level: [round(owner.blood_volume / BLOOD_VOLUME_NORMAL * 100, 0.1)] percent.</span>")
+	var/possible_next_warn = owner.blood_volume - (BLOOD_VOLUME_NORMAL * 0.1)
+	if(possible_next_warn > next_warn)
+		next_warn = possible_next_warn	//If we recovered blood inbetween activations, update warning
+
+/obj/item/organ/lungs/ipc/on_life(seconds, times_fired)
+	. = ..()
+	if(!.)
+		if(is_cooling)
+			to_chat(owner, "<span class='warning'>Cooling system safeguards triggered - active cooling aborted.</span>")
+			is_cooling = 0
+		return
+	if(!is_cooling)
+		return
+	if(!HAS_TRAIT(owner, TRAIT_ROBOTIC_ORGANISM))
+		to_chat(owner, "<span class='warning'>Biotype incompatible with cooling system. Commencing emergency shutdown.</span>")
+		is_cooling = 0
+		return
+	if(owner.stat >= SOFT_CRIT)
+		to_chat(owner, "<span class='warning'>Operating system ping returned null response - Shutting down active cooling to avoid component damage.</span>")
+		is_cooling = 0
+		return
+	if(owner.blood_volume < cooling_coolant_drain)
+		to_chat(owner, "<span class='warning'>Coolant levels insufficient to maintain active cooling - Replenish immediately.</span>")
+		is_cooling = 0
+		return
+	if(abs(owner.bodytemperature - T20C) < SYNTH_ACTIVE_COOLING_TEMP_BOUNDARY)
+		return	//Does not drain coolant (blood) nor do anything if we are close enough to room temp.
+	var/cooling_efficiency =  owner.get_cooling_efficiency()
+	var/actual_drain = cooling_coolant_drain * max(1 - cooling_efficiency, 0.2)	//Being in a suitable environment reduces drain by up to 80%
+	var/temp_diff = owner.bodytemperature - T20C
+	if(temp_diff > 0)
+		owner.adjust_bodytemperature(clamp(((T0C - owner.bodytemperature) * max(cooling_efficiency, 0.5) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX, -SYNTH_ACTIVE_COOLING_MIN_ADJUSTMENT))
+	else
+		owner.adjust_bodytemperature(clamp(((T20C - owner.bodytemperature) * max(cooling_efficiency, 0.5) / BODYTEMP_HEAT_DIVISOR), SYNTH_ACTIVE_COOLING_MIN_ADJUSTMENT, BODYTEMP_HEATING_MAX))
+	var/datum/gas_mixture/air = owner.loc.return_air()
+	if(!air || air.return_pressure() < ONE_ATMOSPHERE * SYNTH_ACTIVE_COOLING_LOW_PRESSURE_THRESHOLD)
+		actual_drain *= SYNTH_ACTIVE_COOLING_LOW_PRESSURE_PENALTY	//Our cooling system can handle hot places okayish, but starts to cry at low pressures (reads: Effectively vents hot coolant thats been warmed up via internal heat-exchange as emergency measure and with very low efficiency)
+	owner.blood_volume = max(owner.blood_volume - actual_drain, 0)
+	if(owner.blood_volume <= next_warn)
+		to_chat(owner, "[owner.blood_volume > BLOOD_VOLUME_BAD ? "<span class='notice'>" : "<span class='warning'>"]Coolant level passed threshold - now [round(owner.blood_volume / BLOOD_VOLUME_NORMAL * 100, 0.1)] percent.</span>")
+		next_warn -= (BLOOD_VOLUME_NORMAL * 0.1)
+			
 /obj/item/organ/lungs/plasmaman
 	name = "plasma filter"
 	desc = "A spongy rib-shaped mass for filtering plasma from the air."
