@@ -153,17 +153,24 @@
 	var/coolant
 	var/total_efficiency
 	var/environ_efficiency
+	var/suitlink_efficiency
 	if(!jammed)
 		coolant = owner.blood_volume
 		total_efficiency = owner.get_cooling_efficiency()
 		environ_efficiency = owner.get_environment_cooling_efficiency()
+		suitlink_efficiency = owner.check_suitlinking()
 	else
 		coolant = rand(1, 600)
 		total_efficiency = rand(1, 15) / 10
 		environ_efficiency = rand(1, 20) / 10
 	. += "<span class='notice'>Performing internal cooling system diagnostics:</span>"
 	. += "<span class='notice'>Coolant level: [coolant] units, [round((coolant / (BLOOD_VOLUME_NORMAL * owner.blood_ratio)) * 100, 0.1)] percent</span>"
-	. += "<span class='notice'>Current Cooling Efficiency: [round(total_efficiency * 100, 0.1)] percent, environment viability: [round(environ_efficiency * 100, 0.1)] percent.</span>"
+	. += "<span class='notice'>Current Cooling Efficiency: [round(total_efficiency * 100, 0.1)] percent, [suitlink_efficiency ? "<font color='green'>active suitlink detected</font>, guaranteeing <font color='green'>[suitlink_efficiency * 100]%</font> environmental cooling efficiency." : "environment viability: [round(environ_efficiency * 100, 0.1)] percent."]</span>"
+
+/atom/movable/screen/synth/coolant_counter/proc/jam(amount, cap = 20)
+	if(jammed > cap)	//Preserve previous more impactful event.
+		return
+	jammed = min(jammed + amount, cap)
 
 /datum/hud/human/New(mob/living/carbon/human/owner)
 	..()
