@@ -23,8 +23,6 @@
 	//readd this mob's HUDs (antag, med, etc)
 	reload_huds()
 
-	reload_fullscreen() // Reload any fullscreen overlays this mob has.
-
 	sync_mind()
 
 	//Reload alternate appearances
@@ -56,8 +54,4 @@
 		LoadComponent(/datum/component/field_of_vision, field_of_vision_type)
 
 	// load rendering
-	if(!client.parallax_holder)
-		client.CreateParallax()
-	else
-		client.parallax_holder.Reset()
-	client.update_clickcatcher()
+	reload_rendering()

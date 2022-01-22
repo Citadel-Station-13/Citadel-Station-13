@@ -715,6 +715,7 @@
 			if(shuttle_area.parallax_movedir)
 				parallax_slowdown()
 
+#warn oh no
 /obj/docking_port/mobile/proc/parallax_slowdown()
 	for(var/place in shuttle_areas)
 		var/area/shuttle/shuttle_area = place
@@ -728,8 +729,6 @@
 			continue
 		for (var/thing2 in T)
 			var/atom/movable/AM = thing2
-			if (length(AM.client_mobs_in_contents))
-				AM.update_parallax_contents()
 
 /obj/docking_port/mobile/proc/check_transit_zone()
 	if(assigned_transit)

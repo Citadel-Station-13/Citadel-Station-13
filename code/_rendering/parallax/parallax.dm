@@ -12,6 +12,10 @@
 		objects = CreateObjects()
 		layers = objects.len
 
+/datum/parallax/Destroy()
+	QDEL_LIST(objects)
+	return ..()s
+
 /**
  * Gets a new version of the objects inside - used when applying to a holder.
  */
@@ -21,4 +25,4 @@
 		. += layer.Clone()
 
 /datum/parallax/proc/CreateObjectS()
-	objects = list()
+	. = objects = list()

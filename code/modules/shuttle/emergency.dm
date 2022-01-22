@@ -462,6 +462,7 @@
 					areas += E
 				hyperspace_sound(HYPERSPACE_END, areas)
 			if(time_left <= PARALLAX_LOOP_TIME)
+				#warn oh no
 				var/area_parallax = FALSE
 				for(var/place in shuttle_areas)
 					var/area/shuttle/shuttle_area = place

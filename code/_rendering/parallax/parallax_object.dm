@@ -13,6 +13,10 @@
 	var/offset_x = 0
 	/// current cached offset y
 	var/offset_y = 0
+	/// normal centered x
+	var/center_x = 0
+	/// normal centered y
+	var/center_y = 0
 	/// absolute - always determine shift x/y as a function of real x/y instead of allowing for relative scroll.
 	var/absolute = FALSE
 	/// parallax level required to see this
@@ -21,6 +25,25 @@
 	var/view_current
 	/// dynamic self tile - tile to our view size. set this to false for static parallax layers.
 	var/dynamic_self_tile = TRUE
+	/// map id
+	var/map_id
+
+/atom/movable/screen/parallax_layer/proc/ResetPosition(x, y)
+	offset_x = -(center_x + speed * x)
+	offset_y = -(center_y + speed * y)
+	if(!absolute)
+		offset_x = MODULUS(offset_x, 240)
+		offset_y = MODULUS(offset_y, 240)
+	screen_loc = "[map_id && "[map_id]:"]CENTER-7:[round(offset_x,1)],CENTER-7:[round(offset_y,1)]"
+
+/atom/movable/screen/parallax_layer/proc/RelativePosition(x, y, rel_x, rel_y)
+	if(absolute)
+		return ResetPosition(x, y)
+	offset_x -= rel_x * speed
+	offset_y -= rel_y * speed
+	offset_x = MODULUS(offset_x, 240)
+	offset_y = MODULUS(offset_y, 240)
+	screen_loc = "[map_id && "[map_id]:"]CENTER-7:[round(offset_x,1)],CENTER-7:[round(offset_y,1)]"
 
 /atom/movable/screen/parallax_layer/proc/SetView(client_view = world.view)
 	if(current_view == client_view)
@@ -61,3 +84,9 @@
 	layer.parallax_intensity = parallax_intensity
 	layer.view_current = view_current
 	layer.appearance = appearance
+
+/atom/movable/screen/parallax_layer/proc/default_x()
+	return absolute_center_x
+
+/atom/movable/screen/parallax_layer/proc/default_y()
+	return absolute_center_y

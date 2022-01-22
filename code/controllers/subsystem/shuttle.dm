@@ -513,6 +513,7 @@ SUBSYSTEM_DEF(shuttle)
 	if(!midpoint)
 		return FALSE
 	var/area/shuttle/transit/A = new()
+	#warn oh no
 	A.parallax_movedir = travel_dir
 	A.contents = proposal.reserved_turfs
 	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)

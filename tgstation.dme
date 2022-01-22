@@ -291,6 +291,7 @@
 #include "code\_onclick\hud\screen_objects\stamina.dm"
 #include "code\_onclick\hud\screen_objects\storage.dm"
 #include "code\_onclick\hud\screen_objects\vore.dm"
+#include "code\_rendering\mob.dm"
 #include "code\_rendering\atom_huds\alternate_appearance.dm"
 #include "code\_rendering\atom_huds\atom_hud.dm"
 #include "code\_rendering\atom_huds\data_huds.dm"
