@@ -53,31 +53,21 @@
 
 /obj/item/seeds/replicapod/on_reagent_change(changetype)
 	if(changetype == ADD_REAGENT)
-		var/datum/reagent/blood/B = reagents.has_reagent(/datum/reagent/blood)
-		if(B)
-			if(B.data["mind"] && B.data["cloneable"])
-				mind = B.data["mind"]
-				ckey = B.data["ckey"]
-				realName = B.data["real_name"]
-				blood_gender = B.data["gender"]
-				blood_type = B.data["blood_type"]
-				features = B.data["features"]
-				factions = B.data["factions"]
-				quirks = B.data["quirks"]
-				contains_sample = TRUE
-				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
-			else
-				visible_message("<span class='warning'>The [src] rejects the sample!</span>")
-
-	if(!reagents.has_reagent(/datum/reagent/blood))
-		mind = null
-		ckey = null
-		realName = null
-		blood_gender = null
-		blood_type = null
-		features = null
-		factions = null
-		contains_sample = FALSE
+		for(var/datum/reagent/R as anything in reagents.reagent_list)
+			if(R.data["mind"])
+				if(R.data["cloneable"])
+					mind = R.data["mind"]
+					ckey = R.data["ckey"]
+					realName = R.data["real_name"]
+					blood_gender = R.data["gender"]
+					blood_type = R.data["blood_type"]
+					features = R.data["features"]
+					factions = R.data["factions"]
+					quirks = R.data["quirks"]
+					contains_sample = TRUE
+					visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
+				else
+					visible_message("<span class='warning'>The [src] rejects the sample!</span>")
 
 /obj/item/seeds/replicapod/get_analyzer_text()
 	var/text = ..()
