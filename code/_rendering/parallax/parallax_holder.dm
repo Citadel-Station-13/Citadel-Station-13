@@ -21,6 +21,8 @@
 	var/atom/forced_eye
 	/// last turf loc
 	var/turf/last
+	/// last area - for parallax scrolling/loop animations
+	var/area/last_area
 	/// Holder object for vis
 	var/atom/movable/screen/parallax_vis/vis_holder
 	/// are we not on the main map? if so, put map id here
@@ -29,6 +31,16 @@
 	var/list/atom/movable/screen/parallax_layer/layers
 	/// vis contents
 	var/list/atom/movable/vis
+	/// currently scrolling?
+	var/scrolling = FALSE
+	/// current scroll speed in DS per scroll
+	var/scroll_speed
+	/// current scroll angle - think of this as scrolling in this angle relative to ground, e.g. 90 would be "picture is moving to right", 180 is "picture moving south"
+	var/scroll_angle
+	/// current scroll turn - applied after angle. if angle is 0 (picture moving north) and turn is 90, it would be like if you turned your viewport 90 deg clockwise.
+	var/scroll_turn
+	/// animation lock - currently animating? timerid of lock if true
+	var/animation_lock = FALSE
 
 /datum/parallax_holder/New(client/C, secondary_map, forced_eye)
 	owner = C
@@ -53,19 +65,22 @@
 	return ..()
 
 /datum/parallax_holder/proc/Reset()
-	// if no eye, tear down
 	if(!owner.eye)
+		// if no eye, tear down
+		last = eye = last_area = null
 		SetParallax(null)
 		return
 	// first, check loc
 	var/turf/T = get_turf(owner.eye)
 	if(!T)
 		// if in nullspace, tear down
+		last = eye = last_area = null
 		SetParallax(null)
 		return
 	// set last loc and eye
 	last = T
 	eye = forced_eye || owner.eye
+	last_area = T.loc
 	// then, check if we need to switch/set parallax
 	var/expected_type = SSparallax.get_parallax_type(T.z)
 	if(QDELETED(parallax) || (parallax.type != expected_type))
@@ -76,10 +91,8 @@
 		Sync()
 		Apply()
 	// hard reset positions to correct positions
-	for(var/atom/movable/parallax_layer/L in layers)
+	for(var/atom/movable/screen/parallax_layer/L in layers)
 		L.ResetPosition(T.x, T.y)
-	// process scrolling/movedir
-	#warn impl
 
 // better updates via client_mobs_in_contents can be created again when important recursive contents is ported!
 /datum/parallax_holder/proc/Update(full)
@@ -101,11 +114,15 @@
 	// get rel offsets
 	var/rel_x = T.x - last.x
 	var/rel_y = T.y - last.y
+	// set last
+	last = T
 	// move
 	for(var/atom/movable/screen/parallax_layer/L in layers)
 		L.RelativePosition(T.x, T.y, rel_x, rel_y)
 	// process scrolling/movedir
-	#warn impl
+	if(last_area != T.loc)
+		last_area = T.loc
+		Sync()
 
 /**
  * Syncs us to our parallax objects. Does NOT check if we should have those objects, that's Reset()'s job.
@@ -121,7 +138,9 @@
 		L.map_id = secondary_map
 	if(!istype(vis_holder))
 		vis_holder = new /atom/movable/screen/parallax_vis
-	vis_holder.vis_contents = vis
+	var/turf/T = get_turf(eye)
+	vis_holder.vis_contents = vis = T? SSparallax.get_parallax_vis_contents(T.z) || list()
+	#warn movedir
 
 /datum/parallax_holder/proc/Apply()
 	if(QDELETED(owner))
@@ -174,6 +193,24 @@
 		return
 	Sync()
 	Apply()
+
+/**
+ * Sets scrolling
+ *
+ * @params
+ * speed - ds per loop
+ * turn - angle clockwise from north to turn the motion to
+ * angle - angle clockwise from north to scroll towards
+ * windup - ds to spend on windups. 0 for immediate.
+ */
+/datum/parallax_holder/proc/SetScrolling(speed)
+
+/**
+ * Marks an animation lock.
+ */
+/datum/parallax_holder/proc/AnimationLock(time)
+	animation_lock = addtimer(CALLBACK(src, .proc/_anim_lock_finished), time, TIMER_CLIENT_TIME)
+
 
 
 // This sets which way the current shuttle is moving (returns true if the shuttle has stopped moving so the caller can append their animation)

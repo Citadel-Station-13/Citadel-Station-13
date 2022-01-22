@@ -191,8 +191,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	persistent_inventory_update(screenmob)
 	screenmob.update_action_buttons(1)
 	reorganize_alerts()
-	screenmob.reload_fullscreen()
-	client.parallax_holder?.Apply()
+	screenmob.reload_rendering()
 
 	// ensure observers get an accurate and up-to-date view
 	if (!viewmob)
