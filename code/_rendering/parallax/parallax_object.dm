@@ -50,9 +50,9 @@
 	screen_loc = "[map_id && "[map_id]:"]CENTER-7:[round(offset_x,1)],CENTER-7:[round(offset_y,1)]"
 
 /atom/movable/screen/parallax_layer/proc/SetView(client_view = world.view)
-	if(current_view == client_view)
+	if(view_current == client_view)
 		return
-	current_view = client_view
+	view_current= client_view
 	if(!dynamic_self_tile)
 		return
 	var/list/real_view = getviewsize(client_view)
@@ -90,7 +90,7 @@
 	layer.appearance = appearance
 
 /atom/movable/screen/parallax_layer/proc/default_x()
-	return absolute_center_x
+	return center_x
 
 /atom/movable/screen/parallax_layer/proc/default_y()
-	return absolute_center_y
+	return center_y

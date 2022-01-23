@@ -9,7 +9,7 @@
 
 /datum/parallax/New(create_objects = TRUE)
 	if(create_objects)
-		objects = CreateObjects()
+		CreateObjectS()
 		layers = objects.len
 
 /datum/parallax/Destroy()

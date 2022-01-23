@@ -10,8 +10,8 @@
 
 /datum/parallax/space/CreateObjects()
 	. = ..()
-	objects += new /atom/movable/screen/parallax_layer/space/layer_1,
-	objects += new /atom/movable/screen/parallax_layer/space/layer_2,
+	objects += new /atom/movable/screen/parallax_layer/space/layer_1
+	objects += new /atom/movable/screen/parallax_layer/space/layer_2
 	objects += new /atom/movable/screen/parallax_layer/space/layer_3
 	objects += new /atom/movable/screen/parallax_layer/space/planet/P
 	if(random_layer)
@@ -30,7 +30,7 @@
 	icon_state = "layer2"
 	speed = 1
 	layer = 2
-	parallax_intensity = PARALLAX_MEDIUM
+	parallax_intensity = PARALLAX_MED
 
 /atom/movable/screen/parallax_layer/space/layer_3
 	icon_state = "layer3"
