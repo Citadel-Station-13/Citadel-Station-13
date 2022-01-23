@@ -35,12 +35,14 @@
 	var/scrolling = FALSE
 	/// current scroll speed in DS per scroll
 	var/scroll_speed
-	/// current scroll angle - think of this as scrolling in this angle relative to ground, e.g. 90 would be "picture is moving to right", 180 is "picture moving south"
-	var/scroll_angle
 	/// current scroll turn - applied after angle. if angle is 0 (picture moving north) and turn is 90, it would be like if you turned your viewport 90 deg clockwise.
 	var/scroll_turn
+	/// timeofday of the **start** of the current loop animation. This is needed to smoothly calculate transitions!
+	var/loop_start_timeofday
 	/// animation lock - currently animating? timerid of lock if true
 	var/animation_lock = FALSE
+	/// animation timer queued - always delete the last one and store the next one
+	var/animation_timer
 
 /datum/parallax_holder/New(client/C, secondary_map, forced_eye)
 	owner = C
@@ -55,6 +57,7 @@
 		if(owner.parallax_holder == src)
 			owner.parallax_holder = null
 		Remove()
+	HardResetAnimations()
 	QDEL_NULL(vis_holder)
 	QDEL_NULL(parallax)
 	layers = null
@@ -189,21 +192,57 @@
 	if(delete_old && istype(parallax) && !QDELETED(parallax))
 		qdel(parallax)
 	parallax = P
+	HardResetAnimations()
 	if(!parallax)
 		return
 	Sync()
 	Apply()
 
 /**
- * Sets scrolling
+ * Runs a modifier to parallax as an animation.
  *
  * @params
  * speed - ds per loop
  * turn - angle clockwise from north to turn the motion to
- * angle - angle clockwise from north to scroll towards
  * windup - ds to spend on windups. 0 for immediate.
  */
-/datum/parallax_holder/proc/SetScrolling(speed)
+/datum/parallax_holder/proc/Animation(speed, turn, windup)
+	if(!windup || windup < 0)
+		windup = 0
+	/// first handle turn. we turn the planemaster
+	var/atom/movable/screen/plane_master/parallax/PM = locate() in owner.screen
+	animate(PM, transform = turn_transform, time = windup)
+
+/datum/parallax_holder/proc/StopCurrentLoop()
+
+
+/**
+ * fully resets animation state
+ */
+/datum/parallax_holder/proc/HardResetAnimations()
+	// reset vars
+	scroll_angle = 0
+	scroll_speed = 0
+	scrolling = FALSE
+	loop_start_timeofday = null
+	if(animation_lock)
+		deltimer(animation_lock)
+		animation_lock = null
+	if(animation_queued)
+		deltimer(animation_queued)
+		animation_queued = null
+	// reset turn
+	if(owner)
+		var/atom/movable/screen/plane_master/parallax/PM = locate() in owner.screen
+		animate(PM, transform = matrix(), time = 0, flags = ANIMATION_END_NOW)
+	// reset objects
+	for(var/atom/movable/screen/plane_master/PM in layers)
+		if(PM.animation_queued)
+			deltimer(PM.animation_queued)
+			PM.animation_queued = null
+		PM.animation_loop_start = null
+		animate(PM, transform = matrix, time = 0, flags = ANIMATION_END_NOW)
+
 
 /**
  * Marks an animation lock.

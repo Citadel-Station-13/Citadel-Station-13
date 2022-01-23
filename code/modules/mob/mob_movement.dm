@@ -403,3 +403,8 @@
 
 /mob/proc/canZMove(direction, turf/target)
 	return FALSE
+
+/mob/onTransitZ(old_z, new_z)
+	. = ..()
+	if(old_z != new_z)
+		client?.parallax_holder?.Reset()

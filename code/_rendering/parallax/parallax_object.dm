@@ -27,6 +27,10 @@
 	var/dynamic_self_tile = TRUE
 	/// map id
 	var/map_id
+	/// queued animation timerid
+	var/animation_queued
+	/// timeofday an animation loop was started at
+	var/animation_loop_start
 
 /atom/movable/screen/parallax_layer/proc/ResetPosition(x, y)
 	offset_x = -(center_x + speed * x)
