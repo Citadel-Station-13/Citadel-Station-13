@@ -121,7 +121,7 @@
 /datum/reagent/fermi/BEsmaller_hypo
 	name = "Rectify milk" //Rectify
 	color = "#E60584"
-	taste_description = "a milky ice cream like flavour."
+	taste_description = "a milky ice cream like flavour"
 	metabolization_rate = 0.25
 	description = "A medicine used to treat organomegaly in a patient's breasts."
 	var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
