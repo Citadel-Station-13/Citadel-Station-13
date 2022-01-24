@@ -1,0 +1,6 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - bugfix: "Artificial zeolite now has a taste"
+  - spellcheck: "\"Zeolites\" has been renamed to \"zeolite\" (\"a beaker of zeolites\" is like \"a beaker of woods\")"
+  - spellcheck: "Various taste descriptors have had their end punctuation removed"
