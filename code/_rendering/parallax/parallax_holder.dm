@@ -130,15 +130,21 @@
  */
 /datum/parallax_holder/proc/Sync()
 	layers = list()
-	for(var/atom/movable/screen/parallax_layer/L in parallax.layers)
+	for(var/atom/movable/screen/parallax_layer/L in parallax.objects)
 		layers += L
 		L.map_id = secondary_map
 	if(!istype(vis_holder))
 		vis_holder = new /atom/movable/screen/parallax_vis
 	var/turf/T = get_turf(eye)
 	vis_holder.vis_contents = vis = T? SSparallax.get_parallax_vis_contents(T.z) : list()
-	if(scrolling != last_area.parallax_moving || scroll_speed != last_area.parallax_move_speed || scroll_turn != last_area.parallax_move_angle)
-		Animation(last_area.parallax_moving? last_area.parallax_move_speed : 0, last_area.parallax_move_angle, last_area.parallax_move_speed)
+	if(!T)
+		if(scrolling)
+			HardResetAnimations()
+	else
+		if(!last_area)
+			last_area = T.loc
+		if(scrolling != last_area.parallax_moving || scroll_speed != last_area.parallax_move_speed || scroll_turn != last_area.parallax_move_angle)
+			Animation(last_area.parallax_moving? last_area.parallax_move_speed : 0, last_area.parallax_move_angle, last_area.parallax_move_speed)
 
 /datum/parallax_holder/proc/Apply()
 	if(QDELETED(owner))
@@ -149,6 +155,7 @@
 			continue
 		if(!L.ShouldSee(owner, last))
 			continue
+		L.SetView(owner.view)
 		. |= L
 	owner.screen |= .
 	if(!secondary_map)		// we're the primary
@@ -216,6 +223,8 @@
 		return
 	// always scroll from north; turn handles everything
 	for(var/atom/movable/screen/parallax_layer/P in layers)
+		if(P.absolute)
+			continue
 		// end all previous animations, do the first segment by shifting down one screen
 		animate(P, transform = matrix(1, 0, 0, 0, 1, -480), time = speed / P.speed, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_END_NOW)
 		P.QueueLoop(speed / P.speed, speed / P.speed)
@@ -228,6 +237,7 @@
 	if(owner && turn != scroll_turn)
 		var/atom/movable/screen/plane_master/parallax/PM = locate() in owner.screen
 		var/matrix/turn_transform = matrix()
+
 		turn_transform.Turn(turn)
 		animate(PM, transform = turn_transform, time = time, flags = ANIMATION_END_NOW, easing = QUAD_EASING | EASE_OUT)
 	if(scroll_speed == 0)
@@ -236,10 +246,11 @@
 		return
 	// someone can do the math for "stop after a smooth iteration" later.
 	for(var/atom/movable/screen/parallax_layer/P in layers)
+		if(P.absolute)
+			continue
 		P.CancelAnimation()
 		animate(P, transform = matrix(1, 0, 0, 0, 1, 480), time = 0, flags = ANIMATION_END_NOW)
 		animate(P, transform = matrix(), time = time, easing = QUAD_EASING | EASE_OUT)
-
 
 /**
  * fully resets animation state
@@ -255,6 +266,8 @@
 		animate(PM, transform = matrix(), time = 0, flags = ANIMATION_END_NOW)
 	// reset objects
 	for(var/atom/movable/screen/parallax_layer/P in layers)
+		if(P.absolute)
+			continue
 		P.CancelAnimation()
 		animate(P, transform = matrix(), time = 0, flags = ANIMATION_END_NOW)
 

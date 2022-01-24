@@ -82,7 +82,7 @@
 	add_overlay(new_overlays)
 
 /atom/movable/screen/parallax_layer/proc/ShouldSee(client/C, atom/location)
-	return
+	return TRUE
 
 /atom/movable/screen/parallax_layer/proc/Clone()
 	var/atom/movable/screen/parallax_layer/layer = new type
@@ -105,7 +105,7 @@
 
 /atom/movable/screen/parallax_layer/proc/_loop(speed)
 	transform = matrix(1, 0, 0, 0, 1, 480)
-	animate(src, transform = matrix(), time = speed, loop = -1, easing = LINEAR_EASING)
+	animate(src, transform = matrix(), time = speed, loop = -1, easing = LINEAR_EASING, flags = ANIMATION_END_NOW)
 	queued_animation = null
 
 /atom/movable/screen/parallax_layer/proc/CancelAnimation()

@@ -83,4 +83,4 @@
  * constructs a transform matrix, defaulting to identity
  */
 /proc/transform_matrix_construct(a = 1, b, c, d = 1, e, f)
-	return new matrix(a, b, c, d, e, f)
+	return matrix(a, b, c, d, e, f)

@@ -143,7 +143,6 @@
 	add_filter("emissives", 1, alpha_mask_filter(render_source = EMISSIVE_RENDER_TARGET, flags = MASK_INVERSE))
 	add_filter("object_lighting", 2, alpha_mask_filter(render_source = O_LIGHTING_VISUAL_RENDER_TARGET, flags = MASK_INVERSE))
 
-
 /**
  * Handles emissive overlays and emissive blockers.
  */
@@ -159,16 +158,27 @@
 
 ///Contains space parallax
 /atom/movable/screen/plane_master/parallax
-	name = "parallax plane master"
+	name = "parallax (scrolling) plane master"
 	plane = PLANE_SPACE_PARALLAX
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_target = PLANE_SPACE_PARALLAX_RENDER_TARGET
+
+/atom/movable/screen/plane_master/parallax/Initialize(mapload)
+	. = ..()
+	var/list/static_layer_filter = layering_filter(
+		render_source = PLANE_SPACE_PARALLAX_STATIC_RENDER_TARGET,
+		flags = FILTER_UNDERLAY,
+		blend_mode = BLEND_ADD
+	)
+	add_filter("static_parallax_layer", 1, static_layer_filter)
 
 /atom/movable/screen/plane_master/parallax_static
-	name = "parallax plane master"
+	name = "parallax (static) plane master"
 	plane = PLANE_SPACE_PARALLAX_STATIC
-	blend_mode = BLEND_MULTIPLY
+	blend_mode = BLEND_ADD
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_target = PLANE_SPACE_PARALLAX_STATIC_RENDER_TARGET
 
 /atom/movable/screen/plane_master/parallax_white
 	name = "parallax whitifier plane master"
@@ -179,7 +189,6 @@
 	plane = CAMERA_STATIC_PLANE
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
-
 
 //Reserved to chat messages, so they are still displayed above the field of vision masking.
 /atom/movable/screen/plane_master/chat_messages

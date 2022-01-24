@@ -721,7 +721,6 @@
 		if(parallax_ongoing)
 			parallax_slowdown()
 
-#warn oh no
 /obj/docking_port/mobile/proc/parallax_slowdown()
 	for(var/area/shuttle_area in shuttle_areas + assigned_transit?.assigned_area)
 		shuttle_area.parallax_moving = FALSE

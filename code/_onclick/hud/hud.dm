@@ -191,7 +191,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	persistent_inventory_update(screenmob)
 	screenmob.update_action_buttons(1)
 	reorganize_alerts()
-	screenmob.reload_rendering()
 
 	// ensure observers get an accurate and up-to-date view
 	if (!viewmob)
@@ -200,6 +199,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			show_hud(hud_version, M)
 	else if (viewmob.hud_used)
 		viewmob.hud_used.plane_masters_update()
+
+	screenmob.reload_rendering()
 
 	return TRUE
 

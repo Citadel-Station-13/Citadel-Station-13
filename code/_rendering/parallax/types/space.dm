@@ -13,7 +13,10 @@
 	objects += new /atom/movable/screen/parallax_layer/space/layer_1
 	objects += new /atom/movable/screen/parallax_layer/space/layer_2
 	objects += new /atom/movable/screen/parallax_layer/space/layer_3
-	objects += new /atom/movable/screen/parallax_layer/space/planet
+	var/atom/movable/screen/parallax_layer/space/planet/P = new
+	P.pixel_x = planet_offset_x
+	P.pixel_y = planet_offset_y
+	objects += P
 	if(random_layer)
 		objects += random_layer
 	if(ispath(random_layer, /atom/movable/screen/parallax_layer/space/random/space_gas))
@@ -60,4 +63,4 @@
 
 /atom/movable/screen/parallax_layer/space/planet/ShouldSee(client/C, atom/location)
 	var/turf/T = get_turf(location)
-	return T && is_station_level(T.z)
+	return ..() && T && is_station_level(T.z)

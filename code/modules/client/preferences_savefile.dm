@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	52
+#define SAVEFILE_VERSION_MAX	53
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -342,6 +342,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 							copied_color_list[2] = copied_color_list[3]
 				marking_list += list(list(part, old_marking_value, copied_color_list))
 			features["mam_body_markings"] = marking_list
+
+	if(current_version < 53)
+		parallax = PARALLAX_INSANE
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)

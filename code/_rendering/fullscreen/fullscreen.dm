@@ -27,10 +27,12 @@
  * Second argument is for animation delay.
  */
 /mob/proc/clear_fullscreen(category, animated = 10)
-	var/atom/movable/screen/fullscreen/screen = fullscreens[category]
 	if(!fullscreens)
 		return
+	var/atom/movable/screen/fullscreen/screen = fullscreens[category]
 	fullscreens -= category
+	if(!screen)
+		return
 	if(animated > 0)
 		animate(screen, alpha = 0, time = animated)
 		addtimer(CALLBACK(src, .proc/_remove_fullscreen_direct, screen), animated, TIMER_CLIENT_TIME)
