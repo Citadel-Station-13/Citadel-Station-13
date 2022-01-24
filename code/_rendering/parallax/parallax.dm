@@ -14,7 +14,7 @@
 
 /datum/parallax/Destroy()
 	QDEL_LIST(objects)
-	return ..()s
+	return ..()
 
 /**
  * Gets a new version of the objects inside - used when applying to a holder.
@@ -24,5 +24,5 @@
 	for(var/atom/movable/screen/parallax_layer/layer in objects)
 		. += layer.Clone()
 
-/datum/parallax/proc/CreateObjectS()
+/datum/parallax/proc/CreateObjects()
 	. = objects = list()

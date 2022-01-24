@@ -513,8 +513,9 @@ SUBSYSTEM_DEF(shuttle)
 	if(!midpoint)
 		return FALSE
 	var/area/shuttle/transit/A = new()
-	#warn oh no
-	A.parallax_movedir = travel_dir
+	A.parallax_moving = TRUE
+	A.parallax_move_angle = dir2angle(turn(travel_dir, 180))
+	A.parallax_move_speed = M.parallax_speed
 	A.contents = proposal.reserved_turfs
 	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
 	new_transit_dock.reserved_area = proposal

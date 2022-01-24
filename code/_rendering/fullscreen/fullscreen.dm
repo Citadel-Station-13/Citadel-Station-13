@@ -9,7 +9,7 @@
 /mob/proc/overlay_fullscreen(category, type, severity)
 	ASSERT(type)
 	if(!category)
-		cateogry = type
+		category = type
 	var/atom/movable/screen/fullscreen/screen = fullscreens[category]
 	if (!screen || screen.type != type)
 		// needs to be recreated
@@ -119,7 +119,7 @@
 	. = ..()
 	if(view_current != client_view)
 		var/list/actualview = getviewsize(client_view)
-		view = client_view
+		view_current = client_view
 		transform = matrix(actualview[1] / size_x, 0, 0, 0, actualview[2] / size_y, 0)
 
 /atom/movable/screen/fullscreen/scaled/brute

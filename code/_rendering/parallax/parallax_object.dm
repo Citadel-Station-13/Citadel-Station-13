@@ -27,6 +27,8 @@
 	var/dynamic_self_tile = TRUE
 	/// map id
 	var/map_id
+	/// queued animation timerid
+	var/queued_animation
 
 /atom/movable/screen/parallax_layer/Initialize(mapload)
 	. = ..()
@@ -97,3 +99,16 @@
 
 /atom/movable/screen/parallax_layer/proc/default_y()
 	return center_y
+
+/atom/movable/screen/parallax_layer/proc/QueueLoop(delay, speed)
+	queued_animation = addtimer(CALLBACK(src, .proc/_loop, speed), time = delay, flags = TIMER_STOPPABLE)
+
+/atom/movable/screen/parallax_layer/proc/_loop(speed)
+	transform = matrix(1, 0, 0, 0, 1, 480)
+	animate(src, transform = matrix(), time = speed, loop = -1, easing = LINEAR_EASING)
+	queued_animation = null
+
+/atom/movable/screen/parallax_layer/proc/CancelAnimation()
+	if(queued_animation)
+		deltimer(queued_animation)
+		queued_animation = null

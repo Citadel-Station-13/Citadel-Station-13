@@ -16,8 +16,8 @@
 	objects += new /atom/movable/screen/parallax_layer/space/planet/P
 	if(random_layer)
 		objects += random_layer
-	if(ispath(random_layer, /atom/movable/screen/space/random/space_gas))
-		var/atom/movable/screen/space/random/space_gas/SG = locate(random_layer) in objects
+	if(ispath(random_layer, /atom/movable/screen/parallax_layer/space/random/space_gas))
+		var/atom/movable/screen/space/parallax_layer/random/space_gas/SG = locate(random_layer) in objects
 		SG.add_atom_colour(random_gas_color, ADMIN_COLOUR_PRIORITY)
 
 /atom/movable/screen/parallax_layer/space/layer_1

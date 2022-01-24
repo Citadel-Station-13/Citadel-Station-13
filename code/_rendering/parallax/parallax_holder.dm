@@ -37,10 +37,6 @@
 	var/scroll_speed
 	/// current scroll turn - applied after angle. if angle is 0 (picture moving north) and turn is 90, it would be like if you turned your viewport 90 deg clockwise.
 	var/scroll_turn
-	/// animation lock - currently animating? timerid of lock if true
-	var/animation_lock = FALSE
-	/// animation callback queued for after animation lock
-	var/datum/callback/animation_queued
 
 /datum/parallax_holder/New(client/C, secondary_map, forced_eye)
 	owner = C
@@ -140,8 +136,9 @@
 	if(!istype(vis_holder))
 		vis_holder = new /atom/movable/screen/parallax_vis
 	var/turf/T = get_turf(eye)
-	vis_holder.vis_contents = vis = T? SSparallax.get_parallax_vis_contents(T.z) || list()
-	#warn movedir
+	vis_holder.vis_contents = vis = T? SSparallax.get_parallax_vis_contents(T.z) : list()
+	if(scrolling != last_area.parallax_moving || scroll_speed != last_area.parallax_move_speed || scroll_turn != last_area.parallax_move_angle)
+		Animation(last_area.parallax_move_speed, last_area.parallax_move_angle, last_area.parallax_move_speed)
 
 /datum/parallax_holder/proc/Apply()
 	if(QDELETED(owner))
@@ -205,16 +202,21 @@
  * windup - ds to spend on windups. 0 for immediate.
  */
 /datum/parallax_holder/proc/Animation(speed = 25, turn = 0, windup = 0)
+	if(scroll_speed = 0)
+		StopScrolling(turn = turn, time = windup)
+		return
 	if(owner && turn != scroll_turn)
 		// first handle turn. we turn the planemaster
 		var/atom/movable/screen/plane_master/parallax/PM = locate() in owner.screen
-		animate(PM, transform = turn_transform, time = windup, easing = QUADEASING)
+		animate(PM, transform = turn_transform, time = windup, easing = QUAD_EASING | EASE_IN)
 	if(scroll_speed == speed)
 		// we're done
 		return
-	// always scroll towards north; turn handles everything
-	var/matrix/scrolling_matrix = matrix(1, 0, 0, 0, 1, 480)
-
+	// always scroll from north; turn handles everything
+	for(var/atom/movable/screen/parallax_layer/P in layers)
+		// end all previous animations, do the first segment by shifting down one screen
+		animate(P, transform = matrix(1, 0, 0, 0, 1, -480), time = speed / P.speed, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_END_NOW)
+		P.QueueLoop(speed / P.speed, speed / P.speed)
 
 /**
  * Smoothly stops the animation, turning to a certain angle as needed.
@@ -223,12 +225,16 @@
 	// reset turn
 	if(owner && turn != scroll_turn)
 		var/atom/movable/screen/plane_master/parallax/PM = locate() in owner.screen
-		animate(PM, transform = matrix(), time = time, flags = ANIMATION_END_NOW, easing = QUAD_EASING)
+		animate(PM, transform = matrix(), time = time, flags = ANIMATION_END_NOW, easing = QUAD_EASING | EASE_OUT)
 	if(scroll_speed == 0)
 		// we're done
+		scrolling = FALSE
 		return
 	// someone can do the math for "stop after a smooth iteration" later.
-
+	for(var/atom/movable/screen/parallax_layer/P in layers)
+		P.CancelAnimation()
+		animate(P, transform = matrix(1, 0, 0, 0, 1, 480), time = 0, flags = ANIMATION_END_NOW)
+		animate(P, transform = matrix(), time = time, easing = QUAD_EASING | EASE_OUT)
 
 
 /**
@@ -239,108 +245,14 @@
 	scroll_turn = 0
 	scroll_speed = 0
 	scrolling = FALSE
-	loop_start_timeofday = null
-	if(animation_lock)
-		deltimer(animation_lock)
-		animation_lock = null
-	if(animation_queued)
-		deltimer(animation_queued)
-		animation_queued = null
 	// reset turn
 	if(owner)
 		var/atom/movable/screen/plane_master/parallax/PM = locate() in owner.screen
 		animate(PM, transform = matrix(), time = 0, flags = ANIMATION_END_NOW)
 	// reset objects
-	for(var/atom/movable/screen/plane_master/PM in layers)
-		animate(PM, transform = matrix(), time = 0, flags = ANIMATION_END_NOW)
-
-
-/**
- * Marks an animation lock.
- */
-/datum/parallax_holder/proc/AnimationLock(time)
-	animation_lock = addtimer(CALLBACK(src, .proc/_anim_lock_finished), time, TIMER_CLIENT_TIME)
-
-/datum/parallax_holder/proc/_anim_lock_finished()
-	animation_lock = null
-	if(animation_queued)
-		animation_queued.InvokeAsync()
-
-// This sets which way the current shuttle is moving (returns true if the shuttle has stopped moving so the caller can append their animation)
-/datum/hud/proc/set_parallax_movedir(new_parallax_movedir, skip_windups)
-	. = FALSE
-	var/client/C = mymob.client
-	if(new_parallax_movedir == C.parallax_movedir)
-		return
-	var/animatedir = new_parallax_movedir
-	if(new_parallax_movedir == FALSE)
-		var/animate_time = 0
-		for(var/thing in C.parallax_layers)
-			var/atom/movable/screen/parallax_layer/L = thing
-			L.icon_state = initial(L.icon_state)
-			L.update_o(C.view)
-			var/T = PARALLAX_LOOP_TIME / L.speed
-			if (T > animate_time)
-				animate_time = T
-		C.dont_animate_parallax = world.time + min(animate_time, PARALLAX_LOOP_TIME)
-		animatedir = C.parallax_movedir
-
-	var/matrix/newtransform
-	switch(animatedir)
-		if(NORTH)
-			newtransform = matrix(1, 0, 0, 0, 1, 480)
-		if(SOUTH)
-			newtransform = matrix(1, 0, 0, 0, 1,-480)
-		if(EAST)
-			newtransform = matrix(1, 0, 480, 0, 1, 0)
-		if(WEST)
-			newtransform = matrix(1, 0,-480, 0, 1, 0)
-
-	var/shortesttimer
-	if(!skip_windups)
-		for(var/thing in C.parallax_layers)
-			var/atom/movable/screen/parallax_layer/L = thing
-
-			var/T = PARALLAX_LOOP_TIME / L.speed
-			if (isnull(shortesttimer))
-				shortesttimer = T
-			if (T < shortesttimer)
-				shortesttimer = T
-			L.transform = newtransform
-			animate(L, transform = matrix(), time = T, easing = QUAD_EASING | (new_parallax_movedir ? EASE_IN : EASE_OUT), flags = ANIMATION_END_NOW)
-			if (new_parallax_movedir)
-				L.transform = newtransform
-				animate(transform = matrix(), time = T) //queue up another animate so lag doesn't create a shutter
-
-	C.parallax_movedir = new_parallax_movedir
-	if (C.parallax_animate_timer)
-		deltimer(C.parallax_animate_timer)
-	var/datum/callback/CB = CALLBACK(src, .proc/update_parallax_motionblur, C, animatedir, new_parallax_movedir, newtransform)
-	if(skip_windups)
-		CB.InvokeAsync()
-	else
-		C.parallax_animate_timer = addtimer(CB, min(shortesttimer, PARALLAX_LOOP_TIME), TIMER_CLIENT_TIME|TIMER_STOPPABLE)
-
-/datum/hud/proc/update_parallax_motionblur(client/C, animatedir, new_parallax_movedir, matrix/newtransform)
-	if(!C)
-		return
-	C.parallax_animate_timer = FALSE
-	for(var/thing in C.parallax_layers)
-		var/atom/movable/screen/parallax_layer/L = thing
-		if (!new_parallax_movedir)
-			animate(L)
-			continue
-
-		var/newstate = initial(L.icon_state)
-		var/T = PARALLAX_LOOP_TIME / L.speed
-
-		if (newstate in icon_states(L.icon))
-			L.icon_state = newstate
-			L.update_o(C.view)
-
-		L.transform = newtransform
-
-		animate(L, transform = matrix(), time = T, loop = -1, flags = ANIMATION_END_NOW)
+	for(var/atom/movable/screen/parallax_layer/P in layers)
+		P.CancelAnimation()
+		animate(P, transform = matrix(), time = 0, flags = ANIMATION_END_NOW)
 
 /client/proc/CreateParallax()
 	if(!parallax_holder)

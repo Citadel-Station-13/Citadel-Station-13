@@ -367,6 +367,9 @@
 	var/can_move_docking_ports = FALSE
 	var/list/hidden_turfs = list()
 
+	/// parallax speed in seconds per loop
+	var/parallax_speed = 25
+
 /obj/docking_port/mobile/register(replace = FALSE)
 	. = ..()
 	if(!id)

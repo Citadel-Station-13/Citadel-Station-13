@@ -151,9 +151,9 @@ All ShuttleMove procs go here
 	//The old turf has now been given back to the area that turf originaly belonged to
 
 	var/area/old_dest_area = newT.loc
-#warn oh no
-	parallax_movedir = old_dest_area.parallax_movedir
-
+	parallax_moving = old_dest_area.parallax_moving
+	parallax_move_angle = old_dest_area.parallax_move_angle
+	parallax_move_speed = old_dest_area.parallax_move_speed
 	old_dest_area.contents -= newT
 	contents += newT
 	newT.change_area(old_dest_area, src)
