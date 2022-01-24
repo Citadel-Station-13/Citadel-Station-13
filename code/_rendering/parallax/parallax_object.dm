@@ -2,7 +2,7 @@
 /atom/movable/screen/parallax_layer
 	icon = 'icons/screen/parallax.dmi'
 	blend_mode = BLEND_ADD
-	plane = PLANE_SPACE_PARALLAX
+	plane = PLANE_SPACE_PARALLAX_AUTO
 	screen_loc = "CENTER-7,CENTER-7"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
@@ -27,12 +27,15 @@
 	var/dynamic_self_tile = TRUE
 	/// map id
 	var/map_id
-	/// queued animation timerid
-	var/animation_queued
-	/// timeofday an animation loop was started at
-	var/animation_loop_start
+
+/atom/movable/screen/parallax_layer/Initialize(mapload)
+	. = ..()
+	if(plane == PLANE_SPACE_PARALLAX_AUTO)
+		plane = absolute? PLANE_SPACE_PARALLAX_STATIC : PLANE_SPACE_PARALLAX
 
 /atom/movable/screen/parallax_layer/proc/ResetPosition(x, y)
+	// remember that our offsets/directiosn are relative to the player's viewport
+	// this means we need to scroll reverse to them.
 	offset_x = -(center_x + speed * x)
 	offset_y = -(center_y + speed * y)
 	if(!absolute)
@@ -52,7 +55,7 @@
 /atom/movable/screen/parallax_layer/proc/SetView(client_view = world.view)
 	if(view_current == client_view)
 		return
-	view_current= client_view
+	view_current = client_view
 	if(!dynamic_self_tile)
 		return
 	var/list/real_view = getviewsize(client_view)

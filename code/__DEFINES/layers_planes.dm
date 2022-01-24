@@ -5,9 +5,16 @@
 
 #define CLICKCATCHER_PLANE -99
 
-#define PLANE_SPACE -95
+#define PLANE_SPACE -98
 #define PLANE_SPACE_RENDER_TARGET "PLANE_SPACE"
-#define PLANE_SPACE_PARALLAX -90
+
+// special value - auto on Initialize() based on absolute y/n
+#define PLANE_SPACE_PARALLAX_AUTO -97
+// this one doesn't turn
+#define PLANE_SPACE_PARALLAX_STATIC -96
+#define PLANE_SPACE_PARALLAX_STATIC_RENDER_TARGET "PLANE_SPACE_PARALLAX_STATIC"
+// this one turns
+#define PLANE_SPACE_PARALLAX -95
 #define PLANE_SPACE_PARALLAX_RENDER_TARGET "PLANE_SPACE_PARALLAX"
 
 #define OPENSPACE_LAYER 17 //Openspace layer over all

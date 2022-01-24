@@ -37,12 +37,10 @@
 	var/scroll_speed
 	/// current scroll turn - applied after angle. if angle is 0 (picture moving north) and turn is 90, it would be like if you turned your viewport 90 deg clockwise.
 	var/scroll_turn
-	/// timeofday of the **start** of the current loop animation. This is needed to smoothly calculate transitions!
-	var/loop_start_timeofday
 	/// animation lock - currently animating? timerid of lock if true
 	var/animation_lock = FALSE
-	/// animation timer queued - always delete the last one and store the next one
-	var/animation_timer
+	/// animation callback queued for after animation lock
+	var/datum/callback/animation_queued
 
 /datum/parallax_holder/New(client/C, secondary_map, forced_eye)
 	owner = C
@@ -206,14 +204,31 @@
  * turn - angle clockwise from north to turn the motion to
  * windup - ds to spend on windups. 0 for immediate.
  */
-/datum/parallax_holder/proc/Animation(speed, turn, windup)
-	if(!windup || windup < 0)
-		windup = 0
-	/// first handle turn. we turn the planemaster
-	var/atom/movable/screen/plane_master/parallax/PM = locate() in owner.screen
-	animate(PM, transform = turn_transform, time = windup)
+/datum/parallax_holder/proc/Animation(speed = 25, turn = 0, windup = 0)
+	if(owner && turn != scroll_turn)
+		// first handle turn. we turn the planemaster
+		var/atom/movable/screen/plane_master/parallax/PM = locate() in owner.screen
+		animate(PM, transform = turn_transform, time = windup, easing = QUADEASING)
+	if(scroll_speed == speed)
+		// we're done
+		return
+	// always scroll towards north; turn handles everything
+	var/matrix/scrolling_matrix = matrix(1, 0, 0, 0, 1, 480)
 
-/datum/parallax_holder/proc/StopCurrentLoop()
+
+/**
+ * Smoothly stops the animation, turning to a certain angle as needed.
+ */
+/datum/parallax_holder/proc/StopScrolling(turn = 0, time = 30)
+	// reset turn
+	if(owner && turn != scroll_turn)
+		var/atom/movable/screen/plane_master/parallax/PM = locate() in owner.screen
+		animate(PM, transform = matrix(), time = time, flags = ANIMATION_END_NOW, easing = QUAD_EASING)
+	if(scroll_speed == 0)
+		// we're done
+		return
+	// someone can do the math for "stop after a smooth iteration" later.
+
 
 
 /**
@@ -221,7 +236,7 @@
  */
 /datum/parallax_holder/proc/HardResetAnimations()
 	// reset vars
-	scroll_angle = 0
+	scroll_turn = 0
 	scroll_speed = 0
 	scrolling = FALSE
 	loop_start_timeofday = null
@@ -237,11 +252,7 @@
 		animate(PM, transform = matrix(), time = 0, flags = ANIMATION_END_NOW)
 	// reset objects
 	for(var/atom/movable/screen/plane_master/PM in layers)
-		if(PM.animation_queued)
-			deltimer(PM.animation_queued)
-			PM.animation_queued = null
-		PM.animation_loop_start = null
-		animate(PM, transform = matrix, time = 0, flags = ANIMATION_END_NOW)
+		animate(PM, transform = matrix(), time = 0, flags = ANIMATION_END_NOW)
 
 
 /**
@@ -250,7 +261,10 @@
 /datum/parallax_holder/proc/AnimationLock(time)
 	animation_lock = addtimer(CALLBACK(src, .proc/_anim_lock_finished), time, TIMER_CLIENT_TIME)
 
-
+/datum/parallax_holder/proc/_anim_lock_finished()
+	animation_lock = null
+	if(animation_queued)
+		animation_queued.InvokeAsync()
 
 // This sets which way the current shuttle is moving (returns true if the shuttle has stopped moving so the caller can append their animation)
 /datum/hud/proc/set_parallax_movedir(new_parallax_movedir, skip_windups)
