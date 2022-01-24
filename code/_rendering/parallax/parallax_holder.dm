@@ -138,7 +138,7 @@
 	var/turf/T = get_turf(eye)
 	vis_holder.vis_contents = vis = T? SSparallax.get_parallax_vis_contents(T.z) : list()
 	if(scrolling != last_area.parallax_moving || scroll_speed != last_area.parallax_move_speed || scroll_turn != last_area.parallax_move_angle)
-		Animation(last_area.parallax_move_speed, last_area.parallax_move_angle, last_area.parallax_move_speed)
+		Animation(last_area.parallax_moving? last_area.parallax_move_speed : 0, last_area.parallax_move_angle, last_area.parallax_move_speed)
 
 /datum/parallax_holder/proc/Apply()
 	if(QDELETED(owner))
@@ -202,12 +202,14 @@
  * windup - ds to spend on windups. 0 for immediate.
  */
 /datum/parallax_holder/proc/Animation(speed = 25, turn = 0, windup = 0)
-	if(scroll_speed = 0)
+	if(speed == 0)
 		StopScrolling(turn = turn, time = windup)
 		return
 	if(owner && turn != scroll_turn)
 		// first handle turn. we turn the planemaster
 		var/atom/movable/screen/plane_master/parallax/PM = locate() in owner.screen
+		var/matrix/turn_transform = matrix()
+		turn_transform.Turn(turn)
 		animate(PM, transform = turn_transform, time = windup, easing = QUAD_EASING | EASE_IN)
 	if(scroll_speed == speed)
 		// we're done
@@ -225,7 +227,9 @@
 	// reset turn
 	if(owner && turn != scroll_turn)
 		var/atom/movable/screen/plane_master/parallax/PM = locate() in owner.screen
-		animate(PM, transform = matrix(), time = time, flags = ANIMATION_END_NOW, easing = QUAD_EASING | EASE_OUT)
+		var/matrix/turn_transform = matrix()
+		turn_transform.Turn(turn)
+		animate(PM, transform = turn_transform, time = time, flags = ANIMATION_END_NOW, easing = QUAD_EASING | EASE_OUT)
 	if(scroll_speed == 0)
 		// we're done
 		scrolling = FALSE

@@ -13,11 +13,11 @@
 	objects += new /atom/movable/screen/parallax_layer/space/layer_1
 	objects += new /atom/movable/screen/parallax_layer/space/layer_2
 	objects += new /atom/movable/screen/parallax_layer/space/layer_3
-	objects += new /atom/movable/screen/parallax_layer/space/planet/P
+	objects += new /atom/movable/screen/parallax_layer/space/planet
 	if(random_layer)
 		objects += random_layer
 	if(ispath(random_layer, /atom/movable/screen/parallax_layer/space/random/space_gas))
-		var/atom/movable/screen/space/parallax_layer/random/space_gas/SG = locate(random_layer) in objects
+		var/atom/movable/screen/parallax_layer/space/random/space_gas/SG = locate(random_layer) in objects
 		SG.add_atom_colour(random_gas_color, ADMIN_COLOUR_PRIORITY)
 
 /atom/movable/screen/parallax_layer/space/layer_1

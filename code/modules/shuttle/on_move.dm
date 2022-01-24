@@ -160,8 +160,12 @@ All ShuttleMove procs go here
 	return TRUE
 
 // Called on areas after everything has been moved
-/area/proc/afterShuttleMove(new_parallax_dir)
-	parallax_movedir = new_parallax_dir
+/area/proc/afterShuttleMove(new_parallax_dir, speed)
+	if(!new_parallax_dir)
+		parallax_moving = FALSE
+		return
+	parallax_move_angle = dir2angle(turn(new_parallax_dir, 180))
+	parallax_move_speed = speed
 	return TRUE
 
 /area/proc/lateShuttleMove()

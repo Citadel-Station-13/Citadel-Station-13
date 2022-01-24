@@ -712,26 +712,24 @@
 				create_ripples(destination, tl)
 
 	var/obj/docking_port/stationary/S0 = get_docked()
-	if(istype(S0, /obj/docking_port/stationary/transit) && timeLeft(1) <= PARALLAX_LOOP_TIME)
+	if(istype(S0, /obj/docking_port/stationary/transit) && timeLeft(1) <= parallax_speed)
+		var/parallax_ongoing = FALSE
 		for(var/place in shuttle_areas)
 			var/area/shuttle/shuttle_area = place
-			if(shuttle_area.parallax_movedir)
-				parallax_slowdown()
+			if(shuttle_area.parallax_moving)
+				parallax_ongoing = TRUE
+		if(parallax_ongoing)
+			parallax_slowdown()
 
 #warn oh no
 /obj/docking_port/mobile/proc/parallax_slowdown()
-	for(var/place in shuttle_areas)
-		var/area/shuttle/shuttle_area = place
-		shuttle_area.parallax_movedir = FALSE
-	if(assigned_transit?.assigned_area)
-		assigned_transit.assigned_area.parallax_movedir = FALSE
-	var/list/L0 = return_ordered_turfs(x, y, z, dir)
-	for (var/thing in L0)
-		var/turf/T = thing
-		if(!T || !istype(T.loc, area_type))
-			continue
-		for (var/thing2 in T)
-			var/atom/movable/AM = thing2
+	for(var/area/shuttle_area in shuttle_areas + assigned_transit?.assigned_area)
+		shuttle_area.parallax_moving = FALSE
+		shuttle_area.parallax_move_speed = 0
+		shuttle_area.parallax_move_angle = 0
+	for(var/mob/M in GLOB.player_list)
+		if(get_area(M) in shuttle_areas)
+			M.client?.parallax_holder?.StopScrolling(0, parallax_speed)
 
 /obj/docking_port/mobile/proc/check_transit_zone()
 	if(assigned_transit)

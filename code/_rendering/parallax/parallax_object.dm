@@ -101,7 +101,7 @@
 	return center_y
 
 /atom/movable/screen/parallax_layer/proc/QueueLoop(delay, speed)
-	queued_animation = addtimer(CALLBACK(src, .proc/_loop, speed), time = delay, flags = TIMER_STOPPABLE)
+	queued_animation = addtimer(CALLBACK(src, .proc/_loop, speed), delay, TIMER_STOPPABLE)
 
 /atom/movable/screen/parallax_layer/proc/_loop(speed)
 	transform = matrix(1, 0, 0, 0, 1, 480)
