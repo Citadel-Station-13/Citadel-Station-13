@@ -164,15 +164,6 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = PLANE_SPACE_PARALLAX_RENDER_TARGET
 
-/atom/movable/screen/plane_master/parallax/Initialize(mapload)
-	. = ..()
-	var/list/static_layer_filter = layering_filter(
-		render_source = PLANE_SPACE_PARALLAX_STATIC_RENDER_TARGET,
-		flags = FILTER_UNDERLAY,
-		blend_mode = BLEND_ADD
-	)
-	add_filter("static_parallax_layer", 1, static_layer_filter)
-
 /atom/movable/screen/plane_master/parallax_static
 	name = "parallax (static) plane master"
 	plane = PLANE_SPACE_PARALLAX_STATIC
