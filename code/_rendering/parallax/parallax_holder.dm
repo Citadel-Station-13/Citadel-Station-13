@@ -217,6 +217,7 @@
 		var/atom/movable/screen/plane_master/parallax/PM = locate() in owner.screen
 		var/matrix/turn_transform = matrix()
 		turn_transform.Turn(turn)
+		scroll_turn = turn
 		animate(PM, transform = turn_transform, time = windup, easing = QUAD_EASING | EASE_IN)
 	if(scroll_speed == speed)
 		// we're done
@@ -225,13 +226,14 @@
 	for(var/atom/movable/screen/parallax_layer/P in layers)
 		if(P.absolute)
 			continue
+		var/matrix/translate_matrix = matrix(1, 0, 0, 0, 1, 480)
 		// end all previous animations, do the first segment by shifting down one screen
-		P.transform = matrix()
-		animate(P, transform = matrix(1, 0, 0, 0, 1, -480), time = speed / P.speed, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_END_NOW)
+		P.transform = translate_matrix
+		animate(P, transform = matrix(), time = speed / P.speed, easing = QUAD_EASING|EASE_IN)
 		// queue up another incase lag makes QueueLoop not fire on time, this time by shifting up
-		P.transform = matrix(1, 0, 0, 0, 1, 480)
+		P.transform = translate_matrix
 		animate(transform = matrix(), time = speed / P.speed)
-		P.QueueLoop(speed / P.speed, speed / P.speed)
+		P.QueueLoop(speed / P.speed, speed / P.speed, translate_matrix)
 
 /**
  * Smoothly stops the animation, turning to a certain angle as needed.
@@ -242,6 +244,7 @@
 		var/atom/movable/screen/plane_master/parallax/PM = locate() in owner.screen
 		var/matrix/turn_transform = matrix()
 		turn_transform.Turn(turn)
+		scroll_turn = turn
 		animate(PM, transform = turn_transform, time = time, flags = ANIMATION_END_NOW, easing = QUAD_EASING | EASE_OUT)
 	if(scroll_speed == 0)
 		// we're done
@@ -252,7 +255,7 @@
 		if(P.absolute)
 			continue
 		P.CancelAnimation()
-		animate(P, transform = matrix(1, 0, 0, 0, 1, 480), time = 0, flags = ANIMATION_END_NOW)
+		P.transform = matrix(1, 0, 0, 0, 1, 480)
 		animate(transform = matrix(), time = time, easing = QUAD_EASING | EASE_OUT)
 
 /**

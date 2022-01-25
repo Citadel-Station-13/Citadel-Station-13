@@ -213,7 +213,7 @@
 #include "code\__HELPERS\view.dm"
 #include "code\__HELPERS\yelling.dm"
 #include "code\__HELPERS\matrices\color_matrix.dm"
-#include "code\__HELPERS\matrices\transfom_matrix.dm"
+#include "code\__HELPERS\matrices\transform_matrix.dm"
 #include "code\__HELPERS\sorts\__main.dm"
 #include "code\__HELPERS\sorts\InsertSort.dm"
 #include "code\__HELPERS\sorts\MergeSort.dm"

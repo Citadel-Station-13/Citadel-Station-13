@@ -3,11 +3,19 @@
 /proc/_abs(A)
 	return abs(A)
 
-/proc/_animate(atom/A, set_vars, time = 10, loop = 1, easing = LINEAR_EASING, flags = null)
-	var/mutable_appearance/MA = new()
-	for(var/v in set_vars)
-		MA.vars[v] = set_vars[v]
-	animate(A, appearance = MA, time, loop, easing, flags)
+/proc/_animate(atom/A, list/data, time = 10, loop = 1, easing = LINEAR_EASING, flags = null)
+	if(!istype(A))
+		return
+	animate(A, appearance = data, time = time, loop = loop, easing = easing, flags = flags)
+
+/proc/_animate_adv(atom/A, list/data, loop = 1, easing = LINEAR_EASING, flags = NONE)
+	if(!A || !islist(data) || data.len < 1)
+		return
+	animate(A, appearance = (data[1] - "time"), time = data[1]["time"], loop = loop, easing = easing, flags = flags)
+	if(data.len < 2)
+		return
+	for(var/i in 2 to data.len)
+		animate(appearance = (data[i] - "time"), time = data[i]["time"])
 
 /proc/_acrccos(A)
 	return arccos(A)

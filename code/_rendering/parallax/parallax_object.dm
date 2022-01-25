@@ -96,12 +96,12 @@
 /atom/movable/screen/parallax_layer/proc/default_y()
 	return center_y
 
-/atom/movable/screen/parallax_layer/proc/QueueLoop(delay, speed)
-	queued_animation = addtimer(CALLBACK(src, .proc/_loop, speed), delay, TIMER_STOPPABLE)
+/atom/movable/screen/parallax_layer/proc/QueueLoop(delay, speed, matrix/translate_matrix)
+	queued_animation = addtimer(CALLBACK(src, .proc/_loop, speed, translate_matrix), delay, TIMER_STOPPABLE)
 
-/atom/movable/screen/parallax_layer/proc/_loop(speed)
-	transform = matrix(1, 0, 0, 0, 1, 480)
-	animate(src, transform = matrix(), time = speed, loop = -1, easing = LINEAR_EASING, flags = ANIMATION_END_NOW)
+/atom/movable/screen/parallax_layer/proc/_loop(speed, matrix/translate_matrix = matrix(1, 0, 0, 0, 1, 480))
+	transform = translate_matrix
+	animate(src, transform = matrix(), time = speed, loop = -1, flags = ANIMATION_PARALLEL)
 	queued_animation = null
 
 /atom/movable/screen/parallax_layer/proc/CancelAnimation()
