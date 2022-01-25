@@ -99,7 +99,8 @@
 		if(!QDELETED(src))
 			qdel(src)
 		return
-	if(eye != forced_eye || !owner.eye)
+	var/atom/actual_eye = owner.eye || forced_eye
+	if(eye != actual_eye)
 		// eye mismatch, reset
 		Reset()
 		return
@@ -119,7 +120,7 @@
 	// process scrolling/movedir
 	if(last_area != T.loc)
 		last_area = T.loc
-		Sync()
+		UpdateMotion()
 
 /**
  * Syncs us to our parallax objects. Does NOT check if we should have those objects, that's Reset()'s job.
@@ -137,14 +138,23 @@
 		vis_holder = new /atom/movable/screen/parallax_vis
 	var/turf/T = get_turf(eye)
 	vis_holder.vis_contents = vis = T? SSparallax.get_parallax_vis_contents(T.z) : list()
+	UpdateMotion()
+
+/**
+ * Updates motion if needed
+ */
+/datum/parallax_holder/proc/UpdateMotion()
+	var/turf/T = get_turf(eye)
 	if(!T)
-		if(scrolling)
+		if(scroll_speed || scroll_turn)
 			HardResetAnimations()
+		return
+	var/list/ret = SSparallax.get_parallax_motion(T.z)
+	if(ret)
+		Animation(ret[1], ret[2], ret[3], ret[4])
 	else
-		if(!last_area)
-			last_area = T.loc
-		if(scrolling != last_area.parallax_moving || scroll_speed != last_area.parallax_move_speed || scroll_turn != last_area.parallax_move_angle)
-			Animation(last_area.parallax_moving? last_area.parallax_move_speed : 0, last_area.parallax_move_angle, last_area.parallax_move_speed)
+		var/area/A = T.loc
+		Animation(A.parallax_move_speed, A.parallax_move_angle)
 
 /datum/parallax_holder/proc/Apply()
 	if(QDELETED(owner))
@@ -207,8 +217,9 @@
  * speed - ds per loop
  * turn - angle clockwise from north to turn the motion to
  * windup - ds to spend on windups. 0 for immediate.
+ * turn_speed - ds to spend on turning. 0 for immediate.
  */
-/datum/parallax_holder/proc/Animation(speed = 25, turn = 0, windup = 0)
+/datum/parallax_holder/proc/Animation(speed = 25, turn = 0, windup = speed, turn_speed = speed)
 	if(speed == 0)
 		StopScrolling(turn = turn, time = windup)
 		return
@@ -218,22 +229,26 @@
 		var/matrix/turn_transform = matrix()
 		turn_transform.Turn(turn)
 		scroll_turn = turn
-		animate(PM, transform = turn_transform, time = windup, easing = QUAD_EASING | EASE_IN)
+		animate(PM, transform = turn_transform, time = turn_speed, easing = QUAD_EASING | EASE_IN, flags = ANIMATION_END_NOW | ANIMATION_LINEAR_TRANSFORM)
 	if(scroll_speed == speed)
 		// we're done
 		return
+	// speed diff?
+	var/current_speed = scroll_speed
+	scroll_speed = speed
+	scrolling = TRUE
 	// always scroll from north; turn handles everything
 	for(var/atom/movable/screen/parallax_layer/P in layers)
 		if(P.absolute)
 			continue
 		var/matrix/translate_matrix = matrix(1, 0, 0, 0, 1, 480)
-		// end all previous animations, do the first segment by shifting down one screen
+		// do the first segment by shifting down one screen
 		P.transform = translate_matrix
-		animate(P, transform = matrix(), time = speed / P.speed, easing = QUAD_EASING|EASE_IN)
+		animate(transform = matrix(), time = move_speed, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_END_NOW)
 		// queue up another incase lag makes QueueLoop not fire on time, this time by shifting up
-		P.transform = translate_matrix
-		animate(transform = matrix(), time = speed / P.speed)
-		P.QueueLoop(speed / P.speed, speed / P.speed, translate_matrix)
+		animate(transform = translate_matrix, time = 0)
+		animate(transform = matrix(), time = move_speed)
+		P.QueueLoop(move_speed, speed / P.speed)
 
 /**
  * Smoothly stops the animation, turning to a certain angle as needed.
@@ -245,18 +260,21 @@
 		var/matrix/turn_transform = matrix()
 		turn_transform.Turn(turn)
 		scroll_turn = turn
-		animate(PM, transform = turn_transform, time = time, flags = ANIMATION_END_NOW, easing = QUAD_EASING | EASE_OUT)
+		animate(PM, transform = turn_transform, time = time, easing = QUAD_EASING | EASE_OUT, flags = ANIMATION_END_NOW | ANIMATION_LINEAR_TRANSFORM)
 	if(scroll_speed == 0)
 		// we're done
 		scrolling = FALSE
+		scroll_speed = 0
 		return
+	scrolling = FALSE
+	scroll_speed = 0
 	// someone can do the math for "stop after a smooth iteration" later.
 	for(var/atom/movable/screen/parallax_layer/P in layers)
 		if(P.absolute)
 			continue
 		P.CancelAnimation()
 		P.transform = matrix(1, 0, 0, 0, 1, 480)
-		animate(transform = matrix(), time = time, easing = QUAD_EASING | EASE_OUT)
+		animate(P, transform = matrix(), time = time, easing = QUAD_EASING | EASE_OUT)
 
 /**
  * fully resets animation state

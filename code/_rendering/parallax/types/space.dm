@@ -1,11 +1,11 @@
 /datum/parallax/space
 	var/static/planet_offset_x = rand(100, 160)
 	var/static/planet_offset_y = rand(100, 160)
-	var/static/random_layer = pickweight(
+	var/static/random_layer = pickweightAllowZero(list(
 		/atom/movable/screen/parallax_layer/space/random/asteroids = 35,
 		/atom/movable/screen/parallax_layer/space/random/space_gas = 35,
 		null = 30
-	)
+	))
 	var/static/random_gas_color = pick(COLOR_TEAL, COLOR_GREEN, COLOR_YELLOW, COLOR_CYAN, COLOR_ORANGE, COLOR_PURPLE)
 
 /datum/parallax/space/CreateObjects()

@@ -164,7 +164,7 @@ All ShuttleMove procs go here
 	if(!new_parallax_dir)
 		parallax_moving = FALSE
 		return
-	parallax_move_angle = dir2angle(turn(new_parallax_dir, 180))
+	parallax_move_angle = dir2angle(new_parallax_dir)
 	parallax_move_speed = speed
 	return TRUE
 

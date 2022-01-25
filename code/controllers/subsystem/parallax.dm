@@ -53,9 +53,11 @@ SUBSYSTEM_DEF(parallax)
 /**
  * Gets parallax motion for a zlevel
  *
- * Returns null or list(speed, dir deg clockwise from north)
+ * Returns null or list(speed, dir deg clockwise from north, windup, turnrate)
+ * THE RETURNED LIST MUST BE A 4-TUPLE, OR PARALLAX WILL CRASH.
+ * DO NOT SCREW WITH THIS UNLESS YOU KNOW WHAT YOU ARE DOING.
  *
- * Area motion will override this.
+ * This will override area motion
  */
 /datum/controller/subsystem/parallax/proc/get_parallax_motion(z)
 	return null
@@ -75,3 +77,11 @@ SUBSYSTEM_DEF(parallax)
 	for(var/client/C in GLOB.clients)
 		if(C.mob.z == z)
 			C.parallax_holder?.Reset()
+
+/**
+ * updates motion of all clients on z
+ */
+/datum/controller/subsystem/parallax/proc/update_z_motion(z)
+	for(var/client/C in GLOB.clients)
+		if(C.mob.z == z)
+			C.parallax_holder?.UpdateMotion()

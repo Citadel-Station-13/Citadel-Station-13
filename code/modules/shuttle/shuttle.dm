@@ -727,8 +727,9 @@
 		shuttle_area.parallax_move_speed = 0
 		shuttle_area.parallax_move_angle = 0
 	for(var/mob/M in GLOB.player_list)
-		if(get_area(M) in shuttle_areas)
-			M.client?.parallax_holder?.StopScrolling(0, parallax_speed)
+		var/area/A = get_area(M)
+		if(A in shuttle_areas)
+			M.client?.parallax_holder?.StopScrolling(A.parallax_move_angle, parallax_speed)
 
 /obj/docking_port/mobile/proc/check_transit_zone()
 	if(assigned_transit)
