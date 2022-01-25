@@ -78,15 +78,8 @@
 	last = T
 	eye = forced_eye || owner.eye
 	last_area = T.loc
-	// then, check if we need to switch/set parallax
-	var/expected_type = SSparallax.get_parallax_type(T.z)
-	if(QDELETED(parallax) || (parallax.type != expected_type))
-		SetParallaxType(expected_type)
-	else
-		// sync
-		Remove()
-		Sync()
-		Apply()
+	// rebuild parallax
+	SetParallax(SSparallax.get_parallax_datum(T.z))
 	// hard reset positions to correct positions
 	for(var/atom/movable/screen/parallax_layer/L in layers)
 		L.ResetPosition(T.x, T.y)

@@ -39,10 +39,16 @@ SUBSYSTEM_DEF(parallax)
 	currentrun = null
 
 /**
- * Gets parallax for zlevel.
+ * Gets parallax type for zlevel.
  */
 /datum/controller/subsystem/parallax/proc/get_parallax_type(z)
 	return /datum/parallax/space
+
+/**
+ * Gets parallax for zlevel.
+ */
+/datum/controller/subsystem/parallax/proc/get_parallax_datum(z)
+	return new get_parallax_type(z)
 
 /**
  * Gets parallax added vis contents for zlevel
