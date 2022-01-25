@@ -80,6 +80,98 @@
 	icon_state = "power_display"
 	screen_loc = ui_lingchemdisplay
 
+#define ui_coolant_display "EAST,SOUTH+3:15"
+
+/atom/movable/screen/synth
+	invisibility = INVISIBILITY_ABSTRACT
+
+
+/atom/movable/screen/synth/proc/clear()
+	invisibility = INVISIBILITY_ABSTRACT
+
+/atom/movable/screen/synth/proc/update_counter(mob/living/carbon/human/owner)
+	invisibility = 0
+
+/atom/movable/screen/synth/coolant_counter
+	icon = 'icons/mob/screen_synth.dmi'
+	name = "Coolant System Readout"
+	icon_state = "coolant-3-1"
+	screen_loc = ui_coolant_display
+	var/jammed = 0
+
+/atom/movable/screen/synth/coolant_counter/update_counter(mob/living/carbon/owner)
+	..()
+	var/valuecolor = "#ff2525"
+	if(owner.stat == DEAD)
+		maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>ERR-0F</font></div>"
+		icon_state = "coolant-3-1"
+		return
+	var/coolant_efficiency
+	var/coolant
+	if(!jammed)
+		coolant_efficiency = owner.get_cooling_efficiency()
+		coolant = owner.blood_volume
+	else
+		coolant_efficiency = rand(1, 15) / 10
+		coolant = rand(1, 600)
+		jammed--
+	if(coolant > BLOOD_VOLUME_SAFE * owner.blood_ratio)	//I unfortunately have to use this else-if stack because switch doesn't support variables.
+		valuecolor =  "#4bbd34"
+	else if(coolant > BLOOD_VOLUME_OKAY * owner.blood_ratio)
+		valuecolor = "#dabb0d"
+	else if(coolant > BLOOD_VOLUME_BAD * owner.blood_ratio)
+		valuecolor =  "#dd8109"
+	else if(coolant > BLOOD_VOLUME_SURVIVE * owner.blood_ratio)
+		valuecolor = "#e7520d"
+	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[round((coolant / (BLOOD_VOLUME_NORMAL * owner.blood_ratio)) * 100, 1)]</font></div>"
+
+	var/efficiency_suffix
+	var/state_suffix
+	switch(coolant_efficiency)
+		if(-INFINITY to 0.4)
+			efficiency_suffix = "1"
+		if(0.4 to 0.75)
+			efficiency_suffix = "2"
+		if(0.75 to 0.95)
+			efficiency_suffix = "3"
+		if(0.95 to 1.3)
+			efficiency_suffix = "4"
+		else
+			efficiency_suffix = "5"
+	var/obj/item/organ/lungs/ipc/L = owner.getorganslot(ORGAN_SLOT_LUNGS)
+	if(istype(L) && L.is_cooling)
+		state_suffix = "2"
+	else
+		state_suffix = "1"
+	icon_state = "coolant-[efficiency_suffix]-[state_suffix]"
+
+/atom/movable/screen/synth/coolant_counter/examine(mob/user)
+	. = ..()
+	var/mob/living/carbon/human/owner = hud.mymob
+	if(owner.stat == DEAD)
+		return
+	var/coolant
+	var/total_efficiency
+	var/environ_efficiency
+	var/suitlink_efficiency
+	if(!jammed)
+		coolant = owner.blood_volume
+		total_efficiency = owner.get_cooling_efficiency()
+		environ_efficiency = owner.get_environment_cooling_efficiency()
+		suitlink_efficiency = owner.check_suitlinking()
+	else
+		coolant = rand(1, 600)
+		total_efficiency = rand(1, 15) / 10
+		environ_efficiency = rand(1, 20) / 10
+	. += "<span class='notice'>Performing internal cooling system diagnostics:</span>"
+	. += "<span class='notice'>Coolant level: [coolant] units, [round((coolant / (BLOOD_VOLUME_NORMAL * owner.blood_ratio)) * 100, 0.1)] percent</span>"
+	. += "<span class='notice'>Current Cooling Efficiency: [round(total_efficiency * 100, 0.1)] percent, [suitlink_efficiency ? "<font color='green'>active suitlink detected</font>, guaranteeing <font color='green'>[suitlink_efficiency * 100]%</font> environmental cooling efficiency." : "environment viability: [round(environ_efficiency * 100, 0.1)] percent."]</span>"
+
+/atom/movable/screen/synth/coolant_counter/proc/jam(amount, cap = 20)
+	if(jammed > cap)	//Preserve previous more impactful event.
+		return
+	jammed = min(jammed + amount, cap)
+
 /datum/hud/human/New(mob/living/carbon/human/owner)
 	..()
 	owner.overlay_fullscreen("see_through_darkness", /atom/movable/screen/fullscreen/see_through_darkness)
@@ -358,6 +450,10 @@
 	sunlight_display = new /atom/movable/screen/bloodsucker/sunlight_counter	// Sunlight
 	sunlight_display.hud = src
 	infodisplay += sunlight_display
+
+	coolant_display = new /atom/movable/screen/synth/coolant_counter	//Coolant & cooling efficiency readouts for Synths.
+	coolant_display.hud = src
+	infodisplay += coolant_display
 
 	zone_select =  new /atom/movable/screen/zone_sel()
 	zone_select.icon = ui_style

@@ -168,9 +168,9 @@
 	R.clear_reagents()
 	R.maximum_volume = fluid_max_volume
 	if(fluid_id)
-		R.add_reagent(fluid_id,amount)
+		R.add_reagent(fluid_id,amount, owner.get_blood_data())
 	else if(linked_organ?.fluid_id)
-		R.add_reagent(linked_organ.fluid_id,amount)
+		R.add_reagent(linked_organ.fluid_id,amount, owner.get_blood_data())
 	return TRUE
 
 /obj/item/organ/genital/proc/update_link()

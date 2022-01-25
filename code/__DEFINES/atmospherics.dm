@@ -68,6 +68,20 @@
 
 #define TEMPERATURE_DAMAGE_COEFFICIENT		1.5		//This is used in handle_temperature_damage() for humans, and in reagents that affect body temperature. Temperature damage is multiplied by this amount.
 
+#define SYNTH_PASSIVE_HEAT_GAIN 10							//Degrees C per handle_environment() Synths passively heat up. Mitigated by cooling efficiency. Can lead to overheating if not managed.
+#define SYNTH_MAX_PASSIVE_GAIN_TEMP 250						//Degrees C that a synth can be heated up to by their internal heat gain, provided their cooling is insufficient to mitigate it.
+#define SYNTH_MIN_PASSIVE_COOLING_TEMP -30					//Degrees C a synth can cool towards at very high cooling efficiency.
+#define SYNTH_HEAT_EFFICIENCY_COEFF 0.005					//How quick the difference between the Synth and the environment starts to matter. The smaller the higher the difference has to be for the same change.
+#define SYNTH_SINGLE_INFLUENCE_COOLING_EFFECT_CAP 3			//How big can the multiplier for heat / pressure cooling be in an optimal environment
+#define SYNTH_TOTAL_ENVIRONMENT_EFFECT_CAP 2				//How big of an multiplier can the environment give in an optimal scenario (maximum efficiency in the end is at a lower cap, this mostly counters low coolant levels)
+#define SYNTH_MAX_COOLING_EFFICIENCY 1.5					//The maximum possible cooling efficiency one can achieve at optimal conditions.
+#define SYNTH_ACTIVE_COOLING_TEMP_BOUNDARY 10				//The minimum distance from room temperature a Synth needs to have for active cooling to actively cool.
+#define SYNTH_ACTIVE_COOLING_LOW_PRESSURE_THRESHOLD 0.05	//At how much percentage of default pressure (or lower) active cooling gets a massive cost penalty.
+#define SYNTH_ACTIVE_COOLING_LOW_PRESSURE_PENALTY 2.5		//By how much is active cooling cost multiplied if in a very-low-pressure environment?
+#define SYNTH_ACTIVE_COOLING_MIN_ADJUSTMENT 5				//What is the minimum amount of temp you move towards the target point, even if it would be less with default calculations?
+#define SYNTH_INTEGRATION_COOLANT_PENALTY 0.4				//Integrating coolant is multiplied with this for calculation of impact on passive cooling.
+#define SYNTH_INTEGRATION_COOLANT_CAP 0.25					//Integrating coolant is capped at counting as current_blood * this number. This is so you can't just run on salglu or whatever.
+
 #define BODYTEMP_NORMAL						310.15			//The natural temperature for a body
 #define BODYTEMP_AUTORECOVERY_DIVISOR		11		//This is the divisor which handles how much of the temperature difference between the current body temperature and 310.15K (optimal temperature) humans auto-regenerate each tick. The higher the number, the slower the recovery. This is applied each tick, so long as the mob is alive.
 #define BODYTEMP_AUTORECOVERY_MINIMUM		12		//Minimum amount of kelvin moved toward 310K per tick. So long as abs(310.15 - bodytemp) is more than 50.
@@ -128,6 +142,7 @@
 #define TANK_MAX_RELEASE_PRESSURE 			(ONE_ATMOSPHERE*3)
 #define TANK_MIN_RELEASE_PRESSURE 			0
 #define TANK_DEFAULT_RELEASE_PRESSURE 		17
+#define TANK_POST_FRAGMENT_REACTIONS		5
 
 //CANATMOSPASS
 #define ATMOS_PASS_YES 1
@@ -260,6 +275,7 @@
 #define GAS_HYPERNOB			"nob"
 #define GAS_NITROUS				"n2o"
 #define GAS_NITRYL				"no2"
+#define GAS_HYDROGEN			"hydrogen"
 #define GAS_TRITIUM				"tritium"
 #define GAS_BZ					"bz"
 #define GAS_STIMULUM			"stim"
@@ -267,9 +283,16 @@
 #define GAS_MIASMA				"miasma"
 #define GAS_METHANE				"methane"
 #define GAS_METHYL_BROMIDE		"methyl_bromide"
+#define GAS_BROMINE				"bromine"
+#define GAS_AMMONIA				"ammonia"
+#define GAS_FLUORINE			"fluorine"
+#define GAS_ETHANOL				"ethanol"
+
+#define GAS_GROUP_CHEMICALS		"Chemicals"
 
 #define GAS_FLAG_DANGEROUS		(1<<0)
 #define GAS_FLAG_BREATH_PROC	(1<<1)
+#define GAS_FLAG_CHEMICAL		(1<<2)
 
 //SUPERMATTER DEFINES
 #define HEAT_PENALTY "heat penalties"

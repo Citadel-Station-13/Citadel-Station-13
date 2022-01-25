@@ -18,7 +18,8 @@
 	var/id_tag = null
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
 
-	var/filter_types = list(GAS_CO2)
+	var/filter_types = list(GAS_CO2, GAS_MIASMA, GAS_GROUP_CHEMICALS)
+	var/list/clean_filter_types = null
 	var/volume_rate = 200
 	var/widenet = 0 //is this scrubber acting on the 3x3 area around it.
 	var/list/turf/adjacent_turfs = list()
@@ -34,6 +35,16 @@
 	..()
 	if(!id_tag)
 		id_tag = assign_uid_vents()
+	generate_clean_filter_types()
+	RegisterSignal(SSdcs,COMSIG_GLOB_NEW_GAS,.proc/generate_clean_filter_types)
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/generate_clean_filter_types()
+	clean_filter_types = list()
+	for(var/id in filter_types)
+		if(id in GLOB.gas_data.groups)
+			clean_filter_types += GLOB.gas_data.groups[id]
+		else
+			clean_filter_types += id
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	var/area/A = get_base_area(src)
@@ -95,7 +106,11 @@
 
 	var/list/f_types = list()
 	for(var/id in GLOB.gas_data.ids)
-		f_types += list(list("gas_id" = id, "gas_name" = GLOB.gas_data.names[id], "enabled" = (id in filter_types)))
+		if(!(id in GLOB.gas_data.groups_by_gas))
+			f_types += list(list("gas_id" = id, "gas_name" = GLOB.gas_data.names[id], "enabled" = (id in filter_types)))
+
+	for(var/group in GLOB.gas_data.groups)
+		f_types += list(list("gas_id" = group, "gas_name" = group, "enabled" = (group in filter_types)))
 
 	var/datum/signal/signal = new(list(
 		"tag" = id_tag,
@@ -147,11 +162,11 @@
 	var/datum/gas_mixture/environment = tile.return_air()
 	var/datum/gas_mixture/air_contents = airs[1]
 
-	if(air_contents.return_pressure() >= 50*ONE_ATMOSPHERE || !islist(filter_types))
+	if(air_contents.return_pressure() >= 50*ONE_ATMOSPHERE || !islist(clean_filter_types))
 		return FALSE
 
 	if(scrubbing & SCRUBBING)
-		environment.scrub_into(air_contents, volume_rate/environment.return_volume(), filter_types)
+		environment.scrub_into(air_contents, volume_rate/environment.return_volume(), clean_filter_types)
 
 		tile.air_update_turf()
 
@@ -205,11 +220,13 @@
 
 	if("toggle_filter" in signal.data)
 		filter_types ^= signal.data["toggle_filter"]
+		generate_clean_filter_types()
 
 	if("set_filters" in signal.data)
 		filter_types = list()
 		for(var/gas in signal.data["set_filters"])
 			filter_types += gas
+		generate_clean_filter_types()
 
 	if("init" in signal.data)
 		name = signal.data["init"]

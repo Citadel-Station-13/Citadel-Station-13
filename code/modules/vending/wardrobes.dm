@@ -6,6 +6,7 @@
 	extra_price = PRICE_EXPENSIVE
 	payment_department = NO_FREEBIES
 	input_display_header = "Returned Clothing"
+	light_mask = "wardrobe-light-mask"
 
 /obj/machinery/vending/wardrobe/canLoadItem(obj/item/I,mob/user)
 	return (I.type in products)
@@ -35,50 +36,10 @@
 					/obj/item/clothing/head/beret/sec/navyofficer = 5)
 	refill_canister = /obj/item/vending_refill/wardrobe/sec_wardrobe
 	payment_department = ACCOUNT_SEC
-	cost_multiplier_per_dept = list(ACCOUNT_SEC = 0)
-	default_price = PRICE_ABOVE_NORMAL
-	extra_price = PRICE_EXPENSIVE
+	light_color = COLOR_MOSTLY_PURE_RED
 
 /obj/item/vending_refill/wardrobe/sec_wardrobe
 	machine_name = "SecDrobe"
-
-
-/obj/machinery/vending/wardrobe/det_wardrobe
-	name = "\improper DetDrobe"
-	desc = "A machine for all your detective needs, as long as you need clothes."
-	icon_state = "detdrobe"
-	product_ads = "Apply your brilliant deductive methods in style!"
-	vend_reply = "Thank you for using the DetDrobe!"
-	products = list(/obj/item/clothing/under/rank/security/detective = 2,
-					/obj/item/clothing/under/rank/security/detective/skirt = 2,
-					/obj/item/clothing/under/rank/security/detective/brown = 2,
-					/obj/item/clothing/under/rank/security/detective/brown/brown2 = 2,
-					/obj/item/clothing/under/rank/security/officer/blueshirt/seccorp/detcorp = 2,
-					/obj/item/clothing/under/rank/security/officer/util = 2,
-					/obj/item/clothing/shoes/sneakers/brown = 2,
-					/obj/item/clothing/suit/det_suit = 2,
-					/obj/item/clothing/head/fedora/det_hat = 2,
-					/obj/item/clothing/under/rank/security/detective/grey = 2,
-					/obj/item/clothing/under/rank/security/detective/grey/skirt = 2,
-					/obj/item/clothing/accessory/waistcoat = 2,
-					/obj/item/clothing/shoes/laceup = 2,
-					/obj/item/clothing/suit/det_suit/grey = 1,
-					/obj/item/clothing/suit/det_suit/forensicsred = 1,
-					/obj/item/clothing/suit/det_suit/forensicsred/long = 1,
-					/obj/item/clothing/suit/det_suit/forensicsblue = 1,
-					/obj/item/clothing/suit/det_suit/forensicsblue/long = 1,
-					/obj/item/clothing/head/fedora = 2,
-					/obj/item/clothing/gloves/color/black = 2,
-					/obj/item/clothing/gloves/color/latex = 2,
-					/obj/item/reagent_containers/food/drinks/flask/det = 2,
-					/obj/item/storage/fancy/cigarettes = 5)
-	premium = list(/obj/item/clothing/head/flatcap = 1)
-	refill_canister = /obj/item/vending_refill/wardrobe/det_wardrobe
-	extra_price = 350
-	payment_department = ACCOUNT_SEC
-
-/obj/item/vending_refill/wardrobe/det_wardrobe
-	machine_name = "DetDrobe"
 
 /obj/machinery/vending/wardrobe/medi_wardrobe
 	name = "\improper MediDrobe"
@@ -118,7 +79,6 @@
 					/obj/item/clothing/suit/toggle/labcoat/emt/highvis = 5)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
 	payment_department = ACCOUNT_MED
-	cost_multiplier_per_dept = list(ACCOUNT_MED = 0)
 
 /obj/item/vending_refill/wardrobe/medi_wardrobe
 	machine_name = "MediDrobe"
@@ -149,7 +109,7 @@
 					/obj/item/clothing/head/hardhat/weldhat = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/engi_wardrobe
 	payment_department = ACCOUNT_ENG
-	cost_multiplier_per_dept = list(ACCOUNT_ENG = 0)
+	light_color = COLOR_VIVID_YELLOW
 
 /obj/item/vending_refill/wardrobe/engi_wardrobe
 	machine_name = "EngiDrobe"
@@ -172,7 +132,7 @@
 					/obj/item/clothing/shoes/sneakers/black = 5)
 	refill_canister = /obj/item/vending_refill/wardrobe/atmos_wardrobe
 	payment_department = ACCOUNT_ENG
-	cost_multiplier_per_dept = list(ACCOUNT_ENG = 0)
+	light_color = COLOR_VIVID_YELLOW
 
 /obj/item/vending_refill/wardrobe/atmos_wardrobe
 	machine_name = "AtmosDrobe"
@@ -195,7 +155,6 @@
 					/obj/item/radio/headset/headset_cargo = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/cargo_wardrobe
 	payment_department = ACCOUNT_CAR
-	cost_multiplier_per_dept = list(ACCOUNT_CAR = 0)
 
 /obj/item/vending_refill/wardrobe/cargo_wardrobe
 	machine_name = "CargoDrobe"
@@ -223,17 +182,16 @@
 					/obj/item/clothing/under/misc/mechsuitblue = 1)
 	contraband = list(/obj/item/clothing/suit/hooded/techpriest = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/robo_wardrobe
+	extra_price = PRICE_EXPENSIVE * 1.2
 	payment_department = ACCOUNT_SCI
-	cost_multiplier_per_dept = list(ACCOUNT_SCI = 0)
-
 /obj/item/vending_refill/wardrobe/robo_wardrobe
 	machine_name = "RoboDrobe"
 
 /obj/machinery/vending/wardrobe/science_wardrobe
 	name = "SciDrobe"
-	desc = "A simple vending machine suitable to dispense well tailored science clothing. Endorsed by Cubans."
+	desc = "A simple vending machine suitable to dispense well tailored science clothing. Endorsed by Space Cubans."
 	icon_state = "scidrobe"
-	product_ads = "Longing for the smell of flesh plasma? Buy your science clothing now!;Made with 10% Auxetics, so you don't have to worry losing your arm!"
+	product_ads = "Longing for the smell of plasma burnt flesh? Buy your science clothing now!;Made with 10% Auxetics, so you don't have to worry about losing your arm!"
 	vend_reply = "Thank you for using the SciDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector = 5,
 					/obj/item/clothing/head/beret/sci = 3,
@@ -251,8 +209,6 @@
 					/obj/item/clothing/mask/gas = 5)
 	refill_canister = /obj/item/vending_refill/wardrobe/science_wardrobe
 	payment_department = ACCOUNT_SCI
-	cost_multiplier_per_dept = list(ACCOUNT_SCI = 0)
-
 /obj/item/vending_refill/wardrobe/science_wardrobe
 	machine_name = "SciDrobe"
 
@@ -274,7 +230,7 @@
 					/obj/item/clothing/mask/bandana = 4)
 	refill_canister = /obj/item/vending_refill/wardrobe/hydro_wardrobe
 	payment_department = ACCOUNT_SRV
-	cost_multiplier_per_dept = list(ACCOUNT_SRV = 0)
+	light_color = LIGHT_COLOR_ELECTRIC_GREEN
 
 /obj/item/vending_refill/wardrobe/hydro_wardrobe
 	machine_name = "HyDrobe"
@@ -299,9 +255,7 @@
 					/obj/item/clothing/glasses/regular/jamjar = 1,
 					/obj/item/storage/bag/books = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/curator_wardrobe
-	payment_department = ACCOUNT_CIV
-	cost_multiplier_per_dept = list(ACCOUNT_CIV = 0)
-
+	payment_department = ACCOUNT_SRV
 /obj/item/vending_refill/wardrobe/curator_wardrobe
 	machine_name = "CuraDrobe"
 
@@ -331,8 +285,6 @@
 					/obj/item/storage/belt/bandolier = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/bar_wardrobe
 	payment_department = ACCOUNT_SRV
-	cost_multiplier_per_dept = list(ACCOUNT_SRV = 0)
-
 /obj/item/vending_refill/wardrobe/bar_wardrobe
 	machine_name = "BarDrobe"
 
@@ -340,8 +292,8 @@
 	name = "ChefDrobe"
 	desc = "This vending machine might not dispense meat, but it certainly dispenses chef related clothing."
 	icon_state = "chefdrobe"
-	product_ads = "Our clothes are guaranteed to protect you from food splatters!;Now stocking recipe books!"
-	vend_reply = "Thank you for using the ChefDrobe!;Just like your grandmother's old recipes!"
+	product_ads = "Our clothes are guaranteed to protect you from food splatters!"
+	vend_reply = "Thank you for using the ChefDrobe!"
 	products = list(/obj/item/clothing/under/suit/waiter = 3,
 					/obj/item/radio/headset/headset_srv = 4,
 					/obj/item/clothing/accessory/waistcoat = 3,
@@ -358,8 +310,6 @@
 					/obj/item/book/granter/crafting_recipe/coldcooking = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
 	payment_department = ACCOUNT_SRV
-	cost_multiplier_per_dept = list(ACCOUNT_SRV = 0)
-
 /obj/item/vending_refill/wardrobe/chef_wardrobe
 	machine_name = "ChefDrobe"
 
@@ -390,8 +340,10 @@
 					/obj/item/screwdriver = 2,
 					/obj/item/stack/cable_coil/random = 4)
 	refill_canister = /obj/item/vending_refill/wardrobe/jani_wardrobe
+	default_price = PRICE_CHEAP
+	extra_price = PRICE_EXPENSIVE * 0.8
 	payment_department = ACCOUNT_SRV
-	cost_multiplier_per_dept = list(ACCOUNT_SRV = 0)
+	light_color = COLOR_STRONG_MAGENTA
 
 /obj/item/vending_refill/wardrobe/jani_wardrobe
 	machine_name = "JaniDrobe"
@@ -423,18 +375,16 @@
 					/obj/item/clothing/shoes/laceup = 3,
 					/obj/item/clothing/accessory/lawyers_badge = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe
-	payment_department = ACCOUNT_CIV
-	cost_multiplier_per_dept = list(ACCOUNT_CIV = 0)
-
+	payment_department = ACCOUNT_SRV
 /obj/item/vending_refill/wardrobe/law_wardrobe
 	machine_name = "LawDrobe"
 
 /obj/machinery/vending/wardrobe/chap_wardrobe
-	name = "ChapDrobe"
-	desc = "This most blessed and holy machine vends clothing only suitable for chaplains to gaze upon."
+	name = "DeusVend"
+	desc = "God wills your purchase."
 	icon_state = "chapdrobe"
 	product_ads = "Are you being bothered by cultists or pesky revenants? Then come and dress like the holy man!;Clothes for men of the cloth!"
-	vend_reply = "Thank you for using the ChapDrobe!"
+	vend_reply = "Thank you for using the DeusVend!"
 	products = list(/obj/item/choice_beacon/holy = 1,
 					/obj/item/storage/backpack/cultpack = 2,
 					/obj/item/clothing/accessory/pocketprotector/cosmetology = 2,
@@ -451,11 +401,9 @@
 	premium = list(/obj/item/toy/plush/plushvar = 1,
 					/obj/item/toy/plush/narplush = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe
-	payment_department = ACCOUNT_CIV
-	cost_multiplier_per_dept = list(ACCOUNT_CIV = 0)
-
+	payment_department = ACCOUNT_SRV
 /obj/item/vending_refill/wardrobe/chap_wardrobe
-	machine_name = "ChapDrobe"
+	machine_name = "DeusVend"
 
 /obj/machinery/vending/wardrobe/chem_wardrobe
 	name = "ChemDrobe"
@@ -475,8 +423,6 @@
 					/obj/item/fermichem/pHbooklet = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/chem_wardrobe
 	payment_department = ACCOUNT_MED
-	cost_multiplier_per_dept = list(ACCOUNT_MED = 0)
-
 /obj/item/vending_refill/wardrobe/chem_wardrobe
 	machine_name = "ChemDrobe"
 
@@ -494,9 +440,7 @@
 					/obj/item/storage/backpack/genetics = 3,
 					/obj/item/storage/backpack/satchel/gen = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/gene_wardrobe
-	payment_department = ACCOUNT_MED
-	cost_multiplier_per_dept = list(ACCOUNT_MED = 0)
-
+	payment_department = ACCOUNT_SCI
 /obj/item/vending_refill/wardrobe/gene_wardrobe
 	machine_name = "GeneDrobe"
 
@@ -517,10 +461,45 @@
 					/obj/item/storage/backpack/satchel/vir = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/viro_wardrobe
 	payment_department = ACCOUNT_MED
-	cost_multiplier_per_dept = list(ACCOUNT_MED = 0)
-
 /obj/item/vending_refill/wardrobe/viro_wardrobe
 	machine_name = "ViroDrobe"
+
+/obj/machinery/vending/wardrobe/det_wardrobe
+	name = "\improper DetDrobe"
+	desc = "A machine for all your detective needs, as long as you need clothes."
+	icon_state = "detdrobe"
+	product_ads = "Apply your brilliant deductive methods in style!"
+	vend_reply = "Thank you for using the DetDrobe!"
+	products = list(/obj/item/clothing/under/rank/security/detective = 2,
+					/obj/item/clothing/under/rank/security/detective/skirt = 2,
+					/obj/item/clothing/under/rank/security/detective/brown = 2,
+					/obj/item/clothing/under/rank/security/detective/brown/brown2 = 2,
+					/obj/item/clothing/under/rank/security/officer/blueshirt/seccorp/detcorp = 2,
+					/obj/item/clothing/under/rank/security/officer/util = 2,
+					/obj/item/clothing/shoes/sneakers/brown = 2,
+					/obj/item/clothing/suit/det_suit = 2,
+					/obj/item/clothing/head/fedora/det_hat = 2,
+					/obj/item/clothing/under/rank/security/detective/grey = 2,
+					/obj/item/clothing/under/rank/security/detective/grey/skirt = 2,
+					/obj/item/clothing/accessory/waistcoat = 2,
+					/obj/item/clothing/shoes/laceup = 2,
+					/obj/item/clothing/suit/det_suit/grey = 1,
+					/obj/item/clothing/suit/det_suit/forensicsred = 1,
+					/obj/item/clothing/suit/det_suit/forensicsred/long = 1,
+					/obj/item/clothing/suit/det_suit/forensicsblue = 1,
+					/obj/item/clothing/suit/det_suit/forensicsblue/long = 1,
+					/obj/item/clothing/head/fedora = 2,
+					/obj/item/clothing/gloves/color/black = 2,
+					/obj/item/clothing/gloves/color/latex = 2,
+					/obj/item/reagent_containers/food/drinks/flask/det = 2,
+					/obj/item/storage/fancy/cigarettes = 5)
+	premium = list(/obj/item/clothing/head/flatcap = 1)
+	refill_canister = /obj/item/vending_refill/wardrobe/det_wardrobe
+	extra_price = PRICE_EXPENSIVE * 1.75
+	payment_department = ACCOUNT_SEC
+
+/obj/item/vending_refill/wardrobe/det_wardrobe
+	machine_name = "DetDrobe"
 
 /obj/machinery/vending/wardrobe/cap_wardrobe
 	name = "Captain's Wardrobe"
@@ -551,10 +530,6 @@
 	payment_department = ACCOUNT_SEC
 	default_price = PRICE_ALMOST_EXPENSIVE
 	extra_price = PRICE_ABOVE_EXPENSIVE
-
-/obj/machinery/vending/wardrobe/cap_wardrobe/Initialize()
-	. = ..()
-	cost_multiplier_per_dept = list("[ACCESS_CAPTAIN]" = 0)
 
 /obj/item/vending_refill/wardrobe/cap_wardrobe
 	machine_name = "Captain's Wardrobe"

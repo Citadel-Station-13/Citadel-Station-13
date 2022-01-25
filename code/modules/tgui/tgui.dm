@@ -92,7 +92,6 @@
 		window.initialize(
 			fancy = user.client.prefs.tgui_fancy,
 			inline_assets = list(
-				get_asset_datum(/datum/asset/simple/tgui_common),
 				get_asset_datum(/datum/asset/simple/tgui),
 			))
 	else
@@ -300,7 +299,6 @@
 		process_status()
 		if(src_object.ui_act(act_type, payload, src, state))
 			SStgui.update_uis(src_object)
-		usr?.client?.last_activity = world.time
 		return FALSE
 	switch(type)
 		if("ready")

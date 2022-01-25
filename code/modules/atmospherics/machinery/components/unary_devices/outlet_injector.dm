@@ -24,13 +24,16 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
 	if(can_interact(user))
 		on = !on
-		update_icon()
+		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
+		update_appearance()
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/AltClick(mob/user)
 	if(can_interact(user))
 		volume_rate = MAX_TRANSFER_RATE
-		update_icon()
+		investigate_log("was set to [volume_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
+		balloon_alert(user, "volume output set to [volume_rate] L/s")
+		update_appearance()
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()

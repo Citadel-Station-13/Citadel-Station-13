@@ -23,7 +23,6 @@ export const DecalPainter = (props, context) => {
                 padding: 0,
               }}
               selected={decal.decal === data.decal_style}
-              tooltip={decal.name}
               onClick={() => act('select decal', {
                 decals: decal.decal,
               })}>
@@ -48,7 +47,7 @@ export const DecalPainter = (props, context) => {
                   height: '48px',
                   padding: 0,
                 }}
-                tooltip={color.colors === "red"
+                content={color.colors === "red"
                   ? "Red"
                   : color.colors === "white"
                     ? "White"

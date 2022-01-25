@@ -12,7 +12,7 @@
 	desc = "Call in an additional clown to share the fun, equipped with full starting gear, but no telecrystals."
 	item = /obj/item/antag_spawner/nuke_ops/clown
 	cost = 20
-	include_modes = list(/datum/game_mode/nuclear/clown_ops)
+	purchasable_from = UPLINK_CLOWN_OPS
 	restricted = TRUE
 
 /datum/uplink_item/support/reinforcement
@@ -22,7 +22,7 @@
 	item = /obj/item/antag_spawner/nuke_ops
 	cost = 25
 	refundable = TRUE
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 	restricted = TRUE
 
 /datum/uplink_item/support/reinforcement/assault_borg
@@ -66,7 +66,7 @@
 	desc = "A clown combat mech equipped with bombanana peel and tearstache grenade launchers, as well as the ubiquitous HoNkER BlAsT 5000."
 	item = /obj/mecha/combat/honker/dark/loaded
 	cost = 80
-	include_modes = list(/datum/game_mode/nuclear/clown_ops)
+	purchasable_from = UPLINK_CLOWN_OPS
 
 /datum/uplink_item/support/mauler
 	name = "Mauler Exosuit"
