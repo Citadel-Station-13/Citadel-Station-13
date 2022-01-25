@@ -19,7 +19,7 @@
 	if(client && screen.ShouldShow(src))
 		screen.SetView(client.view)
 		client.screen += screen
-	return screenw
+	return screen
 
 /**
  * Wipes a fullscreen of a certain category
