@@ -1,41 +1,50 @@
 /datum/computer_file/program/budgetorders
 	filename = "orderapp"
 	filedesc = "NT IRN"
-	// category = PROGRAM_CATEGORY_SUPL
+	category = PROGRAM_CATEGORY_SUPL
 	program_icon_state = "request"
 	extended_desc = "Nanotrasen Internal Requisition Network interface for supply purchasing using a department budget account."
 	requires_ntnet = TRUE
-	transfer_access = ACCESS_HEADS
 	usage_flags = PROGRAM_LAPTOP | PROGRAM_TABLET
 	size = 20
 	tgui_id = "NtosCargo"
 	///Are you actually placing orders with it?
 	var/requestonly = TRUE
 	///Can the tablet see or buy illegal stuff?
-	var/contraband_view = FALSE
+	var/contraband = FALSE
 	///Is it being bought from a personal account, or is it being done via a budget/cargo?
 	var/self_paid = FALSE
 	///Can this console approve purchase requests?
 	var/can_approve_requests = FALSE
 	///What do we say when the shuttle moves with living beings on it.
-	var/safety_warning = "For safety reasons, the automated supply shuttle \
-		cannot transport live organisms, human remains, classified nuclear weaponry, \
-		homing beacons or machinery housing any form of artificial intelligence."
+	var/safety_warning = "For safety and ethical reasons, the automated supply shuttle \
+		cannot transport live organisms, human remains, classified nuclear weaponry, mail, \
+		homing beacons, unstable eigenstates or machinery housing any form of artificial intelligence."
 	///If you're being raided by pirates, what do you tell the crew?
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
+	///The name of the shuttle template being used as the cargo shuttle. 'supply' is default and contains critical code. Don't change this unless you know what you're doing.
+	var/cargo_shuttle = "supply"
+	///The docking port called when returning to the station.
+	var/docking_home = "supply_home"
+	///The docking port called when leaving the station.
+	var/docking_away = "supply_away"
+	///If this console can loan the cargo shuttle. Set to false to disable.
+	var/stationcargo = TRUE
+	///The account this console processes and displays. Independent from the account the shuttle processes.
+	var/cargo_account = ACCOUNT_CAR
 
 /datum/computer_file/program/budgetorders/proc/get_export_categories()
 	. = EXPORT_CARGO
 
 /datum/computer_file/program/budgetorders/run_emag()
-	if(!contraband_view)
-		contraband_view = TRUE
+	if(!contraband)
+		contraband = TRUE
 		return TRUE
 
 /datum/computer_file/program/budgetorders/proc/is_visible_pack(mob/user, paccess_to_check, list/access, contraband)
 	if(issilicon(user)) //Borgs can't buy things.
 		return FALSE
-	if((computer.obj_flags & EMAGGED) || contraband_view)
+	if(computer.obj_flags & EMAGGED)
 		return TRUE
 	else if(contraband) //Hide contrband when non-emagged.
 		return FALSE
@@ -64,11 +73,11 @@
 	. = ..()
 	var/list/data = get_header_data()
 	data["location"] = SSshuttle.supply.getStatusText()
-	var/datum/bank_account/buyer = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	var/datum/bank_account/buyer = SSeconomy.get_dep_account(cargo_account)
 	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 	var/obj/item/card/id/id_card = card_slot?.GetID()
 	if(id_card?.registered_account)
-		if(ACCESS_HEADS in id_card.access)
+		if((ACCESS_HEADS in id_card.access) || (ACCESS_QM in id_card.access))
 			requestonly = FALSE
 			buyer = SSeconomy.get_dep_account(id_card.registered_account.account_job.paycheck_department)
 			can_approve_requests = TRUE
@@ -85,14 +94,14 @@
 	data["supplies"] = list()
 	for(var/pack in SSshuttle.supply_packs)
 		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-		if(!is_visible_pack(usr, P.access , null, P.contraband))
+		if(!is_visible_pack(usr, P.access , null, P.contraband) || P.hidden)
 			continue
 		if(!data["supplies"][P.group])
 			data["supplies"][P.group] = list(
 				"name" = P.group,
 				"packs" = list()
 			)
-		if(((P.hidden || P.contraband) && !contraband_view) || (P.special && !P.special_enabled) || P.DropPodOnly)
+		if((P.hidden && (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.DropPodOnly))
 			continue
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
@@ -105,7 +114,7 @@
 
 //Data regarding the User's capability to buy things.
 	data["has_id"] = id_card
-	data["away"] = SSshuttle.supply.getDockedId() == "supply_away"
+	data["away"] = SSshuttle.supply.getDockedId() == docking_away
 	data["self_paid"] = self_paid
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
 	data["loan"] = !!SSshuttle.shuttle_loan
@@ -153,15 +162,15 @@
 			if(SSshuttle.supplyBlocked)
 				computer.say(blockade_warning)
 				return
-			if(SSshuttle.supply.getDockedId() == "supply_home")
+			if(SSshuttle.supply.getDockedId() == docking_home)
 				SSshuttle.supply.export_categories = get_export_categories()
-				SSshuttle.moveShuttle("supply", "supply_away", TRUE)
+				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
 				computer.say("The supply shuttle is departing.")
 				computer.investigate_log("[key_name(usr)] sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
 				computer.investigate_log("[key_name(usr)] called the supply shuttle.", INVESTIGATE_CARGO)
 				computer.say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
-				SSshuttle.moveShuttle("supply", "supply_home", TRUE)
+				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 			. = TRUE
 		if("loan")
 			if(!SSshuttle.shuttle_loan)
@@ -171,7 +180,9 @@
 				return
 			else if(SSshuttle.supply.mode != SHUTTLE_IDLE)
 				return
-			else if(SSshuttle.supply.getDockedId() != "supply_away")
+			else if(SSshuttle.supply.getDockedId() != docking_away)
+				return
+			else if(stationcargo != TRUE)
 				return
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
@@ -184,7 +195,7 @@
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				return
-			if(((pack.hidden || pack.contraband) && !contraband_view) || pack.DropPodOnly)
+			if((pack.hidden && (pack.contraband && !contraband) || pack.DropPodOnly))
 				return
 
 			var/name = "*None Provided*"
@@ -273,7 +284,7 @@
 			self_paid = !self_paid
 			. = TRUE
 	if(.)
-		post_signal("supply")
+		post_signal(cargo_shuttle)
 
 /datum/computer_file/program/budgetorders/proc/post_signal(command)
 

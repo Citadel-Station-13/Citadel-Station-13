@@ -463,6 +463,11 @@
 	name = "grass baseturf helper" //Basically just changes the baseturf into grass
 	baseturf = /turf/open/floor/spooktime/spooktimegrass //Wherever it is at.
 
+//A reference to this list is passed into area sound managers, and it's modified in a manner that preserves that reference in ash_storm.dm
+GLOBAL_LIST_EMPTY(rain_sounds)
+
+// HEY!! IF THIS DOES NOT WORK CHECK LOGIN.DM !!!!!
+
 /*
 	HERE COMES THE MOTHERFUCKING RAIN
 										*/
@@ -488,45 +493,46 @@
 
 	barometer_predictable = TRUE
 
-	var/datum/looping_sound/active_outside_longrain/sound_ao = new(list(), FALSE, TRUE) //Outside
-	var/datum/looping_sound/active_inside_longrain/sound_ai = new(list(), FALSE, TRUE) //Inside
-	var/datum/looping_sound/active_mountain_longrain/sound_am = new(list(), FALSE, TRUE) //Mountain
+	var/list/outside_longrain = list()
+	var/list/inside_longrain = list()
+	var/list/mountain_longrain = list()
+	// var/datum/looping_sound/active_outside_longrain/sound_ao = new(list(), FALSE, TRUE) //Outside
+	// var/datum/looping_sound/active_inside_longrain/sound_ai = new(list(), FALSE, TRUE) //Inside
+	// var/datum/looping_sound/active_mountain_longrain/sound_am = new(list(), FALSE, TRUE) //Mountain
 
 /datum/weather/long_rain/telegraph() //Yeah, I'm sorry but I just stole ash storm sound loops
 	. = ..()
-	var/list/inside_areas = list() //It already handled inside and outside areas lol.
-	var/list/outside_areas = list() //Now this is what I call, some real disgusting lazy list abuse
-	var/list/mountain_areas = list()
 	var/list/eligible_areas = list()
 	for(var/z in impacted_z_levels) //We check the Z level
 		eligible_areas += SSmapping.areas_in_z["[z]"] //And append them to eligible areas list
-	for(var/i in 1 to eligible_areas.len) //We check the list
-		var/area/place = eligible_areas[i] //Place is the list
+
+
+	for(var/i in 1 to eligible_areas.len)
+		var/area/place = eligible_areas[i]
 		if(istype(place, /area/eventmap/outside)) //If the place is this path
-			outside_areas += place //Outside areas is the place
+			outside_longrain[place] = /datum/looping_sound/active_outside_longrain //Outside areas is the place
 		if(istype(place, /area/eventmap/inside))
-			inside_areas += place
+			inside_longrain[place] = /datum/looping_sound/active_inside_longrain
 		if(istype(place, /area/eventmap/mountain))
-			mountain_areas += place
-		CHECK_TICK //We check the tick this all occurs on.
+			mountain_longrain[place] = /datum/looping_sound/active_mountain_longrain
 
-	sound_ao.output_atoms = outside_areas //The output atom is now set to the areas
-	sound_ai.output_atoms = inside_areas
-	sound_am.output_atoms = mountain_areas
+		CHECK_TICK
 
-	sound_ao.start() //Outside - We can hear it begin
+	//We modify this list instead of setting it to weak/stron sounds in order to preserve things that hold a reference to it
+	//It's essentially a playlist for a bunch of components that chose what sound to loop based on the area a player is in
+	GLOB.rain_sounds += outside_longrain
+	return ..()
 
 /datum/weather/long_rain/start()
-	. = ..()
-	sound_am.start() //Mountain - We only hear after it begins
-	sound_ai.start() //Inside - Ditto
+	GLOB.ash_storm_sounds += mountain_longrain
+	GLOB.ash_storm_sounds += inside_longrain
+	return ..()
 
 /datum/weather/long_rain/end()
-	. = ..()
-	sound_am.stop() //Mountain
-
-	sound_ao.stop() //Outside - And then we stop it all, but only people outside hear the entire segment
-	sound_ai.stop() //Inside
+	GLOB.ash_storm_sounds -= outside_longrain
+	GLOB.ash_storm_sounds -= inside_longrain
+	GLOB.ash_storm_sounds -= mountain_longrain
+	return ..()
 
 /datum/looping_sound/active_outside_longrain
 	mid_sounds = list('modular_citadel/code/modules/eventmaps/Spookystation/outsideloop1.ogg'=1,

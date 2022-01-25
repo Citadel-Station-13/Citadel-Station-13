@@ -1291,9 +1291,7 @@
 
 /obj/item/update_filters()
 	. = ..()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /atom/proc/get_filter(name)
 	if(filter_data && filter_data[name])
@@ -1404,3 +1402,15 @@
   */
 /atom/proc/setClosed()
 		return
+
+//Update the screentip to reflect what we're hoverin over
+/atom/MouseEntered(location, control, params)
+	. = ..()
+	// Statusbar
+	// status_bar_set_text(usr, name)
+	// Screentips
+	// if(usr?.hud_used)
+	// 	if(!usr.client?.prefs.screentip_pref || (flags_1 & NO_SCREENTIPS_1))
+	// 		usr.hud_used.screentip_text.maptext = ""
+	// 	else
+	// 		usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")

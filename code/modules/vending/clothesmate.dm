@@ -1,10 +1,9 @@
-//DON'T FORGET TO CHANGE THE REFILL SIZE IF YOU CHANGE THE MACHINE'S CONTENTS!
 /obj/machinery/vending/clothing
 	name = "ClothesMate" //renamed to make the slogan rhyme
 	desc = "A vending machine for clothing."
 	icon_state = "clothes"
 	icon_deny = "clothes-deny"
-	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this free swag!;Why leave style up to fate? Use the ClothesMate!"
+	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this swag!;Why leave style up to fate? Use the ClothesMate!"
 	vend_reply = "Thank you for using the ClothesMate!"
 	products = list(/obj/item/clothing/head/that = 4,
 					/obj/item/clothing/head/fedora = 3,
@@ -232,9 +231,11 @@
 					/obj/item/clothing/suit/jacket/bluehoodie = 4,
 					/obj/item/clothing/suit/toggle/jacket/whitehoodie = 4)
 	refill_canister = /obj/item/vending_refill/clothing
-	default_price = PRICE_CHEAP
+	default_price = PRICE_CHEAP //Default of
 	extra_price = PRICE_BELOW_NORMAL
 	payment_department = NO_FREEBIES
+	light_mask = "wardrobe-light-mask"
+	light_color = LIGHT_COLOR_ELECTRIC_GREEN
 
 /obj/machinery/vending/clothing/canLoadItem(obj/item/I,mob/user)
 	return (I.type in products)

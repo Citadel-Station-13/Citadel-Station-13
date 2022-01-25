@@ -5,7 +5,7 @@
 	chaos = 5
 	threat = 5
 	min_players = 20
-	uplink_filters = list(/datum/uplink_item/stealthy_weapons/romerol_kit,/datum/uplink_item/bundles_TC/contract_kit)
+	uplink_filters = list(/datum/uplink_item/stealthy_weapons/romerol_kit,/datum/uplink_item/bundles_tc/contract_kit)
 
 /datum/traitor_class/human/martyr/forge_objectives(datum/antagonist/traitor/T)
 	var/datum/objective/martyr/O = new

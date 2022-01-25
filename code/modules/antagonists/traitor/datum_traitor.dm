@@ -5,14 +5,22 @@
 	job_rank = ROLE_TRAITOR
 	antag_moodlet = /datum/mood_event/focused
 	skill_modifiers = list(/datum/skill_modifier/job/level/wiring/basic)
-	var/special_role = ROLE_TRAITOR
+	hijack_speed = 0.5				//10 seconds per hijack stage by default
+	ui_name = "AntagInfoTraitor"
+	suicide_cry = "FOR THE SYNDICATE!!"
 	var/employer = "The Syndicate"
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
 	var/should_equip = TRUE
+
+	///special datum about what kind of employer the trator has
 	var/datum/traitor_class/traitor_kind
+
+	///reference to the uplink this traitor was given, if they were.
+	var/datum/component/uplink/uplink
+
 	var/datum/contractor_hub/contractor_hub
-	hijack_speed = 0.5				//10 seconds per hijack stage by default
+
 	threat = 5
 
 /datum/antagonist/traitor/New()
@@ -45,7 +53,7 @@
 /datum/antagonist/traitor/process()
 	traitor_kind.on_process(src)
 
-/proc/get_random_traitor_kind(var/list/blacklist = list())
+/proc/get_random_traitor_kind(list/blacklist = list())
 	var/list/weights = list()
 	for(var/C in GLOB.traitor_classes)
 		if(!(C in blacklist))
@@ -62,23 +70,24 @@
 	return choice
 
 /datum/antagonist/traitor/on_gain()
+	owner.special_role = job_rank
 	if(owner.current && isAI(owner.current))
 		set_traitor_kind(TRAITOR_AI)
 	else
 		set_traitor_kind(get_random_traitor_kind())
 	SSticker.mode.traitors += owner
-	owner.special_role = special_role
 	finalize_traitor()
-	..()
+	uplink = owner.find_syndicate_uplink()
+	return ..()
 
 /datum/antagonist/traitor/on_removal()
+	if(!silent && owner.current)
+		to_chat(owner.current,span_userdanger("You are no longer the [job_rank]!"))
 	//Remove malf powers.
 	traitor_kind.on_removal(src)
 	SSticker.mode.traitors -= owner
-	if(!silent && owner.current)
-		to_chat(owner.current,"<span class='userdanger'> You are no longer the [special_role]! </span>")
 	owner.special_role = null
-	. = ..()
+	return ..()
 
 /datum/antagonist/traitor/proc/handle_hearing(datum/source, list/hearing_args)
 	var/message = hearing_args[HEARING_RAW_MESSAGE]
@@ -93,6 +102,7 @@
 /datum/antagonist/traitor/proc/remove_objective(datum/objective/O)
 	objectives -= O
 
+/// Generates a complete set of traitor objectives up to the traitor objective limit, including non-generic objectives such as martyr and hijack.
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
 	traitor_kind.forge_objectives(src)
 
@@ -151,21 +161,42 @@
 			H.dna.add_mutation(CLOWNMUT)
 	UnregisterSignal(M, COMSIG_MOVABLE_HEAR)
 
+
+/datum/antagonist/traitor/ui_static_data(mob/user)
+	var/list/data = list()
+	data["phrases"] = jointext(GLOB.syndicate_code_phrase, ", ")
+	data["responses"] = jointext(GLOB.syndicate_code_response, ", ")
+	data["theme"] = traitor_kind.tgui_theme //traitor_flavor["ui_theme"]
+	data["code"] = uplink.unlock_code
+	data["intro"] = "You are from [traitor_kind.employer]." //traitor_flavor["introduction"]
+	data["allies"] = "Most other syndicate operatives are not to be trusted (but try not to rat them out), as they might have been assigned opposing objectives." //traitor_flavor["allies"]
+	data["goal"] = "We do not approve of mindless killing of innocent workers; \"get in, get done, get out\" is our motto." //traitor_flavor["goal"]
+	data["has_uplink"] = uplink ? TRUE : FALSE
+	if(uplink)
+		data["uplink_intro"] =  "You have been provided with a standard uplink to accomplish your task."  //traitor_flavor["uplink"]
+		data["uplink_unlock_info"] = uplink.unlock_text
+	data["objectives"] = get_objectives()
+	return data
+
+/// Outputs this shift's codewords and responses to the antag's chat and copies them to their memory.
 /datum/antagonist/traitor/proc/give_codewords()
 	if(!owner.current)
 		return
-	var/mob/traitor_mob=owner.current
+
+	var/mob/traitor_mob = owner.current
 
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
-	var/dat = "<U><B>The Syndicate have provided you with the following codewords to identify fellow agents:</B></U>\n"
-	dat += "<B>Code Phrase</B>: <span class='blue'>[phrases]</span>\n"
-	dat += "<B>Code Response</B>: <span class='red'>[responses]</span>"
-	to_chat(traitor_mob, dat)
+	to_chat(traitor_mob, "<U><B>The Syndicate have provided you with the following codewords to identify fellow agents:</B></U>")
+	to_chat(traitor_mob, "<B>Code Phrase</B>: [span_blue("[phrases]")]")
+	to_chat(traitor_mob, "<B>Code Response</B>: [span_red("[responses]")]")
 
-	antag_memory += "<b>Code Phrase</b>: <span class='blue'>[phrases]</span><br>"
-	antag_memory += "<b>Code Response</b>: <span class='red'>[responses]</span><br>"
+	antag_memory += "<b>Code Phrase</b>: [span_blue("[phrases]")]<br>"
+	antag_memory += "<b>Code Response</b>: [span_red("[responses]")]<br>"
+
+	to_chat(traitor_mob, "Use the codewords during regular conversation to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
+	to_chat(traitor_mob, span_alertwarning("You memorize the codewords, allowing you to recognise them when heard."))
 
 /datum/antagonist/traitor/proc/add_law_zero()
 	var/mob/living/silicon/ai/killer = owner.current
@@ -220,44 +251,43 @@
 		where = "In your [equipped_slot]"
 	to_chat(mob, "<BR><BR><span class='info'>[where] is a folder containing <b>secret documents</b> that another Syndicate group wants. We have set up a meeting with one of their agents on station to make an exchange. Exercise extreme caution as they cannot be trusted and may be hostile.</span><BR>")
 
-//TODO Collate
 /datum/antagonist/traitor/roundend_report()
 	var/list/result = list()
 
-	var/traitorwin = TRUE
+	var/traitor_won = TRUE
 
 	result += printplayer(owner)
 
-	var/TC_uses = 0
-	var/uplink_true = FALSE
+	var/used_telecrystals = 0
+	var/uplink_owned = FALSE
 	var/purchases = ""
+
 	LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
-	var/datum/uplink_purchase_log/H = GLOB.uplink_purchase_logs_by_key[owner.key]
-	if(H)
-		TC_uses = H.total_spent
-		uplink_true = TRUE
-		purchases += H.generate_render(FALSE)
+	// Uplinks add an entry to uplink_purchase_logs_by_key on init.
+	var/datum/uplink_purchase_log/purchase_log = GLOB.uplink_purchase_logs_by_key[owner.key]
+	if(purchase_log)
+		used_telecrystals = purchase_log.total_spent
+		uplink_owned = TRUE
+		purchases += purchase_log.generate_render(FALSE)
 
 	var/objectives_text = ""
-	if(objectives.len)//If the traitor had no objectives, don't need to process this.
+	if(objectives.len) //If the traitor had no objectives, don't need to process this.
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
-			if(objective.completable)
-				var/completion = objective.check_completion()
-				if(completion >= 1)
-					objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</B></span>"
-				else if(completion <= 0)
-					objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
-					traitorwin = FALSE
-				else
-					objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
+			var/completion = objective.check_completion()
+			if(completion >= 1)
+				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [span_greentext("Success!")]"
+			else if(completion <= 0)
+				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [span_redtext("Fail.")]"
+				traitor_won = FALSE
 			else
-				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text]"
+				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
+
 			count++
 
-	if(uplink_true)
-		var/uplink_text = "(used [TC_uses] TC) [purchases]"
-		if(TC_uses==0 && traitorwin)
+	if(uplink_owned)
+		var/uplink_text = "(used [used_telecrystals] TC) [purchases]"
+		if((used_telecrystals == 0) && traitor_won)
 			var/static/icon/badass = icon('icons/badass.dmi', "badass")
 			uplink_text += "<BIG>[icon2html(badass, world)]</BIG>"
 		result += uplink_text
@@ -266,55 +296,59 @@
 
 	var/special_role_text = lowertext(name)
 
-	if(contractor_hub)
+	if (contractor_hub)
 		result += contractor_round_end()
 
-	if(traitorwin)
-		result += "<span class='greentext'>The [special_role_text] was successful!</span>"
+	if(traitor_won)
+		result += span_greentext("The [special_role_text] was successful!")
 	else
-		result += "<span class='redtext'>The [special_role_text] has failed!</span>"
+		result += span_redtext("The [special_role_text] has failed!")
 		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
 
 	return result.Join("<br>")
 
 /// Proc detailing contract kit buys/completed contracts/additional info
 /datum/antagonist/traitor/proc/contractor_round_end()
-	var result = ""
-	var total_spent_rep = 0
+	var/result = ""
+	var/total_spent_rep = 0
 
-	var/completed_contracts = 0
+	var/completed_contracts = contractor_hub.contracts_completed
 	var/tc_total = contractor_hub.contract_TC_payed_out + contractor_hub.contract_TC_to_redeem
-	for(var/datum/syndicate_contract/contract in contractor_hub.assigned_contracts)
-		if(contract.status == CONTRACT_STATUS_COMPLETE)
-			completed_contracts++
 
 	var/contractor_item_icons = "" // Icons of purchases
 	var/contractor_support_unit = "" // Set if they had a support unit - and shows appended to their contracts completed
 
-	for(var/datum/contractor_item/contractor_purchase in contractor_hub.purchased_items)	// Get all the icons/total cost for all our items bought
+	/// Get all the icons/total cost for all our items bought
+	for (var/datum/contractor_item/contractor_purchase in contractor_hub.purchased_items)
 		contractor_item_icons += "<span class='tooltip_container'>\[ <i class=\"fas [contractor_purchase.item_icon]\"></i><span class='tooltip_hover'><b>[contractor_purchase.name] - [contractor_purchase.cost] Rep</b><br><br>[contractor_purchase.desc]</span> \]</span>"
+
 		total_spent_rep += contractor_purchase.cost
-		if(istype(contractor_purchase, /datum/contractor_item/contractor_partner))	// Special case for reinforcements, we want to show their ckey and name on round end.
+
+		/// Special case for reinforcements, we want to show their ckey and name on round end.
+		if (istype(contractor_purchase, /datum/contractor_item/contractor_partner))
 			var/datum/contractor_item/contractor_partner/partner = contractor_purchase
 			contractor_support_unit += "<br><b>[partner.partner_mind.key]</b> played <b>[partner.partner_mind.current.name]</b>, their contractor support unit."
+
 	if (contractor_hub.purchased_items.len)
-		result += "<br>(used [total_spent_rep] Rep)"
+		result += "<br>(used [total_spent_rep] Rep) "
 		result += contractor_item_icons
 	result += "<br>"
-	if(completed_contracts > 0)
+	if (completed_contracts > 0)
 		var/pluralCheck = "contract"
-		if(completed_contracts > 1)
+		if (completed_contracts > 1)
 			pluralCheck = "contracts"
-		result += "Completed <span class='greentext'>[completed_contracts]</span> [pluralCheck] for a total of \
-					<span class='greentext'>[tc_total] TC</span>!<br>"
+
+		result += "Completed [span_greentext("[completed_contracts]")] [pluralCheck] for a total of \
+					[span_greentext("[tc_total] TC")]![contractor_support_unit]<br>"
+
 	return result
 
 /datum/antagonist/traitor/roundend_report_footer()
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
-	var message = "<br><b>The code phrases were:</b> <span class='bluetext'>[phrases]</span><br>\
-					<b>The code responses were:</b> <span class='redtext'>[responses]</span><br>"
+	var/message = "<br><b>The code phrases were:</b> <span class='bluetext'>[phrases]</span><br>\
+					<b>The code responses were:</b> [span_redtext("[responses]")]<br>"
 
 	return message
 
