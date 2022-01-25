@@ -2,9 +2,10 @@
 /atom/movable/screen/parallax_layer
 	icon = 'icons/screen/parallax.dmi'
 	blend_mode = BLEND_ADD
-	plane = PLANE_SPACE_PARALLAX_AUTO
+	plane = PLANE_SPACE_PARALLAX
 	screen_loc = "CENTER-7,CENTER-7"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	appearance_flags = PIXEL_SCALE | KEEP_TOGETHER
 
 	// notice - all parallax layers are 15x15 tiles. They roll over every 240 pixels.
 	/// pixel x/y shift per real x/y
@@ -30,11 +31,6 @@
 	/// queued animation timerid
 	var/queued_animation
 
-/atom/movable/screen/parallax_layer/Initialize(mapload)
-	. = ..()
-	if(plane == PLANE_SPACE_PARALLAX_AUTO)
-		plane = absolute? PLANE_SPACE_PARALLAX_STATIC : PLANE_SPACE_PARALLAX
-
 /atom/movable/screen/parallax_layer/proc/ResetPosition(x, y)
 	// remember that our offsets/directiosn are relative to the player's viewport
 	// this means we need to scroll reverse to them.
@@ -54,8 +50,8 @@
 	offset_y = MODULUS(offset_y, 240)
 	screen_loc = "[map_id && "[map_id]:"]CENTER-7:[round(offset_x,1)],CENTER-7:[round(offset_y,1)]"
 
-/atom/movable/screen/parallax_layer/proc/SetView(client_view = world.view)
-	if(view_current == client_view)
+/atom/movable/screen/parallax_layer/proc/SetView(client_view = world.view, force_update = FALSE)
+	if(view_current == client_view && !force_update)
 		return
 	view_current = client_view
 	if(!dynamic_self_tile)

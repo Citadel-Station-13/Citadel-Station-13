@@ -158,21 +158,14 @@
 
 ///Contains space parallax
 /atom/movable/screen/plane_master/parallax
-	name = "parallax (scrolling) plane master"
+	name = "parallax plane master"
 	plane = PLANE_SPACE_PARALLAX
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = PLANE_SPACE_PARALLAX_RENDER_TARGET
 
-/atom/movable/screen/plane_master/parallax_static
-	name = "parallax (static) plane master"
-	plane = PLANE_SPACE_PARALLAX_STATIC
-	blend_mode = BLEND_ADD
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_target = PLANE_SPACE_PARALLAX_STATIC_RENDER_TARGET
-
 /atom/movable/screen/plane_master/parallax_white
-	name = "parallax whitifier plane master"
+	name = "parallax backdrop/space turf plane master"
 	plane = PLANE_SPACE
 
 /atom/movable/screen/plane_master/camera_static

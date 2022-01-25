@@ -99,7 +99,7 @@
 		if(!QDELETED(src))
 			qdel(src)
 		return
-	if(eye != forced_eye || owner.eye)
+	if(eye != forced_eye || !owner.eye)
 		// eye mismatch, reset
 		Reset()
 		return
@@ -155,7 +155,7 @@
 			continue
 		if(!L.ShouldSee(owner, last))
 			continue
-		L.SetView(owner.view)
+		L.SetView(owner.view, TRUE)
 		. |= L
 	owner.screen |= .
 	if(!secondary_map)		// we're the primary
@@ -226,7 +226,11 @@
 		if(P.absolute)
 			continue
 		// end all previous animations, do the first segment by shifting down one screen
+		P.transform = matrix()
 		animate(P, transform = matrix(1, 0, 0, 0, 1, -480), time = speed / P.speed, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_END_NOW)
+		// queue up another incase lag makes QueueLoop not fire on time, this time by shifting up
+		P.transform = matrix(1, 0, 0, 0, 1, 480)
+		animate(transform = matrix(), time = speed / P.speed)
 		P.QueueLoop(speed / P.speed, speed / P.speed)
 
 /**
@@ -237,7 +241,6 @@
 	if(owner && turn != scroll_turn)
 		var/atom/movable/screen/plane_master/parallax/PM = locate() in owner.screen
 		var/matrix/turn_transform = matrix()
-
 		turn_transform.Turn(turn)
 		animate(PM, transform = turn_transform, time = time, flags = ANIMATION_END_NOW, easing = QUAD_EASING | EASE_OUT)
 	if(scroll_speed == 0)
@@ -250,7 +253,7 @@
 			continue
 		P.CancelAnimation()
 		animate(P, transform = matrix(1, 0, 0, 0, 1, 480), time = 0, flags = ANIMATION_END_NOW)
-		animate(P, transform = matrix(), time = time, easing = QUAD_EASING | EASE_OUT)
+		animate(transform = matrix(), time = time, easing = QUAD_EASING | EASE_OUT)
 
 /**
  * fully resets animation state
