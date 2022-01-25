@@ -234,7 +234,6 @@
 		// we're done
 		return
 	// speed diff?
-	var/current_speed = scroll_speed
 	scroll_speed = speed
 	scrolling = TRUE
 	// always scroll from north; turn handles everything
@@ -242,13 +241,15 @@
 		if(P.absolute)
 			continue
 		var/matrix/translate_matrix = matrix(1, 0, 0, 0, 1, 480)
+		var/matrix/target_matrix = matrix()
+		var/move_speed = speed * P.speed
 		// do the first segment by shifting down one screen
 		P.transform = translate_matrix
-		animate(transform = matrix(), time = move_speed, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_END_NOW)
+		animate(P, transform = target_matrix, time = move_speed, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_END_NOW)
 		// queue up another incase lag makes QueueLoop not fire on time, this time by shifting up
 		animate(transform = translate_matrix, time = 0)
-		animate(transform = matrix(), time = move_speed)
-		P.QueueLoop(move_speed, speed / P.speed)
+		animate(transform = target_matrix, time = move_speed)
+		P.QueueLoop(move_speed, speed * P.speed, translate_matrix, target_matrix)
 
 /**
  * Smoothly stops the animation, turning to a certain angle as needed.

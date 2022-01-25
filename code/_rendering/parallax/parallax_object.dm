@@ -37,8 +37,14 @@
 	offset_x = -(center_x + speed * x)
 	offset_y = -(center_y + speed * y)
 	if(!absolute)
-		offset_x = MODULUS(offset_x, 240)
-		offset_y = MODULUS(offset_y, 240)
+		if(offset_x > 240)
+			offset_x -= 480
+		if(offset_x < -240)
+			offset_x += 480
+		if(offset_y > 240)
+			offset_y -= 480
+		if(offset_y < -240)
+			offset_y += 480
 	screen_loc = "[map_id && "[map_id]:"]CENTER-7:[round(offset_x,1)],CENTER-7:[round(offset_y,1)]"
 
 /atom/movable/screen/parallax_layer/proc/RelativePosition(x, y, rel_x, rel_y)
@@ -46,8 +52,14 @@
 		return ResetPosition(x, y)
 	offset_x -= rel_x * speed
 	offset_y -= rel_y * speed
-	offset_x = MODULUS(offset_x, 240)
-	offset_y = MODULUS(offset_y, 240)
+	if(offset_x > 240)
+		offset_x -= 480
+	if(offset_x < -240)
+		offset_x += 480
+	if(offset_y > 240)
+		offset_y -= 480
+	if(offset_y < -240)
+		offset_y += 480
 	screen_loc = "[map_id && "[map_id]:"]CENTER-7:[round(offset_x,1)],CENTER-7:[round(offset_y,1)]"
 
 /atom/movable/screen/parallax_layer/proc/SetView(client_view = world.view, force_update = FALSE)
@@ -96,14 +108,14 @@
 /atom/movable/screen/parallax_layer/proc/default_y()
 	return center_y
 
-/atom/movable/screen/parallax_layer/proc/QueueLoop(delay, speed, matrix/translate_matrix)
+/atom/movable/screen/parallax_layer/proc/QueueLoop(delay, speed, matrix/translate_matrix, matrix/target_matrix)
 	if(queued_animation)
 		CancelAnimation()
-	queued_animation = addtimer(CALLBACK(src, .proc/_loop, speed, translate_matrix), delay, TIMER_STOPPABLE)
+	queued_animation = addtimer(CALLBACK(src, .proc/_loop, speed, translate_matrix, target_matrix), delay, TIMER_STOPPABLE)
 
-/atom/movable/screen/parallax_layer/proc/_loop(speed, matrix/translate_matrix = matrix(1, 0, 0, 0, 1, 480))
+/atom/movable/screen/parallax_layer/proc/_loop(speed, matrix/translate_matrix = matrix(1, 0, 0, 0, 1, 480), matrix/target_matrix = matrix())
 	transform = translate_matrix
-	animate(src, transform = matrix(), time = speed, loop = -1)
+	animate(src, transform = target_matrix, time = speed, loop = -1)
 	animate(transform = translate_matrix, time = 0)
 	queued_animation = null
 

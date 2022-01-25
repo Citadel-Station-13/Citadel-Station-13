@@ -19,7 +19,7 @@
 	if(client && screen.ShouldShow(src))
 		screen.SetView(client.view)
 		client.screen += screen
-	return screen
+	return screenw
 
 /**
  * Wipes a fullscreen of a certain category
@@ -82,7 +82,7 @@
 	layer = FULLSCREEN_LAYER
 	plane = FULLSCREEN_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	/// current view - should match size_x and size_y in prototype
+	/// current view we're adapted to
 	var/view_current
 	/// min severity
 	var/severity_min = 0
@@ -118,11 +118,11 @@
 	var/size_y = 15
 
 /atom/movable/screen/fullscreen/scaled/SetView(client_view)
-	. = ..()
 	if(view_current != client_view)
 		var/list/actualview = getviewsize(client_view)
 		view_current = client_view
 		transform = matrix(actualview[1] / size_x, 0, 0, 0, actualview[2] / size_y, 0)
+	return ..()
 
 /atom/movable/screen/fullscreen/scaled/brute
 	icon_state = "brutedamageoverlay"
