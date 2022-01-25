@@ -48,7 +48,8 @@ SUBSYSTEM_DEF(parallax)
  * Gets parallax for zlevel.
  */
 /datum/controller/subsystem/parallax/proc/get_parallax_datum(z)
-	return new get_parallax_type(z)
+	var/datum_type = get_parallax_type(z)
+	return new datum_type
 
 /**
  * Gets parallax added vis contents for zlevel
