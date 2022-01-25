@@ -87,7 +87,7 @@
 	/// min severity
 	var/severity_min = 0
 	/// max severity
-	var/severity_max
+	var/severity_max = INFINITY
 	/// current severity
 	var/severity = 0
 	/// show this while dead
