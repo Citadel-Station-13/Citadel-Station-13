@@ -48,8 +48,17 @@
 			continue
 		var/atom/movable/thing = i
 		thing.Crossed(src)
-//
-////////////////////////////////////////
+
+/**
+ * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like camera mobs or ghosts)
+ * if you want something to move onto a tile with a beartrap or recycler or tripmine or mouse without that object knowing about it at all, use this
+ * most of the time you want forceMove()
+ */
+/atom/movable/proc/abstract_move(atom/new_loc)
+	var/atom/old_loc = loc
+	// move_stacks++
+	loc = new_loc
+	Moved(old_loc)
 
 /atom/movable/Move(atom/newloc, direct, glide_size_override = 0)
 	var/atom/movable/pullee = pulling

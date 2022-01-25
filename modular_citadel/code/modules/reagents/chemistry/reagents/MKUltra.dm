@@ -135,7 +135,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	color = "#660015" // rgb: , 0, 255
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
 	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
-	metabolization_rate = 0.1//It has to be slow, so there's time for the effect.
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM//It has to be slow, so there's time for the effect.
 	data = list("creatorID" = null, "creatorGender" = null, "creatorName" = null)
 	var/creatorID  //ckey
 	var/creatorGender

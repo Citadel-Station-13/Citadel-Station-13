@@ -17,7 +17,6 @@
 /datum/reagent/medicine/leporazine
 	name = "Leporazine"
 	description = "Leporazine will effectively regulate a patient's body temperature, ensuring it never leaves safe levels."
-	chemical_flags = REAGENT_ALL_PROCESS
 	pH = 8.4
 	color = "#82b8aa"
 	value = REAGENT_VALUE_COMMON
@@ -693,7 +692,6 @@
 	reagent_state = LIQUID
 	color = "#00FFFF"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	chemical_flags = REAGENT_ALL_PROCESS
 	pH = 2
 
 /datum/reagent/medicine/salbutamol/on_mob_life(mob/living/carbon/M)
@@ -710,7 +708,6 @@
 	reagent_state = LIQUID
 	color = "#FF6464"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	chemical_flags = REAGENT_ALL_PROCESS
 	pH = 11
 
 /datum/reagent/medicine/perfluorodecalin/on_mob_life(mob/living/carbon/human/M)
@@ -920,7 +917,6 @@
 	reagent_state = LIQUID
 	color = "#000000"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	chemical_flags = REAGENT_ALL_PROCESS
 	overdose_threshold = 35
 	pH = 12
 	value = REAGENT_VALUE_UNCOMMON
@@ -951,7 +947,6 @@
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	chemical_flags = REAGENT_ALL_PROCESS
 	overdose_threshold = 30
 	pH = 10.2
 
@@ -1052,6 +1047,7 @@
 	name = "Mannitol"
 	description = "Efficiently restores brain damage."
 	color = "#DCDCFF"
+	taste_description = "sweetness"
 	pH = 10.4
 	chemical_flags = REAGENT_ALL_PROCESS
 
@@ -1203,7 +1199,6 @@
 	description = "Restores oxygen loss. Overdose causes it instead."
 	reagent_state = LIQUID
 	color = "#13d2f0"
-	chemical_flags = REAGENT_ALL_PROCESS
 	overdose_threshold = 30
 	pH = 9.7
 
@@ -1267,7 +1262,6 @@
 	reagent_state = LIQUID
 	pH = 8.5
 	color = "#5dc1f0"
-	chemical_flags = REAGENT_ALL_PROCESS
 
 /datum/reagent/medicine/inaprovaline/on_mob_life(mob/living/carbon/M)
 	if(M.losebreath >= 5)

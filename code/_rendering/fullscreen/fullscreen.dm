@@ -156,6 +156,12 @@
 /atom/movable/screen/fullscreen/scaled/impaired
 	icon_state = "impairedoverlay"
 
+/atom/movable/screen/fullscreen/scaled/emergency_meeting
+	icon_state = "emergency_meeting"
+	show_when_dead = TRUE
+	layer = CURSE_LAYER
+	plane = SPLASHSCREEN_PLANE
+
 /atom/movable/screen/fullscreen/tiled/blurry
 	icon = 'icons/mob/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"

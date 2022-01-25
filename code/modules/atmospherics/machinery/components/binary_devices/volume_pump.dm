@@ -33,14 +33,19 @@
 	. += "<span class='notice'>You can hold <b>Alt</b> and click on it to maximize its pressure.</span>"
 
 /obj/machinery/atmospherics/components/binary/volume_pump/CtrlClick(mob/user)
-	var/area/A = get_area(src)
-	var/turf/T = get_turf(src)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
 		on = !on
-		update_icon()
-		investigate_log("Volume Pump, [src.name], turned on by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
-		message_admins("Volume Pump, [src.name], turned [on ? "on" : "off"] by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
+		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
+		update_appearance()
 		return ..()
+
+/obj/machinery/atmospherics/components/binary/volume_pump/AltClick(mob/user)
+	if(can_interact(user))
+		transfer_rate = MAX_TRANSFER_RATE
+		investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
+		balloon_alert(user, "volume output set to [transfer_rate] L/s")
+		update_appearance()
+	return ..()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/Destroy()
 	SSradio.remove_object(src,frequency)
