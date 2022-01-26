@@ -1,9 +1,0 @@
-author: "LetterN"
-delete-after: True
-changes: 
-  - rscadd: "Antag info panel using tgui for selected antags"
-  - code_imp: "TGUI hardsync"
-  - code_imp: "TIMER_DELETE_ME flag for timers"
-  - code_imp: "wiremod backend (DO NOT ENABLE, FOLLOWUP PR WILL ADD WIREMOD)
-tweak: Cryo DOES NOT store the items, instead only drops it as soon as the person \"fully cryo\"
-tweak: Changes on how uplink works. Purchases are now only based on if said uplink has the right flag to purchase an item, rather than using a list to whitelist/blacklist specific gamemodes for it. Also, the purchase items handles poplocking by themselves now."
