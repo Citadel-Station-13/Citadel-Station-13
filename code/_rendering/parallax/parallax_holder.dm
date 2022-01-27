@@ -61,7 +61,7 @@
 	owner = null
 	return ..()
 
-/datum/parallax_holder/proc/Reset()
+/datum/parallax_holder/proc/Reset(auto_z_change = FALSE)
 	if(!owner.eye)
 		// if no eye, tear down
 		last = eye = last_area = null
@@ -79,7 +79,7 @@
 	eye = forced_eye || owner.eye
 	last_area = T.loc
 	// rebuild parallax
-	SetParallax(SSparallax.get_parallax_datum(T.z))
+	SetParallax(SSparallax.get_parallax_datum(T.z), null, auto_z_change)
 	// hard reset positions to correct positions
 	for(var/atom/movable/screen/parallax_layer/L in layers)
 		L.ResetPosition(T.x, T.y)
@@ -95,12 +95,12 @@
 	var/atom/actual_eye = owner.eye || forced_eye
 	if(eye != actual_eye)
 		// eye mismatch, reset
-		Reset()
+		Reset(TRUE)
 		return
 	var/turf/T = get_turf(eye)
 	if(!last || T.z != last.z)
 		// z mismatch, reset
-		Reset()
+		Reset(TRUE)
 		return
 	// get rel offsets
 	var/rel_x = T.x - last.x
@@ -122,7 +122,7 @@
  *
  * Also ensures movedirs are correct for the eye's pos.
  */
-/datum/parallax_holder/proc/Sync()
+/datum/parallax_holder/proc/Sync(auto_z_change)
 	layers = list()
 	for(var/atom/movable/screen/parallax_layer/L in parallax.objects)
 		layers += L
@@ -131,12 +131,12 @@
 		vis_holder = new /atom/movable/screen/parallax_vis
 	var/turf/T = get_turf(eye)
 	vis_holder.vis_contents = vis = T? SSparallax.get_parallax_vis_contents(T.z) : list()
-	UpdateMotion()
+	UpdateMotion(auto_z_change)
 
 /**
  * Updates motion if needed
  */
-/datum/parallax_holder/proc/UpdateMotion()
+/datum/parallax_holder/proc/UpdateMotion(auto_z_change)
 	var/turf/T = get_turf(eye)
 	if(!T)
 		if(scroll_speed || scroll_turn)
@@ -144,10 +144,10 @@
 		return
 	var/list/ret = SSparallax.get_parallax_motion(T.z)
 	if(ret)
-		Animation(ret[1], ret[2], ret[3], ret[4])
+		Animation(ret[1], ret[2], auto_z_change? 0 : ret[3], auto_z_change? 0 : ret[4])
 	else
 		var/area/A = T.loc
-		Animation(A.parallax_move_speed, A.parallax_move_angle)
+		Animation(A.parallax_move_speed, A.parallax_move_angle, auto_z_change? 0 : null, auto_z_change? 0 : null)
 
 /datum/parallax_holder/proc/Apply()
 	if(QDELETED(owner))
@@ -190,7 +190,7 @@
 		CRASH("Invalid path")
 	SetParallax(new path)
 
-/datum/parallax_holder/proc/SetParallax(datum/parallax/P, delete_old = TRUE)
+/datum/parallax_holder/proc/SetParallax(datum/parallax/P, delete_old = TRUE, auto_z_change)
 	if(P == parallax)
 		return
 	Remove()
@@ -200,7 +200,7 @@
 	HardResetAnimations()
 	if(!parallax)
 		return
-	Sync()
+	Sync(auto_z_change)
 	Apply()
 
 /**

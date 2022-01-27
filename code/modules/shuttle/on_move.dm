@@ -312,7 +312,7 @@ All ShuttleMove procs go here
 		if(buckled)
 			shake_force *= 0.25
 		shake_camera(src, shake_force, 1)
-	client?.parallax_holder?.Reset()
+	client?.parallax_holder?.Reset(auto_z_change = FALSE)
 
 /mob/living/lateShuttleMove(turf/oldT, list/movement_force, move_dir)
 	if(buckled)
