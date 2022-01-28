@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes: 
+  - bugfix: "Fixes Papers not working due to a dependency updated."
