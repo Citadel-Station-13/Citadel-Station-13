@@ -1,0 +1,4 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - rscdel: "genital fluids are once again not valid for pod cloning, nor do the decals have dna (I hate the fact I had to PR this because the original got merged with this still present)"
