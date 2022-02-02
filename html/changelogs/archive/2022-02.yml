@@ -1,0 +1,13 @@
+2022-02-01:
+  SpiWat:
+  - spellcheck: tweenty --> twenty
+2022-02-02:
+  BlueWildrose:
+  - bugfix: Sylvan should actually be speakable for those who have taken that language
+      as roundstart now, and for plantpeople who naturally start with it.
+  - bugfix: The langauge Neo-kanji's shortcut was overlapping with the slime language,
+      and has been relocated from k to j.
+  - bugfix: The langauge Dwarvish's shortcut was potentially overlapping with drones,
+      and has been relocated from D to w.
+  - bugfix: The language Rachnidian's shortcut was getting in the way of the Ratvarian
+      language, so it's been moved from r to c.
