@@ -1,0 +1,247 @@
+2021-09-01:
+  BlueWildrose:
+  - bugfix: The waddle component now takes size into account when running rotating
+      animations, thus not reverting character sizes to default size.
+  ma44:
+  - bugfix: Weapon rechargers now have their recharger indicators again.
+  - bugfix: Energy guns now update when switching modes again.
+  - bugfix: Stabilized yellow slime extracts will now update cells and guns it recharges.
+  - rscadd: Weapon rechargers will now be more noticeable when it has finished recharging
+      something.
+  zeroisthebiggay:
+  - bugfix: the fucking chainsaw sprite
+2021-09-03:
+  timothyteakettle:
+  - bugfix: fixes losing your additional language upon changing species
+2021-09-04:
+  Putnam3145:
+  - bugfix: Might've fixed some ghost sprite oddities nobody even knew about
+  WanderingFox95:
+  - bugfix: Lavaland architects don't screw up so badly anymore and do in fact not
+      somehow leave holes through the planet surface all the way into space under
+      their bookshelves.
+  - bugfix: Snow was removed from Lavaland Ruins.
+  keronshb:
+  - bugfix: Fixes entering an occupied VR sleeper bug
+  timothyteakettle:
+  - bugfix: makes the arm/leg markings for synthetic lizards appear as an option again
+2021-09-05:
+  DeltaFire15:
+  - bugfix: Unreadied player gamemode votes now actually get ignored (if the config
+      for this is enabled).
+2021-09-07:
+  bunny232:
+  - bugfix: fixed some jank in pubby's xenobiological secure pen
+  keronshb:
+  - bugfix: Gremlins no longer have AA when dead
+  zeroisthebiggay:
+  - spellcheck: you can just about
+2021-09-08:
+  keronshb:
+  - imageadd: Adds the parade outfit for the HoS and Centcomm
+  - imageadd: Recolors the parade outfit for the Captain
+  - imageadd: Adds a toggle option for the parade outfits
+  - bugfix: Observers can no longer highlight your items
+2021-09-10:
+  BlueWildrose:
+  - rscadd: CTRL + (combat mode) Right Click - positional dropping and item rotation.
+  keronshb:
+  - rscadd: Readds Reebe
+  - rscadd: Added the ability to dye your hair with gradients by using a hair dye
+      spray.
+  - rscadd: The new Colorist quirk, allowing you to spawn with a hair dye spray.
+  - rscadd: Adds Hair gradients to preferences
+  - imageadd: Three new hair gradients, a pair of shorter fades and a spiky wave.
+  - bugfix: Adds viewers for mask of madness so it doesn't wallhack
+  zeroisthebiggay:
+  - bugfix: Replaced the DNA probe's old sprite (Hypospray) with a unique sprite
+  - imageadd: added some icons and images for hyposprays and medipens so they stand
+      out
+  - imageadd: added inhands for the cautery, retractor, drapes and hemostat.
+  - imageadd: New icon and sprites for the DNA probe
+  - imageadd: Emergency survival boxes now have an unique blue sprite and description
+      to tell them apart from regular boxes.
+  - imageadd: Added craftable normal/extended emergency oxygen tank boxes to put your
+      emergency oxygen tank collection inside.
+  - imageadd: Emergency first aid kits now look visually consistent with full first
+      aid kits.
+  - imageadd: Ports new Hypospray, Combat Autoinjector, Pestle, Mortar and Dropper
+      sprites from Shiptest!
+  - imageadd: Adds a new sprite for pill bottles!
+  - imageadd: new surgical tool sprites
+  - imageadd: The cyborg toolset is now all new and improved, with a new coat of paint!
+  - imageadd: Updates pride hammer sprites!
+  - imageadd: Replaced old Mjolnir sprites with new Mjolnir sprites.
+2021-09-11:
+  LetterN:
+  - code_imp: Tickers, GC, MC, FS updates
+  - code_imp: rust_g update. It is default that we use their urlencode/unencode now.
+  - code_imp: updates CBT to juke
+  - bugfix: CI Cache works properly now
+  Putnam3145:
+  - bugfix: Removed some crashes
+  SandPoot:
+  - rscadd: 'Cyborg grippers now have a preview of the item you are holding. tweak:
+      Cyborg grippers no longer drop using alt-click, instead, you try to drop the
+      gripper to drop the item, and then you can drop the gripper. tweak: You can
+      now use the "Pick up" verb on the right click menu to take items with a cyborg
+      gripper.'
+  - bugfix: You should be able to access the interface of airlock electronics once
+      again as a borg.
+  - refactor: Reworks a lot of stuff that was being used on the grippers.
+  timothyteakettle:
+  - bugfix: arachnid legs now show up properly
+  zeroisthebiggay:
+  - imageadd: reinforcing the mining hardsuit with goliath hide now makes the sprite
+      cooler
+  - imageadd: The SWAT helmet is now consistent between its front, side and back sprites
+      for coloration.
+  - imageadd: new riot armor sprites
+2021-09-12:
+  LetterN:
+  - bugfix: lowers the audio volume of ark sfx
+  - bugfix: readded cwc theme in the index.js once more
+  timothyteakettle:
+  - rscadd: allows custom taste text and color on the custom ice cream setting in
+      the ice cream vat
+2021-09-14:
+  Hatterhat:
+  - balance: The Syndicate zero-day'd the NT IRN program on modular computers through
+      cryptographic sequencing technology. NanoTrasen's cybersecurity divisions are
+      seething.
+  LetterN:
+  - code_imp: sync mafia code
+  Putnam3145:
+  - balance: Nerfed bad toxins bombs and buffed good toxins bombs. There's no longer
+      an arbitrary hard research points cap.
+  keronshb:
+  - balance: Removes zap obj damage and machinery explosion from the SM arcs
+  - bugfix: Fixes hitby runtime.
+  zeroisthebiggay:
+  - rscadd: the permabrig erp role
+  - balance: changeling adrenals buff
+  - bugfix: speedups
+  - bugfix: bread goes in mouth and not on head
+2021-09-17:
+  DeltaFire15:
+  - bugfix: Techweb hidden nodes should now show less weird behavior.
+2021-09-18:
+  kiwedespars:
+  - balance: blacklisted morphine and haloperidol from dart guns
+2021-09-20:
+  BlueWildrose:
+  - balance: Slime regenerative extracts now require five seconds of wait before they
+      are used. They add 25 disgust when used.
+  DeltaFire15:
+  - bugfix: Catsurgeons should now spawn at more reasonable locations if possible.
+  - balance: carded AIs can now be converted by conversion sigils (clockcult)
+  - bugfix: There is now a way to acquire nanite storage protocols (bepis, like the
+      other protocols), as opposed to them existing with no way to acquire them.
+  - bugfix: Plastic golems are back to ventcrawler_nude instead of ventcrawler_always
+  Putnam3145:
+  - config: monstermos config added, disabled
+  buffyuwu:
+  - bugfix: fixed medihound sleeper ui display
+  - rscadd: Adds 4 redesigned jackets and 2 redesigned shirts to loadout
+  - bugfix: Holoparasites no long rename and recolor on relog
+  dapnee:
+  - bugfix: attaches an air vent that was just there on the AI sat, changes some areas
+      to what they'd logically be
+  keronshb:
+  - bugfix: Plague Rats will no longer spawn thousands of dirt decals
+  - bugfix: Plague Rats will no longer spawn thousands of corpses
+  - bugfix: Plague Rats can't spawn or transform off station z anymore
+  - bugfix: Plague Rats shouldn't explosively grow instantly
+  - bugfix: Plague Rats won't spawn infinite miasma anymore.
+  - balance: Plague Rats health is now 100.
+  - balance: Plague Rats can now ventcrawl through everything to prevent farming.
+  - bugfix: Slaughter Demons Slam will now wound again on hit.
+  - balance: Damage for demons back up to 30
+  - balance: 'Wound Bonus for demons now at 0. image_add: Adds a sprite for the action
+      bar'
+  - refactor: Changed the CTRL+SHIFT Click to an action button.  People can see the
+      cooldown now too.
+  - rscadd: PAIs can be emagged to reset master
+  qweq12yt:
+  - bugfix: Fixed space heaters not being able to be interacted/turned on in non powered
+      areas
+  timothyteakettle:
+  - bugfix: removes passkey from access circuits as its not used anymore
+  - rscadd: a new mild trauma, **[REDACTED]**
+  zeroisthebiggay:
+  - balance: glass has do_after
+  - bugfix: box perma has power
+  - bugfix: missing madness mask sprites
+  - balance: The Spider Clan has recently taken up the Space Ninja project again along
+      with the Syndicate. Space Ninjas have been drastically changed as a result,
+      becoming much weaker and more stealth oriented. As a result of cutting costs
+      per ninja, more ninjas were able to be hired. Expect to see them around more
+      often.
+  - bugfix: prisoners cannot latejoin anymore
+  - bugfix: bone satchel onmob sprites
+  - rscadd: new tips
+  - rscdel: old tips
+  - imageadd: all medipens get inhands
+  - rscadd: some more brainhurt lines
+2021-09-22:
+  silicons:
+  - bugfix: dice bags can only hold dice
+  - rscdel: limb damage changes reverted
+  - bugfix: crawling can't be adrenals'd
+2021-09-23:
+  KrabSpider:
+  - code_imp: cryogenics ain't a candidate for anomaly spawns anymore.
+  buffyuwu:
+  - rscadd: canvas and spray can are now sold in the fun vendor
+2021-09-24:
+  zeroisthebiggay:
+  - balance: gremlins become shock immune
+2021-09-25:
+  buffyuwu:
+  - bugfix: fixes accordions
+2021-09-27:
+  zeroisthebiggay:
+  - bugfix: helter skelter actually spawns
+  - bugfix: 'code\modules\mob\living\simple_animal\hostile\plaguerat.dm:139:warning:
+      newmouse: variable defined but not used'
+2021-09-28:
+  zeroisthebiggay:
+  - balance: helter skelter loot insanity
+  - bugfix: helter skelter comms insanity
+2021-09-29:
+  Ghommie:
+  - rscdel: Animals are no loner n(e)igh-immune to stuttering.
+  - bugfix: Silicons and animals won't keep stuttering or slurring forever after being
+      struck by something that made them like that in the first place (such as a Blue
+      Space Artillery).
+  Hatterhat:
+  - balance: Reports from other stations' Wardens blasting themselves in sensitive
+      places due to mishandled firearms has led to the introduction of a folding-stock
+      safety for their shotgun, rendering it inoperable while the stock is folded.
+  - balance: Compact combat shotguns now stay compact when stored, by virtue of being
+      unable to be extended while in a bag.
+  - balance: Reloading a shotgun with a shell clip now inflicts melee click delay.
+  LetterN:
+  - rscadd: clowncar railgun- i mean gun
+  - rscadd: more achivements
+  - rscadd: syndie carp can pick up the disky (and is smart now)
+  - code_imp: hooks most of the achivements, all of the heretics work now
+  Putnam3145:
+  - bugfix: Lavaland can no longer be too cold for its natives to surivive
+  buffyuwu:
+  - bugfix: flannels can now be toggled in style from buttoned to unbuttoned
+  - rscadd: ports more rp and existing tg assets with minor edits into loadout selection
+  keronshb:
+  - refactor: Ninja status back in the status menu
+  zeroisthebiggay:
+  - bugfix: the monkey shuttle brig
+  - rscadd: meta gets a prison
+  - bugfix: the floating fire extinguisher
+  - balance: fucks the motivation's cost.
+  - soundadd: a new maintenance ambience
+2021-09-30:
+  Hatterhat:
+  - rscdel: The xenomorph infestation on Moon Outpost 19 is significantly less prone
+      to outbreaks, theoretically.
+  Putnam3145:
+  - rscdel: Minesweeper's "play on same board"

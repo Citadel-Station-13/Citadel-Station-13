@@ -1,0 +1,95 @@
+2022-01-02:
+  DeltaFire15:
+  - admin: Station names now require admin approval instead of autoaccepting.
+  Putnam3145:
+  - bugfix: Bluespace pipes
+2022-01-03:
+  TripleShades:
+  - rscadd: '(Meta) Floodlight to Atmospherics tweak: (Meta) Atmospherics Entryway
+      layout change tweak: (Meta) Atmospherics Monitoring room layout tweak tweak:
+      (Meta) Atmospherics Supply Line room airlock location change'
+  - bugfix: (Meta) Incinerator Access airlock now has the correct access
+2022-01-04:
+  Hatterhat:
+  - imageadd: Jumpboots now have a mining sprite. Alt-click, as usual, to change 'em.
+  MrJWhit:
+  - rscadd: Adds pipes to the SM to make omega better
+  - bugfix: Various omega fixes
+  Putnam3145:
+  - rscadd: Hydrogen gas (no way to get yet)
+  - rscadd: Gas groups, such as...
+  - rscadd: Chemical gases, starting with ethanol, bromine, diethylamine, ammonia,
+      phlogiston
+  - rscadd: Bromine gas (can make it by tossing hot bromine on the ground OR by burning
+      methyl bromide)
+  - rscadd: Ammonia gas (toss hot ammonia on the ground OR burn diethylamine)
+  - rscdel: 'Snowflake trit/plasma fires fires tweak: Generic fires are now more accurate
+      energy-wise tweak: Water vapor condensation no longer happens below 40 C tweak:
+      Methyl bromide now burns properly'
+  - balance: Massive fusion nerf
+  - balance: Due to the removal of snowflake trit fires, trit fires are much, much
+      less hot
+  - balance: 'Due to the previous, bombs are now easier to reach 50,000 points on
+      (2 : 1 plasma : oxy at 160 kelvins cold side should be fine)'
+2022-01-07:
+  MrJWhit:
+  - rscadd: Adds an airlock between atmos and engineering on omega.
+2022-01-10:
+  Linzolle:
+  - bugfix: bloodsplatter effects no longer white in certain cases
+  - bugfix: the blood in the BDM ruin is no longer white
+  Putnam3145:
+  - bugfix: Alcohol works again
+2022-01-14:
+  Putnam3145:
+  - admin: More logging for bad ERP reagent mechanics
+  - balance: Made supernova rad storms less strong, slightly more common (but less
+      spammy)
+2022-01-23:
+  DeltaFire15:
+  - balance: Synths no longer take direct damage from low blood. They will however
+      suffer from lower cooling efficiency and be in danger of overheating.
+  - balance: The temperature system of synths is now simillar to the coldblooded trait,
+      though depending on environment and coolant level, with access to short bursts
+      of direct control via active cooling.
+  - balance: Synths no longer breathe. If in crit, they meltdown and suffer burn damage
+      over time.
+  - balance: Synths are now immune to low pressure, resistant to low temp, and vulnerable
+      to high temp.
+  - balance: Synths no longer process oxyloss and temperature adjustment chemicals.
+  - balance: 'Nanogel is now printable at med- / scilathes and mechfabs after researching
+      the Advanced Robotics node. It does need a bit of diamond though. tweak: All
+      Synthetics now use blood type S'
+  Putnam3145:
+  - rscadd: Atmospheric Flux event
+  - balance: A lot more fluids can be used for replica pods
+  Trilbyspaceclone:
+  - rscadd: New type of flora to lava land, an Ash Tree, can be harvested for coal
+      or if lucky used to gather honey. Just use a container!
+2022-01-25:
+  Putnam3145:
+  - bugfix: Artificial zeolite now has a taste
+  - spellcheck: '"Zeolites" has been renamed to "zeolite" ("a beaker of zeolites"
+      is like "a beaker of woods")'
+  - spellcheck: Various taste descriptors have had their end punctuation removed
+2022-01-26:
+  LetterN:
+  - rscadd: Antag info panel using tgui for selected antags
+  - code_imp: TGUI hardsync
+  - code_imp: TIMER_DELETE_ME flag for timers
+  - code_imp: 'wiremod backend (DO NOT ENABLE, FOLLOWUP PR WILL ADD WIREMOD) tweak:
+      Cryo DOES NOT store the items, instead only drops it as soon as the person "fully
+      cryo" tweak: Changes on how uplink works. Purchases are now only based on if
+      said uplink has the right flag to purchase an item, rather than using a list
+      to whitelist/blacklist specific gamemodes for it. Also, the purchase items handles
+      poplocking by themselves now.'
+2022-01-28:
+  DeltaFire15:
+  - rscdel: genital fluids are once again not valid for pod cloning, nor do the decals
+      have dna (I hate the fact I had to PR this because the original got merged with
+      this still present)
+  SpiWat:
+  - spellcheck: fixed a typo, I hope
+2022-01-29:
+  Arturlang:
+  - bugfix: Fixes Papers not working due to a dependency updated.
