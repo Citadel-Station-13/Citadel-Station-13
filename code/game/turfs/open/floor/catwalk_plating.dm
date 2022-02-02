@@ -34,11 +34,11 @@
 /turf/open/floor/plating/catwalk_floor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	covered = !covered
-	to_chat(user, span_notice("[!covered ? "You removed the cover!" : "You added the cover!"]"))
+	user.balloon_alert(user, "[!covered ? "cover removed" : "cover added"]")
 	update_icon(UPDATE_OVERLAYS)
 
 /turf/open/floor/plating/catwalk_floor/pry_tile(obj/item/crowbar, mob/user, silent)
 	if(covered)
-		to_chat(user, span_notice("You need to remove the cover first!"))
+		user.balloon_alert(user, "remove cover first!")
 		return FALSE
 	. = ..()

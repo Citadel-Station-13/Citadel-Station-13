@@ -121,7 +121,7 @@
 		return
 	var/mob/living/carbon/human/H = owner.current
 	// Give uplink
-	var/obj/item/uplink_holder = owner.equip_traitor(uplink_owner = src)
+	var/obj/item/uplink_holder = owner.equip_traitor()
 	var/datum/component/uplink/uplink = uplink_holder.GetComponent(/datum/component/uplink)
 	uplink.telecrystals = INITIAL_CRYSTALS
 	// Give AI hacking board

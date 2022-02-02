@@ -154,7 +154,7 @@
 		pop_areas += A
 
 	var/list/targets = list()
-	for(var/H in GLOB.network_holopads)
+	for(var/H in GLOB.the_station_areas)
 		var/area/A = get_area(H)
 		if(!A || findtextEx(A.name, "AI") || !(A in pop_areas) || !is_station_level(H))
 			continue

@@ -659,7 +659,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
-	if (HAS_TRAIT(src, TRAIT_COLDBLOODED))
+	if(HAS_TRAIT(src, TRAIT_COLDBLOODED) || HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
 		return 0 //Return 0 as your natural temperature. Species proc handle_environment() will adjust your temperature based on this.
 
 	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature
@@ -672,6 +672,49 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			return min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM/4))
 		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
 			return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
+
+/mob/living/carbon/proc/get_cooling_efficiency()
+	if(!HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		return 1
+	
+	var/integration_bonus = min(blood_volume * SYNTH_INTEGRATION_COOLANT_CAP, integrating_blood * SYNTH_INTEGRATION_COOLANT_PENALTY)	//Integration blood somewhat helps, though only at 40% impact and to a cap of 25% of current blood level.
+	var/blood_effective_volume = blood_volume + integration_bonus
+	var/coolant_efficiency = min(blood_effective_volume / BLOOD_VOLUME_SAFE, 1)	//Low coolant is only a negative, adding more than needed will not help you.
+	var/environment_efficiency = get_environment_cooling_efficiency()
+
+	return min(coolant_efficiency * environment_efficiency, SYNTH_MAX_COOLING_EFFICIENCY)
+
+
+/mob/living/carbon/proc/get_environment_cooling_efficiency()
+	var/suitlink = check_suitlinking()
+	if(suitlink)
+		return suitlink //If you are wearing full EVA or lavaland hazard gear (on lavaland), assume it has been made to accomodate your cooling needs.
+	var/datum/gas_mixture/environment = loc.return_air()
+	if(!environment)
+		return 0
+
+	var/pressure = environment.return_pressure()
+	var/heat = environment.return_temperature()
+
+	var/heat_efficiency = clamp(1 + ((bodytemperature - heat) * SYNTH_HEAT_EFFICIENCY_COEFF), 0, SYNTH_SINGLE_INFLUENCE_COOLING_EFFECT_CAP)
+	var/pressure_efficiency = clamp(pressure / ONE_ATMOSPHERE, 0, SYNTH_SINGLE_INFLUENCE_COOLING_EFFECT_CAP)
+
+	var/total_environment_efficiency = min(heat_efficiency * pressure_efficiency, SYNTH_TOTAL_ENVIRONMENT_EFFECT_CAP)	//At best, you can get 200% total
+	return total_environment_efficiency
+
+/mob/living/carbon/proc/check_suitlinking()
+	var/suit_item = get_item_by_slot(SLOT_WEAR_SUIT)
+	var/head_item = get_item_by_slot(SLOT_HEAD)
+	var/turf/T = get_turf(src)
+	
+	if(istype(head_item, /obj/item/clothing/head/helmet/space) && istype(suit_item, /obj/item/clothing/suit/space))
+		return 1
+	
+	if(T && is_mining_level(T.z) && istype(head_item, /obj/item/clothing/head/hooded/explorer) && istype(suit_item, /obj/item/clothing/suit/hooded/explorer))
+		return 1
+
+	return 0
+
 /////////
 //LIVER//
 /////////

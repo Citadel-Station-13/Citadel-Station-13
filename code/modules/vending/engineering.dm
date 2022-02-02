@@ -5,9 +5,9 @@
 	icon_state = "engi"
 	icon_deny = "engi-deny"
 	products = list(/obj/item/clothing/under/rank/engineering/chief_engineer = 4,
-					/obj/item/clothing/under/rank/engineering/engineer = 4,
-					/obj/item/clothing/shoes/sneakers/orange = 4,
-					/obj/item/clothing/head/hardhat = 4,
+		            /obj/item/clothing/under/rank/engineering/engineer = 4,
+		            /obj/item/clothing/shoes/sneakers/orange = 4,
+		            /obj/item/clothing/head/hardhat = 4,
 					/obj/item/storage/belt/utility = 4,
 					/obj/item/clothing/glasses/meson/engine = 4,
 					/obj/item/clothing/gloves/color/yellow = 4,
@@ -26,9 +26,13 @@
 					/obj/item/stock_parts/micro_laser = 5,
 					/obj/item/stock_parts/matter_bin = 5,
 					/obj/item/stock_parts/manipulator = 5)
-	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
+	refill_canister = /obj/item/vending_refill/engineering
 	resistance_flags = FIRE_PROOF
 	default_price = PRICE_NORMAL
 	extra_price = PRICE_NORMAL
 	payment_department = ACCOUNT_ENG
-	cost_multiplier_per_dept = list(ACCOUNT_ENG = 0)
+	light_mask = "engi-light-mask"
+
+/obj/item/vending_refill/engineering
+	machine_name = "Robco Tool Maker"
+	icon_state = "refill_engi"
