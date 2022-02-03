@@ -94,6 +94,10 @@
 	config_entry_value = 10
 	min_val = 0
 
+/datum/config_entry/keyed_list/dynamic_mode_days
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
+
 /datum/config_entry/keyed_list/storyteller_weight
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM
