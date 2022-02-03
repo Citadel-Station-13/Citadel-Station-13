@@ -217,8 +217,8 @@
 
 /datum/disease/transformation/slime
 	name = "Advanced Mutation Transformation"
-	cure_text = "frost oil"
-	cures = list(/datum/reagent/consumable/frostoil)
+	cure_text = "Frost Oil or Mutadone."
+	cures = list(/datum/reagent/consumable/frostoil, /datum/reagent/medicine/mutadone)
 	cure_chance = 80
 	agent = "Advanced Mutation Toxin"
 	desc = "This highly concentrated extract converts anything into more of itself."
@@ -233,16 +233,11 @@
 
 /datum/disease/transformation/slime/stage_act()
 	..()
-	switch(stage)
-		if(1)
-			if(ishuman(affected_mob) && affected_mob.dna)
-				if(affected_mob.dna.species.id == SPECIES_SLIME_LUMI || affected_mob.dna.species.id == SPECIES_STARGAZER || affected_mob.dna.species.id == SPECIES_SLIME_LUMI)
-					stage = 5
-		if(3)
-			if(ishuman(affected_mob))
-				var/mob/living/carbon/human/human = affected_mob
-				if(human.dna.species.id != SPECIES_SLIME_LUMI && affected_mob.dna.species.id != SPECIES_STARGAZER && affected_mob.dna.species.id != SPECIES_SLIME_LUMI)
-					human.set_species(/datum/species/jelly/slime)
+	if(stage == 3)
+		if(ishuman(affected_mob))
+			var/mob/living/carbon/human/human = affected_mob
+			if(!isjellyperson(human))
+				human.set_species(/datum/species/jelly/slime)
 
 /datum/disease/transformation/corgi
 	name = "The Barkening"
