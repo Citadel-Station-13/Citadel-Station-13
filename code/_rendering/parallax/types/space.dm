@@ -10,15 +10,15 @@
 
 /datum/parallax/space/CreateObjects()
 	. = ..()
-	objects += new /atom/movable/screen/parallax_layer/space/layer_1
-	objects += new /atom/movable/screen/parallax_layer/space/layer_2
-	objects += new /atom/movable/screen/parallax_layer/space/layer_3
+	. += new /atom/movable/screen/parallax_layer/space/layer_1
+	. += new /atom/movable/screen/parallax_layer/space/layer_2
+	. += new /atom/movable/screen/parallax_layer/space/layer_3
 	var/atom/movable/screen/parallax_layer/space/planet/P = new
 	P.pixel_x = planet_offset_x
 	P.pixel_y = planet_offset_y
-	objects += P
+	. += P
 	if(random_layer)
-		objects += random_layer
+		. += new random_layer
 	if(ispath(random_layer, /atom/movable/screen/parallax_layer/space/random/space_gas))
 		var/atom/movable/screen/parallax_layer/space/random/space_gas/SG = locate(random_layer) in objects
 		SG.add_atom_colour(random_gas_color, ADMIN_COLOUR_PRIORITY)
