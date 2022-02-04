@@ -1,0 +1,4 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - refactor: "Converted the changelog popup to TGUI"
