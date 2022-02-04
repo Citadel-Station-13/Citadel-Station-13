@@ -9,13 +9,13 @@
 	species_traits = list(MUTCOLORS,NOEYES,NOTRANSSTING,HAS_FLESH,HAS_BONE,HAIR,ROBOTIC_LIMBS)
 	hair_alpha = 210
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
-	mutant_bodyparts = list("ipc_screen" = "Blank", "ipc_antenna" = "None")
+	mutant_bodyparts = list("ipc_screen" = "Blank", "deco_wings" = "None", "ipc_antenna" = "None")
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
 	gib_types = list(/obj/effect/gibspawner/ipc, /obj/effect/gibspawner/ipc/bodypartless)
 
 	coldmod = 0.5
 	heatmod = 1.2
-	cold_offset = -125	//Can handle pretty cold environments, but it's still a slightly bad idea if you enter a room thats full of near-absolute-zero gas
+	cold_offset = SYNTH_COLD_OFFSET	//Can handle pretty cold environments, but it's still a slightly bad idea if you enter a room thats full of near-absolute-zero gas
 	blacklisted_quirks = list(/datum/quirk/coldblooded)
 	balance_point_values = TRUE
 

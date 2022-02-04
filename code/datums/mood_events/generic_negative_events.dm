@@ -294,3 +294,8 @@
 	description = "<span class='boldwarning'>I hate when my shoes come untied!</span>\n"
 	mood_change = -3
 	timeout = 1 MINUTES
+
+/datum/mood_event/sacrifice_bad
+	description = "<span class='warning'>Those darn savages!</span>\n"
+	mood_change = -5
+	timeout = 2 MINUTES

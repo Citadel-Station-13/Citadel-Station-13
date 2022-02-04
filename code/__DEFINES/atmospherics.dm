@@ -81,6 +81,7 @@
 #define SYNTH_ACTIVE_COOLING_MIN_ADJUSTMENT 5				//What is the minimum amount of temp you move towards the target point, even if it would be less with default calculations?
 #define SYNTH_INTEGRATION_COOLANT_PENALTY 0.4				//Integrating coolant is multiplied with this for calculation of impact on passive cooling.
 #define SYNTH_INTEGRATION_COOLANT_CAP 0.25					//Integrating coolant is capped at counting as current_blood * this number. This is so you can't just run on salglu or whatever.
+#define SYNTH_COLD_OFFSET -125								//How much colder temps Synths can tolerate. Used in their species.
 
 #define BODYTEMP_NORMAL						310.15			//The natural temperature for a body
 #define BODYTEMP_AUTORECOVERY_DIVISOR		11		//This is the divisor which handles how much of the temperature difference between the current body temperature and 310.15K (optimal temperature) humans auto-regenerate each tick. The higher the number, the slower the recovery. This is applied each tick, so long as the mob is alive.
