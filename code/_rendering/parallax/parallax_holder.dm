@@ -64,7 +64,7 @@
 	owner = null
 	return ..()
 
-/datum/parallax_holder/proc/Reset(auto_z_change)
+/datum/parallax_holder/proc/Reset(auto_z_change, force)
 	if(!(cached_eye = Eye()))
 		// if no eye, tear down
 		last = cached_eye = last_area = null
@@ -81,7 +81,7 @@
 	last = T
 	last_area = T.loc
 	// rebuild parallax
-	SetParallax(SSparallax.get_parallax_datum(T.z), null, auto_z_change)
+	SetParallax(SSparallax.get_parallax_datum(T.z), null, auto_z_change, force)
 	// hard reset positions to correct positions
 	for(var/atom/movable/screen/parallax_layer/L in layers)
 		L.ResetPosition(T.x, T.y)
@@ -135,7 +135,7 @@
  *
  * Also ensures movedirs are correct for the eye's pos.
  */
-/datum/parallax_holder/proc/Sync(auto_z_change)
+/datum/parallax_holder/proc/Sync(auto_z_change, force)
 	layers = list()
 	for(var/atom/movable/screen/parallax_layer/L in parallax.objects)
 		layers += L
@@ -144,12 +144,12 @@
 		vis_holder = new /atom/movable/screen/parallax_vis
 	var/turf/T = get_turf(cached_eye)
 	vis_holder.vis_contents = vis = T? SSparallax.get_parallax_vis_contents(T.z) : list()
-	UpdateMotion(auto_z_change)
+	UpdateMotion(auto_z_change, force)
 
 /**
  * Updates motion if needed
  */
-/datum/parallax_holder/proc/UpdateMotion(auto_z_change)
+/datum/parallax_holder/proc/UpdateMotion(auto_z_change, force)
 	var/turf/T = get_turf(cached_eye)
 	if(!T)
 		if(scroll_speed || scroll_turn)
@@ -157,10 +157,10 @@
 		return
 	var/list/ret = SSparallax.get_parallax_motion(T.z)
 	if(ret)
-		Animation(ret[1], ret[2], auto_z_change? 0 : ret[3], auto_z_change? 0 : ret[4])
+		Animation(ret[1], ret[2], auto_z_change? 0 : ret[3], auto_z_change? 0 : ret[4], force)
 	else
 		var/area/A = T.loc
-		Animation(A.parallax_move_speed, A.parallax_move_angle, auto_z_change? 0 : null, auto_z_change? 0 : null)
+		Animation(A.parallax_move_speed, A.parallax_move_angle, auto_z_change? 0 : null, auto_z_change? 0 : null, force)
 
 /datum/parallax_holder/proc/Apply(client/C = owner)
 	if(QDELETED(C))
@@ -199,16 +199,17 @@
 		CRASH("Invalid path")
 	SetParallax(new path)
 
-/datum/parallax_holder/proc/SetParallax(datum/parallax/P, delete_old = TRUE, auto_z_change)
+/datum/parallax_holder/proc/SetParallax(datum/parallax/P, delete_old = TRUE, auto_z_change, force)
 	if(P == parallax)
 		return
 	Remove()
 	if(delete_old && istype(parallax) && !QDELETED(parallax))
 		qdel(parallax)
+	HardResetAnimations()
 	parallax = P
 	if(!parallax)
 		return
-	Sync(auto_z_change)
+	Sync(auto_z_change, force)
 	Apply()
 
 /**
@@ -220,7 +221,8 @@
  * windup - ds to spend on windups. 0 for immediate.
  * turn_speed - ds to spend on turning. 0 for immediate.
  */
-/datum/parallax_holder/proc/Animation(speed = 25, turn = 0, windup = speed, turn_speed = speed)
+/datum/parallax_holder/proc/Animation(speed = 25, turn = 0, windup = speed, turn_speed = speed, force)
+	// Parallax doesn't currently use this method of rotating.
 
 	// #if !PARALLAX_ROTATION_ANIMATIONS
 	// 	turn_speed  = 0
@@ -235,7 +237,7 @@
 	// 	turn_transform.Turn(turn)
 	// 	scroll_turn = turn
 	// 	animate(GetPlaneMaster(), transform = turn_transform, time = turn_speed, easing = QUAD_EASING | EASE_IN, flags = ANIMATION_END_NOW | ANIMATION_LINEAR_TRANSFORM)
-	if(scroll_speed == speed)
+	if(scroll_speed == speed && !force)
 		// we're done
 		return
 	// speed diff?

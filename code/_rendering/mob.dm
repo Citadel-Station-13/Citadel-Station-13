@@ -10,7 +10,7 @@
 	if(!client.parallax_holder)
 		client.CreateParallax()
 	else
-		client.parallax_holder.Reset()
+		client.parallax_holder.Reset(force = TRUE)
 	client.update_clickcatcher()
 	reload_fullscreen()
 
