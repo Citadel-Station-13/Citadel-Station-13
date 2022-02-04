@@ -1560,6 +1560,7 @@
 #include "code\modules\antagonists\abductor\machinery\dispenser.dm"
 #include "code\modules\antagonists\abductor\machinery\experiment.dm"
 #include "code\modules\antagonists\abductor\machinery\pad.dm"
+#include "code\modules\antagonists\ashwalker\ashwalker.dm"
 #include "code\modules\antagonists\blob\blob.dm"
 #include "code\modules\antagonists\blob\blob\blob_report.dm"
 #include "code\modules\antagonists\blob\blob\overmind.dm"
