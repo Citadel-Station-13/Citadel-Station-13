@@ -46,7 +46,7 @@
 		CRASH("No client")
 	src.secondary_map = secondary_map
 	src.forced_eye = forced_eye
-	src.planemaster_override
+	src.planemaster_override = planemaster_override
 	Reset()
 
 /datum/parallax_holder/Destroy()
@@ -167,8 +167,8 @@
 		return
 	. = list()
 	for(var/atom/movable/screen/parallax_layer/L in layers)
-		// if(L.parallax_intensity > owner.prefs.parallax)
-		// 	continue
+		if(L.parallax_intensity > owner.prefs.parallax)
+			continue
 		if(!L.ShouldSee(C, last))
 			continue
 		L.SetView(C.view, TRUE)
@@ -222,19 +222,19 @@
  */
 /datum/parallax_holder/proc/Animation(speed = 25, turn = 0, windup = speed, turn_speed = speed)
 
-#if !PARALLAX_ROTATION_ANIMATIONS
-	turn_speed  = 0
-#endif
+	// #if !PARALLAX_ROTATION_ANIMATIONS
+	// 	turn_speed  = 0
+	// #endif
 
 	if(speed == 0)
 		StopScrolling(turn = turn, time = windup)
 		return
-	if(turn != scroll_turn && GetPlaneMaster())
-		// first handle turn. we turn the planemaster
-		var/matrix/turn_transform = matrix()
-		turn_transform.Turn(turn)
-		scroll_turn = turn
-		animate(GetPlaneMaster(), transform = turn_transform, time = turn_speed, easing = QUAD_EASING | EASE_IN, flags = ANIMATION_END_NOW | ANIMATION_LINEAR_TRANSFORM)
+	// if(turn != scroll_turn && GetPlaneMaster())
+	// 	// first handle turn. we turn the planemaster
+	// 	var/matrix/turn_transform = matrix()
+	// 	turn_transform.Turn(turn)
+	// 	scroll_turn = turn
+	// 	animate(GetPlaneMaster(), transform = turn_transform, time = turn_speed, easing = QUAD_EASING | EASE_IN, flags = ANIMATION_END_NOW | ANIMATION_LINEAR_TRANSFORM)
 	if(scroll_speed == speed)
 		// we're done
 		return
@@ -245,7 +245,8 @@
 	for(var/atom/movable/screen/parallax_layer/P in layers)
 		if(P.absolute)
 			continue
-		var/matrix/translate_matrix = matrix(1, 0, 0, 0, 1, 480)
+		var/matrix/translate_matrix = matrix()
+		translate_matrix.Translate(cos(turn) * 480, sin(turn) * 480)
 		var/matrix/target_matrix = matrix()
 		var/move_speed = speed * P.speed
 		// do the first segment by shifting down one screen
@@ -278,7 +279,9 @@
 		if(P.absolute)
 			continue
 		P.CancelAnimation()
-		P.transform = matrix(1, 0, 0, 0, 1, 480)
+		var/matrix/translate_matrix = matrix()
+		translate_matrix.Translate(cos(turn) * 480, sin(turn) * 480)
+		P.transform = translate_matrix
 		animate(P, transform = matrix(), time = time, easing = QUAD_EASING | EASE_OUT)
 
 /**

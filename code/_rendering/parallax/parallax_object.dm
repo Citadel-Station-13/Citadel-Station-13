@@ -84,6 +84,8 @@
 			// because if it inherited us it'll result in exponentially increasing overlays
 			// due to cut_overlays() above over there being a queue operation and not instant!
 			clone.overlays = list()
+			clone.plane = FLOAT_PLANE
+			clone.layer = FLOAT_LAYER
 			// shift to position
 			clone.transform = matrix(1, 0, x * 480, 0, 1, y * 480)
 			new_overlays += clone
