@@ -174,23 +174,25 @@
 		L.SetView(C.view, TRUE)
 		. |= L
 	C.screen |= .
-	var/atom/movable/screen/plane_master/parallax_white/PM = GetPlaneMaster()
-	if(PM)
-		PM.color =  list(
-			0, 0, 0, 0,
-			0, 0, 0, 0,
-			0, 0, 0, 0,
-			1, 1, 1, 1,
-			0, 0, 0, 0
-		)
+	if(!secondary_map)
+		var/atom/movable/screen/plane_master/parallax_white/PM = locate() in C.screen
+		if(PM)
+			PM.color =  list(
+				0, 0, 0, 0,
+				0, 0, 0, 0,
+				0, 0, 0, 0,
+				1, 1, 1, 1,
+				0, 0, 0, 0
+			)
 
 /datum/parallax_holder/proc/Remove(client/C = owner)
 	if(QDELETED(C))
 		return
 	C.screen -= layers
-	var/atom/movable/screen/plane_master/parallax_white/PM = GetPlaneMaster()
-	if(PM)
-		PM.color =  initial(PM.color)
+	if(!secondary_map)
+		var/atom/movable/screen/plane_master/parallax_white/PM = locate() in C.screen
+		if(PM)
+			PM.color =  initial(PM.color)
 
 /datum/parallax_holder/proc/SetParallaxType(path)
 	if(!ispath(path, /datum/parallax))
