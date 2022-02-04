@@ -8,3 +8,6 @@
 #define PARALLAX_MED     2
 #define PARALLAX_HIGH    3
 #define PARALLAX_INSANE  4  // default
+
+// keep this false until we can fix it being a seizure hazard/ugly as sin
+#define PARALLAX_ROTATION_ANIMATIONS FALSE

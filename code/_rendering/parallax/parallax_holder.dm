@@ -16,7 +16,7 @@
 	/// The parallax object we're currently rendering
 	var/datum/parallax/parallax
 	/// Eye we were last anchored to - used to detect eye changes
-	var/atom/eye
+	var/atom/cached_eye
 	/// force this eye as the "real" eye - useful for secondary maps
 	var/atom/forced_eye
 	/// last turf loc
@@ -37,13 +37,16 @@
 	var/scroll_speed
 	/// current scroll turn - applied after angle. if angle is 0 (picture moving north) and turn is 90, it would be like if you turned your viewport 90 deg clockwise.
 	var/scroll_turn
+	/// override planemaster we manipulate for turning and other effects
+	var/atom/movable/screen/plane_master/parallax/planemaster_override
 
-/datum/parallax_holder/New(client/C, secondary_map, forced_eye)
+/datum/parallax_holder/New(client/C, secondary_map, forced_eye, planemaster_override)
 	owner = C
 	if(!owner)
 		CRASH("No client")
 	src.secondary_map = secondary_map
 	src.forced_eye = forced_eye
+	src.planemaster_override
 	Reset()
 
 /datum/parallax_holder/Destroy()
@@ -61,22 +64,21 @@
 	owner = null
 	return ..()
 
-/datum/parallax_holder/proc/Reset(auto_z_change = FALSE)
-	if(!owner.eye)
+/datum/parallax_holder/proc/Reset(auto_z_change)
+	if(!(cached_eye = Eye()))
 		// if no eye, tear down
-		last = eye = last_area = null
-		SetParallax(null)
+		last = cached_eye = last_area = null
+		SetParallax(null, null, auto_z_change)
 		return
 	// first, check loc
-	var/turf/T = get_turf(owner.eye)
+	var/turf/T = get_turf(cached_eye)
 	if(!T)
 		// if in nullspace, tear down
-		last = eye = last_area = null
-		SetParallax(null)
+		last = cached_eye = last_area = null
+		SetParallax(null, null, auto_z_change)
 		return
 	// set last loc and eye
 	last = T
-	eye = forced_eye || owner.eye
 	last_area = T.loc
 	// rebuild parallax
 	SetParallax(SSparallax.get_parallax_datum(T.z), null, auto_z_change)
@@ -86,21 +88,20 @@
 
 // better updates via client_mobs_in_contents can be created again when important recursive contents is ported!
 /datum/parallax_holder/proc/Update(full)
-	if(!full && !eye || (get_turf(eye) == last))
+	if(!full && !cached_eye || (get_turf(cached_eye) == last))
 		return
 	if(!owner)	// why are we here
 		if(!QDELETED(src))
 			qdel(src)
 		return
-	var/atom/actual_eye = owner.eye || forced_eye
-	if(eye != actual_eye)
+	if(cached_eye != Eye())
 		// eye mismatch, reset
-		Reset(TRUE)
+		Reset()
 		return
-	var/turf/T = get_turf(eye)
+	var/turf/T = get_turf(cached_eye)
 	if(!last || T.z != last.z)
 		// z mismatch, reset
-		Reset(TRUE)
+		Reset()
 		return
 	// get rel offsets
 	var/rel_x = T.x - last.x
@@ -116,6 +117,18 @@
 		UpdateMotion()
 
 /**
+ * Gets the eye we should be centered on
+ */
+/datum/parallax_holder/proc/Eye()
+	return forced_eye || owner?.eye
+
+/**
+ * Gets the base parallax planemaster for things like turning
+ */
+/datum/parallax_holder/proc/GetPlaneMaster()
+	return planemaster_override || (owner && (locate(/atom/movable/screen/plane_master/parallax) in owner?.screen))
+
+/**
  * Syncs us to our parallax objects. Does NOT check if we should have those objects, that's Reset()'s job.
  *
  * Doesn't move/update positions/screen locs either.
@@ -129,7 +142,7 @@
 		L.map_id = secondary_map
 	if(!istype(vis_holder))
 		vis_holder = new /atom/movable/screen/parallax_vis
-	var/turf/T = get_turf(eye)
+	var/turf/T = get_turf(cached_eye)
 	vis_holder.vis_contents = vis = T? SSparallax.get_parallax_vis_contents(T.z) : list()
 	UpdateMotion(auto_z_change)
 
@@ -137,7 +150,7 @@
  * Updates motion if needed
  */
 /datum/parallax_holder/proc/UpdateMotion(auto_z_change)
-	var/turf/T = get_turf(eye)
+	var/turf/T = get_turf(cached_eye)
 	if(!T)
 		if(scroll_speed || scroll_turn)
 			HardResetAnimations()
@@ -149,41 +162,35 @@
 		var/area/A = T.loc
 		Animation(A.parallax_move_speed, A.parallax_move_angle, auto_z_change? 0 : null, auto_z_change? 0 : null)
 
-/datum/parallax_holder/proc/Apply()
-	if(QDELETED(owner))
+/datum/parallax_holder/proc/Apply(client/C = owner)
+	if(QDELETED(C))
 		return
 	. = list()
 	for(var/atom/movable/screen/parallax_layer/L in layers)
-		if(L.parallax_intensity > owner.prefs.parallax)
+		// if(L.parallax_intensity > owner.prefs.parallax)
+		// 	continue
+		if(!L.ShouldSee(C, last))
 			continue
-		if(!L.ShouldSee(owner, last))
-			continue
-		L.SetView(owner.view, TRUE)
+		L.SetView(C.view, TRUE)
 		. |= L
-	owner.screen |= .
-	if(!secondary_map)		// we're the primary
-		var/atom/movable/screen/plane_master/parallax_white/PM = locate() in owner.screen
-		if(!PM)
-			stack_trace("Couldn't find space plane master")
-		else
-			PM.color =  list(
-				0, 0, 0, 0,
-				0, 0, 0, 0,
-				0, 0, 0, 0,
-				1, 1, 1, 1,
-				0, 0, 0, 0
-			)
+	C.screen |= .
+	var/atom/movable/screen/plane_master/parallax_white/PM = GetPlaneMaster()
+	if(PM)
+		PM.color =  list(
+			0, 0, 0, 0,
+			0, 0, 0, 0,
+			0, 0, 0, 0,
+			1, 1, 1, 1,
+			0, 0, 0, 0
+		)
 
-/datum/parallax_holder/proc/Remove()
-	if(QDELETED(owner))
+/datum/parallax_holder/proc/Remove(client/C = owner)
+	if(QDELETED(C))
 		return
-	owner.screen -= layers
-	if(!secondary_map)		// we're the primary
-		var/atom/movable/screen/plane_master/parallax_white/PM = locate() in owner.screen
-		if(!PM)
-			stack_trace("Couldn't find space plane master")
-		else
-			PM.color =  initial(PM.color)
+	C.screen -= layers
+	var/atom/movable/screen/plane_master/parallax_white/PM = GetPlaneMaster()
+	if(PM)
+		PM.color =  initial(PM.color)
 
 /datum/parallax_holder/proc/SetParallaxType(path)
 	if(!ispath(path, /datum/parallax))
@@ -197,7 +204,6 @@
 	if(delete_old && istype(parallax) && !QDELETED(parallax))
 		qdel(parallax)
 	parallax = P
-	HardResetAnimations()
 	if(!parallax)
 		return
 	Sync(auto_z_change)
@@ -213,16 +219,18 @@
  * turn_speed - ds to spend on turning. 0 for immediate.
  */
 /datum/parallax_holder/proc/Animation(speed = 25, turn = 0, windup = speed, turn_speed = speed)
+	#if !PARALLAX_ROTATION_ANIMATIONS
+		turn_speed  = 0
+	#endif
 	if(speed == 0)
 		StopScrolling(turn = turn, time = windup)
 		return
-	if(owner && turn != scroll_turn)
+	if(turn != scroll_turn && GetPlaneMaster())
 		// first handle turn. we turn the planemaster
-		var/atom/movable/screen/plane_master/parallax/PM = locate() in owner.screen
 		var/matrix/turn_transform = matrix()
 		turn_transform.Turn(turn)
 		scroll_turn = turn
-		animate(PM, transform = turn_transform, time = turn_speed, easing = QUAD_EASING | EASE_IN, flags = ANIMATION_END_NOW | ANIMATION_LINEAR_TRANSFORM)
+		animate(GetPlaneMaster(), transform = turn_transform, time = turn_speed, easing = QUAD_EASING | EASE_IN, flags = ANIMATION_END_NOW | ANIMATION_LINEAR_TRANSFORM)
 	if(scroll_speed == speed)
 		// we're done
 		return
@@ -249,12 +257,11 @@
  */
 /datum/parallax_holder/proc/StopScrolling(turn = 0, time = 30)
 	// reset turn
-	if(owner && turn != scroll_turn)
-		var/atom/movable/screen/plane_master/parallax/PM = locate() in owner.screen
+	if(turn != scroll_turn && GetPlaneMaster())
 		var/matrix/turn_transform = matrix()
 		turn_transform.Turn(turn)
 		scroll_turn = turn
-		animate(PM, transform = turn_transform, time = time, easing = QUAD_EASING | EASE_OUT, flags = ANIMATION_END_NOW | ANIMATION_LINEAR_TRANSFORM)
+		animate(base_plane_master(), transform = turn_transform, time = time, easing = QUAD_EASING | EASE_OUT, flags = ANIMATION_END_NOW | ANIMATION_LINEAR_TRANSFORM)
 	if(scroll_speed == 0)
 		// we're done
 		scrolling = FALSE
@@ -279,9 +286,8 @@
 	scroll_speed = 0
 	scrolling = FALSE
 	// reset turn
-	if(owner)
-		var/atom/movable/screen/plane_master/parallax/PM = locate() in owner.screen
-		animate(PM, transform = matrix(), time = 0, flags = ANIMATION_END_NOW)
+	if(GetPlaneMaster())
+		animate(GetPlaneMaster(), transform = matrix(), time = 0, flags = ANIMATION_END_NOW)
 	// reset objects
 	for(var/atom/movable/screen/parallax_layer/P in layers)
 		if(P.absolute)
