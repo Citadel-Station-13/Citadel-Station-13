@@ -104,6 +104,7 @@
 #define TRAIT_RESISTCOLD		"resist_cold"
 #define TRAIT_RESISTHIGHPRESSURE	"resist_high_pressure"
 #define TRAIT_RESISTLOWPRESSURE	"resist_low_pressure"
+#define TRAIT_LOWPRESSURECOOLING "low_pressure_cooling"
 #define TRAIT_BOMBIMMUNE		"bomb_immunity"
 #define TRAIT_RADIMMUNE			"rad_immunity"
 #define TRAIT_GENELESS			"geneless"

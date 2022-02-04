@@ -699,6 +699,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	var/heat_efficiency = clamp(1 + ((bodytemperature - heat) * SYNTH_HEAT_EFFICIENCY_COEFF), 0, SYNTH_SINGLE_INFLUENCE_COOLING_EFFECT_CAP)
 	var/pressure_efficiency = clamp(pressure / ONE_ATMOSPHERE, 0, SYNTH_SINGLE_INFLUENCE_COOLING_EFFECT_CAP)
 
+	if(HAS_TRAIT(src, TRAIT_LOWPRESSURECOOLING))
+		pressure_efficiency = max(pressure_efficiency, 1)	//Space adaptation nulls drawbacks of low-pressure cooling.
+
 	var/total_environment_efficiency = min(heat_efficiency * pressure_efficiency, SYNTH_TOTAL_ENVIRONMENT_EFFECT_CAP)	//At best, you can get 200% total
 	return total_environment_efficiency
 
