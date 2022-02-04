@@ -1,0 +1,7 @@
+author: "SakuraOran"
+delete-after: True
+changes: 
+  - rscadd: "Ashwalkers can now heal, even from death, by being incapacitated (asleep/dead) near the tendril"
+  - rscadd: "Added the ability for antags to have the \"protect object\" objective, which the ashwalkers now have to protect the tendril. This is determined by if the object is broken or not, and can be set to any object or structure that can reasonably be destroyed"
+  - balance: "Ashwalkers get one life, and have a 40% chance to earn an additional life when they sacrifice to the tendril."
+  - bugfix: "fixed mobs not dropping guaranteed_butcher_results when gibbed"
