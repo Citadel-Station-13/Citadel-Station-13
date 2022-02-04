@@ -60,7 +60,7 @@
 	layers = null
 	vis = null
 	last = null
-	eye = null
+	forced_eye = cached_eye = null
 	owner = null
 	return ..()
 
@@ -263,7 +263,7 @@
 		var/matrix/turn_transform = matrix()
 		turn_transform.Turn(turn)
 		scroll_turn = turn
-		animate(base_plane_master(), transform = turn_transform, time = time, easing = QUAD_EASING | EASE_OUT, flags = ANIMATION_END_NOW | ANIMATION_LINEAR_TRANSFORM)
+		animate(GetPlaneMaster(), transform = turn_transform, time = time, easing = QUAD_EASING | EASE_OUT, flags = ANIMATION_END_NOW | ANIMATION_LINEAR_TRANSFORM)
 	if(scroll_speed == 0)
 		// we're done
 		scrolling = FALSE
