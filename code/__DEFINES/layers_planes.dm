@@ -38,9 +38,6 @@
 
 #define CHAT_PLANE -1 //We don't want heard messages to be hidden by FoV.
 
-/// Plane for balloon text (text that fades up)
-#define BALLOON_CHAT_PLANE -1.2
-
 #define CHAT_LAYER 12.0001 // Do not insert layers between these two values
 #define CHAT_LAYER_MAX 12.9999
 
@@ -155,6 +152,10 @@
 #define CAMERA_STATIC_PLANE 19
 #define CAMERA_STATIC_LAYER 19
 #define CAMERA_STATIC_RENDER_TARGET "CAMERA_STATIC_PLANE"
+
+/// Plane for balloon text (text that fades up)
+/// It's over lighting and every other crap because this is nearly as important as hud content and only visible to the user.
+#define BALLOON_CHAT_PLANE 20
 
 //HUD layer defines
 
