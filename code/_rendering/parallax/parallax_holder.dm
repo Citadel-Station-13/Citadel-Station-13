@@ -219,9 +219,11 @@
  * turn_speed - ds to spend on turning. 0 for immediate.
  */
 /datum/parallax_holder/proc/Animation(speed = 25, turn = 0, windup = speed, turn_speed = speed)
-	#if !PARALLAX_ROTATION_ANIMATIONS
-		turn_speed  = 0
-	#endif
+
+#if !PARALLAX_ROTATION_ANIMATIONS
+	turn_speed  = 0
+#endif
+
 	if(speed == 0)
 		StopScrolling(turn = turn, time = windup)
 		return
