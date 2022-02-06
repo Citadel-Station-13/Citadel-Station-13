@@ -71,28 +71,38 @@
 	var/list/real_view = getviewsize(client_view)
 	var/count_x = CEILING((real_view[1] / 2) / 15, 1) + 1
 	var/count_y = CEILING((real_view[2] / 2) / 15, 1) + 1
-	cut_overlays()
-	var/list/new_overlays = list()
+	var/list/new_overlays = GetOverlays()
 	for(var/x in -count_x to count_x)
 		for(var/y in -count_y to count_y)
 			if(!x && !y)
 				continue
 			var/mutable_appearance/clone = new
 			// appearance clone
-			clone.appearance = src
+			clone.icon = icon
+			clone.icon_state = icon_state
+			clone.overlays = GetOverlays()
 			// do NOT inherit our overlays! parallax layers should never have overlays,
 			// because if it inherited us it'll result in exponentially increasing overlays
 			// due to cut_overlays() above over there being a queue operation and not instant!
-			clone.overlays = list()
-			clone.plane = FLOAT_PLANE
-			clone.layer = FLOAT_LAYER
+			// clone.overlays = list()
+			// currently instantly using overlays =.
+			// clone.blend_mode = blend_mode
+			// clone.mouse_opacity = mouse_opacity
+			// clone.plane = plane
+			// clone.layer = layer
 			// shift to position
 			clone.transform = matrix(1, 0, x * 480, 0, 1, y * 480)
 			new_overlays += clone
-	add_overlay(new_overlays)
+	overlays = new_overlays
 
 /atom/movable/screen/parallax_layer/proc/ShouldSee(client/C, atom/location)
 	return TRUE
+
+/**
+ * Return "natural" overlays, as we're goin to do some fuckery to overlays above.
+ */
+/atom/movable/screen/parallax_layer/proc/GetOverlays()
+	return list()
 
 /atom/movable/screen/parallax_layer/proc/Clone()
 	var/atom/movable/screen/parallax_layer/layer = new type
