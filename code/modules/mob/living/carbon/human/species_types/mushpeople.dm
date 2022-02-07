@@ -1,5 +1,5 @@
 /datum/species/mush //mush mush codecuck
-	name = "Anthropomorphic Mushroom"
+	name = "Fungoid"
 	id = SPECIES_MUSHROOM
 	mutant_bodyparts = list("caps" = "Round")
 
@@ -18,6 +18,7 @@
 
 	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM)
 
+	brutemod = 0.85
 	burnmod = 1.25
 	heatmod = 1.5
 
@@ -54,6 +55,10 @@
 	if(chem.type == /datum/reagent/toxin/plantbgone/weedkiller)
 		H.adjustToxLoss(3)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
+		return TRUE
+	if(chem.type == /datum/reagent/consumable/nutriment)
+		H.adjustBruteLoss(1.25)
+		H.adjustBurnLoss(1.25)
 		return TRUE
 	return ..()
 
