@@ -58,10 +58,6 @@
 	//readd this mob's HUDs (antag, med, etc)
 	reload_huds()
 
-	reload_fullscreen() // Reload any fullscreen overlays this mob has.
-
-	add_click_catcher()
-
 	sync_mind()
 
 	//Reload alternate appearances
@@ -92,6 +88,9 @@
 
 	if(has_field_of_vision && CONFIG_GET(flag/use_field_of_vision))
 		LoadComponent(/datum/component/field_of_vision, field_of_vision_type)
+
+	// load rendering
+	reload_rendering()
 
 	AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
 

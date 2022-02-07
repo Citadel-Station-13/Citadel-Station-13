@@ -1,25 +1,3 @@
-/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
-	remove_from_mob_list()
-	remove_from_dead_mob_list()
-	remove_from_alive_mob_list()
-	GLOB.all_clockwork_mobs -= src
-	focus = null
-	LAssailant = null
-	movespeed_modification = null
-	for (var/alert in alerts)
-		clear_alert(alert, TRUE)
-	if(observers && observers.len)
-		for(var/M in observers)
-			var/mob/dead/observe = M
-			observe.reset_perspective(null)
-	qdel(hud_used)
-	for(var/cc in client_colours)
-		qdel(cc)
-	client_colours = null
-	ghostize()
-	..()
-	return QDEL_HINT_HARDDEL
-
 /mob/Initialize()
 	add_to_mob_list()
 	if(stat == DEAD)
@@ -38,7 +16,31 @@
 	update_config_movespeed()
 	update_movespeed(TRUE)
 	initialize_actionspeed()
+	init_rendering()
 	hook_vr("mob_new",list(src))
+
+/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
+	remove_from_mob_list()
+	remove_from_dead_mob_list()
+	remove_from_alive_mob_list()
+	GLOB.all_clockwork_mobs -= src
+	focus = null
+	LAssailant = null
+	movespeed_modification = null
+	for (var/alert in alerts)
+		clear_alert(alert, TRUE)
+	if(observers && observers.len)
+		for(var/M in observers)
+			var/mob/dead/observe = M
+			observe.reset_perspective(null)
+	dispose_rendering()
+	qdel(hud_used)
+	for(var/cc in client_colours)
+		qdel(cc)
+	client_colours = null
+	ghostize()
+	..()
+	return QDEL_HINT_HARDDEL
 
 /mob/GenerateTag()
 	tag = "mob_[next_mob_id++]"

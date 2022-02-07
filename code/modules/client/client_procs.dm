@@ -444,8 +444,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	send_resources()
 
-	generate_clickcatcher()
-	apply_clickcatcher()
+	update_clickcatcher()
 
 	if(prefs.lastchangelog != GLOB.changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
@@ -535,9 +534,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 			send2adminchat("Server", "[cheesy_message] (No admins online)")
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
-	if(movingmob != null)
-		movingmob.client_mobs_in_contents -= mob
-		UNSETEMPTY(movingmob.client_mobs_in_contents)
 	// seen_messages = null
 	Master.UpdateTickRate()
 	. = ..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
@@ -1014,7 +1010,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/list/old_view = getviewsize(view)
 	view = new_size
 	var/list/actualview = getviewsize(view)
-	apply_clickcatcher(actualview)
+	update_clickcatcher()
+	parallax_holder.Reset()
 	mob.reload_fullscreen()
 	if (isliving(mob))
 		var/mob/living/M = mob
@@ -1022,17 +1019,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if (prefs.auto_fit_viewport)
 		addtimer(CALLBACK(src,.verb/fit_viewport,10)) //Delayed to avoid wingets from Login calls.
 	SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_CHANGE_VIEW, src, old_view, actualview)
-
-/client/proc/generate_clickcatcher()
-	if(!void)
-		void = new()
-		screen += void
-
-/client/proc/apply_clickcatcher(list/actualview)
-	generate_clickcatcher()
-	if(!actualview)
-		actualview = getviewsize(view)
-	void.UpdateGreed(actualview[1],actualview[2])
 
 /client/proc/AnnouncePR(announcement)
 	if(prefs && prefs.chat_toggles & CHAT_PULLR)
