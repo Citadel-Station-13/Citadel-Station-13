@@ -1,6 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - rscadd: "TGUI autolathe
-tweak: You can now input a custom amount to print(hard limit at 50 or maximum stack size)
-tweak: Can now search and change categories while the autolathe is busy, line up those designs!"
