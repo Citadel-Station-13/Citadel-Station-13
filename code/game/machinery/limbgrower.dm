@@ -52,23 +52,30 @@
 
 /obj/machinery/limbgrower/ui_data(mob/user)
 	var/list/data = list()
-
-	for(var/datum/reagent/reagent_id in reagents.reagent_list)
-		var/list/reagent_data = list(
-			reagent_name = reagent_id.name,
-			reagent_amount = reagent_id.volume,
-			reagent_type = reagent_id.type
-		)
-		data["reagents"] += list(reagent_data)
-
+	if(reagents.reagent_list.len)
+		for(var/datum/reagent/reagent_id in reagents.reagent_list)
+			var/list/reagent_data = list(
+				reagent_name = reagent_id.name,
+				reagent_amount = reagent_id.volume,
+				reagent_type = reagent_id.type
+			)
+			data["reagents"] += list(reagent_data)
+	else 
+		data["reagents"] = list()
 	data["total_reagents"] = reagents.total_volume
 	data["max_reagents"] = reagents.maximum_volume
 	data["busy"] = busy
 	var/list/disk_data = list()
 	disk_data["disk"] = dna_disk				//Do i, the machine, have a disk?
-	disk_data["name"] = dna_disk?.fields["name"]	//Name for the human saved if there is one
+	if(dna_disk)
+		if(dna_disk.fields["name"])
+			disk_data["name"] = dna_disk.fields["name"]
+		else if(dna_disk.genetic_makeup_buffer["name"])
+			disk_data["name"] = dna_disk.genetic_makeup_buffer["name"]
+		else
+			disk_data["name"] = "No name"
+	//Name for the human saved if there is one
 	data["disk"] = disk_data
-
 	return data
 
 /obj/machinery/limbgrower/ui_static_data(mob/user)
@@ -118,6 +125,15 @@
 /obj/machinery/limbgrower/attackby(obj/item/user_item, mob/living/user, params)
 	if (busy)
 		to_chat(user, "<span class=\"alert\">\The [src] is busy. Please wait for completion of previous operation.</span>")
+		return
+	if(ispath(user_item.type, /obj/item/reagent_containers/blood) && user.a_intent != INTENT_HARM)
+		var/obj/item/reagent_containers/blood/B = user_item
+		if(!B.reagents.get_reagents())
+			to_chat(user, "<span class=\"alert\">You can't fill the [src] with a empty [B]!</span>")
+			return
+		user.visible_message("<span class='notice'>[user] drains the [user_item] into the [src] using the blood bag port on [src].</span>",
+			"You drain the [user_item] into the [src] using the blood bag port.")
+		B.reagents.trans_to(src, B.amount_per_transfer_from_this)
 		return
 
 	if(default_deconstruction_screwdriver(user, "limbgrower_panelopen", "limbgrower_idleoff", user_item))
@@ -180,7 +196,7 @@
 			for(var/reagent_id in consumed_reagents_list)
 				consumed_reagents_list[reagent_id] *= production_coefficient
 				if(!reagents.has_reagent(reagent_id, consumed_reagents_list[reagent_id]))
-					audible_message("<span class='notice'>\The [src] buzzes.</span>")
+					audible_message("<span class='warning'>\The [src] buzzes, with a screen showing: INSUFFICENT REAGENTS</span>")
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 					return
 
@@ -206,17 +222,13 @@
  * modified_consumed_reagents_list - the list of reagents we will consume on build, modified by the production coefficient.
  */
 /obj/machinery/limbgrower/proc/build_item(list/modified_consumed_reagents_list)
-	for(var/reagent_id in modified_consumed_reagents_list)
-		if(!reagents.has_reagent(reagent_id, modified_consumed_reagents_list[reagent_id]))
-			audible_message("<span class='notice'>\The [src] buzzes.</span>")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
-			break
-
-		reagents.remove_reagent(reagent_id, modified_consumed_reagents_list[reagent_id])
-
+	HandleReagentUsage(modified_consumed_reagents_list)
 	var/built_typepath = being_built.build_path
 	// If we have a bodypart, we need to initialize the limb on its own. Otherwise we can build it here.
-	if(ispath(built_typepath, /obj/item/bodypart))
+	if(ispath(built_typepath, /mob/living/carbon/human/chestonly))
+		if(!build_mob_chest(built_typepath, FALSE))
+			HandleReagentUsage(modified_consumed_reagents_list, FALSE)
+	else if(ispath(built_typepath, /obj/item/bodypart))
 		build_limb(built_typepath)
 	else if(ispath(built_typepath, /obj/item/organ/genital)) //genitals are uhh... customizable
 		build_genital(built_typepath)
@@ -226,6 +238,17 @@
 	busy = FALSE
 	flick("limbgrower_unfill", src)
 	icon_state = "limbgrower_idleoff"
+
+/obj/machinery/limbgrower/proc/HandleReagentUsage(modified_consumed_reagents_list, remove = TRUE)
+	for(var/reagent_id in modified_consumed_reagents_list)
+		if(!reagents.has_reagent(reagent_id, modified_consumed_reagents_list[reagent_id]))
+			audible_message("<span class='warning'>\The [src] buzzes, with a screen showing: INSUFFICENT REAGENTS</span>")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+			break
+		if(remove)
+			reagents.remove_reagent(reagent_id, modified_consumed_reagents_list[reagent_id])
+		else
+			reagents.add_reagent(reagent_id, modified_consumed_reagents_list[reagent_id])
 
 /*
  * The process of putting together a limb.
@@ -305,6 +328,42 @@
 				new built_typepath(loc)
 	else
 		new built_typepath(loc)
+
+/obj/machinery/limbgrower/proc/build_mob_chest(built_typepath)
+	// Create a mob with a chest, but nothing else
+	if(!ispath(built_typepath, /mob/living/carbon/human/chestonly))
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		visible_message(src, "Buzzes, a error screen appearing on it's display.")
+		return FALSE
+	var/dna = dna_disk?.genetic_makeup_buffer["name"]
+	var/mob/living/carbon/human/chestonly/C = new(loc)
+	if(dna) 
+		C.real_name = dna
+	else
+		C.dna.nameless = TRUE
+		C.real_name = "Synthetic Humanoid #[rand(10000, 99999)]"
+	C.set_resting(TRUE, TRUE)
+	C.stat = DEAD
+	C.adjustOxyLoss(200)
+	C.adjustCloneLoss(50)
+	C.med_hud_set_status()
+	C.med_hud_set_health()
+	C.underwear = "Nude"
+	C.undershirt = "Nude"
+	C.saved_underwear = ""
+	C.saved_undershirt = ""
+	C.hair_style = "bald"
+	C.skin_tone = "albino"
+	// Just enough to start reviving them, I hope
+	C.blood_volume = BLOOD_VOLUME_SURVIVE
+	// At some point, make a way to deal with species regenerate_organs
+	// Remove all the organs
+	for(var/organ in C.internal_organs)
+		var/obj/item/organ/O = organ
+		O.Remove(organ)
+	
+	C.update_appearance()
+	return TRUE
 
 /obj/machinery/limbgrower/RefreshParts()
 	reagents.maximum_volume = 0
