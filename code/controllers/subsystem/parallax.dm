@@ -5,21 +5,6 @@ SUBSYSTEM_DEF(parallax)
 	priority = FIRE_PRIORITY_PARALLAX
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
-	var/planet_x_offset = 128
-	var/planet_y_offset = 128
-	var/random_layer
-	var/random_parallax_color
-
-
-//These are cached per client so needs to be done asap so people joining at roundstart do not miss these.
-/datum/controller/subsystem/parallax/PreInit()
-	. = ..()
-	if(prob(70))	//70% chance to pick a special extra layer
-		random_layer = pick(/atom/movable/screen/parallax_layer/random/space_gas, /atom/movable/screen/parallax_layer/random/asteroids)
-		random_parallax_color = pick(COLOR_TEAL, COLOR_GREEN, COLOR_YELLOW, COLOR_CYAN, COLOR_ORANGE, COLOR_PURPLE)//Special color for random_layer1. Has to be done here so everyone sees the same color. [COLOR_SILVER]
-	planet_y_offset = rand(100, 160)
-	planet_x_offset = rand(100, 160)
-
 
 /datum/controller/subsystem/parallax/fire(resumed = FALSE)
 	if (!resumed)
@@ -28,28 +13,82 @@ SUBSYSTEM_DEF(parallax)
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
-	while(length(currentrun))
-		var/client/processing_client = currentrun[currentrun.len]
-		currentrun.len--
-		if (QDELETED(processing_client) || !processing_client.eye)
+	if(times_fired % 5)		// lazy tick
+		while(length(currentrun))
+			var/client/processing_client = currentrun[currentrun.len]
+			currentrun.len--
+			if (QDELETED(processing_client) || !processing_client.eye)
+				if (MC_TICK_CHECK)
+					return
+				continue
+			processing_client.parallax_holder?.Update()
 			if (MC_TICK_CHECK)
 				return
-			continue
-
-		var/atom/movable/movable_eye = processing_client.eye
-		if(!istype(movable_eye))
-			continue
-
-		for (movable_eye; isloc(movable_eye.loc) && !isturf(movable_eye.loc); movable_eye = movable_eye.loc);
-
-		if(movable_eye == processing_client.movingmob)
+	else	// full tick
+		while(length(currentrun))
+			var/client/processing_client = currentrun[currentrun.len]
+			currentrun.len--
+			if (QDELETED(processing_client) || !processing_client.eye)
+				if (MC_TICK_CHECK)
+					return
+				continue
+			processing_client.parallax_holder?.Update(TRUE)
 			if (MC_TICK_CHECK)
 				return
-			continue
-		if(!isnull(processing_client.movingmob))
-			LAZYREMOVE(processing_client.movingmob.client_mobs_in_contents, processing_client.mob)
-		LAZYADD(movable_eye.client_mobs_in_contents, processing_client.mob)
-		processing_client.movingmob = movable_eye
-		if (MC_TICK_CHECK)
-			return
+
 	currentrun = null
+
+/**
+ * Gets parallax type for zlevel.
+ */
+/datum/controller/subsystem/parallax/proc/get_parallax_type(z)
+	return /datum/parallax/space
+
+/**
+ * Gets parallax for zlevel.
+ */
+/datum/controller/subsystem/parallax/proc/get_parallax_datum(z)
+	var/datum_type = get_parallax_type(z)
+	return new datum_type
+
+/**
+ * Gets parallax added vis contents for zlevel
+ */
+/datum/controller/subsystem/parallax/proc/get_parallax_vis_contents(z)
+	return list()
+
+/**
+ * Gets parallax motion for a zlevel
+ *
+ * Returns null or list(speed, dir deg clockwise from north, windup, turnrate)
+ * THE RETURNED LIST MUST BE A 4-TUPLE, OR PARALLAX WILL CRASH.
+ * DO NOT SCREW WITH THIS UNLESS YOU KNOW WHAT YOU ARE DOING.
+ *
+ * This will override area motion
+ */
+/datum/controller/subsystem/parallax/proc/get_parallax_motion(z)
+	return null
+
+/**
+ * updates all parallax for clients on a z
+ */
+/datum/controller/subsystem/parallax/proc/update_clients_on_z(z)
+	for(var/client/C in GLOB.clients)
+		if(C.mob.z == z)
+			C.parallax_holder?.Update()
+
+/**
+ * resets all parallax for clients on a z
+ */
+/datum/controller/subsystem/parallax/proc/reset_clients_on_z(z)
+	for(var/client/C in GLOB.clients)
+		if(C.mob.z == z)
+			C.parallax_holder?.Reset()
+
+/**
+ * updates motion of all clients on z
+ */
+/datum/controller/subsystem/parallax/proc/update_z_motion(z)
+	for(var/client/C in GLOB.clients)
+		if(C.mob.z == z)
+			C.parallax_holder?.UpdateMotion()

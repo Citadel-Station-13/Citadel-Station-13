@@ -596,9 +596,13 @@
 	//SHOULD_CALL_PARENT(TRUE)
 	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON_STATE)
 
-/// Updates the overlays of the atom
+/**
+ * Builds a list of overlays for the atom, this will not apply them.
+ * If you need to update overlays, use [update_icon(UPDATE_OVERLAYS)],
+ * This proc is intended to be overridden.
+ */
 /atom/proc/update_overlays()
-	//SHOULD_CALL_PARENT(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
 
@@ -610,12 +614,12 @@
 		user.buckle_message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>You can't move while buckled to [src]!</span>")
 
-/atom/proc/contents_explosion(severity, target)
+/atom/proc/contents_explosion(severity, target, origin)
 	return //For handling the effects of explosions on contents that would not normally be effected
 
-/atom/proc/ex_act(severity, target, datum/explosion/E)
+/atom/proc/ex_act(severity, target, origin)
 	set waitfor = FALSE
-	contents_explosion(severity, target)
+	contents_explosion(severity, target, origin)
 	SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
 
 /**
@@ -1287,9 +1291,7 @@
 
 /obj/item/update_filters()
 	. = ..()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /atom/proc/get_filter(name)
 	if(filter_data && filter_data[name])
@@ -1400,3 +1402,15 @@
   */
 /atom/proc/setClosed()
 		return
+
+//Update the screentip to reflect what we're hoverin over
+/atom/MouseEntered(location, control, params)
+	. = ..()
+	// Statusbar
+	// status_bar_set_text(usr, name)
+	// Screentips
+	// if(usr?.hud_used)
+	// 	if(!usr.client?.prefs.screentip_pref || (flags_1 & NO_SCREENTIPS_1))
+	// 		usr.hud_used.screentip_text.maptext = ""
+	// 	else
+	// 		usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")

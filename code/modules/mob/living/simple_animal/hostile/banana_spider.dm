@@ -87,7 +87,7 @@
 			else
 				visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
 
-/mob/living/simple_animal/banana_spider/ex_act()
+/mob/living/simple_animal/banana_spider/ex_act(severity, target, origin)
 	return
 
 /mob/living/simple_animal/banana_spider/start_pulling()

@@ -468,7 +468,7 @@ const VoreUserPreferences = (props, context) => {
             + (allowmobvore
               ? "Click here to prevent being eaten by mobs."
               : "Click here to allow being eaten by mobs.")}
-            tooltipPosition="bottom-right"
+            tooltipPosition="bottom-start"
             content={allowmobvore ? "Mobs eating you allowed" : "No Mobs eating you"} />
         </Flex.Item>
         <Flex.Item basis="33%" grow={1}>
@@ -491,7 +491,7 @@ const VoreUserPreferences = (props, context) => {
             fluid
             tooltip={"This button is for those who don't like being digested. It can make you undigestable."
             + (digestable ? " Click here to prevent digestion." : " Click here to allow digestion.")}
-            tooltipPosition="bottom-right"
+            tooltipPosition="bottom-start"
             content={digestable ? "Digestion Allowed" : "No Digestion"} />
         </Flex.Item>
         <Flex.Item basis="50%">
@@ -538,7 +538,7 @@ const VoreUserPreferences = (props, context) => {
             + (lickable
               ? "Click here to turn off being able to be licked."
               : "Click here to turn on being able to be licked.")}
-            tooltipPosition="bottom-right"
+            tooltipPosition="bottom-start"
             content={lickable ? "Lickable" : "Unlickable"} />
         </Flex.Item>
         <Flex.Item basis="25%">

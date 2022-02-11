@@ -54,7 +54,7 @@
 /obj/machinery/door/keycard/emp_act(severity)
 	return
 
-/obj/machinery/door/keycard/ex_act(severity, target)
+/obj/machinery/door/keycard/ex_act(severity, target, origin)
 	return
 
 /obj/machinery/door/keycard/try_to_activate_door(mob/user)

@@ -3,6 +3,7 @@
 	desc = "A machine to give your apparel a fresh new color! Recommended to use with white items for best results."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "colormate"
+	// light_mask = "colormate-light-mask"
 	density = TRUE
 	anchored = TRUE
 	circuit = /obj/item/circuitboard/machine/colormate

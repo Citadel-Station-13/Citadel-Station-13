@@ -1,19 +1,3 @@
-/datum/crafting_recipe/pin_removal
-	name = "Pin Removal"
-	result = /obj/item/gun
-	reqs = list(/obj/item/gun = 1)
-	parts = list(/obj/item/gun = 1)
-	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	time = 50
-	category = CAT_WEAPONRY
-	subcategory = CAT_OTHER
-
-/datum/crafting_recipe/pin_removal/check_requirements(mob/user, list/collected_requirements)
-	var/obj/item/gun/G = collected_requirements[/obj/item/gun][1]
-	if (G.no_pin_required || !G.pin)
-		return FALSE
-	return TRUE
-
 /datum/crafting_recipe/strobeshield
 	name = "Strobe Shield"
 	result = /obj/item/shield/riot/flash

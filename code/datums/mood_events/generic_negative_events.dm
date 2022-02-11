@@ -325,3 +325,8 @@
 
 	mood_change *= people_laughing_at_you
 	return ..()
+
+/datum/mood_event/sacrifice_bad
+	description = "<span class='warning'>Those darn savages!</span>\n"
+	mood_change = -5
+	timeout = 2 MINUTES

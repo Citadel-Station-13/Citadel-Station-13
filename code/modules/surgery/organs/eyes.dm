@@ -41,7 +41,7 @@
 		return
 	switch(eye_damaged)
 		if(BLURRY_VISION_ONE, BLURRY_VISION_TWO)
-			owner.overlay_fullscreen("eye_damage", /atom/movable/screen/fullscreen/impaired, eye_damaged)
+			owner.overlay_fullscreen("eye_damage", /atom/movable/screen/fullscreen/scaled/impaired, eye_damaged)
 		if(BLIND_VISION_THREE)
 			owner.become_blind(EYE_DAMAGE)
 	if(ishuman(owner))
@@ -106,7 +106,7 @@
 	else if(eye_damaged == BLIND_VISION_THREE)
 		owner.become_blind(EYE_DAMAGE)
 	if(eye_damaged && eye_damaged != BLIND_VISION_THREE)
-		owner.overlay_fullscreen("eye_damage", /atom/movable/screen/fullscreen/impaired, eye_damaged)
+		owner.overlay_fullscreen("eye_damage", /atom/movable/screen/fullscreen/scaled/impaired, eye_damaged)
 	else
 		owner.clear_fullscreen("eye_damage")
 

@@ -141,7 +141,7 @@
 		if(isliving(M.current) && M.current.stat != DEAD)
 			var/turf/t_turf = isAI(M.current) ? get_step(get_step(src, NORTH),NORTH) : get_turf(src) // AI too fat, must make sure it always ends up a 2 tiles north instead of on the ark.
 			do_teleport(M.current, t_turf, channel = TELEPORT_CHANNEL_CULT, forced = TRUE)
-			M.current.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash)
+			M.current.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/tiled/flash)
 			M.current.clear_fullscreen("flash", 5)
 	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 50, FALSE)
 	recalls_remaining--
@@ -197,7 +197,7 @@
 		glow = new /obj/effect/clockwork/overlay/gateway_glow(get_turf(src))
 		glow.linked = src
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/ex_act(severity)
+/obj/structure/destructible/clockwork/massive/celestial_gateway/ex_act(severity, target, origin)
 	var/damage = max((obj_integrity * 0.7) / severity, 100) //requires multiple bombs to take down
 	take_damage(damage, BRUTE, "bomb", 0)
 
@@ -311,7 +311,7 @@
 		var/turf/T = get_turf(M)
 		if(is_servant_of_ratvar(M) && (!T || T.z != z))
 			M.forceMove(get_step(src, SOUTH))
-			M.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash)
+			M.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/tiled/flash)
 			M.clear_fullscreen("flash", 5)
 	progress_in_seconds += GATEWAY_SUMMON_RATE
 	switch(progress_in_seconds)

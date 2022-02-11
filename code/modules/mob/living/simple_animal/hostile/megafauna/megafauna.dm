@@ -138,7 +138,7 @@
 		adjustBruteLoss(-L.maxHealth/2)
 	L.gib()
 
-/mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
+/mob/living/simple_animal/hostile/megafauna/ex_act(severity, target, origin)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			adjustBruteLoss(250)

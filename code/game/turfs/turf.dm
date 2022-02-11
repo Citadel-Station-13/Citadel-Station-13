@@ -451,7 +451,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/is_shielded()
 
-/turf/contents_explosion(severity, target)
+/turf/contents_explosion(severity, target, origin)
 	var/affecting_level
 	if(severity == 1)
 		affecting_level = 1
@@ -469,7 +469,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 				var/atom/movable/AM = A
 				if(!AM.ex_check(explosion_id))
 					continue
-			A.ex_act(severity, target)
+			A.ex_act(severity, target, origin)
 			CHECK_TICK
 
 /turf/wave_ex_act(power, datum/wave_explosion/explosion, dir)

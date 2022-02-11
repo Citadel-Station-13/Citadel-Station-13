@@ -578,8 +578,6 @@
 			Spl.Fade(TRUE)
 			character.playsound_local(get_turf(character), 'sound/voice/ApproachingTG.ogg', 25)
 
-		character.update_parallax_teleport()
-
 	job.standard_assign_skills(character.mind)
 
 	SSticker.minds += character.mind

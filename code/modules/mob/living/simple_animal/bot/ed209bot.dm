@@ -96,64 +96,45 @@
 	text_dehack = "You restore [name]'s combat inhibitor."
 	text_dehack_fail = "[name] ignores your attempts to restrict him!"
 
-/mob/living/simple_animal/bot/ed209/get_controls(mob/user)
-	var/dat
-	dat += hack(user)
-	dat += showpai(user)
-	dat += text({"
-<TT><B>Security Unit v2.6 controls</B></TT><BR><BR>
-Status: []<BR>
-Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-Maintenance panel panel is [open ? "opened" : "closed"]<BR>"},
-
-"<A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A>" )
-
+// Variables sent to TGUI
+/mob/living/simple_animal/bot/ed209/ui_data(mob/user)
+	var/list/data = ..()
 	if(!locked || hasSiliconAccessInArea(user)|| IsAdminGhost(user))
 		if(!lasercolor)
-			dat += text({"<BR>
-Arrest Unidentifiable Persons: []<BR>
-Arrest for Unauthorized Weapons: []<BR>
-Arrest for Warrant: []<BR>
-<BR>
-Operating Mode: []<BR>
-Report Arrests[]<BR>
-Auto Patrol[]"},
+			data["custom_controls"]["check_id"] = idcheck
+			data["custom_controls"]["check_weapons"] = weaponscheck
+			data["custom_controls"]["check_warrants"] = check_records
+			data["custom_controls"]["handcuff_targets"] = !arrest_type
+			data["custom_controls"]["arrest_alert"] = declare_arrests
+	return data
 
-"<A href='?src=[REF(src)];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
-"<A href='?src=[REF(src)];operation=weaponscheck'>[weaponscheck ? "Yes" : "No"]</A>",
-"<A href='?src=[REF(src)];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
-"<A href='?src=[REF(src)];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
-"<A href='?src=[REF(src)];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
-"<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
-
-	return dat
-
-/mob/living/simple_animal/bot/ed209/Topic(href, href_list)
+// Actions received from TGUI
+/mob/living/simple_animal/bot/ed209/ui_act(action, params)
 	if(lasercolor && ishuman(usr))
 		var/mob/living/carbon/human/H = usr
-		if((lasercolor == "b") && (istype(H.wear_suit, /obj/item/clothing/suit/redtag)))//Opposing team cannot operate it
-			return
-		else if((lasercolor == "r") && (istype(H.wear_suit, /obj/item/clothing/suit/bluetag)))
-			return
-	if(..())
-		return 1
+		switch(lasercolor) //Opposing team cannot operate it
+			if("b")
+				if(istype(H.wear_suit, /obj/item/clothing/suit/redtag))
+					return TRUE
+			if("r")
+				if(istype(H.wear_suit, /obj/item/clothing/suit/bluetag))
+					return TRUE
+	. = ..()
+	if(. || !hasSiliconAccessInArea(usr) && !IsAdminGhost(usr) && !(bot_core.allowed(usr) || !locked))
+		return TRUE
 
-	switch(href_list["operation"])
-		if("idcheck")
+	switch(action)
+		if("check_id")
 			idcheck = !idcheck
-			update_controls()
-		if("weaponscheck")
+		if("check_weapons")
 			weaponscheck = !weaponscheck
-			update_controls()
-		if("ignorerec")
+		if("check_warrants")
 			check_records = !check_records
-			update_controls()
-		if("switchmode")
+		if("handcuff_targets")
 			arrest_type = !arrest_type
-			update_controls()
-		if("declarearrests")
+		if("arrest_alert")
 			declare_arrests = !declare_arrests
-			update_controls()
+	return
 
 /mob/living/simple_animal/bot/ed209/proc/judgement_criteria()
 	var/final = FALSE

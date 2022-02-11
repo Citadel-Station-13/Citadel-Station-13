@@ -13,15 +13,21 @@
 
 /obj/machinery/grill/Initialize()
 	. = ..()
-	grill_loop = new(list(src), FALSE)
+	grill_loop = new(src, FALSE)
+
+/obj/machinery/grill/Destroy()
+	QDEL_NULL(grill_loop)
+	return ..()
 
 /obj/machinery/grill/update_icon_state()
 	if(grilled_item)
 		icon_state = "grill"
-	else if(grill_fuel)
+		return ..()
+	if(grill_fuel > 0)
 		icon_state = "grill_on"
-	else
-		icon_state = "grill_open"
+		return ..()
+	icon_state = "grill_open"
+	return ..()
 
 /obj/machinery/grill/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/sheet/mineral/coal) || istype(I, /obj/item/stack/sheet/mineral/wood))
@@ -60,21 +66,21 @@
 				return
 	..()
 
-/obj/machinery/grill/process()
+/obj/machinery/grill/process(delta_time)
 	..()
-	update_icon()
-	if(!grill_fuel)
+	update_appearance()
+	if(grill_fuel <= 0)
 		return
 	else
-		grill_fuel -= 1
-		if(prob(1))
+		grill_fuel -= 0.5 * delta_time
+		if(DT_PROB(0.5, delta_time))
 			var/datum/effect_system/smoke_spread/bad/smoke = new
 			smoke.set_up(1, loc)
 			smoke.start()
 	if(grilled_item)
-		grill_time += 1
+		grill_time += delta_time
 		grilled_item.reagents.add_reagent("char", 1)
-		grill_fuel -= 10
+		grill_fuel -= 5 * delta_time
 		grilled_item.AddComponent(/datum/component/sizzle)
 
 /obj/machinery/grill/Exited(atom/movable/AM)
@@ -109,9 +115,9 @@
 
 /obj/machinery/grill/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(grilled_item)
-		to_chat(user, "<span class='notice'>You take out [grilled_item] from [src].</span>")
+		to_chat(user, span_notice("You take out [grilled_item] from [src]."))
 		grilled_item.forceMove(drop_location())
-		update_icon()
+		update_appearance()
 		return
 	return ..()
 

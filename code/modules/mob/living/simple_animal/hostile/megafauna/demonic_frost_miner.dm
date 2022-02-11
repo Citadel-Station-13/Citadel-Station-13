@@ -147,7 +147,7 @@ Difficulty: Extremely Hard
 	if(isturf(target) || isobj(target))
 		target.ex_act(EXPLODE_HEAVY)
 
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/ex_act(severity, target)
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/ex_act(severity, target, origin)
 	adjustBruteLoss(30 * severity - 120)
 	visible_message("<span class='danger'>[src] absorbs the explosion!</span>", "<span class='userdanger'>You absorb the explosion!</span>")
 

@@ -144,7 +144,7 @@
 	return
 
 
-/obj/mecha/working/ripley/contents_explosion(severity, target)
+/obj/mecha/working/ripley/contents_explosion(severity, target, origin)
 	for(var/X in cargo)
 		var/obj/O = X
 		if(prob(30/severity))

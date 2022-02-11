@@ -35,6 +35,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/atom/movable/screen/devil/soul_counter/devilsouldisplay
 
+	var/atom/movable/screen/synth/coolant_counter/coolant_display
+
 	var/atom/movable/screen/action_intent
 	var/atom/movable/screen/zone_select
 	var/atom/movable/screen/pull_icon
@@ -134,7 +136,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		return FALSE
 
 	screenmob.client.screen = list()
-	screenmob.client.apply_clickcatcher()
+	screenmob.client.update_clickcatcher()
 
 	var/display_hud_version = version
 	if(!display_hud_version)	//If 0 or blank, display the next hud version
@@ -193,9 +195,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)
 	screenmob.update_action_buttons(1)
-	reorganize_alerts(screenmob)
-	screenmob.reload_fullscreen()
-	update_parallax_pref(screenmob)
+	reorganize_alerts()
 
 	// ensure observers get an accurate and up-to-date view
 	if (!viewmob)
@@ -204,6 +204,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			show_hud(hud_version, M)
 	else if (viewmob.hud_used)
 		viewmob.hud_used.plane_masters_update()
+
+	screenmob.reload_rendering()
 
 	return TRUE
 

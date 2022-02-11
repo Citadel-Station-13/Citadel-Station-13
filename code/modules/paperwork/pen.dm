@@ -148,6 +148,10 @@
 /obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
 	. = ..()
 	//Changing name/description of items. Only works if they have the UNIQUE_RENAME object flag set
+	try_modify_object(O, user, proximity)
+
+/obj/item/pen/proc/try_modify_object(obj/O, mob/living/user, proximity)
+	set waitfor = FALSE
 	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
 		var/penchoice = input(user, "What would you like to edit?", "Rename, change description or reset both?") as null|anything in list("Rename","Change description","Reset")
 		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))

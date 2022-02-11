@@ -20,7 +20,7 @@
 	minimum_pressure = HAZARD_LOW_PRESSURE + 10
 	maximum_pressure = LAVALAND_EQUIPMENT_EFFECT_PRESSURE - 1
 
-	minimum_temp = 270
+	minimum_temp = 281
 	maximum_temp = 320
 
 /datum/atmosphere/lavaland/check_for_sanity(datum/gas_mixture/mix)

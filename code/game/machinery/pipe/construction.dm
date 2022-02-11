@@ -45,7 +45,8 @@ Buildable meters
 	if(make_from)
 		make_from_existing(make_from)
 	else
-		pipe_type = _pipe_type
+		if(!initial(src.pipe_type))
+			pipe_type = _pipe_type
 		setDir(_dir)
 
 	update()

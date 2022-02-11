@@ -421,7 +421,7 @@ Difficulty: Very Hard
 	if(ismob(AM))
 		ActivationReaction(AM, ACTIVATE_MOB_BUMP)
 
-/obj/machinery/anomalous_crystal/ex_act()
+/obj/machinery/anomalous_crystal/ex_act(severity, target, origin)
 	ActivationReaction(null, ACTIVATE_BOMB)
 
 /obj/machinery/anomalous_crystal/honk //Strips and equips you as a clown. I apologize for nothing
@@ -740,7 +740,7 @@ Difficulty: Very Hard
 /obj/structure/closet/stasis/emp_act()
 	return
 
-/obj/structure/closet/stasis/ex_act()
+/obj/structure/closet/stasis/ex_act(severity, target, origin)
 	return
 
 /obj/structure/closet/stasis/handle_lock_addition()

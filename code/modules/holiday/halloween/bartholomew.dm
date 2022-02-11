@@ -10,8 +10,12 @@
 	speech_span = "spooky"
 	resistance_flags = INDESTRUCTIBLE
 	var/active = TRUE
+	var/BallTutorial = FALSE
 
 /obj/item/barthpot/attackby(obj/item/I, mob/user, params)
+	if(BallTutorial)
+		say("Hello and welcome to the annual Citadelstation Spookyball 2021! CENTCOM requisitioned this old hospital as a new colony site two years ago, and we’re back again after a few additions here and there. Next to me you can find all the tools you’ll need to build a nice private house, if you’re here for that kind of thing. The axes will chop trees, and give you wood. Shovels will remove grass and things, which you can use the grass to make beds and backets. The pickaxe will allow you pick out the nearby rocks, if you’re more interested in building a cave dwelling. Finally the umbrella and light sources are because it’s spooky, and it might rain! As for interesting spots; There’s the old abandoned mansion which you can get to by going through the entrance and towards the east. There’s also a mech arena directly south, and a racetrack in the caves to the right of the arena, follow the lanterns. And make sure to explore the caves too! Lots of neat things to find!")
+		return
 	if(!active)
 		say("Meow!")
 		return
@@ -27,6 +31,9 @@
 	say("It doesn't seem like that's magical enough!")
 
 /obj/item/barthpot/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+	if(BallTutorial)
+		say("Hello and welcome to the annual Citadelstation Spookyball 2021! CENTCOM requisitioned this old hospital as a new colony site two years ago, and we’re back again after a few additions here and there. Next to me you can find all the tools you’ll need to build a nice private house, if you’re here for that kind of thing. The axes will chop trees, and give you wood. Shovels will remove grass and things, which you can use the grass to make beds and backets. The pickaxe will allow you pick out the nearby rocks, if you’re more interested in building a cave dwelling. Finally the umbrella and light sources are because it’s spooky, and it might rain! As for interesting spots; There’s the old abandoned mansion which you can get to by going through the entrance and towards the east. There’s also a mech arena directly south, and a racetrack in the caves to the right of the arena, follow the lanterns. And make sure to explore the caves too! Lots of neat things to find!")
+		return
 	if(!active)
 		say("Meow!")
 		return

@@ -52,7 +52,7 @@
 	desc = "Packs of tools waiting to be used for repairing. Contains a tool and engineering vending machine refill. Requires CE access."
 	cost = 5500 //Powerfull
 	access = ACCESS_CE
-	contains = list(/obj/item/vending_refill/tool,
+	contains = list(/obj/item/vending_refill/youtool,
 					/obj/item/vending_refill/engivend)
 	crate_name = "engineering supply crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering

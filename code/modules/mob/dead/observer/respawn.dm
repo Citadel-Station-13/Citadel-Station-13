@@ -165,7 +165,7 @@
 
 /**
  * Actual proc that removes us and puts us back on lobby
- * 
+ *
  * Returns the new mob.
  */
 /mob/dead/observer/proc/transfer_to_lobby()
@@ -174,8 +174,7 @@
 		return
 	client.screen.Cut()
 	client.view_size.resetToDefault()
-	client.generate_clickcatcher()
-	client.apply_clickcatcher()
+	client.update_clickcatcher()
 	client.view_size.setDefault(getScreenSize(client.prefs.widescreenpref))
 	client.view_size.resetToDefault()
 
