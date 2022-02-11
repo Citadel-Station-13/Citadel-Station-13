@@ -47,14 +47,10 @@ export const Limbgrower = (props, context) => {
         </Section>
         <Section title="Reagents">
           <Box mb={1}>
-            {!!total_reagents && max_reagents
-              ? (
-                <p>
-                  {`Total Reagents/Maximum Reagents:
-                  ${total_reagents}/${max_reagents}`}
-                </p>
-              )
-              : null}
+            {/* Total_reagents could be null or undefined, so let's be safe */
+              `Total Reagents/Maximum Reagents:
+            ${total_reagents ? total_reagents : 0}/${max_reagents}`
+            }
             <ProgressBar value={(total_reagents && max_reagents)
               ? (total_reagents / max_reagents) : 0} />
           </Box>

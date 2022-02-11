@@ -6,6 +6,9 @@
 /datum/design/chestmob
 	name = "Synthetic Humanoid Framework Chest"
 	id = "chestmob"
+	// Mobs don't make very good roundstart icons
+	research_icon = 'icons/mob/human_parts.dmi'
+	research_icon_state = "default_human_chest"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/synthflesh = 100, /datum/reagent/blood = BLOOD_VOLUME_SURVIVE)
 	build_path = /mob/living/carbon/human/chestonly

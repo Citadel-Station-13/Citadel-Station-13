@@ -129,10 +129,13 @@
 	if(ispath(user_item.type, /obj/item/reagent_containers/blood) && user.a_intent != INTENT_HARM)
 		var/obj/item/reagent_containers/blood/B = user_item
 		if(!B.reagents.get_reagents())
-			to_chat(user, "<span class=\"alert\">You can't fill the [src] with a empty [B]!</span>")
+			to_chat(user, "<span class=\"alert\">You can't fill [src] with a empty [B.name]!</span>")
 			return
-		user.visible_message("<span class='notice'>[user] drains the [user_item] into the [src] using the blood bag port on [src].</span>",
-			"You drain the [user_item] into the [src] using the blood bag port.")
+		if(reagents.total_volume == reagents.maximum_volume)
+			to_chat(user, "<span class=\"alert\">\The [src] can't hold more blood!</span>")
+			return
+		user.visible_message("<span class='notice'>[user] drains the [user_item] into [src] using the blood bag port on [src].</span>",
+			"You drain the [user_item] into [src] using the blood bag port.")
 		B.reagents.trans_to(src, B.amount_per_transfer_from_this)
 		return
 
@@ -335,13 +338,21 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		visible_message(src, "Buzzes, a error screen appearing on it's display.")
 		return FALSE
-	var/dna = dna_disk?.genetic_makeup_buffer["name"]
+	// Fields is from cloning, a much fuller scan, genetic_makeup_buffer is less so
+	var/dna_genetics = dna_disk?.genetic_makeup_buffer
+	var/dna_cloning = dna_disk?.fields
+	var/datum/species/selected = GLOB.species_datums[selected_category]
 	var/mob/living/carbon/human/chestonly/C = new(loc)
-	if(dna) 
-		C.real_name = dna
+	C.real_name = length(dna_genetics) ? dna_genetics["name"] : "Synthetic Humanoid #[rand(10000, 99999)]"
+	if(length(dna_cloning))
+		C.hardset_dna(dna_cloning["UI"], dna_cloning["SE"], dna_cloning["name"], dna_cloning["blood_type"], dna_cloning["mrace"], dna_cloning["features"])
+	else if(length(dna_genetics))
+		C.hardset_dna(dna_genetics["UI"], null, dna_genetics["name"], dna_genetics["blood_type"])
 	else
-		C.dna.nameless = TRUE
 		C.real_name = "Synthetic Humanoid #[rand(10000, 99999)]"
+		C.hair_style = "bald"
+		C.skin_tone = "albino"
+		C.set_species(selected)
 	C.set_resting(TRUE, TRUE)
 	C.stat = DEAD
 	C.adjustOxyLoss(200)
@@ -352,8 +363,7 @@
 	C.undershirt = "Nude"
 	C.saved_underwear = ""
 	C.saved_undershirt = ""
-	C.hair_style = "bald"
-	C.skin_tone = "albino"
+	
 	// Just enough to start reviving them, I hope
 	C.blood_volume = BLOOD_VOLUME_SURVIVE
 	// At some point, make a way to deal with species regenerate_organs
@@ -361,7 +371,9 @@
 	for(var/organ in C.internal_organs)
 		var/obj/item/organ/O = organ
 		O.Remove(organ)
-	
+	C.update_body(TRUE)
+	C.update_hair()
+	C.update_body_parts()
 	C.update_appearance()
 	return TRUE
 
