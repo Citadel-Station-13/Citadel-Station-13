@@ -60,6 +60,8 @@
 #define ANTAG_HUD_BROTHER		23
 #define ANTAG_HUD_BLOODSUCKER   24
 #define ANTAG_HUD_FUGITIVE		25
-#define ANTAG_HUD_HERETIC	26
+#define ANTAG_HUD_HERETIC	    26
+#define ANTAG_HUD_SPACECOP		27
+#define ANTAG_HUD_GANGSTER		28
 
 #define ADD_HUD_TO_COOLDOWN 20 //cooldown for being shown the images for any particular data hud
