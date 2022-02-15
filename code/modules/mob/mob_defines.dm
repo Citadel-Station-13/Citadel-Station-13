@@ -16,6 +16,10 @@
 	attack_hand_unwieldlyness = CLICK_CD_MELEE
 	attack_hand_speed = 0
 
+	// Rendering
+	/// Fullscreen objects
+	var/list/fullscreens = list()
+
 	/// What receives our keyboard input. src by default.
 	var/datum/focus
 
@@ -143,7 +147,6 @@
 	var/registered_z
 
 	var/list/alerts = list() // contains /atom/movable/screen/alert only // On /mob so clientless mobs will throw alerts properly
-	var/list/screens = list()
 	var/list/client_colours = list()
 	var/hud_type = /datum/hud
 
