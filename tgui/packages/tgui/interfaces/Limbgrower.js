@@ -42,6 +42,8 @@ export const Limbgrower = (props, context) => {
             <div>
               Containing data for {disk['name']},<br />
               Attempting to create genitalia will use the disk&apos;s data.
+              Any Synthetic Frameworks created will
+              overwrite the race category selected.
             </div>
           ) : disk['disk'] ? "No data." : "No disk."}
         </Section>

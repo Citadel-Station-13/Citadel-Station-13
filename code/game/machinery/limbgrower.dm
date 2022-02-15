@@ -356,7 +356,8 @@
 	C.set_resting(TRUE, TRUE)
 	C.stat = DEAD
 	C.adjustOxyLoss(200)
-	C.adjustCloneLoss(50)
+	// Limb replacement causes toxloss, which can cause too much suffering for the doctor that I don't want
+	C.adjustCloneLoss(45)
 	C.med_hud_set_status()
 	C.med_hud_set_health()
 	C.underwear = "Nude"
