@@ -65,6 +65,10 @@
 
 		"Clock Cult": {
 			"weight": 3
+		},
+
+		"Families": {
+			"weight": 3
 		}
 	},
 
@@ -115,6 +119,10 @@
 
 		"Space Ninja": {
 			"weight": 4
+		},
+
+		"Family Head Aspirants": {
+			"weight": 3
 		},
 
 		"Spiders": {

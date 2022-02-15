@@ -16,7 +16,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "pen"
 	item_state = "pen"
-	// inhand_icon_state = "pen"
+	// item_state = "pen"
 	// worn_icon_state = "pen"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS
 	throwforce = 0
@@ -289,7 +289,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "digging_pen"
 	item_state = "pen"
-	// inhand_icon_state = "pen"
+	// item_state = "pen"
 	// worn_icon_state = "pen"
 	force = 3
 	w_class = WEIGHT_CLASS_TINY

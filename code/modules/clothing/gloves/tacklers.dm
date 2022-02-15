@@ -133,3 +133,9 @@
 	base_knockdown = 1.75 SECONDS
 	min_distance = 2
 	skill_mod = -1
+
+/obj/item/clothing/gloves/tackler/football
+	name = "football gloves"
+	desc = "Gloves for football players! Teaches them how to tackle like a pro."
+	icon_state = "tackle_gloves"
+	item_state = "tackle_gloves"

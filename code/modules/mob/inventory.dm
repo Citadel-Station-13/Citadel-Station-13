@@ -414,10 +414,6 @@
 	drop_all_held_items()
 
 /obj/item/proc/equip_to_best_slot(mob/M)
-	if(src != M.get_active_held_item())
-		to_chat(M, "<span class='warning'>You are not holding anything to equip!</span>")
-		return FALSE
-
 	if(M.equip_to_appropriate_slot(src, TRUE))
 		M.update_inv_hands()
 		return TRUE

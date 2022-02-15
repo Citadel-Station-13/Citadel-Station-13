@@ -72,7 +72,7 @@
 /obj/item/stack/ore/uranium
 	name = "uranium ore"
 	icon_state = "Uranium ore"
-	// inhand_icon_state = "Uranium ore"
+	// item_state = "Uranium ore"
 	singular_name = "uranium ore chunk"
 	points = 30
 	// material_flags = MATERIAL_NO_EFFECTS

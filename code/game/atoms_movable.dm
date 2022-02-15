@@ -28,7 +28,6 @@
 	var/pass_flags = 0
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
 	var/atom/movable/moving_from_pull		//attempt to resume grab after moving instead of before.
-	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/list/acted_explosions	//for explosion dodging
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 
@@ -107,8 +106,6 @@
 
 	for(var/movable_content in contents)
 		qdel(movable_content)
-
-	LAZYCLEARLIST(client_mobs_in_contents)
 
 	moveToNullspace()
 
