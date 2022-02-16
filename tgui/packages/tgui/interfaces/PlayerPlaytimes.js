@@ -64,12 +64,12 @@ export const PlayerPlaytimes = (props, context) => {
                 </Table.Cell>
                 <Table.Cell>
                   <center>
-                    {!!client.observer
+                    {!client.ingame ? <font color="cyan">(At lobby)</font>
+                      : (!!client.observer
                       && (
                         <Tooltip content="This player is observing">
                           <Icon name="ghost" />
-                        </Tooltip>
-                      )} {client.name}
+                        </Tooltip>))} {client.name}
                   </center>
                 </Table.Cell>
                 <Table.Cell>
