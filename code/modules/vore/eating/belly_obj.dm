@@ -226,10 +226,6 @@
 				continue
 			L.vore_flags &= ~ABSORBED
 			L.stop_sound_channel(CHANNEL_PREYLOOP)
-			SEND_SIGNAL(OW, COMSIG_CLEAR_MOOD_EVENT, "fedpred", /datum/mood_event/fedpred)
-			SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
-			SEND_SIGNAL(OW, COMSIG_ADD_MOOD_EVENT, "emptypred", /datum/mood_event/emptypred)
-			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "emptyprey", /datum/mood_event/emptyprey)
 		count += release_specific_contents(AM, silent = TRUE)
 
 	//Clean up our own business
@@ -273,10 +269,7 @@
 		var/mob/living/OW = owner
 		if(ML.client)
 			ML.stop_sound_channel(CHANNEL_PREYLOOP) //Stop the internal loop, it'll restart if the isbelly check on next tick anyway
-		SEND_SIGNAL(OW, COMSIG_CLEAR_MOOD_EVENT, "fedpred", /datum/mood_event/fedpred)
-		SEND_SIGNAL(ML, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
-		SEND_SIGNAL(OW, COMSIG_ADD_MOOD_EVENT, "emptypred", /datum/mood_event/emptypred)
-		SEND_SIGNAL(ML, COMSIG_ADD_MOOD_EVENT, "emptyprey", /datum/mood_event/emptyprey)
+
 
 		if((ML.vore_flags & ABSORBED))
 			ML.vore_flags &= ~(ABSORBED)
@@ -322,12 +315,7 @@
 	if (prey.buckled)
 		prey.buckled.unbuckle_mob(prey,TRUE)
 
-	if(!isbelly(prey.loc))
-		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "fedpred", /datum/mood_event/fedpred)
-		SEND_SIGNAL(prey, COMSIG_ADD_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
-	else
-		SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "emptypred", /datum/mood_event/emptypred)
-		SEND_SIGNAL(prey, COMSIG_CLEAR_MOOD_EVENT, "emptyprey", /datum/mood_event/emptyprey)
+
 
 	prey.forceMove(src)
 

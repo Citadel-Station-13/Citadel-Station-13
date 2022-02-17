@@ -157,7 +157,7 @@
 /datum/mood_event/area
 	description = "" //Fill this out in the area
 	mood_change = 0
-//Power gamer stuff below
+
 /datum/mood_event/drankblood
 	description = "<span class='nicegreen'>I have fed greedly from that which nourishes me.</span>\n"
 	mood_change = 10
@@ -167,21 +167,6 @@
 	description = "<span class='nicegreen'>I slept in a coffin during the day. I feel whole again.</span>\n"
 	mood_change = 8
 	timeout = 1200
-
-//Cursed stuff below.
-
-/datum/mood_event/orgasm
-	description = "<span class='userlove'>I came!</span>\n" //funny meme haha
-	mood_change = 3
-	timeout = 100 SECONDS
-
-/datum/mood_event/fedpred
-	description = "<span class='nicegreen'>I've devoured someone!</span>\n"
-	mood_change = 3
-
-/datum/mood_event/fedprey
-	description = "<span class='nicegreen'>It feels quite cozy in here.</span>\n"
-	mood_change = 3
 
 /datum/mood_event/hope_lavaland
 	description = "<span class='nicegreen'>What a peculiar emblem.  It makes me feel hopeful for my future.</span>\n"
@@ -201,10 +186,6 @@
 	description = "<span class='nicegreen'>That work of art was so great it made me believe in the goodness of humanity. Says a lot in a place like this.</span>\n"
 	mood_change = 4
 	timeout = 4 MINUTES
-
-/datum/mood_event/cleared_stomach
-	description = "<span class='nicegreen'>Feels nice to get that out of the way!</span>\n"
-	mood_change = 3
 
 /datum/mood_event/high_five
 	description = "<span class='nicegreen'>I love getting high fives!</span>\n"

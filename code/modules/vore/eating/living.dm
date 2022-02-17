@@ -234,7 +234,6 @@
 		message_admins("[src] used OOC escape to escape from [B.owner]'s belly.")
 		log_consent("[src] used OOC escape to escape from [B.owner]'s belly.")
 		src.stop_sound_channel(CHANNEL_PREYLOOP)
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
 		for(var/mob/living/simple_animal/SA in range(10))
 			SA.prey_excludes[src] = world.time
 
