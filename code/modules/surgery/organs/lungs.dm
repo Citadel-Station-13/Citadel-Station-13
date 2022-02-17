@@ -600,7 +600,7 @@
 	#undef SAFE_THRESHOLD_RATIO
 
 /obj/item/organ/lungs/slime
-	name = "vacuole"
+	name = "oxygen vacuole"
 	icon_state = "lungs-s"
 	desc = "A large organelle designed to store oxygen and other important gasses."
 
@@ -632,6 +632,37 @@
 	. = ..()
 	if(.)
 		applyOrganDamage(2) //Yamerol lungs are temporary
+		
+/obj/item/organ/lungs/nitrogen
+	name = "nitrogen vacuole"
+	icon_state = "lungs-s"
+	desc = "A large organelle designed to store nitrogen and other important gasses."
+	breathing_class = GAS_N2
+
+/obj/item/organ/lungs/carbondioxide
+	name = "carbon dioxide vacuole"
+	icon_state = "lungs-s"
+	desc = "A large organelle designed to store carbon dioxide, whatever that is, and other important gasses."
+	breathing_class = GAS_CO2
+	
+/obj/item/organ/lungs/nitrogen/populate_gas_info()
+	..()
+	gas_max -= GAS_CO2
+
+/obj/item/organ/lungs/methane
+	name = "methane vacuole"
+	icon_state = "lungs-s"
+	desc = "A large organelle designed to store methane and other important gasses."
+	breathing_class = GAS_METHANE
+
+/obj/item/organ/lungs/methyl
+	name = "methyl bromide vacuole"
+	icon_state = "lungs-s"
+	desc = "A large organelle designed to store methyl bromide and other important gasses."
+	breathing_class = BREATH_METHYL
+/obj/item/organ/lungs/nitrogen/populate_gas_info()
+	..()
+	gas_max -= GAS_METHYL_BROMIDE
 
 #undef PP
 #undef PP_MOLES
