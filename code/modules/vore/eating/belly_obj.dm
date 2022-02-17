@@ -221,7 +221,6 @@
 		var/atom/movable/AM = thing
 		if(isliving(AM))
 			var/mob/living/L = AM
-			var/mob/living/OW = owner
 			if(L.vore_flags & ABSORBED && !include_absorbed)
 				continue
 			L.vore_flags &= ~ABSORBED
