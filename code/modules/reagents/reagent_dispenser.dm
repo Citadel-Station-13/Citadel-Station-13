@@ -151,7 +151,7 @@
 /obj/structure/reagent_dispensers/fueltank/blob_act(obj/structure/blob/B)
 	boom()
 
-/obj/structure/reagent_dispensers/fueltank/ex_act()
+/obj/structure/reagent_dispensers/fueltank/ex_act(severity, target, origin)
 	boom()
 
 /obj/structure/reagent_dispensers/fueltank/fire_act(exposed_temperature, exposed_volume)

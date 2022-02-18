@@ -240,3 +240,18 @@
 		parts += printplayerlist(members - eminence)
 
 	return "<div class='panel clockborder'>[parts.Join("<br>")]</div>"
+
+//I have no idea where to put this so I'm leaving it here. Loads reebe. Only one reebe can exist, so it's checked via a global var.
+/proc/load_reebe()
+	if(GLOB.reebe_loaded)
+		return TRUE
+	var/list/errorList = list()
+	var/list/reebes = SSmapping.LoadGroup(errorList, "Reebe", "map_files/generic", "City_of_Cogs.dmm", default_traits = ZTRAITS_REEBE, silent = TRUE)
+	if(errorList.len)	// reebe failed to load
+		message_admins("Reebe failed to load!")
+		log_game("Reebe failed to load!")
+		return FALSE
+	for(var/datum/parsed_map/PM in reebes)
+		PM.initTemplateBounds()
+	GLOB.reebe_loaded = TRUE
+	return TRUE

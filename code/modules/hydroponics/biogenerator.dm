@@ -27,10 +27,10 @@
 	QDEL_NULL(beaker)
 	return ..()
 
-/obj/machinery/biogenerator/contents_explosion(severity, target)
+/obj/machinery/biogenerator/contents_explosion(severity, target, origin)
 	..()
 	if(beaker)
-		beaker.ex_act(severity, target)
+		beaker.ex_act(severity, target, origin)
 
 /obj/machinery/biogenerator/handle_atom_del(atom/A)
 	..()

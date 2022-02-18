@@ -27,7 +27,7 @@
 	QDEL_NULL(beaker)
 	return ..()
 
-/obj/item/storage/portable_chem_mixer/ex_act(severity, target)
+/obj/item/storage/portable_chem_mixer/ex_act(severity, target, origin)
 	if(severity < 3)
 		..()
 

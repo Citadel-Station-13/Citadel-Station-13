@@ -142,7 +142,7 @@
 	if(charge < 0)
 		charge = 0
 
-/obj/item/stock_parts/cell/ex_act(severity, target)
+/obj/item/stock_parts/cell/ex_act(severity, target, origin)
 	..()
 	if(!QDELETED(src))
 		switch(severity)
@@ -186,23 +186,6 @@
 
 /obj/item/stock_parts/cell/get_part_rating()
 	return rating * maxcharge
-
-// stuff so ipcs and synthlizards can eat power cells, taken from how moths can eat clothing
-/obj/item/reagent_containers/food/snacks/cell
-	name = "oops"
-	desc = "If you're reading this it means I messed up. This is related to ipcs/synths eating cells and I didn't know a better way to do it than making a new food object."
-	list_reagents = list(/datum/reagent/consumable/nutriment = 0.5)
-	tastes = list("electricity" = 1, "metal" = 1)
-
-/obj/item/stock_parts/cell/attack(mob/M, mob/user, def_zone)
-	if(user.a_intent != INTENT_HARM && isrobotic(M))
-		var/obj/item/reagent_containers/food/snacks/cell/cell_as_food = new
-		cell_as_food.name = name
-		if(cell_as_food.attack(M, user, def_zone))
-			take_damage(40, sound_effect=FALSE)
-		qdel(cell_as_food)
-	else
-		return ..()
 
 /* Cell variants*/
 /obj/item/stock_parts/cell/empty

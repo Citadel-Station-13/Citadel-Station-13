@@ -554,9 +554,9 @@
 			if(!QDELETED(lockerelectronics))
 				lockerelectronics.accesses = req_access
 
-/obj/structure/closet/contents_explosion(severity, target)
+/obj/structure/closet/contents_explosion(severity, target, origin)
 	for(var/atom/A in contents)
-		A.ex_act(severity, target)
+		A.ex_act(severity, target, origin)
 		CHECK_TICK
 
 /obj/structure/closet/singularity_act()

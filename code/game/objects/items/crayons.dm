@@ -72,6 +72,10 @@
 	var/datum/team/gang/gang //For marking territory.
 	var/gang_tag_delay = 30 //this is the delay for gang mode tag applications on anything that gang = true on.
 
+	var/precision_mode = FALSE
+	var/precision_x = 0
+	var/precision_y = 0
+
 /obj/item/toy/crayon/proc/isValidSurface(surface)
 	return istype(surface, /turf/open/floor)
 
@@ -228,6 +232,12 @@
 	.["can_change_colour"] = can_change_colour
 	.["current_colour"] = paint_color
 
+	.["precision_mode"] = precision_mode
+	.["x"] = precision_x
+	.["y"] = precision_y
+	.["min_offset"] = -world.icon_size/2
+	.["max_offset"] = world.icon_size/2
+
 /obj/item/toy/crayon/ui_act(action, list/params)
 	if(..())
 		return
@@ -256,6 +266,17 @@
 			. = TRUE
 			paint_mode = PAINT_NORMAL
 			drawtype = "a"
+		if("toggle_precision")
+			precision_mode = !precision_mode
+			. = TRUE
+		if("set_precision_x")
+			var/x = text2num(params["x"])
+			precision_x = x
+			. = TRUE
+		if("set_precision_y")
+			var/y = text2num(params["y"])
+			precision_y = y
+			. = TRUE
 	update_icon()
 
 /obj/item/toy/crayon/proc/select_colour(mob/user)
@@ -400,8 +421,12 @@
 				if(PAINT_NORMAL)
 					var/obj/effect/decal/cleanable/crayon/C = new(target, paint_color, drawing, temp, graf_rot)
 					C.add_hiddenprint(user)
-					C.pixel_x = clickx
-					C.pixel_y = clicky
+					if(precision_mode)
+						C.pixel_x = clamp(precision_x, -(world.icon_size/2), world.icon_size/2)
+						C.pixel_y = clamp(precision_y, -(world.icon_size/2), world.icon_size/2)
+					else
+						C.pixel_x = clickx
+						C.pixel_y = clicky
 					affected_turfs += target
 				if(PAINT_LARGE_HORIZONTAL)
 					var/turf/left = locate(target.x-1,target.y,target.z)
@@ -738,6 +763,8 @@
 
 	if(isobj(target))
 		if(actually_paints)
+			if(istype(target, /obj/item/canvas)) //dont color our canvas neon green when im trying to paint please
+				return
 			var/list/hsl = rgb2hsl(hex2num(copytext(paint_color,2,4)),hex2num(copytext(paint_color,4,6)),hex2num(copytext(paint_color,6,8)))
 			var/static/whitelisted = typecacheof(list(/obj/structure/window,
 										/obj/effect/decal/cleanable/crayon,

@@ -658,10 +658,10 @@
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M)
 	M.reagents.add_reagent(/datum/reagent/consumable/sugar,3)
 	if(prob(55))
-		M.adjustBruteLoss(-1*REM, 0)
-		M.adjustFireLoss(-1*REM, 0)
-		M.adjustOxyLoss(-1*REM, 0)
-		M.adjustToxLoss(-1*REM, 0, TRUE) //heals TOXINLOVERs
+		M.adjustBruteLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustOxyLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustToxLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 0, TRUE) //heals TOXINLOVERs
 	..()
 
 /datum/reagent/consumable/honey/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -746,9 +746,9 @@
 		. = 1
 	if(prob(20))
 		M.losebreath += 4
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM, 150)
-		M.adjustToxLoss(3*REM,0)
-		M.adjustStaminaLoss(10*REM,0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REAGENTS_EFFECT_MULTIPLIER, 150)
+		M.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER,0)
+		M.adjustStaminaLoss(10*REAGENTS_EFFECT_MULTIPLIER,0)
 		M.blur_eyes(5)
 		. = TRUE
 	..()
@@ -778,8 +778,8 @@
 
 /datum/reagent/consumable/vitfro/on_mob_life(mob/living/carbon/M)
 	if(prob(80))
-		M.adjustBruteLoss(-1*REM, 0)
-		M.adjustFireLoss(-1*REM, 0)
+		M.adjustBruteLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 0)
 		. = TRUE
 	..()
 
@@ -804,7 +804,7 @@
 		var/mob/living/carbon/C = M
 		var/obj/item/organ/stomach/ethereal/stomach = C.getorganslot(ORGAN_SLOT_STOMACH)
 		if(istype(stomach))
-			stomach.adjust_charge(reac_volume * REM)
+			stomach.adjust_charge(reac_volume * REAGENTS_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M)
 	if(prob(25) && !isethereal(M))

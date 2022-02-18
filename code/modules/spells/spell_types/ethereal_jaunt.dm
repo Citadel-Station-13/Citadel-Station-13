@@ -105,7 +105,7 @@
 
 	forceMove(newLoc)
 
-/obj/effect/dummy/phased_mob/spell_jaunt/ex_act(blah)
+/obj/effect/dummy/phased_mob/spell_jaunt/ex_act(severity, target, origin)
 	return
 
 /obj/effect/dummy/phased_mob/spell_jaunt/wave_ex_act(power, datum/wave_explosion/explosion, dir)

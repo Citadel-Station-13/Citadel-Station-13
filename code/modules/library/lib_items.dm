@@ -193,6 +193,13 @@
 	new /obj/item/book/manual/wiki/research_and_development(src)
 	update_icon()
 
+/obj/structure/bookcase/manuals/medical
+	name = "medical manuals bookcase"
+
+/obj/structure/bookcase/manuals/medical/Initialize()
+	. = ..()
+	new /obj/item/book/manual/wiki/medical_cloning(src)
+	update_icon()
 
 /*
  * Book

@@ -653,6 +653,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			if (drafted_rules.len > 0)
 				pick_midround_rule(drafted_rules)
 		else if (random_event_hijacked == HIJACKED_TOO_SOON)
+			message_admins("DYNAMIC: Midround injection failed when random event was hijacked. Spawning another random event in its place.")
 			log_game("DYNAMIC: Midround injection failed when random event was hijacked. Spawning another random event in its place.")
 
 			// A random event antag would have rolled had this injection check passed.

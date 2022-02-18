@@ -90,7 +90,7 @@
 
 /datum/action/cooldown/coffer/Trigger()
 	. = ..()
-	if(!.)
+	if(!. || owner.stat != CONSCIOUS)
 		return
 	var/turf/T = get_turf(owner)
 	var/loot = rand(1,100)
@@ -135,7 +135,7 @@
 
 /datum/action/cooldown/riot/Trigger()
 	. = ..()
-	if(!.)
+	if(!. || owner.stat != CONSCIOUS)
 		return
 	var/cap = CONFIG_GET(number/ratcap)
 	var/something_from_nothing = FALSE

@@ -174,7 +174,7 @@
 
 //Immunities
 
-/mob/living/simple_animal/revenant/ex_act(severity, target)
+/mob/living/simple_animal/revenant/ex_act(severity, target, origin)
 	return 1 //Immune to the effects of explosions.
 
 /mob/living/simple_animal/revenant/wave_ex_act(power, datum/wave_explosion/explosion, dir)

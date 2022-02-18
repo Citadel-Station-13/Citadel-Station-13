@@ -62,7 +62,7 @@
 	user.transfer_ckey(src, FALSE)
 	density = TRUE
 
-/mob/living/simple_animal/hostile/bread/ex_act()
+/mob/living/simple_animal/hostile/bread/ex_act(severity, target, origin)
 	return
 
 /mob/living/simple_animal/hostile/bread/start_pulling()
