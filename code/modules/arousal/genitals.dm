@@ -112,15 +112,15 @@
 
 	var/list/genital_list = list()
 	for(var/obj/item/organ/genital/G in internal_organs)
-		if(!CHECK_BITFIELD(G.genital_flags, GENITAL_INTERNAL))
+		if(!(G.genital_flags & GENITAL_INTERNAL))
 			genital_list += G
 	if(!genital_list.len) //There is nothing to expose
 		return
 	//Full list of exposable genitals created
 	var/obj/item/organ/genital/picked_organ
-	picked_organ = tgui_input_list(src, "Choose which genitalia to expose/hide", "Expose/Hide genitals", genital_list)
+	picked_organ = input(src, "Choose which genitalia to expose/hide", "Expose/Hide genitals") as null|anything in genital_list
 	if(picked_organ && (picked_organ in internal_organs))
-		var/picked_visibility = tgui_input_list(src, "Choose visibility setting", "Expose/Hide genitals", GLOB.genitals_visibility_toggles)
+		var/picked_visibility = input(src, "Choose visibility setting", "Expose/Hide genitals") as null|anything in GLOB.genitals_visibility_toggles
 		if(picked_visibility && picked_organ && (picked_organ in internal_organs))
 			picked_organ.toggle_visibility(picked_visibility)
 	return
@@ -136,7 +136,7 @@
 	if(!genital_list.len) //There's nothing that can show arousal
 		return
 	var/obj/item/organ/genital/picked_organ
-	picked_organ = tgui_input_list(src, "Choose which genitalia to toggle arousal on", "Set genital arousal", genital_list)
+	picked_organ = input(src, "Choose which genitalia to toggle arousal on", "Set genital arousal", null) in genital_list
 	if(picked_organ)
 		var/original_state = picked_organ.aroused_state
 		picked_organ.set_aroused_state(!picked_organ.aroused_state)

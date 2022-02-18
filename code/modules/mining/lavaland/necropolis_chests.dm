@@ -484,7 +484,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 
-/obj/effect/warp_cube/ex_act(severity, target)
+/obj/effect/warp_cube/ex_act(severity, target, origin)
 	return
 
 //Meat Hook
@@ -607,7 +607,7 @@
 /obj/effect/immortality_talisman/attackby()
 	return
 
-/obj/effect/immortality_talisman/ex_act()
+/obj/effect/immortality_talisman/ex_act(severity, target, origin)
 	return
 
 /obj/effect/immortality_talisman/singularity_pull()
@@ -1138,7 +1138,7 @@
 		var/mob/living/L = I
 		da_list[L.real_name] = L
 
-	var/choice = tgui_input_list(user,"Who do you want dead?","Choose Your Victim", da_list)
+	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in da_list
 
 	choice = da_list[choice]
 

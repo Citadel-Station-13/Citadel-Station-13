@@ -51,7 +51,7 @@
 	if(!SSticker.mode)
 		to_chat(user, "Can't become a banana spider before the game has started.")
 		return
-	var/be_spider = tgui_alert(user, "Become a banana spider? (Warning, You can no longer be cloned!)",,list("Yes","No"))
+	var/be_spider = alert("Become a banana spider? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(be_spider == "No" || QDELETED(src) || !isobserver(user))
 		return
 	if(key)
@@ -87,7 +87,7 @@
 			else
 				visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
 
-/mob/living/simple_animal/banana_spider/ex_act()
+/mob/living/simple_animal/banana_spider/ex_act(severity, target, origin)
 	return
 
 /mob/living/simple_animal/banana_spider/start_pulling()

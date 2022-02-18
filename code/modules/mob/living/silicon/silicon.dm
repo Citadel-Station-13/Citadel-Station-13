@@ -78,7 +78,7 @@
 	GLOB.silicon_mobs -= src
 	return ..()
 
-/mob/living/silicon/contents_explosion(severity, target)
+/mob/living/silicon/contents_explosion(severity, target, origin)
 	return
 
 /mob/living/silicon/proc/cancelAlarm()
@@ -338,7 +338,7 @@
 		return
 
 	//Ask the user to pick a channel from what it has available.
-	var/Autochan = tgui_input_list(src, "Select a channel:", "", list("Default","None") + radio.channels)
+	var/Autochan = input("Select a channel:") as null|anything in list("Default","None") + radio.channels
 
 	if(!Autochan)
 		return

@@ -14,19 +14,19 @@
 	to_chat(c, "<span class='notice'>***********************************************************</span>")
 
 /datum/buildmode_mode/boom/change_settings(client/c)
-	devastation = tgui_input_num(c, "Range of total devastation. -1 to none", text("Input"))
+	devastation = input(c, "Range of total devastation. -1 to none", text("Input")) as num|null
 	if(devastation == null)
 		devastation = -1
-	heavy = tgui_input_num(c, "Range of heavy impact. -1 to none", text("Input"))
+	heavy = input(c, "Range of heavy impact. -1 to none", text("Input")) as num|null
 	if(heavy == null)
 		heavy = -1
-	light = tgui_input_num(c, "Range of light impact. -1 to none", text("Input"))
+	light = input(c, "Range of light impact. -1 to none", text("Input")) as num|null
 	if(light == null)
 		light = -1
-	flash = tgui_input_num(c, "Range of flash. -1 to none", text("Input"))
+	flash = input(c, "Range of flash. -1 to none", text("Input")) as num|null
 	if(flash == null)
 		flash = -1
-	flames = tgui_input_num(c, "Range of flames. -1 to none", text("Input"))
+	flames = input(c, "Range of flames. -1 to none", text("Input")) as num|null
 	if(flames == null)
 		flames = -1
 

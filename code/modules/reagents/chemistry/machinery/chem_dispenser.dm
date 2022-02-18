@@ -165,14 +165,14 @@
 	obj_flags |= EMAGGED
 	return TRUE
 
-/obj/machinery/chem_dispenser/ex_act(severity, target)
+/obj/machinery/chem_dispenser/ex_act(severity, target, origin)
 	if(severity < 3)
 		..()
 
-/obj/machinery/chem_dispenser/contents_explosion(severity, target)
+/obj/machinery/chem_dispenser/contents_explosion(severity, target, origin)
 	..()
 	if(beaker)
-		beaker.ex_act(severity, target)
+		beaker.ex_act(severity, target, origin)
 
 /obj/machinery/chem_dispenser/Exited(atom/movable/A, atom/newloc)
 	. = ..()
@@ -322,7 +322,7 @@
 		if("clear_recipes")
 			if(!is_operational())
 				return
-			var/yesno = tgui_alert(usr, "Clear all recipes?",, list("Yes","No"))
+			var/yesno = alert("Clear all recipes?",, "Yes","No")
 			if(yesno == "Yes")
 				saved_recipes = list()
 			. = TRUE
@@ -337,7 +337,7 @@
 			var/name = stripped_input(usr,"Name","What do you want to name this recipe?", "Recipe", MAX_NAME_LEN)
 			if(!usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 				return
-			if(saved_recipes[name] && tgui_alert(usr, "\"[name]\" already exists, do you want to overwrite it?",, list("Yes", "No")) == "No")
+			if(saved_recipes[name] && alert("\"[name]\" already exists, do you want to overwrite it?",, "Yes", "No") == "No")
 				return
 			if(name && recording_recipe)
 				var/list/logstring = list()

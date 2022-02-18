@@ -50,6 +50,7 @@
 	var/cached_z
 	/// I'm busy, don't move.
 	var/busy = FALSE
+	var/spawn_cars = FALSE
 
 	var/static/blacklisted_items = typecacheof(list(
 		/obj/effect,
@@ -91,6 +92,9 @@
 	poof()
 
 /mob/living/simple_animal/jacq/on_attack_hand(mob/living/carbon/human/M)
+	if(spawn_cars)
+		spawn_cars(M)
+		return ..()
 	if(!active)
 		say("Hello there [gender_check(M)]!")
 		return ..()
@@ -101,6 +105,9 @@
 	..()
 
 /mob/living/simple_animal/jacq/attack_paw(mob/living/carbon/monkey/M)
+	if(spawn_cars)
+		spawn_cars(M)
+		return ..()
 	if(!active)
 		say("Hello there [gender_check(M)]!")
 		return ..()
@@ -128,6 +135,8 @@
 
 
 /mob/living/simple_animal/jacq/proc/poof()
+	if(!active)//if disabled, don't poof
+		return
 	last_poof = world.realtime
 	var/datum/reagents/R = new/datum/reagents(100)//Hey, just in case.
 	var/datum/effect_system/smoke_spread/chem/s = new()
@@ -187,7 +196,7 @@
 		progression["[C.real_name]"] = progression["[C.real_name]"] | JACQ_HELLO
 
 	var/choices = list("Trick", "Treat", "How do I get candies?", "Do I know you from somewhere?")
-	var/choice = tgui_input_list(C, "Trick or Treat?", "Trick or Treat?", choices)
+	var/choice = input(C, "Trick or Treat?", "Trick or Treat?") in choices
 	switch(choice)
 		if("Trick")
 			trick(C)
@@ -211,7 +220,7 @@
 	visible_message("<b>[src]</b> gives off a glowing smile, <span class='spooky'>\"What ken Ah offer ye? I can magic up an object, a potion or a plushie fer ye.\"</span>")
 	jacqrunes("What ken Ah offer ye? I can magic up an object, a potion or a plushie fer ye.", C)
 	var/choices_reward = list("Object - 3 candies", "Potion - 2 candies", "Jacqueline Tracker - 2 candies", "Plushie - 1 candy", "Can I get to know you instead?", "Become a pumpkinhead dullahan (perma) - 4 candies")
-	var/choice_reward = tgui_input_list(usr, "Trick or Treat?", "Trick or Treat?", choices_reward)
+	var/choice_reward = input(usr, "Trick or Treat?", "Trick or Treat?") in choices_reward
 
 	//rewards
 	switch(choice_reward)
@@ -324,7 +333,7 @@
 			jacqrunes("A question? Sure, it'll cost you a candy though!", C)
 			choices += "Nevermind"
 			//Candies for chitchats
-			var/choice = tgui_input_list(C, "What do you want to ask?", "What do you want to ask?", choices)
+			var/choice = input(C, "What do you want to ask?", "What do you want to ask?") in choices
 			if(!take_candies(C, 1))
 				visible_message("<b>[src]</b> raises an eyebrow, <span class='spooky'>\"It's a candy per question [gender]! Thems the rules!\"</span>")
 				jacqrunes("It's a candy per question [gender]! Thems the rules!", C)
@@ -470,12 +479,36 @@
 	sleep(20)
 	poof()
 
+/mob/living/simple_animal/jacq/proc/spawn_cars(mob/living/carbon/C)
+	visible_message("<b>[src]</b> gives off a glowing smile, <span class='spooky'>\"What ken Ah offer ye? I can magic up a vectorcraft in manual or automatic fer ye.\"</span>")
+	var/choices_reward = list("Manual", "Automatic", "How do Automatics work?", "Nothing, thanks")
+	var/choice_reward = input(usr, "Trick or Treat?", "Trick or Treat?") in choices_reward
+
+	switch(choice_reward)
+		if("Manual")
+			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"Great choice! 'Ere's yer car.\"</span>")
+			jacqrunes("Great choice! 'Ere's yer car.", C)
+			new /obj/vehicle/sealed/vectorcraft(loc)
+		if("Automatic")
+			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"'Ere's yer car. Not as fast as an automatic mind.\"</span>")
+			jacqrunes("'Ere's yer car. Not as fast as an automatic mind.", C)
+			new /obj/vehicle/sealed/vectorcraft/auto(loc)
+		if("How do Automatics work?")
+			visible_message("<b>[src]</b> smiles, <span class='spooky'>\"Hold wasd to gain speed in a direction, c to enable/disable the clutch, 1 2 3 4 to change gears (help is gear 1, disarm is gear 2, grab is gear 3 and harm is gear 4) while holding a direction (make sure the clutch is enabled when you change gears, you should hear a sound when you've successfully changed gears), r to toggle handbrake, hold alt for brake and press shift for boost (the machine will beep when the boost is recharged)! If you hear an ebbing sound like \"brbrbrbrbr\" you need to gear down, the whining sound means you need to gear up. Hearing a pleasant \"whumwhumwhum\" is optimal gearage! It can be a lil slow to start, so make sure you're in the 1st gear, andusing a boost to get you started is a good idea. If you've got a good speed you'll likely never need to dip down to gear 1 again, and make sure to hold the acceleration pedal down while changing gears (hold a direction). 1st gear is for slow movement, and it's a good idea to mvoe to 2nd gear as quick as you can, you can coldstart a car from gear one by slowly moving, then using the boost to jump you up to gear 2 speeds. The upper gears are for unlimiting your top speed.\"</span>")
+			jacqrunes("They're a bit tricky, aye. Basically;", C)
+		if("Nothing, thanks")
+			visible_message("<b>[src]</b> shrugs, <span class='spooky'>\"Suit yerself.\"</span>")
+			jacqrunes("Suit yerself.", C)
+
+	visible_message("<b>[src]</b> shrugs, <span class='spooky'>\"Oh and look after the crafts, aye? They can get a wee bit... explosive if banged up a tad too much. They move slower damaged too like. Ye can repair 'em with the welders o'er there.\"</span>")
+	jacqrunes("Oh and look after the crafts, aye? They can get a wee bit... explosive if banged up a tad too much. They move slower damaged too like. Ye can repair 'em with the welders o'er there. ", C)
+
 /mob/living/simple_animal/jacq/update_mobility()
 	. = ..()
 	if(busy)
-		DISABLE_BITFIELD(., MOBILITY_MOVE)
+		. &= ~(MOBILITY_MOVE)
 	else
-		ENABLE_BITFIELD(., MOBILITY_MOVE)
+		. |= MOBILITY_MOVE
 	mobility_flags = .
 
 

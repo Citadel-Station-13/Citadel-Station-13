@@ -451,7 +451,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/is_shielded()
 
-/turf/contents_explosion(severity, target)
+/turf/contents_explosion(severity, target, origin)
 	var/affecting_level
 	if(severity == 1)
 		affecting_level = 1
@@ -469,7 +469,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 				var/atom/movable/AM = A
 				if(!AM.ex_check(explosion_id))
 					continue
-			A.ex_act(severity, target)
+			A.ex_act(severity, target, origin)
 			CHECK_TICK
 
 /turf/wave_ex_act(power, datum/wave_explosion/explosion, dir)
@@ -512,7 +512,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/shove_act(mob/living/target, mob/living/user, pre_act = FALSE)
 	var/list/possibilities
 	for(var/obj/O in contents)
-		if(CHECK_BITFIELD(O.obj_flags, SHOVABLE_ONTO))
+		if((O.obj_flags & SHOVABLE_ONTO))
 			LAZYADD(possibilities, O)
 		else if(!O.CanPass(target, src))
 			return FALSE

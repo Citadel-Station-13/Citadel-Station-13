@@ -106,7 +106,7 @@
 	applyOrganDamage(maxHealth * decay_factor * (seconds * 0.5))
 
 /obj/item/organ/proc/can_decay()
-	if(CHECK_BITFIELD(organ_flags, ORGAN_NO_SPOIL | ORGAN_SYNTHETIC | ORGAN_FAILING))
+	if(organ_flags & (ORGAN_NO_SPOIL | ORGAN_SYNTHETIC | ORGAN_FAILING))
 		return FALSE
 	return TRUE
 

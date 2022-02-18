@@ -19,7 +19,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(!check_rights(R_FUN))
 		return
 
-	var/aimed = tgui_alert(usr, "Aimed at current location?","Sniperod", list("Yes", "No"))
+	var/aimed = alert("Aimed at current location?","Sniperod", "Yes", "No")
 	if(aimed == "Yes")
 		special_target = get_turf(usr)
 
@@ -99,7 +99,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	walk(src,0)
 	walk_towards(src, destination, 1)
 
-/obj/effect/immovablerod/ex_act(severity, target)
+/obj/effect/immovablerod/ex_act(severity, target, origin)
 	return 0
 
 /obj/effect/immovablerod/singularity_act()

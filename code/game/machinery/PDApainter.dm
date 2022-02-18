@@ -58,9 +58,9 @@
 		storedpda.forceMove(loc)
 		storedpda = null
 
-/obj/machinery/pdapainter/contents_explosion(severity, target)
+/obj/machinery/pdapainter/contents_explosion(severity, target, origin)
 	if(storedpda)
-		storedpda.ex_act(severity, target)
+		storedpda.ex_act(severity, target, origin)
 
 /obj/machinery/pdapainter/handle_atom_del(atom/A)
 	if(A == storedpda)
@@ -112,7 +112,7 @@
 	if(!storedpda)
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 		return
-	var/choice = tgui_input_list(user, "Select the new skin!", "PDA Painting", colorlist)
+	var/choice = input(user, "Select the new skin!", "PDA Painting") as null|anything in colorlist
 	if(!choice || !storedpda || !in_range(src, user))
 		return
 	var/list/P = colorlist[choice]

@@ -47,7 +47,7 @@
 	set name = "Set Transfer Amount"
 	set category = "Object"
 	set waitfor = FALSE
-	var/N = tgui_input_list(usr, "Amount per transfer from this:","[src]", possible_transfer_amounts)
+	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
 	if(N)
 		amount_per_transfer_from_this = N
 		to_chat(usr, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
@@ -88,10 +88,10 @@
 		return 0
 	return 1
 
-/obj/item/reagent_containers/ex_act()
+/obj/item/reagent_containers/ex_act(severity, target, origin)
 	if(reagents)
 		for(var/datum/reagent/R in reagents.reagent_list)
-			R.on_ex_act()
+			R.on_ex_act(severity)
 	if(!QDELETED(src))
 		..()
 

@@ -226,7 +226,7 @@
 	invisibility = INVISIBILITY_ABSTRACT
 	var/obj/machinery/parent
 
-/obj/structure/filler/ex_act()
+/obj/structure/filler/ex_act(severity, target, origin)
 	return
 
 /obj/machinery/computer/bsa_control
@@ -286,7 +286,7 @@
 	var/list/options = gps_locators
 	if(area_aim)
 		options += GLOB.teleportlocs
-	var/V = tgui_input_list(user,"Select target", "Select target", options)
+	var/V = input(user,"Select target", "Select target",null) in options|null
 	target = options[V]
 
 

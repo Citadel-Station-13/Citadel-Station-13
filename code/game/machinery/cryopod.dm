@@ -101,7 +101,7 @@
 			updateUsrDialog()
 			return
 
-		var/obj/I = tgui_input_list(user, "Please choose which object to retrieve.","Object recovery", stored_packages)
+		var/obj/I = input(user, "Please choose which object to retrieve.","Object recovery",null) as null|anything in stored_packages
 		playsound(src, "terminal_type", 25, 0)
 		if(!I)
 			return
@@ -158,11 +158,8 @@
 	name = "Circuit board (Cryogenic Oversight Console)"
 	build_path = "/obj/machinery/computer/cryopod"
 
-/obj/machinery/computer/cryopod/contents_explosion()
+/obj/machinery/computer/cryopod/contents_explosion(severity, target, origin)
 	return
-
-/obj/machinery/computer/cryopod/contents_explosion()
-	return			//don't blow everyone's shit up.
 
 /// The box
 /obj/item/storage/box/blue/cryostorage_items
@@ -439,7 +436,7 @@
 			to_chat(user, "<span class='danger'>You can't put [target] into [src]. They're conscious.</span>")
 		return
 	else if(target.client)
-		if(tgui_alert(target,"Would you like to enter cryosleep?",,list("Yes","No")) == "No")
+		if(alert(target,"Would you like to enter cryosleep?",,"Yes","No") == "No")
 			return
 
 	var/generic_plsnoleave_message = " Please adminhelp before leaving the round, even if there are no administrators online!"
@@ -462,7 +459,7 @@
 			LAZYADD(caught_string, "Revolutionary")
 
 		if(caught_string)
-			tgui_alert(target, "You're a [english_list(caught_string)]![generic_plsnoleave_message][addendum]")
+			alert(target, "You're a [english_list(caught_string)]![generic_plsnoleave_message][addendum]")
 			target.client.cryo_warned = world.time
 			return
 

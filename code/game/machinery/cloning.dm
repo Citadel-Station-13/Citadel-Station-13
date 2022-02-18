@@ -439,7 +439,7 @@
 			mob_occupant.copy_from_prefs_vr()
 			go_out()
 
-/obj/machinery/clonepod/ex_act(severity, target)
+/obj/machinery/clonepod/ex_act(severity, target, origin)
 	..()
 	if(!QDELETED(src))
 		go_out()

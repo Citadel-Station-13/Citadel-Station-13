@@ -125,7 +125,7 @@
 					M.reset_perspective(null)
 					to_chat(M, "The screen bursts into static.")
 
-/obj/machinery/camera/ex_act(severity, target)
+/obj/machinery/camera/ex_act(severity, target, origin)
 	if(invuln)
 		return
 	..()

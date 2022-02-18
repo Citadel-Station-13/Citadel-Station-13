@@ -287,7 +287,7 @@
 				if (params["sheets"])
 					desired = text2num(params["sheets"])
 				else
-					desired = tgui_input_num(usr, "How many sheets?", "How many sheets would you like to smelt?", 1)
+					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
 
 				var/sheets_to_remove = round(min(desired,50,stored_amount))
 
@@ -332,7 +332,7 @@
 				if (params["sheets"])
 					desired = text2num(params["sheets"])
 				else
-					desired = tgui_input_num(usr, "How many sheets?", "How many sheets would you like to smelt?", 1)
+					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
 				var/amount = round(min(desired,50,smelt_amount))
 				mat_container.use_materials(alloy.materials, amount)
 				materials.silo_log(src, "released", -amount, "sheets", alloy.materials)
@@ -346,7 +346,7 @@
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
 			return TRUE
 
-/obj/machinery/mineral/ore_redemption/ex_act(severity, target)
+/obj/machinery/mineral/ore_redemption/ex_act(severity, target, origin)
 	do_sparks(5, TRUE, src)
 	..()
 

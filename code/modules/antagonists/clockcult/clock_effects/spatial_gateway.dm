@@ -102,7 +102,7 @@
 		return TRUE
 	return ..()
 
-/obj/effect/clockwork/spatial_gateway/ex_act(severity)
+/obj/effect/clockwork/spatial_gateway/ex_act(severity, target, origin)
 	if(severity == 1 && uses)
 		uses = 0
 		visible_message("<span class='warning'>[src] is disrupted!</span>")
@@ -187,7 +187,7 @@
 	if(!possible_targets.len)
 		to_chat(invoker, "<span class='warning'>There are no other eligible targets for a Spatial Gateway!</span>")
 		return FALSE
-	var/input_target_key = tgui_input_list(invoker, "Choose a target to form a rift to.", "Spatial Gateway", possible_targets)
+	var/input_target_key = input(invoker, "Choose a target to form a rift to.", "Spatial Gateway") as null|anything in possible_targets
 	var/atom/movable/target = possible_targets[input_target_key]
 	if(!src || !input_target_key || !invoker || !invoker.canUseTopic(src, !issilicon(invoker)) || !is_servant_of_ratvar(invoker) || (isitem(src) && invoker.get_active_held_item() != src) || !invoker.can_speak_vocal())
 		return FALSE //if any of the involved things no longer exist, the invoker is stunned, too far away to use the object, or does not serve ratvar, or if the object is an item and not in the mob's active hand, fail
@@ -251,7 +251,7 @@
 	name = "stable gateway"
 	is_stable = TRUE
 
-/obj/effect/clockwork/spatial_gateway/stable/ex_act(severity)
+/obj/effect/clockwork/spatial_gateway/stable/ex_act(severity, target, origin)
 	if(severity == 1)
 		start_shutdown() //Yes, you can chain devastation-level explosions to delay a gateway shutdown, if you somehow manage to do it without breaking the obelisk. Is it worth it? Probably not.
 		return TRUE

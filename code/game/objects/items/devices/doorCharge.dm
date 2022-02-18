@@ -14,7 +14,7 @@
 	attack_verb = list("blown up", "exploded", "detonated")
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=30)
 
-/obj/item/doorCharge/ex_act(severity, target)
+/obj/item/doorCharge/ex_act(severity, target, origin)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			visible_message("<span class='warning'>[src] detonates!</span>")

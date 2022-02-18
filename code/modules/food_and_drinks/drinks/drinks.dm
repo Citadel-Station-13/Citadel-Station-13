@@ -500,7 +500,7 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
 	if(!is_drainable())
 		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
-		ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+		reagents.reagents_holder_flags |= OPENCONTAINER
 		playsound(src, "can_open", 50, 1)
 		spillable = TRUE
 		return

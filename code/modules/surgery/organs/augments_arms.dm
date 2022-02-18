@@ -326,49 +326,79 @@
 	desc = "An internal power cord hooked up to a battery. Useful if you run on electricity. Not so much otherwise."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "wire1"
+	var/in_use = FALSE	//No stacking doafters
 
 /obj/item/apc_powercord/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!istype(target, /obj/machinery/power/apc) || !ishuman(user) || !proximity_flag)
+	if((!istype(target, /obj/machinery/power/apc) && !istype(target, /obj/item/stock_parts/cell)) || !ishuman(user) || !proximity_flag)
 		return ..()
 	user.DelayNextAction(CLICK_CD_MELEE)
-	var/obj/machinery/power/apc/A = target
 	var/mob/living/carbon/human/H = user
+	if(in_use)
+		to_chat(H, "<span class='warning'>[src] is already connected to something!</span>")
+		return
 	var/obj/item/organ/stomach/ipc/cell = locate(/obj/item/organ/stomach/ipc) in H.internal_organs
 	if(!cell)
-		to_chat(H, "<span class='warning'>You try to siphon energy from the [A], but your power cell is gone!</span>")
+		to_chat(H, "<span class='warning'>You try to siphon energy from [target], but your power cell is gone!</span>")
 		return
-
-	if(A.cell && A.cell.charge > 0)
-		if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
-			to_chat(user, "<span class='warning'>You are already fully charged!</span>")
+	if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
+		to_chat(user, "<span class='warning'>You are already fully charged!</span>")
+		return
+	if(istype(target, /obj/machinery/power/apc))
+		var/obj/machinery/power/apc/A = target
+		if(A.cell && A.cell.charge > 0)
+			in_use = TRUE
+			apc_powerdraw_loop(A, H)
 			return
-		else
-			powerdraw_loop(A, H)
+	else	//We only let through cells and APCs, so this has to be a cell
+		var/obj/item/stock_parts/cell/C = target
+		if(C.charge > 0)
+			in_use = TRUE
+			cell_powerdraw_loop(C, H)
 			return
 
-	to_chat(user, "<span class='warning'>There is no charge to draw from that APC.</span>")
+	to_chat(user, "<span class='warning'>There is no charge to draw from [target].</span>")
 
-/obj/item/apc_powercord/proc/powerdraw_loop(obj/machinery/power/apc/A, mob/living/carbon/human/H)
-	H.visible_message("<span class='notice'>[H] inserts a power connector into the [A].</span>", "<span class='notice'>You begin to draw power from the [A].</span>")
+/obj/item/apc_powercord/proc/apc_powerdraw_loop(obj/machinery/power/apc/A, mob/living/carbon/human/H)
+	H.visible_message("<span class='notice'>[H] inserts a power connector into [A].</span>", "<span class='notice'>You begin to draw power from [A].</span>")
 	while(do_after(H, 10, target = A))
 		if(loc != H)
 			to_chat(H, "<span class='warning'>You must keep your connector out while charging!</span>")
 			break
 		if(A.cell.charge == 0)
-			to_chat(H, "<span class='warning'>The [A] doesn't have enough charge to spare.</span>")
+			to_chat(H, "<span class='warning'>[A] doesn't have enough charge to spare.</span>")
 			break
 		A.charging = 1
 		if(A.cell.charge >= 500)
 			do_sparks(1, FALSE, A)
-			H.nutrition += 50
-			A.cell.charge -= 150
+			H.adjust_nutrition(50)
+			A.cell.use(150)
 			to_chat(H, "<span class='notice'>You siphon off some of the stored charge for your own use.</span>")
 		else
-			H.nutrition += A.cell.charge/10
-			A.cell.charge = 0
-			to_chat(H, "<span class='notice'>You siphon off as much as the [A] can spare.</span>")
+			H.adjust_nutrition(A.cell.charge/10)
+			A.cell.use(A.cell.charge)
+			to_chat(H, "<span class='notice'>You siphon off as much as [A] can spare.</span>")
 			break
 		if(H.nutrition > NUTRITION_LEVEL_WELL_FED)
 			to_chat(H, "<span class='notice'>You are now fully charged.</span>")
 			break
-	H.visible_message("<span class='notice'>[H] unplugs from the [A].</span>", "<span class='notice'>You unplug from the [A].</span>")
+	in_use = FALSE
+	H.visible_message("<span class='notice'>[H] unplugs from [A].</span>", "<span class='notice'>You unplug from [A].</span>")
+
+/obj/item/apc_powercord/proc/cell_powerdraw_loop(obj/item/stock_parts/cell/C, mob/living/carbon/human/H)
+	H.visible_message("<span class='notice'>[H] connects a power cord to [C]</span>", "<span class='notice'>You begin to draw power from [C].</span>")
+	while(do_after(H, 10, target = C))
+		if(loc != H)
+			to_chat(H, "<span class='warning'>You must keep your connector out while charging!</span>")
+			break
+		if(C.charge == 0)
+			to_chat(H, "<span class='warning'>[C] doesn't have any charge remaining.</span>")
+			break
+		var/siphoned_charge = min(C.charge, 2000)
+		C.use(siphoned_charge)
+		do_sparks(1, FALSE, C)
+		H.adjust_nutrition(siphoned_charge / 100)	//Less efficient on a pure power basis than APC recharge. Still a very viable way of gaining nutrition. (100 nutrition / base 10k cell)
+		if(H.nutrition > NUTRITION_LEVEL_WELL_FED)
+			to_chat(H, "<span class='notice'>You are now fully charged.</span>")
+			break
+	in_use = FALSE
+	H.visible_message("<span class='notice'>[H] disconnects [src] from [C].</span>", "<span class='notice'>You disconnect from [C].</span>")

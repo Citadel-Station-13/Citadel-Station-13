@@ -69,7 +69,7 @@
 /obj/effect/anomaly/proc/detonate()
 	return
 
-/obj/effect/anomaly/ex_act(severity, target)
+/obj/effect/anomaly/ex_act(severity, target, origin)
 	if(severity == 1)
 		qdel(src)
 

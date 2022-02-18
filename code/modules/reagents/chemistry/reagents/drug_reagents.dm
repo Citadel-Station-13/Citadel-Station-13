@@ -59,7 +59,7 @@
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smoked", /datum/mood_event/smoked, name)
 	M.AdjustAllImmobility(-20, 0)
 	M.AdjustUnconscious(-20, 0)
-	M.adjustStaminaLoss(-0.5*REM, 0)
+	M.adjustStaminaLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
@@ -83,30 +83,30 @@
 	. = 1
 
 /datum/reagent/drug/crank/overdose_process(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
-	M.adjustToxLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REAGENTS_EFFECT_MULTIPLIER)
+	M.adjustToxLoss(2*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustBruteLoss(2*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage1(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5*REM)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5*REAGENTS_EFFECT_MULTIPLIER)
 	..()
 
 /datum/reagent/drug/crank/addiction_act_stage2(mob/living/M)
-	M.adjustToxLoss(5*REM, 0)
+	M.adjustToxLoss(5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage3(mob/living/M)
-	M.adjustBruteLoss(5*REM, 0)
+	M.adjustBruteLoss(5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage4(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM)
-	M.adjustToxLoss(5*REM, 0)
-	M.adjustBruteLoss(5*REM, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REAGENTS_EFFECT_MULTIPLIER)
+	M.adjustToxLoss(5*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustBruteLoss(5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
@@ -128,14 +128,14 @@
 	..()
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25*REM)
-	M.adjustToxLoss(0.25*REM, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25*REAGENTS_EFFECT_MULTIPLIER)
+	M.adjustToxLoss(0.25*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
 /datum/reagent/drug/krokodil/addiction_act_stage1(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
-	M.adjustToxLoss(2*REM, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REAGENTS_EFFECT_MULTIPLIER)
+	M.adjustToxLoss(2*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
@@ -147,7 +147,7 @@
 /datum/reagent/drug/krokodil/addiction_act_stage3(mob/living/M)
 	if(prob(25))
 		to_chat(M, "<span class='danger'>Your skin starts to peel away...</span>")
-	M.adjustBruteLoss(3*REM, 0)
+	M.adjustBruteLoss(3*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
@@ -155,10 +155,10 @@
 	CHECK_DNA_AND_SPECIES(M)
 	if(!istype(M.dna.species, /datum/species/krokodil_addict))
 		to_chat(M, "<span class='userdanger'>Your skin falls off easily!</span>")
-		M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
+		M.adjustBruteLoss(50*REAGENTS_EFFECT_MULTIPLIER, 0) // holy shit your skin just FELL THE FUCK OFF
 		M.set_species(/datum/species/krokodil_addict)
 	else
-		M.adjustBruteLoss(5*REM, 0)
+		M.adjustBruteLoss(5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
@@ -186,14 +186,14 @@
 	if(DT_PROB(2.5, delta_time))
 		to_chat(M, span_notice("[high_message]"))
 	// SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
-	M.AdjustStun(-40 * REM * delta_time)
-	M.AdjustKnockdown(-40 * REM * delta_time)
-	M.AdjustUnconscious(-40 * REM * delta_time)
-	M.AdjustParalyzed(-40 * REM * delta_time)
-	M.AdjustImmobilized(-40 * REM * delta_time)
-	M.adjustStaminaLoss(-2 * REM * delta_time, 0)
-	M.Jitter(2 * REM * delta_time)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1, 4) * REM * delta_time)
+	M.AdjustStun(-40 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+	M.AdjustKnockdown(-40 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+	M.AdjustUnconscious(-40 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+	M.AdjustParalyzed(-40 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+	M.AdjustImmobilized(-40 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+	M.adjustStaminaLoss(-2 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
+	M.Jitter(2 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1, 4) * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 	if(DT_PROB(2.5, delta_time))
 		M.emote(pick("twitch", "shiver"))
 	..()
@@ -201,7 +201,7 @@
 
 /datum/reagent/drug/methamphetamine/overdose_process(mob/living/M, delta_time, times_fired)
 	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovable(M.loc))
-		for(var/i in 1 to round(4 * REM * delta_time, 1))
+		for(var/i in 1 to round(4 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 1))
 			step(M, pick(GLOB.cardinals))
 	if(DT_PROB(10, delta_time))
 		M.emote("laugh")
@@ -209,8 +209,8 @@
 		M.visible_message(span_danger("[M]'s hands flip out and flail everywhere!"))
 		M.drop_all_held_items()
 	..()
-	M.adjustToxLoss(1 * REM * delta_time, 0)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, (rand(5, 10) / 10) * REM * delta_time)
+	M.adjustToxLoss(1 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, (rand(5, 10) / 10) * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 	. = TRUE
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage1(mob/living/M)
@@ -486,8 +486,8 @@
 			H.dna.species.punchstunthreshold += 2
 
 /datum/reagent/drug/skooma/on_mob_life(mob/living/carbon/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM)
-	M.adjustToxLoss(1*REM)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REAGENTS_EFFECT_MULTIPLIER)
+	M.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER)
 	if(prob(10))
 		M.adjust_blurriness(2)
 	..()
@@ -531,7 +531,7 @@
 	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/syndicateadrenals/on_mob_life(mob/living/M)
-	M.adjustStaminaLoss(-5*REM)
+	M.adjustStaminaLoss(-5*REAGENTS_EFFECT_MULTIPLIER)
 	. = ..()
 
 /datum/reagent/syndicateadrenals/on_mob_metabolize(mob/living/M)
