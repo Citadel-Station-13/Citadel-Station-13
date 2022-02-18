@@ -22,7 +22,7 @@
 	name = "Succubus milk"
 	description = "A volatile collodial mixture derived from milk that encourages mammary production via a potent estrogen mix."
 	color = "#E60584" // rgb: 96, 0, 255
-	taste_description = "a milky ice cream like flavour."
+	taste_description = "a milky ice cream like flavour"
 	overdose_threshold = 17
 	metabolization_rate = 0.25
 	impure_chem 			= /datum/reagent/fermi/BEsmaller //If you make an inpure chem, it stalls growth
@@ -106,7 +106,7 @@
 	name = "Modesty milk"
 	description = "A volatile collodial mixture derived from milk that encourages mammary reduction via a potent estrogen mix. Produced by reacting impure Succubus milk."
 	color = "#E60584" // rgb: 96, 0, 255
-	taste_description = "a milky ice cream like flavour."
+	taste_description = "a milky ice cream like flavour"
 	metabolization_rate = 0.25
 	can_synth = FALSE
 	value = REAGENT_VALUE_RARE
@@ -121,7 +121,7 @@
 /datum/reagent/fermi/BEsmaller_hypo
 	name = "Rectify milk" //Rectify
 	color = "#E60584"
-	taste_description = "a milky ice cream like flavour."
+	taste_description = "a milky ice cream like flavour"
 	metabolization_rate = 0.25
 	description = "A medicine used to treat organomegaly in a patient's breasts."
 	var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)

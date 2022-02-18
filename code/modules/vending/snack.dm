@@ -4,6 +4,7 @@
 	product_slogans = "Try our new nougat bar!;Twice the calories for half the price!"
 	product_ads = "The healthiest!;Award-winning chocolate bars!;Mmm! So good!;Oh my god it's so juicy!;Have a snack.;Snacks are good for you!;Have some more Getmore!;Best quality snacks straight from mars.;We love chocolate!;Try our new jerky!"
 	icon_state = "snack"
+	light_mask = "snack-light-mask"
 	products = list(/obj/item/reagent_containers/food/snacks/candy = 5,
 					/obj/item/reagent_containers/food/snacks/chocolatebar = 5,
 					/obj/item/reagent_containers/food/drinks/dry_ramen = 5,
@@ -25,13 +26,11 @@
 					/obj/item/reagent_containers/food/snacks/chococoin = 1,
 					/obj/item/storage/box/marshmallow = 1,
 					/obj/item/storage/box/donkpockets = 2)
-
 	refill_canister = /obj/item/vending_refill/snack
 	canload_access_list = list(ACCESS_KITCHEN)
 	default_price = PRICE_REALLY_CHEAP
 	extra_price = PRICE_ALMOST_CHEAP
 	payment_department = ACCOUNT_SRV
-	cost_multiplier_per_dept = list(ACCOUNT_SRV = 0)
 	input_display_header = "Chef's Food Selection"
 
 /obj/item/vending_refill/snack

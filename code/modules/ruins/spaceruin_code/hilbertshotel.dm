@@ -302,7 +302,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 		user.reset_perspective(parentSphere)
 		user.set_machine(src)
 		var/datum/action/peepholeCancel/PHC = new
-		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/scaled/impaired, 1)
 		PHC.Grant(user)
 		return TRUE
 

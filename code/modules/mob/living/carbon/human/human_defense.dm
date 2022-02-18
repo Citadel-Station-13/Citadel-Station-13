@@ -416,6 +416,7 @@
 	severity *= 0.5
 	var/do_not_stun = FALSE
 	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		hud_used?.coolant_display.jam(round(severity / 10, 1))	//Messes up the cooling system readout.
 		severity *= 0.5 //Robotpeople take less limb damage, but instead suffer system corruption (see carbon emp_act)
 		do_not_stun = TRUE
 	for(var/obj/item/bodypart/L in src.bodyparts)

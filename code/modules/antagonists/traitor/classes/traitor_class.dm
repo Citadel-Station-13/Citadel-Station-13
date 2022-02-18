@@ -11,6 +11,8 @@ GLOBAL_LIST_EMPTY(traitor_classes)
 	/// Minimum players for this to randomly roll via get_random_traitor_kind().
 	var/min_players = 0
 	var/list/uplink_filters
+	/// Specific tgui theme for the player's antag info panel.
+	var/tgui_theme = "syndicate"
 
 /datum/traitor_class/New()
 	..()

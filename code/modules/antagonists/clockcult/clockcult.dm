@@ -6,6 +6,7 @@
 	job_rank = ROLE_SERVANT_OF_RATVAR
 	antag_moodlet = /datum/mood_event/cult
 	skill_modifiers = list(/datum/skill_modifier/job/level/wiring, /datum/skill_modifier/job/level/dwarfy/blacksmithing)
+	ui_name = "AntagInfoClockwork"
 	var/datum/action/innate/hierophant/hierophant_network = new
 	threat = 3
 	var/datum/team/clockcult/clock_team
@@ -13,6 +14,12 @@
 	var/neutered = FALSE			//can not use round ending, gibbing, converting, or similar things with unmatched round impact
 	var/ignore_eligibility_check = FALSE
 	var/ignore_holy_water = FALSE
+
+/datum/antagonist/clockcult/ui_data(mob/user)
+	. = ..()
+	if(!.)
+		return
+	.["HONOR_RATVAR"] = GLOB.ratvar_awakens
 
 /datum/antagonist/clockcult/silent
 	name = "Silent Clock Cultist"
@@ -22,6 +29,8 @@
 /datum/antagonist/clockcult/neutered
 	name = "Neutered Clock Cultist"
 	neutered = TRUE
+	soft_antag = TRUE
+	ui_name = null // no.
 
 /datum/antagonist/clockcult/neutered/traitor
 	name = "Traitor Clock Cultist"
@@ -56,14 +65,6 @@
 	. = ..()
 	if(. && !ignore_eligibility_check)
 		. = is_eligible_servant(new_owner.current)
-
-/datum/antagonist/clockcult/greet()
-	if(!owner.current || silent)
-		return
-	owner.current.visible_message("<span class='heavy_brass'>[owner.current]'s eyes glow a blazing yellow!</span>", null, null, 7, owner.current) //don't show the owner this message
-	to_chat(owner.current, "<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork \
-	Justiciar above all else. Perform his every whim without hesitation.</span>")
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/clockcultalr.ogg', 70, FALSE, pressure_affected = FALSE)
 
 /datum/antagonist/clockcult/on_gain()
 	var/mob/living/current = owner.current

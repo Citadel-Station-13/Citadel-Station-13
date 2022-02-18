@@ -14,6 +14,7 @@
 	var/response_timer_id = null
 	var/approval_time = 600
 	var/allow_unicode = FALSE
+	var/admin_approved = FALSE
 
 	var/static/regex/standard_station_regex
 
@@ -62,8 +63,32 @@
 
 	to_chat(user, "Your name has been sent to your employers for approval.")
 	// Autoapproves after a certain time
-	response_timer_id = addtimer(CALLBACK(src, .proc/rename_station, new_name, user.name, user.real_name, key_name(user)), approval_time, TIMER_STOPPABLE)
-	to_chat(GLOB.admins, "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[ADMIN_LOOKUPFLW(user)] proposes to rename the [name_type] to [html_encode(new_name)] (will autoapprove in [DisplayTimeText(approval_time)]). [ADMIN_SMITE(user)] (<A HREF='?_src_=holder;[HrefToken(TRUE)];reject_custom_name=[REF(src)]'>REJECT</A>) [ADMIN_CENTCOM_REPLY(user)]</span>")
+	var/requires_approval = CONFIG_GET(flag/station_name_needs_approval)
+	response_timer_id = addtimer(CALLBACK(src, .proc/check_state, new_name, user.name, user.real_name, key_name(user)), approval_time, TIMER_STOPPABLE)
+	to_chat(GLOB.admins, "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[ADMIN_LOOKUPFLW(user)] proposes to rename the [name_type] to [html_encode(new_name)] ([requires_approval ? "REQUIRES ADMIN APPROVAL and will autodeny" : "will autoapprove"] in [DisplayTimeText(approval_time)]). [ADMIN_SMITE(user)] (<A HREF='?_src_=holder;[HrefToken(TRUE)];reject_custom_name=[REF(src)]'>REJECT</A>)[requires_approval ? " (<A HREF='?_src_=holder;[HrefToken(TRUE)];approve_custom_name=[REF(src)]'>APPROVE</A>)" : ""] [ADMIN_CENTCOM_REPLY(user)]</span>")
+
+/obj/item/station_charter/proc/check_state(designation, uname, ureal_name, ukey)
+	var/requires_approval = CONFIG_GET(flag/station_name_needs_approval)
+	if(requires_approval && !admin_approved)
+		var/turf/T = get_turf(src)
+		T.visible_message("<span class='warning'>A note appears on [src], stating this sector requires central command approval for its station names, which was not performed in time for this request. Looks like the change has been auto-rejected.</span>")
+		var/m = "Station rename has been autorejected due to config requiring admin approval."
+		message_admins(m)
+		log_admin(m)
+	else
+		rename_station(designation, uname, ureal_name, ukey)
+	response_timer_id = null
+	admin_approved = FALSE
+
+/obj/item/station_charter/proc/allow_pass(user)
+	if(!user)
+		return
+	if(!response_timer_id)
+		return
+	admin_approved = TRUE
+	var/m = "[key_name(user)] has approved the proposed station name. It can still be denied prior to the timer expiring."
+	message_admins(m)
+	log_admin(m)
 
 /obj/item/station_charter/proc/reject_proposed(user)
 	if(!user)
@@ -80,6 +105,7 @@
 
 	deltimer(response_timer_id)
 	response_timer_id = null
+	admin_approved = FALSE
 
 /obj/item/station_charter/proc/rename_station(designation, uname, ureal_name, ukey)
 	set_station_name(designation)

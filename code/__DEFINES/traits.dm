@@ -104,6 +104,7 @@
 #define TRAIT_RESISTCOLD		"resist_cold"
 #define TRAIT_RESISTHIGHPRESSURE	"resist_high_pressure"
 #define TRAIT_RESISTLOWPRESSURE	"resist_low_pressure"
+#define TRAIT_LOWPRESSURECOOLING "low_pressure_cooling"
 #define TRAIT_BOMBIMMUNE		"bomb_immunity"
 #define TRAIT_RADIMMUNE			"rad_immunity"
 #define TRAIT_GENELESS			"geneless"
@@ -121,6 +122,7 @@
 #define TRAIT_ROBOTIC_ORGANISM	"robotic_organism"
 #define TRAIT_ROBOT_RADSHIELDING	"robot_radshielding"
 #define TRAIT_NOBREATH			"no_breath"
+#define TRAIT_AUXILIARY_LUNGS	"auxiliary_lungs"	//Lungs not neccessary required due to nobreath, but provides some other helpful function.
 #define TRAIT_ANTIMAGIC			"anti_magic"
 #define TRAIT_HOLY				"holy"
 #define TRAIT_DEPRESSION		"depression"
@@ -200,6 +202,7 @@
 #define TRAIT_FRIENDLY			"friendly"
 #define TRAIT_SNOB				"snob"
 #define TRAIT_MULTILINGUAL		"multilingual"
+#define TRAIT_HEARING_SENSITIVE "hearing_sensitive"
 #define TRAIT_CULT_EYES 		"cult_eyes"
 #define TRAIT_AUTO_CATCH_ITEM	"auto_catch_item"
 #define TRAIT_CLOWN_MENTALITY	"clown_mentality" // The future is now, clownman.
@@ -222,6 +225,8 @@
 /// forces us to not render our overlays
 #define TRAIT_HUMAN_NO_RENDER			"human_no_render"
 #define TRAIT_TRASHCAN					"trashcan"
+///Used for fireman carry to have mobe not be dropped when passing by a prone individual.
+#define TRAIT_BEING_CARRIED "being_carried"	
 
 // mobility flag traits
 // IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)

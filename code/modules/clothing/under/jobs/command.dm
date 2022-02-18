@@ -53,5 +53,5 @@
 	desc = "An ironically skimpy blue dress with gold markings denoting the rank of \"Captain\"."
 	icon_state = "lewdcap"
 	item_state = "lewdcap"
-	can_adjust = FALSE
+	alt_covers_chest = TRUE
 	mutantrace_variation = STYLE_DIGITIGRADE|USE_TAUR_CLIP_MASK

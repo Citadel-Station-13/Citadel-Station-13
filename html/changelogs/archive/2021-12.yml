@@ -1,0 +1,82 @@
+2021-12-01:
+  DeltaFire15:
+  - balance: Pellets now care about block woundwise
+  - balance: Pellet wound-bonus no longer stacks for the final calculation
+  - balance: Embeds no longer bypass full blocking.
+  - bugfix: Shields now work properly against unarmed / mob attacks.
+2021-12-02:
+  DeltaFire15:
+  - balance: Synthetics gained quasi-immunity to most chemicals, excluding some core
+      medical chems and a few specific disruptive ones.
+  - rscadd: Health analyzer, ChemMaster and chemical analyzer interactions with the
+      chemical processing flag system.
+  - bugfix: System Cleaner should now always update health as opposed to before.
+  - balance: system cleaner is now twice as effective.
+2021-12-03:
+  TripleShades:
+  - rscadd: (Pubby) Holopad to surgery viewing area
+2021-12-05:
+  Arturlang:
+  - rscadd: You can now put in LaTeX equations in TGUI paper if you insert them between
+      two $ dollar signs
+  DeltaFire15:
+  - bugfix: Fireman carry no longer drops the carried person if passing over a prone
+      individual.
+2021-12-09:
+  DeltaFire15:
+  - bugfix: Linters should no longer scream.
+  Linzolle:
+  - bugfix: it now only snows on festivestation instead of every map
+  - bugfix: rain now triggers properly on spookystation
+  TripleShades:
+  - rscadd: (Pubby) Gives Robotic's Lab Surgery a cautery
+  keronshb:
+  - rscadd: Lets dynamic pick clock cultists midround
+  timothyteakettle:
+  - bugfix: being fat no longer makes you slower when floating
+2021-12-11:
+  SandPoot:
+  - bugfix: Borg speech is now centralized even inside lockers or something like that.
+  bunny232:
+  - bugfix: Cold blooded critters won't worry too much about the air around them being
+      too hot even though their body temperature is the same as it.
+  - balance: The warm pool is no longer nearly boiling and the cool pool no longer
+      goes below 0C.
+2021-12-12:
+  DeltaFire15:
+  - bugfix: Linters should no longer complain about afterattack sleeps.
+2021-12-13:
+  Putnam3145:
+  - bugfix: Per-minute science output fixed
+2021-12-17:
+  DeltaFire15:
+  - bugfix: The time for admins to cancel events is 30 seconds again.
+  SandPoot:
+  - bugfix: Fixes assembly holders.
+2021-12-21:
+  ShizCalev:
+  - bugfix: Fixed an issue where you were able to remove flashlights/bayonets that
+      were supposed to be permanently attached to a gun.
+  - bugfix: Fixed an issue where you were unable to remove flashlights & bayonets
+      from certain weapons.
+  - bugfix: Fixed a potential issue where adding a flashlight to your helmet would've
+      caused you to lose other action buttons.
+  - bugfix: 'Fixed a issue where guns with multiple action buttons would break all
+      but one of those action buttons. tweak: If you have both a bayonet and a flashlight
+      attached to your gun, you''ll now be given a prompt on which you''d like to
+      remove when using a screwdriver on it. tweak: Hacking a firing pin out of a
+      gun is no longer done via a crafting menu - you can now do it by simply holding
+      the gun in your hand and clicking it with a welder/screwdriver/wirecutters.'
+2021-12-23:
+  Putnam3145:
+  - bugfix: Atmos group processing heuristic no longer does opposite of intent
+2021-12-29:
+  TripleShades:
+  - rscadd: (Festive Station) Fixes
+  - rscadd: 'Readds the cold to Festive Station tweak: (Festive Station) Fixes'
+  - rscadd: (Pubby) Cautery??? I think this is leftover but nobody has touched Pubby
+      since me so it's fine probably
+2021-12-31:
+  SandPoot:
+  - bugfix: You also no longer get every animation sprite and direction sprite of
+      items on the menus.

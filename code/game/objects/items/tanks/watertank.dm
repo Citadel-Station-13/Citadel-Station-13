@@ -271,18 +271,7 @@
 		if(resin_cooldown)
 			to_chat(user, "<span class='warning'>Resin launcher is still recharging...</span>")
 			return
-		resin_cooldown = TRUE
-		R.remove_any(100)
-		var/obj/effect/resin_container/A = new (get_turf(src))
-		log_game("[key_name(user)] used Resin Launcher at [AREACOORD(user)].")
-		playsound(src,'sound/items/syringeproj.ogg',40,1)
-		for(var/a=0, a<5, a++)
-			step_towards(A, target)
-			sleep(2)
-		A.Smoke()
-		spawn(100)
-			if(src)
-				resin_cooldown = FALSE
+		launch_resin(target, user)
 		return
 	if(nozzle_mode == RESIN_FOAM)
 		if(!Adj|| !isturf(target))
@@ -300,6 +289,21 @@
 		else
 			to_chat(user, "<span class='warning'>Resin foam mix is still being synthesized...</span>")
 			return
+
+/obj/item/extinguisher/mini/nozzle/proc/launch_resin(atom/target, mob/user)
+	set waitfor = FALSE
+	resin_cooldown = TRUE
+	reagents.remove_any(100)
+	var/obj/effect/resin_container/A = new (get_turf(src))
+	log_game("[key_name(user)] used Resin Launcher at [AREACOORD(user)].")
+	playsound(src,'sound/items/syringeproj.ogg',40,1)
+	for(var/a=0, a<5, a++)
+		step_towards(A, target)
+		sleep(2)
+	A.Smoke()
+	spawn(100)
+		if(src)
+			resin_cooldown = FALSE
 
 /obj/effect/resin_container
 	name = "resin container"

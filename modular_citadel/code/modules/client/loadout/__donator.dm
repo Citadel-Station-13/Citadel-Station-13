@@ -566,3 +566,16 @@
 	path = SLOT_WEAR_MASK
 	path = /obj/item/clothing/mask/gas/clown_hat
 	ckeywhitelist = list("djkouta")
+
+/datum/gear/donator/spacehoodie
+	name = "Space Hoodie"
+	path = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/spacehoodie
+	ckeywhitelist = list("bidlink2")
+
+/datum/gear/donator/pokerchips
+	name = "pokerchip set"
+	slot = SLOT_IN_BACKPACK
+	path = /obj/item/storage/box/pockerchips
+	ckeywhitelist = list("greed2323")
+

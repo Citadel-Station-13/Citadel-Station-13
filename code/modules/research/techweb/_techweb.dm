@@ -19,6 +19,7 @@
 	var/list/research_logs = list()								//IC logs.
 	var/largest_bomb_value = 0
 	var/organization = "Third-Party"							//Organization name, used for display.
+	var/list/next_income = list()								//To be applied on the next passive techweb income
 	var/list/last_bitcoins = list()								//Current per-second production, used for display only.
 	var/list/discovered_mutations = list()                           //Mutations discovered by genetics, this way they are shared and cant be destroyed by destroying a single console
 	var/list/tiers = list()										//Assoc list, id = number, 1 is available, 2 is all reqs are 1, so on
@@ -105,16 +106,27 @@
 		V.rescan_views()
 		V.updateUsrDialog()
 
-/datum/techweb/proc/add_point_list(list/pointlist)
-	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] > 0)
-			research_points[i] += pointlist[i]
+/datum/techweb/proc/add_point_list(list/pointlist, income = TRUE)
+	if(income) // i DO NOT TRUST byond to optimize this way properly
+		for(var/i in pointlist)
+			if(SSresearch.point_types[i] && pointlist[i] > 0)
+				next_income[i] += pointlist[i]
+	else
+		for(var/i in pointlist)
+			if(SSresearch.point_types[i] && pointlist[i] > 0)
+				research_points[i] += pointlist[i]
 
 /datum/techweb/proc/add_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
 	for(var/i in l)
 		l[i] = amount
 	add_point_list(l)
+
+/datum/techweb/proc/commit_income()
+	. = next_income.Copy()
+	add_point_list(next_income, income = FALSE)
+	for(var/i in next_income)
+		next_income[i] = 0
 
 /datum/techweb/proc/remove_point_list(list/pointlist)
 	for(var/i in pointlist)
@@ -170,16 +182,22 @@
 /datum/techweb/proc/get_researched_nodes()
 	return researched_nodes - hidden_nodes
 
-/datum/techweb/proc/add_point_type(type, amount)
+/datum/techweb/proc/add_point_type(type, amount, income = TRUE)
 	if(!SSresearch.point_types[type] || (amount <= 0))
 		return FALSE
-	research_points[type] += amount
+	if(income)
+		next_income[type] += amount
+	else
+		research_points[type] += amount
 	return TRUE
 
-/datum/techweb/proc/modify_point_type(type, amount)
+/datum/techweb/proc/modify_point_type(type, amount, income = TRUE)
 	if(!SSresearch.point_types[type])
 		return FALSE
-	research_points[type] = max(0, research_points[type] + amount)
+	if(income && amount > 0)
+		next_income[type] += amount
+	else
+		research_points[type] = max(0, research_points[type] + amount)
 	return TRUE
 
 /datum/techweb/proc/remove_point_type(type, amount)

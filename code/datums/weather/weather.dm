@@ -209,6 +209,9 @@
 /datum/weather/proc/weather_act(mob/living/L)
 	return
 
+/datum/weather/proc/weather_act_turf(area/N) //What effect does this weather have on the area?
+	return
+
 /**
   * Updates the overlays on impacted areas
   *
@@ -224,6 +227,7 @@
 				N.icon_state = telegraph_overlay
 			if(MAIN_STAGE)
 				N.icon_state = weather_overlay
+				weather_act_turf(N)
 			if(WIND_DOWN_STAGE)
 				N.icon_state = end_overlay
 			if(END_STAGE)

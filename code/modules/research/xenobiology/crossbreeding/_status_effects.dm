@@ -495,7 +495,11 @@
 
 /datum/status_effect/stabilized/orange/tick()
 	var/body_temperature_difference = BODYTEMP_NORMAL - owner.bodytemperature
-	owner.adjust_bodytemperature(min(5,body_temperature_difference))
+	var/cooling_cap = -5
+	if(HAS_TRAIT(owner, TRAIT_ROBOTIC_ORGANISM))
+		cooling_cap *= 0.5									//Only cools by half as much (which is 5 per life tick since this ticks twice as much as life) so it isn't true spaceproofness..
+		body_temperature_difference += SYNTH_COLD_OFFSET	//.. But also cools towards a cold temp, provided there is nothing that counters it.
+	owner.adjust_bodytemperature(clamp(body_temperature_difference, cooling_cap, 5))
 	return ..()
 
 /datum/status_effect/stabilized/purple

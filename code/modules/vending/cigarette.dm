@@ -17,13 +17,15 @@
 					/obj/item/storage/fancy/cigarettes/cigpack_shadyjims = 1,
 					/obj/item/clothing/mask/cigarette/dart = 3)
 	premium = list(/obj/item/storage/fancy/cigarettes/cigpack_robustgold = 3,
-					/obj/item/storage/fancy/cigarettes/cigars = 1,
-					/obj/item/storage/fancy/cigarettes/cigars/havana = 1,
-					/obj/item/storage/fancy/cigarettes/cigars/cohiba = 1)
+				   /obj/item/lighter = 3,
+		           /obj/item/storage/fancy/cigarettes/cigars = 1,
+		           /obj/item/storage/fancy/cigarettes/cigars/havana = 1,
+		           /obj/item/storage/fancy/cigarettes/cigars/cohiba = 1)
 	refill_canister = /obj/item/vending_refill/cigarette
 	default_price = PRICE_ALMOST_CHEAP
 	extra_price = PRICE_ABOVE_NORMAL
 	payment_department = ACCOUNT_SRV
+	light_mask = "cigs-light-mask"
 
 /obj/machinery/vending/cigarette/syndicate
 	products = list(/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 7,
@@ -34,7 +36,6 @@
 					/obj/item/storage/box/matches = 10,
 					/obj/item/lighter/greyscale = 4,
 					/obj/item/storage/fancy/rollingpapers = 5)
-	payment_department = NO_FREEBIES
 
 /obj/machinery/vending/cigarette/syndicate/Initialize()
 	. = ..()

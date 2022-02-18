@@ -101,7 +101,7 @@
 	if(!C)
 		return
 	watching += C
-	M.overlay_fullscreen("cinematic",/atom/movable/screen/fullscreen/cinematic_backdrop)
+	M.overlay_fullscreen("cinematic",/atom/movable/screen/fullscreen/tiled/cinematic_backdrop)
 	C.screen += screen
 
 //Sound helper
