@@ -23307,7 +23307,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall,
+/turf/open/space/basic,
 /area/maintenance/port/aft)
 "aKo" = (
 /obj/structure/lattice,
@@ -40741,6 +40741,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
+"doR" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/turf/closed/wall/r_wall,
+/area/science/mixing)
 "dvB" = (
 /obj/structure/sink/puddle,
 /turf/open/floor/plating/asteroid,
@@ -40987,6 +40993,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engineering/atmos)
+"eIl" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/science/mixing)
 "eOg" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
@@ -41025,6 +41035,10 @@
 "eWo" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/closed/wall/r_wall,
+/area/science/mixing)
+"eWG" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plasteel,
 /area/science/mixing)
 "eXV" = (
 /obj/machinery/atmospherics/pipe/simple/dark/visible{
@@ -41360,6 +41374,10 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"gfi" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall/rust,
+/area/science/mixing)
 "ggq" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -41543,10 +41561,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engineering/atmos)
-"gSB" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall/r_wall,
-/area/science/mixing)
 "gVX" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2{
 	dir = 8
@@ -46919,10 +46933,6 @@
 	icon_state = "wood-broken6"
 	},
 /area/maintenance/starboard/aft)
-"tEk" = (
-/obj/machinery/pool/drain,
-/turf/open/pool,
-/area/maintenance/starboard/aft)
 "tFk" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -47069,6 +47079,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrous_output,
 /turf/open/floor/engine/n2o,
 /area/engineering/atmos)
+"ujF" = (
+/obj/machinery/pool/drain,
+/turf/open/pool,
+/area/maintenance/starboard/aft)
 "uok" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 8
@@ -47503,12 +47517,6 @@
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"vHT" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
-/turf/closed/wall/r_wall,
-/area/science/mixing)
 "vJk" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
@@ -47542,10 +47550,6 @@
 "vMb" = (
 /turf/open/floor/engine/n2o,
 /area/engineering/atmos)
-"vNP" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall/r_wall/rust,
-/area/science/mixing)
 "vPZ" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
@@ -47797,10 +47801,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engineering/atmos)
-"wXH" = (
-/obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel,
-/area/science/mixing)
 "xdr" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -95626,7 +95626,7 @@ hXc
 abP
 jLF
 aAY
-wXH
+eWG
 bdA
 aRy
 aRy
@@ -96150,7 +96150,7 @@ aRy
 bhm
 bhX
 uCY
-tEk
+ujF
 nio
 jeI
 juY
@@ -98453,12 +98453,12 @@ sVt
 sVt
 sVt
 qcP
-gSB
-vNP
-vNP
-gSB
-gSB
-vHT
+eIl
+gfi
+gfi
+eIl
+eIl
+doR
 iio
 aad
 aad
