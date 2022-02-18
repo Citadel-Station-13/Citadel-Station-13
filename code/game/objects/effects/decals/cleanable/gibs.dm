@@ -11,12 +11,12 @@
 	var/gibs_reagent_id = /datum/reagent/liquidgibs
 	var/gibs_bloodtype = "A+"
 
-/obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
+/obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases, list/blood_data)
 	. = ..()
 	if(random_icon_states && (icon_state == initial(icon_state)) && length(random_icon_states) > 0)
 		icon_state = pick(random_icon_states)
 	if(gibs_reagent_id)
-		reagents.add_reagent(gibs_reagent_id, 5)
+		reagents.add_reagent(gibs_reagent_id, 5, blood_data)
 	if(gibs_bloodtype)
 		add_blood_DNA(list("Non-human DNA" = gibs_bloodtype), diseases)
 	update_icon()

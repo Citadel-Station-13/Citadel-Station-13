@@ -3,12 +3,15 @@
 	roundend_category = "wizards/witches"
 	antagpanel_category = "Wizard"
 	job_rank = ROLE_WIZARD
+	antag_hud_type = ANTAG_HUD_WIZ
+	antag_hud_name = "wizard"
 	antag_moodlet = /datum/mood_event/focused
-	threat = 30
+	hijack_speed = 0.5
+	ui_name = "AntagInfoWizard"
+	suicide_cry = "FOR THE FEDERATION!!"
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
-	var/hud_version = "wizard"
 	var/datum/team/wizard/wiz_team //Only created if wizard summons apprentices
 	var/move_to_lair = TRUE
 	var/outfit_type = /datum/outfit/wizard
@@ -50,16 +53,17 @@
 	wiz_team = new(owner)
 	wiz_team.name = "[owner.current.real_name] team"
 	wiz_team.master_wizard = src
-	update_wiz_icons_added(owner.current)
+	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
 
 /datum/antagonist/wizard/proc/send_to_lair()
-	if(!owner || !owner.current)
+	if(!owner)
+		CRASH("Antag datum with no owner.")
+	if(!owner.current)
 		return
 	if(!GLOB.wizardstart.len)
 		SSjob.SendToLateJoin(owner.current)
 		to_chat(owner, "HOT INSERTION, GO GO GO")
-	else
-		owner.current.forceMove(pick(GLOB.wizardstart))
+	owner.current.forceMove(pick(GLOB.wizardstart))
 
 /datum/antagonist/wizard/proc/create_objectives()
 	var/datum/objective/flavor/wizard/new_objective = new
@@ -79,7 +83,7 @@
 
 /datum/antagonist/wizard/proc/equip_wizard()
 	if(!owner)
-		return
+		CRASH("Antag datum with no owner.")
 	var/mob/living/carbon/human/H = owner.current
 	if(!istype(H))
 		return
@@ -91,18 +95,14 @@
 		H.age = wiz_age
 	H.equipOutfit(outfit_type)
 
-/datum/antagonist/wizard/greet()
-	to_chat(owner, "<span class='boldannounce'>You are the Space Wizard!</span>")
-	to_chat(owner, "<B>The Space Wizards Federation has given you the following tasks:</B>")
-	owner.announce_objectives()
-	to_chat(owner, "<B>These are merely guidelines! The federation are your masters, but you forge your own path!</B>")
-	to_chat(owner, "You will find a list of available spells in your spell book. Choose your magic arsenal carefully.")
-	to_chat(owner, "The spellbook is bound to you, and others cannot use it.")
-	to_chat(owner, "In your pockets you will find a teleport scroll. Use it as needed.")
-	to_chat(owner,"<B>Remember:</B> do not forget to prepare your spells.")
+/datum/antagonist/wizard/ui_static_data(mob/user)
+	. = ..()
+	var/list/data = list()
+	data["objectives"] = get_objectives()
+	return data
 
 /datum/antagonist/wizard/farewell()
-	to_chat(owner, "<span class='userdanger'>You have been brainwashed! You are no longer a wizard!</span>")
+	to_chat(owner, span_userdanger("You have been brainwashed! You are no longer a wizard!"))
 
 /datum/antagonist/wizard/proc/rename_wizard()
 	set waitfor = FALSE
@@ -111,7 +111,7 @@
 	var/wizard_name_second = pick(GLOB.wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	var/mob/living/wiz_mob = owner.current
-	var/newname = reject_bad_name(stripped_input(wiz_mob, "You are the [name]. Would you like to change your name to something else?", "Name change", randomname, MAX_NAME_LEN))
+	var/newname = sanitize_name(reject_bad_text(stripped_input(wiz_mob, "You are the [name]. Would you like to change your name to something else?", "Name change", randomname, MAX_NAME_LEN)))
 
 	if (!newname)
 		newname = randomname
@@ -120,12 +120,12 @@
 
 /datum/antagonist/wizard/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_wiz_icons_added(M, wiz_team ? TRUE : FALSE) //Don't bother showing the icon if you're solo wizard
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	M.faction |= ROLE_WIZARD
 
 /datum/antagonist/wizard/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_wiz_icons_removed(M)
+	remove_antag_hud(antag_hud_type, M)
 	M.faction -= ROLE_WIZARD
 
 
@@ -138,7 +138,7 @@
 
 /datum/antagonist/wizard/apprentice
 	name = "Wizard Apprentice"
-	hud_version = "apprentice"
+	antag_hud_name = "apprentice"
 	var/datum/mind/master
 	var/school = APPRENTICE_DESTRUCTION
 	outfit_type = /datum/outfit/wizard/apprentice
@@ -157,7 +157,7 @@
 /datum/antagonist/wizard/apprentice/equip_wizard()
 	. = ..()
 	if(!owner)
-		return
+		CRASH("Antag datum with no owner.")
 	var/mob/living/carbon/human/H = owner.current
 	if(!istype(H))
 		return
@@ -169,12 +169,12 @@
 		if(APPRENTICE_BLUESPACE)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(null))
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
-			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt.")
+			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned reality-bending mobility spells. You are able to cast teleport and ethereal jaunt.")
 		if(APPRENTICE_HEALING)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(null))
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall(null))
 			H.put_in_hands(new /obj/item/gun/magic/staff/healing(H))
-			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned livesaving survival spells. You are able to cast charge and forcewall.")
+			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned life-saving survival spells. You are able to cast charge and forcewall.")
 		if(APPRENTICE_ROBELESS)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 			owner.AddSpell(new /obj/effect/proc_holder/spell/pointed/mind_transfer(null))
@@ -194,6 +194,7 @@
 //Random event wizard
 /datum/antagonist/wizard/apprentice/imposter
 	name = "Wizard Imposter"
+	show_in_antagpanel = FALSE
 	allow_rename = FALSE
 	move_to_lair = FALSE
 
@@ -224,20 +225,11 @@
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
 
-/datum/antagonist/wizard/proc/update_wiz_icons_added(mob/living/wiz,join = TRUE)
-	var/datum/atom_hud/antag/wizhud = GLOB.huds[ANTAG_HUD_WIZ]
-	wizhud.join_hud(wiz)
-	set_antag_hud(wiz, hud_version)
-
-/datum/antagonist/wizard/proc/update_wiz_icons_removed(mob/living/wiz)
-	var/datum/atom_hud/antag/wizhud = GLOB.huds[ANTAG_HUD_WIZ]
-	wizhud.leave_hud(wiz)
-	set_antag_hud(wiz, null)
-
-
 /datum/antagonist/wizard/academy
 	name = "Academy Teacher"
+	show_in_antagpanel = FALSE
 	outfit_type = /datum/outfit/wizard/academy
+	move_to_lair = FALSE
 
 /datum/antagonist/wizard/academy/equip_wizard()
 	. = ..()
@@ -250,7 +242,7 @@
 	if(!istype(M))
 		return
 
-	var/obj/item/implant/exile/Implant = new
+	var/obj/item/implant/exile/Implant = new/obj/item/implant/exile(M)
 	Implant.implant(M)
 
 /datum/antagonist/wizard/academy/create_objectives()
@@ -265,25 +257,25 @@
 	parts += printplayer(owner)
 
 	var/count = 1
-	var/wizardwin = 1
+	var/wizardwin = TRUE
 	for(var/datum/objective/objective in objectives)
 		if(objective.completable)
 			var/completion = objective.check_completion()
 			if(completion >= 1)
-				parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</B></span>"
+				parts += "<br><B>Objective #[count]</B>: [objective.explanation_text] [span_greentext("Success!")]"
 			else if(completion <= 0)
-				parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+				parts += "<br><B>Objective #[count]</B>: [objective.explanation_text] [span_redtext("Fail.")]"
 				wizardwin = FALSE
 			else
-				parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
+				parts += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
 		else
 			parts += "<B>Objective #[count]</B>: [objective.explanation_text]"
 		count++
 
 	if(wizardwin)
-		parts += "<span class='greentext'>The wizard was successful!</span>"
+		parts += span_greentext("The wizard was successful!")
 	else
-		parts += "<span class='redtext'>The wizard has failed!</span>"
+		parts += span_redtext("The wizard has failed!")
 
 	if(owner.spell_list.len>0)
 		parts += "<B>[owner.name] used the following spells: </B>"

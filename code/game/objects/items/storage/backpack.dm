@@ -657,3 +657,9 @@
 	desc = "Worn by snails as armor and storage compartment."
 	icon_state = "snailshell"
 	item_state = "snailshell"
+
+/obj/item/storage/backpack/henchmen
+	name = "wings"
+	desc = "Granted to the henchmen who deserve it. This probably doesn't include you."
+	icon_state = "henchmen"
+	item_state = "henchmen"

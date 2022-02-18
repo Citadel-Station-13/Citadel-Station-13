@@ -79,7 +79,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isangel(A) (is_species(A, /datum/species/angel))
 #define ismush(A) (is_species(A, /datum/species/mush))
 #define isshadow(A) (is_species(A, /datum/species/shadow))
-#define isrobotic(A) (is_species(A, /datum/species/ipc) || is_species(A, /datum/species/synthliz))
+#define isrobotic(A) (is_species(A, /datum/species/ipc) || is_species(A, /datum/species/synthliz) || is_species(A, /datum/species/mammal/synthetic))
 #define isdwarf(A) (is_species(A, /datum/species/dwarf))
 
 // Citadel specific species

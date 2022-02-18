@@ -12,7 +12,7 @@
 /datum/reagent/fermi/eigenstate
 	name = "Eigenstasium"
 	description = "A strange mixture formed from a controlled reaction of bluespace with plasma, that causes localised eigenstate fluxuations within the patient"
-	taste_description = "wiggly cosmic dust."
+	taste_description = "wiggly cosmic dust"
 	color = "#5020F4" // rgb: 50, 20, 255
 	overdose_threshold = 15
 	addiction_threshold = 15

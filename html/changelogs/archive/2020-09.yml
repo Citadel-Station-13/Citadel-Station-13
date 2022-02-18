@@ -1,0 +1,222 @@
+2020-09-01:
+  BlueWildrose:
+  - bugfix: fixed slimes starting off hungry
+2020-09-02:
+  Putnam3145:
+  - code_imp: Added a unit test for character saving.
+  - balance: Plastitanium rapier no longer silently sleeps with no chance at counterplay
+      when used by pacifists.
+  - bugfix: Fusion scan is now actually useful.
+  Tupinambis:
+  - tweak: moved the dakis, genital growth pills, and genital autosurgeons out of
+      the maintenance loot table and into kinkmates.
+  raspy-on-osu:
+  - bugfix: pyroclastic anomaly client spam
+  timothyteakettle:
+  - rscadd: you can hide your ckey now from the roundend report
+2020-09-03:
+  Ghommie:
+  - bugfix: Jaunters should now work with magic mirror chasming.
+  - bugfix: The photocopier can now print more than one copy at a time.
+  - bugfix: Alkali perspiration infos don't crash the Pandemic UI anymore.
+  - bugfix: Windoors can be actually tinted now.
+2020-09-04:
+  timothyteakettle:
+  - bugfix: ipcs can speak
+2020-09-05:
+  Bhijn:
+  - rscadd: Readded the old method of temperature notifications in the form of a new
+      pair of shivering/sweating notifications.
+  Putnam3145:
+  - tweak: Hilbert hotel flavor text for one particular snowflake hotel changed.
+  - admin: admins can now actually reduce threat level in dynamic
+  - tweak: Made owo.ogg smaller.
+  - tweak: Character saving unit test is now more verbose on failure.
+  - refactor: Added an extools proc hook alternative to rust_g logging.
+  raspy-on-osu:
+  - tweak: supermatter shard examine text
+  - tweak: protolathe item categories
+2020-09-06:
+  Putnam3145:
+  - rscdel: Dynamic no longer pushes events.
+  - balance: Made spontaneous brain trauma a good deal less annoying.
+  lolman360, NecromancerAnne:
+  - rscadd: The ancient art of blacksmithing, now in pixels.
+  - imageadd: cool swords and shit (thanks anne)
+  raspy-on-osu:
+  - tweak: thermomachine examine text
+2020-09-07:
+  DeltaFire15:
+  - spellcheck: fixed a typo causing a span not to show.
+  Putnam for debugging ammo loading! Thx!!:
+  - rscdel: Removed spell blade, diamond picaxe, and fire wand from lava land loot
+      tables
+  - tweak: Each mini boss now has its own type of crate.
+  - tweak: Each spike has its own type of crate that it pulls its now smaller loot
+      table from
+  - balance: Moved god eye from spike loot table to hard spawn collosses fight
+  - balance: Moved holoparasight from spike loot table to bubble gum
+  - balance: Moved magic meat hook from spike loot table to drake
+  - rscadd: 2 more crates to Arena Shuttle as well as 4-4-4 of each new type of chest
+  - balance: Replaced the diamond pick loot with a better one
+  - tweak: Replaced the cursted katana with a non cursted verson that deals half the
+      damage and has less block!
+  - rscadd: Three new potions, blue heals the mind like a mama potion, Green heals
+      the soul aka the organs! Lastly Red heals the body, by 100 damage of each main
+      types. Best not to waste them!
+  - rscadd: Four more "wands" Spellbooks! These fun little guys shoot out its own
+      pages to do the affect, one will set the target on fire like a bullet, one will
+      harm them a bit, one will heal the target a small bit - How nice! Last one will
+      give them a few statis affects like a taser bolt but without as much power or
+      tasing affect
+2020-09-08:
+  Ghommie:
+  - spellcheck: fixed names of the Electrical Toolbox goodie pack and green croptop
+      christmas suit.
+  - bugfix: Fixed turf visuals for real. Original PR by AnturK on tgstation.
+  KeRSedChaplain:
+  - soundadd: added borg_deathsound.ogg and android_scream.ogg
+  silicons:
+  - balance: meteor waves now have a static 5 minute timer.
+2020-09-09:
+  Putnam3145:
+  - bugfix: Made superconductivity work for the first time literally ever.
+  timothyteakettle:
+  - bugfix: accents work better
+2020-09-11:
+  Putnam3145:
+  - balance: Superconducting turfs now can't go below 0 celsius.
+2020-09-12:
+  BlueWildrose:
+  - bugfix: The Polychromic winter coat's hoodie will now polychrome, alongside any
+      other new polychromic items with toggleable headwear.
+  - bugfix: Minesweeper will no longer blow up the player's ears when they select
+      "Play on the same board"
+  - rscadd: Slimepeople will find warm donk pockets among other toxin healing items
+      even more repulsive, as they are anti-toxic.
+  - tweak: Slimepeople are now neutral to gross foods.
+  DeltaFire15:
+  - balance: AIs can no longer qdel() the gravity generator
+  Putnam3145:
+  - code_imp: Added some unit tests for reactions.
+  - refactor: replaced handle_changeling and handle_bloodsucker with signal registration
+  Sonic121x:
+  - bugfix: Fixed pill button on chemical press
+  TheObserver-sys:
+  - rscadd: Brass now has a proper datum. Aspiring Forgetenders rejoice!
+  Trilbyspaceclone:
+  - bugfix: Race based drinks will no longer stay inside your blood for ever.
+  Tupinambis:
+  - tweak: Redid Cogstation atmos pipes to make it less cluttered.
+  - tweak: Removed a few doors from the main hallway to mitigate chokepoint issues
+  - bugfix: All belt hell conveyers are now on by default, so that belt hell actually
+      works.
+  - bugfix: IDs for poddoors and belts and the like. Everything is now properly hooked
+      and should work as expected (except for the pressure triggered mass drivers)
+  - bugfix: addresses most if not all roundstart active turfs.
+  - bugfix: Issue where wires were connected to the SMES improperly, and SMES were
+      not properly precharged, resulting in power failure earlier than intended.
+  - bugfix: various rogue turfs and wirings.
+  - bugfix: security office APC being hooked to maintenance for some reason.
+  - bugfix: TEG is now directly wired to the SMES.
+  - code_imp: 'adds a subtype of mass drivers that is triggered by things being on
+      it. TODO: Make these mass drivers trigger poddoors, to make belt hell fully
+      functional.'
+  lolman360:
+  - bugfix: glaives now work again
+  zeroisthebiggay:
+  - balance: Revolver is now poplocked down to fifteen people.
+2020-09-16:
+  timothyteakettle:
+  - tweak: fixed an icon path
+2020-09-17:
+  DeltaFire15:
+  - rscadd: Failing the plushmium reaction can now create peculiar plushies, depending
+      on reaction volume.
+  - bugfix: The mood-buff from petting a plushie now works properly again.
+  - bugfix: Fixed wacky necropolis loot chest behavior
+  EmeraldSundisk:
+  - rscadd: Adds the Research Director's office to Omega Station
+  - rscadd: Adds 2 new solar arrays (and control rooms)
+  - rscadd: Adds some action figures that weren't there previously
+  - rscadd: The CMO's office now has a light switch
+  - tweak: Slight readjustments to impacted areas
+  - tweak: Readjusts the toxins air supply line to (ideally) be easier to service
+  - bugfix: Department camera consoles should now be able to actually check appropriate
+      cameras
+  - bugfix: Xenobiology can now be locked down (by the Research Director)
+  MrJWhit:
+  - rscadd: Adds a brain damage line
+  Putnam3145:
+  - bugfix: Your balls finally feel full, again.
+  timothyteakettle:
+  - rscadd: due to changes in policy, and several lawsuits, Nanotrasen has been forced
+      to allow disabled people to sign up
+2020-09-20:
+  DeltaFire15:
+  - bugfix: Sutures work on simplemobs again.
+  - bugfix: Attacking dismembered bodyparts now targets the chest instead, for weapons
+      aswell as unarmed attacks.
+  MrJWhit:
+  - rscadd: New sprites for chess pieces! You can craft them in-game with metal sheets.
+  silicons:
+  - balance: hulks can smash again (walls no longer break their hands)
+  - rscdel: acid no longer degrades armor
+2020-09-22:
+  Arturlang:
+  - rscadd: TGUI Statpanel
+  YakumoChen:
+  - imageadd: Mechsuits, robotics jumpsuits added to RoboDrobe
+  timothyteakettle:
+  - tweak: character previews should be more consistent now
+2020-09-24:
+  Putnam3145:
+  - refactor: Atmos is free.
+2020-09-25:
+  Putnam3145:
+  - bugfix: Removed a non-working proc that already had its functionality implemented
+      in another proc in the same file.
+2020-09-26:
+  CoreFlare:
+  - rscadd: IPC's can have hair. Why wasn't this added earlier. Use the bald hairstyle
+      for no hair.
+2020-09-27:
+  SiliconMain:
+  - tweak: Holograms made from projectors (atmos, engi, sec, medical, ect...) can
+      no longer be contaminated by radiation
+2020-09-28:
+  ArchieBeepBoop:
+  - rscadd: Craftable Micro Powered Fans
+  Degirin2120:
+  - rscadd: Added engineering hazard jumpsuits, can be found in the engidrobe, comes
+      in 3 varieties.
+  Putnam3145:
+  - tweak: Added a brute-force check-every-single-tile step to SSair when it has enough
+      time to run.
+  - balance: G fuid production is now much lower.
+  - rscdel: Supermatter sabotage objective's gone.
+  - balance: Subterfuge objectives are now all equally likely.
+  - spellcheck: Replaced a "(hopefully) 1" with a "2"
+  - tweak: Cryoing no longer unwins already-won objectives.
+  SiliconMain:
+  - tweak: Minor adjustment to material cost of long range atmos analyzer
+  Trilbyspaceclone:
+  - tweak: Most drinks now have some animation in them, from basic soda bubbles fizzing
+      around to ice cubes bobbing just a bit.
+  Tupinambis:
+  - bugfix: Ghost poly's color value is now a hex value instead of an oct value. This
+      has been a thing for OVER FIVE YEARS
+  - imageadd: Updates TEG, Antimatter, Jetpack sprites (CO2 and Oxy from Eris).
+  - imageadd: Replaced old chair sprites with new ones ported and modified from eris.
+  - tweak: Beds can now be placed both right and left.
+  - tweak: Subtle changes to stool legs to give them more of a shine.
+  raspy-on-osu:
+  - tweak: TEG power generation
+  thakyZ:
+  - rscadd: Added the ability to print the Light Replacer at the Engineering Protolathe
+  timothyteakettle:
+  - bugfix: turrets can once again be broken
+  - rscadd: you can now have heterochromia and select individual eye colours
+2020-09-29:
+  timothyteakettle:
+  - bugfix: fixed a typo causing your right eye colour to save as the left eye colour

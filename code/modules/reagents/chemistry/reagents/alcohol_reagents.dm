@@ -14,6 +14,7 @@
 	taste_description = "alcohol"
 	var/boozepwr = 65 //Higher numbers equal higher hardness, higher hardness equals more intense alcohol poisoning
 	pH = 7.33
+	boiling_point = 351.38
 	value = REAGENT_VALUE_VERY_COMMON //don't bother tweaking all drinks values, way too many can easily be done roundstart or with an upgraded dispenser.
 
 /*
@@ -40,10 +41,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	. = ..()
 	if(!iscarbon(L))
 		return
-
-	var/mob/living/carbon/C = L
-	if(HAS_TRAIT(C, TRAIT_ROBOTIC_ORGANISM))
-		C.reagents.remove_reagent(type, amount, FALSE)
 
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/C)
 	if(HAS_TRAIT(C, TRAIT_TOXIC_ALCOHOL))
@@ -88,6 +85,31 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				S.success_multiplier = max(0.1*power_multiplier, S.success_multiplier)
 				// +10% success propability on each step, useful while operating in less-than-perfect conditions
 	return ..()
+
+/datum/reagent/consumable/ethanol/define_gas() // So that all alcohols have the same gas, i.e. "ethanol"
+	var/datum/gas/G = new
+	G.id = GAS_ETHANOL
+	G.name = "Ethanol"
+	G.enthalpy = -234800
+	G.specific_heat = 38
+	G.fire_products = list(GAS_CO2 = 1, GAS_H2O = 1.5)
+	G.fire_burn_rate = 1 / 3
+	G.fire_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
+	G.color = "#404030"
+	G.breath_reagent = /datum/reagent/consumable/ethanol
+	G.group = GAS_GROUP_CHEMICALS
+	return G
+
+/datum/reagent/consumable/ethanol/get_gas()
+	var/datum/auxgm/cached_gas_data = GLOB.gas_data
+	. = GAS_ETHANOL
+	if(!(. in cached_gas_data.ids))
+		var/datum/gas/G = define_gas()
+		if(istype(G))
+			cached_gas_data.add_gas(G)
+		else // this codepath should probably not happen at all, since we never use get_gas() on anything with no boiling point
+			return null
+
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"

@@ -53,6 +53,12 @@
 	else
 		return ..()
 
+/obj/structure/bed/post_buckle_mob(mob/living/target)
+	target.pixel_y = target.get_standard_pixel_y_offset(TRUE)
+
+/obj/structure/bed/double/post_unbuckle_mob(mob/living/target)
+	target.pixel_y = target.get_standard_pixel_y_offset(FALSE)
+
 /*
  * Roller beds
  */
@@ -214,3 +220,24 @@
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from Earth. Could aliens be stealing our technology?"
 	icon_state = "abed"
+
+//Double Beds, for luxurious sleeping, i.e. the captain and maybe heads- Do use this for ERP
+/obj/structure/bed/double
+	name = "double bed"
+	desc = "A luxurious double bed, for those too important for small dreams."
+	icon_state = "bed_double"
+	buildstackamount = 4
+	max_buckled_mobs = 2
+	///The mob who buckled to this bed second, to avoid other mobs getting pixel-shifted before he unbuckles.
+	var/mob/living/goldilocks
+
+/obj/structure/bed/double/post_buckle_mob(mob/living/target)
+	target.pixel_y = target.get_standard_pixel_y_offset(TRUE)
+	if(buckled_mobs.len > 1 && !goldilocks) //Push the second buckled mob a bit higher from the normal lying position
+		target.pixel_y = target.get_standard_pixel_y_offset(FALSE) + 6
+		goldilocks = target
+
+/obj/structure/bed/double/post_unbuckle_mob(mob/living/target)
+	target.pixel_y = target.get_standard_pixel_y_offset(FALSE)
+	if(target == goldilocks)
+		goldilocks = null

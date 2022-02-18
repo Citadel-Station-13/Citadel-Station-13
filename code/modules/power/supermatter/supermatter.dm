@@ -210,7 +210,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	AddElement(/datum/element/bsa_blocker)
 	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/call_explode)
 
-	soundloop = new(list(src), TRUE)
+	soundloop = new(src, TRUE)
 
 /obj/machinery/power/supermatter_crystal/Destroy()
 	investigate_log("has been destroyed.", INVESTIGATE_SUPERMATTER)
@@ -220,6 +220,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	QDEL_NULL(countdown)
 	if(is_main_engine && GLOB.main_supermatter_engine == src)
 		GLOB.main_supermatter_engine = null
+	QDEL_NULL(soundloop)
 	return ..()
 
 /obj/machinery/power/supermatter_crystal/examine(mob/user)
@@ -228,6 +229,57 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/mob/living/carbon/C = user
 		if (!istype(C.glasses, /obj/item/clothing/glasses/meson) && (get_dist(user, src) < HALLUCINATION_RANGE(power)))
 			. += "<span class='danger'>You get headaches just from looking at it.</span>"
+
+// SupermatterMonitor UI for ghosts only. Inherited attack_ghost will call this.
+/obj/machinery/power/supermatter_crystal/ui_interact(mob/user, datum/tgui/ui)
+	if(!isobserver(user))
+		return FALSE
+	. = ..()
+	ui = SStgui.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "SupermatterMonitor")
+		ui.open()
+
+/obj/machinery/power/supermatter_crystal/ui_data(mob/user)
+	var/list/data = list()
+
+	var/turf/local_turf = get_turf(src)
+
+	var/datum/gas_mixture/air = local_turf.return_air()
+
+	// singlecrystal set to true eliminates the back sign on the gases breakdown.
+	data["singlecrystal"] = TRUE
+	data["active"] = TRUE
+	data["SM_integrity"] = get_integrity()
+	data["SM_power"] = power
+	data["SM_ambienttemp"] = air.return_temperature()
+	data["SM_ambientpressure"] = air.return_pressure()
+	data["SM_bad_moles_amount"] = MOLE_PENALTY_THRESHOLD / gasefficency
+	data["SM_moles"] = 0
+	data["SM_uid"] = uid
+	var/area/active_supermatter_area = get_area(src)
+	data["SM_area_name"] = active_supermatter_area.name
+
+	var/list/gasdata = list()
+
+	if(air.total_moles())
+		data["SM_moles"] = air.total_moles()
+		for(var/id in air.get_gases())
+			var/gas_level = air.get_moles(id)/air.total_moles()
+			if(gas_level > 0)
+				gasdata.Add(list(list(
+				"name"= "[GLOB.gas_data.names[id]]",
+				"amount" = round(gas_level*100, 0.01))))
+
+	else
+		for(var/id in air.get_gases())
+			gasdata.Add(list(list(
+			"name"= "[GLOB.gas_data.names[id]]",
+			"amount" = 0)))
+
+	data["gases"] = gasdata
+
+	return data
 
 /obj/machinery/power/supermatter_crystal/proc/get_status()
 	var/turf/T = get_turf(src)
@@ -628,6 +680,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	//Tells the engi team to get their butt in gear
 	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
+		if(damage_archived < warning_point) //If damage_archive is under the warning point, this is the very first cycle that we've reached said point.
+			SEND_SIGNAL(src, COMSIG_SUPERMATTER_DELAM_START_ALARM)
 		if((REALTIMEOFDAY - lastwarning) / 10 >= WARNING_DELAY)
 			alarm()
 
@@ -635,6 +689,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			if(damage > emergency_point)
 				// it's bad, LETS YELL
 				radio.talk_into(src, "[emergency_alert] Integrity: [get_integrity()]%", common_channel, list(SPAN_YELL))
+				SEND_SIGNAL(src, COMSIG_SUPERMATTER_DELAM_ALARM)
 				lastwarning = REALTIMEOFDAY
 				if(!has_reached_emergency)
 					investigate_log("has reached the emergency point for the first time.", INVESTIGATE_SUPERMATTER)
@@ -642,6 +697,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 					has_reached_emergency = TRUE
 			else if(damage >= damage_archived) // The damage is still going up
 				radio.talk_into(src, "[warning_alert] Integrity: [get_integrity()]%", engineering_channel)
+				SEND_SIGNAL(src, COMSIG_SUPERMATTER_DELAM_ALARM)
 				lastwarning = REALTIMEOFDAY - (WARNING_DELAY * 5)
 
 			else                                                 // Phew, we're safe

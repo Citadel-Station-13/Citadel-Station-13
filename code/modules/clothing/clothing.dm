@@ -21,8 +21,6 @@
 	var/active_sound = null
 	var/toggle_cooldown = null
 	var/cooldown = 0
-	var/obj/item/flashlight/F = null
-	var/can_flashlight = 0
 
 	var/blocks_shove_knockdown = FALSE //Whether wearing the clothing item blocks the ability for shove to knock down.
 
@@ -445,7 +443,7 @@ BLIND     // can't see anything
 		..()
 
 //Species-restricted clothing check. - Thanks Oraclestation, BS13, /vg/station etc.
-/obj/item/clothing/mob_can_equip(mob/M, slot, disable_warning = TRUE)
+/obj/item/clothing/mob_can_equip(M, equipper, slot, disable_warning = TRUE, bypass_equip_delay_self)
 
 	//if we can't equip the item anyway, don't bother with species_restricted (also cuts down on spam)
 	if(!..())

@@ -176,9 +176,6 @@
 #define ui_ghost_mafia "SOUTH: 6, CENTER+2:24"
 #define ui_ghost_spawners "SOUTH: 6, CENTER+1:24" // LEGACY. SAME LOC AS PAI
 
-// #define ui_wanted_lvl "NORTH,11"
-
-
 //UI position overrides for 1:1 screen layout. (default is 7:5)
 #define ui_stamina "EAST-1:28,CENTER:17" // replacing internals button
 #define ui_overridden_resist "EAST-3:24,SOUTH+1:7"
@@ -190,3 +187,5 @@
 #define ui_boxarea "EAST-4:6,SOUTH+1:6"
 #define ui_boxlang "EAST-5:22,SOUTH+1:6"
 #define ui_boxvore	"EAST-5:22,SOUTH+1:6"
+
+#define ui_wanted_lvl "NORTH,11"

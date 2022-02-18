@@ -5,9 +5,10 @@
 
 #define CLICKCATCHER_PLANE -99
 
-#define PLANE_SPACE -95
+#define PLANE_SPACE -98
 #define PLANE_SPACE_RENDER_TARGET "PLANE_SPACE"
-#define PLANE_SPACE_PARALLAX -90
+
+#define PLANE_SPACE_PARALLAX -95
 #define PLANE_SPACE_PARALLAX_RENDER_TARGET "PLANE_SPACE_PARALLAX"
 
 #define OPENSPACE_LAYER 17 //Openspace layer over all
@@ -152,6 +153,10 @@
 #define CAMERA_STATIC_PLANE 19
 #define CAMERA_STATIC_LAYER 19
 #define CAMERA_STATIC_RENDER_TARGET "CAMERA_STATIC_PLANE"
+
+/// Plane for balloon text (text that fades up)
+/// It's over lighting and every other crap because this is nearly as important as hud content and only visible to the user.
+#define BALLOON_CHAT_PLANE 20
 
 //HUD layer defines
 

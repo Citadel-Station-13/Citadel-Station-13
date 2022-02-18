@@ -1,4 +1,9 @@
 /obj/machinery/vending/assist
+	name = "\improper Part-Mart"
+	desc = "All the finest of miscellaneous electronics one could ever need! Not responsible for any injuries caused by reckless misuse of parts."
+	// icon_state = "parts"
+	// icon_deny = "parts-deny"
+
 	products = list(/obj/item/assembly/prox_sensor = 7,
 					/obj/item/assembly/igniter = 6,
 					/obj/item/assembly/playback = 4,
@@ -15,13 +20,13 @@
 	premium = list(/obj/item/stock_parts/cell/upgraded/plus = 2,
 					/obj/item/flashlight/lantern = 2,
 					/obj/item/beacon = 2)
-	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
-	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	refill_canister = /obj/item/vending_refill/assist
-	resistance_flags = FIRE_PROOF
+	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
 	default_price = PRICE_REALLY_CHEAP
 	extra_price = PRICE_ALMOST_CHEAP
 	payment_department = NO_FREEBIES
+	// light_mask = "parts-light-mask"
 
 /obj/item/vending_refill/assist
-	icon_state = "refill_engi"
+	machine_name = "Part-Mart"
+	icon_state = "refill_parts"

@@ -1,0 +1,148 @@
+2021-07-02:
+  silicons:
+  - bugfix: spray bottles work again.
+2021-07-03:
+  DeltaFire15:
+  - bugfix: Turrets on nonlethal mode now once again shoot till the target is stamcrit
+      as opposed to unable to use items, resolving some issues.
+  Putnam3145:
+  - bugfix: A bunch of sleeping process() calls now either don't sleep or make sure
+      to call a proc with waitfor set to FALSE
+  WanderingFox95:
+  - bugfix: The axolotl ears in the .dmi file actually exist to the game now.
+2021-07-04:
+  cadyn:
+  - server: Updated server scripts for proper linux support
+2021-07-05:
+  Putnam3145:
+  - bugfix: Watchers no longer search 9 tiles away for stuff then throw the result
+      away if it's more than 1 tile away
+  - server: Auxmos pull now uses a tag instead of pulling straight from the main branch
+  WanderingFox95:
+  - bugfix: Moved a sprite one pixel to the left.
+  zeroisthebiggay:
+  - imageadd: tg based tool resprites
+  - bugfix: wirecutters have proper overlays
+2021-07-07:
+  DeltaFire15:
+  - bugfix: Golem / Plasmaman species color should work again.
+2021-07-09:
+  MrJWhit:
+  - bugfix: Made a light not exist on the same tile as a door on pubby.
+  - bugfix: Makes the RD APC automatically connect to the powernet with the correct
+      wire on pubby.
+  - rscadd: Added another wall for the AM engine so it doesn't space the airlock roundstart.
+2021-07-10:
+  WanderingFox95:
+  - imageadd: Returns the wheelchair sprites to having, you know, wheels?
+  - rscadd: 'A motorized wheelchair addsound: Chairwhoosh.'
+2021-07-11:
+  shellspeed1:
+  - balance: replaces the seed machine with a biogen in the survival pod.
+  - bugfix: corrected an issue regarding wrong pair of gloves in the pod for DYI wiring
+      .
+2021-07-12:
+  Putnam3145:
+  - refactor: causes_dirt_buildup_on_floor is now just a thing humans do instead of
+      a weird var only true for humans
+2021-07-13:
+  MrJWhit:
+  - rscadd: Adds a mirror above the sink in the captains bedroom in pubby
+2021-07-14:
+  Putnam3145:
+  - refactor: Acid is now a component
+2021-07-15:
+  Putnam3145:
+  - bugfix: fixes a major source of lag
+2021-07-17:
+  cadyn:
+  - server: precompile.sh updated
+2021-07-18:
+  timothyteakettle:
+  - bugfix: fixes photosynthesis stopping nutrition going past well fed from non-photosynthesis
+      means
+2021-07-19:
+  Arturlang:
+  - bugfix: The crafting button should no longer silently make more copies of itself
+      on reconects
+  - code_imp: There are no longer two copies of the crafting component.
+  - code_imp: 'There is no longer a rogue d in tracer.dm tweak: Everything in Misc
+      was moved to Miscelanious in the crafting menu, and Misc was nuked from orbit.
+      Nobody will miss you.'
+  MrJWhit:
+  - bugfix: Fixes a memory leak, there's a good chance that it's the same one that
+      killed kilo.
+  SandPoot:
+  - rscadd: Put back mob vore with a pref.
+  - code_imp: Taken some stuff from tg for tgui_alert.
+  - refactor: Refactored a lot of code on vore panel.
+  WanderingFox95:
+  - rscadd: custom plasteel kegs
+  YakumoChen:
+  - rscadd: You can now wear the suffering of others on your head with just a sheet
+      of human skin!
+  - imageadd: Human skin hats
+  keronshb:
+  - rscadd: Stripping/equipping things to a conscious braindead person (AKA a human
+      owned by a disconnected player) will now give them a message with your visible
+      name and roughly how long ago you touched their stuff when they login again.
+      Touching someone's pockets or adjusting their gear other than equipping/unequipping
+      is not logged. After 5 minutes, you'll have forgotten both their name and exactly
+      how long ago past those 5 minutes it happened. (Credit to Ryll-Ryll)
+  - rscadd: LAZYNULL
+  - rscadd: Breaking mirrors now gives you a bad omen
+  timothyteakettle:
+  - bugfix: anthros can now select the cow tail
+  - rscadd: new quirk that allows you to eat trash
+2021-07-23:
+  silicons:
+  - balance: Batons are slightly more powerful.
+2021-07-24:
+  MrJWhit:
+  - rscadd: Replaces the northwest maint room on box with a sadness room
+  - rscadd: Replaces bar stripper room with an arcade on boxstation
+  - rscadd: Squished the west bathrooms a bit and made a room to sell things on boxstation.
+  - balance: Southeast maint hallway on box is now ziggy and zaggier.
+  - bugfix: Fixed pipes being not connected with the recent map PR for boxstation.
+  Putnam3145:
+  - bugfix: hallucination now bottoms out at 0
+  - balance: supermatter now causes only half the hallucinations
+  cadyn:
+  - server: auxmos bump for dependencies.sh
+2021-07-26:
+  SandPoot:
+  - rscdel: Removes a sneaky transform button on the vore panel.
+2021-07-27:
+  Putnam3145:
+  - bugfix: Generic fires work now
+  - balance: A knock-on effect of the HE pipe change is that space cooling is ~8.4x
+      as powerful
+2021-07-29:
+  EmeraldSundisk:
+  - rscadd: Adds decals between Virology and the general Medbay to provide clarity
+  - rscadd: Adds an airlock with access to the Engineering Cooling Loop
+  - rscadd: The Maintenance Theater now has a suitable amount of dust
+  - rscdel: Removed an errant entertainment monitor left in the morgue
+  - rscdel: 'Removed redundant scrubber piping in and around the bar and kitchen tweak:
+      Slightly readjusts an airpipe to take advantage of newfound space tweak: The
+      Toxins Lab has received (predominantly) visual adjustments as to render it more
+      in line with the general science department tweak: Toxins Storage is no longer
+      its own area and as such needn''t worry about APCs'
+  - bugfix: Hydroponics now has a proper APC as intended
+2021-07-31:
+  MrJWhit:
+  - bugfix: Fixes some minor mistakes around space near boxstation.
+  TripleShades:
+  - rscadd: 'Fountain area to public mining station-side tweak: Moved around the tables
+      and chairs and monitor at public mining station-side'
+  WanderingFox95:
+  - rscadd: 'Added new ruin maps: The Bathhouse, The Library, The Engineering outpost,
+      The Hotsprings(un-cursed), Lust, Wrath and an alternate spawn for the BDM in
+      the form of a mining outpost, based on the same Ruins on the Ice Moon. removed:
+      A lot of the fun items within the ice moon-based ruins that would break mining
+      even more and trading cards.'
+  - balance: 'Yes, this includes that the lavaland version of the hot spring is literally
+      just water and not cursed. tweak: Also "fixed" that only one version of the
+      BDM ruin ever spawns. Not sure it needed fixing but even locally hosted, only
+      blooddrunk2.dmm would spawn. Since I added another spawn for the BDM, I fixed
+      that too.'

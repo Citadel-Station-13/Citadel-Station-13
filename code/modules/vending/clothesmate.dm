@@ -1,10 +1,9 @@
-//DON'T FORGET TO CHANGE THE REFILL SIZE IF YOU CHANGE THE MACHINE'S CONTENTS!
 /obj/machinery/vending/clothing
 	name = "ClothesMate" //renamed to make the slogan rhyme
 	desc = "A vending machine for clothing."
 	icon_state = "clothes"
 	icon_deny = "clothes-deny"
-	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this free swag!;Why leave style up to fate? Use the ClothesMate!"
+	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this swag!;Why leave style up to fate? Use the ClothesMate!"
 	vend_reply = "Thank you for using the ClothesMate!"
 	products = list(/obj/item/clothing/head/that = 4,
 					/obj/item/clothing/head/fedora = 3,
@@ -164,7 +163,65 @@
 					/obj/item/clothing/ears/headphones = 10,
 					/obj/item/clothing/suit/apron/purple_bartender = 4,
 					/obj/item/clothing/under/rank/civilian/bartender/purple = 4,
-
+					/obj/item/storage/backpack/henchmen = 20,
+					/obj/item/clothing/under/suit/henchmen = 20,
+					/obj/item/clothing/under/costume/yakuza = 20,
+					/obj/item/clothing/shoes/yakuza = 20,
+					/obj/item/clothing/suit/yakuza = 20,
+					/obj/item/clothing/under/costume/jackbros = 20,
+					/obj/item/clothing/shoes/jackbros = 20,
+					/obj/item/clothing/head/jackbros = 20,
+					/obj/item/clothing/under/costume/dutch = 20,
+					/obj/item/clothing/head/bowler = 20,
+					/obj/item/clothing/suit/dutch = 20,
+					/obj/item/clothing/suit/irs = 20,
+					/obj/item/clothing/under/costume/irs = 20,
+					/obj/item/clothing/head/irs = 20,
+					/obj/item/clothing/suit/osi = 20,
+					/obj/item/clothing/under/costume/osi = 20,
+					/obj/item/clothing/glasses/osi = 20,
+					/obj/item/clothing/suit/tmc = 20,
+					/obj/item/clothing/under/costume/tmc = 20,
+					/obj/item/clothing/head/tmc = 20,
+					/obj/item/clothing/suit/pg = 20,
+					/obj/item/clothing/under/costume/pg = 20,
+					/obj/item/clothing/head/pg = 20,
+					/obj/item/clothing/suit/driscoll = 20,
+					/obj/item/clothing/under/costume/driscoll = 20,
+					/obj/item/clothing/mask/gas/driscoll = 20,
+					/obj/item/clothing/suit/deckers = 20,
+					/obj/item/clothing/under/costume/deckers = 20,
+					/obj/item/clothing/head/deckers = 20,
+					/obj/item/clothing/shoes/deckers = 20,
+					/obj/item/clothing/suit/morningstar = 20,
+					/obj/item/clothing/under/costume/morningstar = 20,
+					/obj/item/clothing/head/morningstar = 20,
+					/obj/item/clothing/shoes/morningstar = 20,
+					/obj/item/clothing/suit/saints = 20,
+					/obj/item/clothing/under/costume/saints = 20,
+					/obj/item/clothing/head/saints = 20,
+					/obj/item/clothing/shoes/saints = 20,
+					/obj/item/clothing/suit/phantom = 20,
+					/obj/item/clothing/under/costume/phantom = 20,
+					/obj/item/clothing/glasses/phantom = 20,
+					/obj/item/clothing/shoes/phantom = 20,
+					/obj/item/clothing/suit/allies = 20,
+					/obj/item/clothing/under/costume/allies = 20,
+					/obj/item/clothing/head/allies = 20,
+					/obj/item/clothing/suit/soviet = 20,
+					/obj/item/clothing/under/costume/soviet_families = 20,
+					/obj/item/clothing/head/ushanka/soviet = 20,
+					/obj/item/clothing/suit/yuri = 20,
+					/obj/item/clothing/under/costume/yuri = 20,
+					/obj/item/clothing/head/yuri = 20,
+					/obj/item/clothing/suit/sybil_slickers = 20,
+					/obj/item/clothing/under/costume/sybil_slickers = 20,
+					/obj/item/clothing/head/sybil_slickers = 20,
+					/obj/item/clothing/shoes/sybil_slickers = 20,
+					/obj/item/clothing/suit/basil_boys = 20,
+					/obj/item/clothing/under/costume/basil_boys = 20,
+					/obj/item/clothing/head/basil_boys = 20,
+					/obj/item/clothing/shoes/basil_boys = 20,
 					/* Commenting out until next Christmas or made automatic
 					/obj/item/clothing/accessory/sweater/uglyxmas = 3,
 					/obj/item/clothing/under/costume/christmas = 3,
@@ -232,9 +289,11 @@
 					/obj/item/clothing/suit/jacket/bluehoodie = 4,
 					/obj/item/clothing/suit/toggle/jacket/whitehoodie = 4)
 	refill_canister = /obj/item/vending_refill/clothing
-	default_price = PRICE_CHEAP
+	default_price = PRICE_CHEAP //Default of
 	extra_price = PRICE_BELOW_NORMAL
 	payment_department = NO_FREEBIES
+	light_mask = "wardrobe-light-mask"
+	light_color = LIGHT_COLOR_ELECTRIC_GREEN
 
 /obj/machinery/vending/clothing/canLoadItem(obj/item/I,mob/user)
 	return (I.type in products)

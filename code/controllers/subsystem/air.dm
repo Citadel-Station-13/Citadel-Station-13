@@ -116,6 +116,11 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/auxtools_update_reactions()
 
+/datum/controller/subsystem/air/proc/add_reaction(datum/gas_reaction/r)
+	gas_reactions += r
+	sortTim(gas_reactions, /proc/cmp_gas_reaction)
+	auxtools_update_reactions()
+
 /proc/reset_all_air()
 	SSair.can_fire = 0
 	message_admins("Air reset begun.")
@@ -405,7 +410,7 @@ SUBSYSTEM_DEF(air)
 		eq_cooldown += (1-delay_threshold) * (cost_equalize / total_thread_time) * 2
 		if(eq_cooldown > 0.5)
 			equalize_enabled = FALSE
-		excited_group_pressure_goal = max(0,excited_group_pressure_goal_target * (1 - delay_threshold))
+		excited_group_pressure_goal = max(0,excited_group_pressure_goal_target * delay_threshold)
 
 
 /datum/controller/subsystem/air/proc/process_turfs(resumed = 0)

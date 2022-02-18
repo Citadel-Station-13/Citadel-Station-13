@@ -13,7 +13,7 @@
 			with suppressors."
 	item = /obj/item/storage/box/syndie_kit/pistol
 	cost = 7
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver Kit"
@@ -22,7 +22,7 @@
 	cost = 13
 	player_minimum = 15
 	surplus = 50
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
+	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/rawketlawnchair
 	name = "84mm Rocket Propelled Grenade Launcher"
@@ -31,7 +31,7 @@
 	item = /obj/item/gun/ballistic/rocketlauncher
 	cost = 8
 	surplus = 30
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/antitank
 	name = "Anti Tank Pistol"
@@ -42,7 +42,7 @@
 	item = /obj/item/gun/ballistic/automatic/pistol/antitank/syndicate
 	cost = 14
 	surplus = 25
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/pie_cannon
 	name = "Banana Cream Pie Cannon"
@@ -50,7 +50,7 @@
 	cost = 10
 	item = /obj/item/pneumatic_cannon/pie/selfcharge
 	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear/clown_ops)
+	purchasable_from = UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/bananashield
 	name = "Bananium Energy Shield"
@@ -60,7 +60,7 @@
 	item = /obj/item/shield/energy/bananium
 	cost = 16
 	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear/clown_ops)
+	purchasable_from = UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/clownsword
 	name = "Bananium Energy Sword"
@@ -69,7 +69,7 @@
 	item = /obj/item/melee/transforming/energy/sword/bananium
 	cost = 3
 	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear/clown_ops)
+	purchasable_from = UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/bioterror
 	name = "Biohazardous Chemical Sprayer"
@@ -79,7 +79,7 @@
 	item = /obj/item/reagent_containers/spray/chemsprayer/bioterror
 	cost = 20
 	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/throwingweapons
 	name = "Box of Throwing Weapons"
@@ -95,7 +95,7 @@
 	item = /obj/item/gun/ballistic/automatic/shotgun/bulldog
 	cost = 8
 	surplus = 40
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/smg
 	name = "C-20r Submachine Gun"
@@ -104,7 +104,7 @@
 	item = /obj/item/gun/ballistic/automatic/c20r
 	cost = 10
 	surplus = 40
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/doublesword
 	name = "Double-Bladed Energy Sword"
@@ -113,7 +113,7 @@
 	item = /obj/item/dualsaber
 	player_minimum = 25
 	cost = 16
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
+	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/doublesword/get_discount()
 	return pick(4;0.8,2;0.65,1;0.5)
@@ -125,7 +125,7 @@
 	item = /obj/item/dualsaber/hypereutactic
 	player_minimum = 25
 	cost = 16
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
+	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/hyperblade/get_discount()
 	return pick(4;0.8,2;0.65,1;0.5)
@@ -136,7 +136,7 @@
 			pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/melee/transforming/energy/sword/saber
 	cost = 8
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
+	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/shield
 	name = "Energy Shield"
@@ -145,7 +145,7 @@
 	item = /obj/item/shield/energy
 	cost = 16
 	surplus = 20
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/rapier
 	name = "Rapier"
@@ -154,7 +154,7 @@
 			However, due to the size of the blade and obvious nature of the sheath, the weapon stands out as being obviously nefarious."
 	item = /obj/item/storage/belt/sabre/rapier
 	cost = 8
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
+	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/flamethrower
 	name = "Flamethrower"
@@ -163,7 +163,7 @@
 	item = /obj/item/flamethrower/full/tank
 	cost = 4
 	surplus = 40
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/flechettegun
 	name = "Flechette Launcher"
@@ -173,7 +173,7 @@
 	item = /obj/item/gun/ballistic/automatic/flechette
 	cost = 12
 	surplus = 30
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/rapid
 	name = "Bands of the North Star"
@@ -182,7 +182,7 @@
 			Combines with all martial arts, but the user will be unable to bring themselves to use guns, nor remove the armbands."
 	item = /obj/item/clothing/gloves/fingerless/pugilist/rapid
 	cost = 30
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/guardian
 	name = "Holoparasites"
@@ -194,7 +194,7 @@
 	refundable = TRUE
 	cant_discount = TRUE
 	surplus = 0
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	player_minimum = 25
 	restricted = TRUE
 	refund_path = /obj/item/guardiancreator/tech/choose/traitor
@@ -208,7 +208,7 @@
 	refundable = TRUE
 	surplus = 50
 	refund_path = /obj/item/guardiancreator/tech/choose/nukie
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
@@ -217,7 +217,7 @@
 	item = /obj/item/gun/ballistic/automatic/l6_saw
 	cost = 18
 	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/carbine
 	name = "M-90gl Carbine"
@@ -226,7 +226,7 @@
 	item = /obj/item/gun/ballistic/automatic/m90
 	cost = 18
 	surplus = 50
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/maulergauntlets
 	name = "Mauler Gauntlets"
@@ -245,7 +245,6 @@
 		 deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
 	item = /obj/item/melee/powerfist
 	cost = 8
-	exclude_modes = list(/datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
@@ -253,14 +252,14 @@
 	item = /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
 	cost = 16
 	surplus = 25
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/bolt_action
 	name = "Surplus Rifle"
 	desc = "A horribly outdated bolt action weapon. You've got to be desperate to use this."
 	item = /obj/item/gun/ballistic/shotgun/boltaction
 	cost = 2
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/foamsmg
 	name = "Toy Submachine Gun"
@@ -268,7 +267,7 @@
 	item = /obj/item/gun/ballistic/automatic/c20r/toy
 	cost = 5
 	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/foammachinegun
 	name = "Toy Machine Gun"
@@ -277,7 +276,7 @@
 	item = /obj/item/gun/ballistic/automatic/l6_saw/toy
 	cost = 10
 	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/foampistol
 	name = "Toy Pistol with Riot Darts"
@@ -293,4 +292,4 @@
 			Allows you to cut from a far distance!"
 	item = /obj/item/gun/magic/staff/motivation
 	cost = 10
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
