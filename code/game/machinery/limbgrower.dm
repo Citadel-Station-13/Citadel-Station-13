@@ -129,7 +129,7 @@
 	if(ispath(user_item.type, /obj/item/reagent_containers/blood) && user.a_intent != INTENT_HARM)
 		var/obj/item/reagent_containers/blood/B = user_item
 		if(!B.reagents.get_reagents())
-			to_chat(user, "<span class=\"alert\">You can't fill [src] with a empty [B.name]!</span>")
+			to_chat(user, "<span class=\"alert\">You can't fill [src] with an empty [B.name]!</span>")
 			return
 		if(reagents.total_volume == reagents.maximum_volume)
 			to_chat(user, "<span class=\"alert\">\The [src] can't hold more blood!</span>")
@@ -199,7 +199,7 @@
 			for(var/reagent_id in consumed_reagents_list)
 				consumed_reagents_list[reagent_id] *= production_coefficient
 				if(!reagents.has_reagent(reagent_id, consumed_reagents_list[reagent_id]))
-					audible_message("<span class='warning'>\The [src] buzzes, with a screen showing: INSUFFICENT REAGENTS</span>")
+					audible_message("<span class='warning'>\The [src] buzzes and states "INSUFFICENT REAGENTS"</span>")
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 					return
 
@@ -336,7 +336,7 @@
 	// Create a mob with a chest, but nothing else
 	if(!ispath(built_typepath, /mob/living/carbon/human/chestonly))
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
-		visible_message(src, "Buzzes, a error screen appearing on it's display.")
+		visible_message(src, "Buzzes, an error screen appearing on its display.")
 		return FALSE
 	// Fields is from cloning, a much fuller scan, genetic_makeup_buffer is less so
 	var/dna_genetics = dna_disk?.genetic_makeup_buffer
