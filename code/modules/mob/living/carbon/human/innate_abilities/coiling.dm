@@ -73,6 +73,9 @@
 
 	// change overlay back to original image
 	H.dna.species.mutant_bodyparts["taur"] = "Naga"
+	H.dna.features["taur"] = "Naga"
+	H.update_mutant_bodyparts()
+
 	H.update_body()
 
 	H.layer += 0.1
