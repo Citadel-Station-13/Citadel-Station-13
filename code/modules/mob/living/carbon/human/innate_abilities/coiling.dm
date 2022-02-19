@@ -47,11 +47,10 @@
 	RegisterSignal(owner, COMSIG_LIVING_STOPPED_PULLING, .proc/cancel_coil)
 
 	// update the coil offset, update again if owner changes direction
-	update_coil_offset()
 	RegisterSignal(owner, COMSIG_ATOM_DIR_CHANGE, .proc/update_coil_offset)
+	update_coil_offset(null, null, owner.dir)
 
 	// set our overlay to new image
-
 	var/mob/living/carbon/human/user = owner
 	user.dna.species.mutant_bodyparts["taur"] = "Naga (coiled)"
 	user.dna.features["taur"] = "Naga (coiled)"
