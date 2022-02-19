@@ -199,7 +199,7 @@
 			for(var/reagent_id in consumed_reagents_list)
 				consumed_reagents_list[reagent_id] *= production_coefficient
 				if(!reagents.has_reagent(reagent_id, consumed_reagents_list[reagent_id]))
-					audible_message("<span class='warning'>\The [src] buzzes and states "INSUFFICENT REAGENTS"</span>")
+					audible_message("<span class='warning'>\The [src] buzzes and states \"INSUFFICENT REAGENTS\"</span>")
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 					return
 
