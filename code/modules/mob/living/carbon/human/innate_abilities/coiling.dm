@@ -17,9 +17,9 @@
 		if(ishuman(owner.pulling) && !currently_coiling)
 			coil_mob(owner.pulling)
 
-/datum/action/innate/ability/coiling/proc/update_coil_offset()
+/datum/action/innate/ability/coiling/proc/update_coil_offset(atom/source, old_dir, new_dir)
 	// update the coiling offset on the coiled user depending on the way the owner is facing
-	switch(owner.dir)
+	switch(new_dir)
 		if(NORTH)
 			currently_coiled.pixel_x = -12
 		if(EAST)
