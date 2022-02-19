@@ -2,8 +2,8 @@
 /datum/action/innate/ability/coiling
 	name = "Coil Grabbed Mob"
 	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "slimepuddle"
-	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	button_icon_state = "coil_icon"
+	icon_icon = 'icons/mob/actions/actions_snake.dmi'
 	background_icon_state = "bg_alien"
 	required_mobility_flags = MOBILITY_STAND
 	var/currently_coiling = FALSE
@@ -21,17 +21,18 @@
 	// update the coiling offset on the coiled user depending on the way the owner is facing
 	switch(owner.dir)
 		if(NORTH)
-			owner.pixel_x = -12
+			currently_coiled.pixel_x = -12
 		if(EAST)
-			owner.pixel_x = -12
+			currently_coiled.pixel_x = -12
 		if(SOUTH)
-			owner.pixel_x = 12
+			currently_coiled.pixel_x = 12
 		if(NORTH)
-			owner.pixel_x = 12
+			currently_coiled.pixel_x = 12
 
 /datum/action/innate/ability/coiling/proc/coil_mob(var/mob/living/carbon/human/H)
 	// begin the coiling action
-	message_admins("[owner] is coiling [H]")
+	H.visible_message("<span class='warning'>[owner] coils [H] with their tail!</span>", \
+						  "<span class='userdanger'>[owner] coils you with their tail!</span>")
 	currently_coiling = TRUE
 	currently_coiled = H
 
@@ -60,7 +61,8 @@
 	var/mob/living/carbon/human/H = owner
 
 	// cancel the coiling action by removing the overlay
-	message_admins("[owner] has stopped coiling [currently_coiled]")
+	currently_coiled.pixel_x = 0
+
 	currently_coiling = FALSE
 	currently_coiled = null
 
