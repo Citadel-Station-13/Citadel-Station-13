@@ -685,7 +685,7 @@ Certain types of changes may require prior approval from maintainers. This curre
 * Code adding, removing, or updating the availability of alien races/species/human mutants. This includes pull requests attempting to add or remove features from said races/species/mutants. (Requires approval from at least one maintainer)
 * Code adding, removing, or modifying the functionality of adult-oriented features (such as, but not limited to: vore, genitals, MKUltra, and more). This also includes pull requests attempting to add or remove these features outright. (Requires approval from at least half of the formal maintainer team)
 
-The above content requires approval from the specified amount of maintainers prior to PR creation. Seeking approval must be done via a @Maintainer ping in a relevant development/code or staff channel on the Discord, otherwise it will be considered insufficient. If a PR contains any of the above content, but the creator does not have sufficient approval prior to the PR's creation, then the PR may be closed by any maintainer, at any time, for any reason.
+If a PR contains any of the above content, and it lacks prior approval, then it may closed at maintainer discretion. Prior approval requires an @Maintainer ping in a relevant development/code or staff channel on the Discord. This is primarily to limit the impact of PRs that're created in bad faith, or are otherwise counterproductive to the server's health.
 
 ## A word on Git
 This repository uses `LF` line endings for all code as specified in the **.gitattributes** and **.editorconfig** files.
