@@ -81,3 +81,6 @@
 2022-02-19:
   timothyteakettle:
   - rscadd: polychromic clown outfit and mask
+2022-02-20:
+  jupyterkat:
+  - refactor: switched equalization method to katmos
