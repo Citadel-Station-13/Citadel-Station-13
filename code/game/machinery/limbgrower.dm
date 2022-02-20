@@ -225,12 +225,12 @@
  * modified_consumed_reagents_list - the list of reagents we will consume on build, modified by the production coefficient.
  */
 /obj/machinery/limbgrower/proc/build_item(list/modified_consumed_reagents_list)
-	HandleReagentUsage(modified_consumed_reagents_list)
+	reagent_usage(modified_consumed_reagents_list)
 	var/built_typepath = being_built.build_path
 	// If we have a bodypart, we need to initialize the limb on its own. Otherwise we can build it here.
 	if(ispath(built_typepath, /mob/living/carbon/human/chestonly))
 		if(!build_mob_chest(built_typepath, FALSE))
-			HandleReagentUsage(modified_consumed_reagents_list, FALSE)
+			reagent_usage(modified_consumed_reagents_list, FALSE)
 	else if(ispath(built_typepath, /obj/item/bodypart))
 		build_limb(built_typepath)
 	else if(ispath(built_typepath, /obj/item/organ/genital)) //genitals are uhh... customizable
@@ -242,16 +242,24 @@
 	flick("limbgrower_unfill", src)
 	icon_state = "limbgrower_idleoff"
 
-/obj/machinery/limbgrower/proc/HandleReagentUsage(modified_consumed_reagents_list, remove = TRUE)
-	for(var/reagent_id in modified_consumed_reagents_list)
-		if(!reagents.has_reagent(reagent_id, modified_consumed_reagents_list[reagent_id]))
-			audible_message("<span class='warning'>\The [src] buzzes, with a screen showing: INSUFFICENT REAGENTS</span>")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
-			break
-		if(remove)
-			reagents.remove_reagent(reagent_id, modified_consumed_reagents_list[reagent_id])
-		else
-			reagents.add_reagent(reagent_id, modified_consumed_reagents_list[reagent_id])
+/obj/machinery/limbgrower/proc/reagent_usage(modified_consumed_reagents_list, remove = TRUE)
+	// Apparently, having a boolean in a loop is worse than doing it twice
+	if(remove)
+		for(var/reagent_id in modified_consumed_reagents_list)
+			if(reagent_sanity_check(reagent_id, modified_consumed_reagents_list[reagent_id]))
+				reagents.remove_reagent(reagent_id, modified_consumed_reagents_list[reagent_id])
+	else
+		for(var/reagent_id in modified_consumed_reagents_list)
+			if(reagent_sanity_check(reagent_id, modified_consumed_reagents_list[reagent_id]))
+				reagents.add_reagent(reagent_id, modified_consumed_reagents_list[reagent_id])
+
+
+/obj/machinery/limbgrower/proc/reagent_sanity_check(reagent_id, amount)
+	if(reagents.has_reagent(reagent_id, amount))
+		return TRUE
+	audible_message("<span class='warning'>\The [src] buzzes, with a screen showing: INSUFFICENT REAGENTS</span>")
+	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+	return FALSE
 
 /*
  * The process of putting together a limb.
