@@ -104,6 +104,7 @@
 #define TRAIT_RESISTCOLD		"resist_cold"
 #define TRAIT_RESISTHIGHPRESSURE	"resist_high_pressure"
 #define TRAIT_RESISTLOWPRESSURE	"resist_low_pressure"
+#define TRAIT_LOWPRESSURECOOLING "low_pressure_cooling"
 #define TRAIT_BOMBIMMUNE		"bomb_immunity"
 #define TRAIT_RADIMMUNE			"rad_immunity"
 #define TRAIT_GENELESS			"geneless"
@@ -201,6 +202,7 @@
 #define TRAIT_FRIENDLY			"friendly"
 #define TRAIT_SNOB				"snob"
 #define TRAIT_MULTILINGUAL		"multilingual"
+#define TRAIT_HEARING_SENSITIVE "hearing_sensitive"
 #define TRAIT_CULT_EYES 		"cult_eyes"
 #define TRAIT_AUTO_CATCH_ITEM	"auto_catch_item"
 #define TRAIT_CLOWN_MENTALITY	"clown_mentality" // The future is now, clownman.

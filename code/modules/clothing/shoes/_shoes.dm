@@ -102,7 +102,7 @@
 	worn_y_dimension = world.icon_size
 
 /obj/item/clothing/shoes/dropped(mob/user)
-	if(our_alert && (our_alert.mob_viewer == user))
+	if(our_alert && (our_alert.owner == user))
 		user.clear_alert("shoealert")
 	if(offset && equipped_before_drop)
 		restore_offsets(user)

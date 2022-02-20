@@ -136,6 +136,10 @@
 
 #define STATUS_EFFECT_INLOVE /datum/status_effect/in_love //Displays you as being in love with someone else, and makes hearts appear around them.
 
+#define STATUS_EFFECT_OFFERING /datum/status_effect/offering // you are offering up an item to people
+
+#define STATUS_EFFECT_HANDSHAKE /datum/status_effect/offering/secret_handshake // you are attempting to perform a secret Family handshake
+
 /////////////
 //  SLIME  //
 /////////////

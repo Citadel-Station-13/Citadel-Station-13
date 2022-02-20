@@ -1,0 +1,465 @@
+2020-07-02:
+  Ghommie:
+  - bugfix: Fixing a few issues with twohanded items.
+  - bugfix: Unum decks now work correctly.
+  - bugfix: Abductor walls are once again buildable with alien alloy.
+  Trilbyspaceclone:
+  - tweak: Makes pride and envy ruin a bit smaller!
+  - rscadd: Pride now has rings, lipstick wigs and silver walls/door making a nice
+      and polished look then cyan blue walls.
+  - rscadd: more trash and better dagger placement on food ruin
+  - rscadd: Snowboim now has snowballs and toy gifts for the two skeles daw!
+  - tweak: Beach boim now has carp light branding beer, as well as soap!
+  - tweak: Greed ruin now uses nice slick walls and carpet!
+  - tweak: Founten ruin looks a lot better with its carpets and well maintained fluff
+      things, but walls suffered and no longer can salvage ruined metal...
+  - rscadd: Alien nest has a bit more glowy floors of resin looking a bit more lived
+      in by the drones. As well as the "door" now being see through resin rather then
+      the thicker stuff that you cant see through
+  - rscadd: Pizza party has a few more gifts, some candy and snap pops yay!
+  - balance: Sloth ruin is about 15~ tiles shorter, has and has more fruit for a bowl.
+      How lazy!
+  silicons:
+  - bugfix: bohbombing is a thing now
+2020-07-03:
+  Arturlang:
+  - rscadd: You can now toggle hardsuit helmets from the strip menu
+  Ghommie:
+  - bugfix: fixed custom speech/tongue stuff.
+  - balance: Lowered shaft miners' paycheck, they have other ways to make cash.
+  - rscadd: You can't (un)equip garments on/from obscured inventory slots anymore.
+  - balance: The stamina cost multiplier for swinging melee weapons against mobs has
+      been brought back to 1 from 0.8
+  - balance: The stamina cost for throwing mobs now scales with their mob size variable.
+  LetterN:
+  - tweak: Ported some tags from tgui-3.0 to Vending.js
+  - bugfix: vending icons
+  - bugfix: r&d icons
+  - bugfix: chem master icons
+  Onule:
+  - tweak: titanium wall man good
+  Sonic121x:
+  - bugfix: Bringback the ChemMaster pill type button.
+  - bugfix: Fix Technode icon.
+  bunny232:
+  - tweak: Witchhunter hat no longer obscures mask ears ,eyes, face and mouth
+  timothyteakettle:
+  - bugfix: bloodpacks initialise correctly now
+2020-07-04:
+  Sonic121x:
+  - rscadd: crushed Soldry sodacan
+  - rscadd: digitigrade version of chief medical officer's turtleneck and captain's
+      female formal outfit.
+  silicons:
+  - refactor: blood_DNA["color"] is now a single variable instead of a list
+2020-07-05:
+  Ghommie:
+  - bugfix: You can now actually gain wiring experience from using cable coils.
+  - bugfix: Opening the View Skill Panel shouldn't trigger messages about insufficient
+      admin privileges anymore.
+  Yakumo Chen, kappa-sama:
+  - rscdel: Removes improvised handguns
+  - rscdel: removed handsaws, improvised gun barrels (you can use atmos pipes again)
+  - balance: Guncrafting is less time and resource intensive
+  - tweak: Item names in guncrafting are user-friendly.
+  kappa-sama:
+  - rscadd: cloth string to replace durathread string
+  - rscdel: durathread string
+  - balance: All bows and arrows have had crafting times significantly reduced, coming
+      out at up to 6 times faster crafting speeds. Improvised bows no longer require
+      durathread; instead, they use cloth materials.
+  silicons:
+  - tweak: active blocking now has a toggle keybind
+  - rscadd: auto bunker override verb has been added
+  - balance: shields take 2.5 stam instead of 3.5 stam per second to maintain block
+  - rscadd: Cybernetic implant shields will auto-extend and be used to block if the
+      user has no item to block with
+  timothyteakettle:
+  - tweak: cooking oil is now far less lethal, requiring a higher volume of the reagent
+      to deal more damage
+2020-07-07:
+  KasparoVy:
+  - tweak: Fixes misaligned south-facing silver legwraps sprite.
+  Owai-Seek:
+  - bugfix: Bee Balm is now visible.
+  Weblure:
+  - bugfix: Fixed the slowdown formula for small character sprites; you guys don't
+      use custom sprite sizes so just ignore these changes.
+  - bugfix: Fixed the "Move it to the threshold" button; it now does what it says.
+  - tweak: Reworded some text to be clearer.
+2020-07-08:
+  DeltaFire15:
+  - bugfix: The kill-once objective now works properly.
+  EmeraldSundisk:
+  - rscadd: CogStation now has an apothecary
+  - rscdel: Removes an outdated note on sleepers
+  - tweak: Readjusts CogStation's chemistry lab
+  - tweak: Slight area designation adjustments for Robotics
+  - bugfix: The arrivals plaque should be readable now
+  Owai-Seek:
+  - rscadd: Margarine, Chili Cheese Fries.
+  - tweak: Egg Wraps are now categorized under egg foods.
+  - bugfix: Tuna Sandwich crafting/sprite is now visible.
+  - imageadd: Icons for chicken, cooked chicken, steak, grilled carp, corndogs
+  - imageadd: Icons for chili cheese fries, margarine, BLT sandwich
+  - imageadd: (Unused) icons for raw meatballs, and lard
+2020-07-09:
+  timothyteakettle:
+  - rscadd: bluespace tray added, allowing twice as many items as the regular tray,
+      printable at the service lathe, researched through science
+  - rscadd: bluespace jar added, a kind of pet carrier that allows human sized mobs
+      inside, and smashes when thrown, researched and printed through science
+2020-07-10:
+  Chiirno:
+  - code_imp: Gave jellypeople a unique brain object /obj/item/organ/brain/jelly
+  - imageadd: added an icon for jellypeople brains.
+  EmeraldSundisk:
+  - rscadd: Adds a pool to PubbyStation
+  - tweak: Slight adjustments to the surrounding area as to fit said pool
+  Sneakyrat6:
+  - bugfix: Fixes hair falling out of hoodies.
+  TheObserver-sys:
+  - bugfix: Actually adds the juice reagent to make laugh peas donuts.
+2020-07-11:
+  Putnam3145:
+  - refactor: Gas mixtures now live entirely in a DLL.
+2020-07-12:
+  DeltaFire15:
+  - balance: Sentinels compromise now heals augmented bodyparts.
+  EmeraldSundisk:
+  - rscadd: Adds turnstiles to CogStation's security wing
+  - rscadd: Readds robotics to the Corpse Disposal Network
+  - rscadd: Readds chemistry's ability to send items directly to the experimentation
+      lab
+  - tweak: Visual renovation and slight adjustments to CogStation's robotics lab
+  - tweak: Slight visual adjustments elsewhere (the library)
+  - bugfix: CogStation's mail and disposal pipes are once again complete
+  - bugfix: CogStation's robotics lab now has spawners, lights, and other room essentials
+  HeroWithYay:
+  - rscadd: Added Telecrystal Dust
+  - tweak: Telecrystals can be sold at cargo
+  LetterN:
+  - rscadd: Added d[thing] emojis
+  - bugfix: bye xss
+  MrJWhit:
+  - rscdel: Removes northern tunnel to the monastery on Pubby
+  Yakumo Chen:
+  - rscadd: Adds a wedding crate to cargo full of wedding attire.
+  kappa-sama:
+  - tweak: wisdom cow is half as common and is wise enough to lag the server 66% less
+  silicons:
+  - config: 'policy configuration added, plus support hooks for assisting enforcement
+      of clone memory disorder. logging: added logging of revival by defib, cloning,
+      strangereagent, and revival surgery'
+  - rscadd: You can now "audibly emote" by having ! at the start of a sentence.
+  timothyteakettle:
+  - rscadd: due to recent biological advancements, you can now make eye contact with
+      people.
+  zeroisthebiggay:
+  - bugfix: a singular stray pixel
+2020-07-13:
+  Linzolle:
+  - bugfix: you can no longer vore and digest people regardless of vore preferences
+  Owai-Seek:
+  - tweak: Trashbags can now hold most shoes, and organs.
+  - balance: You can no longer nest nuke disks or hold brains in the trash.
+2020-07-14:
+  silicons:
+  - rscadd: chemical reactions now are sorted by priority first and temperature second.
+  - rscadd: sec and medical records have been added to character setup.
+  - bugfix: circuit reagent heaters are now sanitized for temperature from 2.7 to
+      1000.
+  timothyteakettle:
+  - bugfix: ports a money bag exploit
+2020-07-15:
+  Sonic121x:
+  - bugfix: Paramedic jumpsuit
+2020-07-16:
+  DeltaFire15:
+  - bugfix: Fixes a zeolite runtime caused by a missing check.
+  Sneakyrat6:
+  - bugfix: Fixes being able to meta people real name with OOC Notes
+  timothyteakettle:
+  - rscadd: travelling traders from another dimension can now visit the station in
+      search of something specific, and reward you for giving it to them
+  - bugfix: small error with pet carrier logic fixed and also making sure simple mobs
+      are catered for properly inside bluespace jars
+  - bugfix: fixes coin related issue
+2020-07-17:
+  ShizCalev, Fikou:
+  - bugfix: Added some sanity checking for varedit values.
+  - bugfix: Fixed an exploit involving coins and mints that could crash the server.
+  - bugfix: Fixed an exploit that would allow you to destroy round-critical / indestructible
+      items with folders.
+  - bugfix: Swarmers can no longer cut power lines by deconstructing catwalks underneath
+      them.
+  - bugfix: Fixed a scenario that allowed infinite resource generation via ore machines.
+  - bugfix: you can no longer inject html in ahelps
+  - admin: you cant either, jannies
+  timothyteakettle:
+  - bugfix: fixes a small pickle related issue
+  - rscadd: recent culinary and scientific advancements have brought forth new pickle
+      related technologies
+2020-07-19:
+  Arturlang:
+  - rscadd: TGUI 3.0 and enables all the UIs, plus the smart asset cache, and all
+      the things required for them
+  EmeraldSundisk:
+  - rscadd: Adds a pool to Delta Station
+  - rscadd: Adds light fixtures to specified areas
+  - tweak: Relocates objects in impacted areas of Delta's starboard maintenance
+  MrJWhit:
+  - rscadd: Adds a small light next to the kitchen counter
+  Putnam3145:
+  - bugfix: Pen uplinks no longer broken
+  TheObserver-sys:
+  - rscadd: 'Adds a new reaction: Slime Extractification. Take 30u Slime Jelly, 5u
+      Frost Oil, and 5u plasma to generate a fresh grey slime extract.'
+  Yakumo Chen:
+  - tweak: Hierophant club now checks for friendly fire by default.
+  b1tt3r1n0:
+  - rscadd: Added the updated circle game
+  silicons:
+  - rscadd: Unarmed parry is now a thing.
+  timothyteakettle:
+  - rscadd: plushies in the loadout have been replaced with a box that lets you choose
+      one instead
+  - bugfix: wrestling should no longer have the ability to permanently rotate people
+  - rscadd: you can now select to wear a snail shell as your backpack in the customization
+      menu
+  zeroisthebiggay:
+  - tweak: martial arts twenty minpop
+  - bugfix: records
+2020-07-20:
+  lolman360:
+  - tweak: Service borgs now have synthesizers instead of a violin and guitar.
+  - bugfix: borg RSF
+2020-07-21:
+  Arturlang:
+  - bugfix: Decal painter ui now works, yay?
+  CameronWoof:
+  - rscadd: Adds aloe, a new growable plant
+  - rscadd: Adds medicated sutures and advanced regenerative meshes
+  - bugfix: Polypyrylium oligomers and liquid electricity now correctly populate
+  Chiirno:
+  - rscadd: Alt-click pill bottles places top-most pill into active hand.
+  - tweak: Moved dice bags from pill_bottle/dice to box/dice to avoid dice bags being
+      affected from medical specific pill bottle changes.
+  DeltaFire15:
+  - bugfix: Swarmers can once again eat items as long as there's nothing living in
+      them.
+  Funce:
+  - bugfix: Genetics spiderwebs are no longer impassable walls
+  Kraseo:
+  - balance: Damp rags no longer instantly apply their chemicals onto someone.
+  SiliconMain:
+  - tweak: Geigers can no longer be contaminated
+  TheSpaghetti:
+  - rscadd: new snowflake trait
+  kappa-sama:
+  - balance: advanced surgery duffel bag no longer comes with a nukie medkit. it costs
+      4 less telecrystals to make up for this colossal nerf.
+  - tweak: quartered the weight of the stray cargo pod event from 2x normal to 1/2
+      normal
+  silicons:
+  - tweak: survivalists (from summon guns/magic) are proper objective'd pseudoantagonists
+      again
+  - tweak: summon guns/magic can only be used once each
+  - tweak: summon guns/magic now only cost one point each
+  - imageadd: ':dsmile: :dfrown: :dhsmile: :dpog: :dneutral:'
+  - bugfix: gravity should update for mobs a fair bit faster
+  - rscadd: voting can now be done from the stat panel if the system is plurality
+      and approval
+  timothyteakettle:
+  - rscadd: new fried component used for frying objects
+  - bugfix: various frying bugs fixed such as being able to unfry items and frying
+      turfs with cold cooking oil
+2020-07-22:
+  Ludox:
+  - rscdel: You can no longer be brainwashed into giving birth to a fake baby
+  kappa-sama:
+  - balance: brainwashing disk has lost its cost buffs (3->5) and is role restricted
+      once more (medical doctor/roboticist)
+2020-07-23:
+  DeltaFire15:
+  - bugfix: Traits are no longer fucked
+  Putnam3145:
+  - tweak: Slight optimization in chat code.
+  kappa-sama:
+  - bugfix: tendril chests being empty
+  zeroisthebiggay:
+  - rscadd: fetish content
+2020-07-24:
+  EmeraldSundisk:
+  - rscadd: Adds a CMO office, along with Virology and Genetics labs to Omega Station
+  - rscadd: Adds a second chemistry station to the chemistry lab
+  - tweak: Adjusts the locations of some objects in medical to accommodate these new
+      additions
+  - tweak: Relocates the morgue
+  - tweak: Relocates items in impacted areas of maintenance as well as the library
+  - bugfix: Fixes an air line Bartholomew somehow knocked out
+  Linzolle:
+  - bugfix: wounds now have a description on examine
+  Owai-Seek:
+  - rscadd: Meatball Sub, Meatloaf + Meatloaf Slices, Bear Chili, Mashed Potatoes
+  - rscadd: Buttered Potatoes, Fancy Cracker Pack, Spiral Soup, Sweet and Sour Chicken
+  - tweak: Organised the Food DMI a bit.
+  - tweak: Deleted some stray pixels on some sprites.
+  - tweak: Nuggie boxes are now centered correctly.
+  - imageadd: Icons for the the food items in this PR.
+  Sneakyrat6:
+  - bugfix: Fixes dressers not giving you undies
+  - bugfix: Fixes Snaxi not loading properly because of typos
+  - rscadd: You can now burn photos
+  Zandario:
+  - spellcheck: Murdered **tipes** and gave birth to **is**.
+  silicons:
+  - tweak: sanitization now doesn't cut off 15.7 or something million possible colors
+      from character preferences (instead of only allowing 16 values for R G and B,
+      it now allows 256 each)
+  - balance: projectiles are by default 17.5 tiles per second instead of 12.5
+  timothyteakettle:
+  - rscadd: due to recent innovative research in the medical field, you now have bones
+  - tweak: zombie claws are now sharp and do less damage, but can destroy non-lifeforms
+      far faster
+  - tweak: zombies now take less stamina damage
+  - rscadd: beepsky can now wear hats
+  zeroisthebiggay:
+  - imageadd: rad and kravglove sprites
+2020-07-25:
+  CameronWoof:
+  - bugfix: Aloe now has an icon.
+  timothyteakettle:
+  - bugfix: beepsky replaces the word THREAT_LEVEL with the actual threat level
+2020-07-26:
+  DeltaFire15:
+  - bugfix: Organs now decay again.
+  Iatots:
+  - tweak: Licking wounds now may cause you to spit out a hairball once in a while!
+  - rscadd: You can now craft a catgirl plushie with 3 of a new ingredient occasionally
+      found in medbay!
+  dapnee:
+  - tweak: removed legacy public mining shuttle area and remade lounge
+2020-07-27:
+  Hatterhat:
+  - rscadd: Training bokkens! Make 'em from wood, use 'em in-hand to toggle between
+      harmful and not-so-harmful, practice your parrying with them!
+  - bugfix: Marker beacons should have a sprite again.
+  silicons:
+  - rscadd: clownops and clown mobs now share the same faction. HONK!
+  timothyteakettle:
+  - bugfix: modern pickle technology now allows people who have been turned into pickles,
+      to be retrieved through the medical course of dying
+2020-07-28:
+  Cacogen:
+  - rscadd: OSHA has more pull than anyone could have expected. All armor provided
+      by Nanotrasen and the syndicate now have tags that accurately lists defenses
+      and resistances of a piece of clothing.
+  CameronWoof:
+  - tweak: Exotic seed crates now contain a spaceman's trumpet seed packet.
+  EmeraldSundisk:
+  - rscadd: Renovates Snow Taxi's northeast bathroom to have multiple non-urinal toilets
+      and showers
+  - rscadd: Adds signage/labeling to improve map readability
+  - rscadd: Adds a bathroom to the northwest station
+  - rscadd: Adds a filing cabinet to the cargo department
+  - tweak: Area designation adjustments to account for the above changes
+  - bugfix: Adds a missing airlock cyclelink near medical
+  Ludox235:
+  - tweak: Makes the flavour text that appears when you become a zombie tell you to
+      act like one.
+  MrJWhit:
+  - tweak: Decluttered toxins and hid the yellow mix line in atmos, for metastation
+  SiliconMain:
+  - tweak: Paramedic heirloom is now a zippo
+  - tweak: Durathread belts now protect their contents from radiation, and can hold
+      full sized extinguishers
+  Sishen1542:
+  - rscdel: removed zoomba
+  dapnee:
+  - tweak: added a fan to the listening outpost
+  - bugfix: added two missing r-walls near the SM, removed random light and wire node
+      below the engine, and fixed the missing cable in the courtroom on Kilo
+  kappa-sama:
+  - balance: Stimpaks cost 5tc once more, up from 3tc.
+  silicons:
+  - rscadd: polychromatic cloaks to loadout
+  - rscdel: no more self healing with medibeam guns
+  - balance: oh no, taser buff. alt fire delay dropped to 0.4 seconds.
+  - rscadd: you can now shoot yourself by disarm-intenting yourself with a gun.
+  timothyteakettle:
+  - tweak: species code is now slightly less messy
+  - bugfix: slight tweak to how material crafting works
+  - bugfix: changed up pet carriers / bluespace jars a bit so you can't fit certain
+      things inside them and also the text shown for resist times is accurate
+  zeroisthebiggay:
+  - rscadd: Black Box theft objective
+2020-07-29:
+  DeltaFire15:
+  - bugfix: The 'Naked' outfit is no longer broken.
+  Ghommie:
+  - bugfix: fixed cremator trays, paleness examination strings, chat message for stamping
+      paper, looping sounds, load away missions/VR admin verb, access requirements
+      for using the sechuds.
+  - tweak: Alt-Clicking a cigarette packet should pull the lighter out first if present,
+      then cigarettes.
+  Hatterhat:
+  - bugfix: Directional windows can now be rotated counterclockwise properly again.
+  NecromancerAnne, Sirich96:
+  - rscadd: Stunbaton sprites by Sirich96.
+  - rscadd: New sprites for the stunsword.
+  necromanceranne:
+  - rscadd: Adds some in-hands for the rapier sheath.
+  timothyteakettle:
+  - bugfix: tail wagging should work in all cases now
+  - bugfix: bluespace jars work as intended now
+  - bugfix: aliens can remove embeds now
+  - bugfix: bloodsuckers are not affected by bloodloss
+  zeroisthebiggay:
+  - rscadd: Flannel jackets and bartender winter coat
+2020-07-30:
+  Adelphon:
+  - rscadd: Created a Cosmetic version of the camo.
+  Arturlang:
+  - code_imp: Bloodsucker LifeTick runs from BiologicalLife now
+  Ryll-Ryll ported by silicons:
+  - rscadd: Shoelaces are now a thing. You can untie them by laying down next to someone.
+  - tweak: shoes now have lace delays and some can't be laced at all
+  - refactor: do after now tracks who's interacting with who, meaning some actions
+      now break when the target moves away.
+  SiliconMain:
+  - rscadd: Ported the long range atmos analyzer from sk*rat, credit to NotRanged
+  silicons:
+  - rscadd: energy sword perfect parries now reflect projectiles back at their shooters.
+  - balance: any mob can now parry if they have the right item
+  - rscadd: beam rifles now go into emitters properly
+  - refactor: clickdelay has been refactored into an experimental hybrid system. Check
+      code/modules/mob/clickdelay.dm for more information.
+  - balance: Resisting no longer checks clickdelay, but is standardized to a 2 second
+      per resist system for most forms of resisting. It still sets clickdelay, though.
+  - rscadd: 'Meters have been added for estimating time until next attack/resist.
+      Won''t be that useful due to our clickdelay currently being very short, though.
+      They''re visible from your hand and resist HUD elements. experimental: Most
+      attacks and forms of attacking (minus unarmed because it''s too much of a pain
+      to refactor how hugs/gloves of the north star works) now check for time-since-last-attack
+      rather than making it so you can''t attack for said time. This means you can
+      very quickly switch to a gun from a melee weapon, whereas in the old system
+      a melee weapon would put you on lockout for 0.8 seconds, in the new system all
+      the gun cares about is that you did not attack for at least 0.4 seconds.'
+  - code_imp: All clickdelay setting/reading are now procs, so it should be trivial
+      to implement another system where drawing/switching to a weapon requires you
+      to have it out for x seconds before using it. I am not personally doing it at
+      this point in time though because it will likely just annoy everyone with no
+      real gain unless we do something like putting a 0.8 second switch-to cooldown
+      for guns (which I did not, yet)
+  - refactor: 'attack_hand has been refactored to on_attack_hand remove: sexchems
+      no longer impact click delay'
+  - rscadd: turrets now automatically stagger their shots. Happy parrying/blocking.
+  - bugfix: turrets now speed_process, they were shooting slower than they should
+      be
+  - balance: anything can now block with the right items
+  timothyteakettle:
+  - bugfix: some crafted crates won't contain items now, and thus have stopped breaking
+      the laws of physics
+  - tweak: beepskys hats now follow the laws of gravity and move up/down when he bobs
+      up and down

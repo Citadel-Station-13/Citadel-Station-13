@@ -669,7 +669,7 @@
 			icon_state = "well_3"
 			return TRUE
 		else
-			to_chat(user, "<span class='warning'>You need at least tweenty-five pieces of sandstone!</span>")
+			to_chat(user, "<span class='warning'>You need at least twenty-five pieces of sandstone!</span>")
 			return
 	if(steps == 3 && S.tool_behaviour == TOOL_SHOVEL)
 		S.use_tool(src, user, 80, volume=100)

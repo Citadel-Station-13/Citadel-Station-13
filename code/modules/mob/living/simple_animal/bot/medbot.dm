@@ -155,87 +155,63 @@
 /mob/living/simple_animal/bot/medbot/attack_paw(mob/user)
 	return attack_hand(user)
 
-/mob/living/simple_animal/bot/medbot/get_controls(mob/user)
-	var/dat
-	dat += hack(user)
-	dat += showpai(user)
-	dat += "<TT><B>Medical Unit Controls v1.1</B></TT><BR><BR>"
-	dat += "Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>"
-	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
-	dat += "Beaker: "
+// Variables sent to TGUI
+/mob/living/simple_animal/bot/medbot/ui_data(mob/user)
+	var/list/data = ..()
 	if(reagent_glass)
-		dat += "<A href='?src=[REF(src)];eject=1'>Loaded \[[reagent_glass.reagents.total_volume]/[reagent_glass.reagents.maximum_volume]\]</a>"
-	else
-		dat += "None Loaded"
-	dat += "<br>Behaviour controls are [locked ? "locked" : "unlocked"]<hr>"
+		data["custom_controls"]["beaker"] = reagent_glass
+		data["custom_contrlos"]["reagents"] = "[reagent_glass.reagents.total_volume]/[reagent_glass.reagents.maximum_volume]"
 	if(!locked || hasSiliconAccessInArea(user) || IsAdminGhost(user))
-		dat += "<TT>Healing Threshold: "
-		dat += "<a href='?src=[REF(src)];adj_threshold=-10'>--</a> "
-		dat += "<a href='?src=[REF(src)];adj_threshold=-5'>-</a> "
-		dat += "[heal_threshold] "
-		dat += "<a href='?src=[REF(src)];adj_threshold=5'>+</a> "
-		dat += "<a href='?src=[REF(src)];adj_threshold=10'>++</a>"
-		dat += "</TT><br>"
+		data["custom_controls"]["injection_amount"] = injection_amount
+		data["custom_controls"]["use_beaker"] = use_beaker
+		data["custom_controls"]["treat_virus"] = treat_virus
+		data["custom_controls"]["heal_threshold"] = heal_threshold
+		data["custom_controls"]["speaker"] = !shut_up
+		data["custom_controls"]["crit_alerts"] = declare_crit
+		data["custom_controls"]["stationary_mode"] = stationary_mode
+	return data
 
-		dat += "<TT>Injection Level: "
-		dat += "<a href='?src=[REF(src)];adj_inject=-5'>-</a> "
-		dat += "[injection_amount] "
-		dat += "<a href='?src=[REF(src)];adj_inject=5'>+</a> "
-		dat += "</TT><br>"
+// Actions received from TGUI
+/mob/living/simple_animal/bot/medbot/ui_act(action, params)
+	. = ..()
+	if(. || !hasSiliconAccessInArea(usr) && !IsAdminGhost(usr) && !(bot_core.allowed(usr) || !locked))
+		return TRUE
+	switch(action)
+		if("heal_threshold")
+			var/adjust_num = round(text2num(params["threshold"]))
+			heal_threshold = adjust_num
+			if(heal_threshold < 5)
+				heal_threshold = 5
+			if(heal_threshold > 75)
+				heal_threshold = 75
 
-		dat += "Reagent Source: "
-		dat += "<a href='?src=[REF(src)];use_beaker=1'>[use_beaker ? "Loaded Beaker (When available)" : "Internal Synthesizer"]</a><br>"
+		if("injection_amount")
+			var/adjust_num = round(text2num(params["amount"]))
+			injection_amount = adjust_num
+			if(injection_amount < 1)
+				injection_amount = 1
+			if(injection_amount > 15)
+				injection_amount = 15
 
-		dat += "Treat Viral Infections: <a href='?src=[REF(src)];virus=1'>[treat_virus ? "Yes" : "No"]</a><br>"
-		dat += "The speaker switch is [shut_up ? "off" : "on"]. <a href='?src=[REF(src)];togglevoice=[1]'>Toggle</a><br>"
-		dat += "Critical Patient Alerts: <a href='?src=[REF(src)];critalerts=1'>[declare_crit ? "Yes" : "No"]</a><br>"
-		dat += "Patrol Station: <a href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</a><br>"
-		dat += "Stationary Mode: <a href='?src=[REF(src)];stationary=1'>[stationary_mode ? "Yes" : "No"]</a><br>"
+		if("use_beaker")
+			use_beaker = !use_beaker
 
-	return dat
+		if("eject")
+			if(!isnull(reagent_glass))
+				reagent_glass.forceMove(drop_location())
+				reagent_glass = null
 
-/mob/living/simple_animal/bot/medbot/Topic(href, href_list)
-	if(..())
-		return 1
+		if("speaker")
+			shut_up = !shut_up
+		if("crit_alerts")
+			declare_crit = !declare_crit
+		if("stationary_mode")
+			stationary_mode = !stationary_mode
+			path = list()
+			update_appearance()
 
-	if(href_list["adj_threshold"])
-		var/adjust_num = text2num(href_list["adj_threshold"])
-		heal_threshold += adjust_num
-		if(heal_threshold < 5)
-			heal_threshold = 5
-		if(heal_threshold > 75)
-			heal_threshold = 75
-
-	else if(href_list["adj_inject"])
-		var/adjust_num = text2num(href_list["adj_inject"])
-		injection_amount += adjust_num
-		if(injection_amount < 5)
-			injection_amount = 5
-		if(injection_amount > 15)
-			injection_amount = 15
-
-	else if(href_list["use_beaker"])
-		use_beaker = !use_beaker
-
-	else if(href_list["eject"] && (!isnull(reagent_glass)))
-		reagent_glass.forceMove(drop_location())
-		reagent_glass = null
-
-	else if(href_list["togglevoice"])
-		shut_up = !shut_up
-
-	else if(href_list["critalerts"])
-		declare_crit = !declare_crit
-
-	else if(href_list["stationary"])
-		stationary_mode = !stationary_mode
-		path = list()
-		update_icon()
-
-	else if(href_list["virus"])
-		treat_virus = !treat_virus
-
-	update_controls()
+		if("virus")
+			treat_virus = !treat_virus
 	return
 
 /mob/living/simple_animal/bot/medbot/attackby(obj/item/W as obj, mob/user as mob, params)
@@ -251,7 +227,6 @@
 
 		reagent_glass = W
 		to_chat(user, "<span class='notice'>You insert [W].</span>")
-		show_controls(user)
 
 	else if(istype(W, /obj/item/reagent_containers/syringe/piercing))
 		if(bot_core.allowed(user) && open && !(upgrades & UPGRADE_MEDICAL_PIERERCING))

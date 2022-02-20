@@ -11,7 +11,8 @@
 6. [Pull Request Process](#pull-request-process)
 7. [Porting features/sprites/sounds/tools from other codebases](#porting-featuresspritessoundstools-from-other-codebases)
 8. [Banned content](#banned-content)
-9. [A word on Git](#a-word-on-git)
+9. [Content requiring prior approval](#content-requiring-prior-approval)
+10. [A word on Git](#a-word-on-git)
 
 ## Reporting Issues
 If you ever encounter a bug in-game, the best way to let a coder know about it is with our GitHub Issue Tracker. Please make sure you use the supplied issue template, and include the round ID for the server.
@@ -677,6 +678,14 @@ Do not add any of the following in a Pull Request or risk getting the PR closed:
 * Code which violates GitHub's [terms of service](https://github.com/site/terms).
 
 Just because something isn't on this list doesn't mean that it's acceptable. Use common sense above all else.
+
+## Content requiring prior approval
+Certain types of changes may require prior approval from maintainers. This currently includes:
+
+* Code adding, removing, or updating the availability of alien races/species/human mutants. This includes pull requests attempting to add or remove features from said races/species/mutants. (Requires approval from at least one maintainer)
+* Code adding, removing, or modifying the functionality of adult-oriented features (such as, but not limited to: vore, genitals, MKUltra, and more). This also includes pull requests attempting to add or remove these features outright. (Requires approval from at least half of the formal maintainer team)
+
+If a PR contains any of the above content, and it lacks prior approval, then it may closed at maintainer discretion. Prior approval requires an @Maintainer ping in a relevant development/code or staff channel on the Discord. This is primarily to limit the impact of PRs that're created in bad faith, or are otherwise counterproductive to the server's health.
 
 ## A word on Git
 This repository uses `LF` line endings for all code as specified in the **.gitattributes** and **.editorconfig** files.

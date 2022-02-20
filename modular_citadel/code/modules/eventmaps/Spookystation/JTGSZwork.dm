@@ -630,19 +630,19 @@ GLOBAL_LIST_EMPTY(rain_sounds)
 		playchime = 1
 
 	switch(hour)
-		if(1 || 2)
+		if(1, 2)
 			HRimgstate = "asshouroverlay-2" //Now it is ass, mostly because someones going to kill me for the other names.
 		if(3)
 			HRimgstate = "asshouroverlay-3"
-		if(4 || 5)
+		if(4, 5)
 			HRimgstate = "asshouroverlay-4"
 		if(6)
 			HRimgstate = "asshouroverlay-6"
-		if(7 || 8)
+		if(7, 8)
 			HRimgstate = "asshouroverlay-7"
 		if(9)
 			HRimgstate = "asshouroverlay-9"
-		if(10 || 11)
+		if(10, 11)
 			HRimgstate = "asshouroverlay-10"
 		else
 			HRimgstate = "asshouroverlay-0" //Station time wraps to 0, and so does our hours.
