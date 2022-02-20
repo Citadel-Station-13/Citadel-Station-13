@@ -26,7 +26,7 @@
 			currently_coiled.pixel_x = -12
 		if(SOUTH)
 			currently_coiled.pixel_x = 12
-		if(NORTH)
+		if(WEST)
 			currently_coiled.pixel_x = 12
 
 /datum/action/innate/ability/coiling/proc/coil_mob(var/mob/living/carbon/human/H)

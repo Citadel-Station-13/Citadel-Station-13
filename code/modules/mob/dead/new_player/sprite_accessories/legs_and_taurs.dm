@@ -129,7 +129,7 @@
 /datum/sprite_accessory/taur/naga/coiled
 	name = "Naga (coiled)"
 	icon_state = "naga_coiled"
-	locked = TRUE
+	ignore = TRUE
 
 /datum/sprite_accessory/taur/otie
 	name = "Otie"
