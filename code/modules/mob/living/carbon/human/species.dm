@@ -883,10 +883,21 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	var/tauric = mutant_bodyparts["taur"] && H.dna.features["taur"] && H.dna.features["taur"] != "None"
 
-	if(!tauric || (H.dna.features["taur"] != "Naga" && H.dna.features["taur"] != "Naga (coiled)"))
-		for(var/datum/action/A in H.actions)
-			if(A.type == /datum/action/innate/ability/coiling)
-				A.Remove(H)
+	// stuff for adding/removing the coiling ability if you have a taur part
+	// if another action is ever based on mutant parts we should probably make a system for it so it's all done in one proc with less overhead
+	var/datum/action/found_action
+
+	for(var/datum/action/A in H.actions)
+		if(A.type == /datum/action/innate/ability/coiling)
+			found_action = A
+
+	if(found_action && (!tauric || (H.dna.features["taur"] != "Naga" && H.dna.features["taur"] != "Naga (coiled)")))
+		found_action.Remove(H)
+
+	if(!found_action && tauric && H.dna.features["taur"] == "Naga")
+		found_action = new /datum/action/innate/ability/coiling()
+		found_action.Grant(H)
+
 
 	for(var/mutant_part in mutant_bodyparts)
 		var/reference_list = GLOB.mutant_reference_list[mutant_part]

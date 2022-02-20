@@ -3067,10 +3067,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	character.dna.features = features.Copy()
 
-	if(features["taur"] && features["taur"] == "Naga")
-		var/datum/action/A = new /datum/action/innate/ability/coiling()
-		A.Grant(character)
-
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
 	character.dna.species.eye_type = eye_type
 	if(chosen_limb_id && (chosen_limb_id in character.dna.species.allowed_limb_ids))
