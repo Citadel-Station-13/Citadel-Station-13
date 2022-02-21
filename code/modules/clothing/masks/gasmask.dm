@@ -119,6 +119,23 @@
 		to_chat(user, "<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>")
 		return TRUE
 
+/obj/item/clothing/mask/gas/clown_hat_polychromic
+	name = "polychromic clown wig and mask"
+	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
+	clothing_flags = ALLOWINTERNALS
+	icon_state = "clown"
+	item_state = "clown_hat"
+	dye_color = "clown"
+	w_class = WEIGHT_CLASS_SMALL
+	flags_cover = MASKCOVERSEYES
+	resistance_flags = FLAMMABLE
+	dog_fashion = /datum/dog_fashion/head/clown
+	var/list/poly_colors = list("#FF8000", "#FFFFFF", "#FF0000", "#0000FF", "#FFFF00")
+
+/obj/item/clothing/mask/gas/clown_hat_polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, poly_colors, 5, names = list("Hair", "Frame", "Mouth", "Eyes", "Markings"))
+
 /obj/item/clothing/mask/gas/clown_hat/sexy
 	name = "sexy-clown wig and mask"
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."

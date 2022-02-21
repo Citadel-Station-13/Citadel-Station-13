@@ -2703,7 +2703,6 @@
 #include "code\modules\mob\living\carbon\human\innate_abilities\limb_regeneration.dm"
 #include "code\modules\mob\living\carbon\human\species_types\abductor.dm"
 #include "code\modules\mob\living\carbon\human\species_types\android.dm"
-#include "code\modules\mob\living\carbon\human\species_types\angel.dm"
 #include "code\modules\mob\living\carbon\human\species_types\anthropomorph.dm"
 #include "code\modules\mob\living\carbon\human\species_types\arachnid.dm"
 #include "code\modules\mob\living\carbon\human\species_types\bugmen.dm"

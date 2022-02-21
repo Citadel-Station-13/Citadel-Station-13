@@ -224,6 +224,7 @@
 				else
 					to_chat(owner, "<span class='userdanger'>You feel your heart lurching in your chest...</span>")
 					owner.adjustOxyLoss(8)
+		else
 
 /datum/brain_trauma/severe/discoordination
 	name = "Discoordination"

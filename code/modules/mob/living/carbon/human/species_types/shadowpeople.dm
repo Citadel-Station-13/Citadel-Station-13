@@ -16,6 +16,7 @@
 	mutanteyes = /obj/item/organ/eyes/night_vision
 
 	species_category = SPECIES_CATEGORY_SHADOW
+	wings_icons = SPECIES_WINGS_SKELETAL //not sure what's more spooky for these guys - skeleton or dragon?
 
 /datum/species/shadow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

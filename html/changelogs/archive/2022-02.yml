@@ -74,3 +74,13 @@
   - refactor: Refactors give/take > offer/receive
   - config: Added Families to the dynamic config
   - admin: Adds admin tp Family stuff
+2022-02-17:
+  '[Timberpoes](https://github.com/Timberpoes)':
+  - admin: Re-added the button to the player playtime panel that lets admins toggle
+      a player's job playtime exemption status.
+2022-02-19:
+  timothyteakettle:
+  - rscadd: polychromic clown outfit and mask
+2022-02-20:
+  jupyterkat:
+  - refactor: switched equalization method to katmos

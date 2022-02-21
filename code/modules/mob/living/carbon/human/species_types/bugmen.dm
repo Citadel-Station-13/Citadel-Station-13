@@ -19,6 +19,7 @@
 	tail_type = "mam_tail"
 	wagging_type = "mam_waggingtail"
 	species_category = SPECIES_CATEGORY_INSECT
+	wings_icons = SPECIES_WINGS_INSECT
 
 	allowed_limb_ids = list("insect","apid","moth","moth_not_greyscale")
 
