@@ -366,7 +366,10 @@
 	item_state = "ran_suit"
 	body_parts_covered = CHEST|GROIN|LEGS
 	flags_inv = HIDEJUMPSUIT|HIDETAUR
-	heat_protection = CHEST|GROIN|LEGS //fluffy tails!
+	cold_protection = CHEST|GROIN|LEGS //fluffy tails!
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT //Bleh, same as winter coat
+	heat_protection = CHEST|GROIN|LEGS
+	max_heat_protection_temperature = COAT_MAX_TEMP_PROTECT
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/head/ran
