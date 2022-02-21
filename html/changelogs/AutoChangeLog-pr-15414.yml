@@ -1,0 +1,5 @@
+author: "BlueWildrose and tralezab, Wjohnston, Mey Ha Zah, ArcaneDefense, Jack7D1, Papaporo, Sheits & Mqiib from TG and Yog"
+delete-after: True
+changes: 
+  - rscadd: "TG wing port - All species can now use flight potions and grow wings. Your wing sprite will be based off of what wings you have on your character, or otherwise what species you are if you have no wings."
+  - bugfix: "Jellypeople did not call the species parent proc on spec_life. Fixed."
