@@ -6155,6 +6155,9 @@
 /turf/closed/wall/r_wall,
 /area/command/heads_quarters/cmo)
 "ajH" = (
+/obj/machinery/door/window/eastleft{
+	req_access_txt = "48;50"
+	},
 /obj/structure/plasticflaps/opaque,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
