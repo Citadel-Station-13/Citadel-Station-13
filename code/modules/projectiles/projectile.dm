@@ -31,7 +31,6 @@
 	var/xo = null
 	var/atom/original = null // the original target clicked
 	var/turf/starting = null // the projectile's starting turf
-	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
 	var/p_x = 16
 	var/p_y = 16			// the pixel location of the tile that the player clicked. Default is the center
 
