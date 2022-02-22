@@ -16,7 +16,7 @@
 		if(cell.use(amount * GLOB.CELLRATE))
 			return TRUE
 		else // Discharge the cell anyway.
-			cell.use(min(amount*GLOB.CELLRATE, cell.charge))
+			cell.use(min(amount * GLOB.CELLRATE, cell.charge))
 			return FALSE
 	return FALSE
 

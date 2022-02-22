@@ -1,0 +1,267 @@
+2021-02-02:
+  silicons:
+  - rscadd: pais can now be carried around piggybacking/fireman
+  - balance: Meth and Nuka Cola once again, speed you up.
+2021-02-03:
+  Hatterhat:
+  - bugfix: The green energy sabre's sprite now respects proper handedness.
+2021-02-05:
+  SmArtKar:
+  - rscadd: The orbit menu now has an Auto-Observe button! No more sifting through
+      the lame observe menu to snoop in people's backpacks! Also, orbit menu now refreshes.
+  - bugfix: KAs are no longer getting broken when fired by a circuit
+  keronshb:
+  - balance: Force and damage > 15 from 18/25
+  - balance: Knockdown put down to 5 from 30
+  - balance: Armor pen down to 10 from 100.
+  - balance: Makes cell chargers, charge faster.
+  raspy-on-osu:
+  - bugfix: alien royals can no longer ventcrawl
+  shellspeed1:
+  - balance: There actually needs to be people for zombies to happen now.
+  timothyteakettle:
+  - rscadd: dwarf facial hair is no longer randomised
+2021-02-07:
+  Thalpy:
+  - refactor: 'Dispenser: Adds the ability to store a small amount of reagents in
+      the machine itself for dispensing. Reacting recipies cannot be stored. Size
+      of storage increases with bin size.'
+  - refactor: 'Dispenser: Allows reagents to be color coded by pH'
+  - refactor: 'Dispenser: Each reagent displays it''s pH on hover'
+  - refactor: 'Dispenser: Allows the user to toggle between buttons and a radial dial'
+  - refactor: 'Dispenser: When the dispencer is upgraded it can dispense 5/3/2/1 volumes
+      based on rating refactor: Dispenser: as it was before. This does not break recorded
+      recipes.'
+  - tweak: Adds a round function to some numbers so they're not huge
+  - tweak: The Chem master can now get purity for all reagents when analysed
+  - bugfix: Synthissue fixes
+  - tweak: buffers now have a strong and weak variant. Weak can be dispensed, and
+      strong can be created. Strong buffers are 6x more effective.
+  - bugfix: Some buffer pH edge calculation fixes
+  TyrianTyrell:
+  - rscadd: added a signed language, that can't be used over the radio but can be
+      used if you're mute. also added the multilingual trait.
+  - imageadd: hopefully added an icon for the signed language.
+  - code_imp: changed how some traits function slightly.
+  dzahlus:
+  - tweak: tweaked a few sounds
+  - soundadd: added a new weapon sounds
+  - sounddel: removed old weapon sounds
+  - code_imp: changed some sound related code
+  silicons:
+  - rscadd: syndicate ablative armwraps have been added.
+2021-02-09:
+  Chiirno:
+  - rscadd: Adds clown waddle to clown shoes. Enhanced Clown Waddle Dampeners can
+      be engaged in-hand with ctrl+click, _but why would you?_
+  MrJWhit:
+  - rscadd: Re-adds theater disposal outlet, and makes dorms disposal able to have
+      things sent to it on boxstation.
+  TyrianTyrell:
+  - bugfix: made default tongue able to speak signed language.
+  timothyteakettle:
+  - balance: sentient viruses can now infect synths and ipcs
+2021-02-11:
+  Adelphon:
+  - rscadd: Charismatic Suit
+  - rscadd: Urban Jacket
+  DeltaFire15:
+  - tweak: Added nanogel to the robodrobe.
+  Putnam3145:
+  - rscadd: Config to keep unreadied players from mode voting
+  dzahlus:
+  - bugfix: fixes grenadelaunch.ogg being used where it shouldn't and makes mech weapons
+      use correct sound
+  keronshb:
+  - balance: 10 > 30 second for Warp Implant cooldown
+  - rscdel: Comments out power sink objective.
+  timothyteakettle:
+  - bugfix: persistent blood should stop being invisible and alt clicking it shouldn't
+      return the entire spritesheet
+  - admin: pickpocketing is now logged using log_combat
+  zeroisthebiggay:
+  - tweak: the aesthetic sterile mask no longer hides faces so you can cosplay egirls
+      and keep flavortexts
+2021-02-12:
+  Hatterhat:
+  - balance: The ATVs on SnowCabin.dmm have been replaced with snowmobiles.
+  MrJWhit:
+  - tweak: Random deltastation fixes.
+  - tweak: Gives boxstation vault door actual vault door access
+  silicons:
+  - balance: Voice of God - sleep removed, stun staggers instead, knockdown is faster
+      but does not do stamina damage, vomit is faster but doesn't stun
+2021-02-13:
+  Hatterhat:
+  - balance: Energy bolas now take 2.5 seconds to remove and dissipate on removal.
+  timothyteakettle:
+  - admin: migration error to version 39+ of savefiles is now logged instead of messaging
+      all online admins in the chat
+2021-02-14:
+  DeltaFire15:
+  - admin: The antag panel now correctly shows the names of cultist / clockcult datum
+      subtypes.
+  - bugfix: Adding clock cultists via the admin panel now works correctly.
+  - bugfix: Xeno larvae should now be able to ventcrawl again.
+  Hatterhat:
+  - tweak: Repairing sensors on jumpsuits now requires a fully-intact jumpsuit. Find
+      some cloth.
+  - tweak: Durathread armor kits now require you to have a fully-repaired jumpsuit,
+      first, with no attachments.
+  - bugfix: Durathread armor kits now no longer weave the entirety of the jumpsuit
+      armor universe into having armor.
+  TyrianTyrell:
+  - code_imp: added a define for multilingual granted languages, and changed the multilingual
+      trait to use it.
+2021-02-15:
+  Adelphon:
+  - rscadd: polychromatic shoes
+  - rscadd: polychromatic windbreaker
+  - rscadd: polychromatic canvas cloak
+  - bugfix: digitigrade charismatic suit texture
+  DeltaFire15:
+  - balance: Kneecapped pugilist parries somewhat.
+  - balance: Slightly nerfed default unarmed parries.
+  - balance: Slightly nerfed traitor armwrap parries.
+  - bugfix: Pugilist parries now cannot perfectly defend against projectiles, as they
+      were supposed to.
+  - bugfix: Some parrying numbers that one would think were in seconds didn't have
+      the SECONDS. I added those.
+  - balance: Clock cultists now yell alot less when invoking scripture.
+  dzahlus:
+  - rscadd: Added new emote
+  - soundadd: added a new emote sound
+  silicons:
+  - balance: people on the ground hit less hard in unarmed combat. rng miss remove
+      from punches.
+  - bugfix: chat highlighting no longer drops half your entered words.
+2021-02-16:
+  silicons:
+  - config: sprint removal entry added, UI will revert to old UI while this is active.
+2021-02-18:
+  BlueWildrose:
+  - admin: Admins now receive messages regarding certain holodeck actions.
+  Hatterhat:
+  - bugfix: Free Golem Ship GPSes now start as disabled. Like they were supposed to.
+  LetterN:
+  - tweak: No more liver damage when you opt out of "hornychems"
+  SmArtKar:
+  - rscadd: Added a new TCG card game
+  dzahlus:
+  - rscdel: Removed maroon objective due to toxic gameplay behaviour
+  shellspeed1:
+  - bugfix: floor bots place plating before tiles now.
+  - bugfix: gets rid of another tile duplication issue.
+  silicons:
+  - spellcheck: priviledge --> privilege
+2021-02-19:
+  Putnam3145:
+  - bugfix: Buzz Fuzz's addiction threshold is now a can and a sip as intended.
+  timothyteakettle:
+  - admin: staring into pierced realities is now logged
+2021-02-20:
+  Adelphon:
+  - rscadd: polychromic pants
+  - tweak: urban coat made polychromic
+  Chiirno:
+  - tweak: Synthflesh now unhusks with 100u instead of requiring 101u.
+  SmArtKar:
+  - tweak: Added some QoL changes to TCG
+  - bugfix: Fixed TCG cards not saving
+  TyrianTyrell:
+  - bugfix: fixed the signed language so that you can actually use it, and that it's
+      unusable when it's meant to be.
+  timothyteakettle:
+  - bugfix: stops people using Message All on PDAs when their cartridge doesn't allow
+      it
+2021-02-21:
+  Hatterhat:
+  - balance: Anomaly announcements and brand intelligence now always announce instead
+      of having some ham-fisted chance of being a command report.
+  IronEleven:
+  - balance: Raises Space Vine Population Requirement from 10 to 20
+  MrJWhit:
+  - tweak: Removes an unnecessary % on the seed extractor.
+  timothyteakettle:
+  - bugfix: the query for checking mentors now gets properly deleted
+  - rscadd: vampires no longer burn in the chapel if they signed up as the chaplain
+2021-02-22:
+  Putnam3145:
+  - rscadd: (Hexa)crocin
+  - rscadd: (Hexa)camphor
+  - rscadd: Nymphomaniac quirk
+  - admin: All climaxes and arousals are now logged, as well as genital exposure.
+  SandPoot:
+  - rscadd: Cyborg tablets and it's special app for self-management.
+  - bugfix: In the case of a doomsday device being created outside of an AI it will
+      delete itself.
+  - imageadd: Some sprites for it have been added and the borg's hud light toggles
+      been changed to only on-off (made by yours truly)
+  - refactor: A lot of borg code was changed
+  - refactor: Tools no longer use istype checks and actually check for their behavior.
+  Vynzill:
+  - rscadd: cursed rice hat that's hard to find and obtain, along with a couple other
+      hats
+  - rscadd: a replacement toy gun for donksoft lmg
+  - rscadd: gorillas to the jungle gateway, friendly, even when attacked.
+  - bugfix: couple mapping errors I noticed, most importantly a missing window in
+      the chapel.
+  - balance: shotgun and donksoft lmg removed, captain coat nerfed armor values.
+  - balance: leaper healthpool from 450 to 550 hopefully making it more of a struggle,
+      and gives it a name.
+  - tweak: leaper pit is more wider. The hidden room south is now more obvious to
+      find
+  dzahlus:
+  - rscadd: Added pain emote to getting wounded
+  - soundadd: added a new pain emote sounds
+2021-02-23:
+  keronshb:
+  - rscadd: Hyperblade to uplink with poplock
+  - balance: Removes combination of two Dragon Tooth Swords while keeping it for regular
+      eutactics.
+  timothyteakettle:
+  - bugfix: banning panel prioritises mobs with clients now when trying to find them
+      if they're in the game
+2021-02-24:
+  SandPoot:
+  - bugfix: Regular crowbars no longer open powered airlocks.
+  silicons:
+  - balance: xeno cube makes hostile xenos now, and drops a sentinel instead of a
+      drone.
+2021-02-25:
+  DeltaFire15:
+  - bugfix: Traitor / Ling objective amount should now be correct again.
+2021-02-26:
+  DeltaFire15:
+  - code_imp: All machine-frame based tool-use actions now have state-checking callbacks.
+2021-02-27:
+  Hatterhat:
+  - balance: Lingfists (trait_mauler) now deal no stam damage and lost their 15(!!!)
+      armor penetration.
+  Putnam3145:
+  - tweak: Tablets now protect their contents from rads.
+  TheObserver-sys:
+  - rscadd: Chems that should have been usable are now usable, try some cryoxadone
+      on a plant today!!!
+  kappa-sama:
+  - tweak: cards and card binders are now small-class items
+  keronshb:
+  - balance: 16 > 10 unlock cost for stronger abilities
+  - balance: Made nearly all other abilities for free.
+  kiwedespars:
+  - balance: reverted the pr that absolutely gutted pugilism and made it worse than
+      base unarmed, also gives it a second long stagger
+  - balance: removed the ability to parry while horizontal, because that's dumb and
+      makes it easy to just time the parries right.
+  silicons:
+  - bugfix: chaplain arrythmic knives can no longer be abused for infinite speed.
+2021-02-28:
+  Putnam3145:
+  - bugfix: Polychromic windbreaker's alt-click message is now coherent
+  - code_imp: Toggleable suits now have an on_toggle proc to be overridden.
+  R3dtail:
+  - tweak: doubled max belly name length and quadrupled belly description length
+  SandPoot:
+  - tweak: Body rejuvenation surgery will loop until the patient is completely healed.
+  dzahlus:
+  - bugfix: fixes toxinlovers dying from heretic stuff that should heal them instead

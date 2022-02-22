@@ -3,7 +3,7 @@
 
 /datum/reagent/fermi
 	name = "Fermi" //This should never exist, but it does so that it can exist in the case of errors..
-	taste_description	= "affection and love!"
+	taste_description	= "the default fermi taste"
 	can_synth = FALSE
 	value = 20
 	impure_chem 			= /datum/reagent/impure/fermiTox // What chemical is metabolised with an inpure reaction
@@ -34,7 +34,7 @@
 	name = "Hat growth serium"
 	description = "A strange substance that draws in a hat from the hat dimention."
 	color = "#7c311a" // rgb: , 0, 255
-	taste_description = "like jerky, whiskey and an off aftertaste of a crypt."
+	taste_description = "like jerky, whiskey and an off aftertaste of a crypt"
 	metabolization_rate = 0.2
 	overdose_threshold = 25
 	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_ALL_PROCESS
@@ -201,7 +201,7 @@
 	impure_chem 			= /datum/reagent/fermi/nanite_b_goneTox //If you make an inpure chem, it stalls growth
 	inverse_chem_val 		= 0.25
 	inverse_chem		= /datum/reagent/fermi/nanite_b_goneTox //At really impure vols, it just becomes 100% inverse
-	taste_description = "what can only be described as licking a battery."
+	taste_description = "what can only be described as licking a battery"
 	pH = 9
 	value = 90
 	can_synth = FALSE
@@ -240,6 +240,7 @@
 /datum/reagent/fermi/nanite_b_goneTox
 	name = "Electromagnetic crystals"
 	description = "Causes items upon the patient to sometimes short out, as well as causing a shock in the patient, if the residual charge between the crystals builds up to sufficient quantities"
+	taste_description = "shocking pain"
 	metabolization_rate = 0.5
 	chemical_flags = REAGENT_INVISIBLE | REAGENT_ALL_PROCESS
 
@@ -262,7 +263,7 @@
 /datum/reagent/fermi/fermiAcid
 	name = "Acid vapour"
 	description = "Someone didn't do like an otter, and add acid to water."
-	taste_description = "acid burns, ow"
+	taste_description = "burning"
 	color = "#FFFFFF"
 	pH = 0
 	can_synth = FALSE
@@ -338,6 +339,7 @@
 	name = "Strong acidic buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards acidity when added to another."
 	color = "#fbc314"
+	taste_description = "burning"
 	pH = 0
 	chemical_flags = REAGENT_FORCEONNEW | REAGENT_ALL_PROCESS
 	can_synth = TRUE
@@ -368,6 +370,7 @@
 	name = "Acidic buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards acidity when added to another."
 	color = "#fbf344"
+	taste_description = "vinegar"
 	pH = 4
 	can_synth = TRUE
 	strength = 0.25
@@ -376,6 +379,7 @@
 	name = "Strong basic buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards alkalinity when added to another."
 	color = "#3853a4"
+	taste_description = "burning"
 	pH = 14
 	chemical_flags = REAGENT_FORCEONNEW | REAGENT_ALL_PROCESS
 	can_synth = TRUE
@@ -385,6 +389,7 @@
 	name = "Basic buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards alkalinity when added to another."
 	color = "#5873c4"
+	taste_description = "something soapy"
 	pH = 10
 	can_synth = TRUE
 	strength = 0.25

@@ -348,6 +348,8 @@
 
 /datum/config_entry/flag/dynamic_config_enabled
 
+/datum/config_entry/flag/station_name_needs_approval
+
 //ambition end
 	config_entry_value = 5
 /datum/config_entry/number/max_ambitions	// Maximum number of ambitions a mind can store.

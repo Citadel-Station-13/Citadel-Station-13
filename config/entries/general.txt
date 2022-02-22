@@ -503,3 +503,6 @@ PAI_CUSTOM_HOLOFORMS
 
 ## Enables monstermos/"equalization" step in atmos.
 # ATMOS_EQUALIZATION_ENABLED
+
+## Do station renames from the station charter require admin approval to pass, as opposed to autoapproving if not denied.
+STATION_NAME_NEEDS_APPROVAL

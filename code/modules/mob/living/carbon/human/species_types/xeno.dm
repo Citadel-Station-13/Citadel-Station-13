@@ -17,3 +17,4 @@
 	disliked_food = JUNKFOOD
 	liked_food = GROSS | MEAT
 	species_category = SPECIES_CATEGORY_ALIEN
+	wings_icons = SPECIES_WINGS_DRAGON //most depictions of xenomorphs with wings are closest to this.

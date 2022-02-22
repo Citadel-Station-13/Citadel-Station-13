@@ -4,6 +4,10 @@
 /datum/config_entry/flag/log_access	// log login/logout
 	config_entry_value = TRUE
 
+/// Config entry which special logging of failed logins under suspicious circumstances.
+/datum/config_entry/flag/log_suspicious_login
+	config_entry_value = TRUE
+
 /datum/config_entry/flag/log_say	// log client say
 	config_entry_value = TRUE
 

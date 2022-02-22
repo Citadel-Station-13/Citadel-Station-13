@@ -304,6 +304,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 /datum/reagent/fermi/SDGFheal
 	name = "synthetic-derived healing factor"
 	description = "Leftover SDGF is transferred into the resulting clone, which quickly heals up the stresses from suddenly splitting. Restores blood, nutrition, and repaires brain and clone damage quickly. Only obtainable from using excess SDGF, and only enters the cloned body."
+	taste_description = "slime"
 	metabolization_rate = 0.8
 	can_synth = FALSE
 

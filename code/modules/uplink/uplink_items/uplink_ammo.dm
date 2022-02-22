@@ -12,7 +12,7 @@
 	desc = "Contains 10 additional .45-70 GOVT rounds. Caliber is exceedingly rare, and thus, comes at a premium."
 	item = /obj/item/ammo_box/g4570
 	cost = 5
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/pistol
 	name = "10mm Handgun Magazine"
@@ -20,7 +20,7 @@
 			are dirt cheap but are half as effective as .357 rounds."
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 1
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/ammo/pistol/box
 	name = "Ammo Box - 10mm"
@@ -34,7 +34,7 @@
 			These rounds are less effective at injuring the target but penetrate protective gear."
 	item = /obj/item/ammo_box/magazine/m10mm/ap
 	cost = 2
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/ammo/pistolap/box
 	name = "Ammo Box - 10mm Armour Piercing"
@@ -48,7 +48,7 @@
 			These rounds are more damaging but ineffective against armour."
 	item = /obj/item/ammo_box/magazine/m10mm/hp
 	cost = 3
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/ammo/pistolhp/box
 	name = "Ammo Box - 10mm Hollow Point"
@@ -62,7 +62,7 @@
 			Loaded with incendiary rounds which inflict little damage, but ignite the target."
 	item = /obj/item/ammo_box/magazine/m10mm/fire
 	cost = 2
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/ammo/pistolfire/box
 	name = "Ammo Box - 10mm Incendiary"
@@ -85,7 +85,7 @@
 
 /datum/uplink_item/ammo/shotgun
 	cost = 2
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/shotgun/bag
 	name = "12g Ammo Duffel Bag"
@@ -136,7 +136,7 @@
 			For when you really need a lot of things dead."
 	item = /obj/item/ammo_box/a357
 	cost = 3
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/ammo/revolver/ap
 	name = ".357 Armor Piercing Speed Loader"
@@ -150,25 +150,25 @@
 			Your teammates will ask you to not shoot these down small hallways."
 	item = /obj/item/ammo_casing/a40mm
 	cost = 2
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/smg/bag
 	name = ".45 Ammo Duffel Bag"
 	desc = "A duffel bag filled with enough .45 ammo to supply an entire team, at a discounted price."
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/smg
 	cost = 20 //instead of 27 TC
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/smg
 	name = ".45 SMG Magazine"
 	desc = "An additional 24-round .45 magazine suitable for use with the C-20r submachine gun."
 	item = /obj/item/ammo_box/magazine/smgm45
 	cost = 3
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/sniper
 	cost = 4
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/sniper/basic
 	name = ".50 Magazine"
@@ -194,7 +194,7 @@
 			These bullets pack less punch than 7.12x82mm rounds, but they still offer more power than .45 ammo."
 	item = /obj/item/ammo_box/magazine/m556
 	cost = 4
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/machinegun/match
 	name = "7.12x82mm (Match) Box Magazine"
@@ -206,7 +206,7 @@
 /datum/uplink_item/ammo/machinegun
 	cost = 6
 	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/machinegun/basic
 	name = "1.95x129mm Box Magazine"
@@ -234,7 +234,7 @@
 	item = /obj/item/ammo_box/magazine/mm195x129/incen
 
 /datum/uplink_item/ammo/rocket
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/rocket/basic
 	name = "84mm HE Rocket"
@@ -254,7 +254,7 @@
 	desc = "An additional 15-round 9mm magazine, compatible with the Stechkin APS pistol, found in the Spetsnaz Pyro bundle."
 	item = /obj/item/ammo_box/magazine/pistolm9mm
 	cost = 2
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/pistolaps
 	name = "Ammo Box - 9mm"
@@ -268,7 +268,7 @@
 			Loaded with armor piercing flechettes that very nearly ignore armor, but are not very effective against flesh."
 	item = /obj/item/ammo_box/magazine/flechette
 	cost = 2
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/flechettes
 	name = "Serrated Flechette Magazine"
@@ -277,7 +277,7 @@
 			These flechettes are highly likely to sever arteries, and even limbs."
 	item = /obj/item/ammo_box/magazine/flechette/s
 	cost = 2
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/toydarts
 	name = "Box of Riot Darts"
@@ -293,32 +293,32 @@
 			and broca systems, making it impossible for them to move or speak for some time."
 	item = /obj/item/storage/box/syndie_kit/bioterror
 	cost = 6
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/ammo/bolt_action
 	name = "Surplus Rifle Clip"
 	desc = "A stripper clip used to quickly load bolt action rifles. Contains 5 rounds."
 	item = /obj/item/ammo_box/a762
 	cost = 1
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/bolt_action_bulk
 	name = "Surplus Rifle Clip Box"
 	desc = "An ammo box we found in a warehouse, holding 7 clips of 5 rounds for bolt-action rifles. Yes, the cheap ones."
 	item = /obj/item/storage/toolbox/ammo
 	cost = 4
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/dark_gygax/bag
 	name = "Dark Gygax Ammo Bag"
 	desc = "A duffel bag containing ammo for three full reloads of the incendiary carbine and flash bang launcher that are equipped on a standard Dark Gygax exosuit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/dark_gygax
 	cost = 4
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/mauler/bag
 	name = "Mauler Ammo Bag"
 	desc = "A duffel bag containing ammo for three full reloads of the LMG, scattershot carbine, and SRM-8 missile laucher that are equipped on a standard Mauler exosuit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mauler
 	cost = 6
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS

@@ -1,0 +1,278 @@
+2021-04-02:
+  LetterN:
+  - bugfix: piratepayment
+2021-04-03:
+  BlueWildrose:
+  - bugfix: The hydroponics pet bee, Bumbles no longer has a number besides their
+      name.
+  Putnam3145:
+  - rscdel: '"Destroy all nanotrasen cloning machines" objective is gone'
+  - code_imp: Removed all the commented-out sabotage objectives (we can just get them
+      from history)
+  - rscadd: Observe verb logging
+2021-04-04:
+  Hatterhat:
+  - balance: After a sudden crash in the tower-cap log slash wooden plank economy,
+      NanoTrasen has decided to stop selling tower-cap logs to Cargo.
+2021-04-06:
+  ArcaneMusic:
+  - bugfix: Prevents people from lagging the server by growing HUMANS FROM CABBAGE!
+  BlueWildrose:
+  - admin: Admins get to hear the prayer ding again unless they have prayer sounds
+      turned off.
+  DeltaFire15:
+  - bugfix: The wood plank cargo pack no longer is named incorrectly.
+  Putnam3145:
+  - bugfix: forced climax doesn't do a climax-with
+  SandPoot:
+  - bugfix: Reverts locker/crate behavior for attacking it with an item while closed
+      (use any intent other than help to bash it).
+  - bugfix: 'Laptop interactions are no longer weird and now you can drag it to yourself
+      to pick it up. tweak: Ctrl+Shift-Click to toggle laptops open/closed. tweak:
+      More examine info for laptops.'
+  - bugfix: Lockers/Crates can now be deconstructed the right way respecting the cutting_tool
+      (even if it's not one of the default interactions).
+  - rscdel: Dragging the laptop into itself shouldn't do anything anymore (kind of
+      pointless and hard to do).
+2021-04-07:
+  LetterN:
+  - rscadd: Perln generation & biomes from lavaland
+  - code_imp: Cleans up the area, update it's icon and updates the openspace to use
+      the modules.
+2021-04-09:
+  BlueWildrose:
+  - balance: The genetics mutation Autotomy has been buffed to be 20 instability instead
+      of 30, and harmless in delimbing.
+  - rscadd: 'There are now three more pills in each breast or penis enlargement pill
+      bottle. tweak: There are now 10 pill bottles of breast and penis enlargement
+      pill bottles in a Kinkmate instead of 5.'
+  - balance: Because of such changes that increases their amount in the kinkmate,
+      succubus milk and incubus draft values are reduced to RARE from VERY_RARE.
+  - spellcheck: Grammar correction on titty pill bottle.
+  - rscadd: The pandemic machine can now let you swap containers.
+  - bugfix: Slime puddles will now show mutation visual indicators & cult indicators
+      after exiting slime puddle form
+  - bugfix: Slime puddle transformation animations are now resized to fit the slimeperson's
+      current size, making it visually more consistent
+  - spellcheck: Typo correction in some mutation descriptions and other things
+  - code_imp: Cult/clockcult layers moved from LAYER_MUTATION to LAYER_ANTAG, new
+      update section for them specifically now
+  - rscadd: Sylvan and Mushroom languages are now tongueless, and Encoded Audio Language
+      is now learnable.
+  SandPoot:
+  - bugfix: The dragons_blood "lizard with the appearance of a drake" no longer wipes
+      important stuff.
+  - bugfix: Fixes Ashlizard legs not being digitigrade and makes them have the "Sharp"
+      snout.
+  - bugfix: Machines that open no longer drop their stock parts.
+  brokenOculus:
+  - rscadd: Added Telescopic Baseball Bat
+  - rscadd: Added Telescopic Baseball Bat to Stealthy uplink items
+  - rscadd: Added sprites for Telescopic Baseball Bat
+  - rscadd: Added Telescopic Baseball Bat to Baseball kit under uplink bundles
+2021-04-12:
+  BlueWildrose:
+  - bugfix: Fixed female slime-subspecies left/right sprites being flipped
+  - bugfix: Fixed drones nullspacing things they try to place on tables and in closets
+  - bugfix: Fixed phantom mob-holder items. You can now grab Ian from your backpack
+      without any issues.
+  silicons:
+  - balance: gold cores can spawn simplemob xenos again.
+  timothyteakettle:
+  - config: makes AGE_VERIFICATION option off by default
+2021-04-13:
+  rossark:
+  - bugfix: wrong word
+2021-04-14:
+  Hatterhat:
+  - balance: Space pirates are now slightly more aware of how much money the station
+      has, and will demand payment accordingly. (No more 20k minimum payouts and basically-confirmed
+      three midround skeletons.)
+2021-04-15:
+  BlueWildrose:
+  - bugfix: Fixed escape pods not docking at Centcom
+  skodai:
+  - imageadd: Resprited the icons for the sushi, onigiri, tuna can and sea weed.
+2021-04-16:
+  BlueWildrose:
+  - bugfix: (TGport-Timberpoes) You can once again pay off the pirate event from the
+      communications console without it silently failing for no obvious reason.
+  - bugfix: Fixed being unable to delete messages from the communication consoles
+      message list save for the one on the bottom.
+  - bugfix: The data siphon that the space pirates have will no longer go invisible
+      when it begins siphoning.
+  - bugfix: If the space pirate's "offer" has been rejected, there is now announcement
+      feedback for if this does happen.
+  DeltaFire15:
+  - bugfix: Borgs can now use tank dispensers (again?)
+2021-04-18:
+  BlueWildrose:
+  - balance: '(TGport-Kriskog) Reduced blight cost to 75, more in line with its underwhelming
+      nature. tweak: (TGport-Kriskog) Revenants now only use stolen essence to unlock
+      new spells. No more counting corpses or waiting for regen before draining. tweak:
+      (TGport-Kriskog) Spell unlock costs adjusted accordingly, defile upped from
+      0 to a cost of 10. tweak: (TGport-Kriskog) Drain targets in soft-crit will be
+      stunned, to prevent them crawling away.'
+  - bugfix: (TGport-ShizCalev) Fixed revenant's light overload ability not blowing
+      lights in a square if there was another broken/burnt out/empty light in it.
+  DeltaFire15:
+  - bugfix: Mechs now do not get drained an absurd amount of energy when EMPd.
+  - bugfix: Organic healing surgeries no longer show up for people without any organic
+      bodyparts.
+  SandPoot:
+  - rscadd: Adds a fancy TGUI interface for the cloning computer.
+  - rscdel: 'Destroys the old cloning interface. tweak: Alt-Click now removes disks
+      from the cloning computer.'
+  - refactor: Replaced way too much code for the cloning computer.
+  - refactor: Cloning scan's implant now outputs a list if desired.
+2021-04-20:
+  BlueWildrose:
+  - rscadd: New slimeperson organs that aren't really that different from humans for
+      now.
+  - imageadd: Some blue organs for slimepeople.
+  - rscadd: Space pirate sleepers can now be crowbared to be destroyed.
+  DrPainis:
+  - rscadd: ash drake meat
+  Hatterhat:
+  - bugfix: Plastitanium glass now properly applies the *2 bonus for integrity and
+      efficiency when used as a solar panel.
+  HeroWithYay:
+  - imageadd: replaced some icons
+  Putnam3145:
+  - rscadd: Bluespace pipes, which can teleport gas over long distances
+  - rscadd: Donk co traitor class (assassin-heavy)
+  - rscadd: Waffle co traitor class (freeform)
+  - rscadd: 'Admin-only activity tracking system only attached to antags for now tweak:
+      Objective rerolling can now be done twice'
+  - bugfix: Sabotage objectives won't give "free objective" anymore
+  The0bserver, TripleZeta, and AsciiSquid:
+  - rscadd: New, easily concealable weapons, chambered in .38, .357, and .45-70 Govt.
+      Fun for the whole family!
+  - rscadd: Some smugglers seem to have acquired a high amount of .38 derringers,
+      and are looking to offload them to those of gray morality, with no questions
+      asked!
+  - rscadd: An enigmatic gun collector has seen fit to do special acquisition work
+      for the Gorlex Marauders, selling the fruits of his labor for a premium price.
+      If you have the right electomagnetic sequence, you might be able to contact
+      him to acquire a piece of his armory.
+  coiax:
+  - rscadd: Nuke ops can now purchase a box of "deathrattle implants". When an implanted
+      person dies, all the other users of the implant will get a message, saying who
+      died and where they died.
+  keronshb:
+  - balance: Weight per blood is .03 now instead of .05
+  - balance: Dragnet Snare breakout timer is now 2.5 seconds down from 5 seconds.
+  qweq12yt:
+  - bugfix: Fixed a bug where some cargo crates would never arrive and still charge
+      users
+  zeroisthebiggay:
+  - rscdel: the box ghost burger
+2021-04-21:
+  necromanceranne:
+  - balance: Stun batons (not police batons/telebatons) no longer knockdown on leftclick.
+  - balance: Stun batons apply a knockdown and tase effect on right click, but once
+      every few seconds (they still don't disarm). They are vulnerable to a shove
+      disarm briefly, however. Standard batons have a cooldown of 5 seconds. Stun
+      prods have a cooldown of 7 seconds.
+  - balance: Taser resistance prevents the knockdown, so any chem that grants this
+      (like adrenals) protects you from this knockdown.
+  - balance: Stun batons apply a stagger when they hit someone, preventing sprinting
+      for a few seconds.
+  - balance: Stun batons respect melee armor for their stamina damage, but their cells,
+      based on max charge, grant armor penetration. For every 1000 charge, they gain
+      1 armor pen. (Roundstart batons have 15 pen, just fyi)
+  - balance: Shoves can disarm you of any item, not just guns.
+  - bugfix: Removes a duplicate trait definition for TRAIT_NICE_SHOT.
+2021-04-22:
+  Whoneedspacee:
+  - rscadd: new arena attack where ash drake summons lava around you
+  - rscdel: removed old swooping above you, instead flies above you instantly
+  - balance: ash drake now spawns temporary lava pools instead of meteors falling
+      down
+  - balance: ash drake takes twice as long to swoop down now that he instantly goes
+      above you
+  - balance: ash drake now moves twice as fast
+  - balance: increases the odds of lava spawns in the lava pool attack
+  - balance: 'increases fire line damage and decreases lava attacks direct damage
+      tweak: ash drake fire now shoots in the direction of the target tweak: changes
+      times of certain animations tweak: changes sounds of meteor falling to lava
+      creation'
+  - bugfix: a bug where ash drakes attacks did not damage mechs
+  - imageadd: changes meteor icon to lava creation animation from lava staff
+  - rscadd: Mass fire attack, sends fire out from the ash drake in all directions
+  - rscadd: Adds an enraged attack for ash drake, heals him as well as making him
+      glow and go faster, spawning massive amounts of fire in all directions
+  - rscdel: 'Removes the old triple swoop with lava pools attack tweak: Lava pools
+      can now spawn with the normal fire breath attack sometimes tweak: Lava pools
+      now have changed delays for lesser amounts so they don''t all just place around
+      one area tweak: Increases default swoop delay'
+  - balance: Teleporting out of the lava arena now has some actual consequences by
+      enraging the ash drake
+  - bugfix: Makes lava arena a bit less laggy by not recalculating range_turfs every
+      time
+  - bugfix: Fixes the arena attack selecting inaccessible tiles as the safe tile though
+      this will not change the turfs to basalt temporarily to prevent moving through
+      indestructible walls
+  - bugfix: Fire lines would not spawn if their range would place their final turf
+      location outside of the map
+  - bugfix: The arena attack will no longer destroy indestructible open turfs
+  - balance: ash drake fire does less damage now
+  - balance: ash drake takes longer to swoop down now
+  - balance: tiles take longer to fully convert into lava now, slowing down the arena
+      attack as well
+  - balance: fire breath now moves slower
+  - balance: triple fire breath for the lava swoop only happens below half health
+      now
+  - bugfix: The arena attack not making safespots when you fight it in a mech
+2021-04-25:
+  DrPainis:
+  - spellcheck: Bubblegum is now capitalized.
+2021-04-26:
+  Trigg, stylemistake and SandPoot:
+  - admin: 'Admins just got a new TGUI Select Equipment menu tweak: Prevents the window
+      from creating sprites for any animated version there might be. (this guarantees
+      consistant sprite size/amount)'
+2021-04-29:
+  Putnam3145:
+  - bugfix: Fixed a couple runtimes in activity (threat) tracking
+  keronshb:
+  - balance: Removes the Reinforcement Chromosome from Genetics.
+2021-04-30:
+  DrPainis:
+  - spellcheck: Bubblegum's hallucinations are capitalized.
+  Melbert, SandPoot:
+  - refactor: TGUI Limbgrower
+  - refactor: Refactored the limbgrower to modernize the code and allow for more types
+      of designs.
+  - rscadd: The limbgrower now supports plumbing ducts.
+  - bugfix: Fixes genitals not actually getting data from disks.
+  - code_imp: Adds two special helpers.
+  SandPoot:
+  - rscadd: The decal painter now has visible previews for your tile painting funs.
+  - bugfix: Fixes decal painter painting in the opposite direction.
+  TheObserver-sys:
+  - bugfix: Restores the access lock on crates that should have them, given the goods
+      inside.
+  - bugfix: Makes the 10MM Surplus Rifle a less awful thing to use.
+  - bugfix: replaces unarmored things with their armored versions.
+  - balance: Illegal Tech Ammo actually is fucking reasonable, now.
+  - balance: Expensive Illegal Tech Ammo Boxes are now constructible, with actually
+      justifiable prices.
+  WanderingFox95:
+  - balance: There's finally a reason for the reagent dart gun to exist and be used!
+  akada:
+  - imageadd: Changes the space adaptation sprite to something less intrusive and
+      more subtle.
+  necromanceranne:
+  - rscadd: 'Basic cybernetic organs: they''re worse than organic! Basic stomachs,
+      hearts, lungs and livers! For when you hate someone enough to not bother harvesting
+      organs from a monkeyhuman!'
+  - rscadd: 'Cybernetic organs have been adjusted into three tiers: 1 (basic), 2 (standard,
+      better than organic) and 3 (absolutely better than organic but expensive to
+      print)'
+  - rscadd: Cybernetic organs that are emp'd instead suffer different effects based
+      on the severity of the emp. The bigger the emp, the worse the effect is.
+  - rscadd: Rather than outright bricking, severely emp'd cyberorgans degrade over
+      time very quickly, requiring replacement in the near future.
+  - rscadd: Fake blindfolds in the loadout. They don't obscure vision, for better
+      or worse.

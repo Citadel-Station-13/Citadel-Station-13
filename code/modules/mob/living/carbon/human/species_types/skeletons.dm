@@ -16,6 +16,7 @@
 	burnmod = 1.25
 
 	species_category = SPECIES_CATEGORY_SKELETON //they have their own category that's disassociated from undead, paired with plasmapeople
+	wings_icons = SPECIES_WINGS_SKELETAL
 
 /datum/species/skeleton/New()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN]) //skeletons are stronger during the spooky season!

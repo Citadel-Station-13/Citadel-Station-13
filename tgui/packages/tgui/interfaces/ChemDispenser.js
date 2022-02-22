@@ -52,7 +52,7 @@ export const ChemDispenser = (props, context) => {
               icon="cog"
               disabled={!data.isBeakerLoaded}
               tooltip="Alternate between buttons and radial input"
-              tooltipPosition="bottom-left"
+              tooltipPosition="bottom-end"
               selected={modeToggle}
               onClick={() => setModeToggle(!modeToggle)} />]
           }>
@@ -150,8 +150,8 @@ export const ChemDispenser = (props, context) => {
             <Button       // eslint-disable-line
               key="colorButton"
               icon="cog"
-              tooltip="Color code the reagents by pH"
-              tooltipPosition="bottom-left"
+              tooltip={"Color code the reagents by pH"}
+              tooltipPosition={"bottom-end"}
               selected={hasCol}
               onClick={() => setHasCol(!hasCol)} />]
           )}>

@@ -461,11 +461,11 @@
 				for(var/area/shuttle/escape/E in GLOB.sortedAreas)
 					areas += E
 				hyperspace_sound(HYPERSPACE_END, areas)
-			if(time_left <= PARALLAX_LOOP_TIME)
+			if(time_left <= parallax_speed)
 				var/area_parallax = FALSE
 				for(var/place in shuttle_areas)
 					var/area/shuttle/shuttle_area = place
-					if(shuttle_area.parallax_movedir)
+					if(shuttle_area.parallax_moving)
 						area_parallax = TRUE
 						break
 				if(area_parallax)

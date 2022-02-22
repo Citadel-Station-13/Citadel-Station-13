@@ -1,0 +1,540 @@
+2020-08-01:
+  dapnee:
+  - tweak: added cake hat to bar, adds another atmostech spawn
+  - bugfix: sinks point in the right direction, APC won't spawn off the wall in circuits
+  - bugfix: changes commissary APC so it actually powers the room, adds a missing
+      AIR alarm, arrivals no longer has active atmos tiles.
+  silicons:
+  - tweak: toy shotguns no longer need 2 hands to fire
+  - bugfix: being on fire works again.
+  timothyteakettle:
+  - bugfix: monkeys no longer continuously bleed everywhere
+2020-08-02:
+  Auris456852:
+  - rscadd: Added B.O.O.P. Remote Control cartridges to the PTech.
+  Hatterhat:
+  - rscadd: Durathread reinforcement kits! Sprites by Toriate, sets jumpsuit armor
+      to durathread levels, craft in the crafting menu.
+  KeRSedChaplain:
+  - rscadd: The belligerent scripture and a brass multitool, and a new marauder variant
+      which act similar to holoparasites/guardian spirits.
+  - rscdel: Removed the abductor teleport consoles they get, removes abscond for the
+      time being as I've not seen much use for it other than just spamming it and
+      hoping you end up in the armory.
+  - tweak: moved around scriptures to make the cult work better as being based around
+      the station, makes the Ark scream more often and work as a summonable object,
+      clockwork armor now has a flat 0 defense up to 10 instead of negatives against
+      laser damage. Makes the Ark work better in a station based setting, as well
+      as the Heralds beacon in case It works for the mode.
+  - soundadd: added powerloaderstep.ogg for Neovgre
+  - tweak: changes 'Dread_Ipad.dmi' to 'clockwork_slab.dmi'
+  MrJWhit:
+  - tweak: Adjusts abductor spawntext
+  Seris02:
+  - bugfix: fixed replica pods
+  dapnee:
+  - bugfix: fixed active turfs on wizard ruin and space hermit, fixed missing APC's
+      and added a light on Delta
+  ike709 and bobbahbrown:
+  - rscadd: Admins can now see your bans on (some) other servers.
+  kappa-sama:
+  - bugfix: chaplain cultists being able to convert people to full clockwork cult
+      status
+  timothyteakettle:
+  - tweak: combat mode now has weaker buffs in terms of damage dealt and took for
+      being or not being in the mode
+  - tweak: damage debuff for laying down has been decreased from 0.5x to 0.7x
+2020-08-03:
+  KeRSedChaplain:
+  - bugfix: fixed clockwork guardians being able to reflect ranged weapons
+  Linzolle:
+  - bugfix: uv penlight no longer invisible
+  dapnee:
+  - bugfix: active turfs on box and xenohive, maintenance bar APC not being stringed
+      correctly, turned a monitor to face a direction that makes sense, changed tag
+      of camera in gravgen being misnamed
+  silicons:
+  - rscadd: shoves have been buffed to apply a status effect rather than a 0.85 movespeed
+      modifier, meaning repeatedly shoving someone now renews the debuff
+  - balance: shoves now stagger for 3.5 seconds.
+  - tweak: war operatives now actually time 20 minutes since roundstart to depart
+      instead of 15.
+  - balance: explosive stand bombs can now be examined from any distance
+  - code_imp: explosive stand bombs are now a component.
+2020-08-04:
+  Seris02:
+  - bugfix: lizard spines
+  timothyteakettle:
+  - rscadd: due to further advancements in medical technology, you can now have holes
+      poked into your body for fun and enjoyment
+  zeroisthebiggay:
+  - rscadd: prefs for headpat wagging
+2020-08-06:
+  Auris456852:
+  - rscadd: Added B.O.O.P. Remote Control cartridges to the PTech.
+  Hatterhat:
+  - rscadd: Proto-kinetic glaives! Essentially a proto-kinetic crusher with a different
+      blade, handguard, and goliath hide grip. Expensive, but elegant.
+  - balance: Door charges no longer knock people out.
+  Ludox235:
+  - rscadd: You can now buy damaged AI upload modules in the traitor's uplink.
+  Seris02:
+  - bugfix: fixed ghost chilis
+  Trilbyspaceclone:
+  - rscadd: 4 New blends of tea have been shipped to the station, and how to make
+      them has been leaked!
+  b1tt3r1n0:
+  - rscadd: Added the warp implant
+  dapnee:
+  - tweak: added a hallway to telecoms for engineers to get there on meta
+  kappa-sama:
+  - rscdel: dildo circuit assemblies
+  lolman360:
+  - bugfix: The Tendril-Mother on Lavaland has remembered how to make ashwalkers who
+      know how to speak Draconic again.
+  timothyteakettle:
+  - tweak: nanotrasen has decided to fire all disabled members of the security division
+      and confiscate certain sentimental items from doctors
+  - tweak: the custom tongue preference now passes through cloning so you spawn with
+      your selected tongue
+  - tweak: several changes to travelling traders so they look better and spawn slightly
+      less often
+  zeroisthebiggay:
+  - rscadd: nukies can buy holoparasites
+2020-08-07:
+  dapnee:
+  - bugfix: fixed active tufs on some space ruins, murderdome VR, and a few on pubby,
+      changed cargo autolathe to techfab, messed with pipe room leading to monastery.
+  lolman360:
+  - bugfix: vendors are now unanchored when tipped. it just fell over it's not bolted
+      to the ground anymore.
+  - bugfix: podpeople no fat when sunbathing.
+  silicons:
+  - balance: explosions only recurse one level into storage before dropping 1 level
+      per storage layer.
+  - tweak: volumetric storage is now minimum 16 pixels per item because 8 was ridiculous
+  - spellcheck: shieldbash balanace --> balance
+  - rscadd: attempting to send too long of an emote will now reflect it back to you
+      instead of cutting it off and discarding the overflow.
+  - rscadd: holoparasites can now play music
+  - balance: lethal blood now causes damaging bleeding instead of outright gibbing
+2020-08-08:
+  DeltaFire15:
+  - balance: Roundstart cultists now start with a replica fabricator - no brass though,
+      make your own.
+  - balance: 'Kindle cast time: 10 > 15, mute after stun end: 2 > 5, slur after mute
+      end: 3 > 5'
+  - bugfix: The ratvarian spear no longer adds negative vitality under very specific
+      circumstances.
+  - balance: The Ratvarian Spear can parry now! Short parries with low leeway, but
+      low cooldown.
+  - rscadd: The brass claw, a implant-based weapon which gains combo on consecutive
+      hits against the same target.
+  - rscadd: The sigil of rites, a sigil used to perform various rites with a cost
+      of power and materials
+  - rscadd: 'The Rite of Advancement: Used to add a organ or cyberimplant to a clockie
+      without need for surgery.'
+  - rscadd: 'The Rite of Woundmending: Used to heal all wounds on another cultist,
+      causing toxins damage in return.'
+  - rscadd: 'The Rite of the Claw: Used to summon a brass claw implant. Maximum of
+      4 uses per round.'
+  Hatterhat:
+  - rscadd: You can now buy a toolbox's worth of Mosin-Nagant ammo for a fairly discounted
+      price.
+  - rscadd: Revolvers from the dedicated kit now have reskinning capabilities.
+  - bugfix: You can now actually buy the riflery primer, which lets you pump shotguns
+      and work the Mosin's bolt faster.
+  - imageadd: Bulldog slug magazines now have a unique sprite.
+  Ludox235:
+  - rscdel: Removed an abductee objective that told you to remove all oxygen.
+  - rscadd: Added a new abductee objective to replace the removed one.
+  Sishen1542:
+  - tweak: "\U0001F171\uFE0Foneless"
+  - rscadd: squishy slime emotes
+  timothyteakettle:
+  - tweak: heparin makes you bleed half as much now
+  - tweak: cuts make you bleed 25% less now
+  - rscadd: more items in the loadout and loadout has subcategories now for easier
+      searching
+2020-08-09:
+  Hatterhat:
+  - rscadd: Proto-kinetic glaives (not crushers) can parry now.
+  MrJWhit:
+  - rscadd: Adds a second shutter on the top of the hop line
+  silicons:
+  - bugfix: immovable rods no longer drop down chasms
+  - rscdel: 'fun removal: squeaking objects now have an 1 second cooldown between
+      squeaks, and will have a 33% chance of interrupting any other squeaking object
+      when Cross()ing, meaning no more ear-fuck conveyor belts.'
+2020-08-10:
+  Hatterhat:
+  - bugfix: Parry counterattack text now shows up.
+  - balance: Sterilized gauze is now better at stopping bleeding, and applies slightly
+      faster. Very slightly faster.
+  - balance: Ointment and sutures now hold more in a stack (12 and 15, respectively).
+  - tweak: Sterilized gauze can now be made by just pouring 10u sterilizine onto standard
+      medical gauze, instead of having to craft it. Why you had to craft it, I will
+      honestly never know.
+  - balance: Proto-kinetic glaives are more expensive, stagger/cooldown on failed
+      parries increased slightly, perfect parries required for counterattack.
+  - rscadd: 'New item: Temporal Katana. 2 points for wizards, timestops upon successful
+      parry, bokken quickparry stats (100 force on melee counter!).'
+  - rscadd: Also you can *smirk. This has no mechanical effect, other than being smug.
+  KeRSedChaplain:
+  - rscadd: Added a guide for romerol usage
+  - balance: made infectious zombies not enter softcrit and take no stamina damage
+  LetterN:
+  - tweak: clocktheme color
+  - code_imp: Ports TGUI-4
+  Lynxless:
+  - rscadd: 'Ports TG #51879'
+  Owai-Seek:
+  - tweak: Meatballs now spawn raw from food processors.
+  Putnam3145:
+  - rscadd: Ethereals
+  - rscdel: (Hexa)crocin
+  - rscdel: (Hexa)camphor
+  - tweak: Tweaked wording for marking tickets IC issue.
+  - tweak: Rerolling your traitor goals will ONLY give you "proper" objectives.
+  Seris02:
+  - bugfix: borgs being able to select and use a module when it's too damaged
+  Sishen1542:
+  - balance: gave chairs active block/parry in exchange for removal of block_chance
+  - tweak: replaces box whiteship tbaton with truncheon
+  kappa-sama:
+  - balance: made the Dirty Magazines crate cost 4000 instead of 12000 credits
+  - rscadd: MODS I SPILLED MU JUICE HEJPPHRLP HELPJ JLEP HELP
+  silicons:
+  - balance: player made areas are no longer valid for malf hacking
+  - tweak: default space levels is 4 again.
+  - tweak: rats now swarm instead of stacking on one spot.
+  - balance: getting hit by an explosion will now barely hard knockdown, but will
+      leave you somewhat winded.
+  timothyteakettle:
+  - tweak: speech verbs copy through dna copying now
+2020-08-11:
+  Hatterhat:
+  - bugfix: PDA uplinks can now steal from pens. Properly. Just make sure to have
+      a pen in your PDA, first.
+  kappa-sama:
+  - tweak: tracer no longer gives you full stamheals per use
+  zeroisthebiggay:
+  - rscadd: volaju two
+2020-08-12:
+  DeltaFire15:
+  - balance: 'hellgun single-pack classification: goodies -> armory'
+  Detective-Google:
+  - bugfix: hallway table hallway table
+  Hatterhat:
+  - balance: The temporal katana is now slightly more worthy of the 2 spell point
+      cost, with a smaller, antimagic respecting timestop, less force, and no random
+      blockchance. Society has progressed past the need for blockchance.
+  LetterN:
+  - rscadd: Mafia Component
+  - bugfix: Fixed missing icons and handtele
+  Putnam3145:
+  - bugfix: a whole lot of jank regarding funny part sprite display.
+  Toriate:
+  - rscadd: Opossums have migrated into the maintenance tunnels! Seek them out at
+      your own peril!
+  ancientpower:
+  - tweak: Doors added to the west side of box medbay to make things a bit more manageable.
+  kappa-sama:
+  - tweak: smuggler satchel cost 2->1
+  - tweak: radio jammer cost 5->2
+  - bugfix: smuggler satchel uplink description now implies that persistence is disabled
+  lolman360:
+  - rscadd: renameable necklace (accessory, attaches to suit) and ring (glove slot.)
+  - tweak: custom rename is now 2048 characters? i think it's characters.
+  silicons:
+  - rscadd: You can now use anything as an emoji by doing :/obj/item/path/to/item:.
+      This works for any /atom or subtype.
+  timothyteakettle:
+  - rscadd: syndicate agents now have access to mechanical aim enhancers which allow
+      them to aim bullets to bounce off walls
+  - bugfix: ricochets work properly now for the bullets that support them
+  zeroisthebiggay:
+  - imageadd: hair and some sechuds
+  - balance: ce hardsuit radproofing
+2020-08-13:
+  LetterN:
+  - rscdel: Removes fermisleepers and reverts them to tg ones
+2020-08-14:
+  silicons:
+  - bugfix: abductors can buy things
+2020-08-15:
+  LetterN:
+  - bugfix: missing anomaly core icons
+  - bugfix: wrong state. blame the tg vertion i copied
+  silicons:
+  - tweak: the 8 rotation limit from clockwork chairs has been removed. please don't
+      abuse this.
+  - tweak: ethereals can now wear underwear
+2020-08-16:
+  kiwedespars:
+  - balance: nerfed hypereut chaplain weapon.
+  - balance: 50% rng blockchance -> 0%
+  - balance: parry made much worse because it's an actual weapon and a roundstart
+      one at that.
+  zeroisthebiggay:
+  - rscadd: tips
+  - rscdel: tips
+2020-08-17:
+  DeltaFire15:
+  - bugfix: Cogscarabs are no longer always Pogscarabs
+  Strazyplus:
+  - rscadd: Added drakeborgs
+  - rscadd: Added drakeplushies
+  - imageadd: added drakeborg sprites
+  - imageadd: added drakeplushie sprites
+  - code_imp: changed some code - added drakeplushies to backpack loadout Removed
+      duplicate voresleeper belly sprites from engdrake & jantidrake. [CC BY-NC-SA
+      3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/)
+  - rscadd: Added CC BY-NC-SA 3.0 license details to icon/mob/cyborg moved drakeborg.dmi
+      to icon/mob/cyborg
+2020-08-18:
+  DeltaFire15:
+  - balance: 'kindle cast time: 15ds -> 25ds'
+  - tweak: Moved the Belligerent Scripture to where it should be in the code
+  Detective-Google:
+  - rscadd: glass floors
+  - rscadd: uncrowbarrable plasma floors tweak:disco inferno's plasma floors can no
+      longer be crowbarred.
+  - rscadd: ghost cafe has funky fresh art
+  - bugfix: you can actually remove glass floors now
+  - code_imp: get_equipped_items is hopefully less gross
+  - balance: plasma cutters are no longer gay
+  Hatterhat:
+  - balance: Slaughter demons (and laughter demons, being a subtype) are MOB_SIZE_LARGE,
+      with one of the more immediate effects being able to mark them with a crusher
+      and backstab them.
+  - balance: The funny blyat men have stumbled upon another surplus of Mosin-Nagants
+      and are starting to pack them into crates again.
+  - balance: Vehicle riders can now, by default, get shot in the face and/or chest.
+  - rscadd: Adminspawn only .357 DumDum rounds! Because sometimes the other guy just
+      really needs to hurt.
+  - rscadd: Bluespace beakers now have a chemical window through the side that shows
+      chemical overlays.
+  - rscadd: Plant DNA manipulators now let you chuck things over them. Or they WOULD,
+      if LETPASSTHROW worked half a damn.
+  LetterN:
+  - bugfix: uplink implant states
+  - tweak: tweaks how role assigning works
+  MrJWhit:
+  - rscadd: Gives ashwalkers nightvision
+  - balance: Makes tesla blast people, not the environment, to save the server.
+  TheObserver-sys:
+  - bugfix: moves Garlic sprites from growing.dmi to growing_vegetable.dmi
+  - rscdel: Removes the unused Electric Lime mutation, it just takes up space with
+      no actual function nor sprites.
+  - imageadd: Gives Catnip growing sprites
+  - imagedel: Removes redundant images in growing.dmi
+  kiwedespars:
+  - rscadd: 10 force to a fucking rubber cock.
+  lolman360:
+  - balance: shotgun stripper clip nerf. ammoboxes can now accept a load_delay that
+      happens when they attack a magazine, internal or external.
+  ported from tg:
+  - rscadd: bronze airlocks and windows can now be built
+  - balance: i also tweaked bronze flooring to be cheaper.
+  silicons:
+  - tweak: stamina draining projectiles without stamina for their primary damage type
+      now has their stamina damage taken into account for shield blocking, rather
+      than the block being done for free for that.
+  timothyteakettle:
+  - refactor: snowflake code tidyup
+  - refactor: snowflake code for mutant bodypart selection has been rewritten to be
+      ~14x shorter
+  - tweak: meat type and horns can now be selected by any species
+2020-08-20:
+  DeltaFire15:
+  - bugfix: The cooking oil damage formula is no longer scuffed.
+  - tweak: Changed the clockie help-link to lead to our own wiki.
+  Fikou:
+  - admin: admins can now do html in ahelps properly
+  Hatterhat:
+  - balance: Pirate threats are now announced as "business propositions", and their
+      arrivals are now also announced properly.
+  tiramisuapimancer:
+  - bugfix: Ethereal hair is now their body color instead of accidentally white
+2020-08-21:
+  LetterN:
+  - rscadd: Updates and adds some of the tips
+  Putnam3145:
+  - admin: added reftracking as a compile flag
+  SmArtKar:
+  - tweak: RSD limitation is now 500 tiles
+  - bugfix: Fixed broken RSD sprites
+  - config: Removed that shuttle limit
+  timothyteakettle:
+  - bugfix: two snouts can once again be chosen in customization
+  - bugfix: lizard snouts work again
+2020-08-22:
+  Time-Green (copypasta'd by lolman360):
+  - rscadd: plumbing
+  - rscadd: automatic hydro trays
+2020-08-23:
+  DeltaFire15:
+  - bugfix: silicons and clockies can now access APCs properly
+  EmeraldSundisk:
+  - rscadd: Medbay now has a smartfridge for organ storage
+  - rscadd: Slight enhancements to the station's electrical wiring layout
+  - rscadd: Very small library renovation
+  - bugfix: Exterior airlocks have been given proper air systems for safety's sake
+  Ghommie:
+  - bugfix: Stops shielded hardsuits from slowly turning the wearer into a big glowing
+      ball of stacked energy shield overlays.
+  - tweak: the shielding overlay is merely visual as result. Aim your clicks.
+  Ludox235:
+  - tweak: no more 10 pop xenos (25pop now)
+  MrJWhit:
+  - tweak: Increases the majority of airlocks by 1 tile.
+  - tweak: Minor adjustments to the TEG engine.
+  Putnam3145:
+  - balance: Simplemobs no longer count in dynamic.
+  - balance: '"Story" storyteller no longer starts at a ludicrously low threat, always.'
+  - balance: Blob threat now scales with coverage.
+  - tweak: One person with their pref on no longer overpowers 40 people who might
+      not even know there is one.
+  - bugfix: Negative-weight rulesets are no longer put into the list.
+  kiwedespars:
+  - tweak: removed durathread from armwraps recipe.
+  lolman360:
+  - rscadd: breath mask balaclava
+  timothyteakettle:
+  - bugfix: lizards are now a recommended species for mam snouts
+  zeroisthebiggay:
+  - rscadd: new sprites for the temporal katana
+  - rscadd: suiciding with the temporal katana omae wa mou shinderius you into the
+      shadow realm
+  - soundadd: twilight isnt earrape
+2020-08-24:
+  MrJWhit:
+  - bugfix: Fixes areas on expanded airlocks
+  silicons:
+  - bugfix: wormhole jaunters work
+  - tweak: wormhole jaunters no longer get interference from bags of holding
+  - bugfix: airlocks now only shock on pulse/wirecutters instead of on tgui panel
+      open.
+  timothyteakettle:
+  - rscadd: three new items are in the loadout for all donators
+  zeroisthebiggay:
+  - rscadd: contraband black evening gloves in kinkvend
+2020-08-25:
+  Hatterhat:
+  - rscadd: Insidious combat gloves have been replaced by insidious guerilla gloves.
+      They're generally the same, except now you can tackle with them.
+  Literallynotpickles:
+  - tweak: You can now equip handheld crew monitors on all medical-related winter
+      coats.
+  Putnam3145:
+  - tweak: vore now ejects occupants on death
+  raspy-on-osu:
+  - tweak: Thermoelectric Generator power output
+  timothyteakettle:
+  - tweak: I.P.Cs now short their circuits when expressing emotion, causing sparks
+      to appear around them.
+2020-08-26:
+  ancientpower:
+  - tweak: Ghosts can read newscasters by clicking on them.
+  silicons:
+  - balance: hierophant vortex blasts now have 50% armor penetration vs mecha
+  - balance: ventcrawling now kicks off every attached/buckled mob, even for non humans.
+2020-08-27:
+  silicons:
+  - tweak: eyebeam lighting can only have 128 maximum HSV saturation now.
+  - balance: no more shotgun stripper clips in boxes.
+  - balance: goliath tentacles now do 20 damage to mechs at 25% ap
+  timothyteakettle:
+  - tweak: changing your character's gender won't randomize its hairstyle and facial
+      hairstyle now
+2020-08-28:
+  EmeraldSundisk:
+  - rscadd: Adds more paper to the library
+  - rscadd: The law office now has a desk window
+  - tweak: Expands most of CogStation's exterior airlocks. Slightly adjusts surrounding
+      areas to accommodate this.
+  - tweak: Updates some of CogStation's paperwork
+  - tweak: The rat in the morgue turned themselves into a possum. Funniest shit I've
+      ever seen.
+  - bugfix: Adjusts some area designations so cameras should receive power properly
+  - bugfix: Cleans up an errant decal
+  Hatterhat:
+  - tweak: Traitor holoparasites can now only be bought once, because apparently you
+      can only have one active holopara.
+  - balance: PDA bombs can now only be bought once per uplink.
+  lolman360:
+  - rscadd: atmos = radiation = chemistry.
+  shellspeed1:
+  - rscadd: Adds slow mode for iv drips
+  timothyteakettle:
+  - rscadd: an ancient game over a thousand years old has re-emerged among crewmembers
+      - rock paper scissors
+  - tweak: customization features appear in alphabetical order where necessary
+  - tweak: bokken do two more stamina damage now
+  - rscadd: you can now choose a body sprite as an anthromorph or anthromorphic insect,
+      and can choose from aquatic/avian and apid respectively (and obviously back
+      to the defaults too)
+2020-08-30:
+  raspy-on-osu:
+  - rscadd: new explosion echoes
+  - tweak: explosion echo range
+  - soundadd: 5 new explosion related sounds
+2020-08-31:
+  Arturlang:
+  - tweak: Slimes can now damage structures, don't leave them unfed!
+  Chiirno:
+  - bugfix: Moves pill_bottles/dice to box/dice on CogStation.
+  Couls, ported by NecromancerAnne:
+  - code_imp: cleans up mech backstabbing code
+  DeltaFire15:
+  - rscdel: teleport-to-ark ability of the eminence, commented out
+  - rscadd: teleport-to-obelisk ability for the eminence
+  Detective-Google:
+  - tweak: plasmamen have no more slowdown
+  - rscadd: object reskins now use very nice and cool radials
+  EmeraldSundisk:
+  - rscadd: Adds a pool to MetaStation
+  - tweak: Slight readjustments to the surrounding area
+  - bugfix: Fixes a handful of external airlocks
+  ForrestWick:
+  - balance: removes wall walking boots from nukie uplink
+  - tweak: removes wall walking boots from nukie uplink
+  Ghommie:
+  - bugfix: e-gun overlays and some floor decals should have been fixed.
+  LetterN:
+  - rscadd: tgchat
+  Lynxless:
+  - tweak: Changed anatomic panacea into a direct buff, instead of a chem injection
+  - balance: Changed the values of anatomic panacea
+  - imageadd: Added a new icon for panacea's buff alert
+  Putnam3145:
+  - tweak: Pref for genital/vore examine text
+  - bugfix: Fixed a couple events having ghost roles eligible.
+  - balance: 'Buffed slaughter demon: gets stronger as it eats people'
+  - balance: 'Nerfed slaughter demon: no longer permanently round-removes all who
+      are eaten by it, instead releasing their now-heartless bodies'
+  - bugfix: Dynamic storytellers now calculate property weights properly.
+  Sonic121x:
+  - bugfix: Fix the four type of new tea that will stuck inside your vein.
+  - rscadd: drinking glass sprite for those tea.
+  kappa-sama:
+  - balance: miners can no longer acquire funny antag item
+  lolman360:
+  - bugfix: shuttle engine/heater sprites now face the right way
+  raspy-on-osu:
+  - tweak: TEG power output
+  - tweak: tesla movement priorities
+  - rscadd: tesla counterplay
+  - rscadd: tesla containment check (containment variable now usable)
+  silicons:
+  - bugfix: brooms now sweep objects on MOVABLE_PRE_MOVE rather than MOVABLE_MOVED
+  - balance: firedoors no longer automatically open on touch when there's no pressure
+      differences.
+  timothyteakettle:
+  - tweak: buzz, buzz2 and ping are now all unrestricted emotes and can be used by
+      anyone
+  - imagedel: the drake credit and pickle credit sprites have been removed
+  - refactor: tongue speech handling is now done by accent datums
+  zeroisthebiggay:
+  - rscdel: waffleco

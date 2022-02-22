@@ -298,7 +298,7 @@
 
 /obj/item/toy/crayon/proc/draw_on(atom/target, mob/user, proximity, params)
 	var/static/list/punctuation = list("!","?",".",",","/","+","-","=","%","#","&")
-
+	var/istagger = HAS_TRAIT(user, TRAIT_TAGGER)
 	var/cost = 1
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		cost = 5
@@ -355,13 +355,13 @@
 	else if(drawing in graffiti|oriented)
 		temp = "graffiti"
 
-	// If a gang member is using a gang spraycan, it'll behave differently
-	var/gang_mode = FALSE
-	if(gang && user.mind && user.mind.has_antag_datum(/datum/antagonist/gang)) //Heres a check.
-		gang_mode = TRUE // No more runtimes if a non-gang member sprays a gang can, it just works like normal cans.
-	// discontinue if the area isn't valid for tagging because gang "honour"
+	var/gang_mode
+	if(user.mind)
+		gang_mode = user.mind.has_antag_datum(/datum/antagonist/gang)
+
 	if(gang_mode && (!can_claim_for_gang(user, target)))
 		return
+
 
 	var/graf_rot
 	if(drawing in oriented)
@@ -390,16 +390,12 @@
 		audible_message("<span class='notice'>You hear spraying.</span>")
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 
-	var/takes_time = !instant //For order purposes, since I'm maximum bad.
-	if(gang_mode)
-		takes_time = TRUE
-
 	var/wait_time = 50
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		wait_time *= 3
 
-	if(takes_time) //This is what deteremines the time it takes to spray a tag in gang mode. 50 is Default.
-		if(!do_after(user, gang_tag_delay, target = target)) //25 is a good number, but we have gang_tag_delay var now.
+	if(gang_mode || !instant)
+		if(!do_after(user, 50, target = target))
 			return
 
 	if(length(text_buffer))
@@ -410,16 +406,15 @@
 
 
 	if(actually_paints)
+		var/obj/effect/decal/cleanable/crayon/C = new(target, paint_color, drawing, temp, graf_rot)
 		if(gang_mode)
-			// Double check it wasn't tagged in the meanwhile.
 			if(!can_claim_for_gang(user, target))
 				return
-			tag_for_gang(user, target)
+			tag_for_gang(user, target, gang_mode)
 			affected_turfs += target
 		else
 			switch(paint_mode)
 				if(PAINT_NORMAL)
-					var/obj/effect/decal/cleanable/crayon/C = new(target, paint_color, drawing, temp, graf_rot)
 					C.add_hiddenprint(user)
 					if(precision_mode)
 						C.pixel_x = clamp(precision_x, -(world.icon_size/2), world.icon_size/2)
@@ -432,14 +427,18 @@
 					var/turf/left = locate(target.x-1,target.y,target.z)
 					var/turf/right = locate(target.x+1,target.y,target.z)
 					if(isValidSurface(left) && isValidSurface(right))
-						var/obj/effect/decal/cleanable/crayon/C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
-						C.add_hiddenprint(user)
+						C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
 						affected_turfs += left
 						affected_turfs += right
 						affected_turfs += target
 					else
 						to_chat(user, "<span class='warning'>There isn't enough space to paint!</span>")
 						return
+			C.add_hiddenprint(user)
+			if(istagger)
+				C.AddComponent(/datum/element/art, GOOD_ART)
+			else
+				C.AddComponent(/datum/element/art, BAD_ART)
 
 	if(!instant)
 		to_chat(user, "<span class='notice'>You finish drawing \the [temp].</span>")
@@ -462,52 +461,6 @@
 		reagents.trans_to(t, ., volume_multiplier)
 	check_empty(user)
 
-
-//////////////Gang mode stuff/////////////////
-/obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target)
-	// Check area validity.
-	// Reject space, player-created areas, and non-station z-levels.
-	var/area/A = get_base_area(target)
-	if(!A || (!is_station_level(A.z)) || !(A.area_flags & VALID_TERRITORY))
-		to_chat(user, "<span class='warning'>[A] is unsuitable for tagging.</span>")
-		return FALSE
-
-	var/spraying_over = FALSE
-	for(var/G in target)
-		var/obj/effect/decal/cleanable/crayon/gang/gangtag = G
-		if(istype(gangtag))
-			var/datum/antagonist/gang/GA = user.mind.has_antag_datum(/datum/antagonist/gang)
-			if(gangtag.gang != GA.gang)
-				spraying_over = TRUE
-				break
-
-	var/occupying_gang = territory_claimed(A, user)
-	if(occupying_gang && !spraying_over)
-		to_chat(user, "<span class='danger'>[A] has already been tagged by the [occupying_gang] gang! You must get rid of or spray over the old tag first!</span>")
-		return FALSE
-
-	// If you pass the gauntlet of checks, you're good to proceed
-	return TRUE
-
-/obj/item/toy/crayon/proc/territory_claimed(area/territory, mob/user)
-	for(var/datum/team/gang/G in GLOB.gangs)
-		if(territory.type in (G.territories|G.new_territories))
-			. = G.name
-			break
-
-/obj/item/toy/crayon/proc/tag_for_gang(mob/user, atom/target)
-	//Delete any old markings on this tile, including other gang tags
-	for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
-		qdel(old_marking)
-
-	var/datum/antagonist/gang/G = user.mind.has_antag_datum(/datum/antagonist/gang)
-	var/area/territory = get_base_area(target)
-
-	new /obj/effect/decal/cleanable/crayon/gang(target,G.gang,"graffiti",0,user) // Heres the gang tag.
-	to_chat(user, "<span class='notice'>You tagged [territory] for your gang!</span>")
-/////////////////Gang end////////////////////
-
-
 /obj/item/toy/crayon/attack(mob/M, mob/user)
 	if(edible && (M == user))
 		to_chat(user, "You take a bite of the [src.name]. Delicious!")
@@ -520,6 +473,49 @@
 		// check_empty() is called during afterattack
 	else
 		..()
+
+//////////////Gang mode stuff/////////////////
+/obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target)
+	var/area/A = get_area(target)
+	if(!A || (!is_station_level(A.z)))
+		to_chat(user, "<span class='warning'>[A] is unsuitable for tagging.</span>")
+		return FALSE
+
+	var/spraying_over = FALSE
+	for(var/obj/effect/decal/cleanable/crayon/gang/G in target)
+		spraying_over = TRUE
+
+	for(var/obj/machinery/power/apc in target)
+		to_chat(user, "<span class='warning'>You can't tag an APC.</span>")
+		return FALSE
+
+	var/occupying_gang = territory_claimed(A, user)
+	if(occupying_gang && !spraying_over)
+		to_chat(user, "<span class='danger'>[A] has already been tagged by a gang! You must find and spray over the old tag first!</span>")
+		return FALSE
+
+	// stolen from oldgang lmao
+	return TRUE
+
+/obj/item/toy/crayon/proc/tag_for_gang(mob/user, atom/target, datum/antagonist/gang/user_gang)
+	for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
+		qdel(old_marking)
+
+	var/area/territory = get_area(target)
+
+	var/obj/effect/decal/cleanable/crayon/gang/tag = new /obj/effect/decal/cleanable/crayon/gang(target)
+	tag.my_gang = user_gang.my_gang
+	tag.icon_state = "[user_gang.gang_id]_tag"
+	tag.name = "[tag.my_gang.name] gang tag"
+	tag.desc = "Looks like someone's claimed this area for [tag.my_gang.name]."
+	to_chat(user, "<span class='notice'>You tagged [territory] for [tag.my_gang.name]!</span>")
+
+/obj/item/toy/crayon/proc/territory_claimed(area/territory, mob/user)
+	for(var/obj/effect/decal/cleanable/crayon/gang/G in GLOB.gang_tags)
+		if(get_area(G) == territory)
+			return G
+
+/////////////////Gang end////////////////////
 
 /obj/item/toy/crayon/red
 	icon_state = "crayonred"
@@ -761,7 +757,7 @@
 
 		return
 
-	if(isobj(target))
+	if(isobj(target) && !istype(target, /obj/effect/decal/cleanable/crayon/gang))
 		if(actually_paints)
 			if(istype(target, /obj/item/canvas)) //dont color our canvas neon green when im trying to paint please
 				return
@@ -865,26 +861,6 @@
 	pre_noise = FALSE
 	post_noise = FALSE
 	reagent_contents = list(/datum/reagent/consumable/nothing = 1, /datum/reagent/toxin/mutetoxin = 1)
-
-/obj/item/toy/crayon/spraycan/gang
-	charges = 20 // Charges back to 20, which is the default value for them.
-	gang = TRUE
-	gang_tag_delay = 15 //Its 50% faster than a regular spraycan, for tagging. After-all they did spend points/meet the boss.
-
-	pre_noise = FALSE
-	post_noise = TRUE // Its even more stealthy just a tad.
-
-/obj/item/toy/crayon/spraycan/gang/Initialize(loc, datum/team/gang/G)
-	..()
-	if(G)
-		gang = G
-		paint_color = G.color
-		update_icon()
-
-/obj/item/toy/crayon/spraycan/gang/examine(mob/user)
-	. = ..()
-	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/gang) || isobserver(user))
-		. += "This spraycan has been specially modified with a stage 2 nozzle kit, making it faster."
 
 /obj/item/toy/crayon/spraycan/infinite
 	name = "infinite spraycan"

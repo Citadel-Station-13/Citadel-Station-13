@@ -193,7 +193,7 @@
 
 /obj/item/melee/transforming/energy/sword/saber
 	possible_colors = list("red" = LIGHT_COLOR_RED, "blue" = LIGHT_COLOR_LIGHT_CYAN, "green" = LIGHT_COLOR_GREEN, "purple" = LIGHT_COLOR_LAVENDER)
-	unique_reskin = list("Sword" = "sword0", "saber" = "esaber0")
+	unique_reskin = list("Sword" = "sword0", "Saber" = "esaber0")
 	var/hacked = FALSE
 	var/saber = FALSE
 

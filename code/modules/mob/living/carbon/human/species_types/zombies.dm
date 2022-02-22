@@ -16,6 +16,7 @@
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW
 	species_category = SPECIES_CATEGORY_UNDEAD
+	wings_icons = SPECIES_WINGS_SKELETAL //eh.
 
 /datum/species/zombie/notspaceproof
 	id = "notspaceproofzombie"

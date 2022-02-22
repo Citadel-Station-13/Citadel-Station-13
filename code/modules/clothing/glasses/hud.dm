@@ -3,6 +3,8 @@
 	desc = "A heads-up display that provides important info in (almost) real time."
 	flags_1 = null //doesn't protect eyes because it's a monocle, duh
 	var/hud_type = null
+	///Used for topic calls. Just because you have a HUD display doesn't mean you should be able to interact with stuff.
+	var/hud_trait = null
 
 /obj/item/clothing/glasses/hud/CheckParts(list/parts_list)
 	. = ..()
@@ -290,3 +292,16 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	thermal_overload()
+
+/obj/item/clothing/glasses/hud/spacecop
+	name = "police aviators"
+	desc = "For thinking you look cool while brutalizing protestors and minorities."
+	icon_state = "bigsunglasses"
+	hud_type = ANTAG_HUD_GANGSTER
+
+/obj/item/clothing/glasses/hud/spacecop/hidden // for the undercover cop
+	name = "sunglasses"
+	desc = "These sunglasses are special, and let you view potential criminals."
+	icon_state = "sun"
+	item_state = "sunglasses"
+

@@ -16,6 +16,7 @@
 	has_field_of_vision = FALSE //Too much of a trouble, their vision is already bound to their severed head.
 	species_category = SPECIES_CATEGORY_UNDEAD
 	var/pumpkin = FALSE
+	wings_icons = SPECIES_WINGS_SKELETAL //seems suitable for an undead.
 
 	var/obj/item/dullahan_relay/myhead
 

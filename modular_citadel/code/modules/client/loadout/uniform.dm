@@ -739,3 +739,9 @@
 	path = /obj/item/clothing/under/rank/cargo/tech/long
 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
 	restricted_roles = list("Cargo Technician")
+
+/datum/gear/uniform/clown_polychromic
+	name = "polychromic clown suit"
+	path = /obj/item/clothing/under/rank/civilian/polychromic_clown
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_roles = list("Clown")

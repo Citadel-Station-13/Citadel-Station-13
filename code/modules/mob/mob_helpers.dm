@@ -144,6 +144,7 @@
 				newletter = "nglu"
 			if(5)
 				newletter = "glor"
+			else
 		. += newletter
 	return sanitize(.)
 
