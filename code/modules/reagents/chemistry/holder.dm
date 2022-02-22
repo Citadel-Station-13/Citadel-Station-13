@@ -32,6 +32,12 @@
 		var/datum/chemical_reaction/D = new path()
 		var/list/reaction_ids = list()
 
+		// store drinks separately for bartender cartridge
+		if(D.id)
+			if(istype(D.id, /datum/reagent/consumable))
+				var/datum/reagent/consumable/r = D.id
+				GLOB.drink_reactions_list[lowertext(initial(r.name))] = D
+
 		if(D.required_reagents && D.required_reagents.len)
 			for(var/reaction in D.required_reagents)
 				reaction_ids += reaction

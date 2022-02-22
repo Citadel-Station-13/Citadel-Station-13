@@ -13,6 +13,7 @@
 #define CART_QUARTERMASTER		(1<<12)
 #define CART_HYDROPONICS		(1<<13)
 #define CART_DRONEPHONE			(1<<14)
+#define CART_BARTENDER			(1<<15)
 
 
 /obj/item/cartridge
@@ -189,6 +190,12 @@
 	access = ~(CART_CLOWN | CART_MIME | CART_REMOTE_DOOR)
 	bot_access_flags = SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT
 	spam_enabled = 1
+
+/obj/item/cartridge/bartender
+	name = "\improper B.O.O.Z.E cartridge"
+	desc = "Now with 12% alcohol!"
+	icon_state = "cart-bar"
+	access = CART_BARTENDER
 
 /obj/item/cartridge/captain/New()
 	..()

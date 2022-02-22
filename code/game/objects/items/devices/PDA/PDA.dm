@@ -369,6 +369,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Toggle Door'>[PDAIMG(rdoor)]Toggle Remote Door</a></li>"
 					if (cartridge.access & CART_DRONEPHONE)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Drone Phone'>[PDAIMG(dronephone)]Drone Phone</a></li>"
+					if (cartridge.access & CART_BARTENDER)
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Drink Recipe Browser'>[PDAIMG(bucket)]Drink Recipe Browser</a></li>"
 				dat += "<li><a href='byond://?src=[REF(src)];choice=3'>[PDAIMG(atmos)]Atmospheric Scan</a></li>"
 				dat += "<li><a href='byond://?src=[REF(src)];choice=Light'>[PDAIMG(flashlight)][fon ? "Disable" : "Enable"] Flashlight</a></li>"
 				if (pai)
@@ -704,6 +706,30 @@ GLOBAL_LIST_EMPTY(PDAs)
 						var/turf/T = get_turf(loc)
 						if(T)
 							pai.forceMove(T)
+
+//DRINK RECIPE BROWSER=============================
+			if("Drink Recipe Browser")
+				if(cartridge && cartridge.access & CART_BARTENDER)
+					var/option = input(U, "Enter keyword to return a recipe.")
+					if(option)
+						option = lowertext(option)
+						var/list/reagents_required
+						var/found_reagent_name
+						for(var/reagent_name in GLOB.drink_reactions_list)
+							message_admins(reagent_name)
+							if(findtext(reagent_name, option))
+								found_reagent_name = reagent_name
+								reagents_required = GLOB.drink_reactions_list[reagent_name].required_reagents
+								break
+						if(length(reagents_required))
+							to_chat(U, "Reagent found: [found_reagent_name]<br>Required Reagents:<br>")
+							var/reagents_required_string = ""
+							for(var/datum/reagent/r in reagents_required)
+								reagents_required_string += "[initial(r.name)]: [reagents_required[r]]<br>"
+							to_chat(U, reagents_required_string)
+							return
+						else
+							to_chat(U, "Reagent with term: [option] could not be located!")
 
 //LINK FUNCTIONS===================================
 
