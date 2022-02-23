@@ -128,3 +128,20 @@
   - bugfix: '[Omega] Toxins Mix Chamber no longer starts bolted'
   - bugfix: '[Omega] Missing pipe above Security leading into Perma'
   - bugfix: '[Omega] Secure Tech Storage now properly has an area'
+2022-02-23:
+  SandPoot:
+  - bugfix: You know the training targets? You can grab them again now with your own
+      hands, instead of using telekinesis.
+  TripleShades:
+  - rscadd: '[Omega] Trash chute to space in Virology'
+  - rscadd: '[Omega] Trash chute to space in Xenobiology'
+  - rscadd: '[Omega] Airlock leading out to Supermatter cooling pipeline'
+  - rscadd: '[Omega] Two more air pumps to Toxins'
+  - rscadd: '[Omega] Robotics circuitry printer'
+  - rscadd: '[Omega] Windoor to Cargo delivery flaps'
+  - rscdel: '[Omega] Backdoor to Gravity Generator'
+  - rscdel: '[Omega] Bunched up cameras tweak: [Omega] Pipes leading to the Incinerator
+      burn chamber are now black tweak: [Omega] Gravity Generator airlocks are now
+      accessible by engineers tweak: [Omega] Chapel mass driver and mass driver bulkhead
+      are now controlled by one button instead of two'
+  - bugfix: '[Omega] Lawyer''s carpet is no longer airless'
