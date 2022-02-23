@@ -14,6 +14,7 @@
 #define CART_HYDROPONICS		(1<<13)
 #define CART_DRONEPHONE			(1<<14)
 #define CART_BARTENDER			(1<<15)
+#define CART_CHEMISTRY			(1<<16)
 
 
 /obj/item/cartridge
@@ -78,7 +79,7 @@
 /obj/item/cartridge/chemistry
 	name = "\improper ChemWhiz cartridge"
 	icon_state = "cart-chem"
-	access = CART_REAGENT_SCANNER
+	access = CART_REAGENT_SCANNER | CART_CHEMISTRY
 	bot_access_flags = MED_BOT
 
 /obj/item/cartridge/security

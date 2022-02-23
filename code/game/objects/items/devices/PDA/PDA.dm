@@ -371,6 +371,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Drone Phone'>[PDAIMG(dronephone)]Drone Phone</a></li>"
 					if (cartridge.access & CART_BARTENDER)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Drink Recipe Browser'>[PDAIMG(bucket)]Drink Recipe Browser</a></li>"
+					if (cartridge.access & CART_CHEMISTRY)
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Chemistry Recipe Browser'>[PDAIMG(bucket)]Chemistry Recipe Browser</a></li>"
 				dat += "<li><a href='byond://?src=[REF(src)];choice=3'>[PDAIMG(atmos)]Atmospheric Scan</a></li>"
 				dat += "<li><a href='byond://?src=[REF(src)];choice=Light'>[PDAIMG(flashlight)][fon ? "Disable" : "Enable"] Flashlight</a></li>"
 				if (pai)
@@ -710,28 +712,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 //DRINK RECIPE BROWSER=============================
 			if("Drink Recipe Browser")
 				if(cartridge && cartridge.access & CART_BARTENDER)
-					var/option = input(U, "Enter keyword to return a recipe.")
-					if(option)
-						option = lowertext(option)
-						var/list/reagents_required
-						var/found_reagent_name
-						var/required_temp
-						for(var/reagent_name in GLOB.drink_reactions_list)
-							if(findtext(lowertext(reagent_name), option))
-								found_reagent_name = reagent_name
-								reagents_required = GLOB.drink_reactions_list[reagent_name].required_reagents
-								required_temp = GLOB.drink_reactions_list[reagent_name].required_temp
-								break
-						if(length(reagents_required))
-							to_chat(U, "<b>Recipe found: [found_reagent_name]</b>[required_temp ? "<br>Required Temperature: [required_temp]K" : ""]<br>Required Reagents:")
-							var/reagents_required_string = ""
-							for(var/r in reagents_required)
-								var/datum/reagent/reagent = r
-								reagents_required_string += "<br>[initial(reagent.name)]: [reagents_required[r]]"
-							to_chat(U, reagents_required_string)
-							return
-						else
-							to_chat(U, "<span class='warning'>Reagent with term: [option] could not be located!</span>")
+					recipe_search(U, GLOB.drink_reactions_list)
+
+//CHEMISTRY RECIPE BROWSER
+			if("Chemistry Recipe Browser")
+				if(cartridge && cartridge.access & CART_CHEMISTRY)
+					recipe_search(U, GLOB.normalized_chemical_reactions_list)
 
 //LINK FUNCTIONS===================================
 
