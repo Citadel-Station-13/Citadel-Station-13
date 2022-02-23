@@ -731,7 +731,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 							to_chat(U, reagents_required_string)
 							return
 						else
-							to_chat(U, "Reagent with term: [option] could not be located!")
+							to_chat(U, "<span class='warning'>Reagent with term: [option] could not be located!</span>")
 
 //LINK FUNCTIONS===================================
 
