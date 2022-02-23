@@ -10526,6 +10526,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/closet/secure_closet/contraband/armory,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aqC" = (
