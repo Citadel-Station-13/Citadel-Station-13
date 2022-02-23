@@ -34,8 +34,8 @@
 
 		var/datum/chemical_reaction/D = new path()
 		var/list/reaction_ids = list()
-		// store drinks separately for bartender cartridge
-		if(D.id)
+		// store recipes separately for bartender/chemistry cartridges
+		if(D.id && !D.is_secret) // don't show things like secretcatchem or secret sauce
 			var/datum/reagent/r = D.id
 			if(ispath(D.id, /datum/reagent/consumable))
 				GLOB.drink_reactions_list[initial(r.name)] = D

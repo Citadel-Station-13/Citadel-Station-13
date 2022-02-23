@@ -38,6 +38,8 @@
 	var/clear_conversion						//bitflags for clear conversions; REACTION_CLEAR_IMPURE or REACTION_CLEAR_INVERSE
 	var/PurityMin 				= 0.15 		//If purity is below 0.15, it explodes too. Set to 0 to disable this.
 
+	var/is_secret = FALSE 					// If it should show in recipe searchers such as the bartender/chemistry PDA functions
+
 
 /datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, multiplier, specialreact)
 	set waitfor = FALSE
