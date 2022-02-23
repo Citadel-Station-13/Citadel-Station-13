@@ -23307,7 +23307,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/space/basic,
+/turf/open/floor/plating,
 /area/maintenance/port/aft)
 "aKo" = (
 /obj/structure/lattice,
