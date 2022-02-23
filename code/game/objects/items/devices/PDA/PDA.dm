@@ -715,17 +715,19 @@ GLOBAL_LIST_EMPTY(PDAs)
 						option = lowertext(option)
 						var/list/reagents_required
 						var/found_reagent_name
+						var/required_temp
 						for(var/reagent_name in GLOB.drink_reactions_list)
-							message_admins(reagent_name)
-							if(findtext(reagent_name, option))
+							if(findtext(lowertext(reagent_name), option))
 								found_reagent_name = reagent_name
 								reagents_required = GLOB.drink_reactions_list[reagent_name].required_reagents
+								required_temp = GLOB.drink_reactions_list[reagent_name].required_temp
 								break
 						if(length(reagents_required))
-							to_chat(U, "Reagent found: [found_reagent_name]<br>Required Reagents:<br>")
+							to_chat(U, "<b>Recipe found: [found_reagent_name]</b>[required_temp ? "<br>Required Temperature: [required_temp]K" : ""]<br>Required Reagents:")
 							var/reagents_required_string = ""
-							for(var/datum/reagent/r in reagents_required)
-								reagents_required_string += "[initial(r.name)]: [reagents_required[r]]<br>"
+							for(var/r in reagents_required)
+								var/datum/reagent/reagent = r
+								reagents_required_string += "<br>[initial(reagent.name)]: [reagents_required[r]]"
 							to_chat(U, reagents_required_string)
 							return
 						else

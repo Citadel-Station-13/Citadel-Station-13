@@ -14,6 +14,7 @@
 		GLOB.chemical_reagents_list[path] = D
 
 /proc/build_chemical_reactions_list()
+	message_admins("STARTY START START!")
 	//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
 	// It is filtered into multiple lists within a list.
 	// For example:
@@ -26,17 +27,17 @@
 	//Randomized need to go last since they need to check against conflicts with normal recipes
 	var/paths = subtypesof(/datum/chemical_reaction) - typesof(/datum/chemical_reaction/randomized) + subtypesof(/datum/chemical_reaction/randomized)
 	GLOB.chemical_reactions_list = list()
+	GLOB.drink_reactions_list = list()
 
 	for(var/path in paths)
 
 		var/datum/chemical_reaction/D = new path()
 		var/list/reaction_ids = list()
-
 		// store drinks separately for bartender cartridge
 		if(D.id)
-			if(istype(D.id, /datum/reagent/consumable))
+			if(ispath(D.id, /datum/reagent/consumable))
 				var/datum/reagent/consumable/r = D.id
-				GLOB.drink_reactions_list[lowertext(initial(r.name))] = D
+				GLOB.drink_reactions_list[initial(r.name)] = D
 
 		if(D.required_reagents && D.required_reagents.len)
 			for(var/reaction in D.required_reagents)
