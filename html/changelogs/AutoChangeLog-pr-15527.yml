@@ -1,0 +1,7 @@
+author: "TripleShades"
+delete-after: True
+changes: 
+  - rscadd: "[Omega] Additional Solar Panels to both existing arrays"
+  - rscadd: "[Omega] Floor tile underneath library maint airlock"
+  - rscadd: "[Omega] Contraband locker to Armoury"
+  - bugfix: "[Omega] Solar Array SMES Units actually connect to the grid properly now"
