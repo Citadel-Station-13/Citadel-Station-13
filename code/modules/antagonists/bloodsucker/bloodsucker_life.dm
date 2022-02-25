@@ -84,7 +84,7 @@
 		return FALSE
 	if(owner.current.reagents.has_reagent(/datum/reagent/consumable/garlic))
 		return FALSE
-	if(istype(owner.current.get_item_by_slot(SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
+	if(istype(owner.current.get_item_by_slot(ITEM_SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
 		return FALSE
 	owner.current.adjustStaminaLoss(-1.5 + (actual_regen * -7) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
 	owner.current.adjustCloneLoss(-0.1 * (actual_regen * 2) * mult, 0)

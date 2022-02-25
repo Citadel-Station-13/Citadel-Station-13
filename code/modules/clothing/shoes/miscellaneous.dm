@@ -28,7 +28,7 @@
 
 /obj/item/clothing/shoes/combat/sneakboots/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_SHOES)
+	if(slot == ITEM_SLOT_FEET)
 		ADD_TRAIT(user, TRAIT_SILENT_STEP, SHOES_TRAIT)
 
 /obj/item/clothing/shoes/combat/sneakboots/dropped(mob/user)
@@ -112,7 +112,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_SHOES)
+	if(slot == ITEM_SLOT_FEET)
 		if(enabled_waddle)
 			waddle = user.AddComponent(/datum/component/waddling)
 		if(user.mind && HAS_TRAIT(user.mind, TRAIT_CLOWN_MENTALITY))
@@ -340,7 +340,7 @@
 /obj/item/clothing/shoes/wheelys/ui_action_click(mob/user, action)
 	if(!isliving(user))
 		return
-	if(!istype(user.get_item_by_slot(SLOT_SHOES), /obj/item/clothing/shoes/wheelys))
+	if(!istype(user.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes/wheelys))
 		to_chat(user, "<span class='warning'>You must be wearing the wheely-heels to use them!</span>")
 		return
 	if(!(W.is_occupant(user)))
@@ -460,7 +460,7 @@
 
 /obj/item/clothing/shoes/wallwalkers/equipped(mob/user,slot)
 	. = ..()
-	if(slot == SLOT_SHOES)
+	if(slot == ITEM_SLOT_FEET)
 		RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE,.proc/intercept_user_move)
 
 /obj/item/clothing/shoes/wallwalkers/dropped(mob/user)

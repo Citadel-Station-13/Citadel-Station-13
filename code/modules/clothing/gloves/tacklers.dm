@@ -28,7 +28,7 @@
 	if(!ishuman(user))
 		return
 	switch(slot) // I didn't like how it looked
-		if(SLOT_GLOVES)
+		if(ITEM_SLOT_GLOVES)
 			var/mob/living/carbon/human/H = user
 			tackler = H.AddComponent(/datum/component/tackler, stamina_cost=tackle_stam_cost, base_knockdown = base_knockdown, range = tackle_range, speed = tackle_speed, skill_mod = skill_mod, min_distance = min_distance)
 		else
@@ -103,7 +103,7 @@
 
 /obj/item/clothing/gloves/tackler/combat/insulated/infiltrator/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_GLOVES)
+	if(slot == ITEM_SLOT_GLOVES)
 		ADD_TRAIT(user, carrytrait, GLOVE_TRAIT)
 
 /obj/item/clothing/gloves/tackler/combat/insulated/infiltrator/dropped(mob/user)

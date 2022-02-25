@@ -333,7 +333,7 @@ GENETICS SCANNER
 		var/has_stomach = C.dna && !(NOSTOMACH in C.dna.species.species_traits)
 		if(!M.getorganslot(ORGAN_SLOT_EYES))
 			msg += "\t<span class='alert'><b>Subject does not have eyes.</b></span>\n"
-		if(!M.getorganslot(ORGAN_SLOT_EARS))
+		if(!M.getorganslot(ORGAN_ITEM_SLOT_EARS))
 			msg += "\t<span class='alert'><b>Subject does not have ears.</b></span>\n"
 		if(!M.getorganslot(ORGAN_SLOT_BRAIN))
 			msg += "\t<span class='alert'><b>Subject's brain function is non-existent!</b></span>\n"
@@ -436,7 +436,7 @@ GENETICS SCANNER
 				if(R)
 					blood_type = R.name
 
-			
+
 			if((C.scan_blood_volume() + C.integrating_blood) <= (BLOOD_VOLUME_SAFE * C.blood_ratio) && (C.scan_blood_volume() + C.integrating_blood) > (BLOOD_VOLUME_OKAY*C.blood_ratio))
 				msg += "<span class='danger'>LOW [HAS_TRAIT(C, TRAIT_ROBOTIC_ORGANISM) ? "coolant" : "blood"] level [blood_percent] %, [C.scan_blood_volume()] cl[C.integrating_blood? ", with [integrated_blood_percent] % of it integrating, [C.integrating_blood] cl " : ""].</span> <span class='info'>type: [blood_type]</span>\n"
 			else if((C.scan_blood_volume() + C.integrating_blood) <= (BLOOD_VOLUME_OKAY * C.blood_ratio))

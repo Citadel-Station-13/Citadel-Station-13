@@ -158,7 +158,7 @@
 #define ORGAN_SLOT_STOMACH "stomach"
 #define ORGAN_SLOT_STOMACH_AID "stomach_aid"
 #define ORGAN_SLOT_BREATHING_TUBE "breathing_tube"
-#define ORGAN_SLOT_EARS "ears"
+#define ORGAN_ITEM_SLOT_EARS "ears"
 #define ORGAN_SLOT_EYES "eye_sight"
 #define ORGAN_SLOT_LUNGS "lungs"
 #define ORGAN_SLOT_HEART "heart"
