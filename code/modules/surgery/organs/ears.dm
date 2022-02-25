@@ -3,7 +3,7 @@
 	icon_state = "ears"
 	desc = "There are three parts to the ear. Inner, middle and outer. Only one of these parts should be normally visible."
 	zone = BODY_ZONE_HEAD
-	slot = ORGAN_ITEM_SLOT_EARS
+	slot = ORGAN_SLOT_EARS
 	gender = PLURAL
 
 	healing_factor = STANDARD_ORGAN_HEALING
@@ -138,7 +138,7 @@
 	icon_state = "ears-c"
 	desc = "A pair of microphones intended to be installed in an IPC head, that grant the ability to hear."
 	zone = BODY_ZONE_HEAD
-	slot = ORGAN_ITEM_SLOT_EARS
+	slot = ORGAN_SLOT_EARS
 	gender = PLURAL
 	organ_flags = ORGAN_SYNTHETIC
 

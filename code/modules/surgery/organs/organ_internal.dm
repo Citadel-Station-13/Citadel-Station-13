@@ -333,7 +333,7 @@
 		if(only_one)
 			return TRUE
 
-	if(!getorganslot(ORGAN_ITEM_SLOT_EARS))
+	if(!getorganslot(ORGAN_SLOT_EARS))
 		var/obj/item/organ/ears/ears
 		if(dna && dna.species && dna.species.mutantears)
 			ears = new dna.species.mutantears

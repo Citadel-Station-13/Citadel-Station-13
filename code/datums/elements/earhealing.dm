@@ -30,7 +30,7 @@
 		var/mob/living/carbon/user = user_by_item[i]
 		if(HAS_TRAIT(user, TRAIT_DEAF))
 			continue
-		var/obj/item/organ/ears/ears = user.getorganslot(ORGAN_ITEM_SLOT_EARS)
+		var/obj/item/organ/ears/ears = user.getorganslot(ORGAN_SLOT_EARS)
 		if(!ears)
 			continue
 		ears.deaf = max(ears.deaf - 0.25, (ears.damage < ears.maxHealth ? 0 : 1)) // Do not clear deafness if our ears are too damaged

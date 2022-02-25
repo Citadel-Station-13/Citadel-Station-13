@@ -102,7 +102,7 @@
 		if("jamcoolanthud")
 			hud_used.coolant_display.jam(10)
 		if("receporgandamage")
-			adjustOrganLoss(ORGAN_ITEM_SLOT_EARS, rand(10, 20))
+			adjustOrganLoss(ORGAN_SLOT_EARS, rand(10, 20))
 			adjustOrganLoss(ORGAN_SLOT_EYES, rand(10, 20))
 			to_chat(src, "<span class='warning'>Power spike detected in auditory and visual systems!</span>")
 		if("longlimbdisable")

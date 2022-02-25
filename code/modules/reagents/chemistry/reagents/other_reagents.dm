@@ -2670,7 +2670,7 @@
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, -100)
 	M.adjustOrganLoss(ORGAN_SLOT_HEART, -100)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -100)
-	M.adjustOrganLoss(ORGAN_ITEM_SLOT_EARS, -100)
+	M.adjustOrganLoss(ORGAN_SLOT_EARS, -100)
 	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, -100)
 	M.adjustOrganLoss(ORGAN_SLOT_TONGUE, -100)
 	M.adjustOrganLoss(ORGAN_SLOT_EYES, -100)

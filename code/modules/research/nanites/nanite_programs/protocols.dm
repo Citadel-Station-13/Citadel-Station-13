@@ -244,7 +244,7 @@
 			if(eyes)
 				eyes.applyOrganDamage(0.75)
 		if(prob(13))
-			var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_ITEM_SLOT_EARS)
+			var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
 			if(ears)
 				ears.applyOrganDamage(0.75)
 		current_stage++

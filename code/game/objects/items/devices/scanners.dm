@@ -333,7 +333,7 @@ GENETICS SCANNER
 		var/has_stomach = C.dna && !(NOSTOMACH in C.dna.species.species_traits)
 		if(!M.getorganslot(ORGAN_SLOT_EYES))
 			msg += "\t<span class='alert'><b>Subject does not have eyes.</b></span>\n"
-		if(!M.getorganslot(ORGAN_ITEM_SLOT_EARS))
+		if(!M.getorganslot(ORGAN_SLOT_EARS))
 			msg += "\t<span class='alert'><b>Subject does not have ears.</b></span>\n"
 		if(!M.getorganslot(ORGAN_SLOT_BRAIN))
 			msg += "\t<span class='alert'><b>Subject's brain function is non-existent!</b></span>\n"
