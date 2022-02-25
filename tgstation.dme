@@ -2699,6 +2699,7 @@
 #include "code\modules\mob\living\carbon\human\typing_indicator.dm"
 #include "code\modules\mob\living\carbon\human\update_icons.dm"
 #include "code\modules\mob\living\carbon\human\innate_abilities\blobform.dm"
+#include "code\modules\mob\living\carbon\human\innate_abilities\coiling.dm"
 #include "code\modules\mob\living\carbon\human\innate_abilities\customization.dm"
 #include "code\modules\mob\living\carbon\human\innate_abilities\limb_regeneration.dm"
 #include "code\modules\mob\living\carbon\human\species_types\abductor.dm"
