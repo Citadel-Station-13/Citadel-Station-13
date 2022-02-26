@@ -154,3 +154,7 @@
       now'
   timothyteakettle:
   - rscadd: adds snake coiling
+2022-02-26:
+  Putnam3145:
+  - balance: Now slightly easier to get 50,000 points with toxins (50,000 point baseline
+      changed from 200 light range to 175)
