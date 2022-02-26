@@ -82,9 +82,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!owner)
 		stack_trace("Destroy()ing antagonist datum when it has no owner.")
 	else
-		LAZYREMOVE(owner.antag_datums, src)
 //ambition start
-	owner?.do_remove_antag_datum(src)
+		owner?.do_remove_antag_datum(src)
 //ambition end
 	owner = null
 	return ..()
@@ -237,7 +236,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	remove_innate_effects()
 	clear_antag_moodies()
-	LAZYREMOVE(owner.antag_datums, src)
+	owner.do_remove_antag_datum(src)
 	// cit skill
 	for(var/A in skill_modifiers)
 		owner.remove_skill_modifier(GET_SKILL_MOD_ID(A, type))

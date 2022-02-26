@@ -201,7 +201,7 @@
 	. = LAZYLEN(antag_datums)
 	LAZYADD(antag_datums, instanced_datum)
 	if(!.)
-		current.verbs += /mob/proc/edit_objectives_and_ambitions
+		add_verb(current, /mob/proc/edit_objectives_and_ambitions)
 //ambition end
 
 /datum/mind/proc/remove_antag_datum(datum_type)
@@ -218,7 +218,7 @@
 	LAZYREMOVE(antag_datums, instanced_datum)
 	if(. && !LAZYLEN(antag_datums))
 		ambitions = null
-		current.verbs -= /mob/proc/edit_objectives_and_ambitions
+		remove_verb(current, /mob/proc/edit_objectives_and_ambitions)
 //ambition end
 
 /datum/mind/proc/remove_all_antag_datums() //For the Lazy amongst us.
