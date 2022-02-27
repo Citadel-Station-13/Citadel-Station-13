@@ -9,7 +9,7 @@
 	var/filter_size
 	var/filter_color
 
-/datum/component/wearertargeting/phantomthief/Initialize(_x = -2, _y = 0, _size = 0, _color = "#E62111", list/_valid_slots = list(SLOT_GLASSES))
+/datum/component/wearertargeting/phantomthief/Initialize(_x = -2, _y = 0, _size = 0, _color = "#E62111", list/_valid_slots = list(ITEM_SLOT_EYES))
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE)
 		return

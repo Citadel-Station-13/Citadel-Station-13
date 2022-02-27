@@ -34,7 +34,7 @@
 			var/obj/item/WH = H.head
 			H.visible_message("<span class='warning'>[src] bounces off [H]'s [WH.name]!", "<span class='warning'>[src] bounces off your [WH.name], falling to the floor.</span>")
 			return
-		if(H.equip_to_slot_if_possible(src, SLOT_HEAD, FALSE, TRUE))
+		if(H.equip_to_slot_if_possible(src, ITEM_SLOT_HEAD, FALSE, TRUE))
 			H.visible_message("<span class='notice'>[src] lands neatly on [H]'s head!", "<span class='notice'>[src] lands perfectly onto your head!</span>")
 		return
 	if(iscyborg(hit_atom))

@@ -432,7 +432,7 @@
 				var/obj/item/W = C.head
 				C.dropItemToGround(W, TRUE)
 			var/jaqc_latern = new /obj/item/clothing/head/hardhat/pumpkinhead/jaqc
-			C.equip_to_slot(jaqc_latern, SLOT_HEAD, 1, 1)
+			C.equip_to_slot(jaqc_latern, ITEM_SLOT_HEAD, 1, 1)
 		if(4)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"In your body there's something amiss, you'll find it's a chem made by my sis!\"</span>")
 			jacqrunes("In your body there's something amiss, you'll find it's a chem made by my sis!", C)
@@ -449,7 +449,7 @@
 				var/obj/item/W = H.wear_suit
 				H.dropItemToGround(W, TRUE)
 			var/ghost = new /obj/item/clothing/suit/ghost_sheet/sticky
-			H.equip_to_slot(ghost, SLOT_WEAR_SUIT, 1, 1)
+			H.equip_to_slot(ghost, ITEM_SLOT_OCLOTHING, 1, 1)
 	poof()
 
 //Blame Fel

@@ -27,6 +27,9 @@
 
 //INDEXES
 #define COOLDOWN_EMPLOYMENT_CABINET	"employment cabinet"
+#define COOLDOWN_AMBITION	"ambition"
+#define COOLDOWN_OBJECTIVES	"objectives"
+#define COOLDOWN_OBJ_ADMIN_PING	"obj_admin_ping"
 
 //car cooldowns
 #define COOLDOWN_CAR_HONK "car_honk"

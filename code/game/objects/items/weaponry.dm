@@ -1229,7 +1229,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/slapper/on_offered(mob/living/carbon/offerer)
 	. = TRUE
-	
+
 	if(!(locate(/mob/living/carbon) in orange(1, offerer)))
 		visible_message(span_danger("[offerer] raises [offerer.p_their()] arm, looking around for a high-five, but there's no one around!"), \
 			span_warning("You post up, looking for a high-five, but finding no one within range!"), null, 2)

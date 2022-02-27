@@ -23,6 +23,7 @@
 	outfit_important_for_life = /datum/outfit/plasmaman
 
 	species_category = SPECIES_CATEGORY_SKELETON
+	wings_icons = SPECIES_WINGS_SKELETAL
 
 	ass_image = 'icons/ass/assplasma.png'
 

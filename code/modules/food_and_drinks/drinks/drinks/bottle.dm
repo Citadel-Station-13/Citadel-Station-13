@@ -35,7 +35,7 @@
 
 	//If they have a hat/helmet and the user is targeting their head.
 	if(affecting == BODY_ZONE_HEAD)
-		var/obj/item/I = target.get_item_by_slot(SLOT_HEAD)
+		var/obj/item/I = target.get_item_by_slot(ITEM_SLOT_HEAD)
 		if(I)
 			headarmor = I.armor.melee
 
