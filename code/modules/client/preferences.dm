@@ -2138,6 +2138,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 								continue
 							if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
 								snowflake_taur_list[S.name] = path
+							if(S.ignore)
+								continue
 					var/new_taur
 					new_taur = input(user, "Choose your character's tauric body:", "Character Preference") as null|anything in snowflake_taur_list
 					if(new_taur)
