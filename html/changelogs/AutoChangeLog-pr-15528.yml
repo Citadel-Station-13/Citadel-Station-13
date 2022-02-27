@@ -1,0 +1,4 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - refactor: "Kills off SLOT_ in favor of ITEM_SLOT_"
