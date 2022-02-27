@@ -942,6 +942,9 @@
 		. += "[t_He] [t_is] a [spec_trait_examine_font()][dna.custom_species ? dna.custom_species : dna.species.name]</font>"
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, usr, .)
 
+/mob/living/carbon/human/chestonly
+	bodyparts = list(/obj/item/bodypart/chest)
+
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor
 
