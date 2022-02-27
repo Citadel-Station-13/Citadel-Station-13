@@ -1,7 +1,7 @@
 /datum/gear/uniform
 	category = LOADOUT_CATEGORY_UNIFORM
 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_GENERAL
-	slot = SLOT_W_UNIFORM
+	slot = ITEM_SLOT_ICLOTHING
 
 /datum/gear/uniform/suit
 	name = "Black suit"
@@ -636,27 +636,27 @@
 /*Commenting out Until next Christmas or made automatic
 /datum/gear/uniform/christmasmaler
 	name = "Red Masculine Christmas Suit"
-	category = SLOT_W_UNIFORM
+	category = ITEM_SLOT_ICLOTHING
 	path = /obj/item/clothing/under/costume/christmas
 
 /datum/gear/uniform/christmasmaleg
 	name = "Green Masculine Christmas Suit"
-	category = SLOT_W_UNIFORM
+	category = ITEM_SLOT_ICLOTHING
 	path = /obj/item/clothing/under/costume/christmas/green
 
 /datum/gear/uniform/christmasfemaler
 	name = "Red Feminine Christmas Suit"
-	category = SLOT_W_UNIFORM
+	category = ITEM_SLOT_ICLOTHING
 	path = /obj/item/clothing/under/costume/christmas/croptop
 
 /datum/gear/uniform/christmasfemaleg
 	name = "Green Feminine Christmas Suit"
-	category = SLOT_W_UNIFORM
+	category = ITEM_SLOT_ICLOTHING
 	path = /obj/item/clothing/under/costume/christmas/croptop/green
 
 /datum/gear/uniform/pinkstripper
 	name = "Pink stripper outfit"
-	category = SLOT_W_UNIFORM
+	category = ITEM_SLOT_ICLOTHING
 	path = /obj/item/clothing/under/misc/stripper
 	cost = 3
 */
