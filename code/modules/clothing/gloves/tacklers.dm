@@ -6,6 +6,8 @@
 	transfer_prints = TRUE
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = COAT_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	//custom_premium_price = PRICE_EXPENSIVE
 	/// For storing our tackler datum so we can remove it after

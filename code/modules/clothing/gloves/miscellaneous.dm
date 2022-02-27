@@ -9,6 +9,8 @@
 	equip_delay_other = 20
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = COAT_MAX_TEMP_PROTECT
 	strip_mod = 0.9
 	custom_price = PRICE_ALMOST_CHEAP
 
@@ -349,6 +351,8 @@
 	transfer_prints = TRUE
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = COAT_MAX_TEMP_PROTECT
 	strip_mod = 0.9
 
 /obj/item/clothing/gloves/evening/black
