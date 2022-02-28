@@ -29,7 +29,7 @@
 		if(path == prototype && skip_prototype)
 			continue
 		var/datum/sprite_accessory/P = path
-		if((roundstart && initial(P.locked)) || initial(P.ignore))
+		if((roundstart && initial(P.locked)))
 			continue
 		var/datum/sprite_accessory/D = new path()
 
