@@ -158,3 +158,19 @@
   Putnam3145:
   - balance: Now slightly easier to get 50,000 points with toxins (50,000 point baseline
       changed from 200 light range to 175)
+2022-02-28:
+  Arturlang:
+  - rscadd: The limbgrower can make human chest parts that you can build onto into
+      a person.
+  Putnam3145:
+  - rscadd: Configurable weekly high-chaos days
+  SandPoot:
+  - refactor: Kills off SLOT_ in favor of ITEM_SLOT_
+  SandPoot and Crowbar764:
+  - rscadd: TGUI for the player playtimes menu.
+  bunny232:
+  - rscadd: Cold weather gear can now provide insulation against temperatures of up
+      to 57C (330K)
+  timothyteakettle:
+  - rscadd: adds a cartridge for the bartender's PDA that lets them search drink recipes
+  - rscadd: updates chemist cartridge to be able to search all chemical recipes
