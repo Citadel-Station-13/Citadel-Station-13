@@ -1,10 +1,10 @@
 /datum/strippable_item/mob_item_slot/head
 	key = STRIPPABLE_ITEM_HEAD
-	item_slot = SLOT_HEAD
+	item_slot = ITEM_SLOT_HEAD
 
 /datum/strippable_item/mob_item_slot/back
 	key = STRIPPABLE_ITEM_BACK
-	item_slot = SLOT_BACK
+	item_slot = ITEM_SLOT_BACK
 
 /datum/strippable_item/mob_item_slot/back/get_alternate_action(atom/source, mob/user)
 	if(..() == FALSE)
@@ -18,15 +18,15 @@
 
 /datum/strippable_item/mob_item_slot/mask
 	key = STRIPPABLE_ITEM_MASK
-	item_slot = SLOT_WEAR_MASK
+	item_slot = ITEM_SLOT_MASK
 
 /datum/strippable_item/mob_item_slot/neck
 	key = STRIPPABLE_ITEM_NECK
-	item_slot = SLOT_NECK
+	item_slot = ITEM_SLOT_NECK
 
 /datum/strippable_item/mob_item_slot/handcuffs
 	key = STRIPPABLE_ITEM_HANDCUFFS
-	item_slot = SLOT_HANDCUFFED
+	item_slot = ITEM_SLOT_HANDCUFFED
 
 /datum/strippable_item/mob_item_slot/handcuffs/should_show(atom/source, mob/user)
 	if (!iscarbon(source))
@@ -41,7 +41,7 @@
 
 /datum/strippable_item/mob_item_slot/legcuffs
 	key = STRIPPABLE_ITEM_LEGCUFFS
-	item_slot = SLOT_LEGCUFFED
+	item_slot = ITEM_SLOT_LEGCUFFED
 
 /datum/strippable_item/mob_item_slot/legcuffs/should_show(atom/source, mob/user)
 	if (!iscarbon(source))

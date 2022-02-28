@@ -1557,6 +1557,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_check_player_exp()	//Allows admins to determine who the newer players are.
 	set category = "Admin"
 	set name = "Player Playtime"
+
 	if(!check_rights(R_ADMIN))
 		return
 
@@ -1564,12 +1565,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(usr, "<span class='warning'>Tracking is disabled in the server configuration file.</span>")
 		return
 
-	var/list/msg = list()
-	msg += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
-	for(var/client/C in GLOB.clients)
-		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(C.mob)]'>" + C.get_exp_living() + "</a></LI>"
-	msg += "</UL></BODY></HTML>"
-	src << browse(msg.Join(), "window=Player_playtime_check")
+	new /datum/player_playtime(usr)
 
 /obj/effect/temp_visual/fireball
 	icon = 'icons/obj/wizard.dmi'

@@ -174,7 +174,7 @@
 		L.SetView(C.view, TRUE)
 		. |= L
 	C.screen |= .
-	if(!secondary_map)
+	if(!secondary_map && (owner.prefs.parallax != PARALLAX_DISABLE))
 		var/atom/movable/screen/plane_master/parallax_white/PM = locate() in C.screen
 		if(PM)
 			PM.color =  list(

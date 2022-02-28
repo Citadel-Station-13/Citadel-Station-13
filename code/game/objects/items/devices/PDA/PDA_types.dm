@@ -222,6 +222,7 @@
 /obj/item/pda/bar
 	name = "bartender PDA"
 	icon_state = "pda-bartender"
+	default_cartridge = /obj/item/cartridge/bartender
 	inserted_item = /obj/item/pen/fountain
 
 /obj/item/pda/atmos

@@ -77,7 +77,7 @@
 	item_state = "gold_zippo"
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	heat = 1500
 	resistance_flags = FIRE_PROOF
 	light_color = LIGHT_COLOR_FIRE
@@ -404,7 +404,7 @@
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/zuliecloak
 	body_parts_covered = CHEST|GROIN|ARMS
-	slot_flags = SLOT_WEAR_SUIT | ITEM_SLOT_NECK //it's a cloak. it's cosmetic. so why the hell not? what could possibly go wrong?
+	slot_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_NECK //it's a cloak. it's cosmetic. so why the hell not? what could possibly go wrong?
 	mutantrace_variation = NONE
 
 /obj/item/clothing/head/hooded/cloakhood/zuliecloak

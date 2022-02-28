@@ -34,6 +34,7 @@
 /obj/item/target/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(pinnedLoc)
 		pinnedLoc.removeTarget(user)
+	. = ..()
 
 /obj/item/target/syndicate
 	icon_state = "target_s"

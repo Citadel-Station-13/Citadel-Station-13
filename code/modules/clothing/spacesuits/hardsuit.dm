@@ -50,12 +50,12 @@
 		soundloop.stop(user)
 
 /obj/item/clothing/head/helmet/space/hardsuit/item_action_slot_check(slot, mob/user, datum/action/A)
-	if(slot == SLOT_HEAD)
+	if(slot == ITEM_SLOT_HEAD)
 		return 1
 
 /obj/item/clothing/head/helmet/space/hardsuit/equipped(mob/user, slot)
 	..()
-	if(slot != SLOT_HEAD)
+	if(slot != ITEM_SLOT_HEAD)
 		if(suit)
 			suit.RemoveHelmet()
 			soundloop.stop(user)
@@ -118,7 +118,7 @@
 		if(jetpack)
 			to_chat(user, "<span class='warning'>[src] already has a jetpack installed.</span>")
 			return
-		if(src == user.get_item_by_slot(SLOT_WEAR_SUIT)) //Make sure the player is not wearing the suit before applying the upgrade.
+		if(src == user.get_item_by_slot(ITEM_SLOT_OCLOTHING)) //Make sure the player is not wearing the suit before applying the upgrade.
 			to_chat(user, "<span class='warning'>You cannot install the upgrade to [src] while wearing it.</span>")
 			return
 
@@ -130,7 +130,7 @@
 		if(!jetpack)
 			to_chat(user, "<span class='warning'>[src] has no jetpack installed.</span>")
 			return
-		if(src == user.get_item_by_slot(SLOT_WEAR_SUIT))
+		if(src == user.get_item_by_slot(ITEM_SLOT_OCLOTHING))
 			to_chat(user, "<span class='warning'>You cannot remove the jetpack from [src] while wearing it.</span>")
 			return
 
@@ -145,7 +145,7 @@
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
 	..()
 	if(jetpack)
-		if(slot == SLOT_WEAR_SUIT)
+		if(slot == ITEM_SLOT_OCLOTHING)
 			for(var/X in jetpack.actions)
 				var/datum/action/A = X
 				A.Grant(user)
@@ -158,7 +158,7 @@
 			A.Remove(user)
 
 /obj/item/clothing/suit/space/hardsuit/item_action_slot_check(slot, mob/user, datum/action/A)
-	if(slot == SLOT_WEAR_SUIT) //we only give the mob the ability to toggle the helmet if he's wearing the hardsuit.
+	if(slot == ITEM_SLOT_OCLOTHING) //we only give the mob the ability to toggle the helmet if he's wearing the hardsuit.
 		return 1
 
 	//Engineering
@@ -488,7 +488,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/medical/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if (slot == SLOT_HEAD)
+	if (slot == ITEM_SLOT_HEAD)
 		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 		DHUD.add_hud_to(user)
 
@@ -528,7 +528,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if (slot == SLOT_HEAD)
+	if (slot == ITEM_SLOT_HEAD)
 		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
 		DHUD.add_hud_to(user)
 
@@ -702,7 +702,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/ancient/mason/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if (slot == SLOT_HEAD)
+	if (slot == ITEM_SLOT_HEAD)
 		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
 		DHUD.add_hud_to(user)
 		ADD_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "mason_hardsuit")
@@ -726,7 +726,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/ancient/equipped(mob/user, slot)
 	. = ..()
-	if(slot != SLOT_WEAR_SUIT)
+	if(slot != ITEM_SLOT_OCLOTHING)
 		if(listeningTo)
 			UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 		return

@@ -32,6 +32,20 @@
 	can_adjust = FALSE
 	mutantrace_variation = STYLE_DIGITIGRADE //The clown suit must look funny, no taur alpha masks where possible.
 
+/obj/item/clothing/under/rank/civilian/polychromic_clown
+	name = "polychromic clown suit"
+	desc = "<i>'HONK!'</i>"
+	icon_state = "clown"
+	item_state = "clown"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+	mutantrace_variation = STYLE_DIGITIGRADE //The clown suit must look funny, no taur alpha masks where possible.
+	var/list/poly_colors = list("#FF0000", "#FF99FF", "#FFFF00", "#FFFFFF")
+
+/obj/item/clothing/under/rank/civilian/polychromic_clown/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, poly_colors, 4)
+
 /obj/item/clothing/under/rank/civilian/clown/blue
 	name = "blue clown suit"
 	desc = "<i>'BLUE HONK!'</i>"

@@ -34,7 +34,7 @@
 			stacked_spellcasting_by_user -= target
 
 /datum/element/spellcasting/proc/on_equip(datum/source, mob/equipper, slot)
-	if(!(cast_slots & slotdefine2slotbit(slot)))
+	if(!(cast_slots & slot))
 		return
 	users_by_item[source] = equipper
 	if(!stacked_spellcasting_by_user[equipper])

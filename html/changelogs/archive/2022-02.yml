@@ -78,3 +78,83 @@
   '[Timberpoes](https://github.com/Timberpoes)':
   - admin: Re-added the button to the player playtime panel that lets admins toggle
       a player's job playtime exemption status.
+2022-02-19:
+  timothyteakettle:
+  - rscadd: polychromic clown outfit and mask
+2022-02-20:
+  jupyterkat:
+  - refactor: switched equalization method to katmos
+2022-02-21:
+  BlueWildrose and tralezab, Wjohnston, Mey Ha Zah, ArcaneDefense, Jack7D1, Papaporo, Sheits & Mqiib from TG and Yog:
+  - rscadd: TG wing port - All species can now use flight potions and grow wings.
+      Your wing sprite will be based off of what wings you have on your character,
+      or otherwise what species you are if you have no wings.
+  - bugfix: Jellypeople did not call the species parent proc on spec_life. Fixed.
+  Putnam3145:
+  - bugfix: Default features on linux auxmos compile now formatted correctly
+  - bugfix: reinforced plasma glass windows are buildable
+  TripleShades:
+  - rscadd: '[Omega] Gateway shutter button'
+  - rscadd: '[Omega] Signs to the airlocks that lead to space that say SPACE'
+  - rscadd: '[Omega] Air Alarm for the Turbine itself'
+  - rscadd: '[Omega] SMES Unit for the Turbine itself'
+  - rscadd: '[Omega] Firelock to Robotics airlock'
+  - rscadd: '[Omega] Captain''s Office now has a hand teleporter and medal box'
+  - rscadd: '[Omega] Screwdriver to Chemistry'
+  - rscadd: '[Omega] Space Cleaner bottle to Medbay'
+  - rscadd: '[Omega] Limb Grower and Spare Limb Crate to Surgery'
+  - rscadd: '[Omega] Kinkmate in Dorms'
+  - rscadd: '[Omega] Lightbulb fixture to Secure Tech Storage'
+  - rscadd: '[Omega] Armsky is now in the Armoury'
+  - rscdel: '[Omega] Extra automated announcement machine'
+  - rscdel: '[Omega] Wall inside of southwest Solar Array window'
+  - rscdel: '[Omega] Wall inside library maint airlock'
+  - rscdel: '[Omega] Duplicate Robotics airlock tweak: [Omega] HoS gun now spawns
+      in HoS locker instead of Captain''s locker tweak: [Omega] Both Solar Arrays
+      now have more windows tweak: [Omega] PACMAN moved out from behind a Command
+      airlock in Engineering tweak: [Omega] A few cameras so that they''re not sitting
+      improperly on windows tweak: [Omega] Medbay Surgery now has a surgical duffel
+      instead of strewn about tools tweak: [Omega] Security Cell 1 is now properly
+      named and has a bed instead of a chair tweak: [Omega] Toxins scrubber piping
+      now goes through a wall tweak: [Omega] Robotics trash can is now moved to the
+      small hallway between Robotics and Toxins tweak: [Omega] Maint Pool drain moved
+      down a tile so it''s easier to retrieve lost items'
+  - bugfix: '[Omega] Lawyer Office access'
+  - bugfix: '[Omega] Both Solar Arrays are now wired up to power the station properly'
+  - bugfix: '[Omega] Wire leading to the single Supermatter Emitter should now be
+      properly connected and not diagonal'
+  - bugfix: '[Omega] Gateway Maint airlock access'
+  - bugfix: '[Omega] Toxins Launch not being connected to the main air supply'
+  - bugfix: '[Omega] Toxins Mix Chamber no longer starts bolted'
+  - bugfix: '[Omega] Missing pipe above Security leading into Perma'
+  - bugfix: '[Omega] Secure Tech Storage now properly has an area'
+2022-02-23:
+  SandPoot:
+  - bugfix: You know the training targets? You can grab them again now with your own
+      hands, instead of using telekinesis.
+  TripleShades:
+  - rscadd: '[Omega] Trash chute to space in Virology'
+  - rscadd: '[Omega] Trash chute to space in Xenobiology'
+  - rscadd: '[Omega] Airlock leading out to Supermatter cooling pipeline'
+  - rscadd: '[Omega] Two more air pumps to Toxins'
+  - rscadd: '[Omega] Robotics circuitry printer'
+  - rscadd: '[Omega] Windoor to Cargo delivery flaps'
+  - rscdel: '[Omega] Backdoor to Gravity Generator'
+  - rscdel: '[Omega] Bunched up cameras tweak: [Omega] Pipes leading to the Incinerator
+      burn chamber are now black tweak: [Omega] Gravity Generator airlocks are now
+      accessible by engineers tweak: [Omega] Chapel mass driver and mass driver bulkhead
+      are now controlled by one button instead of two'
+  - bugfix: '[Omega] Lawyer''s carpet is no longer airless'
+2022-02-25:
+  TripleShades:
+  - rscadd: '[Omega] Additional Solar Panels to both existing arrays'
+  - rscadd: '[Omega] Floor tile underneath library maint airlock'
+  - rscadd: '[Omega] Contraband locker to Armoury'
+  - bugfix: '[Omega] Solar Array SMES Units actually connect to the grid properly
+      now'
+  timothyteakettle:
+  - rscadd: adds snake coiling
+2022-02-26:
+  Putnam3145:
+  - balance: Now slightly easier to get 50,000 points with toxins (50,000 point baseline
+      changed from 200 light range to 175)

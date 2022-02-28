@@ -719,7 +719,6 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	icon = 'icons/obj/smooth_structures/rplasma_window.dmi'
 	icon_state = "rplasmawindow"
 	dir = FULLTILE_WINDOW_DIR
-	state = PRWINDOW_SECURE
 	max_integrity = 1000
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1

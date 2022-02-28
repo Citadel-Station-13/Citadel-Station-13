@@ -16,6 +16,8 @@ GLOBAL_LIST_EMPTY(singularities)				    //list of all singularities on the stati
 GLOBAL_LIST_EMPTY(grounding_rods)					//list of all grounding rods on the station
 
 GLOBAL_LIST(chemical_reactions_list)				//list of all /datum/chemical_reaction datums. Used during chemical reactions
+GLOBAL_LIST(drink_reactions_list)				//list of all /datum/chemical_reaction datums where the output is of type /datum/reagent/consumable for bartender PDA
+GLOBAL_LIST(normalized_chemical_reactions_list)			//list of all /datum/chemical_reaction datums with actual sane indexing for chemistry PDA
 GLOBAL_LIST(chemical_reagents_list)				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
 GLOBAL_LIST_EMPTY(tech_list)					//list of all /datum/tech datums indexed by id.
 GLOBAL_LIST_EMPTY(surgeries_list)				//list of all surgeries by name, associated with their path.

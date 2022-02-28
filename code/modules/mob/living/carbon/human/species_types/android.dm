@@ -12,3 +12,4 @@
 	species_language_holder = /datum/language_holder/synthetic
 	limbs_id = SPECIES_SYNTH
 	species_category = SPECIES_CATEGORY_ROBOT
+	wings_icons = SPECIES_WINGS_ROBOT

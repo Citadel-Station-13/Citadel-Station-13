@@ -206,7 +206,7 @@
 
 /obj/item/clothing/suit/cardborg/equipped(mob/living/user, slot)
 	..()
-	if(slot == SLOT_WEAR_SUIT)
+	if(slot == ITEM_SLOT_OCLOTHING)
 		disguise(user)
 
 /obj/item/clothing/suit/cardborg/dropped(mob/living/user)
@@ -279,7 +279,9 @@
 	item_state = "labcoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	cold_protection = CHEST|GROIN|ARMS
+	heat_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT	//Space carp like space, so you should too
+	max_heat_protection_temperature = COAT_MAX_TEMP_PROTECT
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/gun/ballistic/automatic/speargun, /obj/item/staff/bostaff)
 	hoodtype = /obj/item/clothing/head/hooded/carp_hood
 
@@ -289,7 +291,9 @@
 	icon_state = "carp_casual"
 	body_parts_covered = HEAD
 	cold_protection = HEAD
+	heat_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = COAT_MAX_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/suit/hooded/ian_costume	//It's Ian, rub his bell- oh god what happened to his inside parts?
@@ -362,7 +366,10 @@
 	item_state = "ran_suit"
 	body_parts_covered = CHEST|GROIN|LEGS
 	flags_inv = HIDEJUMPSUIT|HIDETAUR
-	heat_protection = CHEST|GROIN|LEGS //fluffy tails!
+	cold_protection = CHEST|GROIN|LEGS //fluffy tails!
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT //Bleh, same as winter coat
+	heat_protection = CHEST|GROIN|LEGS
+	max_heat_protection_temperature = COAT_MAX_TEMP_PROTECT
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/head/ran
@@ -419,7 +426,9 @@
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/radio)
 	body_parts_covered = CHEST|ARMS
 	cold_protection = CHEST|GROIN|ARMS
+	heat_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = COAT_MAX_TEMP_PROTECT
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/jacket/flannel
@@ -520,6 +529,7 @@
 	icon_state = "leathercoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	cold_protection = CHEST|GROIN|ARMS|LEGS
+	heat_protection = CHEST|GROIN|ARMS|LEGS
 	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/suit/jacket/puffer
@@ -537,6 +547,7 @@
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN
 	cold_protection = CHEST|GROIN
+	heat_protection = CHEST|GROIN
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 30, "rad" = 0, "fire" = 0, "acid" = 0)
 
 /obj/item/clothing/suit/jacket/miljacket
@@ -655,7 +666,9 @@
 	item_state = "coatwinter"
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
+	heat_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = COAT_MAX_TEMP_PROTECT
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -666,7 +679,9 @@
 	icon_state = "winterhood"
 	body_parts_covered = HEAD
 	cold_protection = HEAD
+	heat_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = COAT_MAX_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
 	rad_flags = RAD_NO_CONTAMINATE
 
@@ -1012,7 +1027,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/ratvar/equipped(mob/living/user,slot)
 	..()
-	if (slot != SLOT_WEAR_SUIT || !real)
+	if (slot != ITEM_SLOT_OCLOTHING || !real)
 		return
 	if (is_servant_of_ratvar(user))
 		return
@@ -1034,7 +1049,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/narsie/equipped(mob/living/user,slot)
 	..()
-	if (slot != SLOT_WEAR_SUIT || !real)
+	if (slot != ITEM_SLOT_OCLOTHING || !real)
 		return
 	if (iscultist(user))
 		return
