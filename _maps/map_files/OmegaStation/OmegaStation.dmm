@@ -36338,6 +36338,7 @@
 	dir = 8
 	},
 /obj/machinery/smartfridge/organ/preloaded{
+	density = 0;
 	pixel_y = -31
 	},
 /turf/open/floor/plasteel,
