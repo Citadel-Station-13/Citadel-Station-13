@@ -1,0 +1,15 @@
+author: "TripleShades"
+delete-after: True
+changes: 
+  - rscadd: "[Omega] Windoors to Atmos flaps"
+  - rscadd: "[Omega] Windoor to Librarian desk"
+  - rscadd: "[Omega] Another belt switch to Cargo"
+  - rscadd: "[Omega] Superfluous decals"
+  - rscadd: "[Omega] Two space heaters"
+  - rscadd: "[Omega] Two empty medkits and health scanners to Robotics"
+  - rscadd: "[Omega] More painting mounts in the Library
+remove: [Omega] Superfluous decals"
+  - bugfix: "[Omega] Organ Fridge no longer invisibly takes up the tile it was shifted from
+tweak: [Omega] Maint garden is no longer spaced at the cost of losing a puddle
+tweak: [Omega] Moves around the blood crate in Medbay to swap with a vendor
+tweak: [Omega] Moved around Library book shelves"
