@@ -2,7 +2,7 @@
 	for(var/turf/open/T as anything in reservation.reserved_turfs)
 		T.Initalize_Atmos(0)
 		T.air.clear()
-	var/turf/open/center_turf = locate(run_loc_floor_bottom_left.x+2,run_loc_floor_bottom_left+2,run_loc_floor_bottom_left.z)
+	var/turf/open/center_turf = locate(run_loc_floor_bottom_left.x+2,run_loc_floor_bottom_left.y+2,run_loc_floor_bottom_left.z)
 	center_turf.air.set_moles(GAS_PLASMA, 32)
 	for(var/i in 1 to 10)
 		SSair.fire()
