@@ -14,7 +14,7 @@
 	center_turf.air.vv_react(center_turf)
 	if(center_turf.air.get_moles(GAS_PLASMA) >= 95)
 		Fail("Gas isn't reacting properly")
-	if(center_turf.air.get_temperature <= 400)
+	if(center_turf.air.return_temperature() <= 400)
 		Fail("Gas temperature isn't changing properly with air reactions")
 	var/obj/effect/hotspot = locate(/obj/effect/hotspot) in center_turf
 	if(!istype(hotspot))
