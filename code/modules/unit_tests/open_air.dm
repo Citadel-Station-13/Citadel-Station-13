@@ -23,3 +23,4 @@
 /datum/unit_test/open_air/Destroy()
 	for(var/turf/T as anything in reservation.reserved_turfs)
 		T.Initalize_Atmos(0)
+	..()
