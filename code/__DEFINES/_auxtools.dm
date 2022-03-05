@@ -3,6 +3,8 @@
 /proc/__detect_auxmos()
 	if (fexists("./libauxmos.so"))
 		return "./libauxmos.so"
+	else if (fexists("./auxtools/libauxmos.so"))
+		return "./auxtools/libauxmos.so"
 	else if (fexists("[world.GetConfig("env", "HOME")]/.byond/bin/libauxmos.so"))
 		return "[world.GetConfig("env", "HOME")]/.byond/bin/libauxmos.so"
 	else
