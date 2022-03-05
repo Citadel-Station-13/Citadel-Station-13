@@ -161,8 +161,12 @@
 			stepsdone += "u"
 			currentsteps += 1
 			currentquality -= 1
-	user.visible_message("<span class='notice'>[user] works the metal on the anvil with their hammer with a loud clang!</span>", \
-						"<span class='notice'>You [stepdone] the metal with a loud clang!</span>")
+	if(currentsteps == 1)
+		user.visible_message("<span class='notice'>[user] starts forging the heated material on the anvil with their hammer with a loud clang!</span>", \
+						"<span class='notice'>You [stepdone] the heated material with a loud clang, starting to forge the workpiece!</span>")
+	else
+		user.visible_message("<span class='notice'>[user] forges the workpiece on the anvil with their hammer with a loud clang!</span>", \
+						"<span class='notice'>You [stepdone] the workpiece with a loud clang!</span>")
 	playsound(src, 'sound/effects/clang2.ogg',40, 2)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/clang2.ogg', 40, 2), 15)
 	if(length(stepsdone) >= 3)
@@ -213,8 +217,10 @@
 					finisheditem.desc =  "It looks to be barely passable as... whatever it's trying to pass for."
 				if(0)
 					finisheditem.desc =  "It looks to be totally average."
-				if(0 to INFINITY)
+				if(0 to 6)
 					finisheditem.desc =  "It looks to be better than average."
+				if(6 to INFINITY)
+					finisheditem.desc =  "It looks to be almost perfect work."
 			workpiece_state = FALSE
 			finisheditem.set_custom_materials(workpiece_material)
 			currentquality = anvilquality
@@ -266,23 +272,23 @@
 	itemqualitymax = 2
 
 /obj/structure/anvil/obtainable/sandstone
-	name = "sandstone brick anvil"
-	desc = "A big block of sandstone. Useable as an anvil."
+	name = "sandstone forging slab"
+	desc = "A big sandstone slab. Useable as an alternative for anvil."
 	custom_materials = list(/datum/material/sandstone=8000)
 	icon_state = "sandvil"
 	anvilquality = -1
 	itemqualitymax = 2
 
 /obj/structure/anvil/obtainable/basalt
-	name = "basalt brick anvil"
-	desc = "A big block of basalt. Useable as an anvil, better than sandstone. Igneous!"
+	name = "basalt forging slab"
+	desc = "A big basalt slab. Useable as an alternative for anvil, better than sandstone. Igneous!"
 	icon_state = "sandvilnoir"
 	anvilquality = -0.5
 	itemqualitymax = 4
 
 /obj/structure/anvil/obtainable/basic
-	name = "anvil"
-	desc = "An anvil. It's got wheels bolted to the bottom."
+	name = "steel anvil"
+	desc = "An industrial-grade steel anvil. It's got wheels bolted to the bottom."
 	anvilquality = 0
 	itemqualitymax = 6
 
@@ -305,11 +311,11 @@
 	if(is_servant_of_ratvar(user))
 		return ..()
 	else
-		to_chat(user, "<span class='neovgre'>KNPXWN, QNJCQNW!</span>") //rot13 then rot22 if anyone wants to decode
+		to_chat(user, "<span class='neovgre'>KNPXWN, QNJCQNW!</span>") //rot13 then rot22 if anyone wants to decode - Doesn't work, not sure if there is an easter egg. (LeadOnTaste)
 
 /obj/structure/anvil/obtainable/narsie
 	name = "runic anvil"
-	desc = "An anvil made of a strange, runic metal."
+	desc = "An anvil made of a strange, runic metal with blood-red grooves running on the whole surface. It emanates pain and suffering."
 	custom_materials = list(/datum/material/runedmetal=8000)
 	icon = 'icons/obj/smith.dmi'
 	icon_state = "evil"
@@ -320,7 +326,7 @@
 	if(iscultist(user))
 		return ..()
 	else
-		to_chat(user, "<span class='narsiesmall'>That is not yours to use!</span>")
+		to_chat(user, "<span class='narsiesmall'>You feel ominous, draining presence behind you. Probably, it would be better to not touch this anvil...</span>")
 
 #undef WORKPIECE_PRESENT
 #undef WORKPIECE_INPROGRESS
