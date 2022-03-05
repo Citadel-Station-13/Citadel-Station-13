@@ -47,7 +47,7 @@
 		return
 	if(!isturf(user.loc))
 		return
-	if(!AStar(user, target.loc, /turf/proc/Distance, changeling.sting_range, simulated_only = 0))
+	if(!get_path_to(user, target, max_distance = changeling.sting_range, simulated_only = FALSE))
 		return
 	return 1
 
