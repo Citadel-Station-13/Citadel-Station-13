@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 /obj/item/radio/headset/ComponentInitialize()
 	. = ..()
 	if (bowman)
-		AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
+		AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
 /obj/item/radio/headset/Initialize()
 	. = ..()
@@ -373,4 +373,4 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = replacetext(name,"headset", "bowman headset")
 	desc = "[desc] Protects ears from flashbangs."
 	bowman = TRUE
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))

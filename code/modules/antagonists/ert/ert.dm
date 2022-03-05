@@ -234,8 +234,8 @@
 			var/obj/O = new C(owner.current)
 			var/list/slots = list (
 				"backpack" = ITEM_SLOT_BACKPACK,
-				"left pocket" = SLOT_L_STORE,
-				"right pocket" = SLOT_R_STORE
+				"left pocket" = ITEM_SLOT_LPOCKET,
+				"right pocket" = ITEM_SLOT_RPOCKET
 			)
 			var/mob/living/carbon/human/H = owner.current
 			var/equipped = H.equip_in_one_of_slots(O, slots)

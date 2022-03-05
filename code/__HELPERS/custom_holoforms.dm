@@ -18,7 +18,7 @@
 	if(length(inhand_equipment))
 		for(var/path in inhand_equipment)
 			var/obj/item/I = new path
-			mannequin.equip_to_slot_if_possible(I, SLOT_HANDS, TRUE, TRUE, TRUE, TRUE)
+			mannequin.equip_to_slot_if_possible(I, ITEM_SLOT_HANDS, TRUE, TRUE, TRUE, TRUE)
 
 
 	var/icon/combined = new

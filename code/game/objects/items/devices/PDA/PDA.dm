@@ -369,6 +369,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Toggle Door'>[PDAIMG(rdoor)]Toggle Remote Door</a></li>"
 					if (cartridge.access & CART_DRONEPHONE)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Drone Phone'>[PDAIMG(dronephone)]Drone Phone</a></li>"
+					if (cartridge.access & CART_BARTENDER)
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Drink Recipe Browser'>[PDAIMG(bucket)]Drink Recipe Browser</a></li>"
+					if (cartridge.access & CART_CHEMISTRY)
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Chemistry Recipe Browser'>[PDAIMG(bucket)]Chemistry Recipe Browser</a></li>"
 				dat += "<li><a href='byond://?src=[REF(src)];choice=3'>[PDAIMG(atmos)]Atmospheric Scan</a></li>"
 				dat += "<li><a href='byond://?src=[REF(src)];choice=Light'>[PDAIMG(flashlight)][fon ? "Disable" : "Enable"] Flashlight</a></li>"
 				if (pai)
@@ -704,6 +708,16 @@ GLOBAL_LIST_EMPTY(PDAs)
 						var/turf/T = get_turf(loc)
 						if(T)
 							pai.forceMove(T)
+
+//DRINK RECIPE BROWSER=============================
+			if("Drink Recipe Browser")
+				if(cartridge && cartridge.access & CART_BARTENDER)
+					recipe_search(U, GLOB.drink_reactions_list)
+
+//CHEMISTRY RECIPE BROWSER
+			if("Chemistry Recipe Browser")
+				if(cartridge && cartridge.access & CART_CHEMISTRY)
+					recipe_search(U, GLOB.normalized_chemical_reactions_list)
 
 //LINK FUNCTIONS===================================
 

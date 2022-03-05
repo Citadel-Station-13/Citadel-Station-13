@@ -500,7 +500,7 @@ SUBSYSTEM_DEF(job)
 			tcg_cards = N.client.prefs.tcg_cards
 	if(tcg_cards)
 		var/obj/item/tcgcard_binder/binder = new(get_turf(H))
-		H.equip_to_slot_if_possible(binder, SLOT_IN_BACKPACK, disable_warning = TRUE, bypass_equip_delay_self = TRUE)
+		H.equip_to_slot_if_possible(binder, ITEM_SLOT_BACKPACK, disable_warning = TRUE, bypass_equip_delay_self = TRUE)
 		for(var/card_type in N.client.prefs.tcg_cards)
 			if(card_type)
 				if(islist(H.client.prefs.tcg_cards[card_type]))
@@ -710,9 +710,9 @@ SUBSYSTEM_DEF(job)
 				permitted = FALSE
 			if(G.donoritem && !G.donator_ckey_check(the_mob.client.ckey))
 				permitted = FALSE
-			if(!equipbackpackstuff && G.slot == SLOT_IN_BACKPACK)//snowflake check since plopping stuff in the backpack doesnt work for pre-job equip loadout stuffs
+			if(!equipbackpackstuff && G.slot == ITEM_SLOT_BACKPACK)//snowflake check since plopping stuff in the backpack doesnt work for pre-job equip loadout stuffs
 				permitted = FALSE
-			if(equipbackpackstuff && G.slot != SLOT_IN_BACKPACK)//ditto
+			if(equipbackpackstuff && G.slot != ITEM_SLOT_BACKPACK)//ditto
 				permitted = FALSE
 			if(!permitted)
 				continue
@@ -749,7 +749,7 @@ SUBSYSTEM_DEF(job)
 							I.forceMove(get_turf(C))
 						else
 							qdel(I)
-				else if(!M.equip_to_slot_if_possible(I, SLOT_IN_BACKPACK, disable_warning = TRUE, bypass_equip_delay_self = TRUE)) // Otherwise, try to put it in the backpack
+				else if(!M.equip_to_slot_if_possible(I, ITEM_SLOT_BACKPACK, disable_warning = TRUE, bypass_equip_delay_self = TRUE)) // Otherwise, try to put it in the backpack
 					if(can_drop)
 						I.forceMove(get_turf(M)) // If everything fails, just put it on the floor under the mob.
 					else
