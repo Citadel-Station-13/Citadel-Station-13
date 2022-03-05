@@ -11,6 +11,7 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	flags_1 = NO_SCREENTIPS_1
 
 	/// Minimum explosion power to break tile
 	var/explosion_power_break_tile = EXPLOSION_POWER_FLOOR_TILE_BREAK
