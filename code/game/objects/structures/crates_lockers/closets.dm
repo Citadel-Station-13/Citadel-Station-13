@@ -110,10 +110,10 @@
 	if(HAS_TRAIT(user, TRAIT_SKITTISH))
 		. += "<span class='notice'>If you bump into [p_them()] while running, you will jump inside.</span>"
 
-/obj/structure/closet/CanPass(atom/movable/mover, turf/target)
+/obj/structure/closet/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(wall_mounted)
 		return TRUE
-	return !density
 
 /obj/structure/closet/proc/can_open(mob/living/user, force = FALSE)
 	if(force)

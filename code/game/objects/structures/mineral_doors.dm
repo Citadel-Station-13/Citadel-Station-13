@@ -53,10 +53,10 @@
 /obj/structure/mineral_door/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	return TryToSwitchState(user)
 
-/obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target)
+/obj/structure/mineral_door/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
-	return !density
 
 /obj/structure/mineral_door/proc/TryToSwitchState(atom/user)
 	if(isSwitchingStates)

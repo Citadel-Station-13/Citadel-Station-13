@@ -10,9 +10,11 @@
 	var/broken = 0 //similar to machinery's stat BROKEN
 	layer = BELOW_OBJ_LAYER
 	//ricochets on structures commented out for now because there's a lot of structures that /shouldnt/ be ricocheting and those need to be reviewed first
+	//With the addition of [pass_flags_self] the ricocheting of structures /shouldnt/ happen by default thus the existing code could be uncommented out - Solaris-Shade
 	//flags_1 = DEFAULT_RICOCHET_1
 	//flags_ricochet = RICOCHET_HARD
 	//ricochet_chance_mod = 0.5
+	pass_flags_self = PASSSTRUCTURE
 
 /obj/structure/Initialize()
 	if (!armor)
@@ -114,4 +116,4 @@
 				return  "<span class='warning'>It's falling apart!</span>"
 
 /obj/structure/rust_heretic_act()
-	take_damage(500, BRUTE, "melee", 1) 
+	take_damage(500, BRUTE, "melee", 1)

@@ -68,7 +68,7 @@
 		else
 			CRASH("Invalid rediretion mode [redirection_mode]")
 
-/mob/living/bullet_act(obj/item/projectile/P, def_zone)
+/mob/living/bullet_act(obj/item/projectile/P, def_zone, piercing_hit = FALSE)
 	var/totaldamage = P.damage
 	var/final_percent = 0
 	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
@@ -81,7 +81,7 @@
 		if(returned & BLOCK_REDIRECTED)
 			return BULLET_ACT_FORCE_PIERCE
 		if(returned & BLOCK_SUCCESS)
-			P.on_hit(src, final_percent, def_zone)
+			P.on_hit(src, final_percent, def_zone, piercing_hit)
 			return BULLET_ACT_BLOCK
 		totaldamage = block_calculate_resultant_damage(totaldamage, returnlist)
 	var/armor = run_armor_check(def_zone, P.flag, null, null, P.armour_penetration, null)

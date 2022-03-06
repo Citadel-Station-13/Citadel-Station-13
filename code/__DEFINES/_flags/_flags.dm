@@ -104,6 +104,7 @@ GLOBAL_LIST_INIT(bitflags, list(
 #define PASSBLOB		(1<<3)
 #define PASSMOB			(1<<4)
 #define PASSCLOSEDTURF	(1<<5)
+/// Let thrown things past us. **ONLY MEANINGFUL ON pass_flags_self!**
 #define LETPASSTHROW	(1<<6)
 
 //Movement Types
@@ -111,8 +112,8 @@ GLOBAL_LIST_INIT(bitflags, list(
 #define FLYING				(1<<1)
 #define VENTCRAWLING		(1<<2)
 #define FLOATING			(1<<3)
-///When moving, will Bump()/Cross()/Uncross() everything, but won't be stopped.
-#define UNSTOPPABLE			(1<<4)
+///When moving, will Bump()/Cross()/Uncross() everything, but won't stop or Bump() anything.
+#define PHASING				(1<<4)
 ///Applied if you're crawling around on the ground/resting.
 #define CRAWLING			(1<<5)
 

@@ -19,10 +19,10 @@
 	icon_state = "table"
 	density = TRUE
 	anchored = TRUE
+	pass_flags_self = PASSTABLE | LETPASSTHROW
 	layer = TABLE_LAYER
 	climbable = TRUE
 	obj_flags = CAN_BE_HIT|SHOVABLE_ONTO
-	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.")
 	attack_hand_speed = CLICK_CD_MELEE
 	attack_hand_is_action = TRUE
 	var/frame = /obj/structure/table_frame
@@ -99,15 +99,14 @@
 /obj/structure/table/attack_tk()
 	return FALSE
 
-/obj/structure/table/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSTABLE))
-		return 1
+/obj/structure/table/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(.)
+		return
 	if(mover.throwing)
-		return 1
+		return TRUE
 	if(locate(/obj/structure/table) in get_turf(mover))
-		return 1
-	else
-		return !density
+		return TRUE
 
 /obj/structure/table/CanAStarPass(ID, dir, caller)
 	. = !density
@@ -685,7 +684,7 @@
 	layer = TABLE_LAYER
 	density = TRUE
 	anchored = TRUE
-	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.
+	pass_flags_self = LETPASSTHROW //You can throw objects over this, despite it's density.
 	max_integrity = 20
 	attack_hand_speed = CLICK_CD_MELEE
 	attack_hand_is_action = TRUE
@@ -701,12 +700,6 @@
 		return 1
 	else
 		return 0
-
-/obj/structure/rack/CanAStarPass(ID, dir, caller)
-	. = !density
-	if(ismovable(caller))
-		var/atom/movable/mover = caller
-		. = . || (mover.pass_flags & PASSTABLE)
 
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
 	. = ..()
