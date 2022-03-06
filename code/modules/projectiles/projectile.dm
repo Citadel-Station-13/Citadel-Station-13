@@ -369,7 +369,7 @@
  * Furthermore, this proc shouldn't check can_hit_target - this should only be called if can hit target is already checked.
  * Also, we select_target to find what to process_hit first.
  */
-/obj/projectile/proc/Impact(atom/A)
+/obj/item/projectile/proc/Impact(atom/A)
 	if(!trajectory)
 		qdel(src)
 		return FALSE
@@ -467,7 +467,7 @@
  * 4. Turf
  * 5. Nothing
  */
-/obj/projectile/proc/select_target(turf/T, atom/target)
+/obj/item/projectile/proc/select_target(turf/T, atom/target)
 	// 1. original
 	if(can_hit_target(original, TRUE, FALSE))
 		return original
@@ -499,7 +499,7 @@
 
 //Returns true if the target atom is on our current turf and above the right layer
 //If direct target is true it's the originally clicked target.
-/obj/projectile/proc/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE)
+/obj/item/projectile/proc/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE)
 	if(QDELETED(target) || impacted[target])
 		return FALSE
 	if(!ignore_loc && (loc != target.loc))
@@ -538,7 +538,7 @@
  * In impact there's more code for selecting WHAT to hit
  * So this proc is more of checking if we should hit something at all BY having an atom cross us.
  */
-/obj/projectile/proc/scan_crossed_hit(atom/movable/A)
+/obj/item/projectile/proc/scan_crossed_hit(atom/movable/A)
 	if(can_hit_target(A, direct_target = (A == original)))
 		Impact(A)
 
@@ -547,7 +547,7 @@
  *
  * This proc is a little high in overhead but allows us to not snowflake CanPass in living and other things.
  */
-/obj/projectile/proc/scan_moved_turf()
+/obj/item/projectile/proc/scan_moved_turf()
 	// Optimally, we scan: mobs --> objs --> turf for impact
 	// but, overhead is a thing and 2 for loops every time it moves is a no-go.
 	// realistically, since we already do select_target in impact, we can not do that
@@ -566,7 +566,7 @@
 /**
  * Projectile crossed: When something enters a projectile's tile, make sure the projectile hits it if it should be hitting it.
  */
-/obj/projectile/Crossed(atom/movable/AM)
+/obj/item/projectile/Crossed(atom/movable/AM)
 	. = ..()
 	scan_crossed_hit(AM)
 
@@ -574,7 +574,7 @@
  * Projectile can pass through
  * Used to not even attempt to Bump() or fail to Cross() anything we already hit.
  */
-/obj/projectile/CanPassThrough(atom/blocker, turf/target, blocker_opinion)
+/obj/item/projectile/CanPassThrough(atom/blocker, turf/target, blocker_opinion)
 	return impacted[blocker]? TRUE : ..()
 
 /**
@@ -586,7 +586,7 @@
  * Scan turf we're now in for anything we can/should hit. This is useful for hitting non dense objects the user
  * directly clicks on, as well as for PHASING projectiles to be able to hit things at all as they don't ever Bump().
  */
-/obj/projectile/Moved(atom/OldLoc, Dir)
+/obj/item/projectile/Moved(atom/OldLoc, Dir)
 	. = ..()
 	if(!fired)
 		return
@@ -601,7 +601,7 @@
  * NOT meant to be a pure proc, since this replaces prehit() which was used to do things.
  * Return PROJECTILE_DELETE_WITHOUT_HITTING to delete projectile without hitting at all!
  */
-/obj/projectile/proc/prehit_pierce(atom/A)
+/obj/item/projectile/proc/prehit_pierce(atom/A)
 	if(projectile_phasing & A.pass_flags_self)
 		return PROJECTILE_PIERCE_PHASE
 	if(projectile_piercing & A.pass_flags_self)

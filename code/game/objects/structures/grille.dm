@@ -127,7 +127,7 @@
 
 /obj/structure/grille/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-	if(!. && istype(mover, /obj/projectile))
+	if(!. && istype(mover, /obj/item/projectile))
 		return prob(30)
 
 /obj/structure/grille/CanAStarPass(ID, dir, caller)

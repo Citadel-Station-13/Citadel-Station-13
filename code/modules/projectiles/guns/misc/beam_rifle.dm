@@ -490,7 +490,7 @@
 	if(!QDELETED(target))
 		handle_impact(target)
 
-/obj/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE, piercing_hit = FALSE)
+/obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE, piercing_hit = FALSE)
 	handle_hit(target, piercing_hit)
 	. = ..()
 
@@ -522,9 +522,9 @@
 	hitscan_light_intensity = 0
 	hitscan_light_color_override = "#99ff99"
 
-/obj/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit_pierce(atom/target)
+/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit_pierce(atom/target)
 	return PROJECTILE_DELETE_WITHOUT_HITTING
 
-/obj/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit()
+/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit()
 	qdel(src)
 	return BULLET_ACT_BLOCK

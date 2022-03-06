@@ -28,7 +28,7 @@
 		arm = starting.Beam(src, icon_state = "curse[handedness]", time = INFINITY, maxdistance = INFINITY, beam_type=/obj/effect/ebeam/curse_arm)
 	..()
 
-/obj/projectile/curse_hand/prehit_pierce(atom/target)
+/obj/item/projectile/curse_hand/prehit_pierce(atom/target)
 	return (target == original)? PROJECTILE_PIERCE_NONE : PROJECTILE_PIERCE_PHASE
 
 /obj/item/projectile/curse_hand/Destroy()
