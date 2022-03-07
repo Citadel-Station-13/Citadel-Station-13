@@ -90,7 +90,7 @@
 
 /datum/reagent/clf3/define_gas()
 	var/datum/gas/G = ..()
-	G.enthalpy = -163200
+	G.fire_energy_released = -163200
 	G.oxidation_temperature = T0C - 50
 	return G
 
@@ -167,7 +167,7 @@
 
 /datum/reagent/phlogiston/define_gas()
 	var/datum/gas/G = ..()
-	G.enthalpy = FIRE_PLASMA_ENERGY_RELEASED / 100
+	G.fire_energy_released = FIRE_PLASMA_ENERGY_RELEASED / 100
 	G.fire_products = list(GAS_O2 = 0.25, GAS_METHANE = 0.75) // meanwhile this is just magic
 	G.fire_burn_rate = 1
 	G.fire_temperature = T20C+1
