@@ -926,7 +926,7 @@
 			create_brother(H.loc)
 
 /datum/species/golem/cardboard/proc/create_brother(var/location)
-	new /obj/effect/mob_spawn/human/golem/servant(location, /datum/species/golem/cardboard, owner)
+	new /obj/structure/ghost_role_spawner/golem/servant(location, /datum/species/golem/cardboard, owner)
 	last_creation = world.time
 
 /datum/species/golem/leather

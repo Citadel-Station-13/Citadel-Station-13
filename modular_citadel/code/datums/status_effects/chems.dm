@@ -618,7 +618,7 @@
 	if(owner.mind.assigned_role == "Chaplain")
 		deltaResist *= 1.2
 	//Command staff has authority,
-	if(owner.mind.assigned_role in GLOB.command_positions)
+	if(owner.mind.assigned_role in SSjob.GetDepartmentJobNames(/datum/department/command))
 		deltaResist *= 1.1
 	//Chemists should be familiar with drug effects
 	if(owner.mind.assigned_role == "Chemist")

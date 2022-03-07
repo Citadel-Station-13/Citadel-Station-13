@@ -37,10 +37,10 @@
 	player_mind.active = 1
 
 	var/list/spawn_locs = list()
-	for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
+	for(var/atom/movable/landmark/carpspawn/L in GLOB.landmarks_list)
 		if(isturf(L.loc))
 			spawn_locs += L.loc
-	for(var/obj/effect/landmark/loneopspawn/L in GLOB.landmarks_list)
+	for(var/atom/movable/landmark/loneopspawn/L in GLOB.landmarks_list)
 		if(isturf(L.loc))
 			spawn_locs += L.loc
 

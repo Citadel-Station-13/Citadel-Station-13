@@ -303,7 +303,7 @@
 		return 0
 
 	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Praetorian","Hunter","Sentinel","Drone","Larva")
-	var/obj/effect/landmark/spawn_here = GLOB.xeno_spawn.len ? pick(GLOB.xeno_spawn) : null
+	var/atom/movable/landmark/spawn_here = GLOB.xeno_spawn.len ? pick(GLOB.xeno_spawn) : null
 	var/mob/living/carbon/alien/new_xeno
 	switch(alien_caste)
 		if("Queen")
@@ -321,7 +321,7 @@
 		else
 			return 0
 	if(!spawn_here)
-		SSjob.SendToLateJoin(new_xeno, FALSE)
+		SSjob.SendToLatejoin(new_xeno)
 
 	new_xeno.ckey = ckey
 	var/msg = "<span class='notice'>[key_name_admin(usr)] has spawned [ckey] as a filthy xeno [alien_caste].</span>"
@@ -380,7 +380,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 						return
 
 				if(!T)
-					SSjob.SendToLateJoin(new_xeno, FALSE)
+					SSjob.SendToLatejoin(new_xeno)
 
 				//Now to give them their mind back.
 				G_found.mind.transfer_to(new_xeno)	//be careful when doing stuff like this! I've already checked the mind isn't in use
@@ -395,7 +395,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		else if(findtext(G_found.real_name,"monkey"))
 			if(alert("This character appears to have been a monkey. Would you like to respawn them as such?",,"Yes","No")=="Yes")
 				var/mob/living/carbon/monkey/new_monkey = new
-				SSjob.SendToLateJoin(new_monkey)
+				SSjob.SendToLatejoin(new_monkey)
 				G_found.mind.transfer_to(new_monkey)	//be careful when doing stuff like this! I've already checked the mind isn't in use
 				G_found.transfer_ckey(new_monkey, FALSE)
 				to_chat(new_monkey, "You have been fully respawned. Enjoy the game.")
@@ -407,7 +407,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	//Ok, it's not a xeno or a monkey. So, spawn a human.
 	var/mob/living/carbon/human/new_character = new//The mob being spawned.
-	SSjob.SendToLateJoin(new_character)
+	SSjob.SendToLatejoin(new_character)
 
 	var/datum/data/record/record_found			//Referenced to later to either randomize or not randomize the character.
 	if(G_found.mind && !G_found.mind.active)	//mind isn't currently in use by someone/something
@@ -450,12 +450,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/player_key = G_found.key
 
 	//Now for special roles and equipment.
-	var/datum/antagonist/traitor/traitordatum = new_character.mind.has_antag_datum(/datum/antagonist/traitor)
-	if(traitordatum)
-		SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
-		traitordatum.equip()
-
-
 	switch(new_character.mind.special_role)
 		if(ROLE_WIZARD)
 			new_character.forceMove(pick(GLOB.wizardstart))
@@ -467,7 +461,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			N.equip_op()
 		if(ROLE_NINJA)
 			var/list/ninja_spawn = list()
-			for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
+			for(var/atom/movable/landmark/carpspawn/L in GLOB.landmarks_list)
 				ninja_spawn += L
 			var/datum/antagonist/ninja/ninjadatum = new_character.mind.has_antag_datum(/datum/antagonist/ninja)
 			ninjadatum.equip_space_ninja()
@@ -481,7 +475,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				if("AI")
 					new_character = new_character.AIize()
 				else
-					SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)//Or we simply equip them.
+					SSjob.EquipPlayer(new_character, new_character.mind.assigned_role, TRUE, null, null, TRUE, TRUE)//Or we simply equip them.
+
+	var/datum/antagonist/traitor/traitordatum = new_character.mind.has_antag_datum(/datum/antagonist/traitor)
+	if(traitordatum)
+		traitordatum.equip()
 
 	//Announces the character on all the systems, based on the record.
 	if(!issilicon(new_character))//If they are not a cyborg/AI.

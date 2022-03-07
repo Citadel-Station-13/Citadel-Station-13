@@ -3,10 +3,11 @@
 
 #define JOB_MODIFICATION_MAP_NAME "OmegaStation"
 
+#warn deal with this
+
 /datum/job/New()
 	..()
 	MAP_JOB_CHECK
-	supervisors = "the captain and the head of personnel"
 
 /datum/outfit/job/New()
 	..()
@@ -20,12 +21,10 @@
 /datum/job/captain/New()
 	..()
 	MAP_JOB_CHECK
-	supervisors = "Nanotrasen and Central Command"
 
 /datum/job/hop/New()
 	..()
 	MAP_JOB_CHECK
-	supervisors = "the captain and Central Command"
 
 /datum/job/hop/get_access()
 	MAP_JOB_CHECK_BASE

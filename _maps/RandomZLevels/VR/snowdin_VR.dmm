@@ -210,7 +210,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/landmark/vr_spawn/snowdin,
+/atom/movable/landmark/vr_spawn/snowdin,
 /obj/item/bedsheet/purple,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/post/dorm)
@@ -256,7 +256,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/landmark/vr_spawn/snowdin,
+/atom/movable/landmark/vr_spawn/snowdin,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/post/dorm)
 "aY" = (
@@ -299,7 +299,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/landmark/vr_spawn/snowdin,
+/atom/movable/landmark/vr_spawn/snowdin,
 /obj/item/paper/crumpled/ruins/snowdin/dontdeadopeninside,
 /obj/item/bedsheet/green,
 /turf/open/floor/wood,
@@ -628,7 +628,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/snowdin/post/kitchen)
 "bM" = (
-/obj/effect/landmark/vr_spawn/snowdin,
+/atom/movable/landmark/vr_spawn/snowdin,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/snowdin/post/kitchen)
@@ -1823,7 +1823,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/landmark/vr_spawn/snowdin,
+/atom/movable/landmark/vr_spawn/snowdin,
 /obj/item/bedsheet/red,
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
@@ -2537,12 +2537,12 @@
 /area/awaymission/snowdin/post/gateway)
 "fH" = (
 /obj/structure/bed,
-/obj/effect/landmark/vr_spawn/snowdin,
+/atom/movable/landmark/vr_spawn/snowdin,
 /obj/item/bedsheet/nanotrasen,
 /turf/open/floor/carpet,
 /area/awaymission/snowdin/post/dorm)
 "fI" = (
-/obj/effect/landmark/vr_spawn/snowdin,
+/atom/movable/landmark/vr_spawn/snowdin,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
@@ -2906,7 +2906,7 @@
 /area/awaymission/snowdin/post/gateway)
 "gw" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/effect/landmark/vr_spawn/snowdin,
+/atom/movable/landmark/vr_spawn/snowdin,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
@@ -2916,7 +2916,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/landmark/vr_spawn/snowdin,
+/atom/movable/landmark/vr_spawn/snowdin,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
@@ -3270,7 +3270,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/obj/effect/landmark/vr_spawn/snowdin,
+/atom/movable/landmark/vr_spawn/snowdin,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "hm" = (
@@ -3283,7 +3283,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/obj/effect/landmark/vr_spawn/snowdin,
+/atom/movable/landmark/vr_spawn/snowdin,
 /obj/machinery/holopad,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -3295,7 +3295,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/landmark/vr_spawn/snowdin,
+/atom/movable/landmark/vr_spawn/snowdin,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "ho" = (
@@ -3542,7 +3542,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "hR" = (
-/obj/effect/landmark/vr_spawn/snowdin,
+/atom/movable/landmark/vr_spawn/snowdin,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
@@ -3553,7 +3553,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/landmark/vr_spawn/snowdin,
+/atom/movable/landmark/vr_spawn/snowdin,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -3562,7 +3562,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/effect/landmark/vr_spawn/snowdin,
+/atom/movable/landmark/vr_spawn/snowdin,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	piping_layer = 3;
@@ -4346,7 +4346,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/landmark/vr_spawn/snowdin,
+/atom/movable/landmark/vr_spawn/snowdin,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/garage)
@@ -4571,7 +4571,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "jZ" = (
-/obj/effect/landmark/vr_spawn/snowdin,
+/atom/movable/landmark/vr_spawn/snowdin,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

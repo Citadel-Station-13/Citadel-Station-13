@@ -121,7 +121,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/lavaland/powered/seedvault)
 "t" = (
-/obj/effect/mob_spawn/human/seed_vault,
+/obj/structure/ghost_role_spawner/seed_vault,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/lavaland/powered/seedvault)
 "u" = (

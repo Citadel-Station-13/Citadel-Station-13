@@ -96,11 +96,11 @@
 		if("infinite_sec")
 			if(!is_debugger)
 				return
-			var/datum/job/J = SSjob.GetJob("Security Officer")
+			var/datum/job/J = SSjob.GetJobName("Security Officer")
 			if(!J)
 				return
 			J.total_positions = -1
-			J.spawn_positions = -1
+			J.roundstart_positions = -1
 			message_admins("[key_name_admin(holder)] has removed the cap on security officers.")
 		//Buttons for helpful stuff. This is where people land in the tgui
 		if("clear_virus")

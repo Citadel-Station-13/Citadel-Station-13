@@ -132,14 +132,14 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_mob_realname_dsc(mob/A,mob/B)
 	return sorttext(A.real_name,B.real_name)
 
-/proc/cmp_job_display_asc(datum/job/A, datum/job/B)
-	return A.display_order - B.display_order
-
 /proc/cmp_reagents_asc(datum/reagent/a, datum/reagent/b)
 	return sorttext(initial(b.name),initial(a.name))
 
 /proc/cmp_typepaths_asc(A, B)
 	return sorttext("[B]","[A]")
+
+/proc/cmp_department_priority_dsc(datum/department/A, datum/department/B)
+	return B.priority - A.priority
 
 /proc/cmp_playtime(list/A, list/B)
 	return A["playtime"] - B["playtime"]

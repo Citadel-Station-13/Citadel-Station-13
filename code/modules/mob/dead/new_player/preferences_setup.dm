@@ -48,11 +48,11 @@
 
 	if(current_tab == LOADOUT_TAB)
 		//give it its loadout if not on the appearance tab
-		SSjob.equip_loadout(parent.mob, mannequin, FALSE, bypass_prereqs = TRUE, can_drop = FALSE)
+		SSjob.EquipLoadout(mannequin, TRUE, null, src, parent.ckey)
 	else
 		if(previewJob && equip_job)
 			mannequin.job = previewJob.title
-			previewJob.equip(mannequin, TRUE, preference_source = parent)
+			previewJob.equip(mannequin, TRUE, prefs = src)
 
 	mannequin.regenerate_icons()
 
@@ -65,6 +65,6 @@
 	var/datum/job/highest_job
 	for(var/job in job_preferences)
 		if(job_preferences["[job]"] > highest_pref)
-			highest_job = SSjob.GetJob(job)
+			highest_job = SSjob.GetJobName(job)
 			highest_pref = job_preferences["[job]"]
 	return highest_job

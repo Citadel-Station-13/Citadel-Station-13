@@ -150,7 +150,7 @@
 /datum/mapGeneratorModule/snow/randIceRocks
 	spawnableAtoms = list(/obj/structure/flora/rock/icy = 5, /obj/structure/flora/rock/pile/icy = 5)
 
-/obj/effect/landmark/mapGenerator/snowy
+/atom/movable/landmark/mapGenerator/snowy
 	mapGeneratorType = /datum/mapGenerator/snowy
 	endTurfX = 159
 	endTurfY = 157

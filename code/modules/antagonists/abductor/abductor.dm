@@ -19,7 +19,7 @@
 	name = "Abductor Agent"
 	sub_role = "Agent"
 	outfit = /datum/outfit/abductor/agent
-	landmark_type = /obj/effect/landmark/abductor/agent
+	landmark_type = /atom/movable/landmark/abductor/agent
 	greet_text = "Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve."
 	show_in_antagpanel = TRUE
 	skill_modifiers = list(/datum/skill_modifier/job/level/wiring)
@@ -28,7 +28,7 @@
 	name = "Abductor Scientist"
 	sub_role = "Scientist"
 	outfit = /datum/outfit/abductor/scientist
-	landmark_type = /obj/effect/landmark/abductor/scientist
+	landmark_type = /atom/movable/landmark/abductor/scientist
 	greet_text = "Use your experimental console and surgical equipment to monitor your agent and experiment upon abducted humans."
 	show_in_antagpanel = TRUE
 	skill_modifiers = list(/datum/skill_modifier/job/affinity/surgery)
@@ -78,7 +78,7 @@
 	H.equipOutfit(outfit)
 
 	//Teleport to ship
-	for(var/obj/effect/landmark/abductor/LM in GLOB.landmarks_list)
+	for(var/atom/movable/landmark/abductor/LM in GLOB.landmarks_list)
 		if(istype(LM, landmark_type) && LM.team_number == team.team_number)
 			H.forceMove(LM.loc)
 			break
@@ -166,12 +166,12 @@
 	return "<div class='panel redborder'>[result.Join("<br>")]</div>"
 
 // LANDMARKS
-/obj/effect/landmark/abductor
+/atom/movable/landmark/abductor
 	var/team_number = 1
 
-/obj/effect/landmark/abductor/agent
+/atom/movable/landmark/abductor/agent
 	icon_state = "abductor_agent"
-/obj/effect/landmark/abductor/scientist
+/atom/movable/landmark/abductor/scientist
 	icon_state = "abductor"
 
 // OBJECTIVES

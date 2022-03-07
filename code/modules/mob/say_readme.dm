@@ -166,7 +166,7 @@ VIRTUAL SPEAKERS:
 Virtual speakers are simply atom/movables with a few extra variables.
 If radio_freq is not null, the code will rely on the fact that the speaker is virtual. This means that several procs will return something:
 	(all of these procs are defined at the atom/movable level and return "" at that level.)
-	GetJob()
+	GetJobName()
 		Returns the job string variable of the virtual speaker.
 	GetTrack()
 		Returns wether the tracking href should be fake or not.

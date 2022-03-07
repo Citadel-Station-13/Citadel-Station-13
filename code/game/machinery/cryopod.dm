@@ -438,7 +438,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	if(target == user && world.time - target.client.cryo_warned > 5 MINUTES)
 		var/list/caught_string
 		var/addendum = ""
-		if(target.mind.assigned_role in GLOB.command_positions)
+		if(target.mind.assigned_role in SSjob.GetDepartmentJobNames(/datum/department/command))
 			LAZYADD(caught_string, "Head of Staff")
 			addendum = " Be sure to put your locker items back into your locker!"
 		if(iscultist(target) || is_servant_of_ratvar(target))

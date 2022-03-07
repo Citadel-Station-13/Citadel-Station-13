@@ -17,9 +17,9 @@
 	var/mob/dead/selected = pick_n_take(candidates)
 
 	var/list/spawn_locs = list()
-	for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
+	for(var/atom/movable/landmark/carpspawn/L in GLOB.landmarks_list)
 		spawn_locs += L.loc
-	for(var/obj/effect/landmark/loneopspawn/L in GLOB.landmarks_list)
+	for(var/atom/movable/landmark/loneopspawn/L in GLOB.landmarks_list)
 		spawn_locs += L.loc
 	if(!spawn_locs.len)
 		return MAP_ERROR

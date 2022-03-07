@@ -93,7 +93,7 @@
 /turf/open/floor/plasteel/dark,
 /area/mafia)
 "n" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /turf/open/floor/mineral/plastitanium,
 /area/mafia)
 "o" = (
@@ -147,7 +147,7 @@
 /area/mafia)
 "u" = (
 /obj/effect/baseturf_helper/asteroid,
-/obj/effect/landmark/mafia/town_center,
+/atom/movable/landmark/mafia/town_center,
 /obj/structure/chair,
 /turf/open/floor/circuit/red,
 /area/mafia)
@@ -288,7 +288,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /turf/open/floor/plasteel/dark,
 /area/mafia)
 

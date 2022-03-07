@@ -50,9 +50,11 @@
 	/// Jobs blacklist - if this is not empty, jobs in this aren't allowed.
 	var/list/job_blacklist
 	/// Job spawn position mod - type = number
-	var/list/job_override_spawn_positions
+	var/list/job_override_roundstart_positions
 	/// Job total position mod - type = number
 	var/list/job_override_total_positions
+	/// Job join_type override
+	var/list/job_join_type_override
 	/// Add these accesses to jobs - type = list()
 	var/list/job_access_add
 	/// Remove these accesses from jobs - type = list()
@@ -206,14 +208,14 @@
 				continue
 			job_blacklist += type
 
-	if("job_override_spawn_positions" in json)
-		job_override_spawn_positions = list()
-		for(var/path in json["job_override_spawn_positions"])
+	if("job_override_roundstart_positions" in json)
+		job_override_roundstart_positions = list()
+		for(var/path in json["job_override_roundstart_positions"])
 			var/type = text2path(path)
 			if(!path)
 				log_config("map datum [config_filename] failed to validate path [path] in job overrides.")
 				continue
-			job_override_spawn_positions += type
+			job_override_roundstart_positions += type
 
 	if("job_override_total_positions" in json)
 		job_override_total_positions = list()
@@ -282,7 +284,7 @@
 	jsonlist["allow_custom_shuttles"] = allow_custom_shuttles
 	jsonlist["job_whitelist"] = job_whitelist
 	jsonlist["job_blacklist"] = job_blacklist
-	jsonlist["job_override_spawn_positions"] = job_override_spawn_positions
+	jsonlist["job_override_roundstart_positions"] = job_override_roundstart_positions
 	jsonlist["job_override_total_positions"] = job_override_total_positions
 	jsonlist["job_access_add"] = job_access_add
 	jsonlist["job_access_remove"] = job_access_remove

@@ -5,11 +5,11 @@
 	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_HOLOFORM)
 	prefs.copy_to(mannequin)
 	if(apply_loadout && prefs.parent)
-		SSjob.equip_loadout(prefs.parent.mob, mannequin, bypass_prereqs = TRUE)
+		SSjob.EquipLoadout(mannequin, TRUE, null, prefs, null)
 	if(copy_job)
 		var/datum/job/highest = prefs.get_highest_job()
 		if(highest && !istype(highest, /datum/job/ai) && !istype(highest, /datum/job/cyborg))
-			highest.equip(mannequin, TRUE, preference_source = prefs.parent)
+			highest.equip(mannequin, TRUE, FALSE, FALSE, FALSE, prefs)
 
 	if(length(equipment_by_slot))
 		for(var/slot in equipment_by_slot)

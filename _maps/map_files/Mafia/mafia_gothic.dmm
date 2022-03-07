@@ -48,11 +48,11 @@
 /turf/open/floor/carpet/red,
 /area/mafia)
 "m" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /turf/open/floor/carpet/red,
 /area/mafia)
 "n" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /turf/open/floor/plasteel/chapel{
 	dir = 1
 	},
@@ -86,7 +86,7 @@
 /area/mafia)
 "u" = (
 /obj/effect/baseturf_helper/asteroid,
-/obj/effect/landmark/mafia/town_center,
+/atom/movable/landmark/mafia/town_center,
 /turf/open/floor/carpet/royalblack,
 /area/mafia)
 "v" = (
@@ -96,7 +96,7 @@
 	},
 /area/mafia)
 "D" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /turf/open/floor/plasteel/chapel{
 	dir = 4
 	},
@@ -119,13 +119,13 @@
 	},
 /area/mafia)
 "M" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /turf/open/floor/plasteel/chapel{
 	dir = 8
 	},
 /area/mafia)
 "N" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /turf/open/floor/plasteel/chapel,
 /area/mafia)
 "O" = (

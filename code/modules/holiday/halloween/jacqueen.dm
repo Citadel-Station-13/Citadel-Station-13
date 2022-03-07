@@ -22,7 +22,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
 		playsound(H, 'sound/spookoween/ahaha.ogg', 100, 0.25)
 
-	for(var/obj/effect/landmark/barthpot/bp in GLOB.landmarks_list)
+	for(var/atom/movable/landmark/barthpot/bp in GLOB.landmarks_list)
 		new /obj/item/barthpot(bp.loc)
 		new /mob/living/simple_animal/jacq(bp.loc)
 

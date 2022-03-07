@@ -13,7 +13,7 @@
 /turf/open/lava/smooth,
 /area/shuttle_arena)
 "e" = (
-/obj/effect/landmark/shuttle_arena_entrance,
+/atom/movable/landmark/shuttle_arena_entrance,
 /turf/open/indestructible/necropolis/air,
 /area/shuttle_arena)
 "f" = (
@@ -70,7 +70,7 @@
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
 "z" = (
-/obj/effect/landmark/shuttle_arena_safe,
+/atom/movable/landmark/shuttle_arena_safe,
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
 "H" = (

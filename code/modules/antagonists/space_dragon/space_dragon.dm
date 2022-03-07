@@ -6,7 +6,7 @@
 	show_in_antagpanel = TRUE
 	show_name_in_check_antagonists = TRUE
 	var/list/datum/mind/carp = list()
-	
+
 /datum/antagonist/space_dragon/greet()
 	to_chat(owner, "<b>Endless time and space we have moved through.  We do not remember from where we came, we do not know where we will go.  All space belongs to us.\n\
 					Space is an empty void, of which our kind is the apex predator, and there was little to rival our claim to this title.\n\
@@ -16,12 +16,12 @@
 					Alt click to cause a gust around you!</span>")
 	owner.announce_objectives()
 	SEND_SOUND(owner.current, sound('sound/magic/demon_attack1.ogg'))
-	
+
 /datum/antagonist/space_dragon/proc/forge_objectives()
 	var/datum/objective/summon_carp/summon = new()
 	summon.dragon = src
 	objectives += summon
-	
+
 /datum/antagonist/space_dragon/on_gain()
 	forge_objectives()
 	. = ..()
@@ -54,7 +54,7 @@
 /datum/antagonist/space_dragon/admin_add(datum/mind/new_owner, mob/admin)
 	// pick the spawn loc
 	var/list/spawn_locs = list()
-	for(var/obj/effect/landmark/carpspawn/carp_spawn in GLOB.landmarks_list)
+	for(var/atom/movable/landmark/carpspawn/carp_spawn in GLOB.landmarks_list)
 		if(!isturf(carp_spawn.loc))
 			stack_trace("Carp spawn found not on a turf: [carp_spawn.type] on [isnull(carp_spawn.loc) ? "null" : carp_spawn.loc.type]")
 			continue

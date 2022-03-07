@@ -69,8 +69,8 @@
 	return TRUE
 
 /datum/game_mode/revolution/post_setup()
-	var/list/heads = SSjob.get_living_heads()
-	var/list/sec = SSjob.get_living_sec()
+	var/list/heads = SSjob.GetLivingDepartmentMinds(/datum/department/command)
+	var/list/sec = SSjob.GetLivingDepartmentMinds(/datum/department/security)
 	var/weighted_score = clamp(round(heads.len - ((3 - sec.len) / 3)), 1, max_headrevs)
 
 	for(var/datum/mind/rev_mind in headrev_candidates)	//People with return to lobby may still be in the lobby. Let's pick someone else in that case.

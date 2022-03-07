@@ -21,7 +21,7 @@
 /datum/antagonist/rev/can_be_owned(datum/mind/new_owner)
 	. = ..()
 	if(.)
-		if(new_owner.assigned_role in GLOB.command_positions)
+		if(new_owner.assigned_role in SSjob.GetDepartmentJobNames(/datum/department/command))
 			return FALSE
 		if(new_owner.unconvertable)
 			return FALSE
@@ -309,7 +309,7 @@
 	var/list/ex_revs = list()
 
 /datum/team/revolution/proc/update_objectives(initial = FALSE)
-	var/untracked_heads = SSjob.get_all_heads()
+	var/untracked_heads = SSjob.GetDepartmentMinds(/datum/department/command)
 	for(var/datum/objective/mutiny/O in objectives)
 		untracked_heads -= O.target
 	for(var/datum/mind/M in untracked_heads)
@@ -333,8 +333,8 @@
 /datum/team/revolution/proc/update_heads()
 	if(SSticker.HasRoundStarted())
 		var/list/datum/mind/head_revolutionaries = head_revolutionaries()
-		var/list/datum/mind/heads = SSjob.get_all_heads()
-		var/list/sec = SSjob.get_all_sec()
+		var/list/datum/mind/heads = SSjob.GetDepartmentMinds(/datum/department/command)
+		var/list/sec = SSjob.GetDepartmentMinds(/datum/department/security)
 
 		if(head_revolutionaries.len < max_headrevs && head_revolutionaries.len < round(heads.len - ((8 - sec.len) / 3)))
 			var/list/datum/mind/non_heads = members - head_revolutionaries
@@ -381,6 +381,8 @@
 	else
 		return
 
+	var/list/enemy_ranks = SSjob.GetDepartmentJobNames(/datum/department/command) | SSjob.GetDepartmentJobNames(/datum/department/security)
+
 	SSshuttle.clearHostileEnvironment(src)
 	save_members()
 
@@ -410,7 +412,7 @@
 			if (isnull(mind))
 				continue
 
-			if (!(mind.assigned_role in GLOB.command_positions + GLOB.security_positions))
+			if (!(mind.assigned_role in enemy_ranks))
 				continue
 
 			var/mob/living/carbon/target_body = mind.current
@@ -425,8 +427,8 @@
 			else
 				mind.announce_objectives()
 
-		for (var/job_name in GLOB.command_positions + GLOB.security_positions)
-			var/datum/job/job = SSjob.GetJob(job_name)
+		for (var/job_name in enemy_ranks)
+			var/datum/job/job = SSjob.GetJobName(job_name)
 			job.allow_bureaucratic_error = FALSE
 			job.total_positions = 0
 
@@ -492,7 +494,7 @@
 		rev_part += printplayerlist(revs,TRUE)
 		result += rev_part.Join("<br>")
 
-	var/list/heads = SSjob.get_all_heads()
+	var/list/heads = SSjob.GetDepartmentMinds(/datum/department/command)
 	if(heads.len)
 		var/head_text = "<span class='header'>The heads of staff were:</span>"
 		head_text += "<ul class='playerlist'>"
@@ -526,7 +528,7 @@
 
 	var/heads_report = "<b>Heads of Staff</b><br>"
 	heads_report += "<table cellspacing=5>"
-	for(var/datum/mind/N in SSjob.get_living_heads())
+	for(var/datum/mind/N in SSjob.GetLivingDepartmentMinds(/datum/department/command))
 		var/mob/M = N.current
 		if(M)
 			heads_report += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"

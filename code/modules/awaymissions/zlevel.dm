@@ -15,13 +15,13 @@
 	INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
 	GLOB.random_zlevels_generated[name] = TRUE
 
-/obj/effect/landmark/awaystart
+/atom/movable/landmark/awaystart
 	name = "away mission spawn"
 	desc = "Randomly picked away mission spawn points."
 	var/id
 	var/delay = TRUE // If the generated destination should be delayed by configured gateway delay
 
-/obj/effect/landmark/awaystart/Initialize()
+/atom/movable/landmark/awaystart/Initialize()
 	. = ..()
 	var/datum/gateway_destination/point/current
 	for(var/datum/gateway_destination/point/D in GLOB.gateway_destinations)
@@ -35,7 +35,7 @@
 		GLOB.gateway_destinations += current
 	current.target_turfs += get_turf(src)
 
-/obj/effect/landmark/awaystart/nodelay
+/atom/movable/landmark/awaystart/nodelay
 	delay = FALSE
 
 /proc/generateMapList(filename)

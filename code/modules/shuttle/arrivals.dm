@@ -35,25 +35,18 @@
 
 /obj/docking_port/mobile/arrivals/LateInitialize()
 	areas = list()
-
+	// wipe old list
+	for(var/atom/movable/landmark/spawnpoint/latejoin/station/arrivals_shuttle/S in SSjob.latejoin_spawnpoints[JOB_FACTION_STATION])
+		qdel(S)
+	// regiser wnew spawnpoints
 	var/list/new_latejoin = list()
 	for(var/area/shuttle/arrival/A in GLOB.sortedAreas)
 		for(var/obj/structure/chair/C in A)
+			new /atom/movable/landmark/spawnpoint/latejoin/station/arrivals_shuttle(C.loc)
 			new_latejoin += C
 		if(!console)
 			console = locate(/obj/machinery/requests_console) in A
 		areas += A
-
-	if(SSjob.latejoin_trackers.len)
-		WARNING("Map contains predefined latejoin spawn points and an arrivals shuttle. Using the arrivals shuttle.")
-
-	if(!new_latejoin.len)
-		WARNING("Arrivals shuttle contains no chairs for spawn points. Reverting to latejoin landmarks.")
-		if(!SSjob.latejoin_trackers.len)
-			WARNING("No latejoin landmarks exist. Players will spawn unbuckled on the shuttle.")
-		return
-
-	SSjob.latejoin_trackers = new_latejoin
 
 /obj/docking_port/mobile/arrivals/check()
 	. = ..()
@@ -104,8 +97,8 @@
 		Launch(FALSE)
 
 /obj/docking_port/mobile/arrivals/proc/CheckTurfsPressure()
-	for(var/I in SSjob.latejoin_trackers)
-		var/turf/open/T = get_turf(I)
+	for(var/atom/movable/landmark/spawnpoint/latejoin/station/arrivals_shuttle/S in SSjob.GetAllSpawnpoints())
+		var/turf/open/T = get_turf(S)
 		var/pressure = T.air.return_pressure()
 		if(pressure < HAZARD_LOW_PRESSURE || pressure > HAZARD_HIGH_PRESSURE)	//simple safety check
 			return TRUE

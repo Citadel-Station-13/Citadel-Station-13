@@ -26,35 +26,27 @@ GLOBAL_PROTECT(exp_to_update)
 		return (job_requirement - my_exp)
 
 /datum/job/proc/get_exp_req_amount()
-	if(title in (GLOB.command_positions | list("AI")))
+	if(jexp_considered_command_role())
 		var/uerhh = CONFIG_GET(number/use_exp_restrictions_heads_hours)
 		if(uerhh)
 			return uerhh * 60
 	return exp_requirements
 
 /datum/job/proc/get_exp_req_type()
-	if(title in (GLOB.command_positions | list("AI")))
+	if(jexp_considered_command_role())
 		if(CONFIG_GET(flag/use_exp_restrictions_heads_department) && exp_type_department)
 			return exp_type_department
 	return exp_type
 
+/datum/job/proc/jexp_considered_command_role()
+	return istype(src, /datum/job/ai) || (/datum/department/command in departments)
+
 /proc/job_is_xp_locked(jobtitle)
-	if(!CONFIG_GET(flag/use_exp_restrictions_heads) && (jobtitle in (GLOB.command_positions | list("AI"))))
+	if(!CONFIG_GET(flag/use_exp_restrictions_heads) && (jobtitle in (SSjob.GetDepartmentJobNames(/datum/department/command) | list("AI"))))
 		return FALSE
-	if(!CONFIG_GET(flag/use_exp_restrictions_other) && !(jobtitle in (GLOB.command_positions | list("AI"))))
+	if(!CONFIG_GET(flag/use_exp_restrictions_other) && !(jobtitle in (SSjob.GetDepartmentJobNames(/datum/department/command) | list("AI"))))
 		return FALSE
 	return TRUE
-
-/client/proc/calc_exp_type(exptype)
-	var/list/explist = prefs.exp.Copy()
-	var/amount = 0
-	var/list/typelist = GLOB.exp_jobsmap[exptype]
-	if(!typelist)
-		return -1
-	for(var/job in typelist["titles"])
-		if(job in explist)
-			amount += explist[job]
-	return amount
 
 // todo: port tgui exp
 /client/proc/get_exp_report()
@@ -69,7 +61,7 @@ GLOBAL_PROTECT(exp_to_update)
 	var/return_text = list()
 	return_text += "<UL>"
 	var/list/exp_data = list()
-	for(var/category in SSjob.name_occupations)
+	for(var/category in SSjob.GetAllJobNames())
 		if(play_records[category])
 			exp_data[category] = text2num(play_records[category])
 		else
@@ -102,7 +94,7 @@ GLOBAL_PROTECT(exp_to_update)
 	return_text += "</UL>"
 	var/list/jobs_locked = list()
 	var/list/jobs_unlocked = list()
-	for(var/datum/job/job in SSjob.occupations)
+	for(var/datum/job/job in SSjob.GetAllJobs())
 		if(job.exp_requirements && job.exp_type)
 			if(!job_is_xp_locked(job.title))
 				continue
@@ -167,7 +159,7 @@ GLOBAL_PROTECT(exp_to_update)
 		play_records[exp_read.item[1]] = text2num(exp_read.item[2])
 	qdel(exp_read)
 
-	for(var/rtype in SSjob.name_occupations)
+	for(var/rtype in SSjob.GetAllJobNames())
 		if(!play_records[rtype])
 			play_records[rtype] = 0
 	for(var/rtype in GLOB.exp_specialmap)
@@ -217,7 +209,7 @@ GLOBAL_PROTECT(exp_to_update)
 			if(announce_changes)
 				to_chat(src,"<span class='notice'>You got: [minutes] Living EXP!</span>")
 			if(mob.mind.assigned_role)
-				for(var/job in SSjob.name_occupations)
+				for(var/job in SSjob.job_name_lookup)
 					if(mob.mind.assigned_role == job)
 						rolefound = TRUE
 						play_records[job] += minutes
@@ -288,3 +280,22 @@ GLOBAL_PROTECT(exp_to_update)
 		prefs.db_flags = 0	//This PROBABLY won't happen, but better safe than sorry.
 	qdel(flags_read)
 	return TRUE
+
+/client/proc/calc_exp_type(exptype)
+	var/list/explist = prefs.exp.Copy()
+	var/amount = 0
+	var/list/typelist = SSjob.job_exp_map[exptype]
+	if(!typelist)
+		return -1
+	for(var/job in typelist["titles"])
+		if(job in explist)
+			amount += explist[job]
+	return amount
+
+GLOBAL_LIST_INIT(exp_specialmap, list(
+	EXP_TYPE_LIVING = list(), // all living mobs
+	EXP_TYPE_ANTAG = list(),
+	EXP_TYPE_SPECIAL = list("Lifebringer","Ash Walker","Exile","Servant Golem","Free Golem","Hermit","Translocated Vet","Escaped Prisoner","Hotel Staff","SuperFriend","Space Syndicate","Ancient Crew","Space Doctor","Space Bartender","Beach Bum","Skeleton","Zombie","Space Bar Patron","Lavaland Syndicate","Ghost Role", "Ghost Cafe Visitor"), // Ghost roles
+	EXP_TYPE_GHOST = list() // dead people, observers
+))
+GLOBAL_PROTECT(exp_specialmap)

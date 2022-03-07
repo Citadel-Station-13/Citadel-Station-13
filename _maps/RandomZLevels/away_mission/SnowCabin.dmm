@@ -801,7 +801,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "cH" = (
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cI" = (
@@ -863,7 +863,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "cQ" = (
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
@@ -2893,11 +2893,11 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hH" = (
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "hI" = (
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /obj/structure/sign/poster/official/report_crimes{
 	pixel_y = -32
 	},

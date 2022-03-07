@@ -1,12 +1,12 @@
-/obj/effect/landmark/mafia_game_area //locations where mafia will be loaded by the datum
+/atom/movable/landmark/mafia_game_area //locations where mafia will be loaded by the datum
 	name = "Mafia Area Spawn"
 	var/game_id = "mafia"
 
-/obj/effect/landmark/mafia
+/atom/movable/landmark/mafia
 	name = "Mafia Player Spawn"
 	var/game_id = "mafia"
 
-/obj/effect/landmark/mafia/town_center
+/atom/movable/landmark/mafia/town_center
 	name = "Mafia Town Center"
 
 //for ghosts/admins

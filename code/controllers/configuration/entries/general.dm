@@ -146,11 +146,6 @@
 	config_entry_value = 55
 	min_val = 30
 
-/datum/config_entry/flag/arrivals_shuttle_require_undocked	//Require the arrivals shuttle to be undocked before latejoiners can join
-
-/datum/config_entry/flag/arrivals_shuttle_require_safe_latejoin	//Require the arrivals shuttle to be operational in order for latejoiners to join
-
-
 /datum/config_entry/flag/revival_pod_plants
 
 /datum/config_entry/flag/revival_cloning

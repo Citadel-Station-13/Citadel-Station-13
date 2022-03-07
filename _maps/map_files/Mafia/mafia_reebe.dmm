@@ -19,7 +19,7 @@
 /turf/open/floor/clockwork/reebe,
 /area/mafia)
 "g" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /turf/open/floor/clockwork/reebe,
 /area/mafia)
 "h" = (
@@ -56,7 +56,7 @@
 /area/mafia)
 "m" = (
 /obj/effect/baseturf_helper/asteroid,
-/obj/effect/landmark/mafia/town_center,
+/atom/movable/landmark/mafia/town_center,
 /obj/structure/chair/brass,
 /turf/open/floor/clockwork/reebe,
 /area/mafia)

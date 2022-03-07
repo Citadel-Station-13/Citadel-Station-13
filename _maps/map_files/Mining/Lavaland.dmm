@@ -1532,7 +1532,7 @@
 	},
 /area/ruin/lavaland/unpowered/ash_walkers)
 "ol" = (
-/obj/effect/landmark/stationroom/lavaland/station,
+/atom/movable/landmark/stationroom/lavaland/station,
 /turf/open/lava/smooth/lava_land_surface,
 /area/template_noop)
 "oo" = (

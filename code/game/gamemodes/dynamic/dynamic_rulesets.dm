@@ -228,7 +228,7 @@
 		if(length(exclusive_roles))
 			var/exclusive_candidate = FALSE
 			for(var/role in exclusive_roles)
-				var/datum/job/job = SSjob.GetJob(role)
+				var/datum/job/job = SSjob.GetJobName(role)
 				if((role in candidate_client.prefs.job_preferences) && !jobban_isbanned(candidate_player.ckey, role) && !job.required_playtime_remaining(candidate_client))
 					exclusive_candidate = TRUE
 					break

@@ -106,7 +106,7 @@
 				if(!(VR?.connect(M)))
 					if(allow_creating_vr_mobs)
 						to_chat(occupant, "<span class='warning'>Virtual avatar [vr_mob ? "corrupted" : "missing"], attempting to create one...</span>")
-						var/obj/effect/landmark/vr_spawn/V = get_vr_spawnpoint()
+						var/atom/movable/landmark/vr_spawn/V = get_vr_spawnpoint()
 						var/turf/T = get_turf(V)
 						if(T)
 							new_player(occupant, T, V.vr_outfit)
@@ -151,7 +151,7 @@
 				if(SOFT_CRIT)
 					status = "Barely Conscious"
 			data["vr_avatar"] += list("status" = status, "health" = vr_mob.health, "maxhealth" = vr_mob.maxHealth)
-	else 
+	else
 		data["can_delete_avatar"] = FALSE
 		data["vr_avatar"] = FALSE
 		data["isliving"] = FALSE
@@ -166,7 +166,7 @@
 
 /obj/machinery/vr_sleeper/proc/build_spawnpoints() // used to rebuild the list for admins if need be
 	GLOB.vr_spawnpoints = list()
-	for(var/obj/effect/landmark/vr_spawn/V in GLOB.landmarks_list)
+	for(var/atom/movable/landmark/vr_spawn/V in GLOB.landmarks_list)
 		GLOB.vr_spawnpoints[V.vr_category] = V
 
 /obj/machinery/vr_sleeper/proc/new_player(mob/M, location, datum/outfit/outfit, transfer = TRUE)
@@ -203,28 +203,28 @@
 	if(vr_mob)
 		vr_mob.Dizzy(10)
 
-/obj/effect/landmark/vr_spawn //places you can spawn in VR, auto selected by the vr_sleeper during get_vr_spawnpoint()
+/atom/movable/landmark/vr_spawn //places you can spawn in VR, auto selected by the vr_sleeper during get_vr_spawnpoint()
 	var/vr_category = "default" //So we can have specific sleepers, eg: "Basketball VR Sleeper", etc.
 	var/vr_outfit = /datum/outfit/vr
 
-/obj/effect/landmark/vr_spawn/Initialize()
+/atom/movable/landmark/vr_spawn/Initialize()
 	. = ..()
 	LAZYADD(GLOB.vr_spawnpoints[vr_category], src)
 
-/obj/effect/landmark/vr_spawn/Destroy()
+/atom/movable/landmark/vr_spawn/Destroy()
 	LAZYREMOVE(GLOB.vr_spawnpoints[vr_category], src)
 	return ..()
 
-/obj/effect/landmark/vr_spawn/team_1
+/atom/movable/landmark/vr_spawn/team_1
 	vr_category = "team_1"
 
-/obj/effect/landmark/vr_spawn/team_2
+/atom/movable/landmark/vr_spawn/team_2
 	vr_category = "team_2"
 
-/obj/effect/landmark/vr_spawn/admin
+/atom/movable/landmark/vr_spawn/admin
 	vr_category = "event"
 
-/obj/effect/landmark/vr_spawn/syndicate // Multiple missions will use syndicate gear
+/atom/movable/landmark/vr_spawn/syndicate // Multiple missions will use syndicate gear
 	vr_outfit = /datum/outfit/vr/syndicate
 
 /obj/effect/vr_clean_master // Will keep VR areas that have this relatively clean.

@@ -51,7 +51,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/card/proc/get_jobs()
-	return get_all_jobs()
+	return SSjob.GetAllJobNames(JOB_FACTION_STATION)
 
 /obj/machinery/computer/card/centcom/get_jobs()
 	return get_all_centcom_jobs()
@@ -198,7 +198,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		dat += {"<a href='?src=[REF(src)];choice=return'>Return</a>
 		<table><tr><td style='width:25%'><b>Job</b></td><td style='width:25%'><b>Slots</b></td>
 		<td style='width:25%'><b>Open job</b></td><td style='width:25%'><b>Close job</b><td style='width:25%'><b>Prioritize</b></td></td></tr>"}
-		for(var/datum/job/job in SSjob.occupations)
+		for(var/datum/job/job in SSjob.GetAllJobs(JOB_FACTION_STATION))
 			dat += "<tr>"
 			if(job.title in blacklisted)
 				continue
@@ -397,7 +397,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					head_subordinates = list()
 					if(ACCESS_CHANGE_IDS in inserted_scan_id.access)
 						if(target_dept)
-							head_subordinates = get_all_jobs()
+							head_subordinates = SSjob.GetAllJobNames(JOB_FACTION_STATION)
 							region_access |= target_dept
 							authenticated = 1
 						else
@@ -502,7 +502,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			// MAKE ANOTHER JOB POSITION AVAILABLE FOR LATE JOINERS
 			if(authenticated && !target_dept)
 				var/edit_job_target = href_list["job"]
-				var/datum/job/j = SSjob.GetJob(edit_job_target)
+				var/datum/job/j = SSjob.GetJobName(edit_job_target)
 				if(!j)
 					updateUsrDialog()
 					return 0
@@ -519,7 +519,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			// MAKE JOB POSITION UNAVAILABLE FOR LATE JOINERS
 			if(authenticated && !target_dept)
 				var/edit_job_target = href_list["job"]
-				var/datum/job/j = SSjob.GetJob(edit_job_target)
+				var/datum/job/j = SSjob.GetJobName(edit_job_target)
 				if(!j)
 					updateUsrDialog()
 					return 0
@@ -537,7 +537,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			// TOGGLE WHETHER JOB APPEARS AS PRIORITIZED IN THE LOBBY
 			if(authenticated && !target_dept)
 				var/priority_target = href_list["job"]
-				var/datum/job/j = SSjob.GetJob(priority_target)
+				var/datum/job/j = SSjob.GetJobName(priority_target)
 				if(!j)
 					updateUsrDialog()
 					return 0
@@ -571,9 +571,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	updateUsrDialog()
 
 /obj/machinery/computer/card/proc/get_subordinates(rank)
-	for(var/datum/job/job in SSjob.occupations)
-		if(rank in job.department_head)
-			head_subordinates += job.title
+	for(var/datum/department/D in SSjob.departments)
+		if(SSjob.GetJobType(D.supervisor).GetName() == rank)
+			head_subordinates += D.GetJobNames()
 
 /obj/machinery/computer/card/centcom
 	name = "\improper CentCom identification console"

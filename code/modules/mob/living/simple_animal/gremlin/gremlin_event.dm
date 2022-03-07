@@ -18,12 +18,12 @@
 
 	var/list/spawn_locs = list()
 
-	for(var/obj/effect/landmark/L in GLOB.landmarks_list)
+	for(var/atom/movable/landmark/L in GLOB.landmarks_list)
 		if(isturf(L.loc) && !isspaceturf(L.loc))
 			if(L.name in acceptable_spawns)
 				spawn_locs += L.loc
 	if(!spawn_locs.len) //If we can't find any gremlin spawns, try the xeno spawns
-		for(var/obj/effect/landmark/L in GLOB.landmarks_list)
+		for(var/atom/movable/landmark/L in GLOB.landmarks_list)
 			if(isturf(L.loc))
 				switch(L.name)
 					if("Assistant")

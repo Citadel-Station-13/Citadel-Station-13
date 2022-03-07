@@ -270,7 +270,7 @@
 	sec_hud_set_security_status()
 	..()
 
-/mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE, client/preference_source)
+/mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE, datum/preferences/prefs)
 	var/datum/outfit/O = null
 
 	if(ispath(outfit))
@@ -282,7 +282,7 @@
 	if(!O)
 		return 0
 
-	return O.equip(src, visualsOnly, preference_source)
+	return O.equip(src, visualsOnly, prefs)
 
 
 //delete all equipment without dropping anything

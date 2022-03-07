@@ -527,7 +527,7 @@
 	//Sketchy fallback for safety, put them somewhere safe.
 	else if(ismob(src))
 		testing("[src] (\ref[src]) doesn't have an owner, and dropped someone at a latespawn point!")
-		SSjob.SendToLateJoin(src)
+		SSjob.SendToLatejoin(src)
 		// wew lad. let's see if this never gets used, hopefully
 	else
 		qdel(src) //final option, I guess.

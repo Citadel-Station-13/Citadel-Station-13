@@ -48,7 +48,7 @@
 /turf/open/floor/holofloor/wood,
 /area/mafia)
 "m" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /turf/open/floor/holofloor/wood,
 /area/mafia)
 "n" = (
@@ -90,7 +90,7 @@
 /area/mafia)
 "v" = (
 /obj/effect/baseturf_helper/asteroid,
-/obj/effect/landmark/mafia/town_center,
+/atom/movable/landmark/mafia/town_center,
 /turf/open/floor/holofloor/snow,
 /area/mafia)
 "w" = (
@@ -111,7 +111,7 @@
 /turf/open/floor/plasteel/dark,
 /area/mafia)
 "y" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /turf/open/floor/holofloor/snow,
 /area/mafia)
 "z" = (
@@ -132,7 +132,7 @@
 /turf/open/floor/plasteel,
 /area/mafia)
 "B" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /obj/structure/lattice/catwalk,
 /turf/open/lava/plasma,
 /area/mafia)

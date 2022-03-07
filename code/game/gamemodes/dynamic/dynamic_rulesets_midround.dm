@@ -678,7 +678,7 @@
 	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/execute()
-	for(var/obj/effect/landmark/carpspawn/C in GLOB.landmarks_list)
+	for(var/atom/movable/landmark/carpspawn/C in GLOB.landmarks_list)
 		spawn_locs += (C.loc)
 	if(!spawn_locs.len)
 		message_admins("No valid spawn locations found, aborting...")
@@ -794,7 +794,7 @@
 	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja/execute()
-	for(var/obj/effect/landmark/carpspawn/carp_spawn in GLOB.landmarks_list)
+	for(var/atom/movable/landmark/carpspawn/carp_spawn in GLOB.landmarks_list)
 		if(!isturf(carp_spawn.loc))
 			stack_trace("Carp spawn found not on a turf: [carp_spawn.type] on [isnull(carp_spawn.loc) ? "null" : carp_spawn.loc.type]")
 			continue
@@ -852,7 +852,7 @@
 			if(container_turf && is_station_level(container_turf.z))
 				spawn_locs += container_turf
 	if(!spawn_locs.len) //If we can't find any valid spawnpoints, try the carp spawns
-		for(var/obj/effect/landmark/carpspawn/carp_spawnpoint in GLOB.landmarks_list)
+		for(var/atom/movable/landmark/carpspawn/carp_spawnpoint in GLOB.landmarks_list)
 			if(isturf(carp_spawnpoint.loc))
 				spawn_locs += carp_spawnpoint.loc
 	if(!spawn_locs.len) //If we can't find THAT, then just give up and cry

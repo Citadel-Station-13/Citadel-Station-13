@@ -142,6 +142,6 @@
 	playsound(get_turf(loc), 'sound/misc/server-ready.ogg', 50, 1, -1)
 	..()
 
-/obj/effect/landmark/error
+/atom/movable/landmark/error
 	name = "error"
 	icon_state = "error_room"

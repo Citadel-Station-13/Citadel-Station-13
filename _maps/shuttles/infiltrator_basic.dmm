@@ -931,8 +931,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/landmark/start/nuclear_equipment,
-/obj/effect/landmark/start/nuclear_equipment,
+/atom/movable/landmark/start/nuclear_equipment,
+/atom/movable/landmark/start/nuclear_equipment,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/armory)
 "cf" = (
@@ -949,7 +949,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/landmark/start/nuclear_equipment/minibomb,
+/atom/movable/landmark/start/nuclear_equipment/minibomb,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/armory)
 "cg" = (

@@ -424,9 +424,7 @@
 	output += "<option value='None'>No Severity</option>"
 	output += "<td><b>Job:</b><select name='dbbanaddjob'>"
 	output += "<option value=''>--</option>"
-	for(var/j in get_all_jobs())
-		output += "<option value='[j]'>[j]</option>"
-	for(var/j in GLOB.nonhuman_positions)
+	for(var/j in SSjob.GetAllJobNames())
 		output += "<option value='[j]'>[j]</option>"
 	for(var/j in list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_OPERATIVE, ROLE_REV, ROLE_CULTIST, ROLE_WIZARD, ROLE_HERETIC))
 		output += "<option value='[j]'>[j]</option>"

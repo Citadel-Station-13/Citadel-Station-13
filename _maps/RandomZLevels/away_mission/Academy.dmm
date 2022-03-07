@@ -3572,14 +3572,14 @@
 /area/awaymission/academy/academygate)
 "ki" = (
 /obj/item/stack/cable_coil/random,
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "kj" = (
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "kk" = (
@@ -4431,7 +4431,7 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/classrooms)
 "Ao" = (
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "Ck" = (
@@ -4504,7 +4504,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "NK" = (
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
 "Oj" = (

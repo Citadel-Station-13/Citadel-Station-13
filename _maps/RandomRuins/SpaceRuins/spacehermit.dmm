@@ -244,7 +244,7 @@
 /turf/template_noop,
 /area/template_noop)
 "aY" = (
-/obj/effect/mob_spawn/human/hermit{
+/obj/structure/ghost_role_spawner/hermit{
 	flavour_text = "<span class='big bold'>You've been late to awaken from your cryo slumber. Blasted machine, you set it to 10 days not 10 weeks!</span><b> Where have the others gone while we were out? Did they manage to survive? These thoughts are dispelled by yet another recollection of how you got here... ";
 	job_description = "Space Hermit"
 	},

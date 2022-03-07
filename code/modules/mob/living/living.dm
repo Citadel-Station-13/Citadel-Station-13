@@ -421,7 +421,7 @@
 		if(E.phase < 3)
 			if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
 				to_chat(src, "<span class='notice'>Your mindshield prevents your mind from giving in!</span>")
-			else if(src.mind.assigned_role in GLOB.command_positions)
+			else if(src.mind.assigned_role in SSjob.GetDepartmentJobNames(/datum/department/command))
 				to_chat(src, "<span class='notice'>Your dedication to your department prevents you from giving in!</span>")
 			else
 				E.enthrallTally += 20

@@ -162,10 +162,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return TRUE
 
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
-/mob/proc/apply_pref_name(role, client/C)
+/mob/proc/apply_pref_name(role, datum/preferences/prefs)
 	set waitfor = FALSE
-	if(!C)
-		C = client
 	var/oldname = real_name
 	var/newname
 	var/loop = 1
@@ -174,8 +172,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/banned = jobban_isbanned(src, "appearance")
 
 	while(loop && safety < 5)
-		if(C && C.prefs.custom_names[role] && !safety && !banned)
-			newname = C.prefs.custom_names[role]
+		if(prefs?.custom_names[role] && !safety && !banned)
+			newname = prefs.custom_names[role]
 		else
 			switch(role)
 				if("human")

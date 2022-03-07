@@ -615,7 +615,7 @@
 		// shut up you broke your vow
 		if(user.mind.assigned_role == "Mime")
 			return 0.5
-		if(user.mind.assigned_role in GLOB.command_positions)
+		if(user.mind.assigned_role in SSjob.GetDepartmentJobNames(/datum/department/command))
 			return 1.4		// heads are great at speaking with authority
 	return 1
 
@@ -700,7 +700,7 @@
 		if(user.mind.assigned_role == "Chaplain")
 			power_multiplier *= 1.2
 		//Command staff has authority
-		if(user.mind.assigned_role in GLOB.command_positions)
+		if(user.mind.assigned_role in SSjob.GetDepartmentJobNames(/datum/department/command))
 			power_multiplier *= 1.1
 		//Why are you speaking
 		if(user.mind.assigned_role == "Mime")

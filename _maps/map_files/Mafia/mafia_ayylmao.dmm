@@ -38,12 +38,12 @@
 /turf/open/floor/plating/abductor,
 /area/mafia)
 "m" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /obj/structure/bed/abductor,
 /turf/open/floor/plating/abductor,
 /area/mafia)
 "n" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /obj/structure/bed/abductor,
 /turf/open/floor/plating/abductor2,
 /area/mafia)
@@ -71,7 +71,7 @@
 /area/mafia)
 "u" = (
 /obj/effect/baseturf_helper/asteroid,
-/obj/effect/landmark/mafia/town_center,
+/atom/movable/landmark/mafia/town_center,
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/mafia)
 "v" = (

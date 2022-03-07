@@ -73,7 +73,7 @@
 	switch(action)
 		if("PRG_open_job")
 			var/edit_job_target = params["target"]
-			var/datum/job/j = SSjob.GetJob(edit_job_target)
+			var/datum/job/j = SSjob.GetJobName(edit_job_target)
 			if(!j || !can_open_job(j))
 				return
 			if(opened_positions[edit_job_target] >= 0)
@@ -85,7 +85,7 @@
 			return TRUE
 		if("PRG_close_job")
 			var/edit_job_target = params["target"]
-			var/datum/job/j = SSjob.GetJob(edit_job_target)
+			var/datum/job/j = SSjob.GetJobName(edit_job_target)
 			if(!j || !can_close_job(j))
 				return
 			//Allow instant closing without cooldown if a position has been opened before
@@ -98,8 +98,8 @@
 			return TRUE
 		if("PRG_priority")
 			var/priority_target = params["target"]
-			var/datum/job/j = SSjob.GetJob(priority_target)
-			if(!j || (j?.title in blacklisted))
+			var/datum/job/j = SSjob.GetJobName(priority_target)
+			if(!j || (j?.GetName() in blacklisted))
 				return
 			if(j.total_positions <= j.current_positions)
 				return
@@ -126,8 +126,7 @@
 	data["authed"] = authed
 
 	var/list/pos = list()
-	for(var/j in SSjob.occupations)
-		var/datum/job/job = j
+	for(var/datum/job/job as anything in SSjob.GetAllJobs())
 		if(job.title in blacklisted)
 			continue
 

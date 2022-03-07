@@ -202,6 +202,10 @@
 #endif
 	SEND_TEXT(world.log, text)
 
+/* Used to log debug information that aren't necessarily runtimes */
+/proc/log_debug(text)
+	log_world("DEBUG: [text]")
+
 /* Log to the logfile only. */
 /proc/log_runtime(text)
 	WRITE_LOG(GLOB.world_runtime_log, text)

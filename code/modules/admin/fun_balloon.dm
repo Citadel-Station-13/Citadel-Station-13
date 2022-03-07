@@ -111,7 +111,7 @@
 
 /obj/effect/forcefield/arena_shuttle/Initialize()
 	. = ..()
-	for(var/obj/effect/landmark/shuttle_arena_safe/exit in GLOB.landmarks_list)
+	for(var/atom/movable/landmark/shuttle_arena_safe/exit in GLOB.landmarks_list)
 		warp_points += exit
 
 /obj/effect/forcefield/arena_shuttle/Bumped(atom/movable/AM)
@@ -131,11 +131,11 @@
 	else
 		to_chat(L, "You are not yet worthy of passing. Drag a severed head to the barrier to be allowed entry to the hall of champions.")
 
-/obj/effect/landmark/shuttle_arena_safe
+/atom/movable/landmark/shuttle_arena_safe
 	name = "hall of champions"
 	desc = "For the winners."
 
-/obj/effect/landmark/shuttle_arena_entrance
+/atom/movable/landmark/shuttle_arena_entrance
 	name = "the arena"
 	desc = "A lava filled battlefield."
 
@@ -150,10 +150,10 @@
 		return
 
 	if(!warp_points.len)
-		for(var/obj/effect/landmark/shuttle_arena_entrance/S in GLOB.landmarks_list)
+		for(var/atom/movable/landmark/shuttle_arena_entrance/S in GLOB.landmarks_list)
 			warp_points |= S
 
-	var/obj/effect/landmark/LA = pick(warp_points)
+	var/atom/movable/landmark/LA = pick(warp_points)
 	var/mob/living/M = AM
 	M.forceMove(get_turf(LA))
 	to_chat(M, "<span class='reallybig redtext'>You're trapped in a deadly arena! To escape, you'll need to drag a severed head to the escape portals.</span>")

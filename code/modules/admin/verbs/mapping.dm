@@ -314,7 +314,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	//Also add the x
 	for(var/x_number in 1 to 4)
 		final.Insert(icon('icons/mob/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
-	fcopy(final, "icons/mob/landmarks.dmi")
+	fcopy(final, "icons/mapping/landmarks/job_spawnpoints.dmi")
 
 /client/proc/debug_z_levels()
 	set name = "Debug Z-Levels"

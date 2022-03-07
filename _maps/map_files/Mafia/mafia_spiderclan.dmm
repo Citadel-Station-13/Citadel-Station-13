@@ -53,11 +53,11 @@
 /turf/open/floor/plating,
 /area/mafia)
 "m" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /turf/open/floor/wood,
 /area/mafia)
 "n" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /turf/open/floor/carpet/black,
 /area/mafia)
 "o" = (
@@ -90,7 +90,7 @@
 /area/mafia)
 "u" = (
 /obj/effect/baseturf_helper/asteroid,
-/obj/effect/landmark/mafia/town_center,
+/atom/movable/landmark/mafia/town_center,
 /turf/open/floor/plating/beach/sand,
 /area/mafia)
 "v" = (

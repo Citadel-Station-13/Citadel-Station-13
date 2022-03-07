@@ -39,13 +39,13 @@
 	flags_inv = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
-/obj/effect/landmark/xmastree
+/atom/movable/landmark/xmastree
 	name = "christmas tree spawner"
 	layer = FLY_LAYER
 	var/festive_tree = /obj/structure/flora/tree/pine/xmas
 	var/christmas_tree = /obj/structure/flora/tree/pine/xmas/presents
 
-/obj/effect/landmark/xmastree/Initialize(mapload)
+/atom/movable/landmark/xmastree/Initialize(mapload)
 	..()
 	if((CHRISTMAS in SSevents.holidays) && christmas_tree)
 		new christmas_tree(get_turf(src))
@@ -53,10 +53,10 @@
 		new festive_tree(get_turf(src))
 	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/xmastree/hilbert
+/atom/movable/landmark/xmastree/hilbert
 	christmas_tree = /obj/structure/flora/tree/pine/xmas
 
-/obj/effect/landmark/xmastree/rdrod
+/atom/movable/landmark/xmastree/rdrod
 	name = "festivus pole spawner"
 	festive_tree = /obj/structure/festivus
 	christmas_tree = null

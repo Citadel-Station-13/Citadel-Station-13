@@ -1437,7 +1437,7 @@
 /turf/open/floor/wood,
 /area/shuttle/pirate)
 "cy" = (
-/obj/effect/mob_spawn/human/pirate/captain{
+/obj/structure/ghost_role_spawner/pirate/captain{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1453,7 +1453,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/human/pirate{
+/obj/structure/ghost_role_spawner/pirate{
 	dir = 1
 	},
 /obj/effect/turf_decal/box/red,
@@ -1469,7 +1469,7 @@
 /area/shuttle/pirate)
 "cB" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/human/pirate{
+/obj/structure/ghost_role_spawner/pirate{
 	dir = 1
 	},
 /obj/effect/turf_decal/box/red,

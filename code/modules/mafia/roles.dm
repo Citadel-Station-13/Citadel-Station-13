@@ -8,7 +8,7 @@
 
 	var/player_key
 	var/mob/living/carbon/human/body
-	var/obj/effect/landmark/mafia/assigned_landmark
+	var/atom/movable/landmark/mafia/assigned_landmark
 
 	///role flags (special status of roles like detection immune)
 	var/role_flags = NONE

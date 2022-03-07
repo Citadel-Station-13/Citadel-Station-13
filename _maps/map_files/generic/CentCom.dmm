@@ -2285,7 +2285,7 @@
 /turf/closed/indestructible/riveted,
 /area/start)
 "fY" = (
-/obj/effect/landmark/start/new_player,
+/atom/movable/landmark/start/new_player,
 /turf/open/floor/plating,
 /area/start)
 "fZ" = (
@@ -3163,7 +3163,7 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
 "iq" = (
-/obj/effect/landmark/prisonwarp,
+/atom/movable/landmark/prisonwarp,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -4645,7 +4645,7 @@
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "lD" = (
-/obj/effect/landmark/abductor/scientist{
+/atom/movable/landmark/abductor/scientist{
 	team_number = 4
 	},
 /turf/open/floor/plating/abductor,
@@ -4655,7 +4655,7 @@
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "lF" = (
-/obj/effect/landmark/abductor/agent{
+/atom/movable/landmark/abductor/agent{
 	team_number = 4
 	},
 /turf/open/floor/plating/abductor,
@@ -6992,7 +6992,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "pW" = (
-/obj/effect/landmark/ai_multicam_room,
+/atom/movable/landmark/ai_multicam_room,
 /turf/open/ai_visible,
 /area/ai_multicam_room)
 "pZ" = (
@@ -7969,7 +7969,7 @@
 /turf/open/floor/plating,
 /area/syndicate_mothership)
 "sf" = (
-/obj/effect/landmark/holding_facility,
+/atom/movable/landmark/holding_facility,
 /mob/living/simple_animal/bot/medbot{
 	name = "Syndicate Hospitality Drone"
 	},
@@ -9829,7 +9829,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/three)
 "wi" = (
-/obj/effect/landmark/mafia_game_area,
+/atom/movable/landmark/mafia_game_area,
 /turf/open/space/basic,
 /area/space)
 "wj" = (
@@ -10359,7 +10359,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership)
 "xI" = (
-/obj/effect/landmark/start/nukeop,
+/atom/movable/landmark/start/nukeop,
 /turf/open/floor/plasteel/dark,
 /area/syndicate_mothership)
 "xJ" = (
@@ -11057,12 +11057,12 @@
 /area/centcom/ferry)
 "zB" = (
 /obj/structure/chair/office/dark,
-/obj/effect/landmark/ert_spawn,
+/atom/movable/landmark/ert_spawn,
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "zC" = (
 /obj/structure/chair/office/dark,
-/obj/effect/landmark/ert_spawn,
+/atom/movable/landmark/ert_spawn,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -11349,7 +11349,7 @@
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
-/obj/effect/landmark/ert_spawn,
+/atom/movable/landmark/ert_spawn,
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Ai" = (
@@ -11484,7 +11484,7 @@
 	},
 /area/wizard_station)
 "Ay" = (
-/obj/effect/landmark/start/wizard,
+/atom/movable/landmark/start/wizard,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "Az" = (
@@ -11573,7 +11573,7 @@
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
-/obj/effect/landmark/ert_spawn,
+/atom/movable/landmark/ert_spawn,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -12029,13 +12029,13 @@
 /turf/open/floor/plasteel,
 /area/centcom/evac)
 "BQ" = (
-/obj/effect/landmark/abductor/scientist{
+/atom/movable/landmark/abductor/scientist{
 	team_number = 3
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "BR" = (
-/obj/effect/landmark/abductor/agent{
+/atom/movable/landmark/abductor/agent{
 	team_number = 3
 	},
 /turf/open/floor/plating/abductor,
@@ -12079,14 +12079,14 @@
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
-/obj/effect/landmark/ert_spawn,
+/atom/movable/landmark/ert_spawn,
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Cb" = (
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
-/obj/effect/landmark/ert_spawn,
+/atom/movable/landmark/ert_spawn,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -14893,7 +14893,7 @@
 /area/tdome/tdomeobserve)
 "HM" = (
 /obj/structure/chair,
-/obj/effect/landmark/thunderdome/observe,
+/atom/movable/landmark/thunderdome/observe,
 /obj/structure/sign/barsign{
 	pixel_y = 32
 	},
@@ -14911,7 +14911,7 @@
 /area/tdome/tdomeobserve)
 "HN" = (
 /obj/structure/chair,
-/obj/effect/landmark/thunderdome/observe,
+/atom/movable/landmark/thunderdome/observe,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -15343,21 +15343,21 @@
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "IA" = (
-/obj/effect/landmark/thunderdome/two,
+/atom/movable/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "IB" = (
-/obj/effect/landmark/thunderdome/two,
+/atom/movable/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "IC" = (
-/obj/effect/landmark/thunderdome/two,
+/atom/movable/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -15430,21 +15430,21 @@
 /turf/open/floor/plasteel,
 /area/centcom/supplypod)
 "IL" = (
-/obj/effect/landmark/thunderdome/one,
+/atom/movable/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "IM" = (
-/obj/effect/landmark/thunderdome/one,
+/atom/movable/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "IN" = (
-/obj/effect/landmark/thunderdome/one,
+/atom/movable/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -15486,7 +15486,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeadmin)
 "IT" = (
-/obj/effect/landmark/thunderdome/two,
+/atom/movable/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -15496,12 +15496,12 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/obj/effect/landmark/thunderdome/two,
+/atom/movable/landmark/thunderdome/two,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "IV" = (
-/obj/effect/landmark/thunderdome/two,
+/atom/movable/landmark/thunderdome/two,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -15515,7 +15515,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "IW" = (
-/obj/effect/landmark/thunderdome/two,
+/atom/movable/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -15534,7 +15534,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "IZ" = (
-/obj/effect/landmark/thunderdome/one,
+/atom/movable/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -15544,12 +15544,12 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/obj/effect/landmark/thunderdome/one,
+/atom/movable/landmark/thunderdome/one,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "Jb" = (
-/obj/effect/landmark/thunderdome/one,
+/atom/movable/landmark/thunderdome/one,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -15563,7 +15563,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "Jc" = (
-/obj/effect/landmark/thunderdome/one,
+/atom/movable/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -15598,7 +15598,7 @@
 	pixel_y = -9;
 	resistance_flags = 64
 	},
-/obj/effect/landmark/thunderdome/two,
+/atom/movable/landmark/thunderdome/two,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -15641,7 +15641,7 @@
 	pixel_y = -10;
 	resistance_flags = 64
 	},
-/obj/effect/landmark/thunderdome/one,
+/atom/movable/landmark/thunderdome/one,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -15709,38 +15709,38 @@
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "Ju" = (
-/obj/effect/landmark/thunderdome/two,
+/atom/movable/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "Jv" = (
-/obj/effect/landmark/thunderdome/two,
+/atom/movable/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "Jw" = (
-/obj/effect/landmark/thunderdome/two,
+/atom/movable/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "Jx" = (
-/obj/effect/landmark/thunderdome/one,
+/atom/movable/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "Jy" = (
-/obj/effect/landmark/thunderdome/one,
+/atom/movable/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "Jz" = (
-/obj/effect/landmark/thunderdome/one,
+/atom/movable/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -15834,11 +15834,11 @@
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "JM" = (
-/obj/effect/landmark/abductor/scientist,
+/atom/movable/landmark/abductor/scientist,
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "JN" = (
-/obj/effect/landmark/abductor/agent,
+/atom/movable/landmark/abductor/agent,
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "JO" = (
@@ -15881,7 +15881,7 @@
 /turf/open/floor/plasteel/dark,
 /area/tdome/tdomeadmin)
 "JQ" = (
-/obj/effect/landmark/thunderdome/admin,
+/atom/movable/landmark/thunderdome/admin,
 /obj/structure/chair/comfy/black{
 	dir = 1
 	},
@@ -16612,13 +16612,13 @@
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "LT" = (
-/obj/effect/landmark/abductor/scientist{
+/atom/movable/landmark/abductor/scientist{
 	team_number = 2
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "LU" = (
-/obj/effect/landmark/abductor/agent{
+/atom/movable/landmark/abductor/agent{
 	team_number = 2
 	},
 /turf/open/floor/plating/abductor,
@@ -16647,7 +16647,7 @@
 	},
 /area/awaymission/errorroom)
 "Ma" = (
-/obj/effect/landmark/error,
+/atom/movable/landmark/error,
 /turf/open/floor/plating/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0
@@ -17649,7 +17649,7 @@
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
 "QM" = (
-/obj/effect/mob_spawn/human/ghostcafe{
+/obj/structure/ghost_role_spawner/ghost_cafe{
 	dir = 8
 	},
 /turf/open/indestructible/hotelwood,
@@ -17990,7 +17990,7 @@
 /area/centcom/holding)
 "Tf" = (
 /obj/machinery/light,
-/obj/effect/landmark/holding_facility,
+/atom/movable/landmark/holding_facility,
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
 "Tg" = (
@@ -18487,7 +18487,7 @@
 /turf/open/floor/wood,
 /area/syndicate_mothership)
 "VX" = (
-/obj/effect/landmark/shuttle_import,
+/atom/movable/landmark/shuttle_import,
 /turf/open/space/basic,
 /area/space)
 "VY" = (
@@ -18619,7 +18619,7 @@
 "WR" = (
 /obj/structure/bed,
 /obj/item/bedsheet/syndie,
-/obj/effect/landmark/holding_facility,
+/atom/movable/landmark/holding_facility,
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
 "WS" = (
@@ -18803,7 +18803,7 @@
 /turf/open/floor/plating,
 /area/syndicate_mothership)
 "XZ" = (
-/obj/effect/landmark/holding_facility,
+/atom/movable/landmark/holding_facility,
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
 "Yc" = (
@@ -19006,7 +19006,7 @@
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
 "Zz" = (
-/obj/effect/landmark/start/nukeop_leader,
+/atom/movable/landmark/start/nukeop_leader,
 /turf/open/floor/wood,
 /area/syndicate_mothership)
 "ZF" = (

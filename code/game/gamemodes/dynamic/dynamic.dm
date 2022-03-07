@@ -671,7 +671,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/chance = 0
 	var/effective_living_players = current_players[CURRENT_LIVING_PLAYERS].len
 	if(GLOB.dynamic_extended)
-		effective_living_players = min(effective_living_players, length(SSjob.get_living_sec())*2 + length(SSjob.get_living_heads()))
+		effective_living_players = min(effective_living_players, length(SSjob.GetLivingDepartmentMinds(/datum/department/security))*2 + length(SSjob.GetLivingDepartmentMinds(/datum/department/command)))
 	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(effective_living_players/5))
 	if (!current_players[CURRENT_LIVING_ANTAGS].len)
 		if(GLOB.dynamic_extended)

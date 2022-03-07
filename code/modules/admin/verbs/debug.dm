@@ -674,7 +674,7 @@
 		return
 	var/list/names = list()
 	for(var/i in GLOB.ruin_landmarks)
-		var/obj/effect/landmark/ruin/ruin_landmark = i
+		var/atom/movable/landmark/ruin/ruin_landmark = i
 		var/datum/map_template/ruin/template = ruin_landmark.ruin_template
 
 		var/count = 1
@@ -690,7 +690,7 @@
 	var/ruinname = input("Select ruin", "Jump to Ruin") as null|anything in names
 
 
-	var/obj/effect/landmark/ruin/landmark = names[ruinname]
+	var/atom/movable/landmark/ruin/landmark = names[ruinname]
 
 	if(istype(landmark))
 		var/datum/map_template/ruin/template = landmark.ruin_template
@@ -707,7 +707,7 @@
 
 	var/list/exists = list()
 	for(var/landmark in GLOB.ruin_landmarks)
-		var/obj/effect/landmark/ruin/L = landmark
+		var/atom/movable/landmark/ruin/L = landmark
 		exists[L.ruin_template] = landmark
 
 	var/list/names = list()
@@ -741,7 +741,7 @@
 	var/len = GLOB.ruin_landmarks.len
 	seedRuins(SSmapping.levels_by_trait(data[2]), max(1, template.cost), data[3], list(ruinname = template))
 	if (GLOB.ruin_landmarks.len > len)
-		var/obj/effect/landmark/ruin/landmark = GLOB.ruin_landmarks[GLOB.ruin_landmarks.len]
+		var/atom/movable/landmark/ruin/landmark = GLOB.ruin_landmarks[GLOB.ruin_landmarks.len]
 		log_admin("[key_name(src)] randomly spawned ruin [ruinname] at [COORD(landmark)].")
 		usr.forceMove(get_turf(landmark))
 		to_chat(src, "<span class='name'>[template.name]</span>")

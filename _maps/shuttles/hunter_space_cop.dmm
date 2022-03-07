@@ -71,7 +71,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/effect/mob_spawn/human/fugitive/spacepol{
+/obj/structure/ghost_role_spawner/fugitive_hunter/spacepol{
 	dir = 1;
 	short_desc = null
 	},

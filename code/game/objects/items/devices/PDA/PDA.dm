@@ -169,13 +169,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/equipped(mob/user, slot)
 	. = ..()
-	if(equipped || !user.client)
+	if(equipped || !user.client?.prefs)
 		return
-	update_style(user.client)
+	update_style(user.client.prefs)
 
-/obj/item/pda/proc/update_style(client/C)
-	background_color = C.prefs.pda_color
-	switch(C.prefs.pda_style)
+/obj/item/pda/proc/update_style(datum/preferences/prefs)
+	background_color = prefs.pda_color
+	switch(prefs.pda_style)
 		if(MONO)
 			font_index = MODE_MONO
 			font_mode = FONT_MONO
@@ -191,7 +191,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		else
 			font_index = MODE_MONO
 			font_mode = FONT_MONO
-	var/pref_skin = GLOB.pda_reskins[C.prefs.pda_skin]
+	var/pref_skin = GLOB.pda_reskins[prefs.pda_skin]
 	if(icon != pref_skin)
 		icon = pref_skin
 		new_overlays = TRUE

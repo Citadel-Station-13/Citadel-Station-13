@@ -110,6 +110,19 @@
 	/// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
 	var/datum/sprite_accessory/undershirt = null
 
+	/// Access override for ID
+	var/list/access_override
+	/// Access added to ID
+	var/list/access_add
+	/// ID assigned role override
+	var/id_role_override
+	/// Clone job access to ID
+	var/access_clone
+	/// ID name override
+	var/id_name_override
+	/// ID automatically names from person equipping to
+	var/id_auto_name
+
 /**
  * Called at the start of the equip proc
  *
@@ -121,7 +134,7 @@
  *
  * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
  */
-/datum/outfit/proc/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/proc/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, datum/preferences/prefs)
 	//to be overridden for customization depending on client prefs,species etc
 	return
 
@@ -136,7 +149,7 @@
  *
  * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
  */
-/datum/outfit/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, datum/preferences/prefs)
 	//to be overridden for toggling internals, id binding, access etc
 	return
 
@@ -148,8 +161,8 @@
  *
  * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
  */
-/datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
-	pre_equip(H, visualsOnly, preference_source)
+/datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, datum/preferences/prefs)
+	pre_equip(H, visualsOnly, prefs)
 
 	//Start with uniform,suit,backpack for additional slots
 	if(uniform)
@@ -175,7 +188,28 @@
 	if(glasses)
 		H.equip_to_slot_or_del(new glasses(H), ITEM_SLOT_EYES, TRUE)
 	if(id)
+<<<<<<< HEAD
+		var/obj/item/card/id/ID = new id(H)
+		if(H.equip_to_slot_or_del(ID, SLOT_WEAR_ID, TRUE) && istype(ID))
+			if(islist(access_override))
+				ID.access = access_override.Copy()
+			else if(access_clone)
+				var/datum/job/J = SSjob.GetJobAuto(access_clone)
+				if(J)
+					ID.access = J.access.Copy()
+			if(islist(access_add))
+				ID.access |= access_add
+			if(id_role_override)
+				ID.assignment = id_role_override
+			if(id_name_override)
+				ID.registered_name = id_name_override
+			else if(id_auto_name)
+				ID.registered_name = H.real_name
+			ID.update_label()
+
+=======
 		H.equip_to_slot_or_del(new id(H), ITEM_SLOT_ID, TRUE)
+>>>>>>> citadel/master
 	if(suit_store)
 		H.equip_to_slot_or_del(new suit_store(H), ITEM_SLOT_SUITSTORE, TRUE)
 	if(undershirt)
@@ -217,7 +251,7 @@
 		var/obj/item/clothing/suit/space/hardsuit/HS = H.wear_suit
 		HS.ToggleHelmet()
 
-	post_equip(H, visualsOnly, preference_source)
+	post_equip(H, visualsOnly, prefs)
 
 	if(!visualsOnly)
 		apply_fingerprints(H)

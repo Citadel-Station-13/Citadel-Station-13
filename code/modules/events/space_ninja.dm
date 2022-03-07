@@ -13,7 +13,7 @@
 
 /datum/round_event/ghost_role/space_ninja/spawn_role()
 	var/list/spawn_locs = list()
-	for(var/obj/effect/landmark/carpspawn/carp_spawn in GLOB.landmarks_list)
+	for(var/atom/movable/landmark/carpspawn/carp_spawn in GLOB.landmarks_list)
 		if(!isturf(carp_spawn.loc))
 			stack_trace("Carp spawn found not on a turf: [carp_spawn.type] on [isnull(carp_spawn.loc) ? "null" : carp_spawn.loc.type]")
 			continue

@@ -1,4 +1,4 @@
-/obj/effect/landmark/barthpot
+/atom/movable/landmark/barthpot
 	name = "barthpot"
 
 /obj/item/barthpot

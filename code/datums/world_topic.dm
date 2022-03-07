@@ -240,45 +240,13 @@
 	keyword = "jsonmanifest"
 
 /datum/world_topic/jsonmanifest/Run(list/input, addr)
-	var/list/command = list()
-	var/list/security = list()
-	var/list/engineering = list()
-	var/list/medical = list()
-	var/list/science = list()
-	var/list/cargo = list()
-	var/list/civilian = list()
-	var/list/misc = list()
-	for(var/datum/data/record/R in GLOB.data_core.general)
-		var/name = R.fields["name"]
-		var/rank = R.fields["rank"]
-		var/real_rank = rank // make_list_rank(R.fields["real_rank"])
-		if(real_rank in GLOB.security_positions)
-			security[name] = rank
-		else if(real_rank in GLOB.engineering_positions)
-			engineering[name] = rank
-		else if(real_rank in GLOB.medical_positions)
-			medical[name] = rank
-		else if(real_rank in GLOB.science_positions)
-			science[name] = rank
-		else if(real_rank in GLOB.supply_positions)
-			cargo[name] = rank
-		else if(real_rank in GLOB.civilian_positions)
-			civilian[name] = rank
-		else
-			misc[name] = rank
-		// mixed departments, /datum/department when
-		if(real_rank in GLOB.command_positions)
-			command[name] = rank
-
 	. = list()
-	.["Command"] = command
-	.["Security"] = security
-	.["Engineering"] = engineering
-	.["Medical"] = medical
-	.["Science"] = science
-	.["Cargo"] = cargo
-	.["Civilian"] = civilian
-	.["Misc"] = misc
+	var/list/manifest = GLOB.data_core.get_manifest_tg()
+	for(var/department in manifest)
+		.[department] = list()
+		for(var/i in manifest[department])
+			var/list/L = i
+			.[department][L["name"]] = L["rank"]
 	return json_encode(.)
 
 /datum/world_topic/jsonrevision

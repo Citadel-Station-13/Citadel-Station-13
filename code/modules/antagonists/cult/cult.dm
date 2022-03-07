@@ -390,7 +390,7 @@
 	return reshape
 
 /mob/living/carbon/human/get_sac_image()
-	var/datum/job/sacjob = SSjob.GetJob(mind.assigned_role)
+	var/datum/job/sacjob = SSjob.GetJobName(mind.assigned_role)
 	var/datum/preferences/sacface = client.prefs
 	var/icon/reshape = get_flat_human_icon(null, sacjob, sacface, list(SOUTH))
 	reshape.Shift(SOUTH, 4)

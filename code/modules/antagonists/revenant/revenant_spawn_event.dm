@@ -43,7 +43,7 @@
 			if(T && is_station_level(T.z))
 				spawn_locs += T
 	if(!spawn_locs.len) //If we can't find any valid spawnpoints, try the carp spawns
-		for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
+		for(var/atom/movable/landmark/carpspawn/L in GLOB.landmarks_list)
 			if(isturf(L.loc))
 				spawn_locs += L.loc
 	if(!spawn_locs.len) //If we can't find either, just spawn the revenant at the player's location

@@ -72,7 +72,7 @@
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
 "p" = (
-/obj/effect/mob_spawn/human/fugitive/bounty/hook{
+/obj/structure/ghost_role_spawner/fugitive_hunter/bounty/hook{
 	short_desc = null
 	},
 /turf/open/floor/pod/light,
@@ -208,7 +208,7 @@
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "M" = (
-/obj/effect/mob_spawn/human/fugitive/bounty/armor{
+/obj/structure/ghost_role_spawner/fugitive_hunter/bounty/armor{
 	dir = 1;
 	short_desc = null
 	},
@@ -227,7 +227,7 @@
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "Z" = (
-/obj/effect/mob_spawn/human/fugitive/bounty/synth{
+/obj/structure/ghost_role_spawner/fugitive_hunter/bounty/synth{
 	short_desc = null
 	},
 /turf/open/floor/pod/light,

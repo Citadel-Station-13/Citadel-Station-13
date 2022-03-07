@@ -34,7 +34,7 @@
 	var/datum/preferences/dummy_prefs = new
 	dummy_prefs.pref_species = new /datum/species/zombie
 	dummy_prefs.be_random_body = TRUE
-	var/datum/job/J = SSjob.GetJob(zombiejob)
+	var/datum/job/J = SSjob.GetJobName(zombiejob)
 	var/datum/outfit/O
 	if(J.outfit)
 		O = new J.outfit

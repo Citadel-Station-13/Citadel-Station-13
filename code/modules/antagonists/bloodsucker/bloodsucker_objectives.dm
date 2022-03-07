@@ -126,15 +126,15 @@
 		valid_jobs = roles
 	else
 		valid_jobs = list()
+		var/datum/job/target_job = SSjob.GetJobName(target_role)
 		var/list/alljobs = subtypesof(/datum/job) // This is just a list of TYPES, not the actual variables!
 		for(var/T in alljobs)
 			var/datum/job/J = SSjob.GetJobType(T) //
 			if (!istype(J))
 				continue
 			// Found a job whose Dept Head matches either list of heads, or this job IS the head
-			if ((target_role in J.department_head) || target_role == J.title)
+			if((J.GetName() in target_job.GetSubordinateNames()) || target_role == J.title)
 				valid_jobs += J.title
-
 
 	// Check Vassals, and see if they match
 	var/objcount = 0

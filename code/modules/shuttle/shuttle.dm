@@ -648,11 +648,11 @@
 	else
 		. = null
 
-/obj/effect/landmark/shuttle_import
+/atom/movable/landmark/shuttle_import
 	name = "Shuttle Import"
 
 // Never move the shuttle import landmark, otherwise things get WEIRD
-/obj/effect/landmark/shuttle_import/onShuttleMove()
+/atom/movable/landmark/shuttle_import/onShuttleMove()
 	return FALSE
 
 //used by shuttle subsystem to check timers

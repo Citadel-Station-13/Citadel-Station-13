@@ -198,7 +198,7 @@
 	set_linked() // update portal links
 	. = ..()
 
-/obj/effect/portal/permanent/one_way // doesn't have a return portal, can have multiple exits, /obj/effect/landmark/portal_exit to mark them
+/obj/effect/portal/permanent/one_way // doesn't have a return portal, can have multiple exits, /atom/movable/landmark/portal_exit to mark them
 	name = "one-way portal"
 	desc = "You get the feeling that this might not be the safest thing you've ever done."
 
@@ -206,7 +206,7 @@
 	if(!id)
 		return
 	var/list/possible_turfs = list()
-	for(var/obj/effect/landmark/portal_exit/PE in GLOB.landmarks_list)
+	for(var/atom/movable/landmark/portal_exit/PE in GLOB.landmarks_list)
 		if(PE.id == id)
 			var/turf/T = get_turf(PE)
 			if(T)

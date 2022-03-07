@@ -180,6 +180,22 @@ SUBSYSTEM_DEF(tgui)
 /**
  * public
  *
+ * Get all open UIs on an object.
+ *
+ * required src_object datum The object/datum which owns the UI.
+ *
+ * return list of datum/tgui - found UIs. **Read only,** this does not copy the list and just returns the reference!
+ */
+/datum/controller/subsystem/tgui/proc/get_open_uis(datum/src_object)
+	var/key = "[REF(src_object)]"
+	// No UIs opened for this src_object
+	if(isnull(open_uis_by_src[key]) || !istype(open_uis_by_src[key], /list))
+		return null
+	return open_uis_by_src[key]
+
+/**
+ * public
+ *
  * Update all UIs attached to src_object.
  *
  * required src_object datum The object/datum which owns the UIs.

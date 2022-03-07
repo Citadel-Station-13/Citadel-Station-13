@@ -94,10 +94,12 @@
 		CRASH("Loading pirate ship failed!")
 
 	for(var/turf/A in ship.get_affected_turfs(T))
-		for(var/obj/effect/mob_spawn/human/pirate/spawner in A)
+		for(var/obj/structure/ghost_role_spawner/pirate/spawner in A)
 			if(candidates.len > 0)
 				var/mob/our_candidate = candidates[1]
-				spawner.create(our_candidate.ckey)
+				var/datum/component/ghostrole_spawnpoint/C = spawner.GetComponent(/datum/component/ghostrole_spawnpoint)
+				var/datum/ghostrole/G = get_ghostrole_datum(/datum/ghostrole/pirate)
+				G.AttemptSpawn(our_candidate.client, C)
 				candidates -= our_candidate
 				notify_ghosts("The pirate ship has an object of interest: [our_candidate]!", source=our_candidate, action=NOTIFY_ORBIT, header="Something's Interesting!")
 			else
@@ -421,7 +423,7 @@
 	export_types = list(/mob/living/carbon/human)
 
 /datum/export/pirate/ransom/find_loot()
-	var/list/head_minds = SSjob.get_living_heads()
+	var/list/head_minds = SSjob.GetLivingDepartmentMinds(/datum/department/command)
 	var/list/head_mobs = list()
 	for(var/datum/mind/M in head_minds)
 		head_mobs += M.current
@@ -435,7 +437,7 @@
 	else if("pirate" in H.faction) //can't ransom your fellow pirates to CentCom!
 		return 0
 	else
-		if(H.mind.assigned_role in GLOB.command_positions)
+		if(H.mind.assigned_role in SSjob.GetDepartmentJobNames(/datum/department/command))
 			return 3000
 		else
 			return 1000

@@ -32,7 +32,7 @@ SUBSYSTEM_DEF(activity)
 	for(var/m in GLOB.player_list)
 		var/mob/M = m
 		if (M?.mind?.assigned_role && M.stat != DEAD)
-			var/datum/job/J = SSjob.GetJob(M.mind.assigned_role)
+			var/datum/job/J = SSjob.GetJobName(M.mind.assigned_role)
 			if(J)
 				if(length(M.mind.antag_datums))
 					threats["players"] += J.GetThreat()
@@ -75,5 +75,5 @@ SUBSYSTEM_DEF(activity)
 /datum/controller/subsystem/activity/proc/on_death(datum/source, mob/M, gibbed)
 	if(!("crew_deaths" in deferred_threats))
 		deferred_threats["crew_deaths"] = 0
-	if(M?.mind && SSjob.GetJob(M.mind.assigned_role))
+	if(M?.mind && SSjob.GetJobName(M.mind.assigned_role))
 		deferred_threats["crew_deaths"] += 1

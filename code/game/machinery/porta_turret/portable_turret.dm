@@ -571,7 +571,7 @@
 		threatcount += 4
 
 	// If we aren't shooting heads then return a threatcount of 0
-	if (!(turret_flags & TURRET_FLAG_SHOOT_HEADS) && (perp.get_assignment() in GLOB.command_positions))
+	if (!(turret_flags & TURRET_FLAG_SHOOT_HEADS) && (perp.get_assignment() in SSjob.GetDepartmentJobNames(/datum/department/command)))
 		return 0
 
 	return threatcount

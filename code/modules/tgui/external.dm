@@ -52,15 +52,23 @@
  *
  * Forces an update on static data. Should be done manually whenever something
  * happens to change static data.
+ * If no user is specified, all UIs will be updated.
  *
- * required user the mob currently interacting with the ui
+ * optional user the mob currently interacting with the ui
  * optional ui ui to be updated
  */
 /datum/proc/update_static_data(mob/user, datum/tgui/ui)
-	if(!ui)
-		ui = SStgui.get_open_ui(user, src)
 	if(ui)
 		ui.send_full_update()
+		return
+	if(user)
+		ui = SStgui.get_open_ui(user, src)
+		if(ui)
+			ui.send_full_update()
+		return
+	// neither specified, send all
+	for(var/datum/tgui/_ui as anything in SStgui.get_open_uis(src))
+		_ui.send_full_update()
 
 /**
  * public

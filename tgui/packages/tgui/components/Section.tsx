@@ -20,6 +20,8 @@ interface SectionProps extends BoxProps {
   level?: boolean;
   /** @deprecated Please use `scrollable` property */
   overflowY?: any;
+  /** Cit specific BANAID, used for custom colors in the title border */
+  borderHexColor?: string;
 }
 
 export class Section extends Component<SectionProps> {
@@ -53,6 +55,8 @@ export class Section extends Component<SectionProps> {
       fitted,
       scrollable,
       children,
+      // BANAID custom color for border (when title exists)
+      borderHexColor,
       ...rest
     } = this.props;
     const hasTitle = canRender(title) || canRender(buttons);
@@ -69,7 +73,9 @@ export class Section extends Component<SectionProps> {
         ])}
         {...computeBoxProps(rest)}>
         {hasTitle && (
-          <div className="Section__title">
+          <div
+            className={borderHexColor ? undefined : "Section__title"}
+            style={{ "border-bottom": borderHexColor ? `2px solid ${borderHexColor}` : undefined }}>
             <span className="Section__titleText">
               {title}
             </span>

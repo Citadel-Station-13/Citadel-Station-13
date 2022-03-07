@@ -64,7 +64,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter)
 "o" = (
-/obj/effect/mob_spawn/human/fugitive/russian{
+/obj/structure/ghost_role_spawner/fugitive_hunter/russian{
 	dir = 4;
 	short_desc = null
 	},
@@ -209,7 +209,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter)
 "L" = (
-/obj/effect/mob_spawn/human/fugitive/russian{
+/obj/structure/ghost_role_spawner/fugitive_hunter/russian{
 	dir = 1;
 	short_desc = null
 	},

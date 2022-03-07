@@ -55,11 +55,11 @@
 /turf/open/floor/grass/fakebasalt,
 /area/mafia)
 "m" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /turf/open/floor/grass/fakebasalt,
 /area/mafia)
 "n" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9;
 	icon_state = "trimline_fill"
@@ -169,7 +169,7 @@
 /turf/open/floor/plasteel,
 /area/mafia)
 "A" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6;
 	icon_state = "trimline_fill"
@@ -224,7 +224,7 @@
 /turf/open/floor/plasteel,
 /area/mafia)
 "G" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10;
 	icon_state = "trimline_fill"
@@ -258,7 +258,7 @@
 /turf/open/floor/plasteel,
 /area/mafia)
 "J" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6;
 	icon_state = "trimline_fill"
@@ -283,7 +283,7 @@
 /turf/open/floor/plasteel,
 /area/mafia)
 "L" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5;
 	icon_state = "trimline_fill"
@@ -321,7 +321,7 @@
 /turf/open/floor/plasteel,
 /area/mafia)
 "Q" = (
-/obj/effect/landmark/mafia,
+/atom/movable/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9;
 	icon_state = "trimline_fill"
@@ -330,7 +330,7 @@
 /area/mafia)
 "R" = (
 /obj/effect/baseturf_helper/asteroid,
-/obj/effect/landmark/mafia/town_center,
+/atom/movable/landmark/mafia/town_center,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 1

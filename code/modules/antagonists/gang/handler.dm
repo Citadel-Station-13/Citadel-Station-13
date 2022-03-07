@@ -419,7 +419,7 @@ GLOBAL_VAR(families_override_theme)
 
 			cop.mind.add_antag_datum(ert_antag)
 			cop.mind.assigned_role = ert_antag.name
-			SSjob.SendToLateJoin(cop)
+			SSjob.SendToLatejoin(cop)
 
 			//Logging and cleanup
 			log_game("[key_name(cop)] has been selected as an [ert_antag.name]")

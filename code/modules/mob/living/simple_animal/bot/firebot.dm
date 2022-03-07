@@ -42,7 +42,7 @@
 /mob/living/simple_animal/bot/firebot/Initialize()
 	. = ..()
 	update_icon()
-	var/datum/job/engineer/J = new/datum/job/engineer
+	var/datum/job/engineer/J = SSjob.GetJobType(/datum/job/engineer)
 	access_card.access += J.get_access()
 	prev_access = access_card.access
 

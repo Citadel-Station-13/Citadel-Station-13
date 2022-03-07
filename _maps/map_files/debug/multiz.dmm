@@ -1271,11 +1271,11 @@
 /turf/open/floor/plasteel,
 /area/engineering/storage)
 "dH" = (
-/obj/effect/landmark/start,
+/atom/movable/landmark/start,
 /turf/open/floor/plasteel,
 /area/commons/storage/primary)
 "dI" = (
-/obj/effect/landmark/latejoin,
+/atom/movable/landmark/spawnpoint/latejoin/station,
 /turf/open/floor/plasteel,
 /area/commons/storage/primary)
 "dJ" = (

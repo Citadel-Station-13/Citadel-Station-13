@@ -17,13 +17,13 @@
 /turf/open/indestructible/necropolis/ice,
 /area/icemoon/underground/explored)
 "z" = (
-/obj/effect/landmark/portal_exit{
+/atom/movable/landmark/portal_exit{
 	id = "wendigo arena"
 	},
 /turf/open/indestructible/necropolis/ice,
 /area/icemoon/underground/explored)
 "K" = (
-/obj/effect/landmark/portal_exit{
+/atom/movable/landmark/portal_exit{
 	id = "wendigo arena exit"
 	},
 /turf/open/floor/plating/asteroid/snow/ice/icemoon,

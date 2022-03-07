@@ -17,13 +17,13 @@
 		if(!istype(A, whitelist_area) || (T.flags_1 & NO_LAVA_GEN_1))
 			possible_locs -= T
 		else
-			river_nodes += new /obj/effect/landmark/river_waypoint(T)
+			river_nodes += new /atom/movable/landmark/river_waypoint(T)
 			num_spawned++
-	
+
 	safety = 0
 	//make some randomly pathing rivers
 	for(var/A in river_nodes)
-		var/obj/effect/landmark/river_waypoint/W = A
+		var/atom/movable/landmark/river_waypoint/W = A
 		if (W.z != target_z || W.connected)
 			continue
 		W.connected = 1
@@ -64,7 +64,7 @@
 		qdel(WP)
 
 
-/obj/effect/landmark/river_waypoint
+/atom/movable/landmark/river_waypoint
 	name = "river waypoint"
 	var/connected = 0
 	invisibility = INVISIBILITY_ABSTRACT

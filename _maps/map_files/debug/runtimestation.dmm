@@ -1261,7 +1261,7 @@
 /turf/open/floor/plasteel,
 /area/commons/storage/primary)
 "dD" = (
-/obj/effect/landmark/observer_start,
+/atom/movable/landmark/observer_start,
 /turf/open/floor/plasteel,
 /area/commons/storage/primary)
 "dE" = (
@@ -1285,7 +1285,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/department/bridge)
 "dI" = (
-/obj/effect/landmark/start,
+/atom/movable/landmark/start,
 /turf/open/floor/plasteel,
 /area/commons/storage/primary)
 "dJ" = (

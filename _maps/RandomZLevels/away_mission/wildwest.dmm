@@ -2106,7 +2106,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/awaymission/wildwest/refine)
 "gV" = (
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},

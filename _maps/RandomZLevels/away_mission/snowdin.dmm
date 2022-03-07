@@ -210,7 +210,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /obj/item/bedsheet/purple,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/post/dorm)
@@ -256,7 +256,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/post/dorm)
 "aY" = (
@@ -299,7 +299,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /obj/item/paper/crumpled/ruins/snowdin/dontdeadopeninside,
 /obj/item/bedsheet/green,
 /turf/open/floor/wood,
@@ -627,7 +627,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/snowdin/post/kitchen)
 "bM" = (
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/snowdin/post/kitchen)
@@ -1818,7 +1818,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /obj/item/bedsheet/red,
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
@@ -2691,7 +2691,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "gg" = (
 /obj/structure/bed,
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /obj/item/bedsheet/nanotrasen,
 /turf/open/floor/carpet,
 /area/awaymission/snowdin/post/dorm)
@@ -3490,12 +3490,12 @@
 /area/awaymission/snowdin/post/gateway)
 "hR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "hS" = (
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -3509,7 +3509,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
@@ -3841,7 +3841,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "iB" = (
@@ -3854,7 +3854,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -3869,7 +3869,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "iD" = (
@@ -4275,7 +4275,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "ju" = (
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
@@ -4286,7 +4286,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -4379,7 +4379,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	piping_layer = 3;
@@ -5867,7 +5867,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/garage)
@@ -11663,7 +11663,7 @@
 	},
 /area/awaymission/snowdin/outside)
 "Be" = (
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

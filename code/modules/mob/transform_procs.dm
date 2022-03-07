@@ -334,7 +334,7 @@
 
 /mob/proc/AIize(transfer_after = TRUE)
 	var/list/turf/landmark_loc = list()
-	for(var/obj/effect/landmark/start/ai/sloc in GLOB.landmarks_list)
+	for(var/atom/movable/landmark/spawnpoint/job/ai/sloc in GLOB.landmarks_list)
 		if(locate(/mob/living/silicon/ai) in sloc.loc)
 			continue
 		if(sloc.primary_ai)
@@ -344,7 +344,7 @@
 		landmark_loc += sloc.loc
 	if(!landmark_loc.len)
 		to_chat(src, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
-		for(var/obj/effect/landmark/start/ai/sloc in GLOB.landmarks_list)
+		for(var/atom/movable/landmark/spawnpoint/job/ai/sloc in GLOB.landmarks_list)
 			landmark_loc += sloc.loc
 
 	if(!landmark_loc.len)

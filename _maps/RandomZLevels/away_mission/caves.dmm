@@ -790,7 +790,7 @@
 	},
 /area/awaymission/caves/BMP_asteroid)
 "cz" = (
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -911,7 +911,7 @@
 	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "cR" = (
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1177,7 +1177,7 @@
 "dH" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "dI" = (
@@ -1254,7 +1254,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "dZ" = (
@@ -1283,7 +1283,7 @@
 /area/awaymission/caves/northblock)
 "ed" = (
 /obj/structure/bed,
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /turf/open/floor/wood{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1481,7 +1481,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/caves/listeningpost)
 "eO" = (
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /turf/open/floor/plasteel,
 /area/awaymission/caves/listeningpost)
 "eP" = (
@@ -1841,7 +1841,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/caves/BMP_asteroid)
 "fU" = (
-/obj/effect/landmark/awaystart,
+/atom/movable/landmark/awaystart,
 /turf/open/floor/plasteel/elevatorshaft{
 	initial_gas_mix = "n2=23;o2=14";
 	name = "elevator flooring"

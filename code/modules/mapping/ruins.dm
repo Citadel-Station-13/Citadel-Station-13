@@ -21,7 +21,7 @@
 
 			if(!valid)
 				break
-			
+
 
 		if(!valid)
 			continue
@@ -43,7 +43,7 @@
 		for(var/turf/T in get_affected_turfs(central_turf, 1))
 			T.flags_1 |= NO_RUINS_1
 
-		new /obj/effect/landmark/ruin(central_turf, src)
+		new /atom/movable/landmark/ruin(central_turf, src)
 		return central_turf
 
 /datum/map_template/ruin/proc/place_on_isolated_level(z)
@@ -56,7 +56,7 @@
 	for(var/turf/T in get_affected_turfs(placement))
 		T.flags_1 |= NO_RUINS_1
 	var/turf/center = locate(placement.x + round(width/2),placement.y + round(height/2),placement.z)
-	new /obj/effect/landmark/ruin(center, src)
+	new /atom/movable/landmark/ruin(center, src)
 	return center
 
 /proc/seedRuins(list/z_levels = null, budget = 0, whitelist = list(/area/space), list/potentialRuins)

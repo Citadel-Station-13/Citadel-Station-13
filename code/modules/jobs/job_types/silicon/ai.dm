@@ -1,0 +1,72 @@
+/datum/job/ai
+	title = "AI"
+	desc = "The governing intelligence of an installation; bound to a set of company-provided laws and tasked with assisting the crew."
+	supervisor_text_override = "your laws"
+//	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
+	faction = JOB_FACTION_STATION
+	total_positions = 1
+	roundstart_positions = 1
+	selection_color = "#ccffcc"
+	req_admin_notify = TRUE
+	minimal_player_age = 30
+	exp_requirements = 180
+	exp_type = EXP_TYPE_CREW
+	exp_type_department = EXP_TYPE_SILICON
+	allow_bureaucratic_error = FALSE
+	var/do_special_check = TRUE
+	threat = 5
+	considered_combat_role = TRUE
+
+	starting_modifiers = list(/datum/skill_modifier/job/level/wiring/basic)
+
+/datum/job/ai/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null, datum/preferences/prefs)
+	if(visualsOnly)
+		CRASH("dynamic preview is unsupported")
+	. = H.AIize(latejoin, prefs)
+
+/datum/job/ai/after_spawn(mob/M, latejoin, client/C)
+	. = ..()
+	if(latejoin)
+		var/obj/structure/AIcore/latejoin_inactive/lateJoinCore
+		for(var/obj/structure/AIcore/latejoin_inactive/P in GLOB.latejoin_ai_cores)
+			if(P.is_available())
+				lateJoinCore = P
+				GLOB.latejoin_ai_cores -= P
+				break
+		if(lateJoinCore)
+			lateJoinCore.available = FALSE
+			M.forceMove(lateJoinCore.loc)
+			qdel(lateJoinCore)
+	var/mob/living/silicon/ai/AI = M
+	AI.apply_pref_name("ai", C)			//If this runtimes oh well jobcode is fucked.
+	AI.set_core_display_icon(null, C)
+
+	//we may have been created after our borg
+	if(SSticker.current_state == GAME_STATE_SETTING_UP)
+		for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
+			if(!R.connected_ai)
+				R.TryConnectToAI()
+
+	if(latejoin)
+		announce(AI)
+
+/datum/job/ai/override_latejoin_spawn()
+	return TRUE
+
+/datum/job/ai/special_check_latejoin(client/C)
+	if(!do_special_check)
+		return TRUE
+	for(var/i in GLOB.latejoin_ai_cores)
+		var/obj/structure/AIcore/latejoin_inactive/LAI = i
+		if(istype(LAI))
+			if(LAI.is_available())
+				return TRUE
+	return FALSE
+
+/datum/job/ai/announce(mob/living/silicon/ai/AI)
+	. = ..()
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "[AI] has been downloaded to an empty bluespace-networked AI core at [AREACOORD(AI)]."))
+
+/datum/job/ai/config_check()
+	return CONFIG_GET(flag/allow_ai)
+

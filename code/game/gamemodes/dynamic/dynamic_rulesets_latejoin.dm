@@ -100,8 +100,9 @@
 	if(!..())
 		return FALSE
 	var/head_check = 0
+	var/list/head_roles = SSjob.GetDepartmentType(/datum/department/command).GetJobNames()
 	for(var/mob/player in mode.current_players[CURRENT_LIVING_PLAYERS])
-		if (player.mind.assigned_role in GLOB.command_positions)
+		if (player.mind.assigned_role in head_roles)
 			head_check++
 	return (head_check >= required_heads_of_staff)
 

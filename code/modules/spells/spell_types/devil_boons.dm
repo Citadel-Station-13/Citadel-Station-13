@@ -57,7 +57,7 @@
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "sacredflame"
 	var/mob/living/friend
-	var/obj/effect/mob_spawn/human/demonic_friend/friendShell
+	var/obj/structure/ghost_role_spawner/demonic_friend/friendShell
 
 /obj/effect/proc_holder/spell/targeted/summon_friend/cast(list/targets, mob/user = usr)
 	if(!QDELETED(friend))
@@ -70,7 +70,10 @@
 		return
 	for(var/C in targets)
 		var/mob/living/L = C
-		friendShell = new /obj/effect/mob_spawn/human/demonic_friend(L.loc, L.mind, src)
+		friendShell = new(L.loc, list(
+			"owner" = user.mind,
+			"spell" = src
+		))
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket/robeless
 	clothes_req = NONE

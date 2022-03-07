@@ -30,64 +30,20 @@
 	var/assignedrole
 	var/show_flavour = TRUE
 	var/banType = "lavaland"
-	var/ghost_usable = TRUE
 	var/skip_reentry_check = FALSE //Skips the ghost role blacklist time for people who ghost/suicide/cryo
 
 ///override this to add special spawn conditions to a ghost role
 /obj/effect/mob_spawn/proc/allow_spawn(mob/user, silent = FALSE)
-	return TRUE
-	
-//ATTACK GHOST IGNORING PARENT RETURN VALUE
-/obj/effect/mob_spawn/attack_ghost(mob/user, latejoinercalling)
-	if(!SSticker.HasRoundStarted() || !loc || !ghost_usable)
-		return
-	if(!uses)
-		to_chat(user, "<span class='warning'>This spawner is out of charges!</span>")
-		return
-	if(jobban_isbanned(user, banType))
-		to_chat(user, "<span class='warning'>You are jobanned!</span>")
-		return
-	if(!allow_spawn(user, silent = FALSE))
-		return
-	if(QDELETED(src) || QDELETED(user))
-		return
-	if(isobserver(user))
-		var/mob/dead/observer/O = user
-		if(!O.can_reenter_round() && !skip_reentry_check)
-			return FALSE
-	var/ghost_role = alert(latejoinercalling ? "Latejoin as [mob_name]? (This is a ghost role, and as such, it's very likely to be off-station.)" : "Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
-	if(ghost_role == "No" || !loc)
-		return
-	if(QDELETED(src) || QDELETED(user))
-		return
-	if(latejoinercalling)
-		var/mob/dead/new_player/NP = user
-		if(istype(NP))
-			NP.close_spawn_windows()
-			NP.stop_sound_channel(CHANNEL_LOBBYMUSIC)
-	log_game("[key_name(user)] became [mob_name]")
-	create(ckey = user.ckey)
 	return TRUE
 
 /obj/effect/mob_spawn/Initialize(mapload)
 	. = ..()
 	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
 		INVOKE_ASYNC(src, .proc/create)
-	else if(ghost_usable)
-		GLOB.poi_list |= src
-		LAZYADD(GLOB.mob_spawners[job_description ? job_description : name], src)
 
 
 /obj/effect/mob_spawn/Destroy()
-	GLOB.poi_list -= src
-	var/job_name = job_description ? job_description : name
-	LAZYREMOVE(GLOB.mob_spawners[job_name], src)
-	if(!LAZYLEN(GLOB.mob_spawners[job_name]))
-		GLOB.mob_spawners -= job_name
 	return ..()
-
-/obj/effect/mob_spawn/proc/can_latejoin() //If it can be taken from the lobby.
-	return ghost_usable
 
 /obj/effect/mob_spawn/proc/special(mob/M)
 	return
@@ -267,7 +223,6 @@
 	roundstart = FALSE //you could use these for alive fake humans on roundstart but this is more common scenario
 
 /obj/effect/mob_spawn/human/corpse/delayed
-	ghost_usable = FALSE //These are just not-yet-set corpses.
 	instant = FALSE
 
 //Non-human spawners
