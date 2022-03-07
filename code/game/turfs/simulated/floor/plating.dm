@@ -125,8 +125,11 @@
 			if(istype(W, /obj/item/stack/tile/material))
 				var/turf/newturf = PlaceOnTop(/turf/open/floor/material, flags = CHANGETURF_INHERIT_AIR)
 				newturf.set_custom_materials(W.custom_materials)
+				newturf.add_atom_colour(C.atom_colours[WASHABLE_COLOUR_PRIORITY], FIXED_COLOUR_PRIORITY)
 			else if(W.turf_type)
 				var/turf/open/floor/T = PlaceOnTop(W.turf_type, flags = CHANGETURF_INHERIT_AIR)
+				if(length(C.atom_colours) && C.atom_colours[WASHABLE_COLOUR_PRIORITY] != null)
+					T.add_atom_colour(C.atom_colours[WASHABLE_COLOUR_PRIORITY], FIXED_COLOUR_PRIORITY)
 				if(istype(W, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 					var/obj/item/stack/tile/light/L = W
 					var/turf/open/floor/light/F = T
