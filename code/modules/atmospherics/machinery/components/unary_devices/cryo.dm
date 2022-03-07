@@ -296,7 +296,7 @@
 	else
 		. += "[src] seems empty."
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/living/carbon/target, mob/user)
+/obj/machinery/atmospherics/components/unary/cryo_cell/MouseDropped(mob/living/carbon/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !istype(target) || !user.IsAdvancedToolUser())
 		return
 	if(!CHECK_MOBILITY(target, MOBILITY_MOVE))

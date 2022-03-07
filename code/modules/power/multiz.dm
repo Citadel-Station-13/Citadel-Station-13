@@ -73,8 +73,8 @@
 	if(C && C.powernet)
 		C.powernet.add_machine(src) //Nice we're in.
 		powernet = C.powernet
-	below = locate(/obj/machinery/power/deck_relay) in(SSmapping.get_turf_below(T))
-	above = locate(/obj/machinery/power/deck_relay) in(SSmapping.get_turf_above(T))
+	below = locate(/obj/machinery/power/deck_relay) in T.Below()
+	above = locate(/obj/machinery/power/deck_relay) in T.Above()
 	if(below || above)
 		icon_state = "cablerelay-on"
 	return TRUE

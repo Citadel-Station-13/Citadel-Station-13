@@ -4,16 +4,13 @@
 	name = "\proper space"
 	intact = 0
 	dirt_buildup_allowed = FALSE
+	turf_construct_flags = TURF_CONSTRUCT_FLAGS_PLATING_OVER
 
 	initial_temperature = TCMB
 	thermal_conductivity = 0
 	heat_capacity = 700000
 	wave_explosion_multiply = EXPLOSION_DAMPEN_SPACE
 	wave_explosion_block = EXPLOSION_BLOCK_SPACE
-
-	var/destination_z
-	var/destination_x
-	var/destination_y
 
 	var/static/datum/gas_mixture/immutable/space/space_gas
 	plane = PLANE_SPACE
@@ -66,22 +63,9 @@
 	if (opacity)
 		has_opaque_atom = TRUE
 
-	var/turf/T = SSmapping.get_turf_above(src)
-	if(T)
-		T.multiz_turf_new(src, DOWN)
-	T = SSmapping.get_turf_below(src)
-	if(T)
-		T.multiz_turf_new(src, UP)
-
 	ComponentInitialize()
 
 	return INITIALIZE_HINT_NORMAL
-
-//ATTACK GHOST IGNORING PARENT RETURN VALUE
-/turf/open/space/attack_ghost(mob/dead/observer/user)
-	if(destination_z)
-		var/turf/T = locate(destination_x, destination_y, destination_z)
-		user.forceMove(T)
 
 /turf/open/space/Initalize_Atmos(times_fired)
 	return
@@ -118,100 +102,8 @@
 /turf/open/space/attack_paw(mob/user)
 	return attack_hand(user)
 
-/turf/open/space/proc/CanBuildHere()
-	return TRUE
-
 /turf/open/space/handle_slip()
 	return // no lube bullshit, this is space
-
-/turf/open/space/attackby(obj/item/C, mob/user, params)
-	..()
-	if(!CanBuildHere())
-		return
-	if(istype(C, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = C
-		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-		var/obj/structure/lattice/catwalk/W = locate(/obj/structure/lattice/catwalk, src)
-		if(W)
-			to_chat(user, "<span class='warning'>There is already a catwalk here!</span>")
-			return
-		if(L)
-			if(R.use(1))
-				qdel(L)
-				to_chat(user, "<span class='notice'>You construct a catwalk.</span>")
-				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-				new/obj/structure/lattice/catwalk(src)
-			else
-				to_chat(user, "<span class='warning'>You need two rods to build a catwalk!</span>")
-			return
-		if(R.use(1))
-			to_chat(user, "<span class='notice'>You construct a lattice.</span>")
-			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-			ReplaceWithLattice()
-		else
-			to_chat(user, "<span class='warning'>You need one rod to build a lattice.</span>")
-		return
-	if(istype(C, /obj/item/stack/tile/plasteel))
-		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-		if(L)
-			var/obj/item/stack/tile/plasteel/S = C
-			if(S.use(1))
-				qdel(L)
-				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-				to_chat(user, "<span class='notice'>You build a floor.</span>")
-				PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-			else
-				to_chat(user, "<span class='warning'>You need one floor tile to build a floor!</span>")
-		else
-			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
-
-/turf/open/space/Entered(atom/movable/A)
-	..()
-	if ((!(A) || src != A.loc))
-		return
-
-	if(destination_z && destination_x && destination_y && !(A.pulledby || !A.can_be_z_moved))
-		var/tx = destination_x
-		var/ty = destination_y
-		var/turf/DT = locate(tx, ty, destination_z)
-		var/itercount = 0
-		while(DT.density || istype(DT.loc,/area/shuttle)) // Extend towards the center of the map, trying to look for a better place to arrive
-			if (itercount++ >= 100)
-				log_game("SPACE Z-TRANSIT ERROR: Could not find a safe place to land [A] within 100 iterations.")
-				break
-			if (tx < 128)
-				tx++
-			else
-				tx--
-			if (ty < 128)
-				ty++
-			else
-				ty--
-			DT = locate(tx, ty, destination_z)
-
-		var/atom/movable/pulling = A.pulling
-		var/atom/movable/puller = A
-		A.forceMove(DT)
-
-		while (pulling != null)
-			var/next_pulling = pulling.pulling
-			if(next_pulling == pulling)
-				break		// no loops
-
-			var/turf/T = get_step(puller.loc, turn(puller.dir, 180))
-			pulling.can_be_z_moved = FALSE
-			pulling.forceMove(T)
-			puller.start_pulling(pulling)
-			pulling.can_be_z_moved = TRUE
-
-			puller = pulling
-			pulling = next_pulling
-
-		//now we're on the new z_level, proceed the space drifting
-		stoplag()//Let a diagonal move finish, if necessary
-		A.newtonian_move(A.inertia_dir)
-		A.inertia_moving = TRUE
-
 
 /turf/open/space/Exited(atom/movable/AM, atom/OldLoc)
 	. = ..()
@@ -231,11 +123,6 @@
 		return 1
 	return 0
 
-/turf/open/space/is_transition_turf()
-	if(destination_x || destination_y || destination_z)
-		return 1
-
-
 /turf/open/space/acid_act(acidpwr, acid_volume)
 	return 0
 
@@ -247,7 +134,7 @@
 
 
 /turf/open/space/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(!CanBuildHere())
+	if(!CanBuildOn())
 		return FALSE
 
 	switch(the_rcd.mode)
@@ -267,115 +154,6 @@
 			return TRUE
 	return FALSE
 
-/turf/open/space/ReplaceWithLattice()
-	var/dest_x = destination_x
-	var/dest_y = destination_y
-	var/dest_z = destination_z
-	..()
-	destination_x = dest_x
-	destination_y = dest_y
-	destination_z = dest_z
 
 /turf/open/space/get_yelling_resistance(power)
 	return INFINITY				// no sound through space for crying out loud
-
-/turf/open/space/transparent
-	baseturfs = /turf/open/space/transparent/openspace
-	intact = FALSE //this means wires go on top
-
-/turf/open/space/transparent/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
-	..()
-	plane = OPENSPACE_PLANE
-	layer = OPENSPACE_LAYER
-	icon_state = "transparent"
-
-	return INITIALIZE_HINT_LATELOAD
-
-/turf/open/space/transparent/LateInitialize()
-	update_multiz(TRUE, TRUE)
-
-/turf/open/space/transparent/Destroy()
-	vis_contents.len = 0
-	return ..()
-
-/turf/open/space/transparent/update_multiz(prune_on_fail = FALSE, init = FALSE)
-	. = ..()
-	var/turf/T = below()
-	if(!T)
-		vis_contents.len = 0
-		if(!show_bottom_level() && prune_on_fail) //If we cant show whats below, and we prune on fail, change the turf to space as a fallback
-			ChangeTurf(/turf/open/space)
-		return FALSE
-	if(init)
-		vis_contents += T
-	return TRUE
-
-/turf/open/space/transparent/multiz_turf_del(turf/T, dir)
-	if(dir != DOWN)
-		return
-	update_multiz()
-
-/turf/open/space/transparent/multiz_turf_new(turf/T, dir)
-	if(dir != DOWN)
-		return
-	update_multiz()
-
-///Called when there is no real turf below this turf
-/turf/open/space/transparent/proc/show_bottom_level()
-	var/turf/path = get_z_base_turf()
-	var/mutable_appearance/underlay_appearance = mutable_appearance(initial(path.icon), initial(path.icon_state), layer = TURF_LAYER, plane = PLANE_SPACE)
-	underlays += underlay_appearance
-	return TRUE
-
-/turf/open/space/transparent/openspace
-	name = "open space"
-	desc = "Watch your step!"
-	icon_state = "transparent"
-	baseturfs = /turf/open/space/transparent/openspace
-	CanAtmosPassVertical = ATMOS_PASS_YES
-	//mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-///No bottom level for openspace.
-/turf/open/space/transparent/openspace/show_bottom_level()
-	return FALSE
-
-/turf/open/space/transparent/openspace/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
-	. = ..()
-
-	icon_state = "transparent"
-
-	vis_contents += GLOB.openspace_backdrop_one_for_all //Special grey square for projecting backdrop darkness filter on it.
-
-/turf/open/space/transparent/openspace/zAirIn()
-	return TRUE
-
-/turf/open/space/transparent/openspace/zAirOut()
-	return TRUE
-
-/turf/open/space/transparent/openspace/zPassIn(atom/movable/A, direction, turf/source)
-	if(direction == DOWN)
-		for(var/obj/O in contents)
-			if(O.obj_flags & BLOCK_Z_IN_DOWN)
-				return FALSE
-		return TRUE
-	if(direction == UP)
-		for(var/obj/O in contents)
-			if(O.obj_flags & BLOCK_Z_IN_UP)
-				return FALSE
-		return TRUE
-	return FALSE
-
-/turf/open/space/transparent/openspace/zPassOut(atom/movable/A, direction, turf/destination)
-	if(A.anchored)
-		return FALSE
-	if(direction == DOWN)
-		for(var/obj/O in contents)
-			if(O.obj_flags & BLOCK_Z_OUT_DOWN)
-				return FALSE
-		return TRUE
-	if(direction == UP)
-		for(var/obj/O in contents)
-			if(O.obj_flags & BLOCK_Z_OUT_UP)
-				return FALSE
-		return TRUE
-	return FALSE

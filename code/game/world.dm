@@ -222,6 +222,8 @@ GLOBAL_LIST(topic_status_cache)
 #endif
 		if(!GLOB.log_directory)
 			LAZYADD(fail_reasons, "Missing GLOB.log_directory!")
+		if(Master.subsystem_init_errored)
+			LAZYADD(fail_reasons, "A subsystem encountered a severe error during world startup.")
 	else
 		fail_reasons = list("Missing GLOB!")
 	if(!fail_reasons)
@@ -316,7 +318,7 @@ GLOBAL_LIST(topic_status_cache)
 	var/players = GLOB.clients.len
 
 	if(SSmapping.config) // this just stops the runtime, honk.
-		features += "[SSmapping.config.map_name]"	//CIT CHANGE - makes the hub entry display the current map
+		features += "[SSmapping.getMapName()]"	//CIT CHANGE - makes the hub entry display the current map
 
 	if(NUM2SECLEVEL(GLOB.security_level))//CIT CHANGE - makes the hub entry show the security level
 		features += "[NUM2SECLEVEL(GLOB.security_level)] alert"

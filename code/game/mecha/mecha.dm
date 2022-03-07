@@ -820,7 +820,7 @@
 	return internal_tank.return_air()
 
 
-/obj/mecha/MouseDrop_T(mob/M, mob/user)
+/obj/mecha/MouseDropped(mob/M, mob/user)
 	if (!user.canUseTopic(src) || (user != M))
 		return
 	if(!ishuman(user)) // no silicons or drones in mechas.

@@ -48,7 +48,7 @@
 	color = "#33CCFF"
 
 /obj/item/projectile/gravity/repulse/get_target(turf/origin, atom/movable/AM)
-	return get_turf_in_angle(Get_Angle(origin, AM), origin, power)
+	return get_turf_in_angle(get_visual_angle(origin, AM), origin, power)
 
 /obj/item/projectile/gravity/attract
 	name = "attraction bolt"

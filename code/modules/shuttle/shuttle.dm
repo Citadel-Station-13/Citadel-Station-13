@@ -277,7 +277,7 @@
 
 /obj/docking_port/stationary/transit
 	name = "In Transit"
-	var/datum/turf_reservation/reserved_area
+	var/datum/space_reservation/reserved_area
 	var/area/shuttle/transit/assigned_area
 	var/obj/docking_port/mobile/owner
 

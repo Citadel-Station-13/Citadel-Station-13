@@ -25,7 +25,7 @@
 			if(user_unbuckle_mob(buckled_mobs[1],user))
 				return 1
 
-/atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
+/atom/movable/MouseDropped(mob/living/M, mob/living/user)
 	. = ..()
 	if(can_buckle && istype(M) && istype(user))
 		if(user_buckle_mob(M, user))
@@ -86,7 +86,7 @@
 			M.adjust_fire_stacks(1)
 			M.IgniteMob()
 
-/atom/movable/proc/unbuckle_mob(mob/living/buckled_mob, force=FALSE)
+/atom/movable/proc/unbuckle_mob(mob/living/buckled_mob, force = FALSE)
 	if(!isliving(buckled_mob))
 		CRASH("Non-living [buckled_mob] thing called unbuckle_mob() for source.")
 	if(buckled_mob.buckled != src)

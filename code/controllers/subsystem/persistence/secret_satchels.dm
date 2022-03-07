@@ -18,7 +18,7 @@
 	var/placed_satchel = 0
 	var/path
 
-	var/json_file = file("data/npc_saves/SecretSatchels[SSmapping.config.map_name].json")
+	var/json_file = file("data/npc_saves/SecretSatchels[SSmapping.getPersistenceKey()].json")
 	var/list/json = list()
 	if(fexists(json_file))
 		json = json_decode(file2text(json_file))
@@ -72,7 +72,7 @@
 		data["saved_obj"] = pick(savable_obj)
 		satchels_to_add += list(data)
 
-	var/json_file = file("data/npc_saves/SecretSatchels[SSmapping.config.map_name].json")
+	var/json_file = file("data/npc_saves/SecretSatchels[SSmapping.getMapName()].json")
 	var/list/file_data = list()
 	fdel(json_file)
 	file_data["data"] = old_secret_satchels + satchels_to_add

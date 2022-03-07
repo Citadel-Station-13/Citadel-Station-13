@@ -295,7 +295,7 @@
 
 // mousedrop a crate to load the bot
 // can load anything if hacked
-/mob/living/simple_animal/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
+/mob/living/simple_animal/bot/mulebot/MouseDropped(atom/movable/AM, mob/user)
 	if(user.incapacitated() || user.lying)
 		return
 

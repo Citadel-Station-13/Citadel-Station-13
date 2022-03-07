@@ -1,0 +1,32 @@
+{
+	"id": "fesiivestation",
+	"width": 255,
+	"height": 255,
+	"center": true,
+	"levels": [
+		{
+			"name": "Station 1",
+			"id": "festiive_1",
+			"path": "FestiveStation.dmm",
+			"linkage_mode": "Normal",
+			"Traits": [
+				"Station",
+				"Minimaps"
+			]
+		}
+	],
+	"name": "[EVENT] Festive Station",
+    "shuttles": {
+	    "cargo": "cargo_box",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_box",
+	    "emergency": "emergency_box"
+    },
+	"lateload": {
+		"integral": [
+			"centcom",
+			"lavaland"
+		]
+	}
+}
+

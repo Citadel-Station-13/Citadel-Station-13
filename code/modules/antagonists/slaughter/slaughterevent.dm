@@ -10,7 +10,7 @@
 	weight = initial(src.weight)
 	var/list/allowed_turf_typecache = typecacheof(/turf/open) - typecacheof(/turf/open/space)
 	var/list/allowed_z_cache = list()
-	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+	for(var/z in SSmapping.LevelsByTrait(ZTRAIT_STATION))
 		allowed_z_cache[num2text(z)] = TRUE
 	for(var/obj/effect/decal/cleanable/C in world)
 		if(!C.loc || QDELETED(C))

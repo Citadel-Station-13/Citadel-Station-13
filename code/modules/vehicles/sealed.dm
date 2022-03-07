@@ -14,7 +14,7 @@
 	if(istype(E))
 		E.vehicle_entered_target = src
 
-/obj/vehicle/sealed/MouseDrop_T(atom/dropping, mob/M)
+/obj/vehicle/sealed/MouseDropped(atom/dropping, mob/M)
 	if(!istype(dropping) || !istype(M))
 		return ..()
 	if(M == dropping)

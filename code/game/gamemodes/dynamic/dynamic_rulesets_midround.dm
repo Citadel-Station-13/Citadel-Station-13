@@ -879,7 +879,7 @@
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/generate_ruleset_body(mob/applicant)
-	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.get_station_center())
+	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.GetStationCenter())
 	virus.key = applicant.key
 	INVOKE_ASYNC(virus, /mob/camera/disease/proc/pick_name)
 	message_admins("[ADMIN_LOOKUPFLW(virus)] has been made into a sentient disease by the midround ruleset.")

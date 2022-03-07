@@ -766,7 +766,7 @@
 			message_admins(msg)
 			admin_ticket_log(src, msg)
 
-/mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
+/mob/living/carbon/human/MouseDropped(mob/living/target, mob/living/user)
 	var/GS_needed = istype(target, /mob/living/silicon/pai)? GRAB_PASSIVE : GRAB_AGGRESSIVE
 	if(pulling == target && grab_state >= GS_needed && stat == CONSCIOUS)
 		//If they dragged themselves and we're currently aggressively grabbing them try to piggyback

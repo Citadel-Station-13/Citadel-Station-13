@@ -62,7 +62,7 @@
 	var/turf/curturf = get_turf(teleatom)
 	var/turf/destturf = get_teleport_turf(get_turf(destination), precision)
 
-	if(!destturf || !curturf || destturf.is_transition_turf())
+	if(!destturf || !curturf || destturf.IsTransitionTurf())
 		return FALSE
 
 	var/area/A = get_area(curturf)
@@ -111,7 +111,7 @@
 		if (zlevel)
 			zlevels = list(zlevel)
 		else
-			zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
+			zlevels = SSmapping.LevelsByTrait(ZTRAIT_STATION)
 	var/cycles = 1000
 	for(var/cycle in 1 to cycles)
 		// DRUNK DIALLING WOOOOOOOOO
@@ -181,7 +181,7 @@
 		return list(center)
 	var/list/posturfs = list()
 	for(var/turf/T in range(precision,center))
-		if(T.is_transition_turf())
+		if(T.IsTransitionTurf())
 			continue // Avoid picking these.
 		var/area/A = T.loc
 		if(!(A.area_flags & NOTELEPORT))

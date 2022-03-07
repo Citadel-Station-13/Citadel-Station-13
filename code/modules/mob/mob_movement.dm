@@ -372,39 +372,13 @@
 		for(var/atom/movable/screen/mov_intent/selector in hud_used.static_inventory)
 			selector.update_icon()
 
-/mob/verb/up()
-	set name = "Move Upwards"
-	set category = "IC"
-
-	if(zMove(UP, TRUE))
-		to_chat(src, "<span class='notice'>You move upwards.</span>")
-
-/mob/verb/down()
-	set name = "Move Down"
-	set category = "IC"
-
-	if(zMove(DOWN, TRUE))
-		to_chat(src, "<span class='notice'>You move down.</span>")
-
-/mob/proc/zMove(dir, feedback = FALSE)
-	if(dir != UP && dir != DOWN)
-		return FALSE
-	var/turf/target = get_step_multiz(src, dir)
-	if(!target)
-		if(feedback)
-			to_chat(src, "<span class='warning'>There's nothing in that direction!</span>")
-		return FALSE
-	if(!canZMove(dir, target))
-		if(feedback)
-			to_chat(src, "<span class='warning'>You couldn't move there!</span>")
-		return FALSE
-	forceMove(target)
-	return TRUE
-
-/mob/proc/canZMove(direction, turf/target)
-	return FALSE
-
 /mob/onTransitZ(old_z, new_z)
 	. = ..()
 	if(old_z != new_z)
 		client?.parallax_holder?.Reset()
+
+/**
+ * Can we overcome gravity?
+ */
+/mob/proc/mob_overcomes_gravity()
+	return (movement_type & FLYING)

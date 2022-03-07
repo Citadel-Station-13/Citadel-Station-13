@@ -1,0 +1,38 @@
+{
+	"id": "kilostation",
+	"width": 255,
+	"height": 255,
+	"center": true,
+	"levels": [
+		{
+			"name": "Station 1",
+			"id": "kilo_1",
+			"path": "KiloStation.dmm",
+			"linkage_mode": "Crosslink",
+			"Traits": [
+				"Station",
+				"Minimaps"
+			]
+		}
+	],
+	"name": "Kilo Station",
+    "shuttles": {
+	    "cargo": "cargo_kilo",
+	    "ferry": "ferry_kilo",
+	    "whiteship": "whiteship_delta",
+	    "emergency": "emergency_kilo"
+    },
+	"lateload": {
+		"integral": [
+			"centcom",
+			"lavaland"
+		]
+	}
+}
+
+{
+    "map_name": "MultiZ Debug",
+    "map_path": "map_files/debug",
+    "map_file": "multiz.dmm",
+	"traits": [{"Up" : 1, "Linkage" : "Cross"}, {"Up" : 1, "Down" : -1, "Baseturf" : "/turf/open/openspace", "Linkage" : "Cross"}, {"Down" : -1, "Baseturf" : "/turf/open/openspace", "Linkage" : "Cross"}]
+	}

@@ -109,7 +109,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		if(turfs.len)
 			T = pick(turfs)
 		else
-			T = SSmapping.get_station_center()
+			T = SSmapping.GetStationCenter()
 
 		forceMove(T)
 

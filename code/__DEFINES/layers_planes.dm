@@ -11,9 +11,10 @@
 #define PLANE_SPACE_PARALLAX -95
 #define PLANE_SPACE_PARALLAX_RENDER_TARGET "PLANE_SPACE_PARALLAX"
 
-#define OPENSPACE_LAYER 17 //Openspace layer over all
-#define OPENSPACE_PLANE -10 //Openspace plane below all turfs
-#define OPENSPACE_BACKDROP_PLANE -9 //Black square just over openspace plane to guaranteed cover all in openspace turf
+// RESERVED PLANES FOR ZMIMIC
+#define PLANE_ZMIMIC_RESERVED_MINIMUM -80
+
+#define PLANE_ZMIMIC_RESERVED_MAXIMUM -70
 
 #define FLOOR_PLANE -8
 #define FLOOR_PLANE_RENDER_TARGET "FLOOR_PLANE"
@@ -111,6 +112,9 @@
 #define ABOVE_FLY_LAYER 5.1
 #define GASFIRE_LAYER 5.2
 #define RIPPLE_LAYER 5.3
+
+/// zmimic managed lighting layer
+#define MIMICED_LIGHTING_LAYER 5.9
 
 #define GHOST_LAYER 6
 #define LOW_LANDMARK_LAYER 9

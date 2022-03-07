@@ -53,11 +53,11 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	return ChangeTurf(path, new_baseturf, flags)
 
 /turf/proc/get_z_base_turf()
-	. = SSmapping.level_trait(z, ZTRAIT_BASETURF) || /turf/open/space
+	. = SSmapping.GetAttribute(z, ZATTRIBUTE_BASETURF) || /turf/open/space
 	if (!ispath(.))
 		. = text2path(.)
 		if (!ispath(.))
-			warning("Z-level [z] has invalid baseturf '[SSmapping.level_trait(z, ZTRAIT_BASETURF)]'")
+			warning("Z-level [z] has invalid baseturf '[SSmapping.GetAttribute(z, ZATTRIBUTE_BASETURF)]'")
 			. = /turf/open/space
 
 // Creates a new turf
@@ -139,6 +139,13 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		for(var/turf/open/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 			S.update_starlight()
 
+	var/turf/multiz_considerations
+	// always do below first
+	if((multiz_considerations = Below()))
+		multiz_considerations.UpdateMultiZ()
+	UpdateMultiZ()
+	if((multiz_considerations = Above()))
+		multiz_considerations.UpdateMultiZ()
 	return W
 
 /turf/open/ChangeTurf(path, list/new_baseturfs, flags)

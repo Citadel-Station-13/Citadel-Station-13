@@ -20,6 +20,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 	/// Are we processing (higher values increase the processing delay by n ticks)
 	var/processing = TRUE
+	/// Initializing
+	var/initializing = FALSE
 	/// How many times have we ran
 	var/iteration = 0
 	/// Stack end detector to detect stack overflows that kill the mc's main loop
@@ -68,6 +70,9 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	///current tick limit, assigned before running a subsystem.
 	///used by CHECK_TICK as well so that the procs subsystems call can obey that SS's tick limits
 	var/static/current_ticklimit = TICK_LIMIT_RUNNING
+
+	/// If a subsystem init had a severe error
+	var/subsystem_init_errored = FALSE
 
 /datum/controller/master/New()
 	if(!config)
@@ -192,6 +197,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 /datum/controller/master/Initialize(delay, init_sss, tgs_prime)
 	set waitfor = 0
 
+	initializing = TRUE
+
 	if(delay)
 		sleep(delay)
 
@@ -237,6 +244,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	if(sleep_offline_after_initializations && CONFIG_GET(flag/resume_after_initializations))
 		world.sleep_offline = FALSE
 	initializations_finished_with_no_players_logged_in = initialized_tod < REALTIMEOFDAY - 10
+	initializing = TRUE
 	// Loop.
 	Master.StartProcessing(0)
 
@@ -435,6 +443,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		if (SS.state != SS_IDLE)
 			continue
 		if (SS.can_fire <= 0)
+			continue
+		if (SS.suspended)
 			continue
 		if (SS.next_fire > world.time)
 			continue

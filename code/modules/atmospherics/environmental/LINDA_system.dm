@@ -1,6 +1,10 @@
 /atom/var/CanAtmosPass = ATMOS_PASS_YES
-/atom/var/CanAtmosPassVertical = ATMOS_PASS_YES
+/atom/var/CanAtmosPassVertical = ATMOS_PASS_INHERIT
 
+/**
+ * Whether or not we should allow something to pass atmos from our turf to another
+ * This is called for multiz up/down as well!
+ */
 /atom/proc/CanAtmosPass(turf/T)
 	switch (CanAtmosPass)
 		if (ATMOS_PASS_PROC)
@@ -20,7 +24,7 @@
 	var/dir = vertical? get_dir_multiz(src, T) : get_dir(src, T)
 	var/opp = REVERSE_DIR(dir)
 	. = TRUE
-	if(vertical && !(zAirOut(dir, T) && T.zAirIn(dir, src)))
+	if(vertical && !(dir == UP? ((T.z_flags & Z_AIR_DOWN) && (z_flags & Z_AIR_UP)) : ((T.z_flags & Z_AIR_UP) && (z_flags & Z_AIR_DOWN))))
 		. = FALSE
 	if(blocks_air || T.blocks_air)
 		. = FALSE

@@ -90,7 +90,7 @@
 /mob/living/simple_animal/banana_spider/ex_act(severity, target, origin)
 	return
 
-/mob/living/simple_animal/banana_spider/start_pulling()
+/mob/living/simple_animal/banana_spider/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
 	return FALSE			//No.
 
 /obj/item/reagent_containers/food/snacks/deadbanana_spider

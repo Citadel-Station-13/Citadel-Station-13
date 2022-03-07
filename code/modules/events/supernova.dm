@@ -42,7 +42,7 @@
 /datum/round_event/supernova/start()
 	supernova.power_mod = 0.001 * power
 	var/explosion_size = rand(1000000000, 10000000000)
-	var/turf/epicenter = get_turf_in_angle(supernova.azimuth, SSmapping.get_station_center(), round(world.maxx * 0.45))
+	var/turf/epicenter = get_turf_in_angle(supernova.azimuth, SSmapping.GetStationCenter(), round(world.maxx * 0.45))
 	for(var/array in GLOB.doppler_arrays)
 		var/obj/machinery/doppler_array/A = array
 		A.sense_explosion(epicenter, explosion_size/2, explosion_size, 0, 107000000 / power, explosion_size/2, explosion_size, 0)

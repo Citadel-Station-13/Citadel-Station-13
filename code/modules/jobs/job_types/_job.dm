@@ -85,13 +85,13 @@
 /**
   * Checks if we should be created on a certain map
   */
-/datum/job/proc/map_check(datum/map_config/C)
+/datum/job/proc/map_check(datum/map_config/station/C)
 	return (length(C.job_whitelist)? (type in C.job_whitelist) : !(type in C.job_blacklist))
 
 /**
   * Processes map specific overrides
   */
-/datum/job/proc/process_map_overrides(datum/map_config/C)
+/datum/job/proc/process_map_overrides(datum/map_config/station/C)
 	if(type in C.job_override_spawn_positions)
 		spawn_positions = C.job_override_spawn_positions[type]
 	if(type in C.job_override_total_positions)

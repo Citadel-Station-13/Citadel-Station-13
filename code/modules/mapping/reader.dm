@@ -48,6 +48,9 @@
 	var/turfsSkipped = 0
 	#endif
 
+	/// Allow maxx/maxy expand? Don't ever turn this on outside of debugging
+	var/allow_expand = FALSE
+
 /// Shortcut function to parse a map and apply it to the world.
 ///
 /// - `dmm_file`: A .dmm file to load (Required).
@@ -225,6 +228,8 @@
 	var/delta_swap = x_offset - y_offset
 	// less checks later
 	var/do_crop = x_lower > -INFINITY || x_upper < INFINITY || y_lower > -INFINITY || y_upper < INFINITY
+	/// Did we try to run out of bounds?
+	var/overflowed = FALSE
 
 	for(var/__I in gridSets)
 		var/datum/grid_set/gridset = __I
@@ -257,13 +262,21 @@
 						actual_x += xi
 						continue
 					else
-						world.maxx = placement_x
+						if(!allow_expand)
+							overflowed = TRUE
+							actual_x += xi
+						else
+							world.maxx = placement_x
 						did_expand = TRUE
 				if(placement_y > world.maxy)
 					if(cropMap)
 						break
 					else
-						world.maxy = placement_y
+						if(!allow_expand)
+							overflowed = TRUE
+							actual_y += yi
+						else
+							world.maxy = placement_y
 						did_expand = TRUE
 				if(placement_x < 1)
 					actual_x += xi
@@ -302,6 +315,9 @@
 
 	if(did_expand)
 		world.refresh_atmos_grid()
+
+	if(overflowed)
+		stack_trace("[src] was stopped from expanding world.maxx/world.maxy. This shouldn't happen.")
 
 	#ifdef TESTING
 	if(turfsSkipped)

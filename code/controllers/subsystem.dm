@@ -28,9 +28,17 @@
 	/// This var is set to TRUE after the subsystem has been initialized.
 	var/initialized = FALSE
 
+	// Subsystem startup accounting - these variables cannot be trusted if the subsystem has crashed and been Recover()'d.
+	var/init_state = SS_INITSTATE_NONE // The current initialization state of this SS - this might be invalid if the subsystem has been Recover()'d.
+	var/init_time = 0                  // How long the subsystem took to initialize, in seconds.
+	var/init_start = 0                 // What timeofday did we start initializing?
+	var/init_finish                    // What timeofday did we finish initializing?
+
 	/// Set to 0 to prevent fire() calls, mostly for admin use or subsystems that may be resumed later
 	/// use the [SS_NO_FIRE] flag instead for systems that never fire to keep it from even being added to list that is checked every tick
 	var/can_fire = TRUE
+	/// temporarily suspended
+	var/suspended = FALSE
 
 	///Bitmap of what game states can this subsystem fire at. See [RUNLEVELS_DEFAULT] for more details.
 	var/runlevels = RUNLEVELS_DEFAULT //points of the game at which the SS can fire
@@ -243,24 +251,70 @@
 /datum/controller/subsystem/proc/subsystem_log(msg)
 	return log_subsystem(name, msg)
 
+// Wrapper so things continue to work even in the case of a SS that doesn't call parent.
+/datum/controller/subsystem/proc/DoInitialize(timeofday)
+	init_state = SS_INITSTATE_STARTED
+	init_start = timeofday
+	Initialize(timeofday)
+	init_finish = REALTIMEOFDAY
+	. = (REALTIMEOFDAY - timeofday)/10
+	var/msg = "Initialized [name] subsystem within [.] second\s!"
+	to_chat(world, "<span class='boldannounce'>[msg]</span>")
+	log_subsystem(msg)
+
+	init_state = SS_INITSTATE_DONE
+	initialized = TRUE	// Legacy.
+
 //used to initialize the subsystem AFTER the map has loaded
 /datum/controller/subsystem/Initialize(start_timeofday)
-	initialized = TRUE
-	// SEND_SIGNAL(src, COMSIG_SUBSYSTEM_POST_INITIALIZE, start_timeofday)
-	var/time = (REALTIMEOFDAY - start_timeofday) / 10
-	var/msg = "Initialized [name] subsystem within [time] second[time == 1 ? "" : "s"]!"
-	to_chat(world, span_boldannounce("[msg]"))
-	log_subsystem(msg)
-	return time
 
+//hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.
 /datum/controller/subsystem/stat_entry(msg)
-	if(can_fire && !(SS_NO_FIRE & flags))
-		msg = "[round(cost,1)]ms|[round(tick_usage,1)]%([round(tick_overrun,1)]%)|[round(ticks,0.1)]\t[msg]"
+	if (Master.initializing)
+		msg = "[stat_entry_init()]\t[msg]"
 	else
-		msg = "OFFLINE\t[msg]"
+		msg = "[stat_entry_run()]\t[msg]"
+
 	return msg
 
+/datum/controller/subsystem/proc/stat_entry_init()
+	if (init_state == SS_INITSTATE_DONE)
+		. = "DONE ([init_time]s)"
+	else if (flags & SS_NO_INIT)
+		. = "NO INIT"
+	else if (init_state == SS_INITSTATE_STARTED)
+		if (init_start)
+			. = "LOAD ([(REALTIMEOFDAY - init_start)/10]s)"
+		else
+			. = "LOAD"
+	else
+		. = "WAIT"
+
+// Generates the message shown before a subsystem during normal MC operation.
+/datum/controller/subsystem/proc/stat_entry_run()
+	if (flags & SS_NO_FIRE)
+		. = "NO FIRE"
+	else if (can_fire && !suspended)
+		. = "[round(cost,1)]ms|[round(tick_usage,1)]%([round(tick_overrun,1)]%)|[round(ticks,0.1)]"
+	else if (!can_fire)
+		. = "OFFLINE"
+	else
+		. = "SUSPEND"
+
+/datum/controller/subsystem/proc/init_state_letter()
+	if (flags & SS_NO_INIT)
+		return
+	switch (init_state)
+		if (SS_INITSTATE_NONE)
+			. = "W"
+		if (SS_INITSTATE_STARTED)
+			. = "L"
+		if (SS_INITSTATE_DONE)
+			. = "D"
+
 /datum/controller/subsystem/proc/state_letter()
+	if(Master.initializing)
+		return init_state_letter()
 	switch (state)
 		if (SS_RUNNING)
 			. = "R"
@@ -282,6 +336,28 @@
 //should attempt to salvage what it can from the old instance of subsystem
 /datum/controller/subsystem/Recover()
 
+// Admin-disables this subsystem. Will show as OFFLINE in MC panel.
+/datum/controller/subsystem/proc/disable()
+	can_fire = FALSE
+
+// Admin-enables this subsystem.
+/datum/controller/subsystem/proc/enable()
+	if (!can_fire)
+		next_fire = world.time + wait
+		can_fire = TRUE
+
+// Suspends this subsystem. Functionally identical to disable(), but shows SUSPEND in MC panel.
+// 	Preferred over disable() for self-disabling subsystems.
+/datum/controller/subsystem/proc/suspend()
+	suspended = TRUE
+
+// Wakes a suspended subsystem.
+/datum/controller/subsystem/proc/wake()
+	if (suspended)
+		suspended = FALSE
+		if (can_fire)
+			next_fire = world.time + wait
+
 /datum/controller/subsystem/vv_edit_var(var_name, var_value)
 	switch (var_name)
 		if (NAMEOF(src, can_fire))
@@ -291,3 +367,23 @@
 		if (NAMEOF(src, queued_priority)) //editing this breaks things.
 			return FALSE
 	. = ..()
+
+/datum/controller/subsystem/proc/init_log(msg)
+	to_chat(world, "<span class='boldnotice'>INIT - SS[name] - [msg]</span>")
+	log_subsystem(src, "Init - Log - [msg]")
+
+/datum/controller/subsystem/proc/init_warning(msg)
+	to_chat(world, "<span class='boldwarning'>INIT - SS[name]- [msg]</span>")
+	log_subsystem(src, "Init - Warning - [msg]")
+
+/// This will fail integration tests.
+/datum/controller/subsystem/proc/init_error(msg)
+	to_chat(world, "<span class='boldwarning'>ERROR - SS[name] - [msg]</span>")
+	log_subsystem(src, "Init - Error - [msg]")
+	Master.subsystem_init_errored = TRUE
+
+/// This will fail integration tests.
+/datum/controller/subsystem/proc/init_fatal(msg)
+	to_chat(world, "<span class='boldwarning'>FATAL - SS[name] - [msg]</span>")
+	log_subsystem(src, "Init - Fatal - [msg]")
+	Master.subsystem_init_errored = TRUE

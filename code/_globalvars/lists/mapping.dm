@@ -52,8 +52,3 @@ GLOBAL_LIST_EMPTY(all_abstract_markers)
 GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/megafauna/dragon = 4, /mob/living/simple_animal/hostile/megafauna/colossus = 2, /mob/living/simple_animal/hostile/megafauna/bubblegum = 6))
 
 GLOBAL_LIST_EMPTY(stationroom_landmarks) //List of all spawns for stationrooms
-
-///Away missions, VR, random z levels stuff.
-GLOBAL_LIST_EMPTY(random_zlevels_generated)
-GLOBAL_LIST_INIT(potential_away_levels, generateMapList(filename = "[global.config.directory]/awaymissionconfig.txt"))
-GLOBAL_LIST_INIT(potential_vr_levels, generateMapList(filename = "[global.config.directory]/vr_config.txt"))

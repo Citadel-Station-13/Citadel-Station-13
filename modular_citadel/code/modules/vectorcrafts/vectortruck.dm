@@ -17,7 +17,7 @@
 	var/static/radial_eject_key = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_eject_key")
 	var/static/radial_eject_boot = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_eject_boot")
 
-/obj/vehicle/sealed/vectorcraft/boot/MouseDrop_T(atom/dropping, mob/user)
+/obj/vehicle/sealed/vectorcraft/boot/MouseDropped(atom/dropping, mob/user)
 	if(istype(dropping, /obj/))
 		if(LAZYLEN(boot) < boot_size)
 			boot += dropping
@@ -56,7 +56,7 @@
 	if(weewoo)
 		weewoo()
 
-/obj/vehicle/sealed/vectorcraft/boot/ambulance/MouseDrop_T(mob/living/L, mob/user)
+/obj/vehicle/sealed/vectorcraft/boot/ambulance/MouseDropped(mob/living/L, mob/user)
 	if(isliving(L))
 		Sl.close_machine(L)
 		to_chat(user, "<span class='notice'>You put [L] into the [src]'s emergency sleeper!</span>")

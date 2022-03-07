@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(job)
 	var/list/level_order = list(JP_HIGH,JP_MEDIUM,JP_LOW)
 
 /datum/controller/subsystem/job/Initialize(timeofday)
-	SSmapping.HACK_LoadMapConfig()
+	SSmapping.EnsureConfigLoaded()
 	if(!occupations.len)
 		SetupOccupations()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(job)
 		if(!job.map_check(SSmapping.config))	//Even though we initialize before mapping, this is fine because the config is loaded at new
 			testing("Removed [job.type] due to map config");
 			continue
-		job.process_map_overrides(SSmapping.config)
+		job.process_map_overrides(SSmapping.map)
 		occupations += job
 		name_occupations[job.title] = job
 		type_occupations[J] = job

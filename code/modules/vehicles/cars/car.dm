@@ -29,7 +29,7 @@
 	last_enginesound_time = world.time
 	playsound(src, engine_sound, 100, TRUE)
 
-/obj/vehicle/sealed/car/MouseDrop_T(atom/dropping, mob/living/M)
+/obj/vehicle/sealed/car/MouseDropped(atom/dropping, mob/living/M)
 	if(!istype(M) || !CHECK_MOBILITY(M, MOBILITY_USE))
 		return FALSE
 	if(isliving(dropping) && M != dropping)

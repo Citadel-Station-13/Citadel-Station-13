@@ -17,7 +17,7 @@
 
 	var/mob/dead/observer/selected = pick_n_take(candidates)
 
-	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.get_station_center())
+	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.GetStationCenter())
 	selected.transfer_ckey(virus, FALSE)
 	INVOKE_ASYNC(virus, /mob/camera/disease/proc/pick_name)
 	message_admins("[ADMIN_LOOKUPFLW(virus)] has been made into a sentient disease by an event.")

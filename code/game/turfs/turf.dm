@@ -7,7 +7,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE // Important for interaction with and visualization of openspace.
 	luminosity = 1
 
-	var/intact = 1
+	/// Turf construct flags - standard construction handling. Does not currently include RCD handling.
+	var/turf_construct_flags = NONE
+	/// standard rcd plating cost, not taking into account lattice
+	var/rcd_plating_cost = 3
+	/// standard rcd teardown cost
+	var/rcd_teardown_cost = 30
 
 	// baseturfs can be either a list or a single turf type.
 	// In class definition like here it should always be a single type.
@@ -16,6 +21,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// This shouldn't be modified directly, use the helper procs.
 	var/list/baseturfs = /turf/baseturf_bottom
 
+	var/intact = 1
 	var/initial_temperature = T20C
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
@@ -80,14 +86,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if (light_power && light_range)
 		update_light()
 
-	var/turf/T = SSmapping.get_turf_above(src)
-	if(T)
-		T.multiz_turf_new(src, DOWN)
-	T = SSmapping.get_turf_below(src)
-	if(T)
-		T.multiz_turf_new(src, UP)
-
-
 	if (opacity)
 		has_opaque_atom = TRUE
 
@@ -101,6 +99,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	else
 		update_air_ref(-1)
 		__auxtools_update_turf_temp_info(isspaceturf(get_z_base_turf()))
+
+	if (z_flags & ZM_MIMIC_BELOW)
+		setup_zmimic(mapload)
 
 	return INITIALIZE_HINT_NORMAL
 
@@ -118,12 +119,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(!changing_turf)
 		stack_trace("Incorrect turf deletion")
 	changing_turf = FALSE
-	var/turf/T = SSmapping.get_turf_above(src)
-	if(T)
-		T.multiz_turf_del(src, DOWN)
-	T = SSmapping.get_turf_below(src)
-	if(T)
-		T.multiz_turf_del(src, UP)
 	if(force)
 		..()
 		//this will completely wipe turf state
@@ -132,6 +127,13 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			qdel(A)
 		return
 	visibilityChanged()
+
+	if (z_flags & ZM_MIMIC_BELOW)
+		cleanup_zmimic()
+
+	if (mimic_proxy)
+		QDEL_NULL(mimic_proxy)
+
 	QDEL_LIST(blueprint_data)
 	flags_1 &= ~INITIALIZED_1
 	requires_activation = FALSE
@@ -139,63 +141,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/on_attack_hand(mob/user)
 	user.Move_Pulled(src)
-
-/turf/proc/multiz_turf_del(turf/T, dir)
-	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_DEL, T, dir)
-
-/turf/proc/multiz_turf_new(turf/T, dir)
-	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_NEW, T, dir)
-
-//zPassIn doesn't necessarily pass an atom!
-//direction is direction of travel of air
-/turf/proc/zPassIn(atom/movable/A, direction, turf/source)
-	return FALSE
-
-//direction is direction of travel of air
-/turf/proc/zPassOut(atom/movable/A, direction, turf/destination)
-	return FALSE
-
-//direction is direction of travel of air
-/turf/proc/zAirIn(direction, turf/source)
-	return FALSE
-
-//direction is direction of travel of air
-/turf/proc/zAirOut(direction, turf/source)
-	return FALSE
-
-/turf/proc/zImpact(atom/movable/A, levels = 1, turf/prev_turf)
-	var/flags = NONE
-	var/mov_name = A.name
-	for(var/i in contents)
-		var/atom/thing = i
-		flags |= thing.intercept_zImpact(A, levels)
-		if(flags & FALL_STOP_INTERCEPTING)
-			break
-	if(prev_turf && !(flags & FALL_NO_MESSAGE))
-		prev_turf.visible_message("<span class='danger'>[mov_name] falls through [prev_turf]!</span>")
-	if(flags & FALL_INTERCEPTED)
-		return
-	if(zFall(A, levels + 1))
-		return FALSE
-	A.visible_message("<span class='danger'>[A] crashes into [src]!</span>")
-	A.onZImpact(src, levels)
-	return TRUE
-
-/turf/proc/can_zFall(atom/movable/A, levels = 1, turf/target)
-	SHOULD_BE_PURE(TRUE)
-	return zPassOut(A, DOWN, target) && target.zPassIn(A, DOWN, src)
-
-/turf/proc/zFall(atom/movable/A, levels = 1, force = FALSE)
-	var/turf/target = get_step_multiz(src, DOWN)
-	if(!target || (!isobj(A) && !ismob(A)))
-		return FALSE
-	if(!force && (!can_zFall(A, levels, target) || !A.can_zFall(src, levels, target, DOWN)))
-		return FALSE
-	A.zfalling = TRUE
-	A.forceMove(target)
-	A.zfalling = FALSE
-	target.zImpact(A, levels, src)
-	return TRUE
 
 /turf/proc/handleRCL(obj/item/rcl/C, mob/user)
 	if(C.loaded)
@@ -294,7 +239,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
 		reconsider_lights()
 
-
 /turf/open/Entered(atom/movable/AM)
 	..()
 	//melting
@@ -302,60 +246,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		var/obj/O = AM
 		if(O.obj_flags & FROZEN)
 			O.make_unfrozen()
-	if(!AM.zfalling)
-		zFall(AM)
-
-/turf/proc/is_plasteel_floor()
-	return FALSE
-
-// A proc in case it needs to be recreated or badmins want to change the baseturfs
-/turf/proc/assemble_baseturfs(turf/fake_baseturf_type)
-	var/static/list/created_baseturf_lists = list()
-	var/turf/current_target
-	if(fake_baseturf_type)
-		if(length(fake_baseturf_type)) // We were given a list, just apply it and move on
-			baseturfs = fake_baseturf_type
-			return
-		current_target = fake_baseturf_type
-	else
-		if(length(baseturfs))
-			return // No replacement baseturf has been given and the current baseturfs value is already a list/assembled
-		if(!baseturfs)
-			current_target = initial(baseturfs) || type // This should never happen but just in case...
-			stack_trace("baseturfs var was null for [type]. Failsafe activated and it has been given a new baseturfs value of [current_target].")
-		else
-			current_target = baseturfs
-
-	// If we've made the output before we don't need to regenerate it
-	if(created_baseturf_lists[current_target])
-		var/list/premade_baseturfs = created_baseturf_lists[current_target]
-		if(length(premade_baseturfs))
-			baseturfs = premade_baseturfs.Copy()
-		else
-			baseturfs = premade_baseturfs
-		return baseturfs
-
-	var/turf/next_target = initial(current_target.baseturfs)
-	//Most things only have 1 baseturf so this loop won't run in most cases
-	if(current_target == next_target)
-		baseturfs = current_target
-		created_baseturf_lists[current_target] = current_target
-		return current_target
-	var/list/new_baseturfs = list(current_target)
-	for(var/i=0;current_target != next_target;i++)
-		if(i > 100)
-			// A baseturfs list over 100 members long is silly
-			// Because of how this is all structured it will only runtime/message once per type
-			stack_trace("A turf <[type]> created a baseturfs list over 100 members long. This is most likely an infinite loop.")
-			message_admins("A turf <[type]> created a baseturfs list over 100 members long. This is most likely an infinite loop.")
-			break
-		new_baseturfs.Insert(1, next_target)
-		current_target = next_target
-		next_target = initial(current_target.baseturfs)
-
-	baseturfs = new_baseturfs
-	created_baseturf_lists[new_baseturfs[new_baseturfs.len]] = new_baseturfs.Copy()
-	return new_baseturfs
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
@@ -540,9 +430,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(!SSticker.HasRoundStarted())
 		add_blueprints(AM)
 
-/turf/proc/is_transition_turf()
-	return
-
 /turf/acid_act(acidpwr, acid_volume)
 	. = 1
 	var/acid_type = /obj/effect/acid
@@ -638,3 +525,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/obj/machinery/door/D = locate() in src
 	if(D?.density)
 		. += D.opacity? 29 : 19			// glass doors are slightly more resistant to screaming
+
+/**
+ * Checks if we have a dense object
+ */
+/turf/proc/contains_dense_object()
+	for(var/atom/movable/AM as anything in contents)
+		if(AM.density)
+			return TRUE
+	return FALSE

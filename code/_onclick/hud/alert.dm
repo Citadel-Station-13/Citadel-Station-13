@@ -518,7 +518,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		desc = "You are currently tracking [real_target.real_name] in [get_area_name(blood_target)]."
 	else
 		desc = "You are currently tracking [blood_target] in [get_area_name(blood_target)]."
-	var/target_angle = Get_Angle(Q, P)
+	var/target_visual_angle = get_visual_angle(Q, P)
 	var/target_dist = get_dist(P, Q)
 	cut_overlays()
 	switch(target_dist)
@@ -544,8 +544,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			icon_state = "arrow0"
 		if(65 to 400)
 			icon_state = "arrow"
-	var/difference = target_angle - angle
-	angle = target_angle
+	var/difference = target_visual_angle - angle
+	angle = target_visual_angle
 	if(!difference)
 		return
 	var/matrix/final = matrix(transform)

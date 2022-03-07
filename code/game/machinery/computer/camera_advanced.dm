@@ -22,20 +22,21 @@
 		networks -= i
 		networks += lowertext(i)
 	if(lock_override)
+		var/list/traits = list()
 		if(lock_override & CAMERA_LOCK_STATION)
-			z_lock |= SSmapping.levels_by_trait(ZTRAIT_STATION)
+			traits += ZTRAIT_STATION
 		if(lock_override & CAMERA_LOCK_MINING)
-			z_lock |= SSmapping.levels_by_trait(ZTRAIT_MINING)
+			traits += ZTRAIT_MINING
 		if(lock_override & CAMERA_LOCK_CENTCOM)
-			z_lock |= SSmapping.levels_by_trait(ZTRAIT_CENTCOM)
+			traits += ZTRAIT_CENTCOM
 		if(lock_override & CAMERA_LOCK_REEBE)
-			z_lock |= SSmapping.levels_by_trait(ZTRAIT_REEBE)
+			traits += ZTRAIT_REEBE
+		z_lock |= SSmapping.LevelsByAnyTrait(traits)
 
 /obj/machinery/computer/camera_advanced/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	for(var/i in networks)
 		networks -= i
 		networks += "[idnum][i]"
-
 /obj/machinery/computer/camera_advanced/syndie
 	icon_keyboard = "syndie_key"
 

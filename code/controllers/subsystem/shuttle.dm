@@ -68,7 +68,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/obj/docking_port/mobile/preview_shuttle
 	var/datum/map_template/shuttle/preview_template
 
-	var/datum/turf_reservation/preview_reservation
+	var/datum/space_reservation/preview_reservation
 
 	var/shuttle_loading
 
@@ -126,7 +126,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/esETA = emergency?.getModeStr()
 	emergency_shuttle_stat_text = "[esETA? "[esETA] [emergency.getTimerStr()]" : ""]"
 
-	if(!SSmapping.clearing_reserved_turfs)
+	if(!SSmapping.reformatting_reserved_turfs)
 		while(transit_requesters.len)
 			var/requester = popleft(transit_requesters)
 			var/success = generate_transit_dock(requester)
@@ -482,7 +482,7 @@ SUBSYSTEM_DEF(shuttle)
 			transit_path = /turf/open/space/transit/west
 			border_path = /turf/open/space/transit/border/west
 
-	var/datum/turf_reservation/proposal = SSmapping.RequestBlockReservation(transit_width, transit_height, null, /datum/turf_reservation/transit, transit_path, border_path)
+	var/datum/space_reservation/proposal = SSmapping.RequestBlockReservation(transit_width, transit_height, /datum/space_reservation/transit, transit_path, border_path)
 
 	if(!istype(proposal))
 		return FALSE
@@ -741,7 +741,7 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/load_template(datum/map_template/shuttle/S)
 	. = FALSE
 	// load shuttle template, centred at shuttle import landmark,
-	preview_reservation = SSmapping.RequestBlockReservation(S.width, S.height, SSmapping.transit.z_value, /datum/turf_reservation/transit)
+	preview_reservation = SSmapping.RequestBlockReservation(S.width, S.height, /datum/space_reservation/transit)
 	if(!preview_reservation)
 		CRASH("failed to reserve an area for shuttle template loading")
 	var/turf/BL = TURF_FROM_COORDS_LIST(preview_reservation.bottom_left_coords)

@@ -376,7 +376,7 @@
 			// we need to approximate our incoming angle - again, better math exists but why bother
 			var/incoming_angle = angle
 			if(isturf(atom.loc) && (atom.loc != victim.loc))
-				incoming_angle = Get_Angle(atom.loc, victim.loc)
+				incoming_angle = get_visual_angle(atom.loc, victim.loc)
 			// pierce through target
 			// we do not want to turn while doing this so we pierce through them visually
 			incoming_angle += 180
@@ -440,7 +440,7 @@
 	// construct source matrix
 	var/matrix/source = new
 
-	source.Turn((relative_to == get_turf(atom.locked))? src.rotation : Get_Angle(relative_to, destination))
+	source.Turn((relative_to == get_turf(atom.locked))? src.rotation : get_visual_angle(relative_to, destination))
 	source.Translate(rel_x, rel_y)
 
 	// set vars

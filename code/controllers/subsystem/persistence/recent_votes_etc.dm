@@ -40,7 +40,7 @@
 	WRITE_FILE(json_file, json_encode(file_data))
 
 /datum/controller/subsystem/persistence/proc/RecordMaps()
-	saved_maps = saved_maps?.len ? list("[SSmapping.config.map_name]") | saved_maps : list("[SSmapping.config.map_name]")
+	saved_maps = saved_maps?.len ? list("[SSmapping.getMapID()]") | saved_maps : list("[SSmapping.getMapID()]")
 	var/json_file = file("data/RecentMaps.json")
 	var/list/file_data = list()
 	file_data["maps"] = saved_maps

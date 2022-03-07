@@ -12,19 +12,14 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	floor_tile = /obj/item/stack/sheet/glass
+	zm_flags = ZM_MIMIC_BELOW
 
 // /turf/open/floor/glass/setup_broken_states()
 // 	return list("glass-damaged1", "glass-damaged2", "glass-damaged3")
 
-
 /turf/open/floor/glass/Initialize()
 	icon_state = "" //Prevent the normal icon from appearing behind the smooth overlays
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/turf/open/floor/glass/LateInitialize()
-	. = ..()
-	AddElement(/datum/element/turf_z_transparency, TRUE)
+	return ..()
 
 /// n(omegalul)
 /turf/open/floor/glass/crowbar_act(mob/living/user, obj/item/I)

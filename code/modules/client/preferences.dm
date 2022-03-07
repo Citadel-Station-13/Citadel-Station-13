@@ -2375,7 +2375,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if ("preferred_map")
 					var/maplist = list()
 					var/default = "Default"
-					if (config.defaultmap)
+					if (conf ig.defaultmap)
 						default += " ([config.defaultmap.map_name])"
 					for (var/M in config.maplist)
 						var/datum/map_config/VM = config.maplist[M]

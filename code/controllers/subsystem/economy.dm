@@ -88,6 +88,7 @@ SUBSYSTEM_DEF(economy)
 	var/alive_crew
 	var/dead_monsters
 	var/cash_to_grant
+	var/list/station_levels = SSmapping.LevelsByTrait(ZTRAIT_STATION)
 	for(var/mob/m in GLOB.mob_list)
 		if(isnewplayer(m))
 			continue
@@ -113,7 +114,7 @@ SUBSYSTEM_DEF(economy)
 						D.adjust_money(medical_cash)
 		if(ishostile(m))
 			var/mob/living/simple_animal/hostile/H = m
-			if(H.stat == DEAD && (H.z in SSmapping.levels_by_trait(ZTRAIT_STATION)))
+			if(H.stat == DEAD && (H.z in station_levels))
 				dead_monsters++
 		CHECK_TICK
 	var/living_ratio = alive_crew / crew

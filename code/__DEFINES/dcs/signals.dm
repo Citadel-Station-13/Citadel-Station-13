@@ -25,6 +25,13 @@
 	/// Do not allow this random event to continue.
 	#define CANCEL_PRE_RANDOM_EVENT (1<<0)
 
+/// multiz vertical datastructure update
+#define COMSIG_GLOB_MULTIZ_UPDATE_VERTICAL			"!multiz_vertical"
+/// multiz horizontal datastructure update
+#define COMSIG_GLOB_MULTIZ_UPDATE_HORIZONTAL		"!multiz_horizontal"
+/// multiz world_structs updated
+#define COMSIG_GLOB_MULTIZ_STRUCT_UPDATED			"!multiz_struct"
+
 /// a weather event of some kind occured
 #define COMSIG_WEATHER_TELEGRAPH(event_type) "!weather_telegraph [event_type]"
 #define COMSIG_WEATHER_START(event_type) "!weather_start [event_type]"
@@ -176,9 +183,6 @@
 	#define COMPONENT_NO_ATTACK_HAND 1							//works on all 3.
 /////////////////
 
-//This signal return value bitflags can be found in __DEFINES/misc.dm
-#define COMSIG_ATOM_INTERCEPT_Z_FALL "movable_intercept_z_impact"	//called for each movable in a turf contents on /turf/zImpact(): (atom/movable/A, levels)
-
 /// Called from orbit component: (atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 #define COMSIG_ATOM_ORBIT_BEGIN "atom_orbit_begin"
 /// Called from orbit component: (atom/movable/orbiter, refreshing)
@@ -197,7 +201,7 @@
 #define COMSIG_CLICK_CTRL_SHIFT "ctrl_shift_click"				//from base of atom/CtrlShiftClick(/mob)
 #define COMSIG_MOUSEDROP_ONTO "mousedrop_onto"					//from base of atom/MouseDrop(): (/atom/over, /mob/user)
 	#define COMPONENT_NO_MOUSEDROP 1
-#define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"			//from base of atom/MouseDrop_T: (/atom/from, /mob/user)
+#define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"			//from base of atom/MouseDropped: (/atom/from, /mob/user)
 
 // /area signals
 #define COMSIG_AREA_ENTERED "area_entered" 						//from base of area/Entered(): (atom/movable/M)
@@ -209,10 +213,8 @@
 #define COMSIG_TURF_CHANGE "turf_change"
 ///from base of atom/has_gravity(): (atom/asker, list/forced_gravities)
 #define COMSIG_TURF_HAS_GRAVITY "turf_has_gravity"
-///from base of turf/multiz_turf_del(): (turf/source, direction)
-#define COMSIG_TURF_MULTIZ_DEL "turf_multiz_del"
-///from base of turf/multiz_turf_new: (turf/source, direction)
-#define COMSIG_TURF_MULTIZ_NEW "turf_multiz_new"
+/// from base of turf/UpdateMultiZ: ()
+#define COMSIG_TURF_UPDATE_MULTIZ "turf_multiz_update"
 
 // /atom/movable signals
 #define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"					///from base of atom/movable/Moved(): (/atom)
@@ -247,6 +249,8 @@
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"			//called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_TELEPORTED "movable_teleported"			//from base of do_teleport(): (channel, turf/origin, turf/destination)
 #define COMSIG_MOVABLE_CHASM_DROP "movable_chasm_drop"			//from base of /datum/component/chasm/drop() (/datum/component/chasm)
+/// from base of /atom/movable/CanZFall() (levels, fall_flags) - unlike the normal fall procs, returned flags will be added, NOT replaced.
+#define COMSIG_MOVABLE_CAN_ZFALL "movable_can_zfall"
 
 // /mind signals
 #define  COMSIG_PRE_MIND_TRANSFER "pre_mind_transfer"			//from base of mind/transfer_to() before it's done: (new_character, old_character)

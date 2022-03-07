@@ -7,38 +7,27 @@
 	message_admins("[key_name_admin(usr)] is forcing a random map rotation.")
 	log_admin("[key_name(usr)] is forcing a random map rotation.")
 	SSticker.maprotatechecked = 1
-	SSmapping.maprotate()
+	SSmapping.MapRotate()
 
 /client/proc/adminchangemap()
 	set category = "Server"
 	set name = "Change Map"
 	var/list/maprotatechoices = list()
-	for (var/map in config.maplist)
-		var/datum/map_config/VM = config.maplist[map]
-		var/mapname = VM.map_name
-		if (VM == config.defaultmap)
+	for(var/id in config.map_data)
+		var/datum/map_settings/S = config.map_data[id]
+		var/mapname = S.map_id
+		if(id == config.default_map)
 			mapname += " (Default)"
-
-		if (VM.config_min_users > 0 || VM.config_max_users > 0)
-			mapname += " \["
-			if (VM.config_min_users > 0)
-				mapname += "[VM.config_min_users]"
-			else
-				mapname += "0"
-			mapname += "-"
-			if (VM.config_max_users > 0)
-				mapname += "[VM.config_max_users]"
-			else
-				mapname += "inf"
-			mapname += "\]"
-
-		maprotatechoices[mapname] = VM
+		if(S.maxplayers > 0 || S.minplayers> 0)
+			mapname += " \[[S.minplayers > 0? S.minplayers : "inf"]-[S.maxplayers > 0? S.maxplayers : "inf"]]"
+		maprotatechoices[mapname] = S
 	var/chosenmap = input("Choose a map to change to", "Change Map")  as null|anything in maprotatechoices
 	if (!chosenmap)
 		return
 	SSticker.maprotatechecked = 1
-	var/datum/map_config/VM = maprotatechoices[chosenmap]
-	message_admins("[key_name_admin(usr)] is changing the map to [VM.map_name]")
-	log_admin("[key_name(usr)] is changing the map to [VM.map_name]")
-	if (SSmapping.changemap(VM) == 0)
-		message_admins("[key_name_admin(usr)] has changed the map to [VM.map_name]")
+	var/datum/map_settings/S = maprotatechoices[chosenmap]
+	message_admins("[key_name_admin(usr)] is changing the map to [S.map_id]")
+	log_admin("[key_name(usr)] is changing the map to [S.map_id]")
+	if(!SSmapping.SetNextMap(S.map_id))
+		message_admins("Map change to [S.map_id] failed.")
+		CRASH("Map change failed.")

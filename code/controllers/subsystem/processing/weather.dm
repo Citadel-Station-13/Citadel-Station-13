@@ -33,7 +33,7 @@ PROCESSING_SUBSYSTEM_DEF(weather)
 
 		// any weather with a probability set may occur at random
 		if (probability)
-			for(var/z in SSmapping.levels_by_trait(target_trait))
+			for(var/z in SSmapping.LevelsByTrait(target_trait))
 				LAZYINITLIST(eligible_zlevels["[z]"])
 				eligible_zlevels["[z]"][W] = probability
 	return ..()
@@ -49,7 +49,7 @@ PROCESSING_SUBSYSTEM_DEF(weather)
 		CRASH("run_weather called with invalid weather_datum_type: [weather_datum_type || "null"]")
 
 	if (isnull(z_levels))
-		z_levels = SSmapping.levels_by_trait(initial(weather_datum_type.target_trait))
+		z_levels = SSmapping.LevelsByTrait(initial(weather_datum_type.target_trait))
 	else if (isnum(z_levels))
 		z_levels = list(z_levels)
 	else if (!islist(z_levels))

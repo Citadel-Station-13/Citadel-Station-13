@@ -5,6 +5,7 @@
 	icon_state = "lava"
 	gender = PLURAL //"That's some lava."
 	baseturfs = /turf/open/lava //lava all the way down
+	turf_construct_flags = TURF_CONSTRUCT_ROD_CATWALK | TURF_CONSTRUCT_ROD_LATTICE
 	slowdown = 2
 	dirt_buildup_allowed = FALSE
 
@@ -81,22 +82,6 @@
 	. = 5000
 
 /turf/open/lava/TakeTemperature(temp)
-
-/turf/open/lava/attackby(obj/item/C, mob/user, params)
-	..()
-	if(istype(C, /obj/item/stack/rods/lava))
-		var/obj/item/stack/rods/lava/R = C
-		var/obj/structure/lattice/lava/H = locate(/obj/structure/lattice/lava, src)
-		if(H)
-			to_chat(user, "<span class='warning'>There is already a lattice here!</span>")
-			return
-		if(R.use(1))
-			to_chat(user, "<span class='notice'>You construct a lattice.</span>")
-			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-			new /obj/structure/lattice/lava(locate(x, y, z))
-		else
-			to_chat(user, "<span class='warning'>You need one rod to build a heatproof lattice.</span>")
-		return
 
 /turf/open/lava/proc/is_safe()
 	//if anything matching this typecache is found in the lava, we don't burn things

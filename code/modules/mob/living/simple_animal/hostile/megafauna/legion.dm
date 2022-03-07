@@ -367,7 +367,7 @@ SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
 	if(!T || !T1)
 		return
 	//Now we generate the tracer.
-	var/angle = Get_Angle(T1, T)
+	var/angle = get_visual_angle(T1, T)
 	var/datum/point/vector/V = new(T1.x, T1.y, T1.z, 0, 0, angle)
 	generate_tracer_between_points(V, V.return_vector_after_increments(6), /obj/effect/projectile/tracer/legion/tracer, 0, shot_delay, 0, 0, 0, null)
 	playsound(src, 'sound/machines/airlockopen.ogg', 100, TRUE)

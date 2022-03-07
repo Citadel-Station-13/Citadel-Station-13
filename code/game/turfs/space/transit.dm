@@ -64,14 +64,13 @@
 	var/min = 1+TRANSITIONEDGE
 
 	var/list/possible_transtitons = list()
-	for(var/A in SSmapping.z_list)
-		var/datum/space_level/D = A
-		if (D.linkage == CROSSLINKED)
-			possible_transtitons += D.z_value
+	for(var/datum/space_level/L as anything in SSmapping.space_levels)
+		if(L.linkage_mode == Z_LINKAGE_CROSSLINKED)
+			possible_transtitons += L.z_value
 	if(!length(possible_transtitons)) //No space to throw them to - try throwing them onto mining
-		possible_transtitons = SSmapping.levels_by_trait(ZTRAIT_MINING)
+		possible_transtitons = SSmapping.LevelsByTrait(ZTRAIT_MINING)
 		if(!length(possible_transtitons)) //Just throw them back on station, if not just runtime.
-			possible_transtitons = SSmapping.levels_by_trait(ZTRAIT_STATION)
+			possible_transtitons = SSmapping.LevelsByTrait(ZTRAIT_STATION)
 	var/_z = pick(possible_transtitons)
 
 	//now select coordinates for a border turf
@@ -96,10 +95,8 @@
 	var/turf/throwturf = get_ranged_target_turf(T, dir, 1)
 	AM.safe_throw_at(throwturf, 1, 4, null, FALSE)
 
-
-/turf/open/space/transit/CanBuildHere()
+/turf/open/space/transit/CanBuildOn()
 	return SSshuttle.is_in_shuttle_bounds(src)
-
 
 /turf/open/space/transit/Initialize()
 	. = ..()

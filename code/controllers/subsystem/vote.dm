@@ -333,11 +333,20 @@ SUBSYSTEM_DEF(vote)
 				if(. == "Restart Round")
 					restart = 1
 			if("map")
-				var/datum/map_config/VM = config.maplist[.]
-				message_admins("The map has been voted for and will change to: [VM.map_name]")
-				log_admin("The map has been voted for and will change to: [VM.map_name]")
-				if(SSmapping.changemap(config.maplist[.]))
-					to_chat(world, "<span class='boldannounce'>The map vote has chosen [VM.map_name] for next round!</span>")
+				var/datum/map_config/station/VM
+				for(var/id in SSmapping.map_datums)
+					var/datum/map_config/station/potential = SSmapping.map_datums[id]
+					if(potential.name == result)
+						VM = potential
+						break
+				if(!VM)
+					to_chat(world, span_boldwarning("SSvote was unabled to find map ID [result]."))
+					stack_trace("Unable to find [result] after mapvote.")
+					return
+				message_admins("The map has been voted for and will change to: [VM.name]")
+				log_admin("The map has been voted for and will change to: [VM.name]")
+				if(SSmapping.SetNextMap(result))
+					to_chat(world, "<span class='boldannounce'>The map vote has chosen [VM.name] for next round!</span>")
 			if("transfer") // austation begin -- Crew autotransfer vote
 				if(. == "Initiate Crew Transfer")
 					SSshuttle.autoEnd()
@@ -433,16 +442,19 @@ SUBSYSTEM_DEF(vote)
 				choices.Add(config.votable_modes)
 			if("map")
 				var/players = GLOB.clients.len
-				var/list/lastmaps = SSpersistence.saved_maps?.len ? list("[SSmapping.config.map_name]") | SSpersistence.saved_maps : list("[SSmapping.config.map_name]")
-				for(var/M in config.maplist) //This is a typeless loop due to the finnicky nature of keyed lists in this kind of context
-					var/datum/map_config/targetmap = config.maplist[M]
+				var/list/lastmaps = SSpersistence.saved_maps?.len ? list("[SSmapping.getMapID()]") | SSpersistence.saved_maps : list("[SSmapping.getMapID()]")
+				for(var/M in config.GetMapIDs()) //This is a typeless loop due to the finnicky nature of keyed lists in this kind of context
+					var/datum/map_settings/targetmap = config.GetMapSettings(M)
 					if(!istype(targetmap))
+						continue
+					if(!SSmapping.map_datums[M])
+						subsystem_log("ERROR: Unable to find [M] in SSmapping map datums. Skipping.")
 						continue
 					if(!targetmap.voteweight)
 						continue
 					if((targetmap.config_min_users && players < targetmap.config_min_users) || (targetmap.config_max_users && players > targetmap.config_max_users))
 						continue
-					if(targetmap.max_round_search_span && count_occurences_of_value(lastmaps, M, targetmap.max_round_search_span) >= targetmap.max_rounds_played)
+					if(targetmap.max_rounds_search_span && count_occurences_of_value(lastmaps, M, targetmap.max_rounds_search_span) >= targetmap.max_rounds_played)
 						continue
 					choices |= M
 			if("transfer") // austation begin -- Crew autotranfer vote

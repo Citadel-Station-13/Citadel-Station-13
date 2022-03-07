@@ -101,7 +101,7 @@
 		available_chems += get_random_reagent_id()
 		reset_chem_buttons()
 
-/obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
+/obj/machinery/sleeper/MouseDropped(mob/target, mob/user)
 	if(user.stat || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
 		return
 	if(isliving(user))

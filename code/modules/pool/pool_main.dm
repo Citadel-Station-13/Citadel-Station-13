@@ -50,7 +50,7 @@
 	layer = BELOW_MOB_LAYER
 
 // Mousedrop hook to normal turfs to get out of pools.
-/turf/open/MouseDrop_T(atom/from, mob/living/user)
+/turf/open/MouseDropped(atom/from, mob/living/user)
 	if(!istype(user))
 		return ..()
 	// I could make this /open/floor and not have the !istype but ehh - kev
@@ -155,7 +155,7 @@
 			playsound(src, "water_wade", 20, TRUE)
 	return ..()
 
-/turf/open/pool/MouseDrop_T(atom/from, mob/user)
+/turf/open/pool/MouseDropped(atom/from, mob/user)
 	. = ..()
 	if(!isliving(from))
 		return

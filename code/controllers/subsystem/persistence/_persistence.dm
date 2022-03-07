@@ -36,9 +36,10 @@ SUBSYSTEM_DEF(persistence)
  */
 /datum/controller/subsystem/persistence/proc/get_map_persistence_path()
 	ASSERT(SSmapping.config)
-	if(!SSmapping.config.persistence_key || (SSmapping.config.persistence_key == "NO_PERSIST"))
+	var/key = SSmapping.getPersistenceKey()
+	if(!key || (key == "NO_PERSIST"))
 		return null
-	return "data/persistence/[ckey(SSmapping.config.persistence_key)]"
+	return "data/persistence/[ckey(key)]"
 
 /datum/controller/subsystem/persistence/proc/CollectData()
 	SaveServerPersistence()
@@ -103,16 +104,20 @@ SUBSYSTEM_DEF(persistence)
 
 /datum/controller/subsystem/persistence/proc/LoadChiselMessages()
 	var/list/saved_messages = list()
+	var/map_key = SSmapping.getPersistenceKey()
+	if(!map_key)
+		subsystem_log("Skipping loading chisel messages due to null persistence key")
 	if(fexists("data/npc_saves/ChiselMessages.sav")) //legacy compatability to convert old format to new
 		var/savefile/chisel_messages_sav = new /savefile("data/npc_saves/ChiselMessages.sav")
 		var/saved_json
-		chisel_messages_sav[SSmapping.config.map_name] >> saved_json
+		chisel_messages_sav[SSmapping.getPersistenceKey()] >> saved_json
 		if(!saved_json)
 			return
 		saved_messages = json_decode(saved_json)
 		fdel("data/npc_saves/ChiselMessages.sav")
 	else
-		var/json_file = file("data/npc_saves/ChiselMessages[SSmapping.config.map_name].json")
+
+		var/json_file = file("data/npc_saves/ChiselMessages[map_key].json")
 		if(!fexists(json_file))
 			return
 		var/list/json = json_decode(file2text(json_file))
@@ -144,7 +149,7 @@ SUBSYSTEM_DEF(persistence)
 		if(!QDELETED(M))
 			M.unpack(item)
 
-	log_world("Loaded [saved_messages.len] engraved messages on map [SSmapping.config.map_name]")
+	log_world("Loaded [saved_messages.len] engraved messages on map [map_key]")
 
 
 /datum/controller/subsystem/persistence/proc/LoadAntagReputation()
@@ -236,12 +241,16 @@ SUBSYSTEM_DEF(persistence)
 	WRITE_FILE(frame_path, frame_json)
 
 /datum/controller/subsystem/persistence/proc/CollectChiselMessages()
-	var/json_file = file("data/npc_saves/ChiselMessages[SSmapping.config.map_name].json")
+	var/map_key = SSmapping.getPersistenceKey()
+	if(!map_key)
+		subsystem_log("Skipping saving chisel messages due to null persistence key")
+		return
+	var/json_file = file("data/npc_saves/ChiselMessages[map_key].json")
 
 	for(var/obj/structure/chisel_message/M in chisel_messages)
 		saved_messages += list(M.pack())
 
-	log_world("Saved [saved_messages.len] engraved messages on map [SSmapping.config.map_name]")
+	log_world("Saved [saved_messages.len] engraved messages on map [map_key]")
 	var/list/file_data = list()
 	file_data["data"] = saved_messages
 	fdel(json_file)

@@ -1,18 +1,38 @@
 /datum/map_template
+	/// Name
 	var/name = "Default Template Name"
-	var/width = 0				//all these are for SOUTH!
+	/// Abstract type
+	var/abstract_type = /datum/map_template
+	/// Width when loaded in south
+	var/width = 0
+	/// Height when loaded in south
 	var/height = 0
+	/// Z depth when loaded in south
 	var/zdepth = 1
+	/// Path to the map - generated from prefix + suffix if null and those exist
 	var/mappath
-	var/loaded = 0 // Times loaded this round
+	/// Mappath prefix
+	var/prefix
+	/// Mappath suffix
+	var/suffix
+	/// Times loaded this round
+	var/loaded = 0
+	/// Cached parsed map datastructure
 	var/datum/parsed_map/cached_map
+	/// Keep parsed map cached by default? WARNING: High memory usage
 	var/keep_cached_map = FALSE
+	/// Default annihilate bounds option
 	var/default_annihilate = FALSE
-	var/list/ztraits				//zlevel traits for load_new_z
+	/// Traits for load_new_z
+	var/list/level_traits
+	/// Attributes for load_new_z
+	var/list/level_attributes
 
 /datum/map_template/New(path = null, rename = null, cache = FALSE)
 	if(path)
 		mappath = path
+	if(!mappath && prefix && suffix)
+		mappath = prefix + suffix
 	if(mappath)
 		preload_size(mappath, cache)
 	if(rename)
@@ -87,12 +107,17 @@
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 
-/datum/map_template/proc/load_new_z(orientation = SOUTH, list/ztraits = src.ztraits || list(ZTRAIT_AWAY = TRUE), centered = TRUE)
+/datum/map_template/proc/load_new_z(orientation = SOUTH, list/traits = level_traits, list/attributes = level_attributes, centered = TRUE, id = md5(GUID()))
 	var/x = centered? max(round((world.maxx - width) / 2), 1) : 1
 	var/y = centered? max(round((world.maxy - height) / 2), 1) : 1
 
-	var/datum/space_level/level = SSmapping.add_new_zlevel(name, ztraits)
-	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop = TRUE, orientation = orientation)
+	var/datum/space_level/level = new(id, traits, attributes)
+	SSmapping.InstantiateMapLevel(level)
+	if(!level.instantiated)
+		CRASH("Level didn't instantiate (instantiated is false)")
+	if(!level.z_value)
+		CRASH("Level didn't instantiate (no z)")
+	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf = (SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop = TRUE, orientation = orientation)
 	var/list/bounds = parsed.bounds
 	if(!bounds)
 		return FALSE
@@ -200,9 +225,9 @@
 
 //for your ever biggening badminnery kevinz000
 //❤ - Cyberboss
-/proc/load_new_z_level(file, name, orientation, list/ztraits)
+/proc/load_new_z_level(file, name, orientation, list/traits, list/attributes)
 	var/datum/map_template/template = new(file, name)
-	return template.load_new_z(orientation, ztraits)
+	return template.load_new_z(orientation, traits, attributes)
 
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE, orientation = SOUTH)
 	var/turf/placement = T

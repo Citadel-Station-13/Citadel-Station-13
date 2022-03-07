@@ -9,13 +9,19 @@ SUBSYSTEM_DEF(statpanels)
 	var/mc_data_encoded
 	var/list/cached_images = list()
 
-/datum/controller/subsystem/statpanels/fire(resumed = FALSE)
+/datum/controller/subsystem/statpanels/Initialize(start_timeofday)
+	. = ..()
+	SelfTick()
+
+/datum/controller/subsystem/statpanels/fire(resumed = FALSE, no_tick_check)
 	if (!resumed)
-		var/datum/map_config/cached = SSmapping.next_map_config
+		var/next_map_cached = SSmapping.GetNextMap()
+		if(next_map_cached)
+			next_map_cached = SSmapping.getMapDatum(next_map_cached).name
 		var/round_time = world.time - SSticker.round_start_time
 		var/list/global_data = list(
-			"Map: [SSmapping.config?.map_name || "Loading..."]",
-			cached ? "Next Map: [cached.map_name]" : null,
+			"Map: [SSmapping.initialized? SSmapping.getMapName() : "Loading..."]",
+			next_map_cached? "Next Map: [next_map_cached]" : null,
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
 			"Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]",
 			"Round Time: [round_time > MIDNIGHT_ROLLOVER ? "[round(round_time/MIDNIGHT_ROLLOVER)]:[worldtime2text()]" : worldtime2text()]",
@@ -148,9 +154,17 @@ SUBSYSTEM_DEF(statpanels)
 							turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content))
 					turfitems = url_encode(json_encode(turfitems))
 					target << output("[turfitems];", "statbrowser:update_listedturf")
-		if(MC_TICK_CHECK)
+		if(!no_tick_check && MC_TICK_CHECK)
 			return
 
+/datum/controller/subsystem/statpanels/proc/SelfTick()
+	// sometimes
+	while(Master.initializing)
+		// i wonder to myself
+		fire(FALSE, TRUE)
+		// ... am i the bad guy?
+		sleep(5)
+	// yeah, yeah i am.
 
 /datum/controller/subsystem/statpanels/proc/generate_mc_data()
 	var/list/mc_data = list(

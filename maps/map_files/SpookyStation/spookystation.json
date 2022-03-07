@@ -1,0 +1,31 @@
+{
+	"id": "spookystation",
+	"width": 255,
+	"height": 255,
+	"center": true,
+	"levels": [
+		{
+			"name": "Station 1",
+			"id": "spooky_1",
+			"path": "SpookyStation.dmm",
+			"linkage_mode": "Crosslink",
+			"Traits": [
+				"Station",
+				"Minimaps"
+			]
+		}
+	],
+	"name": "Spooky Station",
+    "shuttles": {
+	    "cargo": "cargo_box",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_pubby",
+	    "emergency": "emergency_pubby"
+    },
+	"lateload": {
+		"integral": [
+			"centcom",
+			"lavaland"
+		]
+	}
+}

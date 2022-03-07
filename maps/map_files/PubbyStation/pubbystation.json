@@ -1,0 +1,36 @@
+{
+	"id": "pubbystation",
+	"width": 255,
+	"height": 255,
+	"center": true,
+	"levels": [
+		{
+			"name": "Station 1",
+			"id": "pubby_1",
+			"path": "PubbyStation.dmm",
+			"linkage_mode": "Crosslink",
+			"Traits": [
+				"Station",
+				"Minimaps"
+			]
+		}
+	],
+	"name": "Pubby Station",
+    "shuttles": {
+	    "cargo": "cargo_box",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_pubby",
+	    "emergency": "emergency_pubby"
+    },
+	"lateload": {
+		"integral": [
+			"centcom",
+			"lavaland"
+		]
+	},
+	"job_access_add": {
+		"/datum/job/hos": [27],
+		"/datum/job/officer": [27],
+		"/datum/job/detective": [27]
+	}
+}

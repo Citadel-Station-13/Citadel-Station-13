@@ -62,7 +62,7 @@
 				visible_message("<span class='danger'>[src] deflects [P] back at their attacker!</span>", \
 					"<span class='userdanger'>You deflect [P] back at your attacker!</span>")
 			if(P.firer)
-				P.setAngle(Get_Angle(src, P.firer))
+				P.setAngle(get_visual_angle(src, P.firer))
 			else
 				P.setAngle(SIMPLIFY_DEGREES(P.Angle + 180))
 		else

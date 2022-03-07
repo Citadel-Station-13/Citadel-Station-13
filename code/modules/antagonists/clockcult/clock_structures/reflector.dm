@@ -49,7 +49,7 @@
 		if(WEST)
 			real_angle = 270
 
-	var/incidence = GET_ANGLE_OF_INCIDENCE(real_angle, (P.Angle + 180))
+	var/incidence = get_visual_angle_OF_INCIDENCE(real_angle, (P.Angle + 180))
 	if(abs(incidence) > 90 && abs(incidence) < 270)
 		return FALSE
 	var/new_angle = SIMPLIFY_DEGREES(real_angle + incidence)

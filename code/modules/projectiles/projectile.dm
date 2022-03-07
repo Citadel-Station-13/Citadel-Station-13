@@ -314,13 +314,13 @@
 	for(var/mob/living/L in range(ricochet_auto_aim_range, src.loc))
 		if(L.stat == DEAD || !isInSight(src, L))
 			continue
-		var/our_angle = abs(closer_angle_difference(Angle, get_projectile_angle(src.loc, L.loc)))
+		var/our_angle = abs(closer_angle_difference(Angle, get_physics_angle(src.loc, L.loc)))
 		if(our_angle < best_angle)
 			best_angle = our_angle
 			unlucky_sob = L
 
 	if(unlucky_sob)
-		setAngle(get_projectile_angle(src, unlucky_sob.loc))
+		setAngle(get_physics_angle(src, unlucky_sob.loc))
 
 /obj/item/projectile/proc/store_hitscan_collision(datum/point/pcache)
 	beam_segments[beam_index] = pcache
@@ -501,7 +501,7 @@
 			qdel(src)
 			return
 		var/turf/target = locate(clamp(starting + xo, 1, world.maxx), clamp(starting + yo, 1, world.maxy), starting.z)
-		setAngle(get_projectile_angle(src, target))
+		setAngle(get_physics_angle(src, target))
 	original_angle = Angle
 	if(!nondirectional_sprite)
 		var/matrix/M = new
@@ -618,7 +618,7 @@
 		// HOMING START - Too expensive to proccall at this point.
 		if(homing_target)
 			// No datum/points, too expensive.
-			var/angle = closer_angle_difference(Angle, get_projectile_angle(src, homing_target))
+			var/angle = closer_angle_difference(Angle, get_physics_angle(src, homing_target))
 			var/max_turn = homing_turn_speed * seconds_equivalent
 			setAngle(Angle + clamp(angle, -max_turn, max_turn))
 		// HOMING END
@@ -716,7 +716,7 @@
 	if(targloc || !params)
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
-		setAngle(get_projectile_angle(src, targloc) + spread)
+		setAngle(get_physics_angle(src, targloc) + spread)
 
 	if(isliving(source) && params)
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, params)
@@ -727,7 +727,7 @@
 	else if(targloc)
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
-		setAngle(get_projectile_angle(src, targloc) + spread)
+		setAngle(get_physics_angle(src, targloc) + spread)
 	else
 		stack_trace("WARNING: Projectile [type] fired without either mouse parameters, or a target atom to aim at!")
 		qdel(src)

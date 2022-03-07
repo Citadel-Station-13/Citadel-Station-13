@@ -116,7 +116,7 @@
 		I.forceMove(src)
 		user.visible_message("[user.name] places \the [I] into \the [src].", "<span class='notice'>You place \the [I] into \the [src].</span>")
 //mouse drop another mob or self
-/obj/machinery/disposal/MouseDrop_T(mob/living/target, mob/living/user)
+/obj/machinery/disposal/MouseDropped(mob/living/target, mob/living/user)
 	if(istype(target))
 		stuff_mob_in(target, user)
 

@@ -72,7 +72,7 @@
 	icon_state = "[initial(icon_state)][state_open ? "-open" : ""]"
 
 
-/obj/machinery/vr_sleeper/MouseDrop_T(mob/target, mob/user)
+/obj/machinery/vr_sleeper/MouseDropped(mob/target, mob/user)
 	if(user.lying || !iscarbon(target) || !Adjacent(target) || !user.canUseTopic(src, BE_CLOSE, TRUE, NO_TK))
 		return
 	if(occupant)
@@ -151,7 +151,7 @@
 				if(SOFT_CRIT)
 					status = "Barely Conscious"
 			data["vr_avatar"] += list("status" = status, "health" = vr_mob.health, "maxhealth" = vr_mob.maxHealth)
-	else 
+	else
 		data["can_delete_avatar"] = FALSE
 		data["vr_avatar"] = FALSE
 		data["isliving"] = FALSE

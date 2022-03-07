@@ -12,9 +12,9 @@ SUBSYSTEM_DEF(minimaps)
 	return ..()
 
 /datum/controller/subsystem/minimaps/proc/build_minimaps()
-	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
-		var/datum/space_level/SL = SSmapping.get_level(z)
-		var/name = (SL.name == initial(SL.name))? "[z] - Station" : "[z] - [SL.name]"
+	for(var/z in SSmapping.LevelsByTrait(ZTRAIT_MINIMAPS))
+		var/datum/space_level/SL = SSmapping.GetLevelDatum(z)
+		var/name = (SL.name == initial(SL.name))? "Unknown Level [z]" : "[SL.name]"
 		station_minimaps += new /datum/minimap(z, name = name)
 
 	station_minimap = new(station_minimaps, "Station")

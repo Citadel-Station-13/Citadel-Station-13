@@ -1,0 +1,31 @@
+{
+	"id": "deltastation",
+	"width": 255,
+	"height": 255,
+	"center": true,
+	"levels": [
+		{
+			"name": "Station 1",
+			"id": "delta_1",
+			"path": "DeltaStation2.dmm",
+			"linkage_mode": "Crosslink",
+			"Traits": [
+				"Station",
+				"Minimaps"
+			]
+		}
+	],
+	"name": "Delta Station",
+    "shuttles": {
+	    "cargo": "cargo_delta",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_delta",
+	    "emergency": "emergency_delta"
+    },
+	"lateload": {
+		"integral": [
+			"centcom",
+			"lavaland"
+		]
+	}
+}

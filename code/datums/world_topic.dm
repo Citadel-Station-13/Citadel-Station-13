@@ -180,7 +180,7 @@
 	.["admins"] = presentmins.len + afkmins.len //equivalent to the info gotten from adminwho
 	.["gamestate"] = SSticker.current_state
 
-	.["map_name"] = SSmapping.config?.map_name || "Loading..."
+	.["map_name"] = SSmapping.getMapName() || "Loading..."
 
 	if(key_valid)
 		.["active_players"] = get_active_player_count()
@@ -221,7 +221,7 @@
 	.["admins"] = presentmins.len + afkmins.len //equivalent to the info gotten from adminwho
 	.["security_level"] = "[NUM2SECLEVEL(GLOB.security_level)]"
 	.["round_duration"] = WORLDTIME2TEXT("hh:mm:ss")
-	.["map"] = SSmapping.config.map_name
+	.["map"] = SSmapping.getMapName()
 	return json_encode(.)
 
 /datum/world_topic/jsonplayers

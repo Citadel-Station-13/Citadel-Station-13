@@ -42,7 +42,7 @@
 	. = ..()
 	add_fingerprint(usr)
 
-/obj/structure/MouseDrop_T(atom/movable/O, mob/user)
+/obj/structure/MouseDropped(atom/movable/O, mob/user)
 	. = ..()
 	if(!climbable)
 		return
@@ -114,4 +114,4 @@
 				return  "<span class='warning'>It's falling apart!</span>"
 
 /obj/structure/rust_heretic_act()
-	take_damage(500, BRUTE, "melee", 1) 
+	take_damage(500, BRUTE, "melee", 1)

@@ -65,5 +65,5 @@
 /mob/living/simple_animal/hostile/bread/ex_act(severity, target, origin)
 	return
 
-/mob/living/simple_animal/hostile/bread/start_pulling()
+/mob/living/simple_animal/hostile/bread/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
 	return FALSE

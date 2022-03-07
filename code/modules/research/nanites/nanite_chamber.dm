@@ -199,7 +199,7 @@
 /obj/machinery/nanite_chamber/interact(mob/user)
 	toggle_open(user)
 
-/obj/machinery/nanite_chamber/MouseDrop_T(mob/target, mob/user)
+/obj/machinery/nanite_chamber/MouseDropped(mob/target, mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || !Adjacent(target) || !user.Adjacent(target) || !iscarbon(target))
 		return
 	if(close_machine(target))

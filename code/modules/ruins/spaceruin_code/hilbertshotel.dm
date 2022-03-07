@@ -62,7 +62,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	if(!storageTurf) //Blame subsystems for not allowing this to be in Initialize
 		if(!GLOB.hhStorageTurf)
 			var/datum/map_template/hilbertshotelstorage/storageTemp = new()
-			var/datum/turf_reservation/storageReservation = SSmapping.RequestBlockReservation(3, 3)
+			var/datum/space_reservation/storageReservation = SSmapping.RequestBlockReservation(3, 3)
 			storageTemp.load(locate(storageReservation.bottom_left_coords[1], storageReservation.bottom_left_coords[2], storageReservation.bottom_left_coords[3]))
 			GLOB.hhStorageTurf = locate(storageReservation.bottom_left_coords[1]+1, storageReservation.bottom_left_coords[2]+1, storageReservation.bottom_left_coords[3])
 		else
@@ -76,7 +76,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
 /obj/item/hilbertshotel/proc/tryActiveRoom(var/roomNumber, var/mob/user)
 	if(activeRooms["[roomNumber]"])
-		var/datum/turf_reservation/roomReservation = activeRooms["[roomNumber]"]
+		var/datum/space_reservation/roomReservation = activeRooms["[roomNumber]"]
 		do_sparks(3, FALSE, get_turf(user))
 		user.forceMove(locate(roomReservation.bottom_left_coords[1] + hotelRoomTemp.landingZoneRelativeX, roomReservation.bottom_left_coords[2] + hotelRoomTemp.landingZoneRelativeY, roomReservation.bottom_left_coords[3]))
 		return TRUE
@@ -85,7 +85,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
 /obj/item/hilbertshotel/proc/tryStoredRoom(var/roomNumber, var/mob/user)
 	if(storedRooms["[roomNumber]"])
-		var/datum/turf_reservation/roomReservation = SSmapping.RequestBlockReservation(hotelRoomTemp.width, hotelRoomTemp.height)
+		var/datum/space_reservation/roomReservation = SSmapping.RequestBlockReservation(hotelRoomTemp.width, hotelRoomTemp.height)
 		hotelRoomTempEmpty.load(locate(roomReservation.bottom_left_coords[1], roomReservation.bottom_left_coords[2], roomReservation.bottom_left_coords[3]))
 		var/turfNumber = 1
 		for(var/i=0, i<hotelRoomTemp.width, i++)
@@ -108,7 +108,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
 /// This is a BLOCKING OPERATION. Note the room load call, and the block reservation calls.
 /obj/item/hilbertshotel/proc/sendToNewRoom(var/roomNumber, var/mob/user)
-	var/datum/turf_reservation/roomReservation = SSmapping.RequestBlockReservation(hotelRoomTemp.width, hotelRoomTemp.height)
+	var/datum/space_reservation/roomReservation = SSmapping.RequestBlockReservation(hotelRoomTemp.width, hotelRoomTemp.height)
 	if(ruinSpawned)
 		mysteryRoom = GLOB.hhmysteryRoomNumber
 		if(roomNumber == mysteryRoom)
@@ -122,7 +122,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	do_sparks(3, FALSE, get_turf(user))
 	user.forceMove(locate(roomReservation.bottom_left_coords[1] + hotelRoomTemp.landingZoneRelativeX, roomReservation.bottom_left_coords[2] + hotelRoomTemp.landingZoneRelativeY, roomReservation.bottom_left_coords[3]))
 
-/obj/item/hilbertshotel/proc/linkTurfs(var/datum/turf_reservation/currentReservation, var/currentRoomnumber)
+/obj/item/hilbertshotel/proc/linkTurfs(var/datum/space_reservation/currentReservation, var/currentRoomnumber)
 	var/area/hilbertshotel/currentArea = get_area(locate(currentReservation.bottom_left_coords[1], currentReservation.bottom_left_coords[2], currentReservation.bottom_left_coords[3]))
 	currentArea.name = "Hilbert's Hotel Room [currentRoomnumber]"
 	currentArea.parentSphere = src
@@ -138,7 +138,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 /obj/item/hilbertshotel/proc/ejectRooms()
 	if(activeRooms.len)
 		for(var/x in activeRooms)
-			var/datum/turf_reservation/room = activeRooms[x]
+			var/datum/space_reservation/room = activeRooms[x]
 			for(var/i=0, i<hotelRoomTemp.width, i++)
 				for(var/j=0, j<hotelRoomTemp.height, j++)
 					for(var/atom/movable/A in locate(room.bottom_left_coords[1] + i, room.bottom_left_coords[2] + j, room.bottom_left_coords[3]))
@@ -146,36 +146,14 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 							var/mob/M = A
 							if(M.mind)
 								to_chat(M, "<span class='warning'>As the sphere breaks apart, you're suddenly ejected into the depths of space!</span>")
-						var/max = world.maxx-TRANSITIONEDGE
-						var/min = 1+TRANSITIONEDGE
-						var/list/possible_transtitons = list()
-						for(var/AZ in SSmapping.z_list)
-							var/datum/space_level/D = AZ
-							if (D.linkage == CROSSLINKED)
-								possible_transtitons += D.z_value
-						var/_z = pick(possible_transtitons)
-						var/_x = rand(min,max)
-						var/_y = rand(min,max)
-						var/turf/T = locate(_x, _y, _z)
-						A.forceMove(T)
+						A.forceMove(SSmapping.RandomCrosslinkedSpaceTurf() || loc || SSmapping.RandomStationSpaceTurf())
 			qdel(room)
 
 	if(storedRooms.len)
 		for(var/x in storedRooms)
 			var/list/atomList = storedRooms[x]
 			for(var/atom/movable/A in atomList)
-				var/max = world.maxx-TRANSITIONEDGE
-				var/min = 1+TRANSITIONEDGE
-				var/list/possible_transtitons = list()
-				for(var/AZ in SSmapping.z_list)
-					var/datum/space_level/D = AZ
-					if (D.linkage == CROSSLINKED)
-						possible_transtitons += D.z_value
-				var/_z = pick(possible_transtitons)
-				var/_x = rand(min,max)
-				var/_y = rand(min,max)
-				var/turf/T = locate(_x, _y, _z)
-				A.forceMove(T)
+				A.forceMove(SSmapping.RandomCrosslinkedSpaceTurf() || loc || SSmapping.RandomStationSpaceTurf())
 
 /obj/item/hilbertshotel/ghostdojo
 	name = "Infinite Dormitories"
@@ -186,7 +164,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	. = ..()
 	promptAndCheckIn(user)
 
-/obj/item/hilbertshotel/ghostdojo/linkTurfs(datum/turf_reservation/currentReservation, currentRoomnumber)
+/obj/item/hilbertshotel/ghostdojo/linkTurfs(datum/space_reservation/currentReservation, currentRoomnumber)
 	. = ..()
 	var/area/hilbertshotel/currentArea = get_area(locate(currentReservation.bottom_left_coords[1], currentReservation.bottom_left_coords[2], currentReservation.bottom_left_coords[3]))
 	for(var/turf/closed/indestructible/hoteldoor/door in currentArea)
@@ -196,21 +174,22 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 //Template Stuff
 /datum/map_template/hilbertshotel
 	name = "Hilbert's Hotel Room"
-	mappath = '_maps/templates/hilbertshotel.dmm'
+	abstract_type = /datum/map_template/hilbertshotel
+	mappath = 'maps/map_templates/misc/hilbertshotel.dmm'
 	var/landingZoneRelativeX = 2
 	var/landingZoneRelativeY = 8
 
 /datum/map_template/hilbertshotel/empty
 	name = "Empty Hilbert's Hotel Room"
-	mappath = '_maps/templates/hilbertshotelempty.dmm'
+	mappath = 'maps/map_templates/misc/hilbertshotelempty.dmm'
 
 /datum/map_template/hilbertshotel/lore
 	name = "Doctor Hilbert's Deathbed"
-	mappath = '_maps/templates/hilbertshotellore.dmm'
+	mappath = 'maps/map_templates/misc/hilbertshotellore.dmm'
 
 /datum/map_template/hilbertshotelstorage
 	name = "Hilbert's Hotel Storage"
-	mappath = '_maps/templates/hilbertshotelstorage.dmm'
+	mappath = 'maps/map_templates/misc/hilbertshotelstorage.dmm'
 
 //Turfs and Areas
 /turf/closed/indestructible/hotelwall
@@ -334,7 +313,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	ambientsounds = list('sound/ambience/servicebell.ogg')
 	var/roomnumber = 0
 	var/obj/item/hilbertshotel/parentSphere
-	var/datum/turf_reservation/reservation
+	var/datum/space_reservation/reservation
 	var/turf/storageTurf
 
 /area/hilbertshotel/Entered(atom/movable/AM)

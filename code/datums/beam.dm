@@ -29,7 +29,7 @@
 	icon = beam_icon
 	icon_state = beam_icon_state
 	beam_type = btype
-	if(time < INFINITY) 
+	if(time < INFINITY)
 		addtimer(CALLBACK(src,.proc/End), time)
 
 /datum/beam/proc/Start()
@@ -96,7 +96,7 @@
 /datum/beam/proc/Draw()
 	if(!origin_oldloc || !target_oldloc)
 		return
-	var/Angle = round(Get_Angle(origin_oldloc,target_oldloc))
+	var/Angle = round(get_visual_angle(origin_oldloc,target_oldloc))
 	var/matrix/rot_matrix = matrix()
 	rot_matrix.Turn(Angle)
 

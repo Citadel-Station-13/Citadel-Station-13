@@ -54,7 +54,7 @@
 		return FALSE
 	if(!A.powered(EQUIP))
 		return FALSE
-	if(!SSmapping.level_trait(T.z,ZTRAIT_STATION))
+	if(!SSmapping.HasTrait(T.z, ZTRAIT_STATION))
 		return FALSE
 	if(!istype(T, /turf/open/floor))
 		return FALSE

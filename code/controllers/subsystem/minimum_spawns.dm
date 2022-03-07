@@ -36,8 +36,8 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 // step 5: snaxi support - done?
 
 /datum/controller/subsystem/min_spawns/Initialize(start_timeofday)
-	var/list/snaxi_zs_list = SSmapping.levels_by_trait(ZTRAIT_ICE_RUINS) // boy if these things arent mutually exclusive
-	var/list/lavaland_zs_list = SSmapping.levels_by_trait(ZTRAIT_LAVA_RUINS) // i'm gonna fuckin scream
+	var/list/snaxi_zs_list = SSmapping.LevelsByTrait(ZTRAIT_ICE_RUINS) // boy if these things arent mutually exclusive
+	var/list/lavaland_zs_list = SSmapping.LevelsByTrait(ZTRAIT_LAVA_RUINS) // i'm gonna fuckin scream
 	if(snaxi_zs_list.len)
 		active_spawns = GLOB.minimum_snow_surface_spawns
 		active_spawns_2 = GLOB.minimum_snow_under_spawns
@@ -48,19 +48,7 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 		return ..() // call it a day i guess
 	// borrowing this from auxbase code - see code\modules\mining\aux_base.dm
 	if(snaxi_snowflake_check)
-		for(var/z_level in SSmapping.levels_by_trait(ZTRAIT_ICE_RUINS))
-			for(var/turf/TT in Z_TURFS(z_level))
-				if(!isarea(TT.loc))
-					continue
-				var/area/A = TT.loc
-				if(!A.mob_spawn_allowed)
-					continue
-				if(!istype(TT, /turf/open/floor/plating/asteroid))
-					continue
-				if(typesof(/turf/open/lava) in orange(9, TT))
-					continue
-				valid_mining_turfs.Add(TT)
-		for(var/z_level in SSmapping.levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND))
+		for(var/z_level in SSmapping.LevelsByAnyTrait(list(ZTRAIT_ICE_RUINS, ZTRAIT_ICE_RUINS_UNDERGROUND)))
 			for(var/turf/TT in Z_TURFS(z_level))
 				if(!isarea(TT.loc))
 					continue
@@ -73,7 +61,7 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 					continue
 				valid_mining_turfs_2.Add(TT)
 	else
-		for(var/z_level in SSmapping.levels_by_trait(ZTRAIT_LAVA_RUINS))
+		for(var/z_level in SSmapping.LevelsByTrait(ZTRAIT_LAVA_RUINS))
 			for(var/turf/TT in Z_TURFS(z_level))
 				if(!isarea(TT.loc))
 					continue
@@ -96,7 +84,7 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 		where_we_droppin_boys_iterations++
 		CHECK_TICK
 		if(where_we_droppin_boys_iterations >= 1250)
-			INIT_ANNOUNCE("Minimum Spawns subsystem stopped early on spawns list 1 - too many iterations!")
+			init_warning("Minimum Spawns subsystem stopped early on spawns list 1 - too many iterations!")
 			break
 		var/turf/RT = pick_n_take(valid_mining_turfs) //Pick a random mining Z-level turf
 		var/MS_tospawn = pick_n_take(active_spawns)
@@ -120,7 +108,7 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 		where_we_droppin_boys_iterations++
 		CHECK_TICK
 		if(where_we_droppin_boys_iterations >= 1250)
-			INIT_ANNOUNCE("Minimum Spawns subsystem stopped early on active list 2 - too many iterations!")
+			init_warning("Minimum Spawns subsystem stopped early on active list 2 - too many iterations!")
 			break
 		var/turf/RT2 = pick_n_take(valid_mining_turfs_2) //Pick a random mining Z-level turf
 		var/MS2_tospawn = pick_n_take(active_spawns_2)

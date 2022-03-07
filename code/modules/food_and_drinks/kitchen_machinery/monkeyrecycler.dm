@@ -47,7 +47,7 @@
 	else
 		return ..()
 
-/obj/machinery/monkey_recycler/MouseDrop_T(mob/living/target, mob/living/user)
+/obj/machinery/monkey_recycler/MouseDropped(mob/living/target, mob/living/user)
 	if(!istype(target))
 		return
 	if(ismonkey(target))

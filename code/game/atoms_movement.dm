@@ -249,7 +249,8 @@
 		var/area/destarea = get_area(destination)
 
 		loc = destination
-		moving_diagonally = 0
+		zfalling = FALSE
+		moving_diagonally = NONE
 
 		if(!same_loc)
 			if(oldloc)
@@ -328,3 +329,24 @@
 	inertia_last_loc = loc
 	SSspacedrift.processing[src] = src
 	return TRUE
+
+/**
+ * forceMove that brings pulling objects and buckled mobs along
+ */
+/atom/movable/proc/TransitForceMove(atom/destination, recurse = 1)
+	var/list/mob/buckled = buckled_mobs.Copy()
+	var/atom/movable/pulling = src.pulling
+
+	forceMove(destination)
+	if(recurse)
+		for(var/atom/movable/AM in buckled)
+			if(AM.loc == destination)
+				continue
+			AM.TransitForceMove(destination, recurse - 1)
+		if(pulling && pulling.loc != destination)
+			pulling.TransitForceMove(destination, recurse - 1)
+
+	for(var/atom/movable/AM in buckled)
+		buckle_mob(AM, TRUE, TRUE)	// check loc so if they dropped off, ignore them
+	if(pulling)
+		start_pulling(pulling, supress_message = TRUE)

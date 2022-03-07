@@ -34,7 +34,7 @@
 /datum/antagonist/disease/apply_innate_effects(mob/living/mob_override)
 	if(!istype(owner.current, /mob/camera/disease))
 		var/turf/T = get_turf(owner.current)
-		T = T ? T : SSmapping.get_station_center()
+		T = T ? T : SSmapping.GetStationCenter()
 		var/mob/camera/disease/D = new /mob/camera/disease(T)
 		owner.transfer_to(D)
 

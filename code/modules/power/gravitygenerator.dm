@@ -354,10 +354,11 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 // Shake everyone on the z level to let them know that gravity was enagaged/disenagaged.
 /obj/machinery/gravity_generator/main/proc/shake_everyone()
 	var/turf/T = get_turf(src)
+	var/list/affected = SSmapping.GetAccessibleLevels(T.z, FALSE)
 	var/sound/alert_sound = sound('sound/effects/alert.ogg')
 	for(var/i in GLOB.mob_list)
 		var/mob/M = i
-		if(M.z != z && !(SSmapping.level_trait(z, ZTRAITS_STATION) && SSmapping.level_trait(M.z, ZTRAITS_STATION)))
+		if(!(M.z in affected))
 			continue
 		M.update_gravity(M.mob_has_gravity())
 		if(M.client)
@@ -372,16 +373,12 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		return length(GLOB.gravity_generators["[T.z]"])
 	return FALSE
 
+#warn proof of concept for world structs
+
 /obj/machinery/gravity_generator/main/proc/update_list()
 	var/turf/T = get_turf(src.loc)
 	if(T)
-		var/list/z_list = list()
-		// Multi-Z, station gravity generator generates gravity on all ZTRAIT_STATION z-levels.
-		if(SSmapping.level_trait(T.z, ZTRAIT_STATION))
-			for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
-				z_list += z
-		else
-			z_list += T.z
+		var/list/z_list = SSmapping.GetAccessibleLevels(T.z, FALSE)
 		for(var/z in z_list)
 			if(!GLOB.gravity_generators["[z]"])
 				GLOB.gravity_generators["[z]"] = list()

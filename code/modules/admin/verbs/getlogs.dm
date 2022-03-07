@@ -16,7 +16,7 @@
 /client/proc/browseserverlogs(path = "data/logs/")
 	if(!check_rights(R_SENSITIVE))
 		return
-	path = browse_files(path)
+	path = browse_files(path, list("html", "log", "txt", "md", "json", "dmm"))
 	if(!path)
 		return
 

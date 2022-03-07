@@ -111,7 +111,7 @@
 	user = caster
 	if(user)
 		var/matrix/M = new
-		M.Turn(Get_Angle(src, user))
+		M.Turn(get_visual_angle(src, user))
 		transform = M
 	INVOKE_ASYNC(src, .proc/volthit)
 

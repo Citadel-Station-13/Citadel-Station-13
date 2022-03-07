@@ -129,7 +129,7 @@
 	Aid your master in bringing their victims here and keeping them secure.\n
 	You can secure victims to the vassal rack by click dragging the victim onto the rack while it is secured</span>"} */
 
-/obj/structure/bloodsucker/vassalrack/MouseDrop_T(atom/movable/O, mob/user)
+/obj/structure/bloodsucker/vassalrack/MouseDropped(atom/movable/O, mob/user)
 	if(!O.Adjacent(src) || O == user || !isliving(O) || !isliving(user) || useLock || has_buckled_mobs() || user.incapacitated())
 		return
 	if(!anchored && AmBloodsucker(user))

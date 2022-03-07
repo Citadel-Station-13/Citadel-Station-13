@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(time_track)
 
 /datum/controller/subsystem/time_track/Initialize(start_timeofday)
 	. = ..()
-	GLOB.perf_log = "[GLOB.log_directory]/perf-[GLOB.round_id ? GLOB.round_id : "NULL"]-[SSmapping.config?.map_name].csv"
+	GLOB.perf_log = "[GLOB.log_directory]/perf-[GLOB.round_id ? GLOB.round_id : "NULL"]-[SSmapping.getMapName()].csv"
 	log_perf(
 		list(
 			"time",

@@ -32,7 +32,7 @@
 	stats_action.Remove(user)
 	strafing_action.Remove(user)
 
-/obj/mecha/combat/neovgre/MouseDrop_T(mob/M, mob/user)
+/obj/mecha/combat/neovgre/MouseDropped(mob/M, mob/user)
 	if(!is_servant_of_ratvar(user))
 		to_chat(user, "<span class='neovgre'>BEGONE HEATHEN!</span>")
 		return

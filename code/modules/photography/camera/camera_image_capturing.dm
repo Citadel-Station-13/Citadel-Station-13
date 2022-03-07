@@ -10,7 +10,7 @@
 			step_y = AM.step_y
 	. = ..()
 
-/obj/item/camera/proc/camera_get_icon(list/turfs, turf/center, psize_x = 96, psize_y = 96, datum/turf_reservation/clone_area, size_x, size_y, total_x, total_y)
+/obj/item/camera/proc/camera_get_icon(list/turfs, turf/center, psize_x = 96, psize_y = 96, datum/space_reservation/clone_area, size_x, size_y, total_x, total_y)
 	var/list/atoms = list()
 	var/skip_normal = FALSE
 	var/wipe_atoms = FALSE

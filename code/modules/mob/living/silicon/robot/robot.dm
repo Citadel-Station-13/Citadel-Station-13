@@ -1222,7 +1222,7 @@
 	shell = TRUE
 	cell = null
 
-/mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
+/mob/living/silicon/robot/MouseDropped(mob/living/M, mob/living/user)
 	. = ..()
 	if(!(M in buckled_mobs) && isliving(M))
 		buckle_mob(M)

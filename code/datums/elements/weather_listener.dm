@@ -33,7 +33,7 @@
 
 /datum/element/weather_listener/proc/handle_z_level_change(datum/source, old_z, new_z)
 	SIGNAL_HANDLER
-	var/list/fitting_z_levels = SSmapping.levels_by_trait(weather_trait)
+	var/list/fitting_z_levels = SSmapping.LevelsByTrait(weather_trait)
 	if(!(new_z in fitting_z_levels))
 		return
 	var/datum/component/our_comp = source.AddComponent(/datum/component/area_sound_manager, playlist, list(), COMSIG_MOB_CLIENT_LOGOUT, fitting_z_levels)

@@ -25,7 +25,7 @@
 	loaded_debris = TRUE
 	var/list/allowed_turf_typecache = typecacheof(/turf/open) - typecacheof(/turf/open/space)
 	var/list/allowed_z_cache = list()
-	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+	for(var/z in SSmapping.LevelsByTrait(ZTRAIT_STATION))
 		allowed_z_cache[num2text(z)] = TRUE
 	var/list/data = json_decode(file2text("[get_map_persistence_path()]/debris.json"))
 	var/list/z_lookup = list()
@@ -164,7 +164,7 @@
 /datum/controller/subsystem/persistence/proc/RelevantPersistentDebris()
 	var/list/allowed_turf_typecache = typecacheof(/turf/open) - typecacheof(/turf/open/space)
 	var/list/allowed_z_cache = list()
-	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+	for(var/z in SSmapping.LevelsByTrait(ZTRAIT_STATION))
 		allowed_z_cache[num2text(z)] = TRUE
 	. = list()
 	for(var/obj/effect/decal/cleanable/C in world)

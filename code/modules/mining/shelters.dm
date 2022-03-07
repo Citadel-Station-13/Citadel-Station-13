@@ -1,4 +1,5 @@
 /datum/map_template/shelter
+	prefix = "maps/map_templates/shelters/"
 	var/shelter_id
 	var/description
 	var/blacklisted_turfs
@@ -37,7 +38,7 @@
 		built-in navigation, entertainment, medical facilities and a \
 		sleeping area! Order now, and we'll throw in a TINY FAN, \
 		absolutely free!"
-	mappath = "_maps/templates/shelter_1.dmm"
+	suffix = "shelter_1.dmm"
 
 /datum/map_template/shelter/alpha/New()
 	. = ..()
@@ -52,7 +53,7 @@
 		running water, a gourmet three course meal, cooking facilities, \
 		and a deluxe companion to keep you from getting lonely during \
 		an ash storm."
-	mappath = "_maps/templates/shelter_2.dmm"
+	suffix = "shelter_2.dmm"
 
 /datum/map_template/shelter/beta/New()
 	. = ..()
@@ -67,7 +68,7 @@
 		also has a sink. This isn't a survival capsule and so you can \
 		expect that this won't save you if you're bleeding out to \
 		death."
-	mappath = "_maps/templates/shelter_3.dmm"
+	suffix = "shelter_3.dmm"
 
 /datum/map_template/shelter/charlie/New()
 	. = ..()
@@ -79,7 +80,7 @@
 	shelter_id = "shelter_delta"
 	description = "A massive but barebones survival capsule useful\
 	for projects that require great deals of space."
-	mappath = "_maps/templates/shelter_4.dmm"
+	suffix = "shelter_4.dmm"
 
 /datum/map_template/shelter/delta/New()
 	. = ..()
@@ -90,7 +91,7 @@
 	name = "Shelter Epsilon"
 	shelter_id = "shelter_epsilon"
 	description = "A small apartment in the palm of your hand."
-	mappath = "_maps/templates/shelter_5.dmm"
+	suffix = "shelter_5.dmm"
 
 /datum/map_template/shelter/epsilon/New()
 	. = ..()
