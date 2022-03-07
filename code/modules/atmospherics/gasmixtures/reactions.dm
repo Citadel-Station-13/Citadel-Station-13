@@ -477,9 +477,9 @@
 	var/result = G.react()
 	if(result != REACTING)
 		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
-	if(abs(G.analyzer_results["fusion"] - 3) > 0.0000001)
+	if(abs(G.analyzer_results["fusion"] - 3) > 0.01)
 		var/instability = G.analyzer_results["fusion"]
-		return list("success" = FALSE, "message" = "Fusion is not calculating analyzer results correctly, should be 3.000000045, is instead [instability]")
+		return list("success" = FALSE, "message" = "Fusion is not calculating analyzer results correctly, should be ~3, is instead [instability]")
 	if(abs(G.get_moles(GAS_PLASMA) - 850.616) > 0.5)
 		var/plas = G.get_moles(GAS_PLASMA)
 		return list("success" = FALSE, "message" = "Fusion is not calculating plasma correctly, should be 850.616, is instead [plas]")
@@ -533,7 +533,7 @@
 	if(result != REACTING)
 		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
 	if(!G.get_moles(GAS_NITRYL) < 0.8)
-		return list("success" = FALSE, "message" = "Nitryl isn't being generated correctly!")
+		return list("success" = FALSE, "message" = "Nitryl isn't being generated correctly! [G.get_moles(GAS_NITRYL)] moles present.")
 	return ..()
 
 /datum/gas_reaction/bzformation //Formation of BZ by combining plasma and tritium at low pressures. Exothermic.
@@ -581,7 +581,7 @@
 	if(result != REACTING)
 		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
 	if(!G.get_moles(GAS_BZ) < 4) // efficiency is 4.0643 and bz generation == efficiency
-		return list("success" = FALSE, "message" = "Nitryl isn't being generated correctly!")
+		return list("success" = FALSE, "message" = "BZ isn't being generated correctly! [G.get_moles(GAS_BZ)] moles present.")
 	return ..()
 
 /datum/gas_reaction/stimformation //Stimulum formation follows a strange pattern of how effective it will be at a given temperature, having some multiple peaks and some large dropoffs. Exo and endo thermic.
@@ -630,7 +630,7 @@
 	if(result != REACTING)
 		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
 	if(!G.get_moles(GAS_STIMULUM) < 900)
-		return list("success" = FALSE, "message" = "Stimulum isn't being generated correctly!")
+		return list("success" = FALSE, "message" = "Stimulum isn't being generated correctly! [G.get_moles(GAS_STIMULUM)] moles present.")
 	return ..()
 
 /datum/gas_reaction/nobliumformation //Hyper-Noblium formation is extrememly endothermic, but requires high temperatures to start. Due to its high mass, hyper-nobelium uses large amounts of nitrogen and tritium. BZ can be used as a catalyst to make it less endothermic.
@@ -663,10 +663,10 @@
 
 /datum/gas_reaction/nobliumformation/test()
 	var/datum/gas_mixture/G = new
-	G.set_moles(GAS_N2,100)
+	G.set_moles(GAS_N2,1000)
 	G.set_moles(GAS_TRITIUM,500)
 	G.set_volume(1000)
-	G.set_temperature(5000000) // yeah, really
+	G.set_temperature(50000000) // yeah, really
 	var/result = G.react()
 	if(result != REACTING)
 		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
