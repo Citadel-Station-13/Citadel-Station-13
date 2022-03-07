@@ -90,7 +90,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/datum/gas/G = new
 	G.id = GAS_ETHANOL
 	G.name = "Ethanol"
-	G.fire_energy_released = -234800
+	G.enthalpy = -234800
 	G.specific_heat = 38
 	G.fire_products = list(GAS_CO2 = 1, GAS_H2O = 1.5)
 	G.fire_burn_rate = 1 / 3

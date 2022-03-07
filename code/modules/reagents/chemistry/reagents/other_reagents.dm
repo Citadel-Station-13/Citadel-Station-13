@@ -1279,7 +1279,7 @@
 
 /datum/reagent/fuel/define_gas()
 	var/datum/gas/G = ..()
-	G.fire_energy_released = 227400
+	G.enthalpy = 227400
 	G.fire_burn_rate = 2 / 5
 	G.fire_products = list(GAS_CO2 = 2, GAS_H2O = 1)
 	G.fire_temperature = T0C+300
@@ -1508,7 +1508,7 @@
 	var/datum/gas/G = ..()
 	G.fire_burn_rate = 1 / 6
 	G.fire_products = list(GAS_H2O = 4, GAS_AMMONIA = 1, GAS_CO2 = 4)
-	G.fire_energy_released = -131000
+	G.enthalpy = -131000
 	G.fire_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 	return G
 
