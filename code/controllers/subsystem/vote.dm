@@ -336,16 +336,16 @@ SUBSYSTEM_DEF(vote)
 				var/datum/map_config/station/VM
 				for(var/id in SSmapping.map_datums)
 					var/datum/map_config/station/potential = SSmapping.map_datums[id]
-					if(potential.name == result)
+					if(potential.name == .)
 						VM = potential
 						break
 				if(!VM)
-					to_chat(world, span_boldwarning("SSvote was unabled to find map ID [result]."))
-					stack_trace("Unable to find [result] after mapvote.")
+					to_chat(world, span_boldwarning("SSvote was unabled to find map ID [.]."))
+					stack_trace("Unable to find [.] after mapvote.")
 					return
 				message_admins("The map has been voted for and will change to: [VM.name]")
 				log_admin("The map has been voted for and will change to: [VM.name]")
-				if(SSmapping.SetNextMap(result))
+				if(SSmapping.SetNextMap(VM.id))
 					to_chat(world, "<span class='boldannounce'>The map vote has chosen [VM.name] for next round!</span>")
 			if("transfer") // austation begin -- Crew autotransfer vote
 				if(. == "Initiate Crew Transfer")
@@ -452,11 +452,11 @@ SUBSYSTEM_DEF(vote)
 						continue
 					if(!targetmap.voteweight)
 						continue
-					if((targetmap.config_min_users && players < targetmap.config_min_users) || (targetmap.config_max_users && players > targetmap.config_max_users))
+					if((targetmap.minplayers && players < targetmap.minplayers) || (targetmap.maxplayers && players > targetmap.maxplayers))
 						continue
 					if(targetmap.max_rounds_search_span && count_occurences_of_value(lastmaps, M, targetmap.max_rounds_search_span) >= targetmap.max_rounds_played)
 						continue
-					choices |= M
+					choices |= SSmapping.getMapName(M)
 			if("transfer") // austation begin -- Crew autotranfer vote
 				choices.Add("Initiate Crew Transfer","Continue Playing") // austation end
 			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote

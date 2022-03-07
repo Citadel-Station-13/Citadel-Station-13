@@ -154,7 +154,7 @@
 	maptype = data["maptype"]
 	if("persistence_key" in data)
 		persistence_key = data["persistence_key"] || id
-	if("year_offset" in dadta)
+	if("year_offset" in data)
 		year_offset = data["year_offset"]
 	job_whitelist = data["job_whitelist"]
 	job_blacklist = data["job_blacklist"]
@@ -175,7 +175,7 @@
 		station_ruin_budget = data["station_ruin_budget"]
 	if("shutles" in data)
 		shuttles = data["shuttles"]
-	if("lateload")
+	if("lateload" in data)
 		lateload = data["lateload"]
 
 /**

@@ -913,14 +913,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if (!p_map)
 					p_map = "Default"
 					if (config.defaultmap)
-						p_map += " ([config.defaultmap.map_name])"
+						p_map += " ([SSmapping.getMapNName(config.default_map)])"
 				else
-					if (p_map in config.maplist)
-						var/datum/map_config/VM = config.maplist[p_map]
+					if (p_map in config.map_data)
+						var/datum/map_settings/VM = config.map_data[p_map]
 						if (!VM)
 							p_map += " (No longer exists)"
 						else
-							p_map = VM.map_name
+							p_map = SSmapping.getMapName(VM.map_id)
 					else
 						p_map += " (No longer exists)"
 				if(CONFIG_GET(flag/allow_map_voting))
@@ -2375,12 +2375,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if ("preferred_map")
 					var/maplist = list()
 					var/default = "Default"
-					if (conf ig.defaultmap)
-						default += " ([config.defaultmap.map_name])"
-					for (var/M in config.maplist)
-						var/datum/map_config/VM = config.maplist[M]
-						var/friendlyname = "[VM.map_name] "
-						if (VM.voteweight <= 0)
+					if (config.default_map)
+						default += " ([SSmapping.getMapName(config.default_map)])"
+					for (var/M in config.GetMapIDs())
+						var/datum/map_settings/VM = config.GetMapSettings(M)
+						var/friendlyname = "[SSmapping.getMapName(VM.id)] "
+						if(!VM.rotation)
 							friendlyname += " (disabled)"
 						maplist[friendlyname] = VM.map_name
 					maplist[default] = null

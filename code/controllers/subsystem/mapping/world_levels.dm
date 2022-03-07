@@ -110,7 +110,7 @@
 		message_admins("Admin [key_name_admin(usr)] has loaded map level [group]:[id].")
 		log_admin("Admin [key_name(usr)] has loaded map level [group]:[id].")
 		var/start = REALTIMEOFDAY
-		var/loaded_z = SSmapping.LoadLevel(group, id)
+		var/loaded_indices = SSmapping.LoadLevel(group, id)
 		if(!loaded_indices)
 			message_admins("[group]:[id] loading failed or runtimed.")
 			log_admin("Custom load of [group]:[id] failed.")

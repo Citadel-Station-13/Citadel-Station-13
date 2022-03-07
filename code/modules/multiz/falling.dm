@@ -42,7 +42,7 @@
 	if(zfalling)
 		return FALSE
 	if(throwing)
-		return FASLE
+		return FALSE
 	. = TRUE
 	_ZFall(fall_flags, 0)
 

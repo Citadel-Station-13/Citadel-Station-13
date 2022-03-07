@@ -40,7 +40,7 @@
 	var/atmos_string = "TEMP=2.7"
 
 	/// Linkage mode
-	var/linkage_mode = ZLEVEL_LINKAGE_DEFAULT
+	var/linkage_mode = Z_LINKAGE_NORMAL
 
 	/// Traits - binary yes/no's
 	var/list/traits = list()
