@@ -63,9 +63,13 @@
 	src.atmos_adjacent_turfs = atmos_adjacent_turfs
 	__update_auxtools_turf_adjacency_info(isspaceturf(get_z_base_turf()))
 
+//Sets this turf to sleep, auxmos will avoid processing sleeping turfs
 /turf/proc/set_sleeping(should_sleep)
 
-/turf/proc/__update_auxtools_turf_adjacency_info()
+//Tells auxmos to read adjacency info from this turf in the post processing step
+//isnexttospace - self-explanatory, this is used in heat processing
+//immediately - tells auxmos to read adjacency info from this turf immediately, will deadlock if you call this at the wrong time
+/turf/proc/__update_auxtools_turf_adjacency_info(isnexttospace, immediately)
 
 //returns a list of adjacent turfs that can share air with this one.
 //alldir includes adjacent diagonal tiles that can share
