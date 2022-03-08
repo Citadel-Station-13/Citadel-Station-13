@@ -77,6 +77,11 @@
 			remove_ripples()
 			return DOCKING_IMMOBILIZED
 
+	for(var/turf/terf as anything in old_turfs)
+		terf.set_sleeping(TRUE)
+	for(var/turf/terf as anything in new_turfs)
+		terf.set_sleeping(FALSE)
+
 	// Moving to the new location will trample the ripples there at the exact
 	// same time any mobs there are trampled, to avoid any discrepancy where
 	// the ripples go away before it is safe.

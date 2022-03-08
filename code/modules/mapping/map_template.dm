@@ -150,9 +150,8 @@
 
 	var/list/border = block(locate(max(T.x - 1, 1), max(T.y - 1, 1), T.z),
 		locate(min(T.x + width + 1, world.maxx), min(T.y + height + 1, world.maxy), T.z))
-	for(var/i in border)
-		var/turf/turf_to_disable = i
-		turf_to_disable.atmos_adjacent_turfs?.Cut()
+	for(var/turf/terf as anything in border)
+		terf.set_sleeping(TRUE)
 
 	if(annihilate == MAP_TEMPLATE_ANNIHILATE_PRELOAD)
 		annihilate_bounds(old_T, centered, orientation)

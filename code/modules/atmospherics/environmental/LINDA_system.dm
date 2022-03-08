@@ -40,9 +40,6 @@
 	return FALSE
 
 /turf/proc/ImmediateCalculateAdjacentTurfs()
-	if(SSair.thread_running())
-		CALCULATE_ADJACENT_TURFS(src)
-		return
 	var/canpass = CANATMOSPASS(src, src)
 	var/canvpass = CANVERTICALATMOSPASS(src, src)
 	for(var/direction in GLOB.cardinals_multiz)
@@ -61,11 +58,9 @@
 			if (T.atmos_adjacent_turfs)
 				T.atmos_adjacent_turfs -= src
 			UNSETEMPTY(T.atmos_adjacent_turfs)
-			T.set_sleeping(T.blocks_air)
-		T.__update_auxtools_turf_adjacency_info(isspaceturf(T.get_z_base_turf()), -1)
+		T.__update_auxtools_turf_adjacency_info(isspaceturf(T.get_z_base_turf()))
 	UNSETEMPTY(atmos_adjacent_turfs)
 	src.atmos_adjacent_turfs = atmos_adjacent_turfs
-	set_sleeping(blocks_air)
 	__update_auxtools_turf_adjacency_info(isspaceturf(get_z_base_turf()))
 
 /turf/proc/set_sleeping(should_sleep)
