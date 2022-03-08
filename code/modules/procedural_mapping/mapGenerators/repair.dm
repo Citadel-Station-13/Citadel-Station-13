@@ -24,6 +24,11 @@
 	GLOB.reloading_map = TRUE
 	// This is kind of finicky on multi-Z maps but the reader would need to be
 	// changed to allow Z cropping and that's a mess
+
+	// update: yeah it's going to be a mess
+	var/list/levels_impacted = list()
+	for(var/z in mother1.z_low to mother1.z_high)
+		if()
 	var/z_offset = SSmapping.station_start
 	var/list/bounds
 	#warn oh lord..

@@ -134,7 +134,7 @@
 					for(var/v in current_pick.always_spawn_with)
 						if(current_pick.always_spawn_with[v] == PLACE_BELOW)
 							var/turf/T = locate(1,1,target_z)
-							if(!SSmapping.get_turf_below(T))
+							if(!T.Below())
 								if(forced_z)
 									continue outer
 								else

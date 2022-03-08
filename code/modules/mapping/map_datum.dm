@@ -54,7 +54,7 @@
 	original_path = path
 
 /datum/map_config/Destroy(force)
-	if(instantiated && !forced)
+	if(instantiated && !force)
 		. = QDEL_HINT_LETMELIVE
 		CRASH("Attempted to qdel an instantiated map config. This is going to cause problems - SSmapping will cache all loaded levels for data retrieval.")
 	QDEL_LIST(levels)

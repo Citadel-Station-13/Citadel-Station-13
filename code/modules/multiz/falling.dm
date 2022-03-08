@@ -16,7 +16,7 @@
  *
  * **If we are already falling, returning only FALL_BLOCKED will cause an impact.**
  */
-/atom/movable/proc/CanZFall(fall_flags)
+/atom/movable/proc/CanZFall(levels, fall_flags)
 	. = FALL_BLOCKED		// most atoms really shouldn't fall
 	. |= SEND_SIGNAL(src, COMSIG_MOVABLE_CAN_ZFALL, levels, .)
 

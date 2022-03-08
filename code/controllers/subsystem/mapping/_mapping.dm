@@ -120,7 +120,7 @@ SUBSYSTEM_DEF(mapping)
 	map_datums = SSmapping.map_datums
 	level_datums = SSmapping.level_datums
 	map_datums_loaded = SSmapping.map_datums_loaded
-	level_datums_loaded = SSmapping.level_datums_loaded
+	map_levels_loaded = SSmapping.map_levels_loaded
 	can_fire = SSmapping.can_fire
 
 	RebuildVerticality()

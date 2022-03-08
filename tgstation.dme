@@ -420,6 +420,7 @@
 #include "code\controllers\subsystem\zcopy.dm"
 #include "code\controllers\subsystem\mapping\_init.dm"
 #include "code\controllers\subsystem\mapping\_mapping.dm"
+#include "code\controllers\subsystem\mapping\level_deletion.dm"
 #include "code\controllers\subsystem\mapping\map_rotation.dm"
 #include "code\controllers\subsystem\mapping\map_templates.dm"
 #include "code\controllers\subsystem\mapping\misc_helpers.dm"

@@ -80,7 +80,7 @@
  */
 /datum/controller/subsystem/mapping/proc/getMapName(id)
 	if(id)
-		var/datum/map_config/config = maps_by_id[config]
+		var/datum/map_config/config = map_datums[config]
 		return config?.name || "ERROR"
 	return map?.name || "UNKNOWN"
 
@@ -89,14 +89,14 @@
  */
 /datum/controller/subsystem/mapping/proc/getMapDatum(id)
 	RETURN_TYPE(/datum/map_config/station)
-	return maps_by_id[id]
+	return map_datums[id]
 
 /**
  * Gets all possible map IDs
  */
 /datum/controller/subsystem/mapping/proc/getAllMapIDs()
 	. = list()
-	for(var/i in maps_by_id)
+	for(var/i in map_datums)
 		. += i
 
 /**

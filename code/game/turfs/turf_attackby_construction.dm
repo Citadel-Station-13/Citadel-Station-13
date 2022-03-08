@@ -49,7 +49,7 @@
 #warn impl
 
 /turf/proc/attempt_lattice_construction(obj/item/I, mob/user, params)
-	if(!istype(I /obj/item/stack/rods))
+	if(!istype(I, /obj/item/stack/rods))
 		return FALSE
 
 
