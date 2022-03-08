@@ -102,28 +102,34 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	if(!tracking || emped) //Do not bother scanning if the GPS is off or EMPed
 		return data
 
-	#warn proof of concept for virtual zlevels
-
 	var/turf/curr = get_turf(parent)
 	data["currentArea"] = "[get_area_name(curr, TRUE)]"
-	data["currentCoords"] = "[curr.x], [curr.y], [curr.z]"
+	var/list/our_coords = SSmapping.GetVirtualCoords(curr)
+	data["currentCoords"] = "[our_coords[1]], [our_coords[2]], [our_coords[3]]"
 
 	var/list/signals = list()
 	data["signals"] = list()
+	var/list/accessible_levels = SSmapping.GetAccessibleLevels(curr.z)
 
 	for(var/gps in GLOB.GPS_list)
 		var/datum/component/gps/G = gps
 		if(G.emped || !G.tracking || G == src)
 			continue
 		var/turf/pos = get_turf(G.parent)
+		if(!(pos.z in accessible_levels))
+			continue
 		if(!pos || !global_mode && pos.z != curr.z)
 			continue
 		var/list/signal = list()
+		var/list/their_coords = SSmapping.GetVirtualCoords(pos)
 		signal["entrytag"] = G.gpstag //Name or 'tag' of the GPS
-		signal["coords"] = "[pos.x], [pos.y], [pos.z]"
-		if(pos.z == curr.z) //Distance/Direction calculations for same z-level only
-			signal["dist"] = max(get_dist(curr, pos), 0) //Distance between the src and remote GPS turfs
-			signal["degrees"] = round(get_visual_angle(curr, pos)) //0-360 degree directional bearing, for more precision.
+		signal["coords"] = "[their_coords[1]], [their_coords[2]], [their_coords[3]]"
+		var/dist = SSmapping.GetVirtualDist(curr, pos)
+		if(dist != -1)
+			signal["dist"] = dist
+		var/degrees = round(SSmapping.GetVirtualAngle(curr, pos), 1)
+		if(degrees != -1)
+			signal["degrees"] = degrees
 		signals += list(signal) //Add this signal to the list of signals
 	data["signals"] = signals
 	return data

@@ -2,7 +2,7 @@
 	/// Ordered list of /datum/space_level - corrosponds to real z values!
 	var/static/list/datum/space_level/space_levels = list()
 	/// id to map level datum
-	var/static/list/level_by_id = list()
+	var/static/list/datum/space_level/level_by_id = list()
 	/// Ordered lookup list for multiz up
 	var/list/multiz_lookup_up
 	/// Ordered lookup list for multiz down
@@ -127,9 +127,12 @@
 	ASSERT(istype(level))
 
 	// make new level
-	var/new_z = ++world.maxz
+	var/new_z = GetInstantiationLevel()
 
 	SynchronizeDatastructures()
+
+	if(new_z in reusable_levels)
+		reusable_levels -= new_z
 
 	space_levels[new_z] = level
 
@@ -427,6 +430,7 @@
 		if(struct_by_z[z])
 			var/datum/world_struct/struct = struct_by_z[z]
 			struct.Deconstruct()
+			qdel(struct)
 	stack_trace("WARNING: Up/Down loops found in zlevels [english_list(loops)]. This is not allowed and will cause both falling and zcopy to infinitely loop. All zlevels involved have been disconnected, and any structs involved have been destroyed.")
 	RebuildVerticality()
 

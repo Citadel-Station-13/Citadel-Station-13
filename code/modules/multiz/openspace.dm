@@ -5,7 +5,8 @@
 	icon_state = "transparent"
 	baseturfs = /turf/open/openspace
 	CanAtmosPassVertical = ATMOS_PASS_YES
-	z_flags = Z_OPEN_UP | Z_OPEN_DOWN | Z_AIR_UP | Z_AIR_DOWN | Z_TRANSPARENT
+	z_flags = Z_OPEN_UP | Z_OPEN_DOWN | Z_AIR_UP | Z_AIR_DOWN | Z_CONSIDERED_OPEN
+	zm_flags = ZM_MIMIC_BELOW
 	turf_construct_flags = TURF_CONSTRUCT_FLAGS_PLATING_OVER
 	intact = FALSE //this means wires go on top
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -53,7 +54,7 @@
 
 /turf/open/openspace/icemoon/Initialize()
 	. = ..()
-	var/turf/T = below()
+	var/turf/T = Below()
 	if(T.flags_1 & NO_RUINS_1 && protect_ruin)
 		ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
 		return

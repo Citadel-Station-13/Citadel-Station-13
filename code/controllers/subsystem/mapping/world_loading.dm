@@ -1,8 +1,6 @@
 /datum/controller/subsystem/mapping
 	/// List of map datums by id, made at world start.
 	var/list/map_datums
-	/// map datums by ID
-	var/list/maps_by_id
 	/// Currently loaded map datum
 	var/static/datum/map_config/station/map
 	/// World loaded?
@@ -14,6 +12,18 @@
 	if(map_datums_loaded)
 		return
 	map_datums_loaded = TRUE
+	// wipe old map datums
+	for(var/id in map_datums)
+		var/datum/map_config/config = map_datums[id]
+		if(!istype(config))
+			continue
+		if(config == map)
+			// we need this one, dereference without qdel
+			map_datums -= id
+			continue
+		// otherwise, delete it
+		qdel(config)
+		map_datums -= id
 	map_datums = list()
 	var/list/json_paths = directory_walk_exts(list("maps/map_files", "config/map_files"), list("json"))
 	for(var/path in json_paths)

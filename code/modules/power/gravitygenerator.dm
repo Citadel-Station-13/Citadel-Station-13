@@ -373,8 +373,6 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		return length(GLOB.gravity_generators["[T.z]"])
 	return FALSE
 
-#warn proof of concept for world structs
-
 /obj/machinery/gravity_generator/main/proc/update_list()
 	var/turf/T = get_turf(src.loc)
 	if(T)

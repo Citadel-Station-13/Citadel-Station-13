@@ -181,7 +181,8 @@ SUBSYSTEM_DEF(zcopy)
 			Td = Td.zm_below
 
 		// Depth must be the depth of the *visible* turf, not self.
-		var/turf_depth = T.z_depth = SSmapping.z_stack_lookup[T.z].Find(T.z)
+		var/list/stack = SSmapping.z_stack_lookup[T.z]
+		var/turf_depth = T.z_depth = stack.Find(T.z)
 
 		var/t_target = OPENTURF_MAX_PLANE - turf_depth	// This is where the turf (but not the copied atoms) gets put.
 
@@ -269,7 +270,8 @@ SUBSYSTEM_DEF(zcopy)
 				deltimer(OO.destruction_timer)
 				OO.destruction_timer = null
 
-			OO.depth = override_depth || min(SSmapping.z_stack_lookup[T.z].Find(T.z), OPENTURF_MAX_DEPTH)
+			// we can use stack var declared above since T is not overwritten
+			OO.depth = override_depth || min(stack.Find(T.z), OPENTURF_MAX_DEPTH)
 
 			// These types need to be pushed a layer down for bigturfs to function correctly.
 			switch (original_type)

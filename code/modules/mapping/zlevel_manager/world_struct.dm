@@ -39,9 +39,10 @@
 	/// Regex
 	var/static/regex/grid_parser = new(@"([\n]+),([\n)]+,([\n]+)", "g")
 
-/datum/world_struct/Destroy()
+/datum/world_struct/Destroy(force)
 	if(constructed)
-		Deconstruct()
+		. = QDEL_HINT_LETMELIVE
+		CRASH("Attempted to destroy a constructed world_struct.")
 	return ..()
 
 // The below code is a monstrosity.

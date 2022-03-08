@@ -3,7 +3,9 @@
 SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
 	init_order = INIT_ORDER_MAPPING
-	flags = SS_NO_FIRE
+	flags = NONE
+	can_fire = FALSE
+	wait = 20
 
 	var/list/nuke_tiles = list()
 	var/list/nuke_threats = list()
@@ -115,6 +117,11 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
 	initialized = SSmapping.initialized
+	map_datums = SSmapping.map_datums
+	level_datums = SSmapping.level_datums
+	map_datums_loaded = SSmapping.map_datums_loaded
+	level_datums_loaded = SSmapping.level_datums_loaded
+	can_fire = SSmapping.can_fire
 
 	RebuildVerticality()
 	RebuildTransitions()

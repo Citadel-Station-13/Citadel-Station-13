@@ -8,8 +8,25 @@
 	var/static/away_loaded = FALSE
 	/// VR loaded?
 	var/static/vr_loaded = FALSE
+	/// loaded map levels from disk?
+	var/map_levels_loaded = FALSE
 
 /datum/controller/subsystem/mapping/proc/InitMapLevels()
+	if(map_levels_loaded)
+		return
+	// wipe old map datums
+	if(islist(level_datums))
+		for(var/id in level_datums)
+			var/datum/map_config/level/config = map_datums[id]
+			if(!istype(config))
+				continue
+			if(config in loaded_levels)
+				// we need this one, dereference without qdel
+				level_datums -= id
+				continue
+			// otherwise, delete it
+			qdel(config)
+			level_datums -= id
 	level_datums = list()
 	var/list/json_paths = directory_walk_exts(list("maps/space_levels", "config/space_levels"), list("json"))
 	for(var/path in json_paths)
@@ -24,6 +41,7 @@
 			qdel(map)
 			continue
 		level_datums[map.group][map.id] = map
+	map_levels_loaded = TRUE
 
 /datum/controller/subsystem/mapping/proc/LoadLevel(group, id)
 	if(!level_datums[group])
@@ -88,7 +106,7 @@
 		log_admin("Admin [key_name_admin(src)] is loading map file [F] ([length(F)] bytes).")
 
 		var/start = REALTIMEOFDAY
-		var/loaded_indices = SSmapping.InstantiateMapLevel(L)
+		var/list/loaded_indices = SSmapping.InstantiateMapLevel(L)
 		if(!loaded_indices)
 			message_admins("[F] loading failed or runtimed.")
 			log_admin("Custom load of [F] failed.")
@@ -110,7 +128,7 @@
 		message_admins("Admin [key_name_admin(usr)] has loaded map level [group]:[id].")
 		log_admin("Admin [key_name(usr)] has loaded map level [group]:[id].")
 		var/start = REALTIMEOFDAY
-		var/loaded_indices = SSmapping.LoadLevel(group, id)
+		var/list/loaded_indices = SSmapping.LoadLevel(group, id)
 		if(!loaded_indices)
 			message_admins("[group]:[id] loading failed or runtimed.")
 			log_admin("Custom load of [group]:[id] failed.")
@@ -120,4 +138,5 @@
 
 /datum/controller/subsystem/mapping/OnConfigLoad()
 	. = ..()
+	map_levels_loaded = FALSE
 	InitMapLevels()

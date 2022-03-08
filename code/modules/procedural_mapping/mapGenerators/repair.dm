@@ -17,6 +17,7 @@
 	allowAtomsOnSpace = TRUE
 
 /datum/mapGeneratorModule/reload_station_map/generate()
+	#warn lmao test this mess
 	if(!istype(mother, /datum/mapGenerator/repair/reload_station_map))
 		return
 	var/datum/mapGenerator/repair/reload_station_map/mother1 = mother
@@ -78,7 +79,8 @@
 	var/x_high = 0
 	var/y_low = 0
 	var/y_high = 0
-	var/z = 0
+	var/z_low = 0
+	var/z_high = 0
 	var/cleanload = FALSE
 	var/datum/mapGeneratorModule/reload_station_map/loader
 	buildmode_name = "Repair: Reload Block \[DO NOT USE\]"
@@ -99,7 +101,8 @@
 	y_low = min(start.y, end.y)
 	x_high = max(start.x, end.x)
 	y_high = max(start.y, end.y)
-	z = SSmapping.station_start
+	z_low = min(start.z, end.z)
+	z_high = max(start.z, end.z)
 
 GLOBAL_VAR_INIT(reloading_map, FALSE)
 

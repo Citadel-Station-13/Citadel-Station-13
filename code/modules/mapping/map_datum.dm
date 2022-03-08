@@ -25,6 +25,8 @@
 	var/z_count = 1
 	/// Center this map?
 	var/center = TRUE
+	/// did instantiation happen on us? levels can still be instantiated without us being specifically instantiated!
+	var/instantiated = FALSE
 	/// zlevel datums - ordered list
 	var/list/datum/space_level/levels
 	/// world_structs to set up - list(struct z_grid, struct z_grid 2, etc)
@@ -50,6 +52,13 @@
 				data = safe_json_decode(data)
 		ParseJSONList(data, path)
 	original_path = path
+
+/datum/map_config/Destroy(force)
+	if(instantiated && !forced)
+		. = QDEL_HINT_LETMELIVE
+		CRASH("Attempted to qdel an instantiated map config. This is going to cause problems - SSmapping will cache all loaded levels for data retrieval.")
+	QDEL_LIST(levels)
+	return ..()
 
 /datum/map_config/proc/ParseJSONList(list/data, path)
 	original_datalist = data

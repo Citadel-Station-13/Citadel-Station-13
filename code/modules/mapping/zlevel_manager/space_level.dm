@@ -81,6 +81,10 @@
 	if(instantiated && !force)
 		. = QDEL_HINT_LETMELIVE
 		CRASH("Attempted to destroy an instantiated space level datum.")
+	traits = null
+	attributes = null
+	// don't rebuild the level, if we're instantiated and this is happening shit's fucked anyways
+	up = down = east = west = north = south = null
 	return ..()
 
 /**

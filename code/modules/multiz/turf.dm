@@ -28,6 +28,7 @@ GLOBAL_VAR_INIT(unroofed_catwalk_overlay, image('icons/modules/multiz/turf_overl
 /turf/proc/UpdateMultiZ()
 	SEND_SIGNAL(src, COMSIG_TURF_UPDATE_MULTIZ)
 
+	#warn check logic
 	// DOWNWARDS
 	// First, check if we're the bottom level. If we're the bottom level and we're openspace, we need to teardown to the zlevel's baseturf
 	// If the zlevels' baseturf IS openspace for some reason, we tear down to space

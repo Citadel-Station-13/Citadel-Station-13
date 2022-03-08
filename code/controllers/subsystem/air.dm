@@ -525,6 +525,24 @@ SUBSYSTEM_DEF(air)
 	var/datum/atmosphere/mix = atmos_gen[gas_string]
 	return mix.gas_string
 
+/datum/controller/subsystem/air/BeginZClear(z)
+	. = ..()
+	if(!can_fire)
+		return
+	can_fire = FALSE
+	subsystem_log("SSair due to active level clearing.")
+	message_admins("SSair suspending for level clear.")
+
+/datum/controller/subsystem/air/OnZClear(z)
+	. = ..()
+	if(can_fire)
+		return
+	if(length(SSmapping.erasing_levels))
+		return
+	can_fire = TRUE
+	subsystem_log("SSair resuming after level clearing.")
+	message_admins("SSair resuming after level clear.")
+
 #undef SSAIR_PIPENETS
 #undef SSAIR_ATMOSMACHINERY
 #undef SSAIR_EXCITEDGROUPS
