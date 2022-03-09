@@ -306,8 +306,6 @@
 	A.forceMove(drop_location())
 	A.throw_at(locate(x_abs, y_abs, T.z), range, 3)
 
-	air_update_turf()
-
 	// If the item came from a grabber now we can update the outputs since we've thrown it.
 	if(istype(G))
 		G.update_outputs()

@@ -236,7 +236,6 @@
 
 /turf/open/proc/TakeTemperature(temp)
 	air.set_temperature(air.return_temperature() + temp)
-	air_update_turf()
 
 /turf/open/proc/freon_gas_act()
 	for(var/obj/I in contents)

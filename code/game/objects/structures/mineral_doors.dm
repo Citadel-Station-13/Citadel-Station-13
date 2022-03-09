@@ -28,7 +28,7 @@
 /obj/structure/mineral_door/Initialize()
 	. = ..()
 	initial_state = icon_state
-	air_update_turf(TRUE)
+	air_update_turf()
 
 /obj/structure/mineral_door/Move()
 	var/turf/T = loc
@@ -90,7 +90,7 @@
 	density = FALSE
 	layer = OPEN_DOOR_LAYER
 	state = 1
-	air_update_turf(1)
+	air_update_turf()
 	update_icon()
 	isSwitchingStates = 0
 
@@ -111,7 +111,7 @@
 	set_opacity(TRUE)
 	state = 0
 	layer = initial(layer)
-	air_update_turf(1)
+	air_update_turf()
 	update_icon()
 	isSwitchingStates = 0
 

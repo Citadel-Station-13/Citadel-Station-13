@@ -55,7 +55,6 @@
 		var/pressure_delta = abs(our_pressure - environment.return_pressure())
 		if(pressure_delta > 0.1)
 			equalize_all_gases_in_list(list(air_contents,environment))
-			air_update_turf()
 
 			update_parents()
 

@@ -90,19 +90,19 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	. = ..()
 	if(direct)
 		setDir(direct)
-	
+
 	if(extra_reinforced && anchored)
 		state = PRWINDOW_SECURE
 
 	else if(reinf && anchored)
 		state = WINDOW_SCREWED_TO_FRAME
-	
+
 
 	if(mapload && electrochromatic_id && electrochromatic_id[1] == "!")
 		electrochromatic_id = SSmapping.get_obfuscated_id(electrochromatic_id)
 
 	ini_dir = dir
-	air_update_turf(1)
+	air_update_turf()
 
 	if(fulltile)
 		setDir()
@@ -350,7 +350,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 
 /obj/structure/window/setAnchored(anchorvalue)
 	..()
-	air_update_turf(TRUE)
+	air_update_turf()
 	update_nearby_icons()
 
 /obj/structure/window/proc/electrochromatic_dim()
@@ -519,13 +519,13 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	return TRUE
 
 /obj/structure/window/proc/after_rotation(mob/user,rotation_type)
-	air_update_turf(1)
+	air_update_turf()
 	ini_dir = dir
 	add_fingerprint(user)
 
 /obj/structure/window/Destroy()
 	density = FALSE
-	air_update_turf(1)
+	air_update_turf()
 	update_nearby_icons()
 	remove_electrochromatic()
 	return ..()

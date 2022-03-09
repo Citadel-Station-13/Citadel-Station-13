@@ -131,7 +131,6 @@
 
 	if(breath)
 		loc.assume_air(breath)
-		air_update_turf()
 
 /mob/living/carbon/proc/has_smoke_protection()
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
@@ -372,8 +371,6 @@
 	stank.set_temperature(BODYTEMP_NORMAL)
 
 	miasma_turf.assume_air(stank)
-
-	miasma_turf.air_update_turf()
 
 /mob/living/carbon/proc/handle_blood()
 	return

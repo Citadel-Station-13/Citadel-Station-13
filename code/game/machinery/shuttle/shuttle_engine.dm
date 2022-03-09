@@ -131,7 +131,6 @@
 	if(deltaTemperature < 0)
 		return
 	env.set_temperature(env.return_temperature(),deltaTemperature)
-	air_update_turf()
 
 /obj/machinery/shuttle/engine/default_change_direction_wrench(mob/user, obj/item/I)
 	. = ..()

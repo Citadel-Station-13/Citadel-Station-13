@@ -67,7 +67,6 @@
 		if(istype(L))
 			var/datum/gas_mixture/env = L.return_air()
 			env.adjust_heat(heating_power * perc * heat_gen)
-			air_update_turf()
 
 /proc/fix_noid_research_servers()
 	var/list/no_id_servers = list()

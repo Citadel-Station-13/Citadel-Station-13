@@ -98,7 +98,6 @@ GLOBAL_LIST_EMPTY(plague_rats)
 		if(T.air)
 			if(miasma_moles < 200)
 				T.assume_air(stank)
-				T.air_update_turf()
 
 	if(prob(40))
 		scavenge.Trigger()

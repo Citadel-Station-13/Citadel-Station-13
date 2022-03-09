@@ -1493,7 +1493,7 @@
 		setDir(direct)
 
 	ini_dir = dir
-	air_update_turf(1)
+	air_update_turf()
 
 /obj/structure/festive/trainplatform/edge_north/setDir(direct)
 	if(!fulltile)
@@ -1551,7 +1551,7 @@
 		setDir(direct)
 
 	ini_dir = dir
-	air_update_turf(1)
+	air_update_turf()
 
 /obj/structure/festive/trainplatform/edge_south/setDir(direct)
 	if(!fulltile)
@@ -1609,7 +1609,7 @@
 		setDir(direct)
 
 	ini_dir = dir
-	air_update_turf(1)
+	air_update_turf()
 
 /obj/structure/festive/trainplatform/edge_east/setDir(direct)
 	if(!fulltile)
@@ -1667,7 +1667,7 @@
 		setDir(direct)
 
 	ini_dir = dir
-	air_update_turf(1)
+	air_update_turf()
 
 /obj/structure/festive/trainplatform/edge_west/setDir(direct)
 	if(!fulltile)

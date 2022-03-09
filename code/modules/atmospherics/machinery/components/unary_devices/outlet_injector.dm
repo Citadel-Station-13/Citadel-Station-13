@@ -70,7 +70,6 @@
 
 	if(air_contents.return_temperature() > 0)
 		loc.assume_air_ratio(air_contents, volume_rate / air_contents.return_volume())
-		air_update_turf()
 
 		update_parents()
 

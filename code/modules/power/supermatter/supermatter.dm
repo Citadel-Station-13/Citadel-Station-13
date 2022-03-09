@@ -606,7 +606,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	if(produces_gas)
 		env.merge(removed)
-		air_update_turf()
 
 	/*********
 	END CITADEL CHANGES

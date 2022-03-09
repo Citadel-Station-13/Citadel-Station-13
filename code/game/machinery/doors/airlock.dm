@@ -102,7 +102,7 @@
 	rad_insulation = RAD_MEDIUM_INSULATION
 
 	var/static/list/airlock_overlays = list()
-	
+
 	/// sigh
 	var/unelectrify_timerid
 
@@ -1132,7 +1132,7 @@
 	update_freelook_sight()
 	sleep(4)
 	density = FALSE
-	air_update_turf(1)
+	air_update_turf()
 	sleep(1)
 	layer = OPEN_DOOR_LAYER
 	update_icon(AIRLOCK_OPEN, 1)
@@ -1174,11 +1174,11 @@
 	layer = CLOSED_DOOR_LAYER
 	if(air_tight)
 		density = TRUE
-		air_update_turf(1)
+		air_update_turf()
 	sleep(1)
 	if(!air_tight)
 		density = TRUE
-		air_update_turf(1)
+		air_update_turf()
 	sleep(4)
 	if(!safe)
 		crush()

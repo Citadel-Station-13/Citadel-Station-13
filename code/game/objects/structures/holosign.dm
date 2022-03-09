@@ -84,7 +84,7 @@
 
 /obj/structure/holosign/barrier/atmos/Initialize()
 	. = ..()
-	air_update_turf(TRUE)
+	air_update_turf()
 
 /obj/structure/holosign/barrier/firelock
 	name = "holo firelock"
@@ -100,7 +100,7 @@
 
 /obj/structure/holosign/barrier/firelock/Initialize()
 	. = ..()
-	air_update_turf(TRUE)
+	air_update_turf()
 
 /obj/structure/holosign/barrier/combifan
 	name = "holo combifan"
@@ -120,7 +120,7 @@
 
 /obj/structure/holosign/barrier/combifan/Initialize()
 	. = ..()
-	air_update_turf(TRUE)
+	air_update_turf()
 
 /obj/structure/holosign/barrier/cyborg
 	name = "Energy Field"

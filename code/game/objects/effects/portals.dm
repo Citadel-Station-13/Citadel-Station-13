@@ -115,10 +115,10 @@
 	LAZYINITLIST(atmos_destination.atmos_adjacent_turfs)
 	if(atmos_source.atmos_adjacent_turfs[atmos_destination] || atmos_destination.atmos_adjacent_turfs[atmos_source])	//Already linked!
 		return FALSE
-	atmos_source.atmos_adjacent_turfs[atmos_destination] = TRUE
-	atmos_destination.atmos_adjacent_turfs[atmos_source] = TRUE
-	atmos_source.air_update_turf(FALSE)
-	atmos_destination.air_update_turf(FALSE)
+	atmos_source.atmos_adjacent_turfs[atmos_destination] = DOWN
+	atmos_destination.atmos_adjacent_turfs[atmos_source] = DOWN
+	atmos_source.__update_auxtools_turf_adjacency_info(FALSE)
+	atmos_destination.__update_auxtools_turf_adjacency_info(FALSE)
 
 /obj/effect/portal/proc/unlink_atmos()
 	if(istype(atmos_source))
@@ -129,6 +129,8 @@
 		if(istype(atmos_source) && !atmos_destination.Adjacent(atmos_source) && !CANATMOSPASS(atmos_source, atmos_destination))
 			LAZYREMOVE(atmos_destination.atmos_adjacent_turfs, atmos_source)
 		atmos_destination = null
+	atmos_source.ImmediateCalculateAdjacentTurfs()
+	atmos_destination.ImmediateCalculateAdjacentTurfs()
 
 /obj/effect/portal/Destroy()
 	GLOB.portals -= src

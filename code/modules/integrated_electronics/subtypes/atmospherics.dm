@@ -116,7 +116,6 @@
 
 	// Move gas from one place to another
 	move_gas(source_air, target_air, (istype(target, /obj/item/tank) ? target : null))
-	air_update_turf()
 
 /obj/item/integrated_circuit/atmospherics/pump/proc/move_gas(datum/gas_mixture/source_air, datum/gas_mixture/target_air, obj/item/tank/snowflake)
 
