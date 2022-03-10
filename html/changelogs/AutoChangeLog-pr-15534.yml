@@ -1,0 +1,5 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - rscadd: "Screentips."
+  - rscdel: "Removed the bottom grey section of the screen."
