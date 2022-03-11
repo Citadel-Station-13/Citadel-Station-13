@@ -46157,8 +46157,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/components/binary/valve/digital{
-	dir = 8;
-	icon_state = "dvalve_map-2"
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -57767,6 +57766,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/toy/plush/mothplushie,
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
 "dBr" = (
@@ -77552,8 +77552,7 @@
 /area/engineering/main)
 "grf" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	dir = 5;
-	icon_state = "pipe11-2"
+	dir = 5
 	},
 /turf/closed/wall/r_wall,
 /area/science/xenobiology)
@@ -77889,8 +77888,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4;
-	icon_state = "inje_map-2"
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)

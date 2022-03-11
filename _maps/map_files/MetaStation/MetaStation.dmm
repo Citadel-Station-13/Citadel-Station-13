@@ -29270,13 +29270,12 @@
 	},
 /area/medical/surgery)
 "ckZ" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
+	},
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 4
@@ -32861,6 +32860,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/toy/plush/mothplushie,
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms/room_a)
 "cts" = (
