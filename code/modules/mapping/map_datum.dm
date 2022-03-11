@@ -159,7 +159,8 @@
 
 /datum/map_config/station/ParseJSONList(list/data)
 	. = ..()
-	maptype = data["maptype"]
+	if(data["maptype"])
+		maptype = data["maptype"]
 	if("persistence_key" in data)
 		persistence_key = data["persistence_key"] || id
 	if("year_offset" in data)
