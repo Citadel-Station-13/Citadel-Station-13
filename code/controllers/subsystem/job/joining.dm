@@ -91,7 +91,7 @@
 	if(tcg_cards && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/tcgcard_binder/binder = new(get_turf(H))
-		H.equip_to_slot_if_possible(binder, SLOT_IN_BACKPACK, disable_warning = TRUE, bypass_equip_delay_self = TRUE)
+		H.equip_to_slot_if_possible(binder, ITEM_SLOT_BACKPACK, disable_warning = TRUE, bypass_equip_delay_self = TRUE)
 		for(var/card_type in tcg_cards)
 			if(card_type)
 				if(islist(tcg_cards[card_type]))

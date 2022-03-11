@@ -188,9 +188,8 @@
 	if(glasses)
 		H.equip_to_slot_or_del(new glasses(H), ITEM_SLOT_EYES, TRUE)
 	if(id)
-<<<<<<< HEAD
 		var/obj/item/card/id/ID = new id(H)
-		if(H.equip_to_slot_or_del(ID, SLOT_WEAR_ID, TRUE) && istype(ID))
+		if(H.equip_to_slot_or_del(ID, ITEM_SLOT_ID, TRUE) && istype(ID))
 			if(islist(access_override))
 				ID.access = access_override.Copy()
 			else if(access_clone)
@@ -207,9 +206,6 @@
 				ID.registered_name = H.real_name
 			ID.update_label()
 
-=======
-		H.equip_to_slot_or_del(new id(H), ITEM_SLOT_ID, TRUE)
->>>>>>> citadel/master
 	if(suit_store)
 		H.equip_to_slot_or_del(new suit_store(H), ITEM_SLOT_SUITSTORE, TRUE)
 	if(undershirt)

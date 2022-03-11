@@ -19,14 +19,13 @@
 #warn finish
 
 /datum/ghostrole_instantiator/human/random/species/golem
-	possible_species = typesof(/datum/species/golem)
 
 /datum/ghostrole_instantiator/human/random/species/golem/GetSpeciesPath(mob/living/carbon/human/H, list/params)
 	var/predestined = params["species"]
 	if(istext(predestined))
 		predestined = text2path(predestined)
 	if(!ispath(predestined, /datum/species/golem))
-		return ..()
+		return pick(typesof(/datum/species/golem))
 	return predestined
 
 
@@ -39,7 +38,6 @@
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "construct"
-	death = FALSE
 	anchored = FALSE
 	move_resist = MOVE_FORCE_NORMAL
 	density = FALSE
