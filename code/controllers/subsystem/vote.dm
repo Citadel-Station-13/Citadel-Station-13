@@ -253,9 +253,9 @@ SUBSYSTEM_DEF(vote)
 		calculate_highest_median(vote_title_text)
 	var/list/winners = list()
 	if(mode == "transfer")
-		var/greater_amount_required = 2 + transfer_votes_done
-		text += "\nExtending requires [greater_amount_required] more votes to win."
-		if(choices[VOTE_TRANSFER] + greater_amount_required >= choices[VOTE_CONTINUE])
+		var/amount_required = 3 + transfer_votes_done
+		text += "\nExtending requires at least [amount_required] votes to win."
+		if(choices[VOTE_CONTINUE] < amount_required || choices[VOTE_TRANSFER] >= choices[VOTE_CONTINUE])
 			winners = list(VOTE_TRANSFER)
 		else
 			winners = list(VOTE_CONTINUE)
