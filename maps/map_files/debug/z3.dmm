@@ -1,0 +1,97 @@
+"ax" = (/obj/effect/turf_decal/stripes/white/line,/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/engineering/storage)
+"aT" = (/obj/machinery/airalarm/directional/north,/turf/open/floor/plating,/area/engineering/storage)
+"eg" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 8},/turf/open/floor/plasteel,/area/engineering/storage)
+"gH" = (/obj/machinery/atmospherics/components/unary/portables_connector/visible{dir = 1},/turf/open/floor/plating,/area/engineering/storage)
+"ht" = (/obj/effect/turf_decal/stripes/asteroid/line,/turf/open/floor/plasteel,/area/engineering/storage)
+"kB" = (/obj/machinery/power/deck_relay,/obj/structure/cable{icon_state = "0-8"},/turf/open/floor/plating,/area/engineering/storage)
+"kE" = (/turf/open/space/basic,/area/space)
+"kV" = (/obj/machinery/light{dir = 4},/turf/open/floor/plating,/area/engineering/storage)
+"la" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 1},/turf/open/floor/plasteel,/area/engineering/storage)
+"le" = (/obj/effect/turf_decal/stripes/white/line{dir = 6; icon_state = "warningline_white"},/turf/open/floor/plating,/area/engineering/storage)
+"nk" = (/turf/open/floor/plasteel,/area/engineering/storage)
+"nt" = (/obj/machinery/atmospherics/pipe/simple/multiz,/turf/open/floor/plating,/area/engineering/storage)
+"pa" = (/obj/machinery/power/apc/auto_name/north,/obj/structure/cable{icon_state = "0-4"},/turf/open/floor/plating,/area/engineering/storage)
+"pm" = (/obj/machinery/light{dir = 4},/turf/open/floor/plasteel,/area/engineering/storage)
+"ps" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/engineering/storage)
+"sy" = (/obj/effect/turf_decal/stripes/white/line,/turf/open/floor/plating,/area/engineering/storage)
+"uc" = (/obj/machinery/light{dir = 8},/turf/open/openspace,/area/engineering/storage)
+"vd" = (/obj/effect/turf_decal/stripes/white/line{dir = 9; icon_state = "warningline_white"},/turf/open/floor/plating,/area/engineering/storage)
+"vK" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 4},/obj/machinery/light{dir = 8},/turf/open/floor/plasteel,/area/engineering/storage)
+"xP" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 8},/obj/effect/turf_decal/stripes/asteroid/line{dir = 4},/obj/machinery/door/airlock/external/glass,/obj/structure/fans/tiny,/turf/open/floor/plasteel,/area/engineering/storage)
+"za" = (/turf/open/openspace,/area/space/nearstation)
+"zL" = (/obj/effect/turf_decal/stripes/white/line{dir = 4; icon_state = "warningline_white"},/turf/open/floor/plating,/area/engineering/storage)
+"Bb" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 4},/turf/open/floor/plasteel,/area/engineering/storage)
+"BM" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 1},/obj/effect/turf_decal/stripes/asteroid/line{dir = 8},/obj/machinery/light{dir = 1},/turf/open/floor/plasteel,/area/engineering/storage)
+"Ey" = (/obj/effect/turf_decal/stripes/white/line{dir = 1; icon_state = "warningline_white"},/obj/effect/turf_decal/stripes/white/line{dir = 4; icon_state = "warningline_white"},/turf/open/floor/plating,/area/engineering/storage)
+"EX" = (/obj/structure/cable{icon_state = "4-8"},/turf/open/floor/plating,/area/engineering/storage)
+"Ff" = (/obj/machinery/meter,/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 8},/turf/open/floor/plating,/area/engineering/storage)
+"Ho" = (/obj/effect/turf_decal/stripes/white/line{dir = 5; icon_state = "warningline_white"},/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/engineering/storage)
+"Kh" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/space)
+"OB" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 1},/obj/effect/turf_decal/stripes/asteroid/line{dir = 8},/obj/effect/turf_decal/stripes/asteroid/line{dir = 4},/turf/open/floor/plasteel,/area/engineering/storage)
+"Pf" = (/turf/open/floor/plating,/area/engineering/storage)
+"PX" = (/turf/open/openspace,/area/space)
+"Tk" = (/obj/effect/turf_decal/stripes/white/line{dir = 1; icon_state = "warningline_white"},/turf/open/floor/plating,/area/engineering/storage)
+"UO" = (/obj/structure/ladder,/turf/open/floor/plasteel,/area/engineering/storage)
+"Vz" = (/obj/effect/turf_decal/stripes/white/line{dir = 8; icon_state = "warningline_white"},/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/engineering/storage)
+"XR" = (/turf/open/openspace,/area/engineering/storage)
+"XV" = (/obj/effect/turf_decal/stripes/asteroid/line,/obj/effect/turf_decal/stripes/asteroid/line{dir = 4},/turf/open/floor/plasteel,/area/engineering/storage)
+"Yf" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 1},/obj/effect/turf_decal/stripes/asteroid/line{dir = 4},/obj/machinery/light{dir = 1},/turf/open/floor/plasteel,/area/engineering/storage)
+"Za" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 8},/turf/open/floor/plating,/area/engineering/storage)
+"Zg" = (/turf/closed/wall/r_wall,/area/engineering/storage)
+"Zj" = (/obj/effect/turf_decal/stripes/white/line{dir = 8; icon_state = "warningline_white"},/turf/open/floor/plating,/area/engineering/storage)
+"ZT" = (/obj/machinery/light{dir = 8},/turf/open/floor/plating,/area/engineering/storage)
+
+(1,1,1) = {"
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRZgzazazazazazazaZgXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRZgzazazazazazazaZgXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRZgzazazazazazazaZgXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRZgzazazazazazazaZgXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRZgzazazazazazazaZgXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRZgzazazazazazazaZgXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRZgzazazazazazaOBZgXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRZgKhKhKhKhKhKhxPZgXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRBMlalalalalalankYfXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRegnknknknknknknkBbXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRegnknknknknknknkBbXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRegnknknknknknknkBbXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRegnknknknknknknkBbXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRegnknknknknknknkBbXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRegnknknknknknknkBbXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRegnknknknknkpmZgvKXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRegnknknknknkUOnkBbXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRleTkTkTkTkTkTkTkTkEynknkBbXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRZjkVZgPfPfZgZTPfPfzLhthtXVXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRZjPfpaEXkBaTPfPfPfzLXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRZjPfPfPfPfPfPfPfPfzLXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgucXRXRZjPfPfPfPfPfPfPfPfzLXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRZjPfPfPfPfPfntPfPfzLXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRZjPfPfPfPfPfFfZaPfzLXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRVzpspspsPfPfgHPfPfzLXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRVzXRXRpsZTPfPfPfXRzLXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRHoaxaxaxsysysysysyvdXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+"}
