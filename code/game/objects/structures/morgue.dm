@@ -371,8 +371,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	else
 		return 0
 
-/obj/structure/tray/m_tray/CanAStarPass(ID, dir, caller)
+/obj/structure/tray/m_tray/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
 	. = !density
-	if(ismovable(caller))
-		var/atom/movable/mover = caller
-		. = . || (mover.pass_flags & PASSTABLE)
+	if(istype(caller))
+		. = . || (caller.pass_flags & PASSTABLE)
