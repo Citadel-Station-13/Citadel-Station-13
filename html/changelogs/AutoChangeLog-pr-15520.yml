@@ -1,5 +1,0 @@
-author: "Daggertail"
-delete-after: True
-changes: 
-  - code_imp: "Updated Python BS to 3.7.9"
-  - code_imp: "Changed some Mapmerge lines"
