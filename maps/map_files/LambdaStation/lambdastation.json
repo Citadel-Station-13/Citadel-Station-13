@@ -1,0 +1,43 @@
+{
+	"id": "lambdastation",
+	"width": 255,
+	"height": 255,
+	"center": true,
+	"levels": [
+		{
+			"name": "Station 1",
+			"id": "lambda_1",
+			"path": "lambda.dmm",
+			"linkage_mode": "Crosslink",
+			"traits": [
+				"Station",
+				"Minimaps"
+			],
+			"up": "lambda_2"
+		},
+		{
+			"name": "Station 2",
+			"id": "lambda_2",
+			"path": "dorms.dmm",
+			"linkage_mode": "Crosslink",
+			"traits": [
+				"Station",
+				"Minimaps"
+			],
+			"down": "lambda_1"
+		}
+	],
+	"name": "Lambda Station",
+    "shuttles": {
+	    "cargo": "cargo_box",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_meta",
+	    "emergency": "emergency_meta"
+    },
+	"lateload": {
+		"integral": [
+			"centcom",
+			"lavaland"
+		]
+	}
+}

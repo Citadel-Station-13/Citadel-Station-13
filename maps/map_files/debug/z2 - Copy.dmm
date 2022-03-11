@@ -1,0 +1,113 @@
+"af" = (/obj/structure/grille,/turf/open/openspace,/area/space/nearstation)
+"aT" = (/obj/machinery/airalarm/directional/north,/turf/open/floor/plating,/area/hallway/secondary/service)
+"bB" = (/obj/machinery/atmospherics/components/binary/valve,/turf/open/floor/plating,/area/hallway/secondary/service)
+"df" = (/turf/closed/wall/r_wall,/area/maintenance/department/bridge)
+"dJ" = (/obj/effect/turf_decal/stripes/asteroid/corner{dir = 1},/turf/open/floor/plasteel,/area/hallway/secondary/service)
+"dR" = (/obj/structure/lattice,/obj/structure/grille,/turf/open/openspace,/area/space/nearstation)
+"eo" = (/turf/open/floor/plating,/area/hallway/secondary/service)
+"eC" = (/obj/machinery/light{dir = 4},/obj/effect/turf_decal/stripes/asteroid/line{dir = 8},/turf/open/floor/plasteel,/area/hallway/secondary/service)
+"eO" = (/obj/effect/turf_decal/stripes/asteroid/corner,/turf/open/floor/plasteel,/area/hallway/secondary/service)
+"gF" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 8},/turf/open/floor/plating,/area/hallway/secondary/service)
+"hH" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/maintenance/department/bridge)
+"in" = (/obj/effect/turf_decal/stripes/asteroid/line,/turf/open/floor/plasteel,/area/hallway/secondary/service)
+"iL" = (/obj/machinery/light{dir = 4},/turf/open/floor/plating,/area/maintenance/department/bridge)
+"jk" = (/obj/machinery/light{dir = 8},/turf/open/floor/plating,/area/maintenance/department/bridge)
+"jU" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 8},/turf/open/floor/plasteel,/area/hallway/secondary/service)
+"kB" = (/obj/machinery/power/deck_relay,/obj/structure/cable{icon_state = "0-8"},/turf/open/floor/plating,/area/hallway/secondary/service)
+"kE" = (/turf/open/space/basic,/area/space)
+"le" = (/obj/structure/disposalpipe/trunk,/obj/machinery/disposal/bin,/turf/open/floor/plating,/area/hallway/secondary/service)
+"mV" = (/obj/machinery/light{dir = 1},/turf/open/floor/plating,/area/maintenance/department/bridge)
+"nk" = (/obj/machinery/airalarm/directional/north,/turf/open/floor/plasteel{dir = 1},/area/hallway/secondary/service)
+"nG" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 4},/obj/machinery/light{dir = 8},/turf/open/floor/plasteel,/area/hallway/secondary/service)
+"oc" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 1},/obj/machinery/light,/turf/open/floor/plasteel,/area/hallway/secondary/service)
+"od" = (/turf/open/floor/plasteel{dir = 10},/area/hallway/secondary/service)
+"oZ" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 4},/turf/open/floor/plasteel,/area/hallway/secondary/service)
+"pa" = (/obj/machinery/power/apc/auto_name/north,/obj/structure/cable{icon_state = "0-4"},/turf/open/floor/plating,/area/hallway/secondary/service)
+"qD" = (/obj/structure/stairs{dir = 1},/turf/open/floor/plating,/area/hallway/secondary/service)
+"qR" = (/obj/machinery/light,/turf/open/floor/plating,/area/maintenance/department/bridge)
+"rK" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 4},/turf/open/floor/plating,/area/maintenance/department/bridge)
+"tz" = (/turf/open/floor/plasteel{dir = 4},/area/hallway/secondary/service)
+"tN" = (/obj/machinery/light{dir = 8},/turf/open/floor/plating,/area/hallway/secondary/service)
+"uw" = (/obj/machinery/light{dir = 4},/turf/open/floor/plasteel,/area/hallway/secondary/service)
+"wC" = (/obj/machinery/light{dir = 8},/turf/open/floor/plasteel{dir = 8},/area/hallway/secondary/service)
+"za" = (/turf/open/openspace,/area/space/nearstation)
+"zG" = (/turf/open/floor/plasteel{dir = 1},/area/hallway/secondary/service)
+"Eo" = (/turf/open/openspace,/area/hallway/secondary/service)
+"EP" = (/obj/machinery/light{dir = 8},/turf/open/floor/plasteel,/area/hallway/secondary/service)
+"EX" = (/obj/structure/cable{icon_state = "4-8"},/turf/open/floor/plating,/area/hallway/secondary/service)
+"GF" = (/obj/structure/disposalpipe/trunk/multiz/down{dir = 1; icon_state = "pipe-down"},/turf/open/floor/plating,/area/hallway/secondary/service)
+"GO" = (/obj/machinery/light,/turf/open/floor/plasteel,/area/hallway/secondary/service)
+"Hi" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 4},/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel,/area/hallway/secondary/service)
+"Jj" = (/turf/open/openspace,/area/maintenance/department/bridge)
+"JR" = (/obj/machinery/atmospherics/pipe/simple/multiz,/turf/open/floor/plating,/area/hallway/secondary/service)
+"Kh" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 1},/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel,/area/hallway/secondary/service)
+"Kk" = (/turf/open/floor/plasteel,/area/hallway/secondary/service)
+"KN" = (/turf/open/floor/plating,/area/maintenance/department/bridge)
+"Mo" = (/turf/open/floor/plasteel{dir = 8},/area/hallway/secondary/service)
+"Nd" = (/turf/open/floor/plasteel{dir = 9},/area/hallway/secondary/service)
+"Nz" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/hallway/secondary/service)
+"ON" = (/obj/effect/turf_decal/stripes/asteroid/corner{dir = 4},/obj/machinery/light,/turf/open/floor/plasteel,/area/hallway/secondary/service)
+"Pf" = (/obj/machinery/meter,/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 8},/turf/open/floor/plating,/area/hallway/secondary/service)
+"PX" = (/turf/open/openspace,/area/space)
+"Sf" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 1},/turf/open/floor/plasteel,/area/hallway/secondary/service)
+"Tr" = (/turf/open/floor/plasteel{dir = 2},/area/hallway/secondary/service)
+"UO" = (/obj/structure/ladder,/obj/effect/turf_decal/stripes/asteroid/corner{dir = 8},/turf/open/floor/plasteel,/area/hallway/secondary/service)
+"Xq" = (/obj/effect/turf_decal/stripes/asteroid/line,/turf/open/floor/plating,/area/maintenance/department/bridge)
+"XR" = (/turf/closed/wall/r_wall,/area/hallway/secondary/service)
+"Zg" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 8},/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel,/area/hallway/secondary/service)
+"Zj" = (/obj/structure/disposalpipe/segment,/turf/open/floor/plating,/area/hallway/secondary/service)
+
+(1,1,1) = {"
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfdfdfdfdfdfdfdfdfdRafafafafafafdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNKNmVKNKNKNKNdfzazazazazazazadfKNKNKNKNmVKNKNKNKNKNmVKNKNKNdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNXRXRXRXRXRXRXRzazazazazazazaXRXRXRXRXRXRXRXRXRXRXRXRXRXRiLdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNXReoeoeoeoKkNzzazazazazazazaNzKkKkKkKkKkKkKkKkKkKkKkKkXRKNdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNXReoeoeoKkKkHizazazazazazazaZgKkKkuwXRKkKkKkKkzGMotzKkXRKNdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNXRtNeoTrKkKkHizazazazazazazaZgKkKkKkKkKkKkKkKkMoKkMouwXRKNdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNXReoKkTrKkKkNzzazazazazazazaNzKkKkKkKkKkKkKkKktzMozGKkXRKNdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNXRKkKkKkKkKkXRzazazazazazazaXRKkKkKkKkKkKkKkKkGOKkKkKkXRiLdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNXRKkKkKkKkKkXRXRNzKhKhKhNzXRXRKkKkKkKkKkXRXRXRXRXRXRXRXRKNdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfjkXREPKkKkKkKkXRKkKkKkKkKkKkKkXRKkKkKkKkKkKkKkXRNdzGzGzGXRKNdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXhHKNeoKkKkKkKkKkNzKkKkKkKkKkKkKkNzKkKkKkKkKkKkKkXRMoKkKkKkeoKNdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXhHKNeoKkKkKkKkuwXREPKkKkKkKkKkuwXREPKkKkKkKkKkuwXRwCKkKkKkeoKNdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXhHKNeoKkKkKkKkKkXRXRNzKkKkKkNzXRXRKkKkKkKkKkKkKkKkMoKkKkMoeoKNdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXhHKNeoKkKkKkKkKktznkzGzGzGzGzGzGzGKkKkKkKkKkKkKkXRMoKkKkKkeoKNdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXhHKNeoKkKkKkKkKkKkKkKkKkKkKkKkKkKkKkKkKkKkKkKkKkXRMoKkKkKkeoiLdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfjkXREPKkKkKkKkKkKkKkKkKkKkKkKkKkKkKkKkKkKkKkKkXRodKkKkKkXRKNdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNXRKkKkKkKkKkKkKkKkKkKkKkuwXREPKkKkKkKkKkKkuwXRXRXRXRXRXRKNdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNXReOininininininininininUOKkKkKkKkKkKkKkKkKkKkKkKkKkKkXRKNdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNXRoZleeoeoeoeoeoeoeoeoeojUKkKkKkKkKkKkKkKkKkKkKkKkKkuwXRiLdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNXRoZZjeoXReoeoXReoeoeoeojUKkKkKkKkKkKkKkKkKkKkKkKkKkKkXRKNdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfjkXRnGGFeopaEXkBaTJReoeoeojUKkKkKkKkNzNzNzNzNzNzNzNzNzNzXRXqdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNXRoZeoeoeoeoeoeoPfgFeoeojUKkKkKkKkNzEoEoEoEoEoEoEoEoEoEoJjdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNXRoZeoeoeoeoeoeobBeoeoeojUKkKkKkKkNzEoEoEoEoEoEoEoEoEoEoJjdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNXRoZeoeoeoeoeoeoJReoeoeojUKkKkKkKkNzEoEoEoEoEoEoEoEoEoEoJjdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNXRoZeoeoeoeoeoeoeoeoeoeojUKkKkKkKkNzEoEoEoEoEoEoEoEoEoEoJjdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfjkXRnGNzNzNzNzeoeoeoeoeoeojUKkKkKkKkNzEoEoEoEoEoEoEoEoEoEoJjdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNXRoZNzEoEoNzeoeoEoeoqDeojUKkKkKkKkNzEoEoEoEoEoEoEoEoEoEoJjdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNXRoZNzNzNzNzeoeoeoeoeoeoeCXREPKkKkNzEoEoEoEoEoEoEoEoEoEoJjdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNXRONSfSfSfSfocSfSfSfSfocdJXRKkKkKkNzEoEoEoEoEoEoEoEoEoEoJjdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXRXREoEoEoEoEoEoEoEoEoEoJjdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfKNKNqRKNKNKNKNqRKNKNKNKNqRKNKNKNKNqRrKJjJjJjJjJjJjJjJjJjJjJjdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXPXkEkEkEkEkE
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+kEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkEkE
+"}

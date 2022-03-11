@@ -517,9 +517,11 @@ SUBSYSTEM_DEF(air)
 		var/datum/atmosphere/atmostype = T
 		atmos_gen[initial(atmostype.id)] = new atmostype
 
-/datum/controller/subsystem/air/proc/preprocess_gas_string(gas_string)
+/datum/controller/subsystem/air/proc/preprocess_gas_string(gas_string, turf/T)
 	if(!atmos_gen)
 		generate_atmos()
+	if(gas_string == GAS_STRING_Z_DEFAULT)
+		return T? SSmapping.GetDefaultAir(T.z) : AIRLESS_ATMOS
 	if(!atmos_gen[gas_string])
 		return gas_string
 	var/datum/atmosphere/mix = atmos_gen[gas_string]

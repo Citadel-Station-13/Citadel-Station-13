@@ -133,5 +133,5 @@
 		return
 
 	var/datum/gas_mixture/G = new
-	G.parse_gas_string(text)
+	G.parse_gas_string(text, src)
 	assume_air(G)

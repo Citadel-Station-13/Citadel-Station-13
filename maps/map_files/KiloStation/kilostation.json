@@ -9,7 +9,7 @@
 			"id": "kilo_1",
 			"path": "KiloStation.dmm",
 			"linkage_mode": "Crosslink",
-			"Traits": [
+			"traits": [
 				"Station",
 				"Minimaps"
 			]

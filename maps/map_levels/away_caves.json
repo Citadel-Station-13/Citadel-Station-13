@@ -1,0 +1,16 @@
+{
+	"id": "caves",
+	"group": "away",
+	"width": 255,
+	"height": 255,
+	"levels" : [
+		{
+			"name": "Away Mission - Caves",
+			"path": "away_caves.dmm",
+			"traits": [
+				"Away"
+			]
+		}
+	],
+	"name": "Away Mission - Caves"
+}

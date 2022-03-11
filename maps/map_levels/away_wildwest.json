@@ -1,0 +1,16 @@
+{
+	"id": "wildwest",
+	"group": "away",
+	"width": 255,
+	"height": 255,
+	"levels" : [
+		{
+			"name": "Away Mission - Wild West",
+			"path": "away_wildwest.dmm",
+			"traits": [
+				"Away"
+			]
+		}
+	],
+	"name": "Away Mission - Wild West"
+}

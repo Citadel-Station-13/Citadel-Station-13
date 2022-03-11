@@ -1,0 +1,16 @@
+{
+	"id": "centcom",
+	"group": "integral",
+	"width": 255,
+	"height": 255,
+	"levels" : [
+		{
+			"name": "Central Command",
+			"path": "integral_centcom.dmm",
+			"traits": [
+				"Centcom"
+			]
+		}
+	],
+	"name": "Central Command"
+}

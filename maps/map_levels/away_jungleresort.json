@@ -1,0 +1,16 @@
+{
+	"id": "jungleresort",
+	"group": "away",
+	"width": 255,
+	"height": 255,
+	"levels" : [
+		{
+			"name": "Away Mission - Jungle Resort",
+			"path": "away_jungleresort.dmm",
+			"traits": [
+				"Away"
+			]
+		}
+	],
+	"name": "Away Mission - Jungle Resort"
+}

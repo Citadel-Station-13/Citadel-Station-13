@@ -1,0 +1,16 @@
+{
+	"id": "syndicate",
+	"group": "vr",
+	"width": 255,
+	"height": 255,
+	"levels" : [
+		{
+			"name": "VR - Syndicate Trainer",
+			"path": "vr_syndicate.dmm",
+			"traits": [
+				"Virtual Reality"
+			]
+		}
+	],
+	"name": "VR - Syndicate Trainer"
+}

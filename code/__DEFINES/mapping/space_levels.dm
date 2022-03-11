@@ -31,6 +31,8 @@
 #define ZATTRIBUTE_BASETURF "Baseturf"
 /// Bombcap multiplier as number
 #define ZATTRIBUTE_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
+/// Default airmix
+#define ZATTRIBUTE_GAS_STRING "Default Air"
 
 // Linkage types - Normal linkage variables override these, so don't set them if you use these.
 /// Default - don't preprocess for unlinked sides, just leave them empty

@@ -1,13 +1,13 @@
 {
-	"id": "deltastation",
+	"id": "debug_map",
 	"width": 255,
 	"height": 255,
 	"center": true,
 	"levels": [
 		{
 			"name": "Station 1",
-			"id": "delta_1",
-			"path": "DeltaStation2.dmm",
+			"id": "mini_debug_1",
+			"path": "runtimestation.dmm",
 			"linkage_mode": "Crosslink",
 			"traits": [
 				"Station",
@@ -15,12 +15,9 @@
 			]
 		}
 	],
-	"name": "Delta Station",
+	"name": "Debug - Runtime",
     "shuttles": {
 	    "cargo": "cargo_delta",
-	    "ferry": "ferry_fancy",
-	    "whiteship": "whiteship_delta",
-	    "emergency": "emergency_delta"
     },
 	"lateload": {
 		"integral": [

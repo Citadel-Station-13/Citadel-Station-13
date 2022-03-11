@@ -1,0 +1,23 @@
+{
+	"id": "lavaland",
+	"group": "integral",
+	"width": 255,
+	"height": 255,
+	"levels" : [
+		{
+			"name": "Lavaland",
+			"path": "integral_lavaland.dmm",
+			"traits": [
+				"Mining",
+				"Gravity",
+				"Lava Ruins",
+				"Weather_Ashstorm"
+			],
+			"attributes": {
+				"Bombcap Multiplier": 5,
+				"Baseturf": "/turf/open/lava/smooth/lava_land_surface"
+			}
+		}
+	],
+	"name": "Lavaland"
+}

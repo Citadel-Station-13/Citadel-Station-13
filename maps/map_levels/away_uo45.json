@@ -1,0 +1,16 @@
+{
+	"id": "uo45",
+	"group": "away",
+	"width": 255,
+	"height": 255,
+	"levels" : [
+		{
+			"name": "Away Mission - Underground Outpost 45",
+			"path": "away_uo45.dmm",
+			"traits": [
+				"Away"
+			]
+		}
+	],
+	"name": "Away Mission - Underground Outpost 45"
+}

@@ -1,0 +1,16 @@
+{
+	"id": "challenge",
+	"group": "away",
+	"width": 255,
+	"height": 255,
+	"levels" : [
+		{
+			"name": "Away Mission - Challenge",
+			"path": "away_challenge.dmm",
+			"traits": [
+				"Away"
+			]
+		}
+	],
+	"name": "Away Mission - Challenge"
+}

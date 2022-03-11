@@ -33,12 +33,6 @@
 	VAR_PRIVATE/north
 	VAR_PRIVATE/south
 
-	// Default environment
-	/// Baseturf - defaults to space
-	var/baseturf = /turf/open/space
-	/// Atmosphere - defaults to vacuum, this should be a gas string
-	var/atmos_string = "TEMP=2.7"
-
 	/// Linkage mode
 	var/linkage_mode = Z_LINKAGE_NORMAL
 
@@ -68,6 +62,8 @@
 /datum/space_level/New(id, list/traits, list/attributes, map_path)
 	if(id)
 		src.id = id
+	if(!src.id)
+		src.id = "[GUID()]"
 	if(map_path)
 		src.map_path = map_path
 	if(traits)
@@ -149,8 +145,6 @@
 	if(data["attributes"])
 		for(var/key in data["attributes"])
 			SetAttribute(key, data["attributes"][key])
-	if(data["atmos_string"])
-		atmos_string = data["atmos_string"]
 	if(data["linkage_mode"])
 		linkage_mode = data["linkage_mode"]
 

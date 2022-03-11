@@ -1,0 +1,16 @@
+{
+	"id": "academy",
+	"group": "away",
+	"width": 255,
+	"height": 255,
+	"levels" : [
+		{
+			"name": "Away Mission - Wizard Academy",
+			"path": "away_academy.dmm",
+			"traits": [
+				"Away"
+			]
+		}
+	],
+	"name": "Away Mission - Wizard Academy"
+}

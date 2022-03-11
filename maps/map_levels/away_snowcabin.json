@@ -1,0 +1,16 @@
+{
+	"id": "snowcabin",
+	"group": "away",
+	"width": 255,
+	"height": 255,
+	"levels" : [
+		{
+			"name": "Away Mission - Snow Cabin",
+			"path": "away_snowcabin.dmm",
+			"traits": [
+				"Away"
+			]
+		}
+	],
+	"name": "Away Mission - Snow Cabin"
+}

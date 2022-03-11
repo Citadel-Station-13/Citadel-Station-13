@@ -1,0 +1,16 @@
+{
+	"id": "snowdin",
+	"group": "away",
+	"width": 255,
+	"height": 255,
+	"levels" : [
+		{
+			"name": "Away Mission - Snowdin",
+			"path": "away_snowdin.dmm",
+			"traits": [
+				"Away"
+			]
+		}
+	],
+	"name": "Away Mission - Snowdin"
+}

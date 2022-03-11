@@ -160,6 +160,7 @@
 #define OPENTURF_DEFAULT_ATMOS		"o2=21.78;n2=82.36;TEMP=293.15" //the default air mix that open turfs spawn, also is what the station vents output at assuming a 21/79% o2/n2 mix
 #define TCOMMS_ATMOS				"n2=100;TEMP=80" //-193,15degC telecommunications. also used for xenobiology slime killrooms
 #define AIRLESS_ATMOS				"TEMP=2.7" //space
+#define GAS_STRING_Z_DEFAULT		"USE_Z_DEFAULT"
 #define FROZEN_ATMOS				"o2=21.78;n2=82.36;TEMP=180" //-93.15degC snow and ice turfs
 #define BURNMIX_ATMOS				"o2=2500;plasma=5000;TEMP=370" //used in the holodeck burn test program
 

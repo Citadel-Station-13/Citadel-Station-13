@@ -82,7 +82,7 @@
 	for(var/z in erasing_first_wipe)
 		var/turf/current = erasing_first_wipe[z]
 		var/x = current.x
-		var/y  current.y
+		var/y = current.y
 		var/_z = text2num(z)
 		while(current)
 			current.empty(world.turf)
@@ -120,7 +120,7 @@
  * WARNING: AFTER THIS, YOU NEED TO USE THE LEVEL, OR READD TO REUSABLE, OR THIS IS A MEMORY LEAK!
  */
 /datum/controller/subsystem/mapping/proc/GetInstantiationLevel()
-	if(islist(reusable_levels) && rersuable_levels.len)
+	if(islist(reusable_levels) && reusable_levels.len)
 		. = reusable_levels[1]
 		reusable_levels.Cut(1, 2)
 		return .

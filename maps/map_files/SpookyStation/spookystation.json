@@ -9,7 +9,7 @@
 			"id": "spooky_1",
 			"path": "SpookyStation.dmm",
 			"linkage_mode": "Crosslink",
-			"Traits": [
+			"traits": [
 				"Station",
 				"Minimaps"
 			]

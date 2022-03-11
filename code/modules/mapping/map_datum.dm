@@ -1,5 +1,3 @@
-#warn oh boy, convert all the .jsons lmfao :/
-
 /**
  * Map datums
  *
@@ -68,7 +66,8 @@
 	ASSERT(isnum(width) && width > 0)
 	height = data["height"]
 	ASSERT(isnum(height) && height > 0)
-	center = data["center"]? TRUE : FALSE
+	if(data["center"])
+		center = data["center"]? TRUE : FALSE
 	levels = list()
 	var/pathroot = path && (copytext_char(path, 1, findlasttext_char(path, "/")) + "/")
 	for(var/L in data["levels"])

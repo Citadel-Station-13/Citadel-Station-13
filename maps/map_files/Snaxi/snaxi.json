@@ -1,0 +1,67 @@
+{
+	"id": "snaxi",
+	"width": 255,
+	"height": 255,
+	"center": true,
+	"levels": [
+		{
+			"name": "Cavern",
+			"id": "snaxi_1",
+			"path": "IcemoonUnderground_Below.dmm",
+			"traits": [
+				"Mining",
+				"Ice Ruins Underground",
+				"Gravity"
+			],
+			"attributes": {
+				"Baseturf": "/turf/open/lava/plasma/ice_moon"
+			},
+			"up": "snaxi_2"
+		},
+		{
+			"name": "Underground",
+			"id": "snaxi_2",
+			"path": "IcemoonUnderground_Above.dmm",
+			"traits": [
+				"Mining",
+				"Ice Ruins Underground",
+				"Gravity"
+			],
+			"attributes": {
+				"Baseturf": "/turf/open/openspace/icemoon"
+			},
+			"down": "snaxi_1",
+			"up": "snaxi_3"
+		},
+		{
+			"name": "Station",
+			"id": "snaxi_3",
+			"path": "Snaxi.dmm",
+			"traits": [
+				"Mining",
+				"Ice Ruins",
+				"Weather_Snowstorm",
+				"Gravity"
+			],
+			"attributes": {
+				"Baseturf": "/turf/open/floor/plating/asteroid/snow/icemoon"
+			},
+			"down": "snaxi_2"
+		}
+	],
+	"name": "Snow Taxi",
+    "shuttles": {
+	    "cargo": "cargo_box",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_box",
+	    "emergency": "emergency_box"
+    },
+	"station_ruin_budget":0,
+	"space_ruin_levels":0,
+	"space_empty_levels":0,
+	"lateload": {
+		"integral": [
+			"centcom"
+		]
+	}
+}

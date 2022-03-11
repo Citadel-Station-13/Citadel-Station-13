@@ -9,7 +9,7 @@
 			"id": "pubby_1",
 			"path": "PubbyStation.dmm",
 			"linkage_mode": "Crosslink",
-			"Traits": [
+			"traits": [
 				"Station",
 				"Minimaps"
 			]

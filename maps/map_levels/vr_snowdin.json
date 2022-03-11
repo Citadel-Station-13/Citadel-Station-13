@@ -1,0 +1,16 @@
+{
+	"id": "snowdin",
+	"group": "vr",
+	"width": 255,
+	"height": 255,
+	"levels" : [
+		{
+			"name": "VR - Snowdin",
+			"path": "vr_snowdin.dmm",
+			"traits": [
+				"Virtual Reality"
+			]
+		}
+	],
+	"name": "VR - Snowdin"
+}

@@ -9,7 +9,7 @@
 			"id": "cog_1",
 			"path": "CogStation.dmm",
 			"linkage_mode": "Crosslink",
-			"Traits": [
+			"traits": [
 				"Station",
 				"Minimaps"
 			]

@@ -9,7 +9,7 @@
 			"id": "box_1",
 			"path": "BoxStation.dmm",
 			"linkage_mode": "Crosslink",
-			"Traits": [
+			"traits": [
 				"Station",
 				"Minimaps"
 			]

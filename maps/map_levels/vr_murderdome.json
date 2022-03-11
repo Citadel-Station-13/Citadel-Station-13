@@ -1,0 +1,16 @@
+{
+	"id": "murderdome",
+	"group": "vr",
+	"width": 255,
+	"height": 255,
+	"levels" : [
+		{
+			"name": "VR - Murderdome",
+			"path": "vr_murderdome.dmm",
+			"traits": [
+				"Virtual Reality"
+			]
+		}
+	],
+	"name": "Murderdome"
+}

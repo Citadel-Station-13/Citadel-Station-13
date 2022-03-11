@@ -1,0 +1,16 @@
+{
+	"id": "beach",
+	"group": "away",
+	"width": 255,
+	"height": 255,
+	"levels" : [
+		{
+			"name": "Away Mission - Beach",
+			"path": "away_beach.dmm",
+			"traits": [
+				"Away"
+			]
+		}
+	],
+	"name": "Away Mission - Beach"
+}

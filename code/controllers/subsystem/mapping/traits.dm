@@ -102,3 +102,9 @@
 /datum/controller/subsystem/mapping/proc/GetBaseturf(z)
 	var/type = GetAttribute(z, ZATTRIBUTE_BASETURF)
 	return type || /turf/open/space
+
+/**
+ * Gets deault air of a zlevel
+ */
+/datum/controller/subsystem/mapping/proc/GetDefaultAir(z)
+	return GetAttribute(z, ZATTRIBUTE_GAS_STRING) || AIRLESS_ATMOS

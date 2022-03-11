@@ -912,7 +912,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				var/p_map = preferred_map
 				if (!p_map)
 					p_map = "Default"
-					if (config.defaultmap)
+					if (config.default_map)
 						p_map += " ([SSmapping.getMapNName(config.default_map)])"
 				else
 					if (p_map in config.map_data)

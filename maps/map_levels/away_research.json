@@ -1,0 +1,16 @@
+{
+	"id": "research",
+	"group": "away",
+	"width": 255,
+	"height": 255,
+	"levels" : [
+		{
+			"name": "Away Mission - Research Base",
+			"path": "away_research.dmm",
+			"traits": [
+				"Away"
+			]
+		}
+	],
+	"name": "Away Mission - Research"
+}

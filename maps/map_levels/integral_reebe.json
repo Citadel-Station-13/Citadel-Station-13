@@ -1,0 +1,20 @@
+{
+	"id": "reebe",
+	"group": "integral",
+	"width": 255,
+	"height": 255,
+	"levels" : [
+		{
+			"name": "Reebe",
+			"path": "integral_reebe.dmm",
+			"traits": [
+				"Reebe",
+				"Gravity"
+			],
+			"attributes": {
+				"Bombcap Multiplier": 0.5
+			}
+		}
+	],
+	"name": "Reebe (City of Cogs)"
+}

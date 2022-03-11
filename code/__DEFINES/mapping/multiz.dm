@@ -11,3 +11,5 @@
 #define FALL_RECOVERED				(1<<4)
 /// kill fall entirely, no handling for impacts/recovery
 #define FALL_TERMINATED				(1<<5)
+/// don't make fall feedback
+#define FALL_SILENT					(1<<6)
