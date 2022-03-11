@@ -254,6 +254,7 @@ SUBSYSTEM_DEF(vote)
 	var/list/winners = list()
 	if(mode == "transfer")
 		var/amount_required = 3 + transfer_votes_done
+		transfer_votes_done += 1
 		text += "\nExtending requires at least [amount_required] votes to win."
 		if(choices[VOTE_CONTINUE] < amount_required || choices[VOTE_TRANSFER] >= choices[VOTE_CONTINUE])
 			winners = list(VOTE_TRANSFER)
