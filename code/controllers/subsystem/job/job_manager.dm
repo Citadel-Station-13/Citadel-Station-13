@@ -290,11 +290,11 @@
 			faction = horrifying_nested_list[job.faction] = list()
 		var/datum/department/D = job.GetPrimaryDepartment()
 		var/list/dept
-		if(horrifying_nested_list[job.faction][D])
-			dept = horrifying_nested_list[job.faction][D]
+		if(faction[D])
+			dept = faction[D]
 		else
-			dept = horrifying_nested_list[job.faction][D] = list()
-		dept += list(list(job.title = job))
+			dept = faction[D] = list()
+		dept[job.title] = job
 
 	// *sigh
 	var/list/_station = horrifying_nested_list[JOB_FACTION_STATION]
@@ -303,7 +303,8 @@
 	horrifying_nested_list.Insert(1, JOB_FACTION_STATION)
 	horrifying_nested_list[JOB_FACTION_STATION] = _station
 	// sort rest
-	sortTim(horrifying_nested_list, /proc/cmp_text_asc, associative = FALSE, fromIndex = 2)
+	if(horrifying_nested_list.len > 1)
+		sortTim(horrifying_nested_list, /proc/cmp_text_asc, associative = FALSE, fromIndex = 2)
 	for(var/faction as anything in horrifying_nested_list)
 		// sort departments
 		var/list/L1 = horrifying_nested_list[faction]

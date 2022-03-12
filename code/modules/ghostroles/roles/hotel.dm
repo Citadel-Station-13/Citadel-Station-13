@@ -6,7 +6,7 @@
 	assigned_role = "Hotel Staff"
 
 /datum/ghostrole/space_hotel/security
-	instantiator = /datum/ghostrole_instantiator/hotelstaff/security
+	instantiator = /datum/ghostrole_instantiator/human/random/space_hotel/security
 	name = "Space Hotel Security"
 	desc = "You have been assigned to this hotel to protect the interests of the company while keeping the peace between \
 		guests and the staff."
