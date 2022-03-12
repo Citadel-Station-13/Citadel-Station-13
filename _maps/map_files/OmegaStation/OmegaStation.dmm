@@ -2652,7 +2652,7 @@
 	},
 /area/command/heads_quarters/hos)
 "afc" = (
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
@@ -3004,7 +3004,7 @@
 /turf/open/floor/plasteel,
 /area/cargo/storage)
 "afF" = (
-/obj/effect/landmark/start/cargo_technician,
+/atom/movable/landmark/spawnpoint/job/cargo_technician,
 /obj/machinery/conveyor_switch/oneway{
 	dir = 8;
 	id = "cargounload"
@@ -3443,7 +3443,7 @@
 /turf/open/floor/plasteel,
 /area/cargo/storage)
 "agy" = (
-/obj/effect/landmark/start/cargo_technician,
+/atom/movable/landmark/spawnpoint/job/cargo_technician,
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
@@ -4975,7 +4975,7 @@
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/fore)
 "ajl" = (
@@ -5096,7 +5096,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ajw" = (
@@ -5245,7 +5245,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/obj/effect/landmark/start/cargo_technician,
+/atom/movable/landmark/spawnpoint/job/cargo_technician,
 /turf/open/floor/plasteel,
 /area/cargo/storage)
 "ajM" = (
@@ -5291,7 +5291,7 @@
 /area/medical/medbay/zone3)
 "ajO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/landmark/start/paramedic,
+/atom/movable/landmark/spawnpoint/job/paramedic,
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "ajP" = (
@@ -6650,7 +6650,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ami" = (
@@ -7367,7 +7367,7 @@
 /area/security/brig)
 "anD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "anE" = (
@@ -12486,7 +12486,7 @@
 	name = "Station Intercom";
 	pixel_x = -26
 	},
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12683,7 +12683,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /turf/open/floor/plasteel/dark,
 /area/service/bar/atrium)
 "awZ" = (
@@ -13415,7 +13415,7 @@
 /turf/open/floor/plating,
 /area/commons/dorms)
 "ayw" = (
-/obj/effect/landmark/start/assistant,
+/atom/movable/landmark/spawnpoint/job/assistant,
 /turf/open/floor/plasteel/white/corner,
 /area/commons/dorms)
 "ayx" = (
@@ -14421,7 +14421,7 @@
 /obj/structure/chair/office/dark{
 	dir = 4
 	},
-/obj/effect/landmark/start/atmospheric_technician,
+/atom/movable/landmark/spawnpoint/job/atmospheric_technician,
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "aAB" = (
@@ -17207,7 +17207,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/engineering/break_room)
 "aFG" = (
@@ -20449,7 +20449,7 @@
 	pixel_x = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "aLn" = (
@@ -23265,7 +23265,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "aQy" = (
@@ -23322,7 +23322,7 @@
 /obj/structure/cable/white{
 	icon_state = "2-4"
 	},
-/obj/effect/landmark/blobstart,
+/atom/movable/landmark/blobstart,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
@@ -24074,7 +24074,7 @@
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
 "aSo" = (
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "aSp" = (
@@ -24410,7 +24410,7 @@
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
-/obj/effect/landmark/start/assistant,
+/atom/movable/landmark/spawnpoint/job/assistant,
 /turf/open/floor/plasteel/dark/side{
 	dir = 10
 	},
@@ -24451,7 +24451,7 @@
 /obj/structure/chair/office/dark{
 	dir = 4
 	},
-/obj/effect/landmark/start/librarian,
+/atom/movable/landmark/spawnpoint/job/librarian,
 /turf/open/floor/plasteel/dark/side{
 	dir = 10
 	},
@@ -28680,7 +28680,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Checkpoint";
 	req_access_txt = "63"
@@ -29381,7 +29381,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/effect/landmark/xeno_spawn,
+/atom/movable/landmark/xeno_spawn,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
 "bcQ" = (
@@ -29439,7 +29439,7 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/zone3)
 "bcV" = (
-/obj/effect/landmark/start/medical_doctor,
+/atom/movable/landmark/spawnpoint/job/medical_doctor,
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "bcW" = (
@@ -29891,7 +29891,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/xeno_spawn,
+/atom/movable/landmark/xeno_spawn,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "bdH" = (
@@ -33128,7 +33128,7 @@
 /area/hallway/secondary/entry)
 "bjR" = (
 /obj/structure/chair/office/light,
-/obj/effect/landmark/start/scientist,
+/atom/movable/landmark/spawnpoint/job/scientist,
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
@@ -34314,7 +34314,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /turf/open/floor/plasteel/dark/side{
 	dir = 10
 	},
@@ -34331,7 +34331,7 @@
 /area/command/heads_quarters/hop)
 "bxz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard/fore)
 "bxA" = (
@@ -34394,11 +34394,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/service/bar/atrium)
 "bxH" = (
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "bxJ" = (
@@ -34422,11 +34422,11 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /turf/open/floor/plasteel/white/corner,
 /area/commons/dorms)
 "bxL" = (
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/service/bar/atrium)
 "bxM" = (
@@ -34452,7 +34452,7 @@
 /area/maintenance/port/central)
 "bxP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "bxQ" = (
@@ -34511,7 +34511,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -35097,7 +35097,7 @@
 /turf/closed/wall/r_wall,
 /area/science/mixing)
 "eDE" = (
-/obj/effect/landmark/carpspawn,
+/atom/movable/landmark/carpspawn,
 /turf/open/space/basic,
 /area/space/station_ruins)
 "eIk" = (
@@ -38546,7 +38546,7 @@
 /area/engineering/storage/tech)
 "sFT" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/effect/landmark/xeno_spawn,
+/atom/movable/landmark/xeno_spawn,
 /turf/open/floor/plasteel/dark/side{
 	dir = 6
 	},
@@ -41448,7 +41448,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
-/obj/effect/landmark/event_spawn,
+/atom/movable/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
@@ -41495,7 +41495,7 @@
 	},
 /obj/structure/window/spawner/north,
 /obj/machinery/door/window/westright,
-/obj/effect/landmark/blobstart,
+/atom/movable/landmark/blobstart,
 /turf/open/floor/plasteel/freezer,
 /area/commons/toilet/restrooms)
 "xrf" = (

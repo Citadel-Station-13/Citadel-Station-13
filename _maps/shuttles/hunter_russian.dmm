@@ -66,7 +66,6 @@
 "o" = (
 /obj/structure/ghost_role_spawner/fugitive_hunter/russian{
 	dir = 4;
-	short_desc = null
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter)
@@ -210,8 +209,7 @@
 /area/shuttle/hunter)
 "L" = (
 /obj/structure/ghost_role_spawner/fugitive_hunter/russian{
-	dir = 1;
-	short_desc = null
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/hunter)
