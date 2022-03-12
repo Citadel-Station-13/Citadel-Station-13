@@ -1228,10 +1228,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	// PLEASE IM BEGGING YOU WHEN DO WE REFACTOR PREFERNECES TO BE LESS AWFUL IN RENDERING THIS IS TERRIBLE AAA
 
-	var/width = widthPerColumn
-
 	var/list/HTML = list()
 	HTML += "<center>"
+	var/columns = 1
 
 	HTML += "<b>Choose occupation chances</b><br>"
 	HTML += "<div align='center'>Left-click to raise an occupation preference, right-click to lower it.<br></div>"
@@ -1276,6 +1275,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr>"
 				// reset left
 				left = jobs_per_column
+				// make column
+				columns++
 
 			var/list/data = departments[D]
 			// put all jobs in
@@ -1292,6 +1293,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr>"
 					// reset left
 					left = jobs_per_column
+					// make column
+					columns ++
 
 		// fill remaining
 		for(var/i in 1 to left)
@@ -1326,15 +1329,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	// generate reset link
 	HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>Reset Preferences</a></center>"
 
-	var/datum/browser/popup = new(user, "mob_occupation", "<div align='center'>Occupation Preferences</div>", width, height)
+	var/datum/browser/popup = new(user, "mob_occupation", "<div align='center'>Occupation Preferences</div>", widthPerColumn * columns, height)
 	popup.set_window_options("can_close=0")
 	popup.set_content(HTML.Join(""))
 	popup.open(FALSE)
 
 /datum/preferences/proc/GenerateOccupationEntry(datum/job/J)
 	var/head = length(J.departments_supervised)
-	var/has_alt_titles = length(J.GetTitles()) > 1
-	var/left = "[has_alt_titles && "<a href='?_src_=prefs;pickalttitle=[J.title]'>"][head? "<b>[J.title]</b>" : J.title][has_alt_titles && "</a>"]"
+	// don't question the `|| null`
+	var/has_alt_titles = (length(J.GetTitles()) > 1) || null
+	var/left = "[has_alt_titles && "<a href='?_src_=prefs;pickalttitles=[J.title]'>"][head? "<b><font color='black'>[J.title]</font></b>" : J.title][has_alt_titles && "</a>"]"
 	var/preftext
 	if(jobban_isbanned(parent.mob, J.title))
 		preftext = "<a href='?_src_=prefs;bancheck=[J.title]'>BANNED</a>"
