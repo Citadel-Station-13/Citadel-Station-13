@@ -17,7 +17,7 @@ GLOBAL_DATUM_INIT(new_player_state, /datum/ui_state/new_player_state, new)
  * Checks that the user is a new_player
  */
 
-GLOBAL_DATUM_INIT(new_player_state, /datum/ui_state/new_player_state, new)
+GLOBAL_DATUM_INIT(explicit_new_player_state, /datum/ui_state/explicit_new_player_state, new)
 
 /datum/ui_state/new_player_state/can_use_topic(src_object, mob/user)
 	if(isnewplayer(user))
