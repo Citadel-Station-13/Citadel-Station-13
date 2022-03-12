@@ -50,7 +50,7 @@
 	/** PROJECTILE PIERCING
 	  * WARNING:
 	  * Projectile piercing MUST be done using these variables.
-	  * Ordinary passflags will be **IGNORED**.
+	  * Ordinary passflags will result in can_hit_target being false unless directly clicked on - similar to projectile_phasing but without even going to process_hit.
 	  * The two flag variables below both use pass flags.
 	  * In the context of LETPASStHROW, it means the projectile will ignore things that are currently "in the air" from a throw.
 	  *
@@ -354,7 +354,7 @@
 
 /obj/item/projectile/Bump(atom/A)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, A)
-	if(!can_hit_target(A, A == original, TRUE))
+	if(!can_hit_target(A, A == original, TRUE, TRUE))
 		return
 	Impact(A)
 
@@ -395,7 +395,7 @@
 	if(def_zone && check_zone(def_zone) != BODY_ZONE_CHEST)
 		def_zone = ran_zone(def_zone, max(100-(7*distance), 5) * zone_accuracy_factor) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 
-	return process_hit(T, select_target(T, A))		// SELECT TARGET FIRST!
+	return process_hit(T, select_target(T, A, A), A)		// SELECT TARGET FIRST!
 
 /**
  * The primary workhorse proc of projectile impacts.
@@ -414,12 +414,14 @@
  * @params
  * T - Turf we're on/supposedly hitting
  * target - target we're hitting
+ * bumped - target we originally bumped. it's here to ensure that if something blocks our projectile by means of Cross() failure, we hit it
+ * even if it is not dense.
  * hit_something - only should be set by recursive calling by this proc - tracks if we hit something already
  *
  * Returns if we hit something.
  * - Silly-Cons
  */
-/obj/item/projectile/proc/process_hit(turf/T, atom/target, hit_something = FALSE)
+/obj/item/projectile/proc/process_hit(turf/T, atom/target, atom/bumped, hit_something = FALSE)
 	// 1.
 	if(QDELETED(src) || !T || !target)
 		return
@@ -434,7 +436,7 @@
 		if(!(movement_type & PHASING))
 			temporary_unstoppable_movement = TRUE
 			movement_type |= PHASING
-		return process_hit(T, select_target(T, target), hit_something)	// try to hit something else
+		return process_hit(T, select_target(T, target, bumped), bumped, hit_something)	// try to hit something else
 	// at this point we are going to hit the thing
 	// in which case send signal to it
 	SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args)
@@ -446,8 +448,8 @@
 		if(!(movement_type & PHASING))
 			temporary_unstoppable_movement = TRUE
 			movement_type |= PHASING
-		return process_hit(T, select_target(T, target), TRUE)
-		qdel(src)
+		return process_hit(T, select_target(T, target, bumped), bumped, TRUE)
+	qdel(src)
 	return hit_something
 
 /**
@@ -456,7 +458,9 @@
  * @params
  * T - The turf
  * target - The "preferred" atom to hit, usually what we Bumped() first.
- *
+ * bumped - used to track if something is the reason we impacted in the first place.
+ * If set, this atom is always treated as dense by can_hit_target.
+
  * Priority:
  * 0. Anything that is already in impacted is ignored no matter what. Furthermore, in any bracket, if the target atom parameter is in it, that's hit first.
  * 	Furthermore, can_hit_target is always checked. This (entire proc) is PERFORMANCE OVERHEAD!! But, it shouldn't be ""too"" bad and I frankly don't have a better *generic non snowflakey* way that I can think of right now at 3 AM.
@@ -467,51 +471,50 @@
  * 4. Turf
  * 5. Nothing
  */
-/obj/item/projectile/proc/select_target(turf/T, atom/target)
+/obj/item/projectile/proc/select_target(turf/T, atom/target, atom/bumped)
 	// 1. original
-	if(can_hit_target(original, TRUE, FALSE))
+	if(can_hit_target(original, TRUE, FALSE, original == bumped))
 		return original
 	var/list/atom/possible = list()		// let's define these ONCE
 	var/list/atom/considering = list()
 	// 2. mobs
 	possible = typecache_filter_list(T, GLOB.typecache_living)	// living only
 	for(var/i in possible)
-		if(!can_hit_target(i, i == original, TRUE))
+		if(!can_hit_target(i, i == original, TRUE, i == bumped))
 			continue
 		considering += i
 	if(considering.len)
 		var/mob/living/M = pick(considering)
 		return M.lowest_buckled_mob()
 	considering.len = 0
-	// 3. objs
-	possible = typecache_filter_list(T, GLOB.typecache_machine_or_structure)	// because why are items ever dense?
-	for(var/i in possible)
-		if(!can_hit_target(i, i == original, TRUE))
+	// 3. objs and other dense things
+	for(var/i in T.contents)
+		if(!can_hit_target(i, i == original, TRUE, i == bumped))
 			continue
 		considering += i
 	if(considering.len)
 		return pick(considering)
 	// 4. turf
-	if(can_hit_target(T, T == original, TRUE))
+	if(can_hit_target(T, T == original, TRUE, T == bumped))
 		return T
 	// 5. nothing
 		// (returns null)
 
 //Returns true if the target atom is on our current turf and above the right layer
 //If direct target is true it's the originally clicked target.
-/obj/item/projectile/proc/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE)
+/obj/item/projectile/proc/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE,cross_failed = FALSE)
 	if(QDELETED(target) || impacted[target])
 		return FALSE
 	if(!ignore_loc && (loc != target.loc))
 		return FALSE
-	// if pass_flags match, pass through entirely
-	if(target.pass_flags_self & pass_flags)		// phasing
+	// if pass_flags match, pass through entirely - unless direct target is set.
+	if((target.pass_flags_self & pass_flags) && !direct_target)
 		return FALSE
 	if(!ignore_source_check && firer)
 		var/mob/M = firer
 		if((target == firer) || ((target == firer.loc) && ismecha(firer.loc)) || (target in firer.buckled_mobs) || (istype(M) && (M.buckled == target)))
 			return FALSE
-	if(target.density)		//This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
+	if(target.density || cross_failed)		//This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
 		return TRUE
 	if(!isliving(target))
 		if(isturf(target))		// non dense turfs
@@ -525,8 +528,14 @@
 		if(direct_target)
 			return TRUE
 		// If target not able to use items, move and stand - or if they're just dead, pass over.
-		if(L.stat == DEAD || (!hit_stunned_targets && HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED)))
+		if(L.stat == DEAD)
 			return FALSE
+		if(!L.density)
+			return FALSE
+		if(L.resting)
+			return TRUE
+		var/stunned = HAS_TRAIT(L, TRAIT_MOBILITY_NOMOVE) && HAS_TRAIT(L, TRAIT_MOBILITY_NOREST) && HAS_TRAIT(L, TRAIT_MOBILITY_NOPICKUP)
+		return !stunned || hit_stunned_targets
 	return TRUE
 
 /**
@@ -601,8 +610,9 @@
  * NOT meant to be a pure proc, since this replaces prehit() which was used to do things.
  * Return PROJECTILE_DELETE_WITHOUT_HITTING to delete projectile without hitting at all!
  */
+
 /obj/item/projectile/proc/prehit_pierce(atom/A)
-	if(projectile_phasing & A.pass_flags_self)
+	if((projectile_phasing & A.pass_flags_self) && (phasing_ignore_direct_target || original != A))
 		return PROJECTILE_PIERCE_PHASE
 	if(projectile_piercing & A.pass_flags_self)
 		return PROJECTILE_PIERCE_HIT
@@ -612,8 +622,6 @@
 			return (projectile_phasing & LETPASSTHROW)? PROJECTILE_PIERCE_PHASE : ((projectile_piercing & LETPASSTHROW)? PROJECTILE_PIERCE_HIT : PROJECTILE_PIERCE_NONE)
 	return PROJECTILE_PIERCE_NONE
 
-/**INeedAnAdult I am unsure what the fuck is going on in here and I'll have to get clairification on this shit.
- */
 /obj/item/projectile/proc/check_ricochet(atom/A)
 	if(ricochets > ricochets_max)		//safety thing, we don't care about what the other thing says about this.
 		return FALSE
@@ -676,16 +684,17 @@
 		pixels_tick_leftover = required_pixels
 
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
+	LAZYINITLIST(impacted)
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)	//If no angle needs to resolve it from xo/yo!
 	if(shrapnel_type)
 		AddElement(/datum/element/embed, projectile_payload = shrapnel_type)
 	if(!log_override && firer && original)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
- 	if(direct_target && (get_dist(direct_target, get_turf(src)) <= 1))		// point blank shots
+	if(direct_target && (get_dist(direct_target, get_turf(src)) <= 1))		// point blank shots
 		process_hit(get_turf(direct_target), direct_target)
 		if(QDELETED(src))
- 			return
+			return
 	if(isnum(angle))
 		setAngle(angle)
 	if(spread)
@@ -703,7 +712,6 @@
 		var/matrix/M = new
 		M.Turn(Angle)
 		transform = M
-	LAZYINITLIST(impacted)
 	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
 	set_light(fired_light_range, fired_light_intensity, fired_light_color)

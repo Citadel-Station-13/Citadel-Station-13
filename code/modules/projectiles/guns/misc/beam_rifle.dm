@@ -445,22 +445,22 @@
 				continue
 			O.take_damage(aoe_structure_damage * get_damage_coeff(O), BURN, "laser", FALSE)
 
-/obj/item/projectile/beam/beam_rifle/proc/check_pierce(atom/A)
+/obj/item/projectile/beam/beam_rifle/prehit_pierce(atom/A)
 	if(isclosedturf(A) && (wall_pierce < wall_pierce_amount))
 		if(prob(wall_devastate))
 			if(iswallturf(A))
 				var/turf/closed/wall/W = A
 				W.dismantle_wall(TRUE, TRUE)
 			else
-				target.ex_act(EXPLODE_HEAVY)
+				A.ex_act(EXPLODE_HEAVY)
 		++wall_pierce
 		return PROJECTILE_PIERCE_PHASE			// yeah this gun is a snowflakey piece of garbage - Silly-Cons
 	if(isobj(A) && (structure_pierce < structure_pierce_amount))
 		++structure_pierce
 		var/obj/O = A
-		O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(A), BURN, ENERGY, FALSE)
+		O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(A), BURN, "energy", FALSE)
 		return PROJECTILE_PIERCE_PHASE			// ditto and this could be refactored to on_hit honestly - Silly-Cons
- 	return ..()
+	return ..()
 
 /obj/item/projectile/beam/beam_rifle/proc/get_damage_coeff(atom/target)
 	if(istype(target, /obj/machinery/door))

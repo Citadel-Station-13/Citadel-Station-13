@@ -106,6 +106,8 @@ GLOBAL_LIST_INIT(bitflags, list(
 #define PASSCLOSEDTURF	(1<<5)
 /// Let thrown things past us. **ONLY MEANINGFUL ON pass_flags_self!**
 #define LETPASSTHROW	(1<<6)
+#define	PASSMACHINE		(1<<7)
+#define PASSSTRUCTURE	(1<<8)
 
 //Movement Types
 #define GROUND				(1<<0)

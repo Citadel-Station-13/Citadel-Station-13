@@ -149,26 +149,21 @@
 	. += "<span class='notice'>The biometric scanners are <b>[force_allaccess ? "off" : "on"]</b>.</span>"
 
 /obj/structure/holosign/barrier/medical/CanAllowThrough(atom/movable/mover, turf/target)
-	. = ..()
+	icon_state = "holo_medical"
 	if(force_allaccess)
 		return TRUE
 	if(ishuman(mover))
-
-		return CheckHuman(mover)
-
-/obj/structure/holosign/barrier/medical/Bumped(atom/movable/AM)
-	. = ..()
-	icon_state = "holo_medical"
-	if(ishuman(AM) && !CheckHuman(AM))
-		if(buzzcd < world.time)
-			playsound(get_turf(src),'sound/machines/buzz-sigh.ogg',65,TRUE,4)
-			buzzcd = (world.time + 60)
-		icon_state = "holo_medical-deny"
-
-/obj/structure/holosign/barrier/medical/proc/CheckHuman(mob/living/carbon/human/sickboi)
-	var/threat = sickboi.check_virus()
-	if(get_disease_severity_value(threat) > get_disease_severity_value(DISEASE_SEVERITY_MINOR))
-		return FALSE
+		var/mob/living/carbon/human/sickboi = mover
+		var/threat = sickboi.check_virus()
+		switch(threat)
+			if(DISEASE_SEVERITY_MINOR, DISEASE_SEVERITY_MEDIUM, DISEASE_SEVERITY_HARMFUL, DISEASE_SEVERITY_DANGEROUS, DISEASE_SEVERITY_BIOHAZARD)
+				if(buzzcd < world.time)
+					playsound(get_turf(src),'sound/machines/buzz-sigh.ogg',65,TRUE,4)
+					buzzcd = (world.time + 60)
+				icon_state = "holo_medical-deny"
+				return FALSE
+			else
+				return TRUE //nice or benign diseases!
 	return TRUE
 
 /obj/structure/holosign/barrier/medical/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)

@@ -134,7 +134,7 @@
 	return !density || (dir != to_dir) || (check_access(ID) && hasPower())
 
 /obj/machinery/door/window/CheckExit(atom/movable/mover, turf/target)
-	if((pass_flags_self & mover.pass_flags)) || ((pass_flags_self & LETPASSTHROW) && mover.throwing))
+	if((pass_flags_self & mover.pass_flags) || ((pass_flags_self & LETPASSTHROW) && mover.throwing))
 		return TRUE
 	if(get_dir(loc, target) == dir)
 		return !density
