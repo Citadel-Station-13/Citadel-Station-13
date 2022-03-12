@@ -19,7 +19,7 @@
 		to_chat(created, "<span class='userdanger'>You have been born outside of your natural home! Whether you decide to return home, or make due with your new home is your own decision.</span>")
 
 /datum/ghostrole/ashwalker/AllowSpawn(client/C, list/params)
-	if(params["team"])
+	if(params && params["team"])
 		var/datum/team/ashwalkers/team = params["team"]
 		if(C.ckey in team.players_spawned)
 			to_chat(C, span_warning("<b>You have exhausted your usefulness to the Necropolis</b>."))

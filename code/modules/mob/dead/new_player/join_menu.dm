@@ -15,7 +15,7 @@ GLOBAL_DATUM_INIT(join_menu, /datum/join_menu, new)
 	addtimer(CALLBACK(src, /datum/proc/update_static_data), 0, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /datum/join_menu/ui_state(mob/user)
-	return GLOB.new_player_state
+	return GLOB.explicit_new_player_state
 
 /datum/join_menu/ui_static_data(mob/user)
 	. = ..()

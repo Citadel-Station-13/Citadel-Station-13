@@ -11,6 +11,8 @@
 	var/list/departments
 	/// Departments we supervise - generated at runtime. List of typepaths, not referneces.
 	var/list/departments_supervised
+	/// preferred department to be in for preferences/joining
+	var/preferred_preferences_department
 	/// Determines if this job can be spawned into by players
 	var/join_types = JOB_ROUNDSTART | JOB_LATEJOIN
 	/// HUD icon state

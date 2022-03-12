@@ -3,6 +3,7 @@
 	desc = "The Head of Personnel acts as the station's human resources officer, assigning crewmembers to areas as necessary."
 //	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	faction = JOB_FACTION_STATION
+	preferred_preferences_department = /datum/department/command
 	total_positions = 1
 	roundstart_positions = 1
 	selection_color = "#3a8529"

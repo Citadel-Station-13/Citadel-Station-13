@@ -288,7 +288,7 @@
 			faction = horrifying_nested_list[job.faction]
 		else
 			faction = horrifying_nested_list[job.faction] = list()
-		var/datum/department/D = job.GetPrimarySupervisedDepartment() || job.GetPrimaryDepartment()
+		var/datum/department/D = (job.preferred_preferences_department && GetDepartmentType(job.preferred_preferences_department)) || job.GetPrimarySupervisedDepartment() || job.GetPrimaryDepartment()
 		var/list/dept
 		if(faction[D])
 			dept = faction[D]
@@ -320,6 +320,6 @@
 				L2.Insert(1, headname)
 				L2[headname] = _head
 			// sort the rest
-			sortTim(L2, /proc/cmp_text_asc, associative = FALSE)
+			sortTim(L2, /proc/cmp_text_asc, associative = FALSE, fromIndex = 2)
 	// finish
 

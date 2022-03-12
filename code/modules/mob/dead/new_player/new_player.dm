@@ -270,7 +270,7 @@
 		return
 
 	if(href_list["join_menu"])
-		GLOB.join_menu.ui_interact(src)
+		LateChoices()
 
 	if(href_list["show_preferences"])
 		client.prefs.ShowChoices(src)

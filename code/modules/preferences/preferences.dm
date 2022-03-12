@@ -1333,7 +1333,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/proc/GenerateOccupationEntry(datum/job/J)
 	var/head = length(J.departments_supervised)
-	var/left = "<a href='_src_=prefs;pickalttitle=[J.title]'>[head? "<b><span class='dark'>[J.title]</span></b>" : J.title]</a>"
+	var/has_alt_titles = length(J.GetTitles()) > 1
+	var/left = "[has_alt_titles && "<a href='?_src_=prefs;pickalttitle=[J.title]'>"][head? "<b>[J.title]</b>" : J.title][has_alt_titles && "</a>"]"
 	var/preftext
 	if(jobban_isbanned(parent.mob, J.title))
 		preftext = "<a href='?_src_=prefs;bancheck=[J.title]'>BANNED</a>"

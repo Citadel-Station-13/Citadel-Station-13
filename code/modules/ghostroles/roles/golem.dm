@@ -84,7 +84,7 @@
 		golem_species_override = species		// yes semi-circular-reference sue me
 	return ..(mapload, list(
 		"species" = species,
-		"creator" = istype(creator, /datum/mind)? creator : creator.mind
+		"creator" = creator && (istype(creator, /datum/mind)? creator : creator.mind)
 	), (has_owner && creator)? /datum/ghostrole/golem/servant : /datum/ghostrole/golem/free)
 
 /obj/structure/ghost_role_spawner/golem/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)

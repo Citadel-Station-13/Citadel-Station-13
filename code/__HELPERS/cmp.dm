@@ -139,7 +139,7 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	return sorttext("[B]","[A]")
 
 /proc/cmp_department_priority_dsc(datum/department/A, datum/department/B)
-	return B.priority - A.priority
+	return (B.priority - A.priority) || cmp_name_dsc(A, B)
 
 /proc/cmp_playtime(list/A, list/B)
 	return A["playtime"] - B["playtime"]

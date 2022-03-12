@@ -1,11 +1,7 @@
 /datum/parallax/space
 	var/static/planet_offset_x = rand(100, 160)
 	var/static/planet_offset_y = rand(100, 160)
-	var/static/random_layer = pickweightAllowZero(list(
-		/atom/movable/screen/parallax_layer/space/random/asteroids = 35,
-		/atom/movable/screen/parallax_layer/space/random/space_gas = 35,
-		null = 30
-	))
+	var/static/random_layer = pick_random_layer()
 	var/static/random_gas_color = pick(COLOR_TEAL, COLOR_GREEN, COLOR_YELLOW, COLOR_CYAN, COLOR_ORANGE, COLOR_PURPLE)
 
 /datum/parallax/space/CreateObjects()
@@ -17,11 +13,20 @@
 	P.pixel_x = planet_offset_x
 	P.pixel_y = planet_offset_y
 	. += P
-	if(random_layer)
+	if(ispath(random_layer, /atom/movable/screen/parallax_layer))
 		. += new random_layer
 	if(ispath(random_layer, /atom/movable/screen/parallax_layer/space/random/space_gas))
 		var/atom/movable/screen/parallax_layer/space/random/space_gas/SG = locate(random_layer) in objects
 		SG.add_atom_colour(random_gas_color, ADMIN_COLOUR_PRIORITY)
+
+/datum/parallax/space/proc/pick_random_layer()
+	. = null
+	switch(rand(1, 100))
+		if(1 to 35)
+			. = /atom/movable/screen/parallax_layer/space/random/asteroids
+		if(36 to 70)
+			. = /atom/movable/screen/parallax_layer/space/random/space_gas
+		if(71 to 100)
 
 /atom/movable/screen/parallax_layer/space/layer_1
 	icon_state = "layer1"
