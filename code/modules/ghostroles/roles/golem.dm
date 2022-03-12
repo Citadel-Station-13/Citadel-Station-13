@@ -81,7 +81,7 @@
 		species = golem_species_override
 	if(species) //spawners list uses object name to register so this goes before ..()
 		name += " ([initial(species.prefix)])"
-		mob_species = species
+		golem_species_override = species		// yes semi-circular-reference sue me
 	return ..(mapload, list(
 		"species" = species,
 		"creator" = istype(creator, /datum/mind)? creator : creator.mind
@@ -96,12 +96,12 @@
 			CRASH("Couldn't locate freegolem instantiator")
 		var/datum/ghostrole_instantiator/I = G.instantiator
 		var/transfer_choice = alert("Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
-		if(transfer_choice != "Yes" || QDELETED(src) || uses <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERY, NO_TK))
+		if(transfer_choice != "Yes" || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERY, NO_TK))
 			return
 		log_game("[key_name(user)] golem-swapped into [src]")
 		user.visible_message("<span class='notice'>A faint light leaves [user], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")
 		var/mob/living/created = I.Run(user.client, loc, list(
-			"species" = species,
+			"species" = golem_species_override,
 			"name" = user.real_name
 		))
 		if(!created)
@@ -119,6 +119,5 @@
 /obj/structure/ghost_role_spawner/golem/adamantine
 	name = "dust-caked free golem shell"
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
-	mob_name = "a free golem"
 	can_transfer = FALSE
 	golem_species_override = /datum/species/golem/adamantine
