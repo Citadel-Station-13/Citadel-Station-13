@@ -13,7 +13,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/landmark)
 	GLOB.landmarks_list += src
 
 /atom/movable/landmark/Destroy()
-	log_debug("[src] ([type]) was deleted.")
 	GLOB.landmarks_list -= src
 	return ..()
 

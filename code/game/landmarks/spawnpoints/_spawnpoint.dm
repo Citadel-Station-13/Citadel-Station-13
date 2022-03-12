@@ -19,6 +19,10 @@
 	Register()
 	return ..()
 
+/atom/movable/landmark/spawnpoint/Destroy()
+	Unregister()
+	return ..()
+
 /atom/movable/landmark/spawnpoint/forceMove(atom/destination)
 	Unregister()
 	. = ..()
