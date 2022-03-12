@@ -369,4 +369,11 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	if(.)
 		return
 	if(locate(/obj/structure/table) in get_turf(mover))
-		return TRUE
+		return 1
+	else
+		return 0
+
+/obj/structure/tray/m_tray/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+	. = !density
+	if(istype(caller))
+		. = . || (caller.pass_flags & PASSTABLE)

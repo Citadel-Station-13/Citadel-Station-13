@@ -135,6 +135,8 @@
 			var/datum/sprite_accessory/taur/instance = GLOB.taur_list[path]
 			if(istype(instance, /datum/sprite_accessory))
 				var/datum/sprite_accessory/S = instance
+				if(S.ignore)
+					continue
 				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
 					snowflake_taur_list[S.name] = path
 		var/new_taur

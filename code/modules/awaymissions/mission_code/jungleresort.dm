@@ -27,7 +27,7 @@
 
 /obj/item/clothing/head/rice_hat/cursed/equipped(mob/M, slot)
     . = ..()
-    if (slot == SLOT_HEAD)
+    if (slot == ITEM_SLOT_HEAD)
         RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
     else
         UnregisterSignal(M, COMSIG_MOB_SAY)

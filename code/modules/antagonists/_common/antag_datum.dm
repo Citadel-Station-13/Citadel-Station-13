@@ -50,6 +50,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/show_name_in_check_antagonists = FALSE
 	/// Should this antagonist be shown as antag to ghosts? Shouldn't be used for stealthy antagonists like traitors
 	var/show_to_ghosts = FALSE
+//ambition start
+	/// Lazy list for antagonists to request the admins objectives.
+	var/list/requested_objective_changes
+//ambition end
 
 	/* CIT SPECIFIC */
 	/// Quirks that will be removed upon gaining this antag. Pacifist and mute are default.
@@ -78,7 +82,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!owner)
 		stack_trace("Destroy()ing antagonist datum when it has no owner.")
 	else
-		LAZYREMOVE(owner.antag_datums, src)
+//ambition start
+		owner?.do_remove_antag_datum(src)
+//ambition end
 	owner = null
 	return ..()
 
@@ -230,7 +236,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	remove_innate_effects()
 	clear_antag_moodies()
-	LAZYREMOVE(owner.antag_datums, src)
+	owner.do_remove_antag_datum(src)
 	// cit skill
 	for(var/A in skill_modifiers)
 		owner.remove_skill_modifier(GET_SKILL_MOD_ID(A, type))
@@ -524,3 +530,33 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/action/antag_info/IsAvailable()
 	return TRUE
+
+///Clears change requests from deleted objectives to avoid broken references.
+/datum/antagonist/proc/clean_request_from_del_objective(datum/objective/source, force)
+	var/objective_reference = REF(source)
+	for(var/uid in requested_objective_changes)
+		var/list/change_request = requested_objective_changes[uid]
+		if(change_request["target"] != objective_reference)
+			continue
+		LAZYREMOVE(requested_objective_changes, uid)
+
+
+/datum/antagonist/proc/add_objective_change(uid, list/additions)
+	LAZYADD(requested_objective_changes, uid)
+	var/datum/objective/request_target = additions["target"]
+	if(!ispath(request_target))
+		request_target = locate(request_target) in objectives
+		if(istype(request_target))
+			RegisterSignal(request_target, COMSIG_PARENT_QDELETING, .proc/clean_request_from_del_objective)
+	requested_objective_changes[uid] = additions
+
+
+/datum/antagonist/proc/remove_objective_change(uid)
+	if(!LAZYACCESS(requested_objective_changes, uid))
+		return
+	var/datum/objective/request_target = requested_objective_changes[uid]["target"]
+	if(!ispath(request_target))
+		request_target = locate(request_target) in objectives
+		if(istype(request_target))
+			UnregisterSignal(request_target, COMSIG_PARENT_QDELETING)
+	LAZYREMOVE(requested_objective_changes, uid)

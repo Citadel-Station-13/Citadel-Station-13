@@ -128,3 +128,49 @@
   - bugfix: '[Omega] Toxins Mix Chamber no longer starts bolted'
   - bugfix: '[Omega] Missing pipe above Security leading into Perma'
   - bugfix: '[Omega] Secure Tech Storage now properly has an area'
+2022-02-23:
+  SandPoot:
+  - bugfix: You know the training targets? You can grab them again now with your own
+      hands, instead of using telekinesis.
+  TripleShades:
+  - rscadd: '[Omega] Trash chute to space in Virology'
+  - rscadd: '[Omega] Trash chute to space in Xenobiology'
+  - rscadd: '[Omega] Airlock leading out to Supermatter cooling pipeline'
+  - rscadd: '[Omega] Two more air pumps to Toxins'
+  - rscadd: '[Omega] Robotics circuitry printer'
+  - rscadd: '[Omega] Windoor to Cargo delivery flaps'
+  - rscdel: '[Omega] Backdoor to Gravity Generator'
+  - rscdel: '[Omega] Bunched up cameras tweak: [Omega] Pipes leading to the Incinerator
+      burn chamber are now black tweak: [Omega] Gravity Generator airlocks are now
+      accessible by engineers tweak: [Omega] Chapel mass driver and mass driver bulkhead
+      are now controlled by one button instead of two'
+  - bugfix: '[Omega] Lawyer''s carpet is no longer airless'
+2022-02-25:
+  TripleShades:
+  - rscadd: '[Omega] Additional Solar Panels to both existing arrays'
+  - rscadd: '[Omega] Floor tile underneath library maint airlock'
+  - rscadd: '[Omega] Contraband locker to Armoury'
+  - bugfix: '[Omega] Solar Array SMES Units actually connect to the grid properly
+      now'
+  timothyteakettle:
+  - rscadd: adds snake coiling
+2022-02-26:
+  Putnam3145:
+  - balance: Now slightly easier to get 50,000 points with toxins (50,000 point baseline
+      changed from 200 light range to 175)
+2022-02-28:
+  Arturlang:
+  - rscadd: The limbgrower can make human chest parts that you can build onto into
+      a person.
+  Putnam3145:
+  - rscadd: Configurable weekly high-chaos days
+  SandPoot:
+  - refactor: Kills off SLOT_ in favor of ITEM_SLOT_
+  SandPoot and Crowbar764:
+  - rscadd: TGUI for the player playtimes menu.
+  bunny232:
+  - rscadd: Cold weather gear can now provide insulation against temperatures of up
+      to 57C (330K)
+  timothyteakettle:
+  - rscadd: adds a cartridge for the bartender's PDA that lets them search drink recipes
+  - rscadd: updates chemist cartridge to be able to search all chemical recipes

@@ -14,6 +14,9 @@
 ///Like LAZYCOPY - copies an input list if the list has entries, If it doesn't the assigned list is nulled
 #define LAZYLISTDUPLICATE(L) (L ? L.Copy() : null )
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
+//ambition start
+#define LAZYCUT(L, S, E) if((length(L) >= S) && (E == 0 || length(L) >= (E - 1))) { L.Cut(S, E); if(!length(L)) { L = null; } }
+//ambition end
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
 #define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
 #define LAZYFIND(L, V) (L ? L.Find(V) : 0)

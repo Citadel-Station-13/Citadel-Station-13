@@ -89,7 +89,7 @@
 
 /// Triggered on equip of the item containing the component
 /datum/component/two_handed/proc/on_equip(datum/source, mob/user, slot)
-	if(require_twohands && slot == SLOT_HANDS) // force equip the item
+	if(require_twohands && slot == ITEM_SLOT_HANDS) // force equip the item
 		wield(user)
 	if(!user.is_holding(parent) && wielded && !require_twohands)
 		unwield(user)
