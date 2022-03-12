@@ -1290,7 +1290,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					// close table
 					HTML += "</table></td>"
 					// make new table
-					HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr>"
+					HTML += "<td><table width='100%' cellpadding='1' cellspacing='0'><tr>"
 					// reset left
 					left = jobs_per_column
 					// make column
