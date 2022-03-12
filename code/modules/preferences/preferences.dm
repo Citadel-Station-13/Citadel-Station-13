@@ -1272,7 +1272,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				// close table
 				HTML += "</table></td>"
 				// make new table
-				HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr>"
+				HTML += "<td width='20%'><table width='100%' cellpadding='1' cellspacing='0'><tr>"
 				// reset left
 				left = jobs_per_column
 				// make column
@@ -1290,7 +1290,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					// close table
 					HTML += "</table></td>"
 					// make new table
-					HTML += "<td><table width='100%' cellpadding='1' cellspacing='0'><tr>"
+					HTML += "<td width='20%'><table width='100%' cellpadding='1' cellspacing='0'><tr>"
 					// reset left
 					left = jobs_per_column
 					// make column
@@ -1307,7 +1307,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		HTML += "</tr></table>"
 
 		// close container divider
-		HTML += "</div><br>>br>"
+		HTML += "</div><br><br>"
 
 	// close final
 	HTML += "</center>"
@@ -1338,7 +1338,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/head = length(J.departments_supervised)
 	// don't question the `|| null`
 	var/has_alt_titles = (length(J.GetTitles()) > 1) || null
-	var/left = "[has_alt_titles && "<a href='?_src_=prefs;pickalttitles=[J.title]'>"][head? "<b><font color='black'>[J.title]</font></b>" : J.title][has_alt_titles && "</a>"]"
+	var/left = "[has_alt_titles && "<a href='?_src_=prefs;pickalttitles=[J.title]'>"]<font color='black'>[head? "<b>[J.title]</</b>" : J.title]</font>[has_alt_titles && "</a>"]"
 	var/preftext
 	if(jobban_isbanned(parent.mob, J.title))
 		preftext = "<a href='?_src_=prefs;bancheck=[J.title]'>BANNED</a>"
