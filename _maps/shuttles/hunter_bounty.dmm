@@ -72,8 +72,7 @@
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
 "p" = (
-/obj/structure/ghost_role_spawner/fugitive_hunter/bounty/hook{
-	},
+/obj/structure/ghost_role_spawner/fugitive_hunter/bounty/hook,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
 "q" = (
@@ -225,8 +224,7 @@
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "Z" = (
-/obj/structure/ghost_role_spawner/fugitive_hunter/bounty/synth{
-	},
+/obj/structure/ghost_role_spawner/fugitive_hunter/bounty/synth,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
 
