@@ -55,6 +55,8 @@ GLOBAL_LIST_INIT(ghostroles, init_ghostroles())
 	var/jobban_role
 	/// Automatically give them an objective and custom antag datum
 	var/automatic_objective
+	/// inject params during spawning
+	var/list/inject_params
 
 /datum/ghostrole/New(_id)
 	if(ispath(instantiator, /datum/ghostrole_instantiator))
@@ -86,6 +88,8 @@ GLOBAL_LIST_INIT(ghostroles, init_ghostroles())
 		return "PreInstantiate() failed."
 	var/datum/component/ghostrole_spawnpoint/spawnpoint = spawnerless? null : (chosen_spawnpoint || GetSpawnpoint(C))
 	var/list/params = islist(spawnpoint?.params)? spawnpoint.params.Copy() : list()		// clone/new, because procs CAN MODIFY THIS.
+	if(inject_params)
+		params |= inject_params
 	if(!AllowSpawn(C, params))		// check again with params
 		return "The spawnpoint refused to let you spawn."
 	var/atom/location = GetSpawnLoc(C, spawnpoint)

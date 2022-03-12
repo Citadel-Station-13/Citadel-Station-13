@@ -1,3 +1,16 @@
+/datum/ghostrole/golem
+	instantiator = /datum/ghostrole_instantiator/human/random/species/golem
+
+/datum/ghostrole/golem/Greet(mob/created, datum/component/ghostrole_spawnpoint/spawnpoint, list/params)
+	. = ..()
+	var/mob/living/carbon/human/H = created
+	if(!istype(H))
+		return
+	var/datum/species/golem/G = H.dna.species
+	if(!istype(G))
+		return
+	to_chat(created, G.info_text)
+
 /datum/ghostrole/golem/free
 	name = "Free Golem"
 	desc = "You are a Free Golem. Your family worships The Liberator."
@@ -5,18 +18,31 @@
 	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
 	golems, so that no golem may ever be forced to serve again."
 
+/datum/ghostrole/golem/free/Greet(mob/created, datum/component/ghostrole_spawnpoint/spawnpoint, list/params)
+	. = ..()
+	to_chat(created, span_boldwarning("Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked."))
+
 /datum/ghostrole/golem/servant
 	name = "Servant Golem"
 	desc = "You are a golem."
 	spawntext = "You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools."
+	inject_params = list(
+		"servant" = TRUE
+	)
 
 /datum/ghostrole/golem/servant/PostInstantiate(mob/created, datum/component/ghostrole_spawnpoint/spawnpoint, list/params)
 	. = ..()
 	var/datum/mind/creator_mind = params["creator"]
 	if(!creator_mind)
 		return
-
-#warn finish
+	var/creator_name = creator_mind.name
+	log_game("[key_name(created)] possessed a golem shell enslaved to [creator_mind.name]/[creator_mind.key].")
+	log_admin("[key_name(created)] possessed a golem shell enslaved to [creator_mind.name]/[creator_mind.key].")
+	created.mind.store_memory( "Serve [creator_name][creator_mind.current && " (currently [creator_mind.current.name])"], and assist them in completing their goals at any cost.")
+	to_chat(created, span_boldwarning("Serve [creator_name][creator_mind.current && " (currently [creator_mind.current.name])"], and assist them in completing their goals at any cost."))
+	var/mob/living/carbon/human/H = created
+	var/datum/species/golem/G = H.dna.species
+	G.owner = creator_mind
 
 /datum/ghostrole_instantiator/human/random/species/golem
 
@@ -28,9 +54,11 @@
 		return pick(typesof(/datum/species/golem))
 	return predestined
 
-
-#warn convert
-
+/datum/ghostrole_instantiator/human/random/species/golem/Randomize(mob/living/carbon/human/H, list/params)
+	. = ..()
+	H.set_cloned_appearance()
+	var/datum/species/golem/G = H.dna.species
+	H.real_name = params["name"] || (params["servant"]? "[initial(G.prefix)] Golem ([rand(1,999)])" : H.dna.species.random_name())
 
 //Golem shells: Spawns in Free Golem ships in lavaland. Ghosts become mineral golems and are advised to spread personal freedom.
 /obj/structure/ghost_role_spawner/golem
@@ -45,8 +73,12 @@
 	var/has_owner = FALSE
 	/// can golems switch bodies to this shell
 	var/can_transfer = TRUE
+	/// override golem species?
+	var/golem_species_override
 
 /obj/structure/ghost_role_spawner/golem/Initialize(mapload, datum/species/golem/species, mob/creator)
+	if(golem_species_override)
+		species = golem_species_override
 	if(species) //spawners list uses object name to register so this goes before ..()
 		name += " ([initial(species.prefix)])"
 		mob_species = species
@@ -54,38 +86,6 @@
 		"species" = species,
 		"creator" = istype(creator, /datum/mind)? creator : creator.mind
 	), (has_owner && creator)? /datum/ghostrole/golem/servant : /datum/ghostrole/golem/free)
-
-	if(has_owner && creator)
-		important_info = "Serve [creator], and assist [creator.p_them()] in completing [creator.p_their()] goals at any cost."
-		owner = creator
-
-/obj/structure/ghost_role_spawner/golem/special(mob/living/new_spawn, name)
-	var/datum/species/golem/X = mob_species
-	to_chat(new_spawn, "[initial(X.info_text)]")
-	if(!owner)
-		to_chat(new_spawn, "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked.")
-	else
-		new_spawn.mind.store_memory("<b>Serve [owner.real_name], your creator.</b>")
-		new_spawn.mind.enslave_mind_to_creator(owner)
-		log_game("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")
-		log_admin("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")
-	if(ishuman(new_spawn))
-		var/mob/living/carbon/human/H = new_spawn
-		if(has_owner)
-			var/datum/species/golem/G = H.dna.species
-			G.owner = owner
-		H.set_cloned_appearance()
-		if(!name)
-			if(has_owner)
-				H.real_name = "[initial(X.prefix)] Golem ([rand(1,999)])"
-			else
-				H.real_name = H.dna.species.random_name()
-		else
-			H.real_name = name
-	if(has_owner)
-		new_spawn.mind.assigned_role = "Servant Golem"
-	else
-		new_spawn.mind.assigned_role = "Free Golem"
 
 /obj/structure/ghost_role_spawner/golem/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(isgolem(user) && can_transfer)
@@ -100,7 +100,10 @@
 			return
 		log_game("[key_name(user)] golem-swapped into [src]")
 		user.visible_message("<span class='notice'>A faint light leaves [user], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")
-		var/mob/living/created = I.Run(user.client, loc, list())
+		var/mob/living/created = I.Run(user.client, loc, list(
+			"species" = species,
+			"name" = user.real_name
+		))
 		if(!created)
 			CRASH("Couldn't make a valid golem, cancelling.")
 		user.mind.transfer_to(created)
@@ -118,4 +121,4 @@
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
 	mob_name = "a free golem"
 	can_transfer = FALSE
-	mob_species = /datum/species/golem/adamantine
+	golem_species_override = /datum/species/golem/adamantine
