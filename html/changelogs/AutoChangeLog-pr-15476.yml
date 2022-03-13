@@ -1,0 +1,5 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - balance: "Regenerative cores when used on Synthetics on lavaland now heal for 20 brute + burn instead of 5"
+  - balance: "Regenerative cores when used now on lavaland now only heal 5 brute + burn, regardless of whom they are used on. Additionally, their damage slowdown negation is reduced to ten seconds."
