@@ -1,0 +1,7 @@
+author: "TripleShades"
+delete-after: True
+changes: 
+  - rscdel: "[Omega] Engineering Supermatter shortcut airlock to Cooling Loop
+tweak: [Omega] Gravity Generator walkable area"
+  - bugfix: "[Omega] Two Xenobiology pens now have chutes"
+  - bugfix: "[Omega] Makes a t-junction pipe in Atmospherics not visible above the floor"
