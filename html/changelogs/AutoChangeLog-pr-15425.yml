@@ -1,0 +1,6 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - balance: "Base organ healing rate reduced by 66% (It can still be increased to up to 500% of the base value via sufficient satiety)"
+  - bugfix: "Cybernetic organs no longer passively heal damage despite the proc stating they didn't."
+  - balance: "Synthetics now gain satiety at sufficient charge (~5 minutes to max satiety from 0)"
