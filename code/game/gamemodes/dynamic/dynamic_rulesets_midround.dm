@@ -769,7 +769,7 @@
 	if(!spawn_locs.len)
 		message_admins("No valid spawn locations found in GLOB.xeno_spawn, aborting swarmer spawning...")
 		return MAP_ERROR
-	new /obj/effect/mob_spawn/swarmer(get_turf(GLOB.the_gateway))
+	new /obj/structure/ghost_role_spawner/swarmer(get_turf(GLOB.the_gateway))
 	log_game("A Swarmer was spawned via Dynamic Mode.")
 	return ..()
 

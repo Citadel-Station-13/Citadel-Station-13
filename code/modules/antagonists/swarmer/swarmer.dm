@@ -6,22 +6,10 @@
 	icon_state = "swarmer_unactivated"
 	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=4000)
 
-#warn convert
-/obj/effect/mob_spawn/swarmer
-	name = "unactivated swarmer"
-	desc = "A currently unactivated swarmer. Swarmers can self activate at any time, it would be wise to immediately dispose of this."
-	icon = 'icons/mob/swarmer.dmi'
-	icon_state = "swarmer_unactivated"
-	density = FALSE
-	anchored = FALSE
-
-	mob_type = /mob/living/simple_animal/hostile/swarmer
-	mob_name = "a swarmer"
-	job_description = "Swarmer"
-	death = FALSE
-	roundstart = FALSE
-	short_desc = "You are a swarmer, a weapon of a long dead civilization."
-	flavour_text = {"
+/datum/ghostrole/swarmer
+	instantiator = /datum/ghostrole_instantiator/simple/swarmer
+	desc = "You are a swarmer, a weapon of a long dead civilization."
+	spawntext = {"
 	<b>You are a swarmer, a weapon of a long dead civilization. Until further orders from your original masters are received, you must continue to consume and replicate.</b>
 	<b>Clicking on any object will try to consume it, either deconstructing it into its components, destroying it, or integrating any materials it has into you if successful.</b>
 	<b>Ctrl-Clicking on a mob will attempt to remove it from the area and place it in a safe environment for storage.</b>
@@ -31,19 +19,27 @@
 	3. Biological resources will be harvested at a later date; do not harm them.
 	"}
 
-/obj/effect/mob_spawn/swarmer/Initialize()
-	. = ..()
-	var/area/A = get_area(src)
-	if(A)
-		notify_ghosts("A swarmer shell has been created in [A.name].", 'sound/effects/bin_close.ogg', source = src, action = NOTIFY_ATTACK, flashwindow = FALSE, ignore_dnr_observers = TRUE)
+/datum/ghostrole_instantiator/simple/swarmer
+	mob_type = /mob/living/simple_animal/hostile/swarmer
 
-/obj/effect/mob_spawn/swarmer/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+#warn convert
+/obj/structure/ghost_role_spawner/swarmer
+	name = "unactivated swarmer"
+	desc = "A currently unactivated swarmer. Swarmers can self activate at any time, it would be wise to immediately dispose of this."
+	icon = 'icons/mob/swarmer.dmi'
+	icon_state = "swarmer_unactivated"
+	density = FALSE
+	anchored = FALSE
+	move_resist = MOVE_RESIST_DEFAULT
+	role_type = /datum/ghostrole/swarmer
+
+/obj/structure/ghost_role_spawner/swarmer/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
 	to_chat(user, "<span class='notice'>Picking up the swarmer may cause it to activate. You should be careful about this.</span>")
 
-/obj/effect/mob_spawn/swarmer/attackby(obj/item/W, mob/user, params)
+/obj/structure/ghost_role_spawner/swarmer/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_SCREWDRIVER && user.a_intent != INTENT_HARM)
 		user.visible_message("<span class='warning'>[usr.name] deactivates [src].</span>",
 			"<span class='notice'>After some fiddling, you find a way to disable [src]'s power source.</span>",
@@ -51,7 +47,7 @@
 		new /obj/item/deactivated_swarmer(get_turf(src))
 		qdel(src)
 	else
-		..()
+		return ..()
 
 ////The Mob itself////
 
@@ -169,11 +165,11 @@
 	S.DisIntegrate(src)
 	return TRUE //return TRUE/FALSE whether or not an AI swarmer should try this swarmer_act() again, NOT whether it succeeded.
 
-/obj/effect/mob_spawn/swarmer/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+/obj/structure/ghost_role_spawner/swarmer/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	S.Integrate(src)
 	return FALSE //would logically be TRUE, but we don't want AI swarmers eating player spawn chances.
 
-/obj/effect/mob_spawn/swarmer/IntegrateAmount()
+/obj/structure/ghost_role_spawner/swarmer/IntegrateAmount()
 	return 50
 
 /turf/closed/indestructible/swarmer_act()
@@ -723,7 +719,7 @@
 
 
 /mob/living/simple_animal/hostile/swarmer/proc/SwarmerTypeToCreate()
-	return /obj/effect/mob_spawn/swarmer
+	return /obj/structure/ghost_role_spawner/swarmer
 
 
 /mob/living/simple_animal/hostile/swarmer/proc/RepairSelf()

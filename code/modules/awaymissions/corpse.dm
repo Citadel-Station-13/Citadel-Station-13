@@ -13,15 +13,8 @@
 	var/death = TRUE //Kill the mob
 	var/roundstart = TRUE //fires on initialize
 	var/instant = FALSE	//fires on New
-	var/short_desc = "The mapper forgot to set this!"
-	var/flavour_text = ""
-	var/important_info = ""
 	var/faction = null
-	var/permanent = FALSE	//If true, the spawner will not disappear upon running out of uses.
 	var/random = FALSE		//Don't set a name or gender, just go random
-	var/antagonist_type
-	var/objectives = null
-	var/uses = 1			//how many times can we spawn from it. set to -1 for infinite.
 	var/brute_damage = 0
 	var/oxy_damage = 0
 	var/burn_damage = 0
@@ -39,7 +32,6 @@
 	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
 		INVOKE_ASYNC(src, .proc/create)
 
-
 /obj/effect/mob_spawn/Destroy()
 	return ..()
 
@@ -49,7 +41,7 @@
 /obj/effect/mob_spawn/proc/equip(mob/M)
 	return
 
-/obj/effect/mob_spawn/proc/create(ckey, name)
+/obj/effect/mob_spawn/proc/create()
 	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
 	if(!random)
 		M.real_name = mob_name ? mob_name : M.name
@@ -68,35 +60,7 @@
 	M.adjustFireLoss(burn_damage)
 	M.color = mob_color
 	equip(M)
-
-	if(ckey)
-		M.ckey = ckey
-		if(show_flavour)
-			var/output_message = "<span class='big bold'>[short_desc]</span>"
-			if(flavour_text != "")
-				output_message += "\n<span class='bold'>[flavour_text]</span>"
-			if(important_info != "")
-				output_message += "\n<span class='userdanger'>[important_info]</span>"
-			to_chat(M, output_message)
-		var/datum/mind/MM = M.mind
-		var/datum/antagonist/A
-		if(antagonist_type)
-			A = MM.add_antag_datum(antagonist_type)
-		if(objectives)
-			if(!A)
-				A = MM.add_antag_datum(/datum/antagonist/custom)
-			for(var/objective in objectives)
-				var/datum/objective/O = new/datum/objective(objective)
-				O.owner = MM
-				A.objectives += O
-		if(assignedrole)
-			M.mind.assigned_role = assignedrole
-		special(M, name)
-		MM.name = M.real_name
-	if(uses > 0)
-		uses--
-	if(!permanent && !uses)
-		qdel(src)
+	qdel(src)
 
 // Base version - place these on maps/templates.
 /obj/effect/mob_spawn/human
@@ -575,6 +539,7 @@
 	suit = /obj/item/clothing/suit/armor/vest
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 
+#warn convert
 /obj/effect/mob_spawn/human/lavaknight
 	name = "odd cryogenics pod"
 	desc = "A humming cryo pod. You can barely recognise a faint glow underneath the built up ice. The machine is attempting to wake up its occupant."

@@ -20,6 +20,21 @@
 /datum/ghostrole_instantiator/proc/Equip(client/C, mob/M, list/params)
 	CRASH("Base Equip() called on ghostrole instantiator datum.")
 
+/datum/ghostrole_instantiator/simple
+	var/mob_type
+
+/datum/ghostrole_instantiator/simple/Create(client/C, atom/location, list/params)
+	var/type_to_make = GetMobType(location)
+	if(!ispath(type_to_make, /mob/living))
+		CRASH("Invalid path: [type_to_make]")
+	var/mob/living/L = new type_to_make(location)
+	for(var/trait in mob_traits)
+		ADD_TRAIT(L, trait, GHOSTROLE_TRAIT)
+	return L
+
+/datum/ghostrole_instantiator/simple/proc/GetMobType(client/C, atom/location, list/params)
+	return params["mob"] || mob_type
+
 /datum/ghostrole_instantiator/human
 	/// outfit to equip
 	var/equip_outfit
