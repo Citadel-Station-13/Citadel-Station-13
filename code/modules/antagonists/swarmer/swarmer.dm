@@ -22,7 +22,6 @@
 /datum/ghostrole_instantiator/simple/swarmer
 	mob_type = /mob/living/simple_animal/hostile/swarmer
 
-#warn convert
 /obj/structure/ghost_role_spawner/swarmer
 	name = "unactivated swarmer"
 	desc = "A currently unactivated swarmer. Swarmers can self activate at any time, it would be wise to immediately dispose of this."
