@@ -33,6 +33,17 @@
 	var/obj/structure/hoist/source_hoist
 	/// attached atom
 	var/atom/movable/attached
+	/// currently moving the attached atom
+	var/moving = FALSE
+
+/obj/effect/hoist_hook/Destroy()
+	if(attached)
+		Detach()
+	if(source_hoist)
+		if(source_hoist.hook == src)
+			source_hoist.hook = null
+		source_hoist = null
+	return ..()
 
 /obj/effect/hoist_hook/proc/Attach(atom/movable/target, mob/user)
 	if(attached)
@@ -45,6 +56,9 @@
 		if(user)
 			to_chat(user, span_warning("[target] is too heavy to attach to [src], or is anchored to the ground!"))
 		return
+	if(ismob(target))
+		var/mob/M = target
+		buckle_mob(M, TRUE, FALSE)
 	visible_message(span_notice(user? "[user] attached [target] to src." : "[target] attaches to [src]!"))
 	attached = target
 	source_hoist?.layer = target.layer + 0.1
@@ -68,16 +82,22 @@
 	attached = null
 
 /obj/effect/hoist_hook/proc/InterceptMove(datum/source)
-	if(source == attached)
+	if(source != attached)
+		return
+	if(!moving)
 		Detach()
 
 /obj/effect/hoist_hook/proc/InterceptAttachedFall()
 	return FALL_BLOCKED
 
-/obj/effect/hoist_hook/Moved(atom/OldLoc, Dir)
-	. = ..()
-	if(attached && !ismob(attached))	// buckle handles mob
-		attached.forceMove(loc)
+/obj/effect/hoist_hook/proc/MoveTo(atom/newloc)
+	moving = TRUE
+	forceMove(newloc)
+	moving = FALSE
+	var/attached = src.attached
+	attached?.forceMove(loc)
+	if(attached && !src.attached)
+		Attach(attached)
 
 /obj/effect/hoist_hook/MouseDropped(atom/dropping, mob/user)
 	. = ..()
@@ -98,37 +118,33 @@
 	anchored = TRUE
 
 	var/broken = FALSE
-	var/atom/movable/hoistee
 	var/movedir = UP
-	var/obj/effect/hoist_hook/source_hook
+	var/obj/effect/hoist_hook/hook
 
 /obj/structure/hoist/Initialize(mapload, ndir)
 	. = ..()
-	set_dir(ndir)
+	setDir(ndir)
 	var/turf/newloc = get_step(src, dir)
-	source_hook = new(newloc)
-	source_hook.source_hoist = src
+	hook = new(newloc)
+	hook.source_hoist = src
 
 /obj/structure/hoist/Destroy()
 	if(hoistee)
 		release_hoistee()
-	QDEL_NULL(src.source_hook)
-	return ..()
-
-/obj/effect/hoist_hook/Destroy()
-	source_hoist = null
+	QDEL_NULL(hook)
 	return ..()
 
 /obj/structure/hoist/proc/check_consistency()
 	if (!hoistee)
 		return
-	if (hoistee.z != source_hook.z)
+	if (hoistee.z != hook.z)
 		release_hoistee()
 		return
 
 /obj/structure/hoist/proc/release_hoistee()
+	hook.Detach()
 	if(ismob(hoistee))
-		source_hook.unbuckle_mob(hoistee)
+		hook.unbuckle_mob(hoistee)
 	else
 		hoistee.anchored = FALSE
 	events_repository.unregister(/decl/observ/destroyed, hoistee, src)
@@ -142,7 +158,8 @@
 	desc += " It looks broken, and the clamp has retracted back into the hoist. Seems like you'd have to re-deploy it to get it to work again."
 	if(hoistee)
 		release_hoistee()
-	QDEL_NULL(source_hook)
+	QDEL_NULL(hook)
+
 /obj/structure/hoist/explosion_act(severity)
 	. = ..()
 	if(.)
@@ -235,17 +252,17 @@
 	collapse_kit()
 
 /obj/structure/hoist/proc/can_move_dir(direction)
-	var/turf/dest = direction == UP ? GetAbove(source_hook) : GetBelow(source_hook)
+	var/turf/dest = direction == UP ? GetAbove(hook) : GetBelow(hook)
 	if(!istype(dest))
 		return FALSE
 	switch(direction)
 		if (UP)
 			if(!dest.is_open()) // can't move into a solid tile
 				return FALSE
-			if (source_hook in get_step(src, dir)) // you don't get to move above the hoist
+			if (hook in get_step(src, dir)) // you don't get to move above the hoist
 				return FALSE
 		if (DOWN)
-			var/turf/T = get_turf(source_hook)
+			var/turf/T = get_turf(hook)
 			if(!istype(T) || !T.is_open()) // can't move down through a solid tile
 				return FALSE
 	return TRUE // i thought i could trust myself to write something as simple as this, guess i was wrong
@@ -254,8 +271,8 @@
 	var/can = can_move_dir(direction)
 	if (!can)
 		return 0
-	var/turf/move_dest = direction == UP ? GetAbove(source_hook) : GetBelow(source_hook)
-	source_hook.forceMove(move_dest)
+	var/turf/move_dest = direction == UP ? GetAbove(hook) : GetBelow(hook)
+	hook.forceMove(move_dest)
 	if (!ishoisting)
 		return 1
 	hoistee.hoist_act(move_dest)

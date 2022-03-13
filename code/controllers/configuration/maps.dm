@@ -1,6 +1,6 @@
 /datum/controller/configuration
 	/// loaded map data, keyed by id and associated to a /datum/map_settings
-	var/list/map_data
+	var/list/datum/map_settings/map_data
 	/// allowed away missions
 	var/list/away_data
 	/// allowed vr missions

@@ -157,7 +157,7 @@
 /atom/movable/openspace/turf_proxy
 	plane = OPENTURF_MAX_PLANE
 	mouse_opacity = 0
-	zm_flags = ZMM_IGNORE  // Only one of these should ever be visible at a time, the mimic logic will handle that.
+	zmm_flags = ZMM_IGNORE  // Only one of these should ever be visible at a time, the mimic logic will handle that.
 
 // experimental - directly pass clicks
 /atom/movable/openspace/turf_proxy/Click(...)

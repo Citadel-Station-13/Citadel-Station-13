@@ -151,7 +151,12 @@
  * - levels - levels fallen so far, so going from, say, z2 to z1 would be a 1 level fall.
  * - fall_flags - see __DEFINES/mapping/multiz.dm
  */
-/atom/proc/ZImpacted(atom/movable/victim, levels = 1, fall_flags)
+/atom/proc/ZImpacted(atom/movable/AM, levels = 1, fall_flags)
+	#warn only hit one thing?
+	if(!(fall_flags & FALL_SILENT))
+		AM.visible_message(span_danger("[AM] crashes into [src]!"), span_warning("You hear something crashing down near you."), span_danger("You crash into [victim]!"))
+	if(!(fall_flags & FALL_CUSHIONED_FALLER))
+		TakeFallDamage(GetSelfFallDamage(victim, levels, fall_flags))
 	return fall_flags
 
 /**
@@ -164,7 +169,7 @@
  * - levels - levels fallen so far, so going from, say, z2 to z1 would be a 1 level fall.
  * - fall_flags - see __DEFINES/mapping/multiz.dm
  */
-/atom/movable/proc/ZImpact(atom/ground, levels = 1, fall_flags)
+/atom/movable/proc/ZImpact(atom/victim, levels = 1, fall_flags)
 	return fall_flags
 
 /**

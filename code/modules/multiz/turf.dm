@@ -32,18 +32,14 @@ GLOBAL_VAR_INIT(unroofed_catwalk_overlay, image('icons/modules/multiz/turf_overl
 	// DOWNWARDS
 	// First, check if we're the bottom level. If we're the bottom level and we're openspace, we need to teardown to the zlevel's baseturf
 	// If the zlevels' baseturf IS openspace for some reason, we tear down to space
-	var/intact = TRUE
 	var/turf/below = Below()
 	if(!below)
-		intact = FALSE
 		if(istype(src, /turf/open/openspace))
 			var/type = SSmapping.GetBaseturf(z)
-			ChangeTurf(ispath(type, /turf/open/openspace)? /turf/open/space : type)
+			ChangeTurf(ispath(type, /turf/open/openspace)? world.turf : type)
 			// return, as changeturf calls updatemultiz.
 			return
-
-	// Then, if we're actually still openspace, we need to update ZMimic.
-	if(intact)
+	else
 		update_mimic()
 
 	// UPWARDS

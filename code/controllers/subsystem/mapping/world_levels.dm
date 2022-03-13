@@ -1,4 +1,3 @@
-#warn convert every json :) ahaha oh fuck.
 /datum/controller/subsystem/mapping
 	/// nested list - group = list(id = map datum)
 	var/list/level_datums

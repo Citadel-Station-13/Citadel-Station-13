@@ -32,17 +32,19 @@
 	if(!isnull(force_destination))
 		src.force_destination = force_destination
 	Build()
+	RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/transit)
 
-#warn handling for transitions (movement)
+/datum/component/transition_border/proc/transit(datum/source, atom/movable/AM)
+	var/turf/destination = SSmapping.GetVirtualStep(parent, dir)
+	if(!destination)
+		CRASH("Invalid destination found??")
+	AM.TransitForceMove(destination, 2)
 
 /datum/component/transition_border/proc/Build()
 	// reset first
 	holder1?.Reset()
 	holder2?.Reset()
 	holder3?.Reset()
-
-#warn make borders jump to second tile of other level
-#warn byond is awful and will crash otherwise!
 
 	// "why the hell do you need 3 holders"
 	// because otherwise i can't offset them right, because we want the map to look like it's continuous, not overlapping
@@ -59,22 +61,22 @@
 			if(!holder1)
 				holder1 = new(parent)
 			holder1.vis_contents = turfs
-			holder1.pixel_y = dir & SOUTH? world.icon_size * (range + 1) : 32
+			holder1.pixel_y = dir & SOUTH? -world.icon_size * (range - 1) : 0
 
 		turfs = GetTurfsInCardinal(EWCOMPONENT(dir))
 		if(length(turfs))
 			if(!holder2)
 				holder2 = new(parent)
 			holder2.vis_contents = turfs
-			holder2.pixel_x = dir & WEST? world.icon_size * (range + 1) : 32
+			holder2.pixel_x = dir & WEST? world.icon_size * (range - 1) : 0
 
 		turfs = GetTurfsInDiagonal(dir)
 		if(length(turfs))
 			if(!holder3)
 				holder3 = new(parent)
 			holder3.vis_contents = turfs
-			holder3.pixel_y = dir & SOUTH? world.icon_size * (range + 1) : 32
-			holder3.pixel_x = dir & WEST? world.icon_size * (range + 1) : 32
+			holder3.pixel_y = dir & SOUTH? world.icon_size * (range - 1) : 0
+			holder3.pixel_x = dir & WEST? world.icon_size * (range - 1) : 0
 	else
 		var/list/turfs = GetTurfsInCardinal(dir)
 		if(!length(turfs))
@@ -82,8 +84,8 @@
 		if(!holder1)
 			holder1 = new(parent)
 		holder1.vis_contents = turfs
-		holder1.pixel_x = dir == WEST? world.icon_size * (range + 1) : 32
-		holder1.pixel_y = dir == SOUTH? world.icon_size * (range + 1) : 32
+		holder1.pixel_x = dir == WEST? world.icon_size * (range - 1) : 0
+		holder1.pixel_y = dir == SOUTH? world.icon_size * (range - 1) : 0
 
 /datum/component/transition_border/proc/GetTurfsInDiagonal(dir)
 	ASSERT(dir & (dir - 1))
@@ -93,15 +95,15 @@
 	if(!target_level && !force_target)
 		return list()
 	var/turf/target = locate(
-		dir & EAST? 1 : 255,
-		dir & NORTH? 1 : 255,
+		dir & EAST? 2 : 254,
+		dir & NORTH? 2 : 254,
 		target_level.z_value
 	)
 	return block(
 		target,
 		locate(
-			dir & EAST? range : world.maxx - range + 1,
-			dir & NORTH? range : world.maxy - range + 1,
+			dir & EAST? range + 1 : world.maxx - range,
+			dir & NORTH? range + 1 : world.maxy - range,
 			force_target || target_level.z_value
 		)
 	)
@@ -114,12 +116,12 @@
 	if(!target_level && !force_target)
 		return list()
 
-	var/turf/target = locate((dir == EAST)? 1 : ((dir == WEST)? 255 : T.x), (dir == NORTH)? 1 : ((dir == SOUTH)? 255 : T.y), force_target || target_level.z_value)
+	var/turf/target = locate((dir == EAST)? 2 : ((dir == WEST)? world.maxx - 1 : T.x), (dir == NORTH)? 2 : ((dir == SOUTH)? world.maxy - 1 : T.y), force_target || target_level.z_value)
 	return block(
 		target,
 		locate(
-			(dir == EAST)? range : ((dir == WEST)? world.maxx - range + 1 : T.x),
-			(dir == NORTH)? range : ((dir == SOUTH)? world.maxy - range + 1 : T.y),
+			(dir == EAST)? range + 1 : ((dir == WEST)? world.maxx - range: T.x),
+			(dir == NORTH)? range + 1 : ((dir == SOUTH)? world.maxy - range : T.y),
 			force_target || target_level.z_value
 		)
 	)

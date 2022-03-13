@@ -1,3 +1,7 @@
+/**
+ * due to the new transition border system that works on theoretically any turf,
+ * this now just tests if TransitForceMove() works properly.
+ */
 /datum/unit_test/chain_pull_through_space
 	var/turf/open/space/space_tile
 	var/claimed_tile
@@ -7,14 +11,6 @@
 
 /datum/unit_test/chain_pull_through_space/New()
 	..()
-
-	// Create a space tile that goes to another z-level
-	claimed_tile = run_loc_floor_bottom_left.type
-
-	space_tile = new(locate(run_loc_floor_bottom_left.x, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
-	space_tile.destination_x = 100
-	space_tile.destination_y = 100
-	space_tile.destination_z = 5
 
 	// Create our list of humans, all adjacent to one another
 	alice = new(locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
@@ -27,7 +23,6 @@
 	charlie.name = "Charlie"
 
 /datum/unit_test/chain_pull_through_space/Destroy()
-	space_tile.ChangeTurf(claimed_tile)
 	qdel(alice)
 	qdel(bob)
 	qdel(charlie)
@@ -47,7 +42,8 @@
 		return Fail("During normal move, Charlie was not at the correct x ([charlie.x])")
 
 	// We're going through the space turf now that should teleport us
-	alice.Move(run_loc_floor_bottom_left)
+	// alice.Move(run_loc_floor_bottom_left)
+	alice.TransitForceMove(run_loc_floor_top_right)
 	if (alice.z != space_tile.destination_z)
 		return Fail("Alice did not teleport to the destination z-level. Current location: ([alice.x], [alice.y], [alice.z])")
 
@@ -55,8 +51,12 @@
 		return Fail("Bob did not teleport to the destination z-level. Current location: ([bob.x], [bob.y], [bob.z])")
 	if (!bob.Adjacent(alice))
 		return Fail("Bob is not adjacent to Alice. Bob is at [bob.x], Alice is at [alice.x]")
+	if(!(alice.pulling == bob))
+		return Fail("Alice is not pulling Bob.")
 
 	if (charlie.z != space_tile.destination_z)
 		return Fail("Charlie did not teleport to the destination z-level. Current location: ([charlie.x], [charlie.y], [charlie.z])")
 	if (!charlie.Adjacent(bob))
 		return Fail("Charlie is not adjacent to Bob. Charlie is at [charlie.x], Bob is at [bob.x]")
+	if(!(bob.pulling == charlie))
+		return Fail("Bob is not pulling Charlie.")

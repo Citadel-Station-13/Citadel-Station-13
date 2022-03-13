@@ -75,7 +75,7 @@
 		reusable_levels += text2num(z)
 		erasing_levels -= text2num(z)
 		for(var/datum/controller/subsystem/S in Master.subsystems)
-			S.OnZCLear(z)
+			S.OnZClear(z)
 		if(!length(erasing_levels))
 			can_fire = FALSE
 

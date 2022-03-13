@@ -14,7 +14,6 @@
 /turf/open/openspace/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
-
 /turf/open/openspace/can_have_cabling()
 	if(locate(/obj/structure/lattice/catwalk, src))
 		return TRUE

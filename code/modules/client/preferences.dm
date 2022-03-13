@@ -917,7 +917,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if (!p_map)
 					p_map = "Default"
 					if (config.default_map)
-						p_map += " ([SSmapping.getMapNName(config.default_map)])"
+						p_map += " ([SSmapping.getMapName(config.default_map)])"
 				else
 					if (p_map in config.map_data)
 						var/datum/map_settings/VM = config.map_data[p_map]
@@ -2383,10 +2383,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						default += " ([SSmapping.getMapName(config.default_map)])"
 					for (var/M in config.GetMapIDs())
 						var/datum/map_settings/VM = config.GetMapSettings(M)
-						var/friendlyname = "[SSmapping.getMapName(VM.id)] "
+						var/friendlyname = "[SSmapping.getMapName(VM.map_id)] "
 						if(!VM.rotation)
 							friendlyname += " (disabled)"
-						maplist[friendlyname] = VM.map_name
+						maplist[friendlyname] = VM.map_id
 					maplist[default] = null
 					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference")  as null|anything in maplist
 					if (pickedmap)

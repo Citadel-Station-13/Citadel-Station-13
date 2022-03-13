@@ -54,6 +54,14 @@
 
 //FALLING STUFF
 
+/atom/movable/proc/Handle
+
+/atom/movable/proc/TakeFallDamage(amount, levels = 1)
+	return
+
+
+
+
 
 /atom/movable/proc/handle_fall(var/turf/landing)
 	var/turf/previous = get_turf(loc)
@@ -101,16 +109,7 @@
 	apply_damage(rand(min_damage, max_damage), BRUTE, BP_L_ARM, armor_pen = 75)
 	apply_damage(rand(min_damage, max_damage), BRUTE, BP_R_ARM, armor_pen = 75)
 	SET_STATUS_MAX(src, STAT_WEAK, 3)
-	if(prob(skill_fail_chance(SKILL_HAULING, 40, SKILL_EXPERT, 2)))
-		var/list/victims = list()
-		for(var/tag in list(BP_L_FOOT, BP_R_FOOT, BP_L_ARM, BP_R_ARM))
-			var/obj/item/organ/external/E = get_organ(tag)
-			if(E && !E.is_stump() && !E.dislocated && !BP_IS_PROSTHETIC(E))
-				victims += E
-		if(victims.len)
-			var/obj/item/organ/external/victim = pick(victims)
-			victim.dislocate()
-			to_chat(src, "<span class='warning'>You feel a sickening pop as your [victim.joint] is wrenched out of the socket.</span>")
+
 	updatehealth()
 
 /mob/living/carbon/human/proc/climb_up(atom/A)
