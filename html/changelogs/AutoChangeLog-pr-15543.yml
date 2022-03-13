@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - rscadd: "spraypainting a stack of floor tiles makes the placed tile the same colour"
