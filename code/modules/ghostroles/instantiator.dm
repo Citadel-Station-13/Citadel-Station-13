@@ -61,6 +61,15 @@
  * Returns an outfit instance or a typepath
  */
 /datum/ghostrole_instantiator/human/proc/GetOutfit(client/C, mob/M, list/params)
+	// allow for outfit override
+	if(params["outfit"])
+		var/override = params["outfit"]
+		if(istext(override))
+			override = text2path(override)
+		if(ispath(override, /datum/outfit))
+			return override
+		if(istype(override, /datum/outfit))
+			return override
 	if(ispath(equip_outfit, /datum/outfit))
 		return equip_outfit
 	if(istype(equip_outfit, /datum/outfit))

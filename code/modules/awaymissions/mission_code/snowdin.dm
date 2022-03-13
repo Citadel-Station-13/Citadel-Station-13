@@ -559,20 +559,27 @@
 	name = "Syndicate Snow Operative Corpse"
 	implants = null
 
-#warn convert
-/obj/effect/mob_spawn/human/syndicate/coldres/alive
+/datum/ghostrole/snowdin_operative
+	lazy_init = TRUE
+	name = "Syndicate Snow Operative (Snowdin)"
+	desc = "You are a syndicate operative recently awoken from cryostasis in an underground outpost."
+	spawntext = "You are a syndicate operative recently awoken from cryostasis in an underground outpost. Monitor Nanotrasen communications and record information. All intruders should be \
+	disposed of swiftly to assure no gathered information is stolen or lost. Try not to wander too far from the outpost as the caves can be a deadly place even for a trained operative such as yourself."
+	instantiator = /datum/ghostrole_instantiator/human/random/snow_operative
+
+/datum/ghostrole_instantiator/human/random/snow_operative
+	equip_outfit = /datum/outfit/snowsyndie
+
+/datum/ghostrole_instantiator/human/random/snow_operative/Equip(client/C, mob/M, list/params)
+	. = ..()
+	M.faction |= ROLE_SYNDICATE
+
+/obj/structure/ghost_role_spawner/syndicate_snowdin
 	name = "sleeper"
-	mob_name = "Syndicate Snow Operative"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	roundstart = FALSE
-	death = FALSE
-	job_description = "Syndicate Snow Operative"
-	faction = ROLE_SYNDICATE
-	outfit = /datum/outfit/snowsyndie
-	short_desc = "You are a syndicate operative recently awoken from cryostasis in an underground outpost."
-	flavour_text = "You are a syndicate operative recently awoken from cryostasis in an underground outpost. Monitor Nanotrasen communications and record information. All intruders should be \
-	disposed of swiftly to assure no gathered information is stolen or lost. Try not to wander too far from the outpost as the caves can be a deadly place even for a trained operative such as yourself."
+	role_type = /datum/ghostrole/snowdin_operative
+
 
 /datum/outfit/snowsyndie
 	name = "Syndicate Snow Operative"

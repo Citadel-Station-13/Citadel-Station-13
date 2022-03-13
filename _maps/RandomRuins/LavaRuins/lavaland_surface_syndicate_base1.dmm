@@ -2850,7 +2850,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/lavaland/unpowered/syndicate_lava_base/main)
 "ib" = (
-/obj/effect/mob_spawn/human/lavaland_syndicate{
+/obj/structure/ghost_role_spawner/syndicate{
 	dir = 4
 	},
 /turf/open/floor/plasteel/grimy,
@@ -2889,7 +2889,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/lavaland/unpowered/syndicate_lava_base/dormitories)
 "ie" = (
-/obj/effect/mob_spawn/human/lavaland_syndicate/comms{
+/obj/structure/ghost_role_spawner/syndicate/comms{
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
@@ -3545,7 +3545,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/lavaland/unpowered/syndicate_lava_base/main)
 "jn" = (
-/obj/effect/mob_spawn/human/lavaland_syndicate{
+/obj/structure/ghost_role_spawner/syndicate{
 	dir = 4
 	},
 /obj/machinery/airalarm/syndicate{
@@ -3570,7 +3570,7 @@
 /turf/open/floor/plating,
 /area/ruin/lavaland/unpowered/syndicate_lava_base/main)
 "jq" = (
-/obj/effect/mob_spawn/human/lavaland_syndicate{
+/obj/structure/ghost_role_spawner/syndicate{
 	dir = 8
 	},
 /obj/machinery/airalarm/syndicate{

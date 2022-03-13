@@ -119,22 +119,34 @@
 
 ///Syndicate Listening Post
 
-#warn convert
-/obj/effect/mob_spawn/human/lavaland_syndicate
+/datum/ghostrole/syndicate_virologist
 	name = "Syndicate Bioweapon Scientist"
-	roundstart = FALSE
-	death = FALSE
-	job_description = "Off-station Syndicate Scientist"
+	inject_params = list(
+		"outfit" = /datum/outfit/lavaland_syndicate
+	)
+	desc = "You are a syndicate science technician, employed in a top secret research facility developing biological weapons."
+	spawntext = "Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. Continue your research as best you can, and try to keep a low profile. <span class='boldwarning'>The base is rigged with explosives, DO NOT abandon it or let it fall into enemy hands!</span>"
+	assigned_role = "Lavaland Syndicate"
+
+/datum/ghostrole/syndicate_comms
+	name = "Syndicate Comms Agent"
+	inject_params = list(
+		"outfit" = /datum/outfit/lavaland_syndicate/comms
+	)
+	desc = "You are a syndicate comms agent, employed in a top secret research facility developing biological weapons."
+	flavour_text = "<span class='big bold'>You are a syndicate agent,</span><b> assigned to a small listening post station situated near your hated enemy's top secret research facility: Space Station 13. <b>Monitor enemy activity as best you can, and try to keep a low profile. <font size=6>DON'T</font> abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
+	assigned_role = "Syndicate Comms Agent"
+
+/datum/ghostrole_instantiator/human/random/syndicate/Equip(client/C, mob/M, list/params)
+	. = ..()
+	M.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
+	M.faction |= ROLE_SYNDICATE
+
+/obj/structure/ghost_role_spawner/syndicate
+	name = "Syndicate Bioweapon Scientist"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
-	short_desc = "You are a syndicate science technician, employed in a top secret research facility developing biological weapons."
-	flavour_text = "Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. Continue your research as best you can, and try to keep a low profile."
-	important_info = "The base is rigged with explosives, DO NOT abandon it or let it fall into enemy hands!"
-	outfit = /datum/outfit/lavaland_syndicate
-	assignedrole = "Lavaland Syndicate"
-
-/obj/effect/mob_spawn/human/lavaland_syndicate/special(mob/living/new_spawn)
-	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
+	role_type = /datum/ghostrole/syndicate_viroogist
 
 /datum/outfit/lavaland_syndicate
 	name = "Lavaland Syndicate Agent"
@@ -150,20 +162,11 @@
 	id = /obj/item/card/id/syndicate/anyone
 	implants = list(/obj/item/implant/weapons_auth)
 
-/datum/outfit/lavaland_syndicate/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
-	H.faction |= ROLE_SYNDICATE
-
-#warn convert
-/obj/effect/mob_spawn/human/lavaland_syndicate/comms
+/obj/structure/ghost_role_spawner/syndicate/comms
 	name = "Syndicate Comms Agent"
-	job_description = "Off-station Syndicate Comms Agent"
-	short_desc = "You are a syndicate comms agent, employed in a top secret research facility developing biological weapons."
-	flavour_text = "Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. Monitor enemy activity as best you can, and try to keep a low profile. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!"
-	important_info = "DO NOT abandon the base."
-	outfit = /datum/outfit/lavaland_syndicate/comms
-	flavour_text = "<span class='big bold'>You are a syndicate agent,</span><b> assigned to a small listening post station situated near your hated enemy's top secret research facility: Space Station 13. <b>Monitor enemy activity as best you can, and try to keep a low profile. <font size=6>DON'T</font> abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
+	role_type = /datum/ghostrole/syndicate_comms
 
-/obj/effect/mob_spawn/human/lavaland_syndicate/comms/space/Initialize()
+/obj/structure/ghost_role_spawner/syndicate/comms/space/Initialize()
 	. = ..()
 	if(prob(90)) //only has a 10% chance of existing, otherwise it'll just be a NPC syndie.
 		new /mob/living/simple_animal/hostile/syndicate/ranged(get_turf(src))
