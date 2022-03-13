@@ -1,6 +1,7 @@
 /datum/department/cargo
 	name = "Supply"
 	SQL_name = "Supply"
+	priority = 20
 	jobs = list(
 		/datum/job/cargo_tech,
 		/datum/job/mining,

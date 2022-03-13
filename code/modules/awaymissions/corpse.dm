@@ -29,8 +29,6 @@
 	var/mob_color //Change the mob's color
 	var/assignedrole
 	var/show_flavour = TRUE
-	var/banType = "lavaland"
-	var/skip_reentry_check = FALSE //Skips the ghost role blacklist time for people who ghost/suicide/cryo
 
 ///override this to add special spawn conditions to a ghost role
 /obj/effect/mob_spawn/proc/allow_spawn(mob/user, silent = FALSE)
@@ -303,6 +301,7 @@
 	outfit = /datum/outfit/job/doctor
 
 
+#warn convert
 /obj/effect/mob_spawn/human/doctor/alive
 	death = FALSE
 	roundstart = FALSE
@@ -359,6 +358,7 @@
 	id_access_list = list(ACCESS_BAR)
 	outfit = /datum/outfit/spacebartender
 
+#warn convert
 /obj/effect/mob_spawn/human/bartender/alive
 	death = FALSE
 	roundstart = FALSE
@@ -384,6 +384,7 @@
 /obj/effect/mob_spawn/human/beach
 	outfit = /datum/outfit/beachbum
 
+#warn convert
 /obj/effect/mob_spawn/human/beach/alive
 	death = FALSE
 	roundstart = FALSE
@@ -475,6 +476,7 @@
 	id = /obj/item/card/id
 
 
+#warn convert
 /obj/effect/mob_spawn/human/commander/alive
 	death = FALSE
 	roundstart = FALSE
@@ -505,6 +507,7 @@
 	mob_species = /datum/species/skeleton
 	mob_gender = NEUTER
 
+#warn convert
 /obj/effect/mob_spawn/human/skeleton/alive
 	death = FALSE
 	roundstart = FALSE
@@ -521,6 +524,7 @@
 	mob_species = /datum/species/zombie
 	assignedrole = "Zombie"
 
+#warn convert
 /obj/effect/mob_spawn/human/zombie/alive
 	death = FALSE
 	roundstart = FALSE
@@ -545,6 +549,7 @@
 
 
 //For ghost bar.
+#warn convert
 /obj/effect/mob_spawn/human/alive/space_bar_patron
 	name = "Bar cryogenics"
 	mob_name = "Bar patron"

@@ -4,3 +4,4 @@
 /datum/department/unlisted
 	name = "Unlisted"
 	unlisted = TRUE
+	priority = -10000

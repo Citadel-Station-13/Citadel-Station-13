@@ -1,5 +1,6 @@
 /datum/department/silicon
 	name = "Silicons"
+	priority = -10
 	unlisted = TRUE
 	SQL_name = "Silicons"
 	jobs = list(

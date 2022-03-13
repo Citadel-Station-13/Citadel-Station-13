@@ -559,6 +559,7 @@
 	name = "Syndicate Snow Operative Corpse"
 	implants = null
 
+#warn convert
 /obj/effect/mob_spawn/human/syndicate/coldres/alive
 	name = "sleeper"
 	mob_name = "Syndicate Snow Operative"

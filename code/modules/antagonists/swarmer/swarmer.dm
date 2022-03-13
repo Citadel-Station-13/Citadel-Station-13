@@ -6,6 +6,7 @@
 	icon_state = "swarmer_unactivated"
 	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=4000)
 
+#warn convert
 /obj/effect/mob_spawn/swarmer
 	name = "unactivated swarmer"
 	desc = "A currently unactivated swarmer. Swarmers can self activate at any time, it would be wise to immediately dispose of this."

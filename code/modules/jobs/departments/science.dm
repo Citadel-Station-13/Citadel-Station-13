@@ -1,6 +1,7 @@
 /datum/department/science
 	name = "Science"
 	SQL_name = "Science"
+	priority = 30
 	jobs = list(
 		/datum/job/scientist,
 		/datum/job/roboticist,

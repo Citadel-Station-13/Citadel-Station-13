@@ -1338,7 +1338,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/head = length(J.departments_supervised)
 	// don't question the `|| null`
 	var/has_alt_titles = (length(J.GetTitles()) > 1) || null
-	var/left = "[has_alt_titles && "<a href='?_src_=prefs;pickalttitles=[J.title]'>"]<font color='black'>[head? "<b>[J.title]</</b>" : J.title]</font>[has_alt_titles && "</a>"]"
+	var/left = "[has_alt_titles && "<a href='?_src_=prefs;setalttitle=[J.title]'>"]<font color='black'>[head? "<b>[J.title]</</b>" : J.title]</font>[has_alt_titles && "</a>"]"
 	var/preftext
 	if(jobban_isbanned(parent.mob, J.title))
 		preftext = "<a href='?_src_=prefs;bancheck=[J.title]'>BANNED</a>"
@@ -1391,7 +1391,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		oncontextmenu='javascript:return setJobPrefRedirect([enabled? 0 : JP_LOW], \"[J.title]\");'>\
 		<font color=[enabled? "orange" : "red"]>[enabled? "Yes" : "No"]</font></a>"
 
-	var/right = "<a href='_src_=prefs;jobhelp=[J.title]'>\[?]</a> [preftext]"
+	var/right = "<a href='?_src_=prefs;jobhelp=[J.title]'>\[?]</a> [preftext]"
 
 	. = "<tr bgcolor='[J.selection_color]'><td width='60%' align='right'>[left] </td><td> [right]</td></tr>"
 
@@ -1563,7 +1563,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			text += ".</span>"
 			to_chat(user, text, confidential = TRUE)
 		qdel(query_get_jobban)
-		return
+		return TRUE
 
 	if(href_list["jobhelp"])
 		var/datum/job/J = SSjob.GetJobAuto(href_list["jobhelp"])
@@ -1577,7 +1577,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		var/preferred = input(user, "Select a title for [J.title]", "Alt Titles", J.title) as null|anything in titles
 		alt_titles[J.title] = preferred
 		SetChoices(user)
-		return
+		return TRUE
 
 	if(href_list["preference"] == "job")
 		switch(href_list["task"])

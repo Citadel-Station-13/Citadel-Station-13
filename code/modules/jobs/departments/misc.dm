@@ -3,4 +3,5 @@
  */
 /datum/department/misc
 	name = "Miscellaneous"
+	priority = -1000
 	color = rgb(150,150,150)
