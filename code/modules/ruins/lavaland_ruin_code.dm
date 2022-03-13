@@ -134,7 +134,7 @@
 		"outfit" = /datum/outfit/lavaland_syndicate/comms
 	)
 	desc = "You are a syndicate comms agent, employed in a top secret research facility developing biological weapons."
-	flavour_text = "<span class='big bold'>You are a syndicate agent,</span><b> assigned to a small listening post station situated near your hated enemy's top secret research facility: Space Station 13. <b>Monitor enemy activity as best you can, and try to keep a low profile. <font size=6>DON'T</font> abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
+	spawntext = "<span class='big bold'>You are a syndicate agent,</span><b> assigned to a small listening post station situated near your hated enemy's top secret research facility: Space Station 13. <b>Monitor enemy activity as best you can, and try to keep a low profile. <font size=6>DON'T</font> abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
 	assigned_role = "Syndicate Comms Agent"
 
 /datum/ghostrole_instantiator/human/random/syndicate/Equip(client/C, mob/M, list/params)
