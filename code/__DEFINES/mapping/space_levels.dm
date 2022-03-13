@@ -27,8 +27,6 @@
 #define ZTRAIT_LONGRAIN "Weather_Longrain"
 
 // Attributes - Can include any text data as a field.
-/// Baseturf path as text
-#define ZATTRIBUTE_BASETURF "Baseturf"
 /// Bombcap multiplier as number
 #define ZATTRIBUTE_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
 /// Default airmix

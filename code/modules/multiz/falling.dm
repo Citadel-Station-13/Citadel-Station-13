@@ -153,6 +153,7 @@
  */
 /atom/proc/ZImpacted(atom/movable/AM, levels = 1, fall_flags)
 	#warn only hit one thing?
+	#warn this needs to be moved to impact so not everything is hit
 	if(!(fall_flags & FALL_SILENT))
 		AM.visible_message(span_danger("[AM] crashes into [src]!"), span_warning("You hear something crashing down near you."), span_danger("You crash into [victim]!"))
 	if(!(fall_flags & FALL_CUSHIONED_FALLER))

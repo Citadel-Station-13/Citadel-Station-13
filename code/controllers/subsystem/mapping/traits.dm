@@ -100,8 +100,8 @@
  * Gets baseturf type of a zlevel
  */
 /datum/controller/subsystem/mapping/proc/GetBaseturf(z)
-	var/type = GetAttribute(z, ZATTRIBUTE_BASETURF)
-	return type || /turf/open/space
+	var/datum/space_level/L = space_levels[z]
+	return L.baseturf || world.turf
 
 /**
  * Gets deault air of a zlevel

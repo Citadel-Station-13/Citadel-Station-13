@@ -40,6 +40,8 @@
 	var/list/traits = list()
 	/// Attributes - key-value lists, value can be string/number/null only. Recursing lists are supported.
 	var/list/attributes = list()
+	/// baseturf - path
+	var/baseturf
 
 	// TRANSIENT VARIABLES
 	/// Current crosslinking x in grid
@@ -137,7 +139,7 @@
 	if(data["baseturf"])
 		baseturf = text2path(data["baseturf"])
 		if(!ispath(baseturf))
-			baseturf = down? /turf/open/openspace : /turf/open/space
+			baseturf = down? /turf/open/openspace : world.turf
 			stack_trace("Invalid baseturf [data["baseturf"]].")
 	if(data["traits"])
 		for(var/i in data["traits"])

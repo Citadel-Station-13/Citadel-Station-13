@@ -16,6 +16,7 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	turf_construct_flags = TURF_CONSTRUCT_FLAGS_SANDBOX
 
 	var/attachment_holes = TRUE
 

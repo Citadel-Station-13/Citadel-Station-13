@@ -1,13 +1,32 @@
 /**
  * Can a turf be built on? Usually used to ensure you can't build over things like transit turfs
  */
-/turf/proc/CanBuildOn()
+/turf/proc/CanBuildOn(mob/user)
 	return TRUE
 
 /turf/attackby(obj/item/C, mob/user, params)
-	..()
-	if(!CanBuildHere())
-		return
+	. = ..()
+	var/turf/target
+	var/list/modifiers = params2list(params)
+	if(modifiers["right"])
+		target = Above()
+		if(!target)
+			to_chat(user, "<span class='warning'>There's nothing above this turf!</span>")
+			return
+		if(!target.CanBuildOn(user))
+			to_chat(user, span_warning("You can't build on the turf above this!"))
+			return
+	else
+		if(!CanBuildOn(user))
+			to_chat(user, span_warning("You can't build on this turf!"))
+			return
+		target = src
+	if(target.attempt_lattice_construction(C, user, params))
+		return TRUE
+	if(target.attempt_catwalk_construction(C, user, params))
+		return TRUE
+	if(target.attempt_plating_construction(C, user, params))
+		return TRUE
 	#warn rework this, check for ctrl for multiz upwards build.
 	if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
@@ -57,6 +76,7 @@
 
 /turf/proc/attempt_catwalk_construction(obj/item/I, mob/user, params)
 
+#warn plating direct flag too, check flags on all
 /turf/proc/attempt_plating_construction(obj/item/I, mob/user, params)
 
 /turf/proc/has_lattice()
