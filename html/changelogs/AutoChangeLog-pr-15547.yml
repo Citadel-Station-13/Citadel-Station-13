@@ -1,0 +1,4 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - rscadd: "Round continuation limitations based on population voting for continuation"
