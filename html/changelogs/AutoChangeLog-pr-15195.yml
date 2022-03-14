@@ -1,5 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - balance: "rebalanced synthtissue's and strange reagent's revival.
-tweak: Hyposprays on spray mode now use \"patch\" as opposed to \"touch\" to mirror normal medsprays."
