@@ -44,10 +44,14 @@
 	owner = C
 	if(!owner)
 		CRASH("No client")
+	return
+
+/*
 	src.secondary_map = secondary_map
 	src.forced_eye = forced_eye
 	src.planemaster_override = planemaster_override
 	Reset()
+*/
 
 /datum/parallax_holder/Destroy()
 	if(owner)
@@ -65,6 +69,9 @@
 	return ..()
 
 /datum/parallax_holder/proc/Reset(auto_z_change, force)
+	return
+
+/*
 	if(!(cached_eye = Eye()))
 		// if no eye, tear down
 		last = cached_eye = last_area = null
@@ -85,9 +92,13 @@
 	// hard reset positions to correct positions
 	for(var/atom/movable/screen/parallax_layer/L in layers)
 		L.ResetPosition(T.x, T.y)
+*/
 
 // better updates via client_mobs_in_contents can be created again when important recursive contents is ported!
 /datum/parallax_holder/proc/Update(full)
+	return
+
+/*
 	if(!full && !cached_eye || (get_turf(cached_eye) == last))
 		return
 	if(!owner)	// why are we here
@@ -115,18 +126,27 @@
 	if(last_area != T.loc)
 		last_area = T.loc
 		UpdateMotion()
+*/
 
 /**
  * Gets the eye we should be centered on
  */
 /datum/parallax_holder/proc/Eye()
+	return
+
+/*
 	return forced_eye || owner?.eye
+*/
 
 /**
  * Gets the base parallax planemaster for things like turning
  */
 /datum/parallax_holder/proc/GetPlaneMaster()
+	return
+
+/*
 	return planemaster_override || (owner && (locate(/atom/movable/screen/plane_master/parallax) in owner?.screen))
+*/
 
 /**
  * Syncs us to our parallax objects. Does NOT check if we should have those objects, that's Reset()'s job.
@@ -136,6 +156,9 @@
  * Also ensures movedirs are correct for the eye's pos.
  */
 /datum/parallax_holder/proc/Sync(auto_z_change, force)
+	return
+
+/*
 	layers = list()
 	for(var/atom/movable/screen/parallax_layer/L in parallax.objects)
 		layers += L
@@ -145,11 +168,15 @@
 	var/turf/T = get_turf(cached_eye)
 	vis_holder.vis_contents = vis = T? SSparallax.get_parallax_vis_contents(T.z) : list()
 	UpdateMotion(auto_z_change, force)
+*/
 
 /**
  * Updates motion if needed
  */
 /datum/parallax_holder/proc/UpdateMotion(auto_z_change, force)
+	return
+
+/*
 	var/turf/T = get_turf(cached_eye)
 	if(!T)
 		if(scroll_speed || scroll_turn)
@@ -161,6 +188,7 @@
 	else
 		var/area/A = T.loc
 		Animation(A.parallax_move_speed, A.parallax_move_angle, auto_z_change? 0 : null, auto_z_change? 0 : null, force)
+*/
 
 /datum/parallax_holder/proc/Apply(client/C = owner)
 	return		// testmerge
@@ -190,6 +218,9 @@
 */
 
 /datum/parallax_holder/proc/Remove(client/C = owner)
+	return
+
+/*
 	if(QDELETED(C))
 		return
 	C.screen -= layers
@@ -197,6 +228,7 @@
 		var/atom/movable/screen/plane_master/parallax_white/PM = locate() in C.screen
 		if(PM)
 			PM.color =  initial(PM.color)
+*/
 
 /datum/parallax_holder/proc/SetParallaxType(path)
 	if(!ispath(path, /datum/parallax))
@@ -204,6 +236,9 @@
 	SetParallax(new path)
 
 /datum/parallax_holder/proc/SetParallax(datum/parallax/P, delete_old = TRUE, auto_z_change, force)
+	return
+
+/*
 	if(P == parallax)
 		return
 	Remove()
@@ -215,6 +250,7 @@
 		return
 	Sync(auto_z_change, force)
 	Apply()
+*/
 
 /**
  * Runs a modifier to parallax as an animation.
@@ -226,6 +262,9 @@
  * turn_speed - ds to spend on turning. 0 for immediate.
  */
 /datum/parallax_holder/proc/Animation(speed = 25, turn = 0, windup = speed, turn_speed = speed, force)
+	return
+
+/*
 	// Parallax doesn't currently use this method of rotating.
 
 	// #if !PARALLAX_ROTATION_ANIMATIONS
@@ -262,11 +301,15 @@
 		animate(transform = translate_matrix, time = 0)
 		animate(transform = target_matrix, time = move_speed)
 		P.QueueLoop(move_speed, speed * P.speed, translate_matrix, target_matrix)
+*/
 
 /**
  * Smoothly stops the animation, turning to a certain angle as needed.
  */
 /datum/parallax_holder/proc/StopScrolling(turn = 0, time = 30)
+	return
+
+/*
 	// reset turn
 	if(turn != scroll_turn && GetPlaneMaster())
 		var/matrix/turn_transform = matrix()
@@ -289,11 +332,15 @@
 		translate_matrix.Translate(cos(turn) * 480, sin(turn) * 480)
 		P.transform = translate_matrix
 		animate(P, transform = matrix(), time = time, easing = QUAD_EASING | EASE_OUT)
+*/
 
 /**
  * fully resets animation state
  */
 /datum/parallax_holder/proc/HardResetAnimations()
+	return
+
+/*
 	// reset vars
 	scroll_turn = 0
 	scroll_speed = 0
@@ -307,9 +354,11 @@
 			continue
 		P.CancelAnimation()
 		animate(P, transform = matrix(), time = 0, flags = ANIMATION_END_NOW)
+*/
 
 /client/proc/CreateParallax()
 	if(!parallax_holder)
 		parallax_holder = new(src)
+
 /atom/movable/screen/parallax_vis
 	screen_loc = "CENTER,CENTER"
