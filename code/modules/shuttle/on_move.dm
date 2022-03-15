@@ -144,12 +144,10 @@ All ShuttleMove procs go here
 /area/proc/onShuttleMove(turf/oldT, turf/newT, area/underlying_old_area)
 	if(newT == oldT) // In case of in place shuttle rotation shenanigans.
 		return TRUE
-
 	contents -= oldT
 	underlying_old_area.contents += oldT
 	oldT.change_area(src, underlying_old_area)
 	//The old turf has now been given back to the area that turf originaly belonged to
-
 	var/area/old_dest_area = newT.loc
 	parallax_moving = old_dest_area.parallax_moving
 	parallax_move_angle = old_dest_area.parallax_move_angle
@@ -161,11 +159,13 @@ All ShuttleMove procs go here
 
 // Called on areas after everything has been moved
 /area/proc/afterShuttleMove(new_parallax_dir, speed)
+	SHUTTLE_DEBUG_TRACE
 	if(!new_parallax_dir)
 		parallax_moving = FALSE
 		return
 	parallax_move_angle = dir2angle(new_parallax_dir)
 	parallax_move_speed = speed
+	SHUTTLE_DEBUG_TRACE
 	return TRUE
 
 /area/proc/lateShuttleMove()

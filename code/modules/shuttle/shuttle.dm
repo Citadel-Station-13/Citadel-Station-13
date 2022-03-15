@@ -705,6 +705,7 @@
 	destination = null
 
 /obj/docking_port/mobile/proc/check_effects()
+	SHUTTLE_DEBUG_TRACE
 	if(!ripples.len)
 		if((mode == SHUTTLE_CALL) || (mode == SHUTTLE_RECALL))
 			var/tl = timeLeft(1)
@@ -722,6 +723,7 @@
 			parallax_slowdown()
 
 /obj/docking_port/mobile/proc/parallax_slowdown()
+	SHUTTLE_DEBUG_TRACE
 	for(var/mob/M in GLOB.player_list)
 		var/area/A = get_area(M)
 		if(A in shuttle_areas)

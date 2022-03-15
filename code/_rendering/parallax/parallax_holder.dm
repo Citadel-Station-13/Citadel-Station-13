@@ -41,6 +41,7 @@
 	var/atom/movable/screen/plane_master/parallax/planemaster_override
 
 /datum/parallax_holder/New(client/C, secondary_map, forced_eye, planemaster_override)
+	PARALLAX_DEBUG_TRACE
 	owner = C
 	if(!owner)
 		CRASH("No client")
@@ -50,6 +51,7 @@
 	Reset()
 
 /datum/parallax_holder/Destroy()
+	PARALLAX_DEBUG_TRACE
 	if(owner)
 		if(owner.parallax_holder == src)
 			owner.parallax_holder = null
@@ -65,6 +67,7 @@
 	return ..()
 
 /datum/parallax_holder/proc/Reset(auto_z_change, force)
+	PARALLAX_DEBUG_TRACE
 	if(!(cached_eye = Eye()))
 		// if no eye, tear down
 		last = cached_eye = last_area = null
@@ -243,6 +246,7 @@
 	// speed diff?
 	scroll_speed = speed
 	scrolling = TRUE
+	PARALLAX_DEBUG_TRACE
 	// always scroll from north; turn handles everything
 	for(var/atom/movable/screen/parallax_layer/P in layers)
 		if(P.absolute)
@@ -265,6 +269,7 @@
 /datum/parallax_holder/proc/StopScrolling(turn = 0, time = 30)
 	// reset turn
 	if(turn != scroll_turn && GetPlaneMaster())
+		PARALLAX_DEBUG_TRACE
 		var/matrix/turn_transform = matrix()
 		turn_transform.Turn(turn)
 		scroll_turn = turn
@@ -274,6 +279,7 @@
 		scrolling = FALSE
 		scroll_speed = 0
 		return
+	PARALLAX_DEBUG_TRACE
 	scrolling = FALSE
 	scroll_speed = 0
 	// someone can do the math for "stop after a smooth iteration" later.
@@ -290,6 +296,7 @@
  * fully resets animation state
  */
 /datum/parallax_holder/proc/HardResetAnimations()
+	PARALLAX_DEBUG_TRACE
 	// reset vars
 	scroll_turn = 0
 	scroll_speed = 0

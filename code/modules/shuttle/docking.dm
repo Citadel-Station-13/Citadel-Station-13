@@ -1,11 +1,12 @@
 /// This is the main proc. It instantly moves our mobile port to stationary port `new_dock`.
 /obj/docking_port/mobile/proc/initiate_docking(obj/docking_port/stationary/new_dock, movement_direction, force=FALSE)
+	SSshuttle.subsystem_log("TRACE_ENTER: initiate_docking")
 	// Crashing this ship with NO SURVIVORS
-
+	SHUTTLE_DEBUG_TRACE
 	if(new_dock.get_docked() == src)
 		remove_ripples()
 		return DOCKING_SUCCESS
-
+	SHUTTLE_DEBUG_TRACE
 	if(!force)
 		if(!check_dock(new_dock))
 			remove_ripples()
@@ -13,7 +14,7 @@
 		if(!canMove())
 			remove_ripples()
 			return DOCKING_IMMOBILIZED
-
+	SHUTTLE_DEBUG_TRACE
 	var/obj/docking_port/stationary/old_dock = get_docked()
 
 	// The area that gets placed under where the shuttle moved from
@@ -27,9 +28,11 @@
 		The bitflag contains the data for what inhabitants of that coordinate should be moved to the new location
 		The bitflags can be found in __DEFINES/shuttles.dm
 	*/
+	SHUTTLE_DEBUG_TRACE
 	var/list/old_turfs = return_ordered_turfs(x, y, z, dir)
 	var/list/new_turfs = return_ordered_turfs(new_dock.x, new_dock.y, new_dock.z, new_dock.dir)
 	CHECK_TICK
+	SHUTTLE_DEBUG_TRACE
 	/**************************************************************************************************************/
 
 	// The underlying old area is the area assumed to be under the shuttle's starting location
@@ -51,7 +54,11 @@
 	var/list/moved_atoms = list() //Everything not a turf that gets moved in the shuttle
 	var/list/areas_to_move = list() //unique assoc list of areas on turfs being moved
 
+	SHUTTLE_DEBUG_TRACE
+
 	. = preflight_check(old_turfs, new_turfs, areas_to_move, rotation)
+
+	SHUTTLE_DEBUG_TRACE
 	if(.)
 		remove_ripples()
 		return
@@ -69,6 +76,8 @@
 		SSshuttle.update_hidden_docking_ports(null, new_hidden_turfs)
 	/***************************************************************************************************************/
 
+	SHUTTLE_DEBUG_TRACE
+
 	if(!force)
 		if(!check_dock(new_dock))
 			remove_ripples()
@@ -80,11 +89,15 @@
 	// Moving to the new location will trample the ripples there at the exact
 	// same time any mobs there are trampled, to avoid any discrepancy where
 	// the ripples go away before it is safe.
+	SHUTTLE_DEBUG_TRACE
 	takeoff(old_turfs, new_turfs, moved_atoms, rotation, movement_direction, old_dock, underlying_old_area)
+	SHUTTLE_DEBUG_TRACE
 
 	CHECK_TICK
 
+	SHUTTLE_DEBUG_TRACE
 	cleanup_runway(new_dock, old_turfs, new_turfs, areas_to_move, moved_atoms, rotation, movement_direction, underlying_old_area)
+	SHUTTLE_DEBUG_TRACE
 
 	CHECK_TICK
 
@@ -94,12 +107,15 @@
 		hidden_turfs = new_hidden_turfs
 	/****************************************************************************************************************/
 
+	SHUTTLE_DEBUG_TRACE
 	check_poddoors()
 	new_dock.last_dock_time = world.time
 	setDir(new_dock.dir)
 
 	// remove any stragglers just in case, and clear the list
 	remove_ripples()
+	SHUTTLE_DEBUG_TRACE
+	SSshuttle.subsystem_log("TRACE_EXIT: initiate_docking")
 	return DOCKING_SUCCESS
 
 /obj/docking_port/mobile/proc/preflight_check(list/old_turfs, list/new_turfs, list/areas_to_move, rotation)
