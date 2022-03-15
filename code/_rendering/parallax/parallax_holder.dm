@@ -163,6 +163,9 @@
 		Animation(A.parallax_move_speed, A.parallax_move_angle, auto_z_change? 0 : null, auto_z_change? 0 : null, force)
 
 /datum/parallax_holder/proc/Apply(client/C = owner)
+	return		// testmerge
+
+/*
 	if(QDELETED(C))
 		return
 	. = list()
@@ -184,6 +187,7 @@
 				1, 1, 1, 1,
 				0, 0, 0, 0
 			)
+*/
 
 /datum/parallax_holder/proc/Remove(client/C = owner)
 	if(QDELETED(C))
