@@ -98,5 +98,5 @@
 #warn Consider switching to VSCode editor instead, where you can press Ctrl+Shift+B to build.
 #endif
 
-#define SHUTTLE_DEBUG_TRACE SSshuttle.subsystem_log("TRACE: [__LINE__] ([THIS_PROC_TYPE]) in [__FILE__] executing;")
-#define PARALLAX_DEBUG_TRACE SSparallax.subsystem_log("TRACE: [__LINE__] ([THIS_PROC_TYPE]) in [__FILE__] executing;")
+#define SHUTTLE_DEBUG_TRACE SSshuttle.subsystem_log("TRACE: [__LINE__] in [__FILE__] executing;")
+#define PARALLAX_DEBUG_TRACE SSparallax.subsystem_log("TRACE: [__LINE__] in [__FILE__] executing;")
