@@ -99,4 +99,4 @@
 #endif
 
 #define SHUTTLE_DEBUG_TRACE SSshuttle.subsystem_log("TRACE: [__LINE__] ([THIS_PROC_TYPE]) in [__FILE__] executing;")
-#define PARALLAX_DEBUG_TRACE SSparallax.subsystem_log("TRACE: PARALLAX: [__LINE__] ([THIS_PROC_TYPE]) in [__FILE__] executing;)
+#define PARALLAX_DEBUG_TRACE SSparallax.subsystem_log("TRACE: [__LINE__] ([THIS_PROC_TYPE]) in [__FILE__] executing;")
