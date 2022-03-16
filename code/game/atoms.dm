@@ -896,9 +896,6 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 
-/atom/proc/mech_melee_attack(obj/mecha/M)
-	return
-
 //If a mob logouts/logins in side of an object you can use this proc
 /atom/proc/on_log(login)
 	if(loc)

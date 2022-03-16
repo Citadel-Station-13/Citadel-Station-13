@@ -107,19 +107,6 @@
 				return
 			bumpopen(M)
 			return
-
-	if(ismecha(AM))
-		var/obj/mecha/mecha = AM
-		if(density)
-			if(mecha.occupant)
-				if(world.time - mecha.occupant.last_bumped <= 10)
-					return
-				mecha.occupant.last_bumped = world.time
-			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access)))
-				open()
-			else
-				do_animate("deny")
-		return
 	return
 
 /obj/machinery/door/Move()
@@ -362,7 +349,7 @@
 			C.bleed(DOOR_CRUSH_DAMAGE)
 		else
 			L.add_splatter_floor(location)
-	for(var/obj/mecha/M in get_turf(src))
+	for(var/obj/vehicle/sealed/mecha/M in get_turf(src))
 		M.take_damage(DOOR_CRUSH_DAMAGE)
 
 /obj/machinery/door/proc/autoclose()

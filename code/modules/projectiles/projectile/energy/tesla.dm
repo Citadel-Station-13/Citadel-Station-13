@@ -28,3 +28,7 @@
 /obj/item/projectile/energy/tesla/cannon
 	name = "tesla orb"
 	power = 20000
+
+/obj/item/projectile/energy/tesla/sphere
+	name = "tesla sphere"
+	power = 100000

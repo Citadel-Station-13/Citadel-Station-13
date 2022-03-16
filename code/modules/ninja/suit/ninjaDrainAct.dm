@@ -241,16 +241,18 @@
 
 	return drain_total
 
-//MECH//
-/obj/mecha/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
+
+/obj/vehicle/sealed/mecha/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
 	if(!ninja_suit || !ninja || !ninja_gloves)
+
 		return INVALID_DRAIN
 
 	var/maxcapacity = FALSE //Safety check
 	var/drain = 0 //Drain amount
 	var/drain_total = 0
 
-	occupant_message("<span class='danger'>Warning: Unauthorized access through sub-route 4, block H, detected.</span>")
+	for(var/mob/living/MB in occupants)
+		to_chat(MB, "[icon2html(src, occupants)]<span class='danger'>Warning: Unauthorized access through sub-route 4, block H, detected.</span>")
 	if(get_charge())
 		while(ninja_gloves.candrain && cell.charge > 0 && !maxcapacity)
 			drain = rand(ninja_gloves.mindrain, ninja_gloves.maxdrain)
