@@ -24,6 +24,10 @@
 /datum/config_entry/flag/log_game	// log game events
 	config_entry_value = TRUE
 
+/// log mech data
+/datum/config_entry/flag/log_mecha
+	config_entry_value = TRUE
+
 /datum/config_entry/flag/log_virus	// log virology data
 	config_entry_value = TRUE
 
