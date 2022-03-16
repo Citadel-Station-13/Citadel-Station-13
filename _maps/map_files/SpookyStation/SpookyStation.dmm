@@ -4981,7 +4981,7 @@
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "aoJ" = (
-/obj/mecha/working/ripley/deathripley{
+/obj/vehicle/sealed/mecha/working/ripley/deathripley{
 	equipment_disabled = 1;
 	light_color = "#FAA019";
 	lights_power = 3
