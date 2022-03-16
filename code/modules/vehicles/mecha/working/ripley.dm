@@ -30,10 +30,6 @@
 	. = ..()
 	update_pressure()
 
-/obj/vehicle/sealed/mecha/working/ripley/moved_inside(mob/living/carbon/human/H)
-	..()
-	update_icon()
-
 /obj/vehicle/sealed/mecha/working/ripley/check_for_internal_damage(list/possible_int_damage, ignore_threshold = FALSE)
 	if (!enclosed)
 		possible_int_damage -= (MECHA_INT_TEMP_CONTROL + MECHA_INT_TANK_BREACH) //if we don't even have an air tank, these two doesn't make a ton of sense.
@@ -44,6 +40,7 @@
 	AddComponent(/datum/component/armor_plate,3,/obj/item/stack/sheet/animalhide/goliath_hide,list(MELEE = 10, BULLET = 5, LASER = 5))
 
 /obj/vehicle/sealed/mecha/working/ripley/generate_actions()
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/climb_out)
 	if(enclosed)
 		initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_internals, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_cycle_equip, VEHICLE_CONTROL_EQUIPMENT)

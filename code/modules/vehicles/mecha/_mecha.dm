@@ -956,6 +956,7 @@
 
 
 /obj/vehicle/sealed/mecha/generate_actions()
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/climb_out) // I don't see a single problem in generating exit vehicle action.
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_internals, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_cycle_equip, VEHICLE_CONTROL_EQUIPMENT)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, VEHICLE_CONTROL_SETTINGS)
@@ -968,9 +969,8 @@
 		return
 	if(ishuman(H) && !Adjacent(H))
 		return
-	add_occupant(H)
 	H.forceMove(src)
-	H.update_mouse_pointer()
+	add_occupant(H)
 	add_fingerprint(H)
 	log_message("[H] moved in as pilot.", LOG_MECHA)
 	setDir(dir_in)
@@ -1025,8 +1025,6 @@
 	B.reset_perspective(src)
 	B.remote_control = src
 	B.update_mobility()
-	B.update_mouse_pointer()
-	update_icon()
 	setDir(dir_in)
 	log_message("[M] moved in as pilot.", LOG_MECHA)
 	if(!internal_damage)
@@ -1100,7 +1098,6 @@
 		mmi.mecha = null
 		mmi.update_icon()
 		L.mobility_flags = NONE
-	update_icon()
 	setDir(dir_in)
 	return ..()
 
@@ -1109,21 +1106,28 @@
 	RegisterSignal(M, COMSIG_MOB_DEATH, .proc/mob_exit)
 	RegisterSignal(M, COMSIG_MOB_CLICKON, .proc/on_mouseclick)
 	RegisterSignal(M, COMSIG_MOB_SAY, .proc/display_speech_bubble)
-	update_icon()
 	return ..()
+
+/obj/vehicle/sealed/mecha/after_add_occupant(mob/M)
+	. = ..()
+	update_icon()
+	M.update_mouse_pointer()
 
 /obj/vehicle/sealed/mecha/remove_occupant(mob/M)
 	UnregisterSignal(M, COMSIG_MOB_DEATH)
 	UnregisterSignal(M, COMSIG_MOB_CLICKON)
 	UnregisterSignal(M, COMSIG_MOB_SAY)
-	update_icon()
 	M.clear_alert("charge")
 	M.clear_alert("mech damage")
 	if(M.client)
-		M.update_mouse_pointer()
 		M.client.view_size.resetToDefault()
 		zoom_mode = 0
 	return ..()
+
+/obj/vehicle/sealed/mecha/after_remove_occupant(mob/M)
+	. = ..()
+	update_icon()
+	M.update_mouse_pointer()
 
 /////////////////////////
 ////// Access stuff /////
