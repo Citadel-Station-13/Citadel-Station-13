@@ -110,8 +110,8 @@
 		WRITE_LOG(GLOB.world_attack_log, "ATTACK: [text]")
 
 /proc/log_victim(text)
-	if (CONFIG_GET(flag/victim))
-		WRITE_LOG(GLOB.world_attack_log, "VICTIM: [text]")
+	if (CONFIG_GET(flag/log_victim))
+		WRITE_LOG(GLOB.world_victim_log, "VICTIM: [text]")
 
 /proc/log_manifest(ckey, datum/mind/mind,mob/body, latejoin = FALSE)
 	if (CONFIG_GET(flag/log_manifest))
