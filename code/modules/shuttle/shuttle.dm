@@ -662,6 +662,8 @@
 	if(mode == SHUTTLE_IGNITING)
 		check_transit_zone()
 
+	SHUTTLE_DEBUG_TRACE
+
 	if(timeLeft(1) > 0)
 		return
 	// If we can't dock or we don't have a transit slot, wait for 20 ds,
