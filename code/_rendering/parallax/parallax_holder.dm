@@ -252,7 +252,7 @@
 		if(P.absolute)
 			continue
 		var/matrix/translate_matrix = matrix()
-		translate_matrix.Translate(sin(turn) * 480, cos(turn) * 480))
+		translate_matrix.Translate(sin(turn) * 480, cos(turn) * 480)
 		var/matrix/target_matrix = matrix()
 		var/move_speed = speed * P.speed
 		// do the first segment by shifting down one screen
