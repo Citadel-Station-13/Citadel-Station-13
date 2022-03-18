@@ -43682,6 +43682,7 @@
 /obj/structure/table,
 /obj/item/toy/cards/deck,
 /obj/item/storage/crayons,
+/obj/item/chisel,
 /turf/open/floor/plasteel/grimy,
 /area/commons/fitness/recreation)
 "uWC" = (
