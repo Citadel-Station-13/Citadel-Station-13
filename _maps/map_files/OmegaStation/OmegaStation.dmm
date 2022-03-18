@@ -41360,7 +41360,7 @@
 /area/maintenance/port/aft)
 "wkG" = (
 /obj/structure/lattice/catwalk,
-/turf/open/floor/plating/airless,
+/turf/open/space/basic,
 /area/space/nearstation)
 "wkO" = (
 /obj/structure/cable/white{
