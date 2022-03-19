@@ -578,8 +578,12 @@
 /datum/status_effect/regenerative_core/on_apply()
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
-
-	if(HAS_TRAIT(owner, TRAIT_ROBOTIC_ORGANISM))	//Robots can heal from cores, but only get 1/5th of the healing. They can use this to get past the damage threshhold however, and then regularely heal from there.
+	var/turf/T = get_turf(owner)
+	if(T && is_mining_level(T.z))
+		if(HAS_TRAIT(owner, TRAIT_ROBOTIC_ORGANISM))	//Robots can heal from cores, though they ""only"" heal 20 brute + burn damage each instead of 25
+			heal_amount *= 0.8
+	else
+		duration = 10 SECONDS
 		heal_amount *= 0.2
 	owner.adjustBruteLoss(-heal_amount, only_organic = FALSE)
 	if(!AmBloodsucker(owner))	//use your coffin you lazy bastard

@@ -9,6 +9,8 @@
 		resting = new_resting
 		if(!silent)
 			to_chat(src, "<span class='notice'>You are now [resting? "resting" : "getting up"].</span>")
+		if(resting == 1)
+			SEND_SIGNAL(src, COMSIG_LIVING_RESTING)
 		update_resting(updating)
 
 /mob/living/proc/update_resting(update_mobility = TRUE)

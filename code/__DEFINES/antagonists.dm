@@ -123,3 +123,9 @@ GLOBAL_LIST_EMPTY(living_heart_cache)	//A list of all living hearts in existance
 
 /// The dimensions of the antagonist preview icon. Will be scaled to this size.
 #define ANTAGONIST_PREVIEW_ICON_SIZE 96
+
+//Objectives-Ambitions Panel
+#define REQUEST_NEW_OBJECTIVE "new_objective"
+#define REQUEST_DEL_OBJECTIVE "del_objective"
+#define REQUEST_WIN_OBJECTIVE "win_objective"
+#define REQUEST_LOSE_OBJECTIVE "lose_objective"

@@ -264,7 +264,8 @@
 	item_state = "that"
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
-
+	heat_protection = HEAD
+	max_heat_protection_temperature = COAT_MAX_TEMP_PROTECT
 	dog_fashion = /datum/dog_fashion/head/santa
 	beepsky_fashion = /datum/beepsky_fashion/santa
 
@@ -354,7 +355,7 @@
 
 /obj/item/clothing/head/frenchberet/equipped(mob/M, slot)
 	. = ..()
-	if (slot == SLOT_HEAD)
+	if (slot == ITEM_SLOT_HEAD)
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	else
 		UnregisterSignal(M, COMSIG_MOB_SAY)

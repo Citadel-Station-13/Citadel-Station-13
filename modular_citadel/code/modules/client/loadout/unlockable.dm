@@ -1,6 +1,6 @@
 /datum/gear/unlockable
 	category = LOADOUT_CATEGORY_UNLOCKABLE
-	slot = SLOT_NECK
+	slot = ITEM_SLOT_NECK
 
 	var/progress_required //what does our progress need to be to unlock it
 	var/progress_key //what is the key used to retrieve existing progress for this unlockable

@@ -32,4 +32,4 @@
 	playsound(wearer, 'sound/misc/souldeath.ogg', 100, FALSE)
 
 /datum/component/souldeath/neck
-	equip_slot = SLOT_NECK
+	equip_slot = ITEM_SLOT_NECK

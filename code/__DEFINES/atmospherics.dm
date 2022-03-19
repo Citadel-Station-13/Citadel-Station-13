@@ -116,6 +116,7 @@
 #define GLOVES_MAX_TEMP_PROTECT				1500	//For some gloves
 #define SHOES_MIN_TEMP_PROTECT				2.0		//For gloves
 #define SHOES_MAX_TEMP_PROTECT				1500	//For gloves
+#define COAT_MAX_TEMP_PROTECT				330     //For winter coats (if they can stop you from getting cold why can't they do it the other way to a lesser extent)
 
 #define PRESSURE_DAMAGE_COEFFICIENT			4		//The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
 #define MAX_HIGH_PRESSURE_DAMAGE			16		// CITADEL CHANGES Max to 16, low to 8.

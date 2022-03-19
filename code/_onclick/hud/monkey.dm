@@ -50,7 +50,7 @@
 	inv_box.icon_state = "mask"
 //	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_monkey_mask
-	inv_box.slot_id = SLOT_WEAR_MASK
+	inv_box.slot_id = ITEM_SLOT_MASK
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
@@ -59,7 +59,7 @@
 	inv_box.icon_state = "neck"
 //	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_monkey_neck
-	inv_box.slot_id = SLOT_NECK
+	inv_box.slot_id = ITEM_SLOT_NECK
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
@@ -68,7 +68,7 @@
 	inv_box.icon_state = "head"
 //	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_monkey_head
-	inv_box.slot_id = SLOT_HEAD
+	inv_box.slot_id = ITEM_SLOT_HEAD
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
@@ -76,7 +76,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
 	inv_box.screen_loc = ui_monkey_back
-	inv_box.slot_id = SLOT_BACK
+	inv_box.slot_id = ITEM_SLOT_BACK
 	static_inventory += inv_box
 
 	throw_icon = new /atom/movable/screen/throw_catch()
@@ -126,7 +126,7 @@
 	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)
 			inv.hud = src
-			inv_slots[inv.slot_id] = inv
+			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
 			inv.update_icon()
 
 /datum/hud/monkey/persistent_inventory_update()

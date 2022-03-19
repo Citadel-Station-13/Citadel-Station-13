@@ -395,6 +395,7 @@
 	..()
 	update_pull_movespeed()
 	update_pull_hud_icon()
+	SEND_SIGNAL(src, COMSIG_LIVING_STOPPED_PULLING)
 
 /mob/living/verb/stop_pulling1()
 	set name = "Stop Pulling"

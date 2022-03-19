@@ -1024,7 +1024,7 @@ GLOBAL_LIST_EMPTY(rain_sounds)
     lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
     righthand_file = 'icons/mob/inhands/items_righthand.dmi'
     icon_state = "umbrella_closed"
-    slot_flags = SLOT_BELT
+    slot_flags = ITEM_SLOT_BELT
     force = 5
     throwforce = 5
     w_class = WEIGHT_CLASS_SMALL

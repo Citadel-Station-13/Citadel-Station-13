@@ -38,7 +38,7 @@
 
 /obj/item/clothing/head/helmet/clockwork/equipped(mob/living/user, slot)
 	..()
-	if(slot == SLOT_HEAD && !is_servant_of_ratvar(user))
+	if(slot == ITEM_SLOT_HEAD && !is_servant_of_ratvar(user))
 		if(!iscultist(user))
 			to_chat(user, "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>")
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off [user.p_their()] head!</span>", "<span class='warning'>The helmet flickers off your head, leaving only nausea!</span>")
@@ -105,7 +105,7 @@
 
 /obj/item/clothing/suit/armor/clockwork/equipped(mob/living/user, slot)
 	..()
-	if(slot == SLOT_WEAR_SUIT && !is_servant_of_ratvar(user))
+	if(slot == ITEM_SLOT_OCLOTHING && !is_servant_of_ratvar(user))
 		if(!iscultist(user))
 			to_chat(user, "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>")
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off [user.p_their()] body!</span>", "<span class='warning'>The cuirass flickers off your body, leaving only nausea!</span>")
@@ -165,7 +165,7 @@
 
 /obj/item/clothing/gloves/clockwork/equipped(mob/living/user, slot)
 	..()
-	if(slot == SLOT_GLOVES && !is_servant_of_ratvar(user))
+	if(slot == ITEM_SLOT_GLOVES && !is_servant_of_ratvar(user))
 		if(!iscultist(user))
 			to_chat(user, "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>")
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off [user.p_their()] arms!</span>", "<span class='warning'>The gauntlets flicker off your arms, leaving only nausea!</span>")
@@ -215,7 +215,7 @@
 
 /obj/item/clothing/shoes/clockwork/equipped(mob/living/user, slot)
 	..()
-	if(slot == SLOT_SHOES && !is_servant_of_ratvar(user))
+	if(slot == ITEM_SLOT_FEET && !is_servant_of_ratvar(user))
 		if(!iscultist(user))
 			to_chat(user, "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>")
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off [user.p_their()] feet!</span>", "<span class='warning'>The treads flicker off your feet, leaving only nausea!</span>")
