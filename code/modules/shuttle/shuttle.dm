@@ -730,7 +730,10 @@
 		var/area/A = get_area(M)
 		if(A in shuttle_areas)
 			M.client?.parallax_holder?.StopScrolling(A.parallax_move_angle, parallax_speed)
-	for(var/area/shuttle_area in shuttle_areas + assigned_transit?.assigned_area)
+	var/list/areas = shuttle_areas.Copy()
+	if(assigned_transit && assigned_tarnsit.assigned_area)
+		areas += assigned_transit.assigned_area
+	for(var/area/shuttle_area in areas)
 		shuttle_area.parallax_moving = FALSE
 		shuttle_area.parallax_move_speed = 0
 		shuttle_area.parallax_move_angle = 0
