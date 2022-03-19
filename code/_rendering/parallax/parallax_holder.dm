@@ -168,7 +168,7 @@
 /datum/parallax_holder/proc/Apply(client/C = owner)
 	if(QDELETED(C))
 		return
-	. = list()
+	. = list(vis_holder)
 	for(var/atom/movable/screen/parallax_layer/L in layers)
 		if(L.parallax_intensity > owner.prefs.parallax)
 			continue
@@ -192,6 +192,7 @@
 	if(QDELETED(C))
 		return
 	C.screen -= layers
+	C.screen -= vis_holder
 	if(!secondary_map)
 		var/atom/movable/screen/plane_master/parallax_white/PM = locate() in C.screen
 		if(PM)
@@ -252,12 +253,12 @@
 		if(P.absolute)
 			continue
 		var/matrix/translate_matrix = matrix()
-		translate_matrix.Translate(sin(turn) * 480, cos(turn) * 480))
+		translate_matrix.Translate(sin(turn) * 480, cos(turn) * 480)
 		var/matrix/target_matrix = matrix()
 		var/move_speed = speed * P.speed
 		// do the first segment by shifting down one screen
 		P.transform = translate_matrix
-		animate(P, transform = target_matrix, time = move_speed, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_END_NOW)
+		animate(P, transform = target_matrix, time = windup * P.speed, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_END_NOW)
 		// queue up another incase lag makes QueueLoop not fire on time, this time by shifting up
 		animate(transform = translate_matrix, time = 0)
 		animate(transform = target_matrix, time = move_speed)
@@ -302,14 +303,17 @@
 	scroll_speed = 0
 	scrolling = FALSE
 	// reset turn
-	if(GetPlaneMaster())
-		animate(GetPlaneMaster(), transform = matrix(), time = 0, flags = ANIMATION_END_NOW)
+	var/atom/movable/screen/plane_master/PM = GetPlaneMaster()
+	if(PM)
+		animate(PM, time = 0, flags = ANIMATION_END_NOW)
+		PM.transform = matrix()
 	// reset objects
 	for(var/atom/movable/screen/parallax_layer/P in layers)
 		if(P.absolute)
 			continue
 		P.CancelAnimation()
-		animate(P, transform = matrix(), time = 0, flags = ANIMATION_END_NOW)
+		animate(P, time = 0, flags = ANIMATION_END_NOW)
+		P.transform = matrix()
 
 /client/proc/CreateParallax()
 	if(!parallax_holder)

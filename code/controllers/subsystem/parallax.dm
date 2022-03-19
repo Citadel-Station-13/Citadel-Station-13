@@ -54,7 +54,7 @@ SUBSYSTEM_DEF(parallax)
 /**
  * Gets parallax added vis contents for zlevel
  */
-/datum/controller/subsystem/parallax/proc/get_parallax_vis_contents(z)
+/datum/controller/subsystem/parallax/proc/get_parallax_vis_contents(turf/T)
 	return list()
 
 /**
