@@ -722,14 +722,14 @@
 			if(shuttle_area.parallax_moving)
 				parallax_ongoing = TRUE
 		if(parallax_ongoing)
-			parallax_slowdown()
+			parallax_slowdown(timeLeft(1))
 
-/obj/docking_port/mobile/proc/parallax_slowdown()
+/obj/docking_port/mobile/proc/parallax_slowdown(speed = parallax_speed)
 	SHUTTLE_DEBUG_TRACE
 	for(var/mob/M in GLOB.player_list)
 		var/area/A = get_area(M)
 		if(A in shuttle_areas)
-			M.client?.parallax_holder?.StopScrolling(A.parallax_move_angle, parallax_speed)
+			M.client?.parallax_holder?.StopScrolling(A.parallax_move_angle, speed)
 	var/list/areas = shuttle_areas.Copy()
 	if(assigned_transit && assigned_transit.assigned_area)
 		areas += assigned_transit.assigned_area
