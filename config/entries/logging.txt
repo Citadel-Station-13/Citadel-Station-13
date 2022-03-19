@@ -34,6 +34,9 @@ LOG_EMOTE
 ## log attack messages
 LOG_ATTACK
 
+## log victim messages
+LOG_VICTIM
+
 ## log pda messages
 LOG_PDA
 
