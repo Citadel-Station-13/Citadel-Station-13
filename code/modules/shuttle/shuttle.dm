@@ -707,6 +707,9 @@
 	destination = null
 
 /obj/docking_port/mobile/proc/check_effects()
+	return
+
+/*
 	SHUTTLE_DEBUG_TRACE
 	if(!ripples.len)
 		if((mode == SHUTTLE_CALL) || (mode == SHUTTLE_RECALL))
@@ -723,8 +726,11 @@
 				parallax_ongoing = TRUE
 		if(parallax_ongoing)
 			parallax_slowdown(timeLeft(1))
+*/
 
 /obj/docking_port/mobile/proc/parallax_slowdown(speed = parallax_speed)
+	return
+/*
 	SHUTTLE_DEBUG_TRACE
 	for(var/mob/M in GLOB.player_list)
 		var/area/A = get_area(M)
@@ -737,6 +743,7 @@
 		shuttle_area.parallax_moving = FALSE
 		shuttle_area.parallax_move_speed = 0
 		shuttle_area.parallax_move_angle = 0
+*/
 
 /obj/docking_port/mobile/proc/check_transit_zone()
 	if(assigned_transit)

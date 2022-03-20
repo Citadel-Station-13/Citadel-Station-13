@@ -149,9 +149,9 @@ All ShuttleMove procs go here
 	oldT.change_area(src, underlying_old_area)
 	//The old turf has now been given back to the area that turf originaly belonged to
 	var/area/old_dest_area = newT.loc
-	parallax_moving = old_dest_area.parallax_moving
-	parallax_move_angle = old_dest_area.parallax_move_angle
-	parallax_move_speed = old_dest_area.parallax_move_speed
+	// parallax_moving = old_dest_area.parallax_moving
+	// parallax_move_angle = old_dest_area.parallax_move_angle
+	// parallax_move_speed = old_dest_area.parallax_move_speed
 	old_dest_area.contents -= newT
 	contents += newT
 	newT.change_area(old_dest_area, src)
@@ -159,6 +159,8 @@ All ShuttleMove procs go here
 
 // Called on areas after everything has been moved
 /area/proc/afterShuttleMove(new_parallax_dir, speed)
+	return TRUE
+	/*
 	SHUTTLE_DEBUG_TRACE
 	if(!new_parallax_dir)
 		parallax_moving = FALSE
@@ -167,6 +169,7 @@ All ShuttleMove procs go here
 	parallax_move_speed = speed
 	SHUTTLE_DEBUG_TRACE
 	return TRUE
+	*/
 
 /area/proc/lateShuttleMove()
 	return
