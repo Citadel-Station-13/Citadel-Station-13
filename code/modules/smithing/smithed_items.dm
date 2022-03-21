@@ -68,13 +68,13 @@
 	custom_materials = list(/datum/material/silver=12000)
 
 /obj/item/ingot/bananium
-	custom_materials = list(/datum/material/bananium=12000)
+	custom_materials = list(/datum/material/bananium=12000)//honk
 
 /obj/item/ingot/titanium
-	custom_materials = list(/datum/material/titanium=12000)
+	custom_materials = list(/datum/material/titanium=12000)//TITANIUM SON
 
 /obj/item/ingot/adamantine
-	custom_materials = list(/datum/material/adamantine=12000)
+	custom_materials = list(/datum/material/adamantine=12000)//infinite powah
 
 /obj/item/ingot/cult
 	custom_materials = list(/datum/material/runedmetal=12000)

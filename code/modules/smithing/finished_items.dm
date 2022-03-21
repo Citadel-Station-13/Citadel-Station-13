@@ -285,6 +285,15 @@
 	overlay_state = "hammerhandle"
 	qualitymod = -2
 
+/* going to sprite it before adding
+/obj/item/melee/smith/hammer/warframe
+	name = "industrial hammer"
+	desc = "A heavy, wrench-like tool of steel. Useable as a cheap hammer."
+	w_class = WEIGHT_CLASS_BULKY
+	icon_state = "warframe"
+	qualitymod = -1
+*/
+
 /obj/item/melee/smith/hammer/narsie
 	name = "runemetal hammer"
 	custom_materials = list(/datum/material/runedmetal = 12000)
