@@ -1,7 +1,7 @@
 /datum/gear/head
 	category = LOADOUT_CATEGORY_HEAD
 	subcategory = LOADOUT_SUBCATEGORY_HEAD_GENERAL
-	slot = SLOT_HEAD
+	slot = ITEM_SLOT_HEAD
 
 /datum/gear/head/baseball
 	name = "Ballcap"
@@ -156,12 +156,12 @@
 /*Commenting out Until next Christmas or made automatic
 /datum/gear/santahatr
 	name = "Red Santa Hat"
-	category = SLOT_HEAD
+	category = ITEM_SLOT_HEAD
 	path = /obj/item/clothing/head/christmashat
 
 /datum/gear/santahatg
 	name = "Green Santa Hat"
-	category = SLOT_HEAD
+	category = ITEM_SLOT_HEAD
 	path = /obj/item/clothing/head/christmashatg
 */
 

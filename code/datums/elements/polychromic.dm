@@ -144,7 +144,7 @@
 	return TRUE
 
 /datum/element/polychromic/proc/grant_user_action(atom/source, mob/user, slot)
-	if(slot == SLOT_IN_BACKPACK || slot == SLOT_LEGCUFFED || slot == SLOT_HANDCUFFED || slot == SLOT_GENERC_DEXTROUS_STORAGE)
+	if(slot == ITEM_SLOT_BACKPACK || slot == ITEM_SLOT_LEGCUFFED || slot == ITEM_SLOT_HANDCUFFED || slot == ITEM_SLOT_DEX_STORAGE)
 		return
 	var/datum/action/polychromic/P = actions_by_atom[source]
 	if(!P)

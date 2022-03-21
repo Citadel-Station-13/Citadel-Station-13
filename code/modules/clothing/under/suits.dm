@@ -111,6 +111,25 @@
 	body_parts_covered = CHEST|GROIN
 	can_adjust = FALSE
 
+
+/obj/item/clothing/under/suit/beige
+	name = "beige suit"
+	desc = "An excellent light colored suit, experts in the field stress that it should not to be confused with the inferior tan suit."
+	icon_state = "beige_suit"
+	item_state = "beige_suit"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/under/suit/henchmen
+	name = "henchmen jumpsuit"
+	desc = "A very gaudy jumpsuit for a proper Henchman. Guild regulations, you understand."
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/uniform.dmi'
+	icon_state = "henchmen"
+	item_state = "henchmen"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR|HIDETAUR
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
 /obj/item/clothing/under/suit/polychromic	//enables all three overlays to reduce copypasta and defines basic stuff
 	name = "polychromic suit"
 	desc = "For when you want to show off your horrible colour coordination skills."

@@ -163,7 +163,7 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "shotgunclip"
 	caliber = "shotgun" // slapped in to allow shell mix n match
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKET
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_NORMAL
 	w_volume = ITEM_VOLUME_STRIPPER_CLIP
 	ammo_type = /obj/item/ammo_casing/shotgun

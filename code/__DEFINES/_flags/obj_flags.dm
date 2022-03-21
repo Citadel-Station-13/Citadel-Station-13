@@ -16,6 +16,7 @@
 #define SHOVABLE_ONTO			(1<<13)//called on turf.shove_act() to consider whether an object should have a niche effect (defined in their own shove_act()) when someone is pushed onto it, or do a sanity CanPass() check.
 #define EXAMINE_SKIP			(1<<14) /// Makes the Examine proc not read out this item.
 #define IN_STORAGE				(1<<15) //is this item in the storage item, such as backpack? used for tooltips
+#define HAND_ITEM               (1<<16) // If an item is just your hand (circled hand, slapper) and shouldn't block things like riding
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE	0 // We have no damage on the clothing

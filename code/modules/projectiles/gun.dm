@@ -619,7 +619,7 @@
 		. += knife_overlay
 
 /obj/item/gun/item_action_slot_check(slot, mob/user, datum/action/A)
-	if(istype(A, /datum/action/item_action/toggle_scope_zoom) && slot != SLOT_HANDS)
+	if(istype(A, /datum/action/item_action/toggle_scope_zoom) && slot != ITEM_SLOT_HANDS)
 		return FALSE
 	return ..()
 

@@ -203,7 +203,7 @@
 /area/awaymission/jungleresort)
 "cK" = (
 /obj/structure/closet/crate,
-/obj/item/clothing/head/collectable/petehat/gang,
+/obj/item/clothing/head/collectable/petehat,
 /turf/open/floor/plating/rust,
 /area/awaymission/jungleresort)
 "cT" = (

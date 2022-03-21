@@ -188,7 +188,7 @@
 	icon_state = "inducer-combat"
 	item_state = "inducer-combat"
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	desc = "A tool for inductively charging internal power cells. This one has been modified and upgraded to be able to charge into guns as well as normal electronics."
 	cell_type = /obj/item/stock_parts/cell/hyper
 	powertransfer = 1300

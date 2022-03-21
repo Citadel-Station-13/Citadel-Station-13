@@ -1215,7 +1215,7 @@
 
 	if(user != target)
 		var/reverse_message = "has been [what_done] by [ssource][postfix]"
-		target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
+		target.log_message(reverse_message, LOG_VICTIM, color="orange", log_globally=FALSE)
 
 /**
   * log_wound() is for when someone is *attacked* and suffers a wound. Note that this only captures wounds from damage, so smites/forced wounds aren't logged, as well as demotions like cuts scabbing over
@@ -1406,11 +1406,12 @@
 //Update the screentip to reflect what we're hoverin over
 /atom/MouseEntered(location, control, params)
 	. = ..()
-	// Statusbar
-	// status_bar_set_text(usr, name)
 	// Screentips
-	// if(usr?.hud_used)
-	// 	if(!usr.client?.prefs.screentip_pref || (flags_1 & NO_SCREENTIPS_1))
-	// 		usr.hud_used.screentip_text.maptext = ""
-	// 	else
-	// 		usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")
+	var/client/client = usr?.client
+	var/datum/hud/active_hud = client?.mob?.hud_used
+	if(active_hud)
+		if(!client.prefs.screentip_pref || (flags_1 & NO_SCREENTIPS_1))
+			active_hud.screentip_text.maptext = ""
+		else
+			//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
+			active_hud.screentip_text.maptext = MAPTEXT("<span style='text-align: center; font-size: 32px; color: [client?.prefs?.screentip_color]'>[name]</span>")

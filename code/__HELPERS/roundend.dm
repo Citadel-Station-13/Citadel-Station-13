@@ -590,8 +590,8 @@
 	var/list/all_teams = list()
 	var/list/all_antagonists = list()
 
-	// for(var/datum/team/A in GLOB.antagonist_teams)
-	// 	all_teams |= A
+	for(var/datum/team/A in GLOB.antagonist_teams)
+		all_teams |= A
 
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!A.owner)
@@ -624,6 +624,10 @@
 			currrent_category = A.roundend_category
 			previous_category = A
 		result += A.roundend_report()
+//ambition start
+		for(var/count in 1 to LAZYLEN(A.owner.ambitions))
+			result += "<br><B>Ambition #[count]</B>: [A.owner.ambitions[count]]"
+//ambition end
 		result += "<br><br>"
 		CHECK_TICK
 

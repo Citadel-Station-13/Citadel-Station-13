@@ -172,7 +172,7 @@
 /datum/quirk/colorist/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/dyespray/spraycan = new(get_turf(quirk_holder))
-	H.equip_to_slot(spraycan, SLOT_IN_BACKPACK)
+	H.equip_to_slot(spraycan, ITEM_SLOT_BACKPACK)
 	H.regenerate_icons()
 
 /datum/quirk/colorist/post_add()

@@ -34,10 +34,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/antag_hud_name
 	/// If above 0, this is the multiplier for the speed at which we hijack the shuttle. Do not directly read, use hijack_speed().
 	var/hijack_speed = 0
-	/// If set to true, the antag will not be added to the living antag list.
-	var/soft_antag = FALSE
 	/// The battlecry this antagonist shouts when suiciding with C4/X4.
 	var/suicide_cry = ""
+	/// The typepath for the outfit to show in the preview for the preferences menu.
+	var/preview_outfit
+	/// If set to true, the antag will not be added to the living antag list.
+	var/soft_antag = FALSE
+
 	//Antag panel properties
 	///This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
 	var/show_in_antagpanel = TRUE
@@ -47,6 +50,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/show_name_in_check_antagonists = FALSE
 	/// Should this antagonist be shown as antag to ghosts? Shouldn't be used for stealthy antagonists like traitors
 	var/show_to_ghosts = FALSE
+//ambition start
+	/// Lazy list for antagonists to request the admins objectives.
+	var/list/requested_objective_changes
+//ambition end
 
 	/* CIT SPECIFIC */
 	/// Quirks that will be removed upon gaining this antag. Pacifist and mute are default.
@@ -75,7 +82,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!owner)
 		stack_trace("Destroy()ing antagonist datum when it has no owner.")
 	else
-		LAZYREMOVE(owner.antag_datums, src)
+//ambition start
+		owner?.do_remove_antag_datum(src)
+//ambition end
 	owner = null
 	return ..()
 
@@ -227,7 +236,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	remove_innate_effects()
 	clear_antag_moodies()
-	LAZYREMOVE(owner.antag_datums, src)
+	owner.do_remove_antag_datum(src)
 	// cit skill
 	for(var/A in skill_modifiers)
 		owner.remove_skill_modifier(GET_SKILL_MOD_ID(A, type))
@@ -376,6 +385,43 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/get_admin_commands()
 	. = list()
 
+/// Creates an icon from the preview outfit.
+/// Custom implementors of `get_preview_icon` should use this, as the
+/// result of `get_preview_icon` is expected to be the completed version.
+/datum/antagonist/proc/render_preview_outfit(datum/outfit/outfit, mob/living/carbon/human/dummy)
+	dummy = dummy || new /mob/living/carbon/human/dummy/consistent
+	dummy.equipOutfit(outfit, visualsOnly = TRUE)
+	COMPILE_OVERLAYS(dummy)
+	var/icon = getFlatIcon(dummy)
+
+	// We don't want to qdel the dummy right away, since its items haven't initialized yet.
+	SSatoms.prepare_deletion(dummy)
+
+	return icon
+
+/// Given an icon, will crop it to be consistent of those in the preferences menu.
+/// Not necessary, and in fact will look bad if it's anything other than a human.
+/datum/antagonist/proc/finish_preview_icon(icon/icon)
+	// Zoom in on the top of the head and the chest
+	// I have no idea how to do this dynamically.
+	icon.Scale(115, 115)
+
+	// This is probably better as a Crop, but I cannot figure it out.
+	icon.Shift(WEST, 8)
+	icon.Shift(SOUTH, 30)
+
+	icon.Crop(1, 1, ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+
+	return icon
+
+/// Returns the icon to show on the preferences menu.
+/datum/antagonist/proc/get_preview_icon()
+	if (isnull(preview_outfit))
+		return null
+
+	return finish_preview_icon(render_preview_outfit(preview_outfit))
+
+
 /datum/antagonist/Topic(href,href_list)
 	if(!check_rights(R_ADMIN))
 		return
@@ -484,3 +530,33 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/action/antag_info/IsAvailable()
 	return TRUE
+
+///Clears change requests from deleted objectives to avoid broken references.
+/datum/antagonist/proc/clean_request_from_del_objective(datum/objective/source, force)
+	var/objective_reference = REF(source)
+	for(var/uid in requested_objective_changes)
+		var/list/change_request = requested_objective_changes[uid]
+		if(change_request["target"] != objective_reference)
+			continue
+		LAZYREMOVE(requested_objective_changes, uid)
+
+
+/datum/antagonist/proc/add_objective_change(uid, list/additions)
+	LAZYADD(requested_objective_changes, uid)
+	var/datum/objective/request_target = additions["target"]
+	if(!ispath(request_target))
+		request_target = locate(request_target) in objectives
+		if(istype(request_target))
+			RegisterSignal(request_target, COMSIG_PARENT_QDELETING, .proc/clean_request_from_del_objective)
+	requested_objective_changes[uid] = additions
+
+
+/datum/antagonist/proc/remove_objective_change(uid)
+	if(!LAZYACCESS(requested_objective_changes, uid))
+		return
+	var/datum/objective/request_target = requested_objective_changes[uid]["target"]
+	if(!ispath(request_target))
+		request_target = locate(request_target) in objectives
+		if(istype(request_target))
+			UnregisterSignal(request_target, COMSIG_PARENT_QDELETING)
+	LAZYREMOVE(requested_objective_changes, uid)

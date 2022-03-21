@@ -206,6 +206,21 @@
 	description = "<span class='nicegreen'>Feels nice to get that out of the way!</span>\n"
 	mood_change = 3
 
+/datum/mood_event/high_five
+	description = "<span class='nicegreen'>I love getting high fives!</span>\n"
+	mood_change = 2
+	timeout = 45 SECONDS
+
+/datum/mood_event/high_ten
+	description = "<span class='nicegreen'>AMAZING! A HIGH-TEN!</span>\n"
+	mood_change = 3
+	timeout = 45 SECONDS
+
+/datum/mood_event/down_low
+	description = "<span class='nicegreen'>HA! What a rube, they never stood a chance...</span>\n"
+	mood_change = 4
+	timeout = 1.5 MINUTES
+
 /datum/mood_event/sacrifice_good
 	description = "<span class='nicegreen'>The gods are pleased with this offering!</span>\n"
 	mood_change = 5

@@ -1,4 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - balance: "The Space Adaptation mutation when applied to Synthetics now nullifies the penalty for passive cooling if in low-pressure environments."

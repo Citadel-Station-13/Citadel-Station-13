@@ -58,6 +58,9 @@ em						{font-style: normal;	font-weight: bold;}
 .aiprivradio			{color: #ff00ff;}
 .redteamradio			{color: #ff0000;}
 .blueteamradio			{color: #0000ff;}
+.greenteamradio			{color: #00ff00;}
+.yellowteamradio		{color: #d1ba22;}
+.gangradio				{color: #ac2ea1;}
 
 .yell					{					font-weight: bold;}
 

@@ -202,6 +202,7 @@
 #define TRAIT_FRIENDLY			"friendly"
 #define TRAIT_SNOB				"snob"
 #define TRAIT_MULTILINGUAL		"multilingual"
+#define TRAIT_HEARING_SENSITIVE "hearing_sensitive"
 #define TRAIT_CULT_EYES 		"cult_eyes"
 #define TRAIT_AUTO_CATCH_ITEM	"auto_catch_item"
 #define TRAIT_CLOWN_MENTALITY	"clown_mentality" // The future is now, clownman.

@@ -2,9 +2,6 @@
 
 //PUBLIC -  call these wherever you want
 
-
-/mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE)
-
 /* Proc to create or update an alert. Returns the alert if the alert is new or updated, 0 if it was thrown already
  category is a text string. Each mob may only have one alert per category; the previous one will be replaced
  path is a type path of the actual alert type to throw
@@ -14,6 +11,7 @@
  Clicks are forwarded to master
  Override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.
  */
+/mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE)
 
 	if(!category || QDELETED(src))
 		return
@@ -42,7 +40,7 @@
 		thealert.override_alerts = override
 		if(override)
 			thealert.timeout = null
-	thealert.mob_viewer = src
+	thealert.owner = src
 
 	if(new_master)
 		var/old_layer = new_master.layer
@@ -97,8 +95,10 @@
 	var/severity = 0
 	var/alerttooltipstyle = ""
 	var/override_alerts = FALSE //If it is overriding other alerts of the same type
-	var/mob/mob_viewer //the mob viewing this alert
+	var/mob/owner //Alert owner
 
+	/// Boolean. If TRUE, the Click() proc will attempt to Click() on the master first if there is a master.
+	var/click_master = TRUE
 
 /atom/movable/screen/alert/MouseEntered(location,control,params)
 	if(!QDELETED(src))
@@ -251,6 +251,8 @@ or something covering your eyes."
 
 /atom/movable/screen/alert/mind_control/Click()
 	var/mob/living/L = usr
+	if(L != owner)
+		return
 	to_chat(L, "<span class='mind_control'>[command]</span>")
 
 /atom/movable/screen/alert/hypnosis
@@ -271,7 +273,7 @@ If you're feeling frisky, examine yourself and click the underlined item to pull
 	icon_state = "embeddedobject"
 
 /atom/movable/screen/alert/embeddedobject/Click()
-	if(isliving(usr))
+	if(isliving(usr) && usr == owner)
 		var/mob/living/carbon/M = usr
 		return M.help_shake_act(M)
 
@@ -300,7 +302,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/fire/Click()
 	var/mob/living/L = usr
-	if(!istype(L) || !L.can_resist())
+	if(!istype(L) || !L.can_resist() || L != owner)
 		return
 	L.MarkResistTime()
 	if(CHECK_MOBILITY(L, MOBILITY_MOVE))
@@ -308,37 +310,110 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/give // information set when the give alert is made
 	icon_state = "default"
-	var/mob/living/carbon/giver
+	var/mob/living/carbon/offerer
 	var/obj/item/receiving
 
 /**
-  * Handles assigning most of the variables for the alert that pops up when an item is offered
-  *
-  * Handles setting the name, description and icon of the alert and tracking the person giving
-  * and the item being offered, also registers a signal that removes the alert from anyone who moves away from the giver
-  * Arguments:
-  * * taker - The person receiving the alert
-  * * giver - The person giving the alert and item
-  * * receiving - The item being given by the giver
-  */
-/atom/movable/screen/alert/give/proc/setup(mob/living/carbon/taker, mob/living/carbon/giver, obj/item/receiving)
-	name = "[giver] is offering [receiving]"
-	desc = "[giver] is offering [receiving]. Click this alert to take it."
+ * Handles assigning most of the variables for the alert that pops up when an item is offered
+ *
+ * Handles setting the name, description and icon of the alert and tracking the person giving
+ * and the item being offered, also registers a signal that removes the alert from anyone who moves away from the offerer
+ * Arguments:
+ * * taker - The person receiving the alert
+ * * offerer - The person giving the alert and item
+ * * receiving - The item being given by the offerer
+ */
+/atom/movable/screen/alert/give/proc/setup(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+	name = "[offerer] is offering [receiving]"
+	desc = "[offerer] is offering [receiving]. Click this alert to take it."
 	icon_state = "template"
 	cut_overlays()
 	add_overlay(receiving)
 	src.receiving = receiving
-	src.giver = giver
-	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/removeAlert)
-
-/atom/movable/screen/alert/give/proc/removeAlert()
-	to_chat(usr, "<span class='warning'>You moved out of range of [giver]!</span>")
-	usr.clear_alert("[giver]")
+	src.offerer = offerer
+	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range, override = TRUE) //Override to prevent runtimes when people offer a item multiple times
 
 /atom/movable/screen/alert/give/Click(location, control, params)
 	. = ..()
-	var/mob/living/carbon/C = usr
-	C.take(giver, receiving)
+	if(!.)
+		return
+	if(!iscarbon(usr))
+		CRASH("User for [src] is of type \[[usr.type]\]. This should never happen.")
+	handle_transfer()
+
+/// An overrideable proc used simply to hand over the item when claimed, this is a proc so that high-fives can override them since nothing is actually transferred
+/atom/movable/screen/alert/give/proc/handle_transfer()
+	var/mob/living/carbon/taker = owner
+	taker.take(offerer, receiving)
+
+/// Simply checks if the other person is still in range
+/atom/movable/screen/alert/give/proc/check_in_range(atom/taker)
+	SIGNAL_HANDLER
+	
+	if(!offerer.CanReach(taker))
+		to_chat(owner, span_warning("You moved out of range of [offerer]!"))
+		owner.clear_alert("[offerer]")
+
+/atom/movable/screen/alert/give/highfive/setup(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+	. = ..()
+	name = "[offerer] is offering a high-five!"
+	desc = "[offerer] is offering a high-five! Click this alert to slap it."
+	RegisterSignal(offerer, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
+
+/atom/movable/screen/alert/give/highfive/handle_transfer()
+	var/mob/living/carbon/taker = owner
+	if(receiving && (receiving in offerer.held_items))
+		receiving.on_offer_taken(offerer, taker)
+		return
+	too_slow_p1()
+
+/// If the person who offered the high five no longer has it when we try to accept it, we get pranked hard
+/atom/movable/screen/alert/give/highfive/proc/too_slow_p1()
+	var/mob/living/carbon/rube = owner
+	if(!rube || !offerer)
+		qdel(src)
+		return
+
+	offerer.visible_message(span_notice("[rube] rushes in to high-five [offerer], but-"), span_nicegreen("[rube] falls for your trick just as planned, lunging for a high-five that no longer exists! Classic!"), ignored_mobs=rube)
+	to_chat(rube, span_nicegreen("You go in for [offerer]'s high-five, but-"))
+	addtimer(CALLBACK(src, .proc/too_slow_p2, offerer, rube), 0.5 SECONDS)
+
+/// Part two of the ultimate prank
+/atom/movable/screen/alert/give/highfive/proc/too_slow_p2()
+	var/mob/living/carbon/rube = owner
+	if(!rube || !offerer)
+		qdel(src)
+		return
+
+	offerer.visible_message(span_danger("[offerer] pulls away from [rube]'s slap at the last second, dodging the high-five entirely!"), span_nicegreen("[rube] fails to make contact with your hand, making an utter fool of [rube.p_them()]self!"), span_hear("You hear a disappointing sound of flesh not hitting flesh!"), ignored_mobs=rube)
+	var/all_caps_for_emphasis = uppertext("NO! [offerer] PULLS [offerer.p_their()] HAND AWAY FROM YOURS! YOU'RE TOO SLOW!")
+	to_chat(rube, span_userdanger("[all_caps_for_emphasis]"))
+	playsound(offerer, 'sound/weapons/thudswoosh.ogg', 100, TRUE, 1)
+	rube.Knockdown(1 SECONDS)
+	SEND_SIGNAL(offerer, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/down_low)
+	SEND_SIGNAL(rube, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/too_slow)
+	qdel(src)
+
+/// If someone examine_more's the offerer while they're trying to pull a too-slow, it'll tip them off to the offerer's trickster ways
+/atom/movable/screen/alert/give/highfive/proc/check_fake_out(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(!receiving)
+		examine_list += "[span_warning("[offerer]'s arm appears tensed up, as if [offerer.p_they()] plan on pulling it back suddenly...")]\n"
+
+/// Families handshakes
+/atom/movable/screen/alert/give/secret_handshake
+	icon_state = "default"
+
+/atom/movable/screen/alert/give/secret_handshake/setup(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+	name = "[offerer] is offering a Handshake"
+	desc = "[offerer] wants to teach you the Secret Handshake for their Family and induct you! Click on this alert to accept."
+	icon_state = "template"
+	cut_overlays()
+	add_overlay(receiving)
+	src.receiving = receiving
+	src.offerer = offerer
+	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range, override = TRUE) //Override to prevent runtimes when people offer a item multiple times
 
 //ALIENS
 
@@ -393,10 +468,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/bloodsense/process()
 	var/atom/blood_target
 
-	if(!mob_viewer.mind)
+	if(!owner.mind)
 		return
 
-	var/datum/antagonist/cult/antag = mob_viewer.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	var/datum/antagonist/cult/antag = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	if(!antag?.cult_team)
 		return
 	var/datum/objective/sacrifice/sac_objective = locate() in antag.cult_team.objectives
@@ -433,7 +508,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			add_overlay(narnar)
 		return
 	var/turf/P = get_turf(blood_target)
-	var/turf/Q = get_turf(mob_viewer)
+	var/turf/Q = get_turf(owner)
 	if(!P || !Q || (P.z != Q.z)) //The target is on a different Z level, we cannot sense that far.
 		icon_state = "runed_sense2"
 		desc = "You can no longer sense your target's presence."
@@ -497,7 +572,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		for(var/mob/living/L in GLOB.alive_mob_list)
 			if(is_servant_of_ratvar(L))
 				servants++
-		var/datum/antagonist/clockcult/C = mob_viewer.mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
+		var/datum/antagonist/clockcult/C = owner.mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
 		if(C && C.clock_team)
 			textlist += "[C.clock_team.eminence ? "There is an Eminence." : "<b>There is no Eminence! Get one ASAP!</b>"]<br>"
 		textlist += "There are currently <b>[servants]</b> servant[servants > 1 ? "s" : ""] of Ratvar.<br>"
@@ -595,7 +670,7 @@ so as to remain in compliance with the most up-to-date laws."
 	var/atom/target = null
 
 /atom/movable/screen/alert/hackingapc/Click()
-	if(!usr || !usr.client)
+	if(!usr || !usr.client || usr != owner)
 		return
 	if(!target)
 		return
@@ -621,7 +696,7 @@ so as to remain in compliance with the most up-to-date laws."
 	timeout = 300
 
 /atom/movable/screen/alert/notify_cloning/Click()
-	if(!usr || !usr.client)
+	if(!usr || !usr.client || usr != owner)
 		return
 	var/mob/dead/observer/G = usr
 	G.reenter_corpse()
@@ -635,7 +710,7 @@ so as to remain in compliance with the most up-to-date laws."
 	var/action = NOTIFY_JUMP
 
 /atom/movable/screen/alert/notify_action/Click()
-	if(!usr || !usr.client)
+	if(!usr || !usr.client || usr != owner)
 		return
 	if(!target)
 		return
@@ -669,14 +744,14 @@ so as to remain in compliance with the most up-to-date laws."
 
 /atom/movable/screen/alert/restrained/Click()
 	var/mob/living/L = usr
-	if(!istype(L) || !L.can_resist())
+	if(!istype(L) || !L.can_resist() || L != owner)
 		return
 	L.MarkResistTime()
 	return L.resist_restraints()
 
 /atom/movable/screen/alert/restrained/buckled/Click()
 	var/mob/living/L = usr
-	if(!istype(L) || !L.can_resist())
+	if(!istype(L) || !L.can_resist() || L != owner)
 		return
 	L.MarkResistTime()
 	return L.resist_buckle()
@@ -693,7 +768,7 @@ so as to remain in compliance with the most up-to-date laws."
 
 /atom/movable/screen/alert/shoes/Click()
 	var/mob/living/carbon/C = usr
-	if(!istype(C) || !C.can_resist() || C != mob_viewer || !C.shoes)
+	if(!istype(C) || !C.can_resist() || C != owner || !C.shoes)
 		return
 	C.MarkResistTime()
 	C.shoes.handle_tying(C)
@@ -701,11 +776,14 @@ so as to remain in compliance with the most up-to-date laws."
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there
-/datum/hud/proc/reorganize_alerts()
+/datum/hud/proc/reorganize_alerts(mob/viewmob)
+	var/mob/screenmob = viewmob || mymob
+	if(!screenmob.client)
+		return
 	var/list/alerts = mymob.alerts
 	if(!hud_shown)
 		for(var/i = 1, i <= alerts.len, i++)
-			mymob.client.screen -= alerts[alerts[i]]
+			screenmob.client.screen -= alerts[alerts[i]]
 		return 1
 	for(var/i = 1, i <= alerts.len, i++)
 		var/atom/movable/screen/alert/alert = alerts[alerts[i]]
@@ -725,22 +803,29 @@ so as to remain in compliance with the most up-to-date laws."
 			else
 				. = ""
 		alert.screen_loc = .
-		mymob.client.screen |= alert
+		screenmob.client.screen |= alert
+	if(!viewmob)
+		for(var/M in mymob.observers)
+			reorganize_alerts(M)
 	return 1
 
 /atom/movable/screen/alert/Click(location, control, params)
 	if(!usr || !usr.client)
-		return
+		return FALSE
+	if(usr != owner)
+		return FALSE
 	var/paramslist = params2list(params)
 	if(paramslist["shift"]) // screen objects don't do the normal Click() stuff so we'll cheat
 		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
-		return
-	if(master)
+		return FALSE
+	if(master && click_master)
 		return usr.client.Click(master, location, control, params)
+	
+	return TRUE
 
 /atom/movable/screen/alert/Destroy()
 	. = ..()
 	severity = 0
 	master = null
-	mob_viewer = null
+	owner = null
 	screen_loc = ""

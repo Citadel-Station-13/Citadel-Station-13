@@ -57,4 +57,5 @@
 	exotic_bloodtype = "S"
 	exotic_blood_color = BLOOD_COLOR_OIL
 	allowed_limb_ids = list("mammal","aquatic","avian", "human")
-	species_category = "robot"
+	species_category = SPECIES_CATEGORY_ROBOT
+	wings_icons = SPECIES_WINGS_ROBOT

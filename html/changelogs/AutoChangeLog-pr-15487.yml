@@ -1,5 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - balance: "Stabilized orange extracts can only cool by -5 degrees per tick base instead of by as much as the difference is."
-  - balance: "Stabilized orange extracts only have halved cooling effects on Synthetics (2.5 per status tick / 5 per life), but also cool them towards ~-100°C instead of base bodytemp."

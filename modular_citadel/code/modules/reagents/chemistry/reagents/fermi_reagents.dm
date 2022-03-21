@@ -48,7 +48,7 @@
 		var/obj/item/W = M.head
 		M.dropItemToGround(W, TRUE)
 	var/hat = new /obj/item/clothing/head/hattip()
-	M.equip_to_slot(hat, SLOT_HEAD, 1, 1)
+	M.equip_to_slot(hat, ITEM_SLOT_HEAD, 1, 1)
 
 
 /datum/reagent/fermi/hatmium/on_mob_life(mob/living/carbon/human/M)

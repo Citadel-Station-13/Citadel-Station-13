@@ -58,13 +58,10 @@
 	pinned_target.nullPinnedLoc()
 	nullPinnedTarget()
 	handle_density()
-	if(ishuman(user))
-		if(!user.get_active_held_item())
-			user.put_in_hands(pinned_target)
-			to_chat(user, "<span class='notice'>You take the target out of the stake.</span>")
-	else
-		pinned_target.forceMove(user.drop_location())
-		to_chat(user, "<span class='notice'>You take the target out of the stake.</span>")
+	pinned_target.forceMove(get_turf(src))
+	to_chat(user, "<span class='notice'>You take the target out of the stake.</span>")
+	if(user.can_hold_items())
+		user.put_in_hands(pinned_target)
 
 /obj/structure/target_stake/bullet_act(obj/item/projectile/P)
 	if(pinned_target)
