@@ -1,0 +1,5 @@
+author: "TripleShades"
+delete-after: True
+changes: 
+  - rscadd: "[Omega] Gravity Generator room scrubber
+tweak: [Omega] tcomms vents are now passive"
