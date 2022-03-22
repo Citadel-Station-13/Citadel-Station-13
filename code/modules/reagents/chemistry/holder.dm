@@ -234,6 +234,7 @@
 		var/transfer_amount = T.volume * part
 		if(preserve_data)
 			trans_data = copy_data(T)
+			post_copy_data(T)
 		transferred += "[T] - [transfer_amount]"
 
 		R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, T.purity, pH, no_react = TRUE, ignore_pH = TRUE) //we only handle reaction after every reagent has been transfered.
@@ -274,7 +275,8 @@
 		var/datum/reagent/T = reagent
 		var/copy_amount = T.volume * part
 		if(preserve_data)
-			trans_data = T.data
+			trans_data = copy_data(T)
+			post_copy_data(T)
 		R.add_reagent(T.type, copy_amount * multiplier, trans_data)
 
 	src.update_total()
@@ -301,7 +303,8 @@
 		var/datum/reagent/current_reagent = CR
 		if(current_reagent.type == reagent)
 			if(preserve_data)
-				trans_data = current_reagent.data
+				trans_data = copy_data(current_reagent)
+				post_copy_data(current_reagent)
 			R.add_reagent(current_reagent.type, amount, trans_data, chem_temp, current_reagent.purity, pH, no_react = TRUE)
 			remove_reagent(current_reagent.type, amount, 1)
 			if(log && amount > 0)
@@ -1151,6 +1154,11 @@
 		trans_data["viruses"] = v.Copy()
 
 	return trans_data
+
+///
+// Should be ran after using copy_data. Calls the reagent's post_copy_data, which usually does nothing.
+/datum/reagents/proc/post_copy_data(datum/reagent/current_reagent)
+	return current_reagent.post_copy_data()
 
 /datum/reagents/proc/get_reagent(type)
 	var/list/cached_reagents = reagent_list

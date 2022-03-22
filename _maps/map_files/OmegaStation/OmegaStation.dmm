@@ -7464,6 +7464,9 @@
 /obj/item/rcl/pre_loaded,
 /obj/item/clothing/glasses/meson/gar,
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/command/heads_quarters/ce)
 "anL" = (
@@ -7495,7 +7498,6 @@
 /turf/open/floor/plasteel,
 /area/command/teleporter)
 "anO" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -7504,6 +7506,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/command/heads_quarters/ce)
 "anP" = (
@@ -16359,6 +16364,13 @@
 /area/hallway/secondary/exit)
 "aEg" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/inverse{
+	dir = 4;
+	name = "air mixer"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "aEh" = (
@@ -23459,7 +23471,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/engine,
 /area/engineering/main)
 "aQU" = (
@@ -24302,9 +24313,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = -32
-	},
+/obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/engine,
 /area/engineering/main)
 "aSQ" = (
@@ -34090,14 +34099,17 @@
 /turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "buK" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1;
+	external_pressure_bound = 140;
+	name = "server vent";
+	pressure_checks = 0
 	},
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
@@ -35927,6 +35939,20 @@
 /obj/machinery/atmospherics/miner/carbon_dioxide,
 /turf/open/floor/engine/co2,
 /area/engineering/atmos)
+"hPC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+	dir = 1;
+	external_pressure_bound = 120;
+	name = "server vent"
+	},
+/turf/open/floor/plasteel/dark/telecomms,
+/area/tcommsat/server)
 "hQH" = (
 /obj/structure/sign/warning/vacuum,
 /turf/closed/wall,
@@ -37878,6 +37904,9 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "qdY" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engineering/gravity_generator)
 "qeO" = (
@@ -37929,6 +37958,9 @@
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "qpG" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/engineering/gravity_generator)
 "qsc" = (
@@ -41355,7 +41387,7 @@
 /area/maintenance/port/aft)
 "wkG" = (
 /obj/structure/lattice/catwalk,
-/turf/open/floor/plating/airless,
+/turf/open/space/basic,
 /area/space/nearstation)
 "wkO" = (
 /obj/structure/cable/white{
@@ -70301,7 +70333,7 @@ aAg
 akN
 cpn
 alI
-aGe
+bwY
 aGe
 sIu
 aJj
@@ -71087,7 +71119,7 @@ sJP
 aPG
 buG
 buI
-buK
+hPC
 sKj
 buR
 aMJ

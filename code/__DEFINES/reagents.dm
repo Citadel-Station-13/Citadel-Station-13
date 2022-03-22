@@ -63,6 +63,9 @@
 
 #define THRESHOLD_UNHUSK 50 // health threshold for synthflesh/rezadone to unhusk someone
 
+#define SYNTHTISSUE_BORROW_CAP 250	//The cap for synthtissue's borrowed health value when used on someone dead or already having borrowed health.
+#define SYNTHTISSUE_DAMAGE_FLIP_CYCLES 45	//After how many cycles the damage will be pure toxdamage as opposed to clonedamage like initially. Gradually changes during its cycles.
+
 //reagent bitflags, used for altering how they works
 #define REAGENT_DEAD_PROCESS		(1<<0)	//calls on_mob_dead() if present in a dead body
 #define REAGENT_DONOTSPLIT			(1<<1)	//Do not split the chem at all during processing
