@@ -18,3 +18,12 @@
 		prefs.tip_delay = max(indelay, 0.01)
 		prefs.save_preferences()
 		to_chat(usr, "<span class='danger'>Tooltip delay set to [indelay] milliseconds.</span>")
+
+/client/verb/toggle_hover_outline()
+	set name = "Toggle hover outline"
+	set desc = "Toggles hover-over item outline"
+	set category = "Preferences"
+
+	prefs.outline_enabled = !prefs.outline_enabled
+	prefs.save_preferences()
+	to_chat(usr, "<span class='danger'>Item outline [prefs.outline_enabled ? "en" : "dis"]abled.</span>")

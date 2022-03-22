@@ -116,6 +116,11 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/auxtools_update_reactions()
 
+/datum/controller/subsystem/air/proc/add_reaction(datum/gas_reaction/r)
+	gas_reactions += r
+	sortTim(gas_reactions, /proc/cmp_gas_reaction)
+	auxtools_update_reactions()
+
 /proc/reset_all_air()
 	SSair.can_fire = 0
 	message_admins("Air reset begun.")
@@ -391,12 +396,15 @@ SUBSYSTEM_DEF(air)
 	*/
 
 /datum/controller/subsystem/air/proc/run_delay_heuristics()
-	if(!equalize_enabled)
-		cost_equalize = 0
-		if(should_do_equalization)
-			eq_cooldown--
-			if(eq_cooldown <= 0)
-				equalize_enabled = TRUE
+	if(should_do_equalization)
+		if(!equalize_enabled)
+			cost_equalize = 0
+			if(should_do_equalization)
+				eq_cooldown--
+				if(eq_cooldown <= 0)
+					equalize_enabled = TRUE
+	else
+		equalize_enabled = FALSE
 	var/total_thread_time = cost_turfs + cost_equalize + cost_groups + cost_post_process
 	if(total_thread_time)
 		var/wait_ms = wait * 100
@@ -405,7 +413,7 @@ SUBSYSTEM_DEF(air)
 		eq_cooldown += (1-delay_threshold) * (cost_equalize / total_thread_time) * 2
 		if(eq_cooldown > 0.5)
 			equalize_enabled = FALSE
-		excited_group_pressure_goal = max(0,excited_group_pressure_goal_target * (1 - delay_threshold))
+		excited_group_pressure_goal = max(0,excited_group_pressure_goal_target * delay_threshold)
 
 
 /datum/controller/subsystem/air/proc/process_turfs(resumed = 0)

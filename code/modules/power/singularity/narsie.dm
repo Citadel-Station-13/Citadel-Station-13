@@ -62,7 +62,7 @@
 	for(var/datum/mind/cult_mind in SSticker.mode.cult)
 		if(isliving(cult_mind.current))
 			var/mob/living/L = cult_mind.current
-			L.narsie_act()
+			INVOKE_ASYNC(L, /atom.proc/narsie_act)
 	for(var/mob/living/player in GLOB.player_list)
 		if(player.stat != DEAD && player.loc && is_station_level(player.loc.z) && !iscultist(player) && !isanimal(player))
 			souls_needed[player] = TRUE
@@ -143,7 +143,7 @@
 		A.narsie_act()
 
 
-/obj/singularity/narsie/ex_act() //No throwing bombs at her either.
+/obj/singularity/narsie/ex_act(severity, target, origin) //No throwing bombs at her either.
 	return
 
 

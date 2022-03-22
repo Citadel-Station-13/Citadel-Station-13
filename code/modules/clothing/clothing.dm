@@ -21,8 +21,6 @@
 	var/active_sound = null
 	var/toggle_cooldown = null
 	var/cooldown = 0
-	var/obj/item/flashlight/F = null
-	var/can_flashlight = 0
 
 	var/blocks_shove_knockdown = FALSE //Whether wearing the clothing item blocks the ability for shove to knock down.
 
@@ -221,7 +219,7 @@
 	..()
 	if (!istype(user))
 		return
-	if(slot_flags & slotdefine2slotbit(slot)) //Was equipped to a valid slot for this item?
+	if(slot_flags & slot) //Was equipped to a valid slot for this item?
 		if(iscarbon(user) && LAZYLEN(zones_disabled))
 			RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/bristle)
 		if(LAZYLEN(user_vars_to_edit))
@@ -445,14 +443,14 @@ BLIND     // can't see anything
 		..()
 
 //Species-restricted clothing check. - Thanks Oraclestation, BS13, /vg/station etc.
-/obj/item/clothing/mob_can_equip(mob/M, slot, disable_warning = TRUE)
+/obj/item/clothing/mob_can_equip(M, equipper, slot, disable_warning = TRUE, bypass_equip_delay_self)
 
 	//if we can't equip the item anyway, don't bother with species_restricted (also cuts down on spam)
 	if(!..())
 		return FALSE
 
 	// Skip species restriction checks on non-equipment slots
-	if(slot in list(SLOT_IN_BACKPACK, SLOT_L_STORE, SLOT_R_STORE))
+	if(slot in list(ITEM_SLOT_BACKPACK, ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET))
 		return TRUE
 
 	if(species_restricted && ishuman(M))

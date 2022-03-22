@@ -156,7 +156,7 @@
 	category = list("hacked", "Misc")
 
 /obj/item/electropack/shockcollar/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	if(loc == user && user.get_item_by_slot(SLOT_NECK))
+	if(loc == user && user.get_item_by_slot(ITEM_SLOT_NECK))
 		to_chat(user, "<span class='warning'>The collar is fastened tight! You'll need help taking this off!</span>")
 		return
 	return ..()
@@ -167,7 +167,7 @@
 
 	if(isliving(loc) && on) //the "on" arg is currently useless
 		var/mob/living/L = loc
-		if(!L.get_item_by_slot(SLOT_NECK)) //**properly** stops pocket shockers
+		if(!L.get_item_by_slot(ITEM_SLOT_NECK)) //**properly** stops pocket shockers
 			return
 		if(shock_cooldown == TRUE)
 			return

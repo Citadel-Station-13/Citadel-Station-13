@@ -273,10 +273,13 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 				summoner.adjustCloneLoss(amount * 0.5) //dying hosts take 50% bonus damage as cloneloss
 		update_health_hud()
 
-/mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
+/mob/living/simple_animal/hostile/guardian/ex_act(severity, target, origin)
 	switch(severity)
 		if(1)
-			gib()
+			if(istype(origin, /datum/explosion))
+				gib(was_explosion = origin)
+			else
+				gib()
 			return
 		if(2)
 			adjustBruteLoss(60)
@@ -286,10 +289,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/wave_ex_act(power, datum/wave_explosion/explosion, dir)
 	adjustBruteLoss(EXPLOSION_POWER_STANDARD_SCALE_MOB_DAMAGE(power, explosion.mob_damage_mod * 0.33))
 
-/mob/living/simple_animal/hostile/guardian/gib()
+/mob/living/simple_animal/hostile/guardian/gib(no_brain, no_organs, no_bodyparts, datum/explosion/was_explosion)
 	if(summoner)
 		to_chat(summoner, "<span class='danger'><B>Your [src] was blown up!</span></B>")
-		summoner.gib()
+		summoner.gib(was_explosion = was_explosion)
 	ghostize()
 	qdel(src)
 

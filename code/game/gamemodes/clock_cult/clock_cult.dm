@@ -151,14 +151,8 @@ Credit where due:
 	var/datum/team/clockcult/main_clockcult
 
 /datum/game_mode/clockwork_cult/pre_setup() //Gamemode and job code is pain. Have fun codediving all of that stuff, whoever works on this next - Delta
-	var/list/errorList = list()
-	var/list/reebes = SSmapping.LoadGroup(errorList, "Reebe", "map_files/generic", "City_of_Cogs.dmm", default_traits = ZTRAITS_REEBE, silent = TRUE)
-	if(errorList.len)	// reebe failed to load
-		message_admins("Reebe failed to load!")
-		log_game("Reebe failed to load!")
+	if(!load_reebe())
 		return FALSE
-	for(var/datum/parsed_map/PM in reebes)	//Temporarily commented because of z-level loading reliably segfaulting the server.
-		PM.initTemplateBounds()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
@@ -211,11 +205,11 @@ Credit where due:
 	var/mob/living/carbon/human/L = M
 	var/obj/item/clockwork/slab/S = new
 	var/slot = "At your feet"
-	var/list/slots = list("In your left pocket" = SLOT_L_STORE, "In your right pocket" = SLOT_R_STORE, "In your backpack" = SLOT_IN_BACKPACK)
+	var/list/slots = list("In your left pocket" = ITEM_SLOT_LPOCKET, "In your right pocket" = ITEM_SLOT_RPOCKET, "In your backpack" = ITEM_SLOT_BACKPACK)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		var/obj/item/clockwork/replica_fabricator/F = new
-		if(H.equip_to_slot_or_del(F, SLOT_IN_BACKPACK))
+		if(H.equip_to_slot_or_del(F, ITEM_SLOT_BACKPACK))
 			to_chat(H, "<span class='brass'>You have been equipped with a replica fabricator, an advanced tool that can convert objects like doors, tables or even coats into clockwork equivalents.</span>")
 		slot = H.equip_in_one_of_slots(S, slots)
 		if(slot == "In your backpack")

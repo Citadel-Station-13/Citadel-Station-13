@@ -17,7 +17,6 @@ SUBSYSTEM_DEF(processing)
 /datum/controller/subsystem/processing/fire(resumed = FALSE)
 	if (!resumed)
 		currentrun = processing.Copy()
-	var/delta_time = (flags & SS_TICKER)? (wait * world.tick_lag * 0.1) : (wait * 0.1)
 	//cache for sanic speed (lists are references anyways)
 	var/list/current_run = currentrun
 
@@ -26,7 +25,7 @@ SUBSYSTEM_DEF(processing)
 		current_run.len--
 		if(QDELETED(thing))
 			processing -= thing
-		else if(thing.process(delta_time) == PROCESS_KILL)
+		else if(thing.process(wait * 0.1) == PROCESS_KILL)
 			// fully stop so that a future START_PROCESSING will work
 			STOP_PROCESSING(src, thing)
 		if (MC_TICK_CHECK)
@@ -47,5 +46,5 @@ SUBSYSTEM_DEF(processing)
  * If you override this do not call parent, as it will return PROCESS_KILL. This is done to prevent objects that dont override process() from staying in the processing list
  */
 /datum/proc/process(delta_time)
-	SHOULD_NOT_SLEEP(TRUE)
+	set waitfor = FALSE
 	return PROCESS_KILL

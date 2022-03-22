@@ -20,7 +20,7 @@
 
 /obj/item/wormhole_jaunter/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_BELT)
+	if(slot == ITEM_SLOT_BELT)
 		RegisterSignal(user, COMSIG_MOVABLE_CHASM_DROP, .proc/chasm_react)
 
 /obj/item/wormhole_jaunter/dropped(mob/user)
@@ -68,7 +68,7 @@
 
 	var/mob/M = loc
 	if(istype(M))
-		if(M.get_item_by_slot(SLOT_BELT) == src)
+		if(M.get_item_by_slot(ITEM_SLOT_BELT) == src)
 			if(prob(severity))
 				M.visible_message("<span class='warning'>[src] overloads and activates!</span>")
 				SSblackbox.record_feedback("tally", "jaunter", 1, "EMP") // EMP accidental activation

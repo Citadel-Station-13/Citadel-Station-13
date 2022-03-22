@@ -35,67 +35,63 @@
 	. = ..()
 	. += distance_multiplier < 1 ? "Bluespace shortcut module installed. Route is [distance_multiplier]x the original length." : ""
 
-/obj/machinery/computer/custom_shuttle/ui_interact(mob/user)
+/obj/machinery/computer/custom_shuttle/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "CustomShuttleConsole", name)
+		ui.open()
+
+/obj/machinery/computer/custom_shuttle/ui_data(mob/user)
+	var/list/data = list()
 	var/list/options = params2list(possible_destinations)
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
-	var/dat = "[M ? "Current Location : [M.getStatusText()]" : "Shuttle link required."]<br><br>"
+	data["docked_location"] = M ? M.get_status_text_tgui() : null
 	if(M)
-		dat += "<A href='?src=[REF(src)];calculate=1'>Run Flight Calculations</A><br>"
-		dat += "<b>Shuttle Data</b><hr>"
-		dat += "Shuttle Mass: [calculated_mass/10]tons<br>"
-		dat += "Engine Force: [calculated_dforce]kN ([calculated_engine_count] engines)<br>"
-		dat += "Sublight Speed: [calculated_speed]ms<sup>-1</sup><br>"
-		dat += calculated_speed < 1 ? "<b>INSUFFICIENT ENGINE POWER</b><br>" : ""
-		dat += calculated_non_operational_thrusters > 0 ? "<b>Warning: [calculated_non_operational_thrusters] thrusters offline.</b><br>" : ""
-		dat += "Fuel Consumption: [calculated_consumption]units per distance<br>"
-		dat += "Engine Cooldown: [calculated_cooldown]s<hr>"
-		var/destination_found
+		calculateStats(FALSE, 0, TRUE)
+		data["ship_name"] = M.area_type ? M.area_type:name : "ERROR"
+		data["shuttle_mass"] = calculated_mass/10
+		data["engine_force"] = calculated_dforce
+		data["engines"] = calculated_engine_count
+		data["calculated_speed"] = calculated_speed
+		data["damaged_engines"] = calculated_non_operational_thrusters
+		data["calculated_consumption"] = calculated_consumption
+		data["calculated_cooldown"] = calculated_cooldown
+		data["locations"] = list()
 		for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
 			if(!options.Find(S.id))
 				continue
-			if(!M.check_dock(S, silent=TRUE))
+			if(!M.check_dock(S, silent = TRUE))
 				continue
-			if(calculated_speed == 0)
-				break
-			destination_found = TRUE
-			var/dist = round(calculateDistance(S))
-			dat += "<A href='?src=[REF(src)];setloc=[S.id]'>Target [S.name] (Dist: [dist] | Fuel Cost: [round(dist * calculated_consumption)] | Time: [round(dist / calculated_speed)])</A><br>"
-		if(!destination_found)
-			dat += "<B>No valid destinations</B><br>"
-		dat += "<hr>[targetLocation ? "Target Location : [targetLocation]" : "No Target Location"]"
-		dat += "<hr><A href='?src=[REF(src)];fly=1'>Initate Flight</A><br>"
-	dat += "<A href='?src=[REF(user)];mach_close=computer'>Close</a>"
+			var/list/location_data = list(
+				id = S.id,
+				name = S.name,
+				dist = round(calculateDistance(S))
+			)
+			data["locations"] += list(location_data)
+		data["destination"] = targetLocation
+	return data
 
-	popup = new(user, "computer", M ? M.name : "shuttle", 350, 450)
-	popup.set_content("<center>[dat]</center>")
-	popup.open()
-
-/obj/machinery/computer/custom_shuttle/Topic(href, href_list)
-	if(..())
+/obj/machinery/computer/custom_shuttle/ui_act(action, params)
+	. = ..()
+	if(.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
 	if(!allowed(usr))
 		to_chat(usr, "<span class='danger'>Access denied.</span>")
 		return
 
-	if(href_list["calculate"])
-		calculateStats()
-		ui_interact(usr)
-		return
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 	if(!M)
+		to_chat(usr, "<span class='danger'>Shuttle Link Required.</span>")
 		return
 	if(M.launch_status == ENDGAME_LAUNCHED)
 		return
-	if(href_list["setloc"])
-		SetTargetLocation(href_list["setloc"])
-		ui_interact(usr)
-		return
-	else if(href_list["fly"])
-		Fly()
-		ui_interact(usr)
-		return
+
+	switch(action)
+		if("setloc")
+			SetTargetLocation(params["setloc"])
+		if("fly")
+			Fly()
+	return
 
 /obj/machinery/computer/custom_shuttle/proc/calculateDistance(var/obj/docking_port/stationary/port)
 	var/deltaX = port.x - x

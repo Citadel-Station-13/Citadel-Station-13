@@ -325,7 +325,7 @@ GENETICS SCANNER
 		var/breathes = TRUE
 		var/blooded = TRUE
 		if(C.dna && C.dna.species)
-			if(HAS_TRAIT_FROM(C, TRAIT_NOBREATH, SPECIES_TRAIT))
+			if(!HAS_TRAIT_FROM(C, TRAIT_AUXILIARY_LUNGS, SPECIES_TRAIT) && HAS_TRAIT_FROM(C, TRAIT_NOBREATH, SPECIES_TRAIT))
 				breathes = FALSE
 			if(NOBLOOD in C.dna.species.species_traits)
 				blooded = FALSE
@@ -379,6 +379,8 @@ GENETICS SCANNER
 		else if (S.mutantliver != initial(S.mutantliver))
 			mutant = TRUE
 		else if (S.mutantstomach != initial(S.mutantstomach))
+			mutant = TRUE
+		else if (S.flying_species != initial(S.flying_species))
 			mutant = TRUE
 
 		msg += "\t<span class='info'>Reported Species: [H.spec_trait_examine_font()][H.dna.custom_species ? H.dna.custom_species : S.name]</font></span>\n"
@@ -434,12 +436,13 @@ GENETICS SCANNER
 				if(R)
 					blood_type = R.name
 
+
 			if((C.scan_blood_volume() + C.integrating_blood) <= (BLOOD_VOLUME_SAFE * C.blood_ratio) && (C.scan_blood_volume() + C.integrating_blood) > (BLOOD_VOLUME_OKAY*C.blood_ratio))
-				msg += "<span class='danger'>LOW blood level [blood_percent] %, [C.scan_blood_volume()] cl[C.integrating_blood? ", with [integrated_blood_percent] % of it integrating, [C.integrating_blood] cl " : ""].</span> <span class='info'>type: [blood_type]</span>\n"
+				msg += "<span class='danger'>LOW [HAS_TRAIT(C, TRAIT_ROBOTIC_ORGANISM) ? "coolant" : "blood"] level [blood_percent] %, [C.scan_blood_volume()] cl[C.integrating_blood? ", with [integrated_blood_percent] % of it integrating, [C.integrating_blood] cl " : ""].</span> <span class='info'>type: [blood_type]</span>\n"
 			else if((C.scan_blood_volume() + C.integrating_blood) <= (BLOOD_VOLUME_OKAY * C.blood_ratio))
-				msg += "<span class='danger'>CRITICAL blood level [blood_percent] %, [C.scan_blood_volume()] cl[C.integrating_blood? ", with [integrated_blood_percent] % of it integrating, [C.integrating_blood] cl " : ""].</span> <span class='info'>type: [blood_type]</span>\n"
+				msg += "<span class='danger'>CRITICAL [HAS_TRAIT(C, TRAIT_ROBOTIC_ORGANISM) ? "coolant" : "blood"] level [blood_percent] %, [C.scan_blood_volume()] cl[C.integrating_blood? ", with [integrated_blood_percent] % of it integrating, [C.integrating_blood] cl " : ""].</span> <span class='info'>type: [blood_type]</span>\n"
 			else
-				msg += "<span class='info'>Blood level [blood_percent] %, [C.scan_blood_volume()] cl[C.integrating_blood? ", with [integrated_blood_percent] % of it integrating, [C.integrating_blood] cl " : ""]. type: [blood_type]</span>\n"
+				msg += "<span class='info'>[HAS_TRAIT(C, TRAIT_ROBOTIC_ORGANISM) ? "Coolant" : "Blood"] level [blood_percent] %, [C.scan_blood_volume()] cl[C.integrating_blood? ", with [integrated_blood_percent] % of it integrating, [C.integrating_blood] cl " : ""]. type: [blood_type]</span>\n"
 
 
 		var/cyberimp_detect
@@ -467,7 +470,8 @@ GENETICS SCANNER
 				if(length(reagents))
 					msg += "<span class='notice'>Subject contains the following reagents:</span>\n"
 					for(var/datum/reagent/R in reagents)
-						msg += "<span class='notice'>[R.volume] units of [R.name][R.overdosed == 1 ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]\n"
+						var/invalid_reagent = is_reagent_processing_invalid(R, M)
+						msg += "<span class='notice'>[invalid_reagent ? "<font color='grey'>" : ""][R.volume] units of [R.name][invalid_reagent ? "</font>" : ""][R.overdosed == 1 ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]\n"
 				else
 					msg += "<span class='notice'>Subject contains no reagents.</span>\n"
 

@@ -18,9 +18,9 @@
 		AM.forceMove(T)
 	return ..()
 
-/obj/structure/bigDelivery/contents_explosion(severity, target)
+/obj/structure/bigDelivery/contents_explosion(severity, target, origin)
 	for(var/atom/movable/AM in contents)
-		AM.ex_act()
+		AM.ex_act(severity, target, origin)
 
 /obj/structure/bigDelivery/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/destTagger))
@@ -82,9 +82,9 @@
 	var/giftwrapped = 0
 	var/sortTag = 0
 
-/obj/item/smallDelivery/contents_explosion(severity, target)
+/obj/item/smallDelivery/contents_explosion(severity, target, origin)
 	for(var/atom/movable/AM in contents)
-		AM.ex_act()
+		AM.ex_act(severity, target, origin)
 
 /obj/item/smallDelivery/attack_self(mob/user)
 	user.temporarilyRemoveItemFromInventory(src, TRUE)

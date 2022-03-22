@@ -244,6 +244,69 @@
 
 //////////////////////////////////////////////
 //                                          //
+//                 FAMILIES                 //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/midround/families
+	name = "Family Head Aspirants"
+	persistent = TRUE
+	antag_datum = /datum/antagonist/gang
+	antag_flag = ROLE_FAMILY_HEAD_ASPIRANT
+	antag_flag_override = ROLE_FAMILIES
+	protected_roles = list("Prisoner", "Head of Personnel")
+	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel", "Quartermaster", "Chief Engineer", "Chief Medical Officer", "Research Director")
+	required_candidates = 9
+	weight = 3
+	cost = 15
+	requirements = list(101,101,101,50,30,20,10,10,10,10)
+	flags = HIGH_IMPACT_RULESET
+	blocking_rules = list(/datum/dynamic_ruleset/roundstart/families)
+	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
+	var/datum/gang_handler/handler
+
+/datum/dynamic_ruleset/midround/families/trim_candidates()
+	..()
+	candidates = living_players
+	for(var/mob/living/player in candidates)
+		if(issilicon(player))
+			candidates -= player
+		else if(is_centcom_level(player.z))
+			candidates -= player
+		else if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
+			candidates -= player
+		else if(HAS_TRAIT(player, TRAIT_MINDSHIELD))
+			candidates -= player
+
+
+/datum/dynamic_ruleset/midround/families/ready(forced = FALSE)
+	if (required_candidates > living_players.len)
+		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/midround/families/pre_execute()
+	..()
+	handler = new /datum/gang_handler(candidates,restricted_roles)
+	handler.gang_balance_cap = clamp((indice_pop - 3), 2, 5) // gang_balance_cap by indice_pop: (2,2,2,2,2,3,4,5,5,5)
+	handler.midround_ruleset = TRUE
+	handler.use_dynamic_timing = TRUE
+	return handler.pre_setup_analogue()
+
+/datum/dynamic_ruleset/midround/families/execute()
+	return handler.post_setup_analogue(TRUE)
+
+/datum/dynamic_ruleset/midround/families/clean_up()
+	QDEL_NULL(handler)
+	..()
+
+/datum/dynamic_ruleset/midround/families/rule_process()
+	return handler.process_analogue()
+
+/datum/dynamic_ruleset/midround/families/round_result()
+	return handler.set_round_result_analogue()
+
+//////////////////////////////////////////////
+//                                          //
 //         Malfunctioning AI                //
 //                                         //
 //////////////////////////////////////////////
@@ -381,6 +444,70 @@
 		new_character.mind.add_antag_datum(new_role)
 	else
 		return ..()
+
+//////////////////////////////////////////////
+//                                          //
+//              Clock Cult (MID)            //
+//                                          //
+//////////////////////////////////////////////
+
+
+//changes two people midround into clockwork cultists
+/datum/dynamic_ruleset/midround/ratvar_awakening
+	name = "Ratvar Awakening"
+	antag_datum = /datum/antagonist/clockcult
+	antag_flag = "clock mid"
+	antag_flag_override = ROLE_SERVANT_OF_RATVAR
+	protected_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel", "Quartermaster", "Chief Engineer", "Chief Medical Officer", "Research Director")
+	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel", "Quartermaster", "Chief Engineer", "Chief Medical Officer", "Research Director")
+	enemy_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel", "Quartermaster", "Chief Engineer", "Chief Medical Officer", "Research Director")
+	required_enemies = list(1,1,1,1,1,1,0,0,0,0)
+	required_candidates = 2
+	weight = 3
+	cost = 20
+	requirements = list(101,101,101,101,50,40,30,20,10,10)
+	var/list/clock_cap = list(1,1,1,1,2,3,4,5,5,5)
+	flags = HIGH_IMPACT_RULESET
+
+/datum/dynamic_ruleset/midround/ratvar_awakening/acceptable(population=0, threat=0)
+	if (locate(/datum/dynamic_ruleset/roundstart/clockcult) in mode.executed_rules)
+		return FALSE // Unavailable if clockies exist at round start
+	indice_pop = min(clock_cap.len, round(living_players.len/5)+1)
+	required_candidates = clock_cap[indice_pop]
+	return ..()
+
+/datum/dynamic_ruleset/midround/ratvar_awakening/trim_candidates()
+	..()
+	candidates = living_players
+	for(var/mob/living/player as anything in candidates)
+		var/turf/player_turf = get_turf(player)
+		if(!player_turf || !is_station_level(player_turf.z))
+			candidates -= player //no ghost roles
+			continue
+
+		if(!is_eligible_servant(player))
+			candidates -= player
+			continue
+
+		if(player.mind && (player.mind.special_role || length(player.mind.antag_datums) > 0))
+			candidates -= player //no double dipping
+
+/datum/dynamic_ruleset/midround/ratvar_awakening/execute()
+	if(!candidates || !candidates.len)
+		return FALSE
+	for(var/i = 0; i < required_candidates; i++)
+		if(!candidates.len)
+			break
+		var/mob/living/clock_antag = pick_n_take(candidates)
+		assigned += clock_antag.mind
+	for(var/datum/mind/M in assigned) //add them to the clockwork team
+		add_servant_of_ratvar(M.current)
+		SSticker.mode.equip_servant(M.current)
+		SSticker.mode.greet_servant(M.current)
+		message_admins("[ADMIN_LOOKUPFLW(M.current)] was selected by the [name] ruleset and has been made into a midround clock cultist.")
+		log_game("DYNAMIC: [key_name(M.current)] was selected by the [name] ruleset and has been made into a midround clock cultist.")
+	load_reebe()
+	return ..()
 
 //////////////////////////////////////////////
 //                                          //

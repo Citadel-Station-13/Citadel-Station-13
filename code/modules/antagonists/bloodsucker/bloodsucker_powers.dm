@@ -94,7 +94,7 @@
 		if(display_error)
 			to_chat(owner, "<span class='warning'>You have a stake in your chest! Your powers are useless.</span>")
 		return FALSE
-	if(istype(owner.get_item_by_slot(SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
+	if(istype(owner.get_item_by_slot(ITEM_SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
 		if(display_error)
 			to_chat(owner, "<span class='warning'The necklace on your neck is interfering with your powers!</span>")
 		return FALSE

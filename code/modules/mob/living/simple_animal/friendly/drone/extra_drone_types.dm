@@ -188,6 +188,9 @@
 /mob/living/simple_animal/drone/cogscarab/update_drone_hack()
 	return //we don't get hacked or give a shit about it
 
+/mob/living/simple_animal/drone/cogscarab/death(gibbed)
+	. = ..()
+
 /mob/living/simple_animal/drone/cogscarab/drone_chat(msg)
 	titled_hierophant_message(src, msg, "nezbere", "brass", "Construct") //HIEROPHANT DRONES
 

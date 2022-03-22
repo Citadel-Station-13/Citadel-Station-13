@@ -13,6 +13,7 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/completed = FALSE				//currently only used for custom objectives.
 	var/completable = TRUE				//Whether this objective shows greentext when completed
 	var/martyr_compatible = FALSE		//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
+	var/objective_name = "Objective"	//name used in printing this objective (Objective #1)
 
 /datum/objective/New(var/text)
 	GLOB.objectives += src // CITADEL EDIT FOR CRYOPODS
@@ -164,7 +165,7 @@ If not set, defaults to check_completion instead. Set it. It's used by cryo.
 	if(receiver && receiver.current)
 		if(ishuman(receiver.current))
 			var/mob/living/carbon/human/H = receiver.current
-			var/list/slots = list("backpack" = SLOT_IN_BACKPACK)
+			var/list/slots = list("backpack" = ITEM_SLOT_BACKPACK)
 			for(var/eq_path in special_equipment)
 				var/obj/O = new eq_path
 				. += O
@@ -778,6 +779,24 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		target_amount = count
 	update_explanation_text()
 */
+/datum/objective/protect_object
+	name = "protect object"
+	var/obj/protect_target
+
+/datum/objective/protect_object/proc/set_target(obj/O)
+	protect_target = O
+	update_explanation_text()
+
+/datum/objective/protect_object/update_explanation_text()
+	. = ..()
+	if(protect_target)
+		explanation_text = "Protect \the [protect_target] at all costs."
+	else
+		explanation_text = "Free objective."
+
+/datum/objective/protect_object/check_completion()
+	return !QDELETED(protect_target)
+
 //Changeling Objectives
 
 /datum/objective/absorb
@@ -1178,7 +1197,7 @@ GLOBAL_LIST_EMPTY(cult_contraband)
 	I.forceMove(get_turf(owner))
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.equip_in_one_of_slots(I, list("backpack" = SLOT_IN_BACKPACK), critical = TRUE)
+		H.equip_in_one_of_slots(I, list("backpack" = ITEM_SLOT_BACKPACK), critical = TRUE)
 		hoarded_item = I
 
 

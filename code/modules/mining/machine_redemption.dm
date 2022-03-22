@@ -346,7 +346,7 @@
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
 			return TRUE
 
-/obj/machinery/mineral/ore_redemption/ex_act(severity, target)
+/obj/machinery/mineral/ore_redemption/ex_act(severity, target, origin)
 	do_sparks(5, TRUE, src)
 	..()
 

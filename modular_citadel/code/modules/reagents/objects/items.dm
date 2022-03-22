@@ -140,7 +140,16 @@
 		out_message += "<span class='warning'>A reaction appears to be occuring currently.<span class='notice'>\n"
 	out_message += "Chemicals found in the beaker:</b>\n"
 	for(var/datum/reagent/R in cont.reagents.reagent_list)
-		out_message += "<b>[R.volume]u of [R.name]</b>, <b>Purity:</b> [R.purity], [(scanmode?"[(R.overdose_threshold?"<b>Overdose:</b> [R.overdose_threshold]u, ":"")][(R.addiction_threshold?"<b>Addiction:</b> [R.addiction_threshold]u, ":"")]<b>Base pH:</b> [R.pH].":".")]\n"
+		var/processtype
+		if(CHECK_MULTIPLE_BITFIELDS(R.chemical_flags, (REAGENT_ROBOTIC_PROCESS | REAGENT_ORGANIC_PROCESS)))
+			processtype = "Both robots and organics"
+		else if(R.chemical_flags & REAGENT_ROBOTIC_PROCESS)
+			processtype = "Robots only"
+		else if(R.chemical_flags & REAGENT_ORGANIC_PROCESS)
+			processtype = "Organics only"
+		else
+			processtype = "Noone?! (Report this to Nanotrasen's spacetime department immediately)"
+		out_message += "<b>[R.volume]u of [R.name]</b>, <b>Purity:</b> [R.purity], [(scanmode?"[(R.overdose_threshold?"<b>Overdose:</b> [R.overdose_threshold]u, ":"")][(R.addiction_threshold?"<b>Addiction:</b> [R.addiction_threshold]u, ":"")]<b>Metabolized by:</b> [processtype], <b>Base pH:</b> [R.pH].":".")]\n"
 		if(scanmode)
 			out_message += "<b>Analysis:</b> [R.description]\n"
 	to_chat(user, "[out_message]</span>")

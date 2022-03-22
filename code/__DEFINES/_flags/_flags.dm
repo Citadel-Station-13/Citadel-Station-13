@@ -37,6 +37,8 @@ GLOBAL_LIST_INIT(bitflags, list(
 #define OVERLAY_QUEUED_1			(1<<8)
 ///Item has priority to check when entering or leaving.
 #define ON_BORDER_1					(1<<9)
+///Whether or not this atom shows screentips when hovered over
+#define NO_SCREENTIPS_1				(1<<10)
 ///Prevent clicking things below it on the same turf eg. doors/ fulltile windows.
 #define PREVENT_CLICK_UNDER_1		(1<<11)
 #define HOLOGRAM_1					(1<<12)
