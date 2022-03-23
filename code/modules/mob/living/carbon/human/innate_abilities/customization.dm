@@ -22,7 +22,7 @@
 
 /datum/action/innate/ability/humanoid_customization/proc/change_form()
 	var/mob/living/carbon/human/H = owner
-	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Body Color","Hair Style", "Genitals", "Tail", "Snout", "Markings", "Ears", "Taur body", "Penis", "Vagina", "Penis Length", "Breast Size", "Breast Shape", "Cancel")
+	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Body Color", "Eye Color","Hair Style", "Genitals", "Tail", "Snout", "Markings", "Ears", "Taur body", "Penis", "Vagina", "Penis Length", "Breast Size", "Breast Shape", "Cancel")
 
 	if(select_alteration == "Body Color")
 		var/new_color = input(owner, "Choose your skin color:", "Race change","#"+H.dna.features["mcolor"]) as color|null
@@ -34,6 +34,27 @@
 				H.update_hair()
 			else
 				to_chat(H, "<span class='notice'>Invalid color. Your color is not bright enough.</span>")
+	else if(select_alteration == "Eye Color")
+		if(iscultist(H) && HAS_TRAIT(H, TRAIT_CULT_EYES))
+			to_chat(H, "<span class='cultlarge'>\"I do not need you to hide yourself anymore, relish my gift.\"</span>")
+			return
+
+		var/heterochromia = input(owner, "Do you want to have heterochromia?", "Confirm Multicolors") in list("Yes", "No")
+		if(heterochromia == "Yes")
+			var/new_color1 = input(owner, "Choose your left eye color:", "Eye Color Change","#"+H.dna?.features["left_eye_color"]) as color|null
+			if(new_color1)
+				H.left_eye_color = sanitize_hexcolor(new_color1, 6)
+			var/new_color2 = input(owner, "Choose your right eye color:",  "Eye Color Change","#"+H.dna?.features["right_eye_color"]) as color|null
+			if(new_color2)
+				H.right_eye_color = sanitize_hexcolor(new_color2, 6)
+		else
+			var/new_eyes = input(owner, "Choose your eye color:", "Character Preference","#"+H.dna?.features["left_eye_color"]) as color|null
+			if(new_eyes)
+				H.left_eye_color = sanitize_hexcolor(new_eyes, 6)
+				H.right_eye_color = sanitize_hexcolor(new_eyes, 6)
+		H.dna?.update_ui_block(DNA_LEFT_EYE_COLOR_BLOCK)
+		H.dna?.update_ui_block(DNA_RIGHT_EYE_COLOR_BLOCK)
+		H.update_body()
 	else if(select_alteration == "Hair Style")
 		if(H.gender == MALE)
 			var/new_style = input(owner, "Select a facial hair style", "Hair Alterations")  as null|anything in GLOB.facial_hair_styles_list
