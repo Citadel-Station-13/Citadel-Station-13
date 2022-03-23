@@ -163,7 +163,7 @@
 	if(can_inject(M, 1, affecting))//Thick suits can stop monkey bites.
 		if(..()) //successful monkey bite, this handles disease contraction.
 			var/damage = rand(1, 3)
-			apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, "melee"))
+			apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, MELEE))
 		return 1
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
@@ -183,7 +183,7 @@
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 		if(!affecting)
 			affecting = get_bodypart(BODY_ZONE_CHEST)
-		var/armor_block = run_armor_check(affecting, "melee", null, null,10)
+		var/armor_block = run_armor_check(affecting, MELEE, null, null,10)
 
 		playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 		visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
@@ -219,7 +219,7 @@
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(L.zone_selected))
 		if(!affecting)
 			affecting = get_bodypart(BODY_ZONE_CHEST)
-		var/armor_block = run_armor_check(affecting, "melee")
+		var/armor_block = run_armor_check(affecting, MELEE)
 		apply_damage(damage, BRUTE, affecting, armor_block)
 
 
@@ -233,7 +233,7 @@
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		if(!affecting)
 			affecting = get_bodypart(BODY_ZONE_CHEST)
-		var/armor = run_armor_check(affecting, "melee", armour_penetration = M.armour_penetration)
+		var/armor = run_armor_check(affecting, MELEE, armour_penetration = M.armour_penetration)
 		apply_damage(damage, M.melee_damage_type, affecting, armor, wound_bonus = M.wound_bonus, bare_wound_bonus = M.bare_wound_bonus, sharpness = M.sharpness)
 
 /mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M)
@@ -253,7 +253,7 @@
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	if(!affecting)
 		affecting = get_bodypart(BODY_ZONE_CHEST)
-	var/armor_block = run_armor_check(affecting, "melee")
+	var/armor_block = run_armor_check(affecting, MELEE)
 	apply_damage(damage, BRUTE, affecting, armor_block, wound_bonus=wound_mod)
 
 
@@ -265,7 +265,7 @@
 		return
 	var/brute_loss = 0
 	var/burn_loss = 0
-	var/bomb_armor = getarmor(null, "bomb")
+	var/bomb_armor = getarmor(null, BOMB)
 
 	//200 max knockdown for EXPLODE_HEAVY
 	//160 max knockdown for EXPLODE_LIGHT
@@ -286,7 +286,7 @@
 				brute_loss = 500
 				var/atom/throw_target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
 				throw_at(throw_target, 200, 4)
-				damage_clothes(400 - bomb_armor, BRUTE, "bomb")
+				damage_clothes(400 - bomb_armor, BRUTE, BOMB)
 
 		if (EXPLODE_HEAVY)
 			brute_loss = 60
@@ -294,7 +294,7 @@
 			if(bomb_armor)
 				brute_loss = 30*(2 - round(bomb_armor*0.01, 0.05))
 				burn_loss = brute_loss				//damage gets reduced from 120 to up to 60 combined brute+burn
-			damage_clothes(200 - bomb_armor, BRUTE, "bomb")
+			damage_clothes(200 - bomb_armor, BRUTE, BOMB)
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
 			Unconscious(20)							//short amount of time for follow up attacks against elusive enemies like wizards
@@ -305,7 +305,7 @@
 			brute_loss = 30
 			if(bomb_armor)
 				brute_loss = 15*(2 - round(bomb_armor*0.01, 0.05))
-			damage_clothes(max(50 - bomb_armor, 0), BRUTE, "bomb")
+			damage_clothes(max(50 - bomb_armor, 0), BRUTE, BOMB)
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
 			Knockdown((160 - (bomb_armor * 1.6)) / 4)		//100 bomb armor will prevent knockdown altogether
@@ -318,7 +318,7 @@
 		var/max_limb_loss = round(4/severity) //so you don't lose four limbs at severity 3.
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
-			if(prob(50/severity) && !prob(getarmor(BP, "bomb")) && BP.body_zone != BODY_ZONE_HEAD && BP.body_zone != BODY_ZONE_CHEST)
+			if(prob(50/severity) && !prob(getarmor(BP, BOMB)) && BP.body_zone != BODY_ZONE_HEAD && BP.body_zone != BODY_ZONE_CHEST)
 				BP.brute_dam = BP.max_damage
 				BP.dismember()
 				max_limb_loss--
@@ -332,7 +332,7 @@
 	show_message("<span class='userdanger'>The blob attacks you!</span>")
 	var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
-	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, "melee"))
+	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, MELEE))
 
 
 ///Calculates the siemens coeff based on clothing and species, can also restart hearts.

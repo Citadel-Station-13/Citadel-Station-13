@@ -70,7 +70,7 @@
 	else
 		var/obj/vehicle/sealed/mecha/M = locate() in get_turf(src)
 		if(M)
-			M.take_damage(50,BRUTE,"melee")
+			M.take_damage(50,BRUTE,MELEE)
 			M.visible_message("<span class='danger'>A massive brass spike erupts from the ground, penetrating \the [M] and shattering the trap into pieces!</span>")
 			addtimer(CALLBACK(src, .proc/take_damage, max_integrity), 1)
 		else

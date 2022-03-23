@@ -4,7 +4,7 @@
 	icon = 'icons/mecha/neovgre.dmi'
 	icon_state = "neovgre"
 	max_integrity = 500 //This is THE ratvarian superweaon, its deployment is an investment
-	armor = list("melee" = 50, "bullet" = 40, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100) //Its similar to the clockwork armour albeit with a few buffs becuase RATVARIAN SUPERWEAPON!!
+	armor = list(MELEE = 50, BULLET = 40, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100) //Its similar to the clockwork armour albeit with a few buffs becuase RATVARIAN SUPERWEAPON!!
 	force = 50 //SMASHY SMASHY!!
 	movedelay = 3
 	internal_damage_threshold = 0

@@ -28,7 +28,7 @@
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
 	max_integrity = 160		//the turret's health
 	integrity_failure = 0.5
-	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 30, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 	/// Base turret icon state
 	base_icon_state = "standard"
 	/// Scan range of the turret for locating targets
@@ -776,7 +776,7 @@
 /obj/machinery/porta_turret/syndicate/energy/pirate
 	max_integrity = 260
 	integrity_failure = 0.08
-	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 50, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 
 /obj/machinery/porta_turret/syndicate/energy/raven
 	stun_projectile =  /obj/item/projectile/beam/laser
@@ -796,7 +796,7 @@
 	lethal_projectile = /obj/item/projectile/bullet/p50/penetrator/shuttle
 	lethal_projectile_sound = 'sound/weapons/gunshot_smg.ogg'
 	stun_projectile_sound = 'sound/weapons/gunshot_smg.ogg'
-	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 80, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 80, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 
 /obj/machinery/porta_turret/syndicate/pod/toolbox
 	max_integrity = 100

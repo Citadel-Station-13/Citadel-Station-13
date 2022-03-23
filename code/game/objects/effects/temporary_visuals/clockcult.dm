@@ -129,7 +129,7 @@
 			"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
 			continue
 		L.visible_message("<span class='warning'>[L] is struck by a [name]!</span>", "<span class='userdanger'>You're struck by a [name]!</span>")
-		L.apply_damage(damage, BURN, "chest", L.run_armor_check("chest", "laser", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 0, "Your armor was penetrated by [src]!"))
+		L.apply_damage(damage, BURN, "chest", L.run_armor_check("chest", LASER, "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 0, "Your armor was penetrated by [src]!"))
 		log_combat(user, L, "struck with a volt blast")
 		hit_amount++
 	for(var/obj/vehicle/sealed/mecha/M in T)

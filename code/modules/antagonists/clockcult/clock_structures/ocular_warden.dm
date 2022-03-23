@@ -77,7 +77,7 @@
 						L.IgniteMob()
 			else if(ismecha(target))
 				var/obj/vehicle/sealed/mecha/M = target
-				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
+				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, MELEE, 1, get_dir(src, M))
 
 			new /obj/effect/temp_visual/ratvar/ocular_warden(get_turf(target))
 

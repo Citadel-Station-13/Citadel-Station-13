@@ -39,7 +39,7 @@
 			else
 				return 0
 	mecha_attacker.visible_message("<span class='danger'>[mecha_attacker.name] hits [src]!</span>", "<span class='danger'>You hit [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-	return take_damage(mecha_attacker.force * 3, mech_damtype, "melee", play_soundeffect, get_dir(src, mecha_attacker)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
+	return take_damage(mecha_attacker.force * 3, mech_damtype, MELEE, play_soundeffect, get_dir(src, mecha_attacker)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
 /obj/structure/window/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker)
 	if(!can_be_reached())
