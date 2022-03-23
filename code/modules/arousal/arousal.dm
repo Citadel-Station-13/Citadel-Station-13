@@ -145,7 +145,7 @@
 			partners -= L
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
-			if(!C.exposed_genitals.len || !C.is_groin_exposed() || !C.is_chest_exposed() || !C.is_mouth_covered()) //Nothing through_clothing, no proper partner.
+			if(!C.exposed_genitals.len && !C.is_groin_exposed() && !C.is_chest_exposed() && C.is_mouth_covered()) //Nothing through_clothing, no proper partner.
 				partners -= C
 	//NOW the list should only contain correct partners
 	if(!partners.len)
