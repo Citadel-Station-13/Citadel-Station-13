@@ -16,10 +16,16 @@
 	wreckage = /obj/structure/mecha_wreckage/durand/neovgre
 	stepsound = 'sound/mecha/neostep2.ogg'
 	turnsound = 'sound/mecha/powerloader_step.ogg'
+	max_occupants = 2
 
+//override this proc if you need to split up mecha control between multiple people (see savannah_ivanov.dm)
+/obj/vehicle/sealed/mecha/combat/neovgre/auto_assign_occupant_flags(mob/M)
+	if(driver_amount() < max_drivers)
+		add_control_flags(M, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_SETTINGS)
+	else
+		add_control_flags(M, VEHICLE_CONTROL_MELEE|VEHICLE_CONTROL_EQUIPMENT)
 
-
-/obj/vehicle/sealed/mecha/neovgre/mob_exit(mob/M, silent, forced)
+/obj/vehicle/sealed/mecha/combat/neovgre/mob_exit(mob/M, silent, forced)
 	if(forced)
 		..()
 
@@ -76,6 +82,8 @@
 	GLOB.neovgre_exists ++
 	var/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy/neovgre/N = new
 	N.attach(src)
+	var/obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla/shocking = new
+	shocking.attach(src)
 
 /obj/structure/mecha_wreckage/durand/neovgre
 	name = "\improper Neovgre wreckage?"

@@ -47,6 +47,8 @@
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/strafe, VEHICLE_CONTROL_DRIVE)
+	if(max_occupants > 1)
+		initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/swap_seat)
 
 /obj/vehicle/sealed/mecha/working/ripley/Destroy()
 	for(var/atom/movable/A in cargo)
