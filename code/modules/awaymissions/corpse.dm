@@ -362,7 +362,6 @@
 	name = "Beach Bum Lifeguard"
 	desc = "Beach biodome's lifeguard."
 	spawntext = "<span class='big bold'>You're a spunky lifeguard!</span><b> It's up to you to make sure nobody drowns or gets eaten by sharks and stuff.</b>"
-	instantiator = /datum/ghostrole_instantiator/human/random
 	inject_params = list(
 		"outfit" = /datum/outfit/beachbum/lifeguard
 	)
@@ -375,8 +374,6 @@
 	role_type = /datum/ghostrole/beach_bum
 
 /obj/structure/ghost_role_spawner/beach_bum/lifeguard
-	flavour_text = "<span class='big bold'>You're a spunky lifeguard!</span><b> It's up to you to make sure nobody drowns or gets eaten by sharks and stuff.</b>"
-	mob_gender = "female"
 	name = "lifeguard sleeper"
 	role_type = /datum/ghostrole/beach_bum/lifeguard
 
@@ -570,7 +567,6 @@
 /obj/structure/ghost_role_spawner/lavaknight
 	name = "odd cryogenics pod"
 	desc = "A humming cryo pod. You can barely recognise a faint glow underneath the built up ice. The machine is attempting to wake up its occupant."
-	mob_name = "a displaced knight from another dimension"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	role_type = /datum/ghostrole/lavaknight
