@@ -348,27 +348,37 @@
 /obj/effect/mob_spawn/human/beach
 	outfit = /datum/outfit/beachbum
 
-#warn convert
-/obj/effect/mob_spawn/human/beach/alive
-	death = FALSE
-	roundstart = FALSE
-	random = TRUE
-	job_description = "Beach Biodome Bum"
-	mob_name = "Beach Bum"
+/datum/ghostrole/beach_bum
+	name = "Beach Bum"
+	spawntext = "It's up to you to make sure nobody drowns or gets eaten by sharks and stuff."
+	desc = "Beach biodome denizen"
+	instantiator = /datum/ghostrole_instantiator/human/random
+	inject_params = list(
+		"outfit" = /datum/outfit/beachbum
+	)
+	assigned_role = "Beach Bum"
+
+/datum/ghostrole/beach_bum/lifeguard
+	name = "Beach Bum Lifeguard"
+	desc = "Beach biodome's lifeguard."
+	spawntext = "<span class='big bold'>You're a spunky lifeguard!</span><b> It's up to you to make sure nobody drowns or gets eaten by sharks and stuff.</b>"
+	instantiator = /datum/ghostrole_instantiator/human/random
+	inject_params = list(
+		"outfit" = /datum/outfit/beachbum/lifeguard
+	)
+	assigned_role = "Beach Biodome Lifeguard"
+
+/obj/structure/ghost_role_spawner/beach_bum
 	name = "beach bum sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	short_desc = "You're a spunky lifeguard!"
-	flavour_text = "It's up to you to make sure nobody drowns or gets eaten by sharks and stuff."
-	assignedrole = "Beach Bum"
+	role_type = /datum/ghostrole/beach_bum
 
-/obj/effect/mob_spawn/human/beach/alive/lifeguard
+/obj/structure/ghost_role_spawner/beach_bum/lifeguard
 	flavour_text = "<span class='big bold'>You're a spunky lifeguard!</span><b> It's up to you to make sure nobody drowns or gets eaten by sharks and stuff.</b>"
 	mob_gender = "female"
 	name = "lifeguard sleeper"
-	id_job = "Lifeguard"
-	job_description = "Beach Biodome Lifeguard"
-	uniform = /obj/item/clothing/under/shorts/red
+	role_type = /datum/ghostrole/beach_bum/lifeguard
 
 /datum/outfit/beachbum
 	name = "Beach Bum"
@@ -377,6 +387,10 @@
 	l_pocket = /obj/item/reagent_containers/food/snacks/pizzaslice/dank;
 	uniform = /obj/item/clothing/under/pants/youngfolksjeans
 	id = /obj/item/card/id
+
+/datum/outfit/beachbum/lifeguard
+	id_role_override = "Lifeguard"
+	uniform = /obj/item/clothing/under/shorts/red
 
 /datum/outfit/beachbum/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
@@ -540,33 +554,29 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 
 #warn convert
-/obj/effect/mob_spawn/human/lavaknight
+
+/datum/ghostrole/lavaknight
+	name = "Lava Knight"
+	desc = "A displaced knight from another dimension"
+	spawntext = "<font size=3><b>Y</b></font><b>ou are a knight who conveniently has some form of retrograde amnesia. \
+	You cannot remember where you came from. However, a few things remain burnt into your mind, most prominently a vow to never harm another sapient being under any circumstances unless it is hellbent on ending your life. \
+	Remember: hostile creatures and such are fair game for attacking, but <span class='danger'>under no circumstances are you to attack anything capable of thought and/or speech</span> unless it has made it its life's calling to chase you to the ends of the earth."
+	assigned_role = "Cydonian Knight"
+	inject_params = list(
+		"outfit" = /datum/outfit/lavaknight
+	)
+	instantiator = /datum/ghostrole_instantiator/human/random
+
+/obj/structure/ghost_role_spawner/lavaknight
 	name = "odd cryogenics pod"
 	desc = "A humming cryo pod. You can barely recognise a faint glow underneath the built up ice. The machine is attempting to wake up its occupant."
 	mob_name = "a displaced knight from another dimension"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	roundstart = FALSE
-	id_job = "Knight"
-	job_description = "Cydonian Knight"
-	death = FALSE
-	random = TRUE
-	outfit = /datum/outfit/lavaknight
-	mob_species = /datum/species/human
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are a knight who conveniently has some form of retrograde amnesia. \
-	You cannot remember where you came from. However, a few things remain burnt into your mind, most prominently a vow to never harm another sapient being under any circumstances unless it is hellbent on ending your life. \
-	Remember: hostile creatures and such are fair game for attacking, but <span class='danger'>under no circumstances are you to attack anything capable of thought and/or speech</span> unless it has made it its life's calling to chase you to the ends of the earth."
-	assignedrole = "Cydonian Knight"
+	role_type = /datum/ghostrole/lavaknight
 
-/obj/effect/mob_spawn/human/lavaknight/special(mob/living/new_spawn)
-	if(ishuman(new_spawn))
-		var/mob/living/carbon/human/H = new_spawn
-		H.dna.features["mam_ears"] = "Cat, Big"	//cat people
-		H.dna.features["mcolor"] = H.hair_color
-		H.update_body()
-
-/obj/effect/mob_spawn/human/lavaknight/Destroy()
-	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
+/obj/structure/ghost_role_spawner/lavaknight/Destroy()
+	new /obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
 
 /datum/outfit/lavaknight
@@ -578,18 +588,24 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/lavaknight
 	suit_store = /obj/item/tank/internals/oxygen
 	id = /obj/item/card/id/knight/blue
+	id_role_override = "Knight"
 
-/obj/effect/mob_spawn/human/lavaknight/captain
-	name = "odd gilded cryogenics pod"
-	desc = "A humming cryo pod that appears to be gilded. You can barely recognise a faint glow underneath the built up ice. The machine is attempting to wake up its occupant."
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are a knight who conveniently has some form of retrograde amnesia. \
+/datum/ghostrole/lavaknight/captain
+	spawntext = "<font size=3><b>Y</b></font><b>ou are a knight who conveniently has some form of retrograde amnesia. \
 	You cannot remember where you came from. However, a few things remain burnt into your mind, most prominently a vow to never harm another sapient being under any circumstances unless it is hellbent on ending your life. \
 	Remember: hostile creatures and such are fair game for attacking, but <span class='danger'>under no circumstances are you to attack anything capable of thought and/or speech</span> unless it has made it its life's calling to chase you to the ends of the earth. \
 	You feel a natural instict to lead, and as such, you should strive to lead your comrades to safety, and hopefully home. You also feel a burning determination to uphold your vow, as well as your fellow comrade's."
-	outfit = /datum/outfit/lavaknight/captain
-	id_job = "Knight Captain"
+	inject_params = list(
+		"outfit" = /datum/outfit/lavaknight/captain
+	)
+
+/obj/structure/ghost_role_spawner/lavaknight/captain
+	name = "odd gilded cryogenics pod"
+	desc = "A humming cryo pod that appears to be gilded. You can barely recognise a faint glow underneath the built up ice. The machine is attempting to wake up its occupant."
+	role_type = /datum/ghostrole/lavaknight/captain
 
 /datum/outfit/lavaknight/captain
 	name ="Cydonian Knight Captain"
 	l_pocket = /obj/item/dualsaber/hypereutactic
 	id = /obj/item/card/id/knight/captain
+	id_role_override = "Knight Captain"

@@ -237,7 +237,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/lavaland/powered/beach)
 "aV" = (
-/obj/effect/mob_spawn/human/beach/alive,
+/obj/structure/ghost_role_spawner/beach_bum,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/lavaland/powered/beach)
 "aW" = (
@@ -345,7 +345,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/mob_spawn/human/beach/alive/lifeguard,
+/obj/structure/ghost_role_spawner/beach_bum/lifeguard,
 /turf/open/floor/wood,
 /area/ruin/lavaland/powered/beach)
 "bJ" = (
