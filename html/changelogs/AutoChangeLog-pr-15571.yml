@@ -1,0 +1,4 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - bugfix: "Self-fueling welders should no longer be able to be stuck not refueling."
