@@ -491,6 +491,7 @@ Moving interrupts
 		new_statue.set_visuals(current_target)
 		new_statue.set_custom_materials(custom_materials)
 		var/mutable_appearance/ma = current_target
+		new_statue.dir = ma.dir
 		new_statue.name = "statue of [ma.name]"
 		new_statue.desc = "A statue depicting [ma.name]."
 		qdel(src)
