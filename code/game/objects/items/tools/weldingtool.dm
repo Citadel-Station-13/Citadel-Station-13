@@ -46,6 +46,8 @@
 	create_reagents(max_fuel)
 	reagents.add_reagent(/datum/reagent/fuel, max_fuel)
 	update_icon()
+	if(can_off_process)
+		START_PROCESSING(SSobj, src)
 
 /obj/item/weldingtool/ComponentInitialize()
 	. = ..()
