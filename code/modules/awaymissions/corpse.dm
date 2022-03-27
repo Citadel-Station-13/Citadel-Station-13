@@ -264,27 +264,6 @@
 	name = "Doctor"
 	outfit = /datum/outfit/job/doctor
 
-
-#warn convert
-/obj/effect/mob_spawn/human/doctor/alive
-	death = FALSE
-	roundstart = FALSE
-	random = TRUE
-	name = "sleeper"
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
-	short_desc = "You are a space doctor!"
-	assignedrole = "Space Doctor"
-	job_description = "Off-station Doctor"
-
-/obj/effect/mob_spawn/human/doctor/alive/equip(mob/living/carbon/human/H)
-	..()
-	// Remove radio and PDA so they wouldn't annoy station crew.
-	var/list/del_types = list(/obj/item/pda, /obj/item/radio/headset)
-	for(var/del_type in del_types)
-		var/obj/item/I = locate(del_type) in H
-		qdel(I)
-
 /obj/effect/mob_spawn/human/engineer
 	name = "Engineer"
 	outfit = /datum/outfit/job/engineer/gloved
@@ -475,26 +454,6 @@
 	name = "Abductor Corpse"
 	uniform = /obj/item/clothing/under/color/grey
 	shoes = /obj/item/clothing/shoes/combat
-
-
-//For ghost bar.
-#warn convert
-/obj/effect/mob_spawn/human/alive/space_bar_patron
-	name = "Bar cryogenics"
-	mob_name = "Bar patron"
-	random = TRUE
-	permanent = TRUE
-	uses = -1
-	outfit = /datum/outfit/spacebartender
-	assignedrole = "Space Bar Patron"
-	job_description = "Space Bar Patron"
-
-/obj/effect/mob_spawn/human/alive/space_bar_patron/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	var/despawn = alert("Return to cryosleep? (Warning, Your mob will be deleted!)",,"Yes","No")
-	if(despawn == "No" || !loc || !Adjacent(user))
-		return
-	user.visible_message("<span class='notice'>[user.name] climbs back into cryosleep...</span>")
-	qdel(user)
 
 /datum/outfit/cryobartender
 	name = "Cryogenic Bartender"
