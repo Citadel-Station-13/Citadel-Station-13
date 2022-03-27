@@ -450,30 +450,6 @@
 	back = /obj/item/storage/backpack/security
 	id = /obj/item/card/id
 
-
-#warn convert
-/obj/effect/mob_spawn/human/commander/alive
-	death = FALSE
-	roundstart = FALSE
-	job_description = "Nanotrasen Commander"
-	mob_name = "Nanotrasen Commander"
-	name = "sleeper"
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
-	short_desc = "You are a Nanotrasen Commander!"
-
-/obj/effect/mob_spawn/human/nanotrasensoldier/alive
-	death = FALSE
-	roundstart = FALSE
-	mob_name = "Private Security Officer"
-	job_description = "Nanotrasen Security"
-	name = "sleeper"
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
-	faction = "nanotrasenprivate"
-	short_desc = "You are a Nanotrasen Private Security Officer!"
-
-
 /////////////////Spooky Undead//////////////////////
 
 /obj/effect/mob_spawn/human/skeleton
@@ -482,33 +458,11 @@
 	mob_species = /datum/species/skeleton
 	mob_gender = NEUTER
 
-#warn convert
-/obj/effect/mob_spawn/human/skeleton/alive
-	death = FALSE
-	roundstart = FALSE
-	job_description = "Skeleton"
-	icon = 'icons/effects/blood.dmi'
-	icon_state = "remains"
-	short_desc = "By unknown powers, your skeletal remains have been reanimated!"
-	flavour_text = "Walk this mortal plain and terrorize all living adventurers who dare cross your path."
-	assignedrole = "Skeleton"
-
 /obj/effect/mob_spawn/human/zombie
 	name = "rotting corpse"
 	mob_name = "zombie"
 	mob_species = /datum/species/zombie
 	assignedrole = "Zombie"
-
-#warn convert
-/obj/effect/mob_spawn/human/zombie/alive
-	death = FALSE
-	roundstart = FALSE
-	job_description = "Zombie"
-	icon = 'icons/effects/blood.dmi'
-	icon_state = "remains"
-	short_desc = "By unknown powers, your rotting remains have been resurrected!"
-	flavour_text = "Walk this mortal plain and terrorize all living adventurers who dare cross your path."
-
 
 
 /obj/effect/mob_spawn/human/abductor
@@ -550,7 +504,6 @@
 	suit = /obj/item/clothing/suit/armor/vest
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 
-#warn convert
 
 /datum/ghostrole/lavaknight
 	name = "Lava Knight"

@@ -1615,9 +1615,6 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/listeningpost)
 "fj" = (
-/obj/effect/mob_spawn/human/skeleton/alive{
-	name = "spooky skeleton remains"
-	},
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},

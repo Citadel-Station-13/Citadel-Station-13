@@ -19,7 +19,6 @@ GLOBAL_LIST_INIT(ghostroles, init_ghostroles())
 	if(ispath(path, /datum/ghostrole))
 		GLOB.ghostroles[path] = new path
 		return GLOB.ghostroles[path]
-	CRASH("Failed to get ghostrole: [path]")
 
 /**
  * Ghostrole datums

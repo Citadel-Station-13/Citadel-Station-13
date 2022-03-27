@@ -97,6 +97,11 @@
 	)
 
 /datum/ghostrole_instantiator/human/random/species/proc/GetSpeciesPath(mob/living/carbon/human/H, list/params)
+	var/override = params["species"]
+	if(istext(override))
+		override = text2path(override)
+	if(ispath(override, /datum/species))
+		return override
 	return safepick(possible_species) || /datum/species/human
 
 /datum/ghostrole_instantiator/human/random/species/Randomize(mob/living/carbon/human/H, list/params)
@@ -131,7 +136,8 @@
 	return H
 
 /datum/ghostrole_instantiator/human/player_static/proc/LoadSavefile(client/C, mob/living/carbon/human/H)
-	C.prefs.copy_to(H)
-	SSjob.EquipLoadout(H, FALSE, null, C.prefs, C.ckey)
-	if(CONFIG_GET(flag/roundstart_traits))
+	C.prefs.copy_to(H)w
+	if(equip_loadout)
+		SSjob.EquipLoadout(H, FALSE, null, C.prefs, C.ckey)
+	if(equip_traits && CONFIG_GET(flag/roundstart_traits))
 		SSquirks.AssignQuirks(H, C, TRUE, FALSE, null, FALSE, C)

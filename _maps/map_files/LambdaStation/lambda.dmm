@@ -43820,7 +43820,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "bRJ" = (
-/obj/effect/mob_spawn/human/skeleton/alive,
 /obj/machinery/light/small{
 	dir = 1
 	},
