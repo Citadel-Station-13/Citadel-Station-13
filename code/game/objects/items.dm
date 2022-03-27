@@ -23,7 +23,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	///Icon file for right inhand overlays
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
-	///Icon file for mob worn overlays.
+	///Icon file for mob worn overlays.w
 	///no var for state because it should *always* be the same as icon_state
 	var/icon/mob_overlay_icon
 	//Forced mob worn layer instead of the standard preferred size.
@@ -557,14 +557,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	// 	else if(slot == ITEM_SLOT_HANDS)
 	// 		playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE)
 	user.update_equipment_speed_mods()
-
-
-//Overlays for the worn overlay so you can overlay while you overlay
-//eg: ammo counters, primed grenade flashing, etc.
-//"icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
-/obj/item/proc/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
-	. = list()
-	SEND_SIGNAL(src, COMSIG_ITEM_WORN_OVERLAYS, isinhands, icon_file, used_state, style_flags, .)
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user, datum/action/A)

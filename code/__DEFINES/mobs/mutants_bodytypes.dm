@@ -1,4 +1,14 @@
+// Bodytypes - these are flags but in some cases like equip procs/icon gen procs should only be one at a time.
+/// normal
+#define BODYTYPE_HUMAN						(1<<0)
+/// muzzle - sensical for headgear, etc
+#define BODYTYPE_MUZZLE						(1<<1)
+///
 
+
+
+
+#warn oh god..
 
 /**
  * the file considering ALL THE AWFULNESS around

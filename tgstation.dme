@@ -2387,6 +2387,7 @@
 #include "code\modules\integrated_electronics\subtypes\weaponized.dm"
 #include "code\modules\inventory\item.dm"
 #include "code\modules\inventory\rendering.dm"
+#include "code\modules\inventory\slot.dm"
 #include "code\modules\jobs\access.dm"
 #include "code\modules\jobs\job_exp.dm"
 #include "code\modules\jobs\job_report.dm"

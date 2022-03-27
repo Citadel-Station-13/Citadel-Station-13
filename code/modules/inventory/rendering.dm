@@ -2,6 +2,50 @@
  * file contains all base item rendering backend for showing which items are equipped on a mob visually
  */
 /obj/item
+	/// base worn state - if this is set to NON NULL, the item will use new rendering system - **All worn states/etc must be in the same icon file as its normal icon!** if we ever convert the whole codebase, remove this latter part of the comment.
+	var/worn_state
+	/// if you have to be a little snowflake and override worn icon instead of the above, use this.
+	var/worn_icon
+	/// pixels x width of worn icon
+	var/worn_x_dimension = 32
+	/// pixels y width of worn icon
+	var/worn_y_dimension = 32
+	/// do not do [_slot] in dmi state generation so [worn_base_state][_slot][_bodytype] becomes [worn_base_state][_bodytype]
+	var/worn_slots_monostate = FALSE
+
+
+	/// which bodytypes are allowed to wear this? if one is and it isn't in bodytypes_supported, the automatic fallback list/template icons will be used.
+	var/bodytypes_allowed = ALL
+	/// supported bodytypes - these bodytypes will have their keys added in worn state.
+	var/bodytypes_supported = NONE
+	/// bodytypes where we give up and use a template if none are founud - this will go AFTER bodytypes_supported, so if one isn't supported but IS templated, it will be used instead of none.
+	var/bodytypes_templated = NONE
+	/// bodyypes that are flattened to being **omitted** e.g. if BODYTYPE_HUMAN is in here, it'd be [worn_base_state][_slot] instead of [worn_base_state][_slot][_bodytype]
+	var/bodytypes_omitted = ALL
+
+#warn ugh - hook allowed bodytypes, modify species to get effective bodytype lists.
+#warn figure out how to do templating too..
+#warn unit tests...
+
+/**
+ * master proc to build worn overlays. returns a single mutable_appearance.
+ *
+ * how this picks icon file:
+ *
+ * how this picks icon state:
+ */
+/obj/item/proc/build_worn_appearance()
+
+/obj/item/proc/get_worn_icon(datum/inventory_slot/slot, requested_bodytype, templating)
+
+/obj/item/proc/get_worn_state(datum/inventory_slot/slot, requested_bodytype, templating)
+
+//Overlays for the worn overlay so you can overlay while you overlay
+//eg: ammo counters, primed grenade flashing, etc.
+//"icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
+/obj/item/proc/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
+	. = list()
+	SEND_SIGNAL(src, COMSIG_ITEM_WORN_OVERLAYS, isinhands, icon_file, used_state, style_flags, .)
 
 // greyscale
 // body type
