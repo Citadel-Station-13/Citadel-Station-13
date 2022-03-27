@@ -3,6 +3,16 @@
  */
 /obj/item
 
+// greyscale
+// body type
+// digitgrade if body type is human
+// slot datum/meta datums? for icon key. same for left/right hand, abstract?
+// [(bodytype != BODYTYPE_HUMAN && bodytype_) || mutantrace_][inhand_icon_state || worn_icon_state][_slotstring]
+// icon state caching yeah or nah
+// standard mutantrace clip mask?
+// GAGS --> vendor, loadout, colormate + color matrix editing for loadout/colormate
+// accessories - removal, addition, layering, slots, max slots, etc? generics? need nested equipped and dropped calls too
+
 /obj/item/proc/build_worn_icon(default_layer, default_icon_file, isinhands, femaleuniform, override_state, style_flags, use_mob_overlay_icon, alpha_mask)
 	. = ..()
 
