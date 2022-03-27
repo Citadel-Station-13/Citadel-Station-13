@@ -301,19 +301,22 @@
 	id_access_list = list(ACCESS_BAR)
 	outfit = /datum/outfit/spacebartender
 
-#warn convert
-/obj/effect/mob_spawn/human/bartender/alive
-	death = FALSE
-	roundstart = FALSE
-	random = TRUE
-	job_description = "Off-station Bartender"
+/datum/ghostrole/space_bartender
+	lazy_init = TRUE
+	name = "Space Bartender"
+	assigned_role = "Space Bartender"
+	desc = "An off station bartender."
+	spawntext =  "Time to mix drinks and change lives. Smoking space drugs makes it easier to understand your patrons' odd dialect."
+	inject_params = list(
+		"outfit" = /datum/outfit/spacebartender
+	)
+	instantiator = /datum/ghostrole_instantiator/human/random
+
+/obj/structure/ghost_role_spawner/bartender
 	name = "bartender sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	short_desc = "You are a space bartender!"
-	flavour_text = "Time to mix drinks and change lives. Smoking space drugs makes it easier to understand your patrons' odd dialect."
-	assignedrole = "Space Bartender"
-	id_job = "Bartender"
+	role_type = /datum/ghostrole/space_bartender
 
 /datum/outfit/spacebartender
 	name = "Space Bartender"
@@ -323,12 +326,14 @@
 	suit = /obj/item/clothing/suit/armor/vest
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	id = /obj/item/card/id
+	id_role_override = "Bartender"
 
 /obj/effect/mob_spawn/human/beach
 	outfit = /datum/outfit/beachbum
 
 /datum/ghostrole/beach_bum
 	name = "Beach Bum"
+	lazy_init = TRUE
 	spawntext = "It's up to you to make sure nobody drowns or gets eaten by sharks and stuff."
 	desc = "Beach biodome denizen"
 	instantiator = /datum/ghostrole_instantiator/human/random

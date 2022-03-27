@@ -707,7 +707,7 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "ck" = (
-/obj/effect/mob_spawn/human/bartender/alive,
+/obj/structure/ghost_role_spawner/bartender,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cl" = (

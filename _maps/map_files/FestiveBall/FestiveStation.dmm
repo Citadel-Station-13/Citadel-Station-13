@@ -54219,7 +54219,7 @@
 /turf/open/floor/festive/alleyway,
 /area/edina/street/secondary/castle)
 "ibM" = (
-/obj/effect/mob_spawn/human/bartender/alive,
+/obj/structure/ghost_role_spawner/bartender,
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "ihe" = (
