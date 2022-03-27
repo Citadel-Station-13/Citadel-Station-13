@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes: 
+  - code_imp: "Updates caniuse-lite and changes babel to minify to true, instead of auto"
