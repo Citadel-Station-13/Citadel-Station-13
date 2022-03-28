@@ -42,6 +42,7 @@
 	if(source_hoist)
 		if(source_hoist.hook == src)
 			source_hoist.hook = null
+		source_hoist.obj_break()
 		source_hoist = null
 	return ..()
 
@@ -117,7 +118,6 @@
 	density = TRUE
 	anchored = TRUE
 
-	var/broken = FALSE
 	var/movedir = UP
 	var/obj/effect/hoist_hook/hook
 
@@ -129,55 +129,29 @@
 	hook.source_hoist = src
 
 /obj/structure/hoist/Destroy()
-	if(hoistee)
-		release_hoistee()
 	QDEL_NULL(hook)
 	return ..()
 
-/obj/structure/hoist/proc/check_consistency()
-	if (!hoistee)
-		return
-	if (hoistee.z != hook.z)
-		release_hoistee()
-		return
-
-/obj/structure/hoist/proc/release_hoistee()
-	hook.Detach()
-	if(ismob(hoistee))
-		hook.unbuckle_mob(hoistee)
-	else
-		hoistee.anchored = FALSE
-	events_repository.unregister(/decl/observ/destroyed, hoistee, src)
-	hoistee = null
-	layer = initial(layer)
-
-/obj/structure/hoist/proc/break_hoist()
-	if(broken)
-		return
-	broken = TRUE
-	desc += " It looks broken, and the clamp has retracted back into the hoist. Seems like you'd have to re-deploy it to get it to work again."
-	if(hoistee)
-		release_hoistee()
-	QDEL_NULL(hook)
-
-/obj/structure/hoist/explosion_act(severity)
+/obj/structure/hoist/obj_break(damage_flag)
 	. = ..()
-	if(.)
+	if(hook)
+		visible_message("[src] breaks!")
+		QDEL_NULL(hook)
 
-		if(severity == 1 || (severity == 2 && prob(50)))
-			physically_destroyed()
-		else if(severity == 2)
-			visible_message("\The [src] shakes violently, and neatly collapses as its damage sensors go off.")
-			collapse_kit()
-		else if(severity == 3 && prob(50) && !broken)
-			break_hoist()
+/obj/structure/hoist/deconstruct(disassembled)
+	var/obj/item/hoist_kit/kit = new(location)
+	transfer_fingerprints_to(kit)
+	return ..()
 
-/obj/effect/hoist_hook/explosion_act(severity)
+/obj/structure/hoist/examine(mob/user)
 	. = ..()
-	if(. && (severity == 1 || (severity == 2 && prob(50)) || (severity == 3 && prob(25))))
-		source_hoist.break_hoist()
+	if(!hook)
+		. += span_warning("It looks broken, and the clamp has retracted back into the hoist. Seems like you'd have to re-deploy it to get it to work again.")
 
-/obj/structure/hoist/attack_hand(mob/user)
+/obj/structure/hoist/on_attack_hand(mob/user, act_intent, unarmed_attack_flags)
+	. = ..()
+
+
 	if (!ishuman(user))
 		return
 
@@ -207,14 +181,6 @@
 		return
 
 	check_consistency()
-
-	var/size
-	if (ismob(hoistee))
-		var/mob/M = hoistee
-		size = M.mob_size
-	else if (isobj(hoistee))
-		var/obj/O = hoistee
-		size = O.w_class
 
 	user.visible_message(
 		span_notice("[user] begins to [movtext] \the [hoistee]!"),
