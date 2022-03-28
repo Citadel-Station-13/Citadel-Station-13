@@ -23,7 +23,6 @@
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 
-#warn get nebula AO
 /atom/movable/screen/plane_master/wall
 	name = "wall plane master"
 	plane = WALL_PLANE
