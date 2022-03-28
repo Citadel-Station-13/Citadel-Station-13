@@ -897,7 +897,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	set waitfor = FALSE
 	. = ..()
 	. = FALL_TERMINATED
-	Bumped(AM)
+	Bumped(victim)
 
 /obj/machinery/power/supermatter_crystal/proc/Consume(atom/movable/AM)
 	if(isliving(AM))
