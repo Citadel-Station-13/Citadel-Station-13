@@ -41,6 +41,7 @@ GLOBAL_LIST_INIT(bitflags, list(
 #define NO_SCREENTIPS_1				(1<<10)
 ///Prevent clicking things below it on the same turf eg. doors/ fulltile windows.
 #define PREVENT_CLICK_UNDER_1		(1<<11)
+/// Used to mark holographic atoms.
 #define HOLOGRAM_1					(1<<12)
 ///Prevents mobs from getting chainshocked by teslas and the supermatter.
 #define SHOCKED_1 					(1<<13)
@@ -64,36 +65,6 @@ GLOBAL_LIST_INIT(bitflags, list(
 #define NO_RUINS_1 (1<<10)
 /// Should this tile be cleaned up and reinserted into an excited group?
 #define EXCITED_CLEANUP_1 (1 << 13)
-
-////////////////Area flags\\\\\\\\\\\\\\
-/// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
-#define VALID_TERRITORY (1<<0)
-/// If blobs can spawn there and if it counts towards their score.
-#define BLOBS_ALLOWED (1<<1)
-/// If mining tunnel generation is allowed in this area
-#define CAVES_ALLOWED (1<<2)
-/// If flora are allowed to spawn in this area randomly through tunnel generation
-#define FLORA_ALLOWED (1<<3)
-/// If mobs can be spawned by natural random generation
-#define MOB_SPAWN_ALLOWED (1<<4)
-/// If megafauna can be spawned by natural random generation
-#define MEGAFAUNA_SPAWN_ALLOWED (1<<5)
-/// Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
-#define NOTELEPORT (1<<6)
-/// Hides area from player Teleport function.
-#define HIDDEN_AREA (1<<7)
-/// If false, loading multiple maps with this area type will create multiple instances.
-#define UNIQUE_AREA (1<<8)
-/// If people are allowed to suicide in it. Mostly for OOC stuff like minigames
-#define BLOCK_SUICIDE (1<<9)
-/// Can the Xenobio management console transverse this area by default?
-#define XENOBIOLOGY_COMPATIBLE (1<<10)
-/// If Abductors are unable to teleport in with their observation console
-#define ABDUCTOR_PROOF (1<<11)
-/// If an area should be hidden from power consoles, power/atmosphere alerts, etc.
-#define NO_ALERTS (1<<12)
-/// If blood cultists can draw runes or build structures on this AREA.
-#define CULT_PERMITTED (1<<13)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
@@ -149,33 +120,6 @@ GLOBAL_LIST_INIT(bitflags, list(
 // radiation
 #define RAD_PROTECT_CONTENTS (1<<0)
 #define RAD_NO_CONTAMINATE (1<<1)
-
-//Mob mobility var flags
-/// any flag
-#define CHECK_MOBILITY(target, flags) (target.mobility_flags & flags)
-#define CHECK_ALL_MOBILITY(target, flags) CHECK_MULTIPLE_BITFIELDS(target.mobility_flags, flags)
-
-/// can move
-#define MOBILITY_MOVE			(1<<0)
-/// can, and is, standing up.
-#define MOBILITY_STAND			(1<<1)
-/// can pickup items
-#define MOBILITY_PICKUP			(1<<2)
-/// can use items and interact with world objects like opening closets/etc
-#define MOBILITY_USE			(1<<3)
-/// can use interfaces like consoles
-#define MOBILITY_UI				(1<<4)
-/// can use storage item
-#define MOBILITY_STORAGE		(1<<5)
-/// can pull things
-#define MOBILITY_PULL			(1<<6)
-/// can hold non-nodropped items voluntarily
-#define MOBILITY_HOLD			(1<<7)
-/// Can resist out of buckling, grabs, cuffs, etc, in the usual order (buckle --> cuffs --> grab)
-#define MOBILITY_RESIST			(1<<8)
-
-#define MOBILITY_FLAGS_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL | MOBILITY_RESIST)
-#define MOBILITY_FLAGS_ANY_INTERACTION (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_UI | MOBILITY_STORAGE)
 
 /// If the thing can reflect light (lasers/energy)
 #define RICOCHET_SHINY			(1<<0)

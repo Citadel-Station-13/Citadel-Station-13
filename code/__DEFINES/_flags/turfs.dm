@@ -1,4 +1,4 @@
-#warn probably need to redo these lol
+// /turf/turf_construct_flags
 /// Can make lattice on this with rods
 #define TURF_CONSTRUCT_ROD_LATTICE			(1<<0)
 /// Can make catwalk on this with rods from lattice
@@ -31,6 +31,3 @@
 #define Z_OPEN_DOWN			(1<<3)
 /// Considered open - below turfs will get the openspace overlay if so
 #define Z_CONSIDERED_OPEN	(1<<4)
-
-
-#warn global var flag lists for these

@@ -36,7 +36,7 @@
 			visible_message
 		#warn climbing
 
-/mob/proc/GetZClimbTargets
+/mob/proc/GetZClimbTargets()
 
 /mob/ProcessZClimb(gravity, visible, silent, allow_blocking_actions, force)
 
