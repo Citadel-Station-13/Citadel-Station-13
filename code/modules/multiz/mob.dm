@@ -38,6 +38,7 @@
 
 /mob/proc/GetZClimbTargets()
 
+
 /mob/ProcessZClimb(gravity, visible, silent, allow_blocking_actions, force)
 
 /mob/living/TakeFallDamage(amount, levels = 1)
