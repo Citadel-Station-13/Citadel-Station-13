@@ -333,7 +333,7 @@
 /**
  * forceMove that brings pulling objects and buckled mobs along
  */
-/atom/movable/proc/TransitForceMove(atom/destination, recurse = 1)
+/atom/movable/proc/TransitForceMove(atom/destination, recurse = 2)
 	var/list/mob/buckled = buckled_mobs.Copy()
 	var/atom/movable/pulling = src.pulling
 

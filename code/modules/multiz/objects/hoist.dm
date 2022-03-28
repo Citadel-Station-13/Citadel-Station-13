@@ -151,7 +151,6 @@
 /obj/structure/hoist/on_attack_hand(mob/user, act_intent, unarmed_attack_flags)
 	. = ..()
 
-
 	if (!ishuman(user))
 		return
 
@@ -200,49 +199,45 @@
 	set category = "Object"
 	set src in range(1)
 
-	if (!ishuman(usr))
+	if(!isliving(usr))
 		return
-
-	if (isobserver(usr) || usr.incapacitated())
+	var/mob/living/L = usr
+	if(!CHECK_MOBILITY(L, MOBILITY_USE))
 		return
-	if (!usr.check_dexterity(DEXTERITY_GRIP))
+	visible_message(span_notice("[L] begins to collapse [src]."))
+	if (!do_after(L, 2 SECONDS, src))
+		L.show_message("You fail to collapse [src]!")
 		return
-
-	if (hoistee)
-		to_chat(usr, span_notice("You cannot collapse the hoist with \the [hoistee] attached!"))
-		return
-
-	if (!do_after(usr, (2 SECONDS), src))
-		return
-
+	visible_message(span_notice("[L] collapses [src]."))
 	collapse_kit()
 
-/obj/structure/hoist/proc/can_move_dir(direction)
-	var/turf/dest = direction == UP ? GetAbove(hook) : GetBelow(hook)
-	if(!istype(dest))
+/obj/structure/hoist/proc/can_move_dir(direction, mob/user)
+	var/turf/source = get_turf(hook)
+	if(!source)
+		return FALSE
+	var/turf/dest = get_step_multiz(source, direction)
+	if(!dest)
+		return FALSE
+	if(!source.CanZPass(hook, direction))
+		if(user)
+			to_chat(user, span_warning("Something is blocking the hoist hook!"))
 		return FALSE
 	switch(direction)
-		if (UP)
-			if(!dest.is_open()) // can't move into a solid tile
+		if(UP)
+			// no moving above hoist
+			var/list/stack = SSmapping.GetZStack(z)
+			if(!(hook.z in stack) || (stack.Find(dest.z) > stack.Find(z)))
+				to_chat(user, span_warning("How are you going to move the hoist hook above the hoist?"))
 				return FALSE
-			if (hook in get_step(src, dir)) // you don't get to move above the hoist
-				return FALSE
-		if (DOWN)
-			var/turf/T = get_turf(hook)
-			if(!istype(T) || !T.is_open()) // can't move down through a solid tile
-				return FALSE
-	return TRUE // i thought i could trust myself to write something as simple as this, guess i was wrong
+	return TRUE
 
-/obj/structure/hoist/proc/move_dir(direction, ishoisting)
-	var/can = can_move_dir(direction)
-	if (!can)
-		return 0
-	var/turf/move_dest = direction == UP ? GetAbove(hook) : GetBelow(hook)
-	hook.forceMove(move_dest)
-	if (!ishoisting)
-		return 1
-	hoistee.hoist_act(move_dest)
-	return 1
+/obj/structure/hoist/proc/move_dir(direction, mob/user)
+	ASSERT(direction == UP || direction == DOWN)
+	if(!can_move_dir(direction, user))
+		return FALSE
+	if(user)
+		visible_message(span_notice("[user] [direction == UP? "raises" : "lowers"] \the [src]."))
+	hook.forceMove(get_step_multiz(hook, direction))
 
 /atom/movable/proc/hoist_act(turf/dest)
 	forceMove(dest)
