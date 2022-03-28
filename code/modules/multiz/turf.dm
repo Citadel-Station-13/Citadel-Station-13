@@ -65,7 +65,25 @@ GLOBAL_VAR_INIT(unroofed_catwalk_overlay, image('icons/modules/multiz/turf_overl
 
 /turf/examine(mob/user)
 	. = ..()
-	#warn multiz examine ,hint that ceiling can be patched with rods/floor if flags are right
+	var/turf/above = Above()
+	if(!above)
+		return
+	if(!(above.z_flags & Z_CONSIDERED_OPEN))
+		. += span_notice("The ceiling above this seems to be \the [above].")
+		if(!(above.turf_construct_flags & TURF_DECONSTRUCT_ALLOW_FROM_UNDER))
+			return
+		if(above.turf_construct_flags & TURF_DECONSTRUCT_RCD_TEARDOWN)
+			. += span_warning("You could probably tear the celiing down with a RCD using <b>Ctrl+Click</b>.")
+		return
+	. += span_notice("The ceiling above this seems to be open!")
+	if(!(above.turf_construct_flags & TURF_CONSTRUCT_ALLOW_FROM_UNDER))
+		return
+	if((above.turf_construct_flags & TURF_CONSTRUCT_TILE_PLATING_DIRECT) || (above.has_lattice() && (above.turf_construct_flags & TURF_CONSTRUCT_TILE_PLATING)))
+		. += span_notice("You could probably <b>Ctrl+Click</b> this tile with floor tiles to fill in the ceiling, as long as there is support near it.")
+	else if(above.turf_construct_flags & TURF_CONSTRUCT_ROD_LATTICE)
+		. += span_notice("You could probbaly <b>Ctrl+Click</b> this tile with rods to build lattice above it, as long as there is support near it.")
+	if(above.turf_construct_flags & TURF_CONSTRUCT_RCD_PLATING)
+		. += span_notice("You could probably fill the ceiling in with a RCD using <b>Ctrl+Click</b>, as long as there is support near it.")
 
 /**
  * WARNING: This proc is unique. Read the doc here, especially the return value.
@@ -122,7 +140,7 @@ GLOBAL_VAR_INIT(unroofed_catwalk_overlay, image('icons/modules/multiz/turf_overl
 	return isnull(zPassInObstruction(A, direction, source))
 
 /turf/zPassOut(atom/movable/A, direction, turf/destination)
-	return isnull(zPassOutObstruction(A, direction, source))
+	return isnull(zPassOutObstruction(A, direction, destination))
 
 /turf/ZImpacted(atom/movable/victim, levels, fall_flags)
 	. = ..()

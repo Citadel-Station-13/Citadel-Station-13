@@ -34,7 +34,7 @@
  * null for fail, true for instant generic "x moves up"/silent, list("verb in motion", "verb present" delay) otherwise
  */
 /atom/movable/proc/ProcessZMove(gravity, visible, silent, allow_blocking_actions, force)
-	#warn feedback for moving down
+	#warn rethink this proc
 	return dir == DOWN
 
 /mob/verb/up()

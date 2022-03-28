@@ -22,24 +22,47 @@
 	. = ..()
 	if(mob_overcomes_gravity())
 		return . | FALL_RECOVERED
-	#warn climbing/magboots
 
 /mob/ProcessZMove(gravity, visible, silent, allow_blocking_actions, force)
 	. = ..()
+	if(dir == DOWN)
+
+	#warn feedback for moving down
 	#warn check: nograv. if nograv, allow just negate grav/spacemove as weell as the others.
 	#warn otherwise, only allow overcome gravity and climb.
 	if(dir == UP)
-		return ProcessZClimb()
+		return ProcessZClimb(gravity, visible, silent, allow_blocking_actions, force)
 	#warn gravity vs nograv
 	if(dir == UP)
 		if(mob_overcomes_gravity())
 			visible_message
 		#warn climbing
 
+/**
+ * get list of things that allow us to climb up
+ *
+ * warning - these things don't necessarily block fall, so it's entirely possible
+ * we climb up and immediately fall
+ *
+ * TODO: new, laggier system for getting "climb"/support/prevent fall targets,
+ * to allow magboot wall scaling
+ *
+ * lazy way - just don't call fall after climbing, but better way is to make
+ * a range() check when wearing magboots
+ */
 /mob/proc/GetZClimbTargets()
-
+	. = list()
+	if(!isturf(loc))
+		return
+	var/turf/T = loc
+	var/turf/above = T.Above()
+	if(above)
+		for(var/atom/movable/AM in above)
+			if(AM.AllowZClimb(src, TRUE))
+				. += AM
 
 /mob/ProcessZClimb(gravity, visible, silent, allow_blocking_actions, force)
+	#warn that
 
 /mob/living/TakeFallDamage(amount, levels = 1)
 	take_overall_damage(amount)

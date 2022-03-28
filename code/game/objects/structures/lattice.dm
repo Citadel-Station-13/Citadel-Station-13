@@ -31,9 +31,17 @@
 
 /obj/structure/lattice/PreventZFall(atom/movable/victim, levels, fall_flags)
 	. = ..()
-	return ismob(victim) && FALL_BLOCKED
+	if(isliving(victim))
+		var/mob/living/L = victim
+		if(L.mob_size > MOB_SIZE_TINY)
+			. |= FALL_BLOCKED
 
-/obj/structure/lattice/
+/obj/structure/lattice/AllowZClimb(atom/movable/AM)
+	. = ..()
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(L.mob_size > MOB_SIZE_TINY)
+			. |= FALL_BLOCKED
 
 /obj/structure/lattice/blob_act(obj/structure/blob/B)
 	return
