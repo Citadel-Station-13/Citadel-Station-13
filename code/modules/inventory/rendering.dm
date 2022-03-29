@@ -2,6 +2,7 @@
  * file contains all base item rendering backend for showing which items are equipped on a mob visually
  */
 /obj/item
+	// worn icons
 	/// base worn state - if this is set to NON NULL, the item will use new rendering system - **All worn states/etc must be in the same icon file as its normal icon!** if we ever convert the whole codebase, remove this latter part of the comment.
 	var/worn_state
 	/// if you have to be a little snowflake and override worn icon instead of the above, use this.
@@ -15,6 +16,7 @@
 	/// if non null, override layer when worn instead of using slot default
 	var/worn_layer_override
 
+	// bodytypes
 	/// which bodytypes are allowed to wear this? if one is and it isn't in bodytypes_supported, the automatic fallback list/template icons will be used.
 	var/bodytypes_allowed = ALL
 	/// supported bodytypes - these bodytypes will have their keys added in worn state.
@@ -23,6 +25,10 @@
 	var/bodytypes_templated = NONE
 	/// bodyypes that are flattened to being **omitted** e.g. if BODYTYPE_HUMAN is in here, it'd be [worn_base_state][_slot] instead of [worn_base_state][_slot][_bodytype]
 	var/bodytypes_omitted = ALL
+
+	// greyscaling
+	///The config type to use for greyscaled worn sprites. Both this and greyscale_colors must be assigned to work.
+	var/greyscale_config_worn
 
 #warn ugh - hook allowed bodytypes, modify species to get effective bodytype lists.
 #warn figure out how to do templating too..
@@ -66,8 +72,19 @@
 // GAGS --> vendor, loadout, colormate + color matrix editing for loadout/colormate
 // accessories - removal, addition, layering, slots, max slots, etc? generics? need nested equipped and dropped calls too
 
-/obj/item/proc/build_worn_icon(default_layer, default_icon_file, isinhands, femaleuniform, override_state, style_flags, use_mob_overlay_icon, alpha_mask)
+
+/obj/item/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
+	if(new_worn_config)
+		greyscale_config_worn = new_worn_config
+	return ..()
+
+/// Checks if this atom uses the GAGS system and if so updates the worn and inhand icons
+/obj/item/update_greyscale()
 	. = ..()
+	if(!greyscale_colors)
+		return
+	if(greyscale_config_worn)
+		worn_icon = SSgreyscale.GetColoredIconByType(greyscale_config_worn, greyscale_colors)
 
 /*
 Does everything in relation to building the /mutable_appearance used in the mob's overlays list
