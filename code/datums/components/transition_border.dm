@@ -2,7 +2,7 @@
  * Component used for turf transitions.
  */
 /datum/component/transition_border
-	can_transfer = FALSE
+	can_transfer = TRUE
 	var/atom/movable/mirage_border/holder1
 	var/atom/movable/mirage_border/holder2
 	var/atom/movable/mirage_border/holder3
@@ -33,6 +33,21 @@
 		src.force_destination = force_destination
 	Build()
 	RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/transit)
+
+/datum/component/transition_border/RegisterWithParent()
+	. = ..()
+	RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/transit)
+	Build()
+
+/datum/component/transition_border/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ATOM_ENTERED)
+	if(holder1)
+		QDEL_NULL(holder1)
+	if(holder2)
+		QDEL_NULL(holder2)
+	if(holder3)
+		QDEL_NULL(holder3)
+	return ..()
 
 /datum/component/transition_border/proc/transit(datum/source, atom/movable/AM)
 	var/turf/destination = SSmapping.GetVirtualStep(parent, dir)
@@ -88,6 +103,7 @@
 		holder1.pixel_y = dir == SOUTH? world.icon_size * (range - 1) : 0
 
 /datum/component/transition_border/proc/GetTurfsInDiagonal(dir)
+	#warn support less-than-world-size levels
 	ASSERT(dir & (dir - 1))
 	var/turf/T = parent
 	var/datum/space_level/L = SSmapping.space_levels[T.z]
@@ -109,6 +125,7 @@
 	)
 
 /datum/component/transition_border/proc/GetTurfsInCardinal(dir)
+	#warn support less-than-world-size levels
 	ASSERT(dir)
 	var/turf/T = parent
 	var/datum/space_level/L = SSmapping.space_levels[T.z]
@@ -125,15 +142,6 @@
 			force_target || target_level.z_value
 		)
 	)
-
-/datum/component/transition_border/Destroy()
-	if(holder1)
-		QDEL_NULL(holder1)
-	if(holder2)
-		QDEL_NULL(holder2)
-	if(holder3)
-		QDEL_NULL(holder3)
-	return ..()
 
 /atom/movable/mirage_border
 	name = "Mirage holder"

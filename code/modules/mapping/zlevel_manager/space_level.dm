@@ -22,7 +22,20 @@
 	/// load orientation
 	var/orientation = SOUTH
 	/// load centered?
-	var/center = TRUE
+	var/center = FALSE
+	/// load "void" tiles for blank areas when we're smaller than the world zlevel size?
+	var/fill_void = TRUE
+
+	#warn hook these into load process and generation
+	// bounds - for when we had to fill void.
+	/// start x
+	var/lowerleft_x
+	/// start y
+	var/lowerleft_y
+	/// end x
+	var/topright_x
+	/// end y
+	var/topright_y
 
 	// Linkage/MultiZ - what zlevels are where. References by ID, or direct ref to a space_level datum
 	VAR_PRIVATE/up
@@ -123,6 +136,8 @@
 				orientation = SOUTH
 	if(data["center"])
 		center = data["center"]
+	if(data["fill_void"])
+		fill_void = data["fill_void"]
 	// This part links us based on index.
 	if(data["up"])
 		up = data["up"]
@@ -238,6 +253,7 @@
  */
 /datum/space_level/proc/RebuildTransitions()
 	var/list/checking = list()
+	#warn support less-than-world-size levels
 	checking += block(locate(1, 1, z_value), locate(world.maxx, 1, z_value))
 	checking += block(locate(1, world.maxy, z_value), locate(world.maxx, world.maxy, z_value))
 	checking += block(locate(1, 2, z_value), locate(1, world.maxy - 1, z_value))
@@ -333,3 +349,9 @@
 				return istype(down, /datum/space_level)? down : SSmapping.level_by_id[down]
 			else
 				CRASH("Invalid dir: [dir]")
+
+/**
+ * expand the level to fill the entire level, wiping void turfs on the way
+ */
+/datum/space_level/proc/RemoveVoid()
+	#warn impl

@@ -125,6 +125,7 @@
  */
 /datum/controller/subsystem/mapping/proc/InstantiateMapLevel(datum/space_level/level, load_from_path = TRUE, rebuild_datastructures_immediately = TRUE, rebuild_turfs_immediately = TRUE)
 	ASSERT(istype(level))
+	#warn add support for filling void tiles where there's no map!
 
 	// make new level
 	var/new_z = GetInstantiationLevel()
