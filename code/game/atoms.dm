@@ -224,9 +224,6 @@
 		var/turf/T = loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
 
-	if (canSmoothWith)
-		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
-
 	// apply materials properly from the default custom_materials value
 	set_custom_materials(custom_materials)
 

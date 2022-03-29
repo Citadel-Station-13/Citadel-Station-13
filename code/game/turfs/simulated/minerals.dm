@@ -28,6 +28,7 @@
 	var/weak_turf = FALSE
 
 /turf/closed/mineral/Initialize()
+	#warn ????
 	if (!canSmoothWith)
 		canSmoothWith = list(/turf/closed/mineral, /turf/closed/indestructible)
 	. = ..()
