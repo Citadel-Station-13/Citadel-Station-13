@@ -75,7 +75,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/stagger_force
 
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
-	var/current_equipped_slot
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
 	var/obj/item/master = null
@@ -495,6 +494,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user, datum/action/A)
+	// slot = get_inventory_slot_datum(slot)
+	// return !slot.is_abstract && slot.is_inventory
 	if(slot == ITEM_SLOT_BACKPACK || slot == ITEM_SLOT_LEGCUFFED) //these aren't true slots, so avoid granting actions there
 		return FALSE
 	return TRUE

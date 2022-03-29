@@ -12,7 +12,8 @@ GLOBAL_LIST_EMPTY(inventory_slots)
 
 /**
  * meta for inventory slots
- * can be created manually for overrides on mobs
+ * can be created manually for overrides on mobs, but otherwise
+ * should be cached.
  */
 /datum/inventory_slot
 	/// slot name

@@ -1,5 +1,25 @@
 /obj/item/clothing
+	// supporting accessories
+	/// supports accessories attachment
+	var/allow_accessories = FALSE
+	/// all attached accessories - lazy list
+	var/list/accessories
 
+	// being an accessory
+	/// supports being an accessory
+	var/is_accessory = FALSE
+
+/**
+ * gets all attached accessories
+ */
+/obj/item/
+
+#warn equip hook
+#warn drop hook
+#warn pickup hook
+
+#warn equip hook on attach
+#warn drop hook on detach
 
 
 // /obj/item/clothing/accessory //Ties moved to neck slot items, but as there are still things like medals and armbands, this accessory system is being kept as-is

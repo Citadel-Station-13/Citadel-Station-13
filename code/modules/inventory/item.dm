@@ -1,3 +1,7 @@
+/obj/item
+	/// currently equipped slot
+	var/current_equipped_slot
+
 /**
  * Called after an item is placed in an equipment slot.
  *
@@ -12,6 +16,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	var/signal_flags = SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	current_equipped_slot = slot
+	// current_equipped_slot = get_inventory_slot_datum(slot)
 	if(!(signal_flags & COMPONENT_NO_GRANT_ACTIONS))
 		for(var/X in actions)
 			var/datum/action/A = X
