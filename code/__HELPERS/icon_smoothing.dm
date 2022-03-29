@@ -54,6 +54,12 @@
 /atom/movable/var/can_be_unanchored = FALSE
 /turf/var/list/fixed_underlay = null
 
+#warn port tg icon smoothing
+#warn *SCREAM
+
+#warn vars are already injected, get rid of old vars!
+#warn smoothing group conversion
+
 /proc/calculate_adjacencies(atom/A)
 	if(!A.loc)
 		return 0
