@@ -318,6 +318,8 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 				add_verb(src, /client/proc/play_web_sound)
 		if(rights & R_SPAWN)
 			add_verb(src, GLOB.admin_verbs_spawn)
+		if(rights & R_SENSITIVE)
+			add_verb(src, GLOB.admin_verbs_sensitive)
 
 /client/proc/remove_admin_verbs()
 	remove_verb(src, list(
