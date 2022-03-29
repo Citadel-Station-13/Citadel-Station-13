@@ -119,7 +119,9 @@
  * gets an reusable level, or increments world.maxz
  * WARNING: AFTER THIS, YOU NEED TO USE THE LEVEL, OR READD TO REUSABLE, OR THIS IS A MEMORY LEAK!
  */
-/datum/controller/subsystem/mapping/proc/GetInstantiationLevel()
+/datum/controller/subsystem/mapping/proc/GetInstantiationLevel(baseturf = world.turf)
+	#warn here's the shitty part where we changeturf an entire zlevel if it's used already
+	#warn I FUCKING HATE MY LIFE
 	if(islist(reusable_levels) && reusable_levels.len)
 		. = reusable_levels[1]
 		reusable_levels.Cut(1, 2)

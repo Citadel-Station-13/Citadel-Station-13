@@ -126,9 +126,11 @@
 /datum/controller/subsystem/mapping/proc/InstantiateMapLevel(datum/space_level/level, load_from_path = TRUE, rebuild_datastructures_immediately = TRUE, rebuild_turfs_immediately = TRUE)
 	ASSERT(istype(level))
 	#warn add support for filling void tiles where there's no map!
+	#warn not-so-microoptimization - change world.turf before z increase!
 
 	// make new level
-	var/new_z = GetInstantiationLevel()
+	var/new_z = GetInstantiationLevel(level.baseturf)
+	#warn above --> void turf behavior??
 
 	SynchronizeDatastructures()
 
@@ -149,6 +151,7 @@
 			var/height = parsed.height
 			var/x = level.center? max(round((world.maxx - width) / 2), 1) : 1
 			var/y = level.center? max(round((world.maxy - height) / 2), 1) : 1
+			#warn fill level actual x/y's in here ahugoashodshojewiwir
 			parsed.load(x, y, new_z, TRUE, TRUE, null, null, null, null, FALSE, level.orientation, FALSE, null)
 			parsed_maps += parsed
 		else if(path)	// didn't find, vs non existant
@@ -156,6 +159,7 @@
 
 	var/baseturf = GetBaseturf(new_z)
 	// for any turfs not changed,
+	#warn this is a garbage fucking check, remove it with world.turf change god fucking DAMN
 	for(var/turf/T as anything in block(locate(1, 1, new_z), locate(world.maxx, world.maxy, new_z)))
 		if(istype(T, world.turf))
 			T.ChangeTurf(baseturf, null, CHANGETURF_SKIP)
