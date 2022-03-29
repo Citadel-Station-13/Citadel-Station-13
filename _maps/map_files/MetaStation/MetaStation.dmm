@@ -4143,6 +4143,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/light_switch{
+	pixel_x = -10;
+	pixel_y = -26
+	},
 /turf/open/floor/plasteel,
 /area/security/range)
 "amt" = (
@@ -5970,6 +5974,10 @@
 /obj/item/book/manual/wiki/security_space_law{
 	pixel_x = -3;
 	pixel_y = 5
+	},
+/obj/machinery/light_switch{
+	pixel_x = 16;
+	pixel_y = -26
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
@@ -8518,6 +8526,9 @@
 "azY" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 1
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
@@ -24204,6 +24215,11 @@
 	},
 /obj/structure/table,
 /obj/item/kitchen/rollingpin,
+/obj/machinery/camera{
+	c_tag = "Service Hallway";
+	dir = 4;
+	name = "hallway camera"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
 "bYp" = (
@@ -33174,6 +33190,10 @@
 	icon_state = "1-8"
 	},
 /obj/effect/landmark/start/medical_doctor,
+/obj/machinery/camera{
+	c_tag = "Patient Room";
+	dir = 10
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms/room_a)
 "cum" = (
@@ -33363,6 +33383,10 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/machinery/light_switch{
+	pixel_x = -25;
+	pixel_y = 26
 	},
 /turf/open/floor/plasteel,
 /area/medical/paramedic)
@@ -35364,7 +35388,7 @@
 	dir = 10
 	},
 /obj/machinery/camera{
-	c_tag = "Genetics Lab";
+	c_tag = "Genetics Lab Hall";
 	dir = 6;
 	network = list("ss13","medbay")
 	},
@@ -52788,7 +52812,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
-	c_tag = "Atmospherics - Entrance"
+	c_tag = "Atmospherics - Bow"
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
@@ -54751,7 +54775,7 @@
 "gXt" = (
 /obj/machinery/cryopod,
 /obj/machinery/camera{
-	c_tag = "Fitness Room - Fore"
+	c_tag = "Cryogenics"
 	},
 /turf/open/floor/plasteel/dark,
 /area/commons/cryopod)
@@ -56227,6 +56251,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/light_switch{
+	pixel_x = 8;
+	pixel_y = 30
+	},
 /turf/open/floor/plasteel/dark,
 /area/command/teleporter)
 "hNB" = (
@@ -56376,6 +56404,16 @@
 	},
 /turf/open/floor/engine/n2,
 /area/engineering/atmos)
+"hRD" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/machinery/light_switch{
+	pixel_x = -24
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "hSe" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -56908,6 +56946,9 @@
 /area/solars/starboard/aft)
 "ihO" = (
 /obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/prison)
 "iiu" = (
@@ -59850,6 +59891,16 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/cargo/storage)
+"jPq" = (
+/obj/structure/urinal{
+	pixel_y = 29
+	},
+/obj/machinery/camera{
+	c_tag = "Auxiliary Restrooms";
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/commons/toilet/auxiliary)
 "jPu" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -64388,6 +64439,10 @@
 "moT" = (
 /obj/structure/table,
 /obj/item/camera,
+/obj/machinery/camera{
+	c_tag = "Art Storage";
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/commons/storage/art)
 "moW" = (
@@ -67268,6 +67323,9 @@
 /obj/item/clothing/mask/breath,
 /obj/effect/turf_decal/bot{
 	dir = 1
+	},
+/obj/machinery/light_switch{
+	pixel_x = -23
 	},
 /turf/open/floor/plasteel{
 	dir = 1
@@ -70711,6 +70769,10 @@
 	pixel_x = -28
 	},
 /obj/machinery/light/small,
+/obj/machinery/light_switch{
+	pixel_x = -10;
+	pixel_y = -26
+	},
 /turf/open/floor/plasteel/freezer,
 /area/commons/fitness/recreation)
 "pRd" = (
@@ -83941,6 +84003,9 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/light_switch{
+	pixel_x = -24
+	},
 /turf/open/floor/plasteel,
 /area/security/office)
 "xnt" = (
@@ -84591,6 +84656,9 @@
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "xEM" = (
+/obj/machinery/light_switch{
+	pixel_x = -20
+	},
 /turf/open/floor/plating,
 /area/commons/toilet/auxiliary)
 "xFb" = (
@@ -102517,7 +102585,7 @@ btZ
 bvV
 bxN
 mei
-nzp
+jPq
 xEM
 mei
 smm
@@ -110693,7 +110761,7 @@ afR
 akx
 anh
 anh
-anh
+hRD
 anh
 alQ
 anh
