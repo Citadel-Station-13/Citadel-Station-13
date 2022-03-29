@@ -96,6 +96,7 @@
 #define VV_HK_EDIT_FILTERS "edit_filters"
 #define VV_HK_EDIT_COLOR_MATRIX "edit_color_matrix"
 // #define VV_HK_ADD_AI "add_ai"
+#define VV_HK_MODIFY_GREYSCALE "modify_greyscale"
 
 // /obj
 #define VV_HK_OSAY "osay"

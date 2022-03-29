@@ -57,7 +57,7 @@
 	tiled_dirt = FALSE
 
 /turf/open/floor/plating/ashplanet/Initialize()
-	if(smooth)
+	if(IS_SMOOTH(src))
 		var/matrix/M = new
 		M.Translate(-4, -4)
 		transform = M

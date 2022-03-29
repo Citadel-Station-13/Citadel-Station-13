@@ -34,11 +34,15 @@
 
 /obj/effect/clockwork/overlay/wall/Initialize()
 	. = ..()
-	queue_smooth_neighbors(src)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/queue_smooth, src), 1)
+	QUEUE_SMOOTH_NEIGHBORS(src)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/clockwork/overlay/wall/LateInitialize()
+	. = ..()
+	QUEUE_SMOOTH(src)
 
 /obj/effect/clockwork/overlay/wall/Destroy()
-	queue_smooth_neighbors(src)
+	QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
 /obj/effect/clockwork/overlay/floor
