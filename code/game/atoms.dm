@@ -983,7 +983,10 @@
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EXPLOSION, "Explosion")
 	// VV_DROPDOWN_OPTION(VV_HK_RADIATE, "Radiate")
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_FILTERS, "Edit Filters")
+	VV_DROPDOWN_OPTION(VV_HK_EDIT_COLOR_MATRIX, "Edit Color as Matrix")
 	// VV_DROPDOWN_OPTION(VV_HK_ADD_AI, "Add AI controller")
+	if(greyscale_colors)
+		VV_DROPDOWN_OPTION(VV_HK_MODIFY_GREYSCALE, "Modify greyscale colors")
 
 /atom/vv_do_topic(list/href_list)
 	. = ..()
@@ -1030,6 +1033,15 @@
 	if(href_list[VV_HK_EDIT_FILTERS] && check_rights(R_VAREDIT))
 		var/client/C = usr.client
 		C?.open_filter_editor(src)
+	if(href_list[VV_HK_EDIT_COLOR_MATRIX] && check_rights(R_VAREDIT))
+		var/client/C = usr.client
+		C?.open_color_matrix_editor(src)
+	if(href_list[VV_HK_MODIFY_GREYSCALE])
+		if(!check_rights(NONE))
+			return
+		var/datum/greyscale_modify_menu/menu = new(src, usr, SSgreyscale.configurations)
+		menu.Unlock()
+		menu.ui_interact(usr)
 
 /atom/vv_get_header()
 	. = ..()

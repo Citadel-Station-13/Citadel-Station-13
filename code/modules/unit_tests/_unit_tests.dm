@@ -62,7 +62,7 @@
 // #include "dynamic_ruleset_sanity.dm"
 // #include "emoting.dm"
 // #include "food_edibility_check.dm"
-// #include "greyscale_config.dm"
+#include "greyscale_config.dm"
 // #include "heretic_knowledge.dm"
 // #include "holidays.dm"
 // #include "hydroponics_harvest.dm"

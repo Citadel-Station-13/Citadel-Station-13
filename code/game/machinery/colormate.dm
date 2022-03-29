@@ -1,3 +1,4 @@
+#warn tgui entirely, greyscale modify menu, matrix modify menu
 /obj/machinery/gear_painter
 	name = "\improper Color Mate"
 	desc = "A machine to give your apparel a fresh new color! Recommended to use with white items for best results."

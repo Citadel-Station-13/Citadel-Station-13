@@ -9,6 +9,8 @@
 	/// supports being an accessory
 	var/is_accessory = FALSE
 
+#warn finish
+
 /**
  * gets all attached accessories
  */
