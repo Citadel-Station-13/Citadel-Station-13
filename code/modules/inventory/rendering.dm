@@ -12,7 +12,8 @@
 	var/worn_y_dimension = 32
 	/// do not do [_slot] in dmi state generation so [worn_base_state][_slot][_bodytype] becomes [worn_base_state][_bodytype]
 	var/worn_slots_monostate = FALSE
-
+	/// if non null, override layer when worn instead of using slot default
+	var/worn_layer_override
 
 	/// which bodytypes are allowed to wear this? if one is and it isn't in bodytypes_supported, the automatic fallback list/template icons will be used.
 	var/bodytypes_allowed = ALL
@@ -34,12 +35,20 @@
  *
  * how this picks icon state:
  */
-/obj/item/proc/build_worn_appearance()
+/obj/item/proc/build_worn_appearance(datum/inventory_slot/slot, requested_bodytype, mob/living/L)
+	slot = get_inventory_slot_datum(slot)
+	#warn how to handle current default icons
+	#warn how to handle female uniform
+
 
 /obj/item/proc/get_worn_icon(datum/inventory_slot/slot, requested_bodytype, templating)
+	slot = get_inventory_slot_datum(slot)
+
 
 /obj/item/proc/get_worn_state(datum/inventory_slot/slot, requested_bodytype, templating)
+	slot = get_inventory_slot_datum(slot)
 
+#warn refactor?
 //Overlays for the worn overlay so you can overlay while you overlay
 //eg: ammo counters, primed grenade flashing, etc.
 //"icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file

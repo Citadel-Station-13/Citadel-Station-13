@@ -162,7 +162,7 @@
 	. = ..()
 	for(var/sloties in get_all_slots() - list(l_store, r_store, s_store))
 		var/obj/item/thing = sloties
-		. += thing?.slowdown
+		. += thing?.get_equipment_speed_mod()
 
 /mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	var/index = get_held_index_of_item(I)

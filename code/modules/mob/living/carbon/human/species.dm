@@ -21,6 +21,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/name
 	// Default color. If mutant colors are disabled, this is the color that will be used by that race.
 	var/default_color = "#FFF"
+	/// default bodytype - used for clothing rendering. note: this can be changed by get_effective_bodytype!
+	var/default_bodytype = BODYTYPE_HUMAN
 
 	///Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows
 	var/sexes = TRUE
@@ -2609,3 +2611,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		else
 			to_chat(H, "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>")
 			H.set_resting(FALSE, TRUE)
+
+/**
+ * gets the bodytype the rendering system *should* use for a certain item and slot.
+ */
+/datum/species/proc/get_effective_bodytype(obj/item/I, slot, mob/living/carbon/human/H)
+	. = defaultt_bodytype
+	#warn finish

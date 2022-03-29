@@ -2,6 +2,8 @@ GLOBAL_LIST_EMPTY(inventory_slots)
 
 /proc/get_inventory_slot_datum(id_or_type)
 	RETURN_TYPE(/datum/inventory_slot)
+	if(istype(id_or_type, /datum/inventory_slot))
+		return id_or_type
 	if(GLOB.inventory_slots[id_or_type])
 		return GLOB.inventory_slots[id_or_type]
 	if(ispath(id_or_type, /datum/inventory_slot))
@@ -23,13 +25,98 @@ GLOBAL_LIST_EMPTY(inventory_slots)
 	var/is_inventory = TRUE
 	/// is abstract? stuff lke "slot in backpack" obviously isn't.
 	var/is_abstract = FALSE
+	/// render layer
+	var/render_layer
+	#warn put in render layers
 
 /datum/inventory_slot/New(_id)
 	id = _id || type
 	if(isnull(name))
 		name = "[id]"
 
-#warn put in standard inv slots, /flagged, etc.
+/datum/inventory_slot/normal
+	is_inventory = TRUE
+	is_abstract = FALSE
+
+/**
+ * standard "item slot flag fits in" inventory slots
+ */
+/datum/inventory_slot/normal/flag
+	/// flag to use
+	var/slot_flag
+
+/datum/inventory_slot/normal/flag/head
+	name = "Head"
+	slot_flag = ITEM_SLOT_HEAD
+	render_key = "head"
+
+/datum/inventory_slot/normal/flag/ears
+	name = "Ears"
+	slot_flag = ITEM_SLOT_EARS
+	render_key = "ears"
+
+/datum/inventory_slot/normal/flag/neck
+	name = "Neck"
+	slot_flag = ITEM_SLOT_NECK
+	render_key = "neck"
+
+/datum/inventory_slot/normal/flag/back
+	name = "Back"
+	slot_flag = ITEM_SLOT_BACK
+	render_key = "back"
+
+/datum/inventory_slot/normal/flag/suit
+	name = "Oversuit"
+	slot_flag = ITEM_SLOT_OCLOTHING
+	render_key = "suit"
+
+/datum/inventory_slot/normal/flag/uniform
+	name = "Uniform"
+	slot_flag = ITEM_SLOT_ICLOTHING
+	render_key = "uniform"
+
+/datum/inventory_slot/normal/flag/suit_store
+	name = "Suit Storage"
+	slot_flag = ITEM_SLOT_SUITSTORE
+	render_key = "suitstore"
+
+/datum/inventory_slot/normal/flag/mask
+	name = "Mask"
+	slot_flag = ITEM_SLOT_MASK
+	render_key = "mask"
+
+/datum/inventory_slot/normal/flag/gloves
+	name = "Gloves"
+	slot_flag = ITEM_SLOT_GLOVES
+	render_key = "hands"
+
+/datum/inventory_slot/normal/flag/shoes
+	name = "Shoes"
+	slot_flag = ITEM_SLOT_FEET
+	render_key = "feet"
+
+/datum/inventory_slot/normal/flag/eyes
+	name = "Glasses"
+	slot_flag = ITEM_SLOT_EYES
+	render_key = "eyes"
+
+/datum/inventory_slot/normal/flag/belt
+	name = "Belt"
+	slot_flag = ITEM_SLOT_BELT
+	render_key = "belt"
+
+/datum/inventory_slot/normal/flag/id
+	name = "ID"
+	slot_flag = ITEM_SLOT_ID
+	render_key = "id"
+
+/datum/inventory_slot/normal/pocket
+
+/datum/inventory_slot/normal/pocket/left
+	name = "Left Pocket"
+
+/datum/inventory_slot/normal/pocket/right
+	name = "Right Pocket"
 
 /**
  * abstract slots - marks certain behaviors so we don't need to use define values.

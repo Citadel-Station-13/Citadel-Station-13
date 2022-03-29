@@ -3,7 +3,14 @@
 #define BODYTYPE_HUMAN						(1<<0)
 /// muzzle - sensical for headgear, etc
 #define BODYTYPE_MUZZLE						(1<<1)
-///
+/// digitigrade - sensical for legwears, jumpsuits, suits, etc
+#define BODYTYPE_DIGITIGRADE				(1<<2)
+/// snake taur
+#define BODYTYPE_TAUR_SNAKE					(1<<3)
+/// hoof
+#define BODYTYPE_TAUR_HOOF					(1<<4)
+/// paw
+#define BODYTYPE_TAUR_PAW					(1<<5)
 
 
 

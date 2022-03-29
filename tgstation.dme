@@ -2385,6 +2385,7 @@
 #include "code\modules\integrated_electronics\subtypes\time.dm"
 #include "code\modules\integrated_electronics\subtypes\trig.dm"
 #include "code\modules\integrated_electronics\subtypes\weaponized.dm"
+#include "code\modules\inventory\bodytype_templates.dm"
 #include "code\modules\inventory\item.dm"
 #include "code\modules\inventory\rendering.dm"
 #include "code\modules\inventory\slot.dm"
