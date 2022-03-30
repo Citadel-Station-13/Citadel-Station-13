@@ -146,7 +146,7 @@
 	name = "Syndicate Bioweapon Scientist"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
-	role_type = /datum/ghostrole/syndicate_viroogist
+	role_type = /datum/ghostrole/syndicate_virologist
 
 /datum/outfit/lavaland_syndicate
 	name = "Lavaland Syndicate Agent"

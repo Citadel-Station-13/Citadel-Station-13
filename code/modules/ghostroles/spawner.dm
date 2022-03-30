@@ -71,7 +71,7 @@
 	if(instantiator_path)
 		G.instantiator = new instantiator_path
 	else
-		G.instantiator = new ispath(mob_path, /mob/living/carbon/human)? /datum/ghostrole_instantiator/human/random/species : /datum/ghostrole_instantiator/simple
+		G.instantiator = ispath(mob_path, /mob/living/carbon/human)? new /datum/ghostrole_instantiator/human/random/species : new /datum/ghostrole_instantiator/simple
 	return G
 
 /obj/structure/ghost_role_spawner/custom/proc/GenerateParams()
