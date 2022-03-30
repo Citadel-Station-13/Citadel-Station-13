@@ -443,8 +443,8 @@ RLD
 			airlock_glass = FALSE
 
 
-/obj/item/construction/rcd/proc/rcd_create(atom/A, mob/user)
-	var/list/rcd_results = A.rcd_vals(user, src)
+/obj/item/construction/rcd/proc/rcd_create(atom/A, mob/user, from_under)
+	var/list/rcd_results = A.rcd_vals(user, src, from_under)
 	if(!rcd_results)
 		return FALSE
 	var/delay = rcd_results["delay"] * delay_mod
@@ -532,16 +532,24 @@ RLD
 	else
 		return FALSE
 
-/obj/item/construction/rcd/afterattack(atom/A, mob/user, proximity)
+/obj/item/construction/rcd/afterattack(atom/A, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	var/list/params = params2list(click_parameters)
+	var/turf/above
+	if(isturf(A) && params["ctrl"])
+		var/turf/T = A
+		above = T.Above()
+		if(!above)
+			to_chat(user, span_warning("There's nothing above [T]!"))
+			return
 	if(!proximity)
 		if(!ranged || !range_check(A,user)) //early return not-in-range sanity.
 			return
 		if(target_check(A,user))
 			user.Beam(A,icon_state="rped_upgrade",time=30)
-		rcd_create(A,user)
+		rcd_create(above || A, user, above && TRUE)
 		return
-	rcd_create(A, user)
+	rcd_create(above || A, user, above && TRUE)
 
 /obj/item/construction/rcd/proc/detonate_pulse()
 	audible_message("<span class='danger'><b>[src] begins to vibrate and \

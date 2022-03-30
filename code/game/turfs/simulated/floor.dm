@@ -284,7 +284,9 @@
 /turf/open/floor/acid_melt()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
-/turf/open/floor/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+/turf/open/floor/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd, from_under)
+	if(from_under)
+		return FALSE
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
 			return list("mode" = RCD_FLOORWALL, "delay" = 20, "cost" = 16)

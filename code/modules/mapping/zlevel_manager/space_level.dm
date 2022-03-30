@@ -22,9 +22,9 @@
 	/// load orientation
 	var/orientation = SOUTH
 	/// load centered?
-	var/center = FALSE
+	var/center = TRUE
 	/// load "void" tiles for blank areas when we're smaller than the world zlevel size?
-	var/fill_void = TRUE
+	var/fill_void = FALSE
 
 	#warn hook these into load process and generation
 	// bounds - for when we had to fill void.

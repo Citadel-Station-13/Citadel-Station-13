@@ -86,9 +86,39 @@
 	return locate(/obj/structure/lattice/catwalk) in src
 
 /turf/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	. = ..()
+	switch(passed_mode)
+		if(RCD_FLOORWALL)
+			to_chat(user, span_notice("You build a floor."))
+			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			return TRUE
+		if(RCD_DECONSTRUCT)
+			to_chat(user, span_warning("You tear down \the [src]!"))
+			ScrapeAway(1, flags = CHANGETURF_INHERIT_AIR)
+			return TRUE
+	return FALSE
 
 /turf/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	. = ..()
-
-#warn impl rcd
+	if(!CanBuildOn())
+		return FALSE
+	var/is_under = FALSE
+	if(user.z != z)
+		var/turf/below = Below()
+		if(!below)
+			return FALSE
+		if(user.z == below.z)
+			is_under = TRUE
+	switch(the_rcd.mode)
+		if(RCD_FLOORWALL)
+			var/lattice_mitigation = has_lattice? 2 : 0
+			if(is_under && !(turf_construct_flags & TURF_CONSTRUCT_ALLOW_FROM_UNDER))
+				return FALSE
+			if(!(turf_construct_flags & TURF_CONSTRUCT_RCD_PLATING))
+				return FALSE
+			return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = max(0, rcd_plating_cost - lattice_mitigation))
+		if(RCD_DECONSTRUCT)
+			if(is_under && !(turf_construct_flags & TURF_DECONSTRUCT_ALLOW_FROM_UNDER))
+				return FALSE
+			if(!(turf_construct_flags & TURF_DECONSTRUCT_RCD_TEARDOWN))
+				return FALSE
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 40, "cost" = rcd_teardown_cost)
+	return ..()
