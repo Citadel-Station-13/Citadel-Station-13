@@ -130,8 +130,8 @@
 	user.dropItemToGround(user.head)
 	user.dropItemToGround(user.wear_suit)
 
-	user.equip_to_slot_if_possible(new suit_type(user), SLOT_WEAR_SUIT, 1, 1, 1)
-	user.equip_to_slot_if_possible(new helmet_type(user), SLOT_HEAD, 1, 1, 1)
+	user.equip_to_slot_if_possible(new suit_type(user), ITEM_SLOT_OCLOTHING, 1, 1, 1)
+	user.equip_to_slot_if_possible(new helmet_type(user), ITEM_SLOT_HEAD, 1, 1, 1)
 
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.chem_recharge_slowdown += recharge_slowdown
@@ -637,7 +637,7 @@
 
 	user.dropItemToGround(user.gloves)
 
-	user.equip_to_slot_if_possible(new glove_type(user), SLOT_GLOVES, 1, 1, 1)
+	user.equip_to_slot_if_possible(new glove_type(user), ITEM_SLOT_GLOVES, 1, 1, 1)
 	playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.chem_recharge_slowdown += recharge_slowdown
@@ -733,7 +733,7 @@
 
 /obj/item/clothing/gloves/fingerless/pugilist/cling/equipped(mob/user, slot)
 	. = ..()
-	if(current_equipped_slot == SLOT_GLOVES)
+	if(current_equipped_slot == ITEM_SLOT_GLOVES)
 		to_chat(user, "<span class='notice'>With [src] formed around our arms, we are ready to fight.</span>")
 
 /obj/item/clothing/gloves/fingerless/pugilist/cling/dropped(mob/user)

@@ -21,6 +21,7 @@
 	var/web_cooldown = 200
 	var/web_ready = TRUE
 	var/spinner_rate = 25
+	wings_icons = SPECIES_WINGS_MOTH //Arachnids' phylum is arthropods, which include butterflies. Might as well hit them with moth wings.
 
 /datum/species/arachnid/random_name(gender,unique,lastname)
 	if(unique)

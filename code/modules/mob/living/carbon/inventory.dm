@@ -1,16 +1,16 @@
 /mob/living/carbon/get_item_by_slot(slot_id)
 	switch(slot_id)
-		if(SLOT_BACK)
+		if(ITEM_SLOT_BACK)
 			return back
-		if(SLOT_WEAR_MASK)
+		if(ITEM_SLOT_MASK)
 			return wear_mask
-		if(SLOT_NECK)
+		if(ITEM_SLOT_NECK)
 			return wear_neck
-		if(SLOT_HEAD)
+		if(ITEM_SLOT_HEAD)
 			return head
-		if(SLOT_HANDCUFFED)
+		if(ITEM_SLOT_HANDCUFFED)
 			return handcuffed
-		if(SLOT_LEGCUFFED)
+		if(ITEM_SLOT_LEGCUFFED)
 			return legcuffed
 	return null
 
@@ -20,17 +20,17 @@
 			return slot
 	if(critical) //it is CRITICAL they get this item, no matter what
 		//do they have a backpack?
-		var/obj/item/backpack = get_item_by_slot(SLOT_BACK)
+		var/obj/item/backpack = get_item_by_slot(ITEM_SLOT_BACK)
 		if(!backpack)
 			//nothing on their back
 			backpack = new /obj/item/storage/backpack(get_turf(src))
-			if(equip_to_slot(backpack, SLOT_BACK)) //worst-case-scenario, something that shouldnt wear a backpack gets one
+			if(equip_to_slot(backpack, ITEM_SLOT_BACK)) //worst-case-scenario, something that shouldnt wear a backpack gets one
 				I.forceMove(backpack)
-				return SLOT_BACK
+				return ITEM_SLOT_BACK
 		else if(istype(backpack) && SEND_SIGNAL(backpack, COMSIG_CONTAINS_STORAGE))
 			//place it in here, regardless of storage capacity
 			I.forceMove(backpack)
-			return SLOT_BACK
+			return ITEM_SLOT_BACK
 		else
 			//this should NEVER happen, but if it does, report it with the appropriate information
 			var/conclusion = qdel_on_fail ? "deleted" : "not moved, staying at current position [I.x], [I.y], [I.z]"
@@ -69,28 +69,28 @@
 	I.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE
 	switch(slot)
-		if(SLOT_BACK)
+		if(ITEM_SLOT_BACK)
 			back = I
 			update_inv_back()
-		if(SLOT_WEAR_MASK)
+		if(ITEM_SLOT_MASK)
 			wear_mask = I
 			wear_mask_update(I, toggle_off = 0)
-		if(SLOT_HEAD)
+		if(ITEM_SLOT_HEAD)
 			head = I
 			head_update(I)
-		if(SLOT_NECK)
+		if(ITEM_SLOT_NECK)
 			wear_neck = I
 			update_inv_neck(I)
-		if(SLOT_HANDCUFFED)
+		if(ITEM_SLOT_HANDCUFFED)
 			handcuffed = I
 			update_handcuffed()
-		if(SLOT_LEGCUFFED)
+		if(ITEM_SLOT_LEGCUFFED)
 			legcuffed = I
 			update_inv_legcuffed()
-		if(SLOT_HANDS)
+		if(ITEM_SLOT_HANDS)
 			put_in_hands(I)
 			update_inv_hands()
-		if(SLOT_IN_BACKPACK)
+		if(ITEM_SLOT_BACKPACK)
 			if(!back || !SEND_SIGNAL(back, COMSIG_TRY_STORAGE_INSERT, I, src, TRUE))
 				not_handled = TRUE
 		else
@@ -161,55 +161,58 @@
 	return index && hand_bodyparts[index]
 
 /**
-  * Proc called when giving an item to another player
+  * Proc called when offering an item to another player
   *
   * This handles creating an alert and adding an overlay to it
   */
 /mob/living/carbon/proc/give(target)
-	var/obj/item/receiving = get_active_held_item()
-	if(!receiving)
+	var/obj/item/offered_item = get_active_held_item()
+	if(!offered_item)
 		to_chat(src, "<span class='warning'>You're not holding anything to give!</span>")
 		return
-	visible_message("<span class='notice'>[src] is offering [receiving]</span>", \
-					"<span class='notice'>You offer [receiving]</span>", null, 2)
-	var/mob/living/carbon/targets = list()
-	if(!target)
-		for(var/mob/living/carbon/C in orange(1, src))
-			if(!CanReach(C))
-				return
-			targets += C
-	else
-		targets += target
-	if(!targets)
+
+	if(IS_DEAD_OR_INCAP(src))
+		to_chat(src, span_warning("You're unable to offer anything in your current state!"))
 		return
-	for(var/mob/living/carbon/C in targets)
-		var/atom/movable/screen/alert/give/G = C.throw_alert("[src]", /atom/movable/screen/alert/give)
-		if(!G)
-			return
-		G.setup(C, src, receiving)
+
+	if(has_status_effect(STATUS_EFFECT_OFFERING))
+		to_chat(src, span_warning("You're already offering up something!"))
+		return
+
+	if(offered_item.on_offered(src)) // see if the item interrupts with its own behavior
+		return
+
+	visible_message(span_notice("[src] is offering [offered_item]."), \
+					span_notice("You offer [offered_item]."), null, 2)
+
+	apply_status_effect(STATUS_EFFECT_OFFERING, offered_item)
 
 /**
   * Proc called when the player clicks the give alert
   *
-  * Handles checking if the player taking the item has open slots and is in range of the giver
+  * Handles checking if the player taking the item has open slots and is in range of the offerer
   * Also deals with the actual transferring of the item to the players hands
   * Arguments:
-  * * giver - The person giving the original item
-  * * I - The item being given by the giver
+  * * offerer - The person giving the original item
+  * * I - The item being given by the offerer
   */
-/mob/living/carbon/proc/take(mob/living/carbon/giver, obj/item/I)
-	clear_alert("[giver]")
-	if(get_dist(src, giver) > 1)
-		to_chat(src, "<span class='warning'>[giver] is out of range! </span>")
+/mob/living/carbon/proc/take(mob/living/carbon/offerer, obj/item/I)
+	clear_alert("[offerer]")
+	if(get_dist(src, offerer) > 1)
+		to_chat(src, span_warning("[offerer] is out of range!"))
 		return
-	if(!I || giver.get_active_held_item() != I)
-		to_chat(src, "<span class='warning'>[giver] is no longer holding the item they were offering! </span>")
+	if(!I || offerer.get_active_held_item() != I)
+		to_chat(src, span_warning("[offerer] is no longer holding the item they were offering!"))
 		return
 	if(!get_empty_held_indexes())
 		to_chat(src, "<span class='warning'>You have no empty hands!</span>")
 		return
-	if(!giver.temporarilyRemoveItemFromInventory(I))
-		visible_message("<span class='notice'>[src] tries to hand over [I] but it's stuck to them....", \
+	if(I.on_offer_taken(offerer, src)) // see if the item has special behavior for being accepted
+		return
+	if(!offerer.temporarilyRemoveItemFromInventory(I))
+		visible_message("<span class='notice'>[offerer] tries to hand over [I] but it's stuck to them....", \
 						"<span class'notice'> You make a fool of yourself trying to give away an item stuck to your hands")
 		return
+	visible_message(span_notice("[src] takes [I] from [offerer]"), \
+					span_notice("You take [I] from [offerer]"))
 	put_in_hands(I)

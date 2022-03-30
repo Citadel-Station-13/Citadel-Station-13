@@ -28,7 +28,7 @@
 
 /obj/item/clothing/shoes/combat/sneakboots/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_SHOES)
+	if(slot == ITEM_SLOT_FEET)
 		ADD_TRAIT(user, TRAIT_SILENT_STEP, SHOES_TRAIT)
 
 /obj/item/clothing/shoes/combat/sneakboots/dropped(mob/user)
@@ -112,7 +112,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_SHOES)
+	if(slot == ITEM_SLOT_FEET)
 		if(enabled_waddle)
 			waddle = user.AddComponent(/datum/component/waddling)
 		if(user.mind && HAS_TRAIT(user.mind, TRAIT_CLOWN_MENTALITY))
@@ -267,9 +267,15 @@
 	desc = "A specialized pair of combat boots with a built-in propulsion system for rapid foward movement."
 	icon_state = "jetboots"
 	resistance_flags = FIRE_PROOF
+	cold_protection = FEET|LEGS
+	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
+	heat_protection = FEET|LEGS
+	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	actions_types = list(/datum/action/item_action/bhop)
 	permeability_coefficient = 0.05
+	unique_reskin = list("Explorer" = "miningjet",
+						"Jackboot" = "jetboots")
 	var/jumpdistance = 5 //-1 from to see the actual distance, e.g 4 goes over 3 tiles
 	var/jumpspeed = 3
 	var/recharging_rate = 60 //default 6 seconds between each dash
@@ -334,7 +340,7 @@
 /obj/item/clothing/shoes/wheelys/ui_action_click(mob/user, action)
 	if(!isliving(user))
 		return
-	if(!istype(user.get_item_by_slot(SLOT_SHOES), /obj/item/clothing/shoes/wheelys))
+	if(!istype(user.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes/wheelys))
 		to_chat(user, "<span class='warning'>You must be wearing the wheely-heels to use them!</span>")
 		return
 	if(!(W.is_occupant(user)))
@@ -417,12 +423,16 @@
 	name = "cowboy boots"
 	desc = "A standard pair of brown cowboy boots."
 	icon_state = "cowboyboots"
+	item_state = "cowboyboots"
+	permeability_coefficient = 0.05 //these are quite tall
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/cowboyboots/black
 	name = "black cowboy boots"
 	desc = "A pair of black cowboy boots, pretty easy to scuff up."
 	icon_state = "cowboyboots_black"
+	item_state = "cowboyboots_black"
 
 /obj/item/clothing/shoes/wallwalkers
 	name = "wall walking boots"
@@ -450,7 +460,7 @@
 
 /obj/item/clothing/shoes/wallwalkers/equipped(mob/user,slot)
 	. = ..()
-	if(slot == SLOT_SHOES)
+	if(slot == ITEM_SLOT_FEET)
 		RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE,.proc/intercept_user_move)
 
 /obj/item/clothing/shoes/wallwalkers/dropped(mob/user)
@@ -541,3 +551,59 @@
 	desc = "They got me for my foams!"
 	icon_state = "SwagShoes"
 	item_state = "SwagShoes"
+
+/obj/item/clothing/shoes/phantom
+	name = "phantom shoes"
+	desc = "Excellent for when you need to do cool flashy flips."
+	icon_state = "phantom_shoes"
+	item_state = "phantom_shoes"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/shoes/saints
+	name = "saints sneakers"
+	desc = "Officially branded Saints sneakers. Incredibly valuable!"
+	icon_state = "saints_shoes"
+	item_state = "saints_shoes"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/shoes/morningstar
+	name = "morningstar boots"
+	desc = "The most expensive boots on this station. Wearing them dropped the value by about 50%."
+	icon_state = "morningstar_shoes"
+	item_state = "morningstar_shoes"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/shoes/deckers
+	name = "deckers rollerskates"
+	desc = "t3h c00L3st sh03z j00'LL 3v3r f1nd."
+	icon_state = "decker_shoes"
+	item_state = "decker_shoes"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/shoes/sybil_slickers
+	name = "sybil slickers shoes"
+	desc = "FOOTBALL! YEAH!"
+	icon_state = "sneakers_blue"
+	item_state = "sneakers_blue"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/shoes/basil_boys
+	name = "basil boys shoes"
+	desc = "FOOTBALL! YEAH!"
+	icon_state = "sneakers_red"
+	item_state = "sneakers_red"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/shoes/yakuza
+	name = "tojo clan shoes"
+	desc = "Steel-toed and intimidating."
+	icon_state = "MajimaShoes"
+	item_state = "MajimaShoes_worn"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/shoes/jackbros
+	name = "frosty boots"
+	desc = "For when you're stepping on up to the plate."
+	icon_state = "JackFrostShoes"
+	item_state = "JackFrostShoes_worn"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON

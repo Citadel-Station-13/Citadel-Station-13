@@ -1,0 +1,176 @@
+2022-02-01:
+  SpiWat:
+  - spellcheck: tweenty --> twenty
+2022-02-02:
+  BlueWildrose:
+  - bugfix: Sylvan should actually be speakable for those who have taken that language
+      as roundstart now, and for plantpeople who naturally start with it.
+  - bugfix: The langauge Neo-kanji's shortcut was overlapping with the slime language,
+      and has been relocated from k to j.
+  - bugfix: The langauge Dwarvish's shortcut was potentially overlapping with drones,
+      and has been relocated from D to w.
+  - bugfix: The language Rachnidian's shortcut was getting in the way of the Ratvarian
+      language, so it's been moved from r to c.
+2022-02-08:
+  CoreFlare:
+  - rscadd: Humanity is... Ok. Blood is fuel. IPCs have wings.
+  DeltaFire15:
+  - balance: Stabilized orange extracts can only cool by -5 degrees per tick base
+      instead of by as much as the difference is.
+  - balance: "Stabilized orange extracts only have halved cooling effects on Synthetics\
+      \ (2.5 per status tick / 5 per life), but also cool them towards ~-100\xB0C\
+      \ instead of base bodytemp."
+  - balance: The Space Adaptation mutation when applied to Synthetics now nullifies
+      the penalty for passive cooling if in low-pressure environments.
+  LiteralMushroom:
+  - rscadd: Slimes can have wings now.
+  SakuraOran:
+  - rscadd: Ashwalkers can now heal, even from death, by being incapacitated (asleep/dead)
+      near the tendril
+  - rscadd: Added the ability for antags to have the "protect object" objective, which
+      the ashwalkers now have to protect the tendril. This is determined by if the
+      object is broken or not, and can be set to any object or structure that can
+      reasonably be destroyed
+  - balance: Ashwalkers get one life, and have a 40% chance to earn an additional
+      life when they sacrifice to the tendril.
+  - bugfix: fixed mobs not dropping guaranteed_butcher_results when gibbed
+  SandPoot:
+  - qol: Changing a reagent container's transfer amount will now give you feedback
+      in the form of text on the container itself.
+  - rscadd: 'TGUI autolathe tweak: You can now input a custom amount to print(hard
+      limit at 50 or maximum stack size) tweak: Can now search and change categories
+      while the autolathe is busy, line up those designs!'
+  - bugfix: You can once again see your previews for picking target bodyparts on your
+      hud.
+  - refactor: Converted the changelog popup to TGUI
+  - rscadd: Adds a keybinding where you can cancel actions.
+  - rscadd: Made a cool UI for the custom shuttles.
+  - bugfix: Removes "Convert Lineendings" git action.
+  - rscadd: All of your favorite simple bot friends aboard the station now have a
+      much better interface in TGUI
+  - qol: You can now lock and unlock bots, including their maintenance hatches, via
+      the UI.
+  silicons:
+  - refactor: clickcatchers, parallax
+2022-02-14:
+  keronshb:
+  - rscadd: Adds the new MRP version of Families
+  - rscadd: Adds the new Antag UI panel for Families, disables it for other antags
+      (for now)
+  - rscadd: Adds High Fives (needed for the Handshake)
+  - rscdel: Removed old Gang War
+  - bugfix: Fixed Observer Alerts and general alerts for give/take/restraints.
+  - soundadd: Adds related sounds for Families
+  - imageadd: Adds related icons for Families
+  - code_imp: Changed the petehat/gang to just petehat on the jungle away mission
+  - code_imp: Adds HAND_ITEM
+  - code_imp: A bunch of UI code for Antags/Families
+  - code_imp: Adds IS_DEAD_OR_INCAP
+  - code_imp: Adds GLOBAL_LIST_EMPTY(pre_setup_antags)
+  - code_imp: Adds Queued Deletions
+  - code_imp: Sanity check for attached_effect
+  - code_imp: Adds Suicide cries for antags
+  - code_imp: Adds preview_outfits for antags
+  - refactor: Refactors give/take > offer/receive
+  - config: Added Families to the dynamic config
+  - admin: Adds admin tp Family stuff
+2022-02-17:
+  '[Timberpoes](https://github.com/Timberpoes)':
+  - admin: Re-added the button to the player playtime panel that lets admins toggle
+      a player's job playtime exemption status.
+2022-02-19:
+  timothyteakettle:
+  - rscadd: polychromic clown outfit and mask
+2022-02-20:
+  jupyterkat:
+  - refactor: switched equalization method to katmos
+2022-02-21:
+  BlueWildrose and tralezab, Wjohnston, Mey Ha Zah, ArcaneDefense, Jack7D1, Papaporo, Sheits & Mqiib from TG and Yog:
+  - rscadd: TG wing port - All species can now use flight potions and grow wings.
+      Your wing sprite will be based off of what wings you have on your character,
+      or otherwise what species you are if you have no wings.
+  - bugfix: Jellypeople did not call the species parent proc on spec_life. Fixed.
+  Putnam3145:
+  - bugfix: Default features on linux auxmos compile now formatted correctly
+  - bugfix: reinforced plasma glass windows are buildable
+  TripleShades:
+  - rscadd: '[Omega] Gateway shutter button'
+  - rscadd: '[Omega] Signs to the airlocks that lead to space that say SPACE'
+  - rscadd: '[Omega] Air Alarm for the Turbine itself'
+  - rscadd: '[Omega] SMES Unit for the Turbine itself'
+  - rscadd: '[Omega] Firelock to Robotics airlock'
+  - rscadd: '[Omega] Captain''s Office now has a hand teleporter and medal box'
+  - rscadd: '[Omega] Screwdriver to Chemistry'
+  - rscadd: '[Omega] Space Cleaner bottle to Medbay'
+  - rscadd: '[Omega] Limb Grower and Spare Limb Crate to Surgery'
+  - rscadd: '[Omega] Kinkmate in Dorms'
+  - rscadd: '[Omega] Lightbulb fixture to Secure Tech Storage'
+  - rscadd: '[Omega] Armsky is now in the Armoury'
+  - rscdel: '[Omega] Extra automated announcement machine'
+  - rscdel: '[Omega] Wall inside of southwest Solar Array window'
+  - rscdel: '[Omega] Wall inside library maint airlock'
+  - rscdel: '[Omega] Duplicate Robotics airlock tweak: [Omega] HoS gun now spawns
+      in HoS locker instead of Captain''s locker tweak: [Omega] Both Solar Arrays
+      now have more windows tweak: [Omega] PACMAN moved out from behind a Command
+      airlock in Engineering tweak: [Omega] A few cameras so that they''re not sitting
+      improperly on windows tweak: [Omega] Medbay Surgery now has a surgical duffel
+      instead of strewn about tools tweak: [Omega] Security Cell 1 is now properly
+      named and has a bed instead of a chair tweak: [Omega] Toxins scrubber piping
+      now goes through a wall tweak: [Omega] Robotics trash can is now moved to the
+      small hallway between Robotics and Toxins tweak: [Omega] Maint Pool drain moved
+      down a tile so it''s easier to retrieve lost items'
+  - bugfix: '[Omega] Lawyer Office access'
+  - bugfix: '[Omega] Both Solar Arrays are now wired up to power the station properly'
+  - bugfix: '[Omega] Wire leading to the single Supermatter Emitter should now be
+      properly connected and not diagonal'
+  - bugfix: '[Omega] Gateway Maint airlock access'
+  - bugfix: '[Omega] Toxins Launch not being connected to the main air supply'
+  - bugfix: '[Omega] Toxins Mix Chamber no longer starts bolted'
+  - bugfix: '[Omega] Missing pipe above Security leading into Perma'
+  - bugfix: '[Omega] Secure Tech Storage now properly has an area'
+2022-02-23:
+  SandPoot:
+  - bugfix: You know the training targets? You can grab them again now with your own
+      hands, instead of using telekinesis.
+  TripleShades:
+  - rscadd: '[Omega] Trash chute to space in Virology'
+  - rscadd: '[Omega] Trash chute to space in Xenobiology'
+  - rscadd: '[Omega] Airlock leading out to Supermatter cooling pipeline'
+  - rscadd: '[Omega] Two more air pumps to Toxins'
+  - rscadd: '[Omega] Robotics circuitry printer'
+  - rscadd: '[Omega] Windoor to Cargo delivery flaps'
+  - rscdel: '[Omega] Backdoor to Gravity Generator'
+  - rscdel: '[Omega] Bunched up cameras tweak: [Omega] Pipes leading to the Incinerator
+      burn chamber are now black tweak: [Omega] Gravity Generator airlocks are now
+      accessible by engineers tweak: [Omega] Chapel mass driver and mass driver bulkhead
+      are now controlled by one button instead of two'
+  - bugfix: '[Omega] Lawyer''s carpet is no longer airless'
+2022-02-25:
+  TripleShades:
+  - rscadd: '[Omega] Additional Solar Panels to both existing arrays'
+  - rscadd: '[Omega] Floor tile underneath library maint airlock'
+  - rscadd: '[Omega] Contraband locker to Armoury'
+  - bugfix: '[Omega] Solar Array SMES Units actually connect to the grid properly
+      now'
+  timothyteakettle:
+  - rscadd: adds snake coiling
+2022-02-26:
+  Putnam3145:
+  - balance: Now slightly easier to get 50,000 points with toxins (50,000 point baseline
+      changed from 200 light range to 175)
+2022-02-28:
+  Arturlang:
+  - rscadd: The limbgrower can make human chest parts that you can build onto into
+      a person.
+  Putnam3145:
+  - rscadd: Configurable weekly high-chaos days
+  SandPoot:
+  - refactor: Kills off SLOT_ in favor of ITEM_SLOT_
+  SandPoot and Crowbar764:
+  - rscadd: TGUI for the player playtimes menu.
+  bunny232:
+  - rscadd: Cold weather gear can now provide insulation against temperatures of up
+      to 57C (330K)
+  timothyteakettle:
+  - rscadd: adds a cartridge for the bartender's PDA that lets them search drink recipes
+  - rscadd: updates chemist cartridge to be able to search all chemical recipes

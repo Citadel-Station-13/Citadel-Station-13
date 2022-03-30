@@ -1,6 +1,6 @@
 /datum/gear/mask
 	category = LOADOUT_CATEGORY_MASK
-	slot = SLOT_WEAR_MASK
+	slot = ITEM_SLOT_MASK
 
 /datum/gear/mask/balaclava
 	name = "Balaclava"
@@ -30,4 +30,8 @@
 	name = "Paper mask"
 	path = /obj/item/clothing/mask/paper
 	cost = 2
-	
+
+/datum/gear/mask/polychromic_clown
+	name = "polychromic clown wig and mask"
+	path = /obj/item/clothing/mask/gas/clown_hat_polychromic
+	restricted_roles = list("Clown")

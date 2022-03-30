@@ -52,23 +52,30 @@
 
 /obj/machinery/limbgrower/ui_data(mob/user)
 	var/list/data = list()
-
-	for(var/datum/reagent/reagent_id in reagents.reagent_list)
-		var/list/reagent_data = list(
-			reagent_name = reagent_id.name,
-			reagent_amount = reagent_id.volume,
-			reagent_type = reagent_id.type
-		)
-		data["reagents"] += list(reagent_data)
-
+	if(reagents.reagent_list.len)
+		for(var/datum/reagent/reagent_id in reagents.reagent_list)
+			var/list/reagent_data = list(
+				reagent_name = reagent_id.name,
+				reagent_amount = reagent_id.volume,
+				reagent_type = reagent_id.type
+			)
+			data["reagents"] += list(reagent_data)
+	else 
+		data["reagents"] = list()
 	data["total_reagents"] = reagents.total_volume
 	data["max_reagents"] = reagents.maximum_volume
 	data["busy"] = busy
 	var/list/disk_data = list()
 	disk_data["disk"] = dna_disk				//Do i, the machine, have a disk?
-	disk_data["name"] = dna_disk?.fields["name"]	//Name for the human saved if there is one
+	if(dna_disk)
+		if(dna_disk.fields["name"])
+			disk_data["name"] = dna_disk.fields["name"]
+		else if(dna_disk.genetic_makeup_buffer["name"])
+			disk_data["name"] = dna_disk.genetic_makeup_buffer["name"]
+		else
+			disk_data["name"] = "No name"
+	//Name for the human saved if there is one
 	data["disk"] = disk_data
-
 	return data
 
 /obj/machinery/limbgrower/ui_static_data(mob/user)
@@ -118,6 +125,18 @@
 /obj/machinery/limbgrower/attackby(obj/item/user_item, mob/living/user, params)
 	if (busy)
 		to_chat(user, "<span class=\"alert\">\The [src] is busy. Please wait for completion of previous operation.</span>")
+		return
+	if(ispath(user_item.type, /obj/item/reagent_containers/blood) && user.a_intent != INTENT_HARM)
+		var/obj/item/reagent_containers/blood/B = user_item
+		if(!B.reagents.get_reagents())
+			to_chat(user, "<span class=\"alert\">You can't fill [src] with an empty [B.name]!</span>")
+			return
+		if(reagents.total_volume == reagents.maximum_volume)
+			to_chat(user, "<span class=\"alert\">\The [src] can't hold more blood!</span>")
+			return
+		user.visible_message("<span class='notice'>[user] drains the [user_item] into [src] using the blood bag port on [src].</span>",
+			"You drain the [user_item] into [src] using the blood bag port.")
+		B.reagents.trans_to(src, B.amount_per_transfer_from_this)
 		return
 
 	if(default_deconstruction_screwdriver(user, "limbgrower_panelopen", "limbgrower_idleoff", user_item))
@@ -180,7 +199,7 @@
 			for(var/reagent_id in consumed_reagents_list)
 				consumed_reagents_list[reagent_id] *= production_coefficient
 				if(!reagents.has_reagent(reagent_id, consumed_reagents_list[reagent_id]))
-					audible_message("<span class='notice'>\The [src] buzzes.</span>")
+					audible_message("<span class='warning'>\The [src] buzzes and states \"INSUFFICENT REAGENTS\"</span>")
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 					return
 
@@ -206,17 +225,13 @@
  * modified_consumed_reagents_list - the list of reagents we will consume on build, modified by the production coefficient.
  */
 /obj/machinery/limbgrower/proc/build_item(list/modified_consumed_reagents_list)
-	for(var/reagent_id in modified_consumed_reagents_list)
-		if(!reagents.has_reagent(reagent_id, modified_consumed_reagents_list[reagent_id]))
-			audible_message("<span class='notice'>\The [src] buzzes.</span>")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
-			break
-
-		reagents.remove_reagent(reagent_id, modified_consumed_reagents_list[reagent_id])
-
+	reagent_usage(modified_consumed_reagents_list)
 	var/built_typepath = being_built.build_path
 	// If we have a bodypart, we need to initialize the limb on its own. Otherwise we can build it here.
-	if(ispath(built_typepath, /obj/item/bodypart))
+	if(ispath(built_typepath, /mob/living/carbon/human/chestonly))
+		if(!build_mob_chest(built_typepath, FALSE))
+			reagent_usage(modified_consumed_reagents_list, FALSE)
+	else if(ispath(built_typepath, /obj/item/bodypart))
 		build_limb(built_typepath)
 	else if(ispath(built_typepath, /obj/item/organ/genital)) //genitals are uhh... customizable
 		build_genital(built_typepath)
@@ -226,6 +241,25 @@
 	busy = FALSE
 	flick("limbgrower_unfill", src)
 	icon_state = "limbgrower_idleoff"
+
+/obj/machinery/limbgrower/proc/reagent_usage(modified_consumed_reagents_list, remove = TRUE)
+	// Apparently, having a boolean in a loop is worse than doing it twice
+	if(remove)
+		for(var/reagent_id in modified_consumed_reagents_list)
+			if(reagent_sanity_check(reagent_id, modified_consumed_reagents_list[reagent_id]))
+				reagents.remove_reagent(reagent_id, modified_consumed_reagents_list[reagent_id])
+	else
+		for(var/reagent_id in modified_consumed_reagents_list)
+			if(reagent_sanity_check(reagent_id, modified_consumed_reagents_list[reagent_id]))
+				reagents.add_reagent(reagent_id, modified_consumed_reagents_list[reagent_id])
+
+
+/obj/machinery/limbgrower/proc/reagent_sanity_check(reagent_id, amount)
+	if(reagents.has_reagent(reagent_id, amount))
+		return TRUE
+	audible_message("<span class='warning'>\The [src] buzzes, with a screen showing: INSUFFICENT REAGENTS</span>")
+	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+	return FALSE
 
 /*
  * The process of putting together a limb.
@@ -305,6 +339,53 @@
 				new built_typepath(loc)
 	else
 		new built_typepath(loc)
+
+/obj/machinery/limbgrower/proc/build_mob_chest(built_typepath)
+	// Create a mob with a chest, but nothing else
+	if(!ispath(built_typepath, /mob/living/carbon/human/chestonly))
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		visible_message(src, "Buzzes, an error screen appearing on its display.")
+		return FALSE
+	// Fields is from cloning, a much fuller scan, genetic_makeup_buffer is less so
+	var/dna_genetics = dna_disk?.genetic_makeup_buffer
+	var/dna_cloning = dna_disk?.fields
+	var/datum/species/selected = GLOB.species_datums[selected_category]
+	var/mob/living/carbon/human/chestonly/C = new(loc)
+	C.real_name = length(dna_genetics) ? dna_genetics["name"] : "Synthetic Humanoid #[rand(10000, 99999)]"
+	if(length(dna_cloning))
+		C.hardset_dna(dna_cloning["UI"], dna_cloning["SE"], dna_cloning["name"], dna_cloning["blood_type"], dna_cloning["mrace"], dna_cloning["features"])
+	else if(length(dna_genetics))
+		C.hardset_dna(dna_genetics["UI"], null, dna_genetics["name"], dna_genetics["blood_type"])
+	else
+		C.real_name = "Synthetic Humanoid #[rand(10000, 99999)]"
+		C.hair_style = "bald"
+		C.skin_tone = "albino"
+		C.set_species(selected)
+	C.set_resting(TRUE, TRUE)
+	// Don't want to cause it to deathgasp..
+	C.stat = DEAD
+	C.adjustOxyLoss(200)
+	// Limb replacement causes toxloss, which can cause too much suffering for the doctor that I don't want
+	C.adjustCloneLoss(45)
+	C.med_hud_set_status()
+	C.med_hud_set_health()
+	C.underwear = "Nude"
+	C.undershirt = "Nude"
+	C.saved_underwear = ""
+	C.saved_undershirt = ""
+	
+	// Just enough to start reviving them, I hope
+	C.blood_volume = BLOOD_VOLUME_SURVIVE
+	// At some point, make a way to deal with species regenerate_organs
+	// Remove all the organs
+	for(var/organ in C.internal_organs)
+		var/obj/item/organ/O = organ
+		O.Remove(organ)
+	C.update_body(TRUE)
+	C.update_hair()
+	C.update_body_parts()
+	C.update_appearance()
+	return TRUE
 
 /obj/machinery/limbgrower/RefreshParts()
 	reagents.maximum_volume = 0

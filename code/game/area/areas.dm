@@ -50,7 +50,12 @@
 
 	var/has_gravity = FALSE
 
-	var/parallax_movedir = 0
+	/// Parallax moving?
+	var/parallax_moving = FALSE
+	/// Parallax move speed - 0 to disable
+	var/parallax_move_speed = 0
+	/// Parallax move dir - degrees clockwise from north
+	var/parallax_move_angle = 0
 
 	var/list/ambientsounds = GENERIC
 	flags_1 = CAN_BE_DIRTY_1

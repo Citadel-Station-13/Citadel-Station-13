@@ -182,7 +182,7 @@
 
 ////organ defines
 #define STANDARD_ORGAN_THRESHOLD 	100
-#define STANDARD_ORGAN_HEALING 		(1/(15 MINUTES / (2 SECONDS)))
+#define STANDARD_ORGAN_HEALING 		(1/(15 MINUTES / (2 SECONDS))) / 3  //Base organ healing can be amped by a factor of up to x5 via satiety. This assumes it to be somewhat in the upper center of positive satiety as base.
 #define STANDARD_ORGAN_DECAY		(1/(15 MINUTES / (2 SECONDS)))		//designed to fail organs when left to decay for ~15 minutes. 2 SECOND is SSmobs tickrate.
 
 

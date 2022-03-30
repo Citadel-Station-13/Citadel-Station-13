@@ -43,7 +43,7 @@
 		inv_box.icon = ui_style
 		inv_box.icon_state = "suit_storage"
 		inv_box.screen_loc = ui_id
-		inv_box.slot_id = SLOT_GENERC_DEXTROUS_STORAGE
+		inv_box.slot_id = ITEM_SLOT_DEX_STORAGE
 		static_inventory += inv_box
 
 		using = new /atom/movable/screen/guardian/Communicate()

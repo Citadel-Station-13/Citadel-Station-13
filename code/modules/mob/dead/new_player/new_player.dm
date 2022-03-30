@@ -580,8 +580,6 @@
 			Spl.Fade(TRUE)
 			character.playsound_local(get_turf(character), 'sound/voice/ApproachingTG.ogg', 25)
 
-		character.update_parallax_teleport()
-
 	job.standard_assign_skills(character.mind)
 
 	SSticker.minds += character.mind
@@ -764,6 +762,7 @@
 
 		client.prefs.scars_list["[cur_scar_index]"] = valid_scars
 		client.prefs.save_character()
+	
 	client.prefs.copy_to(H, initial_spawn = TRUE)
 	H.dna.update_dna_identity()
 	if(mind)

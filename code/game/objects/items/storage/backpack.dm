@@ -53,7 +53,6 @@
 	desc = "A satchel that opens into a localized pocket of Blue Space."
 	icon_state = "holdingsat"
 	item_state = "holdingsat"
-	species_exception = list(/datum/species/angel)
 
 /obj/item/storage/backpack/holding/duffel
 	name = "duffel bag of holding"
@@ -190,7 +189,6 @@
 	name = "satchel"
 	desc = "A trendy looking satchel."
 	icon_state = "satchel-norm"
-	species_exception = list(/datum/species/angel) //satchels can be equipped since they are on the side, not back
 
 /obj/item/storage/backpack/satchel/leather
 	name = "leather satchel"
@@ -657,3 +655,9 @@
 	desc = "Worn by snails as armor and storage compartment."
 	icon_state = "snailshell"
 	item_state = "snailshell"
+
+/obj/item/storage/backpack/henchmen
+	name = "wings"
+	desc = "Granted to the henchmen who deserve it. This probably doesn't include you."
+	icon_state = "henchmen"
+	item_state = "henchmen"

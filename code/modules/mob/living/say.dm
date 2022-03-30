@@ -297,7 +297,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			AM.Hear(rendered, src, message_language, message, null, spans, message_mode, source)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
 
-	if(!eavesdrop_range && say_test(message) == "2")	// Yell hook
+	if(client && !eavesdrop_range && say_test(message) == "2")	// Yell hook
 		process_yelling(listening, rendered, src, message_language, message, spans, message_mode, source)
 
 	//speech bubble

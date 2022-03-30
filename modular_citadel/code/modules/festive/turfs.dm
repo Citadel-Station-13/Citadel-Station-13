@@ -9,7 +9,9 @@
 	light_color = "#00111a" //The light can technically cycle on a timer worldwide, but no daynight cycle.
 	baseturfs = /turf/open/floor/grass/snow/edina //If we explode or die somehow, we just make more! Ahahaha!!!
 	tiled_dirt = 0 //NO TILESMOOTHING DIRT/DIRT SPAWNS OR SOME SHIT
-	initial_gas_mix = OPENTURF_DEFAULT_ATMOS //DO NOT FREEZE EVERYONE TO DEATH ON CHRISTMAS
+	//initial_gas_mix = OPENTURF_DEFAULT_ATMOS //DO NOT FREEZE EVERYONE TO DEATH ON CHRISTMAS
+	initial_gas_mix = FESTIVE_ATMOS
+	planetary_atmos = 1	//Uses new!!! planetmos wow!!! maybe?
 
 //lets people build
 /turf/open/floor/grass/snow/edina/attackby(obj/item/C, mob/user, params)
@@ -38,6 +40,13 @@
 	icon_state = "unsmooth"
 	smooth = SMOOTH_MORE | SMOOTH_BORDER
 	canSmoothWith = list(/turf/open/floor/festive/cobblestone)
+	initial_gas_mix = FESTIVE_ATMOS
+	planetary_atmos = 1
+
+/turf/open/floor/festive/cobblestone/safe	//this is literally cobblestone but safe for inside use because I don't want to fuck with aesthetics
+	baseturfs = /turf/open/floor/festive/cobblestone/safe
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	planetary_atmos = FALSE
 
 /turf/open/floor/festive/sidewalk
 	name = "sidewalk"
@@ -46,6 +55,8 @@
 	icon_state = "unsmooth"
 	smooth = SMOOTH_MORE | SMOOTH_BORDER
 	canSmoothWith = list(/turf/open/floor/festive/sidewalk)
+	initial_gas_mix = FESTIVE_ATMOS
+	planetary_atmos = 1
 
 /turf/open/floor/festive/alleyway
 	name = "alleyway bricks"
@@ -54,6 +65,13 @@
 	icon_state = "unsmooth"
 	smooth = SMOOTH_MORE | SMOOTH_BORDER
 	canSmoothWith = list(/turf/open/floor/festive/alleyway, /turf/open/floor/festive/white_alleyway)
+	initial_gas_mix = FESTIVE_ATMOS
+	planetary_atmos = 1
+
+/turf/open/floor/festive/alleyway/safe	//this is literally alleyway but safe for inside use because I don't want to fuck with aesthetics
+	baseturfs = /turf/open/floor/festive/alleyway/safe
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	planetary_atmos = FALSE
 
 /turf/open/floor/festive/white_alleyway
 	name = "alleyway bricks"
@@ -62,6 +80,8 @@
 	icon_state = "unsmooth"
 	smooth = SMOOTH_MORE | SMOOTH_BORDER
 	canSmoothWith = list(/turf/open/floor/festive/alleyway, /turf/open/floor/festive/white_alleyway)
+	initial_gas_mix = FESTIVE_ATMOS
+	planetary_atmos = 1
 
 /turf/open/floor/festive/trainplatform
 	name = "trainplatform"
@@ -70,6 +90,13 @@
 	icon_state = "unsmooth"
 	smooth = SMOOTH_MORE | SMOOTH_BORDER
 	canSmoothWith = list(/turf/open/floor/festive/trainplatform)
+	initial_gas_mix = FESTIVE_ATMOS
+	planetary_atmos = 1
+
+/turf/open/floor/festive/trainplatform/safe	//this is literally train platform but safe for inside use because I don't want to remap the strip club
+	baseturfs = /turf/open/floor/festive/trainplatform/safe
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	planetary_atmos = FALSE
 
 /turf/open/floor/festive/stairs/stairsnorth
 	name = "stairs north"

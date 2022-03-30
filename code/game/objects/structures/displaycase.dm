@@ -397,7 +397,7 @@
 		data["owner_name"] = payments_acc.account_holder
 	if(showpiece)
 		data["product_name"] = capitalize(showpiece.name)
-		var/base64 = icon2base64(icon(showpiece.icon, showpiece.icon_state))
+		var/base64 = icon2base64(icon(showpiece.icon, showpiece.icon_state, SOUTH, 1))
 		data["product_icon"] = base64
 	data["registered"] = register
 	data["product_cost"] = sale_price

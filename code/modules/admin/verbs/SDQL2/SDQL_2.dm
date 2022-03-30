@@ -242,7 +242,7 @@
 	var/selectors_used = FALSE
 	var/list/combined_refs = list()
 	do
-		CHECK_TICK
+		stoplag(2)
 		finished = TRUE
 		for(var/i in running)
 			var/datum/SDQL2_query/query = i

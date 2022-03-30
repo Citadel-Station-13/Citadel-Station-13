@@ -145,6 +145,8 @@
 		if(7)
 			new /obj/item/clothing/glasses/sunglasses(src)
 			new /obj/item/clothing/mask/cigarette/rollie(src)
+		else
+			return
 
 /obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S)
 	if(!opened)

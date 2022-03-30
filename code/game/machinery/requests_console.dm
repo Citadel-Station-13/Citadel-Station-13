@@ -374,7 +374,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				radio_freq = FREQ_ENGINEERING
 			if("security")
 				radio_freq = FREQ_SECURITY
-			if("cargobay" || "mining")
+			if("cargobay", "mining")
 				radio_freq = FREQ_SUPPLY
 		Radio.set_frequency(radio_freq)
 

@@ -121,15 +121,15 @@
 		return
 	var/mob/living/carbon/human/H = owner.current
 	// Give uplink
-	var/obj/item/uplink_holder = owner.equip_traitor(uplink_owner = src)
+	var/obj/item/uplink_holder = owner.equip_traitor()
 	var/datum/component/uplink/uplink = uplink_holder.GetComponent(/datum/component/uplink)
 	uplink.telecrystals = INITIAL_CRYSTALS
 	// Give AI hacking board
 	var/obj/item/aiModule/core/full/overthrow/O = new(H)
 	var/list/slots = list (
-		"backpack" = SLOT_IN_BACKPACK,
-		"left pocket" = SLOT_L_STORE,
-		"right pocket" = SLOT_R_STORE
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"left pocket" = ITEM_SLOT_LPOCKET,
+		"right pocket" = ITEM_SLOT_RPOCKET
 	)
 	var/where = H.equip_in_one_of_slots(O, slots, critical = TRUE)
 	if (!where)

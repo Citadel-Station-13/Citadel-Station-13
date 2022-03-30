@@ -548,6 +548,8 @@
 	FermiExplode 		= FALSE
 	PurityMin 			= 0.2
 
+	is_secret = TRUE
+
 /datum/chemical_reaction/fermi/secretcatchem/New()
 	//rand doesn't seem to work with n^-e
 	OptimalTempMin 		+= rand(-100, 100)

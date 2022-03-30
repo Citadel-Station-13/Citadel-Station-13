@@ -6,7 +6,7 @@
 //			1) Tennis balls, lines 39 - 99
 //			2) Chew bones, lines 101 - 138
 //			3) Frisbee, lines 140 - 166
-*/		
+*/
 
 /obj/item/toy/fluff
 	name = "Fluff Item"

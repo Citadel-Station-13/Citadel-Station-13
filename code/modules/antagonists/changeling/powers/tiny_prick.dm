@@ -47,8 +47,8 @@
 		return
 	if(!isturf(user.loc))
 		return
-	if(!AStar(user, target.loc, /turf/proc/Distance, changeling.sting_range, simulated_only = 0))
-		return
+	if(!length(get_path_to(user, target, max_distance = changeling.sting_range, simulated_only = FALSE)))
+		return // no path within the sting's range is found. what a weird place to use the pathfinding system
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/target)

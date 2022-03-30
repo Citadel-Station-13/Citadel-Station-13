@@ -30,6 +30,8 @@
 /mob/living/carbon/human/PhysicalLife(seconds, times_fired)
 	if(!(. = ..()))
 		return
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM) && hud_used)
+		hud_used.coolant_display.update_counter(src)
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
@@ -76,9 +78,23 @@
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
 
-	var/L = getorganslot(ORGAN_SLOT_LUNGS)
+	if(breath && HAS_TRAIT(src, TRAIT_NOBREATH) && HAS_TRAIT(src, TRAIT_AUXILIARY_LUNGS))	//Something something bz and synth cooling systems interacting (in reality, this only exists to not make robot lings too strong)
+		var/total_moles = breath.total_moles()
+		var/pressure = breath.return_pressure()
+		#define PP_MOLES(X) ((X / total_moles) * pressure)
+		#define PP(air, gas) PP_MOLES(air.get_moles(gas))
+		var/bz_pp = PP(breath, GAS_BZ)
+		if(bz_pp > 1)
+			reagents.add_reagent(/datum/reagent/bz_metabolites,5)
+		else if(bz_pp > 0.1)
+			reagents.add_reagent(/datum/reagent/bz_metabolites,1)
+		#undef PP_MOLES
+		#undef PP
 
+	var/L = getorganslot(ORGAN_SLOT_LUNGS)
 	if(!L)
+		if(HAS_TRAIT(src, TRAIT_NOBREATH))
+			return
 		if(health >= crit_threshold)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
 		else if(!HAS_TRAIT(src, TRAIT_NOCRITDAMAGE))
