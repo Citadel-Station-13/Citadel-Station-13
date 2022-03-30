@@ -59,7 +59,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	var/positive_trait_count = pick(20;0, 5;1, 1;2)
 	var/neutral_trait_count = pick(10;0, 10;1, 3;2)
 	var/negative_trait_count = pick(20;0, 5;1, 1;2)
-
+	can_fire = FALSE
 	pick_traits(STATION_TRAIT_POSITIVE, positive_trait_count)
 	pick_traits(STATION_TRAIT_NEUTRAL, neutral_trait_count)
 	pick_traits(STATION_TRAIT_NEGATIVE, negative_trait_count)
@@ -75,6 +75,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 ///Creates a given trait of a specific type, while also removing any blacklisted ones from the future pool.
 /datum/controller/subsystem/processing/station/proc/setup_trait(datum/station_trait/trait_type)
 	var/datum/station_trait/trait_instance = new trait_type()
+	can_fire = can_fire || trait_instance.trait_processes
 	station_traits += trait_instance
 	if(!trait_instance.blacklist)
 		return
