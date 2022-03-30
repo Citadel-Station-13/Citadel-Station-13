@@ -29,9 +29,9 @@
 	#warn hook these into load process and generation
 	// bounds - for when we had to fill void.
 	/// start x
-	var/lowerleft_x
+	var/bottomleft_x
 	/// start y
-	var/lowerleft_y
+	var/bottomleft_y
 	/// end x
 	var/topright_x
 	/// end y
@@ -354,4 +354,26 @@
  * expand the level to fill the entire level, wiping void turfs on the way
  */
 /datum/space_level/proc/RemoveVoid()
-	#warn impl
+	ASSERT(bottomleft_x && bottomleft_y && topright_x && topright_y)
+	var/list/turf/turfs = list()
+	if(bottomleft_x > 1)
+		turfs += block(locate(1, 1, z_value), locate(bottomleft_x - 1, world.maxy, z_value))
+	if(topright_x < world.maxx)
+		turfs += block(locate(topright_x + 1, 1, z_value), locate(world.maxx, world.maxy, z_value))
+	if(bottomleft_y > 1)
+		turfs += block(locate(bottomleft_x, 1, z_value), locate(topright_x, bottomleft_y - 1, z_value))
+	if(topright_y < world.maxy)
+		turfs += block(locate(bottomleft_x, topright_y + 1, z_value), locate(topright_x, world.maxy, z_value))
+	var/area/new_area = world.area
+	if(initial(new_area.area_flags) & UNIQUE_AREA)
+		new_area = GLOB.areas_by_type[world.area]
+		if(!new_area)
+			stack_trace("No area found even though unique?")
+			new_area = new world.area
+	else
+		new_area = new world.area
+	for(var/turf/T in turfs)
+		if(istype(T, VOID_TURF_TYPE))
+			T.ChangeTurf(world.turf)
+		if(istype(T.loc, VOID_AREA_TYPE))
+			new_area.contents.Add(T)

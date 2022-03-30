@@ -4,3 +4,5 @@
 
 /// void turf type
 #define VOID_TURF_TYPE			/turf/closed/void
+/// void area type
+#define VOID_AREA_TYPE			/area/void
