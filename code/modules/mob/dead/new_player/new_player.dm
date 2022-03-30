@@ -269,7 +269,7 @@
 	if(!age_verify())
 		return
 
-	if(href_list["join_menu"])
+	if(href_list["join_panel"])
 		LateChoices()
 
 	if(href_list["show_preferences"])

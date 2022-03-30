@@ -95,13 +95,13 @@ export const JoinMenu = (props, context) => {
                 (thing => (
                   <Collapsible title={thing.name} color="transparent" buttons={
                     <>
-                    {thing.slots} <Icon name="user-friends" />
-                    <Button.Confirm
-                     icon="sign-in-alt"
-                     content="Join"
-                     color="transparent"
-                     onClick={() => act('join', {id: thing.id, type: "ghostrole"})}
-                     />
+                      {thing.slots} <Icon name="user-friends" />
+                      <Button.Confirm
+                        icon="sign-in-alt"
+                        content="Join"
+                        color="transparent"
+                        onClick={() => act('join', { id: thing.id, type: "ghostrole" })}
+                      />
                     </>
                   }>
                     <Section>

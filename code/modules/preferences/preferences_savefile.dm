@@ -957,6 +957,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Validate job prefs
 	var/high
+	LAZYINITLIST(job_preferences)
 	for(var/j in job_preferences)
 		if(job_preferences["[j]"] != JP_LOW && job_preferences["[j]"] != JP_MEDIUM && job_preferences["[j]"] != JP_HIGH)
 			job_preferences -= j
@@ -965,6 +966,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				job_preferences -= j
 			else
 				high = j
+	LAZYINITLIST(alt_titles)
 	for(var/job in alt_titles)
 		var/datum/job/J = SSjob.GetJobName(job)
 		if(!(alt_titles[job] in J.GetTitles()))

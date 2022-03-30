@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Section } from '../components';
 import { Window } from '../layouts';
 
-export const SpawnersMenu = (props, context) => {
+export const GhostRoleMenu = (props, context) => {
   const { act, data } = useBackend(context);
   const spawners = data.spawners || [];
   return (
