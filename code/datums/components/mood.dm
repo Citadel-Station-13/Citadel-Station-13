@@ -34,6 +34,7 @@
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/stop_processing)
 	RegisterSignal(parent, COMSIG_VOID_MASK_ACT, .proc/direct_sanity_drain)
+	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/update_beauty)
 
 
 	if(owner.hud_used)
