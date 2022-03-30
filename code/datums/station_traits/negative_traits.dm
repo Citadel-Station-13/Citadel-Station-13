@@ -57,7 +57,13 @@
 /datum/station_trait/hangover/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned_mob)
 	SIGNAL_HANDLER
 
-	if(prob(65) || HAS_TRAIT(spawned_mob, TRAIT_ROBOTIC_ORGANISM) || HAS_TRAIT(spawned_mob, TRAIT_TOXIC_ALCOHOL))
+	if(prob(65)) // most aren't hungover
+		return
+	if(!iscarbon(spawned_mob)) // don't want silicons or similar to be counted here
+		return
+	if(HAS_TRAIT(spawned_mob, TRAIT_ROBOTIC_ORGANISM)) // robots can't get hungover
+		return
+	if(HAS_TRAIT(spawned_mob, TRAIT_TOXIC_ALCOHOL)) // people with alcohol intolerance also can't
 		return
 	var/obj/item/hat = pick(
 		/obj/item/clothing/head/sombrero,
