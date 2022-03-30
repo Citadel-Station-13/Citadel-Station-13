@@ -57,7 +57,7 @@
 /datum/station_trait/hangover/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned_mob)
 	SIGNAL_HANDLER
 
-	if(prob(65) || HAS_TRAIT(spawned_mob, TRAIT_TOXIC_ALCOHOL))
+	if(prob(65) || HAS_TRAIT(spawned_mob, TRAIT_ROBOTIC_ORGANISM) || HAS_TRAIT(spawned_mob, TRAIT_TOXIC_ALCOHOL))
 		return
 	var/obj/item/hat = pick(
 		/obj/item/clothing/head/sombrero,
