@@ -954,10 +954,22 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	scars_list["5"] = sanitize_text(scars_list["5"])
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
+
 	//Validate job prefs
+	var/high
 	for(var/j in job_preferences)
 		if(job_preferences["[j]"] != JP_LOW && job_preferences["[j]"] != JP_MEDIUM && job_preferences["[j]"] != JP_HIGH)
 			job_preferences -= j
+		if(job_preferences["[j]"] == JP_HIGH)
+			if(high)
+				job_preferences -= j
+			else
+				high = j
+	for(var/job in alt_titles)
+		var/datum/job/J = SSjob.GetJobName(job)
+		if(!(alt_titles[job] in J.GetTitles()))
+			alt_titles -= job
+
 
 	all_quirks = SANITIZE_LIST(all_quirks)
 

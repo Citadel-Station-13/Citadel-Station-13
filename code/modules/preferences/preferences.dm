@@ -159,7 +159,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/joblessrole = BERANDOMJOB  //defaults to 1 for fewer assistants
 
 	/// alt title by job
-	var/list/alt_titles
+	var/list/alt_titles = list()
 	////////////////// OCCUPATIONS END ////////////////
 
 	// 0 = character settings, 1 = game preferences
@@ -1222,7 +1222,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	popup.open(FALSE)
 	onclose(user, "capturekeypress", src)
 
-/datum/preferences/proc/SetChoices(mob/user, jobs_per_column = 15, widthPerColumn = 295, height = 620)
+/datum/preferences/proc/SetChoices(mob/user, jobs_per_column = 25, widthPerColumn = 295, height = 800)
 	if(!SSjob)
 		return
 

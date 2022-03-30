@@ -3,7 +3,7 @@
 	desc = "The clown 'supposedly' entertains the crew and 'supposedly' improves morale."
 	alt_titles = list(
 		/datum/alt_title/clown/fool,
-		/datum/alt_title/clown/
+		/datum/alt_title/clown/jester
 	)
 	faction = JOB_FACTION_STATION
 	total_positions = 1

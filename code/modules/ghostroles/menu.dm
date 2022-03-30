@@ -8,7 +8,7 @@ GLOBAL_DATUM_INIT(ghostrole_menu, /datum/ghostrole_menu, new)
 /datum/ghostrole_menu/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "")
+		ui = new(user, src, "GhostRoleMenu")
 		ui.open()
 
 /datum/ghostrole_menu/ui_static_data(mob/user)
