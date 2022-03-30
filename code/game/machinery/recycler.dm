@@ -123,7 +123,7 @@
 				living_detected = living_detected || AM
 			nom += AM
 		else if(isliving(AM))
-			living_detected = living_detected || TRUE
+			living_detected = living_detected || AM
 			crunchy_nom += AM
 	var/not_eaten = to_eat.len - nom.len - crunchy_nom.len
 	if(living_detected) // First, check if we have any living beings detected.
