@@ -6,12 +6,13 @@
 #define CIT_FILTER_STAMINACRIT filter(type="drop_shadow", x=0, y=0, size=-3, color="#04080F")
 
 //organ defines
-#define VAGINA_LAYER_INDEX		1
-#define TESTICLES_LAYER_INDEX	2
-#define GENITAL_LAYER_INDEX		3
-#define PENIS_LAYER_INDEX		4
+#define BUTT_LAYER_INDEX		1
+#define VAGINA_LAYER_INDEX		2
+#define TESTICLES_LAYER_INDEX	3
+#define GENITAL_LAYER_INDEX		4
+#define PENIS_LAYER_INDEX		5
 
-#define GENITAL_LAYER_INDEX_LENGTH 4 //keep it updated with each new index added, thanks.
+#define GENITAL_LAYER_INDEX_LENGTH 5 //keep it updated with each new index added, thanks.
 
 //genital flags
 #define GENITAL_BLACKLISTED		(1<<0) //for genitals that shouldn't be added to GLOB.genitals_list.
@@ -62,6 +63,9 @@
 #define MILK_RATE_MULT		1
 #define MILK_EFFICIENCY		1
 
+#define BUTT_SIZE_DEF		1
+#define BUTT_SIZE_MAX		5  //butt genitals are special in that they have caps. if there's the event there's even bigger butt sprites, raise this number.
+
 //visibility toggles defines to avoid errors typos code errors.
 #define GEN_VISIBLE_ALWAYS "Always visible"
 #define GEN_VISIBLE_NO_CLOTHES "Hidden by clothes"
@@ -102,6 +106,8 @@
 #define GENITAL_EXAMINE		(1<<13)
 #define VORE_EXAMINE		(1<<14)
 #define TRASH_FORCEFEED		(1<<15)
+#define BUTT_ENLARGEMENT	(1<<16)
+//Note: reminder, if you're a coder adding more bitflags here in the event we add more horny things, the maximum is (1<<23).
 #define TOGGLES_CITADEL 0
 
 //belly sound pref things
