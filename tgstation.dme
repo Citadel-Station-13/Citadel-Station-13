@@ -1819,6 +1819,7 @@
 #include "code\modules\arousal\genitals.dm"
 #include "code\modules\arousal\genitals_sprite_accessories.dm"
 #include "code\modules\arousal\organs\breasts.dm"
+#include "code\modules\arousal\organs\butt.dm"
 #include "code\modules\arousal\organs\penis.dm"
 #include "code\modules\arousal\organs\testicles.dm"
 #include "code\modules\arousal\organs\vagina.dm"

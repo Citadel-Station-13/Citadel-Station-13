@@ -212,3 +212,13 @@
 	reagents_list = list(/datum/reagent/medicine/synthflesh = 25)
 	build_path = /obj/item/organ/genital/breasts
 	category = list("initial","human","lizard","fly","insect","plasmaman","mammal","xeno")
+
+/datum/design/butt
+	name = "Butt"
+	id = "butt"
+	research_icon_state = "butt_pair_5_s"
+	research_icon = 'icons/obj/genitals/butt.dmi'
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/synthflesh = 25)
+	build_path = /obj/item/organ/genital/butt
+	category = list("initial","human","lizard","fly","insect","plasmaman","mammal","xeno")

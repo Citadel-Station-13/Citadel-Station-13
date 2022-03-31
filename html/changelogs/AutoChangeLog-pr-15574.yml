@@ -1,0 +1,14 @@
+author: "TripleShades"
+delete-after: True
+changes: 
+  - rscadd: "Added cameras to some areas in current rotation stations for parity"
+  - rscadd: "Added light switches to many areas in current rotation stations"
+  - rscadd: "Added atmos alarms to a few areas in current rotation stations for parity"
+  - rscadd: "[Box] Gives Morgue Maintenance an APC"
+  - rscdel: "[Omega] Removes Arrivals Lobby APC since it's now part of the hallway"
+  - bugfix: "Fixes a few duplicate c_tags for current rotation ruins and stations"
+  - bugfix: "Fixes some incorrectly placed areas in current rotation stations"
+  - bugfix: "Fixes pipes that led to nowhere in current rotation stations"
+  - bugfix: "[Box] Kitchen Cold Room should now lose power via proper area connection"
+  - bugfix: "[Box] Chief Engineer's Office should no longer be announced as Command erroneously due to mapping error"
+  - bugfix: "[Omega] Law Office APC should no longer control the Restrooms"
