@@ -1,0 +1,148 @@
+2021-05-01:
+  qweq12yt:
+  - bugfix: Restores the sprite for the Riot Suit.
+2021-05-03:
+  TripleShades:
+  - rscadd: Added two air alarms to Pubby Security, one in the evidence locker room
+      and one in the main equipment back room
+  - rscadd: pAI Card back to outside Research in Meta Station
+  - bugfix: Pubby Disposals now shunts to space
+  - bugfix: Maintinence Areas being not applied to certain airlocks as well as stealing
+      minor walls
+  - bugfix: Box Surgery Storage camera is now renamed to be on the network
+  - bugfix: 'Box Paramedic Station camera is now renamed to be on the network, and
+      no longer steals the Morgue''s cam tweak: Box Surgery Storage is now it''s own
+      proper room'
+2021-05-05:
+  The0bserver, with a great amount of advice from TripleZeta/TetraZeta:
+  - rscadd: Adds a new crate type, for use with any manner of cheeky breeki shenanigans,
+      as well as with existing Russian contraband.
+  bunny232:
+  - rscadd: There's some new vents and scrubbers in the meta station xenobiology department.
+      Welders and wrenches not included*
+  keronshb:
+  - balance: Nightmare Shadow Jaunt threshold up to 0.4
+  - balance: Vendor and Engraved message light down to 0.3
+2021-05-08:
+  Arturlang:
+  - bugfix: Synthblood bottles now have the proper color and probably won't poison
+      you anymore
+  timothyteakettle:
+  - rscadd: lets humans have digi legs (and avian legs)
+2021-05-09:
+  Putnam3145:
+  - rscadd: Priority announcement admeme verb
+  SandPoot:
+  - bugfix: Fixed Cyborg examines adding an extra weird line.
+  - code_imp: Everything can be set to have tooltips, and even coded to have neat
+      tooltips.
+  - rscadd: Makes it so humans and borgs already have tooltips.
+  TheObserver-sys:
+  - bugfix: Fixes most of the weird handling bugs and improves cigarette case handling
+      in general.
+  - rscadd: The Gorlex Marauders have seen fit to allow you to purchase the .45-70
+      GOVT rare ammo, at a premium cost. Don't waste it.
+  WanderingFox95:
+  - rscadd: added the unrolling pin, an innovative solution to dough-based mishaps.
+  - imageadd: added visuals for the unrolling pin
+  dzahlus:
+  - soundadd: added new malf AI spawn and doomsday sound
+  - sounddel: removed old malf AI spawn and doomsday sound
+  zeroisthebiggay:
+  - balance: pirates now have a medbay and several other things qualifying as a buff
+  - balance: pirates lost their toilet
+2021-05-11:
+  LetterN:
+  - bugfix: fixes emagging console shuttle purchases
+  - balance: syndie melee simplemobs has no more bullshit shield
+  bunny232:
+  - rscadd: Delta station xenobiology department has received enhanced scrubbing and
+      ventilation capabilities similar to box and meta
+2021-05-12:
+  DeltaFire15:
+  - bugfix: find_safe_turf no longer always fails on safe oxygen levels(??)
+  - bugfix: 'Heretic bladeshatters now actually take the heretic''s z into account
+      as intended, instead of always being station z tweak: Message for failing the
+      bladeshatter despite succeeding the do_after tweak: Improves bladeshatter a
+      bit by making it safer codewise'
+2021-05-13:
+  Linzolle:
+  - spellcheck: anthromorphic -> anthropomorphic
+  WanderingFox95:
+  - rscadd: Pinot Mort (Necropolis Wine), a new, (totally healthy) mixed drink!
+  qweq12yt:
+  - bugfix: Fixed sleeping disky spam (it still sleeps soundly, but every minute instead
+      of every two seconds)
+  - bugfix: Fixed Hulks not breaking cuffs, zipties, restraints.
+  silicons:
+  - code_imp: A deterministic wave explosion system has been added. Use it with wave_explosion().
+  zeroisthebiggay:
+  - rscadd: vegas style bunny ears
+2021-05-14:
+  keronshb:
+  - balance: Removes VOG sleep command since it was an undocumented readd.
+  zeroisthebiggay:
+  - spellcheck: consealed
+2021-05-15:
+  bunny232:
+  - bugfix: Corrects the bot pathing by engineering on meta station
+  timothyteakettle:
+  - balance: borg spraycans have a five second delay before being able to knock someone
+      down again
+2021-05-19:
+  WanderingFox95:
+  - rscadd: The E-Fink, a mending tool for food.
+  - soundadd: A backwards bladeslice. (Yes, for the E-fink)
+  - imageadd: And Icons for the E-fink, of course.
+  shellspeed1:
+  - rscadd: Survival pods can now be designated as requiring power. Survival pods
+      with this feature should include an APC when created and will run out of power
+      rather quickly if no source is added. Perfect for true emergencies.
+  - rscadd: An empty survival pod has been added to the mining vendor. This is an
+      extremely barebones pod featuring only a gps, table, apc, and the standard fridge
+      for some donk pockets.
+  zeroisthebiggay:
+  - rscadd: New Alcohol Amaretto and various cocktails
+  - rscadd: more drink mixture flavortext
+  - soundadd: you're going to Baystation
+2021-05-20:
+  qweq12yt:
+  - bugfix: Fixed void cloak voiding itself into oblivion.
+  - bugfix: You can now order emag shuttles again.
+  timothyteakettle:
+  - rscadd: ports rp's marking system
+2021-05-21:
+  Putnam3145:
+  - bugfix: Fixed activity being attached to minds instead of mobs on antag attach.
+2021-05-23:
+  Putnam3145:
+  - bugfix: Antag and species no longer remove all traits if one has a blacklisted
+      trait
+  WanderingFox95:
+  - imageadd: Replaced the antlers showing up when you select deer ears with actual
+      deer ears. Literally why was that even a thing before?
+  - imageadd: Straight rabbit ears are now a thing.
+  keronshb:
+  - balance: 30 > 25 pop req for contractor kit
+  - code_imp: adds a special hud for simple mobs.
+  - imageadd: a lot of >32x32 mobs now have icons for their health dolls
+2021-05-24:
+  zeroisthebiggay:
+  - rscadd: 'New traitor item: the Mauler Gauntlets! Punch hard, punch good! Eight
+      telecrystals, buy today!'
+  - rscadd: hairs from Airborne Snitch
+2021-05-26:
+  bunny232:
+  - bugfix: Removed two random 'captain's office' tiles from space on meta station
+2021-05-29:
+  Kraseo:
+  - bugfix: No more slamming into people while bloodcrawled.
+  Linzolle:
+  - bugfix: brand intelligence event works again
+  keronshb:
+  - rscadd: swag outfit available in clothesmate
+  - rscadd: 'swag shoes availble in clothesmate resprite: changed swag shoes icon
+      to the one twaticus made.'
+  - rscadd: Adds the clown mob spawner for admins
+  zeroisthebiggay:
+  - balance: puglism damage can no longer stack with scarp

@@ -167,7 +167,7 @@
 	actions_types = list(/datum/action/item_action/stickmen)
 
 /obj/item/clothing/suit/wizrobe/paper/item_action_slot_check(slot, mob/user, datum/action/A)
-	if(A.type == /datum/action/item_action/stickmen && slot != SLOT_WEAR_SUIT)
+	if(A.type == /datum/action/item_action/stickmen && slot != ITEM_SLOT_OCLOTHING)
 		return FALSE
 	return ..()
 

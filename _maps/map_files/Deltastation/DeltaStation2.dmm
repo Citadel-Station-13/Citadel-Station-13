@@ -36417,8 +36417,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "cEA" = (
-/obj/effect/turf_decal/vg_decals/atmos/carbon_dioxide,
-/turf/open/floor/engine/co2,
+/obj/effect/turf_decal/vg_decals/atmos/air,
+/turf/open/floor/engine/air,
 /area/engineering/atmos)
 "cFF" = (
 /turf/open/floor/engine{
@@ -43290,6 +43290,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "cWx" = (
@@ -46156,8 +46157,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/components/binary/valve/digital{
-	dir = 8;
-	icon_state = "dvalve_map-2"
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -50089,6 +50089,9 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab)
 "djz" = (
@@ -50938,6 +50941,9 @@
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
+	},
+/obj/machinery/light_switch{
+	pixel_x = -26
 	},
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab)
@@ -53781,6 +53787,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/blue,
+/obj/item/wallframe/light_fixture/small{
+	pixel_y = -15
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/department/medical)
 "dss" = (
@@ -56699,6 +56708,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/light_switch{
+	pixel_x = -26;
+	pixel_y = -26
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/construction)
 "dyP" = (
@@ -60427,6 +60440,10 @@
 /obj/item/clothing/gloves/color/latex/nitrile,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/breath/medical,
+/obj/item/wallframe/light_fixture/small{
+	dir = 4;
+	pixel_x = 14
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
 "dGA" = (
@@ -75535,7 +75552,6 @@
 	name = "medbay camera";
 	network = list("ss13","medbay")
 	},
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -77552,8 +77568,7 @@
 /area/engineering/main)
 "grf" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	dir = 5;
-	icon_state = "pipe11-2"
+	dir = 5
 	},
 /turf/closed/wall/r_wall,
 /area/science/xenobiology)
@@ -77889,8 +77904,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4;
-	icon_state = "inje_map-2"
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
@@ -78953,7 +78967,6 @@
 /turf/open/floor/plasteel,
 /area/commons/dorms)
 "gUc" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/bodycontainer/crematorium{
 	dir = 4;
 	id = "cremawheat"
@@ -81076,6 +81089,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/atmospherics/miner/toxins,
 /turf/open/floor/engine/plasma,
 /area/engineering/atmos)
 "hEm" = (
@@ -86275,7 +86289,7 @@
 "jjN" = (
 /obj/structure/table/reinforced,
 /obj/machinery/camera{
-	c_tag = "Science - Experimentation Lab";
+	c_tag = "Science - Circuitry Lab";
 	name = "science camera";
 	network = list("ss13","rd")
 	},
@@ -91350,7 +91364,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/camera{
-	c_tag = "Library - Aft";
+	c_tag = "Library - Port";
 	name = "library camera"
 	},
 /turf/open/floor/wood,
@@ -92152,7 +92166,7 @@
 /turf/closed/wall,
 /area/commons/storage/primary)
 "lkg" = (
-/obj/machinery/atmospherics/miner/toxins,
+/obj/effect/turf_decal/vg_decals/atmos/plasma,
 /turf/open/floor/engine/plasma,
 /area/engineering/atmos)
 "lkF" = (
@@ -93712,7 +93726,7 @@
 /turf/open/floor/plasteel,
 /area/engineering/main)
 "lNq" = (
-/obj/machinery/atmospherics/miner/nitrogen,
+/obj/effect/turf_decal/vg_decals/atmos/nitrogen,
 /turf/open/floor/engine/n2,
 /area/engineering/atmos)
 "lNA" = (
@@ -95067,8 +95081,8 @@
 /turf/open/floor/plasteel/dark,
 /area/engineering/atmos)
 "mmq" = (
-/obj/effect/turf_decal/vg_decals/atmos/nitrogen,
-/turf/open/floor/engine/n2,
+/obj/effect/turf_decal/vg_decals/atmos/mix,
+/turf/open/floor/engine/vacuum,
 /area/engineering/atmos)
 "mmC" = (
 /obj/structure/cable/white{
@@ -95541,6 +95555,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/atmospherics/miner/n2o,
 /turf/open/floor/engine/n2o,
 /area/engineering/atmos)
 "mwH" = (
@@ -98637,6 +98652,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/atmospherics/miner/carbon_dioxide,
 /turf/open/floor/engine/co2,
 /area/engineering/atmos)
 "nzv" = (
@@ -100568,7 +100584,7 @@
 /turf/open/floor/plasteel/dark,
 /area/service/library)
 "ohX" = (
-/obj/machinery/atmospherics/miner/carbon_dioxide,
+/obj/effect/turf_decal/vg_decals/atmos/carbon_dioxide,
 /turf/open/floor/engine/co2,
 /area/engineering/atmos)
 "ohZ" = (
@@ -101089,6 +101105,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/engineering/main)
+"orP" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "orZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -102605,7 +102634,7 @@
 /turf/open/floor/plasteel,
 /area/engineering/break_room)
 "oTt" = (
-/obj/machinery/atmospherics/miner/n2o,
+/obj/effect/turf_decal/vg_decals/atmos/nitrous_oxide,
 /turf/open/floor/engine/n2o,
 /area/engineering/atmos)
 "oTJ" = (
@@ -106021,7 +106050,6 @@
 	dir = 1;
 	name = "atmospherics camera"
 	},
-/obj/effect/turf_decal/vg_decals/atmos/mix,
 /turf/open/floor/engine/vacuum,
 /area/engineering/atmos)
 "qbJ" = (
@@ -106069,10 +106097,6 @@
 	dir = 6
 	},
 /turf/open/floor/plating,
-/area/engineering/atmos)
-"qcm" = (
-/obj/effect/turf_decal/vg_decals/atmos/plasma,
-/turf/open/floor/engine/plasma,
 /area/engineering/atmos)
 "qcW" = (
 /obj/machinery/firealarm{
@@ -108270,10 +108294,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmospherics_engine)
-"qYy" = (
-/obj/effect/turf_decal/vg_decals/atmos/oxygen,
-/turf/open/floor/engine/o2,
-/area/engineering/atmos)
 "qYD" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 9
@@ -109954,10 +109974,6 @@
 	dir = 6
 	},
 /area/science/circuit)
-"rCx" = (
-/obj/effect/turf_decal/vg_decals/atmos/nitrous_oxide,
-/turf/open/floor/engine/n2o,
-/area/engineering/atmos)
 "rCK" = (
 /obj/machinery/button/door{
 	id = "teleporterhubshutters";
@@ -113668,6 +113684,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/engineering/break_room)
+"sOn" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/light_switch{
+	pixel_x = -26;
+	pixel_y = 8
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "sOo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -114382,7 +114412,7 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Library - Aft";
+	c_tag = "Library - Beam";
 	name = "library camera"
 	},
 /turf/open/floor/plasteel/grimy,
@@ -116140,10 +116170,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/aisat/exterior)
-"tBF" = (
-/obj/effect/turf_decal/vg_decals/atmos/air,
-/turf/open/floor/engine/air,
-/area/engineering/atmos)
 "tBH" = (
 /obj/machinery/door/airlock/atmos/glass/critical{
 	heat_proof = 1;
@@ -117081,6 +117107,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "Engineering MiniSat Access";
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/engineering/transit_tube)
 "tVn" = (
@@ -117155,7 +117185,7 @@
 /turf/open/floor/plasteel,
 /area/cargo/storage)
 "tWb" = (
-/obj/machinery/atmospherics/miner/oxygen,
+/obj/effect/turf_decal/vg_decals/atmos/oxygen,
 /turf/open/floor/engine/o2,
 /area/engineering/atmos)
 "tWi" = (
@@ -118594,6 +118624,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/atmospherics/miner/oxygen,
 /turf/open/floor/engine/o2,
 /area/engineering/atmos)
 "uuL" = (
@@ -118951,6 +118982,9 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
+	},
+/obj/machinery/light_switch{
+	pixel_y = 24
 	},
 /turf/open/floor/plasteel,
 /area/security/office)
@@ -119418,6 +119452,10 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/light_switch{
+	pixel_x = 26;
+	pixel_y = 26
 	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/command/storage/eva)
@@ -125328,6 +125366,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/atmospherics/miner/nitrogen,
 /turf/open/floor/engine/n2,
 /area/engineering/atmos)
 "wXR" = (
@@ -126529,7 +126568,7 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Science - Lab Access";
+	c_tag = "Science - Circuitry Lab Starboard";
 	dir = 8;
 	name = "science camera";
 	network = list("ss13","rd")
@@ -150110,18 +150149,18 @@ aSQ
 iio
 iMu
 ohX
-cEA
+hFW
 iio
 sEM
 lkg
-qcm
+kRS
 iio
 rUo
 oTt
-rCx
+lbI
 iio
 kcG
-kcG
+mmq
 qbG
 iio
 aad
@@ -157560,16 +157599,16 @@ aaa
 aad
 iio
 wTN
+cEA
 lEq
-tBF
 iio
 wjw
 tWb
-qYy
+sCm
 iio
 eFu
 lNq
-mmq
+skw
 iio
 aMN
 emZ
@@ -169473,7 +169512,7 @@ dGk
 dHF
 dIW
 dCy
-dKY
+orP
 dMx
 dNS
 aaa
@@ -179941,7 +179980,7 @@ byJ
 bAl
 bCe
 bEc
-bmh
+sOn
 bHA
 bJw
 bLn

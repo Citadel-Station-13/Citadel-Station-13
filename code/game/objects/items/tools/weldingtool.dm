@@ -46,6 +46,8 @@
 	create_reagents(max_fuel)
 	reagents.add_reagent(/datum/reagent/fuel, max_fuel)
 	update_icon()
+	if(can_off_process)
+		START_PROCESSING(SSobj, src)
 
 /obj/item/weldingtool/ComponentInitialize()
 	. = ..()
@@ -291,10 +293,10 @@
 	status = !status
 	if(status)
 		to_chat(user, "<span class='notice'>You resecure [src] and close the fuel tank.</span>")
-		DISABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+		reagents.reagents_holder_flags &= ~(OPENCONTAINER)
 	else
 		to_chat(user, "<span class='notice'>[src] can now be attached, modified, and refuelled.</span>")
-		ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+		reagents.reagents_holder_flags |= OPENCONTAINER
 	add_fingerprint(user)
 
 /obj/item/weldingtool/proc/flamethrower_rods(obj/item/I, mob/user)

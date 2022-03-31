@@ -31,7 +31,7 @@
 				C.visible_message("<span class='warning'>[U] sprays glittery rubber on the hands of [C]!</span>")
 		else
 			user.visible_message("<span class='warning'>The rubber fails to stick to [C]'s hands!</span>",
-				"<span class='warning'>The rubber fails to stick to [C]'s [(SLOT_GLOVES in C.check_obscured_slots()) ? "unexposed" : ""] hands!</span>")
+				"<span class='warning'>The rubber fails to stick to [C]'s [(ITEM_SLOT_GLOVES in C.check_obscured_slots()) ? "unexposed" : ""] hands!</span>")
 
 		qdel(src)
 
@@ -226,7 +226,7 @@
 
 /obj/item/clothing/gloves/color/latex/equipped(mob/user, slot)
 	..()
-	if(slot == SLOT_GLOVES)
+	if(slot == ITEM_SLOT_GLOVES)
 		ADD_TRAIT(user, carrytrait, GLOVE_TRAIT)
 
 /obj/item/clothing/gloves/color/latex/dropped(mob/user)

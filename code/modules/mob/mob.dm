@@ -1,25 +1,3 @@
-/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
-	remove_from_mob_list()
-	remove_from_dead_mob_list()
-	remove_from_alive_mob_list()
-	GLOB.all_clockwork_mobs -= src
-	focus = null
-	LAssailant = null
-	movespeed_modification = null
-	for (var/alert in alerts)
-		clear_alert(alert, TRUE)
-	if(observers && observers.len)
-		for(var/M in observers)
-			var/mob/dead/observe = M
-			observe.reset_perspective(null)
-	qdel(hud_used)
-	for(var/cc in client_colours)
-		qdel(cc)
-	client_colours = null
-	ghostize()
-	..()
-	return QDEL_HINT_HARDDEL
-
 /mob/Initialize()
 	add_to_mob_list()
 	if(stat == DEAD)
@@ -38,7 +16,31 @@
 	update_config_movespeed()
 	update_movespeed(TRUE)
 	initialize_actionspeed()
+	init_rendering()
 	hook_vr("mob_new",list(src))
+
+/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
+	remove_from_mob_list()
+	remove_from_dead_mob_list()
+	remove_from_alive_mob_list()
+	GLOB.all_clockwork_mobs -= src
+	focus = null
+	LAssailant = null
+	movespeed_modification = null
+	for (var/alert in alerts)
+		clear_alert(alert, TRUE)
+	if(observers && observers.len)
+		for(var/M in observers)
+			var/mob/dead/observe = M
+			observe.reset_perspective(null)
+	dispose_rendering()
+	qdel(hud_used)
+	for(var/cc in client_colours)
+		qdel(cc)
+	client_colours = null
+	ghostize()
+	..()
+	return QDEL_HINT_HARDDEL
 
 /mob/GenerateTag()
 	tag = "mob_[next_mob_id++]"
@@ -289,9 +291,6 @@
 	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE, A)
 	return TRUE
 
-/mob/proc/show_inv(mob/user)
-	return
-
 //view() but with a signal, to allow blacklisting some of the otherwise visible atoms.
 /mob/proc/fov_view(dist = world.view)
 	. = view(dist, src)
@@ -440,7 +439,11 @@
 	set category = "IC"
 	set desc = "View your character's notes memory."
 	if(mind)
-		mind.show_memory(src)
+//ambition start
+		var/datum/browser/popup = new(src, "memory", "Memory and Notes")
+		popup.set_content(mind.show_memory())
+		popup.open()
+//ambition end
 	else
 		to_chat(src, "You don't have a mind datum for some reason, so you can't look at your notes, if you had any.")
 
@@ -508,10 +511,6 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 		unset_machine()
 		src << browse(null, t1)
 
-	if(href_list["refresh"])
-		if(machine && in_range(src, usr))
-			show_inv(machine)
-
 	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
@@ -527,12 +526,6 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 					usr.stripPanelUnequip(what,src,slot)
 			else
 				usr.stripPanelEquip(what,src,slot)
-
-	if(usr.machine == src)
-		if(Adjacent(usr))
-			show_inv(usr)
-		else
-			usr << browse(null,"window=mob[REF(src)]")
 
 // The src mob is trying to strip an item from someone
 // Defined in living.dm
@@ -554,12 +547,6 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 		return
 	if(isAI(M))
 		return
-
-/mob/MouseDrop_T(atom/dropping, atom/user)
-	. = ..()
-	if(ismob(dropping) && dropping != user)
-		var/mob/M = dropping
-		M.show_inv(user)
 
 /mob/proc/is_muzzled()
 	return FALSE

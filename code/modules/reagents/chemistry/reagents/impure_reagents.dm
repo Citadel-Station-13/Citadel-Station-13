@@ -3,7 +3,7 @@
 //Invert = Whole conversion
 
 /datum/reagent/impure
-	chemical_flags = REAGENT_INVISIBLE | REAGENT_SNEAKYNAME //by default, it will stay hidden on splitting, but take the name of the source on inverting
+	chemical_flags = REAGENT_INVISIBLE | REAGENT_SNEAKYNAME | REAGENT_ORGANIC_PROCESS //by default, it will stay hidden on splitting, but take the name of the source on inverting
 
 
 /datum/reagent/impure/fermiTox

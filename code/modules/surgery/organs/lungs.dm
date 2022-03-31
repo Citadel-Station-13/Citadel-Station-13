@@ -90,6 +90,11 @@
 		max = safe_breath_dam_max,
 		damage_type = safe_damage_type
 	)
+	if(ispath(breathing_class))
+		var/datum/breathing_class/class = GLOB.gas_data.breathing_classes[breathing_class]
+		for(var/g in class.gases)
+			if(class.gases[g] > 0)
+				gas_min -= g
 
 //TODO: lung health affects lung function
 /obj/item/organ/lungs/onDamage(damage_mod) //damage might be too low atm.
@@ -196,9 +201,9 @@
 			mole_adjustments[entry] = -required_moles
 			mole_adjustments[breath_results[entry]] = required_moles
 		if(required_pp < safe_min)
-			var/multiplier = 0
+			var/multiplier = handle_too_little_breath(H, required_pp, safe_min, required_moles)
 			if(required_moles > 0)
-				multiplier = handle_too_little_breath(H, required_pp, safe_min, required_moles) / required_moles
+				multiplier /= required_moles
 			for(var/adjustment in mole_adjustments)
 				mole_adjustments[adjustment] *= multiplier
 			if(alert_category)
@@ -218,12 +223,10 @@
 		var/alert_type = null
 		if(ispath(breathing_class))
 			breathing_class = breathing_classes[breathing_class]
-			var/list/gases = breathing_class.gases
 			alert_category = breathing_class.high_alert_category
 			alert_type = breathing_class.high_alert_datum
 			danger_reagent = breathing_class.danger_reagent
-			for(var/gas in gases)
-				found_pp += PP(breath, gas)
+			found_pp = breathing_class.get_effective_pp(breath)
 		else
 			danger_reagent = danger_reagents[entry]
 			if(entry in breath_alert_info)
@@ -245,7 +248,7 @@
 	for(var/gas in breath.get_gases())
 		if(gas in breath_reagents)
 			var/datum/reagent/R = breath_reagents[gas]
-			H.reagents.add_reagent(R, PP(breath,gas))
+			H.reagents.add_reagent(R, breath.get_moles(gas) * initial(R.molarity))
 			mole_adjustments[gas] = (gas in mole_adjustments) ? mole_adjustments[gas] - breath.get_moles(gas) : -breath.get_moles(gas)
 
 	for(var/gas in mole_adjustments)
@@ -412,7 +415,7 @@
 	if(!.)
 		return
 	if(!failed && organ_flags & ORGAN_FAILING)
-		if(owner && owner.stat == CONSCIOUS)
+		if(owner && owner.stat == CONSCIOUS && !HAS_TRAIT(owner, TRAIT_NOBREATH))
 			owner.visible_message("<span class='danger'>[owner] grabs [owner.p_their()] throat, struggling for breath!</span>", \
 								"<span class='userdanger'>You suddenly feel like you can't breathe!</span>")
 		failed = TRUE
@@ -422,6 +425,10 @@
 /obj/item/organ/lungs/ipc
 	name = "ipc cooling system"
 	icon_state = "lungs-c"
+	var/is_cooling = 0
+	var/cooling_coolant_drain = 5	//Coolant (blood) use per tick of active cooling.
+	var/next_warn = BLOOD_VOLUME_NORMAL
+	actions_types = list(/datum/action/item_action/organ_action/toggle)
 
 /obj/item/organ/lungs/ipc/emp_act(severity) //Should probably put it somewhere else later
 	. = ..()
@@ -429,11 +436,65 @@
 		return
 	to_chat(owner, "<span class='warning'>Alert: Critical cooling system failure!</span>")
 	switch(severity)
-		if(1)
-			owner.adjust_bodytemperature(100*TEMPERATURE_DAMAGE_COEFFICIENT)
-		if(2)
+		if(1 to 50)
 			owner.adjust_bodytemperature(30*TEMPERATURE_DAMAGE_COEFFICIENT)
+		if(50 to INFINITY)
+			owner.adjust_bodytemperature(100*TEMPERATURE_DAMAGE_COEFFICIENT)
+	
+/obj/item/organ/lungs/ipc/ui_action_click(mob/user, actiontype)
+	if(!owner)
+		return
+	if(!HAS_TRAIT(user, TRAIT_ROBOTIC_ORGANISM))
+		to_chat(user, "<span class='notice'>Biotype incompatible with cooling system. Activation signal suppressed.</span>")
+		return
+	if(!is_cooling && owner.blood_volume < cooling_coolant_drain)
+		to_chat(user, "<span class='warning'>Coolant levels insufficient to enable active cooling - Replenish immediately.</span>")
+		return
 
+	is_cooling = !is_cooling
+	to_chat(user, "<span class='notice'>Active cooling [is_cooling ? "enabled" : "disabled"] - current coolant level: [round(owner.blood_volume / BLOOD_VOLUME_NORMAL * 100, 0.1)] percent.</span>")
+	var/possible_next_warn = owner.blood_volume - (BLOOD_VOLUME_NORMAL * 0.1)
+	if(possible_next_warn > next_warn)
+		next_warn = possible_next_warn	//If we recovered blood inbetween activations, update warning
+
+/obj/item/organ/lungs/ipc/on_life(seconds, times_fired)
+	. = ..()
+	if(!.)
+		if(is_cooling)
+			to_chat(owner, "<span class='warning'>Cooling system safeguards triggered - active cooling aborted.</span>")
+			is_cooling = 0
+		return
+	if(!is_cooling)
+		return
+	if(!HAS_TRAIT(owner, TRAIT_ROBOTIC_ORGANISM))
+		to_chat(owner, "<span class='warning'>Biotype incompatible with cooling system. Commencing emergency shutdown.</span>")
+		is_cooling = 0
+		return
+	if(owner.stat >= SOFT_CRIT)
+		to_chat(owner, "<span class='warning'>Operating system ping returned null response - Shutting down active cooling to avoid component damage.</span>")
+		is_cooling = 0
+		return
+	if(owner.blood_volume < cooling_coolant_drain)
+		to_chat(owner, "<span class='warning'>Coolant levels insufficient to maintain active cooling - Replenish immediately.</span>")
+		is_cooling = 0
+		return
+	if(abs(owner.bodytemperature - T20C) < SYNTH_ACTIVE_COOLING_TEMP_BOUNDARY)
+		return	//Does not drain coolant (blood) nor do anything if we are close enough to room temp.
+	var/cooling_efficiency =  owner.get_cooling_efficiency()
+	var/actual_drain = cooling_coolant_drain * max(1 - cooling_efficiency, 0.2)	//Being in a suitable environment reduces drain by up to 80%
+	var/temp_diff = owner.bodytemperature - T20C
+	if(temp_diff > 0)
+		owner.adjust_bodytemperature(clamp(((T0C - owner.bodytemperature) * max(cooling_efficiency, 0.5) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX, -SYNTH_ACTIVE_COOLING_MIN_ADJUSTMENT))
+	else
+		owner.adjust_bodytemperature(clamp(((T20C - owner.bodytemperature) * max(cooling_efficiency, 0.5) / BODYTEMP_HEAT_DIVISOR), SYNTH_ACTIVE_COOLING_MIN_ADJUSTMENT, BODYTEMP_HEATING_MAX))
+	var/datum/gas_mixture/air = owner.loc.return_air()
+	if(!air || air.return_pressure() < ONE_ATMOSPHERE * SYNTH_ACTIVE_COOLING_LOW_PRESSURE_THRESHOLD)
+		actual_drain *= SYNTH_ACTIVE_COOLING_LOW_PRESSURE_PENALTY	//Our cooling system can handle hot places okayish, but starts to cry at low pressures (reads: Effectively vents hot coolant thats been warmed up via internal heat-exchange as emergency measure and with very low efficiency)
+	owner.blood_volume = max(owner.blood_volume - actual_drain, 0)
+	if(owner.blood_volume <= next_warn)
+		to_chat(owner, "[owner.blood_volume > BLOOD_VOLUME_BAD ? "<span class='notice'>" : "<span class='warning'>"]Coolant level passed threshold - now [round(owner.blood_volume / BLOOD_VOLUME_NORMAL * 100, 0.1)] percent.</span>")
+		next_warn -= (BLOOD_VOLUME_NORMAL * 0.1)
+			
 /obj/item/organ/lungs/plasmaman
 	name = "plasma filter"
 	desc = "A spongy rib-shaped mass for filtering plasma from the air."
@@ -517,17 +578,20 @@
 	var/total_moles = breath.total_moles()
 	for(var/id in breath.get_gases())
 		var/this_pressure = PP(breath, id)
-		var/req_pressure = (this_pressure * SAFE_THRESHOLD_RATIO) - 1
-		if(req_pressure > 0)
-			gas_min[id] = req_pressure
+		if(id in gas_min)
+			var/req_pressure = (this_pressure * SAFE_THRESHOLD_RATIO) - 1
+			if(req_pressure > 0)
+				gas_min[id] = req_pressure
+			else
+				gas_min -= id // if there's not even enough of the gas to register, we shouldn't need it
 		if(id in gas_max)
 			gas_max[id] += this_pressure
-	var/bz = breath.get_moles(GAS_BZ)
+	var/bz = breath.get_moles(GAS_BZ) // snowflaked cause it's got special behavior, of course
 	if(bz)
 		BZ_trip_balls_min += bz
 		BZ_brain_damage_min += bz
 
-	gas_max[GAS_N2] = PP(breath, GAS_N2) + 5
+	gas_max[GAS_N2] = max(15, PP(breath, GAS_N2) + 3) // don't want ash lizards breathing on station; sometimes they might be able to, though
 	var/datum/breathing_class/class = GLOB.gas_data.breathing_classes[breathing_class]
 	var/o2_pp = class.get_effective_pp(breath)
 	safe_breath_min = min(3, 0.3 * o2_pp)

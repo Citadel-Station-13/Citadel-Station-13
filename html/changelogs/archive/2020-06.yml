@@ -1,0 +1,353 @@
+2020-06-08:
+  DeltaFire15:
+  - bugfix: Delinging now properly removes their special role
+  - balance: Keycard auth devices now require two seperate IDs with sufficient access
+      to auth.
+  Linzolle:
+  - bugfix: shotguns no longer delete chambered shells while firing
+  kevinz000:
+  - rscadd: test
+  - rscdel: test
+  shellspeed1:
+  - rscadd: Internal tanks are now printable at the engineering lathe.
+  timothyteakettle:
+  - bugfix: newly created areas using blueprints now maintain the previous areas noteleport
+      value
+  - bugfix: kudzu seeds now actually spawn vines
+2020-06-09:
+  Anonymous:
+  - rscadd: Added Orville-inspired clothing as a worthy alternative to Trek stuff.
+  - tweak: Adds chaplain role allowance to the TMP Service Uniform loadout.
+  - tweak: Adds paramedic in every medsci mentioned uniform loadout.
+  DeltaFire15:
+  - bugfix: Offstation AIs can once again only interact with their z-level
+  Ghommie:
+  - bugfix: Fixing IC material containers interaction with stacks, for real.
+  Trilbyspaceclone:
+  - tweak: Gasses like BZ and Masiam seem to just sell for less in cargo, markets
+      seem to change it seems
+  kevinz000:
+  - balance: plantpeople should stop dying in the halls now
+  - rscadd: Modifier-independent hotkey bindings have been added.
+2020-06-10:
+  DeltaFire15:
+  - bugfix: Golems / simillar now inherit the neutered antag datum if the creator
+      is neutered.
+  Ghommie:
+  - bugfix: Fixing missing pill type buttons from the chem master UI.
+  Naksu:
+  - code_imp: Lighting corner updates are ever so slightly faster.
+  Putnam for helping me code the contamination clearing on people:
+  - rscadd: Lab made Zeolites have been remade anew and more affective now that they
+      refined the best possable way to mix and make a supper Zeolite capable of clearing
+      contamination form not only people but items!
+  Trilbyspaceclone:
+  - tweak: Tank Dispender has been moved into toxin storage from toxins
+  kevinz000:
+  - rscadd: traitor classes can now be poplocked. hijack/glorious death are now locked
+      to 25/20 respectively.
+  timothyteakettle:
+  - rscadd: adds a new fermichem, used for creating sentient plushies!
+  - rscadd: Mice can now breed using cheese wedges
+  - rscadd: Royal cheese can be crafted to convert a mouse into king rat
+2020-06-11:
+  Ghommie:
+  - balance: Balanced vending machine prices to be generally more affordable, a minority
+      has been priced up though.
+2020-06-12:
+  EmeraldSundisk:
+  - tweak: The Detective's Office has been commandeered in order to serve a Head of
+      Security. Detectives will find their new office within starboard maintenance.
+  - rscadd: Adds the Head of Security's standard equipment to their new office.
+  - tweak: Slight adjustment/expansion to the main security department
+  - rscadd: Additional maintenance work
+  timothyteakettle:
+  - rscadd: Crabs, cockroaches, slimes and crabs are now small enough to fit in pet
+      carriers
+2020-06-14:
+  Bhijn:
+  - bugfix: raw HTML can no longer be used in flavortext
+  - rscadd: Added Lesbian Visibility Day (April 26th)
+  - rscadd: Added Bisexual Visibility Day (September 23rd)
+  - rscadd: Added Coming Out Day! (October 11th)
+  - rscadd: Added Intersex Awareness Day (October 26th)
+  - rscadd: Added Transgender Awareness Week (November 13th - 19th)
+  - rscadd: Added the Transgender Day of Remembrance (November 20th)
+  - rscadd: Added Asexual Awareness Week (Last full week of October, this year it'll
+      be Oct. 25-31)
+  - rscadd: Added the Stonewall Riot Anniversary (June 28)
+  - bugfix: Moth week is now *actually* the last full week of July, instead of the
+      4th of every weekday + the 5th Sunday.
+  Floof Ball / Kathrin Morrison / Floof Ball#0798:
+  - rscadd: Improvised Pistol + 32 ACP ammo.
+  - rscadd: Improvised Energy Gun. Fires 5 shots of 10 burn damage each. Can be upgraded
+      with a lens made from glassworking and T4 parts for a minor buff.
+  - rscadd: Ammo + gun part loot spawners for mappers.
+  - rscadd: New sprites for Improvised Rifle, the ability to sling the rifle and a
+      sprite for that.
+  - rscadd: New sprites for the Improvised Shotgun and its sling sprite.
+  - balance: Improvised shotguns are now two-handed only.
+  - balance: Improvised shotguns now only have a much less harsh 0.9* modifier, keeping
+      them two hits to crit with slugs and buckshot. It can no longer be dual-wielded
+      but can still be sawn off for w_class medium (can fit in backpacks).
+  - bugfix: Missing handsaw icons added in.
+  - tweak: Crafting table cleaned up into sections.
+  Ghommie:
+  - tweak: changed the weak attack message prefix from "inefficiently" to "limply",
+      "feebly" and "saplessly" and lowered the threshold.
+  - bugfix: Fixing old beserker hardsuits having the wrong helmet type.
+  The0bserver and Stewydeadmike:
+  - rscadd: Hey, there's a bit of dust in this recipe book! Recipes using peas? How
+      many recipes does this book even have?
+  - rscadd: Adds 6 new food items, and 1 new consumable reagent using all forms of
+      the recently discovered peas. Ask your local botanist and chef for them today!
+  YakumoChen:
+  - tweak: Adds polychrome options to loadout
+  - tweak: Adds risque polychrome options to Kinkmate vendors
+  kevinz000:
+  - bugfix: emissive blockers can no longer be radioactive.
+  - rscadd: Ghosts can now scan air inside most objects that contain air by clicking
+      on them.
+  - rscadd: Directional blocking has been added, keybound to G. This will reduce a
+      portion of incoming damage if done with eligible items at the cost of stamina
+      damage incurred to the user based on damage blocked as well as while active,
+      as well as in most cases preventing the user from doing any attacks while this
+      is active.
+  - rscadd: Parrying has been added, keybound to F. Timing-based counterattacks, effect
+      heavily dependent on the item, WIP.
+  - balance: Disks are now smaller.
+2020-06-15:
+  Anturk, kevinz000:
+  - bugfix: VV now properly allows access to datums in associative lists
+  - rscadd: SDQL2 printout has been upgraded for the 5th time.
+  kevinz000:
+  - bugfix: plushies now work. credits to timothytea.
+  - rscadd: You can now tape knives to cleanbots
+  kevinz000 (port from VOREStation):
+  - imageadd: Ported zoomba skins for cyborgs.
+2020-06-16:
+  Ghommie:
+  - bugfix: You can't blink nor use LOOC/AOOC as a petrified statue anymore.
+  Trilbyspaceclone:
+  - tweak: BEPIS decal painter has been moved to venders, replacing it being the flashdark
+  kevinz000:
+  - refactor: projectile ricochets now use a less hilariously terrible way of being
+      handled and should be easier to w
+  - bugfix: projectile runtime/ricocheting
+  - balance: Lobotomy no longer has a 50% chance of giving you a nigh-unremovable
+      trauma, but does 50 brain damage even on success. On failure, it will give you
+      a lobotomy-class trauma.
+  - balance: spinesnapping from tackling now only gives a lobotomy class trauma instead
+      of magic.
+  timothyteakettle:
+  - bugfix: Food carts now function as intended, allowing the pouring and mixing of
+      drinks.
+  - rscadd: slimes can now change their color using alter form
+2020-06-17:
+  SmArtKar:
+  - rscadd: New ID icons
+  - rscadd: Sutures and Meshes
+  Trilbyspaceclone:
+  - bugfix: Gin export takes gin now
+2020-06-18:
+  Detective-Google:
+  - tweak: cog is now less the suck
+  - bugfix: couple little derpy bits
+  - balance: malf disk and illegal tech disk moved from ashwalker base (guaranteed)
+      to tendrils (chance based)
+  SmArtKar:
+  - rscadd: Ported shuttles from beestation
+  timothyteakettle:
+  - rscadd: embeds got reworked, sticky tape was added, more bullets that ricochet
+      also added
+  - rscadd: medbots can now be tipped over
+  - soundadd: added more medbot sounds
+2020-06-19:
+  Bhijn:
+  - bugfix: Atmos can no longer become completely bricked
+  Funce:
+  - bugfix: Square root circuit should now actually work.
+  SmArtKar:
+  - bugfix: Fixed my runtimes
+  TheSpaghetti:
+  - rscadd: more insectoid insects
+  kevinz000:
+  - rscadd: bay/polaris style say_emphasis has been added. You can now |italicize|
+      _underline_ and +bold+ your messages.
+  timothyteakettle:
+  - rscadd: Adds the brain trauma event, where one player gets a random brain trauma!
+  - rscadd: Adds the wisdom cow event, where the wisdom cow appears on the station!
+  - rscadd: Adds the fake virus event, where people get fake virus symptoms.
+  - rscadd: Adds the stray cargo pod event, where a cargo pod crashes into the station.
+  - rscadd: Adds the fugitives event, where fugitives are loose on the station, and
+      it's the hunters jobs to capture them.
+2020-06-20:
+  LetterN:
+  - rscadd: Asset cache from tg
+  - tweak: Made the map viewer not look bad
+  - bugfix: Admin matrix right-bracket
+  bunny232:
+  - rscdel: Removed unsavory things from the vent clog event
+2020-06-21:
+  kevinz000:
+  - balance: calculations for punch hit chance has been drastically buffed in favor
+      of the attacker.
+2020-06-22:
+  Ghommie (porting PRs by zxaber, Ryll-Ryll, AnturK):
+  - tweak: Certain small items purchased through cargo now get grouped into a single
+      box. They also are immune to the 10% private account fee.
+  - rscadd: Added single-order options for several existing products in the Cargo
+      Catalog.
+  - tweak: Medkit listings are now single-pack items, and considered small items that
+      get grouped into single boxes. Price for medkits is as close to unchanged as
+      is reasonable.
+  - rscadd: You can now beat on vending machines to try and knock loose free stuff!
+      You can also almost kill yourself doing it, so it's your call if your life is
+      worth ten bucks.
+  - rscadd: Cigarette packets now have coupons on the back for small cargo items!
+      Smoking DOES pay!
+  - tweak: Some single/small items in cargo have been rebranded as goodies, come in
+      lockboxes rather than crates, and can only be purchased with private accounts.
+  kevinz000:
+  - refactor: Life() is split into BiologicalLife() and PhysicalLife. A component
+      signal has been added that can prevent either from ticking.
+  shellspeed1:
+  - rscadd: Adds IV bags.
+2020-06-24:
+  DeltaFire15:
+  - balance: Choosing a random item in your uplink will no longer sometimes reroll
+      your contract.
+  - rscdel: Syndicate crate event cannot fire as a random event anymore.
+  Detective-Google:
+  - bugfix: singulos no longer succ infinite rods out of the ice
+  - bugfix: one of the directions for the diag hudpatch was blu instead of orang
+  timothyteakettle:
+  - bugfix: bonfires/grills no longer produce infinite quantities of food
+  - bugfix: slime's alter form ability now updates their hair colour when changing
+      their body colour
+2020-06-25:
+  Anonymous:
+  - rscadd: Added kepi and orvilike kepi. Available through loadout.
+  Detective Google:
+  - rscadd: Medigygax
+  Detective-Google:
+  - bugfix: malf AIs can no longer yeet the station while shunted
+  - bugfix: SMESes can now properly use self charging cells
+  - rscadd: ghosts now show up when the round ends
+  - balance: away missions
+  Funce:
+  - bugfix: Mentor SQL queries are now deleted properly.
+  Linzolle:
+  - bugfix: analyze function on chem master is no longer broken
+  - bugfix: organs now decay inside dead bodies again
+  dapnee:
+  - rscadd: wataur bottle item
+  - imageadd: wataur bottle and overlay
+2020-06-26:
+  Ghommie:
+  - bugfix: Snore spam.
+  - bugfix: Hostile mobs shouldn't hit their original spawner structures or thoses
+      of the same faction.
+  silicons:
+  - bugfix: soap cleans blood again
+2020-06-27:
+  Detective-Google:
+  - tweak: Lying down is better
+  timothyteakettle:
+  - rscadd: felinids now nya when tabled
+2020-06-28:
+  Detective-Google:
+  - bugfix: cog is less the suck
+  - tweak: piggybacking is no longer absolutely inferior
+  Ghommie:
+  - bugfix: Fixing windows interaction with spraycans.
+  - bugfix: Fixing kinetic accelerator guns not working well with gun circuitries.
+  - bugfix: Fixing Zoomba borgs lights overlays.
+  - bugfix: Fixing the "absorb another ling" and "absorb the most dna" objectives
+      rolling when no other changeling is around.
+  - spellcheck: Clarified a pet peeve about the spread infestation ability.
+  - bugfix: BEPIS nodes won't show up anymore in the expert mode ui of the r&d console
+      anymore (good thing they weren't researchable).
+  - bugfix: Hopefully fixing sound loop edge cases.
+  - bugfix: Fixing pAI radios being permanently disabled by EMPs at times.
+  - rscadd: Windoors can now be obscured with spraycans just like windows.
+  Ghommie porting PRs by Qustinnus/Floyd, Willow, cacogen, nemvar, Ghilker and EOBGames (Inept):
+  - bugfix: Fixes a material duplication bug.
+  - code_imp: unique combinations of custom_materials lists are now shared between
+      objects
+  - rscadd: meat material. yes.
+  - rscadd: materials can now be used to build walls/floors. meat house
+  - bugfix: edible component now does not try to attack if you eat something with
+      it
+  - rscadd: Texture support for mat datums with thanks to 4DPlanner!
+  - bugfix: you no longer hit yourself with organs when eating
+  - rscadd: A whole bunch of materials are now datumised! Check out bronze, runed
+      metal, sand, sandstone, snow, paper, cardboard, bone and bamboo. Oh, and pizza.
+      Yes, pizza.
+  - balance: Buffs material floor tiles' throwforces from 1 to 10 (same as iron) to
+      better showcase the effect of different materials (e.g. meat vs. titanium)
+  - bugfix: Radioactive items no longer output a single . when examined at a distance
+  MrJWhit:
+  - rscdel: Removed air alarm in Snow Snaxi in Tcomms Sat
+  - rscdel: Removed trash bins in genetics and mining
+  - tweak: Gives cargo techs a cargolathe
+  Putnam3145:
+  - bugfix: lost my mind just a couple of times
+  b1tt3r1n0:
+  - rscadd: pouches, again, and and material pouches.
+  timothyteakettle:
+  - rscadd: support for custom blood colours implemented, slimes blood colour now
+      equivalent to their body colour
+2020-06-29:
+  b1tt3r1n0:
+  - balance: Made teratomas from sdgf less powergame
+  timothyteakettle:
+  - bugfix: slimes no longer have white blood by default
+2020-06-30:
+  Fikou:
+  - rscadd: spray cans, airlock painters, and decal painters added to engineering/service/autolathe
+      (where applicable)
+  Ghommie:
+  - bugfix: Fixed a gap on the male insect anthro torso sprite when facing south.
+  - bugfix: Fixed mecha ID access not being removable.
+  - bugfix: Fixed a peeve with the hypno trance status effect not sanitizing some
+      heard hypnosis inputs (i.e. custom say messages like say"honks*clownem ipsum
+      dolor")
+  - bugfix: fixed an issue about using stacks with only 1 amount left.
+  - bugfix: Fixed a peeve on attack messages against carbons/humans.
+  - bugfix: Fixed missing hypnochair board.
+  - bugfix: Fixed material walls and tiles. My bad on that port.
+  Ghommie (inspired by MrDoomBringer's work on tgstation):
+  - rscadd: New check skills UI.
+  Ghommie (porting PRs by XTDM, coiax, MrDoomBringer):
+  - tweak: Random Events now have a follow link for ghosts!
+  - rscadd: Adds the Spontaneous Brain Trauma to the event pool. Sometimes your brain
+      just goes a little wrong.
+  - rscadd: Sometimes a low level cloning pod will make errors in replicating your
+      brain, leaving you with a mild brain trauma.
+  - rscadd: When a person is cloned, any mental traumas are cloned as well.
+  - rscadd: The wizard federation announces that the Curse of Madness is out of beta
+      and is now available for purchase for 4 points. It causes long-lasting brain
+      traumas to all inhabitants of a target space station.
+  - rscadd: The wizard federation declines responsibility for any self-harm caused
+      by curses cast while inside the targeted station.
+  - rscadd: Due to the extensive testing of the Curse of Madness some unique new trauma
+      types have appeared across Nanotrasen-controlled space.
+  - rscadd: Curse of Madness can now be triggered by a wizard's Summon Events, at
+      the same chance as Summon Guns or Summon Magic.
+  - admin: When an admin triggers Curse of Madness manually, they can specify their
+      own dark truth to horrify the station with.
+  nightred:
+  - code_imp: Created two_handed component
+  - refactor: Updated all existing two handed items to use the new component
+  silicons:
+  - bugfix: typing indicators no longer generates duplicate message boxes.
+  - rscadd: config errors now have line numbers.
+  - tweak: outgoing mentorpms are now blue instead of green for the sender.
+  - soundadd: '*squish'
+  timothyteakettle:
+  - rscadd: you can now select your tongue and speech verb in the character customization
+      menu!
+  - rscadd: skeleton is now split into two more types, greater and lesser
+  - bugfix: non-carbon blood is now not white
+  - spellcheck: fixed a bunch of grammar/spelling mistakes

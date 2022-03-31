@@ -141,20 +141,20 @@
 
 /obj/item/reagent_containers/rag/towel/attack(mob/living/M, mob/living/user)
 	if(user.a_intent == INTENT_HARM)
-		DISABLE_BITFIELD(item_flags, NOBLUDGEON)
+		item_flags &= ~(NOBLUDGEON)
 		. = TRUE
 	..()
 	if(.)
-		ENABLE_BITFIELD(item_flags, NOBLUDGEON)
+		item_flags |= NOBLUDGEON
 
 /obj/item/reagent_containers/rag/towel/equipped(mob/living/user, slot)
 	. = ..()
 	switch(slot)
-		if(SLOT_BELT)
+		if(ITEM_SLOT_BELT)
 			body_parts_covered = GROIN|LEGS
-		if(SLOT_WEAR_SUIT)
+		if(ITEM_SLOT_OCLOTHING)
 			body_parts_covered = CHEST|GROIN|LEGS
-		if(SLOT_HEAD)
+		if(ITEM_SLOT_HEAD)
 			body_parts_covered = HEAD
 			flags_inv = HIDEHAIR
 

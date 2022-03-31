@@ -264,7 +264,9 @@
 		ui.open()
 
 /obj/item/clockwork/slab/ui_data(mob/user) //we display a lot of data via TGUI
-	. = list()
+	. = ..()
+	if(!.)
+		return
 	.["recollection"] = recollecting
 	.["power"] = DisplayPower(get_clockwork_power())
 	.["power_unformatted"] = get_clockwork_power()
@@ -275,6 +277,7 @@
 		if(S.tier == SCRIPTURE_PERIPHERAL) // This tier is skiped because this contains basetype stuff
 			continue
 
+		// FUTURE IMPL: cache these perhaps?
 		var/list/data = list()
 		data["name"] = S.name
 		data["descname"] = S.descname

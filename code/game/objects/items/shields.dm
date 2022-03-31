@@ -174,11 +174,11 @@
 /obj/item/shield/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(ismovable(object))
 		var/atom/movable/AM = object
-		if(CHECK_BITFIELD(shield_flags, SHIELD_TRANSPARENT) && (AM.pass_flags & PASSGLASS))
+		if((shield_flags & SHIELD_TRANSPARENT) && (AM.pass_flags & PASSGLASS))
 			return BLOCK_NONE
-	if(CHECK_BITFIELD(shield_flags, SHIELD_NO_RANGED) && (attack_type & ATTACK_TYPE_PROJECTILE))
+	if((shield_flags & SHIELD_NO_RANGED) && (attack_type & ATTACK_TYPE_PROJECTILE))
 		return BLOCK_NONE
-	if(CHECK_BITFIELD(shield_flags, SHIELD_NO_MELEE) && (attack_type & ATTACK_TYPE_MELEE))
+	if((shield_flags & SHIELD_NO_MELEE) && (attack_type & ATTACK_TYPE_MELEE))
 		return BLOCK_NONE
 	if(attack_type & ATTACK_TYPE_THROWN)
 		final_block_chance += 30
@@ -247,38 +247,44 @@
 	var/final_damage = damage
 
 	if(attack_type & ATTACK_TYPE_MELEE)
-		var/obj/hittingthing = object
-		if(hittingthing.damtype == BURN)
-			if(CHECK_BITFIELD(shield_flags, SHIELD_ENERGY_WEAK))
-				final_damage *= 2
-			else if(CHECK_BITFIELD(shield_flags, SHIELD_ENERGY_STRONG))
-				final_damage *= 0.5
+		if(istype(object, /obj))	//Assumption: non-object attackers are a meleeing mob. Therefore: Assuming physical attack in this case.
+			var/obj/hittingthing = object
+			if(hittingthing.damtype == BURN)
+				if((shield_flags & SHIELD_ENERGY_WEAK))
+					final_damage *= 2
+				else if((shield_flags & SHIELD_ENERGY_STRONG))
+					final_damage *= 0.5
 
-		if(hittingthing.damtype == BRUTE)
-			if(CHECK_BITFIELD(shield_flags, SHIELD_KINETIC_WEAK))
-				final_damage *= 2
-			else if(CHECK_BITFIELD(shield_flags, SHIELD_KINETIC_STRONG))
-				final_damage *= 0.5
+			if(hittingthing.damtype == BRUTE)
+				if((shield_flags & SHIELD_KINETIC_WEAK))
+					final_damage *= 2
+				else if((shield_flags & SHIELD_KINETIC_STRONG))
+					final_damage *= 0.5
 
-		if(hittingthing.damtype == STAMINA || hittingthing.damtype == TOX || hittingthing.damtype == CLONE || hittingthing.damtype == BRAIN || hittingthing.damtype == OXY)
-			final_damage = 0
+			if(hittingthing.damtype == STAMINA || hittingthing.damtype == TOX || hittingthing.damtype == CLONE || hittingthing.damtype == BRAIN || hittingthing.damtype == OXY)
+				final_damage = 0
+		else
+			if((shield_flags & SHIELD_KINETIC_WEAK))
+				final_damage *= 2
+			else if((shield_flags & SHIELD_KINETIC_STRONG))
+				final_damage *= 0.5
 
 	if(attack_type & ATTACK_TYPE_PROJECTILE)
 		var/obj/item/projectile/shootingthing = object
 		if(is_energy_reflectable_projectile(shootingthing))
-			if(CHECK_BITFIELD(shield_flags, SHIELD_ENERGY_WEAK))
+			if((shield_flags & SHIELD_ENERGY_WEAK))
 				final_damage *= 2
-			else if(CHECK_BITFIELD(shield_flags, SHIELD_ENERGY_STRONG))
+			else if((shield_flags & SHIELD_ENERGY_STRONG))
 				final_damage *= 0.5
 
 		if(!is_energy_reflectable_projectile(object))
-			if(CHECK_BITFIELD(shield_flags, SHIELD_KINETIC_WEAK))
+			if((shield_flags & SHIELD_KINETIC_WEAK))
 				final_damage *= 2
-			else if(CHECK_BITFIELD(shield_flags, SHIELD_KINETIC_STRONG))
+			else if((shield_flags & SHIELD_KINETIC_STRONG))
 				final_damage *= 0.5
 
 		if(shootingthing.damage_type == STAMINA)
-			if(CHECK_BITFIELD(shield_flags, SHIELD_DISABLER_DISRUPTED))
+			if((shield_flags & SHIELD_DISABLER_DISRUPTED))
 				final_damage *= 3 //disablers melt these kinds of shields. Really meant more for holoshields.
 			else
 				final_damage = 0

@@ -1,7 +1,7 @@
 /datum/gear/backpack
 	category = LOADOUT_CATEGORY_BACKPACK
 	subcategory = LOADOUT_SUBCATEGORY_BACKPACK_GENERAL
-	slot = SLOT_IN_BACKPACK
+	slot = ITEM_SLOT_BACKPACK
 
 /datum/gear/backpack/plushbox
 	name = "Plushie Choice Box"

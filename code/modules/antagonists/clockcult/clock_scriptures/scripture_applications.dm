@@ -231,3 +231,31 @@
 		to_chat(invoker, "<span class='nezbere'>\"Only one of my weapons may exist in this temporal stream!\"</span>")
 		return FALSE
 	return ..()
+
+/datum/clockwork_scripture/create_object/construct/cogscarab
+	descname = "Building Construct"
+	name = "Cogscarab"
+	desc = "Creates a shell for a cogscarab, a drone that helps build your base!"
+	invocations = list("Arise, drone!", "Create defenses for the true light!")
+	channel_time = 80
+	power_cost = 8000
+	creator_message = "<span class='brass'>Your slab disgorges several chunks of replicant alloy that form into a spiderlike shell.</span>"
+	usage_tip = "These machines will help you get a base built up while you go out to look for more followers."
+	tier = SCRIPTURE_APPLICATION
+	one_per_tile = TRUE
+	primary_component = BELLIGERENT_EYE
+	sort_priority = 9
+	quickbind = TRUE
+	quickbind_desc = "Creates a cogscarab, good for the backline."
+	object_path = /obj/item/clockwork/construct_chassis/cogscarab/
+	construct_type = /mob/living/simple_animal/drone/cogscarab
+	combat_construct = FALSE
+
+/datum/clockwork_scripture/create_object/construct/cogscarab/update_construct_limit()
+	var/human_servants = 0
+	for(var/V in SSticker.mode.servants_of_ratvar)
+		var/datum/mind/M = V
+		var/mob/living/L = M.current
+		if(ishuman(L) && L.stat != DEAD)
+			human_servants++
+	construct_limit = round(clamp((human_servants / 4), 1, 3))	//1 per 4 human servants, maximum of 3

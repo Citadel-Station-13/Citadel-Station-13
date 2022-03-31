@@ -135,14 +135,14 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	color = "#660015" // rgb: , 0, 255
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
 	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
-	metabolization_rate = 0.1//It has to be slow, so there's time for the effect.
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM//It has to be slow, so there's time for the effect.
 	data = list("creatorID" = null, "creatorGender" = null, "creatorName" = null)
 	var/creatorID  //ckey
 	var/creatorGender
 	var/creatorName
 	var/mob/living/creator
 	pH = 10
-	chemical_flags = REAGENT_ONMOBMERGE | REAGENT_DONOTSPLIT //Procs on_mob_add when merging into a human
+	chemical_flags = REAGENT_ONMOBMERGE | REAGENT_DONOTSPLIT | REAGENT_ALL_PROCESS //Procs on_mob_add when merging into a human
 	can_synth = FALSE
 	value = REAGENT_VALUE_EXCEPTIONAL
 
@@ -270,7 +270,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	color = "#2C051A" // rgb: , 0, 255
 	metabolization_rate = 1
 	taste_description = "extremely bitter chocolate"
-	chemical_flags = REAGENT_DONOTSPLIT
+	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_ORGANIC_PROCESS
 	can_synth = FALSE
 
 /datum/reagent/fermi/enthrallExplo/on_mob_life(mob/living/carbon/M) //Drug them, jitter them, dizzy them, confuse them

@@ -46,16 +46,16 @@
 	for(var/obj/item/reagent_containers/glass/beaker/B in component_parts)
 		reagents.maximum_volume += B.reagents.maximum_volume
 
-/obj/machinery/chem_master/ex_act(severity, target)
+/obj/machinery/chem_master/ex_act(severity, target, origin)
 	if(severity < 3)
 		..()
 
-/obj/machinery/chem_master/contents_explosion(severity, target)
+/obj/machinery/chem_master/contents_explosion(severity, target, origin)
 	..()
 	if(beaker)
-		beaker.ex_act(severity, target)
+		beaker.ex_act(severity, target, origin)
 	if(bottle)
-		bottle.ex_act(severity, target)
+		bottle.ex_act(severity, target, origin)
 
 /obj/machinery/chem_master/Exited(atom/movable/A, atom/newloc)
 	. = ..()
@@ -390,22 +390,31 @@
 		var/datum/reagent/R = GLOB.chemical_reagents_list[reagent]
 		if(R)
 			var/state = "Unknown"
-			if(initial(R.reagent_state) == 1)
+			if(initial(R.reagent_state) == SOLID)
 				state = "Solid"
-			else if(initial(R.reagent_state) == 2)
+			else if(initial(R.reagent_state) == LIQUID)
 				state = "Liquid"
-			else if(initial(R.reagent_state) == 3)
+			else if(initial(R.reagent_state) == GAS)
 				state = "Gas"
 			var/const/P = 3 //The number of seconds between life ticks
 			var/T = initial(R.metabolization_rate) * (60 / P)
+			var/processtype
+			if(CHECK_MULTIPLE_BITFIELDS(R.chemical_flags, (REAGENT_ROBOTIC_PROCESS | REAGENT_ORGANIC_PROCESS)))
+				processtype = "Both robots and organics"
+			else if(R.chemical_flags & REAGENT_ROBOTIC_PROCESS)
+				processtype = "Robots only"
+			else if(R.chemical_flags & REAGENT_ORGANIC_PROCESS)
+				processtype = "Organics only"
+			else
+				processtype = "Noone?! (Report this to Nanotrasen's spacetime department immediately)"
 			if(istype(R, /datum/reagent/fermi))
 				fermianalyze = TRUE
 				var/datum/chemical_reaction/Rcr = get_chemical_reaction(reagent)
 				var/pHpeakCache = (Rcr.OptimalpHMin + Rcr.OptimalpHMax)/2
-				analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = R.purity, "inverseRatioF" = initial(R.inverse_chem_val), "purityE" = initial(Rcr.PurityMin), "minTemp" = initial(Rcr.OptimalTempMin), "maxTemp" = initial(Rcr.OptimalTempMax), "eTemp" = initial(Rcr.ExplodeTemp), "pHpeak" = pHpeakCache)
+				analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "processType" = processtype, "purityF" = R.purity, "inverseRatioF" = initial(R.inverse_chem_val), "purityE" = initial(Rcr.PurityMin), "minTemp" = initial(Rcr.OptimalTempMin), "maxTemp" = initial(Rcr.OptimalTempMax), "eTemp" = initial(Rcr.ExplodeTemp), "pHpeak" = pHpeakCache)
 			else
 				fermianalyze = FALSE
-				analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = R.purity)
+				analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "processType" = processtype, "purityF" = R.purity)
 			screen = "analyze"
 			return TRUE
 

@@ -40,6 +40,16 @@
 	density = FALSE
 	pixel_x = -16
 
+/obj/structure/flora/stump/attackby(obj/item/W, mob/user, params)
+	if((W.tool_behaviour == TOOL_SHOVEL) && params)
+		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
+		if(do_after(user, 20))
+			new /obj/item/grown/log/tree(get_turf(src))
+			user.visible_message("[user] digs up [src].", "<span class='notice'>You dig up [src].</span>")
+			qdel(src)
+	else
+		return ..()
+
 /obj/structure/flora/tree/pine
 	name = "pine tree"
 	desc = "A coniferous pine tree."
@@ -58,6 +68,7 @@
 	desc = "A wondrous decorated Christmas tree."
 	icon_state = "pine_c"
 	icon_states = null
+	resistance_flags = INDESTRUCTIBLE  //Sorry grinch, not this time
 
 /obj/structure/flora/tree/pine/xmas/presents
 	icon_state = "pinepresents"

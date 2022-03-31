@@ -62,7 +62,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	update_icon()
 
 /obj/machinery/requests_console/update_icon_state()
-	if(CHECK_BITFIELD(stat, NOPOWER))
+	if((stat & NOPOWER))
 		set_light(0)
 	else
 		set_light(1.4, 0.7, "#34D352")//green light
@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			icon_state="req_comp_open"
 		else
 			icon_state="req_comp_rewired"
-	else if(CHECK_BITFIELD(stat, NOPOWER))
+	else if((stat & NOPOWER))
 		if(icon_state != "req_comp_off")
 			icon_state = "req_comp_off"
 	else
@@ -374,7 +374,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				radio_freq = FREQ_ENGINEERING
 			if("security")
 				radio_freq = FREQ_SECURITY
-			if("cargobay" || "mining")
+			if("cargobay", "mining")
 				radio_freq = FREQ_SUPPLY
 		Radio.set_frequency(radio_freq)
 

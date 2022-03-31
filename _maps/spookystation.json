@@ -1,0 +1,14 @@
+{
+    "map_name": "SpookyStation",
+    "map_path": "map_files/SpookyStation",
+    "map_file": "SpookyStation.dmm",
+    "shuttles": {
+	    "emergency": "emergency_pubby",
+	    "whiteship": "whiteship_pubby",
+	    "ferry": "ferry_fancy",
+	    "cargo": "cargo_box"
+    },
+	"traits": [
+		{ "Weather_Longrain":true }
+	]
+}

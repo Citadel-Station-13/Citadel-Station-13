@@ -34,7 +34,7 @@
 				user.put_in_hands(PA)
 
 /obj/item/chrono_eraser/item_action_slot_check(slot, mob/user, datum/action/A)
-	if(slot == SLOT_BACK)
+	if(slot == ITEM_SLOT_BACK)
 		return 1
 
 /obj/item/gun/energy/chrono_gun
@@ -266,7 +266,7 @@
 /obj/effect/chrono_field/singularity_pull()
 	return
 
-/obj/effect/chrono_field/ex_act()
+/obj/effect/chrono_field/ex_act(severity, target, origin)
 	return
 
 /obj/effect/chrono_field/blob_act(obj/structure/blob/B)

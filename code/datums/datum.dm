@@ -106,7 +106,7 @@
 	active_timers = null
 	for(var/thing in timers)
 		var/datum/timedevent/timer = thing
-		if (timer.spent)
+		if (timer.spent && !(timer.flags & TIMER_DELETE_ME))
 			continue
 		qdel(timer)
 
@@ -234,6 +234,7 @@
 		qdel(D)
 	else
 		return returned
+
 
 /**
   * Callback called by a timer to end an associative-list-indexed cooldown.

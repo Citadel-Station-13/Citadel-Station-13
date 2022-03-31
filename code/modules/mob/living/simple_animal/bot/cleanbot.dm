@@ -182,7 +182,7 @@
 			deputize(W, user)
 
 	else if(istype(W, /obj/item/mop/advanced))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_CLEANER_ADVANCED_MOP))
+		if(bot_core.allowed(user) && open && !(upgrades & UPGRADE_CLEANER_ADVANCED_MOP))
 			to_chat(user, "<span class='notice'>You replace \the [src] old mop with a new better one!</span>")
 			upgrades |= UPGRADE_CLEANER_ADVANCED_MOP
 			clean_time = 20 //2.5 the speed!
@@ -198,7 +198,7 @@
 			to_chat(user, "<span class='notice'>The [src] already has this mop!</span>")
 
 	else if(istype(W, /obj/item/broom))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_CLEANER_BROOM))
+		if(bot_core.allowed(user) && open && !(upgrades & UPGRADE_CLEANER_BROOM))
 			to_chat(user, "<span class='notice'>You add to \the [src] a broom speeding it up!</span>")
 			upgrades |= UPGRADE_CLEANER_BROOM
 			base_speed = 1 //2x faster!
@@ -302,7 +302,7 @@
 
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
-			path = get_path_to(src, target.loc, /turf/proc/Distance_cardinal, 0, 30, id=access_card)
+			path = get_path_to(src, target, 30, id=access_card)
 			if(!bot_move(target))
 				add_to_ignore(target)
 				target = null
@@ -443,37 +443,33 @@
 /obj/machinery/bot_core/cleanbot
 	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS)
 
-/mob/living/simple_animal/bot/cleanbot/get_controls(mob/user)
-	var/dat
-	dat += hack(user)
-	dat += showpai(user)
-	dat += text({"
-Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>
-Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-Maintenance panel panel is [open ? "opened" : "closed"]"})
-	if(!locked || issilicon(user)|| IsAdminGhost(user))
-		dat += "<BR>Clean Blood: <A href='?src=[REF(src)];operation=blood'>[blood ? "Yes" : "No"]</A>"
-		dat += "<BR>Clean Trash: <A href='?src=[REF(src)];operation=trash'>[trash ? "Yes" : "No"]</A>"
-		dat += "<BR>Clean Graffiti: <A href='?src=[REF(src)];operation=drawn'>[drawn ? "Yes" : "No"]</A>"
-		dat += "<BR>Exterminate Pests: <A href='?src=[REF(src)];operation=pests'>[pests ? "Yes" : "No"]</A>"
-		dat += "<BR><BR>Patrol Station: <A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A>"
-	return dat
+// Variables sent to TGUI
+/mob/living/simple_animal/bot/cleanbot/ui_data(mob/user)
+	var/list/data = ..()
 
-/mob/living/simple_animal/bot/cleanbot/Topic(href, href_list)
-	if(..())
-		return 1
-	if(href_list["operation"])
-		switch(href_list["operation"])
-			if("blood")
-				blood = !blood
-			if("pests")
-				pests = !pests
-			if("trash")
-				trash = !trash
-			if("drawn")
-				drawn = !drawn
-		get_targets()
-		update_controls()
+	if(!locked || issilicon(user)|| IsAdminGhost(user))
+		data["custom_controls"]["clean_blood"] = blood
+		data["custom_controls"]["clean_trash"] = trash
+		data["custom_controls"]["clean_graffiti"] = drawn
+		data["custom_controls"]["pest_control"] = pests
+	return data
+
+// Actions received from TGUI
+/mob/living/simple_animal/bot/cleanbot/ui_act(action, params)
+	. = ..()
+	if(. || !hasSiliconAccessInArea(usr) && !IsAdminGhost(usr) && !(bot_core.allowed(usr) || !locked))
+		return TRUE
+	switch(action)
+		if("clean_blood")
+			blood = !blood
+		if("pest_control")
+			pests = !pests
+		if("clean_trash")
+			trash = !trash
+		if("clean_graffiti")
+			drawn = !drawn
+	get_targets()
+	return
 
 /obj/machinery/bot_core/cleanbot/medbay
 	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS, ACCESS_MEDICAL)

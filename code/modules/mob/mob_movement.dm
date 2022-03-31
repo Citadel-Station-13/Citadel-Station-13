@@ -110,6 +110,11 @@
 
 	SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVE, src, direction, n, oldloc, add_delay)
 
+/mob/Moved(atom/OldLoc, Dir)
+	. = ..()
+	if(client)
+		client.parallax_holder.Update()
+
 /// Process_Grab(): checks for grab, attempts to break if so. Return TRUE to prevent movement.
 /client/proc/Process_Grab()
 	if(mob.pulledby)
@@ -398,3 +403,8 @@
 
 /mob/proc/canZMove(direction, turf/target)
 	return FALSE
+
+/mob/onTransitZ(old_z, new_z)
+	. = ..()
+	if(old_z != new_z)
+		client?.parallax_holder?.Reset()

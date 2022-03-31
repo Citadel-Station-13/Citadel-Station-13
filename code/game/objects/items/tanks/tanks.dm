@@ -48,7 +48,7 @@
 					var/obj/item/clothing/mask/M = check
 					if(M.mask_adjusted)
 						M.adjustmask(H)
-				if(CHECK_BITFIELD(check.clothing_flags, ALLOWINTERNALS))
+				if((check.clothing_flags & ALLOWINTERNALS))
 					internals = TRUE
 
 			if(!internals)
@@ -291,8 +291,8 @@
 			message_admins("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
 			log_game("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
 		//Give the gas a chance to build up more pressure through reacting
-		air_contents.react(src)
-		air_contents.react(src)
+		for(var/i in 1 to TANK_POST_FRAGMENT_REACTIONS)
+			air_contents.react(src)
 
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE

@@ -52,6 +52,8 @@ GLOBAL_LIST_EMPTY(current_observers_list)
 
 //Dynamic Port
 GLOBAL_LIST_EMPTY(new_player_list) //all /mob/dead/new_player, in theory all should have clients and those that don't are in the process of spawning and get deleted when done.
+//Family Port
+GLOBAL_LIST_EMPTY(pre_setup_antags) //minds that have been picked as antag by the gamemode. removed as antag datums are set.
 
 /proc/update_config_movespeed_type_lookup(update_mobs = TRUE)
 	// NOTE: This is entirely based on the fact that byond typesof/subtypesof gets longer/deeper paths before shallower ones.

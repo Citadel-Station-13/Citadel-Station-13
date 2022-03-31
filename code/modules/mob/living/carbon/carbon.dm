@@ -198,7 +198,7 @@
 			if(start_T && end_T)
 				log_combat(src, throwable_mob, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
 
-	else if(!CHECK_BITFIELD(I.item_flags, ABSTRACT) && !HAS_TRAIT(I, TRAIT_NODROP))
+	else if(!(I.item_flags & ABSTRACT) && !HAS_TRAIT(I, TRAIT_NODROP))
 		thrown_thing = I
 		dropItemToGround(I)
 
@@ -229,61 +229,8 @@
 /mob/living/carbon/proc/canBeHandcuffed()
 	return 0
 
-
-/mob/living/carbon/show_inv(mob/user)
-	user.set_machine(src)
-	var/dat = {"
-	<HR>
-	<B><FONT size=3>[name]</FONT></B>
-	<HR>
-	<BR><B>Head:</B> <A href='?src=[REF(src)];item=[SLOT_HEAD]'>				[(head && !(head.item_flags & ABSTRACT)) 			? head 		: "Nothing"]</A>
-	<BR><B>Mask:</B> <A href='?src=[REF(src)];item=[SLOT_WEAR_MASK]'>		[(wear_mask && !(wear_mask.item_flags & ABSTRACT))	? wear_mask	: "Nothing"]</A>
-	<BR><B>Neck:</B> <A href='?src=[REF(src)];item=[SLOT_NECK]'>		[(wear_neck && !(wear_neck.item_flags & ABSTRACT))	? wear_neck	: "Nothing"]</A>"}
-
-	for(var/i in 1 to held_items.len)
-		var/obj/item/I = get_item_for_held_index(i)
-		dat += "<BR><B>[get_held_index_name(i)]:</B></td><td><A href='?src=[REF(src)];item=[SLOT_HANDS];hand_index=[i]'>[(I && !(I.item_flags & ABSTRACT)) ? I : "Nothing"]</a>"
-
-	dat += "<BR><B>Back:</B> <A href='?src=[REF(src)];item=[SLOT_BACK]'>[back ? back : "Nothing"]</A>"
-
-	if(!HAS_TRAIT(src, TRAIT_NO_INTERNALS) && istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/tank))
-		dat += "<BR><A href='?src=[REF(src)];internal=1'>[internal ? "Disable Internals" : "Set Internals"]</A>"
-
-	if(handcuffed)
-		dat += "<BR><A href='?src=[REF(src)];item=[SLOT_HANDCUFFED]'>Handcuffed</A>"
-	if(legcuffed)
-		dat += "<BR><A href='?src=[REF(src)];item=[SLOT_LEGCUFFED]'>Legcuffed</A>"
-
-	dat += {"
-	<BR>
-	<BR><A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
-	"}
-	user << browse(dat, "window=mob[REF(src)];size=325x500")
-	onclose(user, "mob[REF(src)]")
-
 /mob/living/carbon/Topic(href, href_list)
 	..()
-	//strip panel
-	if(usr.canUseTopic(src, BE_CLOSE))
-		if(href_list["internal"] && !HAS_TRAIT(src, TRAIT_NO_INTERNALS))
-			var/slot = text2num(href_list["internal"])
-			var/obj/item/ITEM = get_item_by_slot(slot)
-			if(ITEM && istype(ITEM, /obj/item/tank) && wear_mask && (wear_mask.clothing_flags & ALLOWINTERNALS))
-				visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>", \
-								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on your [ITEM.name].</span>", \
-								target = usr, target_message = "<span class='danger'>You try to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>")
-				if(do_mob(usr, src, POCKET_STRIP_DELAY))
-					if(internal)
-						internal = null
-						update_internals_hud_icon(0)
-					else if(ITEM && istype(ITEM, /obj/item/tank))
-						if((wear_mask && (wear_mask.clothing_flags & ALLOWINTERNALS)) || getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-							internal = ITEM
-							update_internals_hud_icon(1)
-
-					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>", \
-									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on your [ITEM.name].</span>", \
-									target = usr, target_message = "<span class='danger'>You [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>")
 	if(href_list["embedded_object"] && usr.canUseTopic(src, BE_CLOSE))
 		var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
 		if(!L)
@@ -314,7 +261,7 @@
 		// too soon.
 		var/buckle_cd = 600
 		if(handcuffed)
-			var/obj/item/restraints/O = src.get_item_by_slot(SLOT_HANDCUFFED)
+			var/obj/item/restraints/O = src.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
 			buckle_cd = O.breakouttime
 		MarkResistTime()
 		visible_message("<span class='warning'>[src] attempts to unbuckle [p_them()]self!</span>", \
@@ -621,12 +568,12 @@
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			set_resting(TRUE, FALSE, FALSE)
 			SEND_SIGNAL(src, COMSIG_DISABLE_COMBAT_MODE)
-			ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT)
+			combat_flags |= COMBAT_FLAG_HARD_STAMCRIT
 			filters += CIT_FILTER_STAMINACRIT
 			update_mobility()
 	if((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && total_health <= STAMINA_CRIT_REMOVAL_THRESHOLD)
 		to_chat(src, "<span class='notice'>You don't feel nearly as exhausted anymore.</span>")
-		DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT)
+		combat_flags &= ~(COMBAT_FLAG_HARD_STAMCRIT)
 		filters -= CIT_FILTER_STAMINACRIT
 		update_mobility()
 	UpdateStaminaBuffer()
@@ -699,7 +646,7 @@
 		become_blind(EYES_COVERED)
 	else if(tinttotal >= TINT_DARKENED)
 		cure_blind(EYES_COVERED)
-		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 2)
+		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/scaled/impaired, 2)
 	else
 		cure_blind(EYES_COVERED)
 		clear_fullscreen("tint", 0)
@@ -775,10 +722,10 @@
 					visionseverity = 9
 				if(-INFINITY to -24)
 					visionseverity = 10
-			overlay_fullscreen("critvision", /atom/movable/screen/fullscreen/crit/vision, visionseverity)
+			overlay_fullscreen("critvision", /atom/movable/screen/fullscreen/scaled/crit/vision, visionseverity)
 		else
 			clear_fullscreen("critvision")
-		overlay_fullscreen("crit", /atom/movable/screen/fullscreen/crit, severity)
+		overlay_fullscreen("crit", /atom/movable/screen/fullscreen/scaled/crit, severity)
 	else
 		clear_fullscreen("crit")
 		clear_fullscreen("critvision")
@@ -802,7 +749,7 @@
 				severity = 6
 			if(45 to INFINITY)
 				severity = 7
-		overlay_fullscreen("oxy", /atom/movable/screen/fullscreen/oxy, severity)
+		overlay_fullscreen("oxy", /atom/movable/screen/fullscreen/scaled/oxy, severity)
 	else
 		clear_fullscreen("oxy")
 
@@ -823,7 +770,7 @@
 				severity = 5
 			if(85 to INFINITY)
 				severity = 6
-		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
+		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/scaled/brute, severity)
 	else
 		clear_fullscreen("brute")
 
@@ -898,16 +845,16 @@
 	update_inv_handcuffed()
 	update_hud_handcuffed()
 
-/mob/living/carbon/proc/can_defib()
+/mob/living/carbon/proc/can_revive(ignore_timelimit = FALSE, maximum_brute_dam = MAX_REVIVE_BRUTE_DAMAGE, maximum_fire_dam = MAX_REVIVE_FIRE_DAMAGE, ignore_heart = FALSE)
 	var/tlimit = DEFIB_TIME_LIMIT * 10
 	var/obj/item/organ/heart = getorgan(/obj/item/organ/heart)
 	if(suiciding || hellbound || HAS_TRAIT(src, TRAIT_HUSK) || AmBloodsucker(src))
 		return
-	if((world.time - timeofdeath) > tlimit)
+	if(!ignore_timelimit && (world.time - timeofdeath) > tlimit)
 		return
-	if((getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
+	if((getBruteLoss() >= maximum_brute_dam) || (getFireLoss() >= maximum_fire_dam))
 		return
-	if(!heart || (heart.organ_flags & ORGAN_FAILING))
+	if(!ignore_heart && (!heart || (heart.organ_flags & ORGAN_FAILING)))
 		return
 	var/obj/item/organ/brain/BR = getorgan(/obj/item/organ/brain)
 	if(QDELETED(BR) || BR.brain_death || (BR.organ_flags & ORGAN_FAILING) || suiciding)
@@ -1190,15 +1137,15 @@
 /mob/living/carbon/check_obscured_slots()
 	if(head)
 		if(head.flags_inv & HIDEMASK)
-			LAZYOR(., SLOT_WEAR_MASK)
+			LAZYOR(., ITEM_SLOT_MASK)
 		if(head.flags_inv & HIDEEYES)
-			LAZYOR(., SLOT_GLASSES)
+			LAZYOR(., ITEM_SLOT_EYES)
 		if(head.flags_inv & HIDEEARS)
-			LAZYOR(., SLOT_EARS)
+			LAZYOR(., ITEM_SLOT_EARS)
 
 	if(wear_mask)
 		if(wear_mask.flags_inv & HIDEEYES)
-			LAZYOR(., SLOT_GLASSES)
+			LAZYOR(., ITEM_SLOT_EYES)
 
 // if any of our bodyparts are bleeding
 /mob/living/carbon/proc/is_bleeding()

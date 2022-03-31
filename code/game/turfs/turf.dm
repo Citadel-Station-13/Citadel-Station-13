@@ -451,7 +451,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/is_shielded()
 
-/turf/contents_explosion(severity, target)
+/turf/contents_explosion(severity, target, origin)
 	var/affecting_level
 	if(severity == 1)
 		affecting_level = 1
@@ -469,7 +469,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 				var/atom/movable/AM = A
 				if(!AM.ex_check(explosion_id))
 					continue
-			A.ex_act(severity, target)
+			A.ex_act(severity, target, origin)
 			CHECK_TICK
 
 /turf/wave_ex_act(power, datum/wave_explosion/explosion, dir)
@@ -512,7 +512,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/shove_act(mob/living/target, mob/living/user, pre_act = FALSE)
 	var/list/possibilities
 	for(var/obj/O in contents)
-		if(CHECK_BITFIELD(O.obj_flags, SHOVABLE_ONTO))
+		if((O.obj_flags & SHOVABLE_ONTO))
 			LAZYADD(possibilities, O)
 		else if(!O.CanPass(target, src))
 			return FALSE
@@ -638,3 +638,23 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/obj/machinery/door/D = locate() in src
 	if(D?.density)
 		. += D.opacity? 29 : 19			// glass doors are slightly more resistant to screaming
+
+/**
+ * Returns adjacent turfs to this turf that are reachable, in all cardinal directions
+ *
+ * Arguments:
+ * * caller: The movable, if one exists, being used for mobility checks to see what tiles it can reach
+ * * ID: An ID card that decides if we can gain access to doors that would otherwise block a turf
+ * * simulated_only: Do we only worry about turfs with simulated atmos, most notably things that aren't space?
+*/
+/turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only)
+	var/static/space_type_cache = typecacheof(/turf/open/space)
+	. = list()
+
+	for(var/iter_dir in GLOB.cardinals)
+		var/turf/turf_to_check = get_step(src,iter_dir)
+		if(!turf_to_check || (simulated_only && space_type_cache[turf_to_check.type]))
+			continue
+		if(turf_to_check.density || LinkBlockedWithAccess(turf_to_check, caller, ID))
+			continue
+		. += turf_to_check

@@ -112,7 +112,7 @@
 
 	var/list/genital_list = list()
 	for(var/obj/item/organ/genital/G in internal_organs)
-		if(!CHECK_BITFIELD(G.genital_flags, GENITAL_INTERNAL))
+		if(!(G.genital_flags & GENITAL_INTERNAL))
 			genital_list += G
 	if(!genital_list.len) //There is nothing to expose
 		return

@@ -224,7 +224,7 @@
 	if(!QDELETED(src))
 		qdel(src)
 
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/ex_act(severity)
+/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/ex_act(severity, target, origin)
 	qdel(src) //Ensuring that it's deleted by its own explosion. Also prevents mass chain reaction with piles of cherry bombs
 
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime(mob/living/lanced_by)
@@ -365,7 +365,7 @@
 			opened = TRUE
 			spillable = !screwdrivered
 			reagent_flags = OPENCONTAINER
-			ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+			reagents.reagents_holder_flags |= OPENCONTAINER
 			icon_state = screwdrivered ? "coconut_carved" : "coconut_chopped"
 			desc = "A coconut. [screwdrivered ? "This one's got a hole in it" : "This one's sliced open, with all its delicious contents for your eyes to savour"]."
 			playsound(user, W.hitsound, 50, 1, -1)
@@ -500,7 +500,7 @@
 	log_game("Coconut bomb detonation at [AREACOORD(T)], location [loc]")
 	qdel(src)
 
-/obj/item/reagent_containers/food/snacks/grown/coconut/ex_act(severity)
+/obj/item/reagent_containers/food/snacks/grown/coconut/ex_act(severity, target, origin)
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/grown/coconut/deconstruct(disassembled = TRUE)

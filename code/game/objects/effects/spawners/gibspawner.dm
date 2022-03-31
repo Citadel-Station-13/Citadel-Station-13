@@ -31,7 +31,10 @@
 
 	var/list/dna_to_add //find the dna to pass to the spawned gibs. do note this can be null if the mob doesn't have blood. add_blood_DNA() has built in null handling.
 	var/body_coloring = ""
+
+	var/list/blood_data_to_add
 	if(source_mob)
+		blood_data_to_add = source_mob.get_blood_data()
 		if(!issilicon(source_mob))
 			dna_to_add = blood_dna || source_mob.get_blood_dna_list() //ez pz
 		if(ishuman(source_mob))
@@ -65,7 +68,7 @@
 		if(gibamounts[i])
 			for(var/j = 1, j<= gibamounts[i], j++)
 				var/gibType = gibtypes[i]
-				gib = new gibType(loc, diseases)
+				gib = new gibType(loc, diseases, blood_data_to_add)
 				if(iscarbon(loc))
 					var/mob/living/carbon/digester = loc
 					digester.stomach_contents += gib

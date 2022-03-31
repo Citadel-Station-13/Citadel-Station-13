@@ -735,7 +735,10 @@
 	if(jb)
 		to_chat(user, "<span class='warning'>Your mind goes blank as you attempt to use the potion.</span>")
 		return
+	try_transfer_mind(SM, user)
 
+/obj/item/slimepotion/transference/proc/try_transfer_mind(mob/living/simple_animal/SM, mob/user)
+	set waitfor = FALSE
 	prompted = 1
 	if(alert("This will permanently transfer your consciousness to [SM]. Are you sure you want to do this?",,"Yes","No")=="No")
 		prompted = 0

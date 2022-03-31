@@ -15,6 +15,7 @@
 
 /datum/movespeed_modifier/hunger
 	variable = TRUE
+	blacklisted_movetypes = FLOATING|FLYING
 
 /datum/movespeed_modifier/slaughter
 	multiplicative_slowdown = -1

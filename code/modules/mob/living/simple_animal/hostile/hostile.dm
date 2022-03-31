@@ -367,7 +367,7 @@
 	if(vore_active)
 		if(isliving(target))
 			var/mob/living/L = target
-			if(!client && L.Adjacent(src) && CHECK_BITFIELD(L.vore_flags, DEVOURABLE) && CHECK_BITFIELD(L.vore_flags, MOBVORE)) // aggressive check to ensure vore attacks can be made
+			if(!client && L.Adjacent(src) && (L.vore_flags & DEVOURABLE) && (L.vore_flags & MOBVORE)) // aggressive check to ensure vore attacks can be made
 				if(prob(voracious_chance))
 					vore_attack(src,L,src)
 				else

@@ -36,12 +36,13 @@
 	. = ..()
 	wires = new /datum/wires/microwave(src)
 	create_reagents(100)
-	soundloop = new(list(src), FALSE)
+	soundloop = new(src, FALSE)
 
 /obj/machinery/microwave/Destroy()
 	eject()
 	if(wires)
 		QDEL_NULL(wires)
+	QDEL_NULL(soundloop)
 	. = ..()
 
 /obj/machinery/microwave/RefreshParts()

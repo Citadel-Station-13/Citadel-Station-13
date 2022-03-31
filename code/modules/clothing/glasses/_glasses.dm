@@ -115,7 +115,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 
 /obj/item/clothing/glasses/science/item_action_slot_check(slot, mob/user, datum/action/A)
-	if(slot == SLOT_GLASSES)
+	if(slot == ITEM_SLOT_EYES)
 		return 1
 
 /obj/item/clothing/glasses/night
@@ -158,7 +158,7 @@
 
 /obj/item/clothing/glasses/eyepatch/syndicate/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot == SLOT_GLASSES)
+	if(slot == ITEM_SLOT_EYES)
 		user.visible_message("<span class='warning'>Circuitry from the eyepatch links itself to your brain as you put on the eyepatch.")
 		if(HAS_TRAIT(user, TRAIT_POOR_AIM))
 			user.visible_message("<span class='warning'>You hear a fizzing noise from the circuit. That can't be good.")
@@ -351,7 +351,7 @@
 
 /obj/item/clothing/glasses/sunglasses/blindfold/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot == SLOT_GLASSES)
+	if(slot == ITEM_SLOT_EYES)
 		user.become_blind("blindfold_[REF(src)]")
 
 /obj/item/clothing/glasses/sunglasses/blindfold/dropped(mob/living/carbon/human/user)
@@ -372,7 +372,7 @@
 	var/colored_before = FALSE
 
 /obj/item/clothing/glasses/sunglasses/blindfold/white/equipped(mob/living/carbon/human/user, slot)
-	if(ishuman(user) && slot == SLOT_GLASSES)
+	if(ishuman(user) && slot == ITEM_SLOT_EYES)
 		update_icon(user)
 		user.update_inv_glasses() //Color might have been changed by update_icon.
 	..()
@@ -581,3 +581,14 @@
 		var/mob/living/carbon/human/H = user
 		H.update_sight()
 
+/obj/item/clothing/glasses/osi
+	name = "O.S.I. Sunglasses"
+	desc = "There's no such thing as good news! Just bad news and... weird news.."
+	icon_state = "osi_glasses"
+	item_state = "osi_glasses"
+
+/obj/item/clothing/glasses/phantom
+	name = "Phantom Thief Mask"
+	desc = "Lookin' cool."
+	icon_state = "phantom_glasses"
+	item_state = "phantom_glasses"

@@ -80,13 +80,13 @@
 /obj/item/defibrillator/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc == user)
 		if(slot_flags == ITEM_SLOT_BACK)
-			if(user.get_item_by_slot(SLOT_BACK) == src)
+			if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
 				ui_action_click()
 			else
 				to_chat(user, "<span class='warning'>Put the defibrillator on your back first!</span>")
 
 		else if(slot_flags == ITEM_SLOT_BELT)
-			if(user.get_item_by_slot(SLOT_BELT) == src)
+			if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
 				ui_action_click()
 			else
 				to_chat(user, "<span class='warning'>Strap the defibrillator's belt on first!</span>")
@@ -182,7 +182,7 @@
 
 /obj/item/defibrillator/equipped(mob/user, slot)
 	..()
-	if((slot_flags == ITEM_SLOT_BACK && slot != SLOT_BACK) || (slot_flags == ITEM_SLOT_BELT && slot != SLOT_BELT))
+	if((slot_flags == ITEM_SLOT_BACK && slot != ITEM_SLOT_BACK) || (slot_flags == ITEM_SLOT_BELT && slot != ITEM_SLOT_BELT))
 		remove_paddles(user)
 		update_power()
 
@@ -423,7 +423,7 @@
 	if((!req_defib && grab_ghost) || (req_defib && defib.grab_ghost))
 		H.notify_ghost_cloning("Your heart is being defibrillated!")
 		H.grab_ghost() // Shove them back in their body.
-	else if(H.can_defib())
+	else if(H.can_revive())
 		H.notify_ghost_cloning("Your heart is being defibrillated. Re-enter your corpse if you want to be revived!", source = src)
 
 	do_help(H, user)

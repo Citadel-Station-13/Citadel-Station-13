@@ -365,13 +365,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"aQ" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Telecomms Control Room";
-	req_one_access_txt = "19; 61"
-	},
-/turf/open/floor/plating/airless,
-/area/tcommsat/chamber)
 "aR" = (
 /obj/item/electropack/shockcollar,
 /obj/item/assembly/signaler,
@@ -3201,6 +3194,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/service/hydroponics/garden/monastery)
+"iA" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating/airless,
+/area/tcommsat/chamber)
 "iC" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -5602,6 +5601,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard)
+"ox" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "oy" = (
 /obj/structure/railing{
 	dir = 4;
@@ -7714,12 +7719,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/carpet/blue,
 /area/commons/vacant_room/office)
-"tS" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/turf/open/floor/plating/airless,
-/area/tcommsat/chamber)
 "tT" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -14697,6 +14696,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/commons/fitness/recreation)
+"LG" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "LH" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -37240,11 +37248,11 @@ lQ
 Yv
 Yv
 Yv
-dh
-Yv
-Yv
-aQ
-tS
+LG
+ox
+ox
+kF
+iA
 kF
 Gq
 LC

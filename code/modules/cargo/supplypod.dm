@@ -187,10 +187,10 @@
 	else
 		..()
 
-/obj/structure/closet/supplypod/ex_act() //Explosions dont do SHIT TO US! This is because supplypods create explosions when they land.
+/obj/structure/closet/supplypod/ex_act(severity, target, origin) //Explosions dont do SHIT TO US! This is because supplypods create explosions when they land.
 	return
 
-/obj/structure/closet/supplypod/contents_explosion() //Supplypods also protect their contents from the harmful effects of fucking exploding.
+/obj/structure/closet/supplypod/contents_explosion(severity, target, origin) //Supplypods also protect their contents from the harmful effects of fucking exploding.
 	return
 
 /obj/structure/closet/supplypod/toggle(mob/living/user)
@@ -648,7 +648,7 @@
 	desc = "This disk provides a firmware update to the Express Supply Console, granting the use of Nanotrasen's Bluespace Drop Pods to the supply department."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cargodisk"
-	// inhand_icon_state = "card-id"
+	// item_state = "card-id"
 	w_class = WEIGHT_CLASS_SMALL
 
 // let's not.

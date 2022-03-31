@@ -31,7 +31,7 @@
 
 /obj/item/projectile/curse_hand/prehit(atom/target)
 	if(target == original)
-		DISABLE_BITFIELD(movement_type, UNSTOPPABLE)
+		movement_type &= ~(UNSTOPPABLE)
 	else if(!isturf(target))
 		return FALSE
 	return ..()
@@ -40,7 +40,7 @@
 	if(arm)
 		arm.End()
 		arm = null
-	if(CHECK_BITFIELD(movement_type, UNSTOPPABLE))
+	if((movement_type & UNSTOPPABLE))
 		playsound(src, 'sound/effects/curse3.ogg', 25, 1, -1)
 	var/turf/T = get_step(src, dir)
 	var/obj/effect/temp_visual/dir_setting/curse/hand/leftover = new(T, dir)

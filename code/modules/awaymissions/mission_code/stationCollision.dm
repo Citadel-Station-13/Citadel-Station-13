@@ -149,5 +149,5 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 	if(prob(25))
 		mezzer()
 
-/obj/singularity/narsie/mini/ex_act()
+/obj/singularity/narsie/mini/ex_act(severity, target, origin)
 	return

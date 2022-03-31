@@ -77,10 +77,10 @@
 	else
 		return ..()
 
-/obj/effect/decal/cleanable/ex_act()
+/obj/effect/decal/cleanable/ex_act(severity, target, origin)
 	if(reagents)
 		for(var/datum/reagent/R in reagents.reagent_list)
-			R.on_ex_act()
+			R.on_ex_act(severity)
 	..()
 
 /obj/effect/decal/cleanable/fire_act(exposed_temperature, exposed_volume)

@@ -43,9 +43,9 @@
 	drop_all_items()
 	return ..()
 
-/obj/machinery/reagentgrinder/contents_explosion(severity, target)
+/obj/machinery/reagentgrinder/contents_explosion(severity, target, origin)
 	if(beaker)
-		beaker.ex_act(severity, target)
+		beaker.ex_act(severity, target, origin)
 
 /obj/machinery/reagentgrinder/RefreshParts()
 	speed = 1
