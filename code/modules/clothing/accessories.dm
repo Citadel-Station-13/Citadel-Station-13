@@ -23,6 +23,7 @@
 #warn equip hook on attach
 #warn drop hook on detach
 
+#warn alt click for detach menu
 
 // /obj/item/clothing/accessory //Ties moved to neck slot items, but as there are still things like medals and armbands, this accessory system is being kept as-is
 // 	name = "Accessory"
