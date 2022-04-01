@@ -20,8 +20,6 @@ GLOBAL_LIST_EMPTY(inventory_slots)
 	var/name
 	/// unique slot id
 	var/id
-	/// render key - the [_slot] in [worn_state][_slot][_bodytype].
-	var/render_key
 	/// is inventory? stuff like handcuffing/legcuffing isn't.
 	var/is_inventory = TRUE
 	/// is abstract? stuff lke "slot in backpack" obviously isn't.
@@ -35,88 +33,93 @@ GLOBAL_LIST_EMPTY(inventory_slots)
 	if(isnull(name))
 		name = "[id]"
 
-/datum/inventory_slot/normal
+/**
+ * worn clothes - these have render keys.
+ */
+/datum/inventory_slot/equipment
 	is_inventory = TRUE
 	is_abstract = FALSE
+	/// render key - the [_slot] in [worn_state][_slot][_bodytype].
+	var/render_key
 
 /**
  * standard "item slot flag fits in" inventory slots
  */
-/datum/inventory_slot/normal/flag
+/datum/inventory_slot/equipment/flag
 	/// flag to use
 	var/slot_flag
 
-/datum/inventory_slot/normal/flag/head
+/datum/inventory_slot/equipment/flag/head
 	name = "Head"
 	slot_flag = ITEM_SLOT_HEAD
 	render_key = "head"
 
-/datum/inventory_slot/normal/flag/ears
+/datum/inventory_slot/equipment/flag/ears
 	name = "Ears"
 	slot_flag = ITEM_SLOT_EARS
 	render_key = "ears"
 
-/datum/inventory_slot/normal/flag/neck
+/datum/inventory_slot/equipment/flag/neck
 	name = "Neck"
 	slot_flag = ITEM_SLOT_NECK
 	render_key = "neck"
 
-/datum/inventory_slot/normal/flag/back
+/datum/inventory_slot/equipment/flag/back
 	name = "Back"
 	slot_flag = ITEM_SLOT_BACK
 	render_key = "back"
 
-/datum/inventory_slot/normal/flag/suit
+/datum/inventory_slot/equipment/flag/suit
 	name = "Oversuit"
 	slot_flag = ITEM_SLOT_OCLOTHING
 	render_key = "suit"
 
-/datum/inventory_slot/normal/flag/uniform
+/datum/inventory_slot/equipment/flag/uniform
 	name = "Uniform"
 	slot_flag = ITEM_SLOT_ICLOTHING
 	render_key = "uniform"
 
-/datum/inventory_slot/normal/flag/suit_store
+/datum/inventory_slot/equipment/flag/suit_store
 	name = "Suit Storage"
 	slot_flag = ITEM_SLOT_SUITSTORE
 	render_key = "suitstore"
 
-/datum/inventory_slot/normal/flag/mask
+/datum/inventory_slot/equipment/flag/mask
 	name = "Mask"
 	slot_flag = ITEM_SLOT_MASK
 	render_key = "mask"
 
-/datum/inventory_slot/normal/flag/gloves
+/datum/inventory_slot/equipment/flag/gloves
 	name = "Gloves"
 	slot_flag = ITEM_SLOT_GLOVES
 	render_key = "hands"
 
-/datum/inventory_slot/normal/flag/shoes
+/datum/inventory_slot/equipment/flag/shoes
 	name = "Shoes"
 	slot_flag = ITEM_SLOT_FEET
 	render_key = "feet"
 
-/datum/inventory_slot/normal/flag/eyes
+/datum/inventory_slot/equipment/flag/eyes
 	name = "Glasses"
 	slot_flag = ITEM_SLOT_EYES
 	render_key = "eyes"
 
-/datum/inventory_slot/normal/flag/belt
+/datum/inventory_slot/equipment/flag/belt
 	name = "Belt"
 	slot_flag = ITEM_SLOT_BELT
 	render_key = "belt"
 
-/datum/inventory_slot/normal/flag/id
+/datum/inventory_slot/equipment/flag/id
 	name = "ID"
 	slot_flag = ITEM_SLOT_ID
 	render_key = "id"
 
-/datum/inventory_slot/normal/pocket
+/datum/inventory_slot/equipment/pocket
 
-/datum/inventory_slot/normal/pocket/left
+/datum/inventory_slot/equipment/pocket/left
 	name = "Left Pocket"
 
-/datum/inventory_slot/normal/pocket/right
+/datum/inventory_slot/equipment/pocket/right
 	name = "Right Pocket"
 
 /**
@@ -160,8 +163,6 @@ GLOBAL_LIST_EMPTY(inventory_slots)
 
 /datum/inventory_slot/virtual/hand/left
 	name = "Left Hand"
-	render_key = "_lhand"
 
 /datum/inventory_slot/virtual/hand/right
 	name = "Right Hand"
-	render_key = "_rhand"

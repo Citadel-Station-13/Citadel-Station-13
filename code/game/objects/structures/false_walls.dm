@@ -69,7 +69,7 @@
 	if(opening)
 		if(density)
 			icon_state = "fwall_opening"
-			smooth = SMOOTH_FALSE
+			smoothing_flags = NONE
 			clear_smooth_overlays()
 		else
 			icon_state = "fwall_closing"

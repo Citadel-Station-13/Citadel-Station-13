@@ -63,7 +63,7 @@
 	icon_state = "dirt"
 	alpha = 127
 	canSmoothWith = list(/obj/effect/decal/cleanable/dirt, /turf/closed/wall, /obj/structure/falsewall)
-	smooth = SMOOTH_FALSE
+	smoothing_flags = NONE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	beauty = -75
 	mergeable_decal = TRUE

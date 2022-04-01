@@ -204,7 +204,7 @@
 /turf/closed/wall/mineral/titanium/nosmooth
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
-	smooth = SMOOTH_FALSE
+	smoothing_flags = NONE
 
 /turf/closed/wall/mineral/titanium/overspace
 	icon_state = "map-overspace"
@@ -266,7 +266,7 @@
 /turf/closed/wall/mineral/plastitanium/nosmooth
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
-	smooth = SMOOTH_FALSE
+	smoothing_flags = NONE
 
 /turf/closed/wall/mineral/plastitanium/overspace
 	icon_state = "map-overspace"

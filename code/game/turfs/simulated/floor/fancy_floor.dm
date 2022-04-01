@@ -277,7 +277,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "arcade"
 	floor_tile = /obj/item/stack/tile/carpet/arcade
-	smooth = SMOOTH_FALSE
+	smoothing_flags = NONE
 	canSmoothWith = list()
 
 /turf/open/floor/carpet/blackred

@@ -279,7 +279,7 @@
 	name = "Rolling table"
 	desc = "A NT brand \"Rolly poly\" rolling table. It can and will move."
 	anchored = FALSE
-	smooth = SMOOTH_FALSE
+	smoothing_flags = NONE
 	canSmoothWith = list()
 	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
 	icon_state = "rollingtable"
@@ -642,7 +642,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "optable"
 	buildstack = /obj/item/stack/sheet/mineral/silver
-	smooth = SMOOTH_FALSE
+	smoothing_flags = NONE
 	can_buckle = 1
 	buckle_lying = 1
 	buckle_requires_restraints = 1

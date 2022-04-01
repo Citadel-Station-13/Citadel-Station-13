@@ -212,7 +212,7 @@
 /turf/closed/wall/r_wall/update_icon()
 	. = ..()
 	if(d_state != INTACT)
-		smooth = SMOOTH_FALSE
+		smoothing_flags = NONE
 		clear_smooth_overlays()
 	else
 		smooth = SMOOTH_TRUE
@@ -267,7 +267,7 @@
 /turf/closed/wall/r_wall/syndicate/nosmooth
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
-	smooth = SMOOTH_FALSE
+	smoothing_flags = NONE
 
 /turf/closed/wall/r_wall/syndicate/overspace
 	icon_state = "map-overspace"

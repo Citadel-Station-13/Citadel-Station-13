@@ -15,6 +15,17 @@
 	var/worn_slots_monostate = FALSE
 	/// if non null, override layer when worn instead of using slot default
 	var/worn_layer_override
+	// INHANDS - These use worn_state, but have their own render keys, as they're bodytype agnostic.
+	/// left hand slot string
+	var/worn_render_key_lefthand = "_left"
+	/// right hand slot string
+	var/worn_render_key_righthand = "_right"
+	// ADMINBUS - NEVER USE IN CODE, ENFORCED USING FINAL
+	/// when set via vv, overrides worn state in a slot, no matter what
+	VAR_FINAL/list/worn_state_slot_overide
+	/// when set via vv, overrides worn icon in a slot, no matter what
+	VAR_FINAL/list/worn_icon_slot_override
+
 
 	// bodytypes
 	/// which bodytypes are allowed to wear this? if one is and it isn't in bodytypes_supported, the automatic fallback list/template icons will be used.
@@ -33,6 +44,7 @@
 #warn ugh - hook allowed bodytypes, modify species to get effective bodytype lists.
 #warn figure out how to do templating too..
 #warn unit tests...
+#warn refactor how species offsets work!
 
 /**
  * master proc to build worn overlays. returns a single mutable_appearance.
@@ -46,6 +58,7 @@
 	#warn how to handle current default icons
 	#warn how to handle female uniform
 
+#warn impl: 1. slot key, 2. inhand key if inhand, 3. overrides
 
 /obj/item/proc/get_worn_icon(datum/inventory_slot/slot, requested_bodytype, templating)
 	slot = get_inventory_slot_datum(slot)
