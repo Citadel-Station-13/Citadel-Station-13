@@ -254,16 +254,12 @@
  * Do we supervise a department? Only works after SSjob init.
  */
 /datum/job/proc/IsDepartmentSupervisor(id)
-	if(SSjob.initialized)
-		CRASH("SSjob not initialized.")
 	return id in departments_supervised
 
 /**
  * Are we in a department? Only works after SSjob init.
  */
 /datum/job/proc/IsInDepartment(id)
-	if(SSjob.initialized)
-		CRASH("SSjob not initialized.")
 	return id in departments
 
 /**

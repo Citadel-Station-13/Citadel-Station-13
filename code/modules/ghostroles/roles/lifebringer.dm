@@ -31,6 +31,7 @@
 	desc = "An ancient machine that seems to be used for storing plant matter. The glass is obstructed by a mat of vines."
 	icon = 'icons/obj/lavaland/spawners.dmi'
 	icon_state = "terrarium"
+	role_type = /datum/ghostrole/seed_vault
 
 /obj/structure/ghost_role_spawner/seed_vault/Destroy()
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
