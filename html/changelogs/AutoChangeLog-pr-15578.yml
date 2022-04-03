@@ -1,4 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - bugfix: "Fixes some diagonal weirdness that might be going on with npcs."
