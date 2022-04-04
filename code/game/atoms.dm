@@ -126,8 +126,7 @@
 	///What smoothing groups does this atom belongs to, to match canSmoothWith. If null, nobody can smooth with it.
 	var/list/smoothing_groups = null
 	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
-	var/list/canSmoothWith = null
-	#warn CONVERT EVERYTHING FOR ABOVE TWO VARS
+	var/list/can_smooth_with = null
 
 	///Mobs that are currently do_after'ing this atom, to be cleared from on Destroy()
 	var/list/targeted_by
