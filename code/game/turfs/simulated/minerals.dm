@@ -266,7 +266,7 @@
 	smooth_icon = 'icons/turf/walls/mountain_wall.dmi'
 	icon_state = "mountainrock"
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	canSmoothWith = list (SMOOTH_GROUP_WALL)
+	can_smooth_with = list (SMOOTH_GROUP_WALL)
 	smoothing_groups = list(SMOOTH_GROUP_WALL)
 	defer_change = TRUE
 	environment_type = "snow"
@@ -330,7 +330,7 @@
 	icon_state = "mountainrock"
 	// base_icon_state = "mountain_wall"
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	canSmoothWith = list (SMOOTH_GROUP_WALL)
+	can_smooth_with = list (SMOOTH_GROUP_WALL)
 	smoothing_groups = list(SMOOTH_GROUP_WALL)
 	defer_change = TRUE
 	environment_type = "snow"
@@ -461,7 +461,7 @@
 	icon_state = "rock2"
 	// base_icon_state = "rock_wall"
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	canSmoothWith = list (SMOOTH_GROUP_WALL)
+	can_smooth_with = list (SMOOTH_GROUP_WALL)
 	smoothing_groups = list(SMOOTH_GROUP_WALL)
 	baseturfs = /turf/open/floor/plating/ashplanet/wateryrock
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
@@ -476,7 +476,7 @@
 	icon_state = "mountainrock"
 	// base_icon_state = "mountain_wall"
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	canSmoothWith = list (SMOOTH_GROUP_WALL)
+	can_smooth_with = list (SMOOTH_GROUP_WALL)
 	smoothing_groups = list(SMOOTH_GROUP_WALL)
 	baseturfs = /turf/open/floor/plating/asteroid/snow
 	initial_gas_mix = FROZEN_ATMOS
@@ -496,7 +496,7 @@
 	icon_state = "icerock"
 	// base_icon_state = "icerock_wall"
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	canSmoothWith = list (SMOOTH_GROUP_WALL)
+	can_smooth_with = list (SMOOTH_GROUP_WALL)
 	smoothing_groups = list(SMOOTH_GROUP_WALL)
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	environment_type = "snow_cavern"
