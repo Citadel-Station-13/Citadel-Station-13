@@ -1222,7 +1222,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	popup.open(FALSE)
 	onclose(user, "capturekeypress", src)
 
-/datum/preferences/proc/SetChoices(mob/user, jobs_per_column = 25, widthPerColumn = 295, height = 800)
+/datum/preferences/proc/SetChoices(mob/user, jobs_per_column = 20, widthPerColumn = 295, height = 800)
 	if(!SSjob)
 		return
 

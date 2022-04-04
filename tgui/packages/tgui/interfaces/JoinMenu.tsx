@@ -2,7 +2,7 @@
 import { map } from 'common/collections';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, Section, Flex, NoticeBox, Collapsible } from '../components';
+import { Box, Button, Section, Flex, Icon, NoticeBox, Collapsible } from '../components';
 import { COLORS } from '../constants';
 import { Window } from '../layouts';
 
