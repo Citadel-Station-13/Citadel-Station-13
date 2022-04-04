@@ -123,7 +123,7 @@
 	var/bottom_left_corner
 	///Smoothing variable
 	var/bottom_right_corner
-	///What smoothing groups does this atom belongs to, to match canSmoothWith. If null, nobody can smooth with it.
+	///What smoothing groups does this atom belongs to, to match can_smooth_with. If null, nobody can smooth with it.
 	var/list/smoothing_groups = null
 	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
 	var/list/can_smooth_with = null
@@ -210,11 +210,11 @@
 	if (length(smoothing_groups))
 		sortTim(smoothing_groups) //In case it's not properly ordered, let's avoid duplicate entries with the same values.
 		SET_BITFLAG_LIST(smoothing_groups)
-	if (length(canSmoothWith))
-		sortTim(canSmoothWith)
-		if(canSmoothWith[length(canSmoothWith)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
+	if (length(can_smooth_with))
+		sortTim(can_smooth_with)
+		if(can_smooth_with[length(can_smooth_with)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
 			smoothing_flags |= SMOOTH_OBJ
-		SET_BITFLAG_LIST(canSmoothWith)
+		SET_BITFLAG_LIST(can_smooth_with)
 
 	if (light_power && light_range)
 		update_light()

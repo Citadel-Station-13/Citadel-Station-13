@@ -157,8 +157,9 @@
 /turf/closed/indestructible/rock/snow/ice/ore
 	icon = 'icons/turf/walls/icerock_wall.dmi'
 	icon_state = "icerock"
-	smoothing_flags = SMOOTH_CORNERS |SMOOTH_BORDER
-	canSmoothWith = list (/turf/closed)
+	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	canSmoothWith = list (SMOOTH_GROUP_WALL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL)
 	pixel_x = -4
 	pixel_y = -4
 

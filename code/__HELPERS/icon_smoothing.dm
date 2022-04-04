@@ -2,9 +2,9 @@
 /*
 	Each tile is divided in 4 corners, each corner has an appearance associated to it; the tile is then overlayed by these 4 appearances
 	To use this, just set your atom's 'smoothing_flags' var to 1. If your atom can be moved/unanchored, set its 'can_be_unanchored' var to 1.
-	If you don't want your atom's icon to smooth with anything but atoms of the same type, set the list 'canSmoothWith' to null;
-	Otherwise, put all the smoothing groups you want the atom icon to smooth with in 'canSmoothWith', including the group of the atom itself.
-	Smoothing groups are just shared flags between objects. If one of the 'canSmoothWith' of A matches one of the `smoothing_groups` of B, then A will smooth with B.
+	If you don't want your atom's icon to smooth with anything but atoms of the same type, set the list 'can_smooth_with' to null;
+	Otherwise, put all the smoothing groups you want the atom icon to smooth with in 'can_smooth_with', including the group of the atom itself.
+	Smoothing groups are just shared flags between objects. If one of the 'can_smooth_with' of A matches one of the `smoothing_groups` of B, then A will smooth with B.
 
 	Each atom has its own icon file with all the possible corner states. See 'smooth_wall.dmi' for a template.
 
@@ -40,8 +40,8 @@
 		}; \
 		else { \
 			if(!isnull(neighbor.smoothing_groups)) { \
-				for(var/target in source.canSmoothWith) { \
-					if(!(source.canSmoothWith[target] & neighbor.smoothing_groups[target])) { \
+				for(var/target in source.can_smooth_with) { \
+					if(!(source.can_smooth_with[target] & neighbor.smoothing_groups[target])) { \
 						continue; \
 					}; \
 					junction |= direction_flag; \
@@ -53,8 +53,8 @@
 					if(!thing.anchored || isnull(thing.smoothing_groups)) { \
 						continue; \
 					}; \
-					for(var/target in source.canSmoothWith) { \
-						if(!(source.canSmoothWith[target] & thing.smoothing_groups[target])) { \
+					for(var/target in source.can_smooth_with) { \
+						if(!(source.can_smooth_with[target] & thing.smoothing_groups[target])) { \
 							continue; \
 						}; \
 						junction |= direction_flag; \
@@ -272,15 +272,15 @@
 	if((source_area.area_limited_icon_smoothing && !istype(target_area, source_area.area_limited_icon_smoothing)) || (target_area.area_limited_icon_smoothing && !istype(source_area, target_area.area_limited_icon_smoothing)))
 		return NO_ADJ_FOUND
 
-	if(isnull(canSmoothWith)) //special case in which it will only smooth with itself
+	if(isnull(can_smooth_with)) //special case in which it will only smooth with itself
 		if(isturf(src))
 			return (type == target_turf.type) ? ADJ_FOUND : NO_ADJ_FOUND
 		var/atom/matching_obj = locate(type) in target_turf
 		return (matching_obj && matching_obj.type == type) ? ADJ_FOUND : NO_ADJ_FOUND
 
 	if(!isnull(target_turf.smoothing_groups))
-		for(var/target in canSmoothWith)
-			if(!(canSmoothWith[target] & target_turf.smoothing_groups[target]))
+		for(var/target in can_smooth_with)
+			if(!(can_smooth_with[target] & target_turf.smoothing_groups[target]))
 				continue
 			return ADJ_FOUND
 
@@ -289,8 +289,8 @@
 			var/atom/movable/thing = am
 			if(!thing.anchored || isnull(thing.smoothing_groups))
 				continue
-			for(var/target in canSmoothWith)
-				if(!(canSmoothWith[target] & thing.smoothing_groups[target]))
+			for(var/target in can_smooth_with)
+				if(!(can_smooth_with[target] & thing.smoothing_groups[target]))
 					continue
 				return ADJ_FOUND
 
@@ -483,4 +483,4 @@
 	icon_state = "smooth"
 	smoothing_flags = SMOOTH_CORNERS|SMOOTH_DIAGONAL_CORNERS|SMOOTH_BORDER
 	smoothing_groups = null
-	canSmoothWith = null
+	can_smooth_with = null

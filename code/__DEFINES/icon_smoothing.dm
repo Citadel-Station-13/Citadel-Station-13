@@ -58,12 +58,32 @@ DEFINE_BITFIELD(smoothing_junction, list(
 
 #define S_TURF(num) ((24 * 0) + num) //Not any different from the number itself, but kept this way in case someone wants to expand it by adding stuff before it.
 /* /turf only */
+#define SMOOTH_GROUP_WALL_GOLD			S_TURF(1)
+#define SMOOTH_GROUP_WALL				S_TURF(2)
+#define SMOOTH_GROUP_WALL_TITANIUM		S_TURF(3)
+#define SMOOTH_GROUP_WALL_DIAMOND		S_TURF(4)
+#define SMOOTH_GROUP_WALL_SILVER		S_TURF(5)
+#define SMOOTH_GROUP_WALL_WOOD			S_TURF(6)
+#define SMOOTH_GROUP_WALL_URANIUM		S_TURF(7)
+#define SMOOTH_GROUP_WALL_STEEL			S_TURF(8)
+#define SMOOTH_GROUP_WALL_PLASTEEL		S_TURF(9)
+#define SMOOTH_GROUP_WALL_PLASMA		S_TURF(10)
+#define SMOOTH_GROUP_ALLEYWAY			S_TURF(11)
+#define SMOOTH_GROUP_WALL_BRICK			S_TURF(12)
+#define SMOOTH_GROUP_WALL_BRICK_NORMAL	S_TURF(13)
+#define SMOOTH_GROUP_ROAD				S_TURF(14)
 
 #define MAX_S_TURF SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS //Always match this value with the one above it.
 
 #define S_OBJ(num) (MAX_S_TURF + 1 + num)
 /* /obj included */
+#define SMOOTH_GROUP_WINDOW				S_OBJ(1)
+#define SMOOTH_GROUP_TABLE				S_OBJ(2)
+#define SMOOTH_GROUP_CLOCKCULT			S_OBJ(3)
+#define SMOOTH_GROUP_FALSEWALL			S_OBJ(4)
+#define SMOOTH_GROUP_LATTICE			S_OBJ(5)
+#define SMOOTH_GROUP_CATWALK			S_OBJ(6)
 
 #define MAX_S_OBJ SMOOTH_GROUP_GAS_TANK //Always match this value with the one above it.
 
-#warn get all currenet groups in
+#warn get all currenet groups in, update max's.
