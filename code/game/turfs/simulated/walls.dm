@@ -40,7 +40,7 @@
 	/turf/closed/wall/rust,
 	/turf/closed/wall/r_wall/rust,
 	/turf/closed/wall/clockwork)
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_CORNERS
 
 	var/list/dent_decals
 

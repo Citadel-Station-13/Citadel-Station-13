@@ -215,7 +215,7 @@
 		smoothing_flags = NONE
 		clear_smooth_overlays()
 	else
-		smooth = SMOOTH_TRUE
+		smoothing_flags = SMOOTH_CORNERS
 		QUEUE_SMOOTH_NEIGHBORS(src)
 		QUEUE_SMOOTH(src)
 
@@ -254,14 +254,14 @@
 	icon_state = "map-shuttle"
 	explosion_block = 20
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
-	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
+	smoothing_flags = SMOOTH_CORNERS | SMOOTH_DIAGONAL_CORNERS
 	canSmoothWith = list(/turf/closed/wall/r_wall/syndicate, /turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plastitanium, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
 
 /turf/closed/wall/r_wall/syndicate/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	return FALSE
 
 /turf/closed/wall/r_wall/syndicate/nodiagonal
-	smooth = SMOOTH_MORE
+	smoothing_flags = SMOOTH_CORNERS
 	icon_state = "map-shuttle_nd"
 
 /turf/closed/wall/r_wall/syndicate/nosmooth
@@ -281,7 +281,7 @@
 	canSmoothWith = list(/turf/closed/wall/r_wall/syndicate/pirate, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plastitanium/pirate, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
 
 /turf/closed/wall/r_wall/syndicate/pirate/nodiagonal
-	smooth = SMOOTH_MORE
+	smoothing_flags = SMOOTH_CORNERS
 	icon_state = "map-shuttle_nd"
 
 /turf/closed/wall/r_wall/syndicate/pirate/nosmooth

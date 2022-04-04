@@ -238,7 +238,7 @@
 	icon_state = "carpet"
 	floor_tile = /obj/item/stack/tile/carpet
 	broken_states = list("damaged")
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_CORNERS
 	canSmoothWith = list(/turf/open/floor/carpet, /turf/open/floor/carpet/airless)
 	flags_1 = NONE
 	bullet_bounce_sound = null
@@ -270,7 +270,7 @@
 /turf/open/floor/carpet/black
 	icon = 'icons/turf/floors/carpet_black.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/black
-	smooth = SMOOTH_MORE
+	smoothing_flags = SMOOTH_CORNERS
 	canSmoothWith = list(/turf/open/floor/carpet/black, /turf/open/floor/carpet/blackred, /turf/open/floor/carpet/monochrome)
 
 /turf/open/floor/carpet/arcade
@@ -284,14 +284,14 @@
 	icon = 'icons/turf/floors/carpet_blackred.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/blackred
 	icon_state = "tile-carpet-blackred"
-	smooth = SMOOTH_MORE
+	smoothing_flags = SMOOTH_CORNERS
 	canSmoothWith = list(/turf/open/floor/carpet/black, /turf/open/floor/carpet/blackred, /turf/open/floor/carpet/monochrome)
 
 /turf/open/floor/carpet/monochrome
 	icon = 'icons/turf/floors/carpet_monochrome.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/monochrome
 	icon_state = "tile-carpet-monochrome"
-	smooth = SMOOTH_MORE
+	smoothing_flags = SMOOTH_CORNERS
 	canSmoothWith = list(/turf/open/floor/carpet/black, /turf/open/floor/carpet/blackred, /turf/open/floor/carpet/monochrome)
 
 /turf/open/floor/carpet/blue
@@ -394,7 +394,7 @@
 
 /turf/open/floor/fakepit
 	desc = "A clever illusion designed to look like a bottomless pit."
-	smooth = SMOOTH_TRUE | SMOOTH_BORDER | SMOOTH_MORE
+	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER | SMOOTH_MORE
 	canSmoothWith = list(/turf/open/floor/fakepit)
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"

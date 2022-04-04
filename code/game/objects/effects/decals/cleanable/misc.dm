@@ -93,7 +93,7 @@
 	. = ..()
 	var/turf/T = get_turf(src)
 	if(T.tiled_dirt)
-		smooth = SMOOTH_MORE
+		smoothing_flags = SMOOTH_CORNERS
 		icon = 'icons/effects/dirt.dmi'
 		icon_state = ""
 		QUEUE_SMOOTH(src)

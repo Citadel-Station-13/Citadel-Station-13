@@ -6,7 +6,7 @@
 	name = "rock"
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock"
-	smooth = SMOOTH_MORE|SMOOTH_BORDER
+	smoothing_flags = SMOOTH_CORNERS |SMOOTH_BORDER
 	canSmoothWith = null
 	baseturfs = /turf/open/floor/plating/asteroid/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -265,7 +265,7 @@
 	icon = 'icons/turf/mining.dmi'
 	smooth_icon = 'icons/turf/walls/mountain_wall.dmi'
 	icon_state = "mountainrock"
-	smooth = SMOOTH_MORE|SMOOTH_BORDER
+	smoothing_flags = SMOOTH_CORNERS |SMOOTH_BORDER
 	canSmoothWith = list (/turf/closed)
 	defer_change = TRUE
 	environment_type = "snow"
@@ -281,7 +281,7 @@
 		icon = 'icons/turf/walls/icerock_wall.dmi'
 		icon_state = "icerock_wall-0"
 		// base_icon_state = "icerock_wall"
-		smooth = SMOOTH_MORE|SMOOTH_BORDER
+		smoothing_flags = SMOOTH_CORNERS |SMOOTH_BORDER
 
 /turf/closed/mineral/random/snow
 	mineralSpawnChanceList = list(
@@ -328,7 +328,7 @@
 	smooth_icon = 'icons/turf/walls/mountain_wall.dmi'
 	icon_state = "mountainrock"
 	// base_icon_state = "mountain_wall"
-	smooth = SMOOTH_MORE|SMOOTH_BORDER
+	smoothing_flags = SMOOTH_CORNERS |SMOOTH_BORDER
 	canSmoothWith = list (/turf/closed)
 	defer_change = TRUE
 	environment_type = "snow"
@@ -348,7 +348,7 @@
 		icon = 'icons/turf/walls/icerock_wall.dmi'
 		icon_state = "icerock_wall-0"
 		// base_icon_state = "icerock_wall"
-		smooth = SMOOTH_MORE|SMOOTH_BORDER
+		smoothing_flags = SMOOTH_CORNERS |SMOOTH_BORDER
 
 /turf/closed/mineral/iron
 	mineralType = /obj/item/stack/ore/iron
@@ -458,7 +458,7 @@
 	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
 	icon_state = "rock2"
 	// base_icon_state = "rock_wall"
-	smooth = SMOOTH_MORE|SMOOTH_BORDER
+	smoothing_flags = SMOOTH_CORNERS |SMOOTH_BORDER
 	canSmoothWith = list (/turf/closed)
 	baseturfs = /turf/open/floor/plating/ashplanet/wateryrock
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
@@ -472,7 +472,7 @@
 	smooth_icon = 'icons/turf/walls/mountain_wall.dmi'
 	icon_state = "mountainrock"
 	// base_icon_state = "mountain_wall"
-	smooth = SMOOTH_MORE|SMOOTH_BORDER
+	smoothing_flags = SMOOTH_CORNERS |SMOOTH_BORDER
 	canSmoothWith = list (/turf/closed)
 	baseturfs = /turf/open/floor/plating/asteroid/snow
 	initial_gas_mix = FROZEN_ATMOS
@@ -491,7 +491,7 @@
 	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
 	icon_state = "icerock"
 	// base_icon_state = "icerock_wall"
-	smooth = SMOOTH_MORE|SMOOTH_BORDER
+	smoothing_flags = SMOOTH_CORNERS |SMOOTH_BORDER
 	canSmoothWith = list (/turf/closed)
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	environment_type = "snow_cavern"

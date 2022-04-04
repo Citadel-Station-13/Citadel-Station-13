@@ -4,7 +4,7 @@
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	icon_state = "cult"
 	canSmoothWith = null
-	smooth = SMOOTH_MORE
+	smoothing_flags = SMOOTH_CORNERS
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	sheet_amount = 1
 	explosion_block = 10

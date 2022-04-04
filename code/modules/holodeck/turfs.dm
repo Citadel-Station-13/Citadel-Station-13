@@ -104,7 +104,7 @@
 	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "carpet"
 	floor_tile = /obj/item/stack/tile/carpet
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_CORNERS
 	canSmoothWith = null
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
@@ -163,7 +163,7 @@
 
 /turf/open/floor/holofloor/ice/smooth
 	icon_state = "smooth"
-	smooth = SMOOTH_MORE | SMOOTH_BORDER
+	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
 	canSmoothWith = list(/turf/open/floor/plating/ice/smooth, /turf/open/floor/plating/ice, /turf/open/floor/holofloor/ice)
 	baseturfs = /turf/open/floor/holofloor/ice/smooth
 
