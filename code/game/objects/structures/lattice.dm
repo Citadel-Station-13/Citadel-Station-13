@@ -98,7 +98,8 @@
 	icon_state = "catwalk"
 	number_of_rods = 2
 	smoothing_flags = SMOOTH_CORNERS
-	canSmoothWith = null
+	smoothing_groups = list(SMOOTH_GROUP_CATWALK)
+	can_smooth_with = list(SMOOTH_GROUP_CATWALK)
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 
 /obj/structure/lattice/catwalk/deconstruction_hints(mob/user)

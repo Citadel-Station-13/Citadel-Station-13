@@ -59,7 +59,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define S_TURF(num) ((24 * 0) + num) //Not any different from the number itself, but kept this way in case someone wants to expand it by adding stuff before it.
 /* /turf only */
 #define SMOOTH_GROUP_WALL_GOLD			S_TURF(1)
-#define SMOOTH_GROUP_WALL				S_TURF(2)
+#define SMOOTH_GROUP_WALL				S_TURF(2)		// all walls should have this. all walls should not necessarily smooth to this.
 #define SMOOTH_GROUP_WALL_TITANIUM		S_TURF(3)
 #define SMOOTH_GROUP_WALL_DIAMOND		S_TURF(4)
 #define SMOOTH_GROUP_WALL_SILVER		S_TURF(5)
@@ -77,12 +77,14 @@ DEFINE_BITFIELD(smoothing_junction, list(
 
 #define S_OBJ(num) (MAX_S_TURF + 1 + num)
 /* /obj included */
-#define SMOOTH_GROUP_WINDOW				S_OBJ(1)
-#define SMOOTH_GROUP_TABLE				S_OBJ(2)
-#define SMOOTH_GROUP_CLOCKCULT			S_OBJ(3)
+#define SMOOTH_GROUP_WINDOW				S_OBJ(1)		// all fulltile windows should have this. all fulltile windows should not necessarily smooth to this.
+#define SMOOTH_GROUP_TABLE				S_OBJ(2)		// all tables should have this. all tables should not necessarily smooth to this.
+#define SMOOTH_GROUP_CLOCKCULT			S_OBJ(3)		// all clockcult objects should have this. all clockcult objects should not necessarily smooth to this.
 #define SMOOTH_GROUP_FALSEWALL			S_OBJ(4)
 #define SMOOTH_GROUP_LATTICE			S_OBJ(5)
 #define SMOOTH_GROUP_CATWALK			S_OBJ(6)
+#define SMOOTH_GROUP_TABLE_NORMAL		S_OBJ(7)
+#define SMOOTH_GROUP_WINDOW_NORMAL		S_OBJ(8)
 
 #define MAX_S_OBJ SMOOTH_GROUP_GAS_TANK //Always match this value with the one above it.
 
