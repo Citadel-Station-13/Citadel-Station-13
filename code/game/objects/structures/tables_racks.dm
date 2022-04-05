@@ -35,7 +35,7 @@
 	max_integrity = 100
 	integrity_failure = 0.33
 	smoothing_flags = SMOOTH_CORNERS
-	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced, /obj/structure/table/greyscale)
+	smoothing_groups = list(SMOOTH_GROUP_TABLE, SMOOTH_GROUP_TABLE_NORMAL)
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
@@ -280,7 +280,8 @@
 	desc = "A NT brand \"Rolly poly\" rolling table. It can and will move."
 	anchored = FALSE
 	smoothing_flags = NONE
-	canSmoothWith = list()
+	can_smooth_with = null
+	smoothing_groups = null
 	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
 	icon_state = "rollingtable"
 	var/list/attached_items = list()
@@ -314,7 +315,8 @@
 	icon = 'icons/obj/smooth_structures/glass_table.dmi'
 	icon_state = "glass_table"
 	buildstack = /obj/item/stack/sheet/glass
-	canSmoothWith = null
+	smoothing_groups = list(SMOOTH_GROUP_TABLE, SMOOTH_GROUP_TABLE_GLASS)
+	can_smooth_with = list(SMOOTH_GROUP_TABLE_GLASS)
 	max_integrity = 70
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
@@ -392,7 +394,8 @@
 	icon_state = "plasmaglass_table"
 	climbable = TRUE
 	buildstack = /obj/item/stack/sheet/plasmaglass
-	canSmoothWith = null
+	smoothing_groups = list(SMOOTH_GROUP_TABLE, SMOOTH_GROUP_TABLE_PLASMAGLASS)
+	can_smooth_with = list(SMOOTH_GROUP_TABLE_PLASMAGLASS)
 	max_integrity = 270
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 10, "bullet" = 5, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
