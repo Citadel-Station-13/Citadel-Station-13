@@ -10,7 +10,7 @@
 	layer = LATTICE_LAYER //under pipes
 	plane = FLOOR_PLANE
 	var/number_of_rods = 1
-	smoothing_groups = list(SMOOTH_GROUP_LATTICE),
+	smoothing_groups = list(SMOOTH_GROUP_LATTICE)
 	can_smooth_with = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_WALL, SMOOTH_GROUP_LATTICE, SMOOTH_GROUP_FALSEWALL)
 	smoothing_flags = SMOOTH_CORNERS
 	//	flags = CONDUCT_1
@@ -121,7 +121,7 @@
 /obj/structure/lattice/catwalk/clockwork
 	name = "clockwork catwalk"
 	icon = 'icons/obj/smooth_structures/catwalk_clockwork.dmi'
-	smoothing_groups = list(SMOOTH_GROUP_LATTICE),
+	smoothing_groups = list(SMOOTH_GROUP_LATTICE)
 	can_smooth_with = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_WALL, SMOOTH_GROUP_LATTICE, SMOOTH_GROUP_FALSEWALL)
 	smoothing_flags = SMOOTH_CORNERS
 
