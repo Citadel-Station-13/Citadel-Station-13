@@ -108,9 +108,8 @@
 	bar_material = SAND
 	climbable = TRUE
 	smoothing_flags = SMOOTH_CORNERS
-	canSmoothWith = list(/obj/structure/barricade/sandbags, /turf/closed/wall, /turf/closed/wall/r_wall, /obj/structure/falsewall, /obj/structure/falsewall/reinforced, /turf/closed/wall/rust, /turf/closed/wall/r_wall/rust, /obj/structure/barricade/security)
-
-
+	smoothing_groups = list(SMOOTH_GROUP_SANDBAGS)
+	can_smooth_with = list(SMOOTH_GROUP_SANDBAGS, SMOOTH_GROUP_WALL)
 /obj/structure/barricade/security
 	name = "security barrier"
 	desc = "A deployable barrier. Provides good cover in fire fights."

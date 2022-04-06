@@ -57,7 +57,8 @@
 	density = TRUE
 	opacity = 1
 	anchored = TRUE
-	canSmoothWith = list(/obj/structure/alien/resin)
+	smoothing_groups = list(SMOOTH_GROUP_XENO_STRUCTURAL)
+	can_smooth_with = list(SMOOTH_GROUP_XENO_STRUCTURAL)
 	max_integrity = 200
 	smoothing_flags = SMOOTH_CORNERS
 	var/resintype = null
@@ -79,7 +80,6 @@
 	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
 	icon_state = "smooth"	//same as resin, but consistency ho!
 	resintype = "wall"
-	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
 
 /obj/structure/alien/resin/wall/BlockThermalConductivity()
 	return TRUE
@@ -92,7 +92,6 @@
 	opacity = 0
 	max_integrity = 160
 	resintype = "membrane"
-	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
 
 /obj/structure/alien/resin/attack_paw(mob/user)
 	return attack_hand(user)
@@ -118,6 +117,8 @@
 	plane = FLOOR_PLANE
 	icon_state = "weeds"
 	max_integrity = 15
+	smoothing_groups = list(SMOOTH_GROUP_XENO_WEEDS)
+	can_smooth_with = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_XENO_STRUCTURAL, SMOOTH_GROUP_XENO_WEEDS)
 	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)
 	smoothing_flags = SMOOTH_CORNERS
 	var/last_expand = 0 //last world.time this weed expanded
