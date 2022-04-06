@@ -12,7 +12,7 @@
 	/// The result from the output
 	var/datum/port/output/result
 
-/obj/item/circuit_component/tempsensor/Initialize()
+/obj/item/circuit_component/tempsensor/Initialize(mapload)
 	. = ..()
 	result = add_output_port("Result", PORT_TYPE_NUMBER)
 

@@ -115,7 +115,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(LAZYLEN(GLOB.pda_reskins))
 		. += "<span class='notice'>Ctrl-shift-click it to reskin it.</span>"
 
-/obj/item/pda/Initialize()
+/obj/item/pda/Initialize(mapload)
 	. = ..()
 	if(fon)
 		set_light(f_lum, f_pow, f_col)

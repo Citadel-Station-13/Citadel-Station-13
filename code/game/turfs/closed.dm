@@ -13,7 +13,7 @@
 	/// how much of inbound yelling to dampen
 	var/yelling_dampen = 0.5
 
-/turf/closed/Initialize()
+/turf/closed/Initialize(mapload)
 	. = ..()
 
 /turf/closed/AfterChange()
@@ -123,7 +123,7 @@
 	smooth = SMOOTH_TRUE
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 
-/turf/closed/indestructible/fakeglass/Initialize()
+/turf/closed/indestructible/fakeglass/Initialize(mapload)
 	. = ..()
 	icon_state = null //set the icon state to null, so our base state isn't visible
 	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay

@@ -84,7 +84,7 @@
 		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_DEFLECT
 		. |= BLOCK_SHOULD_REDIRECT
 
-/obj/item/dualsaber/Initialize()
+/obj/item/dualsaber/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
@@ -94,7 +94,7 @@
 	AddComponent(/datum/component/two_handed, force_unwielded=3, force_wielded=34, \
 					wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
 
-/obj/item/dualsaber/Initialize()
+/obj/item/dualsaber/Initialize(mapload)
 	. = ..()
 	if(LAZYLEN(possible_colors))
 		saber_color = pick(possible_colors)

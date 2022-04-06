@@ -79,7 +79,7 @@
 	age_restrictions = FALSE
 	payment_department = NO_FREEBIES
 
-/obj/machinery/vending/boozeomat/syndicate_access/Initialize()
+/obj/machinery/vending/boozeomat/syndicate_access/Initialize(mapload)
 	. = ..()
 	cost_multiplier_per_dept = list("[ACCESS_SYNDICATE]" = 0)
 

@@ -88,7 +88,7 @@
 	poly_states = 0
 	actions_types = list(/datum/action/item_action/squeeze)
 
-/obj/item/toy/fluff/tennis_poly/tri/squeak/Initialize()
+/obj/item/toy/fluff/tennis_poly/tri/squeak/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak)
 
@@ -124,7 +124,7 @@
 	name = "polychromic bone"
 	desc = "A polychromic chew bone. Makes a small squeak when squeezed."
 
-/obj/item/toy/fluff/bone_poly/squeak/Initialize()
+/obj/item/toy/fluff/bone_poly/squeak/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak)
 

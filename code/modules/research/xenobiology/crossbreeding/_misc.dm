@@ -73,7 +73,7 @@
 	max_integrity = 100
 	armor = list("melee" = 30, "bullet" = 50, "laser" = -50, "energy" = -50, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = -80, "acid" = 30)
 
-/obj/structure/ice_stasis/Initialize()
+/obj/structure/ice_stasis/Initialize(mapload)
 	. = ..()
 	playsound(src, 'sound/magic/ethereal_exit.ogg', 50, 1)
 

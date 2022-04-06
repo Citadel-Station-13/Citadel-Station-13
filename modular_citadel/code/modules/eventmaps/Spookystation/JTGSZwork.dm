@@ -179,7 +179,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	var/turfverb = "dig out"
 
-/turf/open/floor/spooktime/nonspooktimegrass/Initialize() //Init rng icon.
+/turf/open/floor/spooktime/nonspooktimegrass/Initialize(mapload) //Init rng icon.
 	. = ..()
 	icon_state = "grass_[rand(1,3)]"
 
@@ -264,7 +264,7 @@
 	var/obj/structure/flora/turfDebris = null
 
 
-/turf/open/floor/spooktime/spooktimegrass/Initialize() //Considering adding dirtgen here too.
+/turf/open/floor/spooktime/spooktimegrass/Initialize(mapload) //Considering adding dirtgen here too.
 	. = ..()
 	if(prob(1))
 		icon_state = "smoothdarkdirt" //Sometimes we can be dirt.
@@ -590,7 +590,7 @@ GLOBAL_LIST_EMPTY(rain_sounds)
 	var/dyndial_cycle_ticker = 0 //How many
 	var/playchime = 1 //Procs will reset their vars.
 
-/obj/machinery/grandfatherclock/Initialize()
+/obj/machinery/grandfatherclock/Initialize(mapload)
 	. = ..()
 	update_icon() //We get it done
 
@@ -1030,7 +1030,7 @@ GLOBAL_LIST_EMPTY(rain_sounds)
     w_class = WEIGHT_CLASS_SMALL
     var/open = FALSE
 
-/obj/item/umbrella/Initialize()
+/obj/item/umbrella/Initialize(mapload)
     ..()
     color = RANDOM_COLOUR
     update_icon()

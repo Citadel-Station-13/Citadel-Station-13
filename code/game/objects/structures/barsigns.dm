@@ -11,7 +11,7 @@
 	var/list/barsigns=list()
 	var/panel_open = FALSE
 
-/obj/structure/sign/barsign/Initialize()
+/obj/structure/sign/barsign/Initialize(mapload)
 	. = ..()
 
 //filling the barsigns list

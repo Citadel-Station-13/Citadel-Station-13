@@ -58,7 +58,7 @@
 	visor_flags_inv = HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	mutantrace_variation = NONE
 
-/obj/item/clothing/head/helmet/space/plasmaman/Initialize()
+/obj/item/clothing/head/helmet/space/plasmaman/Initialize(mapload)
 	. = ..()
 	visor_toggling()
 	update_icon()

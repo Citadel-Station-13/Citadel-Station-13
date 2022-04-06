@@ -8,7 +8,7 @@
 	var/alternative_mode = FALSE
 	var/no_t //do not update sprites when pulling up hood so we can avoid oddities with certain mechanics
 
-/obj/item/clothing/suit/hooded/Initialize()
+/obj/item/clothing/suit/hooded/Initialize(mapload)
 	. = ..()
 	hood = MakeHelmet()
 
@@ -146,7 +146,7 @@
 	. += "Alt-click on [src] to toggle the [togglename]."
 
 //Hardsuit toggle code
-/obj/item/clothing/suit/space/hardsuit/Initialize()
+/obj/item/clothing/suit/space/hardsuit/Initialize(mapload)
 	. = ..()
 	helmet = MakeHelmet()
 

@@ -84,7 +84,7 @@
 	bare_wound_bonus = 10
 	custom_price = PRICE_NORMAL
 
-/obj/item/kitchen/knife/Initialize()
+/obj/item/kitchen/knife/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 80 - force, 100, force - 10) //bonus chance increases depending on force
 
@@ -120,7 +120,7 @@
 	bare_wound_bonus = 10
 	custom_price = PRICE_NORMAL
 
-/obj/item/kitchen/efink/Initialize()
+/obj/item/kitchen/efink/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 80 - force, 100, force - 10) //bonus chance increases depending on force
 
@@ -209,7 +209,7 @@
 	var/light_on = FALSE
 	var/brightness_on = 7
 
-/obj/item/kitchen/knife/combat/survival/knuckledagger/Initialize()
+/obj/item/kitchen/knife/combat/survival/knuckledagger/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 30, 130, 20) // it's good for butchering stuff
 
@@ -322,6 +322,6 @@
 	desc = "A knife used to cleanly butcher. Its razor-sharp edge has been honed for butchering, but has been poorly maintained over the years."
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-/obj/item/kitchen/knife/scimitar/Initialize()
+/obj/item/kitchen/knife/scimitar/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 90 - force, 100, force - 60) //bonus chance increases depending on force

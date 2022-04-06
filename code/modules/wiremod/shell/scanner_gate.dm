@@ -5,7 +5,7 @@
 	icon_state = "scangate_black"
 	var/scanline_timer
 
-/obj/structure/scanner_gate_shell/Initialize()
+/obj/structure/scanner_gate_shell/Initialize(mapload)
 	. = ..()
 	set_scanline("passive")
 	var/static/list/loc_connections = list(
@@ -45,7 +45,7 @@
 
 	var/obj/structure/scanner_gate_shell/attached_gate
 
-/obj/item/circuit_component/scanner_gate/Initialize()
+/obj/item/circuit_component/scanner_gate/Initialize(mapload)
 	. = ..()
 	scanned = add_output_port("Scanned Object", PORT_TYPE_ATOM)
 

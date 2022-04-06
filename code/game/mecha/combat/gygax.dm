@@ -31,7 +31,7 @@
 	wreckage = /obj/structure/mecha_wreckage/gygax/dark
 	max_equip = 4
 
-/obj/mecha/combat/gygax/dark/loaded/Initialize()
+/obj/mecha/combat/gygax/dark/loaded/Initialize(mapload)
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
 	ME.attach(src)

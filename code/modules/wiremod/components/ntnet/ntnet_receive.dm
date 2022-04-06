@@ -20,7 +20,7 @@
 	var/datum/port/input/option/data_type_options
 	var/datum/port/input/option/secondary_data_type_options
 
-/obj/item/circuit_component/ntnet_receive/Initialize()
+/obj/item/circuit_component/ntnet_receive/Initialize(mapload)
 	. = ..()
 	data_package = add_output_port("Data Package", PORT_TYPE_ANY)
 	secondary_package = add_output_port("Secondary Package", PORT_TYPE_ANY)

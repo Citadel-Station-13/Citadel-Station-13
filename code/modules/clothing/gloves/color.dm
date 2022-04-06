@@ -44,7 +44,7 @@
 	resistance_flags = ACID_PROOF
 	var/shocks_remaining = 10
 
-/obj/item/clothing/gloves/color/yellow/sprayon/Initialize()
+/obj/item/clothing/gloves/color/yellow/sprayon/Initialize(mapload)
 	.=..()
 	ADD_TRAIT(src, TRAIT_NODROP, GLOVE_TRAIT)
 
@@ -79,7 +79,7 @@
 	desc = "Old and worn out insulated gloves, hopefully they still work."
 	name = "worn out insulated gloves"
 
-/obj/item/clothing/gloves/color/fyellow/old/Initialize()
+/obj/item/clothing/gloves/color/fyellow/old/Initialize(mapload)
 	. = ..()
 	siemens_coefficient = pick(0,0,0,0.5,0.5,0.5,0.75)
 

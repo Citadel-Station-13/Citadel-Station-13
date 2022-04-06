@@ -82,7 +82,7 @@
 	alpha = 150
 	init_vis_overlay = FALSE
 
-/obj/structure/holosign/barrier/atmos/Initialize()
+/obj/structure/holosign/barrier/atmos/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE)
 
@@ -98,7 +98,7 @@
 /obj/structure/holosign/barrier/firelock/BlockThermalConductivity()
 	return TRUE
 
-/obj/structure/holosign/barrier/firelock/Initialize()
+/obj/structure/holosign/barrier/firelock/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE)
 
@@ -118,7 +118,7 @@
 /obj/structure/holosign/barrier/combifan/BlockThermalConductivity()
 	return TRUE
 
-/obj/structure/holosign/barrier/combifan/Initialize()
+/obj/structure/holosign/barrier/combifan/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE)
 

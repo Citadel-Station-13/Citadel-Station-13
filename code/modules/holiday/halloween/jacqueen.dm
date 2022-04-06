@@ -61,7 +61,7 @@
 		/atom/movable/screen
 	))
 
-/mob/living/simple_animal/jacq/Initialize()
+/mob/living/simple_animal/jacq/Initialize(mapload)
 	. = ..() //fuck you jacq, return a hint you shit
 	cached_z = z
 	poof()
@@ -664,13 +664,13 @@
 	hat_type = "pumpkin_j"
 	brightness_on = 4
 
-/obj/item/clothing/head/hardhat/pumpkinhead/jaqc/Initialize()
+/obj/item/clothing/head/hardhat/pumpkinhead/jaqc/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, GLUED_ITEM_TRAIT)
 
 /obj/item/clothing/suit/ghost_sheet/sticky
 
-/obj/item/clothing/suit/ghost_sheet/sticky/Initialize()
+/obj/item/clothing/suit/ghost_sheet/sticky/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, GLUED_ITEM_TRAIT)
 
@@ -723,7 +723,7 @@
 	icon_state = "jacq_potion"
 	desc = "A potion with a strange concoction within. Be careful, as if it's thrown it explodes in a puff of smoke like Jacqueline."
 
-/obj/item/reagent_containers/potion_container/Initialize()
+/obj/item/reagent_containers/potion_container/Initialize(mapload)
 	.=..()
 	var/R = get_random_reagent_id()
 	reagents.add_reagent(R, 30)
@@ -748,6 +748,6 @@
 	icon_state = "jacq_candy"
 	desc = "A candy with strange magic within. Be careful, as the magic isn't always helpful."
 
-/obj/item/reagent_containers/food/snacks/special_candy/Initialize()
+/obj/item/reagent_containers/food/snacks/special_candy/Initialize(mapload)
 	.=..()
 	reagents.add_reagent(get_random_reagent_id(), 5)

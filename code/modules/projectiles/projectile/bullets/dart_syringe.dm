@@ -4,7 +4,7 @@
 	damage = 6
 	var/piercing = FALSE
 
-/obj/item/projectile/bullet/dart/Initialize()
+/obj/item/projectile/bullet/dart/Initialize(mapload)
 	. = ..()
 	create_reagents(50, NO_REACT, NO_REAGENTS_VALUE)
 
@@ -32,13 +32,13 @@
 /obj/item/projectile/bullet/dart/piercing
 	piercing = TRUE
 
-/obj/item/projectile/bullet/dart/metalfoam/Initialize()
+/obj/item/projectile/bullet/dart/metalfoam/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/aluminium, 15)
 	reagents.add_reagent(/datum/reagent/foaming_agent, 5)
 	reagents.add_reagent(/datum/reagent/toxin/acid, 5)
 
-/obj/item/projectile/bullet/dart/catranq/Initialize()
+/obj/item/projectile/bullet/dart/catranq/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/fermi/furranium, 5) // Turns out I don't even need to give this guy actual tranquilizer chems.
 

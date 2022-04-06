@@ -12,7 +12,7 @@
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
 
-/obj/structure/statue/Initialize()
+/obj/structure/statue/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/art, impressiveness)
 	addtimer(CALLBACK(src, /datum.proc/_AddElement, list(/datum/element/beauty, impressiveness *  75)), 0)

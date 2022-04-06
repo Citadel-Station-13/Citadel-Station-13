@@ -70,7 +70,7 @@
 	var/slam_mode = FALSE
 	var/datum/action/cooldown/slam
 
-/mob/living/simple_animal/slaughter/Initialize()
+/mob/living/simple_animal/slaughter/Initialize(mapload)
 	..()
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
@@ -282,7 +282,7 @@
 		T = find_safe_turf()
 	for(var/mob/living/M in consumed_mobs)
 		if(!M)
-			continue	
+			continue
 		M.forceMove(T)
 		if(M.revive(full_heal = TRUE, admin_revive = TRUE))
 			M.grab_ghost(force = TRUE)

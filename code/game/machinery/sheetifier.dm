@@ -11,7 +11,7 @@
 	layer = BELOW_OBJ_LAYER
 	var/busy_processing = FALSE
 
-/obj/machinery/sheetifier/Initialize()
+/obj/machinery/sheetifier/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/material_container, list(/datum/material/meat), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE, /obj/item/reagent_containers/food/snacks/meat/slab, CALLBACK(src, .proc/CanInsertMaterials), CALLBACK(src, .proc/AfterInsertMaterials))
 

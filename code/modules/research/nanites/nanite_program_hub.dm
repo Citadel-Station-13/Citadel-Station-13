@@ -22,7 +22,7 @@
 		list(name = "Protocols"),
 	)
 
-/obj/machinery/nanite_program_hub/Initialize()
+/obj/machinery/nanite_program_hub/Initialize(mapload)
 	. = ..()
 	linked_techweb = SSresearch.science_tech
 
@@ -148,6 +148,6 @@
 				disk.name = initial(disk.name)
 			. = TRUE
 
-/obj/machinery/nanite_program_hub/admin/Initialize()
+/obj/machinery/nanite_program_hub/admin/Initialize(mapload)
 	. = ..()
 	linked_techweb = SSresearch.admin_tech

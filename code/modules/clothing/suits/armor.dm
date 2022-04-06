@@ -11,7 +11,7 @@
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50, "wound" = 10)
 
 
-/obj/item/clothing/suit/armor/Initialize()
+/obj/item/clothing/suit/armor/Initialize(mapload)
 	. = ..()
 	if(!allowed)
 		allowed = GLOB.security_vest_allowed
@@ -145,7 +145,7 @@
 	armor = list("melee" = 50, "bullet" = 40, "laser" = 50, "energy" = 50, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 90, "wound" = 10)
 	togglename = "buttons"
 
-/obj/item/clothing/suit/toggle/captains_parade/Initialize()
+/obj/item/clothing/suit/toggle/captains_parade/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.security_wintercoat_allowed
 
@@ -207,7 +207,7 @@
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
 
-/obj/item/clothing/suit/armor/vest/det_suit/Initialize()
+/obj/item/clothing/suit/armor/vest/det_suit/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.detective_vest_allowed
 
@@ -336,7 +336,7 @@
 	armor = list("melee" = 35, "bullet" = 40, "laser" = 40, "energy" = 50, "bomb" = 35, "bio" = 10, "rad" = 10, "fire" = 10, "acid" = 60)
 	togglename = "buttons"
 
-/obj/item/clothing/suit/toggle/armor/vest/centcom_formal/Initialize()
+/obj/item/clothing/suit/toggle/armor/vest/centcom_formal/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.security_wintercoat_allowed
 
@@ -349,6 +349,6 @@
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 40, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 90, "wound" = 10)
 	togglename = "buttons"
 
-/obj/item/clothing/suit/toggle/armor/hos/hos_formal/Initialize()
+/obj/item/clothing/suit/toggle/armor/hos/hos_formal/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.security_wintercoat_allowed

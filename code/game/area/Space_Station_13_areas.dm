@@ -126,7 +126,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	ambientsounds = RUINS
 	area_flags = UNIQUE_AREA | NO_ALERTS
 
-/area/asteroid/artifactroom/Initialize()
+/area/asteroid/artifactroom/Initialize(mapload)
 	. = ..()
 	set_dynamic_lighting()
 

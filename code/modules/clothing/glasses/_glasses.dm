@@ -299,7 +299,7 @@
 	actions_types = list(/datum/action/item_action/flash)
 	var/obj/item/assembly/flash/installed
 
-/obj/item/clothing/glasses/sunglasses/stunglasses/Initialize()
+/obj/item/clothing/glasses/sunglasses/stunglasses/Initialize(mapload)
 	. = ..()
 	if (!installed)
 		installed = new(src)
@@ -491,7 +491,7 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
-/obj/item/clothing/glasses/godeye/Initialize()
+/obj/item/clothing/glasses/godeye/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
 

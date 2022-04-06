@@ -20,7 +20,7 @@
 	var/cannonmode = CLOWN_CANNON_INACTIVE
 	var/light_on = TRUE
 
-/obj/vehicle/sealed/car/clowncar/Initialize()
+/obj/vehicle/sealed/car/clowncar/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj,src)
 
@@ -246,7 +246,7 @@
 	key_type = null
 	explode_on_death = FALSE
 
-/obj/vehicle/sealed/car/clowncar/twitch_plays/Initialize()
+/obj/vehicle/sealed/car/clowncar/twitch_plays/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/twitch_plays/simple_movement)
 	GLOB.poi_list |= src

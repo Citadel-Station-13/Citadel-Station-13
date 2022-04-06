@@ -8,14 +8,14 @@
 	max_integrity = 200
 	var/obj/item/bodypart/storedpart
 	var/initial_icon_state
-	var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', 
-											"engineer" = 'icons/mob/augmentation/augments_engineer.dmi', 
-											"security" = 'icons/mob/augmentation/augments_security.dmi', 
-											"mining" = 'icons/mob/augmentation/augments_mining.dmi', 
-											"Talon" = 'icons/mob/augmentation/cosmetic_prosthetic/talon.dmi', 
-											"Nanotrasen" = 'icons/mob/augmentation/cosmetic_prosthetic/nanotrasen.dmi', 
-											"Hephaesthus" = 'icons/mob/augmentation/cosmetic_prosthetic/hephaestus.dmi', 
-											"Bishop" = 'icons/mob/augmentation/cosmetic_prosthetic/bishop.dmi', 
+	var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi',
+											"engineer" = 'icons/mob/augmentation/augments_engineer.dmi',
+											"security" = 'icons/mob/augmentation/augments_security.dmi',
+											"mining" = 'icons/mob/augmentation/augments_mining.dmi',
+											"Talon" = 'icons/mob/augmentation/cosmetic_prosthetic/talon.dmi',
+											"Nanotrasen" = 'icons/mob/augmentation/cosmetic_prosthetic/nanotrasen.dmi',
+											"Hephaesthus" = 'icons/mob/augmentation/cosmetic_prosthetic/hephaestus.dmi',
+											"Bishop" = 'icons/mob/augmentation/cosmetic_prosthetic/bishop.dmi',
 											"Xion" = 'icons/mob/augmentation/cosmetic_prosthetic/xion.dmi',
 											"Grayson" = 'icons/mob/augmentation/cosmetic_prosthetic/grayson.dmi',
 											"Cybersolutions" = 'icons/mob/augmentation/cosmetic_prosthetic/cybersolutions.dmi',
@@ -27,7 +27,7 @@
 	if(storedpart)
 		. += "<span class='notice'>Alt-click to eject the limb.</span>"
 
-/obj/machinery/aug_manipulator/Initialize()
+/obj/machinery/aug_manipulator/Initialize(mapload)
 	initial_icon_state = initial(icon_state)
 	return ..()
 

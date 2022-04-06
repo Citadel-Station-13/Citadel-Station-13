@@ -17,7 +17,7 @@
 	fire_sound = 'sound/effects/attackblob.ogg'
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
-/obj/item/gun/magic/bloodchill/Initialize()
+/obj/item/gun/magic/bloodchill/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 

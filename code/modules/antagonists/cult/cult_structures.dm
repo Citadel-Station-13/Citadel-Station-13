@@ -89,7 +89,7 @@
 	var/static/image/radial_shell = image(icon = 'icons/obj/wizard.dmi', icon_state = "construct-cult")
 	var/static/image/radial_unholy_water = image(icon = 'icons/obj/drinks.dmi', icon_state = "holyflask")
 
-/obj/structure/destructible/cult/talisman/Initialize()
+/obj/structure/destructible/cult/talisman/Initialize(mapload)
 	. = ..()
 	radial_unholy_water.color = "#333333"
 

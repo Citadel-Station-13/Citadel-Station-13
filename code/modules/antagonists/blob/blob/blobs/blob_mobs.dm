@@ -221,7 +221,7 @@
 	hud_type = /datum/hud/blobbernaut
 	var/independent = FALSE
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
+/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize(mapload)
 	. = ..()
 	if(independent)
 		pass_flags &= ~PASSBLOB

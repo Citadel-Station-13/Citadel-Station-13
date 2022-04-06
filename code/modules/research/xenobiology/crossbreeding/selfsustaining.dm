@@ -14,7 +14,7 @@ Self-sustaining extracts:
 	var/obj/item/slime_extract/extract
 
 //Just divides into the actual item.
-/obj/item/slimecross/selfsustaining/Initialize()
+/obj/item/slimecross/selfsustaining/Initialize(mapload)
 	..()
 	visible_message("<span class='warning'>The [src] shudders, and splits into four smaller extracts.</span>")
 	for(var/i = 0, i < 4, i++)

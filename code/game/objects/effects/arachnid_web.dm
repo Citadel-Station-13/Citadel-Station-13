@@ -49,7 +49,7 @@
 	density = FALSE
 	max_integrity = 60
 
-/obj/structure/arachnid/cocoon/Initialize()
+/obj/structure/arachnid/cocoon/Initialize(mapload)
 	icon_state = pick("cocoon1","cocoon2","cocoon3")
 	. = ..()
 

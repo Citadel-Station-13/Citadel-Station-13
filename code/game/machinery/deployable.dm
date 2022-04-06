@@ -126,7 +126,7 @@
 	var/deploy_message = TRUE
 
 
-/obj/structure/barricade/security/Initialize()
+/obj/structure/barricade/security/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/deploy), deploy_time)
 

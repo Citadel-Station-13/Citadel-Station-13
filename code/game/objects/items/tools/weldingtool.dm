@@ -41,7 +41,7 @@
 	wound_bonus = 0
 	bare_wound_bonus = 5
 
-/obj/item/weldingtool/Initialize()
+/obj/item/weldingtool/Initialize(mapload)
 	. = ..()
 	create_reagents(max_fuel)
 	reagents.add_reagent(/datum/reagent/fuel, max_fuel)

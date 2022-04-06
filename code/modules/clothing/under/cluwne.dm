@@ -8,7 +8,7 @@
 	can_adjust = 0
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
-/obj/item/clothing/under/cluwne/Initialize()
+/obj/item/clothing/under/cluwne/Initialize(mapload)
 	.=..()
 	ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
 	ADD_TRAIT(src, CURSED_ITEM_TRAIT, CLOTHING_TRAIT)

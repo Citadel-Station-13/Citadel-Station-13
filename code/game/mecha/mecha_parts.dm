@@ -15,14 +15,14 @@
 		return FALSE
 	user.visible_message("<span class='notice'>[user] attaches [src] to [M].</span>", "<span class='notice'>You attach [src] to [M].</span>")
 	return TRUE
-	
+
 /obj/item/mecha_parts/chassis
 	name = "Mecha Chassis"
 	icon_state = "backbone"
 	interaction_flags_item = NONE			//Don't pick us up!!
 	var/construct_type
 
-/obj/item/mecha_parts/chassis/Initialize()
+/obj/item/mecha_parts/chassis/Initialize(mapload)
 	. = ..()
 	if(construct_type)
 		AddComponent(construct_type)

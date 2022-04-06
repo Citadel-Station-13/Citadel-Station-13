@@ -32,7 +32,7 @@
     else
         UnregisterSignal(M, COMSIG_MOB_SAY)
 
-/obj/item/clothing/head/rice_hat/cursed/Initialize()
+/obj/item/clothing/head/rice_hat/cursed/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, SHAMEBRERO_TRAIT)
 

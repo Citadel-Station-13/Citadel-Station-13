@@ -8,7 +8,7 @@
 	var/mob/living/carbon/human/target
 	var/datum/antagonist/heretic/sac_targetter	//The heretic who used this to acquire the current target - gets cleared when target gets sacrificed.
 
-/obj/item/living_heart/Initialize()
+/obj/item/living_heart/Initialize(mapload)
 	. = ..()
 	GLOB.living_heart_cache.Add(src)	//Add is better than +=.
 
@@ -310,7 +310,7 @@
 	. += "This item can carve 'Grasping carving' - when stepped on it causes heavy damage to the legs and stuns for 5 seconds."
 	. += "This item can carve 'Mad carving' - when stepped on it causes dizzyness, jiterryness, temporary blindness, confusion , stuttering and slurring."
 
-/obj/item/melee/rune_knife/Initialize()
+/obj/item/melee/rune_knife/Initialize(mapload)
 	. = ..()
 	linked_action = new(src)
 

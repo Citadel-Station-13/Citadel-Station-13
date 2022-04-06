@@ -19,7 +19,7 @@
 	wound_bonus = -30
 	bare_wound_bonus = 15
 
-/obj/item/zombie_hand/Initialize()
+/obj/item/zombie_hand/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 

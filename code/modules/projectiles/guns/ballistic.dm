@@ -10,7 +10,7 @@
 	var/magazine_wording = "magazine"
 	var/sawn_item_state = "gun"
 
-/obj/item/gun/ballistic/Initialize()
+/obj/item/gun/ballistic/Initialize(mapload)
 	. = ..()
 	if(!spawnwithmagazine)
 		update_icon()

@@ -30,7 +30,7 @@
 
 	var/stored_power = 0//Power to deploy per tick
 
-/obj/machinery/power/am_control_unit/Initialize()
+/obj/machinery/power/am_control_unit/Initialize(mapload)
 	. = ..()
 	linked_shielding = list()
 	linked_cores = list()

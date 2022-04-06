@@ -50,7 +50,7 @@
 	var/can_be_rigged = TRUE
 	var/rigged = FALSE
 
-/obj/item/dice/Initialize()
+/obj/item/dice/Initialize(mapload)
 	. = ..()
 	result = roll(sides)
 	update_icon()
@@ -89,7 +89,7 @@
 	desc = "A die with six sides. 6 TIMES 255 TIMES 255 TILE TOTAL EXISTENCE, SQUARE YOUR MIND OF EDUCATED STUPID: 2 DOES NOT EXIST."
 	icon_state = "spaced6"
 
-/obj/item/dice/d6/space/Initialize()
+/obj/item/dice/d6/space/Initialize(mapload)
 	. = ..()
 	if(prob(10))
 		name = "spess cube"

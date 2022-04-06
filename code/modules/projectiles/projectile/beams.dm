@@ -30,7 +30,7 @@
 	wound_bonus = 0
 	damage = 25
 
-/obj/item/projectile/beam/laser/hellfire/Initialize()
+/obj/item/projectile/beam/laser/hellfire/Initialize(mapload)
 	. = ..()
 	transform *= 2
 
