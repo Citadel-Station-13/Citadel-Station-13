@@ -98,20 +98,16 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(atom/target, mob/user)
 	if(!chassis)
-		return
-	var/C = chassis.loc
-	chassis.use_power(energy_drain)
-	. = do_after(user, equip_cooldown, target=target)
-	if(!chassis || 	chassis.loc != C || src != chassis.selected || !(get_dir(chassis, target)&chassis.dir))
 		return FALSE
+	chassis.use_power(energy_drain)
+	return do_after(user, equip_cooldown, target, extra_checks = CALLBACK(src, .proc/do_after_checks, target), interaction_key = interaction_key)
 
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_mecha(atom/target, mob/user, delay)
-	if(!chassis)
-		return
-	var/C = chassis.loc
-	. = do_after(user, delay, target=target)
-	if(!chassis || 	chassis.loc != C || src != chassis.selected || !(get_dir(chassis, target)&chassis.dir))
-		return FALSE
+	return do_after(user, delay, target, extra_checks = CALLBACK(src, .proc/do_after_checks, target))
+
+/// do after checks for the mecha equipment do afters
+/obj/item/mecha_parts/mecha_equipment/proc/do_after_checks(atom/target)
+	return chassis && (get_dir(chassis, target) & chassis.dir)
 
 /obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/vehicle/sealed/mecha/M)
 	if(LAZYLEN(M.equipment)<M.max_equip)
