@@ -8,7 +8,8 @@
 	max_integrity = 120
 	smoothing_flags = SMOOTH_CORNERS
 	can_be_unanchored = FALSE
-	canSmoothWith = null
+	can_smooth_with = list(SMOOTH_GROUP_XENO_NEST)
+	smoothing_groups = list(SMOOTH_GROUP_XENO_NEST)
 	buildstacktype = null
 	flags_1 = NODECONSTRUCT_1
 	bolts = FALSE

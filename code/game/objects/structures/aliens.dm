@@ -119,7 +119,6 @@
 	max_integrity = 15
 	smoothing_groups = list(SMOOTH_GROUP_XENO_WEEDS)
 	can_smooth_with = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_XENO_STRUCTURAL, SMOOTH_GROUP_XENO_WEEDS)
-	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)
 	smoothing_flags = SMOOTH_CORNERS
 	var/last_expand = 0 //last world.time this weed expanded
 	var/growth_cooldown_low = 150

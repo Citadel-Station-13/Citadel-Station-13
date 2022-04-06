@@ -70,6 +70,8 @@
 	icon_state = "wood"
 	baseturfs = /turf/closed/indestructible/wood
 	smoothing_flags = SMOOTH_CORNERS
+	can_smooth_with = list(SMOOTH_GROUP_WALL_WOOD)
+	smoothing_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_WOOD)
 	canSmoothWith = list(/obj/structure/falsewall/wood, /turf/closed/wall/mineral/wood, /turf/closed/indestructible/wood)
 
 /turf/closed/indestructible/oldshuttle/corner
