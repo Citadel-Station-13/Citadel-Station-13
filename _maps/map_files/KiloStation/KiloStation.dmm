@@ -39443,6 +39443,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/chisel,
 /turf/open/floor/plasteel/dark,
 /area/service/library)
 "blB" = (

@@ -25370,6 +25370,7 @@
 	name = "Station Intercom";
 	pixel_x = 26
 	},
+/obj/item/chisel,
 /turf/open/floor/plasteel/dark,
 /area/service/library)
 "aVc" = (
