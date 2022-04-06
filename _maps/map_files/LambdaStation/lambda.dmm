@@ -38153,17 +38153,17 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bDq" = (
-/obj/machinery/sleeper,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "bDr" = (
-/obj/machinery/sleeper,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "bDs" = (

@@ -11916,12 +11916,10 @@
 /turf/open/floor/plasteel/white,
 /area/centcom/control)
 "BH" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "BI" = (
@@ -11936,12 +11934,10 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "BJ" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "BK" = (
@@ -16445,9 +16441,7 @@
 /turf/open/floor/holofloor/wood,
 /area/holodeck/rec_center/wrestlingarena)
 "Lh" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "Li" = (
@@ -46321,7 +46315,7 @@ KO
 KV
 KV
 KV
-Lb
+Lh
 Lb
 Lp
 Lp
