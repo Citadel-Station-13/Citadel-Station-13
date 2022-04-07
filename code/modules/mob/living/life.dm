@@ -66,9 +66,10 @@
 
 	//stuff in the stomach
 	handle_stomach()
-	handle_traits() // eye, ear, brain damages
 
 	handle_block_parry(seconds)
+
+	handle_traits() // eye, ear, brain damages
 
 	return TRUE
 
