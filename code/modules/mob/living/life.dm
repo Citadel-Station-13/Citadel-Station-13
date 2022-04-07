@@ -6,12 +6,11 @@
 	SHOULD_NOT_SLEEP(TRUE)
 	if(mob_transforming)
 		return
-	handle_traits() // eye, ear, brain damages
 	handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 	. = SEND_SIGNAL(src, COMSIG_LIVING_LIFE, seconds, times_fired)
 	if(!(. & COMPONENT_INTERRUPT_LIFE_PHYSICAL))
 		PhysicalLife(seconds, times_fired)
-	if(!(. & COMPONENT_INTERRUPT_LIFE_BIOLOGICAL) && !IS_IN_STASIS(src))
+	if(!(. & COMPONENT_INTERRUPT_LIFE_BIOLOGICAL))
 		BiologicalLife(seconds, times_fired)
 
 	// CODE BELOW SHOULD ONLY BE THINGS THAT SHOULD HAPPEN NO MATTER WHAT AND CAN NOT BE SUSPENDED!
@@ -67,6 +66,7 @@
 
 	//stuff in the stomach
 	handle_stomach()
+	handle_traits() // eye, ear, brain damages
 
 	handle_block_parry(seconds)
 

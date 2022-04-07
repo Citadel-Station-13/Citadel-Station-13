@@ -154,25 +154,22 @@
 	. = ..()
 	if(!.)
 		return
-	owner.mobility_flags &= ~MOBILITY_USE
-	owner.mobility_flags &= ~MOBILITY_PICKUP
-	owner.mobility_flags &= ~MOBILITY_PULL
-	owner.mobility_flags &= ~MOBILITY_HOLD
+	RegisterSignal(owner, COMSIG_LIVING_LIFE, .proc/InterruptBiologicalLife)
+	owner.mobility_flags &= ~(MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_PULL | MOBILITY_HOLD)
 	owner.update_mobility()
 	owner.add_filter("stasis_status_ripple", 2, list("type" = "ripple", "flags" = WAVE_BOUNDED, "radius" = 0, "size" = 2))
 	var/filter = owner.get_filter("stasis_status_ripple")
 	animate(filter, radius = 32, time = 15, size = 0, loop = -1)
 
+/datum/status_effect/grouped/stasis/proc/InterruptBiologicalLife()
+	return COMPONENT_INTERRUPT_LIFE_BIOLOGICAL 
 
 /datum/status_effect/grouped/stasis/tick()
 	update_time_of_death()
 
 /datum/status_effect/grouped/stasis/on_remove()
-	owner.mobility_flags |= MOBILITY_USE
-	owner.mobility_flags |= MOBILITY_PICKUP
-	owner.mobility_flags |= MOBILITY_PULL
-	owner.mobility_flags |= MOBILITY_HOLD
-	owner.update_mobility()
+	UnregisterSignal(owner, COMSIG_LIVING_LIFE)
+	owner.mobility_flags |= MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_PULL | MOBILITY_HOLD
 	owner.remove_filter("stasis_status_ripple")
 	update_time_of_death()
 	return ..()
