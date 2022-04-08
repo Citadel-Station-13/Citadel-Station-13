@@ -11,16 +11,16 @@
 #     - (fixes bugs)
 #   wip
 #     - (work in progress)
-#   qol
-#     - (quality of life)
+#   tweak
+#     - (tweaks something)
 #   soundadd
 #     - (adds a sound)
 #   sounddel
 #     - (removes a sound)
-#   rscadd
-#     - (adds a feature)
 #   rscdel
 #     - (removes a feature)
+#   rscadd
+#     - (adds a feature)
 #   imageadd
 #     - (adds an image or sprite)
 #   imagedel
@@ -29,6 +29,8 @@
 #     - (fixes spelling or grammar)
 #   experiment
 #     - (experimental change)
+#   tgs
+#     - (messing around with tgs)
 #   balance
 #     - (balance changes)
 #   code_imp
@@ -41,6 +43,10 @@
 #     - (makes changes to administrator tools)
 #   server
 #     - (miscellaneous changes to server)
+#   expansion
+#     - (expands something)
+#   qol
+#     - (quality of life)
 #################################
 
 # Your name.
