@@ -3603,6 +3603,7 @@
 #include "code\modules\surgery\advanced\necrotic_revival.dm"
 #include "code\modules\surgery\advanced\pacification.dm"
 #include "code\modules\surgery\advanced\revival.dm"
+#include "code\modules\surgery\advanced\robot_brainwashing.dm"
 #include "code\modules\surgery\advanced\toxichealing.dm"
 #include "code\modules\surgery\advanced\viral_bonding.dm"
 #include "code\modules\surgery\advanced\bioware\bioware.dm"

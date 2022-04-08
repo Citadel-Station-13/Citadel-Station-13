@@ -152,5 +152,5 @@
 	display_name = "Alien Surgery"
 	description = "Abductors did nothing wrong."
 	prereq_ids = list("exp_surgery", "alientech")
-	design_ids = list("surgery_brainwashing","surgery_zombie", "surgery_ext_dissection", "surgery_heal_combo_upgrade_femto")
+	design_ids = list("surgery_brainwashing", "surgery_robot_brainwashing", "surgery_zombie", "surgery_ext_dissection", "surgery_heal_combo_upgrade_femto")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
