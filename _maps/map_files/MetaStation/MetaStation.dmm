@@ -50579,9 +50579,6 @@
 /turf/open/floor/plasteel/dark,
 /area/engineering/storage/tech)
 "eAe" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -50595,6 +50592,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/treatment_center)
 "eAy" = (
@@ -81034,9 +81032,6 @@
 /turf/open/space/basic,
 /area/space)
 "vLV" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -81047,6 +81042,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/treatment_center)
 "vMm" = (
