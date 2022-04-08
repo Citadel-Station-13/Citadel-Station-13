@@ -37,20 +37,6 @@
 	#warn rethink this proc
 	return dir == DOWN
 
-/mob/verb/up()
-	set name = "Move Upwards"
-	set category = "IC"
-
-	if(ZMove(UP, null, TRUE))
-		to_chat(src, "<span class='notice'>You move upwards.</span>")
-
-/mob/verb/down()
-	set name = "Move Down"
-	set category = "IC"
-
-	if(ZMove(DOWN, null, TRUE))
-		to_chat(src, "<span class='notice'>You move down.</span>")
-
 
 //FALLING STUFF
 

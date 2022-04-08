@@ -542,7 +542,7 @@ RLD
 		if(!above)
 			to_chat(user, span_warning("There's nothing above [T]!"))
 			return
-	if(!proximity)
+	if(!proximity_flag)
 		if(!ranged || !range_check(A,user)) //early return not-in-range sanity.
 			return
 		if(target_check(A,user))

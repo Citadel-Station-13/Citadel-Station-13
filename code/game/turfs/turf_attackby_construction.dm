@@ -8,7 +8,7 @@
 	. = ..()
 	var/turf/target
 	var/list/modifiers = params2list(params)
-	if(modifiers["right"])
+	if(modifiers["ctrl"])
 		target = Above()
 		if(!target)
 			to_chat(user, "<span class='warning'>There's nothing above this turf!</span>")
@@ -27,57 +27,63 @@
 		return TRUE
 	if(target.attempt_plating_construction(C, user, params))
 		return TRUE
-	#warn rework this, check for ctrl for multiz upwards build.
-	if(istype(C, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = C
-		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-		var/obj/structure/lattice/catwalk/W = locate(/obj/structure/lattice/catwalk, src)
-		if(W)
-			to_chat(user, "<span class='warning'>There is already a catwalk here!</span>")
-			return
-		if(L)
-			if(R.use(1))
-				qdel(L)
-				to_chat(user, "<span class='notice'>You construct a catwalk.</span>")
-				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-				new/obj/structure/lattice/catwalk(src)
-			else
-				to_chat(user, "<span class='warning'>You need two rods to build a catwalk!</span>")
-			return
-		if(R.use(1))
-			to_chat(user, "<span class='notice'>You construct a lattice.</span>")
-			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-			ReplaceWithLattice()
-		else
-			to_chat(user, "<span class='warning'>You need one rod to build a lattice.</span>")
-		return
-	if(istype(C, /obj/item/stack/tile/plasteel))
-		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-		if(L)
-			var/obj/item/stack/tile/plasteel/S = C
-			if(S.use(1))
-				qdel(L)
-				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-				to_chat(user, "<span class='notice'>You build a floor.</span>")
-				PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-			else
-				to_chat(user, "<span class='warning'>You need one floor tile to build a floor!</span>")
-		else
-			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
-
-#warn impl
 
 /turf/proc/attempt_lattice_construction(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/stack/rods))
 		return FALSE
-
-
+	if(!(turf_construct_flags & TURF_CONSTRUCT_ROD_LATTICE))
+		return FALSE
+	if(locate(/obj/structure/lattice) in src)
+		return FALSE
+	var/obj/item/stack/rods/R = I
+	if(!R.use(1))
+		to_chat(user, span_warning("You need one rod to build a lattice."))
+		return FALSE
+	to_chat(user, span_notice("You construct a lattice."))
+	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	ReplaceWithLattice()
 	return TRUE
 
 /turf/proc/attempt_catwalk_construction(obj/item/I, mob/user, params)
+	if(!istype(I, /obj/item/stack/rods))
+		return FALSE
+	if(!(turf_construct_flags & TURF_CONSTRUCT_ROD_CATWALK))
+		return FALSE
+	if(locate(/obj/structure/lattice/catwalk) in src)
+		return FALSE
+	var/has_lattice = locate(/obj/structure/lattice) in src
+	var/obj/item/stack/rods/R = I
+	if(!R.use(has_lattice? 1 : 2))
+		to_chat(user, span_warning("You need [has_lattice? "one" : "two"] rod to build a catwalk."))
+		return FALSE
+	to_chat(user, span_notice("You construct a catwalk."))
+	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	new /obj/structure/lattice/catwalk(src)
+	return TRUE
 
 #warn plating direct flag too, check flags on all
 /turf/proc/attempt_plating_construction(obj/item/I, mob/user, params)
+	if(!(turf_construct_flags & TURF_CONSTRUCT_TILE_PLATING))
+		return FALSE
+	if(!istype(I, /obj/item/stack/tile/plasteel))
+		return FALSE
+	var/has_lattice = has_lattice()
+	if(!has_lattice && !(turf_construct_flags & TURF_CONSTRUCT_TILE_PLATING_DIRECT))
+		to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
+		return FALSE
+	var/obj/item/stack/tile/plasteel/S = I
+	if(!S.use(1))
+		to_chat(user, span_warning("You need one floor tile to build a floor!"))
+		return FALSE
+	var/obj/structure/lattice/L = locate() in src
+	var/catwalk_mitigation = FALSE
+	if(istype(L, /obj/structure/lattice/catwalk))
+		catwalk_mitigation = TRUE
+		new /obj/item/stack/rods(src)
+	qdel(L)
+	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	to_chat(user, "<span class='notice'>You build a floor[catwalk_mitigation && ", tearing away the excess rods from the catwalk"].</span>")
+	PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 
 /turf/proc/has_lattice()
 	return locate(/obj/structure/lattice) in src
@@ -109,7 +115,7 @@
 			is_under = TRUE
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
-			var/lattice_mitigation = has_lattice? 2 : 0
+			var/lattice_mitigation = has_lattice()? ((locate(/obj/structure/lattice/catwalk) in src)? 4 : 2) : 0
 			if(is_under && !(turf_construct_flags & TURF_CONSTRUCT_ALLOW_FROM_UNDER))
 				return FALSE
 			if(!(turf_construct_flags & TURF_CONSTRUCT_RCD_PLATING))

@@ -139,7 +139,7 @@
 		QDEL_NULL(hook)
 
 /obj/structure/hoist/deconstruct(disassembled)
-	var/obj/item/hoist_kit/kit = new(location)
+	var/obj/item/hoist_kit/kit = new(drop_location())
 	transfer_fingerprints_to(kit)
 	return ..()
 
@@ -171,7 +171,7 @@
 		to_chat(user, span_notice("You switch the direction of the pulley."))
 		return
 
-	if (!hoistee)
+	if (!hook.attached)
 		user.visible_message(
 			span_notice("[user] begins to [movtext] the clamp."),
 			span_notice("You begin to [movtext] the clamp."),
@@ -179,13 +179,12 @@
 		move_dir(movedir, 0)
 		return
 
-	check_consistency()
-
 	user.visible_message(
-		span_notice("[user] begins to [movtext] \the [hoistee]!"),
-		span_notice("You begin to [movtext] \the [hoistee]!"),
+		span_notice("[user] begins to [movtext] \the [hook.attached]!"),
+		span_notice("You begin to [movtext] \the [hook.attached]!"),
 		span_notice("You hear the sound of a crank."))
-	if (do_after(user, (1 SECONDS) * size / 4, src))
+
+	if (do_after(user, 1 SECONDS, src))
 		move_dir(movedir, 1)
 
 /obj/structure/hoist/proc/collapse_kit(atom/location)
