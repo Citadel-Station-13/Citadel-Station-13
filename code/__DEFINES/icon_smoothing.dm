@@ -78,11 +78,10 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_WALL_METALLIC		S_TURF(18)
 #define SMOOTH_GROUP_WALL_BANANIUM		S_TURF(19)
 #define SMOOTH_GROUP_WALL_SANDSTONE		S_TURF(20)
-#define SMOOTH_GROUP_WALL_WOOD			S_TURF(21)
-#define SMOOTH_GROUP_WALL_TITANIUM		S_TURF(22)
-#define SMOOTH_GROUP_WALL_PLASTITANIUM	S_TURF(23)
+#define SMOOTH_GROUP_WALL_IRON			S_TURF(23)
+#define SMOOTH_GROUP_WALL_PLASTITANIUM	S_TURF(24)
 
-#define MAX_S_TURF SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS //Always match this value with the one above it.
+#define MAX_S_TURF SMOOTH_GROUP_WALL_PLASTITANIUM //Always match this value with the one above it.
 
 #define S_OBJ(num) (MAX_S_TURF + 1 + num)
 /* /obj included */
