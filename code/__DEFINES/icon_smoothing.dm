@@ -53,13 +53,13 @@ DEFINE_BITFIELD(smoothing_junction, list(
 /**SMOOTHING GROUPS
  * Groups of things to smooth with.
  * * Contained in the `list/smoothing_groups` variable.
- * * Matched with the `list/canSmoothWith` variable to check whether smoothing is possible or not.
+ * * Matched with the `list/can_smooth_with` variable to check whether smoothing is possible or not.
  */
 
 #define S_TURF(num) ((24 * 0) + num) //Not any different from the number itself, but kept this way in case someone wants to expand it by adding stuff before it.
 /* /turf only */
 #define SMOOTH_GROUP_WALL_GOLD			S_TURF(1)
-#define SMOOTH_GROUP_WALL				S_TURF(2)		// all walls should have this. all walls should not necessarily smooth to this.
+#define SMOOTH_GROUP_WALL_MATERIAL		S_TURF(2)
 #define SMOOTH_GROUP_WALL_TITANIUM		S_TURF(3)
 #define SMOOTH_GROUP_WALL_DIAMOND		S_TURF(4)
 #define SMOOTH_GROUP_WALL_SILVER		S_TURF(5)
@@ -72,22 +72,33 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_WALL_BRICK			S_TURF(12)
 #define SMOOTH_GROUP_WALL_BRICK_NORMAL	S_TURF(13)
 #define SMOOTH_GROUP_ROAD				S_TURF(14)
-#define SMOOTH_GROUP_FLOOR				S_TURF(15)
+#define SMOOTH_GROUP_FLOOR_LAVA			S_TURF(13)
 #define SMOOTH_GROUP_WALL_ALIEN			S_TURF(16)
 #define SMOOTH_GROUP_WALL_CLOCKWORK		S_TURF(17)
 #define SMOOTH_GROUP_WALL_METALLIC		S_TURF(18)
 #define SMOOTH_GROUP_WALL_BANANIUM		S_TURF(19)
 #define SMOOTH_GROUP_WALL_SANDSTONE		S_TURF(20)
-#define SMOOTH_GROUP_WALL_IRON			S_TURF(23)
-#define SMOOTH_GROUP_WALL_PLASTITANIUM	S_TURF(24)
+
+
+#define SMOOTH_GROUP_WALL_PLASTITANIUM	S_TURF(23)
+#define SMOOTH_GROUP_CARPET_RED			S_TURF(24)
+#define SMOOTH_GROUP_CARPET_BLUE		S_TURF(25)
+#define SMOOTH_GROUP_CARPET_GREEN		S_TURF(26)
+#define SMOOTH_GROUP_CARPET_ORANGE		S_TURF(27)
+#define SMOOTH_GROUP_CARPET_PURPLE		S_TURF(28)
+#define SMOOTH_GROUP_CARPET_CYAN		S_TURF(29)
+#define SMOOTH_GROUP_CARPET_ROYALBLACK	S_TURF(30)
+#define SMOOTH_GROUP_CARPET_ROYALBLUE	S_TURF(31)
+#define SMOOTH_GROUP_CARPET_BLACK		S_TURF(32)
+#define SMOOTH_GROUP_WALL_IRON			S_TURF(33)
 
 #define MAX_S_TURF SMOOTH_GROUP_WALL_PLASTITANIUM //Always match this value with the one above it.
 
 #define S_OBJ(num) (MAX_S_TURF + 1 + num)
 /* /obj included */
-#define SMOOTH_GROUP_WINDOW				S_OBJ(1)		// all fulltile windows should have this. all fulltile windows should not necessarily smooth to this.
-#define SMOOTH_GROUP_TABLE				S_OBJ(2)		// all tables should have this. all tables should not necessarily smooth to this.
-#define SMOOTH_GROUP_CLOCKCULT			S_OBJ(3)		// all clockcult objects should have this. all clockcult objects should not necessarily smooth to this.
+#define SMOOTH_GROUP_XENO_WEEDS			S_OBJ(1)
+#define SMOOTH_GROUP_SANDBAG			S_OBJ(2)
+
 #define SMOOTH_GROUP_FALSEWALL			S_OBJ(4)
 #define SMOOTH_GROUP_LATTICE			S_OBJ(5)
 #define SMOOTH_GROUP_CATWALK			S_OBJ(6)
@@ -96,12 +107,33 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_TABLE_GLASS		S_OBJ(9)
 #define SMOOTH_GROUP_TABLE_METAL		S_OBJ(10)
 #define SMOOTH_GROUP_TABLE_ALIEN		S_OBJ(11)
-#define SMOOTH_GROUP_ABDUCTOR			S_OBJ(12)
-#define SMOOTH_GROUP_AIRLOCK			S_OBJ(13)
+#define SMOOTH_GROUP_PAPER_FRAME		S_OBJ(12)
+#define SMOOTH_GROUP_XENO_NEST			S_OBJ(13)
 #define SMOOTH_GROUP_SHUTTLE_HEATER		S_OBJ(14)
 #define SMOOTH_GROUP_WINDOW_SHUTTLE		S_OBJ(15)
 #define SMOOTH_GROUP_TABLE_PLASMAGLASS	S_OBJ(16)
+#define SMOOTH_GROUP_WINDOW_TITANIUM	S_OBJ(17)
+#define SMOOTH_GROUP_WINDOW_PLASTITANIUM	S_OBJ(18)
+#define SMOOTH_GROUP_WINDOW_CLOCKWORK	S_OBJ(18)
 
-#define MAX_S_OBJ SMOOTH_GROUP_GAS_TANK //Always match this value with the one above it.
+#define MAX_S_OBJ SMOOTH_GROUP_TABLE_PLASMAGLASS //Always match this value with the one above it.
+
+#define S_ABSTRACT(num) (MAX_S_OBJ + 1 + num)
+/* These are for "categories". */
+
+#define SMOOTH_GROUP_WALL					S_ABSTRACT(1)		// all walls should have this. all walls should not necessarily smooth to this.
+#define SMOOTH_GROUP_FLOOR					S_ABSTRACT(2)
+#define SMOOTH_GROUP_WINDOW					S_ABSTRACT(3)		// all fulltile windows should have this. all fulltile windows should not necessarily smooth to this.
+#define SMOOTH_GROUP_TABLE					S_ABSTRACT(4)		// all tables should have this. all tables should not necessarily smooth to this.
+#define SMOOTH_GROUP_CLOCKCULT				S_ABSTRACT(5)		// all clockcult objects should have this. all clockcult objects should not necessarily smooth to this.
+#define SMOOTH_GROUP_SHUTTLE_EXTERIOR		S_ABSTRACT(6)
+#define SMOOTH_GROUP_SURVIVAL_POD_EXTERIOR	S_ABSTRACT(7)
+#define SMOOTH_GROUP_ABDUCTOR				S_ABSTRACT(8)
+#define SMOOTH_GROUP_AIRLOCK				S_ABSTRACT(9)
+#define SMOOTH_GROUP_XENO_STRUCTURAL		S_ABSTRACT(10)
+#define SMOOTH_GROUP_CARPET					S_ABSTRACT(11)
+#define SMOOTH_GROUP_SHUTTLE_WALL			S_ABSTRACT(12)
+
+#define MAX_S_ABSTRACT						SMOOTH_GROUP_XENO_STRUCTURAL // always match this value with the one above it.
 
 #warn get all currenet groups in, update max's.

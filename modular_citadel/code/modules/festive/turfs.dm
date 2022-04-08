@@ -144,6 +144,7 @@
 	smoothing_flags = SMOOTH_CORNERS
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK)
 	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK_NORMAL, SMOOTH_GROUP_WALL_BRICK)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK, SMOOTH_GROUP_WALL_BRICK_NORMAL)
 
 /turf/closed/festive/greybrick/greybrickns
 	name = "grey brick wall"
@@ -269,6 +270,7 @@
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_we_right_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -294,6 +296,7 @@
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_we_left_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -319,6 +322,7 @@
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_ns_right_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -344,6 +348,7 @@
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_ns_left_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -361,6 +366,7 @@
 	smoothing_flags = SMOOTH_CORNERS
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK)
 	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK_NORMAL, SMOOTH_GROUP_WALL_BRICK)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK, SMOOTH_GROUP_WALL_BRICK_NORMAL)
 
 /turf/closed/festive/redbrick/redbrickns
 	name = "red brick wall"
@@ -486,6 +492,7 @@
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_we_right_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -511,6 +518,7 @@
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_we_left_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -536,6 +544,7 @@
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_ns_right_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -561,6 +570,7 @@
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_ns_left_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -578,6 +588,7 @@
 	smoothing_flags = SMOOTH_CORNERS
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK)
 	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK_NORMAL, SMOOTH_GROUP_WALL_BRICK)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK, SMOOTH_GROUP_WALL_BRICK_NORMAL)
 
 /turf/closed/festive/whitebrick/whitebrickns
 	name = "white brick wall"
@@ -703,6 +714,7 @@
 	icon = 'modular_citadel/code/modules/festive/white_brick_window.dmi'
 	icon_state = "white_brick_window_we_right_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -728,6 +740,7 @@
 	icon = 'modular_citadel/code/modules/festive/white_brick_window.dmi'
 	icon_state = "white_brick_window_we_left_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -753,6 +766,7 @@
 	icon = 'modular_citadel/code/modules/festive/white_brick_window.dmi'
 	icon_state = "white_brick_window_ns_right_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -778,6 +792,7 @@
 	icon = 'modular_citadel/code/modules/festive/white_brick_window.dmi'
 	icon_state = "white_brick_window_ns_left_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -792,6 +807,7 @@
 	smoothing_flags = SMOOTH_CORNERS
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK)
 	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK_NORMAL, SMOOTH_GROUP_WALL_BRICK)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK, SMOOTH_GROUP_WALL_BRICK_NORMAL)
 	color = "#fff6cc"
 
 /turf/closed/festive/creambrick/creambrickns
@@ -921,6 +937,7 @@
 	icon = 'modular_citadel/code/modules/festive/white_brick_window.dmi'
 	icon_state = "white_brick_window_we_right_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -946,6 +963,7 @@
 	icon = 'modular_citadel/code/modules/festive/white_brick_window.dmi'
 	icon_state = "white_brick_window_we_left_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -971,6 +989,7 @@
 	icon = 'modular_citadel/code/modules/festive/white_brick_window.dmi'
 	icon_state = "white_brick_window_ns_right_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -996,6 +1015,7 @@
 	icon = 'modular_citadel/code/modules/festive/white_brick_window.dmi'
 	icon_state = "white_brick_window_ns_left_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -1011,6 +1031,7 @@
 	smoothing_flags = SMOOTH_CORNERS
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK)
 	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK_NORMAL, SMOOTH_GROUP_WALL_BRICK)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK, SMOOTH_GROUP_WALL_BRICK_NORMAL)
 
 /turf/closed/festive/bluebrick/bluebrickns
 	name = "blue brick wall"
@@ -1136,6 +1157,7 @@
 	icon = 'modular_citadel/code/modules/festive/blue_brick_window.dmi'
 	icon_state = "blue_brick_window_we_right_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -1161,6 +1183,7 @@
 	icon = 'modular_citadel/code/modules/festive/blue_brick_window.dmi'
 	icon_state = "blue_brick_window_we_left_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -1186,6 +1209,7 @@
 	icon = 'modular_citadel/code/modules/festive/blue_brick_window.dmi'
 	icon_state = "blue_brick_window_ns_right_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -1211,6 +1235,7 @@
 	icon = 'modular_citadel/code/modules/festive/blue_brick_window.dmi'
 	icon_state = "blue_brick_window_ns_left_end"
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -1232,6 +1257,7 @@
 	smoothing_flags = SMOOTH_CORNERS
 	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK)
 	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK_NORMAL, SMOOTH_GROUP_WALL_BRICK)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK, SMOOTH_GROUP_WALL_BRICK_NORMAL)
 
 /turf/closed/festive/greypanel/greypanelns
 	name = "grey panel wall"

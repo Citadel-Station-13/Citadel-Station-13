@@ -3,7 +3,8 @@
 	desc = "A huge chunk of material used to separate rooms."
 	icon = 'icons/turf/walls/materialwall.dmi'
 	icon_state = "wall"
-	canSmoothWith = list(/turf/closed/wall/material)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_MATERIAL)
+	can_smooth_with = list(SMOOTH_GROUP_WALL_MATERIAL)
 	smoothing_flags = SMOOTH_CORNERS
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
