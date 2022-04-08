@@ -39,6 +39,8 @@
 	icon = 'modular_citadel/code/modules/festive/cobblestone.dmi'
 	icon_state = "unsmooth"
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	smoothing_groups = list(SMOOTH_GROUP_FLOOR_COBBLESTONE, SMOOTH_GROUP_FLOOR)
+	can_smooth_with = list(SMOOTH_GROUP_FLOOR_COBBLESTONE)
 	canSmoothWith = list(/turf/open/floor/festive/cobblestone)
 	initial_gas_mix = FESTIVE_ATMOS
 	planetary_atmos = 1
@@ -54,7 +56,8 @@
 	icon = 'modular_citadel/code/modules/festive/sidewalk.dmi'
 	icon_state = "unsmooth"
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	canSmoothWith = list(/turf/open/floor/festive/sidewalk)
+	smoothing_groups = list(SMOOTH_GROUP_SIDEWALK, SMOOTH_GROUP_FLOOR)
+	can_smooth_with = list(SMOOTH_GROUP_SIDEWALK)
 	initial_gas_mix = FESTIVE_ATMOS
 	planetary_atmos = 1
 
@@ -64,7 +67,8 @@
 	icon = 'modular_citadel/code/modules/festive/alleywaybricks.dmi'
 	icon_state = "unsmooth"
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	canSmoothWith = list(/turf/open/floor/festive/alleyway, /turf/open/floor/festive/white_alleyway)
+	smoothing_groups = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_ALLEYWAY)
+	can_smooth_with = list(SMOOTH_GROUP_ALLEYWAY)
 	initial_gas_mix = FESTIVE_ATMOS
 	planetary_atmos = 1
 
@@ -79,7 +83,8 @@
 	icon = 'modular_citadel/code/modules/festive/white_alleywaybricks.dmi'
 	icon_state = "unsmooth"
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	canSmoothWith = list(/turf/open/floor/festive/alleyway, /turf/open/floor/festive/white_alleyway)
+	smoothing_groups = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_ALLEYWAY)
+	can_smooth_with = list(SMOOTH_GROUP_ALLEYWAY)
 	initial_gas_mix = FESTIVE_ATMOS
 	planetary_atmos = 1
 
@@ -89,7 +94,8 @@
 	icon = 'modular_citadel/code/modules/festive/trainplatform.dmi'
 	icon_state = "unsmooth"
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	canSmoothWith = list(/turf/open/floor/festive/trainplatform)
+	smoothing_groups = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_TRAIN_PLATFORM)
+	can_smooth_with = list(SMOOTH_GROUP_TRAIN_PLATFORM)
 	initial_gas_mix = FESTIVE_ATMOS
 	planetary_atmos = 1
 

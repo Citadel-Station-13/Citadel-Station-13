@@ -255,7 +255,8 @@
 	explosion_block = 20
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_DIAGONAL_CORNERS
-	canSmoothWith = list(/turf/closed/wall/r_wall/syndicate, /turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plastitanium, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_WALL)
+	can_smooth_with = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_WINDOW_PLASTITANIUM, SMOOTH_GROUP_SHUTTLE_HEATER)
 
 /turf/closed/wall/r_wall/syndicate/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	return FALSE
@@ -278,7 +279,8 @@
 /turf/closed/wall/r_wall/syndicate/pirate
 	desc = "Yarr just try to blow this to smithereens!"
 	explosion_block = 30
-	canSmoothWith = list(/turf/closed/wall/r_wall/syndicate/pirate, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plastitanium/pirate, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_WALL)
+	can_smooth_with = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_WINDOW_PLASTITANIUM, SMOOTH_GROUP_SHUTTLE_HEATER)
 
 /turf/closed/wall/r_wall/syndicate/pirate/nodiagonal
 	smoothing_flags = SMOOTH_CORNERS

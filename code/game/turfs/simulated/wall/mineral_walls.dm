@@ -4,7 +4,6 @@
 	icon_state = ""
 	var/last_event = 0
 	var/active = null
-	canSmoothWith = null
 	smoothing_flags = SMOOTH_CORNERS
 
 /turf/closed/wall/mineral/gold
@@ -182,8 +181,8 @@
 	sheet_type = /obj/item/stack/sheet/mineral/abductor
 	slicing_duration = 200   //alien wall takes twice as much time to slice
 	explosion_block = 3
-	can_smooth_with = list(SMOOTH_GROUP_WALL_ABDUCTOR)
-	smoothing_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_ABDUCTOR)
+	can_smooth_with = list(SMOOTH_GROUP_WALL_ALIEN)
+	smoothing_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_ALIEN)
 /////////////////////Titanium walls/////////////////////
 
 /turf/closed/wall/mineral/titanium //has to use this path due to how building walls works
@@ -196,7 +195,8 @@
 	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_DIAGONAL_CORNERS
-	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater, /obj/structure/falsewall/titanium)
+	smoothing_groups = lisT(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_TITANIUM)
+	can_smooth_with = list(SMOOTH_GROUP_WALL_TITANIUM, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_HEATER)
 
 /turf/closed/wall/mineral/titanium/nodiagonal
 	smoothing_flags = SMOOTH_CORNERS
@@ -258,7 +258,8 @@
 	explosion_block = 4
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_DIAGONAL_CORNERS
-	canSmoothWith = list(/turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plastitanium, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_WALL)
+	can_smooth_with = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_WINDOW_PLASTITANIUM, SMOOTH_GROUP_SHUTTLE_HEATER)
 
 /turf/closed/wall/mineral/plastitanium/nodiagonal
 	smoothing_flags = SMOOTH_CORNERS

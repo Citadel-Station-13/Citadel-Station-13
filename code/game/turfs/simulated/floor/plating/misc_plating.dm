@@ -73,7 +73,8 @@
 	return
 
 /turf/open/floor/plating/ashplanet/ash
-	canSmoothWith = list(/turf/open/floor/plating/ashplanet/ash, /turf/closed)
+	smoothing_groups = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_FLOOR_ASH)
+	can_smooth_with = list(SMOOTH_GROUP_FLOOR_ASH, SMOOTH_GROUP_WALL)
 	layer = HIGH_TURF_LAYER
 	slowdown = 1
 
@@ -83,7 +84,8 @@
 	icon_state = "rockyash"
 	smooth_icon = 'icons/turf/floors/rocky_ash.dmi'
 	layer = MID_TURF_LAYER
-	canSmoothWith = list(/turf/open/floor/plating/ashplanet/rocky, /turf/closed)
+	smoothing_groups = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_FLOOR_ROCKY)
+	can_smooth_with = list(SMOOTH_GROUP_FLOOR_ROCKY, SMOOTH_GROUP_WALL)
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
@@ -233,7 +235,8 @@
 
 /turf/open/floor/plating/snowed/smoothed
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	canSmoothWith = list(/turf/open/floor/plating/snowed/smoothed, /turf/open/floor/plating/snowed)
+	can_smooth_with = list(SMOOTH_GROUP_FLOOR_SNOW)
+	can_smooth_with = list(SMOOTH_GROUP_FLOOR_SNOW)
 	planetary_atmos = TRUE
 	icon = 'icons/turf/floors/snow_turf.dmi'
 	icon_state = "smooth"

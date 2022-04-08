@@ -784,7 +784,8 @@
 	framestack = /obj/item/stack/sheet/mineral/abductor
 	buildstackamount = 1
 	framestackamount = 1
-	canSmoothWith = null
+	smoothing_groups = list(SMOOTH_GROUP_TABLE_ALIEN, SMOOTH_GROUP_ABDUCTOR, SMOOTH_GROUP_TABLE)
+	can_smooth_with = list(SMOOTH_GROUP_TABLE_ALIEN)
 	frame = /obj/structure/table_frame/abductor
 
 /obj/structure/table/optable/abductor

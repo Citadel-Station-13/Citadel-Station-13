@@ -7,7 +7,8 @@
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock"
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	canSmoothWith = null
+	smoothing_groups = lisT(SMOOTH_GROUP_WALL_MINERAL, SMOOTH_GROUP_WALL)
+	can_smooth_with = list(SMOOTH_GROUP_WALL_MINERAL)
 	baseturfs = /turf/open/floor/plating/asteroid/airless
 	initial_gas_mix = AIRLESS_ATMOS
 	opacity = TRUE
@@ -28,15 +29,11 @@
 	var/weak_turf = FALSE
 
 /turf/closed/mineral/Initialize()
-	#warn ????
-	if (!canSmoothWith)
-		canSmoothWith = list(/turf/closed/mineral, /turf/closed/indestructible)
 	. = ..()
 	var/matrix/M = new
 	M.Translate(-4, -4)
 	transform = M
 	icon = smooth_icon
-
 
 /turf/closed/mineral/proc/Spread_Vein()
 	var/spreadChance = initial(mineralType.spreadChance)

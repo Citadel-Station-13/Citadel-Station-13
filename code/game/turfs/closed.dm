@@ -189,7 +189,8 @@
 	desc = "A thick, seemingly indestructible stone wall."
 	icon = 'icons/turf/walls/boss_wall.dmi'
 	icon_state = "wall"
-	canSmoothWith = list(/turf/closed/indestructible/riveted/boss, /turf/closed/indestructible/riveted/boss/see_through)
+	smoothing_groups = list(SMOOTH_GROUP_WALL_BOSS, SMOOTH_GROUP_WALL)
+	can_smooth_with = list(SMOOTH_GROUP_WALL_BOSS)
 	explosion_block = 50
 	baseturfs = /turf/closed/indestructible/riveted/boss
 
@@ -218,7 +219,8 @@
 	desc = "The incredible compressive forces that formed this sturdy ice wall gave it a blue color."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "ice"
-	canSmoothWith = list(/turf/closed/indestructible/rock/glacierrock/blue)
+	smoothing_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_BLUEGLACIER)
+	can_smooth_with = list(SMOOTH_GROUP_WALL_BLUEGLACIER)
 
 /turf/closed/get_yelling_resistance(power)
 	return yelling_resistance + (power * yelling_dampen)

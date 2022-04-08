@@ -1,4 +1,5 @@
 /// Makes sure items using GAGS have all the icon states needed to work
+/*
 /datum/unit_test/greyscale_item_icon_states
 
 /datum/unit_test/greyscale_item_icon_states/Run()
@@ -22,6 +23,10 @@
 		var/belt_icon_state = initial(item_path.belt_icon_state) || initial(item_path.icon_state)
 		if(belt && !belt.icon_states[belt_icon_state])
 			Fail("[belt.DebugName()] is missing a sprite for the belt overlay for [item_path]. Expected icon state: '[belt_icon_state]'")
+*/
+
+// commented out because we use one icon file for all slots, meaning [worn_state] is not necessarily enough.
+// we can remake the unit test at a later date.
 
 /// Makes sure objects using greyscale configs have, if any, the correct number of colors
 /datum/unit_test/greyscale_color_count
