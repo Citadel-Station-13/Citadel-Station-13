@@ -1,0 +1,5 @@
+author: "Arturlang"
+delete-after: True
+changes: 
+  - rscadd: "Adds stasis beds and related mechanics"
+  - rscdel: "Removed mapped in sleepers from station maps. Shuttles have it but centcomm doesn't."
