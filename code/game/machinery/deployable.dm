@@ -107,9 +107,9 @@
 	pass_flags = LETPASSTHROW
 	bar_material = SAND
 	climbable = TRUE
-	smoothing_flags = SMOOTH_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_SANDBAG)
-	can_smooth_with = list(SMOOTH_GROUP_SANDBAG, SMOOTH_GROUP_WALL)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_SANDBAG)
+	smooth_with = list(SMOOTH_GROUP_SANDBAG, SMOOTH_GROUP_WALL)
 /obj/structure/barricade/security
 	name = "security barrier"
 	desc = "A deployable barrier. Provides good cover in fire fights."

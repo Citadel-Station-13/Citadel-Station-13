@@ -38,9 +38,9 @@
 	baseturfs = /turf/open/floor/festive/cobblestone
 	icon = 'modular_citadel/code/modules/festive/cobblestone.dmi'
 	icon_state = "unsmooth"
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	smoothing_groups = list(SMOOTH_GROUP_FLOOR_COBBLESTONE, SMOOTH_GROUP_FLOOR)
-	can_smooth_with = list(SMOOTH_GROUP_FLOOR_COBBLESTONE)
+	smooth_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	smooth_groups = list(SMOOTH_GROUP_FLOOR_COBBLESTONE, SMOOTH_GROUP_FLOOR)
+	smooth_with = list(SMOOTH_GROUP_FLOOR_COBBLESTONE)
 	canSmoothWith = list(/turf/open/floor/festive/cobblestone)
 	initial_gas_mix = FESTIVE_ATMOS
 	planetary_atmos = 1
@@ -55,9 +55,9 @@
 	baseturfs = /turf/open/floor/festive/sidewalk
 	icon = 'modular_citadel/code/modules/festive/sidewalk.dmi'
 	icon_state = "unsmooth"
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	smoothing_groups = list(SMOOTH_GROUP_SIDEWALK, SMOOTH_GROUP_FLOOR)
-	can_smooth_with = list(SMOOTH_GROUP_SIDEWALK)
+	smooth_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	smooth_groups = list(SMOOTH_GROUP_SIDEWALK, SMOOTH_GROUP_FLOOR)
+	smooth_with = list(SMOOTH_GROUP_SIDEWALK)
 	initial_gas_mix = FESTIVE_ATMOS
 	planetary_atmos = 1
 
@@ -66,9 +66,9 @@
 	baseturfs = /turf/open/floor/festive/alleyway
 	icon = 'modular_citadel/code/modules/festive/alleywaybricks.dmi'
 	icon_state = "unsmooth"
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	smoothing_groups = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_ALLEYWAY)
-	can_smooth_with = list(SMOOTH_GROUP_ALLEYWAY)
+	smooth_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	smooth_groups = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_ALLEYWAY)
+	smooth_with = list(SMOOTH_GROUP_ALLEYWAY)
 	initial_gas_mix = FESTIVE_ATMOS
 	planetary_atmos = 1
 
@@ -82,9 +82,9 @@
 	baseturfs = /turf/open/floor/festive/alleyway
 	icon = 'modular_citadel/code/modules/festive/white_alleywaybricks.dmi'
 	icon_state = "unsmooth"
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	smoothing_groups = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_ALLEYWAY)
-	can_smooth_with = list(SMOOTH_GROUP_ALLEYWAY)
+	smooth_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	smooth_groups = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_ALLEYWAY)
+	smooth_with = list(SMOOTH_GROUP_ALLEYWAY)
 	initial_gas_mix = FESTIVE_ATMOS
 	planetary_atmos = 1
 
@@ -93,9 +93,9 @@
 	baseturfs = /turf/open/floor/festive/trainplatform
 	icon = 'modular_citadel/code/modules/festive/trainplatform.dmi'
 	icon_state = "unsmooth"
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	smoothing_groups = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_TRAIN_PLATFORM)
-	can_smooth_with = list(SMOOTH_GROUP_TRAIN_PLATFORM)
+	smooth_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	smooth_groups = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_TRAIN_PLATFORM)
+	smooth_with = list(SMOOTH_GROUP_TRAIN_PLATFORM)
 	initial_gas_mix = FESTIVE_ATMOS
 	planetary_atmos = 1
 
@@ -147,80 +147,80 @@
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_wall.dmi'
 	icon_state = "grey_brick"
-	smoothing_flags = SMOOTH_CORNERS
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK_NORMAL, SMOOTH_GROUP_WALL_BRICK)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK, SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK_NORMAL, SMOOTH_GROUP_WALL_BRICK)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK, SMOOTH_GROUP_WALL_BRICK_NORMAL)
 
 /turf/closed/festive/greybrick/greybrickns
 	name = "grey brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_wall.dmi'
 	icon_state = "grey_brick_wall_ns"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/greybrick/greybrickwe
 	name = "grey brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_wall.dmi'
 	icon_state = "grey_brick_wall_we"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/greybrick/greybrickcornerse
 	name = "grey brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_wall.dmi'
 	icon_state = "grey_brick_corner_se"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/greybrick/greybrickcornersw
 	name = "grey brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_wall.dmi'
 	icon_state = "grey_brick_corner_sw"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/greybrick/greybrickcornerne
 	name = "grey brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_wall.dmi'
 	icon_state = "grey_brick_corner_ne"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/greybrick/greybrickcornernw
 	name = "grey brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_wall.dmi'
 	icon_state = "grey_brick_corner_nw"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/greybrick/greybricktn
 	name = "grey brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_wall.dmi'
 	icon_state = "grey_brick_t_n"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/greybrick/greybrickts
 	name = "grey brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_wall.dmi'
 	icon_state = "grey_brick_t_s"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/greybrick/greybricktw
 	name = "grey brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_wall.dmi'
 	icon_state = "grey_brick_t_w"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/greybrick/greybrickte
 	name = "grey brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_wall.dmi'
 	icon_state = "grey_brick_t_e"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /obj/structure/festive/greybrick/windowdoorweend1
 	name = "grey window"
@@ -275,8 +275,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_we_right_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -301,8 +301,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_we_left_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -327,8 +327,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_ns_right_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -353,8 +353,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_ns_left_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -369,80 +369,80 @@
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/red_brick_wall.dmi'
 	icon_state = "red_brick"
-	smoothing_flags = SMOOTH_CORNERS
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK_NORMAL, SMOOTH_GROUP_WALL_BRICK)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK, SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK_NORMAL, SMOOTH_GROUP_WALL_BRICK)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK, SMOOTH_GROUP_WALL_BRICK_NORMAL)
 
 /turf/closed/festive/redbrick/redbrickns
 	name = "red brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/red_brick_wall.dmi'
 	icon_state = "red_brick_wall_ns"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/redbrick/redbrickwe
 	name = "red brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/red_brick_wall.dmi'
 	icon_state = "red_brick_wall_we"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/redbrick/redbrickcornerse
 	name = "red brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/red_brick_wall.dmi'
 	icon_state = "red_brick_corner_se"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/redbrick/redbrickcornersw
 	name = "red brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/red_brick_wall.dmi'
 	icon_state = "red_brick_corner_sw"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/redbrick/redbrickcornerne
 	name = "red brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/red_brick_wall.dmi'
 	icon_state = "red_brick_corner_ne"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/redbrick/redbrickcornernw
 	name = "red brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/red_brick_wall.dmi'
 	icon_state = "red_brick_corner_nw"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/redbrick/redbricktn
 	name = "red brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/red_brick_wall.dmi'
 	icon_state = "red_brick_t_n"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/redbrick/redbrickts
 	name = "red brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/red_brick_wall.dmi'
 	icon_state = "red_brick_t_s"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/redbrick/redbricktw
 	name = "red brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/red_brick_wall.dmi'
 	icon_state = "red_brick_t_w"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/redbrick/redbrickte
 	name = "red brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/red_brick_wall.dmi'
 	icon_state = "red_brick_t_e"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /obj/structure/festive/redbrick/windowdoorweend1
 	name = "red window"
@@ -497,8 +497,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_we_right_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -523,8 +523,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_we_left_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -549,8 +549,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_ns_right_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -575,8 +575,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_ns_left_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -591,80 +591,80 @@
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick"
-	smoothing_flags = SMOOTH_CORNERS
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK_NORMAL, SMOOTH_GROUP_WALL_BRICK)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK, SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK_NORMAL, SMOOTH_GROUP_WALL_BRICK)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK, SMOOTH_GROUP_WALL_BRICK_NORMAL)
 
 /turf/closed/festive/whitebrick/whitebrickns
 	name = "white brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_wall_ns"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/whitebrick/whitebrickwe
 	name = "white brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_wall_we"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/whitebrick/whitebrickcornerse
 	name = "white brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_corner_se"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/whitebrick/whitebrickcornersw
 	name = "white brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_corner_sw"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/whitebrick/whitebrickcornerne
 	name = "white brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_corner_ne"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/whitebrick/whitebrickcornernw
 	name = "white brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_corner_nw"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/whitebrick/whitebricktn
 	name = "white brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_t_n"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/whitebrick/whitebrickts
 	name = "white brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_t_s"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/whitebrick/whitebricktw
 	name = "white brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_t_w"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/whitebrick/whitebrickte
 	name = "white brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_t_e"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /obj/structure/festive/whitebrick/windowdoorweend1
 	name = "white window"
@@ -719,8 +719,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/white_brick_window.dmi'
 	icon_state = "white_brick_window_we_right_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -745,8 +745,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/white_brick_window.dmi'
 	icon_state = "white_brick_window_we_left_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -771,8 +771,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/white_brick_window.dmi'
 	icon_state = "white_brick_window_ns_right_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -797,8 +797,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/white_brick_window.dmi'
 	icon_state = "white_brick_window_ns_left_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -810,10 +810,10 @@
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick"
-	smoothing_flags = SMOOTH_CORNERS
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK_NORMAL, SMOOTH_GROUP_WALL_BRICK)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK, SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK_NORMAL, SMOOTH_GROUP_WALL_BRICK)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK, SMOOTH_GROUP_WALL_BRICK_NORMAL)
 	color = "#fff6cc"
 
 /turf/closed/festive/creambrick/creambrickns
@@ -821,70 +821,70 @@
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_wall_ns"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/creambrick/creambrickwe
 	name = "white brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_wall_we"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/creambrick/creambrickcornerse
 	name = "white brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_corner_se"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/creambrick/creambrickcornersw
 	name = "white brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_corner_sw"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/creambrick/creambrickcornerne
 	name = "white brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_corner_ne"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/creambrick/creambrickcornernw
 	name = "white brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_corner_nw"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/creambrick/creambricktn
 	name = "white brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_t_n"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/creambrick/creambrickts
 	name = "white brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_t_s"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/creambrick/creambricktw
 	name = "white brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_t_w"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/creambrick/creambrickte
 	name = "white brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/white_brick_wall.dmi'
 	icon_state = "white_brick_t_e"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /obj/structure/festive/creambrick/windowdoorweend1
 	name = "white window"
@@ -942,8 +942,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/white_brick_window.dmi'
 	icon_state = "white_brick_window_we_right_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -968,8 +968,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/white_brick_window.dmi'
 	icon_state = "white_brick_window_we_left_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -994,8 +994,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/white_brick_window.dmi'
 	icon_state = "white_brick_window_ns_right_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -1020,8 +1020,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/white_brick_window.dmi'
 	icon_state = "white_brick_window_ns_left_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -1034,80 +1034,80 @@
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/blue_brick_wall.dmi'
 	icon_state = "blue_brick"
-	smoothing_flags = SMOOTH_CORNERS
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK_NORMAL, SMOOTH_GROUP_WALL_BRICK)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK, SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK_NORMAL, SMOOTH_GROUP_WALL_BRICK)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK, SMOOTH_GROUP_WALL_BRICK_NORMAL)
 
 /turf/closed/festive/bluebrick/bluebrickns
 	name = "blue brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/blue_brick_wall.dmi'
 	icon_state = "blue_brick_wall_ns"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/bluebrick/bluebrickwe
 	name = "blue brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/blue_brick_wall.dmi'
 	icon_state = "blue_brick_wall_we"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/bluebrick/bluebrickcornerse
 	name = "blue brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/blue_brick_wall.dmi'
 	icon_state = "blue_brick_corner_se"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/bluebrick/bluebrickcornersw
 	name = "blue brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/blue_brick_wall.dmi'
 	icon_state = "blue_brick_corner_sw"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/bluebrick/bluebrickcornerne
 	name = "blue brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/blue_brick_wall.dmi'
 	icon_state = "blue_brick_corner_ne"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/bluebrick/bluebrickcornernw
 	name = "blue brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/blue_brick_wall.dmi'
 	icon_state = "blue_brick_corner_nw"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/bluebrick/bluebricktn
 	name = "blue brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/blue_brick_wall.dmi'
 	icon_state = "blue_brick_t_n"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/bluebrick/bluebrickts
 	name = "blue brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/blue_brick_wall.dmi'
 	icon_state = "blue_brick_t_s"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/bluebrick/bluebricktw
 	name = "blue brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/blue_brick_wall.dmi'
 	icon_state = "blue_brick_t_w"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/bluebrick/bluebrickte
 	name = "blue brick wall"
 	desc = "A brick wall, intricately built up."
 	icon = 'modular_citadel/code/modules/festive/blue_brick_wall.dmi'
 	icon_state = "blue_brick_t_e"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /obj/structure/festive/bluebrick/windowdoorweend1
 	name = "blue window"
@@ -1162,8 +1162,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/blue_brick_window.dmi'
 	icon_state = "blue_brick_window_we_right_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -1188,8 +1188,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/blue_brick_window.dmi'
 	icon_state = "blue_brick_window_we_left_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -1214,8 +1214,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/blue_brick_window.dmi'
 	icon_state = "blue_brick_window_ns_right_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -1240,8 +1240,8 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/blue_brick_window.dmi'
 	icon_state = "blue_brick_window_ns_left_end"
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK)
 	density = TRUE
 	anchored = TRUE
 
@@ -1260,80 +1260,80 @@
 	desc = "A panel wall, with horizontal sidings."
 	icon = 'modular_citadel/code/modules/festive/grey_panel_wall.dmi'
 	icon_state = "grey_panel"
-	smoothing_flags = SMOOTH_CORNERS
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BRICK)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK_NORMAL, SMOOTH_GROUP_WALL_BRICK)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BRICK, SMOOTH_GROUP_WALL_BRICK_NORMAL)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_with = list(SMOOTH_GROUP_WALL_BRICK)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK_NORMAL, SMOOTH_GROUP_WALL_BRICK)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BRICK, SMOOTH_GROUP_WALL_BRICK_NORMAL)
 
 /turf/closed/festive/greypanel/greypanelns
 	name = "grey panel wall"
 	desc = "A panel wall, with horizontal sidings."
 	icon = 'modular_citadel/code/modules/festive/grey_panel_wall.dmi'
 	icon_state = "grey_panel_wall_ns"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/greypanel/greypanelwe
 	name = "grey panel wall"
 	desc = "A panel wall, with horizontal sidings."
 	icon = 'modular_citadel/code/modules/festive/grey_panel_wall.dmi'
 	icon_state = "grey_panel_wall_we"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/greypanel/greypanelcornerse
 	name = "grey panel wall"
 	desc = "A panel wall, with horizontal sidings."
 	icon = 'modular_citadel/code/modules/festive/grey_panel_wall.dmi'
 	icon_state = "grey_panel_corner_se"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/greypanel/greypanelcornersw
 	name = "grey panel wall"
 	desc = "A panel wall, with horizontal sidings."
 	icon = 'modular_citadel/code/modules/festive/grey_panel_wall.dmi'
 	icon_state = "grey_panel_corner_sw"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/greypanel/greypanelcornerne
 	name = "grey panel wall"
 	desc = "A panel wall, with horizontal sidings."
 	icon = 'modular_citadel/code/modules/festive/grey_panel_wall.dmi'
 	icon_state = "grey_panel_corner_ne"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/greypanel/greypanelcornernw
 	name = "grey panel wall"
 	desc = "A panel wall, with horizontal sidings."
 	icon = 'modular_citadel/code/modules/festive/grey_panel_wall.dmi'
 	icon_state = "grey_panel_corner_nw"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/greypanel/greypaneltn
 	name = "grey panel wall"
 	desc = "A panel wall, with horizontal sidings."
 	icon = 'modular_citadel/code/modules/festive/grey_panel_wall.dmi'
 	icon_state = "grey_panel_t_n"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/greypanel/greypanelts
 	name = "grey panel wall"
 	desc = "A panel wall, with horizontal sidings."
 	icon = 'modular_citadel/code/modules/festive/grey_panel_wall.dmi'
 	icon_state = "grey_panel_t_s"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/greypanel/greypaneltw
 	name = "grey panel wall"
 	desc = "A panel wall, with horizontal sidings."
 	icon = 'modular_citadel/code/modules/festive/grey_panel_wall.dmi'
 	icon_state = "grey_panel_t_w"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/festive/greypanel/greypanelte
 	name = "grey panel wall"
 	desc = "A panel wall, with horizontal sidings."
 	icon = 'modular_citadel/code/modules/festive/grey_panel_wall.dmi'
 	icon_state = "grey_panel_t_e"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 //Train Decals
 

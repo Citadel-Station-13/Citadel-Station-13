@@ -3,9 +3,9 @@
 	desc = "A huge chunk of material used to separate rooms."
 	icon = 'icons/turf/walls/materialwall.dmi'
 	icon_state = "wall"
-	smoothing_groups = list(SMOOTH_GROUP_WALL_MATERIAL)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_MATERIAL)
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_WALL_MATERIAL)
+	smooth_with = list(SMOOTH_GROUP_WALL_MATERIAL)
+	smooth_flags = SMOOTH_CORNERS
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 /turf/closed/wall/material/break_wall()

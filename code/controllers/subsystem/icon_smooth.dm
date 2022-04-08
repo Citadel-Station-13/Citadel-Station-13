@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(icon_smooth)
 	while(length(cached))
 		var/atom/smoothing_atom = cached[length(cached)]
 		cached.len--
-		if(QDELETED(smoothing_atom) || !(smoothing_atom.smoothing_flags & SMOOTH_QUEUED))
+		if(QDELETED(smoothing_atom) || !(smoothing_atom.smooth_flags & SMOOTH_QUEUED))
 			continue
 		if(smoothing_atom.flags_1 & INITIALIZED_1)
 			smoothing_atom.smooth_icon()
@@ -36,14 +36,14 @@ SUBSYSTEM_DEF(icon_smooth)
 
 
 /datum/controller/subsystem/icon_smooth/proc/add_to_queue(atom/thing)
-	if(thing.smoothing_flags & SMOOTH_QUEUED)
+	if(thing.smooth_flags & SMOOTH_QUEUED)
 		return
-	thing.smoothing_flags |= SMOOTH_QUEUED
+	thing.smooth_flags |= SMOOTH_QUEUED
 	smooth_queue += thing
 	if(!can_fire)
 		can_fire = TRUE
 
 /datum/controller/subsystem/icon_smooth/proc/remove_from_queues(atom/thing)
-	thing.smoothing_flags &= ~SMOOTH_QUEUED
+	thing.smooth_flags &= ~SMOOTH_QUEUED
 	smooth_queue -= thing
 	deferred -= thing

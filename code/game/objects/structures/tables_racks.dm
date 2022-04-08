@@ -34,8 +34,8 @@
 	var/deconstruction_ready = 1
 	max_integrity = 100
 	integrity_failure = 0.33
-	smoothing_flags = SMOOTH_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_TABLE, SMOOTH_GROUP_TABLE_NORMAL)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_TABLE, SMOOTH_GROUP_TABLE_NORMAL)
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
@@ -279,9 +279,9 @@
 	name = "Rolling table"
 	desc = "A NT brand \"Rolly poly\" rolling table. It can and will move."
 	anchored = FALSE
-	smoothing_flags = NONE
-	can_smooth_with = null
-	smoothing_groups = null
+	smooth_flags = NONE
+	smooth_with = null
+	smooth_groups = null
 	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
 	icon_state = "rollingtable"
 	var/list/attached_items = list()
@@ -315,8 +315,8 @@
 	icon = 'icons/obj/smooth_structures/glass_table.dmi'
 	icon_state = "glass_table"
 	buildstack = /obj/item/stack/sheet/glass
-	smoothing_groups = list(SMOOTH_GROUP_TABLE, SMOOTH_GROUP_TABLE_GLASS)
-	can_smooth_with = list(SMOOTH_GROUP_TABLE_GLASS)
+	smooth_groups = list(SMOOTH_GROUP_TABLE, SMOOTH_GROUP_TABLE_GLASS)
+	smooth_with = list(SMOOTH_GROUP_TABLE_GLASS)
 	max_integrity = 70
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
@@ -394,8 +394,8 @@
 	icon_state = "plasmaglass_table"
 	climbable = TRUE
 	buildstack = /obj/item/stack/sheet/plasmaglass
-	smoothing_groups = list(SMOOTH_GROUP_TABLE, SMOOTH_GROUP_TABLE_PLASMAGLASS)
-	can_smooth_with = list(SMOOTH_GROUP_TABLE_PLASMAGLASS)
+	smooth_groups = list(SMOOTH_GROUP_TABLE, SMOOTH_GROUP_TABLE_PLASMAGLASS)
+	smooth_with = list(SMOOTH_GROUP_TABLE_PLASMAGLASS)
 	max_integrity = 270
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 10, "bullet" = 5, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
@@ -446,8 +446,8 @@
 	buildstack = /obj/item/stack/sheet/mineral/wood
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
-	can_smooth_with = list(SMOOTH_GROUP_TABLE_WOOD)
-	smoothing_groups = list(SMOOTH_GROUP_TABLE, SMOOTH_GROUP_TABLE_WOOD)
+	smooth_with = list(SMOOTH_GROUP_TABLE_WOOD)
+	smooth_groups = list(SMOOTH_GROUP_TABLE, SMOOTH_GROUP_TABLE_WOOD)
 
 /obj/structure/table/wood/narsie_act(total_override = TRUE)
 	if(!total_override)
@@ -471,8 +471,8 @@
 	frame = /obj/structure/table_frame
 	framestack = /obj/item/stack/rods
 	buildstack = /obj/item/stack/tile/carpet
-	can_smooth_with = list(SMOOTH_GROUP_TABLE_FANCY)
-	smoothing_groups = list(SMOOTH_GROUP_TABLE_FANCY, SMOOTH_GROUP_TABLE)
+	smooth_with = list(SMOOTH_GROUP_TABLE_FANCY)
+	smooth_groups = list(SMOOTH_GROUP_TABLE_FANCY, SMOOTH_GROUP_TABLE)
 	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
 
 /obj/structure/table/wood/fancy/Initialize()
@@ -586,8 +586,8 @@
 	buildstack = /obj/item/stack/tile/brass
 	framestackamount = 1
 	buildstackamount = 1
-	smoothing_groups = list(SMOOTH_GROUP_TABLE_CLOCKWORK, SMOOTH_GROUP_CLOCKCULT, SMOOTH_GROUP_TABLE_BRASS)
-	can_smooth_with = list(SMOOTH_GROUP_TABLE_CLOCKWORK)
+	smooth_groups = list(SMOOTH_GROUP_TABLE_CLOCKWORK, SMOOTH_GROUP_CLOCKCULT, SMOOTH_GROUP_TABLE_BRASS)
+	smooth_with = list(SMOOTH_GROUP_TABLE_CLOCKWORK)
 
 /obj/structure/table/reinforced/brass/New()
 	change_construction_value(2)
@@ -619,8 +619,8 @@
 	icon_state = "brass_table"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	buildstack = /obj/item/stack/sheet/bronze
-	smoothing_groups = list(SMOOTH_GROUP_TABLE_CLOCKWORK, SMOOTH_GROUP_CLOCKCULT, SMOOTH_GROUP_TABLE_BRONZE)
-	can_smooth_with = list(SMOOTH_GROUP_TABLE_CLOCKWORK)
+	smooth_groups = list(SMOOTH_GROUP_TABLE_CLOCKWORK, SMOOTH_GROUP_CLOCKCULT, SMOOTH_GROUP_TABLE_BRONZE)
+	smooth_with = list(SMOOTH_GROUP_TABLE_CLOCKWORK)
 
 /obj/structure/table/bronze/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
 	..()
@@ -636,7 +636,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "optable"
 	buildstack = /obj/item/stack/sheet/mineral/silver
-	smoothing_flags = NONE
+	smooth_flags = NONE
 	can_buckle = 1
 	buckle_lying = 1
 	buckle_requires_restraints = 1

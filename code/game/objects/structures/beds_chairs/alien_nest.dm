@@ -6,10 +6,10 @@
 	icon = 'icons/obj/smooth_structures/alien/nest.dmi'
 	icon_state = "nest"
 	max_integrity = 120
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_flags = SMOOTH_CORNERS
 	can_be_unanchored = FALSE
-	can_smooth_with = list(SMOOTH_GROUP_XENO_NEST)
-	smoothing_groups = list(SMOOTH_GROUP_XENO_NEST)
+	smooth_with = list(SMOOTH_GROUP_XENO_NEST)
+	smooth_groups = list(SMOOTH_GROUP_XENO_NEST)
 	buildstacktype = null
 	flags_1 = NODECONSTRUCT_1
 	bolts = FALSE

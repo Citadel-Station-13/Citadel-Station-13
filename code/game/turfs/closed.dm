@@ -61,7 +61,7 @@
 	icon = 'icons/turf/walls/sandstone_wall.dmi'
 	icon_state = "sandstone"
 	baseturfs = /turf/closed/indestructible/sandstone
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_flags = SMOOTH_CORNERS
 
 /turf/closed/indestructible/wood
 	name = "wooden wall"
@@ -69,9 +69,9 @@
 	icon = 'icons/turf/walls/wood_wall.dmi'
 	icon_state = "wood"
 	baseturfs = /turf/closed/indestructible/wood
-	smoothing_flags = SMOOTH_CORNERS
-	can_smooth_with = list(SMOOTH_GROUP_WALL_WOOD)
-	smoothing_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_WOOD)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_with = list(SMOOTH_GROUP_WALL_WOOD)
+	smooth_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_WOOD)
 
 /turf/closed/indestructible/oldshuttle/corner
 	icon_state = "corner"
@@ -99,13 +99,13 @@
 /turf/closed/indestructible/riveted
 	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "riveted"
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_flags = SMOOTH_CORNERS
 	explosion_block = INFINITY
 
 /turf/closed/indestructible/syndicate
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "map-shuttle"
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_flags = SMOOTH_CORNERS
 
 /turf/closed/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
@@ -121,7 +121,7 @@
 	name = "window"
 	icon_state = "fake_window"
 	opacity = 0
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_flags = SMOOTH_CORNERS
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 
 /turf/closed/indestructible/fakeglass/Initialize()
@@ -158,9 +158,9 @@
 /turf/closed/indestructible/rock/snow/ice/ore
 	icon = 'icons/turf/walls/icerock_wall.dmi'
 	icon_state = "icerock"
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	can_smooth_with = list (SMOOTH_GROUP_WALL)
-	smoothing_groups = list(SMOOTH_GROUP_WALL)
+	smooth_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	smooth_with = list (SMOOTH_GROUP_WALL)
+	smooth_groups = list(SMOOTH_GROUP_WALL)
 	pixel_x = -4
 	pixel_y = -4
 
@@ -189,8 +189,8 @@
 	desc = "A thick, seemingly indestructible stone wall."
 	icon = 'icons/turf/walls/boss_wall.dmi'
 	icon_state = "wall"
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BOSS, SMOOTH_GROUP_WALL)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BOSS)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BOSS, SMOOTH_GROUP_WALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_BOSS)
 	explosion_block = 50
 	baseturfs = /turf/closed/indestructible/riveted/boss
 
@@ -219,8 +219,8 @@
 	desc = "The incredible compressive forces that formed this sturdy ice wall gave it a blue color."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "ice"
-	smoothing_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_BLUEGLACIER)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BLUEGLACIER)
+	smooth_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_BLUEGLACIER)
+	smooth_with = list(SMOOTH_GROUP_WALL_BLUEGLACIER)
 
 /turf/closed/get_yelling_resistance(power)
 	return yelling_resistance + (power * yelling_dampen)

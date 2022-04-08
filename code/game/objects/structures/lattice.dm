@@ -10,9 +10,9 @@
 	layer = LATTICE_LAYER //under pipes
 	plane = FLOOR_PLANE
 	var/number_of_rods = 1
-	smoothing_groups = list(SMOOTH_GROUP_LATTICE)
-	can_smooth_with = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_WALL, SMOOTH_GROUP_LATTICE, SMOOTH_GROUP_FALSEWALL)
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_LATTICE)
+	smooth_with = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_WALL, SMOOTH_GROUP_LATTICE, SMOOTH_GROUP_FALSEWALL)
+	smooth_flags = SMOOTH_CORNERS
 	//	flags = CONDUCT_1
 
 /obj/structure/lattice/examine(mob/user)
@@ -95,9 +95,9 @@
 	icon = 'icons/obj/smooth_structures/catwalk.dmi'
 	icon_state = "catwalk"
 	number_of_rods = 2
-	smoothing_flags = SMOOTH_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_CATWALK)
-	can_smooth_with = list(SMOOTH_GROUP_CATWALK)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_CATWALK)
+	smooth_with = list(SMOOTH_GROUP_CATWALK)
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 
 /obj/structure/lattice/catwalk/deconstruction_hints(mob/user)
@@ -121,9 +121,9 @@
 /obj/structure/lattice/catwalk/clockwork
 	name = "clockwork catwalk"
 	icon = 'icons/obj/smooth_structures/catwalk_clockwork.dmi'
-	smoothing_groups = list(SMOOTH_GROUP_LATTICE)
-	can_smooth_with = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_WALL, SMOOTH_GROUP_LATTICE, SMOOTH_GROUP_FALSEWALL)
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_LATTICE)
+	smooth_with = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_WALL, SMOOTH_GROUP_LATTICE, SMOOTH_GROUP_FALSEWALL)
+	smooth_flags = SMOOTH_CORNERS
 
 /obj/structure/lattice/catwalk/clockwork/Initialize(mapload)
 	. = ..()
@@ -152,7 +152,7 @@
 	icon_state = "catwalk"
 	number_of_rods = 1
 	color = "#5286b9ff"
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_flags = SMOOTH_CORNERS
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 

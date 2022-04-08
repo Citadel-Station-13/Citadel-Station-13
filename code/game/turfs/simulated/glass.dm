@@ -5,7 +5,7 @@
 	icon_state = "floor_glass"
 	baseturfs = /turf/open/openspace
 	intact = FALSE //this means wires go on top
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_flags = SMOOTH_CORNERS
 	canSmoothWith = list(/turf/open/floor/glass, /turf/open/floor/glass/reinforced)
 	footstep = FOOTSTEP_PLATING
 	barefootstep = FOOTSTEP_HARD_BAREFOOT

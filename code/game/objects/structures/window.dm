@@ -694,9 +694,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	max_integrity = 50
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smoothing_flags = SMOOTH_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_WINDOW, SMOOTH_GROUP_WINDOW_NORMAL)
-	can_smooth_with = list(SMOOTH_GROUP_WINDOW_NORMAL)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_WINDOW, SMOOTH_GROUP_WINDOW_NORMAL)
+	smooth_with = list(SMOOTH_GROUP_WINDOW_NORMAL)
 	glass_amount = 2
 
 /obj/structure/window/fulltile/unanchored
@@ -709,9 +709,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	max_integrity = 300
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smoothing_flags = SMOOTH_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_WINDOW, SMOOTH_GROUP_WINDOW_NORMAL)
-	can_smooth_with = list(SMOOTH_GROUP_WINDOW_NORMAL)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_WINDOW, SMOOTH_GROUP_WINDOW_NORMAL)
+	smooth_with = list(SMOOTH_GROUP_WINDOW_NORMAL)
 	glass_amount = 2
 
 /obj/structure/window/plasma/fulltile/unanchored
@@ -724,7 +724,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	max_integrity = 1000
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_flags = SMOOTH_CORNERS
 	glass_amount = 2
 
 /obj/structure/window/plasma/reinforced/fulltile/unanchored
@@ -737,9 +737,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	max_integrity = 100
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smoothing_flags = SMOOTH_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_WINDOW, SMOOTH_GROUP_WINDOW_NORMAL)
-	can_smooth_with = list(SMOOTH_GROUP_WINDOW_NORMAL)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_WINDOW, SMOOTH_GROUP_WINDOW_NORMAL)
+	smooth_with = list(SMOOTH_GROUP_WINDOW_NORMAL)
 	level = 3
 	glass_amount = 2
 
@@ -752,9 +752,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	dir = FULLTILE_WINDOW_DIR
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smoothing_flags = SMOOTH_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_WINDOW, SMOOTH_GROUP_WINDOW_NORMAL)
-	can_smooth_with = list(SMOOTH_GROUP_WINDOW_NORMAL)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_WINDOW, SMOOTH_GROUP_WINDOW_NORMAL)
+	smooth_with = list(SMOOTH_GROUP_WINDOW_NORMAL)
 	level = 3
 	glass_amount = 2
 
@@ -778,9 +778,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	reinf = TRUE
 	heat_resistance = 1600
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
-	smoothing_flags = SMOOTH_CORNERS
-	can_smooth_with = list(SMOOTH_GROUP_WINDOW_TITANIUM)
-	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_EXTERIOR, SMOOTH_GROUP_WINDOW_SHUTTLE, SMOOTH_GROUP_WINDOW_TITANIUM)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_with = list(SMOOTH_GROUP_WINDOW_TITANIUM)
+	smooth_groups = list(SMOOTH_GROUP_SHUTTLE_EXTERIOR, SMOOTH_GROUP_WINDOW_SHUTTLE, SMOOTH_GROUP_WINDOW_TITANIUM)
 	explosion_block = 3
 	level = 3
 	glass_type = /obj/item/stack/sheet/titaniumglass
@@ -810,9 +810,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	extra_reinforced = TRUE
 	heat_resistance = 1600
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
-	smoothing_flags = SMOOTH_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_WINDOW_PLASTITANIUM, SMOOTH_GROUP_WINDOW_SHUTTLE, SMOOTH_GROUP_SHUTTLE_EXTERIOR)
-	can_smooth_with = list(SMOOTH_GROUP_WINDOW_PLASTITANIUM)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_WINDOW_PLASTITANIUM, SMOOTH_GROUP_WINDOW_SHUTTLE, SMOOTH_GROUP_SHUTTLE_EXTERIOR)
+	smooth_with = list(SMOOTH_GROUP_WINDOW_PLASTITANIUM)
 	explosion_block = 3
 	level = 3
 	glass_type = /obj/item/stack/sheet/plastitaniumglass
@@ -886,9 +886,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 
 /obj/structure/window/reinforced/clockwork/fulltile
 	icon_state = "clockwork_window"
-	smoothing_flags = SMOOTH_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_WINDOW_CLOCKWORK)
-	can_smooth_with = list(SMOOTH_GROUP_WINDOW_CLOCKWORK)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_WINDOW_CLOCKWORK)
+	smooth_with = list(SMOOTH_GROUP_WINDOW_CLOCKWORK)
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	dir = FULLTILE_WINDOW_DIR
@@ -915,9 +915,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	max_integrity = 15
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smoothing_flags = SMOOTH_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_PAPER_FRAME)
-	can_smooth_with = list(SMOOTH_GROUP_PAPER_FRAME)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_PAPER_FRAME)
+	smooth_with = list(SMOOTH_GROUP_PAPER_FRAME)
 	glass_amount = 2
 	glass_type = /obj/item/stack/sheet/paperframes
 	heat_resistance = 233
@@ -992,9 +992,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 
 /obj/structure/window/bronze/fulltile
 	icon_state = "clockwork_window"
-	smoothing_groups = list(SMOOTH_GROUP_WINDOW_CLOCKWORK)
-	can_smooth_with = list(SMOOTH_GROUP_WINDOW_CLOCKWORK)
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_WINDOW_CLOCKWORK)
+	smooth_with = list(SMOOTH_GROUP_WINDOW_CLOCKWORK)
+	smooth_flags = SMOOTH_CORNERS
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	dir = FULLTILE_WINDOW_DIR

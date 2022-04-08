@@ -112,9 +112,9 @@
 	var/greyscale_colors
 
 	///Icon-smoothing behavior.
-	var/smoothing_flags = NONE
+	var/smooth_flags = NONE
 	///What directions this is currently smoothing with. IMPORTANT: This uses the smoothing direction flags as defined in icon_smoothing.dm, instead of the BYOND flags.
-	var/smoothing_junction = null //This starts as null for us to know when it's first set, but after that it will hold a 8-bit mask ranging from 0 to 255.
+	var/smooth_junction = null //This starts as null for us to know when it's first set, but after that it will hold a 8-bit mask ranging from 0 to 255.
 	///Smoothing variable
 	var/top_left_corner
 	///Smoothing variable
@@ -123,10 +123,10 @@
 	var/bottom_left_corner
 	///Smoothing variable
 	var/bottom_right_corner
-	///What smoothing groups does this atom belongs to, to match can_smooth_with. If null, nobody can smooth with it.
-	var/list/smoothing_groups = null
+	///What smoothing groups does this atom belongs to, to match smooth_with. If null, nobody can smooth with it.
+	var/list/smooth_groups = null
 	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
-	var/list/can_smooth_with = null
+	var/list/smooth_with = null
 
 	///Mobs that are currently do_after'ing this atom, to be cleared from on Destroy()
 	var/list/targeted_by
@@ -207,14 +207,14 @@
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
-	if (length(smoothing_groups))
-		sortTim(smoothing_groups) //In case it's not properly ordered, let's avoid duplicate entries with the same values.
-		SET_BITFLAG_LIST(smoothing_groups)
-	if (length(can_smooth_with))
-		sortTim(can_smooth_with)
-		if(can_smooth_with[length(can_smooth_with)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
-			smoothing_flags |= SMOOTH_OBJ
-		SET_BITFLAG_LIST(can_smooth_with)
+	if (length(smooth_groups))
+		sortTim(smooth_groups) //In case it's not properly ordered, let's avoid duplicate entries with the same values.
+		SET_BITFLAG_LIST(smooth_groups)
+	if (length(smooth_with))
+		sortTim(smooth_with)
+		if(smooth_with[length(smooth_with)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
+			smooth_flags |= SMOOTH_OBJ
+		SET_BITFLAG_LIST(smooth_with)
 
 	if (light_power && light_range)
 		update_light()

@@ -212,10 +212,10 @@
 /turf/closed/wall/r_wall/update_icon()
 	. = ..()
 	if(d_state != INTACT)
-		smoothing_flags = NONE
+		smooth_flags = NONE
 		clear_smooth_overlays()
 	else
-		smoothing_flags = SMOOTH_CORNERS
+		smooth_flags = SMOOTH_CORNERS
 		QUEUE_SMOOTH_NEIGHBORS(src)
 		QUEUE_SMOOTH(src)
 
@@ -254,21 +254,21 @@
 	icon_state = "map-shuttle"
 	explosion_block = 20
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_DIAGONAL_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_WALL)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_WINDOW_PLASTITANIUM, SMOOTH_GROUP_SHUTTLE_HEATER)
+	smooth_flags = SMOOTH_CORNERS | SMOOTH_DIAGONAL_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_WALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_WINDOW_PLASTITANIUM, SMOOTH_GROUP_SHUTTLE_HEATER)
 
 /turf/closed/wall/r_wall/syndicate/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	return FALSE
 
 /turf/closed/wall/r_wall/syndicate/nodiagonal
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_flags = SMOOTH_CORNERS
 	icon_state = "map-shuttle_nd"
 
 /turf/closed/wall/r_wall/syndicate/nosmooth
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/wall/r_wall/syndicate/overspace
 	icon_state = "map-overspace"
@@ -279,11 +279,11 @@
 /turf/closed/wall/r_wall/syndicate/pirate
 	desc = "Yarr just try to blow this to smithereens!"
 	explosion_block = 30
-	smoothing_groups = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_WALL)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_WINDOW_PLASTITANIUM, SMOOTH_GROUP_SHUTTLE_HEATER)
+	smooth_groups = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_WALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_WINDOW_PLASTITANIUM, SMOOTH_GROUP_SHUTTLE_HEATER)
 
 /turf/closed/wall/r_wall/syndicate/pirate/nodiagonal
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_flags = SMOOTH_CORNERS
 	icon_state = "map-shuttle_nd"
 
 /turf/closed/wall/r_wall/syndicate/pirate/nosmooth

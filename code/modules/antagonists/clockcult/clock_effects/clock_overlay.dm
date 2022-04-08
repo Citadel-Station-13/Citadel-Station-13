@@ -28,9 +28,9 @@
 	name = "clockwork wall"
 	icon = 'icons/turf/walls/clockwork_wall.dmi'
 	icon_state = "clockwork_wall"
-	smoothing_groups = list(SMOOTH_GROUP_CLOCKCULT, SMOOTH_GROUP_WALL_CLOCKWORK)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_CLOCKWORK)
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_CLOCKCULT, SMOOTH_GROUP_WALL_CLOCKWORK)
+	smooth_with = list(SMOOTH_GROUP_WALL_CLOCKWORK)
+	smooth_flags = SMOOTH_CORNERS
 	layer = CLOSED_TURF_LAYER
 
 /obj/effect/clockwork/overlay/wall/Initialize()

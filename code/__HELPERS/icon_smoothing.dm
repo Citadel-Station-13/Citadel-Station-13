@@ -1,16 +1,16 @@
 //generic (by snowflake) tile smoothing code; smooth your icons with this!
 /*
 	Each tile is divided in 4 corners, each corner has an appearance associated to it; the tile is then overlayed by these 4 appearances
-	To use this, just set your atom's 'smoothing_flags' var to 1. If your atom can be moved/unanchored, set its 'can_be_unanchored' var to 1.
-	If you don't want your atom's icon to smooth with anything but atoms of the same type, set the list 'can_smooth_with' to null;
-	Otherwise, put all the smoothing groups you want the atom icon to smooth with in 'can_smooth_with', including the group of the atom itself.
-	Smoothing groups are just shared flags between objects. If one of the 'can_smooth_with' of A matches one of the `smoothing_groups` of B, then A will smooth with B.
+	To use this, just set your atom's 'smooth_flags' var to 1. If your atom can be moved/unanchored, set its 'can_be_unanchored' var to 1.
+	If you don't want your atom's icon to smooth with anything but atoms of the same type, set the list 'smooth_with' to null;
+	Otherwise, put all the smoothing groups you want the atom icon to smooth with in 'smooth_with', including the group of the atom itself.
+	Smoothing groups are just shared flags between objects. If one of the 'smooth_with' of A matches one of the `smooth_groups` of B, then A will smooth with B.
 
 	Each atom has its own icon file with all the possible corner states. See 'smooth_wall.dmi' for a template.
 
 	DIAGONAL SMOOTHING INSTRUCTIONS
 	To make your atom smooth diagonally you need all the proper icon states (see 'smooth_wall.dmi' for a template) and
-	to add the 'SMOOTH_DIAGONAL_CORNERS' flag to the atom's smoothing_flags var (in addition to either SMOOTH_TRUE or SMOOTH_MORE).
+	to add the 'SMOOTH_DIAGONAL_CORNERS' flag to the atom's smooth_flags var (in addition to either SMOOTH_TRUE or SMOOTH_MORE).
 
 	For turfs, what appears under the diagonal corners depends on the turf that was in the same position previously: if you make a wall on
 	a plating floor, you will see plating under the diagonal wall corner, if it was space, you will see space.
@@ -34,27 +34,27 @@
 	do { \
 		var/turf/neighbor = get_step(source, direction); \
 		if(!neighbor) { \
-			if(source.smoothing_flags & SMOOTH_BORDER) { \
+			if(source.smooth_flags & SMOOTH_BORDER) { \
 				junction |= direction_flag; \
 			}; \
 		}; \
 		else { \
-			if(!isnull(neighbor.smoothing_groups)) { \
-				for(var/target in source.can_smooth_with) { \
-					if(!(source.can_smooth_with[target] & neighbor.smoothing_groups[target])) { \
+			if(!isnull(neighbor.smooth_groups)) { \
+				for(var/target in source.smooth_with) { \
+					if(!(source.smooth_with[target] & neighbor.smooth_groups[target])) { \
 						continue; \
 					}; \
 					junction |= direction_flag; \
 					break; \
 				}; \
 			}; \
-			if(!(junction & direction_flag) && source.smoothing_flags & SMOOTH_OBJ) { \
+			if(!(junction & direction_flag) && source.smooth_flags & SMOOTH_OBJ) { \
 				for(var/obj/thing in neighbor) { \
-					if(!thing.anchored || isnull(thing.smoothing_groups)) { \
+					if(!thing.anchored || isnull(thing.smooth_groups)) { \
 						continue; \
 					}; \
-					for(var/target in source.can_smooth_with) { \
-						if(!(source.can_smooth_with[target] & thing.smoothing_groups[target])) { \
+					for(var/target in source.smooth_with) { \
+						if(!(source.smooth_with[target] & thing.smooth_groups[target])) { \
 							continue; \
 						}; \
 						junction |= direction_flag; \
@@ -79,7 +79,7 @@
 	for(var/direction in GLOB.cardinals)
 		switch(find_type_in_direction(direction))
 			if(NULLTURF_BORDER)
-				if((smoothing_flags & SMOOTH_BORDER))
+				if((smooth_flags & SMOOTH_BORDER))
 					. |= direction //BYOND and smooth dirs are the same for cardinals
 			if(ADJ_FOUND)
 				. |= direction //BYOND and smooth dirs are the same for cardinals
@@ -88,7 +88,7 @@
 		if(. & WEST_JUNCTION)
 			switch(find_type_in_direction(NORTHWEST))
 				if(NULLTURF_BORDER)
-					if((smoothing_flags & SMOOTH_BORDER))
+					if((smooth_flags & SMOOTH_BORDER))
 						. |= NORTHWEST_JUNCTION
 				if(ADJ_FOUND)
 					. |= NORTHWEST_JUNCTION
@@ -96,7 +96,7 @@
 		if(. & EAST_JUNCTION)
 			switch(find_type_in_direction(NORTHEAST))
 				if(NULLTURF_BORDER)
-					if((smoothing_flags & SMOOTH_BORDER))
+					if((smooth_flags & SMOOTH_BORDER))
 						. |= NORTHEAST_JUNCTION
 				if(ADJ_FOUND)
 					. |= NORTHEAST_JUNCTION
@@ -105,7 +105,7 @@
 		if(. & WEST_JUNCTION)
 			switch(find_type_in_direction(SOUTHWEST))
 				if(NULLTURF_BORDER)
-					if((smoothing_flags & SMOOTH_BORDER))
+					if((smooth_flags & SMOOTH_BORDER))
 						. |= SOUTHWEST_JUNCTION
 				if(ADJ_FOUND)
 					. |= SOUTHWEST_JUNCTION
@@ -113,7 +113,7 @@
 		if(. & EAST_JUNCTION)
 			switch(find_type_in_direction(SOUTHEAST))
 				if(NULLTURF_BORDER)
-					if((smoothing_flags & SMOOTH_BORDER))
+					if((smooth_flags & SMOOTH_BORDER))
 						. |= SOUTHEAST_JUNCTION
 				if(ADJ_FOUND)
 					. |= SOUTHEAST_JUNCTION
@@ -127,19 +127,19 @@
 
 ///do not use, use QUEUE_SMOOTH(atom)
 /atom/proc/smooth_icon()
-	smoothing_flags &= ~SMOOTH_QUEUED
+	smooth_flags &= ~SMOOTH_QUEUED
 	flags_1 |= HTML_USE_INITAL_ICON_1
 	if (!z)
 		CRASH("[type] called smooth_icon() without being on a z-level")
-	if(smoothing_flags & SMOOTH_CORNERS)
-		if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS)
+	if(smooth_flags & SMOOTH_CORNERS)
+		if(smooth_flags & SMOOTH_DIAGONAL_CORNERS)
 			corners_diagonal_smooth(calculate_adjacencies())
 		else
 			corners_cardinal_smooth(calculate_adjacencies())
-	else if(smoothing_flags & SMOOTH_BITMASK)
+	else if(smooth_flags & SMOOTH_BITMASK)
 		bitmask_smooth()
 	else
-		CRASH("smooth_icon called for [src] with smoothing_flags == [smoothing_flags]")
+		CRASH("smooth_icon called for [src] with smooth_flags == [smooth_flags]")
 	SEND_SIGNAL(src, COMSIG_ATOM_SMOOTHED_ICON)
 	update_appearance(~UPDATE_SMOOTHING)
 
@@ -272,25 +272,25 @@
 	if((source_area.area_limited_icon_smoothing && !istype(target_area, source_area.area_limited_icon_smoothing)) || (target_area.area_limited_icon_smoothing && !istype(source_area, target_area.area_limited_icon_smoothing)))
 		return NO_ADJ_FOUND
 
-	if(isnull(can_smooth_with)) //special case in which it will only smooth with itself
+	if(isnull(smooth_with)) //special case in which it will only smooth with itself
 		if(isturf(src))
 			return (type == target_turf.type) ? ADJ_FOUND : NO_ADJ_FOUND
 		var/atom/matching_obj = locate(type) in target_turf
 		return (matching_obj && matching_obj.type == type) ? ADJ_FOUND : NO_ADJ_FOUND
 
-	if(!isnull(target_turf.smoothing_groups))
-		for(var/target in can_smooth_with)
-			if(!(can_smooth_with[target] & target_turf.smoothing_groups[target]))
+	if(!isnull(target_turf.smooth_groups))
+		for(var/target in smooth_with)
+			if(!(smooth_with[target] & target_turf.smooth_groups[target]))
 				continue
 			return ADJ_FOUND
 
-	if(smoothing_flags & SMOOTH_OBJ)
+	if(smooth_flags & SMOOTH_OBJ)
 		for(var/am in target_turf)
 			var/atom/movable/thing = am
-			if(!thing.anchored || isnull(thing.smoothing_groups))
+			if(!thing.anchored || isnull(thing.smooth_groups))
 				continue
-			for(var/target in can_smooth_with)
-				if(!(can_smooth_with[target] & thing.smoothing_groups[target]))
+			for(var/target in smooth_with)
+				if(!(smooth_with[target] & thing.smooth_groups[target]))
 					continue
 				return ADJ_FOUND
 
@@ -300,7 +300,7 @@
 /**
  * Basic smoothing proc. The atom checks for adjacent directions to smooth with and changes the icon_state based on that.
  *
- * Returns the previous smoothing_junction state so the previous state can be compared with the new one after the proc ends, and see the changes, if any.
+ * Returns the previous smooth_junction state so the previous state can be compared with the new one after the proc ends, and see the changes, if any.
  *
 */
 /atom/proc/bitmask_smooth()
@@ -332,14 +332,14 @@
 
 ///Changes the icon state based on the new junction bitmask. Returns the old junction value.
 /atom/proc/set_smoothed_icon_state(new_junction)
-	. = smoothing_junction
-	smoothing_junction = new_junction
-	icon_state = "[base_icon_state]-[smoothing_junction]"
+	. = smooth_junction
+	smooth_junction = new_junction
+	icon_state = "[base_icon_state]-[smooth_junction]"
 
 
 /turf/closed/set_smoothed_icon_state(new_junction)
 	. = ..()
-	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS)
+	if(smooth_flags & SMOOTH_DIAGONAL_CORNERS)
 		switch(new_junction)
 			if(
 				NORTH_JUNCTION|WEST_JUNCTION,
@@ -351,9 +351,9 @@
 				SOUTH_JUNCTION|WEST_JUNCTION|SOUTHWEST_JUNCTION,
 				SOUTH_JUNCTION|EAST_JUNCTION|SOUTHEAST_JUNCTION
 				)
-				icon_state = "[base_icon_state]-[smoothing_junction]-d"
+				icon_state = "[base_icon_state]-[smooth_junction]-d"
 				if(!fixed_underlay && new_junction != .) // Mutable underlays?
-					var/junction_dir = reverse_ndir(smoothing_junction)
+					var/junction_dir = reverse_ndir(smooth_junction)
 					var/turned_adjacency = REVERSE_DIR(junction_dir)
 					var/turf/neighbor_turf = get_step(src, turned_adjacency & (NORTH|SOUTH))
 					var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, plane = FLOOR_PLANE)
@@ -380,14 +380,14 @@
 	var/list/away_turfs = block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
 	for(var/V in away_turfs)
 		var/turf/T = V
-		if(T.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		if(T.smooth_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 			if(now)
 				T.smooth_icon()
 			else
 				QUEUE_SMOOTH(T)
 		for(var/R in T)
 			var/atom/A = R
-			if(A.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+			if(A.smooth_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 				if(now)
 					A.smooth_icon()
 				else
@@ -481,6 +481,6 @@
 	name = "smooth wall"
 	icon = 'icons/turf/smooth_wall.dmi'
 	icon_state = "smooth"
-	smoothing_flags = SMOOTH_CORNERS|SMOOTH_DIAGONAL_CORNERS|SMOOTH_BORDER
-	smoothing_groups = null
-	can_smooth_with = null
+	smooth_flags = SMOOTH_CORNERS|SMOOTH_DIAGONAL_CORNERS|SMOOTH_BORDER
+	smooth_groups = null
+	smooth_with = null

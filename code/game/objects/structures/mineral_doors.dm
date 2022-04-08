@@ -242,7 +242,7 @@
 	sheetAmount = 3
 	resistance_flags = FLAMMABLE
 	max_integrity = 20
-	smoothing_groups = list(SMOOTH_GROUP_PAPER_FRAME)
+	smooth_groups = list(SMOOTH_GROUP_PAPER_FRAME)
 
 /obj/structure/mineral_door/paperframe/Initialize()
 	. = ..()

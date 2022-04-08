@@ -12,10 +12,10 @@
 	density = TRUE
 	opacity = 1
 	max_integrity = 100
-	smoothing_groups = list(SMOOTH_GROUP_FALSEWALL, SMOOTH_GROUP_WALL_STEEL)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_METALLIC)
+	smooth_groups = list(SMOOTH_GROUP_FALSEWALL, SMOOTH_GROUP_WALL_STEEL)
+	smooth_with = list(SMOOTH_GROUP_WALL_METALLIC)
 
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_flags = SMOOTH_CORNERS
 	can_be_unanchored = FALSE
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
@@ -62,14 +62,14 @@
 	if(opening)
 		if(density)
 			icon_state = "fwall_opening"
-			smoothing_flags = NONE
+			smooth_flags = NONE
 			clear_smooth_overlays()
 		else
 			icon_state = "fwall_closing"
 	else
 		if(density)
 			icon_state = initial(icon_state)
-			smoothing_flags = SMOOTH_CORNERS
+			smooth_flags = SMOOTH_CORNERS
 			QUEUE_SMOOTH(src)
 		else
 			icon_state = "fwall_open"
@@ -144,8 +144,8 @@
 	icon_state = "r_wall"
 	walltype = /turf/closed/wall/r_wall
 	mineral = /obj/item/stack/sheet/plasteel
-	smoothing_groups = list(SMOOTH_GROUP_WALL_METALLIC, SMOOTH_GROUP_WALL_PLASTEEL, SMOOTH_GROUP_FALSEWALL)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_METALLIC)
+	smooth_groups = list(SMOOTH_GROUP_WALL_METALLIC, SMOOTH_GROUP_WALL_PLASTEEL, SMOOTH_GROUP_FALSEWALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_METALLIC)
 
 
 /obj/structure/falsewall/reinforced/examine_status(mob/user)
@@ -170,8 +170,8 @@
 	walltype = /turf/closed/wall/mineral/uranium
 	var/active = null
 	var/last_event = 0
-	smoothing_groups = list(SMOOTH_GROUP_WALL_URANIUM, SMOOTH_GROUP_FALSEWALL)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_URANIUM)
+	smooth_groups = list(SMOOTH_GROUP_WALL_URANIUM, SMOOTH_GROUP_FALSEWALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_URANIUM)
 
 /obj/structure/falsewall/uranium/attackby(obj/item/W, mob/user, params)
 	radiate()
@@ -203,8 +203,8 @@
 	icon_state = "gold"
 	mineral = /obj/item/stack/sheet/mineral/gold
 	walltype = /turf/closed/wall/mineral/gold
-	smoothing_groups = list(SMOOTH_GROUP_WALL_GOLD, SMOOTH_GROUP_FALSEWALL)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_GOLD)
+	smooth_groups = list(SMOOTH_GROUP_WALL_GOLD, SMOOTH_GROUP_FALSEWALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_GOLD)
 
 /obj/structure/falsewall/silver
 	name = "silver wall"
@@ -213,8 +213,8 @@
 	icon_state = "silver"
 	mineral = /obj/item/stack/sheet/mineral/silver
 	walltype = /turf/closed/wall/mineral/silver
-	smoothing_groups = list(SMOOTH_GROUP_WALL_SILVER, SMOOTH_GROUP_FALSEWALL)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_SILVER)
+	smooth_groups = list(SMOOTH_GROUP_WALL_SILVER, SMOOTH_GROUP_FALSEWALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_SILVER)
 
 /obj/structure/falsewall/diamond
 	name = "diamond wall"
@@ -223,8 +223,8 @@
 	icon_state = "diamond"
 	mineral = /obj/item/stack/sheet/mineral/diamond
 	walltype = /turf/closed/wall/mineral/diamond
-	smoothing_groups = list(SMOOTH_GROUP_WALL_DIAMOND, SMOOTH_GROUP_FALSEWALL)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_DIAMOND)
+	smooth_groups = list(SMOOTH_GROUP_WALL_DIAMOND, SMOOTH_GROUP_FALSEWALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_DIAMOND)
 	max_integrity = 800
 
 /obj/structure/falsewall/plasma
@@ -262,8 +262,8 @@
 	icon_state = "bananium"
 	mineral = /obj/item/stack/sheet/mineral/bananium
 	walltype = /turf/closed/wall/mineral/bananium
-	smoothing_groups = list(SMOOTH_GROUP_WALL_BANANIUM, SMOOTH_GROUP_FALSEWALL)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BANANIUM)
+	smooth_groups = list(SMOOTH_GROUP_WALL_BANANIUM, SMOOTH_GROUP_FALSEWALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_BANANIUM)
 
 /obj/structure/falsewall/sandstone
 	name = "sandstone wall"
@@ -272,8 +272,8 @@
 	icon_state = "sandstone"
 	mineral = /obj/item/stack/sheet/mineral/sandstone
 	walltype = /turf/closed/wall/mineral/sandstone
-	smoothing_groups = list(SMOOTH_GROUP_WALL_SANDSTONE, SMOOTH_GROUP_FALSEWALL)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_SANDSTONE)
+	smooth_groups = list(SMOOTH_GROUP_WALL_SANDSTONE, SMOOTH_GROUP_FALSEWALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_SANDSTONE)
 
 /obj/structure/falsewall/wood
 	name = "wooden wall"
@@ -282,8 +282,8 @@
 	icon_state = "wood"
 	mineral = /obj/item/stack/sheet/mineral/wood
 	walltype = /turf/closed/wall/mineral/wood
-	smoothing_groups = list(SMOOTH_GROUP_WALL_WOOD, SMOOTH_GROUP_FALSEWALL)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_WOOD)
+	smooth_groups = list(SMOOTH_GROUP_WALL_WOOD, SMOOTH_GROUP_FALSEWALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_WOOD)
 
 /obj/structure/falsewall/iron
 	name = "rough metal wall"
@@ -293,8 +293,8 @@
 	mineral = /obj/item/stack/rods
 	mineral_amount = 5
 	walltype = /turf/closed/wall/mineral/iron
-	smoothing_groups = list(SMOOTH_GROUP_WALL_IRON, SMOOTH_GROUP_FALSEWALL)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_IRON)
+	smooth_groups = list(SMOOTH_GROUP_WALL_IRON, SMOOTH_GROUP_FALSEWALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_IRON)
 
 /obj/structure/falsewall/abductor
 	name = "alien wall"
@@ -303,8 +303,8 @@
 	icon_state = "abductor"
 	mineral = /obj/item/stack/sheet/mineral/abductor
 	walltype = /turf/closed/wall/mineral/abductor
-	smoothing_groups = list(SMOOTH_GROUP_WALL_ALIEN, SMOOTH_GROUP_FALSEWALL)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_ALIEN)
+	smooth_groups = list(SMOOTH_GROUP_WALL_ALIEN, SMOOTH_GROUP_FALSEWALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_ALIEN)
 
 /obj/structure/falsewall/titanium
 	name = "wall"
@@ -313,9 +313,9 @@
 	icon_state = "shuttle"
 	mineral = /obj/item/stack/sheet/mineral/titanium
 	walltype = /turf/closed/wall/mineral/titanium
-	smoothing_flags = SMOOTH_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_WALL_TITANIUM, SMOOTH_GROUP_FALSEWALL)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_TITANIUM, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_HEATER, SMOOTH_GROUP_WINDOW_SHUTTLE)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_WALL_TITANIUM, SMOOTH_GROUP_FALSEWALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_TITANIUM, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_HEATER, SMOOTH_GROUP_WINDOW_SHUTTLE)
 
 /obj/structure/falsewall/plastitanium
 	name = "wall"
@@ -324,9 +324,9 @@
 	icon_state = "shuttle"
 	mineral = /obj/item/stack/sheet/mineral/plastitanium
 	walltype = /turf/closed/wall/mineral/plastitanium
-	smoothing_flags = SMOOTH_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_FALSEWALL)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_HEATER, SMOOTH_GROUP_WINDOW_SHUTTLE)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_FALSEWALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_HEATER, SMOOTH_GROUP_WINDOW_SHUTTLE)
 
 /obj/structure/falsewall/brass
 	name = "clockwork wall"
@@ -335,8 +335,8 @@
 	icon_state = "clockwork_wall"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	mineral_amount = 1
-	smoothing_groups = list(SMOOTH_GROUP_WALL_CLOCKWORK, SMOOTH_GROUP_FALSEWALL)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_CLOCKWORK)
+	smooth_groups = list(SMOOTH_GROUP_WALL_CLOCKWORK, SMOOTH_GROUP_FALSEWALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_CLOCKWORK)
 	girder_type = /obj/structure/destructible/clockwork/wall_gear/displaced
 	walltype = /turf/closed/wall/clockwork
 	mineral = /obj/item/stack/tile/brass

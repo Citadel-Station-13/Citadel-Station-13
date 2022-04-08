@@ -62,9 +62,9 @@
 	desc = "Someone should clean that up."
 	icon_state = "dirt"
 	alpha = 127
-	can_smooth_with = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_DIRT)
-	smoothing_groups = list(SMOOTH_GROUP_DIRT)
-	smoothing_flags = NONE
+	smooth_with = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_DIRT)
+	smooth_groups = list(SMOOTH_GROUP_DIRT)
+	smooth_flags = NONE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	beauty = -75
 	mergeable_decal = TRUE
@@ -94,7 +94,7 @@
 	. = ..()
 	var/turf/T = get_turf(src)
 	if(T.tiled_dirt)
-		smoothing_flags = SMOOTH_CORNERS
+		smooth_flags = SMOOTH_CORNERS
 		icon = 'icons/effects/dirt.dmi'
 		icon_state = ""
 		QUEUE_SMOOTH(src)

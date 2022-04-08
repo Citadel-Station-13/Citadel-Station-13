@@ -101,9 +101,9 @@
 	name = "pod window"
 	icon = 'icons/obj/smooth_structures/pod_window.dmi'
 	icon_state = "smooth"
-	smoothing_flags = SMOOTH_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_SURVIVAL_POD_EXTERIOR)
-	can_smooth_with = list(SMOOTH_GROUP_SURVIVAL_POD_EXTERIOR)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_SURVIVAL_POD_EXTERIOR)
+	smooth_with = list(SMOOTH_GROUP_SURVIVAL_POD_EXTERIOR)
 
 /obj/structure/window/shuttle/survival_pod/spawner/north
 	dir = NORTH
@@ -125,7 +125,7 @@
 	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod
-	smoothing_groups = list(SMOOTH_GROUP_SURVIVAL_POD_EXTERIOR, SMOOTH_GROUP_AIRLOCK)
+	smooth_groups = list(SMOOTH_GROUP_SURVIVAL_POD_EXTERIOR, SMOOTH_GROUP_AIRLOCK)
 
 /obj/machinery/door/airlock/survival_pod/glass
 	opacity = FALSE
@@ -149,7 +149,7 @@
 /obj/structure/table/survival_pod
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	icon_state = "table"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 //Sleeper
 /obj/machinery/sleeper/survival_pod

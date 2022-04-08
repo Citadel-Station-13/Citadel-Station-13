@@ -15,9 +15,9 @@
 	icon_state = "flower_bud"
 	layer = SPACEVINE_MOB_LAYER
 	opacity = 0
-	can_smooth_with = null
-	smoothing_groups = null
-	smoothing_flags = NONE
+	smooth_with = null
+	smooth_groups = null
+	smooth_flags = NONE
 	/// The amount of time it takes to create a venus human trap, in deciseconds
 	var/growth_time = 1200
 

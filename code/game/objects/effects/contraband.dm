@@ -127,7 +127,7 @@
 		return
 
 	// Deny placing posters on currently-diagonal walls, although the wall may change in the future.
-	if((smoothing_flags & (SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS)) && (smoothing_junction & (SOUTHEAST_JUNCTION | SOUTHWEST_JUNCTION | NORTHEAST_JUNCTION | NORTHWEST_JUNCTION)))
+	if((smooth_flags & (SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS)) && (smooth_junction & (SOUTHEAST_JUNCTION | SOUTHWEST_JUNCTION | NORTHEAST_JUNCTION | NORTHWEST_JUNCTION)))
 		return
 
 	var/stuff_on_wall = 0

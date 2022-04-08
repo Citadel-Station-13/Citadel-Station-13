@@ -4,7 +4,7 @@
 	icon_state = ""
 	var/last_event = 0
 	var/active = null
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_flags = SMOOTH_CORNERS
 
 /turf/closed/wall/mineral/gold
 	name = "gold wall"
@@ -13,8 +13,8 @@
 	icon_state = "gold"
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	explosion_block = 0 //gold is a soft metal you dingus.
-	can_smooth_with = list(SMOOTH_GROUP_WALL_GOLD)
-	smoothing_groups = list(SMOOTH_GROUP_WALL_GOLD, SMOOTH_GROUP_WALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_GOLD)
+	smooth_groups = list(SMOOTH_GROUP_WALL_GOLD, SMOOTH_GROUP_WALL)
 
 /turf/closed/wall/mineral/silver
 	name = "silver wall"
@@ -22,8 +22,8 @@
 	icon = 'icons/turf/walls/silver_wall.dmi'
 	icon_state = "silver"
 	sheet_type = /obj/item/stack/sheet/mineral/silver
-	can_smooth_with = list(SMOOTH_GROUP_WALL_SILVER)
-	smoothing_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_SILVER)
+	smooth_with = list(SMOOTH_GROUP_WALL_SILVER)
+	smooth_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_SILVER)
 /turf/closed/wall/mineral/diamond
 	name = "diamond wall"
 	desc = "A wall with diamond plating. You monster."
@@ -32,16 +32,16 @@
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	slicing_duration = 200   //diamond wall takes twice as much time to slice
 	explosion_block = 3
-	can_smooth_with = list(SMOOTH_GROUP_WALL_DIAMOND)
-	smoothing_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_DIAMOND)
+	smooth_with = list(SMOOTH_GROUP_WALL_DIAMOND)
+	smooth_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_DIAMOND)
 /turf/closed/wall/mineral/bananium
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
 	icon = 'icons/turf/walls/bananium_wall.dmi'
 	icon_state = "bananium"
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
-	can_smooth_with = list(SMOOTH_GROUP_WALL_BANANIUM)
-	smoothing_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_BANANIUM)
+	smooth_with = list(SMOOTH_GROUP_WALL_BANANIUM)
+	smooth_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_BANANIUM)
 /turf/closed/wall/mineral/sandstone
 	name = "sandstone wall"
 	desc = "A wall with sandstone plating. Rough."
@@ -49,8 +49,8 @@
 	icon_state = "sandstone"
 	sheet_type = /obj/item/stack/sheet/mineral/sandstone
 	explosion_block = 0
-	can_smooth_with = list(SMOOTH_GROUP_WALL_SANDSTONE)
-	smoothing_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_SANDSTONE)
+	smooth_with = list(SMOOTH_GROUP_WALL_SANDSTONE)
+	smooth_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_SANDSTONE)
 /turf/closed/wall/mineral/uranium
 	article = "a"
 	name = "uranium wall"
@@ -58,8 +58,8 @@
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium"
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
-	can_smooth_with = list(SMOOTH_GROUP_WALL_URANIUM)
-	smoothing_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_URANIUM)
+	smooth_with = list(SMOOTH_GROUP_WALL_URANIUM)
+	smooth_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_URANIUM)
 /turf/closed/wall/mineral/uranium/proc/radiate()
 	if(!active)
 		if(world.time > last_event+15)
@@ -91,8 +91,8 @@
 	icon_state = "plasma"
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	thermal_conductivity = 0.04
-	can_smooth_with = list(SMOOTH_GROUP_WALL_PLASMA)
-	smoothing_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_PLASMA)
+	smooth_with = list(SMOOTH_GROUP_WALL_PLASMA)
+	smooth_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_PLASMA)
 /turf/closed/wall/mineral/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma wall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
@@ -131,8 +131,8 @@
 	sheet_type = /obj/item/stack/sheet/mineral/wood
 	hardness = 70
 	explosion_block = 0
-	smoothing_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_WOOD)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_WOOD)
+	smooth_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_WOOD)
+	smooth_with = list(SMOOTH_GROUP_WALL_WOOD)
 
 /turf/closed/wall/mineral/wood/attackby(obj/item/W, mob/user)
 	if(W.sharpness && W.force)
@@ -156,8 +156,8 @@
 	icon = 'icons/turf/walls/iron_wall.dmi'
 	icon_state = "iron"
 	sheet_type = /obj/item/stack/rods
-	can_smooth_with = list(SMOOTH_GROUP_WALL_IRON)
-	smoothing_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_IRON)
+	smooth_with = list(SMOOTH_GROUP_WALL_IRON)
+	smooth_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_IRON)
 /turf/closed/wall/mineral/snow
 	name = "packed snow wall"
 	desc = "A wall made of densely packed snow blocks."
@@ -177,12 +177,12 @@
 	desc = "A wall with alien alloy plating."
 	icon = 'icons/turf/walls/abductor_wall.dmi'
 	icon_state = "abductor"
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_DIAGONAL_CORNERS
+	smooth_flags = SMOOTH_CORNERS | SMOOTH_DIAGONAL_CORNERS
 	sheet_type = /obj/item/stack/sheet/mineral/abductor
 	slicing_duration = 200   //alien wall takes twice as much time to slice
 	explosion_block = 3
-	can_smooth_with = list(SMOOTH_GROUP_WALL_ALIEN)
-	smoothing_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_ALIEN)
+	smooth_with = list(SMOOTH_GROUP_WALL_ALIEN)
+	smooth_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_ALIEN)
 /////////////////////Titanium walls/////////////////////
 
 /turf/closed/wall/mineral/titanium //has to use this path due to how building walls works
@@ -194,18 +194,18 @@
 	flags_1 = CAN_BE_DIRTY_1 | DEFAULT_RICOCHET_1
 	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_DIAGONAL_CORNERS
-	smoothing_groups = lisT(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_TITANIUM)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_TITANIUM, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_HEATER)
+	smooth_flags = SMOOTH_CORNERS | SMOOTH_DIAGONAL_CORNERS
+	smooth_groups = lisT(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_TITANIUM)
+	smooth_with = list(SMOOTH_GROUP_WALL_TITANIUM, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_HEATER)
 
 /turf/closed/wall/mineral/titanium/nodiagonal
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_flags = SMOOTH_CORNERS
 	icon_state = "map-shuttle_nd"
 
 /turf/closed/wall/mineral/titanium/nosmooth
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/wall/mineral/titanium/overspace
 	icon_state = "map-overspace"
@@ -239,12 +239,12 @@
 	desc = "An easily-compressable wall used for temporary shelter."
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "smooth"
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_DIAGONAL_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_SURVIVAL_POD_EXTERIOR)
-	can_smooth_with = list(SMOOTH_GROUP_SURVIVAL_POD_EXTERIOR)
+	smooth_flags = SMOOTH_CORNERS | SMOOTH_DIAGONAL_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_SURVIVAL_POD_EXTERIOR)
+	smooth_with = list(SMOOTH_GROUP_SURVIVAL_POD_EXTERIOR)
 
 /turf/closed/wall/mineral/titanium/survival/nodiagonal
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_flags = SMOOTH_CORNERS
 
 /turf/closed/wall/mineral/titanium/survival/pod
 
@@ -257,18 +257,18 @@
 	icon_state = "map-shuttle"
 	explosion_block = 4
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_DIAGONAL_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_WALL)
-	can_smooth_with = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_WINDOW_PLASTITANIUM, SMOOTH_GROUP_SHUTTLE_HEATER)
+	smooth_flags = SMOOTH_CORNERS | SMOOTH_DIAGONAL_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_WALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_WINDOW_PLASTITANIUM, SMOOTH_GROUP_SHUTTLE_HEATER)
 
 /turf/closed/wall/mineral/plastitanium/nodiagonal
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_flags = SMOOTH_CORNERS
 	icon_state = "map-shuttle_nd"
 
 /turf/closed/wall/mineral/plastitanium/nosmooth
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
-	smoothing_flags = NONE
+	smooth_flags = NONE
 
 /turf/closed/wall/mineral/plastitanium/overspace
 	icon_state = "map-overspace"

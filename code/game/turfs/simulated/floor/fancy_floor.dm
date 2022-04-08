@@ -238,9 +238,9 @@
 	icon_state = "carpet"
 	floor_tile = /obj/item/stack/tile/carpet
 	broken_states = list("damaged")
-	smoothing_flags = SMOOTH_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_CARPET)
-	can_smooth_with = list(SMOOTH_GROUP_CARPET)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_CARPET)
+	smooth_with = list(SMOOTH_GROUP_CARPET)
 	flags_1 = NONE
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_CARPET
@@ -271,81 +271,81 @@
 /turf/open/floor/carpet/black
 	icon = 'icons/turf/floors/carpet_black.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/black
-	smoothing_flags = SMOOTH_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_BLACK)
-	can_smooth_with = list(SMOOTH_GROUP_CARPET_BLACK)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_BLACK)
+	smooth_with = list(SMOOTH_GROUP_CARPET_BLACK)
 
 /turf/open/floor/carpet/arcade
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "arcade"
 	floor_tile = /obj/item/stack/tile/carpet/arcade
-	smoothing_flags = NONE
-	smoothing_groups = null
-	can_smooth_with = null
+	smooth_flags = NONE
+	smooth_groups = null
+	smooth_with = null
 
 /turf/open/floor/carpet/blackred
 	icon = 'icons/turf/floors/carpet_blackred.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/blackred
 	icon_state = "tile-carpet-blackred"
-	smoothing_flags = SMOOTH_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_BLACK)
-	can_smooth_with = list(SMOOTH_GROUP_CARPET_BLACK)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_BLACK)
+	smooth_with = list(SMOOTH_GROUP_CARPET_BLACK)
 
 /turf/open/floor/carpet/monochrome
 	icon = 'icons/turf/floors/carpet_monochrome.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/monochrome
 	icon_state = "tile-carpet-monochrome"
-	smoothing_flags = SMOOTH_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_BLACK)
-	can_smooth_with = list(SMOOTH_GROUP_CARPET_BLACK)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_BLACK)
+	smooth_with = list(SMOOTH_GROUP_CARPET_BLACK)
 
 /turf/open/floor/carpet/blue
 	icon = 'icons/turf/floors/carpet_blue.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/blue
-	can_smooth_with = list(SMOOTH_GROUP_CARPET_BLUE)
-	smoothing_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_BLUE)
+	smooth_with = list(SMOOTH_GROUP_CARPET_BLUE)
+	smooth_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_BLUE)
 
 /turf/open/floor/carpet/cyan
 	icon = 'icons/turf/floors/carpet_cyan.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/cyan
-	can_smooth_with = list(SMOOTH_GROUP_CARPET_CYAN)
-	smoothing_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_CYAN)
+	smooth_with = list(SMOOTH_GROUP_CARPET_CYAN)
+	smooth_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_CYAN)
 
 /turf/open/floor/carpet/green
 	icon = 'icons/turf/floors/carpet_green.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/green
-	can_smooth_with = list(SMOOTH_GROUP_CARPET_GREEN)
-	smoothing_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_GREEN)
+	smooth_with = list(SMOOTH_GROUP_CARPET_GREEN)
+	smooth_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_GREEN)
 
 /turf/open/floor/carpet/orange
 	icon = 'icons/turf/floors/carpet_orange.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/orange
-	can_smooth_with = list(SMOOTH_GROUP_CARPET_ORANGE)
-	smoothing_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_ORANGE)
+	smooth_with = list(SMOOTH_GROUP_CARPET_ORANGE)
+	smooth_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_ORANGE)
 
 /turf/open/floor/carpet/purple
 	icon = 'icons/turf/floors/carpet_purple.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/purple
-	can_smooth_with = list(SMOOTH_GROUP_CARPET_PURPLE)
-	smoothing_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_PURPLE)
+	smooth_with = list(SMOOTH_GROUP_CARPET_PURPLE)
+	smooth_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_PURPLE)
 
 /turf/open/floor/carpet/red
 	icon = 'icons/turf/floors/carpet_red.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/red
-	can_smooth_with = list(SMOOTH_GROUP_CARPET_RED)
-	smoothing_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_RED)
+	smooth_with = list(SMOOTH_GROUP_CARPET_RED)
+	smooth_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_RED)
 
 /turf/open/floor/carpet/royalblack
 	icon = 'icons/turf/floors/carpet_royalblack.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/royalblack
-	can_smooth_with = list(SMOOTH_GROUP_CARPET_ROYALBLACK)
-	smoothing_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_ROYALBLACK)
+	smooth_with = list(SMOOTH_GROUP_CARPET_ROYALBLACK)
+	smooth_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_ROYALBLACK)
 
 /turf/open/floor/carpet/royalblue
 	icon = 'icons/turf/floors/carpet_royalblue.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/royalblue
-	can_smooth_with = list(SMOOTH_GROUP_CARPET_ROYALBLUE)
-	smoothing_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_ROYALBLUE)
+	smooth_with = list(SMOOTH_GROUP_CARPET_ROYALBLUE)
+	smooth_groups = list(SMOOTH_GROUP_CARPET, SMOOTH_GROUP_CARPET_ROYALBLUE)
 
 //*****Airless versions of all of the above.*****
 /turf/open/floor/carpet/airless
@@ -407,9 +407,9 @@
 
 /turf/open/floor/fakepit
 	desc = "A clever illusion designed to look like a bottomless pit."
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	smoothing_groups = list(SMOOTH_GROUP_CHASM)
-	can_smooth_with = list(SMOOTH_GROUP_CHASM)
+	smooth_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	smooth_groups = list(SMOOTH_GROUP_CHASM)
+	smooth_with = list(SMOOTH_GROUP_CHASM)
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"
 	tiled_dirt = FALSE

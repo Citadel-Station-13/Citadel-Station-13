@@ -57,10 +57,10 @@
 	density = TRUE
 	opacity = 1
 	anchored = TRUE
-	smoothing_groups = list(SMOOTH_GROUP_XENO_STRUCTURAL)
-	can_smooth_with = list(SMOOTH_GROUP_XENO_STRUCTURAL)
+	smooth_groups = list(SMOOTH_GROUP_XENO_STRUCTURAL)
+	smooth_with = list(SMOOTH_GROUP_XENO_STRUCTURAL)
 	max_integrity = 200
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_flags = SMOOTH_CORNERS
 	var/resintype = null
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
@@ -117,9 +117,9 @@
 	plane = FLOOR_PLANE
 	icon_state = "weeds"
 	max_integrity = 15
-	smoothing_groups = list(SMOOTH_GROUP_XENO_WEEDS)
-	can_smooth_with = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_XENO_STRUCTURAL, SMOOTH_GROUP_XENO_WEEDS)
-	smoothing_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_XENO_WEEDS)
+	smooth_with = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_XENO_STRUCTURAL, SMOOTH_GROUP_XENO_WEEDS)
+	smooth_flags = SMOOTH_CORNERS
 	var/last_expand = 0 //last world.time this weed expanded
 	var/growth_cooldown_low = 150
 	var/growth_cooldown_high = 200
