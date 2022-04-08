@@ -8,6 +8,8 @@
 	// being an accessory
 	/// supports being an accessory
 	var/is_accessory = FALSE
+	/// forced accessory layer on inv/item and worn - 0 is the layer of the parent clothing
+	var/accessory_layer = 100
 
 #warn finish
 
@@ -25,6 +27,7 @@
 
 #warn alt click for detach menu
 
+#warn render hook
 // /obj/item/clothing/accessory //Ties moved to neck slot items, but as there are still things like medals and armbands, this accessory system is being kept as-is
 // 	name = "Accessory"
 // 	desc = "Something has gone wrong!"

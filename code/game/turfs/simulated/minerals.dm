@@ -7,7 +7,7 @@
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock"
 	smooth_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	smooth_groups = lisT(SMOOTH_GROUP_WALL_MINERAL, SMOOTH_GROUP_WALL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_MINERAL, SMOOTH_GROUP_WALL)
 	smooth_with = list(SMOOTH_GROUP_WALL_MINERAL)
 	baseturfs = /turf/open/floor/plating/asteroid/airless
 	initial_gas_mix = AIRLESS_ATMOS

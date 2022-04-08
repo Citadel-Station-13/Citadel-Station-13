@@ -41,7 +41,6 @@
 	smooth_flags = SMOOTH_CORNERS | SMOOTH_BORDER
 	smooth_groups = list(SMOOTH_GROUP_FLOOR_COBBLESTONE, SMOOTH_GROUP_FLOOR)
 	smooth_with = list(SMOOTH_GROUP_FLOOR_COBBLESTONE)
-	canSmoothWith = list(/turf/open/floor/festive/cobblestone)
 	initial_gas_mix = FESTIVE_ATMOS
 	planetary_atmos = 1
 

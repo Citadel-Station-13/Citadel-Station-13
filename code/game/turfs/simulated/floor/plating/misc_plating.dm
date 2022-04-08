@@ -94,7 +94,7 @@
 /turf/open/floor/plating/ashplanet/wateryrock
 	gender = PLURAL
 	name = "wet rocky ground"
-	smooth = null
+	smooth_flags = NONE
 	icon_state = "wateryrock"
 	slowdown = 2
 	footstep = FOOTSTEP_FLOOR
@@ -199,7 +199,8 @@
 /turf/open/floor/plating/ice/smooth
 	icon_state = "smooth"
 	smooth_flags = SMOOTH_CORNERS | SMOOTH_BORDER
-	canSmoothWith = list(/turf/open/floor/plating/ice/smooth, /turf/open/floor/plating/ice, /turf/open/floor/plating/ice/colder)
+	smooth_groups = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_FLOOR_ICE)
+	smooth_with = list(SMOOTH_GROUP_FLOOR_ICE)
 
 /turf/open/floor/plating/ice/colder
 	initial_temperature = 140

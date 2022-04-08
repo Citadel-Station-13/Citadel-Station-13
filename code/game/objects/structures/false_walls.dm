@@ -234,7 +234,8 @@
 	icon_state = "plasma"
 	mineral = /obj/item/stack/sheet/mineral/plasma
 	walltype = /turf/closed/wall/mineral/plasma
-	canSmoothWith = list(/obj/structure/falsewall/plasma, /turf/closed/wall/mineral/plasma)
+	smooth_groups = list(SMOOTH_GROUP_WALL_PLASMA, SMOOTH_GROUP_FALSEWALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_PLASMA)
 
 /obj/structure/falsewall/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.get_temperature() > 300)

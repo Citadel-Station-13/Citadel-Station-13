@@ -158,6 +158,7 @@
 	sheet_type = /obj/item/stack/rods
 	smooth_with = list(SMOOTH_GROUP_WALL_IRON)
 	smooth_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_IRON)
+
 /turf/closed/wall/mineral/snow
 	name = "packed snow wall"
 	desc = "A wall made of densely packed snow blocks."
@@ -166,8 +167,8 @@
 	hardness = 80
 	explosion_block = 0
 	slicing_duration = 30
-	sheet_type = /obj/item/stack/sheet/mineral/snow
-	canSmoothWith = null
+	smooth_groups = list(SMOOTH_GROUP_WALL_SNOW, SMOOTH_GROUP_WALL)
+	smooth_with = liist(SMOOTH_GROUP_WALL_SNOW)
 	girder_type = null
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
@@ -181,10 +182,10 @@
 	sheet_type = /obj/item/stack/sheet/mineral/abductor
 	slicing_duration = 200   //alien wall takes twice as much time to slice
 	explosion_block = 3
-	smooth_with = list(SMOOTH_GROUP_WALL_ALIEN)
+	smooth_with = list(SMOOTH_GROUP_WALL_ALIEN, SMOOTH_GROUP_WALL)
 	smooth_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_ALIEN)
-/////////////////////Titanium walls/////////////////////
 
+/////////////////////Titanium walls/////////////////////
 /turf/closed/wall/mineral/titanium //has to use this path due to how building walls works
 	name = "wall"
 	desc = "A light-weight titanium wall used in shuttles."
@@ -195,7 +196,7 @@
 	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smooth_flags = SMOOTH_CORNERS | SMOOTH_DIAGONAL_CORNERS
-	smooth_groups = lisT(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_TITANIUM)
+	smooth_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_TITANIUM)
 	smooth_with = list(SMOOTH_GROUP_WALL_TITANIUM, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_HEATER)
 
 /turf/closed/wall/mineral/titanium/nodiagonal
@@ -240,7 +241,7 @@
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "smooth"
 	smooth_flags = SMOOTH_CORNERS | SMOOTH_DIAGONAL_CORNERS
-	smooth_groups = list(SMOOTH_GROUP_SURVIVAL_POD_EXTERIOR)
+	smooth_groups = list(SMOOTH_GROUP_SURVIVAL_POD_EXTERIOR, SMOOTH_GROUP_WALL)
 	smooth_with = list(SMOOTH_GROUP_SURVIVAL_POD_EXTERIOR)
 
 /turf/closed/wall/mineral/titanium/survival/nodiagonal

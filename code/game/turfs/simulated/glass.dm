@@ -6,7 +6,8 @@
 	baseturfs = /turf/open/openspace
 	intact = FALSE //this means wires go on top
 	smooth_flags = SMOOTH_CORNERS
-	canSmoothWith = list(/turf/open/floor/glass, /turf/open/floor/glass/reinforced)
+	smooth_with = list(SMOOTH_GROUP_FLOOR_GLASS)
+	smooth_groups = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_FLOOR_GLASS)
 	footstep = FOOTSTEP_PLATING
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW

@@ -178,7 +178,7 @@
 	icon_state = "iced"
 	desc = "A wall covered in a thick sheet of ice."
 	smooth_groups = list(SMOOTH_GROUP_WALL_ICE, SMOOTH_GROUP_WALL)
-	smooth_with = lisT(SMOOTH_GROUP_WALL_ICE)
+	smooth_with = list(SMOOTH_GROUP_WALL_ICE)
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
 	bullet_sizzle = TRUE
