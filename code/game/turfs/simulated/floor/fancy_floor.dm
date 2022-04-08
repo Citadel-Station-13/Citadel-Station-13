@@ -407,8 +407,9 @@
 
 /turf/open/floor/fakepit
 	desc = "A clever illusion designed to look like a bottomless pit."
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER | SMOOTH_MORE
-	canSmoothWith = list(/turf/open/floor/fakepit)
+	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	smoothing_groups = list(SMOOTH_GROUP_CHASM)
+	can_smooth_with = list(SMOOTH_GROUP_CHASM)
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"
 	tiled_dirt = FALSE

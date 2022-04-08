@@ -31,15 +31,8 @@
 	var/sheet_amount = 2
 	var/girder_type = /obj/structure/girder
 
-	canSmoothWith = list(
-	/turf/closed/wall,
-	/turf/closed/wall/r_wall,
-	/obj/structure/falsewall,
-	/obj/structure/falsewall/brass,
-	/obj/structure/falsewall/reinforced,
-	/turf/closed/wall/rust,
-	/turf/closed/wall/r_wall/rust,
-	/turf/closed/wall/clockwork)
+	smoothing_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_STEEL)
+	can_smooth_with = list(SMOOTH_GROUP_WALL_STEEL, SMOOTH_GROUP_WALL_PLASTEEL, SMOOTH_GROUP_WALL_CLOCKWORK)
 	smoothing_flags = SMOOTH_CORNERS
 
 	var/list/dent_decals

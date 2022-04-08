@@ -446,9 +446,8 @@
 	buildstack = /obj/item/stack/sheet/mineral/wood
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
-	canSmoothWith = list(/obj/structure/table/wood,
-		/obj/structure/table/wood/poker,
-		/obj/structure/table/wood/bar)
+	can_smooth_with = list(SMOOTH_GROUP_TABLE_WOOD)
+	smoothing_groups = list(SMOOTH_GROUP_TABLE, SMOOTH_GROUP_TABLE_WOOD)
 
 /obj/structure/table/wood/narsie_act(total_override = TRUE)
 	if(!total_override)
@@ -472,18 +471,8 @@
 	frame = /obj/structure/table_frame
 	framestack = /obj/item/stack/rods
 	buildstack = /obj/item/stack/tile/carpet
-	canSmoothWith = list(/obj/structure/table/wood/fancy,
-		/obj/structure/table/wood/fancy/black,
-		/obj/structure/table/wood/fancy/blackred,
-		/obj/structure/table/wood/fancy/monochrome,
-		/obj/structure/table/wood/fancy/blue,
-		/obj/structure/table/wood/fancy/cyan,
-		/obj/structure/table/wood/fancy/green,
-		/obj/structure/table/wood/fancy/orange,
-		/obj/structure/table/wood/fancy/purple,
-		/obj/structure/table/wood/fancy/red,
-		/obj/structure/table/wood/fancy/royalblack,
-		/obj/structure/table/wood/fancy/royalblue)
+	can_smooth_with = list(SMOOTH_GROUP_TABLE_FANCY)
+	smoothing_groups = list(SMOOTH_GROUP_TABLE_FANCY, SMOOTH_GROUP_TABLE)
 	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
 
 /obj/structure/table/wood/fancy/Initialize()
@@ -597,7 +586,8 @@
 	buildstack = /obj/item/stack/tile/brass
 	framestackamount = 1
 	buildstackamount = 1
-	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
+	smoothing_groups = list(SMOOTH_GROUP_TABLE_CLOCKWORK, SMOOTH_GROUP_CLOCKCULT, SMOOTH_GROUP_TABLE_BRASS)
+	can_smooth_with = list(SMOOTH_GROUP_TABLE_CLOCKWORK)
 
 /obj/structure/table/reinforced/brass/New()
 	change_construction_value(2)
@@ -629,7 +619,8 @@
 	icon_state = "brass_table"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	buildstack = /obj/item/stack/sheet/bronze
-	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
+	smoothing_groups = list(SMOOTH_GROUP_TABLE_CLOCKWORK, SMOOTH_GROUP_CLOCKCULT, SMOOTH_GROUP_TABLE_BRONZE)
+	can_smooth_with = list(SMOOTH_GROUP_TABLE_CLOCKWORK)
 
 /obj/structure/table/bronze/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
 	..()
