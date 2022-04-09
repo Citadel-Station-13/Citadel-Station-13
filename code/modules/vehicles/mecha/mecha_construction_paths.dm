@@ -557,7 +557,7 @@
 	inner_plating = /obj/item/stack/sheet/metal
 	inner_plating_amount = 5
 
-	outer_plating = /obj/item/mecha_parts/part/gygax_armor
+	outer_plating = /obj/item/mecha_parts/part/medigax_armor
 	outer_plating_amount = 1
 
 /datum/component/construction/mecha/medigax/custom_action(obj/item/I, mob/living/user, diff)
@@ -687,15 +687,15 @@
 
 /datum/component/construction/mecha/firefighter
 	result = /obj/vehicle/sealed/mecha/working/ripley/firefighter
-	base_icon = "firefighter"
+	base_icon = "fireripley"
 
 	circuit_control = /obj/item/circuitboard/mecha/ripley/main
 	circuit_periph = /obj/item/circuitboard/mecha/ripley/peripherals
 
-	inner_plating= /obj/item/clothing/suit/fire
+	inner_plating = /obj/item/clothing/suit/fire
 	inner_plating_amount = 1
 
-	outer_plating=/obj/item/stack/sheet/plasteel
+	outer_plating = /obj/item/stack/sheet/plasteel
 	outer_plating_amount = 10
 
 /datum/component/construction/mecha/firefighter/get_outer_plating_steps()
