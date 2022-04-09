@@ -420,9 +420,6 @@
 	outer_plating=/obj/item/mecha_parts/part/gygax_armor
 	outer_plating_amount=1
 
-/datum/component/construction/mecha/gygax/action(datum/source, atom/used_atom, mob/user)
-	return check_step(used_atom,user)
-
 /datum/component/construction/mecha/gygax/custom_action(obj/item/I, mob/living/user, diff)
 	if(!..())
 		return FALSE
@@ -552,173 +549,16 @@
 /datum/component/construction/mecha/medigax
 	result = /obj/vehicle/sealed/mecha/medical/medigax
 	base_icon = "medigax"
-	steps = list(
-		//1
-		list(
-			"key" = TOOL_WRENCH,
-			"desc" = "The hydraulic systems are disconnected."
-		),
 
-		//2
-		list(
-			"key" = TOOL_SCREWDRIVER,
-			"back_key" = TOOL_WRENCH,
-			"desc" = "The hydraulic systems are connected."
-		),
+	circuit_control = /obj/item/circuitboard/mecha/gygax/main
+	circuit_periph = /obj/item/circuitboard/mecha/gygax/peripherals
+	circuit_weapon = /obj/item/circuitboard/mecha/gygax/targeting
 
-		//3
-		list(
-			"key" = /obj/item/stack/cable_coil,
-			"amount" = 5,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The hydraulic systems are active."
-		),
+	inner_plating = /obj/item/stack/sheet/metal
+	inner_plating_amount = 5
 
-		//4
-		list(
-			"key" = TOOL_WIRECUTTER,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The wiring is added."
-		),
-
-		//5
-		list(
-			"key" = /obj/item/circuitboard/mecha/gygax/main,
-			"action" = ITEM_DELETE,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The wiring is adjusted."
-		),
-
-		//6
-		list(
-			"key" = TOOL_SCREWDRIVER,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "Central control module is installed."
-		),
-
-		//7
-		list(
-			"key" = /obj/item/circuitboard/mecha/gygax/peripherals,
-			"action" = ITEM_DELETE,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Central control module is secured."
-		),
-
-		//8
-		list(
-			"key" = TOOL_SCREWDRIVER,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "Peripherals control module is installed."
-		),
-
-		//9
-		list(
-			"key" = /obj/item/circuitboard/mecha/gygax/targeting,
-			"action" = ITEM_DELETE,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Peripherals control module is secured."
-		),
-
-		//10
-		list(
-			"key" = TOOL_SCREWDRIVER,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "Weapon control module is installed."
-		),
-
-		//11
-		list(
-			"key" = /obj/item/stock_parts/scanning_module,
-			"action" = ITEM_MOVE_INSIDE,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Weapon control module is secured."
-		),
-
-		//12
-		list(
-			"key" = TOOL_SCREWDRIVER,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "Scanner module is installed."
-		),
-
-		//13
-		list(
-			"key" = /obj/item/stock_parts/capacitor,
-			"action" = ITEM_MOVE_INSIDE,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Scanner module is secured."
-		),
-
-		//14
-		list(
-			"key" = TOOL_SCREWDRIVER,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "Capacitor is installed."
-		),
-
-		//15
-		list(
-			"key" = /obj/item/stock_parts/cell,
-			"action" = ITEM_MOVE_INSIDE,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Capacitor is secured."
-		),
-
-		//16
-		list(
-			"key" = TOOL_SCREWDRIVER,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "The power cell is installed."
-		),
-
-		//17
-		list(
-			"key" = /obj/item/stack/sheet/metal,
-			"amount" = 5,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The power cell is secured."
-		),
-
-		//18
-		list(
-			"key" = TOOL_WRENCH,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "Internal armor is installed."
-		),
-
-		//19
-		list(
-			"key" = TOOL_WELDER,
-			"back_key" = TOOL_WRENCH,
-			"desc" = "Internal armor is wrenched."
-		),
-
-		//20
-		list(
-			"key" = /obj/item/mecha_parts/part/medigax_armor,
-			"action" = ITEM_DELETE,
-			"back_key" = TOOL_WELDER,
-			"desc" = "Internal armor is welded."
-		),
-
-		//21
-		list(
-			"key" = TOOL_WRENCH,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "External armor is installed."
-		),
-
-		//22
-		list(
-			"key" = TOOL_WELDER,
-			"back_key" = TOOL_WRENCH,
-			"desc" = "External armor is wrenched."
-		),
-
-	)
-
-/datum/component/construction/mecha/medigax/action(datum/source, atom/used_atom, mob/user)
-	return check_step(used_atom,user)
+	outer_plating = /obj/item/mecha_parts/part/gygax_armor
+	outer_plating_amount = 1
 
 /datum/component/construction/mecha/medigax/custom_action(obj/item/I, mob/living/user, diff)
 	if(!..())
@@ -831,7 +671,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] welds Gygax Armor Plates to [parent].", "<span class='notice'>You weld Medical Gygax Armor Plates to [parent].</span>")
 			else
-				user.visible_message("[user] unfastens Gygax Armor Plates.", "<span class='notice'>You unfasten  Medical Gygax Armor Plates.</span>")
+				user.visible_message("[user] unfastens Gygax Armor Plates.", "<span class='notice'>You unfasten Medical Gygax Armor Plates.</span>")
 	return TRUE
 // End Medigax
 
