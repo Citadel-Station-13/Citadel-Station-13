@@ -5,7 +5,7 @@
 	damage_type = OXY
 	nodamage = 1
 	armour_penetration = 100
-	flag = "magic"
+	flag = MAGIC
 
 /obj/item/projectile/magic/death
 	name = "bolt of death"
@@ -302,7 +302,7 @@
 	icon_state = "lavastaff"
 	damage = 15
 	damage_type = BURN
-	flag = "magic"
+	flag = MAGIC
 	dismemberment = 50
 	nodamage = 0
 
@@ -322,7 +322,7 @@
 	damage_type = BURN
 	nodamage = 0
 	armour_penetration = 0
-	flag = "magic"
+	flag = MAGIC
 	hitsound = 'sound/weapons/barragespellhit.ogg'
 
 /obj/item/projectile/magic/arcane_barrage/on_hit(target)
@@ -339,7 +339,7 @@
 	name = "locker bolt"
 	icon_state = "locker"
 	nodamage = TRUE
-	flag = "magic"
+	flag = MAGIC
 	var/weld = TRUE
 	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
 	var/locker_suck = TRUE
@@ -437,7 +437,7 @@
 	damage_type = BURN
 	nodamage = 0
 	pixels_per_second = TILES_TO_PIXELS(33.33)
-	flag = "magic"
+	flag = MAGIC
 
 	var/zap_power = 20000
 	var/zap_range = 15

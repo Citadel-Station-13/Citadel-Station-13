@@ -5,7 +5,7 @@
 	damage = 0
 	damage_type = BRUTE
 	nodamage = 1
-	flag = "bullet"
+	flag = BULLET
 
 /obj/item/projectile/meteor/Bump(atom/A)
 	if(A == firer)
