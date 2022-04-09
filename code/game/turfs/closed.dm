@@ -6,6 +6,7 @@
 	blocks_air = 1
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	rad_insulation = RAD_MEDIUM_INSULATION
+	pass_flags_self = PASSCLOSEDTURF
 	wave_explosion_block = 10
 	wave_explosion_multiply = 0.75
 	/// How much we block yelling
@@ -22,11 +23,6 @@
 
 /turf/closed/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE
-
-/turf/closed/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSCLOSEDTURF))
-		return TRUE
-	return ..()
 
 /turf/closed/indestructible
 	name = "wall"

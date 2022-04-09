@@ -69,7 +69,9 @@
 		return CanAStarPass(ID, to_dir, caller.pulling)
 	return TRUE //diseases, stings, etc can pass
 
-/obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
+/obj/structure/plasticflaps/CanAllowThrough(atom/movable/A, turf/T)
+	. = ..()
+
 	if(istype(A) && (A.pass_flags & PASSGLASS))
 		return prob(60)
 
@@ -93,7 +95,6 @@
 			return 1
 		if(!M.lying && !(SEND_SIGNAL(M, COMSIG_CHECK_VENTCRAWL)) && M.mob_size != MOB_SIZE_TINY) //If your not laying down, or a ventcrawler or a small creature, no pass.
 			return 0
-	return ..()
 
 /obj/structure/plasticflaps/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

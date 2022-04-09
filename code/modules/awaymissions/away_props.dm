@@ -6,10 +6,11 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	anchored = TRUE
 
-/obj/effect/oneway/CanPass(atom/movable/mover, turf/target)
+/obj/effect/oneway/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	var/turf/T = get_turf(src)
 	var/turf/MT = get_turf(mover)
-	return ..() && (T == MT || get_dir(MT,T) == dir)
+	return . && (T == MT || get_dir(MT,T) == dir)
 
 
 /obj/effect/wind

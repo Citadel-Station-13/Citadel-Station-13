@@ -51,20 +51,19 @@
 	name = "holo barrier"
 	desc = "A short holographic barrier which can only be passed by walking."
 	icon_state = "holosign_sec"
-	pass_flags = LETPASSTHROW
+	pass_flags_self = PASSTABLE | PASSGRILLE | PASSGLASS | LETPASSTHROW
 	density = TRUE
 	max_integrity = 20
 	var/allow_walk = 1 //can we pass through it on walk intent
 
-/obj/structure/holosign/barrier/CanPass(atom/movable/mover, turf/target)
-	if(!density)
-		return 1
-	if(mover.pass_flags & (PASSGLASS|PASSTABLE|PASSGRILLE))
-		return 1
+/obj/structure/holosign/barrier/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(.)
+		return
 	if(iscarbon(mover))
 		var/mob/living/carbon/C = mover
 		if(allow_walk && C.m_intent == MOVE_INTENT_WALK)
-			return 1
+			return TRUE
 
 /obj/structure/holosign/barrier/engineering
 	icon_state = "holosign_engi"
@@ -149,7 +148,7 @@
 	. = ..()
 	. += "<span class='notice'>The biometric scanners are <b>[force_allaccess ? "off" : "on"]</b>.</span>"
 
-/obj/structure/holosign/barrier/medical/CanPass(atom/movable/mover, turf/target)
+/obj/structure/holosign/barrier/medical/CanAllowThrough(atom/movable/mover, turf/target)
 	icon_state = "holo_medical"
 	if(force_allaccess)
 		return TRUE
@@ -159,7 +158,7 @@
 		switch(threat)
 			if(DISEASE_SEVERITY_MINOR, DISEASE_SEVERITY_MEDIUM, DISEASE_SEVERITY_HARMFUL, DISEASE_SEVERITY_DANGEROUS, DISEASE_SEVERITY_BIOHAZARD)
 				if(buzzcd < world.time)
-					playsound(get_turf(src),'sound/machines/buzz-sigh.ogg',65,1,4)
+					playsound(get_turf(src),'sound/machines/buzz-sigh.ogg',65,TRUE,4)
 					buzzcd = (world.time + 60)
 				icon_state = "holo_medical-deny"
 				return FALSE
