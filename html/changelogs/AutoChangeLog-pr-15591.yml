@@ -1,0 +1,6 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - bugfix: "The action button for leaving mechs actually works!"
+  - bugfix: "The medigax no longer uses gygax armor plates to be built!"
+  - bugfix: "The firefighter ripley is now visible during construction."
