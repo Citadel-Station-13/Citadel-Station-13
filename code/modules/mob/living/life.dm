@@ -6,13 +6,13 @@
 	SHOULD_NOT_SLEEP(TRUE)
 	if(mob_transforming)
 		return
-
 	. = SEND_SIGNAL(src, COMSIG_LIVING_LIFE, seconds, times_fired)
 	if(!(. & COMPONENT_INTERRUPT_LIFE_PHYSICAL))
 		PhysicalLife(seconds, times_fired)
 	if(!(. & COMPONENT_INTERRUPT_LIFE_BIOLOGICAL))
 		BiologicalLife(seconds, times_fired)
-
+	if(!(. & COMPONET_INTERRUPT_STATUS_EFFECTS))
+		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 	// CODE BELOW SHOULD ONLY BE THINGS THAT SHOULD HAPPEN NO MATTER WHAT AND CAN NOT BE SUSPENDED!
 	// Otherwise, it goes into one of the two split Life procs!
 
@@ -69,9 +69,8 @@
 
 	handle_block_parry(seconds)
 
-	// These two MIGHT need to be moved to base Life() if we get any in the future that's a "physical" effect that needs to fire even while in stasis.
 	handle_traits() // eye, ear, brain damages
-	handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
+
 	return TRUE
 
 /**

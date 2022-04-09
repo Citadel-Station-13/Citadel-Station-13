@@ -385,6 +385,7 @@
 #define COMSIG_LIVING_LIFE "life_tick"							//from base of mob/living/Life() (seconds, times_fired)
 	#define COMPONENT_INTERRUPT_LIFE_BIOLOGICAL 1		// interrupt biological processes
 	#define COMPONENT_INTERRUPT_LIFE_PHYSICAL 2			// interrupt physical handling
+	#define COMPONET_INTERRUPT_STATUS_EFFECTS 3			// interrupt status effects
 
 #define COMSIG_LIVING_BIOLOGICAL_LIFE "biological_life"			//from base of mob/living/BiologicalLife() (seconds, times_fired)
 
@@ -526,7 +527,19 @@
 #define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"				///sent to targets during the process_hit proc of projectiles
 
 #define COMSIG_PELLET_CLOUD_INIT "pellet_cloud_init"				// sent to targets during the process_hit proc of projectiles
+// /obj/vehicle/sealed/mecha signals
+// /sent from mecha action buttons to the mecha they're linked to
+#define COMSIG_MECHA_ACTION_TRIGGER "mecha_action_activate"
 
+///sent from clicking while you have no equipment selected. Sent before cooldown and adjacency checks, so you can use this for infinite range things if you want.
+#define COMSIG_MECHA_MELEE_CLICK "mecha_action_melee_click"
+	/// Prevents click from happening.
+	#define COMPONENT_CANCEL_MELEE_CLICK (1<<0)
+///sent from clicking while you have equipment selected.
+#define COMSIG_MECHA_EQUIPMENT_CLICK "mecha_action_equipment_click"
+	/// Prevents click from happening.
+	#define COMPONENT_CANCEL_EQUIPMENT_CLICK (1<<0)
+	
 // /mob/living/carbon/human signals
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY "human_melee_unarmed_attackby"		//from mob/living/carbon/human/UnarmedAttack(): (mob/living/carbon/human/attacker)

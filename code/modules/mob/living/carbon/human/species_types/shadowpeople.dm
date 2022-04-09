@@ -211,7 +211,7 @@
 			visible_message("<span class='danger'>[S] is disintegrated by [src]!</span>")
 	else if(AM.light_range && AM.light_power  && !(istype(AM, /obj/machinery/power/apc) || istype(AM, /obj/machinery/airalarm)))
 		var/obj/target_object = AM
-		target_object.take_damage(force * 5, BRUTE, "melee", 0)
+		target_object.take_damage(force * 5, BRUTE, MELEE, 0)
 
 
 /obj/item/light_eater/proc/disintegrate(obj/item/O)

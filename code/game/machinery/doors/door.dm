@@ -10,7 +10,7 @@
 	power_channel = ENVIRON
 	max_integrity = 350
 	damage_deflection = 10
-	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 70)
+	armor = list(MELEE = 30, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 10, BIO = 100, RAD = 100, FIRE = 80, ACID = 70)
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	flags_1 = PREVENT_CLICK_UNDER_1|DEFAULT_RICOCHET_1
 	ricochet_chance_mod = 0.8
@@ -107,19 +107,6 @@
 				return
 			bumpopen(M)
 			return
-
-	if(ismecha(AM))
-		var/obj/mecha/mecha = AM
-		if(density)
-			if(mecha.occupant)
-				if(world.time - mecha.occupant.last_bumped <= 10)
-					return
-				mecha.occupant.last_bumped = world.time
-			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access)))
-				open()
-			else
-				do_animate("deny")
-		return
 	return
 
 /obj/machinery/door/Move()
@@ -362,7 +349,7 @@
 			C.bleed(DOOR_CRUSH_DAMAGE)
 		else
 			L.add_splatter_floor(location)
-	for(var/obj/mecha/M in get_turf(src))
+	for(var/obj/vehicle/sealed/mecha/M in get_turf(src))
 		M.take_damage(DOOR_CRUSH_DAMAGE)
 
 /obj/machinery/door/proc/autoclose()

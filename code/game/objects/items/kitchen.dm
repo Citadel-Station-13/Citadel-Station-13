@@ -27,7 +27,7 @@
 	flags_1 = CONDUCT_1
 	attack_verb = list("attacked", "stabbed", "poked")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 30)
 	sharpness = SHARP_POINTY
 	var/datum/reagent/forkload //used to eat omelette
 
@@ -78,7 +78,7 @@
 	custom_materials = list(/datum/material/iron=12000)
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = SHARP_POINTY
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	var/bayonet = FALSE	//Can this be attached to a gun?
 	wound_bonus = -5
 	bare_wound_bonus = 10
@@ -114,7 +114,7 @@
 	custom_materials = list(/datum/material/iron=12000)
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = SHARP_POINTY
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	var/bayonet = FALSE	//Can this be attached to a gun?
 	wound_bonus = -5
 	bare_wound_bonus = 10
@@ -266,7 +266,7 @@
 	force = 8
 	throwforce = 12//fuck git
 	attack_verb = list("shanked", "shivved")
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	custom_materials = list(/datum/material/glass=400)
 
 /obj/item/kitchen/knife/shiv/carrot

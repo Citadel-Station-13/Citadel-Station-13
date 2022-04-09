@@ -39,7 +39,7 @@
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 	var/viewalerts = 0
 	var/icon/holo_icon//Female is assigned when AI is created.
-	var/obj/mecha/controlled_mech //For controlled_mech a mech, to determine whether to relaymove or use the AI eye.
+	var/obj/vehicle/sealed/mecha/controlled_mech //For controlled_mech a mech, to determine whether to relaymove or use the AI eye.
 	var/radio_enabled = TRUE //Determins if a carded AI can speak with its built in radio or not.
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
 	var/obj/item/pda/ai/aiPDA
@@ -408,7 +408,7 @@
 		return
 
 	if (href_list["ai_take_control"]) //Mech domination
-		var/obj/mecha/M = locate(href_list["ai_take_control"])
+		var/obj/vehicle/sealed/mecha/M = locate(href_list["ai_take_control"])
 		if(controlled_mech)
 			to_chat(src, "<span class='warning'>You are already loaded into an onboard computer!</span>")
 			return

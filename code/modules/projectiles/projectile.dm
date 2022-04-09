@@ -123,7 +123,7 @@
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
-	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
+	var/flag = BULLET //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	var/projectile_type = /obj/item/projectile
 	/// Range of the projectile, de-incrementing every step. The projectile deletes itself at 0. This is in tiles.
 	var/range = 50
@@ -438,9 +438,9 @@
 			CRASH("Invalid return value for projectile ricochet check from [A].")
 
 /obj/item/projectile/proc/check_ricochet_flag(atom/A)
-	if((flag in list("energy", "laser")) && (A.flags_ricochet & RICOCHET_SHINY))
+	if((flag in list(ENERGY, LASER)) && (A.flags_ricochet & RICOCHET_SHINY))
 		return TRUE
-	if((flag in list("bomb", "bullet")) && (A.flags_ricochet & RICOCHET_HARD))
+	if((flag in list(BOMB, BULLET)) && (A.flags_ricochet & RICOCHET_HARD))
 		return TRUE
 	return FALSE
 

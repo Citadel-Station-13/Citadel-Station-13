@@ -72,11 +72,6 @@
 		return FALSE
 	return ..()
 
-/obj/structure/destructible/clockwork/mech_melee_attack(obj/mecha/M)
-	if(M.occupant && is_servant_of_ratvar(M.occupant) && immune_to_servant_attacks)
-		return FALSE
-	return ..()
-
 /obj/structure/destructible/clockwork/proc/get_efficiency_mod()
 	if(GLOB.ratvar_awakens)
 		return 2

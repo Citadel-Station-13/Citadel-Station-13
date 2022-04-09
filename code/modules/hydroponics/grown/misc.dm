@@ -377,7 +377,7 @@
 		var/obj/item/bodypart/affecting = user.zone_selected //Find what the player is aiming at
 		if (affecting == BODY_ZONE_HEAD && prob(15))
 			//smash the nut open
-			var/armor_block = min(90, M.run_armor_check(affecting, "melee", null, null,armour_penetration)) // For normal attack damage
+			var/armor_block = min(90, M.run_armor_check(affecting, MELEE, null, null,armour_penetration)) // For normal attack damage
 			M.apply_damage(force, BRUTE, affecting, armor_block)
 
 			//Sound

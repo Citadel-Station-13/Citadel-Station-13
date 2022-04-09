@@ -5,7 +5,7 @@
 	desc = "Deus Vult."
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
-	armor = list("melee" = 41, "bullet" = 15, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 2, "rad" = 0, "fire" = 0, "acid" = 50)
+	armor = list(MELEE = 41, BULLET = 15, LASER = 5,ENERGY = 5, BOMB = 5, BIO = 2, RAD = 0, FIRE = 0, ACID = 50)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
