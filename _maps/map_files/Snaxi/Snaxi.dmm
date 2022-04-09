@@ -11007,9 +11007,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "aPZ" = (
@@ -20516,9 +20514,6 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
 "fUX" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -20528,6 +20523,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "fVm" = (
@@ -23736,9 +23732,6 @@
 /turf/open/floor/plasteel/dark,
 /area/security/office)
 "hWn" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -23755,6 +23748,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "hWp" = (
@@ -29421,9 +29415,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
 "lOX" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/structure/window/reinforced,
 /obj/structure/mirror{
 	pixel_x = 25
@@ -29433,6 +29424,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "lPB" = (
@@ -44165,9 +44157,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone3)
 "vkk" = (
@@ -46271,9 +46261,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "wut" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 8
@@ -46282,6 +46269,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "wuC" = (

@@ -53,7 +53,7 @@
 	if(!(O.resistance_flags & ACID_PROOF))
 		if(prob(33))
 			playsound(O.loc, 'sound/items/welder.ogg', 150, 1)
-		O.take_damage(min(1 + round(sqrt(level)*0.3), 300), BURN, "acid", 0)
+		O.take_damage(min(1 + round(sqrt(level)*0.3), 300), BURN, ACID, 0)
 
 	level = max(level - (5 + 3*round(sqrt(level))), 0)
 	if(level <= 0)

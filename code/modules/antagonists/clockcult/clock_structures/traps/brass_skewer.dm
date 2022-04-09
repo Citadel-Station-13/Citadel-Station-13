@@ -68,9 +68,9 @@
 		mouse_opacity = MOUSE_OPACITY_OPAQUE //So players can interact with the tile it's on to pull them off
 		buckle_mob(squirrel, TRUE)
 	else
-		var/obj/mecha/M = locate() in get_turf(src)
+		var/obj/vehicle/sealed/mecha/M = locate() in get_turf(src)
 		if(M)
-			M.take_damage(50,BRUTE,"melee")
+			M.take_damage(50,BRUTE,MELEE)
 			M.visible_message("<span class='danger'>A massive brass spike erupts from the ground, penetrating \the [M] and shattering the trap into pieces!</span>")
 			addtimer(CALLBACK(src, .proc/take_damage, max_integrity), 1)
 		else

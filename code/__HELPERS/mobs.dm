@@ -484,3 +484,5 @@ GLOBAL_LIST_EMPTY(species_datums)
 
 //check if the person is dead, not sure where to put this
 #define IS_DEAD_OR_INCAP(source) (source.incapacitated() || source.stat)
+
+#define IS_IN_STASIS(mob) (mob.has_status_effect(/datum/status_effect/grouped/stasis))

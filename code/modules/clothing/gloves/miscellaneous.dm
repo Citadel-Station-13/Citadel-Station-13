@@ -114,7 +114,7 @@
 	icon_state = "narsiearmwraps"
 	item_state = "narsiearmwraps"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 35, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 35, RAD = 0, FIRE = 50, ACID = 50)
 	enhancement = 3
 	secondary_trait = TRAIT_KI_VAMPIRE
 
@@ -124,7 +124,7 @@
 	icon_state = "ratvararmwraps"
 	item_state = "ratvararmwraps"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list("melee" = 10, "bullet" = 0, "laser" = -10, "energy" = 0, "bomb" = 0, "bio" = 35, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 10, BULLET = 0, LASER = -10, ENERGY = 0, BOMB = 0, BIO = 35, RAD = 0, FIRE = 50, ACID = 50)
 	enhancement = 4 //The artifice of Ratvar is unmatched except when it is.
 	secondary_trait = TRAIT_STRONG_GRABBER
 
@@ -252,7 +252,7 @@
 	cold_protection = ARMS|HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	armor = list("melee" = 30, "bullet" = 30, "laser" = 10, "energy" = 10, "bomb" = 55, "bio" = 15, "rad" = 15, "fire" = 80, "acid" = 50)
+	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 15, RAD = 15, FIRE = 80, ACID = 50)
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	strip_delay = 80
@@ -297,7 +297,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 70, ACID = 30)
 	strip_mod = 0.9
 
 /obj/item/clothing/gloves/combat
@@ -313,7 +313,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 50)
 	strip_mod = 1.5
 
 /obj/item/clothing/gloves/bracer
@@ -329,7 +329,7 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	armor = list("melee" = 15, "bullet" = 35, "laser" = 35, "energy" = 20, "bomb" = 35, "bio" = 35, "rad" = 35, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 15, BULLET = 35, LASER = 35, ENERGY = 20, BOMB = 35, BIO = 35, RAD = 35, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/gloves/thief
 	name = "black gloves"
