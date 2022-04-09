@@ -1,4 +1,0 @@
-author: "AnthurK"
-delete-after: True
-changes: 
-  - bugfix: "Fixes bots trying to path through dense corners."
