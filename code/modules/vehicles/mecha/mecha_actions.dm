@@ -273,7 +273,3 @@
 	button_icon_state = "mech_phasing_[chassis.phasing ? "on" : "off"]"
 	to_chat(owner, "[icon2html(chassis, owner)]<font color=\"[chassis.phasing?"#00f\">En":"#f00\">Dis"]abled phasing.</font>")
 	UpdateButtonIcon()
-
-/datum/action/vehicle/sealed/mecha/climb_out
-	name = "Eject From Mech"
-	button_icon_state = "mech_eject"
