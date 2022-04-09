@@ -53,7 +53,7 @@
 		dna.species.on_hit(P, src)
 
 
-/mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
+/mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone, piercing_hit = FALSE)
 	if(dna && dna.species)
 		var/spec_return = dna.species.bullet_act(P, src)
 		if(spec_return)
@@ -61,7 +61,7 @@
 
 	if(mind) //martial art stuff
 		if(mind.martial_art && mind.martial_art.can_use(src)) //Some martial arts users can deflect projectiles!
-			var/martial_art_result = mind.martial_art.on_projectile_hit(src, P, def_zone)
+			var/martial_art_result = mind.martial_art.on_projectile_hit(src, P, def_zone, piercing_hit)
 			if(!(martial_art_result == BULLET_ACT_HIT))
 				return martial_art_result
 	return ..()

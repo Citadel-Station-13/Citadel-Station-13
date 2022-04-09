@@ -114,7 +114,8 @@
 	icon_state = "blastwave"
 	damage = 0
 	nodamage = FALSE
-	movement_type = FLYING | UNSTOPPABLE
+	movement_type = FLYING
+	projectile_phasing = ALL		// just blows up the turfs lmao - Silly-Cons
 	var/heavyr = 0
 	var/mediumr = 0
 	var/lightr = 0

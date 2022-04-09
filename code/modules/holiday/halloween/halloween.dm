@@ -175,9 +175,6 @@
 			step(I,direction)
 		return
 
-/mob/living/simple_animal/hostile/construct/shade/howling_ghost/CanPass(atom/movable/mover, turf/target)
-	return 1
-
 ///////////////////////////
 //Spookoween Insane Clown//
 ///////////////////////////
@@ -233,7 +230,7 @@
 	return
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/adjustHealth()
-	. = ..() 
+	. = ..()
 	if(prob(5))
 		playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
 

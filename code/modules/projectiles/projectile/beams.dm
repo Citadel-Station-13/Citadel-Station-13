@@ -72,7 +72,7 @@
 	damage = 15
 	irradiate = 100
 	range = 15
-	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE
 
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_GREEN
@@ -166,7 +166,7 @@
 /obj/item/projectile/beam/lasertag/mag		//the projectile, compatible with regular laser tag armor
 	icon_state = "magjectile-toy"
 	name = "lasertag magbolt"
-	movement_type = FLYING | UNSTOPPABLE		//for penetration memes
+	movement_type = FLYING | PHASING		//for penetration memes
 	range = 5		//so it isn't super annoying
 	light_range = 2
 	light_color = LIGHT_COLOR_YELLOW

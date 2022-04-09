@@ -28,7 +28,7 @@
 	damage = 10
 	armour_penetration = 20
 	stamina = 10
-	movement_type = FLYING | UNSTOPPABLE
+	movement_type = FLYING | PHASING
 	range = 6
 	fired_light_range = 1
 	fired_light_color = LIGHT_COLOR_RED
@@ -37,7 +37,7 @@
 	icon_state = "magjectile-large"
 	damage = 10
 	armour_penetration = 20
-	movement_type = FLYING | UNSTOPPABLE
+	movement_type = FLYING | PHASING
 	range = 20
 	pixels_per_second = TILES_TO_PIXELS(12.5)
 	fired_light_range = 4
