@@ -1,4 +1,0 @@
-author: "tiviplus, lolman360, SandPoot"
-delete-after: True
-changes: 
-  - refactor: "/obj/mecha > /obj/vehicle/sealed/mecha"

@@ -8,3 +8,15 @@
   - rscadd: Adds stasis beds and related mechanics
   - rscdel: Removed mapped in sleepers from station maps. Shuttles have it but centcomm
       doesn't.
+2022-04-10:
+  SandPoot:
+  - bugfix: The action button for leaving mechs actually works!
+  - bugfix: The medigax no longer uses gygax armor plates to be built!
+  - bugfix: The firefighter ripley is now visible during construction.
+  - bugfix: Medigaxes can actually be built now.
+  Solaris-Shade:
+  - bugfix: fixed a few projectile lines
+  - code_imp: changed a large block of the projectile code
+  - refactor: refactored most of the projectile code
+  tiviplus, lolman360, SandPoot:
+  - refactor: /obj/mecha > /obj/vehicle/sealed/mecha
