@@ -105,7 +105,7 @@ DEFINE_BITFIELD(smooth_junction, list(
 #define SMOOTH_GROUP_FLOOR_GLASS		S_TURF(45)
 #define SMOOTH_GROUP_WALL_HOTEL			S_TURF(46)
 
-#define MAX_S_TURF SMOOTH_GROUP_WALL_PLASTITANIUM //Always match this value with the one above it.
+#define MAX_S_TURF SMOOTH_GROUP_WALL_HOTEL //Always match this value with the one above it.
 
 #define S_OBJ(num) (MAX_S_TURF + 1 + num)
 /* /obj included */
@@ -134,7 +134,7 @@ DEFINE_BITFIELD(smooth_junction, list(
 #define SMOOTH_GROUP_TABLE_BRONZE		S_OBJ(22)
 #define SMOOTH_GROUP_DIRT				S_OBJ(23)
 
-#define MAX_S_OBJ SMOOTH_GROUP_TABLE_PLASMAGLASS //Always match this value with the one above it.
+#define MAX_S_OBJ SMOOTH_GROUP_DIRT //Always match this value with the one above it.
 
 #define S_ABSTRACT(num) (MAX_S_OBJ + 1 + num)
 /* These are for "categories". */
@@ -153,6 +153,4 @@ DEFINE_BITFIELD(smooth_junction, list(
 #define SMOOTH_GROUP_SHUTTLE_WALL			S_ABSTRACT(12)
 #define SMOOTH_GROUP_CULT					S_ABSTRACT(13)
 
-#define MAX_S_ABSTRACT						SMOOTH_GROUP_XENO_STRUCTURAL // always match this value with the one above it.
-
-#warn get all currenet groups in, update max's.
+#define MAX_S_ABSTRACT						SMOOTH_GROUP_CULT // always match this value with the one above it.

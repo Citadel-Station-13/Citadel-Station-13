@@ -5,11 +5,17 @@
 	/// all attached accessories - lazy list
 	var/list/accessories
 
+
 	// being an accessory
 	/// supports being an accessory
 	var/is_accessory = FALSE
 	/// forced accessory layer on inv/item and worn - 0 is the layer of the parent clothing
 	var/accessory_layer = 100
+	/// additive armor mode
+	var/accessory_armor_mode = ACCESSORY_ARMOR_ATTACH_ADDITIVE
+	/// accessory armor - overrides normal armor if this is set
+	var/datum/armor/accessory_armor
+	#warn impl armor checks
 
 #warn finish
 

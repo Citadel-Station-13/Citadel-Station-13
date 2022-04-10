@@ -39,11 +39,12 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
+	item_flags &= ~(IN_INVENTORY | IN_STORAGE)
+	var/old_slot = current_equipped_slot
+	current_equipped_slot = null
+	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user, old_slot)
 	if(item_flags & DROPDEL)
 		qdel(src)
-	item_flags &= ~(IN_INVENTORY)
-	item_flags &= ~(IN_STORAGE)
-	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
 	if(!silent)
 		playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE)
 	user?.update_equipment_speed_mods()
