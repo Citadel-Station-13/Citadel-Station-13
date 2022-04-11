@@ -52,7 +52,7 @@
 				var/meattype = /obj/item/reagent_containers/food/snacks/meat/slab/human
 				if(ishuman(affected_mob))
 					meattype = affected_mob.dna.species.meat
-				else if(ismonkey(affected_mob))
+				else //grab the carbon's meat instead (usually this means monkey meat... though other disease-compatible carbon mobs might apply.)
 					meattype = affected_mob.type_of_meat
 
 				if(humanmeatamount)
