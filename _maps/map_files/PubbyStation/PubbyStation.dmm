@@ -32745,7 +32745,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/stasis,
+/obj/machinery/sleeper{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/medical/treatment_center)
 "bzQ" = (
@@ -33969,7 +33971,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/stasis,
+/obj/machinery/stasis{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/medical/treatment_center)
 "bCl" = (

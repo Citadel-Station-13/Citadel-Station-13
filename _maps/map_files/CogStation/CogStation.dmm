@@ -58323,7 +58323,9 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner/west,
-/obj/machinery/stasis,
+/obj/machinery/sleeper{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "ctZ" = (

@@ -29801,7 +29801,7 @@
 /area/medical/surgery)
 "byn" = (
 /obj/effect/decal/festive/christmas_ivy_string,
-/obj/machinery/stasis,
+/obj/machinery/sleeper,
 /turf/open/floor/plasteel/white/side,
 /area/medical/exam_room)
 "byo" = (
@@ -29882,7 +29882,7 @@
 /turf/open/floor/plasteel/white/side,
 /area/medical/exam_room)
 "byy" = (
-/obj/machinery/stasis,
+/obj/machinery/sleeper,
 /turf/open/floor/plasteel/white/side,
 /area/medical/exam_room)
 "byz" = (
@@ -33048,7 +33048,9 @@
 	},
 /area/medical/genetics/cloning)
 "bEC" = (
-/obj/machinery/stasis,
+/obj/machinery/stasis{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
