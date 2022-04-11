@@ -1832,6 +1832,7 @@
 				With the sensation of your regained limbs, also comes pain!</span>",
 			"<span class='italics'>You hear a grotsque squelching noise and the sound of crunching bones.</span>")
 		playsound(C, 'sound/magic/demon_consume.ogg', 50, 1)
+		SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "painful_limb_regrowth", /datum/mood_event/painful_limb_regrowth)
 		C.emote("scream")
 	C.regenerate_limbs(excluded_limbs = list(BODY_ZONE_HEAD)) //would be a little funky for dullahans if they suddenly sprouted a head.
 	C.blood_volume = max(C.blood_volume - 30*limbs_to_heal.len,0)
