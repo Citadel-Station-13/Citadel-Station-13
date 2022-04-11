@@ -1811,6 +1811,8 @@
 
 /datum/reagent/medicine/limb_regrowth/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
 	. = ..()
+	if(!.)
+		return
 	if(method == TOUCH) //as funny as it would be to have this hurled at someone, nah.
 		return
 	var/vol = reac_volume + C.reagents.get_reagent_amount(/datum/reagent/medicine/limb_regrowth)
