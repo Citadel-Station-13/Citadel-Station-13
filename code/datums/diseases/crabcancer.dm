@@ -3,7 +3,7 @@
 	form = "Skin Cancer"
 	max_stages = 3
 	cure_text = "Mutadone"
-	spread_text = "Noncontageous"
+	spread_text = "Noncontagious"
 	cures = list(/datum/reagent/medicine/mutadone)
 	agent = "Carcinisoprojection Jelly"
 	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
