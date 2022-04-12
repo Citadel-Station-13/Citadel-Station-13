@@ -43,7 +43,8 @@
 	. = ..(M, force, check_loc)
 	if(.)
 		if(progressbars_by_rider[M])
-			qdel(progressbars_by_rider[M])
+			var/datum/progressbar/to_delete = progressbars_by_rider[M]
+			to_delete.end_progress()
 		var/datum/progressbar/D = new(M, chargemax, src)
 		D.update(charge)
 		progressbars_by_rider[M] = D
@@ -51,12 +52,14 @@
 /obj/vehicle/ridden/secway/unbuckle_mob(mob/living/M, force)
 	. = ..(M, force)
 	if(.)
-		qdel(progressbars_by_rider[M])
+		var/datum/progressbar/to_delete = progressbars_by_rider[M]
+		to_delete.end_progress()
 		progressbars_by_rider -= M
 
 /obj/vehicle/ridden/secway/Destroy()
 	for(var/i in progressbars_by_rider)
-		qdel(progressbars_by_rider[i])
+		var/datum/progressbar/to_delete = progressbars_by_rider[i]
+		to_delete.end_progress()
 	progressbars_by_rider.Cut()
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()

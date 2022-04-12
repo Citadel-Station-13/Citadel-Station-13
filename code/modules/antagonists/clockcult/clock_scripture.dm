@@ -310,7 +310,7 @@ Judgement 80k power or nine converts
 	var/datum/progressbar/progbar
 
 /datum/clockwork_scripture/ranged_ability/Destroy()
-	qdel(progbar)
+	progbar.end_progress()
 	return ..()
 
 /datum/clockwork_scripture/ranged_ability/scripture_effects()
@@ -333,7 +333,7 @@ Judgement 80k power or nine converts
 		(allow_mobility || (can_recite() && T == get_turf(invoker))))
 		if(progbar)
 			if(slab.slab_ability.in_progress)
-				qdel(progbar)
+				progbar.end_progress()
 			else
 				progbar.update(end_time - world.time)
 		stoplag(1)

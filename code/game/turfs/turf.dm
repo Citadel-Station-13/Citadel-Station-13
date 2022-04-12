@@ -388,7 +388,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/datum/progressbar/progress = new(user, things.len, src)
 	while (do_after(usr, 1 SECONDS, TRUE, src, FALSE, CALLBACK(src_object, /datum/component/storage.proc/mass_remove_from_storage, src, things, progress, TRUE, user)))
 		stoplag(1)
-	qdel(progress)
+	progress.end_progress()
 
 	return TRUE
 
