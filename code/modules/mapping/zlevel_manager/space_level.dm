@@ -55,6 +55,7 @@
 	var/list/attributes = list()
 	/// baseturf - path
 	var/baseturf
+	#warn base area - impl and hook
 
 	// TRANSIENT VARIABLES
 	/// Current crosslinking x in grid
