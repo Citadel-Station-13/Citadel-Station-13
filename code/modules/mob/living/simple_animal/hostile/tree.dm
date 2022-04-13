@@ -44,6 +44,15 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
 
+/mob/living/simple_animal/hostile/tree/Initialize()
+	. = ..()
+	add_cell_sample()
+
+/mob/living/simple_animal/hostile/tree/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PINE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+
+
 /mob/living/simple_animal/hostile/tree/BiologicalLife(seconds, times_fired)
 	if(!(. = ..()))
 		return
@@ -76,3 +85,6 @@
 	health_doll_icon = "festivus_pole"
 	loot = list(/obj/item/stack/rods)
 	speak_emote = list("polls")
+
+/mob/living/simple_animal/hostile/tree/festivus/add_cell_sample()
+	return

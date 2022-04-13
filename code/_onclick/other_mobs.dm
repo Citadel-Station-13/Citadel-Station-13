@@ -266,7 +266,7 @@
 	if(dextrous && !ismob(A))
 		return ..()
 	else
-		AttackingTarget()
+		AttackingTarget(A)
 
 /*
 	New Players:

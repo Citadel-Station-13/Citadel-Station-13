@@ -40,6 +40,10 @@
 	. = ..()
 	add_verb(src, /mob/living/proc/lay_down)
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
+	add_cell_sample()
+
+/mob/living/simple_animal/pet/cat/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CAT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/pet/cat/ComponentInitialize()
 	. = ..()
@@ -79,6 +83,9 @@
 	held_icon = "original"
 	collar_type = null
 	unique_pet = TRUE
+
+/mob/living/simple_animal/pet/cat/original/add_cell_sample()
+	return
 
 /mob/living/simple_animal/pet/cat/kitten
 	name = "kitten"
@@ -257,6 +264,9 @@
 	deathmessage = "loses its false life and collapses!"
 	death_sound = "bodyfall"
 	held_icon = "cak"
+
+/mob/living/simple_animal/pet/cat/cak/add_cell_sample()
+	return
 
 /mob/living/simple_animal/pet/cat/cak/CheckParts(list/parts)
 	..()

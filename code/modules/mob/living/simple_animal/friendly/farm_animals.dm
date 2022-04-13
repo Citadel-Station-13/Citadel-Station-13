@@ -147,6 +147,10 @@
 /mob/living/simple_animal/cow/Initialize()
 	udder = new(null, milk_reagent)
 	. = ..()
+	add_cell_sample()
+
+/mob/living/simple_animal/cow/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COW, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/cow/Destroy()
 	qdel(udder)
@@ -253,6 +257,10 @@
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
+	add_cell_sample()
+
+/mob/living/simple_animal/chick/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/chick/BiologicalLife(seconds, times_fired)
 	if(!(. = ..()))
@@ -320,8 +328,11 @@
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 	++chicken_count
-
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
+	add_cell_sample()
+
+/mob/living/simple_animal/chicken/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/chicken/Destroy()
 	--chicken_count

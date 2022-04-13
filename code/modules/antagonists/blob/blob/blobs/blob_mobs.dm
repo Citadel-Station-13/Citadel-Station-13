@@ -96,11 +96,16 @@
 	var/is_zombie = 0
 	gold_core_spawnable = HOSTILE_SPAWN
 
+/mob/living/simple_animal/hostile/blob/blobspore/independent
+	gold_core_spawnable = FALSE
+	independent = TRUE
+
 /mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, var/obj/structure/blob/factory/linked_node)
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
 	. = ..()
+	add_cell_sample()
 
 /mob/living/simple_animal/hostile/blob/blobspore/BiologicalLife(seconds, times_fired)
 	if(!(. = ..()))
@@ -190,6 +195,9 @@
 	melee_damage_upper = 2
 	death_cloud_size = 0
 
+/mob/living/simple_animal/hostile/blob/blobspore/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
 /////////////////
 // BLOBBERNAUT //
 /////////////////
@@ -225,6 +233,11 @@
 	. = ..()
 	if(independent)
 		pass_flags &= ~PASSBLOB
+	add_cell_sample()
+
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
 	if(!independent && ismob(AM))

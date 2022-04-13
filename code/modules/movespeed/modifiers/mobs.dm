@@ -171,3 +171,6 @@
 
 /datum/movespeed_modifier/gauntlet_concussion
 	multiplicative_slowdown = 5
+
+/datum/movespeed_modifier/metabolicboost
+	multiplicative_slowdown = -1.5

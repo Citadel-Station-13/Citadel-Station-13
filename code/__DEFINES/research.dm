@@ -76,3 +76,38 @@
 #define BOMB_TARGET_POINTS			50000 //Adjust as needed. Actual hard cap is double this, but will never be reached due to hyperbolic curve.
 #define BOMB_TARGET_SIZE			175 // The shockwave radius required for a bomb to get TECHWEB_BOMB_MIDPOINT points.
 #define BOMB_SUB_TARGET_EXPONENT	3 // The power of the points curve below the target size. Higher = less points for worse bombs, below target.
+
+///Swab cell line types
+#define CELL_LINE_TABLE_SLUDGE "cell_line_sludge_table"
+#define CELL_LINE_TABLE_MOLD "cell_line_mold_table"
+#define CELL_LINE_TABLE_MOIST "cell_line_moist_table"
+#define CELL_LINE_TABLE_BLOB "cell_line_blob_table"
+
+///Biopsy cell line types
+#define CELL_LINE_TABLE_BEAR "cell_line_bear_table"
+#define CELL_LINE_TABLE_BLOBBERNAUT "cell_line_blobbernaut_table"
+#define CELL_LINE_TABLE_BLOBSPORE "cell_line_blobspore_table"
+#define CELL_LINE_TABLE_CARP "cell_line_carp_table"
+#define CELL_LINE_TABLE_CAT "cell_line_cat_table"
+#define CELL_LINE_TABLE_CHICKEN "cell_line_chicken_table"
+#define CELL_LINE_TABLE_COCKROACH "cell_line_cockroach_table"
+#define CELL_LINE_TABLE_CORGI "cell_line_corgi_table"
+#define CELL_LINE_TABLE_COW "cell_line_cow_table"
+#define CELL_LINE_TABLE_GELATINOUS "cell_line_gelatinous_table"
+#define CELL_LINE_TABLE_GLOCKROACH "cell_line_glockroach_table"
+#define CELL_LINE_TABLE_GRAPE "cell_line_grape_table"
+#define CELL_LINE_TABLE_HAUBEROACH "cell_line_hauberoach_table"
+#define CELL_LINE_TABLE_MEGACARP "cell_line_megacarp_table"
+#define CELL_LINE_TABLE_MOUSE "cell_line_mouse_table"
+#define CELL_LINE_TABLE_PINE "cell_line_pine_table"
+#define CELL_LINE_TABLE_PUG "cell_line_pug_table"
+#define CELL_LINE_TABLE_SLIME "cell_line_slime_table"
+#define CELL_LINE_TABLE_SNAKE "cell_line_snake_table"
+#define CELL_LINE_TABLE_VATBEAST "cell_line_vatbeast_table"
+
+///All cell virus types
+#define CELL_VIRUS_TABLE_GENERIC "cell_virus_generic_table"
+#define CELL_VIRUS_TABLE_GENERIC_MOB "cell_virus_generic_mob_table"
+
+///General defines for vatgrowing
+#define VATGROWING_DANGER_MINIMUM 30 //Past how much growth can the other cell_lines affect a finished cell line negatively

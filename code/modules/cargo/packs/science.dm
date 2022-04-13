@@ -12,7 +12,7 @@
 
 /datum/supply_pack/science/ape  //Ape out!
 	name = "Ape Cube Crate"
-	desc = "Pss what a new test subject with supper strangth, speed, and love for bananas all at the same time? Say no more... Contains a single ape cube. Dont add water!"
+	desc = "Psst... want a new test subject with super strength, speed, and love for bananas all at the same time? Say no more! Contains a single ape cube. Just add water!"
 	contraband = TRUE
 	cost = 2500
 	contains = list (/obj/item/reagent_containers/food/snacks/cube/ape)
@@ -40,6 +40,18 @@
 					/obj/item/clothing/gloves/color/latex,
 					/obj/item/clothing/gloves/color/latex)
 	crate_name = "chemistry beaker crate"
+
+/datum/supply_pack/science/cytology
+	name = "Cytology supplies crate"
+	desc = "Did out of control specimens pulverize xenobiology? Here is some more supplies for further testing."
+	cost = 2000
+	contains = list(/obj/structure/microscope,
+					/obj/item/biopsy_tool,
+					/obj/item/storage/box/petridish,
+					/obj/item/storage/box/petridish,
+					/obj/item/storage/box/swab,
+					/obj/item/construction/plumbing)
+	crate_name = "cytology supplies crate"
 
 /datum/supply_pack/science/robotics/mecha_odysseus
 	name = "Circuit Crate (Odysseus)"

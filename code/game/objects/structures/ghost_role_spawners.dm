@@ -783,7 +783,7 @@
 		/mob/living/simple_animal/parrot,
 		/mob/living/simple_animal/hostile/lizard,
 		/mob/living/simple_animal/crab,
-		/mob/living/simple_animal/cockroach,
+		/mob/living/simple_animal/hostile/retaliate/cockroach,
 		/mob/living/simple_animal/butterfly,
 		/mob/living/simple_animal/mouse,
 		/mob/living/simple_animal/sloth,

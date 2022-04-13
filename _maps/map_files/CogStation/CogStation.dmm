@@ -3682,7 +3682,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "ajm" = (
@@ -10663,7 +10663,7 @@
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/plasteel,
 /area/service/hydroponics/lobby)
 "ayI" = (
@@ -33917,7 +33917,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "bwp" = (
@@ -35231,7 +35231,7 @@
 	dir = 1;
 	light_color = "#ffc1c1"
 	},
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bzf" = (
@@ -54746,7 +54746,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/port/central)
 "cnr" = (

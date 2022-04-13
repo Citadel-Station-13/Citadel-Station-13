@@ -2251,7 +2251,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aiE" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aiF" = (
@@ -7447,7 +7447,7 @@
 	},
 /area/maintenance/port/fore)
 "awu" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/wood,
 /area/maintenance/port/fore)
 "awv" = (
@@ -7687,7 +7687,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aya" = (
@@ -14383,7 +14383,7 @@
 	},
 /area/security/prison)
 "bdo" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "bdp" = (
@@ -32643,7 +32643,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "cnh" = (
@@ -38394,7 +38394,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "cMV" = (
@@ -51870,7 +51870,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/aft)
 "dnN" = (
@@ -61774,7 +61774,7 @@
 /turf/open/floor/wood,
 /area/security/detectives_office/private_investigators_office)
 "dJE" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/wood,
 /area/security/detectives_office/private_investigators_office)
 "dJF" = (
@@ -65959,7 +65959,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "dRH" = (
@@ -82459,7 +82459,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/wood,
 /area/service/theater/abandoned)
 "hXJ" = (
@@ -82797,7 +82797,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/plasteel/dark,
 /area/service/abandoned_gambling_den)
 "ieG" = (
@@ -84734,7 +84734,7 @@
 /turf/open/floor/plasteel,
 /area/cargo/qm)
 "iIi" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/plasteel/grimy,
 /area/commons/vacant_room/office)
 "iIp" = (
@@ -86872,7 +86872,7 @@
 "jup" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
 	},
@@ -91490,7 +91490,7 @@
 /area/service/janitor)
 "kVv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/wood,
 /area/commons/vacant_room/office)
 "kVI" = (
@@ -94285,7 +94285,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/office)
 "lYg" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/wood,
 /area/service/library/abandoned)
 "lYl" = (
@@ -113528,7 +113528,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/plasteel/dark,
 /area/service/abandoned_gambling_den)
 "sLy" = (
@@ -114933,7 +114933,7 @@
 "tiZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/wood,
 /area/service/abandoned_gambling_den)
 "tjw" = (

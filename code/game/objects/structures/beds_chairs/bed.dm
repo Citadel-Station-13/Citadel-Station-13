@@ -241,3 +241,12 @@
 	target.pixel_y = target.get_standard_pixel_y_offset(FALSE)
 	if(target == goldilocks)
 		goldilocks = null
+
+/obj/structure/bed/maint
+	name = "dirty mattress"
+	desc = "An old grubby mattress. You try to not think about what could be the cause of those stains."
+	icon_state = "dirty_mattress"
+
+/obj/structure/bed/maint/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)

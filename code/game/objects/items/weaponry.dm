@@ -1081,7 +1081,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	strong_against = typecacheof(list(
 					/mob/living/simple_animal/hostile/poison/bees/,
 					/mob/living/simple_animal/butterfly,
-					/mob/living/simple_animal/cockroach,
+					/mob/living/simple_animal/hostile/retaliate/cockroach,
 					/obj/item/queen_bee,
 					/obj/structure/spider/spiderling
 	))

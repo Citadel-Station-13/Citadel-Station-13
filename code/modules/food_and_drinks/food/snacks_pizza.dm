@@ -187,7 +187,7 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/pizzaslice/arnold
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 30, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/iron = 10, /datum/reagent/medicine/omnizine = 30)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pepperoni" = 2, "9 millimeter bullets" = 2)
-	
+
 
 /obj/item/reagent_containers/food/snacks/proc/try_break_off(mob/living/M, mob/living/user) //maybe i give you a pizza maybe i break off your arm
 	var/obj/item/bodypart/l_arm = user.get_bodypart(BODY_ZONE_L_ARM)
@@ -246,3 +246,18 @@
 	filling_color = "#A52A2A"
 	tastes = list("cardboard" = 1, "tomato" = 1, "cheese" = 1, "pepperoni" = 2)
 	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT
+
+
+/obj/item/reagent_containers/food/snacks/pizzaslice/moldy
+	name = "moldy pizza slice"
+	desc = "This was once a perfectly good slice of pizza pie, but now it lies here, rancid and bursting with spores. What a bummer! But we should not dwell on the past, only look towards the future."
+	icon_state = "moldy_slice"
+	filling_color = "#e9d075"
+	bitesize = 4
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/peptides = 3, /datum/reagent/consumable/tomatojuice = 1, /datum/reagent/toxin/amatoxin = 2)
+	tastes = list("stale crust" = 1, "rancid cheese" = 2, "mushroom" = 1)
+	foodtype = GRAIN | VEGETABLES | DAIRY | GROSS
+
+/obj/item/reagent_containers/food/snacks/pizzaslice/moldy/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)

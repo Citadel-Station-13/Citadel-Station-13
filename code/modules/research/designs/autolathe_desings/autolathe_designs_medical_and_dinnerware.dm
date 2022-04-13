@@ -223,3 +223,21 @@
 	build_path = /obj/item/reagent_containers/glass/bottle/vial/large
 	category = list("initial","Medical","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/petridish
+	name = "Petri Dish"
+	id = "petri_dish"
+	build_type = PROTOLATHE | AUTOLATHE
+	materials = list(/datum/material/glass = 500)
+	build_path = /obj/item/petri_dish
+	category = list("initial","Medical","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/swab
+	name = "Sterile Swab"
+	id = "swab"
+	build_type = PROTOLATHE | AUTOLATHE
+	materials = list(/datum/material/plastic = 200)
+	build_path = /obj/item/swab
+	category = list("initial","Medical","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE

@@ -41,6 +41,13 @@
 	var/regen_cooldown = 0 //Used for how long it takes before a healing will take place default in 60 seconds
 	var/regen_amount = 0 //How much is healed pre regen cooldown
 
+/mob/living/simple_animal/hostile/carp/Initialize(mapload)
+	. = ..()
+	add_cell_sample()
+
+/mob/living/simple_animal/hostile/carp/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
 /mob/living/simple_animal/hostile/carp/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(regen_amount)
@@ -64,6 +71,9 @@
 	maxbodytemp = INFINITY
 	gold_core_spawnable = NO_SPAWN
 	del_on_death = 1
+
+/mob/living/simple_animal/hostile/carp/holocarp/add_cell_sample()
+	return
 
 /mob/living/simple_animal/hostile/carp/megacarp
 	icon = 'icons/mob/broadMobs.dmi'
@@ -92,6 +102,10 @@
 	melee_damage_upper += rand(10,20)
 	maxHealth += rand(40,60)
 	move_to_delay = rand(3,7)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGACARP, CELL_VIRUS_TABLE_GENERIC_MOB)
+
+/mob/living/simple_animal/hostile/carp/megacarp/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGACARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/carp/cayenne
 	name = "Cayenne"

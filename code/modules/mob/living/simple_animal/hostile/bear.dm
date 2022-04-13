@@ -48,6 +48,12 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 
 	footstep_type = FOOTSTEP_MOB_CLAW
+/mob/living/simple_animal/hostile/bear/Initialize()
+	. = ..()
+	add_cell_sample()
+
+/mob/living/simple_animal/hostile/bear/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson
@@ -129,6 +135,9 @@
 	attack_verb_continuous = "slaps"
 	attack_verb_simple = "slap"
 
+/mob/living/simple_animal/hostile/bear/butter/add_cell_sample()
+	return //You cannot grow a real bear from butter.
+
 /mob/living/simple_animal/hostile/bear/butter/BiologicalLife(seconds, times_fired) //Heals butter bear really fast when he takes damage.
 	if(stat)
 		return
@@ -162,23 +171,3 @@
 			L.Knockdown(20)
 			playsound(loc, 'sound/misc/slip.ogg', 15)
 			L.visible_message("<span class='danger'>[L] slips on butter!</span>")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

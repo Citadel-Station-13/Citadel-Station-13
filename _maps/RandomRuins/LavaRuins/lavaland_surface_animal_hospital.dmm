@@ -411,7 +411,7 @@
 /turf/open/floor/plating,
 /area/ruin/lavaland/powered/animal_hospital)
 "bg" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/retaliate/cockroach,
 /turf/open/floor/plating,
 /area/ruin/lavaland/powered/animal_hospital)
 "bh" = (

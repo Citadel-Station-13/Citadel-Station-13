@@ -175,7 +175,7 @@
 	/mob/living/carbon/monkey = 1,
 	/mob/living/simple_animal/mouse = 2)
 	possible_rewards = list(/mob/living/simple_animal/pet/dog/corgi/exoticcorgi = 1, //rewards are animals, friendly to only the person who handed the reward in!
-		/mob/living/simple_animal/cockroach = 1,
+		/mob/living/simple_animal/hostile/retaliate/cockroach = 1,
 		/mob/living/simple_animal/hostile/skeleton = 1,
 		/mob/living/simple_animal/hostile/stickman = 1,
 		/mob/living/simple_animal/hostile/stickman/dog = 1,

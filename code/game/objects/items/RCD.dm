@@ -865,7 +865,6 @@ RLD
 	has_ammobar = FALSE
 	matter = 200
 	max_matter = 200
-
 	///type of the plumbing machine
 	var/blueprint = null
 	///index, used in the attack self to get the type. stored here since it doesnt change
