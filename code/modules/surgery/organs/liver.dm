@@ -24,6 +24,7 @@
 	var/filterToxins = TRUE //whether to filter toxins
 	var/cachedmoveCalc = 1
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/iron = 5)
+	grind_results = list(/datum/reagent/consumable/nutriment/peptides = 5)
 
 /obj/item/organ/liver/on_life(seconds, times_fired)
 	. = ..()
