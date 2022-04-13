@@ -413,11 +413,18 @@
 	#define COMPONENT_HOSTILE_NO_ATTACK 1
 
 // /obj signals
-#define COMSIG_OBJ_DECONSTRUCT 	"obj_deconstruct"				//from base of obj/deconstruct(): (disassembled)
-#define COMSIG_OBJ_BREAK		"obj_break"						//from base of /obj/obj_break(): (damage_flag)
-#define COMSIG_OBJ_SETANCHORED 	"obj_setanchored"				//called in /obj/structure/setAnchored(): (value)
-#define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH	"obj_default_unfasten_wrench" //called exclusively in plumbing, for now
-#define COMSIG_OBJ_ATTACK_GENERIC "obj_attack_generic"			//from base of atom/animal_attack(): (/mob/user)
+///from base of obj/deconstruct(): (disassembled)
+#define COMSIG_OBJ_DECONSTRUCT 	"obj_deconstruct"
+///from base of /obj/obj_break(): (damage_flag)
+#define COMSIG_OBJ_BREAK		"obj_break"
+///called in /obj/structure/setAnchored(): (value)
+#define COMSIG_OBJ_SETANCHORED 	"obj_setanchored"
+///called exclusively in plumbing, for now
+#define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH	"obj_default_unfasten_wrench"
+///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
+#define COMSIG_OBJ_HIDE "obj_hide"
+///from base of atom/animal_attack(): (/mob/user)
+#define COMSIG_OBJ_ATTACK_GENERIC "obj_attack_generic"
 	#define COMPONENT_STOP_GENERIC_ATTACK 1
 
 

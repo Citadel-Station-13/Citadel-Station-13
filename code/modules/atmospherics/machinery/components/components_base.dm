@@ -2,11 +2,15 @@
 // On top of that, now people can add component-speciic procs/vars if they want!
 
 /obj/machinery/atmospherics/components
-	var/welded = FALSE //Used on pumps and scrubbers
-	var/showpipe = FALSE
-	var/shift_underlay_only = TRUE //Layering only shifts underlay?
-
+	hide = FALSE
+	var/welded = FALSE
+	///Should the component should show the pipe underneath it?
+	var/showpipe = TRUE
+	///When the component is on a non default layer should we shift everything? Or just the underlay pipe
+	var/shift_underlay_only = TRUE
+	///Stores the component pipeline
 	var/list/datum/pipeline/parents
+	///Stores the component gas mixture
 	var/list/datum/gas_mixture/airs
 
 /obj/machinery/atmospherics/components/New()
@@ -18,26 +22,34 @@
 		var/datum/gas_mixture/A = new(200)
 		airs[i] = A
 
+/obj/machinery/atmospherics/components/Initialize(mapload)
+	. = ..()
+
+	if(hide)
+		RegisterSignal(src, COMSIG_OBJ_HIDE, .proc/hide_pipe)
+
 // Iconnery
 
 /obj/machinery/atmospherics/components/proc/update_icon_nopipes()
 	return
+
+/**
+ * Called in Initialize(), set the showpipe var to true or false depending on the situation, calls update_icon()
+ */
+/obj/machinery/atmospherics/components/proc/hide_pipe(datum/source, covered)
+	SIGNAL_HANDLER
+	showpipe = !covered
+	update_appearance()
 
 /obj/machinery/atmospherics/components/update_icon()
 	update_icon_nopipes()
 
 	underlays.Cut()
 
-	var/turf/T = loc
-	if(level == 2 || (istype(T) && !T.intact))
-		showpipe = TRUE
-		plane = ABOVE_WALL_PLANE
-	else
-		showpipe = FALSE
-		plane = FLOOR_PLANE
+	plane = showpipe ? GAME_PLANE : FLOOR_PLANE
 
 	if(!showpipe)
-		return //no need to update the pipes if they aren't showing
+		return ..() //no need to update the pipes if they aren't showing
 
 	var/connected = 0 //Direction bitset
 
@@ -54,12 +66,13 @@
 
 	if(!shift_underlay_only)
 		PIPING_LAYER_SHIFT(src, piping_layer)
+	return ..()
 
 /obj/machinery/atmospherics/components/proc/get_pipe_underlay(state, dir, color = null)
 	if(color)
-		. = getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', state, dir, color, piping_layer = shift_underlay_only ? piping_layer : 2)
+		. = getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', state, dir, color, piping_layer = shift_underlay_only ? piping_layer : PIPING_LAYER_DEFAULT)
 	else
-		. = getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', state, dir, piping_layer = shift_underlay_only ? piping_layer : 2)
+		. = getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', state, dir, piping_layer = shift_underlay_only ? piping_layer : PIPING_LAYER_DEFAULT)
 
 // Pipenet stuff; housekeeping
 

@@ -77,7 +77,6 @@
 			built = new /obj/machinery/atmospherics/pipe/manifold4w(loc)
 	built.SetInitDirections()
 	built.on_construction(pipe_color, pipe_layer)
-	built.hide(!visible_pipes)
 
 /obj/effect/mapping_helpers/network_builder/atmos_pipe/distro
 	name = "distro line autobuilder"

@@ -5,7 +5,7 @@
 	desc = "It is an open vent."
 	can_unwrench = TRUE
 
-	level = 1
+	hide = TRUE
 	interacts_with_air = TRUE
 	layer = GAS_SCRUBBER_LAYER
 

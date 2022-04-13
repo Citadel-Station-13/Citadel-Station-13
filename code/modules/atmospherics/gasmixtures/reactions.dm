@@ -106,7 +106,7 @@
 	reagents_holder.add_reagent(condensing_reagent, amt)
 	. = REACTING
 	for(var/atom/movable/AM in location)
-		if(location.intact && AM.level == 1)
+		if(location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 			continue
 		reagents_holder.reaction(AM, TOUCH)
 	reagents_holder.reaction(location, TOUCH)

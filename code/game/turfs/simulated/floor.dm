@@ -30,7 +30,9 @@
 	var/icon_plating = "plating"
 	thermal_conductivity = 0.04
 	heat_capacity = 10000
-	intact = 1
+
+	overfloor_placed = TRUE
+
 	var/broken = 0
 	var/burnt = 0
 	var/floor_tile = null //tile that this floor drops
@@ -156,8 +158,7 @@
 
 /turf/open/floor/is_shielded()
 	for(var/obj/structure/A in contents)
-		if(A.level == 3)
-			return 1
+		return 1
 
 /turf/open/floor/blob_act(obj/structure/blob/B)
 	return
@@ -217,12 +218,12 @@
 		return 1
 	if(..())
 		return 1
-	if(intact && istype(C, /obj/item/stack/tile))
+	if(overfloor_placed && istype(C, /obj/item/stack/tile))
 		try_replace_tile(C, user, params)
 	return 0
 
 /turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
-	return intact ? FORCE_BOOLEAN(pry_tile(I, user)) : FALSE
+	return overfloor_placed ? FORCE_BOOLEAN(pry_tile(I, user)) : FALSE
 
 /turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)

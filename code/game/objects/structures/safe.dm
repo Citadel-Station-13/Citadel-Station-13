@@ -239,14 +239,11 @@ FLOOR SAFES
 	name = "floor safe"
 	icon_state = "floorsafe"
 	density = FALSE
-	level = 1	//underfloor
 	layer = LOW_OBJ_LAYER
 
 /obj/structure/safe/floor/Initialize(mapload)
 	. = ..()
-	if(mapload)
-		var/turf/T = loc
-		hide(T.intact)
+	AddElement(/datum/element/undertile)
 
 #undef SOUND_CHANCE
 #undef BROKEN_THRESHOLD

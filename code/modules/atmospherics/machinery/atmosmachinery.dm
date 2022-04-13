@@ -12,32 +12,45 @@
 
 /obj/machinery/atmospherics
 	anchored = TRUE
-	move_resist = INFINITY				//Moving a connected machine without actually doing the normal (dis)connection things will probably cause a LOT of issues.
+	move_resist = INFINITY //Moving a connected machine without actually doing the normal (dis)connection things will probably cause a LOT of issues. (this imply moving machines with something that can push turfs like a megafauna)
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = ENVIRON
 	layer = GAS_PIPE_HIDDEN_LAYER //under wires
-	plane = ABOVE_WALL_PLANE
 	resistance_flags = FIRE_PROOF
 	max_integrity = 200
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
 	var/nodealert = 0
+	///Check if the object can be unwrenched
 	var/can_unwrench = 0
+	///Bitflag of the initialized directions (NORTH | SOUTH | EAST | WEST)
 	var/initialize_directions = 0
+	///The color of the pipe
 	var/pipe_color
+	///What layer the pipe is in (from 1 to 3, default 2)
 	var/piping_layer = PIPING_LAYER_DEFAULT
+	///The flags of the pipe/component (PIPING_ALL_LAYER | PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY | PIPING_CARDINAL_AUTONORMALIZE)
 	var/pipe_flags = NONE
+
+	///This only works on pipes, because they have 1000 subtypes wich need to be visible and invisible under tiles, so we track this here
+	var/hide = TRUE
 
 	var/static/list/iconsetids = list()
 	var/static/list/pipeimages = list()
 
+	///The image of the pipe/device used for ventcrawling
 	var/image/pipe_vision_img = null
 
+	///The type of the device (UNARY, BINARY, TRINARY, QUATERNARY)
 	var/device_type = 0
+	///The lists of nodes that a pipe/device has, depends on the device_type var (from 1 to 4)
 	var/list/obj/machinery/atmospherics/nodes
 
+	///The path of the pipe/device that will spawn after unwrenching it (such as pipe fittings)
 	var/construction_type
-	var/pipe_state //icon_state as a pipe item
+	///icon_state as a pipe item
+	var/pipe_state
+	///Check if the device should be on or off (mostly used in processing for machines)
 	var/on = FALSE
 	var/interacts_with_air = FALSE
 
@@ -191,11 +204,6 @@
 	if(!can_unwrench(user))
 		return ..()
 
-	var/turf/T = get_turf(src)
-	if (level==1 && isturf(T) && T.intact)
-		to_chat(user, "<span class='warning'>You must remove the plating first!</span>")
-		return TRUE
-
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	add_fingerprint(user)
@@ -272,8 +280,6 @@
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		pipe_color = obj_color
 	setPipingLayer(set_layer)
-	var/turf/T = get_turf(src)
-	level = T.intact ? 2 : 1
 	atmosinit()
 	var/list/nodes = pipeline_expansion()
 	for(var/obj/machinery/atmospherics/A in nodes)

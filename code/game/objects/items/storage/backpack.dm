@@ -280,28 +280,18 @@
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
 	w_class = WEIGHT_CLASS_BULKY //Can fit in backpacks itself.
-	level = 1
 	component_type = /datum/component/storage/concrete/secret_satchel
 
-/obj/item/storage/backpack/satchel/flat/Initialize()
+/obj/item/storage/backpack/satchel/flat/Initialize(mapload)
 	. = ..()
 	SSpersistence.new_secret_satchels += src
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, INVISIBILITY_OBSERVER, use_anchor = TRUE)
 
 /obj/item/storage/backpack/satchel/flat/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 6
 	STR.cant_hold = typecacheof(list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks
-
-/obj/item/storage/backpack/satchel/flat/hide(intact)
-	if(intact)
-		invisibility = INVISIBILITY_MAXIMUM
-		anchored = TRUE //otherwise you can start pulling, cover it, and drag around an invisible backpack.
-		icon_state = "[initial(icon_state)]2"
-	else
-		invisibility = initial(invisibility)
-		anchored = FALSE
-		icon_state = initial(icon_state)
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
 	new /obj/item/stack/tile/plasteel(src)
@@ -316,15 +306,12 @@
 	var/list/reward_all_of_these = list() //use paths!
 	var/revealed = FALSE
 
-/obj/item/storage/backpack/satchel/flat/secret/Initialize()
+/obj/item/storage/backpack/satchel/flat/secret/Initialize(mapload)
 	. = ..()
-
-	if(isfloorturf(loc) && !isplatingturf(loc))
-		hide(1)
-
-/obj/item/storage/backpack/satchel/flat/secret/hide(intact)
-	..()
-	if(!intact && !revealed)
+	var/turf/open/floor = get_turf(src)
+	var/covered = floor.underfloor_accessibility < UNDERFLOOR_VISIBLE
+	SEND_SIGNAL(src, COMSIG_OBJ_HIDE, covered)
+	if(covered && !revealed)
 		if(reward_one_of_these.len > 0)
 			var/reward = pick(reward_one_of_these)
 			new reward(src)

@@ -5,7 +5,7 @@
 	icon = 'icons/obj/atmospherics/components/unary_devices.dmi'
 	can_unwrench = TRUE
 	use_power = NO_POWER_USE
-	level = 0
+	hide = TRUE
 	layer = GAS_FILTER_LAYER
 	pipe_flags = PIPING_ONE_PER_TURF
 	pipe_state = "connector"
@@ -56,7 +56,7 @@
 	icon_state = "connector_map-3"
 
 /obj/machinery/atmospherics/components/unary/portables_connector/visible
-	level = 2
+	hide = FALSE
 
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer1
 	piping_layer = 1

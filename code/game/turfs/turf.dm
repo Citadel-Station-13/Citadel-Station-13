@@ -7,7 +7,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE // Important for interaction with and visualization of openspace.
 	luminosity = 1
 
-	var/intact = 1
+	/// If there's a tile over a basic floor that can be ripped out
+	var/overfloor_placed = FALSE
+	/// How accessible underfloor pieces such as wires, pipes, etc are on this turf. Can be HIDDEN, VISIBLE, or INTERACTABLE.
+	var/underfloor_accessibility = UNDERFLOOR_HIDDEN
 
 	// baseturfs can be either a list or a single turf type.
 	// In class definition like here it should always be a single type.
@@ -350,8 +353,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
 		if(O.flags_1 & INITIALIZED_1)
-			// SEND_SIGNAL(O, COMSIG_OBJ_HIDE, intact)
-			O.hide(intact)
+			SEND_SIGNAL(O, COMSIG_OBJ_HIDE, underfloor_accessibility < UNDERFLOOR_VISIBLE)
 
 // override for space turfs, since they should never hide anything
 /turf/open/space/levelupdate()
@@ -411,11 +413,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 ////////////////////////////////////////////////////
 
 /turf/singularity_act()
-	if(intact)
+	if(underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		for(var/obj/O in contents) //this is for deleting things like wires contained in the turf
-			if(O.level != 1)
-				continue
-			if(O.invisibility == INVISIBILITY_MAXIMUM)
+			if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 				O.singularity_act()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return(2)
@@ -424,7 +424,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return TRUE
 
 /turf/proc/can_lay_cable()
-	return can_have_cabling() & !intact
+	return can_have_cabling() && underfloor_accessibility >= UNDERFLOOR_INTERACTABLE
 
 /turf/proc/visibilityChanged()
 	GLOB.cameranet.updateVisibility(src)
@@ -442,19 +442,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/is_shielded()
 
 /turf/contents_explosion(severity, target, origin)
-	var/affecting_level
-	if(severity == 1)
-		affecting_level = 1
-	else if(is_shielded())
-		affecting_level = 3
-	else if(intact)
-		affecting_level = 2
-	else
-		affecting_level = 1
-
+	. = ..()
 	for(var/V in contents)
 		var/atom/A = V
-		if(!QDELETED(A) && A.level >= affecting_level)
+		if(!QDELETED(A))
 			if(ismovable(A))
 				var/atom/movable/AM = A
 				if(!AM.ex_check(explosion_id))
@@ -464,19 +455,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/wave_ex_act(power, datum/wave_explosion/explosion, dir)
 	. = ..()
-	var/affecting_level
-	if(is_shielded())
-		affecting_level = 3
-	else if(intact)
-		affecting_level = 2
-	else
-		affecting_level = 1
 	var/atom/A
 	for(var/i in contents)
 		if(. <= 0)
 			return 0
 		A = i
-		if(!QDELETED(A) && A.level >= affecting_level)
+		if(!QDELETED(A))
 			.  = A.wave_explode(., explosion, dir)
 	maptext = "[.]"
 
@@ -534,22 +518,18 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return
 
 /turf/acid_act(acidpwr, acid_volume)
-	. = 1
-	var/acid_type = /obj/effect/acid
-	if(acidpwr >= 200) //alien acid power
-		acid_type = /obj/effect/acid/alien
-	var/has_acid_effect = FALSE
+	. = ..()
+	if((acidpwr <= 0) || (acid_volume <= 0))
+		return FALSE
+
+	AddComponent(/datum/component/acid, acidpwr, acid_volume)
 	for(var/obj/O in src)
-		if(intact && O.level == 1) //hidden under the floor
+		if(underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 			continue
-		if(istype(O, acid_type))
-			var/obj/effect/acid/A = O
-			A.acid_level = min(A.level + acid_volume * acidpwr, 12000)//capping acid level to limit power of the acid
-			has_acid_effect = 1
-			continue
+
 		O.acid_act(acidpwr, acid_volume)
-	if(!has_acid_effect)
-		new acid_type(src, acidpwr, acid_volume)
+
+	return . || TRUE
 
 /turf/proc/acid_melt()
 	return

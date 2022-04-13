@@ -35,8 +35,8 @@
 		path = text2path(old_secret_satchels[pos]["saved_obj"])
 
 	if(F)
-		if(isfloorturf(F.loc) && !isplatingturf(F.loc))
-			F.hide(1)
+		var/turf/open/floor = get_turf(F)
+		SEND_SIGNAL(F, COMSIG_OBJ_HIDE, floor.underfloor_accessibility < UNDERFLOOR_VISIBLE)
 		if(ispath(path))
 			var/spawned_item = new path(F)
 			spawned_objects[spawned_item] = TRUE

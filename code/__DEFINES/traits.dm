@@ -268,6 +268,8 @@
 // item traits
 #define TRAIT_NODROP            "nodrop"
 #define TRAIT_SPOOKY_THROW      "spooky_throw"
+/// Visible on t-ray scanners if the atom/var/level == 1
+#define TRAIT_T_RAY_VISIBLE "t-ray-visible"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
@@ -345,6 +347,8 @@
 #define CORRUPTED_SYSTEM "corrupted-system"
 ///Turf trait for when a turf is transparent
 #define TURF_Z_TRANSPARENT_TRAIT "turf_z_transparent"
+/// Trait applied by element
+#define ELEMENT_TRAIT(source) "element_trait_[source]"
 /// This trait is added by the active directional block system.
 #define ACTIVE_BLOCK_TRAIT				"active_block"
 /// This trait is added by the parry system.
