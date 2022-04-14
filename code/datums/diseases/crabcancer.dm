@@ -65,4 +65,3 @@
 						new /obj/item/reagent_containers/food/snacks/meat/rawcrab(affected_mob.loc)
 				affected_mob.jitteriness += 3
 
-	return
