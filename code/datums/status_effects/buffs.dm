@@ -69,7 +69,7 @@
 	..()
 
 /datum/status_effect/vanguard_shield/Destroy()
-	qdel(progbar)
+	progbar.end_progress()
 	progbar = null
 	return ..()
 
