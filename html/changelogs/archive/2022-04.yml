@@ -20,3 +20,7 @@
   - refactor: refactored most of the projectile code
   tiviplus, lolman360, SandPoot:
   - refactor: /obj/mecha > /obj/vehicle/sealed/mecha
+2022-04-15:
+  BlueWildrose:
+  - rscadd: Added carcinisoprojection jelly, a limb regrowth chemical made from xenobiology's
+      slime mutation toxin & blood. Don't overdose!
