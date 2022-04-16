@@ -82,8 +82,7 @@
 			if(CONFIG_GET(flag/auto_deadmin_players) || (M.client.prefs?.deadmin & DEADMIN_ALWAYS))
 				M.client.holder.auto_deadmin()
 			else
-				handle_auto_deadmin_roles(M.client, rank) */
-
+				handle_auto_deadmin_roles(M.client, rank)
 
 	// tcg card handling
 	var/list/tcg_cards = C.prefs.tcg_cards
@@ -206,7 +205,7 @@
 /datum/controller/subsystem/job/proc/handle_auto_deadmin_roles(client/C, rank)
 	if(!C?.holder)
 		return TRUE
-	var/datum/job/job = GetJob(rank)
+	var/datum/job/job = GetJobAuto(rank)
 	if(!job)
 		return
 	if((job.auto_deadmin_role_flags & DEADMIN_POSITION_HEAD) && (CONFIG_GET(flag/auto_deadmin_heads) || (C.prefs?.toggles & DEADMIN_POSITION_HEAD)))
