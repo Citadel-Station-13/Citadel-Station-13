@@ -20,6 +20,7 @@ GLOBAL_DATUM_INIT(ghostrole_menu, /datum/ghostrole_menu, new)
 		data["short_desc"] = role.desc
 		data["flavor_text"] = role.spawntext
 		data["amount_left"] = role.SpawnsLeft(user)
+		. += list(data)	// wrap
 
 /datum/ghostrole_menu/ui_act(action, params)
 	if(..())
