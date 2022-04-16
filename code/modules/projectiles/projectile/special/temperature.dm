@@ -12,7 +12,7 @@
 	ricochet_chance = 80
 	is_reflectable = TRUE
 	light_color = LIGHT_COLOR_BLUE
-	flag = "energy"
+	flag = ENERGY
 	var/temperature = 100
 
 /obj/item/projectile/temp/on_hit(atom/target, blocked = 0)

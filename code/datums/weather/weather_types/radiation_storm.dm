@@ -30,7 +30,7 @@
 	status_alarm(TRUE)
 
 /datum/weather/rad_storm/weather_act(mob/living/L)
-	var/resist = L.getarmor(null, "rad")
+	var/resist = L.getarmor(null, RAD)
 	var/ratio = 1 - (min(resist, 100) / 100)
 	L.rad_act(radiation_intensity * ratio)
 

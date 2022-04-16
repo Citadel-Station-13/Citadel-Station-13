@@ -74,7 +74,7 @@
 	flags_1 = NONE
 
 
-/obj/item/pinpointer/syndicate_cyborg/Initialize()
+/obj/item/pinpointer/syndicate_cyborg/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
@@ -91,7 +91,7 @@
 		target = closest_operative
 	..()
 
-/obj/item/pinpointer/spider_cyborg/Initialize()
+/obj/item/pinpointer/spider_cyborg/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 

@@ -7,7 +7,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 
-/obj/item/trash/Initialize()
+/obj/item/trash/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/trash)
 

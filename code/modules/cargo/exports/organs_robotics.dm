@@ -163,7 +163,7 @@
 	cost = 150
 	unit_name = "mech based tool"
 	include_subtypes = TRUE
-	export_types = list(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp, /obj/item/mecha_parts/mecha_equipment/extinguisher, /obj/item/mecha_parts/mecha_equipment/rcd, /obj/item/mecha_parts/mecha_equipment/cable_layer, \
+	export_types = list(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp, /obj/item/mecha_parts/mecha_equipment/extinguisher, /obj/item/mecha_parts/mecha_equipment/rcd, \
 						/obj/item/mecha_parts/mecha_equipment/drill, /obj/item/mecha_parts/mecha_equipment/mining_scanner, /obj/item/mecha_parts/mecha_equipment/medical/sleeper)
 
 /datum/export/robotics/mech_blue_space

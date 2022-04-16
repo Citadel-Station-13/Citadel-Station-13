@@ -61,7 +61,7 @@
 	var/killed_crew = 0
 
 
-/obj/machinery/computer/arcade/orion_trail/Initialize()
+/obj/machinery/computer/arcade/orion_trail/Initialize(mapload)
 	. = ..()
 	Radio = new /obj/item/radio(src)
 	Radio.listening = 0

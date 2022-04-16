@@ -101,7 +101,7 @@
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 
-/mob/living/simple_animal/hostile/asteroid/goliath/beast/random/Initialize()
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/random/Initialize(mapload)
 	. = ..()
 	if(prob(1))
 		new /mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient(loc)
@@ -200,7 +200,7 @@
 			L.Stun(75)
 		L.adjustBruteLoss(rand(15,20)) // Less stun more harm
 		latched = TRUE
-	for(var/obj/mecha/M in loc)
+	for(var/obj/vehicle/sealed/mecha/M in loc)
 		M.take_damage(20, BRUTE, null, null, null, 25)
 	if(!latched)
 		retract()

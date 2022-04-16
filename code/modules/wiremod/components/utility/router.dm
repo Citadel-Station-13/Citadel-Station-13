@@ -35,7 +35,7 @@
 	)
 	router_options = add_option_port("Router Options", component_options)
 
-/obj/item/circuit_component/router/Initialize()
+/obj/item/circuit_component/router/Initialize(mapload)
 	. = ..()
 	current_type = router_options.value
 	if(input_port_amount > 1)

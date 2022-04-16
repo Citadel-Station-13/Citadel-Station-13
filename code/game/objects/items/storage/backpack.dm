@@ -44,7 +44,7 @@
 	item_state = "holdingpack"
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 60, ACID = 50)
 	component_type = /datum/component/storage/concrete/bluespace/bag_of_holding
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
@@ -283,7 +283,7 @@
 	level = 1
 	component_type = /datum/component/storage/concrete/secret_satchel
 
-/obj/item/storage/backpack/satchel/flat/Initialize()
+/obj/item/storage/backpack/satchel/flat/Initialize(mapload)
 	. = ..()
 	SSpersistence.new_secret_satchels += src
 
@@ -316,7 +316,7 @@
 	var/list/reward_all_of_these = list() //use paths!
 	var/revealed = FALSE
 
-/obj/item/storage/backpack/satchel/flat/secret/Initialize()
+/obj/item/storage/backpack/satchel/flat/secret/Initialize(mapload)
 	. = ..()
 
 	if(isfloorturf(loc) && !isplatingturf(loc))

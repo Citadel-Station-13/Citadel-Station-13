@@ -171,7 +171,7 @@
 	payment_department = ACCOUNT_SRV
 	light_mask="theater-light-mask"
 
-/obj/machinery/vending/autodrobe/Initialize()
+/obj/machinery/vending/autodrobe/Initialize(mapload)
 	. = ..()
 	cost_multiplier_per_dept = list("[ACCESS_THEATRE]" = 0)
 

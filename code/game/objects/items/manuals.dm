@@ -336,7 +336,7 @@
 	title = "Outdated Chemistry Textbook"
 	page_link = "Guide_to_chemistry"
 
-/obj/item/book/manual/wiki/chemistry/Initialize()
+/obj/item/book/manual/wiki/chemistry/Initialize(mapload)
 	. = ..()
 	new /obj/item/book/manual/wiki/cit/chemistry(loc)
 	new /obj/item/book/manual/wiki/cit/chem_recipies(loc)

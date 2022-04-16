@@ -26814,12 +26814,10 @@
 /turf/open/floor/plating,
 /area/medical/medbay/zone3)
 "aXS" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/dark/side{
 	dir = 8
 	},
@@ -28158,9 +28156,6 @@
 /turf/open/floor/plating,
 /area/medical/medbay/zone3)
 "bax" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
@@ -28170,6 +28165,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/dark/side{
 	dir = 8
 	},

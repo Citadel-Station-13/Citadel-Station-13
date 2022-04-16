@@ -123,7 +123,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	var/rating = 1
 	rad_flags = RAD_NO_CONTAMINATE
 
-/obj/item/stock_parts/Initialize()
+/obj/item/stock_parts/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)

@@ -1,7 +1,7 @@
 /obj/item/projectile/energy/plasmabolt
 	name = "plasma bolt"
 	icon_state = "plasma"
-	flag = "energy"
+	flag = ENERGY
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'

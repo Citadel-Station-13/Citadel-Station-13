@@ -66,7 +66,7 @@
 	blood_overlay_type = "armor"
 	dog_fashion = /datum/dog_fashion/back
 	mutantrace_variation = NONE
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
 
 /obj/item/lighter/gold
@@ -137,7 +137,7 @@
 	item_state = "satchel_carrot"
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 
-/obj/item/storage/backpack/satchel/carrot/Initialize()
+/obj/item/storage/backpack/satchel/carrot/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/items/toysqueak1.ogg'=1), 50)
 

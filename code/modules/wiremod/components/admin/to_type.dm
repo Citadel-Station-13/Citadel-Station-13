@@ -14,7 +14,7 @@
 	/// The type output
 	var/datum/port/output/type_output
 
-/obj/item/circuit_component/to_type/Initialize()
+/obj/item/circuit_component/to_type/Initialize(mapload)
 	. = ..()
 	input_path = add_input_port("Type", PORT_TYPE_STRING)
 	type_output = add_output_port("Typepath", PORT_TYPE_ANY)

@@ -33,7 +33,7 @@
 	var/recalls_remaining = 1
 	var/recalling
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/Initialize()
+/obj/structure/destructible/clockwork/massive/celestial_gateway/Initialize(mapload)
 	. = ..()
 	INVOKE_ASYNC(src, .proc/spawn_animation)
 	glow = new(get_turf(src))
@@ -199,7 +199,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/ex_act(severity, target, origin)
 	var/damage = max((obj_integrity * 0.7) / severity, 100) //requires multiple bombs to take down
-	take_damage(damage, BRUTE, "bomb", 0)
+	take_damage(damage, BRUTE, BOMB, 0)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/get_arrival_time(var/deciseconds = TRUE)
 	if(seconds_until_activation)
@@ -301,7 +301,7 @@
 	for(var/obj/O in orange(1, src))
 		if(!O.pulledby && !iseffect(O) && O.density)
 			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
-				O.take_damage(50, BURN, "bomb")
+				O.take_damage(50, BURN, BOMB)
 			O.update_icon()
 
 	conversion_pulse() //Converts the nearby area into clockcult-style

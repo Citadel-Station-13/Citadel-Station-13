@@ -731,7 +731,7 @@
 /mob/living/silicon/robot/modules
 	var/set_module = /obj/item/robot_module
 
-/mob/living/silicon/robot/modules/Initialize()
+/mob/living/silicon/robot/modules/Initialize(mapload)
 	. = ..()
 	module.transform_to(set_module)
 
@@ -772,7 +772,7 @@
 	cell = /obj/item/stock_parts/cell/hyper
 	// radio = /obj/item/radio/borg/syndicate
 
-/mob/living/silicon/robot/modules/syndicate/Initialize()
+/mob/living/silicon/robot/modules/syndicate/Initialize(mapload)
 	. = ..()
 	radio = new /obj/item/radio/borg/syndicate(src)
 	laws = new /datum/ai_laws/syndicate_override()

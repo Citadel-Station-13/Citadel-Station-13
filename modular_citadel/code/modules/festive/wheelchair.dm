@@ -1,4 +1,4 @@
-/obj/vehicle/sealed/vectorcraft/rideable/Initialize()
+/obj/vehicle/sealed/vectorcraft/rideable/Initialize(mapload)
 	. = ..()
 
 /obj/vehicle/sealed/vectorcraft/rideable/post_unbuckle_mob(mob/living/M)
@@ -45,7 +45,7 @@
 	icon_state = "wheelchair"
 	layer = OBJ_LAYER
 	max_integrity = 100
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 30)	//Wheelchairs aren't super tough yo
+	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 20, ACID = 30)	//Wheelchairs aren't super tough yo
 	canmove = TRUE
 	density = FALSE		//Thought I couldn't fix this one easily, phew
 

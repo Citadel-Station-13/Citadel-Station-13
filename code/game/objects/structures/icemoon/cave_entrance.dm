@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(ore_probability, list(/obj/item/stack/ore/uranium = 50,
 	move_resist = INFINITY
 	anchored = TRUE
 
-/obj/structure/spawner/ice_moon/Initialize()
+/obj/structure/spawner/ice_moon/Initialize(mapload)
 	. = ..()
 	clear_rock()
 
@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(ore_probability, list(/obj/item/stack/ore/uranium = 50,
 	anchored = TRUE
 	density = TRUE
 
-/obj/effect/collapsing_demonic_portal/Initialize()
+/obj/effect/collapsing_demonic_portal/Initialize(mapload)
 	. = ..()
 	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, FALSE, 50, TRUE, TRUE)
 	visible_message("<span class='boldannounce'>[src] begins to collapse, cutting it off from this world!</span>")

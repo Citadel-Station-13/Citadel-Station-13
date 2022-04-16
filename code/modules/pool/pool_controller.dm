@@ -64,7 +64,7 @@
 	. = ..()
 	. += "<span class='boldnotice'>Alt click to drain reagents.</span>"
 
-/obj/machinery/pool/controller/Initialize()
+/obj/machinery/pool/controller/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 	create_reagents(1000)

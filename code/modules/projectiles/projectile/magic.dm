@@ -5,7 +5,7 @@
 	damage_type = OXY
 	nodamage = 1
 	armour_penetration = 100
-	flag = "magic"
+	flag = MAGIC
 
 /obj/item/projectile/magic/death
 	name = "bolt of death"
@@ -302,7 +302,7 @@
 	icon_state = "lavastaff"
 	damage = 15
 	damage_type = BURN
-	flag = "magic"
+	flag = MAGIC
 	dismemberment = 50
 	nodamage = 0
 
@@ -322,7 +322,7 @@
 	damage_type = BURN
 	nodamage = 0
 	armour_penetration = 0
-	flag = "magic"
+	flag = MAGIC
 	hitsound = 'sound/weapons/barragespellhit.ogg'
 
 /obj/item/projectile/magic/arcane_barrage/on_hit(target)
@@ -339,23 +339,22 @@
 	name = "locker bolt"
 	icon_state = "locker"
 	nodamage = TRUE
-	flag = "magic"
+	flag = MAGIC
 	var/weld = TRUE
 	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
 	var/locker_suck = TRUE
 
-/obj/item/projectile/magic/locker/prehit(atom/A)
+/obj/item/projectile/magic/locker/prehit_pierce(atom/A)
+	. = ..()
 	if(ismob(A) && locker_suck)
 		var/mob/M = A
-		if(M.anti_magic_check())
+		if(M.anti_magic_check()) // no this doesn't check if ..() returned to phase through do I care no it's magic ain't gotta explain shit - Silly-Cons
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [A]!</span>")
-			qdel(src)
-			return
+			return PROJECTILE_DELETE_WITHOUT_HITTING
 		if(M.anchored)
-			return ..()
+			return
 		M.forceMove(src)
-		return FALSE
-	return ..()
+		return PROJECTILE_PIERCE_PHASE
 
 /obj/item/projectile/magic/locker/on_hit(target)
 	if(created)
@@ -382,7 +381,7 @@
 	var/weakened_icon = "decursed"
 	var/auto_destroy = TRUE
 
-/obj/structure/closet/decay/Initialize()
+/obj/structure/closet/decay/Initialize(mapload)
 	. = ..()
 	if(auto_destroy)
 		addtimer(CALLBACK(src, .proc/bust_open), 5 MINUTES)
@@ -437,7 +436,7 @@
 	damage_type = BURN
 	nodamage = 0
 	pixels_per_second = TILES_TO_PIXELS(33.33)
-	flag = "magic"
+	flag = MAGIC
 
 	var/zap_power = 20000
 	var/zap_range = 15

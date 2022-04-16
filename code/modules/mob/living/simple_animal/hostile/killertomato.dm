@@ -29,6 +29,6 @@
 	maxbodytemp = 500
 	gold_core_spawnable = HOSTILE_SPAWN
 
-/mob/living/simple_animal/hostile/killertomato/Initialize()
+/mob/living/simple_animal/hostile/killertomato/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)

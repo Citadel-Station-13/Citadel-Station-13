@@ -31,7 +31,7 @@
 	var/squish_chance = 50
 	del_on_death = 1
 
-/mob/living/simple_animal/cockroach/Initialize()
+/mob/living/simple_animal/cockroach/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 

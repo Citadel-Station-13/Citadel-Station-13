@@ -6,7 +6,7 @@
 	max_integrity = 200
 	health_regen = 1
 	point_return = 25
-	armor = list("melee" = 10, "bullet" = 20, "laser" = 15, "energy" = 10, "bomb" = 40, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+	armor = list(MELEE = 10, BULLET = 20, LASER = 15, ENERGY = 10, BOMB = 40, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 	var/list/spores = list()
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
 	var/max_spores = 3

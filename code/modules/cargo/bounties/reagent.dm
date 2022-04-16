@@ -139,6 +139,7 @@
 		/datum/reagent/medicine/atropine,\
 		/datum/reagent/medicine/strange_reagent,\
 		/datum/reagent/medicine/regen_jelly,\
+		/datum/reagent/medicine/limb_regrowth,\
 		/datum/reagent/drug/space_drugs,\
 		/datum/reagent/drug/crank,\
 		/datum/reagent/drug/krokodil,\

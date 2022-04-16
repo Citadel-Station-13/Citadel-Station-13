@@ -39,6 +39,7 @@
 #define LOG_ADMIN_PRIVATE (1 << 14)
 #define LOG_ASAY		(1 << 15)
 #define LOG_VIRUS		(1 << 16)
+#define LOG_MECHA (1 << 17)
 #define LOG_SHUTTLE		(1 << 18)
 #define LOG_VICTIM 		(1 << 19)
 

@@ -34,7 +34,7 @@ Borg Hypospray
 								//Used as list for input() in shakers.
 	var/list/reagent_names = list()
 
-/obj/item/reagent_containers/borghypo/Initialize()
+/obj/item/reagent_containers/borghypo/Initialize(mapload)
 	. = ..()
 
 	for(var/R in reagent_ids)
