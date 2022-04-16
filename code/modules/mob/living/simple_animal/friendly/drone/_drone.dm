@@ -79,7 +79,7 @@
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
 
-/mob/living/simple_animal/drone/Initialize()
+/mob/living/simple_animal/drone/Initialize(mapload)
 	. = ..()
 	GLOB.drones_list += src
 	access_card = new /obj/item/card/id(src)

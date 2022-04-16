@@ -15,7 +15,7 @@
 	var/action_background_icon_state = "bg_spell"
 	var/base_action = /datum/action/spell_action
 
-/obj/effect/proc_holder/Initialize()
+/obj/effect/proc_holder/Initialize(mapload)
 	. = ..()
 	if(has_action)
 		action = new base_action(src)
@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	action_background_icon_state = "bg_spell"
 	base_action = /datum/action/spell_action/spell
 
-/obj/effect/proc_holder/spell/Initialize()
+/obj/effect/proc_holder/spell/Initialize(mapload)
 	. = ..()
 	if(mobs_whitelist)
 		mobs_whitelist = typecacheof(mobs_whitelist)
@@ -204,7 +204,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/playMagSound()
 	playsound(get_turf(usr), sound,50,1)
 
-/obj/effect/proc_holder/spell/Initialize()
+/obj/effect/proc_holder/spell/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 

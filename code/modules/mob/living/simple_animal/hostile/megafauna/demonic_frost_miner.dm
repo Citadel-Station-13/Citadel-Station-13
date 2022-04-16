@@ -48,7 +48,7 @@ Difficulty: Extremely Hard
 	/// If the demonic frost miner is currently transforming to its enraged state
 	var/enraging = FALSE
 
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Initialize()
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/knockback, 7, FALSE, TRUE)
 	AddComponent(/datum/component/lifesteal, 50)
@@ -309,7 +309,7 @@ Difficulty: Extremely Hard
 	desc = "A pair of winter boots contractually made by a devil, they cannot be taken off once put on."
 	slowdown = SHOES_SPEED_SLIGHT
 
-/obj/item/clothing/shoes/winterboots/ice_boots/speedy/Initialize()
+/obj/item/clothing/shoes/winterboots/ice_boots/speedy/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
@@ -318,7 +318,7 @@ Difficulty: Extremely Hard
 	desc = "Cracks rocks at an inhuman speed, as well as being enhanced for combat purposes."
 	toolspeed = 0
 
-/obj/item/pickaxe/drill/jackhammer/demonic/Initialize()
+/obj/item/pickaxe/drill/jackhammer/demonic/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/knockback, 4, FALSE, TRUE)
 	AddComponent(/datum/component/lifesteal, 5)

@@ -98,7 +98,7 @@
 	secondary_trait = TRAIT_ANTIMAGIC
 	var/chaplain_spawnable = TRUE
 
-/obj/item/clothing/gloves/fingerless/pugilist/chaplain/Initialize()
+/obj/item/clothing/gloves/fingerless/pugilist/chaplain/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
 
@@ -138,7 +138,7 @@
 	var/warcry = "AT"
 	secondary_trait = TRAIT_NOSOFTCRIT //basically extra health
 
-/obj/item/clothing/gloves/fingerless/pugilist/rapid/Initialize()
+/obj/item/clothing/gloves/fingerless/pugilist/rapid/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, GLOVE_TRAIT)
 

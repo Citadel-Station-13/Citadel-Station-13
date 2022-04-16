@@ -151,7 +151,7 @@
 	var/number_of_pins = 8
 	var/max_string_length = 512
 
-/obj/item/integrated_circuit/converter/concatenator/Initialize()
+/obj/item/integrated_circuit/converter/concatenator/Initialize(mapload)
 	for(var/i = 1 to number_of_pins)
 		inputs["input [i]"] = IC_PINTYPE_STRING
 	. = ..()

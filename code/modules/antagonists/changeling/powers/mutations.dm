@@ -302,7 +302,7 @@
 	firing_effect_type = null
 	var/obj/item/gun/magic/tentacle/gun //the item that shot it
 
-/obj/item/ammo_casing/magic/tentacle/Initialize()
+/obj/item/ammo_casing/magic/tentacle/Initialize(mapload)
 	gun = loc
 	. = ..()
 
@@ -321,7 +321,7 @@
 	var/chain
 	var/obj/item/ammo_casing/magic/tentacle/source //the item that shot it
 
-/obj/item/projectile/tentacle/Initialize()
+/obj/item/projectile/tentacle/Initialize(mapload)
 	source = loc
 	. = ..()
 
@@ -506,7 +506,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 90, ACID = 90) //No armor at all.
 	mutantrace_variation = NONE
 
-/obj/item/clothing/suit/space/changeling/Initialize()
+/obj/item/clothing/suit/space/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc))
@@ -527,7 +527,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
-/obj/item/clothing/head/helmet/space/changeling/Initialize()
+/obj/item/clothing/head/helmet/space/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
@@ -563,7 +563,7 @@
 	cold_protection = 0
 	heat_protection = 0
 
-/obj/item/clothing/suit/armor/changeling/Initialize()
+/obj/item/clothing/suit/armor/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc))
@@ -577,7 +577,7 @@
 	armor = list(MELEE = 70, BULLET = 60, LASER = 30, ENERGY = 40, BOMB = 10, BIO = 4, RAD = 0, FIRE = 50, ACID = 90)
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE
 
-/obj/item/clothing/head/helmet/changeling/Initialize()
+/obj/item/clothing/head/helmet/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
@@ -655,7 +655,7 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 35, BIO = 35, RAD = 35, FIRE = 0, ACID = 0)
 
-/obj/item/clothing/gloves/claws/Initialize()
+/obj/item/clothing/gloves/claws/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
@@ -727,7 +727,7 @@
 	to_chat(user, "<span class='notice'>[src] are now formed to allow for [fasthands ? "fast, precise strikes" : "crippling, damaging blows"].</span>")
 	addtimer(CALLBACK(src, .proc/use_buffs, user, TRUE), 0.1) // go fuckin get em
 
-/obj/item/clothing/gloves/fingerless/pugilist/cling/Initialize()
+/obj/item/clothing/gloves/fingerless/pugilist/cling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 

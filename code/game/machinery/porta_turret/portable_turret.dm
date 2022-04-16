@@ -98,7 +98,7 @@
 	/// MISSING:
 	var/shot_stagger = 0
 
-/obj/machinery/porta_turret/Initialize()
+/obj/machinery/porta_turret/Initialize(mapload)
 	. = ..()
 	if(!base)
 		base = src
@@ -837,7 +837,7 @@
 /obj/machinery/porta_turret/aux_base/interact(mob/user) //Controlled solely from the base console.
 	return
 
-/obj/machinery/porta_turret/aux_base/Initialize()
+/obj/machinery/porta_turret/aux_base/Initialize(mapload)
 	. = ..()
 	cover.name = name
 	cover.desc = desc

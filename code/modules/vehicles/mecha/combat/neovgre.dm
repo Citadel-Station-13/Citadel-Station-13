@@ -77,7 +77,7 @@
 		if(obj_integrity < max_integrity && istype(loc, /turf/open/floor/clockwork))
 			obj_integrity += min(max_integrity - obj_integrity, max_integrity / 200)
 
-/obj/vehicle/sealed/mecha/combat/neovgre/Initialize()
+/obj/vehicle/sealed/mecha/combat/neovgre/Initialize(mapload)
 	.=..()
 	GLOB.neovgre_exists ++
 	var/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy/neovgre/N = new

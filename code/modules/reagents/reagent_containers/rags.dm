@@ -134,7 +134,7 @@
 	var/folded_icon = "towel"
 	var/list/possible_colors
 
-/obj/item/reagent_containers/rag/towel/Initialize()
+/obj/item/reagent_containers/rag/towel/Initialize(mapload)
 	. = ..()
 	if(possible_colors)
 		add_atom_colour(pick(possible_colors), FIXED_COLOUR_PRIORITY)

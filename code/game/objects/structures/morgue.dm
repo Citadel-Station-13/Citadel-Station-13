@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	var/message_cooldown
 	var/breakout_time = 600
 
-/obj/structure/bodycontainer/Initialize()
+/obj/structure/bodycontainer/Initialize(mapload)
 	. = ..()
 	if(starting_tray)
 		connected = new starting_tray(src)
@@ -213,7 +213,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	GLOB.crematoriums.Remove(src)
 	return ..()
 
-/obj/structure/bodycontainer/crematorium/Initialize()
+/obj/structure/bodycontainer/crematorium/Initialize(mapload)
 	. = ..()
 	GLOB.crematoriums.Add(src)
 

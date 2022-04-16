@@ -1,4 +1,4 @@
-/mob/Initialize()
+/mob/Initialize(mapload)
 	add_to_mob_list()
 	if(stat == DEAD)
 		add_to_dead_mob_list()

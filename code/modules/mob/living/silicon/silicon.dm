@@ -50,7 +50,7 @@
 
 	typing_indicator_state = /obj/effect/overlay/typing_indicator/machine
 
-/mob/living/silicon/Initialize()
+/mob/living/silicon/Initialize(mapload)
 	. = ..()
 	GLOB.silicon_mobs += src
 	faction += "silicon"

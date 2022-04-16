@@ -10,7 +10,7 @@
 	var/fueluse = 1
 
 
-/obj/structure/furnace/Initialize()
+/obj/structure/furnace/Initialize(mapload)
 	..()
 	create_reagents(250, TRANSPARENT)
 	START_PROCESSING(SSobj, src)

@@ -168,7 +168,7 @@
 
 /obj/item/radio/mech //this has to go somewhere
 
-/obj/vehicle/sealed/mecha/Initialize()
+/obj/vehicle/sealed/mecha/Initialize(mapload)
 	. = ..()
 	add_radio()
 	add_cabin()

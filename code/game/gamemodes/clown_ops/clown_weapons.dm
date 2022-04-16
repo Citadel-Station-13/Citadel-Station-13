@@ -37,7 +37,7 @@
 	var/max_recharge = 3000 //30 peels worth
 	var/recharge_rate = 34 //about 1/3 of a peel per tick
 
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/Initialize()
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/Initialize(mapload)
 	. = ..()
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	bananium.insert_amount_mat(max_recharge, /datum/material/bananium)
@@ -69,7 +69,7 @@
 	var/next_trombone_allowed = 0
 	var/datum/component/slippery/slipper
 
-/obj/item/melee/transforming/energy/sword/bananium/Initialize()
+/obj/item/melee/transforming/energy/sword/bananium/Initialize(mapload)
 	. = ..()
 	slipper = LoadComponent(/datum/component/slippery, 81, GALOSHES_DONT_HELP)
 	slipper.signal_enabled = active
@@ -128,7 +128,7 @@
 	on_throw_speed = 1
 	var/datum/component/slippery/slipper
 
-/obj/item/shield/energy/bananium/Initialize()
+/obj/item/shield/energy/bananium/Initialize(mapload)
 	. = ..()
 	slipper = LoadComponent(/datum/component/slippery, 81, GALOSHES_DONT_HELP)
 	slipper.signal_enabled = active
@@ -173,7 +173,7 @@
 	var/det_time = 50
 	var/obj/item/grenade/syndieminibomb/bomb
 
-/obj/item/grown/bananapeel/bombanana/Initialize()
+/obj/item/grown/bananapeel/bombanana/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery, det_time)
 	bomb = new /obj/item/grenade/syndieminibomb(src)
@@ -219,7 +219,7 @@
 /obj/item/clothing/mask/fakemoustache/sticky
 	var/unstick_time = 2 MINUTES
 
-/obj/item/clothing/mask/fakemoustache/sticky/Initialize()
+/obj/item/clothing/mask/fakemoustache/sticky/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT)
 	addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT), unstick_time)
@@ -287,7 +287,7 @@
 		return
 	cell = new /obj/item/stock_parts/cell/hyper(src)
 
-/obj/vehicle/sealed/mecha/combat/honker/dark/loaded/Initialize()
+/obj/vehicle/sealed/mecha/combat/honker/dark/loaded/Initialize(mapload)
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/honker()
 	ME.attach(src)

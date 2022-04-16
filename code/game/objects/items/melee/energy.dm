@@ -8,7 +8,7 @@
 	var/sword_color
 	total_mass = 0.4 //Survival flashlights typically weigh around 5 ounces.
 
-/obj/item/melee/transforming/energy/Initialize()
+/obj/item/melee/transforming/energy/Initialize(mapload)
 	. = ..()
 	total_mass_on = (total_mass_on ? total_mass_on : (w_class_on * 0.75))
 	if(active)
@@ -331,7 +331,7 @@
 	sharpness = SHARP_EDGED
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
-/obj/item/melee/transforming/energy/blade/Initialize()
+/obj/item/melee/transforming/energy/blade/Initialize(mapload)
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -371,7 +371,7 @@
 	light_color = "#37FFF7"
 	actions_types = list()
 
-/obj/item/melee/transforming/energy/sword/cx/Initialize()
+/obj/item/melee/transforming/energy/sword/cx/Initialize(mapload)
 	icon_state_on = icon_state
 	return ..()
 

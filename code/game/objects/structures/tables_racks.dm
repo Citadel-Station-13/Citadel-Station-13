@@ -482,7 +482,7 @@
 		/obj/structure/table/wood/fancy/royalblue)
 	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
 
-/obj/structure/table/wood/fancy/Initialize()
+/obj/structure/table/wood/fancy/Initialize(mapload)
 	. = ..()
 	// Needs to be set dynamically because table smooth sprites are 32x34,
 	// which the editor treats as a two-tile-tall object. The sprites are that

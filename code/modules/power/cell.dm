@@ -370,7 +370,7 @@
 	custom_materials = list(/datum/material/glass = 20)
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/stock_parts/cell/emergency_light/Initialize()
+/obj/item/stock_parts/cell/emergency_light/Initialize(mapload)
 	. = ..()
 	var/area/A = get_area(src)
 	if(!A.lightswitch || !A.light_power)

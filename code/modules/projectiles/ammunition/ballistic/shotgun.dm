@@ -124,7 +124,7 @@
 	projectile_type = /obj/item/projectile/bullet/dart
 	var/reagent_amount = 30
 
-/obj/item/ammo_casing/shotgun/dart/Initialize()
+/obj/item/ammo_casing/shotgun/dart/Initialize(mapload)
 	. = ..()
 	create_reagents(reagent_amount, OPENCONTAINER)
 
@@ -137,7 +137,7 @@
 	icon_state = "cnrshell"
 	reagent_amount = 10
 
-/obj/item/ammo_casing/shotgun/dart/noreact/Initialize()
+/obj/item/ammo_casing/shotgun/dart/noreact/Initialize(mapload)
 	. = ..()
 	reagents.reagents_holder_flags |= NO_REACT
 
@@ -146,7 +146,7 @@
 	projectile_type = /obj/item/projectile/bullet/dart/piercing
 	reagent_amount = 50
 
-/obj/item/ammo_casing/shotgun/dart/bioterror/Initialize()
+/obj/item/ammo_casing/shotgun/dart/bioterror/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/toxin/amanitin, 12) //for a nasty surprise after you get shot and somehow escape and don't think to quickly purge, and even shock those who are loaded up on purging agents
 	reagents.add_reagent(/datum/reagent/toxin/chloralhydrate, 6)

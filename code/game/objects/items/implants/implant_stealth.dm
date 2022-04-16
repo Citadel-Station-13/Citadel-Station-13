@@ -16,7 +16,7 @@
 	animate(src, , alpha = 0, time = 5)
 	START_PROCESSING(SSobj, src)
 
-/obj/structure/closet/cardboard/agent/Initialize()
+/obj/structure/closet/cardboard/agent/Initialize(mapload)
 	. = ..()
 	go_invisible()
 

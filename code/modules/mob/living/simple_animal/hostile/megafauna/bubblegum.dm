@@ -120,7 +120,7 @@ Difficulty: Hard
 			SetRecoveryTime(10)
 
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize(mapload)
 	. = ..()
 	if(istype(src, /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination))
 		return
@@ -454,7 +454,7 @@ Difficulty: Hard
 	deathmessage = "Explodes into a pool of blood!"
 	deathsound = 'sound/effects/splat.ogg'
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Initialize()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Initialize(mapload)
 	..()
 	toggle_ai(AI_OFF)
 

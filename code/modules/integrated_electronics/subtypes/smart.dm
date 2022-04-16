@@ -87,7 +87,7 @@
 	power_draw_per_use = 80
 	var/obj/item/card/id/idc
 
-/obj/item/integrated_circuit/smart/advanced_pathfinder/Initialize()
+/obj/item/integrated_circuit/smart/advanced_pathfinder/Initialize(mapload)
 	.=..()
 	idc = new(src)
 

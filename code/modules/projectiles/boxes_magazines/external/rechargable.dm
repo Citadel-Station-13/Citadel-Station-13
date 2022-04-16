@@ -67,7 +67,7 @@
 	var/e_cost = 100
 	projectile_type = /obj/item/projectile/beam
 
-/obj/item/ammo_casing/mws_batt/Initialize()
+/obj/item/ammo_casing/mws_batt/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-10, 10)
 	pixel_y = rand(-10, 10)

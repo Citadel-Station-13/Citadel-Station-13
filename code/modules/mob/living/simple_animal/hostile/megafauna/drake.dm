@@ -74,7 +74,7 @@ Difficulty: Medium
 
 	footstep_type = FOOTSTEP_MOB_HEAVY
 
-/mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
+/mob/living/simple_animal/hostile/megafauna/dragon/Initialize(mapload)
 	smallsprite.Grant(src)
 	. = ..()
 	internal = new/obj/item/gps/internal/dragon(src)

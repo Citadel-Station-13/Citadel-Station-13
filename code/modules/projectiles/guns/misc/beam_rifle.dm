@@ -169,7 +169,7 @@
 	to_chat(user, "<span class='boldnotice'>You set \the [src] to [projectile_setting_pierce? "pierce":"impact"] mode.</span>")
 	aiming_beam()
 
-/obj/item/gun/energy/beam_rifle/Initialize()
+/obj/item/gun/energy/beam_rifle/Initialize(mapload)
 	. = ..()
 	fire_delay = delay
 	current_tracers = list()

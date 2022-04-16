@@ -229,7 +229,7 @@
 	var/chaplain_spawnable = TRUE
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
-/obj/item/nullrod/Initialize()
+/obj/item/nullrod/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
 
@@ -314,7 +314,7 @@
 	attack_verb = list("punched", "cross countered", "pummeled")
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
-/obj/item/nullrod/godhand/Initialize()
+/obj/item/nullrod/godhand/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
@@ -455,7 +455,7 @@
 	sharpness = SHARP_EDGED
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 
-/obj/item/nullrod/scythe/Initialize()
+/obj/item/nullrod/scythe/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 70, 110) //the harvest gives a high bonus chance
 
@@ -582,7 +582,7 @@
 	tool_behaviour = TOOL_SAW
 	toolspeed = 2
 
-/obj/item/nullrod/chainsaw/Initialize()
+/obj/item/nullrod/chainsaw/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 30, 100, 0, hitsound)
@@ -662,7 +662,7 @@
 	bare_wound_bonus = 25
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
-/obj/item/nullrod/armblade/Initialize()
+/obj/item/nullrod/armblade/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 80, 70)
@@ -831,7 +831,7 @@
 	var/praying = FALSE
 	var/deity_name = "Coderbus" //This is the default, hopefully won't actually appear if the religion subsystem is running properly
 
-/obj/item/nullrod/rosary/Initialize()
+/obj/item/nullrod/rosary/Initialize(mapload)
 	.=..()
 	if(GLOB.deity)
 		deity_name = GLOB.deity

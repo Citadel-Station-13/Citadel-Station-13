@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	var/deity_name = "Christ"
 	force_string = "holy"
 
-/obj/item/storage/book/bible/Initialize()
+/obj/item/storage/book/bible/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, FALSE, TRUE)
 

@@ -15,7 +15,7 @@
 	resistance_flags = FIRE_PROOF
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/pitchfork/Initialize()
+/obj/item/pitchfork/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
@@ -42,7 +42,7 @@
 	force = 19
 	throwforce = 24
 
-/obj/item/pitchfork/demonic/Initialize()
+/obj/item/pitchfork/demonic/Initialize(mapload)
 	. = ..()
 	set_light(3,6,LIGHT_COLOR_RED)
 

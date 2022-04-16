@@ -25,13 +25,13 @@
 	var/static/radial_juice = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_juice")
 	var/static/radial_mix = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_mix")
 
-/obj/machinery/reagentgrinder/Initialize()
+/obj/machinery/reagentgrinder/Initialize(mapload)
 	. = ..()
 	holdingitems = list()
 	beaker = new /obj/item/reagent_containers/glass/beaker/large(src)
 	beaker.desc += " May contain blended dust. Don't breathe this in!"
 
-/obj/machinery/reagentgrinder/constructed/Initialize()
+/obj/machinery/reagentgrinder/constructed/Initialize(mapload)
 	. = ..()
 	holdingitems = list()
 	QDEL_NULL(beaker)

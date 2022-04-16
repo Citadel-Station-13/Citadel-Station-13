@@ -27,7 +27,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	gold_core_spawnable = FRIENDLY_SPAWN
 
-/mob/living/simple_animal/opossum/Initialize()
+/mob/living/simple_animal/opossum/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 

@@ -34,7 +34,7 @@
 
 	proccall_options = add_option_port("Proccall Options", component_options)
 
-/obj/item/circuit_component/proccall/Initialize()
+/obj/item/circuit_component/proccall/Initialize(mapload)
 	. = ..()
 	entity = add_input_port("Target", PORT_TYPE_ATOM)
 	proc_name = add_input_port("Proc Name", PORT_TYPE_STRING)

@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(power_sinks)
 
 	var/obj/structure/cable/attached		// the attached cable
 
-/obj/item/powersink/Initialize()
+/obj/item/powersink/Initialize(mapload)
 	. = ..()
 	GLOB.power_sinks += src
 

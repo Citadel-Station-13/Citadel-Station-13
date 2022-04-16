@@ -18,7 +18,7 @@
 	var/temp_tolerance_high = T20C
 	var/temp_penalty_coefficient = 0.5	//1 = -1 points per degree above high tolerance. 0.5 = -0.5 points per degree above high tolerance.
 
-/obj/machinery/rnd/server/Initialize()
+/obj/machinery/rnd/server/Initialize(mapload)
 	. = ..()
 	SSresearch.servers |= src
 	stored_research = SSresearch.science_tech

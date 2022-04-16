@@ -10,7 +10,7 @@
 	pixel_x = -32
 	pixel_y = -32
 
-/obj/vehicle/sealed/mecha/combat/five_stars/Initialize()
+/obj/vehicle/sealed/mecha/combat/five_stars/Initialize(mapload)
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/spacecops(src)
 	ME.attach(src)

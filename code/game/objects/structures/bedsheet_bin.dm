@@ -259,7 +259,7 @@ GLOBAL_LIST_INIT(double_bedsheets, list(/obj/item/bedsheet/double,
 	var/g_mouth
 	var/g_eyes
 
-/obj/item/bedsheet/gondola/Initialize()
+/obj/item/bedsheet/gondola/Initialize(mapload)
 	. = ..()
 	g_mouth = "sheetgondola_mouth[rand(1, 4)]"
 	g_eyes = "sheetgondola_eyes[rand(1, 4)]"
@@ -285,7 +285,7 @@ GLOBAL_LIST_INIT(double_bedsheets, list(/obj/item/bedsheet/double,
 	name = "random bedsheet"
 	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
 
-/obj/item/bedsheet/random/Initialize()
+/obj/item/bedsheet/random/Initialize(mapload)
 	..()
 	if(bedsheet_type == BEDSHEET_SINGLE)
 		var/type = pick(typesof(/obj/item/bedsheet) - (list(/obj/item/bedsheet/random, /obj/item/bedsheet/chameleon) + typesof(/obj/item/bedsheet/unlockable) + GLOB.double_bedsheets))
@@ -446,7 +446,7 @@ GLOBAL_LIST_INIT(double_bedsheets, list(/obj/item/bedsheet/double,
 	icon_state = "random_bedsheet"
 	bedsheet_type = BEDSHEET_DOUBLE
 
-/obj/item/bedsheet/random/double/Initialize()
+/obj/item/bedsheet/random/double/Initialize(mapload)
 	..()
 	if(bedsheet_type == BEDSHEET_DOUBLE)
 		var/type = pick(GLOB.double_bedsheets)

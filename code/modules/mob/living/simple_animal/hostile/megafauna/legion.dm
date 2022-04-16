@@ -59,7 +59,7 @@ SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
 	var/size = 3
 	var/charging = FALSE
 
-/mob/living/simple_animal/hostile/megafauna/legion/Initialize()
+/mob/living/simple_animal/hostile/megafauna/legion/Initialize(mapload)
 	. = ..()
 	internal = new/obj/item/gps/internal/legion(src)
 
@@ -345,7 +345,7 @@ SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
 	///Compared with the targeted mobs. If they have the faction, turret won't shoot.
 	var/faction = list("mining")
 
-/obj/structure/legionturret/Initialize()
+/obj/structure/legionturret/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/set_up_shot), initial_firing_time)
 

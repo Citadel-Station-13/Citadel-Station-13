@@ -17,7 +17,7 @@
 	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70)
 	var/obj/item/stored
 
-/obj/machinery/blackbox_recorder/Initialize()
+/obj/machinery/blackbox_recorder/Initialize(mapload)
 	. = ..()
 	stored = new /obj/item/blackbox(src)
 
@@ -93,7 +93,7 @@
 	var/list/datum/data_rc_msg/rc_msgs = list()
 	var/decryptkey
 
-/obj/machinery/telecomms/message_server/Initialize()
+/obj/machinery/telecomms/message_server/Initialize(mapload)
 	. = ..()
 	if (!decryptkey)
 		decryptkey = GenerateKey()

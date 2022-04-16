@@ -192,7 +192,7 @@
 	flags_1 = NONE
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage
 
-/obj/item/gun/ballistic/shotgun/boltaction/enchanted/Initialize()
+/obj/item/gun/ballistic/shotgun/boltaction/enchanted/Initialize(mapload)
 	. = ..()
 	bolt_open = TRUE
 	pump()
@@ -303,7 +303,7 @@
 	. = ..()
 	. += "<span class='notice'>Alt-click to pump it.</span>"
 
-/obj/item/gun/ballistic/shotgun/automatic/dual_tube/Initialize()
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/Initialize(mapload)
 	. = ..()
 	if (!alternate_magazine)
 		alternate_magazine = new mag_type(src)

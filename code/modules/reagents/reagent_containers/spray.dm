@@ -229,7 +229,7 @@
 	generate_amount = 1
 	generate_delay = 40		//deciseconds
 
-/obj/item/reagent_containers/spray/waterflower/cyborg/Initialize()
+/obj/item/reagent_containers/spray/waterflower/cyborg/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 

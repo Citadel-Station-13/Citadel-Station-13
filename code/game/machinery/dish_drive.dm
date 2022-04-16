@@ -22,7 +22,7 @@
 	var/suction_enabled = TRUE
 	var/transmit_enabled = TRUE
 
-/obj/machinery/dish_drive/Initialize()
+/obj/machinery/dish_drive/Initialize(mapload)
 	. = ..()
 	RefreshParts()
 

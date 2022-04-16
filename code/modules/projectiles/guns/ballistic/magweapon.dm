@@ -21,7 +21,7 @@
 	var/obj/item/stock_parts/cell/cell
 	var/cell_type = /obj/item/stock_parts/cell/magnetic
 
-/obj/item/gun/ballistic/automatic/magrifle/Initialize()
+/obj/item/gun/ballistic/automatic/magrifle/Initialize(mapload)
 	. = ..()
 	if(cell_type)
 		cell = new cell_type(src)

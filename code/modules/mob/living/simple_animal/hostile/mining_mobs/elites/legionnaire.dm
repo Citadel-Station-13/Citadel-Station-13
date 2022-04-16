@@ -275,7 +275,7 @@
 	duration = 10
 	color = rgb(0,0,0)
 
-/obj/effect/temp_visual/dragon_swoop/legionnaire/Initialize()
+/obj/effect/temp_visual/dragon_swoop/legionnaire/Initialize(mapload)
 	. = ..()
 	transform *= 0.33
 

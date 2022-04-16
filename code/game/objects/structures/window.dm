@@ -922,7 +922,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	var/static/mutable_appearance/torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER - 0.1)
 	var/static/mutable_appearance/paper = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER - 0.1)
 
-/obj/structure/window/paperframe/Initialize()
+/obj/structure/window/paperframe/Initialize(mapload)
 	. = ..()
 	update_icon()
 

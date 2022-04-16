@@ -151,7 +151,7 @@
 	//Generic flags
 	var/simple_mob_flags = NONE
 
-/mob/living/simple_animal/Initialize()
+/mob/living/simple_animal/Initialize(mapload)
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
 	if(gender == PLURAL)

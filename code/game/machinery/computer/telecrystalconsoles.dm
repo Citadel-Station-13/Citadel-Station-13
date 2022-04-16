@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	var/obj/item/uplinkholder = null
 	var/obj/machinery/computer/telecrystals/boss/linkedboss = null
 
-/obj/machinery/computer/telecrystals/uplinker/Initialize()
+/obj/machinery/computer/telecrystals/uplinker/Initialize(mapload)
 	. = ..()
 
 	var/ID = pick_n_take(GLOB.possible_uplinker_IDs)

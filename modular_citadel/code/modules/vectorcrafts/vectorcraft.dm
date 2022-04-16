@@ -35,7 +35,7 @@
 
 	var/mob/living/carbon/human/driver
 
-/obj/vehicle/sealed/vectorcraft/Initialize()
+/obj/vehicle/sealed/vectorcraft/Initialize(mapload)
 	..()
 	i_m_acell = max_acceleration
 	i_m_decell = max_deceleration
