@@ -12,7 +12,7 @@
 	var/last_sound = 0
 	var/delay = 15
 
-/obj/item/clothing/mask/gas/cluwne/Initialize()
+/obj/item/clothing/mask/gas/cluwne/Initialize(mapload)
 	.=..()
 	ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
 	ADD_TRAIT(src, CURSED_ITEM_TRAIT, CLOTHING_TRAIT)
@@ -68,7 +68,7 @@
 	var/is_cursed = FALSE //i don't care that this is *slightly* memory wasteful, it's just one more byte and it's not like some madman is going to spawn thousands of these
 	var/is_very_cursed = FALSE
 
-/obj/item/clothing/mask/gas/cluwne/happy_cluwne/Initialize()
+/obj/item/clothing/mask/gas/cluwne/happy_cluwne/Initialize(mapload)
 	.=..()
 	if(prob(1)) //this function pre-determines the logic of the cluwne mask. applying and reapplying the mask does not alter or change anything
 		is_cursed = TRUE

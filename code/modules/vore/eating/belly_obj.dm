@@ -147,7 +147,7 @@
 
 		//ommitted list
 		// "shrink_grow_size",
-/obj/belly/Initialize()
+/obj/belly/Initialize(mapload)
 	. = ..()
 	take_ownership(src.loc)
 

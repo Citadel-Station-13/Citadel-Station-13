@@ -229,7 +229,7 @@
 /obj/item/storage/briefcase/launchpad
 	var/obj/machinery/launchpad/briefcase/pad
 
-/obj/item/storage/briefcase/launchpad/Initialize()
+/obj/item/storage/briefcase/launchpad/Initialize(mapload)
 	pad = new(null, src) //spawns pad in nullspace to hide it from briefcase contents
 	. = ..()
 

@@ -2,13 +2,13 @@
 	hitsound_on = 'sound/weapons/blade1.ogg'
 	heat = 3500
 	max_integrity = 200
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 30)
 	resistance_flags = FIRE_PROOF
 	var/brightness_on = 3
 	var/sword_color
 	total_mass = 0.4 //Survival flashlights typically weigh around 5 ounces.
 
-/obj/item/melee/transforming/energy/Initialize()
+/obj/item/melee/transforming/energy/Initialize(mapload)
 	. = ..()
 	total_mass_on = (total_mass_on ? total_mass_on : (w_class_on * 0.75))
 	if(active)
@@ -331,7 +331,7 @@
 	sharpness = SHARP_EDGED
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
-/obj/item/melee/transforming/energy/blade/Initialize()
+/obj/item/melee/transforming/energy/blade/Initialize(mapload)
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -371,7 +371,7 @@
 	light_color = "#37FFF7"
 	actions_types = list()
 
-/obj/item/melee/transforming/energy/sword/cx/Initialize()
+/obj/item/melee/transforming/energy/sword/cx/Initialize(mapload)
 	icon_state_on = icon_state
 	return ..()
 

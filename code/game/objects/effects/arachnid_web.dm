@@ -16,7 +16,7 @@
 		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/structure/arachnid/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee")
+	if(damage_flag == MELEE)
 		switch(damage_type)
 			if(BURN)
 				damage_amount *= 2
@@ -49,7 +49,7 @@
 	density = FALSE
 	max_integrity = 60
 
-/obj/structure/arachnid/cocoon/Initialize()
+/obj/structure/arachnid/cocoon/Initialize(mapload)
 	icon_state = pick("cocoon1","cocoon2","cocoon3")
 	. = ..()
 

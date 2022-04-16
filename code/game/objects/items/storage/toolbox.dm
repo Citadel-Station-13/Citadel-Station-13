@@ -400,7 +400,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	attack_verb = list("robusted", "bounced")
 	can_rubberify = FALSE //we are already the future.
 
-/obj/item/storage/toolbox/rubber/Initialize()
+/obj/item/storage/toolbox/rubber/Initialize(mapload)
 	icon_state = pick("blue", "red", "yellow", "green")
 	item_state = "toolbox_[icon_state]"
 	if(!GLOB.rubber_toolbox_icons[icon_state])

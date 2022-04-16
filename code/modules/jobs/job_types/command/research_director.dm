@@ -1,8 +1,8 @@
 /datum/job/rd
 	title = "Research Director"
 	desc = "The Research Director is tasked with running the Science division, both keeping their department safe from the station, and the other way around."
-//	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	faction = JOB_FACTION_STATION
+	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	total_positions = 1
 	roundstart_positions = 1
 	selection_color = "#7544cc"

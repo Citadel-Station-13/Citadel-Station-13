@@ -6,7 +6,7 @@
 	var/highlighted = FALSE
 	var/mob/camera/aiEye/pic_in_pic/aiEye
 
-/atom/movable/screen/movable/pic_in_pic/ai/Initialize()
+/atom/movable/screen/movable/pic_in_pic/ai/Initialize(mapload)
 	. = ..()
 	aiEye = new /mob/camera/aiEye/pic_in_pic()
 	aiEye.screen = src
@@ -103,7 +103,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /atom/movable/landmark/ai_multicam_room)
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "x"
 
-/atom/movable/landmark/ai_multicam_room/Initialize()
+/atom/movable/landmark/ai_multicam_room/Initialize(mapload)
 	. = ..()
 	qdel(GLOB.ai_camera_room_landmark)
 	GLOB.ai_camera_room_landmark = src

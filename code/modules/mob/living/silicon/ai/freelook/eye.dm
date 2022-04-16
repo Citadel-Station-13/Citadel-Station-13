@@ -18,7 +18,7 @@
 	var/ai_detector_visible = TRUE
 	var/ai_detector_color = COLOR_RED
 
-/mob/camera/aiEye/Initialize()
+/mob/camera/aiEye/Initialize(mapload)
 	. = ..()
 	GLOB.aiEyes += src
 	update_ai_detect_hud()

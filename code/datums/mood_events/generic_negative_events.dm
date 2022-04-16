@@ -147,6 +147,11 @@
 	mood_change = -5
 	timeout = 1 MINUTES
 
+/datum/mood_event/painful_limb_regrowth
+	description = "<span class='warning'>It's great to have all my limbs back but that was absolutely painful.</span>\n"
+	mood_change = -5
+	timeout = 1 MINUTES
+
 /datum/mood_event/loud_gong
 	description = "<span class='warning'>That loud gong noise really hurt my ears!</span>\n"
 	mood_change = -3

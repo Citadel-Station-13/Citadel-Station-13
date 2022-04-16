@@ -81,7 +81,7 @@ Difficulty: Normal
 	var/list/kill_phrases = list("Wsyvgi sj irivkc xettih. Vitemvmrk...", "Irivkc wsyvgi jsyrh. Vitemvmrk...", "Jyip jsyrh. Egxmzexmrk vitemv gcgpiw...", "Kix fiex. Liepmrk...")
 	var/list/target_phrases = list("Xevkix psgexih.", "Iriqc jsyrh.", "Eguymvih xevkix.")
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/Initialize()
+/mob/living/simple_animal/hostile/megafauna/hierophant/Initialize(mapload)
 	. = ..()
 	internal = new/obj/item/gps/internal/hierophant(src)
 	spawned_beacon = new(loc)
@@ -490,7 +490,8 @@ Difficulty: Normal
 	queue_smooth_neighbors(src)
 	return ..()
 
-/obj/effect/temp_visual/hierophant/wall/CanPass(atom/movable/mover, turf/target)
+/obj/effect/temp_visual/hierophant/wall/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(QDELETED(caster))
 		return FALSE
 	if(mover == caster.pulledby)
@@ -501,7 +502,6 @@ Difficulty: Normal
 			return TRUE
 	if(mover == caster)
 		return TRUE
-	return FALSE
 
 /obj/effect/temp_visual/hierophant/chaser //a hierophant's chaser. follows target around, moving and producing a blast every speed deciseconds.
 	duration = 98
@@ -643,7 +643,7 @@ Difficulty: Normal
 		playsound(L,'sound/weapons/sear.ogg', 50, 1, -4)
 		to_chat(L, "<span class='userdanger'>You're struck by a [name]!</span>")
 		var/limb_to_hit = L.get_bodypart(pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-		var/armor = L.run_armor_check(limb_to_hit, "melee", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 50, "Your armor was penetrated by [src]!")
+		var/armor = L.run_armor_check(limb_to_hit, MELEE, "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 50, "Your armor was penetrated by [src]!")
 		L.apply_damage(damage, BURN, limb_to_hit, armor, wound_bonus=CANT_WOUND)
 		if(ishostile(L))
 			var/mob/living/simple_animal/hostile/H = L //mobs find and damage you...
@@ -656,14 +656,16 @@ Difficulty: Normal
 		if(monster_damage_boost && (ismegafauna(L) || istype(L, /mob/living/simple_animal/hostile/asteroid)))
 			L.adjustBruteLoss(damage)
 		log_combat(caster, L, "struck with a [name]")
-	for(var/obj/mecha/M in T.contents - hit_things) //also damage mechs.
+	for(var/obj/vehicle/sealed/mecha/M in T.contents - hit_things) //also damage mechs.
 		hit_things += M
-		if(M.occupant)
-			if(friendly_fire_check && caster && caster.faction_check_mob(M.occupant))
+		for(var/O in M.occupants)
+			var/mob/living/occupant = O
+			if(friendly_fire_check && caster && caster.faction_check_mob(occupant))
 				continue
-			to_chat(M.occupant, "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>")
-		playsound(M,'sound/weapons/sear.ogg', 50, 1, -4)
-		M.take_damage(damage, BURN, 0, 0, null, 50)
+			to_chat(occupant, "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>")
+			playsound(M,'sound/weapons/sear.ogg', 50, TRUE, -4)
+			M.take_damage(damage, BURN, 0, 0)
+
 
 /obj/effect/hierophant
 	name = "hierophant beacon"

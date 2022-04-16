@@ -1,8 +1,8 @@
 /datum/job/officer
 	title = "Security Officer"
 	desc = "The Security Officer protects the station from threats, both external and internal."
-//	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	faction = JOB_FACTION_STATION
+	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	total_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
 	roundstart_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
 	supervisor_text_override = "the head of security, and the head of your assigned department (if applicable)"
@@ -139,7 +139,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	//The helmet is necessary because /obj/item/clothing/head/helmet/sec is overwritten in the chameleon list by the standard helmet, which has the same name and icon state
 
 
-/obj/item/radio/headset/headset_sec/alt/department/Initialize()
+/obj/item/radio/headset/headset_sec/alt/department/Initialize(mapload)
 	. = ..()
 	wires = new/datum/wires/radio(src)
 	secure_radio_connections = new

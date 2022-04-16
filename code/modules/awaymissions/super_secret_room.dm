@@ -10,7 +10,7 @@
 	var/times_spoken_to = 0
 	var/list/shenanigans = list()
 
-/obj/structure/speaking_tile/Initialize()
+/obj/structure/speaking_tile/Initialize(mapload)
 	. = ..()
 	var/json_file = file("data/npc_saves/Poly.json")
 	if(!fexists(json_file))

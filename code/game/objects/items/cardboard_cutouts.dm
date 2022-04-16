@@ -15,7 +15,7 @@
 	/// If the cutout actually appears as what it portray and not a discolored version
 	var/deceptive = FALSE
 
-/obj/item/cardboard_cutout/Initialize()
+/obj/item/cardboard_cutout/Initialize(mapload)
 	. = ..()
 	if(possible_appearances)
 		return
@@ -92,9 +92,9 @@
 		if(prob(I.force))
 			push_over()
 
-/obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P)
+/obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P, def_zone, piercing_hit = FALSE)
 	if(istype(P, /obj/item/projectile/bullet/reusable))
-		P.on_hit(src, 0)
+		P.on_hit(src, 0, piercing_hit)
 	visible_message("<span class='danger'>[src] has been hit by [P]!</span>")
 	playsound(src, 'sound/weapons/slice.ogg', 50, 1)
 	if(prob(P.damage))

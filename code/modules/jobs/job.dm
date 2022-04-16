@@ -39,6 +39,8 @@
 	var/custom_spawn_text
 	/// Supervisor text override
 	var/supervisor_text_override
+	/// for auto deadmin system
+	var/auto_deadmin_role_flags = NONE
 
 	// These can be flags but I don't care because they're never changed
 	/// Can you always join as this job even while respawning (should probably only be on for assistant)

@@ -8,7 +8,7 @@
 	idle_power_usage = 2
 	active_power_usage = 4
 	max_integrity = 300
-	armor = list("melee" = 50, "bullet" = 30, "laser" = 70, "energy" = 50, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
+	armor = list(MELEE = 50, BULLET = 30, LASER = 70, ENERGY = 50, BOMB = 20, BIO = 0, RAD = 0, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
 	var/id = null
 	var/on = FALSE
@@ -40,7 +40,7 @@
 			location.hotspot_expose(700,10,1)
 	return 1
 
-/obj/machinery/igniter/Initialize()
+/obj/machinery/igniter/Initialize(mapload)
 	. = ..()
 	icon_state = "igniter[on]"
 
@@ -70,7 +70,7 @@
 /obj/machinery/sparker/toxmix
 	id = INCINERATOR_TOXMIX_IGNITER
 
-/obj/machinery/sparker/Initialize()
+/obj/machinery/sparker/Initialize(mapload)
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)

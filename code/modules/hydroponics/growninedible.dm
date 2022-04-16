@@ -9,7 +9,7 @@
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 	var/tastes = list("indescribable" = 1) //Stops runtimes. Grown are un-eatable anyways so if you do then its a bug
 
-/obj/item/grown/Initialize(newloc, obj/item/seeds/new_seed)
+/obj/item/grown/Initialize(mapload, newloc, obj/item/seeds/new_seed)
 	. = ..()
 	create_reagents(50, NONE, HARVEST_REAGENTS_VALUE)
 

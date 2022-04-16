@@ -7,7 +7,7 @@
 /obj/item/disk/design_disk/adv/knight_gear
 	name = "Magic Disk of Smithing"
 
-/obj/item/disk/design_disk/adv/knight_gear/Initialize()
+/obj/item/disk/design_disk/adv/knight_gear/Initialize(mapload)
 	. = ..()
 	var/datum/design/knight_armour/A = new
 	var/datum/design/knight_helmet/H = new
@@ -33,7 +33,7 @@
 	icon_state = "datadisk1"
 	max_blueprints = 1
 
-/obj/item/disk/design_disk/plant_disk/Initialize()
+/obj/item/disk/design_disk/plant_disk/Initialize(mapload)
 	. = ..()
 	var/datum/design/diskplantgene/P = new
 	blueprints[1] = P
@@ -46,7 +46,7 @@
 	icon_state = "datadisk1"
 	max_blueprints = 1
 
-/obj/item/disk/design_disk/golem_shell/Initialize()
+/obj/item/disk/design_disk/golem_shell/Initialize(mapload)
 	. = ..()
 	var/datum/design/golem_shell/G = new
 	blueprints[1] = G
@@ -166,7 +166,7 @@
 	name = "Syndicate Comms Agent"
 	role_type = /datum/ghostrole/syndicate_comms
 
-/obj/structure/ghost_role_spawner/syndicate/comms/space/Initialize()
+/obj/structure/ghost_role_spawner/syndicate/comms/space/Initialize(mapload)
 	. = ..()
 	if(prob(90)) //only has a 10% chance of existing, otherwise it'll just be a NPC syndie.
 		new /mob/living/simple_animal/hostile/syndicate/ranged(get_turf(src))
@@ -178,7 +178,7 @@
 	mask = /obj/item/clothing/mask/chameleon/gps
 	suit = /obj/item/clothing/suit/armor/vest
 
-/obj/item/clothing/mask/chameleon/gps/Initialize()
+/obj/item/clothing/mask/chameleon/gps/Initialize(mapload)
 	. = ..()
 	new /obj/item/gps/internal/lavaland_syndicate_base(src)
 

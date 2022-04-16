@@ -1,8 +1,8 @@
 /datum/job/chief_engineer
 	title = "Chief Engineer"
 	desc = "The Chief Engineer runs the engineering division, and is tasked with keeping the station well-maintained."
-//	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	faction = JOB_FACTION_STATION
+	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	total_positions = 1
 	roundstart_positions = 1
 	selection_color = "#ee7400"

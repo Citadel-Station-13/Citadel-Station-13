@@ -167,7 +167,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "random_glowstick"
 
-/obj/effect/spawner/lootdrop/glowstick/Initialize()
+/obj/effect/spawner/lootdrop/glowstick/Initialize(mapload)
 	loot = typesof(/obj/item/flashlight/glowstick)
 	. = ..()
 
@@ -222,7 +222,7 @@
 /obj/effect/spawner/lootdrop/costume
 	name = "random costume spawner"
 
-/obj/effect/spawner/lootdrop/costume/Initialize()
+/obj/effect/spawner/lootdrop/costume/Initialize(mapload)
 	loot = list()
 	for(var/path in subtypesof(/obj/effect/spawner/bundle/costume))
 		loot[path] = TRUE
@@ -298,7 +298,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "mre"
 
-/obj/effect/spawner/lootdrop/mre/Initialize()
+/obj/effect/spawner/lootdrop/mre/Initialize(mapload)
 	for(var/A in subtypesof(/obj/item/storage/box/mre))
 		var/obj/item/storage/box/mre/M = A
 		var/our_chance = initial(M.spawner_chance)

@@ -8,7 +8,7 @@
 	ttone = "honk"
 	var/slipvictims = list() //CIT CHANGE - makes clown PDAs track unique people slipped
 
-/obj/item/pda/clown/Initialize()
+/obj/item/pda/clown/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery, 120, NO_SLIP_WHEN_WALKING|SLIP_WHEN_JOGGING, CALLBACK(src, .proc/AfterSlip))
 

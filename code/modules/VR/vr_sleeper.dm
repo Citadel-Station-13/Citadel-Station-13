@@ -16,7 +16,7 @@
 	var/allow_creating_vr_mobs = TRUE //So you can have vr_sleepers that always spawn you as a specific person or 1 life/chance vr games
 	var/only_current_user_can_interact = FALSE
 
-/obj/machinery/vr_sleeper/Initialize()
+/obj/machinery/vr_sleeper/Initialize(mapload)
 	. = ..()
 	sparks = new /datum/effect_system/spark_spread()
 	sparks.set_up(2,0)
@@ -207,7 +207,7 @@
 	var/vr_category = "default" //So we can have specific sleepers, eg: "Basketball VR Sleeper", etc.
 	var/vr_outfit = /datum/outfit/vr
 
-/atom/movable/landmark/vr_spawn/Initialize()
+/atom/movable/landmark/vr_spawn/Initialize(mapload)
 	. = ..()
 	LAZYADD(GLOB.vr_spawnpoints[vr_category], src)
 
@@ -235,7 +235,7 @@
 	var/area/vr_area
 	var/list/corpse_party
 
-/obj/effect/vr_clean_master/Initialize()
+/obj/effect/vr_clean_master/Initialize(mapload)
 	. = ..()
 	vr_area = get_base_area(src)
 	if(!vr_area)

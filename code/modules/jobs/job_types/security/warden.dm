@@ -1,8 +1,8 @@
 /datum/job/warden
 	title = "Warden"
 	desc = "The Warden manages the brig."
-//	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	faction = JOB_FACTION_STATION
+	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	total_positions = 1
 	roundstart_positions = 1
 	selection_color = "#c02f2f"

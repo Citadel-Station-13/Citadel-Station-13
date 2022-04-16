@@ -1,8 +1,8 @@
 /datum/job/cmo
 	title = "Chief Medical Officer"
 	desc = "The Chief Medical Officer manages the medical department."
-//	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	faction = JOB_FACTION_STATION
+	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	total_positions = 1
 	roundstart_positions = 1
 	selection_color = "#509ed1"

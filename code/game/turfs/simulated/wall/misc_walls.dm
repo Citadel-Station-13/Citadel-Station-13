@@ -10,7 +10,7 @@
 	explosion_block = 10
 	girder_type = /obj/structure/girder/cult
 
-/turf/closed/wall/mineral/cult/Initialize()
+/turf/closed/wall/mineral/cult/Initialize(mapload)
 	new /obj/effect/temp_visual/cult/turf(src)
 	. = ..()
 
@@ -60,7 +60,7 @@
 	var/heated
 	var/obj/effect/clockwork/overlay/wall/realappearance
 
-/turf/closed/wall/clockwork/Initialize()
+/turf/closed/wall/clockwork/Initialize(mapload)
 	. = ..()
 	new /obj/effect/temp_visual/ratvar/wall(src)
 	new /obj/effect/temp_visual/ratvar/beam(src)
@@ -145,10 +145,11 @@
 		user.adjustFireLoss(5)
 		playsound(src, 'sound/machines/fryer/deep_fryer_emerge.ogg', 50, TRUE)
 
-/turf/closed/wall/clockwork/mech_melee_attack(obj/mecha/M)
+/turf/closed/wall/clockwork/mech_melee_attack(obj/vehicle/sealed/mecha/M)
 	..()
 	if(heated)
-		to_chat(M.occupant, "<span class='userdanger'>The wall's intense heat completely reflects your [M.name]'s attack!</span>")
+		for(var/mob/living/MB in M.occupants)
+			to_chat(MB, "<span class='userdanger'>The wall's intense heat completely reflects your [M.name]'s attack!</span>")
 		M.take_damage(20, BURN)
 
 /turf/closed/wall/clockwork/proc/turn_up_the_heat()

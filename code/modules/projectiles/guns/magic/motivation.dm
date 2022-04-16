@@ -23,7 +23,7 @@
 	block_parry_data = /datum/block_parry_data/motivation
 
 //to get this to toggle correctly
-/obj/item/gun/magic/staff/motivation/Initialize()
+/obj/item/gun/magic/staff/motivation/Initialize(mapload)
 	. = ..()
 	judgementcut = new(src)
 

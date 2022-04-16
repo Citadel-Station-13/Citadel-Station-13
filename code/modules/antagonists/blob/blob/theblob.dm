@@ -4,14 +4,15 @@
 	icon = 'icons/mob/blob.dmi'
 	light_range = 2
 	desc = "A thick wall of writhing tendrils."
-	density = FALSE //this being false causes two bugs, being able to attack blob tiles behind other blobs and being unable to move on blob tiles in no gravity, but turning it to 1 causes the blob mobs to be unable to path through blobs, which is probably worse.
+	density = TRUE
 	opacity = 0
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
+	pass_flags_self = PASSBLOB
 	CanAtmosPass = ATMOS_PASS_PROC
 	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	max_integrity = 30
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 70)
 	var/health_regen = 2 //how much health this blob regens when pulsed
 	var/pulse_timestamp = 0 //we got pulsed when?
 	var/heal_timestamp = 0 //we got healed when?
@@ -66,11 +67,6 @@
 
 /obj/structure/blob/BlockThermalConductivity()
 	return atmosblock
-
-/obj/structure/blob/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSBLOB))
-		return 1
-	return 0
 
 /obj/structure/blob/CanAtmosPass(turf/T)
 	return !atmosblock
@@ -210,9 +206,9 @@
 	. = ..()
 	if(overmind)
 		if(overmind.blobstrain.tesla_reaction(src, power))
-			take_damage(power/400, BURN, "energy")
+			take_damage(power/400, BURN, ENERGY)
 	else
-		take_damage(power/400, BURN, "energy")
+		take_damage(power/400, BURN, ENERGY)
 
 /obj/structure/blob/extinguish()
 	..()

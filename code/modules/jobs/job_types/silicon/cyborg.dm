@@ -1,8 +1,8 @@
 /datum/job/cyborg
 	title = "Cyborg"
 	desc = "Stationbound platforms tasked with assisting the crew, and the governing AI with their day to day tasks."
-//	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
 	faction = JOB_FACTION_STATION
+	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
 	total_positions = 0
 	roundstart_positions = 3
 	supervisor_text_override = "your laws and the AI"

@@ -26,7 +26,7 @@
 	tastes = list("fish" = 1)
 	foodtype = MEAT
 
-/obj/item/reagent_containers/food/snacks/carpmeat/Initialize()
+/obj/item/reagent_containers/food/snacks/carpmeat/Initialize(mapload)
 	. = ..()
 	eatverb = pick("bite","chew","choke down","gnaw","swallow","chomp")
 
@@ -63,7 +63,7 @@
 	filling_color = "#ee7676"
 	tastes = list("fish" = 1, "pan seared vegtables" = 1)
 	foodtype = MEAT | VEGETABLES | FRIED
-	
+
 /obj/item/reagent_containers/food/snacks/sushi_basic
 	name = "funa hosomaki"
 	desc = "A small cylindrical kudzu skin, filled with rice and fish."
@@ -172,7 +172,7 @@
 	foodtype = MEAT | BREAKFAST
 	var/roasted = FALSE
 
-/obj/item/reagent_containers/food/snacks/sausage/Initialize()
+/obj/item/reagent_containers/food/snacks/sausage/Initialize(mapload)
 	. = ..()
 	eatverb = pick("bite","chew","nibble","deep throat","gobble","chomp")
 
@@ -283,7 +283,7 @@
 	tastes = list("soy" = 1, "vegetables" = 1)
 	foodtype = VEGETABLES
 
-/obj/item/reagent_containers/food/snacks/stewedsoymeat/Initialize()
+/obj/item/reagent_containers/food/snacks/stewedsoymeat/Initialize(mapload)
 	. = ..()
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 
@@ -328,7 +328,7 @@
 	tastes = list("\"chicken\"" = 1)
 	foodtype = MEAT
 
-/obj/item/reagent_containers/food/snacks/nugget/Initialize()
+/obj/item/reagent_containers/food/snacks/nugget/Initialize(mapload)
 	. = ..()
 	var/shape = pick("lump", "star", "lizard", "corgi")
 	desc = "A 'chicken' nugget vaguely shaped like a [shape]."
@@ -391,7 +391,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("meat" = 3, "smokey sauce" = 1)
 	foodtype = MEAT
-	
+
 /obj/item/reagent_containers/food/snacks/goliathcalamari
 	name = "goliath calamari"
 	desc = "ACKCHYUALLY, this isn't calamari, guys!"

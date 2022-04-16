@@ -31,11 +31,20 @@
 #define COOLDOWN_OBJECTIVES	"objectives"
 #define COOLDOWN_OBJ_ADMIN_PING	"obj_admin_ping"
 
+
+//Mecha cooldowns
+#define COOLDOWN_MECHA_MESSAGE "mecha_message"
+#define COOLDOWN_MECHA_EQUIPMENT "mecha_equipment"
+#define COOLDOWN_MECHA_ARMOR "mecha_armor"
+#define COOLDOWN_MECHA_MELEE_ATTACK "mecha_melee"
+#define COOLDOWN_MECHA_SMOKE "mecha_smoke"
+
 //car cooldowns
 #define COOLDOWN_CAR_HONK "car_honk"
 
 //clown car cooldowns
 #define COOLDOWN_CLOWNCAR_RANDOMNESS "clown_car_randomness"
+
 
 //TIMER COOLDOWN MACROS
 

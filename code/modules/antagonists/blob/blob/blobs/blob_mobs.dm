@@ -46,10 +46,10 @@
 	else
 		adjustFireLoss(5)
 
-/mob/living/simple_animal/hostile/blob/CanPass(atom/movable/mover, turf/target)
+/mob/living/simple_animal/hostile/blob/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover, /obj/structure/blob))
-		return 1
-	return ..()
+		return TRUE
 
 /mob/living/simple_animal/hostile/blob/Process_Spacemove(movement_dir = 0)
 	for(var/obj/structure/blob/B in range(1, src))
@@ -221,7 +221,7 @@
 	hud_type = /datum/hud/blobbernaut
 	var/independent = FALSE
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
+/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize(mapload)
 	. = ..()
 	if(independent)
 		pass_flags &= ~PASSBLOB

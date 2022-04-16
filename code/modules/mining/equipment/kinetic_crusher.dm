@@ -34,7 +34,7 @@
 	detonation_damage = 60
 	wielded = 1
 
-/obj/item/kinetic_crusher/Initialize()
+/obj/item/kinetic_crusher/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
@@ -133,7 +133,7 @@
 				C.total_damage += target_health - L.health //we did some damage, but let's not assume how much we did
 			new /obj/effect/temp_visual/kinetic_blast(get_turf(L))
 			var/backstab_dir = get_dir(user, L)
-			var/def_check = L.getarmor(type = "bomb")
+			var/def_check = L.getarmor(type = BOMB)
 			if((user.dir & backstab_dir) && (L.dir & backstab_dir))
 				if(!QDELETED(C))
 					C.total_damage += detonation_damage + backstab_bonus //cheat a little and add the total before killing it, so certain mobs don't have much lower chances of giving an item
@@ -278,7 +278,7 @@
 	nodamage = TRUE
 	damage = 0 //We're just here to mark people. This is still a melee weapon.
 	damage_type = BRUTE
-	flag = "bomb"
+	flag = BOMB
 	range = 6
 	log_override = TRUE
 	var/obj/item/kinetic_crusher/hammer_synced

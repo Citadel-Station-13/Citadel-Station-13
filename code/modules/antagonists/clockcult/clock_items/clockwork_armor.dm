@@ -8,9 +8,9 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEFACE|HIDESNOUT
 	mutantrace_variation = STYLE_MUZZLE
-	armor = list("melee" = 50, "bullet" = 70, "laser" = 0, "energy" = 0, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100, "magic" = 60, "wound" = 65)
+	armor = list(MELEE = 50, BULLET = 70, LASER = 0, ENERGY = 0, BOMB = 60, BIO = 0, RAD = 0, FIRE = 100, ACID = 100, MAGIC = 60, WOUND = 65)
 
-/obj/item/clothing/head/helmet/clockwork/Initialize()
+/obj/item/clothing/head/helmet/clockwork/Initialize(mapload)
 	. = ..()
 	ratvar_act()
 	GLOB.all_clockwork_objects += src
@@ -68,11 +68,11 @@
 	cold_protection = CHEST|GROIN|LEGS
 	heat_protection = CHEST|GROIN|LEGS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list("melee" = 60, "bullet" = 70, "laser" = 0, "energy" = 0, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100, "magic" = 60, "wound" = 65)
+	armor = list(MELEE = 60, BULLET = 70, LASER = 0, ENERGY = 0, BOMB = 60, BIO = 0, RAD = 0, FIRE = 100, ACID = 100, MAGIC = 60, WOUND = 65)
 	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/mmi/posibrain/soul_vessel, /obj/item/reagent_containers/food/drinks/bottle/holyoil)
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC
 
-/obj/item/clothing/suit/armor/clockwork/Initialize()
+/obj/item/clothing/suit/armor/clockwork/Initialize(mapload)
 	. = ..()
 	ratvar_act()
 	GLOB.all_clockwork_objects += src
@@ -135,9 +135,9 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list("melee" = 80, "bullet" = 70, "laser" = 0, "energy" = 0, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100, "magic" = 70, "wound" = 85)
+	armor = list(MELEE = 80, BULLET = 70, LASER = 0, ENERGY = 0, BOMB = 60, BIO = 0, RAD = 0, FIRE = 100, ACID = 100, MAGIC = 70, WOUND = 85)
 
-/obj/item/clothing/gloves/clockwork/Initialize()
+/obj/item/clothing/gloves/clockwork/Initialize(mapload)
 	. = ..()
 	ratvar_act()
 	GLOB.all_clockwork_objects += src
@@ -190,7 +190,7 @@
 	equip_delay_other = 30
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-/obj/item/clothing/shoes/clockwork/Initialize()
+/obj/item/clothing/shoes/clockwork/Initialize(mapload)
 	. = ..()
 	ratvar_act()
 	GLOB.all_clockwork_objects += src

@@ -1,8 +1,8 @@
 /datum/job/qm
 	title = "Quartermaster"
 	desc = "The Quartermaster manages the supply department."
-//	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	faction = JOB_FACTION_STATION
+	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	total_positions = 1
 	roundstart_positions = 1
 	selection_color = "#a06121"

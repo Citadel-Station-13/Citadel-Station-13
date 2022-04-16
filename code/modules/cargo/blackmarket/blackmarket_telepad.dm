@@ -25,7 +25,7 @@
 	var/transmitting // Current /datum/blackmarket_purchase being sent to the target uplink.
 	var/list/datum/blackmarket_purchase/queue = list() // Queue for purchases that the machine should recieve and send.
 
-/obj/machinery/ltsrbt/Initialize()
+/obj/machinery/ltsrbt/Initialize(mapload)
 	. = ..()
 	SSblackmarket.telepads += src
 

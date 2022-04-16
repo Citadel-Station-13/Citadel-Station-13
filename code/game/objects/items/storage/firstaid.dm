@@ -405,6 +405,14 @@
 	for(var/i in 1 to 10)
 		new /obj/item/reagent_containers/pill/breast_enlargement(src)
 
+/obj/item/storage/pill_bottle/butt_enlargement
+	name = "butt enlargement pills"
+	desc = "May alert security when sneaking around if enough pills are consumed due to assclapping. Be dummy thick responsibly."
+
+/obj/item/storage/pill_bottle/butt_enlargement/PopulateContents()
+	for(var/i in 1 to 10)
+		new /obj/item/reagent_containers/pill/butt_enlargement(src)
+
 /obj/item/storage/pill_bottle/neurine
 	name = "bottle of neurine pills"
 	desc = "Contains pills to treat non-severe mental traumas."
@@ -551,6 +559,9 @@
 	new /obj/item/reagent_containers/glass/bottle/vial/small/penisreduction(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/penisreduction(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/penisreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/buttreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/buttreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/buttreduction(src)
 
 /obj/item/storage/hypospraykit/brute
 	name = "brute trauma hypospray kit"

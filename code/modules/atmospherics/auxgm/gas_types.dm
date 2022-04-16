@@ -60,6 +60,10 @@
 	fire_products = "plasma_fire"
 	enthalpy = FIRE_PLASMA_ENERGY_RELEASED // 3000000, 3 megajoules, 3000 kj
 
+/datum/gas/plasma/New()
+	if(world.system_type == UNIX)
+		fire_temperature = null
+
 /datum/gas/water_vapor
 	id = GAS_H2O
 	specific_heat = 40
@@ -133,6 +137,10 @@
 	fire_burn_rate = 2
 	fire_radiation_released = 50 // arbitrary number, basically 60 moles of trit burning will just barely start to harm you
 	fire_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 50
+
+/datum/gas/tritium/New()
+	if(world.system_type == UNIX)
+		fire_temperature = null
 
 /datum/gas/bz
 	id = GAS_BZ

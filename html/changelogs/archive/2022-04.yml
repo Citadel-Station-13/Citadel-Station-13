@@ -1,0 +1,29 @@
+2022-04-08:
+  SandPoot:
+  - bugfix: Make changelogs actually get added!
+2022-04-09:
+  AnthurK:
+  - bugfix: Fixes bots trying to path through dense corners.
+  Arturlang:
+  - rscadd: Adds stasis beds and related mechanics
+  - rscdel: Removed mapped in sleepers from station maps. Shuttles have it but centcomm
+      doesn't.
+2022-04-10:
+  SandPoot:
+  - bugfix: The action button for leaving mechs actually works!
+  - bugfix: The medigax no longer uses gygax armor plates to be built!
+  - bugfix: The firefighter ripley is now visible during construction.
+  - bugfix: Medigaxes can actually be built now.
+  Solaris-Shade:
+  - bugfix: fixed a few projectile lines
+  - code_imp: changed a large block of the projectile code
+  - refactor: refactored most of the projectile code
+  tiviplus, lolman360, SandPoot:
+  - refactor: /obj/mecha > /obj/vehicle/sealed/mecha
+2022-04-15:
+  BlueWildrose:
+  - rscadd: Added carcinisoprojection jelly, a limb regrowth chemical made from xenobiology's
+      slime mutation toxin & blood. Don't overdose!
+2022-04-16:
+  SandPoot:
+  - bugfix: Progressbars no longer stay after completing/failing their task.

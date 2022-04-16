@@ -15,7 +15,7 @@
 	// area_limited_icon_smoothing = /area/shuttle
 	sound_environment = SOUND_ENVIRONMENT_ROOM
 
-/area/shuttle/Initialize()
+/area/shuttle/Initialize(mapload)
 	if(!canSmoothWithAreas)
 		canSmoothWithAreas = type
 	. = ..()

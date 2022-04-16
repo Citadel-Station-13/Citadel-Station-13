@@ -56,7 +56,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 /obj/machinery/computer/card/centcom/get_jobs()
 	return get_all_centcom_jobs()
 
-/obj/machinery/computer/card/Initialize()
+/obj/machinery/computer/card/Initialize(mapload)
 	. = ..()
 	change_position_cooldown = CONFIG_GET(number/id_console_jobslot_delay)
 
@@ -586,7 +586,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	icon_screen = "idminor"
 	circuit = /obj/item/circuitboard/computer/card/minor
 
-/obj/machinery/computer/card/minor/Initialize()
+/obj/machinery/computer/card/minor/Initialize(mapload)
 	. = ..()
 	var/obj/item/circuitboard/computer/card/minor/typed_circuit = circuit
 	if(target_dept)
