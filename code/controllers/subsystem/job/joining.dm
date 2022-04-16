@@ -82,7 +82,7 @@
 			if(CONFIG_GET(flag/auto_deadmin_players) || (M.client.prefs?.deadmin & DEADMIN_ALWAYS))
 				M.client.holder.auto_deadmin()
 			else
-				handle_auto_deadmin_roles(M.client, rank)
+				handle_auto_deadmin_roles(M.client, J)
 
 	// tcg card handling
 	var/list/tcg_cards = C.prefs.tcg_cards
