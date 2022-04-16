@@ -79,6 +79,7 @@
 			for(var/foo in client.player_details.post_login_callbacks)
 				var/datum/callback/CB = foo
 				CB.Invoke()
+			auto_deadmin_on_login()
 
 	mind?.hide_ckey = client?.prefs?.hide_ckey
 
@@ -96,3 +97,13 @@
 
 	// optimized area sound effects. Enable during events (compile flag when 😳)
 	// AddElement(/datum/element/weather_listener, /datum/weather/long_rain, ZTRAIT_STATION, GLOB.rain_sounds)
+
+/mob/proc/auto_deadmin_on_login() //return true if they're not an admin at the end.
+	if(!client?.holder)
+		return TRUE
+	if(CONFIG_GET(flag/auto_deadmin_players) || (client.prefs?.deadmin & DEADMIN_ALWAYS))
+		return client.holder.auto_deadmin()
+	if(mind.has_antag_datum(/datum/antagonist) && (CONFIG_GET(flag/auto_deadmin_antagonists) || client.prefs?.deadmin & DEADMIN_ANTAGONIST))
+		return client.holder.auto_deadmin()
+	if(job)
+		return SSjob.handle_auto_deadmin_roles(client, job)
