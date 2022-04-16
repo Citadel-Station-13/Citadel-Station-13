@@ -24,3 +24,6 @@
   BlueWildrose:
   - rscadd: Added carcinisoprojection jelly, a limb regrowth chemical made from xenobiology's
       slime mutation toxin & blood. Don't overdose!
+2022-04-16:
+  SandPoot:
+  - bugfix: Progressbars no longer stay after completing/failing their task.
