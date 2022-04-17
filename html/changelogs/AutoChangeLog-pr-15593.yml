@@ -1,5 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - bugfix: "Fires are back on Linux
-tweak: Linux-only: plasma and trit fires work as before"
