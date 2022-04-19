@@ -20,12 +20,10 @@
 /mob/living/proc/update_density()
 	density = !lying && !HAS_TRAIT(src, TRAIT_LIVING_NO_DENSITY)
 
-/mob/living/CanPass(atom/movable/mover, turf/target)
-	if((mover.pass_flags & PASSMOB))
-		return TRUE
-	if(istype(mover, /obj/item/projectile))
-		var/obj/item/projectile/P = mover
-		return !P.can_hit_target(src, P.permutated, src == P.original, TRUE)
+/mob/living/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(.)
+		return
 	if(mover.throwing)
 		return (!density || lying)
 	if(buckled == mover)
@@ -41,7 +39,7 @@
 	var/mob/living/L = mover		//typecast first, check isliving and only check this if living using short circuit
 	if(isliving(L) && lying && L.lying)		//if we're both lying down and aren't already being thrown/shipped around, don't pass
 		return FALSE
-	return (!density || (isliving(mover)? L.can_move_under_living(src) : !mover.density))
+	return (isliving(mover)? L.can_move_under_living(src) : !mover.density)
 
 /mob/living/toggle_move_intent()
 	. = ..()

@@ -65,7 +65,7 @@
 	var/obj/machinery/mineral/processing_unit/machine = null
 	var/machinedir = EAST
 
-/obj/machinery/mineral/processing_unit_console/Initialize()
+/obj/machinery/mineral/processing_unit_console/Initialize(mapload)
 	. = ..()
 	machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, machinedir))
 	if (machine)
@@ -127,7 +127,7 @@
 	var/selected_alloy = null
 	var/datum/techweb/stored_research
 
-/obj/machinery/mineral/processing_unit/Initialize()
+/obj/machinery/mineral/processing_unit/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 1)
 	AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/gold, /datum/material/diamond, /datum/material/plasma, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace), INFINITY, TRUE, /obj/item/stack)

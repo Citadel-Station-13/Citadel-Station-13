@@ -11,7 +11,7 @@
 	var/creation_message = "<span class='brass'>The chassis shudders and hums to life!</span>"
 	var/construct_type //The construct this shell will create
 
-/obj/item/clockwork/construct_chassis/Initialize()
+/obj/item/clockwork/construct_chassis/Initialize(mapload)
 	. = ..()
 	var/area/A = get_area(src)
 	if(A && construct_type)
@@ -92,7 +92,7 @@
 	var/infinite_resources = FALSE //No.
 	var/static/obj/item/seasonal_hat //Share it with all other scarabs, since we're from the same cult!
 
-/obj/item/clockwork/construct_chassis/cogscarab/Initialize()
+/obj/item/clockwork/construct_chassis/cogscarab/Initialize(mapload)
 	. = ..()
 	if(GLOB.servants_active)
 		infinite_resources = FALSE //This check is relatively irrelevant until *someone* makes the infinite resources var default to true again, so, leaving it in.

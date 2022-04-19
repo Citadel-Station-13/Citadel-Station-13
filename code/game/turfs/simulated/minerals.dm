@@ -28,7 +28,7 @@
 	// If true you can mine the mineral turf with your hands
 	var/weak_turf = FALSE
 
-/turf/closed/mineral/Initialize()
+/turf/closed/mineral/Initialize(mapload)
 	. = ..()
 	var/matrix/M = new
 	M.Translate(-4, -4)
@@ -189,7 +189,7 @@
 		//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 13
 
-/turf/closed/mineral/random/Initialize()
+/turf/closed/mineral/random/Initialize(mapload)
 
 	mineralSpawnChanceList = typelist("mineralSpawnChanceList", mineralSpawnChanceList)
 
@@ -515,7 +515,7 @@
 	var/activated_name = null
 	var/mutable_appearance/activated_overlay
 
-/turf/closed/mineral/gibtonite/Initialize()
+/turf/closed/mineral/gibtonite/Initialize(mapload)
 	det_time = rand(8,10) //So you don't know exactly when the hot potato will explode
 	. = ..()
 

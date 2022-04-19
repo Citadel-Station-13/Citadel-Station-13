@@ -12,7 +12,7 @@
 	var/nighttime_duration = 900 //15 Minutes
 	var/issued_XP = FALSE
 
-/obj/effect/sunlight/Initialize()
+/obj/effect/sunlight/Initialize(mapload)
 	. = ..()
 
 /obj/effect/sunlight/proc/start_countdown()

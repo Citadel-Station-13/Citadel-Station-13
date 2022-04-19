@@ -18306,6 +18306,7 @@
 /obj/structure/table,
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
+/obj/item/chisel,
 /turf/open/floor/plasteel,
 /area/commons/storage/art)
 "aGS" = (
@@ -38153,17 +38154,17 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bDq" = (
-/obj/machinery/sleeper,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "bDr" = (
-/obj/machinery/sleeper,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "bDs" = (

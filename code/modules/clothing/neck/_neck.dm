@@ -175,7 +175,7 @@
 	var/tagname = null
 	var/treat_path = /obj/item/reagent_containers/food/snacks/cookie
 
-/obj/item/clothing/neck/petcollar/Initialize()
+/obj/item/clothing/neck/petcollar/Initialize(mapload)
 	. = ..()
 	if(treat_path)
 		new treat_path(src)

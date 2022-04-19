@@ -31,6 +31,7 @@
 				/obj/item/autosurgeon/testicles = 3,
 				/obj/item/storage/pill_bottle/penis_enlargement = 10,
 				/obj/item/storage/pill_bottle/breast_enlargement = 10,
+				/obj/item/storage/pill_bottle/butt_enlargement = 10,
 				/obj/item/reagent_containers/glass/bottle/crocin = 10,
 				/obj/item/reagent_containers/glass/bottle/camphor = 5,
 				/obj/item/storage/daki = 4

@@ -32,7 +32,7 @@
 	var/list/engymodels = list("Default", "Default - Treads", "Heavy", "Sleek", "Marina", "Can", "Spider", "Loader","Handy", "Pup Dozer", "Vale")
 
 
-/obj/item/borg_chameleon/Initialize()
+/obj/item/borg_chameleon/Initialize(mapload)
 	. = ..()
 	friendlyName = pick(GLOB.ai_names)
 

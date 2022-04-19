@@ -5,10 +5,11 @@
 	icon_state = "grille"
 	density = TRUE
 	anchored = TRUE
+	pass_flags_self = PASSGRILLE
 	flags_1 = CONDUCT_1
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = BELOW_OBJ_LAYER
-	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 0, ACID = 0)
 	max_integrity = 50
 	attack_hand_is_action = TRUE
 	attack_hand_speed = 8
@@ -91,7 +92,7 @@
 	user.DelayNextAction(flush = TRUE)
 	user.do_attack_animation(src)
 	if(!shock(user, 70) && !QDELETED(src)) //Last hit still shocks but shouldn't deal damage to the grille)
-		take_damage(rand(5,10), BRUTE, "melee", 1)
+		take_damage(rand(5,10), BRUTE, MELEE, 1)
 
 /obj/structure/grille/attack_paw(mob/user)
 	return attack_hand(user)
@@ -113,7 +114,7 @@
 	user.visible_message("<span class='warning'>[user] hits [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
 	log_combat(user, src, "hit")
 	if(!shock(user, 70))
-		take_damage(rand(5,10), BRUTE, "melee", 1)
+		take_damage(rand(5,10), BRUTE, MELEE, 1)
 
 /obj/structure/grille/attack_alien(mob/living/user)
 	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
@@ -122,16 +123,12 @@
 	user.do_attack_animation(src)
 	user.visible_message("<span class='warning'>[user] mangles [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
 	if(!shock(user, 70))
-		take_damage(20, BRUTE, "melee", 1)
+		take_damage(20, BRUTE, MELEE, 1)
 
-/obj/structure/grille/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
-		return TRUE
-	else
-		if(istype(mover, /obj/item/projectile) && density)
-			return prob(30)
-		else
-			return !density
+/obj/structure/grille/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(!. && istype(mover, /obj/item/projectile))
+		return prob(30)
 
 /obj/structure/grille/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
 	. = !density

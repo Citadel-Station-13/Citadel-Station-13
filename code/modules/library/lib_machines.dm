@@ -183,7 +183,7 @@
 	var/printer_cooldown = 0
 	COOLDOWN_DECLARE(library_console_topic_cooldown)
 
-/obj/machinery/computer/libraryconsole/bookmanagement/Initialize()
+/obj/machinery/computer/libraryconsole/bookmanagement/Initialize(mapload)
 	. = ..()
 	if(circuit)
 		circuit.name = "Book Inventory Management Console (Machine Board)"

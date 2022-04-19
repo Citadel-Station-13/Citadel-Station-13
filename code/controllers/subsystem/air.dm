@@ -396,12 +396,15 @@ SUBSYSTEM_DEF(air)
 	*/
 
 /datum/controller/subsystem/air/proc/run_delay_heuristics()
-	if(!equalize_enabled)
-		cost_equalize = 0
-		if(should_do_equalization)
-			eq_cooldown--
-			if(eq_cooldown <= 0)
-				equalize_enabled = TRUE
+	if(should_do_equalization)
+		if(!equalize_enabled)
+			cost_equalize = 0
+			if(should_do_equalization)
+				eq_cooldown--
+				if(eq_cooldown <= 0)
+					equalize_enabled = TRUE
+	else
+		equalize_enabled = FALSE
 	var/total_thread_time = cost_turfs + cost_equalize + cost_groups + cost_post_process
 	if(total_thread_time)
 		var/wait_ms = wait * 100

@@ -17,7 +17,7 @@
 	var/flashlight_power = 0.8 //strength of the light when on
 	light_color = "#FFCC66"
 
-/obj/item/flashlight/Initialize()
+/obj/item/flashlight/Initialize(mapload)
 	. = ..()
 	if(icon_state == "[initial(icon_state)]-on")
 		on = TRUE
@@ -461,7 +461,7 @@
 	rad_flags = RAD_NO_CONTAMINATE
 	var/fuel = 0
 
-/obj/item/flashlight/glowstick/Initialize()
+/obj/item/flashlight/glowstick/Initialize(mapload)
 	fuel = rand(1000, 1500)
 	light_color = color
 	. = ..()

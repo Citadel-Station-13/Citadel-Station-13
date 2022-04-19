@@ -6,7 +6,7 @@
 	name = "gas sensor"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor1"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 0)
 
 	var/on = TRUE
 
@@ -71,7 +71,7 @@
 	frequency = new_frequency
 	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
 
-/obj/machinery/air_sensor/Initialize()
+/obj/machinery/air_sensor/Initialize(mapload)
 	. = ..()
 	SSair.atmos_air_machinery += src
 	set_frequency(frequency)
@@ -126,7 +126,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	var/datum/radio_frequency/radio_connection
 
 
-/obj/machinery/computer/atmos_control/Initialize()
+/obj/machinery/computer/atmos_control/Initialize(mapload)
 	. = ..()
 	GLOB.atmos_air_controllers += src
 	set_frequency(frequency)

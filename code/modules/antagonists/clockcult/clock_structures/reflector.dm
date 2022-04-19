@@ -16,7 +16,7 @@
 
 	var/ini_dir = null
 
-/obj/structure/destructible/clockwork/reflector/Initialize()
+/obj/structure/destructible/clockwork/reflector/Initialize(mapload)
 	. = ..()
 	allowed_projectile_typecache = typecacheof(allowed_projectile_typecache)
 

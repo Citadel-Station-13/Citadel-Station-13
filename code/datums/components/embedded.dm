@@ -152,7 +152,7 @@
 		to_chat(victim, "<span class='userdanger'>[weapon] sticks itself to your [limb.name]!</span>")
 
 	if(damage > 0)
-		var/armor = victim.run_armor_check(limb.body_zone, "melee", "Your armor has protected your [limb.name].", "Your armor has softened a hit to your [limb.name].",weapon.armour_penetration)
+		var/armor = victim.run_armor_check(limb.body_zone, MELEE, "Your armor has protected your [limb.name].", "Your armor has softened a hit to your [limb.name].",weapon.armour_penetration)
 		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, blocked=armor, sharpness = weapon.get_sharpness())
 
 /// Called every time a carbon with a harmful embed moves, rolling a chance for the item to cause pain. The chance is halved if the carbon is crawling or walking.

@@ -122,7 +122,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /obj/structure/elite_tumor
 	name = "pulsing tumor"
 	desc = "An odd, pulsing tumor sticking out of the ground.  You feel compelled to reach out and touch it..."
-	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
 	resistance_flags = INDESTRUCTIBLE
 	var/activity = TUMOR_INACTIVE
 	var/boosted = FALSE
@@ -383,8 +383,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	ourelite = null
 	return ..()
 
-/obj/effect/temp_visual/elite_tumor_wall/CanPass(atom/movable/mover, turf/target)
+/obj/effect/temp_visual/elite_tumor_wall/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(mover == ourelite || mover == activator)
 		return FALSE
-	else
-		return TRUE

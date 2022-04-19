@@ -31,7 +31,7 @@
 	var/proper_bomb = TRUE //Please
 	var/obj/effect/countdown/nuclearbomb/countdown
 
-/obj/machinery/nuclearbomb/Initialize()
+/obj/machinery/nuclearbomb/Initialize(mapload)
 	. = ..()
 	countdown = new(src)
 	GLOB.nuke_list += src
@@ -507,7 +507,7 @@
 	proper_bomb = FALSE
 	var/obj/structure/reagent_dispensers/beerkeg/keg
 
-/obj/machinery/nuclearbomb/beer/Initialize()
+/obj/machinery/nuclearbomb/beer/Initialize(mapload)
 	. = ..()
 	keg = new(src)
 	QDEL_NULL(core)
@@ -612,14 +612,14 @@ This is here to make the tiles around the station mininuke change when it's arme
 	icon_state = "nucleardisk"
 	persistence_replacement = /obj/item/disk/nuclear/fake
 	max_integrity = 250
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/fake = FALSE
 	var/turf/lastlocation
 	var/last_disk_move
 	var/process_tick = 0
 
-/obj/item/disk/nuclear/Initialize()
+/obj/item/disk/nuclear/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/bed_tuckable, 6, -6, 0)
 

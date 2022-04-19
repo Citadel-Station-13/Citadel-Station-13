@@ -37,4 +37,4 @@
 	icon_state = "declone"
 	damage = 4
 	damage_type = BURN
-	flag = "energy"
+	flag = ENERGY

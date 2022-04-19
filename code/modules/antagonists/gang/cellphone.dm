@@ -9,7 +9,7 @@ GLOBAL_LIST_EMPTY(gangster_cell_phones)
 	var/gang_id = "Grove Street Families"
 	var/activated = FALSE
 
-/obj/item/gangster_cellphone/Initialize()
+/obj/item/gangster_cellphone/Initialize(mapload)
 	. = ..()
 	GLOB.gangster_cell_phones += src
 	flags_1 |= HEAR_1

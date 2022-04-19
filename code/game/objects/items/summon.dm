@@ -29,7 +29,7 @@
 	/// are we a ranged weapon?
 	var/melee_only = TRUE
 
-/obj/item/summon/Initialize()
+/obj/item/summon/Initialize(mapload)
 	. = ..()
 	if(host_type)
 		host = new host_type(src, summon_count, range)

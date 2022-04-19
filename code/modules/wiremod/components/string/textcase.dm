@@ -27,7 +27,7 @@
 	)
 	textcase_options = add_option_port("Textcase Options", component_options)
 
-/obj/item/circuit_component/textcase/Initialize()
+/obj/item/circuit_component/textcase/Initialize(mapload)
 	. = ..()
 	input_port = add_input_port("Input", PORT_TYPE_STRING)
 	output = add_output_port("Output", PORT_TYPE_STRING)

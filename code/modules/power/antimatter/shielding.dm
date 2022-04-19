@@ -28,7 +28,7 @@
 	var/dirs = 0
 
 
-/obj/machinery/am_shielding/Initialize()
+/obj/machinery/am_shielding/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/controllerscan), 10)
 
@@ -102,7 +102,7 @@
 
 /obj/machinery/am_shielding/bullet_act(obj/item/projectile/Proj)
 	. = ..()
-	if(Proj.flag != "bullet")
+	if(Proj.flag != BULLET)
 		stability -= Proj.force/2
 		check_stability()
 

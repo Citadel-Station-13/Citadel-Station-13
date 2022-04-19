@@ -17,7 +17,7 @@
 	var/datum/gas_mixture/air_contents
 	var/volume = 2 //Pretty small, I know
 
-/obj/item/integrated_circuit/atmospherics/Initialize()
+/obj/item/integrated_circuit/atmospherics/Initialize(mapload)
 	air_contents = new(volume)
 	return ..()
 
@@ -57,7 +57,7 @@
 	var/target_pressure = PUMP_MAX_PRESSURE
 	power_draw_per_use = 20
 
-/obj/item/integrated_circuit/atmospherics/pump/Initialize()
+/obj/item/integrated_circuit/atmospherics/pump/Initialize(mapload)
 	air_contents = new(volume)
 	extended_desc += " Use negative pressure to move air from target to source. \
 					Note that only part of the gas is moved on each transfer, \
@@ -246,7 +246,7 @@
 
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connector
 
-/obj/item/integrated_circuit/atmospherics/connector/Initialize()
+/obj/item/integrated_circuit/atmospherics/connector/Initialize(mapload)
 	air_contents = new(volume)
 	START_PROCESSING(SSobj, src)
 	. = ..()
@@ -398,7 +398,7 @@
 		contaminated_air.merge(removed)
 
 
-/obj/item/integrated_circuit/atmospherics/pump/filter/Initialize()
+/obj/item/integrated_circuit/atmospherics/pump/filter/Initialize(mapload)
 	air_contents = new(volume)
 	. = ..()
 	extended_desc = "Remember to properly spell and capitalize the filtered gas name. \
@@ -485,7 +485,7 @@
 	volume = 3 //emergency tank sized
 	var/broken = FALSE
 
-/obj/item/integrated_circuit/atmospherics/tank/Initialize()
+/obj/item/integrated_circuit/atmospherics/tank/Initialize(mapload)
 	air_contents = new(volume)
 	START_PROCESSING(SSobj, src)
 	extended_desc = "Take care not to pressurize it above [round(TANK_FAILURE_PRESSURE)] kPa, or else it will break."
@@ -611,7 +611,7 @@
 	var/temperature = 293.15
 	var/heater_coefficient = 0.1
 
-/obj/item/integrated_circuit/atmospherics/cooler/Initialize()
+/obj/item/integrated_circuit/atmospherics/cooler/Initialize(mapload)
 	air_contents = new(volume)
 	START_PROCESSING(SSobj, src)
 	. = ..()
@@ -701,7 +701,7 @@
 
 	var/obj/item/tank/internals/current_tank
 
-/obj/item/integrated_circuit/input/tank_slot/Initialize()
+/obj/item/integrated_circuit/input/tank_slot/Initialize(mapload)
 	START_PROCESSING(SSobj, src)
 	. = ..()
 

@@ -131,6 +131,13 @@
 	name = "ipc cell"
 	icon_state = "stomach-ipc"
 
+/obj/item/organ/stomach/ipc/on_life()
+	. = ..()
+	if(!.)
+		return
+	if(HAS_TRAIT(owner, TRAIT_ROBOTIC_ORGANISM) && owner.nutrition >= NUTRITION_LEVEL_FED)
+		owner.satiety += 5	//We don't need to cap the value as it's already automatically capped during nutrition level handling. Also effectively only +4 as you lose 1 per life tick. 300 seconds of sufficient charge to reach full satiety.
+
 /obj/item/organ/stomach/ipc/emp_act(severity)
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)

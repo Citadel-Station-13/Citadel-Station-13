@@ -36,7 +36,7 @@
 								)
 	var/obj/item/disk/data/dna_disk
 
-/obj/machinery/limbgrower/Initialize()
+/obj/machinery/limbgrower/Initialize(mapload)
 	create_reagents(100, OPENCONTAINER)
 	stored_research = new /datum/techweb/specialized/autounlocking/limbgrower
 	. = ..()
@@ -60,7 +60,7 @@
 				reagent_type = reagent_id.type
 			)
 			data["reagents"] += list(reagent_data)
-	else 
+	else
 		data["reagents"] = list()
 	data["total_reagents"] = reagents.total_volume
 	data["max_reagents"] = reagents.maximum_volume
@@ -335,6 +335,12 @@
 					if(!features["breasts_producing"])
 						boobs.genital_flags &= ~(GENITAL_FUID_PRODUCTION|CAN_CLIMAX_WITH|CAN_MASTURBATE_WITH)
 					boobs.update()
+			if(/obj/item/organ/genital/butt)
+				var/obj/item/organ/genital/butt/ass = new(loc)
+				if(features["has_butt"])
+					ass.color = sanitize_hexcolor(features["butt_color"], 6, TRUE)
+					ass.size = features["butt_size"]
+					ass.update()
 			else
 				new built_typepath(loc)
 	else
@@ -373,7 +379,7 @@
 	C.undershirt = "Nude"
 	C.saved_underwear = ""
 	C.saved_undershirt = ""
-	
+
 	// Just enough to start reviving them, I hope
 	C.blood_volume = BLOOD_VOLUME_SURVIVE
 	// At some point, make a way to deal with species regenerate_organs

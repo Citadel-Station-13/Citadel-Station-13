@@ -81,3 +81,17 @@ GUEST_BAN
 
 ## Allow admin hrefs that don't use the new token system, will eventually be removed
 DEBUG_ADMIN_HREFS
+
+##
+## Those deadmin configs will lock admins this way, so it's not really recommended unless really needed
+##
+## Uncomment to automatically deadmin players when the game starts.
+#AUTO_DEADMIN_PLAYERS
+
+## Uncomment to automatically deadmin antagonists when they gain the role.
+#AUTO_DEADMIN_ANTAGONISTS
+
+## Uncomment to automatically deadmin specific role sets when a player joins the game.
+#AUTO_DEADMIN_HEADS
+#AUTO_DEADMIN_SECURITY
+#AUTO_DEADMIN_SILICONS

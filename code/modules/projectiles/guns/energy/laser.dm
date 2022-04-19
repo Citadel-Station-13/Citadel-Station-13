@@ -204,7 +204,7 @@
 	throwforce = 10
 	obj_flags = UNIQUE_RENAME
 
-/obj/item/gun/energy/laser/redtag/hitscan/chaplain/Initialize()
+/obj/item/gun/energy/laser/redtag/hitscan/chaplain/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
 

@@ -1,0 +1,4 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - rscadd: "Added deadminning preferences (only affects admins)."

@@ -146,7 +146,7 @@ GLOBAL_LIST_INIT(bitfields, generate_bitfields())
 		"FLYING" = FLYING,
 		"VENTCRAWLING" = VENTCRAWLING,
 		"FLOATING" = FLOATING,
-		"UNSTOPPABLE" = UNSTOPPABLE
+		"PHASING" = PHASING
 		),
 	"resistance_flags" = list(
 		"LAVA_PROOF" = LAVA_PROOF,

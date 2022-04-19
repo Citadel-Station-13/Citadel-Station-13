@@ -3,27 +3,28 @@
 /obj/structure/statue/bone
 	anchored = TRUE
 	max_integrity = 120
-	material_drop_type = /obj/item/stack/sheet/bone
 	impressiveness = 18 // Carved from the bones of a massive creature, it's going to be a specticle to say the least
 	layer = ABOVE_ALL_MOB_LAYER
+	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*5)
+	abstract_type = /obj/structure/statue/bone
 
 /obj/structure/statue/bone/rib
 	name = "collosal rib"
 	desc = "It's staggering to think that something this big could have lived, let alone died."
-	oreAmount = 4
+	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*4)
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "rib"
 
 /obj/structure/statue/bone/skull
 	name = "collosal skull"
 	desc = "The gaping maw of a dead, titanic monster."
-	oreAmount = 12
+	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*12)
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "skull"
 
 /obj/structure/statue/bone/skull/half
 	desc = "The gaping maw of a dead, titanic monster. This one is cracked in half."
-	oreAmount = 6
+	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*6)
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "skull-half"
 
@@ -39,7 +40,7 @@
 	slowdown = 0.5
 	floor_variance = 30
 
-/turf/open/floor/plating/asteroid/basalt/wasteland/Initialize()
+/turf/open/floor/plating/asteroid/basalt/wasteland/Initialize(mapload)
 	.=..()
 	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,6)]"
@@ -68,7 +69,7 @@
 	icon_state = "puddle-oil"
 	dispensedreagent = /datum/reagent/oil
 
-/obj/structure/sink/oil_well/Initialize()
+/obj/structure/sink/oil_well/Initialize(mapload)
 	.=..()
 	create_reagents(20)
 	reagents.add_reagent(dispensedreagent, 20)

@@ -5,10 +5,9 @@
 
 	for(var/r in subtypesof(/datum/gas_reaction))
 		var/datum/gas_reaction/reaction = r
-		if(initial(reaction.exclude))
-			continue
 		reaction = new r
-		. += reaction
+		if(!reaction.exclude)
+			. += reaction
 	sortTim(., /proc/cmp_gas_reaction)
 
 /proc/cmp_gas_reaction(datum/gas_reaction/a, datum/gas_reaction/b) // compares lists of reactions by the maximum priority contained within the list
@@ -119,6 +118,7 @@
 	id = "tritfire"
 
 /datum/gas_reaction/tritfire/init_reqs()
+	exclude = world.system_type == MS_WINDOWS // temporary stopgap until generic fires work on linux
 	min_requirements = list(
 		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST,
 		GAS_TRITIUM = MINIMUM_MOLE_COUNT,
@@ -200,6 +200,7 @@
 	id = "plasmafire"
 
 /datum/gas_reaction/plasmafire/init_reqs()
+	exclude = world.system_type == MS_WINDOWS // temporary stopgap until generic fires work on linux
 	min_requirements = list(
 		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST,
 		GAS_PLASMA = MINIMUM_MOLE_COUNT,

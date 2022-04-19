@@ -33,7 +33,7 @@
 	smooth_flags = SMOOTH_CORNERS
 	layer = CLOSED_TURF_LAYER
 
-/obj/effect/clockwork/overlay/wall/Initialize()
+/obj/effect/clockwork/overlay/wall/Initialize(mapload)
 	. = ..()
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	return INITIALIZE_HINT_LATELOAD

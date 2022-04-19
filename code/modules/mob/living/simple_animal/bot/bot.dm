@@ -149,7 +149,7 @@
 	bot_reset() //Resets an AI's call, should it exist.
 	update_icon()
 
-/mob/living/simple_animal/bot/Initialize()
+/mob/living/simple_animal/bot/Initialize(mapload)
 	. = ..()
 	GLOB.bots_list += src
 	access_card = new /obj/item/card/id(src)
@@ -285,7 +285,7 @@
 			call_mode()
 			return
 		if(BOT_SUMMON)		//Called by PDA
-			bot_summon()
+			summon_step()
 			return
 	return TRUE //Successful completion. Used to prevent child process() continuing if this one is ended early.
 
@@ -731,8 +731,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 			mode = BOT_SUMMON
 			speak("Responding.", radio_channel)
 
-			calc_summon_path()
-
 		if("ejectpai")
 			ejectpairemote(user)
 	return
@@ -758,9 +756,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 			return
 		else
 			to_chat(src, "<span class='warning'>Unidentified control sequence received:[command]</span>")
-
-/mob/living/simple_animal/bot/proc/bot_summon() // summoned to PDA
-	summon_step()
 
 // calculates a path to the current destination
 // given an optional turf to avoid
@@ -876,7 +871,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	anchored = FALSE
 	var/mob/living/simple_animal/bot/owner = null
 
-/obj/machinery/bot_core/Initialize()
+/obj/machinery/bot_core/Initialize(mapload)
 	. = ..()
 	owner = loc
 	if(!istype(owner))

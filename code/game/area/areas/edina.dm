@@ -169,7 +169,7 @@
 	name = "planet z helper"
 	layer = POINT_LAYER
 
-/obj/effect/mapping_helpers/planet_z/Initialize()
+/obj/effect/mapping_helpers/planet_z/Initialize(mapload)
 	. = ..()
 	var/datum/space_level/S = SSmapping.get_level(z)
 	S.traits["Planet"] = TRUE //This probably doesn't work as I expect. But maybe!!

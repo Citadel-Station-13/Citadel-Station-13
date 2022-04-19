@@ -39,7 +39,7 @@
 	var/light_on = 0
 	var/obj/item/gun/energy/kinetic_accelerator/minebot/stored_gun
 
-/mob/living/simple_animal/hostile/mining_drone/Initialize()
+/mob/living/simple_animal/hostile/mining_drone/Initialize(mapload)
 	. = ..()
 	stored_gun = new(src)
 	var/datum/action/innate/minedrone/toggle_light/toggle_light_action = new()
@@ -131,7 +131,8 @@
 				to_chat(M, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
 		return
 
-/mob/living/simple_animal/hostile/mining_drone/CanPass(atom/movable/O)
+/mob/living/simple_animal/hostile/mining_drone/CanAllowThrough(atom/movable/O)
+	. = ..()
 	if(istype(O, /obj/item/projectile/kinetic))
 		var/obj/item/projectile/kinetic/K = O
 		if(K.kinetic_gun)
@@ -141,7 +142,6 @@
 					return TRUE
 	if(istype(O, /obj/item/projectile/destabilizer))
 		return TRUE
-	return ..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
 	mode = MINEDRONE_COLLECT

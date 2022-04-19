@@ -10,7 +10,7 @@
 	integrity_failure = 0.5
 	max_integrity = 100
 	rad_flags = RAD_PROTECT_CONTENTS
-	armor = list("melee" = 0, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 0, ACID = 0)
 
 	var/enabled = 0 // Whether the computer is turned on.
 	var/screen_on = 1 // Whether the computer is active/opened/it's screen is on.
@@ -54,7 +54,7 @@
 	var/comp_light_color //The color of that light
 
 
-/obj/item/modular_computer/Initialize()
+/obj/item/modular_computer/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	if(!physical)

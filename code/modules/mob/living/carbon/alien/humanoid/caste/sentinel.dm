@@ -6,7 +6,7 @@
 	icon_state = "aliens"
 	meleeSlashHumanPower = 15
 
-/mob/living/carbon/alien/humanoid/sentinel/Initialize()
+/mob/living/carbon/alien/humanoid/sentinel/Initialize(mapload)
 	AddAbility(new /obj/effect/proc_holder/alien/sneak)
 	. = ..()
 

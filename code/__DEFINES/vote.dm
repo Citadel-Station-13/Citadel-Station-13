@@ -5,6 +5,9 @@
 #define HIGHEST_MEDIAN_VOTING "HIGHEST_MEDIAN"
 #define INSTANT_RUNOFF_VOTING "IRV"
 
+#define VOTE_TRANSFER "Initiate Crew Transfer"
+#define VOTE_CONTINUE "Continue Playing"
+
 #define SHOW_RESULTS (1<<0)
 #define SHOW_VOTES (1<<1)
 #define SHOW_WINNER (1<<2)

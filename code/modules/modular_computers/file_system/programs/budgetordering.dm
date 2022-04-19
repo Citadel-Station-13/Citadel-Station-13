@@ -79,7 +79,6 @@
 	if(id_card?.registered_account)
 		if((ACCESS_HEADS in id_card.access) || (ACCESS_QM in id_card.access))
 			requestonly = FALSE
-			buyer = SSeconomy.get_dep_account(id_card.registered_account.account_job.paycheck_department)
 			can_approve_requests = TRUE
 		else
 			requestonly = TRUE
@@ -236,8 +235,7 @@
 				return
 
 			if(!self_paid && ishuman(usr) && !account)
-				var/obj/item/card/id/id_card = card_slot?.GetID()
-				account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
+				account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 
 			var/turf/T = get_turf(src)
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
@@ -263,9 +261,7 @@
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.requestlist)
 				if(SO.id == id)
-					var/obj/item/card/id/id_card = card_slot?.GetID()
-					if(id_card && id_card?.registered_account)
-						SO.paying_account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
+					SO.paying_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 					SSshuttle.requestlist -= SO
 					SSshuttle.shoppinglist += SO
 					. = TRUE
