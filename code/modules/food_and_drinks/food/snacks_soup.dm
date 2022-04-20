@@ -62,7 +62,7 @@
 	icon_state = "wingfangchu"
 	trash = /obj/item/reagent_containers/glass/bowl
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/soysauce = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/protein = 6, /datum/reagent/consumable/soysauce = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("soy" = 1)
 	foodtype = MEAT
 
@@ -130,7 +130,7 @@
 	desc = "Sensationally seasoned bear meat diced up with some peppers."
 	icon_state = "bearchili"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/capsaicin = 1)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/medicine/morphine = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/capsaicin = 5)
+	list_reagents = list(/datum/reagent/consumable/protein = 10, /datum/reagent/medicine/morphine = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/capsaicin = 5)
 	tastes = list("the outdoors" = 1, "hot peppers" = 1)
 	foodtype = VEGETABLES | MEAT
 
@@ -139,7 +139,7 @@
 	desc = "A delicious soup with dumplings and hunks of monkey meat simmered to perfection, in a broth that tastes faintly of bananas."
 	icon_state = "monkeysdelight"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 5)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/banana = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/protein = 5, /datum/reagent/consumable/banana = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("the jungle" = 1, "banana" = 1)
 	foodtype = FRUIT
 
@@ -156,7 +156,7 @@
 	name = "eyeball soup"
 	desc = "It looks back at you..."
 	icon_state = "eyeballsoup"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/liquidgibs = 3)
+	bonus_reagents = list(/datum/reagent/consumable/protein = 1, /datum/reagent/liquidgibs = 3)
 	tastes = list("tomato" = 1, "squirming" = 1)
 	foodtype = MEAT | GROSS
 
@@ -249,7 +249,7 @@
 	name = "bisque"
 	desc = "A classic entree from Space-France."
 	icon_state = "bisque"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 6)
+	bonus_reagents = list(/datum/reagent/consumable/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("creamy texture" = 1, "crab" = 4)
 	foodtype = MEAT
 
@@ -297,6 +297,6 @@
 	desc = "An entire pot of an extremely spicy dish made using extremely exotic ingredients. Highly recommend by an interdimensional businessman."
 	icon_state = "facehuggerpot"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
+	list_reagents = list(/datum/reagent/consumable/protein = 20, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("face huggers" = 1)
 	foodtype = MEAT

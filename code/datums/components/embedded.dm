@@ -91,7 +91,7 @@
 	if(!weapon.isEmbedHarmless())
 		harmful = TRUE
 
-	weapon.embedded(parent)
+	weapon.embedded(parent, part)
 
 	if(iscarbon(parent))
 		initCarbon()
