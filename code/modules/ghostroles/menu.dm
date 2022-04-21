@@ -15,7 +15,12 @@ GLOBAL_DATUM_INIT(ghostrole_menu, /datum/ghostrole_menu, new)
 	. = ..()
 	var/list/spawners = list()
 	.["spawners"] = spawners
-	for(var/datum/ghostrole/role in GLOB.ghostroles)
+	for(var/id in GLOB.ghostroles)
+		var/datum/ghostrole/role = GLOB.ghostroles[id]
+		if(!istype(role))
+			stack_trace("non ghostrole [role] ([id]) pruned from ghostroles list.")
+			GLOB.ghostroles -= id
+			continue
 		var/list/data = list()
 		data["id"] = role.id || role.type
 		data["name"] = role.name
