@@ -110,16 +110,14 @@
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	faction = list("hostile")
 	sharpness = SHARP_POINTY
-	ai_controller = /datum/ai_controller/basic_controller/cockroach/hauberoach
 	cockroach_cell_line = CELL_LINE_TABLE_HAUBEROACH
 
 /mob/living/basic/cockroach/hauberoach/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 10, max_damage = 15, flags = (CALTROP_BYPASS_SHOES | CALTROP_SILENT))
-	AddComponent(/datum/component/squashable, squash_chance = 100, squash_damage = 1, squash_callback = /mob/living/basic/cockroach/hauberoach/.proc/on_squish)
 
 ///Proc used to override the squashing behavior of the normal cockroach.
-/mob/living/basic/cockroach/hauberoach/proc/on_squish(mob/living/cockroach, mob/living/living_target)
+/mob/living/simple_animal/hostile/retaliate/cockroach/hauberoach/proc/on_squish(mob/living/cockroach, mob/living/living_target)
 	if(!istype(living_target))
 		return FALSE //We failed to run the invoke. Might be because we're a structure. Let the squashable element handle it then!
 	if(!HAS_TRAIT(living_target, TRAIT_PIERCEIMMUNE))
@@ -127,16 +125,3 @@
 		return TRUE
 	living_target.visible_message(span_notice("[living_target] squashes [cockroach], not even noticing its spike."), span_notice("You squashed [cockroach], not even noticing its spike."))
 	return FALSE
-/datum/ai_controller/basic_controller/cockroach/hauberoach
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/random_speech/cockroach,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/hauberoach,  //If we are attacking someone, this will prevent us from hunting
-		/datum/ai_planning_subtree/find_and_hunt_target
-	)
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/hauberoach
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/hauberoach
-
-/datum/ai_behavior/basic_melee_attack/hauberoach //Slightly slower, as this is being made in feature freeze ;)
-	action_cooldown = 1 SECONDS

@@ -48,7 +48,7 @@
 	icon_state = "meatbread"
 	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/meat
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 10)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/protein = 15, /datum/reagent/consumable/nutriment/vitamin = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 15, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("bread" = 10, "meat" = 10)
 	foodtype = GRAIN | MEAT
 
@@ -64,7 +64,7 @@
 	icon_state = "xenomeatbread"
 	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/xenomeat
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 10)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/protein = 15, /datum/reagent/consumable/nutriment/vitamin = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 15, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("bread" = 10, "acid" = 10)
 	foodtype = GRAIN | MEAT
 
@@ -82,7 +82,7 @@
 	icon_state = "spidermeatbread"
 	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/spidermeat
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 10)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/protein = 15, /datum/reagent/toxin = 15, /datum/reagent/consumable/nutriment/vitamin = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 15, /datum/reagent/toxin = 15, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("bread" = 10, "cobwebs" = 5)
 	foodtype = GRAIN | MEAT | TOXIC
 
@@ -91,7 +91,7 @@
 	desc = "A slice of meatloaf made from an animal that most likely still wants you dead."
 	icon_state = "xenobreadslice"
 	filling_color = "#7CFC00"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/protein = 3, /datum/reagent/toxin = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/toxin = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
 	foodtype = GRAIN | MEAT | TOXIC
 
 /obj/item/reagent_containers/food/snacks/store/bread/banana
@@ -119,7 +119,7 @@
 	icon_state = "tofubread"
 	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/tofu
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 10)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("bread" = 10, "tofu" = 10)
 	foodtype = GRAIN | VEGETABLES
 
@@ -128,7 +128,7 @@
 	desc = "A slice of delicious tofubread."
 	icon_state = "tofubreadslice"
 	filling_color = "#FF8C00"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	foodtype = GRAIN | VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/store/bread/creamcheese
@@ -137,7 +137,7 @@
 	icon_state = "creamcheesebread"
 	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/creamcheese
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("bread" = 10, "cheese" = 10)
 	foodtype = GRAIN | DAIRY
 
@@ -146,7 +146,7 @@
 	desc = "A slice of yum!"
 	icon_state = "creamcheesebreadslice"
 	filling_color = "#FF8C00"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	foodtype = GRAIN | DAIRY
 
 /obj/item/reagent_containers/food/snacks/store/bread/mimana
@@ -240,7 +240,7 @@
 	desc = "It's still within its expiration date, right?"
 	icon_state = "tumorbread"
 	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/tumor_bread
-	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/protein = 10, /datum/reagent/toxin = 10) //tumors are meaty hence protein
+	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/toxin = 10) //tumors are meaty hence protein
 	foodtype = GROSS | GRAIN
 	tastes = list("wheat and tumors" = 10)
 

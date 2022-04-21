@@ -76,7 +76,7 @@ All foods are distributed among various categories. Use common sense.
 		if(list_reagents)
 			for(var/rid in list_reagents)
 				var/amount = list_reagents[rid]
-				if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin || r_id == /datum/reagent/consumable/nutriment/protein)
+				if(rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin || rid == /datum/reagent/consumable/nutriment/protein)
 					reagents.add_reagent(rid, amount, tastes.Copy())
 				else
 					reagents.add_reagent(rid, amount)

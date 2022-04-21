@@ -5,7 +5,7 @@
 	icon_state = "sandwich"
 	trash = /obj/item/trash/plate
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	cooked_type = /obj/item/reagent_containers/food/snacks/toastedsandwich
 	tastes = list("meat" = 2, "cheese" = 1, "bread" = 2, "lettuce" = 1)
 	foodtype = GRAIN | VEGETABLES
@@ -28,7 +28,7 @@
 	icon_state = "blt"
 	trash = /obj/item/trash/plate
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("bacon" = 1, "lettuce" = 1, "tomato" = 1, "mayo" = 1)
 	foodtype = GRAIN | MEAT | VEGETABLES
 
@@ -149,7 +149,7 @@
 	desc = "Both a salad and a sandwich in one."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "tunasandwich"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("tuna" = 4, "mayonnaise" = 2, "bread" = 2)
 	foodtype = GRAIN | MEAT
@@ -159,7 +159,7 @@
 	desc = "At some point, you need to be the chief sub."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "meatballsub"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 4)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 4)
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("meat" = 2, "toasted bread" = 1)
 	foodtype = GRAIN | MEAT

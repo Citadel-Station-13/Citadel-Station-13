@@ -21,7 +21,7 @@
 	desc = "A small can of tuna fish beloved by felines."
 	icon_state = "tuna_can"
 //trash = /obj/item/trash/tuna_used //I dont know if I like this idea - A Masked Cat
-	list_reagents = list(/datum/reagent/consumable/sodiumchloride = 5, /datum/reagent/consumable/protein = 5, /datum/reagent/mercury = 2)
+	list_reagents = list(/datum/reagent/consumable/sodiumchloride = 5, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/mercury = 2)
 	tastes = list("tuna" = 15, "mercury" = 1, "salt" = 3)
 	foodtype = MEAT
 
@@ -31,7 +31,7 @@
 	desc = "A small cylinder filled with rice and fish."
 	icon_state = "sushie_basic"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1/datum/reagent/consumable/protein = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1/datum/reagent/consumable/nutriment/protein = 1)
 	bitesize = 1
 	filling_color = "#F2EEEA" //rgb(242, 238, 234)
 	tastes = list("fish" = 1, "rice" = 1, "salt" = 1)
@@ -42,7 +42,7 @@
 	desc = "A pice of carp lightly placed on some rice."
 	icon_state = "sushie_adv"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/protein = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 2)
 	bitesize = 1
 	filling_color = "#F2EEEA" //rgb(242, 238, 234)
 	tastes = list("fish" = 1, "rice" = 1, "salt" = 1)
@@ -53,7 +53,7 @@
 	desc = "A well prepared piece of carp fillet placed on rice. Looks fancy and fresh!"
 	icon_state = "sushie_pro"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
 	bitesize = 1
 	filling_color = "#F2EEEA" //rgb(242, 238, 234)
 	tastes = list("fish" = 1, "rice" = 1, "salt" = 1)
@@ -63,7 +63,7 @@
 	name = "tobiko"
 	desc = "Spider eggs wrapped in a thin salted kudzu pod."
 	icon_state = "sushie_egg"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	filling_color = "#FF3333" // R225 G051 B051
 	tastes = list("seaweed" = 1, "salty" = 2)
 	foodtype = MEAT | VEGETABLES
@@ -72,6 +72,6 @@
 	name = "onigiri"
 	desc = "A ball of rice with some light salt and a wrap of kudzu skin."
 	icon_state = "riceball"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/protein = 3, /datum/reagent/consumable/sodiumchloride = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/sodiumchloride = 2)
 	tastes = list("rice" = 4, "salt" = 1)
 	foodtype = GRAIN

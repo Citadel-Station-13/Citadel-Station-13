@@ -192,7 +192,7 @@
 	desc = "The precursor to Pigs in a Blanket."
 	icon_state = "eggwrap"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 2 /datum/reagent/consumable/protein = 3)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 3)
 	filling_color = "#F0E68C"
 	tastes = list("egg" = 1)
 	foodtype = MEAT
@@ -211,7 +211,7 @@
 	name = "spider eggs"
 	desc = "A cluster of juicy spider eggs. A great side dish for when you care not for your health."
 	icon_state = "spidereggs"
-	list_reagents = list(/datum/reagent/consumable/protein = 2, /datum/reagent/toxin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/toxin = 2)
 	filling_color = "#008000"
 	tastes = list("cobwebs" = 1)
 	foodtype = MEAT | TOXIC
@@ -220,7 +220,7 @@
 	name = "spiderling"
 	desc = "It's slightly twitching in your hand. Ew..."
 	icon_state = "spiderling"
-	list_reagents = list(/datum/reagent/consumable/protein = 1, /datum/reagent/toxin = 4)
+	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/toxin = 4)
 	filling_color = "#00800"
 	tastes = list("cobwebs" = 1, "guts" = 2)
 	foodtype = MEAT | TOXIC
@@ -313,7 +313,7 @@
 	desc = "The best burrito for meat lovers."
 	icon_state = "carneburrito"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
 	filling_color = "#A0522D"
 	tastes = list("torilla" = 2, "meat" = 4)
 	foodtype = GRAIN | MEAT
@@ -323,7 +323,7 @@
 	desc = "A super spicy burrito."
 	icon_state = "fuegoburrito"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/protein = 20, /datum/reagent/consumable/capsaicin = 5, /datum/reagent/consumable/nutriment/vitamin = 3)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 20, /datum/reagent/consumable/capsaicin = 5, /datum/reagent/consumable/nutriment/vitamin = 3)
 	filling_color = "#FF2000"
 	tastes = list("torilla" = 2, "meat" = 3, "hot peppers" = 1)
 	foodtype = GRAIN | MEAT
@@ -416,7 +416,7 @@
 	desc = "The former skull of a damned human, filled with goliath meat. It has a decorative lava pool made of ketchup and hotsauce."
 	icon_state = "stuffed_legion"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/capsaicin = 1, /datum/reagent/medicine/tricordrazine = 5)
-	list_reagents = list(/datum/reagent/consumable/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/capsaicin = 2, /datum/reagent/medicine/tricordrazine = 10)
+	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/capsaicin = 2, /datum/reagent/medicine/tricordrazine = 10)
 	tastes = list("death" = 2, "rock" = 1, "meat" = 1, "hot peppers" = 1)
 	foodtype = MEAT
 
@@ -510,7 +510,7 @@
 	desc = "A traditional taco with meat, cheese, and lettuce."
 	icon_state = "taco"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	filling_color = "F0D830"
 	tastes = list("taco" = 4, "meat" = 2, "cheese" = 2, "lettuce" = 1)
 	foodtype = MEAT | DAIRY | GRAIN | VEGETABLES
@@ -519,7 +519,7 @@
 	desc = "A traditional taco with meat and cheese, minus the rabbit food."
 	icon_state = "taco_plain"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("taco" = 4, "meat" = 2, "cheese" = 2)
 	foodtype = MEAT | DAIRY | GRAIN
 
@@ -618,7 +618,7 @@
 	name = "Crab Rangoon"
 	desc = "Has many names, like crab puffs, cheese wontons, crab dumplings? Whatever you call them, they're a fabulous blast of cream cheesy crab."
 	icon_state = "crabrangoon"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	filling_color = "#f2efdc"
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("cream cheese" = 4, "crab" = 3, "crispiness" = 2)
@@ -727,7 +727,7 @@
 	desc = "Contains less than 15% real rabbit!"
 	icon_state = "chocolatebunny"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/protein = 1, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2) //contains real rabbit!
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2) //contains real rabbit!
 	filling_color = "#A0522D"
 
 /obj/item/reagent_containers/food/snacks/soup/mammi

@@ -105,7 +105,7 @@
 	name = "rice and pork"
 	desc = "Well, it looks like pork..."
 	icon_state = "riceporkbowl"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("rice" = 1, "meat" = 1)
 	foodtype = GRAIN | MEAT
 
@@ -113,7 +113,7 @@
 	name = "egg bowl"
 	desc = "A bowl of rice with a fried egg."
 	icon_state = "eggbowl"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("rice" = 1, "egg" = 1)
 	foodtype = GRAIN | MEAT //EGG = MEAT -NinjaNomNom 2017
 
@@ -140,6 +140,6 @@
 	desc = "A spicy and savory meat and rice dish."
 	icon_state = "gumbo"
 	trash = /obj/item/reagent_containers/glass/bowl
-	list_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/protein = 5)
+	list_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/nutriment/protein = 5)
 	tastes = list("building heat" = 2, "savory meat and vegtables" = 1)
 	foodtype = GRAIN | MEAT | VEGETABLES
