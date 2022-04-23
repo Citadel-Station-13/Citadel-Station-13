@@ -6,7 +6,6 @@
 	icon_dead = "gelatinous_dead"
 	mob_biotypes = MOB_ORGANIC
 	pass_flags = PASSTABLE | PASSGRILLE
-	ventcrawler = VENTCRAWLER_ALWAYS
 	gender = NEUTER
 	emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("blorbles")
@@ -37,6 +36,7 @@
 	create_reagents(300)
 	add_cell_sample()
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 7.5)
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/hostile/ooze/attacked_by(obj/item/I, mob/living/user)
 	if(!check_edible(I))
@@ -134,7 +134,7 @@
 	QDEL_NULL(consume)
 
 ///If this mob gets resisted by something, its trying to escape consumption.
-/mob/living/simple_animal/hostile/ooze/gelatinous/container_resist_act(mob/living/user)
+/mob/living/simple_animal/hostile/ooze/gelatinous/container_resist(mob/living/user)
 	. = ..()
 	if(!do_after(user, 6 SECONDS)) //6 second struggle
 		return FALSE
@@ -360,7 +360,7 @@
 		return
 
 	ooze.visible_message("<span class='nicegreen>[ooze] launches a mending globule!</span>", "<span class='notice'>You launch a mending globule.</span>")
-	var/obj/projectile/globule/globule = new (ooze.loc)
+	var/obj/item/projectile/globule/globule = new (ooze.loc)
 	globule.preparePixelProjectile(target, ooze, params)
 	globule.def_zone = ooze.zone_selected
 	globule.fire()
@@ -374,7 +374,7 @@
 	remove_ranged_ability()
 
 ///This projectile embeds into mobs and heals them over time.
-/obj/projectile/globule
+/obj/item/projectile/globule
 	name = "mending globule"
 	icon_state = "glob_projectile"
 	shrapnel_type = /obj/item/mending_globule
@@ -471,7 +471,7 @@
 		dump_inhabitant(FALSE)
 	return ..()
 
-/obj/structure/gel_cocoon/container_resist_act(mob/living/user)
+/obj/structure/gel_cocoon/container_resist(mob/living/user)
 	. = ..()
 	user.visible_message("<span class='notice'>You see [user] breaking out of [src]!</span>", \
 		"<span class='notice'>You start tearing the soft tissue of the gel cocoon</span>")

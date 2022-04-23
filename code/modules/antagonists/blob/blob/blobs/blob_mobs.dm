@@ -98,7 +98,6 @@
 
 /mob/living/simple_animal/hostile/blob/blobspore/independent
 	gold_core_spawnable = FALSE
-	independent = TRUE
 
 /mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, var/obj/structure/blob/factory/linked_node)
 	if(istype(linked_node))

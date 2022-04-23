@@ -914,3 +914,10 @@
 	id = /datum/reagent/card_powder/black
 	results = list(/datum/reagent/card_powder/black = 1)
 	required_reagents = list(/datum/reagent/card_powder/yellow = 12)
+
+//yuck
+
+/datum/chemical_reaction/yuck
+	results = list(/datum/reagent/yuck = 4)
+	required_reagents = list(/datum/reagent/fuel = 3)
+	required_container = /obj/item/reagent_containers/food/snacks/deadmouse

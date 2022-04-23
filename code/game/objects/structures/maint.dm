@@ -14,7 +14,6 @@ at the cost of risking a vicious bite.**/
 	var/list/loot = list(
 					/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton = 35,
 					/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie = 15,
-					/obj/item/trash/can = 15,
 					/obj/item/clothing/head/helmet/skull = 10,
 					/obj/item/restraints/handcuffs = 4,
 					/obj/item/restraints/handcuffs/cable/red = 1,

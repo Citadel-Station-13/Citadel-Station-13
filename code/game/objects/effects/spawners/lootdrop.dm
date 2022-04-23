@@ -785,10 +785,9 @@
 				/obj/item/trash/sosjerky = 10,
 				/obj/item/trash/pistachios = 10,
 				/obj/item/trash/boritos = 8,
-				/obj/item/trash/can/food/beans = 6,
 				/obj/item/trash/popcorn = 5,
 				/obj/item/trash/energybar = 5,
-				/obj/item/trash/can/food/peaches/maint = 4,
+				/obj/item/trash/can = 4,
 				/obj/item/trash/semki = 2)
 
 /obj/effect/spawner/lootdrop/botanical_waste
@@ -815,7 +814,7 @@
 
 /obj/effect/spawner/lootdrop/maint_drugs
 	name = "maint drugs spawner"
-	loot = list(/obj/item/reagent_containers/food/drinks/bottle/hooch = 50,
+	loot = list(/obj/item/reagent_containers/food/drinks/bottle/rum = 50,
 				/obj/item/clothing/mask/cigarette/rollie/cannabis = 15,
 				/obj/item/clothing/mask/cigarette/rollie/mindbreaker = 5,
 				/obj/item/reagent_containers/syringe = 15,

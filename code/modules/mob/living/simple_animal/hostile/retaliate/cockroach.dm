@@ -71,14 +71,14 @@
 /mob/living/simple_animal/hostile/retaliate/cockroach/ex_act(severity, target, origin) //Explosions are a terrible way to handle a cockroach.
 	return
 
-/obj/projectile/glockroachbullet
+/obj/item/projectile/glockroachbullet
 	damage = 10 //same damage as a hivebot
 	damage_type = BRUTE
 
 /obj/item/ammo_casing/glockroach
 	name = "0.9mm bullet casing"
 	desc = "A... 0.9mm bullet casing? What?"
-	projectile_type = /obj/projectile/glockroachbullet
+	projectile_type = /obj/item/projectile/glockroachbullet
 
 
 /mob/living/simple_animal/hostile/retaliate/cockroach/glockroach
@@ -106,15 +106,13 @@
 	melee_damage_upper = 10
 	obj_damage = 10
 	gold_core_spawnable = HOSTILE_SPAWN
-	attack_sound = 'sound/weapons/bladeslice.ogg'
-	attack_vis_effect = ATTACK_EFFECT_SLASH
 	faction = list("hostile")
 	sharpness = SHARP_POINTY
 	cockroach_cell_line = CELL_LINE_TABLE_HAUBEROACH
 
 /mob/living/basic/cockroach/hauberoach/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/caltrop, min_damage = 10, max_damage = 15, flags = (CALTROP_BYPASS_SHOES | CALTROP_SILENT))
+	AddComponent(/datum/component/caltrop, min_damage = 10, max_damage = 15, flags = (CALTROP_BYPASS_SHOES | CALTROP_IGNORE_WALKERS))
 
 ///Proc used to override the squashing behavior of the normal cockroach.
 /mob/living/simple_animal/hostile/retaliate/cockroach/hauberoach/proc/on_squish(mob/living/cockroach, mob/living/living_target)

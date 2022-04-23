@@ -31,7 +31,7 @@
 	desc = "A small cylinder filled with rice and fish."
 	icon_state = "sushie_basic"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1/datum/reagent/consumable/nutriment/protein = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 1)
 	bitesize = 1
 	filling_color = "#F2EEEA" //rgb(242, 238, 234)
 	tastes = list("fish" = 1, "rice" = 1, "salt" = 1)

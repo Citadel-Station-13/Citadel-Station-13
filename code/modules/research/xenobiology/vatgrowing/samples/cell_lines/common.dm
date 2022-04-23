@@ -37,7 +37,7 @@
 							/datum/reagent/consumable/eggyolk = 1,
 							/datum/reagent/consumable/nutriment/vitamin = 2)
 
-	suppressive_reagents = list(/datum/reagent/fuel/oil = -4,
+	suppressive_reagents = list(/datum/reagent/oil = -4,
 								/datum/reagent/toxin = -2)
 
 	virus_suspectibility = 1
@@ -124,7 +124,7 @@
 	required_reagents = list(
 						/datum/reagent/consumable/nutriment/protein,
 						/datum/reagent/liquidgibs,
-						/datum/reagent/medicine/c2/synthflesh) //Nuke this if the dispenser becomes xenobio meta.
+						/datum/reagent/medicine/synthflesh) //Nuke this if the dispenser becomes xenobio meta.
 
 	supplementary_reagents = list(
 						/datum/reagent/consumable/honey = 8, //Hunny.
@@ -164,7 +164,7 @@
 	desc = "Cartilaginous cyprinid cells"
 	required_reagents = list(
 						/datum/reagent/consumable/nutriment/protein,
-						/datum/reagent/medicine/c2/synthflesh,
+						/datum/reagent/medicine/synthflesh,
 						/datum/reagent/consumable/nutriment)
 
 	supplementary_reagents = list(
@@ -241,7 +241,7 @@
 	desc = "Blobular myocytes"
 	required_reagents = list(
 	 					/datum/reagent/consumable/nutriment/protein,
-	 					/datum/reagent/medicine/c2/synthflesh,
+	 					/datum/reagent/medicine/synthflesh,
 	 					/datum/reagent/sulfur) //grind flares to get this
 
 	supplementary_reagents = list(
@@ -324,18 +324,18 @@
 							/datum/reagent/consumable/ethanol/bug_spray = -4)
 
 	virus_suspectibility = 0
-	resulting_atoms = list(/mob/living/simple_animal/hostile/cockroach = 5)
+	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/cockroach = 5)
 
 /datum/micro_organism/cell_line/glockroach
 	desc = "Gattodeoid anthropod cells"
 	required_reagents = list(
 		/datum/reagent/consumable/nutriment/protein,
-		/datum/reagent/drug/maint/powder,
+		/datum/reagent/drug/space_drugs,
 		/datum/reagent/iron)
 
 	supplementary_reagents = list(
-		/datum/reagent/gunpowder = 6,
-		/datum/reagent/drug/maint/tar = 4,
+		/datum/reagent/blackpowder = 6,
+		/datum/reagent/drug/krokodil = 4,
 		/datum/reagent/yuck = 2,
 		/datum/reagent/growthserum = 2)
 
@@ -345,7 +345,7 @@
 		/datum/reagent/consumable/ethanol/bug_spray = -4)
 
 	virus_suspectibility = 0
-	resulting_atoms = list(/mob/living/basic/cockroach/glockroach = 2)
+	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/cockroach/glockroach = 2)
 
 /datum/micro_organism/cell_line/hauberoach
 	desc = "Hattodeoid anthropod cells"
@@ -359,7 +359,7 @@
 		/datum/reagent/medicine/pen_acid = 4, //Prussian Blue is an antidote for radioactive thallium poisoning, among other things. The pickelhaube was worn by Prussian/German officers. You can tell I'm running out of ideas here.
 		/datum/reagent/yuck = 2,
 		/datum/reagent/blood = 2,
-		/datum/reagent/iron = 2) //they need metal to grow their helmets
+		/datum/reagent/aluminium = 2) //they need metal to grow their helmets
 
 	suppressive_reagents = list(
 		/datum/reagent/toxin/pestkiller = -2,
@@ -367,7 +367,7 @@
 		/datum/reagent/consumable/ethanol/cognac = -4)
 
 	virus_suspectibility = 0
-	resulting_atoms = list(/mob/living/basic/cockroach/hauberoach = 2)
+	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/cockroach/hauberoach = 2)
 
 
 
@@ -411,7 +411,7 @@
 
 	suppressive_reagents = list(
 						/datum/reagent/consumable/sodiumchloride = -3,
-						/datum/reagent/medicine/c2/syriniver = -2)
+						/datum/reagent/medicine/thializid = -2)
 	virus_suspectibility = 0.5
 	resulting_atoms = list(/mob/living/simple_animal/hostile/vatbeast = 1)
 

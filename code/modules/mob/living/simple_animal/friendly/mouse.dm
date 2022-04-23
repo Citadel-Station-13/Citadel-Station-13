@@ -197,6 +197,18 @@ GLOBAL_VAR(tom_existed)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 
+/obj/item/food/deadmouse/afterattack(obj/target, mob/living/user, proximity_flag)
+	if(proximity_flag && reagents && target.is_open_container())
+		// is_open_container will not return truthy if target.reagents doesn't exist
+		var/datum/reagents/target_reagents = target.reagents
+		var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
+		if(target_reagents.has_reagent(/datum/reagent/fuel) && target_reagents.trans_to(src, trans_amount))
+			to_chat(user, span_notice("You dip [src] into [target]."))
+		else
+			to_chat(user, span_warning("That's a terrible idea."))
+	else
+		return ..()
+
 /mob/living/simple_animal/mouse/proc/miasma(datum/gas_mixture/environment, check_temp = FALSE)
 	if(isturf(src.loc) && isopenturf(src.loc))
 		var/turf/open/ST = src.loc
