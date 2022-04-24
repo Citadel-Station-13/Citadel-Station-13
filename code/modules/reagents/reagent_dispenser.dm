@@ -223,6 +223,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	icon_state = "virus_food"
 	reagent_id = /datum/reagent/consumable/virus_food
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30)
+
 /obj/structure/reagent_dispensers/cooking_oil
 	name = "vat of cooking oil"
 	desc = "A huge metal vat with a tap on the front. Filled with cooking oil for use in frying food."

@@ -4012,9 +4012,7 @@
 	},
 /area/command/heads_quarters/hos)
 "ahz" = (
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
@@ -10400,9 +10398,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = -32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /obj/structure/closet/secure_closet/security/sec,
 /turf/open/floor/plasteel/dark/side{
 	dir = 10
@@ -23733,9 +23729,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
-/obj/structure/reagent_dispensers/virusfood{
-	pixel_x = -32
-	},
+/obj/structure/reagent_dispensers/wall/virusfood/directional/west,
 /obj/item/storage/box/beakers{
 	pixel_x = -6;
 	pixel_y = 8
@@ -28320,9 +28314,7 @@
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/radio,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},

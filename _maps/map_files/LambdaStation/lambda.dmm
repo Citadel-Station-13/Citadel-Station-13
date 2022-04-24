@@ -3448,7 +3448,7 @@
 /area/security/execution/education)
 "ahJ" = (
 /obj/structure/table,
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = 29
 	},
 /obj/item/storage/backpack/duffelbag/sec/surgery{
@@ -11081,9 +11081,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
 /turf/open/floor/plasteel/dark,
@@ -13482,7 +13480,7 @@
 	dir = 1
 	},
 /obj/machinery/recharger,
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel/dark,
@@ -14058,7 +14056,7 @@
 /turf/closed/wall/r_wall,
 /area/security/checkpoint/science)
 "azx" = (
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = -30
 	},
 /obj/structure/closet/secure_closet/security/science,
@@ -29285,7 +29283,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "bek" = (
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_y = 30
 	},
 /obj/machinery/recharger,
@@ -42585,9 +42583,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bOh" = (
-/obj/structure/reagent_dispensers/virusfood{
-	pixel_y = 30
-	},
+/obj/structure/reagent_dispensers/wall/virusfood/directional/north,
 /obj/structure/table/glass,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
@@ -43012,7 +43008,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "bPi" = (
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = 30
 	},
 /obj/structure/table,
@@ -52048,7 +52044,7 @@
 /area/hallway/secondary/entry)
 "cqh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1,
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_y = 30
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{

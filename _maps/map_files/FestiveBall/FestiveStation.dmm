@@ -6457,9 +6457,7 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = -32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /turf/open/floor/festive/wooden/wooden1,
 /area/ai_monitored/security/armory)
 "aqv" = (
@@ -13060,7 +13058,7 @@
 /area/security)
 "aIa" = (
 /obj/structure/closet/bombcloset/security,
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = 30
 	},
 /obj/effect/turf_decal/tile/red,
@@ -14900,9 +14898,7 @@
 /obj/machinery/status_display/ai{
 	pixel_y = 32
 	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -27413,9 +27409,7 @@
 	},
 /area/medical/virology)
 "bsD" = (
-/obj/structure/reagent_dispensers/virusfood{
-	pixel_x = -32
-	},
+/obj/structure/reagent_dispensers/wall/virusfood/directional/west,
 /obj/structure/table/glass,
 /obj/structure/cable/white{
 	icon_state = "1-2"

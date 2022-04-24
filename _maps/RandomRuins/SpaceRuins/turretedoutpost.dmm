@@ -167,9 +167,7 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "aC" = (
 /obj/structure/table/reinforced,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/turretedoutpost)
 "aD" = (

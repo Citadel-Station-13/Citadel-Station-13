@@ -1803,7 +1803,7 @@
 	dir = 8
 	},
 /obj/structure/chair,
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_y = 30
 	},
 /obj/effect/turf_decal/tile/red{
@@ -7839,7 +7839,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "oC" = (
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = -30
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -9390,7 +9390,7 @@
 /obj/structure/table,
 /obj/item/storage/box,
 /obj/item/storage/box,
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_y = 30
 	},
 /obj/effect/turf_decal/tile/red{

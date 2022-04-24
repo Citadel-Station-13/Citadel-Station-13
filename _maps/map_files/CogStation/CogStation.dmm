@@ -10119,9 +10119,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 10
 	},
@@ -59385,9 +59383,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/virusfood{
-	pixel_x = -32
-	},
+/obj/structure/reagent_dispensers/wall/virusfood/directional/west,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
 	},

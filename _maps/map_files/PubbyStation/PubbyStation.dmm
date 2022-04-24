@@ -5985,7 +5985,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_y = 30
 	},
 /obj/effect/turf_decal/tile/red{
@@ -15255,7 +15255,7 @@
 	departmentType = 5;
 	pixel_x = -32
 	},
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_y = 30
 	},
 /obj/machinery/computer/security,
@@ -20810,9 +20810,7 @@
 	departmentType = 5;
 	pixel_y = 30
 	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -25517,7 +25515,7 @@
 /area/security/checkpoint/medical)
 "bjZ" = (
 /obj/machinery/computer/secure_data,
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_y = 30
 	},
 /obj/effect/turf_decal/tile/red{
@@ -35454,9 +35452,7 @@
 /turf/open/floor/plasteel/dark,
 /area/command/heads_quarters/rd)
 "bEW" = (
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/structure/filingcabinet/security,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -38984,9 +38980,7 @@
 /area/medical/virology)
 "bMJ" = (
 /obj/structure/table/glass,
-/obj/structure/reagent_dispensers/virusfood{
-	pixel_x = 32
-	},
+/obj/structure/reagent_dispensers/wall/virusfood/directional/east,
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/reagent_containers/dropper,
@@ -43389,9 +43383,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "bWC" = (
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/structure/closet/secure_closet/security/engine,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -50869,7 +50861,7 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel/showroomfloor,
