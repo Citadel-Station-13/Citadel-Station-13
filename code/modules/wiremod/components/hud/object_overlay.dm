@@ -29,7 +29,7 @@
 	var/list/active_overlays = list()
 	var/list/options_map
 
-/obj/item/circuit_component/object_overlay/Initialize()
+/obj/item/circuit_component/object_overlay/Initialize(mapload)
 	. = ..()
 	target = add_input_port("Target", PORT_TYPE_ATOM)
 

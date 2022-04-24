@@ -95,7 +95,7 @@
 	GLOB.pai_list -= src
 	return ..()
 
-/mob/living/silicon/pai/Initialize()
+/mob/living/silicon/pai/Initialize(mapload)
 	var/obj/item/paicard/P = loc
 	START_PROCESSING(SSfastprocess, src)
 	GLOB.pai_list += src
@@ -143,7 +143,7 @@
 	custom_holoform.Grant(src)
 	emitter_next_use = world.time + 10 SECONDS
 
-/mob/living/silicon/pai/deployed/Initialize()
+/mob/living/silicon/pai/deployed/Initialize(mapload)
 	. = ..()
 	fold_out(TRUE)
 

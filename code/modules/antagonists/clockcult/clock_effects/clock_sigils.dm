@@ -199,7 +199,7 @@
 	sigil_name = "Sigil of Transmission"
 	affects_servants = TRUE
 
-/obj/effect/clockwork/sigil/transmission/Initialize()
+/obj/effect/clockwork/sigil/transmission/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -228,7 +228,7 @@
 	else if(get_clockwork_power())
 		to_chat(L, "<span class='brass'>You feel a slight, static shock.</span>")
 
-/obj/effect/clockwork/sigil/transmission/Initialize()
+/obj/effect/clockwork/sigil/transmission/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 

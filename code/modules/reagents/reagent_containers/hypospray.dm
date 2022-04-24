@@ -370,7 +370,7 @@
 	quickload = TRUE
 	penetrates = TRUE
 
-/obj/item/hypospray/mkii/Initialize()
+/obj/item/hypospray/mkii/Initialize(mapload)
 	. = ..()
 	if(!spawnwithvial)
 		update_icon()

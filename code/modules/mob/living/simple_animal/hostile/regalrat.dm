@@ -29,7 +29,7 @@
 	var/datum/action/cooldown/riot
 	///Number assigned to rats and mice, checked when determining infighting.
 
-/mob/living/simple_animal/hostile/regalrat/Initialize()
+/mob/living/simple_animal/hostile/regalrat/Initialize(mapload)
 	. = ..()
 	coffer = new /datum/action/cooldown/coffer
 	coffer.Grant(src)
@@ -183,7 +183,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	faction = list("rat")
 
-/mob/living/simple_animal/hostile/rat/Initialize()
+/mob/living/simple_animal/hostile/rat/Initialize(mapload)
 	. = ..()
 	SSmobs.cheeserats += src
 	AddComponent(/datum/component/swarming)

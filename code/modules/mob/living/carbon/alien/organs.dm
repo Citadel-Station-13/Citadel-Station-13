@@ -4,7 +4,7 @@
 	var/list/alien_powers = list()
 	organ_flags = ORGAN_NO_SPOIL|ORGAN_EDIBLE
 
-/obj/item/organ/alien/Initialize()
+/obj/item/organ/alien/Initialize(mapload)
 	. = ..()
 	for(var/A in alien_powers)
 		if(ispath(A))

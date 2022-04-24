@@ -16,7 +16,7 @@
 	var/datum/port/input/secondary_package
 	var/datum/port/input/enc_key
 
-/obj/item/circuit_component/ntnet_send/Initialize()
+/obj/item/circuit_component/ntnet_send/Initialize(mapload)
 	. = ..()
 	data_package = add_input_port("Data Package", PORT_TYPE_ANY)
 	secondary_package = add_input_port("Secondary Package", PORT_TYPE_ANY)

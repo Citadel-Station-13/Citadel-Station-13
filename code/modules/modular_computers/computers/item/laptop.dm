@@ -35,7 +35,7 @@
 		if(card_slot2.stored_card)
 			. += "<span class='notice'>\The [src] has \a [card_slot2] with an id inside, Alt-click to remove the id.</span>"
 
-/obj/item/modular_computer/laptop/Initialize()
+/obj/item/modular_computer/laptop/Initialize(mapload)
 	. = ..()
 
 	if(start_open && !screen_on)

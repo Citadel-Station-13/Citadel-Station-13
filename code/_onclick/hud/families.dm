@@ -12,7 +12,7 @@
 /atom/movable/screen/wanted/New()
 	return ..()
 
-/atom/movable/screen/wanted/Initialize()
+/atom/movable/screen/wanted/Initialize(mapload)
 	. = ..()
 	update_icon()
 

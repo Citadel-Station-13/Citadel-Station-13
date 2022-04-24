@@ -47,7 +47,7 @@
 
 // Bags are prohibited from this due to the potential explotation of objects, same with brought
 
-/obj/item/dogborg/sleeper/Initialize()
+/obj/item/dogborg/sleeper/Initialize(mapload)
 	. = ..()
 	update_icon()
 	item_flags |= NOBLUDGEON //No more attack messages

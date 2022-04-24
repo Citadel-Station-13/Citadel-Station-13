@@ -97,7 +97,7 @@
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/mjollnir/Initialize()
+/obj/item/mjollnir/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)

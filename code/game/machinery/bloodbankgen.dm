@@ -17,7 +17,7 @@
 	var/efficiency = 0
 	var/productivity = 0
 
-/obj/machinery/bloodbankgen/Initialize()
+/obj/machinery/bloodbankgen/Initialize(mapload)
 	. = ..()
 	create_reagents(maxbloodstored, AMOUNT_VISIBLE)
 	update_icon()

@@ -26,7 +26,7 @@
 	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, the T-ray Scanner mode lets you see underfloor objects such as cables and pipes, and the Radiation Scanner mode let's you see objects contaminated by radiation. Each lens has been replaced with a corrective lens."
 	vision_correction = 1
 
-/obj/item/clothing/glasses/meson/engine/Initialize()
+/obj/item/clothing/glasses/meson/engine/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	update_icon()

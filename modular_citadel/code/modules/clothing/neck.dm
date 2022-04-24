@@ -18,6 +18,6 @@
 	playsound(owner, 'sound/misc/souldeath.ogg', 100, FALSE)
 
 
-/obj/item/clothing/neck/undertale/Initialize()
+/obj/item/clothing/neck/undertale/Initialize(mapload)
 	..()
 	AddComponent(/datum/component/souldeath/neck)

@@ -123,7 +123,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	user.visible_message("<span class='suicide'>[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer.</span>")
 	return (TOXLOSS|OXYLOSS)
 
-/obj/item/clothing/mask/cigarette/Initialize()
+/obj/item/clothing/mask/cigarette/Initialize(mapload)
 	. = ..()
 	create_reagents(chem_volume, INJECTABLE | NO_REACT, NO_REAGENTS_VALUE) // so it doesn't react until you light it
 	if(list_reagents)
@@ -398,7 +398,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	throwforce = 0
 	grind_results = list(/datum/reagent/carbon = 2)
 
-/obj/item/cigbutt/Initialize()
+/obj/item/cigbutt/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/trash)
 
@@ -422,7 +422,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	list_reagents = null
 	var/packeditem = 0
 
-/obj/item/clothing/mask/cigarette/pipe/Initialize()
+/obj/item/clothing/mask/cigarette/pipe/Initialize(mapload)
 	. = ..()
 	name = "empty [initial(name)]"
 
@@ -532,7 +532,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/oil = 5)
 	custom_price = PRICE_ALMOST_CHEAP
 
-/obj/item/lighter/Initialize()
+/obj/item/lighter/Initialize(mapload)
 	. = ..()
 	if(!overlay_state)
 		overlay_state = pick(overlay_list)
@@ -670,7 +670,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		COLOR_ASSEMBLY_PURPLE
 		)
 
-/obj/item/lighter/greyscale/Initialize()
+/obj/item/lighter/greyscale/Initialize(mapload)
 	. = ..()
 	if(!lighter_color)
 		lighter_color = pick(color_list)
@@ -917,7 +917,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/list/list_reagents = list() //For the base reagents bongs could get
 
 
-/obj/item/bong/Initialize()
+/obj/item/bong/Initialize(mapload)
 	. = ..()
 	create_reagents(chem_volume, NO_REACT) // so it doesn't react until you light it
 	reagents.add_reagent_list(list_reagents)

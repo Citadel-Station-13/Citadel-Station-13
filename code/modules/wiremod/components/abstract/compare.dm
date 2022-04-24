@@ -21,7 +21,7 @@
 
 	var/list/datum/port/input/compare_ports = list()
 
-/obj/item/circuit_component/compare/Initialize()
+/obj/item/circuit_component/compare/Initialize(mapload)
 	. = ..()
 	for(var/port_id in 1 to input_port_amount)
 		var/letter = ascii2text(text2ascii("A") + (port_id-1))

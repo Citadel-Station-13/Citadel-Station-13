@@ -23,7 +23,7 @@
 	var/playstyle_string = "<span class='heavy_brass'>You are a bug, yell at whoever spawned you!</span>"
 	var/empower_string = "<span class='heavy_brass'>You have nothing to empower, yell at the coders!</span>" //Shown to the mob when the herald beacon activates
 
-/mob/living/simple_animal/hostile/clockwork/Initialize()
+/mob/living/simple_animal/hostile/clockwork/Initialize(mapload)
 	. = ..()
 	update_values()
 

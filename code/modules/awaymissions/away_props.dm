@@ -21,7 +21,7 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	var/strength = 30
 
-/obj/effect/wind/Initialize()
+/obj/effect/wind/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj,src)
 

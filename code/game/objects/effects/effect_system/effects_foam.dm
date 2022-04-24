@@ -90,7 +90,7 @@
 /obj/effect/particle_effect/foam/long_life
 	lifetime = 150
 
-/obj/effect/particle_effect/foam/Initialize()
+/obj/effect/particle_effect/foam/Initialize(mapload)
 	. = ..()
 	MakeSlippery()
 	create_reagents(1000, NONE, NO_REAGENTS_VALUE) //limited by the size of the reagent holder anyway.
@@ -271,7 +271,7 @@
 	attack_hand_speed = CLICK_CD_MELEE
 	attack_hand_is_action = TRUE
 
-/obj/structure/foamedmetal/Initialize()
+/obj/structure/foamedmetal/Initialize(mapload)
 	. = ..()
 	air_update_turf(1)
 
@@ -305,7 +305,7 @@
 	max_integrity = 10
 	pass_flags_self = PASSGLASS
 
-/obj/structure/foamedmetal/resin/Initialize()
+/obj/structure/foamedmetal/resin/Initialize(mapload)
 	. = ..()
 	neutralize_air()
 	addtimer(CALLBACK(src, .proc/neutralize_air), 5)		// yeah this sucks, maybe when auxmos is out

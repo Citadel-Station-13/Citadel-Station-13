@@ -22,7 +22,7 @@
 	var/list/numbers = list()
 	var/counter_appearance
 
-/obj/item/circuit_component/counter_overlay/Initialize()
+/obj/item/circuit_component/counter_overlay/Initialize(mapload)
 	. = ..()
 	counter_number = add_input_port("Displayed Number", PORT_TYPE_NUMBER)
 

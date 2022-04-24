@@ -33,7 +33,7 @@
 	var/headphones_on = FALSE
 	custom_price = PRICE_ALMOST_CHEAP
 
-/obj/item/clothing/ears/headphones/Initialize()
+/obj/item/clothing/ears/headphones/Initialize(mapload)
 	. = ..()
 	update_icon()
 

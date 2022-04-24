@@ -39,7 +39,7 @@ RLD
 	var/custom_range = 7
 	var/upgrade = FALSE
 
-/obj/item/construction/Initialize()
+/obj/item/construction/Initialize(mapload)
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
@@ -464,7 +464,7 @@ RLD
 				return TRUE
 	qdel(rcd_effect)
 
-/obj/item/construction/rcd/Initialize()
+/obj/item/construction/rcd/Initialize(mapload)
 	. = ..()
 	GLOB.rcd_list += src
 
@@ -561,7 +561,7 @@ RLD
 		cut_overlays()	//To prevent infinite stacking of overlays
 		add_overlay("[icon_state]_charge[ratio]")
 
-/obj/item/construction/rcd/Initialize()
+/obj/item/construction/rcd/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -699,7 +699,7 @@ RLD
 	var/color_choice = null
 
 
-/obj/item/construction/rld/Initialize()
+/obj/item/construction/rld/Initialize(mapload)
 	. = ..()
 	update_icon()
 

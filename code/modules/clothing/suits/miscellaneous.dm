@@ -185,7 +185,7 @@
 	body_parts_covered = ARMS
 	actions_types = list(/datum/action/item_action/toggle_wings)
 
-/obj/item/clothing/suit/toggle/owlwings/Initialize()
+/obj/item/clothing/suit/toggle/owlwings/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.security_vest_allowed
 
@@ -259,7 +259,7 @@
 	icon_state = "ponchoshame"
 	item_state = "ponchoshame"
 
-/obj/item/clothing/suit/poncho/ponchoshame/Initialize()
+/obj/item/clothing/suit/poncho/ponchoshame/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, SHAMEBRERO_TRAIT)
 
@@ -692,7 +692,7 @@
 	armor = list(MELEE = 40, BULLET = 45, LASER = 45, ENERGY = 35, BOMB = 40, BIO = 25, RAD = 25, FIRE = 35, ACID = 50)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/centcom
 
-/obj/item/clothing/suit/hooded/wintercoat/centcom/Initialize()
+/obj/item/clothing/suit/hooded/wintercoat/centcom/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.security_wintercoat_allowed
 
@@ -708,7 +708,7 @@
 	armor = list(MELEE = 25, BULLET = 30, LASER = 30, ENERGY = 10, BOMB = 25, BIO = 0, RAD = 0, FIRE = 0, ACID = 50)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/captain
 
-/obj/item/clothing/suit/hooded/wintercoat/captain/Initialize()
+/obj/item/clothing/suit/hooded/wintercoat/captain/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.security_wintercoat_allowed
 
@@ -736,7 +736,7 @@
 	armor = list(MELEE = 25, BULLET = 15, LASER = 30, ENERGY = 10, BOMB = 25, BIO = 0, RAD = 0, FIRE = 0, ACID = 45)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/security
 
-/obj/item/clothing/suit/hooded/wintercoat/security/Initialize()
+/obj/item/clothing/suit/hooded/wintercoat/security/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.security_wintercoat_allowed
 
@@ -752,7 +752,7 @@
 	armor = list(MELEE = 35, BULLET = 35, LASER = 35, ENERGY = 15, BOMB = 30, BIO = 0, RAD = 0, FIRE = 0, ACID = 55)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/hos
 
-/obj/item/clothing/suit/hooded/wintercoat/hos/Initialize()
+/obj/item/clothing/suit/hooded/wintercoat/hos/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.security_wintercoat_allowed
 
@@ -1089,7 +1089,7 @@
 	armor = list(MELEE = 15, BULLET = 8, LASER = 25, ENERGY = 5, BOMB = 12, BIO = 0, RAD = 0, FIRE = 0, ACID = 50)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/durathread
 
-/obj/item/clothing/suit/hooded/wintercoat/durathread/Initialize()
+/obj/item/clothing/suit/hooded/wintercoat/durathread/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.security_wintercoat_allowed
 

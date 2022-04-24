@@ -25,7 +25,7 @@
 	wound_bonus = -15
 	bare_wound_bonus = 15
 
-/obj/item/spear/Initialize()
+/obj/item/spear/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)

@@ -3,6 +3,7 @@
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/incise, /datum/surgery_step/handle_cavity, /datum/surgery_step/close)
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST)
+
 //handle cavity
 /datum/surgery_step/handle_cavity
 	name = "implant item"
@@ -11,11 +12,15 @@
 	implements = list(/obj/item = 100)
 	repeatable = TRUE
 	time = 32
+	preop_sound = 'sound/surgery/organ1.ogg'
+	success_sound = 'sound/surgery/organ2.ogg'
 	var/obj/item/IC = null
+
 /datum/surgery_step/handle_cavity/tool_check(mob/user, obj/item/tool)
 	if(istype(tool, /obj/item/cautery) || istype(tool, /obj/item/gun/energy/laser))
 		return FALSE
 	return !tool.get_temperature()
+
 /datum/surgery_step/handle_cavity/preop(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/bodypart/chest/CH = target.get_bodypart(BODY_ZONE_CHEST)
 	IC = CH.cavity_item

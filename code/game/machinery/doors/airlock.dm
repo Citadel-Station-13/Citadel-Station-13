@@ -106,7 +106,7 @@
 	/// sigh
 	var/unelectrify_timerid
 
-/obj/machinery/door/airlock/Initialize()
+/obj/machinery/door/airlock/Initialize(mapload)
 	. = ..()
 	wires = new wiretypepath(src) //CIT CHANGE - makes it possible for airlocks to have different wire datums
 	if(frequency)

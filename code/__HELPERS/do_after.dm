@@ -121,7 +121,7 @@
 			break
 
 	// CLEANUP
-	qdel(progbar)
+	progbar.end_progress()
 	// If we failed, just return.
 	if(!.)
 		return FALSE
@@ -206,8 +206,9 @@
 		if((!drifting && user.loc != user_loc) || target.loc != target_loc || (!ignorehelditem && user.get_active_held_item() != holding) || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
-	if(progress)
-		qdel(progbar)
+
+	if(!QDELETED(progbar))
+		progbar.end_progress()
 
 	if(!QDELETED(target))
 		LAZYREMOVE(user.do_afters, target)
@@ -296,8 +297,10 @@
 			if(user.get_active_held_item() != holding)
 				. = 0
 				break
-	if(progress)
-		qdel(progbar)
+
+	if(!QDELETED(progbar))
+		progbar.end_progress()
+
 	if(!QDELETED(target))
 		LAZYREMOVE(user.do_afters, target)
 
@@ -351,8 +354,10 @@
 				if((!drifting && user_loc != user.loc) || QDELETED(target) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
 					. = 0
 					break mainloop
-	if(progbar)
-		qdel(progbar)
+
+	if(!QDELETED(progbar))
+		progbar.end_progress()
+
 	for(var/thing in targets)
 		var/atom/target = thing
 		if(!QDELETED(target))

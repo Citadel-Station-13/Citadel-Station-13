@@ -40,7 +40,7 @@
 	death_sound = 'sound/voice/hiss6.ogg'
 	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
 
-/mob/living/simple_animal/hostile/alien/Initialize()
+/mob/living/simple_animal/hostile/alien/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW)
 
@@ -86,7 +86,7 @@
 	melee_damage_upper = 20
 	del_on_death = TRUE
 	loot = list(/obj/effect/mob_spawn/alien/corpse/humanoid/sentinel)
-	
+
 
 /mob/living/simple_animal/hostile/alien/queen
 	name = "alien queen"

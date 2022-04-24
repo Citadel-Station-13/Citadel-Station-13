@@ -26,7 +26,7 @@
 	variable_name.possible_options = null
 	return ..()
 
-/obj/item/circuit_component/getter/Initialize()
+/obj/item/circuit_component/getter/Initialize(mapload)
 	. = ..()
 	value = add_output_port("Value", PORT_TYPE_ANY)
 

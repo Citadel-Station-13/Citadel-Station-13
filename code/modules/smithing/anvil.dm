@@ -68,7 +68,7 @@
 	RECIPE_GLAIVE = /obj/item/smithing/glaivehead,
 	RECIPE_PIKE = /obj/item/smithing/pikehead)
 
-/obj/structure/anvil/Initialize()
+/obj/structure/anvil/Initialize(mapload)
 	..()
 	currentquality = anvilquality
 

@@ -33,7 +33,7 @@
 /obj/machinery/power/rad_collector/anchored
 	anchored = TRUE
 
-/obj/machinery/power/rad_collector/Initialize()
+/obj/machinery/power/rad_collector/Initialize(mapload)
 	. = ..()
 	Radio = new /obj/item/radio(src)
 	Radio.listening = 0

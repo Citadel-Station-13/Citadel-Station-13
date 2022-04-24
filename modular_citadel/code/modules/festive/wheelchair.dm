@@ -1,4 +1,4 @@
-/obj/vehicle/sealed/vectorcraft/rideable/Initialize()
+/obj/vehicle/sealed/vectorcraft/rideable/Initialize(mapload)
 	. = ..()
 
 /obj/vehicle/sealed/vectorcraft/rideable/post_unbuckle_mob(mob/living/M)

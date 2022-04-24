@@ -371,3 +371,9 @@
 	id = /datum/reagent/medicine/system_cleaner
 	results = list(/datum/reagent/medicine/system_cleaner = 4)
 	required_reagents = list(/datum/reagent/iron = 2, /datum/reagent/oil = 2, /datum/reagent/medicine/calomel = 2, /datum/reagent/acetone = 2)
+
+/datum/chemical_reaction/limb_regrowth
+	name = "Carcinisoprojection Jelly"
+	id = /datum/reagent/medicine/limb_regrowth
+	results = list(/datum/reagent/medicine/limb_regrowth = 2)
+	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/slime_toxin = 1)

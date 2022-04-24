@@ -137,7 +137,7 @@
 	item_state = "satchel_carrot"
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 
-/obj/item/storage/backpack/satchel/carrot/Initialize()
+/obj/item/storage/backpack/satchel/carrot/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/items/toysqueak1.ogg'=1), 50)
 
