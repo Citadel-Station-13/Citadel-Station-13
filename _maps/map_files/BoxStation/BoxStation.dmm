@@ -45079,7 +45079,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "chi" = (
-/obj/machinery/atmospherics/pipe/manifold4w/visible,
+/obj/machinery/atmospherics/pipe/manifold4w/general/visible,
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
