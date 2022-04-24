@@ -53,7 +53,7 @@
 	if(eye_blind) // UNCONSCIOUS or has blind trait, or has temporary blindness
 		if(stat == CONSCIOUS || stat == SOFT_CRIT)
 			throw_alert("blind", /atom/movable/screen/alert/blind)
-		overlay_fullscreen("blind", /atom/movable/screen/fullscreen/scaled/blind)
+		overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blind)
 		// You are blind why should you be able to make out details like color, only shapes near you
 		// add_client_colour(/datum/client_colour/monochrome/blind)
 	else // CONSCIOUS no blind trait, no blindness
@@ -66,42 +66,29 @@
 /mob/proc/blur_eyes(amount)
 	if(amount>0)
 		eye_blurry = max(amount, eye_blurry)
-	update_eyeblur()
+	update_eye_blur()
 
 /**
   * Adjust the current blurriness of the mobs vision by amount
   */
 /mob/proc/adjust_blurriness(amount)
 	eye_blurry = max(eye_blurry+amount, 0)
-	update_eyeblur()
+	update_eye_blur()
 
 ///Set the mobs blurriness of vision to an amount
 /mob/proc/set_blurriness(amount)
 	eye_blurry = max(amount, 0)
-	update_eyeblur()
+	update_eye_blur()
 
-/mob/proc/update_eyeblur()
-	remove_eyeblur()
+///Apply the blurry overlays to a mobs clients screen
+/mob/proc/update_eye_blur()
+	if(!client)
+		return
+	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	if(eye_blurry)
-		add_eyeblur()
-
-/mob/proc/add_eyeblur()
-	if(!client)
-		return
-	var/list/screens = list(hud_used.plane_masters["[GAME_PLANE]"], hud_used.plane_masters["[FLOOR_PLANE]"],
-							hud_used.plane_masters["[WALL_PLANE]"], hud_used.plane_masters["[ABOVE_WALL_PLANE]"])
-	for(var/A in screens)
-		var/atom/movable/screen/plane_master/P = A
-		P.add_filter("blurry_eyes", 2, EYE_BLUR(clamp(eye_blurry*0.1,0.6,3)))
-
-/mob/proc/remove_eyeblur()
-	if(!client)
-		return
-	var/list/screens = list(hud_used.plane_masters["[GAME_PLANE]"], hud_used.plane_masters["[FLOOR_PLANE]"],
-							hud_used.plane_masters["[WALL_PLANE]"], hud_used.plane_masters["[ABOVE_WALL_PLANE]"])
-	for(var/A in screens)
-		var/atom/movable/screen/plane_master/P = A
-		P.remove_filter("blurry_eyes")
+		game_plane_master_controller.add_filter("eye_blur", 1, gauss_blur_filter(clamp(eye_blurry * 0.1, 0.6, 3)))
+	else
+		game_plane_master_controller.remove_filter("eye_blur")
 
 ///Adjust the drugginess of a mob
 /mob/proc/adjust_drugginess(amount)

@@ -487,10 +487,8 @@ BOX_RANDOM_ENGINE Box P.A.C.M.A.N,1
 ## Allows players to set a hexadecimal color of their choice as skin tone, on top of the standard ones.
 ALLOW_CUSTOM_SKINTONES
 
-## Enables the FoV component, which hides objects and mobs behind the parent from their sight, unless they turn around, duh.
-## Camera mobs, AIs, ghosts and some other are of course exempt from this. This also doesn't influence simplemob AI, for the best.
-#USE_FIELD_OF_VISION
-
+## Whether native FoV is enabled for all people.
+#NATIVE_FOV
 
 ## Allows pAI custom holoforms
 PAI_CUSTOM_HOLOFORMS

@@ -91,10 +91,13 @@
 		return
 	playsound(T, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume, TRUE, footstep_sounds[turf_footstep][3] + e_range, falloff_distance = 1)
 
-/datum/component/footstep/proc/play_humanstep()
+/datum/component/footstep/proc/play_humanstep(mob/living/carbon/human/source, atom/oldloc, direction)
 	var/turf/open/T = prepare_step()
 	if(!T)
 		return
+
+	play_fov_effect(source, 5, "footstep", direction, ignore_self = TRUE)
+
 	var/mob/living/carbon/human/H = parent
 	var/list/L = GLOB.barefootstep
 	var/turf_footstep = T.barefootstep

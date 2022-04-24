@@ -52,6 +52,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/list/inv_slots[SLOTS_AMT] // /atom/movable/screen/inventory objects, ordered by their slot ID.
 	var/list/hand_slots // /atom/movable/screen/inventory/hand objects, assoc list of "[held_index]" = object
 	var/list/atom/movable/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
+	///Assoc list of controller groups, associated with key string group name with value of the plane master controller ref
+	var/list/atom/movable/plane_master_controller/plane_master_controllers = list()
 
 
 	///UI for screentips that appear when you mouse over things
@@ -101,6 +103,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	screentip_text = new(null, src)
 	static_inventory += screentip_text
+
+	for(var/mytype in subtypesof(/atom/movable/plane_master_controller))
+		var/atom/movable/plane_master_controller/controller_instance = new mytype(null,src)
+		plane_master_controllers[controller_instance.name] = controller_instance
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)

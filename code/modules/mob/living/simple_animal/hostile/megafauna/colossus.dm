@@ -218,7 +218,7 @@ Difficulty: Very Hard
 	pixels_per_second = TILES_TO_PIXELS(5)
 	eyeblur = 0
 	damage_type = BRUTE
-	pass_flags = PASSTABLE
+	pass_flags = GAME_PLANE
 
 /obj/item/projectile/colossus/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -426,7 +426,7 @@ Difficulty: Very Hard
 
 /obj/machinery/anomalous_crystal/honk //Strips and equips you as a clown. I apologize for nothing
 	observer_desc = "This crystal strips and equips its targets as clowns."
-	possible_methods = list(ACTIVATE_TOUCH)  //Because We love AOE transformations!  
+	possible_methods = list(ACTIVATE_TOUCH)  //Because We love AOE transformations!
 	activation_sound = 'sound/items/bikehorn.ogg'
 
 /obj/machinery/anomalous_crystal/honk/ActivationReaction(mob/user)

@@ -672,12 +672,12 @@
 				var/mob/driver = D
 				if(driver.client?.keys_held["Alt"])
 					no_strafe = TRUE
-					setDir(direction)
+					set_dir_mecha(direction)
 					if(turnsound)
 						playsound(src,turnsound,40,TRUE)
 					return TRUE
 		else
-			setDir(direction)
+			set_dir_mecha(direction)
 			if(turnsound)
 				playsound(src,turnsound,40,TRUE)
 			return TRUE
@@ -687,7 +687,7 @@
 	. = step(src,direction, dir)
 
 	if(strafe && !no_strafe)
-		setDir(olddir)
+		set_dir_mecha(olddir)
 
 
 /obj/vehicle/sealed/mecha/Bump(atom/obstacle)
@@ -975,7 +975,7 @@
 	add_occupant(H)
 	add_fingerprint(H)
 	log_message("[H] moved in as pilot.", LOG_MECHA)
-	setDir(dir_in)
+	set_dir_mecha(dir_in)
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
 	if(!internal_damage)
 		SEND_SOUND(H, sound('sound/mecha/nominal.ogg',volume=50))
@@ -1027,7 +1027,7 @@
 	B.reset_perspective(src)
 	B.remote_control = src
 	B.update_mobility()
-	setDir(dir_in)
+	set_dir_mecha(dir_in)
 	log_message("[M] moved in as pilot.", LOG_MECHA)
 	if(!internal_damage)
 		SEND_SOUND(M, sound('sound/mecha/nominal.ogg',volume=50))
@@ -1100,7 +1100,7 @@
 		mmi.mecha = null
 		mmi.update_icon()
 		L.mobility_flags = NONE
-	setDir(dir_in)
+	set_dir_mecha(dir_in)
 	return ..()
 
 
@@ -1221,3 +1221,9 @@
 		else
 			to_chat(user, "<span class='notice'>None of the equipment on this exosuit can use this ammo!</span>")
 	return FALSE
+
+/// Sets the direction of the mecha and all of its occcupents, required for FOV. Alternatively one could make a recursive contents registration and register topmost direction changes in the fov component
+/obj/vehicle/sealed/mecha/proc/set_dir_mecha(new_dir)
+	setDir(new_dir)
+	for(var/mob/living/occupant as anything in occupants)
+		occupant.setDir(new_dir)

@@ -169,23 +169,15 @@
 	if(clockcultslurring)
 		clockcultslurring = max(clockcultslurring-1, 0)
 
-/mob/living/proc/handle_traits()
+/mob/living/proc/handle_traits(delta_time, times_fired)
 	//Eyes
 	if(eye_blind)			//blindness, heals slowly over time
-		if(!stat && !(HAS_TRAIT(src, TRAIT_BLIND)))
-			eye_blind = max(eye_blind-1,0)
-			if(client && !eye_blind)
-				clear_alert("blind")
-				clear_fullscreen("blind")
-		else
-			eye_blind = max(eye_blind-1,1)
-	else if(eye_blurry)			//blurry eyes heal slowly
-		eye_blurry = max(eye_blurry-1, 0)
-		if(client)
-			if(!eye_blurry)
-				remove_eyeblur()
-			else
-				update_eyeblur()
+		if(HAS_TRAIT_FROM(src, TRAIT_BLIND, EYES_COVERED)) //covering your eyes heals blurry eyes faster
+			adjust_blindness(-1.5 * delta_time)
+		else if(!stat && !(HAS_TRAIT(src, TRAIT_BLIND)))
+			adjust_blindness(-0.5 * delta_time)
+	else if(eye_blurry) //blurry eyes heal slowly
+		adjust_blurriness(-0.5 * delta_time)
 
 /mob/living/proc/update_damage_hud()
 	return

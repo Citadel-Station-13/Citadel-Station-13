@@ -315,6 +315,8 @@
   */
 /datum/config_entry/flag/use_field_of_vision
 
+/datum/config_entry/flag/native_fov
+
 //Shuttle size limiter
 /datum/config_entry/number/max_shuttle_count
 	config_entry_value = 6

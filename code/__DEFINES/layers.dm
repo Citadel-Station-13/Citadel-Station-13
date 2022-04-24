@@ -61,6 +61,7 @@
 #define CATWALK_LAYER 2.51
 #define LOW_SIGIL_LAYER 2.52
 #define SIGIL_LAYER 2.53
+#define HIGH_SIGIL_LAYER 2.56
 #define HIGH_PIPE_LAYER 2.54
 // Anything aboe this layer is not "on" a turf for the purposes of washing
 // I hate this life of ours
@@ -194,6 +195,14 @@
 //HUD layer defines
 #define HUD_PLANE 1000
 #define ABOVE_HUD_PLANE 1100
+
+//Storage layer defines
+#define VOLUMETRIC_STORAGE_BOX_PLANE 1001
+#define VOLUMETRIC_STORAGE_BOX_RENDER_TARGET "VOLUME_STORAGE_BOX_PLANE"
+
+#define VOLUMETRIC_STORAGE_ITEM_PLANE 1002
+#define VOLUMETRIC_STORAGE_ACTIVE_ITEM_PLANE 1003
+#define VOLUMETRIC_STORAGE_ITEM_RENDER_TARGET "VOLUME_STORAGE_ITEM_PLANE"
 
 #define RADIAL_BACKGROUND_LAYER 0
 ///1000 is an unimportant number, it's just to normalize copied layers

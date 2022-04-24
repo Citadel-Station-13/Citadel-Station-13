@@ -4,6 +4,8 @@
 	see_in_dark = 2
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD,RAD_HUD)
 	pressure_resistance = 10
+	plane = GAME_PLANE_FOV_HIDDEN
+
 	has_field_of_vision = TRUE
 
 	typing_indicator_enabled = TRUE
@@ -176,3 +178,10 @@
 	var/stamina_buffer_regen_last = 0
 	/// Last time we used stamina buffer
 	var/stamina_buffer_last_use = 0
+
+	/// FOV view that is applied from either nativeness or traits
+	var/fov_view
+	/// Native FOV that will be applied if a config is enabled
+	var/native_fov = FOV_90_DEGREES
+	/// Lazy list of FOV traits that will apply a FOV view when handled.
+	var/list/fov_traits

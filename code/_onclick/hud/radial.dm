@@ -4,8 +4,7 @@
 GLOBAL_LIST_EMPTY(radial_menus)
 
 /atom/movable/screen/radial
-	icon = 'icons/mob/radial.dmi'
-	layer = ABOVE_HUD_LAYER
+	icon = 'icons/hud/radial.dmi'
 	plane = ABOVE_HUD_PLANE
 	var/datum/radial_menu/parent
 
@@ -17,13 +16,13 @@ GLOBAL_LIST_EMPTY(radial_menus)
 /atom/movable/screen/radial/slice/MouseEntered(location, control, params)
 	. = ..()
 	icon_state = "radial_slice_focus"
-	if(tooltips)
+	if(should_tooltip)
 		openToolTip(usr, src, params, title = name)
 
 /atom/movable/screen/radial/slice/MouseExited(location, control, params)
 	. = ..()
 	icon_state = "radial_slice"
-	if(tooltips)
+	if(should_tooltip)
 		closeToolTip(usr)
 
 /atom/movable/screen/radial/slice/Click(location, control, params)
@@ -121,7 +120,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		var/elements_to_add = max_elements - elements.len
 		for(var/i in 1 to elements_to_add) //Create all elements
 			var/atom/movable/screen/radial/slice/new_element = new /atom/movable/screen/radial/slice
-			new_element.tooltips = use_tooltips
+			new_element.should_tooltip = use_tooltips
 			new_element.parent = src
 			elements += new_element
 
@@ -239,7 +238,6 @@ GLOBAL_LIST_EMPTY(radial_menus)
 /datum/radial_menu/proc/extract_image(E)
 	var/mutable_appearance/MA = new /mutable_appearance(E)
 	if(MA)
-		MA.layer = ABOVE_HUD_LAYER
 		MA.plane = ABOVE_HUD_PLANE
 		MA.appearance_flags |= RESET_TRANSFORM
 	return MA
@@ -257,7 +255,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		return
 	current_user = M.client
 	//Blank
-	menu_holder = image(icon='icons/effects/effects.dmi',loc=anchor,icon_state="nothing",layer = ABOVE_HUD_LAYER)
+	menu_holder = image(icon='icons/effects/effects.dmi',loc=anchor,icon_state="nothing")
 	menu_holder.plane = ABOVE_HUD_PLANE
 	menu_holder.appearance_flags |= KEEP_APART
 	menu_holder.vis_contents += elements + close_button

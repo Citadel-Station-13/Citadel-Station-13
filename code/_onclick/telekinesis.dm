@@ -71,11 +71,11 @@
 	icon = 'icons/obj/magic.dmi'//Needs sprites
 	icon_state = "2"
 	item_flags = NOBLUDGEON | ABSTRACT | DROPDEL
-	//item_state = null
+	//inhand_icon_state = null
 	w_class = WEIGHT_CLASS_GIGANTIC
-	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 
+	///Object focused / selected by the TK user
 	var/atom/movable/focus
 	var/mob/living/carbon/tk_user
 

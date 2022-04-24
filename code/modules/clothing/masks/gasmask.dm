@@ -14,6 +14,14 @@
 	visor_flags_inv = HIDEFACE
 	var/flavor_adjust = TRUE //can it do the heehoo alt click to hide/show identity
 
+/obj/item/clothing/mask/gas/Initialize()
+	. = ..()
+	init_fov()
+
+/// Initializes the FoV component for the gas mask
+/obj/item/clothing/mask/gas/proc/init_fov()
+	AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+
 /obj/item/clothing/mask/gas/examine(mob/user)
 	. = ..()
 	if(flavor_adjust)
@@ -90,6 +98,9 @@
 	dog_fashion = /datum/dog_fashion/head/clown
 	var/static/list/clownmask_designs
 
+/obj/item/clothing/mask/gas/clown_hat/init_fov()
+	return
+
 /obj/item/clothing/mask/gas/clown_hat/Initialize(mapload)
 	.=..()
 	if(!clownmask_designs)
@@ -132,6 +143,9 @@
 	dog_fashion = /datum/dog_fashion/head/clown
 	var/list/poly_colors = list("#FF8000", "#FFFFFF", "#FF0000", "#0000FF", "#FFFF00")
 
+/obj/item/clothing/mask/gas/clown_hat/init_fov()
+	return
+
 /obj/item/clothing/mask/gas/clown_hat_polychromic/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/polychromic, poly_colors, 5, names = list("Hair", "Frame", "Mouth", "Eyes", "Markings"))
@@ -154,6 +168,9 @@
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	var/static/list/mimemask_designs
+
+/obj/item/clothing/mask/gas/clown_hat/init_fov()
+	return
 
 /obj/item/clothing/mask/gas/mime/Initialize(mapload)
 	.=..()

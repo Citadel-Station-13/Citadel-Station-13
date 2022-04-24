@@ -1261,6 +1261,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggled Hub Visibility", "[GLOB.hub_visibility ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/*
 /client/proc/cmd_admin_toggle_fov()
 	set category = "Admin.Fun"
 	set name = "Enable/Disable Field of Vision"
@@ -1312,6 +1313,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			CHECK_TICK
 
 	busy_toggling_fov = FALSE
+*/
 
 /client/proc/smite(mob/living/carbon/human/target as mob)
 	set name = "Smite"

@@ -162,7 +162,7 @@
 	animate(filter, radius = 32, time = 15, size = 0, loop = -1)
 
 /datum/status_effect/grouped/stasis/proc/InterruptBiologicalLife()
-	return COMPONENT_INTERRUPT_LIFE_BIOLOGICAL 
+	return COMPONENT_INTERRUPT_LIFE_BIOLOGICAL
 
 /datum/status_effect/grouped/stasis/tick()
 	update_time_of_death()
@@ -816,7 +816,7 @@
 /datum/status_effect/necropolis_curse/proc/apply_curse(set_curse)
 	curse_flags |= set_curse
 	if(curse_flags & CURSE_BLINDING)
-		owner.overlay_fullscreen("curse", /atom/movable/screen/fullscreen/scaled/curse, 1)
+		owner.overlay_fullscreen("curse", /atom/movable/screen/fullscreen/curse, 1)
 
 /datum/status_effect/necropolis_curse/proc/remove_curse(remove_curse)
 	if(remove_curse & CURSE_BLINDING)

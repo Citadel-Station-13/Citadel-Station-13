@@ -58,7 +58,7 @@
 	var/atom/movable/emissive_blocker/em_block
 
 	/// Should we use tooltips, if the thing does not have the code implemented `get_tooltip_data()`, it will default to examine(src)
-	var/tooltips = FALSE
+	var/should_tooltip = FALSE
 	/// How loudly we yell
 	var/yell_power = 50
 	/// last time we yelled
@@ -518,7 +518,7 @@
 	return
 
 
-/atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
+/atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, fov_effect = TRUE)
 	if(!no_effect && (visual_effect_icon || used_item))
 		do_item_attack_animation(A, visual_effect_icon, used_item)
 
@@ -541,6 +541,9 @@
 	else if(direction & WEST)
 		pixel_x_diff = -8
 		turn_dir = -1
+
+	if(fov_effect)
+		play_fov_effect(A, 5, "attack")
 
 	var/matrix/initial_transform = matrix(transform)
 	var/matrix/rotated_transform = transform.Turn(15 * turn_dir)

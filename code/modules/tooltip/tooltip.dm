@@ -128,14 +128,14 @@ Notes:
  * If set, will return a list for the tooltip (that will also be put together in a `Join()`)
  * However, if returning `null`, the tooltip will not be shown as #14942 changed it.
  *
- * Though no tooltips will be created for atoms that have `tooltips = FALSE`
+ * Though no tooltips will be created for atoms that have `should_tooltip = FALSE`
 */
 /atom/movable/proc/get_tooltip_data()
 	return list()
 
 /atom/movable/MouseEntered(location, control, params)
 	. = ..()
-	if(tooltips)
+	if(should_tooltip)
 		if((get(src, /mob) == usr && !QDELETED(src)) && usr?.client.prefs.enable_tips)
 			var/list/tooltip_data = get_tooltip_data()
 			if(length(tooltip_data))

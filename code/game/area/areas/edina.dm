@@ -167,7 +167,6 @@
 ////////////////Mapping helper/////////////////////////
 /obj/effect/mapping_helpers/planet_z
 	name = "planet z helper"
-	layer = POINT_LAYER
 
 /obj/effect/mapping_helpers/planet_z/Initialize()
 	. = ..()

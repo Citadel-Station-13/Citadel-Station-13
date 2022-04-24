@@ -45,7 +45,6 @@
 	name = "stamina buffer"
 	icon_state = "stambuffer0"
 	screen_loc = ui_stamina
-	layer = ABOVE_HUD_LAYER + 0.1
 	mouse_opacity = 0
 
 /atom/movable/screen/staminabuffer/proc/mark_dirty()

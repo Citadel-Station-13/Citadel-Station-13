@@ -84,7 +84,7 @@
 	var/last_fire_update
 	var/hardcore_survival_score = 0
 
-	tooltips = TRUE
+	should_tooltip = TRUE
 
 	var/additional_language //the additional language this human can speak from their preference selection
 

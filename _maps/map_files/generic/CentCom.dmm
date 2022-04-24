@@ -3231,9 +3231,7 @@
 /obj/item/grenade/plastic/x4,
 /obj/structure/table/reinforced,
 /obj/item/clothing/ears/earmuffs,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/centcom/control)
@@ -3510,9 +3508,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "jg" = (
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -5299,9 +5295,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "mW" = (
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -5939,9 +5933,7 @@
 /obj/structure/table/wood,
 /obj/item/storage/photo_album,
 /obj/item/camera,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -7904,9 +7896,7 @@
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -8695,9 +8685,7 @@
 /obj/item/grenade/plastic/x4,
 /obj/structure/table/reinforced,
 /obj/item/clothing/ears/earmuffs,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -12419,9 +12407,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/box/syringes,
 /obj/item/gun/syringe/rapidsyringe,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = -32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -12959,9 +12945,7 @@
 	},
 /obj/item/storage/box/silver_ids,
 /obj/structure/table/reinforced,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

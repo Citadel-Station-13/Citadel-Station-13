@@ -7,10 +7,10 @@
 	anchored = TRUE
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
-	plane = WALL_PLANE
+	// base_icon_state = "wall"
 	layer = LOW_OBJ_LAYER
 	density = TRUE
-	opacity = 1
+	opacity = TRUE
 	max_integrity = 100
 
 	canSmoothWith = list(

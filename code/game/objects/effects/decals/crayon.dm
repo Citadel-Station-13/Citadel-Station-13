@@ -5,8 +5,8 @@ GLOBAL_LIST(gang_tags)
 	desc = "Graffiti. Damn kids."
 	icon = 'icons/effects/crayondecal.dmi'
 	icon_state = "rune1"
-	plane = ABOVE_WALL_PLANE //makes the graffiti visible over a wall.
 	gender = NEUTER
+	plane = GAME_PLANE //makes the graffiti visible over a wall.
 	persistent = TRUE
 	persistence_allow_stacking = TRUE
 	mergeable_decal = FALSE

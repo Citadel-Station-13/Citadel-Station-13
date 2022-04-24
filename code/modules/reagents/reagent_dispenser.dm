@@ -199,31 +199,28 @@
 		return
 	return ..()
 
-///////////////////
-//Misc Dispenders//
-///////////////////
+/// Wall mounted dispeners, like pepper spray or virus food. Not a normal tank, and shouldn't be able to be turned into a plumbed stationary one.
+/obj/structure/reagent_dispensers/wall
+	anchored = TRUE
+	density = FALSE
 
-/obj/structure/reagent_dispensers/peppertank
+/obj/structure/reagent_dispensers/wall/peppertank
 	name = "pepper spray refiller"
 	desc = "Contains condensed capsaicin for use in law \"enforcement.\""
 	icon_state = "pepper"
-	plane = ABOVE_WALL_PLANE
-	anchored = TRUE
-	density = FALSE
 	reagent_id = /datum/reagent/consumable/condensedcapsaicin
 
-/obj/structure/reagent_dispensers/peppertank/Initialize()
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 30)
+
+/obj/structure/reagent_dispensers/wall/peppertank/Initialize()
 	. = ..()
 	if(prob(1))
 		desc = "IT'S PEPPER TIME, BITCH!"
 
-/obj/structure/reagent_dispensers/virusfood
+/obj/structure/reagent_dispensers/wall/virusfood
 	name = "virus food dispenser"
 	desc = "A dispenser of low-potency virus mutagenic."
 	icon_state = "virus_food"
-	plane = ABOVE_WALL_PLANE
-	anchored = TRUE
-	density = FALSE
 	reagent_id = /datum/reagent/consumable/virus_food
 
 /obj/structure/reagent_dispensers/cooking_oil
