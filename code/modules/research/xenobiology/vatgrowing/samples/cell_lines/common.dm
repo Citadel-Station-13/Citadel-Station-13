@@ -355,7 +355,7 @@
 		/datum/reagent/iron)
 
 	supplementary_reagents = list(
-		/datum/reagent/gunpowder = 6,
+		/datum/reagent/blackpowder = 6,
 		/datum/reagent/medicine/pen_acid = 4, //Prussian Blue is an antidote for radioactive thallium poisoning, among other things. The pickelhaube was worn by Prussian/German officers. You can tell I'm running out of ideas here.
 		/datum/reagent/yuck = 2,
 		/datum/reagent/blood = 2,

@@ -90,7 +90,7 @@
 
 ///Tries to transfer the atoms reagents then delete it
 /mob/living/simple_animal/hostile/ooze/proc/eat_atom(obj/item/eaten_atom)
-	eaten_atom.reagents.trans_to(src, eaten_atom.reagents.total_volume, transfered_by = src)
+	eaten_atom.reagents.trans_to(src, eaten_atom.reagents.total_volume)
 	src.visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", "<span class='notice'>You eat [eaten_atom].</span>")
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	qdel(eaten_atom)
@@ -133,13 +133,6 @@
 	QDEL_NULL(boost)
 	QDEL_NULL(consume)
 
-///If this mob gets resisted by something, its trying to escape consumption.
-/mob/living/simple_animal/hostile/ooze/gelatinous/container_resist(mob/living/user)
-	. = ..()
-	if(!do_after(user, 6 SECONDS)) //6 second struggle
-		return FALSE
-	consume.stop_consuming()
-
 /mob/living/simple_animal/hostile/ooze/gelatinous/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GELATINOUS, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
@@ -147,7 +140,7 @@
 /datum/action/cooldown/metabolicboost
 	name = "Metabolic boost"
 	desc = "Gain a temporary speed boost. Costs 10 nutrition and slowly raises your temperature"
-	background_icon_state = "bg_hive"
+	background_icon_state = "bg_default"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "metabolic_boost"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
@@ -196,7 +189,7 @@
 /datum/action/consume
 	name = "Consume"
 	desc = "Consume a mob that you are dragging to gain nutrition from them"
-	background_icon_state = "bg_hive"
+	background_icon_state = "bg_default"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "consume"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
@@ -321,7 +314,7 @@
 	active = FALSE
 	action_icon = 'icons/mob/actions/actions_slime.dmi'
 	action_icon_state = "globules"
-	action_background_icon_state = "bg_hive"
+	action_background_icon_state = "bg_default"
 	var/cooldown = 5 SECONDS
 	var/current_cooldown = 0
 
@@ -421,7 +414,7 @@
 /datum/action/cooldown/gel_cocoon
 	name = "Gel Cocoon"
 	desc = "Puts a mob inside of a cocoon, allowing it to slowly heal."
-	background_icon_state = "bg_hive"
+	background_icon_state = "bg_default"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "gel_cocoon"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN

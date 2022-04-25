@@ -1815,12 +1815,12 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/trophazole/on_transfer(atom/A, method=INGEST, trans_volume)
-	if(method != INGEST || !iscarbon(A))
+/datum/reagent/medicine/thializid/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+	if(method != INGEST || !iscarbon(M))
 		return
 
-	A.reagents.remove_reagent(/datum/reagent/medicine/trophazole, trans_volume * 0.05)
-	A.reagents.add_reagent(/datum/reagent/medicine/metafactor, trans_volume * 0.25)
+	M.reagents.remove_reagent(/datum/reagent/medicine/trophazole, reac_volume * 0.05)
+	M.reagents.add_reagent(/datum/reagent/medicine/metafactor, reac_volume * 0.25)
 
 	..()
 
@@ -1878,16 +1878,16 @@
 	overdose_threshold = 6
 	var/conversion_amount
 
-/datum/reagent/medicine/thializid/on_transfer(atom/A, method=INJECT, trans_volume)
-	if(method != INJECT || !iscarbon(A))
+/datum/reagent/medicine/thializid/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+	if(method != INJECT || !iscarbon(M))
 		return
-	var/mob/living/carbon/C = A
-	if(trans_volume >= 0.6) //prevents cheesing with ultralow doses.
-		C.adjustToxLoss(-1.5 * min(2, trans_volume) * REAGENTS_EFFECT_MULTIPLIER, 0)	  //This is to promote iv pole use for that chemotherapy feel.
+	var/mob/living/carbon/C = M
+	if(reac_volume >= 0.6) //prevents cheesing with ultralow doses.
+		C.adjustToxLoss(-1.5 * min(2, reac_volume) * REAGENTS_EFFECT_MULTIPLIER, 0)	  //This is to promote iv pole use for that chemotherapy feel.
 	var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 	if(L.damage > L.high_threshold || !L)
 		return
-	conversion_amount = trans_volume * (min(100 - L.damage, 80) / 100) //the more damaged the liver the worse we metabolize.
+	conversion_amount = reac_volume * (min(100 - L.damage, 80) / 100) //the more damaged the liver the worse we metabolize.
 	C.reagents.remove_reagent(/datum/reagent/medicine/thializid, conversion_amount)
 	C.reagents.add_reagent(/datum/reagent/medicine/oxalizid, conversion_amount)
 	..()

@@ -162,6 +162,11 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /datum/reagent/proc/on_mob_end_metabolize(mob/living/L)
 	return
 
+///Called after a reagent is transfered
+/datum/reagent/proc/on_transfer(atom/A, methods=TOUCH, trans_volume)
+	return
+
+//called by conditional_update_move
 /datum/reagent/proc/on_move(mob/M)
 	return
 

@@ -2769,12 +2769,12 @@
 	yuck_cycle = 0 // reset vomiting
 	return ..()
 
-/datum/reagent/yuck/on_transfer(atom/A, methods=TOUCH, trans_volume)
-	if((methods & INGEST) || !iscarbon(A))
+/datum/reagent/yuck/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+	if((method = INGEST) || !iscarbon(M))
 		return ..()
 
-	A.reagents.remove_reagent(type, trans_volume)
-	A.reagents.add_reagent(/datum/reagent/fuel, trans_volume * 0.75)
-	A.reagents.add_reagent(/datum/reagent/water, trans_volume * 0.25)
+	M.reagents.remove_reagent(type, reac_volume)
+	M.reagents.add_reagent(/datum/reagent/fuel, reac_volume * 0.75)
+	M.reagents.add_reagent(/datum/reagent/water, reac_volume * 0.25)
 
 	return ..()
