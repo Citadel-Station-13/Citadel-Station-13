@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(ghostroles, init_ghostroles())
 /proc/get_ghostrole_datum(path)
 	if(GLOB.ghostroles[path])
 		return GLOB.ghostroles[path]
-	var/is_this_a_path = text2path(path)
+	var/is_this_a_path = ispath(path)? path : text2path(path)
 	if(ispath(is_this_a_path, /datum/ghostrole))
 		GLOB.ghostroles[is_this_a_path] = new is_this_a_path
 		return GLOB.ghostroles[is_this_a_path]
