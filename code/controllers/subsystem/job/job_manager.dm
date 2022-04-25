@@ -102,7 +102,8 @@
 	return TRUE
 
 /datum/controller/subsystem/job/proc/GetJobAuto(thing)
-	. = job_type_lookup[thing] || job_name_lookup[thing]
+	var/is_this_a_path = istext(thing) && text2path(thing)
+	. = job_type_lookup[thing] || job_name_lookup[thing] || job_type_lookup[is_this_a_path]
 	if(!.)
 		CRASH("Failed JobAutoLookup: [thing].")
 

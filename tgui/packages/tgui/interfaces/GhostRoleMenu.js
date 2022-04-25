@@ -22,12 +22,12 @@ export const GhostRoleMenu = (props, context) => {
                   <Button
                     content="Jump"
                     onClick={() => act('jump', {
-                      name: spawner.name,
+                      id: spawner.id,
                     })} />
                   <Button
                     content="Spawn"
                     onClick={() => act('spawn', {
-                      name: spawner.name,
+                      id: spawner.id,
                     })} />
                 </>
               )}>
