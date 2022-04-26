@@ -20,7 +20,7 @@
 	C = C || M.client
 
 	// failures before this point runtime
-	JobDebug("EquipLoadout: [M], ignore [ignore_restrictions], job [J.title], ckey [ckey]")
+	JobDebug("EquipLoadout: [M], ignore [ignore_restrictions], job [J?.title], ckey [ckey]")
 
 	if(!ishuman(M))
 		JobDebug("Ignoring EquipLoadout for [M]: Not human.")
@@ -81,7 +81,7 @@
 	. = FALSE
 	if(!istype(G))
 		CRASH("Bad gear datum")
-	if(LAZYLEN(G.restricted_roles) && !(J.title in G.restricted_roles))		// todo: have job ids instead of titles
+	if(LAZYLEN(G.restricted_roles) && (!J || !(J.title in G.restricted_roles)))		// todo: have job ids instead of titles
 		JobDebug("CanEquipGear failed [ckey] [G.type] [J? J.title : "NOJOB"]: Wrong job")
 		return
 	if(G.donoritem && !G.donator_ckey_check(ckey))

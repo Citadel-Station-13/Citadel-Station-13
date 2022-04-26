@@ -7,10 +7,10 @@
 
 /datum/ghostrole_instantiator/proc/Run(client/C, atom/location, list/params)
 	RETURN_TYPE(/mob)
-	. = Create(C, location)
+	. = Create(C, location, params)
 	if(!.)
 		return
-	if(!Equip(C, .))
+	if(!Equip(C, ., params))
 		qdel(.)
 		return null
 

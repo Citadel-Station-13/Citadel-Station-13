@@ -103,6 +103,7 @@
 
 /**
  * gets a job by rank title/name or typepath
+ * passing in the job datum itself is also valid
  */
 /datum/controller/subsystem/job/proc/GetJobAuto(thing)
 	RETURN_TYPE(/datum/job)
@@ -111,6 +112,8 @@
 	else if(istext(thing))
 		var/is_this_a_path = text2path(thing)
 		. = ispath(is_this_a_path)? job_type_lookup[is_this_a_path] : job_name_lookup[thing]
+	else if(istype(thing, /datum/job))	// direct instanced
+		return thing
 	if(!.)
 		CRASH("Failed JobAutoLookup: [thing].")
 
