@@ -84,7 +84,7 @@
 /atom/movable/landmark/spawnpoint/proc/Available(mob/M, client/C, harder = FALSE)
 	if(!spawns_left)
 		return FALSE
-	if(prevent_mob_stack && !harder)
+	if(prevent_mob_stack && M && !harder)
 		if(ishuman(M) && (locate(/mob/living/carbon/human) in GetSpawnLoc()))
 			return FALSE
 		else if(locate(M.type) in GetSpawnLoc())

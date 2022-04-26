@@ -59,11 +59,12 @@ GLOBAL_DATUM_INIT(join_menu, /datum/join_menu, new)
 		else
 			department = jobs[J.faction][department_name]
 		// finally, add job data
+		var/slots = J.SlotsRemaining()
 		var/list/data = list(
 			"id" = J.type,
 			"name" = EffectiveTitle(J, usr.client),
 			"desc" = EffectiveDesc(J, usr.client),
-			"slots" = J.SlotsRemaining(),
+			"slots" = slots == INFINITY? -1 : slots,
 			"real_name" = J.title
 		)
 		department += list(data)	// wrap list
@@ -74,7 +75,7 @@ GLOBAL_DATUM_INIT(join_menu, /datum/join_menu, new)
 	for(var/id in GLOB.ghostroles)
 		var/datum/ghostrole/R = GLOB.ghostroles[id]
 		// can't afford runtime here
-		if(!istype(R) || !R.AllowSpawn(usr.client))
+		if(!istype(R) || !R.AllowSpawn(user.client))
 			continue
 		var/list/data = list(
 			"id" = id,

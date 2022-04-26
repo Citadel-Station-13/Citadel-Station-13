@@ -26,6 +26,7 @@ GLOBAL_DATUM_INIT(ghostrole_menu, /datum/ghostrole_menu, new)
 		data["name"] = role.name
 		data["short_desc"] = role.desc
 		data["flavor_text"] = role.spawntext
+		data["important_info"] = role.ImportantInfo()
 		data["amount_left"] = role.SpawnsLeft(user)
 		spawners += list(data)	// wrap
 
@@ -41,7 +42,7 @@ GLOBAL_DATUM_INIT(ghostrole_menu, /datum/ghostrole_menu, new)
 	switch(action)
 		if("jump")
 			if(role.spawnerless)
-				to_chat(usr, "<span class='warning'>[role] is spawnerless!</span>")
+				to_chat(usr, "<span class='warning'>[role] is spawnerless! You won't be able to find out where you spawn until you actually spawn in!</span>")
 				return
 			var/atom/A = role.GetSpawnLoc(usr.client, role.GetSpawnpoint(usr.client))
 			if(!A)
@@ -52,7 +53,9 @@ GLOBAL_DATUM_INIT(ghostrole_menu, /datum/ghostrole_menu, new)
 				return
 			usr.forceMove(get_turf(A))
 		if("spawn")
-			role.AttemptSpawn(usr.client)
+			var/error = role.AttemptSpawn(usr.client)
+			if(istext(error))
+				to_chaT(usr, span_danger(error))
 
 /**
  * Call this whenever ghostrole data changes, we don't keep resending to save performance.

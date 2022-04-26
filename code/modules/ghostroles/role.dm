@@ -43,6 +43,8 @@ GLOBAL_LIST_INIT(ghostroles, init_ghostroles())
 	var/slots = INFINITY
 	/// default message to show on greet(), also shows in spawners menu.
 	var/spawntext
+	/// important rules/policy info
+	var/important_info
 	/// should we show the standard ghostrole greeting?
 	var/show_standard_greeting = TRUE
 	/// snowflake ID for if we're not to be referred to by path - dynamically created ghostolres
@@ -72,7 +74,10 @@ GLOBAL_LIST_INIT(ghostroles, init_ghostroles())
 		to_chat(created, spawntext)
 	if(spawnpoint.spawntext)
 		to_chat(created, spawntext)
+
+/datum/ghostrole/proc/ImportantInfo()
 	// todo: policyconfig
+	return important_info
 
 /**
  * Master proc for spawning someone as this role.
@@ -157,7 +162,7 @@ GLOBAL_LIST_INIT(ghostroles, init_ghostroles())
 		var/list/inputlist = list()
 		for(var/datum/component/ghostrole_spawnpoint/spawnpoint as anything in spawnpoints)
 			var/atom/A = spawnpoint.Atom()
-			.["[A] - [get_area(A)]"] = spawnpoint
+			inputlist["[A] - [get_area(A)]"] = spawnpoint
 		var/picked = tgui_input_list(C, "Spawner Selection", inputlist)
 		return inputlist[picked]
 
@@ -167,7 +172,7 @@ GLOBAL_LIST_INIT(ghostroles, init_ghostroles())
  * spawnpoint can be null for spawnerless ghostroles.
  */
 /datum/ghostrole/proc/GetSpawnLoc(client/C, datum/component/ghostrole_spawnpoint/spawnpoint)
-	return spawnpoint.Turf()
+	return spawnpoint?.Turf()
 
 /**
  * Spawnpoint can be null here, if we're not using a spawnpoint

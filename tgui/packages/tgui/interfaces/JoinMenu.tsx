@@ -91,33 +91,24 @@ export const JoinMenu = (props, context) => {
           <Flex.Item mb={1}>
             {/* Ghostroles */}
             <Section title="Ghostroles">
-              {data.ghostroles.foreach(
-                (thing => (
-                  <Collapsible title={thing.name} color="transparent" buttons={
+              {data.ghostroles.map(
+                (role) => (
+                  <Collapsible key={role.id} title={role.name} color="transparent" buttons={
                     <>
-                      {thing.slots} <Icon name="user-friends" />
+                      {role.slots} <Icon name="user-friends" />
                       <Button.Confirm
                         icon="sign-in-alt"
                         content="Join"
                         color="transparent"
-                        onClick={() => act('join', { id: thing.id, type: "ghostrole" })}
+                        onClick={() => act('join', { id: role.id, type: "ghostrole" })}
                       />
                     </>
                   }>
-                    <Section>
-                      {thing.desc}
-                    </Section>
+                    <Box mt={1}>
+                      {role.desc}
+                    </Box>
                   </Collapsible>
-                ))
-              )}
-              <Flex grow wrap>
-                <Flex.Item grow>
-                  do something here please
-                </Flex.Item>
-                <Flex.Item grow>
-                  do something here please
-                </Flex.Item>
-              </Flex>
+                ))}
             </Section>
           </Flex.Item>
         </Flex>
@@ -202,7 +193,7 @@ const RoleList = (props: IRoleListProps, context) => {
                     fluid
                     key={dat.id}
                     tooltip={dat.desc}
-                    content={`(${dat.slots ? dat.slots : "&infin;"}) ${dat.real_name}`}
+                    content={`(${dat.slots === -1 ? dat.slots : "Unlimited"}) ${dat.real_name}`}
                     confirmContent={`Play as ${dat.real_name}?`}
                     onClick={() => act('join', { 'id': dat.id, 'type': 'job' })}
                   />

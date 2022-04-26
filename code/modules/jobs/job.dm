@@ -268,7 +268,7 @@
  * joins remaining
  */
 /datum/job/proc/SlotsRemaining()
-	return max(0, total_positions - current_positions)
+	return SSjob.overflow_role == title? INFINITY : max(0, total_positions - current_positions)
 
 /**
  * Get spawntext for supervisors
