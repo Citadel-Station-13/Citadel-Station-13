@@ -77,11 +77,11 @@ GLOBAL_DATUM_INIT(join_menu, /datum/join_menu, new)
 		// can't afford runtime here
 		if(!istype(R) || !R.AllowSpawn(user.client))
 			continue
+		var/slots = R.SpawnsLeft(user.client)
 		var/list/data = list(
 			"id" = id,
 			"name" = R.name,
 			"desc" = R.desc,
-			var/slots = R.SpawnsLeft(user.client),
 			"slots" = slots == INFINITY? -1 : slots
 		)
 		ghostroles += list(data)	// wrap list
