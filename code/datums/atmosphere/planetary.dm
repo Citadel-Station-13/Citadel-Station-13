@@ -13,7 +13,7 @@
 	)
 	restricted_gases = list(
 		GAS_BZ=0.1,
-		GAS_METHYL_BROMIDE=0.1,
+		GAS_BROMINE=0.1
 	)
 	restricted_chance = 30
 
@@ -22,6 +22,23 @@
 
 	minimum_temp = 281
 	maximum_temp = 320
+
+/datum/atmosphere/lavaland/generate_gas_string()
+	if(prob(restricted_chance))
+		base_gases = list(
+			GAS_METHANE=5,
+			GAS_N2=10
+		)
+		normal_gases = list(
+			GAS_METHANE=5,
+			GAS_N2=5,
+		)
+		restricted_gases = list(
+			GAS_AMMONIA = 0.1,
+			GAS_METHYL_BROMIDE = 0.1,
+			GAS_HYDROGEN = 0.1
+		)
+	return ..()
 
 /datum/atmosphere/lavaland/check_for_sanity(datum/gas_mixture/mix)
 	var/datum/breathing_class/o2_class = GLOB.gas_data.breathing_classes[BREATH_OXY]
@@ -33,16 +50,16 @@
 	id = ICEMOON_DEFAULT_ATMOS
 
 	base_gases = list(
-		GAS_O2=5,
+		GAS_METHANE=5,
 		GAS_N2=10,
 	)
 	normal_gases = list(
-		GAS_O2=10,
-		GAS_N2=10,
-		GAS_CO2=10,
+		GAS_METHANE=5,
+		GAS_N2=10
 	)
 	restricted_gases = list(
 		GAS_METHYL_BROMIDE=0.1,
+		GAS_HYDROGEN=0.1
 	)
 	restricted_chance = 10
 
@@ -52,3 +69,18 @@
 	minimum_temp = 180
 	maximum_temp = 180
 
+/datum/atmosphere/icemoon/generate_gas_string()
+	if(prob(restricted_chance))
+		base_gases = list(
+			GAS_O2=5,
+			GAS_N2=10,
+		)
+		normal_gases = list(
+			GAS_O2=5,
+			GAS_N2=10,
+		)
+		restricted_gases = list(
+			GAS_BZ = 0.1,
+			GAS_METHYL_BROMIDE = 0.1,
+		)
+	return ..()

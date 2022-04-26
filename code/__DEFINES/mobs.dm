@@ -347,6 +347,7 @@
 // / Breathing types. Lungs can access either by these or by a string, which will be considered a gas ID.
 #define BREATH_OXY		/datum/breathing_class/oxygen
 #define BREATH_PLASMA	/datum/breathing_class/plasma
+#define BREATH_METHANE	/datum/breathing_class/methane
 
 //Gremlins
 #define NPC_TAMPER_ACT_FORGET 1 //Don't try to tamper with this again
