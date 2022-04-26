@@ -95,7 +95,7 @@ export const JoinMenu = (props, context) => {
                 (role) => (
                   <Collapsible key={role.id} title={role.name} color="transparent" buttons={
                     <>
-                      {!(role.slots === -1) && role.slots}<Icon name="user-friends" />
+                      {(role.slots === -1)? '' : role.slots} <Icon name="user-friends" />
                       <Button.Confirm
                         icon="sign-in-alt"
                         content="Join"

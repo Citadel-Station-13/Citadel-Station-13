@@ -54,9 +54,10 @@ GLOBAL_DATUM_INIT(ghostrole_menu, /datum/ghostrole_menu, new)
 				return
 			usr.forceMove(get_turf(A))
 		if("spawn")
-			var/error = role.AttemptSpawn(usr.client)
+			var/client/C = usr.client
+			var/error = role.AttemptSpawn(C)
 			if(istext(error))
-				to_chat(usr, span_danger(error))
+				to_chat(C, span_danger(error))
 
 /**
  * Call this whenever ghostrole data changes, we don't keep resending to save performance.

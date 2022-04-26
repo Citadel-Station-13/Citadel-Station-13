@@ -138,6 +138,7 @@ GLOBAL_DATUM_INIT(join_menu, /datum/join_menu, new)
  * return effective title - used for alt titles - JOBS ONLY, not ghostroles
  */
 /datum/join_menu/proc/EffectiveTitle(job_id, client/C)
+	#warn this
 	return "Job #[rand(1, 100)]"	// i'm sorry sandpoot but atleast you get the code early..
 
 /**
@@ -192,9 +193,10 @@ GLOBAL_DATUM_INIT(join_menu, /datum/join_menu, new)
 						to_chat(usr, "<span class='warning'>Failed to find ghostrole [R]</span>")
 						return
 					to_chat(usr, "<span class='warning'>Attempting to join as ghostrole [id] ([R.name]).</span>")
-					var/error = R.AttemptSpawn(N.client)
+					var/client/C = N.client
+					var/error = R.AttemptSpawn(C)
 					if(istext(error))
-						to_chat(usr, span_danger(error))
+						to_chat(C, span_danger(error))
 		if("queue")
 			AttemptQueue(usr)
 
