@@ -18,7 +18,7 @@
 	var/id_tag = null
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
 
-	var/filter_types = list(GAS_CO2, GAS_MIASMA, GAS_GROUP_CHEMICALS)
+	var/filter_types = list(GAS_CO2, GAS_METHANE, GAS_METHYL_BROMIDE, GAS_MIASMA, GAS_GROUP_CHEMICALS)
 	var/list/clean_filter_types = null
 	var/volume_rate = 200
 	var/widenet = 0 //is this scrubber acting on the 3x3 area around it.

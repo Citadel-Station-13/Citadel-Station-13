@@ -535,7 +535,7 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"set_filters" = list(GAS_CO2, GAS_MIASMA, GAS_GROUP_CHEMICALS),
+					"set_filters" = list(GAS_CO2, GAS_METHANE, GAS_METHYL_BROMIDE, GAS_MIASMA, GAS_GROUP_CHEMICALS),
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
