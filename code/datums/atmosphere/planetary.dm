@@ -41,10 +41,11 @@
 	return ..()
 
 /datum/atmosphere/lavaland/check_for_sanity(datum/gas_mixture/mix)
-	var/datum/breathing_class/o2_class = GLOB.gas_data.breathing_classes[BREATH_OXY]
-	while(o2_class.get_effective_pp(mix) < 10)
-		mix.adjust_moles(GAS_CO2, -0.5)
-		mix.adjust_moles(GAS_O2, 0.5)
+	if(mix.get_moles(GAS_METHANE) < 0.1)
+		var/datum/breathing_class/o2_class = GLOB.gas_data.breathing_classes[BREATH_OXY]
+		while(o2_class.get_effective_pp(mix) < 10)
+			mix.adjust_moles(GAS_CO2, -0.5)
+			mix.adjust_moles(GAS_O2, 0.5)
 
 /datum/atmosphere/icemoon
 	id = ICEMOON_DEFAULT_ATMOS
