@@ -39,7 +39,7 @@
 
 	//converts the uniform string into the path we'll wear, whether it's the skirt or regular variant
 	var/holder
-	if(preference_source && preference_source.prefs.jumpsuit_style == PREF_SKIRT)
+	if(preference_source?.jumpsuit_style == PREF_SKIRT)
 		holder = "[uniform]/skirt"
 		if(!text2path(holder))
 			holder = "[uniform]"
