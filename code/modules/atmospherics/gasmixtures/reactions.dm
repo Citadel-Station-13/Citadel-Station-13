@@ -789,6 +789,5 @@
 		var/G = pick(gases)
 		air.adjust_moles(G, max(0.1, energy_remaining / (gases[G] * new_temp * 20)))
 		energy_remaining = initial_energy - air.thermal_energy()
-	if(energy_remaining < 0)
-		air.set_temperature(air.return_temperature() + (energy_remaining / (air.heat_capacity())))
+	air.adjust_heat(-energy_remaining)
 	return REACTING
