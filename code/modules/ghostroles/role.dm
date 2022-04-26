@@ -100,6 +100,8 @@ GLOBAL_LIST_INIT(ghostroles, init_ghostroles())
 	var/atom/location = GetSpawnLoc(C, spawnpoint)
 	if(!location)
 		return "Couldn't get a spawn location."
+	if(!instantiator)
+		return "BUG: No instantiator for [src][(id !=type) && ":[id]"] ([type])"
 	var/mob/created = Instantiate(C, location, params)
 	if(!created)
 		return "Mob instantiation failed."

@@ -17,8 +17,8 @@
 
 	var/pda_slot = ITEM_SLOT_BACK
 
-/datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
-	var/preference_backpack = preference_source?.prefs.backbag
+/datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, datum/preferences/preference_source)
+	var/preference_backpack = preference_source?.backbag
 
 	if(preference_backpack)
 		switch(preference_backpack)

@@ -5,6 +5,7 @@
 	desc = "Off-station area for ghosts to roleplay in."
 	spawntext = "You know one thing for sure. You aren't actually alive! Are you in a simulation?"
 	jobban_role = ROLE_GHOSTCAFE
+	instantiator = /datum/ghostrole_instantiator/human/player_static/ghost_cafe
 
 /obj/structure/ghost_role_spawner/ghost_cafe
 	name = "Ghost Cafe Sleeper"

@@ -105,13 +105,12 @@
  * gets a job by rank title/name or typepath
  */
 /datum/controller/subsystem/job/proc/GetJobAuto(thing)
+	RETURN_TYPE(/datum/job)
 	if(ispath(thing))
 		. = job_type_lookup[thing]
-	else
-		. = job_name_lookup[thing]
-		if(!.)
-			var/is_this_a_path = text2path(thing)
-			. = (is_this_a_path && job_type_lookup[is_this_a_path]) || null
+	else if(istext(thing))
+		var/is_this_a_path = text2path(thing)
+		. = ispath(is_this_a_path)? job_type_lookup[is_this_a_path] : job_name_lookup[thing]
 	if(!.)
 		CRASH("Failed JobAutoLookup: [thing].")
 

@@ -15,7 +15,7 @@ export const GhostRoleMenu = (props, context) => {
           {spawners.map(spawner => (
             <Section
               key={spawner.name}
-              title={spawner.name + ' (' + spawner.amount_left + ' left)'}
+              title={spawner.name + (!(spawner.amount_left === -1) && (' (' + spawner.amount_left + ' left)'))}
               level={2}
               buttons={(
                 <>

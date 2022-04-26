@@ -27,7 +27,8 @@ GLOBAL_DATUM_INIT(ghostrole_menu, /datum/ghostrole_menu, new)
 		data["short_desc"] = role.desc
 		data["flavor_text"] = role.spawntext
 		data["important_info"] = role.ImportantInfo()
-		data["amount_left"] = role.SpawnsLeft(user)
+		var/slots = role.SpawnsLeft(user)
+		data["amount_left"] = slots == INFINITY? -1 : slots
 		spawners += list(data)	// wrap
 
 /datum/ghostrole_menu/ui_act(action, params)
