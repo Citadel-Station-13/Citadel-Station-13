@@ -111,7 +111,7 @@ GLOBAL_DATUM_INIT(join_menu, /datum/join_menu, new)
 		if(SHUTTLE_CALL)
 			evac = 1
 	.["evacuated"] = evac
-	.["charname"] = usr.client?.prefs?.real_name || "Unknown User"
+	.["charname"] = user.client?.prefs?.real_name || "Unknown User"
 	// position in queue, -1 for not queued, null for no queue active, otherwise number
 	// if -1, ui should present option to queue
 	// if null, ui shouldn't show queue at all or say "there is no queue" etc etc

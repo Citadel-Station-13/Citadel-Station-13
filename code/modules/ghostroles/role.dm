@@ -104,7 +104,7 @@ GLOBAL_LIST_INIT(ghostroles, init_ghostroles())
 	if(!created)
 		return "Mob instantiation failed."
 	if(!Transfer(C, created))
-		qdel(created)
+		qdel(created)w
 		return "Mob transfer failed."
 	PostInstantiate(created, spawnpoint, params)
 	GLOB.join_menu.queue_update()
@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(ghostroles, init_ghostroles())
  * Checks if the client is a valid user mob and if we can allow a spawn from them
  */
 /datum/ghostrole/proc/AllowSpawn(client/C, list/params)
-	if(!isobserver(C) && !isnewplayer(C))
+	if(!isobserver(C.mob) && !isnewplayer(C.mob))
 		return FALSE
 	if(SpawnsLeft(C) <= 0)
 		return FALSE
@@ -157,14 +157,13 @@ GLOBAL_LIST_INIT(ghostroles, init_ghostroles())
 /datum/ghostrole/proc/GetSpawnpoint(client/C)
 	if(!allow_pick_spawner)
 		return safepick(GLOB.ghostrole_spawnpoints[id])
-	else
-		var/list/datum/component/ghostrole_spawnpoint/spawnpoints = GLOB.ghostrole_spawnpoints[id]
-		var/list/inputlist = list()
-		for(var/datum/component/ghostrole_spawnpoint/spawnpoint as anything in spawnpoints)
-			var/atom/A = spawnpoint.Atom()
-			inputlist["[A] - [get_area(A)]"] = spawnpoint
-		var/picked = tgui_input_list(C, "Spawner Selection", inputlist)
-		return inputlist[picked]
+	var/list/datum/component/ghostrole_spawnpoint/spawnpoints = GLOB.ghostrole_spawnpoints[id]
+	var/list/inputlist = list()
+	for(var/datum/component/ghostrole_spawnpoint/spawnpoint as anything in spawnpoints)
+		var/atom/A = spawnpoint.Atom()
+		inputlist["[A] - [get_area(A)]"] = spawnpoint
+	var/picked = tgui_input_list(C.mob, "Spawner Selection", inputlist)
+	return inputlist[picked]
 
 /**
  * Gets a spawn location for a client.

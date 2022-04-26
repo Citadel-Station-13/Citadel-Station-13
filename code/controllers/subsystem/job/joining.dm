@@ -186,11 +186,11 @@
 	if(S)
 		M.forceMove(S.GetSpawnLoc())
 		S.OnSpawn(M, C)
-
-	var/error_message = "Unable to send [key_name(M)] to latejoin."
-	message_admins(error_message)
-	subsystem_log(error_message)
-	CRASH(error_message)		// this is serious.
+	else
+		var/error_message = "Unable to send [key_name(M)] to latejoin."
+		message_admins(error_message)
+		subsystem_log(error_message)
+		CRASH(error_message)		// this is serious.
 
 /datum/controller/subsystem/job/proc/SendToRoundstart(mob/M, client/C, datum/job/J)
 	var/atom/movable/landmark/spawnpoint/S = GetRoundstartSpawnpoint(M, C, J.GetID(), J.faction)
