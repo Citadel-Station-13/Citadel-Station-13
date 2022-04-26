@@ -786,7 +786,7 @@
 	for(var/g in gases)
 		gases[g] = 10000 / gases[g]
 	while(energy_remaining > 0)
-		var/G = pickweight(gases)
+		var/G = pick(gases)
 		air.adjust_moles(G, max(0.1, energy_remaining / (gases[G] * new_temp * 20)))
 		energy_remaining = initial_energy - air.thermal_energy()
 	if(energy_remaining < 0)
