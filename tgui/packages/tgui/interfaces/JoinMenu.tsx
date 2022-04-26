@@ -182,7 +182,7 @@ const RoleList = (props: IRoleListProps, context) => {
           const data: DepartmentData[] = props.departmentData[name];
 
           return (
-            <Flex.Item ml={2} mr={2} mb={1} key={name} basis="22%" grow>
+            <Flex.Item ml={2} mr={2} mt={2} key={name} basis="22%" grow>
               <Section
                 title={name}
                 borderHexColor={

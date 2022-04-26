@@ -127,6 +127,7 @@
 	desc = "You are a syndicate science technician, employed in a top secret research facility developing biological weapons."
 	spawntext = "Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. Continue your research as best you can, and try to keep a low profile. <span class='boldwarning'>The base is rigged with explosives, DO NOT abandon it or let it fall into enemy hands!</span>"
 	assigned_role = "Lavaland Syndicate"
+	instantiator = /datum/ghostrole_instantiator/human/random/syndicate
 
 /datum/ghostrole/syndicate_comms
 	name = "Syndicate Comms Agent"
@@ -136,6 +137,7 @@
 	desc = "You are a syndicate comms agent, employed in a top secret research facility developing biological weapons."
 	spawntext = "<span class='big bold'>You are a syndicate agent,</span><b> assigned to a small listening post station situated near your hated enemy's top secret research facility: Space Station 13. <b>Monitor enemy activity as best you can, and try to keep a low profile. <font size=6>DON'T</font> abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
 	assigned_role = "Syndicate Comms Agent"
+	instantiator = /datum/ghostrole_instantiator/human/random/syndicate
 
 /datum/ghostrole_instantiator/human/random/syndicate/Equip(client/C, mob/M, list/params)
 	. = ..()

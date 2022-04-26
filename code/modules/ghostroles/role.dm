@@ -115,7 +115,7 @@ GLOBAL_LIST_INIT(ghostroles, init_ghostroles())
 
 /datum/ghostrole/proc/Instantiate(client/C, atom/loc, list/params)
 	var/mob/living/L = instantiator.Run(C, loc, params)
-	. = istype(L)
+	. = istype(L) && L
 	if(.)
 		L.mind?.assigned_role = assigned_role || name
 

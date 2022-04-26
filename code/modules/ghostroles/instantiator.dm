@@ -10,9 +10,7 @@
 	. = Create(C, location, params)
 	if(!.)
 		return
-	if(!Equip(C, ., params))
-		qdel(.)
-		return null
+	Equip(C, ., params)
 
 /datum/ghostrole_instantiator/proc/Create(client/C, atom/location, list/params)
 	CRASH("Base Create() called on ghostrole instantiator datum.")

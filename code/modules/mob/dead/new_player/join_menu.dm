@@ -191,8 +191,10 @@ GLOBAL_DATUM_INIT(join_menu, /datum/join_menu, new)
 					if(!R)
 						to_chat(usr, "<span class='warning'>Failed to find ghostrole [R]</span>")
 						return
-					to_chat(usr, "<span class='warning'>Attempting to ghostrole as [id] ([R.name]).</span>")
-					R.AttemptSpawn(N.client)
+					to_chat(usr, "<span class='warning'>Attempting to join as ghostrole [id] ([R.name]).</span>")
+					var/error = R.AttemptSpawn(N.client)
+					if(istext(error))
+						to_chat(usr, span_danger(error))
 		if("queue")
 			AttemptQueue(usr)
 
