@@ -55,7 +55,7 @@ GLOBAL_DATUM_INIT(ghostrole_menu, /datum/ghostrole_menu, new)
 		if("spawn")
 			var/error = role.AttemptSpawn(usr.client)
 			if(istext(error))
-				to_chaT(usr, span_danger(error))
+				to_chat(usr, span_danger(error))
 
 /**
  * Call this whenever ghostrole data changes, we don't keep resending to save performance.
