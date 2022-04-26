@@ -41,12 +41,15 @@ GLOBAL_LIST(topic_status_cache)
 	SSdbcore.SetRoundID()
 	SetupLogs()
 
-#ifndef USE_CUSTOM_ERROR_HANDLER
+// #ifndef USE_CUSTOM_ERROR_HANDLER
+// 	world.log = file("[GLOB.log_directory]/dd.log")
+// #else
+// 	if (TgsAvailable())
+// 		world.log = file("[GLOB.log_directory]/dd.log") //not all runtimes trigger world/Error, so this is the only way to ensure we can see all of them.
+// #endif
+
+	// to deal with invisible runtimes, always log this
 	world.log = file("[GLOB.log_directory]/dd.log")
-#else
-	if (TgsAvailable())
-		world.log = file("[GLOB.log_directory]/dd.log") //not all runtimes trigger world/Error, so this is the only way to ensure we can see all of them.
-#endif
 
 	LoadVerbs(/datum/verbs/menu)
 	if(CONFIG_GET(flag/usewhitelist))
