@@ -123,6 +123,7 @@ GLOBAL_LIST_INIT(ghostroles, init_ghostroles())
 	if(!isnewplayer(C.mob))
 		C.mob.ghostize(TRUE, TRUE)
 	created.ckey = C.ckey
+	return TRUE
 
 /**
  * Ran before anything else is at AttemptSpawn()
