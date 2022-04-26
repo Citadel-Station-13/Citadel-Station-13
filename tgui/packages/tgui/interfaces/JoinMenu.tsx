@@ -193,7 +193,7 @@ const RoleList = (props: IRoleListProps, context) => {
                     fluid
                     key={dat.id}
                     tooltip={dat.desc}
-                    content={`(${dat.slots === -1 ? "Unlimited" : dat.slots}) ${dat.real_name}`}
+                    content={`${dat.real_name} - ${dat.slots === -1 ? "Unlimited" : dat.slots}`}
                     confirmContent={`Play as ${dat.real_name}?`}
                     onClick={() => act('join', { 'id': dat.id, 'type': 'job' })}
                   />
