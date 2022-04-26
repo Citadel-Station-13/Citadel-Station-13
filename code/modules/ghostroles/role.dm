@@ -104,7 +104,7 @@ GLOBAL_LIST_INIT(ghostroles, init_ghostroles())
 	if(!created)
 		return "Mob instantiation failed."
 	if(!Transfer(C, created))
-		qdel(created)w
+		qdel(created)
 		return "Mob transfer failed."
 	PostInstantiate(created, spawnpoint, params)
 	GLOB.join_menu.queue_update()
