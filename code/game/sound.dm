@@ -173,7 +173,7 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 		var/dz = turf_source.y - T.y // Hearing from infront/behind
 		S.z = dz * distance_multiplier
 		var/dy = (turf_source.z - T.z) * 5 * distance_multiplier // Hearing from  above / below, multiplied by 5 because we assume height is further along coords.
-		S.y = dy
+		S.y = dy + 1
 
 		S.falloff = isnull(max_distance)? FALLOFF_SOUNDS : max_distance //use max_distance, else just use 1 as we are a direct sound so falloff isnt relevant.
 
