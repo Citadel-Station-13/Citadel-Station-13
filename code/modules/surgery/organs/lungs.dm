@@ -440,7 +440,7 @@
 			owner.adjust_bodytemperature(30*TEMPERATURE_DAMAGE_COEFFICIENT)
 		if(50 to INFINITY)
 			owner.adjust_bodytemperature(100*TEMPERATURE_DAMAGE_COEFFICIENT)
-	
+
 /obj/item/organ/lungs/ipc/ui_action_click(mob/user, actiontype)
 	if(!owner)
 		return
@@ -494,7 +494,7 @@
 	if(owner.blood_volume <= next_warn)
 		to_chat(owner, "[owner.blood_volume > BLOOD_VOLUME_BAD ? "<span class='notice'>" : "<span class='warning'>"]Coolant level passed threshold - now [round(owner.blood_volume / BLOOD_VOLUME_NORMAL * 100, 0.1)] percent.</span>")
 		next_warn -= (BLOOD_VOLUME_NORMAL * 0.1)
-			
+
 /obj/item/organ/lungs/plasmaman
 	name = "plasma filter"
 	desc = "A spongy rib-shaped mass for filtering plasma from the air."
@@ -574,6 +574,8 @@
 	// humans usually breathe 21 but require 16/17, so 80% - 1, which is more lenient but it's fine
 	#define SAFE_THRESHOLD_RATIO 0.8
 	var/datum/gas_mixture/breath = SSair.planetary[LAVALAND_DEFAULT_ATMOS] // y'all know
+	if(breath.get_moles(GAS_METHANE) > 0.1)
+		breathing_class = BREATH_METHANE
 	var/pressure = breath.return_pressure()
 	var/total_moles = breath.total_moles()
 	for(var/id in breath.get_gases())

@@ -40,9 +40,16 @@
 	if(hotspot && istype(T) && T.air)
 		qdel(hotspot)
 		var/datum/gas_mixture/G = T.air
-		var/plas_amt = min(30,G.get_moles(GAS_PLASMA))  //Absorb some plasma
-		G.adjust_moles(GAS_PLASMA,-plas_amt)
-		absorbed_plasma += plas_amt
+		var/amt_removed = min(30,G.get_moles(GAS_PLASMA))  //Absorb some plasma
+		G.adjust_moles(GAS_PLASMA,-amt_removed)
+		absorbed_plasma += amt_removed
+		var/list/fire_gases = GLOB.gas_data.fire_temperatures.Copy()
+		for(var/gas in fire_gases - GAS_PLASMA)
+			if(amt_removed <= 0)
+				break
+			var/this_amount = min(30-amt_removed, G.get_moles(gas))
+			G.adjust_moles(gas, -this_amount)
+			amt_removed -= this_amount
 		if(G.return_temperature() > T20C)
 			G.set_temperature(max(G.return_temperature()/2,T20C))
 		T.air_update_turf()
