@@ -17,7 +17,6 @@
 	//regarding the requirements lists: the minimum or maximum requirements must be non-zero.
 	//when in doubt, use MINIMUM_MOLE_COUNT.
 	var/list/min_requirements
-	var/list/max_requirements
 	var/exclude = FALSE //do it this way to allow for addition/removal of reactions midmatch in the future
 	var/priority = 100 //lower numbers are checked/react later than higher numbers. if two reactions have the same priority they may happen in either order
 	var/name = "reaction"
@@ -717,3 +716,78 @@
 	if(result != NO_REACTION)
 		return list("success" = FALSE, "message" = "Miasma sterilization not stopping due to water vapor correctly!")
 	return ..()
+
+/datum/gas_reaction/nitric_oxide
+	priority = -5
+	name = "Nitric oxide decomposition"
+	id = "nitric_oxide"
+
+/datum/gas_reaction/nitric_oxide/init_reqs()
+	min_requirements = list(
+		"MAX_TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST+100,
+		GAS_NITRIC = MINIMUM_MOLE_COUNT
+	)
+
+/datum/gas_reaction/nitric_oxide/react(datum/gas_mixture/air, datum/holder)
+	var/nitric = air.get_moles(GAS_NITRIC)
+	var/oxygen = air.get_moles(GAS_O2)
+	var/max_amount = max(nitric / 10, MINIMUM_MOLE_COUNT)
+	var/enthalpy = air.return_temperature() * (air.heat_capacity() + R_IDEAL_GAS_EQUATION * air.total_moles());
+	var/list/enthalpies = GLOB.gas_data.enthalpies
+	if(oxygen > MINIMUM_MOLE_COUNT)
+		var/reaction_amount = min(max_amount, oxygen)
+		air.adjust_moles(GAS_NITRIC, -reaction_amount*2)
+		air.adjust_moles(GAS_O2, -reaction_amount)
+		air.adjust_moles(GAS_NITRYL, reaction_amount*2)
+		enthalpy += (reaction_amount * -(enthalpies[GAS_NITRIC] - enthalpies[GAS_NITRYL]))
+	air.adjust_moles(GAS_NITRIC, -max_amount)
+	air.adjust_moles(GAS_O2, max_amount * 0.5)
+	air.adjust_moles(GAS_N2, max_amount * 0.5)
+	enthalpy += max_amount * -enthalpies[GAS_NITRIC]
+	air.set_temperature(enthalpy/(air.heat_capacity() + R_IDEAL_GAS_EQUATION * air.total_moles()))
+	return REACTING
+
+/datum/gas_reaction/hagedorn
+	priority = -INFINITY
+	name = "Hagedorn decomposition"
+	id = "hagedorn"
+
+/datum/gas_reaction/hagedorn/init_reqs()
+	min_requirements = list(
+		"TEMP" = 2e12 // 2 trillion kelvins
+	)
+
+/datum/gas_reaction/hagedorn/react(datum/gas_mixture/air, datum/holder)
+	var/initial_energy = air.thermal_energy()
+	for(var/g in air.get_gases())
+		air.set_moles(g, 0)
+	air.set_moles(GAS_QCD, initial_energy / (air.return_temperature() * GLOB.gas_data.specific_heats[GAS_QCD]))
+
+/datum/gas_reaction/dehagedorn
+	priority = 50
+	name = "Hagedorn condensation"
+	id = "dehagedorn"
+
+/datum/gas_reaction/dehagedorn/init_reqs()
+	min_requirements = list(
+		"MAX_TEMP" = 1.99e12,
+		GAS_QCD = MINIMUM_MOLE_COUNT
+	)
+
+/datum/gas_reaction/dehagedorn/react(datum/gas_mixture/air, datum/holder)
+	var/initial_energy = air.thermal_energy()
+	var/energy_remaining = initial_energy
+	air.set_moles(GAS_QCD, 0)
+	air.set_temperature(min(air.return_temperature(), 1.8e12))
+	var/new_temp = air.return_temperature()
+	var/list/gases = GLOB.gas_data.specific_heats.Copy()
+	gases -= GAS_QCD
+	gases -= GAS_TRITIUM // no refusing sorry
+	for(var/g in gases)
+		gases[g] = 10000 / gases[g]
+	while(energy_remaining > 0)
+		var/G = pick(gases)
+		air.adjust_moles(G, max(0.1, energy_remaining / (gases[G] * new_temp * 20)))
+		energy_remaining = initial_energy - air.thermal_energy()
+	air.adjust_heat(-energy_remaining)
+	return REACTING

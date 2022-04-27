@@ -1483,6 +1483,7 @@
 	description = "A caustic substance commonly used in fertilizer or household cleaners."
 	reagent_state = GAS
 	gas = GAS_AMMONIA
+	boiling_point = 239.81
 	color = "#404030" // rgb: 64, 64, 48
 	taste_description = "mordant"
 	pH = 11.6
