@@ -1,7 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - rscadd: "The stasis beds can now be researched alongside being built."
-  - balance: "Maps are now half stasis beds and half sleepers... only in medbay."
-  - bugfix: "The stasis bed's examine now works."
-  - refactor: "Generally updates stasis bed's code and adds cooldown defines (i learnt how to use them)"

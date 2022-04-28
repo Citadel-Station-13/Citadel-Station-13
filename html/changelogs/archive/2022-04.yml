@@ -37,3 +37,18 @@
   - rscadd: Added deadminning preferences (only affects admins).
   maxspells:
   - expansion: Surgery steps play sound effects appropriate to the step
+2022-04-28:
+  Putnam3145:
+  - rscadd: 'Methane-based planetary atmospheres tweak: Advanced fire extinguishers
+      can now remove non-plasma flammable gases'
+  - rscadd: Nitric oxide (NO), with reactions associated
+  - rscadd: A maximum temperature above which all gases break down into quark matter,
+      which will break down into gases again if it goes below that temperature.
+  SandPoot:
+  - rscadd: The stasis beds can now be researched alongside being built.
+  - balance: Maps are now half stasis beds and half sleepers... only in medbay.
+  - bugfix: The stasis bed's examine now works.
+  - refactor: Generally updates stasis bed's code and adds cooldown defines (i learnt
+      how to use them)
+  timothyteakettle:
+  - spellcheck: trashcan quirk now uses correct grammar
