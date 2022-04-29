@@ -42,3 +42,5 @@
 #define FUSION_RAD_MAX						2000
 #define FUSION_RAD_COEFFICIENT				(-1000)
 #define FUSION_INSTABILITY_ENDOTHERMALITY   2
+// Snowflake fire product types
+#define FIRE_PRODUCT_PLASMA 				0

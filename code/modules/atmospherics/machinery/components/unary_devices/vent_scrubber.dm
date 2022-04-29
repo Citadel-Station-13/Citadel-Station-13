@@ -42,7 +42,7 @@
 	clean_filter_types = list()
 	for(var/id in filter_types)
 		if(id in GLOB.gas_data.groups)
-			clean_filter_types += GLOB.gas_data.groups[id]
+			clean_filter_types |= GLOB.gas_data.groups[id]
 		else
 			clean_filter_types += id
 
