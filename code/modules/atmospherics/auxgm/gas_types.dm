@@ -147,6 +147,8 @@
 	specific_heat = 10
 	name = "Hydrogen"
 	flags = GAS_FLAG_DANGEROUS
+	moles_visible = MOLES_GAS_VISIBLE
+	color = "#ffe"
 	fusion_power = 0
 	powermix = 1
 	heat_penalty = 3
