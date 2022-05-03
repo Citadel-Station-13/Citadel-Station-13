@@ -1,0 +1,7 @@
+2022-05-03:
+  Putnam3145:
+  - bugfix: Round times are accurate now
+  SandPoot:
+  - bugfix: Actually fixes dragging storage items into themself.
+  timothyteakettle:
+  - rscadd: sodium sensitivity quirk

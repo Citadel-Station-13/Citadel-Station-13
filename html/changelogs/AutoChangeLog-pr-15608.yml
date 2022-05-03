@@ -1,4 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - bugfix: "Actually fixes dragging storage items into themself."
