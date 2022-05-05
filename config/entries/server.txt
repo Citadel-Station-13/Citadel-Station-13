@@ -4,8 +4,18 @@
 ## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
 # SERVERNAME tgstation
 
+## Community short-name: This appears in parentheses after the server's active station name
+# COMMUNITYSHORTNAME tg???
+
+## Community link: Requires a community short-name defined. Attaches a link to the community's shortname, and requires a short-name defined.
+## You could alternatively just add raw HTML to the above, but this is more newbie-friendly
+# COMMUNITYLINK http://crouton.net
+
 ## Server tagline: This will appear right below the server's title.
 # SERVERTAGLINE A generic TG-based server
+
+## Use tagline strings: Uncomment to have the server's tagline be randomly selected from taglines.txt
+# USETAGLINESTRINGS
 
 ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
 # SERVERSQLNAME tgstation
