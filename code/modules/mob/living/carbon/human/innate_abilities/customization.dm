@@ -120,7 +120,7 @@
 	else if (select_alteration == "Wings")
 		var/list/snowflake_wings_list = list("Normal" = null)
 		for(var/path in GLOB.deco_wings_list)
-			var/datum/sprite_accessory/wings/deco_wings/instance = GLOB.deco_wings_list[path]
+			var/datum/sprite_accessory/deco_wings/instance = GLOB.deco_wings_list[path]
 			if(istype(instance, /datum/sprite_accessory))
 				var/datum/sprite_accessory/S = instance
 				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
