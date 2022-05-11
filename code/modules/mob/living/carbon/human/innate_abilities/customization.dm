@@ -118,6 +118,11 @@
 		H.update_body()
 		
 	else if (select_alteration == "Wings")
+		var/new_color = input(owner, "Choose your wing color:", "Race change","#"+H.dna.features["wings_color"]) as color|null
+		if(new_color)
+			H.dna.features["wings_color"] = sanitize_hexcolor(new_color, 6)
+			H.update_body()
+			H.update_hair()
 		var/list/snowflake_wings_list = list("Normal" = null)
 		for(var/path in GLOB.deco_wings_list)
 			var/datum/sprite_accessory/deco_wings/instance = GLOB.deco_wings_list[path]
