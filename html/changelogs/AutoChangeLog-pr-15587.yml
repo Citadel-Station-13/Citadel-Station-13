@@ -1,0 +1,6 @@
+author: "TomGarou"
+delete-after: True
+changes: 
+  - rscadd: "Added Reprogramming to surgeries via Techweb under Alien surgery and Brainwashing disk"
+  - balance: "Synths and non Synths can now be brainwashed equally"
+  - bugfix: "Brainwash surgery not working with synths due to metal heads"
