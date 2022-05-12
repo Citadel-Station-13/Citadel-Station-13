@@ -1,0 +1,7 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - rscadd: "Status displays can now be built."
+  - rscadd: "AIs can now quickly modify their status displays using an emote (*bsod)!"
+  - rscadd: "AIs can also modify their status displays by just clicking on the devices (opens a radial wheel)!"
+  - refactor: "Status displays simply look a lot better now."
