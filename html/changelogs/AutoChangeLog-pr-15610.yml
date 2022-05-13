@@ -1,4 +1,0 @@
-author: "Bhijn & Myr"
-delete-after: True
-changes: 
-  - rscadd: "The server's hub tagline now has the option to pull random strings from strings/server_taglines.txt!"
