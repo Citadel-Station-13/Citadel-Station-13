@@ -117,7 +117,6 @@
 	id = "tritfire"
 
 /datum/gas_reaction/tritfire/init_reqs()
-	exclude = world.system_type == MS_WINDOWS // temporary stopgap until generic fires work on linux
 	min_requirements = list(
 		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST,
 		GAS_TRITIUM = MINIMUM_MOLE_COUNT,
@@ -199,7 +198,6 @@
 	id = "plasmafire"
 
 /datum/gas_reaction/plasmafire/init_reqs()
-	exclude = world.system_type == MS_WINDOWS // temporary stopgap until generic fires work on linux
 	min_requirements = list(
 		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST,
 		GAS_PLASMA = MINIMUM_MOLE_COUNT,

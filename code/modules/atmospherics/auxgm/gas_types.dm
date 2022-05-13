@@ -7,6 +7,9 @@
 	heat_penalty = 1
 	transmit_modifier = 1.5
 
+/datum/gas/oxygen/generate_TLV()
+	return new/datum/tlv(16, 19, 40, 50)
+
 /datum/gas/nitrogen
 	id = GAS_N2
 	specific_heat = 20
@@ -48,6 +51,9 @@
 	fusion_power = 3
 	enthalpy = -393500
 
+/datum/gas/carbon_dioxide/generate_TLV()
+	return new/datum/tlv(-1, -1, 5, 10)
+
 /datum/gas/plasma
 	id = GAS_PLASMA
 	specific_heat = 200
@@ -60,12 +66,8 @@
 	powermix = 1
 	fire_burn_rate = OXYGEN_BURN_RATE_BASE // named when plasma fires were the only fires, surely
 	fire_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
-	fire_products = "plasma_fire"
+	fire_products = FIRE_PRODUCT_PLASMA
 	enthalpy = FIRE_PLASMA_ENERGY_RELEASED // 3000000, 3 megajoules, 3000 kj
-
-/datum/gas/plasma/New()
-	if(world.system_type == UNIX)
-		fire_temperature = null
 
 /datum/gas/water_vapor
 	id = GAS_H2O
@@ -73,6 +75,7 @@
 	name = "Water Vapor"
 	gas_overlay = "water_vapor"
 	moles_visible = MOLES_GAS_VISIBLE
+	flags = GAS_FLAG_DANGEROUS
 	fusion_power = 8
 	heat_penalty = 8
 	enthalpy = -241800 // FIRE_HYDROGEN_ENERGY_RELEASED is actually what this was supposed to be
@@ -92,10 +95,30 @@
 	enthalpy = 81600
 	heat_resistance = 6
 
+/datum/gas/tritium
+	id = GAS_TRITIUM
+	specific_heat = 10
+	name = "Tritium"
+	gas_overlay = "tritium"
+	moles_visible = MOLES_GAS_VISIBLE
+	flags = GAS_FLAG_DANGEROUS
+	fusion_power = 1
+	powermix = 1
+	heat_penalty = 10
+	transmit_modifier = 30
+	fire_products = list(GAS_H2O = 1)
+	enthalpy = 300000
+	fire_burn_rate = 2
+	fire_radiation_released = 50 // arbitrary number, basically 60 moles of trit burning will just barely start to harm you
+	fire_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 50
+
 /datum/gas/nitric_oxide
 	id = GAS_NITRIC
 	specific_heat = 20
 	name = "Nitric oxide"
+	flags = GAS_FLAG_DANGEROUS
+	odor = "sharp sweetness"
+	odor_strength = 1
 	fusion_power = 15
 	enthalpy = 91290
 	heat_resistance = 2
@@ -104,7 +127,7 @@
 	id = GAS_NITRYL
 	specific_heat = 20
 	name = "Nitrogen dioxide"
-	gas_overlay = "nitryl"
+	color = "#963"
 	moles_visible = MOLES_GAS_VISIBLE
 	flags = GAS_FLAG_DANGEROUS
 	fusion_power = 15
@@ -124,6 +147,8 @@
 	specific_heat = 10
 	name = "Hydrogen"
 	flags = GAS_FLAG_DANGEROUS
+	moles_visible = MOLES_GAS_VISIBLE
+	color = "#ffe"
 	fusion_power = 0
 	powermix = 1
 	heat_penalty = 3
@@ -131,27 +156,6 @@
 	fire_products = list(GAS_H2O = 1)
 	fire_burn_rate = 2
 	fire_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 50
-
-/datum/gas/tritium
-	id = GAS_TRITIUM
-	specific_heat = 10
-	name = "Tritium"
-	gas_overlay = "tritium"
-	moles_visible = MOLES_GAS_VISIBLE
-	flags = GAS_FLAG_DANGEROUS
-	fusion_power = 1
-	powermix = 1
-	heat_penalty = 10
-	transmit_modifier = 30
-	fire_products = list(GAS_H2O = 1)
-	enthalpy = 300000
-	fire_burn_rate = 2
-	fire_radiation_released = 50 // arbitrary number, basically 60 moles of trit burning will just barely start to harm you
-	fire_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 50
-
-/datum/gas/tritium/New()
-	if(world.system_type == UNIX)
-		fire_temperature = null
 
 /datum/gas/bz
 	id = GAS_BZ
@@ -168,6 +172,8 @@
 /datum/gas/stimulum
 	id = GAS_STIMULUM
 	specific_heat = 5
+	odor = "the color blue" // fast
+	odor_strength = 10
 	name = "Stimulum"
 	fusion_power = 7
 
@@ -184,10 +190,15 @@
 	transmit_modifier = -5
 	heat_resistance = 3
 
+/datum/gas/pluoxium/generate_TLV()
+	return new/datum/tlv(-1, -1, 5, 6)
+
 /datum/gas/miasma
 	id = GAS_MIASMA
 	specific_heat = 20
 	fusion_power = 50
+	flags = GAS_FLAG_DANGEROUS
+	// snowflaked odor
 	name = "Miasma"
 	gas_overlay = "miasma"
 	moles_visible = MOLES_GAS_VISIBLE * 60
@@ -196,6 +207,9 @@
 	id = GAS_METHANE
 	specific_heat = 30
 	name = "Methane"
+	odor = "natural gas"
+	odor_strength = 2
+	flags = GAS_FLAG_DANGEROUS
 	powerloss_inhibition = 1
 	heat_resistance = 3
 	breath_results = GAS_METHYL_BROMIDE
@@ -234,14 +248,18 @@
 	fire_products = list(GAS_CO2 = 1, GAS_H2O = 1.5, GAS_BROMINE = 0.5)
 	enthalpy = -35400
 	fire_burn_rate = 4 / 7 // oh no
-	fire_temperature = 808 // its autoignition, it apparently doesn't spark readily, so i don't put it lower
+	fire_temperature = 808 // its autoignition; it apparently doesn't spark readily, so i don't put it lower
 
 /datum/gas/bromine
 	id = GAS_BROMINE
 	specific_heat = 76
 	name = "Bromine"
-	flags = GAS_FLAG_DANGEROUS
+	flags = GAS_FLAG_DANGEROUS | GAS_FLAG_CHEMICAL
 	group = GAS_GROUP_CHEMICALS
+	color = "#6e1f00"
+	moles_visible = MOLES_GAS_VISIBLE
+	odor = "bromine" // it's a very recognizable smell
+	odor_strength = 0.1
 	enthalpy = 193 // yeah it's small but it's good to include it
 	breath_reagent = /datum/reagent/bromine
 
@@ -249,7 +267,9 @@
 	id = GAS_AMMONIA
 	specific_heat = 35
 	name = "Ammonia"
-	flags = GAS_FLAG_DANGEROUS
+	odor = "ammonia"
+	odor_strength = 0.01
+	flags = GAS_FLAG_DANGEROUS | GAS_FLAG_CHEMICAL
 	group = GAS_GROUP_CHEMICALS
 	enthalpy = -45900
 	breath_reagent = /datum/reagent/ammonia

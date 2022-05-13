@@ -90,7 +90,6 @@
 	var/frequency = FREQ_ATMOS_CONTROL
 	var/alarm_frequency = FREQ_ATMOS_ALARMS
 	var/datum/radio_frequency/radio_connection
-
 	var/list/TLV = list( // Breathable air.
 		"pressure"					= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
 		"temperature"				= new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66),
@@ -108,8 +107,16 @@
 		GAS_NITRYL			= new/datum/tlv/dangerous,
 		GAS_PLUOXIUM			= new/datum/tlv(-1, -1, 5, 6), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
 		GAS_METHANE			= new/datum/tlv(-1, -1, 3, 6),
-		GAS_METHYL_BROMIDE	= new/datum/tlv/dangerous
+		GAS_METHYL_BROMIDE	= new/datum/tlv/dangerous,
+		GAS_AMMONIA		= new/datum/tlv/dangerous,
+		GAS_BROMINE			= new/datum/tlv/dangerous,
+
 	)
+
+/obj/machinery/airalarm/proc/regenerate_TLV()
+	var/list/TLVs = GLOB.gas_data.TLVs
+	for(var/g in TLVs)
+		TLV[g] = TLVs[g]
 
 /obj/machinery/airalarm/server // No checks here.
 	TLV = list(
@@ -131,6 +138,11 @@
 		GAS_METHANE			= new/datum/tlv/no_checks,
 		GAS_METHYL_BROMIDE	= new/datum/tlv/no_checks
 	)
+
+/obj/machinery/airalarm/server/regenerate_TLV()
+	var/list/TLVs = GLOB.gas_data.TLVs
+	for(var/g in TLVs)
+		TLV[g] = new/datum/tlv/no_checks
 
 /obj/machinery/airalarm/kitchen_cold_room // Copypasta: to check temperatures.
 	TLV = list(
@@ -203,6 +215,8 @@
 
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
+	regenerate_TLV()
+	RegisterSignal(SSdcs,COMSIG_GLOB_NEW_GAS,.proc/regenerate_TLV)
 	wires = new /datum/wires/airalarm(src)
 
 	if(ndir)
@@ -535,7 +549,7 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"set_filters" = list(GAS_CO2, GAS_METHANE, GAS_METHYL_BROMIDE, GAS_MIASMA, GAS_GROUP_CHEMICALS),
+					"set_filters" = list(GAS_CO2, GAS_MIASMA, GAS_GROUP_CHEMICALS),
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
@@ -546,26 +560,11 @@
 					"set_external_pressure" = ONE_ATMOSPHERE
 				))
 		if(AALARM_MODE_CONTAMINATED)
+			var/list/all_gases = GLOB.gas_data.get_by_flag(GAS_FLAG_DANGEROUS)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"set_filters" = list(
-						GAS_CO2,
-						GAS_MIASMA,
-						GAS_PLASMA,
-						GAS_H2O,
-						GAS_HYDROGEN,
-						GAS_HYPERNOB,
-						GAS_NITROUS,
-						GAS_NITRYL,
-						GAS_TRITIUM,
-						GAS_BZ,
-						GAS_STIMULUM,
-						GAS_PLUOXIUM,
-						GAS_METHANE,
-						GAS_METHYL_BROMIDE,
-						GAS_GROUP_CHEMICALS
-					),
+					"set_filters" = all_gases,
 					"scrubbing" = 1,
 					"widenet" = 1,
 				))
@@ -599,7 +598,7 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"set_filters" = list(GAS_CO2, GAS_MIASMA),
+					"set_filters" = list(GAS_CO2, GAS_MIASMA, GAS_GROUP_CHEMICALS),
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
