@@ -1,9 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - rscadd: "Smelly gases (Bromine, methane, ammonia, nitric oxide and stimulum in particular)"
-  - rscadd: "Easier-to-make-visible gases; gases made visible with this system are bromine and hydrogen (plus nitryl, but that was already visible in the same way)"
-  - bugfix: "Scrubbers scrub chems properly
-tweak: Air alarms now show all gases, not just ones they're hardcoded to show
-tweak: Contaminated now only removes \"dangerous\" gases (this is actually a consequence of the hardcode reduction)
-tweak: Water vapor is now counted as DANGEROUS (this makes it included in \"contaminated\" and adds admin logging when people open water vapor cans)"
