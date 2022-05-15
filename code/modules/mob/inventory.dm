@@ -472,7 +472,7 @@
 /mob/living/carbon/human/change_number_of_hands(amt)
 	var/old_limbs = held_items.len
 	if(amt < old_limbs)
-		for(var/i in hand_bodyparts.len to (amt + 1)t step -1)
+		for(var/i in hand_bodyparts.len to (amt + 1) step -1)
 			var/obj/item/bodypart/BP = hand_bodyparts[i]
 			BP.dismember()
 			hand_bodyparts[i] = null
