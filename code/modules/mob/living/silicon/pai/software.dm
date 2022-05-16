@@ -91,7 +91,7 @@
 					#leftmenu a:visited { color: #CCCCCC; }
 					#leftmenu a:active { color: #000000; }
 
-					#rightmenu {color: #CCCCCC; background-color:#555555; width: 200px ; height: auto; min-height: 340px; right: 10px; position: absolute; z-index: 1}
+					#rightmenu {color: #CCCCCC; background-color:#555555; width: 200px; height: auto; min-height: 340px; right: 10px; position: absolute; z-index: 1}
 					#rightmenu a:link { color: #CCCCCC; }
 					#rightmenu a:hover { color: #CC3333; }
 					#rightmenu a:visited { color: #CCCCCC; }
