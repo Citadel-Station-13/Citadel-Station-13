@@ -74,24 +74,23 @@
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
 
-												// Declaring a doctype is necessary to enable BYOND's crappy browser's more advanced CSS functionality
+	//? Declaring a doctype is necessary to enable BYOND's crappy browser's more advanced CSS functionality
 	dat = {"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
 			<html>
 			<head>
 				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 				<style type=\"text/css\">
-					body { background-image:url('html/paigrid.png'); }
 
-					#header { text-align:center; color:white; font-size: 30px; height: 35px; width: 100%; letter-spacing: 2px; z-index: 5}
-					#content {position: relative; left: 10px; height: 400px; width: 100%; z-index: 0}
+					#header { text-align:center; color:white; font-size: 30px; height: 35px; width: 100%; letter-spacing: 2px; z-index: 5; }
+					#content { position: relative; left: 10px; height: 400px; width: 100%; z-index: 0; }
 
-					#leftmenu {color: #AAAAAA; background-color:#333333; width: 400px; height: auto; min-height: 340px; position: absolute; z-index: 0}
+					#leftmenu { color: #AAAAAA; background-color:#333333; width: 400px; height: auto; min-height: 340px; position: absolute; z-index: 0; }
 					#leftmenu a:link { color: #CCCCCC; }
 					#leftmenu a:hover { color: #CC3333; }
 					#leftmenu a:visited { color: #CCCCCC; }
 					#leftmenu a:active { color: #000000; }
 
-					#rightmenu {color: #CCCCCC; background-color:#555555; width: 200px; height: auto; min-height: 340px; right: 10px; position: absolute; z-index: 1}
+					#rightmenu { color: #CCCCCC; background-color:#555555; width: 200px; height: auto; min-height: 340px; right: 10px; position: absolute; z-index: 1; }
 					#rightmenu a:link { color: #CCCCCC; }
 					#rightmenu a:hover { color: #CC3333; }
 					#rightmenu a:visited { color: #CCCCCC; }
@@ -112,15 +111,13 @@
 				</div>
 			</body>
 			</html>"} //"
-	usr << browse(dat, "window=pai;size=640x480;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
-	onclose(usr, "pai")
+	src << browse(dat, "window=pai;size=640x480;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
+	onclose(src, "pai")
 	temp = null
-	return
-
-
 
 /mob/living/silicon/pai/Topic(href, href_list)
-	..()
+	if(..())
+		return
 	var/soft = href_list["software"]
 	var/sub = href_list["sub"]
 	if(soft)
@@ -350,8 +347,6 @@
 	dat += "<a href='byond://?src=[REF(src)];software=buy;sub=0'>Download additional software</a>"
 	return dat
 
-
-
 /mob/living/silicon/pai/proc/downloadSoftware()
 	var/dat = ""
 
@@ -369,7 +364,6 @@
 			dat += "[displayName] (Download Complete) <br>"
 	dat += "</p>"
 	return dat
-
 
 /mob/living/silicon/pai/proc/directives()
 	var/dat = ""
@@ -486,20 +480,19 @@
 				. += "<pre>Requested security record not found,</pre><BR>"
 			. += "<BR>\n<A href='?src=[REF(src)];software=securityrecord;sub=0'>Back</A><BR>"
 	return .
+
 // Encryption Keys
-// Encryption kets
 /mob/living/silicon/pai/proc/softwareEncryptionKeys()
 	var/dat = {"<h3>Encryption Key Firmware</h3><br>
 				When enabled, this device will be able to use up to two (2) encryption keys for departmental channel access.<br><br>
 				The device is currently [encryptmod ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>[encryptmod ? "" : "<a href='byond://?src=[REF(src)];software=encryptionkeys;sub=0;toggle=1'>Activate Encryption Key Ports</a><br>"]"}
 	return dat
 
-
 // Universal Translator
 /mob/living/silicon/pai/proc/softwareTranslator()
 	var/datum/language_holder/H = get_language_holder()
 	. = {"<h3>Universal Translator</h3><br>
-				When enabled, this device will permamently be able to speak and understand all known forms of communication.<br><br>
+				When enabled, this device will permanently be able to speak and understand all known forms of communication.<br><br>
 				The device is currently [H.omnitongue ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>[H.omnitongue ? "" : "<a href='byond://?src=[REF(src)];software=translator;sub=0;toggle=1'>Activate Translation Module</a><br>"]"}
 	return .
 
