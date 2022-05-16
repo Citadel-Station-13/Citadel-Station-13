@@ -91,3 +91,8 @@
 #define LOADOUT_TAB				4
 #define CONTENT_PREFERENCES_TAB	5
 #define KEYBINDINGS_TAB			6
+
+//quirks
+#define QUIRK_POSITIVE	"Positive"
+#define QUIRK_NEGATIVE	"Negative"
+#define QUIRK_NEUTRAL	"Neutral"
