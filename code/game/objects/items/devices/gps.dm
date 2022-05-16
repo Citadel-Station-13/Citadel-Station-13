@@ -13,6 +13,10 @@
 
 /obj/item/gps/Initialize(mapload)
 	. = ..()
+	add_gps_component()
+
+/// Adds the GPS component to this item.
+/obj/item/gps/proc/add_gps_component()
 	AddComponent(/datum/component/gps/item, gpstag, emp_proof, starton)
 
 /obj/item/gps/science
@@ -66,6 +70,15 @@
 /obj/item/gps/internal/base
 	gpstag = "NT_AUX"
 	desc = "A homing signal from Nanotrasen's mining base."
+
+/*
+ * GPS for pAIS, which only allows access if it's contained within the user.
+ */
+/obj/item/gps/pai
+	gpstag = "PAI0"
+
+/obj/item/gps/pai/add_gps_component()
+	AddComponent(/datum/component/gps/item, gpstag, state = GLOB.inventory_state)
 
 /obj/item/gps/visible_debug
 	name = "visible GPS"

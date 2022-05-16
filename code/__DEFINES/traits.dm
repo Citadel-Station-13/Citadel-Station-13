@@ -233,6 +233,8 @@
 #define TRAIT_TRASHCAN					"trashcan"
 ///Used for fireman carry to have mobe not be dropped when passing by a prone individual.
 #define TRAIT_BEING_CARRIED "being_carried"
+/// Trait applied to PAIs by being folded
+#define PAI_FOLDED "pai-folded"
 
 // mobility flag traits
 // IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)

@@ -26,7 +26,8 @@
 	var/obj/item/camera/siliconcam/aicamera = null //photography
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_TRACK_HUD)
 
-	var/obj/item/radio/borg/radio = null //AIs dont use this but this is at the silicon level to advoid copypasta in say()
+	/// All silicons make use of this, with (p)AI's creating headsets.
+	var/obj/item/radio/borg/radio = null
 
 	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 	var/list/alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
@@ -37,16 +38,25 @@
 	var/devillawcheck[5]
 
 	var/sensors_on = 0
-	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
-	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
-	var/d_hud = DATA_HUD_DIAGNOSTIC_BASIC //Determines the diag hud to use
+
+	/// Determines the med hud to use.
+	var/med_hud = DATA_HUD_MEDICAL_ADVANCED
+	/// Determines the sec hud to use.
+	var/sec_hud = DATA_HUD_SECURITY_ADVANCED
+	/// Determines the diag hud to use.
+	var/d_hud = DATA_HUD_DIAGNOSTIC_BASIC
 
 	var/law_change_counter = 0
 	var/obj/machinery/camera/builtInCamera = null
-	var/updating = FALSE //portable camera camerachunk update
+	/// Portable camera camerachunk update.
+	var/updating = FALSE
 
-	var/hack_software = FALSE //Will be able to use hacking actions
-	var/interaction_range = 7			//wireless control range
+	/// Will be able to use hacking actions.
+	var/hack_software = FALSE
+	/// Wireless control range.
+	var/interaction_range = 7
+
+	var/obj/item/pda/aiPDA
 
 	typing_indicator_state = /obj/effect/overlay/typing_indicator/machine
 
@@ -399,19 +409,9 @@
 		return aicamera.selectpicture(user)
 
 /mob/living/silicon/proc/ai_roster()
-	if(!client)
-		return
-	if(world.time < client.crew_manifest_delay)
-		return
-	client.crew_manifest_delay = world.time + (1 SECONDS)
-
-	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Crew Roster</title></head><body><b>Crew Roster:</b><br><br>"
-
-	dat += GLOB.data_core.get_manifest()
-	dat += "</body></html>"
-
-	src << browse(dat, "window=airoster")
-	onclose(src, "airoster")
+	var/datum/browser/popup = new(src, "airoster", "Crew Manifest", 387, 420)
+	popup.set_content(GLOB.data_core.get_manifest())
+	popup.open()
 
 /mob/living/silicon/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()

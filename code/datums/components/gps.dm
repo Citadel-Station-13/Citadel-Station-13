@@ -16,15 +16,24 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	GLOB.GPS_list -= src
 	return ..()
 
-///GPS component subtype. Only gps/item's can be used to open the UI.
+/// GPS component subtype. Only gps/item's can be used to open the UI.
 /datum/component/gps/item
-	var/updating = TRUE //Automatic updating of GPS list. Can be set to manual by user.
-	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
+	/// Automatic updating of GPS list. Can be set to manual by user.
+	var/updating = TRUE
+	/// If disabled, only GPS signals of the same Z level are shown.
+	var/global_mode = TRUE
+	/// UI state of GPS, altering when it can be used.
+	var/datum/ui_state/state = null
 
 /datum/component/gps/item/Initialize(_gpstag = "COM0", emp_proof = FALSE, starton = TRUE)
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE || !isitem(parent))
 		return COMPONENT_INCOMPATIBLE
+
+	if(isnull(state))
+		state = GLOB.default_state
+	src.state = state
+
 	var/atom/A = parent
 	if(starton)
 		A.add_overlay("working")
@@ -92,6 +101,9 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		ui = new(user, src, "Gps")
 		ui.open()
 	ui.set_autoupdate(updating)
+
+/datum/component/gps/item/ui_state(mob/user)
+	return state
 
 /datum/component/gps/item/ui_data(mob/user)
 	var/list/data = list()

@@ -5,26 +5,24 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	take_holo_damage(severity/2)
-	DefaultCombatKnockdown(severity*4)
-	short_radio()
+	take_holo_damage(50 / severity)
+	Stun(400 / severity)
 	if(holoform)
 		fold_in(force = TRUE)
-	emitter_next_use = world.time + emitter_emp_cd
 	//Need more effects that aren't instadeath or permanent law corruption.
 
-/mob/living/silicon/pai/ex_act(severity, target, origin)
-	take_holo_damage(severity * 50)
+/mob/living/silicon/pai/ex_act(severity, target)
+	take_holo_damage(50 * severity)
 	switch(severity)
-		if(1)	//RIP
+		if(EXPLODE_DEVASTATE) //RIP
 			qdel(card)
 			qdel(src)
-		if(2)
+		if(EXPLODE_HEAVY)
 			fold_in(force = 1)
-			DefaultCombatKnockdown(400)
-		if(3)
+			Paralyze(400)
+		if(EXPLODE_LIGHT)
 			fold_in(force = 1)
-			DefaultCombatKnockdown(200)
+			Paralyze(200)
 
 /mob/living/silicon/pai/on_attack_hand(mob/living/carbon/human/user)
 	switch(user.a_intent)
@@ -55,12 +53,15 @@
 		else
 			grabbedby(user)
 
-/mob/living/silicon/pai/bullet_act(obj/item/projectile/P, def_zone)
-	if(P.stun)
+/mob/living/silicon/pai/bullet_act(obj/item/projectile/Proj)
+	if(Proj.stun)
 		fold_in(force = TRUE)
-		visible_message("<span class='warning'>The electrically-charged projectile disrupts [src]'s holomatrix, forcing [src] to fold in!</span>")
+		src.visible_message(span_warning("The electrically-charged projectile disrupts [src]'s holomatrix, forcing [src] to fold in!"))
+	. = ..(Proj)
+
+/mob/living/silicon/pai/IgniteMob(mob/living/silicon/pai/P)
 	. = ..()
-	return BULLET_ACT_FORCE_PIERCE
+	return FALSE
 
 /mob/living/silicon/pai/stripPanelUnequip(obj/item/what, mob/who, where) //prevents stripping
 	to_chat(src, "<span class='warning'>Your holochassis stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>")
@@ -68,15 +69,12 @@
 /mob/living/silicon/pai/stripPanelEquip(obj/item/what, mob/who, where) //prevents stripping
 	to_chat(src, "<span class='warning'>Your holochassis stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>")
 
-/mob/living/silicon/pai/IgniteMob(var/mob/living/silicon/pai/P)
-	return FALSE //No we're not flammable
-
 /mob/living/silicon/pai/proc/take_holo_damage(amount)
 	emitterhealth = clamp((emitterhealth - amount), -50, emittermaxhealth)
 	if(emitterhealth < 0)
 		fold_in(force = TRUE)
 	if(amount > 0)
-		to_chat(src, "<span class='userdanger'>The impact degrades your holochassis!</span>")
+		to_chat(src, span_userdanger("The impact degrades your holochassis!"))
 	return amount
 
 /mob/living/silicon/pai/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)
