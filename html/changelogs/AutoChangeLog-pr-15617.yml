@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - rscadd: "poly alt cloak can now be renamed/dedescriptioned in loadout"
