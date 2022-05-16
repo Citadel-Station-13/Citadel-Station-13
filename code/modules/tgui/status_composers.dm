@@ -15,10 +15,10 @@
 /// far away users will be able to see, and anyone farther won't see anything.
 /// Dead users will receive updates no matter what, though you likely want to add
 /// a [`ui_status_only_living`] check for finer observer interactions.
-/proc/ui_status_user_is_adjacent(mob/user, atom/source)
+/proc/ui_status_user_is_adjacent(mob/user, atom/source, allow_tk = TRUE)
 	if (isliving(user))
 		var/mob/living/living_user = user
-		return living_user.shared_living_ui_distance(source)
+		return living_user.shared_living_ui_distance(source, allow_tk = allow_tk)
 	else
 		return UI_UPDATE
 
@@ -52,6 +52,7 @@
 /// but everyone else can only watch.
 /proc/ui_status_user_has_free_hands(mob/user, atom/source)
 	return (!user.restrained(TRUE) && user.get_num_arms() && user.get_empty_held_indexes()) ? UI_UPDATE : UI_INTERACTIVE
+
 /// Returns a UI status such that advanced tool users will be able to interact,
 /// but everyone else can only watch.
 /proc/ui_status_user_is_advanced_tool_user(mob/user)

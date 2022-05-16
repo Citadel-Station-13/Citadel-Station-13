@@ -1,6 +1,6 @@
-/*!
- * Copyright (c) 2021 Arm A. Hammer
- * SPDX-License-Identifier: MIT
+/**
+ *! Copyright (c) 2021 Arm A. Hammer
+ *! SPDX-License-Identifier: MIT
  */
 
 /**

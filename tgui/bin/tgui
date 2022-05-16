@@ -92,7 +92,7 @@ task-clean() {
   rm -f .yarn/build-state.yml
   rm -f .yarn/install-state.gz
   rm -f .yarn/install-target
-  rm -f .pnp.*
+  rm -f .pnp.js
   ## NPM artifacts
   rm -rf **/node_modules
   rm -f **/package-lock.json

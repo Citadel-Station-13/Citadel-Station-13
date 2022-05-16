@@ -1,6 +1,6 @@
-/*!
- * Copyright (c) 2020 Aleksej Komarov
- * SPDX-License-Identifier: MIT
+/**
+ *! Copyright (c) 2020 Aleksej Komarov
+ *! SPDX-License-Identifier: MIT
  */
 
 /**
@@ -66,13 +66,16 @@
 			// He got cleaned up before we were done
 			return
 		var/list/row = telemetry_connections[i]
+
 		// Check for a malformed history object
 		if (!row || row.len < 3 || (!row["ckey"] || !row["address"] || !row["computer_id"]))
 			return
 		if (world.IsBanned(row["ckey"], row["address"], row["computer_id"], real_bans_only = TRUE))
 			found = row
 			break
+
 		CHECK_TICK
+
 	// This fucker has a history of playing on a banned account.
 	if(found)
 		var/msg = "[key_name(client)] has a banned account in connection history! (Matched: [found["ckey"]], [found["address"]], [found["computer_id"]])"
