@@ -251,7 +251,7 @@
 		if(BIO_JUST_FLESH)
 			if(wounding_type == WOUND_BLUNT)
 				wounding_type = WOUND_SLASH
-				wounding_dmg *= (easy_dismember ? 1 : 0.3)
+				wounding_dmg *= (easy_dismember ? 1 : 0.5)
 			if((mangled_state & BODYPART_MANGLED_FLESH) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 				return
 		// standard humanoids
