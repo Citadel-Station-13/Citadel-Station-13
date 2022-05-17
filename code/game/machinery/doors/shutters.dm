@@ -5,7 +5,7 @@
 	icon = 'icons/obj/doors/shutters.dmi'
 	layer = SHUTTER_LAYER
 	closingLayer = SHUTTER_LAYER
-	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 75, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 70)
+	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 75, BOMB = 25, BIO = 100, RAD = 100, FIRE = 100, ACID = 70)
 	damage_deflection = 20
 	max_integrity = 100
 
@@ -24,7 +24,7 @@
 	desc = "These shutters have an armoured frame; it looks like plasteel. These shutters look robust enough to survive explosions."
 	icon = 'icons/obj/doors/shutters_old.dmi'
 	icon_state = "closed"
-	armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 75, "bomb" = 30, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 70)
+	armor = list(MELEE = 30, BULLET = 30, LASER = 30, ENERGY = 75, BOMB = 30, BIO = 100, RAD = 100, FIRE = 100, ACID = 70)
 	max_integrity = 300
 
 /obj/machinery/door/poddoor/shutters/old/preopen

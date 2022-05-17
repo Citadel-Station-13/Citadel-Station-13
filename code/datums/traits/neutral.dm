@@ -179,3 +179,10 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 	to_chat(quirk_holder, "<span class='boldnotice'>You brought some extra dye with you! It's in your bag if you forgot.</span>")
+
+/datum/quirk/salt_sensitive
+	name = "Sodium Sensitivity"
+	desc = "Your body is sensitive to sodium, and is burnt upon contact. Ingestion or contact with it is not advised."
+	value = 0
+	medical_record_text = "Patient should not come into contact with sodium."
+	mob_trait = TRAIT_SALT_SENSITIVE

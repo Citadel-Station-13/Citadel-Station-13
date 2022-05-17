@@ -168,7 +168,7 @@
 /obj/item/gun/energy/dueling/hugbox/stamina
 	hugbox = DUEL_HUGBOX_NONLETHAL
 
-/obj/item/gun/energy/dueling/Initialize()
+/obj/item/gun/energy/dueling/Initialize(mapload)
 	. = ..()
 	setting_overlay = mutable_appearance(icon,setting_iconstate())
 	add_overlay(setting_overlay)

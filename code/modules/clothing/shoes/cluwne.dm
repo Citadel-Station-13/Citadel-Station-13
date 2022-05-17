@@ -7,7 +7,7 @@
 	item_flags = DROPDEL
 	var/footstep = 1
 
-/obj/item/clothing/shoes/clown_shoes/cluwne/Initialize()
+/obj/item/clothing/shoes/clown_shoes/cluwne/Initialize(mapload)
 	.=..()
 	ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
 	ADD_TRAIT(src, CURSED_ITEM_TRAIT, CLOTHING_TRAIT)

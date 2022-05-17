@@ -78,7 +78,7 @@ effective or pretty fucking useless.
 	var/ui_x = 320
 	var/ui_y = 335
 
-/obj/item/healthanalyzer/rad_laser/Initialize()
+/obj/item/healthanalyzer/rad_laser/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/identification/syndicate, ID_COMPONENT_DEL_ON_IDENTIFY, ID_COMPONENT_EFFECT_NO_ACTIONS, ID_COMPONENT_IDENTIFY_WITH_DECONSTRUCTOR)
 

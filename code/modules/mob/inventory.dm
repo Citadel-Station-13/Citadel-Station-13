@@ -461,7 +461,7 @@
 //any cost it has isn't a worry
 /mob/proc/change_number_of_hands(amt)
 	if(amt < held_items.len)
-		for(var/i in held_items.len to amt step -1)
+		for(var/i in held_items.len to (amt + 1) step -1)
 			dropItemToGround(held_items[i])
 	held_items.len = amt
 
@@ -472,14 +472,14 @@
 /mob/living/carbon/human/change_number_of_hands(amt)
 	var/old_limbs = held_items.len
 	if(amt < old_limbs)
-		for(var/i in hand_bodyparts.len to amt step -1)
+		for(var/i in hand_bodyparts.len to (amt + 1) step -1)
 			var/obj/item/bodypart/BP = hand_bodyparts[i]
 			BP.dismember()
 			hand_bodyparts[i] = null
 		hand_bodyparts.len = amt
 	else if(amt > old_limbs)
 		hand_bodyparts.len = amt
-		for(var/i in old_limbs+1 to amt)
+		for(var/i in (old_limbs + 1) to amt)
 			var/path = /obj/item/bodypart/l_arm
 			if(!(i % 2))
 				path = /obj/item/bodypart/r_arm

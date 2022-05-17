@@ -31,7 +31,7 @@
 	speak_chance = 1
 	unique_name = FALSE
 
-/mob/living/simple_animal/pet/bumbles/Initialize()
+/mob/living/simple_animal/pet/bumbles/Initialize(mapload)
 	. = ..()
 	add_verb(src, /mob/living/proc/lay_down)
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)

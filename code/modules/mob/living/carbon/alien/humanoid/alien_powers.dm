@@ -17,7 +17,7 @@ Doesn't work on other aliens/AI.*/
 	action_icon_state = "spell_default"
 	action_background_icon_state = "bg_alien"
 
-/obj/effect/proc_holder/alien/Initialize()
+/obj/effect/proc_holder/alien/Initialize(mapload)
 	. = ..()
 	action = new(src)
 

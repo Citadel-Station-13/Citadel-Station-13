@@ -16,7 +16,7 @@
 	var/obj/item/organ/cyberimp/bci/bci
 	var/intercept_cooldown = 1 SECONDS
 
-/obj/item/circuit_component/target_intercept/Initialize()
+/obj/item/circuit_component/target_intercept/Initialize(mapload)
 	. = ..()
 	trigger_input = add_input_port("Activate", PORT_TYPE_SIGNAL)
 	trigger_output = add_output_port("Triggered", PORT_TYPE_SIGNAL)

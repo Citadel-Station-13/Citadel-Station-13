@@ -14,7 +14,7 @@
 	Asserts are to avoid the inevitable infinite loops
 */
 
-/area/holodeck/Initialize()
+/area/holodeck/Initialize(mapload)
 	. = ..()
 	var/list/update_holodeck_cache = SSholodeck?.rejected_areas[type]
 	if(update_holodeck_cache)

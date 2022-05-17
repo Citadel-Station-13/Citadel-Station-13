@@ -474,7 +474,7 @@
 	light_color = "#FFFFFF"
 	light_range = LUMINESCENT_DEFAULT_GLOW
 
-/obj/effect/dummy/luminescent_glow/Initialize()
+/obj/effect/dummy/luminescent_glow/Initialize(mapload)
 	. = ..()
 	if(!isliving(loc))
 		return INITIALIZE_HINT_QDEL

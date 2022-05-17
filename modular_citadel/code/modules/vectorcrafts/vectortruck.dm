@@ -47,7 +47,7 @@
 	var/weewoo = FALSE
 	var/weewoocount = 0
 
-/obj/vehicle/sealed/vectorcraft/boot/ambulance/Initialize()
+/obj/vehicle/sealed/vectorcraft/boot/ambulance/Initialize(mapload)
 	. = ..()
 	Sl = new /obj/machinery/sleeper
 

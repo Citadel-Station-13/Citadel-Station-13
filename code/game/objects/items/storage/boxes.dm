@@ -964,7 +964,7 @@
 	illustration = "fruit"
 	var/theme_name
 
-/obj/item/storage/box/ingredients/Initialize()
+/obj/item/storage/box/ingredients/Initialize(mapload)
 	. = ..()
 	if(theme_name)
 		name = "[name] ([theme_name])"
@@ -1287,7 +1287,7 @@
 	var/expiration_date_min = 2300
 	var/expiration_date_max = 2700
 
-/obj/item/storage/box/mre/Initialize()
+/obj/item/storage/box/mre/Initialize(mapload)
 	. = ..()
 	if(can_expire)
 		expiration_date = rand(expiration_date_min, expiration_date_max)

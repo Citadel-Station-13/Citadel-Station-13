@@ -46157,8 +46157,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/components/binary/valve/digital{
-	dir = 8;
-	icon_state = "dvalve_map-2"
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -46911,12 +46910,10 @@
 	dir = 4;
 	pixel_x = -23
 	},
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel,
 /area/medical/abandoned)
 "ddn" = (
@@ -47560,10 +47557,10 @@
 /turf/open/floor/plating,
 /area/security/checkpoint/medical)
 "deC" = (
-/obj/machinery/sleeper{
+/obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/end{
+/obj/machinery/sleeper{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -47585,12 +47582,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "deF" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "deG" = (
@@ -50090,6 +50085,9 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab)
 "djz" = (
@@ -50939,6 +50937,9 @@
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
+	},
+/obj/machinery/light_switch{
+	pixel_x = -26
 	},
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab)
@@ -53782,6 +53783,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/blue,
+/obj/item/wallframe/light_fixture/small{
+	pixel_y = -15
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/department/medical)
 "dss" = (
@@ -56700,6 +56704,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/light_switch{
+	pixel_x = -26;
+	pixel_y = -26
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/construction)
 "dyP" = (
@@ -60428,6 +60436,10 @@
 /obj/item/clothing/gloves/color/latex/nitrile,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/breath/medical,
+/obj/item/wallframe/light_fixture/small{
+	dir = 4;
+	pixel_x = 14
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
 "dGA" = (
@@ -77552,8 +77564,7 @@
 /area/engineering/main)
 "grf" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	dir = 5;
-	icon_state = "pipe11-2"
+	dir = 5
 	},
 /turf/closed/wall/r_wall,
 /area/science/xenobiology)
@@ -77889,8 +77900,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4;
-	icon_state = "inje_map-2"
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
@@ -78953,7 +78963,6 @@
 /turf/open/floor/plasteel,
 /area/commons/dorms)
 "gUc" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/bodycontainer/crematorium{
 	dir = 4;
 	id = "cremawheat"
@@ -86276,7 +86285,7 @@
 "jjN" = (
 /obj/structure/table/reinforced,
 /obj/machinery/camera{
-	c_tag = "Science - Experimentation Lab";
+	c_tag = "Science - Circuitry Lab";
 	name = "science camera";
 	network = list("ss13","rd")
 	},
@@ -91351,7 +91360,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/camera{
-	c_tag = "Library - Aft";
+	c_tag = "Library - Port";
 	name = "library camera"
 	},
 /turf/open/floor/wood,
@@ -101092,6 +101101,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/engineering/main)
+"orP" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "orZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -113658,6 +113680,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/engineering/break_room)
+"sOn" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/light_switch{
+	pixel_x = -26;
+	pixel_y = 8
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "sOo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -114372,7 +114408,7 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Library - Aft";
+	c_tag = "Library - Beam";
 	name = "library camera"
 	},
 /turf/open/floor/plasteel/grimy,
@@ -117067,6 +117103,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "Engineering MiniSat Access";
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/engineering/transit_tube)
 "tVn" = (
@@ -118939,6 +118979,9 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/machinery/light_switch{
+	pixel_y = 24
+	},
 /turf/open/floor/plasteel,
 /area/security/office)
 "uBU" = (
@@ -119405,6 +119448,10 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/light_switch{
+	pixel_x = 26;
+	pixel_y = 26
 	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/command/storage/eva)
@@ -124179,6 +124226,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/chisel,
 /turf/open/floor/plasteel/dark,
 /area/service/library)
 "wDf" = (
@@ -126517,7 +126565,7 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Science - Lab Access";
+	c_tag = "Science - Circuitry Lab Starboard";
 	dir = 8;
 	name = "science camera";
 	network = list("ss13","rd")
@@ -169461,7 +169509,7 @@ dGk
 dHF
 dIW
 dCy
-dKY
+orP
 dMx
 dNS
 aaa
@@ -179929,7 +179977,7 @@ byJ
 bAl
 bCe
 bEc
-bmh
+sOn
 bHA
 bJw
 bLn

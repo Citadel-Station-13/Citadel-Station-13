@@ -22,7 +22,7 @@
 
 /datum/action/innate/ability/humanoid_customization/proc/change_form()
 	var/mob/living/carbon/human/H = owner
-	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Body Color", "Eye Color","Hair Style", "Genitals", "Tail", "Snout", "Markings", "Ears", "Taur body", "Penis", "Vagina", "Penis Length", "Breast Size", "Breast Shape", "Cancel")
+	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Body Color", "Eye Color","Hair Style", "Genitals", "Tail", "Snout", "Wings", "Markings", "Ears", "Taur body", "Penis", "Vagina", "Penis Length", "Breast Size", "Breast Shape", "Butt Size", "Cancel")
 
 	if(select_alteration == "Body Color")
 		var/new_color = input(owner, "Choose your skin color:", "Race change","#"+H.dna.features["mcolor"]) as color|null
@@ -115,6 +115,25 @@
 		new_snout = input(owner, "Choose your character's face:", "Face Alteration") as null|anything in snowflake_snouts_list
 		if(new_snout)
 			H.dna.features["mam_snouts"] = new_snout
+		H.update_body()
+		
+	else if (select_alteration == "Wings")
+		var/new_color = input(owner, "Choose your wing color:", "Race change","#"+H.dna.features["wings_color"]) as color|null
+		if(new_color)
+			H.dna.features["wings_color"] = sanitize_hexcolor(new_color, 6)
+			H.update_body()
+			H.update_hair()
+		var/list/snowflake_wings_list = list("Normal" = null)
+		for(var/path in GLOB.deco_wings_list)
+			var/datum/sprite_accessory/deco_wings/instance = GLOB.deco_wings_list[path]
+			if(istype(instance, /datum/sprite_accessory))
+				var/datum/sprite_accessory/S = instance
+				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
+					snowflake_wings_list[S.name] = path
+		var/new_wings
+		new_wings = input(owner, "Choose your character's wings:", "Wing Alteration") as null|anything in snowflake_wings_list
+		if(new_wings)
+			H.dna.features["deco_wings"] = new_wings
 		H.update_body()
 
 	else if (select_alteration == "Markings")
@@ -226,6 +245,18 @@
 		H.update_genitals()
 		H.apply_overlay()
 		H.give_genital(/obj/item/organ/genital/breasts)
+
+	else if (select_alteration == "Butt Size")
+		for(var/obj/item/organ/genital/butt/X in H.internal_organs)
+			qdel(X)
+		var/min_B = CONFIG_GET(number/butt_min_size_prefs)
+		var/max_B = CONFIG_GET(number/butt_max_size_prefs)
+		var/new_length = input(owner, "Butt size:\n([min_B]-[max_B])", "Genital Alteration") as num|null
+		if(new_length)
+			H.dna.features["butt_size"] = clamp(round(new_length), min_B, max_B)
+		H.update_genitals()
+		H.apply_overlay()
+		H.give_genital(/obj/item/organ/genital/butt)
 
 	else
 		return

@@ -205,6 +205,16 @@
 	synchronizer_coeff = 1
 	var/reek = 200
 
+/datum/mutation/human/olfaction/on_acquiring(mob/living/carbon/human/owner)
+	if(..() || HAS_TRAIT(owner, TRAIT_ANOSMIA))
+		return TRUE
+	ADD_TRAIT(owner, TRAIT_GOODSMELL, GENETIC_MUTATION)
+
+/datum/mutation/human/olfaction/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	REMOVE_TRAIT(owner, TRAIT_GOODSMELL, GENETIC_MUTATION)
+
 /datum/mutation/human/olfaction/modify()
 	if(power)
 		var/obj/effect/proc_holder/spell/targeted/olfaction/S = power

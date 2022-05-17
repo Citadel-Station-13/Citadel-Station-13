@@ -127,12 +127,57 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
-
 /datum/status_effect/grouped/stasis
 	id = "stasis"
 	duration = -1
 	tick_interval = 10
+	alert_type = /atom/movable/screen/alert/status_effect/stasis
 	var/last_dead_time
+
+/datum/status_effect/grouped/stasis/proc/update_time_of_death()
+	if(last_dead_time)
+		var/delta = world.time - last_dead_time
+		var/new_timeofdeath = owner.timeofdeath + delta
+		owner.timeofdeath = new_timeofdeath
+		owner.tod = gameTimestamp(wtime=new_timeofdeath)
+		last_dead_time = null
+	if(owner.stat == DEAD)
+		last_dead_time = world.time
+
+/datum/status_effect/grouped/stasis/on_creation(mob/living/new_owner, set_duration)
+	. = ..()
+	if(.)
+		update_time_of_death()
+		owner.reagents?.end_metabolization(owner, FALSE)
+
+/datum/status_effect/grouped/stasis/on_apply()
+	. = ..()
+	if(!.)
+		return
+	RegisterSignal(owner, COMSIG_LIVING_LIFE, .proc/InterruptBiologicalLife)
+	owner.mobility_flags &= ~(MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_PULL | MOBILITY_HOLD)
+	owner.update_mobility()
+	owner.add_filter("stasis_status_ripple", 2, list("type" = "ripple", "flags" = WAVE_BOUNDED, "radius" = 0, "size" = 2))
+	var/filter = owner.get_filter("stasis_status_ripple")
+	animate(filter, radius = 32, time = 15, size = 0, loop = -1)
+
+/datum/status_effect/grouped/stasis/proc/InterruptBiologicalLife()
+	return COMPONENT_INTERRUPT_LIFE_BIOLOGICAL 
+
+/datum/status_effect/grouped/stasis/tick()
+	update_time_of_death()
+
+/datum/status_effect/grouped/stasis/on_remove()
+	UnregisterSignal(owner, COMSIG_LIVING_LIFE)
+	owner.mobility_flags |= MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_PULL | MOBILITY_HOLD
+	owner.remove_filter("stasis_status_ripple")
+	update_time_of_death()
+	return ..()
+
+/atom/movable/screen/alert/status_effect/stasis
+	name = "Stasis"
+	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
+	icon_state = "stasis"
 
 /datum/status_effect/robotic_emp
 	id = "emp_no_combat_mode"
@@ -819,7 +864,7 @@
 /obj/effect/temp_visual/curse
 	icon_state = "curse"
 
-/obj/effect/temp_visual/curse/Initialize()
+/obj/effect/temp_visual/curse/Initialize(mapload)
 	. = ..()
 	deltimer(timerid)
 

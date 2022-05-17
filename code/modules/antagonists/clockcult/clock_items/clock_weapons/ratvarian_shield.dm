@@ -7,7 +7,7 @@
 	item_state = "ratvarian_shield"
 	desc = "A resilient shield made out of brass.. It feels warm to the touch."
 	var/clockwork_desc = "A powerful shield of ratvarian making. It absorbs blocked attacks to charge devastating bashes."
-	armor = list("melee" = 80, "bullet" = 70, "laser" = -10, "energy" = -20, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 80, BULLET = 70, LASER = -10, ENERGY = -20, BOMB = 60, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	shield_flags = SHIELD_FLAGS_DEFAULT | SHIELD_KINETIC_STRONG | SHIELD_ENERGY_WEAK
 	max_integrity = 300 //High integrity, extremely strong against melee / bullets, but still quite easy to destroy with lasers and energy
 	repair_material = /obj/item/stack/tile/brass

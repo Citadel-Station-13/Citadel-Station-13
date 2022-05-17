@@ -18,7 +18,7 @@
 	var/datum/port/input/new_value
 
 
-/obj/item/circuit_component/set_variable/Initialize()
+/obj/item/circuit_component/set_variable/Initialize(mapload)
 	. = ..()
 	entity = add_input_port("Target", PORT_TYPE_ATOM)
 	variable_name = add_input_port("Variable Name", PORT_TYPE_STRING)
