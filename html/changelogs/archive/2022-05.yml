@@ -35,3 +35,6 @@
       "dangerous" gases (this is actually a consequence of the hardcode reduction)
       tweak: Water vapor is now counted as DANGEROUS (this makes it included in "contaminated"
       and adds admin logging when people open water vapor cans)'
+2022-05-17:
+  timothyteakettle:
+  - rscadd: poly alt cloak can now be renamed/dedescriptioned in loadout
