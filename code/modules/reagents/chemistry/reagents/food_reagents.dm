@@ -381,6 +381,13 @@
 		return
 	if(M.has_bane(BANE_SALT))
 		M.mind.disrupt_spells(-200)
+	if(HAS_TRAIT(M, TRAIT_SALT_SENSITIVE)) // haha snails go brrr
+		M.adjustFireLoss(2)
+		M.emote("scream")
+
+/datum/reagent/consumable/sodiumchloride/on_mob_life(mob/living/M)
+	if(HAS_TRAIT(M, TRAIT_SALT_SENSITIVE))
+		M.adjustFireLoss(1) // equal to a standard toxin
 
 /datum/reagent/consumable/sodiumchloride/reaction_turf(turf/T, reac_volume) //Creates an umbra-blocking salt pile
 	if(!istype(T))

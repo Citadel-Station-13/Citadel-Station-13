@@ -30326,7 +30326,9 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "bwD" = (
-/obj/machinery/stasis,
+/obj/machinery/sleeper{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "bwE" = (

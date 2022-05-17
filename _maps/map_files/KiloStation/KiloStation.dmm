@@ -22447,7 +22447,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/stasis,
+/obj/machinery/stasis{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
 "aLj" = (
@@ -84641,6 +84643,17 @@
 	icon_state = "wood-broken6"
 	},
 /area/commons/vacant_room/office)
+"fuh" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/medbay/central)
 "fyr" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/closed/mineral/random/labormineral,
@@ -104567,7 +104580,7 @@ aRd
 aOR
 abl
 aSW
-aLi
+fuh
 aLi
 aOW
 aWp

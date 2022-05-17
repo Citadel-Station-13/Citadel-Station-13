@@ -275,6 +275,7 @@
 #define GAS_PLASMA				"plasma"
 #define GAS_H2O					"water_vapor"
 #define GAS_HYPERNOB			"nob"
+#define GAS_NITRIC				"no"
 #define GAS_NITROUS				"n2o"
 #define GAS_NITRYL				"no2"
 #define GAS_HYDROGEN			"hydrogen"
@@ -289,6 +290,7 @@
 #define GAS_AMMONIA				"ammonia"
 #define GAS_FLUORINE			"fluorine"
 #define GAS_ETHANOL				"ethanol"
+#define GAS_QCD					"qcd"
 
 #define GAS_GROUP_CHEMICALS		"Chemicals"
 

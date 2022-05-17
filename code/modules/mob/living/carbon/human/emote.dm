@@ -6,7 +6,7 @@
 
 /datum/emote/living/carbon/human/cry/run_emote(mob/user, params)
 	. = ..()
-	if(. && isipcperson(user))
+	if(. && isrobotic(user))
 		do_fake_sparks(5,FALSE,user)
 
 /datum/emote/living/carbon/human/dap

@@ -179,6 +179,8 @@
 #define TRAIT_DWARF				"dwarf"
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
 #define TRAIT_AGEUSIA			"ageusia"
+#define TRAIT_ANOSMIA			"anosmia"
+#define TRAIT_GOODSMELL			"super_smeller"
 #define TRAIT_HEAVY_SLEEPER		"heavy_sleeper"
 #define TRAIT_NIGHT_VISION		"night_vision"
 #define TRAIT_LIGHT_STEP		"light_step"
@@ -356,6 +358,7 @@
 #define STICKY_NODROP "sticky-nodrop" //sticky nodrop sounds like a bad soundcloud rapper's name
 #define TRAIT_SACRIFICED "sacrificed" //Makes sure that people cant be cult sacrificed twice.
 #define TRAIT_SPACEWALK "spacewalk"
+#define TRAIT_SALT_SENSITIVE "salt_sensitive"
 
 
 /// obtained from mapping helper
