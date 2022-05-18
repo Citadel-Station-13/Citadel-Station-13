@@ -11,8 +11,10 @@
 	else if(istext(var_value))
 		if(findtext(var_value, "\n"))
 			. = VV_MESSAGE
+		/*
 		else if(findtext(var_value, GLOB.is_color))
 			. = VV_COLOR
+		*/
 		else
 			. = VV_TEXT
 
@@ -40,10 +42,12 @@
 			. = VV_TYPE
 
 	else if(islist(var_value))
+		/*
 		if(var_name in GLOB.color_vars)
 			. = VV_COLOR_MATRIX
 		else
-			. = VV_LIST
+		*/
+		. = VV_LIST
 
 	else if(isfile(var_value))
 		. = VV_FILE

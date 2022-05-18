@@ -168,7 +168,7 @@
 	explosion_block = 0
 	slicing_duration = 30
 	smooth_groups = list(SMOOTH_GROUP_WALL_SNOW, SMOOTH_GROUP_WALL)
-	smooth_with = liist(SMOOTH_GROUP_WALL_SNOW)
+	smooth_with = list(SMOOTH_GROUP_WALL_SNOW)
 	girder_type = null
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null

@@ -104,8 +104,9 @@ DEFINE_BITFIELD(smooth_junction, list(
 #define SMOOTH_GROUP_WALL_BOSS			S_TURF(44)
 #define SMOOTH_GROUP_FLOOR_GLASS		S_TURF(45)
 #define SMOOTH_GROUP_WALL_HOTEL			S_TURF(46)
+#define SMOOTH_GROUP_WALL_SNOW			S_TURF(47)
 
-#define MAX_S_TURF SMOOTH_GROUP_WALL_HOTEL //Always match this value with the one above it.
+#define MAX_S_TURF SMOOTH_GROUP_WALL_SNOW //Always match this value with the one above it.
 
 #define S_OBJ(num) (MAX_S_TURF + 1 + num)
 /* /obj included */

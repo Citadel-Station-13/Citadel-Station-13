@@ -1014,7 +1014,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 /mob/proc/equipped_speed_mods()
 	for(var/obj/item/I in held_items)
 		if(I.item_flags & SLOWS_WHILE_IN_HAND)
-			. += I.get_equipment_speed_mod()
+			. += I.slowdown
 
 /**
   * Mostly called by doUnEquip()
