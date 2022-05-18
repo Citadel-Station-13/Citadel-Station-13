@@ -479,15 +479,15 @@ Difficulty: Normal
 	icon_state = "wall"
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	duration = 100
-	smooth = SMOOTH_TRUE
+	smooth_flags = SMOOTH_CORNERS
 
 /obj/effect/temp_visual/hierophant/wall/Initialize(mapload, new_caster)
 	. = ..()
-	queue_smooth_neighbors(src)
-	queue_smooth(src)
+	QUEUE_SMOOTH(src)
+	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /obj/effect/temp_visual/hierophant/wall/Destroy()
-	queue_smooth_neighbors(src)
+	QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
 /obj/effect/temp_visual/hierophant/wall/CanAllowThrough(atom/movable/mover, turf/target)

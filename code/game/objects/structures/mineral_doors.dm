@@ -242,14 +242,15 @@
 	sheetAmount = 3
 	resistance_flags = FLAMMABLE
 	max_integrity = 20
+	smooth_groups = list(SMOOTH_GROUP_PAPER_FRAME)
 
 /obj/structure/mineral_door/paperframe/Initialize(mapload)
 	. = ..()
-	queue_smooth_neighbors(src)
+	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /obj/structure/mineral_door/paperframe/ComponentInitialize()
 	return
 
 /obj/structure/mineral_door/paperframe/Destroy()
-	queue_smooth_neighbors(src)
+	QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()

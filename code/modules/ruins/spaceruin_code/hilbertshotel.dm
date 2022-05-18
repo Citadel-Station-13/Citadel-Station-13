@@ -217,7 +217,8 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	name = "hotel wall"
 	desc = "A wall designed to protect the security of the hotel's guests."
 	icon_state = "hotelwall"
-	canSmoothWith = list(/turf/closed/indestructible/hotelwall)
+	smooth_with = list(SMOOTH_GROUP_WALL_HOTEL)
+	smooth_groups = list(SMOOTH_GROUP_WALL_HOTEL, SMOOTH_GROUP_WALL)
 	explosion_block = INFINITY
 
 /turf/open/indestructible/hotelwood

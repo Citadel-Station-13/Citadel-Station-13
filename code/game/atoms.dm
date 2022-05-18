@@ -109,6 +109,28 @@
 	///Used for changing icon states for different base sprites.
 	var/base_icon_state
 
+	///The config type to use for greyscaled sprites. Both this and greyscale_colors must be assigned to work.
+	// var/greyscale_config
+	///A string of hex format colors to be used by greyscale sprites, ex: "#0054aa#badcff"
+	// var/greyscale_colors
+
+	///Icon-smoothing behavior.
+	var/smooth_flags = NONE
+	///What directions this is currently smoothing with. IMPORTANT: This uses the smoothing direction flags as defined in icon_smoothing.dm, instead of the BYOND flags.
+	var/smooth_junction = null //This starts as null for us to know when it's first set, but after that it will hold a 8-bit mask ranging from 0 to 255.
+	///Smoothing variable
+	var/top_left_corner
+	///Smoothing variable
+	var/top_right_corner
+	///Smoothing variable
+	var/bottom_left_corner
+	///Smoothing variable
+	var/bottom_right_corner
+	///What smoothing groups does this atom belongs to, to match smooth_with. If null, nobody can smooth with it.
+	var/list/smooth_groups = null
+	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
+	var/list/smooth_with = null
+
 	///Mobs that are currently do_after'ing this atom, to be cleared from on Destroy()
 	var/list/targeted_by
 
@@ -184,9 +206,23 @@
 	if(loc)
 		SEND_SIGNAL(loc, COMSIG_ATOM_CREATED, src) /// Sends a signal that the new atom `src`, has been created at `loc`
 
+	/*
+	if(greyscale_config && greyscale_colors)
+		update_greyscale()
+	*/
+
 	//atom color stuff
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+
+	if (length(smooth_groups))
+		sortTim(smooth_groups) //In case it's not properly ordered, let's avoid duplicate entries with the same values.
+		SET_BITFLAG_LIST(smooth_groups)
+	if (length(smooth_with))
+		sortTim(smooth_with)
+		if(smooth_with[length(smooth_with)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
+			smooth_flags |= SMOOTH_OBJ
+		SET_BITFLAG_LIST(smooth_with)
 
 	if (light_power && light_range)
 		update_light()
@@ -194,9 +230,6 @@
 	if (opacity && isturf(loc))
 		var/turf/T = loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
-
-	if (canSmoothWith)
-		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
 
 	// apply materials properly from the default custom_materials value
 	set_custom_materials(custom_materials)
@@ -634,6 +667,32 @@
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
 
+/*
+/// Handles updates to greyscale value updates.
+/// The colors argument can be either a list or the full color string.
+/// Child procs should call parent last so the update happens after all changes.
+/atom/proc/set_greyscale(list/colors, new_config)
+	SHOULD_CALL_PARENT(TRUE)
+	if(istype(colors))
+		colors = colors.Join("")
+	if(!isnull(colors) && greyscale_colors != colors) // If you want to disable greyscale stuff then give a blank string
+		greyscale_colors = colors
+
+	if(!isnull(new_config) && greyscale_config != new_config)
+		greyscale_config = new_config
+
+	update_greyscale()
+
+/// Checks if this atom uses the GAGS system and if so updates the icon
+/atom/proc/update_greyscale()
+	SHOULD_CALL_PARENT(TRUE)
+	if(greyscale_colors && greyscale_config)
+		icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
+	if(!smoothing_flags) // This is a bitfield but we're just checking that some sort of smoothing is happening
+		return
+	update_atom_colour()
+	QUEUE_SMOOTH(src)
+*/
 
 /atom/proc/relaymove(mob/living/user)
 	if(!istype(user))
@@ -1009,8 +1068,12 @@
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EXPLOSION, "Explosion")
 	// VV_DROPDOWN_OPTION(VV_HK_RADIATE, "Radiate")
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_FILTERS, "Edit Filters")
+	VV_DROPDOWN_OPTION(VV_HK_EDIT_COLOR_MATRIX, "Edit Color as Matrix")
 	// VV_DROPDOWN_OPTION(VV_HK_ADD_AI, "Add AI controller")
-
+	/*
+	if(greyscale_colors)
+		VV_DROPDOWN_OPTION(VV_HK_MODIFY_GREYSCALE, "Modify greyscale colors")
+	*/
 /atom/vv_do_topic(list/href_list)
 	. = ..()
 	if(href_list[VV_HK_ADD_REAGENT] && check_rights(R_VAREDIT))
@@ -1056,6 +1119,17 @@
 	if(href_list[VV_HK_EDIT_FILTERS] && check_rights(R_VAREDIT))
 		var/client/C = usr.client
 		C?.open_filter_editor(src)
+	if(href_list[VV_HK_EDIT_COLOR_MATRIX] && check_rights(R_VAREDIT))
+		var/client/C = usr.client
+		C?.open_color_matrix_editor(src)
+	/*
+	if(href_list[VV_HK_MODIFY_GREYSCALE])
+		if(!check_rights(NONE))
+			return
+		var/datum/greyscale_modify_menu/menu = new(src, usr, SSgreyscale.configurations)
+		menu.Unlock()
+		menu.ui_interact(usr)
+	*/
 
 /atom/vv_get_header()
 	. = ..()

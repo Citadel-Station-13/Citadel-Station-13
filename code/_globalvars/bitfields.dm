@@ -1,4 +1,20 @@
-GLOBAL_LIST_INIT(bitfields, list(
+GLOBAL_LIST_INIT(bitfields, generate_bitfields())
+
+/// Specifies a bitfield for smarter debugging
+/datum/bitfield
+	/// The variable name that contains the bitfield
+	var/variable
+
+	/// An associative list of the readable flag and its true value
+	var/list/flags
+
+/// Turns /datum/bitfield subtypes into a list for use in debugging
+/proc/generate_bitfields()
+	var/list/bitfields = list()
+	for (var/_bitfield in subtypesof(/datum/bitfield))
+		var/datum/bitfield/bitfield = new _bitfield
+		bitfields[bitfield.variable] = bitfield.flags
+	return bitfields + list(
 	"appearance_flags" = list(
 		"LONG_GLIDE" = LONG_GLIDE,
 		"RESET_COLOR" = RESET_COLOR,
@@ -188,13 +204,6 @@ GLOBAL_LIST_INIT(bitfields, list(
 		"ZAP_ALLOW_DUPLICATES" = ZAP_ALLOW_DUPLICATES,
 		"ZAP_MACHINE_EXPLOSIVE" = ZAP_MACHINE_EXPLOSIVE,
 		),
-	"smooth" = list(
-		"SMOOTH_TRUE" = SMOOTH_TRUE,
-		"SMOOTH_MORE" = SMOOTH_MORE,
-		"SMOOTH_DIAGONAL" = SMOOTH_DIAGONAL,
-		"SMOOTH_BORDER" = SMOOTH_BORDER,
-		"SMOOTH_QUEUED" = SMOOTH_QUEUED,
-		),
 	"reagents_holder_flags" = list(
 		"INJECTABLE" = INJECTABLE,
 		"DRAWABLE" = DRAWABLE,
@@ -326,4 +335,4 @@ GLOBAL_LIST_INIT(bitfields, list(
 		"VIS_UNDERLAY" = VIS_UNDERLAY,
 		"VIS_HIDE" = VIS_HIDE
 	)
-	))
+	)

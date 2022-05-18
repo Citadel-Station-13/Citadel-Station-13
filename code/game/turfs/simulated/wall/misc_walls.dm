@@ -3,8 +3,9 @@
 	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound."
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	icon_state = "cult"
-	canSmoothWith = null
-	smooth = SMOOTH_MORE
+	smooth_groups = list(SMOOTH_GROUP_WALL_CULT, SMOOTH_GROUP_CULT, SMOOTH_GROUP_WALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_CULT)
+	smooth_flags = SMOOTH_CORNERS
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	sheet_amount = 1
 	explosion_block = 10
@@ -169,7 +170,6 @@
 		slicing_duration = initial(slicing_duration)
 		animate(realappearance, color = initial(realappearance.color), time = 25)
 
-
 /turf/closed/wall/vault
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "rockvault"
@@ -178,7 +178,8 @@
 	icon = 'icons/turf/walls/icedmetal_wall.dmi'
 	icon_state = "iced"
 	desc = "A wall covered in a thick sheet of ice."
-	canSmoothWith = null
+	smooth_groups = list(SMOOTH_GROUP_WALL_ICE, SMOOTH_GROUP_WALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_ICE)
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
 	bullet_sizzle = TRUE

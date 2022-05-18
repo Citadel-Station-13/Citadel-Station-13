@@ -34,8 +34,8 @@
 	var/deconstruction_ready = 1
 	max_integrity = 100
 	integrity_failure = 0.33
-	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced, /obj/structure/table/greyscale)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_TABLE, SMOOTH_GROUP_TABLE_NORMAL)
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
@@ -45,9 +45,9 @@
 	return "<span class='notice'>The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.</span>"
 
 /obj/structure/table/update_icon()
-	if(smooth)
-		queue_smooth(src)
-		queue_smooth_neighbors(src)
+	if(IS_SMOOTH(src))
+		QUEUE_SMOOTH(src)
+		QUEUE_SMOOTH_NEIGHBORS(src)
 
 /obj/structure/table/narsie_act()
 	var/atom/A = loc
@@ -278,8 +278,9 @@
 	name = "Rolling table"
 	desc = "A NT brand \"Rolly poly\" rolling table. It can and will move."
 	anchored = FALSE
-	smooth = SMOOTH_FALSE
-	canSmoothWith = list()
+	smooth_flags = NONE
+	smooth_with = null
+	smooth_groups = null
 	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
 	icon_state = "rollingtable"
 	var/list/attached_items = list()
@@ -313,7 +314,8 @@
 	icon = 'icons/obj/smooth_structures/glass_table.dmi'
 	icon_state = "glass_table"
 	buildstack = /obj/item/stack/sheet/glass
-	canSmoothWith = null
+	smooth_groups = list(SMOOTH_GROUP_TABLE, SMOOTH_GROUP_TABLE_GLASS)
+	smooth_with = list(SMOOTH_GROUP_TABLE_GLASS)
 	max_integrity = 70
 	resistance_flags = ACID_PROOF
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 100)
@@ -391,7 +393,8 @@
 	icon_state = "plasmaglass_table"
 	climbable = TRUE
 	buildstack = /obj/item/stack/sheet/plasmaglass
-	canSmoothWith = null
+	smooth_groups = list(SMOOTH_GROUP_TABLE, SMOOTH_GROUP_TABLE_PLASMAGLASS)
+	smooth_with = list(SMOOTH_GROUP_TABLE_PLASMAGLASS)
 	max_integrity = 270
 	resistance_flags = ACID_PROOF
 	armor = list(MELEE = 10, BULLET = 5, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 80, ACID = 100)
@@ -442,9 +445,8 @@
 	buildstack = /obj/item/stack/sheet/mineral/wood
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
-	canSmoothWith = list(/obj/structure/table/wood,
-		/obj/structure/table/wood/poker,
-		/obj/structure/table/wood/bar)
+	smooth_with = list(SMOOTH_GROUP_TABLE_WOOD)
+	smooth_groups = list(SMOOTH_GROUP_TABLE, SMOOTH_GROUP_TABLE_WOOD)
 
 /obj/structure/table/wood/narsie_act(total_override = TRUE)
 	if(!total_override)
@@ -468,18 +470,8 @@
 	frame = /obj/structure/table_frame
 	framestack = /obj/item/stack/rods
 	buildstack = /obj/item/stack/tile/carpet
-	canSmoothWith = list(/obj/structure/table/wood/fancy,
-		/obj/structure/table/wood/fancy/black,
-		/obj/structure/table/wood/fancy/blackred,
-		/obj/structure/table/wood/fancy/monochrome,
-		/obj/structure/table/wood/fancy/blue,
-		/obj/structure/table/wood/fancy/cyan,
-		/obj/structure/table/wood/fancy/green,
-		/obj/structure/table/wood/fancy/orange,
-		/obj/structure/table/wood/fancy/purple,
-		/obj/structure/table/wood/fancy/red,
-		/obj/structure/table/wood/fancy/royalblack,
-		/obj/structure/table/wood/fancy/royalblue)
+	smooth_with = list(SMOOTH_GROUP_TABLE_FANCY)
+	smooth_groups = list(SMOOTH_GROUP_TABLE_FANCY, SMOOTH_GROUP_TABLE)
 	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
 
 /obj/structure/table/wood/fancy/Initialize(mapload)
@@ -593,7 +585,8 @@
 	buildstack = /obj/item/stack/tile/brass
 	framestackamount = 1
 	buildstackamount = 1
-	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
+	smooth_groups = list(SMOOTH_GROUP_TABLE_CLOCKWORK, SMOOTH_GROUP_CLOCKCULT, SMOOTH_GROUP_TABLE_BRASS)
+	smooth_with = list(SMOOTH_GROUP_TABLE_CLOCKWORK)
 
 /obj/structure/table/reinforced/brass/New()
 	change_construction_value(2)
@@ -625,7 +618,8 @@
 	icon_state = "brass_table"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	buildstack = /obj/item/stack/sheet/bronze
-	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
+	smooth_groups = list(SMOOTH_GROUP_TABLE_CLOCKWORK, SMOOTH_GROUP_CLOCKCULT, SMOOTH_GROUP_TABLE_BRONZE)
+	smooth_with = list(SMOOTH_GROUP_TABLE_CLOCKWORK)
 
 /obj/structure/table/bronze/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
 	..()
@@ -641,7 +635,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "optable"
 	buildstack = /obj/item/stack/sheet/mineral/silver
-	smooth = SMOOTH_FALSE
+	smooth_flags = NONE
 	can_buckle = 1
 	buckle_lying = 1
 	buckle_requires_restraints = 1

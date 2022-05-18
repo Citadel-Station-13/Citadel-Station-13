@@ -20,16 +20,16 @@
 	if (!armor)
 		armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	. = ..()
-	if(smooth)
-		queue_smooth(src)
-		queue_smooth_neighbors(src)
+	if(IS_SMOOTH(src))
+		QUEUE_SMOOTH(src)
+		QUEUE_SMOOTH_NEIGHBORS(src)
 		icon_state = ""
 	GLOB.cameranet.updateVisibility(src)
 
 /obj/structure/Destroy()
 	GLOB.cameranet.updateVisibility(src)
-	if(smooth)
-		queue_smooth_neighbors(src)
+	if(IS_SMOOTH(src))
+		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
 /obj/structure/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
