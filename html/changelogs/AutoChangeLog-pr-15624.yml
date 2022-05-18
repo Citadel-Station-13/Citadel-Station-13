@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - rscadd: "quirks are now organised into three tabs for positive, neutral and negative"
