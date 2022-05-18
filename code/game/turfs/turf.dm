@@ -62,6 +62,15 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(color) // is this being used? This is here because parent isn't being called
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
+	if (length(smooth_groups))
+		sortTim(smooth_groups) //In case it's not properly ordered, let's avoid duplicate entries with the same values.
+		SET_BITFLAG_LIST(smooth_groups)
+	if (length(smooth_with))
+		sortTim(smooth_with)
+		if(smooth_with[length(smooth_with)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
+			smooth_flags |= SMOOTH_OBJ
+		SET_BITFLAG_LIST(smooth_with)
+
 	assemble_baseturfs()
 
 	levelupdate()
