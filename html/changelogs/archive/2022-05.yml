@@ -38,3 +38,6 @@
 2022-05-17:
   timothyteakettle:
   - rscadd: poly alt cloak can now be renamed/dedescriptioned in loadout
+2022-05-19:
+  timothyteakettle:
+  - rscadd: quirks are now organised into three tabs for positive, neutral and negative
