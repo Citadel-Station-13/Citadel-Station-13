@@ -33,6 +33,9 @@
 	linked_organ = null
 	. = ..()
 
+/obj/item/organ/genital/on_life()
+	return
+
 /obj/item/organ/genital/proc/set_aroused_state(new_state,cause = "manual toggle")
 	if(!(genital_flags & GENITAL_CAN_AROUSE))
 		return FALSE
