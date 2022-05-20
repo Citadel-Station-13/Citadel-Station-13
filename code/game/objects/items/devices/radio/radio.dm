@@ -84,7 +84,7 @@
 	QDEL_NULL(keyslot)
 	return ..()
 
-/obj/item/radio/Initialize(mapload)
+/obj/item/radio/Initialize()
 	wires = new /datum/wires/radio(src)
 	if(prison_radio)
 		wires.cut(WIRE_TX) // OH GOD WHY
@@ -241,8 +241,7 @@
 	for(var/obj/item/jammer/jammer in GLOB.active_jammers)
 		var/turf/jammer_turf = get_turf(jammer)
 		if(position.z == jammer_turf.z && (get_dist(position, jammer_turf) < jammer.range))
-			message = Gibberish(message,100)
-			break
+			return
 
 	// Determine the identity information which will be attached to the signal.
 	var/atom/movable/virtualspeaker/speaker = new(null, M, src)
@@ -378,7 +377,7 @@
 	syndie = 1
 	keyslot = new /obj/item/encryptionkey/syndicate
 
-/obj/item/radio/borg/syndicate/Initialize(mapload)
+/obj/item/radio/borg/syndicate/Initialize()
 	. = ..()
 	set_frequency(FREQ_SYNDICATE)
 
