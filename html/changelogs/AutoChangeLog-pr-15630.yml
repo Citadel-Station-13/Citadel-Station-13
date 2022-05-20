@@ -1,0 +1,4 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - bugfix: "Silicon flavor texts are no longer broken... maybe?"
