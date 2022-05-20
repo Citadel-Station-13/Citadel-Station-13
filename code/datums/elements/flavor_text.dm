@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	if(ismob(target))
 		add_verb(target, /mob/proc/set_pose)
 
-/datum/element/flavor_Text/carbon/temporary/Detach(datum/source, force)
+/datum/element/flavor_text/carbon/temporary/Detach(datum/source, force)
 	. = ..()
 	if(ismob(source))
 		remove_verb(source, /mob/proc/set_pose)
