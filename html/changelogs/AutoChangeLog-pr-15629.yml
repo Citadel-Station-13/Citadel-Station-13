@@ -1,0 +1,4 @@
+author: "Bhijn & Myr"
+delete-after: True
+changes: 
+  - bugfix: "Blood trails no longer have a duplicate directionless iconstate as their base sprite, fixing the Wonkiness of blood trails going west/east."
