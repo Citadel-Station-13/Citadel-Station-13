@@ -44,12 +44,6 @@ export const Jukebox = (props, context) => {
                 <LabeledList.Item label="Track Length">
                   {track_selected ? track_length : "No Track Selected"}
                 </LabeledList.Item>
-                <LabeledList.Item />
-                <LabeledList.Item />
-                <LabeledList.Item />
-                <LabeledList.Item label="Cost to Queue">
-                  {cost_for_play} CR {has_access ? "(Cost waived)" : ""}
-                </LabeledList.Item>
               </LabeledList>
             </Stack.Item>
             <Stack.Item>
@@ -107,6 +101,11 @@ export const Jukebox = (props, context) => {
               </LabeledControls>
             </Stack.Item>
           </Stack>
+          <LabeledList>
+            <LabeledList.Item label="Cost to Queue">
+              {cost_for_play} CR {has_access ? "(Cost waived)" : ""}
+            </LabeledList.Item>
+          </LabeledList>
         </Section>
         <Section fill vertical>
           <Stack>

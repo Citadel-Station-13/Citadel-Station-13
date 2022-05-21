@@ -150,10 +150,10 @@
 				log_econ("[queuecost] credits were inserted into [src] by [key_name(usr)] (ID: [C.registered_name]) to queue [selectedtrack.song_name].")
 			queuedplaylist += selectedtrack
 			if(active)
-				say("[selectedtrack.song_name] has been added to the queue!")
-				playsound(src, 'sound/machines/ping.ogg', 50, TRUE)
+				say("[selectedtrack.song_name] has been added to the queue.")
 			else if(!playing)
 				activate_music()
+			playsound(src, 'sound/machines/ping.ogg', 50, TRUE)
 			queuecooldown = world.time + (3 SECONDS)
 			return TRUE
 		if("select_track")
@@ -193,6 +193,8 @@
 		START_PROCESSING(SSobj, src)
 		stop = world.time + playing.song_length
 		queuedplaylist.Cut(1, 2)
+		say("Now playing: [playing.song_name]")
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, TRUE)
 		return TRUE
 	else
 		return FALSE
