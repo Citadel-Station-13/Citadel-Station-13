@@ -492,16 +492,21 @@
 	QDEL_LIST(sparkles)
 
 /obj/machinery/jukebox/process()
-	if(active && world.time >= stop)
-		active = FALSE
-		dance_over()
-		if(stop && queuedplaylist.len)
-			activate_music()
-		else
-			playsound(src,'sound/machines/terminal_off.ogg',50,1)
-			update_icon()
-			playing = null
-			stop = 0
+	if(active)
+		if(world.time >= stop)
+			active = FALSE
+			dance_over()
+			if(stop && queuedplaylist.len)
+				activate_music()
+			else
+				playsound(src,'sound/machines/terminal_off.ogg',50,1)
+				update_icon()
+				playing = null
+				stop = 0
+		else if(volume > 140) // BOOM BOOM BOOM BOOM
+			for(var/mob/living/carbon/C in hearers(round(volume/35), src)) // I WANT YOU IN MY ROOM
+				if(istype(C)) // LETS SPEND THE NIGHT TOGETHER
+					C.adjustEarDamage(max((((volume/35) - sqrt(get_dist(C, src) * 4)) - C.get_ear_protection())*0.1, 0)) // FROM NOW UNTIL FOREVER
 
 
 /obj/machinery/jukebox/disco/process()
