@@ -312,6 +312,36 @@ Class Procs:
 
 	return TRUE // If we passed all of those checks, woohoo! We can interact with this machine.
 
+/obj/machinery/proc/can_transact(obj/item/card/id/thecard, allowdepartment, silent)
+	if(!istype(thecard))
+		if(!silent)
+			say("No card found.")
+		return FALSE
+	else if (!thecard.registered_account)
+		if(!silent)
+			say("No account found.")
+		return FALSE
+	else if(!allowdepartment && !thecard.registered_account.account_job)
+		if(!silent)
+			say("Departmental accounts have been blacklisted from personal expenses due to embezzlement.")
+		return FALSE
+	return TRUE
+
+/obj/machinery/proc/attempt_transact(obj/item/card/id/thecard, transaction_cost)
+	if(!istype(thecard))
+		return FALSE
+	var/datum/bank_account/account = thecard.registered_account
+	if(!istype(account))
+		return FALSE
+
+	if(transaction_cost)
+		if(!account.adjust_money(-transaction_cost))
+			return FALSE
+		var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
+		if(D)
+			D.adjust_money(transaction_cost)
+	return TRUE
+
 /obj/machinery/proc/check_nap_violations()
 	if(!SSeconomy.full_ancap)
 		return TRUE

@@ -1,3 +1,10 @@
+// Jukelist indices
+#define JUKE_TRACK 1
+#define JUKE_CHANNEL 2
+#define JUKE_BOX 3
+#define JUKE_FALLOFF 4
+
+
 SUBSYSTEM_DEF(jukeboxes)
 	name = "Jukeboxes"
 	wait = 5
@@ -40,12 +47,21 @@ SUBSYSTEM_DEF(jukeboxes)
 		if(!(M.client.prefs.toggles & SOUND_INSTRUMENTS))
 			continue
 
-		M.playsound_local(M, null, 100, channel = youvegotafreejukebox[2], S = song_to_init)
+		M.playsound_local(M, null, 100, channel = youvegotafreejukebox[JUKE_CHANNEL], S = song_to_init)
 	return activejukeboxes.len
+
+
+//Updates jukebox by transferring to different object or modifying falloff.
+/datum/controller/subsystem/jukeboxes/proc/updatejukebox(IDtoupdate, obj/jukebox, jukefalloff) 
+	if(islist(activejukeboxes[IDtoupdate]))
+		if(istype(jukebox))
+			activejukeboxes[IDtoupdate][JUKE_BOX] = jukebox
+		if(!isnull(jukefalloff))
+			activejukeboxes[IDtoupdate][JUKE_FALLOFF] = jukefalloff
 
 /datum/controller/subsystem/jukeboxes/proc/removejukebox(IDtoremove)
 	if(islist(activejukeboxes[IDtoremove]))
-		var/jukechannel = activejukeboxes[IDtoremove][2]
+		var/jukechannel = activejukeboxes[IDtoremove][JUKE_CHANNEL]
 		for(var/mob/M in GLOB.player_list)
 			if(!M.client)
 				continue
@@ -93,22 +109,25 @@ SUBSYSTEM_DEF(jukeboxes)
 		if(!istype(jukebox))
 			stack_trace("Nonexistant or invalid object associated with jukebox.")
 			continue
+
+		var/list/audible_zlevels = get_multiz_accessible_levels(jukebox.z) //TODO - for multiz refresh, this should use the cached zlevel connections var in SSMapping. For now this is fine!
+
 		var/sound/song_played = sound(juketrack.song_path)
 		var/turf/currentturf = get_turf(jukebox)
 		var/area/currentarea = get_area(jukebox)
 		var/list/hearerscache = hearers(7, jukebox)
-
-		song_played.falloff = jukeinfo[4]
+		var/targetfalloff = jukeinfo[JUKE_FALLOFF]
+		var/mixes = ((targetfalloff*250)-750)
 
 		for(var/mob/M in GLOB.player_list)
 			if(!M.client)
 				continue
 			if(!(M.client.prefs.toggles & SOUND_INSTRUMENTS) || !M.can_hear())
-				M.stop_sound_channel(jukeinfo[2])
+				M.stop_sound_channel(jukeinfo[JUKE_CHANNEL])
 				continue
 
 			var/inrange = FALSE
-			if(jukebox.z == M.z)	//todo - expand this to work with mining planet z-levels when robust jukebox audio gets merged to master
+			if(targetfalloff && (M.z in audible_zlevels))
 				song_played.status = SOUND_UPDATE
 				if(get_area(M) == currentarea)
 					inrange = TRUE
@@ -116,6 +135,12 @@ SUBSYSTEM_DEF(jukeboxes)
 					inrange = TRUE
 			else
 				song_played.status = SOUND_MUTE | SOUND_UPDATE	//Setting volume = 0 doesn't let the sound properties update at all, which is lame.
-			M.playsound_local(currentturf, null, 100, channel = jukeinfo[2], S = song_played, envwet = (inrange ? -250 : 0), envdry = (inrange ? 0 : -10000))
+			song_played.falloff = (inrange ? targetfalloff : targetfalloff * targetfalloff) //The wet channel uses a sqrt falloff by default. Exponentially increasing the falloff when muffled makes 
+			M.playsound_local(currentturf, null, (targetfalloff ? min((targetfalloff * 50), 100) : 1), channel = jukeinfo[JUKE_CHANNEL], S = song_played, envwet = ((inrange) ? mixes : max(mixes, 0)), envdry = (inrange ? max(mixes, 0) : -10000))
 			CHECK_TICK
 	return
+
+#undef JUKE_TRACK
+#undef JUKE_CHANNEL
+#undef JUKE_BOX
+#undef JUKE_FALLOFF
