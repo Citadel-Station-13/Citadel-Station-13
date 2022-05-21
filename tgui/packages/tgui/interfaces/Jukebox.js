@@ -48,7 +48,7 @@ export const Jukebox = (props, context) => {
                 <LabeledList.Item />
                 <LabeledList.Item />
                 <LabeledList.Item label="Cost to Queue">
-                  {cost_for_play} CR {has_access ? "" : "(Cost waived)"}
+                  {cost_for_play} CR {has_access ? "(Cost waived)" : ""}
                 </LabeledList.Item>
               </LabeledList>
             </Stack.Item>
