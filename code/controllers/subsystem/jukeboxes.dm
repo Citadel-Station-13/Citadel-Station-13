@@ -11,6 +11,7 @@
 #define JUKE_CHANNEL 2
 #define JUKE_BOX 3
 #define JUKE_FALLOFF 4
+#define JUKE_SOUND 5
 
 
 SUBSYSTEM_DEF(jukeboxes)
@@ -41,14 +42,15 @@ SUBSYSTEM_DEF(jukeboxes)
 	if(!channeltoreserve)
 		return FALSE
 	freejukeboxchannels -= channeltoreserve
-	var/list/youvegotafreejukebox = list(T, channeltoreserve, jukebox, jukefalloff)
+	var/list/youvegotafreejukebox = list(T, channeltoreserve, jukebox, jukefalloff, null)
+
+	var/sound/song_to_init = sound(T.song_path)
+	song_to_init.status = SOUND_MUTE
+	youvegotafreejukebox[JUKE_SOUND] = song_to_init
+
 	activejukeboxes.len++
 	activejukeboxes[activejukeboxes.len] = youvegotafreejukebox
 
-	//Due to changes in later versions of 512, SOUND_UPDATE no longer properly plays audio when a file is defined in the sound datum. As such, we are now required to init the audio before we can actually do anything with it.
-	//Downsides to this? This means that you can *only* hear the jukebox audio if you were present on the server when it started playing, and it means that it's now impossible to add loops to the jukebox track list.
-	var/sound/song_to_init = sound(T.song_path)
-	song_to_init.status = SOUND_MUTE
 	for(var/mob/M in GLOB.player_list)
 		if(!M.client)
 			continue
@@ -109,18 +111,18 @@ SUBSYSTEM_DEF(jukeboxes)
 		if(!jukeinfo.len)
 			stack_trace("Active jukebox without any associated metadata.")
 			continue
-		var/datum/track/juketrack = jukeinfo[1]
+		var/datum/track/juketrack = jukeinfo[JUKE_TRACK]
 		if(!istype(juketrack))
 			stack_trace("Invalid jukebox track datum.")
 			continue
-		var/obj/jukebox = jukeinfo[3]
+		var/obj/jukebox = jukeinfo[JUKE_BOX]
 		if(!istype(jukebox))
 			stack_trace("Nonexistant or invalid object associated with jukebox.")
 			continue
 
 		var/list/audible_zlevels = get_multiz_accessible_levels(jukebox.z) //TODO - for multiz refresh, this should use the cached zlevel connections var in SSMapping. For now this is fine!
 
-		var/sound/song_played = sound(juketrack.song_path)
+		var/sound/song_played = jukeinfo[JUKE_SOUND]
 		var/turf/currentturf = get_turf(jukebox)
 		var/area/currentarea = get_area(jukebox)
 		var/list/hearerscache = hearers(7, jukebox)
@@ -153,3 +155,4 @@ SUBSYSTEM_DEF(jukeboxes)
 #undef JUKE_CHANNEL
 #undef JUKE_BOX
 #undef JUKE_FALLOFF
+#undef JUKE_SOUND
