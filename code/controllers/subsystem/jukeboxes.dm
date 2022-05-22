@@ -1,3 +1,11 @@
+//As a brief warning to all those who dare tread upon these grounds:
+//The bulk of this code here was written years ago, back in the days of 512.
+//We were incredibly drunk back then. And nowadays, we've found that being drunk is a hard requirement for working with this code.
+//So if you're here to make changes? Brandish a glass. There are many sins here, but it's exactly as engineered as it needs to be.
+//We physically won't be able to tell you what half of this code does. The only thing that'll help you here is the ballmer peak.
+//Bottoms up, friend. And be sure to drink responsibly. Be sure to fetch some water, too; it eases the hangover. - Bhijn & Myr
+
+
 // Jukelist indices
 #define JUKE_TRACK 1
 #define JUKE_CHANNEL 2
