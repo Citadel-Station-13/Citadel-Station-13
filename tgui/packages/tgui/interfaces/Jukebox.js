@@ -52,7 +52,7 @@ export const Jukebox = (props, context) => {
                   <Box position="relative">
                     <Knob
                       size={2.4}
-                      color={volume > 70 ? 'red' : 'green'}
+                      color={volume > 140 ? 'red' : 'green'}
                       value={volume}
                       unit="%"
                       minValue={0}
