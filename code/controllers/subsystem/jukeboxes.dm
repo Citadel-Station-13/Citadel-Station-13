@@ -120,10 +120,6 @@ SUBSYSTEM_DEF(jukeboxes)
 		var/mixes = ((targetfalloff*250)-750)
 		var/inrange
 
-		//Workaround for a BYOND bug. (SOUND_MUTE | SOUND_UPDATE) no longer works. at all. it doesn't mute the sound, and it doesn't allow the sound to update. We have no idea when this broke.
-		//"What happens if you just set the volume to 0?" this never worked. When a sound's sent with a volume of 0, dreamseeker simply does nothing.
-		//So instead, we're gonna mute the dry and wet channels while still keeping the sound exactly the same. TECHNICALLY this works. Buuuut technically the sound's still audible.
-
 		for(var/mob/M in GLOB.player_list)
 			if(!M.client)
 				continue
@@ -140,7 +136,7 @@ SUBSYSTEM_DEF(jukeboxes)
 				song_played.status = SOUND_UPDATE
 			else
 				song_played.status = SOUND_MUTE | SOUND_UPDATE
-			song_played.falloff = (inrange ? targetfalloff : targetfalloff * targetfalloff) //The wet channel uses a sqrt falloff by default. Exponentially increasing the falloff when muffled makes 
+			song_played.falloff = (inrange ? targetfalloff : targetfalloff * targetfalloff) //The wet channel uses a sqrt falloff by default. Exponentially increasing the falloff when muffled cancels out that sqrt falloff
 			M.playsound_local(currentturf, null, (targetfalloff ? min((targetfalloff * 50), 100) : 1), channel = jukeinfo[JUKE_CHANNEL], S = song_played, envwet = ((inrange) ? mixes : max(mixes, 0)), envdry = (inrange ? max(mixes, 0) : -10000))
 			CHECK_TICK
 	return

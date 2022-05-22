@@ -111,11 +111,14 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 
 /mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/S, max_distance,
 	falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = SOUND_DEFAULT_DISTANCE_MULTIPLIER, envwet = -10000, envdry = 0)
-	if(!client || !can_hear())
+	if(!client)
 		return
 
 	if(!S)
 		S = sound(get_sfx(soundin))
+
+	if(!can_hear() && !(S.status & SOUND_UPDATE)) //This is primarily to make sure sound updates still go through when a spaceman's deaf
+		return
 
 	S.wait = 0 //No queue
 	S.channel = channel || SSsounds.random_available_channel()
