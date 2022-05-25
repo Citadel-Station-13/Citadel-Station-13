@@ -20,7 +20,7 @@
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damaged[blood_overlay_type]")
 		if(blood_DNA)
 			var/file2use = (style_flags & STYLE_ALL_TAURIC) ? 'modular_citadel/icons/mob/64x32_effects.dmi' : 'icons/effects/blood.dmi'
-			. += mutable_appearance(file2use, "[blood_overlay_type]blood", color = blood_DNA_to_color())
+			. += mutable_appearance(file2use, "[blood_overlay_type]blood", color = blood_DNA_to_color(), blend_mode = BLEND_MULTIPLY)
 		var/mob/living/carbon/human/M = loc
 		if(ishuman(M) && M.w_uniform)
 			var/obj/item/clothing/under/U = M.w_uniform

@@ -3,6 +3,7 @@
 	desc = "It's gooey. Perhaps it's the chef's cooking?"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
+	blend_mode = BLEND_MULTIPLY
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	blood_state = BLOOD_STATE_BLOOD
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
@@ -83,6 +84,7 @@
 	name = "blood"
 	icon = 'icons/effects/blood.dmi'
 	desc = "Your instincts say you shouldn't be following these."
+	blend_mode = BLEND_MULTIPLY
 	random_icon_states = null
 	beauty = -50
 	persistent = TRUE
