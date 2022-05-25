@@ -161,7 +161,7 @@
 	name = "Hyper-noblium"
 	gas_overlay = "freon"
 	moles_visible = MOLES_GAS_VISIBLE
-	price = 20
+	price = 50
 
 /datum/gas/hydrogen
 	id = GAS_HYDROGEN
