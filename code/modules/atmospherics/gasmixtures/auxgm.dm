@@ -43,6 +43,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GA
 	var/list/TLVs = list()
 	var/list/odors = list()
 	var/list/odor_strengths = list()
+	var/list/prices = list()
 
 /datum/gas
 	var/id = ""
@@ -60,6 +61,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GA
 	var/datum/reagent/breath_reagent = null // what breathing this adds to your reagents
 	var/datum/reagent/breath_reagent_dangerous = null // what breathing this adds to your reagents IF it's above a danger threshold
 	var/list/breath_alert_info = null // list for alerts that pop up when you have too much/not enough of something
+	var/price = 0 // How much this gas is worth when sold, per mole.
 	var/oxidation_temperature = null // temperature above which this gas is an oxidizer; null for none
 	var/oxidation_rate = 1 // how many moles of this can oxidize how many moles of material
 	var/fire_temperature = null // temperature above which gas may catch fire; null for none
@@ -135,6 +137,8 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(GAS_O2, GAS_N2, GAS_CO2, GA
 		if(gas.odor)
 			odor_strengths[g] = gas.odor_strength
 			odors[g] = gas.odor
+		if(gas.price)
+			prices[g] = gas.price
 		add_supermatter_properties(gas)
 		_auxtools_register_gas(gas)
 		if(done_initializing)
