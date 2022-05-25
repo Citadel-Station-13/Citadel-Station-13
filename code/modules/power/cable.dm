@@ -605,7 +605,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(!isturf(user.loc))
 		return
 
-	if(!isturf(T) || T.underfloor_accessibility || !T.can_have_cabling())
+	if(!isturf(T) || T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE || !T.can_have_cabling())
 		to_chat(user, "<span class='warning'>You can only lay cables on catwalks and plating!</span>")
 		return
 
