@@ -41,12 +41,16 @@ SUBSYSTEM_DEF(jukeboxes)
 	var/channeltoreserve = pick(freejukeboxchannels)
 	if(!channeltoreserve)
 		return FALSE
-	freejukeboxchannels -= channeltoreserve
-	var/list/youvegotafreejukebox = list(T, channeltoreserve, jukebox, jukefalloff, null)
-
 	var/sound/song_to_init = sound(T.song_path)
+	freejukeboxchannels -= channeltoreserve
+	var/list/youvegotafreejukebox = list(T, channeltoreserve, jukebox, jukefalloff, song_to_init)
+
 	song_to_init.status = SOUND_MUTE
-	youvegotafreejukebox[JUKE_SOUND] = song_to_init
+	song_to_init.environment = 7
+	song_to_init.channel = channeltoreserve
+	song_to_init.volume = 1
+	song_to_init.falloff = jukefalloff
+	song_to_init.echo = list(0, null, -10000, null, null, null, null, null, null, null, null, null, null, 1, 1, 1, null, null)
 
 	activejukeboxes.len++
 	activejukeboxes[activejukeboxes.len] = youvegotafreejukebox
@@ -57,7 +61,7 @@ SUBSYSTEM_DEF(jukeboxes)
 		if(!(M.client.prefs.toggles & SOUND_INSTRUMENTS))
 			continue
 
-		M.playsound_local(M, null, 100, channel = youvegotafreejukebox[JUKE_CHANNEL], S = song_to_init)
+		SEND_SOUND(M, song_to_init)
 	return activejukeboxes.len
 
 
@@ -129,6 +133,17 @@ SUBSYSTEM_DEF(jukeboxes)
 		var/targetfalloff = jukeinfo[JUKE_FALLOFF]
 		var/mixes = ((targetfalloff*250)-750)
 		var/inrange
+		var/pressure_factor
+
+
+		var/datum/gas_mixture/source_env = (istype(currentturf) ? currentturf.return_air() : null)
+		var/datum/gas_mixture/hearer_env //We init this var outside of the mob loop for the sake of performance
+		var/turf/hearerturf //ditto
+
+		var/source_pressure = (istype(source_env) ? source_env.return_pressure() : 0)
+
+		song_played.falloff = targetfalloff
+		song_played.volume = min((targetfalloff * 50), 100)
 
 		for(var/mob/M in GLOB.player_list)
 			if(!M.client)
@@ -138,16 +153,31 @@ SUBSYSTEM_DEF(jukeboxes)
 				continue
 
 			inrange = FALSE
-			if(targetfalloff && M.can_hear() && (M.z in audible_zlevels))
-				if(get_area(M) == currentarea)
-					inrange = TRUE
-				else if(M in hearerscache)
-					inrange = TRUE
-				song_played.status = SOUND_UPDATE
-			else
-				song_played.status = SOUND_MUTE | SOUND_UPDATE
-			song_played.falloff = (inrange ? targetfalloff : targetfalloff * targetfalloff) //The wet channel uses a sqrt falloff by default. Exponentially increasing the falloff when muffled cancels out that sqrt falloff
-			M.playsound_local(currentturf, null, (targetfalloff ? min((targetfalloff * 50), 100) : 1), channel = jukeinfo[JUKE_CHANNEL], S = song_played, envwet = ((inrange) ? mixes : max(mixes, 0)), envdry = (inrange ? max(mixes, 0) : -10000))
+			song_played.status = SOUND_MUTE | SOUND_UPDATE
+
+			if(source_pressure)
+				hearerturf = get_turf(M)
+				hearer_env = (istype(hearerturf) ? hearerturf.return_air() : null)
+				if(istype(hearer_env))
+					pressure_factor = min(source_pressure, hearer_env.return_pressure())
+
+				if(pressure_factor && targetfalloff && M.can_hear() && (M.z in audible_zlevels))
+					if(get_area(M) == currentarea)
+						inrange = TRUE
+					else if(M in hearerscache)
+						inrange = TRUE
+
+					song_played.x = (currentturf.x - M.x) * SOUND_DEFAULT_DISTANCE_MULTIPLIER
+					song_played.z = (currentturf.y - M.y) * SOUND_DEFAULT_DISTANCE_MULTIPLIER
+					song_played.y = (((currentturf.z - M.z) * 10 * SOUND_DEFAULT_DISTANCE_MULTIPLIER) + ((currentturf.z < M.z) ? -5 : 5))
+
+					if(pressure_factor < ONE_ATMOSPHERE)
+						song_played.volume = (min((targetfalloff * 50), 100) * max((pressure_factor - SOUND_MINIMUM_PRESSURE)/(ONE_ATMOSPHERE - SOUND_MINIMUM_PRESSURE), 1))
+
+					song_played.echo[1] = (inrange ? 0 : -10000)
+					song_played.echo[3] = (inrange ? mixes : max(mixes, 0))
+					song_played.status = SOUND_UPDATE
+			SEND_SOUND(M, song_played)
 			CHECK_TICK
 	return
 
