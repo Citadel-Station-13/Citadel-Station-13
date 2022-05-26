@@ -203,6 +203,7 @@
 #define TRAIT_NYMPHO			"nymphomaniac"
 #define TRAIT_MASO              "masochism"
 #define	TRAIT_HIGH_BLOOD        "high_blood"
+
 #define TRAIT_PARA              "paraplegic"
 #define TRAIT_EMPATH			"empath"
 #define TRAIT_FRIENDLY			"friendly"
@@ -355,7 +356,7 @@
 #define TRAIT_SACRIFICED "sacrificed" //Makes sure that people cant be cult sacrificed twice.
 #define TRAIT_SPACEWALK "spacewalk"
 #define TRAIT_SALT_SENSITIVE "salt_sensitive"
-
+#define	TRAIT_UNIVERSAL_BLOOD "universal_blood"
 
 /// obtained from mapping helper
 #define MAPPING_HELPER_TRAIT "mapping-helper"

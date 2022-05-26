@@ -219,3 +219,23 @@
 /datum/quirk/night_vision/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.update_sight()
+
+/datum/quirk/blooduniversal
+	name = "Universal Blood"
+	desc = "You've a special bloodtype that allows you tothat is accepting of all blood types aside from HF, X* and GEL."
+	value = 2 //a
+	mob_trait = TRAIT_UNIVERSAL_BLOOD
+	gain_text = "<span class='notice'>You feel accepting of most blood types!</span>"
+	lose_text = "<span class='notice'>You feel less accepting of blood.</span>"
+	medical_record_text = "Patient's blood tests report an abnormal bloodtype that is compatiable with all blood types aside from HF, X* and GEL."
+
+/datum/quirk/blooduniversal/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.dna.blood_type = "U"
+
+/datum/quirk/blooduniversal/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	if (H.dna.species.exotic_bloodtype == "")
+		H.dna.blood_type = random_blood_type()
+	else 
+		H.dna.blood_type = H.dna?.species?.exotic_bloodtype
