@@ -34,16 +34,20 @@
 	. = ..()
 	if(!fixed_color)
 		add_atom_colour(blood_DNA_to_color(), FIXED_COLOUR_PRIORITY)
+		blend_mode = blood_DNA_to_blend()
 
 /obj/effect/decal/cleanable/blood/PersistenceSave(list/data)
 	. = ..()
 	data["color"] = color
+	data["blendmode"] = blend_mode
 
 /obj/effect/decal/cleanable/blood/PersistenceLoad(list/data)
 	. = ..()
 	if(data["color"])
 		fixed_color = TRUE
 		add_atom_colour(data["color"], FIXED_COLOUR_PRIORITY)
+	if(data["blendmode"])
+		blend_mode = data["blendmode"]
 	name = "dried blood"
 	desc = "Looks like it's been here a while. Eew"
 	bloodiness = 0
@@ -96,6 +100,7 @@
 	. = ..()
 	data["dir"] = dir
 	data["color"] = color
+	data["blendmode"] = blend_mode
 
 /obj/effect/decal/cleanable/trail_holder/PersistenceLoad(list/data)
 	. = ..()
@@ -104,11 +109,14 @@
 	if(data["color"])
 		fixed_color = TRUE
 		add_atom_colour(data["color"], FIXED_COLOUR_PRIORITY)
+	if(data["blendmode"])
+		blend_mode = data["blendmode"]
 
 /obj/effect/decal/cleanable/trail_holder/update_icon()
 	. = ..()
 	if(!fixed_color)
 		add_atom_colour(blood_DNA_to_color(), FIXED_COLOUR_PRIORITY)
+		blend_mode = blood_DNA_to_blend()
 
 /obj/effect/cleanable/trail_holder/Initialize(mapload)
 	. = ..()
