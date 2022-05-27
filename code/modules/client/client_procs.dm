@@ -901,7 +901,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if (second != clicklimiter[CURRENT_SECOND])
 			clicklimiter[CURRENT_SECOND] = second
 			clicklimiter[SECOND_COUNT] = 0
-		clicklimiter[SECOND_COUNT] += 1//+(!!ab)
+		clicklimiter[SECOND_COUNT] += 1
 		if (clicklimiter[SECOND_COUNT] > scl)
 			to_chat(src, "<span class='danger'>Your previous click was ignored because you've done too many in a second</span>")
 			return
