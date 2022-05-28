@@ -132,6 +132,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	value = -1
 	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
 
+/datum/quirk/nyctophobia/add()
 	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, .proc/on_holder_moved)
 
 /datum/quirk/nyctophobia/remove()
