@@ -116,7 +116,6 @@ GLOBAL_LIST(topic_status_cache)
 	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
 	GLOB.world_asset_log = "[GLOB.log_directory]/asset.log"
 	GLOB.world_attack_log = "[GLOB.log_directory]/attack.log"
-	GLOB.world_victim_log = "[GLOB.log_directory]/victim.log"
 	GLOB.world_pda_log = "[GLOB.log_directory]/pda.log"
 	GLOB.world_telecomms_log = "[GLOB.log_directory]/telecomms.log"
 	GLOB.world_manifest_log = "[GLOB.log_directory]/manifest.log"
@@ -322,7 +321,7 @@ GLOBAL_LIST(topic_status_cache)
 		. += "[SSmapping.config.map_name], "
 	if(NUM2SECLEVEL(GLOB.security_level))
 		. += "[NUM2SECLEVEL(GLOB.security_level)] alert, "
-	
+
 	. += "[get_active_player_count(afk_check = TRUE)] playing"
 
 	status = .

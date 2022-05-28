@@ -1192,8 +1192,6 @@
 			log_mecha(log_text)
 		if(LOG_SHUTTLE)
 			log_shuttle(log_text)
-		if(LOG_VICTIM)
-			log_victim(log_text)
 		else
 			stack_trace("Invalid individual logging type: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
 			log_game(log_text)
@@ -1245,7 +1243,7 @@
 
 	if(user != target)
 		var/reverse_message = "has been [what_done] by [ssource][postfix]"
-		target.log_message(reverse_message, LOG_VICTIM, color="orange")
+		target.log_message(reverse_message, LOG_VICTIM, color="orange", log_globally=FALSE)
 
 /**
   * log_wound() is for when someone is *attacked* and suffers a wound. Note that this only captures wounds from damage, so smites/forced wounds aren't logged, as well as demotions like cuts scabbing over

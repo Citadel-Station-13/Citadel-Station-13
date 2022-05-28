@@ -55,10 +55,6 @@
 /datum/config_entry/flag/log_attack
 	config_entry_value = TRUE
 
-/// log attack messages
-/datum/config_entry/flag/log_victim
-	config_entry_value = TRUE
-
 /// log emotes
 /datum/config_entry/flag/log_emote
 	config_entry_value = TRUE
