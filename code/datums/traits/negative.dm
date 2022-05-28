@@ -25,6 +25,7 @@
 	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
 	medical_record_text = "Patient has a severe mood disorder, causing them to experience acute episodes of depression."
 	mood_quirk = TRUE
+	processing_quirk = TRUE
 
 /datum/quirk/depression/on_process()
 	if(prob(0.05))
@@ -38,6 +39,7 @@
 	medical_record_text = "Patient demonstrates an unnatural attachment to a family heirloom."
 	var/obj/item/heirloom
 	var/where
+	processing_quirk = TRUE
 
 GLOBAL_LIST_EMPTY(family_heirlooms)
 
@@ -102,6 +104,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	gain_text = "<span class='danger'>You feel smooth.</span>"
 	lose_text = "<span class='notice'>You feel wrinkled again.</span>"
 	medical_record_text = "Patient has a tumor in their brain that is slowly driving them to brain death."
+	processing_quirk = TRUE
 
 /datum/quirk/brainproblems/on_process()
 	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
@@ -128,6 +131,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctually act careful, and constantly feel a sense of dread."
 	value = -1
 	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
+	processing_quirk = TRUE
 
 /datum/quirk/nyctophobia/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -156,6 +160,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	gain_text = "<span class='danger'>Bright lights seem irritating.</span>"
 	lose_text = "<span class='notice'>Enlightening.</span>"
 	medical_record_text = "Despite my warnings, the patient refuses turn on the lights, only to end up rolling down a full flight of stairs and into the cellar."
+	processing_quirk = TRUE
 
 /datum/quirk/lightless/on_process()
 	var/turf/T = get_turf(quirk_holder)
@@ -236,6 +241,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	gain_text = "<span class='userdanger'>...</span>"
 	lose_text = "<span class='notice'>You feel in tune with the world again.</span>"
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
+	processing_quirk = TRUE
 
 /datum/quirk/insanity/on_process()
 	if(quirk_holder.reagents.has_reagent(/datum/reagent/toxin/mindbreaker))
@@ -261,6 +267,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	lose_text = "<span class='notice'>You feel easier about talking again.</span>" //if only it were that easy!
 	medical_record_text = "Patient is usually anxious in social encounters and prefers to avoid them."
 	var/dumb_thing = TRUE
+	processing_quirk = TRUE
 
 /datum/quirk/social_anxiety/add()
 	RegisterSignal(quirk_holder, COMSIG_MOB_EYECONTACT, .proc/eye_contact)

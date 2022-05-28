@@ -72,6 +72,7 @@
 	mob_trait = TRAIT_JOLLY
 	mood_quirk = TRUE
 	medical_record_text = "Patient demonstrates constant euthymia irregular for environment. It's a bit much, to be honest."
+	processing_quirk = TRUE
 
 /datum/quirk/jolly/on_process()
 	if(prob(0.05))
