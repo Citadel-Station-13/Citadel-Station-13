@@ -162,7 +162,7 @@
 	animate(filter, radius = 32, time = 15, size = 0, loop = -1)
 
 /datum/status_effect/grouped/stasis/proc/InterruptBiologicalLife()
-	return COMPONENT_INTERRUPT_LIFE_BIOLOGICAL 
+	return COMPONENT_INTERRUPT_LIFE_BIOLOGICAL
 
 /datum/status_effect/grouped/stasis/tick()
 	update_time_of_death()
@@ -1058,7 +1058,7 @@
 	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
 	// The brain trauma itself does its own set of logging, but this is the only place the source of the hypnosis phrase can be found.
 	hearing_speaker.log_message("has hypnotised [key_name(C)] with the phrase '[hypnomsg]'", LOG_ATTACK)
-	C.log_message("has been hypnotised by the phrase '[hypnomsg]' spoken by [key_name(hearing_speaker)]", LOG_VICTIM, log_globally = FALSE)
+	C.log_message("has been hypnotised by the phrase '[hypnomsg]' spoken by [key_name(hearing_speaker)]", LOG_VICTIM)
 	addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hypnomsg), 10)
 	addtimer(CALLBACK(C, /mob/living.proc/Stun, 60, TRUE, TRUE), 15) //Take some time to think about it
 	qdel(src)

@@ -80,12 +80,12 @@
 
 /obj/machinery/power/rad_collector/interact(mob/user)
 	if(anchored)
-		if(!src.locked)
+		if(!locked)
 			toggle_power()
-			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
-			"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>")
-			var/fuel = loaded_tank.air_contents.get_moles(GAS_PLASMA)
-			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [key_name(user)]. [loaded_tank?"Fuel: [round(fuel/0.29)]%":"<font color='red'>It is empty</font>"].", INVESTIGATE_SINGULO)
+			user.visible_message("<span class='notice'>[user] turns \the [src] [active ? "on":"off"].</span>", \
+			"<span class='notice'>You turn \the [src] [active ? "on":"off"].</span>")
+			var/fuel = loaded_tank?.air_contents.get_moles(GAS_PLASMA)
+			investigate_log("turned [active ? "<font color='green'>on</font>":"<font color='red'>off</font>"] by [key_name(user)]. [loaded_tank ? "Fuel: [round(fuel/0.29)]%":"<font color='red'>It is empty</font>"].", INVESTIGATE_SINGULO)
 			return
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")

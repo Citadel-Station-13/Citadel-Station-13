@@ -102,7 +102,7 @@
 
 	var/log = "[key_name(source)] is having [equipping] put on them by [key_name(user)]"
 	user.log_message(log, LOG_ATTACK, color="red")
-	source.log_message(log, LOG_VICTIM, color="red", log_globally=FALSE)
+	source.log_message(log, LOG_VICTIM, color="red")
 
 	return TRUE
 
@@ -144,7 +144,7 @@
 
 	to_chat(user, span_danger("You try to remove [source]'s [item]..."))
 	user.log_message("[key_name(source)] is being stripped of [item] by [key_name(user)]", LOG_ATTACK, color="red")
-	source.log_message("[key_name(source)] is being stripped of [item] by [key_name(user)]", LOG_VICTIM, color="red", log_globally=FALSE)
+	source.log_message("[key_name(source)] is being stripped of [item] by [key_name(user)]", LOG_VICTIM, color="red")
 	item.add_fingerprint(source)
 
 	if(ishuman(source))
@@ -295,7 +295,7 @@
 		return FALSE
 
 	user.log_message("[key_name(source)] has been stripped of [item] by [key_name(user)]", LOG_ATTACK, color="red")
-	source.log_message("[key_name(source)] has been stripped of [item] by [key_name(user)]", LOG_VICTIM, color="red", log_globally=FALSE)
+	source.log_message("[key_name(source)] has been stripped of [item] by [key_name(user)]", LOG_VICTIM, color="red")
 
 	// Updates speed in case stripped speed affecting item
 	source.update_equipment_speed_mods()
