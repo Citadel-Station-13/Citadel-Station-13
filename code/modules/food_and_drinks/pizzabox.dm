@@ -311,7 +311,7 @@
 		/obj/item/reagent_containers/food/snacks/pizza/donkpocket = 0.3,
 		/obj/item/reagent_containers/food/snacks/pizza/dank = 0.1) //pizzas here are weighted by chance to be someone's favorite
 	var/static/list/pizza_preferences
-	var/next_pizza_attunement
+	COOLDOWN_DECLARE(next_pizza_attunement)
 
 /obj/item/pizzabox/infinite/Initialize(mapload)
 	. = ..()
@@ -324,7 +324,7 @@
 		. += "<span class='deadsay'>This pizza box is anomalous, and will produce infinite pizza.</span>"
 
 /obj/item/pizzabox/infinite/attack_self(mob/living/user)
-	if(world.time > next_pizza_attunement)
+	if(COOLDOWN_FINISHED(src, next_pizza_attunement))
 		QDEL_NULL(pizza)
 		if(ishuman(user))
 			attune_pizza(user)
@@ -334,7 +334,7 @@
 	var/had_pizza = (pizza ? TRUE : FALSE)
 	. = ..()
 	if(had_pizza && !pizza)
-		next_pizza_attunement = world.time + (10 SECONDS) //This is balanced specifically so that it takes several hours to generate enough pizzas to use for lag methods that on item duping
+		COOLDOWN_START(src, next_pizza_attunement, (10 SECONDS)) //This is balanced specifically so that it takes several hours to generate enough pizzas to use for lag methods that on item duping
 
 /obj/item/pizzabox/infinite/proc/attune_pizza(mob/living/carbon/human/noms) //tonight on "proc names I never thought I'd type"
 	if(!pizza_preferences[noms.ckey])
