@@ -131,27 +131,38 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctually act careful, and constantly feel a sense of dread."
 	value = -1
 	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
-	processing_quirk = TRUE
 
-/datum/quirk/nyctophobia/on_process()
-	var/mob/living/carbon/human/H = quirk_holder
-	if(H.dna.species.id in list("shadow", "nightmare"))
-		return //we're tied with the dark, so we don't get scared of it; don't cleanse outright to avoid cheese
-	var/turf/T = get_turf(quirk_holder)
-	var/lums = T.get_lumcount()
-	if(lums <= 0.2)
-		if(quirk_holder.m_intent == MOVE_INTENT_RUN)
-			addtimer(CALLBACK(src, .proc/recheck),2) //0.2 seconds of being in the dark
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "nyctophobia", /datum/mood_event/nyctophobia)
-	else
+	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, .proc/on_holder_moved)
+
+/datum/quirk/nyctophobia/remove()
+	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
+	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
+
+/// Called when the quirk holder moves. Updates the quirk holder's mood.
+/datum/quirk/nyctophobia/proc/on_holder_moved(mob/living/source, atom/old_loc, dir, forced)
+	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
+		return
+
+	var/mob/living/carbon/human/human_holder = quirk_holder
+
+	if(human_holder.dna?.species.id in list(SPECIES_SHADOW, SPECIES_NIGHTMARE))
+		return
+
+	if((human_holder.sight & SEE_TURFS) == SEE_TURFS)
+		return
+
+	var/turf/holder_turf = get_turf(quirk_holder)
+
+	var/lums = holder_turf.get_lumcount()
+
+	if(lums > 0.2)
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
+		return
 
-/datum/quirk/nyctophobia/proc/recheck()
-	var/turf/T = get_turf(quirk_holder)
-	var/lums = T.get_lumcount()
-	if(lums <= 0.2) //check again, did they remain in the dark for 0.2 seconds?
-		to_chat(quirk_holder, "<span class='warning'>Easy, easy, take it slow... you're in the dark...</span>")
+	if(quirk_holder.m_intent == MOVE_INTENT_RUN)
+		to_chat(quirk_holder, span_warning("Easy, easy, take it slow... you're in the dark..."))
 		quirk_holder.toggle_move_intent()
+	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "nyctophobia", /datum/mood_event/nyctophobia)
 
 /datum/quirk/lightless
 	name = "Light Sensitivity"
@@ -160,7 +171,36 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	gain_text = "<span class='danger'>Bright lights seem irritating.</span>"
 	lose_text = "<span class='notice'>Enlightening.</span>"
 	medical_record_text = "Despite my warnings, the patient refuses turn on the lights, only to end up rolling down a full flight of stairs and into the cellar."
-	processing_quirk = TRUE
+
+/datum/quirk/lightless/add()
+	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, .proc/on_holder_moved)
+
+/datum/quirk/lightless/remove()
+	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
+	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "brightlight")
+
+/datum/quirk/lightless/proc/on_holder_moved(mob/living/source, atom/old_loc, dir, forced)
+	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
+		return
+
+	var/mob/living/carbon/human/human_holder = quirk_holder
+
+	if(human_holder.dna?.species.id in list(SPECIES_SHADOW, SPECIES_NIGHTMARE))
+		return
+
+	if((human_holder.sight & SEE_TURFS) == SEE_TURFS)
+		return
+
+	var/turf/holder_turf = get_turf(quirk_holder)
+
+	var/lums = holder_turf.get_lumcount()
+
+	if(lums < 0.8)
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "brightlight")
+		return
+
+	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "brightlight", /datum/mood_event/brightlight)
+
 
 /datum/quirk/lightless/on_process()
 	var/turf/T = get_turf(quirk_holder)
