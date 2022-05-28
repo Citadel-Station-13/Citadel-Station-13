@@ -334,7 +334,7 @@
 	var/had_pizza = (pizza ? TRUE : FALSE)
 	. = ..()
 	if(had_pizza && !pizza)
-		COOLDOWN_START(src, next_pizza_attunement, (10 SECONDS)) //This is balanced specifically so that it takes several hours to generate enough pizzas to use for lag methods that on item duping
+		COOLDOWN_START(src, next_pizza_attunement, (3 SECONDS))
 
 /obj/item/pizzabox/infinite/proc/attune_pizza(mob/living/carbon/human/noms) //tonight on "proc names I never thought I'd type"
 	if(!pizza_preferences[noms.ckey])
