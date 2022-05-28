@@ -135,10 +135,6 @@
 	///Used in MouseDrag to preserve the last mouse-entered object.
 	var/mouseObject = null
 	var/mouseControlObject = null
-	//Middle-mouse-button click dragtime control for aimbot exploit detection.
-	var/middragtime = 0
-	//Middle-mouse-button clicked object control for aimbot exploit detection.
-	var/atom/middragatom
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
