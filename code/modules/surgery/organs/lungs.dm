@@ -76,6 +76,8 @@
 	var/heat_level_3_damage = HEAT_GAS_DAMAGE_LEVEL_3
 	var/heat_damage_type = BURN
 
+	var/smell_sensitivity = 1
+
 	var/crit_stabilizing_reagent = /datum/reagent/medicine/epinephrine
 
 /obj/item/organ/lungs/New()
@@ -245,12 +247,16 @@
 		else if(alert_category)
 			H.clear_alert(alert_category)
 	var/list/breath_reagents = GLOB.gas_data.breath_reagents
+	var/static/datum/reagents/reagents_holder = new
+	reagents_holder.clear_reagents()
+	reagents_holder.chem_temp = breath.return_temperature()
 	for(var/gas in breath.get_gases())
 		if(gas in breath_reagents)
 			var/datum/reagent/R = breath_reagents[gas]
-			H.reagents.add_reagent(R, breath.get_moles(gas) * initial(R.molarity))
+			reagents_holder.add_reagent(R, breath.get_moles(gas) * initial(R.molarity))
 			mole_adjustments[gas] = (gas in mole_adjustments) ? mole_adjustments[gas] - breath.get_moles(gas) : -breath.get_moles(gas)
-
+	reagents_holder.reaction(H, VAPOR, from_gas = 1)
+	H.smell(breath)
 	for(var/gas in mole_adjustments)
 		breath.adjust_moles(gas, mole_adjustments[gas])
 
@@ -440,7 +446,7 @@
 			owner.adjust_bodytemperature(30*TEMPERATURE_DAMAGE_COEFFICIENT)
 		if(50 to INFINITY)
 			owner.adjust_bodytemperature(100*TEMPERATURE_DAMAGE_COEFFICIENT)
-	
+
 /obj/item/organ/lungs/ipc/ui_action_click(mob/user, actiontype)
 	if(!owner)
 		return
@@ -494,7 +500,7 @@
 	if(owner.blood_volume <= next_warn)
 		to_chat(owner, "[owner.blood_volume > BLOOD_VOLUME_BAD ? "<span class='notice'>" : "<span class='warning'>"]Coolant level passed threshold - now [round(owner.blood_volume / BLOOD_VOLUME_NORMAL * 100, 0.1)] percent.</span>")
 		next_warn -= (BLOOD_VOLUME_NORMAL * 0.1)
-			
+
 /obj/item/organ/lungs/plasmaman
 	name = "plasma filter"
 	desc = "A spongy rib-shaped mass for filtering plasma from the air."
@@ -523,6 +529,7 @@
 	safe_breath_min = 13
 	safe_breath_max = 100
 	emp_vulnerability = 2
+	smell_sensitivity = 1.5
 
 /obj/item/organ/lungs/cybernetic/tier3
 	name = "upgraded cybernetic lungs"
@@ -540,6 +547,7 @@
 	SA_sleep_min = 50
 	BZ_brain_damage_min = 30
 	emp_vulnerability = 3
+	smell_sensitivity = 2
 
 	cold_level_1_threshold = 200
 	cold_level_2_threshold = 140
@@ -574,6 +582,8 @@
 	// humans usually breathe 21 but require 16/17, so 80% - 1, which is more lenient but it's fine
 	#define SAFE_THRESHOLD_RATIO 0.8
 	var/datum/gas_mixture/breath = SSair.planetary[LAVALAND_DEFAULT_ATMOS] // y'all know
+	if(breath.get_moles(GAS_METHANE) > 0.1)
+		breathing_class = BREATH_METHANE
 	var/pressure = breath.return_pressure()
 	var/total_moles = breath.total_moles()
 	for(var/id in breath.get_gases())

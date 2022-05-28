@@ -17,7 +17,7 @@
 	P.pixel_x = planet_offset_x
 	P.pixel_y = planet_offset_y
 	. += P
-	if(random_layer)
+	if(ispath(random_layer, /atom/movable/screen/parallax_layer))
 		. += new random_layer
 	if(ispath(random_layer, /atom/movable/screen/parallax_layer/space/random/space_gas))
 		var/atom/movable/screen/parallax_layer/space/random/space_gas/SG = locate(random_layer) in objects

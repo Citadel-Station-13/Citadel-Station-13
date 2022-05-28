@@ -160,7 +160,7 @@
 	icon_state = "surgicaldrill_a"
 	hitsound = 'sound/items/welder.ogg'
 
-/obj/item/surgicaldrill/advanced/Initialize()
+/obj/item/surgicaldrill/advanced/Initialize(mapload)
 	. = ..()
 	set_light(1)
 
@@ -214,7 +214,7 @@
 	toolspeed = 1
 	bare_wound_bonus = 20
 
-/obj/item/scalpel/Initialize()
+/obj/item/scalpel/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 80 * toolspeed, 100, 0)
 
@@ -235,7 +235,7 @@
 	light_color = LIGHT_COLOR_GREEN
 	sharpness = SHARP_POINTY
 
-/obj/item/scalpel/advanced/Initialize()
+/obj/item/scalpel/advanced/Initialize(mapload)
 	. = ..()
 	set_light(1)
 
@@ -311,7 +311,7 @@
 	wound_bonus = 5
 	bare_wound_bonus = 10
 
-/obj/item/circular_saw/Initialize()
+/obj/item/circular_saw/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 40 * toolspeed, 100, 5, 'sound/weapons/circsawhit.ogg') //saws are very accurate and fast at butchering
 

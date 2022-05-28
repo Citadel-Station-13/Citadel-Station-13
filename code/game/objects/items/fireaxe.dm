@@ -15,13 +15,13 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 30)
 	resistance_flags = FIRE_PROOF
 	wound_bonus = -15
 	bare_wound_bonus = 20
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/fireaxe/Initialize()
+/obj/item/fireaxe/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
@@ -52,10 +52,10 @@
 		return
 	if(istype(A, /obj/structure/window)) //destroys windows and grilles in one hit (or more if it has a ton of health like plasmaglass)
 		var/obj/structure/window/W = A
-		W.take_damage(200, BRUTE, "melee", 0)
+		W.take_damage(200, BRUTE, MELEE, 0)
 	else if(istype(A, /obj/structure/grille))
 		var/obj/structure/grille/G = A
-		G.take_damage(40, BRUTE, "melee", 0)
+		G.take_damage(40, BRUTE, MELEE, 0)
 
 /*
  * Bone Axe

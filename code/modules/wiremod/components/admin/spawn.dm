@@ -20,7 +20,7 @@
 	/// The result from the output
 	var/datum/port/output/spawned_atom
 
-/obj/item/circuit_component/spawn_atom/Initialize()
+/obj/item/circuit_component/spawn_atom/Initialize(mapload)
 	. = ..()
 	input_path = add_input_port("Type", PORT_TYPE_ANY)
 	spawn_at = add_input_port("Spawn At", PORT_TYPE_ATOM)

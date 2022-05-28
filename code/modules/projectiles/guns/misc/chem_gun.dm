@@ -21,7 +21,7 @@
 	var/list/allowed_containers = list(/obj/item/reagent_containers/glass/bottle/vial/small, /obj/item/reagent_containers/glass/bottle/vial/large)
 	var/quickload = TRUE
 
-/obj/item/gun/chem/Initialize()
+/obj/item/gun/chem/Initialize(mapload)
 	. = ..()
 	chambered = new /obj/item/ammo_casing/chemgun(src)
 	START_PROCESSING(SSobj, src)
@@ -111,7 +111,7 @@
 	icon_state = "chemgunrepeater"
 	item_state = "syringegun"
 
-obj/item/gun/chem/smart/Initialize()
+obj/item/gun/chem/smart/Initialize(mapload)
 	. = ..()
 	chambered = new /obj/item/ammo_casing/chemgun/smart(src)
 

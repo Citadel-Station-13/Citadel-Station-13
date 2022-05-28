@@ -20,7 +20,7 @@
 	user.visible_message("<span class='suicide'>[user] hooks [user.p_them()]self to the electropack and spams the trigger! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
-/obj/item/electropack/Initialize()
+/obj/item/electropack/Initialize(mapload)
 	. = ..()
 	set_frequency(frequency)
 

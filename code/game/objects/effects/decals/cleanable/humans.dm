@@ -82,7 +82,6 @@
 /obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose
 	name = "blood"
 	icon = 'icons/effects/blood.dmi'
-	icon_state = "ltrails_1"
 	desc = "Your instincts say you shouldn't be following these."
 	random_icon_states = null
 	beauty = -50
@@ -109,7 +108,7 @@
 	if(!fixed_color)
 		add_atom_colour(blood_DNA_to_color(), FIXED_COLOUR_PRIORITY)
 
-/obj/effect/cleanable/trail_holder/Initialize()
+/obj/effect/cleanable/trail_holder/Initialize(mapload)
 	. = ..()
 	update_icon()
 

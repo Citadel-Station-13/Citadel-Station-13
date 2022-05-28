@@ -27,6 +27,11 @@ refactor: refactored some code
 config: changed some config setting
 admin: messed with admin stuff
 server: something server ops should know
+wip: still being worked on
+experiment: experimental
+tgs: has something to do with tgs
+expansion: expands on something
+qol: quality of life content
 /:cl:
 
 <!-- Both :cl:'s are required for the changelog to work! You can put your name to the right of the first :cl: if you want to overwrite your GitHub username as author ingame. -->

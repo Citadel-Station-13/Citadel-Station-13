@@ -92,7 +92,7 @@
 
 	var/list/saved_recipes = list()
 
-/obj/machinery/chem_dispenser/Initialize()
+/obj/machinery/chem_dispenser/Initialize(mapload)
 	. = ..()
 	dispensable_reagents = sortList(dispensable_reagents, /proc/cmp_reagents_asc)
 	if(emagged_reagents)
@@ -534,7 +534,7 @@
 			return "purple"
 
 
-/obj/machinery/chem_dispenser/drinks/Initialize()
+/obj/machinery/chem_dispenser/drinks/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE)
 
@@ -629,7 +629,7 @@
 	obj_flags = CAN_BE_HIT | EMAGGED
 	flags_1 = NODECONSTRUCT_1
 
-/obj/machinery/chem_dispenser/drinks/fullupgrade/Initialize()
+/obj/machinery/chem_dispenser/drinks/fullupgrade/Initialize(mapload)
 	. = ..()
 	dispensable_reagents |= emagged_reagents //adds emagged reagents
 	component_parts = list()
@@ -689,7 +689,7 @@
 	obj_flags = CAN_BE_HIT | EMAGGED
 	flags_1 = NODECONSTRUCT_1
 
-/obj/machinery/chem_dispenser/drinks/beer/fullupgrade/Initialize()
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade/Initialize(mapload)
 	. = ..()
 	dispensable_reagents |= emagged_reagents //adds emagged reagents
 	component_parts = list()
@@ -736,7 +736,7 @@
 	upgrade_reagents2 = null
 	upgrade_reagents3 = null
 
-/obj/machinery/chem_dispenser/mutagensaltpeter/Initialize()
+/obj/machinery/chem_dispenser/mutagensaltpeter/Initialize(mapload)
 	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(null)
@@ -753,7 +753,7 @@
 	obj_flags = CAN_BE_HIT | EMAGGED
 	flags_1 = NODECONSTRUCT_1
 
-/obj/machinery/chem_dispenser/fullupgrade/Initialize()
+/obj/machinery/chem_dispenser/fullupgrade/Initialize(mapload)
 	. = ..()
 	dispensable_reagents |= emagged_reagents //adds emagged reagents
 	component_parts = list()
@@ -818,7 +818,7 @@
 		/datum/reagent/medicine/morphine
 	)
 
-/obj/machinery/chem_dispenser/abductor/Initialize()
+/obj/machinery/chem_dispenser/abductor/Initialize(mapload)
 	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(null)

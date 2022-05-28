@@ -21,7 +21,7 @@
 	always_reskinnable = TRUE
 	cached_icon = "hypovial"
 
-/obj/item/reagent_containers/glass/bottle/vial/Initialize()
+/obj/item/reagent_containers/glass/bottle/vial/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -102,6 +102,11 @@
 	name = "pink hypovial (penis treatment)"
 	icon_state = "hypovial-pink"
 	list_reagents = list(/datum/reagent/fermi/PEsmaller_hypo = 30)
+
+/obj/item/reagent_containers/glass/bottle/vial/small/buttreduction
+	name = "pink hypovial (butt treatment)"
+	icon_state = "hypovial-pink"
+	list_reagents = list(/datum/reagent/fermi/AEsmaller_hypo = 30)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/CMO
 	name = "deluxe hypovial"

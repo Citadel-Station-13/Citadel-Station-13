@@ -24,7 +24,7 @@
 	var/egg_lain = 0
 	gold_core_spawnable = NO_SPAWN //are you sure about this?? // CITADEL CHANGE, Yes.
 
-/mob/living/simple_animal/hostile/headcrab/Initialize()
+/mob/living/simple_animal/hostile/headcrab/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 

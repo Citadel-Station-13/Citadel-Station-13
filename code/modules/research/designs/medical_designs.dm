@@ -958,6 +958,13 @@
 	surgery = /datum/surgery/advanced/brainwashing
 	research_icon_state = "surgery_head"
 
+/datum/design/surgery/robo_brainwashing
+	name = "Reprogramming"
+	desc = "A surgical procedure which hardcodes a directive into the patient's logic subroutines, making it their absolute priority. It can be purged using a mindshield implant."
+	id = "surgery_robot_brainwashing"
+	surgery = /datum/surgery/advanced/robot_brainwashing
+	research_icon_state = "surgery_head"
+
 /datum/design/surgery/nerve_splicing
 	name = "Nerve Splicing"
 	desc = "A surgical procedure which splices the patient's nerves, making them more resistant to stuns."

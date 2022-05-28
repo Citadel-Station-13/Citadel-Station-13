@@ -292,6 +292,8 @@ GLOBAL_LIST_INIT(station_names, world.file2list("strings/station_names.txt" + ""
 
 GLOBAL_LIST_INIT(station_suffixes, world.file2list("strings/station_suffixes.txt"))
 
+GLOBAL_LIST_INIT(server_taglines, world.file2list("[global.config.directory]/server_taglines.txt"))
+
 GLOBAL_LIST_INIT(greek_letters, world.file2list("strings/greek_letters.txt"))
 
 GLOBAL_LIST_INIT(phonetic_alphabet, world.file2list("strings/phonetic_alphabet.txt"))

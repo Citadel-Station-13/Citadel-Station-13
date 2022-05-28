@@ -8,7 +8,7 @@
 	var/mob/living/carbon/human/target
 	var/datum/antagonist/heretic/sac_targetter	//The heretic who used this to acquire the current target - gets cleared when target gets sacrificed.
 
-/obj/item/living_heart/Initialize()
+/obj/item/living_heart/Initialize(mapload)
 	. = ..()
 	GLOB.living_heart_cache.Add(src)	//Add is better than +=.
 
@@ -177,7 +177,7 @@
 	allowed = list(/obj/item/melee/sickly_blade, /obj/item/forbidden_book, /obj/item/living_heart)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	// slightly better than normal cult robes
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50,"energy" = 50, "bomb" = 35, "bio" = 20, "rad" = 0, "fire" = 20, "acid" = 20)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50,ENERGY = 50, BOMB = 35, BIO = 20, RAD = 0, FIRE = 20, ACID = 20)
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/reagent_containers/glass/beaker/eldritch
@@ -193,7 +193,7 @@
 	flags_inv = NONE
 	flags_cover = NONE
 	desc = "Black like tar, doesn't reflect any light. Runic symbols line the outside, with each flash you lose comprehension of what you are seeing."
-	armor = list("melee" = 30, "bullet" = 30, "laser" = 30,"energy" = 30, "bomb" = 15, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	obj_flags = NONE | EXAMINE_SKIP
 
 /obj/item/clothing/suit/hooded/cultrobes/void
@@ -205,7 +205,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/void
 	flags_inv = NONE
 	// slightly worse than normal cult robes
-	armor = list("melee" = 30, "bullet" = 30, "laser" = 30,"energy" = 30, "bomb" = 15, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/void_cloak
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
@@ -310,7 +310,7 @@
 	. += "This item can carve 'Grasping carving' - when stepped on it causes heavy damage to the legs and stuns for 5 seconds."
 	. += "This item can carve 'Mad carving' - when stepped on it causes dizzyness, jiterryness, temporary blindness, confusion , stuttering and slurring."
 
-/obj/item/melee/rune_knife/Initialize()
+/obj/item/melee/rune_knife/Initialize(mapload)
 	. = ..()
 	linked_action = new(src)
 

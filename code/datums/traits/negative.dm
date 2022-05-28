@@ -416,3 +416,12 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	. = ..()
 	var/mob/living/carbon/human/H = quirk_holder
 	H?.cure_trauma_type(/datum/brain_trauma/severe/monophobia, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/no_smell
+	name = "Anosmia"
+	desc = "You can't smell anything! You won't be able to detect certain colorless gases."
+	value = -1
+	mob_trait = TRAIT_ANOSMIA
+	gain_text = "<span class='notice'>You can't smell anything!</span>"
+	lose_text = "<span class='notice'>You can smell again!</span>"
+	medical_record_text = "Patient suffers from anosmia and is incapable of smelling gases or particulates."

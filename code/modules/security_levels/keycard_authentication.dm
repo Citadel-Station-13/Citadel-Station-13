@@ -26,7 +26,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	var/obj/item/card/id/first_id = null
 	var/waiting = 0
 
-/obj/machinery/keycard_auth/Initialize()
+/obj/machinery/keycard_auth/Initialize(mapload)
 	. = ..()
 	ev = GLOB.keycard_events.addEvent("triggerEvent", CALLBACK(src, .proc/triggerEvent))
 

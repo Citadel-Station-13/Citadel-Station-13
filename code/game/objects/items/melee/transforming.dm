@@ -15,7 +15,7 @@
 	var/clumsy_check = TRUE
 	var/total_mass_on //Total mass in ounces when transformed. Primarily for balance purposes. Don't think about it too hard.
 
-/obj/item/melee/transforming/Initialize()
+/obj/item/melee/transforming/Initialize(mapload)
 	. = ..()
 	if(active)
 		if(attack_verb_on.len)

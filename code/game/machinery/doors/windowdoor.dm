@@ -9,9 +9,10 @@
 	var/base_state = "left"
 	max_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ max_integrity at the bottom of this .dm file
 	integrity_failure = 0
-	armor = list("melee" = 20, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 70, "acid" = 100)
+	armor = list(MELEE = 20, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 100, RAD = 100, FIRE = 70, ACID = 100)
 	visible = FALSE
 	flags_1 = ON_BORDER_1|DEFAULT_RICOCHET_1
+	pass_flags_self = PASSGLASS
 	opacity = 0
 	CanAtmosPass = ATMOS_PASS_PROC
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
@@ -77,11 +78,13 @@
 		return
 	if (!( ismob(AM) ))
 		if(ismecha(AM))
-			var/obj/mecha/mecha = AM
-			if(mecha.occupant && src.allowed(mecha.occupant))
-				open_and_close()
-			else
-				do_animate("deny")
+			var/obj/vehicle/sealed/mecha/mecha = AM
+			for(var/O in mecha.occupants)
+				var/mob/living/occupant = O
+				if(allowed(occupant))
+					open_and_close()
+					return
+			do_animate("deny")
 		return
 	if (!( SSticker ))
 		return
@@ -103,11 +106,12 @@
 		do_animate("deny")
 	return
 
-/obj/machinery/door/window/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+/obj/machinery/door/window/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(.)
+		return
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
-		return !density
+		return
 	if(istype(mover, /obj/structure/window))
 		var/obj/structure/window/W = mover
 		if(!valid_window_location(loc, W.ini_dir))
@@ -119,7 +123,7 @@
 	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
 		return FALSE
 	else
-		return 1
+		return TRUE
 
 /obj/machinery/door/window/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)
@@ -131,13 +135,12 @@
 /obj/machinery/door/window/CanAStarPass(obj/item/card/id/ID, to_dir)
 	return !density || (dir != to_dir) || (check_access(ID) && hasPower())
 
-/obj/machinery/door/window/CheckExit(atom/movable/mover as mob|obj, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+/obj/machinery/door/window/CheckExit(atom/movable/mover, turf/target)
+	if((pass_flags_self & mover.pass_flags) || ((pass_flags_self & LETPASSTHROW) && mover.throwing))
+		return TRUE
 	if(get_dir(loc, target) == dir)
 		return !density
-	else
-		return 1
+	return TRUE
 
 /obj/machinery/door/window/open(forced=0)
 	if (src.operating == 1) //doors can still open when emag-disabled

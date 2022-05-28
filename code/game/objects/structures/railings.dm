@@ -18,7 +18,7 @@
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
 
-/obj/structure/railing/Initialize()
+/obj/structure/railing/Initialize(mapload)
 	. = ..()
 	ini_dir = dir
 
@@ -78,7 +78,7 @@
 /obj/structure/railing/CheckExit(atom/movable/mover, turf/target)
 	..()
 	if(get_dir(loc, target) & dir)
-		var/checking = UNSTOPPABLE | FLYING | FLOATING
+		var/checking = PHASING | FLYING | FLOATING
 		return !density || mover.throwing || mover.movement_type & checking || mover.move_force >= MOVE_FORCE_EXTREMELY_STRONG
 	return TRUE
 

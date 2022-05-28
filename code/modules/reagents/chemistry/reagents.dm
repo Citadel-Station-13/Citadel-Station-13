@@ -199,6 +199,10 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		M.reagents.add_reagent(impure_chem, impureVol, FALSE, other_purity = 1-cached_purity)
 		log_reagent("MOB ADD: on_merge() (mixed purity): merged [volume - impureVol] of [type] and [volume] of [impure_chem]")
 
+//Ran by a reagent holder on a specific reagent after copying its data.
+/datum/reagent/proc/post_copy_data()
+	return
+
 /datum/reagent/proc/on_update(atom/A)
 	return
 
@@ -269,6 +273,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	G.color = color
 	G.breath_reagent = src.type
 	G.group = GAS_GROUP_CHEMICALS
+	G.moles_visible = MOLES_GAS_VISIBLE
 	return G
 
 /datum/reagent/proc/create_gas()

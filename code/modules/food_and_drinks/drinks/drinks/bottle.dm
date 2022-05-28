@@ -31,7 +31,7 @@
 	var/obj/item/bodypart/affecting = user.zone_selected //Find what the player is aiming at
 
 	var/headarmor = 0 // Target's head armor
-	var/armor_block = min(90, target.run_armor_check(affecting, "melee", null, null,armour_penetration)) // For normal attack damage
+	var/armor_block = min(90, target.run_armor_check(affecting, MELEE, null, null,armour_penetration)) // For normal attack damage
 
 	//If they have a hat/helmet and the user is targeting their head.
 	if(affecting == BODY_ZONE_HEAD)
@@ -89,7 +89,7 @@
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
 	sharpness = SHARP_EDGED
 
-/obj/item/broken_bottle/Initialize()
+/obj/item/broken_bottle/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 200, 55)
 
@@ -243,7 +243,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/absinthe/empty
 	list_reagents = null
 
-/obj/item/reagent_containers/food/drinks/bottle/absinthe/Initialize()
+/obj/item/reagent_containers/food/drinks/bottle/absinthe/Initialize(mapload)
 	. = ..()
 	redact()
 
@@ -332,7 +332,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/sake/empty
 	list_reagents = null
 
-/obj/item/reagent_containers/food/drinks/bottle/sake/Initialize()
+/obj/item/reagent_containers/food/drinks/bottle/sake/Initialize(mapload)
 	. = ..()
 	if(prob(10))
 		name = "Fluffy Tail Sake"
@@ -509,7 +509,7 @@
 	..()
 	add_overlay("[initial(icon_state)]shine")
 
-/obj/item/reagent_containers/food/drinks/bottle/blank/Initialize()
+/obj/item/reagent_containers/food/drinks/bottle/blank/Initialize(mapload)
 	. = ..()
 	update_icon()
 

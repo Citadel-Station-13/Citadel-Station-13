@@ -349,7 +349,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /// Simply checks if the other person is still in range
 /atom/movable/screen/alert/give/proc/check_in_range(atom/taker)
 	SIGNAL_HANDLER
-	
+
 	if(!offerer.CanReach(taker))
 		to_chat(owner, span_warning("You moved out of range of [offerer]!"))
 		owner.clear_alert("[offerer]")
@@ -455,7 +455,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/angle = 0
 	var/mob/living/simple_animal/hostile/construct/Cviewer = null
 
-/atom/movable/screen/alert/bloodsense/Initialize()
+/atom/movable/screen/alert/bloodsense/Initialize(mapload)
 	. = ..()
 	narnar = new('icons/mob/screen_alert.dmi', "mini_nar")
 	START_PROCESSING(SSprocessing, src)
@@ -820,7 +820,7 @@ so as to remain in compliance with the most up-to-date laws."
 		return FALSE
 	if(master && click_master)
 		return usr.client.Click(master, location, control, params)
-	
+
 	return TRUE
 
 /atom/movable/screen/alert/Destroy()

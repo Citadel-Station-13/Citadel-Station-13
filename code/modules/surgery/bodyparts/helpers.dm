@@ -124,19 +124,25 @@
 /mob/living/carbon/alien/larva/get_leg_ignore()
 	return TRUE
 
-/mob/living/proc/get_missing_limbs()
+/mob/living/proc/get_missing_limbs(exclude_head = FALSE)
 	return list()
 
-/mob/living/carbon/get_missing_limbs()
+/mob/living/carbon/get_missing_limbs(exclude_head = FALSE)
 	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 	for(var/zone in full)
+		if(exclude_head && zone == BODY_ZONE_HEAD) //this is needed in case we don't care for the lack of a dullahan's head or something.
+			full -= zone
+			continue
 		if(get_bodypart(zone))
 			full -= zone
 	return full
 
-/mob/living/carbon/alien/larva/get_missing_limbs()
+/mob/living/carbon/alien/larva/get_missing_limbs(exclude_head = FALSE)
 	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST)
 	for(var/zone in full)
+		if(exclude_head && zone == BODY_ZONE_HEAD) //I guess????
+			full -= zone
+			continue
 		if(get_bodypart(zone))
 			full -= zone
 	return full

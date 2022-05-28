@@ -12,7 +12,7 @@
 /obj/item/clothing/glasses/changeling
 	name = "flesh"
 
-/obj/item/clothing/glasses/changeling/Initialize()
+/obj/item/clothing/glasses/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
@@ -27,7 +27,7 @@
 /obj/item/clothing/under/changeling
 	name = "flesh"
 
-/obj/item/clothing/under/changeling/Initialize()
+/obj/item/clothing/under/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
@@ -43,7 +43,7 @@
 	name = "flesh"
 	allowed = list(/obj/item/changeling)
 
-/obj/item/clothing/suit/changeling/Initialize()
+/obj/item/clothing/suit/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
@@ -58,7 +58,7 @@
 /obj/item/clothing/head/changeling
 	name = "flesh"
 
-/obj/item/clothing/head/changeling/Initialize()
+/obj/item/clothing/head/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
@@ -72,7 +72,7 @@
 /obj/item/clothing/shoes/changeling
 	name = "flesh"
 
-/obj/item/clothing/shoes/changeling/Initialize()
+/obj/item/clothing/shoes/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
@@ -87,7 +87,7 @@
 /obj/item/clothing/gloves/changeling
 	name = "flesh"
 
-/obj/item/clothing/gloves/changeling/Initialize()
+/obj/item/clothing/gloves/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
@@ -102,7 +102,7 @@
 /obj/item/clothing/mask/changeling
 	name = "flesh"
 
-/obj/item/clothing/mask/changeling/Initialize()
+/obj/item/clothing/mask/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
@@ -119,7 +119,7 @@
 	slot_flags = ALL
 	allowed = list(/obj/item/changeling)
 
-/obj/item/changeling/Initialize()
+/obj/item/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 

@@ -71,7 +71,7 @@
 	update_appearance()
 	return TRUE
 
-/obj/item/dildo/Initialize()
+/obj/item/dildo/Initialize(mapload)
 	. = ..()
 	if(random_color == TRUE)
 		var/randcolor = pick(GLOB.dildo_colors)

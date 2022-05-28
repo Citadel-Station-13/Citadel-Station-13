@@ -14,6 +14,7 @@
 		//there should be bone fixing
 		/datum/surgery_step/close
 		)
+
 /datum/surgery/organ_manipulation/soft
 	possible_locs = list(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 	steps = list(
@@ -24,6 +25,7 @@
 		/datum/surgery_step/manipulate_organs,
 		/datum/surgery_step/close
 		)
+
 /datum/surgery/organ_manipulation/alien
 	name = "Alien organ manipulation"
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
@@ -36,6 +38,7 @@
 		/datum/surgery_step/manipulate_organs,
 		/datum/surgery_step/close
 		)
+
 /datum/surgery/organ_manipulation/mechanic
 	name = "Prosthesis organ manipulation"
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
@@ -49,6 +52,7 @@
 		/datum/surgery_step/mechanic_wrench,
 		/datum/surgery_step/mechanic_close
 		)
+
 /datum/surgery/organ_manipulation/mechanic/soft
 	possible_locs = list(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 	steps = list(
@@ -58,20 +62,27 @@
 		/datum/surgery_step/manipulate_organs,
 		/datum/surgery_step/mechanic_close
 		)
+
 /datum/surgery_step/manipulate_organs
 	time = 64
 	name = "manipulate organs"
 	repeatable = 1
 	implements = list(/obj/item/organ = 100, /obj/item/organ_storage = 100)
+	preop_sound = 'sound/surgery/organ2.ogg'
+	success_sound = 'sound/surgery/organ1.ogg'
 	var/implements_extract = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 55)
 	var/current_type
 	var/obj/item/organ/I = null
+
 /datum/surgery_step/manipulate_organs/New()
 	..()
 	implements = implements + implements_extract
+
 /datum/surgery_step/manipulate_organs/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	I = null
 	if(istype(tool, /obj/item/organ_storage))
+		preop_sound = initial(preop_sound)
+		success_sound = initial(success_sound)
 		if(!tool.contents.len)
 			to_chat(user, "<span class='notice'>There is nothing inside [tool]!</span>")
 			return -1
@@ -82,6 +93,8 @@
 		tool = I
 	if(isorgan(tool))
 		current_type = "insert"
+		preop_sound = 'sound/surgery/hemostat1.ogg'
+		success_sound = 'sound/surgery/organ2.ogg'
 		I = tool
 		if(target_zone != I.zone || target.getorganslot(I.slot))
 			to_chat(user, "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")

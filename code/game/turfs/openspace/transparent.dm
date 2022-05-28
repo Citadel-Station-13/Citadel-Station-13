@@ -2,7 +2,7 @@
 	baseturfs = /turf/open/transparent/openspace
 	intact = FALSE //this means wires go on top
 
-/turf/open/transparent/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
+/turf/open/transparent/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
 	plane = OPENSPACE_PLANE
 	layer = OPENSPACE_LAYER
@@ -59,7 +59,7 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
-/turf/open/transparent/glass/Initialize()
+/turf/open/transparent/glass/Initialize(mapload)
 	icon_state = "" //Prevent the normal icon from appearing behind the smooth overlays
 	..()
 	return INITIALIZE_HINT_LATELOAD

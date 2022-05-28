@@ -29,7 +29,7 @@
 	visor_flags_cover = MASKCOVERSMOUTH
 	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.01
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 25, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 25, RAD = 0, FIRE = 0, ACID = 0)
 	actions_types = list(/datum/action/item_action/adjust)
 	mutantrace_variation = STYLE_MUZZLE
 
@@ -41,7 +41,7 @@
 	visor_flags_inv = null
 	visor_flags_cover = null
 	permeability_coefficient = 1
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/mask/surgical/attack_self(mob/user)
 	adjustmask(user)
@@ -133,7 +133,7 @@
 	flags_inv = HIDEFACIALHAIR
 	clothing_flags = NONE
 
-/obj/item/clothing/mask/pig/cursed/Initialize()
+/obj/item/clothing/mask/pig/cursed/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
 	playsound(get_turf(src), 'sound/magic/pighead_curse.ogg', 50, 1)
@@ -159,7 +159,7 @@
 /obj/item/clothing/mask/frog/cursed
 	clothing_flags = NONE
 
-/obj/item/clothing/mask/frog/cursed/Initialize()
+/obj/item/clothing/mask/frog/cursed/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
 
@@ -190,7 +190,7 @@
 	flags_inv = HIDEFACIALHAIR
 	clothing_flags = NONE
 
-/obj/item/clothing/mask/cowmask/cursed/Initialize()
+/obj/item/clothing/mask/cowmask/cursed/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
 	playsound(get_turf(src), 'sound/magic/cowhead_curse.ogg', 50, 1)
@@ -215,7 +215,7 @@
 	clothing_flags = NONE
 	flags_inv = HIDEFACIALHAIR
 
-/obj/item/clothing/mask/horsehead/cursed/Initialize()
+/obj/item/clothing/mask/horsehead/cursed/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
 	playsound(get_turf(src), 'sound/magic/horsehead_curse.ogg', 50, 1)

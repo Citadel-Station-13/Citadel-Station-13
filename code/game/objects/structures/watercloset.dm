@@ -16,7 +16,7 @@
 	attack_hand_speed = CLICK_CD_MELEE
 	attack_hand_is_action = TRUE
 
-/obj/structure/toilet/Initialize()
+/obj/structure/toilet/Initialize(mapload)
 	. = ..()
 	open = round(rand(0, 1))
 	update_icon()
@@ -138,7 +138,7 @@
 /obj/structure/toilet/secret
 	var/secret_type = null
 
-/obj/structure/toilet/secret/Initialize()
+/obj/structure/toilet/secret/Initialize(mapload)
 	. = ..()
 	if (secret_type)
 		new secret_type(src)
@@ -255,7 +255,7 @@
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/datum/looping_sound/showering/soundloop
 
-/obj/machinery/shower/Initialize()
+/obj/machinery/shower/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, FALSE)
 

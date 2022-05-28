@@ -402,11 +402,11 @@
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700,50,1)
 		// deals damage to mechs
-		for(var/obj/mecha/M in T.contents)
+		for(var/obj/vehicle/sealed/mecha/M in T.contents)
 			if(M in hit_list)
 				continue
 			hit_list += M
-			M.take_damage(45, BURN, "melee", 1)
+			M.take_damage(45, BURN, MELEE, 1)
 		sleep(1.5)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/eldritch
@@ -702,7 +702,7 @@
 	duration = 1 MINUTES
 	layer = LOW_SIGIL_LAYER
 
-/obj/effect/temp_visual/glowing_rune/Initialize()
+/obj/effect/temp_visual/glowing_rune/Initialize(mapload)
 	. = ..()
 	pixel_y = rand(-6,6)
 	pixel_x = rand(-6,6)

@@ -1483,6 +1483,7 @@
 	description = "A caustic substance commonly used in fertilizer or household cleaners."
 	reagent_state = GAS
 	gas = GAS_AMMONIA
+	boiling_point = 239.81
 	color = "#404030" // rgb: 64, 64, 48
 	taste_description = "mordant"
 	pH = 11.6
@@ -1495,6 +1496,13 @@
 		if(myseed && prob(10))
 			myseed.adjust_yield(1)
 			myseed.adjust_instability(1)
+
+/datum/reagent/ammonia/reaction_mob(mob/living/M, method=TOUCH, reac_volume, touch_protection)
+	if(method == VAPOR)
+		M.adjustOrganLoss(ORGAN_SLOT_LUNGS, ((100-touch_protection)/100)*reac_volume*REAGENTS_EFFECT_MULTIPLIER * 0.25)
+		if(prob(reac_volume))
+			to_chat(M, "<span class='danger'>Your lungs hurt!</span>")
+	return ..()
 
 /datum/reagent/diethylamine
 	name = "Diethylamine"
@@ -1805,6 +1813,10 @@
 	gas = GAS_BROMINE
 	boiling_point = 332
 	pH = 7.8
+
+/datum/reagent/bromine/on_mob_life(mob/living/carbon/C)
+	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2, 99)
+	..()
 
 /datum/reagent/phenol
 	name = "Phenol"

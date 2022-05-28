@@ -17,7 +17,7 @@
 	var/is_stable = FALSE
 	var/busy = FALSE //If someone is already working on closing the gateway, only needed for stable gateways but in the parent to not need typecasting
 
-/obj/effect/clockwork/spatial_gateway/Initialize()
+/obj/effect/clockwork/spatial_gateway/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/check_setup), 1)
 

@@ -64,6 +64,10 @@
 	icon_state = "single"
 	name = "Single" //Single as "single pair", for clarity.
 
+/datum/sprite_accessory/testicles/hidden
+	icon_state = "hidden"
+	name = "Hidden" //not sure why these were missing, but I'm pretty certain people might want these.
+
 //Vaginas
 /datum/sprite_accessory/vagina
 	icon = 'icons/obj/genitals/vagina_onmob.dmi'
@@ -119,3 +123,15 @@
 /datum/sprite_accessory/breasts/sextuple
 	icon_state = "sextuple"
 	name = "Sextuple"
+
+//BUTT BE HERE
+/datum/sprite_accessory/butt
+	icon = 'icons/obj/genitals/butt_onmob.dmi'
+	icon_state = "butt"
+	name = "butt"
+	color_src = "butt_color"
+
+//there literally shouldn't be any other ass types besides one because that'd be weird, this is just here to keep things consistent for the genital system.
+/datum/sprite_accessory/butt/pair
+	icon_state = "pair"
+	name = "Pair"

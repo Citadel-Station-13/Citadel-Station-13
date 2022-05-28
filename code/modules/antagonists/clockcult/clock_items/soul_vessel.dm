@@ -25,7 +25,7 @@
 	force_replace_ai_name = TRUE
 	overrides_aicore_laws = TRUE
 
-/obj/item/mmi/posibrain/soul_vessel/Initialize()
+/obj/item/mmi/posibrain/soul_vessel/Initialize(mapload)
 	. = ..()
 	radio.on = FALSE
 	laws = new /datum/ai_laws/ratvar()

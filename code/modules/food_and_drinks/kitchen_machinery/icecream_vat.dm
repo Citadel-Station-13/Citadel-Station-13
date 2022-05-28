@@ -80,7 +80,7 @@
 			return "vanilla"
 
 
-/obj/machinery/icecream_vat/Initialize()
+/obj/machinery/icecream_vat/Initialize(mapload)
 	. = ..()
 	while(product_types.len < 9)
 		product_types.Add(5)
@@ -249,7 +249,7 @@
 	bitesize = 4
 	foodtype = DAIRY | SUGAR
 
-/obj/item/reagent_containers/food/snacks/icecream/Initialize()
+/obj/item/reagent_containers/food/snacks/icecream/Initialize(mapload)
 	. = ..()
 	reagents.maximum_volume = 20
 

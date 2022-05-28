@@ -149,7 +149,7 @@
 	bot_reset() //Resets an AI's call, should it exist.
 	update_icon()
 
-/mob/living/simple_animal/bot/Initialize()
+/mob/living/simple_animal/bot/Initialize(mapload)
 	. = ..()
 	GLOB.bots_list += src
 	access_card = new /obj/item/card/id(src)
@@ -285,7 +285,7 @@
 			call_mode()
 			return
 		if(BOT_SUMMON)		//Called by PDA
-			bot_summon()
+			summon_step()
 			return
 	return TRUE //Successful completion. Used to prevent child process() continuing if this one is ended early.
 
@@ -551,7 +551,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/datum/job/captain/All = new/datum/job/captain
 	all_access.access = All.get_access()
 
-	set_path(get_path_to(src, waypoint, /turf/proc/Distance_cardinal, 0, 200, id=all_access))
+	set_path(get_path_to(src, waypoint, 200, id=all_access))
 	calling_ai = caller //Link the AI to the bot!
 	ai_waypoint = waypoint
 
@@ -730,7 +730,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 				access_card.access = user_access + prev_access //Adds the user's access, if any.
 			mode = BOT_SUMMON
 			speak("Responding.", radio_channel)
-			calc_summon_path()
 
 		if("ejectpai")
 			ejectpairemote(user)
@@ -758,19 +757,16 @@ Pass a positive integer as an argument to override a bot's default speed.
 		else
 			to_chat(src, "<span class='warning'>Unidentified control sequence received:[command]</span>")
 
-/mob/living/simple_animal/bot/proc/bot_summon() // summoned to PDA
-	summon_step()
-
 // calculates a path to the current destination
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/proc/calc_path(turf/avoid)
 	check_bot_access()
-	set_path(get_path_to(src, patrol_target, /turf/proc/Distance_cardinal, 0, 120, id=access_card, exclude=avoid))
+	set_path(get_path_to(src, patrol_target, 120, id=access_card, exclude=avoid))
 
 /mob/living/simple_animal/bot/proc/calc_summon_path(turf/avoid)
 	check_bot_access()
 	spawn()
-		set_path(get_path_to(src, summon_target, /turf/proc/Distance_cardinal, 0, 150, id=access_card, exclude=avoid))
+		set_path(get_path_to(src, summon_target, 150, id=access_card, exclude=avoid))
 		if(!path.len) //Cannot reach target. Give up and announce the issue.
 			speak("Summon command failed, destination unreachable.",radio_channel)
 			bot_reset()
@@ -875,7 +871,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	anchored = FALSE
 	var/mob/living/simple_animal/bot/owner = null
 
-/obj/machinery/bot_core/Initialize()
+/obj/machinery/bot_core/Initialize(mapload)
 	. = ..()
 	owner = loc
 	if(!istype(owner))

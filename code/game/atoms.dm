@@ -9,6 +9,9 @@
 	plane = GAME_PLANE
 	appearance_flags = TILE_BOUND
 
+	/// pass_flags that we are. If any of this matches a pass_flag on a moving thing, by default, we let them through.
+	var/pass_flags_self = NONE
+
 	var/level = 2
 	///If non-null, overrides a/an/some in all cases
 	var/article
@@ -267,14 +270,29 @@
 	var/a_incidence_s = abs(incidence_s)
 	if(a_incidence_s > 90 && a_incidence_s < 270)
 		return FALSE
-	if((P.flag in list("bullet", "bomb")) && P.ricochet_incidence_leeway)
+	if((P.flag in list(BULLET, BOMB)) && P.ricochet_incidence_leeway)
 		if((a_incidence_s < 90 && a_incidence_s < 90 - P.ricochet_incidence_leeway) || (a_incidence_s > 270 && a_incidence_s -270 > P.ricochet_incidence_leeway))
-			return
+			return FALSE
 	var/new_angle_s = SIMPLIFY_DEGREES(face_angle + incidence_s)
 	P.setAngle(new_angle_s)
 	return TRUE
 
 /atom/proc/CanPass(atom/movable/mover, turf/target)
+	//SHOULD_CALL_PARENT(TRUE)
+	if(mover.movement_type & PHASING)
+		return TRUE
+	. = CanAllowThrough(mover, target)
+	// This is cheaper than calling the proc every time since most things dont override CanPassThrough
+	if(!mover.generic_canpass)
+		return mover.CanPassThrough(src, target, .)
+
+/// Returns true or false to allow the mover to move through src
+/atom/proc/CanAllowThrough(atom/movable/mover, turf/target)
+	//SHOULD_CALL_PARENT(TRUE)
+	if(mover.pass_flags & pass_flags_self)
+		return TRUE
+	if(mover.throwing && (pass_flags_self & LETPASSTHROW))
+		return TRUE
 	return !density
 
 /**
@@ -445,9 +463,19 @@
 		wires.emp_pulse(severity)
 	return protection // Pass the protection value collected here upwards
 
-/atom/proc/bullet_act(obj/item/projectile/P, def_zone)
+/**
+ * React to a hit by a projectile object
+ *
+ * Default behaviour is to send the [COMSIG_ATOM_BULLET_ACT] and then call [on_hit][/obj/item/projectile/proc/on_hit] on the projectile
+ *
+ * @params
+ * P - projectile
+ * def_zone - zone hit
+ * piercing_hit - is this hit piercing or normal?
+ */
+/atom/proc/bullet_act(obj/item/projectile/P, def_zone, piercing_hit = FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone)
-	. = P.on_hit(src, 0, def_zone)
+	. = P.on_hit(src, 0, def_zone, piercing_hit)
 
 //used on altdisarm() for special interactions between the shoved victim (target) and the src, with user being the one shoving the target on it.
 // IMPORTANT: if you wish to add a new own shove_act() to a certain object, remember to add SHOVABLE_ONTO to its obj_flags bitfied var first.
@@ -860,10 +888,11 @@
 	var/datum/progressbar/progress = new(user, things.len, src)
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	if(STR == src_object)
+		progress.end_progress()
 		return
 	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(STR, /datum/component/storage.proc/handle_mass_item_insertion, things, src_object, user, progress)))
 		stoplag(1)
-	qdel(progress)
+	progress.end_progress()
 	to_chat(user, "<span class='notice'>You dump as much of [src_object.parent]'s contents into [STR.insert_preposition]to [src] as you can.</span>")
 	if(user.active_storage) //refresh the HUD to show the transfered contents
 		user.active_storage.ui_show(user)
@@ -895,9 +924,6 @@
 /atom/proc/setDir(newdir, ismousemovement=FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
-
-/atom/proc/mech_melee_attack(obj/mecha/M)
-	return
 
 //If a mob logouts/logins in side of an object you can use this proc
 /atom/proc/on_log(login)
@@ -1162,6 +1188,8 @@
 			log_game(log_text)
 		if(LOG_GAME)
 			log_game(log_text)
+		if(LOG_MECHA)
+			log_mecha(log_text)
 		if(LOG_SHUTTLE)
 			log_shuttle(log_text)
 		else
@@ -1215,7 +1243,7 @@
 
 	if(user != target)
 		var/reverse_message = "has been [what_done] by [ssource][postfix]"
-		target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
+		target.log_message(reverse_message, LOG_VICTIM, color="orange", log_globally=FALSE)
 
 /**
   * log_wound() is for when someone is *attacked* and suffers a wound. Note that this only captures wounds from damage, so smites/forced wounds aren't logged, as well as demotions like cuts scabbing over
@@ -1406,11 +1434,12 @@
 //Update the screentip to reflect what we're hoverin over
 /atom/MouseEntered(location, control, params)
 	. = ..()
-	// Statusbar
-	// status_bar_set_text(usr, name)
 	// Screentips
-	// if(usr?.hud_used)
-	// 	if(!usr.client?.prefs.screentip_pref || (flags_1 & NO_SCREENTIPS_1))
-	// 		usr.hud_used.screentip_text.maptext = ""
-	// 	else
-	// 		usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")
+	var/client/client = usr?.client
+	var/datum/hud/active_hud = client?.mob?.hud_used
+	if(active_hud)
+		if(!client.prefs.screentip_pref || (flags_1 & NO_SCREENTIPS_1))
+			active_hud.screentip_text.maptext = ""
+		else
+			//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
+			active_hud.screentip_text.maptext = MAPTEXT("<span style='text-align: center; font-size: 32px; color: [client?.prefs?.screentip_color]'>[name]</span>")

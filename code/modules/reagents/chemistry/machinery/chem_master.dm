@@ -22,7 +22,7 @@
 	var/list/pillStyles
 	var/fermianalyze //Give more detail on fermireactions on analysis
 
-/obj/machinery/chem_master/Initialize()
+/obj/machinery/chem_master/Initialize(mapload)
 	create_reagents(100)
 
 	//Calculate the span tags and ids fo all the available pill icons

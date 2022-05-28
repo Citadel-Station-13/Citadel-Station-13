@@ -43,7 +43,7 @@
 	#define REPLACE_TILE		6
 	#define TILE_EMAG		7
 
-/mob/living/simple_animal/bot/floorbot/Initialize()
+/mob/living/simple_animal/bot/floorbot/Initialize(mapload)
 	. = ..()
 	update_icon()
 	var/datum/job/engineer/J = new/datum/job/engineer
@@ -263,9 +263,9 @@
 		if(path.len == 0)
 			if(!isturf(target))
 				var/turf/TL = get_turf(target)
-				path = get_path_to(src, TL, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = 0)
+				path = get_path_to(src, TL, 30, id=access_card,simulated_only = 0)
 			else
-				path = get_path_to(src, target, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = 0)
+				path = get_path_to(src, target, 30, id=access_card,simulated_only = 0)
 
 			if(!bot_move(target))
 				add_to_ignore(target)

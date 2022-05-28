@@ -31,6 +31,7 @@ const createBabelConfig = options => {
       require.resolve('common/string.babel-plugin.cjs'),
       ...plugins,
     ],
+    compact: true,
   };
 };
 

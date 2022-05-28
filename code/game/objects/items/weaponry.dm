@@ -11,7 +11,7 @@
 	throw_range = 7
 	attack_verb = list("banned")
 	max_integrity = 200
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/banhammer/suicide_act(mob/user)
@@ -67,11 +67,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	block_chance = 50
 	sharpness = SHARP_EDGED
 	max_integrity = 200
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
-/obj/item/claymore/Initialize()
+/obj/item/claymore/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 40, 105)
 	AddElement(/datum/element/sword_point)
@@ -97,7 +97,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
 	var/obj/item/disk/nuclear/nuke_disk //OUR STORED NUKE DISK
 
-/obj/item/claymore/highlander/Initialize()
+/obj/item/claymore/highlander/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
 	START_PROCESSING(SSobj, src)
@@ -223,7 +223,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "claymore_cyborg"
 	var/mob/living/silicon/robot/robot
 
-/obj/item/claymore/highlander/robot/Initialize()
+/obj/item/claymore/highlander/robot/Initialize(mapload)
 	var/obj/item/robot_module/kiltkit = loc
 	robot = kiltkit.loc
 	if(!istype(robot))
@@ -250,7 +250,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	block_chance = 50
 	sharpness = SHARP_EDGED
 	max_integrity = 200
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
@@ -262,7 +262,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/katana/cursed
 	slot_flags = null
 
-/obj/item/katana/cursed/Initialize()
+/obj/item/katana/cursed/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
@@ -369,7 +369,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /datum/block_parry_data/bokken/quick_parry/proj
 	parry_efficiency_perfect_override = list()
 
-/obj/item/melee/bokken/Initialize()
+/obj/item/melee/bokken/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/sword_point)
 	if(!harm) //if initialised in non-harm mode, setup force accordingly
@@ -793,7 +793,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1
 
-/obj/item/mounted_chainsaw/Initialize()
+/obj/item/mounted_chainsaw/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
@@ -821,7 +821,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb = list("busted")
 	var/impressiveness = 45
 
-/obj/item/statuebust/Initialize()
+/obj/item/statuebust/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/art, impressiveness)
 	// AddComponent(/datum/component/beauty, 1000)
@@ -928,7 +928,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/throwforce_off // Damage when off
 	var/weight_class_on // What is the new size class when turned on
 
-/obj/item/melee/baseball_bat/Initialize()
+/obj/item/melee/baseball_bat/Initialize(mapload)
 	. = ..()
 	if(prob(1))
 		name = "cricket bat"
@@ -946,7 +946,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 	wound_bonus = -5
 
-/obj/item/melee/baseball_bat/chaplain/Initialize()
+/obj/item/melee/baseball_bat/chaplain/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
 
@@ -1076,7 +1076,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	//Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
 	var/list/strong_against
 
-/obj/item/melee/flyswatter/Initialize()
+/obj/item/melee/flyswatter/Initialize(mapload)
 	. = ..()
 	strong_against = typecacheof(list(
 					/mob/living/simple_animal/hostile/poison/bees/,
@@ -1108,7 +1108,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
 	attack_verb = list("bopped")
 
-/obj/item/circlegame/Initialize()
+/obj/item/circlegame/Initialize(mapload)
 	. = ..()
 	var/mob/living/owner = loc
 	if(!istype(owner))
@@ -1398,7 +1398,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/vibro_weapon/Initialize()
+/obj/item/vibro_weapon/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)

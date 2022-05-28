@@ -14,7 +14,7 @@
 	var/obj/item/holder = null
 	// You can use this var for item path, it would be converted into an item on New()
 
-/obj/item/organ/cyberimp/arm/Initialize()
+/obj/item/organ/cyberimp/arm/Initialize(mapload)
 	. = ..()
 	if(ispath(holder))
 		holder = new holder(src)
@@ -242,7 +242,7 @@
 	desc = "An integrated projector mounted onto a user's arm that is able to be used as a powerful flash."
 	contents = newlist(/obj/item/assembly/flash/armimplant)
 
-/obj/item/organ/cyberimp/arm/flash/Initialize()
+/obj/item/organ/cyberimp/arm/flash/Initialize(mapload)
 	. = ..()
 	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
 		var/obj/item/assembly/flash/armimplant/F = locate(/obj/item/assembly/flash/armimplant) in items_list
@@ -258,7 +258,7 @@
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm."
 	contents = newlist(/obj/item/melee/transforming/energy/blade/hardlight, /obj/item/gun/medbeam, /obj/item/borg/stun, /obj/item/assembly/flash/armimplant)
 
-/obj/item/organ/cyberimp/arm/combat/Initialize()
+/obj/item/organ/cyberimp/arm/combat/Initialize(mapload)
 	. = ..()
 	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
 		var/obj/item/assembly/flash/armimplant/F = locate(/obj/item/assembly/flash/armimplant) in items_list

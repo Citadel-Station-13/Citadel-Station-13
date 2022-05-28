@@ -37,7 +37,7 @@
 					/obj/item/lighter/greyscale = 4,
 					/obj/item/storage/fancy/rollingpapers = 5)
 
-/obj/machinery/vending/cigarette/syndicate/Initialize()
+/obj/machinery/vending/cigarette/syndicate/Initialize(mapload)
 	. = ..()
 	cost_multiplier_per_dept = list("[ACCESS_SYNDICATE]" = 0)
 

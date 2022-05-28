@@ -70,7 +70,7 @@
 	freq_listening = list(FREQ_ENGINEERING)
 	autolinkers = list("processor4", "engineering", "common")
 
-/obj/machinery/telecomms/bus/preset_four/Initialize()
+/obj/machinery/telecomms/bus/preset_four/Initialize(mapload)
 	. = ..()
 	for(var/i = MIN_FREQ, i <= MAX_FREQ, i += 2)
 		freq_listening |= i

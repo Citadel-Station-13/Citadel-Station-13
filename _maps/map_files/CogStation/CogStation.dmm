@@ -8805,12 +8805,11 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
+/obj/structure/table,
+/obj/item/stack/medical/suture/five,
 /turf/open/floor/plasteel/white,
 /area/medical/clinic)
 "auS" = (
@@ -8876,9 +8875,7 @@
 	name = "Station Intercom (Common)";
 	pixel_y = 26
 	},
-/obj/machinery/sleep_console{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/clinic)
 "auZ" = (
@@ -36751,9 +36748,6 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/storage/box/engineer{
-	pixel_y = 4
-	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
 "bCu" = (
@@ -58340,9 +58334,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/east,
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "cua" = (

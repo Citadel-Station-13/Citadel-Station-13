@@ -296,20 +296,15 @@
 			qdel(src)
 		return TRUE
 
-/obj/structure/girder/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
+/obj/structure/girder/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if((mover.pass_flags & PASSGRILLE) || istype(mover, /obj/item/projectile))
 		return prob(girderpasschance)
-	else
-		if(istype(mover, /obj/item/projectile))
-			return prob(girderpasschance)
-		else
-			return 0
 
-/obj/structure/girder/CanAStarPass(ID, dir, caller)
+/obj/structure/girder/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
 	. = !density
-	if(ismovable(caller))
-		var/atom/movable/mover = caller
-		. = . || (mover.pass_flags & PASSGRILLE)
+	if(istype(caller))
+		. = . || (caller.pass_flags & PASSGRILLE)
 
 /obj/structure/girder/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

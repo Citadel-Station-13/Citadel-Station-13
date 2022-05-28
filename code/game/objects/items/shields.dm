@@ -3,7 +3,7 @@
 	icon = 'icons/obj/shields.dmi'
 	item_flags = ITEM_CAN_BLOCK
 	block_parry_data = /datum/block_parry_data/shield
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 80, ACID = 70)
 	/// Shield flags
 	var/shield_flags = SHIELD_FLAGS_DEFAULT
 	/// Last shieldbash world.time
@@ -304,7 +304,7 @@
 /obj/item/shield/riot/energy_proof
 	name = "energy resistant shield"
 	desc = "An ablative shield designed to absorb and disperse energy attacks. This comes at significant cost to its ability to withstand ballistics and kinetics, breaking apart easily."
-	armor = list("melee" = 30, "bullet" = -10, "laser" = 80, "energy" = 80, "bomb" = -40, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
+	armor = list(MELEE = 30, BULLET = -10, LASER = 80, ENERGY = 80, BOMB = -40, BIO = 0, RAD = 0, FIRE = 0, ACID = 50)
 	icon_state = "riot_laser"
 	item_state = "riot_laser"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
@@ -315,7 +315,7 @@
 /obj/item/shield/riot/kinetic_proof
 	name = "kinetic resistant shield"
 	desc = "A polymer and ceramic shield designed to absorb ballistic projectiles and kinetic force. It doesn't do very well into energy attacks, especially from weapons that inflict burns."
-	armor = list("melee" = 30, "bullet" = 80, "laser" = 0, "energy" = 0, "bomb" = -40, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
+	armor = list(MELEE = 30, BULLET = 80, LASER = 0, ENERGY = 0, BOMB = -40, BIO = 0, RAD = 0, FIRE = 0, ACID = 50)
 	icon_state = "riot_bullet"
 	item_state = "riot_bullet"
 	shield_flags = SHIELD_FLAGS_DEFAULT | SHIELD_KINETIC_STRONG | SHIELD_ENERGY_WEAK
@@ -334,7 +334,7 @@
 
 /obj/item/shield/riot/roman/fake
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>. It appears to be a bit flimsy."
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	shield_flags = SHIELD_ENERGY_WEAK | SHIELD_KINETIC_WEAK | SHIELD_NO_RANGED
 	max_integrity = 40
 
@@ -366,7 +366,7 @@
 	item_state = "flashshield"
 	var/obj/item/assembly/flash/handheld/embedded_flash
 
-/obj/item/shield/riot/flash/Initialize()
+/obj/item/shield/riot/flash/Initialize(mapload)
 	. = ..()
 	embedded_flash = new(src)
 
@@ -471,7 +471,7 @@
 /obj/item/shield/makeshift
 	name = "metal shield"
 	desc = "A large shield made of wired and welded sheets of metal. The handle is made of cloth and leather, making it unwieldy."
-	armor = list("melee" = 25, "bullet" = 25, "laser" = 5, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 80)
+	armor = list(MELEE = 25, BULLET = 25, LASER = 5, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 70, ACID = 80)
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	item_state = "metal"
@@ -485,7 +485,7 @@
 /obj/item/shield/riot/tower
 	name = "tower shield"
 	desc = "An immense tower shield. Designed to ensure maximum protection to the user, at the expense of mobility."
-	armor = list("melee" = 95, "bullet" = 95, "laser" = 75, "energy" = 60, "bomb" = 90, "bio" = 90, "rad" = 0, "fire" = 90, "acid" = 10) //Armor for the item, dosnt transfer to user
+	armor = list(MELEE = 95, BULLET = 95, LASER = 75, ENERGY = 60, BOMB = 90, BIO = 90, RAD = 0, FIRE = 90, ACID = 10) //Armor for the item, dosnt transfer to user
 	item_state = "metal"
 	icon_state = "metal"
 	force = 16
@@ -561,7 +561,7 @@
 	var/active = 0
 	var/clumsy_check = TRUE
 
-/obj/item/shield/energy/Initialize()
+/obj/item/shield/energy/Initialize(mapload)
 	. = ..()
 	icon_state = "[base_icon_state]0"
 

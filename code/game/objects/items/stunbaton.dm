@@ -13,7 +13,7 @@
 	throwforce = 7
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("beaten")
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
 	attack_speed = CLICK_CD_MELEE
 
 	var/stamina_loss_amount = 35
@@ -190,7 +190,7 @@
 	var/final_stamina_loss_amount = stamina_loss_amount //Our stunning power for the baton
 	var/shoved = FALSE //Did we succeed on knocking our target over?
 	var/zap_penetration = armor_pen
-	var/zap_block = L.run_armor_check(BODY_ZONE_CHEST, "melee", null, null, zap_penetration) //armor check, including calculation for armor penetration, for our attack
+	var/zap_block = L.run_armor_check(BODY_ZONE_CHEST, MELEE, null, null, zap_penetration) //armor check, including calculation for armor penetration, for our attack
 	final_stamina_loss_amount = block_calculate_resultant_damage(final_stamina_loss_amount, return_list)
 
 	var/obj/item/stock_parts/cell/our_cell = get_cell()
@@ -333,7 +333,7 @@
 	status_duration = 3 //Slows someone for a tiny bit
 	var/obj/item/assembly/igniter/sparkler
 
-/obj/item/melee/baton/cattleprod/Initialize()
+/obj/item/melee/baton/cattleprod/Initialize(mapload)
 	. = ..()
 	sparkler = new (src)
 	sparkler.activate_cooldown = 7 //Helps visualize the knockdown
