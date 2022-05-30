@@ -618,8 +618,6 @@
 	cold_level_2_threshold = 260
 	cold_level_3_threshold = 230
 
-	maxHealth = 250
-
 /obj/item/organ/lungs/ashwalker/populate_gas_info()
 	..()
 	gas_max -= GAS_PLASMA

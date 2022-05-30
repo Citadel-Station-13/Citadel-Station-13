@@ -409,10 +409,11 @@
 	mutant_bodyparts = list("mcolor" = "FFFFFF", "mcolor2" = "FFFFFF","mcolor3" = "FFFFFF", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "Plain", "mam_snouts" = "None", "taur" = "None", "deco_wings" = "None", "legs" = "Plantigrade")
 	say_mod = "says"
 	hair_color = "mutcolor"
-	hair_alpha = 160 //a notch brighter so it blends better.
+	hair_alpha = 160 //a notch brighter so it blends better. //ok but imagine we could change this for all species as a customization feature????
 	coldmod = 3
 	heatmod = 1
 	burnmod = 1
+	cold_offset = -10 //take cold damage slightly earlier, can be negated by wearing things like wintercoats, space suits, etc
 
 	allowed_limb_ids = list(SPECIES_SLIME,SPECIES_STARGAZER,SPECIES_SLIME_LUMI)
 
