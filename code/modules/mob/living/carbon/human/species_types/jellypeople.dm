@@ -24,6 +24,8 @@
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
 	burnmod = 0.5 // = 1/2x generic burn damage
+	cold_offset = -10 //take cold damage slightly earlier, can be negated by wearing things like wintercoats, space suits, etc
+
 	species_language_holder = /datum/language_holder/jelly
 
 	tail_type = "mam_tail"
@@ -413,8 +415,6 @@
 	coldmod = 3
 	heatmod = 1
 	burnmod = 1
-	cold_offset = -10 //take cold damage slightly earlier, can be negated by wearing things like wintercoats, space suits, etc
-
 	allowed_limb_ids = list(SPECIES_SLIME,SPECIES_STARGAZER,SPECIES_SLIME_LUMI)
 
 ///////////////////////////////////LUMINESCENTS//////////////////////////////////////////
