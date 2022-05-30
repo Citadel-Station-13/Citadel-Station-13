@@ -24,7 +24,10 @@
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
 	burnmod = 0.5 // = 1/2x generic burn damage
-	cold_offset = -10 //take cold damage slightly earlier, can be negated by wearing things like wintercoats, space suits, etc
+
+	//take cold damage slightly earlier, can be negated by wearing things like wintercoats, space suits, etc
+	//this value is the same as the difference between the old tier 1 value for when slime lungs made slimes take damage in comparison to regular lungs
+	cold_offset = -25
 
 	species_language_holder = /datum/language_holder/jelly
 

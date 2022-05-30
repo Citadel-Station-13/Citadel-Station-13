@@ -614,10 +614,6 @@
 	icon_state = "lungs-s"
 	desc = "A large organelle designed to store oxygen and other important gasses."
 
-	cold_level_1_threshold = 285 // Remember when slimes used to be succeptable to cold? Well....
-	cold_level_2_threshold = 260
-	cold_level_3_threshold = 230
-
 /obj/item/organ/lungs/ashwalker/populate_gas_info()
 	..()
 	gas_max -= GAS_PLASMA
