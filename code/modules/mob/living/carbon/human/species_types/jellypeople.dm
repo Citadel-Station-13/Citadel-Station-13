@@ -28,7 +28,7 @@
 
 	//take cold damage slightly earlier, can be negated by wearing things like wintercoats, space suits, etc
 	//this value is the same as the difference between the old tier 1 value for when slime lungs made slimes take damage in comparison to regular lungs
-	cold_offset = -25
+	cold_offset = 25
 
 	species_language_holder = /datum/language_holder/jelly
 
