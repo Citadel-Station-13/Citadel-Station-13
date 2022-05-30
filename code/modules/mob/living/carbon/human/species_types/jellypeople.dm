@@ -21,6 +21,7 @@
 	liked_food = TOXIC | MEAT
 	disliked_food = null
 	toxic_food = ANTITOXIC
+
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
 	burnmod = 0.5 // = 1/2x generic burn damage
