@@ -1295,7 +1295,7 @@
 		filters += filter(arglist(arguments))
 	UNSETEMPTY(filter_data)
 
-/atom/proc/transition_filter(name, time, list/new_params, easing, loop)
+/atom/proc/transition_filter(name, time, list/new_params, easing, loop, parallel = TRUE)
 	var/filter = get_filter(name)
 	if(!filter)
 		return
@@ -1306,7 +1306,7 @@
 	for(var/thing in new_params)
 		params[thing] = new_params[thing]
 
-	animate(filter, new_params, time = time, easing = easing, loop = loop)
+	animate(filter, new_params, time = time, easing = easing, loop = loop, flags = (parallel ? ANIMATION_PARALLEL : 0))
 	for(var/param in params)
 		filter_data[name][param] = params[param]
 
