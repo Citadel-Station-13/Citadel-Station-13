@@ -89,6 +89,9 @@
 		if(!(client.prefs.db_flags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE)) //completed? Skip
 			return TRUE
 
+		if(!client)
+			return FALSE
+
 		var/age_verification = age_gate()
 		//ban them and kick them
 		if(age_verification != 1)
@@ -165,7 +168,7 @@
 		return 0
 
 	//don't let people get to this unless they are specifically not verified
-	if(href_list["Month"] && (CONFIG_GET(flag/age_verification) && !check_rights_for(client, R_ADMIN) && !(client.ckey in GLOB.bunker_passthrough)))
+	if(href_list["Month"] && (CONFIG_GET(flag/age_verification) && /*!check_rights_for(client, R_ADMIN) &&*/ !(client.ckey in GLOB.bunker_passthrough)))
 		var/player_month = text2num(href_list["Month"])
 		var/player_year = text2num(href_list["Year"])
 

@@ -1,10 +1,6 @@
 /datum/hud/new_player
 
-/datum/hud/new_player/New(mob/dead/new_player/owner)
-	..()
-	//This shouldn't happen like this but, age_verify sleeps, and they'll get the buttons when it's done.
-	if (!owner.age_verify())
-		return
+/datum/hud/new_player/proc/populate_buttons(mob/dead/new_player/owner)
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
 	for(var/button_type in buttons)
 		var/atom/movable/screen/lobby/lobbyscreen = new button_type()
@@ -14,6 +10,7 @@
 		if(istype(lobbyscreen, /atom/movable/screen/lobby/button))
 			var/atom/movable/screen/lobby/button/lobby_button = lobbyscreen
 			lobby_button.owner = REF(owner)
+	show_hud(hud_version)
 
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE

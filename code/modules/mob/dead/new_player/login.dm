@@ -9,6 +9,12 @@
 
 	..()
 
+	if(!age_verify())
+		return
+
+	if(!client) //client can end up null as a result of age_verify() kicking those who fail
+		return
+
 	var/motd = global.config.motd
 	if(motd)
 		to_chat(src, "<div class=\"motd\">[motd]</div>", handle_whitespace=FALSE)
@@ -35,3 +41,7 @@
 		else
 			postfix = "soon"
 		to_chat(src, "Please set up your character and select \"Ready\". The game will start [postfix].")
+
+	var/datum/hud/new_player/NH = hud_used
+	if(istype(NH))
+		NH.populate_buttons(src)
