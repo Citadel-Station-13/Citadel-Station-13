@@ -168,7 +168,7 @@
 		return 0
 
 	//don't let people get to this unless they are specifically not verified
-	if(href_list["Month"] && (CONFIG_GET(flag/age_verification) && /*!check_rights_for(client, R_ADMIN) &&*/ !(client.ckey in GLOB.bunker_passthrough)))
+	if(href_list["Month"] && (CONFIG_GET(flag/age_verification) && !check_rights_for(client, R_ADMIN) && !(client.ckey in GLOB.bunker_passthrough)))
 		var/player_month = text2num(href_list["Month"])
 		var/player_year = text2num(href_list["Year"])
 
