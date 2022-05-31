@@ -5,6 +5,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 	fire_sound = "sound/weapons/revolvershot.ogg"
 	casing_ejector = FALSE
+	recoil = 0.5
 
 /obj/item/gun/ballistic/revolver/Initialize(mapload)
 	. = ..()
@@ -285,6 +286,7 @@
 	item_state = "shotgun"
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_MEDIUM
+	recoil = 1
 	force = 10
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
