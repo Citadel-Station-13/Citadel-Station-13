@@ -28,7 +28,7 @@
 	healthdoll.hud = src
 	infodisplay += healthdoll
 
-	alien_plasma_display = new /obj/screen/ooze_nutrition_display //Just going to use the alien plasma display because making new vars for each object is braindead.
+	alien_plasma_display = new /atom/movable/screen/ooze_nutrition_display //Just going to use the alien plasma display because making new vars for each object is braindead.
 	alien_plasma_display.hud = src
 	infodisplay += alien_plasma_display
 
