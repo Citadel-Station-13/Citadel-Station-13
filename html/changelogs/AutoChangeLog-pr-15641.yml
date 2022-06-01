@@ -1,0 +1,5 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - balance: "Nitryl is higher risk, can't be sold for as much"
+  - refactor: "Gas prices are now part of the gas data structure"
