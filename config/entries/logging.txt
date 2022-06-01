@@ -61,6 +61,9 @@ LOG_JOB_DEBUG
 ## Log shuttle related actions
 LOG_SHUTTLE
 
+## Log economy-related actions
+LOG_ECON
+
 ## log all world.Topic() calls
 LOG_WORLD_TOPIC
 

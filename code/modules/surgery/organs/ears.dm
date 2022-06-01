@@ -18,10 +18,9 @@
 	// to hear anything.
 	var/deaf = 0
 
-	// `ear_damage` measures long term damage to the ears, if too high,
+	// `damage` in this case measures long term damage to the ears, if too high,
 	// the person will not have either `deaf` or `ear_damage` decrease
 	// without external aid (earmuffs, drugs)
-	var/ear_damage = 0
 
 	//Resistance against loud noises
 	var/bang_protect = 0
@@ -44,16 +43,22 @@
 
 /obj/item/organ/ears/proc/restoreEars()
 	deaf = 0
-	ear_damage = 0
+	damage = 0
+	prev_damage = 0
 	organ_flags &= ~ORGAN_FAILING
 
 	var/mob/living/carbon/C = owner
 
 	if(iscarbon(owner) && HAS_TRAIT(C, TRAIT_DEAF))
 		deaf = 1
+	var/mess = check_damage_thresholds()
+	if(mess && owner)
+		to_chat(owner, mess)
 
 /obj/item/organ/ears/proc/adjustEarDamage(ddmg, ddeaf)
-	ear_damage = max(ear_damage + (ddmg*damage_multiplier), 0)
+	if(owner.status_flags & GODMODE)
+		return
+	setOrganDamage(max(damage + (ddmg*damage_multiplier), 0))
 	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
 
 /obj/item/organ/ears/proc/minimumDeafTicks(value)
