@@ -1,0 +1,8 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - bugfix: "Mechs now use power when moving."
+  - bugfix: "The check for mining-only mechs is no longer inverted to only allow non-mining z levels."
+  - bugfix: "Reverted an accidental buff from the /tg/ mech code port and its adjustment to citadel's mech state."
+  - bugfix: "Mechs with different base movement power cost now actually have it apply instead of immediately being overwritten.
+tweak: Adjusted part impact on movement power use to make more sense."
