@@ -1,0 +1,4 @@
+author: "Bhijn & Myr"
+delete-after: True
+changes: 
+  - bugfix: "You can no longer attach multiple tracking beacons to a single mech, fixing an exploit where mechs can be nuked with minimal effort."
