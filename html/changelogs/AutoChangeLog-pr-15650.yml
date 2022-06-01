@@ -1,0 +1,6 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - rscadd: "optimises quirks somewhat
+tweak: nyctophobia will now stop run intent when you try to move in darkness with it on, compared to the old behaviour of automatically turning it off in darkness when it is on and you have been in darkness for >= 0.2 seconds
+tweak: nyctophobia and lightless will both not update your mood until you move now, as part of the optimisations made by changing them to tg code"
