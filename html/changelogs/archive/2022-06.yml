@@ -1,0 +1,17 @@
+2022-06-01:
+  DeltaFire15:
+  - bugfix: Mechs now use power when moving.
+  - bugfix: The check for mining-only mechs is no longer inverted to only allow non-mining
+      z levels.
+  - bugfix: Reverted an accidental buff from the /tg/ mech code port and its adjustment
+      to citadel's mech state.
+  - bugfix: 'Mechs with different base movement power cost now actually have it apply
+      instead of immediately being overwritten. tweak: Adjusted part impact on movement
+      power use to make more sense.'
+  timothyteakettle:
+  - rscadd: 'optimises quirks somewhat tweak: nyctophobia will now stop run intent
+      when you try to move in darkness with it on, compared to the old behaviour of
+      automatically turning it off in darkness when it is on and you have been in
+      darkness for >= 0.2 seconds tweak: nyctophobia and lightless will both not update
+      your mood until you move now, as part of the optimisations made by changing
+      them to tg code'
