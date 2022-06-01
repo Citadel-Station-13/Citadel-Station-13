@@ -209,7 +209,7 @@ There are several things that need to be remembered:
 			inv.update_icon()
 
 		if(!gloves && bloody_hands)
-			var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER, color = blood_DNA_to_color())
+			var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER, color = blood_DNA_to_color(), blend_mode = blood_DNA_to_blend())
 			if(get_num_arms(FALSE) < 2)
 				if(has_left_hand(FALSE))
 					bloody_overlay.icon_state = "bloodyhands_left"

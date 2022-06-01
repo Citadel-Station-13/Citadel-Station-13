@@ -17,6 +17,7 @@
 	exotic_blood = /datum/reagent/blood/jellyblood
 	exotic_bloodtype = "GEL"
 	exotic_blood_color = "BLOOD_COLOR_SLIME"
+	exotic_blood_blend_mode = BLEND_DEFAULT
 	damage_overlay_type = ""
 	liked_food = TOXIC | MEAT
 	disliked_food = null

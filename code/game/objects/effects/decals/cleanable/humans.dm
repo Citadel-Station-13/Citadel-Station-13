@@ -3,6 +3,7 @@
 	desc = "It's gooey. Perhaps it's the chef's cooking?"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
+	blend_mode = BLEND_MULTIPLY
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	blood_state = BLOOD_STATE_BLOOD
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
@@ -33,16 +34,20 @@
 	. = ..()
 	if(!fixed_color)
 		add_atom_colour(blood_DNA_to_color(), FIXED_COLOUR_PRIORITY)
+		blend_mode = blood_DNA_to_blend()
 
 /obj/effect/decal/cleanable/blood/PersistenceSave(list/data)
 	. = ..()
 	data["color"] = color
+	data["blendmode"] = blend_mode
 
 /obj/effect/decal/cleanable/blood/PersistenceLoad(list/data)
 	. = ..()
 	if(data["color"])
 		fixed_color = TRUE
 		add_atom_colour(data["color"], FIXED_COLOUR_PRIORITY)
+	if(data["blendmode"])
+		blend_mode = data["blendmode"]
 	name = "dried blood"
 	desc = "Looks like it's been here a while. Eew"
 	bloodiness = 0
@@ -83,6 +88,7 @@
 	name = "blood"
 	icon = 'icons/effects/blood.dmi'
 	desc = "Your instincts say you shouldn't be following these."
+	blend_mode = BLEND_MULTIPLY
 	random_icon_states = null
 	beauty = -50
 	persistent = TRUE
@@ -94,6 +100,7 @@
 	. = ..()
 	data["dir"] = dir
 	data["color"] = color
+	data["blendmode"] = blend_mode
 
 /obj/effect/decal/cleanable/trail_holder/PersistenceLoad(list/data)
 	. = ..()
@@ -102,11 +109,14 @@
 	if(data["color"])
 		fixed_color = TRUE
 		add_atom_colour(data["color"], FIXED_COLOUR_PRIORITY)
+	if(data["blendmode"])
+		blend_mode = data["blendmode"]
 
 /obj/effect/decal/cleanable/trail_holder/update_icon()
 	. = ..()
 	if(!fixed_color)
 		add_atom_colour(blood_DNA_to_color(), FIXED_COLOUR_PRIORITY)
+		blend_mode = blood_DNA_to_blend()
 
 /obj/effect/cleanable/trail_holder/Initialize(mapload)
 	. = ..()
