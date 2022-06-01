@@ -320,6 +320,7 @@
 #include "code\controllers\configuration\entries\admin.dm"
 #include "code\controllers\configuration\entries\alert.dm"
 #include "code\controllers\configuration\entries\antag_rep.dm"
+#include "code\controllers\configuration\entries\bot.dm"
 #include "code\controllers\configuration\entries\comms.dm"
 #include "code\controllers\configuration\entries\connections.dm"
 #include "code\controllers\configuration\entries\dbconfig.dm"

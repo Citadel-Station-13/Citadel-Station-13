@@ -258,15 +258,24 @@
 
 	send2adminchat("Server", "A round of [mode.name] just ended[mode_result == "undefined" ? "." : " with a [mode_result]."] Survival rate: [survival_rate]")
 
-	if(LAZYLEN(GLOB.round_end_notifiees))
-		world.TgsTargetedChatBroadcast("[GLOB.round_end_notifiees.Join(", ")] the round has ended.", FALSE)
-
 	if(length(CONFIG_GET(keyed_list/cross_server)))
 		send_news_report()
 
 	//tell the nice people on discord what went on before the salt cannon happens.
-	world.TgsTargetedChatBroadcast("The current round has ended. Please standby for your shift interlude Nanotrasen News Network's report!", FALSE)
-	world.TgsTargetedChatBroadcast(send_news_report(), FALSE)
+	if(CONFIG_GET(string/chat_roundend_notice_tag))
+		var/broadcastmessage = ""
+
+		if(LAZYLEN(GLOB.round_end_notifiees))
+			broadcastmessage += "[GLOB.round_end_notifiees.Join(", ")], "
+
+
+		broadcastmessage += "[((broadcastmessage == "") ? "the" : "The")] current round has ended. Please standby for your shift interlude Nanotrasen News Network's report!\n"
+		broadcastmessage += "```\n[send_news_report()]\n```"
+
+		if(CONFIG_GET(string/chat_reboot_role))
+			broadcastmessage += "\n\n<@&[CONFIG_GET(string/chat_reboot_role)]>, the server will reboot shortly!"
+
+		send2chat(broadcastmessage, CONFIG_GET(string/chat_roundend_notice_tag))
 
 	CHECK_TICK
 
