@@ -27,7 +27,7 @@
 			if(istype(U) && U.attached_accessory)
 				var/obj/item/clothing/accessory/A = U.attached_accessory
 				if(A.above_suit)
-					. += U.accessory_overlay
+					. += U.accessory_overlays
 
 /obj/item/clothing/suit/update_clothes_damaged_state()
 	..()

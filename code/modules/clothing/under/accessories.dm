@@ -57,7 +57,7 @@
 	plane = initial(plane)
 	U.cut_overlays()
 	U.attached_accessory = null
-	U.accessory_overlay = null
+	U.accessory_overlays = null
 
 /obj/item/clothing/accessory/proc/on_uniform_equip(obj/item/clothing/under/U, user)
 	return

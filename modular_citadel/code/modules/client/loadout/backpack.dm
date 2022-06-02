@@ -177,7 +177,7 @@
 	path = /obj/item/clothing/accessory/necklace
 
 /datum/gear/backpack/polymaidapron //this is ALSO here because loadout doesn't support proper accessories
-	name = "A renameable necklace"
+	name = "Polychromic maid apron"
 	path = /obj/item/clothing/accessory/maidapron/polychromic
 	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
 	loadout_initial_colors = list("#333333", "#FFFFFF")
