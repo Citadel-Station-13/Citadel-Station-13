@@ -255,6 +255,15 @@
 	item_state = "maidapron"
 	minimize_when_attached = FALSE
 
+/obj/item/clothing/accessory/maidapron/polychromic
+	name = "polychromic maid apron"
+	icon_state = "polymaidapron"
+	item_state = "polymaidapron"
+
+/obj/item/clothing/accessory/maidapron/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#333333", "#FFFFFF"), 2)
+
 /obj/item/clothing/accessory/sleevecrop
 	name = "one sleeved crop top"
 	desc = "Off the shoulder crop top, for those nights out partying."
@@ -548,3 +557,5 @@
 	obj_flags = UNIQUE_RENAME
 	custom_materials = list(/datum/material/iron=100)
 	resistance_flags = FIRE_PROOF
+
+/
