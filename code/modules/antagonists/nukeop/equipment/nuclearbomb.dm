@@ -79,7 +79,7 @@
 	. = ..()
 	if(SSevents.holidays && SSevents.holidays[PRIDE_MONTH] && prob(50))
 		name = "tactical gender-reveal device"
-		desc = "\"But who's gender is it revealing?\" you ponder. Don't worry. That comes later."
+		desc = "\"But whose gender is it revealing?\" you ponder. Don't worry. That comes later."
 
 /obj/machinery/nuclearbomb/syndicate/get_cinematic_type(off_station)
 	var/datum/game_mode/nuclear/NM = SSticker.mode
