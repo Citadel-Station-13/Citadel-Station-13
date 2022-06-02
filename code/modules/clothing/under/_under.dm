@@ -162,7 +162,7 @@
 				accessory_overlays = list(accessory_overlay)
 			else
 				accessory_overlays = list()
-				polychromic.apply_worn_overlays(I, FALSE, 'icons/mob/clothing/accessories.dmi', item_state || icon_state, NONE, accessory_overlays)
+				polychromic.apply_worn_overlays(I, FALSE, 'icons/mob/clothing/accessories.dmi', I.item_state || I.icon_state, NONE, accessory_overlays)
 
 			if(ishuman(loc))
 				var/mob/living/carbon/human/H = loc
