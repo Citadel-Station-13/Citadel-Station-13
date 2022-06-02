@@ -65,13 +65,10 @@
 	var/cooldown = 12 SECONDS
 	var/current_cooldown = 0
 
-/obj/effect/proc_holder/tentacle_slap/Click(location, control, params)
-	. = ..()
-	if(!isliving(usr))
-		return TRUE
-	fire(usr)
 
-/obj/effect/proc_holder/tentacle_slap/fire(mob/living/carbon/user)
+/obj/effect/proc_holder/tentacle_slap/Trigger(mob/user)
+	. = ..()
+	(mob/living/carbon/user)
 	if(current_cooldown > world.time)
 		to_chat(user, "<span class='notice'>This ability is still on cooldown.</span>")
 		return

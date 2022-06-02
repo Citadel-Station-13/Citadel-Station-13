@@ -318,14 +318,7 @@
 	var/cooldown = 5 SECONDS
 	var/current_cooldown = 0
 
-/obj/effect/proc_holder/globules/Click(location, control, params)
-	. = ..()
-	if(!isliving(usr))
-		return TRUE
-	var/mob/living/user = usr
-	fire(user)
-
-/obj/effect/proc_holder/globules/fire(mob/living/carbon/user)
+/obj/effect/proc_holder/globules/Trigger(mob/living/carbon/user)
 	var/message
 	if(current_cooldown > world.time)
 		to_chat(user, "<span class='notice'>This ability is still on cooldown.</span>")
