@@ -1,5 +1,0 @@
-author: "Bhijn & Myr"
-delete-after: True
-changes: 
-  - rscadd: "The TGS bot is now capable of pinging the reboot role! Rejoice!
-tweak: The TGS bot's automated output can now be configured to define which channels certain messages are output to."

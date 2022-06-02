@@ -1,4 +1,0 @@
-author: "Bhijn & Myr"
-delete-after: True
-changes: 
-  - bugfix: "Boxstation's incinerator sensor now properly reports to atmos's machinery again"

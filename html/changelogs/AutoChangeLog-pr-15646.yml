@@ -1,4 +1,0 @@
-author: "Bhijn & Myr"
-delete-after: True
-changes: 
-  - bugfix: "Omegastation's airmix filter is no longer inverted! The oxygen:nitrogen levels of Omega later in the round should now be normal again."
