@@ -1,0 +1,4 @@
+author: "Bhijn & Myr"
+delete-after: True
+changes: 
+  - bugfix: "Solar panels now actually face the proper direction. This is achieved by reducing the iconstate to only 1 dir."
