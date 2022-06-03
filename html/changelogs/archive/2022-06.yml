@@ -52,3 +52,7 @@
       adjusted versions, icons for the masks as well.
   bunny232:
   - rscadd: Universal blood type now accepts bug blood.
+2022-06-03:
+  Bhijn & Myr:
+  - bugfix: Solar panels now actually face the proper direction. This is achieved
+      by reducing the iconstate to only 1 dir.
