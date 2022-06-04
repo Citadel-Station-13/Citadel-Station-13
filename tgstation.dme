@@ -3734,6 +3734,7 @@
 #include "code\modules\vending\medical.dm"
 #include "code\modules\vending\medical_wall.dm"
 #include "code\modules\vending\megaseed.dm"
+#include "code\modules\vending\monkey.dm"
 #include "code\modules\vending\nutrimax.dm"
 #include "code\modules\vending\plasmaresearch.dm"
 #include "code\modules\vending\robotics.dm"
