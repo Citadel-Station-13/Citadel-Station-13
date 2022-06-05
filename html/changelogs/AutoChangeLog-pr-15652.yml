@@ -1,0 +1,4 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - refactor: "Completely replaces the new player panel *not the admin one* with TG's."

@@ -69,6 +69,19 @@
 	fire_products = FIRE_PRODUCT_PLASMA
 	enthalpy = FIRE_PLASMA_ENERGY_RELEASED // 3000000, 3 megajoules, 3000 kj
 
+/datum/gas/nitrous_oxide
+	id = GAS_NITROUS
+	specific_heat = 40
+	name = "Nitrous Oxide"
+	gas_overlay = "nitrous_oxide"
+	moles_visible = MOLES_GAS_VISIBLE * 2
+	flags = GAS_FLAG_DANGEROUS
+	fire_products = list(GAS_N2 = 1)
+	oxidation_rate = 0.5
+	oxidation_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100
+	enthalpy = 81600
+	heat_resistance = 6
+
 /datum/gas/water_vapor
 	id = GAS_H2O
 	specific_heat = 40
@@ -82,18 +95,23 @@
 	powermix = 1
 	breath_reagent = /datum/reagent/water
 
-/datum/gas/nitrous_oxide
-	id = GAS_NITROUS
-	specific_heat = 40
-	name = "Nitrous Oxide"
-	gas_overlay = "nitrous_oxide"
-	moles_visible = MOLES_GAS_VISIBLE * 2
-	flags = GAS_FLAG_DANGEROUS
-	fire_products = list(GAS_N2 = 1)
-	oxidation_rate = 0.5
-	oxidation_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100
-	enthalpy = 81600
-	heat_resistance = 6
+
+/datum/gas/pluoxium
+	id = GAS_PLUOXIUM
+	specific_heat = 80
+	name = "Pluoxium"
+	fusion_power = 10
+	oxidation_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 25 // it is VERY stable
+	oxidation_rate = 8 // when it can oxidize, it can oxidize a LOT
+	enthalpy = -2000000 // but it reduces the heat output a great deal (plasma fires add 3000000 per mole)
+	powermix = -1
+	heat_penalty = -1
+	transmit_modifier = -5
+	heat_resistance = 3
+	price = 6
+
+/datum/gas/pluoxium/generate_TLV()
+	return new/datum/tlv(-1, -1, 5, 6)
 
 /datum/gas/tritium
 	id = GAS_TRITIUM
@@ -111,6 +129,7 @@
 	fire_burn_rate = 2
 	fire_radiation_released = 50 // arbitrary number, basically 60 moles of trit burning will just barely start to harm you
 	fire_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 50
+	price = 7
 
 /datum/gas/nitric_oxide
 	id = GAS_NITRIC
@@ -134,6 +153,7 @@
 	fire_products = list(GAS_N2 = 0.5)
 	enthalpy = 33200
 	oxidation_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 50
+	price = 3
 
 /datum/gas/hypernoblium
 	id = GAS_HYPERNOB
@@ -141,6 +161,7 @@
 	name = "Hyper-noblium"
 	gas_overlay = "freon"
 	moles_visible = MOLES_GAS_VISIBLE
+	price = 50
 
 /datum/gas/hydrogen
 	id = GAS_HYDROGEN
@@ -168,6 +189,7 @@
 	enthalpy = FIRE_CARBON_ENERGY_RELEASED // it is a mystery
 	transmit_modifier = -2
 	radioactivity_modifier = 5
+	price = 3
 
 /datum/gas/stimulum
 	id = GAS_STIMULUM
@@ -176,22 +198,7 @@
 	odor_strength = 10
 	name = "Stimulum"
 	fusion_power = 7
-
-/datum/gas/pluoxium
-	id = GAS_PLUOXIUM
-	specific_heat = 80
-	name = "Pluoxium"
-	fusion_power = 10
-	oxidation_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 25 // it is VERY stable
-	oxidation_rate = 8 // when it can oxidize, it can oxidize a LOT
-	enthalpy = -2000000 // but it reduces the heat output a great deal (plasma fires add 3000000 per mole)
-	powermix = -1
-	heat_penalty = -1
-	transmit_modifier = -5
-	heat_resistance = 3
-
-/datum/gas/pluoxium/generate_TLV()
-	return new/datum/tlv(-1, -1, 5, 6)
+	price = 25
 
 /datum/gas/miasma
 	id = GAS_MIASMA
@@ -202,6 +209,7 @@
 	name = "Miasma"
 	gas_overlay = "miasma"
 	moles_visible = MOLES_GAS_VISIBLE * 60
+	price = 2
 
 /datum/gas/methane
 	id = GAS_METHANE
@@ -227,6 +235,7 @@
 	)
 	enthalpy = -74600
 	fire_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
+	price = 1
 
 /datum/gas/methyl_bromide
 	id = GAS_METHYL_BROMIDE
@@ -249,6 +258,7 @@
 	enthalpy = -35400
 	fire_burn_rate = 4 / 7 // oh no
 	fire_temperature = 808 // its autoignition; it apparently doesn't spark readily, so i don't put it lower
+	price = 2
 
 /datum/gas/bromine
 	id = GAS_BROMINE
@@ -285,3 +295,4 @@
 	powermix = -1
 	transmit_modifier = -10
 	heat_penalty = -10
+	price = 10

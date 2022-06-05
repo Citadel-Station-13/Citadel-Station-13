@@ -272,7 +272,7 @@
 
 /obj/vehicle/sealed/mecha/proc/update_part_values() ///Updates the values given by scanning module and capacitor tier, called when a part is removed or inserted.
 	if(scanmod)
-		normal_step_energy_drain = 20 - (5 * scanmod.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best
+		normal_step_energy_drain = initial(normal_step_energy_drain) * (1.5 / (scanmod.rating - 0.5)) //movement power cost is 3x of default at T1, 1x at T2, 0.6x at T3 and 0.4x at T4
 		step_energy_drain = normal_step_energy_drain
 	else
 		normal_step_energy_drain = 500
@@ -641,6 +641,9 @@
 	if(!Process_Spacemove(direction))
 		return FALSE
 	if(!has_charge(step_energy_drain))
+		if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MESSAGE))
+			to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Insufficient power to move!</span>")
+			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
 		return FALSE
 	if(zoom_mode)
 		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Unable to move while in zoom mode!</span>")
@@ -651,7 +654,7 @@
 	if(!scanmod || !capacitor)
 		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Missing [scanmod? "capacitor" : "scanning module"].</span>")
 		return FALSE
-	if(lavaland_only && is_mining_level(z))
+	if(lavaland_only && !is_mining_level(z))
 		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Invalid Environment.</span>")
 		return FALSE
 
@@ -683,6 +686,7 @@
 			return TRUE
 
 	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
+	use_power(step_energy_drain)
 	//Otherwise just walk normally
 	. = step(src,direction, dir)
 

@@ -2280,7 +2280,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/arena_source)
 "fX" = (
-/turf/closed/indestructible/riveted,
+/turf/closed/indestructible/start_area,
 /area/start)
 "fY" = (
 /obj/effect/landmark/start/new_player,

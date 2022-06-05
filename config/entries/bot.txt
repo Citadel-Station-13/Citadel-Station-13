@@ -1,0 +1,17 @@
+## Chat Announce Options
+## Various messages to be sent to game chats
+## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS4
+## If using TGS4, the string option can be set as a chat channel tag to limit the message to channels of that tag type (case-sensitive)
+## i.e. CHAT_ANNOUNCE_NEW_GAME chat_channel_tag
+
+## Announcements for when a new round begins.
+#CHAT_ANNOUNCE_NEW_GAME
+
+## Announcements for when the round ends, pending server reboot.
+#CHAT_ROUNDEND_NOTICE_TAG
+
+## For where should the one true bird speak?
+#CHAT_SQUAWK_TAG
+
+## Role ID that, when present, will be pinged every round end.
+#CHAT_REBOOT_ROLE

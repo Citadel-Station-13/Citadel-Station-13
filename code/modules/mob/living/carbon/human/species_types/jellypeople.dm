@@ -17,6 +17,7 @@
 	exotic_blood = /datum/reagent/blood/jellyblood
 	exotic_bloodtype = "GEL"
 	exotic_blood_color = "BLOOD_COLOR_SLIME"
+	exotic_blood_blend_mode = BLEND_DEFAULT
 	damage_overlay_type = ""
 	liked_food = TOXIC | MEAT
 	disliked_food = null
@@ -31,6 +32,7 @@
 	species_category = SPECIES_CATEGORY_JELLY
 	wings_icons = SPECIES_WINGS_JELLY
 	ass_image = 'icons/ass/assslime.png'
+	blacklisted_quirks = list(/datum/quirk/glass_bones)
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	C.faction -= "slime"
