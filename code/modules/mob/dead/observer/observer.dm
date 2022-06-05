@@ -535,7 +535,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/stop_orbit(datum/component/orbiter/orbits)
 	. = ..()
 	//restart our floating animation after orbit is done.
-	pixel_y = 0
+	pixel_z = 0
 	animate(src, pixel_z = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_z = -4, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
 
