@@ -473,3 +473,21 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	gain_text = "<span class='notice'>You can't smell anything!</span>"
 	lose_text = "<span class='notice'>You can smell again!</span>"
 	medical_record_text = "Patient suffers from anosmia and is incapable of smelling gases or particulates."
+
+/datum/quirk/paper_skin
+	name = "Paper Skin"
+	desc = "Your flesh is weaker, resulting in receiving cuts more easily."
+	value = -1
+	mob_trait = TRAIT_PAPER_SKIN
+	gain_text = "<span class='notice'>Your flesh feels weak!</span>"
+	lose_text = "<span class='notice'>Your flesh feels more durable!</span>"
+	medical_record_text = "Patient suffers from weak flesh, resulting in them receiving cuts far more easily."
+
+/datum/quirk/glass_bones
+	name = "Glass Bones"
+	desc = "Your bones are far more brittle, and more vulnerable to breakage."
+	value = -1
+	mob_trait = TRAIT_GLASS_BONES
+	gain_text = "<span class='notice'>Your bones feels weak!</span>"
+	lose_text = "<span class='notice'>Your bones feels more durable!</span>"
+	medical_record_text = "Patient suffers from brittle bones, resulting in them receiving breakages far more easily."
