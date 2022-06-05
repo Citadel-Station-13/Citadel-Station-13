@@ -212,6 +212,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 	// airlock_wires = /datum/wires/airlock/maint
 	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED
+	minimap_color = "#454545"
 
 //Maintenance - Departmental
 
@@ -435,6 +436,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway
 	nightshift_public_area = NIGHTSHIFT_AREA_PUBLIC
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	minimap_color = "#aaaaaa"
 
 /area/hallway/primary
 	name = "Primary Hallway"
@@ -490,6 +492,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway/secondary/exit
 	name = "Escape Shuttle Hallway"
 	icon_state = "escape"
+	minimap_color = "#baa0a0"
 
 /area/hallway/secondary/exit/departure_lounge
 	name = "Departure Lounge"
@@ -498,6 +501,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway/secondary/entry
 	name = "Arrival Shuttle Hallway"
 	icon_state = "entry"
+	minimap_color = "#a0a0ba"
 
 /area/hallway/secondary/service
 	name = "Service Hallway"
