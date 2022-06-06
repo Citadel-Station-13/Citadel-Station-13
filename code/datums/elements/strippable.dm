@@ -290,12 +290,12 @@
 
 /// A utility function for `/datum/strippable_item`s to start unequipping an item from a mob.
 /proc/start_unequip_mob(obj/item/item, mob/source, mob/user, strip_delay)
-	var/strip_mod
+	var/strip_mod = 1
 	var/obj/item/clothing/gloves/gloves = user.get_item_by_slot(ITEM_SLOT_GLOVES)
 	if(istype(gloves))
 		strip_mod = gloves.strip_mod
 
-	if (!do_mob(user, source, strip_mod || strip_delay || item.strip_delay, ignorehelditem = TRUE))
+	if (!do_mob(user, source, (strip_delay || item.strip_delay) / strip_mod, ignorehelditem = TRUE))
 		return FALSE
 
 	return TRUE
