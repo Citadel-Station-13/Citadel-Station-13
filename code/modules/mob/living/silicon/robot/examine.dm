@@ -49,6 +49,9 @@
 		if(DEAD)
 			. += "<span class='deadsay'>It looks like its system is corrupted and requires a reset.</span>"
 
+	if(LAZYLEN(.) > 1)
+		.[2] = "<hr>[.[2]]"
+
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, usr, .)
 
 	. += ..()

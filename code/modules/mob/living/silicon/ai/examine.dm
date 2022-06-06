@@ -18,4 +18,7 @@
 		else if (!shunted && !client)
 			. += "[src]Core.exe has stopped responding! NTOS is searching for a solution to the problem..."
 
+	if(LAZYLEN(.) > 1)
+		.[2] = "<hr>[.[2]]"
+
 	. += ..()

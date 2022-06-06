@@ -109,3 +109,13 @@ blockquote {
   margin-left: 0.3em;
   margin-right: 0em;
 }
+
+hr {
+  background-color: rgba($text-color, 0.25);
+  height: 0.15em;
+  border-style: none;
+  margin-left: 1em;
+  margin-right: 2em;
+  margin-bottom: 0.3em;
+  margin-top: 0.3em;
+}
