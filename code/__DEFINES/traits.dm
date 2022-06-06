@@ -233,6 +233,8 @@
 #define TRAIT_TRASHCAN					"trashcan"
 ///Used for fireman carry to have mobe not be dropped when passing by a prone individual.
 #define TRAIT_BEING_CARRIED "being_carried"
+#define TRAIT_GLASS_BONES "glass_bones"
+#define TRAIT_PAPER_SKIN "paper_skin"
 
 // mobility flag traits
 // IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)

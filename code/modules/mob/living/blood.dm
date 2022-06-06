@@ -193,6 +193,7 @@
 
 	blood_data["blood_DNA"] = dna.unique_enzymes
 	blood_data["bloodcolor"] = dna.species.exotic_blood_color
+	blood_data["bloodblend"] = dna.species.exotic_blood_blend_mode
 	if(disease_resistances && disease_resistances.len)
 		blood_data["resistances"] = disease_resistances.Copy()
 	var/list/temp_chem = list()
@@ -264,7 +265,7 @@
 		"O-" = list("O-","SY"),
 		"O+" = list("O-", "O+","SY"),
 		"L" = list("L","SY"),
-		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U","SY"),
+		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U","SY", "BUG"),
 		"HF" = list("HF", "SY"),
 		"X*" = list("X*", "SY"),
 		"SY" = list("SY"),

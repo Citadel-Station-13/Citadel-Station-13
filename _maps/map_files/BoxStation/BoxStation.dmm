@@ -47561,7 +47561,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/machinery/air_sensor{
+/obj/machinery/air_sensor/atmos/incinerator_tank{
 	pixel_x = -32;
 	pixel_y = -32
 	},
@@ -54648,6 +54648,7 @@
 /obj/structure/sign/poster/contraband/robust_softdrinks{
 	pixel_y = 32
 	},
+/obj/machinery/vending/snack/orange,
 /turf/open/floor/wood,
 /area/service/bar)
 "fZm" = (
@@ -57436,10 +57437,10 @@
 /turf/open/floor/plasteel/dark,
 /area/security/prison/cells)
 "kgB" = (
-/obj/machinery/vending/snack/orange,
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/jukebox,
 /turf/open/floor/wood,
 /area/service/bar)
 "khb" = (

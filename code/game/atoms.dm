@@ -701,7 +701,7 @@
 	var/blood_id = get_blood_id()
 	if(!(blood_id in GLOB.blood_reagent_types))
 		return
-	return list("color" = BLOOD_COLOR_HUMAN, "ANIMAL DNA" = "Y-")
+	return list("color" = BLOOD_COLOR_HUMAN, "blendmode" = BLEND_MULTIPLY, "ANIMAL DNA" = "Y-")
 
 /mob/living/carbon/get_blood_dna_list()
 	var/blood_id = get_blood_id()
@@ -710,14 +710,16 @@
 	var/list/blood_dna = list()
 	if(dna)
 		blood_dna["color"] = dna.species.exotic_blood_color //so when combined, the list grows with the number of colors
+		blood_dna["blendmode"] = dna.species.exotic_blood_blend_mode
 		blood_dna[dna.unique_enzymes] = dna.blood_type
 	else
 		blood_dna["color"] = BLOOD_COLOR_HUMAN
+		blood_dna["blendmode"] = BLEND_MULTIPLY
 		blood_dna["UNKNOWN DNA"] = "X*"
 	return blood_dna
 
 /mob/living/carbon/alien/get_blood_dna_list()
-	return list("color" = BLOOD_COLOR_XENO, "UNKNOWN DNA" = "X*")
+	return list("color" = BLOOD_COLOR_XENO, "blendmode" = BLEND_MULTIPLY, "UNKNOWN DNA" = "X*")
 
 //to add a mob's dna info into an object's blood_DNA list.
 /atom/proc/transfer_mob_blood_dna(mob/living/L)
@@ -736,6 +738,7 @@
 		var/old = blood_DNA["color"]
 		blood_DNA["color"] = BlendRGB(blood_DNA["color"], new_blood_dna["color"])
 		changed = old != blood_DNA["color"]
+	blood_DNA["blendmode"] = new_blood_dna["blendmode"]
 	if(blood_DNA.len == old_length)
 		return FALSE
 	return changed
@@ -755,6 +758,7 @@
 			blood_DNA["color"] = blood_dna["color"]
 		else
 			blood_DNA["color"] = BlendRGB(blood_DNA["color"], blood_dna["color"])
+		blood_DNA["blendmode"] = blood_dna["blendmode"]
 
 //to add blood from a mob onto something, and transfer their dna info
 /atom/proc/add_mob_blood(mob/living/M)
@@ -824,6 +828,11 @@
 
 /atom/proc/blood_DNA_to_color()
 	return (blood_DNA && blood_DNA["color"]) || BLOOD_COLOR_HUMAN
+
+/atom/proc/blood_DNA_to_blend()
+	if(blood_DNA && !isnull(blood_DNA["blendmode"]))
+		return blood_DNA["blendmode"]
+	return BLEND_MULTIPLY
 
 /atom/proc/clean_blood()
 	. = blood_DNA? TRUE : FALSE
@@ -1191,6 +1200,8 @@
 			log_mecha(log_text)
 		if(LOG_SHUTTLE)
 			log_shuttle(log_text)
+		if(LOG_ECON)
+			log_econ(log_text)
 		else
 			stack_trace("Invalid individual logging type: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
 			log_game(log_text)

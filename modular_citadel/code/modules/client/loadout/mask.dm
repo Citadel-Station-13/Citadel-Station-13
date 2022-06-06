@@ -15,6 +15,16 @@
 	path = /obj/item/clothing/mask/joy
 	cost = 3
 
+/datum/gear/mask/kitsune
+	name = "White Kitsune Mask"
+	path = /obj/item/clothing/mask/kitsunewhi
+	cost = 2
+
+/datum/gear/mask/black_kitsune
+	name = "Black Kitsune Mask"
+	path = /obj/item/clothing/mask/kitsuneblk
+	cost = 2
+
 /datum/gear/mask/gas
 	name = "Gas Mask"
 	path = /obj/item/clothing/mask/gas

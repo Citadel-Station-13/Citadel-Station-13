@@ -15,6 +15,7 @@
 $include entries/admin.txt
 $include entries/alert.txt
 $include entries/antag_rep.txt
+$include entries/bot.txt
 $include entries/comms.txt
 $include entries/connections.txt
 $include entries/dbconfig.txt

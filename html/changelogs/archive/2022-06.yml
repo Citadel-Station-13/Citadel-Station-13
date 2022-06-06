@@ -1,0 +1,63 @@
+2022-06-01:
+  DeltaFire15:
+  - bugfix: Mechs now use power when moving.
+  - bugfix: The check for mining-only mechs is no longer inverted to only allow non-mining
+      z levels.
+  - bugfix: Reverted an accidental buff from the /tg/ mech code port and its adjustment
+      to citadel's mech state.
+  - bugfix: 'Mechs with different base movement power cost now actually have it apply
+      instead of immediately being overwritten. tweak: Adjusted part impact on movement
+      power use to make more sense.'
+  timothyteakettle:
+  - rscadd: 'optimises quirks somewhat tweak: nyctophobia will now stop run intent
+      when you try to move in darkness with it on, compared to the old behaviour of
+      automatically turning it off in darkness when it is on and you have been in
+      darkness for >= 0.2 seconds tweak: nyctophobia and lightless will both not update
+      your mood until you move now, as part of the optimisations made by changing
+      them to tg code'
+2022-06-02:
+  Bhijn & Myr:
+  - bugfix: You can no longer attach multiple tracking beacons to a single mech, fixing
+      an exploit where mechs can be nuked with minimal effort.
+  - bugfix: Omegastation's airmix filter is no longer inverted! The oxygen:nitrogen
+      levels of Omega later in the round should now be normal again.
+  - rscadd: 'The TGS bot is now capable of pinging the reboot role! Rejoice! tweak:
+      The TGS bot''s automated output can now be configured to define which channels
+      certain messages are output to.'
+  - rscadd: Jukeboxes now have a queue! You can pay 40 credits to have any song of
+      your choosing queued up for playback on the jukebox!
+  - rscadd: Jukeboxes can now be emagged, allowing you to boost their volume up to
+      210%, along with removing all of its access restrictions. Additionally, a sufficiently
+      loud jukebox is fully capable of causing potentially permanent damage to your
+      ears.
+  - rscadd: 'Jukeboxes now support multi-z! This is self-explanatory. tweak: Volume
+      knobs now work on jukeboxes! tweak: Muffled jukeboxes have been given a buff.
+      tweak: Sounds now factor in the distance multiplier for their baseline z offset.
+      tweak: SOUND_UPDATE now bypasses the can_hear() check in playsound_local() (thanks
+      Azarak for helping figure this out!)'
+  - bugfix: 'Jukebox audio no longer uses playsound_local(), allowing falloff to properly
+      apply to jukeboxes (this fixes the bug where they were significantly quieter
+      than intended) tweak: When deaf, jukeboxes no longer mute the playing track
+      permanently.'
+  - bugfix: Ears are capable of taking damage again.
+  - rscadd: Jukeboxes have been added to Boxstation, Lambdastation, Metastation, and
+      Omegastation
+  - bugfix: Boxstation's incinerator sensor now properly reports to atmos's machinery
+      again
+  Putnam3145:
+  - balance: Nitryl is higher risk, can't be sold for as much
+  - refactor: Gas prices are now part of the gas data structure
+  TrojanCoyote:
+  - rscadd: sprites for muzzled and non muzzled mobs for the masks, along with the
+      adjusted versions, icons for the masks as well.
+  bunny232:
+  - rscadd: Universal blood type now accepts bug blood.
+2022-06-03:
+  Bhijn & Myr:
+  - bugfix: Solar panels now actually face the proper direction. This is achieved
+      by reducing the iconstate to only 1 dir.
+2022-06-06:
+  SandPoot:
+  - refactor: Completely replaces the new player panel *not the admin one* with TG's.
+  timothyteakettle:
+  - rscadd: adds paper skin and glass bones quirks

@@ -925,8 +925,8 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 /mob/living/simple_animal/parrot/Poly/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	. = ..()
-	if(. && !client && prob(1) && prob(1)) //Only the one true bird may speak across dimensions.
-		world.TgsTargetedChatBroadcast("A stray squawk is heard... \"[message]\"", FALSE)
+	if(. && !client && prob(1) && prob(1) && CONFIG_GET(string/chat_squawk_tag)) //Only the one true bird may speak across dimensions.
+		send2chat("A stray squawk is heard... \"[message]\"", CONFIG_GET(string/chat_squawk_tag))
 
 /mob/living/simple_animal/parrot/Poly/BiologicalLife(seconds, times_fired)
 	if(!(. = ..()))

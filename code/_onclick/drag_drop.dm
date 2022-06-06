@@ -101,14 +101,6 @@
 	..()
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
-	var/list/L = params2list(params)
-	if (L["middle"])
-		if (src_object && src_location != over_location)
-			middragtime = world.time
-			middragatom = src_object
-		else
-			middragtime = 0
-			middragatom = null
 	mouseParams = params
 	mouseLocation = over_location
 	mouseObject = over_object
@@ -121,9 +113,3 @@
 
 /obj/item/proc/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	return
-
-/client/MouseDrop(src_object, over_object, src_location, over_location, src_control, over_control, params)
-	if (middragatom == src_object)
-		middragtime = 0
-		middragatom = null
-	..()

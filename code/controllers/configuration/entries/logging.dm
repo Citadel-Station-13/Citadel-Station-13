@@ -79,6 +79,10 @@
 /datum/config_entry/flag/log_telecomms
 	config_entry_value = TRUE
 
+/// log economy
+/datum/config_entry/flag/log_econ
+	config_entry_value = TRUE
+
 /// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
 /datum/config_entry/flag/log_twitter
 	config_entry_value = TRUE

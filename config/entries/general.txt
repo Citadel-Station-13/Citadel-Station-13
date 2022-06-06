@@ -31,15 +31,6 @@ ALLOW_HOLIDAYS
 ## Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
 #SHOW_IRC_NAME
 
-## Chat Announce Options
-## Various messages to be sent to game chats
-## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS4
-## If using TGS4, the string option can be set as a chat channel tag to limit the message to channels of that tag type (case-sensitive)
-## i.e. CHAT_ANNOUNCE_NEW_GAME chat_channel_tag
-
-## Send a message with the station name starting a new game
-#CHAT_ANNOUNCE_NEW_GAME
-
 ##Default screen resolution, in tiles.
 ##	By default, this is 15x15, which gets simplified to 7 by BYOND, as it is a 1:1 screen ratio.
 ##	For reference, Goonstation uses a resolution of 21x15 for it's widescreen mode.

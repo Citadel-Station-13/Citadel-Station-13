@@ -65625,6 +65625,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/service/chapel/main)
+"mWS" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/machinery/jukebox,
+/turf/open/floor/plasteel,
+/area/service/bar)
 "mXi" = (
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain/private)
@@ -119794,7 +119802,7 @@ teZ
 teZ
 wbZ
 hCA
-msI
+mWS
 pzY
 kPZ
 upO

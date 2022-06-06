@@ -13600,14 +13600,7 @@
 /turf/open/floor/plasteel,
 /area/service/bar/atrium)
 "ayN" = (
-/obj/item/storage/fancy/cigarettes/cigars{
-	pixel_y = 6
-	},
-/obj/item/storage/fancy/cigarettes/cigars/cohiba{
-	pixel_y = 3
-	},
-/obj/item/storage/fancy/cigarettes/cigars/havana,
-/obj/structure/table/reinforced,
+/obj/machinery/jukebox,
 /turf/open/floor/plasteel/dark/corner{
 	dir = 4
 	},
@@ -13618,6 +13611,13 @@
 	pixel_x = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/storage/fancy/cigarettes/cigars/havana,
+/obj/item/storage/fancy/cigarettes/cigars/cohiba{
+	pixel_y = 3
+	},
+/obj/item/storage/fancy/cigarettes/cigars{
+	pixel_y = 6
+	},
 /turf/open/floor/plasteel/dark/side{
 	dir = 1
 	},
@@ -16375,9 +16375,8 @@
 /area/hallway/secondary/exit)
 "aEg" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/inverse{
-	dir = 4;
-	name = "air mixer"
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped{
+	dir = 4
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -84763,7 +84762,7 @@ awp
 awX
 axR
 ayN
-aue
+asg
 blj
 aCb
 aCe

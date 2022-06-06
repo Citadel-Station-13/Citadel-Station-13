@@ -14,6 +14,7 @@
 	/// should we immediately call on_spawn or add a timer to trigger
 	var/on_spawn_immediate = TRUE
 	var/mob/living/quirk_holder
+	var/processing_quirk = FALSE
 
 /datum/quirk/New(mob/living/quirk_mob, spawn_effects)
 	if(!quirk_mob || (human_only && !ishuman(quirk_mob)) || quirk_mob.has_quirk(type))
@@ -25,7 +26,8 @@
 	quirk_holder.roundstart_quirks += src
 	if(mob_trait)
 		ADD_TRAIT(quirk_holder, mob_trait, ROUNDSTART_TRAIT)
-	START_PROCESSING(SSquirks, src)
+	if(processing_quirk)
+		START_PROCESSING(SSquirks, src)
 	add()
 	if(spawn_effects)
 		if(on_spawn_immediate)
@@ -35,7 +37,8 @@
 		addtimer(CALLBACK(src, .proc/post_add), 30)
 
 /datum/quirk/Destroy()
-	STOP_PROCESSING(SSquirks, src)
+	if(processing_quirk)
+		STOP_PROCESSING(SSquirks, src)
 	remove()
 	if(quirk_holder)
 		to_chat(quirk_holder, lose_text)
