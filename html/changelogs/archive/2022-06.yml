@@ -56,3 +56,8 @@
   Bhijn & Myr:
   - bugfix: Solar panels now actually face the proper direction. This is achieved
       by reducing the iconstate to only 1 dir.
+2022-06-06:
+  SandPoot:
+  - refactor: Completely replaces the new player panel *not the admin one* with TG's.
+  timothyteakettle:
+  - rscadd: adds paper skin and glass bones quirks
