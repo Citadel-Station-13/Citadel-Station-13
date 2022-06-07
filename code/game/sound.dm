@@ -110,7 +110,11 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 */
 
 /mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/S, max_distance,
-	falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = SOUND_DEFAULT_DISTANCE_MULTIPLIER, envwet = -10000, envdry = 0)
+	falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = SOUND_DEFAULT_DISTANCE_MULTIPLIER, envwet = -10000, envdry = 0, virtual_hearer)
+	if(audiovisual_redirect)
+		virtual_hearer = get_turf(src)
+		audiovisual_redirect.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, max_distance, falloff_distance, distance_multiplier, max(0, envwet), -10000, virtual_hearer)
+		//No return here, as we want to deliberately support the possibility of shenanigans in which mobs with clients can have active AV redirects to completely different players
 	if(!client)
 		return
 
@@ -134,7 +138,7 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 			S.frequency = get_rand_frequency()
 
 	if(isturf(turf_source))
-		var/turf/T = get_turf(src)
+		var/turf/T = virtual_hearer || get_turf(src)
 
 		//sound volume falloff with distance
 		var/distance = get_dist(T, turf_source)

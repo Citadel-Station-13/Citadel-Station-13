@@ -138,7 +138,7 @@
 		return
 	hearers -= ignored_mobs
 
-	if(target_message && target && istype(target) && target.client)
+	if(target_message && target && istype(target) && (target.client || target.audiovisual_redirect))
 		hearers -= target
 		if(omni)
 			target.show_message(target_message)
@@ -155,7 +155,7 @@
 	if(self_message)
 		hearers -= src
 	for(var/mob/M in hearers)
-		if(!M.client)
+		if(!M.client && !M.audiovisual_redirect)
 			continue
 		if(omni)
 			M.show_message(message)

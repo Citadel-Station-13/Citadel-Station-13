@@ -238,7 +238,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args) //parent calls can't overwrite the current proc args.
-	if(!client)
+	if(!client && !audiovisual_redirect)
 		return
 	var/deaf_message
 	var/deaf_type
