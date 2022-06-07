@@ -6,6 +6,7 @@
 	products = list(/obj/item/vended_monkey = 6)
 	refill_canister = /obj/item/vending_refill/monkey
 	payment_department = ACCOUNT_MED
+	cost_multiplier_per_dept = list(ACCOUNT_SCI = 0)
 
 // temporary monkey item that is dispensed onto the floor and then deletes itself, spawning a monkey
 /obj/item/vended_monkey
