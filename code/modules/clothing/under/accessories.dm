@@ -557,5 +557,3 @@
 	obj_flags = UNIQUE_RENAME
 	custom_materials = list(/datum/material/iron=100)
 	resistance_flags = FIRE_PROOF
-
-/
