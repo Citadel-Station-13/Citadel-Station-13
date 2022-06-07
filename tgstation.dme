@@ -154,6 +154,8 @@
 #include "code\__DEFINES\dcs\helpers.dm"
 #include "code\__DEFINES\dcs\signals.dm"
 #include "code\__DEFINES\dcs\signals\signals_subsystem.dm"
+#include "code\__DEFINES\dcs\signals\signals_atom\signals_atom_movement.dm"
+#include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_living.dm"
 #include "code\__DEFINES\mapping\maploader.dm"
 #include "code\__DEFINES\material\worth.dm"
 #include "code\__DEFINES\mobs\innate_abilities.dm"
