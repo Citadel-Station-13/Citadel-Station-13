@@ -1176,25 +1176,22 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 	var/initialpixely = pixel_y
 	var/shiftx = rand(-pixelshiftx,pixelshiftx)
 	var/shifty = rand(-pixelshifty,pixelshifty)
-	animate(src, pixel_x = pixel_x + shiftx, pixel_y = pixel_y + shifty, time = 0.2, loop = duration)
-	pixel_x = initialpixelx
-	pixel_y = initialpixely
+	animate(src, pixel_x = shiftx, pixel_y = shifty, time = 0.2, loop = duration, flags = ANIMATION_RELATIVE)
+	animate(pixel_x = initialpixelx, pixel_y = initialpixely, time = 0.2)
 
-/atom/proc/do_jiggle(targetangle = 45, timer = 20)
+/atom/proc/do_jiggle(targetangle = 25, timer = 20)
 	var/matrix/OM = matrix(transform)
 	var/matrix/M = matrix(transform)
-	var/halftime = timer * 0.5
 	M.Turn(pick(-targetangle, targetangle))
-	animate(src, transform = M, time = halftime, easing = ELASTIC_EASING)
-	animate(src, transform = OM, time = halftime, easing = ELASTIC_EASING)
+	animate(src, transform = M, time = timer * 0.1, easing = BACK_EASING | EASE_IN)
+	animate(transform = OM, time = timer * 0.4, easing = ELASTIC_EASING)
 
 /atom/proc/do_squish(squishx = 1.2, squishy = 0.6, timer = 20)
 	var/matrix/OM = matrix(transform)
 	var/matrix/M = matrix(transform)
-	var/halftime = timer * 0.5
 	M.Scale(squishx, squishy)
-	animate(src, transform = M, time = halftime, easing = BOUNCE_EASING)
-	animate(src, transform = OM, time = halftime, easing = BOUNCE_EASING)
+	animate(src, transform = M, time = timer * 0.5, easing = ELASTIC_EASING)
+	animate(transform = OM, time = timer * 0.5, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
 
 /proc/weightclass2text(var/w_class)
 	switch(w_class)

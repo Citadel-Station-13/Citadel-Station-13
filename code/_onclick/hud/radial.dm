@@ -178,7 +178,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		starting.Scale(0.1,0.1)
 		E.transform = starting
 		var/matrix/TM = matrix()
-		animate(E,pixel_x = px,pixel_y = py, transform = TM, time = timing)
+		animate(E,pixel_x = px,pixel_y = py, transform = TM, time = timing, easing = SINE_EASING | EASE_OUT)
 	else
 		E.pixel_y = py
 		E.pixel_x = px

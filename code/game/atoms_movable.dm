@@ -604,11 +604,11 @@
 	if(throwing && !throw_override)
 		return
 	if(on && !(movement_type & FLOATING))
-		animate(src, pixel_y = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
-		animate(pixel_y = -2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
+		animate(src, pixel_z = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
+		animate(pixel_z = -4, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
 		setMovetype(movement_type | FLOATING)
 	else if (!on && (movement_type & FLOATING))
-		animate(src, pixel_y = initial(pixel_y), time = 10)
+		animate(src, pixel_z = initial(pixel_y), time = 10)
 		setMovetype(movement_type & ~FLOATING)
 	floating_need_update = FALSE // assume it's done
 
@@ -774,4 +774,4 @@
 	M.Turn(pick(-30, 30))
 	animate(I, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 3, transform = M, easing = CUBIC_EASING)
 	sleep(1)
-	animate(I, alpha = 0, transform = matrix(), time = 1)
+	animate(I, alpha = 0, transform = matrix(), time = 1, flags = ANIMATION_PARALLEL)
