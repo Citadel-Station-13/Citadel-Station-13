@@ -10,12 +10,12 @@
 	icon_state = "glassbottle"
 	worn_icon_state = "bottle"
 	fill_icon_thresholds = list(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)
-	custom_price = PAYCHECK_CREW * 1.1
+	custom_price = PRICE_CHEAP_AS_FREE * 1.1
 	amount_per_transfer_from_this = 10
 	volume = 100
 	force = 15 //Smashing bottles over someone's head hurts.
 	throwforce = 15
-	inhand_icon_state = "beer" //Generic held-item sprite until unique ones are made.
+	item_state = "beer" //Generic held-item sprite until unique ones are made.
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	isGlass = TRUE
@@ -28,7 +28,7 @@
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
 	icon_state = "glassbottlesmall"
 	volume = 50
-	custom_price = PAYCHECK_CREW * 0.9
+	custom_price = PRICE_CHEAP_AS_FREE * 0.9
 
 /obj/item/reagent_containers/food/drinks/bottle/smash(mob/living/target, mob/thrower, ranged = FALSE)
 	if(bartender_check(target) && ranged)
@@ -118,9 +118,8 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	demolition_mod = 0.25
 	w_class = WEIGHT_CLASS_TINY
-	inhand_icon_state = "broken_beer"
+	item_state = "broken_beer"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -163,7 +162,7 @@
 	volume = 30
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 30)
 	foodtype = GRAIN | ALCOHOL
-	custom_price = PAYCHECK_CREW
+	custom_price = PRICE_CHEAP_AS_FREE
 
 /obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 1)
@@ -179,8 +178,8 @@
 	volume = 30
 	list_reagents = list(/datum/reagent/consumable/rootbeer = 30)
 	foodtype = SUGAR | JUNKFOOD
-	custom_price = PAYCHECK_CREW * 1.5
-	custom_premium_price = PAYCHECK_CREW * 2
+	custom_price = PRICE_CHEAP_AS_FREE * 1.5
+	custom_premium_price = PRICE_CHEAP_AS_FREE * 2
 
 /obj/item/reagent_containers/food/drinks/bottle/ale
 	name = "Magm-Ale"
@@ -189,7 +188,7 @@
 	volume = 30
 	list_reagents = list(/datum/reagent/consumable/ethanol/ale = 30)
 	foodtype = GRAIN | ALCOHOL
-	custom_price = PAYCHECK_CREW
+	custom_price = PRICE_CHEAP_AS_FREE
 
 /obj/item/reagent_containers/food/drinks/bottle/gin
 	name = "Griffeater gin"
@@ -237,7 +236,6 @@
 	icon_state = "bottleofnothing"
 	list_reagents = list(/datum/reagent/consumable/nothing = 100)
 	foodtype = NONE
-	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/patron
 	name = "Wrapp Artiste Patron"
@@ -256,7 +254,7 @@
 	desc = "A 40 full of malt liquor. Kicks stronger than, well, a rabid bear."
 	icon_state = "maltliquorbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer/maltliquor = 100)
-	custom_price = PAYCHECK_CREW
+	custom_price = PRICE_CHEAP_AS_FREE
 
 /obj/item/reagent_containers/food/drinks/bottle/holywater
 	name = "flask of holy water"
@@ -448,74 +446,69 @@
 /obj/item/reagent_containers/food/drinks/bottle/orangejuice
 	name = "orange juice"
 	desc = "Full of vitamins and deliciousness!"
-	custom_price = PAYCHECK_CREW
+	custom_price = PRICE_CHEAP_AS_FREE
 	icon_state = "orangejuice"
-	inhand_icon_state = "carton"
+	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/orangejuice = 100)
 	foodtype = FRUIT | BREAKFAST
-	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/cream
 	name = "milk cream"
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
-	custom_price = PAYCHECK_CREW
+	custom_price = PRICE_CHEAP_AS_FREE
 	icon_state = "cream"
-	inhand_icon_state = "carton"
+	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/cream = 100)
 	foodtype = DAIRY
-	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "tomato juice"
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
-	custom_price = PAYCHECK_CREW
+	custom_price = PRICE_CHEAP_AS_FREE
 	icon_state = "tomatojuice"
-	inhand_icon_state = "carton"
+	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/tomatojuice = 100)
 	foodtype = VEGETABLES
-	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/limejuice
 	name = "lime juice"
 	desc = "Sweet-sour goodness."
-	custom_price = PAYCHECK_CREW
+	custom_price = PRICE_CHEAP_AS_FREE
 	icon_state = "limejuice"
-	inhand_icon_state = "carton"
+	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/limejuice = 100)
 	foodtype = FRUIT
-	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/pineapplejuice
 	name = "pineapple juice"
 	desc = "Extremely tart, yellow juice."
-	custom_price = PAYCHECK_CREW
+	custom_price = PRICE_CHEAP_AS_FREE
 	icon_state = "pineapplejuice"
-	inhand_icon_state = "carton"
+	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/pineapplejuice = 100)
 	foodtype = FRUIT | PINEAPPLE
-	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/menthol
 	name = "menthol"
 	desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
-	custom_price = PAYCHECK_CREW
+	custom_price = PRICE_CHEAP_AS_FREE
 	icon_state = "mentholbox"
-	inhand_icon_state = "carton"
+	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
@@ -524,17 +517,16 @@
 /obj/item/reagent_containers/food/drinks/bottle/grenadine
 	name = "Jester Grenadine"
 	desc = "Contains 0% real cherries!"
-	custom_price = PAYCHECK_CREW
+	custom_price = PRICE_CHEAP_AS_FREE
 	icon_state = "grenadine"
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/grenadine = 100)
 	foodtype = FRUIT
-	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/applejack
 	name = "Buckin' Bronco's Applejack"
 	desc = "Kicks like a horse, tastes like an apple!"
-	custom_price = PAYCHECK_CREW
+	custom_price = PRICE_CHEAP_AS_FREE
 	icon_state = "applejack_bottle"
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/ethanol/applejack = 100)

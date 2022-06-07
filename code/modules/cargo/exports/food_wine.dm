@@ -162,19 +162,6 @@
 	unit_name = "snowcone"
 	export_types = list(/obj/item/reagent_containers/food/snacks/snowcones)
 
-/datum/export/booze/brands
-	cost = 200
-	unit_name = "export bottle"
-	export_types = list(/obj/item/export/bottle/kahlua, /obj/item/export/bottle/whiskey, /obj/item/export/bottle/vodka, /obj/item/export/bottle/gin, \
-						/obj/item/export/bottle/rum, /obj/item/export/bottle/tequila, /obj/item/export/bottle/vermouth, /obj/item/export/bottle/wine, /obj/item/export/bottle/grappa, /obj/item/export/bottle/cognac, \
-						/obj/item/export/bottle/absinthe, /obj/item/export/bottle/goldschlager, /obj/item/export/bottle/patron, /obj/item/export/bottle/sake, /obj/item/export/bottle/hcider, /obj/item/export/bottle/champagne, \
-						/obj/item/export/bottle/applejack, /obj/item/export/bottle/trappist, /obj/item/export/bottle/blazaam, /obj/item/export/bottle/grenadine, /obj/item/export/bottle/fernet)
-
-/datum/export/booze/bottled
-	cost = 400
-	unit_name = "exotic brews"
-	export_types = list(/obj/item/export/bottle/blooddrop, /obj/item/export/bottle/slim_gold, /obj/item/export/bottle/white_bloodmoon, /obj/item/export/bottle/greenroad)
-
 /datum/export/booze/bottledkeg
 	cost = 250
 	unit_name = "exotic brews"
