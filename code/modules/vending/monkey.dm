@@ -21,7 +21,7 @@
 
 /obj/item/vending_refill/monkey
 	machine_name = "Monkey Vendor"
-	icon_state = "refill_cola????????" // um????? we dont have a sprite????
+	icon_state = "refill_monkey"
 
 /obj/machinery/vending/monkey/advertise()
 	// shake
