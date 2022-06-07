@@ -295,4 +295,4 @@
 	powermix = -1
 	transmit_modifier = -10
 	heat_penalty = -10
-	price = 10
+	price = 100 // it's kinda really hard to actually get it into a canister

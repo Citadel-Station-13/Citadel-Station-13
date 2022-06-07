@@ -759,7 +759,18 @@
 	var/initial_energy = air.thermal_energy()
 	for(var/g in air.get_gases())
 		air.set_moles(g, 0)
-	air.set_moles(GAS_QCD, initial_energy / (air.return_temperature() * GLOB.gas_data.specific_heats[GAS_QCD]))
+	var/amount = initial_energy / (air.return_temperature() * GLOB.gas_data.specific_heats[GAS_QCD])
+	air.set_moles(GAS_QCD, amount)
+	var/list/largest_values = SSresearch.science_tech.largest_values
+	if(!(GAS_QCD in largest_values))
+		largest_values[GAS_QCD] = 0
+	var/previous_largest = largest_values[GAS_QCD]
+	var/research_amount = amount * QCD_RESEARCH_AMOUNT
+	if(previous_largest < research_amount)
+		SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, research_amount)
+		largest_values[GAS_QCD] = research_amount
+	else
+		SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, research_amount / 100)
 
 /datum/gas_reaction/dehagedorn
 	priority = 50
@@ -781,11 +792,10 @@
 	var/list/gases = GLOB.gas_data.specific_heats.Copy()
 	gases -= GAS_QCD
 	gases -= GAS_TRITIUM // no refusing sorry
-	for(var/g in gases)
-		gases[g] = 10000 / gases[g]
+	gases -= GAS_HYPERNOB // makes it waaay too easy to stabilize it
 	while(energy_remaining > 0)
 		var/G = pick(gases)
 		air.adjust_moles(G, max(0.1, energy_remaining / (gases[G] * new_temp * 20)))
 		energy_remaining = initial_energy - air.thermal_energy()
-	air.adjust_heat(-energy_remaining)
+	air.set_temperature(initial_energy / air.heat_capacity())
 	return REACTING
