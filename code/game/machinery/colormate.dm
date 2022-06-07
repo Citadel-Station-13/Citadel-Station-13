@@ -79,7 +79,6 @@
 			return
 		if(!QDELETED(H))
 			H.release()
-		user.visible_message("<span class='notice'>[user] stuffs [I] into [src]'s receptable! Oh dear.</span>")
 
 		insert_mob(victim, user)
 		SStgui.update_uis(src)
