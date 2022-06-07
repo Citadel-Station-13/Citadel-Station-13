@@ -17,7 +17,7 @@
 /datum/chemical_reaction/drink/bilk
 	results = list(/datum/reagent/consumable/ethanol/bilk = 2)
 	required_reagents = list(/datum/reagent/consumable/milk = 1, /datum/reagent/consumable/ethanol/beer = 1)
-	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_BRUTE
+	//reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_BRUTE
 
 /datum/chemical_reaction/drink/icetea
 	results = list(/datum/reagent/consumable/icetea = 4)

@@ -153,6 +153,7 @@
 #include "code\__DEFINES\dcs\flags.dm"
 #include "code\__DEFINES\dcs\helpers.dm"
 #include "code\__DEFINES\dcs\signals.dm"
+#include "code\__DEFINES\dcs\signals\signals_food.dm"
 #include "code\__DEFINES\dcs\signals\signals_subsystem.dm"
 #include "code\__DEFINES\mapping\maploader.dm"
 #include "code\__DEFINES\material\worth.dm"

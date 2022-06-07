@@ -90,3 +90,8 @@
 GLOBAL_LIST_INIT(blacklisted_medchems, list(
 	/datum/reagent/medicine/morphine, /datum/reagent/medicine/haloperidol,	//harmful chemicals in medicine
 	))
+
+#define GOLDSCHLAGER_VODKA (10)
+#define GOLDSCHLAGER_GOLD (1)
+
+#define GOLDSCHLAGER_GOLD_RATIO (GOLDSCHLAGER_GOLD/(GOLDSCHLAGER_VODKA+GOLDSCHLAGER_GOLD))
