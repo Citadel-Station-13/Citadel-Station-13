@@ -854,7 +854,7 @@
 	required_reagents = list(/datum/reagent/consumable/ethanol/alliescocktail = 50, /datum/reagent/consumable/ethanol/champagne = 20, /datum/reagent/consumable/doctor_delight = 10, /datum/reagent/consumable/ethanol/quintuple_sec = 10, /datum/reagent/consumable/ethanol/screwdrivercocktail = 10)
 	mix_message = "When your powers combine, I am Captain Pl-..."
 
--////////////////////////////////////////// Tea  Base Drinks //////////////////////////////////////
+////////////////////////////////////////// Tea  Base Drinks //////////////////////////////////////
 
 /datum/chemical_reaction/mush
 	name = "Mush Tea"

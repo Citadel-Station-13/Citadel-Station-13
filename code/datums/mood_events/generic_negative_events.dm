@@ -335,3 +335,8 @@
 	description = "<span class='warning'>Those darn savages!</span>\n"
 	mood_change = -5
 	timeout = 2 MINUTES
+
+/datum/mood_event/soda_spill
+	description = "Cool! That's fine, I wanted to wear that soda, not drink it..."
+	mood_change = -2
+	timeout = 1 MINUTES
