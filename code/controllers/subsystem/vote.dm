@@ -320,11 +320,11 @@ SUBSYSTEM_DEF(vote)
 				admintext += "\nIt should be noted that this is not a raw tally of votes but rather the median score plus a tiebreaker!"
 			for(var/i=1,i<=choices.len,i++)
 				var/votes = choices[choices[i]]
-				admintext += "\n<b>[choices[i]]:</b> [votes]"
+				admintext += "\n<b>[choices[i]]:</b> [votes ? votes : "0"]" //This is raw data, but the raw data is null by default. If ya don't compensate for it, then it'll look weird!
 		else
 			for(var/i=1,i<=scores.len,i++)
 				var/score = scores[scores[i]]
-				admintext += "\n<b>[scores[i]]:</b> [score]"
+				admintext += "\n<b>[scores[i]]:</b> [score ? score : "0"]"
 		message_admins(admintext)
 	return .
 
