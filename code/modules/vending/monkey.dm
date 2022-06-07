@@ -11,6 +11,8 @@
 	name = "vended monkey"
 	desc = "If you're seeing this, the coders made a mistake!"
 	item_flags = ABSTRACT // this stops it being placed into the user's hand by failing a can_put_in_hand check
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "valuechimp"
 
 /obj/item/vended_monkey/Initialize()
 	. = ..()
@@ -22,4 +24,9 @@
 	icon_state = "refill_cola????????" // um????? we dont have a sprite????
 
 /obj/machinery/vending/monkey/advertise()
-	// shake and make monkey noises instead
+	// shake
+	do_jiggle()
+	// make monkey noises
+	playsound(loc, 'modular_citadel/sound/voice/scream_monkey.ogg', 30, 1, 3, 1.2) // slightly quieter than a normal scream
+	// chat effect
+	visible_message("<span class='danger'>[src] shakes violently!</span>")
