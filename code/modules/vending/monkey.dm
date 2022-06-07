@@ -5,6 +5,7 @@
 	icon_state = "valuechimp"
 	products = list(/obj/item/vended_monkey = 6)
 	refill_canister = /obj/item/vending_refill/monkey
+	payment_department = ACCOUNT_MED
 
 // temporary monkey item that is dispensed onto the floor and then deletes itself, spawning a monkey
 /obj/item/vended_monkey
@@ -17,7 +18,7 @@
 /obj/item/vended_monkey/Initialize()
 	. = ..()
 	new /mob/living/carbon/monkey(get_turf(src))
-	return INITIALIZE_HINT_QDEL
+	qdel(src)
 
 /obj/item/vending_refill/monkey
 	machine_name = "Monkey Vendor"
