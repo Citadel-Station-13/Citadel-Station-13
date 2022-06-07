@@ -1,0 +1,6 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - rscadd: "updates existing poly maid outfit with tg sprite but polychromatic"
+  - rscadd: "adds polychromic maid apron, gloves, collar, headband"
+  - rscadd: "adds support for polychromic accessories"
