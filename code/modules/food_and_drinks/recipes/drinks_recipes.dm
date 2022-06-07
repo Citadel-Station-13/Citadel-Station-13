@@ -8,7 +8,7 @@
 /datum/chemical_reaction/drink/goldschlager
 	results = list(/datum/reagent/consumable/ethanol/goldschlager = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = GOLDSCHLAGER_VODKA, /datum/reagent/gold = GOLDSCHLAGER_GOLD)
-	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY
+	//reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY
 
 /datum/chemical_reaction/drink/patron
 	results = list(/datum/reagent/consumable/ethanol/patron = 10)
@@ -285,7 +285,6 @@
 /datum/chemical_reaction/drink/acidspit
 	results = list(/datum/reagent/consumable/ethanol/acid_spit = 6)
 	required_reagents = list(/datum/reagent/toxin/acid = 1, /datum/reagent/consumable/ethanol/wine = 5)
-	optimal_ph_min = 0 //Our reaction is very acidic, so lets shift our range
 
 /datum/chemical_reaction/drink/amasec
 	results = list(/datum/reagent/consumable/ethanol/amasec = 10)
@@ -337,7 +336,7 @@
 /datum/chemical_reaction/drink/bananahonk
 	results = list(/datum/reagent/consumable/ethanol/bananahonk = 2)
 	required_reagents = list(/datum/reagent/consumable/laughter = 1, /datum/reagent/consumable/cream = 1)
-	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
+	//reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/drink/silencer
 	results = list(/datum/reagent/consumable/ethanol/silencer = 3)
@@ -388,7 +387,6 @@
 /datum/chemical_reaction/drink/triple_citrus
 	results = list(/datum/reagent/consumable/triple_citrus = 3)
 	required_reagents = list(/datum/reagent/consumable/lemonjuice = 1, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/orangejuice = 1)
-	optimal_ph_min = 0//Our reaction is very acidic, so lets shift our range
 
 /datum/chemical_reaction/drink/grape_soda
 	results = list(/datum/reagent/consumable/grape_soda = 2)
@@ -414,7 +412,7 @@
 	required_reagents = list(/datum/reagent/consumable/ethanol/brave_bull = 5, /datum/reagent/consumable/ethanol/syndicatebomb = 5, /datum/reagent/consumable/ethanol/absinthe = 5)
 	mix_message = "The mixture darkens to a healthy crimson."
 	required_temp = 315 //Piping hot!
-	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_BRUTE | REACTION_TAG_BURN | REACTION_TAG_TOXIN | REACTION_TAG_OXY | REACTION_TAG_CLONE
+	//reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_BRUTE | REACTION_TAG_BURN | REACTION_TAG_TOXIN | REACTION_TAG_OXY | REACTION_TAG_CLONE
 
 /datum/chemical_reaction/drink/bacchus_blessing
 	results = list(/datum/reagent/consumable/ethanol/bacchus_blessing = 4)
@@ -583,7 +581,7 @@
 	required_reagents = list(/datum/reagent/consumable/ethanol/triple_sec = 2, /datum/reagent/consumable/lemon_lime = 1, /datum/reagent/consumable/ethanol/rum = 2, /datum/reagent/consumable/ethanol/vodka = 1)
 	mix_message = "The faint aroma of summer camping trips wafts through the air; but what's that buzzing noise?"
 	mix_sound = 'sound/creatures/bee.ogg'
-	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
+	//reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/drink/jack_rose
 	results = list(/datum/reagent/consumable/ethanol/jack_rose = 4)

@@ -146,7 +146,7 @@
 	qdel(src)
 	target.Bumped(B)
 
-/obj/item/reagent_containers/food/drinks/bullet_act(obj/projectile/P)
+/obj/item/reagent_containers/food/drinks/bullet_act(obj/item/projectile/P)
 	. = ..()
 	if(!(P.nodamage) && P.damage_type == BRUTE && !QDELETED(src))
 		var/atom/T = get_turf(src)
@@ -228,7 +228,7 @@
 /obj/item/reagent_containers/food/drinks/ice
 	name = "ice cup"
 	desc = "Careful, cold ice, do not chew."
-	custom_price = PAYCHECK_LOWER * 0.6
+	custom_price = PRICE_CHEAP_AS_FREE
 	icon_state = "icecup"
 	list_reagents = list(/datum/reagent/consumable/ice = 30)
 	spillable = TRUE
@@ -261,7 +261,7 @@
 	list_reagents = list(/datum/reagent/consumable/hot_coco = 15, /datum/reagent/consumable/sugar = 5)
 	foodtype = SUGAR
 	resistance_flags = FREEZE_PROOF
-	custom_price = PAYCHECK_CREW * 1.2
+	custom_price = PRICE_CHEAP_AS_FREE
 
 
 /obj/item/reagent_containers/food/drinks/dry_ramen
@@ -291,7 +291,7 @@
 	var/cap_lost = FALSE
 	var/mutable_appearance/cap_overlay
 	var/flip_chance = 10
-	custom_price = PAYCHECK_LOWER * 0.8
+	custom_price = PRICE_CHEAP_AS_FREE
 
 /obj/item/reagent_containers/food/drinks/waterbottle/Initialize(mapload)
 	. = ..()
@@ -623,7 +623,7 @@
 	reagent_flags = NONE
 	spillable = FALSE
 	isGlass = FALSE
-	custom_price = PAYCHECK_CREW * 0.9
+	custom_price = PRICE_CHEAP_AS_FREE
 	obj_flags = CAN_BE_HIT
 	throwforce = 12 // set to 0 upon being opened. Have you ever been domed by a soda can? Those things fucking hurt
 	/// If the can hasn't been opened yet, this is the measure of how fizzed up it is from being shaken or thrown around. When opened, this is rolled as a percentage chance to burst
@@ -669,7 +669,7 @@
 		return TRUE
 	. = ..()
 
-/obj/item/reagent_containers/food/drinks/soda_cans/bullet_act(obj/projectile/P)
+/obj/item/reagent_containers/food/drinks/soda_cans/bullet_act(obj/item/projectile/P)
 	. = ..()
 	if(!(P.nodamage) && P.damage_type == BRUTE && !QDELETED(src))
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(src.loc)
@@ -855,7 +855,6 @@
 	name = "Monkey Energy"
 	desc = "Unleash the ape!"
 	icon_state = "monkey_energy"
-	inhand_icon_state = "monkey_energy"
 	list_reagents = list(/datum/reagent/consumable/monkey_energy = 50)
 	foodtype = SUGAR | JUNKFOOD
 
