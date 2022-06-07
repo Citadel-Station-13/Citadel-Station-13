@@ -199,3 +199,10 @@
 	contains = list(/obj/item/vending_refill/wardrobe/sec_wardrobe,
 					/obj/item/vending_refill/wardrobe/law_wardrobe)
 	crate_name = "security department supply crate"
+
+/datum/supply_pack/vending/monkey
+	name = "Monkey Vendor Supply Crate"
+	desc = "This crate contains one refill for the Monkey Vendor."
+	cost = 1500
+	contains = list(/obj/item/vending_refill/monkey)
+	crate_name = "monkey vendor refill"
