@@ -1,0 +1,4 @@
+author: "Bhijn & Myr"
+delete-after: True
+changes: 
+  - bugfix: "Admin vote deobfuscation now properly displays votes as 0 if they were simply never voted for."
