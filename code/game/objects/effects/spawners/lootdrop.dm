@@ -89,7 +89,7 @@
 				/obj/item/storage/pill_bottle/happy = 1,
 				/obj/item/storage/pill_bottle/lsd = 1,
 				/obj/item/storage/pill_bottle/psicodine = 1,
-				/obj/item/reagent_containers/food/drinks/beer = 4,
+				/obj/item/reagent_containers/food/drinks/bottle/beer = 4,
 				/obj/item/reagent_containers/food/drinks/bottle/whiskey = 1,
 				/obj/item/paper/fluff/jobs/prisoner/letter = 1,
 				/obj/item/grenade/smokebomb = 1,
