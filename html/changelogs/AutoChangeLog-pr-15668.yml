@@ -1,0 +1,4 @@
+author: "Bhijn & Myr"
+delete-after: True
+changes: 
+  - rscadd: "Station pets now retain their color between shifts!"
