@@ -1,0 +1,4 @@
+author: "Bhijn & Myr"
+delete-after: True
+changes: 
+  - bugfix: "Audiovisual redirection now works exactly as it used to. In laymen's terms, this means folks in VR sleepers are aware of the world around them again!"
