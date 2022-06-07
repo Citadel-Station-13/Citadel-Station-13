@@ -360,3 +360,12 @@
 	desc = "Thin, pretty gloves intended for use in sexy feminine attire. A tag on the hem claims they pair great with black stockings."
 	icon_state = "eveningblack"
 	item_state = "eveningblack"
+
+/obj/item/clothing/gloves/polymaid
+	name = "polychromic maid gloves"
+	desc = "Colourable maid gloves!"
+	icon_state = "maid_arms"
+
+/obj/item/clothing/gloves/polymaid/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#333333", "#FFFFFF"), 2)
