@@ -19,7 +19,7 @@
 /obj/item/vended_monkey/Initialize()
 	. = ..()
 	new /mob/living/carbon/monkey(get_turf(src))
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/vending_refill/monkey
 	machine_name = "Monkey Vendor"
