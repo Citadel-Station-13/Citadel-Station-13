@@ -379,6 +379,8 @@
 
 	parts += "[FOURSPACES]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
 	parts += "[FOURSPACES]Station Integrity: <B>[mode.station_was_nuked ? "<span class='redtext'>Destroyed</span>" : "[popcount["station_integrity"]]%"]</B>"
+	if(mode.station_was_nuked && SSevents.holidays && SSevents.holidays[PRIDE_MONTH])
+		parts += "[FOURSPACES]Gender revealed: <B>[pick(500; "Male", 500; "Female", "Bigender", "Agender", "Demiboy", "Demigirl", "Genderfluid", "Pangender", "Xenogender", "Clown", 50; "What", 50; "Oh no.", 50; "Excuse me?")]</B>"
 	var/total_players = GLOB.joined_player_list.len
 	if(total_players)
 		parts+= "[FOURSPACES]Total Population: <B>[total_players]</B>"
