@@ -61,3 +61,40 @@
   - refactor: Completely replaces the new player panel *not the admin one* with TG's.
   timothyteakettle:
   - rscadd: adds paper skin and glass bones quirks
+2022-06-08:
+  Bhijn & Myr:
+  - bugfix: Audiovisual redirection now works exactly as it used to. In laymen's terms,
+      this means folks in VR sleepers are aware of the world around them again!
+  - rscadd: During pride month, station nukes are significantly more efficient at
+      revealing genders.
+  - rscadd: Station pets now retain their color between shifts!
+  - bugfix: The shake animation, jiggle animation, squish animation, jitter animation,
+      and float animation, have all been fixed.
+  - bugfix: This also means that storage animations are fully working again. It's
+      been a few years!
+  - bugfix: 'The pull animation no longer interrupts ongoing animations. tweak: The
+      pull animation now supports diagonal directions (currently only applies to the
+      initial grab! pull code is spaghetti)'
+  - bugfix: All screenshake sources now fully support the screenshake pref
+  - code_imp: cit_screenshake.dm has been fully merged into the base files.
+  - bugfix: You can no longer remotely apply fingerprints to storage objects by clicking
+      and dragging it around. Additionally, storage objects now rustle again when
+      clicking and dragging (only took like,, a year to fix)
+  - bugfix: 'The pickup animation now properly slides into your spaceman again, instead
+      of just kinda disappearing. tweak: When pulling a resting mob, they''ll now
+      skip the laying animation entirely, fixing a visual oddity where they shrink
+      and grow to flip. tweak: Alerts are now a little snappier and bouncier, as they''ve
+      been swapped from sine easing, to back easing. tweak: Radial menus now use sine
+      easing, rather than linear easing. This just looks a little prettier. tweak:
+      Runechat now properly respects an object''s X offset. Previously, it relied
+      on a hardcoded check for dogborgs. tweak: The float animation now uses pixel_z
+      instead of pixel_y, fixing issues where the Y offset gets wiped due to the float
+      animation. This also makes floating fully compatible with ctrl+WASD.'
+  - bugfix: Admin vote deobfuscation now properly displays votes as 0 if they were
+      simply never voted for.
+  SandPoot:
+  - refactor: Does some extremely minor touches on pulling/pushing code.
+  timothyteakettle:
+  - rscadd: updates existing poly maid outfit with tg sprite but polychromatic
+  - rscadd: adds polychromic maid apron, gloves, collar, headband
+  - rscadd: adds support for polychromic accessories
