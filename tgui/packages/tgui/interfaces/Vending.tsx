@@ -1,6 +1,9 @@
+import { filter } from 'common/collections';
+import { flow } from 'common/fp';
 import { classes } from 'common/react';
-import { useBackend } from '../backend';
-import { Box, Button, Section, Table } from '../components';
+import { createSearch } from 'common/string';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Icon, Input, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 type VendingData = {
@@ -23,6 +26,7 @@ type ProductRecord = {
   price: number;
   max_amount: number;
   ref: string;
+  amount: number;
 }
 
 type CoinRecord = {
@@ -83,7 +87,7 @@ const VendingRow = (props, context) => {
   );
 
   return (
-    <Table.Row>
+    <Table.Row className="candystripe">
       <Table.Cell collapsing>
         {product.img && (
           <img
@@ -174,6 +178,10 @@ export const Vending = (props, context) => {
     hidden_records = [],
     stock,
   } = data;
+  const [
+    searchText,
+    setSearchText,
+  ] = useLocalState(context, 'searchText', '');
   let inventory;
   let custom = false;
   if (data.vending_machine_input) {
@@ -194,6 +202,8 @@ export const Vending = (props, context) => {
   }
   // Just in case we still have undefined values in the list
   inventory = inventory.filter(item => !!item);
+  // Filter by search text
+  inventory = prepareSearch(inventory, searchText);
   return (
     <Window
       title="Vending Machine"
@@ -219,6 +229,17 @@ export const Vending = (props, context) => {
           </Section>
         )}
         <Section title="Products">
+          <Table mb={1}>
+            <Table.Cell width="8%">
+              <Icon name="search" ml={1.5} />
+            </Table.Cell>
+            <Table.Cell>
+              <Input
+                fluid
+                placeholder="Search for products..."
+                onInput={(e, value) => setSearchText(value)} />
+            </Table.Cell>
+          </Table>
           <Table>
             {inventory.map(product => (
               <VendingRow
@@ -232,4 +253,16 @@ export const Vending = (props, context) => {
       </Window.Content>
     </Window>
   );
+};
+
+/**
+ * Search box
+ */
+export const prepareSearch = (products, searchText = '') => {
+  const testSearch = createSearch<ProductRecord>(searchText,
+    product => product.name);
+  return flow([
+    // Optional search term
+    searchText && filter(testSearch),
+  ])(products);
 };
