@@ -1317,3 +1317,72 @@
 	if(prob(25))
 		to_chat(M, "<span class = 'notice'>[pick("Buzz Buzz.", "Stinging with flavour.", "Ideal of the worker drone", "A Hive of Flavour", "Sap back that missing energy!", "Got Honey?", "The Queen approved it!")]</span>")
 	..()
+
+/datum/reagent/consumable/pinktea //Tiny Tim song
+	name = "Strawberry Tea"
+	description = "A timeless classic!"
+	color = "#f76aeb"//rgb(247, 106, 235)
+	glass_icon_state = "pinktea"
+	quality = DRINK_VERYGOOD
+	taste_description = "sweet tea with a hint of strawberry"
+	glass_name = "mug of strawberry tea"
+	glass_desc = "Delicious traditional tea flavored with strawberries."
+
+/datum/reagent/consumable/tea/pinktea/on_mob_life(mob/living/carbon/M)
+	if(prob(10))
+		to_chat(M, "<span class = 'notice'>[pick("Diamond skies where white deer fly.","Sipping strawberry tea.","Silver raindrops drift through timeless, Neverending June.","Crystal ... pearls free, with love!","Beaming love into me.")]</span>")
+	..()
+	. = 1
+
+/datum/reagent/consumable/catnip_tea
+	name = "Catnip Tea"
+	description = "A sleepy and tasty catnip tea!"
+	color = "#101000" // rgb: 16, 16, 0
+	nutriment_factor = 0
+	taste_description = "sugar and catnip"
+	glass_icon_state = "teaglass"
+	glass_name = "glass of catnip tea"
+	glass_desc = "A purrfect drink for a cat."
+
+/datum/reagent/consumable/catnip_tea/on_mob_life(mob/living/carbon/M)
+	M.adjustStaminaLoss(min(50 - M.getStaminaLoss(), 3))
+	if(prob(20))
+		M.emote("nya")
+	if(prob(20))
+		to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "Backrubs would be nice.", "Mew")]</span>")
+	..()
+
+/datum/reagent/consumable/coconutmilk
+	name = "Coconut Milk"
+	description = "A transparent white liquid extracted from coconuts. Rich in taste."
+	color = "#DFDFDF" // rgb: 223, 223, 223
+	taste_description = "sweet milk"
+	quality = DRINK_GOOD
+	glass_icon_state = "glass_white"
+	glass_name = "glass of coconut milk"
+	glass_desc = "White and nutritious goodness!"
+
+/datum/reagent/consumable/coconutmilk/on_mob_life(mob/living/carbon/M)
+	if(M.getBruteLoss() && prob(20))
+		M.heal_bodypart_damage(2,0, 0)
+		. = 1
+	..()
+
+// i googled "natural coagulant" and a couple of results came up for banana peels, so after precisely 30 more seconds of research, i now dub grinding banana peels good for your blood
+/datum/reagent/consumable/banana_peel
+	name = "Pulped Banana Peel"
+	description = "Okay, so you put a banana peel in a grinder... Why, exactly?"
+	color = "#863333" // rgb: 175, 175, 0
+	reagent_state = SOLID
+	taste_description = "stringy, bitter pulp"
+	glass_name = "glass of banana peel pulp"
+	glass_desc = "Okay, so you put a banana peel in a grinder... Why, exactly?"
+
+/datum/reagent/consumable/baked_banana_peel
+	name = "Baked Banana Peel Powder"
+	description = "You took a banana peel... pulped it... baked it... Where are you going with this?"
+	color = "#863333" // rgb: 175, 175, 0
+	reagent_state = SOLID
+	taste_description = "bitter powder"
+	glass_name = "glass of banana peel powder"
+	glass_desc = "You took a banana peel... pulped it... baked it... Where are you going with this?"

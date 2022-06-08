@@ -140,12 +140,12 @@
 
 /datum/chemical_reaction/drink/greenbeer
 	results = list(/datum/reagent/consumable/ethanol/beer/green = 10)
-	required_reagents = list(/datum/reagent/colorful_reagent/powder/green = 1, /datum/reagent/consumable/ethanol/beer = 10)
+	required_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/green = 1, /datum/reagent/consumable/ethanol/beer = 10)
 	//reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/drink/greenbeer2 //apparently there's no other way to do this
 	results = list(/datum/reagent/consumable/ethanol/beer/green = 10)
-	required_reagents = list(/datum/reagent/colorful_reagent/powder/green/crayon = 1, /datum/reagent/consumable/ethanol/beer = 10)
+	required_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/green/crayon = 1, /datum/reagent/consumable/ethanol/beer = 10)
 
 /datum/chemical_reaction/drink/hooch
 	results = list(/datum/reagent/consumable/ethanol/hooch = 3)
@@ -212,7 +212,7 @@
 
 /datum/chemical_reaction/drink/singulo
 	results = list(/datum/reagent/consumable/ethanol/singulo = 10)
-	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 5, /datum/reagent/uranium/radium = 1, /datum/reagent/consumable/ethanol/wine = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 5, /datum/reagent/radium = 1, /datum/reagent/consumable/ethanol/wine = 5)
 
 /datum/chemical_reaction/drink/alliescocktail
 	results = list(/datum/reagent/consumable/ethanol/alliescocktail = 2)
@@ -496,7 +496,7 @@
 
 /datum/chemical_reaction/drink/squirt_cider
 	results = list(/datum/reagent/consumable/ethanol/squirt_cider = 4)
-	required_reagents = list(/datum/reagent/water = 2, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/salt = 1)
+	required_reagents = list(/datum/reagent/water = 2, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sodiumchloride = 1)
 	mix_message = "The mix swirls and turns a bright red that reminds you of an apple's skin."
 	//reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
 
@@ -709,11 +709,11 @@
 
 /datum/chemical_reaction/drink/salt_and_swell
 	results = list(/datum/reagent/consumable/ethanol/salt_and_swell = 10)
-	required_reagents = list(/datum/reagent/consumable/ethanol/navy_rum = 4, /datum/reagent/consumable/toechtauese_syrup = 3, /datum/reagent/consumable/eggwhite = 2, /datum/reagent/medicine/salglu_solution = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/navy_rum = 4, /datum/reagent/consumable/toechtauese_syrup = 3, /datum/reagent/consumable/eggyolk = 2, /datum/reagent/medicine/salglu_solution = 1)
 
 /datum/chemical_reaction/drink/tiltaellen
 	results = list(/datum/reagent/consumable/ethanol/tiltaellen = 10)
-	required_reagents = list(/datum/reagent/consumable/yoghurt = 8, /datum/reagent/consumable/vinegar = 1, /datum/reagent/consumable/salt = 1)
+	required_reagents = list(/datum/reagent/consumable/yoghurt = 8, /datum/reagent/consumable/vinegar = 1, /datum/reagent/consumable/sodiumchloride = 1)
 	mix_message = "The mixture curdles and thickens."
 
 /datum/chemical_reaction/drink/tich_toch
@@ -742,7 +742,7 @@
 
 /datum/chemical_reaction/drink/italian_coco
 	results = list(/datum/reagent/consumable/italian_coco = 10)
-	required_reagents = list(/datum/reagent/consumable/hot_coco  = 5, /datum/reagent/consumable/corn_starch = 1, /datum/reagent/consumable/whipped_cream = 4)
+	required_reagents = list(/datum/reagent/consumable/hot_coco  = 5, /datum/reagent/consumable/corn_starch = 1, /datum/reagent/consumable/cream = 4)
 
 /datum/chemical_reaction/drink/helianthus
 	results = list(/datum/reagent/consumable/ethanol/helianthus = 5)

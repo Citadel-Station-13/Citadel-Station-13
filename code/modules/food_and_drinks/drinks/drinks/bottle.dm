@@ -564,8 +564,6 @@
 	spillable = TRUE
 	update_appearance()
 	var/obj/projectile/bullet/reusable/champagne_cork/popped_cork = new (get_turf(src))
-	popped_cork.firer =  user
-	popped_cork.fired_from = src
 	popped_cork.fire(dir2angle(user.dir) + rand(-30, 30))
 
 /obj/item/projectile/bullet/reusable/champagne_cork
