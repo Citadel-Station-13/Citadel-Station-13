@@ -155,11 +155,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	pH = 6
 
 /datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.set_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/dizziness, only_if_higher = TRUE)
+	drinker.Dizzy(10 SECONDS * REM * delta_time)
 	drinker.adjust_drowsyness(-3 * REM * delta_time)
 	drinker.AdjustSleeping(-40 * REM * delta_time)
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
-		drinker.set_timed_status_effect(10 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+		drinker.Jitter(10 SECONDS)
 	..()
 	. = TRUE
 
@@ -302,7 +302,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	pH = 3.5
 
 /datum/reagent/consumable/ethanol/threemileisland/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.adjust_drugginess(100 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
+	drinker.drugginess = min(100 SECONDS * REM * delta_time, 100 SECONDS)
 	return ..()
 
 /datum/reagent/consumable/ethanol/gin
@@ -2087,7 +2087,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/bug_spray/on_mob_metabolize(mob/living/carbon/drinker)
 
-	if(ismoth(drinker) || isflyperson(drinker))
+	if(isinsect(drinker) || isflyperson(drinker))
 		drinker.emote("scream")
 	return ..()
 
@@ -2204,8 +2204,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/trappist/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(drinker.mind?.holy_role)
 		drinker.adjustFireLoss(-2.5 * REM * delta_time, 0)
-		drinker.adjust_timed_status_effect(-2 SECONDS * REM * delta_time, /datum/status_effect/jitter)
-		drinker.adjust_timed_status_effect(-2 SECONDS * REM * delta_time, /datum/status_effect/speech/stutter)
+		drinker.jitter = max(drinker.jitter - (2 SECONDS * REM * delta_time), 0)
+		drinker.stutter = max(drinker.stutter - (2 SECONDS * REM * delta_time), 0)
 	return ..()
 
 /datum/reagent/consumable/ethanol/blazaam

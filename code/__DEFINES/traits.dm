@@ -370,3 +370,4 @@
 #define TRAIT_DOUBLE_TAP "double_tap"
 #define TRAIT_COMEDY_METABOLISM "comedy_metabolism"
 #define TRAIT_GAMERGOD "gamergod"
+#define TRAIT_MEDICAL_METABOLISM "medical_metabolism"

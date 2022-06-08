@@ -269,7 +269,7 @@
 	..()
 
 /datum/reagent/consumable/coffee/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.dizziness = max(M.dizziness - (10 SECONDS * REM * delta_time) 0)
+	M.dizziness = max(M.dizziness - (10 SECONDS * REM * delta_time))
 	M.adjust_drowsyness(-3 * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	//310.15 is the normal bodytemp.
@@ -436,7 +436,7 @@
 	..()
 
 /datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.Jitter(40 SECONDS * REM * delta_time, /datum/status_effect/jitter)
+	M.Jitter(40 SECONDS * REM * delta_time)
 	M.drugginess = min(1 MINUTES * REM * delta_time, 1 MINUTES)
 	M.Dizzy(3 SECONDS * REM * delta_time)
 	M.set_drowsyness(0)
@@ -473,7 +473,7 @@
 		ADD_TRAIT(M, TRAIT_DOUBLE_TAP, type)
 		effect_enabled = TRUE
 
-	M.Jitter(4 SECONDS * REM * delta_time, /datum/status_effect/jitter)
+	M.Jitter(4 SECONDS * REM * delta_time)
 	if(prob(50))
 		M.Dizzy(2 SECONDS * REM * delta_time)
 	if(current_cycle > 10)
@@ -521,7 +521,7 @@
 	M.adjust_drowsyness(-7 * REM * delta_time)
 	M.AdjustSleeping(-20 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
-	M.Jitter(10 SECONDS * REM * delta_time, /datum/status_effect/jitter)
+	M.Jitter(10 SECONDS * REM * delta_time)
 	..()
 	. = TRUE
 
@@ -645,7 +645,7 @@
 	glass_desc = "You can unleash the ape, but without the pop of the can?"
 
 /datum/reagent/consumable/monkey_energy/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.Jitter(80 SECONDS * REM * delta_time, /datum/status_effect/jitter)
+	M.Jitter(80 SECONDS * REM * delta_time)
 	M.Dizzy(2 SECONDS * REM * delta_time)
 	M.set_drowsyness(0)
 	M.AdjustSleeping(-40 * REM * delta_time)
@@ -695,7 +695,7 @@
 	M.adjust_drowsyness(-3 *REM * delta_time)
 	M.SetSleeping(0)
 	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
-	M.Jitter(10 SECONDS * REM * delta_time, /datum/status_effect/jitter)
+	M.Jitter(10 SECONDS * REM * delta_time)
 	if(M.getBruteLoss() && DT_PROB(10, delta_time))
 		M.heal_bodypart_damage(1,0, 0)
 	..()
