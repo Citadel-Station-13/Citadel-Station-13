@@ -363,3 +363,7 @@
 #define MAPPING_HELPER_TRAIT "mapping-helper"
 /// Trait associated with mafia
 #define MAFIA_TRAIT "mafia"
+
+#define TRAIT_HALT_RADIATION_EFFECTS "halt_radiation_effects"
+#define TRAIT_ENGINEER_METABOLISM "engineer_metabolism"
+#define TRAIT_WINE_TASTER "wine_taster"
