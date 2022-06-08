@@ -8,7 +8,6 @@
 	name = "glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
 	icon_state = "glassbottle"
-	worn_icon_state = "bottle"
 	fill_icon_thresholds = list(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)
 	custom_price = PRICE_CHEAP_AS_FREE * 1.1
 	amount_per_transfer_from_this = 10
@@ -569,7 +568,7 @@
 	popped_cork.fired_from = src
 	popped_cork.fire(dir2angle(user.dir) + rand(-30, 30))
 
-/obj/projectile/bullet/reusable/champagne_cork
+/obj/item/projectile/bullet/reusable/champagne_cork
 	name = "champagne cork"
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "champagne_cork"
