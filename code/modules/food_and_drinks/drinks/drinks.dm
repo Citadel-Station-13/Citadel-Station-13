@@ -243,7 +243,7 @@
 	name = "mug"
 	desc = "A drink served in a classy mug."
 	icon_state = "tea"
-	inhand_icon_state = "coffee"
+	item_state = "coffee"
 	spillable = TRUE
 
 /obj/item/reagent_containers/food/drinks/mug/update_icon_state()
@@ -263,6 +263,29 @@
 	resistance_flags = FREEZE_PROOF
 	custom_price = PRICE_CHEAP_AS_FREE
 
+/obj/item/reagent_containers/food/drinks/mug/tea/red
+	name = "Dutchess Red tea"
+	icon_state = "tea"
+	desc = "Duchess Red's personal blend of red tea leaves and hot water. Great addition to any meal."
+	list_reagents = list(/datum/reagent/consumable/tea/red = 30)
+
+/obj/item/reagent_containers/food/drinks/mug/tea/green
+	name = "Prince Green tea"
+	icon_state = "tea"
+	desc = "Prince Green's brew of tea. The blend may be different from time to time, but Prince Green swears by it!"
+	list_reagents = list(/datum/reagent/consumable/tea/green = 30)
+
+/obj/item/reagent_containers/food/drinks/mug/tea/forest
+	name = "Royal Forest tea"
+	icon_state = "tea"
+	desc = "Tea fit for anyone with a sweet tooth like Royal Forest."
+	list_reagents = list(/datum/reagent/consumable/tea/forest = 30)
+
+/obj/item/reagent_containers/food/drinks/mug/tea/mush
+	name = "Rebel Mush tea"
+	icon_state = "tea"
+	desc = "Rebel Mush, a hallucinogenic tea to help people find their inner self."
+	list_reagents = list(/datum/reagent/consumable/tea/mush = 30)
 
 /obj/item/reagent_containers/food/drinks/dry_ramen
 	name = "cup ramen"
@@ -876,3 +899,9 @@
 	desc = "An old stained mug used for filling with dwarven ale."
 	icon_state = "manlydorfglass"
 	isGlass = FALSE //it's a wooden mug!
+
+/obj/item/reagent_containers/food/drinks/coffee/type2
+	name = "\improper Coffee, instant (type 2)"
+	desc = "Coffee that's been blow dried into a granulated powder. This packet includes self heating water for your nutritional pleasure."
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "condi_cornoil"

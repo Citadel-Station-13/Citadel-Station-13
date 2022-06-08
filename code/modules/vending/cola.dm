@@ -120,7 +120,7 @@
 					/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 5,
 					/obj/item/reagent_containers/food/drinks/soda_cans/buzz_fuzz = 5,)
 	contraband = list(/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko = 6)
-	premium = list(/obj/item/reagent_containers/food/drinks/beer/light = 1,
+	premium = list(/obj/item/reagent_containers/food/drinks/bottle/beer/light = 1,
 					/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 1)
 	product_slogans = "~A hive of Flavour!~"
 	product_ads = "Stinging flavour!;Ideal of the worker drone!;Buzz Buzz!;Got Honey?;The Queen approves of this drink!;Sap back that missing energy!;Bee the consumer unit!"
