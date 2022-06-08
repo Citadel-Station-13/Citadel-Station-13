@@ -123,3 +123,15 @@
 /mob/proc/adjust_bodytemperature(amount,min_temp=0,max_temp=INFINITY)
 	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
 		bodytemperature = clamp(bodytemperature + amount,min_temp,max_temp)
+
+/**
+* Set drowsyness of a mob to passed value
+*/
+/mob/proc/set_drowsyness(amount)
+	drowsyness = max(amount, 0)
+
+/**
+ * Adds passed value to the drowsyness of a mob
+ */
+/mob/proc/adjust_drowsyness(amount)
+	drowsyness = max(drowsyness + amount, 0)

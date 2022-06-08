@@ -33,7 +33,7 @@
 		user.visible_message(span_notice("[user] swallows a gulp of [src]."), \
 			span_notice("You swallow a gulp of [src]."))
 		if(HAS_TRAIT(M, TRAIT_VORACIOUS))
-			M.changeNext_move(CLICK_CD_MELEE * 0.5) //chug! chug! chug!
+			M.DelayNextAction(CLICK_CD_MELEE * 0.5) //chug! chug! chug!
 
 	else
 		M.visible_message(span_danger("[user] attempts to feed [M] the contents of [src]."), \
@@ -306,7 +306,6 @@
 	custom_materials = list(/datum/material/plastic=1000)
 	volume = 50
 	amount_per_transfer_from_this = 10
-	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
 	isGlass = FALSE
 	// The 2 bottles have separate cap overlay icons because if the bottle falls over while bottle flipping the cap stays fucked on the moved overlay
 	var/cap_icon_state = "bottle_cap_small"
@@ -380,7 +379,7 @@
 	return ..()
 
 /obj/item/reagent_containers/food/drinks/waterbottle/afterattack(obj/target, mob/living/user, proximity)
-	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && !user.combat_mode)))
+	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume)))
 		to_chat(user, span_warning("You must remove the cap before you can do that!"))
 		return
 
@@ -680,7 +679,7 @@
 	return TOXLOSS
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/living/user)
-	if(istype(M, /mob/living/carbon) && !reagents.total_volume && user.combat_mode && user.zone_selected == BODY_ZONE_HEAD)
+	if(istype(M, /mob/living/carbon) && !reagents.total_volume && user.zone_selected == BODY_ZONE_HEAD)
 		if(M == user)
 			user.visible_message(span_warning("[user] crushes the can of [src] on [user.p_their()] forehead!"), span_notice("You crush the can of [src] on your forehead."))
 		else
@@ -709,7 +708,7 @@
 		return
 
 	to_chat(user, "You pull back the tab of [src] with a satisfying pop.") //Ahhhhhhhh
-	reagents.flags |= OPENCONTAINER
+	reagents.reagent_flags |= OPENCONTAINER
 	playsound(src, SFX_CAN_OPEN, 50, TRUE)
 	spillable = TRUE
 	throwforce = 0
@@ -735,7 +734,7 @@
 	if(!hide_message)
 		visible_message(span_danger("[src] spills over, fizzing its contents all over [target]!"))
 	spillable = TRUE
-	reagents.flags |= OPENCONTAINER
+	reagents.reagent_flags |= OPENCONTAINER
 	reagents.expose(target, TOUCH)
 	reagents.clear_reagents()
 	throwforce = 0

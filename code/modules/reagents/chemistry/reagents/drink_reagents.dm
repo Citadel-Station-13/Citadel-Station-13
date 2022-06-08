@@ -133,7 +133,7 @@
 	glass_desc = "The raw essence of a banana. HONK."
 
 /datum/reagent/consumable/banana/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	var/obj/item/organ/internal/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
 	if((liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM)) || ismonkey(M))
 		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time, 0)
 		. = TRUE
@@ -211,7 +211,7 @@
 /datum/reagent/consumable/milk/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 0.3))
+		mytray.adjustWater(round(chems.get_reagent_amount(type) * 0.3))
 		if(myseed)
 			myseed.adjust_potency(-chems.get_reagent_amount(type) * 0.5)
 
@@ -265,7 +265,7 @@
 	glass_desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
 
 /datum/reagent/consumable/coffee/overdose_process(mob/living/M, delta_time, times_fired)
-	M.jitter = min(10 SECONDS * REM * delta_time, 10 SECONDS)
+	M.Jitter(10 SECONDS * REM * delta_time)
 	..()
 
 /datum/reagent/consumable/coffee/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -273,7 +273,7 @@
 	M.adjust_drowsyness(-3 * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	//310.15 is the normal bodytemp.
-	M.adjust_bodytemperature(25 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
+	M.adjust_bodytemperature(25 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, BODYTEMP_NORMAL)
 	if(holder.has_reagent(/datum/reagent/consumable/frostoil))
 		holder.remove_reagent(/datum/reagent/consumable/frostoil, 5 * REM * delta_time)
 	..()
@@ -291,12 +291,12 @@
 
 /datum/reagent/consumable/tea/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (4 SECONDS * REM * delta_time), 0)
-	M.jitter = max(M.jitter - (6 SECONDS * REM * delta_time), 0)
+	M.Jitter(M.jitteriness - (6 SECONDS * REM * delta_time))
 	M.adjust_drowsyness(-1 * REM * delta_time)
 	M.AdjustSleeping(-20 * REM * delta_time)
 	if(M.getToxLoss() && DT_PROB(10, delta_time))
 		M.adjustToxLoss(-1, 0)
-	M.adjust_bodytemperature(20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
+	M.adjust_bodytemperature(20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, BODYTEMP_NORMAL)
 	..()
 	. = TRUE
 
@@ -342,8 +342,8 @@
 	M.dizziness = max(M.dizziness - (10 SECONDS * REM * delta_time), 0)
 	M.adjust_drowsyness(-3 * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
-	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
-	M.jitter = min(10 SECONDS * REM * delta_time, 10 SECONDS)
+	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
+	M.Jitter(10 SECONDS * REM * delta_time)
 	..()
 	. = TRUE
 
@@ -361,8 +361,8 @@
 	M.dizziness = max(M.dizziness - (10 SECONDS * REM * delta_time), 0)
 	M.adjust_drowsyness(-3 * REM * delta_time)
 	M.AdjustSleeping(-60 * REM * delta_time)
-	M.adjust_bodytemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
-	M.jitter = min(10 SECONDS * REM * delta_time, 10 SECONDS)
+	M.adjust_bodytemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
+	M.Jitter(min(10 SECONDS * REM * delta_time, 10 SECONDS))
 	M.adjustToxLoss(1 * REM * delta_time, 0)
 	..()
 	. = TRUE
@@ -383,7 +383,7 @@
 	M.AdjustSleeping(-40 * REM * delta_time)
 	if(M.getToxLoss() && DT_PROB(10, delta_time))
 		M.adjustToxLoss(-1, 0)
-	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
 	..()
 	. = TRUE
 
@@ -398,7 +398,7 @@
 
 /datum/reagent/consumable/space_cola/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_drowsyness(-5 * REM * delta_time)
-	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
 	..()
 
 /datum/reagent/consumable/roy_rogers
@@ -412,9 +412,9 @@
 	glass_desc = "90% sugar in a glass."
 
 /datum/reagent/consumable/roy_rogers/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.jitter = min(12 SECONDS * REM * delta_time, 12 SECONDS)
+	M.Jitter(min(12 SECONDS * REM * delta_time, 12 SECONDS))
 	M.adjust_drowsyness(-5 * REM * delta_time)
-	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
 	return ..()
 
 /datum/reagent/consumable/nuka_cola
@@ -437,11 +437,11 @@
 
 /datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.Jitter(40 SECONDS * REM * delta_time)
-	M.drugginess = min(1 MINUTES * REM * delta_time, 1 MINUTES)
+	M.set_drugginess(min(1 MINUTES * REM * delta_time, 1 MINUTES))
 	M.Dizzy(3 SECONDS * REM * delta_time)
 	M.set_drowsyness(0)
 	M.AdjustSleeping(-40 * REM * delta_time)
-	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
 	..()
 	. = TRUE
 
@@ -505,7 +505,7 @@
 	M.Dizzy(2 SECONDS * REM * delta_time)
 	M.set_drowsyness(0)
 	M.AdjustSleeping(-40 * REM * delta_time)
-	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
 	..()
 
 /datum/reagent/consumable/spacemountainwind
@@ -520,7 +520,7 @@
 /datum/reagent/consumable/spacemountainwind/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_drowsyness(-7 * REM * delta_time)
 	M.AdjustSleeping(-20 * REM * delta_time)
-	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
 	M.Jitter(10 SECONDS * REM * delta_time)
 	..()
 	. = TRUE
@@ -536,7 +536,7 @@
 
 /datum/reagent/consumable/dr_gibb/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_drowsyness(-6 * REM * delta_time)
-	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
 	..()
 
 /datum/reagent/consumable/space_up
@@ -550,7 +550,7 @@
 
 
 /datum/reagent/consumable/space_up/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	M.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
 	..()
 
 /datum/reagent/consumable/lemon_lime
@@ -564,7 +564,7 @@
 
 
 /datum/reagent/consumable/lemon_lime/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	M.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
 	..()
 
 
@@ -578,7 +578,7 @@
 	glass_desc = "Goes well with a Vlad's salad."
 
 /datum/reagent/consumable/pwr_game/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	M.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
 
 /datum/reagent/consumable/shamblers
 	name = "Shambler's Juice"
@@ -590,7 +590,7 @@
 	glass_desc = "Mmm mm, shambly."
 
 /datum/reagent/consumable/shamblers/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	M.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
 	..()
 
 /datum/reagent/consumable/sodawater
@@ -608,13 +608,13 @@
 /datum/reagent/consumable/sodawater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 1))
-		mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.1))
+		mytray.adjustWater(round(chems.get_reagent_amount(type) * 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(type) * 0.1))
 
 /datum/reagent/consumable/sodawater/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (10 SECONDS * REM * delta_time), 0)
 	M.adjust_drowsyness(-3 * REM * delta_time)
-	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
 	..()
 
 /datum/reagent/consumable/tonic
@@ -630,7 +630,7 @@
 	M.Dizzy(10 SECONDS * REM * delta_time)
 	M.adjust_drowsyness(-3 * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
-	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
 	..()
 	. = TRUE
 
@@ -649,7 +649,7 @@
 	M.Dizzy(2 SECONDS * REM * delta_time)
 	M.set_drowsyness(0)
 	M.AdjustSleeping(-40 * REM * delta_time)
-	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
 	..()
 
 /datum/reagent/consumable/monkey_energy/on_mob_metabolize(mob/living/L)
@@ -677,7 +677,7 @@
 	glass_desc = "Generally, you're supposed to put something else in there too..."
 
 /datum/reagent/consumable/ice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
 	..()
 
 /datum/reagent/consumable/soy_latte
@@ -694,7 +694,7 @@
 	M.dizziness = max(M.dizziness - (10 SECONDS * REM * delta_time), 0)
 	M.adjust_drowsyness(-3 *REM * delta_time)
 	M.SetSleeping(0)
-	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
+	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, BODYTEMP_NORMAL)
 	M.Jitter(10 SECONDS * REM * delta_time)
 	if(M.getBruteLoss() && DT_PROB(10, delta_time))
 		M.heal_bodypart_damage(1,0, 0)
@@ -715,7 +715,7 @@
 	M.dizziness = max(M.dizziness - (10 SECONDS * REM * delta_time), 0)
 	M.adjust_drowsyness(-6 * REM * delta_time)
 	M.SetSleeping(0)
-	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
+	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, BODYTEMP_NORMAL)
 	M.Jitter(10 SECONDS * REM * delta_time)
 	if(M.getBruteLoss() && DT_PROB(10, delta_time))
 		M.heal_bodypart_damage(1, 0, 0)
@@ -738,7 +738,7 @@
 	M.adjustToxLoss(-0.5 * REM * delta_time, 0)
 	M.adjustOxyLoss(-0.5 * REM * delta_time, 0)
 	if(M.nutrition && (M.nutrition - 2 > 0))
-		var/obj/item/organ/internal/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+		var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
 		if(!(HAS_TRAIT(liver, TRAIT_MEDICAL_METABOLISM)))
 			// Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
 			M.adjust_nutrition(-2 * REM * delta_time)
@@ -867,7 +867,7 @@
 	glass_desc = "It's grape (soda)!"
 
 /datum/reagent/consumable/grape_soda/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
 	..()
 
 /datum/reagent/consumable/milk/chocolate_milk
@@ -888,7 +888,7 @@
 	glass_desc = "A favorite winter drink to warm you up."
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
+	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, BODYTEMP_NORMAL)
 	if(M.getBruteLoss() && DT_PROB(10, delta_time))
 		M.heal_bodypart_damage(1, 0, 0)
 		. = TRUE
@@ -908,7 +908,7 @@
 	glass_desc = "A spin on a winter favourite, made to please."
 
 /datum/reagent/consumable/italian_coco/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
+	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, BODYTEMP_NORMAL)
 	return ..()
 
 /datum/reagent/consumable/menthol
@@ -965,7 +965,7 @@
 	glass_desc = "A classic space-American vanilla flavored soft drink."
 
 /datum/reagent/consumable/cream_soda/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
 	..()
 
 /datum/reagent/consumable/sol_dry
@@ -1070,7 +1070,7 @@
 	glass_desc = "90% water, but still refreshing."
 
 /datum/reagent/consumable/agua_fresca/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	M.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, BODYTEMP_NORMAL)
 	if(M.getToxLoss() && DT_PROB(10, delta_time))
 		M.adjustToxLoss(-0.5, 0)
 	return ..()

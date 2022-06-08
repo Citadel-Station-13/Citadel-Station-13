@@ -161,8 +161,3 @@
 	cost = 3
 	unit_name = "snowcone"
 	export_types = list(/obj/item/reagent_containers/food/snacks/snowcones)
-
-/datum/export/booze/bottledkeg
-	cost = 250
-	unit_name = "exotic brews"
-	export_types = list(/obj/item/export/bottle/minikeg) //Its just beer

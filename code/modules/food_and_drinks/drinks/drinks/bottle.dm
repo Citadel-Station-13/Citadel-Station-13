@@ -8,7 +8,6 @@
 	name = "glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
 	icon_state = "glassbottle"
-	fill_icon_thresholds = list(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)
 	custom_price = PRICE_CHEAP_AS_FREE * 1.1
 	amount_per_transfer_from_this = 10
 	volume = 100
@@ -333,7 +332,7 @@
 	// There was a large fight in the coderbus about a player reference
 	// in absinthe. Ergo, this is why the name generation is now so
 	// complicated. Judge us kindly.
-	var/shortname = pick_weight(
+	var/shortname = pick(
 		list("T&T" = 1, "A&A" = 1, "Generic" = 1))
 	var/fullname
 	switch(shortname)
@@ -559,11 +558,11 @@
 /obj/item/reagent_containers/food/drinks/bottle/champagne/proc/pop_cork(mob/user)
 	user.visible_message(span_danger("[user] loosens the cork of [src] causing it to pop out of the bottle with great force."), \
 		span_nicegreen("You elegantly loosen the cork of [src] causing it to pop out of the bottle with great force."))
-	reagents.flags |= OPENCONTAINER
+	reagents.reagent_flags |= OPENCONTAINER
 	playsound(src, 'sound/items/champagne_pop.ogg', 70, TRUE)
 	spillable = TRUE
 	update_appearance()
-	var/obj/projectile/bullet/reusable/champagne_cork/popped_cork = new (get_turf(src))
+	var/obj/item/projectile/bullet/reusable/champagne_cork/popped_cork = new (get_turf(src))
 	popped_cork.fire(dir2angle(user.dir) + rand(-30, 30))
 
 /obj/item/projectile/bullet/reusable/champagne_cork
@@ -656,10 +655,10 @@
 /obj/item/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/I, mob/user, params)
 	if(I.get_temperature() && !active)
 		active = TRUE
-		log_bomber(user, "has primed a", src, "for detonation")
+		log_combat(user, "has primed a", src, "for detonation")
 
 		to_chat(user, span_info("You light [src] on fire."))
-		add_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
+		add_overlay(GLOB.fire_overlay)
 		if(!isGlass)
 			addtimer(CALLBACK(src, .proc/explode), 5 SECONDS)
 
@@ -681,7 +680,7 @@
 			to_chat(user, span_danger("The flame's spread too far on it!"))
 			return
 		to_chat(user, span_info("You snuff out the flame on [src]."))
-		cut_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
+		cut_overlay(GLOB.fire_overlay)
 		active = FALSE
 		return
 	return ..()

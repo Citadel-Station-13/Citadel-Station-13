@@ -143,10 +143,6 @@
 	required_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/green = 1, /datum/reagent/consumable/ethanol/beer = 10)
 	//reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
 
-/datum/chemical_reaction/drink/greenbeer2 //apparently there's no other way to do this
-	results = list(/datum/reagent/consumable/ethanol/beer/green = 10)
-	required_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/green/crayon = 1, /datum/reagent/consumable/ethanol/beer = 10)
-
 /datum/chemical_reaction/drink/hooch
 	results = list(/datum/reagent/consumable/ethanol/hooch = 3)
 	required_reagents = list (/datum/reagent/consumable/ethanol = 2, /datum/reagent/fuel = 1)
