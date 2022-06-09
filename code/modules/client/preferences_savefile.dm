@@ -1030,11 +1030,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	scars_list["4"] = sanitize_text(scars_list["4"])
 	scars_list["5"] = sanitize_text(scars_list["5"])
 
-	bark_id = sanitize_inlist(bark_id, GLOB.bark_list, initial(bark_id))
+	bark_id = sanitize_inlist(bark_id, GLOB.bark_list, pick(GLOB.bark_random_list))
 	var/datum/bark/bark_path = GLOB.bark_list[bark_id]
 	bark_speed = sanitize_num_clamp(bark_speed, initial(bark_path.minspeed), initial(bark_path.maxspeed), initial(bark_speed))
-	bark_pitch = sanitize_num_clamp(bark_pitch, initial(bark_path.minpitch), initial(bark_path.maxpitch), initial(bark_pitch))
-	bark_variance = sanitize_num_clamp(bark_variance, initial(bark_path.minvariance), initial(bark_path.maxvariance), initial(bark_variance))
+	bark_pitch = sanitize_num_clamp(bark_pitch, initial(bark_path.minpitch), initial(bark_path.maxpitch), ((gender == MALE ? rand(60, 120) : (gender == FEMALE ? rand(80, 140) : rand(60,140))) / 100))
+	bark_variance = sanitize_num_clamp(bark_variance, initial(bark_path.minvariance), initial(bark_path.maxvariance), (rand(10, 40) / 100))
 
 	joblessrole = sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	//Validate job prefs

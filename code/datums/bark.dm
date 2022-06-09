@@ -19,6 +19,7 @@
 	// Visibility vars. Regardless of what's set below, these can still be obtained via adminbus and genetics. Rule of fun.
 	var/list/ckeys_allowed
 	var/ignore = FALSE //Controls whether or not this can be chosen in chargen
+	var/allow_random = FALSE //Allows chargen randomization to use this. This is mainly to restrict the pool to sounds that fit well for most characters
 
 
 // So the basic jist of the sound design here: We make use primarily of shorter instrument samples for barks. We would've went with animalese instead, but doing so would've involved quite a bit of overhead to saycode.
@@ -29,26 +30,31 @@
 	name = "Muted String (Low)"
 	id = "mutedc2"
 	soundpath = 'sound/instruments/synthesis_samples/guitar/crisis_muted/C2.ogg'
+	allow_random = TRUE
 
 /datum/bark/mutedc3
 	name = "Muted String (Medium)"
 	id = "mutedc3"
 	soundpath = 'sound/instruments/synthesis_samples/guitar/crisis_muted/C3.ogg'
+	allow_random = TRUE
 
 /datum/bark/mutedc4
 	name = "Muted String (High)"
 	id = "mutedc4"
 	soundpath = 'sound/instruments/synthesis_samples/guitar/crisis_muted/C4.ogg'
+	allow_random = TRUE
 
 /datum/bark/banjoc3
 	name = "Banjo (Medium)"
 	id = "banjoc3"
 	soundpath = 'sound/instruments/banjo/Cn3.ogg'
+	allow_random = TRUE
 
 /datum/bark/banjoc4
 	name = "Banjo (High)"
 	id = "banjoc4"
 	soundpath = 'sound/instruments/banjo/Cn4.ogg'
+	allow_random = TRUE
 
 /datum/bark/squeaky
 	name = "Squeaky"
