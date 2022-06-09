@@ -504,7 +504,7 @@
 		if(mutations_overlay_update)
 			update_mutations_overlay()
 		set_bark(GLOB.bark_list[deconstruct_block(getblock(structure, DNA_BARK_SOUND_BLOCK), GLOB.bark_list.len)])
-		vocal_speed = (deconstruct_block(getblock(structure, DNA_BARK_PITCH_BLOCK), 16) / 16)
+		vocal_speed = (deconstruct_block(getblock(structure, DNA_BARK_PITCH_BLOCK), 16) / 4)
 		vocal_pitch = (deconstruct_block(getblock(structure, DNA_BARK_PITCH_BLOCK), 48) / 30)
 		vocal_pitch_range = (deconstruct_block(getblock(structure, DNA_BARK_VARIANCE_BLOCK), 48) / 48)
 
