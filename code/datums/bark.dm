@@ -50,18 +50,6 @@
 	id = "banjoc4"
 	soundpath = 'sound/instruments/banjo/Cn4.ogg'
 
-/datum/bark/bikehorn
-	name = "Bikehorn"
-	id = "horn"
-	soundpath = 'sound/instruments/bikehorn/Cn4.ogg'
-	ignore = TRUE // Genetics only. This is an unusually quiet sound, but genetics should be allowed to have some !!fun!!
-
-/datum/bark/bwoink
-	name = "Bwoink"
-	id = "bwoink"
-	soundpath = 'sound/effects/adminhelp.ogg'
-	ignore = TRUE // Also genetics only. Emergent heart attack generation
-
 /datum/bark/squeaky
 	name = "Squeaky"
 	id = "squeak"
@@ -96,3 +84,50 @@
 	id = "bullet"
 	maxpitch = 1.6 //This works well with higher pitches!
 	soundpath = 'sound/weapons/bulletflyby.ogg' //This works... Surprisingly well as a bark? It's neat!
+
+
+// Genetics-only/admin-only sounds. These either clash hard with the audio design of the above sounds, or have some other form of audio design issue, but aren't *too* awful as a sometimes thing.
+// Rule of fun very much applies to this section. Audio design is extremely important for the above section, but down here? No gods, no masters, pure anarchy.
+// The min/max variables simply don't apply to these, as only chargen cares about them. As such, there's no need to define those.
+
+/datum/bark/bikehorn
+	name = "Bikehorn"
+	id = "horn"
+	soundpath = 'sound/instruments/bikehorn/Cn4.ogg'
+	ignore = TRUE // This is an unusually quiet sound.
+
+/datum/bark/bwoink
+	name = "Bwoink"
+	id = "bwoink"
+	soundpath = 'sound/effects/adminhelp.ogg'
+	ignore = TRUE // Emergent heart attack generation
+
+/datum/bark/merp
+	name = "Merp"
+	id = "merp"
+	soundpath = 'modular_citadel/sound/voice/merp.ogg'
+	ignore = TRUE
+
+/datum/bark/bark
+	name = "Bark"
+	id = "bark"
+	soundpath = 'modular_citadel/sound/voice/bark1.ogg'
+	ignore = TRUE
+
+/datum/bark/nya
+	name = "Nya"
+	id = "nya"
+	soundpath = 'modular_citadel/sound/voice/nya.ogg'
+	ignore = TRUE
+
+/datum/bark/moff
+	name = "Moff"
+	id = "moff"
+	soundpath = 'modular_citadel/sound/voice/mothsqueak.ogg'
+	ignore = TRUE
+
+/datum/bark/weh
+	name = "Weh"
+	id = "weh"
+	soundpath = 'modular_citadel/sound/voice/weh.ogg'
+	ignore = TRUE

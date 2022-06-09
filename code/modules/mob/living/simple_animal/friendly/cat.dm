@@ -35,6 +35,9 @@
 	collar_type = "cat"
 	var/held_icon = "cat2"
 	footstep_type = FOOTSTEP_MOB_CLAW
+	vocal_bark_id = "mutedc4"
+	vocal_pitch = 1.4
+	vocal_pitch_range = 0.4
 
 /mob/living/simple_animal/pet/cat/Initialize(mapload)
 	. = ..()
