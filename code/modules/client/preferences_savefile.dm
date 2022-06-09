@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	54
+#define SAVEFILE_VERSION_MAX	55
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -42,6 +42,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 //if your savefile is 3 months out of date, then 'tough shit'.
 
 /datum/preferences/proc/update_preferences(current_version, savefile/S)
+	if(current_version < 55) //Bitflag toggles don't set their defaults when they're added, always defaulting to off instead.
+		toggles |= SOUND_BARK
 	if(current_version < 46)	//If you remove this, remove force_reset_keybindings() too.
 		force_reset_keybindings_direct(TRUE)
 		addtimer(CALLBACK(src, .proc/force_reset_keybindings), 30)	//No mob available when this is run, timer allows user choice.
@@ -845,6 +847,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_silicon_flavor_text"] >> features["silicon_flavor_text"]
 	S["feature_ooc_notes"] >> features["ooc_notes"]
 
+	// Barks
+	S["bark_id"] >> bark_id
+	S["bark_speed"] >> bark_speed
+	S["bark_pitch"] >> bark_pitch
+	S["bark_variance"] >> bark_variance
+
 	S["vore_flags"] >> vore_flags
 	S["vore_taste"] >> vore_taste
 	S["vore_smell"] >> vore_smell
@@ -1022,6 +1030,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	scars_list["4"] = sanitize_text(scars_list["4"])
 	scars_list["5"] = sanitize_text(scars_list["5"])
 
+	bark_id = sanitize_inlist(bark_id, GLOB.bark_list, initial(bark_id))
+	var/datum/bark/bark_path = GLOB.bark_list[bark_id]
+	bark_speed = sanitize_num_clamp(bark_speed, initial(bark_path.minspeed), initial(bark_path.maxspeed), initial(bark_speed))
+	bark_pitch = sanitize_num_clamp(bark_pitch, initial(bark_path.minpitch), initial(bark_path.maxpitch), initial(bark_pitch))
+	bark_variance = sanitize_num_clamp(bark_variance, initial(bark_path.minvariance), initial(bark_path.maxvariance), initial(bark_variance))
+
 	joblessrole = sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	//Validate job prefs
 	for(var/j in job_preferences)
@@ -1089,6 +1103,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["custom_speech_verb"]		, custom_speech_verb)
 	WRITE_FILE(S["custom_tongue"]			, custom_tongue)
 	WRITE_FILE(S["additional_language"]		, additional_language)
+	WRITE_FILE(S["bark_id"]					, bark_id)
+	WRITE_FILE(S["bark_speed"]				, bark_speed)
+	WRITE_FILE(S["bark_pitch"]				, bark_pitch)
+	WRITE_FILE(S["bark_variance"]			, bark_variance)
 
 	// records
 	WRITE_FILE(S["security_records"]		, security_records)

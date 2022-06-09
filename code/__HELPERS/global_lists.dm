@@ -79,6 +79,10 @@
 		var/datum/emote/E = new path()
 		E.emote_list[E.key] = E
 
+	for(var/path in subtypesof(/datum/bark))
+		var/datum/bark/B = new path()
+		GLOB.bark_list[B.id] = path
+
 	// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
 	for(var/path in subtypesof(/datum/sprite_accessory/hair_gradient))
 		var/datum/sprite_accessory/hair_gradient/H = new path()
