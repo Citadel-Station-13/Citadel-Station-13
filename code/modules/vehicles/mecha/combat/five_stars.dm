@@ -4,7 +4,6 @@
 	icon = 'icons/mecha/mecha_96x96.dmi'
 	icon_state = "five_stars"
 	armor = list(MELEE = 100, BULLET = 50, LASER = 35, ENERGY = 35, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
-	step_in = 4
 	dir_in = 1 //Facing North.
 	max_integrity = 800
 	pixel_x = -32
