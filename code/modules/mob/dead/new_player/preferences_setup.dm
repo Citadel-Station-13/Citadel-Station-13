@@ -25,8 +25,8 @@
 		pref_species = new rando_race()
 	features = random_features(pref_species?.id, gender)
 	bark_id = pick(GLOB.bark_random_list)
-	bark_pitch = ((gender == MALE ? rand(60, 120) : (gender == FEMALE ? rand(80, 140) : rand(60,140))) / 100)
-	bark_variance = rand(10, 40) / 100
+	bark_pitch = BARK_PITCH_RAND(gender)
+	bark_variance = BARK_VARIANCE_RAND
 	age = rand(AGE_MIN,AGE_MAX)
 
 /datum/preferences/proc/update_preview_icon(current_tab)

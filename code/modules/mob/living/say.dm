@@ -317,11 +317,13 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 				continue
 			if(!(M.client.prefs.toggles & SOUND_BARK))
 				listening -= M
-		var/barks = round((LAZYLEN(message) / vocal_speed)) + 1
+		var/barks = min(round((LAZYLEN(message) / vocal_speed)) + 1, BARK_MAX_BARKS)
 		var/total_delay
 		for(var/i in 1 to barks)
+			if(total_delay > BARK_MAX_TIME)
+				break
 			addtimer(CALLBACK(src, /atom/movable/proc/bark, listening, (message_range * (is_yell ? 4 : 1)), (vocal_volume * (is_yell ? 1.5 : 1)), rand(vocal_pitch * 100, ((vocal_pitch*100) + (vocal_pitch_range*100))) / 100), total_delay)
-			total_delay += rand(DS2TICKS((vocal_speed/4) * (is_yell ? 0.5 : 1)), DS2TICKS(vocal_speed/4) + DS2TICKS((vocal_speed/4) * (is_yell ? 0.5 : 1))) TICKS
+			total_delay += rand(DS2TICKS((vocal_speed / BARK_SPEED_BASELINE) * (is_yell ? 0.5 : 1)), DS2TICKS(vocal_speed / BARK_SPEED_BASELINE) + DS2TICKS((vocal_speed / BARK_SPEED_BASELINE) * (is_yell ? 0.5 : 1))) TICKS
 
 
 /atom/movable/proc/process_yelling(list/already_heard, rendered, atom/movable/speaker, datum/language/message_language, message, list/spans, message_mode, obj/source)

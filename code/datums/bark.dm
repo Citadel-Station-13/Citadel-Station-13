@@ -7,14 +7,14 @@
 
 	// Pitch vars. The actual range for a bark is [(pitch - (maxvariance*0.5)) to (pitch + (maxvariance*0.5))]
 	// Make absolutely sure to take variance into account when curating a sound for bark purposes.
-	var/minpitch = 0.6
-	var/maxpitch = 1.4
-	var/minvariance = 0.1
-	var/maxvariance = 0.4
+	var/minpitch = BARK_DEFAULT_MINPITCH
+	var/maxpitch = BARK_DEFAULT_MAXPITCH
+	var/minvariance = BARK_DEFAULT_MINVARY
+	var/maxvariance = BARK_DEFAULT_MAXVARY
 
 	// Speed vars. Speed determines the number of characters required for each bark, with lower speeds being faster with higher bark density
-	var/minspeed = 2
-	var/maxspeed = 8
+	var/minspeed = BARK_DEFAULT_MINSPEED
+	var/maxspeed = BARK_DEFAULT_MAXSPEED
 
 	// Visibility vars. Regardless of what's set below, these can still be obtained via adminbus and genetics. Rule of fun.
 	var/list/ckeys_allowed

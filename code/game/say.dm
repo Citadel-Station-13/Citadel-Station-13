@@ -55,11 +55,13 @@ GLOBAL_LIST_INIT(freqtospan, list(
 				continue
 			if(!(M.client.prefs.toggles & SOUND_BARK))
 				hearers -= M
-		var/barks = round((LAZYLEN(message) / vocal_speed)) + 1
+		var/barks = min(round((LAZYLEN(message) / vocal_speed)) + 1, BARK_MAX_BARKS)
 		var/total_delay
 		for(var/i in 1 to barks)
+			if(total_delay > BARK_MAX_TIME)
+				break
 			addtimer(CALLBACK(src, .proc/bark, hearers, range, vocal_volume, rand((vocal_pitch * 100), (vocal_pitch*100) + (vocal_pitch_range*100)) / 100), total_delay)
-			total_delay += rand(DS2TICKS(vocal_speed/4), DS2TICKS(vocal_speed/4) + DS2TICKS(vocal_speed/4)) TICKS
+			total_delay += rand(DS2TICKS(vocal_speed / BARK_SPEED_BASELINE), DS2TICKS(vocal_speed / BARK_SPEED_BASELINE) + DS2TICKS(vocal_speed / BARK_SPEED_BASELINE)) TICKS
 
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, face_name = FALSE, atom/movable/source)
 	if(!source)
