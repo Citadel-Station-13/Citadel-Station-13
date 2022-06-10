@@ -113,6 +113,8 @@
 #define BARK_PITCH_RAND(gend) ((gend == MALE ? rand(60, 120) : (gend == FEMALE ? rand(80, 140) : rand(60,140))) / 100) //Macro for determining random pitch based off gender
 #define BARK_VARIANCE_RAND (rand(BARK_DEFAULT_MINVARY * 100, BARK_DEFAULT_MAXVARY * 100) / 100) //Macro for randomizing bark variance to reduce the amount of copy-pasta necessary for that
 
+#define BARK_DO_VARY(pitch, variance) (rand(((pitch * 100) - (variance*50)), ((pitch*100) + (variance*50))) / 100)
+
 // Is something in the IC chat filter? This is config dependent.
 #define CHAT_FILTER_CHECK(T) (config.ic_filter_regex && findtext(T, config.ic_filter_regex))
 
