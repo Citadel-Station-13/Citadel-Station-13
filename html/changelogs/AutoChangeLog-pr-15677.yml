@@ -1,0 +1,5 @@
+author: "Bhijn & Myr"
+delete-after: True
+changes: 
+  - rscadd: "Talking is now accompanied with fully-customizable sounds! You can modify your character's speech under the speech tab in chargen, and you can toggle these sounds via the \"Hear/Silence Vocal Barks\" verb under the preferences tab! This also fully supports genetics."
+  - bugfix: "Admittedly an unatomized change, but Cit's DNA blocks can now properly be updated through genetics. Before, these required a complete genetics reset to apply."
