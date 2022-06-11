@@ -1,0 +1,12 @@
+author: "Bhijn & Myr"
+delete-after: True
+changes: 
+  - rscadd: "The station minimap now features higher detail! Instead of just windows and grilles being outlined, all dense+anchored structures and machinery are shown on the minimap."
+  - rscadd: "The station minimap now supports obfuscating entire areas, via the minimap_show_walls var."
+  - rscadd: "The station minimap now supports defining two area colors, allowing for a checkerboard pattern!
+tweak: Hallways and maint have been given white and gray colors, respectively, for ease of readability.
+tweak: Ruins are now obfuscated on the minimap, and have been given a subtle, yet distinct, color pattern!"
+  - bugfix: "The station minimap no longer errors when you mouse over it"
+  - rscadd: "The station minimap now supports multiz! (However, due to bugginess, multiz minimaps won't display area tooltips.)
+tweak: The station minimap now features pixel-perfect scaling."
+  - code_imp: "The station minimap can now support managing data for up to 16,581,374 areas without any conflicts at all! Before, BYOND's psuedorandom RNG meant that it was somewhat common for areas to collide with each others' data."
