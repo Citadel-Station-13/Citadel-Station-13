@@ -36,6 +36,7 @@
 	var/datum/reagent/milk_reagent = /datum/reagent/consumable/milk
 
 	footstep_type = FOOTSTEP_MOB_SHOE
+	vocal_bark_id = "banjoc3"
 
 /mob/living/simple_animal/hostile/retaliate/goat/Initialize(mapload, /datum/reagent/milk_reagent)
 	udder = new (null, milk_reagent)
@@ -143,6 +144,8 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 
 	footstep_type = FOOTSTEP_MOB_SHOE
+	vocal_bark_id = "mutedc2"
+	vocal_pitch = 1.2
 
 /mob/living/simple_animal/cow/Initialize(mapload)
 	udder = new(null, milk_reagent)
@@ -247,6 +250,8 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 	footstep_type = FOOTSTEP_MOB_CLAW
+	vocal_bark_id = "squeak"
+	vocal_pitch = 1.4
 
 /mob/living/simple_animal/chick/Initialize(mapload)
 	. = ..()
@@ -309,6 +314,9 @@
 	var/static/chicken_count = 0
 
 	footstep_type = FOOTSTEP_MOB_CLAW
+	vocal_bark_id = "synthgrunt"
+	vocal_pitch = 1.4
+	vocal_pitch_range = 0.4
 
 /mob/living/simple_animal/chicken/Initialize(mapload)
 	. = ..()
@@ -403,6 +411,8 @@
 	var/static/kiwi_count = 0
 
 	footstep_type = FOOTSTEP_MOB_CLAW
+	vocal_bark_id = "squeak"
+	vocal_pitch = 1.4
 
 /mob/living/simple_animal/kiwi/Destroy()
 	--kiwi_count
@@ -481,6 +491,8 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 	footstep_type = FOOTSTEP_MOB_CLAW
+	vocal_bark_id = "squeak"
+	vocal_pitch = 1.4
 
 /mob/living/simple_animal/babyKiwi/Initialize(mapload)
 	. = ..()
@@ -557,3 +569,4 @@
 	maxHealth = 75
 	blood_volume = BLOOD_VOLUME_NORMAL
 	footstep_type = FOOTSTEP_MOB_SHOE
+	vocal_bark_id = "mutedc4"

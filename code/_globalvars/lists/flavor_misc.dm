@@ -43,6 +43,10 @@ GLOBAL_LIST_EMPTY(arachnid_spinneret_list)
 GLOBAL_LIST_EMPTY(arachnid_mandibles_list)
 GLOBAL_LIST_EMPTY(caps_list)
 
+	//Bark bits
+GLOBAL_LIST_EMPTY(bark_list)
+GLOBAL_LIST_EMPTY(bark_random_list)
+
 //a way to index the right bodypart list given the type of bodypart
 GLOBAL_LIST_INIT(mutant_reference_list, list(
 	"tail_lizard" = GLOB.tails_list_lizard,

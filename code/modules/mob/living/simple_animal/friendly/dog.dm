@@ -20,6 +20,9 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
+	vocal_bark_id = "bullet"
+	vocal_speed = 6
+
 /mob/living/simple_animal/pet/dog/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/wuv, "yaps happily!", EMOTE_AUDIBLE, /datum/mood_event/pet_animal, "growls!", EMOTE_AUDIBLE)
@@ -639,6 +642,8 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	mob_size = MOB_SIZE_SMALL
 	collar_type = "puppy"
 
+	vocal_pitch = 1.6
+
 //puppies cannot wear anything.
 /mob/living/simple_animal/pet/dog/corgi/puppy/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
@@ -659,6 +664,8 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	minbodytemp = TCMB
 	maxbodytemp = T0C + 40
 	held_icon = "void_puppy"
+
+	vocal_pitch = 0.6
 
 /mob/living/simple_animal/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0)
 	return 1	//Void puppies can navigate space.

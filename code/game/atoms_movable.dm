@@ -64,6 +64,14 @@
 	/// last time we yelled
 	var/last_yell = 0
 
+	// Text-to-bark sounds
+	var/sound/vocal_bark
+	var/vocal_bark_id
+	var/vocal_pitch = 1
+	var/vocal_pitch_range = 0.2 //Actual pitch is (pitch - (vocal_pitch_range*0.5)) to (pitch + (vocal_pitch_range*0.5))
+	var/vocal_volume = 70 //Baseline. This gets modified by yelling and other factors
+	var/vocal_speed = 4 //Lower values are faster, higher values are slower
+
 /atom/movable/Initialize(mapload)
 	. = ..()
 	switch(blocks_emissive)
@@ -695,6 +703,17 @@
 /atom/movable/proc/update_atom_languages()
 	var/datum/language_holder/LH = get_language_holder()
 	return LH.update_atom_languages(src)
+
+/// Sets the vocal bark for the atom, using the bark's ID
+/atom/movable/proc/set_bark(id)
+	if(!id)
+		return FALSE
+	var/datum/bark/B = GLOB.bark_list[id]
+	if(!B)
+		return FALSE
+	vocal_bark = sound(initial(B.soundpath))
+	vocal_bark_id = id
+	return vocal_bark
 
 /* End language procs */
 
