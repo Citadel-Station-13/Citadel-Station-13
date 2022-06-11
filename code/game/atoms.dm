@@ -518,7 +518,7 @@
 	. = list("[get_examine_string(user, TRUE)].")
 
 	if(desc)
-		. += desc
+		. += "<hr>[desc]"
 
 	if(custom_materials)
 		var/list/materials_list = list()

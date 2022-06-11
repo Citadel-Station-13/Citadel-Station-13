@@ -167,7 +167,7 @@
 			if(WOUND_INFECTION_SEPTIC to INFINITY)
 				. += "Infection Level: <span class='deadsay'>LOSS IMMINENT</span>\n"
 		if(infestation > sanitization)
-			. += "\tSurgical debridement, antiobiotics/sterilizers, or regenerative mesh will rid infection. Paramedic UV penlights are also effective.\n"
+			. += "Surgical debridement, antiobiotics/sterilizers, or regenerative mesh will rid infection. Paramedic UV penlights are also effective.\n"
 
 		if(flesh_damage > 0)
 			. += "Flesh damage detected: Please apply ointment or regenerative mesh to allow recovery.\n"
