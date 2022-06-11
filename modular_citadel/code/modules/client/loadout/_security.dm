@@ -16,12 +16,6 @@
 	path = /obj/item/clothing/suit/armor/hos/navyblue
 	restricted_roles = list("Head of Security")
 
-/datum/gear/suit/platecarrier
-	name = "Plate Carrier"
-	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
-	path = /obj/item/clothing/suit/armor/hos/platecarrier
-	restricted_roles = list("Head of Security")
-
 /datum/gear/suit/navybluejacketofficer
 	name = "security officer's navyblue jacket"
 	subcategory = LOADOUT_SUBCATEGORY_SUIT_JOBS
