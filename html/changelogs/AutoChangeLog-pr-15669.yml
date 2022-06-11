@@ -1,0 +1,4 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - bugfix: "Fixed items that use strip_mod and strip_silence (stripping people faster or without giving them a message)"
