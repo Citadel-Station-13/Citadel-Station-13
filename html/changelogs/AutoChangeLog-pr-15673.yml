@@ -1,0 +1,9 @@
+author: "Bhijn & Myr (+ UI work and cleanup by Sandpoot!)"
+delete-after: True
+changes: 
+  - rscadd: "Colormates now have HSV coloration!
+tweak: Colormates have had their \"please use white clothing\" message removed, as that recommendation's now mostly pointless
+tweak: The default mode for colormates is now HSV coloration
+tweak: The temp messages in colormates have been tweaked slightly to be more user-friendly, as they're user-facing.
+tweak: The description for constants in the colormate matrix mode has been fixed; the constant variables have nothing to do with contrast, they simply add color
+tweak: Matrix mode has been made a lot more usable; it's now clamped between -10 and 10, and features a step of 0.01, making it much easier to simply click and drag to adjust the values, rather than having to punch them in manually"
