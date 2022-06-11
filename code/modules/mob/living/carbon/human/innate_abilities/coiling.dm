@@ -31,7 +31,7 @@
 
 /datum/action/innate/ability/coiling/proc/coil_mob(var/mob/living/carbon/human/H)
 	if(currently_coiling)
-		to_chat(owner, SPAN_WARNING("You are already coiling someone!"))
+		to_chat(owner, span_warning("You are already coiling someone!"))
 		return
 		
 	// begin the coiling action
