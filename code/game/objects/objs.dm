@@ -7,6 +7,8 @@
 	var/obj_flags = CAN_BE_HIT
 	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
 
+	var/minimap_override_color // allows this obj to set its own color on the minimap
+
 	var/damtype = BRUTE
 	var/force = 0
 
