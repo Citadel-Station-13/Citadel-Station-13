@@ -1,5 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - rscadd: "Added a search box to all vending machine uis."
-  - qol: "Vending machines have candystripes for better clarity."
