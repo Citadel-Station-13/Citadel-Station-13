@@ -1,0 +1,4 @@
+author: "Bhijn & Myr"
+delete-after: True
+changes: 
+  - bugfix: "Jukebox audio is now audible within closets, crates, etc!"
