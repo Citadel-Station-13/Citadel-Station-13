@@ -99,7 +99,6 @@
 /obj/item/clothing/suit/armor/hos/platecarrier/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/concrete/storage = AddComponent(/datum/component/storage/concrete)
-	storage.max_volume = 28
 	storage.max_items = 5
 
 /obj/item/clothing/suit/armor/vest/warden
