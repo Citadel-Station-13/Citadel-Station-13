@@ -44,7 +44,7 @@
 			return // The drink might be empty after the delay, such as by spam-feeding
 		M.visible_message(span_danger("[user] fed [M] the contents of [src]."), \
 			span_userdanger("[user] fed you the contents of [src]."))
-		log_combat(user, M, "fed", reagents.get_reagent_log_string())
+		log_combat(user, M, "fed", reagents.log_list())
 
 	SEND_SIGNAL(src, COMSIG_DRINK_DRANK, M, user)
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
@@ -67,11 +67,12 @@
 
 /*
  * On accidental consumption, make sure the container is partially glass, and continue to the reagent_container proc
- */
+
 /obj/item/reagent_containers/food/drinks/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
 	if(isGlass && !custom_materials)
 		set_custom_materials(list(GET_MATERIAL_REF(/datum/material/glass) = 5))
 	return ..()
+*/
 
 /obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
 	. = ..()
@@ -291,7 +292,7 @@
 	name = "cup ramen"
 	desc = "Just add 5ml of water, self heats! A taste that reminds you of your school years. Now new with salty flavour!"
 	icon_state = "ramen"
-	list_reagents = list(/datum/reagent/consumable/dry_ramen = 15, /datum/reagent/consumable/salt = 3)
+	list_reagents = list(/datum/reagent/consumable/dry_ramen = 15, /datum/reagent/consumable/sodiumchloride = 3)
 	foodtype = GRAIN
 	isGlass = FALSE
 	custom_price = PRICE_CHEAP_AS_FREE * 0.9
@@ -708,8 +709,8 @@
 		return
 
 	to_chat(user, "You pull back the tab of [src] with a satisfying pop.") //Ahhhhhhhh
-	reagents.reagent_flags |= OPENCONTAINER
-	playsound(src, SFX_CAN_OPEN, 50, TRUE)
+	reagent_flags |= OPENCONTAINER
+	playsound(src, "can_open", 50, TRUE)
 	spillable = TRUE
 	throwforce = 0
 
@@ -730,12 +731,12 @@
 			if(iter_mob != target)
 				SEND_SIGNAL(iter_mob, COMSIG_ADD_MOOD_EVENT, "observed_soda_spill", /datum/mood_event/observed_soda_spill, target, src)
 
-	playsound(src, 'sound/effects/can_pop.ogg', 80, TRUE)
+	playsound(src, "can_open", 80, TRUE)
 	if(!hide_message)
 		visible_message(span_danger("[src] spills over, fizzing its contents all over [target]!"))
 	spillable = TRUE
-	reagents.reagent_flags |= OPENCONTAINER
-	reagents.expose(target, TOUCH)
+	reagent_flags |= OPENCONTAINER
+	reagents.reaction(target, TOUCH)
 	reagents.clear_reagents()
 	throwforce = 0
 
@@ -761,7 +762,7 @@
 		return
 	return ..()
 
-/obj/item/reagent_containers/food/drinks/soda_cans/attack_self_secondary(mob/user)
+/obj/item/reagent_containers/food/drinks/soda_cans/rightclick_attack_self(mob/user)
 	if(!is_drainable())
 		playsound(src, 'sound/effects/can_shake.ogg', 50, TRUE)
 		user.visible_message(span_danger("[user] shakes [src]!"), span_danger("You shake up [src]!"), vision_distance=2)

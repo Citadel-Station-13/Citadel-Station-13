@@ -204,3 +204,13 @@
 	materials = list(/datum/material/biomass = 300)
 	build_path = /obj/item/clothing/head/rice_hat
 	category = list("initial","Organic Materials")
+
+/obj/item/reagent_containers/food/drinks/bottle/bio_carton
+	name = "small carton box"
+	desc = "A small biodegradable carton box made from plant biomatter."
+	icon_state = "eco_box"
+	item_state = "carton"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	volume = 50
+	isGlass = FALSE

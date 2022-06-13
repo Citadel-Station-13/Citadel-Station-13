@@ -40,17 +40,17 @@
 	qdel(src)
 	target.Bumped(B)
 
-/obj/item/reagent_containers/food/drinks/bottle/attack_secondary(atom/target, mob/living/user, params)
+/obj/item/reagent_containers/food/drinks/bottle/alt_pre_attack(atom/target, mob/living/user, params)
 
 	if(!target)
 		return ..()
 
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to harm [target]!"))
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
+		return
 
 	if(!isliving(target) || !isGlass)
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
+		return
 
 	var/mob/living/living_target = target
 	var/obj/item/bodypart/affecting = user.zone_selected //Find what the player is aiming at
@@ -104,7 +104,7 @@
 	//Finally, smash the bottle. This kills (del) the bottle.
 	smash(target, user)
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return
 
 //Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/broken_bottle
@@ -121,8 +121,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb_continuous = list("stabs", "slashes", "attacks")
-	attack_verb_simple = list("stab", "slash", "attack")
+	attack_verb = list("stabbed", "slashed", "attacked")
 	sharpness = SHARP_EDGED
 	var/static/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
 
@@ -144,7 +143,7 @@
 		if(prob(33))
 			var/obj/item/shard/stab_with = new(to_mimic.drop_location())
 			target.Bumped(stab_with)
-		playsound(src, SFX_SHATTER, 70, TRUE)
+		playsound(src, "shatter", 70, TRUE)
 	else
 		force = 0
 		throwforce = 0
@@ -558,7 +557,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/champagne/proc/pop_cork(mob/user)
 	user.visible_message(span_danger("[user] loosens the cork of [src] causing it to pop out of the bottle with great force."), \
 		span_nicegreen("You elegantly loosen the cork of [src] causing it to pop out of the bottle with great force."))
-	reagents.reagent_flags |= OPENCONTAINER
+	reagent_flags |= OPENCONTAINER
 	playsound(src, 'sound/items/champagne_pop.ogg', 70, TRUE)
 	spillable = TRUE
 	update_appearance()
@@ -738,3 +737,17 @@
 	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
 		to_chat(M, span_info("A pungent smell emanates from [src], like fruit puking out its guts."))
 		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)
+
+/obj/item/reagent_containers/food/drinks/bottle/holyoil
+	name = "flask of zelus oil"
+	desc = "A brass flask of Zelus oil, a viscous fluid scenting of brass. Can be thrown to deal damage from afar."
+	icon_state = "zelusflask"
+	list_reagents = list(/datum/reagent/fuel/holyoil = 30)
+	volume = 30
+	foodtype = NONE
+	force = 18
+	throwforce = 18
+	bottle_knockdown_duration = 18
+
+/obj/item/reagent_containers/food/drinks/bottle/holyoil/empty
+	list_reagents = null

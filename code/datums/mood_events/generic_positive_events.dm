@@ -241,3 +241,8 @@
 		return
 
 	description = "Ahaha! [spilled_mob] spilled [spilled_mob.p_their()] [soda_can ? soda_can.name : "soda"] all over [spilled_mob.p_them()]self! Classic."
+
+/datum/mood_event/memories_of_home
+	description = "This taste seems oddly nostalgic..."
+	mood_change = 3
+	timeout = 5 MINUTES

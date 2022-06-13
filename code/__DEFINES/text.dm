@@ -3,3 +3,6 @@
 
 /// Macro from Lummox used to get height from a MeasureText proc
 #define WXH_TO_HEIGHT(x) text2num(copytext(x, findtextEx(x, "x") + 1))
+
+/// File location for boomer meme catchphrases
+#define BOOMER_FILE "boomer.json"

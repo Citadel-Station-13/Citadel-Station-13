@@ -651,11 +651,6 @@
 	results = list(/datum/reagent/consumable/mushroom_tea = 5)
 	required_reagents = list(/datum/reagent/toxin/mushroom_powder = 1, /datum/reagent/water = 5)
 
-/datum/chemical_reaction/drink/mushi_kombucha
-	results = list(/datum/reagent/consumable/ethanol/mushi_kombucha = 5)
-	required_reagents = list(/datum/reagent/consumable/mushroom_tea = 3, /datum/reagent/consumable/korta_nectar = 2)
-	required_catalysts = list(/datum/reagent/consumable/enzyme = 1)
-
 /datum/chemical_reaction/drink/sea_breeze
 	results = list(/datum/reagent/consumable/ethanol/sea_breeze = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/kortara = 3, /datum/reagent/consumable/ethanol/creme_de_menthe = 1, /datum/reagent/consumable/ethanol/creme_de_cacao = 1)
@@ -668,10 +663,6 @@
 	results = list(/datum/reagent/consumable/ethanol/drunken_espatier = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/mushi_kombucha = 2, /datum/reagent/consumable/ethanol/moonshine = 2, /datum/reagent/consumable/berryjuice = 1)
 	mix_message = "The drink seems to let out a grim sigh..."
-
-/datum/chemical_reaction/drink/protein_blend
-	results = list(/datum/reagent/consumable/ethanol/protein_blend = 5)
-	required_reagents = list(/datum/reagent/yuck = 1, /datum/reagent/consumable/korta_flour = 1, /datum/reagent/blood = 1, /datum/reagent/consumable/ethanol = 2)
 
 /datum/chemical_reaction/drink/triumphal_arch
 	results = list(/datum/reagent/consumable/ethanol/triumphal_arch = 10)
@@ -706,15 +697,6 @@
 /datum/chemical_reaction/drink/salt_and_swell
 	results = list(/datum/reagent/consumable/ethanol/salt_and_swell = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/navy_rum = 4, /datum/reagent/consumable/toechtauese_syrup = 3, /datum/reagent/consumable/eggyolk = 2, /datum/reagent/medicine/salglu_solution = 1)
-
-/datum/chemical_reaction/drink/tiltaellen
-	results = list(/datum/reagent/consumable/ethanol/tiltaellen = 10)
-	required_reagents = list(/datum/reagent/consumable/yoghurt = 8, /datum/reagent/consumable/vinegar = 1, /datum/reagent/consumable/sodiumchloride = 1)
-	mix_message = "The mixture curdles and thickens."
-
-/datum/chemical_reaction/drink/tich_toch
-	results = list(/datum/reagent/consumable/ethanol/tich_toch = 10)
-	required_reagents = list(/datum/reagent/consumable/ethanol/tiltaellen = 6, /datum/reagent/consumable/toechtauese_syrup = 2, /datum/reagent/consumable/ethanol/vodka = 2)
 
 /datum/chemical_reaction/drink/toechtauese_syrup
 	results = list(/datum/reagent/consumable/toechtauese_syrup = 10)

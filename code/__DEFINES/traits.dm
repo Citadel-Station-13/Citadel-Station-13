@@ -366,8 +366,6 @@
 
 #define TRAIT_HALT_RADIATION_EFFECTS "halt_radiation_effects"
 #define TRAIT_ENGINEER_METABOLISM "engineer_metabolism"
-#define TRAIT_WINE_TASTER "wine_taster"
 #define TRAIT_DOUBLE_TAP "double_tap"
 #define TRAIT_COMEDY_METABOLISM "comedy_metabolism"
-#define TRAIT_GAMERGOD "gamergod"
 #define TRAIT_MEDICAL_METABOLISM "medical_metabolism"

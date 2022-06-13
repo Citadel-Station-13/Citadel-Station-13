@@ -113,3 +113,9 @@
 
 /datum/mood_event/MissingLove/add_effects(message)
 	description = "<span class='warning'>[message]</span>\n"
+
+/datum/mood_event/narcotic_medium
+	description = "I feel comfortably numb."
+	mood_change = 4
+	timeout = 3 MINUTES
+

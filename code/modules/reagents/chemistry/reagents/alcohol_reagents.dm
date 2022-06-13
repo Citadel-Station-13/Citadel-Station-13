@@ -43,14 +43,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		//if(HAS_TRAIT(drinker, TRAIT_LIGHT_DRINKER))
 			//booze_power *= 2
 		// Volume, power, and server alcohol rate effect how quickly one gets drunk
-		drinker.adjust_drunk_effect(sqrt(volume) * booze_power * ALCOHOL_RATE * REM * delta_time)
+		drinker.drunkenness += (sqrt(volume) * booze_power * ALCOHOL_RATE * REM * delta_time)
 		if(boozepwr > 0)
 			var/obj/item/organ/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
 			if (istype(liver))
 				liver.applyOrganDamage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * liver.alcohol_tolerance * delta_time, 0))/150))
 	return ..()
 
-/datum/reagent/consumable/ethanol/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/consumable/ethanol/reaction_obj(obj/exposed_obj, reac_volume)
 	if(istype(exposed_obj, /obj/item/paper))
 		var/obj/item/paper/paperaffected = exposed_obj
 		paperaffected.clearpaper()
@@ -58,13 +58,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(istype(exposed_obj, /obj/item/book))
 		if(reac_volume >= 5)
 			var/obj/item/book/affectedbook = exposed_obj
-			affectedbook.book_data.set_content("")
+			affectedbook.dat = ""
 			exposed_obj.visible_message(span_notice("[exposed_obj]'s writing is washed away by [name]!"))
 		else
 			exposed_obj.visible_message(span_warning("[exposed_obj]'s ink is smeared by [name], but doesn't wash away!"))
 	return ..()
 
-/datum/reagent/consumable/ethanol/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.
+/datum/reagent/consumable/ethanol/reaction_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.
 	. = ..()
 	if(!(methods & (TOUCH|VAPOR|PATCH)))
 		return
@@ -362,14 +362,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	. = ..()
 	if(src.data && data && data["vintage"] != src.data["vintage"])
 		src.data["vintage"] = "mixed wine"
-
-/datum/reagent/consumable/ethanol/wine/get_taste_description(mob/living/taster)
-	if(HAS_TRAIT(taster,TRAIT_WINE_TASTER))
-		if(data && data["vintage"])
-			return list("[data["vintage"]]" = 1)
-		else
-			return list("synthetic wine"=1)
-	return ..()
 
 /datum/reagent/consumable/ethanol/lizardwine
 	name = "Lizard Wine"
@@ -2111,7 +2103,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/turbo/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(DT_PROB(2, delta_time))
 		to_chat(drinker, span_notice("[pick("You feel disregard for the rule of law.", "You feel pumped!", "Your head is pounding.", "Your thoughts are racing..")]"))
-	drinker.adjustStaminaLoss(-0.25 * drunkenness * REM * delta_time)
+	drinker.adjustStaminaLoss(-0.25 * drinker.drunkenness * REM * delta_time)
 	return ..()
 
 /datum/reagent/consumable/ethanol/old_timer

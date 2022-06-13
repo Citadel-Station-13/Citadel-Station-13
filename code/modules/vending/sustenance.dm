@@ -6,7 +6,7 @@
 	light_mask = "snack-light-mask"
 	icon_state = "sustenance"
 	products = list(/obj/item/reagent_containers/food/snacks/tofu = 24,
-					/obj/item/reagent_containers/food/drinks/ice/sustanance = 12,
+					/obj/item/reagent_containers/food/drinks/ice/prison = 12,
 					/obj/item/reagent_containers/food/snacks/candy_corn = 6
 					)
 	contraband = list(/obj/item/kitchen/knife = 6,
