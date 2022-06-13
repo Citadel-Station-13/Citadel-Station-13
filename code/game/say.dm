@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	for(var/_AM in hearers)
 		var/atom/movable/AM = _AM
 		AM.Hear(rendered, src, message_language, message, , spans, message_mode, source)
-	if(vocal_bark || vocal_bark_id)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_QUEUE_BARK, hearers, args) || vocal_bark || vocal_bark_id)
 		for(var/mob/M in hearers)
 			if(!M.client)
 				continue
