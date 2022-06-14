@@ -45,7 +45,9 @@
 				adjustStaminaLoss(damage_amount, forced = forced)
 	return TRUE
 
-
+// adjust blood value
+/mob/living/carbon/proc/adjustBloodVolume(amount)
+	blood_volume = max(0,  blood_volume - amount)
 
 //These procs fetch a cumulative total damage from all bodyparts
 /mob/living/carbon/getBruteLoss()
@@ -89,11 +91,10 @@
 //God save me from spaghettifying this - Syscorrupt damage is not affected by toxlovers.
 /mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, toxins_type = TOX_DEFAULT)
 	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER) && toxins_type != TOX_SYSCORRUPT) //damage becomes healing and healing becomes damage
-		amount = -amount
 		if(amount > 0)
-			blood_volume -= 3 * amount		//5x was too much, this is punishing enough.
+			adjustBloodVolume(3 * amount)		//5x was too much, this is punishing enough.
 		else
-			blood_volume -= amount
+			adjustBloodVolume(amount)
 	return ..()
 
 /mob/living/carbon/getStaminaLoss()
