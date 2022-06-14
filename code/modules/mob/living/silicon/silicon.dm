@@ -52,6 +52,7 @@
 
 	vocal_bark_id = "synth"
 	vocal_pitch_range = 0.1
+	vocal_volume = 40
 
 /mob/living/silicon/Initialize(mapload)
 	. = ..()
