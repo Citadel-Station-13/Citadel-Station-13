@@ -16,7 +16,7 @@
 	var/req_stat = CONSCIOUS // CONSCIOUS, UNCONSCIOUS or DEAD
 	var/always_keep = 0 // important for abilities like revive that screw you if you lose them.
 	var/ignores_fakedeath = FALSE // usable with the FAKEDEATH flag
-	var/loudness = 0 //Determines how much having this ability will affect changeling blood tests. At 4, the blood will react violently and turn to ash, creating a unique message in the process. At 10, the blood will explode when heated.
+	var/loudness = 0.5 //Determines how much having this ability will affect changeling blood tests. This is averaged with other purchased abilities. Above 1, the blood will react violently and turn to ash, creating a unique message in the process. Above 2, the blood will explode when heated.
 
 
 /obj/effect/proc_holder/changeling/proc/on_purchase(mob/user, is_respec)
