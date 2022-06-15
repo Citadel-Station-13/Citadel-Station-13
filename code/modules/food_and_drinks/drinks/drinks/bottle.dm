@@ -557,7 +557,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/champagne/proc/pop_cork(mob/user)
 	user.visible_message(span_danger("[user] loosens the cork of [src] causing it to pop out of the bottle with great force."), \
 		span_nicegreen("You elegantly loosen the cork of [src] causing it to pop out of the bottle with great force."))
-	reagent_flags |= OPENCONTAINER
+	reagents.reagents_holder_flags |= OPENCONTAINER
 	playsound(src, 'sound/items/champagne_pop.ogg', 70, TRUE)
 	spillable = TRUE
 	update_appearance()

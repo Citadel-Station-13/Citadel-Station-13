@@ -709,7 +709,7 @@
 		return
 
 	to_chat(user, "You pull back the tab of [src] with a satisfying pop.") //Ahhhhhhhh
-	reagent_flags |= OPENCONTAINER
+	reagents.reagents_holder_flags |= OPENCONTAINER
 	playsound(src, "can_open", 50, TRUE)
 	spillable = TRUE
 	throwforce = 0
@@ -735,7 +735,7 @@
 	if(!hide_message)
 		visible_message(span_danger("[src] spills over, fizzing its contents all over [target]!"))
 	spillable = TRUE
-	reagent_flags |= OPENCONTAINER
+	reagents.reagents_holder_flags |= OPENCONTAINER
 	reagents.reaction(target, TOUCH)
 	reagents.clear_reagents()
 	throwforce = 0
