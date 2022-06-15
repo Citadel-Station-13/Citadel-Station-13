@@ -16,7 +16,10 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	movement_type = FLYING
 	generic_canpass = FALSE
-	animate_movement = NO_STEPS
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	layer = MOB_LAYER
+	plane = GAME_PLANE_FOV_HIDDEN
+	//The sound this plays on impact.
 	hitsound = 'sound/weapons/pierce.ogg'
 	appearance_flags = PIXEL_SCALE
 	var/hitsound_wall = ""
@@ -85,7 +88,7 @@
 	var/original_angle = 0		//Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
 	var/spread = 0			//amount (in degrees) of projectile spread
-	animate_movement = 0	//Use SLIDE_STEPS in conjunction with legacy
+	animate_movement = NO_STEPS	//Use SLIDE_STEPS in conjunction with legacy
 	/// how many times we've ricochet'd so far (instance variable, not a stat)
 	var/ricochets = 0
 	/// how many times we can ricochet max

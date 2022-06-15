@@ -6,7 +6,7 @@
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
 	circuit = /obj/item/circuitboard/computer/security
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/active_camera
@@ -40,8 +40,10 @@
 	cam_screen.del_on_map_removal = FALSE
 	cam_screen.screen_loc = "[map_name]:1,1"
 	cam_plane_masters = list()
-	for(var/plane in subtypesof(/atom/movable/screen/plane_master))
-		var/atom/movable/screen/instance = new plane()
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
+		var/atom/movable/screen/plane_master/instance = new plane()
+		if(instance.blend_mode_override)
+			instance.blend_mode = instance.blend_mode_override
 		instance.assigned_map = map_name
 		instance.del_on_map_removal = FALSE
 		instance.screen_loc = "[map_name]:CENTER"
@@ -51,9 +53,9 @@
 	cam_background.del_on_map_removal = FALSE
 
 /obj/machinery/computer/security/Destroy()
-	qdel(cam_screen)
+	QDEL_NULL(cam_screen)
 	QDEL_LIST(cam_plane_masters)
-	qdel(cam_background)
+	QDEL_NULL(cam_background)
 	return ..()
 
 /obj/machinery/computer/security/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
@@ -62,6 +64,7 @@
 		network += "[idnum][i]"
 
 /obj/machinery/computer/security/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	// Update UI
 	ui = SStgui.try_update_ui(user, src, ui)
 
@@ -87,6 +90,12 @@
 		// Open UI
 		ui = new(user, src, "CameraConsole", name)
 		ui.open()
+
+/obj/machinery/computer/security/ui_status(mob/user)
+	. = ..()
+	if(. == UI_DISABLED)
+		return UI_CLOSE
+	return .
 
 /obj/machinery/computer/security/ui_data()
 	var/list/data = list()
@@ -118,7 +127,7 @@
 		return
 
 	if(action == "switch_camera")
-		var/c_tag = params["name"]
+		var/c_tag = format_text(params["name"])
 		var/list/cameras = get_available_cameras()
 		var/obj/machinery/camera/selected_camera = cameras[c_tag]
 		active_camera = selected_camera
@@ -166,6 +175,7 @@
 	cam_background.fill_rect(1, 1, size_x, size_y)
 
 /obj/machinery/computer/security/ui_close(mob/user)
+	. = ..()
 	var/user_ref = REF(user)
 	var/is_living = isliving(user)
 	// Living creature or not, we remove you anyway.
@@ -209,7 +219,7 @@
 	name = "security camera monitor"
 	desc = "An old TV hooked into the station's camera network."
 	icon_state = "television"
-	icon_keyboard = "no_keyboard"
+	icon_keyboard = null
 	icon_screen = "detective_tv"
 	pass_flags = PASSTABLE
 
@@ -252,6 +262,7 @@
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
+	icon_keyboard = null
 	layer = SIGN_LAYER
 	network = list("thunder")
 	density = FALSE
@@ -262,6 +273,7 @@
 	icon_state = initial(icon_state)
 	if(stat & BROKEN)
 		icon_state += "b"
+	return ..()
 
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"
@@ -274,6 +286,8 @@
 	interaction_flags_atom = NONE  // interact() is called by BigClick()
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment, 32)
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
 	. = ..()
@@ -299,7 +313,7 @@
 /obj/machinery/computer/security/telescreen/rd
 	name = "\improper Research Director's telescreen"
 	desc = "Used for watching the AI and the RD's goons from the safety of his office."
-	network = list("rd", "aicore", "aiupload", "minisat", "xeno", "test")
+	network = list("rd", "aicore", "aiupload", "minisat", "xeno", "test", "toxins")
 
 /obj/machinery/computer/security/telescreen/circuitry
 	name = "research telescreen"

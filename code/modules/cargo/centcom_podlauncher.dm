@@ -92,10 +92,12 @@
 	cam_screen.del_on_map_removal = TRUE
 	cam_screen.screen_loc = "[map_name]:1,1"
 	cam_plane_masters = list()
-	for(var/plane in subtypesof(/atom/movable/screen/plane_master))
-		var/atom/movable/screen/instance = new plane()
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
+		var/atom/movable/screen/plane_master/instance = new plane()
 		if (!renderLighting && instance.plane == LIGHTING_PLANE)
 			instance.alpha = 100
+		if(instance.blend_mode_override)
+			instance.blend_mode = instance.blend_mode_override
 		instance.assigned_map = map_name
 		instance.del_on_map_removal = TRUE
 		instance.screen_loc = "[map_name]:CENTER"
@@ -865,6 +867,8 @@ GLOBAL_DATUM_INIT(podlauncher, /datum/centcom_podlauncher, new)
 	image_icon = 'icons/obj/supplypods_32x32.dmi'
 	image_state = "selector"
 	image_layer = FLY_LAYER
+	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	alpha = 150
 
 /obj/effect/hallucination/simple/dropoff_location
@@ -872,4 +876,6 @@ GLOBAL_DATUM_INIT(podlauncher, /datum/centcom_podlauncher, new)
 	image_icon = 'icons/obj/supplypods_32x32.dmi'
 	image_state = "dropoff_indicator"
 	image_layer = FLY_LAYER
+	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	alpha = 0
