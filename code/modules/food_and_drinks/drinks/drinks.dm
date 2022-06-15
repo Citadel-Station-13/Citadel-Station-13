@@ -48,7 +48,7 @@
 
 	SEND_SIGNAL(src, COMSIG_DRINK_DRANK, M, user)
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
-	reagents.trans_to(M, gulp_size, transfered_by = user, methods = INGEST)
+	reagents.trans_to(M, gulp_size)
 	checkLiked(fraction, M)
 
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
