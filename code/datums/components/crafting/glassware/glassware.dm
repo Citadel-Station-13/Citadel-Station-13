@@ -39,7 +39,7 @@
 	name = "tea cup"
 	desc = "A glass cup made for sipping tea!"
 	icon = 'icons/obj/glass_ware.dmi'
-	icon_state = "tea_plate"
+	icon_state = "tea_cup"
 
 //////////////////////Chem Disk/////////////////////
 //Two Steps                                       //
@@ -433,7 +433,7 @@
 	icon_state = "glass_base_half"
 	next_step = /obj/item/glasswork/glass_base/tea_cup4
 
-/obj/item/glasswork/glass_base/cup3/attackby(obj/item/I, mob/user, params)
+/obj/item/glasswork/glass_base/tea_cup3/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/stack/sheet/cloth))
 		if(do_after(user,10, target = src))
@@ -446,7 +446,7 @@
 	icon_state = "glass_base_half"
 	next_step = /obj/item/tea_cup
 
-/obj/item/glasswork/glass_base/cup4/attackby(obj/item/I, mob/user, params)
+/obj/item/glasswork/glass_base/tea_cup4/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/stack/sheet/glass))
 		if(do_after(user,10, target = src))
