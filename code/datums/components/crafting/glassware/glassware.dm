@@ -179,7 +179,7 @@
 
 /obj/item/glasswork/glass_base/spouty
 	name = "Glass fodder sheet (spout)"
-	desc = "A set of glass sheets set aside for glass working. This one is ideal for a spouty flask. It needs to heated with something very hot."
+	desc = "A set of glass sheets set aside for glass working. This one is ideal for a spouty flask. It needs to be cut with some glassworking tools."
 	next_step = /obj/item/glasswork/glass_base/spouty_part2
 
 /obj/item/glasswork/glass_base/spouty/attackby(obj/item/I, mob/user, params)
