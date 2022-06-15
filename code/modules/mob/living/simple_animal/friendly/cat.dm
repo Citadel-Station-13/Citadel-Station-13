@@ -35,6 +35,9 @@
 	collar_type = "cat"
 	var/held_icon = "cat2"
 	footstep_type = FOOTSTEP_MOB_CLAW
+	vocal_bark_id = "mutedc4"
+	vocal_pitch = 1.4
+	vocal_pitch_range = 0.4
 
 /mob/living/simple_animal/pet/cat/Initialize(mapload)
 	. = ..()
@@ -136,6 +139,7 @@
 	..()
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Read_Memory()
+	var/saved_color
 	if(fexists("data/npc_saves/Runtime.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
 		S["family"] >> family
@@ -146,14 +150,21 @@
 			return
 		var/list/json = json_decode(file2text(json_file))
 		family = json["family"]
+		saved_color = json["color"]
 	if(isnull(family))
 		family = list()
+	if(!isnull(saved_color))
+		add_atom_colour(json_decode(saved_color), FIXED_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Write_Memory(dead)
 	var/json_file = file("data/npc_saves/Runtime.json")
 	var/list/file_data = list()
 	family = list()
 	if(!dead)
+		if(color)
+			file_data["color"] = json_encode(color)
+		else
+			file_data["color"] = null
 		for(var/mob/living/simple_animal/pet/cat/kitten/C in children)
 			if(istype(C,type) || C.stat || !C.z || !C.butcher_results) //That last one is a work around for hologram cats
 				continue
@@ -161,6 +172,8 @@
 				family[C.type] += 1
 			else
 				family[C.type] = 1
+	else
+		file_data["color"] = null
 	file_data["family"] = family
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))

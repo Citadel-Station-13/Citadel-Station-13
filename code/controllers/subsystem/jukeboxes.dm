@@ -161,15 +161,15 @@ SUBSYSTEM_DEF(jukeboxes)
 				if(istype(hearer_env))
 					pressure_factor = min(source_pressure, hearer_env.return_pressure())
 
-				if(pressure_factor && targetfalloff && M.can_hear() && (M.z in audible_zlevels))
-					if(get_area(M) == currentarea)
+				if(pressure_factor && targetfalloff && M.can_hear() && (hearerturf.z in audible_zlevels))
+					if(get_area(hearerturf) == currentarea)
 						inrange = TRUE
 					else if(M in hearerscache)
 						inrange = TRUE
 
-					song_played.x = (currentturf.x - M.x) * SOUND_DEFAULT_DISTANCE_MULTIPLIER
-					song_played.z = (currentturf.y - M.y) * SOUND_DEFAULT_DISTANCE_MULTIPLIER
-					song_played.y = (((currentturf.z - M.z) * 10 * SOUND_DEFAULT_DISTANCE_MULTIPLIER) + ((currentturf.z < M.z) ? -5 : 5))
+					song_played.x = (currentturf.x - hearerturf.x) * SOUND_DEFAULT_DISTANCE_MULTIPLIER
+					song_played.z = (currentturf.y - hearerturf.y) * SOUND_DEFAULT_DISTANCE_MULTIPLIER
+					song_played.y = (((currentturf.z - hearerturf.z) * 10 * SOUND_DEFAULT_DISTANCE_MULTIPLIER) + ((currentturf.z < hearerturf.z) ? -5 : 5))
 
 					if(pressure_factor < ONE_ATMOSPHERE)
 						song_played.volume = (min((targetfalloff * 50), 100) * max((pressure_factor - SOUND_MINIMUM_PRESSURE)/(ONE_ATMOSPHERE - SOUND_MINIMUM_PRESSURE), 1))

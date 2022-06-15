@@ -61,3 +61,91 @@
   - refactor: Completely replaces the new player panel *not the admin one* with TG's.
   timothyteakettle:
   - rscadd: adds paper skin and glass bones quirks
+2022-06-08:
+  Bhijn & Myr:
+  - bugfix: Audiovisual redirection now works exactly as it used to. In laymen's terms,
+      this means folks in VR sleepers are aware of the world around them again!
+  - rscadd: During pride month, station nukes are significantly more efficient at
+      revealing genders.
+  - rscadd: Station pets now retain their color between shifts!
+  - bugfix: The shake animation, jiggle animation, squish animation, jitter animation,
+      and float animation, have all been fixed.
+  - bugfix: This also means that storage animations are fully working again. It's
+      been a few years!
+  - bugfix: 'The pull animation no longer interrupts ongoing animations. tweak: The
+      pull animation now supports diagonal directions (currently only applies to the
+      initial grab! pull code is spaghetti)'
+  - bugfix: All screenshake sources now fully support the screenshake pref
+  - code_imp: cit_screenshake.dm has been fully merged into the base files.
+  - bugfix: You can no longer remotely apply fingerprints to storage objects by clicking
+      and dragging it around. Additionally, storage objects now rustle again when
+      clicking and dragging (only took like,, a year to fix)
+  - bugfix: 'The pickup animation now properly slides into your spaceman again, instead
+      of just kinda disappearing. tweak: When pulling a resting mob, they''ll now
+      skip the laying animation entirely, fixing a visual oddity where they shrink
+      and grow to flip. tweak: Alerts are now a little snappier and bouncier, as they''ve
+      been swapped from sine easing, to back easing. tweak: Radial menus now use sine
+      easing, rather than linear easing. This just looks a little prettier. tweak:
+      Runechat now properly respects an object''s X offset. Previously, it relied
+      on a hardcoded check for dogborgs. tweak: The float animation now uses pixel_z
+      instead of pixel_y, fixing issues where the Y offset gets wiped due to the float
+      animation. This also makes floating fully compatible with ctrl+WASD.'
+  - bugfix: Admin vote deobfuscation now properly displays votes as 0 if they were
+      simply never voted for.
+  SandPoot:
+  - refactor: Does some extremely minor touches on pulling/pushing code.
+  timothyteakettle:
+  - rscadd: updates existing poly maid outfit with tg sprite but polychromatic
+  - rscadd: adds polychromic maid apron, gloves, collar, headband
+  - rscadd: adds support for polychromic accessories
+2022-06-12:
+  Bhijn & Myr:
+  - rscadd: The station minimap now features higher detail! Instead of just windows
+      and grilles being outlined, all dense+anchored structures and machinery are
+      shown on the minimap.
+  - rscadd: The station minimap now supports obfuscating entire areas, via the minimap_show_walls
+      var.
+  - rscadd: 'The station minimap now supports defining two area colors, allowing for
+      a checkerboard pattern! tweak: Hallways and maint have been given white and
+      gray colors, respectively, for ease of readability. tweak: Ruins are now obfuscated
+      on the minimap, and have been given a subtle, yet distinct, color pattern!'
+  - bugfix: The station minimap no longer errors when you mouse over it
+  - rscadd: 'The station minimap now supports multiz! (However, due to bugginess,
+      multiz minimaps won''t display area tooltips.) tweak: The station minimap now
+      features pixel-perfect scaling.'
+  - code_imp: The station minimap can now support managing data for up to 16,581,374
+      areas without any conflicts at all! Before, BYOND's psuedorandom RNG meant that
+      it was somewhat common for areas to collide with each others' data.
+  - rscadd: Talking is now accompanied with fully-customizable sounds! You can modify
+      your character's speech under the speech tab in chargen, and you can toggle
+      these sounds via the "Hear/Silence Vocal Barks" verb under the preferences tab!
+      This also fully supports genetics.
+  - bugfix: Admittedly an unatomized change, but Cit's DNA blocks can now properly
+      be updated through genetics. Before, these required a complete genetics reset
+      to apply.
+  - rscadd: 'The chat now supports blockquotes! tweak: Examining, medical scanners,
+      self-checking, and mood checkups, have all been converted to make use of blockquotes.'
+  Bhijn & Myr (+ UI work and cleanup by Sandpoot!):
+  - rscadd: 'Colormates now have HSV coloration! tweak: Colormates have had their
+      "please use white clothing" message removed, as that recommendation''s now mostly
+      pointless tweak: The default mode for colormates is now HSV coloration tweak:
+      The temp messages in colormates have been tweaked slightly to be more user-friendly,
+      as they''re user-facing. tweak: The description for constants in the colormate
+      matrix mode has been fixed; the constant variables have nothing to do with contrast,
+      they simply add color tweak: Matrix mode has been made a lot more usable; it''s
+      now clamped between -10 and 10, and features a step of 0.01, making it much
+      easier to simply click and drag to adjust the values, rather than having to
+      punch them in manually'
+  Putnam3145:
+  - balance: QCD matter is now worth 10x as much and makes 2 research pointer per
+      mole
+  SandPoot:
+  - rscadd: Added a search box to all vending machine uis.
+  - qol: Vending machines have candystripes for better clarity.
+  - bugfix: Fixed items that use strip_mod and strip_silence (stripping people faster
+      or without giving them a message)
+  keronshb:
+  - bugfix: Families fixed from crashing
+2022-06-13:
+  Bhijn & Myr:
+  - bugfix: Jukebox audio is now audible within closets, crates, etc!

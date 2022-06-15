@@ -203,9 +203,13 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		point_gain = (BOMB_TARGET_POINTS * 2 * orig_light) / (orig_light + BOMB_TARGET_SIZE)
 
 	/*****The Point Capper*****/
-	if(point_gain > linked_techweb.largest_bomb_value)
-		var/old_tech_largest_bomb_value = linked_techweb.largest_bomb_value //held so we can pull old before we do math
-		linked_techweb.largest_bomb_value = point_gain
+
+	var/list/largest_values = linked_techweb.largest_values
+	if(!(LARGEST_BOMB in largest_values))
+		largest_values[LARGEST_BOMB] = 0
+	if(point_gain > largest_values[LARGEST_BOMB])
+		var/old_tech_largest_bomb_value = largest_values[LARGEST_BOMB] //held so we can pull old before we do math
+		linked_techweb.largest_values[LARGEST_BOMB] = point_gain
 		point_gain -= old_tech_largest_bomb_value
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
 		if(D)

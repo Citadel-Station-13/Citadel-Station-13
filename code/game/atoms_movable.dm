@@ -64,6 +64,14 @@
 	/// last time we yelled
 	var/last_yell = 0
 
+	// Text-to-bark sounds
+	var/sound/vocal_bark
+	var/vocal_bark_id
+	var/vocal_pitch = 1
+	var/vocal_pitch_range = 0.2 //Actual pitch is (pitch - (vocal_pitch_range*0.5)) to (pitch + (vocal_pitch_range*0.5))
+	var/vocal_volume = 70 //Baseline. This gets modified by yelling and other factors
+	var/vocal_speed = 4 //Lower values are faster, higher values are slower
+
 /atom/movable/Initialize(mapload)
 	. = ..()
 	switch(blocks_emissive)
@@ -607,11 +615,11 @@
 	if(throwing && !throw_override)
 		return
 	if(on && !(movement_type & FLOATING))
-		animate(src, pixel_y = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
-		animate(pixel_y = -2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
+		animate(src, pixel_z = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
+		animate(pixel_z = -4, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
 		setMovetype(movement_type | FLOATING)
 	else if (!on && (movement_type & FLOATING))
-		animate(src, pixel_y = initial(pixel_y), time = 10)
+		animate(src, pixel_z = initial(pixel_y), time = 10)
 		setMovetype(movement_type & ~FLOATING)
 	floating_need_update = FALSE // assume it's done
 
@@ -699,6 +707,17 @@
 	var/datum/language_holder/LH = get_language_holder()
 	return LH.update_atom_languages(src)
 
+/// Sets the vocal bark for the atom, using the bark's ID
+/atom/movable/proc/set_bark(id)
+	if(!id)
+		return FALSE
+	var/datum/bark/B = GLOB.bark_list[id]
+	if(!B)
+		return FALSE
+	vocal_bark = sound(initial(B.soundpath))
+	vocal_bark_id = id
+	return vocal_bark
+
 /* End language procs */
 
 
@@ -777,4 +796,4 @@
 	M.Turn(pick(-30, 30))
 	animate(I, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 3, transform = M, easing = CUBIC_EASING)
 	sleep(1)
-	animate(I, alpha = 0, transform = matrix(), time = 1)
+	animate(I, alpha = 0, transform = matrix(), time = 1, flags = ANIMATION_PARALLEL)

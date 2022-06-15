@@ -20,6 +20,9 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
+	vocal_bark_id = "bullet"
+	vocal_speed = 6
+
 /mob/living/simple_animal/pet/dog/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/wuv, "yaps happily!", EMOTE_AUDIBLE, /datum/mood_event/pet_animal, "growls!", EMOTE_AUDIBLE)
@@ -436,6 +439,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/proc/Read_Memory()
 	set waitfor = FALSE
+	var/saved_color
 	if(fexists("data/npc_saves/Ian.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
 		S["age"] 		>> age
@@ -450,12 +454,15 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 		age = json["age"]
 		record_age = json["record_age"]
 		saved_head = json["saved_head"]
+		saved_color = json["color"]
 	if(isnull(age))
 		age = 0
 	if(isnull(record_age))
 		record_age = 1
 	if(saved_head)
 		place_on_head(new saved_head)
+	if(!isnull(saved_color))
+		add_atom_colour(json_decode(saved_color), FIXED_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/proc/Write_Memory(dead)
 	var/json_file = file("data/npc_saves/Ian.json")
@@ -470,10 +477,15 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 			file_data["saved_head"] = inventory_head.type
 		else
 			file_data["saved_head"] = null
+		if(color)
+			file_data["color"] = json_encode(color)
+		else
+			file_data["color"] = null
 	else
 		file_data["age"] = 0
 		file_data["record_age"] = record_age
 		file_data["saved_head"] = null
+		file_data["color"] = null
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
@@ -630,6 +642,8 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	mob_size = MOB_SIZE_SMALL
 	collar_type = "puppy"
 
+	vocal_pitch = 1.6
+
 //puppies cannot wear anything.
 /mob/living/simple_animal/pet/dog/corgi/puppy/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
@@ -650,6 +664,8 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	minbodytemp = TCMB
 	maxbodytemp = T0C + 40
 	held_icon = "void_puppy"
+
+	vocal_pitch = 0.6
 
 /mob/living/simple_animal/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0)
 	return 1	//Void puppies can navigate space.

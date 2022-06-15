@@ -19,7 +19,7 @@
 	speed /= segments
 
 	if(parallel)
-		animate(src, transform = matrices[1], time = speed, loops , flags = ANIMATION_PARALLEL)
+		animate(src, transform = matrices[1], time = speed, loops, flags = ANIMATION_PARALLEL)
 	else
 		animate(src, transform = matrices[1], time = speed, loops)
 

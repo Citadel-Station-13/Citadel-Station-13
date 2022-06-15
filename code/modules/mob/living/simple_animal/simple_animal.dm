@@ -482,7 +482,7 @@
 	update_action_buttons_icon()
 	return mobility_flags
 
-/mob/living/simple_animal/update_transform()
+/mob/living/simple_animal/update_transform(do_animate)
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
 	var/changed = 0
 

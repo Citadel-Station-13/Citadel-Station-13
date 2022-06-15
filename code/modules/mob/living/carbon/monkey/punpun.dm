@@ -46,6 +46,7 @@
 	..()
 
 /mob/living/carbon/monkey/punpun/proc/Read_Memory()
+	var/saved_color
 	if(fexists("data/npc_saves/Punpun.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Punpun.sav")
 		S["ancestor_name"]	>> ancestor_name
@@ -62,6 +63,9 @@
 		ancestor_chain = json["ancestor_chain"]
 		relic_hat = json["relic_hat"]
 		relic_mask = json["relic_hat"]
+		saved_color = json["color"]
+	if(!isnull(saved_color))
+		add_atom_colour(json_decode(saved_color), FIXED_COLOUR_PRIORITY)
 
 /mob/living/carbon/monkey/punpun/proc/Write_Memory(dead, gibbed)
 	var/json_file = file("data/npc_saves/Punpun.json")
@@ -71,10 +75,12 @@
 		file_data["ancestor_chain"] = null
 		file_data["relic_hat"] = null
 		file_data["relic_mask"] = null
+		file_data["color"] = null
 	else
 		file_data["ancestor_name"] = ancestor_name ? ancestor_name : name
 		file_data["ancestor_chain"] = dead ? ancestor_chain + 1 : ancestor_chain
 		file_data["relic_hat"] = head ? head.type : null
 		file_data["relic_mask"] = wear_mask ? wear_mask.type : null
+		file_data["color"] = color ? json_encode(color) : null
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))

@@ -227,6 +227,17 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggleprayersounds)()
 	return C.prefs.toggles & SOUND_PRAYERS
 
 
+TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggle_bark)()
+	set name = "Hear/Silence Vocal Barks"
+	set category = "Preferences"
+	set desc = "Hear Vocal Barks"
+	usr.client.prefs.toggles ^= SOUND_BARK
+	usr.client.prefs.save_preferences()
+	to_chat(usr, "You will now [(usr.client.prefs.toggles & SOUND_BARK) ? "hear" : "no longer hear"] vocal barks when other people talk.")
+	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Vocal Barks", "[usr.client.prefs.toggles & SOUND_BARK ? "Enabled" : "Disabled"]"))
+/datum/verbs/menu/Settings/Sound/toggle_bark/Get_checked(client/C)
+	return C.prefs.toggles & SOUND_BARK
+
 /datum/verbs/menu/Settings/Sound/verb/stop_client_sounds()
 	set name = "Stop Sounds"
 	set category = "Preferences"

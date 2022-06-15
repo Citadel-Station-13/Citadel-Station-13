@@ -8,6 +8,7 @@
 	item_flags = NONE
 	obj_flags = UNIQUE_RENAME
 	weapon_weight = WEAPON_LIGHT
+	recoil = 0.5
 	can_flashlight = 1
 	flight_x_offset = 15
 	flight_y_offset = 9

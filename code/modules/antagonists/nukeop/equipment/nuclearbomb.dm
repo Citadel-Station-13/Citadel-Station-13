@@ -66,8 +66,20 @@
 	icon_state = "nuclearbomb_base"
 	anchored = TRUE //stops it being moved
 
+/obj/machinery/nuclearbomb/selfdestruct/Initialize(mapload)
+	. = ..()
+	if(SSevents.holidays && SSevents.holidays[PRIDE_MONTH] && prob(10))
+		name = "station-wide gender-reveal terminal"
+		desc = "For when the whole sector deserves to know a gender. But of whom? Don't ask."
+
 /obj/machinery/nuclearbomb/syndicate
 	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
+
+/obj/machinery/nuclearbomb/syndicate/Initialize(mapload)
+	. = ..()
+	if(SSevents.holidays && SSevents.holidays[PRIDE_MONTH] && prob(50))
+		name = "tactical gender-reveal device"
+		desc = "\"But whose gender is it revealing?\" you ponder. Don't worry. That comes later."
 
 /obj/machinery/nuclearbomb/syndicate/get_cinematic_type(off_station)
 	var/datum/game_mode/nuclear/NM = SSticker.mode
