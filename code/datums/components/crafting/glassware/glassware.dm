@@ -145,7 +145,7 @@
 			qdel(src)
 
 /obj/item/glasswork/glass_base/glass_lens_part5
-	name = "unpolished glass lens"
+	name = "unpolished glass (lens)"
 	desc = "An unpolished glass lens. It needs to be polished with some dry cloth."
 	icon = 'icons/obj/glass_ware.dmi'
 	icon_state = "glass_optics"
@@ -159,7 +159,7 @@
 			qdel(src)
 
 /obj/item/glasswork/glass_base/glass_lens_part6
-	name = "unrefined glass lens"
+	name = "unrefined glass (lens)"
 	desc = "A polished glass lens. It needs to be refined with some sandstone."
 	icon = 'icons/obj/glass_ware.dmi'
 	icon_state = "glass_optics"
@@ -413,7 +413,7 @@
 			qdel(src)
 			qdel(I)
 
-/obj/item/glasswork/glass_base/tea_cupe2
+/obj/item/glasswork/glass_base/tea_cup2
 	name = "glassblowing rod (tea cup)"
 	desc = "A hollow metal rod made for blowing glass. There is a blob of shapen glass at the end of it that needs to be cut off with some glassworking tools."
 	icon_state = "blowing_rods_inuse"
