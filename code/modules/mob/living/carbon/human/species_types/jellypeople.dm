@@ -59,7 +59,7 @@
 	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
 		return
 
-	if(!H.blood_volume)
+	if(H.blood_volume <= 0)
 		H.blood_volume += 2.5 * delta_time
 		H.adjustBruteLoss(2.5 * delta_time)
 		to_chat(H, span_danger("You feel empty!"))
