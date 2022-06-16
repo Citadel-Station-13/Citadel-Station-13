@@ -55,38 +55,44 @@
 	//update blood color to body color
 	exotic_blood_color = "#" + H.dna.features["mcolor"]
 
-/datum/species/jelly/spec_life(mob/living/carbon/human/H)
-	if(H.stat == DEAD || HAS_TRAIT(H, TRAIT_NOMARROW)) //can't farm slime jelly from a dead slime/jelly person indefinitely, and no regeneration for bloodsuckers
+/datum/species/jelly/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
+	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
 		return
-	if(!H.blood_volume)
-		H.adjust_integration_blood(5)
-		H.adjustBruteLoss(5)
-		to_chat(H, "<span class='danger'>You feel empty!</span>")
 
-	if(H.blood_volume < (BLOOD_VOLUME_NORMAL * H.blood_ratio))
+	if(!H.blood_volume)
+		H.blood_volume += 2.5 * delta_time
+		H.adjustBruteLoss(2.5 * delta_time)
+		to_chat(H, span_danger("You feel empty!"))
+
+	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
-			H.adjust_integration_blood(3)
-			H.nutrition -= 2.5
-	if(H.blood_volume < (BLOOD_VOLUME_OKAY*H.blood_ratio))
-		if(prob(5))
-			to_chat(H, "<span class='danger'>You feel drained!</span>")
-	if(H.blood_volume < (BLOOD_VOLUME_BAD*H.blood_ratio))
+			H.blood_volume += 1.5 * delta_time
+			H.adjust_nutrition(-1.25 * delta_time)
+
+	if(H.blood_volume < BLOOD_VOLUME_OKAY)
+		if(DT_PROB(2.5, delta_time))
+			to_chat(H, span_danger("You feel drained!"))
+
+	if(H.blood_volume < BLOOD_VOLUME_BAD)
 		Cannibalize_Body(H)
-	..()
+
+	var/datum/action/innate/ability/regrowth = H.ability_actions[INNATE_ABILITY_LIMB_REGROWTH]
+	if(regrowth)
+		regrowth.UpdateButtonIcon()
 
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
 	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
 	var/obj/item/bodypart/consumed_limb
-	if(!limbs_to_consume.len)
+	if(!length(limbs_to_consume))
 		H.losebreath++
 		return
 	if(H.get_num_legs(FALSE)) //Legs go before arms
 		limbs_to_consume -= list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 	consumed_limb = H.get_bodypart(pick(limbs_to_consume))
 	consumed_limb.drop_limb()
-	to_chat(H, "<span class='userdanger'>Your [consumed_limb] is drawn back into your body, unable to maintain its shape!</span>")
+	to_chat(H, span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!"))
 	qdel(consumed_limb)
-	H.adjust_integration_blood(20)
+	H.blood_volume += 20
 
 ////////////////////////////////////////////////////////SLIMEPEOPLE///////////////////////////////////////////////////////////////////
 
@@ -407,7 +413,7 @@
 	limbs_id = SPECIES_SLIME
 	default_color = "00FFFF"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,HAS_FLESH)
-	inherent_traits = list(TRAIT_TOXINLOVER)
+	inherent_traits = list(TRAIT_TOXINLOVER, TRAIT_SNOWFLAKE_BLOOD_PROCESS)
 	mutant_bodyparts = list("mcolor" = "FFFFFF", "mcolor2" = "FFFFFF","mcolor3" = "FFFFFF", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "Plain", "mam_snouts" = "None", "taur" = "None", "deco_wings" = "None", "legs" = "Plantigrade")
 	say_mod = "says"
 	hair_color = "mutcolor"

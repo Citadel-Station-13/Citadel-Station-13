@@ -38,6 +38,9 @@
 	if(HAS_TRAIT(src, TRAIT_NOMARROW)) //Bloodsuckers don't need to be here.
 		return
 
+	if(HAS_TRAIT(src, TRAIT_SNOWFLAKE_BLOOD_PROCESS)) //slimes regenerate blood in their own way and take damage from not having blood in their own way
+		return
+
 	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
 		if(integrating_blood > 0)
 			var/blood_integrated = max(integrating_blood - 1, 0)
