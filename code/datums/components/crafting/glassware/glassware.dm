@@ -39,7 +39,7 @@
 	name = "tea cup"
 	desc = "A glass cup made for sipping tea!"
 	icon = 'icons/obj/glass_ware.dmi'
-	icon_state = "tea_plate"
+	icon_state = "tea_cup"
 
 //////////////////////Chem Disk/////////////////////
 //Two Steps                                       //
@@ -145,7 +145,7 @@
 			qdel(src)
 
 /obj/item/glasswork/glass_base/glass_lens_part5
-	name = "unpolished glass lens"
+	name = "unpolished glass (lens)"
 	desc = "An unpolished glass lens. It needs to be polished with some dry cloth."
 	icon = 'icons/obj/glass_ware.dmi'
 	icon_state = "glass_optics"
@@ -159,7 +159,7 @@
 			qdel(src)
 
 /obj/item/glasswork/glass_base/glass_lens_part6
-	name = "unrefined glass lens"
+	name = "unrefined glass (lens)"
 	desc = "A polished glass lens. It needs to be refined with some sandstone."
 	icon = 'icons/obj/glass_ware.dmi'
 	icon_state = "glass_optics"
@@ -179,7 +179,7 @@
 
 /obj/item/glasswork/glass_base/spouty
 	name = "Glass fodder sheet (spout)"
-	desc = "A set of glass sheets set aside for glass working. This one is ideal for a spouty flask. It needs to heated with something very hot."
+	desc = "A set of glass sheets set aside for glass working. This one is ideal for a spouty flask. It needs to be cut with some glassworking tools."
 	next_step = /obj/item/glasswork/glass_base/spouty_part2
 
 /obj/item/glasswork/glass_base/spouty/attackby(obj/item/I, mob/user, params)
@@ -413,7 +413,7 @@
 			qdel(src)
 			qdel(I)
 
-/obj/item/glasswork/glass_base/tea_cupe2
+/obj/item/glasswork/glass_base/tea_cup2
 	name = "glassblowing rod (tea cup)"
 	desc = "A hollow metal rod made for blowing glass. There is a blob of shapen glass at the end of it that needs to be cut off with some glassworking tools."
 	icon_state = "blowing_rods_inuse"
@@ -433,7 +433,7 @@
 	icon_state = "glass_base_half"
 	next_step = /obj/item/glasswork/glass_base/tea_cup4
 
-/obj/item/glasswork/glass_base/cup3/attackby(obj/item/I, mob/user, params)
+/obj/item/glasswork/glass_base/tea_cup3/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/stack/sheet/cloth))
 		if(do_after(user,10, target = src))
@@ -446,7 +446,7 @@
 	icon_state = "glass_base_half"
 	next_step = /obj/item/tea_cup
 
-/obj/item/glasswork/glass_base/cup4/attackby(obj/item/I, mob/user, params)
+/obj/item/glasswork/glass_base/tea_cup4/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/stack/sheet/glass))
 		if(do_after(user,10, target = src))
