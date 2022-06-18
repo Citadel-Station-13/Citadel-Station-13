@@ -228,8 +228,8 @@
 			set_glide_size(var_value)
 			. = TRUE
 		if(NAMEOF(src, vocal_bark))
-			if(isfile(vocal_bark))
-				vocal_bark = sound(vocal_bark) //bark() expects vocal_bark to already be a sound datum, for performance reasons. adminbus QoL!
+			if(isfile(var_value))
+				vocal_bark = sound(var_value) //bark() expects vocal_bark to already be a sound datum, for performance reasons. adminbus QoL!
 			. = TRUE
 
 	if(!isnull(.))
