@@ -1,9 +1,0 @@
-author: "TripleShades"
-delete-after: True
-changes: 
-  - bugfix: "Cannabis mutation variants now use the proper growth state icons"
-  - bugfix: "Picking to make tea cups will now give the right starting glasswork base"
-  - bugfix: "Picking to make tea plates will now give the right starting glasswork base"
-  - spellcheck: "Fixed a state typo in tea cup glassworking"
-  - spellcheck: "Fixed an incorrect step displayed on spout glassworking"
-  - code_imp: "Enables the make priority announcement admin verb for admin use"

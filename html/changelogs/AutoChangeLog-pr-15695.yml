@@ -1,4 +1,0 @@
-author: "IHOPMommyLich"
-delete-after: True
-changes: 
-  - rscdel: "Removed the forced dynamic, allowing the standard game mode vote."
