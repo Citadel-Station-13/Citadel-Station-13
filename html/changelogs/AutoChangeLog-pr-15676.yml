@@ -1,0 +1,4 @@
+author: "TrojanCoyote"
+delete-after: True
+changes: 
+  - rscadd: "Adds a plate carrier to HoS loadout, sprites for such"
