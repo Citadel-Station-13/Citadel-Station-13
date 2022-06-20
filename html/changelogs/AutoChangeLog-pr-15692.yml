@@ -1,0 +1,4 @@
+author: "Bhijn & Myr"
+delete-after: True
+changes: 
+  - balance: "Ling abilities now have a default loudness of 0.5. This change applies to every single ability that used to have 0 loudness."
