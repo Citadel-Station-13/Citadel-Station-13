@@ -160,3 +160,9 @@
   - spellcheck: Fixed a state typo in tea cup glassworking
   - spellcheck: Fixed an incorrect step displayed on spout glassworking
   - code_imp: Enables the make priority announcement admin verb for admin use
+2022-06-21:
+  Bhijn & Myr:
+  - balance: Ling abilities now have a default loudness of 0.5. This change applies
+      to every single ability that used to have 0 loudness.
+  TrojanCoyote:
+  - rscadd: Adds a plate carrier to HoS loadout, sprites for such
