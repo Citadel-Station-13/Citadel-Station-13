@@ -13051,6 +13051,7 @@
 /area/commons/toilet)
 "aDW" = (
 /obj/structure/loot_pile/maint,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plasteel,
 /area/cargo/warehouse)
 "aDZ" = (
@@ -21835,6 +21836,7 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bbJ" = (
@@ -25854,6 +25856,7 @@
 	dir = 1
 	},
 /obj/structure/loot_pile/maint,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "blR" = (
@@ -33306,6 +33309,7 @@
 /area/science/storage)
 "bDg" = (
 /obj/structure/loot_pile/maint,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bDh" = (
@@ -35365,6 +35369,7 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
+/obj/effect/spawner/lootdrop/garbage_spawner,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bHX" = (
@@ -36106,6 +36111,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/spawner/lootdrop/garbage_spawner,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bJz" = (
@@ -36538,6 +36544,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bKC" = (
@@ -36557,6 +36564,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
+/obj/effect/spawner/lootdrop/garbage_spawner,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bKE" = (
@@ -36798,13 +36806,8 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bLc" = (
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/science,
-/obj/item/clothing/glasses/science,
-/obj/structure/table,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/closet/secure_closet/cytology,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bLd" = (
@@ -37083,6 +37086,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"bLP" = (
+/obj/effect/spawner/lootdrop/garbage_spawner,
+/turf/open/floor/wood,
+/area/maintenance/starboard/aft)
 "bLQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/closed/wall/r_wall,
@@ -38576,6 +38583,11 @@
 /obj/item/slime_scanner,
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPI" = (
@@ -50967,6 +50979,9 @@
 	dir = 4
 	},
 /obj/structure/loot_pile/maint,
+/obj/effect/spawner/lootdrop/garbage_spawner,
+/obj/effect/spawner/lootdrop/garbage_spawner,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cBE" = (
@@ -51964,6 +51979,7 @@
 	dir = 4
 	},
 /obj/structure/loot_pile/maint,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "cQw" = (
@@ -53126,6 +53142,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/service/bar)
+"eig" = (
+/obj/effect/loot_site_spawner,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "eih" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -53219,6 +53239,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "eoD" = (
@@ -54628,6 +54649,13 @@
 /obj/structure/table,
 /turf/open/floor/plasteel/cafeteria,
 /area/commons/locker)
+"fSm" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/loot_site_spawner,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "fSO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
@@ -54958,6 +54986,10 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"gvn" = (
+/obj/effect/loot_site_spawner,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "gvX" = (
 /turf/open/floor/plasteel/yellowsiding,
 /area/commons/fitness/pool)
@@ -55257,6 +55289,7 @@
 /obj/machinery/atmospherics/components/binary/valve/digital{
 	name = "gas to sauna"
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "gRV" = (
@@ -55531,6 +55564,7 @@
 /area/commons/dorms)
 "hmT" = (
 /obj/structure/loot_pile/maint,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "hnc" = (
@@ -55657,6 +55691,7 @@
 /area/engineering/atmos)
 "hyY" = (
 /obj/structure/loot_pile/maint,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "hzs" = (
@@ -55911,6 +55946,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
+"ibI" = (
+/obj/structure/loot_pile/maint,
+/obj/effect/spawner/lootdrop/garbage_spawner,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "ibK" = (
 /turf/open/floor/plasteel,
 /area/security/processing)
@@ -58118,6 +58159,10 @@
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/commons/storage/emergency/starboard)
+"laV" = (
+/obj/effect/spawner/lootdrop/garbage_spawner,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "lcx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -58759,6 +58804,20 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"lWz" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plasteel/dark,
 /area/maintenance/starboard/aft)
 "lWD" = (
 /obj/effect/decal/cleanable/vomit/old,
@@ -59575,6 +59634,11 @@
 	},
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain)
+"mSG" = (
+/obj/structure/loot_pile/maint,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "mTG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -59694,6 +59758,10 @@
 "ndq" = (
 /turf/open/floor/plating,
 /area/service/abandoned_gambling_den)
+"ndM" = (
+/obj/effect/loot_site_spawner,
+/turf/open/floor/plating,
+/area/maintenance/bar)
 "nez" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
@@ -59779,6 +59847,7 @@
 /area/security/prison/cells)
 "nkP" = (
 /obj/structure/loot_pile/maint,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "nmZ" = (
@@ -62099,6 +62168,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/service/chapel/office)
+"qVB" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/loot_site_spawner,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "qVP" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -63212,6 +63288,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison/upper)
+"sBc" = (
+/obj/effect/loot_site_spawner,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "sBM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/green{
@@ -64558,6 +64638,14 @@
 /obj/item/coin/silver,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"uvr" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/garbage_spawner,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "uvZ" = (
 /obj/structure/mineral_door/wood,
 /turf/open/floor/wood,
@@ -64732,6 +64820,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/prison/upper)
+"uHb" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/loot_site_spawner,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary)
 "uHc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -65213,6 +65311,7 @@
 /area/commons/cryopod)
 "vsO" = (
 /obj/structure/chair/stool/bar,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/wood{
 	icon_state = "wood-broken2"
 	},
@@ -65574,6 +65673,7 @@
 /area/space/nearstation)
 "vPd" = (
 /obj/structure/loot_pile/maint,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "vPs" = (
@@ -65793,6 +65893,7 @@
 "wiR" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/loot_pile/maint,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "wjd" = (
@@ -65843,11 +65944,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "wly" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 4;
-	name = "4maintenance loot spawner"
-	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "wlI" = (
@@ -79837,7 +79934,7 @@ aaf
 alU
 avS
 atJ
-amC
+gvn
 amC
 aKf
 bEJ
@@ -85008,7 +85105,7 @@ aQN
 fRe
 qSo
 aPA
-hmT
+ibI
 bhS
 bjk
 aPz
@@ -87349,7 +87446,7 @@ aaa
 aaa
 bCq
 bHE
-bHE
+sBc
 bSo
 bHE
 bCq
@@ -88905,7 +89002,7 @@ mrR
 dKP
 odx
 rBq
-evR
+ndM
 bCq
 bUs
 bLv
@@ -90685,7 +90782,7 @@ bCq
 bHD
 bJe
 bCq
-nkP
+bHE
 nzX
 bHE
 bHE
@@ -91196,7 +91293,7 @@ bwe
 bAJ
 bCe
 bCq
-bHE
+sBc
 bJf
 bCq
 aaa
@@ -92491,7 +92588,7 @@ aaa
 aaf
 aaf
 bCq
-bTE
+fSm
 bAx
 bVI
 bWC
@@ -100907,7 +101004,7 @@ ajp
 ajp
 ajp
 ajo
-apt
+uHb
 aqm
 arf
 arf
@@ -104578,7 +104675,7 @@ bWe
 bWe
 bWe
 cdE
-bAw
+laV
 bzs
 bAw
 caK
@@ -106904,7 +107001,7 @@ ceJ
 cll
 ccM
 cnb
-bHd
+qVB
 ceI
 aaa
 aaa
@@ -107596,7 +107693,7 @@ alO
 mAH
 jaF
 alP
-anf
+eig
 aCG
 cVb
 cVb
@@ -107675,7 +107772,7 @@ ceJ
 cAe
 cmj
 cne
-bHd
+uvr
 bPn
 aaa
 aaa
@@ -111701,7 +111798,7 @@ aaf
 aaf
 aaa
 alO
-anf
+eig
 anf
 arw
 nuw
@@ -115643,7 +115740,7 @@ clt
 cQw
 cCt
 cOe
-cmo
+mSG
 cNW
 aaa
 aaS
@@ -116901,7 +116998,7 @@ bKc
 cNW
 bMB
 bNA
-cmo
+mSG
 bSl
 bUq
 flc
@@ -118187,7 +118284,7 @@ bLj
 bEs
 cdV
 cac
-bPP
+bLP
 cOe
 gRV
 gDZ
@@ -118446,7 +118543,7 @@ rmX
 xIa
 vxh
 cOe
-bPP
+bLP
 bPP
 bPP
 vsO
@@ -118959,7 +119056,7 @@ cbh
 eDz
 fxk
 iIs
-qFf
+lWz
 pcQ
 leE
 hTt
