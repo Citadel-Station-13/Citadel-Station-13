@@ -4,7 +4,7 @@
 /obj/machinery/camera/emp_proof
 	start_active = TRUE
 
-/obj/machinery/camera/emp_proof/Initialize()
+/obj/machinery/camera/emp_proof/Initialize(mapload)
 	. = ..()
 	upgradeEmpProof()
 
@@ -14,7 +14,7 @@
 	start_active = TRUE
 	icon_state = "xraycam" // Thanks to Krutchen for the icons.
 
-/obj/machinery/camera/xray/Initialize()
+/obj/machinery/camera/xray/Initialize(mapload)
 	. = ..()
 	upgradeXRay()
 
@@ -23,7 +23,7 @@
 	start_active = TRUE
 	name = "motion-sensitive security camera"
 
-/obj/machinery/camera/motion/Initialize()
+/obj/machinery/camera/motion/Initialize(mapload)
 	. = ..()
 	upgradeMotion()
 
@@ -31,7 +31,7 @@
 /obj/machinery/camera/all
 	start_active = TRUE
 
-/obj/machinery/camera/all/Initialize()
+/obj/machinery/camera/all/Initialize(mapload)
 	. = ..()
 	upgradeEmpProof()
 	upgradeXRay()
@@ -43,7 +43,7 @@
 	var/number = 0 //camera number in area
 
 //This camera type automatically sets it's name to whatever the area that it's in is called.
-/obj/machinery/camera/autoname/Initialize()
+/obj/machinery/camera/autoname/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 

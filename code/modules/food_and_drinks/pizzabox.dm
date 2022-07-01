@@ -29,7 +29,7 @@
 	var/const/BOMB_TIMER_MIN = 1
 	var/const/BOMB_TIMER_MAX = 10
 
-/obj/item/pizzabox/Initialize()
+/obj/item/pizzabox/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -259,14 +259,14 @@
 	wires = null
 	update_icon()
 
-/obj/item/pizzabox/bomb/Initialize()
+/obj/item/pizzabox/bomb/Initialize(mapload)
 	. = ..()
 	var/randompizza = pick(subtypesof(/obj/item/reagent_containers/food/snacks/pizza))
 	pizza = new randompizza(src)
 	bomb = new(src)
 	wires = new /datum/wires/explosive/pizza(src)
 
-/obj/item/pizzabox/margherita/Initialize()
+/obj/item/pizzabox/margherita/Initialize(mapload)
 	. = ..()
 	AddPizza()
 	boxtag = "Margherita Deluxe"
@@ -277,22 +277,22 @@
 /obj/item/pizzabox/margherita/robo/AddPizza()
 	pizza = new /obj/item/reagent_containers/food/snacks/pizza/margherita/robo(src)
 
-/obj/item/pizzabox/vegetable/Initialize()
+/obj/item/pizzabox/vegetable/Initialize(mapload)
 	. = ..()
 	pizza = new /obj/item/reagent_containers/food/snacks/pizza/vegetable(src)
 	boxtag = "Gourmet Vegatable"
 
-/obj/item/pizzabox/mushroom/Initialize()
+/obj/item/pizzabox/mushroom/Initialize(mapload)
 	. = ..()
 	pizza = new /obj/item/reagent_containers/food/snacks/pizza/mushroom(src)
 	boxtag = "Mushroom Special"
 
-/obj/item/pizzabox/meat/Initialize()
+/obj/item/pizzabox/meat/Initialize(mapload)
 	. = ..()
 	pizza = new /obj/item/reagent_containers/food/snacks/pizza/meat(src)
 	boxtag = "Meatlover's Supreme"
 
-/obj/item/pizzabox/pineapple/Initialize()
+/obj/item/pizzabox/pineapple/Initialize(mapload)
 	. = ..()
 	pizza = new /obj/item/reagent_containers/food/snacks/pizza/pineapple(src)
 	boxtag = "Honolulu Chew"
@@ -311,8 +311,9 @@
 		/obj/item/reagent_containers/food/snacks/pizza/donkpocket = 0.3,
 		/obj/item/reagent_containers/food/snacks/pizza/dank = 0.1) //pizzas here are weighted by chance to be someone's favorite
 	var/static/list/pizza_preferences
+	COOLDOWN_DECLARE(next_pizza_attunement)
 
-/obj/item/pizzabox/infinite/Initialize()
+/obj/item/pizzabox/infinite/Initialize(mapload)
 	. = ..()
 	if(!pizza_preferences)
 		pizza_preferences = list()
@@ -323,10 +324,17 @@
 		. += "<span class='deadsay'>This pizza box is anomalous, and will produce infinite pizza.</span>"
 
 /obj/item/pizzabox/infinite/attack_self(mob/living/user)
-	QDEL_NULL(pizza)
-	if(ishuman(user))
-		attune_pizza(user)
+	if(COOLDOWN_FINISHED(src, next_pizza_attunement))
+		QDEL_NULL(pizza)
+		if(ishuman(user))
+			attune_pizza(user)
 	. = ..()
+
+/obj/item/pizzabox/infinite/on_attack_hand(mob/user, act_intent, unarmed_attack_flags)
+	var/had_pizza = (pizza ? TRUE : FALSE)
+	. = ..()
+	if(had_pizza && !pizza)
+		COOLDOWN_START(src, next_pizza_attunement, (3 SECONDS))
 
 /obj/item/pizzabox/infinite/proc/attune_pizza(mob/living/carbon/human/noms) //tonight on "proc names I never thought I'd type"
 	if(!pizza_preferences[noms.ckey])

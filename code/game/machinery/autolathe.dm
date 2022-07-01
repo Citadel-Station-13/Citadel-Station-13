@@ -44,7 +44,7 @@
 							"Imported"
 							)
 
-/obj/machinery/autolathe/Initialize()
+/obj/machinery/autolathe/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/autolathe(src)
 	stored_research = new /datum/techweb/specialized/autounlocking/autolathe
@@ -429,7 +429,7 @@
 	desc = "It produces items using metal and glass. This model was reprogrammed without some of the more hazardous designs."
 	circuit = /obj/item/circuitboard/machine/autolathe/secure
 
-/obj/machinery/autolathe/secure/Initialize()
+/obj/machinery/autolathe/secure/Initialize(mapload)
 	. = ..()
 	// let's not leave the parent datum floating, right?
 	if(stored_research)
@@ -452,14 +452,14 @@
 					"Misc",
 					"Imported"
 					)
-/obj/machinery/autolathe/toy/Initialize()
+/obj/machinery/autolathe/toy/Initialize(mapload)
 	. = ..()
 	// let's not leave the parent datum floating, right?
 	if(stored_research)
 		QDEL_NULL(stored_research)
 	stored_research = new /datum/techweb/specialized/autounlocking/autolathe/toy
 
-/obj/machinery/autolathe/toy/hacked/Initialize()
+/obj/machinery/autolathe/toy/hacked/Initialize(mapload)
 	. = ..()
 	adjust_hacked(TRUE)
 

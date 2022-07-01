@@ -25,7 +25,7 @@ SUBSYSTEM_DEF(materials)
 	)
 	///List of stackcrafting recipes for materials using rigid recipes
 	var/list/rigid_stack_recipes = list(
-		// new /datum/stack_recipe("Carving block", /obj/structure/carving_block, 5, one_per_turf = TRUE, on_floor = TRUE, applies_mats = TRUE),
+		new /datum/stack_recipe("Carving block", /obj/structure/carving_block, 5, one_per_turf = TRUE, on_floor = TRUE, applies_mats = TRUE),
 	)
 
 ///Ran on initialize, populated the materials and materials_by_category dictionaries with their appropiate vars (See these variables for more info)

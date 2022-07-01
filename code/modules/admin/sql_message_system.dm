@@ -369,7 +369,7 @@
 	qdel(query_find_message_secret)
 
 /proc/browse_messages(type, target_ckey, index, linkless = FALSE, filter, agegate = FALSE)
-	if(!check_rights(R_SENSITIVE))
+	if((!usr || (target_ckey != usr.ckey)) && !check_rights(R_SENSITIVE))
 		return
 	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)

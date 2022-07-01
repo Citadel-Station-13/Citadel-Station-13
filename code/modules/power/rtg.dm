@@ -19,7 +19,7 @@
 
 	var/irradiate = TRUE // RTGs irradiate surroundings, but only when panel is open.
 
-/obj/machinery/power/rtg/Initialize()
+/obj/machinery/power/rtg/Initialize(mapload)
 	. = ..()
 	connect_to_network()
 
@@ -56,7 +56,7 @@
 /obj/machinery/power/rtg/advanced/fullupgrade //fully ugpraded stock parts
 	desc = "An advanced RTG capable of moderating isotope decay, increasing power output but reducing lifetime. It uses plasma-fueled radiation collectors to increase output even further. This model is fully upgraded with the latest tech available in this quadrant."
 
-/obj/machinery/power/rtg/advanced/fullupgrade/Initialize()
+/obj/machinery/power/rtg/advanced/fullupgrade/Initialize(mapload)
 	. = ..()
 	//This looks terrifying. And apparently instancing vars and modifying the amount variable causes runtime errors. Guess we're sticking to copy pasta, thanks, byond.
 	component_parts = list()

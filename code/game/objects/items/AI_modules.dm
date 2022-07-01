@@ -406,7 +406,7 @@ AI MODULES
 /obj/item/aiModule/core/full/custom
 	name = "Default Core AI Module"
 
-/obj/item/aiModule/core/full/custom/Initialize()
+/obj/item/aiModule/core/full/custom/Initialize(mapload)
 	. = ..()
 	for(var/line in world.file2list("[global.config.directory]/silicon_laws.txt"))
 		if(!line)

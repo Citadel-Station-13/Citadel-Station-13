@@ -35,7 +35,7 @@
 	)
 	comparison_options = add_option_port("Comparison Options", component_options)
 
-/obj/item/circuit_component/select/Initialize()
+/obj/item/circuit_component/select/Initialize(mapload)
 	. = ..()
 	received_table = add_input_port("Input", PORT_TYPE_TABLE)
 	column_name = add_input_port("Column Name", PORT_TYPE_STRING)

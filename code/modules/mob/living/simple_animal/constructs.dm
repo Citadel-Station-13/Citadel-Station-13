@@ -46,7 +46,7 @@
 	var/runetype
 	var/datum/mind/original_mind
 
-/mob/living/simple_animal/hostile/construct/Initialize()
+/mob/living/simple_animal/hostile/construct/Initialize(mapload)
 	. = ..()
 	update_health_hud()
 	var/spellnum = 1
@@ -83,13 +83,12 @@
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/t_He = p_they(TRUE)
 	var/t_s = p_s()
-	. = list("<span class='cult'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n[desc]")
+	. = list("<span class='cult'>This is [icon2html(src, user)] \a <b>[src]</b>!\n[desc]</span>")
 	if(health < maxHealth)
 		if(health >= maxHealth/2)
 			. += "<span class='warning'>[t_He] look[t_s] slightly dented.</span>"
 		else
 			. += "<span class='warning'><b>[t_He] look[t_s] severely dented!</b></span>"
-	. += "*---------*</span>"
 
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
 	if(isconstruct(M)) //is it a construct?
@@ -382,7 +381,7 @@
 		return FALSE
 	. = ..()
 
-/mob/living/simple_animal/hostile/construct/harvester/Initialize()
+/mob/living/simple_animal/hostile/construct/harvester/Initialize(mapload)
 	. = ..()
 	var/datum/action/innate/seek_prey/seek = new()
 	seek.Grant(src)

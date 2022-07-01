@@ -4,6 +4,7 @@
 	icon_state = "syringegun"
 	item_state = "syringegun"
 	w_class = WEIGHT_CLASS_NORMAL
+	recoil = 0.1
 	throw_speed = 3
 	throw_range = 7
 	force = 4
@@ -14,7 +15,7 @@
 	var/list/syringes = list()
 	var/max_syringes = 1
 
-/obj/item/gun/syringe/Initialize()
+/obj/item/gun/syringe/Initialize(mapload)
 	. = ..()
 	chambered = new /obj/item/ammo_casing/syringegun(src)
 
@@ -83,7 +84,7 @@
 	name = "modified syringe gun"
 	desc = "A syringe gun that has been modified to fit DNA injectors instead of normal syringes."
 
-/obj/item/gun/syringe/dna/Initialize()
+/obj/item/gun/syringe/dna/Initialize(mapload)
 	. = ..()
 	chambered = new /obj/item/ammo_casing/dnainjector(src)
 
@@ -113,7 +114,7 @@
 	suppressed = TRUE //Softer fire sound
 	can_unsuppress = FALSE
 
-/obj/item/gun/syringe/dart/Initialize()
+/obj/item/gun/syringe/dart/Initialize(mapload)
 	. = ..()
 	chambered = new /obj/item/ammo_casing/syringegun/dart(src)
 

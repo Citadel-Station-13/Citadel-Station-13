@@ -178,7 +178,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		starting.Scale(0.1,0.1)
 		E.transform = starting
 		var/matrix/TM = matrix()
-		animate(E,pixel_x = px,pixel_y = py, transform = TM, time = timing)
+		animate(E,pixel_x = px,pixel_y = py, transform = TM, time = timing, easing = SINE_EASING | EASE_OUT)
 	else
 		E.pixel_y = py
 		E.pixel_x = px
@@ -194,6 +194,9 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	else
 		if(istext(choices_values[choice_id]))
 			E.name = choices_values[choice_id]
+		else if(ispath(choices_values[choice_id],/atom))
+			var/atom/A = choices_values[choice_id]
+			E.name = initial(A.name)
 		else
 			var/atom/movable/AM = choices_values[choice_id] //Movables only
 			E.name = AM.name

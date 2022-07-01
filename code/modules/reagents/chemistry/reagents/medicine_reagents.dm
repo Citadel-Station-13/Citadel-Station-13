@@ -1359,7 +1359,7 @@
 
 /datum/reagent/medicine/neo_jelly
 	name = "Neo Jelly"
-	description = "Gradually regenerates all types of damage, without harming slime anatomy.Can OD"
+	description = "Gradually regenerates all types of damage, without harming slime anatomy. Can overdose."
 	reagent_state = LIQUID
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	color = "#91D865"
@@ -1798,6 +1798,7 @@
 		M.adjustToxLoss(0.5*REAGENTS_EFFECT_MULTIPLIER)
 	. = 1
 
+
 /datum/reagent/medicine/trophazole
 	name = "Trophazole"
 	description = "Orginally developed as fitness supplement, this chemical accelerates wound healing and if ingested turns nutriment into healing peptides"
@@ -1938,5 +1939,51 @@
 /datum/reagent/medicine/oxalizid/overdose_process(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5)
 	M.adjust_disgust(3)
+
+
+/datum/reagent/medicine/limb_regrowth
+	name = "Carcinisoprojection Jelly"
+	description = "Also known as \"limb regrowth jelly\", this crabby looking xenobiological jelly will rapidly regrow any missing limbs someone has at the cost of some of their blood. Do not overdose."
+	taste_description = "salty slime"
+	color = "#EF5428" //like cooked crab!
+	reagent_state = LIQUID
+	overdose_threshold = 65 //it takes more than one bluespace syringe to overdose someone with this given how nasty the OD is.
+	value = REAGENT_VALUE_RARE
+
+/datum/reagent/medicine/limb_regrowth/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
+	. = ..()
+	if(!.)
+		return
+	if(method == TOUCH) //as funny as it would be to have this hurled at someone, nah.
+		return
+	var/vol = reac_volume + C.reagents.get_reagent_amount(/datum/reagent/medicine/limb_regrowth)
+	if(vol < 5) //need at least 5 units.
+		return
+	var/list/limbs_to_heal = C.get_missing_limbs(exclude_head = TRUE)
+	if(limbs_to_heal.len < 1) //nothing happens if they already got all limbs.
+		return
+	if(HAS_TRAIT(C, TRAIT_ROBOTIC_ORGANISM)) //sorry synths, consider a visit to the roboticist. dunno how to justify regrowing robolimbs.
+		return
+	else if(ishuman(C) && !(HAS_BONE in C.dna?.species?.species_traits)) //boneless have little trouble with the limb chemical.
+		C.visible_message("<span class='notice'>[C] suddenly regrows \his limbs!</span>",
+		"<span class='notice'>You suddenly regrow your limbs, sensation and all!</span>")
+	else //boneful beings get to scream.
+		C.visible_message("<span class='warning'>[C]'s body lets off a grotesque squelching, bone crunching sound as \his limbs grow back rapidly!</span>",
+			"<span class='danger'>Your body emits a grotesque squelching, bone crunching sound as your limbs grow back rapidly! \
+				With the sensation of your regained limbs, also comes pain!</span>",
+			"<span class='italics'>You hear a grotsque squelching noise and the sound of crunching bones.</span>")
+		playsound(C, 'sound/magic/demon_consume.ogg', 50, 1)
+		SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "painful_limb_regrowth", /datum/mood_event/painful_limb_regrowth)
+		C.emote("scream")
+	C.regenerate_limbs(excluded_limbs = list(BODY_ZONE_HEAD)) //would be a little funky for dullahans if they suddenly sprouted a head.
+	C.blood_volume = max(C.blood_volume - 30*limbs_to_heal.len,0)
+	//lose blood for each limb that was regained.
+	//10 units less expensive than slime limb regrowth, but doesn't check for low blood like the ability, so it could be dangerous.
+	to_chat(C,"<span class='warning'>You feel like this ordeal of your limbs regrowing has made you a little paler... as well as made you feel a little thirsty.</span>")
+	//hint at the blood loss. (paler is a common symptom depicted in-game of low blood, but dehydration is another symptom of low blood.)
+
+
+/datum/reagent/medicine/limb_regrowth/overdose_start(mob/living/M)
+	M.ForceContractDisease(new /datum/disease/crabcancer, FALSE, TRUE) //it is now, time for crab.
 	..()
 	. = 1

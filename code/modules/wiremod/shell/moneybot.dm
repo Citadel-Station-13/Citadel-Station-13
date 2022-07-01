@@ -22,7 +22,7 @@
 	stored_money += to_add
 	SEND_SIGNAL(src, COMSIG_MONEYBOT_ADD_MONEY, to_add)
 
-/obj/structure/money_bot/Initialize()
+/obj/structure/money_bot/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/money_bot(),
@@ -49,7 +49,7 @@
 
 	var/obj/structure/money_bot/attached_bot
 
-/obj/item/circuit_component/money_dispenser/Initialize()
+/obj/item/circuit_component/money_dispenser/Initialize(mapload)
 	. = ..()
 	dispense_amount = add_input_port("Amount", PORT_TYPE_NUMBER)
 	on_fail = add_output_port("On Failed", PORT_TYPE_SIGNAL)
@@ -93,7 +93,7 @@
 	/// The person who input the money
 	var/datum/port/output/entity
 
-/obj/item/circuit_component/money_bot/Initialize()
+/obj/item/circuit_component/money_bot/Initialize(mapload)
 	. = ..()
 	total_money = add_output_port("Total Money", PORT_TYPE_NUMBER)
 	money_input = add_output_port("Last Input Money", PORT_TYPE_NUMBER)

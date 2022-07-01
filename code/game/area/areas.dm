@@ -41,7 +41,7 @@
 
 	///Will objects this area be needing power?
 	var/requires_power = TRUE
-	/// This gets overridden to 1 for space in area/Initialize().
+	/// This gets overridden to 1 for space in area/Initialize(mapload).
 	var/always_unpowered = FALSE
 
 	var/power_equip = TRUE
@@ -124,6 +124,10 @@
 	/// Color on minimaps, if it's null (which is default) it makes one at random.
 	var/minimap_color
 
+	var/minimap_color2 // if this isn't null, then this will show as a checkerboard pattern mixed in with the above. works even if the above is null (for better or worse)
+
+	var/minimap_show_walls = TRUE
+
 /**
   * These two vars allow for multiple unique areas to be linked to a master area
   * and share some functionalities such as APC powernet nodes, fire alarms etc, without sacrificing
@@ -197,7 +201,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  *
  * returns INITIALIZE_HINT_LATELOAD
  */
-/area/Initialize()
+/area/Initialize(mapload)
 	icon_state = ""
 	map_name = name // Save the initial (the name set in the map) name of the area.
 	canSmoothWithAreas = typecacheof(canSmoothWithAreas)

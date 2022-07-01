@@ -253,7 +253,7 @@
 	///chem transfer rate / second
 	var/transfer_rate = 5
 
-/obj/item/pet_carrier/bluespace/Initialize()
+/obj/item/pet_carrier/bluespace/Initialize(mapload)
 	. = ..()
 	create_reagents(300, OPENCONTAINER, DEFAULT_REAGENTS_VALUE) //equivalent of bsbeakers
 

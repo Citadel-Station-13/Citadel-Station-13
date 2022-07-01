@@ -13604,14 +13604,7 @@
 /turf/open/floor/plasteel,
 /area/service/bar/atrium)
 "ayN" = (
-/obj/item/storage/fancy/cigarettes/cigars{
-	pixel_y = 6
-	},
-/obj/item/storage/fancy/cigarettes/cigars/cohiba{
-	pixel_y = 3
-	},
-/obj/item/storage/fancy/cigarettes/cigars/havana,
-/obj/structure/table/reinforced,
+/obj/machinery/jukebox,
 /turf/open/floor/plasteel/dark/corner{
 	dir = 4
 	},
@@ -13622,6 +13615,13 @@
 	pixel_x = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/storage/fancy/cigarettes/cigars/havana,
+/obj/item/storage/fancy/cigarettes/cigars/cohiba{
+	pixel_y = 3
+	},
+/obj/item/storage/fancy/cigarettes/cigars{
+	pixel_y = 6
+	},
 /turf/open/floor/plasteel/dark/side{
 	dir = 1
 	},
@@ -16379,9 +16379,8 @@
 /area/hallway/secondary/exit)
 "aEg" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/inverse{
-	dir = 4;
-	name = "air mixer"
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped{
+	dir = 4
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -25370,6 +25369,7 @@
 	name = "Station Intercom";
 	pixel_x = 26
 	},
+/obj/item/chisel,
 /turf/open/floor/plasteel/dark,
 /area/service/library)
 "aVc" = (
@@ -26813,11 +26813,11 @@
 /turf/open/floor/plating,
 /area/medical/medbay/zone3)
 "aXS" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
+	},
+/obj/machinery/sleeper{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark/side{
 	dir = 8
@@ -28157,9 +28157,6 @@
 /turf/open/floor/plating,
 /area/medical/medbay/zone3)
 "bax" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
@@ -28167,6 +28164,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/obj/machinery/stasis{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark/side{
@@ -84770,7 +84770,7 @@ awp
 awX
 axR
 ayN
-aue
+asg
 blj
 aCb
 aCe

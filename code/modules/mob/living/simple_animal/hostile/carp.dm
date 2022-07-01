@@ -95,7 +95,7 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 
-/mob/living/simple_animal/hostile/carp/megacarp/Initialize()
+/mob/living/simple_animal/hostile/carp/megacarp/Initialize(mapload)
 	. = ..()
 	name = "[pick(GLOB.megacarp_first_names)] [pick(GLOB.megacarp_last_names)]"
 	melee_damage_lower += rand(4, 10)
@@ -123,7 +123,7 @@
 	/// Colored disk mouth appearance for adding it as a mouth overlay
 	var/mutable_appearance/colored_disk_mouth
 
-/mob/living/simple_animal/hostile/carp/cayenne/Initialize()
+/mob/living/simple_animal/hostile/carp/cayenne/Initialize(mapload)
 	. = ..()
 	// AddElement(/datum/element/pet_bonus, "bloops happily!")
 	// colored_disk_mouth = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth")

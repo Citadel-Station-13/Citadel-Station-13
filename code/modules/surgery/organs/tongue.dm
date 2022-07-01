@@ -168,7 +168,7 @@
 	var/phomeme_type = "sans"
 	var/list/phomeme_types = list(/datum/accent/span/sans, /datum/accent/span/papyrus)
 
-/obj/item/organ/tongue/bone/Initialize()
+/obj/item/organ/tongue/bone/Initialize(mapload)
 	initial_accents += pick(phomeme_types)
 	. = ..()
 

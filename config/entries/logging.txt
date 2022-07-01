@@ -19,6 +19,9 @@ LOG_SUSPICIOUS_LOGIN
 ## log game actions (start of round, results, etc.)
 LOG_GAME
 
+## log mecha actions
+LOG_MECHA
+
 ## log player votes
 LOG_VOTE
 
@@ -57,6 +60,9 @@ LOG_JOB_DEBUG
 
 ## Log shuttle related actions
 LOG_SHUTTLE
+
+## Log economy-related actions
+LOG_ECON
 
 ## log all world.Topic() calls
 LOG_WORLD_TOPIC

@@ -39,7 +39,7 @@
 	var/datum/progressbar/progress = new(M, length(things), T)
 	while (do_after(M, 10, TRUE, T, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress, TRUE, M)))
 		stoplag(1)
-	qdel(progress)
+	progress.end_progress()
 	A.do_squish(0.8, 1.2)
 
 /datum/component/storage/concrete/bluespace/rped
@@ -83,5 +83,5 @@
 	var/datum/progressbar/progress = new(M, length(things), T)
 	while (do_after(M, 10, TRUE, T, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress, TRUE, M)))
 		stoplag(1)
-	qdel(progress)
+	progress.end_progress()
 	A.do_squish(0.8, 1.2)

@@ -65,6 +65,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/exotic_bloodtype = ""
 	/// Assume human as the default blood colour, override this default by species subtypes
 	var/exotic_blood_color = BLOOD_COLOR_HUMAN
+	/// Which blend mode should this species blood use?
+	var/exotic_blood_blend_mode = BLEND_MULTIPLY
 	///What the species drops when gibbed by a gibber machine.
 	var/meat = /obj/item/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
 	var/list/gib_types = list(/obj/effect/gibspawner/human, /obj/effect/gibspawner/human/bodypartless)
@@ -1696,7 +1698,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			return FALSE
 
 
-		var/armor_block = target.run_armor_check(affecting, "melee")
+		var/armor_block = target.run_armor_check(affecting, MELEE)
 		playsound(target.loc, user.dna.species.attack_sound_override || attack_sound, 25, 1, -1)
 		target.visible_message("<span class='danger'>[user] [atk_verb]ed [target]!</span>", \
 					"<span class='userdanger'>[user] [atk_verb]ed you!</span>", null, COMBAT_MESSAGE_RANGE, null, \
@@ -1905,7 +1907,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	hit_area = affecting.name
 	var/def_zone = affecting.body_zone
 
-	var/armor_block = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>",I.armour_penetration)
+	var/armor_block = H.run_armor_check(affecting, MELEE, "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>",I.armour_penetration)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 	var/Iwound_bonus = I.wound_bonus
@@ -2404,7 +2406,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		for(var/X in burning_items)
 			var/obj/item/I = X
 			if(!(I.resistance_flags & FIRE_PROOF))
-				I.take_damage(H.fire_stacks, BURN, "fire", 0)
+				I.take_damage(H.fire_stacks, BURN, FIRE, 0)
 
 		var/thermal_protection = H.easy_thermal_protection()
 

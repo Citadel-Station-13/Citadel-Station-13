@@ -104,7 +104,7 @@
 	var/obj/item/held_item = null
 
 
-/mob/living/simple_animal/parrot/Initialize()
+/mob/living/simple_animal/parrot/Initialize(mapload)
 	. = ..()
 	if(spawns_with_headset)
 		if(!ears)
@@ -902,7 +902,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	var/longest_survival = 0
 	var/longest_deathstreak = 0
 
-/mob/living/simple_animal/parrot/Poly/Initialize()
+/mob/living/simple_animal/parrot/Poly/Initialize(mapload)
 	ears = new /obj/item/radio/headset/headset_eng(src)
 	available_channels = list(":e")
 	Read_Memory()
@@ -910,11 +910,13 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		speak += pick("...[longest_survival].", "The things I've seen!", "I have lived many lives!", "What are you before me?")
 		desc += " Old as sin, and just as loud. Claimed to be [rounds_survived]."
 		speak_chance = 20 //His hubris has made him more annoying/easier to justify killing
-		add_atom_colour("#EEEE22", FIXED_COLOUR_PRIORITY)
+		if(!color)
+			add_atom_colour("#EEEE22", FIXED_COLOUR_PRIORITY)
 	else if(rounds_survived == longest_deathstreak)
 		speak += pick("What are you waiting for!", "Violence breeds violence!", "Blood! Blood!", "Strike me down if you dare!")
 		desc += " The squawks of [-rounds_survived] dead parrots ring out in your ears..."
-		add_atom_colour("#BB7777", FIXED_COLOUR_PRIORITY)
+		if(!color)
+			add_atom_colour("#BB7777", FIXED_COLOUR_PRIORITY)
 	else if(rounds_survived > 0)
 		speak += pick("...again?", "No, It was over!", "Let me out!", "It never ends!")
 		desc += " Over [rounds_survived] shifts without a \"terrible\" \"accident\"!"
@@ -925,8 +927,8 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 /mob/living/simple_animal/parrot/Poly/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	. = ..()
-	if(. && !client && prob(1) && prob(1)) //Only the one true bird may speak across dimensions.
-		world.TgsTargetedChatBroadcast("A stray squawk is heard... \"[message]\"", FALSE)
+	if(. && !client && prob(1) && prob(1) && CONFIG_GET(string/chat_squawk_tag)) //Only the one true bird may speak across dimensions.
+		send2chat("A stray squawk is heard... \"[message]\"", CONFIG_GET(string/chat_squawk_tag))
 
 /mob/living/simple_animal/parrot/Poly/BiologicalLife(seconds, times_fired)
 	if(!(. = ..()))
@@ -947,6 +949,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	..(gibbed)
 
 /mob/living/simple_animal/parrot/Poly/proc/Read_Memory()
+	var/saved_color
 	if(fexists("data/npc_saves/Poly.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
 		S["phrases"] 			>> speech_buffer
@@ -963,8 +966,11 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		rounds_survived = json["roundssurvived"]
 		longest_survival = json["longestsurvival"]
 		longest_deathstreak = json["longestdeathstreak"]
+		saved_color = json["color"]
 	if(!islist(speech_buffer))
 		speech_buffer = list()
+	if(!isnull(saved_color))
+		add_atom_colour(json_decode(saved_color), FIXED_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/parrot/Poly/proc/Write_Memory(dead)
 	var/json_file = file("data/npc_saves/Poly.json")
@@ -978,6 +984,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 			file_data["longestdeathstreak"] = rounds_survived - 1
 		else
 			file_data["longestdeathstreak"] = longest_deathstreak
+		file_data["color"] = null
 	else
 		file_data["roundssurvived"] = rounds_survived + 1
 		if(rounds_survived + 1 > longest_survival)
@@ -985,6 +992,10 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		else
 			file_data["longestsurvival"] = longest_survival
 		file_data["longestdeathstreak"] = longest_deathstreak
+		if(color)
+			file_data["color"] = json_encode(color)
+		else
+			file_data["color"] = null
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
@@ -1004,7 +1015,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	incorporeal_move = INCORPOREAL_MOVE_BASIC
 	butcher_results = list(/obj/item/ectoplasm = 1)
 
-/mob/living/simple_animal/parrot/Poly/ghost/Initialize()
+/mob/living/simple_animal/parrot/Poly/ghost/Initialize(mapload)
 	memory_saved = TRUE //At this point nothing is saved
 	. = ..()
 

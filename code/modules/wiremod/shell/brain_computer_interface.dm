@@ -6,7 +6,7 @@
 	zone = BODY_ZONE_HEAD
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/organ/cyberimp/bci/Initialize()
+/obj/item/organ/cyberimp/bci/Initialize(mapload)
 	. = ..()
 
 	AddComponent(/datum/component/shell, list(
@@ -167,7 +167,7 @@
 
 	var/datum/weakref/user
 
-/obj/item/circuit_component/bci_core/Initialize()
+/obj/item/circuit_component/bci_core/Initialize(mapload)
 	. = ..()
 
 	message = add_input_port("Message", PORT_TYPE_STRING)
@@ -341,7 +341,7 @@
 
 	COOLDOWN_DECLARE(message_cooldown)
 
-/obj/machinery/bci_implanter/Initialize()
+/obj/machinery/bci_implanter/Initialize(mapload)
 	. = ..()
 	occupant_typecache = typecacheof(/mob/living/carbon)
 

@@ -6,6 +6,7 @@
 	blocks_air = 1
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	rad_insulation = RAD_MEDIUM_INSULATION
+	pass_flags_self = PASSCLOSEDTURF
 	wave_explosion_block = 10
 	wave_explosion_multiply = 0.75
 	/// How much we block yelling
@@ -13,7 +14,7 @@
 	/// how much of inbound yelling to dampen
 	var/yelling_dampen = 0.5
 
-/turf/closed/Initialize()
+/turf/closed/Initialize(mapload)
 	. = ..()
 
 /turf/closed/AfterChange()
@@ -22,11 +23,6 @@
 
 /turf/closed/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE
-
-/turf/closed/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSCLOSEDTURF))
-		return TRUE
-	return ..()
 
 /turf/closed/indestructible
 	name = "wall"
@@ -77,16 +73,26 @@
 
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
-	icon = 'icons/blank_title.png'
+	desc = null
+	icon = 'icons/blanks/blank_title.png'
 	icon_state = ""
-	layer = FLY_LAYER
+	plane = SPLASHSCREEN_PLANE
 	bullet_bounce_sound = null
 
-/turf/closed/indestructible/splashscreen/New()
+INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
+
+/turf/closed/indestructible/splashscreen/Initialize(mapload)
+	. = ..()
 	SStitle.splash_turf = src
 	if(SStitle.icon)
 		icon = SStitle.icon
-	..()
+		handle_generic_titlescreen_sizes()
+
+///helper proc that will center the screen if the icon is changed to a generic width, to make admins have to fudge around with pixel_x less. returns null
+/turf/closed/indestructible/splashscreen/proc/handle_generic_titlescreen_sizes()
+	var/icon/size_check = icon(SStitle.icon, icon_state)
+	var/width = size_check.Width()
+	pixel_x = (672 - width) * 0.5 //The title screen is mapped with the expectation that it's 672x480. Should probably turn the title screen size into a define some time!
 
 /turf/closed/indestructible/splashscreen/vv_edit_var(var_name, var_value)
 	. = ..()
@@ -94,7 +100,13 @@
 		switch(var_name)
 			if(NAMEOF(src, icon))
 				SStitle.icon = icon
+				handle_generic_titlescreen_sizes()
 
+/turf/closed/indestructible/start_area
+	name = null
+	desc = null
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	
 /turf/closed/indestructible/riveted
 	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "riveted"
@@ -123,7 +135,7 @@
 	smooth = SMOOTH_TRUE
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 
-/turf/closed/indestructible/fakeglass/Initialize()
+/turf/closed/indestructible/fakeglass/Initialize(mapload)
 	. = ..()
 	icon_state = null //set the icon state to null, so our base state isn't visible
 	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay

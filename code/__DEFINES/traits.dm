@@ -70,6 +70,10 @@
 #define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (length(target.status_traits[trait] - source) > 0) : FALSE) : FALSE)
 
 //mob traits
+/// Prevents voluntary movement.
+#define TRAIT_IMMOBILIZED "immobilized"
+/// Prevents usage of manipulation appendages (picking, holding or using items, manipulating storage).
+#define TRAIT_HANDS_BLOCKED "handsblocked"
 #define TRAIT_BLIND 			"blind"
 #define TRAIT_MUTE				"mute"
 #define TRAIT_EMOTEMUTE			"emotemute"
@@ -175,6 +179,8 @@
 #define TRAIT_DWARF				"dwarf"
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
 #define TRAIT_AGEUSIA			"ageusia"
+#define TRAIT_ANOSMIA			"anosmia"
+#define TRAIT_GOODSMELL			"super_smeller"
 #define TRAIT_HEAVY_SLEEPER		"heavy_sleeper"
 #define TRAIT_NIGHT_VISION		"night_vision"
 #define TRAIT_LIGHT_STEP		"light_step"
@@ -226,7 +232,9 @@
 #define TRAIT_HUMAN_NO_RENDER			"human_no_render"
 #define TRAIT_TRASHCAN					"trashcan"
 ///Used for fireman carry to have mobe not be dropped when passing by a prone individual.
-#define TRAIT_BEING_CARRIED "being_carried"	
+#define TRAIT_BEING_CARRIED "being_carried"
+#define TRAIT_GLASS_BONES "glass_bones"
+#define TRAIT_PAPER_SKIN "paper_skin"
 
 // mobility flag traits
 // IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)
@@ -348,6 +356,7 @@
 #define STICKY_NODROP "sticky-nodrop" //sticky nodrop sounds like a bad soundcloud rapper's name
 #define TRAIT_SACRIFICED "sacrificed" //Makes sure that people cant be cult sacrificed twice.
 #define TRAIT_SPACEWALK "spacewalk"
+#define TRAIT_SALT_SENSITIVE "salt_sensitive"
 
 
 /// obtained from mapping helper

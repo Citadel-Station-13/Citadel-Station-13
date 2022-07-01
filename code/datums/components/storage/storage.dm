@@ -215,7 +215,7 @@
 	var/list/rejections = list()
 	while(do_after(M, 10, TRUE, parent, FALSE, CALLBACK(src, .proc/handle_mass_pickup, things, I.loc, rejections, progress)))
 		stoplag(1)
-	qdel(progress)
+	progress.end_progress()
 	to_chat(M, "<span class='notice'>You put everything you could [insert_preposition] [parent].</span>")
 	A.do_squish(1.4, 0.4)
 
@@ -273,7 +273,7 @@
 	var/datum/progressbar/progress = new(M, length(things), T)
 	while (do_after(M, 10, TRUE, T, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress, TRUE, M)))
 		stoplag(1)
-	qdel(progress)
+	progress.end_progress()
 	A.do_squish(0.8, 1.2)
 
 /datum/component/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress, trigger_on_found = TRUE, mob/user)
@@ -431,25 +431,26 @@
 	if(M.incapacitated() || !M.canUseStorage())
 		return
 	var/atom/A = parent
-	A.add_fingerprint(M)
 	// this must come before the screen objects only block, dunno why it wasn't before
 	if(over_object == M)
 		user_show_to_mob(M, trigger_on_found = TRUE)
 	if(isrevenant(M))
 		INVOKE_ASYNC(GLOBAL_PROC, .proc/RevenantThrow, over_object, M, source)
 		return
+	if(check_locked(null, M) || !M.CanReach(A) || (!M.CanReach(over_object) && !istype(over_object, /atom/movable/screen)))
+		return
+	playsound(A, "rustle", 50, TRUE, -5)
+	A.do_jiggle()
+	A.add_fingerprint(M)
 	if(!istype(over_object, /atom/movable/screen))
 		INVOKE_ASYNC(src, .proc/dump_content_at, over_object, M)
 		return
 	if(A.loc != M)
 		return
-	playsound(A, "rustle", 50, TRUE, -5)
-	A.do_jiggle()
 	if(istype(over_object, /atom/movable/screen/inventory/hand))
 		var/atom/movable/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(A, H.held_index)
 		return
-	A.add_fingerprint(M)
 
 /datum/component/storage/proc/user_show_to_mob(mob/M, force = FALSE, trigger_on_found = FALSE)
 	var/atom/A = parent

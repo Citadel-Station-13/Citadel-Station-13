@@ -6,5 +6,4 @@
 	return lowertext(ddd) in days
 
 /datum/holiday/dynamic/celebrate()
-	GLOB.dynamic_forced_threat_level = rand(90, 100)
-	CONFIG_SET(string/force_gamemode, "dynamic") // prevents the round vote, which prevents extended
+	GLOB.dynamic_forced_threat_level = rand(50, 100)

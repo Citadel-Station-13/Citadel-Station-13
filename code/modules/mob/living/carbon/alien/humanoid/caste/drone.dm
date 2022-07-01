@@ -6,7 +6,7 @@
 	icon_state = "aliend"
 	meleeKnockdownPower = 80
 
-/mob/living/carbon/alien/humanoid/drone/Initialize()
+/mob/living/carbon/alien/humanoid/drone/Initialize(mapload)
 	AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
 	. = ..()
 

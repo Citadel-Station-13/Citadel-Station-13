@@ -17,7 +17,7 @@
 	var/list/obj/machinery/computer/rdconsole/consoles_accessing = list()
 	var/id = "generic"
 	var/list/research_logs = list()								//IC logs.
-	var/largest_bomb_value = 0
+	var/largest_values = list()
 	var/organization = "Third-Party"							//Organization name, used for display.
 	var/list/next_income = list()								//To be applied on the next passive techweb income
 	var/list/last_bitcoins = list()								//Current per-second production, used for display only.

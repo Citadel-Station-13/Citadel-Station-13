@@ -29,7 +29,7 @@
 	if(inserted_item && (!isturf(loc)))
 		. += "<span class='notice'>Ctrl-click to remove [inserted_item].</span>"
 
-/obj/item/modular_computer/tablet/Initialize()
+/obj/item/modular_computer/tablet/Initialize(mapload)
 	. = ..()
 	if(can_have_pen)
 		if(inserted_item)
@@ -214,6 +214,6 @@
 	device_theme = "syndicate"
 
 
-/obj/item/modular_computer/tablet/integrated/syndicate/Initialize()
+/obj/item/modular_computer/tablet/integrated/syndicate/Initialize(mapload)
 	. = ..()
 	borgo.lamp_color = COLOR_RED //Syndicate likes it red

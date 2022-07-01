@@ -94,7 +94,7 @@ Difficulty: Very Hard
 			INVOKE_ASYNC(src, .proc/alternating_dir_shots)
 
 
-/mob/living/simple_animal/hostile/megafauna/colossus/Initialize()
+/mob/living/simple_animal/hostile/megafauna/colossus/Initialize(mapload)
 	. = ..()
 	internal = new/obj/item/gps/internal/colossus(src)
 
@@ -262,7 +262,7 @@ Difficulty: Very Hard
 		return FALSE
 	return TRUE
 
-/obj/machinery/smartfridge/black_box/Initialize()
+/obj/machinery/smartfridge/black_box/Initialize(mapload)
 	. = ..()
 	var/static/obj/machinery/smartfridge/black_box/current
 	if(current && current != src)
@@ -426,7 +426,7 @@ Difficulty: Very Hard
 
 /obj/machinery/anomalous_crystal/honk //Strips and equips you as a clown. I apologize for nothing
 	observer_desc = "This crystal strips and equips its targets as clowns."
-	possible_methods = list(ACTIVATE_TOUCH)  //Because We love AOE transformations!  
+	possible_methods = list(ACTIVATE_TOUCH)  //Because We love AOE transformations!
 	activation_sound = 'sound/items/bikehorn.ogg'
 
 /obj/machinery/anomalous_crystal/honk/ActivationReaction(mob/user)
@@ -452,7 +452,7 @@ Difficulty: Very Hard
 	var/list/NewFlora = list()
 	var/florachance = 8
 
-/obj/machinery/anomalous_crystal/theme_warp/Initialize()
+/obj/machinery/anomalous_crystal/theme_warp/Initialize(mapload)
 	. = ..()
 	terrain_theme = pick("lavaland","winter","jungle","ayy lmao")
 	observer_desc = "This crystal changes the area around it to match the theme of \"[terrain_theme]\"."
@@ -518,7 +518,7 @@ Difficulty: Very Hard
 	cooldown_add = 50
 	var/obj/item/projectile/generated_projectile = /obj/item/projectile/beam/emitter
 
-/obj/machinery/anomalous_crystal/emitter/Initialize()
+/obj/machinery/anomalous_crystal/emitter/Initialize(mapload)
 	. = ..()
 	generated_projectile = pick(/obj/item/projectile/colossus)
 
@@ -629,7 +629,7 @@ Difficulty: Very Hard
 	stop_automated_movement = 1
 	var/heal_power = 5
 
-/mob/living/simple_animal/hostile/lightgeist/Initialize()
+/mob/living/simple_animal/hostile/lightgeist/Initialize(mapload)
 	. = ..()
 	remove_verb(src, /mob/living/verb/pulled)
 	remove_verb(src, /mob/verb/me_verb)

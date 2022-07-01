@@ -51,7 +51,7 @@
 			index -= 1
 		entry_ports += add_input_port("Index [index+1]", PORT_TYPE_ANY, index = index+1)
 
-/obj/item/circuit_component/list_literal/Initialize()
+/obj/item/circuit_component/list_literal/Initialize(mapload)
 	. = ..()
 	set_list_size(default_list_size)
 	list_output = add_output_port("Value", PORT_TYPE_LIST)

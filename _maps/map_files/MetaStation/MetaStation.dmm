@@ -50579,9 +50579,6 @@
 /turf/open/floor/plasteel/dark,
 /area/engineering/storage/tech)
 "eAe" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -50595,6 +50592,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/treatment_center)
 "eAy" = (
@@ -65633,6 +65631,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/service/chapel/main)
+"mWS" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/machinery/jukebox,
+/turf/open/floor/plasteel,
+/area/service/bar)
 "mXi" = (
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain/private)
@@ -72531,6 +72537,7 @@
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
+/obj/item/chisel,
 /turf/open/floor/plasteel,
 /area/commons/storage/art)
 "qNe" = (
@@ -81033,9 +81040,6 @@
 /turf/open/space/basic,
 /area/space)
 "vLV" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -81045,6 +81049,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/machinery/sleeper{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/treatment_center)
@@ -119803,7 +119810,7 @@ teZ
 teZ
 wbZ
 hCA
-msI
+mWS
 pzY
 kPZ
 upO

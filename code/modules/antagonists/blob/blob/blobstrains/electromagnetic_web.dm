@@ -17,7 +17,7 @@
 	return damage * 1.25 //a laser will do 25 damage, which will kill any normal blob
 
 /datum/blobstrain/reagent/electromagnetic_web/death_reaction(obj/structure/blob/B, damage_flag)
-	if(damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser")
+	if(damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER)
 		empulse_using_range(B.loc, 5) //less than screen range, so you can stand out of range to avoid it
 
 /datum/reagent/blob/electromagnetic_web

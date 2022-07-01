@@ -15,7 +15,7 @@
 	var/self_delay = FALSE //pills are instant, this is because patches inheret their aplication from pills
 	var/dissolvable = TRUE
 
-/obj/item/reagent_containers/pill/Initialize()
+/obj/item/reagent_containers/pill/Initialize(mapload)
 	. = ..()
 	if(!icon_state)
 		icon_state = "pill[rand(1,20)]"
@@ -248,7 +248,7 @@
 	var/static/list/descs = list("Your feeling is telling you no, but...","Drugs are expensive, you can't afford not to eat any pills that you find."\
 	, "Surely, there's no way this could go bad.")
 
-/obj/item/reagent_containers/pill/floorpill/Initialize()
+/obj/item/reagent_containers/pill/floorpill/Initialize(mapload)
 	list_reagents = list(get_random_reagent_id() = rand(10,50))
 	. = ..()
 	name = pick(names)

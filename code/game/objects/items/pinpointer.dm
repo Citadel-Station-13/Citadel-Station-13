@@ -22,7 +22,7 @@
 	/// resets target on toggle
 	var/resets_target = TRUE
 
-/obj/item/pinpointer/Initialize()
+/obj/item/pinpointer/Initialize(mapload)
 	. = ..()
 	GLOB.pinpointer_list += src
 

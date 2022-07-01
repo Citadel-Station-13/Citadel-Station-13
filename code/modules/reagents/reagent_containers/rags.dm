@@ -134,7 +134,7 @@
 	var/folded_icon = "towel"
 	var/list/possible_colors
 
-/obj/item/reagent_containers/rag/towel/Initialize()
+/obj/item/reagent_containers/rag/towel/Initialize(mapload)
 	. = ..()
 	if(possible_colors)
 		add_atom_colour(pick(possible_colors), FIXED_COLOUR_PRIORITY)
@@ -192,4 +192,4 @@
 	extinguish_efficiency = 5
 	action_speed = 15
 	damp_threshold = 0.8
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 20, "bio" = 20, "rad" = 20, "fire" = 50, "acid" = 50) //items don't provide armor to wearers unlike clothing yet.
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 20, BIO = 20, RAD = 20, FIRE = 50, ACID = 50) //items don't provide armor to wearers unlike clothing yet.

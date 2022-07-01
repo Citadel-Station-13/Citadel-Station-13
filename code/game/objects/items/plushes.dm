@@ -466,7 +466,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	desc = "Something fucked up"
 	can_random_spawn = FALSE
 
-/obj/item/toy/plush/random/Initialize()
+/obj/item/toy/plush/random/Initialize(mapload)
 	..()
 	var/newtype
 	var/list/snowflake_list = CONFIG_GET(keyed_list/snowflake_plushies)

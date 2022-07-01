@@ -11,7 +11,7 @@
 	bullet_bounce_sound = null //abandon all hope ye who enter
 	dirt_buildup_allowed = FALSE
 
-/turf/open/chasm/Initialize()
+/turf/open/chasm/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/chasm, SSmapping.get_turf_below(src))
 
@@ -77,9 +77,6 @@
 		else
 			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
 
-/turf/open/chasm/CanPass(atom/movable/mover, turf/target)
-	return 1
-
 // Chasms for Lavaland, with planetary atmos and lava glow
 /turf/open/chasm/lavaland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
@@ -121,7 +118,7 @@
 	light_range = 1.9
 	light_power = 0.65
 
-/turf/open/chasm/magic/Initialize()
+/turf/open/chasm/magic/Initialize(mapload)
 	. = ..()
 	var/turf/T = safepick(get_area_turfs(/area/fabric_of_reality))
 	if(T)

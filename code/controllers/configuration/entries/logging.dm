@@ -31,6 +31,10 @@
 /datum/config_entry/flag/log_game
 	config_entry_value = TRUE
 
+/// log mech data
+/datum/config_entry/flag/log_mecha
+	config_entry_value = TRUE
+
 /// log virology data
 /datum/config_entry/flag/log_virus
 	config_entry_value = TRUE
@@ -73,6 +77,10 @@
 
 /// log telecomms messages
 /datum/config_entry/flag/log_telecomms
+	config_entry_value = TRUE
+
+/// log economy
+/datum/config_entry/flag/log_econ
 	config_entry_value = TRUE
 
 /// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.

@@ -246,7 +246,7 @@
 	var/obj/effect/abstract/eye_lighting/on_mob
 	var/image/mob_overlay
 
-/obj/item/organ/eyes/robotic/glow/Initialize()
+/obj/item/organ/eyes/robotic/glow/Initialize(mapload)
 	. = ..()
 	mob_overlay = image('icons/mob/human_face.dmi', "eyes_glow_gs")
 
@@ -407,7 +407,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/obj/item/organ/eyes/robotic/glow/parent
 
-/obj/effect/abstract/eye_lighting/Initialize()
+/obj/effect/abstract/eye_lighting/Initialize(mapload)
 	. = ..()
 	parent = loc
 	if(!istype(parent))

@@ -52,7 +52,7 @@
 	name = "Polychromic maid costume"
 	path = /obj/item/clothing/under/rank/civilian/janitor/maid/polychromic
 	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
-	loadout_initial_colors = list("#FFFFFF", "#000000")
+	loadout_initial_colors = list("#333333", "#FFFFFF")
 
 /datum/gear/uniform/mailmanuniform
 	name = "Mailman's jumpsuit"

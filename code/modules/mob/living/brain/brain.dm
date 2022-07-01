@@ -9,7 +9,7 @@
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM) //for mechas
 	speech_span = SPAN_ROBOT
 
-/mob/living/brain/Initialize()
+/mob/living/brain/Initialize(mapload)
 	. = ..()
 	create_dna(src)
 	if(stored_dna.blood_type)
@@ -41,7 +41,7 @@
 	return ..()
 
 /mob/living/brain/update_mobility()
-	return ((mobility_flags = (container?.in_contents_of(/obj/mecha)? MOBILITY_FLAGS_DEFAULT : NONE)))
+	return ((mobility_flags = (container?.in_contents_of(/obj/vehicle/sealed/mecha)? MOBILITY_FLAGS_DEFAULT : NONE)))
 
 /mob/living/brain/ex_act(severity, target, origin) //you cant blow up brainmobs because it makes transfer_to() freak out when borgs blow up.
 	return
@@ -71,13 +71,6 @@
 	if(stored_dna)
 		stored_dna.real_name = real_name
 
-/mob/living/brain/ClickOn(atom/A, params)
-	..()
-	if(container)
-		var/obj/mecha/M = container.mecha
-		if(istype(M))
-			return M.click_action(A,src,params)
-
 /mob/living/brain/forceMove(atom/destination)
 	if(container)
 		return container.forceMove(destination)
@@ -98,7 +91,7 @@
 	if(!container)
 		return
 	if (container.mecha)
-		var/obj/mecha/M = container.mecha
+		var/obj/vehicle/sealed/mecha/M = container.mecha
 		if(M.mouse_pointer)
 			client.mouse_pointer_icon = M.mouse_pointer
 	if (client && ranged_ability && ranged_ability.ranged_mousepointer)

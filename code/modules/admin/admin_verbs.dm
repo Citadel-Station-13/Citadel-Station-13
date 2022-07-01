@@ -69,6 +69,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/cmd_admin_man_up, //CIT CHANGE - adds man up verb
 	/client/proc/cmd_admin_man_up_global, //CIT CHANGE - ditto
 	/client/proc/cmd_admin_create_centcom_report,
+	/client/proc/cmd_admin_make_priority_announcement, //CIT CHANGE
 	/client/proc/cmd_change_command_name,
 	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
 	/client/proc/toggle_combo_hud, // toggle display of the combination pizza antag and taco sci/med/eng hud

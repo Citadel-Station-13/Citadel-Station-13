@@ -16,7 +16,7 @@
 	var/atom/movable/target
 	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
 
-/obj/structure/destructible/clockwork/ocular_warden/Initialize()
+/obj/structure/destructible/clockwork/ocular_warden/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -76,8 +76,8 @@
 						L.adjust_fire_stacks(damage_per_tick)
 						L.IgniteMob()
 			else if(ismecha(target))
-				var/obj/mecha/M = target
-				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
+				var/obj/vehicle/sealed/mecha/M = target
+				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, MELEE, 1, get_dir(src, M))
 
 			new /obj/effect/temp_visual/ratvar/ocular_warden(get_turf(target))
 
@@ -91,8 +91,8 @@
 				var/mob/living/L = target
 				to_chat(L, "<span class='neovgre'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [GLOB.ratvar_awakens ? "melts you alive" : "burns you"]!</span>")
 			else if(ismecha(target))
-				var/obj/mecha/M = target
-				to_chat(M.occupant, "<span class='neovgre'>\"I SEE YOU!\"</span>" )
+				var/obj/vehicle/sealed/mecha/M = target
+				to_chat(M.occupants, "<span class='neovgre'>\"I SEE YOU!\"</span>" )
 		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
 			if(prob(50))
 				visible_message("<span class='notice'>[src][pick(idle_messages)]</span>")
@@ -131,8 +131,11 @@
 		. += L
 	var/list/viewcache = list()
 	for(var/N in GLOB.mechas_list)
-		var/obj/mecha/M = N
-		if(get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant))
+		var/obj/vehicle/sealed/mecha/M = N
+		if(get_dist(M, src) <= sight_range && LAZYLEN(M.occupants))
+			for(var/mob/living/MB in M.occupants)
+				if(is_servant_of_ratvar(MB))
+					return
 			if(!length(viewcache))
 				for (var/obj/Z in view(sight_range, src))
 					viewcache += Z

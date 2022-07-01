@@ -80,7 +80,7 @@
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3
 
-#define DNA_UNI_IDENTITY_BLOCKS		15
+#define DNA_UNI_IDENTITY_BLOCKS		19
 #define DNA_HAIR_COLOR_BLOCK		1
 #define DNA_FACIAL_HAIR_COLOR_BLOCK	2
 #define DNA_SKIN_TONE_BLOCK			3
@@ -96,6 +96,10 @@
 #define DNA_MUTANTEAR_BLOCK			13
 #define DNA_MUTANTMARKING_BLOCK		14
 #define DNA_TAUR_BLOCK 				15
+#define DNA_BARK_SOUND_BLOCK		16
+#define DNA_BARK_SPEED_BLOCK		17
+#define DNA_BARK_PITCH_BLOCK		18
+#define DNA_BARK_VARIANCE_BLOCK		19
 
 #define DNA_SEQUENCE_LENGTH			4
 #define DNA_MUTATION_BLOCKS			8

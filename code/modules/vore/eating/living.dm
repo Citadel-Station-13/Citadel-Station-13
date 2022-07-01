@@ -18,7 +18,7 @@
 // Hook for generic creation of stuff on new creatures
 //
 /hook/living_new/proc/vore_setup(mob/living/M)
-	add_verb(M, list(/mob/living/proc/preyloop_refresh, /mob/living/proc/lick, /mob/living/proc/smell, /mob/living/proc/escapeOOC))
+	add_verb(M, list(/mob/living/proc/preyloop_refresh, /mob/living/proc/lick, /mob/living/proc/smell_someone, /mob/living/proc/escapeOOC))
 
 	if(M.vore_flags & NO_VORE) //If the mob isn't supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
 		return TRUE
@@ -394,7 +394,7 @@
 //
 // Equally important as the above
 //
-/mob/living/proc/smell()
+/mob/living/proc/smell_someone()
 	set name = "Smell Someone"
 	set category = "Vore"
 	set desc = "Smell someone nearby!"

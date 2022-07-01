@@ -1121,7 +1121,7 @@
 	dir = 8
 	},
 /obj/machinery/sleeper{
-	dir = 1
+	dir = 4
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -1134,9 +1134,7 @@
 	},
 /area/holodeck/rec_center/medical)
 "dd" = (
-/obj/machinery/sleeper{
-	dir = 1
-	},
+/obj/machinery/stasis,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -2282,7 +2280,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/arena_source)
 "fX" = (
-/turf/closed/indestructible/riveted,
+/turf/closed/indestructible/start_area,
 /area/start)
 "fY" = (
 /obj/effect/landmark/start/new_player,
@@ -11920,11 +11918,11 @@
 /turf/open/floor/plasteel/white,
 /area/centcom/control)
 "BH" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/obj/machinery/sleeper{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
@@ -11940,12 +11938,10 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "BJ" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "BK" = (
@@ -16449,8 +16445,8 @@
 /turf/open/floor/holofloor/wood,
 /area/holodeck/rec_center/wrestlingarena)
 "Lh" = (
-/obj/machinery/sleeper{
-	dir = 8
+/obj/machinery/stasis{
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
@@ -17335,6 +17331,12 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/syndicate_mothership)
+"Pa" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/evac)
 "Pg" = (
 /obj/machinery/light{
 	dir = 1
@@ -46068,7 +46070,7 @@ KH
 KY
 Lb
 KV
-Lh
+Pa
 Lb
 Li
 Li
@@ -46325,7 +46327,7 @@ KO
 KV
 KV
 KV
-Lb
+Lh
 Lb
 Lp
 Lp

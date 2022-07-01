@@ -13,7 +13,7 @@
 	var/recharge_cooldown = 300 //divided by 10 if ratvar is alive
 	actions_types = list(/datum/action/item_action/clock/toggle_visor)
 
-/obj/item/clothing/glasses/judicial_visor/Initialize()
+/obj/item/clothing/glasses/judicial_visor/Initialize(mapload)
 	. = ..()
 	GLOB.all_clockwork_objects += src
 	blaster = new(src)

@@ -77,7 +77,8 @@
 	restraint_check = TRUE
 
 /datum/emote/living/snap/run_emote(mob/living/user, params)
-	if(!(. = ..()))
+	. = ..()
+	if(!.)
 		return
 	if(user.nextsoundemote >= world.time)
 		return
@@ -93,7 +94,8 @@
 	restraint_check = TRUE
 
 /datum/emote/living/snap2/run_emote(mob/living/user, params)
-	if(!(. = ..()))
+	. = ..()
+	if(!.)
 		return
 	if(user.nextsoundemote >= world.time)
 		return
@@ -109,7 +111,8 @@
 	restraint_check = TRUE
 
 /datum/emote/living/snap3/run_emote(mob/living/user, params)
-	if(!(. = ..()))
+	. = ..()
+	if(!.)
 		return
 	if(user.nextsoundemote >= world.time)
 		return
@@ -125,7 +128,8 @@
 	restraint_check = FALSE
 
 /datum/emote/living/awoo/run_emote(mob/living/user, params)
-	if(!(. = ..()))
+	. = ..()
+	if(!.)
 		return
 	if(user.nextsoundemote >= world.time)
 		return
@@ -141,7 +145,8 @@
 	restraint_check = FALSE
 
 /datum/emote/living/hiss/run_emote(mob/living/user, params)
-	if(!(. = ..()))
+	. = ..()
+	if(!.)
 		return
 	if(user.nextsoundemote >= world.time)
 		return
@@ -157,7 +162,8 @@
 	restraint_check = FALSE
 
 /datum/emote/living/meow/run_emote(mob/living/user, params)
-	if(!(. = ..()))
+	. = ..()
+	if(!.)
 		return
 	if(user.nextsoundemote >= world.time)
 		return
@@ -173,7 +179,8 @@
 	restraint_check = FALSE
 
 /datum/emote/living/purr/run_emote(mob/living/user, params)
-	if(!(. = ..()))
+	. = ..()
+	if(!.)
 		return
 	if(user.nextsoundemote >= world.time)
 		return
@@ -189,7 +196,8 @@
 	restraint_check = FALSE
 
 /datum/emote/living/nya/run_emote(mob/living/user, params)
-	if(!(. = ..()))
+	. = ..()
+	if(!.)
 		return
 	if(user.nextsoundemote >= world.time)
 		return
@@ -205,7 +213,8 @@
 	restraint_check = FALSE
 
 /datum/emote/living/weh/run_emote(mob/living/user, params)
-	if(!(. = ..()))
+	. = ..()
+	if(!.)
 		return
 	if(user.nextsoundemote >= world.time)
 		return
@@ -221,7 +230,8 @@
 	restraint_check = FALSE
 
 /datum/emote/living/peep/run_emote(mob/living/user, params)
-	if(!(. = ..()))
+	. = ..()
+	if(!.)
 		return
 	if(user.nextsoundemote >= world.time)
 		return
@@ -244,7 +254,8 @@
 	restraint_check = FALSE
 
 /datum/emote/living/mothsqueak/run_emote(mob/living/user, params)
-	if(!(. = ..()))
+	. = ..()
+	if(!.)
 		return
 	if(user.nextsoundemote >= world.time)
 		return
@@ -260,7 +271,8 @@
 	restraint_check = FALSE
 
 /datum/emote/living/merp/run_emote(mob/living/user, params)
-	if(!(. = ..()))
+	. = ..()
+	if(!.)
 		return
 	if(user.nextsoundemote >= world.time)
 		return
@@ -276,7 +288,8 @@
 	restraint_check = FALSE
 
 /datum/emote/living/bark/run_emote(mob/living/user, params)
-	if(!(. = ..()))
+	. = ..()
+	if(!.)
 		return
 	if(user.nextsoundemote >= world.time)
 		return
@@ -293,7 +306,8 @@
 	restraint_check = FALSE
 
 /datum/emote/living/squish/run_emote(mob/living/user, params)
-	if(!(. = ..()))
+	. = ..()
+	if(!.)
 		return
 	if(user.nextsoundemote >= world.time)
 		return
@@ -310,7 +324,8 @@
 	restraint_check = FALSE
 
 /datum/emote/living/pain/run_emote(mob/living/user, params)
-	if(!(. = ..()))
+	. = ..()
+	if(!.)
 		return
 	if(user.nextsoundemote >= world.time)
 		return
@@ -331,6 +346,7 @@
 	restraint_check = TRUE
 
 /datum/emote/living/clap1/run_emote(mob/living/user, params)
-	if(!(. = ..()))
+	. = ..()
+	if(!.)
 		return
 	playsound(user, 'modular_citadel/sound/voice/clap.ogg', 50, 1, -1)

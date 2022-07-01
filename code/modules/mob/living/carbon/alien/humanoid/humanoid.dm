@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 )))
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
-/mob/living/carbon/alien/humanoid/Initialize()
+/mob/living/carbon/alien/humanoid/Initialize(mapload)
 	AddAbility(new/obj/effect/proc_holder/alien/regurgitate(null))
 	. = ..()
 

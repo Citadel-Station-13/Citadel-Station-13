@@ -1,5 +1,5 @@
 /datum/reagent/blood
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"= null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null,"quirks"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "bloodblend" = BLEND_MULTIPLY, "blood_type"= null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null,"quirks"=null)
 	name = "Blood"
 	chemical_flags = REAGENT_ALL_PROCESS
 	value = REAGENT_VALUE_UNCOMMON // $$$ blood ""donations"" $$$
@@ -81,6 +81,7 @@
 			B.blood_DNA["color"] = data["bloodcolor"]
 		else
 			B.blood_DNA["color"] = BlendRGB(B.blood_DNA["color"], data["bloodcolor"])
+		B.blood_DNA["blendmode"] = data["bloodblend"]
 	if(B.reagents)
 		B.reagents.add_reagent(type, reac_volume)
 	B.update_icon()
@@ -148,7 +149,7 @@
 			. += D
 
 /datum/reagent/blood/synthetics
-	data = list("donor"=null,"viruses"=null,"blood_DNA"="REPLICATED", "bloodcolor" = BLOOD_COLOR_SYNTHETIC, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"="REPLICATED", "bloodcolor" = BLOOD_COLOR_SYNTHETIC, "bloodblend" = BLEND_MULTIPLY, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Synthetic Blood"
 	description = "A synthetically produced imitation of blood."
 	taste_description = "oil"
@@ -156,7 +157,7 @@
 	value = REAGENT_VALUE_NONE
 
 /datum/reagent/blood/jellyblood
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SLIME, "blood_type"="GEL","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SLIME, "bloodblend" = BLEND_DEFAULT, "blood_type"="GEL","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Slime Jelly Blood"
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
 	color = BLOOD_COLOR_SLIME
@@ -165,7 +166,7 @@
 	pH = 4
 
 /datum/reagent/blood/tomato
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "bloodblend" = BLEND_MULTIPLY, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Tomato Blood"
 	description = "This highly resembles blood, but it doesnt actually function like it, resembling more ketchup, with a more blood-like consistency."
 	taste_description = "sap" //Like tree sap?
@@ -189,7 +190,7 @@
 	description = "You don't even want to think about what's in here."
 	taste_description = "gross iron"
 	shot_glass_icon_state = "shotglassred"
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"= "O+","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "bloodblend" = BLEND_MULTIPLY, "blood_type"= "O+","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	pH = 7.45
 
 /datum/reagent/liquidgibs/xeno
@@ -197,7 +198,7 @@
 	color = BLOOD_COLOR_XENO
 	taste_description = "blended heresy"
 	shot_glass_icon_state = "shotglassgreen"
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_XENO, "blood_type"="X*","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_XENO, "bloodblend" = BLEND_MULTIPLY, "blood_type"="X*","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	pH = 2.5
 
 /datum/reagent/liquidgibs/slime
@@ -205,20 +206,20 @@
 	color = BLOOD_COLOR_SLIME
 	taste_description = "slime"
 	shot_glass_icon_state = "shotglassgreen"
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SLIME, "blood_type"="GEL","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SLIME, "bloodblend" = BLEND_DEFAULT, "blood_type"="GEL","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	pH = 4
 
 /datum/reagent/liquidgibs/synth
 	name = "Synthetic sludge"
 	color = BLOOD_COLOR_SYNTHETIC
 	taste_description = "jellied plastic"
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SYNTHETIC, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SYNTHETIC, "bloodblend" = BLEND_MULTIPLY, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 
 /datum/reagent/liquidgibs/oil
 	name = "Hydraulic sludge"
 	color = BLOOD_COLOR_OIL
 	taste_description = "chunky burnt oil"
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_OIL, "blood_type"="HF","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_OIL, "bloodblend" = BLEND_MULTIPLY, "blood_type"="HF","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	pH = 9.75
 
 /datum/reagent/vaccine
@@ -1483,6 +1484,7 @@
 	description = "A caustic substance commonly used in fertilizer or household cleaners."
 	reagent_state = GAS
 	gas = GAS_AMMONIA
+	boiling_point = 239.81
 	color = "#404030" // rgb: 64, 64, 48
 	taste_description = "mordant"
 	pH = 11.6
@@ -1495,6 +1497,13 @@
 		if(myseed && prob(10))
 			myseed.adjust_yield(1)
 			myseed.adjust_instability(1)
+
+/datum/reagent/ammonia/reaction_mob(mob/living/M, method=TOUCH, reac_volume, touch_protection)
+	if(method == VAPOR)
+		M.adjustOrganLoss(ORGAN_SLOT_LUNGS, ((100-touch_protection)/100)*reac_volume*REAGENTS_EFFECT_MULTIPLIER * 0.25)
+		if(prob(reac_volume))
+			to_chat(M, "<span class='danger'>Your lungs hurt!</span>")
+	return ..()
 
 /datum/reagent/diethylamine
 	name = "Diethylamine"
@@ -1805,6 +1814,10 @@
 	gas = GAS_BROMINE
 	boiling_point = 332
 	pH = 7.8
+
+/datum/reagent/bromine/on_mob_life(mob/living/carbon/C)
+	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2, 99)
+	..()
 
 /datum/reagent/phenol
 	name = "Phenol"

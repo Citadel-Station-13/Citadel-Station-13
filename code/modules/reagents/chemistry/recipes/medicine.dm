@@ -372,6 +372,7 @@
 	results = list(/datum/reagent/medicine/system_cleaner = 4)
 	required_reagents = list(/datum/reagent/iron = 2, /datum/reagent/oil = 2, /datum/reagent/medicine/calomel = 2, /datum/reagent/acetone = 2)
 
+
 /datum/chemical_reaction/rhigoxane
 	name = "Rhigoxane"
 	id = /datum/reagent/medicine/rhigoxane
@@ -391,3 +392,10 @@
 	id = /datum/reagent/medicine/thializid
 	results = list(/datum/reagent/medicine/thializid = 5)
 	required_reagents = list(/datum/reagent/sulfur = 1, /datum/reagent/fluorine = 1, /datum/reagent/toxin = 1, /datum/reagent/nitrous_oxide = 2)
+
+/datum/chemical_reaction/limb_regrowth
+	name = "Carcinisoprojection Jelly"
+	id = /datum/reagent/medicine/limb_regrowth
+	results = list(/datum/reagent/medicine/limb_regrowth = 2)
+	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/slime_toxin = 1)
+

@@ -25,7 +25,10 @@
 	var/inertia_moving = 0
 	var/inertia_next_move = 0
 	var/inertia_move_delay = 5
-	var/pass_flags = 0
+	/// Things we can pass through while moving. If any of this matches the thing we're trying to pass's [pass_flags_self], then we can pass through.
+	var/pass_flags = NONE
+	/// If false makes CanPass call CanPassThrough on this type instead of using default behaviour
+	var/generic_canpass = TRUE
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
 	var/atom/movable/moving_from_pull		//attempt to resume grab after moving instead of before.
 	var/list/acted_explosions	//for explosion dodging
@@ -60,6 +63,14 @@
 	var/yell_power = 50
 	/// last time we yelled
 	var/last_yell = 0
+
+	// Text-to-bark sounds
+	var/sound/vocal_bark
+	var/vocal_bark_id
+	var/vocal_pitch = 1
+	var/vocal_pitch_range = 0.2 //Actual pitch is (pitch - (vocal_pitch_range*0.5)) to (pitch + (vocal_pitch_range*0.5))
+	var/vocal_volume = 70 //Baseline. This gets modified by yelling and other factors
+	var/vocal_speed = 4 //Lower values are faster, higher values are slower
 
 /atom/movable/Initialize(mapload)
 	. = ..()
@@ -473,10 +484,15 @@
 /atom/movable/proc/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	return FALSE
 
-/atom/movable/CanPass(atom/movable/mover, turf/target)
+/atom/movable/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(mover in buckled_mobs)
 		return TRUE
-	return ..()
+
+/// Returns true or false to allow src to move through the blocker, mover has final say
+/atom/movable/proc/CanPassThrough(atom/blocker, turf/target, blocker_opinion)
+	SHOULD_CALL_PARENT(TRUE)
+	return blocker_opinion
 
 /// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /atom/movable/proc/on_exit_storage(datum/component/storage/concrete/S) // rename S to master_storage
@@ -596,11 +612,11 @@
 	if(throwing && !throw_override)
 		return
 	if(on && !(movement_type & FLOATING))
-		animate(src, pixel_y = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
-		animate(pixel_y = -2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
+		animate(src, pixel_z = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
+		animate(pixel_z = -4, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
 		setMovetype(movement_type | FLOATING)
 	else if (!on && (movement_type & FLOATING))
-		animate(src, pixel_y = initial(pixel_y), time = 10)
+		animate(src, pixel_z = initial(pixel_y), time = 10)
 		setMovetype(movement_type & ~FLOATING)
 	floating_need_update = FALSE // assume it's done
 
@@ -688,6 +704,17 @@
 	var/datum/language_holder/LH = get_language_holder()
 	return LH.update_atom_languages(src)
 
+/// Sets the vocal bark for the atom, using the bark's ID
+/atom/movable/proc/set_bark(id)
+	if(!id)
+		return FALSE
+	var/datum/bark/B = GLOB.bark_list[id]
+	if(!B)
+		return FALSE
+	vocal_bark = sound(initial(B.soundpath))
+	vocal_bark_id = id
+	return vocal_bark
+
 /* End language procs */
 
 
@@ -766,4 +793,4 @@
 	M.Turn(pick(-30, 30))
 	animate(I, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 3, transform = M, easing = CUBIC_EASING)
 	sleep(1)
-	animate(I, alpha = 0, transform = matrix(), time = 1)
+	animate(I, alpha = 0, transform = matrix(), time = 1, flags = ANIMATION_PARALLEL)

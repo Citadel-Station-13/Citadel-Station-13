@@ -3,6 +3,7 @@
 	desc = "They look bloody and gruesome."
 	icon_state = "gibbl5"
 	layer = LOW_OBJ_LAYER
+	blend_mode = BLEND_DEFAULT
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
 	bloodiness = 0				//This isn't supposed to be bloody.

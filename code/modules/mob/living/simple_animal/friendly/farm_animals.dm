@@ -36,8 +36,9 @@
 	var/datum/reagent/milk_reagent = /datum/reagent/consumable/milk
 
 	footstep_type = FOOTSTEP_MOB_SHOE
+	vocal_bark_id = "banjoc3"
 
-/mob/living/simple_animal/hostile/retaliate/goat/Initialize(/datum/reagent/milk_reagent)
+/mob/living/simple_animal/hostile/retaliate/goat/Initialize(mapload, /datum/reagent/milk_reagent)
 	udder = new (null, milk_reagent)
 	. = ..()
 
@@ -143,8 +144,10 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 
 	footstep_type = FOOTSTEP_MOB_SHOE
+	vocal_bark_id = "mutedc2"
+	vocal_pitch = 1.2
 
-/mob/living/simple_animal/cow/Initialize()
+/mob/living/simple_animal/cow/Initialize(mapload)
 	udder = new(null, milk_reagent)
 	. = ..()
 	add_cell_sample()
@@ -201,7 +204,7 @@
 	name = "strange cow"
 	desc = "Something seems off about the milk this cow is producing."
 
-/mob/living/simple_animal/cow/random/Initialize()
+/mob/living/simple_animal/cow/random/Initialize(mapload)
 	milk_reagent = get_random_reagent_id() //this has a blacklist so don't worry about romerol cows, etc
 	..()
 
@@ -214,7 +217,7 @@
 	speak_chance = 10 //the cow is eager to share its wisdom! //but is wise enough to not lag  the server too bad
 	milk_reagent = /datum/reagent/medicine/liquid_wisdom
 
-/mob/living/simple_animal/cow/wisdom/Initialize()
+/mob/living/simple_animal/cow/wisdom/Initialize(mapload)
 	. = ..()
 	speak = GLOB.wisdoms //Done here so it's setup properly
 
@@ -251,8 +254,10 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 	footstep_type = FOOTSTEP_MOB_CLAW
+	vocal_bark_id = "squeak"
+	vocal_pitch = 1.4
 
-/mob/living/simple_animal/chick/Initialize()
+/mob/living/simple_animal/chick/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
@@ -317,8 +322,11 @@
 	var/static/chicken_count = 0
 
 	footstep_type = FOOTSTEP_MOB_CLAW
+	vocal_bark_id = "synthgrunt"
+	vocal_pitch = 1.4
+	vocal_pitch_range = 0.4
 
-/mob/living/simple_animal/chicken/Initialize()
+/mob/living/simple_animal/chicken/Initialize(mapload)
 	. = ..()
 	if(!body_color)
 		body_color = pick(validColors)
@@ -414,12 +422,14 @@
 	var/static/kiwi_count = 0
 
 	footstep_type = FOOTSTEP_MOB_CLAW
+	vocal_bark_id = "squeak"
+	vocal_pitch = 1.4
 
 /mob/living/simple_animal/kiwi/Destroy()
 	--kiwi_count
 	return ..()
 
-/mob/living/simple_animal/kiwi/Initialize()
+/mob/living/simple_animal/kiwi/Initialize(mapload)
 	. = ..()
 	++kiwi_count
 
@@ -492,8 +502,10 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 	footstep_type = FOOTSTEP_MOB_CLAW
+	vocal_bark_id = "squeak"
+	vocal_pitch = 1.4
 
-/mob/living/simple_animal/babyKiwi/Initialize()
+/mob/living/simple_animal/babyKiwi/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
@@ -517,7 +529,7 @@
 /obj/item/udder
 	name = "udder"
 
-/obj/item/udder/Initialize(loc, milk_reagent)
+/obj/item/udder/Initialize(mapload, loc, milk_reagent)
 	if(!milk_reagent)
 		milk_reagent = /datum/reagent/consumable/milk
 	create_reagents(50, NONE, NO_REAGENTS_VALUE)
@@ -568,3 +580,4 @@
 	maxHealth = 75
 	blood_volume = BLOOD_VOLUME_NORMAL
 	footstep_type = FOOTSTEP_MOB_SHOE
+	vocal_bark_id = "mutedc4"

@@ -7,7 +7,7 @@
 
 	density = TRUE
 	max_integrity = 300
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
 	layer = OBJ_LAYER
 	plane = GAME_PLANE
 	circuit = /obj/item/circuitboard/machine/thermomachine
@@ -24,7 +24,7 @@
 	var/heat_capacity = 0
 	var/interactive = TRUE // So mapmakers can disable interaction.
 
-/obj/machinery/atmospherics/components/unary/thermomachine/Initialize()
+/obj/machinery/atmospherics/components/unary/thermomachine/Initialize(mapload)
 	. = ..()
 	initialize_directions = dir
 
@@ -197,7 +197,7 @@
 	on = TRUE
 	icon_state = "freezer_1"
 
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/Initialize()
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/Initialize(mapload)
 	. = ..()
 	if(target_temperature == initial(target_temperature))
 		target_temperature = min_temperature
@@ -205,7 +205,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom
 	name = "cold room freezer"
 
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom/Initialize()
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom/Initialize(mapload)
 	. = ..()
 	target_temperature = T0C-80
 

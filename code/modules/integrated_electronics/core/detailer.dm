@@ -30,7 +30,7 @@
 		"custom" = COLOR_ASSEMBLY_WHITE
 		)
 
-/obj/item/integrated_electronics/detailer/Initialize()
+/obj/item/integrated_electronics/detailer/Initialize(mapload)
 	.=..()
 	update_icon()
 

@@ -33,7 +33,7 @@
 	. += create_ui_notice("Pathfinding Cooldown: [DisplayTimeText(different_path_cooldown)]", "orange", "stopwatch")
 	. += create_ui_notice("Maximum Range: [max_range] tiles", "orange", "info")
 
-/obj/item/circuit_component/pathfind/Initialize()
+/obj/item/circuit_component/pathfind/Initialize(mapload)
 	. = ..()
 	input_X = add_input_port("Target X", PORT_TYPE_NUMBER, FALSE)
 	input_Y = add_input_port("Target Y", PORT_TYPE_NUMBER, FALSE)

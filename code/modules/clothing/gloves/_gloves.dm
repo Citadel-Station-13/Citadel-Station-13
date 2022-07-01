@@ -32,7 +32,7 @@
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
 		if(blood_DNA)
-			. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands", color = blood_DNA_to_color())
+			. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands", color = blood_DNA_to_color(), blend_mode = blood_DNA_to_blend())
 
 /obj/item/clothing/gloves/update_clothes_damaged_state()
 	..()

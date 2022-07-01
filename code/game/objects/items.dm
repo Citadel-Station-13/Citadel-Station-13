@@ -177,7 +177,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/canMouseDown = FALSE
 
 
-/obj/item/Initialize()
+/obj/item/Initialize(mapload)
 
 	if(attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
@@ -839,9 +839,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/attack_animal(mob/living/simple_animal/M)
 	if (obj_flags & CAN_BE_HIT)
 		return ..()
-	return 0
-
-/obj/item/mech_melee_attack(obj/mecha/M)
 	return 0
 
 /obj/item/burn()

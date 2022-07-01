@@ -21,7 +21,7 @@
 	always_reskinnable = TRUE
 	cached_icon = "hypovial"
 
-/obj/item/reagent_containers/glass/bottle/vial/Initialize()
+/obj/item/reagent_containers/glass/bottle/vial/Initialize(mapload)
 	. = ..()
 	update_icon()
 

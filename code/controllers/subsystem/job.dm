@@ -367,9 +367,14 @@ SUBSYSTEM_DEF(job)
 	JobDebug("DO, Handling unrejectable unassigned")
 	//Mop up people who can't leave.
 	for(var/mob/dead/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
-		if(!GiveRandomJob(player))
-			if(!AssignRole(player, SSjob.overflow_role)) //If everything is already filled, make them an assistant
-				return FALSE //Living on the edge, the forced antagonist couldn't be assigned to overflow role (bans, client age) - just reroll
+		if(player.client.prefs.joblessrole == BERANDOMJOB) //Gives the player a random role if their preferences are set to it
+			if(!GiveRandomJob(player))
+				if(!AssignRole(player, SSjob.overflow_role)) //If everything is already filled, make them the overflow role
+					return FALSE //Living on the edge, the forced antagonist couldn't be assigned to overflow role (bans, client age) - just reroll
+		else //If the player prefers to return to lobby or be an assistant, give them assistant
+			if(!AssignRole(player, SSjob.overflow_role))
+				if(!GiveRandomJob(player)) //The forced antagonist couldn't be assigned to overflow role (bans, client age) - give a random role
+					return FALSE //Somehow the forced antagonist couldn't be assigned to the overflow role or the a random role - reroll
 
 	return validate_required_jobs(required_jobs)
 
@@ -466,11 +471,11 @@ SUBSYSTEM_DEF(job)
 
 		SSpersistence.antag_rep_change[M.client.ckey] += job.GetAntagRep()
 
-/*		if(M.client.holder)
-			if(CONFIG_GET(flag/auto_deadmin_players) || (M.client.prefs?.toggles & DEADMIN_ALWAYS))
+		if(M.client.holder)
+			if(CONFIG_GET(flag/auto_deadmin_players) || (M.client.prefs?.deadmin & DEADMIN_ALWAYS))
 				M.client.holder.auto_deadmin()
 			else
-				handle_auto_deadmin_roles(M.client, rank) */
+				handle_auto_deadmin_roles(M.client, rank)
 
 	to_chat(M, "<b>You are the [rank].</b>")
 	if(job)
@@ -517,19 +522,19 @@ SUBSYSTEM_DEF(job)
 			binder.decks = N.client.prefs.tcg_decks
 
 	return H
-/*
+
 /datum/controller/subsystem/job/proc/handle_auto_deadmin_roles(client/C, rank)
 	if(!C?.holder)
 		return TRUE
 	var/datum/job/job = GetJob(rank)
 	if(!job)
 		return
-	if((job.auto_deadmin_role_flags & DEADMIN_POSITION_HEAD) && (CONFIG_GET(flag/auto_deadmin_heads) || (C.prefs?.toggles & DEADMIN_POSITION_HEAD)))
+	if((job.auto_deadmin_role_flags & DEADMIN_POSITION_HEAD) && (CONFIG_GET(flag/auto_deadmin_heads) || (C.prefs?.deadmin & DEADMIN_POSITION_HEAD)))
 		return C.holder.auto_deadmin()
-	else if((job.auto_deadmin_role_flags & DEADMIN_POSITION_SECURITY) && (CONFIG_GET(flag/auto_deadmin_security) || (C.prefs?.toggles & DEADMIN_POSITION_SECURITY)))
+	else if((job.auto_deadmin_role_flags & DEADMIN_POSITION_SECURITY) && (CONFIG_GET(flag/auto_deadmin_security) || (C.prefs?.deadmin & DEADMIN_POSITION_SECURITY)))
 		return C.holder.auto_deadmin()
-	else if((job.auto_deadmin_role_flags & DEADMIN_POSITION_SILICON) && (CONFIG_GET(flag/auto_deadmin_silicons) || (C.prefs?.toggles & DEADMIN_POSITION_SILICON))) //in the event there's ever psuedo-silicon roles added, ie synths.
-		return C.holder.auto_deadmin()*/
+	else if((job.auto_deadmin_role_flags & DEADMIN_POSITION_SILICON) && (CONFIG_GET(flag/auto_deadmin_silicons) || (C.prefs?.deadmin & DEADMIN_POSITION_SILICON))) //in the event there's ever psuedo-silicon roles added, ie synths.
+		return C.holder.auto_deadmin()
 
 /datum/controller/subsystem/job/proc/setup_officer_positions()
 	var/datum/job/J = SSjob.GetJob("Security Officer")

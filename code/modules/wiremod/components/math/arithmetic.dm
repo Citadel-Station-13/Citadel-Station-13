@@ -37,7 +37,7 @@
 	)
 	arithmetic_option = add_option_port("Arithmetic Option", component_options)
 
-/obj/item/circuit_component/arithmetic/Initialize()
+/obj/item/circuit_component/arithmetic/Initialize(mapload)
 	. = ..()
 	arithmetic_ports = list()
 	for(var/port_id in 1 to input_port_amount)

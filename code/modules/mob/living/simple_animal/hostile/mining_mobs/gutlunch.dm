@@ -46,7 +46,7 @@
 						/obj/item/organ/lungs, /obj/item/organ/stomach, /obj/item/organ/tongue) // So we dont eat implants or brains. Still can eat robotic stuff thats subtyped of base line but thats a issue for another day.
 	var/obj/item/udder/gutlunch/udder = null
 
-/mob/living/simple_animal/hostile/asteroid/gutlunch/Initialize()
+/mob/living/simple_animal/hostile/asteroid/gutlunch/Initialize(mapload)
 	udder = new()
 	. = ..()
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
@@ -103,7 +103,7 @@
 	name = "gubbuck"
 	gender = MALE
 
-/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck/Initialize()
+/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck/Initialize(mapload)
 	. = ..()
 	add_atom_colour(pick("#E39FBB", "#D97D64", "#CF8C4A"), FIXED_COLOUR_PRIORITY)
 	resize = 0.85
@@ -130,7 +130,7 @@
 /obj/item/udder/gutlunch
 	name = "nutrient sac"
 
-/obj/item/udder/gutlunch/Initialize()
+/obj/item/udder/gutlunch/Initialize(mapload)
 	. = ..()
 	reagents = new(50)
 	reagents.my_atom = src
