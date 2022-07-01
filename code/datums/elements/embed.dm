@@ -31,14 +31,14 @@
 	var/payload_type
 	var/embed_chance_turf_mod
 
-/datum/element/embed/Attach(datum/target, embed_chance, fall_chance, pain_chance, pain_mult, remove_pain_mult, impact_pain_mult, rip_time, ignore_throwspeed_threshold, jostle_chance, jostle_pain_mult, pain_stam_pct, embed_chance_turf_mod, projectile_payload=/obj/item/shard)
+/datum/element/embed/Attach(datum/target, embed_chance, fall_chance, pain_chance, pain_mult, remove_pain_mult, impact_pain_mult, rip_time, ignore_throwspeed_threshold, jostle_chance, jostle_pain_mult, pain_stam_pct, embed_chance_turf_mod, projectile_payload)
 	. = ..()
 
 	if(!isitem(target) && !isprojectile(target))
 		return ELEMENT_INCOMPATIBLE
 
 	RegisterSignal(target, COMSIG_ELEMENT_ATTACH, .proc/severancePackage)
-	if(isitem(target))
+	if(!isprojectile(target))
 		RegisterSignal(target, COMSIG_MOVABLE_IMPACT_ZONE, .proc/checkEmbedMob)
 		RegisterSignal(target, COMSIG_MOVABLE_IMPACT, .proc/checkEmbedOther)
 		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examined)
@@ -59,7 +59,9 @@
 			src.embed_chance_turf_mod = embed_chance_turf_mod
 			initialized = TRUE
 	else
-		payload_type = projectile_payload
+		payload_type = /obj/item/shard
+		if(projectile_payload)
+			payload_type = projectile_payload
 		RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/checkEmbedProjectile)
 
 

@@ -346,10 +346,10 @@
 		return
 
 	ooze.visible_message("<span class='nicegreen>[ooze] launches a mending globule!</span>", "<span class='notice'>You launch a mending globule.</span>")
-	var/obj/item/projectile/globule/globule = new (ooze.loc)
-	globule.preparePixelProjectile(target, ooze, params)
-	globule.def_zone = ooze.zone_selected
-	globule.fire()
+	var/obj/item/projectile/globule/healgob = new (ooze.loc)
+	healgob.preparePixelProjectile(target, ooze, params)
+	healgob.def_zone = ooze.zone_selected
+	healgob.fire()
 	ooze.adjust_ooze_nutrition(-5)
 	remove_ranged_ability()
 	current_cooldown = world.time + cooldown

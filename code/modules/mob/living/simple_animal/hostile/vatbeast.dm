@@ -66,9 +66,7 @@
 	var/current_cooldown = 0
 
 
-/obj/effect/proc_holder/tentacle_slap/Trigger(mob/user)
-	. = ..()
-	(mob/living/carbon/user)
+/obj/effect/proc_holder/tentacle_slap/Trigger(mob/living/user)
 	if(current_cooldown > world.time)
 		to_chat(user, "<span class='notice'>This ability is still on cooldown.</span>")
 		return
@@ -106,7 +104,7 @@
 	return TRUE
 
 /mob/living/simple_animal/hostile/vatbeast/attackby(obj/item/I, mob/user)
-	if(!(I in food_type) || key || tame)
+	if(!(is_type_in_list(I, food_type) || key || tame))
 		return ..()
 	if(prob(tame_chance))
 		visible_message("<span class='nicegreen>[src] scuttles at [user], grabbing the [I] out of their hands with a tentacle!</span>")
