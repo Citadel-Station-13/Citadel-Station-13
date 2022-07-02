@@ -208,6 +208,7 @@
 	// snowflaked odor
 	name = "Miasma"
 	gas_overlay = "miasma"
+	color = "#963"
 	moles_visible = MOLES_GAS_VISIBLE * 60
 	price = 2
 
