@@ -39,7 +39,7 @@
 		return
 
 	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
-		if(!HAS_TRAIT(src, TRAIT_SNOWFLAKE_BLOOD_PROCESS))
+		if(species.handle_blood()) // if this returns TRUE, then the species is not handling blood itself and we can control everything
 			if(integrating_blood > 0)
 				var/blood_integrated = max(integrating_blood - 1, 0)
 				var/blood_diff = integrating_blood - blood_integrated

@@ -55,9 +55,9 @@
 	//update blood color to body color
 	exotic_blood_color = "#" + H.dna.features["mcolor"]
 
-/datum/species/jelly/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
+/datum/species/jelly/handle_blood(mob/living/carbon/human/H, delta_time, times_fired)
 	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
-		return
+		return TRUE // we dont handle blood when dead
 
 	if(H.blood_volume <= 0)
 		H.blood_volume += 2.5 * delta_time
@@ -79,6 +79,8 @@
 	var/datum/action/innate/ability/regrowth = H.ability_actions[INNATE_ABILITY_LIMB_REGROWTH]
 	if(regrowth)
 		regrowth.UpdateButtonIcon()
+
+	return FALSE // to let living/handle_blood know that the species is handling blood instead
 
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
 	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()

@@ -363,6 +363,3 @@
 #define MAPPING_HELPER_TRAIT "mapping-helper"
 /// Trait associated with mafia
 #define MAFIA_TRAIT "mafia"
-
-/// snowflake blood process (slimes)
-#define TRAIT_SNOWFLAKE_BLOOD_PROCESS "snowflake_blood_process"
