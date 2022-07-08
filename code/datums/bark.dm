@@ -72,8 +72,8 @@
 /datum/bark/chitter
 	name = "Chittery"
 	id = "chitter"
-	minspeed = 6 //This is a pretty long sound
-	soundpath = 'sound/items/Ratchet.ogg'
+	minspeed = 4 //Even with the sound being replaced with a unique, shorter sound, this is still a little too long for higher speeds
+	soundpath = 'sound/voice/barks/chitter.ogg'
 
 /datum/bark/synthetic_grunt
 	name = "Synthetic (Grunt)"
@@ -90,6 +90,11 @@
 	id = "bullet"
 	maxpitch = 1.6 //This works well with higher pitches!
 	soundpath = 'sound/weapons/bulletflyby.ogg' //This works... Surprisingly well as a bark? It's neat!
+
+/datum/bark/coggers
+	name = "Brassy"
+	id = "coggers"
+	soundpath = 'sound/machines/clockcult/integration_cog_install.ogg' //Yet another unexpectedly good bark sound
 
 
 // Genetics-only/admin-only sounds. These either clash hard with the audio design of the above sounds, or have some other form of audio design issue, but aren't *too* awful as a sometimes thing.
@@ -136,4 +141,10 @@
 	name = "Weh"
 	id = "weh"
 	soundpath = 'modular_citadel/sound/voice/weh.ogg'
+	ignore = TRUE
+
+/datum/bark/honk
+	name = "Annoying Honk"
+	id = "honk"
+	soundpath = 'sound/creatures/goose1.ogg'
 	ignore = TRUE

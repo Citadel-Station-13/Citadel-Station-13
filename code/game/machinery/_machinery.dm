@@ -106,6 +106,7 @@ Class Procs:
 
 	vocal_bark_id = "synth"
 	vocal_pitch = 0.6
+	vocal_volume = 40
 
 	var/stat = 0
 	var/use_power = IDLE_POWER_USE

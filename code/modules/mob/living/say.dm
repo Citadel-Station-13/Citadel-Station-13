@@ -311,7 +311,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
 
 	//Listening gets trimmed here if a vocal bark's present. If anyone ever makes this proc return listening, make sure to instead initialize a copy of listening in here to avoid wonkiness
-	if(vocal_bark || vocal_bark_id)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_QUEUE_BARK, listening, args) || vocal_bark || vocal_bark_id)
 		for(var/mob/M in listening)
 			if(!M.client)
 				continue
@@ -319,11 +319,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 				listening -= M
 		var/barks = min(round((LAZYLEN(message) / vocal_speed)) + 1, BARK_MAX_BARKS)
 		var/total_delay
+		vocal_current_bark = world.time
 		for(var/i in 1 to barks)
 			if(total_delay > BARK_MAX_TIME)
 				break
-			addtimer(CALLBACK(src, /atom/movable/proc/bark, listening, (message_range * (is_yell ? 4 : 1)), (vocal_volume * (is_yell ? 1.5 : 1)), BARK_DO_VARY(vocal_pitch, vocal_pitch_range)), total_delay)
-			total_delay += rand(DS2TICKS((vocal_speed / BARK_SPEED_BASELINE) * (is_yell ? 0.5 : 1)), DS2TICKS(vocal_speed / BARK_SPEED_BASELINE) + DS2TICKS((vocal_speed / BARK_SPEED_BASELINE) * (is_yell ? 0.5 : 1))) TICKS
+			addtimer(CALLBACK(src, /atom/movable/proc/bark, listening, (message_range * (is_yell ? 4 : 1)), (vocal_volume * (is_yell ? 1.5 : 1)), BARK_DO_VARY(vocal_pitch, vocal_pitch_range), vocal_current_bark), total_delay)
+			total_delay += rand(DS2TICKS(vocal_speed / BARK_SPEED_BASELINE), DS2TICKS(vocal_speed / BARK_SPEED_BASELINE) + DS2TICKS((vocal_speed / BARK_SPEED_BASELINE) * (is_yell ? 0.5 : 1))) TICKS
 
 
 /atom/movable/proc/process_yelling(list/already_heard, rendered, atom/movable/speaker, datum/language/message_language, message, list/spans, message_mode, obj/source)

@@ -44,6 +44,10 @@
 	emote_hear = list("squawks.","bawks!")
 	emote_see = list("flutters its wings.")
 
+	vocal_bark_id = "banjoc4"
+	vocal_pitch = 1.4
+	vocal_pitch_range = 0.4
+
 	speak_chance = 1 //1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/cracker/ = 1)
