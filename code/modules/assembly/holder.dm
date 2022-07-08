@@ -32,7 +32,7 @@
 			A.forceMove(src)
 	A.holder = src
 	// bandaid: please don't try to be picked up while we're still in the assembly
-	A.interaction_flags &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
+	A.interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 	A.toggle_secure()
 	if(!a_left)
 		a_left = A
