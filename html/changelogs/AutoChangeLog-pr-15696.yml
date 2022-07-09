@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - rscadd: "slimes no longer die from having no blood, properly consume limbs when at low blood, and suffer brute damage and oxygen loss for having no blood and no limbs left to consume respectably, they cannot go past BLOOD_VOLUME_MAXIMUM from consuming toxin"
