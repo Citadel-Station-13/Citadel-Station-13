@@ -870,6 +870,11 @@ function checkchangelog($payload, $compile = true) {
 				if($item != 'something server ops should know')
 					$currentchangelogblock[] = array('type' => 'server', 'body' => $item);
 				break;
+			case 'tweak':
+				if($item != 'tweaked a few things')
+					$tags[] = 'Tweak';
+					$currentchangelogblock[] = array('type' => 'tweak', 'body' => $item);
+				break;
 			default:
 				//we add it to the last changelog entry as a separate line
 				if (count($currentchangelogblock) > 0)
