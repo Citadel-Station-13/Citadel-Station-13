@@ -1,0 +1,5 @@
+author: "MediHound"
+delete-after: True
+changes: 
+  - rscdel: "Removed old Alina sprites"
+  - rscadd: "Added new Alina sprites"
