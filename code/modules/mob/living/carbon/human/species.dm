@@ -2456,7 +2456,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 //Blood Stuff///
 ////////////////
 // true = handle blood normally, false = do not (and then handle blood in this proc instead please!!)
-/datum/species/proc/handle_blood()
+/datum/species/proc/handle_blood(mob/living/carbon/human/H, delta_time, times_fired)
 	return TRUE
 
 ////////////////

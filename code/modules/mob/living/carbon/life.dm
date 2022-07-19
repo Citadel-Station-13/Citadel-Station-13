@@ -9,7 +9,7 @@
 		. = FALSE
 	if(!.)
 		return
-	handle_blood()
+	handle_blood(delta_time, times_fired)
 	// handle_blood *could* kill us.
 	// we should probably have a better system for if we need to check for death or something in the future hmw
 	if(stat != DEAD)
@@ -375,7 +375,7 @@
 
 	miasma_turf.air_update_turf()
 
-/mob/living/carbon/proc/handle_blood()
+/mob/living/carbon/proc/handle_blood(delta_time, times_fired)
 	return
 
 /mob/living/carbon/proc/handle_bodyparts(seconds, times_fired)
