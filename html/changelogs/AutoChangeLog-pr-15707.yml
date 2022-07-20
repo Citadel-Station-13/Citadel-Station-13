@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - bugfix: "makes brain trauma event respect canSpawnEvent conditions such as min players"

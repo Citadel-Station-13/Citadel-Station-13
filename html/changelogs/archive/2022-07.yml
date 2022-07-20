@@ -34,3 +34,9 @@
   - rscadd: Added new Alina sprites
   SandPoot:
   - bugfix: The tweak tag for changelogs should now work.
+2022-07-20:
+  Putnam3145:
+  - balance: quark matter is now worth 5% as much and gives 10% the research points
+  timothyteakettle:
+  - bugfix: makes brain trauma event respect canSpawnEvent conditions such as min
+      players
