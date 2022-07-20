@@ -372,27 +372,6 @@
 	if(!B)
 		B = new(T)
 
-//This is a terrible way of handling it.
-/mob/living/proc/ResetBloodVol()
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if (HAS_TRAIT(src, TRAIT_HIGH_BLOOD))
-			blood_ratio = 1.2
-			H.handle_blood(delta_time, times_fired)
-			return
-		blood_ratio = 1
-		H.handle_blood(delta_time, times_fired)
-		return
-	blood_ratio = 1
-
-/mob/living/proc/AdjustBloodVol(value)
-	if(blood_ratio == value)
-		return
-	blood_ratio = value
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		H.handle_blood(delta_time, times_fired)
-
 /mob/living/proc/adjust_integration_blood(value, remove_actual_blood, force)
     if(integrating_blood +  value < 0 && remove_actual_blood)
         blood_volume += value + integrating_blood

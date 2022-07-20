@@ -9,7 +9,7 @@
 		. = FALSE
 	if(!.)
 		return
-	handle_blood(delta_time, times_fired)
+	handle_blood(seconds, times_fired)
 	// handle_blood *could* kill us.
 	// we should probably have a better system for if we need to check for death or something in the future hmw
 	if(stat != DEAD)
