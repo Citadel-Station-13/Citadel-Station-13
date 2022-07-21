@@ -1,0 +1,4 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - bugfix: "The syndicate has fixed the radiation health analyzer allowing you to check on the ui again."
