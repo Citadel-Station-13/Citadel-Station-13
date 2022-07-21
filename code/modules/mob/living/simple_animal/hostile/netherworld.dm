@@ -45,7 +45,7 @@
 	var/chosen_sound = pick(migo_sounds)
 	playsound(src, chosen_sound, 100, TRUE)
 
-/mob/living/simple_animal/hostile/netherworld/migo/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/netherworld/migo/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(stat)

@@ -33,7 +33,7 @@
 	if(relic_mask)
 		equip_to_slot_or_del(new relic_mask, ITEM_SLOT_MASK)
 
-/mob/living/carbon/monkey/punpun/BiologicalLife(seconds, times_fired)
+/mob/living/carbon/monkey/punpun/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)

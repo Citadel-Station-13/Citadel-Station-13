@@ -70,7 +70,7 @@
 	. = ..()
 	AddComponent(/datum/component/stationloving)
 
-/mob/living/simple_animal/jacq/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/jacq/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(!ckey)

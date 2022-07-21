@@ -23,7 +23,7 @@
 	deathmessage = "vanishes into thin air! It was a fake!"
 	has_field_of_vision = FALSE //not meant to be played anyway.
 
-/mob/living/simple_animal/hostile/illusion/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/illusion/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(world.time > life_span)
