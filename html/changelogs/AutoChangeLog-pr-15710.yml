@@ -1,4 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - bugfix: "If you have a dark purple stabilized extract and are holding nothing in your hand, no longer attempts to heat nothing, which caused immense amounts of runtimes."

@@ -40,3 +40,10 @@
   timothyteakettle:
   - bugfix: makes brain trauma event respect canSpawnEvent conditions such as min
       players
+2022-07-21:
+  SandPoot:
+  - bugfix: If you have a dark purple stabilized extract and are holding nothing in
+      your hand, no longer attempts to heat nothing, which caused immense amounts
+      of runtimes.
+  - bugfix: The syndicate has fixed the radiation health analyzer allowing you to
+      check on the ui again.
