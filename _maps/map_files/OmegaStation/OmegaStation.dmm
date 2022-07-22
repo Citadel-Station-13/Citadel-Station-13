@@ -35459,7 +35459,7 @@
 /obj/item/folder,
 /obj/item/pen,
 /obj/structure/sign/painting/library{
-	step_x = -32
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel/dark,
 /area/service/library)
