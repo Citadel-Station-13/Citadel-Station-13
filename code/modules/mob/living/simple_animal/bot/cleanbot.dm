@@ -381,6 +381,12 @@
 				target = null
 			mode = BOT_IDLE
 			icon_state = "cleanbot[on]"
+	else if(istype(A, /turf)) //for player-controlled cleanbots so they can clean unclickable messes like dirt
+		var/turf/T = A
+		for(var/atom/S in T.contents)
+			if(istype(S, /obj/effect/decal/cleanable)) //clean the first mess found
+				UnarmedAttack(S)
+				return
 	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
 		visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [A]!</span>")
 		playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)
