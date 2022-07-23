@@ -62,13 +62,14 @@
 	if(!is_operational())
 		return
 
-	if(shocked && !(stat & NOPOWER))
-		shock(user,50)
-
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Autolathe", capitalize(src.name))
 		ui.open()
+
+	if(shocked && !(stat & NOPOWER))
+		if(shock(user,50))
+			ui.close() //close the window if they got zapped successfully as to prevent them from getting zapped infinitely.
 
 /obj/machinery/autolathe/ui_data(mob/user)
 	var/list/data = list()
