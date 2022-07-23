@@ -1,7 +1,0 @@
-author: "TripleShades"
-delete-after: True
-changes: 
-  - rscdel: "Snow Cabin turbine"
-  - tweak: "Snow Cabin, Jungle Resort, and Plasma Outpost gateways now use RTGs for power generation"
-  - balance: "Snow Cabin SMES unit is now non-magical"
-  - bugfix: "Snow Cabin gateway wiring now connected properly"
