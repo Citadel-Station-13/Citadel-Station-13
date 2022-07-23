@@ -1,0 +1,4 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - bugfix: "Cleanbots will no longer go invisible when they get turned on or off."
