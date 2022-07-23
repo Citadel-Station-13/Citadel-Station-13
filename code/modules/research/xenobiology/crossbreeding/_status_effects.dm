@@ -603,14 +603,14 @@
 	return ..()
 
 /datum/status_effect/stabilized/darkpurple/tick()
-	var/obj/item/I = owner.get_active_held_item()
-	var/obj/item/reagent_containers/food/snacks/F = I
-	if(istype(F))
-		if(F.cooked_type)
+	var/obj/item/item = owner.get_active_held_item()
+	if(item)
+		var/obj/item/reagent_containers/food/snacks/F = item
+		if(istype(F) && F.cooked_type)
 			to_chat(owner, "<span class='warning'>[linked_extract] flares up brightly, and your hands alone are enough cook [F]!</span>")
 			F.microwave_act()
-	else
-		I.attackby(fire, owner)
+		else
+			item.attackby(fire, owner)
 	return ..()
 
 /datum/status_effect/stabilized/darkpurple/on_remove()
