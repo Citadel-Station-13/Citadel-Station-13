@@ -47,3 +47,10 @@
       of runtimes.
   - bugfix: The syndicate has fixed the radiation health analyzer allowing you to
       check on the ui again.
+2022-07-23:
+  TripleShades:
+  - rscdel: Snow Cabin turbine
+  - tweak: Snow Cabin, Jungle Resort, and Plasma Outpost gateways now use RTGs for
+      power generation
+  - balance: Snow Cabin SMES unit is now non-magical
+  - bugfix: Snow Cabin gateway wiring now connected properly

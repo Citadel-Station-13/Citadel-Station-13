@@ -6363,7 +6363,7 @@
 	c_tag = "Chief Engineer's Office";
 	network = list("ss13","engine")
 	},
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/Polly,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 10
 	},

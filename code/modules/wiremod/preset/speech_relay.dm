@@ -1,7 +1,7 @@
 /**
  * # Speech Relay preset
  *
- * Acts like poly. Says whatever it hears.
+ * Acts like polly. Says whatever it hears.
  */
 /obj/item/integrated_circuit/loaded/speech_relay
 
