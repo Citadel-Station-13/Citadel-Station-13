@@ -427,7 +427,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		add_admin_verbs()
 		var/admin_memo_note = get_message_output("memo")
 		if(admin_memo_note)
-			to_chat(src, get_message_output("memo"))
+			to_chat(src, admin_memo_note)
 		adminGreet()
 
 	add_verbs_from_config()
