@@ -19,6 +19,7 @@
 	path_image_color = "#993299"
 	weather_immunities = list("lava","ash")
 
+	var/base_icon = "cleanbot"
 	var/clean_time = 50 //How long do we take to clean?
 	var/upgrades = 0
 
@@ -126,13 +127,21 @@
 
 /mob/living/simple_animal/bot/cleanbot/turn_on()
 	..()
-	icon_state = "cleanbot[on]"
 	bot_core.updateUsrDialog()
+	update_icon()
 
 /mob/living/simple_animal/bot/cleanbot/turn_off()
 	..()
-	icon_state = "cleanbot[on]"
 	bot_core.updateUsrDialog()
+	update_icon()
+
+/mob/living/simple_animal/bot/cleanbot/update_icon_state()
+	. = ..()
+	switch(mode)
+		if(BOT_CLEANING)
+			icon_state = "[base_icon]-c"
+		else
+			icon_state = "[base_icon][on]"
 
 /mob/living/simple_animal/bot/cleanbot/bot_reset()
 	..()
