@@ -5069,7 +5069,7 @@
 /area/command/heads_quarters/ce)
 "ane" = (
 /obj/structure/filingcabinet/chestdrawer,
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/Polly,
 /turf/open/floor/plasteel/dark,
 /area/command/heads_quarters/ce)
 "anf" = (

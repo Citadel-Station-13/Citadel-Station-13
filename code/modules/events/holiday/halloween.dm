@@ -15,9 +15,9 @@
 
 	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_living_list)
 		Ian.place_on_head(new /obj/item/bedsheet(Ian))
-	for(var/mob/living/simple_animal/parrot/Poly/Poly in GLOB.mob_living_list)
-		new /mob/living/simple_animal/parrot/Poly/ghost(Poly.loc)
-		qdel(Poly)
+	for(var/mob/living/simple_animal/parrot/Polly/Polly in GLOB.mob_living_list)
+		new /mob/living/simple_animal/parrot/Polly/ghost(Polly.loc)
+		qdel(Polly)
 
 
 /datum/round_event/spooky/announce(fake)

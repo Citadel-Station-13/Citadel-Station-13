@@ -85,7 +85,7 @@
 /obj/machinery/keycard_auth{
 	pixel_y = -28
 	},
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/Polly,
 /turf/open/floor/plasteel,
 /area/command/heads_quarters/ce)
 "aai" = (
