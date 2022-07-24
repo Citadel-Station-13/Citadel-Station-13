@@ -17,7 +17,6 @@
 /obj/item/assembly_holder/IsAssemblyHolder()
 	return TRUE
 
-
 /obj/item/assembly_holder/proc/assemble(obj/item/assembly/A, obj/item/assembly/A2, mob/user)
 	attach(A,user)
 	attach(A2,user)
@@ -32,6 +31,8 @@
 		else
 			A.forceMove(src)
 	A.holder = src
+	// bandaid: please don't try to be picked up while we're still in the assembly
+	A.interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 	A.toggle_secure()
 	if(!a_left)
 		a_left = A
@@ -103,9 +104,11 @@
 	to_chat(user, "<span class='notice'>You disassemble [src]!</span>")
 	if(a_left)
 		a_left.on_detach()
+		a_left.interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
 		a_left = null
 	if(a_right)
 		a_right.on_detach()
+		a_right.interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
 		a_right = null
 	qdel(src)
 	return TRUE

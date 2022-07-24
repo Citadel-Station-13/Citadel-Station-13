@@ -579,3 +579,9 @@
 	path = /obj/item/storage/box/pockerchips
 	ckeywhitelist = list("greed2323")
 
+/datum/gear/donator/psychedelicjumpsuit
+	name = "psychedelic jumpsuit"
+	slot = ITEM_SLOT_ICLOTHING
+	path = /obj/item/clothing/under/misc/psyche
+	ckeywhitelist = list("commandnotrecognized")
+

@@ -74,7 +74,7 @@
 		qdel(src)
 
 //low regen over time
-/mob/living/simple_animal/pet/plushie/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/pet/plushie/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(health < maxHealth)

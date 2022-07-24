@@ -660,7 +660,7 @@
 			"goat" = 'icons/mob/animal.dmi',
 			"cat" = 'icons/mob/pets.dmi',
 			"cat2" = 'icons/mob/pets.dmi',
-			"poly" = 'icons/mob/animal.dmi',
+			"polly" = 'icons/mob/animal.dmi',
 			"pug" = 'icons/mob/pets.dmi',
 			"spider" = 'icons/mob/animal.dmi'
 			)
@@ -669,7 +669,7 @@
 			if(input)
 				qdel(holo_icon)
 				switch(input)
-					if("poly")
+					if("polly")
 						holo_icon = getHologramIcon(icon(icon_list[input],"parrot_fly"))
 					if("chicken")
 						holo_icon = getHologramIcon(icon(icon_list[input],"chicken_brown"))

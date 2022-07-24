@@ -44,6 +44,10 @@
 	emote_hear = list("squawks.","bawks!")
 	emote_see = list("flutters its wings.")
 
+	vocal_bark_id = "banjoc4"
+	vocal_pitch = 1.4
+	vocal_pitch_range = 0.4
+
 	speak_chance = 1 //1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/cracker/ = 1)
@@ -80,7 +84,7 @@
 	var/speech_shuffle_rate = 20
 	var/list/available_channels = list()
 
-	//Headset for Poly to yell at engineers :)
+	//Headset for Polly to yell at engineers :)
 	var/obj/item/radio/headset/ears = null
 	/// spawns with headset
 	var/spawns_with_headset = FALSE
@@ -345,7 +349,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 				parrot_state |= PARROT_FLEE
 			icon_state = icon_living
 			drop_held_item(0)
-	else if(istype(O, /obj/item/reagent_containers/food/snacks/cracker)) //Poly wants a cracker.
+	else if(istype(O, /obj/item/reagent_containers/food/snacks/cracker)) //Polly wants a cracker.
 		qdel(O)
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
@@ -372,7 +376,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /*
  * AI - Not really intelligent, but I'm calling it AI anyway.
  */
-/mob/living/simple_animal/parrot/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/parrot/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	//Sprite update for when a parrot gets pulled
@@ -890,10 +894,10 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /*
  * Sub-types
  */
-/mob/living/simple_animal/parrot/Poly
-	name = "Poly"
-	desc = "Poly the Parrot. An expert on quantum cracker theory."
-	speak = list("Poly wanna cracker!", ":e Check the crystal, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS ABOUT TO DELAMINATE CALL THE SHUTTLE")
+/mob/living/simple_animal/parrot/Polly
+	name = "Polly"
+	desc = "Polly the Parrot. An expert on quantum cracker theory."
+	speak = list("Polly wanna cracker!", ":e Check the crystal, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS ABOUT TO DELAMINATE CALL THE SHUTTLE")
 	gold_core_spawnable = NO_SPAWN
 	speak_chance = 3
 	spawns_with_headset = TRUE
@@ -902,7 +906,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	var/longest_survival = 0
 	var/longest_deathstreak = 0
 
-/mob/living/simple_animal/parrot/Poly/Initialize(mapload)
+/mob/living/simple_animal/parrot/Polly/Initialize(mapload)
 	ears = new /obj/item/radio/headset/headset_eng(src)
 	available_channels = list(":e")
 	Read_Memory()
@@ -925,30 +929,30 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	. = ..()
 
-/mob/living/simple_animal/parrot/Poly/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/simple_animal/parrot/Polly/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	. = ..()
 	if(. && !client && prob(1) && prob(1) && CONFIG_GET(string/chat_squawk_tag)) //Only the one true bird may speak across dimensions.
 		send2chat("A stray squawk is heard... \"[message]\"", CONFIG_GET(string/chat_squawk_tag))
 
-/mob/living/simple_animal/parrot/Poly/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/parrot/Polly/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE)
 		memory_saved = TRUE
 
-/mob/living/simple_animal/parrot/Poly/death(gibbed)
+/mob/living/simple_animal/parrot/Polly/death(gibbed)
 	if(!memory_saved)
 		Write_Memory(TRUE)
 	if(rounds_survived == longest_survival || rounds_survived == longest_deathstreak || prob(0.666))
-		var/mob/living/simple_animal/parrot/Poly/ghost/G = new(loc)
+		var/mob/living/simple_animal/parrot/Polly/ghost/G = new(loc)
 		if(mind)
 			mind.transfer_to(G)
 		else
 			transfer_ckey(G)
 	..(gibbed)
 
-/mob/living/simple_animal/parrot/Poly/proc/Read_Memory()
+/mob/living/simple_animal/parrot/Polly/proc/Read_Memory()
 	var/saved_color
 	if(fexists("data/npc_saves/Poly.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
@@ -972,7 +976,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if(!isnull(saved_color))
 		add_atom_colour(json_decode(saved_color), FIXED_COLOUR_PRIORITY)
 
-/mob/living/simple_animal/parrot/Poly/proc/Write_Memory(dead)
+/mob/living/simple_animal/parrot/Polly/proc/Write_Memory(dead)
 	var/json_file = file("data/npc_saves/Poly.json")
 	var/list/file_data = list()
 	if(islist(speech_buffer))
@@ -999,14 +1003,14 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-/mob/living/simple_animal/parrot/Poly/ratvar_act()
+/mob/living/simple_animal/parrot/Polly/ratvar_act()
 	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 75, TRUE)
 	var/mob/living/simple_animal/parrot/clock_hawk/H = new(loc)
 	H.setDir(dir)
 	qdel(src)
 
-/mob/living/simple_animal/parrot/Poly/ghost
-	name = "The Ghost of Poly"
+/mob/living/simple_animal/parrot/Polly/ghost
+	name = "The Ghost of Polly"
 	desc = "Doomed to squawk the Earth."
 	color = "#FFFFFF"
 	alpha = 77
@@ -1015,16 +1019,16 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	incorporeal_move = INCORPOREAL_MOVE_BASIC
 	butcher_results = list(/obj/item/ectoplasm = 1)
 
-/mob/living/simple_animal/parrot/Poly/ghost/Initialize(mapload)
+/mob/living/simple_animal/parrot/Polly/ghost/Initialize(mapload)
 	memory_saved = TRUE //At this point nothing is saved
 	. = ..()
 
-/mob/living/simple_animal/parrot/Poly/ghost/handle_automated_speech()
+/mob/living/simple_animal/parrot/Polly/ghost/handle_automated_speech()
 	if(ismob(loc))
 		return
 	..()
 
-/mob/living/simple_animal/parrot/Poly/ghost/handle_automated_movement()
+/mob/living/simple_animal/parrot/Polly/ghost/handle_automated_movement()
 	if(isliving(parrot_interest))
 		if(!ishuman(parrot_interest))
 			parrot_interest = null
@@ -1033,7 +1037,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 			Possess(parrot_interest)
 	..()
 
-/mob/living/simple_animal/parrot/Poly/ghost/proc/Possess(mob/living/carbon/human/H)
+/mob/living/simple_animal/parrot/Polly/ghost/proc/Possess(mob/living/carbon/human/H)
 	if(!ishuman(H))
 		return
 	var/datum/disease/parrot_possession/P = new

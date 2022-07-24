@@ -3,7 +3,7 @@
 #define POWER_RESTORATION_SEARCH_APC 2
 #define POWER_RESTORATION_APC_FOUND 3
 
-/mob/living/silicon/ai/BiologicalLife(seconds, times_fired)
+/mob/living/silicon/ai/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	//I'm not removing that shitton of tabs, unneeded as they are. -- Urist

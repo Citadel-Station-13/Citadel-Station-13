@@ -57320,7 +57320,7 @@
 	name = "Chief Engineer's RC";
 	pixel_y = -32
 	},
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/Polly,
 /turf/open/floor/plasteel,
 /area/command/heads_quarters/ce)
 "csf" = (

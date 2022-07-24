@@ -1,0 +1,66 @@
+2022-07-05:
+  Putnam3145:
+  - bugfix: Miasma is brown again
+2022-07-09:
+  Bhijn & Myr:
+  - code_imp: Barks can now be intercepted via component signals. Both bark queuing
+      and individual barks can be intercepted via signals!
+  - rscadd: The "Brassy" bark has been added, using the cog installation sound as
+      a sample! This works surprisingly well as a bark
+  - rscadd: 'Genetics can now give people goose1.ogg tweak: If new barks are queued
+      before the current barks are finished, this will interrupt all ongoing barks
+      tweak: Yelling no longer cuts the minimum bark time variance down to half, as
+      this proved to sound pretty awful with most barks. tweak: Chitter now uses a
+      completely unique audio sample, which is based on the original ratchet.ogg it
+      used to be. This new sample is shorter, and has significantly less harsh noise
+      on the higher frequencies, making it much easier on the ears. Additionally,
+      the minimum speed for chitter has been reduced from 6 to 4. tweak: Setting vocal_bark
+      to a file should now automatically turn it into a sound datum (in theory, at
+      least! as of writing i haven''t tested this at all)'
+  - bugfix: Barks and other DNA features after the first mob color now work exactly
+      as you'd expect. This was the cause for horrid eldritch bark sounds when the
+      wrong part of DNA gets hit. The first mob color has lost some genetics resolution
+      as an indirect result of this (the higher resolution is what caused this bug)
+  UDaV73rus, Tokoriso, dragomagol:
+  - rscadd: welding now has an animation!
+  timothyteakettle:
+  - rscadd: slimes no longer die from having no blood, properly consume limbs when
+      at low blood, and suffer brute damage and oxygen loss for having no blood and
+      no limbs left to consume respectably, they cannot go past BLOOD_VOLUME_MAXIMUM
+      from consuming toxin
+2022-07-16:
+  MediHound:
+  - rscdel: Removed old Alina sprites
+  - rscadd: Added new Alina sprites
+  SandPoot:
+  - bugfix: The tweak tag for changelogs should now work.
+2022-07-20:
+  Putnam3145:
+  - balance: quark matter is now worth 5% as much and gives 10% the research points
+  timothyteakettle:
+  - bugfix: makes brain trauma event respect canSpawnEvent conditions such as min
+      players
+2022-07-21:
+  SandPoot:
+  - bugfix: If you have a dark purple stabilized extract and are holding nothing in
+      your hand, no longer attempts to heat nothing, which caused immense amounts
+      of runtimes.
+  - bugfix: The syndicate has fixed the radiation health analyzer allowing you to
+      check on the ui again.
+2022-07-23:
+  TripleShades:
+  - rscdel: Snow Cabin turbine
+  - tweak: Snow Cabin, Jungle Resort, and Plasma Outpost gateways now use RTGs for
+      power generation
+  - balance: Snow Cabin SMES unit is now non-magical
+  - bugfix: Snow Cabin gateway wiring now connected properly
+2022-07-24:
+  Bhijn & Myr:
+  - tweak: The typo in Polly's name has been fixed, severing the decade-old reference
+      to a 2012-era TGstation coder. If you know, you know.
+  BlueWildrose:
+  - qol: Two new Kinkmates have been added to Deltastation in the dorms and arrivals
+      area.
+  - bugfix: Cleanbots will no longer go invisible when they get turned on or off.
+  - qol: Public library paintings have been added to Omegastation. You can now submit
+      paintings that will appear in later rounds on that station.

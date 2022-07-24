@@ -106,7 +106,7 @@
 	. = ..()
 	add_cell_sample()
 
-/mob/living/simple_animal/hostile/blob/blobspore/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/blob/blobspore/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(!is_zombie && isturf(src.loc))
@@ -245,7 +245,7 @@
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/blob/blobbernaut/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	var/list/blobs_in_area = range(2, src)

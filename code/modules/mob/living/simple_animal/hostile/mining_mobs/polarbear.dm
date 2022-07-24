@@ -44,7 +44,7 @@
 		aggressive_message_said = TRUE
 	rapid_melee = 2
 
-/mob/living/simple_animal/hostile/asteroid/polarbear/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/asteroid/polarbear/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(target)

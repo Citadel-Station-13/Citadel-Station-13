@@ -43,7 +43,7 @@
 	var/list/burn_turfs = getline(src, T) - get_turf(src)
 	dragon_fire_line(src, burn_turfs)
 
-/mob/living/simple_animal/hostile/asteroid/ice_whelp/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/asteroid/ice_whelp/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(target)

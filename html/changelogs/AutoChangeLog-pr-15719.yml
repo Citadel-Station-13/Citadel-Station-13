@@ -1,0 +1,4 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - bugfix: "Using wirecutters on an autolathe with an open panel will now have appropriate behavior of opening the wire menu."

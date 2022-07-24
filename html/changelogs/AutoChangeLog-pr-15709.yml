@@ -1,0 +1,4 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - bugfix: "Put arguments into handle_blood (it needs them)."

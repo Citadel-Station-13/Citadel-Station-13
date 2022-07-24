@@ -244,6 +244,8 @@
 //	#define HEARING_SPANS 6
 	#define HEARING_MESSAGE_MODE 7
 //	#define HEARING_SOURCE 8
+#define COMSIG_MOVABLE_BARK "movable_bark"						//from base of atom/movable/proc/bark(): (list/hearers, distance, volume, pitch)
+#define COMSIG_MOVABLE_QUEUE_BARK "movable_queue_bark"			//from base of atom/movable/proc/send_speech(): (list/hearers, message, range, atom/movable/source, bubble_type, list/spans, datum/language/message_language, message_mode)
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"			//called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_TELEPORTED "movable_teleported"			//from base of do_teleport(): (channel, turf/origin, turf/destination)
 #define COMSIG_MOVABLE_CHASM_DROP "movable_chasm_drop"			//from base of /datum/component/chasm/drop() (/datum/component/chasm)
@@ -387,7 +389,7 @@
 	#define COMPONENT_INTERRUPT_LIFE_PHYSICAL 2			// interrupt physical handling
 	#define COMPONET_INTERRUPT_STATUS_EFFECTS 3			// interrupt status effects
 
-#define COMSIG_LIVING_BIOLOGICAL_LIFE "biological_life"			//from base of mob/living/BiologicalLife() (seconds, times_fired)
+#define COMSIG_LIVING_BIOLOGICAL_LIFE "biological_life"			//from base of mob/living/BiologicalLife() (delta_time, times_fired)
 
 #define COMSIG_LIVING_PHYSICAL_LIFE "physical_life"				//from base of mob/living/PhysicalLife() (seconds, times_fired)
 

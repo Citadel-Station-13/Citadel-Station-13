@@ -8,7 +8,7 @@
 
 	typing_indicator_state = /obj/effect/overlay/typing_indicator/slime
 
-/mob/living/simple_animal/slime/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/slime/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(buckled)
