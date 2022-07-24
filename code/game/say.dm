@@ -31,14 +31,18 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 
-/atom/movable/proc/bark(list/hearers, distance, volume, pitch)
+/atom/movable/proc/bark(list/hearers, distance, volume, pitch, queue_time)
+	if(queue_time && vocal_current_bark != queue_time)
+		return
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_BARK, hearers, distance, volume, pitch))
+		return //bark interception. this probably counts as some flavor of BDSM
 	if(!vocal_bark)
 		if(!vocal_bark_id || !set_bark(vocal_bark_id)) //just-in-time bark generation
 			return
 	volume = min(volume, 100)
 	var/turf/T = get_turf(src)
 	for(var/mob/M in hearers)
-		M.playsound_local(T, vol = volume, vary = TRUE, frequency = pitch, max_distance = distance, falloff_distance = distance * 0.75, S = vocal_bark, distance_multiplier = 1)
+		M.playsound_local(T, vol = volume, vary = TRUE, frequency = pitch, max_distance = distance, falloff_distance = 0, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(distance), S = vocal_bark, distance_multiplier = 1)
 
 /atom/movable/proc/can_speak()
 	return 1
@@ -49,7 +53,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	for(var/_AM in hearers)
 		var/atom/movable/AM = _AM
 		AM.Hear(rendered, src, message_language, message, , spans, message_mode, source)
-	if(vocal_bark || vocal_bark_id)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_QUEUE_BARK, hearers, args) || vocal_bark || vocal_bark_id)
 		for(var/mob/M in hearers)
 			if(!M.client)
 				continue
@@ -57,10 +61,11 @@ GLOBAL_LIST_INIT(freqtospan, list(
 				hearers -= M
 		var/barks = min(round((LAZYLEN(message) / vocal_speed)) + 1, BARK_MAX_BARKS)
 		var/total_delay
+		vocal_current_bark = world.time //this is juuuuust random enough to reliably be unique every time send_speech() is called, in most scenarios
 		for(var/i in 1 to barks)
 			if(total_delay > BARK_MAX_TIME)
 				break
-			addtimer(CALLBACK(src, .proc/bark, hearers, range, vocal_volume, BARK_DO_VARY(vocal_pitch, vocal_pitch_range)), total_delay)
+			addtimer(CALLBACK(src, .proc/bark, hearers, range, vocal_volume, BARK_DO_VARY(vocal_pitch, vocal_pitch_range), vocal_current_bark), total_delay)
 			total_delay += rand(DS2TICKS(vocal_speed / BARK_SPEED_BASELINE), DS2TICKS(vocal_speed / BARK_SPEED_BASELINE) + DS2TICKS(vocal_speed / BARK_SPEED_BASELINE)) TICKS
 
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, face_name = FALSE, atom/movable/source)

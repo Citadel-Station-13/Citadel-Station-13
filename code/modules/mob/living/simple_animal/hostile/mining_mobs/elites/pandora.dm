@@ -95,7 +95,7 @@
 		if(AOE_SQUARES)
 			aoe_squares(target)
 
-/mob/living/simple_animal/hostile/asteroid/elite/pandora/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/asteroid/elite/pandora/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(health >= maxHealth * 0.5)

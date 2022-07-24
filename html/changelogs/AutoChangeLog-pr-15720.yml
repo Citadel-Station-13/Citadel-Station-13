@@ -1,0 +1,4 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - bugfix: "The shocked autolathe will no longer infinitely zap you with the menu open."

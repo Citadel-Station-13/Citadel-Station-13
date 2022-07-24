@@ -27,7 +27,7 @@
 #define NOBLIUM_RESEARCH_AMOUNT				25
 #define BZ_RESEARCH_SCALE					4
 #define BZ_RESEARCH_MAX_AMOUNT				400
-#define QCD_RESEARCH_AMOUNT					2 // often made in absolutely massive quantities due to the simple nature of fusion
+#define QCD_RESEARCH_AMOUNT					0.2 // often made in absolutely massive quantities due to the simple nature of fusion
 #define MIASMA_RESEARCH_AMOUNT				6
 #define STIMULUM_RESEARCH_AMOUNT			50
 //Plasma fusion properties

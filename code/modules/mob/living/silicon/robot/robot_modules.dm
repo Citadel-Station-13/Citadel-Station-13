@@ -421,8 +421,8 @@
 		if("Alina")
 			cyborg_base_icon = "alina-med"
 			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
-			special_light_key = "alina"
-			sleeper_overlay = "alinasleeper"
+			special_light_key = "alina-med"
+			sleeper_overlay = "valemedsleeper"
 			moduleselect_icon = "medihound"
 			moduleselect_alternate_icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
 			dogborg = TRUE
@@ -536,9 +536,9 @@
 			dogborg = TRUE
 		if("Alina")
 			cyborg_base_icon = "alina-eng"
-			special_light_key = "alina"
+			special_light_key = "alina-eng"
 			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
-			sleeper_overlay = "alinasleeper"
+			sleeper_overlay = "valeengsleeper"
 			dogborg = TRUE
 		else
 			return FALSE
@@ -620,8 +620,8 @@
 			dogborg = TRUE
 		if("Alina")
 			cyborg_base_icon = "alina-sec"
-			special_light_key = "alina"
-			sleeper_overlay = "alinasleeper"
+			special_light_key = "alina-sec"
+			sleeper_overlay = "valesecsleeper"
 			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
 			dogborg = TRUE
 		if("K9 Dark")

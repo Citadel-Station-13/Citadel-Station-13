@@ -79,7 +79,7 @@
 	foes = null
 	return ..()
 
-/mob/living/simple_animal/hostile/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		walk(src, 0) //stops walking
 		return

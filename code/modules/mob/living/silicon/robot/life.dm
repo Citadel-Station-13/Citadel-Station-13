@@ -1,4 +1,4 @@
-/mob/living/silicon/robot/BiologicalLife(seconds, times_fired)
+/mob/living/silicon/robot/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	adjustOxyLoss(-10) //we're a robot!

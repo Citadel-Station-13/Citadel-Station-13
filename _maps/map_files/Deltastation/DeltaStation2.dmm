@@ -2619,9 +2619,8 @@
 /turf/closed/wall/r_wall,
 /area/space/nearstation)
 "ajs" = (
-/obj/structure/table,
-/obj/item/storage/briefcase,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/vending/kink,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "ajt" = (
@@ -2880,14 +2879,16 @@
 "ajR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/structure/table,
+/obj/item/storage/briefcase,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "ajS" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/hallway/secondary/entry)
@@ -75787,7 +75788,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/Polly,
 /turf/open/floor/plasteel/dark,
 /area/command/heads_quarters/ce)
 "fLq" = (
@@ -96886,7 +96887,7 @@
 /obj/item/folder/red,
 /obj/item/toy/gun,
 /obj/item/clothing/head/beret/sec{
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0);
+	armor = list("melee"=0,"bullet"=0,"laser"=0,"energy"=0,"bomb"=0,"bio"=0,"rad"=0);
 	desc = "A replica beret resembling that of a special operations officer under Nanotrasen.";
 	name = "replica officer's beret"
 	},
@@ -98957,7 +98958,7 @@
 	name = "Replica CentCom officer's jumpsuit"
 	},
 /obj/item/clothing/head/centhat{
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0);
+	armor = list("melee"=0,"bullet"=0,"laser"=0,"energy"=0,"bomb"=0,"bio"=0,"rad"=0);
 	desc = "A replica hat of a Central Commander's attire. It has a small tag on it saying, 'It's good to be emperor.'";
 	name = "Replica CentCom hat"
 	},
@@ -114141,6 +114142,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/vending/kink,
 /turf/open/floor/plasteel,
 /area/commons/fitness/recreation)
 "sVM" = (
@@ -119427,7 +119429,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/beer{
 	desc = "Whatever it is, it reeks of foul, putrid froth.";
-	list_reagents = list("bacchus_blessing" = 15);
+	list_reagents = list("bacchus_blessing"=15);
 	name = "Delta-Down";
 	pixel_x = 5;
 	pixel_y = 5

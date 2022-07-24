@@ -123,7 +123,7 @@
 		trauma = _trauma
 	return ..()
 
-/mob/living/split_personality/BiologicalLife(seconds, times_fired)
+/mob/living/split_personality/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(QDELETED(body))
