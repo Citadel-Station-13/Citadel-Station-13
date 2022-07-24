@@ -46,7 +46,7 @@
 	if(regen_amount)
 		regen_cooldown = world.time + REGENERATION_DELAY
 
-/mob/living/simple_animal/hostile/carp/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/carp/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(regen_amount && regen_cooldown < world.time)

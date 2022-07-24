@@ -223,7 +223,7 @@
 		QDEL_NULL(back) // chain destruction baby
 	return ..()
 
-/mob/living/simple_animal/hostile/eldritch/armsy/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/eldritch/armsy/BiologicalLife(delta_time, times_fired)
 	adjustBruteLoss(-2)
 
 /mob/living/simple_animal/hostile/eldritch/armsy/proc/heal()

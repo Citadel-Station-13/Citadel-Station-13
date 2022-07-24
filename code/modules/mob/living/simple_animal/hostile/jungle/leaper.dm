@@ -165,7 +165,7 @@
 		if(!hopping)
 			Hop()
 
-/mob/living/simple_animal/hostile/jungle/leaper/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/jungle/leaper/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	update_icons()

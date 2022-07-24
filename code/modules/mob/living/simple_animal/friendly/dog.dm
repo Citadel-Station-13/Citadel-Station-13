@@ -425,7 +425,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 		RemoveElement(/datum/element/mob_holder, held_icon)
 		AddElement(/datum/element/mob_holder, "old_corgi")
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/pet/dog/corgi/Ian/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
@@ -563,7 +563,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	nofur = TRUE
 	unique_pet = TRUE
 
-/mob/living/simple_animal/pet/dog/corgi/narsie/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/pet/dog/corgi/narsie/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	for(var/mob/living/simple_animal/pet/P in range(1, src))
@@ -693,7 +693,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 		return
 	..()
 
-/mob/living/simple_animal/pet/dog/corgi/Lisa/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/pet/dog/corgi/Lisa/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 
@@ -707,7 +707,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 					setDir(i)
 					sleep(1)
 
-/mob/living/simple_animal/pet/dog/pug/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/pet/dog/pug/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(!stat && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)

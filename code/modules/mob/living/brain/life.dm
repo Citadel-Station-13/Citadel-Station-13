@@ -1,5 +1,5 @@
 
-/mob/living/brain/BiologicalLife(seconds, times_fired)
+/mob/living/brain/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	handle_emp_damage()

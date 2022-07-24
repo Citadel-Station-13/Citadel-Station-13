@@ -47,7 +47,7 @@
 	udder = null
 	return ..()
 
-/mob/living/simple_animal/hostile/retaliate/goat/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/retaliate/goat/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(stat == CONSCIOUS)
@@ -163,7 +163,7 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/cow/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/cow/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(stat == CONSCIOUS)
@@ -259,7 +259,7 @@
 	pixel_y = rand(0, 10)
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
-/mob/living/simple_animal/chick/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/chick/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(!stat && !ckey)
@@ -268,7 +268,7 @@
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
-/mob/living/simple_animal/chick/holo/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/chick/holo/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	amount_grown = 0
@@ -347,7 +347,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/chicken/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/chicken/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if((!stat && prob(3) && eggsleft > 0) && egg_type)
@@ -424,7 +424,7 @@
 
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
-/mob/living/simple_animal/kiwi/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/kiwi/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if((!stat && prob(3) && eggsleft > 0) && egg_type)
@@ -501,7 +501,7 @@
 
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
-/mob/living/simple_animal/babyKiwi/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/babyKiwi/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(!stat && !ckey)

@@ -30,7 +30,7 @@
 	. = ..()
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
-/mob/living/simple_animal/crab/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/crab/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	//CRAB movement
