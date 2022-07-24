@@ -1034,7 +1034,7 @@
 	M.update_transform()
 	..()
 
-/datum/reagent/consumable/pinkmilk
+/datum/reagent/consumable/milk/pinkmilk
 	name = "Strawberry Milk"
 	description = "A drink of a bygone era of milk and artificial sweetener back on a rock."
 	color = "#f76aeb"//rgb(247, 106, 235)
@@ -1045,13 +1045,13 @@
 	glass_desc = "Delicious flavored strawberry syrup mixed with milk."
 	value = REAGENT_VALUE_VERY_COMMON
 
-/datum/reagent/consumable/tea/pinkmilk/on_mob_life(mob/living/carbon/M)
+/datum/reagent/consumable/milk/pinkmilk/on_mob_life(mob/living/carbon/M)
 	if(prob(15))
 		to_chat(M, "<span class = 'notice'>[pick("You cant help to smile.","You feel nostalgia all of sudden.","You remember to relax.")]</span>")
 	..()
 	. = 1
 
-/datum/reagent/consumable/pinktea //Tiny Tim song
+/datum/reagent/consumable/tea/pinktea //Tiny Tim song
 	name = "Strawberry Tea"
 	description = "A timeless classic!"
 	color = "#f76aeb"//rgb(247, 106, 235)
