@@ -54,3 +54,13 @@
       power generation
   - balance: Snow Cabin SMES unit is now non-magical
   - bugfix: Snow Cabin gateway wiring now connected properly
+2022-07-24:
+  Bhijn & Myr:
+  - tweak: The typo in Polly's name has been fixed, severing the decade-old reference
+      to a 2012-era TGstation coder. If you know, you know.
+  BlueWildrose:
+  - qol: Two new Kinkmates have been added to Deltastation in the dorms and arrivals
+      area.
+  - bugfix: Cleanbots will no longer go invisible when they get turned on or off.
+  - qol: Public library paintings have been added to Omegastation. You can now submit
+      paintings that will appear in later rounds on that station.
