@@ -37,7 +37,6 @@
 	QDEL_NULL(tentacle_slap)
 
 /mob/living/simple_animal/hostile/vatbeast/proc/tamed()
-	. = ..()
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	var/datum/component/riding/riding = LoadComponent(/datum/component/riding)

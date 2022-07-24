@@ -195,10 +195,3 @@
 #define COLOR_PRIDE_GREEN "#41FC66"
 #define COLOR_PRIDE_BLUE "#42FFF2"
 #define COLOR_PRIDE_PURPLE "#5D5DFC"
-
-///Colors for xenobiology vatgrowing
-#define COLOR_SAMPLE_YELLOW "#c0b823"
-#define COLOR_SAMPLE_PURPLE "#342941"
-#define COLOR_SAMPLE_GREEN "#98b944"
-#define COLOR_SAMPLE_BROWN "#91542d"
-#define COLOR_SAMPLE_GRAY "#5e5856"
