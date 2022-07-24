@@ -298,6 +298,16 @@
 		wires.interact(user)
 		return STOP_ATTACK_PROC_CHAIN
 
+/obj/machinery/autolathe/wirecutter_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(busy)
+		balloon_alert(user, "it's busy!")
+		return STOP_ATTACK_PROC_CHAIN
+
+	if(panel_open)
+		wires.interact(user)
+		return STOP_ATTACK_PROC_CHAIN
+
 /obj/machinery/autolathe/proc/AfterMaterialInsert(obj/item/item_inserted, id_inserted, amount_inserted)
 	if(istype(item_inserted, /obj/item/stack/ore/bluespace_crystal))
 		use_power(MINERAL_MATERIAL_AMOUNT / 10)
