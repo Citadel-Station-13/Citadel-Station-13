@@ -500,6 +500,8 @@ Difficulty: Normal
 		var/obj/item/projectile/P = mover
 		if(P.firer == caster)
 			return TRUE
+	if(mover != caster)
+		return FALSE
 	if(mover == caster)
 		return TRUE
 
