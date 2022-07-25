@@ -1,4 +1,0 @@
-author: "BlueWildrose"
-delete-after: True
-changes: 
-  - qol: "Player-controlled cleanbots can now clean messes that ordinarily wouldn't be clickable as long as they are clicking the tile it's on."

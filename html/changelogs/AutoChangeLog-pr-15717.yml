@@ -1,4 +1,0 @@
-author: "BlueWildrose"
-delete-after: True
-changes: 
-  - bugfix: "Harvested grown inedibles now take their seed stats into account instead of acting like they got adminspawned."

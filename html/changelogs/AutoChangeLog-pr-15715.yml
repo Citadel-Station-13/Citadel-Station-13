@@ -1,5 +1,0 @@
-author: "BlueWildrose"
-delete-after: True
-changes: 
-  - bugfix: "Tea now dispenses from dispensers again."
-  - bugfix: "Pink tea and Pink milk are pathed correctly."
