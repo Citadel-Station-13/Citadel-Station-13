@@ -10,9 +10,9 @@ export const IMPL_MEMORY = 0;
 export const IMPL_LOCAL_STORAGE = 1;
 export const IMPL_INDEXED_DB = 2;
 
-const INDEXED_DB_VERSION = 1;
+const INDEXED_DB_VERSION = 2;
 const INDEXED_DB_NAME = 'tgui-citadel-main';
-const INDEXED_DB_STORE_NAME = 'storage-v1';
+const INDEXED_DB_STORE_NAME = 'tgui-citadel-main-v1';
 
 const READ_ONLY = 'readonly';
 const READ_WRITE = 'readwrite';
