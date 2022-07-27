@@ -79,3 +79,6 @@
   - bugfix: Pink tea and Pink milk are pathed correctly.
   SandPoot:
   - bugfix: Put arguments into handle_blood (it needs them).
+2022-07-27:
+  timothyteakettle:
+  - bugfix: slime limb regeneration ability fix
