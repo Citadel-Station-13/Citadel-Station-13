@@ -2109,6 +2109,7 @@
 #include "code\modules\events\anomaly_grav.dm"
 #include "code\modules\events\anomaly_pyro.dm"
 #include "code\modules\events\anomaly_vortex.dm"
+#include "code\modules\events\atmos_speed.dm"
 #include "code\modules\events\aurora_caelus.dm"
 #include "code\modules\events\blob.dm"
 #include "code\modules\events\brain_trauma.dm"

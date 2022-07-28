@@ -1,8 +1,8 @@
 /datum/round_event_control/atmos_flux
 	name = "Atmospheric Flux"
 	typepath = /datum/round_event/atmos_flux
-	max_occurrences = 1
-	weight = 5
+	max_occurrences = 5
+	weight = 10
 	endWhen = 600
 	var/original_speed
 

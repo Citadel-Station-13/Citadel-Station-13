@@ -2,7 +2,7 @@
 	name = "Disease Outbreak"
 	typepath = /datum/round_event/disease_outbreak
 	max_occurrences = 1
-	min_players = 10
+	min_players = 3
 	weight = 5
 
 /datum/round_event/disease_outbreak
@@ -12,6 +12,13 @@
 
 	var/max_severity = 3
 
+/datum/round_event_control/disease_outbreak/canSpawnEvent(var/players_amt, var/gamemode)
+	if(!..()) return FALSE
+	var/list/enemy_roles = list("Medical Doctor","Chief Medical Officer","Paramedic","AI","Chemist","Virologist","Captain","Head of Personnel", "Geneticist")
+	for (var/mob/M in GLOB.alive_mob_list)
+		if(M.stat != DEAD && (M.mind?.assigned_role in enemy_roles))
+			return TRUE
+	return FALSE
 
 /datum/round_event/disease_outbreak/announce(fake)
 	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", "outbreak7")
@@ -22,7 +29,10 @@
 
 /datum/round_event/disease_outbreak/start()
 	var/advanced_virus = FALSE
-	max_severity = 3 + max(FLOOR((world.time - control.earliest_start)/6000, 1),0) //3 symptoms at 20 minutes, plus 1 per 10 minutes
+	var/player_count = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
+	max_severity = 1 + max(FLOOR((world.time - control.earliest_start)/6000, 1),0) //3 symptoms at 20 minutes, plus 1 per 10 minutes
+	max_severity += player_count > 5
+	max_severity += player_count > 10
 	if(prob(20 + (10 * max_severity)))
 		advanced_virus = TRUE
 
