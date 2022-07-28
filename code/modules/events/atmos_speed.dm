@@ -3,11 +3,11 @@
 	typepath = /datum/round_event/atmos_flux
 	max_occurrences = 5
 	weight = 10
-	endWhen = 600
-	var/original_speed
 
 /datum/round_event/atmos_flux
 	announceWhen = 1
+	endWhen = 600
+	var/original_speed
 
 /datum/round_event/atmos_flux/announce(fake)
 	priority_announce("Atmospheric flux in your sector detected. Sensors show that air may move [(SSair.share_max_steps_target > original_speed) ? "faster" : "slower"] than usual for some time.", "Atmos Alert")
