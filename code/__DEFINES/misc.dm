@@ -342,9 +342,6 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 
 #define INCREMENT_TALLY(L, stat) if(L[stat]){L[stat]++}else{L[stat] = 1}
 
-//TODO Move to a pref
-#define STATION_GOAL_BUDGET  1
-
 //Endgame Results
 #define NUKE_NEAR_MISS 1
 #define NUKE_MISS_STATION 2

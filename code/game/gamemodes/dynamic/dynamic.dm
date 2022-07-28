@@ -258,12 +258,12 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	return ..()
 
 /datum/game_mode/dynamic/generate_station_goals()
-	if(shown_threat > 19 || length(current_players[CURRENT_LIVING_ANTAGS]))
-		. = ..()
-	else
-		for(var/T in subtypesof(/datum/station_goal))
-			var/datum/station_goal/G = new T
-			station_goals += G
+	if(round(shown_threat) < 30)
+		if(length(current_players[CURRENT_LIVING_ANTAGS]))
+			station_goal_budget = 2
+		else if(round(shown_threat < 20))
+			station_goal_budget = INFINITY
+	return ..()
 
 /datum/game_mode/dynamic/send_intercept()
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
