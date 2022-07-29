@@ -15,7 +15,7 @@
 			continue
 		if(C.stat == DEAD)
 			continue
-		if (HAS_TRAIT(H,TRAIT_EXEMPT_HEALTH_EVENTS))
+		if (HAS_TRAIT(C,TRAIT_EXEMPT_HEALTH_EVENTS))
 			continue
 		if(!C.shoes || !C.shoes.can_be_tied || C.shoes.tied != SHOES_TIED)
 			continue
