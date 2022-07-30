@@ -17,9 +17,10 @@
 /datum/round_event_control/sandstorm
 	name = "Sandstorm"
 	typepath = /datum/round_event/sandstorm
-	weight = 0
-	max_occurrences = 0
-	earliest_start = 0 MINUTES
+	weight = 5
+	max_occurrences = 1
+	min_players = 5
+	earliest_start = 20 MINUTES
 
 /datum/round_event/sandstorm
 	startWhen = 1
