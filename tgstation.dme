@@ -2155,6 +2155,7 @@
 #include "code\modules\events\supermatter_surge.dm"
 #include "code\modules\events\supernova.dm"
 #include "code\modules\events\travelling_trader.dm"
+#include "code\modules\events\untie_shoes.dm"
 #include "code\modules\events\vent_clog.dm"
 #include "code\modules\events\wisdomcow.dm"
 #include "code\modules\events\wormholes.dm"
