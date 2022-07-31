@@ -82,3 +82,22 @@
 2022-07-27:
   timothyteakettle:
   - bugfix: slime limb regeneration ability fix
+2022-07-31:
+  Putnam3145:
+  - rscadd: Atmospheric flux event (properly)
+  - rscadd: Sandstorm event (was in files, just disabled; 10 space dusts all at once)
+  - tweak: Random brain trauma can now trigger if there's an AI, chemist, virologist,
+      captain, HoP or roboticist
+  - balance: Flux anomaly min player count 10->0
+  - balance: Pyroclastic anomaly min player count 0->5
+  - balance: Cat surgeon weight 8->5
+  - balance: Disease outbreak min player count 10->3, now requires medbay
+  - balance: Heart attack min player count 40->10, now requires medbay
+  - balance: Mass hallucination max occurrences 2->5
+  - balance: Supermatter surge max occurrences 2->5, now half as strong on CO2less
+      setups (lerping up to old value for 100% CO2)
+  - balance: Supernova max occurrences 2->1, weight 10->5
+  - balance: 'Vent Clog: Normal min players 25->0, random chem prob 1%->0%'
+  - balance: 'Vent Clog: Threatening min players 35->15'
+  - balance: 'Vent Clog: Catastrophic min players 45->25'
+  - rscadd: Random shoe untying
