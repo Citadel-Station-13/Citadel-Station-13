@@ -6221,6 +6221,7 @@
 	c_tag = "Engineering Secure Storage";
 	network = list("uo45")
 	},
+/obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -7751,12 +7752,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "ou" = (
 /obj/structure/cable,
-/obj/machinery/power/smes{
-	charge = 1.5e+006;
-	input_level = 30000;
-	inputting = 0;
-	output_level = 7000
-	},
+/obj/machinery/power/smes/magical,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
