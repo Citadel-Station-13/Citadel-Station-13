@@ -526,7 +526,7 @@
 	I.Crop(1,16,32,32)
 	ai_vtuber_overlay = mutable_appearance(I)
 	ai_vtuber_overlay.blend_mode = BLEND_ADD
-	ai_vtuber_overlay.pixel_y = 10
+	ai_vtuber_overlay.pixel_y = 8
 	update_overlays()
 	add_overlay(ai_vtuber_overlay)
 
