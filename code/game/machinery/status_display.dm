@@ -515,10 +515,11 @@
 	// move AI to the location, set master, update overlays (removes messages)
 	user.current = src
 	user.eyeobj.setLoc(get_turf(src))
-	update_appearance()
 	icon_state = initial(icon_state)
 	user.controlled_display = src
 	master = user
+	update_overlays()
+	update_appearance()
 
 	// we set the avatar here
 	var/icon/I = icon(user.client.prefs.custom_holoform_icon)
