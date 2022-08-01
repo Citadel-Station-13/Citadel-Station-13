@@ -114,9 +114,22 @@
 	mode = MODE_HOLOPAD
 
 /datum/saymode/holopad/handle_message(mob/living/user, message, datum/language/language)
+	world << "OTHER GAMING TEST"
 	if(isAI(user))
 		var/mob/living/silicon/ai/AI = user
 		AI.holopad_talk(message, language)
+		return FALSE
+	return TRUE
+
+/datum/saymode/statusdisplay
+	key = "q"
+	mode = MODE_STATUSDISPLAY
+
+/datum/saymode/statusdisplay/handle_message(mob/living/user, message, datum/language/language)
+	message_admins("uwu?")
+	if(isAI(user))
+		var/mob/living/silicon/ai/AI = user
+		AI.statusdisplay_talk(message, language)
 		return FALSE
 	return TRUE
 

@@ -19,7 +19,9 @@
 		A.move_camera_by_click()
 
 /mob/living/silicon/ai/ClickOn(var/atom/A, params)
+	message_admins("do we even get this far")
 	if(!can_interact_with(A))
+		message_admins("can't interact with [A]")
 		return
 
 	if(multicam_on)
@@ -31,13 +33,16 @@
 					break
 
 	if(check_click_intercept(params,A))
+		message_admins("intercepted")
 		return
 
 	if(control_disabled || incapacitated())
+		message_admins("disabled or incap'd")
 		return
 
 	var/turf/pixel_turf = get_turf_pixel(A)
 	if(isnull(pixel_turf))
+		message_admins("no turf pixel")
 		return
 	if(!can_see(A))
 		if(isturf(A)) //On unmodified clients clicking the static overlay clicks the turf underneath
@@ -51,6 +56,7 @@
 			send2tgs_adminless_only("NOCHEAT", message)
 		return
 
+	message_admins("click going through with [params]")
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
@@ -62,6 +68,7 @@
 		AltClickOn(A)
 		return
 	if(modifiers["ctrl"])
+		message_admins("he clicked [A]")
 		CtrlClickOn(A)
 		return
 
