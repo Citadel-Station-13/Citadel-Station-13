@@ -1,0 +1,6 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - admin: "Alphabetically ordered bitfields for admin editing."
+  - admin: "It is now easier to change the flags of turrets."
+  - refactor: "Allows for defining bitfields in other files."
