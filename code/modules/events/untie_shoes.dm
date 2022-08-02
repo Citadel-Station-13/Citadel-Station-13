@@ -19,6 +19,8 @@
 			continue
 		if(!C.shoes || !C.shoes.can_be_tied || C.shoes.tied != SHOES_TIED || C.shoes.lace_time > budget)
 			continue
+		if(!is_station_level(C.z) && prob(50))
+			continue
 		budget -= C.shoes.lace_time
 		if(budget < 5 SECONDS)
 			return
