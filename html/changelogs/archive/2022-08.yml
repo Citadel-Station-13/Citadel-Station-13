@@ -2,3 +2,8 @@
   Putnam3145:
   - bugfix: rad collectors display the right units now
   - balance: Stasis beds are now 90% as good as surgery tables for surgery
+2022-08-02:
+  SandPoot:
+  - admin: Alphabetically ordered bitfields for admin editing.
+  - admin: It is now easier to change the flags of turrets.
+  - refactor: Allows for defining bitfields in other files.
