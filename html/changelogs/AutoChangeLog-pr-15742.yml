@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - rscadd: "lets AIs control status displays (vtuber mode)"
