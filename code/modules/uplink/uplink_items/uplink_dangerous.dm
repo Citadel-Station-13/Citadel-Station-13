@@ -213,7 +213,7 @@
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
-			This deadly weapon has a massive 50-round magazine of devastating 1.95x129mm ammunition."
+			This deadly weapon has a massive 50-round magazine of devastating 7.12x82mm ammunition."
 	item = /obj/item/gun/ballistic/automatic/l6_saw
 	cost = 18
 	surplus = 0
