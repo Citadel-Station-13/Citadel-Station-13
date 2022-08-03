@@ -1,0 +1,4 @@
+author: "TripleShades"
+delete-after: True
+changes: 
+  - qol: "Three gateways will no longer lose power via Magical SMES Units"
