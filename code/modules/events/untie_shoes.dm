@@ -21,6 +21,11 @@
 			continue
 		if(!is_station_level(C.z) && prob(50))
 			continue
+		if(prob(5)
+			C.shoes.adjust_laces(SHOES_KNOTTED)
+			budget -= C.shoes.lace_time // doubling up on the budget removal on purpose
+		else
+			C.shoes.adjust_laces(SHOES_UNTIED)
 		budget -= C.shoes.lace_time
 		if(budget < 5 SECONDS)
 			return
