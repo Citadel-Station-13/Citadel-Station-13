@@ -159,7 +159,7 @@
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = FALSE, mob/pbtarget, message = 1, stam_cost = 0)
 	if(recoil)
-		directional_recoil(user, recoil*5, Get_Angle(user, pbtarget)) // the *5 is a placeholder. the recoil goes hard
+		directional_recoil(user, recoil*5, Get_Angle(user, pbtarget)) // the *5 is a placeholder. it could probably be cranked up tbh
 
 	if(stam_cost) //CIT CHANGE - makes gun recoil cause staminaloss
 		var/safe_cost = clamp(stam_cost, 0, user.stamina_buffer)*(firing && burst_size >= 2 ? 1/burst_size : 1)
