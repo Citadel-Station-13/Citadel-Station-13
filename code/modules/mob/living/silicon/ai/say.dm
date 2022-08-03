@@ -34,8 +34,6 @@
 
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(message, language)
-	message_admins("HOLOPAD TALK")
-
 	message = trim(message)
 
 	if (!message)
@@ -58,7 +56,6 @@
 
 //For status displays only. Usable by AI.
 /mob/living/silicon/ai/proc/statusdisplay_talk(message, language)
-	message_admins("STATUSDISPLAY TALK")
 	message = trim(message)
 
 	if (!message)
