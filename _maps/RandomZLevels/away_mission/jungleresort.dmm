@@ -1992,6 +1992,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/oil/streak,
+/obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plating,
 /area/awaymission/jungleresort)
 "BP" = (
@@ -2811,12 +2812,7 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/smes{
-	charge = 1.5e+006;
-	input_level = 30000;
-	inputting = 0;
-	output_level = 7000
-	},
+/obj/machinery/power/smes/magical,
 /turf/open/floor/plating,
 /area/awaymission/jungleresort)
 "LR" = (
@@ -3183,6 +3179,9 @@
 /obj/item/stack/sheet/mineral/uranium,
 /obj/item/clothing/glasses/meson/engine,
 /obj/item/storage/belt/utility,
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 26
+	},
 /turf/open/floor/plating,
 /area/awaymission/jungleresort)
 "Rm" = (
