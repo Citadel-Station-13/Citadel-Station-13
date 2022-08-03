@@ -1,5 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - balance: "Research bomb \"midpoint\" at which it's worth exactly 50000 points from 240->300"
-  - code_imp: "doesn't snowflake the bomb cap for linux anymore, servers that need to tweak it can do it themselves (I didn't even put it down right, should be 5000 instead of 50000, yikes)"
