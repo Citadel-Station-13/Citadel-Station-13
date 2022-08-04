@@ -1356,6 +1356,7 @@
 /obj/machinery/door/airlock/proc/remove_electrify()
 	secondsElectrified = NOT_ELECTRIFIED
 	unelectrify_timerid = null
+	diag_hud_set_electrified()
 
 /obj/machinery/door/airlock/proc/set_electrified(seconds, mob/user)
 	secondsElectrified = seconds
