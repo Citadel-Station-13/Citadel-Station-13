@@ -791,8 +791,9 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 		// eyes
 		if(!(NOEYES in dna.species.species_traits))
 			var/has_eyes = getorganslot(ORGAN_SLOT_EYES)
-			if(!has_eyes)
+			if(!has_eyes && !GetComponent(/datum/component/dullahan))
 				add_overlay(mutable_appearance('icons/mob/eyes.dmi', "eyes_missing", -BODY_LAYER))
+				message_admins("EYES MISSING APPLIED")
 			else
 				var/left_state = DEFAULT_LEFT_EYE_STATE
 				var/right_state = DEFAULT_RIGHT_EYE_STATE
@@ -803,6 +804,8 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 						right_state = eye_type + "_right_eye"
 				var/mutable_appearance/left_eye = mutable_appearance('icons/mob/eyes.dmi', left_state, -BODY_LAYER)
 				var/mutable_appearance/right_eye = mutable_appearance('icons/mob/eyes.dmi', right_state, -BODY_LAYER)
+				left_eye.category = "HEAD"
+				right_eye.category = "HEAD"
 				if((EYECOLOR in dna.species.species_traits) && has_eyes)
 					left_eye.color = "#" + left_eye_color
 					right_eye.color = "#" + right_eye_color

@@ -2,6 +2,7 @@
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 	mutant_part_string = "ears"
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+	mutable_category = "HEAD"
 
 /datum/sprite_accessory/ears/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)

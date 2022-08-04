@@ -697,6 +697,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				fhair_file = 'icons/mob/facialhair_extensions.dmi'
 
 			var/mutable_appearance/facial_overlay = mutable_appearance(fhair_file, fhair_state, -HAIR_LAYER)
+			facial_overlay.category = "HEAD"
 
 			if(!forced_colour)
 				if(hair_color)
@@ -734,8 +735,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	if(!hair_hidden || dynamic_hair_suffix)
 		var/mutable_appearance/hair_overlay = mutable_appearance(layer = -HAIR_LAYER)
+		hair_overlay.category = "HEAD"
 		var/mutable_appearance/gradient_overlay = mutable_appearance(layer = -HAIR_LAYER)
-		if(!hair_hidden && !H.getorgan(/obj/item/organ/brain)) //Applies the debrained overlay if there is no brain
+		gradient_overlay.category = "HEAD"
+		if(!hair_hidden && !H.getorgan(/obj/item/organ/brain) && !H.GetComponent(/datum/component/dullahan)) //Applies the debrained overlay if there is no brain (ignore if they are dullahan)
 			if(!(NOBLOOD in species_traits))
 				hair_overlay.icon = 'icons/mob/human_parts.dmi'
 				hair_overlay.icon_state = "debrained"
@@ -811,6 +814,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		// lipstick
 		if(H.lip_style && (LIPS in species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/lips.dmi', "lips_[H.lip_style]", -BODY_LAYER)
+			lip_overlay.category = "HEAD"
 			lip_overlay.color = H.lip_color
 
 			if(OFFSET_LIPS in H.dna.species.offset_features)
@@ -822,8 +826,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		// eyes
 		if(!(NOEYES in species_traits))
 			var/has_eyes = H.getorganslot(ORGAN_SLOT_EYES)
-			if(!has_eyes)
+			if(!has_eyes && !H.GetComponent(/datum/component/dullahan))
 				standing += mutable_appearance('icons/mob/eyes.dmi', "eyes_missing", -BODY_LAYER)
+				message_admins("EYES MISSING APPLIED 2")
 			else
 				var/left_state = DEFAULT_LEFT_EYE_STATE
 				var/right_state = DEFAULT_RIGHT_EYE_STATE
@@ -832,6 +837,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					right_state = eye_type + "_right_eye"
 				var/mutable_appearance/left_eye = mutable_appearance('icons/mob/eyes.dmi', left_state, -BODY_LAYER)
 				var/mutable_appearance/right_eye = mutable_appearance('icons/mob/eyes.dmi', right_state, -BODY_LAYER)
+				left_eye.category = "HEAD"
+				right_eye.category = "HEAD"
 				if((EYECOLOR in species_traits) && has_eyes)
 					left_eye.color = "#" + H.left_eye_color
 					right_eye.color = "#" + H.right_eye_color
@@ -1009,6 +1016,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		for(var/bodypart in relevant_layers[layer])
 			var/datum/sprite_accessory/S = bodypart
 			var/mutable_appearance/accessory_overlay = mutable_appearance(S.icon, layer = -layernum)
+			accessory_overlay.category = S.mutable_category
 			bodypart = S.mutant_part_string || dna_feature_as_text_string[S]
 
 			if(S.gender_specific)
@@ -1113,6 +1121,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 			if(S.extra) //apply the extra overlay, if there is one
 				var/mutable_appearance/extra_accessory_overlay = mutable_appearance(S.icon, layer = -layernum)
+				extra_accessory_overlay.category = S.mutable_category
 				if(S.gender_specific)
 					extra_accessory_overlay.icon_state = "[g]_[bodypart]_extra_[S.icon_state]_[layertext]"
 				else
@@ -1159,6 +1168,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 			if(S.extra2) //apply the extra overlay, if there is one
 				var/mutable_appearance/extra2_accessory_overlay = mutable_appearance(S.icon, layer = -layernum)
+				extra2_accessory_overlay.category = S.mutable_category
 				if(S.gender_specific)
 					extra2_accessory_overlay.icon_state = "[g]_[bodypart]_extra2_[S.icon_state]_[layertext]"
 				else

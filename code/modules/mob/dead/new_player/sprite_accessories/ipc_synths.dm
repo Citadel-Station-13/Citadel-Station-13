@@ -6,6 +6,7 @@
 	icon = 'modular_citadel/icons/mob/ipc_screens.dmi'
 	color_src = null
 	relevant_layers = list(BODY_ADJ_LAYER)
+	mutable_category = "HEAD"
 
 /datum/sprite_accessory/screen/blank
 	name = "Blank"
