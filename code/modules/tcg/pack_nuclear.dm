@@ -59,7 +59,7 @@
 
 /datum/tcg_card/pack_nuclear/l6saw
 	name = "L6 Saw LMG"
-	desc = "A heavily modified 1.95x129mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
+	desc = "A heavily modified 7.12x82mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
 	rules = "After equipped unit dies, this card goes to the bottom of draw deck"
 	icon_state = "l6saw"
 
