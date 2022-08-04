@@ -14,3 +14,10 @@
   - code_imp: doesn't snowflake the bomb cap for linux anymore, servers that need
       to tweak it can do it themselves (I didn't even put it down right, should be
       5000 instead of 50000, yikes)
+2022-08-04:
+  MrJWhit:
+  - rscadd: Adds more AI screens on box
+  TripleShades:
+  - qol: Three gateways will no longer lose power via Magical SMES Units
+  timothyteakettle:
+  - rscadd: lets AIs control status displays (vtuber mode)
