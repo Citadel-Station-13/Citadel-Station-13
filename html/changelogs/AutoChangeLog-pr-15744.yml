@@ -1,0 +1,5 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - tweak: "Untied shoelaces probabilities rework"
+  - balance: "Miner boots are slightly harder to tie/untie now"
