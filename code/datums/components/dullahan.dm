@@ -47,7 +47,13 @@
 
 	H.flags_1 &= ~(HEAR_1)
 
+	RegisterSignal(dullahan_head, COMSIG_ATOM_HEARER_IN_VIEW, .proc/include_owner)
+
 	dullahan_head.update_appearance()
+
+/datum/component/dullahan/proc/include_owner(datum/source, list/processing_list, list/hearers)
+	if(!QDELETED(parent))
+		hearers += parent
 
 /datum/component/dullahan/proc/unlist_head(datum/source, noheal = FALSE, list/excluded_limbs)
 	excluded_limbs |= BODY_ZONE_HEAD // So we don't gib when regenerating limbs.
