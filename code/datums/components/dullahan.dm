@@ -170,7 +170,7 @@
 	// work out what organs to give them based on their species
 	if(ishuman(parent))
 		var/mob/living/carbon/human/H = parent
-		var/obj/item/organ/eyes/new_eyes = new H.dna.species.mutant_eyes()
+		var/obj/item/organ/eyes/new_eyes = new H.dna.species.mutanteyes()
 		var/obj/item/organ/brain/new_brain = new H.dna.species.mutant_brain()
 		var/obj/item/organ/eyes/old_eyes = H.getorganslot(ORGAN_SLOT_EYES)
 		var/obj/item/organ/brain/old_brain = H.getorganslot(ORGAN_SLOT_BRAIN)
