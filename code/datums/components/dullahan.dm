@@ -177,9 +177,9 @@
 
 		old_brain.Remove(TRUE,TRUE)
 		QDEL_NULL(old_brain)
-		new_brain.Insert(C, TRUE, TRUE)
+		new_brain.Insert(H, TRUE, TRUE)
 
 		old_eyes.Remove(TRUE,TRUE)
 		QDEL_NULL(old_eyes)
-		new_eyes.Insert(C, TRUE, TRUE)
+		new_eyes.Insert(H, TRUE, TRUE)
 	. = ..()
