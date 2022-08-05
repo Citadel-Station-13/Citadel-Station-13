@@ -134,7 +134,7 @@
 		I.pixel_y = px_y
 	add_overlay(standing)
 
-/obj/item/bodypart/head/get_limb_icon(dropped, ignore_brain = FALSE, ignore_eyes = FALSE)
+/obj/item/bodypart/head/get_limb_icon(dropped, ignore_brain = FALSE)
 	if(custom_head)
 		return
 	cut_overlays()
@@ -181,7 +181,7 @@
 			. += lips_overlay
 
 		// eyes
-		if(eyes || ignore_eyes)
+		if(eyes || ignore_brain)
 			var/left_state = DEFAULT_LEFT_EYE_STATE
 			var/right_state = DEFAULT_RIGHT_EYE_STATE
 			if(owner && owner.dna.species)
@@ -203,7 +203,6 @@
 				. += right_eye
 		else
 			var/eyes_overlay = image('icons/mob/hair.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
-			message_admins("EYES MISSING ALSO IGNORE EYES IS [ignore_eyes]")
 			. += eyes_overlay
 
 /obj/item/bodypart/head/monkey

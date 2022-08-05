@@ -345,7 +345,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/obj/item/organ/stomach/stomach = C.getorganslot(ORGAN_SLOT_STOMACH)
 	var/obj/item/organ/tail/tail = C.getorganslot(ORGAN_SLOT_TAIL)
 
-	var/should_have_brain = TRUE
+	var/should_have_brain = !(HAS_TRAIT(C, TRAIT_DULLAHAN))
 	var/should_have_heart = !(NOBLOOD in species_traits)
 	var/should_have_lungs = ((TRAIT_AUXILIARY_LUNGS in inherent_traits) || !(TRAIT_NOBREATH in inherent_traits))
 	var/should_have_appendix = !(TRAIT_NOHUNGER in inherent_traits)
@@ -803,7 +803,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	H.apply_overlay(HAIR_LAYER)
 
-/datum/species/proc/handle_body(mob/living/carbon/human/H)
+/datum/species/proc/handle_body(mob/living/carbon/human/H, block_recursive_calls = FALSE)
 	H.remove_overlay(BODY_LAYER)
 
 	var/list/standing = list()
@@ -825,10 +825,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		// eyes
 		if(!(NOEYES in species_traits))
-			var/has_eyes = H.getorganslot(ORGAN_SLOT_EYES)
-			if(!has_eyes && !H.GetComponent(/datum/component/dullahan))
+			var/has_eyes = H.getorganslot(ORGAN_SLOT_EYES) || HAS_TRAIT(H, TRAIT_DULLAHAN) // if they are a dullahan just assume eyes exist
+			if(!has_eyes)
 				standing += mutable_appearance('icons/mob/eyes.dmi', "eyes_missing", -BODY_LAYER)
-				message_admins("EYES MISSING APPLIED 2")
 			else
 				var/left_state = DEFAULT_LEFT_EYE_STATE
 				var/right_state = DEFAULT_RIGHT_EYE_STATE
@@ -899,9 +898,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		H.overlays_standing[BODY_LAYER] = standing
 
 	H.apply_overlay(BODY_LAYER)
-	handle_mutant_bodyparts(H)
+	handle_mutant_bodyparts(H, null, block_recursive_calls)
 
-/datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
+/datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour, block_recursive_calls = FALSE)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
 
 	H.remove_overlay(BODY_BEHIND_LAYER)
@@ -1215,6 +1214,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	H.apply_overlay(BODY_ADJ_UPPER_LAYER)
 	H.apply_overlay(BODY_FRONT_LAYER)
 	H.apply_overlay(HORNS_LAYER)
+
+	if(!block_recursive_calls)
+		var/datum/component/dullahan/D = H.GetComponent(/datum/component/dullahan)
+		if(D && D.dullahan_head)
+			D.dullahan_head.update_appearance()
 
 /*
  * Equip the outfit required for life. Replaces items currently worn.
