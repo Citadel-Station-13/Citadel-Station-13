@@ -21,3 +21,12 @@
   - qol: Three gateways will no longer lose power via Magical SMES Units
   timothyteakettle:
   - rscadd: lets AIs control status displays (vtuber mode)
+2022-08-05:
+  Hatterhat:
+  - tweak: The L6 Squad Automatic Weapon, as used by Syndicate nuclear operatives,
+      now fires 7.12x82mm, with no change in ballistic performance. This has the side
+      effect of making it now capable of utilizing match-grade ammunition, which some
+      would think are mutually incompatible concepts.
+  Putnam3145:
+  - tweak: Untied shoelaces probabilities rework
+  - balance: Miner boots are slightly harder to tie/untie now
