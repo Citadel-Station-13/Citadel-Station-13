@@ -167,6 +167,7 @@
 	icon_state = "goldrevolver"
 	fire_sound = 'sound/weapons/resonator_blast.ogg'
 	recoil = 8
+	dir_recoil_amp = 5 // 40 directional recoil is already really funny
 	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/revolver/nagant
