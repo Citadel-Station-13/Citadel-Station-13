@@ -82,8 +82,7 @@
 /obj/item/dullahan_head/Destroy()
 	B.Remove()
 	B.forceMove(get_turf(src))
-	var/mob/living/human/H = parent
-	H.gib()
+	owner.gib()
 	. = ..()
 
 // allow the 'fake' head to relay speech back to the mob
