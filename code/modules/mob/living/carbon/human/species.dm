@@ -345,11 +345,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/obj/item/organ/stomach/stomach = C.getorganslot(ORGAN_SLOT_STOMACH)
 	var/obj/item/organ/tail/tail = C.getorganslot(ORGAN_SLOT_TAIL)
 
-	var/should_have_brain = !(HAS_TRAIT(C, TRAIT_DULLAHAN))
+	var/should_have_brain = !(HAS_TRAIT(C, TRAIT_DULLAHAN)) // do not mess with a dullahans brain
 	var/should_have_heart = !(NOBLOOD in species_traits)
 	var/should_have_lungs = ((TRAIT_AUXILIARY_LUNGS in inherent_traits) || !(TRAIT_NOBREATH in inherent_traits))
 	var/should_have_appendix = !(TRAIT_NOHUNGER in inherent_traits)
-	var/should_have_eyes = TRUE
+	var/should_have_eyes = !(HAS_TRAIT(C, TRAIT_DULLAHAN)) // .. or their eyes
 	var/should_have_ears = TRUE
 	var/should_have_tongue = TRUE
 	var/should_have_liver = !(NOLIVER in species_traits)

@@ -717,16 +717,13 @@
 				death()
 				petrify(INFINITY)
 			if(3)
-				if(prob(90))
-					var/obj/item/bodypart/BP = get_bodypart(pick(BODY_ZONE_CHEST,BODY_ZONE_HEAD))
-					if(BP)
-						BP.dismember()
-					else
-						unequip_everything()
-						drop_all_held_items()
-						gib()
+				var/obj/item/bodypart/BP = get_bodypart(pick(BODY_ZONE_CHEST,BODY_ZONE_HEAD))
+				if(BP)
+					BP.dismember()
 				else
-					set_species(/datum/species/dullahan)
+					unequip_everything()
+					drop_all_held_items()
+					gib()
 
 /datum/dna/proc/update_body_size(old_size)
 	if(!holder || features["body_size"] == old_size)

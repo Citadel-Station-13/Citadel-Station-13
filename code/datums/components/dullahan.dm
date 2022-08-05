@@ -161,3 +161,25 @@
 			H.reset_perspective(H)
 		else
 			H.reset_perspective(dullahan_head)
+
+/datum/component/dullahan/Destroy()
+	UnregisterSignal(parent, COMSIG_LIVING_REGENERATE_LIMBS)
+	qdel(dullahan_head)
+	REMOVE_TRAIT(parent, TRAIT_DULLAHAN, "dullahan_component")
+
+	// work out what organs to give them based on their species
+	if(ishuman(parent))
+		var/mob/living/carbon/human/H = parent
+		var/obj/item/organ/eyes/new_eyes = new H.dna.species.mutant_eyes()
+		var/obj/item/organ/brain/new_brain = new H.dna.species.mutant_brain()
+		var/obj/item/organ/eyes/old_eyes = H.getorganslot(ORGAN_SLOT_EYES)
+		var/obj/item/organ/brain/old_brain = H.getorganslot(ORGAN_SLOT_BRAIN)
+
+		old_brain.Remove(TRUE,TRUE)
+		QDEL_NULL(old_brain)
+		new_brain.Insert(C, TRUE, TRUE)
+
+		old_eyes.Remove(TRUE,TRUE)
+		QDEL_NULL(old_eyes)
+		new_eyes.Insert(C, TRUE, TRUE)
+	. = ..()
