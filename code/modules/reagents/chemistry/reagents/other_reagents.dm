@@ -1979,6 +1979,7 @@
 	reagent_state = LIQUID
 	color = "#A70FFF"
 	taste_description = "dryness"
+	boiling_point = 310
 	pH = 10.7
 	value = REAGENT_VALUE_UNCOMMON
 
