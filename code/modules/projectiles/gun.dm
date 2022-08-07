@@ -94,6 +94,9 @@
 
 	var/automatic = 0 //can gun use it, 0 is no, anything above 0 is the delay between clicks in ds
 
+	/// directional recoil multiplier
+	var/dir_recoil_amp = 10
+
 /obj/item/gun/Initialize(mapload)
 	. = ..()
 	if(no_pin_required)
@@ -159,7 +162,7 @@
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = FALSE, mob/pbtarget, message = 1, stam_cost = 0)
 	if(recoil)
-		shake_camera(user, recoil + 1, recoil)
+		directional_recoil(user, recoil*dir_recoil_amp, Get_Angle(user, pbtarget))
 
 	if(stam_cost) //CIT CHANGE - makes gun recoil cause staminaloss
 		var/safe_cost = clamp(stam_cost, 0, user.stamina_buffer)*(firing && burst_size >= 2 ? 1/burst_size : 1)

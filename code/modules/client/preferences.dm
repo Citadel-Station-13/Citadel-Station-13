@@ -233,6 +233,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/screenshake = 100
 	var/damagescreenshake = 2
+	var/recoil_screenshake = 100
 	var/arousable = TRUE
 	var/autostand = TRUE
 	var/auto_ooc = FALSE
@@ -907,6 +908,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==100) ? "Full" : ((screenshake==0) ? "None" : "[screenshake]")]</a><br>"
 			if (user && user.client && !user.client.prefs.screenshake==0)
 				dat += "<b>Damage Screen Shake:</b> <a href='?_src_=prefs;preference=damagescreenshake'>[(damagescreenshake==1) ? "On" : ((damagescreenshake==0) ? "Off" : "Only when down")]</a><br>"
+			dat += "<b>Recoil Screen Push:</b> <a href='?_src_=prefs;preference=recoil_screenshake'>[(recoil_screenshake==100) ? "Full" : ((recoil_screenshake==0) ? "None" : "[screenshake]")]</a><br>"
 			var/p_chaos
 			if (!preferred_chaos)
 				p_chaos = "No preference"
@@ -2782,7 +2784,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("no_tetris_storage")
 					no_tetris_storage = !no_tetris_storage
 				if ("screenshake")
-					var/desiredshake = input(user, "Set the amount of screenshake you want. \n(0 = disabled, 100 = full, 200 = maximum.)", "Character Preference", screenshake)  as null|num
+					var/desiredshake = input(user, "Set the amount of screenshake you want. \n(0 = disabled, 100 = full, no maximum (at your own risk).)", "Character Preference", screenshake)  as null|num
 					if (!isnull(desiredshake))
 						screenshake = desiredshake
 				if("damagescreenshake")
@@ -2795,6 +2797,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							damagescreenshake = 0
 						else
 							damagescreenshake = 1
+				if ("recoil_screenshake")
+					var/desiredshake = input(user, "Set the amount of recoil screenshake/push you want. \n(0 = disabled, 100 = full, no maximum (at your own risk).)", "Character Preference", screenshake)  as null|num
+					if (!isnull(desiredshake))
+						recoil_screenshake = desiredshake
 				if("nameless")
 					nameless = !nameless
 				//END CITADEL EDIT
