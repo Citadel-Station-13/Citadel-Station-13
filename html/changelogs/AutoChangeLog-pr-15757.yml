@@ -1,0 +1,5 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - tweak: "Proto-kinetic crushers and variants can now be renamed via pen."
+  - tweak: "Custom descriptions on items tagged with UNIQUE_RENAME can now go to 350 characters, up from 140."
