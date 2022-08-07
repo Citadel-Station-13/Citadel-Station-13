@@ -1,0 +1,4 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - bugfix: "catwalk overlays behave properly, appearing on top of cables and such"
