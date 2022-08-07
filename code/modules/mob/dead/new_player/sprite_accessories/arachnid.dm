@@ -49,7 +49,7 @@
 	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 	mutant_part_string = "mandibles"
 	color_src = 0
-	category = "HEAD"
+	mutable_category = "HEAD"
 
 /datum/sprite_accessory/arachnid_mandibles/none
 	name = "None"

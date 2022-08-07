@@ -138,7 +138,7 @@
 	relevant_layers = list(BODY_ADJ_LAYER)
 	recommended_species = list("ipc")
 	mutant_part_string = "ipc_antenna"
-	category = "HEAD"
+	mutable_category = "HEAD"
 
 /datum/sprite_accessory/antenna/none
 	name = "None"
