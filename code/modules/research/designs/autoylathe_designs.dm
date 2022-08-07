@@ -242,7 +242,7 @@
 	category = list("initial", "Toys")
 
 /datum/design/autoylathe/figure/assistant
-	name = "Assistant"
+	name = "Paramedic"
 	id = "assfigure"
 	materials = list(/datum/material/plastic = 500, /datum/material/iron = 50)
 	build_path = /obj/item/toy/figure/assistant

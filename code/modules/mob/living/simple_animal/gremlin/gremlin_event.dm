@@ -9,7 +9,7 @@
 
 
 /datum/round_event/gremlin
-	var/static/list/acceptable_spawns = list("xeno_spawn", "generic event spawn", "blobstart", "Assistant")
+	var/static/list/acceptable_spawns = list("xeno_spawn", "generic event spawn", "blobstart", "Paramedic")
 
 /datum/round_event/gremlin/announce()
 	priority_announce("Bioscans indicate that some gremlins entered through the vents. Deal with them!", "Gremlin Alert", 'sound/announcer/classic/attention.ogg')
@@ -26,7 +26,7 @@
 		for(var/obj/effect/landmark/L in GLOB.landmarks_list)
 			if(isturf(L.loc))
 				switch(L.name)
-					if("Assistant")
+					if("Paramedic")
 						spawn_locs += L.loc
 	if(!spawn_locs.len) //If we can't find THAT, then just give up and cry
 		return MAP_ERROR

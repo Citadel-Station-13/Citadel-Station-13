@@ -16,7 +16,7 @@
 	tidecolor = pick("grey", "white", "yellow", "purple", "brown", "whatevercolorrepresentstheservicepeople")
 	switch(tidecolor)
 		if("grey") //God help you
-			jobs_to_revolt = list("Assistant")
+			jobs_to_revolt = list("Paramedic")
 			nation_name = pick("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Grigio", "Ass", "Assi")
 		if("white")
 			jobs_to_revolt = list("Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Paramedic", "Virologist")

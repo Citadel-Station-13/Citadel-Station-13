@@ -434,7 +434,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/consumable/ethanol/hooch/on_mob_life(mob/living/carbon/M)
-	if(M.mind && M.mind.assigned_role == "Assistant")
+	if(M.mind && M.mind.assigned_role == "Paramedic")
 		M.heal_bodypart_damage(1,1)
 		. = TRUE
 	return ..() || .

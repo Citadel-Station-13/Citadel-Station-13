@@ -299,7 +299,7 @@
 	H.dna.add_mutation(DWARFISM)
 
 /obj/effect/mob_spawn/human/corpse/damaged/legioninfested/Initialize(mapload)
-	var/type = pickweight(list("Miner" = 45, "Ashwalker" = 10, "Golem" = 10,"Clown" = 10, pick(list("Shadow", "YeOlde","Operative", "Cultist", "Lavaknight")) = 4, "Assistant" = 20, "Beelegion" = 1))
+	var/type = pickweight(list("Miner" = 45, "Ashwalker" = 10, "Golem" = 10,"Clown" = 10, pick(list("Shadow", "YeOlde","Operative", "Cultist", "Lavaknight")) = 4, "Paramedic" = 20, "Beelegion" = 1))
 	switch(type)
 		if("Miner")
 			mob_species = pickweight(list(/datum/species/human = 70, /datum/species/lizard = 26, /datum/species/fly = 2, /datum/species/plasmaman = 2))
@@ -408,7 +408,7 @@
 			suit_store = /obj/item/tank/internals/oxygen
 			id = /obj/item/card/id/knight
 			id_job = "Knight"
-		if("Assistant")
+		if("Paramedic")
 			uniform = /obj/item/clothing/under/color/grey
 			belt = /obj/item/tank/internals/emergency_oxygen
 			mask = /obj/item/clothing/mask/gas

@@ -157,7 +157,7 @@
 	description = "A visored cap. Intended to be used with ORV uniform."
 	path = /obj/item/clothing/head/kepi/orvi
 	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
-	restricted_roles = list("Assistant")
+	restricted_roles = list("Paramedic")
 
 /*Commenting out Until next Christmas or made automatic
 /datum/gear/santahatr

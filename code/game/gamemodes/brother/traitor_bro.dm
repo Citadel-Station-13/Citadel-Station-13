@@ -25,7 +25,7 @@
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
-		restricted_jobs += "Assistant"
+		restricted_jobs += "Paramedic"
 
 	var/list/datum/mind/possible_brothers = get_players_for_role(ROLE_BROTHER)
 

@@ -2,20 +2,20 @@
 	name = "Staff Assistant's jumpsuit"
 	path = /obj/item/clothing/under/misc/staffassistant
 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
-	restricted_roles = list("Assistant")
+	restricted_roles = list("Paramedic")
 
 /datum/gear/suit/neetsuit
 	name = "D.A.B. suit"
 	path = /obj/item/clothing/suit/assu_suit
 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
-	restricted_roles = list("Assistant")
+	restricted_roles = list("Paramedic")
 	cost = 2
 
 /datum/gear/head/neethelm
 	name = "D.A.B. helmet"
 	path = /obj/item/clothing/head/assu_helmet
 	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
-	restricted_roles = list("Assistant")
+	restricted_roles = list("Paramedic")
 	cost = 2
 
 /datum/gear/backpack/plushvar

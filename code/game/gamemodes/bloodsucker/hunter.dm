@@ -18,7 +18,7 @@
 		no_hunter_jobs += list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
 
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
-		no_hunter_jobs += "Assistant"
+		no_hunter_jobs += "Paramedic"
 
 	// Find Valid Hunters
 	var/list/datum/mind/hunter_candidates = get_players_for_role(ROLE_MONSTERHUNTER)

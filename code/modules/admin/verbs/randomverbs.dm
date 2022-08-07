@@ -435,7 +435,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	else
 		new_character.mind_initialize()
 	if(!new_character.mind.assigned_role)
-		new_character.mind.assigned_role = "Assistant"//If they somehow got a null assigned role.
+		new_character.mind.assigned_role = "Paramedic"//If they somehow got a null assigned role.
 
 	G_found.transfer_ckey(new_character, FALSE)
 

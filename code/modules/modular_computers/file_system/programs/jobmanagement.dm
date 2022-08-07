@@ -17,7 +17,7 @@
 	//Jobs you cannot open new positions for
 	var/list/blacklisted = list(
 		"AI",
-		"Assistant",
+		"Paramedic",
 		"Prisoner",
 		"Cyborg",
 		"Captain",

@@ -335,7 +335,7 @@
 //CIVILIANS
 
 /datum/tcg_card/pack_1/assistant
-	name = "Assistant"
+	name = "Paramedic"
 	desc = "The lowest ladder on the Nanotrasen Employment Ladder, Assistants are employed to help out with tasks deemed 'too menial for robots'."
 	rules = "Greytide."
 	icon_state = "assistant"

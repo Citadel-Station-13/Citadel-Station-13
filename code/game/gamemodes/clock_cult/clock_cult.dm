@@ -156,7 +156,7 @@ Credit where due:
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
-		restricted_jobs += "Assistant"
+		restricted_jobs += "Paramedic"
 	var/starter_servants = 4 //Try to go for at least four
 	var/number_players = num_players()
 	roundstart_player_count = number_players
@@ -285,7 +285,7 @@ Credit where due:
 /datum/outfit/servant_of_ratvar/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/obj/item/card/id/W = new(H)
 	var/obj/item/pda/PDA = H.wear_id
-	W.assignment = "Assistant"
+	W.assignment = "Paramedic"
 	W.access += ACCESS_MAINT_TUNNELS
 	W.registered_name = H.real_name
 	W.update_label()
@@ -293,7 +293,7 @@ Credit where due:
 		H.internal = H.get_item_for_held_index(2)
 		H.update_internals_hud_icon(1)
 	PDA.owner = H.real_name
-	PDA.ownjob = "Assistant"
+	PDA.ownjob = "Paramedic"
 	PDA.update_label()
 	PDA.id_check(H, W)
 	H.sec_hud_set_ID()

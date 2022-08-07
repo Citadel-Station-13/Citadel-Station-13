@@ -12,7 +12,7 @@
 	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you. It fills the wearer with a strange compulsion to blurt out 'glorf'."
 	item = /obj/item/clothing/under/color/grey/glorf
 	cost = 20
-	restricted_roles = list("Assistant")
+	restricted_roles = list("Paramedic")
 
 /datum/uplink_item/role_restricted/pie_cannon
 	name = "Banana Cream Pie Cannon"
@@ -137,14 +137,14 @@
 	desc = "A gold plated plastitanium toolbox. It comes loaded with a full tool set including a AI detector multitool and combat gloves."
 	item = /obj/item/storage/toolbox/plastitanium/gold_real
 	cost = 4 // Has syndie tools + gloves + a robust weapon
-	restricted_roles = list("Assistant", "Curator") //Curator due to this being made of gold - It fits the theme
+	restricted_roles = list("Paramedic", "Curator") //Curator due to this being made of gold - It fits the theme
 
 /datum/uplink_item/role_restricted/oldtoolboxclean // this is the fourth item relating to toolboxes to be placed into this godforsaken bloated uplink
 	name = "Ancient Toolbox"
 	desc = "An iconic toolbox design notorious with Assistants everywhere, this design was especially made to become more robust the more telecrystals it has inside it! Tools and insulated gloves included."
 	item = /obj/item/storage/toolbox/mechanical/old/clean
 	cost = 2 // with eighteen telecrystals you are still weaker than a desword and without any of its defenses -- the scary part comes from collaborating with allies for a fifty eight force toolbox oh fuck
-	restricted_roles = list("Assistant")
+	restricted_roles = list("Paramedic")
 	surplus = 0
 
 /datum/uplink_item/role_restricted/mimery

@@ -1274,7 +1274,7 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 			. += world.file2list("strings/flavor_objectives/traitor/medical.txt")
 		if("Scientist","Roboticist","Geneticist")
 			. += world.file2list("strings/flavor_objectives/traitor/science.txt")
-		if("Assistant")
+		if("Paramedic")
 			. += world.file2list("strings/flavor_objectives/traitor/assistant.txt")
 
 /datum/objective/flavor/ninja_helping

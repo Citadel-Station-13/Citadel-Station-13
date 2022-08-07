@@ -61,8 +61,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 // START LANDMARKS FOLLOW. Don't change the names unless
 // you are refactoring shitty landmark code.
 /obj/effect/landmark/start/assistant
-	name = "Assistant"
-	icon_state = "Assistant"
+	name = "Paramedic"
+	icon_state = "Paramedic"
 
 /obj/effect/landmark/start/prisoner
 	name = "Prisoner"

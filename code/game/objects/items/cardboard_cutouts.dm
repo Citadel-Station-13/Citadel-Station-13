@@ -20,7 +20,7 @@
 	if(possible_appearances)
 		return
 	possible_appearances = sortList(list(
-		"Assistant" = image(icon = src.icon, icon_state = "cutout_greytide"),
+		"Paramedic" = image(icon = src.icon, icon_state = "cutout_greytide"),
 		"Clown" = image(icon = src.icon, icon_state = "cutout_clown"),
 		"Mime" = image(icon = src.icon, icon_state = "cutout_mime"),
 		"Traitor" = image(icon = src.icon, icon_state = "cutout_traitor"),
@@ -124,7 +124,7 @@
 	if(!deceptive)
 		add_atom_colour("#FFD7A7", FIXED_COLOUR_PRIORITY)
 	switch(new_appearance)
-		if("Assistant")
+		if("Paramedic")
 			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
 			desc = "A cardboat cutout of an assistant."
 			icon_state = "cutout_greytide"

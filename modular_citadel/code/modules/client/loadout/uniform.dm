@@ -552,14 +552,14 @@
 	name = "TMP uniform, trainee"
 	path = /obj/item/clothing/under/trek/fedutil/trainee
 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
-	restricted_roles = list("Assistant", "Janitor", "Cargo Technician")
+	restricted_roles = list("Paramedic", "Janitor", "Cargo Technician")
 
 /datum/gear/uniform/trekfedservice
 	name = "TMP uniform, service"
 	path = /obj/item/clothing/under/trek/fedutil/service
 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
 	restricted_desc = "Service and Civilian, barring Clown, Mime and Lawyer"
-	restricted_roles = list("Assistant", "Bartender", "Botanist", "Cook", "Curator", "Janitor", "Chaplain")
+	restricted_roles = list("Paramedic", "Bartender", "Botanist", "Cook", "Curator", "Janitor", "Chaplain")
 
 //Orvilike
 /datum/gear/uniform/orvcmd
@@ -618,7 +618,7 @@
 	name = "ORV uniform, assistant"
 	path = /obj/item/clothing/under/trek/orv
 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
-	restricted_roles = list("Assistant")
+	restricted_roles = list("Paramedic")
 
 /datum/gear/uniform/orvsrv
 	name = "ORV uniform, other"

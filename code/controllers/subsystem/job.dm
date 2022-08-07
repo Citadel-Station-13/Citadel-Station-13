@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(job)
 	var/list/prioritized_jobs = list()
 	var/list/latejoin_trackers = list()	//Don't read this list, use GetLateJoinTurfs() instead
 
-	var/overflow_role = "Assistant"
+	var/overflow_role = "Paramedic"
 
 	var/list/level_order = list(JP_HIGH,JP_MEDIUM,JP_LOW)
 
@@ -137,7 +137,7 @@ SUBSYSTEM_DEF(job)
 		if(!job)
 			continue
 
-		if(istype(job, GetJob(SSjob.overflow_role))) // We don't want to give him assistant, that's boring!
+		if(istype(job, GetJob(SSjob.overflow_role))) // We don't want to give him paramedic, that's boring!
 			continue
 
 		if(job.title in GLOB.command_positions) //If you want a command position, select it!
@@ -371,7 +371,7 @@ SUBSYSTEM_DEF(job)
 			if(!GiveRandomJob(player))
 				if(!AssignRole(player, SSjob.overflow_role)) //If everything is already filled, make them the overflow role
 					return FALSE //Living on the edge, the forced antagonist couldn't be assigned to overflow role (bans, client age) - just reroll
-		else //If the player prefers to return to lobby or be an assistant, give them assistant
+		else //If the player prefers to return to lobby or be an paramedic, give them paramedic
 			if(!AssignRole(player, SSjob.overflow_role))
 				if(!GiveRandomJob(player)) //The forced antagonist couldn't be assigned to overflow role (bans, client age) - give a random role
 					return FALSE //Somehow the forced antagonist couldn't be assigned to the overflow role or the a random role - reroll

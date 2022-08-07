@@ -2,7 +2,7 @@
 Assistant
 */
 /datum/job/assistant
-	title = "Assistant"
+	title = "Paramedic"
 	flag = ASSISTANT
 	department_flag = CIVILIAN
 	faction = "Station"
@@ -29,7 +29,7 @@ Assistant
 		return ..()
 
 /datum/outfit/job/assistant
-	name = "Assistant"
+	name = "Paramedic"
 	jobtype = /datum/job/assistant
 
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
