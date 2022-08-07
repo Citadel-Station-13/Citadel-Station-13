@@ -12,8 +12,9 @@
 
 	dullahan_head = new(get_turf(H))
 
-	dullahan_head.name = "[H.name]'s head"
-	dullahan_head.desc = "the decapitated head of [H.name]"
+	if(length(H.name))
+		dullahan_head.name = "[H.name]'s head"
+		dullahan_head.desc = "the decapitated head of [H.name]"
 	dullahan_head.owner = H
 	RegisterSignal(H, COMSIG_LIVING_REGENERATE_LIMBS, .proc/unlist_head)
 
