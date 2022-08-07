@@ -774,6 +774,8 @@
 	var/roll_stamcost = 15
 	/// how far are we rolling?
 	var/roll_range = 3
+	/// do you spin when dodgerolling
+	var/roll_orientation = TRUE
 
 /obj/item/melee/transforming/cleaving_saw/examine(mob/user)
 	. = ..()
@@ -819,6 +821,11 @@
 	else
 		B.add_stacks(bleed_stacks_per_hit)
 
+/obj/item/melee/transforming/cleaving_saw/AltClick(mob/user)
+	. = ..()
+	roll_orientation = !roll_orientation
+	to_chat(user, span_notice("You are now [roll_orientation ? "rolling" : "quick-stepping"] when you dodge. (This only affects if you spin or not during a dodge.)"))
+
 /obj/item/melee/transforming/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
 		if(!active)
@@ -847,7 +854,7 @@
 	var/turf/where_to = get_turf(target)
 	user.apply_damage(damage = roll_stamcost, damagetype = STAMINA)
 	user.Immobilize(0.8 SECONDS) // you dont get to adjust your roll
-	user.throw_at(where_to, range = roll_range, speed = 1, force = MOVE_FORCE_NORMAL)
+	user.throw_at(where_to, range = roll_range, speed = 1, force = MOVE_FORCE_NORMAL, spin = roll_orientation)
 	user.apply_status_effect(/datum/status_effect/dodgeroll_iframes)
 	playsound(user, 'sound/effects/body-armor-rolling.ogg', 50, FALSE)
 	return ..()
