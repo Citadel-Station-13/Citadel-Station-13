@@ -19,17 +19,19 @@
 
 	// make sure the brain can't decay or fall out
 	var/obj/item/organ/brain/B = H.getorganslot(ORGAN_SLOT_BRAIN)
-	B.zone = "abstract" // it exists in the ethereal plain
-	B.organ_flags = ORGAN_NO_SPOIL | ORGAN_NO_DISMEMBERMENT	| ORGAN_VITAL
-	dullahan_head.B = B
+	if(B)
+		B.zone = "abstract" // it exists in the ethereal plain
+		B.organ_flags = ORGAN_NO_SPOIL | ORGAN_NO_DISMEMBERMENT	| ORGAN_VITAL
+		dullahan_head.B = B
 
 	// the eyes get similar treatment
 	var/obj/item/organ/eyes/dullahan/new_eyes = new()
 	var/obj/item/organ/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
-	new_eyes.left_eye_color = E.left_eye_color
-	new_eyes.right_eye_color = E.right_eye_color
-	E.Remove()
-	qdel(E)
+	if(E)
+		new_eyes.left_eye_color = E.left_eye_color
+		new_eyes.right_eye_color = E.right_eye_color
+		E.Remove()
+		qdel(E)
 	new_eyes.Insert(H)
 
 	// make sure you handle the tongue correctly, too!
@@ -40,10 +42,16 @@
 	var/obj/item/organ/tongue/dullahan/new_tongue = new()
 	new_tongue.Insert(H)
 
+	// uh, eyes!
+	var/obj/item/organ/ears/dullahan_ears = H.getorganslot(ORGAN_SLOT_EARS)
+	if(dullahan_ears)
+		dullahan_ears.zone = "abstract"
+
 	// moving the brain's zone means we don't need the head to survive
 	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
-	head.drop_limb()
-	qdel(head)
+	if(head)
+		head.drop_limb()
+		qdel(head)
 
 	H.flags_1 &= ~(HEAR_1)
 
@@ -84,18 +92,6 @@
 	B.forceMove(get_turf(src))
 	owner.gib()
 	. = ..()
-
-// allow the 'fake' head to relay speech back to the mob
-/obj/item/dullahan_head/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
-	if(owner)
-		var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
-		var/hrefpart = "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
-		var/treated_message = lang_treat(speaker, message_language, raw_message, spans, message_mode)
-		var/rendered = "<i><span class='game say'><span class='name'>[hrefpart][namepart]</a> </span><span class='message'>[treated_message]</span></span></i>"
-
-		if (owner.client?.prefs.chat_on_map && (owner.client.prefs.see_chat_non_mob || ismob(speaker)))
-			owner.create_chat_message(speaker, message_language, raw_message, spans, message_mode)
-		owner.show_message(rendered, "")
 
 // update head sprite
 /obj/item/dullahan_head/proc/remove_head_overlays()
