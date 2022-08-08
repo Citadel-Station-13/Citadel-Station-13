@@ -60,7 +60,7 @@
 	dullahan_head.update_appearance()
 
 /datum/component/dullahan/proc/update_name(retries = 0)
-	if(retries > 3)
+	if(retries > 30)
 		return FALSE
 	var/mob/living/carbon/human/H = parent
 	if(length(H.name))
