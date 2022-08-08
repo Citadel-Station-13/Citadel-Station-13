@@ -135,12 +135,13 @@
 	id = GAS_NITRIC
 	specific_heat = 20
 	name = "Nitric oxide"
-	flags = GAS_FLAG_DANGEROUS
 	odor = "sharp sweetness"
 	odor_strength = 1
 	fusion_power = 15
 	enthalpy = 91290
 	heat_resistance = 2
+	powermix = -1
+	heat_penalty = -1
 
 /datum/gas/nitryl
 	id = GAS_NITRYL
