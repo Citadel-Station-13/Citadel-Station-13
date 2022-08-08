@@ -1,0 +1,6 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - tweak: "Various gases now have shortened names for filters"
+  - balance: "Nitric oxide now removes from the power mix like nitrogen/pluoxium do"
+  - balance: "Nitric oxide now becomes, at most, 20% nitrogen dioxide instead of 50%"
