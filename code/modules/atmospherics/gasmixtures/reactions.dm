@@ -86,7 +86,7 @@
 	min_requirements[R.get_gas()] = MOLES_GAS_VISIBLE
 	name = "[R.name] condensation"
 	id = "[R.type] condensation"
-	condensing_reagent = R
+	condensing_reagent = new R
 	exclude = FALSE
 
 /datum/gas_reaction/condensation/react(datum/gas_mixture/air, datum/holder)
