@@ -38,7 +38,7 @@
 	. = ..()
 	true_name = pick(possible_true_names)
 
-/mob/living/simple_animal/hostile/clockwork/guardian/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/clockwork/guardian/BiologicalLife(delta_time, times_fired)
 	..()
 	if(is_in_host())
 		if(!is_servant_of_ratvar(host))

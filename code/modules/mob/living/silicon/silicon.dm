@@ -50,6 +50,9 @@
 
 	typing_indicator_state = /obj/effect/overlay/typing_indicator/machine
 
+	vocal_bark_id = "synth"
+	vocal_pitch_range = 0.1
+
 /mob/living/silicon/Initialize(mapload)
 	. = ..()
 	GLOB.silicon_mobs += src
@@ -413,7 +416,7 @@
 	src << browse(dat, "window=airoster")
 	onclose(src, "airoster")
 
-/mob/living/silicon/update_transform()
+/mob/living/silicon/update_transform(do_animate)
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
 	var/changed = 0
 	if(resize != RESIZE_DEFAULT_SIZE)

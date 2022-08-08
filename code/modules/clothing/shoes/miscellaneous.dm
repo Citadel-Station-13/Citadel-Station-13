@@ -213,6 +213,7 @@
 	heat_protection = FEET|LEGS
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
+	lace_time = 10 SECONDS
 
 /obj/item/clothing/shoes/cult
 	name = "\improper Nar'Sien invoker boots"

@@ -6363,7 +6363,7 @@
 	c_tag = "Chief Engineer's Office";
 	network = list("ss13","engine")
 	},
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/Polly,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 10
 	},
@@ -13604,14 +13604,7 @@
 /turf/open/floor/plasteel,
 /area/service/bar/atrium)
 "ayN" = (
-/obj/item/storage/fancy/cigarettes/cigars{
-	pixel_y = 6
-	},
-/obj/item/storage/fancy/cigarettes/cigars/cohiba{
-	pixel_y = 3
-	},
-/obj/item/storage/fancy/cigarettes/cigars/havana,
-/obj/structure/table/reinforced,
+/obj/machinery/jukebox,
 /turf/open/floor/plasteel/dark/corner{
 	dir = 4
 	},
@@ -13622,6 +13615,13 @@
 	pixel_x = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/storage/fancy/cigarettes/cigars/havana,
+/obj/item/storage/fancy/cigarettes/cigars/cohiba{
+	pixel_y = 3
+	},
+/obj/item/storage/fancy/cigarettes/cigars{
+	pixel_y = 6
+	},
 /turf/open/floor/plasteel/dark/side{
 	dir = 1
 	},
@@ -16379,9 +16379,8 @@
 /area/hallway/secondary/exit)
 "aEg" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/inverse{
-	dir = 4;
-	name = "air mixer"
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped{
+	dir = 4
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -23915,7 +23914,7 @@
 	c_tag = "Library 2";
 	dir = 4
 	},
-/obj/structure/sign/painting{
+/obj/structure/sign/painting/library{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/dark/side{
@@ -23926,6 +23925,9 @@
 /obj/structure/table/wood,
 /obj/item/folder,
 /obj/item/pen,
+/obj/structure/sign/painting/library{
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel/dark,
 /area/service/library)
 "aRV" = (
@@ -23995,6 +23997,9 @@
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
 /obj/machinery/newscaster{
+	pixel_x = 32
+	},
+/obj/structure/sign/painting/library{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/dark/side{
@@ -24956,6 +24961,9 @@
 /area/maintenance/port/aft)
 "aUj" = (
 /obj/machinery/photocopier,
+/obj/structure/sign/painting/library{
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel/dark/side{
 	dir = 10
 	},
@@ -26435,7 +26443,7 @@
 /turf/closed/wall,
 /area/service/library)
 "aXg" = (
-/obj/structure/sign/painting{
+/obj/structure/sign/painting/library{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/dark/side{
@@ -26444,6 +26452,9 @@
 /area/service/library)
 "aXh" = (
 /obj/machinery/light,
+/obj/structure/sign/painting/library{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel/dark,
 /area/service/library)
 "aXi" = (
@@ -26461,7 +26472,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "aXj" = (
-/obj/structure/sign/painting{
+/obj/structure/sign/painting/library{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/dark,
@@ -26473,6 +26484,9 @@
 /obj/machinery/camera{
 	c_tag = "Library 1";
 	dir = 8
+	},
+/obj/structure/sign/painting/library{
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/dark/side{
 	dir = 10
@@ -35444,7 +35458,7 @@
 /obj/structure/table/wood,
 /obj/item/folder,
 /obj/item/pen,
-/obj/structure/sign/painting{
+/obj/structure/sign/painting/library{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/dark,
@@ -84771,7 +84785,7 @@ awp
 awX
 axR
 ayN
-aue
+asg
 blj
 aCb
 aCe

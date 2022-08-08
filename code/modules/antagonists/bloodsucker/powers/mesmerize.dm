@@ -2,7 +2,7 @@
 //	* MEZMERIZE
 //		LOVE:		Target falls in love with you. Being harmed directly causes them harm if they see it?
 //		STAY:		Target will do everything they can to stand in the same place.
-//		FOLLOW:		Target follows you, spouting random phrases from their history (or maybe Poly's or NPC's vocab?)
+//		FOLLOW:		Target follows you, spouting random phrases from their history (or maybe Polly's or NPC's vocab?)
 //		ATTACK:		Target finds a nearby non-Bloodsucker victim to attack.
 
 /datum/action/bloodsucker/targeted/mesmerize

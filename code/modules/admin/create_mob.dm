@@ -50,6 +50,10 @@
 	H.dna.features["flavor_text"] = "" //Oh no.
 	H.dna.features["body_model"] = H.gender
 
+	H.set_bark(pick(GLOB.bark_random_list))
+	H.vocal_pitch = BARK_PITCH_RAND(H.gender)
+	H.vocal_pitch_range = BARK_VARIANCE_RAND
+
 	SEND_SIGNAL(H, COMSIG_HUMAN_ON_RANDOMIZE)
 
 	H.update_body(TRUE)

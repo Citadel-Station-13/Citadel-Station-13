@@ -136,13 +136,19 @@
 	if (isnull(item))
 		return FALSE
 
-	source.visible_message(
-		span_warning("[user] tries to remove [source]'s [item.name]."),
-		span_userdanger("[user] tries to remove your [item.name]."),
-		ignored_mobs = user,
-	)
+	var/strip_silence
+	var/obj/item/clothing/gloves/gloves = user.get_item_by_slot(ITEM_SLOT_GLOVES)
+	if(istype(gloves))
+		strip_silence = gloves.strip_silence
 
-	to_chat(user, span_danger("You try to remove [source]'s [item]..."))
+	if(!strip_silence)
+		source.visible_message(
+			span_warning("[user] tries to remove [source]'s [item.name]."),
+			span_userdanger("[user] tries to remove your [item.name]."),
+			ignored_mobs = user,
+		)
+
+	to_chat(user, strip_silence ? span_danger("You try to remove [source]'s [item]...") : span_notice("You try to remove [source]'s [item]..."))
 	user.log_message("[key_name(source)] is being stripped of [item] by [key_name(user)]", LOG_ATTACK, color="red")
 	source.log_message("[key_name(source)] is being stripped of [item] by [key_name(user)]", LOG_VICTIM, color="red", log_globally=FALSE)
 	item.add_fingerprint(source)
@@ -284,7 +290,12 @@
 
 /// A utility function for `/datum/strippable_item`s to start unequipping an item from a mob.
 /proc/start_unequip_mob(obj/item/item, mob/source, mob/user, strip_delay)
-	if (!do_mob(user, source, strip_delay || item.strip_delay, ignorehelditem = TRUE))
+	var/strip_mod = 1
+	var/obj/item/clothing/gloves/gloves = user.get_item_by_slot(ITEM_SLOT_GLOVES)
+	if(istype(gloves))
+		strip_mod = gloves.strip_mod
+
+	if (!do_mob(user, source, (strip_delay || item.strip_delay) / strip_mod, ignorehelditem = TRUE))
 		return FALSE
 
 	return TRUE

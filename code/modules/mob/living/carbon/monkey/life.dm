@@ -3,7 +3,7 @@
 /mob/living/carbon/monkey
 
 
-/mob/living/carbon/monkey/BiologicalLife(seconds, times_fired)
+/mob/living/carbon/monkey/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(client)

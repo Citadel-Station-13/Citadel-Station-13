@@ -118,7 +118,12 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M)
-	if(!..())
+	for(var/obj/item/I in M.contents)
+		if(istype(I, src))
+			to_chat(user, "<span class='warning'>[M] already has a tracking beacon!</span>")
+			return
+	. = ..()
+	if(!.)
 		return
 	M.trackers += src
 	M.diag_hud_set_mechtracking()

@@ -311,6 +311,7 @@
 		/obj/item/reagent_containers/food/snacks/pizza/donkpocket = 0.3,
 		/obj/item/reagent_containers/food/snacks/pizza/dank = 0.1) //pizzas here are weighted by chance to be someone's favorite
 	var/static/list/pizza_preferences
+	COOLDOWN_DECLARE(next_pizza_attunement)
 
 /obj/item/pizzabox/infinite/Initialize(mapload)
 	. = ..()
@@ -323,10 +324,17 @@
 		. += "<span class='deadsay'>This pizza box is anomalous, and will produce infinite pizza.</span>"
 
 /obj/item/pizzabox/infinite/attack_self(mob/living/user)
-	QDEL_NULL(pizza)
-	if(ishuman(user))
-		attune_pizza(user)
+	if(COOLDOWN_FINISHED(src, next_pizza_attunement))
+		QDEL_NULL(pizza)
+		if(ishuman(user))
+			attune_pizza(user)
 	. = ..()
+
+/obj/item/pizzabox/infinite/on_attack_hand(mob/user, act_intent, unarmed_attack_flags)
+	var/had_pizza = (pizza ? TRUE : FALSE)
+	. = ..()
+	if(had_pizza && !pizza)
+		COOLDOWN_START(src, next_pizza_attunement, (3 SECONDS))
 
 /obj/item/pizzabox/infinite/proc/attune_pizza(mob/living/carbon/human/noms) //tonight on "proc names I never thought I'd type"
 	if(!pizza_preferences[noms.ckey])

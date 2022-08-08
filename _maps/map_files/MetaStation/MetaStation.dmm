@@ -57489,7 +57489,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/Polly,
 /turf/open/floor/plasteel/dark,
 /area/command/heads_quarters/ce)
 "ixH" = (
@@ -65631,6 +65631,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/service/chapel/main)
+"mWS" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/machinery/jukebox,
+/turf/open/floor/plasteel,
+/area/service/bar)
 "mXi" = (
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain/private)
@@ -119802,7 +119810,7 @@ teZ
 teZ
 wbZ
 hCA
-msI
+mWS
 pzY
 kPZ
 upO

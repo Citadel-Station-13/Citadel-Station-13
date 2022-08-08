@@ -2,7 +2,7 @@
 	name = "Supermatter Surge"
 	typepath = /datum/round_event/supermatter_surge
 	weight = 20
-	max_occurrences = 4
+	max_occurrences = 5
 	earliest_start = 10 MINUTES
 
 /datum/round_event_control/supermatter_surge/canSpawnEvent()
@@ -37,7 +37,7 @@
 
 /datum/round_event/supermatter_surge/start()
 	var/obj/machinery/power/supermatter_crystal/supermatter = GLOB.main_supermatter_engine
-	var/power_proportion = supermatter.powerloss_inhibitor/2 // what % of the power goes into matter power, at most 50%
+	var/power_proportion = supermatter.powerloss_inhibitor * 0.75 // what % of the power goes into matter power, at most 50%
 	// we reduce the proportion that goes into actual matter power based on powerloss inhibitor
 	// primarily so the supermatter doesn't tesla the instant these happen
 	supermatter.matter_power += power * power_proportion

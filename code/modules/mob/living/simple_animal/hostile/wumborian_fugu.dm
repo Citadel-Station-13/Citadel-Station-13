@@ -47,7 +47,7 @@
 	QDEL_NULL(E)
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/fugu/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/asteroid/fugu/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(!wumbo)

@@ -11,7 +11,7 @@
 	max_temperature = 25000
 	wreckage = /obj/structure/mecha_wreckage/odysseus
 	internal_damage_threshold = 35
-	step_energy_drain = 6
+	normal_step_energy_drain = 6
 	infra_luminosity = 6
 	internals_req_access = list(ACCESS_ROBOTICS, ACCESS_MEDICAL)
 

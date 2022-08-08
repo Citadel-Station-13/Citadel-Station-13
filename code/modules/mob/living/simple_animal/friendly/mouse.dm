@@ -29,6 +29,8 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/chew_probability = 1
 	faction = list("rat")
+	vocal_bark_id = "squeak"
+	vocal_pitch = 1.4
 
 /mob/living/simple_animal/mouse/Initialize(mapload)
 	. = ..()

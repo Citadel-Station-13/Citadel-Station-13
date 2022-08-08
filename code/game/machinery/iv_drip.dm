@@ -230,13 +230,13 @@
 
 	if(beaker)
 		if(beaker.reagents && beaker.reagents.reagent_list.len)
-			. += "\t<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>\n"
+			. += "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>\n"
 		else
-			. += "\t<span class='notice'>Attached is an empty [beaker.name].</span>\n"
+			. += "<span class='notice'>Attached is an empty [beaker.name].</span>\n"
 	else
-		. += "\t<span class='notice'>No chemicals are attached.</span>\n"
+		. += "<span class='notice'>No chemicals are attached.</span>\n"
 
-	. += "\t<span class='notice'>[attached ? attached : "No one"] is attached.</span>"
+	. += "<span class='notice'>[attached ? attached : "No one"] is attached.</span>"
 
 /obj/machinery/iv_drip/telescopic
 	name = "telescopic IV drip"

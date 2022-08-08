@@ -5,7 +5,8 @@
 	min_players = 5
 
 /datum/round_event_control/brain_trauma/canSpawnEvent(var/players_amt, var/gamemode)
-	var/list/enemy_roles = list("Medical Doctor","Chief Medical Officer","Paramedic")
+	if(!..()) return FALSE
+	var/list/enemy_roles = list("Medical Doctor","Chief Medical Officer","Paramedic","AI","Chemist","Virologist","Captain","Head of Personnel","Roboticist")
 	for (var/mob/M in GLOB.alive_mob_list)
 		if(M.stat != DEAD && (M.mind?.assigned_role in enemy_roles))
 			return TRUE
