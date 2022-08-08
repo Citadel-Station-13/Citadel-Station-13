@@ -3357,11 +3357,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(spawn_chair) // Makes spawning on the arrivals shuttle more consistent looking
 			wheels.setDir(spawn_chair.dir)
 		wheels.buckle_mob(character)
-	var/datum/component/dullahan/dullahan = character.GetComponent(/datum/component/dullahan)
-	// if you ready up, quirks are assigned first, very stupid
-	if(dullahan && dullahan.dullahan_head && length(dullahan.dullahan_head.name))
-		dullahan.dullahan_head.name = "[character.name]'s head"
-		dullahan.dullahan_head.desc = "the decapitated head of [character.name]"
 
 /datum/preferences/proc/get_default_name(name_id)
 	switch(name_id)

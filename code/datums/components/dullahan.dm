@@ -12,9 +12,8 @@
 
 	dullahan_head = new(get_turf(H))
 
-	if(length(H.name))
-		dullahan_head.name = "[H.name]'s head"
-		dullahan_head.desc = "the decapitated head of [H.name]"
+	update_name()
+
 	dullahan_head.owner = H
 	RegisterSignal(H, COMSIG_LIVING_REGENERATE_LIMBS, .proc/unlist_head)
 
@@ -59,6 +58,16 @@
 	RegisterSignal(dullahan_head, COMSIG_ATOM_HEARER_IN_VIEW, .proc/include_owner)
 
 	dullahan_head.update_appearance()
+
+/datum/component/dullahan/proc/update_name(retries = 0)
+	if(retries > 3)
+		return FALSE
+	var/mob/living/carbon/human/H = parent
+	if(length(H.name))
+		dullahan_head.name = "[H.name]'s head"
+		dullahan_head.desc = "the decapitated head of [H.name]"
+		return TRUE
+	addtimer(CALLBACK(src, .proc/update_name, retries + 1), 2 SECONDS)
 
 /datum/component/dullahan/proc/include_owner(datum/source, list/processing_list, list/hearers)
 	if(!QDELETED(parent))
