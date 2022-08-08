@@ -107,7 +107,7 @@ SUBSYSTEM_DEF(security_level)
 				if(D.red_alert_access)
 					D.visible_message("<span class='notice'>[D] whirrs as it automatically lifts access requirements!</span>")
 					playsound(D, 'sound/machines/boltsup.ogg', 50, TRUE)
-		SEND_SIGNAL(src, COMSIG_SECURITY_LEVEL_CHANGED, selected_level.number_level)
+		SEND_SIGNAL(src, COMSIG_SECURITY_LEVEL_CHANGED, new_level)
 		SSblackbox.record_feedback("tally", "security_level_changes", 1, NUM2SECLEVEL(GLOB.security_level))
 		SSnightshift.check_nightshift()
 	else
