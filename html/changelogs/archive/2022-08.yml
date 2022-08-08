@@ -30,3 +30,21 @@
   Putnam3145:
   - tweak: Untied shoelaces probabilities rework
   - balance: Miner boots are slightly harder to tie/untie now
+2022-08-08:
+  Hatterhat:
+  - tweak: Proto-kinetic crushers and variants can now be renamed via pen.
+  - tweak: Custom descriptions on items tagged with UNIQUE_RENAME can now go to 350
+      characters, up from 140.
+  - tweak: Recoil now pushes your screen in the opposite direction of where you're
+      shooting. It makes sense in context, I swear. Adjust the setting for this in
+      your client prefs, because it defaults to on.
+  Linzolle:
+  - bugfix: catwalk overlays behave properly, appearing on top of cables and such
+  Putnam3145:
+  - tweak: Various gases now have shortened names for filters
+  - balance: Nitric oxide now removes from the power mix like nitrogen/pluoxium do
+  - balance: Nitric oxide now becomes, at most, 20% nitrogen dioxide instead of 50%
+  SandPoot:
+  - bugfix: Fixed the lack of eyes making ERROR appear on people.
+  - qol: Set up for the dmi editor extension, very helpful as you can see the existant
+      states and their names opposed to only images in a huge spritesheet.

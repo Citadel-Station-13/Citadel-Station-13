@@ -1,5 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the lack of eyes making ERROR appear on people."
-  - qol: "Set up for the dmi editor extension, very helpful as you can see the existant states and their names opposed to only images in a huge spritesheet."

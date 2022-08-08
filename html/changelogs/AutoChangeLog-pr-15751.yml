@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - tweak: "Recoil now pushes your screen in the opposite direction of where you're shooting. It makes sense in context, I swear. Adjust the setting for this in your client prefs, because it defaults to on."
