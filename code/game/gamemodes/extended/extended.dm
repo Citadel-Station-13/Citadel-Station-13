@@ -30,4 +30,4 @@
 /datum/game_mode/extended/announced/send_intercept(report = 0)
 	if(flipseclevel) //CIT CHANGE - allows the sec level to be flipped roundstart
 		return ..()
-	priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", "commandreport")
+	priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", SSstation.announcer.get_rand_report_sound())

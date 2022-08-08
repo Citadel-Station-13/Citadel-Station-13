@@ -15,7 +15,6 @@
 		GAS_BZ=0.1,
 		GAS_BROMINE=0.1
 	)
-	restricted_chance = 30
 
 	minimum_pressure = HAZARD_LOW_PRESSURE + 10
 	maximum_pressure = LAVALAND_EQUIPMENT_EFFECT_PRESSURE - 1
@@ -62,7 +61,7 @@
 		GAS_METHYL_BROMIDE=0.1,
 		GAS_HYDROGEN=0.1
 	)
-	restricted_chance = 10
+	restricted_chance = 5
 
 	minimum_pressure = HAZARD_LOW_PRESSURE + 10
 	maximum_pressure = LAVALAND_EQUIPMENT_EFFECT_PRESSURE - 1

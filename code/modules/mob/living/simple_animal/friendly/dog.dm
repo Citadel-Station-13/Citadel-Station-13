@@ -366,6 +366,8 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 	return valid
 
+
+
 /mob/living/simple_animal/pet/dog/corgi/proc/update_corgi_fluff()
 	// First, change back to defaults
 	name = real_name

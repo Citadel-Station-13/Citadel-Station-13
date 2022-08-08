@@ -878,9 +878,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 	sound_environment = SOUND_AREA_WOODFLOOR
 
-// /area/service/bar/Initialize(mapload)
-// 	. = ..()
-// 	GLOB.bar_areas += src
+/area/service/bar/Initialize(mapload)
+	. = ..()
+	GLOB.bar_areas += src
 
 /area/service/bar/atrium
 	name = "Atrium"
