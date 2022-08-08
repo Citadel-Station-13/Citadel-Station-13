@@ -37,7 +37,7 @@
 		// if(PIRATES_DUTCHMAN)
 		// 	ship_name = "Flying Dutchman"
 
-	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", "commandreport")
+	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", SSstation.announcer.get_rand_report_sound())
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
 		payoff = max(payoff_min, FLOOR(D.account_balance * 0.80, 1000))
