@@ -87,6 +87,7 @@
 	actions_types = list(/datum/action/item_action/organ_action/dullahan)
 	zone = "abstract"
 	tint = INFINITY // used to switch the vision perspective to the head on species_gain().
+	organ_flags = ORGAN_NO_SPOIL | ORGAN_NO_DISMEMBERMENT
 
 /obj/item/dullahan_head
 	name = "coders lament"
@@ -180,8 +181,10 @@
 		var/mob/living/carbon/human/H = parent
 		var/obj/item/organ/eyes/new_eyes = new H.dna.species.mutanteyes()
 		var/obj/item/organ/brain/new_brain = new H.dna.species.mutant_brain()
+		var/obj/item/organ/tongue/new_tongue = new H.dna.species.mutanttongue()
 		var/obj/item/organ/eyes/old_eyes = H.getorganslot(ORGAN_SLOT_EYES)
 		var/obj/item/organ/brain/old_brain = H.getorganslot(ORGAN_SLOT_BRAIN)
+		var/obj/item/organ/tongue/old_tongue = H.getorganslot(ORGAN_SLOT_TONGUE)
 
 		old_brain.Remove(TRUE,TRUE)
 		QDEL_NULL(old_brain)
@@ -190,4 +193,8 @@
 		old_eyes.Remove(TRUE,TRUE)
 		QDEL_NULL(old_eyes)
 		new_eyes.Insert(H, TRUE, TRUE)
+
+		old_tongue.Remove(TRUE,TRUE)
+		QDEL_NULL(old_tongue)
+		new_tongue.Insert(H, TRUE, TRUE)
 	. = ..()
