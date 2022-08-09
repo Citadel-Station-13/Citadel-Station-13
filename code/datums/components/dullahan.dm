@@ -96,6 +96,7 @@
 	// this is for keeping track of the overlays because you can't read the actual overlays list as it's a special byond var
 	var/list/overlays_standing
 	var/obj/item/organ/brain/B
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/dullahan_head/Destroy()
 	B.Remove()
