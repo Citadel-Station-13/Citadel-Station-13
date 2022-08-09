@@ -48,3 +48,10 @@
   - bugfix: Fixed the lack of eyes making ERROR appear on people.
   - qol: Set up for the dmi editor extension, very helpful as you can see the existant
       states and their names opposed to only images in a huge spritesheet.
+2022-08-09:
+  Putnam3145:
+  - rscadd: 'Adds station traits: Small modifiers that can randomly be chosen each
+      round. They are usually logged in the intercept the station receives early in
+      the round'
+  - refactor: Announcement audio is now stored in a datum to make it easy to add different
+      announcers
