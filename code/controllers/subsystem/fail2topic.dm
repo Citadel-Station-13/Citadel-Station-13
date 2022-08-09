@@ -44,6 +44,11 @@ SUBSYSTEM_DEF(fail2topic)
 /datum/controller/subsystem/fail2topic/Shutdown()
 	DropFirewallRule()
 
+/datum/controller/subsystem/fail2topic/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, rule_name))
+		return FALSE
+	return ..()
+
 /datum/controller/subsystem/fail2topic/CanProcCall(procname)
 	. = ..()
 	if(.)
