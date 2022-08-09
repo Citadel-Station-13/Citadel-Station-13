@@ -103,7 +103,6 @@
 	is_cold()
 	if(organ_flags & ORGAN_FROZEN)
 		return
-	message_admins("fuck you we're killing [owner]")
 	applyOrganDamage(maxHealth * decay_factor * (seconds * 0.5))
 
 /obj/item/organ/proc/can_decay()
@@ -156,7 +155,6 @@
 	if(organ_flags & ORGAN_FAILING || !owner)
 		return FALSE
 	if(organ_flags & ORGAN_SYNTHETIC_EMP) //Synthetic organ has been emped, is now failing.
-		message_admins("emp go brrr")
 		applyOrganDamage(maxHealth * decay_factor)
 		return FALSE
 	if(organ_flags & ORGAN_SYNTHETIC)
@@ -167,7 +165,6 @@
 		///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's satiety
 		healing_amount -= owner.satiety > 0 ? 4 * (maxHealth * healing_factor) * (owner.satiety / MAX_SATIETY) : 0
 		if(healing_amount)
-			message_admins("we um are healing")
 			applyOrganDamage(healing_amount) //to FERMI_TWEAK
 	return TRUE
 
