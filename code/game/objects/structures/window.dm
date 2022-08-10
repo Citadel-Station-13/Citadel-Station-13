@@ -37,6 +37,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	var/real_explosion_block	//ignore this, just use explosion_block
 	var/breaksound = "shatter"
 	var/hitsound = 'sound/effects/Glasshit.ogg'
+	var/bloodied = FALSE	/// If some inconsiderate jerk has had their blood spilled on this window, thus making it cleanable
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	rad_flags = RAD_PROTECT_CONTENTS
 	flags_1 = ON_BORDER_1|DEFAULT_RICOCHET_1
