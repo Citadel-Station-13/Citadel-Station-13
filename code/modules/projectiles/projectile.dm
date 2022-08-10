@@ -193,8 +193,6 @@
 /obj/item/projectile/Initialize(mapload)
 	. = ..()
 	decayedRange = range
-	if(embedding)
-		updateEmbedding()
 
 /**
   * Artificially modified to be called at around every world.icon_size pixels of movement.
@@ -207,6 +205,7 @@
 		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
 	if(embedding)
 		embedding["embed_chance"] += embed_falloff_tile
+		updateEmbedding()
 	if(range <= 0 && loc)
 		on_range()
 
