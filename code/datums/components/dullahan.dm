@@ -100,9 +100,10 @@
 	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/dullahan_head/Destroy()
-	B.Remove()
-	B.forceMove(get_turf(src))
-	owner.gib()
+	if(owner)
+		B.Remove()
+		B.forceMove(get_turf(src))
+		owner.gib()
 	. = ..()
 
 // update head sprite
@@ -115,28 +116,31 @@
 	add_overlay(overlay)
 
 /obj/item/dullahan_head/update_appearance()
-	remove_head_overlays()
-	// to do this without duplicating large amounts of code
-	// it's best to regenerate the head, then remove it once we have the overlays we want
-	owner.regenerate_limb(BODY_ZONE_HEAD, TRUE) // don't heal them
-	owner.regenerate_icons(TRUE) // yes i know it's expensive but do you want me to rewrite our entire overlay system, also block recursive calls here by passing in TRUE (it wont go back to call update_appearance this way)
-	var/obj/item/bodypart/head/head = owner.get_bodypart(BODY_ZONE_HEAD)
-	add_overlay(head.get_limb_icon(FALSE, TRUE, TRUE))
-	for(var/overlay in owner.overlays_standing)
-		if(istype(overlay, /mutable_appearance))
-			var/mutable_appearance/mutable = overlay
-			if(mutable.category == "HEAD")
-				add_head_overlay(mutable)
-		else
-			if(islist(overlay))
-				var/list/list_appearances = overlay
-				for(var/overlay2 in list_appearances)
-					if(istype(overlay2, /mutable_appearance))
-						var/mutable_appearance/mutable = overlay2
-						if(mutable.category == "HEAD")
-							add_head_overlay(mutable)
-	head.drop_limb()
-	qdel(head)
+	if(owner && !HAS_TRAIT(owner, TRAIT_HUMAN_NO_RENDER))
+		remove_head_overlays()
+		// to do this without duplicating large amounts of code
+		// it's best to regenerate the head, then remove it once we have the overlays we want
+		owner.regenerate_limb(BODY_ZONE_HEAD, TRUE) // don't heal them
+		owner.cut_overlays()
+		owner.regenerate_icons(TRUE) // yes i know it's expensive but do you want me to rewrite our entire overlay system, also block recursive calls here by passing in TRUE (it wont go back to call update_appearance this way)
+		var/obj/item/bodypart/head/head = owner.get_bodypart(BODY_ZONE_HEAD)
+		if(head)
+			add_overlay(head.get_limb_icon(FALSE, TRUE, TRUE))
+			for(var/overlay in owner.overlays_standing)
+				if(istype(overlay, /mutable_appearance))
+					var/mutable_appearance/mutable = overlay
+					if(mutable.category == "HEAD")
+						add_head_overlay(mutable)
+				else
+					if(islist(overlay))
+						var/list/list_appearances = overlay
+						for(var/overlay2 in list_appearances)
+							if(istype(overlay2, /mutable_appearance))
+								var/mutable_appearance/mutable = overlay2
+								if(mutable.category == "HEAD")
+									add_head_overlay(mutable)
+			head.drop_limb()
+			qdel(head)
 
 /obj/item/dullahan_head/proc/unlist_head(datum/source, noheal = FALSE, list/excluded_limbs)
 	excluded_limbs |= BODY_ZONE_HEAD // So we don't gib when regenerating limbs.
@@ -173,6 +177,7 @@
 
 /datum/component/dullahan/Destroy()
 	UnregisterSignal(parent, COMSIG_LIVING_REGENERATE_LIMBS)
+	dullahan_head.owner = null
 	qdel(dullahan_head)
 	REMOVE_TRAIT(parent, TRAIT_DULLAHAN, "dullahan_component")
 
@@ -185,6 +190,9 @@
 		var/obj/item/organ/eyes/old_eyes = H.getorganslot(ORGAN_SLOT_EYES)
 		var/obj/item/organ/brain/old_brain = H.getorganslot(ORGAN_SLOT_BRAIN)
 		var/obj/item/organ/tongue/old_tongue = H.getorganslot(ORGAN_SLOT_TONGUE)
+
+		H.regenerate_limb(BODY_ZONE_HEAD, TRUE)
+		H.reset_perspective(H)
 
 		old_brain.Remove(TRUE,TRUE)
 		QDEL_NULL(old_brain)
