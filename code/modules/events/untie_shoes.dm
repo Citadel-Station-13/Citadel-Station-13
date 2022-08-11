@@ -9,7 +9,7 @@
 	fakeable = FALSE
 
 /datum/round_event/untied_shoes/start()
-	var/iterations = 1
+	var/budget = rand(5 SECONDS,20 SECONDS)
 	for(var/mob/living/carbon/C in shuffle(GLOB.alive_mob_list))
 		if(!C.client)
 			continue
@@ -17,12 +17,15 @@
 			continue
 		if (HAS_TRAIT(C,TRAIT_EXEMPT_HEALTH_EVENTS))
 			continue
-		if(!C.shoes || !C.shoes.can_be_tied || C.shoes.tied != SHOES_TIED)
+		if(!C.shoes || !C.shoes.can_be_tied || C.shoes.tied != SHOES_TIED || C.shoes.lace_time > budget)
+			continue
+		if(!is_station_level(C.z) && prob(50))
 			continue
 		if(prob(5))
 			C.shoes.adjust_laces(SHOES_KNOTTED)
+			budget -= C.shoes.lace_time // doubling up on the budget removal on purpose
 		else
 			C.shoes.adjust_laces(SHOES_UNTIED)
-		iterations++
-		if(prob(100/iterations))
+		budget -= C.shoes.lace_time
+		if(budget < 5 SECONDS)
 			return

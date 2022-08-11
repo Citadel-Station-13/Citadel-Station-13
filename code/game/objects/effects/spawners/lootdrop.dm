@@ -2,6 +2,7 @@
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "random_loot"
 	layer = OBJ_LAYER
+	var/spawn_on_init = TRUE
 	var/spawn_on_turf = TRUE
 	var/lootcount = 1		//how many items will be spawned
 	var/lootdoubles = TRUE	//if the same item can be spawned twice
@@ -10,10 +11,19 @@
 
 /obj/effect/spawner/lootdrop/Initialize(mapload)
 	..()
+	if(should_spawn_on_init())
+		spawn_loot()
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/spawner/lootdrop/proc/should_spawn_on_init()
+	return spawn_on_init
+
+/obj/effect/spawner/lootdrop/proc/spawn_loot(lootcount_override)
+	var/lootcount = isnull(lootcount_override) ? src.lootcount : lootcount_override
 	if(loot && loot.len)
 		var/atom/A = spawn_on_turf ? get_turf(src) : loc
 		var/loot_spawned = 0
-		while((lootcount-loot_spawned) && loot.len)
+		while((lootcount-loot_spawned) > 0 && loot.len)
 			var/lootspawn = pickweight(loot)
 			if(!lootdoubles)
 				loot.Remove(lootspawn)
@@ -29,7 +39,6 @@
 					if (loot_spawned)
 						spawned_loot.pixel_x = spawned_loot.pixel_y = ((!(loot_spawned%2)*loot_spawned/2)*-1)+((loot_spawned%2)*(loot_spawned+1)/2*1)
 			loot_spawned++
-	return INITIALIZE_HINT_QDEL
 
 /obj/effect/spawner/lootdrop/bedsheet
 	icon = 'icons/obj/bedsheets.dmi'
@@ -160,6 +169,15 @@
 
 /obj/effect/spawner/lootdrop/maintenance/Initialize(mapload)
 	loot = GLOB.maintenance_loot
+	. = ..()
+
+/obj/effect/spawner/lootdrop/maintenance/spawn_loot(lootcount_override)
+	if(isnull(lootcount_override))
+		if(HAS_TRAIT(SSstation, STATION_TRAIT_FILLED_MAINT))
+			lootcount_override = round(lootcount * 1.5)
+
+		else if(HAS_TRAIT(SSstation, STATION_TRAIT_EMPTY_MAINT))
+			lootcount_override = round(lootcount * 0.5)
 	. = ..()
 
 /obj/effect/spawner/lootdrop/glowstick

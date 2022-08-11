@@ -182,6 +182,12 @@ const GASES = [
     'color': 'red',
   },
   {
+    'id': 'no',
+    'name': 'Nitric Oxide',
+    'label': 'NO',
+    'color': 'red',
+  },
+  {
     'id': 'no2',
     'name': 'Nitryl',
     'label': 'NO₂',
@@ -222,6 +228,24 @@ const GASES = [
     'name': 'Hydrogen',
     'label': 'H₂',
     'color': 'white',
+  },
+  {
+    'id': 'methane',
+    'name': 'Methane',
+    'label': 'CH₄',
+    'color': 'grey',
+  },
+  {
+    'id': 'methyl_bromide',
+    'name': 'Methyl Bromide',
+    'label': 'CH₃Br',
+    'color': 'brown',
+  },
+  {
+    'id': 'qcd',
+    'name': 'Quark Matter',
+    'label': 'QGP',
+    'color': 'pink',
   },
 ];
 

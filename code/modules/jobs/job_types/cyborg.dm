@@ -12,7 +12,7 @@
 	exp_requirements = 120
 	exp_type = EXP_TYPE_CREW
 	considered_combat_role = TRUE
-
+	random_spawns_possible = FALSE
 	starting_modifiers = list(/datum/skill_modifier/job/level/wiring/basic)
 
 	display_order = JOB_DISPLAY_ORDER_CYBORG
@@ -22,8 +22,11 @@
 		CRASH("dynamic preview is unsupported")
 	return H.Robotize(FALSE, latejoin)
 
-/datum/job/cyborg/after_spawn(mob/living/silicon/robot/R, mob/M)
-	R.updatename(M.client)
+/datum/job/cyborg/after_spawn(mob/living/silicon/robot/R, client/player_client)
+	. = ..()
+	if(!istype(R))
+		return
+	R.updatename(player_client)
 	R.gender = NEUTER
 
 /datum/job/cyborg/radio_help_message(mob/M)

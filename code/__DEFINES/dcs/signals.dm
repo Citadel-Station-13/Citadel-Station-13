@@ -21,6 +21,12 @@
 #define COMSIG_GLOB_PLAY_CINEMATIC "!play_cinematic"
 	#define COMPONENT_GLOB_BLOCK_CINEMATIC 1
 
+/// job subsystem has spawned and equipped a new mob
+#define COMSIG_GLOB_JOB_AFTER_SPAWN "!job_after_spawn"
+
+/// job datum has been called to deal with the aftermath of a latejoin spawn
+#define COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN "!job_after_latejoin_spawn"
+
 #define COMSIG_GLOB_PRE_RANDOM_EVENT "!pre_random_event"
 	/// Do not allow this random event to continue.
 	#define CANCEL_PRE_RANDOM_EVENT (1<<0)
@@ -670,3 +676,6 @@
 
 // /datum/component/identification signals
 #define COMSIG_IDENTIFICATION_KNOWLEDGE_CHECK "id_knowledge_check"			// (mob/user) - returns a value from ID_COMPONENT_KNOWLEDGE_NONE to ID_COMPONENT_KNOWLEDGE_FULL
+
+///from base of [/datum/component/multiple_lives/proc/respawn]: (mob/respawned_mob, gibbed, lives_left)
+#define COMSIG_ON_MULTIPLE_LIVES_RESPAWN "on_multiple_lives_respawn"
