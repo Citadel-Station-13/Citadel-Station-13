@@ -114,13 +114,11 @@
 			to_chat(user, "<span class='notice'>There are no removable organs in [target]'s [parse_zone(target_zone)]!</span>")
 			return -1
 		else
-			var/list/choices = list()
 			for(var/obj/item/organ/O in organs)
 				O.on_find(user)
 				organs -= O
 				organs[O.name] = O
-				choices[O.name] = image(icon = O.icon, icon_state = O.icon_state)
-			I = show_radial_menu(user, target, choices, require_near = TRUE, tooltips = TRUE)
+			I = show_radial_menu(user, target, organs, require_near = TRUE, tooltips = TRUE)
 			if(I && user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
 				I = organs[I]
 				if(!I)
