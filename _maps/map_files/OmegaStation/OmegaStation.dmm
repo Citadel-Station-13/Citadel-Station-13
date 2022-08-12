@@ -22320,13 +22320,13 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/status_display{
-	pixel_y = 32
-	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/status_display/ai{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/dark/side{
 	dir = 8
 	},
@@ -23041,6 +23041,9 @@
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/status_display/evac{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel/dark/side{
 	dir = 8
 	},
@@ -34691,6 +34694,20 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"bYG" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/machinery/status_display/ai{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/white/corner{
+	dir = 1
+	},
+/area/hallway/secondary/exit)
 "bZq" = (
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible{
 	dir = 8
@@ -34920,6 +34937,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"cYu" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -28
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit)
 "dai" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/firealarm{
@@ -35078,13 +35107,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
-"dZa" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/status_display/evac{
-	pixel_x = -32
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/starboard)
 "dZL" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -35523,20 +35545,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
-"fMf" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/item/radio/intercom{
-	frequency = 1485;
-	name = "Station Intercom (Medbay)";
-	pixel_x = -30
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/aft)
 "fMP" = (
 /obj/structure/grille,
 /turf/open/space/basic,
@@ -36596,23 +36604,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"jMF" = (
-/obj/effect/turf_decal/bot_white/right,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/status_display/ai{
-	pixel_x = 32
-	},
-/turf/open/floor/plasteel/dark,
-/area/command/gateway)
 "jMP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -36644,16 +36635,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/science/mixing)
-"jTh" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch";
-	req_access_txt = "12"
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard)
 "jXc" = (
 /obj/machinery/door/airlock/external{
 	name = "External Airlock";
@@ -36905,13 +36886,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/science/mixing)
-"lbC" = (
-/obj/item/radio/intercom{
-	name = "Station Intercom";
-	pixel_y = 26
-	},
-/turf/closed/wall,
-/area/medical/medbay/zone3)
 "lcW" = (
 /turf/open/floor/wood,
 /area/maintenance/starboard/aft)
@@ -37079,21 +37053,16 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible,
 /turf/open/floor/plating/asteroid/airless,
 /area/asteroid/nearstation)
-"lFU" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -28
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit)
 "lIM" = (
 /turf/closed/wall/rust,
 /area/hallway/primary/aft)
+"lJs" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/status_display/evac{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
 "lMu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -37189,6 +37158,20 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/command/gateway)
+"mje" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/radio/intercom{
+	frequency = 1485;
+	name = "Station Intercom (Medbay)";
+	pixel_x = -30
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft)
 "mkF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
@@ -37238,6 +37221,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
+"mtk" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark/side{
+	dir = 8
+	},
+/area/science/xenobiology)
 "mvB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
@@ -37415,6 +37410,23 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"nul" = (
+/obj/effect/turf_decal/bot_white/right,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/status_display/ai{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/dark,
+/area/command/gateway)
 "nvk" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -37514,20 +37526,6 @@
 /obj/machinery/pool/drain,
 /turf/open/pool,
 /area/maintenance/starboard/aft)
-"nXr" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/machinery/status_display/ai{
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel/white/corner{
-	dir = 1
-	},
-/area/hallway/secondary/exit)
 "oaV" = (
 /obj/structure/grille,
 /obj/machinery/meter,
@@ -37870,18 +37868,6 @@
 /obj/structure/bed,
 /turf/open/floor/wood,
 /area/maintenance/starboard/aft)
-"pus" = (
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/delivery,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark/side{
-	dir = 8
-	},
-/area/science/xenobiology)
 "pvX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -38138,6 +38124,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
+"quy" = (
+/obj/item/radio/intercom{
+	name = "Station Intercom";
+	pixel_y = 26
+	},
+/turf/closed/wall,
+/area/medical/medbay/zone3)
 "qyQ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -38281,16 +38274,6 @@
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/primary/starboard/fore)
-"riz" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/status_display/evac{
-	pixel_y = -32
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/port/aft)
 "rjQ" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/plasteel,
@@ -40834,6 +40817,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
+"tMo" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch";
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "tPn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -79036,7 +79029,7 @@ aMg
 aKM
 aID
 aOU
-riz
+aQc
 ail
 ail
 aFo
@@ -80591,7 +80584,7 @@ bxT
 aYL
 aZH
 bay
-lbC
+quy
 aUn
 aWb
 bdT
@@ -82904,7 +82897,7 @@ aYa
 aYU
 aZQ
 baG
-fMf
+mje
 bbv
 baG
 baG
@@ -86510,7 +86503,7 @@ beL
 nKi
 bfP
 bgp
-pus
+mtk
 bhO
 ibv
 biX
@@ -87505,7 +87498,7 @@ azT
 aAZ
 aCg
 ank
-dZa
+lJs
 aly
 aFX
 aGX
@@ -88272,7 +88265,7 @@ acx
 axf
 oyD
 aRz
-jTh
+tMo
 sJN
 aRz
 aRz
@@ -89564,7 +89557,7 @@ sGy
 sHb
 aRz
 bxM
-lFU
+cYu
 axW
 aae
 sIU
@@ -90077,7 +90070,7 @@ aRz
 aSD
 sHd
 aRz
-nXr
+bYG
 bsC
 sIG
 aRz
@@ -90582,7 +90575,7 @@ bvg
 xMZ
 uIq
 pcD
-jMF
+nul
 kQz
 xWb
 sEQ
