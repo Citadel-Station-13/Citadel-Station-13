@@ -154,12 +154,13 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		update_air_ref(planetary_atmos ? 1 : 2)
 		QDEL_NULL(stashed_air)
 	else
+		flags |= CHANGETURF_RECALC_ADJACENT
 		if(ispath(path,/turf/closed))
-			flags |= CHANGETURF_RECALC_ADJACENT
 			update_air_ref(-1)
 			. = ..()
 		else
 			. = ..()
+			update_air_ref(planetary_atmos ? 1 : 2)
 			if(!istype(air,/datum/gas_mixture))
 				Initalize_Atmos(0)
 
