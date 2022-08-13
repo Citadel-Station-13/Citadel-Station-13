@@ -42,6 +42,7 @@
 			H.hair_style = new_style
 
 		H.update_mutant_bodyparts()
+		H.update_hair()
 
 /obj/structure/mirror/examine_status(mob/user)
 	if(broken)
