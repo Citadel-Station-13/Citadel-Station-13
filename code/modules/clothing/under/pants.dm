@@ -46,7 +46,7 @@
 	desc = "Some tan pants. You look like a white collar worker with these on."
 	icon_state = "tanpants"
 
-/obj/item/clothing/under/pants/polypants/polychromic
+/obj/item/clothing/under/pants/polypants
 	name = "polychromic pants"
 	desc = "Some stylish pair of pants made from polychrome."
 	icon_state = "polypants"
