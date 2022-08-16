@@ -549,6 +549,7 @@
 	var/lube_kind = TURF_WET_LUBE ///What kind of slipperiness gets added to turfs.
 
 /datum/reagent/lube/reaction_turf(turf/open/T, reac_volume)
+	..()
 	if (!istype(T))
 		return
 	if(reac_volume >= 1)
