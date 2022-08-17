@@ -156,11 +156,12 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	else
 		flags |= CHANGETURF_RECALC_ADJACENT
 		if(ispath(path,/turf/closed))
+			. = ..()
 			update_air_ref(-1)
-			. = ..()
 		else
+			qdel(src.air)
+			src.air = null
 			. = ..()
-			air = null
 			Initalize_Atmos(0)
 
 // Take off the top layer turf and replace it with the next baseturf down
