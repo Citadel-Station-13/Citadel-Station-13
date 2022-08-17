@@ -22,7 +22,7 @@
 					return FALSE
 		return 0
 
-/datum/action/innate/limb_regrowth/Activate()
+/datum/action/innate/ability/limb_regrowth/Activate()
 	var/mob/living/carbon/human/H = owner
 	var/list/limbs_to_heal = H.get_missing_limbs()
 	if(!length(limbs_to_heal))

@@ -118,7 +118,7 @@
 	Read_Memory()
 	. = ..()
 
-/mob/living/simple_animal/pet/cat/Runtime/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/pet/cat/Runtime/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(!cats_deployed && SSticker.current_state >= GAME_STATE_SETTING_UP)
@@ -191,7 +191,7 @@
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
 
-/mob/living/simple_animal/pet/cat/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/pet/cat/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(!stat && !buckled && !client)
@@ -285,7 +285,7 @@
 		to_chat(src, "<span class='notice'>Your name is now <b>\"new_name\"</b>!</span>")
 		name = new_name
 
-/mob/living/simple_animal/pet/cat/cak/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/pet/cat/cak/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(stat)

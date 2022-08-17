@@ -376,7 +376,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /*
  * AI - Not really intelligent, but I'm calling it AI anyway.
  */
-/mob/living/simple_animal/parrot/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/parrot/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	//Sprite update for when a parrot gets pulled
@@ -934,7 +934,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if(. && !client && prob(1) && prob(1) && CONFIG_GET(string/chat_squawk_tag)) //Only the one true bird may speak across dimensions.
 		send2chat("A stray squawk is heard... \"[message]\"", CONFIG_GET(string/chat_squawk_tag))
 
-/mob/living/simple_animal/parrot/Polly/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/parrot/Polly/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)

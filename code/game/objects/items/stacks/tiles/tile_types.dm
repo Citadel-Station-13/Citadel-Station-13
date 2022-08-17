@@ -561,4 +561,4 @@
 	singular_name = "catwalk floor tile"
 	desc = "Flooring that shows its contents underneath. Engineers love it!"
 	icon_state = "catwalk_tile"
-	turf_type = /turf/open/floor/plating/catwalk_floor
+	turf_type = /turf/open/floor/catwalk_floor

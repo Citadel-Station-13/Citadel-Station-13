@@ -1,9 +1,17 @@
 /datum/round_event_control/heart_attack
 	name = "Random Heart Attack"
 	typepath = /datum/round_event/heart_attack
-	weight = 20
+	weight = 10
 	max_occurrences = 2
-	min_players = 40 // To avoid shafting lowpop
+	min_players = 10 // To avoid shafting lowpop
+
+/datum/round_event_control/heart_attack/canSpawnEvent(var/players_amt, var/gamemode)
+	if(!..()) return FALSE
+	var/list/enemy_roles = list("Medical Doctor","Chief Medical Officer","Paramedic","Chemist")
+	for (var/mob/M in GLOB.alive_mob_list)
+		if(M.stat != DEAD && (M.mind?.assigned_role in enemy_roles))
+			return TRUE
+	return FALSE
 
 /datum/round_event/heart_attack/start()
 	var/list/heart_attack_contestants = list()

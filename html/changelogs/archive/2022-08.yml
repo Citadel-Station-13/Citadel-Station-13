@@ -1,0 +1,57 @@
+2022-08-01:
+  Putnam3145:
+  - bugfix: rad collectors display the right units now
+  - balance: Stasis beds are now 90% as good as surgery tables for surgery
+2022-08-02:
+  SandPoot:
+  - admin: Alphabetically ordered bitfields for admin editing.
+  - admin: It is now easier to change the flags of turrets.
+  - refactor: Allows for defining bitfields in other files.
+2022-08-03:
+  Putnam3145:
+  - balance: Research bomb "midpoint" at which it's worth exactly 50000 points from
+      240->300
+  - code_imp: doesn't snowflake the bomb cap for linux anymore, servers that need
+      to tweak it can do it themselves (I didn't even put it down right, should be
+      5000 instead of 50000, yikes)
+2022-08-04:
+  MrJWhit:
+  - rscadd: Adds more AI screens on box
+  TripleShades:
+  - qol: Three gateways will no longer lose power via Magical SMES Units
+  timothyteakettle:
+  - rscadd: lets AIs control status displays (vtuber mode)
+2022-08-05:
+  Hatterhat:
+  - tweak: The L6 Squad Automatic Weapon, as used by Syndicate nuclear operatives,
+      now fires 7.12x82mm, with no change in ballistic performance. This has the side
+      effect of making it now capable of utilizing match-grade ammunition, which some
+      would think are mutually incompatible concepts.
+  Putnam3145:
+  - tweak: Untied shoelaces probabilities rework
+  - balance: Miner boots are slightly harder to tie/untie now
+2022-08-08:
+  Hatterhat:
+  - tweak: Proto-kinetic crushers and variants can now be renamed via pen.
+  - tweak: Custom descriptions on items tagged with UNIQUE_RENAME can now go to 350
+      characters, up from 140.
+  - tweak: Recoil now pushes your screen in the opposite direction of where you're
+      shooting. It makes sense in context, I swear. Adjust the setting for this in
+      your client prefs, because it defaults to on.
+  Linzolle:
+  - bugfix: catwalk overlays behave properly, appearing on top of cables and such
+  Putnam3145:
+  - tweak: Various gases now have shortened names for filters
+  - balance: Nitric oxide now removes from the power mix like nitrogen/pluoxium do
+  - balance: Nitric oxide now becomes, at most, 20% nitrogen dioxide instead of 50%
+  SandPoot:
+  - bugfix: Fixed the lack of eyes making ERROR appear on people.
+  - qol: Set up for the dmi editor extension, very helpful as you can see the existant
+      states and their names opposed to only images in a huge spritesheet.
+2022-08-09:
+  Putnam3145:
+  - rscadd: 'Adds station traits: Small modifiers that can randomly be chosen each
+      round. They are usually logged in the intercept the station receives early in
+      the round'
+  - refactor: Announcement audio is now stored in a datum to make it easy to add different
+      announcers

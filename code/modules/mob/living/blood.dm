@@ -30,7 +30,7 @@
 
 
 // Takes care blood loss and regeneration
-/mob/living/carbon/human/handle_blood()
+/mob/living/carbon/human/handle_blood(delta_time, times_fired)
 
 	if(NOBLOOD in dna.species.species_traits || bleedsuppress || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		return
@@ -39,7 +39,7 @@
 		return
 
 	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
-		if(dna.species.handle_blood()) // if this returns TRUE, then the species is not handling blood itself and we can control everything
+		if(dna.species.handle_blood(src, delta_time, times_fired)) // if this returns TRUE, then the species is not handling blood itself and we can control everything
 			if(integrating_blood > 0)
 				var/blood_integrated = max(integrating_blood - 1, 0)
 				var/blood_diff = integrating_blood - blood_integrated
@@ -371,27 +371,6 @@
 	var/obj/effect/decal/cleanable/oil/B = locate() in T.contents
 	if(!B)
 		B = new(T)
-
-//This is a terrible way of handling it.
-/mob/living/proc/ResetBloodVol()
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if (HAS_TRAIT(src, TRAIT_HIGH_BLOOD))
-			blood_ratio = 1.2
-			H.handle_blood()
-			return
-		blood_ratio = 1
-		H.handle_blood()
-		return
-	blood_ratio = 1
-
-/mob/living/proc/AdjustBloodVol(value)
-	if(blood_ratio == value)
-		return
-	blood_ratio = value
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		H.handle_blood()
 
 /mob/living/proc/adjust_integration_blood(value, remove_actual_blood, force)
     if(integrating_blood +  value < 0 && remove_actual_blood)
