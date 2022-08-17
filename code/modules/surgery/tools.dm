@@ -105,6 +105,7 @@
 	attack_verb = list("burnt")
 	tool_behaviour = TOOL_CAUTERY
 	toolspeed = 1
+	heat = 3500
 
 /obj/item/cautery/attack(mob/living/L, mob/user)
 	if(user.a_intent == INTENT_HELP)
@@ -159,6 +160,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "surgicaldrill_a"
 	hitsound = 'sound/items/welder.ogg'
+	heat = 3500
 
 /obj/item/surgicaldrill/advanced/Initialize(mapload)
 	. = ..()
@@ -234,6 +236,7 @@
 	toolspeed = 0.7
 	light_color = LIGHT_COLOR_GREEN
 	sharpness = SHARP_POINTY
+	heat = 3500
 
 /obj/item/scalpel/advanced/Initialize(mapload)
 	. = ..()
