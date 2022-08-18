@@ -126,7 +126,7 @@
 	icon_state = "greenglow"
 	beauty = -300
 	mergeable_decal = TRUE
-	persistent = TRUE
+	persistent = FALSE
 
 /obj/effect/decal/cleanable/greenglow/Initialize(mapload)
 	. = ..()
