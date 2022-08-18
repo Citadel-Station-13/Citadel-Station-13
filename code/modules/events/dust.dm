@@ -28,5 +28,8 @@
 	announceWhen = 0
 	fakeable = FALSE
 
+/datum/round_event/sandstorm/announce(fake)
+	priority_announce("The station is passing through a heavy debris cloud. Watch out for breaches.", "Collision Alert")
+
 /datum/round_event/sandstorm/tick()
 	spawn_meteors(rand(6,10), GLOB.meteorsC)
