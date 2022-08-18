@@ -19,7 +19,7 @@
 	typepath = /datum/round_event/sandstorm
 	weight = 5
 	max_occurrences = 1
-	min_players = 5
+	min_players = 10
 	earliest_start = 20 MINUTES
 
 /datum/round_event/sandstorm
@@ -29,4 +29,4 @@
 	fakeable = FALSE
 
 /datum/round_event/sandstorm/tick()
-	spawn_meteors(10, GLOB.meteorsC)
+	spawn_meteors(rand(6,10), GLOB.meteorsC)
