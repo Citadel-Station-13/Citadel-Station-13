@@ -25228,13 +25228,16 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/virology{
-	name = "Virology Access";
-	req_access_txt = "39"
-	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
+	},
+/obj/machinery/door/airlock/virology{
+	autoclose = 0;
+	frequency = 1449;
+	id_tag = "virology_airlock_interior";
+	name = "Virology Interior Airlock";
+	req_access_txt = "39"
 	},
 /turf/open/floor/plasteel,
 /area/medical/virology)
@@ -26273,13 +26276,16 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/virology{
-	name = "Virology Access";
-	req_access_txt = "39"
-	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
+	},
+/obj/machinery/door/airlock/virology{
+	autoclose = 0;
+	frequency = 1449;
+	id_tag = "virology_airlock_exterior";
+	name = "Virology Exterior Airlock";
+	req_access_txt = "39"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -35859,6 +35865,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/dark/corner{
 	dir = 1
 	},
@@ -37545,13 +37552,6 @@
 	},
 /turf/open/floor/plasteel/dark/corner,
 /area/maintenance/disposal/incinerator)
-"nWW" = (
-/obj/item/radio/intercom{
-	name = "Station Intercom";
-	pixel_y = 26
-	},
-/turf/closed/wall,
-/area/medical/medbay/zone3)
 "nXb" = (
 /obj/machinery/pool/drain,
 /turf/open/pool,
@@ -80681,7 +80681,7 @@ bxT
 aYL
 aZH
 bay
-nWW
+aSh
 aUn
 aWb
 bdT
