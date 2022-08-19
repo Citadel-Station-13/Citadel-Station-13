@@ -87,3 +87,11 @@
       belt goes to the shuttle'
   - tweak: '[Omega] Engineering Secure Storage button is now in Chief Engineer''s
       office'
+2022-08-19:
+  BlueWildrose:
+  - balance: Removes persistence from the cleanable glowing goo. It'll no longer last
+      between rounds.
+  TripleShades:
+  - rscadd: '[Omega] One decal to better indicate Turbine area'
+  - rscdel: '[Omega] Duplicate leftover intercom'
+  - bugfix: '[Omega] Virology Airlock access buttons should actually work'

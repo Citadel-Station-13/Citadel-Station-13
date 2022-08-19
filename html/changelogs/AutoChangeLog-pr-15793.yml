@@ -1,6 +1,0 @@
-author: "TripleShades"
-delete-after: True
-changes: 
-  - rscadd: "[Omega] One decal to better indicate Turbine area"
-  - rscdel: "[Omega] Duplicate leftover intercom"
-  - bugfix: "[Omega] Virology Airlock access buttons should actually work"

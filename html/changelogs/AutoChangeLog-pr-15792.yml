@@ -1,4 +1,0 @@
-author: "BlueWildrose"
-delete-after: True
-changes: 
-  - balance: "Removes persistence from the cleanable glowing goo. It'll no longer last between rounds."
