@@ -911,7 +911,8 @@
 		user.active_storage.ui_show(user)
 	return TRUE
 
-/atom/proc/get_dumping_location(obj/item/storage/source,mob/user)
+///Get the best place to dump the items contained in the source storage item?
+/atom/proc/get_dumping_location()
 	return null
 
 //This proc is called on the location of an atom when the atom is Destroy()'d
