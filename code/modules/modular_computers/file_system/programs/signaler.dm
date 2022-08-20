@@ -57,8 +57,11 @@
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/turf/T = get_turf(src)
 
+	if(!istype(T))
+		T = get_turf(usr)
+
 	var/logging_data
-	if(usr)
+	if(usr && T)
 		logging_data = "[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(signal_frequency)]/[signal_code]"
 		GLOB.lastsignalers.Add(logging_data)
 
