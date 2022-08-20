@@ -1,0 +1,8 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes: 
+  - imageadd: "crushers"
+  - imageadd: "glaives"
+  - imageadd: "drills"
+  - imageadd: "mining scammers"
+  - imageadd: "my mom"
