@@ -53,7 +53,7 @@
 	item_state = "polypants"
 	var/list/poly_colors = list("#75634F", "#3D3D3D", "#575757")
 
-/obj/item/clothing/under/pants/polypants/polychromic/ComponentInitialize()
+/obj/item/clothing/under/pants/polypants/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/polychromic, poly_colors, 3)
 
