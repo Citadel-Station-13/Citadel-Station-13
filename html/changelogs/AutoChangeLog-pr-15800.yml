@@ -1,0 +1,4 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - tweak: "Infinite blood trails are no longer possible"
