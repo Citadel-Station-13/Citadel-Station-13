@@ -35,11 +35,14 @@
 
 GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
 
-/datum/job/officer/after_spawn(mob/living/carbon/human/H, mob/M)
+/datum/job/officer/after_spawn(mob/living/spawned, client/player_client, latejoin = FALSE)
 	. = ..()
+	if(!ishuman(spawned))
+		return
+	var/mob/living/carbon/human/H = spawned
 	// Assign department security
 	var/department
-	if(M && M.client && M.client.prefs)
+	if(player_client?.prefs)
 		department = M.client.prefs.prefered_security_department
 		if(!LAZYLEN(GLOB.available_depts) || department == "None")
 			return
