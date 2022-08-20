@@ -405,6 +405,8 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_ALL_PROCESS
 	overdose_threshold = 60
+	boiling_point = T0C+100
+	gas = GAS_H2O
 	taste_description = "sweetness and salt"
 	var/extra_regen = 0.25 // in addition to acting as temporary blood, also add this much to their actual blood per tick
 	var/last_added = 0
@@ -691,6 +693,7 @@
 	description = "Rapidly restores oxygen deprivation as well as preventing more of it to an extent. Causes jittering."
 	reagent_state = LIQUID
 	color = "#00FFFF"
+	boiling_point = 300
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	pH = 2
 

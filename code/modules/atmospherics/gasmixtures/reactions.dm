@@ -86,7 +86,7 @@
 	min_requirements[R.get_gas()] = MOLES_GAS_VISIBLE
 	name = "[R.name] condensation"
 	id = "[R.type] condensation"
-	condensing_reagent = R
+	condensing_reagent = GLOB.chemical_reagents_list[R.type]
 	exclude = FALSE
 
 /datum/gas_reaction/condensation/react(datum/gas_mixture/air, datum/holder)
@@ -101,7 +101,10 @@
 	var/G = condensing_reagent.get_gas()
 	var/amt = air.get_moles(G)
 	air.adjust_moles(G, -min(initial(condensing_reagent.condensation_amount), amt))
-	reagents_holder.add_reagent(condensing_reagent, amt)
+	if(air.get_moles(G) < MOLES_GAS_VISIBLE)
+		amt += air.get_moles(G)
+		air.set_moles(G, 0.0)
+	reagents_holder.add_reagent(condensing_reagent.type, amt)
 	. = REACTING
 	for(var/atom/movable/AM in location)
 		if(location.intact && AM.level == 1)

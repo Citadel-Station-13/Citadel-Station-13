@@ -266,24 +266,27 @@
 /datum/reagent/water/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T))
 		return
-	var/CT = cooling_temperature
+	if(holder?.chem_temp > T0C + 100)
+		T.atmos_spawn_air("[GAS_H2O]=[reac_volume/molarity];TEMP=[holder.chem_temp]")
+	else
+		var/CT = cooling_temperature
 
-	if(reac_volume >= 5)
-		T.MakeSlippery(TURF_WET_WATER, 10 SECONDS, min(reac_volume*1.5 SECONDS, 60 SECONDS))
+		if(reac_volume >= 5)
+			T.MakeSlippery(TURF_WET_WATER, 10 SECONDS, min(reac_volume*1.5 SECONDS, 60 SECONDS))
 
-	for(var/mob/living/simple_animal/slime/M in T)
-		M.apply_water()
+		for(var/mob/living/simple_animal/slime/M in T)
+			M.apply_water()
 
-	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
-	if(hotspot && !isspaceturf(T))
-		if(T.air)
-			var/datum/gas_mixture/G = T.air
-			G.set_temperature(max(min(G.return_temperature()-(CT*1000),G.return_temperature()/CT),TCMB))
-			G.react(src)
-			qdel(hotspot)
-	var/obj/effect/acid/A = (locate(/obj/effect/acid) in T)
-	if(A)
-		A.acid_level = max(A.acid_level - reac_volume*50, 0)
+		var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
+		if(hotspot && !isspaceturf(T))
+			if(T.air)
+				var/datum/gas_mixture/G = T.air
+				G.set_temperature(max(min(G.return_temperature()-(CT*1000),G.return_temperature()/CT),TCMB))
+				G.react(src)
+				qdel(hotspot)
+		var/obj/effect/acid/A = (locate(/obj/effect/acid) in T)
+		if(A)
+			A.acid_level = max(A.acid_level - reac_volume*50, 0)
 
 /*
  *	Water reaction to an object
@@ -542,9 +545,11 @@
 	chemical_flags = REAGENT_ALL_PROCESS
 	color = "#009CA8" // rgb: 0, 156, 168
 	taste_description = "cherry" // by popular demand
+	boiling_point = 330
 	var/lube_kind = TURF_WET_LUBE ///What kind of slipperiness gets added to turfs.
 
 /datum/reagent/lube/reaction_turf(turf/open/T, reac_volume)
+	..()
 	if (!istype(T))
 		return
 	if(reac_volume >= 1)
@@ -1304,6 +1309,8 @@
 	taste_description = "sourness"
 	boiling_point = T0C+50
 	pH = 5.5
+	molarity = 1
+	condensation_amount = MOLES_GAS_VISIBLE_STEP
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, reac_volume)
 	if(istype(O, /obj/effect/decal/cleanable)  || istype(O, /obj/item/projectile/bullet/reusable/foam_dart) || istype(O, /obj/item/ammo_casing/caseless/foam_dart))
@@ -1848,6 +1855,15 @@
 	reagent_state = LIQUID
 	taste_description = "solvent"//It's neutral though..?
 	color = "#e6e6e6"
+	boiling_point = 329.2
+
+/datum/reagent/acetone/define_gas()
+	var/datum/gas/G = ..()
+	G.fire_burn_rate = 1 / 4
+	G.fire_products = list(GAS_H2O = 3, GAS_CO2 = 3)
+	G.enthalpy = -217100
+	G.fire_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
+	return G
 
 /datum/reagent/colorful_reagent
 	name = "Colorful Reagent"
@@ -1979,6 +1995,7 @@
 	reagent_state = LIQUID
 	color = "#A70FFF"
 	taste_description = "dryness"
+	boiling_point = 310
 	pH = 10.7
 	value = REAGENT_VALUE_UNCOMMON
 
@@ -2245,6 +2262,7 @@
 	color = "#AAAAAA55"
 	taste_description = "water"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	boiling_point = 325
 	value = REAGENT_VALUE_RARE
 	pH = 15
 
@@ -2484,6 +2502,8 @@
 	reagent_state = LIQUID
 	color = "#FFFFFF" // rgb: 255, 255, 255
 	can_synth = FALSE
+	// you know i wouldn't
+	// boiling_point = T0C + 100
 	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 	var/decal_path = /obj/effect/decal/cleanable/semen
 
