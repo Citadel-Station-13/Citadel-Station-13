@@ -95,3 +95,11 @@
   - rscadd: '[Omega] One decal to better indicate Turbine area'
   - rscdel: '[Omega] Duplicate leftover intercom'
   - bugfix: '[Omega] Virology Airlock access buttons should actually work'
+2022-08-20:
+  Putnam3145:
+  - bugfix: Stake (maybe)
+  - bugfix: Caches the auxmos file if found
+  - balance: Sandstorm now happens less often, tends to be less powerful and is announced.
+  zeroisthebiggay:
+  - tweak: cauteries searing tools and energy scalpels now have heat and can be used
+      to light cigarettes
