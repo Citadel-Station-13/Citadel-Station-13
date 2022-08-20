@@ -1,0 +1,6 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes: 
+  - imageadd: "new ninja sprites"
+  - imageadd: "makes the long gloves look more like their normal counterparts"
+  - imageadd: "mauler gauntlets have lost a grand total of three pixels in order to make them slimmer"
