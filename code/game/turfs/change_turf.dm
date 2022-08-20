@@ -151,17 +151,18 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			return
 		var/turf/open/newTurf = .
 		newTurf.air.copy_from(stashed_air)
-		update_air_ref(planetary_atmos ? 1 : 2)
+		newTurf.update_air_ref(planetary_atmos ? 1 : 2)
 		QDEL_NULL(stashed_air)
 	else
+		flags |= CHANGETURF_RECALC_ADJACENT
 		if(ispath(path,/turf/closed))
-			flags |= CHANGETURF_RECALC_ADJACENT
-			update_air_ref(-1)
 			. = ..()
+			var/turf/open/newTurf = .
+			newTurf.update_air_ref(-1)
 		else
 			. = ..()
-			if(!istype(air,/datum/gas_mixture))
-				Initalize_Atmos(0)
+			var/turf/open/newTurf = .
+			newTurf.Initalize_Atmos(0)
 
 // Take off the top layer turf and replace it with the next baseturf down
 /turf/proc/ScrapeAway(amount=1, flags)
