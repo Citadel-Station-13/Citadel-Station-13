@@ -770,6 +770,12 @@
 	total_mass_on = 5
 	attack_speed = 0
 	attack_unwieldlyness = CLICK_CD_MELEE * 0.5
+	/// how much stamina does it cost to roll?
+	var/roll_stamcost = 15
+	/// how far are we rolling?
+	var/roll_range = 3
+	/// do you spin when dodgerolling
+	var/roll_orientation = TRUE
 
 /obj/item/melee/transforming/cleaving_saw/examine(mob/user)
 	. = ..()
@@ -815,6 +821,11 @@
 	else
 		B.add_stacks(bleed_stacks_per_hit)
 
+/obj/item/melee/transforming/cleaving_saw/AltClick(mob/user)
+	. = ..()
+	roll_orientation = !roll_orientation
+	to_chat(user, span_notice("You are now [roll_orientation ? "rolling" : "quick-stepping"] when you dodge. (This only affects if you spin or not during a dodge.)"))
+
 /obj/item/melee/transforming/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
 		if(!active)
@@ -833,6 +844,43 @@
 				if(user.Adjacent(L) && L.density)
 					melee_attack_chain(user, L)
 		swiping = FALSE
+
+/obj/item/melee/transforming/cleaving_saw/alt_pre_attack(atom/A, mob/living/user, params)
+	return TRUE // Let's dance.
+
+/obj/item/melee/transforming/cleaving_saw/altafterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
+	if(user.IsImmobilized()) // no free dodgerolls
+		return
+	var/turf/where_to = get_turf(target)
+	user.apply_damage(damage = roll_stamcost, damagetype = STAMINA)
+	user.Immobilize(0.8 SECONDS) // you dont get to adjust your roll
+	user.throw_at(where_to, range = roll_range, speed = 1, force = MOVE_FORCE_NORMAL, spin = roll_orientation)
+	user.apply_status_effect(/datum/status_effect/dodgeroll_iframes)
+	playsound(user, 'sound/effects/body-armor-rolling.ogg', 50, FALSE)
+	return ..()
+
+/datum/status_effect/dodgeroll_iframes
+	id = "dodgeroll_dodging"
+	alert_type = null
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 0.8 SECONDS // worth tweaking?
+
+/datum/status_effect/dodgeroll_iframes/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_LIVING_RUN_BLOCK, .proc/trolled)
+
+/datum/status_effect/dodgeroll_iframes/on_remove()
+	UnregisterSignal(owner, list(
+		COMSIG_LIVING_RUN_BLOCK
+		))
+	return ..()
+
+/datum/status_effect/dodgeroll_iframes/proc/trolled(mob/living/source, real_attack, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)
+	SIGNAL_HANDLER
+	owner.balloon_alert_to_viewers("missed!")
+	playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	return_list[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_PASSTHROUGH
+	return BLOCK_SUCCESS | BLOCK_SHOULD_REDIRECT | BLOCK_TARGET_DODGED
 
 //Dragon
 
