@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - rscadd: "Cleaving saws now have a Certified FromSoft Classic mechanic: dodge-rolling. Combat mode RMB with it inhand to use."
