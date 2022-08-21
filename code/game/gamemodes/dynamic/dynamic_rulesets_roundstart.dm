@@ -1,5 +1,5 @@
 
-/datum/dynamic_ruleset/roundstart/solo
+/datum/dynamic_ruleset/roundstart/on_station
 	weight = 0
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	minimum_players = INFINITY // it's abstract
