@@ -5,9 +5,7 @@
 /area/survivalpod/nonpowered)
 "dH" = (
 /obj/machinery/chem_dispenser/drinks/beer{
-	pixel_y = 8;
-	CanAtmosPass = -1;
-	CanAtmosPassVertical = -1s
+	pixel_y = 8
 	},
 /obj/structure/table/plasmaglass,
 /obj/machinery/light{
@@ -76,8 +74,6 @@
 "ko" = (
 /obj/machinery/vending/boozeomat{
 	pixel_y = 32;
-	CanAtmosPass = -1;
-	CanAtmosPassVertical = -1sssssssss;
 	pass_flags = 1
 	},
 /turf/open/floor/festive/wooden/wooden1,
@@ -164,6 +160,13 @@
 /obj/structure/table/wood/fancy/royalblack,
 /obj/item/reagent_containers/food/drinks/bottle/lizardwine,
 /turf/open/floor/carpet/royalblue,
+/area/survivalpod/nonpowered)
+"uo" = (
+/obj/structure/bookcase/random{
+	pixel_y = 32;
+	pass_flags = 1
+	},
+/turf/closed/wall/mineral/titanium/survival/pod,
 /area/survivalpod/nonpowered)
 "uR" = (
 /obj/machinery/light,
@@ -411,7 +414,7 @@ FZ
 pF
 Cj
 pF
-FZ
+uo
 ko
 Cj
 mC
