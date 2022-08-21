@@ -219,13 +219,15 @@
 
 /datum/dynamic_ruleset/midround/autotraitor/trim_candidates()
 	..()
+	candidates = list()
 	for(var/mob/living/player in living_players)
 		if(issilicon(player)) // Your assigned role doesn't change when you are turned into a silicon.
-			living_players -= player
+			continue
 		else if(is_centcom_level(player.z))
-			living_players -= player // We don't autotator people in CentCom
+			continue // We don't autotator people in CentCom
 		else if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
-			living_players -= player // We don't autotator people with roles already
+			continue // We don't autotator people with roles already
+		candidates += player.mind
 
 /datum/dynamic_ruleset/midround/autotraitor/ready(forced = FALSE)
 	if (required_candidates > living_players.len)
@@ -233,12 +235,12 @@
 	return ..()
 
 /datum/dynamic_ruleset/midround/autotraitor/execute()
-	var/mob/M = pick(living_players)
+	var/datum/mind/M = antag_pick(candidates)
 	assigned += M
-	living_players -= M
+	living_players -= M.current
 	var/datum/antagonist/traitor/newTraitor = new
-	M.mind.add_antag_datum(newTraitor)
-	message_admins("[ADMIN_LOOKUPFLW(M)] was selected by the [name] ruleset and has been made into a midround traitor.")
+	M.add_antag_datum(newTraitor)
+	message_admins("[ADMIN_LOOKUPFLW(M.current)] was selected by the [name] ruleset and has been made into a midround traitor.")
 	log_game("DYNAMIC: [key_name(M)] was selected by the [name] ruleset and has been made into a midround traitor.")
 	return TRUE
 
@@ -326,33 +328,33 @@
 
 /datum/dynamic_ruleset/midround/malf/trim_candidates()
 	..()
-	candidates = living_players
+	candidates = list()
 	for(var/mob/living/player in candidates)
 		if(!isAI(player))
-			candidates -= player
 			continue
 
 		if(is_centcom_level(player.z))
-			candidates -= player
 			continue
 
 		if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
-			candidates -= player
+			continue
+		candidates += player.mind
 
 /datum/dynamic_ruleset/midround/malf/execute()
 	if(!candidates || !candidates.len)
 		return FALSE
-	var/mob/living/silicon/ai/M = pick_n_take(candidates)
-	assigned += M.mind
-	var/datum/antagonist/traitor/AI = new
-	M.mind.special_role = antag_flag
-	M.mind.add_antag_datum(AI)
+	var/datum/mind/M = antag_pick(candidates)
+	assigned += M
+	var/datum/antagonist/traitor/malf = new
+	M.special_role = antag_flag
+	M.add_antag_datum(malf)
 	if(prob(MALF_ION_PROB))
+		var/mob/living/silicon/ai = M.current
 		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", "ionstorm")
 		if(prob(REPLACE_LAW_WITH_ION_PROB))
-			M.replace_random_law(generate_ion_law(), list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
+			ai.replace_random_law(generate_ion_law(), list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
 		else
-			M.add_ion_law(generate_ion_law())
+			ai.add_ion_law(generate_ion_law())
 	return TRUE
 
 //////////////////////////////////////////////
@@ -470,7 +472,7 @@
 	flags = HIGH_IMPACT_RULESET
 
 /datum/dynamic_ruleset/midround/ratvar_awakening/acceptable(population=0, threat=0)
-	if (locate(/datum/dynamic_ruleset/roundstart/clockcult) in mode.executed_rules)
+	if (locate(/datum/dynamic_ruleset/roundstart/on_station/clockcult) in mode.executed_rules)
 		return FALSE // Unavailable if clockies exist at round start
 	indice_pop = min(clock_cap.len, round(living_players.len/5)+1)
 	required_candidates = clock_cap[indice_pop]

@@ -87,7 +87,7 @@
 	cost = 20
 	requirements = list(101,101,101,101,50,20,20,20,20,20)
 	flags = HIGH_IMPACT_RULESET
-	blocking_rules = list(/datum/dynamic_ruleset/roundstart/revs)
+	blocking_rules = list(/datum/dynamic_ruleset/roundstart/on_station/revs)
 	var/required_heads_of_staff = 3
 	var/finished = FALSE
 	/// How much threat should be injected when the revolution wins?

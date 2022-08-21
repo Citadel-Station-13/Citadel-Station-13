@@ -196,31 +196,26 @@
 
 /// Checks if candidates are connected and if they are banned or don't want to be the antagonist.
 /datum/dynamic_ruleset/roundstart/trim_candidates()
+	var/list/real_candidates = list()
 	for(var/mob/dead/new_player/candidate_player in candidates)
 		var/client/candidate_client = GET_CLIENT(candidate_player)
 		if (!candidate_client || !candidate_player.mind) // Are they connected?
-			candidates.Remove(candidate_player)
 			continue
 
 		else if(!mode.check_age(candidate_client, minimum_required_age))
-			candidates.Remove(candidate_player)
 			continue
 
 		if(candidate_player.mind.special_role) // We really don't want to give antag to an antag.
-			candidates.Remove(candidate_player)
 			continue
 
 		if(ROLE_NO_ANTAGONISM in candidate_player.client.prefs.be_special)
-			candidates.Remove(candidate_player)
 			continue
 
 		if(antag_flag_override)
 			if(!(HAS_ANTAG_PREF(candidate_player.client, antag_flag_override)))
-				candidates.Remove(candidate_player)
 				continue
 		else
 			if(!(HAS_ANTAG_PREF(candidate_player.client, antag_flag)))
-				candidates.Remove(candidate_player)
 				continue
 
 		// If this ruleset has exclusive_roles set, we want to only consider players who have those
@@ -236,7 +231,9 @@
 			// If they didn't have any of the required job prefs enabled or were banned from all enabled prefs,
 			// they're not eligible for this antag type.
 			if(!exclusive_candidate)
-				candidates.Remove(candidate_player)
+				continue
+		real_candidates += candidate_player.mind
+	candidates = real_candidates
 
 /// Do your checks if the ruleset is ready to be executed here.
 /// Should ignore certain checks if forced is TRUE
