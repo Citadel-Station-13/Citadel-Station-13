@@ -111,11 +111,9 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 				else
 					break
 	if(department)
-		to_chat(M, "<b>You have been assigned to [department]!</b>")
+		to_chat(H, "<b>You have been assigned to [department]!</b>")
 	else
-		to_chat(M, "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>")
-
-
+		to_chat(H, "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>")
 
 /datum/outfit/job/security
 	name = "Security Officer"
