@@ -16,6 +16,7 @@
 #define DISABLE_ARRIVALRATTLE	(1<<13)
 #define COMBOHUD_LIGHTING		(1<<14)
 #define SOUND_BARK				(1<<15)
+#define NO_ANTAG				(1<<16)
 
 #define DEADMIN_ALWAYS				(1<<0)
 #define DEADMIN_ANTAGONIST			(1<<1)
