@@ -5,11 +5,14 @@
 /area/survivalpod/nonpowered)
 "dH" = (
 /obj/machinery/chem_dispenser/drinks/beer{
-	pixel_y = 30;
+	pixel_y = 8;
 	CanAtmosPass = -1;
 	CanAtmosPassVertical = -1s
 	},
 /obj/structure/table/plasmaglass,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
 "fp" = (
@@ -19,7 +22,10 @@
 /turf/open/floor/carpet/royalblue,
 /area/survivalpod/nonpowered)
 "fC" = (
-/obj/structure/bookcase/random,
+/obj/structure/bookcase/random{
+	pixel_y = 32;
+	pass_flags = 1
+	},
 /turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
 "fM" = (
@@ -71,7 +77,8 @@
 /obj/machinery/vending/boozeomat{
 	pixel_y = 32;
 	CanAtmosPass = -1;
-	CanAtmosPassVertical = -1sssssssss
+	CanAtmosPassVertical = -1sssssssss;
+	pass_flags = 1
 	},
 /turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
@@ -134,7 +141,7 @@
 /obj/machinery/camera{
 	dir = 5
 	},
-/turf/open/floor/carpet/royalblue,
+/turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
 "sN" = (
 /obj/structure/rack,
@@ -194,7 +201,7 @@
 /area/survivalpod/nonpowered)
 "BI" = (
 /obj/machinery/chem_dispenser/drinks{
-	pixel_y = 30
+	pixel_y = 8
 	},
 /obj/structure/table/plasmaglass{
 	CanAtmosPass = -1
@@ -306,11 +313,17 @@
 /obj/item/pen/fountain,
 /turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
+"Wk" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/festive/wooden/wooden1,
+/area/survivalpod/nonpowered)
 "Ws" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/carpet/royalblue,
+/turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
 "Xh" = (
 /obj/machinery/door/airlock/survival_pod/glass,
@@ -365,7 +378,7 @@ FZ
 Tc
 iu
 zW
-Cj
+Wk
 zo
 uR
 FZ
@@ -425,7 +438,7 @@ lO
 Cj
 Cj
 Cj
-Cj
+wI
 Cj
 Cj
 Cj
@@ -441,7 +454,7 @@ FZ
 FZ
 FZ
 FZ
-Cj
+Wk
 Cj
 Cj
 FZ
@@ -454,10 +467,10 @@ FZ
 FZ
 fC
 sD
-Vp
+Cj
 Ws
-Vp
-Vp
+Cj
+Cj
 Ro
 FZ
 TQ
