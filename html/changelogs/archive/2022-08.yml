@@ -103,3 +103,40 @@
   zeroisthebiggay:
   - tweak: cauteries searing tools and energy scalpels now have heat and can be used
       to light cigarettes
+2022-08-21:
+  Hatterhat:
+  - tweak: Chief engineers now have expert wiring skills, as befitting a crew member
+      of their assumed caliber. Atmos techs also get more wire skill.
+  - tweak: Research directors now have trained wiring skills, and scientists have
+      basic wiring expertise.
+  - rscadd: 'Cleaving saws now have a Certified FromSoft Classic mechanic: dodge-rolling.
+      Combat mode RMB with it inhand to use.'
+  Linzolle:
+  - rscadd: radial menu to organ manipulation surgery
+  Onule, PositiveEntropy, TetraZeta, Axietheaxolotl, Thgvr, AdipemDragon:
+  - imageadd: Completely resprites all medkits!
+  - imageadd: Completely resprites all medical tools!
+  - imageadd: Removes the clamp sprite and instead creates separate hemostat and retractor
+      inhand sprites!
+  - imageadd: Adds missing inhands for the bonesetter, advanced med tools, tactical
+      medkit, surgical drill and bone gel!
+  Putnam3145:
+  - bugfix: update air ref more aggressively
+  - bugfix: Binary translator key now has a proper description
+  - rscadd: Space lube, drying agent, salbutamol, colorful reagent, drying agent chem
+      gases
+  - bugfix: Signal commander works now
+  - tweak: Infinite blood trails are no longer possible
+  Rohesie:
+  - tweak: Admins and byond users can now set their OOC color to light values and
+      it will save in the preferences.
+  zeroisthebiggay:
+  - imageadd: crushers
+  - imageadd: glaives
+  - imageadd: drills
+  - imageadd: mining scammers
+  - imageadd: my mom
+  - imageadd: new ninja sprites
+  - imageadd: makes the long gloves look more like their normal counterparts
+  - imageadd: mauler gauntlets have lost a grand total of three pixels in order to
+      make them slimmer
