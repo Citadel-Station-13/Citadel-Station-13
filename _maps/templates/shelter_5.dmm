@@ -38,6 +38,10 @@
 /obj/machinery/vending/wallmed,
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/survivalpod/nonpowered)
+"gC" = (
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/festive/wooden/wooden1,
+/area/survivalpod/nonpowered)
 "gG" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
@@ -47,7 +51,7 @@
 "hr" = (
 /obj/machinery/door/airlock/survival_pod/glass,
 /obj/machinery/poweredfans,
-/turf/closed/wall/mineral/titanium/survival/pod,
+/turf/open/floor/pod/dark,
 /area/survivalpod/nonpowered)
 "iu" = (
 /obj/structure/curtain,
@@ -97,6 +101,9 @@
 /area/survivalpod/nonpowered)
 "mN" = (
 /obj/machinery/power/rtg/advanced/fullupgrade,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
 /turf/open/floor/pod/dark,
 /area/survivalpod/nonpowered)
 "oo" = (
@@ -110,7 +117,6 @@
 "pF" = (
 /obj/structure/closet/cabinet,
 /obj/item/clothing/under/misc/bathrobe,
-/obj/structure/closet/cabinet,
 /turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
 "qE" = (
@@ -161,13 +167,6 @@
 /obj/item/reagent_containers/food/drinks/bottle/lizardwine,
 /turf/open/floor/carpet/royalblue,
 /area/survivalpod/nonpowered)
-"uo" = (
-/obj/structure/bookcase/random{
-	pixel_y = 32;
-	pass_flags = 1
-	},
-/turf/closed/wall/mineral/titanium/survival/pod,
-/area/survivalpod/nonpowered)
 "uR" = (
 /obj/machinery/light,
 /turf/open/floor/festive/wooden/wooden1,
@@ -198,6 +197,12 @@
 /obj/structure/dresser,
 /turf/open/floor/carpet/royalblue,
 /area/survivalpod/nonpowered)
+"zp" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/pod/dark,
+/area/survivalpod/nonpowered)
 "zW" = (
 /obj/structure/sign/painting/library,
 /turf/closed/wall/mineral/titanium/survival/pod,
@@ -218,6 +223,12 @@
 /obj/machinery/poweredfans,
 /obj/structure/window/shuttle/survival_pod,
 /turf/open/floor/pod/dark,
+/area/survivalpod/nonpowered)
+"Ec" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/under/misc/bathrobe,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
 "EV" = (
 /obj/structure/table/plasmaglass,
@@ -339,6 +350,9 @@
 "Xy" = (
 /obj/machinery/light,
 /obj/machinery/power/apc/auto_name/south,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
 /turf/open/floor/pod/dark,
 /area/survivalpod/nonpowered)
 "YH" = (
@@ -411,10 +425,10 @@ FZ
 rZ
 xC
 FZ
-pF
+Ec
 Cj
 pF
-uo
+FZ
 ko
 Cj
 mC
@@ -445,7 +459,7 @@ wI
 Cj
 Cj
 Cj
-Cj
+gC
 Cj
 Cj
 Cj
@@ -508,7 +522,7 @@ gG
 FZ
 Fo
 Lv
-Lv
+zp
 FZ
 "}
 (12,1,1) = {"
