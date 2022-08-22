@@ -1,0 +1,866 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ar" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
+	},
+/obj/structure/window/plasma/reinforced,
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/obj/machinery/door/window/survival_pod{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/space)
+"aA" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	icon_state = "red_off";
+	dir = 9
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/space)
+"aY" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/turretid{
+	pixel_x = -30;
+	req_access = null
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/white/full,
+/turf/open/floor/plating,
+/area/space)
+"bS" = (
+/obj/machinery/atmospherics/components/binary/valve/digital,
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"cf" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/sleeper/syndie/fullupgrade,
+/obj/machinery/camera/xray{
+	dir = 8;
+	network = list("customfighter")
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"cA" = (
+/obj/machinery/light,
+/obj/machinery/telecomms/relay/preset/telecomms,
+/obj/machinery/camera/xray{
+	dir = 8;
+	network = list("customfighter")
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"dx" = (
+/obj/machinery/poweredfans,
+/obj/machinery/door/airlock/hatch{
+	id_tag = "caravansyndicate1_bolt";
+	name = "External Airlock";
+	normalspeed = 0;
+	req_access_txt = "150"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/space)
+"er" = (
+/obj/structure/sign/poster/contraband/c20r,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/space)
+"ew" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
+/obj/machinery/camera/xray{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"eQ" = (
+/obj/machinery/shuttle/engine/plasma{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/shuttle/heater{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/shuttle/heater{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/space)
+"fz" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/custom{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"hi" = (
+/obj/effect/turf_decal/stripes/red{
+	dir = 9
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
+/obj/machinery/camera/xray,
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"jJ" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 10
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/space)
+"ka" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"kk" = (
+/obj/machinery/airalarm/syndicate,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/space)
+"ne" = (
+/obj/effect/turf_decal/stripes/red{
+	dir = 4
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/space)
+"nL" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	icon_state = "red_off";
+	dir = 10
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/space)
+"oc" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"oA" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/space)
+"oB" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/general/hidden{
+	dir = 4
+	},
+/obj/machinery/meter,
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"qa" = (
+/obj/machinery/door/airlock/hatch{
+	id_tag = "caravansyndicate1_bolt";
+	name = "External Airlock";
+	normalspeed = 0;
+	req_access_txt = "150"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"qi" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"qW" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
+/obj/machinery/camera/xray{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"sX" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/stripes/red{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/space)
+"tG" = (
+/obj/effect/turf_decal/stripes/red{
+	dir = 5
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/space)
+"uD" = (
+/obj/effect/turf_decal/stripes/red/full,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/camera/xray{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/space)
+"uZ" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/atmospherics/components/binary/valve/digital,
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"vD" = (
+/obj/effect/turf_decal/stripes/red{
+	dir = 6
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/space)
+"vP" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/camera/xray{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/space)
+"vU" = (
+/obj/structure/rack,
+/obj/item/pipe_dispenser,
+/obj/item/pickaxe,
+/obj/item/shuttle_creator,
+/obj/effect/turf_decal/stripes/red,
+/obj/machinery/light,
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"xE" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	name = "tactical chair"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/space)
+"yn" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"yM" = (
+/obj/machinery/door/airlock/hatch{
+	id_tag = "caravansyndicate1_bolt";
+	name = "External Airlock";
+	normalspeed = 0;
+	req_access_txt = "150";
+	icon_state = "closing"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/space)
+"AN" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
+/obj/machinery/door/airlock/hatch{
+	id_tag = "caravansyndicate1_bolt";
+	name = "External Airlock";
+	normalspeed = 0;
+	req_access_txt = "150"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/space)
+"AS" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/rtg/advanced/fullupgrade,
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"Bb" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/manifold/general/hidden{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"Bn" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/obj/structure/window/plasma/reinforced,
+/obj/machinery/door/window/survival_pod{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/space)
+"Cx" = (
+/obj/structure/rack,
+/obj/item/wallframe/apc,
+/obj/item/electronics/apc,
+/obj/item/stock_parts/cell/bluespace,
+/obj/item/stock_parts/cell/bluespace,
+/obj/machinery/camera/xray{
+	dir = 8;
+	network = list("customfighter")
+	},
+/obj/item/storage/toolbox/syndicate{
+	pixel_y = -10
+	},
+/obj/item/stack/cable_coil/cyan,
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"CI" = (
+/obj/effect/turf_decal/stripes/red{
+	dir = 10
+	},
+/obj/machinery/spaceship_navigation_beacon,
+/obj/machinery/camera/xray{
+	dir = 4;
+	network = list("customfighter")
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/space)
+"EA" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/stripes/red,
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/general/hidden{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"ER" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"Ft" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"Gu" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"GN" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/obj/machinery/door/airlock/hatch{
+	id_tag = "caravansyndicate1_bolt";
+	name = "External Airlock";
+	normalspeed = 0;
+	req_access_txt = "150"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/space)
+"Hg" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/binary/valve/digital,
+/turf/open/floor/mineral/plastitanium,
+/area/space)
+"Hu" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/space)
+"HN" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"Ip" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/rtg/advanced/fullupgrade,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"Je" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 9
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/space)
+"KQ" = (
+/obj/structure/sign/warning/radiation,
+/turf/closed/wall/mineral/plastitanium,
+/area/space)
+"Le" = (
+/obj/machinery/computer/camera_advanced{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"LB" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	icon_state = "red_off";
+	dir = 6
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/space)
+"LZ" = (
+/obj/machinery/atmospherics/components/unary/shuttle/heater{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/shuttle/heater{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/shuttle/heater{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/space)
+"Mr" = (
+/obj/machinery/porta_turret/syndicate/energy/heavy{
+	dir = 4;
+	icon_state = "blue_off"
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/space)
+"Nv" = (
+/turf/open/floor/mineral/plastitanium,
+/area/space)
+"NX" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/space)
+"Qh" = (
+/obj/effect/turf_decal/stripes/red{
+	dir = 10
+	},
+/obj/machinery/light,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
+/obj/machinery/camera/xray{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"Rj" = (
+/turf/open/space/basic,
+/area/space)
+"Rv" = (
+/obj/structure/sign/warning/nosmoking/circle,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/space)
+"Sk" = (
+/obj/structure/rack,
+/obj/item/storage/backpack/duffelbag/syndie/x4,
+/obj/effect/turf_decal/stripes/red{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/card/id/syndicate,
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"TM" = (
+/obj/machinery/computer/custom_shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"Vx" = (
+/obj/effect/turf_decal/stripes/red{
+	dir = 9
+	},
+/obj/structure/table/survival_pod,
+/obj/machinery/recharger,
+/obj/machinery/camera/xray{
+	dir = 4;
+	network = list("customfighter")
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/space)
+"VQ" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	icon_state = "red_off";
+	dir = 5
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/space)
+"VW" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/stripes/red{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/general/hidden{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"Wl" = (
+/obj/effect/turf_decal/stripes/red{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/space)
+"ZH" = (
+/obj/structure/sign/poster/contraband/syndicate_recruitment,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/space)
+"ZM" = (
+/obj/structure/sign/poster/contraband/lusty_xenomorph,
+/turf/closed/wall/mineral/plastitanium,
+/area/space)
+
+(1,1,1) = {"
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+NX
+dx
+NX
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+"}
+(2,1,1) = {"
+Rj
+Rj
+Rj
+Rj
+Rj
+eQ
+KQ
+uD
+KQ
+eQ
+Rj
+Rj
+Rj
+Rj
+Rj
+"}
+(3,1,1) = {"
+Rj
+Rj
+Rj
+Rj
+aA
+LZ
+oA
+qa
+oA
+LZ
+nL
+Rj
+Rj
+Rj
+Rj
+"}
+(4,1,1) = {"
+Rj
+eQ
+Rj
+Rj
+NX
+jJ
+uZ
+Bb
+bS
+Je
+NX
+Rj
+Rj
+eQ
+Rj
+"}
+(5,1,1) = {"
+NX
+LZ
+NX
+Rj
+NX
+oA
+cf
+HN
+cA
+oA
+NX
+Rj
+NX
+LZ
+NX
+"}
+(6,1,1) = {"
+NX
+Hu
+NX
+oc
+oc
+oA
+Rv
+AN
+ZM
+oA
+oc
+oc
+NX
+Hu
+NX
+"}
+(7,1,1) = {"
+NX
+Ip
+NX
+Rj
+oA
+ar
+Vx
+sX
+CI
+Bn
+oA
+Rj
+NX
+AS
+NX
+"}
+(8,1,1) = {"
+NX
+qW
+NX
+NX
+kk
+hi
+oc
+ER
+oc
+Qh
+oA
+oA
+NX
+ew
+NX
+"}
+(9,1,1) = {"
+NX
+Ft
+GN
+Hg
+GN
+VW
+ka
+oB
+Gu
+EA
+GN
+Hg
+GN
+yn
+NX
+"}
+(10,1,1) = {"
+NX
+KQ
+NX
+NX
+er
+Sk
+Cx
+oc
+qi
+vU
+ZH
+oA
+NX
+KQ
+NX
+"}
+(11,1,1) = {"
+Rj
+NX
+NX
+Rj
+NX
+tG
+ne
+yM
+Wl
+vD
+oA
+Rj
+NX
+NX
+Rj
+"}
+(12,1,1) = {"
+Rj
+Rj
+Nv
+Nv
+NX
+oA
+vP
+xE
+aY
+oA
+NX
+Nv
+Nv
+Rj
+Rj
+"}
+(13,1,1) = {"
+Rj
+Rj
+Rj
+Rj
+VQ
+NX
+TM
+Le
+fz
+NX
+LB
+Rj
+Rj
+Rj
+Rj
+"}
+(14,1,1) = {"
+Rj
+Rj
+Rj
+Rj
+Rj
+NX
+NX
+NX
+NX
+NX
+Rj
+Rj
+Rj
+Rj
+Rj
+"}
+(15,1,1) = {"
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+NX
+Mr
+NX
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+"}

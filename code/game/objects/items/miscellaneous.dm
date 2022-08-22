@@ -185,6 +185,48 @@
 	pet_name = input(M, "What would you like to name the pet? (leave blank for default name)", "Pet Name")
 	..()
 
+//A kit to go with the canned ship with some limited gear.
+/obj/item/choice_beacon/ship/gear
+	name = "Pilots Beacon"
+	desc = "A bit of gear to help a brand new captain achieve their goals."
+
+/obj/item/choice_beacon/ship/gear/generate_display_names()
+	var/static/list/ship_item
+	if(!ship_item)
+		ship_item = list()
+		var/list/templist = subtypesof(/obj/item/storage/box/ship/gear)
+		for(var/V in templist)
+			var/atom/A = V
+			ship_item[initial(A.name)] = A
+	return ship_item
+
+/obj/item/storage/box/ship/gear/particledefender
+	name = "Particle defender kit"
+
+/obj/item/storage/box/ship/gear/particledefender/PopulateContents()
+	new /obj/item/gun/energy/pumpaction/defender(src)
+	new /obj/item/clothing/head/helmet/space/syndicate/green/dark(src)
+	new /obj/item/clothing/suit/space/syndicate/green/dark(src)
+
+/obj/item/storage/box/ship/gear/pistol
+	name = "Crew & 10mm Pistol kit"
+
+/obj/item/storage/box/ship/gear/pistol/PopulateContents()
+	new /obj/item/storage/box/syndie_kit/pistol(src)
+	new /obj/item/clothing/head/helmet/space/syndicate/orange(src)
+	new /obj/item/clothing/suit/space/syndicate/orange(src)
+	new /obj/item/card/id/syndicate(src)
+	new /obj/item/clothing/head/helmet/space/syndicate/orange(src)
+	new /obj/item/clothing/suit/space/syndicate/orange(src)
+
+/obj/item/storage/box/ship/gear/piratecaptain
+	name = "Pirate Captains Kit"
+
+/obj/item/storage/box/ship/gear/piratecaptain/PopulateContents()
+	new /obj/item/melee/transforming/energy/sword/saber (src)
+	new /obj/item/clothing/head/helmet/space/pirate (src)
+	new /obj/item/clothing/suit/space/pirate (src)
+
 //choice boxes (they just open in your hand instead of making a pod)
 /obj/item/choice_beacon/box
 	name = "choice box (default)"

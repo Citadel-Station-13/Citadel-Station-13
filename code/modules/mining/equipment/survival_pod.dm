@@ -94,6 +94,11 @@
 	name = "penthouse bluespace sheler capsule"
 	desc = "The absolute pinnacle of luxury in terms of survival capsules. While exuberantly expensive it has everything needed to make a small home in lavaland."
 	template_id = "shelter_epsilon"
+
+/obj/item/survivalcapsule/syndicate/cannedship
+	name = "canned ship"
+	desc = "Thanks to recent improvements in bluespace compression by the syndicate, a new product has come onto the market for testing. Now presenting a ship in a can, now with 100% more sodium!"
+	template_id = "canned_ship"
 //Pod objects
 
 //Window

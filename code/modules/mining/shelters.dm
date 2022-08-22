@@ -96,3 +96,14 @@
 	. = ..()
 	whitelisted_turfs = typecacheof(/turf/closed/mineral)
 	banned_objects = typecacheof(/obj/structure/stone_tile)
+
+/datum/map_template/shelter/cannedship
+	name = "Canned Ship"
+	shelter_id = "canned_ship"
+	description = "A syndicate dropship which fits into a can."
+	mappath = "_maps/templates/canned_ship.dmm"
+
+/datum/map_template/shelter/cannedship/New()
+	. = ..()
+	whitelisted_turfs = typecacheof(/turf/closed/mineral)
+	banned_objects = typecacheof(/obj/structure/stone_tile)
