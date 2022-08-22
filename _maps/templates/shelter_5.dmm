@@ -22,7 +22,6 @@
 "fC" = (
 /obj/structure/bookcase/random{
 	pixel_y = 32;
-	pass_flags = 1;
 	density = 0
 	},
 /turf/open/floor/festive/wooden/wooden1,
@@ -78,9 +77,8 @@
 /area/survivalpod/nonpowered)
 "ko" = (
 /obj/machinery/vending/boozeomat{
-	pixel_y = 32;
-	pass_flags = 1;
-	density = 0
+	density = null;
+	pixel_y = 32
 	},
 /turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
