@@ -282,7 +282,7 @@ Works together with spawning an observer, noted above.
 			P.respawn_time_of_death = world.time
 			P.respawn_did_cryo = cryo
 	transfer_ckey(ghost, FALSE)
-	ghost.client.init_verbs()
+	ghost.client?.init_verbs()
 	if(penalize)
 		var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
 		var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
