@@ -39,6 +39,10 @@
 	},
 /turf/open/floor/festive/wooden/wooden2,
 /area/survivalpod/nonpowered)
+"hv" = (
+/obj/machinery/seed_extractor,
+/turf/open/floor/grass,
+/area/survivalpod/nonpowered)
 "hM" = (
 /obj/machinery/light{
 	dir = 1
@@ -365,7 +369,7 @@ WU
 OV
 Ys
 Ys
-Ys
+hv
 Ys
 iB
 Gn
