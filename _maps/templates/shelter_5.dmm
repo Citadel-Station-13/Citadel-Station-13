@@ -108,7 +108,7 @@
 /area/survivalpod/nonpowered)
 "oo" = (
 /obj/structure/table/plasmaglass{
-	density = s
+	density = 1
 	},
 /turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
