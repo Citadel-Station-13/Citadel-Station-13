@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(security_level)
  */
 /datum/controller/subsystem/security_level/proc/set_level(new_level)
 	if(!isnum(new_level))
-		new_level = GLOB.all_security_levels.Find()
+		new_level = SECLEVEL2NUM(new_level)
 
 	//Will not be announced if you try to set to the same level as it already is
 	if(new_level >= SEC_LEVEL_GREEN && new_level <= SEC_LEVEL_DELTA && new_level != GLOB.security_level)

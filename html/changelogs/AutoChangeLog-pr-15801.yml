@@ -1,4 +1,0 @@
-author: "Linzolle"
-delete-after: True
-changes: 
-  - bugfix: "suiciding with a stamina projectile now actually works instead of doing literally nothing"

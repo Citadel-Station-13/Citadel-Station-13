@@ -32,6 +32,7 @@
 					/obj/item/clothing/suit/toggle/labcoat/depjacket/sec = 5,
 					/obj/item/clothing/under/rank/security/officer/util = 5,
 					/obj/item/clothing/under/rank/security/officer/blueshirt/seccorp = 5)
+	contraband = list(/obj/item/clothing/under/rank/security/stripper = 5)
 	premium = list(/obj/item/clothing/under/rank/security/officer/formal = 5,
 					/obj/item/clothing/head/beret/sec/navyofficer = 5)
 	refill_canister = /obj/item/vending_refill/wardrobe/sec_wardrobe
