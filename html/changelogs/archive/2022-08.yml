@@ -140,3 +140,15 @@
   - imageadd: makes the long gloves look more like their normal counterparts
   - imageadd: mauler gauntlets have lost a grand total of three pixels in order to
       make them slimmer
+2022-08-22:
+  zeroisthebiggay:
+  - rscadd: Added polychromatic workout shorts to the loadout and to the clothesmate
+      vendors for various workout procedures.
+2022-08-23:
+  Linzolle:
+  - bugfix: suiciding with a stamina projectile now actually works instead of doing
+      literally nothing
+  Putnam3145:
+  - bugfix: security levels work now
+  TrojanCoyote:
+  - tweak: slight change to sprite
