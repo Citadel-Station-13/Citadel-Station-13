@@ -16,10 +16,9 @@
 /turf/open/floor/mineral/titanium/white,
 /area/survivalpod/nonpowered)
 "cA" = (
-/obj/machinery/computer/arcade/orion_trail{
-	dir = 4
-	},
-/turf/open/floor/festive/wooden/wooden2,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/grass,
 /area/survivalpod/nonpowered)
 "dV" = (
 /obj/machinery/processor,
@@ -60,6 +59,7 @@
 "iU" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/chefhat,
+/obj/machinery/reagentgrinder,
 /turf/open/floor/mineral/titanium/white,
 /area/survivalpod/nonpowered)
 "kX" = (
@@ -113,6 +113,11 @@
 	},
 /turf/open/floor/festive/wooden/wooden2,
 /area/survivalpod/nonpowered)
+"zq" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/beakers/bluespace,
+/turf/open/floor/mineral/titanium/white,
+/area/survivalpod/nonpowered)
 "AN" = (
 /turf/open/floor/plasteel/freezer,
 /area/survivalpod/nonpowered)
@@ -155,6 +160,7 @@
 /area/survivalpod/nonpowered)
 "Gt" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/plasteel/freezer,
 /area/survivalpod/nonpowered)
 "HZ" = (
@@ -186,7 +192,15 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/computer/arcade/orion_trail{
+	dir = 4
+	},
 /turf/open/floor/festive/wooden/wooden2,
+/area/survivalpod/nonpowered)
+"Ma" = (
+/obj/structure/table/reinforced,
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/mineral/titanium/white,
 /area/survivalpod/nonpowered)
 "MX" = (
 /obj/machinery/computer/arcade/battle{
@@ -252,8 +266,6 @@
 /obj/item/storage/box/ingredients/vegetarian,
 /obj/item/storage/box/ingredients/exotic,
 /obj/item/storage/box/ingredients/delights,
-/obj/item/storage/toolbox/electrical,
-/obj/item/clothing/gloves/color/yellow,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -319,8 +331,8 @@ vb
 Gn
 Nl
 mv
+WU
 MX
-cA
 LV
 OV
 Oq
@@ -342,7 +354,7 @@ Ys
 Ys
 Ys
 Ys
-Bk
+cA
 Gn
 "}
 (4,1,1) = {"
@@ -425,7 +437,7 @@ vb
 cp
 UW
 Gc
-KL
+zq
 UW
 OV
 Tl
@@ -468,7 +480,7 @@ vb
 (12,1,1) = {"
 vb
 TA
-KL
+Ma
 VM
 iU
 dV

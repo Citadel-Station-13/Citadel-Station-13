@@ -146,14 +146,6 @@
 	},
 /turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
-"sN" = (
-/obj/structure/rack,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/storage/toolbox/electrical,
-/obj/item/pickaxe,
-/obj/item/shovel,
-/turf/open/floor/pod/dark,
-/area/survivalpod/nonpowered)
 "td" = (
 /obj/machinery/light{
 	dir = 4
@@ -537,7 +529,7 @@ Cj
 td
 FZ
 iD
-sN
+Lv
 mN
 FZ
 "}
