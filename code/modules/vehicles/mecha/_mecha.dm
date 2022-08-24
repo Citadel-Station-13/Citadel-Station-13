@@ -195,6 +195,8 @@
 	diag_hud_set_mechstat()
 	update_icon()
 
+
+
 /obj/vehicle/sealed/mecha/Destroy()
 	if(obj_integrity > 0) //no explody if we have hp remaining!
 		explode_on_death = FALSE

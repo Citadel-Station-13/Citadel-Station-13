@@ -181,6 +181,16 @@
 	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 20, BIO = 100, RAD = 20, FIRE = 60, ACID = 30)
 	resistance_flags = FIRE_PROOF | GOLIATH_WEAKNESS
 
+/obj/item/clothing/head/hooded/explorer/heva/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if (slot == ITEM_SLOT_HEAD)
+		ADD_TRAIT(user, TRAIT_ASHSTORM_IMMUNE, "heva_suit")
+
+/obj/item/clothing/head/hooded/explorer/heva/dropped(mob/living/carbon/human/user)
+	..()
+	if (HAS_TRAIT_FROM(user, TRAIT_ASHSTORM_IMMUNE, "heva_suit"))
+		REMOVE_TRAIT(user, TRAIT_ASHSTORM_IMMUNE, "heva_suit")
+
 /obj/item/clothing/mask/gas/heva
 	name = "HEVA mask"
 	desc = "The Hazardous Environments extra-Vehiclar Activity mask, developed by WanTon & Sons Perilous Mining. \
