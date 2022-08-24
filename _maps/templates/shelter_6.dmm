@@ -13,7 +13,6 @@
 "cp" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
 /turf/open/floor/mineral/titanium/white,
 /area/survivalpod/nonpowered)
 "cA" = (
