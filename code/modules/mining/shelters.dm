@@ -100,7 +100,7 @@
 /datum/map_template/shelter/zeta
 	name = "Shelter zeta"
 	shelter_id = "shelter_zeta"
-	description = "A survival capsule with a garden and kitchen. Used wildly by space fast food joints everywhere."
+	description = "A survival capsule with a garden and kitchen. Commonly used by space fast food joints everywhere."
 	mappath = "_maps/templates/shelter_6.dmm"
 
 /datum/map_template/shelter/zeta/New()
