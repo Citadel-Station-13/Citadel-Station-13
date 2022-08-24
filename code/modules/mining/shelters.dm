@@ -98,8 +98,8 @@
 	banned_objects = typecacheof(/obj/structure/stone_tile)
 
 /datum/map_template/shelter/zeta
-	name = "Shelter Zeta"
-	shelter_id = "shelter_Zeta"
+	name = "Shelter zeta"
+	shelter_id = "shelter_zeta"
 	description = "A survival capsule with a garden and kitchen. Used wildly by space fast food joints everywhere."
 	mappath = "_maps/templates/shelter_6.dmm"
 

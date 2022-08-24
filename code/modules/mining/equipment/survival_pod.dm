@@ -97,7 +97,7 @@
 /obj/item/survivalcapsule/luxury/garden
 	name = "garden & kitchen bluespace shelter capsule"
 	desc = "Everything someone needs to make a home cooked meal while surviving the depths of hell... or space."
-	template_id = "shelter_Zeta"
+	template_id = "shelter_zeta"
 //Pod objects
 
 //Window
