@@ -3,7 +3,7 @@
 	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
 	icon_state = "gas_alt"
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS
-	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	flags_inv = HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_NORMAL
 	item_state = "gas_alt"
 	gas_transfer_coefficient = 0.01
@@ -43,7 +43,7 @@
 	tint = 2
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 55)
 	actions_types = list(/datum/action/item_action/toggle)
-	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
+	flags_inv = HIDEEYES|HIDEFACE
 	flags_cover = MASKCOVERSEYES
 	visor_flags_inv = HIDEEYES
 	visor_flags_cover = MASKCOVERSEYES
@@ -80,6 +80,7 @@
 	name = "clown wig and mask"
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
 	clothing_flags = ALLOWINTERNALS
+	flags_inv = HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	icon_state = "clown"
 	item_state = "clown_hat"
 	dye_color = "clown"
@@ -123,6 +124,7 @@
 	name = "polychromic clown wig and mask"
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
 	clothing_flags = ALLOWINTERNALS
+	flags_inv = HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	icon_state = "clown"
 	item_state = "clown_hat"
 	dye_color = "clown"
