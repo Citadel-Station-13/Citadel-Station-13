@@ -123,13 +123,12 @@
 /area/survivalpod/nonpowered)
 "qE" = (
 /obj/structure/sink{
-	pixel_y = 18
+	pixel_y = 24
+	},
+/obj/structure/mirror{
+	pixel_y = 34
 	},
 /turf/open/floor/mineral/silver,
-/area/survivalpod/nonpowered)
-"rL" = (
-/obj/structure/mirror,
-/turf/closed/wall/mineral/titanium/survival/pod,
 /area/survivalpod/nonpowered)
 "rM" = (
 /obj/structure/chair/sofa/corp/corner{
@@ -408,7 +407,7 @@ lW
 Qr
 "}
 (4,1,1) = {"
-rL
+FZ
 qE
 JL
 fN
