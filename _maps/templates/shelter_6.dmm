@@ -83,7 +83,9 @@
 /turf/open/floor/grass,
 /area/survivalpod/nonpowered)
 "tg" = (
-/obj/structure/closet/secure_closet/hydroponics,
+/obj/structure/closet/secure_closet/hydroponics{
+	req_access = null
+	},
 /obj/machinery/light{
 	dir = 4
 	},
