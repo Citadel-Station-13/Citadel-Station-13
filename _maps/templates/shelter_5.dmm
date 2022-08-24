@@ -55,10 +55,10 @@
 /area/survivalpod/nonpowered)
 "iu" = (
 /obj/structure/curtain,
-/obj/structure/window/reinforced/survival_pod{
+/obj/structure/window/plasma/reinforced/spawner/north,
+/obj/machinery/door/window/survival_pod{
 	dir = 4
 	},
-/obj/structure/window/plasma/reinforced/spawner/north,
 /turf/open/floor/noslip,
 /area/survivalpod/nonpowered)
 "iD" = (
