@@ -768,8 +768,8 @@
 	if(!(GAS_QCD in largest_values))
 		largest_values[GAS_QCD] = 0
 	var/previous_largest = largest_values[GAS_QCD]
-	var/research_amount = amount * QCD_RESEARCH_AMOUNT
-	if(previous_largest < research_amount)
+	var/research_amount = min(amount * QCD_RESEARCH_AMOUNT, 100000)
+	if(previous_largest <= research_amount)
 		SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, research_amount)
 		largest_values[GAS_QCD] = research_amount
 	else
