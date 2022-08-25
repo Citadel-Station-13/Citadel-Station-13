@@ -1,15 +1,24 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bG" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/festive/wooden/wooden1,
+/area/survivalpod/nonpowered)
 "cc" = (
-/obj/machinery/vending/games,
+/obj/machinery/vending/games{
+	pixel_y = 29;
+	density = 0
+	},
 /turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
 "dH" = (
 /obj/machinery/chem_dispenser/drinks/beer{
-	pixel_y = 8
-	},
-/obj/structure/table/plasmaglass,
-/obj/machinery/light{
-	dir = 1
+	pixel_y = 30;
+	density = 0
 	},
 /turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
@@ -35,11 +44,19 @@
 /turf/open/floor/noslip,
 /area/survivalpod/nonpowered)
 "gr" = (
-/obj/machinery/vending/wallmed,
-/turf/closed/wall/mineral/titanium/survival/pod,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/power/rtg/advanced/fullupgrade,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/pod/dark,
 /area/survivalpod/nonpowered)
 "gC" = (
-/obj/machinery/airalarm/directional/east,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
 "gG" = (
@@ -51,13 +68,18 @@
 "hr" = (
 /obj/machinery/door/airlock/survival_pod/glass,
 /obj/machinery/poweredfans,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/pod/dark,
 /area/survivalpod/nonpowered)
 "iu" = (
 /obj/structure/curtain,
-/obj/structure/window/plasma/reinforced/spawner/north,
 /obj/machinery/door/window/survival_pod{
 	dir = 4
+	},
+/obj/structure/window/reinforced/tinted{
+	dir = 1
 	},
 /turf/open/floor/noslip,
 /area/survivalpod/nonpowered)
@@ -75,9 +97,18 @@
 /obj/item/toy/plush/mothplushie,
 /turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
+"jA" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/festive/wooden/wooden1,
+/area/survivalpod/nonpowered)
 "ko" = (
 /obj/machinery/vending/boozeomat{
-	density = null;
+	density = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/festive/wooden/wooden1,
@@ -85,6 +116,9 @@
 "lO" = (
 /obj/machinery/poweredfans,
 /obj/machinery/door/airlock/survival_pod/glass,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/pod/dark,
 /area/survivalpod/nonpowered)
 "lW" = (
@@ -166,6 +200,9 @@
 /area/survivalpod/nonpowered)
 "vU" = (
 /obj/machinery/sleeper/survival_pod,
+/obj/machinery/vending/wallmed{
+	pixel_x = -26
+	},
 /turf/open/floor/pod/dark,
 /area/survivalpod/nonpowered)
 "wv" = (
@@ -202,10 +239,7 @@
 /area/survivalpod/nonpowered)
 "BI" = (
 /obj/machinery/chem_dispenser/drinks{
-	pixel_y = 8
-	},
-/obj/structure/table/plasmaglass{
-	CanAtmosPass = -1
+	pixel_y = 30
 	},
 /turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
@@ -242,8 +276,24 @@
 /obj/machinery/light,
 /turf/open/floor/noslip,
 /area/survivalpod/nonpowered)
+"FT" = (
+/obj/machinery/airalarm/directional/east,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/festive/wooden/wooden1,
+/area/survivalpod/nonpowered)
 "FZ" = (
 /turf/closed/wall/mineral/titanium/survival/pod,
+/area/survivalpod/nonpowered)
+"Gd" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
 "JE" = (
 /obj/structure/table/wood/fancy/royalblack,
@@ -285,15 +335,23 @@
 /obj/item/stack/sheet/mineral/wood/fifty,
 /turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
+"RD" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/festive/wooden/wooden1,
+/area/survivalpod/nonpowered)
 "RH" = (
 /obj/machinery/shower{
 	pixel_y = 18
 	},
-/obj/structure/window/plasma/reinforced/spawner/east,
+/obj/structure/window/reinforced/tinted{
+	dir = 4
+	},
 /turf/open/floor/noslip,
 /area/survivalpod/nonpowered)
 "Tc" = (
-/obj/structure/toilet/secret/high_loot{
+/obj/structure/toilet{
 	dir = 4
 	},
 /turf/open/floor/mineral/silver,
@@ -320,6 +378,12 @@
 /obj/item/pen/fountain,
 /turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
+"VJ" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/carpet/royalblue,
+/area/survivalpod/nonpowered)
 "Wk" = (
 /obj/machinery/light{
 	dir = 1
@@ -338,6 +402,9 @@
 /area/survivalpod/nonpowered)
 "Xr" = (
 /obj/machinery/door/airlock/survival_pod,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/pod/dark,
 /area/survivalpod/nonpowered)
 "Xy" = (
@@ -346,7 +413,18 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/pod/dark,
+/area/survivalpod/nonpowered)
+"YC" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/telecomms/relay/preset/station,
+/obj/item/multitool,
+/turf/open/floor/festive/wooden/wooden1,
 /area/survivalpod/nonpowered)
 "YH" = (
 /obj/machinery/mineral/equipment_vendor,
@@ -445,17 +523,17 @@ FZ
 "}
 (7,1,1) = {"
 lO
-Cj
-Cj
-Cj
-wI
-Cj
-Cj
-Cj
 gC
-Cj
-Cj
-Cj
+gC
+gC
+bG
+gC
+Gd
+gC
+gC
+FT
+gC
+jA
 lO
 "}
 (8,1,1) = {"
@@ -464,8 +542,8 @@ FZ
 FZ
 FZ
 FZ
-Wk
-Cj
+YC
+RD
 Cj
 FZ
 FZ
@@ -480,12 +558,12 @@ sD
 Cj
 Ws
 Cj
-Cj
+RD
 Ro
 FZ
 TQ
 vU
-Lv
+zp
 FZ
 "}
 (10,1,1) = {"
@@ -495,9 +573,9 @@ Vp
 Vp
 wv
 Vp
-Vp
+VJ
 EV
-gr
+FZ
 YH
 fM
 Xy
@@ -510,12 +588,12 @@ Vp
 Vp
 fp
 Vp
-Vp
+VJ
 gG
 FZ
 Fo
 Lv
-zp
+gr
 FZ
 "}
 (12,1,1) = {"
@@ -525,7 +603,7 @@ wI
 Ng
 Vv
 oo
-Cj
+RD
 td
 FZ
 iD
