@@ -220,7 +220,7 @@
 	new /obj/item/clothing/suit/space/syndicate/orange(src)
 
 /obj/item/storage/box/ship/gear/piratecaptain
-	name = "Pirate Captains Kit"
+	name = "Pirate Captain's Kit"
 
 /obj/item/storage/box/ship/gear/piratecaptain/PopulateContents()
 	new /obj/item/melee/transforming/energy/sword/saber (src)
