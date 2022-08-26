@@ -1,0 +1,595 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bn" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/survivalpod/nonpowered)
+"by" = (
+/obj/machinery/power/rtg/advanced/fullupgrade,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/survivalpod/nonpowered)
+"cp" = (
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/mineral/titanium/white,
+/area/survivalpod/nonpowered)
+"cA" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/grass,
+/area/survivalpod/nonpowered)
+"dV" = (
+/obj/machinery/processor,
+/turf/open/floor/mineral/titanium/white,
+/area/survivalpod/nonpowered)
+"ei" = (
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/survivalpod/nonpowered)
+"eP" = (
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/turf/open/floor/festive/wooden/wooden2,
+/area/survivalpod/nonpowered)
+"eS" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/pod/dark,
+/area/survivalpod/nonpowered)
+"fM" = (
+/obj/structure/cable{
+	icon_state = "4-9"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/survivalpod/nonpowered)
+"gO" = (
+/obj/machinery/door/airlock/survival_pod,
+/obj/machinery/poweredfans,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/pod/dark,
+/area/survivalpod/nonpowered)
+"hv" = (
+/obj/machinery/seed_extractor,
+/turf/open/floor/grass,
+/area/survivalpod/nonpowered)
+"hM" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/rack,
+/obj/item/kitchen/knife,
+/obj/item/kitchen/knife/butcher,
+/obj/item/kitchen/rollingpin,
+/obj/item/stack/sheet/mineral/coal/ten,
+/turf/open/floor/mineral/titanium/white,
+/area/survivalpod/nonpowered)
+"iB" = (
+/obj/structure/table/plasmaglass,
+/obj/machinery/smartfridge/disks,
+/turf/open/floor/grass,
+/area/survivalpod/nonpowered)
+"iU" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/head/chefhat,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/mineral/titanium/white,
+/area/survivalpod/nonpowered)
+"kX" = (
+/obj/machinery/icecream_vat,
+/turf/open/floor/plasteel/freezer,
+/area/survivalpod/nonpowered)
+"mv" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/turf/open/floor/festive/wooden/wooden2,
+/area/survivalpod/nonpowered)
+"no" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/survivalpod/nonpowered)
+"oW" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/survivalpod/nonpowered)
+"ru" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/grass,
+/area/survivalpod/nonpowered)
+"tg" = (
+/obj/structure/closet/secure_closet/hydroponics{
+	req_access = null
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/survivalpod/nonpowered)
+"ue" = (
+/obj/machinery/hydroponics/constructable/automagic,
+/turf/open/floor/grass,
+/area/survivalpod/nonpowered)
+"uk" = (
+/obj/structure/table/plasmaglass,
+/obj/machinery/plantgenes,
+/turf/open/floor/grass,
+/area/survivalpod/nonpowered)
+"uC" = (
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/pod/dark,
+/area/survivalpod/nonpowered)
+"vb" = (
+/turf/closed/wall/mineral/titanium/survival,
+/area/survivalpod/nonpowered)
+"wB" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/turf/open/floor/festive/wooden/wooden2,
+/area/survivalpod/nonpowered)
+"zq" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/beakers/bluespace,
+/turf/open/floor/mineral/titanium/white,
+/area/survivalpod/nonpowered)
+"AN" = (
+/turf/open/floor/plasteel/freezer,
+/area/survivalpod/nonpowered)
+"AO" = (
+/obj/item/reagent_containers/food/snacks/soup/wingfangchu,
+/obj/structure/table/bronze,
+/turf/open/floor/pod/dark,
+/area/survivalpod/nonpowered)
+"AW" = (
+/obj/machinery/grill,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/survivalpod/nonpowered)
+"Bk" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/grass,
+/area/survivalpod/nonpowered)
+"Ci" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/freezer,
+/area/survivalpod/nonpowered)
+"Cq" = (
+/turf/open/floor/glass/reinforced,
+/area/survivalpod/nonpowered)
+"CP" = (
+/obj/machinery/light,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/pod/dark,
+/area/survivalpod/nonpowered)
+"DU" = (
+/obj/machinery/door/airlock/survival_pod,
+/obj/machinery/poweredfans,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/pod/dark,
+/area/survivalpod/nonpowered)
+"ET" = (
+/obj/structure/cable{
+	icon_state = "1-6"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/survivalpod/nonpowered)
+"Gc" = (
+/obj/structure/table/reinforced,
+/obj/machinery/microwave,
+/turf/open/floor/mineral/titanium/white,
+/area/survivalpod/nonpowered)
+"Gn" = (
+/obj/structure/window/shuttle/survival_pod,
+/obj/machinery/poweredfans,
+/turf/open/floor/pod/dark,
+/area/survivalpod/nonpowered)
+"Gt" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/plasteel/freezer,
+/area/survivalpod/nonpowered)
+"HZ" = (
+/obj/structure/kitchenspike,
+/turf/open/floor/plasteel/freezer,
+/area/survivalpod/nonpowered)
+"JL" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/survivalpod/nonpowered)
+"JP" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass,
+/area/survivalpod/nonpowered)
+"Kp" = (
+/obj/machinery/vending/hydroseeds,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/survivalpod/nonpowered)
+"KL" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/mineral/titanium/white,
+/area/survivalpod/nonpowered)
+"LV" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/computer/arcade/orion_trail{
+	dir = 4
+	},
+/turf/open/floor/festive/wooden/wooden2,
+/area/survivalpod/nonpowered)
+"Ma" = (
+/obj/structure/table/reinforced,
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/mineral/titanium/white,
+/area/survivalpod/nonpowered)
+"MX" = (
+/obj/machinery/computer/arcade/battle{
+	dir = 4
+	},
+/turf/open/floor/festive/wooden/wooden2,
+/area/survivalpod/nonpowered)
+"Nl" = (
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/festive/wooden/wooden2,
+/area/survivalpod/nonpowered)
+"Oi" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/grass,
+/area/survivalpod/nonpowered)
+"Oq" = (
+/obj/machinery/hydroponics/constructable/automagic,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/survivalpod/nonpowered)
+"OV" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/pod/dark,
+/area/survivalpod/nonpowered)
+"Pi" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/pod/dark,
+/area/survivalpod/nonpowered)
+"Pw" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/sink/kitchen{
+	dir = 4;
+	pixel_x = -11
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/survivalpod/nonpowered)
+"Qv" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade,
+/turf/open/floor/mineral/titanium/white,
+/area/survivalpod/nonpowered)
+"QY" = (
+/obj/machinery/smartfridge/food,
+/turf/open/floor/pod/dark,
+/area/survivalpod/nonpowered)
+"Ss" = (
+/obj/machinery/telecomms/relay/preset/station,
+/obj/item/multitool,
+/turf/open/floor/festive/wooden/wooden2,
+/area/survivalpod/nonpowered)
+"Tl" = (
+/obj/machinery/door/airlock/survival_pod,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/survivalpod/nonpowered)
+"Tv" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/bag/tray/bluespace,
+/turf/open/floor/mineral/titanium/white,
+/area/survivalpod/nonpowered)
+"TA" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks/fullupgrade,
+/turf/open/floor/mineral/titanium/white,
+/area/survivalpod/nonpowered)
+"Ue" = (
+/obj/machinery/door/airlock/survival_pod,
+/obj/machinery/poweredfans,
+/turf/open/floor/pod/dark,
+/area/survivalpod/nonpowered)
+"Uv" = (
+/obj/machinery/vending/hydronutrients,
+/turf/open/floor/grass,
+/area/survivalpod/nonpowered)
+"UK" = (
+/obj/structure/rack,
+/obj/item/storage/box/ingredients/wildcard,
+/obj/item/storage/box/ingredients/wildcard,
+/obj/item/storage/box/ingredients/wildcard,
+/obj/item/storage/box/ingredients/vegetarian,
+/obj/item/storage/box/ingredients/exotic,
+/obj/item/storage/box/ingredients/delights,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/freezer,
+/area/survivalpod/nonpowered)
+"UW" = (
+/turf/open/floor/mineral/titanium/white,
+/area/survivalpod/nonpowered)
+"Vt" = (
+/obj/machinery/biogenerator,
+/turf/open/floor/pod/dark,
+/area/survivalpod/nonpowered)
+"VM" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/autolathe,
+/turf/open/floor/mineral/titanium/white,
+/area/survivalpod/nonpowered)
+"We" = (
+/obj/structure/table/bronze,
+/turf/open/floor/pod/dark,
+/area/survivalpod/nonpowered)
+"WU" = (
+/turf/open/floor/festive/wooden/wooden2,
+/area/survivalpod/nonpowered)
+"XT" = (
+/obj/item/book/manual/chef_recipes,
+/obj/item/book/manual/wiki/cooking_to_serve_man{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/mineral/titanium/white,
+/area/survivalpod/nonpowered)
+"Ys" = (
+/turf/open/floor/grass,
+/area/survivalpod/nonpowered)
+"ZU" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/festive/wooden/wooden2,
+/area/survivalpod/nonpowered)
+
+(1,1,1) = {"
+vb
+Gn
+Gn
+Gn
+Gn
+vb
+Ue
+vb
+Gn
+Gn
+Gn
+Gn
+vb
+"}
+(2,1,1) = {"
+Gn
+mv
+WU
+Ss
+MX
+LV
+OV
+Oq
+ue
+ue
+ue
+ue
+Gn
+"}
+(3,1,1) = {"
+Gn
+Nl
+Cq
+Cq
+Cq
+WU
+OV
+Ys
+Ys
+Ys
+Ys
+cA
+Gn
+"}
+(4,1,1) = {"
+Gn
+wB
+Cq
+Cq
+Cq
+WU
+OV
+ru
+Ys
+JP
+Ys
+uk
+Gn
+"}
+(5,1,1) = {"
+Gn
+ZU
+eP
+eP
+eP
+WU
+OV
+Ys
+Ys
+hv
+Ys
+iB
+Gn
+"}
+(6,1,1) = {"
+vb
+vb
+We
+We
+AO
+uC
+OV
+Bk
+ru
+Ys
+Oi
+Bk
+Gn
+"}
+(7,1,1) = {"
+gO
+Pw
+bn
+bn
+bn
+bn
+Pi
+tg
+Ys
+Ys
+Uv
+Kp
+vb
+"}
+(8,1,1) = {"
+vb
+AW
+UW
+XT
+Tv
+UW
+CP
+vb
+QY
+Vt
+vb
+vb
+vb
+"}
+(9,1,1) = {"
+vb
+cp
+UW
+Gc
+zq
+UW
+eS
+Tl
+ET
+AN
+UK
+HZ
+vb
+"}
+(10,1,1) = {"
+vb
+hM
+UW
+KL
+KL
+UW
+OV
+vb
+kX
+fM
+AN
+HZ
+vb
+"}
+(11,1,1) = {"
+vb
+Qv
+UW
+UW
+UW
+UW
+OV
+vb
+ei
+no
+oW
+JL
+vb
+"}
+(12,1,1) = {"
+vb
+TA
+Ma
+VM
+iU
+dV
+CP
+vb
+Ci
+Gt
+by
+by
+vb
+"}
+(13,1,1) = {"
+vb
+vb
+vb
+vb
+vb
+vb
+DU
+vb
+vb
+vb
+vb
+vb
+vb
+"}

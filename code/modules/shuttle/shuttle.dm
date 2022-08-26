@@ -891,7 +891,7 @@
 	var/range = (engine_coeff * max(width, height))
 	var/long_range = range * 2.5
 	var/atom/distant_source
-	if(engine_list[1])
+	if(length(engine_list))
 		distant_source = engine_list[1]
 	else
 		for(var/A in areas)
