@@ -42,13 +42,13 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	if(delete_after_roundstart)
 		qdel(src)
 
-/obj/effect/landmark/start/New()
+/obj/effect/landmark/start/Initialize(mapload)
 	GLOB.start_landmarks_list += src
 	if(jobspawn_override)
 		if(!GLOB.jobspawn_overrides[name])
 			GLOB.jobspawn_overrides[name] = list()
 		GLOB.jobspawn_overrides[name] += src
-	..()
+	. = ..()
 	if(name != "start")
 		tag = "start*[name]"
 
@@ -220,9 +220,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "department_sec"
 	icon_state = "Security Officer"
 
-/obj/effect/landmark/start/depsec/New()
-	..()
+/obj/effect/landmark/start/depsec/Initialize(mapload)
 	GLOB.department_security_spawns += src
+	return ..()
 
 /obj/effect/landmark/start/depsec/Destroy()
 	GLOB.department_security_spawns -= src
@@ -447,9 +447,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	layer = HIGH_LANDMARK_LAYER
 
 
-/obj/effect/landmark/event_spawn/New()
-	..()
+/obj/effect/landmark/event_spawn/Initialize(mapload)
 	GLOB.generic_event_spawns += src
+	return ..()
 
 /obj/effect/landmark/event_spawn/Destroy()
 	GLOB.generic_event_spawns -= src
@@ -458,16 +458,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/ruin
 	var/datum/map_template/ruin/ruin_template
 
-/obj/effect/landmark/ruin/New(loc, my_ruin_template)
+/obj/effect/landmark/ruin/Initialize(mapload, my_ruin_template)
 	name = "ruin_[GLOB.ruin_landmarks.len + 1]"
-	..(loc)
+	. = ..(mapload)
 	ruin_template = my_ruin_template
 	GLOB.ruin_landmarks |= src
+	return ..()
 
 /obj/effect/landmark/ruin/Destroy()
 	GLOB.ruin_landmarks -= src
 	ruin_template = null
-	. = ..()
+	return ..()
 
 //------Station Rooms Landmarks------------//
 /obj/effect/landmark/stationroom
@@ -475,9 +476,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	layer = BULLET_HOLE_LAYER
 	plane = ABOVE_WALL_PLANE
 
-/obj/effect/landmark/stationroom/New()
-	..()
+/obj/effect/landmark/stationroom/Initialize(mapload)
 	GLOB.stationroom_landmarks += src
+	return ..()
 
 /obj/effect/landmark/stationroom/Destroy()
 	if(src in GLOB.stationroom_landmarks)
@@ -514,9 +515,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	templates = list("Engine SM" = 3, "Engine Singulo" = 3, "Engine Tesla" = 3)
 	icon = 'icons/rooms/box/engine.dmi'
 
-/obj/effect/landmark/stationroom/box/engine/New()
-	. = ..()
+/obj/effect/landmark/stationroom/box/engine/Initialize(mapload)
 	templates = CONFIG_GET(keyed_list/box_random_engine)
+	return ..()
 
 // Landmark for the mining station
 /obj/effect/landmark/stationroom/lavaland/station
