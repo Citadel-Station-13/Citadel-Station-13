@@ -1,8 +1,0 @@
-author: "shellspeed1"
-delete-after: True
-changes: 
-  - rscadd: "new garden survival pod added. . It can be bought from the mining vendor for 7500 points."
-  - balance: "To reflect the drop in usefulness of the penthouse pod, its price has been halved."
-  - tweak: "Penthouse survival pod redone, instead of a kitchen and garden it now features an office area for when a miner feels like writing a book, or shitposting in the station's modular computer chatroom."
-  - bugfix: "Stacked windows in survival pods fixed."
-  - tweak: "rtgs in survival pods now come prewired, I figured out a new trick woo."
