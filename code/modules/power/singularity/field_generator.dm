@@ -170,6 +170,7 @@ field_generator power level display
 
 /obj/machinery/field/generator/Destroy()
 	cleanup()
+	QDEL_NULL(radio)
 	return ..()
 
 
