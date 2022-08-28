@@ -173,7 +173,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	var/banned = jobban_isbanned(src, "appearance")
 
-	if(C && C.prefs.custom_names[role] && !safety && !banned)
+	if(C?.prefs?.custom_names[role] && !banned)
 		newname = C.prefs.custom_names[role]
 	else
 		while(loop && safety < 5)
