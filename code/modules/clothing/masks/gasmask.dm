@@ -80,7 +80,7 @@
 	name = "clown wig and mask"
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
 	clothing_flags = ALLOWINTERNALS
-	flags_inv = HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	icon_state = "clown"
 	item_state = "clown_hat"
 	dye_color = "clown"
