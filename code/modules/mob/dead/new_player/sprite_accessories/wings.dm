@@ -216,6 +216,26 @@
 	icon_state = "harpywings"
 	upgrade_to = SPECIES_WINGS_ANGEL
 
+/datum/sprite_accessory/deco_wings/harpywingsalt
+	name = "Harpy (Alt)"
+	icon_state = "harpywingsalt"
+	upgrade_to = SPECIES_WINGS_ANGEL
+
+/datum/sprite_accessory/deco_wings/harpywingsaltcollar
+	name = "Harpy (Alt Collar)"
+	icon_state = "harpywingsaltcollar"
+	upgrade_to = SPECIES_WINGS_ANGEL
+
+/datum/sprite_accessory/deco_wings/harpywingsbat
+	name = "Harpy (Bat)"
+	icon_state = "harpywingsbat"
+	upgrade_to = SPECIES_WINGS_ANGEL
+
+/datum/sprite_accessory/deco_wings/harpywingsbatcollar
+	name = "Harpy (Bat Collar)"
+	icon_state = "harpywingsbatcollar"
+	upgrade_to = SPECIES_WINGS_ANGEL
+
 /datum/sprite_accessory/deco_wings/roboticwing
 	name = "Robotic"
 	icon_state = "drago"
@@ -418,6 +438,26 @@
 /datum/sprite_accessory/insect_wings/harpywings
 	name = "Harpy"
 	icon_state = "harpywings"
+	upgrade_to = SPECIES_WINGS_ANGEL
+
+/datum/sprite_accessory/insect_wings/harpywingsalt
+	name = "Harpy (Alt)"
+	icon_state = "harpywingsalt"
+	upgrade_to = SPECIES_WINGS_ANGEL
+
+/datum/sprite_accessory/insect_wings/harpywingsaltcollar
+	name = "Harpy (Alt Collar)"
+	icon_state = "harpywingsaltcollar"
+	upgrade_to = SPECIES_WINGS_ANGEL
+
+/datum/sprite_accessory/insect_wings/harpywingsbat
+	name = "Harpy (Bat)"
+	icon_state = "harpywingsbat"
+	upgrade_to = SPECIES_WINGS_ANGEL
+
+/datum/sprite_accessory/insect_wings/harpywingsbatcollar
+	name = "Harpy (Bat Collar)"
+	icon_state = "harpywingsbatcollar"
 	upgrade_to = SPECIES_WINGS_ANGEL
 
 /datum/sprite_accessory/insect_wings/roboticwing
