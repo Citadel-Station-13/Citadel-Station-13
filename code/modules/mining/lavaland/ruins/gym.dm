@@ -84,7 +84,7 @@
 /obj/structure/weightmachine/weightlifter
 	name = "inline bench press"
 	icon_state = "benchpress"
-	base_icon_state = "becnhpress"
+	base_icon_state = "benchpress"
 
 /obj/structure/weightmachine/weightlifter/AnimateMachine(mob/living/user)
 	var/reps = 0
