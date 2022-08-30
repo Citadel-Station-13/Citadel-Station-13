@@ -171,3 +171,10 @@
       the station's modular computer chatroom.
   - bugfix: Stacked windows in survival pods fixed.
   - tweak: rtgs in survival pods now come prewired, I figured out a new trick woo.
+2022-08-30:
+  Putnam3145:
+  - balance: Untied shoes are slightly less common
+  - admin: Better admin logging on potential prefbreak arousal stuff
+  zeroisthebiggay:
+  - bugfix: harpy wings layering
+  - rscadd: and steals the harpy wings from rp so that there is some variety
