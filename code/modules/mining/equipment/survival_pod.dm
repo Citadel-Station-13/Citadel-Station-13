@@ -91,9 +91,13 @@
 	template_id = "shelter_delta"
 
 /obj/item/survivalcapsule/luxury/penthouse
-	name = "penthouse bluespace sheler capsule"
-	desc = "The absolute pinnacle of luxury in terms of survival capsules. While exuberantly expensive it has everything needed to make a small home in lavaland."
+	name = "penthouse bluespace shelter capsule"
+	desc = "The absolute pinnacle of luxury in terms of survival capsules. While exuberantly expensive it has everything needed to survive in luxury."
 	template_id = "shelter_epsilon"
+/obj/item/survivalcapsule/luxury/garden
+	name = "garden & kitchen bluespace shelter capsule"
+	desc = "Everything someone needs to make a home cooked meal while surviving the depths of hell... or space."
+	template_id = "shelter_zeta"
 //Pod objects
 
 //Window

@@ -96,3 +96,14 @@
 	. = ..()
 	whitelisted_turfs = typecacheof(/turf/closed/mineral)
 	banned_objects = typecacheof(/obj/structure/stone_tile)
+
+/datum/map_template/shelter/zeta
+	name = "Shelter zeta"
+	shelter_id = "shelter_zeta"
+	description = "A survival capsule with a garden and kitchen. Commonly used by space fast food joints everywhere."
+	mappath = "_maps/templates/shelter_6.dmm"
+
+/datum/map_template/shelter/zeta/New()
+	. = ..()
+	whitelisted_turfs = typecacheof(/turf/closed/mineral)
+	banned_objects = typecacheof(/obj/structure/stone_tile)

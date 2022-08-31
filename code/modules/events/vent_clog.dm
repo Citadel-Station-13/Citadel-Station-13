@@ -59,7 +59,7 @@
 	//needs to be chemid unit checked at some point
 
 /datum/round_event/vent_clog/announce()
-	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "Atmospherics alert")
+	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "Atmospherics alert", has_important_message = TRUE)
 
 /datum/round_event/vent_clog/setup()
 	endWhen = rand(120, 180)
