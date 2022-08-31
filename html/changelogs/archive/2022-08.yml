@@ -178,3 +178,7 @@
   zeroisthebiggay:
   - bugfix: harpy wings layering
   - rscadd: and steals the harpy wings from rp so that there is some variety
+2022-08-31:
+  Putnam3145:
+  - bugfix: has_important_message = TRUE added to a bunch of events so you still know
+      where that pyro anomaly is with an intern

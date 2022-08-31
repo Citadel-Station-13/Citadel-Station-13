@@ -1,4 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - bugfix: "has_important_message = TRUE added to a bunch of events so you still know where that pyro anomaly is with an intern"
