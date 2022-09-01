@@ -1,0 +1,4 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - balance: "Field generators now yell if they fail (singuloose nerf)"
