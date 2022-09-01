@@ -180,7 +180,7 @@
 		Hydro.myseed.adjust_yield(1)
 		Hydro.yieldmod = 2
 	if(prob(BEE_POLLINATE_POTENCY_CHANCE))
-		Hydro.myseed.adjust_potency(1)
+		Hydro.myseed.adjust_potency(2.5)
 
 	if(beehome)
 		beehome.bee_resources = min(beehome.bee_resources + growth, 100)

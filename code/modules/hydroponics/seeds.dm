@@ -129,7 +129,7 @@
 	if(g)
 		g.mutability_flags &=  ~mutability
 
-/obj/item/seeds/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0, stabmut = 3)
+/obj/item/seeds/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 1, potmut = 60, wrmut = 2, wcmut = 5, traitmut = 0, stabmut = 3)
 	adjust_lifespan(rand(-lifemut,lifemut))
 	adjust_endurance(rand(-endmut,endmut))
 	adjust_production(rand(-productmut,productmut))
@@ -275,7 +275,7 @@
 /// Setters procs ///
 /obj/item/seeds/proc/adjust_yield(adjustamt)
 	if(yield != -1) // Unharvestable shouldn't suddenly turn harvestable
-		yield = clamp(yield + adjustamt, 0, 10)
+		yield = clamp(yield + adjustamt, 0, 4)
 
 		if(yield <= 0 && get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
 			yield = 1 // Mushrooms always have a minimum yield of 1.
@@ -312,7 +312,7 @@
 
 /obj/item/seeds/proc/adjust_potency(adjustamt)
 	if(potency != -1)
-		potency = clamp(potency + adjustamt, 0, 100)
+		potency = clamp(potency + adjustamt, 0, 250)
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/potency)
 		if(C)
 			C.value = potency
@@ -333,7 +333,7 @@
 
 /obj/item/seeds/proc/set_yield(adjustamt)
 	if(yield != -1) // Unharvestable shouldn't suddenly turn harvestable
-		yield = clamp(adjustamt, 0, 10)
+		yield = clamp(adjustamt, 0, 4)
 
 		if(yield <= 0 && get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
 			yield = 1 // Mushrooms always have a minimum yield of 1.
@@ -362,7 +362,7 @@
 
 /obj/item/seeds/proc/set_potency(adjustamt)
 	if(potency != -1)
-		potency = clamp(adjustamt, 0, 100)
+		potency = clamp(adjustamt, 0, 250)
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/potency)
 		if(C)
 			C.value = potency

@@ -69,8 +69,8 @@
 	if(spread)
 		myseed.potency -= round(myseed.potency * 0.25) // Reduce potency of the little mushie if it's spreading
 	if(mutate_stats) //baby mushrooms have different stats :3
-		myseed.adjust_potency(rand(-4,3))
-		myseed.adjust_yield(rand(-3,2))
+		myseed.adjust_potency(rand(-10,7))
+		myseed.adjust_yield(rand(-1,1))
 		myseed.adjust_production(rand(-3,3))
 		myseed.endurance = clamp(myseed.endurance + rand(-3,2), 0, 100) // adjust_endurance has a min value of 10, need to edit directly
 	// Scale health to endurance

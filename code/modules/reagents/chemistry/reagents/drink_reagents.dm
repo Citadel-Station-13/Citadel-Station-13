@@ -220,7 +220,7 @@
 	if(chems.has_reagent(type, 1))
 		mytray.adjustWater(round(chems.get_reagent_amount(type) * 0.3))
 		if(myseed)
-			myseed.adjust_potency(-chems.get_reagent_amount(type) * 0.5)
+			myseed.adjust_potency(-chems.get_reagent_amount(type) * 1.25)
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/M)
 	if(HAS_TRAIT(M, TRAIT_CALCIUM_HEALER))
@@ -630,7 +630,7 @@
 		mytray.adjustPests(-rand(2,5))
 		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 0.1))
 		if(myseed)
-			myseed.adjust_potency(round(chems.get_reagent_amount(src.type) * 0.5))
+			myseed.adjust_potency(round(chems.get_reagent_amount(src.type) * 1.25))
 
 /datum/reagent/consumable/buzz_fuzz/on_mob_life(mob/living/carbon/M)
 	if(prob(33))

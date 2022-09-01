@@ -90,10 +90,10 @@
 		adjust_production(rand(5, -15))
 
 	if(S.has_reagent(/datum/reagent/toxin/plasma, 5))
-		adjust_potency(rand(5, -15))
+		adjust_potency(rand(12, -35))
 
 	if(S.has_reagent(/datum/reagent/water/holywater, 10))
-		adjust_potency(rand(15, -5))
+		adjust_potency(rand(35, -12))
 
 
 /obj/item/reagent_containers/food/snacks/grown/kudzupod

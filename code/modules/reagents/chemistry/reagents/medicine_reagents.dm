@@ -1404,8 +1404,8 @@
 		mytray.adjustWeeds (-rand(1,3))
 		if(myseed)
 			myseed.adjust_instability(-round(chems.get_reagent_amount(src.type) * 1.3))
-			myseed.adjust_potency(round(chems.get_reagent_amount(src.type) *1))
-			myseed.adjust_yield(round(chems.get_reagent_amount(src.type) * 1))
+			myseed.adjust_potency(round(chems.get_reagent_amount(src.type) *2.5))
+			myseed.adjust_yield(round(chems.get_reagent_amount(src.type) * 0.4))
 			myseed.adjust_endurance(round(chems.get_reagent_amount(src.type) * 0.5))
 			myseed.adjust_production(-round(chems.get_reagent_amount(src.type) * 0.5))
 
