@@ -34,6 +34,7 @@ field_generator power level display
 	max_integrity = 500
 	//100% immune to lasers and energy projectiles since it absorbs their energy.
 	armor = list(MELEE = 25, BULLET = 10, LASER = 100, ENERGY = 100, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70)
+	var/obj/item/radio/radio
 	var/const/num_power_levels = 6	// Total number of power level icon has
 	var/power_level = 0
 	var/active = FG_OFFLINE
@@ -58,6 +59,9 @@ field_generator power level display
 	. = ..()
 	fields = list()
 	connected_gens = list()
+	radio = new(src)
+	radio.listening = 0
+	radio.recalculateChannels()
 
 /obj/machinery/field/generator/ComponentInitialize()
 	. = ..()
@@ -166,6 +170,7 @@ field_generator power level display
 
 /obj/machinery/field/generator/Destroy()
 	cleanup()
+	QDEL_NULL(radio)
 	return ..()
 
 
@@ -333,6 +338,7 @@ field_generator power level display
 				if((world.time - O.last_warning) > 50) //to stop message-spam
 					temp = 0
 					var/turf/T = get_turf(src)
+					radio.talk_into(src, "A containment field has failed in [get_area_name(src, TRUE)] while a singularity exists.", null, language = get_selected_language())
 					message_admins("A singulo exists and a containment field has failed at [ADMIN_VERBOSEJMP(T)].")
 					investigate_log("has <font color='red'>failed</font> whilst a singulo exists at [AREACOORD(T)].", INVESTIGATE_SINGULO)
 			O.last_warning = world.time
