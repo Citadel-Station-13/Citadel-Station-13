@@ -7,6 +7,7 @@
 	id = MARTIALART_PLASMAFIST
 	help_verb = /mob/living/carbon/human/proc/plasma_fist_help
 	pugilist = TRUE
+	display_combos = TRUE
 
 
 /datum/martial_art/plasma_fist/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
