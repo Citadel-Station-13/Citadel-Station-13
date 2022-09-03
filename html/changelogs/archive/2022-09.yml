@@ -20,3 +20,6 @@
     - soundadd: The next time you work out at the gym, please appreciate the new crispness
         of the sound when that machine starts to squeak as a result of your effort.
         So refreshing.
+2022-09-03:
+  Putnam3145:
+  - bugfix: Destructive analyzer now does not multiply your stack by 50

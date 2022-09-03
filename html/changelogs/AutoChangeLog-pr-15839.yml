@@ -1,4 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - bugfix: "Destructive analyzer now does not multiply your stack by 50"
