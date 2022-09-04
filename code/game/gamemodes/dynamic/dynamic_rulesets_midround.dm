@@ -354,6 +354,49 @@
 
 //////////////////////////////////////////////
 //                                          //
+//              WIZARD (CREW)               //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/midround/wizard
+	name = "Wizard"
+	antag_datum = /datum/antagonist/wizard
+	antag_flag = "wizard mid crew"
+	antag_flag_override = ROLE_WIZARD
+	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
+	required_enemies = list(0,0,0,0,0,0,0,0,0,0)
+	weight = 1
+	cost = 20
+	requirements = list(101,101,100,60,40,20,20,20,10,10)
+	repeatable = TRUE
+	var/datum/mind/wizard
+
+/datum/dynamic_ruleset/midround/wizard/ready(forced = FALSE)
+	if(GLOB.wizardstart.len == 0)
+		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
+		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
+		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/midround/wizard/execute(mob/new_character, index)
+	. = ..()
+	wizard = assigned[1]
+
+/datum/dynamic_ruleset/midround/wizard/rule_process()
+	if(isliving(wizard.current) && wizard.current.stat!=DEAD)
+		return FALSE
+	for(var/obj/item/phylactery/P in GLOB.poi_list) //TODO : IsProperlyDead()
+		if(P.mind && P.mind.has_antag_datum(/datum/antagonist/wizard))
+			return FALSE
+
+	if(SSevents.wizardmode) //If summon events was active, turn it off
+		SSevents.toggleWizardmode()
+		SSevents.resetFrequency()
+
+	return RULESET_STOP_PROCESSING
+
+//////////////////////////////////////////////
+//                                          //
 //              WIZARD (GHOST)              //
 //                                          //
 //////////////////////////////////////////////
@@ -533,6 +576,7 @@
 	name = "Blob Infection"
 	antag_datum = /datum/antagonist/blob
 	antag_flag = "blob mid"
+	antag_flag_override = ROLE_BLOB
 	protected_roles = list("Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("Cyborg", "AI", "Positronic Brain")
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
@@ -556,11 +600,11 @@
 			candidates -= player
 
 /datum/dynamic_ruleset/midround/blob_infection/execute()
-	if(!candidates || !candidates.len)
+	if(!length(candidates))
 		return FALSE
 	var/mob/living/carbon/human/blob_antag = pick_n_take(candidates)
 	assigned += blob_antag.mind
-	blob_antag.mind.special_role = antag_flag
+	blob_antag.mind.special_role = antag_flag_override
 	return ..()
 
 //////////////////////////////////////////////
