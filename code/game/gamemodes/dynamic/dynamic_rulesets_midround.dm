@@ -87,9 +87,10 @@
 		var/threat = round(mode.threat_level/10)
 		if (job_check < required_enemies[threat])
 			return FALSE
-		if (length(dead_players) + length(list_observers) == 0)
-			return FALSE
 	return TRUE
+
+/datum/dynamic_ruleset/midround/from_ghosts/ready(forced = FALSE)
+	return ..() && (length(dead_players) + length(list_observers) >= required_applicants)
 
 /datum/dynamic_ruleset/midround/from_ghosts/execute()
 	var/list/possible_candidates = list()
