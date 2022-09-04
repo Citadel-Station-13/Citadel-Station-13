@@ -15,6 +15,7 @@
 	var/restrict_ghost_roles = TRUE
 	/// What mob type the ruleset is restricted to.
 	var/required_type = /mob/living/carbon/human
+	var/should_use_midround_pref = TRUE
 	var/list/living_players = list()
 	var/list/living_antags = list()
 	var/list/dead_players = list()
@@ -23,6 +24,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts
 	weight = 0
 	required_type = /mob/dead/observer
+	should_use_midround_pref = FALSE
 	/// Whether the ruleset should call generate_ruleset_body or not.
 	var/makeBody = TRUE
 	/// The rule needs this many applicants to be properly executed.
@@ -41,6 +43,9 @@
 			trimmed_list.Remove(M)
 			continue
 		if (!M.client) // Are they connected?
+			trimmed_list.Remove(M)
+			continue
+		if(should_use_midround_pref && !(M.client.prefs.toggles & MIDROUND_ANTAG))
 			trimmed_list.Remove(M)
 			continue
 		if(!mode.check_age(M.client, minimum_required_age))
