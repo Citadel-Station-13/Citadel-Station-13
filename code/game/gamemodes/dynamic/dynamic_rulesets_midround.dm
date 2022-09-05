@@ -166,19 +166,10 @@
 /datum/dynamic_ruleset/midround/from_ghosts/proc/setup_role(datum/antagonist/new_role)
 	return
 
-/// Fired when there are no valid candidates. Will spawn a sleeper agent or latejoin traitor.
+/// Fired when there are no valid candidates. Will try to roll again in a minute.
 /datum/dynamic_ruleset/midround/from_ghosts/proc/attempt_replacement()
-	var/datum/dynamic_ruleset/midround/autotraitor/sleeper_agent = new
-
-	// Otherwise, it has a chance to fail. We don't want that, since this is already pretty unlikely.
-	sleeper_agent.has_failure_chance = FALSE
-
-	mode.configure_ruleset(sleeper_agent)
-
-	if (!mode.picking_specific_rule(sleeper_agent))
-		return
-
-	mode.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator)
+	COOLDOWN_START(mode, midround_injection_cooldown, 1 MINUTE)
+	mode.forced_injection = TRUE
 
 //////////////////////////////////////////////
 //                                          //
