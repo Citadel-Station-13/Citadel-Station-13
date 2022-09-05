@@ -338,10 +338,7 @@
 		return
 
 	var/mob/living/silicon/pai/new_pai = new(src)
-	if(!user.name)
-		new_pai.name = pick(GLOB.ninja_names)
-	else
-		new_pai.name = user.name
+	new_pai.name = pai_name
 	new_pai.real_name = new_pai.name
 	new_pai.key = user.key
 
