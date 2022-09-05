@@ -108,10 +108,10 @@
 		return
 	message_admins("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 	log_game("DYNAMIC: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
+	var/flag = antag_flag_override ? antag_flag_override : antag_flag
+	candidates = pollGhostCandidates("The mode is looking for volunteers to become [antag_flag] for [name]", flag, be_special_flag = flag, ignore_category = antag_flag, poll_time = 300)
 
-	candidates = pollGhostCandidates("The mode is looking for volunteers to become [antag_flag] for [name]", antag_flag, be_special_flag = antag_flag_override ? antag_flag_override : antag_flag, poll_time = 300)
-
-	if(!candidates || candidates.len <= 0)
+	if(!length(candidates))
 		mode.dynamic_log("The ruleset [name] received no applications.")
 		mode.executed_rules -= src
 		attempt_replacement()
@@ -226,9 +226,8 @@
 	return ..()
 
 /datum/dynamic_ruleset/midround/autotraitor/execute()
-	var/mob/M = pick(living_players)
+	var/mob/M = pick_n_take(living_players)
 	assigned += M
-	living_players -= M
 	var/datum/antagonist/traitor/newTraitor = new
 	M.mind.add_antag_datum(newTraitor)
 	message_admins("[ADMIN_LOOKUPFLW(M)] was selected by the [name] ruleset and has been made into a midround traitor.")
@@ -329,7 +328,7 @@
 			candidates -= player
 			continue
 
-		if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
+		if(player.mind && (player.mind.special_role || length(player.mind.antag_datums)))
 			candidates -= player
 
 /datum/dynamic_ruleset/midround/malf/execute()
@@ -359,6 +358,8 @@
 	antag_datum = /datum/antagonist/wizard
 	antag_flag = "wizard mid crew"
 	antag_flag_override = ROLE_WIZARD
+	protected_roles = list("Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel", "Quartermaster", "Chief Engineer", "Chief Medical Officer", "Research Director")
+	restricted_roles = list("AI", "Cyborg")
 	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
 	required_enemies = list(0,0,0,0,0,0,0,0,0,0)
 	weight = 1
@@ -367,6 +368,19 @@
 	repeatable = TRUE
 	var/datum/mind/wizard
 
+/datum/dynamic_ruleset/midround/wizard/trim_candidates()
+	..()
+	candidates = living_players
+	for(var/mob/living/player as anything in candidates)
+		var/turf/player_turf = get_turf(player)
+		if(!player_turf || !is_station_level(player_turf.z))
+			candidates -= player
+			continue
+
+		if(player.mind && (player.mind.special_role || length(player.mind.antag_datums) > 0))
+			candidates -= player
+	candidates = pollCandidates("Do you want to be a wizard?", antag_flag_override, be_special_flag = antag_flag_override, ignore_category = antag_flag_override, poll_time = 300)
+
 /datum/dynamic_ruleset/midround/wizard/ready(forced = FALSE)
 	if(GLOB.wizardstart.len == 0)
 		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
@@ -374,9 +388,15 @@
 		return FALSE
 	return ..()
 
-/datum/dynamic_ruleset/midround/wizard/execute(mob/new_character, index)
-	. = ..()
-	wizard = assigned[1]
+/datum/dynamic_ruleset/midround/wizard/execute()
+	var/mob/M = pick_n_take(living_players)
+	assigned += M
+	var/datum/antagonist/wizard/on_station/wiz = new
+	M.mind.add_antag_datum(wiz)
+	wizard = M.mind
+	message_admins("[ADMIN_LOOKUPFLW(M)] was selected by the [name] ruleset and has been made into a midround wizard.")
+	log_game("DYNAMIC: [key_name(M)] was selected by the [name] ruleset and has been made into a midround wizard.")
+	return TRUE
 
 /datum/dynamic_ruleset/midround/wizard/rule_process()
 	if(isliving(wizard.current) && wizard.current.stat!=DEAD)
@@ -495,7 +515,7 @@
 	antag_flag = "clock mid"
 	antag_flag_override = ROLE_SERVANT_OF_RATVAR
 	protected_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel", "Quartermaster", "Chief Engineer", "Chief Medical Officer", "Research Director")
-	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel", "Quartermaster", "Chief Engineer", "Chief Medical Officer", "Research Director")
+	restricted_roles = list("AI", "Cyborg")
 	enemy_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel", "Quartermaster", "Chief Engineer", "Chief Medical Officer", "Research Director")
 	required_enemies = list(1,1,1,1,1,1,0,0,0,0)
 	required_candidates = 2
