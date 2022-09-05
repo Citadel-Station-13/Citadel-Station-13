@@ -168,7 +168,7 @@
 
 /// Fired when there are no valid candidates. Will try to roll again in a minute.
 /datum/dynamic_ruleset/midround/from_ghosts/proc/attempt_replacement()
-	COOLDOWN_START(mode, midround_injection_cooldown, 1 MINUTE)
+	COOLDOWN_START(mode, midround_injection_cooldown, 1 MINUTES)
 	mode.forced_injection = TRUE
 
 //////////////////////////////////////////////
