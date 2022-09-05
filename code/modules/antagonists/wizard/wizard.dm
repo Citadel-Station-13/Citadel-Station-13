@@ -95,7 +95,7 @@
 	switch(inventory_mode)
 		if(WIZARD_QDEL_INVENTORY)
 			H.delete_equipment()
-		if(WIZARD_REMOVE)
+		if(WIZARD_DROP_INVENTORY)
 			H.unequip_everything()
 	//Wizards are human by default. Use the mirror if you want something else.
 	if(change_species)
@@ -267,7 +267,7 @@
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.start()
 	smoke.set_up(2, get_turf(owner))
-	owner.visible_message("<span class='danger'>[owner] suddenly disappears in a puff of smoke, leaving [owner.p_their()] clothes behind!</span>", "<span class='userdanger'>You feel yourself being pulled away...</span>")
+	owner.current.visible_message("<span class='danger'>[owner] suddenly disappears in a puff of smoke, leaving [owner.p_their()] clothes behind!</span>", "<span class='userdanger'>You feel yourself being pulled away...</span>")
 	return ..()
 
 //Solo wizard report
