@@ -1,0 +1,25 @@
+2022-09-01:
+  Putnam3145:
+  - bugfix: Job code is no longer fricked (oh well)
+  - rscadd: Antag roles can be set to "low" rather than just "enabled" or "disabled",
+      which will prevent spending antag rep on that antag but make you a low priority
+      pick
+  - code_imp: Changed no antags from a special role to a toggle (why did i make it
+      a special role)
+  - code_imp: All direct references to ROLE_NO_ANTAGONISTS have been swapped to the
+      HAS_ANTAG_PREF macro or removed
+2022-09-02:
+  Putnam3145:
+  - tweak: comfy disky no longer wants the station to blow up
+  - balance: Field generators now yell if they fail (singuloose nerf)
+  ? zeroisthebiggay and Tastyfish (https://github.com/Tastyfish) and Fikou (https://github.com/Fikou)
+    and san7890 (https://github.com/san7890)
+  : - bugfix: The 2 types of weight machines now have unique in-game names.
+    - imageadd: New sprites for the weight machines.
+    - imageadd: new punching bag sprites!!!!!!!!!!!!!!!!
+    - soundadd: The next time you work out at the gym, please appreciate the new crispness
+        of the sound when that machine starts to squeak as a result of your effort.
+        So refreshing.
+2022-09-03:
+  Putnam3145:
+  - bugfix: Destructive analyzer now does not multiply your stack by 50

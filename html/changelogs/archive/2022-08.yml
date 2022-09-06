@@ -152,3 +152,33 @@
   - bugfix: security levels work now
   TrojanCoyote:
   - tweak: slight change to sprite
+2022-08-24:
+  zeroisthebiggay:
+  - rscadd: hyper slutskirt and secukini
+2022-08-25:
+  Putnam3145:
+  - code_imp: New Find() lint
+2022-08-27:
+  PositiveEntropy:
+  - imageadd: Resprites the IPC/pAI recharge cable!
+  shellspeed1:
+  - rscadd: new garden survival pod added. . It can be bought from the mining vendor
+      for 7500 points.
+  - balance: To reflect the drop in usefulness of the penthouse pod, its price has
+      been halved.
+  - tweak: Penthouse survival pod redone, instead of a kitchen and garden it now features
+      an office area for when a miner feels like writing a book, or shitposting in
+      the station's modular computer chatroom.
+  - bugfix: Stacked windows in survival pods fixed.
+  - tweak: rtgs in survival pods now come prewired, I figured out a new trick woo.
+2022-08-30:
+  Putnam3145:
+  - balance: Untied shoes are slightly less common
+  - admin: Better admin logging on potential prefbreak arousal stuff
+  zeroisthebiggay:
+  - bugfix: harpy wings layering
+  - rscadd: and steals the harpy wings from rp so that there is some variety
+2022-08-31:
+  Putnam3145:
+  - bugfix: has_important_message = TRUE added to a bunch of events so you still know
+      where that pyro anomaly is with an intern
