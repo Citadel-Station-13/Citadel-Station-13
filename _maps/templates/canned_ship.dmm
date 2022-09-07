@@ -371,7 +371,6 @@
 /obj/effect/turf_decal/stripes/red{
 	dir = 10
 	},
-/obj/machinery/spaceship_navigation_beacon,
 /obj/machinery/camera/xray{
 	dir = 4;
 	network = list("customfighter")
@@ -379,6 +378,7 @@
 /obj/structure/sign/poster/contraband/lusty_xenomorph{
 	pixel_x = -32
 	},
+/obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/mineral/plastitanium,
 /area/space)
 "EA" = (
@@ -684,9 +684,9 @@ eQ
 Rj
 "}
 (5,1,1) = {"
-NX
+KQ
 LZ
-NX
+KQ
 Rj
 NX
 oA
@@ -698,7 +698,7 @@ NX
 Rj
 NX
 LZ
-NX
+KQ
 "}
 (6,1,1) = {"
 NX
@@ -770,7 +770,7 @@ NX
 "}
 (10,1,1) = {"
 NX
-KQ
+NX
 NX
 NX
 er
@@ -782,12 +782,12 @@ vU
 ZH
 oA
 NX
-KQ
+NX
 NX
 "}
 (11,1,1) = {"
 Rj
-NX
+KQ
 NX
 Rj
 NX
@@ -799,7 +799,7 @@ vD
 oA
 Rj
 NX
-NX
+KQ
 Rj
 "}
 (12,1,1) = {"
