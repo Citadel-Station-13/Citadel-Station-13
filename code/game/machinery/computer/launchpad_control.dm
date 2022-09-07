@@ -100,6 +100,7 @@
 			var/new_x = text2num(params["x"])
 			var/new_y = text2num(params["y"])
 			current_pad.set_offset(new_x, new_y)
+			current_pad.update_indicator()
 			. = TRUE
 		if("move_pos")
 			var/plus_x = text2num(params["x"])
@@ -108,6 +109,7 @@
 				x = current_pad.x_offset + plus_x,
 				y = current_pad.y_offset + plus_y
 			)
+			current_pad.update_indicator()
 			. = TRUE
 		if("rename")
 			. = TRUE
@@ -119,12 +121,15 @@
 			if(usr && alert(usr, "Are you sure?", "Unlink Launchpad", "I'm Sure", "Abort") != "Abort")
 				launchpads -= current_pad
 				selected_id = null
+				current_pad.update_indicator()
 			. = TRUE
 		if("launch")
 			teleport(usr, current_pad, TRUE)
+			current_pad.update_indicator()
 			. = TRUE
 
 		if("pull")
 			teleport(usr, current_pad, FALSE)
+			current_pad.update_indicator()
 			. = TRUE
 	. = TRUE
