@@ -251,6 +251,14 @@
 /obj/machinery/camera/xray{
 	dir = 5
 	},
+/obj/item/radio/intercom{
+	broadcasting = 1;
+	dir = 8;
+	freerange = 1;
+	listening = 0;
+	name = "Pirate Radio Broadcast Channel";
+	pixel_y = 28
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/space)
 "vU" = (
@@ -367,6 +375,9 @@
 /obj/machinery/camera/xray{
 	dir = 4;
 	network = list("customfighter")
+	},
+/obj/structure/sign/poster/contraband/lusty_xenomorph{
+	pixel_x = -32
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/space)
@@ -510,9 +521,6 @@
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/space)
-"Nv" = (
-/turf/open/floor/mineral/plastitanium,
-/area/space)
 "NX" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/space)
@@ -549,6 +557,8 @@
 	dir = 1
 	},
 /obj/item/card/id/syndicate,
+/obj/item/clothing/mask/gas/syndicate,
+/obj/item/encryptionkey/syndicate,
 /turf/open/floor/mineral/plastitanium/red,
 /area/space)
 "TM" = (
@@ -603,10 +613,6 @@
 "ZH" = (
 /obj/structure/sign/poster/contraband/syndicate_recruitment,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/space)
-"ZM" = (
-/obj/structure/sign/poster/contraband/lusty_xenomorph,
-/turf/closed/wall/mineral/plastitanium,
 /area/space)
 
 (1,1,1) = {"
@@ -698,15 +704,15 @@ NX
 NX
 Hu
 NX
-oc
-oc
+Rj
+Rj
 oA
 Rv
 AN
-ZM
+NX
 oA
-oc
-oc
+Rj
+Rj
 NX
 Hu
 NX
@@ -799,8 +805,8 @@ Rj
 (12,1,1) = {"
 Rj
 Rj
-Nv
-Nv
+Rj
+Rj
 NX
 oA
 vP
@@ -808,8 +814,8 @@ xE
 aY
 oA
 NX
-Nv
-Nv
+Rj
+Rj
 Rj
 Rj
 "}
