@@ -60,7 +60,7 @@ The reactor CHEWS through moderator. It does not do this slowly. Be very careful
 */
 
 //Remember kids. If the reactor itself is not physically powered by an APC, it cannot shove coolant in!
-/var/datum/looping_sound/rbmk_reactor/soundloop
+GLOBAL_DATUM(rbmk_loop, /datum/looping_sound/rbmk_reactor)
 
 /obj/machinery/atmospherics/components/trinary/nuclear_reactor
 	name = "Advanced Gas-Cooled Nuclear Reactor"
