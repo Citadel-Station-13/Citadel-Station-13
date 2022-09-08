@@ -341,6 +341,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
 /turf/open/floor/engine,
 /area/engineering/main)
 "kR" = (
@@ -490,6 +493,9 @@
 /area/engineering/main)
 "mT" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
 /turf/open/floor/engine,
 /area/engineering/main)
 "mY" = (
@@ -507,9 +513,6 @@
 /turf/open/floor/plating,
 /area/engineering/main)
 "nx" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -689,7 +692,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/engineering/main)
 "uQ" = (
 /obj/machinery/pool/controller,
@@ -793,9 +796,12 @@
 /area/engineering/main)
 "zD" = (
 /obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
 	icon_state = "1-4"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/engine,
 /area/engineering/main)
 "zS" = (
 /turf/open/space/basic,
@@ -896,6 +902,10 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
 	},
 /turf/open/floor/engine,
 /area/engineering/main)
@@ -1113,7 +1123,7 @@
 /turf/open/floor/carpet/green,
 /area/engineering/main)
 "MN" = (
-/obj/machinery/atmospherics/components/trinary/mixer,
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/inverse,
 /turf/open/floor/engine,
 /area/engineering/main)
 "NB" = (
@@ -1301,6 +1311,11 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engineering/main)
+"Ue" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/engineering/main)
 "Vc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -1353,11 +1368,11 @@
 /turf/open/floor/engine,
 /area/engineering/main)
 "Wa" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
 	},
 /turf/open/floor/engine,
 /area/engineering/main)
@@ -1698,7 +1713,7 @@ yf
 (9,1,1) = {"
 ZT
 ZT
-zD
+Pz
 Pz
 ax
 DI
@@ -1896,7 +1911,7 @@ fF
 mx
 hH
 ke
-ke
+zD
 ke
 VM
 mY
@@ -1924,7 +1939,7 @@ NY
 bQ
 mY
 mY
-mY
+uj
 mY
 lA
 mY
@@ -1953,7 +1968,7 @@ Ll
 mY
 jg
 mT
-mT
+Ue
 op
 mY
 mY
