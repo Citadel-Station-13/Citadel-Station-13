@@ -60,7 +60,7 @@ The reactor CHEWS through moderator. It does not do this slowly. Be very careful
 */
 
 //Remember kids. If the reactor itself is not physically powered by an APC, it cannot shove coolant in!
-GLOBAL_DATUM(soundloop, /datum/looping_sound/rbmk_reactor)
+GLOBAL_DATUM(rbmk_loop, /datum/looping_sound/rbmk_reactor)
 
 /obj/machinery/atmospherics/components/trinary/nuclear_reactor
 	name = "Advanced Gas-Cooled Nuclear Reactor"
@@ -103,6 +103,7 @@ GLOBAL_DATUM(soundloop, /datum/looping_sound/rbmk_reactor)
 	var/no_coolant_ticks = 0	//How many times in succession did we not have enough coolant? Decays twice as fast as it accumulates.
 	var/last_user = null
 	var/current_desired_k = null
+	var/datum/looping_sound/rbmk_reactor/soundloop
 	var/datum/powernet/powernet = null
 
 //Use this in your maps if you want everything to be preset.
