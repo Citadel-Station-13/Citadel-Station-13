@@ -8,8 +8,6 @@ What are the archived variables for?
 
 /datum/gas_mixture
 	/// Never ever set this variable, hooked into vv_get_var for view variables viewing.
-	var/list/gases = list()
-	var/temperature = 0 //kelvins
 	var/gas_list_view_only
 	var/initial_volume = CELL_VOLUME //liters
 	var/list/reaction_results
