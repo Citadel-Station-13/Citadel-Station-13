@@ -27,6 +27,10 @@
 /proc/radiation_pulse(atom/source, intensity, range_modifier, log=FALSE, can_contaminate=TRUE)
 	if(!SSradiation.can_fire)
 		return
+	if(istype(get_turf(source), /turf/open/pool))
+		var/turf/open/pool/PL = get_turf(source)
+		if(PL.filled == TRUE)
+			intensity *= 0.15
 	var/area/A = get_area(source)
 	var/atom/nested_loc = source.loc
 	var/spawn_waves = TRUE
