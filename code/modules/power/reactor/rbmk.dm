@@ -511,7 +511,7 @@ The reactor CHEWS through moderator. It does not do this slowly. Be very careful
 	set_light(10)
 	var/startup_sound = pick('sound/effects/ship/reactor/startup.ogg', 'sound/effects/ship/reactor/startup2.ogg')
 	playsound(loc, startup_sound, 100)
-	soundloop = new(list(src), TRUE)
+	soundloop = new(TRUE)
 	if(!powernet)
 		message_admins("No powernet for the Nuclear Reactor! Trying to add.")
 		connect_to_network()
