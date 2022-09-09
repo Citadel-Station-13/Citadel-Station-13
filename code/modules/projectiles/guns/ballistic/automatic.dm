@@ -304,16 +304,20 @@
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/mm712x82
 	weapon_weight = WEAPON_HEAVY
-	var/cover_open = FALSE
 	can_suppress = FALSE
-	burst_size = 3
-	burst_shot_delay = 1
+	burst_size = 1
+	actions_types = list()
 	spread = 7
 	pin = /obj/item/firing_pin/implant/pindicate
 	automatic_burst_overlay = FALSE
+	var/cover_open = FALSE
 
 /obj/item/gun/ballistic/automatic/l6_saw/unrestricted
 	pin = /obj/item/firing_pin
+
+/obj/item/gun/ballistic/automatic/l6_saw/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 
 /obj/item/gun/ballistic/automatic/l6_saw/examine(mob/user)
 	. = ..()
