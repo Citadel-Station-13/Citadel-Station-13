@@ -867,10 +867,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		ip_intel = res.intel
 
 /client/Click(atom/object, atom/location, control, params, ignore_spam = FALSE, extra_info)
-	/*if(last_click > world.time - world.tick_lag)
+	if(last_click > world.time - world.tick_lag)
 		return
 	last_activity = world.time
-	last_click = world.time*/
+	last_click = world.time
+	//fullauto stuff
 	if(!control)
 		return
 	if(click_intercept_time)

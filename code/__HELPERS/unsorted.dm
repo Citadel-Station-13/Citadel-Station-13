@@ -673,6 +673,11 @@ Turf and target are separate in case you want to teleport some distance from a t
 	if(final_x || final_y)
 		return locate(final_x, final_y, T.z)
 
+///Returns a turf based on text inputs, original turf and viewing client
+/proc/parse_caught_click_modifiers(list/modifiers, turf/origin, client/viewing_client)
+	if(!modifiers)
+		return null
+
 //Finds the distance between two atoms, in pixels
 //centered = FALSE counts from turf edge to edge
 //centered = TRUE counts from turf center to turf center

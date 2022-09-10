@@ -15,6 +15,11 @@
 	fire_sound = "sound/weapons/gunshot_smg_alt.ogg"
 	mag_type = /obj/item/ammo_box/magazine/smgm9mm
 	pin = null
+	burst_size = 1
+
+/obj/item/gun/ballistic/automatic/proto/Initialize()
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 
 /obj/item/gun/ballistic/automatic/proto/unrestricted
 	pin = /obj/item/firing_pin
@@ -309,15 +314,14 @@
 	actions_types = list()
 	spread = 7
 	pin = /obj/item/firing_pin/implant/pindicate
-	automatic_burst_overlay = FALSE
 	var/cover_open = FALSE
 
+/obj/item/gun/ballistic/automatic/l6_saw/Initialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 /obj/item/gun/ballistic/automatic/l6_saw/unrestricted
 	pin = /obj/item/firing_pin
-
-/obj/item/gun/ballistic/automatic/l6_saw/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 
 /obj/item/gun/ballistic/automatic/l6_saw/examine(mob/user)
 	. = ..()

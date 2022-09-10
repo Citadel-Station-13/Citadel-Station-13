@@ -57,6 +57,8 @@
 	var/burst_spread = 0				//Spread induced by the gun itself during burst fire per iteration. Only checked if spread is 0.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
 	var/inaccuracy_modifier = 1
+	var/semicd = 0 //cooldown handler
+	var/dual_wield_spread = 24 //additional spread when dual wielding
 
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
