@@ -321,6 +321,12 @@
 ///from base of mob/AltClickOn(): (atom/A)
 #define COMSIG_MOB_ALTCLICKON "mob_altclickon"
 
+//Gun signals
+///When a gun is switched to automatic fire mode
+#define COMSIG_GUN_AUTOFIRE_SELECTED "gun_autofire_selected"
+///When a gun is switched off of automatic fire mode
+#define COMSIG_GUN_AUTOFIRE_DESELECTED "gun_autofire_deselected"
+
 // Lighting:
 ///from base of [atom/proc/set_light]: (l_range, l_power, l_color, l_on)
 #define COMSIG_ATOM_SET_LIGHT "atom_set_light"

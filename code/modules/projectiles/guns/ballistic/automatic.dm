@@ -6,7 +6,7 @@
 	can_suppress = TRUE
 	burst_size = 3
 	burst_shot_delay = 2
-	actions_types = list(/datum/action/item_action/toggle_firemode)
+	fire_select_modes = list(SELECT_SEMI_AUTOMATIC, SELECT_BURST_SHOT, SELECT_FULLY_AUTOMATIC)
 
 /obj/item/gun/ballistic/automatic/proto
 	name = "\improper Nanotrasen Saber SMG"

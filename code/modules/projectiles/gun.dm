@@ -89,6 +89,19 @@
 	var/zoom_out_amt = 0
 	var/datum/action/item_action/toggle_scope_zoom/azoom
 
+	var/safety = FALSE /// Internal variable for keeping track whether the safety is on or off
+	var/has_gun_safety = FALSE /// Whether the gun actually has a gun safety
+	var/datum/action/item_action/toggle_safety/toggle_safety_action
+
+	var/datum/action/item_action/toggle_firemode/firemode_action
+	/// Current fire selection, can choose between burst, single, and full auto.
+	var/fire_select = SELECT_SEMI_AUTOMATIC
+	var/fire_select_index = 1
+	/// What modes does this weapon have? Put SELECT_FULLY_AUTOMATIC in here to enable fully automatic behaviours.
+	var/list/fire_select_modes = list(SELECT_SEMI_AUTOMATIC)
+	/// if i`1t has an icon for a selector switch indicating current firemode.
+	var/selector_switch_icon = FALSE
+
 	var/dualwield_spread_mult = 1		//dualwield spread multiplier
 
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
@@ -97,17 +110,52 @@
 
 	/// directional recoil multiplier
 	var/dir_recoil_amp = 10
+/datum/action/item_action/toggle_safety
+	name = "Toggle Safety"
+	icon_icon = 'icons/hud/actions.dmi'
+	button_icon_state = "safety_on"
 
-/obj/item/gun/Initialize(mapload)
+/obj/item/gun/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/toggle_firemode))
+		fire_select()
+	else if(istype(actiontype, toggle_safety_action))
+		toggle_safety(user)
+	else
+		..()
+
+
+/obj/item/gun/Initialize()
 	. = ..()
-	if(no_pin_required)
-		pin = null
-	else if(pin)
+	if(pin)
 		pin = new pin(src)
+
 	if(gun_light)
-		alight = new (src)
+		alight = new(src)
+
 	if(zoomable)
 		azoom = new (src)
+
+	if(has_gun_safety)
+		safety = TRUE
+		toggle_safety_action = new(src)
+
+	if(burst_size > 1 && !(SELECT_BURST_SHOT in fire_select_modes))
+		fire_select_modes.Add(SELECT_BURST_SHOT)
+	else if(burst_size <= 1 && (SELECT_BURST_SHOT in fire_select_modes))
+		fire_select_modes.Remove(SELECT_BURST_SHOT)
+
+	burst_size = 1
+
+	sortList(fire_select_modes, /proc/cmp_numeric_asc)
+
+	if(fire_select_modes.len > 1)
+		firemode_action = new(src)
+		firemode_action.button_icon_state = "fireselect_[fire_select]"
+		firemode_action.UpdateButtonIcon()
+/obj/item/gun/ComponentInitialize()
+	. = ..()
+	if(SELECT_FULLY_AUTOMATIC in fire_select_modes)
+		AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/gun/Destroy()
 	if(pin)
@@ -118,6 +166,10 @@
 		QDEL_NULL(bayonet)
 	if(chambered)
 		QDEL_NULL(chambered)
+	if(toggle_safety_action)
+		QDEL_NULL(toggle_safety_action)
+	if(firemode_action)
+		QDEL_NULL(firemode_action)
 	return ..()
 
 /obj/item/gun/examine(mob/user)
@@ -142,6 +194,61 @@
 			. += "<span class='info'>[bayonet] looks like it can be <b>unscrewed</b> from [src].</span>"
 	else if(can_bayonet)
 		. += "It has a <b>bayonet</b> lug on it."
+
+/obj/item/gun/proc/fire_select()
+	var/mob/living/carbon/human/user = usr
+
+	var/max_mode = fire_select_modes.len
+
+	if(max_mode <= 1)
+		balloon_alert(user, "only one firemode!")
+		return
+
+	fire_select_index = 1 + fire_select_index % max_mode // Magic math to cycle through this shit!
+
+	fire_select = fire_select_modes[fire_select_index]
+
+	switch(fire_select)
+		if(SELECT_SEMI_AUTOMATIC)
+			burst_size = 1
+			fire_delay = 0
+			SEND_SIGNAL(src, COMSIG_GUN_AUTOFIRE_DESELECTED, user)
+			balloon_alert(user, "semi-automatic")
+		if(SELECT_BURST_SHOT)
+			burst_size = initial(burst_size)
+			fire_delay = initial(fire_delay)
+			SEND_SIGNAL(src, COMSIG_GUN_AUTOFIRE_DESELECTED, user)
+			balloon_alert(user, "[burst_size]-round burst")
+		if(SELECT_FULLY_AUTOMATIC)
+			burst_size = 1
+			SEND_SIGNAL(src, COMSIG_GUN_AUTOFIRE_SELECTED, user)
+			balloon_alert(user, "automatic")
+
+	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
+	update_appearance()
+	firemode_action.button_icon_state = "fireselect_[fire_select]"
+	firemode_action.UpdateButtons()
+	//SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD) I'll need this later
+	return TRUE
+
+/obj/item/gun/proc/toggle_safety(mob/user, override)
+	if(!has_gun_safety)
+		return
+	if(override)
+		if(override == "off")
+			safety = FALSE
+		else
+			safety = TRUE
+	else
+		safety = !safety
+	toggle_safety_action.button_icon_state = "safety_[safety ? "on" : "off"]"
+	toggle_safety_action.UpdateButtons()
+	playsound(src, 'sound/weapons/empty.ogg', 100, TRUE)
+	user.visible_message(
+		span_notice("[user] toggles [src]'s safety [safety ? "<font color='#00ff15'>ON</font>" : "<font color='#ff0000'>OFF</font>"]."),
+		span_notice("You toggle [src]'s safety [safety ? "<font color='#00ff15'>ON</font>" : "<font color='#ff0000'>OFF</font>"].")
+	)
+	//SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD) once again, needed later
 
 /obj/item/gun/equipped(mob/living/user, slot)
 	. = ..()
