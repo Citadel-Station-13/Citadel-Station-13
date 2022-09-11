@@ -975,7 +975,7 @@ The reactor CHEWS through moderator. It does not do this slowly. Be very careful
 	desc = "A neat spray can that can repair torn inflatable segments, and more!"
 	icon = 'icons/obj/inflatable.dmi'
 	icon_state = "sealant"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /area/engineering/main/reactor_core
 	name = "Nuclear Reactor Core"
