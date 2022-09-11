@@ -27,8 +27,8 @@
 /proc/radiation_pulse(atom/source, intensity, range_modifier, log=FALSE, can_contaminate=TRUE)
 	if(!SSradiation.can_fire)
 		return
-	if(istype(get_turf(source), /turf/open/pool))
-		var/turf/open/pool/PL = get_turf(source)
+	var/turf/open/pool/PL = get_turf(source)
+	if(istype(PL))
 		if(PL.filled == TRUE)
 			intensity *= 0.15
 	var/area/A = get_area(source)
@@ -56,6 +56,5 @@
 		thing.rad_act(intensity)
 
 	if(log)
-		var/turf/_source_T = get_turf(source)
-		log_game("Radiation pulse with intensity: [intensity] and range modifier: [range_modifier] in [loc_name(_source_T)][spawn_waves ? "" : " (contained by [nested_loc.name])"]")
+		log_game("Radiation pulse with intensity: [intensity] and range modifier: [range_modifier] in [loc_name(PL)][spawn_waves ? "" : " (contained by [nested_loc.name])"]")
 	return TRUE
