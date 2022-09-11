@@ -72,7 +72,7 @@ The reactor CHEWS through moderator. It does not do this slowly. Be very careful
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	light_color = LIGHT_COLOR_CYAN
-	dir = 8 //Less headache inducing :))
+	dir = WEST //Less headache inducing :))
 	var/id = null //Change me mappers
 	//Variables essential to operation
 	var/temperature = 0 //Lose control of this -> Meltdown
