@@ -274,7 +274,7 @@ The reactor CHEWS through moderator. It does not do this slowly. Be very careful
 				//message_admins("No cable or cable has no powernet!")
 				return
 			else
-				//C.powernet.newavail += last_power_produced //hacky wtf
+				C.powernet.newavail += last_power_produced //hacky wtf
 				//message_admins("Adding [last_power_produced] to powernet.")
 				add_avail(last_power_produced)
 		var/total_control_moles = moderator_input.get_moles(GAS_N2) + (moderator_input.get_moles(GAS_CO2)*2) + (moderator_input.get_moles(GAS_PLUOXIUM)*3) //N2 helps you control the reaction at the cost of making it absolutely blast you with rads. Pluoxium has the same effect but without the rads!
@@ -511,7 +511,7 @@ The reactor CHEWS through moderator. It does not do this slowly. Be very careful
 	set_light(10)
 	var/startup_sound = pick('sound/effects/ship/reactor/startup.ogg', 'sound/effects/ship/reactor/startup2.ogg')
 	playsound(loc, startup_sound, 100)
-	soundloop = new(TRUE)
+	soundloop = new(src, TRUE)
 	if(!powernet)
 		message_admins("No powernet for the Nuclear Reactor! Trying to add.")
 		connect_to_network()

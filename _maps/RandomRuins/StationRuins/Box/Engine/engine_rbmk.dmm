@@ -239,7 +239,7 @@
 /turf/open/floor/plasteel/dark,
 /area/engineering/main)
 "hT" = (
-/obj/machinery/atmospherics/pipe/manifold/yellow{
+/obj/machinery/atmospherics/pipe/manifold/yellow/visible{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -475,8 +475,12 @@
 /turf/open/floor/plasteel/dark,
 /area/engineering/main)
 "mT" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
 /turf/open/floor/engine,
 /area/engineering/main)
 "mY" = (
@@ -531,10 +535,13 @@
 /turf/open/floor/engine,
 /area/engineering/main)
 "op" = (
-/obj/machinery/atmospherics/components/trinary/nuclear_reactor/preset,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/atmospherics/components/trinary/nuclear_reactor/preset,
 /turf/open/floor/engine,
 /area/engineering/main)
 "os" = (
@@ -623,6 +630,12 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engineering/main)
+"tZ" = (
+/obj/machinery/atmospherics/components/binary/pump/rbmk_input{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/engineering/main)
 "ue" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -683,6 +696,15 @@
 	},
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
+/area/engineering/main)
+"vg" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	dir = 8
+	},
+/turf/open/floor/engine,
 /area/engineering/main)
 "vh" = (
 /obj/structure/table,
@@ -816,10 +838,7 @@
 /turf/open/floor/plasteel/dark,
 /area/engineering/main)
 "Cg" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
+/obj/machinery/atmospherics/components/binary/pump/rbmk_moderator,
 /turf/open/floor/engine,
 /area/engineering/main)
 "Ck" = (
@@ -929,7 +948,7 @@
 /turf/open/floor/engine,
 /area/engineering/main)
 "Hj" = (
-/obj/machinery/atmospherics/pipe/manifold/yellow{
+/obj/machinery/atmospherics/pipe/manifold/yellow/visible{
 	dir = 1
 	},
 /turf/open/floor/engine,
@@ -971,6 +990,18 @@
 	},
 /turf/open/floor/engine,
 /area/engineering/main)
+"IL" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/engineering/main)
 "Ja" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
@@ -996,6 +1027,12 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
+/area/engineering/main)
+"JA" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/engine,
 /area/engineering/main)
 "JG" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1043,6 +1080,16 @@
 	network = list("engine");
 	pixel_x = 23
 	},
+/turf/open/floor/engine,
+/area/engineering/main)
+"LC" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/open/floor/engine,
 /area/engineering/main)
 "Me" = (
@@ -1251,6 +1298,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engineering/main)
+"UR" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/engine,
+/area/engineering/main)
 "Vc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -1291,7 +1344,10 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/binary/pump/rbmk_output{
 	dir = 8
 	},
 /turf/open/floor/engine,
@@ -1840,10 +1896,10 @@ fF
 mx
 hH
 ke
-wN
 ke
+wN
 VM
-mY
+JA
 mY
 mY
 FT
@@ -1868,10 +1924,10 @@ NY
 bQ
 mY
 mY
-uj
 mY
-uj
-mY
+mT
+IL
+mT
 mY
 mY
 FT
@@ -1897,9 +1953,9 @@ Ll
 mY
 jg
 Cg
-mT
+LC
 op
-mY
+mT
 mY
 mY
 FT
@@ -1925,9 +1981,9 @@ bQ
 mY
 kX
 mY
-mY
-mY
-mY
+UR
+vg
+UR
 mY
 mY
 FT
@@ -1954,7 +2010,7 @@ Pt
 kX
 mY
 mY
-iY
+tZ
 mY
 mY
 mY
