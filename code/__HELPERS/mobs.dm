@@ -80,6 +80,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_spinneret, GLOB.arachnid_spinneret_list)
 	if(!GLOB.arachnid_mandibles_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_mandibles, GLOB.arachnid_mandibles_list)
+	if(!GLOB.protogen_screens_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/protogen_screens, GLOB.protogen_screens_list)
 
 	//CIT CHANGES - genitals and such
 	if(!GLOB.cock_shapes_list.len)
@@ -174,8 +176,9 @@
 		"insect_fluff"		= "None",
 		"insect_markings"	= pick(GLOB.insect_markings_list),
 		"arachnid_legs"		= pick(GLOB.arachnid_legs_list),
-		"arachnid_spinneret"	= pick(GLOB.arachnid_spinneret_list),
-		"arachnid_mandibles"	= pick(GLOB.arachnid_mandibles_list),
+		"arachnid_spinneret"= pick(GLOB.arachnid_spinneret_list),
+		"arachnid_mandibles"= pick(GLOB.arachnid_mandibles_list),
+		"protogen_screens"	= pick(GLOB.protogen_screens_list),
 		"taur"				= "None",
 		"mam_body_markings" = list(),
 		"mam_ears" 			= snowflake_ears_list ? pick(snowflake_ears_list) : "None",

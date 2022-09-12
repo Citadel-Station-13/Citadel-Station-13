@@ -34,6 +34,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_legs, GLOB.arachnid_legs_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_spinneret, GLOB.arachnid_spinneret_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_mandibles, GLOB.arachnid_mandibles_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/protogen_screens, GLOB.protogen_screens_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/deco_wings, GLOB.deco_wings_list)
 
 //CIT CHANGES START HERE, ADDS SNOWFLAKE BODYPARTS AND MORE

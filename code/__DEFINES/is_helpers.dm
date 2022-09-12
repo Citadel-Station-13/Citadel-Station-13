@@ -84,6 +84,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 // Citadel specific species
 #define isipcperson(A) (is_species(A, /datum/species/ipc))
 #define issynthliz(A) (is_species(A, /datum/species/synthliz))
+#define isprotogen(A) (is_species(A, /datum/species/protogen))
 #define ismammal(A) (is_species(A, /datum/species/mammal))
 #define isinsect(A) (is_species(A, /datum/species/insect))
 #define isxenoperson(A) (is_species(A, /datum/species/xeno))
