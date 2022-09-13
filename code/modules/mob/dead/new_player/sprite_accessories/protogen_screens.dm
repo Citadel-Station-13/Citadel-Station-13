@@ -1,6 +1,7 @@
 /datum/sprite_accessory/protogen_screens
 	icon = 'icons/mob/protogen_screens.dmi'
-	color_src = null
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED_BLUE
 	relevant_layers = list(BODY_ADJ_LAYER)
 	mutant_part_string = "protogen"
 
@@ -39,6 +40,8 @@
 /datum/sprite_accessory/protogen_screens/static
 	name = "Static"
 	icon_state = "static"
+	color_src = null
+	matrixed_sections = null
 
 /datum/sprite_accessory/protogen_screens/alert
 	name = "Alert"
