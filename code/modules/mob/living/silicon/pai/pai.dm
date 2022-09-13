@@ -322,6 +322,30 @@
 	else
 		to_chat(user, "Encryption Key ports not configured.")
 
+/obj/item/paicard/attack_ghost(mob/dead/observer/user)
+	if(pai)
+		to_chat(user, "<span class='warning'>This pAI is already in use!</span>")
+		return
+
+	var/area/A = get_area(get_turf(src))
+	if(A.type in SSpai.restricted_areas) // set in subsystem/pai.dm on initialize of the subsystem
+		to_chat(user, "<span class='warning'>You can't download yourself into a restricted area!</span>")
+		return
+
+	var/pai_name = reject_bad_name(stripped_input(usr, "Enter a name for your pAI", "pAI Name", user.name, MAX_NAME_LEN), TRUE)
+	if(!pai_name)
+		to_chat(user, "<span class='warning'>Entered name is not valid.</span>")
+		return
+
+	var/mob/living/silicon/pai/new_pai = new(src)
+	new_pai.name = pai_name
+	new_pai.real_name = new_pai.name
+	new_pai.key = user.key
+
+	setPersonality(new_pai)
+
+	SSticker.mode.update_cult_icons_removed(pai.mind)
+
 /obj/item/paicard/emag_act(mob/user) // Emag to wipe the master DNA and supplemental directive
 	. = ..()
 	if(!pai)
