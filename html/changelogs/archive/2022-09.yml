@@ -23,3 +23,6 @@
 2022-09-03:
   Putnam3145:
   - bugfix: Destructive analyzer now does not multiply your stack by 50
+2022-09-14:
+  timothyteakettle:
+  - rscadd: lets ghosts click a pAI device to download into it without a master
