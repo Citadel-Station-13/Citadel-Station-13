@@ -52,6 +52,18 @@
 	cost = 20
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
+/datum/uplink_item/bundles_tc/cannedship
+	name = "Ship in a Can"
+	desc = "Thanks to some new cost-cutting measures and the removal of several workplace safety laws by  \
+     the syndicate, a new product has been made available as part of a special test run! Introducing the fabulous new Ship in a Can! \
+	  If owning a ship wasn't enough, this bundle also comes with a drop pod beacon to select some equipment. Donk Co is not responsible for any possible   \
+	   Bannanium poisoning. Batteries included. Agent ID for airlock and turret access included. To assemble, first take the rapid shuttle designation and highlight the entire ship   \
+	    using the select room and select turf tool. Once done, select the airlock at the back of the ship as your docking airlock and select a name.  \
+		 From there use the tools and supplies in the cabin to set up an APC and then turn it on. All that is left is to go wrench in the plasma canisters and enable the fuel valves. Two are in the rear of the ship and one is in each nacelle. \
+		 Total setup time should take about 5 minutes."
+	item = /obj/item/storage/box/syndie_kit/cannedship
+	cost = 20
+
 /datum/uplink_item/bundles_tc/scarp_bundle
 	name = "Sleeping Carp Bundle"
 	desc = "Become one with your inner carp!  Your ancient fish masters leave behind their legacy, and bestow to you their teachings, sacred uniform, and staff. \

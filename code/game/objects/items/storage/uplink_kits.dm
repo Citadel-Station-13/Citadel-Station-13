@@ -564,3 +564,13 @@
 	for(var/i in implants)
 		group.register(i)
 	desc += " The implants are registered to the \"[group.name]\" group."
+
+	//canned ship bundle box
+
+/obj/item/storage/box/syndie_kit/cannedship
+
+/obj/item/storage/box/syndie_kit/cannedship/PopulateContents()
+	new /obj/item/choice_beacon/ship/gear (src)
+	new /obj/item/survivalcapsule/syndicate/cannedship (src)
+
+
