@@ -161,7 +161,6 @@
 	var/datum/duel/duel
 	var/mutable_appearance/setting_overlay
 	var/hugbox = DUEL_HUGBOX_NONE
-	has_gun_safety = TRUE
 
 /obj/item/gun/energy/dueling/hugbox
 	hugbox = DUEL_HUGBOX_LETHAL

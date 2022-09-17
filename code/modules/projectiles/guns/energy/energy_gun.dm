@@ -9,7 +9,6 @@
 	ammo_x_offset = 3
 	flight_x_offset = 15
 	flight_y_offset = 10
-	has_gun_safety = TRUE
 
 /obj/item/gun/energy/e_gun/mini
 	name = "miniature energy gun"

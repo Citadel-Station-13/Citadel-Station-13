@@ -14,7 +14,6 @@
 	fire_sound = 'sound/items/syringeproj.ogg'
 	var/list/syringes = list()
 	var/max_syringes = 1
-	has_gun_safety = TRUE
 
 /obj/item/gun/syringe/Initialize(mapload)
 	. = ..()
@@ -161,7 +160,6 @@
 	icon_state = "blowgun"
 	item_state = "syringegun"
 	fire_sound = 'sound/items/syringeproj.ogg'
-	has_gun_safety = FALSE //unga bunga, tube no fit safety
 
 /obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, stam_cost = 0)
 	visible_message("<span class='danger'>[user] starts aiming with a blowgun!</span>")

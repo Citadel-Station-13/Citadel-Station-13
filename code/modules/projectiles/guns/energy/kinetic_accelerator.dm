@@ -34,7 +34,6 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/premium)
-	has_gun_safety = TRUE
 
 /obj/item/ammo_casing/energy/kinetic/premium
 	projectile_type = /obj/item/projectile/kinetic/premium

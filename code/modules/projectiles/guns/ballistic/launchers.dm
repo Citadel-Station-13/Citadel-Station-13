@@ -11,7 +11,6 @@
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
 	pin = /obj/item/firing_pin/implant/pindicate
-	has_gun_safety = FALSE
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted
 	pin = /obj/item/firing_pin
@@ -28,7 +27,6 @@
 	icon_state = "mecha_grenadelnchr"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/grenademulti
 	pin = /obj/item/firing_pin
-	has_gun_safety = FALSE
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/cyborg/attack_self()
 	return
@@ -94,7 +92,6 @@
 	casing_ejector = FALSE
 	weapon_weight = WEAPON_HEAVY
 	magazine_wording = "rocket"
-	has_gun_safety = TRUE
 
 /obj/item/gun/ballistic/rocketlauncher/unrestricted
 	pin = /obj/item/firing_pin

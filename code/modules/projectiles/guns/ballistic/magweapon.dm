@@ -20,7 +20,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	var/obj/item/stock_parts/cell/cell
 	var/cell_type = /obj/item/stock_parts/cell/magnetic
-	has_gun_safety = TRUE
 
 /obj/item/gun/ballistic/automatic/magrifle/Initialize(mapload)
 	. = ..()

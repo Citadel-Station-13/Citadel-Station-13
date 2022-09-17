@@ -6,7 +6,6 @@
 	fire_sound = "sound/weapons/revolvershot.ogg"
 	casing_ejector = FALSE
 	recoil = 0.5
-	has_gun_safety = TRUE
 
 /obj/item/gun/ballistic/revolver/Initialize(mapload)
 	. = ..()

@@ -11,7 +11,6 @@
 	var/list/grenades = new/list()
 	var/max_grenades = 3
 	custom_materials = list(/datum/material/iron=2000)
-	has_gun_safety = TRUE
 
 /obj/item/gun/grenadelauncher/examine(mob/user)
 	. = ..()

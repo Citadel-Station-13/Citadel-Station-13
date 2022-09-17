@@ -8,7 +8,6 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
 	shaded_charge = 1
-	has_gun_safety = TRUE
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
@@ -93,7 +92,6 @@
 	selfcharge = EGUN_SELFCHARGE_BORG
 	cell_type = /obj/item/stock_parts/cell/secborg
 	charge_delay = 3
-	has_gun_safety = FALSE
 
 /obj/item/gun/energy/laser/cyborg/emp_act()
 	return
@@ -131,7 +129,6 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/accelerator)
 	pin = null
 	ammo_x_offset = 3
-	has_gun_safety = TRUE
 
 /obj/item/ammo_casing/energy/laser/accelerator
 	projectile_type = /obj/item/projectile/beam/laser/accelerator

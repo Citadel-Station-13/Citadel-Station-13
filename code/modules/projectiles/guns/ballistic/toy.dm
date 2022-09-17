@@ -13,7 +13,6 @@
 	clumsy_check = 0
 	item_flags = NONE
 	casing_ejector = FALSE
-	has_gun_safety = TRUE
 
 /obj/item/gun/ballistic/automatic/toy/unrestricted
 	pin = /obj/item/firing_pin

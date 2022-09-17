@@ -15,7 +15,6 @@
 	pin = null
 	no_pin_required = TRUE
 	trigger_guard = TRIGGER_GUARD_NONE //so ashwalkers can use it
-	has_gun_safety = FALSE //bows and arrows don't have safeties
 
 /obj/item/gun/ballistic/bow/shoot_with_empty_chamber()
 	return
