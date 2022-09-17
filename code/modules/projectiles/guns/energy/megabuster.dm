@@ -10,6 +10,7 @@
 	selfcharge = EGUN_SELFCHARGE
 	cell_type = "/obj/item/stock_parts/cell/pulse"
 	icon = 'modular_citadel/icons/obj/guns/VGguns.dmi'
+	has_gun_safety = TRUE
 
 /obj/item/gun/energy/megabuster/proto
 	name = "Proto-buster"

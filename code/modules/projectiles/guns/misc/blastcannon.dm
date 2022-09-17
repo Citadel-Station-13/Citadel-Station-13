@@ -10,6 +10,7 @@
 	item_flags = NONE
 	clumsy_check = FALSE
 	randomspread = FALSE
+	has_gun_safety = TRUE
 
 	var/hugbox = TRUE
 	var/max_power = INFINITY

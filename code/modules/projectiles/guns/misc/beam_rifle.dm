@@ -31,6 +31,7 @@
 	canMouseDown = TRUE
 	can_turret = FALSE
 	can_circuit = FALSE
+	has_gun_safety = TRUE
 	//Cit changes: beam rifle stats.
 	slowdown = 1
 	item_flags = NO_MAT_REDEMPTION | SLOWS_WHILE_IN_HAND | NEEDS_PERMIT

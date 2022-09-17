@@ -13,6 +13,7 @@
 	item_flags = NONE
 	pin = /obj/item/firing_pin
 	cell_type = /obj/item/stock_parts/cell/bluespace
+	
 
 	var/datum/action/item_action/chameleon/change/gun/chameleon_action
 	var/list/chameleon_projectile_vars

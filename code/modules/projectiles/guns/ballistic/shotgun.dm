@@ -15,6 +15,7 @@
 	var/clip_delay = CLICK_CD_MELEE
 	weapon_weight = WEAPON_HEAVY
 	sawn_item_state = "sawnshotgun"
+	has_gun_safety = TRUE
 
 /obj/item/gun/ballistic/shotgun/attackby(obj/item/A, mob/user, params)
 	. = ..()

@@ -8,6 +8,7 @@
 	selfcharge = EGUN_SELFCHARGE
 	can_flashlight = 0
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL // Has no trigger at all, uses neural signals instead
+	has_gun_safety = TRUE
 
 /obj/item/gun/energy/laser/mounted
 	name = "mounted laser"
@@ -18,3 +19,4 @@
 	force = 5
 	selfcharge = EGUN_SELFCHARGE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
+	has_gun_safety = TRUE

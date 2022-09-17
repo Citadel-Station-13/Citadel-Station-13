@@ -20,6 +20,7 @@
 	var/obj/item/reagent_containers/glass/bottle/vial/vial
 	var/list/allowed_containers = list(/obj/item/reagent_containers/glass/bottle/vial/small, /obj/item/reagent_containers/glass/bottle/vial/large)
 	var/quickload = TRUE
+	has_gun_safety = TRUE
 
 /obj/item/gun/chem/Initialize(mapload)
 	. = ..()
@@ -110,6 +111,7 @@
 	desc = "An experimental improved version of the smartdart rifle. It synthesizes medicinal smart darts which it fills using an inserted hypovial. It can accommodate both large and small hypovials."
 	icon_state = "chemgunrepeater"
 	item_state = "syringegun"
+	has_gun_safety = TRUE
 
 obj/item/gun/chem/smart/Initialize(mapload)
 	. = ..()

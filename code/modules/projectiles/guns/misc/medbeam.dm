@@ -13,6 +13,7 @@
 	var/active = 0
 	var/datum/beam/current_beam = null
 	var/mounted = 0 //Denotes if this is a handheld or mounted version
+	has_gun_safety = FALSE //no safety here.
 
 	weapon_weight = WEAPON_MEDIUM
 

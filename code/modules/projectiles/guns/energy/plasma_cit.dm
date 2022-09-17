@@ -9,6 +9,7 @@
 	shaded_charge = 1
 	lefthand_file = 'modular_citadel/icons/mob/citadel/guns_lefthand.dmi'
 	righthand_file = 'modular_citadel/icons/mob/citadel/guns_righthand.dmi'
+	has_gun_safety = TRUE
 
 
 /obj/item/gun/energy/plasma/rifle

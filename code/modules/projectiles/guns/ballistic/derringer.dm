@@ -10,6 +10,7 @@
 	fire_sound = 'sound/weapons/revolvershot.ogg'
 	casing_ejector = FALSE
 	w_class = WEIGHT_CLASS_TINY
+	has_gun_safety = TRUE
 
 /obj/item/gun/ballistic/derringer/get_ammo(countchambered = FALSE, countempties = TRUE)
 	var/boolets = 0 //legacy var name maturity

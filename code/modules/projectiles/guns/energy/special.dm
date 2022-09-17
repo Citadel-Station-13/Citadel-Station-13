@@ -11,6 +11,7 @@
 	ammo_x_offset = 3
 	flight_x_offset = 17
 	flight_y_offset = 9
+	has_gun_safety = TRUE
 
 /obj/item/gun/energy/ionrifle/emp_act(severity)
 	return
@@ -49,6 +50,7 @@
 	modifystate = 1
 	ammo_x_offset = 1
 	selfcharge = EGUN_SELFCHARGE
+	has_gun_safety = FALSE
 
 /obj/item/gun/energy/meteorgun
 	name = "meteor gun"
@@ -60,6 +62,7 @@
 	cell_type = "/obj/item/stock_parts/cell/potato"
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
 	selfcharge = EGUN_SELFCHARGE
+	has_gun_safety = TRUE
 
 /obj/item/gun/energy/meteorgun/pen
 	name = "meteor pen"
@@ -70,6 +73,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
+	has_gun_safety = TRUE
 
 /obj/item/gun/energy/mindflayer
 	name = "\improper Mind Flayer"
@@ -78,6 +82,7 @@
 	item_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
 	ammo_x_offset = 2
+	has_gun_safety = FALSE
 
 /obj/item/gun/energy/kinetic_accelerator/crossbow
 	name = "mini energy crossbow"
@@ -96,6 +101,7 @@
 	unique_frequency = TRUE
 	can_flashlight = 0
 	max_mod_capacity = 0
+	has_gun_safety = TRUE
 
 /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
 	name = "candy corn crossbow"
@@ -103,6 +109,7 @@
 	icon_state = "crossbow_halloween"
 	item_state = "crossbow"
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/halloween)
+	has_gun_safety = FALSE
 
 /obj/item/gun/energy/kinetic_accelerator/crossbow/large
 	name = "energy crossbow"
@@ -133,6 +140,7 @@
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
+	has_gun_safety = FALSE
 
 /obj/item/gun/energy/plasmacutter/ComponentInitialize()
 	. = ..()
@@ -189,6 +197,7 @@
 	icon_state = "gravity_gun"
 	var/power = 4
 	var/firing_core = FALSE
+	has_gun_safety = TRUE
 
 /obj/item/gun/energy/gravity_gun/attackby(obj/item/C, mob/user)
 	if(istype(C, /obj/item/assembly/signaler/anomaly))
@@ -216,6 +225,7 @@
 	var/obj/effect/portal/p_orange
 	var/atmos_link = FALSE
 	var/firing_core = FALSE
+	has_gun_safety = TRUE
 
 /obj/item/gun/energy/wormhole_projector/attackby(obj/item/C, mob/user)
 	if(istype(C, /obj/item/assembly/signaler/anomaly))
@@ -305,6 +315,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
 	can_charge = 0
 	use_cyborg_cell = 1
+	has_gun_safety = FALSE
 
 /obj/item/gun/energy/printer/ComponentInitialize()
 	. = ..()
@@ -334,6 +345,7 @@
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit."
 	ammo_type = list(/obj/item/ammo_casing/energy/instakill)
 	force = 60
+	has_gun_safety = TRUE
 
 /obj/item/gun/energy/laser/instakill/red
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a red design."
@@ -362,6 +374,7 @@
 	cell_type = /obj/item/stock_parts/cell/super
 	ammo_type = list(/obj/item/ammo_casing/energy/emitter)
 	automatic_charge_overlays = FALSE
+	has_gun_safety = TRUE
 
 /obj/item/gun/energy/emitter/update_icon_state()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
@@ -377,3 +390,4 @@
 	icon_state = "decloner"
 	no_pin_required = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/pickle)
+	has_gun_safety = FALSE
