@@ -1011,7 +1011,7 @@
 	playsound(loc, 'sound/effects/bin_close.ogg', 50, 0)
 	return ..()
 
-/obj/item/card/id/mining/miningborg
+/obj/item/card/id/miningborg
 	name = "mining point card"
 	desc = "A robotic ID strip used for claiming and transferring mining points. Must be held in an active slot to transfer points."
 	access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
