@@ -470,6 +470,7 @@ BOX_RANDOM_ENGINE Box TEG,3
 BOX_RANDOM_ENGINE Box Empty,0
 BOX_RANDOM_ENGINE Box Antimatter,1
 BOX_RANDOM_ENGINE Box P.A.C.M.A.N,1
+BOX_RANDOM_ENGINE Box RBMK,3
 
 
 ## Whether the suicide verb is allowed.
