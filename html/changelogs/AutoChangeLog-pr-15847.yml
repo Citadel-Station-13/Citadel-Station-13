@@ -1,0 +1,4 @@
+author: "shellspeed1"
+delete-after: True
+changes: 
+  - rscadd: "Adds the RBMK reactor from NSV. Credit to Kmc2000 for originally making it. https://github.com/BeeStation/NSV13/pull/828"
