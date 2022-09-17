@@ -93,7 +93,7 @@
 
 	//gun safeties
 	var/safety = TRUE /// Internal variable for keeping track whether the safety is on or off
-	var/has_gun_safety = TRUE/// Whether the gun actually has a gun safety
+	var/has_gun_safety = FALSE/// Whether the gun actually has a gun safety
 	var/datum/action/item_action/toggle_safety/toggle_safety_action
 
 	//Firemodes
@@ -116,10 +116,17 @@
 
 /obj/item/gun/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_firemode))
+		message_admins("Fireselector button hit")
 		fire_select()
 	else if(istype(action, /datum/action/item_action/toggle_safety))
 		toggle_safety(user)
+		message_admins("Safety button hit")
+	else if(istype(action, /datum/action/item_action/toggle_scope_zoom))
+		zoom(user, user.dir)
+	else if(istype(action, alight))
+		toggle_gunlight()
 	else
+		message_admins("something hit wrong with full auto")
 		..()
 
 /obj/item/gun/Initialize(mapload)
@@ -675,12 +682,6 @@
 			new_light.forceMove(src)
 
 	gun_light = new_light
-
-/obj/item/gun/ui_action_click(mob/user, action)
-	if(istype(action, /datum/action/item_action/toggle_scope_zoom))
-		zoom(user, user.dir)
-	else if(istype(action, alight))
-		toggle_gunlight()
 
 /obj/item/gun/proc/toggle_gunlight()
 	if(!gun_light)
