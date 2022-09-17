@@ -91,11 +91,6 @@
 	var/zoom_out_amt = 0
 	var/datum/action/item_action/toggle_scope_zoom/azoom
 
-	//gun safeties
-	var/safety = TRUE /// Internal variable for keeping track whether the safety is on or off
-	var/has_gun_safety = FALSE/// Whether the gun actually has a gun safety
-	var/datum/action/item_action/toggle_safety/toggle_safety_action
-
 	//Firemodes
 	var/datum/action/item_action/toggle_firemode/firemode_action
 	/// Current fire selection, can choose between burst, single, and full auto.
@@ -117,8 +112,6 @@
 /obj/item/gun/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_firemode))
 		fire_select()
-	else if(istype(action, /datum/action/item_action/toggle_safety))
-		toggle_safety(user)
 	else if(istype(action, /datum/action/item_action/toggle_scope_zoom))
 		zoom(user, user.dir)
 	else if(istype(action, alight))
@@ -136,9 +129,6 @@
 
 	if(zoomable)
 		azoom = new (src)
-	if(has_gun_safety)
-		safety = TRUE
-		toggle_safety_action = new(src)
 
 	if(burst_size > 1 && !(SELECT_BURST_SHOT in fire_select_modes))
 		fire_select_modes.Add(SELECT_BURST_SHOT)
@@ -170,8 +160,6 @@
 		QDEL_NULL(chambered)
 	if(azoom)
 		QDEL_NULL(azoom)
-	if(toggle_safety_action)
-		QDEL_NULL(toggle_safety_action)
 	if(firemode_action)
 		QDEL_NULL(firemode_action)
 	return ..()
@@ -198,8 +186,6 @@
 			. += "<span class='info'>[bayonet] looks like it can be <b>unscrewed</b> from [src].</span>"
 	else if(can_bayonet)
 		. += "It has a <b>bayonet</b> lug on it."
-	if(has_gun_safety)
-		. += "<span>The safety is [safety ? "<font color='#00ff15'>ON</font>" : "<font color='#ff0000'>OFF</font>"].</span>"
 
 /obj/item/gun/proc/fire_select()
 	var/mob/living/carbon/human/user = usr
@@ -367,22 +353,6 @@
 	var/stam_cost = getstamcost(user)
 	process_fire(target, user, TRUE, params, null, bonus_spread, stam_cost)
 
-/obj/item/gun/proc/toggle_safety(mob/user, override)
-	if(!has_gun_safety)
-		return
-	if(override)
-		if(override == "off")
-			safety = FALSE
-		else
-			safety = TRUE
-	else
-		safety = !safety
-	toggle_safety_action.button_icon_state = "safety_[safety ? "on" : "off"]"
-	toggle_safety_action.UpdateButtonIcon()
-	playsound(src, 'sound/weapons/empty.ogg', 100, TRUE)
-	user.visible_message("<span class='notice'>[user] toggles [src]'s safety [safety ? "<font color='#00ff15'>ON</font>" : "<font color='#ff0000'>OFF</font>"].",
-	"<span class='notice'>You toggle [src]'s safety [safety ? "<font color='#00ff15'>ON</font>" : "<font color='#ff0000'>OFF</font>"].</span>")
-
 /obj/item/gun/can_trigger_gun(mob/living/user)
 	. = ..()
 	if(!.)
@@ -391,9 +361,6 @@
 		return FALSE
 	if(HAS_TRAIT(user, TRAIT_PACIFISM) && chambered?.harmful) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 		to_chat(user, "<span class='notice'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
-		return FALSE
-	if(has_gun_safety && safety)
-		to_chat(user, "<span class='warning'>The safety is on!</span>")
 		return FALSE
 
 /obj/item/gun/CheckAttackCooldown(mob/user, atom/target)
