@@ -116,17 +116,14 @@
 
 /obj/item/gun/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_firemode))
-		message_admins("Fireselector button hit")
 		fire_select()
 	else if(istype(action, /datum/action/item_action/toggle_safety))
 		toggle_safety(user)
-		message_admins("Safety button hit")
 	else if(istype(action, /datum/action/item_action/toggle_scope_zoom))
 		zoom(user, user.dir)
 	else if(istype(action, alight))
 		toggle_gunlight()
 	else
-		message_admins("something hit wrong with full auto")
 		..()
 
 /obj/item/gun/Initialize(mapload)
