@@ -228,6 +228,11 @@
 	button_icon_state = "fireselect_no"
 	name = "Toggle Firemode"
 
+/datum/action/item_action/toggle_safety
+	name = "Toggle Safety"
+	icon_icon = 'icons/hud/actions.dmi'
+	button_icon_state = "safety_on"
+
 /datum/action/item_action/rcl_col
 	name = "Change Cable Color"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'

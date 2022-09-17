@@ -22,6 +22,7 @@
 	var/ranged_attack_speed = CLICK_CD_RANGE
 	var/melee_attack_speed = CLICK_CD_MELEE
 
+	var/gun_flags = NONE
 	var/fire_sound = "gunshot"
 	var/suppressed = null					//whether or not a message is displayed when fired
 	var/can_suppress = FALSE
@@ -32,6 +33,7 @@
 	trigger_guard = TRIGGER_GUARD_NORMAL	//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
 	var/sawn_desc = null				//description change if weapon is sawn-off
 	var/sawn_off = FALSE
+	var/firing_burst = 0 //Prevent the weapon from firing again while already firing
 
 	/// can we be put into a turret
 	var/can_turret = TRUE
@@ -89,10 +91,12 @@
 	var/zoom_out_amt = 0
 	var/datum/action/item_action/toggle_scope_zoom/azoom
 
-	var/safety = FALSE /// Internal variable for keeping track whether the safety is on or off
-	var/has_gun_safety = FALSE /// Whether the gun actually has a gun safety
+	//gun safeties
+	var/safety = TRUE /// Internal variable for keeping track whether the safety is on or off
+	var/has_gun_safety = TRUE/// Whether the gun actually has a gun safety
 	var/datum/action/item_action/toggle_safety/toggle_safety_action
 
+	//Firemodes
 	var/datum/action/item_action/toggle_firemode/firemode_action
 	/// Current fire selection, can choose between burst, single, and full auto.
 	var/fire_select = SELECT_SEMI_AUTOMATIC
@@ -107,24 +111,18 @@
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
 	var/projectile_damage_multiplier = 1
 
-
 	/// directional recoil multiplier
 	var/dir_recoil_amp = 10
-/datum/action/item_action/toggle_safety
-	name = "Toggle Safety"
-	icon_icon = 'icons/hud/actions.dmi'
-	button_icon_state = "safety_on"
 
-/obj/item/gun/ui_action_click(mob/user, actiontype)
-	if(istype(actiontype, /datum/action/item_action/toggle_firemode))
+/obj/item/gun/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/toggle_firemode))
 		fire_select()
-	else if(istype(actiontype, toggle_safety_action))
+	else if(istype(action, /datum/action/item_action/toggle_safety))
 		toggle_safety(user)
 	else
 		..()
 
-
-/obj/item/gun/Initialize()
+/obj/item/gun/Initialize(mapload)
 	. = ..()
 	if(pin)
 		pin = new pin(src)
@@ -134,7 +132,6 @@
 
 	if(zoomable)
 		azoom = new (src)
-
 	if(has_gun_safety)
 		safety = TRUE
 		toggle_safety_action = new(src)
@@ -152,6 +149,7 @@
 		firemode_action = new(src)
 		firemode_action.button_icon_state = "fireselect_[fire_select]"
 		firemode_action.UpdateButtonIcon()
+
 /obj/item/gun/ComponentInitialize()
 	. = ..()
 	if(SELECT_FULLY_AUTOMATIC in fire_select_modes)
@@ -166,6 +164,8 @@
 		QDEL_NULL(bayonet)
 	if(chambered)
 		QDEL_NULL(chambered)
+	if(azoom)
+		QDEL_NULL(azoom)
 	if(toggle_safety_action)
 		QDEL_NULL(toggle_safety_action)
 	if(firemode_action)
@@ -194,6 +194,8 @@
 			. += "<span class='info'>[bayonet] looks like it can be <b>unscrewed</b> from [src].</span>"
 	else if(can_bayonet)
 		. += "It has a <b>bayonet</b> lug on it."
+	if(has_gun_safety)
+		. += "<span>The safety is [safety ? "<font color='#00ff15'>ON</font>" : "<font color='#ff0000'>OFF</font>"].</span>"
 
 /obj/item/gun/proc/fire_select()
 	var/mob/living/carbon/human/user = usr
@@ -201,10 +203,10 @@
 	var/max_mode = fire_select_modes.len
 
 	if(max_mode <= 1)
-		balloon_alert(user, "only one firemode!")
+		to_chat(user, "<span class='warning'>[src] is not capable of switching firemodes!</span>")
 		return
 
-	fire_select_index = 1 + fire_select_index % max_mode // Magic math to cycle through this shit!
+	fire_select_index = 1 + fire_select_index % max_mode //Magic math to cycle through this shit!
 
 	fire_select = fire_select_modes[fire_select_index]
 
@@ -213,42 +215,22 @@
 			burst_size = 1
 			fire_delay = 0
 			SEND_SIGNAL(src, COMSIG_GUN_AUTOFIRE_DESELECTED, user)
-			balloon_alert(user, "semi-automatic")
+			to_chat(user, "<span class='notice'>You switch [src] to semi-automatic.</span>")
 		if(SELECT_BURST_SHOT)
 			burst_size = initial(burst_size)
 			fire_delay = initial(fire_delay)
 			SEND_SIGNAL(src, COMSIG_GUN_AUTOFIRE_DESELECTED, user)
-			balloon_alert(user, "[burst_size]-round burst")
+			to_chat(user, "<span class='notice'>You switch [src] to [burst_size]-round burst.</span>")
 		if(SELECT_FULLY_AUTOMATIC)
 			burst_size = 1
 			SEND_SIGNAL(src, COMSIG_GUN_AUTOFIRE_SELECTED, user)
-			balloon_alert(user, "automatic")
+			to_chat(user, "<span class='notice'>You switch [src] to automatic.</span>")
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
 	update_appearance()
 	firemode_action.button_icon_state = "fireselect_[fire_select]"
-	firemode_action.UpdateButtons()
-	//SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD) I'll need this later
+	firemode_action.UpdateButtonIcon()
 	return TRUE
-
-/obj/item/gun/proc/toggle_safety(mob/user, override)
-	if(!has_gun_safety)
-		return
-	if(override)
-		if(override == "off")
-			safety = FALSE
-		else
-			safety = TRUE
-	else
-		safety = !safety
-	toggle_safety_action.button_icon_state = "safety_[safety ? "on" : "off"]"
-	toggle_safety_action.UpdateButtons()
-	playsound(src, 'sound/weapons/empty.ogg', 100, TRUE)
-	user.visible_message(
-		span_notice("[user] toggles [src]'s safety [safety ? "<font color='#00ff15'>ON</font>" : "<font color='#ff0000'>OFF</font>"]."),
-		span_notice("You toggle [src]'s safety [safety ? "<font color='#00ff15'>ON</font>" : "<font color='#ff0000'>OFF</font>"].")
-	)
-	//SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD) once again, needed later
 
 /obj/item/gun/equipped(mob/living/user, slot)
 	. = ..()
@@ -381,6 +363,22 @@
 	var/stam_cost = getstamcost(user)
 	process_fire(target, user, TRUE, params, null, bonus_spread, stam_cost)
 
+/obj/item/gun/proc/toggle_safety(mob/user, override)
+	if(!has_gun_safety)
+		return
+	if(override)
+		if(override == "off")
+			safety = FALSE
+		else
+			safety = TRUE
+	else
+		safety = !safety
+	toggle_safety_action.button_icon_state = "safety_[safety ? "on" : "off"]"
+	toggle_safety_action.UpdateButtonIcon()
+	playsound(src, 'sound/weapons/empty.ogg', 100, TRUE)
+	user.visible_message("<span class='notice'>[user] toggles [src]'s safety [safety ? "<font color='#00ff15'>ON</font>" : "<font color='#ff0000'>OFF</font>"].",
+	"<span class='notice'>You toggle [src]'s safety [safety ? "<font color='#00ff15'>ON</font>" : "<font color='#ff0000'>OFF</font>"].</span>")
+
 /obj/item/gun/can_trigger_gun(mob/living/user)
 	. = ..()
 	if(!.)
@@ -389,6 +387,9 @@
 		return FALSE
 	if(HAS_TRAIT(user, TRAIT_PACIFISM) && chambered?.harmful) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 		to_chat(user, "<span class='notice'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
+		return FALSE
+	if(has_gun_safety && safety)
+		to_chat(user, "<span class='warning'>The safety is on!</span>")
 		return FALSE
 
 /obj/item/gun/CheckAttackCooldown(mob/user, atom/target)
