@@ -72,6 +72,14 @@
 	id = "newscaster_frame"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 14000, /datum/material/glass = 8000)
+	build_path = /obj/item/wallframe/posialert
+	category = list("initial", "Construction")
+
+/datum/design/posialert
+	name = "Posialert Frame"
+	id = "posialert_frame"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 14000, /datum/material/glass = 8000)
 	build_path = /obj/item/wallframe/newscaster
 	category = list("initial", "Construction")
 
