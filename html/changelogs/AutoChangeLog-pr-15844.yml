@@ -1,0 +1,4 @@
+author: "shellspeed1"
+delete-after: True
+changes: 
+  - balance: "Launchpads now have a targeting icon."
