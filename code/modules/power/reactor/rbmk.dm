@@ -15,8 +15,7 @@
 
 #define RBMK_MAX_CRITICALITY 3 //No more criticality than N for now.
 
-//#define RBMK_POWER_FLAVOURISER 1000 //To turn those KWs into something usable
-#define RBMK_POWER_FLAVOURISER 8000 //To turn those KWs into something usable
+#define RBMK_POWER_FLAVOURISER 1000 //To turn those KWs into something usable
 
 //Math. Lame.
 #define KPA_TO_PSI(A) (A/6.895)
