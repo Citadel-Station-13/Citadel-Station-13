@@ -6,6 +6,7 @@
 	use_power = TRUE
 	idle_power_usage = 200
 	active_power_usage = 2500
+	hud_possible = list(DIAG_LAUNCHPAD_HUD)
 	circuit = /obj/item/circuitboard/machine/launchpad
 	var/icon_teleport = "lpad-beam"
 	var/stationary = TRUE //to prevent briefcase pad deconstruction and such
@@ -24,6 +25,25 @@
 		E += M.rating*15
 	range = E
 
+/obj/machinery/launchpad/Initialize()
+	. = ..()
+	prepare_huds()
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.add_to_hud(src)
+
+	var/image/holder = hud_list[DIAG_LAUNCHPAD_HUD]
+	var/mutable_appearance/MA = new /mutable_appearance()
+	MA.icon = 'icons/effects/effects.dmi'
+	MA.icon_state = "launchpad_target"
+	MA.layer = ABOVE_OPEN_TURF_LAYER
+	MA.plane = 0
+	holder.appearance = MA
+	update_indicator()
+	
+/obj/machinery/launchpad/Destroy()
+	qdel(hud_list[DIAG_LAUNCHPAD_HUD])
+	return ..()
+
 /obj/machinery/launchpad/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
@@ -32,6 +52,7 @@
 /obj/machinery/launchpad/attackby(obj/item/I, mob/user, params)
 	if(stationary)
 		if(default_deconstruction_screwdriver(user, "lpad-idle-o", "lpad-idle", I))
+			update_indicator()
 			return
 
 		if(panel_open)
@@ -63,6 +84,17 @@
 		return FALSE
 	return TRUE
 
+/obj/machinery/launchpad/proc/update_indicator()
+	var/image/holder = hud_list[DIAG_LAUNCHPAD_HUD]
+	var/turf/target_turf
+	if(isAvailable())
+		target_turf = locate(x + x_offset, y + y_offset, z)
+	if(target_turf)
+		holder.icon_state = indicator_icon
+		holder.loc = target_turf
+	else
+		holder.icon_state = null
+
 /obj/machinery/launchpad/proc/set_offset(x, y)
 	if(teleporting)
 		return
@@ -89,11 +121,13 @@
 
 	flick(icon_teleport, src)
 
+
 	//Change the indicator's icon to show that we're teleporting
 	if(sending)
 		indicator_icon = "launchpad_launch"
 	else
 		indicator_icon = "launchpad_pull"
+	update_indicator()
 
 	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
 	teleporting = TRUE
@@ -103,6 +137,7 @@
 
 	//Set the indicator icon back to normal
 	indicator_icon = "launchpad_target"
+	update_indicator()
 
 	if(QDELETED(src) || !isAvailable())
 		return
@@ -213,6 +248,7 @@
 		if(do_after(usr, 30, target = usr))
 			usr.put_in_hands(briefcase)
 			moveToNullspace() //hides it from suitcase contents
+			update_indicator()
 			closed = TRUE
 
 /obj/machinery/launchpad/briefcase/attackby(obj/item/I, mob/user, params)
@@ -249,6 +285,7 @@
 	user.visible_message("<span class='notice'>[user] starts setting down [src]...", "You start setting up [pad]...</span>")
 	if(do_after(user, 30, target = user))
 		pad.forceMove(get_turf(src))
+		pad.update_indicator()
 		pad.closed = FALSE
 		user.transferItemToLoc(src, pad, TRUE)
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_HIDE_ALL)
@@ -322,6 +359,7 @@
 			var/new_x = text2num(params["x"])
 			var/new_y = text2num(params["y"])
 			pad.set_offset(new_x, new_y)
+			pad.update_indicator()
 			. = TRUE
 		if("move_pos")
 			var/plus_x = text2num(params["x"])
@@ -330,6 +368,7 @@
 				x = pad.x_offset + plus_x,
 				y = pad.y_offset + plus_y
 			)
+			pad.update_indicator()
 			. = TRUE
 		if("rename")
 			. = TRUE
@@ -340,12 +379,15 @@
 		if("remove")
 			. = TRUE
 			if(usr && alert(usr, "Are you sure?", "Unlink Launchpad", "I'm Sure", "Abort") != "Abort")
+				pad.update_indicator()
 				pad = null
 		if("launch")
 			sending = TRUE
 			teleport(usr, pad)
+			pad.update_indicator()
 			. = TRUE
 		if("pull")
 			sending = FALSE
 			teleport(usr, pad)
+			pad.update_indicator()
 			. = TRUE
