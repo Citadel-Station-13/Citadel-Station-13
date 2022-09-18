@@ -32,6 +32,7 @@
 						ACCESS_TECH_STORAGE, ACCESS_MINISAT, ACCESS_MAINT_TUNNELS, ACCESS_NETWORK)
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SCI
+	bounty_types = CIV_JOB_SCI
 
 	display_order = JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR
 	starting_modifiers = list(/datum/skill_modifier/job/level/wiring)
