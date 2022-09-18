@@ -216,6 +216,25 @@ as performing this in action() will cause the upgrade to end up in the borg inst
 			for(var/obj/item/ammo_casing/energy/plasma/weak/L in C.ammo_type)
 				L.projectile_type = initial(L.projectile_type)
 
+/obj/item/borg/upgrade/premiumka
+	name = "mining cyborg premium KA"
+	desc = "A premium kinetic accelerator replacement for the mining module's standard kinetic accelerator."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = list(/obj/item/robot_module/miner)
+
+/obj/item/borg/upgrade/premiumka/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		for(var/obj/item/gun/energy/kinetic_accelerator/cyborg/KA in R.module)
+			for(var/obj/item/borg/upgrade/modkit/M in KA.modkits)
+				M.uninstall(src)
+			R.module.remove_module(KA, TRUE)
+
+		var/obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg/PKA = new /obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg(R.module)
+		R.module.basic_modules += PKA
+		R.module.add_module(PKA, FALSE, TRUE)
+
 /obj/item/borg/upgrade/tboh
 	name = "janitor cyborg trash bag of holding"
 	desc = "A trash bag of holding replacement for the janiborg's standard trash bag."
