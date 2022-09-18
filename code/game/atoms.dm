@@ -864,6 +864,10 @@
 	return SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
 
 /atom/proc/rad_act(strength)
+	var/turf/open/pool/PL = get_turf(src)
+	if(istype(PL))
+		if(PL.filled == TRUE)
+			strength *= 0.15
 	SEND_SIGNAL(src, COMSIG_ATOM_RAD_ACT, strength)
 
 /atom/proc/narsie_act()

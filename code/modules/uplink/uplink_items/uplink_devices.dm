@@ -275,6 +275,18 @@
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 	restricted = TRUE
 
+//this seems like a terrible idea to me, so commenting it out for now. -Shell
+/*
+/datum/uplink_item/device_tools/tc_rod
+	name = "Telecrystal Fuel Rod"
+	desc = "This special fuel rod has eight material slots that can be inserted with telecrystals, \
+			once the rod has been fully depleted, you will be able to harvest the extra telecrystals. \
+			Please note: This Rod fissiles much faster than it's regular counterpart, it doesn't take \
+			much to overload the reactor with these..."
+	item = /obj/item/twohanded/required/fuel_rod/material/telecrystal
+	cost = 7
+*/
+
 /* for now
 /datum/uplink_item/device_tools/suspiciousphone
 	name = "Protocol CRAB-17 Phone"

@@ -84,15 +84,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	reclaim_materials_from(thing)
 	for(var/mob/M in thing)
 		M.death()
-	if(istype(thing, /obj/item/stack/sheet))
-		var/obj/item/stack/sheet/S = thing
-		if(S.amount > 1 && !innermode)
-			S.amount--
-			loaded_item = S
-		else
-			qdel(S)
-	else
-		qdel(thing)
+	qdel(thing)
 	if (!innermode)
 		update_icon()
 	return TRUE

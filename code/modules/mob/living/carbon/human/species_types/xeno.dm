@@ -14,7 +14,7 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 	exotic_bloodtype = "X*"
 	damage_overlay_type = "xeno"
-	disliked_food = JUNKFOOD
+	disliked_food = null
 	liked_food = GROSS | MEAT
 	species_category = SPECIES_CATEGORY_ALIEN
 	wings_icons = SPECIES_WINGS_DRAGON //most depictions of xenomorphs with wings are closest to this.

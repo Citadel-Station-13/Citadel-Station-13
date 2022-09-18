@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	55
+#define SAVEFILE_VERSION_MAX	56
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -42,14 +42,20 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 //if your savefile is 3 months out of date, then 'tough shit'.
 
 /datum/preferences/proc/update_preferences(current_version, savefile/S)
-	if(current_version < 55) //Bitflag toggles don't set their defaults when they're added, always defaulting to off instead.
-		toggles |= SOUND_BARK
-	if(current_version < 46)	//If you remove this, remove force_reset_keybindings() too.
-		force_reset_keybindings_direct(TRUE)
-		addtimer(CALLBACK(src, .proc/force_reset_keybindings), 30)	//No mob available when this is run, timer allows user choice.
 	if(current_version < 30)
 		outline_enabled = TRUE
 		outline_color = COLOR_THEME_MIDNIGHT
+	if(current_version < 46)	//If you remove this, remove force_reset_keybindings() too.
+		force_reset_keybindings_direct(TRUE)
+		addtimer(CALLBACK(src, .proc/force_reset_keybindings), 30)	//No mob available when this is run, timer allows user choice.
+	if(current_version < 55) //Bitflag toggles don't set their defaults when they're added, always defaulting to off instead.
+		toggles |= SOUND_BARK
+	if(current_version < 56)
+		if("NO_ANTAGS" in be_special)
+			toggles |= NO_ANTAG
+			be_special -= "NO_ANTAGS"
+		for(var/be_special_type in be_special)
+			be_special[be_special_type] = 1
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 19)

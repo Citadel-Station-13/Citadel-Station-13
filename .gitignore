@@ -196,3 +196,5 @@ Temporary Items
 /tools/LinuxOneShot/TGS_Config
 /tools/LinuxOneShot/TGS_Instances
 /tools/LinuxOneShot/TGS_Logs
+tools/UnstandardnessTestForDM/UnstandardnessTestForDM/obj/x86/Debug/UnstandardnessTestForDM.csproj.AssemblyReference.cache
+tools/UnstandardnessTestForDM/UnstandardnessTestForDM/obj/x86/Debug/.NETFramework,Version=v4.0,Profile=Client.AssemblyAttributes.cs

@@ -210,10 +210,6 @@
 			candidates.Remove(candidate_player)
 			continue
 
-		if(ROLE_NO_ANTAGONISM in candidate_player.client.prefs.be_special)
-			candidates.Remove(candidate_player)
-			continue
-
 		if(antag_flag_override)
 			if(!(HAS_ANTAG_PREF(candidate_player.client, antag_flag_override)))
 				candidates.Remove(candidate_player)
