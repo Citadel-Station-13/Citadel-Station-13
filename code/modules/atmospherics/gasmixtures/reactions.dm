@@ -69,8 +69,6 @@
 
 // no test cause it's entirely based on location
 
-GLOBAL_VAR_INIT(condensation_priority, 0)
-
 /datum/gas_reaction/condensation
 	priority = 0
 	name = "Condensation"
@@ -89,8 +87,6 @@ GLOBAL_VAR_INIT(condensation_priority, 0)
 	name = "[R.name] condensation"
 	id = "[R.type] condensation"
 	condensing_reagent = GLOB.chemical_reagents_list[R.type]
-	GLOB.condensation_priority += 0.000000000001
-	priority = GLOB.condensation_priority
 	exclude = FALSE
 
 /datum/gas_reaction/condensation/react(datum/gas_mixture/air, datum/holder)
