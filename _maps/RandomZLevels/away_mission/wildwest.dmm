@@ -1278,10 +1278,6 @@
 	icon_state = "ironsand4"
 	},
 /area/awaymission/wildwest/gov)
-"eA" = (
-/obj/machinery/mineral/mint,
-/turf/open/floor/plasteel,
-/area/awaymission/wildwest/refine)
 "eC" = (
 /obj/structure/chair/comfy/brown,
 /turf/open/floor/wood,
@@ -29055,7 +29051,7 @@ aG
 aG
 aG
 et
-eA
+eu
 eu
 eu
 eu
