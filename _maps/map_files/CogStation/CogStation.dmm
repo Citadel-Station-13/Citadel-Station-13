@@ -21245,9 +21245,6 @@
 /turf/open/floor/plasteel/dark/side,
 /area/security/courtroom)
 "aUF" = (
-/obj/machinery/computer/bounty{
-	dir = 1
-	},
 /turf/open/floor/carpet/green,
 /area/command/heads_quarters/hop)
 "aUG" = (
@@ -26769,7 +26766,6 @@
 /turf/open/floor/engine,
 /area/engineering/teg)
 "bgS" = (
-/obj/machinery/computer/bounty,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
@@ -27424,6 +27420,9 @@
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
+	},
+/obj/machinery/computer/piratepad_control/civilian{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/cargo/office)
@@ -29094,9 +29093,6 @@
 /turf/open/floor/plasteel,
 /area/cargo/sorting)
 "blR" = (
-/obj/machinery/computer/bounty{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
@@ -58020,6 +58016,7 @@
 /obj/effect/turf_decal/tile/brown,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/piratepad/civilian,
 /turf/open/floor/plasteel,
 /area/cargo/office)
 "ctx" = (

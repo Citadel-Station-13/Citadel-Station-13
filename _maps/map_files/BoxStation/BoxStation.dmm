@@ -29095,9 +29095,6 @@
 /turf/open/floor/plasteel/white,
 /area/science)
 "btB" = (
-/obj/machinery/computer/bounty{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -30016,9 +30013,6 @@
 	department = "Cargo Bay";
 	departmentType = 2;
 	pixel_x = -30
-	},
-/obj/machinery/computer/bounty{
-	dir = 4
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -63578,15 +63572,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"sWR" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/computer/bounty{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/cargo/office)
 "sXy" = (
 /obj/machinery/door/airlock/external{
 	name = "Security External Airlock";
@@ -90004,7 +89989,7 @@ bnG
 bnz
 bpA
 bbR
-sWR
+bkM
 jlm
 bud
 eyM
