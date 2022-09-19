@@ -352,10 +352,6 @@
 	name = "Bounty Pad (Computer Board)"
 	build_path = /obj/machinery/computer/piratepad_control/civilian
 
-// /obj/item/circuitboard/computer/bountypad
-// 	name = "Bounty Pad (Computer Board)"
-// 	build_path = /obj/machinery/computer/piratepad_control/civilian
-
 /obj/item/circuitboard/computer/security/shuttle
 	name = "Shuttlelinking Security Cameras (Computer Board)"
 	icon_state = "generic"
@@ -584,10 +580,6 @@
 /obj/item/circuitboard/computer/cargo/request
 	name = "Supply Request Console (Computer Board)"
 	build_path = /obj/machinery/computer/cargo/request
-
-/obj/item/circuitboard/computer/bounty
-	name = "Nanotrasen Bounty Console (Computer Board)"
-	build_path = /obj/machinery/computer/bounty
 
 /obj/item/circuitboard/computer/ferry
 	name = "Transport Ferry (Computer Board)"

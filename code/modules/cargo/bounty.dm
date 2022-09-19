@@ -78,7 +78,7 @@ GLOBAL_LIST_EMPTY(bounties_list)
 // Returns a new bounty of random type, but does not add it to GLOB.bounties_list.
 /proc/random_bounty(var/guided = 0)
 	var/bounty_num
-	if(guided)
+	if(guided && (guided != CIV_JOB_RANDOM))
 		bounty_num = guided
 	else
 		bounty_num = rand(1,13)

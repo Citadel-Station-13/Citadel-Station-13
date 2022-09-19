@@ -92,9 +92,12 @@
 		stop_sending()
 	if(curr_bounty.can_claim())
 		//Pay for the bounty with the ID's department funds.
-		inserted_scan_id.registered_account.transfer_money(SSeconomy.get_dep_account(inserted_scan_id.registered_account.account_job.paycheck_department), curr_bounty.reward)
-		status_report += "Bounty Completed! [curr_bounty.reward] credits have been paid out. "
+		status_report += "Bounty Completed! Please send your completed bounty cube to cargo for your automated payout shortly."
 		inserted_scan_id.registered_account.reset_bounty()
+		SSeconomy.civ_bounty_tracker++
+		var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
+		reward.bounty_value = curr_bounty.reward
+		reward.AddComponent(/datum/component/pricetag, inserted_scan_id.registered_account, 10)
 	pad.visible_message("<span class='notice'>[pad] activates!</span>")
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
@@ -146,15 +149,7 @@
 				var/curr_time = round(((pot_acc.bounty_timer + (5 MINUTES))-world.time)/ (1 MINUTES), 0.01)
 				to_chat(usr, "<span class='warning'>You already have an incomplete civilian bounty, try again in [curr_time] minutes to replace it!</span>")
 				return FALSE
-			var/datum/bounty/crumbs = random_bounty(pot_acc.account_job.bounty_types) //It's a good scene from War Dogs (2016).
-			/*if(SSeconomy.inflation_value() > 1) //lets try not to add inflation for right now
-				if(istype(crumbs, /datum/bounty/item))
-					var/datum/bounty/item/items = crumbs
-					items.required_count = max(round((items.required_count)/(SSeconomy.inflation_value()*2)), 1)
-				if(istype(crumbs, /datum/bounty/reagent))
-					var/datum/bounty/reagent/chems = crumbs
-					chems.required_volume = max(round((chems.required_volume)/SSeconomy.inflation_value()*2), 1)
-				crumbs.reward = round(crumbs.reward/(SSeconomy.inflation_value()*2))*/
+			var/datum/bounty/crumbs = random_bounty(pot_acc.account_job.bounty_types)
 			pot_acc.bounty_timer = world.time
 			pot_acc.civilian_bounty = crumbs
 		if("eject")
@@ -200,6 +195,15 @@
 		inserted_scan_id = null
 		updateUsrDialog()
 		return TRUE
+
+///Upon completion of a civilian bounty, one of these is created. It is sold to cargo to give the cargo budget bounty money, and the person who completed it cash.
+/obj/item/bounty_cube
+	name = "Bounty Cube"
+	desc = "A bundle of compressed hardlight data, containing a completed bounty. Sell this on the cargo shuttle to claim it!"
+	icon = 'icons/obj/economy.dmi'
+	icon_state = "bounty_cube"
+	///Value of the bounty that this bounty cube sells for.
+	var/bounty_value = 0
 
 
 ///Beacon to launch a new bounty setup when activated.
