@@ -264,6 +264,17 @@
 		I.buffer = src
 		return TRUE
 
+/obj/machinery/piratepad/screwdriver_act_secondary(mob/living/user, obj/item/screwdriver/screw)
+	. = ..()
+	if(!.)
+		return default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle-off", screw)
+
+/obj/machinery/piratepad/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	default_deconstruction_crowbar(tool)
+	return TRUE
+
+
 /obj/machinery/computer/piratepad_control
 	name = "cargo hold control terminal"
 	var/status_report = "Ready for delivery."
@@ -390,6 +401,15 @@
 	sending = FALSE
 
 /obj/machinery/computer/piratepad_control/proc/start_sending()
+	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
+	if(!pad)
+		status_report = "No pad detected. Build or link a pad."
+		pad.audible_message(span_notice("[pad] beeps."))
+		return
+	if(pad?.panel_open)
+		status_report = "Please screwdrive pad closed to send. "
+		pad.audible_message(span_notice("[pad] beeps."))
+		return
 	if(sending)
 		return
 	sending = TRUE

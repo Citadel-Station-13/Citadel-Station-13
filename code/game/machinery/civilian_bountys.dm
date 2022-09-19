@@ -150,7 +150,7 @@
 				to_chat(usr, "<span class='warning'>You already have an incomplete civilian bounty, try again in [curr_time] minutes to replace it!</span>")
 				return FALSE
 			var/datum/bounty/crumbs = random_bounty(pot_acc.account_job.bounty_types)
-			pot_acc.bounty_timer = world.time
+			COOLDOWN_START(pot_acc, bounty_timer, 5 MINUTES)
 			pot_acc.civilian_bounty = crumbs
 		if("eject")
 			id_eject(usr, inserted_scan_id)

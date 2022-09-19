@@ -11,7 +11,7 @@
 	var/being_dumped = FALSE //pink levels are rising
 	var/withdrawDelay = 0
 	var/datum/bounty/civilian_bounty
-	var/bounty_timer = 0
+	COOLDOWN_DECLARE(bounty_timer)
 
 /datum/bank_account/New(newname, job)
 	if(add_to_accounts)
@@ -141,7 +141,7 @@
   */
 /datum/bank_account/proc/reset_bounty()
 	civilian_bounty = null
-	bounty_timer = 0
+	COOLDOWN_RESET(src, bounty_timer)
 
 /datum/bank_account/department
 	account_holder = "Guild Credit Agency"
