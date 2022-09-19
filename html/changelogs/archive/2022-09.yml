@@ -43,3 +43,6 @@
       other langauges.
   - rscadd: Adds the RBMK reactor from NSV. Credit to Kmc2000 for originally making
       it. https://github.com/BeeStation/NSV13/pull/828
+2022-09-19:
+  Putnam3145:
+  - code_imp: Auxmos updated to 2.0.0
