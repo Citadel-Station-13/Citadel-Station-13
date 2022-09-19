@@ -26,3 +26,23 @@
 2022-09-14:
   timothyteakettle:
   - rscadd: lets ghosts click a pAI device to download into it without a master
+2022-09-18:
+  Putnam3145:
+  - code_imp: Spurious for loop squashed
+  That REALLY Good Soda Flavor, jacklecroy on GitHub, ported by Hatterhat:
+  - rscadd: Using certain martial arts will create a combo meter when you attack.
+  - imageadd: Added combo meter icons.
+  shellspeed1:
+  - rscadd: The Quantum Spin design has been brought over from TG for testing in the
+      Citadel Station facilities.
+  - balance: Launchpads now have a targeting icon.
+  - balance: Massive gamebreaking balance. Xenohybrids can now eat DOUGHNUTS. Security
+      officers everywhere are afraid.
+  - bugfix: makes it some people can speak the encoded langauge.
+  - bugfix: makes the xenotongue a xenohybrid tongue so that people with it can speak
+      other langauges.
+  - rscadd: Adds the RBMK reactor from NSV. Credit to Kmc2000 for originally making
+      it. https://github.com/BeeStation/NSV13/pull/828
+2022-09-19:
+  Putnam3145:
+  - code_imp: Auxmos updated to 2.0.0

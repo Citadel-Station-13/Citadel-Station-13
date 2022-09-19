@@ -16,6 +16,10 @@
 #define CHANNEL_DIGEST 1009
 #define CHANNEL_PREYLOOP 1008
 
+
+//Reactor Channel
+#define CHANNEL_REACTOR_ALERT 1007 // Is that radiation I hear? (ported from hyper)
+
 ///Default range of a sound.
 #define SOUND_RANGE 17
 ///default extra range for sounds considered to be quieter
@@ -34,7 +38,7 @@
 //THIS SHOULD ALWAYS BE THE LOWEST ONE!
 //KEEP IT UPDATED
 
-#define CHANNEL_HIGHEST_AVAILABLE 1008 //CIT CHANGE - COMPENSATES FOR VORESOUND CHANNELS
+#define CHANNEL_HIGHEST_AVAILABLE 1007 //CIT CHANGE - COMPENSATES FOR VORESOUND CHANNELS
 
 #define MAX_INSTRUMENT_CHANNELS (128 * 6)
 

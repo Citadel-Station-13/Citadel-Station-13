@@ -98,6 +98,16 @@
 	name = "garden & kitchen bluespace shelter capsule"
 	desc = "Everything someone needs to make a home cooked meal while surviving the depths of hell... or space."
 	template_id = "shelter_zeta"
+
+// RBMK reactor beacon so people can create the engine
+
+/obj/item/survivalcapsule/reactor // the not-so-survival capsule
+	name = "RMBK Reactor Beacon"
+	desc = "A special bluespace beacon designed to implement a reactor into the hull of the ship or station that it is activated on."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "beacon"
+	template_id = "reactor"
+	
 //Pod objects
 
 //Window
