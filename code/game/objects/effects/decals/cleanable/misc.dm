@@ -311,3 +311,9 @@
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
 	mergeable_decal = TRUE
 	persistent = TRUE
+
+/obj/effect/decal/cleanable/wrapping
+	name = "wrapping shreds"
+	desc = "Torn pieces of cardboard and paper, left over from a package."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "paper_shreds"

@@ -101,22 +101,22 @@
 	required_count = 15
 	wanted_types = list(/obj/item/shard)
 
-/*
 /datum/bounty/item/assistant/comfy_chair
 	name = "Comfortable Chairs"
 	description = "Commander Pat is unhappy with his chair. He claims it hurts his back. Ship some alternatives out to humor him."
 	reward = 900
 	required_count = 5
 	wanted_types = list(/obj/structure/chair/comfy)
-*/
 
- /datum/bounty/item/assistant/geranium
+/*
+/datum/bounty/item/assistant/geranium
  	name = "Geraniums"
  	description = "Commander Zot has the hots for Commander Zena. Send a shipment of geraniums - her favorite flower - and he'll happily reward you."
  	reward = 1000
  	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/poppy/geranium)
 	include_subtypes = FALSE
+*/
 
 /datum/bounty/item/assistant/poppy
 	name = "Poppies"
