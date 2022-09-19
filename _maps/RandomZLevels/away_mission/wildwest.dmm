@@ -861,10 +861,6 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/gov)
-"di" = (
-/obj/machinery/mineral/mint,
-/turf/open/floor/plating,
-/area/awaymission/wildwest/refine)
 "dj" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/wood,
@@ -33673,7 +33669,7 @@ bc
 bc
 bc
 bc
-di
+bc
 bc
 bh
 aW
