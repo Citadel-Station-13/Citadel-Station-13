@@ -264,12 +264,12 @@
 		I.buffer = src
 		return TRUE
 
-/obj/machinery/piratepad/screwdriver_act_secondary(mob/living/user, obj/item/screwdriver/screw)
+/obj/machinery/piratepad/screwdriver_act(mob/living/user, obj/item/screwdriver/screw)
 	. = ..()
 	if(!.)
 		return default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle-off", screw)
 
-/obj/machinery/piratepad/crowbar_act_secondary(mob/living/user, obj/item/tool)
+/obj/machinery/piratepad/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_deconstruction_crowbar(tool)
 	return TRUE
@@ -285,6 +285,8 @@
 	var/datum/export_report/total_report
 	var/sending_timer
 	var/cargo_hold_id
+	///Reference to the specific pad that the control computer is linked up to.
+	var/datum/weakref/pad_ref
 
 /obj/machinery/computer/piratepad_control/Initialize(mapload)
 	..()

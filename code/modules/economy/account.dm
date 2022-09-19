@@ -11,6 +11,7 @@
 	var/being_dumped = FALSE //pink levels are rising
 	var/withdrawDelay = 0
 	var/datum/bounty/civilian_bounty
+	var/list/datum/bounty/bounties
 	COOLDOWN_DECLARE(bounty_timer)
 
 /datum/bank_account/New(newname, job)
