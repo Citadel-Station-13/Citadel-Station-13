@@ -3720,10 +3720,6 @@
 	},
 /turf/open/floor/wood,
 /area/eventmap/inside)
-"alc" = (
-/obj/machinery/computer/bounty,
-/turf/open/floor/wood,
-/area/eventmap/inside)
 "ald" = (
 /obj/machinery/computer/cargo/request,
 /turf/open/floor/wood,
@@ -12424,9 +12420,6 @@
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
 "aJT" = (
-/obj/machinery/computer/bounty{
-	dir = 8
-	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
@@ -14198,15 +14191,6 @@
 	dir = 1
 	},
 /turf/open/floor/wood/damturf/broken3,
-/area/eventmap/inside)
-"aOT" = (
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/obj/machinery/computer/bounty{
-	dir = 1
-	},
-/turf/open/floor/wood,
 /area/eventmap/inside)
 "aOU" = (
 /obj/structure/cable/white{
@@ -18162,7 +18146,7 @@ aqr
 aqr
 aOG
 aOM
-aOT
+aBm
 aqr
 aac
 aac
@@ -38454,7 +38438,7 @@ adR
 aDI
 aiZ
 akz
-alc
+aOE
 aOo
 aHT
 aqa
