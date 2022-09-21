@@ -94,12 +94,14 @@
 		stop_sending()
 	if(curr_bounty.can_claim())
 		//Pay for the bounty with the ID's department funds.
-		status_report += "Bounty Completed! Please send your completed bounty cube to cargo for your automated payout shortly."
+		status_report += "Bounty completed! Please give your bounty cube to cargo for your automated payout shortly."
 		inserted_scan_id.registered_account.reset_bounty()
 		SSeconomy.civ_bounty_tracker++
+
 		var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
 		reward.set_up(curr_bounty, inserted_scan_id)
-	pad.visible_message("<span class='notice'>[pad] activates!</span>")
+
+	pad.visible_message(span_notice("[pad] activates!"))
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
 	playsound(loc, 'sound/machines/synth_yes.ogg', 30 , TRUE)
