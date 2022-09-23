@@ -54,7 +54,7 @@
 		to_chat(usr, "<span class='danger'>^^^----- The preceeding message has been DISCARDED for being over the maximum length of [MAX_MESSAGE_LEN]. It has NOT been sent! -----^^^</span>")
 		return
 
-	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trim(copytext_char(sanitize_rp(message), 1, MAX_MESSAGE_LEN))
 	clear_typing_indicator()		// clear it immediately!
 
 	client?.last_activity = world.time
