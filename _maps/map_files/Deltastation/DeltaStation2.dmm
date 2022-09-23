@@ -61512,11 +61512,11 @@
 /obj/machinery/computer/operating{
 	dir = 1
 	},
-/obj/machinery/newscaster{
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
+	},
+/obj/machinery/posialert{
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
