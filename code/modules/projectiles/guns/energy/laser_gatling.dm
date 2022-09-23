@@ -101,8 +101,6 @@
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
 	custom_materials = null
-	automatic = 0.5
-	fire_delay = 2
 	ammo_type = list(
 		/obj/item/ammo_casing/energy/laser
 	)
