@@ -1,0 +1,4 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - bugfix: "Added a check to from-ghosts midrounds making them not able to roll if there are no ghosts"
