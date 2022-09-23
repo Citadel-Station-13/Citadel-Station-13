@@ -215,7 +215,6 @@ as performing this in action() will cause the upgrade to end up in the borg inst
 			C.icon_state = initial(icon_state)
 			for(var/obj/item/ammo_casing/energy/plasma/weak/L in C.ammo_type)
 				L.projectile_type = initial(L.projectile_type)
-
 /obj/item/borg/upgrade/tboh
 	name = "janitor cyborg trash bag of holding"
 	desc = "A trash bag of holding replacement for the janiborg's standard trash bag."

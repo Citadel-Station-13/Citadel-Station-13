@@ -76,7 +76,7 @@
 		new /datum/data/mining_equipment("Miner Full Replacement",		/obj/item/storage/backpack/duffelbag/mining/cloned,					3000),
 		new /datum/data/mining_equipment("Premium Accelerator",			/obj/item/gun/energy/kinetic_accelerator/premiumka,					8000),
 		new /datum/data/mining_equipment("Premium Kinetic Melee Kit",	/obj/item/storage/backpack/duffelbag/mining/glaivekit,				2250),
-		new /datum/data/mining_equipment("Survival Dagger",				/obj/item/kitchen/knife/combat/survival/knuckledagger,				550),
+		new /datum/data/mining_equipment("Survival Dagger",				/obj/item/kitchen/knife/combat/survival/knuckledagger,				550)
 		)
 
 /datum/data/mining_equipment
@@ -131,7 +131,7 @@
 	. = list()
 	var/mob/living/carbon/human/H
 	var/obj/item/card/id/C
-	if(ishuman(user))
+	if(ishuman(user) || iscyborg(user))
 		H = user
 		C = H.get_idcard(TRUE)
 		if(C)
