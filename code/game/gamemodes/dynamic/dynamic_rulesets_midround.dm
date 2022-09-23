@@ -86,6 +86,9 @@
 			return FALSE
 	return TRUE
 
+/datum/dynamic_ruleset/midround/from_ghosts/ready(forced = FALSE)
+	return ..() && (length(dead_players) + length(list_observers) >= required_applicants)
+
 /datum/dynamic_ruleset/midround/from_ghosts/execute()
 	var/list/possible_candidates = list()
 	possible_candidates.Add(dead_players)
