@@ -1,0 +1,5 @@
+author: "zeroisthebiggay, retlaw34 (https://github.com/retlaw34), any%, tetrazeta, zxaber(https://github.com/zxaber)"
+delete-after: True
+changes: 
+  - imageadd: "Restyles the hud"
+  - imageadd: "The Airlock Shock Indicator seen when using a Diagnostics Hud has a new sprite."
