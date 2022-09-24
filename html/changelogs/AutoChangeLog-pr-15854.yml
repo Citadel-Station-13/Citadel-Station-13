@@ -1,4 +1,0 @@
-author: "shellspeed1"
-delete-after: True
-changes: 
-  - rscadd: "Borgs now receive access to the comms associated with their department by default!"

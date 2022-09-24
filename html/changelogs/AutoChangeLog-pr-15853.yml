@@ -1,4 +1,0 @@
-author: "shellspeed1"
-delete-after: True
-changes: 
-  - rscadd: "Added the posialert console, now ghosts can complain at the roboticist for not making posibrains."

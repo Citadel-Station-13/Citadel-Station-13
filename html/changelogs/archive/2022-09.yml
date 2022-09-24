@@ -50,3 +50,21 @@
   shellspeed1:
   - rscadd: Massively buffs talking by adding 3 new speech verbs improving the ability
       of everyone to scream at each other.
+2022-09-24:
+  Putnam3145:
+  - bugfix: Added a check to from-ghosts midrounds making them not able to roll if
+      there are no ghosts
+  shellspeed1:
+  - rscadd: full auto is now available for some weapons.
+  - rscadd: All automatic weapons now come with a firemode selector switch.
+  - rscadd: You can now take people hostage with a gun by using it on someone with
+      the grab intent on.
+  - bugfix: cyborg mining point card now works again.
+  - rscadd: Added the posialert console, now ghosts can complain at the roboticist
+      for not making posibrains.
+  - rscadd: Borgs now receive access to the comms associated with their department
+      by default!
+  zeroisthebiggay, retlaw34 (https://github.com/retlaw34), any%, tetrazeta, zxaber(https://github.com/zxaber):
+  - imageadd: Restyles the hud
+  - imageadd: The Airlock Shock Indicator seen when using a Diagnostics Hud has a
+      new sprite.
