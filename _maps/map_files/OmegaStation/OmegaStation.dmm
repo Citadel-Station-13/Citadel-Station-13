@@ -27988,6 +27988,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/posialert{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
 "bae" = (

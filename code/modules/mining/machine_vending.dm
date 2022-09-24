@@ -132,7 +132,7 @@
 	. = list()
 	var/mob/living/carbon/human/H
 	var/obj/item/card/id/C
-	if(ishuman(user))
+	if(ishuman(user) || iscyborg(user))
 		H = user
 		C = H.get_idcard(TRUE)
 		if(C)

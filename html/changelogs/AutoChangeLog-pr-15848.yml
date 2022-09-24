@@ -1,0 +1,6 @@
+author: "shellspeed1"
+delete-after: True
+changes: 
+  - rscadd: "full auto is now available for some weapons."
+  - rscadd: "All automatic weapons now come with a firemode selector switch."
+  - rscadd: "You can now take people hostage with a gun by using it on someone with the grab intent on."

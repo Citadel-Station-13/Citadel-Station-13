@@ -49200,6 +49200,9 @@
 	c_tag = "Robotics Lab";
 	dir = 4
 	},
+/obj/machinery/posialert{
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel/dark/side{
 	dir = 8
 	},

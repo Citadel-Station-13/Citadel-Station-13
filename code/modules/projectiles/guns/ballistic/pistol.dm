@@ -7,7 +7,7 @@
 	can_suppress = TRUE
 	burst_size = 1
 	fire_delay = 0
-	actions_types = list()
+	fire_select_modes = list(SELECT_SEMI_AUTOMATIC)
 	automatic_burst_overlay = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/no_mag
@@ -104,7 +104,7 @@
 	mag_type = /obj/item/ammo_box/magazine/pistolm9mm
 	burst_size = 3
 	fire_delay = 2
-	actions_types = list(/datum/action/item_action/toggle_firemode)
+	fire_select_modes = list(SELECT_SEMI_AUTOMATIC, SELECT_BURST_SHOT, SELECT_FULLY_AUTOMATIC)
 
 /obj/item/gun/ballistic/automatic/pistol/stickman
 	name = "flat gun"
@@ -137,7 +137,7 @@
 	burst_size = 1
 	can_suppress = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
-	actions_types = list()
+	fire_select_modes = list(SELECT_SEMI_AUTOMATIC)
 	fire_sound = 'sound/weapons/noscope.ogg'
 	spread = 20		//damn thing has no rifling.
 	automatic_burst_overlay = FALSE

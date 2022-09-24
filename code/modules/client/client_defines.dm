@@ -22,6 +22,8 @@
 	///Contains admin info. Null if client is not an admin.
 	var/datum/admins/holder = null
 	var/datum/click_intercept = null // Needs to implement InterceptClickOn(user,params,atom) proc
+	///Time when the click was intercepted
+	var/click_intercept_time = 0
 	var/AI_Interact		= 0
 
 	var/jobbancache = null //Used to cache this client's jobbans to save on DB queries
@@ -78,6 +80,8 @@
 	//These two vars are used to make a special mouse cursor, with a unique icon for clicking
 	var/mouse_up_icon = null
 	var/mouse_down_icon = null
+	///used to override the mouse cursor so it doesnt get reset
+	var/mouse_override_icon = null
 
 	var/ip_intel = "Disabled"
 
