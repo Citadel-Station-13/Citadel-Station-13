@@ -1,0 +1,4 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - bugfix: "Your custom AI name is no longer stomped if someone decides to name a station pet \"Friend\" or whatever"
