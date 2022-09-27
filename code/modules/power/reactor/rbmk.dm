@@ -286,7 +286,7 @@ The reactor CHEWS through moderator. It does not do this slowly. Be very careful
 	//Firstly, heat up the reactor based off of K.
 	var/input_moles = coolant_input.total_moles() //Firstly. Do we have enough moles of coolant?
 	if(input_moles >= minimum_coolant_level)
-		last_coolant_temperature = coolant_input.return_temperature()
+		last_coolant_temperature = coolant_input.return_temperature() - T0C
 		//Important thing to remember, once you slot in the fuel rods, this thing will not stop making heat, at least, not unless you can live to be thousands of years old which is when the spent fuel finally depletes fully.
 		var/new_temp = coolant_input.temperature_share(null, gas_absorption_effectiveness, temperature, 50 + 5*length(fuel_rods)) //Take in the gas as a cooled input, cool the reactor a bit.
 		last_heat_delta = new_temp - temperature
