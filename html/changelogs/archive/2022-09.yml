@@ -68,3 +68,7 @@
   - imageadd: Restyles the hud
   - imageadd: The Airlock Shock Indicator seen when using a Diagnostics Hud has a
       new sprite.
+2022-09-27:
+  Putnam3145:
+  - bugfix: Your custom AI name is no longer stomped if someone decides to name a
+      station pet "Friend" or whatever
