@@ -26,7 +26,7 @@
 	else
 		CRASH("Something that wasn't an atom was given /datum/component/radioactive")
 
-	if(strength > RAD_MINIMUM_CONTAMINATION)
+	if(can_contaminate && strength > RAD_MINIMUM_CONTAMINATION)
 		SSradiation.warn(src)
 
 	//Let's make er glow

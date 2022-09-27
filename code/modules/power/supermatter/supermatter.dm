@@ -12,17 +12,101 @@
 #define OBJECT (LOWEST + 1)
 #define LOWEST (1)
 
+//Gas information
+
+
+/datum/gas
+	var/powermix = 0 // how much this gas contributes to the supermatter's powermix ratio
+	var/heat_penalty = 0 // heat and waste penalty from having the supermatter crystal surrounded by this gas; negative numbers reduce
+	var/transmit_modifier = 0 // bonus to supermatter power generation (multiplicative, since it's % based, and divided by 10)
+	var/radioactivity_modifier = 0 // improves effect of transmit modifiers, must be from -10 to 10
+	var/heat_resistance = 0 // makes the crystal more resistant against heat damage.
+	var/powerloss_inhibition = 0 // Reduces how much power the supermatter loses each tick
+
+/datum/gas/oxygen
+	powermix = 1
+	heat_penalty = 1
+	transmit_modifier = 1.5
+
+/datum/gas/nitrogen
+	powermix = -1
+	heat_penalty = -1.5
+
+/datum/gas/carbon_dioxide
+	powermix = 1
+	heat_penalty = 0.1
+	powerloss_inhibition = 1
+
+/datum/gas/plasma
+	heat_penalty = 15
+	transmit_modifier = 4
+	powermix = 1
+
+/datum/gas/nitrous_oxide
+	heat_resistance = 6
+
+/datum/gas/water_vapor
+	powermix = 1
+	heat_penalty = 8
+
+/datum/gas/pluoxium
+	powermix = -1
+	heat_penalty = -1
+	transmit_modifier = -5
+	heat_resistance = 3
+
+/datum/gas/tritium
+	powermix = 1
+	heat_penalty = 10
+	transmit_modifier = 30
+
+/datum/gas/nitric_oxide
+	heat_resistance = 2
+	powermix = -1
+	heat_penalty = -1
+
+/datum/gas/hydrogen
+	powermix = 1
+	heat_penalty = 3
+	transmit_modifier = 10
+
+/datum/gas/bz
+	heat_penalty = 5
+	transmit_modifier = -2
+	radioactivity_modifier = 5
+
+/datum/gas/methane
+	powerloss_inhibition = 1
+	heat_resistance = 3
+
+/datum/gas/methyl_bromide
+	powermix = 1
+	heat_penalty = -1
+
+/datum/gas/quark_matter
+	powermix = -1
+	transmit_modifier = -10
+	heat_penalty = -10
+
+/datum/auxgm
+	var/list/heat_penalties = list()
+	var/list/transmit_modifiers = list()
+	var/list/radioactivity_modifiers = list()
+	var/list/heat_resistances = list()
+	var/list/powerloss_inhibitions = list()
+	var/list/power_mixes = list()
+	var/list/all_supermatter_gases = list()
+
 /datum/auxgm/proc/add_supermatter_properties(datum/gas/gas)
 	var/g = gas.id
-	var/list/props = src.supermatter
 	if(gas.powermix || gas.heat_penalty || gas.transmit_modifier || gas.radioactivity_modifier || gas.heat_resistance || gas.powerloss_inhibition)
-		props[HEAT_PENALTY][g] = gas.heat_penalty
-		props[TRANSMIT_MODIFIER][g] = gas.transmit_modifier
-		props[RADIOACTIVITY_MODIFIER][g] = gas.radioactivity_modifier
-		props[HEAT_RESISTANCE][g] = gas.heat_resistance
-		props[POWERLOSS_INHIBITION][g] = gas.powerloss_inhibition
-		props[POWER_MIX][g] = gas.powermix
-		props[ALL_SUPERMATTER_GASES] += g
+		heat_penalties[g] = gas.heat_penalty
+		transmit_modifiers[g] = gas.transmit_modifier
+		radioactivity_modifiers[g] = gas.radioactivity_modifier
+		heat_resistances[g] = gas.heat_resistance
+		powerloss_inhibitions[g] = gas.powerloss_inhibition
+		power_mixes[g] = gas.powermix
+		all_supermatter_gases += g
 
 #define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.20         //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
 #define POWERLOSS_INHIBITION_MOLE_THRESHOLD 20        //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.        //Scales powerloss inhibition down until this amount of moles is reached
@@ -445,9 +529,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		removed = new()
 	damage_archived = damage
 
-	var/list/gas_info = GLOB.gas_data.supermatter
+	var/datum/auxgm/gas_info = GLOB.gas_data
 
-	var/list/gases_we_care_about = gas_info[ALL_SUPERMATTER_GASES]
+	var/list/gases_we_care_about = gas_info.all_supermatter_gases
 
 	/********
 	EXPERIMENTAL, HUGBOXY AS HELL CITADEL CHANGES: Even in a vaccum, update gas composition and modifiers.
@@ -510,12 +594,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	var/list/threshold_mod = gases_we_care_about.Copy()
 
-	var/list/powermix = gas_info[POWER_MIX]
-	var/list/heat = gas_info[HEAT_PENALTY]
-	var/list/transmit = gas_info[TRANSMIT_MODIFIER]
-	var/list/resist = gas_info[HEAT_RESISTANCE]
-	var/list/radioactivity = gas_info[RADIOACTIVITY_MODIFIER]
-	var/list/inhibition = gas_info[POWERLOSS_INHIBITION]
+	var/list/powermix = gas_info.power_mixes
+	var/list/heat = gas_info.heat_penalties
+	var/list/transmit = gas_info.transmit_modifiers
+	var/list/resist = gas_info.heat_resistances
+	var/list/radioactivity = gas_info.radioactivity_modifiers
+	var/list/inhibition = gas_info.powerloss_inhibitions
 
 	//We're concerned about pluoxium being too easy to abuse at low percents, so we make sure there's a substantial amount.
 	var/pluoxiumbonus = (gas_comp[GAS_PLUOXIUM] >= 0.15) //makes pluoxium only work at 15%+
