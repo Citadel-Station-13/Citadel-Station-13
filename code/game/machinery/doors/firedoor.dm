@@ -61,13 +61,17 @@
 		for(var/t in T.atmos_adjacent_turfs)
 			if(get_dir(loc, t) == dir)
 				var/turf/open/T2 = t
-				T.atmos_adjacent_turfs[T2] |= ATMOS_ADJACENT_FIRELOCK
-				T2.atmos_adjacent_turfs[T] |= ATMOS_ADJACENT_FIRELOCK
+				if(T2 in T.atmos_adjacent_turfs)
+					T.atmos_adjacent_turfs[T2] |= ATMOS_ADJACENT_FIRELOCK
+				if(T in T2.atmos_adjacent_turfs)
+					T2.atmos_adjacent_turfs[T] |= ATMOS_ADJACENT_FIRELOCK
 	else
 		for(var/t in T.atmos_adjacent_turfs)
 			var/turf/open/T2 = t
-			T.atmos_adjacent_turfs[T2] |= ATMOS_ADJACENT_FIRELOCK
-			T2.atmos_adjacent_turfs[T] |= ATMOS_ADJACENT_FIRELOCK
+			if(T2 in T.atmos_adjacent_turfs)
+				T.atmos_adjacent_turfs[T2] |= ATMOS_ADJACENT_FIRELOCK
+			if(T in T2.atmos_adjacent_turfs)
+				T2.atmos_adjacent_turfs[T] |= ATMOS_ADJACENT_FIRELOCK
 
 /obj/machinery/door/firedoor/closed
 	icon_state = "door_closed"
