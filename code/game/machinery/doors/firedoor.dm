@@ -34,8 +34,6 @@
 /obj/machinery/door/firedoor/Initialize(mapload)
 	. = ..()
 	CalculateAffectingAreas()
-	UpdateAdjacencyFlags()
-
 
 /obj/machinery/door/firedoor/examine(mob/user)
 	. = ..()
