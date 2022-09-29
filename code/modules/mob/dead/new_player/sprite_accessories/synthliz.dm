@@ -47,6 +47,13 @@
 	icon_state = "synthlizscutes"
 	covered_limbs = list("Chest" = MATRIX_GREEN, "Left Leg" = MATRIX_GREEN, "Right Leg" = MATRIX_GREEN)
 
+/datum/sprite_accessory/mam_body_markings/synthliz/protogen //i mean protogens are basically just mammalian synths so let's refrain from making unnecessarily short files
+	recommended_species = list("protogen")
+	icon = 'modular_citadel/icons/mob/protogen_body_markings.dmi'
+	name = "Protogen - Mechanisms"
+	icon_state = "protogen"
+	covered_limbs = list("Head" = MATRIX_RED_GREEN, "Chest" = MATRIX_RED_GREEN, "Left Arm" = MATRIX_RED_GREEN, "Right Arm" = MATRIX_RED_GREEN, "Left Leg" = MATRIX_RED_GREEN, "Right Leg" = MATRIX_RED_GREEN)
+
 //Synth tails
 /datum/sprite_accessory/tails/mam_tails/synthliz
 	recommended_species = list("synthliz")
