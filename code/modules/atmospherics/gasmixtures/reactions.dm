@@ -86,7 +86,7 @@
 	min_requirements[R.get_gas()] = MOLES_GAS_VISIBLE
 	name = "[R.name] condensation"
 	id = "[R.type] condensation"
-	condensing_reagent = R
+	condensing_reagent = GLOB.chemical_reagents_list[R.type]
 	exclude = FALSE
 
 /datum/gas_reaction/condensation/react(datum/gas_mixture/air, datum/holder)
@@ -101,7 +101,10 @@
 	var/G = condensing_reagent.get_gas()
 	var/amt = air.get_moles(G)
 	air.adjust_moles(G, -min(initial(condensing_reagent.condensation_amount), amt))
-	reagents_holder.add_reagent(condensing_reagent, amt)
+	if(air.get_moles(G) < MOLES_GAS_VISIBLE)
+		amt += air.get_moles(G)
+		air.set_moles(G, 0.0)
+	reagents_holder.add_reagent(condensing_reagent.type, amt)
 	. = REACTING
 	for(var/atom/movable/AM in location)
 		if(location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
@@ -729,11 +732,11 @@
 /datum/gas_reaction/nitric_oxide/react(datum/gas_mixture/air, datum/holder)
 	var/nitric = air.get_moles(GAS_NITRIC)
 	var/oxygen = air.get_moles(GAS_O2)
-	var/max_amount = max(nitric / 10, MINIMUM_MOLE_COUNT)
-	var/enthalpy = air.return_temperature() * (air.heat_capacity() + R_IDEAL_GAS_EQUATION * air.total_moles());
+	var/max_amount = max(nitric / 8, MINIMUM_MOLE_COUNT)
+	var/enthalpy = air.return_temperature() * (air.heat_capacity() + R_IDEAL_GAS_EQUATION * air.total_moles())
 	var/list/enthalpies = GLOB.gas_data.enthalpies
 	if(oxygen > MINIMUM_MOLE_COUNT)
-		var/reaction_amount = min(max_amount, oxygen)
+		var/reaction_amount = min(max_amount, oxygen)/4
 		air.adjust_moles(GAS_NITRIC, -reaction_amount*2)
 		air.adjust_moles(GAS_O2, -reaction_amount)
 		air.adjust_moles(GAS_NITRYL, reaction_amount*2)

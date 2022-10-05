@@ -278,7 +278,7 @@
 
 /datum/game_mode/proc/send_intercept()
 	if(flipseclevel && !(config_tag == "extended"))//CIT CHANGE - lets the security level be flipped roundstart
-		priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", "commandreport")
+		priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", SSstation.announcer.get_rand_report_sound())
 		return
 	var/intercepttext = "<b><i>Central Command Status Summary</i></b><hr>"
 	intercepttext += "<b>Central Command has intercepted and partially decoded a Syndicate transmission with vital information regarding their movements. The following report outlines the most \
@@ -348,8 +348,9 @@
 	var/list/curr_tickets = list()				//how many tickets someone has for *this* antag roll, so with the free tickets
 	var/list/datum/mind/insufficient = list()				//who got cucked out of an antag roll due to not having *any* tickets
 	for(var/datum/mind/M in candidates)
+		var/weight = clamp(candidates[M], 0, 1)
 		var/mind_ckey = ckey(M.key)
-		var/can_spend = min(prev_tickets[mind_ckey], additional_tickets)	//they can only spend up to config/max_tickets_per_roll
+		var/can_spend = min(prev_tickets[mind_ckey], additional_tickets * weight)	//they can only spend up to config/max_tickets_per_roll
 		var/amount = can_spend + free_tickets			//but they get config/default_antag_tickets for free
 		if(amount <= 0)		//if they don't have any
 			insufficient += M		//too bad!
@@ -425,10 +426,11 @@
 
 	for(var/mob/dead/new_player/player in players)
 		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
-			if((role in player.client.prefs.be_special) && !(ROLE_NO_ANTAGONISM in player.client.prefs.be_special))
+			if(HAS_ANTAG_PREF(player.client, role))
 				if(!jobban_isbanned(player, ROLE_SYNDICATE) && !QDELETED(player) && !jobban_isbanned(player, role) && !QDELETED(player)) //Nodrak/Carn: Antag Job-bans
 					if(age_check(player.client)) //Must be older than the minimum age
 						candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
+						candidates[player.mind] = player.client.prefs.be_special[role]
 
 	if(restricted_jobs)
 		for(var/datum/mind/player in candidates)
@@ -449,35 +451,11 @@
 				if(player.assigned_role == job)
 					drafted -= player
 
-	drafted = shuffle(drafted) // Will hopefully increase randomness, Donkie
-
-	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
-		if(drafted.len > 0)
-			applicant = pick(drafted)
-			if(applicant)
-				candidates += applicant
-				drafted.Remove(applicant)
-
-		else												// Not enough scrubs, ABORT ABORT ABORT
-			break
-
-	if(restricted_jobs)
-		for(var/datum/mind/player in drafted)				// Remove people who can't be an antagonist
-			for(var/job in restricted_jobs)
-				if(player.assigned_role == job)
-					drafted -= player
-
-	drafted = shuffle(drafted) // Will hopefully increase randomness, Donkie
-
-	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
-		if(drafted.len > 0)
-			applicant = pick(drafted)
-			if(applicant)
-				candidates += applicant
-				drafted.Remove(applicant)
-
-		else												// Not enough scrubs, ABORT ABORT ABORT
-			break
+	while(candidates.len < recommended_enemies && length(drafted))				// Pick randomlly just the number of people we need and add them to our list of candidates
+		applicant = pick_n_take(drafted)
+		if(applicant)
+			candidates += applicant
+			candidates[applicant] = 0
 
 	return candidates		// Returns: The number of people who had the antagonist role set to yes, regardless of recomended_enemies, if that number is greater than recommended_enemies
 							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,

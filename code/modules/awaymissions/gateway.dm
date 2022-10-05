@@ -85,7 +85,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		. = "Exit gateway unpowered."
 
 /datum/gateway_destination/gateway/get_target_turf()
-	return get_step(target_gateway, SOUTH)
+	return get_step(target_gateway.portal,SOUTH)
 
 /datum/gateway_destination/gateway/post_transfer(atom/movable/AM)
 	. = ..()
@@ -112,7 +112,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /datum/gateway_destination/gateway/home/proc/check_exile_implant(mob/living/L)
 	for(var/obj/item/implant/exile/E in L.implants)//Checking that there is an exile implant
-		to_chat(L, "<span class='userdanger'>The station gate has detected your exile implant and is blocking your entry.</span>")
+		to_chat(L, span_userdanger("The station gate has detected your exile implant and is blocking your entry."))
 		return TRUE
 	return FALSE
 
@@ -156,8 +156,6 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	bound_y = 0
 	density = TRUE
 
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 100
 	active_power_usage = 5000
 
 	var/calibrated = TRUE
@@ -173,12 +171,20 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	var/obj/effect/gateway_portal_bumper/portal
 	/// Visual object for handling the viscontents
 	var/obj/effect/gateway_portal_effect/portal_visuals
+	/// Overlay of the lights. They light up fully when it charges fully.
+	var/image/light_overlay
 
 /obj/machinery/gateway/Initialize(mapload)
 	generate_destination()
-	update_icon()
+	update_appearance()
 	portal_visuals = new
 	vis_contents += portal_visuals
+	return ..()
+
+/obj/machinery/gateway/Destroy()
+	destination.target_gateway = null
+	GLOB.gateway_destinations -= destination
+	destination = null
 	return ..()
 
 /obj/machinery/gateway/proc/generate_destination()
@@ -194,7 +200,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	QDEL_NULL(portal)
 	if(use_power == ACTIVE_POWER_USE)
 		use_power = IDLE_POWER_USE
-	update_icon()
+	update_appearance()
 	portal_visuals.reset_visuals()
 
 /obj/machinery/gateway/process()
@@ -202,6 +208,15 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		if(target)
 			deactivate()
 		return
+	if(light_overlay)
+		return
+	for(var/datum/gateway_destination/destination as anything in GLOB.gateway_destinations)
+		if(!destination.is_available())
+			continue
+		light_overlay = image(icon, "portal_light")
+		light_overlay.alpha = 0
+		animate(light_overlay, 3 SECONDS, alpha = 255)
+		add_overlay(light_overlay)
 
 /obj/machinery/gateway/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return
@@ -218,7 +233,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	portal_visuals.setup_visuals(target)
 	generate_bumper()
 	use_power = ACTIVE_POWER_USE
-	update_icon()
+	update_appearance()
 
 /obj/machinery/gateway/proc/Transfer(atom/movable/AM)
 	if(!target || !target.incoming_pass_check(AM))
@@ -243,9 +258,9 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /obj/machinery/gateway/multitool_act(mob/living/user, obj/item/I)
 	if(calibrated)
-		to_chat(user, "<span class='alert'>The gate is already calibrated, there is no work for you to do here.</span>")
+		to_chat(user, span_alert("The gate is already calibrated, there is no work for you to do here."))
 	else
-		to_chat(user, "<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned. Travel to this gate will now be on target.")
+		to_chat(user, "[span_boldnotice("Recalibration successful!")]: \black This gate's systems have been fine tuned. Travel to this gate will now be on target.")
 		calibrated = TRUE
 	return TRUE
 
@@ -258,7 +273,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	. = ..()
 	if(!target)
 		if(!GLOB.the_gateway)
-			to_chat(user,"<span class='warning'>Home gateway is not responding!</span>")
+			to_chat(user,span_warning("Home gateway is not responding!"))
 		if(GLOB.the_gateway.target)
 			GLOB.the_gateway.deactivate() //this will turn the home gateway off so that it's free for us to connect to
 		activate(GLOB.the_gateway.destination)
@@ -276,6 +291,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	try_to_linkup()
 
 /obj/machinery/computer/gateway_control/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Gateway", name)
@@ -350,15 +366,11 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	if(!our_destination)
 		return
 
-
 	add_filter("portal_alpha", 1, list("type" = "alpha", "icon" = icon(alpha_icon, alpha_icon_state), "x" = 32, "y" = 32))
 	add_filter("portal_blur", 1, list("type" = "blur", "size" = 0.5))
 	add_filter("portal_ripple", 1, list("type" = "ripple", "size" = 2, "radius" = 1, "falloff" = 1, "y" = 7))
 
 	animate(get_filter("portal_ripple"), time = 1.3 SECONDS, loop = -1, easing = LINEAR_EASING, radius = 32)
 
-	/// DISABLED DUE TO BYOND BUG CAUSING STACK OVERFLOWS OF ANY HUMAN INSTANTIATION NEAR AN ACTIVATED GATEWAY.
-	/// Probably due to it referencing each other through the gateway (there's a deep loop, maybe BYOND isn't catching something when it usually would)
-	//var/turf/center_turf = our_destination.get_target_turf()
-
-	//vis_contents += block(locate(center_turf.x - 1, center_turf.y - 1, center_turf.z), locate(center_turf.x + 1, center_turf.y + 1, center_turf.z))
+	var/turf/center_turf = our_destination.get_target_turf()
+	vis_contents += block(locate(center_turf.x - 1, center_turf.y - 1, center_turf.z), locate(center_turf.x + 1, center_turf.y + 1, center_turf.z))

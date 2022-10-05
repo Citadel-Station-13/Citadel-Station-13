@@ -434,20 +434,7 @@ SUBSYSTEM_DEF(job)
 
 	//If we joined at roundstart we should be positioned at our workstation
 	if(!joined_late)
-		var/obj/S = null
-		for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
-			if(!sloc.job_spawnpoint)
-				continue
-			if(sloc.name != rank)
-				S = sloc //so we can revert to spawning them on top of eachother if something goes wrong
-				continue
-			if(locate(/mob/living) in sloc.loc)
-				continue
-			S = sloc
-			sloc.used = TRUE
-			break
-		if(length(GLOB.jobspawn_overrides[rank]))
-			S = pick(GLOB.jobspawn_overrides[rank])
+		var/atom/S = job.get_roundstart_spawn_point(H)
 		if(S)
 			S.JoinPlayerHere(H, FALSE)
 		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
@@ -494,7 +481,7 @@ SUBSYSTEM_DEF(job)
 	if(job && H)
 		if(job.dresscodecompliant)// CIT CHANGE - dress code compliance
 			equip_loadout(N, H) // CIT CHANGE - allows players to spawn with loadout items
-		job.after_spawn(H, M, joined_late) // note: this happens before the mob has a key! M will always have a client, H might not.
+		job.after_spawn(H, M.client, joined_late) // note: this happens before the mob has a key! M will always have a client, H might not.
 		equip_loadout(N, H, TRUE)//CIT CHANGE - makes players spawn with in-backpack loadout items properly. A little hacky but it works
 
 	var/list/tcg_cards
@@ -767,6 +754,35 @@ SUBSYSTEM_DEF(job)
 	if(!job)
 		return FALSE
 	job.current_positions = max(0, job.current_positions - 1)
+
+/datum/controller/subsystem/job/proc/get_last_resort_spawn_points()
+	//bad mojo
+	var/area/shuttle/arrival/arrivals_area = GLOB.areas_by_type[/area/shuttle/arrival]
+	if(arrivals_area)
+		//first check if we can find a chair
+		var/obj/structure/chair/shuttle_chair = locate() in arrivals_area
+		if(shuttle_chair)
+			return shuttle_chair
+
+		//last hurrah
+		var/list/turf/available_turfs = list()
+		for(var/turf/arrivals_turf in arrivals_area)
+			if(!is_blocked_turf(arrivals_turf, TRUE))
+				available_turfs += arrivals_turf
+		if(length(available_turfs))
+			return pick(available_turfs)
+
+	//pick an open spot on arrivals and dump em
+	var/list/arrivals_turfs = shuffle(get_area_turfs(/area/shuttle/arrival))
+	if(length(arrivals_turfs))
+		for(var/turf/arrivals_turf in arrivals_turfs)
+			if(!is_blocked_turf(arrivals_turf, TRUE))
+				return arrivals_turf
+		//last chance, pick ANY spot on arrivals and dump em
+		return pick(arrivals_turfs)
+
+	stack_trace("Unable to find last resort spawn point.")
+	return GET_ERROR_ROOM
 
 ///////////////////////////////////
 //Keeps track of all living heads//

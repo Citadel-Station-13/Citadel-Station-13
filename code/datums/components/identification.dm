@@ -61,7 +61,7 @@
 	if(identification_method_flags & ID_COMPONENT_EFFECT_NO_ACTIONS)
 		return COMPONENT_NO_GRANT_ACTIONS
 
-/datum/component/identification/proc/check_knowledge(mob/user)
+/datum/component/identification/proc/check_knowledge(datum/source, mob/user)
 	return ID_COMPONENT_KNOWLEDGE_NONE
 
 /datum/component/identification/proc/on_identify(mob/user)
@@ -83,7 +83,7 @@
   */
 /datum/component/identification/syndicate
 
-/datum/component/identification/syndicate/check_knowledge(mob/user)
+/datum/component/identification/syndicate/check_knowledge(datum/source, mob/user)
 	. = ..()
 	if(user?.mind?.has_antag_datum(/datum/antagonist/traitor))
 		. = max(., ID_COMPONENT_KNOWLEDGE_FULL)

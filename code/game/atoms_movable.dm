@@ -72,6 +72,8 @@
 	var/vocal_volume = 70 //Baseline. This gets modified by yelling and other factors
 	var/vocal_speed = 4 //Lower values are faster, higher values are slower
 
+	var/vocal_current_bark //When barks are queued, this gets passed to the bark proc. If vocal_current_bark doesn't match the args passed to the bark proc (if passed at all), then the bark simply doesn't play. Basic curtailing of spam~
+
 /atom/movable/Initialize(mapload)
 	. = ..()
 	switch(blocks_emissive)
@@ -224,6 +226,10 @@
 			. = TRUE
 		if(NAMEOF(src, glide_size))
 			set_glide_size(var_value)
+			. = TRUE
+		if(NAMEOF(src, vocal_bark))
+			if(isfile(var_value))
+				vocal_bark = sound(var_value) //bark() expects vocal_bark to already be a sound datum, for performance reasons. adminbus QoL!
 			. = TRUE
 
 	if(!isnull(.))

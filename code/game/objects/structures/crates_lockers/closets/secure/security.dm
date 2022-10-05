@@ -64,6 +64,7 @@
 	new /obj/item/clothing/under/rank/security/officer/blueshirt/seccorp/hoscorp(src)
 	new /obj/item/clothing/suit/armor/vest/leather(src)
 	new /obj/item/clothing/suit/armor/hos(src)
+	new /obj/item/clothing/suit/armor/hos/platecarrier(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/skirt(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/alt(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/alt/skirt(src)

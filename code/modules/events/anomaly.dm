@@ -45,7 +45,7 @@
 		CRASH("Anomaly : No valid turfs found for [impact_area] - [impact_area.type]")
 
 /datum/round_event/anomaly/announce(fake)
-	priority_announce("Localized energetic flux wave detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
+	priority_announce("Localized energetic flux wave detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert", has_important_message = TRUE)
 
 /datum/round_event/anomaly/start()
 	var/list/turf/valid = list()

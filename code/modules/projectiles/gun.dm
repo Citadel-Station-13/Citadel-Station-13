@@ -22,6 +22,7 @@
 	var/ranged_attack_speed = CLICK_CD_RANGE
 	var/melee_attack_speed = CLICK_CD_MELEE
 
+	var/gun_flags = NONE
 	var/fire_sound = "gunshot"
 	var/suppressed = null					//whether or not a message is displayed when fired
 	var/can_suppress = FALSE
@@ -32,6 +33,7 @@
 	trigger_guard = TRIGGER_GUARD_NORMAL	//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
 	var/sawn_desc = null				//description change if weapon is sawn-off
 	var/sawn_off = FALSE
+	var/firing_burst = 0 //Prevent the weapon from firing again while already firing
 
 	/// can we be put into a turret
 	var/can_turret = TRUE
@@ -57,6 +59,8 @@
 	var/burst_spread = 0				//Spread induced by the gun itself during burst fire per iteration. Only checked if spread is 0.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
 	var/inaccuracy_modifier = 1
+	var/semicd = 0 //cooldown handler
+	var/dual_wield_spread = 24 //additional spread when dual wielding
 
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
@@ -87,23 +91,63 @@
 	var/zoom_out_amt = 0
 	var/datum/action/item_action/toggle_scope_zoom/azoom
 
+	//Firemodes
+	var/datum/action/item_action/toggle_firemode/firemode_action
+	/// Current fire selection, can choose between burst, single, and full auto.
+	var/fire_select = SELECT_SEMI_AUTOMATIC
+	var/fire_select_index = 1
+	/// What modes does this weapon have? Put SELECT_FULLY_AUTOMATIC in here to enable fully automatic behaviours.
+	var/list/fire_select_modes = list(SELECT_SEMI_AUTOMATIC)
+	/// if i`1t has an icon for a selector switch indicating current firemode.
+	var/selector_switch_icon = FALSE
+
 	var/dualwield_spread_mult = 1		//dualwield spread multiplier
 
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
 	var/projectile_damage_multiplier = 1
 
-	var/automatic = 0 //can gun use it, 0 is no, anything above 0 is the delay between clicks in ds
+	/// directional recoil multiplier
+	var/dir_recoil_amp = 10
+
+/obj/item/gun/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/toggle_firemode))
+		fire_select()
+	else if(istype(action, /datum/action/item_action/toggle_scope_zoom))
+		zoom(user, user.dir)
+	else if(istype(action, alight))
+		toggle_gunlight()
+	else
+		..()
 
 /obj/item/gun/Initialize(mapload)
 	. = ..()
-	if(no_pin_required)
-		pin = null
-	else if(pin)
+	if(pin)
 		pin = new pin(src)
+
 	if(gun_light)
-		alight = new (src)
+		alight = new(src)
+
 	if(zoomable)
 		azoom = new (src)
+
+	if(burst_size > 1 && !(SELECT_BURST_SHOT in fire_select_modes))
+		fire_select_modes.Add(SELECT_BURST_SHOT)
+	else if(burst_size <= 1 && (SELECT_BURST_SHOT in fire_select_modes))
+		fire_select_modes.Remove(SELECT_BURST_SHOT)
+
+	burst_size = 1
+
+	sortList(fire_select_modes, /proc/cmp_numeric_asc)
+
+	if(fire_select_modes.len > 1)
+		firemode_action = new(src)
+		firemode_action.button_icon_state = "fireselect_[fire_select]"
+		firemode_action.UpdateButtonIcon()
+
+/obj/item/gun/ComponentInitialize()
+	. = ..()
+	if(SELECT_FULLY_AUTOMATIC in fire_select_modes)
+		AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/gun/Destroy()
 	if(pin)
@@ -114,6 +158,10 @@
 		QDEL_NULL(bayonet)
 	if(chambered)
 		QDEL_NULL(chambered)
+	if(azoom)
+		QDEL_NULL(azoom)
+	if(firemode_action)
+		QDEL_NULL(firemode_action)
 	return ..()
 
 /obj/item/gun/examine(mob/user)
@@ -139,6 +187,41 @@
 	else if(can_bayonet)
 		. += "It has a <b>bayonet</b> lug on it."
 
+/obj/item/gun/proc/fire_select()
+	var/mob/living/carbon/human/user = usr
+
+	var/max_mode = fire_select_modes.len
+
+	if(max_mode <= 1)
+		to_chat(user, "<span class='warning'>[src] is not capable of switching firemodes!</span>")
+		return
+
+	fire_select_index = 1 + fire_select_index % max_mode //Magic math to cycle through this shit!
+
+	fire_select = fire_select_modes[fire_select_index]
+
+	switch(fire_select)
+		if(SELECT_SEMI_AUTOMATIC)
+			burst_size = 1
+			fire_delay = 0
+			SEND_SIGNAL(src, COMSIG_GUN_AUTOFIRE_DESELECTED, user)
+			to_chat(user, "<span class='notice'>You switch [src] to semi-automatic.</span>")
+		if(SELECT_BURST_SHOT)
+			burst_size = initial(burst_size)
+			fire_delay = initial(fire_delay)
+			SEND_SIGNAL(src, COMSIG_GUN_AUTOFIRE_DESELECTED, user)
+			to_chat(user, "<span class='notice'>You switch [src] to [burst_size]-round burst.</span>")
+		if(SELECT_FULLY_AUTOMATIC)
+			burst_size = 1
+			SEND_SIGNAL(src, COMSIG_GUN_AUTOFIRE_SELECTED, user)
+			to_chat(user, "<span class='notice'>You switch [src] to automatic.</span>")
+
+	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
+	update_appearance()
+	firemode_action.button_icon_state = "fireselect_[fire_select]"
+	firemode_action.UpdateButtonIcon()
+	return TRUE
+
 /obj/item/gun/equipped(mob/living/user, slot)
 	. = ..()
 	if(zoomed && user.get_active_held_item() != src)
@@ -159,7 +242,7 @@
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = FALSE, mob/pbtarget, message = 1, stam_cost = 0)
 	if(recoil)
-		shake_camera(user, recoil + 1, recoil)
+		directional_recoil(user, recoil*dir_recoil_amp, Get_Angle(user, pbtarget))
 
 	if(stam_cost) //CIT CHANGE - makes gun recoil cause staminaloss
 		var/safe_cost = clamp(stam_cost, 0, user.stamina_buffer)*(firing && burst_size >= 2 ? 1/burst_size : 1)
@@ -564,12 +647,6 @@
 
 	gun_light = new_light
 
-/obj/item/gun/ui_action_click(mob/user, action)
-	if(istype(action, /datum/action/item_action/toggle_scope_zoom))
-		zoom(user, user.dir)
-	else if(istype(action, alight))
-		toggle_gunlight()
-
 /obj/item/gun/proc/toggle_gunlight()
 	if(!gun_light)
 		return
@@ -657,7 +734,7 @@
 	if(chambered && chambered.BB)
 		chambered.BB.damage *= 5
 
-	process_fire(target, user, TRUE, params, stam_cost = getstamcost(user))
+	process_fire(target, user, TRUE, params, BODY_ZONE_HEAD, stam_cost = getstamcost(user))
 
 /obj/item/gun/proc/unlock() //used in summon guns and as a convience for admins
 	if(pin)

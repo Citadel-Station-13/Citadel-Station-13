@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/BiologicalLife(seconds, times_fired)
+/mob/living/carbon/alien/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	findQueen()

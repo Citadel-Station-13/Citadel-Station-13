@@ -99,7 +99,9 @@
 /obj/machinery/door/airlock/command{
 	name = "Manager's Office"
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "as" = (
@@ -134,7 +136,9 @@
 /area/awaymission/cabin)
 "aw" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "ax" = (
@@ -185,17 +189,18 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "aD" = (
-/obj/machinery/power/smes/magical{
-	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. It seems to be powered just fine without our intervention.";
-	name = "nanotrasen power storage unit"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/smes/magical,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aE" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/baseturf_helper/asteroid/snow,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -207,7 +212,12 @@
 	pixel_y = 23
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aG" = (
@@ -255,7 +265,9 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -281,15 +293,6 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "aQ" = (
-/obj/structure{
-	anchored = 1;
-	density = 1;
-	desc = "Generates power from lava!";
-	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes/simple.dmi';
-	icon_state = "compressor";
-	name = "geothermal generator"
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
@@ -366,7 +369,9 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bb" = (
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "bc" = (
@@ -431,7 +436,9 @@
 	id_tag = "snowdorm5";
 	name = "Cabin 5"
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bn" = (
@@ -463,7 +470,9 @@
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bt" = (
@@ -492,7 +501,9 @@
 "by" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/cabin)
 "bz" = (
@@ -611,7 +622,9 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Garage"
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bW" = (
@@ -739,7 +752,9 @@
 /obj/structure/sign/poster/official/soft_cap_pop_art{
 	pixel_y = 32
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cu" = (
@@ -838,14 +853,18 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "cM" = (
 /obj/machinery/door/airlock/wood{
 	name = "Gateway"
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cN" = (
@@ -859,12 +878,16 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "cP" = (
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "cQ" = (
 /obj/effect/landmark/awaystart,
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "cR" = (
@@ -898,7 +921,9 @@
 /area/awaymission/cabin)
 "cW" = (
 /obj/item/shovel,
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -957,7 +982,9 @@
 /obj/structure/chair/wood{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "df" = (
@@ -1040,20 +1067,19 @@
 /area/awaymission/cabin)
 "du" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
 /area/awaymission/cabin)
 "dv" = (
-/obj/structure{
-	anchored = 1;
-	density = 1;
-	desc = "Generates power from lava!";
-	icon = 'icons/obj/atmospherics/pipes/simple.dmi';
-	icon_state = "turbine";
-	name = "geothermal generator"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/rtg,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -1269,7 +1295,9 @@
 /turf/open/floor/wood/cold,
 /area/awaymission/cabin/snowforest)
 "eg" = (
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "eh" = (
@@ -1279,7 +1307,9 @@
 "ei" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/glass,
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "ej" = (
@@ -1350,7 +1380,9 @@
 /area/awaymission/cabin/snowforest)
 "et" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "eu" = (
@@ -2720,11 +2752,15 @@
 /obj/structure/sign/poster/official/fruit_bowl{
 	pixel_y = 32
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hi" = (
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "hj" = (
@@ -2732,7 +2768,9 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "hk" = (
@@ -2777,7 +2815,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/generic,
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "hs" = (
@@ -2785,14 +2825,18 @@
 /obj/structure/sign/poster/contraband/missing_gloves{
 	pixel_x = 32
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "ht" = (
 /obj/structure/window{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hu" = (
@@ -2812,6 +2856,9 @@
 	pixel_y = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 26
+	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "hw" = (
@@ -2837,28 +2884,36 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "hz" = (
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/cabin)
 "hA" = (
 /obj/machinery/door/airlock/freezer{
 	name = "Freezer"
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "hB" = (
 /obj/machinery/door/airlock{
 	name = "Backstage"
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hC" = (
 /obj/structure/chair/wood{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "hD" = (
@@ -2870,7 +2925,9 @@
 /obj/machinery/door/airlock{
 	name = "Kitchen"
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hF" = (
@@ -2885,7 +2942,9 @@
 /obj/structure/chair/wood{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hH" = (
@@ -3120,7 +3179,9 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "io" = (
@@ -3317,7 +3378,9 @@
 	id_tag = "snowdorm1";
 	name = "Cabin 1"
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "iW" = (
@@ -3325,7 +3388,9 @@
 	id_tag = "snowdorm2";
 	name = "Cabin 2"
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "iX" = (
@@ -3333,7 +3398,9 @@
 	id_tag = "snowdorm3";
 	name = "Cabin 3"
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "iY" = (
@@ -3341,7 +3408,9 @@
 	id_tag = "snowdorm4";
 	name = "Cabin 4"
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "iZ" = (
@@ -3514,7 +3583,9 @@
 	},
 /obj/item/reagent_containers/glass/bottle/cryoxadone,
 /obj/item/reagent_containers/glass/bottle/cryoxadone,
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "jr" = (
@@ -3645,7 +3716,9 @@
 	name = "Generator Room"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "jD" = (
@@ -5446,7 +5519,9 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "nR" = (
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "nS" = (
@@ -5473,13 +5548,152 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Maintenance"
 	},
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
+/area/awaymission/cabin)
+"nY" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/awaymission/cabin)
+"rn" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/awaymission/cabin)
+"rV" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin)
+"sn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/awaymission/cabin)
+"uk" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/awaymission/cabin)
+"uD" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/carpet,
+/area/awaymission/cabin)
+"ww" = (
+/obj/effect/landmark/awaystart,
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/carpet,
+/area/awaymission/cabin)
+"wx" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/awaymission/cabin)
+"zF" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin)
+"BB" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/awaymission/cabin)
+"Co" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/awaymission/cabin)
+"DU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating,
+/area/awaymission/cabin)
+"Fj" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin)
+"FH" = (
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin)
+"Hb" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/carpet,
+/area/awaymission/cabin)
+"He" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin)
+"IG" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/cabin)
+"JZ" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/carpet,
+/area/awaymission/cabin)
+"KS" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/carpet,
+/area/awaymission/cabin)
+"MB" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/carpet,
 /area/awaymission/cabin)
 "MS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "TZ" = (
@@ -5491,6 +5705,37 @@
 /obj/item/clothing/shoes/winterboots/ice_boots,
 /turf/open/floor/plating/ice/smooth,
 /area/awaymission/cabin/caves)
+"UL" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/awaymission/cabin)
+"WD" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin)
+"WX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating,
+/area/awaymission/cabin)
+"WY" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin)
 
 (1,1,1) = {"
 ab
@@ -25692,21 +25937,21 @@ iZ
 aN
 jl
 bb
-bb
-bb
+JZ
+JZ
 eg
 bm
-eg
+Fj
 nS
 an
-eg
+rV
 eg
 eg
 eg
 eg
 eg
 hB
-eg
+Fj
 aq
 an
 cT
@@ -25953,7 +26198,7 @@ az
 az
 aq
 an
-eg
+He
 bh
 an
 cA
@@ -25963,7 +26208,7 @@ an
 an
 hx
 an
-eg
+He
 aq
 an
 cU
@@ -26210,7 +26455,7 @@ az
 az
 aq
 an
-eg
+He
 aq
 an
 aq
@@ -26220,7 +26465,7 @@ aq
 aq
 aq
 an
-eg
+He
 aq
 an
 cV
@@ -26477,11 +26722,11 @@ aq
 aq
 bh
 an
-eg
+He
 bh
 an
 aL
-nR
+BB
 aL
 ed
 an
@@ -26724,17 +26969,17 @@ an
 an
 aR
 an
-eg
+He
 aq
 an
 aq
 aq
-eg
+FH
 aq
 aq
 aq
 an
-eg
+He
 aq
 an
 cU
@@ -26981,21 +27226,21 @@ aH
 an
 an
 an
-eg
+He
 aq
 an
 cz
 aq
-eg
+He
 aq
 aq
 bh
 an
-eg
+He
 aq
 an
 ed
-nR
+BB
 aL
 kE
 an
@@ -27238,7 +27483,7 @@ an
 an
 aS
 hg
-eg
+He
 bh
 an
 nT
@@ -27248,11 +27493,11 @@ bo
 bo
 cB
 an
-eg
+WD
 eg
 bV
-aw
-aw
+sn
+DU
 gM
 an
 an
@@ -27495,17 +27740,17 @@ aH
 an
 an
 an
-eg
+He
 aq
 an
 aO
 aO
 hC
-hC
-hC
-bb
-bb
-eg
+MB
+MB
+JZ
+JZ
+WY
 aq
 an
 eb
@@ -27752,7 +27997,7 @@ an
 an
 aT
 an
-eg
+He
 aq
 an
 az
@@ -27762,7 +28007,7 @@ az
 aq
 aq
 cO
-eg
+He
 bh
 an
 an
@@ -28266,7 +28511,7 @@ az
 az
 aq
 an
-eg
+He
 aq
 an
 aP
@@ -28276,7 +28521,7 @@ nB
 hd
 az
 aO
-eg
+He
 aq
 aq
 an
@@ -28523,7 +28768,7 @@ az
 az
 aq
 an
-eg
+He
 bh
 an
 bq
@@ -28533,7 +28778,7 @@ hc
 hd
 az
 az
-eg
+He
 aq
 aq
 aN
@@ -28776,11 +29021,11 @@ ja
 bp
 jm
 bb
-bb
-bb
+JZ
+JZ
 eg
 iY
-eg
+WY
 aq
 an
 bt
@@ -28790,7 +29035,7 @@ jx
 hd
 az
 cO
-eg
+He
 aq
 aq
 iR
@@ -29037,7 +29282,7 @@ aI
 aA
 jj
 an
-eg
+He
 aq
 an
 cN
@@ -29304,7 +29549,7 @@ az
 aq
 aq
 aO
-eg
+He
 aq
 aq
 an
@@ -29551,17 +29796,17 @@ ju
 au
 ji
 an
-eg
+He
 aq
 an
 de
-de
-de
-de
-de
-bb
-bb
-eg
+uD
+uD
+uD
+uD
+JZ
+JZ
+WY
 bh
 an
 an
@@ -29804,11 +30049,11 @@ jb
 aN
 jn
 bb
-bb
-bb
+JZ
+JZ
 eg
 iX
-eg
+WY
 bh
 an
 hb
@@ -29818,7 +30063,7 @@ eu
 cK
 cD
 an
-eg
+He
 aq
 aq
 an
@@ -30065,7 +30310,7 @@ az
 az
 aq
 an
-eg
+He
 aq
 an
 hn
@@ -30075,7 +30320,7 @@ aq
 aq
 aq
 an
-eg
+He
 aq
 aq
 aN
@@ -30322,7 +30567,7 @@ az
 az
 aq
 an
-eg
+He
 aq
 an
 bv
@@ -30332,7 +30577,7 @@ aq
 ap
 aq
 an
-eg
+He
 aq
 aq
 iU
@@ -30589,7 +30834,7 @@ bu
 an
 eo
 an
-eg
+He
 aq
 aq
 bp
@@ -30836,7 +31081,7 @@ an
 an
 aU
 an
-eg
+He
 aq
 an
 bw
@@ -30844,9 +31089,9 @@ bO
 bO
 bO
 bO
-hz
+Co
 hE
-eg
+WY
 aq
 aq
 an
@@ -31093,7 +31338,7 @@ aH
 an
 an
 an
-eg
+He
 aq
 an
 bx
@@ -31101,9 +31346,9 @@ bO
 cJ
 cF
 cJ
-hz
+nY
 an
-eg
+He
 bh
 an
 an
@@ -31350,7 +31595,7 @@ an
 an
 hf
 hy
-eg
+He
 aq
 an
 by
@@ -31358,9 +31603,9 @@ hz
 hz
 hz
 hz
-hz
+rn
 an
-eg
+He
 aq
 aq
 an
@@ -31607,7 +31852,7 @@ aH
 an
 an
 an
-eg
+He
 bh
 an
 bz
@@ -31615,9 +31860,9 @@ bO
 bW
 ck
 cj
-hz
+nY
 an
-eg
+He
 aq
 aq
 aN
@@ -31864,7 +32109,7 @@ an
 an
 aW
 an
-eg
+He
 aq
 an
 an
@@ -31874,7 +32119,7 @@ an
 an
 hA
 an
-eg
+He
 aq
 aq
 iS
@@ -32129,9 +32374,9 @@ bB
 bX
 cl
 cl
-hi
+uk
 an
-eg
+He
 aq
 aq
 bp
@@ -32378,15 +32623,15 @@ az
 az
 aq
 an
-eg
+He
 aq
 an
 hi
-hi
-hi
-hi
-hi
-hi
+UL
+UL
+UL
+UL
+wx
 an
 hh
 aq
@@ -32635,7 +32880,7 @@ az
 az
 aq
 an
-eg
+He
 aq
 an
 bC
@@ -32645,7 +32890,7 @@ is
 dt
 cG
 an
-eg
+He
 bh
 an
 an
@@ -32888,11 +33133,11 @@ jc
 bp
 jo
 bb
-bb
-bb
+JZ
+JZ
 eg
 iW
-eg
+WY
 aq
 an
 an
@@ -32902,7 +33147,7 @@ an
 an
 an
 an
-eg
+He
 aq
 aq
 an
@@ -33149,7 +33394,7 @@ aI
 aA
 jg
 an
-eg
+He
 aq
 an
 aJ
@@ -33159,7 +33404,7 @@ cv
 hq
 cv
 an
-eg
+He
 aq
 aq
 aN
@@ -33416,7 +33661,7 @@ bE
 bE
 lz
 an
-eg
+He
 aq
 aq
 iT
@@ -33663,7 +33908,7 @@ jw
 au
 jh
 an
-eg
+He
 aq
 an
 bD
@@ -33673,7 +33918,7 @@ cI
 hD
 bE
 nM
-eg
+He
 aq
 aq
 bp
@@ -33916,21 +34161,21 @@ jd
 aN
 jp
 bb
-bb
-bb
+JZ
+JZ
 eg
 iV
-eg
+WY
 aq
 an
 cP
-cP
-cP
-cP
+IG
+IG
+IG
 jq
-cP
-cP
-eg
+IG
+IG
+WY
 aq
 aq
 an
@@ -34177,7 +34422,7 @@ az
 az
 aq
 an
-eg
+He
 aq
 an
 bF
@@ -34187,7 +34432,7 @@ ho
 bE
 lz
 an
-eg
+He
 aq
 an
 an
@@ -34434,7 +34679,7 @@ az
 az
 aq
 an
-eg
+He
 nS
 an
 bF
@@ -34444,7 +34689,7 @@ hp
 js
 hp
 an
-eg
+He
 aq
 an
 dB
@@ -34701,7 +34946,7 @@ an
 an
 an
 an
-eg
+He
 bh
 an
 dB
@@ -34948,7 +35193,7 @@ an
 an
 aU
 an
-eg
+WD
 eg
 nV
 ei
@@ -34958,7 +35203,7 @@ hr
 hs
 et
 nV
-eg
+zF
 aq
 an
 dB
@@ -35462,7 +35707,7 @@ an
 an
 aX
 bf
-bb
+KS
 an
 bj
 bH
@@ -35472,7 +35717,7 @@ aq
 aq
 aq
 io
-bb
+KS
 az
 an
 dB
@@ -35715,11 +35960,11 @@ ax
 an
 aF
 cL
-aw
+sn
 jC
-bb
-bb
-bb
+JZ
+JZ
+Hb
 an
 bk
 bJ
@@ -35983,10 +36228,10 @@ an
 an
 aq
 cp
+rV
 eg
 eg
-eg
-cQ
+ww
 hI
 an
 dB
@@ -36226,8 +36471,8 @@ ac
 ac
 dB
 ax
-ed
-aw
+WX
+DU
 ed
 hv
 an

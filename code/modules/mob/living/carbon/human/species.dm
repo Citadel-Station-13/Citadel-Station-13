@@ -820,13 +820,13 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				var/left_state = DEFAULT_LEFT_EYE_STATE
 				var/right_state = DEFAULT_RIGHT_EYE_STATE
 				if(eye_type in GLOB.eye_types)
-					left_state = eye_type + "_left_eye"
-					right_state = eye_type + "_right_eye"
+					left_state = "[eye_type]_left_eye"
+					right_state = "[eye_type]_right_eye"
 				var/mutable_appearance/left_eye = mutable_appearance('icons/mob/eyes.dmi', left_state, -BODY_LAYER)
 				var/mutable_appearance/right_eye = mutable_appearance('icons/mob/eyes.dmi', right_state, -BODY_LAYER)
 				if((EYECOLOR in species_traits) && has_eyes)
-					left_eye.color = "#" + H.left_eye_color
-					right_eye.color = "#" + H.right_eye_color
+					left_eye.color = "#[H.left_eye_color]"
+					right_eye.color = "#[H.right_eye_color]"
 				if(OFFSET_EYES in offset_features)
 					left_eye.pixel_x += offset_features[OFFSET_EYES][1]
 					left_eye.pixel_y += offset_features[OFFSET_EYES][2]
@@ -2443,6 +2443,13 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	if(H.movement_type & FLYING)
 		return TRUE
 	return FALSE
+
+////////////////
+//Blood Stuff///
+////////////////
+// true = handle blood normally, false = do not (and then handle blood in this proc instead please!!)
+/datum/species/proc/handle_blood(mob/living/carbon/human/H, delta_time, times_fired)
+	return TRUE
 
 ////////////////
 //Tail Wagging//

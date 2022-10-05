@@ -29,10 +29,12 @@
 
 	var/obj/effect/overlay/status_display_text/message1_overlay
 	var/obj/effect/overlay/status_display_text/message2_overlay
+	var/mutable_appearance/ai_vtuber_overlay
 	var/current_picture = ""
 	var/current_mode = SD_BLANK
 	var/message1 = ""
 	var/message2 = ""
+	var/mob/living/silicon/ai/master
 
 /obj/item/wallframe/status_display
 	name = "status display frame"
@@ -122,6 +124,10 @@
 	if(overlay && message == overlay.message)
 		return null
 
+	// if an AI is controlling, we don't update the overlay
+	if(master)
+		return
+
 	if(overlay)
 		qdel(overlay)
 
@@ -144,6 +150,10 @@
 	. = ..()
 
 	if(stat & (NOPOWER|BROKEN))
+		remove_messages()
+		return
+
+	if(master)
 		remove_messages()
 		return
 
@@ -492,6 +502,42 @@
 		if(initial(emote.emotion) == emotion_result)
 			user.emote(initial(emote.key))
 			break
+
+// ai vtuber moment
+/obj/machinery/status_display/AICtrlClick(mob/living/silicon/ai/user)
+	if(!isAI(user) || master || (user.current && !istype(user.current, /obj/machinery/status_display))) // don't let two AIs control the same one, don't let AI control two things at once
+		return
+
+	if(!user.client.prefs.custom_holoform_icon)
+		to_chat(user, span_notice("You have no custom holoform set!"))
+		return
+
+	// move AI to the location, set master, update overlays (removes messages)
+	user.current = src
+	user.eyeobj.setLoc(get_turf(src))
+	icon_state = initial(icon_state)
+	user.controlled_display = src
+	master = user
+	update_overlays()
+	update_appearance()
+
+	// we set the avatar here
+	var/icon/I = icon(user.client.prefs.custom_holoform_icon)
+	I.Crop(1,16,32,32)
+	ai_vtuber_overlay = mutable_appearance(I)
+	ai_vtuber_overlay.blend_mode = BLEND_ADD
+	ai_vtuber_overlay.pixel_y = 8
+	update_overlays()
+	add_overlay(ai_vtuber_overlay)
+
+	// tell the user how to speak
+	to_chat(user, span_notice("Use :q to relay messages through the status display."))
+
+// modified version of how holopads 'hear' and relay to AIs
+/obj/machinery/status_display/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
+	. = ..()
+	if(master && !radio_freq && master.controlled_display == src)
+		master.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
 /obj/machinery/status_display/ai/process()
 	if(stat & NOPOWER)

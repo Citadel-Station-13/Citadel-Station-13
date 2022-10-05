@@ -18,7 +18,7 @@
 #define THERMAL_PROTECTION_HAND_LEFT	0.025
 #define THERMAL_PROTECTION_HAND_RIGHT	0.025
 
-/mob/living/carbon/human/BiologicalLife(seconds, times_fired)
+/mob/living/carbon/human/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	handle_active_genes()

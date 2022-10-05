@@ -3,7 +3,6 @@
 	typepath = /datum/round_event/vent_clog
 	weight = 10
 	max_occurrences = 3
-	min_players = 25
 
 /datum/round_event/vent_clog
 	announceWhen	= 1
@@ -11,7 +10,7 @@
 	endWhen			= 35
 	var/interval 	= 2
 	var/list/vents  = list()
-	var/randomProbability = 1
+	var/randomProbability = 0
 	var/reagentsAmount = 100
 	var/list/saferChems = list(
 		/datum/reagent/water,
@@ -60,7 +59,7 @@
 	//needs to be chemid unit checked at some point
 
 /datum/round_event/vent_clog/announce()
-	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "Atmospherics alert")
+	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "Atmospherics alert", has_important_message = TRUE)
 
 /datum/round_event/vent_clog/setup()
 	endWhen = rand(120, 180)
@@ -92,7 +91,7 @@
 
 	var/datum/reagents/R = new/datum/reagents(1000)
 	R.my_atom = vent
-	if (prob(randomProbability))
+	if (randomProbability && prob(randomProbability))
 		R.add_reagent(get_random_reagent_id(), reagentsAmount)
 	else
 		R.add_reagent(pick(saferChems), reagentsAmount)
@@ -106,7 +105,7 @@
 	name = "Clogged Vents: Threatening"
 	typepath = /datum/round_event/vent_clog/threatening
 	weight = 4
-	min_players = 35
+	min_players = 15
 	max_occurrences = 1
 	earliest_start = 35 MINUTES
 
@@ -118,7 +117,7 @@
 	name = "Clogged Vents: Catastrophic"
 	typepath = /datum/round_event/vent_clog/catastrophic
 	weight = 2
-	min_players = 45
+	min_players = 25
 	max_occurrences = 1
 	earliest_start = 45 MINUTES
 

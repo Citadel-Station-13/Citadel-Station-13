@@ -135,12 +135,13 @@
 	id = GAS_NITRIC
 	specific_heat = 20
 	name = "Nitric oxide"
-	flags = GAS_FLAG_DANGEROUS
 	odor = "sharp sweetness"
 	odor_strength = 1
 	fusion_power = 15
 	enthalpy = 91290
 	heat_resistance = 2
+	powermix = -1
+	heat_penalty = -1
 
 /datum/gas/nitryl
 	id = GAS_NITRYL
@@ -208,6 +209,7 @@
 	// snowflaked odor
 	name = "Miasma"
 	gas_overlay = "miasma"
+	color = "#963"
 	moles_visible = MOLES_GAS_VISIBLE * 60
 	price = 2
 
@@ -295,4 +297,4 @@
 	powermix = -1
 	transmit_modifier = -10
 	heat_penalty = -10
-	price = 100 // it's kinda really hard to actually get it into a canister
+	price = 5 // IT'S NOT ACTUALLY THAT HARD TO GET INTO A CANISTER LOL

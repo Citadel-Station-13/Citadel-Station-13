@@ -21,7 +21,7 @@
 	threat = 0.5
 
 
-/datum/job/chaplain/after_spawn(mob/living/H, mob/M)
+/datum/job/chaplain/after_spawn(mob/living/H, client/C)
 	. = ..()
 	if(H.mind)
 		H.mind.isholy = TRUE
@@ -41,12 +41,12 @@
 		return
 
 	var/new_religion = DEFAULT_RELIGION
-	if(M.client && M.client.prefs.custom_names["religion"])
-		new_religion = M.client.prefs.custom_names["religion"]
+	if(C && C.prefs.custom_names["religion"])
+		new_religion = C.prefs.custom_names["religion"]
 
 	var/new_deity = DEFAULT_DEITY
-	if(M.client && M.client.prefs.custom_names["deity"])
-		new_deity = M.client.prefs.custom_names["deity"]
+	if(C && C.prefs.custom_names["deity"])
+		new_deity = C.prefs.custom_names["deity"]
 
 	B.deity_name = new_deity
 

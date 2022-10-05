@@ -46,9 +46,6 @@
 		if(!mode.check_age(M.client, minimum_required_age))
 			trimmed_list.Remove(M)
 			continue
-		if(ROLE_NO_ANTAGONISM in M.client.prefs.be_special)
-			trimmed_list.Remove(M)
-			continue
 		if(antag_flag_override)
 			if(!(HAS_ANTAG_PREF(M.client, antag_flag_override)))
 				trimmed_list.Remove(M)
@@ -88,6 +85,9 @@
 		if (job_check < required_enemies[threat])
 			return FALSE
 	return TRUE
+
+/datum/dynamic_ruleset/midround/from_ghosts/ready(forced = FALSE)
+	return ..() && (length(dead_players) + length(list_observers) >= required_applicants)
 
 /datum/dynamic_ruleset/midround/from_ghosts/execute()
 	var/list/possible_candidates = list()

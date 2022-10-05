@@ -89,7 +89,7 @@ Difficulty: Normal
 /mob/living/simple_animal/hostile/megafauna/hierophant/spawn_crusher_loot()
 	new /obj/item/crusher_trophy/vortex_talisman(get_turf(spawned_beacon))
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/megafauna/hierophant/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(spawned_beacon && !QDELETED(spawned_beacon) && !client)
@@ -500,6 +500,8 @@ Difficulty: Normal
 		var/obj/item/projectile/P = mover
 		if(P.firer == caster)
 			return TRUE
+	if(mover != caster)
+		return FALSE
 	if(mover == caster)
 		return TRUE
 

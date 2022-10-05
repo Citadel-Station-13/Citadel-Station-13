@@ -42,8 +42,8 @@
   * Handles biological life processes like chemical metabolism, breathing, etc
   * Returns TRUE or FALSE based on if we were interrupted. This is used by overridden variants to check if they should stop.
   */
-/mob/living/proc/BiologicalLife(seconds, times_fired)
-	SEND_SIGNAL(src,COMSIG_LIVING_BIOLOGICAL_LIFE, seconds, times_fired)
+/mob/living/proc/BiologicalLife(delta_time, times_fired)
+	SEND_SIGNAL(src,COMSIG_LIVING_BIOLOGICAL_LIFE, delta_time, times_fired)
 	handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
 
 	handle_wounds()
@@ -67,7 +67,7 @@
 	//stuff in the stomach
 	handle_stomach()
 
-	handle_block_parry(seconds)
+	handle_block_parry(delta_time)
 
 	handle_traits() // eye, ear, brain damages
 

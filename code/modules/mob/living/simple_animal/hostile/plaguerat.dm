@@ -86,7 +86,7 @@ GLOBAL_LIST_EMPTY(plague_rats)
 					walk_to(src, entry_vent)
 					break
 
-/mob/living/simple_animal/hostile/plaguerat/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/plaguerat/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(isopenturf(loc))

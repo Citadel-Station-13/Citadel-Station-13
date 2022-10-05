@@ -172,10 +172,17 @@
 
 /datum/gear/uniform/pants/polypants
 	name = "Polychromic Pants"
-	path = /obj/item/clothing/under/pants/polypants/polychromic
+	path = /obj/item/clothing/under/pants/polypants
 	cost = 2
 	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
 	loadout_initial_colors = list("#75634F", "#3D3D3D", "#575757")
+
+/datum/gear/uniform/pants/workout
+	name = "Polychromatic Workout Shorts"
+	path = /obj/item/clothing/under/shorts/polychromic/polyworkout
+	cost = 2
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#323232", "#FFFFFF")
 
 /datum/gear/uniform/pants/track
 	name = "Track Pants"

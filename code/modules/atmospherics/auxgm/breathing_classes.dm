@@ -46,7 +46,7 @@
 	gases = list(
 		GAS_METHANE = 1,
 		GAS_METHYL_BROMIDE = -0.7,
-		GAS_OXYGEN = -0.1,
+		GAS_O2 = -0.1,
 		GAS_PLUOXIUM = -0.8
 	)
 	products = list(

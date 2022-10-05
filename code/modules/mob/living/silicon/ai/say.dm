@@ -34,8 +34,6 @@
 
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(message, language)
-
-
 	message = trim(message)
 
 	if (!message)
@@ -54,6 +52,29 @@
 		to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")
 	else
 		to_chat(src, "No holopad connected.")
+
+
+//For status displays only. Usable by AI.
+/mob/living/silicon/ai/proc/statusdisplay_talk(message, language)
+	message = trim(message)
+
+	if (!message)
+		return
+
+	var/obj/machinery/status_display/T = controlled_display
+	if(T)
+		var/turf/padturf = get_turf(T)
+		var/padloc
+		if(padturf)
+			padloc = AREACOORD(padturf)
+		else
+			padloc = "(UNKNOWN)"
+		src.log_talk(message, LOG_SAY, tag="STATUS DISPLAY in [padloc]")
+		send_speech(message, 7, T, "robot", message_language = language)
+		to_chat(src, "<i><span class='game say'>Status Display message transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")
+	else
+		to_chat(src, "No status display connected.")
+
 
 
 // Make sure that the code compiles with AI_VOX undefined

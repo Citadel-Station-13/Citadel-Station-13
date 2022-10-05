@@ -15,6 +15,8 @@
 	/// Set this variable to something not null, this'll be the preferred unarmed parry in most cases if [can_martial_parry] is TRUE. YOU MUST RUN [get_block_parry_data(this)] INSTEAD OF DIRECTLY ACCESSING!
 	var/datum/block_parry_data/block_parry_data
 	var/pugilist = FALSE
+	var/datum/weakref/holder //owner of the martial art
+	var/display_combos = FALSE //shows combo meter if true
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return FALSE
@@ -25,7 +27,7 @@
 /datum/martial_art/proc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return FALSE
 
-/datum/martial_art/proc/can_use(mob/living/carbon/human/H)
+/datum/martial_art/proc/can_use(mob/living/carbon/human/owner_human)
 	return TRUE
 
 /datum/martial_art/proc/add_to_streak(element,mob/living/carbon/human/D)
@@ -34,11 +36,16 @@
 	streak = streak+element
 	if(length(streak) > max_streak_length)
 		streak = copytext(streak, 1 + length(streak[1]))
+	if(display_combos)
+		var/mob/living/holder_living = holder.resolve()
+		holder_living?.hud_used?.combo_display.update_icon_state(streak)
 	return
 
 /datum/martial_art/proc/reset_streak(mob/living/carbon/human/new_target)
 	current_target = new_target
 	streak = ""
+	var/mob/living/holder_living = holder.resolve()
+	holder_living?.hud_used?.combo_display.update_icon_state(streak)
 
 /datum/martial_art/proc/damage_roll(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	//Here we roll for our damage to be added into the damage var in the various attack procs. This is changed depending on whether we are in combat mode, lying down, or if our target is in combat mode.
@@ -47,46 +54,48 @@
 		damage *= 0.7
 	return damage
 
-/datum/martial_art/proc/teach(mob/living/carbon/human/H, make_temporary = FALSE)
-	if(!istype(H) || !H.mind)
+/datum/martial_art/proc/teach(mob/living/carbon/human/owner_human, make_temporary = FALSE)
+	if(!istype(owner_human) || !owner_human.mind)
 		return FALSE
-	if(H.mind.martial_art)
+	if(owner_human.mind.martial_art)
 		if(make_temporary)
-			if(!H.mind.martial_art.allow_temp_override)
+			if(!owner_human.mind.martial_art.allow_temp_override)
 				return FALSE
-			store(H.mind.martial_art,H)
+			store(owner_human.mind.martial_art,owner_human)
 		else
-			H.mind.martial_art.on_remove(H)
+			owner_human.mind.martial_art.on_remove(owner_human)
 	else if(make_temporary)
-		base = H.mind.default_martial_art
+		base = owner_human.mind.default_martial_art
 	if(help_verb)
-		add_verb(H, help_verb)
-	H.mind.martial_art = src
+		add_verb(owner_human, help_verb)
+	owner_human.mind.martial_art = src
+	holder = WEAKREF(owner_human)
 	if(pugilist)
-		ADD_TRAIT(H, TRAIT_PUGILIST, MARTIAL_ARTIST_TRAIT)
+		ADD_TRAIT(owner_human, TRAIT_PUGILIST, MARTIAL_ARTIST_TRAIT)
 	return TRUE
 
-/datum/martial_art/proc/store(datum/martial_art/M,mob/living/carbon/human/H)
-	M.on_remove(H)
+/datum/martial_art/proc/store(datum/martial_art/M,mob/living/carbon/human/owner_human)
+	M.on_remove(owner_human)
 	if(M.base) //Checks if M is temporary, if so it will not be stored.
 		base = M.base
 	else //Otherwise, M is stored.
 		base = M
 
-/datum/martial_art/proc/remove(mob/living/carbon/human/H)
-	if(!istype(H) || !H.mind || H.mind.martial_art != src)
+/datum/martial_art/proc/remove(mob/living/carbon/human/owner_human)
+	if(!istype(owner_human) || !owner_human.mind || owner_human.mind.martial_art != src)
 		return
-	on_remove(H)
+	on_remove(owner_human)
 	if(base)
-		base.teach(H)
+		base.teach(owner_human)
 	else
-		var/datum/martial_art/X = H.mind.default_martial_art
-		X.teach(H)
-	REMOVE_TRAIT(H, TRAIT_PUGILIST, MARTIAL_ARTIST_TRAIT)
+		var/datum/martial_art/X = owner_human.mind.default_martial_art
+		X.teach(owner_human)
+	REMOVE_TRAIT(owner_human, TRAIT_PUGILIST, MARTIAL_ARTIST_TRAIT)
+	holder = null
 
-/datum/martial_art/proc/on_remove(mob/living/carbon/human/H)
+/datum/martial_art/proc/on_remove(mob/living/carbon/human/owner_human)
 	if(help_verb)
-		remove_verb(H, help_verb)
+		remove_verb(owner_human, help_verb)
 	return
 
 ///Gets called when a projectile hits the owner. Returning anything other than BULLET_ACT_HIT will stop the projectile from hitting the mob.

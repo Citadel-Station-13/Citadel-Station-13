@@ -149,3 +149,23 @@
 2022-06-13:
   Bhijn & Myr:
   - bugfix: Jukebox audio is now audible within closets, crates, etc!
+2022-06-19:
+  IHOPMommyLich:
+  - rscdel: Removed the forced dynamic, allowing the standard game mode vote.
+  TripleShades:
+  - bugfix: Cannabis mutation variants now use the proper growth state icons
+  - bugfix: Picking to make tea cups will now give the right starting glasswork base
+  - bugfix: Picking to make tea plates will now give the right starting glasswork
+      base
+  - spellcheck: Fixed a state typo in tea cup glassworking
+  - spellcheck: Fixed an incorrect step displayed on spout glassworking
+  - code_imp: Enables the make priority announcement admin verb for admin use
+2022-06-21:
+  Bhijn & Myr:
+  - balance: Ling abilities now have a default loudness of 0.5. This change applies
+      to every single ability that used to have 0 loudness.
+  TrojanCoyote:
+  - rscadd: Adds a plate carrier to HoS loadout, sprites for such
+2022-06-29:
+  Putnam3145:
+  - bugfix: GAS_OXYGEN -> GAS_O2

@@ -198,7 +198,7 @@
 	swarming = TRUE
 	var/can_infest_dead = FALSE
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(isturf(loc))

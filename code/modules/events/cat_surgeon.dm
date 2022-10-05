@@ -2,11 +2,11 @@
     name = "Cat Surgeon"
     typepath = /datum/round_event/cat_surgeon
     max_occurrences = 1
-    weight = 8
+    weight = 5
 
 /datum/round_event/cat_surgeon/announce(fake)
 	priority_announce("One of our... ahem... 'special' cases has escaped. As it happens their last known location before their tracker went dead is your station so keep an eye out for them. On an unrelated note, has anyone seen our cats?",
-	sender_override = "Nanotrasen Psych Ward")
+	sender_override = "Nanotrasen Psych Ward", has_important_message = TRUE)
 
 /datum/round_event/cat_surgeon/start()
     var/list/spawn_locs = list()

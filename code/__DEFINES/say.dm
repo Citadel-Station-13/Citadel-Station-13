@@ -37,6 +37,7 @@
 
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"
+#define MODE_STATUSDISPLAY "statusdisplay"
 
 #define MODE_CHANGELING "changeling"
 #define MODE_KEY_CHANGELING "g"
@@ -114,6 +115,8 @@
 #define BARK_VARIANCE_RAND (rand(BARK_DEFAULT_MINVARY * 100, BARK_DEFAULT_MAXVARY * 100) / 100) //Macro for randomizing bark variance to reduce the amount of copy-pasta necessary for that
 
 #define BARK_DO_VARY(pitch, variance) (rand(((pitch * 100) - (variance*50)), ((pitch*100) + (variance*50))) / 100)
+
+#define BARK_SOUND_FALLOFF_EXPONENT(distance) (distance/7) //At lower ranges, we want the exponent to be below 1 so that whispers don't sound too awkward. At higher ranges, we want the exponent fairly high to make yelling less obnoxious
 
 // Is something in the IC chat filter? This is config dependent.
 #define CHAT_FILTER_CHECK(T) (config.ic_filter_regex && findtext(T, config.ic_filter_regex))
