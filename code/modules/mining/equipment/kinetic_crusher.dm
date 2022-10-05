@@ -266,17 +266,16 @@
 /obj/item/kinetic_crusher/glaive/gauntlets/Initialize(mapload)
 	. = ..()
 	active_style = new /datum/gauntlet_style/brawler
+	active_style.on_apply(src)
 
 /obj/item/kinetic_crusher/glaive/gauntlets/examine(mob/living/user)
 	. = ..()
 	. += "According to a very small display, the currently loaded style is \"[active_style.name]\"."
 
-/* wip todo
 /obj/item/kinetic_crusher/glaive/gauntlets/examine_more(mob/user)
-	return
-*/
+	return active_style.examine_more_info()
 
-/obj/item/kinetic_crusher/glaive/gauntlets/style_change(datum/gauntlet_style/new_style)
+/obj/item/kinetic_crusher/glaive/gauntlets/proc/style_change(datum/gauntlet_style/new_style)
 	new_style.on_apply(src)
 
 /obj/item/kinetic_crusher/glaive/gauntlets/ComponentInitialize()
@@ -297,15 +296,16 @@
 		item_state = "crusher[wielded]-fist"
 
 /obj/item/kinetic_crusher/glaive/gauntlets/attack(mob/living/target, mob/living/carbon/user)
-	. = ..()
-	if(!combo_on_anything && target.mob_size < MOB_SIZE_LARGE)
+	..()
+	if((combo_on_anything || target.mob_size >= MOB_SIZE_LARGE) && wielded)
 		switch(user.a_intent)
 			if(INTENT_DISARM)
-				add_to_streak("D", user)
+				add_to_streak("D", user, target)
 			if(INTENT_GRAB)
-				add_to_streak("G", user)
+				add_to_streak("G", user, target)
 			if(INTENT_HARM)
-				add_to_streak("H", user)
+				add_to_streak("H", user, target)
+		active_style.check_streak(user, target)
 
 /obj/item/kinetic_crusher/glaive/gauntlets/proc/add_to_streak(element,mob/living/carbon/user, mob/living/target)
 	if(target != current_target)
