@@ -547,14 +547,15 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 
 //merges adjacent full-tile windows into one
-/obj/structure/window/update_overlays()
+/obj/structure/window/update_overlays(updates)
 	. = ..()
 	if(QDELETED(src) || !fulltile)
 		return
 	var/ratio = obj_integrity / max_integrity
 	ratio = CEILING(ratio*4, 1) * 25
 
-	if(IS_SMOOTH(src))
+	// let's NOT INFINITE LOOP?
+	if((updates & UPDATE_SMOOTHING) && IS_SMOOTH(src))
 		QUEUE_SMOOTH(src)
 
 	if(ratio > 75)
