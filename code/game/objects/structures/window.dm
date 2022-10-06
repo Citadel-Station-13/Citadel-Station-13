@@ -951,16 +951,14 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 			user.visible_message("<span class='danger'>[user] tears a hole in [src].</span>")
 			update_icon()
 
-/obj/structure/window/paperframe/update_icon()
+/obj/structure/window/paperframe/update_overlays(updates)
+	. = ..()
 	if(obj_integrity < max_integrity)
-		cut_overlay(paper)
-		add_overlay(torn)
+		. += torn
 		set_opacity(FALSE)
 	else
-		cut_overlay(torn)
-		add_overlay(paper)
+		. += paper
 		set_opacity(TRUE)
-	QUEUE_SMOOTH(src)
 
 /obj/structure/window/paperframe/attackby(obj/item/W, mob/user)
 	if(W.get_temperature())
