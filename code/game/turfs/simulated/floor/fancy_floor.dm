@@ -257,15 +257,15 @@
 	. = ..()
 	update_icon()
 
-/turf/open/floor/carpet/update_icon()
+/turf/open/floor/carpet/update_icon(updates)
 	if(!..())
 		return 0
 	if(!broken && !burnt)
-		if(IS_SMOOTH(src))
+		if((updates & UPDATE_SMOOTHING) && IS_SMOOTH(src))
 			QUEUE_SMOOTH(src)
 	else
 		make_plating()
-		if(IS_SMOOTH(src))
+		if((updates & UPDATE_SMOOTHING) && IS_SMOOTH(src))
 			QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/open/floor/carpet/black

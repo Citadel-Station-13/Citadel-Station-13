@@ -114,9 +114,9 @@
 	. = ..()
 	addtimer(CALLBACK(src, /atom/.proc/update_icon), 1)
 
-/turf/open/floor/holofloor/carpet/update_icon()
+/turf/open/floor/holofloor/carpet/update_icon(update)
 	. = ..()
-	if(intact)
+	if((updates & UPDATE_SMOOTHING) && intact)
 		QUEUE_SMOOTH(src)
 
 /turf/open/floor/holofloor/wood
