@@ -36,6 +36,7 @@
 	var/datum/reagent/milk_reagent = /datum/reagent/consumable/milk
 
 	footstep_type = FOOTSTEP_MOB_SHOE
+	vocal_bark_id = "banjoc3"
 
 /mob/living/simple_animal/hostile/retaliate/goat/Initialize(mapload, /datum/reagent/milk_reagent)
 	udder = new (null, milk_reagent)
@@ -46,7 +47,7 @@
 	udder = null
 	return ..()
 
-/mob/living/simple_animal/hostile/retaliate/goat/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/retaliate/goat/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(stat == CONSCIOUS)
@@ -143,6 +144,8 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 
 	footstep_type = FOOTSTEP_MOB_SHOE
+	vocal_bark_id = "mutedc2"
+	vocal_pitch = 1.2
 
 /mob/living/simple_animal/cow/Initialize(mapload)
 	udder = new(null, milk_reagent)
@@ -160,7 +163,7 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/cow/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/cow/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(stat == CONSCIOUS)
@@ -247,6 +250,8 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 	footstep_type = FOOTSTEP_MOB_CLAW
+	vocal_bark_id = "squeak"
+	vocal_pitch = 1.4
 
 /mob/living/simple_animal/chick/Initialize(mapload)
 	. = ..()
@@ -254,7 +259,7 @@
 	pixel_y = rand(0, 10)
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
-/mob/living/simple_animal/chick/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/chick/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(!stat && !ckey)
@@ -263,7 +268,7 @@
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
-/mob/living/simple_animal/chick/holo/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/chick/holo/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	amount_grown = 0
@@ -309,6 +314,9 @@
 	var/static/chicken_count = 0
 
 	footstep_type = FOOTSTEP_MOB_CLAW
+	vocal_bark_id = "synthgrunt"
+	vocal_pitch = 1.4
+	vocal_pitch_range = 0.4
 
 /mob/living/simple_animal/chicken/Initialize(mapload)
 	. = ..()
@@ -339,7 +347,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/chicken/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/chicken/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if((!stat && prob(3) && eggsleft > 0) && egg_type)
@@ -403,6 +411,8 @@
 	var/static/kiwi_count = 0
 
 	footstep_type = FOOTSTEP_MOB_CLAW
+	vocal_bark_id = "squeak"
+	vocal_pitch = 1.4
 
 /mob/living/simple_animal/kiwi/Destroy()
 	--kiwi_count
@@ -414,7 +424,7 @@
 
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
-/mob/living/simple_animal/kiwi/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/kiwi/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if((!stat && prob(3) && eggsleft > 0) && egg_type)
@@ -481,6 +491,8 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 	footstep_type = FOOTSTEP_MOB_CLAW
+	vocal_bark_id = "squeak"
+	vocal_pitch = 1.4
 
 /mob/living/simple_animal/babyKiwi/Initialize(mapload)
 	. = ..()
@@ -489,7 +501,7 @@
 
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
-/mob/living/simple_animal/babyKiwi/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/babyKiwi/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(!stat && !ckey)
@@ -557,3 +569,4 @@
 	maxHealth = 75
 	blood_volume = BLOOD_VOLUME_NORMAL
 	footstep_type = FOOTSTEP_MOB_SHOE
+	vocal_bark_id = "mutedc4"

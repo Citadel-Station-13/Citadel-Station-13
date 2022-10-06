@@ -671,6 +671,27 @@ Turf and target are separate in case you want to teleport some distance from a t
 	if(final_x || final_y)
 		return locate(final_x, final_y, T.z)
 
+///Returns a turf based on text inputs, original turf and viewing client
+/proc/parse_caught_click_modifiers(list/modifiers, turf/origin, client/viewing_client)
+	if(!modifiers)
+		return null
+
+	var/screen_loc = splittext(LAZYACCESS(modifiers, SCREEN_LOC), ",")
+	var/list/actual_view = getviewsize(viewing_client ? viewing_client.view : world.view)
+	var/click_turf_x = splittext(screen_loc[1], ":")
+	var/click_turf_y = splittext(screen_loc[2], ":")
+	var/click_turf_z = origin.z
+
+	var/click_turf_px = text2num(click_turf_x[2])
+	var/click_turf_py = text2num(click_turf_y[2])
+	click_turf_x = origin.x + text2num(click_turf_x[1]) - round(actual_view[1] / 2) - 1
+	click_turf_y = origin.y + text2num(click_turf_y[1]) - round(actual_view[2] / 2) - 1
+
+	var/turf/click_turf = locate(clamp(click_turf_x, 1, world.maxx), clamp(click_turf_y, 1, world.maxy), click_turf_z)
+	LAZYSET(modifiers, ICON_X, "[(click_turf_px - click_turf.pixel_x) + ((click_turf_x - click_turf.x) * world.icon_size)]")
+	LAZYSET(modifiers, ICON_Y, "[(click_turf_py - click_turf.pixel_y) + ((click_turf_y - click_turf.y) * world.icon_size)]")
+	return click_turf
+
 //Finds the distance between two atoms, in pixels
 //centered = FALSE counts from turf edge to edge
 //centered = TRUE counts from turf center to turf center
@@ -1174,25 +1195,22 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 	var/initialpixely = pixel_y
 	var/shiftx = rand(-pixelshiftx,pixelshiftx)
 	var/shifty = rand(-pixelshifty,pixelshifty)
-	animate(src, pixel_x = pixel_x + shiftx, pixel_y = pixel_y + shifty, time = 0.2, loop = duration)
-	pixel_x = initialpixelx
-	pixel_y = initialpixely
+	animate(src, pixel_x = shiftx, pixel_y = shifty, time = 0.2, loop = duration, flags = ANIMATION_RELATIVE)
+	animate(pixel_x = initialpixelx, pixel_y = initialpixely, time = 0.2)
 
-/atom/proc/do_jiggle(targetangle = 45, timer = 20)
+/atom/proc/do_jiggle(targetangle = 25, timer = 20)
 	var/matrix/OM = matrix(transform)
 	var/matrix/M = matrix(transform)
-	var/halftime = timer * 0.5
 	M.Turn(pick(-targetangle, targetangle))
-	animate(src, transform = M, time = halftime, easing = ELASTIC_EASING)
-	animate(src, transform = OM, time = halftime, easing = ELASTIC_EASING)
+	animate(src, transform = M, time = timer * 0.1, easing = BACK_EASING | EASE_IN)
+	animate(transform = OM, time = timer * 0.4, easing = ELASTIC_EASING)
 
 /atom/proc/do_squish(squishx = 1.2, squishy = 0.6, timer = 20)
 	var/matrix/OM = matrix(transform)
 	var/matrix/M = matrix(transform)
-	var/halftime = timer * 0.5
 	M.Scale(squishx, squishy)
-	animate(src, transform = M, time = halftime, easing = BOUNCE_EASING)
-	animate(src, transform = OM, time = halftime, easing = BOUNCE_EASING)
+	animate(src, transform = M, time = timer * 0.5, easing = ELASTIC_EASING)
+	animate(transform = OM, time = timer * 0.5, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
 
 /proc/weightclass2text(var/w_class)
 	switch(w_class)

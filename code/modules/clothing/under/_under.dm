@@ -20,7 +20,7 @@
 	var/alt_covers_chest = FALSE // for adjusted/rolled-down jumpsuits, FALSE = exposes chest and arms, TRUE = exposes arms only
 	var/dummy_thick = FALSE // is able to hold accessories on its item
 	var/obj/item/clothing/accessory/attached_accessory
-	var/mutable_appearance/accessory_overlay
+	var/list/accessory_overlays
 
 /obj/item/clothing/under/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
 	. = ..()
@@ -29,9 +29,9 @@
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
 	if(blood_DNA)
-		. += mutable_appearance('icons/effects/blood.dmi', "uniformblood", color = blood_DNA_to_color())
-	if(accessory_overlay)
-		. += accessory_overlay
+		. += mutable_appearance('icons/effects/blood.dmi', "uniformblood", color = blood_DNA_to_color(), blend_mode = blood_DNA_to_blend())
+	if(length(accessory_overlays))
+		. += accessory_overlays
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if((sensordamage || (has_sensor < HAS_SENSORS && has_sensor != NO_SENSORS)) && istype(I, /obj/item/stack/cable_coil))
@@ -154,9 +154,15 @@
 			if((flags_inv & HIDEACCESSORY) || (A.flags_inv & HIDEACCESSORY))
 				return TRUE
 
-			accessory_overlay = mutable_appearance('icons/mob/clothing/accessories.dmi', attached_accessory.icon_state)
-			accessory_overlay.alpha = attached_accessory.alpha
-			accessory_overlay.color = attached_accessory.color
+			var/datum/element/polychromic/polychromic = LAZYACCESS(attached_accessory.comp_lookup, "item_worn_overlays")
+			if(!polychromic)
+				var/mutable_appearance/accessory_overlay = mutable_appearance('icons/mob/clothing/accessories.dmi', attached_accessory.icon_state)
+				accessory_overlay.alpha = attached_accessory.alpha
+				accessory_overlay.color = attached_accessory.color
+				accessory_overlays = list(accessory_overlay)
+			else
+				accessory_overlays = list()
+				polychromic.apply_worn_overlays(I, FALSE, 'icons/mob/clothing/accessories.dmi', I.item_state || I.icon_state, NONE, accessory_overlays)
 
 			if(ishuman(loc))
 				var/mob/living/carbon/human/H = loc

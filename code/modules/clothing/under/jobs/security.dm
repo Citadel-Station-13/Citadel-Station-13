@@ -40,8 +40,17 @@
 	icon_state = "secskirt"
 	item_state = "r_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE //you know now that i think of it if you adjust the skirt and the sprite disappears isn't that just like flashing everyone
+	alt_covers_chest = TRUE
 	fitted = FEMALE_UNIFORM_TOP
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/under/rank/security/stripper
+	name = "secukini"
+	icon_state = "secukini"
+	item_state = "secukini"
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 0) //exchange powergame in order to be a whore what are you going to do about it
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/under/rank/security/officer/formal

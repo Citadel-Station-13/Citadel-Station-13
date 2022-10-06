@@ -5,8 +5,8 @@
 	var/automatic_burst_overlay = TRUE
 	can_suppress = TRUE
 	burst_size = 3
-	burst_shot_delay = 2
-	actions_types = list(/datum/action/item_action/toggle_firemode)
+	fire_delay = 2
+	fire_select_modes = list(SELECT_SEMI_AUTOMATIC, SELECT_BURST_SHOT, SELECT_FULLY_AUTOMATIC)
 
 /obj/item/gun/ballistic/automatic/proto
 	name = "\improper Nanotrasen Saber SMG"
@@ -15,6 +15,7 @@
 	fire_sound = "sound/weapons/gunshot_smg_alt.ogg"
 	mag_type = /obj/item/ammo_box/magazine/smgm9mm
 	pin = null
+	burst_size = 1
 
 /obj/item/gun/ballistic/automatic/proto/unrestricted
 	pin = /obj/item/firing_pin
@@ -54,34 +55,6 @@
 				return 1
 			else
 				to_chat(user, "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>")
-
-/obj/item/gun/ballistic/automatic/ui_action_click(mob/user, action)
-	if(istype(action, /datum/action/item_action/toggle_firemode))
-		burst_select()
-	else
-		return ..()
-
-/obj/item/gun/ballistic/automatic/proc/burst_select()
-	var/mob/living/carbon/human/user = usr
-	select = !select
-	if(!select)
-		disable_burst()
-		to_chat(user, "<span class='notice'>You switch to semi-automatic.</span>")
-	else
-		enable_burst()
-		to_chat(user, "<span class='notice'>You switch to [burst_size]-rnd burst.</span>")
-
-	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
-	update_icon()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
-
-/obj/item/gun/ballistic/automatic/proc/enable_burst()
-	burst_size = initial(burst_size)
-
-/obj/item/gun/ballistic/automatic/proc/disable_burst()
-	burst_size = 1
 
 /obj/item/gun/ballistic/automatic/can_shoot()
 	return get_ammo()
@@ -136,17 +109,9 @@
 	knife_y_offset = 12
 	automatic_burst_overlay = FALSE
 
-/obj/item/gun/ballistic/automatic/wt550/enable_burst()
-	. = ..()
-	spread = 15
-
 /obj/item/gun/ballistic/automatic/wt550/afterattack()
 	. = ..()
 	empty_alarm()
-
-/obj/item/gun/ballistic/automatic/wt550/disable_burst()
-	. = ..()
-	spread = 0
 
 /obj/item/gun/ballistic/automatic/wt550/update_icon_state()
 	icon_state = "wt550[magazine ? "-[CEILING(((get_ammo(FALSE) / magazine.max_ammo) * 20) /4, 1)*4]" : "-0"]" //Sprites only support up to 20.
@@ -211,6 +176,7 @@
 /obj/item/gun/ballistic/automatic/m90/update_icon_state()
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
 
+/*
 /obj/item/gun/ballistic/automatic/m90/burst_select()
 	var/mob/living/carbon/human/user = usr
 	switch(select)
@@ -228,6 +194,7 @@
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	update_icon()
 	return
+*/
 
 /obj/item/gun/ballistic/automatic/tommygun
 	name = "\improper Thompson SMG"
@@ -296,22 +263,25 @@
 
 /obj/item/gun/ballistic/automatic/l6_saw
 	name = "\improper L6 SAW"
-	desc = "A heavily modified 1.95x129mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
+	desc = "A heavily modified 7.12x82mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	fire_sound = "sound/weapons/lmgshot.ogg"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = 0
-	mag_type = /obj/item/ammo_box/magazine/mm195x129
+	mag_type = /obj/item/ammo_box/magazine/mm712x82
 	weapon_weight = WEAPON_HEAVY
-	var/cover_open = FALSE
 	can_suppress = FALSE
-	burst_size = 3
-	burst_shot_delay = 1
+	burst_size = 1
+	actions_types = list()
 	spread = 7
 	pin = /obj/item/firing_pin/implant/pindicate
-	automatic_burst_overlay = FALSE
+	var/cover_open = FALSE
 
+/obj/item/gun/ballistic/automatic/l6_saw/Initialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 /obj/item/gun/ballistic/automatic/l6_saw/unrestricted
 	pin = /obj/item/firing_pin
 

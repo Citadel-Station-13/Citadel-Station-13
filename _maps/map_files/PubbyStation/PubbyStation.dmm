@@ -15731,7 +15731,7 @@
 /area/service/cafeteria/lunchroom)
 "aNb" = (
 /obj/machinery/vending/sustenance{
-	contraband = list(/obj/item/kitchen/knife = 6, /obj/item/reagent_containers/food/drinks/coffee = 12);
+	contraband = list(/obj/item/kitchen/knife=6,/obj/item/reagent_containers/food/drinks/coffee=12);
 	desc = "A vending machine which vends food.";
 	product_ads = "Sufficiently healthy."
 	},
@@ -29619,6 +29619,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/posialert{
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
 "bsX" = (
@@ -38786,7 +38789,7 @@
 	input_tag = "mix_in";
 	name = "Gas Mix Tank Control";
 	output_tag = "mix_in";
-	sensors = list("mix_sensor" = "Tank")
+	sensors = list("mix_sensor"="Tank")
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -40274,7 +40277,7 @@
 	input_tag = "n2o_in";
 	name = "Nitrous Oxide Supply Control";
 	output_tag = "n2o_out";
-	sensors = list("n2o_sensor" = "Tank")
+	sensors = list("n2o_sensor"="Tank")
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -41663,7 +41666,7 @@
 	input_tag = "tox_in";
 	name = "Plasma Supply Control";
 	output_tag = "tox_out";
-	sensors = list("tox_sensor" = "Tank")
+	sensors = list("tox_sensor"="Tank")
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -42909,7 +42912,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/Polly,
 /turf/open/floor/plasteel,
 /area/command/heads_quarters/ce)
 "bVE" = (

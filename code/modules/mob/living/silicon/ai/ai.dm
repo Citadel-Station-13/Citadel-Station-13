@@ -47,6 +47,7 @@
 	var/mob/living/simple_animal/bot/Bot
 	var/tracking = FALSE //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
 	var/datum/effect_system/spark_spread/spark_system//So they can initialize sparks whenever/N
+	var/obj/machinery/status_display/controlled_display
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
@@ -660,7 +661,7 @@
 			"goat" = 'icons/mob/animal.dmi',
 			"cat" = 'icons/mob/pets.dmi',
 			"cat2" = 'icons/mob/pets.dmi',
-			"poly" = 'icons/mob/animal.dmi',
+			"polly" = 'icons/mob/animal.dmi',
 			"pug" = 'icons/mob/pets.dmi',
 			"spider" = 'icons/mob/animal.dmi'
 			)
@@ -669,7 +670,7 @@
 			if(input)
 				qdel(holo_icon)
 				switch(input)
-					if("poly")
+					if("polly")
 						holo_icon = getHologramIcon(icon(icon_list[input],"parrot_fly"))
 					if("chicken")
 						holo_icon = getHologramIcon(icon(icon_list[input],"chicken_brown"))
@@ -1043,3 +1044,14 @@
 
 /mob/living/silicon/ai/zMove(dir, feedback = FALSE)
 	. = eyeobj.zMove(dir, feedback)
+
+/mob/living/silicon/ai/proc/stop_controlling_display()
+	if(!controlled_display)
+		return
+	controlled_display.master = null
+	controlled_display.cut_overlay(controlled_display.ai_vtuber_overlay)
+	controlled_display.ai_vtuber_overlay = null
+	if(current == controlled_display)
+		current = null
+	controlled_display.update_appearance()
+	controlled_display = null

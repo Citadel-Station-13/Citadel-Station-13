@@ -550,7 +550,7 @@
 					to_chat(src, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
 					remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 				return
-			var/to_send = ""
+			var/to_send = "<blockquote class ='notice'>"
 			visible_message("[src] examines [p_them()]self.", \
 				"<span class='notice'>You check yourself for injuries.</span>")
 
@@ -597,27 +597,27 @@
 				var/no_damage
 				if(status == "OK" || status == "no damage")
 					no_damage = TRUE
-				to_send += "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name] [HAS_TRAIT(src, TRAIT_SELF_AWARE) ? "has" : "is"] [status].</span>\n"
+				to_send += "<span class='[no_damage ? "notice" : "warning"]'>Your [LB.name] [HAS_TRAIT(src, TRAIT_SELF_AWARE) ? "has" : "is"] [status].</span>\n"
 
 				for(var/thing in LB.wounds)
 					var/datum/wound/W = thing
 					var/msg
 					switch(W.severity)
 						if(WOUND_SEVERITY_TRIVIAL)
-							msg = "\t <span class='danger'>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)].</span>"
+							msg = "<span class='danger'>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)].</span>"
 						if(WOUND_SEVERITY_MODERATE)
-							msg = "\t <span class='warning'>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)]!</span>"
+							msg = "<span class='warning'>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)]!</span>"
 						if(WOUND_SEVERITY_SEVERE)
-							msg = "\t <span class='warning'><b>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)]!</b></span>"
+							msg = "<span class='warning'><b>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)]!</b></span>"
 						if(WOUND_SEVERITY_CRITICAL)
-							msg = "\t <span class='warning'><b>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)]!!</b></span>"
+							msg = "<span class='warning'><b>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)]!!</b></span>"
 					to_chat(src, msg)
 
 				for(var/obj/item/I in LB.embedded_objects)
 					if(I.isEmbedHarmless())
-						to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] stuck to your [LB.name]!</a>")
+						to_chat(src, "<a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] stuck to your [LB.name]!</a>")
 					else
-						to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
+						to_chat(src, "<a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
 
 			for(var/t in missing)
 				to_send += "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>\n"
@@ -723,6 +723,8 @@
 
 			if(roundstart_quirks.len)
 				to_send += "<span class='notice'>You have these quirks: [get_trait_string()].</span>\n"
+
+			to_send += "</blockquote>"
 
 			to_chat(src, to_send)
 		else

@@ -57,7 +57,7 @@
 	plane = initial(plane)
 	U.cut_overlays()
 	U.attached_accessory = null
-	U.accessory_overlay = null
+	U.accessory_overlays = null
 
 /obj/item/clothing/accessory/proc/on_uniform_equip(obj/item/clothing/under/U, user)
 	return
@@ -254,6 +254,15 @@
 	icon_state = "maidapron"
 	item_state = "maidapron"
 	minimize_when_attached = FALSE
+
+/obj/item/clothing/accessory/maidapron/polychromic
+	name = "polychromic maid apron"
+	icon_state = "polymaidapron"
+	item_state = "polymaidapron"
+
+/obj/item/clothing/accessory/maidapron/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#333333", "#FFFFFF"), 2)
 
 /obj/item/clothing/accessory/sleevecrop
 	name = "one sleeved crop top"

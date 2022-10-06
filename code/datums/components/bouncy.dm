@@ -32,7 +32,7 @@
 	var/atom/movable/A = parent
 	switch(rand(1, 3))
 		if(1)
-			A.do_jiggle(45 + rand(-10, 10) * bouncy_mod, 14)
+			A.do_jiggle(25 + rand(-5, 5) * bouncy_mod, 14)
 		if(2)
 			var/min_b = 0.6/bouncy_mod
 			var/max_b = 1.2 * bouncy_mod

@@ -5,6 +5,7 @@
 	desc = "A solar panel. Generates electricity when in contact with sunlight."
 	icon = 'goon/icons/obj/power.dmi'
 	icon_state = "sp_base"
+	minimap_override_color = "#02026a"
 	density = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 0

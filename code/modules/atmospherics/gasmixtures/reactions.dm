@@ -86,7 +86,7 @@
 	min_requirements[R.get_gas()] = MOLES_GAS_VISIBLE
 	name = "[R.name] condensation"
 	id = "[R.type] condensation"
-	condensing_reagent = R
+	condensing_reagent = GLOB.chemical_reagents_list[R.type]
 	exclude = FALSE
 
 /datum/gas_reaction/condensation/react(datum/gas_mixture/air, datum/holder)
@@ -101,7 +101,10 @@
 	var/G = condensing_reagent.get_gas()
 	var/amt = air.get_moles(G)
 	air.adjust_moles(G, -min(initial(condensing_reagent.condensation_amount), amt))
-	reagents_holder.add_reagent(condensing_reagent, amt)
+	if(air.get_moles(G) < MOLES_GAS_VISIBLE)
+		amt += air.get_moles(G)
+		air.set_moles(G, 0.0)
+	reagents_holder.add_reagent(condensing_reagent.type, amt)
 	. = REACTING
 	for(var/atom/movable/AM in location)
 		if(location.intact && AM.level == 1)
@@ -729,11 +732,11 @@
 /datum/gas_reaction/nitric_oxide/react(datum/gas_mixture/air, datum/holder)
 	var/nitric = air.get_moles(GAS_NITRIC)
 	var/oxygen = air.get_moles(GAS_O2)
-	var/max_amount = max(nitric / 10, MINIMUM_MOLE_COUNT)
-	var/enthalpy = air.return_temperature() * (air.heat_capacity() + R_IDEAL_GAS_EQUATION * air.total_moles());
+	var/max_amount = max(nitric / 8, MINIMUM_MOLE_COUNT)
+	var/enthalpy = air.return_temperature() * (air.heat_capacity() + R_IDEAL_GAS_EQUATION * air.total_moles())
 	var/list/enthalpies = GLOB.gas_data.enthalpies
 	if(oxygen > MINIMUM_MOLE_COUNT)
-		var/reaction_amount = min(max_amount, oxygen)
+		var/reaction_amount = min(max_amount, oxygen)/4
 		air.adjust_moles(GAS_NITRIC, -reaction_amount*2)
 		air.adjust_moles(GAS_O2, -reaction_amount)
 		air.adjust_moles(GAS_NITRYL, reaction_amount*2)
@@ -759,7 +762,18 @@
 	var/initial_energy = air.thermal_energy()
 	for(var/g in air.get_gases())
 		air.set_moles(g, 0)
-	air.set_moles(GAS_QCD, initial_energy / (air.return_temperature() * GLOB.gas_data.specific_heats[GAS_QCD]))
+	var/amount = initial_energy / (air.return_temperature() * GLOB.gas_data.specific_heats[GAS_QCD])
+	air.set_moles(GAS_QCD, amount)
+	var/list/largest_values = SSresearch.science_tech.largest_values
+	if(!(GAS_QCD in largest_values))
+		largest_values[GAS_QCD] = 0
+	var/previous_largest = largest_values[GAS_QCD]
+	var/research_amount = amount * QCD_RESEARCH_AMOUNT
+	if(previous_largest < research_amount)
+		SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, research_amount)
+		largest_values[GAS_QCD] = research_amount
+	else
+		SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, research_amount / 100)
 
 /datum/gas_reaction/dehagedorn
 	priority = 50
@@ -781,11 +795,10 @@
 	var/list/gases = GLOB.gas_data.specific_heats.Copy()
 	gases -= GAS_QCD
 	gases -= GAS_TRITIUM // no refusing sorry
-	for(var/g in gases)
-		gases[g] = 10000 / gases[g]
+	gases -= GAS_HYPERNOB // makes it waaay too easy to stabilize it
 	while(energy_remaining > 0)
 		var/G = pick(gases)
 		air.adjust_moles(G, max(0.1, energy_remaining / (gases[G] * new_temp * 20)))
 		energy_remaining = initial_energy - air.thermal_energy()
-	air.adjust_heat(-energy_remaining)
+	air.set_temperature(initial_energy / air.heat_capacity())
 	return REACTING

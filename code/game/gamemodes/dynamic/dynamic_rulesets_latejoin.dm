@@ -14,8 +14,6 @@
 			candidates.Remove(P)
 		else if((exclusive_roles.len > 0) && !(P.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?
 			candidates.Remove(P)
-		else if(ROLE_NO_ANTAGONISM in P.client.prefs.be_special)
-			candidates.Remove(P)
 		else if(antag_flag_override)
 			if(!(HAS_ANTAG_PREF(P.client, antag_flag_override)))
 				candidates.Remove(P)

@@ -66,8 +66,20 @@
 	icon_state = "nuclearbomb_base"
 	anchored = TRUE //stops it being moved
 
+/obj/machinery/nuclearbomb/selfdestruct/Initialize(mapload)
+	. = ..()
+	if(SSevents.holidays && SSevents.holidays[PRIDE_MONTH] && prob(10))
+		name = "station-wide gender-reveal terminal"
+		desc = "For when the whole sector deserves to know a gender. But of whom? Don't ask."
+
 /obj/machinery/nuclearbomb/syndicate
 	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
+
+/obj/machinery/nuclearbomb/syndicate/Initialize(mapload)
+	. = ..()
+	if(SSevents.holidays && SSevents.holidays[PRIDE_MONTH] && prob(50))
+		name = "tactical gender-reveal device"
+		desc = "\"But whose gender is it revealing?\" you ponder. Don't worry. That comes later."
 
 /obj/machinery/nuclearbomb/syndicate/get_cinematic_type(off_station)
 	var/datum/game_mode/nuclear/NM = SSticker.mode
@@ -652,7 +664,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 		if(disk_comfort_level >= 2) //Sleep tight, disky.
 			if(!(process_tick % 30))
 				visible_message("<span class='notice'>[src] sleeps soundly. Sleep tight, disky.</span>")
-		if(last_disk_move < world.time - 5000 && prob((world.time - 5000 - last_disk_move)*0.0001))
+		if(last_disk_move < world.time - 5000 && prob((world.time - 5000 - last_disk_move)*0.0001 / max(disk_comfort_level,1)))
 			var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
 			if(istype(loneop) && loneop.occurrences < loneop.max_occurrences)
 				loneop.weight += 1

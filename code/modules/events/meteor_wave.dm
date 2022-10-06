@@ -61,7 +61,7 @@
 			kill()
 
 /datum/round_event/meteor_wave/announce(fake)
-	priority_announce(generateMeteorString(startWhen,TRUE,direction), "Meteor Alert", "meteors")
+	priority_announce(generateMeteorString(startWhen,TRUE,direction), "Meteor Alert", "meteors", has_important_message = TRUE)
 
 /proc/generateMeteorString(startWhen,syndiealert,direction)
 	var/directionstring

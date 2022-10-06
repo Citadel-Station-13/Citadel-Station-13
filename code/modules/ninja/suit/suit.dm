@@ -182,6 +182,8 @@
 	n_shoes = ninja.shoes
 	ADD_TRAIT(n_shoes, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	n_shoes.slowdown--
+	n_shoes.icon_state = "s-ninjan"
+	n_shoes.item_state = "s-ninjan"
 	n_gloves = ninja.gloves
 	ADD_TRAIT(n_gloves, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	n_gloves.icon_state = "s-ninjan"
@@ -212,6 +214,8 @@
 	if(n_shoes)
 		REMOVE_TRAIT(n_shoes, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 		n_shoes.slowdown++
+		n_shoes.icon_state = "s-ninja"
+		n_shoes.item_state = "s-ninja"
 	if(n_gloves)
 		n_gloves.icon_state = "s-ninja"
 		n_gloves.item_state = "s-ninja"

@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(autotransfer)
 	if(world.time < targettime)
 		return
 	if(maxvotes == NO_MAXVOTES_CAP || maxvotes > curvotes)
-		SSvote.initiate_vote("transfer","server")
+		SSvote.initiate_vote("transfer","server", votesystem=APPROVAL_VOTING)
 		targettime = targettime + voteinterval
 		curvotes++
 	else

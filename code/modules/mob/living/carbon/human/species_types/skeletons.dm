@@ -17,6 +17,7 @@
 
 	species_category = SPECIES_CATEGORY_SKELETON //they have their own category that's disassociated from undead, paired with plasmapeople
 	wings_icons = SPECIES_WINGS_SKELETAL
+	blacklisted_quirks = list(/datum/quirk/paper_skin)
 
 /datum/species/skeleton/New()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN]) //skeletons are stronger during the spooky season!

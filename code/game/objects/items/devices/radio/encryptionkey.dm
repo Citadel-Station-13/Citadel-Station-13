@@ -11,7 +11,7 @@
 
 /obj/item/encryptionkey/Initialize(mapload)
 	. = ..()
-	if(!channels.len)
+	if(!length(channels) && !translate_binary)
 		desc = "An encryption key for a radio headset.  Has no special codes in it. You should probably tell a coder!"
 
 /obj/item/encryptionkey/examine(mob/user)
@@ -22,6 +22,8 @@
 			examine_text_list += "[GLOB.channel_tokens[i]] - [lowertext(i)]"
 
 		. += "<span class='notice'>It can access the following channels; [jointext(examine_text_list, ", ")].</span>"
+	if(translate_binary)
+		. += "<span class='notice'>It also allows access to the special binary channel used by silicons."
 
 /obj/item/encryptionkey/syndicate
 	name = "syndicate encryption key"

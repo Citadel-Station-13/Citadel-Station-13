@@ -121,7 +121,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		remove_verb(src, /mob/dead/observer/verb/boo)
 		remove_verb(src, /mob/dead/observer/verb/possess)
 
-	animate(src, pixel_y = 2, time = 10, loop = -1)
+	animate(src, pixel_z = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = -4, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
 
 	add_to_dead_mob_list()
 
@@ -281,7 +282,7 @@ Works together with spawning an observer, noted above.
 			P.respawn_time_of_death = world.time
 			P.respawn_did_cryo = cryo
 	transfer_ckey(ghost, FALSE)
-	ghost.client.init_verbs()
+	ghost.client?.init_verbs()
 	if(penalize)
 		var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
 		var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
@@ -534,8 +535,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/stop_orbit(datum/component/orbiter/orbits)
 	. = ..()
 	//restart our floating animation after orbit is done.
-	pixel_y = 0
-	animate(src, pixel_y = 2, time = 10, loop = -1)
+	pixel_z = 0
+	animate(src, pixel_z = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = -4, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"

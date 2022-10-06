@@ -100,6 +100,10 @@ if grep -i '/obj/effect/mapping_helpers/custom_icon' _maps/**/*.dmm; then
     echo "Custom icon helper found. Please include dmis as standard assets instead for built-in maps."
     st=1
 fi;
+if grep -n '.Find()' code/**/*.dm; then
+    echo "Empty Find() found. Please try to figure out what was meant to be found."
+	st=1
+fi;
 for json in _maps/*.json
 do
     map_path=$(jq -r '.map_path' $json)

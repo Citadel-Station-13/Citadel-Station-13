@@ -477,6 +477,15 @@
 	item_state = "maid"
 	dynamic_hair_suffix = ""
 
+/obj/item/clothing/head/maid/polychromic
+	name = "polychromic maid headband"
+	icon_state = "polymaid"
+	item_state = "polymaid"
+
+/obj/item/clothing/head/maid/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#333333", "#FFFFFF"), 2)
+
 /obj/item/clothing/head/widered
 	name = "Wide red hat"
 	desc = "It is both wide, and red. Stylish!"

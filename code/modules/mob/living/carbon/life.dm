@@ -1,6 +1,6 @@
-/mob/living/carbon/BiologicalLife(seconds, times_fired)
+/mob/living/carbon/BiologicalLife(delta_time, times_fired)
 	//Reagent processing needs to come before breathing, to prevent edge cases.
-	handle_organs(seconds, times_fired)
+	handle_organs(delta_time, times_fired)
 	. = ..()		// if . is false, we are dead.
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -9,7 +9,7 @@
 		. = FALSE
 	if(!.)
 		return
-	handle_blood()
+	handle_blood(delta_time, times_fired)
 	// handle_blood *could* kill us.
 	// we should probably have a better system for if we need to check for death or something in the future hmw
 	if(stat != DEAD)
@@ -23,7 +23,7 @@
 		handle_brain_damage()
 
 	if(stat != DEAD)
-		handle_liver(seconds, times_fired)
+		handle_liver(delta_time, times_fired)
 
 	if(stat != DEAD)
 		handle_corruption()
@@ -375,7 +375,7 @@
 
 	miasma_turf.air_update_turf()
 
-/mob/living/carbon/proc/handle_blood()
+/mob/living/carbon/proc/handle_blood(delta_time, times_fired)
 	return
 
 /mob/living/carbon/proc/handle_bodyparts(seconds, times_fired)

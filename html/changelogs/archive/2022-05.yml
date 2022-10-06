@@ -38,3 +38,12 @@
 2022-05-17:
   timothyteakettle:
   - rscadd: poly alt cloak can now be renamed/dedescriptioned in loadout
+2022-05-19:
+  timothyteakettle:
+  - rscadd: quirks are now organised into three tabs for positive, neutral and negative
+2022-05-21:
+  Bhijn & Myr:
+  - bugfix: Blood trails no longer have a duplicate directionless iconstate as their
+      base sprite, fixing the Wonkiness of blood trails going west/east.
+  SandPoot:
+  - bugfix: Silicon flavor texts are no longer broken... maybe?

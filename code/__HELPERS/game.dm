@@ -5,6 +5,9 @@
 		locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
 	)
 
+/// Returns either the error landmark or the location of the room. Needless to say, if this is used, it means things have gone awry.
+#define GET_ERROR_ROOM ((locate(/obj/effect/landmark/error) in GLOB.landmarks_list) || locate(4,4,1))
+
 #define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
 #define CULT_POLL_WAIT 2400
 

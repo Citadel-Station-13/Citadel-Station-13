@@ -14,7 +14,7 @@
 	mecha_flags =  CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS
 	internal_damage_threshold = 25
 	max_equip = 2
-	step_energy_drain = 3
+	normal_step_energy_drain = 3
 	color = "#87878715"
 	stepsound = null
 	turnsound = null

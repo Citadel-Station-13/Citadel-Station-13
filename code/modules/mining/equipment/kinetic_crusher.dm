@@ -19,6 +19,7 @@
 	attack_verb = list("smashed", "crushed", "cleaved", "chopped", "pulped")
 	sharpness = SHARP_EDGED
 	actions_types = list(/datum/action/item_action/toggle_light)
+	obj_flags = UNIQUE_RENAME
 	var/list/trophies = list()
 	var/charged = TRUE
 	var/charge_time = 15
@@ -28,8 +29,10 @@
 	var/brightness_on = 7
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/kinetic_crusher/cyborg //probably give this a unique sprite later
-	desc = "An integrated version of the standard kinetic crusher with a grinded down axe head to dissuade mis-use against crewmen. Deals damage equal to the standard crusher against creatures, however."
+/obj/item/kinetic_crusher/cyborg
+	icon_state = "crusher-cyborg"
+	item_state = "crusher0-cyborg"
+	desc = "An integrated version of the standard kinetic crusher with a kinetic dampener module installed to limit harmful usage misusage against organics. Deals damage equal to the standard crusher against creatures."
 	force = 10 //wouldn't want to give a borg a 20 brute melee weapon unemagged now would we
 	detonation_damage = 60
 	wielded = 1

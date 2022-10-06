@@ -3,6 +3,8 @@
 	desc = "Retracts stuff."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron=6000, /datum/material/glass=3000)
 	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
@@ -19,7 +21,6 @@
 /obj/item/retractor/advanced
 	name = "mechanical pinches"
 	desc = "An agglomerate of rods and gears."
-	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor_a"
 	toolspeed = 0.7
 
@@ -41,8 +42,6 @@
 /obj/item/retractor/augment
 	name = "retractor"
 	desc = "Micro-mechanical manipulator for retracting stuff."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "retractor"
 	custom_materials = list(/datum/material/iron=6000, /datum/material/glass=3000)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
@@ -60,6 +59,8 @@
 	desc = "You think you have seen this before."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
 	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
@@ -77,8 +78,6 @@
 /obj/item/hemostat/augment
 	name = "hemostat"
 	desc = "Tiny servos power a pair of pincers to stop bleeding."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "hemostat"
 	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
@@ -98,6 +97,8 @@
 	desc = "This stops bleeding."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron=2500, /datum/material/glass=750)
 	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
@@ -105,6 +106,7 @@
 	attack_verb = list("burnt")
 	tool_behaviour = TOOL_CAUTERY
 	toolspeed = 1
+	heat = 3500
 
 /obj/item/cautery/attack(mob/living/L, mob/user)
 	if(user.a_intent == INTENT_HELP)
@@ -115,8 +117,6 @@
 /obj/item/cautery/augment
 	name = "cautery"
 	desc = "A heated element that cauterizes wounds."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "cautery"
 	custom_materials = list(/datum/material/iron=2500, /datum/material/glass=750)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
@@ -135,8 +135,8 @@
 	desc = "You can drill using this item. You dig?"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "drill"
-	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	item_flags = SURGICAL_TOOL
@@ -156,9 +156,9 @@
 /obj/item/surgicaldrill/advanced
 	name = "searing tool"
 	desc = "It projects a high power laser used for medical application."
-	icon = 'icons/obj/surgery.dmi'
 	icon_state = "surgicaldrill_a"
 	hitsound = 'sound/items/welder.ogg'
+	heat = 3500
 
 /obj/item/surgicaldrill/advanced/Initialize(mapload)
 	. = ..()
@@ -182,8 +182,6 @@
 /obj/item/surgicaldrill/augment
 	name = "surgical drill"
 	desc = "Effectively a small power drill contained within your arm, edges dulled to prevent tissue damage. May or may not pierce the heavens."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "drill"
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	flags_1 = CONDUCT_1
@@ -227,13 +225,13 @@
 /obj/item/scalpel/advanced
 	name = "laser scalpel"
 	desc = "An advanced scalpel which uses laser technology to cut."
-	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel_a"
 	hitsound = 'sound/weapons/blade1.ogg'
 	force = 16
 	toolspeed = 0.7
-	light_color = LIGHT_COLOR_GREEN
+	light_color = LIGHT_COLOR_BLUE
 	sharpness = SHARP_POINTY
+	heat = 3500
 
 /obj/item/scalpel/advanced/Initialize(mapload)
 	. = ..()
@@ -261,8 +259,6 @@
 /obj/item/scalpel/augment
 	name = "scalpel"
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "scalpel"
 	flags_1 = CONDUCT_1
 	force = 10
 	w_class = WEIGHT_CLASS_TINY
@@ -324,8 +320,6 @@
 /obj/item/circular_saw/augment
 	name = "circular saw"
 	desc = "A small but very fast spinning saw. Edges dulled to prevent accidental cutting inside of the surgeon."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "saw"
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	mob_throw_hit_sound =  'sound/weapons/pierce.ogg'
 	flags_1 = CONDUCT_1
@@ -462,7 +456,7 @@
 	name = "bonesetter"
 	desc = "For setting things right."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "bone setter"
+	icon_state = "bonesetter"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)

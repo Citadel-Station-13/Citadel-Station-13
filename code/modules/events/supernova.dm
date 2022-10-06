@@ -1,8 +1,8 @@
 /datum/round_event_control/supernova
 	name = "Supernova"
 	typepath = /datum/round_event/supernova
-	weight = 10
-	max_occurrences = 2
+	weight = 5
+	max_occurrences = 1
 	min_players = 2
 
 /datum/round_event/supernova
@@ -33,7 +33,7 @@
 /datum/round_event/supernova/announce()
 	var/message = "[station_name()]: Our tachyon-doppler array has detected a supernova in your vicinity. Peak flux from the supernova estimated to be [round(power,0.1)] times current solar flux; if the supernova is close to your sun in the sky, your solars may receive this as a power boost.[power > 1 ? " Short burts of radiation may be possible, so please prepare accordingly." : "We expect no radiation bursts from this one."] We hope you enjoy the light."
 	if(prob(power * 25))
-		priority_announce(message, sender_override = "Nanotrasen Meteorology Division")
+		priority_announce(message, sender_override = "Nanotrasen Meteorology Division", has_important_message = TRUE)
 		announced = TRUE
 	else
 		print_command_report(message)

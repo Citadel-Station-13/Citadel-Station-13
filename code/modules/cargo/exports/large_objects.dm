@@ -169,13 +169,9 @@
 /datum/export/large/gas_canister/get_cost(obj/O)
 	var/obj/machinery/portable_atmospherics/canister/C = O
 	var/worth = 10
-	worth += C.air_contents.get_moles(GAS_BZ)*3
-	worth += C.air_contents.get_moles(GAS_STIMULUM)*25
-	worth += C.air_contents.get_moles(GAS_HYPERNOB)*20
-	worth += C.air_contents.get_moles(GAS_MIASMA)*2
-	worth += C.air_contents.get_moles(GAS_TRITIUM)*7
-	worth += C.air_contents.get_moles(GAS_PLUOXIUM)*6
-	worth += C.air_contents.get_moles(GAS_NITRYL)*10
+	var/list/gas_prices = GLOB.gas_data.prices
+	for(var/gas in C.air_contents.get_gases())
+		worth += C.air_contents.get_moles(gas)*gas_prices[gas]
 	return worth
 
 

@@ -39,7 +39,7 @@
 	if(!shield_health)
 		return "<span class='warning'>Its shield has been destroyed!</span>"
 
-/mob/living/simple_animal/hostile/clockwork/marauder/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/clockwork/marauder/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	var/turf/T = get_turf(src)

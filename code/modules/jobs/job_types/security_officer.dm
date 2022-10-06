@@ -35,12 +35,15 @@
 
 GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
 
-/datum/job/officer/after_spawn(mob/living/carbon/human/H, mob/M)
+/datum/job/officer/after_spawn(mob/living/spawned, client/player_client, latejoin = FALSE)
 	. = ..()
+	if(!ishuman(spawned))
+		return
+	var/mob/living/carbon/human/H = spawned
 	// Assign department security
 	var/department
-	if(M && M.client && M.client.prefs)
-		department = M.client.prefs.prefered_security_department
+	if(player_client?.prefs)
+		department = player_client.prefs.prefered_security_department
 		if(!LAZYLEN(GLOB.available_depts) || department == "None")
 			return
 		else if(department in GLOB.available_depts)
@@ -108,11 +111,9 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 				else
 					break
 	if(department)
-		to_chat(M, "<b>You have been assigned to [department]!</b>")
+		to_chat(H, "<b>You have been assigned to [department]!</b>")
 	else
-		to_chat(M, "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>")
-
-
+		to_chat(H, "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>")
 
 /datum/outfit/job/security
 	name = "Security Officer"

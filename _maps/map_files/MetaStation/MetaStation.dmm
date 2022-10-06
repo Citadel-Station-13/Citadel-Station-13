@@ -1701,7 +1701,7 @@
 	name = "3maintenance loot spawner"
 	},
 /obj/effect/spawner/lootdrop/armory_contraband{
-	loot = list(/obj/item/gun/ballistic/automatic/pistol = 5, /obj/item/gun/ballistic/shotgun/automatic/combat = 5, /obj/item/gun/ballistic/revolver/mateba, /obj/item/gun/ballistic/automatic/pistol/deagle, /obj/item/storage/box/syndie_kit/throwing_weapons = 3)
+	loot = list(/obj/item/gun/ballistic/automatic/pistol=5,/obj/item/gun/ballistic/shotgun/automatic/combat=5,/obj/item/gun/ballistic/revolver/mateba,/obj/item/gun/ballistic/automatic/pistol/deagle,/obj/item/storage/box/syndie_kit/throwing_weapons=3)
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -40928,6 +40928,9 @@
 /obj/item/cautery{
 	pixel_y = 15
 	},
+/obj/machinery/posialert{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel/white/corner{
 	dir = 4
 	},
@@ -57237,7 +57240,7 @@
 "iqV" = (
 /obj/structure/table/wood/poker,
 /obj/effect/spawner/lootdrop{
-	loot = list(/obj/item/gun/ballistic/revolver/russian = 5, /obj/item/storage/box/syndie_kit/throwing_weapons, /obj/item/toy/cards/deck/syndicate = 2);
+	loot = list(/obj/item/gun/ballistic/revolver/russian=5,/obj/item/storage/box/syndie_kit/throwing_weapons,/obj/item/toy/cards/deck/syndicate=2);
 	name = "gambling valuables spawner"
 	},
 /turf/open/floor/wood,
@@ -57489,7 +57492,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/Polly,
 /turf/open/floor/plasteel/dark,
 /area/command/heads_quarters/ce)
 "ixH" = (
@@ -65631,6 +65634,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/service/chapel/main)
+"mWS" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/machinery/jukebox,
+/turf/open/floor/plasteel,
+/area/service/bar)
 "mXi" = (
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain/private)
@@ -119802,7 +119813,7 @@ teZ
 teZ
 wbZ
 hCA
-msI
+mWS
 pzY
 kPZ
 upO

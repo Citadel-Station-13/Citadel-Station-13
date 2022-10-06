@@ -67,6 +67,11 @@
 		if(handler) // if we have a handler, the handler should track this gang
 			handler.gangs += my_gang
 			my_gang.current_theme = handler.current_theme
+		else if(GLOB.families_override_theme)
+			my_gang.current_theme = new GLOB.families_override_theme
+		else
+			var/theme_to_use = pick(subtypesof(/datum/gang_theme))
+			my_gang.current_theme = new theme_to_use
 		my_gang.name = gang_name
 		my_gang.gang_id = gang_id
 		my_gang.acceptable_clothes = acceptable_clothes.Copy()

@@ -49200,6 +49200,9 @@
 	c_tag = "Robotics Lab";
 	dir = 4
 	},
+/obj/machinery/posialert{
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel/dark/side{
 	dir = 8
 	},
@@ -57320,7 +57323,7 @@
 	name = "Chief Engineer's RC";
 	pixel_y = -32
 	},
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/Polly,
 /turf/open/floor/plasteel,
 /area/command/heads_quarters/ce)
 "csf" = (

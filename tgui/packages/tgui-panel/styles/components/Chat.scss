@@ -98,3 +98,24 @@ $color-bg-section: base.$color-bg-section !default;
     pointer-events: none;
   }
 }
+
+blockquote {
+  background-color: rgba($text-color, 0.05);
+  border-left: 0.15em solid;
+  border-color: $text-color;
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+  margin-bottom: 0.15em;
+  margin-left: 0.3em;
+  margin-right: 0em;
+}
+
+hr {
+  background-color: rgba($text-color, 0.25);
+  height: 0.15em;
+  border-style: none;
+  margin-left: 1em;
+  margin-right: 2em;
+  margin-bottom: 0.3em;
+  margin-top: 0.3em;
+}

@@ -9,12 +9,13 @@
 	deflect_chance = 5
 	armor = list(MELEE = 25, BULLET = 20, LASER = 30, ENERGY = 15, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	max_temperature = 25000
-	leg_overload_coeff = 80
+	leg_overload_coeff = 300
+	overload_step_energy_drain_min = 300
 	force = 25
 	wreckage = /obj/structure/mecha_wreckage/gygax
 	internal_damage_threshold = 35
 	max_equip = 3
-	step_energy_drain = 3
+	normal_step_energy_drain = 3
 
 /obj/vehicle/sealed/mecha/combat/gygax/dark
 	desc = "A lightweight exosuit, painted in a dark scheme. This model appears to have some modifications."
@@ -24,7 +25,8 @@
 	deflect_chance = 20
 	armor = list(MELEE = 40, BULLET = 40, LASER = 50, ENERGY = 35, BOMB = 20, BIO = 0, RAD =20, FIRE = 100, ACID = 100)
 	max_temperature = 35000
-	leg_overload_coeff = 70
+	leg_overload_coeff = 100
+	overload_step_energy_drain_min = 100
 	force = 30
 	operation_req_access = list(ACCESS_SYNDICATE)
 	internals_req_access = list(ACCESS_SYNDICATE)

@@ -864,19 +864,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(isliving(usr))
 			var/mob/living/L = usr
 			C = L.get_idcard(TRUE)
-		if(!C)
-			say("No card found.")
+		if(!can_transact(C))
 			flick(icon_deny,src)
-			vend_ready = TRUE
-			return
-		else if (!C.registered_account)
-			say("No account found.")
-			flick(icon_deny,src)
-			vend_ready = TRUE
-			return
-		else if(!C.registered_account.account_job)
-			say("Departmental accounts have been blacklisted from personal expenses due to embezzlement.")
-			flick(icon_deny, src)
 			vend_ready = TRUE
 			return
 		// else if(age_restrictions && R.age_restricted && (!C.registered_age || C.registered_age < AGE_MINOR))
@@ -901,16 +890,13 @@ GLOBAL_LIST_EMPTY(vending_products)
 			price_to_use = 0 // it's free shut up
 		if(coin_records.Find(R) || hidden_records.Find(R))
 			price_to_use = R.custom_premium_price ? R.custom_premium_price : extra_price
-		if(price_to_use && !account.adjust_money(-price_to_use))
+		if(price_to_use && !attempt_transact(C, price_to_use))
 			say("You do not possess the funds to purchase [R.name].")
 			flick(icon_deny,src)
 			vend_ready = TRUE
 			return
-		var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
-		if(D)
-			D.adjust_money(price_to_use)
-			SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
-			// log_econ("[price_to_use] credits were inserted into [src] by [D.account_holder] to buy [R].")
+		SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
+		log_econ("[price_to_use] credits were inserted into [src] by [key_name(usr)] (account: [account.account_holder]) to buy [R].")
 	if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
 		say("Thank you for shopping with [src]!")
 		purchase_message_cooldown = world.time + 5 SECONDS
@@ -1169,7 +1155,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 					if(owner)
 						owner.adjust_money(S.custom_price)
 						SSblackbox.record_feedback("amount", "vending_spent", S.custom_price)
-						// log_econ("[S.custom_price] credits were spent on [src] buying a [S] by [owner.account_holder], owned by [private_a.account_holder].")
+						log_econ("[S.custom_price] credits were spent on [src] buying a [S] by [key_name(usr)] (account: [owner.account_holder]), owned by [private_a.account_holder].")
 					vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
 					S.forceMove(drop_location())
 					loaded_items--

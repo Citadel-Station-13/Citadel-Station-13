@@ -164,8 +164,8 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
 			send2chat("New round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game))
 			current_state = GAME_STATE_PREGAME
-			//Everyone who wants to be an observer is now spawned
-			create_observers()
+			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
+
 			fire()
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
@@ -203,6 +203,7 @@ SUBSYSTEM_DEF(ticker)
 					for(var/client/C in SSvote.voting)
 						C << browse(null, "window=vote;can_close=0")
 					SSvote.reset()
+				SEND_SIGNAL(src, COMSIG_TICKER_ENTER_SETTING_UP)
 				current_state = GAME_STATE_SETTING_UP
 				Master.SetRunLevel(RUNLEVEL_SETUP)
 				if(start_immediately)
@@ -215,6 +216,7 @@ SUBSYSTEM_DEF(ticker)
 				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 				timeLeft = null
 				Master.SetRunLevel(RUNLEVEL_LOBBY)
+				SEND_SIGNAL(src, COMSIG_TICKER_ERROR_SETTING_UP)
 
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
@@ -294,12 +296,14 @@ SUBSYSTEM_DEF(ticker)
 		cb.InvokeAsync()
 	LAZYCLEARLIST(round_start_events)
 
+	SEND_SIGNAL(src, COMSIG_TICKER_ROUND_STARTING)
+
 	log_world("Game start took [(world.timeofday - init_start)/10]s")
 	round_start_time = world.time
 	SSdbcore.SetRoundStart()
 
 	to_chat(world, "<span class='notice'><B>Welcome to [station_name()], enjoy your stay!</B></span>")
-	SEND_SOUND(world, sound(get_announcer_sound("welcome")))
+	SEND_SOUND(world, sound(SSstation.announcer.get_rand_welcome_sound()))
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
@@ -378,8 +382,6 @@ SUBSYSTEM_DEF(ticker)
 				LAZYOR(player.client.prefs.characters_joined_as, player.new_character.real_name)
 			else
 				stack_trace("WARNING: Either a player did not have a new_character, did not have a client, or did not have preferences. This is VERY bad.")
-		else
-			player.new_player_panel()
 		CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/collect_minds()
@@ -612,7 +614,7 @@ SUBSYSTEM_DEF(ticker)
 		var/list/ded = SSblackbox.first_death
 		if(ded.len)
 			var/last_words = ded["last_words"] ? " Their last words were: \"[ded["last_words"]]\"" : ""
-			news_message += "\nNT Sanctioned Psykers picked up faint traces of someone near the station, allegedly having had died. Their name was: [ded["name"]], [ded["role"]], at [ded["area"]].[last_words]"
+			news_message += "\nNT Sanctioned Psykers picked up faint traces of someone near the station, allegedly having had died.\nTheir name was: [ded["name"]], [ded["role"]], at [ded["area"]].[last_words]"
 		else
 			news_message += "\nNT Sanctioned Psykers proudly confirm reports that nobody died this shift!"
 
@@ -632,13 +634,6 @@ SUBSYSTEM_DEF(ticker)
 		start_at = world.time + newtime
 	else
 		timeLeft = newtime
-
-//Everyone who wanted to be an observer gets made one now
-/datum/controller/subsystem/ticker/proc/create_observers()
-	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if(player.ready == PLAYER_READY_TO_OBSERVE && player.mind)
-			//Break chain since this has a sleep input in it
-			addtimer(CALLBACK(player, /mob/dead/new_player.proc/make_me_an_observer), 1)
 
 /datum/controller/subsystem/ticker/proc/load_mode()
 	var/mode = trim(file2text("data/mode.txt"))

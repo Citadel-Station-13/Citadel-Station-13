@@ -117,7 +117,8 @@
 		if(!do_after(src, mb_time, target = src) || !in_range(src, container) || !G.climaxable(src, TRUE))
 			return
 	to_chat(src,"<span class='userlove'>You used your [G.name] to fill [container].</span>")
-	message_admins("[src] used their [G.name] to fill [container].")
+	message_admins("[ADMIN_LOOKUPFLW(src)] used their [G.name] to fill [container].")
+	log_consent("[key_name(src)] used their [G.name] to fill [container].")
 	do_climax(fluid_source, container, G, FALSE)
 
 /mob/living/carbon/human/proc/pick_climax_genitals(silent = FALSE)
@@ -159,8 +160,8 @@
 		if(consenting == "Yes")
 			return target
 		else
-			message_admins("[src] tried to climax with [target], but [target] did not consent.")
-			log_consent("[src] tried to climax with [target], but [target] did not consent.")
+			message_admins("[ADMIN_LOOKUPFLW(src)] tried to climax with [target], but [target] did not consent.")
+			log_consent("[key_name(src)] tried to climax with [target], but [target] did not consent.")
 
 /mob/living/carbon/human/proc/pick_climax_container(silent = FALSE)
 	var/list/containers_list = list()
