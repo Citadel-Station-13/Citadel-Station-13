@@ -58,7 +58,7 @@
 		update_icon()
 		air_update_turf(TRUE)
 
-/obj/structure/falsewall/update_icon_state()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
+/obj/structure/falsewall/update_icon_state(updates) //Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	if(opening)
 		if(density)
 			icon_state = "fwall_opening"
@@ -70,7 +70,8 @@
 		if(density)
 			icon_state = initial(icon_state)
 			smooth_flags = SMOOTH_CORNERS
-			QUEUE_SMOOTH(src)
+			if(updates & UPDATE_SMOOTHING)
+				QUEUE_SMOOTH(src)
 		else
 			icon_state = "fwall_open"
 
