@@ -216,7 +216,7 @@
 		clear_smooth_overlays()
 	else
 		smooth_flags = SMOOTH_CORNERS
-		if(!(updates & UPDATE_SMOOTHING))
+		if(updates & UPDATE_SMOOTHING)
 			QUEUE_SMOOTH_NEIGHBORS(src)
 			QUEUE_SMOOTH(src)
 
