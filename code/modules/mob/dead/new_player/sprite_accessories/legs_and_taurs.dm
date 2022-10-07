@@ -97,6 +97,7 @@
 	icon_state = "drider"
 	color_src = MUTCOLORS
 	extra = TRUE
+	taur_mode = STYLE_ARACHNID_TAURIC
 
 /datum/sprite_accessory/taur/eevee
 	name = "Eevee"
