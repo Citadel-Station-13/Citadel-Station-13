@@ -44,3 +44,13 @@
 	<b>Left-click a target to place a Judicial Marker!\n\
 	Click your slab to cancel.</b></span>"
 	timeout_time = 50
+
+//These are exactly the same as the default scriptures, but cyborgs don't need a second person to create them
+/datum/clockwork_scripture/create_object/mania_motor/cyborg
+	invokers_required = 1
+	multiple_invokers_used = FALSE
+
+
+/datum/clockwork_scripture/create_object/clockwork_obelisk/cyborg
+	invokers_required = 1
+	multiple_invokers_used = FALSE

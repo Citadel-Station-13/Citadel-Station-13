@@ -8,7 +8,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEFACE|HIDESNOUT
 	mutantrace_variation = STYLE_MUZZLE
-	armor = list(MELEE = 50, BULLET = 70, LASER = 0, ENERGY = 0, BOMB = 60, BIO = 0, RAD = 0, FIRE = 100, ACID = 100, MAGIC = 60, WOUND = 65)
+	armor = list(MELEE = 50, BULLET = 70, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, RAD = 0, FIRE = 100, ACID = 100, MAGIC = 60, WOUND = 65)
 
 /obj/item/clothing/head/helmet/clockwork/Initialize(mapload)
 	. = ..()
@@ -26,12 +26,12 @@
 		max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else if(GLOB.ratvar_approaches)
-		armor = getArmor(melee = 70, bullet = 80, laser = 10, energy = 25, bomb = 70, bio = 0, rad = 0, fire = 100, acid = 100,, magic = 70, wound = 75)
+		armor = getArmor(melee = 70, bullet = 80, laser = 65, energy = 65, bomb = 70, bio = 0, rad = 0, fire = 100, acid = 100,, magic = 70, wound = 75)
 		clothing_flags |= STOPSPRESSUREDAMAGE
 		max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
-		armor = getArmor(melee = 60, bullet = 70, laser = 0, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100, magic = 60, wound = 65)
+		armor = getArmor(melee = 60, bullet = 70, laser = 50, energy = 50, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100, magic = 60, wound = 65)
 		clothing_flags &= ~STOPSPRESSUREDAMAGE
 		max_heat_protection_temperature = initial(max_heat_protection_temperature)
 		min_cold_protection_temperature = initial(min_cold_protection_temperature)
@@ -68,7 +68,7 @@
 	cold_protection = CHEST|GROIN|LEGS
 	heat_protection = CHEST|GROIN|LEGS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(MELEE = 60, BULLET = 70, LASER = 0, ENERGY = 0, BOMB = 60, BIO = 0, RAD = 0, FIRE = 100, ACID = 100, MAGIC = 60, WOUND = 65)
+	armor = list(MELEE = 60, BULLET = 70, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, RAD = 0, FIRE = 100, ACID = 100, MAGIC = 60, WOUND = 65)
 	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/mmi/posibrain/soul_vessel, /obj/item/reagent_containers/food/drinks/bottle/holyoil)
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC
 
@@ -88,12 +88,12 @@
 		max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else if(GLOB.ratvar_approaches)
-		armor = getArmor(melee = 70, bullet = 80, laser = 10, energy = 25, bomb = 70, bio = 0, rad = 0, fire = 100, acid = 100, magic = 70, wound = 75)
+		armor = getArmor(melee = 70, bullet = 80, laser = 65, energy = 65, bomb = 70, bio = 0, rad = 0, fire = 100, acid = 100, magic = 70, wound = 75)
 		clothing_flags |= STOPSPRESSUREDAMAGE
 		max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
-		armor = getArmor(melee = 60, bullet = 70, laser = 0, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100, magic = 60, wound = 65)
+		armor = getArmor(melee = 60, bullet = 70, laser = 50, energy = 50, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100, magic = 60, wound = 65)
 		clothing_flags &= ~STOPSPRESSUREDAMAGE
 		max_heat_protection_temperature = initial(max_heat_protection_temperature)
 		min_cold_protection_temperature = initial(min_cold_protection_temperature)
@@ -135,7 +135,7 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(MELEE = 80, BULLET = 70, LASER = 0, ENERGY = 0, BOMB = 60, BIO = 0, RAD = 0, FIRE = 100, ACID = 100, MAGIC = 70, WOUND = 85)
+	armor = list(MELEE = 80, BULLET = 70, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, RAD = 0, FIRE = 100, ACID = 100, MAGIC = 70, WOUND = 85)
 
 /obj/item/clothing/gloves/clockwork/Initialize(mapload)
 	. = ..()
@@ -153,7 +153,7 @@
 		max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
-		armor = getArmor(melee = 80, bullet = 70, laser = 0, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100, magic = 70, wound = 85)
+		armor = getArmor(melee = 80, bullet = 70, laser = 50, energy = 50, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100, magic = 70, wound = 85)
 		clothing_flags &= ~STOPSPRESSUREDAMAGE
 		max_heat_protection_temperature = initial(max_heat_protection_temperature)
 		min_cold_protection_temperature = initial(min_cold_protection_temperature)
