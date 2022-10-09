@@ -133,12 +133,6 @@
 		account = I.registered_account
 		return account
 
-/mob/living/proc/toggle_resting()
-	set name = "Rest"
-	set category = "IC"
-
-	set_resting(!resting, FALSE)
-
 /mob/living/carbon/human/can_see_reagents()
 	. = ..()
 	if(.) //No need to run through all of this if it's already true.
