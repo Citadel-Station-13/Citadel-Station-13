@@ -244,9 +244,10 @@
 
 /obj/item/kinetic_crusher/glaive/gauntlets
 	name = "proto-kinetic gauntlets"
-	desc = "A pair of scaled-down proto-kinetic crusher destabilizer modules shoved into gauntlets and greaves, often used by \
-	those who wish to spit in the eyes of God. Sacrifices outright damage for \
-	a reliance on backstabs and the ability to give fauna concussions on a parry."
+	desc = "A pair of scaled-down proto-kinetic crusher destabilizer modules shoved into gauntlets and concealed greaves, \
+	often fielded by those who wish to spit in the eyes of God. Sacrifices outright damage for \
+	a reliance on backstabs and the ability to stagger fauna on a parry, \
+	slowing them and increasing the time between their special attacks."
 	attack_verb = list("pummeled", "punched", "jabbed", "hammer-fisted", "uppercut", "slammed")
 	hitsound = 'sound/weapons/resonator_blast.ogg'
 	sharpness = SHARP_NONE // use your survival dagger or smth
@@ -256,6 +257,26 @@
 						"Fingerless" = "crusher-hands-bare")
 	detonation_damage = 45 // 60 on wield, compared to normal crusher's 70
 	backstab_bonus = 70 // 130 on backstab though
+	var/combo_on_anything = FALSE // @admins if you're varediting this you don't get to whine at me
+	var/streak = "" // you know what time it is
+	var/max_streak_length = 2 // changes with style module
+	var/mob/living/current_target
+	var/datum/gauntlet_style/active_style
+
+/obj/item/kinetic_crusher/glaive/gauntlets/Initialize(mapload)
+	. = ..()
+	active_style = new /datum/gauntlet_style/brawler
+	active_style.on_apply(src)
+
+/obj/item/kinetic_crusher/glaive/gauntlets/examine(mob/living/user)
+	. = ..()
+	. += "According to a very small display, the currently loaded style is \"[active_style.name]\"."
+
+/obj/item/kinetic_crusher/glaive/gauntlets/examine_more(mob/user)
+	return active_style.examine_more_info()
+
+/obj/item/kinetic_crusher/glaive/gauntlets/proc/style_change(datum/gauntlet_style/new_style)
+	new_style.on_apply(src)
 
 /obj/item/kinetic_crusher/glaive/gauntlets/ComponentInitialize()
 	. = ..()
@@ -265,7 +286,7 @@
 	. = ..()
 	if(isliving(attacker))
 		var/mob/living/liv_atk = attacker
-		if(liv_atk.mob_size >= MOB_SIZE_LARGE && !ismegafauna(liv_atk))
+		if(liv_atk.mob_size >= MOB_SIZE_LARGE) // are you goated with the sauce
 			liv_atk.apply_status_effect(STATUS_EFFECT_GAUNTLET_CONC)
 
 /obj/item/kinetic_crusher/glaive/gauntlets/update_icon_state()
@@ -273,6 +294,32 @@
 		item_state = "crusher[wielded]-fistbare"
 	else
 		item_state = "crusher[wielded]-fist"
+
+/obj/item/kinetic_crusher/glaive/gauntlets/attack(mob/living/target, mob/living/carbon/user)
+	..()
+	if((combo_on_anything || target.mob_size >= MOB_SIZE_LARGE) && wielded)
+		switch(user.a_intent)
+			if(INTENT_DISARM)
+				add_to_streak("D", user, target)
+			if(INTENT_GRAB)
+				add_to_streak("G", user, target)
+			if(INTENT_HARM)
+				add_to_streak("H", user, target)
+		active_style.check_streak(user, target)
+
+/obj/item/kinetic_crusher/glaive/gauntlets/proc/add_to_streak(element,mob/living/carbon/user, mob/living/target)
+	if(target != current_target)
+		reset_streak(target, user)
+	streak = streak+element
+	if(length(streak) > max_streak_length)
+		streak = copytext(streak, 1 + length(streak[1]))
+	user?.hud_used?.combo_display.update_icon_state(streak)
+	return
+
+/obj/item/kinetic_crusher/glaive/gauntlets/proc/reset_streak(mob/living/new_target, mob/living/carbon/user)
+	current_target = new_target
+	streak = ""
+	user?.hud_used?.combo_display.update_icon_state(streak)
 
 //destablizing force
 /obj/item/projectile/destabilizer
