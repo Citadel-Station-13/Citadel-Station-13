@@ -445,6 +445,10 @@
 	if(isorgan(O))
 		var/obj/item/organ/organ = O
 		organ.organ_flags |= ORGAN_FROZEN
+	if(isbodypart(O))
+		var/obj/item/bodypart/bodypart = O
+		for(var/obj/item/organ/stored in bodypart.contents)
+			stored.organ_flags |= ORGAN_FROZEN
 
 /obj/machinery/smartfridge/organ/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
@@ -463,6 +467,10 @@
 	if(isorgan(AM))
 		var/obj/item/organ/O = AM
 		O.organ_flags &= ~ORGAN_FROZEN
+	if(isbodypart(AM))
+		var/obj/item/bodypart/bodypart = AM
+		for(var/obj/item/organ/stored in bodypart.contents)
+			stored.organ_flags &= ~ORGAN_FROZEN
 
 //cit specific??????
 /obj/machinery/smartfridge/organ/preloaded
