@@ -23376,9 +23376,6 @@
 /turf/open/floor/plasteel,
 /area/cargo/miningoffice)
 "aQs" = (
-/obj/machinery/computer/bounty{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
@@ -24354,12 +24351,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aTo" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
+/obj/machinery/piratepad/civilian,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aTp" = (
@@ -25017,9 +25012,6 @@
 	name = "Station Intercom";
 	pixel_y = -28
 	},
-/obj/machinery/computer/bounty{
-	dir = 1
-	},
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/cargo/storage)
@@ -25120,15 +25112,15 @@
 /turf/open/floor/plasteel,
 /area/cargo/office)
 "aVG" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 8;
 	light_color = "#e8eaff"
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
+	},
+/obj/machinery/computer/piratepad_control/civilian{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)

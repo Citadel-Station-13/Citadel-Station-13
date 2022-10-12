@@ -1456,3 +1456,18 @@
 /obj/item/storage/box/strange_seeds_5pack/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/seeds/random(src)
+
+/obj/item/storage/box/shipping
+	name = "box of shipping supplies"
+	desc = "Contains several scanners and labelers for shipping things. Wrapping Paper not included."
+	illustration = "shipping"
+
+/obj/item/storage/box/shipping/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/destTagger=1,\
+		/obj/item/sales_tagger=1,\
+		/obj/item/export_scanner=1,\
+		/obj/item/stack/packageWrap/small=2,\
+		/obj/item/stack/wrapping_paper/small=1
+		)
+	generate_items_inside(items_inside,src)

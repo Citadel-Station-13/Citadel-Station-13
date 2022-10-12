@@ -17,6 +17,7 @@
 	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM)
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
+	bounty_types = CIV_JOB_DRINK
 	display_order = JOB_DISPLAY_ORDER_BARTENDER
 	threat = 0.5
 

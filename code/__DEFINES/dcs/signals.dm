@@ -490,6 +490,14 @@
 	#define COMPONENT_BLOCK_SHARPEN_ALREADY 4
 	#define COMPONENT_BLOCK_SHARPEN_MAXED 8
 #define COMSIG_ITEM_MICROWAVE_ACT "microwave_act"               //called on item when microwaved (): (obj/machinery/microwave/M)
+
+// /obj/item signals for economy
+#define COMSIG_ITEM_SOLD "item_sold"							//called when an item is sold by the exports subsystem
+#define COMSIG_STRUCTURE_UNWRAPPED "structure_unwrapped"		//called when a wrapped up structure is opened by hand
+#define COMSIG_ITEM_UNWRAPPED "item_unwrapped"					//called when a wrapped up item is opened by hand
+	#define COMSIG_ITEM_SPLIT_VALUE  1
+#define COMSIG_ITEM_SPLIT_PROFIT "item_split_profits"			//Called when getting the item's exact ratio for cargo's profit.
+
 #define COMSIG_ITEM_WORN_OVERLAYS "item_worn_overlays"			//from base of obj/item/worn_overlays(): (isinhands, icon_file, used_state, style_flags, list/overlays)
 #define COMSIG_ARMOR_PLATED "armor_plated"						//called when an armor plate is successfully applied to an object
 // THE FOLLOWING TWO BLOCKS SHOULD RETURN BLOCK FLAGS AS DEFINED IN __DEFINES/combat.dm!

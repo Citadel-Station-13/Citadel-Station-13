@@ -102,26 +102,29 @@
 	wanted_types = list(/obj/item/shard)
 
 /datum/bounty/item/assistant/comfy_chair
-	name = "Comfy Chairs"
+	name = "Comfortable Chairs"
 	description = "Commander Pat is unhappy with his chair. He claims it hurts his back. Ship some alternatives out to humor him."
 	reward = 900
 	required_count = 5
 	wanted_types = list(/obj/structure/chair/comfy)
 
-// /datum/bounty/item/assistant/geranium
-// 	name = "Geraniums"
-// 	description = "Commander Zot has the hots for Commander Zena. Send a shipment of geraniums - her favorite flower - and he'll happily reward you."
-// 	reward = 1000
-// 	required_count = 3
-// 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/poppy/geranium)
+/*
+/datum/bounty/item/assistant/geranium
+ 	name = "Geraniums"
+ 	description = "Commander Zot has the hots for Commander Zena. Send a shipment of geraniums - her favorite flower - and he'll happily reward you."
+ 	reward = 1000
+ 	required_count = 3
+	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/poppy/geranium)
+	include_subtypes = FALSE
+*/
 
-// /datum/bounty/item/assistant/poppy
-// 	name = "Poppies"
-// 	description = "Commander Zot really wants to sweep Security Officer Olivia off her feet. Send a shipment of Poppies - her favorite flower - and he'll happily reward you."
-// 	reward = 1000
-// 	required_count = 3
-// 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/poppy)
-// 	include_subtypes = FALSE
+/datum/bounty/item/assistant/poppy
+	name = "Poppies"
+	description = "Commander Zot really wants to sweep Security Officer Olivia off her feet. Send a shipment of Poppies - her favorite flower - and he'll happily reward you."
+	reward = 1000
+	required_count = 3
+	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/poppy)
+	include_subtypes = FALSE
 
 /datum/bounty/item/assistant/shadyjims
 	name = "Shady Jim's"
@@ -156,11 +159,6 @@
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/monkeycube)
 */
-/datum/bounty/item/assistant/chainsaw
-	name = "Chainsaw"
-	description = "The chef at CentCom is having trouble butchering her animals. She requests one chainsaw, please."
-	reward = 2500
-	wanted_types = list(/obj/item/chainsaw)
 
 /datum/bounty/item/assistant/ied
 	name = "IED"
@@ -169,29 +167,11 @@
 	required_count = 3
 	wanted_types = list(/obj/item/grenade/iedcasing)
 
-/datum/bounty/item/assistant/bonfire
-	name = "Lit Bonfire"
-	description = "Space heaters are malfunctioning and the cargo crew of Central Command is starting to feel cold. Ship a lit bonfire to warm them up."
-	reward = 5000
-	wanted_types = list(/obj/structure/bonfire)
-
-/datum/bounty/item/assistant/bonfire/applies_to(obj/O)
-	if(!..())
-		return FALSE
-	var/obj/structure/bonfire/B = O
-	return !!B.burning
-
 /datum/bounty/item/assistant/corgimeat
 	name = "Raw Corgi Meat"
 	description = "The Syndicate recently stole all of CentCom's corgi meat. Ship out a replacement immediately."
 	reward = 3000
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/meat/slab/corgi)
-
-/datum/bounty/item/assistant/tail_whip
-	name = "Nine Tails whip"
-	description = "Commander Jackson is looking for a fine addition to her exotic weapons collection. She will reward you handsomely for either a Cat or Liz o' Nine Tails."
-	reward = 4000
-	wanted_types = list(/obj/item/melee/chainofcommand/tailwhip)
 
 /datum/bounty/item/assistant/bolas
 	name = "Bolas"
@@ -215,7 +195,7 @@
 	wanted_types = list(/obj/item/storage/belt/utility)
 
 /datum/bounty/item/assistant/gasmasks
-	name = "Gas Masks" 
+	name = "Gas Masks"
 	description = "The good news is that we have more miasma than we'll ever need. The bad news is, somone opened the release valve on the canisters. Ship us some gas masks!"
 	reward = 1250
 	required_count = 4

@@ -22,6 +22,7 @@
 
 	paycheck = PAYCHECK_HARD
 	paycheck_department = ACCOUNT_SEC
+	bounty_types = CIV_JOB_SEC
 
 	mind_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
