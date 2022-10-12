@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - bugfix: "Shoving organ-containing bodyparts e.g. heads into smart organ storages now freezes the organs in the head, too."
