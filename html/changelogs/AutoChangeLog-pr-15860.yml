@@ -1,0 +1,5 @@
+author: "shellspeed1"
+delete-after: True
+changes: 
+  - rscadd: "The Public Bounty Console has been added replacing both the coin mint and the standard cargo bounties."
+  - rscadd: "The Sales Tagger has been added to enable a little bit of entrepreneurship by the crew."
