@@ -42,7 +42,7 @@
 #define THERMAL_RELEASE_MODIFIER 350         //Higher == more heat released during reaction, not to be confused with the above values
 #define THERMAL_RELEASE_CAP_MODIFIER 250     //Higher == lower cap on how much heat can be released per tick--currently 1.3x old value
 #define PLASMA_RELEASE_MODIFIER 750        //Higher == less plasma released by reaction
-#define OXYGEN_RELEASE_MODIFIER 325        //Higher == less oxygen released at high temperature/power
+#define OXYGEN_RELEASE_MODIFIER 550        //Higher == less oxygen released at high temperature/power
 
 #define REACTION_POWER_MODIFIER 0.55       //Higher == more overall power
 
@@ -600,13 +600,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/max_temp_increase = effective_temperature + ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_CAP_MODIFIER)
 	//Calculate how much gas to release
 	//Varies based on power and gas content
-	removed.adjust_moles(GAS_PLASMA, max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0))
+	removed.adjust_moles(GAS_PLASMA, clamp((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0, 50))
 	//Varies based on power, gas content, and heat
-	removed.adjust_moles(GAS_O2, max(((device_energy + effective_temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0))
+	removed.adjust_moles(GAS_O2, clamp((device_energy * dynamic_heat_modifier + effective_temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0, 100))
 
 	if(removed.return_temperature() < max_temp_increase)
 		removed.adjust_heat(device_energy * dynamic_heat_modifier * THERMAL_RELEASE_MODIFIER)
-		removed.set_temperature(min(removed.return_temperature(), max_temp_increase))
+	removed.set_temperature(min(removed.return_temperature(), max_temp_increase))
 
 
 	if(produces_gas)
