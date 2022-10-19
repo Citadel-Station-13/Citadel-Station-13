@@ -41,16 +41,12 @@
 	name = "Short"
 	icon_state = "short"
 
-/datum/sprite_accessory/horns/tepper
-	name = "Tepper"
+/datum/sprite_accessory/horns/teppy
+	name = "Teppy (Tall)"
 	icon = 'icons/mob/32x64_mutant_bodyparts.dmi'
-	icon_state = "tepper"
-	color_src = MATRIXED
-	matrixed_sections = MATRIX_RED
+	icon_state = "teppy"
 
 /datum/sprite_accessory/horns/stag
-	name = "Stag"
+	name = "Stag (Tall)"
 	icon = 'icons/mob/32x64_mutant_bodyparts.dmi'
 	icon_state = "stag"
-	color_src = MATRIXED
-	matrixed_sections = MATRIX_RED

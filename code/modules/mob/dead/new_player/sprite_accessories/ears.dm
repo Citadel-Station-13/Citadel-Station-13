@@ -482,14 +482,14 @@
 	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/ears/human/jackalope
-	name = "jackalope (Tall)"
+	name = "Jackalope (Tall)"
 	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
 	icon_state = "jackalope"
 	color_src = MATRIXED
 	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/ears/mam_ears/jackalope
-	name = "jackalope (Tall)"
+	name = "Jackalope (Tall)"
 	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
 	icon_state = "jackalope"
 	matrixed_sections = MATRIX_RED
