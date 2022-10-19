@@ -420,6 +420,7 @@
 	name = "Bnnuy (Tall)"
 	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
 	icon_state = "bnnuy"
+	color_src = MATRIXED
 	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/ears/mam_ears/bnnuy
@@ -432,6 +433,7 @@
 	name = "Bnnuy (Alt) (Tall)"
 	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
 	icon_state = "bnnuy2"
+	color_src = MATRIXED
 	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/ears/mam_ears/bnnuy2
@@ -444,6 +446,7 @@
 	name = "Bunny (Tall)"
 	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
 	icon_state = "bunnytall"
+	color_src = MATRIXED
 	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/ears/mam_ears/bunnytall
@@ -456,6 +459,7 @@
 	name = "Sandfox (Tall)"
 	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
 	icon_state = "sandfox"
+	color_src = MATRIXED
 	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/ears/mam_ears/sandfox
@@ -468,6 +472,7 @@
 	name = "Shadekin (Round) (Tall)"
 	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
 	icon_state = "shadekinround"
+	color_src = MATRIXED
 	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/ears/mam_ears/shadekinround
@@ -480,6 +485,7 @@
 	name = "jackalope (Tall)"
 	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
 	icon_state = "jackalope"
+	color_src = MATRIXED
 	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/ears/mam_ears/jackalope
