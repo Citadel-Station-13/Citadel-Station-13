@@ -54,10 +54,6 @@
 
 /datum/species/arachnid/on_species_loss(mob/living/carbon/human/H)
 	. = ..()
-	var/datum/action/innate/spin_web/SW = locate(/datum/action/innate/spin_web) in H.actions
-	var/datum/action/innate/spin_cocoon/SC = locate(/datum/action/innate/spin_cocoon) in H.actions
-	SC?.Remove(H)
-	SW?.Remove(H)
 
 /datum/action/innate/spin_web
 	name = "Spin Web"
