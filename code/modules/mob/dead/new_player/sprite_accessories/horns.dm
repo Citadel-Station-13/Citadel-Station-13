@@ -40,3 +40,17 @@
 /datum/sprite_accessory/horns/short
 	name = "Short"
 	icon_state = "short"
+
+/datum/sprite_accessory/horns/tepper
+	name = "Tepper"
+	icon = 'icons/mob/32x64_mutant_bodyparts.dmi'
+	icon_state = "tepper"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED
+
+/datum/sprite_accessory/horns/stag
+	name = "Stag"
+	icon = 'icons/mob/32x64_mutant_bodyparts.dmi'
+	icon_state = "stag"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED
