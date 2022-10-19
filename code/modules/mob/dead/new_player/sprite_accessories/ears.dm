@@ -411,3 +411,85 @@
 	name = "Wolf"
 	icon_state = "wolf"
 	matrixed_sections = MATRIX_RED_BLUE
+
+/******************************************
+*************** Tall Ears *****************
+*******************************************/
+
+/datum/sprite_accessory/ears/human/bnnuy
+	name = "Bnnuy (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "bnnuy"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/mam_ears/bnnuy
+	name = "Bnnuy (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "bnnuy"
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/human/bnnuy2
+	name = "Bnnuy (Alt) (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "bnnuy2"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/mam_ears/bnnuy2
+	name = "Bnnuy (Alt) (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "bnnuy2"
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/human/bunnytall
+	name = "Bunny (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "bunnytall"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/mam_ears/bunnytall
+	name = "Bunny (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "bunnytall"
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/human/sandfox
+	name = "Sandfox (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "sandfox"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/mam_ears/sandfox
+	name = "Sandfox (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "sandfox"
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/human/shadekinround
+	name = "Shadekin (Round) (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "shadekinround"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/mam_ears/shadekinround
+	name = "Shadekin (Round) (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "shadekinround"
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/human/jackalope
+	name = "Jackalope (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "jackalope"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED
+
+/datum/sprite_accessory/ears/mam_ears/jackalope
+	name = "Jackalope (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "jackalope"
+	matrixed_sections = MATRIX_RED
