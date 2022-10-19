@@ -527,12 +527,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 						H.physiology.footstep_type = FOOTSTEP_MOB_CLAW
 					if(STYLE_SNEK_TAURIC)
 						H.physiology.footstep_type = FOOTSTEP_MOB_CRAWL
-					if(STYLE_ARACHNID_TAURIC)
-						if(!istype(H.dna.species,/datum/species/arachnid))
-							var/datum/action/innate/spin_web/SW = new
-							var/datum/action/innate/spin_cocoon/SC = new
-							SC.Grant(H)
-							SW.Grant(H)
 					else
 						H.physiology.footstep_type = null
 			else
@@ -607,13 +601,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	if((TRAIT_ROBOTIC_ORGANISM in inherent_traits) && C.hud_used)
 		C.hud_used.coolant_display.clear()
-
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		var/datum/action/innate/spin_web/SW = locate(/datum/action/innate/spin_web) in H.actions
-		var/datum/action/innate/spin_cocoon/SC = locate(/datum/action/innate/spin_cocoon) in H.actions
-		SC?.Remove(H)
-		SW?.Remove(H)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
