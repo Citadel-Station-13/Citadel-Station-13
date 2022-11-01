@@ -196,5 +196,23 @@ Temporary Items
 /tools/LinuxOneShot/TGS_Config
 /tools/LinuxOneShot/TGS_Instances
 /tools/LinuxOneShot/TGS_Logs
+
+
+# Built auxtools libraries and intermediate files
+aux*.dll
+libaux*.so
+aux*.pdb
+
+# byond-tracy, we intentionally do not ship this and do not want to maintain it
+prof.dll
+libprof.so
+
+# JavaScript tools
+**/node_modules
+
+# Screenshot tests
+/artifacts
+
+#byond-tracy
 tools/UnstandardnessTestForDM/UnstandardnessTestForDM/obj/x86/Debug/UnstandardnessTestForDM.csproj.AssemblyReference.cache
 tools/UnstandardnessTestForDM/UnstandardnessTestForDM/obj/x86/Debug/.NETFramework,Version=v4.0,Profile=Client.AssemblyAttributes.cs

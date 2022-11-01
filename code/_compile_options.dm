@@ -43,7 +43,9 @@
 // #define TRACK_MAX_SHARE //Allows max share tracking, for use in the atmos debugging ui
 #endif //ifdef TESTING
 
-//#define UNIT_TESTS //If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
+// If this is uncommented, will attempt to load and initialize prof.dll/libprof.so.
+// We do not ship byond-tracy. Build it yourself here: https://github.com/mafemergency/byond-tracy/
+// #define USE_BYOND_TRACY
 
 #ifndef PRELOAD_RSC //set to:
 #define PRELOAD_RSC 2 // 0 to allow using external resources or on-demand behaviour;
