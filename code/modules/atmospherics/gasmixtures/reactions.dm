@@ -760,6 +760,8 @@
 
 /datum/gas_reaction/hagedorn/react(datum/gas_mixture/air, datum/holder)
 	var/initial_energy = air.thermal_energy()
+	if(air.get_moles(GAS_QCD))
+		return
 	for(var/g in air.get_gases())
 		air.set_moles(g, 0)
 	var/amount = initial_energy / (air.return_temperature() * GLOB.gas_data.specific_heats[GAS_QCD])
