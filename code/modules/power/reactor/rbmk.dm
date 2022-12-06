@@ -342,7 +342,7 @@ The reactor CHEWS through moderator. It does not do this slowly. Be very careful
 			playsound(src, pick('sound/machines/fryer/deep_fryer_1.ogg', 'sound/machines/fryer/deep_fryer_2.ogg'), 100, TRUE)
 			var/obj/item/reagent_containers/food/grilled_item = I
 			if(prob(80))
-				return //To give the illusion that it's actually cooking omegalul.
+				continue //To give the illusion that it's actually cooking omegalul.
 			switch(power)
 				if(20 to 39)
 					grilled_item.name = "grilled [initial(grilled_item.name)]"
