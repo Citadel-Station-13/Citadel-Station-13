@@ -1748,7 +1748,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("age")
 					var/new_age = input(user, "Choose your character's age:\n(Minimum: [AGE_MIN])", "Character Preference") as num|null
 					if(new_age)
-						age = max(min( round(text2num(new_age)), INFINITY),AGE_MIN)
+						age = max(min( round(text2num(new_age)), SHORT_REAL_LIMIT),AGE_MIN)
 
 				if("security_records")
 					var/rec = stripped_multiline_input(usr, "Set your security record note section. This should be IC!", "Security Records", html_decode(security_records), MAX_FLAVOR_LEN, TRUE)
