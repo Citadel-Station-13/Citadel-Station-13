@@ -9,6 +9,8 @@
 		return .
 
 	ADD_TRAIT(H, TRAIT_DULLAHAN, "dullahan_component")
+	ADD_TRAIT(H, TRAIT_NOHUNGER, "dullahan_component_no_hunger")
+	ADD_TRAIT(H, TRAIT_NOBREATH, "dullahan_component_no_breath")
 
 	dullahan_head = new(get_turf(H))
 
