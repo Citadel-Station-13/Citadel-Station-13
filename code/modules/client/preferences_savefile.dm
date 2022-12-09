@@ -905,7 +905,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	shirt_color = sanitize_hexcolor(shirt_color, 6, FALSE, initial(shirt_color))
 	socks = sanitize_inlist(socks, GLOB.socks_list)
 	socks_color = sanitize_hexcolor(socks_color, 6, FALSE, initial(socks_color))
-	age = sanitize_integer(age, AGE_MIN, SHORT_REAL_LIMIT, initial(age))
+	age = sanitize_integer(age, AGE_MIN, AGE_MAX_INPUT, initial(age))
 	hair_color = sanitize_hexcolor(hair_color, 6, FALSE)
 	facial_hair_color = sanitize_hexcolor(facial_hair_color, 6, FALSE)
 	grad_style = sanitize_inlist(grad_style, GLOB.hair_gradients_list, "None")
