@@ -305,6 +305,12 @@
 			update_inv_hands()
 		return
 	var/datum/component/storage/storage = equipped_back.GetComponent(/datum/component/storage)
+	if(istype(equipped_back, /obj/item/mod/control))
+		var/obj/item/mod/control/C = equipped_back
+		for(var/obj/item/mod/module/storage/S in C.modules)
+			if(S.stored)
+				equipped_back = S.stored
+				storage = S.stored.GetComponent(/datum/component/storage)
 	if(!storage)
 		if(!thing)
 			equipped_back.attack_hand(src)

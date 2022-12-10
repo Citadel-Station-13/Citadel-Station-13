@@ -2,15 +2,18 @@
 /obj/item/mod
 	name = "Base MOD"
 	desc = "You should not see this, yell at a coder!"
-	icon = 'icons/obj/mod.dmi'
+	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	taur_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "standard-control"
-	worn_icon = 'icons/mob/mod.dmi'
+	item_state = "standard-control"
 
 /obj/item/mod/control
 	name = "MOD control unit"
 	desc = "The control unit of a Modular Outerwear Device, a powered, back-mounted suit that protects against various environments."
 	icon_state = "control"
-	inhand_icon_state = "mod_control"
+	item_state = "control"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	strip_delay = 10 SECONDS
@@ -48,7 +51,7 @@
 	/// How much module complexity this MOD is carrying.
 	var/complexity = 0
 	/// Power usage of the MOD.
-	var/cell_drain = DEFAULT_CELL_DRAIN
+	var/cell_drain = DEFAULT_CHARGE_DRAIN
 	/// Slowdown of the MOD when not active.
 	var/slowdown_inactive = 2
 	/// Slowdown of the MOD when active.
@@ -73,6 +76,8 @@
 	var/obj/item/mod/module/selected_module
 	/// AI mob inhabiting the MOD.
 	var/mob/living/silicon/ai/ai
+	/// pAI mob inhabiting the MOD.
+	var/mob/living/silicon/pai/mod_pai
 	/// Delay between moves as AI.
 	var/movedelay = 0
 	/// Cooldown for AI moves.
@@ -123,6 +128,7 @@
 		piece.permeability_coefficient = theme.permeability_coefficient
 		piece.siemens_coefficient = theme.siemens_coefficient
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
+		piece.item_state = "[skin]-[initial(piece.item_state)]"
 	update_flags()
 	for(var/obj/item/mod/module/module as anything in initial_modules)
 		module = new module(src)
@@ -206,6 +212,7 @@
 			balloon_alert(carbon_user, "retract parts first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
+	return ..()
 
 /obj/item/mod/control/MouseDrop(atom/over_object)
 	if(src != wearer?.back || !istype(over_object, /atom/movable/screen/inventory/hand))
@@ -241,10 +248,22 @@
 		return
 	return ..()
 
+/obj/item/mod/control/AltClick(mob/user)
+	if(seconds_electrified && cell?.charge)
+		if(shock(user))
+			return
+	if(!open)
+		for(var/obj/item/mod/module/storage/S in modules)
+			if(S.stored)
+				playsound(user, "rustle", 50, 1, -5)
+				SEND_SIGNAL(S.stored, COMSIG_TRY_STORAGE_SHOW, wearer, TRUE)
+				return
+	. = ..()
+
 /obj/item/mod/control/screwdriver_act(mob/living/user, obj/item/screwdriver)
 	if(..())
 		return TRUE
-	if(active || activating || ai_controller)
+	if(active || activating)
 		balloon_alert(user, "deactivate suit first!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
@@ -330,12 +349,6 @@
 	if(open)
 		return cell
 
-/obj/item/mod/control/GetAccess()
-	if(ai_controller)
-		return req_access.Copy()
-	else
-		return ..()
-
 /obj/item/mod/control/emag_act(mob/user)
 	locked = !locked
 	balloon_alert(user, "[locked ? "locked" : "unlocked"]")
@@ -363,12 +376,12 @@
 		conceal(null, part)
 	return ..()
 
-/obj/item/mod/control/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
+/obj/item/mod/control/worn_overlays(isinhands = FALSE, icon_file)
 	. = ..()
 	if(!active)
 		return
 	for(var/obj/item/mod/module/module as anything in modules)
-		var/list/module_icons = module.generate_worn_overlay(standing)
+		var/list/module_icons = module.generate_worn_overlay()
 		if(!length(module_icons))
 			continue
 		. += module_icons
@@ -394,8 +407,8 @@
 		var/used_category
 		if(part == helmet)
 			used_category = HELMET_FLAGS
-			helmet.alternate_worn_layer = used_skin[HELMET_LAYER]
-			helmet.alternate_layer = used_skin[HELMET_LAYER]
+			helmet.alternate_worn_layer = used_skin["HELMET_LAYER"]
+			helmet.alternate_layer = used_skin["HELMET_LAYER"]
 		if(part == chestplate)
 			used_category = CHESTPLATE_FLAGS
 		if(part == gauntlets)

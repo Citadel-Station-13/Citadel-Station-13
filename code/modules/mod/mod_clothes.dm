@@ -1,9 +1,12 @@
 /obj/item/clothing/head/helmet/space/mod
 	name = "MOD helmet"
 	desc = "A helmet for a MODsuit."
-	icon = 'icons/obj/mod.dmi'
+	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	taur_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "helmet"
-	worn_icon = 'icons/mob/mod.dmi'
+	item_state = "helmet"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
 	body_parts_covered = HEAD
 	heat_protection = HEAD
@@ -12,15 +15,16 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL
 	resistance_flags = NONE
-	flash_protect = FLASH_PROTECTION_NONE
-	clothing_flags = SNUG_FIT
+	flash_protect = 0
+	clothing_flags = NONE
 	flags_inv = HIDEFACIALHAIR
 	flags_cover = NONE
 	visor_flags = THICKMATERIAL|STOPSPRESSUREDAMAGE
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
-	visor_flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF
+	visor_flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES
 	var/alternate_layer = NECK_LAYER
 	var/obj/item/mod/control/mod
+	mutantrace_variation = STYLE_MUZZLE
 
 /obj/item/clothing/head/helmet/space/mod/Destroy()
 	if(!QDELETED(mod))
@@ -32,9 +36,12 @@
 /obj/item/clothing/suit/armor/mod
 	name = "MOD chestplate"
 	desc = "A chestplate for a MODsuit."
-	icon = 'icons/obj/mod.dmi'
+	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	taur_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "chestplate"
-	worn_icon = 'icons/mob/mod.dmi'
+	item_state = "chestplate"
 	blood_overlay_type = "armor"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
 	body_parts_covered = CHEST|GROIN
@@ -48,6 +55,7 @@
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
 	resistance_flags = NONE
 	var/obj/item/mod/control/mod
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC
 
 /obj/item/clothing/suit/armor/mod/Destroy()
 	if(!QDELETED(mod))
@@ -59,9 +67,12 @@
 /obj/item/clothing/gloves/mod
 	name = "MOD gauntlets"
 	desc = "A pair of gauntlets for a MODsuit."
-	icon = 'icons/obj/mod.dmi'
+	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	taur_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "gauntlets"
-	worn_icon = 'icons/mob/mod.dmi'
+	item_state = "gauntlets"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
 	body_parts_covered = HANDS|ARMS
 	heat_protection = HANDS|ARMS
@@ -86,15 +97,18 @@
 	if(!overslot)
 		return
 	if(!mod.wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
-		mod.wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)
+		mod.wearer.dropItemToGround(overslot, force = TRUE)
 	overslot = null
 
 /obj/item/clothing/shoes/mod
 	name = "MOD boots"
 	desc = "A pair of boots for a MODsuit."
-	icon = 'icons/obj/mod.dmi'
+	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	taur_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "boots"
-	worn_icon = 'icons/mob/mod.dmi'
+	item_state = "boots"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
 	body_parts_covered = FEET|LEGS
 	heat_protection = FEET|LEGS
@@ -103,7 +117,7 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL
 	resistance_flags = NONE
-	item_flags = IGNORE_DIGITIGRADE
+	item_flags = NONE
 	var/obj/item/mod/control/mod
 	var/obj/item/clothing/overslot
 
@@ -119,5 +133,5 @@
 	if(!overslot)
 		return
 	if(!mod.wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
-		mod.wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)
+		mod.wearer.dropItemToGround(overslot, force = TRUE)
 	overslot = null

@@ -1,6 +1,7 @@
 /obj/item/mod/construction
 	desc = "A part used in MOD construction."
-	inhand_icon_state = "rack_parts"
+	icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
+	item_state = "rack_parts"
 
 /obj/item/mod/construction/helmet
 	name = "MOD helmet"
@@ -20,7 +21,7 @@
 
 /obj/item/mod/construction/core
 	name = "MOD core"
-	icon_state = "mod-core"
+	icon_state = "mod-core-standard"
 	desc = "Growing in the most lush, fertile areas of the planet Sprout, there is a crystal known as the Heartbloom. \
 		These rare, organic piezoelectric crystals are of incredible cultural significance to the artist castes of the Ethereals, \
 		owing to their appearance; which is exactly similar to that of an Ethereal's heart. \n\
@@ -29,7 +30,7 @@
 
 /obj/item/mod/construction/broken_core
 	name = "broken MOD core"
-	icon_state = "mod-core-broken"
+	icon_state = "mod-core"
 	desc = "An internal power source for a Modular Outerwear Device. You don't seem to be able to source any power from this one, though."
 
 /obj/item/mod/construction/broken_core/examine(mob/user)
@@ -46,7 +47,7 @@
 /obj/item/mod/construction/armor
 	name = "MOD armor plates"
 	desc = "Armor plates used to finish a MOD."
-	icon_state = "standard-armor"
+	icon_state = "standard-plating"
 	var/datum/mod_theme/theme = /datum/mod_theme
 
 /obj/item/mod/construction/armor/Initialize(mapload)
@@ -54,7 +55,7 @@
 	var/datum/mod_theme/used_theme = GLOB.mod_themes[theme]
 	name = "MOD [used_theme.name] armor plates"
 	desc = "[desc] [used_theme.desc]"
-	icon_state = "[used_theme.default_skin]-armor"
+	icon_state = "[used_theme.default_skin]-plating"
 
 /obj/item/mod/construction/armor/engineering
 	theme = /datum/mod_theme/engineering
@@ -77,7 +78,7 @@
 /obj/item/mod/paint
 	name = "MOD paint kit"
 	desc = "This kit will repaint your MODsuit to something unique."
-	icon = 'icons/obj/mod.dmi'
+	icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
 	icon_state = "paintkit"
 
 #define START_STEP "start"

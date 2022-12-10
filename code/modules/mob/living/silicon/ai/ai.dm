@@ -99,6 +99,13 @@
 	var/display_icon_override
 	var/emote_display = "Neutral" //text string of the current emote we set for the status displays, to prevent logins resetting it.
 
+	var/datum/robot_control/robot_control
+	/// Station alert datum for showing alerts UI
+	var/datum/station_alert/alert_control
+	///remember AI's last location
+	var/atom/lastloc
+	interaction_range = INFINITY
+
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
@@ -177,9 +184,10 @@
 	QDEL_NULL(spark_system)
 	QDEL_NULL(malf_picker)
 	QDEL_NULL(doomsday_device)
-	QDEL_NULL(robot_control)
+	// TODO: Why these no work?
+	// QDEL_NULL(robot_control)
 	QDEL_NULL(aiMulti)
-	QDEL_NULL(alert_control)
+	// QDEL_NULL(alert_control)
 	malfhack = null
 	current = null
 	Bot = null

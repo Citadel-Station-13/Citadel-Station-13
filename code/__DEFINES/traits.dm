@@ -160,6 +160,7 @@
 #define TRAIT_CAPTAIN_METABOLISM "captain-metabolism"
 /// Prevents plasmamen from self-igniting
 #define TRAIT_NOSELFIGNITION "no_selfignition"
+#define TRAIT_NOSELFIGNITION_HEAD_ONLY "no_selfignition_head_only"
 /// Like antimagic, but doesn't block the user from casting
 #define TRAIT_ANTIMAGIC_NO_SELFBLOCK "anti_magic_no_selfblock"
 /// Gives us turf, mob and object vision through walls
@@ -229,8 +230,6 @@
 #define TRAIT_AUTO_CATCH_ITEM	"auto_catch_item"
 #define TRAIT_CLOWN_MENTALITY	"clown_mentality" // The future is now, clownman.
 #define TRAIT_FREESPRINT		"free_sprinting"
-#define TRAIT_XRAY_VISION       "xray_vision"
-#define TRAIT_THERMAL_VISION    "thermal_vision"
 #define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
 #define TRAIT_NO_INTERNALS		"no-internals"
 #define TRAIT_TOXIC_ALCOHOL		"alcohol_intolerance"

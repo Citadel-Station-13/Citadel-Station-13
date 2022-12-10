@@ -1,4 +1,3 @@
-#define MOD_ACTIVATION_STEP_TIME 2 SECONDS
 #define MOD_ACTIVATION_STEP_FLAGS IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED
 
 /// Creates a radial menu from which the user chooses parts of the suit to deploy/retract. Repeats until all parts are extended or retracted.
@@ -72,7 +71,8 @@
 /obj/item/mod/control/proc/conceal(mob/user, part)
 	var/obj/item/piece = part
 	REMOVE_TRAIT(piece, TRAIT_NODROP, MOD_TRAIT)
-	wearer.transferItemToLoc(piece, src, force = TRUE)
+	if(wearer)
+		wearer.transferItemToLoc(piece, src, force = TRUE)
 	if(piece == gauntlets)
 		gauntlets.show_overslot()
 	if(piece == boots)
@@ -117,28 +117,36 @@
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	for(var/obj/item/mod/module/module as anything in modules)
-		if(!module.active)
+		if(!module.active || module.allowed_inactive)
 			continue
 		module.on_deactivation()
 	activating = TRUE
 	to_chat(wearer, span_notice("MODsuit [active ? "shutting down" : "starting up"]."))
-	if(do_after(wearer, MOD_ACTIVATION_STEP_TIME, wearer, MOD_ACTIVATION_STEP_FLAGS))
+	if(do_after(wearer, MOD_ACTIVATION_STEP_TIME, target = wearer, required_mobility_flags = NONE))
 		to_chat(wearer, span_notice("[boots] [active ? "relax their grip on your legs" : "seal around your feet"]."))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		seal_part(boots, seal = !active)
-	if(do_after(wearer, MOD_ACTIVATION_STEP_TIME, wearer, MOD_ACTIVATION_STEP_FLAGS))
+	else
+		return toggle_activate_fail()
+	if(do_after(wearer, MOD_ACTIVATION_STEP_TIME, target = wearer, required_mobility_flags = NONE))
 		to_chat(wearer, span_notice("[gauntlets] [active ? "become loose around your fingers" : "tighten around your fingers and wrists"]."))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		seal_part(gauntlets, seal = !active)
-	if(do_after(wearer, MOD_ACTIVATION_STEP_TIME, wearer, MOD_ACTIVATION_STEP_FLAGS))
+	else
+		return toggle_activate_fail()
+	if(do_after(wearer, MOD_ACTIVATION_STEP_TIME, target = wearer, required_mobility_flags = NONE))
 		to_chat(wearer, span_notice("[chestplate] [active ? "releases your chest" : "cinches tightly against your chest"]."))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		seal_part(chestplate,seal =  !active)
-	if(do_after(wearer, MOD_ACTIVATION_STEP_TIME, wearer, MOD_ACTIVATION_STEP_FLAGS))
+	else
+		return toggle_activate_fail()
+	if(do_after(wearer, MOD_ACTIVATION_STEP_TIME, target = wearer, required_mobility_flags = NONE))
 		to_chat(wearer, span_notice("[helmet] hisses [active ? "open" : "closed"]."))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		seal_part(helmet, seal = !active)
-	if(do_after(wearer, MOD_ACTIVATION_STEP_TIME, wearer, MOD_ACTIVATION_STEP_FLAGS))
+	else
+		return toggle_activate_fail()
+	if(do_after(wearer, MOD_ACTIVATION_STEP_TIME, target = wearer, required_mobility_flags = NONE))
 		to_chat(wearer, span_notice("Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer]."))
 		if(ai)
 			to_chat(ai, span_notice("<b>SYSTEMS [active ? "DEACTIVATED. GOODBYE" : "ACTIVATED. WELCOME"]: \"[ai]\"</b>"))
@@ -148,8 +156,19 @@
 			SEND_SOUND(wearer, sound('sound/mecha/nominal.ogg',volume=50))
 		else
 			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
+	else
+		return toggle_activate_fail()
 	activating = FALSE
 	return TRUE
+
+/obj/item/mod/control/proc/toggle_activate_fail()
+	seal_part(boots, seal = active)
+	seal_part(gauntlets, seal = active)
+	seal_part(chestplate,seal =  active)
+	seal_part(helmet, seal = active)
+	to_chat(wearer, span_warning("[active ? "Shut down" : "Start up"] cancelled."))
+	activating = FALSE
+	return FALSE
 
 ///Seals or unseals the given part
 /obj/item/mod/control/proc/seal_part(obj/item/clothing/part, seal)
@@ -165,18 +184,16 @@
 		part.clothing_flags &= ~part.visor_flags
 		part.heat_protection = NONE
 		part.cold_protection = NONE
+	part.icon_state = "[skin]-[initial(part.icon_state)][seal ? "-sealed" : ""]"
+	part.item_state = "[skin]-[initial(part.item_state)][seal ? "-sealed" : ""]"
 	if(part == boots)
-		boots.icon_state = "[skin]-boots[seal ? "-sealed" : ""]"
 		wearer.update_inv_shoes()
 	if(part == gauntlets)
-		gauntlets.icon_state = "[skin]-gauntlets[seal ? "-sealed" : ""]"
 		wearer.update_inv_gloves()
 	if(part == chestplate)
-		chestplate.icon_state = "[skin]-chestplate[seal ? "-sealed" : ""]"
 		wearer.update_inv_wear_suit()
 		wearer.update_inv_w_uniform()
 	if(part == helmet)
-		helmet.icon_state = "[skin]-helmet[seal ? "-sealed" : ""]"
 		if(seal)
 			helmet.alternate_worn_layer = null
 		else

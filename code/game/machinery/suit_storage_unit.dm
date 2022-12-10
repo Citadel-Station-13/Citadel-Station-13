@@ -31,6 +31,8 @@
 	var/uv_cycles = 6
 	var/message_cooldown
 	var/breakout_time = 300
+	/// How fast it charges cells in a suit
+	var/charge_rate = 250
 
 /obj/machinery/suit_storage_unit/standard_unit
 	suit_type = /obj/item/clothing/suit/space/eva
@@ -43,7 +45,7 @@
 	storage_type = /obj/item/tank/jetpack/oxygen/captain
 
 /obj/machinery/suit_storage_unit/captainmod
-	mask_type = /obj/item/clothing/mask/gas/atmos/captain
+	mask_type = /obj/item/clothing/mask/gas/sechailer
 	storage_type = /obj/item/tank/jetpack/oxygen/captain
 	mod_type = /obj/item/mod/control/pre_equipped/magnate
 
@@ -58,11 +60,11 @@
 
 /obj/machinery/suit_storage_unit/atmos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/atmos
-	mask_type = /obj/item/clothing/mask/gas/atmos
+	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/watertank/atmos
 
 /obj/machinery/suit_storage_unit/atmosmod
-	mask_type = /obj/item/clothing/mask/gas/atmos
+	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/watertank/atmos
 	mod_type = /obj/item/mod/control/pre_equipped/atmospheric
 
@@ -332,7 +334,7 @@
 				things_to_clear += mask.GetAllContents()
 			if(mod)
 				things_to_clear += mod
-				things_to_clear += mod.get_all_contents()
+				things_to_clear += mod.GetAllContents()
 			if(storage)
 				things_to_clear += storage
 				things_to_clear += storage.GetAllContents()
@@ -352,13 +354,7 @@
 
 /obj/machinery/suit_storage_unit/process(delta_time)
 	var/obj/item/stock_parts/cell/cell
-	if(suit)
-		if(!istype(suit))
-			return
-		if(!suit.cell)
-			return
-		cell = suit.cell
-	else if(mod)
+	if(mod)
 		if(!istype(mod))
 			return
 		if(!mod.cell)
@@ -369,6 +365,14 @@
 
 	use_power(charge_rate * delta_time)
 	cell.give(charge_rate * delta_time)
+
+/obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
+	if(!prob(prb))
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+		s.set_up(5, 1, src)
+		s.start()
+		if(electrocute_mob(user, src, src, 1, TRUE))
+			return 1
 
 /obj/machinery/suit_storage_unit/relaymove(mob/user)
 	if(locked)

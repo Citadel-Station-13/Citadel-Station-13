@@ -244,7 +244,6 @@
 	desc = "Three cores, perfect for any MODsuit construction! Naturally harvested™, of course."
 	cost = CARGO_CRATE_VALUE * 3
 	access = ACCESS_ROBOTICS
-	access_view = ACCESS_ROBOTICS
 	contains = list(/obj/item/mod/construction/core,
 		/obj/item/mod/construction/core,
 		/obj/item/mod/construction/core)

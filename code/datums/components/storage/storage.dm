@@ -369,7 +369,7 @@
 //Tries to dump content
 /datum/component/storage/proc/dump_content_at(atom/dest_object, mob/M)
 	var/atom/A = parent
-	var/atom/dump_destination = get_dumping_location(dest_object)
+	var/atom/dump_destination = dest_object.get_dumping_location(dest_object)
 	if(M.CanReach(A) && dump_destination && M.CanReach(dump_destination))
 		if(check_locked(null, M, TRUE))
 			to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
