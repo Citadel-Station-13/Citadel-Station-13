@@ -521,9 +521,7 @@ const ParametersSection = (props, context) => {
                 content="Eject pAI"
                 onClick={() => act('remove_pai')}
               />
-            ) : (
-              <> </>
-            )
+            ) : (<> </>)
           }>
           {AI || 'None'}
         </LabeledList.Item>
