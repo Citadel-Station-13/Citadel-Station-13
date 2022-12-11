@@ -51,6 +51,9 @@
 		if(!holding)
 			balloon_alert(mod.wearer, "no backpack installed!")
 			return
+		if(!istype(holding))
+			balloon_alert(mod.wearer, "it doesn't fit!")
+			return
 		if(mod.wearer.transferItemToLoc(holding, src, force = FALSE, silent = TRUE))
 			stored = holding
 			balloon_alert(mod.wearer, "backpack stored")

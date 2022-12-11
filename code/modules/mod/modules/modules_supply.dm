@@ -169,6 +169,61 @@
 	incompatible_modules = list(/obj/item/mod/module/orebag)
 	cooldown_time = 0.5 SECONDS
 	allowed_inactive = TRUE
+	/// Pickaxe we have stored.
+	var/obj/item/storage/bag/ore/stored
+
+/obj/item/mod/module/orebag/on_use()
+	. = ..()
+	if(!.)
+		return
+	if(!stored)
+		var/obj/item/storage/bag/ore/holding = mod.wearer.get_active_held_item()
+		if(!holding)
+			balloon_alert(mod.wearer, "nothing to store!")
+			return
+		if(!istype(holding))
+			balloon_alert(mod.wearer, "it doesn't fit!")
+			return
+		if(mod.wearer.transferItemToLoc(holding, src, force = FALSE, silent = TRUE))
+			stored = holding
+			balloon_alert(mod.wearer, "mining satchel stored")
+			playsound(src, 'sound/weapons/revolverempty.ogg', 100, TRUE)
+			RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/Pickup_ores)
+	else if(mod.wearer.put_in_active_hand(stored, forced = FALSE, ignore_animation = TRUE))
+		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+		balloon_alert(mod.wearer, "mining satchel retrieved")
+		playsound(src, 'sound/weapons/revolverempty.ogg', 100, TRUE)
+	else
+		balloon_alert(mod.wearer, "mining satchel storage full!")
+
+/obj/item/mod/module/orebag/on_uninstall(deleting = FALSE)
+	if(stored)
+		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+		stored.forceMove(drop_location())
+
+/obj/item/mod/module/orebag/on_equip()
+	if(stored)
+		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/Pickup_ores)
+
+/obj/item/mod/module/orebag/on_unequip()
+	if(stored)
+		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+
+/obj/item/mod/module/orebag/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == stored)
+		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+		stored = null
+
+/obj/item/mod/module/orebag/Destroy()
+	if(stored)
+		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	QDEL_NULL(stored)
+	return ..()
+
+/obj/item/mod/module/orebag/proc/Pickup_ores()
+	if(stored)
+		stored.Pickup_ores(mod.wearer)
 
 // Ash accretion looks cool, but can't be arsed to implement
 // Same with sphere transformation
