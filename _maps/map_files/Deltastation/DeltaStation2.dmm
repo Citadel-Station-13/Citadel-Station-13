@@ -54037,10 +54037,10 @@
 /obj/item/clothing/gloves/color/latex{
 	step_y = 10
 	},
-/obj/item/clothing/mask/surgical{
-	step_y = -10
-	},
 /obj/item/clothing/suit/apron/surgical,
+/obj/item/clothing/mask/surgical{
+	step_y = -6
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "dsP" = (
@@ -54057,7 +54057,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/structure/closet/crate/freezer/blood,
+/obj/machinery/limbgrower,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "dsQ" = (
@@ -54077,10 +54077,10 @@
 /obj/item/clothing/gloves/color/latex{
 	step_y = 10
 	},
-/obj/item/clothing/mask/surgical{
-	step_y = -10
-	},
 /obj/item/clothing/suit/apron/surgical,
+/obj/item/clothing/mask/surgical{
+	step_y = -6
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "dsR" = (
@@ -55255,22 +55255,22 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/item/surgical_drapes,
-/obj/item/hemostat{
+/obj/item/cautery{
 	step_x = -10;
 	step_y = 10
 	},
-/obj/item/retractor{
-	step_x = 10;
+/obj/item/scalpel{
+	step_x = 5;
 	step_y = -5
 	},
-/obj/item/cautery{
+/obj/item/surgical_drapes,
+/obj/item/hemostat{
+	step_x = -10;
+	step_y = -10
+	},
+/obj/item/retractor{
 	step_x = 10;
 	step_y = 10
-	},
-/obj/item/scalpel{
-	step_x = -12;
-	step_y = -3
 	},
 /turf/open/floor/plasteel,
 /area/medical/surgery)
@@ -55296,18 +55296,20 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/item/circular_saw,
 /obj/item/circular_saw{
-	step_y = -4
-	},
-/obj/item/surgicaldrill{
-	pixel_y = 5;
-	step_y = 5
+	step_y = 2
 	},
 /obj/item/surgicaldrill{
 	pixel_y = 5;
 	step_y = 5;
 	step_x = 8
+	},
+/obj/item/circular_saw{
+	step_y = -5
+	},
+/obj/item/surgicaldrill{
+	pixel_y = 5;
+	step_y = 5
 	},
 /turf/open/floor/plasteel,
 /area/medical/surgery)
@@ -55319,22 +55321,22 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
+/obj/item/surgical_drapes,
+/obj/item/scalpel{
+	step_x = 5;
+	step_y = -5
+	},
 /obj/item/hemostat{
+	step_x = -10;
+	step_y = -10
+	},
+/obj/item/cautery{
 	step_x = -10;
 	step_y = 10
 	},
-/obj/item/cautery{
-	step_x = 10;
-	step_y = 10
-	},
-/obj/item/surgical_drapes,
-/obj/item/scalpel{
-	step_x = -12;
-	step_y = -3
-	},
 /obj/item/retractor{
 	step_x = 10;
-	step_y = -5
+	step_y = 10
 	},
 /turf/open/floor/plasteel,
 /area/medical/surgery)
@@ -56009,9 +56011,11 @@
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "dxm" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
@@ -56641,23 +56645,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
-"dyH" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/table/optable,
-/turf/open/floor/plasteel/dark,
-/area/medical/surgery)
 "dyI" = (
 /obj/structure/cable/white,
 /obj/machinery/power/apc{
@@ -56681,7 +56668,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/limbgrower,
+/obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "dyJ" = (
@@ -177238,7 +177225,7 @@ dsO
 dtR
 dvF
 dxm
-dyH
+dyJ
 dma
 cPy
 cPy
