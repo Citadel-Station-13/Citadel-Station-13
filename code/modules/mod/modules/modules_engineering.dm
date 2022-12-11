@@ -91,11 +91,15 @@
 	incompatible_modules = list(/obj/item/mod/module/rad_protection)
 
 /obj/item/mod/module/rad_protection/on_suit_activation()
+	mod.armor[RAD] += 65
+	mod.rad_flags = RAD_PROTECT_CONTENTS|RAD_NO_CONTAMINATE
 	for(var/obj/item/part in mod.mod_parts)
 		armor[RAD] += 65
 		rad_flags = RAD_PROTECT_CONTENTS|RAD_NO_CONTAMINATE
 
 /obj/item/mod/module/rad_protection/on_suit_deactivation(deleting = FALSE)
+	mod.armor[RAD] -= 65
+	mod.rad_flags = NONE
 	for(var/obj/item/part in mod.mod_parts)
 		armor[RAD] -= 65
 		rad_flags = NONE
