@@ -19,7 +19,16 @@
 	strip_delay = 10 SECONDS
 	slowdown = 2
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
-	actions_types = list(/datum/action/item_action/mod/deploy, /datum/action/item_action/mod/activate, /datum/action/item_action/mod/module, /datum/action/item_action/mod/panel)
+	actions_types = list(
+		/datum/action/item_action/mod/deploy,
+		/datum/action/item_action/mod/activate,
+		/datum/action/item_action/mod/module,
+		/datum/action/item_action/mod/panel,
+		/datum/action/item_action/mod/deploy/ai,
+		/datum/action/item_action/mod/activate/ai,
+		/datum/action/item_action/mod/module/ai,
+		/datum/action/item_action/mod/panel/ai,
+	)
 	resistance_flags = NONE
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
@@ -74,10 +83,8 @@
 	var/list/modules = list()
 	/// Currently used module.
 	var/obj/item/mod/module/selected_module
-	/// AI mob inhabiting the MOD.
-	var/mob/living/silicon/ai/ai
-	/// pAI mob inhabiting the MOD.
-	var/mob/living/silicon/pai/mod_pai
+	/// AI/pAI mob inhabiting the MOD.
+	var/mob/living/silicon/ai
 	/// Delay between moves as AI.
 	var/movedelay = 0
 	/// Cooldown for AI moves.
@@ -167,6 +174,7 @@
 	for(var/obj/item/mod/module/module as anything in modules)
 		module.mod = null
 		modules -= module
+	QDEL_NULL(ai)
 	QDEL_NULL(wires)
 	QDEL_NULL(cell)
 	return ..()
@@ -261,7 +269,8 @@
 	. = ..()
 
 /obj/item/mod/control/screwdriver_act(mob/living/user, obj/item/screwdriver)
-	if(..())
+	. = ..()
+	if(.)
 		return TRUE
 	if(active || activating)
 		balloon_alert(user, "deactivate suit first!")
@@ -307,6 +316,12 @@
 	return FALSE
 
 /obj/item/mod/control/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(istype(attacking_item, /obj/item/paicard))
+		if(!open) //mod must be open
+			balloon_alert(user, "suit must be open to transfer!")
+			return FALSE
+		insert_pai(user, attacking_item)
+		return TRUE
 	if(istype(attacking_item, /obj/item/mod/module))
 		if(!open)
 			balloon_alert(user, "open the panel first!")

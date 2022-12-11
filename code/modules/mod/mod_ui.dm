@@ -4,7 +4,7 @@
 		ui = new(user, src, "MODsuit", name)
 		ui.open()
 
-/obj/item/mod/control/ui_data()
+/obj/item/mod/control/ui_data(mob/user)
 	var/data = list()
 	data["interface_break"] = interface_break
 	data["malfunctioning"] = malfunctioning
@@ -16,6 +16,8 @@
 	data["wearer_name"] = wearer ? (wearer.get_authentification_name("Unknown") || "Unknown") : "No Occupant"
 	data["wearer_job"] = wearer ? wearer.get_assignment("Unknown", "Unknown", FALSE) : "No Job"
 	data["AI"] = ai?.name
+	data["is_pAI"] = ai ? ispAI(ai) : FALSE
+	data["is_user_AI"] = ai ? user == ai : FALSE
 	data["cell"] = cell?.name
 	data["charge"] = cell ? round(cell.percent(), 1) : 0
 	data["modules"] = list()
@@ -54,7 +56,7 @@
 	. = ..()
 	if(.)
 		return
-	if(locked && !allowed(usr))
+	if((!allowed(usr) || !ispAI(usr)) && locked)
 		balloon_alert(usr, "insufficient access!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
@@ -77,4 +79,8 @@
 			if(!module)
 				return
 			module.configure_edit(params["key"], params["value"])
+		if("remove_pai")
+			if(ishuman(usr)) // Only the MODsuit's wearer should be removing the pAI.
+				var/mob/user = usr
+				extract_pai(user)
 	return TRUE

@@ -5,8 +5,6 @@
 	var/obj/item/mod/control/mod
 	/// Whether this action is intended for the AI. Stuff breaks a lot if this is done differently.
 	var/ai_action = FALSE
-	/// Whether this action is intended for the inserted pAI. Stuff breaks a lot if this is done differently.
-	var/pai_action = FALSE
 
 /datum/action/item_action/mod/New(Target)
 	..()
@@ -14,7 +12,7 @@
 		qdel(src)
 		return
 	if(ai_action)
-		background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
+		background_icon_state = "bg_tech"
 
 /datum/action/item_action/mod/Grant(mob/user)
 	mod = target
@@ -53,9 +51,6 @@
 /datum/action/item_action/mod/deploy/ai
 	ai_action = TRUE
 
-/datum/action/item_action/mod/deploy/pai
-	pai_action = TRUE
-
 /datum/action/item_action/mod/activate
 	name = "Activate MODsuit"
 	desc = "Activate/Deactivate the MODsuit."
@@ -69,9 +64,6 @@
 
 /datum/action/item_action/mod/activate/ai
 	ai_action = TRUE
-
-/datum/action/item_action/mod/activate/pai
-	pai_action = TRUE
 
 /datum/action/item_action/mod/module
 	name = "Toggle Module"
@@ -87,9 +79,6 @@
 /datum/action/item_action/mod/module/ai
 	ai_action = TRUE
 
-/datum/action/item_action/mod/module/pai
-	pai_action = TRUE
-
 /datum/action/item_action/mod/panel
 	name = "MODsuit Panel"
 	desc = "Open the MODsuit's panel."
@@ -103,6 +92,3 @@
 
 /datum/action/item_action/mod/panel/ai
 	ai_action = TRUE
-
-/datum/action/item_action/mod/panel/pai
-	pai_action = TRUE
