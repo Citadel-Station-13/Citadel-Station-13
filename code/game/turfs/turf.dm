@@ -137,6 +137,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	requires_activation = FALSE
 	..()
 
+	vis_contents.Cut()
+
 /turf/on_attack_hand(mob/user)
 	user.Move_Pulled(src)
 

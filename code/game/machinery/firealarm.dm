@@ -33,8 +33,10 @@
 
 	var/detecting = 1
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
-	var/last_alarm = 0
+	COOLDOWN_DECLARE(last_alarm)
 	var/area/myarea = null
+	//Has this firealarm been triggered by its enviroment?
+	var/triggered = FALSE
 
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
 	. = ..()
@@ -50,6 +52,7 @@
 	LAZYADD(myarea.firealarms, src)
 
 /obj/machinery/firealarm/Destroy()
+	myarea.firereset(src)
 	LAZYREMOVE(myarea.firealarms, src)
 	return ..()
 
@@ -102,7 +105,7 @@
 		. += mutable_appearance(icon, "fire_on")
 		. += emissive_appearance(icon, "fire_on")
 
-	if(!panel_open && detecting) //It just looks horrible with the panel open
+	if(!panel_open && detecting && triggered) //It just looks horrible with the panel open
 		. += "fire_detected"
 		. += mutable_appearance(icon, "fire_detected")
 		. += emissive_appearance(icon, "fire_detected") //Pain
@@ -129,14 +132,14 @@
 	return TRUE
 
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && (last_alarm+FIREALARM_COOLDOWN < world.time) && !(obj_flags & EMAGGED) && detecting && !stat)
+	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && COOLDOWN_FINISHED(src, last_alarm) && !(obj_flags & EMAGGED) && detecting && !stat)
 		alarm()
-	..()
+	return ..()
 
 /obj/machinery/firealarm/proc/alarm(mob/user)
-	if(!is_operational() || (last_alarm+FIREALARM_COOLDOWN > world.time))
+	if(!is_operational() || !COOLDOWN_FINISHED(src, last_alarm))
 		return
-	last_alarm = world.time
+	COOLDOWN_START(src, last_alarm, FIREALARM_COOLDOWN)
 	var/area/A = get_base_area(src)
 	A.firealert(src)
 	playsound(loc, 'goon/sound/machinery/FireAlarm.ogg', 75)
@@ -147,7 +150,7 @@
 	if(!is_operational())
 		return
 	var/area/A = get_base_area(src)
-	A.firereset(src)
+	A.firereset()
 	if(user)
 		log_game("[user] reset a fire alarm at [COORD(src)]")
 
