@@ -125,6 +125,19 @@
 	if(ai)
 		to_chat(ai, span_notice("MODsuit [active ? "shutting down" : "starting up"]."))
 
+	if(force_deactivate)
+		seal_part(boots, seal = FALSE)
+		seal_part(gauntlets, seal = FALSE)
+		seal_part(chestplate,seal =  FALSE)
+		seal_part(helmet, seal = FALSE)
+		finish_activation(on = FALSE)
+		activating = FALSE
+		to_chat(wearer, span_notice("Systems shut down. Parts unsealed. Goodbye, [wearer]."))
+		if(ai)
+			to_chat(ai, span_notice("<b>SYSTEMS DEACTIVATED. GOODBYE: \"[ai]\"</b>"))
+		playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
+		return TRUE
+
 	if(do_after(wearer, MOD_ACTIVATION_STEP_TIME, target = wearer, required_mobility_flags = NONE))
 		to_chat(wearer, span_notice("[boots] [active ? "relax their grip on your legs" : "seal around your feet"]."))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -170,6 +183,7 @@
 	seal_part(chestplate,seal =  active)
 	seal_part(helmet, seal = active)
 	to_chat(wearer, span_warning("[active ? "Shut down" : "Start up"] cancelled."))
+	finish_activation(on = active)
 	activating = FALSE
 	return FALSE
 

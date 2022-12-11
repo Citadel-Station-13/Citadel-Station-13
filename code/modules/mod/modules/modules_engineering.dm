@@ -92,12 +92,12 @@
 
 /obj/item/mod/module/rad_protection/on_suit_activation()
 	for(var/obj/item/part in mod.mod_parts)
-		armor[RAD] = 65
+		armor[RAD] += 65
 		rad_flags = RAD_PROTECT_CONTENTS|RAD_NO_CONTAMINATE
 
 /obj/item/mod/module/rad_protection/on_suit_deactivation(deleting = FALSE)
 	for(var/obj/item/part in mod.mod_parts)
-		armor[RAD] = 0
+		armor[RAD] -= 65
 		rad_flags = NONE
 
 ///Constructor - Lets you build quicker and create RCD holograms.
