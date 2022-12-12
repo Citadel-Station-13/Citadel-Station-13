@@ -104,19 +104,6 @@
 	///ID of the slot containing a gas tank
 	var/internals_slot = null
 
-	//skyrat edit
-	///Slot for underwear like boxers and panties
-	var/underwear = null
-	///Slot for socks, yes, the thing that usually goes before your shoes
-	var/socks = null
-	///Slot for the undershirt (which is quite a foreign concept to me) or bras
-	var/shirt = null
-	///Slot for the opposite ear.
-	var/ears_extra = null
-	///Slot for the part of your arms that isn't quite hands yet.
-	var/wrists = null
-	//
-
 	/// Should the toggle helmet proc be called on the helmet during equip
 	var/toggle_helmet = TRUE
 
@@ -191,6 +178,8 @@
 		H.equip_to_slot_or_del(new id(H), ITEM_SLOT_ID, TRUE)
 	if(suit_store)
 		H.equip_to_slot_or_del(new suit_store(H), ITEM_SLOT_SUITSTORE, TRUE)
+	if(undershirt)
+		H.undershirt = initial(undershirt.name)
 
 	if(accessory)
 		var/obj/item/clothing/under/U = H.w_uniform
