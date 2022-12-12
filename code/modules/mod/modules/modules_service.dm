@@ -60,6 +60,6 @@
 	else
 		balloon_alert(mod.wearer, "can't be microwaved!")
 	var/datum/effect_system/spark_spread/spark_effect_two = new()
-	spark_effect_two.set_up(2, 1, microwave_target)
+	spark_effect_two.set_up(2, 1, microwave_target.loc)
 	spark_effect_two.start()
 	drain_power(use_power_cost)

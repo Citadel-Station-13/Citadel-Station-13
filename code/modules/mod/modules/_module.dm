@@ -133,7 +133,6 @@
 			update_signal()
 			balloon_alert(mod.wearer, "[src] activated, alt-click to use")
 	active = TRUE
-	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	mod.wearer.update_inv_back()
 	return TRUE
 
