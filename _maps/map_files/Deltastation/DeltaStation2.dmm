@@ -55255,23 +55255,7 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/item/cautery{
-	step_x = -10;
-	step_y = 10
-	},
-/obj/item/scalpel{
-	step_x = 5;
-	step_y = -5
-	},
-/obj/item/surgical_drapes,
-/obj/item/hemostat{
-	step_x = -10;
-	step_y = -10
-	},
-/obj/item/retractor{
-	step_x = 10;
-	step_y = 10
-	},
+/obj/item/storage/backpack/duffelbag/med/surgery,
 /turf/open/floor/plasteel,
 /area/medical/surgery)
 "dvG" = (
@@ -55296,21 +55280,7 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/item/circular_saw{
-	step_y = 2
-	},
-/obj/item/surgicaldrill{
-	pixel_y = 5;
-	step_y = 5;
-	step_x = 8
-	},
-/obj/item/circular_saw{
-	step_y = -5
-	},
-/obj/item/surgicaldrill{
-	pixel_y = 5;
-	step_y = 5
-	},
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/plasteel,
 /area/medical/surgery)
 "dvH" = (
@@ -55321,23 +55291,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
-/obj/item/surgical_drapes,
-/obj/item/scalpel{
-	step_x = 5;
-	step_y = -5
-	},
-/obj/item/hemostat{
-	step_x = -10;
-	step_y = -10
-	},
-/obj/item/cautery{
-	step_x = -10;
-	step_y = 10
-	},
-/obj/item/retractor{
-	step_x = 10;
-	step_y = 10
-	},
+/obj/item/storage/backpack/duffelbag/med/surgery,
 /turf/open/floor/plasteel,
 /area/medical/surgery)
 "dvI" = (
