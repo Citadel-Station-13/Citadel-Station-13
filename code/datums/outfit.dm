@@ -79,10 +79,6 @@
 	//Type path of item to go in left hand
 	var/r_hand = null
 
-
-	///ID of the slot containing a gas tank
-	var/internals_slot = null
-
 	/// Any clothing accessory item
 	var/accessory = null
 
@@ -104,6 +100,9 @@
 	  * Format of this list is (typepath, typepath, typepath)
 	  */
 	var/list/implants = null
+
+	///ID of the slot containing a gas tank
+	var/internals_slot = null
 
 	//skyrat edit
 	///Slot for underwear like boxers and panties
@@ -170,6 +169,8 @@
 		H.equip_to_slot_or_del(new uniform(H), ITEM_SLOT_ICLOTHING, TRUE)
 	if(suit)
 		H.equip_to_slot_or_del(new suit(H), ITEM_SLOT_OCLOTHING, TRUE)
+	if(back)
+		H.equip_to_slot_or_del(new back(H), ITEM_SLOT_BACK, TRUE)
 	if(belt)
 		H.equip_to_slot_or_del(new belt(H), ITEM_SLOT_BELT, TRUE)
 	if(gloves)
@@ -183,15 +184,25 @@
 	if(neck)
 		H.equip_to_slot_or_del(new neck(H), ITEM_SLOT_NECK, TRUE)
 	if(ears)
-		H.equip_to_slot_or_del(new ears(H), ITEM_SLOT_EARS, TRUE)
+		H.equip_to_slot_or_del(new ears(H), ITEM_SLOT_EARS_LEFT, TRUE) // Sandstorm edit
 	if(glasses)
 		H.equip_to_slot_or_del(new glasses(H), ITEM_SLOT_EYES, TRUE)
-	if(back)
-		H.equip_to_slot_or_del(new back(H), ITEM_SLOT_BACK, TRUE)
 	if(id)
 		H.equip_to_slot_or_del(new id(H), ITEM_SLOT_ID, TRUE)
 	if(suit_store)
 		H.equip_to_slot_or_del(new suit_store(H), ITEM_SLOT_SUITSTORE, TRUE)
+	// Sandstorm edit
+	if(ears_extra)
+		H.equip_to_slot_or_del(new ears_extra(H), ITEM_SLOT_EARS_RIGHT, TRUE)
+	if(underwear)
+		H.equip_to_slot_or_del(new underwear(H), ITEM_SLOT_UNDERWEAR, TRUE)
+	if(socks)
+		H.equip_to_slot_or_del(new socks(H), ITEM_SLOT_SOCKS, TRUE)
+	if(shirt)
+		H.equip_to_slot_or_del(new shirt(H), ITEM_SLOT_SHIRT, TRUE)
+	if(wrists)
+		H.equip_to_slot_or_del(new wrists(H), ITEM_SLOT_WRISTS, TRUE)
+	//
 
 	if(accessory)
 		var/obj/item/clothing/under/U = H.w_uniform
@@ -207,9 +218,9 @@
 
 	if(!visualsOnly) // Items in pockets or backpack don't show up on mob's icon.
 		if(l_pocket)
-			H.equip_to_slot_or_del(l_pocket, ITEM_SLOT_LPOCKET, TRUE)
+			H.equip_to_slot_or_del(new l_pocket(H), ITEM_SLOT_LPOCKET, TRUE)
 		if(r_pocket)
-			H.equip_to_slot_or_del(r_pocket, ITEM_SLOT_RPOCKET, TRUE)
+			H.equip_to_slot_or_del(new r_pocket(H), ITEM_SLOT_RPOCKET, TRUE)
 
 		if(box)
 			if(!backpack_contents)
@@ -223,7 +234,11 @@
 				if(!isnum(number))//Default to 1
 					number = 1
 				for(var/i in 1 to number)
-					H.equip_to_slot_or_del(path, ITEM_SLOT_BACKPACK, TRUE)
+					H.equip_to_slot_or_del(new path(H), ITEM_SLOT_BACKPACK, TRUE)
+
+	if(!H.head && toggle_helmet && istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit))
+		var/obj/item/clothing/suit/space/hardsuit/HS = H.wear_suit
+		HS.ToggleHelmet()
 
 	post_equip(H, visualsOnly, preference_source)
 

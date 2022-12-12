@@ -26,7 +26,6 @@
 #include "code\__DEFINES\achievements.dm"
 #include "code\__DEFINES\actionspeed_modifiers.dm"
 #include "code\__DEFINES\admin.dm"
-#include "code\__DEFINES\ai.dm"
 #include "code\__DEFINES\antagonists.dm"
 #include "code\__DEFINES\atmospherics.dm"
 #include "code\__DEFINES\bitfields.dm"
