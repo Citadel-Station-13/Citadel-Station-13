@@ -51,6 +51,7 @@
 		balloon_alert(mod.wearer, "must be on the floor!")
 		return
 	var/obj/item/microwave_target = target
+	var/turf/microwave_target_loc = target.loc
 	var/datum/effect_system/spark_spread/spark_effect = new()
 	spark_effect.set_up(2, 1, mod.wearer)
 	spark_effect.start()
@@ -60,6 +61,6 @@
 	else
 		balloon_alert(mod.wearer, "can't be microwaved!")
 	var/datum/effect_system/spark_spread/spark_effect_two = new()
-	spark_effect_two.set_up(2, 1, microwave_target.loc)
+	spark_effect_two.set_up(2, 1, microwave_target_loc)
 	spark_effect_two.start()
 	drain_power(use_power_cost)
