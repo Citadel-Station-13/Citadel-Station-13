@@ -184,25 +184,13 @@
 	if(neck)
 		H.equip_to_slot_or_del(new neck(H), ITEM_SLOT_NECK, TRUE)
 	if(ears)
-		H.equip_to_slot_or_del(new ears(H), ITEM_SLOT_EARS_LEFT, TRUE) // Sandstorm edit
+		H.equip_to_slot_or_del(new ears(H), ITEM_SLOT_EARS, TRUE)
 	if(glasses)
 		H.equip_to_slot_or_del(new glasses(H), ITEM_SLOT_EYES, TRUE)
 	if(id)
 		H.equip_to_slot_or_del(new id(H), ITEM_SLOT_ID, TRUE)
 	if(suit_store)
 		H.equip_to_slot_or_del(new suit_store(H), ITEM_SLOT_SUITSTORE, TRUE)
-	// Sandstorm edit
-	if(ears_extra)
-		H.equip_to_slot_or_del(new ears_extra(H), ITEM_SLOT_EARS_RIGHT, TRUE)
-	if(underwear)
-		H.equip_to_slot_or_del(new underwear(H), ITEM_SLOT_UNDERWEAR, TRUE)
-	if(socks)
-		H.equip_to_slot_or_del(new socks(H), ITEM_SLOT_SOCKS, TRUE)
-	if(shirt)
-		H.equip_to_slot_or_del(new shirt(H), ITEM_SLOT_SHIRT, TRUE)
-	if(wrists)
-		H.equip_to_slot_or_del(new wrists(H), ITEM_SLOT_WRISTS, TRUE)
-	//
 
 	if(accessory)
 		var/obj/item/clothing/under/U = H.w_uniform
