@@ -330,7 +330,7 @@
 	name = "Lucky Jackboots"
 	slot = ITEM_SLOT_BACKPACK
 	path = /obj/item/clothing/shoes/lucky
-	ckeywhitelist = list("donaldtrumpthecommunist")
+	ckeywhitelist = list("spiralwithin")
 
 /datum/gear/donator/raiqbawks
 	name = "Miami Boombox"
