@@ -63,17 +63,29 @@
 /obj/item/mod/construction/armor/atmospheric
 	theme = /datum/mod_theme/atmospheric
 
+/obj/item/mod/construction/armor/advanced
+	theme = /datum/mod_theme/advanced
+
 /obj/item/mod/construction/armor/mining
 	theme = /datum/mod_theme/mining
 
 /obj/item/mod/construction/armor/medical
 	theme = /datum/mod_theme/medical
 
+/obj/item/mod/construction/armor/rescue
+	theme = /datum/mod_theme/rescue
+
 /obj/item/mod/construction/armor/security
 	theme = /datum/mod_theme/security
 
+/obj/item/mod/construction/armor/research
+	theme = /datum/mod_theme/research
+
 /obj/item/mod/construction/armor/cosmohonk
 	theme = /datum/mod_theme/cosmohonk
+
+/obj/item/mod/construction/armor/magnate
+	theme = /datum/mod_theme/magnate
 
 /obj/item/mod/paint
 	name = "MOD paint kit"
