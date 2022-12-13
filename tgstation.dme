@@ -222,6 +222,7 @@
 #include "code\__HELPERS\vector.dm"
 #include "code\__HELPERS\verbs.dm"
 #include "code\__HELPERS\view.dm"
+#include "code\__HELPERS\weakref.dm"
 #include "code\__HELPERS\yelling.dm"
 #include "code\__HELPERS\matrices\color_matrix.dm"
 #include "code\__HELPERS\matrices\transform_matrix.dm"

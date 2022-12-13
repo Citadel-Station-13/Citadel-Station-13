@@ -17,10 +17,6 @@ Doesn't work on other aliens/AI.*/
 	action_icon_state = "spell_default"
 	action_background_icon_state = "bg_alien"
 
-/obj/effect/proc_holder/alien/Initialize(mapload)
-	. = ..()
-	action = new(src)
-
 /obj/effect/proc_holder/alien/Trigger(mob/living/carbon/user, skip_cost_check = FALSE)
 	if(!istype(user))
 		return TRUE
