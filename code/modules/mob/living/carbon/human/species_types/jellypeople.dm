@@ -423,7 +423,7 @@
 	coldmod = 3
 	heatmod = 1
 	burnmod = 1
-
+	balance_point_values = TRUE
 	allowed_limb_ids = list(SPECIES_SLIME,SPECIES_STARGAZER,SPECIES_SLIME_LUMI)
 
 ///////////////////////////////////LUMINESCENTS//////////////////////////////////////////

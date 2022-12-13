@@ -26,6 +26,7 @@
 	wings_icons = SPECIES_WINGS_SKELETAL
 
 	ass_image = 'icons/ass/assplasma.png'
+	balance_point_values = TRUE
 	blacklisted_quirks = list(/datum/quirk/paper_skin)
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
