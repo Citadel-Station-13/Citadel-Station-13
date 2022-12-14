@@ -299,14 +299,6 @@
 	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
-/datum/design/module/mod_injector
-	name = "Injector Module"
-	id = "mod_injector"
-	materials = list(/datum/material/iron = 1000, /datum/material/diamond = 500)
-	build_path = /obj/item/mod/module/injector
-	build_type = PROTOLATHE
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
 /datum/design/module/mod_bikehorn
 	name = "Bike Horn Module"
 	id = "mod_bikehorn"

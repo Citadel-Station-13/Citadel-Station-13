@@ -70,7 +70,6 @@
 		"mod_visor_medhud",
 		"mod_health_analyzer",
 		"mod_quick_carry",
-		"mod_injector",
 		"mod_dna_lock",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)

@@ -34,7 +34,7 @@
 /obj/item/mod/control/pre_equipped/rescue
 	theme = /datum/mod_theme/rescue
 	cell = /obj/item/stock_parts/cell/super
-	initial_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/flashlight, /obj/item/mod/module/health_analyzer, /obj/item/mod/module/injector)
+	initial_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/flashlight, /obj/item/mod/module/health_analyzer)
 
 /obj/item/mod/control/pre_equipped/research
 	theme = /datum/mod_theme/research
@@ -135,7 +135,7 @@
 /obj/item/mod/control/pre_equipped/debug
 	theme = /datum/mod_theme/debug
 	cell = /obj/item/stock_parts/cell/bluespace
-	initial_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/welding, /obj/item/mod/module/flashlight, /obj/item/mod/module/bikehorn, /obj/item/mod/module/rad_protection, /obj/item/mod/module/injector) //one of every type of module, for testing if they all work correctly
+	initial_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/welding, /obj/item/mod/module/flashlight, /obj/item/mod/module/bikehorn, /obj/item/mod/module/rad_protection) //one of every type of module, for testing if they all work correctly
 
 /obj/item/mod/control/pre_equipped/administrative
 	theme = /datum/mod_theme/administrative
