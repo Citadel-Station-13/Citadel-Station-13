@@ -65,7 +65,7 @@
 /obj/item/clothing/accessory/proc/on_uniform_dropped(obj/item/clothing/under/U, user)
 	return
 
-/obj/item/clothing/accessory/AltClick(mob/user)
+/obj/item/clothing/accessory/CtrlClick(mob/user)
 	. = ..()
 	if(istype(user) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(initial(above_suit))
@@ -77,7 +77,7 @@
 	. = ..()
 	. += "<span class='notice'>\The [src] can be attached to a uniform. Alt-click to remove it once attached.</span>"
 	if(initial(above_suit))
-		. += "<span class='notice'>\The [src] can be worn above or below your suit. Alt-click to toggle.</span>"
+		. += "<span class='notice'>\The [src] can be worn above or below your suit. Ctrl-click to toggle.</span>"
 
 //////////////
 //Waistcoats//
@@ -557,3 +557,18 @@
 	obj_flags = UNIQUE_RENAME
 	custom_materials = list(/datum/material/iron=100)
 	resistance_flags = FIRE_PROOF
+
+
+/obj/item/clothing/accessory/pride
+	name = "pride pin"
+	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored holographic pin to show off your pride of sexuality or gender identity, reminding the crew of their unwavering commitment to equity, diversity, and inclusion!"
+	icon_state = "pride"
+	above_suit = TRUE
+	obj_flags = UNIQUE_RENAME
+	unique_reskin = list("Rainbow Pride" = "pride",
+						"Bisexual Pride" = "pride_bi",
+						"Pansexual Pride" = "pride_pan",
+						"Asexual Pride" = "pride_ace",
+						"Non-binary Pride" = "pride_enby",
+						"Transgender Pride" = "pride_trans",
+						)

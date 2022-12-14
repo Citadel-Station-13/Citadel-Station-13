@@ -167,6 +167,7 @@
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 
 /obj/item/radio/mech //this has to go somewhere
+	subspace_transmission = TRUE
 
 /obj/vehicle/sealed/mecha/Initialize(mapload)
 	. = ..()
@@ -196,41 +197,40 @@
 	update_icon()
 
 /obj/vehicle/sealed/mecha/Destroy()
-	if(obj_integrity > 0) //no explody if we have hp remaining!
-		explode_on_death = FALSE
-	for(var/M in occupants)
-		var/mob/living/occupant = M
-		if(isAI(occupant))
-			occupant.gib() //No wreck, no AI to recover
-		else
-			occupant.forceMove(loc)
-			occupant.SetSleeping(destruction_sleep_duration)
+	for(var/ejectee in occupants)
+		mob_exit(ejectee, TRUE, TRUE)
 	if(LAZYLEN(equipment))
-		for(var/E in equipment)
-			var/obj/item/mecha_parts/mecha_equipment/equip = E
+		for(var/obj/item/mecha_parts/mecha_equipment/equip as anything in equipment)
 			equip.detach(loc)
 			qdel(equip)
-	if(cell)
-		QDEL_NULL(cell)
-	if(scanmod)
-		QDEL_NULL(scanmod)
-	if(capacitor)
-		QDEL_NULL(capacitor)
-	if(internal_tank)
-		QDEL_NULL(internal_tank)
+	radio = null
+
 	STOP_PROCESSING(SSobj, src)
-	GLOB.poi_list.Remove(src)
 	LAZYCLEARLIST(equipment)
-	if(loc)
-		loc.assume_air(cabin_air)
-		air_update_turf()
-	else
-		qdel(cabin_air)
-	cabin_air = null
+
+	QDEL_NULL(cell)
+	QDEL_NULL(scanmod)
+	QDEL_NULL(capacitor)
+	QDEL_NULL(internal_tank)
+	QDEL_NULL(cabin_air)
 	QDEL_NULL(spark_system)
 	QDEL_NULL(smoke_system)
 
+	GLOB.poi_list -= src
 	GLOB.mechas_list -= src //global mech list
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.remove_from_hud(src) //YEET
+	return ..()
+
+/obj/vehicle/sealed/mecha/obj_destruction()
+	loc.assume_air(cabin_air)
+	air_update_turf(FALSE, FALSE)
+	for(var/mob/living/occupant as anything in occupants)
+		if(isAI(occupant))
+			occupant.gib() //No wreck, no AI to recover
+			continue
+		mob_exit(occupant, FALSE, TRUE)
+		occupant.SetSleeping(destruction_sleep_duration)
 	return ..()
 
 /obj/vehicle/sealed/mecha/update_icon()
