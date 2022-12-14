@@ -237,7 +237,7 @@
 	if(!anchored || current_size >= STAGE_FIVE)
 		step_towards(src,S)
 
-/obj/get_dumping_location()
+/obj/get_dumping_location(datum/component/storage/source,mob/user)
 	return get_turf(src)
 
 /**

@@ -278,7 +278,7 @@
 	if(.)
 		ChangeTurf(/turf/closed/wall/clockwork)
 
-/turf/closed/wall/get_dumping_location()
+/turf/closed/wall/get_dumping_location(obj/item/storage/source, mob/user)
 	return null
 
 /turf/closed/wall/acid_act(acidpwr, acid_volume)

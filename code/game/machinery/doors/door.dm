@@ -381,7 +381,7 @@
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
 
-/obj/machinery/door/get_dumping_location()
+/obj/machinery/door/get_dumping_location(obj/item/storage/source,mob/user)
 	return null
 
 /obj/machinery/door/proc/lock()
