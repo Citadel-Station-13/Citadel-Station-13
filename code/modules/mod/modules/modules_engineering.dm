@@ -51,12 +51,13 @@
 	incompatible_modules = list(/obj/item/mod/module/magboot)
 	cooldown_time = 0.5 SECONDS
 	/// Slowdown added onto the suit.
-	var/slowdown_active = 0.5
+	var/slowdown_active = 2
 
 /obj/item/mod/module/magboot/on_activation()
 	. = ..()
 	if(!.)
 		return
+	mod.boots.clothing_flags |= NOSLIP
 	ADD_TRAIT(mod.wearer, TRAIT_NEGATES_GRAVITY, MOD_TRAIT)
 	ADD_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
 	mod.slowdown += slowdown_active
@@ -67,6 +68,7 @@
 	. = ..()
 	if(!.)
 		return
+	mod.boots.clothing_flags &= ~NOSLIP
 	REMOVE_TRAIT(mod.wearer, TRAIT_NEGATES_GRAVITY, MOD_TRAIT)
 	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
 	mod.slowdown -= slowdown_active

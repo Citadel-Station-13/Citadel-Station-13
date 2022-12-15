@@ -135,3 +135,6 @@
 	if(!mod.wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		mod.wearer.dropItemToGround(overslot, force = TRUE)
 	overslot = null
+
+/obj/item/clothing/shoes/mod/negates_gravity()
+	return clothing_flags & NOSLIP
