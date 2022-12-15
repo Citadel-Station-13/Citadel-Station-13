@@ -73,7 +73,91 @@
 	QDEL_NULL(stored)
 	return ..()
 
-/// No Ion Jetpack
+///Ion Jetpack - Lets the user fly freely through space using battery charge.
+/obj/item/mod/module/jetpack
+	name = "MOD ion jetpack module"
+	desc = "A series of electric thrusters installed across the suit, this is a module highly anticipated by trainee Engineers. \
+		Rather than using gasses for combustion thrust, these jets are capable of accelerating ions using \
+		charge from the suit's charge. Some say this isn't Nakamura Engineering's first foray into jet-enabled suits."
+	icon_state = "jetpack"
+	module_type = MODULE_TOGGLE
+	complexity = 3
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	use_power_cost = DEFAULT_CHARGE_DRAIN
+	incompatible_modules = list(/obj/item/mod/module/jetpack)
+	cooldown_time = 0.5 SECONDS
+	overlay_state_inactive = "module_jetpack"
+	overlay_state_active = "module_jetpack_on"
+	/// Do we stop the wearer from gliding in space.
+	var/stabilizers = FALSE
+	/// Do we give the wearer a speed buff.
+	var/full_speed = FALSE
+	var/datum/effect_system/trail_follow/ion/ion_trail
+
+/obj/item/mod/module/jetpack/Initialize(mapload)
+	. = ..()
+	ion_trail = new
+	ion_trail.set_up(src)
+
+/obj/item/mod/module/jetpack/Destroy()
+	QDEL_NULL(ion_trail)
+	return ..()
+
+/obj/item/mod/module/jetpack/on_activation()
+	. = ..()
+	if(!.)
+		return
+	ion_trail.start()
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/move_react)
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_SPACEMOVE, .proc/spacemove_react, override = TRUE)
+	if(full_speed)
+		mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+	else
+		mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack)
+
+/obj/item/mod/module/jetpack/on_deactivation(display_message = TRUE, deleting = FALSE)
+	. = ..()
+	stabilizers = FALSE
+	ion_trail.stop()
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack)
+
+/obj/item/mod/module/jetpack/get_configuration()
+	. = ..()
+	.["stabilizers"] = add_ui_configuration("Stabilizers", "bool", stabilizers)
+
+/obj/item/mod/module/jetpack/configure_edit(key, value)
+	switch(key)
+		if("stabilizers")
+			stabilizers = text2num(value)
+
+/obj/item/mod/module/jetpack/proc/move_react(mob/user)
+	allow_thrust()
+
+/obj/item/mod/module/jetpack/proc/allow_thrust(use_fuel = TRUE)
+	if(!active)
+		return FALSE
+	if(!use_fuel)
+		return check_power(use_power_cost)
+	if(!drain_power(use_power_cost))
+		return FALSE
+	return TRUE
+
+/obj/item/mod/module/jetpack/proc/spacemove_react(mob/user, movement_dir)
+	SIGNAL_HANDLER
+
+	if(active && (movement_dir || stabilizers))
+		return COMSIG_MOVABLE_STOP_SPACEMOVE
+
+/obj/item/mod/module/jetpack/advanced
+	name = "MOD advanced ion jetpack module"
+	desc = "An improvement on the previous model of electric thrusters. This one achieves higher speeds through \
+		mounting of more jets and a red paint applied on it."
+	icon_state = "jetpack_advanced"
+	overlay_state_inactive = "module_jetpackadv"
+	overlay_state_active = "module_jetpackadv_on"
+	full_speed = TRUE
 
 ///Eating Apparatus - Lets the user eat/drink with the suit on.
 /obj/item/mod/module/mouthhole
