@@ -4,7 +4,6 @@
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	anthro_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
-	taur_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "helmet"
 	item_state = "helmet"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
@@ -39,7 +38,6 @@
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	anthro_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
-	taur_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "chestplate"
 	item_state = "chestplate"
 	blood_overlay_type = "armor"
@@ -50,12 +48,13 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL
+	flags_inv = HIDETAUR
 	visor_flags = STOPSPRESSUREDAMAGE
 	visor_flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
 	resistance_flags = NONE
 	var/obj/item/mod/control/mod
-	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/armor/mod/Destroy()
 	if(!QDELETED(mod))
@@ -70,7 +69,6 @@
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	anthro_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
-	taur_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "gauntlets"
 	item_state = "gauntlets"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
@@ -106,7 +104,6 @@
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	anthro_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
-	taur_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "boots"
 	item_state = "boots"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
@@ -120,6 +117,7 @@
 	item_flags = NONE
 	var/obj/item/mod/control/mod
 	var/obj/item/clothing/overslot
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/shoes/mod/Destroy()
 	if(!QDELETED(mod))
