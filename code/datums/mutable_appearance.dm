@@ -4,6 +4,9 @@
 
 // Mutable appearances are children of images, just so you know.
 
+/mutable_appearance
+	var/category // listen i want to store some meta information on mutable appearances don't judge me
+
 /mutable_appearance/New()
 	..()
 	plane = FLOAT_PLANE // No clue why this is 0 by default yet images are on FLOAT_PLANE

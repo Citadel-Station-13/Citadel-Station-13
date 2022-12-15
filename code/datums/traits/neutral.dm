@@ -186,3 +186,12 @@
 	value = 0
 	medical_record_text = "Patient should not come into contact with sodium."
 	mob_trait = TRAIT_SALT_SENSITIVE
+
+/datum/quirk/dullahan
+	name = "Dullahan"
+	desc = "Your head is detached from your body."
+	value = 0
+	medical_record_text = "Patient seems to have some kind of spatial link with their decapitated head."
+
+/datum/quirk/dullahan/post_add()
+	quirk_holder.AddComponent(/datum/component/dullahan)

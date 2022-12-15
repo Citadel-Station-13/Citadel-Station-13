@@ -364,6 +364,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(length(old_flavor_text) && !length(features["feature_flavor_text"]))
 			features["feature_flavor_text"] = old_flavor_text
 
+	// hey what happened to 55
+
+	// dullahans as a species cease to exist
+	if(current_version < 56)
+		var/species_id = S["species"]
+		if(species_id == SPECIES_DULLAHAN)
+			S["species"] = SPECIES_HUMAN
+			if(islist(S["all_quirks"]))
+				S["all_quirks"] += "Dullahan"
+			else
+				S["all_quirks"] = list("Dullahan")
+
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return

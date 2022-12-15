@@ -4,6 +4,7 @@
 /datum/sprite_accessory/facial_hair
 	icon = 'icons/mob/hair.dmi'
 	gender = MALE // barf (unless you're a dorf, dorfs dig chix w/ beards :P)
+	mutable_category = "HEAD"
 
 // please make sure they're sorted alphabetically and categorized
 /datum/sprite_accessory/facial_hair/shaved //this is exempt from the alphabetical sort

@@ -134,7 +134,7 @@
 		I.pixel_y = px_y
 	add_overlay(standing)
 
-/obj/item/bodypart/head/get_limb_icon(dropped)
+/obj/item/bodypart/head/get_limb_icon(dropped, ignore_brain = FALSE)
 	if(custom_head)
 		return
 	cut_overlays()
@@ -152,7 +152,7 @@
 					. += facial_overlay
 
 			//Applies the debrained overlay if there is no brain
-			if(!brain)
+			if(!brain && !ignore_brain)
 				var/image/debrain_overlay = image(layer = -HAIR_LAYER, dir = SOUTH)
 				if(animal_origin == ALIEN_BODYPART)
 					debrain_overlay.icon = 'icons/mob/animal_parts.dmi'
@@ -175,12 +175,13 @@
 
 		// lipstick
 		if(lip_style)
-			var/image/lips_overlay = image('icons/mob/lips.dmi', "lips_[lip_style]", -BODY_LAYER, SOUTH)
+			var/mutable_appearance/lips_overlay = mutable_appearance('icons/mob/lips.dmi', "lips_[lip_style]", -BODY_LAYER, SOUTH)
+			lips_overlay.category = "HEAD"
 			lips_overlay.color = lip_color
 			. += lips_overlay
 
 		// eyes
-		if(eyes)
+		if(eyes || ignore_brain)
 			var/left_state = DEFAULT_LEFT_EYE_STATE
 			var/right_state = DEFAULT_RIGHT_EYE_STATE
 			if(owner && owner.dna.species)
@@ -189,12 +190,14 @@
 					left_state = eye_type + "_left_eye"
 					right_state = eye_type + "_right_eye"
 			if(left_state != DEFAULT_NO_EYE_STATE)
-				var/image/left_eye = image('icons/mob/hair.dmi', left_state, -BODY_LAYER, SOUTH)
+				var/mutable_appearance/left_eye = mutable_appearance('icons/mob/hair.dmi', left_state, -BODY_LAYER, SOUTH)
+				left_eye.category = "HEAD"
 				if(eyes.left_eye_color)
 					left_eye.color = "#" + eyes.left_eye_color
 				. += left_eye
 			if(right_state != DEFAULT_NO_EYE_STATE)
-				var/image/right_eye = image('icons/mob/hair.dmi', right_state, -BODY_LAYER, SOUTH)
+				var/mutable_appearance/right_eye = mutable_appearance('icons/mob/hair.dmi', right_state, -BODY_LAYER, SOUTH)
+				right_eye.category = "HEAD"
 				if(eyes.right_eye_color)
 					right_eye.color = "#" + eyes.right_eye_color
 				. += right_eye

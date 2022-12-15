@@ -1084,6 +1084,13 @@
 	else
 		B.gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
 
+/datum/reagent/medicine/neurine/reaction_obj(obj/O, reac_volume)
+	if(istype(O, /obj/item/dullahan_head))
+		var/obj/item/dullahan_head/head = O
+		if(head.B)
+			head.B.applyOrganDamage(-20)
+		if(head.owner)
+			head.owner.cure_trauma_type(resilience = TRAUMA_RESILIENCE_SURGERY)
 
 /datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent(/datum/reagent/consumable/ethanol/neurotoxin))
