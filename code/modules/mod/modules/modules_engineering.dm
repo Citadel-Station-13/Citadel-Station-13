@@ -91,18 +91,18 @@
 	incompatible_modules = list(/obj/item/mod/module/rad_protection)
 
 /obj/item/mod/module/rad_protection/on_suit_activation()
-	mod.armor[RAD] += 65
+	mod.armor = mod.armor.modifyRating(rad = 65)
 	mod.rad_flags = RAD_PROTECT_CONTENTS|RAD_NO_CONTAMINATE
 	for(var/obj/item/part in mod.mod_parts)
-		armor[RAD] += 65
-		rad_flags = RAD_PROTECT_CONTENTS|RAD_NO_CONTAMINATE
+		part.armor = mod.armor
+		part.rad_flags = mod.rad_flags
 
 /obj/item/mod/module/rad_protection/on_suit_deactivation(deleting = FALSE)
-	mod.armor[RAD] -= 65
+	mod.armor = mod.armor.modifyRating(rad = -65)
 	mod.rad_flags = NONE
 	for(var/obj/item/part in mod.mod_parts)
-		armor[RAD] -= 65
-		rad_flags = NONE
+		part.armor = mod.armor
+		part.rad_flags = mod.rad_flags
 
 ///Constructor - Lets you build quicker and create RCD holograms.
 /obj/item/mod/module/constructor
