@@ -4,7 +4,7 @@
 
 /obj/machinery/mineral
 	speed_process = TRUE
-	init_process = FALSE
+	init_process = TRUE // Must be true after init_process fix
 	/// The current direction of `input_turf`, in relation to the machine.
 	var/input_dir = NORTH
 	/// The current direction, in relation to the machine, that items will be output to.
