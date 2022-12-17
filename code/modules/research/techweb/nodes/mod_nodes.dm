@@ -44,6 +44,7 @@
 		"mod_visor_meson",
 		"mod_t_ray",
 		"mod_magboot",
+		"mod_tether",
 		"mod_constructor",
 		"mod_mister_atmos",
 	)

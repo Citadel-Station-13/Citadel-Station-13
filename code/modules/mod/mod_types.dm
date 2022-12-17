@@ -158,6 +158,7 @@
 		/obj/item/mod/module/welding,
 		/obj/item/mod/module/rad_protection,
 		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/tether,
 	)
 
 /obj/item/mod/control/pre_equipped/responsory
@@ -248,6 +249,7 @@
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/bikehorn,
 		/obj/item/mod/module/rad_protection,
+		/obj/item/mod/module/tether,
 	) //one of every type of module, for testing if they all work correctly
 
 /obj/item/mod/control/pre_equipped/administrative

@@ -81,7 +81,64 @@
 	complexity = 0
 	slowdown_active = 0
 
-// No tether module, sorry!
+///Emergency Tether - Shoots a grappling hook projectile in 0g that throws the user towards it.
+/obj/item/mod/module/tether
+	name = "MOD emergency tether module"
+	desc = "A custom-built grappling-hook powered by a winch capable of hauling the user. \
+		While some older models of cargo-oriented grapples have capacities of a few tons, \
+		these are only capable of working in zero-gravity environments, a blessing to some Engineers."
+	icon_state = "tether"
+	module_type = MODULE_ACTIVE
+	complexity = 3
+	use_power_cost = DEFAULT_CHARGE_DRAIN
+	incompatible_modules = list(/obj/item/mod/module/tether)
+	cooldown_time = 1.5 SECONDS
+
+/obj/item/mod/module/tether/on_use()
+	if(mod.wearer.has_gravity(get_turf(src)))
+		balloon_alert(mod.wearer, "too much gravity!")
+		playsound(src, "gun_dry_fire", 25, TRUE)
+		return FALSE
+	return ..()
+
+/obj/item/mod/module/tether/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/projectile/tether = new /obj/item/projectile/tether(mod.wearer.loc)
+	tether.preparePixelProjectile(target, mod.wearer)
+	tether.firer = mod.wearer
+	playsound(src, 'sound/weapons/batonextend.ogg', 25, TRUE)
+	INVOKE_ASYNC(tether, /obj/item/projectile.proc/fire)
+	drain_power(use_power_cost)
+
+/obj/item/projectile/tether
+	name = "tether"
+	icon_state = "tether_projectile"
+	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
+	damage = 0
+	nodamage = TRUE
+	range = 10
+	hitsound = 'sound/weapons/batonextend.ogg'
+	hitsound_wall = 'sound/weapons/batonextend.ogg'
+	suppressed = SUPPRESSED_VERY
+	hit_threshhold = LATTICE_LAYER
+	/// Reference to the beam following the projectile.
+	var/line
+
+/obj/item/projectile/tether/fire(setAngle)
+	if(firer)
+		line = firer.Beam(src, "line", 'icons/obj/clothing/modsuit/mod_modules.dmi')
+	..()
+
+/obj/item/projectile/tether/on_hit(atom/target)
+	. = ..()
+	if(firer)
+		firer.throw_at(target, 10, 1, firer, FALSE, FALSE, null, MOVE_FORCE_NORMAL, TRUE)
+
+/obj/item/projectile/tether/Destroy()
+	QDEL_NULL(line)
+	return ..()
 
 ///Radiation Protection - Protects the user from radiation, gives them a geiger counter and rad info in the panel.
 /obj/item/mod/module/rad_protection

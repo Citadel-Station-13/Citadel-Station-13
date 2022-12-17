@@ -241,6 +241,14 @@
 	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/module/mod_tether
+	name = "Emergency Tether Module"
+	id = "mod_tether"
+	materials = list(/datum/material/iron = 1000, /datum/material/silver = 500)
+	build_path = /obj/item/mod/module/tether
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/module/mod_mouthhole
 	name = "Eating Apparatus Module"
 	id = "mod_mouthhole"
