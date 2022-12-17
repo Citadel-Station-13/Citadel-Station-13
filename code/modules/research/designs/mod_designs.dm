@@ -218,6 +218,13 @@
 	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/module/mod_jetpack
+	name = "Ion Jetpack Module"
+	id = "mod_jetpack"
+	materials = list(/datum/material/iron = 1500, /datum/material/plasma = 1000)
+	build_path = /obj/item/mod/module/jetpack
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/module/mod_magboot
 	name = "Magnetic Stabilizator Module"
 	id = "mod_magboot"

@@ -40,6 +40,7 @@
 	prereq_ids = list("mod_advanced", "engineering")
 	design_ids = list(
 		"mod_plating_engineering",
+		"mod_jetpack",
 		"mod_visor_meson",
 		"mod_t_ray",
 		"mod_magboot",
