@@ -54035,11 +54035,11 @@
 	dir = 4
 	},
 /obj/item/clothing/gloves/color/latex{
-	step_y = 10
+	pixel_y = 10
 	},
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical{
-	step_y = -6
+	pixel_y = -6
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
@@ -54075,11 +54075,11 @@
 	dir = 8
 	},
 /obj/item/clothing/gloves/color/latex{
-	step_y = 10
+	pixel_y = 10
 	},
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical{
-	step_y = -6
+	pixel_y = -6
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
