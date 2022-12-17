@@ -52,6 +52,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/stack/cable_coil/random = 4,
 	/obj/item/stack/cable_coil/random/five = 6,
 	/obj/item/mod/construction/broken_core = 5,
+	/obj/item/mod/module/springlock = 1,
 	/obj/item/stack/medical/suture = 1,
 	/obj/item/stack/rods/ten = 9,
 	/obj/item/stack/rods/twentyfive = 1,

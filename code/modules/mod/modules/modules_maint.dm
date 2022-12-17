@@ -1,6 +1,62 @@
 //Maint modules for MODsuits
 
-///Springlock Mechanism - Nope
+///Springlock Mechanism - allows your modsuit to activate faster, but reagents are very dangerous.
+/obj/item/mod/module/springlock
+	name = "MOD springlock module"
+	desc = "A module that spans the entire size of the MOD unit, sitting under the outer shell. \
+		This mechanical exoskeleton pushes out of the way when the user enters and it helps in booting \
+		up, but was taken out of modern suits because of the springlock's tendency to \"snap\" back \
+		into place when exposed to humidity. You know what it's like to have an entire exoskeleton enter you?"
+	icon_state = "springlock"
+	complexity = 3 // it is inside every part of your suit, so
+	incompatible_modules = list(/obj/item/mod/module/springlock)
+
+/obj/item/mod/module/springlock/on_install()
+	mod.activation_step_time *= 0.5
+
+/obj/item/mod/module/springlock/on_uninstall(deleting = FALSE)
+	mod.activation_step_time *= 2
+
+/obj/item/mod/module/springlock/on_suit_activation()
+	RegisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS, .proc/on_wearer_exposed)
+
+/obj/item/mod/module/springlock/on_suit_deactivation(deleting = FALSE)
+	UnregisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
+
+///Signal fired when wearer is exposed to reagents
+/obj/item/mod/module/springlock/proc/on_wearer_exposed(atom/source, list/reagents, datum/reagents/source_reagents, methods, volume_modifier, show_message, from_gas)
+	SIGNAL_HANDLER
+
+	if(!reagents.len)
+		return
+	if(!(methods & (VAPOR|PATCH|TOUCH)))
+		return //remove non-touch reagent exposure
+	to_chat(mod.wearer, span_danger("[src] makes an ominous click sound..."))
+	playsound(src, 'sound/items/modsuit/springlock.ogg', 75, TRUE)
+	addtimer(CALLBACK(src, .proc/snap_shut), rand(3 SECONDS, 5 SECONDS))
+	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_spring_block)
+
+///Signal fired when wearer attempts to activate/deactivate suits
+/obj/item/mod/module/springlock/proc/on_activate_spring_block(datum/source, user)
+	SIGNAL_HANDLER
+
+	balloon_alert(user, "springlocks aren't responding...?")
+	return MOD_CANCEL_ACTIVATE
+
+///Delayed death proc of the suit after the wearer is exposed to reagents
+/obj/item/mod/module/springlock/proc/snap_shut()
+	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
+	if(!mod.wearer) //while there is a guaranteed user when on_wearer_exposed() fires, that isn't the same case for this proc
+		return
+	mod.wearer.visible_message("[src] inside [mod.wearer]'s [mod.name] snaps shut, mutilating the user inside!", span_userdanger("*SNAP*"))
+	mod.wearer.emote("scream")
+	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
+	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
+	mod.wearer.client?.give_award(/datum/award/achievement/misc/springlock, mod.wearer)
+	mod.wearer.apply_damage(500, BRUTE, forced = TRUE, spread_damage = TRUE, sharpness = SHARP_POINTY) //boggers, bogchamp, etc
+	if(!HAS_TRAIT(mod.wearer, TRAIT_NODEATH))
+		mod.wearer.death() //just in case, for some reason, they're still alive
+	flash_color(mod.wearer, flash_color = "#FF0000", flash_time = 10 SECONDS)
 
 ///Rave Visor - Pointless
 

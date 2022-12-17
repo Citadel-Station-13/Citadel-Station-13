@@ -138,31 +138,31 @@
 		playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
 		return TRUE
 
-	if(do_after(wearer, MOD_ACTIVATION_STEP_TIME, target = wearer, required_mobility_flags = NONE))
+	if(do_after(wearer, activation_step_time, target = wearer, required_mobility_flags = NONE))
 		to_chat(wearer, span_notice("[boots] [active ? "relax their grip on your legs" : "seal around your feet"]."))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		seal_part(boots, seal = !active)
 	else
 		return toggle_activate_fail()
-	if(do_after(wearer, MOD_ACTIVATION_STEP_TIME, target = wearer, required_mobility_flags = NONE))
+	if(do_after(wearer, activation_step_time, target = wearer, required_mobility_flags = NONE))
 		to_chat(wearer, span_notice("[gauntlets] [active ? "become loose around your fingers" : "tighten around your fingers and wrists"]."))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		seal_part(gauntlets, seal = !active)
 	else
 		return toggle_activate_fail()
-	if(do_after(wearer, MOD_ACTIVATION_STEP_TIME, target = wearer, required_mobility_flags = NONE))
+	if(do_after(wearer, activation_step_time, target = wearer, required_mobility_flags = NONE))
 		to_chat(wearer, span_notice("[chestplate] [active ? "releases your chest" : "cinches tightly against your chest"]."))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		seal_part(chestplate,seal =  !active)
 	else
 		return toggle_activate_fail()
-	if(do_after(wearer, MOD_ACTIVATION_STEP_TIME, target = wearer, required_mobility_flags = NONE))
+	if(do_after(wearer, activation_step_time, target = wearer, required_mobility_flags = NONE))
 		to_chat(wearer, span_notice("[helmet] hisses [active ? "open" : "closed"]."))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		seal_part(helmet, seal = !active)
 	else
 		return toggle_activate_fail()
-	if(do_after(wearer, MOD_ACTIVATION_STEP_TIME, target = wearer, required_mobility_flags = NONE))
+	if(do_after(wearer, activation_step_time, target = wearer, required_mobility_flags = NONE))
 		to_chat(wearer, span_notice("Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer]."))
 		if(ai)
 			to_chat(ai, span_notice("<b>SYSTEMS [active ? "DEACTIVATED. GOODBYE" : "ACTIVATED. WELCOME"]: \"[ai]\"</b>"))
@@ -247,5 +247,4 @@
 		seal_part(part, seal = TRUE)
 	finish_activation(on = TRUE)
 
-#undef MOD_ACTIVATION_STEP_TIME
 #undef MOD_ACTIVATION_STEP_FLAGS

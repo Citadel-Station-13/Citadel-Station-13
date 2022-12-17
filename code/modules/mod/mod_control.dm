@@ -65,6 +65,8 @@
 	var/slowdown_inactive = 2
 	/// Slowdown of the MOD when active.
 	var/slowdown_active = 1
+	/// How long this MOD takes each part to seal.
+	var/activation_step_time = MOD_ACTIVATION_STEP_TIME
 	/// MOD cell.
 	var/obj/item/stock_parts/cell/cell
 	/// MOD helmet.

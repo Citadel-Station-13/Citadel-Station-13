@@ -160,6 +160,7 @@
 #include "code\__DEFINES\dcs\signals.dm"
 #include "code\__DEFINES\dcs\signals\signals_medical.dm"
 #include "code\__DEFINES\dcs\signals\signals_mod.dm"
+#include "code\__DEFINES\dcs\signals\signals_reagent.dm"
 #include "code\__DEFINES\dcs\signals\signals_subsystem.dm"
 #include "code\__DEFINES\dcs\signals\signals_atom\signals_atom_movable.dm"
 #include "code\__DEFINES\dcs\signals\signals_atom\signals_atom_movement.dm"
