@@ -187,10 +187,13 @@
 	lose_text = "<span class='danger'>High-tech gizmos are a scam...</span>"
 
 /datum/quirk/trandening/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/autosurgeon/gloweyes/gloweyes = new(get_turf(H))
-	H.equip_to_slot(gloweyes, ITEM_SLOT_BACKPACK)
-	H.regenerate_icons()
+	// Get targets
+	var/obj/item/organ/eyes/old_eyes = quirk_holder.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/robotic/glow/new_eyes = new
+	
+	// Replace eyes
+	qdel(old_eyes)
+	new_eyes.Insert(quirk_holder)
 
 /datum/quirk/bloodpressure
 	name = "Polycythemia vera"
