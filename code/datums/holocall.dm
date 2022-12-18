@@ -449,7 +449,6 @@
 	SAY Oh, shit!
 	DELAY 10
 	PRESET /datum/preset_holoimage/engineer/atmos/rig
-	PRESET /datum/preset_holoimage/engineer/atmos/mod
 	LANGUAGE /datum/language/narsie
 	NAME Unknown
 	SAY RISE, MY LORD!!
@@ -457,7 +456,6 @@
 	LANGUAGE /datum/language/common
 	NAME Plastic
 	PRESET /datum/preset_holoimage/engineer/rig
-	PRESET /datum/preset_holoimage/engineer/mod
 	SAY Fuck, fuck, fuck!
 	DELAY 20
 	SAY It's loose! CALL THE FUCKING SHUTT-
