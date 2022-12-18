@@ -4,10 +4,9 @@
 	desc = "You should not see this, yell at a coder!"
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
-	anthro_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
-	taur_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "standard-control"
 	item_state = "standard-control"
+	mutantrace_variation = STYLE_NO_ANTHRO_ICON
 
 /obj/item/mod/control
 	name = "MOD control unit"

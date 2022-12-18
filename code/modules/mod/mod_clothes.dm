@@ -3,7 +3,7 @@
 	desc = "A helmet for a MODsuit."
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
-	anthro_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing_anthro.dmi'
 	icon_state = "helmet"
 	item_state = "helmet"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
@@ -37,7 +37,7 @@
 	desc = "A chestplate for a MODsuit."
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
-	anthro_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing_anthro.dmi'
 	icon_state = "chestplate"
 	item_state = "chestplate"
 	blood_overlay_type = "armor"
@@ -54,7 +54,7 @@
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
 	resistance_flags = NONE
 	var/obj/item/mod/control/mod
-	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/suit/armor/mod/Destroy()
 	if(!QDELETED(mod))
@@ -68,7 +68,6 @@
 	desc = "A pair of gauntlets for a MODsuit."
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
-	anthro_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "gauntlets"
 	item_state = "gauntlets"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
@@ -81,6 +80,7 @@
 	resistance_flags = NONE
 	var/obj/item/mod/control/mod
 	var/obj/item/clothing/overslot
+	mutantrace_variation = STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/gloves/mod/Destroy()
 	if(!QDELETED(mod))
@@ -103,7 +103,7 @@
 	desc = "A pair of boots for a MODsuit."
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
-	anthro_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/modsuit/mod_clothing_anthro.dmi'
 	icon_state = "boots"
 	item_state = "boots"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
@@ -117,7 +117,7 @@
 	item_flags = NONE
 	var/obj/item/mod/control/mod
 	var/obj/item/clothing/overslot
-	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/shoes/mod/Destroy()
 	if(!QDELETED(mod))
