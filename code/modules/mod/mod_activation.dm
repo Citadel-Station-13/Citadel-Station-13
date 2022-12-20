@@ -1,5 +1,3 @@
-#define MOD_ACTIVATION_STEP_FLAGS IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED
-
 /// Creates a radial menu from which the user chooses parts of the suit to deploy/retract. Repeats until all parts are extended or retracted.
 /obj/item/mod/control/proc/choose_deploy(mob/user)
 	if(!length(mod_parts))
@@ -246,5 +244,3 @@
 	for(var/obj/item/part in mod_parts)
 		seal_part(part, seal = TRUE)
 	finish_activation(on = TRUE)
-
-#undef MOD_ACTIVATION_STEP_FLAGS

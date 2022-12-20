@@ -14,7 +14,6 @@
 		"mod_welding",
 		"mod_mouthhole",
 		"mod_flashlight",
-		"mod_longfall",
 	)
 
 /datum/techweb_node/mod_advanced

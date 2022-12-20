@@ -58,7 +58,6 @@
 	if(!.)
 		return
 	mod.boots.clothing_flags |= NOSLIP
-	ADD_TRAIT(mod.wearer, TRAIT_NEGATES_GRAVITY, MOD_TRAIT)
 	ADD_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
 	mod.slowdown += slowdown_active
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
@@ -69,7 +68,6 @@
 	if(!.)
 		return
 	mod.boots.clothing_flags &= ~NOSLIP
-	REMOVE_TRAIT(mod.wearer, TRAIT_NEGATES_GRAVITY, MOD_TRAIT)
 	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
 	mod.slowdown -= slowdown_active
 	mod.wearer.update_gravity(mod.wearer.has_gravity())

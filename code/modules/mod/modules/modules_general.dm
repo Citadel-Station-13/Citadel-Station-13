@@ -319,31 +319,7 @@
 	drain_power(use_power_cost)
 	return dispensed
 
-///Longfall - Nullifies fall damage, removing charge instead.
-/obj/item/mod/module/longfall
-	name = "MOD longfall module"
-	desc = "Useful for protecting both the suit and the wearer, \
-		utilizing commonplace systems to convert the possible damage from a fall into kinetic charge, \
-		as well as internal gyroscopes to ensure the user's safe falling. \
-		Useful for mining, monorail tracks, or even skydiving!"
-	icon_state = "longfall"
-	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
-	incompatible_modules = list(/obj/item/mod/module/longfall)
-
-/obj/item/mod/module/longfall/on_suit_activation()
-	RegisterSignal(mod.wearer, COMSIG_LIVING_Z_IMPACT, .proc/z_impact_react)
-
-/obj/item/mod/module/longfall/on_suit_deactivation(deleting = FALSE)
-	UnregisterSignal(mod.wearer, COMSIG_LIVING_Z_IMPACT)
-
-/obj/item/mod/module/longfall/proc/z_impact_react(datum/source, levels, turf/fell_on)
-	if(!drain_power(use_power_cost*levels))
-		return
-	new /obj/effect/temp_visual/mook_dust(fell_on)
-	mod.wearer.Stun(levels * 1 SECONDS)
-	to_chat(mod.wearer, span_notice("[src] protects you from the damage!"))
-	return NO_Z_IMPACT_DAMAGE
+///Longfall
 
 ///Thermal Regulator - Naw.
 

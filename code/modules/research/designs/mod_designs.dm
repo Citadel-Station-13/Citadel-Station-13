@@ -306,14 +306,6 @@
 	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/module/mod_longfall
-	name = "Longfall Module"
-	id = "mod_longfall"
-	materials = list(/datum/material/iron = 1000)
-	build_path = /obj/item/mod/module/longfall
-	build_type = PROTOLATHE
-	departmental_flags = DEPARTMENTAL_FLAG_CARGO
-
 /datum/design/module/mod_bikehorn
 	name = "Bike Horn Module"
 	id = "mod_bikehorn"

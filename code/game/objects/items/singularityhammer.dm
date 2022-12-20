@@ -53,13 +53,7 @@
 			var/atom/movable/A = X
 			if(A == wielder)
 				continue
-			if(isliving(A))
-				var/mob/living/vortexed_mob = A
-				if(vortexed_mob.mob_negates_gravity())
-					continue
-				else
-					vortexed_mob.Paralyze(2 SECONDS)
-			if(!A.anchored && !isobserver(A))
+			if(A && !A.anchored && !ishuman(X))
 				step_towards(A,pull)
 				step_towards(A,pull)
 				step_towards(A,pull)
