@@ -74,7 +74,6 @@
 	id = "mod_plating_engineering"
 	build_path = /obj/item/mod/construction/armor/engineering
 	materials = list(/datum/material/iron = 6000, /datum/material/gold = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 	research_icon_state = "engineering-plating"
 
@@ -83,7 +82,6 @@
 	id = "mod_plating_atmospheric"
 	build_path = /obj/item/mod/construction/armor/atmospheric
 	materials = list(/datum/material/iron = 6000, /datum/material/titanium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 	research_icon_state = "atmospheric-plating"
 
@@ -92,7 +90,6 @@
 	id = "mod_plating_mining"
 	build_path = /obj/item/mod/construction/armor/mining
 	materials = list(/datum/material/iron = 6000, /datum/material/titanium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 	research_icon_state = "atmospheric-mining"
 
@@ -101,7 +98,6 @@
 	id = "mod_plating_medical"
 	build_path = /obj/item/mod/construction/armor/medical
 	materials = list(/datum/material/iron = 6000, /datum/material/silver = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 	research_icon_state = "medical-plating"
 
@@ -110,7 +106,6 @@
 	id = "mod_plating_security"
 	build_path = /obj/item/mod/construction/armor/security
 	materials = list(/datum/material/iron = 6000, /datum/material/uranium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 	research_icon_state = "security-plating"
 
@@ -119,7 +114,6 @@
 	id = "mod_plating_cosmohonk"
 	build_path = /obj/item/mod/construction/armor/cosmohonk
 	materials = list(/datum/material/iron = 6000, /datum/material/bananium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 	research_icon_state = "cosmohonk-plating"
 
@@ -127,7 +121,7 @@
 	name = "MOD Paint Kit"
 	desc = "A paint kit for Modular Suits."
 	id = "mod_paint_kit"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = MECHFAB
 	materials = list(/datum/material/iron = 1000, /datum/material/plastic = 500)
 	construction_time = 5 SECONDS
 	build_path = /obj/item/mod/paint
@@ -160,7 +154,6 @@
 	id = "mod_visor_medhud"
 	materials = list(/datum/material/silver = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/visor/medhud
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/module/mod_visor_diaghud
@@ -175,7 +168,6 @@
 	id = "mod_visor_sechud"
 	materials = list(/datum/material/titanium = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/visor/sechud
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/module/mod_visor_meson
@@ -183,7 +175,6 @@
 	id = "mod_visor_meson"
 	materials = list(/datum/material/uranium = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/visor/meson
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/module/mod_visor_welding
@@ -191,7 +182,6 @@
 	id = "mod_welding"
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/welding
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/module/mod_t_ray
@@ -199,7 +189,6 @@
 	id = "mod_t_ray"
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/t_ray
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/module/mod_health_analyzer
@@ -207,7 +196,6 @@
 	id = "mod_health_analyzer"
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/health_analyzer
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/module/mod_stealth
@@ -215,7 +203,6 @@
 	id = "mod_stealth"
 	materials = list(/datum/material/iron = 1000, /datum/material/bluespace = 500)
 	build_path = /obj/item/mod/module/stealth
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/module/mod_jetpack
@@ -230,7 +217,6 @@
 	id = "mod_magboot"
 	materials = list(/datum/material/iron = 1000, /datum/material/gold = 500)
 	build_path = /obj/item/mod/module/magboot
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/module/mod_mag_harness
@@ -238,7 +224,6 @@
 	id = "mod_mag_harness"
 	materials = list(/datum/material/iron = 1500, /datum/material/silver = 500)
 	build_path = /obj/item/mod/module/magnetic_harness
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/module/mod_tether
@@ -246,7 +231,6 @@
 	id = "mod_tether"
 	materials = list(/datum/material/iron = 1000, /datum/material/silver = 500)
 	build_path = /obj/item/mod/module/tether
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/module/mod_mouthhole
@@ -260,7 +244,6 @@
 	id = "mod_rad_protection"
 	materials = list(/datum/material/iron = 1000, /datum/material/uranium = 1000)
 	build_path = /obj/item/mod/module/rad_protection
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/module/mod_emp_shield
@@ -295,7 +278,6 @@
 	id = "mod_constructor"
 	materials = list(/datum/material/iron = 1000, /datum/material/titanium = 500)
 	build_path = /obj/item/mod/module/constructor
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/module/mod_quick_carry
@@ -303,7 +285,6 @@
 	id = "mod_quick_carry"
 	materials = list(/datum/material/iron = 1000, /datum/material/titanium = 500)
 	build_path = /obj/item/mod/module/quick_carry
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/module/mod_bikehorn
@@ -311,7 +292,6 @@
 	id = "mod_bikehorn"
 	materials = list(/datum/material/plastic = 500, /datum/material/iron = 500)
 	build_path = /obj/item/mod/module/bikehorn
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/module/mod_microwave_beam
@@ -319,7 +299,6 @@
 	id = "mod_microwave_beam"
 	materials = list(/datum/material/iron = 1000, /datum/material/uranium = 500)
 	build_path = /obj/item/mod/module/microwave_beam
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/module/mod_clamp
@@ -327,7 +306,6 @@
 	id = "mod_clamp"
 	materials = list(/datum/material/iron = 2000)
 	build_path = /obj/item/mod/module/clamp
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/module/mod_drill
@@ -335,7 +313,6 @@
 	id = "mod_drill"
 	materials = list(/datum/material/silver = 1000, /datum/material/iron = 2000)
 	build_path = /obj/item/mod/module/drill
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/module/mod_orebag
@@ -343,7 +320,6 @@
 	id = "mod_orebag"
 	materials = list(/datum/material/iron = 1500)
 	build_path = /obj/item/mod/module/orebag
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/module/mod_dna_lock
@@ -357,7 +333,6 @@
 	id = "mod_mister_atmos"
 	materials = list(/datum/material/glass = 1000, /datum/material/titanium = 1500)
 	build_path = /obj/item/mod/module/mister/atmos
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/module/mod_holster
@@ -365,7 +340,6 @@
 	id = "mod_holster"
 	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500)
 	build_path = /obj/item/mod/module/holster
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/module/surgicalprocessor
@@ -373,7 +347,6 @@
 	id = "mod_surgicalprocessor"
 	materials = list(/datum/material/titanium = 250, /datum/material/glass = 1000, /datum/material/silver = 1500)
 	build_path = /obj/item/mod/module/surgical_processor
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/module/defibrillator
@@ -381,7 +354,6 @@
 	id = "mod_defib"
 	materials = list(/datum/material/titanium = 250, /datum/material/diamond = 1000, /datum/material/silver = 1500)
 	build_path = /obj/item/mod/module/defibrillator
-	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 //MODsuit anomalock modules
