@@ -109,7 +109,6 @@
 		return
 	ion_trail.start()
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/move_react)
-	RegisterSignal(mod.wearer, COMSIG_MOVABLE_SPACEMOVE, .proc/spacemove_react, override = TRUE)
 	if(full_speed)
 		mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 	else
@@ -143,12 +142,6 @@
 	if(!drain_power(use_power_cost))
 		return FALSE
 	return TRUE
-
-/obj/item/mod/module/jetpack/proc/spacemove_react(mob/user, movement_dir)
-	SIGNAL_HANDLER
-
-	if(active && (movement_dir || stabilizers))
-		return COMSIG_MOVABLE_STOP_SPACEMOVE
 
 /obj/item/mod/module/jetpack/advanced
 	name = "MOD advanced ion jetpack module"
