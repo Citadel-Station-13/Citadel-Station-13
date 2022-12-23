@@ -9,6 +9,7 @@
 	input_dir = WEST
 	output_dir = EAST
 	speed_process = TRUE
+	init_process = TRUE
 
 /obj/machinery/mineral/unloading_machine/proc/horrible_quadratic_monster(var/turf/T)
 	set waitfor = FALSE
