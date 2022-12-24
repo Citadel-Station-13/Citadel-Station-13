@@ -2901,6 +2901,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					chat_on_map = !chat_on_map
 				if("see_chat_non_mob")
 					see_chat_non_mob = !see_chat_non_mob
+				if("typing_indicator")
+					typing_indicator = !typing_indicator
 				if("action_buttons")
 					buttons_locked = !buttons_locked
 				if("tgui_fancy")
