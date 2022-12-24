@@ -67,6 +67,9 @@
 	// when we get this many shards, we get a free bulb.
 	var/shards_required = 4
 
+	// whether it is "bluespace powered" (can be used at a range)
+	var/bluespace_toggle = FALSE
+
 /obj/item/lightreplacer/New()
 	uses = max_uses / 2
 	failmsg = "The [name]'s refill light blinks red."
@@ -242,7 +245,7 @@
 
 /obj/item/lightreplacer/afterattack(atom/T, mob/U, proximity)
 	. = ..()
-	if(!proximity)
+	if(!proximity && !bluespace_toggle)
 		return
 	if(!isturf(T))
 		return
@@ -253,6 +256,9 @@
 			break
 		used = TRUE
 		if(istype(A, /obj/machinery/light))
+			if(!proximity && bluespace_toggle)
+				U.Beam(A, icon_state = "rped_upgrade", time = 1 SECONDS)
+				playsound(src, 'sound/items/pshoom.ogg', 40, 1)
 			ReplaceLight(A, U)
 
 	if(!used)
@@ -265,6 +271,15 @@
 
 /obj/item/lightreplacer/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	return
+
+/obj/item/lightreplacer/blue
+	name = "bluespace light replacer"
+	desc = "A modified light replacer that zaps lights into place. Refill with broken or working lightbulbs, or sheets of glass."
+	icon_state = "lightreplacer_blue"
+	bluespace_toggle = TRUE
+
+/obj/item/lightreplacer/blue/emag_act()
+	return  // balancing against longrange explosions
 
 #undef LIGHT_OK
 #undef LIGHT_EMPTY
