@@ -49,7 +49,3 @@
 /datum/gear/glasses/modern
 	name = "Modern prescription glasses"
 	path = /obj/item/clothing/glasses/regular/modern
-
-/datum/gear/glasses/thin
-	name = "Thin prescription glasses"
-	path = /obj/item/clothing/glasses/regular/thin
