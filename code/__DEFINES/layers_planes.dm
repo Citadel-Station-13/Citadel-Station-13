@@ -158,6 +158,9 @@
 /// It's over lighting and every other crap because this is nearly as important as hud content and only visible to the user.
 #define BALLOON_CHAT_PLANE 20
 
+// Typing indicator layer
+#define TYPING_LAYER 17
+
 //HUD layer defines
 
 #define FULLSCREEN_PLANE 20

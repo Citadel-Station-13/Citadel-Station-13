@@ -75,6 +75,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/see_chat_non_mob = TRUE
 	///Whether emotes will be displayed on runechat. Requires chat_on_map to have effect. Boolean.
 	var/see_rc_emotes = TRUE
+	/// Whether or not to show a typing indicator when speaking. Defaults to on.
+	var/typing_indicator = TRUE
 
 	/// Custom Keybindings
 	var/list/key_bindings = list()
@@ -82,6 +84,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/modless_key_bindings = list()
 
 	var/tgui_fancy = TRUE
+	var/tgui_input = TRUE
+	var/tgui_input_large = FALSE
+	var/tgui_input_swapped = TRUE
+	var/tgui_say_light_mode = FALSE
 	var/tgui_lock = TRUE
 	var/windowflashing = TRUE
 	var/toggles = TOGGLES_DEFAULT
@@ -828,11 +834,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Outline Color:</b> [outline_color ? "<span style='border:1px solid #161616; background-color: [outline_color];'>" : "Theme-based (null)"]&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=outline_color'>Change</a><BR>"
 			dat += "<b>Screentip:</b> <a href='?_src_=prefs;preference=screentip_pref'>[screentip_pref ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Screentip Color:</b> <span style='border:1px solid #161616; background-color: [screentip_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=screentip_color'>Change</a><BR>"
-			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
-			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
+			dat += "<b>Enable fancy TGUI:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Enabled" : "Disabled"]</a><br>"
+			dat += "<b>Input: Enable TGUI</b> <a href='?_src_=prefs;preference=tgui_input'>[(tgui_input) ? "Enabled" : "Disabled"]</a><br>"
+			dat += "<b>Input: Larger buttons</b> <a href='?_src_=prefs;preference=tgui_input_large'>[(tgui_input_large) ? "Enabled" : "Disabled"]</a><br>"
+			dat += "<b>Input: Swap Submit/Cancel buttons</b> <a href='?_src_=prefs;preference=tgui_input_swapped'>[(tgui_input_swapped) ? "Enabled" : "Disabled"]</a><br>"
+			dat += "<b>Lock TGUI to main monitor</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Enabled" : "Disabled"]</a><br>"
+			dat += "<b>Say: Light mode</b> <a href='?_src_=prefs;preference=tgui_say_light_mode'>[(tgui_say_light_mode) ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Show Runechat Chat Bubbles:</b> <a href='?_src_=prefs;preference=chat_on_map'>[chat_on_map ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Runechat message char limit:</b> <a href='?_src_=prefs;preference=max_chat_length;task=input'>[max_chat_length]</a><br>"
 			dat += "<b>See Runechat for non-mobs:</b> <a href='?_src_=prefs;preference=see_chat_non_mob'>[see_chat_non_mob ? "Enabled" : "Disabled"]</a><br>"
+			dat += "<b>Enable typing indicators for self</b> <a href='?_src_=prefs;preference=typing_indicator'>[(typing_indicator) ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<br>"
 			dat += "<b>Action Buttons:</b> <a href='?_src_=prefs;preference=action_buttons'>[(buttons_locked) ? "Locked In Place" : "Unlocked"]</a><br>"
 			dat += "<br>"
@@ -2894,6 +2905,27 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					buttons_locked = !buttons_locked
 				if("tgui_fancy")
 					tgui_fancy = !tgui_fancy
+					for (var/datum/tgui/tgui as anything in user.tgui_open_uis)
+						// Force it to reload either way
+						tgui.update_static_data(user)
+				if("tgui_input_large")
+					tgui_input_large = !tgui_input_large
+					for (var/datum/tgui/tgui as anything in user.tgui_open_uis)
+						// Force it to reload either way
+						tgui.send_full_update(user)
+				if("tgui_input_swapped")
+					tgui_input_swapped = !tgui_input_swapped
+					for (var/datum/tgui/tgui as anything in user.tgui_open_uis)
+						// Force it to reload either way
+						tgui.send_full_update(user)
+				if("tgui_lock")
+					tgui_lock = !tgui_lock
+					for (var/datum/tgui/tgui as anything in user.tgui_open_uis)
+						// Force it to reload either way
+						tgui.update_static_data(user)
+				if("tgui_say_light_mode")
+					tgui_say_light_mode = !tgui_say_light_mode
+					user.client.tgui_say?.load()
 				if("outline_enabled")
 					outline_enabled = !outline_enabled
 				if("outline_color")
@@ -2906,8 +2938,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/pickedScreentipColor = input(user, "Choose your screentip color.", "General Preference", screentip_color) as color|null
 					if(pickedScreentipColor)
 						screentip_color = pickedScreentipColor
-				if("tgui_lock")
-					tgui_lock = !tgui_lock
 				if("winflash")
 					windowflashing = !windowflashing
 				if("hear_adminhelps")

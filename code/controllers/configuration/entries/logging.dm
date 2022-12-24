@@ -79,6 +79,10 @@
 /datum/config_entry/flag/log_telecomms
 	config_entry_value = TRUE
 
+/// log speech indicators(started/stopped speaking)
+/datum/config_entry/flag/log_speech_indicators
+	config_entry_value = TRUE
+
 /// log economy
 /datum/config_entry/flag/log_econ
 	config_entry_value = TRUE

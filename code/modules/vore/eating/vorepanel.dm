@@ -236,7 +236,7 @@
 						break
 
 			if(failure_msg) //Something went wrong.
-				tgui_alert_async(usr, failure_msg, "Error!")
+				tgui_alert(usr, failure_msg, "Error!")
 				return TRUE
 
 			var/obj/belly/NB = new(host)
@@ -266,7 +266,7 @@
 
 		if("saveprefs")
 			if(!host.copy_to_prefs_vr())
-				tgui_alert_async(usr, "<span class='warning'>Belly Preferences not saved!</span>", "Error")
+				tgui_alert(usr, "<span class='warning'>Belly Preferences not saved!</span>", "Error")
 				log_admin("Could not save vore prefs on USER: [usr].")
 			else
 				to_chat(usr, "<span class='notice'>Belly Preferences were saved!</span>")
@@ -277,7 +277,7 @@
 			if(alert != "Reload")
 				return FALSE
 			if(!host.copy_from_prefs_vr())
-				tgui_alert_async(usr, "ERROR: Virgo-specific preferences failed to apply!","Error")
+				tgui_alert(usr, "ERROR: Virgo-specific preferences failed to apply!","Error")
 			else
 				to_chat(usr, "<span class='notice'>Vore preferences applied from active slot!</span>")
 				unsaved_changes = FALSE
@@ -289,7 +289,7 @@
 
 			new_flavor = readd_quotes(new_flavor)
 			if(length(new_flavor) > FLAVOR_MAX)
-				tgui_alert_async(usr, "Entered flavor/taste text too long. [FLAVOR_MAX] character limit.","Error!")
+				tgui_alert(usr, "Entered flavor/taste text too long. [FLAVOR_MAX] character limit.","Error!")
 				return FALSE
 			host.vore_taste = new_flavor
 			unsaved_changes = TRUE
@@ -301,7 +301,7 @@
 
 			new_smell = readd_quotes(new_smell)
 			if(length(new_smell) > FLAVOR_MAX)
-				tgui_alert_async(usr, "Entered perfume/smell text too long. [FLAVOR_MAX] character limit.","Error!")
+				tgui_alert(usr, "Entered perfume/smell text too long. [FLAVOR_MAX] character limit.","Error!")
 				return FALSE
 			host.vore_smell = new_smell
 			unsaved_changes = TRUE
@@ -498,7 +498,7 @@
 
 /datum/vore_look/proc/set_attr(mob/user, params)
 	if(!host.vore_selected)
-		tgui_alert_async(usr, "No belly selected to modify.")
+		tgui_alert(usr, "No belly selected to modify.")
 		return FALSE
 
 	var/attr = params["attribute"]
@@ -518,7 +518,7 @@
 						break
 
 			if(failure_msg) //Something went wrong.
-				tgui_alert_async(user,failure_msg,"Error!")
+				tgui_alert(user,failure_msg,"Error!")
 				return FALSE
 
 			host.vore_selected.name = new_name
@@ -543,7 +543,7 @@
 			if(new_desc)
 				new_desc = readd_quotes(new_desc)
 				if(length(new_desc) > BELLIES_DESC_MAX)
-					tgui_alert_async(usr, "Entered belly desc too long. [BELLIES_DESC_MAX] character limit.","Error")
+					tgui_alert(usr, "Entered belly desc too long. [BELLIES_DESC_MAX] character limit.","Error")
 					return FALSE
 				host.vore_selected.desc = new_desc
 				. = TRUE
@@ -590,7 +590,7 @@
 			var/new_verb = html_encode(input(usr,"New verb when eating (infinitive tense, e.g. nom or swallow):","New Verb") as text|null)
 
 			if(length(new_verb) > BELLIES_NAME_MAX || length(new_verb) < BELLIES_NAME_MIN)
-				tgui_alert_async(usr, "Entered verb length invalid (must be longer than [BELLIES_NAME_MIN], no longer than [BELLIES_NAME_MAX]).","Error")
+				tgui_alert(usr, "Entered verb length invalid (must be longer than [BELLIES_NAME_MIN], no longer than [BELLIES_NAME_MAX]).","Error")
 				return FALSE
 
 			host.vore_selected.vore_verb = new_verb
@@ -646,7 +646,7 @@
 				host.vore_selected.escapable = 0
 				to_chat(usr,"<span class='warning'>Prey will not be able to have special interactions with your [lowertext(host.vore_selected.name)].</span>")
 			else
-				tgui_alert_async(usr, "Something went wrong. Your stomach will now not have special interactions. Press the button enable them again and tell a dev.","Error") //If they somehow have a varable that's not 0 or 1
+				tgui_alert(usr, "Something went wrong. Your stomach will now not have special interactions. Press the button enable them again and tell a dev.","Error") //If they somehow have a varable that's not 0 or 1
 				host.vore_selected.escapable = 0
 			. = TRUE
 		if("b_escapechance")
@@ -707,7 +707,7 @@
 				failure_msg += "You must have at least one belly. "
 
 			if(failure_msg)
-				tgui_alert_async(user,failure_msg,"Error!")
+				tgui_alert(user,failure_msg,"Error!")
 				return FALSE
 
 			qdel(host.vore_selected)

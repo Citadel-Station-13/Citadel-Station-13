@@ -63,7 +63,7 @@
 		brainmob.forceMove(src)
 		brainmob.container = src
 		if(!(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death.
-			brainmob.stat = CONSCIOUS //we manually revive the brain mob
+			brainmob.set_stat(CONSCIOUS) //we manually revive the brain mob
 			brainmob.remove_from_dead_mob_list()
 			brainmob.add_to_alive_mob_list()
 
@@ -99,7 +99,7 @@
 /obj/item/mmi/proc/eject_brain(mob/user)
 	brainmob.container = null //Reset brainmob mmi var.
 	brainmob.forceMove(brain) //Throw mob into brain.
-	brainmob.stat = DEAD
+	brainmob.set_stat(DEAD)
 	brainmob.emp_damage = 0
 	brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
 	brainmob.remove_from_alive_mob_list() //Get outta here

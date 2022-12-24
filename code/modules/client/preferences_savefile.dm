@@ -402,8 +402,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hotkeys"] >> hotkeys
 	S["chat_on_map"] >> chat_on_map
 	S["max_chat_length"] >> max_chat_length
-	S["see_chat_non_mob"] 	>> see_chat_non_mob
+	S["see_chat_non_mob"] >> see_chat_non_mob
+	S["typing_indicator"] >> typing_indicator
 	S["tgui_fancy"] >> tgui_fancy
+	S["tgui_input"] >> tgui_input
+	S["tgui_input_large"] >> tgui_input_large
+	S["tgui_input_swapped"] >> tgui_input_swapped
+	S["tgui_say_light_mode"] >> tgui_say_light_mode
 	S["tgui_lock"] >> tgui_lock
 	S["buttons_locked"] >> buttons_locked
 	S["windowflash"] >> windowflashing
@@ -480,7 +485,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	chat_on_map = sanitize_integer(chat_on_map, 0, 1, initial(chat_on_map))
 	max_chat_length = sanitize_integer(max_chat_length, 1, CHAT_MESSAGE_MAX_LENGTH, initial(max_chat_length))
 	see_chat_non_mob = sanitize_integer(see_chat_non_mob, 0, 1, initial(see_chat_non_mob))
+	typing_indicator = sanitize_integer(typing_indicator, 0, 1, initial(typing_indicator))
 	tgui_fancy = sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
+	tgui_input = sanitize_integer(tgui_input, 0, 1, initial(tgui_input))
+	tgui_input_large = sanitize_integer(tgui_input_large, 0, 1, initial(tgui_input_large))
+	tgui_input_swapped = sanitize_integer(tgui_input_swapped, 0, 1, initial(tgui_input_swapped))
+	tgui_say_light_mode = sanitize_integer(tgui_say_light_mode, 0, 1, initial(tgui_say_light_mode))
 	tgui_lock = sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
 	buttons_locked = sanitize_integer(buttons_locked, 0, 1, initial(buttons_locked))
 	windowflashing = sanitize_integer(windowflashing, 0, 1, initial(windowflashing))
@@ -589,7 +599,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["chat_on_map"], chat_on_map)
 	WRITE_FILE(S["max_chat_length"], max_chat_length)
 	WRITE_FILE(S["see_chat_non_mob"], see_chat_non_mob)
+	WRITE_FILE(S["typing_indicator"], typing_indicator)
 	WRITE_FILE(S["tgui_fancy"], tgui_fancy)
+	WRITE_FILE(S["tgui_input"], tgui_input)
+	WRITE_FILE(S["tgui_input_large"], tgui_input_large)
+	WRITE_FILE(S["tgui_input_swapped"], tgui_input_swapped)
+	WRITE_FILE(S["tgui_say_light_mode"], tgui_say_light_mode)
 	WRITE_FILE(S["tgui_lock"], tgui_lock)
 	WRITE_FILE(S["buttons_locked"], buttons_locked)
 	WRITE_FILE(S["windowflash"], windowflashing)
