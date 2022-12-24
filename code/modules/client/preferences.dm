@@ -2908,6 +2908,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					for (var/datum/tgui/tgui as anything in user.tgui_open_uis)
 						// Force it to reload either way
 						tgui.update_static_data(user)
+				if("tgui_input")
+					tgui_input = !tgui_input
 				if("tgui_input_large")
 					tgui_input_large = !tgui_input_large
 					for (var/datum/tgui/tgui as anything in user.tgui_open_uis)
