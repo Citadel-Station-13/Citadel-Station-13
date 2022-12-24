@@ -182,13 +182,13 @@
 	///List of plants all harvested from the same batch.
 	var/list/result = list()
 	///Tile of the harvester to deposit the growables.
-	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
+	var/output_loc = (user && parent.Adjacent(user)) ? user.loc : parent.loc //needed for TK
 	///Name of the grown products.
 	var/product_name
 	///The Number of products produced by the plant, typically the yield.
 	var/product_count = getYield()
 
-	parent.investigate_log("manual harvest by [key_name(user)] of [getYield()] of [src], with seed traits [english_list(genes)] and reagents_add [english_list_assoc(reagents_add)] and potency [potency].", INVESTIGATE_BOTANY)
+	parent.investigate_log("[user ? "manual harvest by [key_name(user)]" : "automatic harvest"] of [getYield()] of [src], with seed traits [english_list(genes)] and reagents_add [english_list_assoc(reagents_add)] and potency [potency].", INVESTIGATE_BOTANY)
 
 	while(t_amount < product_count)
 		var/obj/item/reagent_containers/food/snacks/grown/t_prod
@@ -227,32 +227,6 @@
 		SSblackbox.record_feedback("tally", "food_harvested", getYield(), product_name)
 	parent.update_tray(user)
 
-	return result
-
-/obj/item/seeds/proc/harvest_userless()
-	var/obj/machinery/hydroponics/parent = loc //for ease of access
-	var/t_amount = 0
-	var/list/result = list()
-	var/output_loc =  parent.loc
-	var/product_name
-	while(t_amount < getYield())
-		var/obj/item/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
-		if(parent.myseed.plantname != initial(parent.myseed.plantname))
-			t_prod.name = lowertext(parent.myseed.plantname)
-		if(productdesc)
-			t_prod.desc = productdesc
-		t_prod.seed.name = parent.myseed.name
-		t_prod.seed.desc = parent.myseed.desc
-		t_prod.seed.plantname = parent.myseed.plantname
-		result.Add(t_prod) // User gets a consumable
-		if(!t_prod)
-			return
-		t_amount++
-		product_name = parent.myseed.plantname
-	if(getYield() >= 1)
-		SSblackbox.record_feedback("tally", "food_harvested", getYield(), product_name)
-	parent.investigate_log("autmoatic harvest of [getYield()] of [src], with seed traits [english_list(genes)] and reagents_add [english_list(reagents_add)] and potency [potency].", INVESTIGATE_BOTANY)
-	parent.update_tray()
 	return result
 
 /obj/item/seeds/proc/prepare_result(var/obj/item/reagent_containers/food/snacks/grown/T)
