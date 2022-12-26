@@ -182,56 +182,56 @@
 	name = "red burger"
 	desc = "Perfect for hiding the fact it's burnt to a crisp."
 	icon_state = "cburger"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/colorful_reagent/powder/red = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/colorful_reagent/crayonpowder/red = 10)
 	foodtypes = GRAIN | MEAT
 
 /obj/item/food/burger/orange
 	name = "orange burger"
 	desc = "Contains 0% juice."
 	icon_state = "cburger"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/colorful_reagent/powder/orange = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/colorful_reagent/crayonpowder/orange = 10)
 	foodtypes = GRAIN | MEAT
 
 /obj/item/food/burger/yellow
 	name = "yellow burger"
 	desc = "Bright to the last bite."
 	icon_state = "cburger"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/colorful_reagent/powder/yellow = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/colorful_reagent/crayonpowder/yellow = 10)
 	foodtypes = GRAIN | MEAT
 
 /obj/item/food/burger/green
 	name = "green burger"
 	desc = "It's not tainted meat, it's painted meat!"
 	icon_state = "cburger"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/colorful_reagent/powder/green = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/colorful_reagent/crayonpowder/green = 10)
 	foodtypes = GRAIN | MEAT
 
 /obj/item/food/burger/blue
 	name = "blue burger"
 	desc = "Is this blue rare?"
 	icon_state = "cburger"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/colorful_reagent/powder/blue = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/colorful_reagent/crayonpowder/blue = 10)
 	foodtypes = GRAIN | MEAT
 
 /obj/item/food/burger/purple
 	name = "purple burger"
 	desc = "Regal and low class at the same time."
 	icon_state = "cburger"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/colorful_reagent/powder/purple = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/colorful_reagent/crayonpowder/purple = 10)
 	foodtypes = GRAIN | MEAT
 
 /obj/item/food/burger/black
 	name = "black burger"
 	desc = "This is overcooked."
 	icon_state = "cburger"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/colorful_reagent/powder/black = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/colorful_reagent/crayonpowder/black = 10)
 	foodtypes = GRAIN | MEAT
 
 /obj/item/food/burger/white
 	name = "white burger"
 	desc = "Delicous Titanium!"
 	icon_state = "cburger"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/colorful_reagent/powder/white = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/colorful_reagent/crayonpowder/white = 10)
 	foodtypes = GRAIN | MEAT
 
 /obj/item/food/burger/spell
