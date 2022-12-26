@@ -1256,7 +1256,7 @@
 /area/awaymission/jungleresort)
 "sD" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/baguette,
+/obj/item/food/baguette,
 /turf/open/floor/wood,
 /area/awaymission/jungleresort)
 "sQ" = (
@@ -2932,7 +2932,6 @@
 /area/awaymission/jungleresort)
 "Nx" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/butteredtoast,
 /obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb,
 /turf/open/floor/wood,
 /area/awaymission/jungleresort)

@@ -53218,7 +53218,7 @@
 /area/security/prison/cells)
 "eky" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/baguette,
+/obj/item/food/baguette,
 /obj/structure/mirror{
 	pixel_y = 32
 	},

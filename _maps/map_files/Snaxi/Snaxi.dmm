@@ -14704,7 +14704,7 @@
 	pixel_y = 2
 	},
 /obj/item/toy/dummy,
-/obj/item/reagent_containers/food/snacks/baguette,
+/obj/item/food/baguette,
 /obj/item/radio/intercom{
 	pixel_x = -25
 	},
