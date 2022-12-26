@@ -106,7 +106,7 @@
 /datum/export/food/burger
 	cost = 12
 	unit_name = "burger"
-	export_types = list(/obj/item/reagent_containers/food/snacks/burger)
+	export_types = list(/obj/item/food/burger)
 
 /datum/export/food/cake
 	cost = 50

@@ -26,8 +26,8 @@
 	name = "Burger Combo #2"
 	desc = "We value our customers at the Greasy Griddle, so much so that we're willing to deliver -just for you.- This combo meal contains two burgers, a soda, fries, a toy, and some chicken nuggets."
 	cost = 3200
-	contains = list(/obj/item/reagent_containers/food/snacks/burger/bigbite,
-					/obj/item/reagent_containers/food/snacks/burger/cheese,
+	contains = list(/obj/item/food/burger/bigbite,
+					/obj/item/food/burger/cheese,
 					/obj/item/reagent_containers/food/snacks/fries,
 					/obj/item/reagent_containers/food/condiment/pack/ketchup,
 					/obj/item/reagent_containers/food/condiment/pack/ketchup,

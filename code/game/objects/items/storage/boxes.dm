@@ -1360,7 +1360,7 @@
 		new /obj/item/reagent_containers/food/snacks/salad/boiledrice(src)
 	else
 		new /obj/item/reagent_containers/food/snacks/salad/ricebowl(src)
-	new /obj/item/reagent_containers/food/snacks/burger/tofu(src)
+	new /obj/item/food/burger/tofu(src)
 	new /obj/item/reagent_containers/food/snacks/salad/fruit(src)
 	new /obj/item/reagent_containers/food/snacks/cracker(src)
 	new /obj/item/tank/internals/emergency_oxygen(src)

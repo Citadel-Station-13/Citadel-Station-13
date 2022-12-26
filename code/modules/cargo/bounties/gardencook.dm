@@ -49,7 +49,7 @@
 	name = "Super Bite Burger" //Salt, Pepper, Boiled Egg, 5 Steak, 4 Tomato, 3 Cheese, Bacon, and a Bun. Should be more than 1800.
 	description = "Commander Tubbs thinks he can set a competitive eating world record. All he needs is a super bite burger shipped to him."
 	reward = 2750
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/burger/superbite)
+	wanted_types = list(/obj/item/food/burger/superbite)
 
 /datum/bounty/item/chef/poppypretzel
 	name = "Poppy Pretzel"

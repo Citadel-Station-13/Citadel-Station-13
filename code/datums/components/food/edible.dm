@@ -20,7 +20,7 @@ Behavior that's still missing from this component that original food items had t
 	///Bitfield of the types of this food
 	var/foodtypes = NONE
 	///Amount of seconds it takes to eat this food
-	var/eat_time = 30
+	var/eat_time = 10
 	///Defines how much it lowers someones satiety (Need to eat, essentialy)
 	var/junkiness = 0
 	///Message to send when eating
@@ -51,6 +51,9 @@ Behavior that's still missing from this component that original food items had t
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
 		RegisterSignal(parent, COMSIG_ITEM_FRIED, .proc/OnFried)
+		var/obj/item/item = parent
+		item.grind_results = list() //Cursed but this is how snacks did it, grinding needs a refactor in the future.
+
 	else if(isturf(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/TryToEatTurf)
 
@@ -135,7 +138,11 @@ Behavior that's still missing from this component that original food items had t
 
 	set waitfor = FALSE
 
+	if(QDELETED(parent))
+		return
+
 	var/atom/owner = parent
+
 
 	if(feeder.a_intent == INTENT_HARM)
 		return
@@ -193,6 +200,11 @@ Behavior that's still missing from this component that original food items had t
 									"<span class='userdanger'>[feeder] forces you to eat [parent]!</span>")
 
 	TakeBite(eater, feeder)
+
+	//If we're not force-feeding, try take another bite
+	if(eater == feeder)
+		INVOKE_ASYNC(src, .proc/TryToEat, eater, feeder)
+
 
 ///This function lets the eater take a bite and transfers the reagents to the eater.
 /datum/component/edible/proc/TakeBite(mob/living/eater, mob/living/feeder)

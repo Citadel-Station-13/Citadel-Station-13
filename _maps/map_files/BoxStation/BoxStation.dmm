@@ -55851,7 +55851,7 @@
 	dir = 4;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/food/snacks/burger/plain,
+/obj/item/food/burger/plain,
 /turf/open/floor/wood,
 /area/service/bar)
 "hPP" = (

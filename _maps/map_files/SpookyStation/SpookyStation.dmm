@@ -6514,9 +6514,9 @@
 "atd" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/bag/tray,
-/obj/item/reagent_containers/food/snacks/burger/ghost,
-/obj/item/reagent_containers/food/snacks/burger/ghost,
-/obj/item/reagent_containers/food/snacks/burger/ghost,
+/obj/item/food/burger/ghost,
+/obj/item/food/burger/ghost,
+/obj/item/food/burger/ghost,
 /turf/open/floor/plasteel/vaporwave,
 /area/eventmap/inside)
 "ate" = (
@@ -7992,8 +7992,8 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/structure/closet/secure_closet/freezer/fridge,
 /obj/item/clothing/head/hooded/human_head,
-/obj/item/reagent_containers/food/snacks/burger/human,
-/obj/item/reagent_containers/food/snacks/burger/human,
+/obj/item/food/burger/human,
+/obj/item/food/burger/human,
 /obj/item/reagent_containers/food/snacks/kebab/human,
 /obj/item/reagent_containers/food/snacks/meat/cutlet/plain/human,
 /obj/item/reagent_containers/food/snacks/meat/rawcutlet/plain/human,

@@ -1585,7 +1585,7 @@
 /obj/item/trash/plate{
 	pixel_y = -2
 	},
-/obj/item/reagent_containers/food/snacks/burger/mcguffin,
+/obj/item/food/burger/mcguffin,
 /turf/open/floor/carpet,
 /area/ruin/space/diner/interior)
 "dM" = (
