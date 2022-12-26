@@ -235,6 +235,8 @@
 #define TRAIT_BEING_CARRIED "being_carried"
 #define TRAIT_GLASS_BONES "glass_bones"
 #define TRAIT_PAPER_SKIN "paper_skin"
+//used because it's more reliable than checking for the component
+#define TRAIT_DULLAHAN "dullahan"
 
 // mobility flag traits
 // IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)

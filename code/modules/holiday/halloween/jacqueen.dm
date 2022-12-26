@@ -219,23 +219,11 @@
 /mob/living/simple_animal/jacq/proc/treat(mob/living/carbon/C, gender)
 	visible_message("<b>[src]</b> gives off a glowing smile, <span class='spooky'>\"What ken Ah offer ye? I can magic up an object, a potion or a plushie fer ye.\"</span>")
 	jacqrunes("What ken Ah offer ye? I can magic up an object, a potion or a plushie fer ye.", C)
-	var/choices_reward = list("Object - 3 candies", "Potion - 2 candies", "Jacqueline Tracker - 2 candies", "Plushie - 1 candy", "Can I get to know you instead?", "Become a pumpkinhead dullahan (perma) - 4 candies")
+	var/choices_reward = list("Object - 3 candies", "Potion - 2 candies", "Jacqueline Tracker - 2 candies", "Plushie - 1 candy", "Can I get to know you instead?")
 	var/choice_reward = input(usr, "Trick or Treat?", "Trick or Treat?") in choices_reward
 
 	//rewards
 	switch(choice_reward)
-		if("Become a pumpkinhead dullahan (perma) - 4 candies")
-			if(!take_candies(C, 4))
-				visible_message("<b>[src]</b> raises an eyebrown, <span class='spooky'>\"It's 4 candies for that [gender]! Thems the rules!\"</span>")
-				jacqrunes("It's 4 candies for that [gender]! Thems the rules!", C)
-				return
-			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"Off comes your head, a pumpkin taking it's stead!\"</span>")
-			jacqrunes("Off comes your head, a pumpkin taking it's stead!", C)
-			C.reagents.add_reagent(/datum/reagent/mutationtoxin/pumpkinhead, 5)
-			sleep(20)
-			poof()
-			return
-
 		if("Object - 3 candies")
 			if(!take_candies(C, 3))
 				visible_message("<b>[src]</b> raises an eyebrown, <span class='spooky'>\"It's 3 candies per trinket [gender]! Thems the rules!\"</span>")
@@ -687,12 +675,6 @@
 		return
 	else
 		..()
-
-/datum/reagent/mutationtoxin/pumpkinhead
-	name = "Pumpkin head mutation toxin"
-	race = /datum/species/dullahan/pumpkin
-	mutationtext = "<span class='spooky'>The pain subsides. You feel your head roll off your shoulders... and you smell pumpkin."
-	//I couldn't get the replace head sprite with a pumpkin to work so, it is what it is.
 
 /mob/living/simple_animal/jacq/proc/check_candies(mob/living/carbon/C)
 	var/invs = C.get_contents()

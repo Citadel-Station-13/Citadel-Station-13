@@ -1913,9 +1913,6 @@
 /obj/machinery/camera/autoname{
 	dir = 4
 	},
-/obj/machinery/computer/bounty{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/cargo/storage)
 "fr" = (

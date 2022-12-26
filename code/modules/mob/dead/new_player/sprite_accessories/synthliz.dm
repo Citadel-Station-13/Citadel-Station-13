@@ -5,6 +5,7 @@
 	color_src = MUTCOLORS
 	name = "Synthetic Lizard - Snout"
 	icon_state = "synthliz_basic"
+	mutable_category = "HEAD"
 
 /datum/sprite_accessory/snouts/mam_snouts/synthliz/synthliz_under
 	icon = 'modular_citadel/icons/mob/synthliz_snouts.dmi'

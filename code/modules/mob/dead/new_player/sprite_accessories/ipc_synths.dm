@@ -6,6 +6,11 @@
 	icon = 'modular_citadel/icons/mob/ipc_screens.dmi'
 	color_src = null
 	relevant_layers = list(BODY_ADJ_LAYER)
+	mutable_category = "HEAD"
+
+/datum/sprite_accessory/screen/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
+	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
+	return (HD == null) // it's not visible if head is null
 
 /datum/sprite_accessory/screen/blank
 	name = "Blank"
@@ -133,6 +138,7 @@
 	relevant_layers = list(BODY_ADJ_LAYER)
 	recommended_species = list("ipc")
 	mutant_part_string = "ipc_antenna"
+	mutable_category = "HEAD"
 
 /datum/sprite_accessory/antenna/none
 	name = "None"

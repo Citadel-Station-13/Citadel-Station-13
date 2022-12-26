@@ -2714,10 +2714,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
-"OI" = (
-/obj/machinery/mineral/mint,
-/turf/open/floor/plasteel,
-/area/mine/production)
 "ON" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/brown{
@@ -7031,7 +7027,7 @@ xv
 bg
 mI
 Cd
-OI
+es
 sz
 gk
 Wf

@@ -18,6 +18,7 @@
 	minimal_access = list(ACCESS_TOX, ACCESS_TOX_STORAGE, ACCESS_RESEARCH, ACCESS_XENOBIOLOGY, ACCESS_MINERAL_STOREROOM)
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_SCI
+	bounty_types = CIV_JOB_SCI
 	starting_modifiers = list(/datum/skill_modifier/job/level/wiring/basic)
 	display_order = JOB_DISPLAY_ORDER_SCIENTIST
 	threat = 1.2

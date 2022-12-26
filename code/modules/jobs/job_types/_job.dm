@@ -71,6 +71,8 @@
 
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
 
+	var/bounty_types = CIV_JOB_BASIC
+
 	//If a job complies with dresscodes, loadout items will not be equipped instead of the job's outfit, instead placing the items into the player's backpack.
 	var/dresscodecompliant = TRUE
 	// How much threat this job is worth in dynamic. Is subtracted if the player's not an antag, added if they are.

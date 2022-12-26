@@ -954,9 +954,6 @@
 /mob/living/carbon/human/species/corporate
 	race = /datum/species/corporate
 
-/mob/living/carbon/human/species/dullahan
-	race = /datum/species/dullahan
-
 /mob/living/carbon/human/species/felinid
 	race = /datum/species/human/felinid
 

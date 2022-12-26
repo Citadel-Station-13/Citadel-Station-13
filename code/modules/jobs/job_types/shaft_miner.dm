@@ -19,6 +19,7 @@
 	minimal_access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
 	paycheck = PAYCHECK_EASY ///Not necessarily easy itself, but it can be trivial to make lot of cash on this job.
 	paycheck_department = ACCOUNT_CAR
+	bounty_types = CIV_JOB_MINE
 
 	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER
 

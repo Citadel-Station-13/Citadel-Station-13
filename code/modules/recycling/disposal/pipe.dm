@@ -54,7 +54,7 @@
 	if(H)
 		H.active = FALSE
 		expel(H, get_turf(src), 0)
-	QDEL_NULL(stored)
+	stored = null //The qdel is handled in expel()
 	return ..()
 
 // returns the direction of the next pipe object, given the entrance dir
