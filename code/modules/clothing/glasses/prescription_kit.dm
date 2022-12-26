@@ -6,9 +6,6 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "modkit"
 
-/obj/item/prescription_kit/examine_more(mob/user)
-	. = ..()
-
 /obj/item/prescription_kit/attack_obj(obj/O, mob/living/user)
 	if(!istype(O, /obj/item/clothing/glasses))
 		return ..()
