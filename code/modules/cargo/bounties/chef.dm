@@ -117,7 +117,7 @@
 	name = "Brain Cake"
 	description = "The science division requires a brain cake for testing purposes. Don't ask."
 	reward = 1200
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/store/cake/brain)
+	wanted_types = list(/obj/item/food/cake/brain)
 
 /datum/bounty/item/chef/waffles
 	name = "Waffles"

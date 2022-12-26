@@ -70,7 +70,7 @@
 /datum/export/food/cooked_cake_pie
 	cost = 15
 	unit_name = "cooked food base"
-	export_types = list(/obj/item/reagent_containers/food/snacks/store/cake/plain, /obj/item/reagent_containers/food/snacks/pie/plain)
+	export_types = list(/obj/item/food/cake/plain, /obj/item/reagent_containers/food/snacks/pie/plain)
 
 /datum/export/food/glassbottle
 	cost = 10
@@ -111,12 +111,12 @@
 /datum/export/food/cake
 	cost = 50
 	unit_name = "cake"
-	export_types = list(/obj/item/reagent_containers/food/snacks/store/cake)
+	export_types = list(/obj/item/food/cake)
 
 /datum/export/food/cake_slice
 	cost = 10
 	unit_name = "cake slice"
-	export_types = list(/obj/item/reagent_containers/food/snacks/cakeslice)
+	export_types = list(/obj/item/food/cakeslice)
 
 /datum/export/food/cheese_wheel
 	cost = 70

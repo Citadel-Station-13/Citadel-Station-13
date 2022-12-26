@@ -167,7 +167,7 @@ All foods are distributed among various categories. Use common sense.
 				M.satiety -= junkiness
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			if(reagents.total_volume)
-				SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user)
+				SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user, bitecount, bitesize)
 				var/fraction = min(bitesize / reagents.total_volume, 1)
 				reagents.reaction(M, INGEST, fraction)
 				reagents.trans_to(M, bitesize, log = TRUE)
@@ -210,7 +210,7 @@ All foods are distributed among various categories. Use common sense.
 			if(S.w_class > WEIGHT_CLASS_SMALL)
 				to_chat(user, "<span class='warning'>[S] is too big for [src]!</span>")
 				return 0
-			if(!S.customfoodfilling || istype(W, /obj/item/reagent_containers/food/snacks/customizable) || istype(W, /obj/item/reagent_containers/food/snacks/pizzaslice/custom) || istype(W, /obj/item/reagent_containers/food/snacks/cakeslice/custom))
+			if(!S.customfoodfilling || istype(W, /obj/item/reagent_containers/food/snacks/customizable) || istype(W, /obj/item/reagent_containers/food/snacks/pizzaslice/custom))
 				to_chat(user, "<span class='warning'>[src] can't be filled with [S]!</span>")
 				return 0
 			if(contents.len >= 20)
@@ -381,26 +381,10 @@ All foods are distributed among various categories. Use common sense.
 /// All the food items that can store an item inside itself, like bread or cake.
 /obj/item/reagent_containers/food/snacks/store
 	w_class = WEIGHT_CLASS_NORMAL
-	var/stored_item = 0
 
-/obj/item/reagent_containers/food/snacks/store/attackby(obj/item/W, mob/user, params)
-	..()
-	if(W.w_class <= WEIGHT_CLASS_SMALL & !istype(W, /obj/item/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
-		if(W.get_sharpness())
-			return 0
-		if(stored_item)
-			return 0
-		if(!iscarbon(user))
-			return 0
-		if(contents.len >= 20)
-			to_chat(user, "<span class='warning'>[src] is full.</span>")
-			return 0
-		to_chat(user, "<span class='notice'>You slip [W] inside [src].</span>")
-		user.transferItemToLoc(W, src)
-		add_fingerprint(user)
-		contents += W
-		stored_item = 1
-		return 1 // no afterattack here
+/obj/item/reagent_containers/food/snacks/store/Initialize()
+	. = ..()
+	AddComponent(/datum/component/food_storage)
 
 /obj/item/reagent_containers/food/snacks/MouseDrop(atom/over)
 	var/turf/T = get_turf(src)

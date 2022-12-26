@@ -12810,7 +12810,7 @@
 /turf/open/floor/carpet/purple,
 /area/service/bar/atrium)
 "aHt" = (
-/obj/item/reagent_containers/food/snacks/cakeslice/slimecake,
+/obj/item/food/cakeslice/slimecake,
 /obj/structure/table/wood/fancy/royalblue,
 /turf/open/floor/carpet/purple,
 /area/service/bar/atrium)
@@ -14315,7 +14315,7 @@
 /turf/open/floor/carpet/red,
 /area/service/bar/atrium)
 "aLd" = (
-/obj/item/reagent_containers/food/snacks/cakeslice/chocolate,
+/obj/item/food/cakeslice/chocolate,
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/service/bar/atrium)

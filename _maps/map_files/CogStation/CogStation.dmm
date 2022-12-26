@@ -14772,7 +14772,7 @@
 /area/hallway/primary/port/fore)
 "aGR" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/snacks/store/cake/chocolate,
+/obj/item/food/cake/chocolate,
 /obj/machinery/door/poddoor/preopen{
 	id = "kitchenlock";
 	name = "Kitchen Lockup"

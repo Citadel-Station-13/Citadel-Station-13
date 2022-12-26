@@ -6286,7 +6286,7 @@
 "asr" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/bag/tray,
-/obj/item/reagent_containers/food/snacks/store/cake/pumpkinspice,
+/obj/item/food/cake/pumpkinspice,
 /turf/open/floor/plasteel/vaporwave,
 /area/eventmap/inside)
 "ass" = (

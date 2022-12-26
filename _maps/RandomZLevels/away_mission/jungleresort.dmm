@@ -257,7 +257,7 @@
 /area/awaymission/jungleresort)
 "dW" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/cakeslice/vanilla_slice,
+/obj/item/food/cakeslice/vanilla_slice,
 /turf/open/floor/wood,
 /area/awaymission/jungleresort)
 "dY" = (
