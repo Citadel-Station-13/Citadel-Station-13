@@ -96,12 +96,12 @@
 /datum/export/food/bread
 	cost = 20
 	unit_name = "load of bread"
-	export_types = list(/obj/item/reagent_containers/food/snacks/store/bread)
+	export_types = list(/obj/item/food/bread)
 
 /datum/export/food/bread_slice
 	cost = 4
 	unit_name = "slice of bread"
-	export_types = list(/obj/item/reagent_containers/food/snacks/breadslice)
+	export_types = list(/obj/item/food/breadslice)
 
 /datum/export/food/burger
 	cost = 12

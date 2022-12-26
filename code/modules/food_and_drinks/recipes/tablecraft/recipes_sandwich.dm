@@ -59,7 +59,7 @@
 	reqs = list(
 		/datum/reagent/toxin/slimejelly = 5,
 		/datum/reagent/consumable/peanut_butter = 5,
-		/obj/item/reagent_containers/food/snacks/breadslice/plain = 2,
+		/obj/item/food/breadslice/plain = 2,
 	)
 	result = /obj/item/reagent_containers/food/snacks/jellysandwich/pbj/slime
 	subcategory = CAT_SANDWICH
@@ -75,7 +75,7 @@
 	reqs = list(
 		/datum/reagent/consumable/cherryjelly = 5,
 		/datum/reagent/consumable/peanut_butter = 5,
-		/obj/item/reagent_containers/food/snacks/breadslice/plain = 2,
+		/obj/item/food/breadslice/plain = 2,
 	)
 	result = /obj/item/reagent_containers/food/snacks/jellysandwich/pbj/cherry
 	subcategory = CAT_SANDWICH
@@ -90,7 +90,7 @@
 	name = "Peanut butter sandwich"
 	reqs = list(
 		/datum/reagent/consumable/peanut_butter = 5,
-		/obj/item/reagent_containers/food/snacks/breadslice/plain = 2,
+		/obj/item/food/breadslice/plain = 2,
 	)
 	result = /obj/item/reagent_containers/food/snacks/peanutbutter_sandwich
 	subcategory = CAT_SANDWICH
@@ -107,7 +107,7 @@
 /datum/crafting_recipe/food/tunasandwich
 	name = "Tuna sandwich"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/breadslice/plain = 2,
+		/obj/item/food/breadslice/plain = 2,
 		/obj/item/reagent_containers/food/snacks/tuna = 1,
 		/obj/item/reagent_containers/food/snacks/grown/onion = 1,
 		/datum/reagent/consumable/mayonnaise = 5
@@ -123,7 +123,7 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/meatballsub
 	subcategory = CAT_SANDWICH
-	
+
 /datum/crafting_recipe/food/hotdog
 	name = "Hot dog"
 	reqs = list(

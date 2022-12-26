@@ -14,6 +14,7 @@
 
 #define REFILLABLE		(1<<2)	// Makes it possible to add reagents through any reagent container.
 #define DRAINABLE		(1<<3)	// Makes it possible to remove reagents through any reagent container.
+#define DUNKABLE (1<<4) // Allows items to be dunked into this container for transfering
 
 #define TRANSPARENT		(1<<4)	// Used on containers which you want to be able to see the reagents off.
 #define AMOUNT_VISIBLE	(1<<5)	// For non-transparent containers that still have the general amount of reagents in them visible.

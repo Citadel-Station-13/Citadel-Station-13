@@ -46,84 +46,10 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 /datum/quirk/family_heirloom/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/heirloom_type
-
-	if(ismoth(H) && prob(50))
-		heirloom_type = /obj/item/flashlight/lantern/heirloom_moth
-	else
-		switch(quirk_holder.mind.assigned_role)
-			//Service jobs
-			if("Clown")
-				heirloom_type = /obj/item/bikehorn/golden
-			if("Mime")
-				heirloom_type = /obj/item/food/baguette
-			if("Janitor")
-				heirloom_type = pick(/obj/item/mop, /obj/item/clothing/suit/caution, /obj/item/reagent_containers/glass/bucket, /obj/item/paper/fluff/stations/soap)
-			if("Cook")
-				heirloom_type = pick(/obj/item/reagent_containers/food/condiment/saltshaker, /obj/item/kitchen/rollingpin, /obj/item/clothing/head/chefhat)
-			if("Botanist")
-				heirloom_type = pick(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/toy/plush/beeplushie)
-			if("Bartender")
-				heirloom_type = pick(/obj/item/reagent_containers/glass/rag, /obj/item/clothing/head/that, /obj/item/reagent_containers/food/drinks/shaker)
-			if("Curator")
-				heirloom_type = pick(/obj/item/pen/fountain, /obj/item/storage/pill_bottle/dice)
-			if("Chaplain")
-				heirloom_type = pick(/obj/item/toy/windup_toolbox, /obj/item/reagent_containers/food/drinks/bottle/holywater)
-			if("Assistant")
-				heirloom_type = /obj/item/storage/toolbox/mechanical/old/heirloom
-			//Security/Command
-			if("Captain")
-				heirloom_type = /obj/item/reagent_containers/food/drinks/flask/gold
-			if("Head of Security")
-				heirloom_type = /obj/item/book/manual/wiki/security_space_law
-			if("Head of Personnel")
-				heirloom_type = /obj/item/reagent_containers/food/drinks/trophy/silver_cup
-			if("Warden")
-				heirloom_type = /obj/item/book/manual/wiki/security_space_law
-			if("Security Officer")
-				heirloom_type = pick(/obj/item/book/manual/wiki/security_space_law, /obj/item/clothing/head/beret/sec)
-			if("Detective")
-				heirloom_type = /obj/item/reagent_containers/food/drinks/bottle/whiskey
-			if("Lawyer")
-				heirloom_type = pick(/obj/item/gavelhammer, /obj/item/book/manual/wiki/security_space_law)
-			if("Prisoner")
-				heirloom_type = /obj/item/pen/blue
-			//RnD
-			if("Research Director")
-				heirloom_type = /obj/item/toy/plush/slimeplushie
-			if("Scientist")
-				heirloom_type = /obj/item/toy/plush/slimeplushie
-			if("Roboticist")
-				heirloom_type = pick(subtypesof(/obj/item/toy/prize) + /obj/item/toy/plush/pkplush) //look at this nerd
-			if("Geneticist")
-				heirloom_type = /obj/item/clothing/under/shorts/purple
-			//Medical
-			if("Chief Medical Officer")
-				heirloom_type = /obj/item/storage/firstaid/ancient/heirloom
-			if("Medical Doctor")
-				heirloom_type = /obj/item/storage/firstaid/ancient/heirloom
-			if("Paramedic")
-				heirloom_type = /obj/item/storage/firstaid/ancient/heirloom
-			if("Psychologist")
-				heirloom_type = /obj/item/storage/pill_bottle
-			if("Chemist")
-				heirloom_type = /obj/item/book/manual/wiki/chemistry
-			if("Virologist")
-				heirloom_type = /obj/item/reagent_containers/syringe
-			//Engineering
-			if("Chief Engineer")
-				heirloom_type = pick(/obj/item/clothing/head/hardhat/white, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
-			if("Station Engineer")
-				heirloom_type = pick(/obj/item/clothing/head/hardhat, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
-			if("Atmospheric Technician")
-				heirloom_type = pick(/obj/item/lighter, /obj/item/lighter/greyscale, /obj/item/storage/box/matches)
-			//Supply
-			if("Quartermaster")
-				heirloom_type = pick(/obj/item/stamp, /obj/item/stamp/denied)
-			if("Cargo Technician")
-				heirloom_type = /obj/item/clipboard
-			if("Shaft Miner")
-				heirloom_type = pick(/obj/item/pickaxe/mini, /obj/item/shovel)
-
+	var/species_heirloom_entry = GLOB.species_heirlooms[H.dna.species.id]
+	if(species_heirloom_entry)
+		if(prob(species_heirloom_entry[1]))
+			heirloom_type = pick(species_heirloom_entry[2])
 	if(!heirloom_type)
 		var/job_heirloom_entry = GLOB.job_heirlooms[quirk_holder.mind.assigned_role]
 		if(!job_heirloom_entry)

@@ -17,8 +17,6 @@
 	UnregisterSignal(target, COMSIG_ITEM_AFTERATTACK)
 
 /datum/element/dunkable/proc/get_dunked(datum/source, atom/target, mob/user, proximity_flag)
-	SIGNAL_HANDLER
-
 	if(!proximity_flag) // if the user is not adjacent to the container
 		return
 	var/obj/item/reagent_containers/container = target // the container we're trying to dunk into
@@ -27,7 +25,7 @@
 			to_chat(user, "<span class='warning'>[container] is unable to be dunked in!</span>")
 			return
 		var/obj/item/I = source // the item that has the dunkable element
-		if(container.reagents.trans_to(I, dunk_amount, transfered_by = user))	//if reagents were transfered, show the message
+		if(container.reagents.trans_to(I, dunk_amount))	//if reagents were transfered, show the message
 			to_chat(user, "<span class='notice'>You dunk \the [I] into \the [container].</span>")
 			return
 		if(!container.reagents.total_volume)

@@ -150,7 +150,6 @@
 		return
 	if(reac_volume >= 5 && holder && holder.chem_temp >= fry_temperature)
 		T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume * 1.5 SECONDS)
-		T.fry(reac_volume/4)
 
 /datum/reagent/consumable/sugar
 	name = "Sugar"

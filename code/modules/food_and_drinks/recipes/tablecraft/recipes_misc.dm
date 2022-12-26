@@ -19,7 +19,7 @@
 	reqs = list(
 		/datum/reagent/consumable/eggyolk = 5,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
-		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1
+		/obj/item/food/bread/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/khachapuri
 	subcategory = CAT_MISCFOOD
@@ -178,15 +178,6 @@
 		/obj/item/food/breadslice/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/jelliedtoast/cherry
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/butteredtoast
-	name = "Buttered Toast"
-	reqs = list(
-		/obj/item/food/breadslice/plain = 1,
-		/obj/item/reagent_containers/food/snacks/butter = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/butteredtoast
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/twobread

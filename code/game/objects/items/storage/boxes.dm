@@ -1311,8 +1311,8 @@
 	can_expire = FALSE
 
 /obj/item/storage/box/mre/menu1/PopulateContents()
-	new /obj/item/reagent_containers/food/snacks/breadslice/plain(src)
-	new /obj/item/reagent_containers/food/snacks/breadslice/creamcheese(src)
+	new /obj/item/food/breadslice/plain(src)
+	new /obj/item/food/breadslice/creamcheese(src)
 	new /obj/item/reagent_containers/food/condiment/pack/ketchup(src)
 	new /obj/item/reagent_containers/food/snacks/chocolatebar(src)
 	new /obj/item/tank/internals/emergency_oxygen(src)
@@ -1341,7 +1341,7 @@
 
 /obj/item/storage/box/mre/menu3/PopulateContents()
 	new /obj/item/reagent_containers/food/snacks/pizzaslice/pepperoni(src)
-	new /obj/item/reagent_containers/food/snacks/breadslice/plain(src)
+	new /obj/item/food/breadslice/plain(src)
 	new /obj/item/reagent_containers/food/snacks/cubannachos(src)
 	new /obj/item/reagent_containers/food/snacks/grown/chili(src)
 	new /obj/item/reagent_containers/food/drinks/coffee/type2(src)

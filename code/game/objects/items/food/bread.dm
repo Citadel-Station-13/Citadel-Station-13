@@ -43,7 +43,7 @@
 	name = "moldy bread slice"
 	desc = "Entire stations have been ripped apart over arguing whether this is still good to eat."
 	icon_state = "moldybreadslice"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/mold = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("decaying fungus" = 1)
 	foodtypes = GROSS
 
@@ -188,14 +188,10 @@
 	desc = "Bon appetit!"
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "baguette"
-	inhand_icon_state = "baguette"
-	worn_icon_state = "baguette"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 3)
 	bite_consumption = 3
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
-	attack_verb_continuous = list("touche's")
-	attack_verb_simple = list("touche")
 	tastes = list("bread" = 1)
 	foodtypes = GRAIN
 
@@ -204,7 +200,6 @@
 	desc = "Alas, it is limited."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "garlicbread"
-	inhand_icon_state = "garlicbread"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/garlic = 2)
 	bite_consumption = 3
 	tastes = list("bread" = 1, "garlic" = 1, "butter" = 1)
@@ -236,20 +231,14 @@
 	appearance = fried.appearance
 	layer = initial(layer)
 	plane = initial(plane)
-	lefthand_file = fried.lefthand_file
-	righthand_file = fried.righthand_file
-	inhand_icon_state = fried.inhand_icon_state
 	desc = fried.desc
 	w_class = fried.w_class
-	slowdown = fried.slowdown
 	equip_delay_self = fried.equip_delay_self
 	equip_delay_other = fried.equip_delay_other
 	strip_delay = fried.strip_delay
 	species_exception = fried.species_exception
 	item_flags = fried.item_flags
 	obj_flags = fried.obj_flags
-	inhand_x_dimension = fried.inhand_x_dimension
-	inhand_y_dimension = fried.inhand_y_dimension
 
 	if(!(SEND_SIGNAL(fried, COMSIG_ITEM_FRIED, src) & COMSIG_FRYING_HANDLED)) //If frying is handled by signal don't do the defaault behavior.
 		fried.forceMove(src)

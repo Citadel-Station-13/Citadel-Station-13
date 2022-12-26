@@ -1332,7 +1332,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		ADMIN_PUNISHMENT_ROD,
 		ADMIN_PUNISHMENT_SHOES,
 		ADMIN_PUNISHMENT_PICKLE,
-		ADMIN_PUNISHMENT_FRY,
 		ADMIN_PUNISHMENT_CRACK,
 		ADMIN_PUNISHMENT_BLEED,
 		ADMIN_PUNISHMENT_SCARIFY,
@@ -1489,8 +1488,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 							break
 		if(ADMIN_PUNISHMENT_PICKLE)
 			target.turn_into_pickle()
-		if(ADMIN_PUNISHMENT_FRY)
-			target.fry()
 
 		if(ADMIN_PUNISHMENT_SHOES)
 			if(!iscarbon(target))
