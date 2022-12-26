@@ -59,6 +59,7 @@
 /obj/item/clothing/glasses/hud/health/prescription/Initialize(mapload)
 	. = ..()
 	prescribe()
+
 /obj/item/clothing/glasses/hud/health/night
 	name = "night vision health scanner HUD"
 	desc = "An advanced medical heads-up display that allows doctors to find patients in complete darkness."
