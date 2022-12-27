@@ -284,7 +284,7 @@
 /area/eventmap/inside)
 "aaZ" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/pastatomato,
+/obj/item/food/spaghetti/pastatomato,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "aba" = (
@@ -10993,7 +10993,7 @@
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
 "aFK" = (
-/obj/item/reagent_containers/food/snacks/pastatomato,
+/obj/item/food/spaghetti/pastatomato,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)

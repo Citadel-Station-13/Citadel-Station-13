@@ -141,7 +141,7 @@
 	if(ispath(result, /obj/item/reagent_containers/food)) //not all food recipes make food objects (like cak/butterbear)
 		requested_item = result
 	else
-		requested_item = /obj/item/reagent_containers/food/snacks/copypasta
+		requested_item = /obj/item/food/spaghetti/copypasta
 	..()
 
 //botanist

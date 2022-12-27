@@ -48707,7 +48707,7 @@
 /area/service/kitchen)
 "cpn" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/spaghetti,
+/obj/item/food/spaghetti,
 /turf/open/floor/plasteel/cafeteria,
 /area/service/kitchen)
 "cpo" = (

@@ -12791,7 +12791,7 @@
 /area/service/bar/atrium)
 "aHp" = (
 /obj/structure/table/wood/fancy/royalblue,
-/obj/item/reagent_containers/food/snacks/meatballspaghetti,
+/obj/item/food/spaghetti/meatballspaghetti,
 /turf/open/floor/carpet/purple,
 /area/service/bar/atrium)
 "aHq" = (
@@ -13708,7 +13708,7 @@
 /area/service/bar/atrium)
 "aJt" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/meatballspaghetti,
+/obj/item/food/spaghetti/meatballspaghetti,
 /turf/open/floor/carpet/royalblack,
 /area/service/bar/atrium)
 "aJu" = (
@@ -13718,7 +13718,7 @@
 /area/service/bar/atrium)
 "aJv" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/pastatomato,
+/obj/item/food/spaghetti/pastatomato,
 /obj/machinery/light/floor,
 /turf/open/floor/carpet/royalblack,
 /area/service/bar/atrium)
@@ -14320,7 +14320,7 @@
 /turf/open/floor/carpet/red,
 /area/service/bar/atrium)
 "aLe" = (
-/obj/item/reagent_containers/food/snacks/chowmein,
+/obj/item/food/spaghetti/chowmein,
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/service/bar/atrium)
@@ -14539,7 +14539,7 @@
 /turf/open/floor/carpet/red,
 /area/service/bar/atrium)
 "aLI" = (
-/obj/item/reagent_containers/food/snacks/copypasta,
+/obj/item/food/spaghetti/copypasta,
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/service/bar/atrium)
@@ -14549,7 +14549,7 @@
 /turf/open/floor/carpet/red,
 /area/service/bar/atrium)
 "aLK" = (
-/obj/item/reagent_containers/food/snacks/boiledspaghetti,
+/obj/item/food/spaghetti/boiledspaghetti,
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/service/bar/atrium)

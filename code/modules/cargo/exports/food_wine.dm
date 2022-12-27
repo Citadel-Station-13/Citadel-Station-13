@@ -144,8 +144,8 @@
 /datum/export/food/pasta
 	cost = 20
 	unit_name = "pasta based meal"
-	export_types = list(/obj/item/reagent_containers/food/snacks/spaghetti, /obj/item/reagent_containers/food/snacks/boiledspaghetti, /obj/item/reagent_containers/food/snacks/pastatomato, /obj/item/reagent_containers/food/snacks/copypasta, \
-						/obj/item/reagent_containers/food/snacks/meatballspaghetti, /obj/item/reagent_containers/food/snacks/spesslaw, /obj/item/reagent_containers/food/snacks/chowmein, /obj/item/reagent_containers/food/snacks/beefnoodle, /obj/item/reagent_containers/food/snacks/butternoodles)
+	export_types = list(/obj/item/food/spaghetti, /obj/item/food/spaghetti/boiledspaghetti, /obj/item/food/spaghetti/pastatomato, /obj/item/food/spaghetti/copypasta, \
+						/obj/item/food/spaghetti/meatballspaghetti, /obj/item/food/spaghetti/spesslaw, /obj/item/food/spaghetti/chowmein, /obj/item/food/spaghetti/beefnoodle, /obj/item/food/spaghetti/butternoodles)
 
 /datum/export/food/pizza
 	cost = 120

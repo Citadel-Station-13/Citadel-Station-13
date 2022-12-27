@@ -17889,8 +17889,8 @@
 /area/security/courtroom)
 "aNe" = (
 /obj/structure/closet/crate,
-/obj/item/reagent_containers/food/snacks/spaghetti,
-/obj/item/reagent_containers/food/snacks/spaghetti,
+/obj/item/food/spaghetti,
+/obj/item/food/spaghetti,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "aNf" = (
@@ -24054,7 +24054,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/light,
 /obj/item/kitchen/fork,
-/obj/item/reagent_containers/food/snacks/pastatomato,
+/obj/item/food/spaghetti/pastatomato,
 /obj/machinery/newscaster/security_unit{
 	pixel_y = -30
 	},

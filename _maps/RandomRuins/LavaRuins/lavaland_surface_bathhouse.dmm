@@ -47,7 +47,7 @@
 /area/ruin/lavaland/powered/bathhouse)
 "l" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/meatballspaghetti,
+/obj/item/food/spaghetti/meatballspaghetti,
 /turf/open/floor/wood,
 /area/ruin/lavaland/powered/bathhouse)
 "m" = (
