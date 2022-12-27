@@ -121,12 +121,12 @@
 	icon_state = "furnace"
 	density = TRUE
 	needs_item_input = TRUE
+	init_process = TRUE
 	var/obj/machinery/mineral/CONSOLE = null
 	var/on = FALSE
 	var/datum/material/selected_material = null
 	var/selected_alloy = null
 	var/datum/techweb/stored_research
-	init_process = TRUE
 
 /obj/machinery/mineral/processing_unit/Initialize(mapload)
 	. = ..()
