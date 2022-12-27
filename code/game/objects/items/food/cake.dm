@@ -210,8 +210,8 @@
 		return
 	energy_bite(M, user)
 
-/obj/item/food/cake/birthday/energy/microwave_act(obj/machinery/microwave/M) //super sekriter club
-	new /obj/item/clothing/head/hardhat/cakehat/energycake(get_turf(src))
+/obj/item/food/cake/birthday/microwave_act(obj/machinery/microwave/M) //super sekriter club
+	new /obj/item/clothing/head/hardhat/cakehat(get_turf(src))
 	qdel(src)
 
 /obj/item/food/cakeslice/birthday/energy
@@ -366,7 +366,7 @@
 	name = "hardware cake"
 	desc = "A quote on quote cake that is made with electronic boards and leaks acid..."
 	icon_state = "hardware_cake"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/toxin/acid = 15, /datum/reagent/fuel/oil = 15)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/toxin/acid = 15, /datum/reagent/oil = 15)
 	tastes = list("acid" = 3, "metal" = 4, "glass" = 5)
 	foodtypes = GRAIN | GROSS
 
@@ -378,7 +378,7 @@
 	desc = "A slice of electronic boards and some acid."
 	icon_state = "hardware_cake_slice"
 	tastes = list("acid" = 3, "metal" = 4, "glass" = 5)
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/toxin/acid = 3, /datum/reagent/fuel/oil = 3)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/toxin/acid = 3, /datum/reagent/oil = 3)
 	foodtypes = GRAIN | GROSS
 
 /obj/item/food/cake/vanilla_cake

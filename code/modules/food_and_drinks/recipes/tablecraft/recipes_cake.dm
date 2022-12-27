@@ -58,15 +58,6 @@
 	result = /obj/item/food/cake/orange
 	subcategory = CAT_CAKE
 
-/datum/crafting_recipe/food/peachcake
-	name = "Peach cake"
-	reqs = list(
-		/obj/item/food/cake/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/peach = 5
-	)
-	result = /obj/item/food/cake/peach_cake
-	subcategory = CAT_CAKE
-
 ///////////////////////////////////FANCY////////////////////////////////////////////
 
 /datum/crafting_recipe/food/birthdaycake
