@@ -14343,7 +14343,7 @@
 /area/eventmap/mountaininside)
 "aPu" = (
 /obj/structure/table/wood/fancy/green,
-/obj/item/reagent_containers/food/snacks/pizza/pineapple,
+/obj/item/food/pizza/pineapple,
 /turf/open/floor/carpet/orange,
 /area/eventmap/mountaininside)
 "aPv" = (
@@ -14354,7 +14354,7 @@
 /area/eventmap/mountaininside)
 "aPw" = (
 /obj/structure/table/wood/fancy/green,
-/obj/item/reagent_containers/food/snacks/pizza/margherita,
+/obj/item/food/pizza/margherita,
 /turf/open/floor/carpet/orange,
 /area/eventmap/mountaininside)
 "aPx" = (
@@ -14365,12 +14365,12 @@
 /area/eventmap/mountaininside)
 "aPy" = (
 /obj/structure/table/wood/fancy/green,
-/obj/item/reagent_containers/food/snacks/pizza/meat,
+/obj/item/food/pizza/meat,
 /turf/open/floor/carpet/orange,
 /area/eventmap/mountaininside)
 "aPz" = (
 /obj/structure/table/wood/fancy/green,
-/obj/item/reagent_containers/food/snacks/pizza/mushroom,
+/obj/item/food/pizza/mushroom,
 /turf/open/floor/carpet/orange,
 /area/eventmap/mountaininside)
 "aPA" = (
@@ -14379,7 +14379,7 @@
 /area/eventmap/mountain)
 "aPB" = (
 /obj/structure/table/wood/fancy/green,
-/obj/item/reagent_containers/food/snacks/pizza/sassysage,
+/obj/item/food/pizza/sassysage,
 /turf/open/floor/carpet/orange,
 /area/eventmap/mountaininside)
 "aPC" = (
@@ -14398,7 +14398,7 @@
 /area/eventmap/mountaininside)
 "aPE" = (
 /obj/structure/table/wood/fancy/green,
-/obj/item/reagent_containers/food/snacks/pizza/vegetable,
+/obj/item/food/pizza/vegetable,
 /turf/open/floor/carpet/orange,
 /area/eventmap/mountaininside)
 "aPF" = (

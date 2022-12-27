@@ -105,7 +105,7 @@
 /area/shuttle/escape/luxury)
 "at" = (
 /obj/structure/table/wood/fancy,
-/obj/item/food/spaghetti/meatballspaghetti,
+/obj/item/reagent_containers/food/snacks/meatballspaghetti,
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/escape/luxury)
 "au" = (
@@ -115,7 +115,7 @@
 /area/shuttle/escape/luxury)
 "av" = (
 /obj/structure/table/wood/fancy,
-/obj/item/food/spaghetti/pastatomato,
+/obj/item/reagent_containers/food/snacks/pastatomato,
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/escape/luxury)
 "aw" = (
@@ -155,7 +155,7 @@
 /area/shuttle/escape/luxury)
 "aD" = (
 /obj/structure/table/wood/fancy,
-/obj/item/food/spaghetti/chowmein,
+/obj/item/reagent_containers/food/snacks/chowmein,
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/escape/luxury)
 "aE" = (
@@ -216,7 +216,7 @@
 /area/shuttle/escape/luxury)
 "aP" = (
 /obj/structure/table/wood/fancy,
-/obj/item/food/spaghetti/copypasta,
+/obj/item/reagent_containers/food/snacks/copypasta,
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/escape/luxury)
 "aQ" = (
@@ -226,7 +226,7 @@
 /area/shuttle/escape/luxury)
 "aR" = (
 /obj/structure/table/wood/fancy,
-/obj/item/food/spaghetti/boiledspaghetti,
+/obj/item/reagent_containers/food/snacks/boiledspaghetti,
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/escape/luxury)
 "aS" = (

@@ -1340,7 +1340,6 @@
 	spawner_chance = 1
 
 /obj/item/storage/box/mre/menu3/PopulateContents()
-	new /obj/item/reagent_containers/food/snacks/pizzaslice/pepperoni(src)
 	new /obj/item/food/breadslice/plain(src)
 	new /obj/item/reagent_containers/food/snacks/cubannachos(src)
 	new /obj/item/reagent_containers/food/snacks/grown/chili(src)

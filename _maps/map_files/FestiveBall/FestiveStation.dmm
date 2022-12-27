@@ -14559,7 +14559,7 @@
 /turf/open/floor/carpet/red,
 /area/service/bar/atrium)
 "aLM" = (
-/obj/item/reagent_containers/food/snacks/customizable/pizza,
+/obj/item/food/pizza/margherita,
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/service/bar/atrium)

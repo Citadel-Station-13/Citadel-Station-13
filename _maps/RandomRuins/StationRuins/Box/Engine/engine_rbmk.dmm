@@ -1137,7 +1137,7 @@
 "NG" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/snacks/pizza/meat,
+/obj/item/food/pizza/meat,
 /turf/open/floor/engine,
 /area/engineering/main)
 "NY" = (

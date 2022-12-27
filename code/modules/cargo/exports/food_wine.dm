@@ -35,7 +35,7 @@
 /datum/export/food/cooked_dough
 	cost = 5
 	unit_name = "cooked food base"
-	export_types = list(/obj/item/reagent_containers/food/snacks/pizzabread)
+	export_types = list(/obj/item/food/pizzabread)
 
 /datum/export/food/buns
 	cost = 3
@@ -150,12 +150,12 @@
 /datum/export/food/pizza
 	cost = 120
 	unit_name = "pizza"
-	export_types = list(/obj/item/reagent_containers/food/snacks/pizza)
+	export_types = list(/obj/item/food/pizza)
 
 /datum/export/food/sliced_pizza
 	cost = 12
 	unit_name = "pizza slice"
-	export_types = list(/obj/item/reagent_containers/food/snacks/pizzaslice)
+	export_types = list(/obj/item/food/pizzaslice)
 
 /datum/export/food/snowcone
 	cost = 3

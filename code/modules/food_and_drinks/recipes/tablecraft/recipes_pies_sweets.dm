@@ -135,7 +135,7 @@
 	reqs = list(
 		/datum/reagent/consumable/blackpepper = 3,
 		/datum/reagent/consumable/sodiumchloride = 3,
-		/obj/item/reagent_containers/food/snacks/pizzabread = 2,
+		/obj/item/food/pizzabread = 2,
 		/obj/item/reagent_containers/food/snacks/meat/cutlet/plain = 6,
 		/obj/item/reagent_containers/food/snacks/butter = 1,
 	)

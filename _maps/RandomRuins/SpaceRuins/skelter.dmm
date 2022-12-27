@@ -560,7 +560,7 @@
 "bv" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/item/reagent_containers/food/snacks/pizzaslice/margherita{
+/obj/item/food/pizzaslice/margherita{
 	pixel_x = -6;
 	pixel_y = 2
 	},

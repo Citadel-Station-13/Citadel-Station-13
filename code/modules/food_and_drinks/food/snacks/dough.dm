@@ -46,22 +46,21 @@
 	icon_state = "flat dough"
 	slice_path = /obj/item/reagent_containers/food/snacks/doughslice
 	slices_num = 3
-	cooked_type = /obj/item/reagent_containers/food/snacks/pizzabread
+	cooked_type = /obj/item/food/pizzabread
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("dough" = 1)
 	foodtype = GRAIN
 
-/obj/item/reagent_containers/food/snacks/pizzabread
+/obj/item/food/pizzabread
 	name = "pizza bread"
 	desc = "Add ingredients to make a pizza."
 	icon = 'icons/obj/food/food_ingredients.dmi'
 	icon_state = "pizzabread"
-	custom_food_type = /obj/item/reagent_containers/food/snacks/customizable/pizza
-	list_reagents = list(/datum/reagent/consumable/nutriment = 7)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 7)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("bread" = 1)
-	foodtype = GRAIN
+	foodtypes = GRAIN
 
 
 /obj/item/reagent_containers/food/snacks/doughslice
