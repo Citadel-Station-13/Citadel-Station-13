@@ -2,6 +2,7 @@
 	layer = ABOVE_MOB_LAYER
 	anchored = TRUE
 	default_driver_move = FALSE
+	var/explode_on_death = TRUE
 	var/car_traits = NONE //Bitflag for special behavior such as kidnapping
 	var/engine_sound = 'sound/vehicles/carrev.ogg'
 	var/last_enginesound_time
@@ -11,6 +12,11 @@
 /obj/vehicle/sealed/car/Initialize(mapload)
 	. = ..()
 	LoadComponent(/datum/component/riding)
+
+/obj/vehicle/sealed/car/Destroy()
+	. = ..()
+	if(explode_on_death)
+		explosion(loc, 0, 1, 2, 3, 0)
 
 /obj/vehicle/sealed/car/generate_actions()
 	. = ..()
