@@ -129,7 +129,6 @@
 	qdel(src)
 
 /obj/effect/decal/cleanable/conveyor_sorter/proc/on_entered(datum/source, atom/movable/AM)
-	. = ..()
 	if(is_type_in_list(AM, sorting_list) && !AM.anchored && COOLDOWN_FINISHED(src, use_cooldown))
 		COOLDOWN_START(src, use_cooldown, 1 SECONDS)
 		AM.Move(get_step(src, dir))
