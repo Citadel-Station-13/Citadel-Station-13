@@ -29,7 +29,7 @@
 
 /obj/item/clothing/glasses/proc/prescribe()
 	vision_correction = TRUE
-	name = "prescription [src]"
+	name = "prescription [name]"
 	desc += " These have been fitted with a prescription overlay device, and thus correct some vision deficiencies."
 
 /obj/item/clothing/glasses/visor_toggling()
