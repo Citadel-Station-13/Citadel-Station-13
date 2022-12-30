@@ -308,16 +308,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		S.update_icon()
 		CHECK_TICK
 
-/*
-/obj/machinery/conveyor_switch/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_CROWBAR)
-		var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
-		C.id = id
-		transfer_fingerprints_to(C)
-		to_chat(user, "<span class='notice'>You detach the conveyor switch.</span>")
-		qdel(src)
-*/
-
 /obj/machinery/conveyor_switch/crowbar_act(mob/user, obj/item/tool)
 	tool.play_tool_sound(src, 50)
 	var/obj/item/conveyor_switch_construct/switch_construct = new/obj/item/conveyor_switch_construct(src.loc)
