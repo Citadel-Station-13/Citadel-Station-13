@@ -27,6 +27,11 @@
 	if(glass_colour_type && ishuman(user))
 		. += "<span class='notice'>Alt-click to toggle its colors.</span>"
 
+/obj/item/clothing/glasses/proc/prescribe()
+	vision_correction = TRUE
+	name = "prescription [name]"
+	desc += " These have been fitted with a prescription overlay device, and thus correct some vision deficiencies."
+
 /obj/item/clothing/glasses/visor_toggling()
 	..()
 	if(visor_vars_to_toggle & VISOR_VISIONFLAGS)
@@ -128,10 +133,9 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
-/obj/item/clothing/glasses/night/prescription
-	name = "prescription night vision goggles"
-	desc = "NVGs but for those with nearsightedness."
-	vision_correction = 1
+/obj/item/clothing/glasses/night/prescription/Initialize(mapload)
+	. = ..()
+	prescribe()
 
 /obj/item/clothing/glasses/night/syndicate
 	name = "combat night vision goggles"
