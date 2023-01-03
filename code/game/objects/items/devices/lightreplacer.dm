@@ -257,8 +257,17 @@
 		used = TRUE
 		if(istype(A, /obj/machinery/light))
 			if(!proximity && bluespace_toggle)
-				U.Beam(A, icon_state = "rped_upgrade", time = 1 SECONDS)
-				playsound(src, 'sound/items/pshoom.ogg', 40, 1)
+				// Set variable for target light
+				var/obj/machinery/light/target = A
+				
+				// Check light status before playing effects
+				if(target.status != LIGHT_OK)
+					// Display RPED beam
+					U.Beam(A, icon_state = "rped_upgrade", time = 1 SECONDS)
+
+					// Play RPED sound
+					playsound(src, 'sound/items/pshoom.ogg', 40, 1)		
+
 			ReplaceLight(A, U)
 
 	if(!used)
