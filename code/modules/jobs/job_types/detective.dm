@@ -27,6 +27,10 @@
 	display_order = JOB_DISPLAY_ORDER_DETECTIVE
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/nonviolent, /datum/quirk/paraplegic, /datum/quirk/monophobia)
 	threat = 1
+	
+	family_heirlooms = list(
+		/obj/item/reagent_containers/food/drinks/flask/det
+	)
 
 /datum/outfit/job/detective
 	name = "Detective"

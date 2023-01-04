@@ -43,27 +43,38 @@
 
 GLOBAL_LIST_EMPTY(family_heirlooms)
 
-/datum/quirk/family_heirloom/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
+/datum/quirk/family_heirloom/on_spawn()	
+	// Define holder and type
+	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/heirloom_type
-	var/species_heirloom_entry = GLOB.species_heirlooms[H.dna.species.id]
-	if(species_heirloom_entry)
-		if(prob(species_heirloom_entry[1]))
-			heirloom_type = pick(species_heirloom_entry[2])
+	
+	// The quirk holder's species - we have a 50% chance, if we have a species with a set heirloom, to choose a species heirloom.
+	var/datum/species/holder_species = human_holder.dna?.species
+	if(holder_species && LAZYLEN(holder_species.family_heirlooms) && prob(50))
+		heirloom_type = pick(holder_species.family_heirlooms)
+	else
+		// Our quirk holder's job
+		var/datum/job/holder_job = SSjob.GetJob(human_holder.last_mind?.assigned_role)
+		if(holder_job && LAZYLEN(holder_job.family_heirlooms))
+			heirloom_type = pick(holder_job.family_heirlooms)
+
+	// If we didn't find an heirloom somehow, throw them a generic one
 	if(!heirloom_type)
-		var/job_heirloom_entry = GLOB.job_heirlooms[quirk_holder.mind.assigned_role]
-		if(!job_heirloom_entry)
-			heirloom_type = pick(GLOB.job_heirlooms["NO_JOB"]) //consider: should this be a define?
-		else
-			heirloom_type = pick(job_heirloom_entry)
+		heirloom_type = pick(/obj/item/toy/cards/deck, /obj/item/lighter, /obj/item/dice/d20)
+	
+	// Create the heirloom item
 	heirloom = new heirloom_type(get_turf(quirk_holder))
+	
+	// Add to global list
 	GLOB.family_heirlooms += heirloom
+	
+	// Determine and assign item location
 	var/list/slots = list(
 		"in your left pocket" = ITEM_SLOT_LPOCKET,
 		"in your right pocket" = ITEM_SLOT_RPOCKET,
 		"in your backpack" = ITEM_SLOT_BACKPACK
 	)
-	where = H.equip_in_one_of_slots(heirloom, slots, FALSE) || "at your feet"
+	where = human_holder.equip_in_one_of_slots(heirloom, slots, FALSE) || "at your feet"
 
 /datum/quirk/family_heirloom/post_add()
 	if(where == "in your backpack")
@@ -75,12 +86,24 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	heirloom.name = "\improper [family_name[family_name.len]] family [heirloom.name]"
 
 /datum/quirk/family_heirloom/on_process()
-	if(heirloom in quirk_holder.GetAllContents())
+	// Ignore for dead holder
+	if(quirk_holder.stat == DEAD)
+		return
+
+	// When held: Positive mood
+	if(heirloom && (heirloom in quirk_holder.GetAllContents()))
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom_missing")
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "family_heirloom", /datum/mood_event/family_heirloom)
+
+	// When not held: Negative mood
 	else
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
+
+/datum/quirk/item_quirk/family_heirloom/remove()
+	// Clear mood events when removing this quirk
+	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
+	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom_missing")
 
 /datum/quirk/family_heirloom/clone_data()
 	return heirloom

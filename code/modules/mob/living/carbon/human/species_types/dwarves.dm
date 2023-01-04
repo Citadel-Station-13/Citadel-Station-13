@@ -20,6 +20,11 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	species_language_holder = /datum/language_holder/dwarf
 	species_category = SPECIES_CATEGORY_BASIC //a kind of human
 
+	family_heirlooms = list(
+		// Dwarves get a dwarf mug as their heirloom (normal container but has manly dorf icon)
+		/obj/item/reagent_containers/food/drinks/dwarf_mug
+	)
+
 /mob/living/carbon/human/species/dwarf //species admin spawn path
 	race = /datum/species/dwarf //and the race the path is set to.
 

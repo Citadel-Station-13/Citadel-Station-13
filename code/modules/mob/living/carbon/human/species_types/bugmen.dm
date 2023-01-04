@@ -24,3 +24,7 @@
 	allowed_limb_ids = list("insect","apid","moth","moth_not_greyscale")
 
 	eye_type = "insect"
+	
+	family_heirlooms = list(
+		/obj/item/flashlight/lantern/heirloom_moth
+	)

@@ -19,6 +19,11 @@
 
 	display_order = JOB_DISPLAY_ORDER_CURATOR
 	threat = 0.3
+	
+	family_heirlooms = list(
+		/obj/item/pen/fountain,
+		/obj/item/storage/dice
+	)
 
 /datum/outfit/job/curator
 	name = "Curator"

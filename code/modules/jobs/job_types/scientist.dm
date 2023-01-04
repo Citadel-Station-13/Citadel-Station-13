@@ -22,6 +22,10 @@
 	starting_modifiers = list(/datum/skill_modifier/job/level/wiring/basic)
 	display_order = JOB_DISPLAY_ORDER_SCIENTIST
 	threat = 1.2
+	
+	family_heirlooms = list(
+		/obj/item/toy/plush/slimeplushie
+	)
 
 /datum/outfit/job/scientist
 	name = "Scientist"

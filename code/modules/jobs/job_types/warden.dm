@@ -29,6 +29,10 @@
 	display_order = JOB_DISPLAY_ORDER_WARDEN
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/nonviolent, /datum/quirk/paraplegic, /datum/quirk/blindness, /datum/quirk/monophobia)
 	threat = 2
+	
+	family_heirlooms = list(
+		/obj/item/book/manual/wiki/security_space_law
+	)
 
 /datum/job/warden/get_access()
 	var/list/L = list()
