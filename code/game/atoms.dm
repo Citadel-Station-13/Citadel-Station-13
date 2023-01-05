@@ -75,7 +75,7 @@
 	var/custom_price
 	///Price of an item in a vending machine, overriding the premium vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
 	var/custom_premium_price
-	///Whether spessmen with an ID with an age below AGE_MINOR (20 by default) can buy this item
+	///Whether spessmen with an ID with an age below AGE_MIN_DRINKING (20 by default) can buy this item
 	var/age_restricted = FALSE
 
 	//List of datums orbiting this atom
