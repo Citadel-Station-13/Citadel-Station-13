@@ -116,6 +116,10 @@
 /obj/item/card/id/examine_more(mob/user)
 	var/list/msg = list("<span class='notice'><i>You examine [src] closer, and note the following...</i></span>")
 
+	// Show age
+	if(registered_age)
+		msg += "The card indicates that the holder is [registered_age] years old."
+	
 	if(mining_points)
 		msg += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
 	if(registered_account)
@@ -198,6 +202,9 @@
 	var/uses_overlays = TRUE
 	var/icon/cached_flat_icon
 
+	// Registered owner's age (Default to blank)
+	var/registered_age = null
+
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 	if(mapload && access_txt)
@@ -229,8 +236,11 @@
 
 /obj/item/card/id/attack_self(mob/user)
 	if(Adjacent(user))
-		user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", \
-					"<span class='notice'>You show \the [src.name].</span>")
+		var/age_drinking
+		if(registered_name && registered_age && registered_age < AGE_MIN_DRINKING)
+			age_drinking = " <b>(MLDA)</b>"
+		user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name][age_drinking].</span>", \
+					"<span class='notice'>You show \the [src.name][age_drinking].</span>")
 		add_fingerprint(user)
 
 /obj/item/card/id/attackby(obj/item/W, mob/user, params)

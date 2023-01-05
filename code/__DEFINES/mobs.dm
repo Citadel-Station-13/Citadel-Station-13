@@ -291,6 +291,7 @@
 #define AGE_MIN					18	// youngest a character can be // CITADEL EDIT - 17 --> 18
 #define AGE_MAX					85	// oldest a character can be randomly generated
 #define AGE_MAX_INPUT			85	// oldest a character's age can be manually set
+#define AGE_MIN_DRINKING		20 	// Youngest a character can legally drink and smoke
 #define WIZARD_AGE_MIN			30	// youngest a wizard can be
 #define APPRENTICE_AGE_MIN		29	// youngest an apprentice can be
 #define SHOES_SLOWDOWN			 0	// How much shoes slow you down by default. Negative values speed you up

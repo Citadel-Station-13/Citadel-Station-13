@@ -185,6 +185,23 @@
 			target_id_card.update_label()
 			playsound(computer, "terminal_type", 50, FALSE)
 			return TRUE
+		// Change age
+		/*
+		 * Not implemented, as it would require TGUI updates
+		 *
+		if("PRG_age")
+			if(!computer || !authenticated || !target_id_card)
+				return TRUE
+
+			var/new_age = params["id_age"]
+			if(!isnum(new_age))
+				stack_trace("[key_name(usr)] ([usr]) attempted to set invalid age \[[new_age]\] to [target_id_card]")
+				return TRUE
+
+			target_id_card.registered_age = new_age
+			playsound(computer, SFX_TERMINAL_TYPE, 50, FALSE)
+			return TRUE
+		*/
 		if("PRG_assign")
 			if(!computer || !authenticated || !target_id_card)
 				return

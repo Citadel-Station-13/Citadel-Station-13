@@ -32,6 +32,9 @@ GLOBAL_LIST_EMPTY(spidermobs)				//all sentient spider mobs
 GLOBAL_LIST_EMPTY(bots_list)
 GLOBAL_LIST_EMPTY(aiEyes)
 
+// Crew below minimum drinking age who have been reported to security for trying to buy things they shouldn't, so they can't spam
+GLOBAL_LIST_EMPTY(narcd_cantdrink)
+
 GLOBAL_LIST_EMPTY(language_datum_instances)
 GLOBAL_LIST_EMPTY(all_languages)
 

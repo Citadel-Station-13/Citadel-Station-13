@@ -301,6 +301,8 @@
 		C.registered_name = H.real_name
 		C.assignment = J.title
 		C.update_label()
+		if(H.age)
+			C.registered_age = H.age
 		for(var/A in SSeconomy.bank_accounts)
 			var/datum/bank_account/B = A
 			if(B.account_id == H.account_id)

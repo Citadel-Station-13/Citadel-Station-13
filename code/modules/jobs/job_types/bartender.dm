@@ -33,6 +33,20 @@
 	backpack_contents = list(/obj/item/storage/box/beanbag=1,/obj/item/book/granter/action/drink_fling=1)
 	shoes = /obj/item/clothing/shoes/laceup
 
+/datum/outfit/job/bartender/post_equip(mob/living/carbon/human/human, visualsOnly)
+	. = ..()
+
+	// Get character's ID
+	var/obj/item/card/id/wearer = human.wear_id
+	
+	// Check for legal drinking age
+	if(human.age < AGE_MIN_DRINKING)
+		// Falsify the ID
+		wearer.registered_age = AGE_MIN_DRINKING
+		
+		// Warn the user
+		to_chat(human, span_notice("You're not technically allowed to access or serve alcohol, but your ID has been discreetly modified to hide this fact. Try to keep that a secret!"))
+
 /datum/job/bartender/after_spawn(mob/living/H, client/C, latejoin = FALSE)
 	. = ..()
 	var/datum/action/innate/drink_fling/D = new
