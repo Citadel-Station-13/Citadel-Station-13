@@ -10,7 +10,6 @@
 	data["malfunctioning"] = malfunctioning
 	data["open"] = open
 	data["active"] = active
-	data["locked"] = locked
 	data["complexity"] = complexity
 	data["selected_module"] = selected_module?.name
 	data["wearer_name"] = wearer ? (wearer.get_authentification_name("Unknown") || "Unknown") : "No Occupant"
@@ -56,17 +55,10 @@
 	. = ..()
 	if(.)
 		return
-	if((!allowed(usr) || !ispAI(usr)) && locked)
-		balloon_alert(usr, "insufficient access!")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		return
 	if(malfunctioning && prob(75))
 		balloon_alert(usr, "button malfunctions!")
 		return
 	switch(action)
-		if("lock")
-			locked = !locked
-			balloon_alert(usr, "[locked ? "locked" : "unlocked"]!")
 		if("activate")
 			toggle_activate(usr)
 		if("select")

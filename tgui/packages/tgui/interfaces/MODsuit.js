@@ -459,7 +459,6 @@ const ParametersSection = (props, context) => {
   const {
     active,
     malfunctioning,
-    locked,
     open,
     selected_module,
     complexity,
@@ -488,17 +487,6 @@ const ParametersSection = (props, context) => {
             />
           }>
           {status}
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="ID Lock"
-          buttons={
-            <Button
-              icon={locked ? 'lock-open' : 'lock'}
-              content={locked ? 'Unlock' : 'Lock'}
-              onClick={() => act('lock')}
-            />
-          }>
-          {locked ? 'Locked' : 'Unlocked'}
         </LabeledList.Item>
         <LabeledList.Item label="Cover">
           {open ? 'Open' : 'Closed'}
