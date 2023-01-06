@@ -31,7 +31,7 @@
 	var/sheet_amount = 2
 	var/girder_type = /obj/structure/girder
 
-	smooth_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_STEEL)
+	smooth_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_STEEL, SMOOTH_GROUP_WALL_METALLIC)
 	smooth_with = list(SMOOTH_GROUP_WALL_STEEL, SMOOTH_GROUP_WALL_PLASTEEL, SMOOTH_GROUP_WALL_CLOCKWORK)
 	smooth_flags = SMOOTH_CORNERS
 

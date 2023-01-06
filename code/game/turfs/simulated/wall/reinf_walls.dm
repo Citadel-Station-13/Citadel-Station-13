@@ -5,6 +5,7 @@
 	icon_state = "r_wall"
 	opacity = 1
 	density = TRUE
+	smooth_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_PLASTEEL, SMOOTH_GROUP_WALL_METALLIC)
 
 	var/d_state = INTACT
 	hardness = 10

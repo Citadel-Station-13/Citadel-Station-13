@@ -13,7 +13,7 @@
 	opacity = 1
 	max_integrity = 100
 	smooth_groups = list(SMOOTH_GROUP_FALSEWALL, SMOOTH_GROUP_WALL_STEEL)
-	smooth_with = list(SMOOTH_GROUP_WALL_METALLIC)
+	smooth_with = list(SMOOTH_GROUP_WALL_STEEL, SMOOTH_GROUP_WALL_CLOCKWORK, SMOOTH_GROUP_WALL_PLASTEEL)
 
 	smooth_flags = SMOOTH_CORNERS
 	can_be_unanchored = FALSE
@@ -72,6 +72,7 @@
 			smooth_flags = SMOOTH_CORNERS
 			if(updates & UPDATE_SMOOTHING)
 				QUEUE_SMOOTH(src)
+				QUEUE_SMOOTH_NEIGHBORS(src)
 		else
 			icon_state = "fwall_open"
 
