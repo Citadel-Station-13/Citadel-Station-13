@@ -1,6 +1,8 @@
 /datum/wires/mod
 	holder_type = /obj/item/mod/control
 	proper_name = "MOD control unit"
+	req_knowledge = JOB_SKILL_MASTER
+	req_skill = JOB_SKILL_TRAINED
 
 /datum/wires/mod/New(atom/holder)
 	wires = list(WIRE_HACK, WIRE_DISABLE, WIRE_SHOCK, WIRE_INTERFACE)
