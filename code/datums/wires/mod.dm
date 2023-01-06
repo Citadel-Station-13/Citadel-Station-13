@@ -5,8 +5,8 @@
 	req_skill = JOB_SKILL_TRAINED
 
 /datum/wires/mod/New(atom/holder)
-	wires = list(WIRE_HACK, WIRE_DISABLE, WIRE_SHOCK, WIRE_INTERFACE)
-	add_duds(2)
+	wires = list(WIRE_DISABLE, WIRE_SHOCK, WIRE_INTERFACE)
+	add_duds(3)
 	..()
 
 /datum/wires/mod/interactable(mob/user)
@@ -20,15 +20,12 @@
 	var/list/status = list()
 	status += "The orange light is [mod.seconds_electrified ? "on" : "off"]."
 	status += "The red light is [mod.malfunctioning ? "off" : "blinking"]."
-	status += "The green light is [mod.locked ? "on" : "off"]."
 	status += "The yellow light is [mod.interface_break ? "off" : "on"]."
 	return status
 
 /datum/wires/mod/on_pulse(wire)
 	var/obj/item/mod/control/mod = holder
 	switch(wire)
-		if(WIRE_HACK)
-			mod.locked = !mod.locked
 		if(WIRE_DISABLE)
 			mod.malfunctioning = TRUE
 		if(WIRE_SHOCK)

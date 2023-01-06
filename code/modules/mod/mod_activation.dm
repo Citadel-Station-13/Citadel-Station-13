@@ -97,10 +97,6 @@
 			balloon_alert(user, "deploy all parts first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
-	if(locked && !active && !allowed(user) && !force_deactivate)
-		balloon_alert(user, "access insufficient!")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		return FALSE
 	if(!cell?.charge && !force_deactivate)
 		balloon_alert(user, "suit not powered!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)

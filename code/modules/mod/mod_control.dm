@@ -44,8 +44,6 @@
 	var/active = FALSE
 	/// If the suit wire/module hatch is open.
 	var/open = FALSE
-	/// If the suit is ID locked.
-	var/locked = FALSE
 	/// If the suit is malfunctioning.
 	var/malfunctioning = FALSE
 	/// If the suit is currently activating/deactivating.
@@ -107,8 +105,6 @@
 	cell_drain = theme.cell_drain
 	initial_modules += theme.inbuilt_modules
 	wires = new /datum/wires/mod(src)
-	if(length(req_access))
-		locked = TRUE
 	if(ispath(cell))
 		cell = new cell(src)
 	helmet = new /obj/item/clothing/head/helmet/space/mod(src)
@@ -364,10 +360,6 @@
 /obj/item/mod/control/get_cell()
 	if(open)
 		return cell
-
-/obj/item/mod/control/emag_act(mob/user)
-	locked = !locked
-	balloon_alert(user, "[locked ? "locked" : "unlocked"]")
 
 /obj/item/mod/control/emp_act(severity)
 	. = ..()
