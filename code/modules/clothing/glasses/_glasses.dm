@@ -237,6 +237,12 @@
 	icon_state = "circle_glasses"
 	item_state = "circle_glasses"
 
+/obj/item/clothing/glasses/regular/modern
+	name = "modern glasses"
+	desc = "A Dork. Co. revamp and/or revision of Nerd. Co.'s classic prescription glasses, with less opaque lenses."
+	icon_state = "glasses_alt"
+	item_state = "glasses_alt"
+
 //Here lies green glasses, so ugly they died. RIP
 
 /obj/item/clothing/glasses/sunglasses
