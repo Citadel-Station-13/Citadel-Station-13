@@ -64,8 +64,6 @@
     new /obj/item/clothing/glasses/hud/health(src)
     new /obj/item/pinpointer/crew(src)
     new /obj/item/sensor_device(src)
-    new /obj/item/mod/construction/armor/rescue(src)
-    new /obj/item/mod/module/health_analyzer(src)
     return
 
 /obj/structure/closet/secure_closet/CMO
@@ -105,6 +103,8 @@
 	new	/obj/item/storage/lockbox/medal/medical(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/cmo(src)
 	new /obj/item/clothing/head/beret/cmo/blue(src)
+    new /obj/item/mod/construction/armor/rescue(src)
+    new /obj/item/mod/module/health_analyzer(src)
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control"
