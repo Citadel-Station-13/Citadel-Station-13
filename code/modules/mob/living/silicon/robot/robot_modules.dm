@@ -805,7 +805,7 @@
 		/obj/item/borg/sight/xray/truesight_lens)
 	moduleselect_icon = "service"
 	hat_offset = 0
-	clean_on_move = TRUE
+	clean_on_move = FALSE
 
 /obj/item/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()

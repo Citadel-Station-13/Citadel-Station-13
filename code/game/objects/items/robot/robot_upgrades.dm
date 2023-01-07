@@ -291,6 +291,24 @@ as performing this in action() will cause the upgrade to end up in the borg inst
 		R.module.basic_modules += M
 		R.module.add_module(M, FALSE, TRUE)
 
+/obj/item/borg/upgrade/mop_automatic
+	name = "janitor cyborg auto-scrubber"
+	desc = "An advanced replacement for mops everywhere. Cleans floors while you walk!"
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = list(/obj/item/robot_module/butler)
+	module_flags = BORG_MODULE_JANITOR
+
+/obj/item/borg/upgrade/mop_automatic/action(mob/living/silicon/robot/R)
+	. = ..()
+	if(.)
+		R.AddElement(/datum/element/cleaning)
+
+/obj/item/borg/upgrade/mop_automatic/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		R.RemoveElement(/datum/element/cleaning)
+
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg."
