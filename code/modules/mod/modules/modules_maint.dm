@@ -29,7 +29,7 @@
 
 	if(!reagents.len)
 		return
-	if(!(methods & (VAPOR|PATCH|TOUCH)))
+	if(!(methods == VAPOR || methods == PATCH || methods == TOUCH))
 		return //remove non-touch reagent exposure
 	to_chat(mod.wearer, span_danger("[src] makes an ominous click sound..."))
 	playsound(src, 'sound/items/modsuit/springlock.ogg', 75, TRUE)
