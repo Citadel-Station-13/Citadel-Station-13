@@ -351,7 +351,7 @@
 		if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
 			add_event(null, "charge", /datum/mood_event/supercharged)
 
-/datum/component/mood/proc/update_beauty(area/A)
+/datum/component/mood/proc/update_beauty(datum/source, area/A)
 	if(A.outdoors) //if we're outside, we don't care.
 		clear_event(null, "area_beauty")
 		return FALSE
