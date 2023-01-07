@@ -10,6 +10,7 @@
 		"mod_gauntlets",
 		"mod_boots",
 		"mod_plating_standard",
+		"mod_paint_kit",
 		"mod_storage",
 		"mod_welding",
 		"mod_mouthhole",
