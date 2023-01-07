@@ -155,6 +155,7 @@
 	pai.remote_control = null
 	pai.canholo = TRUE
 	pai = null
+	ai = null
 
 #define MOVE_DELAY 2
 #define WEARER_DELAY 1
