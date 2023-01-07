@@ -69,7 +69,7 @@
 	/// MOD helmet.
 	var/obj/item/clothing/head/helmet/space/mod/helmet
 	/// MOD chestplate.
-	var/obj/item/clothing/suit/armor/mod/chestplate
+	var/obj/item/clothing/suit/space/mod/chestplate
 	/// MOD gauntlets.
 	var/obj/item/clothing/gloves/mod/gauntlets
 	/// MOD boots.
@@ -110,7 +110,7 @@
 	helmet = new /obj/item/clothing/head/helmet/space/mod(src)
 	helmet.mod = src
 	mod_parts += helmet
-	chestplate = new /obj/item/clothing/suit/armor/mod(src)
+	chestplate = new /obj/item/clothing/suit/space/mod(src)
 	chestplate.mod = src
 	mod_parts += chestplate
 	gauntlets = new /obj/item/clothing/gloves/mod(src)

@@ -32,7 +32,7 @@
 		QDEL_NULL(mod)
 	return ..()
 
-/obj/item/clothing/suit/armor/mod
+/obj/item/clothing/suit/space/mod
 	name = "MOD chestplate"
 	desc = "A chestplate for a MODsuit."
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
@@ -56,7 +56,7 @@
 	var/obj/item/mod/control/mod
 	mutantrace_variation = STYLE_DIGITIGRADE
 
-/obj/item/clothing/suit/armor/mod/Destroy()
+/obj/item/clothing/suit/space/mod/Destroy()
 	if(!QDELETED(mod))
 		mod.chestplate = null
 		mod.mod_parts -= src
