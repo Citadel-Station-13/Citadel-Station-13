@@ -349,24 +349,31 @@
 		reskin_obj(user)
 		return TRUE
 
+/// Reskins an object according to M's choice, modified to be overridable and supports different icons
 /obj/proc/reskin_obj(mob/M)
 	if(!LAZYLEN(unique_reskin))
-		return
+		return FALSE
 
 	var/list/items = list()
 	for(var/reskin_option in unique_reskin)
-		var/image/item_image = image(icon = src.icon, icon_state = unique_reskin[reskin_option])
+		var/image/item_image = image(
+			icon = unique_reskin[reskin_option]["icon"] ? unique_reskin[reskin_option]["icon"] : icon,
+			icon_state = unique_reskin[reskin_option]["icon_state"])
 		items += list("[reskin_option]" = item_image)
 	sortList(items)
 
 	var/pick = show_radial_menu(M, src, items, custom_check = CALLBACK(src, .proc/check_reskin_menu, M), radius = 38, require_near = TRUE)
 	if(!pick)
-		return
-	if(!unique_reskin[pick])
-		return
+		return FALSE
+	if(!unique_reskin[pick]["icon_state"])
+		return FALSE
 	current_skin = pick
-	icon_state = unique_reskin[pick]
+	var/has_icon = unique_reskin[pick]["icon"]
+	if(has_icon)
+		icon = has_icon
+	icon_state = unique_reskin[pick]["icon_state"]
 	to_chat(M, "[src] is now skinned as '[pick].'")
+	return TRUE
 
 /**
   * Checks if we are allowed to interact with a radial menu for reskins
