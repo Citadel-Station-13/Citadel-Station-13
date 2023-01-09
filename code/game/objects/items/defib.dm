@@ -461,8 +461,6 @@
 			cooldown = TRUE
 	busy = FALSE
 	update_icon()
-	if(SEND_SIGNAL(src, COMSIG_DEFIBRILLATOR_SUCCESS) & COMPONENT_DEFIB_STOP)
-		return
 	if(req_defib)
 		defib.cooldowncheck(user)
 	else
@@ -516,8 +514,6 @@
 				cooldown = TRUE
 			busy = FALSE
 			update_icon()
-			if(SEND_SIGNAL(src, COMSIG_DEFIBRILLATOR_SUCCESS) & COMPONENT_DEFIB_STOP)
-				return
 			if(!req_defib)
 				recharge(60)
 			if(req_defib && (defib.cooldowncheck(user)))
@@ -636,8 +632,6 @@
 					defib.deductcharge(revivecost)
 					cooldown = 1
 				update_icon()
-				if(SEND_SIGNAL(src, COMSIG_DEFIBRILLATOR_SUCCESS) & COMPONENT_DEFIB_STOP)
-					return
 				if(req_defib)
 					defib.cooldowncheck(user)
 				else

@@ -304,14 +304,7 @@
 		if(equip_to_slot_if_possible(thing, ITEM_SLOT_BACK))
 			update_inv_hands()
 		return
-	var/datum/component/storage/storage = equipped_back.GetComponent(/datum/component/storage)
-	if(istype(equipped_back, /obj/item/mod/control))
-		var/obj/item/mod/control/C = equipped_back
-		for(var/obj/item/mod/module/storage/S in C.modules)
-			if(S.stored)
-				equipped_back = S.stored
-				storage = S.stored.GetComponent(/datum/component/storage)
-	if(!storage)
+	if(!SEND_SIGNAL(equipped_back, COMSIG_CONTAINS_STORAGE)) // not a storage item
 		if(!thing)
 			equipped_back.attack_hand(src)
 		else
@@ -321,11 +314,10 @@
 		if(!SEND_SIGNAL(equipped_back, COMSIG_TRY_STORAGE_INSERT, thing, src))
 			to_chat(src, "<span class='warning'>You can't fit anything in!</span>")
 		return
-	var/atom/real_location = storage.real_location()
-	if(!real_location.contents.len) // nothing to take out
-		to_chat(src, "<span class='warning'>There's nothing in your [equipped_back.name] to take out!</span>")
+	if(!equipped_back.contents.len) // nothing to take out
+		to_chat(src, "<span class='warning'>There's nothing in your backpack to take out!</span>")
 		return
-	var/obj/item/stored = real_location.contents[real_location.contents.len]
+	var/obj/item/stored = equipped_back.contents[equipped_back.contents.len]
 	if(!stored || stored.on_found(src))
 		return
 	stored.attack_hand(src) // take out thing from backpack
