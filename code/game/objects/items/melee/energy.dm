@@ -203,10 +203,11 @@
 	. = ..()
 	if(.)
 		switch(current_skin)
-			if("Sword")
-				icon_state = "sword[active ? sword_color : "0"]"
 			if("Saber")
 				icon_state = "esaber[active ? sword_color : "0"]"
+			// No skin
+			else
+				icon_state = "sword[active ? sword_color : "0"]"
 
 /obj/item/melee/transforming/energy/sword/saber/reskin_obj(mob/M)
 	. = ..()
