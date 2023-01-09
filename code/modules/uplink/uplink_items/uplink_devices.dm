@@ -10,14 +10,15 @@
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
 	desc = "The cryptographic sequencer, electromagnetic card, or emag, is a small card that unlocks hidden functions \
-			in electronic devices, subverts intended functions, and easily breaks security mechanisms."
+			in electronic devices, subverts intended functions, and easily breaks security mechanisms. Cannot be used to open airlocks."
 	item = /obj/item/card/emag
-	cost = 6
+	cost = 4
 
-/datum/uplink_item/device_tools/emagrecharge
-	name = "Electromagnet Charging Device"
-	desc = "A small device intended for recharging Cryptographic Sequencers. Using it will add five extra charges to the Cryptographic Sequencer."
-	item = /obj/item/emagrecharge
+/datum/uplink_item/device_tools/doorjack
+	name = "Airlock Authentication Override Card"
+	desc = "A specialized cryptographic sequencer specifically designed to override station airlock access codes. \
+			After hacking a certain number of airlocks, the device will require some time to recharge."
+	item = /obj/item/card/emag/doorjack
 	cost = 2
 
 /datum/uplink_item/device_tools/bluespacerecharge

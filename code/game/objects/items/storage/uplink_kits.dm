@@ -46,6 +46,7 @@
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/card/emag(src)
+			new /obj/item/card/emag/doorjack(src)
 			new /obj/item/grenade/plastic/c4(src)
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
@@ -56,6 +57,7 @@
 			new /obj/item/melee/transforming/energy/sword/saber(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/card/emag(src)
+			new /obj/item/card/emag/doorjack(src)
 			new /obj/item/clothing/shoes/chameleon/noslip(src)
 			new /obj/item/encryptionkey/syndicate(src)
 			new /obj/item/grenade/syndieminibomb(src)
@@ -65,7 +67,8 @@
 		if("baseball") // 44~ tc
 			new /obj/item/melee/baseball_bat/ablative/syndi(src) //Lets say 12 tc, lesser sleeping carp
 			new /obj/item/clothing/glasses/sunglasses/garb(src) //Lets say 2 tc
-			new /obj/item/card/emag(src) //6 tc
+			new /obj/item/card/emag(src) //4 tc
+			new /obj/item/card/emag/doorjack(src) //2 tc
 			new /obj/item/clothing/shoes/sneakers/noslip(src) //2tc
 			new /obj/item/encryptionkey/syndicate(src) //1tc
 			new /obj/item/autosurgeon/anti_drop(src) //Lets just say 7~
@@ -87,18 +90,18 @@
 		if("hacker") // 30 tc
 			new /obj/item/aiModule/syndicate(src)
 			new /obj/item/card/emag(src)
+			new /obj/item/card/emag/doorjack(src)
 			new /obj/item/encryptionkey/binary(src)
 			new /obj/item/aiModule/toyAI(src)
 			new /obj/item/multitool/ai_detect(src)
 			new /obj/item/flashlight/emp(src)
-			new /obj/item/emagrecharge(src)
 
 		if("lordsingulo") // "36" tc aka 23 tc
 			new /obj/item/sbeacondrop(src) // 14 kinda useless
 			new /obj/item/clothing/suit/space/syndicate/black/red(src) //2
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src) //2
-			new /obj/item/card/emag(src) //6
-			new /obj/item/emagrecharge(src) //2
+			new /obj/item/card/emag(src) //4
+			new /obj/item/card/emag/doorjack(src) //2
 			new /obj/item/storage/toolbox/syndicate(src) //1
 			new /obj/item/card/id/syndicate(src) //2
 			new /obj/item/flashlight/emp(src) //2
@@ -141,7 +144,8 @@
 			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
 			new /obj/item/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/grenade/plastic/c4 (src) // 1 tc
-			new /obj/item/card/emag(src) // 6 tc
+			new /obj/item/card/emag(src) // 4 tc
+			new /obj/item/card/emag/doorjack(src) // 2 tc
 
 		if("ninja") // 40~ tc worth
 			new /obj/item/katana(src) // Unique , basicly a better esword. 10 tc?
@@ -163,6 +167,7 @@
 
 /obj/item/storage/toolbox/emergency/old/ancientbundle/PopulateContents()
 	new /obj/item/card/emag(src)
+	new /obj/item/card/emag/doorjack(src)
 	new /obj/item/pen/sleepy(src)
 	new /obj/item/reagent_containers/pill/cyanide(src)
 	new /obj/item/chameleon(src) //its not the original cloaking device, but it will do.

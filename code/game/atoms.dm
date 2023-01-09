@@ -860,8 +860,8 @@
 /atom/proc/acid_act(acidpwr, acid_volume)
 	SEND_SIGNAL(src, COMSIG_ATOM_ACID_ACT, acidpwr, acid_volume)
 
-/atom/proc/emag_act()
-	return SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
+/atom/proc/emag_act(mob/user, obj/item/card/emag/item_emag)
+	return SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, item_emag)
 
 /atom/proc/rad_act(strength)
 	var/turf/open/pool/PL = get_turf(src)

@@ -1182,7 +1182,7 @@ GLOBAL_LIST_EMPTY(cult_contraband)
 /datum/objective/collector/New()
 	..()
 	if(!GLOB.traitor_contraband.len)//Only need to fill the list when it's needed.
-		GLOB.traitor_contraband = list(/obj/item/card/emag/empty,/obj/item/clothing/glasses/phantomthief,/obj/item/clothing/gloves/chameleon/broken)
+		GLOB.traitor_contraband = list(/obj/item/card/emag,/obj/item/clothing/glasses/phantomthief,/obj/item/clothing/gloves/chameleon/broken)
 	if(!GLOB.cult_contraband.len)
 		GLOB.cult_contraband = list(/obj/item/clockwork/slab,/obj/item/clockwork/component/belligerent_eye,/obj/item/clockwork/component/belligerent_eye/lens_gem,/obj/item/shuttle_curse,/obj/item/cult_shift)
 

@@ -1129,6 +1129,7 @@
 #include "code\game\objects\items\dyekit.dm"
 #include "code\game\objects\items\eightball.dm"
 #include "code\game\objects\items\electrostaff.dm"
+#include "code\game\objects\items\emags.dm"
 #include "code\game\objects\items\extinguisher.dm"
 #include "code\game\objects\items\fireaxe.dm"
 #include "code\game\objects\items\flamethrower.dm"
