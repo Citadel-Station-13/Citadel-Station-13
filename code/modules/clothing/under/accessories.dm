@@ -573,3 +573,9 @@
 		"Non-binary Pride"  = list("icon_state" = "pride_enby"),
 		"Transgender Pride" = list("icon_state" = "pride_trans")
 	)
+
+/obj/item/clothing/accessory/pride/reskin_obj(mob/M)
+	. = ..()
+	if(!.)
+		return
+	name = "[current_skin] pin"

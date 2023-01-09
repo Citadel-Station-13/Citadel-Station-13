@@ -198,28 +198,25 @@
 		"Saber" = list("icon_state" = "esaber0")
 	)
 	var/hacked = FALSE
-	var/saber = FALSE
 
 /obj/item/melee/transforming/energy/sword/saber/transform_weapon(mob/living/user, supress_message_text)
 	. = ..()
 	if(.)
-		if(active)
-			switch(current_skin)
-				if("Sword")
-					icon_state = "sword[sword_color ? sword_color : "0"]"
-				if("Saber")
-					icon_state = "esaber[sword_color ? sword_color : "0"]"
+		switch(current_skin)
+			if("Sword")
+				icon_state = "sword[active ? sword_color : "0"]"
+			if("Saber")
+				icon_state = "esaber[active ? sword_color : "0"]"
 
 /obj/item/melee/transforming/energy/sword/saber/reskin_obj(mob/M)
 	. = ..()
 	if(!.)
 		return
-	if(active)
-		switch(current_skin)
-			if("Sword")
-				icon_state = "sword[sword_color]"
-			if("Saber")
-				icon_state = "esaber[sword_color]"
+	switch(current_skin)
+		if("Sword")
+			icon_state = "sword[active ? sword_color : "0"]"
+		if("Saber")
+			icon_state = "esaber[active ? sword_color : "0"]"
 
 /obj/item/melee/transforming/energy/sword/saber/set_sword_color(var/color_forced)
 	if(color_forced) // wow i really do not like this at fucking all holy SHIT
