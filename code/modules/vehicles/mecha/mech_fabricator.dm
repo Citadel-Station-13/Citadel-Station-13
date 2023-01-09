@@ -57,8 +57,6 @@
 								"Exosuit Equipment",
 								"Exosuit Ammunition",
 								"Cyborg Upgrade Modules",
-								"MODsuit Chassis",
-								"MODsuit Modules",
 								"Cybernetics",
 								"Implants",
 								"Control Interfaces",

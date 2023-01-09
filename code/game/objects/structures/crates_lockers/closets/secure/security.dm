@@ -17,8 +17,6 @@
 	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/door_remote/captain(src)
 	new /obj/item/storage/photo_album/Captain(src)
-	new /obj/item/mod/construction/armor/magnate(src)
-	new /obj/item/mod/module/holster(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"
