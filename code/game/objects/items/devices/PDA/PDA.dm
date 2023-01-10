@@ -130,6 +130,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 	new_overlays = TRUE
 	update_icon()
 
+/// This is a mess i probably shouldn't touch.
+/obj/item/pda/ComponentInitialize()
+	. = ..()
+	RemoveElement(/datum/element/object_reskinning)
+
 /obj/item/pda/CtrlShiftClick(mob/living/user)
 	. = ..()
 	if(GLOB.pda_reskins && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))

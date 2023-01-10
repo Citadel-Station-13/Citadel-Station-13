@@ -120,8 +120,6 @@
 
 /obj/item/pen/fountain/captain/reskin_obj(mob/M)
 	. = ..()
-	if(!.)
-		return
 	desc = "It's an expensive [current_skin] fountain pen. The nib is quite sharp."
 
 /obj/item/pen/attack_self(mob/living/carbon/user)

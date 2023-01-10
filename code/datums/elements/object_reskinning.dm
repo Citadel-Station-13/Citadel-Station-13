@@ -1,3 +1,20 @@
+/*
+ * # Element: Object Reskinning
+ *
+ * Allows players to modify the appearance of their object (and other attributes if possible)
+ * PLEASE DO NOT HAVE INVALID VALUES IN unique_reskin I DON'T EVEN WANT TO KNOW WHAT HAPPENS.
+ * USAGE:
+ * unique_reskins = list(
+ * 	"skin 1" = list(
+ * 		"desc" = "very cool description",
+ * 		"icon" = 'very_cool_icon.dmi'
+ *		),
+ * 	"skin 2" = list(
+ *		"desc" = "not as cool description",
+ *		"icon" = 'the_boring_skin.dmi'
+ * 		)
+ * )
+*/
 /datum/element/object_reskinning
 	element_flags = ELEMENT_DETACH
 
@@ -22,7 +39,14 @@
 	if(obj.always_reskinnable)
 		examine_list += span_notice("It has no limit to reskinning.")
 
-/// Reskins an object according to user's choice, modified to be overridable and supports different icons
+/*
+ * Reskins an object according to user's choice.
+ * Will detach itself if there's no skins or if done successfully but not always reskinnable.
+ *
+ * Arguments:
+ * * to_reskin The object we will be reskinning
+ * * user The user who wants to choose a skin for the object
+*/
 /datum/element/object_reskinning/proc/reskin(obj/to_reskin, mob/user)
 	// Just stop early
 	if(!(LAZYLEN(to_reskin.unique_reskin) && user.canUseTopic(to_reskin, BE_CLOSE, NO_DEXTERY)))
@@ -30,6 +54,7 @@
 		Detach(to_reskin)
 		return FALSE
 
+	// Get our choices
 	var/list/items = list()
 	for(var/reskin_option in to_reskin.unique_reskin)
 		var/image/item_image = image(
@@ -38,14 +63,19 @@
 		items += list("[reskin_option]" = item_image)
 	sortList(items)
 
+	// Display to the user
 	var/pick = show_radial_menu(user, to_reskin, items, custom_check = CALLBACK(src, .proc/check_reskin_menu, user, to_reskin), radius = 38, require_near = TRUE)
 	if(!pick)
 		return FALSE
+
+	// Finish the work
 	to_reskin.current_skin = pick
 	for(var/reskin_var in to_reskin.unique_reskin[pick])
 		to_reskin.vars[reskin_var] = to_reskin.unique_reskin[pick][reskin_var]
 	to_chat(user, "[to_reskin] is now skinned as '[pick].'")
 	to_reskin.reskin_obj(user)
+
+	// Only once or always?
 	if(!to_reskin.always_reskinnable)
 		Detach(to_reskin)
 	return TRUE
@@ -55,6 +85,7 @@
   *
   * Arguments:
   * * user The mob interacting with the menu
+  * * obj The obj to be checking against
   */
 /datum/element/object_reskinning/proc/check_reskin_menu(mob/user, obj/obj)
 	if(QDELETED(obj))

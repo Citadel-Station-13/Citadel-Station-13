@@ -211,8 +211,6 @@
 
 /obj/item/melee/transforming/energy/sword/saber/reskin_obj(mob/M)
 	. = ..()
-	if(!.)
-		return
 	switch(current_skin)
 		if("Sword")
 			icon_state = "sword[active ? sword_color : "0"]"
