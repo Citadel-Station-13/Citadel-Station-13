@@ -1,0 +1,68 @@
+/datum/element/object_reskinning
+	element_flags = ELEMENT_DETACH
+
+/datum/element/object_reskinning/Attach(datum/target)
+	. = ..()
+	var/obj/the_obj = target
+	if(!istype(the_obj))
+		return ELEMENT_INCOMPATIBLE
+	if(!islist(the_obj.unique_reskin) || !length(the_obj.unique_reskin))
+		message_admins("[src] was given to an object without any unique reskins, if you really need to, give it a couple skins first.")
+		return ELEMENT_INCOMPATIBLE
+
+	RegisterSignal(the_obj, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(the_obj, COMSIG_CLICK_ALT, .proc/reskin)
+
+/datum/element/object_reskinning/Detach(datum/source, force)
+	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_CLICK_ALT))
+	return ..()
+
+/datum/element/object_reskinning/proc/on_examine(obj/obj, mob/user, list/examine_list)
+	examine_list += span_notice("Alt-click to reskin it ([length(obj.unique_reskin)] possible styles).")
+	if(obj.always_reskinnable)
+		examine_list += span_notice("It has no limit to reskinning.")
+
+/// Reskins an object according to user's choice, modified to be overridable and supports different icons
+/datum/element/object_reskinning/proc/reskin(obj/to_reskin, mob/user)
+	// Just stop early
+	if(!(LAZYLEN(to_reskin.unique_reskin) && user.canUseTopic(to_reskin, BE_CLOSE, NO_DEXTERY)))
+		message_admins("[ADMIN_LOOKUPFLW(user)] attempted to reskin an object that has no skins!")
+		Detach(to_reskin)
+		return FALSE
+
+	var/list/items = list()
+	for(var/reskin_option in to_reskin.unique_reskin)
+		var/image/item_image = image(
+			icon = to_reskin.unique_reskin[reskin_option]["icon"] ? to_reskin.unique_reskin[reskin_option]["icon"] : to_reskin.icon,
+			icon_state = to_reskin.unique_reskin[reskin_option]["icon_state"] ? to_reskin.unique_reskin[reskin_option]["icon_state"] : to_reskin.icon_state)
+		items += list("[reskin_option]" = item_image)
+	sortList(items)
+
+	var/pick = show_radial_menu(user, to_reskin, items, custom_check = CALLBACK(src, .proc/check_reskin_menu, user, to_reskin), radius = 38, require_near = TRUE)
+	if(!pick)
+		return FALSE
+	to_reskin.current_skin = pick
+	for(var/reskin_var in to_reskin.unique_reskin[pick])
+		to_reskin.vars[reskin_var] = to_reskin.unique_reskin[pick][reskin_var]
+	to_chat(user, "[to_reskin] is now skinned as '[pick].'")
+	to_reskin.reskin_obj(user)
+	if(!to_reskin.always_reskinnable)
+		Detach(to_reskin)
+	return TRUE
+
+/**
+  * Checks if we are allowed to interact with a radial menu for reskins
+  *
+  * Arguments:
+  * * user The mob interacting with the menu
+  */
+/datum/element/object_reskinning/proc/check_reskin_menu(mob/user, obj/obj)
+	if(QDELETED(obj))
+		return FALSE
+	if(obj.current_skin)
+		return FALSE
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	return TRUE

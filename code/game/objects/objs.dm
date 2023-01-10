@@ -76,6 +76,10 @@
 		var/turf/T = loc
 		T.add_blueprints_preround(src)
 
+/obj/ComponentInitialize()
+	. = ..()
+	if(islist(unique_reskin) && length(unique_reskin))
+		AddElement(/datum/element/object_reskinning)
 
 /obj/Destroy(force=FALSE)
 	if(!ismachinery(src))
@@ -340,57 +344,10 @@
 	. = ..()
 	if(obj_flags & UNIQUE_RENAME)
 		. += "<span class='notice'>Use a pen on it to rename it or change its description.</span>"
-	if(unique_reskin && (!current_skin || always_reskinnable))
-		. += "<span class='notice'>Alt-click it to reskin it.</span>"
 
-/obj/AltClick(mob/user)
-	. = ..()
-	if(unique_reskin && (!current_skin || always_reskinnable) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
-		reskin_obj(user)
-		return TRUE
-
-/// Reskins an object according to M's choice, modified to be overridable and supports different icons
-/obj/proc/reskin_obj(mob/M)
-	if(!LAZYLEN(unique_reskin))
-		return FALSE
-
-	var/list/items = list()
-	for(var/reskin_option in unique_reskin)
-		var/image/item_image = image(
-			icon = unique_reskin[reskin_option]["icon"] ? unique_reskin[reskin_option]["icon"] : icon,
-			icon_state = unique_reskin[reskin_option]["icon_state"])
-		items += list("[reskin_option]" = item_image)
-	sortList(items)
-
-	var/pick = show_radial_menu(M, src, items, custom_check = CALLBACK(src, .proc/check_reskin_menu, M), radius = 38, require_near = TRUE)
-	if(!pick)
-		return FALSE
-	if(!unique_reskin[pick]["icon_state"])
-		return FALSE
-	current_skin = pick
-	var/has_icon = unique_reskin[pick]["icon"]
-	if(has_icon)
-		icon = has_icon
-	icon_state = unique_reskin[pick]["icon_state"]
-	to_chat(M, "[src] is now skinned as '[pick].'")
-	return TRUE
-
-/**
-  * Checks if we are allowed to interact with a radial menu for reskins
-  *
-  * Arguments:
-  * * user The mob interacting with the menu
-  */
-/obj/proc/check_reskin_menu(mob/user)
-	if(QDELETED(src))
-		return FALSE
-	if(current_skin)
-		return FALSE
-	if(!istype(user))
-		return FALSE
-	if(user.incapacitated())
-		return FALSE
-	return TRUE
+/// Do you want to make overrides, of course you do! Will be called if an object was reskinned successfully
+/obj/proc/reskin_obj(mob/user)
+	return
 
 /obj/update_overlays()
 	. = ..()
