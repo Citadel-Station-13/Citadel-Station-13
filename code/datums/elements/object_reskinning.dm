@@ -28,14 +28,15 @@
 		return ELEMENT_INCOMPATIBLE
 
 	RegisterSignal(the_obj, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(the_obj, COMSIG_CLICK_ALT, .proc/reskin)
+	RegisterSignal(the_obj, the_obj.reskin_binding, .proc/reskin)
 
 /datum/element/object_reskinning/Detach(datum/source, force)
-	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_CLICK_ALT))
+	var/obj/being_deleted = source
+	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, being_deleted.reskin_binding))
 	return ..()
 
 /datum/element/object_reskinning/proc/on_examine(obj/obj, mob/user, list/examine_list)
-	examine_list += span_notice("Alt-click to reskin it ([length(obj.unique_reskin)] possible styles).")
+	examine_list += span_notice("[capitalize(replacetext(obj.reskin_binding, "_", "-"))] to reskin it ([length(obj.unique_reskin)] possible styles).")
 	if(obj.always_reskinnable)
 		examine_list += span_notice("It has no limit to reskinning.")
 
@@ -49,9 +50,13 @@
 */
 /datum/element/object_reskinning/proc/reskin(obj/to_reskin, mob/user)
 	// Just stop early
-	if(!(LAZYLEN(to_reskin.unique_reskin) && user.canUseTopic(to_reskin, BE_CLOSE, NO_DEXTERY)))
+	if(!LAZYLEN(to_reskin.unique_reskin))
 		message_admins("[ADMIN_LOOKUPFLW(user)] attempted to reskin an object that has no skins!")
 		Detach(to_reskin)
+		return FALSE
+
+	// Can't use
+	if(!user.canUseTopic(to_reskin, BE_CLOSE, NO_DEXTERY, NO_TK))
 		return FALSE
 
 	// Get our choices
@@ -90,7 +95,7 @@
 /datum/element/object_reskinning/proc/check_reskin_menu(mob/user, obj/obj)
 	if(QDELETED(obj))
 		return FALSE
-	if(obj.current_skin)
+	if(!obj.always_reskinnable && obj.current_skin)
 		return FALSE
 	if(!istype(user))
 		return FALSE

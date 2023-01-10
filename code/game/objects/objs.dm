@@ -28,9 +28,17 @@
 	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
 
 	var/persistence_replacement //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
-	var/current_skin //the item reskin
-	var/list/unique_reskin //List of options to reskin.
+
+	//Reskin variables
+	/// The item reskin
+	var/current_skin
+	/// List of options to reskin.
+	var/list/unique_reskin
+	/// Can always be modified
 	var/always_reskinnable = FALSE
+	/// How to bring up the reskinning menu
+	var/reskin_binding = COMSIG_CLICK_ALT
+	//
 
 	// Access levels, used in modules\jobs\access.dm
 	var/list/req_access
