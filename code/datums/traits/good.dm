@@ -195,6 +195,34 @@
 	qdel(old_eyes)
 	new_eyes.Insert(quirk_holder)
 
+/datum/quirk/trandening/remove()
+	// Get targets
+	var/obj/item/organ/eyes/old_eyes = quirk_holder.getorganslot(ORGAN_SLOT_EYES)
+	var/mob/living/carbon/human/qurk_mob = quirk_holder
+
+	// Check for eyes existing
+	if(!old_eyes)
+		return
+
+	// Check for quirk eyes
+	if(!istype(old_eyes, /obj/item/organ/eyes/robotic/glow))
+		return
+
+	// Define new eyes
+	var/species_eyes = /obj/item/organ/eyes
+
+	// Check for mutant eyes
+	if(qurk_mob.dna.species && qurk_mob.dna.species.mutanteyes)
+		// Set eyes to mutant type
+		species_eyes = qurk_mob.dna.species.mutanteyes
+
+	// Create new eyes item
+	var/obj/item/organ/eyes/new_eyes = new species_eyes()
+
+	// Replace eyes
+	qdel(old_eyes)
+	new_eyes.Insert(quirk_holder)
+
 /datum/quirk/bloodpressure
 	name = "Polycythemia vera"
 	desc = "You've a treated form of Polycythemia vera that increases the total blood volume inside of you as well as the rate of replenishment!"
