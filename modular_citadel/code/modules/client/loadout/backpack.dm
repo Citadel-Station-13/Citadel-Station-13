@@ -190,3 +190,8 @@
 	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION
 	subcategory = LOADOUT_SUBCATEGORY_BACKPACK_ACCESSORIES
 	cost = 0
+
+// Moved here from quirks
+/datum/gear/backpack/dyespray
+	name = "Hair dye spray"
+	path = /obj/item/dyespray
