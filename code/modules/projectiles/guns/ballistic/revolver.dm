@@ -88,13 +88,15 @@
 
 /obj/item/gun/ballistic/revolver/syndicate
 	obj_flags = UNIQUE_RENAME
-	unique_reskin = list("Default" = "revolver",
-						"Silver" = "russianrevolver",
-						"Robust" = "revolvercit",
-						"Bulky" = "revolverhakita",
-						"Polished" = "revolvertoriate",
-						"Soulless" = "revolveroldflip",
-						"Soul" = "revolverold")
+	unique_reskin = list(
+		"Default" = list("icon_state" = "revolver"),
+		"Silver" = list("icon_state" = "russianrevolver"),
+		"Robust" = list("icon_state" = "revolvercit"),
+		"Bulky" = list("icon_state" = "revolverhakita"),
+		"Polished" = list("icon_state" = "revolvertoriate"),
+		"Soulless" = list("icon_state" = "revolveroldflip"),
+		"Soul" = list("icon_state" = "revolverold")
+	)
 
 /obj/item/gun/ballistic/revolver/detective
 	name = "\improper .38 Mars Special"
@@ -102,12 +104,13 @@
 	icon_state = "detective"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	obj_flags = UNIQUE_RENAME
-	unique_reskin = list("Default" = "detective",
-						"Leopard Spots" = "detective_leopard",
-						"Black Panther" = "detective_panther",
-						"Gold Trim" = "detective_gold",
-						"The Peacemaker" = "detective_peacemaker"
-						)
+	unique_reskin = list(
+		"Default" = list("icon_state" = "detective"),
+		"Leopard Spots" = list("icon_state" = "detective_leopard"),
+		"Black Panther" = list("icon_state" = "detective_panther"),
+		"Gold Trim" = list("icon_state" = "detective_gold"),
+		"The Peacemaker" = list("icon_state" = "detective_peacemaker")
+	)
 	var/list/safe_calibers
 
 /obj/item/gun/ballistic/revolver/detective/Initialize(mapload)
@@ -294,13 +297,14 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual
 	sawn_desc = "Omar's coming!"
 	obj_flags = UNIQUE_RENAME
-	unique_reskin = list("Default" = "dshotgun",
-						"Dark Red Finish" = "dshotgun-d",
-						"Ash" = "dshotgun-f",
-						"Faded Grey" = "dshotgun-g",
-						"Maple" = "dshotgun-l",
-						"Rosewood" = "dshotgun-p"
-						)
+	unique_reskin = list(
+		"Default" = list("icon_state" = "dshotgun"),
+		"Dark Red Finish" = list("icon_state" = "dshotgun-d"),
+		"Ash" = list("icon_state" = "dshotgun-f"),
+		"Faded Grey" = list("icon_state" = "dshotgun-g"),
+		"Maple" = list("icon_state" = "dshotgun-l"),
+		"Rosewood" = list("icon_state" = "dshotgun-p")
+	)
 
 /obj/item/gun/ballistic/revolver/doublebarrel/attackby(obj/item/A, mob/user, params)
 	..()
@@ -342,9 +346,10 @@
 	slot_flags = null
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
 	sawn_desc = "I'm just here for the gasoline."
-	unique_reskin = list("Default" = "ishotgun",
-						"Cobbled" = "old_ishotgun"
-						)
+	unique_reskin = list(
+		"Default" = list("icon_state" = "ishotgun"),
+		"Cobbled" = list("icon_state" = "old_ishotgun")
+	)
 	var/slung = FALSE
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)

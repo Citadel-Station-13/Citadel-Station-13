@@ -193,34 +193,29 @@
 
 /obj/item/melee/transforming/energy/sword/saber
 	possible_colors = list("red" = LIGHT_COLOR_RED, "blue" = LIGHT_COLOR_LIGHT_CYAN, "green" = LIGHT_COLOR_GREEN, "purple" = LIGHT_COLOR_LAVENDER)
-	unique_reskin = list("Sword" = "sword0", "Saber" = "esaber0")
+	unique_reskin = list(
+		"Sword" = list("icon_state" = "sword0"),
+		"Saber" = list("icon_state" = "esaber0")
+	)
 	var/hacked = FALSE
-	var/saber = FALSE
 
 /obj/item/melee/transforming/energy/sword/saber/transform_weapon(mob/living/user, supress_message_text)
 	. = ..()
 	if(.)
-		if(active)
-			if(sword_color)
-				if(saber)
-					icon_state = "esaber[sword_color]"
-				else
-					icon_state = "sword[sword_color]"
-		else
-			if(saber)
-				icon_state = "esaber0"
+		switch(current_skin)
+			if("Saber")
+				icon_state = "esaber[active ? sword_color : "0"]"
+			// No skin
 			else
-				icon_state = "sword0"
+				icon_state = "sword[active ? sword_color : "0"]"
 
 /obj/item/melee/transforming/energy/sword/saber/reskin_obj(mob/M)
 	. = ..()
-	if(icon_state == "esaber0")
-		saber = TRUE
-	if(active)
-		if(saber)
-			icon_state = "esaber[sword_color]"
-		else
-			icon_state = "sword[sword_color]"
+	switch(current_skin)
+		if("Sword")
+			icon_state = "sword[active ? sword_color : "0"]"
+		if("Saber")
+			icon_state = "esaber[active ? sword_color : "0"]"
 
 /obj/item/melee/transforming/energy/sword/saber/set_sword_color(var/color_forced)
 	if(color_forced) // wow i really do not like this at fucking all holy SHIT
