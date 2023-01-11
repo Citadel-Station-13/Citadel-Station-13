@@ -181,10 +181,10 @@
 
 /datum/quirk/trandening
 	name = "High Luminosity Eyes"
-	desc = "When the next big fancy implant came out you had to buy one on impluse!"
+	desc = "When the next big fancy implant came out you had to buy one on impulse! You start the shift with emissive cybernetic eyes that can emit colored beams of light."
 	value = 1
-	gain_text = "<span class='notice'>You have to keep up with the next big thing!.</span>"
-	lose_text = "<span class='danger'>High-tech gizmos are a scam...</span>"
+	gain_text = "<span class='notice'>You've been keeping up with the latest cybernetic trends!</span>"
+	lose_text = "<span class='danger'>High powered eye lasers? What were you thinking...</span>"
 
 /datum/quirk/trandening/on_spawn()
 	// Get targets
