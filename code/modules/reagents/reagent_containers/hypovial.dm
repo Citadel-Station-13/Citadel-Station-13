@@ -9,15 +9,16 @@
 	possible_transfer_amounts = list(1,2,5,10)
 	container_flags = APTFT_VERB
 	obj_flags = UNIQUE_RENAME
-	unique_reskin = list("hypovial" = "hypovial",
-						"red hypovial" = "hypovial-b",
-						"blue hypovial" = "hypovial-d",
-						"green hypovial" = "hypovial-a",
-						"orange hypovial" = "hypovial-k",
-						"purple hypovial" = "hypovial-p",
-						"black hypovial" = "hypovial-t",
-						"pink hypovial" = "hypovial-pink"
-						)
+	unique_reskin = list(
+		"hypovial" = list("icon_state" = "hypovial"),
+		"red hypovial" = list("icon_state" = "hypovial-b"),
+		"blue hypovial" = list("icon_state" = "hypovial-d"),
+		"green hypovial" = list("icon_state" = "hypovial-a"),
+		"orange hypovial" = list("icon_state" = "hypovial-k"),
+		"purple hypovial" = list("icon_state" = "hypovial-p"),
+		"black hypovial" = list("icon_state" = "hypovial-t"),
+		"pink hypovial" = list("icon_state" = "hypovial-pink")
+	)
 	always_reskinnable = TRUE
 	cached_icon = "hypovial"
 
@@ -50,14 +51,15 @@
 	icon_state = "hypoviallarge"
 	volume = 120
 	possible_transfer_amounts = list(1,2,5,10,20)
-	unique_reskin = list("large hypovial" = "hypoviallarge",
-						"large red hypovial" = "hypoviallarge-b",
-						"large blue hypovial" = "hypoviallarge-d",
-						"large green hypovial" = "hypoviallarge-a",
-						"large orange hypovial" = "hypoviallarge-k",
-						"large purple hypovial" = "hypoviallarge-p",
-						"large black hypovial" = "hypoviallarge-t"
-						)
+	unique_reskin = list(
+		"large hypovial" = list("icon_state" = "hypoviallarge"),
+		"large red hypovial" = list("icon_state" = "hypoviallarge-b"),
+		"large blue hypovial" = list("icon_state" = "hypoviallarge-d"),
+		"large green hypovial" = list("icon_state" = "hypoviallarge-a"),
+		"large orange hypovial" = list("icon_state" = "hypoviallarge-k"),
+		"large purple hypovial" = list("icon_state" = "hypoviallarge-p"),
+		"large black hypovial" = list("icon_state" = "hypoviallarge-t")
+	)
 	cached_icon = "hypoviallarge"
 
 /obj/item/reagent_containers/glass/bottle/vial/large/bluespace

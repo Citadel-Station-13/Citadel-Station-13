@@ -550,7 +550,10 @@
 	item_state = "fritz"
 	attack_verb = list("barked", "boofed", "shotgun'd")
 	obj_flags = UNIQUE_RENAME
-	unique_reskin = list("Goodboye" = "fritz", "Badboye" = "fritz_bad")
+	unique_reskin = list(
+		"Goodboye" = list("icon_state" = "fritz"),
+		"Badboye" = list("icon_state" = "fritz_bad")
+	)
 	mutantrace_variation = NONE
 
 /obj/item/clothing/neck/cloak/polychromic/polyce

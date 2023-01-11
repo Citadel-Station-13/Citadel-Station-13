@@ -275,8 +275,10 @@
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	actions_types = list(/datum/action/item_action/bhop)
 	permeability_coefficient = 0.05
-	unique_reskin = list("Explorer" = "miningjet",
-						"Jackboot" = "jetboots")
+	unique_reskin = list(
+		"Explorer" = list("icon_state" = "miningjet"),
+		"Jackboot" = list("icon_state" = "jetboots")
+	)
 	var/jumpdistance = 5 //-1 from to see the actual distance, e.g 4 goes over 3 tiles
 	var/jumpspeed = 3
 	var/recharging_rate = 60 //default 6 seconds between each dash

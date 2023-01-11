@@ -32,6 +32,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
+	always_reskinnable = TRUE
+	reskin_binding = COMSIG_CLICK_CTRL_SHIFT
+
 	//Main variables
 	var/owner = null // String name of owner
 	var/default_cartridge = 0 // Access level defined by cartridge
@@ -112,10 +115,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 	. += id ? "<span class='notice'>Alt-click to remove the id.</span>" : ""
 	if(inserted_item && (!isturf(loc)))
 		. += "<span class='notice'>Ctrl-click to remove [inserted_item].</span>"
-	if(LAZYLEN(GLOB.pda_reskins))
-		. += "<span class='notice'>Ctrl-shift-click it to reskin it.</span>"
 
 /obj/item/pda/Initialize(mapload)
+	if(GLOB.pda_reskins)
+		unique_reskin = GLOB.pda_reskins
 	. = ..()
 	if(fon)
 		set_light(f_lum, f_pow, f_col)
@@ -130,28 +133,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 	new_overlays = TRUE
 	update_icon()
 
-/obj/item/pda/CtrlShiftClick(mob/living/user)
-	. = ..()
-	if(GLOB.pda_reskins && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
-		reskin_obj(user)
-
 /obj/item/pda/reskin_obj(mob/M)
-	if(!LAZYLEN(GLOB.pda_reskins))
-		return
-	var/dat = "<b>Reskin options for [name]:</b>"
-	for(var/V in GLOB.pda_reskins)
-		var/output = icon2html(GLOB.pda_reskins[V], M, icon_state)
-		dat += "\n[V]: <span class='reallybig'>[output]</span>"
-	to_chat(M, dat)
-
-	var/choice = input(M, "Choose the a reskin for [src]","Reskin Object") as null|anything in GLOB.pda_reskins
-	var/new_icon = GLOB.pda_reskins[choice]
-	if(QDELETED(src) || isnull(new_icon) || new_icon == icon || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return
-	icon = new_icon
+	. = ..()
 	new_overlays = TRUE
 	update_icon()
-	to_chat(M, "[src] is now skinned as '[choice]'.")
 
 /obj/item/pda/proc/set_new_overlays()
 	if(!overlays_offsets || !(icon in overlays_offsets))
@@ -191,7 +176,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		else
 			font_index = MODE_MONO
 			font_mode = FONT_MONO
-	var/pref_skin = GLOB.pda_reskins[C.prefs.pda_skin]
+	var/pref_skin = GLOB.pda_reskins[C.prefs.pda_skin]["icon"]
 	if(icon != pref_skin)
 		icon = pref_skin
 		new_overlays = TRUE
