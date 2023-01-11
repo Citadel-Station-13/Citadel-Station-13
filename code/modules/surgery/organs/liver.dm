@@ -57,6 +57,21 @@
 		owner.remove_movespeed_modifier(/datum/movespeed_modifier/liver_cirrhosis)
 		sizeMoveMod(1, owner)
 
+/obj/item/organ/liver/on_death()	//Taking a wild guess on where to put this because tg liver code is completely different looking
+	. = ..()
+	var/mob/living/carbon/carbon_owner = owner
+	if(!owner)//If we're outside of a mob
+		return
+	if(!iscarbon(carbon_owner))
+		CRASH("on_death() called for [src] ([type]) with invalid owner ([isnull(owner) ? "null" : owner.type])")
+	if(carbon_owner.stat != DEAD)
+		CRASH("on_death() called for [src] ([type]) with not-dead owner ([owner])")
+	if((organ_flags & ORGAN_FAILING) && HAS_TRAIT(carbon_owner, TRAIT_NOMETABOLISM))//can't process reagents with a failing liver
+		return
+	for(var/reagent in carbon_owner.reagents.reagent_list)
+		var/datum/reagent/R = reagent
+		R.on_mob_dead(carbon_owner)
+
 /obj/item/organ/liver/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(. && damage >= high_threshold)

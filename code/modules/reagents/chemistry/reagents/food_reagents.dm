@@ -15,6 +15,10 @@
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
 	var/max_nutrition = INFINITY
 	var/quality = 0	//affects mood, typically higher for mixed drinks with more complex recipes
+	impure_chem = /datum/reagent/water
+	inverse_chem_val = 0.1
+	inverse_chem = /datum/reagent/water
+	failed_chem = /datum/reagent/consumable/nutriment
 
 /datum/reagent/consumable/on_mob_life(mob/living/carbon/M)
 	if(!HAS_TRAIT(M, TRAIT_NO_PROCESS_FOOD))
@@ -74,6 +78,7 @@
 	data = counterlist_normalise(supplied_data)
 
 /datum/reagent/consumable/nutriment/on_merge(list/newdata, newvolume)
+	. = ..()
 	if(!islist(newdata) || !newdata.len)
 		return
 

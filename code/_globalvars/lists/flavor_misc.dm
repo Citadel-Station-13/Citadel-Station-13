@@ -373,6 +373,7 @@ GLOBAL_LIST_INIT(job_heirlooms, list(
 	"Cook" = list(/obj/item/kitchen/knife/scimitar),
 	"Botanist" = list(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/storage/bag/plants, /obj/item/toy/plush/beeplushie),
 	"Medical Doctor" = list(/obj/item/healthanalyzer),
+	"Chemist" = list(/obj/item/book/manual/wiki/chemistry, /obj/item/ph_booklet),
 	"Paramedic" = list(/obj/item/lighter), //..why?
 	"Station Engineer" = list(/obj/item/wirecutters/brass/family, /obj/item/crowbar/brass/family, /obj/item/screwdriver/brass/family, /obj/item/wrench/brass/family), //brass tools but without the tool speed modifier
 	"Atmospheric Technician" = list(/obj/item/extinguisher/mini/family),

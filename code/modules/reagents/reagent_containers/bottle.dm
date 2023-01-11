@@ -246,6 +246,31 @@
 	desc = "A small bottle of atropine."
 	list_reagents = list(/datum/reagent/medicine/atropine = 30)
 
+/obj/item/reagent_containers/glass/bottle/random_buffer
+	name = "Buffer bottle"
+	desc = "A small bottle of chemical buffer."
+
+/obj/item/reagent_containers/glass/bottle/random_buffer/Initialize()
+	. = ..()
+	if(prob(50))
+		name = "Acidic buffer bottle"
+		desc = "A small bottle of acidic buffer."
+		reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 30)
+	else
+		name = "Basic buffer bottle"
+		desc = "A small bottle of basic buffer."
+		reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 30)
+
+/obj/item/reagent_containers/glass/bottle/acidic_buffer
+	name = "Acidic buffer bottle"
+	desc = "A small bottle of acidic buffer."
+	list_reagents = list(/datum/reagent/reaction_agent/acidic_buffer = 30)
+
+/obj/item/reagent_containers/glass/bottle/basic_buffer
+	name = "Basic buffer bottle"
+	desc = "A small bottle of basic buffer."
+	list_reagents = list(/datum/reagent/reaction_agent/basic_buffer = 30)
+
 /obj/item/reagent_containers/glass/bottle/zeolites
 	name = "Zeolites bottle"
 	desc = "A small bottle of lab made Zeolite, which removes radiation from people quickly as well as contamination on items."

@@ -167,7 +167,7 @@
 /obj/machinery/chem_master/ui_data(mob/user)
 	var/list/data = list()
 	data["isBeakerLoaded"] = beaker ? 1 : 0
-	data["beakerCurrentVolume"] = beaker ? beaker.reagents.total_volume : null
+	data["beakerCurrentVolume"] = beaker ? round(beaker.reagents.total_volume, 0.01) : null
 	data["beakerMaxVolume"] = beaker ? beaker.volume : null
 	data["mode"] = mode
 	data["condi"] = condi
@@ -184,13 +184,13 @@
 	var/beakerContents[0]
 	if(beaker)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents.Add(list(list("name" = R.name, "id" = R.type, "volume" = R.volume))) // list in a list because Byond merges the first list...
+			beaker_contents.Add(list(list("name" = R.name, "id" = ckey(R.name), "volume" = round(R.volume, 0.01)))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beakerContents
 
 	var/bufferContents[0]
 	if(reagents.total_volume)
 		for(var/datum/reagent/N in reagents.reagent_list)
-			bufferContents.Add(list(list("name" = N.name, "id" = N.type, "volume" = N.volume))) // ^
+			buffer_contents.Add(list(list("name" = N.name, "id" = ckey(N.name), "volume" = round(N.volume, 0.01)))) // ^
 	data["bufferContents"] = bufferContents
 
 	//Calculated at init time as it never changes
@@ -227,11 +227,15 @@
 		if (amount == null || amount <= 0)
 			return FALSE
 		if (to_container == "buffer")
-			end_fermi_reaction()
+			var/datum/reagent/R = beaker.reagents.get_reagent(reagent)
+			if(!check_reactions(R, beaker.reagents))
+				return FALSE
 			beaker.reagents.trans_id_to(src, reagent, amount)
 			return TRUE
 		if (to_container == "beaker" && mode)
-			end_fermi_reaction()
+			var/datum/reagent/R = reagents.get_reagent(reagent)
+			if(!check_reactions(R, reagents))
+				return FALSE
 			reagents.trans_id_to(beaker, reagent, amount)
 			return TRUE
 		if (to_container == "beaker" && !mode)
@@ -289,7 +293,7 @@
 				"Maximum [vol_each_max] units per item.",
 				"How many units to fill?",
 				vol_each_max))
-		vol_each = clamp(vol_each, 0, vol_each_max)
+		vol_each = round(clamp(vol_each, 0, vol_each_max), 0.01)
 		if(vol_each <= 0)
 			return FALSE
 		// Get item name
@@ -398,6 +402,7 @@
 				state = "Gas"
 			var/const/P = 3 //The number of seconds between life ticks
 			var/T = initial(R.metabolization_rate) * (60 / P)
+			analyze_vars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "pH" = initial(R.ph))	//I'm gonna be real I don't know about this line chief
 			var/processtype
 			if(CHECK_MULTIPLE_BITFIELDS(R.chemical_flags, (REAGENT_ROBOTIC_PROCESS | REAGENT_ORGANIC_PROCESS)))
 				processtype = "Both robots and organics"
@@ -462,6 +467,26 @@
 		. = . % 9
 		AM.pixel_x = ((.%3)*6)
 		AM.pixel_y = -8 + (round( . / 3)*8)
+
+//Checks to see if the target reagent is being created (reacting) and if so prevents transfer
+//Only prevents reactant from being moved so that people can still manlipulate input reagents
+//I hope to god this block of code goes here
+/obj/machinery/chem_master/proc/check_reactions(datum/reagent/reagent, datum/reagents/holder)
+	if(!reagent)
+		return FALSE
+	var/canMove = TRUE
+	for(var/e in holder.reaction_list)
+		var/datum/equilibrium/E = e
+		if(E.reaction.reaction_flags & REACTION_COMPETITIVE)
+			continue
+		for(var/result in E.reaction.required_reagents)
+			var/datum/reagent/R = result
+			if(R == reagent.type)
+				canMove = FALSE
+	if(!canMove)
+		say("Cannot move arrested chemical reaction reagents!")
+	return canMove
+
 
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
