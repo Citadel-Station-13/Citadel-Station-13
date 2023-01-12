@@ -2,16 +2,14 @@
 
 /obj/item/prescription_kit
 	name = "prescription lens kit"
-	desc = "A disposable kit containing all the needed tools and parts to develop and apply a self-modifying prescription lens overlay device to any eyewear."
+	desc = "A disposable kit containing all the needed tools and parts to develop and apply a self-modifying prescription lens overlay device to any eyewear. \
+	Insert eyewear, receive vision-correcting lenses."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "modkit"
 
-/obj/item/prescription_kit/attack_obj(obj/O, mob/living/user)
-	if(!istype(O, /obj/item/clothing/glasses))
-		return ..()
-
-	if(istype(O, /obj/item/clothing/glasses))
-		var/obj/item/clothing/glasses/target_glasses = O
+/obj/item/prescription_kit/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/clothing/glasses) && I.Adjacent(user))
+		var/obj/item/clothing/glasses/target_glasses = I
 		if(target_glasses.vision_correction)
 			to_chat(user, span_notice("These are already fitted with prescription lenses or otherwise already correct vision!"))
 			return
@@ -20,3 +18,5 @@
 		target_glasses.prescribe()
 		target_glasses.balloon_alert(user, "prescription fitted!")
 		qdel(src)
+	else
+		return ..()
