@@ -20,6 +20,11 @@ Assistant
 	dresscodecompliant = FALSE
 	always_can_respawn_as = TRUE
 	threat = 0.2
+	
+	family_heirlooms = list(
+		/obj/item/storage/toolbox/mechanical/old/heirloom,
+		/obj/item/clothing/gloves/cut/family
+	)
 
 /datum/job/assistant/get_access()
 	if(CONFIG_GET(flag/assistants_have_maint_access) || !CONFIG_GET(flag/jobs_have_minimal_access)) //Config has assistant maint access set

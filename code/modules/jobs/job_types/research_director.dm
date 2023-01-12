@@ -38,6 +38,10 @@
 	starting_modifiers = list(/datum/skill_modifier/job/level/wiring)
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/insanity)
 	threat = 5
+	
+	family_heirlooms = list(
+		/obj/item/toy/plush/slimeplushie
+	)
 
 /datum/outfit/job/rd
 	name = "Research Director"

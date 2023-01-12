@@ -55,8 +55,9 @@
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/ancient
-	icon_state = "firstaid"
-	desc = "A first aid kit with the ability to heal common types of injuries."
+	name = "ancient first-aid kit"
+	icon_state = "oldfirstaid"
+	desc = "A first aid kit with the ability to heal common types of injuries. You start thinking of the good old days just by looking at it."
 
 /obj/item/storage/firstaid/ancient/PopulateContents()
 	if(empty)
@@ -68,6 +69,10 @@
 	new /obj/item/stack/medical/mesh(src)
 	new /obj/item/stack/medical/mesh(src)
 	new /obj/item/stack/medical/mesh(src)
+
+/obj/item/storage/firstaid/ancient/heirloom
+	// Long since been ransacked by hungry powergaming assistants breaking into med storage
+	empty = TRUE
 
 /obj/item/storage/firstaid/brute
 	name = "trauma treatment kit"

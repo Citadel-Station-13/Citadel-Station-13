@@ -27,6 +27,15 @@
 	display_order = JOB_DISPLAY_ORDER_STATION_ENGINEER
 
 	threat = 1
+	
+	family_heirlooms = list(
+		/obj/item/clothing/head/hardhat,
+		/obj/item/screwdriver/brass/family,
+		/obj/item/wrench/brass/family,
+		/obj/item/weldingtool/mini, // No brass family variant
+		/obj/item/crowbar/brass/family,
+		/obj/item/wirecutters/brass/family
+	)
 
 /datum/outfit/job/engineer
 	name = "Station Engineer"
