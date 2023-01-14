@@ -20,6 +20,10 @@
 	if(!. || synthesizing)
 		return
 
+	// Check if this user can process nutriment
+	if(HAS_TRAIT(owner, TRAIT_NO_PROCESS_FOOD))
+		return
+
 	if(owner.nutrition <= hunger_threshold)
 		synthesizing = TRUE
 		to_chat(owner, "<span class='notice'>You feel less hungry...</span>")
