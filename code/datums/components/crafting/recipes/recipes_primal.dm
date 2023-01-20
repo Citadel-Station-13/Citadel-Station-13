@@ -317,3 +317,11 @@
 				 /obj/item/stack/sheet/animalhide/goliath_hide = 2,
 				 /obj/item/stack/sheet/leather = 2)
 	category = CAT_PRIMAL
+
+/datum/crafting_recipe/skeleton_key
+	name = "Skeleton Key"
+	time = 3 SECONDS
+	reqs = list(/obj/item/stack/sheet/bone = 5)
+	result = /obj/item/skeleton_key
+	always_availible = FALSE
+	category = CAT_PRIMAL
