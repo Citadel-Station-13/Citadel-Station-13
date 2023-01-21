@@ -78,6 +78,9 @@
 /obj/item/mod/construction/armor/security
 	theme = /datum/mod_theme/security
 
+/obj/item/mod/construction/armor/safeguard
+	theme = /datum/mod_theme/safeguard
+
 /obj/item/mod/construction/armor/research
 	theme = /datum/mod_theme/research
 
