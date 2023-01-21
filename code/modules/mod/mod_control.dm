@@ -344,14 +344,6 @@
 	else if(is_wire_tool(attacking_item) && open)
 		wires.interact(user)
 		return TRUE
-	else if(istype(attacking_item, /obj/item/mod/paint))
-		if(active || activating)
-			balloon_alert(user, "suit is active!")
-		else if(paint(user, attacking_item))
-			balloon_alert(user, "suit painted")
-		else
-			balloon_alert(user, "not painted!")
-		return TRUE
 	else if(open && attacking_item.GetID())
 		update_access(user, attacking_item)
 		return TRUE
@@ -453,22 +445,25 @@
 		return
 	selected_module.on_select()
 
-/obj/item/mod/control/proc/paint(mob/user, obj/item/paint)
-	if(length(theme.skins) <= 1)
-		return FALSE
-	var/list/skins = list()
-	for(var/mod_skin in theme.skins)
-		skins[mod_skin] = image(icon = icon, icon_state = "[mod_skin]-control")
-	var/pick = show_radial_menu(user, src, skins, custom_check = FALSE, require_near = TRUE)
-	if(!pick || !user.is_holding(paint))
-		return FALSE
-	skin = pick
+/obj/item/mod/control/proc/set_mod_color(new_color)
+	var/list/all_parts = mod_parts + src
+	for(var/obj/item/part as anything in all_parts)
+		part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+		part.add_atom_colour(new_color, FIXED_COLOUR_PRIORITY)
+	wearer?.regenerate_icons()
+
+/obj/item/mod/control/proc/set_mod_skin(new_skin)
+	if(active)
+		CRASH("[src] tried to set skin while active!")
+	skin = new_skin
+	var/list/used_skin = theme.skins[new_skin]
+	if(used_skin[CONTROL_LAYER])
+		alternate_worn_layer = used_skin[CONTROL_LAYER]
 	var/list/skin_updating = mod_parts.Copy() + src
 	for(var/obj/item/piece as anything in skin_updating)
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
 	update_flags()
 	wearer?.regenerate_icons()
-	return TRUE
 
 /obj/item/mod/control/proc/shock(mob/living/user)
 	if(!istype(user) || cell?.charge < 1)
