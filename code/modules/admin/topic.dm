@@ -2778,10 +2778,17 @@
 		if(query_get_mentor.NextRow())
 			to_chat(usr, "<span class='danger'>[ckey] is already a mentor.</span>")
 			return
-		var/datum/db_query/query_add_mentor = SSdbcore.NewQuery("INSERT INTO `[format_table_name("mentor")]` (`id`, `ckey`) VALUES (null, '[ckey]')")
+		var/datum/db_query/query_add_mentor = SSdbcore.NewQuery(
+			"INSERT INTO [format_table_name("mentor")] (id, ckey) VALUES (:id, :ckey)",
+			list("id" = null, "ckey" = ckey)
+		)
 		if(!query_add_mentor.warn_execute())
 			return
-		var/datum/db_query/query_add_admin_log = SSdbcore.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added new mentor [ckey]');")
+		var/datum/db_query/query_add_admin_log = SSdbcore.NewQuery({"
+			INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log)
+			VALUES (:time, :round_id, :adminckey, INET_ATON(:adminip), 'add mentor', :mentor_ckey, CONCAT('Admin removed: ', :mentor_ckey))
+			"}, list("time" = SQLtime(), "round_id" = "[GLOB.round_id]", "adminckey" = usr.ckey, "adminip" = usr.client.address, "mentor_ckey" = ckey)
+		)
 		if(!query_add_admin_log.warn_execute())
 			return
 	else
