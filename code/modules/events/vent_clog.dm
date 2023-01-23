@@ -3,11 +3,13 @@
 	typepath = /datum/round_event/vent_clog
 	weight = 10
 	max_occurrences = 3
+	category = EVENT_CATEGORY_HEALTH
+	description = "All the scrubbers onstation spit random chemicals in smoke form."
 
 /datum/round_event/vent_clog
-	announceWhen	= 1
-	startWhen		= 5
-	endWhen			= 35
+	announce_when	= 1
+	start_when		= 5
+	end_when			= 35
 	var/interval 	= 2
 	var/list/vents  = list()
 	var/randomProbability = 0
@@ -62,7 +64,7 @@
 	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "Atmospherics alert", has_important_message = TRUE)
 
 /datum/round_event/vent_clog/setup()
-	endWhen = rand(120, 180)
+	end_when = rand(120, 180)
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent in GLOB.machines)
 		var/turf/T = get_turf(temp_vent)
 		var/area/A = T.loc
@@ -108,6 +110,7 @@
 	min_players = 15
 	max_occurrences = 1
 	earliest_start = 35 MINUTES
+	description = "Extra dangerous chemicals come out of the scrubbers."
 
 /datum/round_event/vent_clog/threatening
 	randomProbability = 10
@@ -120,6 +123,7 @@
 	min_players = 25
 	max_occurrences = 1
 	earliest_start = 45 MINUTES
+	description = "EXTREMELY dangerous chemicals come out of the scrubbers."
 
 /datum/round_event/vent_clog/catastrophic
 	randomProbability = 30
@@ -129,6 +133,7 @@
 	name = "Clogged Vents: Beer"
 	typepath = /datum/round_event/vent_clog/beer
 	max_occurrences = 0
+	description = "Spits out beer through the scrubber system."
 
 /datum/round_event/vent_clog/beer
 	reagentsAmount = 100
@@ -137,6 +142,7 @@
 	name = "Anti-Plasma Flood"
 	typepath = /datum/round_event/vent_clog/plasma_decon
 	max_occurrences = 0
+	description = "Freezing smoke comes out of the scrubbers."
 
 /datum/round_event/vent_clog/beer/announce()
 	priority_announce("The scrubbers network is experiencing an unexpected surge of pressurized beer. Some ejection of contents may occur.", "Atmospherics alert")
