@@ -253,8 +253,10 @@
 	sharpness = SHARP_NONE // use your survival dagger or smth
 	icon_state = "crusher-hands"
 	item_state = "crusher0-fist"
-	unique_reskin = list("Gauntlets" = "crusher-hands",
-						"Fingerless" = "crusher-hands-bare")
+	unique_reskin = list(
+		"Gauntlets" =  list("icon_state" = "crusher-hands"),
+		"Fingerless" = list("icon_state" = "crusher-hands-bare")
+	)
 	detonation_damage = 45 // 60 on wield, compared to normal crusher's 70
 	backstab_bonus = 70 // 130 on backstab though
 	var/combo_on_anything = FALSE // @admins if you're varediting this you don't get to whine at me

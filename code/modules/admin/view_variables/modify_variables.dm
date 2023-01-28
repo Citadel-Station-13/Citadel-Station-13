@@ -360,6 +360,9 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 	var/original_name = "[O]"
 
+	var/var_old_text
+	var/var_new_text
+
 	switch(class)
 		if(VV_LIST)
 			if(!islist(var_value))
@@ -376,14 +379,25 @@ GLOBAL_PROTECT(VVpixelmovement)
 			for(var/V in varsvars)
 				var_new = replacetext(var_new,"\[[V]]","[O.vars[V]]")
 
+		if(VV_BITFIELD)
+			var/list/old_bitfields
+			for(var/bitfield in GLOB.bitfields[variable])
+				if(var_value & GLOB.bitfields[variable][bitfield])
+					LAZYADD(old_bitfields, bitfield)
+			var_old_text = "\n[var_value] = \n([english_list(old_bitfields, and_text = " | ", comma_text=" | ")])\n"
+			var/list/new_bitfields
+			for(var/bitfield in GLOB.bitfields[variable])
+				if(var_new & GLOB.bitfields[variable][bitfield])
+					LAZYADD(new_bitfields, bitfield)
+			var_new_text = "\n[var_new] = \n([english_list(new_bitfields, and_text = " | ", comma_text=" | ")])"
 
 	if (O.vv_edit_var(variable, var_new) == FALSE)
 		to_chat(src, "Your edit was rejected by the object.", confidential = TRUE)
 		return
 	vv_update_display(O, "varedited", VV_MSG_EDITED)
-	log_world("### VarEdit by [key_name(src)]: [O.type] [variable]=[var_value] => [var_new]")
-	log_admin("[key_name(src)] modified [original_name]'s [variable] from [html_encode("[var_value]")] to [html_encode("[var_new]")]")
-	var/msg = "[key_name_admin(src)] modified [original_name]'s [variable] from [var_value] to [var_new]"
+	log_world("### VarEdit by [key_name(src)]: [O.type] [variable]=[var_old_text ? var_old_text : var_value] => [var_new_text ? var_new_text : var_new]")
+	log_admin("[key_name(src)] modified [original_name]'s [variable] from [html_encode("[var_old_text ? var_old_text : var_value]")] to [html_encode("[var_new_text ? var_new_text : var_new]")]")
+	var/msg = "[key_name_admin(src)] modified [original_name]'s [variable] from [var_old_text ? var_old_text : var_value] to [var_new_text ? var_new_text : var_new]"
 	message_admins(msg)
 	admin_ticket_log(O, msg)
 	return TRUE

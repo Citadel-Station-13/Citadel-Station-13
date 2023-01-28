@@ -19,6 +19,11 @@
 
 	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
 	threat = 0.5
+	
+	family_heirlooms = list(
+		/obj/item/toy/windupToolbox,
+		/obj/item/reagent_containers/food/drinks/bottle/holywater
+	)
 
 
 /datum/job/chaplain/after_spawn(mob/living/H, client/C)

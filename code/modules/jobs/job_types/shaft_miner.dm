@@ -24,6 +24,11 @@
 	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER
 
 	threat = 1.5
+	
+	family_heirlooms = list(
+		/obj/item/pickaxe/mini,
+		/obj/item/shovel
+	)
 
 /datum/outfit/job/miner
 	name = "Shaft Miner (Lavaland)"

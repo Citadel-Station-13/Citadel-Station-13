@@ -9,9 +9,6 @@
 			adjustBruteLoss(damage_amount, forced = forced)
 		if(BURN)
 			adjustFireLoss(damage_amount, forced = forced)
-		if(OXY)
-			if(damage < 0 || forced) //we shouldn't be taking oxygen damage through this proc, but we'll let it heal.
-				adjustOxyLoss(damage_amount, forced = forced)
 	return 1
 
 
@@ -30,7 +27,7 @@
 /mob/living/silicon/setCloneLoss(amount, updating_health = TRUE, forced = FALSE)
 	return FALSE
 
-/mob/living/silicon/adjustStaminaLoss(amount, updating_health = 1, forced = FALSE)//immune to stamina damage.
+/mob/living/silicon/adjustStaminaLoss(amount, updating_health = 1, forced = FALSE) //immune to stamina damage.
 	return FALSE
 
 /mob/living/silicon/setStaminaLoss(amount, updating_health = 1)
@@ -40,4 +37,16 @@
 	return FALSE
 
 /mob/living/silicon/setOrganLoss(slot, amount)
+	return FALSE
+
+/mob/living/silicon/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE) //immune to oxygen damage
+	if(istype(src, /mob/living/silicon/ai)) //ais are snowflakes and use oxyloss for being in AI cards and having no battery
+		return ..()
+
+	return FALSE
+
+/mob/living/silicon/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(istype(src, /mob/living/silicon/ai)) //ditto
+		return ..()
+
 	return FALSE

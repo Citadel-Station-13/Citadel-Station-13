@@ -17,12 +17,16 @@
 		icon_state = "[module.cyborg_base_icon]-wreck"
 
 	if(module.cyborg_pixel_offset)
-		pixel_x = module.cyborg_pixel_offset
+		var/matrix/M = transform
+		M.c = module.cyborg_pixel_offset
+		transform = M
 	//End of citadel changes
 
 	if(module.cyborg_base_icon == "robot")
 		icon = 'icons/mob/robots.dmi'
-		pixel_x = initial(pixel_x)
+		var/matrix/M = transform
+		M.c = 0 // Cyborg's initial x offset is very likely to be 0
+		transform = M
 	if(stat != DEAD && !(IsUnconscious() || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()

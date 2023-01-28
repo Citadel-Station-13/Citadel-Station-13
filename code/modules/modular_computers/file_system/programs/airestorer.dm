@@ -75,9 +75,8 @@
 		restoring = FALSE
 		return
 	ai_slot.locked = TRUE
-	A.adjustOxyLoss(-5, FALSE)
-	A.adjustFireLoss(-5, FALSE)
-	A.adjustToxLoss(-5, FALSE)
+	A.adjustOxyLoss(-5, FALSE, FALSE)
+	A.adjustFireLoss(-5, FALSE, FALSE)
 	A.adjustBruteLoss(-5, FALSE)
 
 	// Please don't forget to update health, otherwise the below if statements will probably always fail.

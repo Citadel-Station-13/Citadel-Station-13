@@ -33,6 +33,10 @@
 
 	ass_image = 'icons/ass/asslizard.png'
 
+	family_heirlooms = list(
+		/obj/item/toy/plush/lizardplushie
+	)
+
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
 		return random_unique_lizard_name(gender)

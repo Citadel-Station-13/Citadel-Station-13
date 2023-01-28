@@ -23,21 +23,6 @@
 	QDEL_NULL(ion_trail)
 	return ..()
 
-/obj/item/tank/jetpack/item_action_slot_check(slot)
-	if(slot == ITEM_SLOT_BACK)
-		return TRUE
-
-/obj/item/tank/jetpack/equipped(mob/user, slot, initial)
-	. = ..()
-	if(on && slot != ITEM_SLOT_BACK)
-		turn_off(user)
-
-/obj/item/tank/jetpack/dropped(mob/user, silent)
-	. = ..()
-	if(on)
-		turn_off(user)
-
-
 /obj/item/tank/jetpack/populate_gas()
 	if(gas_type)
 		air_contents.set_moles(gas_type, ((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C)))
@@ -72,7 +57,6 @@
 	icon_state = "[initial(icon_state)]-on"
 	ion_trail.start()
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/move_react)
-	RegisterSignal(user, COMSIG_MOVABLE_SPACEMOVE, .proc/spacemove_react)
 	if(full_speed)
 		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 	else
@@ -109,13 +93,6 @@
 		return (OXYLOSS)
 	else
 		..()
-
-/obj/item/tank/jetpack/proc/spacemove_react(mob/user, movement_dir)
-	SIGNAL_HANDLER
-
-	if(on && (movement_dir || stabilizers))
-		return COMSIG_MOVABLE_STOP_SPACEMOVE
-
 
 /obj/item/tank/jetpack/improvised
 	name = "improvised jetpack"
@@ -262,13 +239,9 @@
 	return
 
 /mob/living/carbon/get_jetpack()
-	var/obj/item/I = back
-	if(istype(I, /obj/item/tank/jetpack))
-		return I
-	else if(istype(I, /obj/item/mod/control))
-		var/obj/item/mod/control/C = I
-		for(var/obj/item/mod/module/jetpack/J in C.modules)
-			return J
+	var/obj/item/tank/jetpack/J = back
+	if(istype(J))
+		return J
 
 /mob/living/carbon/human/get_jetpack()
 	var/obj/item/tank/jetpack/J = ..()
