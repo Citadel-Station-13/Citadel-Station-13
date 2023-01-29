@@ -1,4 +1,4 @@
-CREATE TABLE `mentor_memo` (
+CREATE TABLE `SS13_mentor_memo` (
   `ckey` varchar(32) NOT NULL,
   `memotext` text NOT NULL,
   `timestamp` datetime NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE `mentor_memo` (
   PRIMARY KEY (`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE `mentor` (
+CREATE TABLE `SS13_mentor` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ckey` varchar(32) NOT NULL,
   PRIMARY KEY (`id`)
