@@ -119,6 +119,6 @@
 	for(var/path in typesof(/obj/item/coin))
 		var/obj/item/coin/C = new path
 		UNTIL(C.flags_1 & INITIALIZED_1) //we want to make sure the value is calculated and not null.
-		GLOB.coin_values[path] = C.value
+		GLOB.coin_values[path] = C.get_item_credit_value()
 		qdel(C)
 

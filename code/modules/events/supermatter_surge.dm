@@ -4,6 +4,8 @@
 	weight = 20
 	max_occurrences = 5
 	earliest_start = 10 MINUTES
+	category = EVENT_CATEGORY_ENGINEERING
+	description = "Randomly modifies the supermatter's power, giving the engineers a lot of headaches."
 
 /datum/round_event_control/supermatter_surge/canSpawnEvent()
 	if(GLOB.main_supermatter_engine?.has_been_powered)
