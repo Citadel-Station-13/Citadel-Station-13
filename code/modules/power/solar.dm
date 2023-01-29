@@ -242,8 +242,9 @@
 			to_chat(user, "<span class='warning'>You need to secure the assembly before you can add glass.</span>")
 			return
 		var/obj/item/stack/sheet/S = W
-		if(S.use(2))
-			glass_type = W.type
+		S = S.split_stack(amount=2)
+		if(S)
+			glass_type = S
 			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 			user.visible_message("<span class='notice'>[user] places the glass on the solar assembly.</span>", "<span class='notice'>You place the glass on the solar assembly.</span>")
 			if(tracker)
