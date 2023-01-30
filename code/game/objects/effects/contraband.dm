@@ -327,13 +327,18 @@
 /obj/structure/sign/poster/contraband/c20r
 	// have fun seeing this poster in "spawn 'c20r'", admins...
 	name = "C-20r"
-	desc = "A poster advertising the Scarborough Arms C-20r."
+	desc = "A poster advertising the Scarborough Arms 'Cobra' C-20r."
 	icon_state = "poster_cr"
 
 /obj/structure/sign/poster/contraband/bulldog
 	name = "Bulldog"
 	desc = "A poster advertising the Scarborough Arms bulldog shotgun."
 	icon_state = "poster_bulldog"
+
+/obj/structure/sign/poster/contraband/gl
+	name = "M-90gl"
+	desc = "A poster advertising the Scarborough Arms M-90gl carbine."
+	icon_state = "poster_gl"
 
 /obj/structure/sign/poster/contraband/energy_swords
 	name = "Energy Swords"
