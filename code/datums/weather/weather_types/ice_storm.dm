@@ -21,7 +21,7 @@
 	protected_areas = list(/area/edina/protected)
 	target_trait = ZTRAIT_ICESTORM
 
-	immunity_type = "rad"
+	immunity_type = TRAIT_SNOWSTORM_IMMUNE
 
 /datum/weather/ice_storm/weather_act(mob/living/L)
 	//L.adjust_bodytemperature(-rand(10,20))

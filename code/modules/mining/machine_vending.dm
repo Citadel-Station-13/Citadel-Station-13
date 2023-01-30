@@ -234,7 +234,7 @@
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemSVoucher(obj/item/suit_voucher/voucher, mob/redeemer)
 	var/items = list(	"Exo-suit" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "exo"),
-						"SEVA suit" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "seva"))
+						"HEVA suit" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "heva"))
 
 	var/selection = show_radial_menu(redeemer, src, items, require_near = TRUE, tooltips = TRUE)
 	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
@@ -244,9 +244,9 @@
 		if("Exo-suit")
 			new /obj/item/clothing/suit/hooded/explorer/exo(drop_location)
 			new /obj/item/clothing/mask/gas/exo(drop_location)
-		if("SEVA suit")
-			new /obj/item/clothing/suit/hooded/explorer/seva(drop_location)
-			new /obj/item/clothing/mask/gas/seva(drop_location)
+		if("HEVA suit")
+			new /obj/item/clothing/suit/hooded/explorer/heva(drop_location)
+			new /obj/item/clothing/mask/gas/heva(drop_location)
 	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 	SSblackbox.record_feedback("tally", "suit_voucher_redeemed", 1, selection)
 	qdel(voucher)
