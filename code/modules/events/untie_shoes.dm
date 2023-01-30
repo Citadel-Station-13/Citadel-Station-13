@@ -4,6 +4,8 @@
 	weight = 50
 	max_occurrences = 10
 	alert_observers = FALSE
+	category = EVENT_CATEGORY_HEALTH
+	description = "Unties people's shoes, with a chance to knot them as well."
 
 /datum/round_event/untied_shoes
 	fakeable = FALSE

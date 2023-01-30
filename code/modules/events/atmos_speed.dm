@@ -3,10 +3,12 @@
 	typepath = /datum/round_event/atmos_flux
 	max_occurrences = 5
 	weight = 10
+	category = EVENT_CATEGORY_ENGINEERING
+	description = "Modifies the speed of the SSair randomly, ends after one minute."
 
 /datum/round_event/atmos_flux
-	announceWhen = 1
-	endWhen = 600
+	announce_when = 1
+	end_when = 600
 	var/original_speed
 
 /datum/round_event/atmos_flux/announce(fake)

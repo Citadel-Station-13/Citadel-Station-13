@@ -7,9 +7,11 @@
 	earliest_start = 40 MINUTES
 	min_players = 35
 	dynamic_should_hijack = TRUE
+	category = EVENT_CATEGORY_ENTITIES
+	description = "Spawns a new blob overmind."
 
 /datum/round_event/ghost_role/blob
-	announceWhen	= -1
+	announce_when	= -1
 	role_name = "blob overmind"
 	fakeable = TRUE
 

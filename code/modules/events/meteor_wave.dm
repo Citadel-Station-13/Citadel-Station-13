@@ -10,22 +10,24 @@
 	min_players = 15
 	max_occurrences = 3
 	earliest_start = 25 MINUTES
+	category = EVENT_CATEGORY_SPACE
+	description = "A regular meteor wave."
 
 /datum/round_event/meteor_wave
-	startWhen		= 6
-	endWhen			= 66
-	announceWhen	= 1
+	start_when		= 6
+	end_when			= 66
+	announce_when	= 1
 	threat = 15
 	var/list/wave_type
 	var/wave_name = "normal"
 	var/direction
 
 /datum/round_event/meteor_wave/setup()
-	announceWhen = 1
-	startWhen = 150		// 5 minutes
+	announce_when = 1
+	start_when = 150		// 5 minutes
 	if(GLOB.singularity_counter)
-		startWhen *= 1 - min(GLOB.singularity_counter * SINGULO_BEACON_DISTURBANCE, SINGULO_BEACON_MAX_DISTURBANCE)
-	endWhen = startWhen + 60
+		start_when *= 1 - min(GLOB.singularity_counter * SINGULO_BEACON_DISTURBANCE, SINGULO_BEACON_MAX_DISTURBANCE)
+	end_when = start_when + 60
 
 /datum/round_event/meteor_wave/New()
 	..()
@@ -61,9 +63,9 @@
 			kill()
 
 /datum/round_event/meteor_wave/announce(fake)
-	priority_announce(generateMeteorString(startWhen,TRUE,direction), "Meteor Alert", "meteors", has_important_message = TRUE)
+	priority_announce(generateMeteorString(start_when,TRUE,direction), "Meteor Alert", "meteors", has_important_message = TRUE)
 
-/proc/generateMeteorString(startWhen,syndiealert,direction)
+/proc/generateMeteorString(start_when,syndiealert,direction)
 	var/directionstring
 	switch(direction)
 		if(NORTH)
@@ -74,7 +76,7 @@
 			directionstring = " towards starboard"
 		if(WEST)
 			directionstring = " towards port"
-	return "Meteors have been detected on a collision course with the station[directionstring]. Estimated time until impact: [round((startWhen * SSevents.wait) / 10, 0.1)] seconds.[GLOB.singularity_counter && syndiealert ? " Warning: Anomalous gravity pulse detected, Syndicate technology interference likely." : ""]"
+	return "Meteors have been detected on a collision course with the station[directionstring]. Estimated time until impact: [round((start_when * SSevents.wait) / 10, 0.1)] seconds.[GLOB.singularity_counter && syndiealert ? " Warning: Anomalous gravity pulse detected, Syndicate technology interference likely." : ""]"
 
 /datum/round_event/meteor_wave/tick()
 	if(ISMULTIPLE(activeFor, 3))
@@ -87,7 +89,7 @@
 	min_players = 20
 	max_occurrences = 3
 	earliest_start = 35 MINUTES
-
+	description = "A meteor wave with higher chance of big meteors."
 
 /datum/round_event/meteor_wave/threatening
 	wave_name = "threatening"
@@ -100,6 +102,7 @@
 	min_players = 25
 	max_occurrences = 3
 	earliest_start = 45 MINUTES
+	description = "A meteor wave that might summon a tunguska class meteor."
 
 /datum/round_event/meteor_wave/catastrophic
 	wave_name = "catastrophic"
