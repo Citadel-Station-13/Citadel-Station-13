@@ -62,7 +62,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/UI_style = null
 	var/outline_enabled = TRUE
 	var/outline_color = COLOR_THEME_MIDNIGHT
-	var/screentip_pref = TRUE
+	var/screentip_pref = SCREENTIP_PREFERENCE_ENABLED
 	var/screentip_color = "#ffd391"
 	var/buttons_locked = FALSE
 	var/hotkeys = FALSE
@@ -2913,7 +2913,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(pickedOutlineColor != pickedOutlineColor)
 						outline_color = pickedOutlineColor // nullable
 				if("screentip_pref")
-					screentip_pref = !screentip_pref
+					var/choice = tgalert(user, "Choose your screentip preference", "Screentipping?", "Yes", "Context Only", "No")
+					switch(choice)
+						if("Yes")
+							screentip_pref = SCREENTIP_PREFERENCE_ENABLED
+						if("Context Only")
+							screentip_pref = SCREENTIP_PREFERENCE_CONTEXT_ONLY
+						else
+							screentip_pref = SCREENTIP_PREFERENCE_DISABLED
 				if("screentip_color")
 					var/pickedScreentipColor = input(user, "Choose your screentip color.", "General Preference", screentip_color) as color|null
 					if(pickedScreentipColor)

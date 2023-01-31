@@ -1450,11 +1450,50 @@
 /atom/MouseEntered(location, control, params)
 	. = ..()
 	// Screentips
-	var/client/client = usr?.client
-	var/datum/hud/active_hud = client?.mob?.hud_used
+	var/mob/user = usr
+	if(isnull(user) && !user.client)
+		return
+
+	var/datum/hud/active_hud = user.hud_used
 	if(active_hud)
-		if(!client.prefs.screentip_pref || (flags_1 & NO_SCREENTIPS_1))
+		var/screentips_enabled = user.client.prefs.screentip_pref
+		if(screentips_enabled == SCREENTIP_PREFERENCE_DISABLED || (flags_1 & NO_SCREENTIPS_1))
 			active_hud.screentip_text.maptext = ""
 		else
-			//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
-			active_hud.screentip_text.maptext = MAPTEXT("<span style='text-align: center; font-size: 32px; color: [client?.prefs?.screentip_color]'>[name]</span>")
+			var/extra_context = ""
+
+			if (isliving(user))
+				var/obj/item/held_item = user.get_active_held_item()
+
+				if ((flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1) || (held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS))
+					var/list/context = list()
+
+					var/contextual_screentip_returns = \
+						SEND_SIGNAL(src, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, context, held_item, user) \
+						| (held_item && SEND_SIGNAL(held_item, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, context, src, user))
+
+					if (contextual_screentip_returns & CONTEXTUAL_SCREENTIP_SET)
+						// LMB and RMB on one line...
+						var/lmb_text = (SCREENTIP_CONTEXT_LMB in context) ? "[SCREENTIP_CONTEXT_LMB]: [context[SCREENTIP_CONTEXT_LMB]]" : ""
+						var/rmb_text = (SCREENTIP_CONTEXT_RMB in context) ? "[SCREENTIP_CONTEXT_RMB]: [context[SCREENTIP_CONTEXT_RMB]]" : ""
+
+						if (lmb_text)
+							extra_context = lmb_text
+							if (rmb_text)
+								extra_context += " | [rmb_text]"
+						else if (rmb_text)
+							extra_context = rmb_text
+
+						// Ctrl-LMB and (in the future) Alt-LMB on another
+						if (SCREENTIP_CONTEXT_CTRL_LMB in context)
+							if (extra_context != "")
+								extra_context += "<br>"
+							extra_context += "[SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB]]"
+
+						extra_context = "<br><span style='font-size: 7px'>[extra_context]</span>"
+
+			if (screentips_enabled == SCREENTIP_PREFERENCE_CONTEXT_ONLY && extra_context == "")
+				active_hud.screentip_text.maptext = ""
+			else
+				//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
+				active_hud.screentip_text.maptext = "<span class='maptext' style='text-align: center; font-size: 32px; color: [user.client.prefs.screentip_color]'>[name][extra_context]</span>"

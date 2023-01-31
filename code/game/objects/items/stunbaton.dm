@@ -30,6 +30,24 @@
 	var/status_duration = 3 SECONDS //how long our status effects last for otherwise
 	COOLDOWN_DECLARE(shove_cooldown)
 
+	/// The context to show when the baton is active and targetting a living thing
+	var/context_living_target_active = "Stun"
+
+	/// The context to show when the baton is active and targetting a living thing in combat mode
+	var/context_living_target_active_combat_mode = "Stun"
+
+	/// The context to show when the baton is inactive and targetting a living thing
+	var/context_living_target_inactive = "Prod"
+
+	/// The context to show when the baton is inactive and targetting a living thing in combat mode
+	var/context_living_target_inactive_combat_mode = "Attack"
+
+	/// The RMB context to show when the baton is active and targetting a living thing
+	var/context_living_rmb_active = "Attack"
+
+	/// The RMB context to show when the baton is inactive and targetting a living thing
+	var/context_living_rmb_inactive = "Attack"
+
 /obj/item/melee/baton/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Right click attack while in combat mode to knockdown, but only once per [cooldown_duration / 10] seconds.</span>"
@@ -53,6 +71,8 @@
 		else
 			cell = new preload_cell_type(src)
 	update_icon()
+
+	register_item_context()
 
 /obj/item/melee/baton/DoRevenantThrowEffects(atom/target)
 	switch_status()
@@ -154,6 +174,30 @@
 	var/interrupt = common_baton_melee(M, user, FALSE)
 	if(!interrupt)
 		return ..()
+
+/obj/item/melee/baton/add_item_context(datum/source, list/context, atom/target, mob/living/user)
+	if (isturf(target))
+		return NONE
+
+	if (isobj(target))
+		context[SCREENTIP_CONTEXT_LMB] = "Attack"
+	else
+		if (turned_on)
+			context[SCREENTIP_CONTEXT_RMB] = context_living_rmb_active
+
+			if (user.a_intent == INTENT_HARM)
+				context[SCREENTIP_CONTEXT_LMB] = context_living_target_active_combat_mode
+			else
+				context[SCREENTIP_CONTEXT_LMB] = context_living_target_active
+		else
+			context[SCREENTIP_CONTEXT_RMB] = context_living_rmb_inactive
+
+			if (user.a_intent == INTENT_HARM)
+				context[SCREENTIP_CONTEXT_LMB] = context_living_target_inactive_combat_mode
+			else
+				context[SCREENTIP_CONTEXT_LMB] = context_living_target_inactive
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/melee/baton/alt_pre_attack(atom/A, mob/living/user, params)
 	if(!user.CheckActionCooldown(CLICK_CD_MELEE))

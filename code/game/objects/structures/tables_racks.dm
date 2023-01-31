@@ -490,6 +490,19 @@
 	// the sprites in the editor to see why.
 	icon = smooth_icon
 
+	if (!(flags_1 & NODECONSTRUCT_1))
+		var/static/list/tool_behaviors = list(
+			TOOL_SCREWDRIVER = list(
+				SCREENTIP_CONTEXT_RMB = "Disassemble",
+			),
+
+			TOOL_WRENCH = list(
+				SCREENTIP_CONTEXT_RMB = "Deconstruct",
+			),
+		)
+
+		AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+
 /obj/structure/table/wood/fancy/black
 	icon_state = "fancy_table_black"
 	buildstack = /obj/item/stack/tile/carpet/black
@@ -704,7 +717,7 @@
 	. = !density
 	if(istype(caller))
 		. = . || (caller.pass_flags & PASSTABLE)
-		
+
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
 	. = ..()
 	if ((!( istype(O, /obj/item) ) || user.get_active_held_item() != O))

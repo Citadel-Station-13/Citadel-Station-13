@@ -51,6 +51,12 @@
 	myarea = get_base_area(src)
 	LAZYADD(myarea.firealarms, src)
 
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		lmb_text = "Turn on", \
+		rmb_text = "Turn off", \
+	)
+
 /obj/machinery/firealarm/Destroy()
 	myarea.firereset(src)
 	LAZYREMOVE(myarea.firealarms, src)
