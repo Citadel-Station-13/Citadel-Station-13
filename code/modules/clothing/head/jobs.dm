@@ -30,6 +30,8 @@
 /obj/item/clothing/head/caphat
 	name = "captain's hat"
 	desc = "It's good being the king."
+	icon = 'icons/obj/clothing/head/hat.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/head/hat.dmi'
 	icon_state = "captain"
 	item_state = "that"
 	flags_inv = 0
@@ -63,6 +65,8 @@
 //Head of Personnel
 /obj/item/clothing/head/hopcap
 	name = "head of personnel's cap"
+	icon = 'icons/obj/clothing/head/hat.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/head/hat.dmi'
 	icon_state = "hopcap"
 	desc = "The symbol of true bureaucratic micromanagement."
 	armor = list(MELEE = 30, BULLET = 25, LASER = 25, ENERGY = 10, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
@@ -124,6 +128,8 @@
 /obj/item/clothing/head/beret
 	name = "beret"
 	desc = "A beret, a mime's favorite headwear."
+	icon = 'icons/obj/clothing/head/hat.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/head/hat.dmi'
 	icon_state = "beret"
 	dog_fashion = /datum/dog_fashion/head/beret
 	dynamic_hair_suffix = ""
@@ -156,6 +162,8 @@
 /obj/item/clothing/head/HoS
 	name = "head of security cap"
 	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge."
+	icon = 'icons/obj/clothing/head/hat.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/head/hat.dmi'
 	icon_state = "hoscap"
 	armor = list(MELEE = 40, BULLET = 30, LASER = 25, ENERGY = 10, BOMB = 25, BIO = 10, RAD = 0, FIRE = 50, ACID = 60)
 	strip_delay = 80
@@ -182,9 +190,9 @@
 /obj/item/clothing/head/warden
 	name = "warden's police hat"
 	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."
-	icon = 'icons/obj/clothing/head/helmet.dmi'
-	mob_overlay_icon = 'icons/mob/clothing/head/helmet.dmi'
-	icon_state = "policehelm"
+	icon = 'icons/obj/clothing/head/hat.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/head/hat.dmi'
+	icon_state = "wardenhat"
 	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 10, BOMB = 25, BIO = 0, RAD = 0, FIRE = 30, ACID = 60)
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden
@@ -192,8 +200,6 @@
 /obj/item/clothing/head/warden/drill
 	name = "warden's campaign hat"
 	desc = "A special armored campaign hat with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection. Has the letters 'FMJ' enscribed on its side."
-	icon = 'icons/obj/clothing/head/helmet.dmi'
-	mob_overlay_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "wardendrill"
 	item_state = "wardendrill"
 	dog_fashion = null
@@ -289,6 +295,8 @@
 /obj/item/clothing/head/fedora/curator
 	name = "treasure hunter's fedora"
 	desc = "You got red text today kid, but it doesn't mean you have to like it."
+	icon = 'icons/obj/clothing/head/hat.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/head/hat.dmi'
 	icon_state = "curator"
 
 //Chief Medical Officer

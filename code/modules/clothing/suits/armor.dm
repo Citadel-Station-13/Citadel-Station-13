@@ -1,6 +1,7 @@
 /obj/item/clothing/suit/armor
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/suits/armor.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/suits/armor_digi.dmi'
 	allowed = null
 	cold_protection = CHEST|GROIN
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT

@@ -3,6 +3,7 @@
 	name = "bio hood"
 	icon = 'icons/obj/clothing/head/bio.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/head/bio.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/head/bio_muzzled.dmi'
 	icon_state = "bio_general"
 	desc = "A hood that protects the head and face from biological contaminants."
 	permeability_coefficient = 0.01
@@ -18,6 +19,7 @@
 	desc = "A suit that protects against biological contamination."
 	icon = 'icons/obj/clothing/suits/bio.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/suits/bio.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/suits/bio_digi.dmi'
 	icon_state = "bio_general"
 	item_state = "bio_suit"
 	w_class = WEIGHT_CLASS_BULKY

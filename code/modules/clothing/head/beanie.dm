@@ -4,6 +4,8 @@
 /obj/item/clothing/head/beanie //Default is white, this is meant to be seen
 	name = "white beanie"
 	desc = "A stylish beanie. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their heads."
+	icon = 'icons/obj/clothing/head/beanie.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/head/beanie.dmi'
 	icon_state = "beanie" //Default white
 
 /obj/item/clothing/head/beanie/black

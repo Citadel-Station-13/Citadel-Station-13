@@ -11,6 +11,7 @@
 /obj/item/clothing/under/rank/security
 	icon = 'icons/obj/clothing/under/security.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/under/security.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/under/security_digi.dmi'
 	strip_delay = 50
 	alt_covers_chest = TRUE
 	sensor_mode = SENSOR_COORDS

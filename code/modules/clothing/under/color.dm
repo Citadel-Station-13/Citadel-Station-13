@@ -1,5 +1,8 @@
 /obj/item/clothing/under/color
 	desc = "A standard issue colored jumpsuit. Variety is the spice of life!"
+	icon = 'icons/obj/clothing/under/color.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/color.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/under/color_digi.dmi'
 	dying_key = DYE_REGISTRY_UNDER
 
 /obj/item/clothing/under/color/jumpskirt
