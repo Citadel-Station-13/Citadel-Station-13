@@ -182,6 +182,8 @@
 /obj/item/clothing/head/warden
 	name = "warden's police hat"
 	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."
+	icon = 'icons/obj/clothing/head/helmet.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "policehelm"
 	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 10, BOMB = 25, BIO = 0, RAD = 0, FIRE = 30, ACID = 60)
 	strip_delay = 60
@@ -190,6 +192,8 @@
 /obj/item/clothing/head/warden/drill
 	name = "warden's campaign hat"
 	desc = "A special armored campaign hat with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection. Has the letters 'FMJ' enscribed on its side."
+	icon = 'icons/obj/clothing/head/helmet.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "wardendrill"
 	item_state = "wardendrill"
 	dog_fashion = null

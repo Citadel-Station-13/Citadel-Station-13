@@ -1,4 +1,6 @@
 /obj/item/clothing/suit/armor
+	icon = 'icons/obj/clothing/suits/armor.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suits/armor.dmi'
 	allowed = null
 	cold_protection = CHEST|GROIN
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
@@ -37,6 +39,12 @@
 	desc = "A Type I armored vest that provides decent protection against most types of damage."
 	icon_state = "armor"
 	item_state = "armor"
+
+/obj/item/clothing/suit/armor/vest/sec
+	name = "security armor vest"
+	desc = "A Type I armored vest decorated with security brandings that provides decent protection against most types of damage."
+	icon_state = "sec-armor"
+	item_state = "sec-armor"
 
 /obj/item/clothing/suit/armor/vest/old
 	name = "degrading armor vest"
@@ -288,7 +296,6 @@
 	desc = "Pukish armor."	//classy.
 	icon_state = "tdgreen"
 	item_state = "tdgreen"
-
 
 /obj/item/clothing/suit/armor/riot/knight
 	name = "plate armour"
