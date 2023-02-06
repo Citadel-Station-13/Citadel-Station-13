@@ -4,10 +4,12 @@
 #define LOADOUT_SUBCATEGORY_NONE		"Miscellaneous"
 #define LOADOUT_SUBCATEGORIES_NONE		list("Miscellaneous")
 
+//accessory
+#define LOADOUT_CATEGORY_ACCESSORY "Accessory"
+
 //backpack
 #define LOADOUT_CATEGORY_BACKPACK 				"In backpack"
 #define LOADOUT_SUBCATEGORY_BACKPACK_GENERAL 	"General" //basically anything that there's not enough of to have its own subcategory
-#define LOADOUT_SUBCATEGORY_BACKPACK_ACCESSORIES "Accessories" //maybe one day someone will make loadouts have accessory compatibility
 #define LOADOUT_SUBCATEGORY_BACKPACK_TOYS 		"Toys"
 //neck
 #define LOADOUT_CATEGORY_NECK "Neck"

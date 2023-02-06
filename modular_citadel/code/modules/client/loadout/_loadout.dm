@@ -55,6 +55,7 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 	var/geargroupID //defines the ID that the gear inherits from the config
 	var/loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION
 	var/list/loadout_initial_colors = list()
+	var/handle_post_equip = FALSE
 
 	//NEW DONATOR SYTSEM STUFF
 	var/donoritem				//autoset on new if null

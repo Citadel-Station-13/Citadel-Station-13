@@ -3814,6 +3814,7 @@
 #include "modular_citadel\code\modules\client\loadout\_medical.dm"
 #include "modular_citadel\code\modules\client\loadout\_security.dm"
 #include "modular_citadel\code\modules\client\loadout\_service.dm"
+#include "modular_citadel\code\modules\client\loadout\accessory.dm"
 #include "modular_citadel\code\modules\client\loadout\backpack.dm"
 #include "modular_citadel\code\modules\client\loadout\glasses.dm"
 #include "modular_citadel\code\modules\client\loadout\gloves.dm"
