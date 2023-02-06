@@ -10,13 +10,6 @@
 	sensor_mode = SENSOR_COORDS
 	sensor_flags = NONE
 
-/obj/item/clothing/under/rank/captain/util
-	name = "command utility uniform"
-	desc = "A utility uniform for command personnel."
-	icon_state = "utilcom"
-	item_state = "utilcom"
-	can_adjust = FALSE
-
 /obj/item/clothing/under/rank/captain/skirt
 	name = "captain's jumpskirt"
 	desc = "It's a blue jumpskirt with some gold markings denoting the rank of \"Captain\"."
@@ -58,3 +51,10 @@
 	item_state = "lewdcap"
 	alt_covers_chest = TRUE
 	mutantrace_variation = STYLE_DIGITIGRADE|USE_TAUR_CLIP_MASK
+
+/obj/item/clothing/under/rank/captain/util
+	name = "command utility uniform"
+	desc = "A utility uniform for command personnel."
+	icon_state = "utilcom"
+	item_state = "utilcom"
+	can_adjust = FALSE

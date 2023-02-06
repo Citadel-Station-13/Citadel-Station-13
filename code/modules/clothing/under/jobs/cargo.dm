@@ -1,3 +1,28 @@
+/obj/item/clothing/under/rank/cargo
+	name = "cargo technician's jumpsuit"
+	desc = "Shorts! They're comfy and easy to wear!"
+	icon = 'icons/obj/clothing/under/cargo.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/cargo.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/under/cargo_digi.dmi'
+	icon_state = "cargo"
+	item_state = "lb_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+
+/obj/item/clothing/under/rank/cargo/skirt
+	name = "cargo technician's jumpskirt"
+	desc = "Skirts! They're comfy and breezy to wear!"
+	icon_state = "cargo_skirt"
+	item_state = "lb_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	fitted = FEMALE_UNIFORM_TOP
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/under/rank/cargo/long
+	name = "cargo technician's jumpsuit (trousers)"
+	desc = "A variant of the cargo technician's uniform with proper trousers, suited for colder climates and modest workers."
+	icon_state = "cargo_long"
+	item_state = "lb_suit"
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/cargo/qm
 	name = "quartermaster's jumpsuit"
@@ -15,38 +40,12 @@
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
-/obj/item/clothing/under/rank/cargo/tech
-	name = "cargo technician's jumpsuit"
-	desc = "Shooooorts! They're comfy and easy to wear!"
-	icon_state = "cargo"
-	item_state = "lb_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
-	alt_covers_chest = TRUE
-
 /obj/item/clothing/under/rank/cargo/util
 	name = "cargo utility uniform"
 	desc = "a utility uniform for cargo personnel"
 	icon_state = "utilsupply"
 	item_state = "utilsupply"
 	can_adjust = FALSE
-
-
-/obj/item/clothing/under/rank/cargo/tech/skirt
-	name = "cargo technician's jumpskirt"
-	desc = "Skiiiiirts! They're comfy and easy to wear"
-	icon_state = "cargo_skirt"
-	item_state = "lb_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
-	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
-
-/obj/item/clothing/under/rank/cargo/tech/long
-	name = "cargo technician's jumpsuit (trousers)"
-	desc = "A variant of the cargo technician's uniform with proper trousers, suited for colder climates and modest workers."
-	icon_state = "cargo_long"
-	item_state = "lb_suit"
-	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/cargo/miner
 	name = "shaft miner's jumpsuit"

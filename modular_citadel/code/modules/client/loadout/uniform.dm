@@ -402,7 +402,7 @@
 
 /datum/gear/uniform/grey/eng
 	name = "Engineering Utility Uniform"
-	path = /obj/item/clothing/under/rank/engineering/engineer/util
+	path = /obj/item/clothing/under/rank/engineering/util
 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
 	restricted_desc = "Engineering"
 	restricted_roles = list("Station Engineer", "Atmospheric Technician", "Chief Engineer")
@@ -423,7 +423,7 @@
 
 /datum/gear/uniform/grey/eng/mech
 	name = "Mechanic's Uniform"
-	path = /obj/item/clothing/under/rank/engineering/engineer/mechanic
+	path = /obj/item/clothing/under/rank/engineering/mechanic
 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
 
 /datum/gear/unifrom/grey/med/red
@@ -741,7 +741,7 @@
 
 /datum/gear/uniform/ctlong
 	name = "cargo tech's jumpsuit (long pants)"
-	path = /obj/item/clothing/under/rank/cargo/tech/long
+	path = /obj/item/clothing/under/rank/cargo/long
 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
 	restricted_roles = list("Cargo Technician")
 
