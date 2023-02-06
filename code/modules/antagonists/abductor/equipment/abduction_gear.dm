@@ -836,7 +836,7 @@
 	material_type = /obj/item/stack/sheet/mineral/abductor
 	noglass = TRUE
 
-/obj/item/clothing/under/abductor
+/obj/item/clothing/under/syndicate/abductor
 	desc = "The most advanced form of jumpsuit known to reality, looks uncomfortable."
 	name = "alien jumpsuit"
 	icon_state = "abductor"

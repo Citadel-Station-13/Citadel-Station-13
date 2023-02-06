@@ -1,6 +1,6 @@
 /datum/outfit/abductor
 	name = "Abductor Basic"
-	uniform = /obj/item/clothing/under/abductor
+	uniform = /obj/item/clothing/under/syndicate/abductor
 	shoes = /obj/item/clothing/shoes/combat
 	back = /obj/item/storage/backpack
 	ears = /obj/item/radio/headset/abductor

@@ -1,6 +1,9 @@
 /obj/item/clothing/under/syndicate
 	name = "tactical turtleneck"
 	desc = "A non-descript and slightly suspicious looking turtleneck with digital camouflage cargo pants."
+	icon = 'icons/obj/clothing/under/syndicate.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/syndicate.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/under/syndicate_digi.dmi'
 	icon_state = "syndicate"
 	item_state = "bl_suit"
 	has_sensor = NO_SENSORS
@@ -67,9 +70,9 @@
 	can_adjust = FALSE
 
 /obj/item/clothing/under/syndicate/sniper
-	name = "Tactical turtleneck suit"
+	name = "agent suit"
 	desc = "A double seamed tactical turtleneck disguised as a civilian grade silk suit. Intended for the most formal operator. The collar is really sharp."
-	icon_state = "really_black_suit"
+	icon_state = "tactical_suit"
 	item_state = "bl_suit"
 	can_adjust = FALSE
 
@@ -83,20 +86,20 @@
 /obj/item/clothing/under/syndicate/camo/cosmetic
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
-/obj/item/clothing/under/syndicate/soviet
-	name = "Ratnik 5 tracksuit"
-	desc = "Badly translated labels tell you to clean this in Vodka. Great for squatting in."
-	icon_state = "trackpants"
-	can_adjust = FALSE
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 5)
-	resistance_flags = NONE
-
 /obj/item/clothing/under/syndicate/combat
 	name = "combat uniform"
 	desc = "With a suit lined with this many pockets, you are ready to operate."
 	icon_state = "syndicate_combat"
 	can_adjust = FALSE
 	mutantrace_variation = USE_TAUR_CLIP_MASK
+
+/obj/item/clothing/under/syndicate/soviet
+	name = "Ratnik 5 tracksuit"
+	desc = "Badly translated labels tell you to clean this in Vodka. Great for squatting in."
+	icon_state = "rus_under_syndicate"
+	can_adjust = FALSE
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 5)
+	resistance_flags = NONE
 
 /obj/item/clothing/under/syndicate/rus_army
 	name = "advanced military tracksuit"
@@ -112,8 +115,11 @@
 	desc = "A major league outfit with the number faded number on the back. Seems rather robust for just a game..."
 	icon_state = "syndicatebaseball"
 	item_state = "syndicatebaseball"
-	has_sensor = NO_SENSORS
 	armor = list(MELEE = 15, BULLET = 5, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 40, WOUND = 10)
 	alt_covers_chest = TRUE
 	mutantrace_variation = USE_TAUR_CLIP_MASK
 
+/obj/item/clothing/under/syndicate/ninja
+	name = "ninjutsu garb"
+	desc = "Comfortable cotton attire fit for running with your arms flailing behind your back and stabbing losers."
+	icon_state = "ninja_suit"
