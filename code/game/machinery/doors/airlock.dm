@@ -700,6 +700,10 @@
 /obj/machinery/door/airlock/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
+	if(istype(held_item, /obj/item/stack/sheet/plasteel))
+		context[SCREENTIP_CONTEXT_LMB] = "Reinforce"
+		return CONTEXTUAL_SCREENTIP_SET
+
 	switch (held_item?.tool_behaviour)
 		if (TOOL_CROWBAR)
 			if (panel_open)

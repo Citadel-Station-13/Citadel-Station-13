@@ -19,8 +19,8 @@ Example:
 	. = ..()
 	AddElement( \
 		/datum/element/contextual_screentip_bare_hands, \
-		lmb_text = "Turn on", \
-		rmb_text = "Turn off", \
+		lmb_text = list(INTENT_HELP = "Turn on"), \
+		rmb_text = list(INTENT_HELP = "Turn off"), \
 	)
 ```
 

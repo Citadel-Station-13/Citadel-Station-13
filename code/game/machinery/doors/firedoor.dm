@@ -51,25 +51,16 @@
 
 	if (isnull(held_item))
 		if (density)
-			// This should be LMB/RMB one day
-			if (user.a_intent == INTENT_HARM)
-				context[SCREENTIP_CONTEXT_LMB] = "Knock"
-			else
-				context[SCREENTIP_CONTEXT_LMB] = "Bash"
-
+			context[SCREENTIP_CONTEXT_LMB] = "Knock"
 			return CONTEXTUAL_SCREENTIP_SET
 		else
 			return .
 
 	switch (held_item.tool_behaviour)
 		if (TOOL_CROWBAR)
-			if (density)
-				context[SCREENTIP_CONTEXT_LMB] = "Close"
-			else if (!welded)
-				context[SCREENTIP_CONTEXT_LMB] = "Hold open"
-				context[SCREENTIP_CONTEXT_RMB] = "Open permanently"
-
-			return CONTEXTUAL_SCREENTIP_SET
+			if(!welded)
+				context[SCREENTIP_CONTEXT_LMB] = density ? "Open" : "Close"
+				return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WELDER)
 			context[SCREENTIP_CONTEXT_LMB] = welded ? "Unweld shut" : "Weld shut"
 			return CONTEXTUAL_SCREENTIP_SET
@@ -79,9 +70,8 @@
 				return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_SCREWDRIVER)
 			if (welded)
-				context[SCREENTIP_CONTEXT_LMB] = "Unlock bolts"
+				context[SCREENTIP_CONTEXT_LMB] = boltslocked ? "Unlock bolts" : "Lock bolts"
 				return CONTEXTUAL_SCREENTIP_SET
-
 	return .
 
 /obj/machinery/door/firedoor/proc/CalculateAffectingAreas()

@@ -58,7 +58,7 @@
 /obj/machinery/door/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
-	if (isnull(held_item))
+	if (isnull(held_item) && !istype(src, /obj/machinery/door/firedoor)) // You cannot open/close with your hands
 		context[SCREENTIP_CONTEXT_LMB] = density ? "Open" : "Close"
 		return CONTEXTUAL_SCREENTIP_SET
 

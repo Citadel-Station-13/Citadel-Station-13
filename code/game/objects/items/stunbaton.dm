@@ -30,24 +30,6 @@
 	var/status_duration = 3 SECONDS //how long our status effects last for otherwise
 	COOLDOWN_DECLARE(shove_cooldown)
 
-	/// The context to show when the baton is active and targetting a living thing
-	var/context_living_target_active = "Stun"
-
-	/// The context to show when the baton is active and targetting a living thing in combat mode
-	var/context_living_target_active_combat_mode = "Stun"
-
-	/// The context to show when the baton is inactive and targetting a living thing
-	var/context_living_target_inactive = "Prod"
-
-	/// The context to show when the baton is inactive and targetting a living thing in combat mode
-	var/context_living_target_inactive_combat_mode = "Attack"
-
-	/// The RMB context to show when the baton is active and targetting a living thing
-	var/context_living_rmb_active = "Attack"
-
-	/// The RMB context to show when the baton is inactive and targetting a living thing
-	var/context_living_rmb_inactive = "Attack"
-
 /obj/item/melee/baton/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Right click attack while in combat mode to knockdown, but only once per [cooldown_duration / 10] seconds.</span>"
@@ -183,19 +165,19 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Attack"
 	else
 		if (turned_on)
-			context[SCREENTIP_CONTEXT_RMB] = context_living_rmb_active
+			context[SCREENTIP_CONTEXT_RMB] = "Knockdown"
 
 			if (user.a_intent == INTENT_HARM)
-				context[SCREENTIP_CONTEXT_LMB] = context_living_target_active_combat_mode
+				context[SCREENTIP_CONTEXT_LMB] = "Harmful stun"
 			else
-				context[SCREENTIP_CONTEXT_LMB] = context_living_target_active
+				context[SCREENTIP_CONTEXT_LMB] = "Stun"
 		else
-			context[SCREENTIP_CONTEXT_RMB] = context_living_rmb_inactive
+			context[SCREENTIP_CONTEXT_RMB] = "Knockdown" // DON'T TELL EM, PRANKED.
 
 			if (user.a_intent == INTENT_HARM)
-				context[SCREENTIP_CONTEXT_LMB] = context_living_target_inactive_combat_mode
+				context[SCREENTIP_CONTEXT_LMB] = "Attack" // It's fine i guess...?
 			else
-				context[SCREENTIP_CONTEXT_LMB] = context_living_target_inactive
+				context[SCREENTIP_CONTEXT_LMB] = "Stun" // STILL DO NOT DARE TELLING THEM
 
 	return CONTEXTUAL_SCREENTIP_SET
 

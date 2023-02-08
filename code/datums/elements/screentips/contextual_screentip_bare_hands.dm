@@ -5,20 +5,30 @@
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
 	id_arg_index = 3
 
+	/* How to use SandPoot's version of this:
+	*
+	* Combat mode will be checked first, then the intents for it, if the
+	* current intent has not been set it defaults to the first item of the list.
+	*
+	* Otherwise if not in combat mode or no messages for it
+	* will also try to get messages for the current intent
+	* if failing to, will try to get the first item of the list.
+	*/
+
 	/// If set, the text to show for LMB
-	var/lmb_text
+	var/list/lmb_text
 
 	/// If set, the text to show for RMB
-	var/rmb_text
+	var/list/rmb_text
 
 	/// If set, the text to show for LMB when in combat mode. Otherwise, defaults to lmb_text.
-	var/lmb_text_combat_mode
+	var/list/lmb_text_combat_mode
 
 	/// If set, the text to show for RMB when in combat mode. Otherwise, defaults to rmb_text.
-	var/rmb_text_combat_mode
+	var/list/rmb_text_combat_mode
 
 // If you're curious about `use_named_parameters`, it's because you should use named parameters!
-// AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Do the thing")
+// AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = list(INTENT_HELP = "Do the thing"))
 /datum/element/contextual_screentip_bare_hands/Attach(
 	datum/target,
 	use_named_parameters,
@@ -64,10 +74,31 @@
 	if (!isnull(held_item))
 		return NONE
 
-	if (!isnull(lmb_text))
-		context[SCREENTIP_CONTEXT_LMB] = user.a_intent == INTENT_HARM ? lmb_text_combat_mode : lmb_text
+	var/combat_mode = SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE)
 
-	if (!isnull(rmb_text))
-		context[SCREENTIP_CONTEXT_RMB] = user.a_intent == INTENT_HARM ? rmb_text_combat_mode : rmb_text
+	if(combat_mode && length(lmb_text_combat_mode))
+		if(lmb_text_combat_mode[user.a_intent])
+			context[SCREENTIP_CONTEXT_LMB] = lmb_text_combat_mode[user.a_intent]
+		else
+			var/first_item = lmb_text_combat_mode[1]
+			context[SCREENTIP_CONTEXT_LMB] = lmb_text_combat_mode[first_item]
+	else if(length(lmb_text))
+		if(lmb_text[user.a_intent])
+			context[SCREENTIP_CONTEXT_LMB] = lmb_text[user.a_intent]
+		else
+			var/first_item = lmb_text[1]
+			context[SCREENTIP_CONTEXT_LMB] = lmb_text[first_item]
+	if(combat_mode && length(rmb_text_combat_mode))
+		if(rmb_text_combat_mode[user.a_intent])
+			context[SCREENTIP_CONTEXT_RMB] = rmb_text_combat_mode[user.a_intent]
+		else
+			var/first_item = rmb_text_combat_mode[1]
+			context[SCREENTIP_CONTEXT_RMB] = rmb_text_combat_mode[first_item]
+	else if(length(rmb_text))
+		if(rmb_text[user.a_intent])
+			context[SCREENTIP_CONTEXT_RMB] = rmb_text[user.a_intent]
+		else
+			var/first_item = rmb_text[1]
+			context[SCREENTIP_CONTEXT_RMB] = rmb_text[first_item]
 
 	return CONTEXTUAL_SCREENTIP_SET

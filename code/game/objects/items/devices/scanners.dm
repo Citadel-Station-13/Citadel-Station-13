@@ -572,6 +572,7 @@ GENETICS SCANNER
 	name = "first aid analyzer"
 	icon_state = "adv_spectrometer"
 	desc = "A prototype MeLo-Tech medical scanner used to diagnose injuries and recommend treatment for serious wounds, but offers no further insight into the patient's health. You hope the final version is less annoying to read!"
+	scanmode = SCANMODE_WOUND // Forces context to give correct tip.
 	var/next_encouragement
 	var/greedy
 

@@ -21,7 +21,7 @@
 				context[SCREENTIP_CONTEXT_LMB] = "CPR"
 		if(INTENT_DISARM)
 			context[SCREENTIP_CONTEXT_LMB] = "Disarm"
-			if(combat_mode)
+			if(combat_mode && (src != user))
 				context[SCREENTIP_CONTEXT_RMB] = "Shove"
 		if(INTENT_GRAB)
 			if(src != user)
@@ -41,7 +41,7 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Attack"
 
 	// Did you know we cannot upgrade grabs from ctrl-click, that's cool
-	if(pulledby != user)
+	if((pulledby != user) && (src != user))
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Pull"
 	// Happens on any intent i believe
 	if((user == src) && combat_mode && lying)
