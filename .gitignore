@@ -198,3 +198,7 @@ Temporary Items
 /tools/LinuxOneShot/TGS_Logs
 tools/UnstandardnessTestForDM/UnstandardnessTestForDM/obj/x86/Debug/UnstandardnessTestForDM.csproj.AssemblyReference.cache
 tools/UnstandardnessTestForDM/UnstandardnessTestForDM/obj/x86/Debug/.NETFramework,Version=v4.0,Profile=Client.AssemblyAttributes.cs
+
+# byond-tracy, we intentionally do not ship this and do not want to maintain it
+prof.dll
+libprof.so

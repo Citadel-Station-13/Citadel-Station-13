@@ -9,6 +9,10 @@ GLOBAL_LIST(topic_status_cache)
 //So subsystems globals exist, but are not initialised
 
 /world/New()
+#ifdef USE_BYOND_TRACY
+	#warn USE_BYOND_TRACY is enabled
+	init_byond_tracy()
+#endif
 	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (debug_server)
 		call(debug_server, "auxtools_init")()
@@ -40,6 +44,10 @@ GLOBAL_LIST(topic_status_cache)
 	SSdbcore.CheckSchemaVersion()
 	SSdbcore.SetRoundID()
 	SetupLogs()
+
+	#ifdef ENABLE_BYOND_TRACY
+	call("prof.dll", "destroy")() // Setup Tracy integration
+	#endif
 
 #ifndef USE_CUSTOM_ERROR_HANDLER
 	world.log = file("[GLOB.log_directory]/dd.log")
@@ -323,7 +331,7 @@ GLOBAL_LIST(topic_status_cache)
 		. += "[SSmapping.config.map_name], "
 	if(NUM2SECLEVEL(GLOB.security_level))
 		. += "[NUM2SECLEVEL(GLOB.security_level)] alert, "
-	
+
 	. += "[get_active_player_count(afk_check = TRUE)] playing"
 
 	status = .
@@ -368,3 +376,18 @@ GLOBAL_LIST(topic_status_cache)
 
 /world/proc/on_tickrate_change()
 	SStimer?.reset_buckets()
+
+/world/proc/init_byond_tracy()
+	var/library
+
+	switch (system_type)
+		if (MS_WINDOWS)
+			library = "prof.dll"
+		if (UNIX)
+			library = "libprof.so"
+		else
+			CRASH("Unsupported platform: [system_type]")
+
+	var/init_result = call(library, "init")()
+	if (init_result != "0")
+		CRASH("Error initializing byond-tracy: [init_result]")
