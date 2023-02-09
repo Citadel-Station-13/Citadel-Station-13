@@ -76,29 +76,17 @@
 
 	var/combat_mode = SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE)
 
+	// Combat lmb
 	if(combat_mode && length(lmb_text_combat_mode))
-		if(lmb_text_combat_mode[user.a_intent])
-			context[SCREENTIP_CONTEXT_LMB] = lmb_text_combat_mode[user.a_intent]
-		else
-			var/first_item = lmb_text_combat_mode[1]
-			context[SCREENTIP_CONTEXT_LMB] = lmb_text_combat_mode[first_item]
+		context[SCREENTIP_CONTEXT_LMB] = lmb_text_combat_mode
+	// LMB
 	else if(length(lmb_text))
-		if(lmb_text[user.a_intent])
-			context[SCREENTIP_CONTEXT_LMB] = lmb_text[user.a_intent]
-		else
-			var/first_item = lmb_text[1]
-			context[SCREENTIP_CONTEXT_LMB] = lmb_text[first_item]
+		context[SCREENTIP_CONTEXT_LMB] = lmb_text
+	// Combat rmb
 	if(combat_mode && length(rmb_text_combat_mode))
-		if(rmb_text_combat_mode[user.a_intent])
-			context[SCREENTIP_CONTEXT_RMB] = rmb_text_combat_mode[user.a_intent]
-		else
-			var/first_item = rmb_text_combat_mode[1]
-			context[SCREENTIP_CONTEXT_RMB] = rmb_text_combat_mode[first_item]
+		context[SCREENTIP_CONTEXT_RMB] = rmb_text_combat_mode
+	// RMB
 	else if(length(rmb_text))
-		if(rmb_text[user.a_intent])
-			context[SCREENTIP_CONTEXT_RMB] = rmb_text[user.a_intent]
-		else
-			var/first_item = rmb_text[1]
-			context[SCREENTIP_CONTEXT_RMB] = rmb_text[first_item]
+		context[SCREENTIP_CONTEXT_RMB] = rmb_text
 
 	return CONTEXTUAL_SCREENTIP_SET

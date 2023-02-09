@@ -1460,12 +1460,34 @@
 		if(screentips_enabled == SCREENTIP_PREFERENCE_DISABLED || (flags_1 & NO_SCREENTIPS_1))
 			active_hud.screentip_text.maptext = ""
 		else
+			active_hud.screentip_text.maptext_y = 0
+			var/lmb_rmb_line = ""
+			var/ctrl_lmb_ctrl_rmb_line = ""
+			var/alt_lmb_alt_rmb_line = ""
+			var/shift_lmb_ctrl_shift_lmb_line = ""
+			var/extra_lines = 0
 			var/extra_context = ""
 
-			if (isliving(user))
+			// Generate intent icons
+			var/static/image/intent_help
+			if(!intent_help)
+				intent_help = image('icons/emoji.dmi', icon_state = INTENT_HELP)
+			var/static/image/intent_disarm
+			if(!intent_disarm)
+				intent_disarm = image('icons/emoji.dmi', icon_state = INTENT_DISARM)
+			var/static/image/intent_grab
+			if(!intent_grab)
+				intent_grab = image('icons/emoji.dmi', icon_state = INTENT_GRAB)
+			var/static/image/intent_harm
+			if(!intent_harm)
+				intent_harm = image('icons/emoji.dmi', icon_state = INTENT_HARM)
+			//
+
+
+			if (isliving(user) || isovermind(user) || isaicamera(user))
 				var/obj/item/held_item = user.get_active_held_item()
 
-				if ((flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1) || (held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS))
+				if (flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1 || held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS)
 					var/list/context = list()
 
 					var/contextual_screentip_returns = \
@@ -1474,23 +1496,168 @@
 
 					if (contextual_screentip_returns & CONTEXTUAL_SCREENTIP_SET)
 						// LMB and RMB on one line...
-						var/lmb_text = (SCREENTIP_CONTEXT_LMB in context) ? "[SCREENTIP_CONTEXT_LMB]: [context[SCREENTIP_CONTEXT_LMB]]" : ""
-						var/rmb_text = (SCREENTIP_CONTEXT_RMB in context) ? "[SCREENTIP_CONTEXT_RMB]: [context[SCREENTIP_CONTEXT_RMB]]" : ""
+						var/lmb_text = ""
+						if((SCREENTIP_CONTEXT_LMB in context) && (length(context[SCREENTIP_CONTEXT_LMB]) > 0))
+							var/list/to_add
+							for(var/intent in context[SCREENTIP_CONTEXT_LMB])
+								switch(intent)
+									if(INTENT_HELP)
+										LAZYADD(to_add, "\icon[intent_help] [SCREENTIP_CONTEXT_LMB]: [context[SCREENTIP_CONTEXT_LMB][INTENT_HELP]]")
+									if(INTENT_DISARM)
+										LAZYADD(to_add, "\icon[intent_disarm] [SCREENTIP_CONTEXT_LMB]: [context[SCREENTIP_CONTEXT_LMB][INTENT_DISARM]]")
+									if(INTENT_GRAB)
+										LAZYADD(to_add, "\icon[intent_grab] [SCREENTIP_CONTEXT_LMB]: [context[SCREENTIP_CONTEXT_LMB][INTENT_GRAB]]")
+									if(INTENT_HARM)
+										LAZYADD(to_add, "\icon[intent_harm] [SCREENTIP_CONTEXT_LMB]: [context[SCREENTIP_CONTEXT_LMB][INTENT_HARM]]")
+									else // If you're adding intent-less YOU BETTER ADD IT FIRST IN THE LIST
+										LAZYADD(to_add, "[SCREENTIP_CONTEXT_LMB]: [context[SCREENTIP_CONTEXT_LMB][intent]]")
+							lmb_text = english_list(to_add, "", " | ", " | ", " | ")
+						var/rmb_text = ""
+						if((SCREENTIP_CONTEXT_RMB in context) && (length(context[SCREENTIP_CONTEXT_RMB]) > 0))
+							var/list/to_add
+							for(var/intent in context[SCREENTIP_CONTEXT_RMB])
+								switch(intent)
+									if(INTENT_HELP)
+										LAZYADD(to_add, "\icon[intent_help] [SCREENTIP_CONTEXT_RMB]: [context[SCREENTIP_CONTEXT_RMB][INTENT_HELP]]")
+									if(INTENT_DISARM)
+										LAZYADD(to_add, "\icon[intent_disarm] [SCREENTIP_CONTEXT_RMB]: [context[SCREENTIP_CONTEXT_RMB][INTENT_DISARM]]")
+									if(INTENT_GRAB)
+										LAZYADD(to_add, "\icon[intent_grab] [SCREENTIP_CONTEXT_RMB]: [context[SCREENTIP_CONTEXT_RMB][INTENT_GRAB]]")
+									if(INTENT_HARM)
+										LAZYADD(to_add, "\icon[intent_harm] [SCREENTIP_CONTEXT_RMB]: [context[SCREENTIP_CONTEXT_RMB][INTENT_HARM]]")
+									else // If you're adding intent-less YOU BETTER ADD IT FIRST IN THE LIST
+										LAZYADD(to_add, "[SCREENTIP_CONTEXT_RMB]: [context[SCREENTIP_CONTEXT_RMB][intent]]")
+							rmb_text = english_list(to_add, "", " | ", " | ", " | ")
 
 						if (lmb_text)
-							extra_context = lmb_text
+							lmb_rmb_line = lmb_text
 							if (rmb_text)
-								extra_context += " | [rmb_text]"
+								lmb_rmb_line += " | [rmb_text]"
 						else if (rmb_text)
-							extra_context = rmb_text
+							lmb_rmb_line = rmb_text
 
-						// Ctrl-LMB and (in the future) Alt-LMB on another
-						if (SCREENTIP_CONTEXT_CTRL_LMB in context)
-							if (extra_context != "")
-								extra_context += "<br>"
-							extra_context += "[SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB]]"
+						// Ctrl-LMB, Ctrl-RMB on one line...
+						if (lmb_rmb_line != "")
+							lmb_rmb_line += "<br>"
+							extra_lines++
+						if((SCREENTIP_CONTEXT_CTRL_LMB in context) && (length(context[SCREENTIP_CONTEXT_CTRL_LMB]) > 0))
+							var/list/to_add
+							for(var/intent in context[SCREENTIP_CONTEXT_CTRL_LMB])
+								switch(intent)
+									if(INTENT_HELP)
+										LAZYADD(to_add, "\icon[intent_help] [SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB][INTENT_HELP]]")
+									if(INTENT_DISARM)
+										LAZYADD(to_add, "\icon[intent_disarm] [SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB][INTENT_DISARM]]")
+									if(INTENT_GRAB)
+										LAZYADD(to_add, "\icon[intent_grab] [SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB][INTENT_GRAB]]")
+									if(INTENT_HARM)
+										LAZYADD(to_add, "\icon[intent_harm] [SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB][INTENT_HARM]]")
+									else // If you're adding intent-less YOU BETTER ADD IT FIRST IN THE LIST
+										LAZYADD(to_add, "[SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB][intent]]")
+							ctrl_lmb_ctrl_rmb_line = english_list(to_add, "", " | ", " | ", " | ")
 
-						extra_context = "<br><span style='font-size: 7px'>[extra_context]</span>"
+						if((SCREENTIP_CONTEXT_CTRL_RMB in context) && (length(context[SCREENTIP_CONTEXT_CTRL_RMB]) > 0))
+							if (ctrl_lmb_ctrl_rmb_line != "")
+								ctrl_lmb_ctrl_rmb_line += " | "
+							ctrl_lmb_ctrl_rmb_line += "[SCREENTIP_CONTEXT_CTRL_RMB]: [context[SCREENTIP_CONTEXT_CTRL_RMB]]"
+							var/list/to_add
+							for(var/intent in context[SCREENTIP_CONTEXT_CTRL_RMB])
+								switch(intent)
+									if(INTENT_HELP)
+										LAZYADD(to_add, "\icon[intent_help] [SCREENTIP_CONTEXT_CTRL_RMB]: [context[SCREENTIP_CONTEXT_CTRL_RMB][INTENT_HELP]]")
+									if(INTENT_DISARM)
+										LAZYADD(to_add, "\icon[intent_disarm] [SCREENTIP_CONTEXT_CTRL_RMB]: [context[SCREENTIP_CONTEXT_CTRL_RMB][INTENT_DISARM]]")
+									if(INTENT_GRAB)
+										LAZYADD(to_add, "\icon[intent_grab] [SCREENTIP_CONTEXT_CTRL_RMB]: [context[SCREENTIP_CONTEXT_CTRL_RMB][INTENT_GRAB]]")
+									if(INTENT_HARM)
+										LAZYADD(to_add, "\icon[intent_harm] [SCREENTIP_CONTEXT_CTRL_RMB]: [context[SCREENTIP_CONTEXT_CTRL_RMB][INTENT_HARM]]")
+									else // If you're adding intent-less YOU BETTER ADD IT FIRST IN THE LIST
+										LAZYADD(to_add, "[SCREENTIP_CONTEXT_CTRL_RMB]: [context[SCREENTIP_CONTEXT_CTRL_RMB][intent]]")
+							ctrl_lmb_ctrl_rmb_line = english_list(to_add, "", " | ", " | ", " | ")
+
+						// Alt-LMB, Alt-RMB on one line...
+						if (ctrl_lmb_ctrl_rmb_line != "")
+							ctrl_lmb_ctrl_rmb_line += "<br>"
+							extra_lines++
+						if((SCREENTIP_CONTEXT_ALT_LMB in context) && (length(context[SCREENTIP_CONTEXT_ALT_LMB]) > 0))
+							var/list/to_add
+							for(var/intent in context[SCREENTIP_CONTEXT_ALT_LMB])
+								switch(intent)
+									if(INTENT_HELP)
+										LAZYADD(to_add, "\icon[intent_help] [SCREENTIP_CONTEXT_ALT_LMB]: [context[SCREENTIP_CONTEXT_ALT_LMB][INTENT_HELP]]")
+									if(INTENT_DISARM)
+										LAZYADD(to_add, "\icon[intent_disarm] [SCREENTIP_CONTEXT_ALT_LMB]: [context[SCREENTIP_CONTEXT_ALT_LMB][INTENT_DISARM]]")
+									if(INTENT_GRAB)
+										LAZYADD(to_add, "\icon[intent_grab] [SCREENTIP_CONTEXT_ALT_LMB]: [context[SCREENTIP_CONTEXT_ALT_LMB][INTENT_GRAB]]")
+									if(INTENT_HARM)
+										LAZYADD(to_add, "\icon[intent_harm] [SCREENTIP_CONTEXT_ALT_LMB]: [context[SCREENTIP_CONTEXT_ALT_LMB][INTENT_HARM]]")
+									else // If you're adding intent-less YOU BETTER ADD IT FIRST IN THE LIST
+										LAZYADD(to_add, "[SCREENTIP_CONTEXT_ALT_LMB]: [context[SCREENTIP_CONTEXT_ALT_LMB][intent]]")
+							alt_lmb_alt_rmb_line = english_list(to_add, "", " | ", " | ", " | ")
+						if((SCREENTIP_CONTEXT_ALT_RMB in context) && (length(context[SCREENTIP_CONTEXT_ALT_RMB]) > 0))
+							if (alt_lmb_alt_rmb_line != "")
+								alt_lmb_alt_rmb_line += " | "
+							var/list/to_add
+							for(var/intent in context[SCREENTIP_CONTEXT_ALT_RMB])
+								switch(intent)
+									if(INTENT_HELP)
+										LAZYADD(to_add, "\icon[intent_help] [SCREENTIP_CONTEXT_ALT_RMB]: [context[SCREENTIP_CONTEXT_ALT_RMB][INTENT_HELP]]")
+									if(INTENT_DISARM)
+										LAZYADD(to_add, "\icon[intent_disarm] [SCREENTIP_CONTEXT_ALT_RMB]: [context[SCREENTIP_CONTEXT_ALT_RMB][INTENT_DISARM]]")
+									if(INTENT_GRAB)
+										LAZYADD(to_add, "\icon[intent_grab] [SCREENTIP_CONTEXT_ALT_RMB]: [context[SCREENTIP_CONTEXT_ALT_RMB][INTENT_GRAB]]")
+									if(INTENT_HARM)
+										LAZYADD(to_add, "\icon[intent_harm] [SCREENTIP_CONTEXT_ALT_RMB]: [context[SCREENTIP_CONTEXT_ALT_RMB][INTENT_HARM]]")
+									else // If you're adding intent-less YOU BETTER ADD IT FIRST IN THE LIST
+										LAZYADD(to_add, "[SCREENTIP_CONTEXT_ALT_RMB]: [context[SCREENTIP_CONTEXT_ALT_RMB][intent]]")
+							alt_lmb_alt_rmb_line = english_list(to_add, "", " | ", " | ", " | ")
+
+						// Shift-LMB, Ctrl-Shift-LMB on one line...
+						if (alt_lmb_alt_rmb_line != "")
+							alt_lmb_alt_rmb_line += "<br>"
+							extra_lines++
+						if((SCREENTIP_CONTEXT_SHIFT_LMB in context) && (length(context[SCREENTIP_CONTEXT_SHIFT_LMB]) > 0))
+							var/list/to_add
+							for(var/intent in context[SCREENTIP_CONTEXT_SHIFT_LMB])
+								switch(intent)
+									if(INTENT_HELP)
+										LAZYADD(to_add, "\icon[intent_help] [SCREENTIP_CONTEXT_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_SHIFT_LMB][INTENT_HELP]]")
+									if(INTENT_DISARM)
+										LAZYADD(to_add, "\icon[intent_disarm] [SCREENTIP_CONTEXT_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_SHIFT_LMB][INTENT_DISARM]]")
+									if(INTENT_GRAB)
+										LAZYADD(to_add, "\icon[intent_grab] [SCREENTIP_CONTEXT_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_SHIFT_LMB][INTENT_GRAB]]")
+									if(INTENT_HARM)
+										LAZYADD(to_add, "\icon[intent_harm] [SCREENTIP_CONTEXT_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_SHIFT_LMB][INTENT_HARM]]")
+									else // If you're adding intent-less YOU BETTER ADD IT FIRST IN THE LIST
+										LAZYADD(to_add, "[SCREENTIP_CONTEXT_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_SHIFT_LMB][intent]]")
+							shift_lmb_ctrl_shift_lmb_line = english_list(to_add, "", " | ", " | ", " | ")
+
+						if((SCREENTIP_CONTEXT_CTRL_SHIFT_LMB in context) && (length(context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]) > 0))
+							if (shift_lmb_ctrl_shift_lmb_line != "")
+								shift_lmb_ctrl_shift_lmb_line += " | "
+							shift_lmb_ctrl_shift_lmb_line += "[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]]"
+							var/list/to_add
+							for(var/intent in context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB])
+								switch(intent)
+									if(INTENT_HELP)
+										LAZYADD(to_add, "\icon[intent_help] [SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB][INTENT_HELP]]")
+									if(INTENT_DISARM)
+										LAZYADD(to_add, "\icon[intent_disarm] [SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB][INTENT_DISARM]]")
+									if(INTENT_GRAB)
+										LAZYADD(to_add, "\icon[intent_grab] [SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB][INTENT_GRAB]]")
+									if(INTENT_HARM)
+										LAZYADD(to_add, "\icon[intent_harm] [SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB][INTENT_HARM]]")
+									else // If you're adding intent-less YOU BETTER ADD IT FIRST IN THE LIST
+										LAZYADD(to_add, "[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB][intent]]")
+							shift_lmb_ctrl_shift_lmb_line = english_list(to_add, "", " | ", " | ", " | ")
+
+						if (shift_lmb_ctrl_shift_lmb_line != "")
+							extra_lines++
+
+						if(extra_lines)
+							extra_context = "<br><span style='font-size: 7px'>[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
+							//first extra line pushes atom name line up 10px, subsequent lines push it up 9px, this offsets that and keeps the first line in the same place
+							active_hud.screentip_text.maptext_y = -10 + (extra_lines - 1) * -9
 
 			if (screentips_enabled == SCREENTIP_PREFERENCE_CONTEXT_ONLY && extra_context == "")
 				active_hud.screentip_text.maptext = ""

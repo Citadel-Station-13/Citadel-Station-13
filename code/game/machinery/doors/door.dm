@@ -59,7 +59,7 @@
 	. = ..()
 
 	if (isnull(held_item) && !istype(src, /obj/machinery/door/firedoor)) // You cannot open/close with your hands
-		context[SCREENTIP_CONTEXT_LMB] = density ? "Open" : "Close"
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, (density ? "Open" : "Close"))
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/door/check_access_list(list/access_list)

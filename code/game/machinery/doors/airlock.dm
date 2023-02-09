@@ -701,34 +701,34 @@
 	. = ..()
 
 	if(istype(held_item, /obj/item/stack/sheet/plasteel))
-		context[SCREENTIP_CONTEXT_LMB] = "Reinforce"
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Reinforce")
 		return CONTEXTUAL_SCREENTIP_SET
 
 	switch (held_item?.tool_behaviour)
 		if (TOOL_CROWBAR)
 			if (panel_open)
 				if (security_level == AIRLOCK_SECURITY_PLASTEEL_O_S || security_level == AIRLOCK_SECURITY_PLASTEEL_I_S)
-					context[SCREENTIP_CONTEXT_LMB] = "Remove shielding"
+					LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Remove shielding")
 					return CONTEXTUAL_SCREENTIP_SET
 				else if (should_try_removing_electronics())
-					context[SCREENTIP_CONTEXT_LMB] = "Remove electronics"
+					LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Remove electronics")
 					return CONTEXTUAL_SCREENTIP_SET
 
 			// Not always contextually true, but is contextually false in ways that make gameplay interesting.
 			// For example, trying to pry open an airlock, only for the bolts to be down and the lights off.
-			context[SCREENTIP_CONTEXT_LMB] = "Pry open"
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Pry open")
 
 			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WELDER)
-			context[SCREENTIP_CONTEXT_RMB] = "Weld shut"
+			LAZYSET(context[SCREENTIP_CONTEXT_RMB], INTENT_ANY, "Weld shut")
 
 			if (panel_open)
 				switch (security_level)
 					if (AIRLOCK_SECURITY_METAL, AIRLOCK_SECURITY_PLASTEEL_I, AIRLOCK_SECURITY_PLASTEEL_O)
-						context[SCREENTIP_CONTEXT_LMB] = "Cut shielding"
+						LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Cut shielding")
 						return CONTEXTUAL_SCREENTIP_SET
 
-			context[SCREENTIP_CONTEXT_LMB] = "Repair"
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Repair")
 			return CONTEXTUAL_SCREENTIP_SET
 
 	return .

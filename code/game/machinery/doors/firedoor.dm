@@ -51,7 +51,7 @@
 
 	if (isnull(held_item))
 		if (density)
-			context[SCREENTIP_CONTEXT_LMB] = "Knock"
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Knock")
 			return CONTEXTUAL_SCREENTIP_SET
 		else
 			return .
@@ -59,18 +59,18 @@
 	switch (held_item.tool_behaviour)
 		if (TOOL_CROWBAR)
 			if(!welded)
-				context[SCREENTIP_CONTEXT_LMB] = density ? "Open" : "Close"
+				LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, (density ? "Open" : "Close"))
 				return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WELDER)
-			context[SCREENTIP_CONTEXT_LMB] = welded ? "Unweld shut" : "Weld shut"
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, (welded ? "Unweld shut" : "Weld shut"))
 			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WRENCH)
 			if (welded && !boltslocked)
-				context[SCREENTIP_CONTEXT_LMB] = "Unfasten bolts"
+				LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Unfasten bolts")
 				return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_SCREWDRIVER)
 			if (welded)
-				context[SCREENTIP_CONTEXT_LMB] = boltslocked ? "Unlock bolts" : "Lock bolts"
+				LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, (boltslocked ? "Unlock bolts" : "Lock bolts"))
 				return CONTEXTUAL_SCREENTIP_SET
 	return .
 

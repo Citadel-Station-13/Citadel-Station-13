@@ -503,11 +503,11 @@
 	if (!(flags_1 & NODECONSTRUCT_1))
 		var/static/list/tool_behaviors = list(
 			TOOL_SCREWDRIVER = list(
-				SCREENTIP_CONTEXT_LMB = "Disassemble",
+				SCREENTIP_CONTEXT_LMB = list(INTENT_ANY = "Disassemble"),
 			),
 
 			TOOL_WRENCH = list(
-				SCREENTIP_CONTEXT_LMB = "Deconstruct",
+				SCREENTIP_CONTEXT_LMB = list(INTENT_ANY = "Deconstruct"),
 			),
 		)
 

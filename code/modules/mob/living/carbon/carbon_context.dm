@@ -9,42 +9,40 @@
 
 	var/combat_mode = SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE)
 
-	switch(user.a_intent)
-		if(INTENT_HELP)
-			if(user == src)
-				context[SCREENTIP_CONTEXT_LMB] = "Check injuries"
-			else if(!lying)
-				context[SCREENTIP_CONTEXT_LMB] = "Comfort"
-			else if (health >= 0 && !HAS_TRAIT(src, TRAIT_FAKEDEATH))
-				context[SCREENTIP_CONTEXT_LMB] = "Shake"
-			else
-				context[SCREENTIP_CONTEXT_LMB] = "CPR"
-		if(INTENT_DISARM)
-			context[SCREENTIP_CONTEXT_LMB] = "Disarm"
-			if(combat_mode && (src != user))
-				context[SCREENTIP_CONTEXT_RMB] = "Shove"
-		if(INTENT_GRAB)
-			if(src != user)
-				if (pulledby == user)
-					switch (user.grab_state)
-						if (GRAB_PASSIVE)
-							context[SCREENTIP_CONTEXT_LMB] = "Grip"
-						if (GRAB_AGGRESSIVE)
-							context[SCREENTIP_CONTEXT_LMB] = "Choke"
-						if (GRAB_NECK)
-							context[SCREENTIP_CONTEXT_LMB] = "Strangle"
-						else
-							return .
+	if(user == src)
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_HELP, "Check injuries")
+	else if(!lying)
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_HELP, "Comfort")
+	else if (health >= 0 && !HAS_TRAIT(src, TRAIT_FAKEDEATH))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_HELP, "Shake")
+	else
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_HELP, "CPR")
+
+	LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_DISARM, "Disarm")
+	if(combat_mode && (src != user))
+		LAZYSET(context[SCREENTIP_CONTEXT_RMB], INTENT_DISARM, "Shove")
+
+	if(src != user)
+		if (pulledby == user)
+			switch (user.grab_state)
+				if (GRAB_PASSIVE)
+					LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_GRAB, "Grip")
+				if (GRAB_AGGRESSIVE)
+					LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_GRAB, "Choke")
+				if (GRAB_NECK)
+					LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_GRAB, "Strangle")
 				else
-					context[SCREENTIP_CONTEXT_LMB] = "Pull"
-		if(INTENT_HARM)
-			context[SCREENTIP_CONTEXT_LMB] = "Attack"
+					return .
+		else
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_GRAB, "Pull")
+
+	LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_HARM, "Attack")
 
 	// Did you know we cannot upgrade grabs from ctrl-click, that's cool
 	if((pulledby != user) && (src != user))
-		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Pull"
+		LAZYSET(context[SCREENTIP_CONTEXT_CTRL_LMB], INTENT_ANY, "Pull")
 	// Happens on any intent i believe
 	if((user == src) && combat_mode && lying)
-		context[SCREENTIP_CONTEXT_RMB] = "Force to get up"
+		LAZYSET(context[SCREENTIP_CONTEXT_RMB], INTENT_ANY, "Force to get up")
 
 	return CONTEXTUAL_SCREENTIP_SET

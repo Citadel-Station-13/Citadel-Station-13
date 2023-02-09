@@ -145,11 +145,11 @@ GENETICS SCANNER
 
 	switch (scanmode)
 		if (SCANMODE_HEALTH)
-			context[SCREENTIP_CONTEXT_LMB] = "Scan health"
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Scan health")
 		if (SCANMODE_CHEMICAL)
-			context[SCREENTIP_CONTEXT_LMB] = "Scan chemicals"
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Scan chemicals")
 		if (SCANMODE_WOUND)
-			context[SCREENTIP_CONTEXT_LMB] = "Scan wounds"
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Scan wounds")
 
 	return CONTEXTUAL_SCREENTIP_SET
 

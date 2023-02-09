@@ -588,11 +588,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	var/static/list/hovering_item_typechecks = list(
 		/obj/item/shard = list(
-			SCREENTIP_CONTEXT_LMB = "Craft spear",
+			SCREENTIP_CONTEXT_LMB = list(INTENT_ANY = "Craft spear"),
 		),
 
 		/obj/item/assembly/igniter = list(
-			SCREENTIP_CONTEXT_LMB = "Craft stunprod",
+			SCREENTIP_CONTEXT_LMB = list(INTENT_ANY = "Craft stunprod"),
 		),
 	)
 

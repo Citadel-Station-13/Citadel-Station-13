@@ -162,22 +162,18 @@
 		return NONE
 
 	if (isobj(target))
-		context[SCREENTIP_CONTEXT_LMB] = "Attack"
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Attack")
 	else
 		if (turned_on)
-			context[SCREENTIP_CONTEXT_RMB] = "Knockdown"
+			LAZYSET(context[SCREENTIP_CONTEXT_RMB], INTENT_ANY, "Knockdown")
 
-			if (user.a_intent == INTENT_HARM)
-				context[SCREENTIP_CONTEXT_LMB] = "Harmful stun"
-			else
-				context[SCREENTIP_CONTEXT_LMB] = "Stun"
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Stun")
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_HARM, "Harmful stun")
 		else
-			context[SCREENTIP_CONTEXT_RMB] = "Knockdown" // DON'T TELL EM, PRANKED.
+			LAZYSET(context[SCREENTIP_CONTEXT_RMB], INTENT_ANY, "Knockdown") // DON'T TELL EM, PRANKED.
 
-			if (user.a_intent == INTENT_HARM)
-				context[SCREENTIP_CONTEXT_LMB] = "Attack" // It's fine i guess...?
-			else
-				context[SCREENTIP_CONTEXT_LMB] = "Stun" // STILL DO NOT DARE TELLING THEM
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Stun") // STILL DO NOT DARE TELLING THEM
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_HARM, "Attack") // It's fine i guess...?
 
 	return CONTEXTUAL_SCREENTIP_SET
 
