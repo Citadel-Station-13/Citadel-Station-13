@@ -38,7 +38,7 @@
 
 	LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_HARM, "Attack")
 
-	// Did you know we cannot upgrade grabs from ctrl-click, that's cool
+	// Monkeys cannot be grabbed harder using ctrl-click, don't ask.
 	if((pulledby != user) && (src != user))
 		LAZYSET(context[SCREENTIP_CONTEXT_CTRL_LMB], INTENT_ANY, "Pull")
 	// Happens on any intent i believe

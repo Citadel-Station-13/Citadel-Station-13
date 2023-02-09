@@ -38,18 +38,18 @@ Example:
 	if (!(flags_1 & NODECONSTRUCT_1))
 		var/static/list/tool_behaviors = list(
 			TOOL_SCREWDRIVER = list(
-				SCREENTIP_CONTEXT_LMB = "Disassemble",
+				SCREENTIP_CONTEXT_LMB = list(INTENT_ANY = "Disassemble"),
 			),
 
 			TOOL_WRENCH = list(
-				SCREENTIP_CONTEXT_LMB = "Deconstruct",
+				SCREENTIP_CONTEXT_LMB = list(INTENT_ANY = "Deconstruct"),
 			),
 		)
 
 		AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 ```
 
-This will display "RMB: Deconstruct" when the user hovers over a table with a wrench.
+This will display "LMB: Deconstruct" when the user hovers over a table with a wrench.
 
 ### `/datum/element/contextual_screentip_item_typechecks`
 
@@ -63,11 +63,11 @@ Example:
 
 	var/static/list/hovering_item_typechecks = list(
 		/obj/item/stack/rods = list(
-			SCREENTIP_CONTEXT_LMB = "Craft wired rod",
+			SCREENTIP_CONTEXT_LMB = list(INTENT_ANY = "Craft wired rod"),
 		),
 
 		/obj/item/stack/sheet/iron = list(
-			SCREENTIP_CONTEXT_LMB = "Craft bola",
+			SCREENTIP_CONTEXT_LMB = list(INTENT_ANY = "Craft bola"),
 		),
 	)
 
