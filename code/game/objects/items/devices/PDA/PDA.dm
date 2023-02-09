@@ -165,6 +165,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	new_overlays = TRUE
 	update_icon()
 
+	register_context()
+
 /obj/item/pda/reskin_obj(mob/M)
 	. = ..()
 	new_overlays = TRUE
