@@ -41,7 +41,7 @@
 	. = ..()
 
 	var/static/list/barehanded_interactions = list(
-		INTENT_HELP = "Slap",
+		INTENT_ANY = "Slap",
 		INTENT_HARM = "Slam"
 	)
 
