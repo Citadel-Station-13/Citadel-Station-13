@@ -581,6 +581,10 @@
 	name = "Supply Request Console (Computer Board)"
 	build_path = /obj/machinery/computer/cargo/request
 
+/obj/item/circuitboard/computer/bounty
+	name = "Nanotrasen Bounty Console (Computer Board)"
+	build_path = /obj/machinery/computer/bounty
+
 /obj/item/circuitboard/computer/ferry
 	name = "Transport Ferry (Computer Board)"
 	icon_state = "supply"

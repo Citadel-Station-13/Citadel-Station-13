@@ -1945,6 +1945,7 @@
 #include "code\modules\buildmode\submodes\throwing.dm"
 #include "code\modules\buildmode\submodes\variable_edit.dm"
 #include "code\modules\cargo\bounty.dm"
+#include "code\modules\cargo\bounty_console.dm"
 #include "code\modules\cargo\centcom_podlauncher.dm"
 #include "code\modules\cargo\console.dm"
 #include "code\modules\cargo\coupon.dm"
