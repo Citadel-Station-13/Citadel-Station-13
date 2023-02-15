@@ -62,7 +62,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/UI_style = null
 	var/outline_enabled = TRUE
 	var/outline_color = COLOR_THEME_MIDNIGHT
-	var/screentip_pref = TRUE
+	var/screentip_pref = SCREENTIP_PREFERENCE_ENABLED
 	var/screentip_color = "#ffd391"
 	var/buttons_locked = FALSE
 	var/hotkeys = FALSE
@@ -827,7 +827,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>UI Style:</b> <a href='?_src_=prefs;task=input;preference=ui'>[UI_style]</a><br>"
 			dat += "<b>Outline:</b> <a href='?_src_=prefs;preference=outline_enabled'>[outline_enabled ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Outline Color:</b> [outline_color ? "<span style='border:1px solid #161616; background-color: [outline_color];'>" : "Theme-based (null)"]&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=outline_color'>Change</a><BR>"
-			dat += "<b>Screentip:</b> <a href='?_src_=prefs;preference=screentip_pref'>[screentip_pref ? "Enabled" : "Disabled"]</a><br>"
+			dat += "<b>Screentip:</b> <a href='?_src_=prefs;preference=screentip_pref'>[screentip_pref]</a><br>"
 			dat += "<b>Screentip Color:</b> <span style='border:1px solid #161616; background-color: [screentip_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=screentip_color'>Change</a><BR>"
 			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
 			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
@@ -2913,7 +2913,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(pickedOutlineColor != pickedOutlineColor)
 						outline_color = pickedOutlineColor // nullable
 				if("screentip_pref")
-					screentip_pref = !screentip_pref
+					var/choice = tgalert(user, "Choose your screentip preference", "Screentipping?", "Yes", "Context Only", "No")
+					switch(choice)
+						if("Yes")
+							screentip_pref = SCREENTIP_PREFERENCE_ENABLED
+						if("Context Only")
+							screentip_pref = SCREENTIP_PREFERENCE_CONTEXT_ONLY
+						else
+							screentip_pref = SCREENTIP_PREFERENCE_DISABLED
 				if("screentip_color")
 					var/pickedScreentipColor = input(user, "Choose your screentip color.", "General Preference", screentip_color) as color|null
 					if(pickedScreentipColor)
