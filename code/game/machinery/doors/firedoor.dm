@@ -46,6 +46,34 @@
 	else
 		. += "<span class='notice'>The bolt locks have been <i>unscrewed</i>, but the bolts themselves are still <b>wrenched</b> to the floor.</span>"
 
+/obj/machinery/door/firedoor/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if (isnull(held_item))
+		if (density)
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Knock")
+			return CONTEXTUAL_SCREENTIP_SET
+		else
+			return .
+
+	switch (held_item.tool_behaviour)
+		if (TOOL_CROWBAR)
+			if(!welded)
+				LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, (density ? "Open" : "Close"))
+				return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_WELDER)
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, (welded ? "Unweld shut" : "Weld shut"))
+			return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_WRENCH)
+			if (welded && !boltslocked)
+				LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Unfasten bolts")
+				return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_SCREWDRIVER)
+			if (welded)
+				LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, (boltslocked ? "Unlock bolts" : "Lock bolts"))
+				return CONTEXTUAL_SCREENTIP_SET
+	return .
+
 /obj/machinery/door/firedoor/proc/CalculateAffectingAreas()
 	remove_from_areas()
 	affecting_areas = get_adjacent_open_areas(src) | get_base_area(src)

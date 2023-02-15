@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	56
+#define SAVEFILE_VERSION_MAX	57
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -56,6 +56,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			be_special -= "NO_ANTAGS"
 		for(var/be_special_type in be_special)
 			be_special[be_special_type] = 1
+	if(current_version < 57)
+		if(screentip_pref)
+			screentip_pref = SCREENTIP_PREFERENCE_ENABLED
+		else
+			// Let's give it a little chance okay, change if you don't like still.
+			screentip_pref = SCREENTIP_PREFERENCE_CONTEXT_ONLY
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 19)

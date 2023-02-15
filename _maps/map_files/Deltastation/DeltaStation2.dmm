@@ -115731,6 +115731,9 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/machinery/computer/bounty{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/cargo/qm)
 "twd" = (
@@ -121628,6 +121631,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/computer/bounty{
 	dir = 8
 	},
 /turf/open/floor/plasteel,

@@ -697,6 +697,42 @@
 		. += "<span class='notice'>Alt-click [src] to [ secondsElectrified ? "un-electrify" : "permanently electrify"] it.</span>"
 		. += "<span class='notice'>Ctrl-Shift-click [src] to [ emergency ? "disable" : "enable"] emergency access.</span>"
 
+/obj/machinery/door/airlock/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(istype(held_item, /obj/item/stack/sheet/plasteel))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Reinforce")
+		return CONTEXTUAL_SCREENTIP_SET
+
+	switch (held_item?.tool_behaviour)
+		if (TOOL_CROWBAR)
+			if (panel_open)
+				if (security_level == AIRLOCK_SECURITY_PLASTEEL_O_S || security_level == AIRLOCK_SECURITY_PLASTEEL_I_S)
+					LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Remove shielding")
+					return CONTEXTUAL_SCREENTIP_SET
+				else if (should_try_removing_electronics())
+					LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Remove electronics")
+					return CONTEXTUAL_SCREENTIP_SET
+
+			// Not always contextually true, but is contextually false in ways that make gameplay interesting.
+			// For example, trying to pry open an airlock, only for the bolts to be down and the lights off.
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Pry open")
+
+			return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_WELDER)
+			LAZYSET(context[SCREENTIP_CONTEXT_RMB], INTENT_ANY, "Weld shut")
+
+			if (panel_open)
+				switch (security_level)
+					if (AIRLOCK_SECURITY_METAL, AIRLOCK_SECURITY_PLASTEEL_I, AIRLOCK_SECURITY_PLASTEEL_O)
+						LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Cut shielding")
+						return CONTEXTUAL_SCREENTIP_SET
+
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Repair")
+			return CONTEXTUAL_SCREENTIP_SET
+
+	return .
+
 /obj/machinery/door/airlock/attack_ai(mob/user)
 	if(!src.canAIControl(user))
 		if(src.canAIHack())
@@ -1024,6 +1060,31 @@
 		return
 	return !operating && density
 
+/// Returns if a crowbar would remove the airlock electronics
+/obj/machinery/door/airlock/proc/should_try_removing_electronics()
+	if (security_level != 0)
+		return FALSE
+
+	if (!panel_open)
+		return FALSE
+
+	if (obj_flags & EMAGGED)
+		return TRUE
+
+	if (!density)
+		return FALSE
+
+	if (!welded)
+		return FALSE
+
+	if (hasPower())
+		return FALSE
+
+	if (locked)
+		return FALSE
+
+	return TRUE
+
 /obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/living/user)
 	var/beingcrowbarred = null
 	if(I.tool_behaviour == TOOL_CROWBAR)
@@ -1042,9 +1103,9 @@
 		charge.forceMove(get_turf(user))
 		charge = null
 		return
-	if(beingcrowbarred && panel_open && ((obj_flags & EMAGGED) || (density && welded && !operating && !hasPower() && !locked)))
-		user.visible_message("[user] removes the electronics from the airlock assembly.", \
-							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
+	if(beingcrowbarred && should_try_removing_electronics() && !operating)
+		user.visible_message(span_notice("[user] removes the electronics from the airlock assembly."), \
+			span_notice("You start to remove electronics from the airlock assembly..."))
 		if(I.use_tool(src, user, 40, volume=100))
 			deconstruct(TRUE, user)
 			return
