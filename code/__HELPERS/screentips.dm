@@ -24,7 +24,7 @@ GLOBAL_LIST_INIT_TYPED(screentip_context_icons, /image, prepare_screentip_contex
 			icon = "\icon[GLOB.screentip_context_icons[icon]]"
 		LAZYADD(to_add, "[key_help][icon]: [context[key][intent]]")
 
-	var/separator = "[allow_image ? " " : " | "]"
+	var/separator = "[allow_image ? "  " : " | "]"
 	return english_list(to_add, "", separator, separator)
 
 #undef HINT_ICON_FILE

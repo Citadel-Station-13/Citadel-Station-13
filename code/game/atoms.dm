@@ -1491,7 +1491,7 @@
 						if (lmb_text)
 							lmb_rmb_line = lmb_text
 							if (rmb_text)
-								lmb_rmb_line += " | [rmb_text]"
+								lmb_rmb_line += " | [allow_images ? " " : ""][rmb_text]"
 						else if (rmb_text)
 							lmb_rmb_line = rmb_text
 
@@ -1504,7 +1504,7 @@
 
 						if((SCREENTIP_CONTEXT_CTRL_RMB in context) && (length(context[SCREENTIP_CONTEXT_CTRL_RMB]) > 0))
 							if (ctrl_lmb_ctrl_rmb_line != "")
-								ctrl_lmb_ctrl_rmb_line += " | "
+								ctrl_lmb_ctrl_rmb_line += " | [allow_images ? " " : ""]"
 							ctrl_lmb_ctrl_rmb_line += "[SCREENTIP_CONTEXT_CTRL_RMB]: [context[SCREENTIP_CONTEXT_CTRL_RMB]]"
 							ctrl_lmb_ctrl_rmb_line = build_context(context, SCREENTIP_CONTEXT_CTRL_RMB, allow_images)
 
@@ -1516,7 +1516,7 @@
 							alt_lmb_alt_rmb_line = build_context(context, SCREENTIP_CONTEXT_ALT_LMB, allow_images)
 						if((SCREENTIP_CONTEXT_ALT_RMB in context) && (length(context[SCREENTIP_CONTEXT_ALT_RMB]) > 0))
 							if (alt_lmb_alt_rmb_line != "")
-								alt_lmb_alt_rmb_line += " | "
+								alt_lmb_alt_rmb_line += " | [allow_images ? " " : ""]"
 							alt_lmb_alt_rmb_line = build_context(context, SCREENTIP_CONTEXT_ALT_RMB, allow_images)
 
 						// Shift-LMB, Ctrl-Shift-LMB on one line...
@@ -1528,7 +1528,7 @@
 
 						if((SCREENTIP_CONTEXT_CTRL_SHIFT_LMB in context) && (length(context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]) > 0))
 							if (shift_lmb_ctrl_shift_lmb_line != "")
-								shift_lmb_ctrl_shift_lmb_line += " | "
+								shift_lmb_ctrl_shift_lmb_line += " | [allow_images ? " " : ""]"
 							shift_lmb_ctrl_shift_lmb_line += "[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]]"
 							shift_lmb_ctrl_shift_lmb_line = build_context(context, SCREENTIP_CONTEXT_CTRL_SHIFT_LMB, allow_images)
 
