@@ -64,6 +64,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/outline_color = COLOR_THEME_MIDNIGHT
 	var/screentip_pref = SCREENTIP_PREFERENCE_ENABLED
 	var/screentip_color = "#ffd391"
+	var/screentip_allow_images = FALSE
 	var/buttons_locked = FALSE
 	var/hotkeys = FALSE
 
@@ -829,6 +830,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Outline Color:</b> [outline_color ? "<span style='border:1px solid #161616; background-color: [outline_color];'>" : "Theme-based (null)"]&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=outline_color'>Change</a><BR>"
 			dat += "<b>Screentip:</b> <a href='?_src_=prefs;preference=screentip_pref'>[screentip_pref]</a><br>"
 			dat += "<b>Screentip Color:</b> <span style='border:1px solid #161616; background-color: [screentip_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=screentip_color'>Change</a><BR>"
+			dat += "<font style='border-bottom:2px dotted white; cursor:help;'\
+				title=\"This is an accessibility preference, if disabled, fallbacks to only text which colorblind people can understand better\">\
+				<b>Screentip context with images:</b></font> <a href='?_src_=prefs;preference=screentip_allow_images'>[screentip_allow_images ? "Allowed" : "Disallowed"]</a><br>"
 			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
 			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
 			dat += "<b>Show Runechat Chat Bubbles:</b> <a href='?_src_=prefs;preference=chat_on_map'>[chat_on_map ? "Enabled" : "Disabled"]</a><br>"
@@ -2925,6 +2929,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/pickedScreentipColor = input(user, "Choose your screentip color.", "General Preference", screentip_color) as color|null
 					if(pickedScreentipColor)
 						screentip_color = pickedScreentipColor
+				if("screentip_allow_images")
+					screentip_allow_images = !screentip_allow_images
 				if("tgui_lock")
 					tgui_lock = !tgui_lock
 				if("winflash")

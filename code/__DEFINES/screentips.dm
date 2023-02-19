@@ -32,4 +32,4 @@
 #define SCREENTIP_PREFERENCE_CONTEXT_ONLY "Only with tips"
 
 /// Regardless of intent
-#define INTENT_ANY "intent_any"
+#define INTENT_ANY "any"
