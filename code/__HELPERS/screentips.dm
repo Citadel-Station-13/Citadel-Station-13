@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT_TYPED(screentip_context_icons, /image, prepare_screentip_contex
 /proc/build_context(list/context, key, allow_image)
 	var/list/to_add
 	for(var/intent in context[key])
-		var/key_help = "[length(key) > 3 ? copytext(key, 1, -3) : ""]"
+		var/key_help = "[length(key) > 3 ? "[copytext(key, 1, -3)][allow_image ? " " : ""]" : ""]"
 		var/icon = "[copytext(key, -3)]-[intent]"
 		if(allow_image)
 			icon = "\icon[GLOB.screentip_context_icons[icon]]"
