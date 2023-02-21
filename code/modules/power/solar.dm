@@ -245,6 +245,7 @@
 		S = S.split_stack(amount=2)
 		if(S)
 			glass_type = S
+			S.moveToNullspace()
 			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 			user.visible_message("<span class='notice'>[user] places the glass on the solar assembly.</span>", "<span class='notice'>You place the glass on the solar assembly.</span>")
 			if(tracker)
