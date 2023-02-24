@@ -6,6 +6,7 @@
 	maptext_height = 480
 	maptext_width = 480
 	maptext = ""
+	layer = SCREENTIP_LAYER
 
 /atom/movable/screen/screentip/Initialize(mapload, _hud)
 	. = ..()
