@@ -28,12 +28,22 @@
 			ACCESS_KEYCARD_AUTH, ACCESS_SEC_DOORS, ACCESS_MAINT_TUNNELS)
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_MED
+	bounty_types = CIV_JOB_MED
 
 	display_order = JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/insanity)
 	threat = 2
 
 	starting_modifiers = list(/datum/skill_modifier/job/surgery, /datum/skill_modifier/job/affinity/surgery)
+	
+	family_heirlooms = list(
+		/obj/item/storage/firstaid/ancient/heirloom,
+		/obj/item/scalpel,
+		/obj/item/hemostat,
+		/obj/item/circular_saw,
+		/obj/item/retractor,
+		/obj/item/cautery
+	)
 
 /datum/outfit/job/cmo
 	name = "Chief Medical Officer"

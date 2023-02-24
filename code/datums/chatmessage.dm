@@ -171,7 +171,7 @@
 	message.maptext_height = mheight
 	message.maptext_x = (CHAT_MESSAGE_WIDTH - owner.bound_width) * -0.5
 	message.maptext = MAPTEXT(complete_text)
-	message.pixel_x = -owner.pixel_x //Dogborgs and other wide boys have a pixel offset. This accounts for that
+	message.pixel_x = -target.pixel_x //Dogborgs and other wide boys have a pixel offset. This accounts for that
 
 	// View the message
 	LAZYADDASSOC(owned_by.seen_messages, message_loc, src)

@@ -43,6 +43,7 @@
 	to_chat(usr, "<span class='notice'>You slide \the [pen] into \the [src]'s pen slot.</span>")
 	inserted_item = pen
 	playsound(src, 'sound/machines/button.ogg', 50, 1)
+	SStgui.update_uis(src)
 
 /obj/item/modular_computer/tablet/proc/remove_pen()
 	if(hasSiliconAccessInArea(usr) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
@@ -52,6 +53,7 @@
 		usr.put_in_hands(inserted_item)
 		to_chat(usr, "<span class='notice'>You remove [inserted_item] from \the [src]'s pen slot.</span>")
 		inserted_item = null
+		SStgui.update_uis(src)
 	else
 		to_chat(usr, "<span class='warning'>\The [src] does not have a pen in it!</span>")
 
@@ -78,9 +80,21 @@
 		QDEL_NULL(inserted_item)
 	return ..()
 
+/obj/item/modular_computer/tablet/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	if(action == "TABLET_eject_pen")
+		if(istype(src, /obj/item/modular_computer/tablet))
+			var/obj/item/modular_computer/tablet/self = src
+			if(self.can_have_pen)
+				self.remove_pen()
+				return TRUE
+
 /obj/item/modular_computer/tablet/ui_data(mob/user)
 	. = ..()
-	.["PC_showpeneject"] = inserted_item ? 1 : 0
+	.["TABLET_show_pen_eject"] = inserted_item ? 1 : 0
+
 /obj/item/modular_computer/tablet/update_icon_state()
 	if(has_variants)
 		if(!finish_color)

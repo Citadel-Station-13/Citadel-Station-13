@@ -33,11 +33,16 @@
 						ACCESS_HOP, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY)
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SRV
+	bounty_types = CIV_JOB_RANDOM
 
 	display_order = JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL
 
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/prosopagnosia, /datum/quirk/insanity)
 	threat = 2
+	
+	family_heirlooms = list(
+		/obj/item/reagent_containers/food/drinks/trophy/silver_cup
+	)
 
 
 /datum/outfit/job/hop

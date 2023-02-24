@@ -137,3 +137,10 @@
 	reward = 2250
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/bbqribs)
+
+/datum/bounty/item/chef/corgifarming //Butchering is a chef's job.
+	name = "Corgi Hides"
+	description = "Admiral Weinstein's space yacht needs new upholstery. A dozen Corgi furs should do just fine."
+	reward = 30000 //that's a lot of dead dogs
+	required_count = 12
+	wanted_types = list(/obj/item/stack/sheet/animalhide/corgi)

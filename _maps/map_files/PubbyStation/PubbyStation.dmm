@@ -18176,11 +18176,14 @@
 /turf/open/floor/plasteel,
 /area/cargo/office)
 "aTe" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/machinery/mineral/ore_redemption{
+	input_dir = 4;
+	output_dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/cargo/office)
 "aTf" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -19684,12 +19687,11 @@
 /turf/open/floor/plasteel,
 /area/cargo/office)
 "aWv" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/mineral/ore_redemption{
-	input_dir = 4;
-	output_dir = 8
+/obj/effect/turf_decal/tile/brown,
+/obj/machinery/computer/piratepad_control/civilian{
+	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel,
 /area/cargo/office)
 "aWw" = (
 /obj/effect/turf_decal/tile/brown,
@@ -22994,12 +22996,12 @@
 /turf/open/floor/plasteel,
 /area/cargo/qm)
 "bdH" = (
-/obj/machinery/computer/bounty{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
+	},
+/obj/machinery/computer/bounty{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/cargo/qm)
@@ -59236,11 +59238,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "pHo" = (
-/obj/machinery/computer/bounty{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/command/heads_quarters/hop)
+/obj/effect/turf_decal/tile/brown,
+/obj/machinery/piratepad/civilian,
+/turf/open/floor/plasteel,
+/area/cargo/office)
 "pJy" = (
 /obj/structure/rack,
 /obj/item/crowbar,
@@ -97112,7 +97113,7 @@ aAG
 aBA
 aCQ
 aDS
-pHo
+aCS
 aAH
 aGu
 aHh
@@ -101498,7 +101499,7 @@ aSe
 aTc
 aOT
 aVp
-aWu
+pHo
 aPW
 aYr
 aOV
@@ -101755,7 +101756,7 @@ aSf
 aTd
 aUn
 aVr
-aWu
+aWv
 aLf
 aYs
 aZk
@@ -102012,7 +102013,7 @@ lAs
 aTe
 aUo
 aVs
-aWv
+aLf
 aLf
 aPW
 aZl

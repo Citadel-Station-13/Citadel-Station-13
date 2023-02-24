@@ -12,16 +12,6 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/health_hud_prescription
-	name = "Prescription Health Scanner HUD"
-	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status. This one has a prescription lens."
-	id = "health_hud_prescription"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 350)
-	build_path = /obj/item/clothing/glasses/hud/health/prescription
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
 /datum/design/health_hud_night
 	name = "Night Vision Health Scanner HUD"
 	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
@@ -42,16 +32,6 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/security_hud_prescription
-	name = "Prescription Security HUD"
-	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status. This one has a prescription lens."
-	id = "security_hud_prescription"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 350)
-	build_path = /obj/item/clothing/glasses/hud/security/prescription
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
 /datum/design/security_hud_night
 	name = "Night Vision Security HUD"
 	desc = "A heads-up display which provides id data and vision in complete darkness."
@@ -69,16 +49,6 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/clothing/glasses/hud/diagnostic
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/diagnostic_hud_prescription
-	name = "Prescription Diagnostic HUD"
-	desc = "A HUD used to analyze and determine faults within robotic machinery. This one has a prescription lens."
-	id = "diagnostic_hud_prescription"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/gold = 350)
-	build_path = /obj/item/clothing/glasses/hud/diagnostic/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
@@ -112,16 +82,6 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/mesons_prescription
-	name = "Prescription Optical Meson Scanners"
-	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition. Prescription lens has been added into this design."
-	id = "mesons_prescription"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 350)
-	build_path = /obj/item/clothing/glasses/meson/prescription
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING
-
 /datum/design/engine_goggles
 	name = "Engineering Scanner Goggles"
 	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, regardless of lighting condition. The T-ray Scanner mode lets you see underfloor objects such as cables and pipes."
@@ -132,16 +92,6 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/engine_goggles_prescription
-	name = "Prescription Engineering Scanner Goggles"
-	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, regardless of lighting condition. The T-ray Scanner mode lets you see underfloor objects such as cables and pipes. Prescription lens has been added into this design."
-	id = "engine_goggles_prescription"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/plasma = 100, /datum/material/silver = 350)
-	build_path = /obj/item/clothing/glasses/meson/engine/prescription
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
 /datum/design/tray_goggles
 	name = "Optical T-Ray Scanners"
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
@@ -149,16 +99,6 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/clothing/glasses/meson/engine/tray
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/tray_goggles_prescription
-	name = "Prescription Optical T-Ray Scanners"
-	desc = "Used by engineering staff to see underfloor objects such as cables and pipes.  Prescription lens has been added into this design."
-	id = "tray_goggles_prescription"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 150)
-	build_path = /obj/item/clothing/glasses/meson/engine/tray/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -175,22 +115,22 @@
 /datum/design/night_vision_goggles
 	name = "Night Vision Goggles"
 	desc = "Goggles that let you see through darkness unhindered."
-	id = "night_visision_goggles"
+	id = "night_vision_goggles"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/plasma = 350, /datum/material/uranium = 1000)
 	build_path = /obj/item/clothing/glasses/night
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/night_vision_goggles_glasses
-	name = "Prescription Night Vision Goggles"
-	desc = "Goggles that let you see through darkness unhindered. Corrects vision."
-	id = "night_visision_goggles_glasses"
+/datum/design/prescription_kit
+	name = "Prescription Lens Kit"
+	desc = "A do-it-yourself kit that lets you add a prescription overlay to any HUDs or other eyewear. Even the ones that shouldn't."
+	id = "prescription_kit"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/plasma = 350, /datum/material/uranium = 1000)
-	build_path = /obj/item/clothing/glasses/night/prescription
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 200, /datum/material/silver = 100) // silver because i guess all the prescription HUDs had it?
+	build_path = /obj/item/prescription_kit
 	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
 /////////////////////////////////////////
 //////////////////Misc///////////////////
@@ -404,6 +344,16 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 1500, /datum/material/silver = 150, /datum/material/glass = 3000)
 	build_path = /obj/item/lightreplacer
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/light_replacer_blue
+	name = "Bluespace Light Replacer"
+	desc = "A device to automatically replace lights at a distance. Refill with working light bulbs."
+	id = "light_replacer_blue"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1500, /datum/material/silver = 150, /datum/material/glass = 3000, /datum/material/bluespace = 300)
+	build_path = /obj/item/lightreplacer/blue
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE | DEPARTMENTAL_FLAG_ENGINEERING
 

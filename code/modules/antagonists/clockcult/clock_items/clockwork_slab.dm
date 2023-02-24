@@ -70,7 +70,7 @@
 
 /obj/item/clockwork/slab/cyborg/engineer //six scriptures, plus a fabricator. Might revert this if its too OP, I just thought that engineering borgs should get the all the structures
 	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission,  /datum/clockwork_scripture/create_object/stargazer, \
-	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/clockwork_obelisk, /datum/clockwork_scripture/create_object/mania_motor)
+	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/clockwork_obelisk/cyborg, /datum/clockwork_scripture/create_object/mania_motor/cyborg)
 
 /obj/item/clockwork/slab/cyborg/medical //six scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
@@ -90,7 +90,7 @@
 */
 /obj/item/clockwork/slab/cyborg/service //six scriptures, plus xray vision
 	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/replicant,/datum/clockwork_scripture/create_object/stargazer, \
-	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/clockwork_obelisk)
+	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/clockwork_obelisk/cyborg)
 
 /obj/item/clockwork/slab/cyborg/miner //three scriptures, plus a spear and xray vision
 	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/channeled/volt_blaster)

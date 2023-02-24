@@ -34,6 +34,7 @@
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/stop_processing)
 	RegisterSignal(parent, COMSIG_VOID_MASK_ACT, .proc/direct_sanity_drain)
+	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/update_beauty)
 
 
 	if(owner.hud_used)
@@ -350,7 +351,7 @@
 		if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
 			add_event(null, "charge", /datum/mood_event/supercharged)
 
-/datum/component/mood/proc/update_beauty(area/A)
+/datum/component/mood/proc/update_beauty(datum/source, area/A)
 	if(A.outdoors) //if we're outside, we don't care.
 		clear_event(null, "area_beauty")
 		return FALSE

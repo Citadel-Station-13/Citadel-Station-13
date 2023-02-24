@@ -15,7 +15,10 @@
 
 	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
-	var/fire = null
+	///Do we have an active fire alarm?
+	var/fire = FALSE
+	///How many fire alarm sources do we have?
+	var/triggered_firealarms = 0
 	///Whether there is an atmos alarm in this area
 	var/atmosalm = FALSE
 	var/poweralm = FALSE
@@ -443,7 +446,18 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	START_PROCESSING(SSobj, src)
 
 /area/proc/firereset(obj/source)
-	if (fire)
+	var/should_reset_alarms = fire
+	if(source)
+		if(istype(source, /obj/machinery/firealarm))
+			var/obj/machinery/firealarm/alarm = source
+			if(alarm.triggered)
+				alarm.triggered = FALSE
+				triggered_firealarms -= 1
+		if(triggered_firealarms > 0)
+			should_reset_alarms = FALSE
+		should_reset_alarms = should_reset_alarms & power_environ //No resetting if there's no power
+
+	if (should_reset_alarms) // if there's a source, make sure there's no fire alarms left
 		set_fire_alarm_effects(FALSE)
 		ModifyFiredoors(TRUE)
 
@@ -462,6 +476,18 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			p.cancelAlarm("Fire", src, source)
 
 	STOP_PROCESSING(SSobj, src)
+
+///Get rid of any dangling camera refs
+/area/proc/clear_camera(obj/machinery/camera/cam)
+	LAZYREMOVE(cameras, cam)
+	for (var/mob/living/silicon/aiPlayer as anything in GLOB.silicon_mobs)
+		aiPlayer.freeCamera(src, cam)
+	for (var/obj/machinery/computer/station_alert/comp as anything in GLOB.alert_consoles)
+		comp.freeCamera(src, cam)
+	for (var/mob/living/simple_animal/drone/drone_on as anything in GLOB.drones_list)
+		drone_on.freeCamera(src, cam)
+	for(var/datum/computer_file/program/alarm_monitor/monitor as anything in GLOB.alarmdisplay)
+		monitor.freeCamera(src, cam)
 
 /area/process()
 	if(firedoors_last_closed_on + 100 < world.time)	//every 10 seconds

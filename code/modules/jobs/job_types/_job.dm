@@ -69,7 +69,12 @@
 	///Is this job affected by weird spawns like the ones from station traits
 	var/random_spawns_possible = TRUE
 
+	/// List of family heirlooms this job can get with the family heirloom quirk. List of types.
+	var/list/family_heirlooms
+
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
+
+	var/bounty_types = CIV_JOB_BASIC
 
 	//If a job complies with dresscodes, loadout items will not be equipped instead of the job's outfit, instead placing the items into the player's backpack.
 	var/dresscodecompliant = TRUE

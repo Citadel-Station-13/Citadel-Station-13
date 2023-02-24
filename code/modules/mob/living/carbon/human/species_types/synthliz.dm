@@ -36,3 +36,8 @@
 	wagging_type = "mam_waggingtail"
 	species_category = SPECIES_CATEGORY_ROBOT
 	wings_icons = SPECIES_WINGS_ROBOT
+
+	family_heirlooms = list(
+		// They're also robots
+		/obj/item/stock_parts/cell/family
+	)

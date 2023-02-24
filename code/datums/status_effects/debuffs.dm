@@ -1186,13 +1186,19 @@
 
 /datum/status_effect/cgau_conc
 	id = "cgau_conc"
-	examine_text = "<span class='warning'>SUBJECTPRONOUN rocks from side to side, confused.</span>"
+	examine_text = "<span class='warning'>SUBJECTPRONOUN sways from side to side hesitantly!</span>"
 	duration = 5 SECONDS
 
-/datum/status_effect/cgau_conc/on_creation(mob/living/new_owner, ...)
+/datum/status_effect/cgau_conc/on_apply()
 	. = ..()
-	new_owner.add_movespeed_modifier(/datum/movespeed_modifier/gauntlet_concussion)
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/gauntlet_concussion)
+	if(ishostile(owner))
+		var/mob/living/simple_animal/hostile/simple_owner = owner
+		simple_owner.ranged_cooldown_time *= 2.5
 
 /datum/status_effect/cgau_conc/on_remove()
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/gauntlet_concussion)
 	. = ..()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/gauntlet_concussion)
+	if(ishostile(owner))
+		var/mob/living/simple_animal/hostile/simple_owner = owner
+		simple_owner.ranged_cooldown_time /= 2.5

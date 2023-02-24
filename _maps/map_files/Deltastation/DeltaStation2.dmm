@@ -14440,9 +14440,6 @@
 /turf/closed/wall,
 /area/hallway/primary/fore)
 "bdO" = (
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -14459,20 +14456,19 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/machinery/computer/piratepad_control/civilian,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "bdP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/machinery/piratepad/civilian,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "bdQ" = (
@@ -53995,22 +53991,16 @@
 /turf/closed/wall,
 /area/medical/surgery)
 "dsN" = (
-/obj/item/clothing/gloves/color/latex,
-/obj/item/clothing/suit/apron/surgical,
-/obj/item/clothing/mask/surgical,
-/obj/item/surgical_drapes,
-/obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/structure/closet/secure_closet/medical2,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "dsO" = (
-/obj/item/retractor,
-/obj/item/hemostat,
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -54022,14 +54012,16 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/item/clothing/gloves/color/latex{
+	pixel_y = 10
+	},
+/obj/item/clothing/suit/apron/surgical,
+/obj/item/clothing/mask/surgical{
+	pixel_y = -6
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "dsP" = (
-/obj/item/circular_saw,
-/obj/item/surgicaldrill{
-	pixel_y = 5
-	},
-/obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
@@ -54043,11 +54035,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/limbgrower,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "dsQ" = (
-/obj/item/scalpel,
-/obj/item/cautery,
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -54060,6 +54051,13 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/item/clothing/gloves/color/latex{
+	pixel_y = 10
+	},
+/obj/item/clothing/suit/apron/surgical,
+/obj/item/clothing/mask/surgical{
+	pixel_y = -6
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
@@ -55218,9 +55216,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "dvF" = (
-/obj/machinery/computer/operating{
-	dir = 4
-	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
@@ -55237,10 +55232,11 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/table/reinforced,
+/obj/item/storage/backpack/duffelbag/med/surgery,
 /turf/open/floor/plasteel,
 /area/medical/surgery)
 "dvG" = (
-/obj/structure/table/optable,
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable/white{
 	icon_state = "2-8"
@@ -55261,17 +55257,19 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/plasteel,
 /area/medical/surgery)
 "dvH" = (
-/obj/machinery/holopad,
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/bot,
+/obj/structure/table/reinforced,
+/obj/item/storage/backpack/duffelbag/med/surgery,
 /turf/open/floor/plasteel,
 /area/medical/surgery)
 "dvI" = (
@@ -55945,9 +55943,11 @@
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "dxm" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
@@ -55955,11 +55955,9 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
+/obj/machinery/holopad,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/medical/surgery)
 "dxo" = (
 /obj/effect/turf_decal/tile/blue,
@@ -56558,7 +56556,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "dyG" = (
-/obj/structure/closet/secure_closet/medical2,
 /obj/structure/sign/poster/official/cleanliness{
 	pixel_x = -32
 	},
@@ -56572,24 +56569,11 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
-/area/medical/surgery)
-"dyH" = (
+/obj/machinery/computer/operating{
+	dir = 1
+	},
 /obj/machinery/status_display/ai{
 	pixel_y = -32
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
@@ -56616,12 +56600,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "dyJ" = (
-/obj/machinery/status_display/evac{
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -56632,7 +56614,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/closet/crate/freezer/blood,
+/obj/structure/table/optable,
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "dyK" = (
@@ -56651,7 +56633,12 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/limbgrower,
+/obj/machinery/computer/operating{
+	dir = 1
+	},
+/obj/machinery/status_display/evac{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "dyL" = (
@@ -73829,16 +73816,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engineering/main)
-"fdZ" = (
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment,
-/obj/machinery/computer/bounty{
-	dir = 8
-	},
-/turf/open/floor/plasteel/grimy,
-/area/command/heads_quarters/hop)
 "fer" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -74382,9 +74359,6 @@
 /area/security/office)
 "fnm" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/computer/bounty{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -115727,12 +115701,12 @@
 /obj/machinery/light_switch{
 	pixel_x = 23
 	},
-/obj/machinery/computer/bounty{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
+	},
+/obj/machinery/computer/bounty{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/cargo/qm)
@@ -121626,14 +121600,14 @@
 	name = "Station Intercom (General)";
 	pixel_x = 28
 	},
-/obj/machinery/computer/bounty{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/computer/bounty{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -165062,7 +165036,7 @@ xmR
 qTU
 xmR
 wGq
-fdZ
+xmR
 kxP
 pnQ
 gEc
@@ -177185,7 +177159,7 @@ dsO
 dtR
 dvF
 dxm
-dyH
+dyJ
 dma
 cPy
 cPy

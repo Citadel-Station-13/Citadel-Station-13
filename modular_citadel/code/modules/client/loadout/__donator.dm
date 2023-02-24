@@ -54,9 +54,10 @@
 
 /datum/gear/donator/kiaramedal
 	name = "Insignia of Steele"
-	slot = ITEM_SLOT_BACKPACK
+	slot = ITEM_SLOT_ACCESSORY
 	path = /obj/item/clothing/accessory/medal/steele
 	ckeywhitelist = list("inferno707")
+	handle_post_equip = TRUE
 
 /datum/gear/donator/hheart
 	name = "The Hollow Heart"
@@ -330,7 +331,7 @@
 	name = "Lucky Jackboots"
 	slot = ITEM_SLOT_BACKPACK
 	path = /obj/item/clothing/shoes/lucky
-	ckeywhitelist = list("donaldtrumpthecommunist")
+	ckeywhitelist = list("spiralwithin")
 
 /datum/gear/donator/raiqbawks
 	name = "Miami Boombox"

@@ -11,7 +11,6 @@
 	var/obj/item/card/id/inserted_id
 	var/list/prize_list = list( //if you add something to this, please, for the love of god, sort it by price/type. use tabs and not spaces.
 		new /datum/data/mining_equipment("1 Marker Beacon",				/obj/item/stack/marker_beacon,										10),
-		new /datum/data/mining_equipment("50 Point Transfer Card",		/obj/item/card/mining_point_card,									50),
 		new /datum/data/mining_equipment("10 Marker Beacons",			/obj/item/stack/marker_beacon/ten,									100),
 		new /datum/data/mining_equipment("30 Marker Beacons",			/obj/item/stack/marker_beacon/thirty,								300),
 		new /datum/data/mining_equipment("Whiskey",						/obj/item/reagent_containers/food/drinks/bottle/whiskey,			100),
@@ -27,7 +26,7 @@
 		new /datum/data/mining_equipment("GAR Meson Scanners",			/obj/item/clothing/glasses/meson/gar,								500),
 		new /datum/data/mining_equipment("Explorer's Webbing",			/obj/item/storage/belt/mining,										500),
 		new /datum/data/mining_equipment("Larger Ore Bag",				/obj/item/storage/bag/ore/large,									500),
-		new /datum/data/mining_equipment("500 Point Transfer Card",		/obj/item/card/mining_point_card/mp500,								500),
+		new /datum/data/mining_equipment("Mining Point Transfer Card", 	/obj/item/card/mining_point_card,									500),
 		new /datum/data/mining_equipment("Tracking Implant Kit", 		/obj/item/storage/box/minertracker,									600),
 		new /datum/data/mining_equipment("Jaunter",						/obj/item/wormhole_jaunter,											750),
 		new /datum/data/mining_equipment("Kinetic Crusher",				/obj/item/kinetic_crusher,											750),
@@ -43,9 +42,6 @@
 		new /datum/data/mining_equipment("Lazarus Injector",			/obj/item/lazarus_injector,											1000),
 		new /datum/data/mining_equipment("Silver Pickaxe",				/obj/item/pickaxe/silver,											1000),
 		new /datum/data/mining_equipment("Mining Conscription Kit",		/obj/item/storage/backpack/duffelbag/mining/conscript,				1000),
-		new /datum/data/mining_equipment("1000 Point Transfer Card",	/obj/item/card/mining_point_card/mp1000,							1000),
-		new /datum/data/mining_equipment("1500 Point Transfer Card",	/obj/item/card/mining_point_card/mp1500,							1500),
-		new /datum/data/mining_equipment("2000 Point Transfer Card",	/obj/item/card/mining_point_card/mp2000,							2000),
 		new /datum/data/mining_equipment("Jetpack Upgrade",				/obj/item/tank/jetpack/suit,										2000),
 		new /datum/data/mining_equipment("Space Cash",					/obj/item/stack/spacecash/c1000,									2000),
 		new /datum/data/mining_equipment("Mining Hardsuit",				/obj/item/clothing/suit/space/hardsuit/mining,						2000),
@@ -76,7 +72,8 @@
 		new /datum/data/mining_equipment("Miner Full Replacement",		/obj/item/storage/backpack/duffelbag/mining/cloned,					3000),
 		new /datum/data/mining_equipment("Premium Accelerator",			/obj/item/gun/energy/kinetic_accelerator/premiumka,					8000),
 		new /datum/data/mining_equipment("Premium Kinetic Melee Kit",	/obj/item/storage/backpack/duffelbag/mining/glaivekit,				2250),
-		new /datum/data/mining_equipment("Survival Dagger",				/obj/item/kitchen/knife/combat/survival/knuckledagger,				550)
+		new /datum/data/mining_equipment("Survival Dagger",				/obj/item/kitchen/knife/combat/survival/knuckledagger,				550),
+		new /datum/data/mining_equipment("Premium KA borg Upgrade",     /obj/item/borg/upgrade/premiumka,                                   8000)
 		)
 
 /datum/data/mining_equipment
@@ -327,28 +324,31 @@
 //TODO add in cr = Credits for cargo
 /obj/item/card/mining_point_card
 	name = "mining points card"
-	desc = "A small card preloaded with mining points. Swipe your ID card over it to transfer the points, then discard. This one only holds a small 50 points on it."
+	desc = "A small card for transferring mining points. Swipe your ID card over it to start the process."
 	icon_state = "data_1"
-	var/points = 50
-
-/obj/item/card/mining_point_card/mp500
-	desc = "A small card preloaded with 500 mining points. Swipe your ID card over it to transfer the points, then discard."
-	points = 500
-
-/obj/item/card/mining_point_card/mp1000
-	desc = "A small card preloaded with 1000 mining points. Swipe your ID card over it to transfer the points, then discard."
-	points = 1000
-
-/obj/item/card/mining_point_card/mp1500
-	desc = "A small card preloaded with 1500 mining points. Swipe your ID card over it to transfer the points, then discard."
-	points = 1500
-
-/obj/item/card/mining_point_card/mp2000
-	desc = "A small card preloaded with 2000 mining points. Swipe your ID card over it to transfer the points, then discard."
-	points = 2000
+	var/points = 500
 
 /obj/item/card/mining_point_card/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
+		var/obj/item/card/id/id = I
+		to_chat(user, span_info("You swipe [id] on [src] and start the transfer process."))
+		var/choice = alert(user, "Do you want to transfer points to or from the point card's storage?", "Mining Points Transfer", "From Point Card/Storage", "To Point Card/Storage", "Cancel")
+		if(choice != "Cancel")
+			var/amount = input(user, "How much do you want to transfer? ID Balance: [id.mining_points], Transfer Card Balance: [points]", "Transfer Points") as num|null
+			if(!amount || amount <= 0)
+				return
+			amount = round(amount, 1)
+			if(choice == "To Point Card/Storage")
+				if(amount && amount <= id.mining_points)
+					id.mining_points -= amount
+					points += amount
+					to_chat(user, span_info("You transfer [amount] points to [src] from [id]."))
+			else if(choice == "From Point Card/Storage")
+				if(amount && amount <= points)
+					id.mining_points += amount
+					points -= amount
+					to_chat(user, span_info("You transfer [amount] points to [id] from [src]."))
+	/*
 		if(points)
 			var/obj/item/card/id/C = I
 			C.mining_points += points
@@ -356,6 +356,7 @@
 			points = 0
 		else
 			to_chat(user, "<span class='info'>There's no points left on [src].</span>")
+	*/
 	..()
 
 /obj/item/card/mining_point_card/examine(mob/user)

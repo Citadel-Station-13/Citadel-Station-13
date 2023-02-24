@@ -18,7 +18,6 @@
 /datum/gear/suit/redhood
 	name = "Red cloak"
 	path = /obj/item/clothing/suit/hooded/cloak/david
-	cost = 3
 
 /datum/gear/suit/jacketbomber
 	name = "Bomber jacket"
@@ -160,14 +159,14 @@
 /datum/gear/suit/coat/polycoat
 	name = "Polychromic winter coat"
 	path = /obj/item/clothing/suit/hooded/wintercoat/polychromic
-	cost = 4 //too many people with neon green coats is hard on the eyes
+	cost = 2 //too many people with neon green coats is hard on the eyes // it's probably fine now
 	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
 	loadout_initial_colors = list("#6A6964", "#C4B8A6", "#0000FF")
 
 /datum/gear/suit/coat/wbreakpoly
 	name = "Polychromic windbreaker"
 	path = /obj/item/clothing/suit/toggle/wbreakpoly/polychromic
-	cost = 4
+	cost = 2
 	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
 	loadout_initial_colors = list("#464F65", "#916035", "#474747")
 

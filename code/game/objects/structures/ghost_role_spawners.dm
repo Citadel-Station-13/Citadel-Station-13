@@ -73,7 +73,7 @@
 	yolk.gib()
 	QDEL_NULL(egg)
 	return ..()
-	
+
 /obj/effect/mob_spawn/human/ash_walker
 	name = "ash walker egg"
 	desc = "A man-sized yellow egg, spawned from some unfathomable creature. A humanoid silhouette lurks within."
@@ -835,7 +835,8 @@
 		var/area/A = get_area(src)
 		var/datum/outfit/O = new /datum/outfit/ghostcafe()
 		O.equip(new_spawn, FALSE, new_spawn.client)
-		SSjob.equip_loadout(null, new_spawn, FALSE)
+		SSjob.equip_loadout(null, new_spawn)
+		SSjob.post_equip_loadout(null, new_spawn)
 		SSquirks.AssignQuirks(new_spawn, new_spawn.client, TRUE, TRUE, null, FALSE, new_spawn)
 		new_spawn.AddElement(/datum/element/ghost_role_eligibility, free_ghosting = TRUE)
 		new_spawn.AddElement(/datum/element/dusts_on_catatonia)

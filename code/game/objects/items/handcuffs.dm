@@ -122,6 +122,21 @@
 	breakouttime = 300 //Deciseconds = 30s
 	cuffsound = 'sound/weapons/cablecuff.ogg'
 
+/obj/item/restraints/handcuffs/cable/Initialize(mapload)
+	. = ..()
+
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/stack/rods = list(
+			SCREENTIP_CONTEXT_LMB = list(INTENT_ANY = "Craft wired rod"),
+		),
+
+		/obj/item/stack/sheet/metal = list(
+			SCREENTIP_CONTEXT_LMB = list(INTENT_ANY = "Craft bola"),
+		),
+	)
+
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+
 /obj/item/restraints/handcuffs/cable/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You start unwinding the cable restraints back into coil</span>")
 	if(!do_after(user, 25, TRUE, user))

@@ -20,11 +20,18 @@
 									ACCESS_ENGINE_EQUIP, ACCESS_EMERGENCY_STORAGE, ACCESS_CONSTRUCTION, ACCESS_MINERAL_STOREROOM)
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_ENG
+	bounty_types = CIV_JOB_ENG
 
 	starting_modifiers = list(/datum/skill_modifier/job/level/wiring, /datum/skill_modifier/job/affinity/wiring)
 
 	display_order = JOB_DISPLAY_ORDER_ATMOSPHERIC_TECHNICIAN
 	threat = 0.5
+	
+	family_heirlooms = list(
+		/obj/item/lighter,
+		/obj/item/lighter/greyscale,
+		/obj/item/storage/box/matches
+	)
 
 /datum/outfit/job/atmos
 	name = "Atmospheric Technician"

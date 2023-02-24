@@ -20,12 +20,22 @@
 									ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CONSTRUCTION, ACCESS_TCOMSAT, ACCESS_MINERAL_STOREROOM)
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_ENG
+	bounty_types = CIV_JOB_ENG
 
 	starting_modifiers = list(/datum/skill_modifier/job/level/wiring, /datum/skill_modifier/job/affinity/wiring)
 
 	display_order = JOB_DISPLAY_ORDER_STATION_ENGINEER
 
 	threat = 1
+	
+	family_heirlooms = list(
+		/obj/item/clothing/head/hardhat,
+		/obj/item/screwdriver/brass/family,
+		/obj/item/wrench/brass/family,
+		/obj/item/weldingtool/mini, // No brass family variant
+		/obj/item/crowbar/brass/family,
+		/obj/item/wirecutters/brass/family
+	)
 
 /datum/outfit/job/engineer
 	name = "Station Engineer"

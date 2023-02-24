@@ -120,7 +120,7 @@
 	return round(A / max(1, all_materials[mat] * ef))
 
 /obj/machinery/rnd/production/proc/efficient_with(path)
-	return !ispath(path, /obj/item/stack/sheet) && !ispath(path, /obj/item/stack/ore/bluespace_crystal)
+	return !ispath(path, /obj/item/stack/sheet) && !ispath(path, /obj/item/stack/ore/bluespace_crystal) && !ispath(path, /obj/item/stack/ducts)
 
 /obj/machinery/rnd/production/proc/user_try_print_id(id, amount)
 	if((!istype(linked_console) && requires_console) || !id)
@@ -232,9 +232,12 @@
 		var/amount = materials.mat_container.materials[mat_id]
 		var/ref = REF(M)
 		l += "* [amount] of [M.name]: "
-		if(amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=1'>Eject</A> [RDSCREEN_NOBREAK]"
+		if(amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=1'>1x</A> [RDSCREEN_NOBREAK]"
 		if(amount >= MINERAL_MATERIAL_AMOUNT*5) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
-		if(amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=50'>All</A>[RDSCREEN_NOBREAK]"
+		if(amount >= MINERAL_MATERIAL_AMOUNT*10) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=10'>10x</A> [RDSCREEN_NOBREAK]"
+		if(amount >= MINERAL_MATERIAL_AMOUNT*20) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=20'>20x</A> [RDSCREEN_NOBREAK]"
+		if(amount >= MINERAL_MATERIAL_AMOUNT*50) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=50'>50x</A> [RDSCREEN_NOBREAK]"
+		if(amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=50'>Max Stack</A>[RDSCREEN_NOBREAK]"
 		l += ""
 	l += "</div>[RDSCREEN_NOBREAK]"
 	return l

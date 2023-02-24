@@ -5243,9 +5243,6 @@
 	name = "Cargo Office RC";
 	pixel_x = 32
 	},
-/obj/machinery/computer/bounty{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -6767,15 +6764,15 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard/fore)
 "amv" = (
-/obj/machinery/computer/bounty{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
+	},
+/obj/machinery/computer/bounty{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/cargo/storage)
@@ -9009,14 +9006,12 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard/fore)
 "aqn" = (
-/obj/structure/chair{
-	dir = 1
-	},
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/piratepad/civilian,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard/fore)
 "aqo" = (
@@ -10228,7 +10223,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "ass" = (
-/obj/machinery/mineral/mint,
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
@@ -38502,6 +38496,13 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrous_input,
 /turf/open/floor/engine/n2o,
 /area/engineering/atmos)
+"svk" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/computer/piratepad_control/civilian{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard/fore)
 "svX" = (
 /obj/structure/sign/warning/fire{
 	pixel_y = -32
@@ -89632,7 +89633,7 @@ amA
 ano
 aog
 apg
-aqk
+svk
 aRz
 abN
 acy

@@ -216,7 +216,7 @@
 			 in you cannot leave and when it is destroyed it will explode catastrophically, with everyone inside."
 	invocations = list("By the strength of the alloy...!!", "...call forth the Arbiter!!")
 	channel_time = 200 // This is a strong fucking weapon, 20 seconds channel time is getting off light I tell ya.
-	power_cost = 75000 //75 KW
+	power_cost = 40000 //40 KW. Why the hell did I think making this cost 5k more than the ARK was a good idea-KeRSe
 	usage_tip = "Neovgre is a powerful mech that will crush your enemies!"
 	invokers_required = 5
 	multiple_invokers_used = TRUE

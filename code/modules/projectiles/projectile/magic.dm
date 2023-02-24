@@ -37,7 +37,7 @@
 			return BULLET_ACT_BLOCK
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
-			if(!is_species(C, /datum/species/dullahan)) //No accidental instagibbing dullahans please
+			if(HAS_TRAIT(C, TRAIT_DULLAHAN)) //No accidental instagibbing dullahans please
 				C.regenerate_limbs()
 			C.regenerate_organs()
 		if(target.revive(full_heal = 1))

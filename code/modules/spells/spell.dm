@@ -35,6 +35,7 @@
 GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for the badmin verb for now
 
 /obj/effect/proc_holder/Destroy()
+	QDEL_NULL(action)
 	if(ranged_ability_user)
 		remove_ranged_ability()
 	return ..()

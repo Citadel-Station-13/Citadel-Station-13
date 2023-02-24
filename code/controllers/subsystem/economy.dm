@@ -52,6 +52,9 @@ SUBSYSTEM_DEF(economy)
 	///The modifier multiplied to the value of cargo pack prices.
 	var/pack_price_modifier = 1
 
+	var/civ_bounty_tracker = 0
+	/// Contains the message to send to newscasters about earnings, updated on price_update()
+
 /datum/controller/subsystem/economy/Initialize(timeofday)
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
 	for(var/A in department_accounts)

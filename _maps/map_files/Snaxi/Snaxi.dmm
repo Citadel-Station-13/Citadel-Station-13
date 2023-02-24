@@ -25707,7 +25707,6 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/machinery/computer/bounty,
 /turf/open/floor/plasteel,
 /area/cargo/storage)
 "jjB" = (
@@ -35731,7 +35730,7 @@
 	pixel_y = -22
 	},
 /obj/machinery/light,
-/obj/structure/closet/emcloset,
+/obj/machinery/piratepad/civilian,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "pLP" = (
@@ -37109,7 +37108,9 @@
 	},
 /area/service/chapel/main)
 "qHq" = (
-/obj/structure/closet/crate,
+/obj/machinery/computer/piratepad_control/civilian{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "qHC" = (
@@ -47801,16 +47802,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai_upload)
-"xEf" = (
-/obj/machinery/computer/bounty{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown,
-/turf/open/floor/plasteel,
-/area/cargo/qm)
 "xEt" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -89683,7 +89674,7 @@ rDE
 dFF
 sLn
 acv
-xEf
+jmU
 krH
 avT
 xUL

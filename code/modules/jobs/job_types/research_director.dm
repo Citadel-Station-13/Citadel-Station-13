@@ -32,11 +32,16 @@
 						ACCESS_TECH_STORAGE, ACCESS_MINISAT, ACCESS_MAINT_TUNNELS, ACCESS_NETWORK)
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SCI
+	bounty_types = CIV_JOB_SCI
 
 	display_order = JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR
 	starting_modifiers = list(/datum/skill_modifier/job/level/wiring)
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/insanity)
 	threat = 5
+	
+	family_heirlooms = list(
+		/obj/item/toy/plush/slimeplushie
+	)
 
 /datum/outfit/job/rd
 	name = "Research Director"

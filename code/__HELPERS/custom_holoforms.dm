@@ -6,6 +6,7 @@
 	prefs.copy_to(mannequin)
 	if(apply_loadout && prefs.parent)
 		SSjob.equip_loadout(prefs.parent.mob, mannequin, bypass_prereqs = TRUE)
+		SSjob.post_equip_loadout(prefs.parent.mob, mannequin, bypass_prereqs = TRUE)
 	if(copy_job)
 		var/datum/job/highest = prefs.get_highest_job()
 		if(highest && !istype(highest, /datum/job/ai) && !istype(highest, /datum/job/cyborg))
