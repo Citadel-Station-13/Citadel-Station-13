@@ -311,14 +311,6 @@
 		InsertAll("", each, GLOB.alldirs)
 	..()
 
-/datum/asset/spritesheet/decals
-	name = "decals"
-
-/datum/asset/spritesheet/decals/register()
-	for(var/each in list('icons/turf/decals.dmi'))
-		InsertAll("", each, GLOB.alldirs)
-	..()
-
 /datum/asset/spritesheet/supplypods
 	name = "supplypods"
 

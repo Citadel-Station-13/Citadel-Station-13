@@ -116,6 +116,38 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(inserted_item && (!isturf(loc)))
 		. += "<span class='notice'>Ctrl-click to remove [inserted_item].</span>"
 
+/obj/item/pda/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(held_item)
+		if(istype(held_item, /obj/item/cartridge) && !cartridge)
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Insert Cartridge")
+			. = CONTEXTUAL_SCREENTIP_SET
+		else if(istype(held_item, /obj/item/card/id) && !id)
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Insert ID")
+			. = CONTEXTUAL_SCREENTIP_SET
+		else if(istype(held_item, /obj/item/paicard) && !pai)
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Insert pAI")
+			. = CONTEXTUAL_SCREENTIP_SET
+		else if(is_type_in_list(held_item, contained_item) && !inserted_item)
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Insert [held_item]")
+			. = CONTEXTUAL_SCREENTIP_SET
+		else if(istype(held_item, /obj/item/photo))
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Scan photo")
+			. = CONTEXTUAL_SCREENTIP_SET
+
+	if(id) // ID gets removed before inserted_item
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, "Remove ID")
+		. = CONTEXTUAL_SCREENTIP_SET
+	else if(inserted_item)
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, "Remove [inserted_item]")
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	if(inserted_item)
+		LAZYSET(context[SCREENTIP_CONTEXT_CTRL_LMB], INTENT_ANY, "Remove [inserted_item]")
+		. = CONTEXTUAL_SCREENTIP_SET
+	return . || NONE
+
 /obj/item/pda/Initialize(mapload)
 	if(GLOB.pda_reskins)
 		unique_reskin = GLOB.pda_reskins
@@ -132,6 +164,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		inserted_item =	new /obj/item/pen(src)
 	new_overlays = TRUE
 	update_icon()
+
+	register_context()
 
 /obj/item/pda/reskin_obj(mob/M)
 	. = ..()
