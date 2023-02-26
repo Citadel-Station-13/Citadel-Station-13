@@ -48,6 +48,8 @@ SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
 	score_achievement_type = /datum/award/score/legion_score
 	pixel_y = -16
 	pixel_x = -32
+	maptext_height = 96
+	maptext_width = 96
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 10
 	wander = FALSE

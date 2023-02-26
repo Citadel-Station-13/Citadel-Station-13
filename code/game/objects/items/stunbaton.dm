@@ -54,6 +54,8 @@
 			cell = new preload_cell_type(src)
 	update_icon()
 
+	register_item_context()
+
 /obj/item/melee/baton/DoRevenantThrowEffects(atom/target)
 	switch_status()
 
@@ -154,6 +156,26 @@
 	var/interrupt = common_baton_melee(M, user, FALSE)
 	if(!interrupt)
 		return ..()
+
+/obj/item/melee/baton/add_item_context(datum/source, list/context, atom/target, mob/living/user)
+	if (isturf(target))
+		return NONE
+
+	if (isobj(target))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Attack")
+	else
+		if (turned_on)
+			LAZYSET(context[SCREENTIP_CONTEXT_RMB], INTENT_ANY, "Knockdown")
+
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Stun")
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_HARM, "Harmful stun")
+		else
+			LAZYSET(context[SCREENTIP_CONTEXT_RMB], INTENT_ANY, "Knockdown") // DON'T TELL EM, PRANKED.
+
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Stun") // STILL DO NOT DARE TELLING THEM
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_HARM, "Attack") // It's fine i guess...?
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/melee/baton/alt_pre_attack(atom/A, mob/living/user, params)
 	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
