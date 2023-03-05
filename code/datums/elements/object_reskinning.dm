@@ -18,21 +18,20 @@
 /datum/element/object_reskinning
 	element_flags = ELEMENT_DETACH
 
-/datum/element/object_reskinning/Attach(datum/target)
+/datum/element/object_reskinning/Attach(obj/target)
 	. = ..()
-	var/obj/the_obj = target
-	if(!istype(the_obj))
+	if(!istype(target))
 		return ELEMENT_INCOMPATIBLE
-	if(!islist(the_obj.unique_reskin) || !length(the_obj.unique_reskin))
+	if(!islist(target.unique_reskin) || !length(target.unique_reskin))
 		message_admins("[src] was given to an object without any unique reskins, if you really need to, give it a couple skins first.")
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(the_obj, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(the_obj, the_obj.reskin_binding, .proc/reskin)
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(target, target.reskin_binding, .proc/reskin)
+	RegisterSignal(target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_requesting_context_from_item)
 
-/datum/element/object_reskinning/Detach(datum/source, force)
-	var/obj/being_deleted = source
-	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, being_deleted.reskin_binding))
+/datum/element/object_reskinning/Detach(obj/source, force)
+	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, source.reskin_binding, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))
 	return ..()
 
 /datum/element/object_reskinning/proc/on_examine(obj/obj, mob/user, list/examine_list)
@@ -102,3 +101,19 @@
 	if(user.incapacitated())
 		return FALSE
 	return TRUE
+
+/datum/element/object_reskinning/proc/on_requesting_context_from_item(
+	obj/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+	SIGNAL_HANDLER
+
+	if(isnull(held_item))
+		switch(source.reskin_binding)
+			if(COMSIG_CLICK_CTRL_SHIFT)
+				LAZYSET(context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB], INTENT_ANY, "Reskin PDA")
+			else
+				LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, "Reskin [source]")
+		return CONTEXTUAL_SCREENTIP_SET

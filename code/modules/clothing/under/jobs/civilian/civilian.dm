@@ -1,17 +1,16 @@
+/obj/item/clothing/under/rank/civilian
+	name = "civilian under"
+	desc = "You shouldn't see this."
+	icon = 'icons/obj/clothing/under/civilian.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/civilian.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/under/civilian_digi.dmi'
+
 /obj/item/clothing/under/rank/civilian/bartender
 	desc = "It looks like it could use some more flair."
 	name = "bartender's uniform"
 	icon_state = "barman"
 	item_state = "bar_suit"
 	alt_covers_chest = TRUE
-
-/obj/item/clothing/under/rank/civilian/bartender/purple
-	desc = "It looks like it has lots of flair!"
-	name = "purple bartender's uniform"
-	icon_state = "purplebartender"
-	item_state = "purplebartender"
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/bartender/skirt
 	name = "bartender's skirt"
@@ -22,6 +21,14 @@
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/under/rank/civilian/bartender/purple
+	desc = "It looks like it has lots of flair!"
+	name = "purple bartender's uniform"
+	icon_state = "purplebartender"
+	item_state = "purplebartender"
+	can_adjust = FALSE
+	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/util
 	name = "utility uniform"
@@ -124,12 +131,6 @@
 	item_state = "b_suit"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/rank/civilian/head_of_personnel/whimsy
-	name = "casual head of personnel's jumpsuit"
-	desc = "It's a jumpsuit worn by someone who works in the position of \"Head of Personnel\", this one seems to be a bit more casual."
-	icon_state = "hop_casual"
-	item_state = "hop_casual"
-
 /obj/item/clothing/under/rank/civilian/head_of_personnel/skirt
 	name = "head of personnel's jumpskirt"
 	desc = "It's a jumpskirt worn by someone who works in the position of \"Head of Personnel\"."
@@ -139,6 +140,12 @@
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/under/rank/civilian/head_of_personnel/whimsy
+	name = "casual head of personnel's jumpsuit"
+	desc = "It's a jumpsuit worn by someone who works in the position of \"Head of Personnel\", this one seems to be a bit more casual."
+	icon_state = "hop_casual"
+	item_state = "hop_casual"
 
 /obj/item/clothing/under/rank/civilian/head_of_personnel/suit
 	name = "head of personnel's suit"
@@ -209,17 +216,24 @@
 	AddElement(/datum/element/polychromic, poly_colors, 2)
 
 /obj/item/clothing/under/rank/civilian/lawyer
+	name = "unamusingly generic lawyer outfit"
 	desc = "Slick threads."
-	name = "Lawyer suit"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/civilian/lawyer/black
-	name = "lawyer black suit"
+	name = "black attorney suit"
 	icon_state = "lawyer_black"
 	item_state = "lawyer_black"
 
+/obj/item/clothing/under/rank/civilian/lawyer/black/skirt
+	name = "lawyer black suitskirt"
+	icon_state = "lawyer_black_skirt"
+	item_state = "lawyer_black"
+	fitted = FEMALE_UNIFORM_TOP
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
 /obj/item/clothing/under/rank/civilian/lawyer/black/alt
-	name = "lawyer black suit"
+	name = "attorney suit"
 	desc = "A professional black suit. Nanotrasen Investigation Bureau approved!"
 	icon_state = "blacksuit"
 	item_state = "bar_suit"
@@ -227,7 +241,7 @@
 	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/civilian/lawyer/black/alt/skirt
-	name = "lawyer black suitskirt"
+	name = "attorney suitskirt"
 	icon_state = "blacksuit_skirt"
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
@@ -249,22 +263,10 @@
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
-/obj/item/clothing/under/rank/civilian/lawyer/black/skirt
-	name = "lawyer black suitskirt"
-	icon_state = "lawyer_black_skirt"
-	item_state = "lawyer_black"
-	fitted = FEMALE_UNIFORM_TOP
-	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
-
 /obj/item/clothing/under/rank/civilian/lawyer/female
-	name = "female black suit"
+	name = "feminine black suit"
 	icon_state = "black_suit_fem"
 	item_state = "bl_suit"
-
-/obj/item/clothing/under/rank/civilian/lawyer/red
-	name = "lawyer red suit"
-	icon_state = "lawyer_red"
-	item_state = "lawyer_red"
 
 /obj/item/clothing/under/rank/civilian/lawyer/female/skirt
 	name = "female black suitskirt"
@@ -272,6 +274,11 @@
 	item_state = "bl_suit"
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/under/rank/civilian/lawyer/red
+	name = "lawyer red suit"
+	icon_state = "lawyer_red"
+	item_state = "lawyer_red"
 
 /obj/item/clothing/under/rank/civilian/lawyer/red/skirt
 	name = "lawyer red suitskirt"
