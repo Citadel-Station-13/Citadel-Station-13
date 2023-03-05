@@ -56,6 +56,9 @@
 	var/minbodytemp = 250
 	var/maxbodytemp = 350
 
+	/// List of weather immunity traits that are then added on Initialize(), see traits.dm.
+	var/list/weather_immunities
+
 	///Healable by medical stacks? Defaults to yes.
 	var/healable = 1
 
@@ -165,6 +168,8 @@
 		AddComponent(/datum/component/personal_crafting)
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
+	for(var/trait in weather_immunities)
+		ADD_TRAIT(src, trait, ROUNDSTART_TRAIT)
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
