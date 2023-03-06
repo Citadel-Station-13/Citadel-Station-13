@@ -550,6 +550,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("shoved", "bashed")
+	hitsound = 'sound/weapons/nebhit.ogg'
 	throw_range = 5
 	force = 3
 	throwforce = 3
@@ -589,13 +590,13 @@
 		throwforce = on_throwforce
 		throw_speed = on_throw_speed
 		w_class = WEIGHT_CLASS_BULKY
-		playsound(user, 'sound/weapons/saberon.ogg', 35, TRUE)
-		to_chat(user, "<span class='notice'>[src] is now active.</span>")
+		playsound(user, 'sound/weapons/nebon.ogg', 35, TRUE)
+		to_chat(user, "<span class='notice'>[src] deploys a hardlight barrier over your arm!</span>")
 	else
 		force = initial(force)
 		throwforce = initial(throwforce)
 		throw_speed = initial(throw_speed)
 		w_class = WEIGHT_CLASS_TINY
-		playsound(user, 'sound/weapons/saberoff.ogg', 35, TRUE)
-		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
+		playsound(user, 'sound/weapons/neboff.ogg', 35, TRUE)
+		to_chat(user, "<span class='notice'>[src] retracts its hardlight barrier, now being able to be concealed.</span>")
 	add_fingerprint(user)
