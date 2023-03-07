@@ -16,8 +16,8 @@
 						/obj/item/clothing/under/rank/medical/chief_medical_officer = 1,
 						/obj/item/clothing/under/rank/medical/geneticist = 1,
 						/obj/item/clothing/under/rank/medical/virologist = 1,
-						/obj/item/clothing/under/rank/medical/doctor/nurse = 1,
-						/obj/item/clothing/under/rank/medical/doctor = 1,
+						/obj/item/clothing/under/rank/medical/nurse = 1,
+						/obj/item/clothing/under/rank/medical = 1,
 						/obj/item/clothing/under/rank/security/detective = 1,
 						/obj/item/clothing/under/suit/white = 0.5,
 						/obj/item/clothing/under/misc/burial = 1

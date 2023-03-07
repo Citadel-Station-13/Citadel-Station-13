@@ -395,7 +395,7 @@
 
 /datum/gear/uniform/grey/med
 	name = "Medical Utility Uniform"
-	path = /obj/item/clothing/under/rank/medical/doctor/util
+	path = /obj/item/clothing/under/rank/medical/util
 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
 	restricted_desc = "Medical"
 	restricted_roles = list("Medical Doctor", "Virologist", "Chemist", "Geneticist", "Paramedic")

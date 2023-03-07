@@ -599,7 +599,7 @@
 	result = /obj/item/banner/medical/mundane
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/rank/medical/doctor = 1)
+				/obj/item/clothing/under/rank/medical = 1)
 	subcategory = CAT_FURNITURE
 	category = CAT_MISCELLANEOUS
 
