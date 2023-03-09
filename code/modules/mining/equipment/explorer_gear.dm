@@ -2,6 +2,9 @@
 /obj/item/clothing/suit/hooded/explorer
 	name = "explorer suit"
 	desc = "An armoured suit for exploring harsh environments."
+	icon = 'icons/obj/clothing/suits/utility.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suits/utility.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/suits/utility_digi.dmi'
 	icon_state = "explorer-normal"
 	item_state = "explorer-normal"
 	var/suit_type = "normal"
@@ -19,6 +22,9 @@
 /obj/item/clothing/head/hooded/explorer
 	name = "explorer hood"
 	desc = "An armoured hood for exploring harsh environments."
+	icon = 'icons/obj/clothing/head/utility.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/head/utility.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/head/utility_muzzled.dmi'
 	icon_state = "explorer-normal"
 	item_state = "explorer-normal"
 	var/suit_type = "normal"

@@ -12,6 +12,9 @@
 /obj/item/clothing/suit/fire
 	name = "emergency firesuit"
 	desc = "A suit that helps protect against fire and heat."
+	icon = 'icons/obj/clothing/suits/utility.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suits/utility.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/suits/utility_digi.dmi'
 	icon_state = "fire"
 	item_state = "ro_suit"
 	w_class = WEIGHT_CLASS_BULKY
@@ -37,7 +40,6 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAUR
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC
 
-
 /obj/item/clothing/suit/fire/heavy
 	name = "heavy firesuit"
 	desc = "An old, bulky thermal protection suit."
@@ -61,6 +63,9 @@
 	name = "bomb hood"
 	desc = "Use in case of bomb."
 	icon_state = "bombsuit"
+	icon = 'icons/obj/clothing/head/utility.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/head/utility.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/head/utility_muzzled.dmi'
 	clothing_flags = THICKMATERIAL
 	armor = list(MELEE = 20, BULLET = 0, LASER = 20,ENERGY = 10, BOMB = 100, BIO = 0, RAD = 0, FIRE = 80, ACID = 50)
 	flags_inv = HIDEFACE|HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
@@ -76,10 +81,12 @@
 	resistance_flags = NONE
 	mutantrace_variation = STYLE_MUZZLE
 
-
 /obj/item/clothing/suit/bomb_suit
 	name = "bomb suit"
 	desc = "A suit designed for safety when handling explosives."
+	icon = 'icons/obj/clothing/suits/utility.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suits/utility.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/suits/utility_digi.dmi'
 	icon_state = "bombsuit"
 	item_state = "bombsuit"
 	w_class = WEIGHT_CLASS_BULKY
@@ -124,6 +131,9 @@
 
 /obj/item/clothing/head/radiation
 	name = "radiation hood"
+	icon = 'icons/obj/clothing/suits/utility.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suits/utility.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/suits/utility_digi.dmi'
 	icon_state = "rad"
 	desc = "A hood with radiation protective properties. The label reads, 'Made with lead. Please do not consume insulation.'"
 	clothing_flags = THICKMATERIAL
@@ -139,6 +149,9 @@
 /obj/item/clothing/suit/radiation
 	name = "radiation suit"
 	desc = "A suit that protects against radiation. The label reads, 'Made with lead. Please do not consume insulation.'"
+	icon = 'icons/obj/clothing/suits/utility.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suits/utility.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/suits/utility_digi.dmi'
 	icon_state = "rad"
 	item_state = "rad_suit"
 	w_class = WEIGHT_CLASS_BULKY

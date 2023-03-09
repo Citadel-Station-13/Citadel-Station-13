@@ -2,6 +2,9 @@
 /obj/item/clothing/head/helmet/space/hardsuit
 	name = "hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
+	icon = 'icons/obj/clothing/hats.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/head.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/head_muzzled.dmi'
 	icon_state = "hardsuit0-engineering"
 	item_state = "eng_helm"
 	max_integrity = 300
@@ -95,6 +98,9 @@
 /obj/item/clothing/suit/space/hardsuit
 	name = "hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
+	icon = 'icons/obj/clothing/suits.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/suit_digi.dmi'
 	icon_state = "hardsuit-engineering"
 	item_state = "eng_hardsuit"
 	max_integrity = 300

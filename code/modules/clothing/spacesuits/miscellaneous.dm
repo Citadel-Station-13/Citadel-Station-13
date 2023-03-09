@@ -72,6 +72,9 @@ Contains:
 /obj/item/clothing/suit/space/officer
 	name = "officer's jacket"
 	desc = "An armored, space-proof jacket used in special operations."
+	icon = 'icons/obj/clothing/suits.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/suit_digi.dmi'
 	icon_state = "detective"
 	item_state = "det_suit"
 	blood_overlay_type = "coat"
@@ -118,6 +121,9 @@ Contains:
 /obj/item/clothing/head/helmet/space/santahat
 	name = "Santa's hat"
 	desc = "Ho ho ho. Merrry X-mas!"
+	icon = 'icons/obj/clothing/hats.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/head.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/head_muzzled.dmi'
 	icon_state = "santahat"
 	flags_cover = HEADCOVERSEYES
 	mutantrace_variation = NONE
@@ -127,19 +133,21 @@ Contains:
 /obj/item/clothing/suit/space/santa
 	name = "Santa's suit"
 	desc = "Festive!"
+	icon = 'icons/obj/clothing/suits.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/suit_digi.dmi'
 	icon_state = "santa"
 	item_state = "santa"
 	slowdown = 0
 	allowed = list(/obj/item) //for stuffing exta special presents
 	mutantrace_variation = STYLE_DIGITIGRADE
 
-
 	//Space pirate outfit
 /obj/item/clothing/head/helmet/space/pirate
 	name = "royal tricorne"
 	desc = "A thick, space-proof tricorne from the royal Space Queen. It's lined with a layer of reflective kevlar."
-	icon_state = "pirate"
-	item_state = "pirate"
+	icon_state = "spacepirate"
+	item_state = "spacepirate"
 	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 15, BOMB = 30, BIO = 30, RAD = 30, FIRE = 60, ACID = 75, WOUND = 30)
 	flags_inv = HIDEHAIR
 	strip_delay = 40
@@ -150,15 +158,15 @@ Contains:
 /obj/item/clothing/head/helmet/space/pirate/bandana
 	name = "royal bandana"
 	desc = "A space-proof bandanna crafted with reflective kevlar."
-	icon_state = "bandana"
-	item_state = "bandana"
+	icon_state = "spacebandana"
+	item_state = "spacebandana"
 	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/space/pirate
 	name = "royal waistcoat "
 	desc = "A royal, space-proof waistcoat. The inside of it is lined with reflective kevlar."
-	icon_state = "pirate"
-	item_state = "pirate"
+	icon_state = "spacepirate"
+	item_state = "spacepirate"
 	w_class = WEIGHT_CLASS_NORMAL
 	flags_inv = 0
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/melee/transforming/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/reagent_containers/food/drinks/bottle/rum)
@@ -335,6 +343,9 @@ Contains:
 /obj/item/clothing/head/helmet/space/freedom
 	name = "eagle helmet"
 	desc = "An advanced, space-proof helmet. It appears to be modeled after an old-world eagle."
+	icon = 'icons/obj/clothing/hats.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/head.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/head_muzzled.dmi'
 	icon_state = "griffinhat"
 	item_state = "griffinhat"
 	armor = list(MELEE = 20, BULLET = 40, LASER = 30, ENERGY = 25, BOMB = 100, BIO = 100, RAD = 100, FIRE = 80, ACID = 80, WOUND = 20)
@@ -360,8 +371,11 @@ Contains:
 /obj/item/clothing/head/helmet/space/hardsuit/carp
 	name = "carp helmet"
 	desc = "Spaceworthy and it looks like a space carp's head, smells like one too."
+	icon = 'icons/obj/clothing/hats.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/head.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/head_muzzled.dmi'
 	icon_state = "carp_helm"
-	item_state = "syndicate"
+	item_state = "nothing"
 	armor = list(MELEE = -20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 75, FIRE = 60, ACID = 75, WOUND = 5)	//As whimpy as a space carp
 	brightness_on = 0 //luminosity when on
 	actions_types = list()
@@ -371,12 +385,14 @@ Contains:
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
 
-
 /obj/item/clothing/suit/space/hardsuit/carp
 	name = "carp space suit"
 	desc = "A slimming piece of dubious space carp technology, you suspect it won't stand up to hand-to-hand blows."
+	icon = 'icons/obj/clothing/suits.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/suit_digi.dmi'
 	icon_state = "carp_suit"
-	item_state = "space_suit_syndicate"
+	item_state = "nothing"
 	slowdown = 0	//Space carp magic, never stop believing
 	armor = list(MELEE = -20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 75, FIRE = 60, ACID = 75, WOUND = 5) //As whimpy whimpy whoo
 	allowed = list(/obj/item/tank/internals, /obj/item/gun/ballistic/automatic/speargun)	//I'm giving you a hint here

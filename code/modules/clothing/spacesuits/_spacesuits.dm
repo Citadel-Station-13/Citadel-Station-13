@@ -5,9 +5,9 @@
 	icon_state = "spaceold"
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS
-	icon = 'icons/obj/clothing/hats.dmi'
-	mob_overlay_icon = 'icons/mob/clothing/head.dmi'
-	anthro_mob_worn_overlay = 'icons/mob/clothing/head_muzzled.dmi'
+	icon = 'icons/obj/clothing/head/space.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/head/space.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/head/space_muzzled.dmi'
 	item_state = "spaceold"
 	permeability_coefficient = 0.01
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, RAD = 50, FIRE = 80, ACID = 70, WOUND = 5)
@@ -30,6 +30,9 @@
 /obj/item/clothing/suit/space
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. Has a big 13 on the back."
+	icon = 'icons/obj/clothing/suits/space.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suits/space.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/suits/space_digi.dmi'
 	icon_state = "spaceold"
 	item_state = "s_suit"
 	w_class = WEIGHT_CLASS_BULKY
