@@ -534,7 +534,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/under/rank/medical/doctor/blue,
+/obj/item/clothing/under/rank/medical/scrubs,
 /obj/item/clothing/shoes/sneakers/white,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
