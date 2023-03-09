@@ -1,6 +1,9 @@
 /obj/item/clothing/suit/toggle/labcoat
 	name = "labcoat"
 	desc = "A suit that protects against minor chemical spills."
+	icon = 'icons/obj/clothing/suits/labcoat.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suits/labcoat.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/suits/labcoat_digi.dmi'
 	icon_state = "labcoat"
 	item_state = "labcoat"
 	blood_overlay_type = "coat"
@@ -31,6 +34,32 @@
 	togglename = "buttons"
 	species_exception = list(/datum/species/golem)
 
+/obj/item/clothing/suit/toggle/labcoat/paramedic
+	name = "paramedic vest"
+	desc = "A dark blue vest with reflective strips for emergency medical technicians."
+	icon_state = "paramedic-vest"
+	item_state = "paramedic-vest"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/toggle/labcoat/emt
+	name = "emt vest"
+	desc = "A dark blue vest with reflective strips for emergency medical technicians."
+	icon_state = "labcoat_emt"
+	item_state = "labcoat_emt"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/toggle/labcoat/emt/red
+	name = "red emt vest"
+	desc = "A red vest with reflective strips for emergency medical technicians."
+	icon_state = "labcoat_emtred"
+	item_state = "labcoat_emtred"
+
+/obj/item/clothing/suit/toggle/labcoat/emt/highvis
+	name = "high visibility emt vest"
+	desc = "a high visibility vest for emergency medical technicians."
+	icon_state = "labcoat_highvis"
+	item_state = "labcoat_highvis"
+
 /obj/item/clothing/suit/toggle/labcoat/cmo
 	name = "chief medical officer's labcoat"
 	desc = "Bluer than the standard model."
@@ -40,8 +69,8 @@
 /obj/item/clothing/suit/toggle/labcoat/mad
 	name = "\proper The Mad's labcoat"
 	desc = "It makes you look capable of konking someone on the noggin and shooting them into space."
-	icon_state = "labgreen"
-	item_state = "labgreen"
+	icon_state = "labcoat_green"
+	item_state = "labcoat_green"
 
 /obj/item/clothing/suit/toggle/labcoat/genetics
 	name = "geneticist labcoat"
@@ -67,6 +96,12 @@
 	name = "roboticist labcoat"
 	desc = "More like an eccentric coat than a labcoat. Helps pass off bloodstains as part of the aesthetic. Comes with red shoulder pads."
 	icon_state = "labcoat_robo"
+
+/obj/item/clothing/suit/toggle/labcoat/rd
+	name = "rsearch director's coat"
+	desc = "A mix between a labcoat and just a regular coat. It's made out of a special anti-bacterial, anti-acidic, and anti-biohazardous synthetic fabric."
+	icon_state = "labcoat_rd"
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 80, RAD = 0, FIRE = 80, ACID = 80)
 
 // Departmental Jackets
 /obj/item/clothing/suit/toggle/labcoat/depjacket

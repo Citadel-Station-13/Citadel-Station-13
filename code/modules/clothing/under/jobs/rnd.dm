@@ -1,3 +1,51 @@
+/obj/item/clothing/under/rank/rnd
+	desc = "It's made of a special fiber that provides minor protection against explosives. It has markings that denote the wearer as a scientist."
+	name = "scientist's jumpsuit"
+	icon = 'icons/obj/clothing/under/rnd.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/rnd.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/under/rnd_digi.dmi'
+	icon_state = "toxins"
+	item_state = "w_suit"
+	permeability_coefficient = 0.5
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 5)
+
+/obj/item/clothing/under/rank/rnd/skirt
+	name = "scientist's jumpskirt"
+	desc = "It's made of a special fiber that provides minor protection against explosives. It has markings that denote the wearer as a scientist."
+	icon_state = "toxins_skirt"
+	item_state = "w_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	fitted = FEMALE_UNIFORM_TOP
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/under/rank/rnd/util
+	name = "science utility uniform"
+	desc = "A utility uniform for science personnel"
+	icon_state = "utilsci"
+	item_state = "utilsci"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/rnd/roboticist
+	desc = "It's a slimming black with reinforced seams; great for industrial work."
+	name = "roboticist's jumpsuit"
+	icon_state = "robotics"
+	item_state = "robotics"
+
+/obj/item/clothing/under/rank/rnd/roboticist/skirt
+	name = "roboticist's jumpskirt"
+	desc = "It's a slimming black with reinforced seams; great for industrial work."
+	icon_state = "robotics_skirt"
+	item_state = "robotics"
+	body_parts_covered = CHEST|GROIN|ARMS
+	fitted = FEMALE_UNIFORM_TOP
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/under/rank/rnd/roboticist/sleek
+	name = "sleek roboticist's jumpsuit"
+	icon_state = "robosleek"
+	item_state = "robosleek"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/rank/rnd/research_director
 	desc = "It's a suit worn by those with the know-how to achieve the position of \"Research Director\". Its fabric provides minor protection from biological contaminants."
 	name = "research director's vest suit"
@@ -30,7 +78,6 @@
 	icon_state = "rdwhimsy_skirt"
 	item_state = "rdwhimsy"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
@@ -48,54 +95,6 @@
 	desc = "A dark purple turtleneck and tan khaki skirt, for a director with a superior sense of style."
 	icon_state = "rdturtle_skirt"
 	item_state = "p_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
-	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
-
-/obj/item/clothing/under/rank/rnd/scientist
-	desc = "It's made of a special fiber that provides minor protection against explosives. It has markings that denote the wearer as a scientist."
-	name = "scientist's jumpsuit"
-	icon_state = "toxins"
-	item_state = "w_suit"
-	permeability_coefficient = 0.5
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 5)
-
-/obj/item/clothing/under/rank/rnd/scientist/util
-	name = "science utility uniform"
-	desc = "A utility uniform for science personnel"
-	icon_state = "utilsci"
-	item_state = "utilsci"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/rank/rnd/scientist/skirt
-	name = "scientist's jumpskirt"
-	desc = "It's made of a special fiber that provides minor protection against explosives. It has markings that denote the wearer as a scientist."
-	icon_state = "toxins_skirt"
-	item_state = "w_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
-	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
-
-/obj/item/clothing/under/rank/rnd/roboticist
-	desc = "It's a slimming black with reinforced seams; great for industrial work."
-	name = "roboticist's jumpsuit"
-	icon_state = "robotics"
-	item_state = "robotics"
-	resistance_flags = NONE
-
-/obj/item/clothing/under/rank/rnd/roboticist/sleek
-	name = "sleek roboticist's jumpsuit"
-	icon_state = "robosleek"
-	item_state = "robosleek"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/rank/rnd/roboticist/skirt
-	name = "roboticist's jumpskirt"
-	desc = "It's a slimming black with reinforced seams; great for industrial work."
-	icon_state = "robotics_skirt"
-	item_state = "robotics"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP

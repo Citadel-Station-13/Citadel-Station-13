@@ -22,7 +22,7 @@
 	starting_modifiers = list(/datum/skill_modifier/job/level/wiring/basic)
 	display_order = JOB_DISPLAY_ORDER_SCIENTIST
 	threat = 1.2
-	
+
 	family_heirlooms = list(
 		/obj/item/toy/plush/slimeplushie
 	)
@@ -33,7 +33,7 @@
 
 	belt = /obj/item/pda/toxins
 	ears = /obj/item/radio/headset/headset_sci
-	uniform = /obj/item/clothing/under/rank/rnd/scientist
+	uniform = /obj/item/clothing/under/rank/rnd
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit = /obj/item/clothing/suit/toggle/labcoat/science
 

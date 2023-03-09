@@ -316,7 +316,7 @@
 	new /obj/item/storage/backpack/satchel/tox(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/science(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/under/rank/rnd/scientist(src)
+		new /obj/item/clothing/under/rank/rnd(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/toggle/labcoat/science(src)
 	for(var/i in 1 to 3)

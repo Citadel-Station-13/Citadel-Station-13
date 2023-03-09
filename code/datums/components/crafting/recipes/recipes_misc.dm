@@ -590,7 +590,7 @@
 	result = /obj/item/banner/science/mundane
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/rank/rnd/scientist = 1)
+				/obj/item/clothing/under/rank/rnd = 1)
 	subcategory = CAT_FURNITURE
 	category = CAT_MISCELLANEOUS
 

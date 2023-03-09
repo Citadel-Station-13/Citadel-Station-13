@@ -229,32 +229,3 @@
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 	mutantrace_variation = STYLE_MUZZLE
-
-
-//Paramedic
-
-/obj/item/clothing/suit/toggle/labcoat/paramedic
-	name = "paramedic vest"
-	desc = "A dark blue vest with reflective strips for emergency medical technicians."
-	icon_state = "paramedic-vest"
-	item_state = "paramedic-vest"
-	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
-
-/obj/item/clothing/suit/toggle/labcoat/emt
-	name = "emt vest"
-	desc = "A dark blue vest with reflective strips for emergency medical technicians."
-	icon_state = "labcoat_emt"
-	item_state = "labcoat_emt"
-	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
-
-/obj/item/clothing/suit/toggle/labcoat/emt/red
-	name = "red emt vest"
-	desc = "A red vest with reflective strips for emergency medical technicians."
-	icon_state = "labcoat_emtred"
-	item_state = "labcoat_emtred"
-
-/obj/item/clothing/suit/toggle/labcoat/emt/highvis
-	name = "high visibility emt vest"
-	desc = "a high visibility vest for emergency medical technicians."
-	icon_state = "labcoat_highvis"
-	item_state = "labcoat_highvis"

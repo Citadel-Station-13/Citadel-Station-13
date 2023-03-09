@@ -388,7 +388,7 @@
 
 /datum/gear/uniform/grey/sci
 	name = "Science Utility Uniform"
-	path = /obj/item/clothing/under/rank/rnd/scientist/util
+	path = /obj/item/clothing/under/rank/rnd/util
 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
 	restricted_desc = "Science"
 	restricted_roles = list("Scientist", "Roboticist", "Research Director", "Geneticist")
