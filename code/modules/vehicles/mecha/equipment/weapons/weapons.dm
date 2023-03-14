@@ -21,7 +21,7 @@
 		return TRUE
 	return FALSE
 
-/obj/item/mecha_parts/mecha_equipment/weapon/action(mob/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/weapon/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return FALSE
 	var/newtonian_target = turn(chassis.dir,180)
@@ -36,20 +36,23 @@
 			else
 				spread = round((i / projectiles_per_shot - 0.5) * variance)
 
-		var/obj/item/projectile/A = new projectile(get_turf(src))
-		A.preparePixelProjectile(target, source, params, spread)
+		var/obj/item/projectile/projectile_obj = new projectile(get_turf(src))
+		projectile_obj.log_override = TRUE //we log being fired ourselves a little further down.
+		projectile_obj.firer = chassis
+		projectile_obj.preparePixelProjectile(target, source, modifiers, spread)
 
-		A.fire()
-		if(!A.suppressed && firing_effect_type)
+		projectile_obj.fire()
+		if(!projectile_obj.suppressed && firing_effect_type)
 			new firing_effect_type(get_turf(src), chassis.dir)
 		playsound(chassis, fire_sound, 50, TRUE)
+
+		log_combat(source, target, "fired [projectile_obj] at", src, "from [chassis] at [get_area_name(src, TRUE)]")
 
 		sleep(max(0, projectile_delay))
 
 		if(kickback)
 			chassis.newtonian_move(newtonian_target)
-	chassis.log_message("Fired from [src.name], targeting [target].", LOG_MECHA)
-	return ..()
+	chassis.log_message("[key_name(source)] fired [src], targeting [target].", LOG_ATTACK)
 
 //Base energy weapon type
 /obj/item/mecha_parts/mecha_equipment/weapon/energy
