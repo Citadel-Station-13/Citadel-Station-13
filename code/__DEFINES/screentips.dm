@@ -31,5 +31,15 @@
 /// Screentips are only enabled when they have context
 #define SCREENTIP_PREFERENCE_CONTEXT_ONLY "Only with tips"
 
+/// Screentips enabled, no context
+#define SCREENTIP_PREFERENCE_NO_CONTEXT "Enabled without tips"
+
 /// Regardless of intent
-#define INTENT_ANY "intent_any"
+#define INTENT_ANY "any"
+
+GLOBAL_LIST_INIT(screentip_pref_options, list(
+	SCREENTIP_PREFERENCE_DISABLED,
+	SCREENTIP_PREFERENCE_ENABLED,
+	SCREENTIP_PREFERENCE_CONTEXT_ONLY,
+	SCREENTIP_PREFERENCE_NO_CONTEXT
+))

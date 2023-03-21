@@ -1467,8 +1467,9 @@
 			var/extra_lines = 0
 			var/extra_context = ""
 
-			if (isliving(user) || isovermind(user) || isaicamera(user))
+			if ((isliving(user) || isovermind(user) || isaicamera(user)) && (user.client.prefs.screentip_pref != SCREENTIP_PREFERENCE_NO_CONTEXT))
 				var/obj/item/held_item = user.get_active_held_item()
+				var/allow_images = user.client.prefs.screentip_allow_images
 
 				if (flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1 || held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS)
 					var/list/context = list()
@@ -1481,15 +1482,15 @@
 						// LMB and RMB on one line...
 						var/lmb_text = ""
 						if((SCREENTIP_CONTEXT_LMB in context) && (length(context[SCREENTIP_CONTEXT_LMB]) > 0))
-							lmb_text = build_context(context, SCREENTIP_CONTEXT_LMB)
+							lmb_text = build_context(context, SCREENTIP_CONTEXT_LMB, allow_images)
 						var/rmb_text = ""
 						if((SCREENTIP_CONTEXT_RMB in context) && (length(context[SCREENTIP_CONTEXT_RMB]) > 0))
-							rmb_text = build_context(context, SCREENTIP_CONTEXT_RMB)
+							rmb_text = build_context(context, SCREENTIP_CONTEXT_RMB, allow_images)
 
 						if (lmb_text)
 							lmb_rmb_line = lmb_text
 							if (rmb_text)
-								lmb_rmb_line += " | [rmb_text]"
+								lmb_rmb_line += " | [allow_images ? " " : ""][rmb_text]"
 						else if (rmb_text)
 							lmb_rmb_line = rmb_text
 
@@ -1498,37 +1499,37 @@
 							lmb_rmb_line += "<br>"
 							extra_lines++
 						if((SCREENTIP_CONTEXT_CTRL_LMB in context) && (length(context[SCREENTIP_CONTEXT_CTRL_LMB]) > 0))
-							ctrl_lmb_ctrl_rmb_line = build_context(context, SCREENTIP_CONTEXT_CTRL_LMB)
+							ctrl_lmb_ctrl_rmb_line = build_context(context, SCREENTIP_CONTEXT_CTRL_LMB, allow_images)
 
 						if((SCREENTIP_CONTEXT_CTRL_RMB in context) && (length(context[SCREENTIP_CONTEXT_CTRL_RMB]) > 0))
 							if (ctrl_lmb_ctrl_rmb_line != "")
-								ctrl_lmb_ctrl_rmb_line += " | "
+								ctrl_lmb_ctrl_rmb_line += " | [allow_images ? " " : ""]"
 							ctrl_lmb_ctrl_rmb_line += "[SCREENTIP_CONTEXT_CTRL_RMB]: [context[SCREENTIP_CONTEXT_CTRL_RMB]]"
-							ctrl_lmb_ctrl_rmb_line = build_context(context, SCREENTIP_CONTEXT_CTRL_RMB)
+							ctrl_lmb_ctrl_rmb_line = build_context(context, SCREENTIP_CONTEXT_CTRL_RMB, allow_images)
 
 						// Alt-LMB, Alt-RMB on one line...
 						if (ctrl_lmb_ctrl_rmb_line != "")
 							ctrl_lmb_ctrl_rmb_line += "<br>"
 							extra_lines++
 						if((SCREENTIP_CONTEXT_ALT_LMB in context) && (length(context[SCREENTIP_CONTEXT_ALT_LMB]) > 0))
-							alt_lmb_alt_rmb_line = build_context(context, SCREENTIP_CONTEXT_ALT_LMB)
+							alt_lmb_alt_rmb_line = build_context(context, SCREENTIP_CONTEXT_ALT_LMB, allow_images)
 						if((SCREENTIP_CONTEXT_ALT_RMB in context) && (length(context[SCREENTIP_CONTEXT_ALT_RMB]) > 0))
 							if (alt_lmb_alt_rmb_line != "")
-								alt_lmb_alt_rmb_line += " | "
-							alt_lmb_alt_rmb_line = build_context(context, SCREENTIP_CONTEXT_ALT_RMB)
+								alt_lmb_alt_rmb_line += " | [allow_images ? " " : ""]"
+							alt_lmb_alt_rmb_line = build_context(context, SCREENTIP_CONTEXT_ALT_RMB, allow_images)
 
 						// Shift-LMB, Ctrl-Shift-LMB on one line...
 						if (alt_lmb_alt_rmb_line != "")
 							alt_lmb_alt_rmb_line += "<br>"
 							extra_lines++
 						if((SCREENTIP_CONTEXT_SHIFT_LMB in context) && (length(context[SCREENTIP_CONTEXT_SHIFT_LMB]) > 0))
-							shift_lmb_ctrl_shift_lmb_line = build_context(context, SCREENTIP_CONTEXT_SHIFT_LMB)
+							shift_lmb_ctrl_shift_lmb_line = build_context(context, SCREENTIP_CONTEXT_SHIFT_LMB, allow_images)
 
 						if((SCREENTIP_CONTEXT_CTRL_SHIFT_LMB in context) && (length(context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]) > 0))
 							if (shift_lmb_ctrl_shift_lmb_line != "")
-								shift_lmb_ctrl_shift_lmb_line += " | "
+								shift_lmb_ctrl_shift_lmb_line += " | [allow_images ? " " : ""]"
 							shift_lmb_ctrl_shift_lmb_line += "[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]]"
-							shift_lmb_ctrl_shift_lmb_line = build_context(context, SCREENTIP_CONTEXT_CTRL_SHIFT_LMB)
+							shift_lmb_ctrl_shift_lmb_line = build_context(context, SCREENTIP_CONTEXT_CTRL_SHIFT_LMB, allow_images)
 
 						if (shift_lmb_ctrl_shift_lmb_line != "")
 							extra_lines++

@@ -423,6 +423,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["outline_enabled"] >> outline_enabled
 	S["screentip_pref"] >> screentip_pref
 	S["screentip_color"] >> screentip_color
+	S["screentip_allow_images"] >> screentip_allow_images
 	S["hotkeys"] >> hotkeys
 	S["chat_on_map"] >> chat_on_map
 	S["max_chat_length"] >> max_chat_length
@@ -544,6 +545,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	modless_key_bindings = sanitize_islist(modless_key_bindings, list())
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
 	screentip_color = sanitize_hexcolor(screentip_color, 6, 1, initial(screentip_color))
+	screentip_pref = sanitize_inlist(screentip_pref, GLOB.screentip_pref_options, SCREENTIP_PREFERENCE_ENABLED)
 
 	verify_keybindings_valid()		// one of these days this will runtime and you'll be glad that i put it in a different proc so no one gets their saves wiped
 
@@ -614,6 +616,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["outline_color"], outline_color)
 	WRITE_FILE(S["screentip_pref"], screentip_pref)
 	WRITE_FILE(S["screentip_color"], screentip_color)
+	WRITE_FILE(S["screentip_allow_images"], screentip_allow_images)
 	WRITE_FILE(S["hotkeys"], hotkeys)
 	WRITE_FILE(S["chat_on_map"], chat_on_map)
 	WRITE_FILE(S["max_chat_length"], max_chat_length)

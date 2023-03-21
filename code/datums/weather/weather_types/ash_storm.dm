@@ -1,6 +1,5 @@
 //A reference to this list is passed into area sound managers, and it's modified in a manner that preserves that reference in ash_storm.dm
 GLOBAL_LIST_EMPTY(ash_storm_sounds)
-//Ash storms happen frequently on lavaland. They heavily obscure vision, and cause high fire damage to anyone caught outside.
 /datum/weather/ash_storm
 	name = "ash storm"
 	desc = "An intense atmospheric storm lifts ash off of the planet's surface and billows it down across the area, dealing intense fire damage to the unprotected."
@@ -22,7 +21,7 @@ GLOBAL_LIST_EMPTY(ash_storm_sounds)
 	protect_indoors = TRUE
 	target_trait = ZTRAIT_ASHSTORM
 
-	immunity_type = "ash"
+	immunity_type = TRAIT_ASHSTORM_IMMUNE
 
 	probability = 90
 
@@ -72,10 +71,6 @@ GLOBAL_LIST_EMPTY(ash_storm_sounds)
 			var/thermal_protection = H.easy_thermal_protection()
 			if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
 				return TRUE
-		if(isliving(L))// if we're a non immune mob inside an immune mob we have to reconsider if that mob is immune to protect ourselves
-			var/mob/living/the_mob = L
-			if("ash" in the_mob.weather_immunities)
-				return TRUE
 		// if(istype(L, /obj/structure/closet))
 		// 	var/obj/structure/closet/the_locker = L
 		// 	if(the_locker.weather_protection)
@@ -92,7 +87,6 @@ GLOBAL_LIST_EMPTY(ash_storm_sounds)
 			L.adjustStaminaLoss(4)
 		return
 	L.adjustFireLoss(4)
-
 
 //Emberfalls are the result of an ash storm passing by close to the playable area of lavaland. They have a 10% chance to trigger in place of an ash storm.
 /datum/weather/ash_storm/emberfall

@@ -49,6 +49,8 @@
 	mob_size = MOB_SIZE_LARGE
 	armour_penetration = 30
 	pixel_x = -16
+	maptext_height = 64
+	maptext_width = 64
 	turns_per_move = 5
 	movement_type = FLYING
 	health_doll_icon = "spacedragon"

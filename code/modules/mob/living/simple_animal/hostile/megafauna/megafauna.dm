@@ -10,7 +10,7 @@
 	obj_damage = 400
 	light_range = 3
 	faction = list("mining", "boss")
-	weather_immunities = list("lava","ash")
+	weather_immunities = list(TRAIT_LAVA_IMMUNE,TRAIT_ASHSTORM_IMMUNE)
 	movement_type = FLYING
 	robust_searching = 1
 	ranged_ignores_vision = TRUE

@@ -8,7 +8,6 @@
 	initial_language_holder = /datum/language_holder/synthetic
 	see_in_dark = 8
 	bubble_icon = "machine"
-	weather_immunities = list("ash")
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
 	mob_biotypes = MOB_ROBOTIC
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
@@ -61,6 +60,7 @@
 		diag_hud.add_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
+	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT)
 
 /mob/living/silicon/ComponentInitialize()
 	. = ..()

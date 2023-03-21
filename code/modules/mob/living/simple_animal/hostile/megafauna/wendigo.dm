@@ -14,7 +14,7 @@ Difficulty: Hard
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
-	weather_immunities = list("snow")
+	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 	speak_emote = list("roars")
 	armour_penetration = 40
 	melee_damage_lower = 40
