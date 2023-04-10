@@ -44,6 +44,8 @@
 	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
 	var/poddoor = FALSE
 	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
+	/// Whether or not the door can be opened by hand (used for blast doors and shutters)
+	var/can_open_with_hands = TRUE
 
 /obj/machinery/door/examine(mob/user)
 	. = ..()
@@ -55,10 +57,16 @@
 	if(!poddoor)
 		. += "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>"
 
-/obj/machinery/door/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+/obj/machinery/door/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	if (isnull(held_item) && !istype(src, /obj/machinery/door/firedoor)) // You cannot open/close with your hands
+	if(!can_open_with_hands)
+		return .
+
+	if(isaicamera(user) || issilicon(user))
+		return .
+
+	if(isnull(held_item) && Adjacent(user))
 		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, (density ? "Open" : "Close"))
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -100,7 +108,7 @@
 	return ..()
 
 /obj/machinery/door/Bumped(atom/movable/AM)
-	if(operating || (obj_flags & EMAGGED))
+	if(operating || (obj_flags & EMAGGED) || (!can_open_with_hands && density))
 		return
 	if(ismob(AM))
 		var/mob/B = AM
@@ -132,9 +140,9 @@
 		return !opacity
 
 /obj/machinery/door/proc/bumpopen(mob/user)
-	if(operating)
+	if(operating || !can_open_with_hands)
 		return
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(!src.requiresID())
 		user = null
 
@@ -155,7 +163,7 @@
 
 /obj/machinery/door/proc/try_to_activate_door(mob/user)
 	add_fingerprint(user)
-	if(operating || (obj_flags & EMAGGED))
+	if(operating || (obj_flags & EMAGGED) || !can_open_with_hands)
 		return
 	if(!requiresID())
 		user = null //so allowed(user) always succeeds
@@ -417,3 +425,14 @@
 	. = ..()
 	if(!density)
 		return . * EXPLOSION_DAMAGE_OPEN_DOOR_FACTOR
+
+/obj/machinery/door/shuttleRotate(rotation, params)
+	. = ..()
+	if(!unres_sides)
+		return
+	var/new_unres_sides
+	for(var/direction in GLOB.cardinals)
+		if(unres_sides & direction)
+			new_unres_sides |= angle2dir_cardinal(rotation+dir2angle(direction))
+	unres_sides = new_unres_sides
+	update_icon()

@@ -26,6 +26,7 @@
 	air_tight = TRUE
 	attack_hand_is_action = TRUE
 	attack_hand_speed = CLICK_CD_MELEE
+	can_open_with_hands = FALSE
 	var/emergency_close_timer = 0
 	var/nextstate = null
 	var/boltslocked = TRUE
