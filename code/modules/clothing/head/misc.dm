@@ -50,6 +50,7 @@
 /obj/item/clothing/head/plaguedoctorhat
 	name = "plague doctor's hat"
 	desc = "These were once used by plague doctors. They're pretty much useless."
+	icon = 'icons/obj/clothing/head/bio.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/head/bio.dmi'
 	anthro_mob_worn_overlay = 'icons/mob/clothing/head/bio_muzzled.dmi'
 	icon_state = "plaguedoctor"
