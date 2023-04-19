@@ -1,3 +1,16 @@
+// i hate this file at least half of these instances are duplicates from other jobs' files
+/obj/item/clothing/under/suit
+	name = "perfectly generic debug suit"
+	desc = "no"
+	icon = 'icons/obj/clothing/under/suits.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/suits.dmi'
+	anthro_mob_worn_overlay = 'icons/mob/clothing/under/suits_digi.dmi'
+
+/obj/item/clothing/under/suit/white
+	name = "white suit"
+	desc = "A white suit and jacket with a blue shirt. You wanna play rough? OKAY!"
+	icon_state = "white_suit"
+	item_state = "white_suit"
 
 /obj/item/clothing/under/suit/white_on_white
 	name = "white suit"
@@ -38,13 +51,13 @@
 
 /obj/item/clothing/under/suit/black_really
 	name = "executive suit"
-	desc = "A formal black suit and red tie, intended for the station's finest."
+	desc = "A formal black suit, intended for the station's finest."
 	icon_state = "really_black_suit"
 	item_state = "bl_suit"
 
 /obj/item/clothing/under/suit/black/skirt
 	name = "executive suit"
-	desc = "A formal trouser suit for women, intended for the station's finest."
+	desc = "A formal black suitskirt, intended for the station's finest."
 	icon_state = "black_suit_fem"
 	item_state = "black_suit_fem"
 
@@ -97,12 +110,6 @@
 	icon_state = "charismatic_suit"
 	item_state = "charismatic_suit"
 
-/obj/item/clothing/under/suit/white
-	name = "white suit"
-	desc = "A white suit and jacket with a blue shirt. You wanna play rough? OKAY!"
-	icon_state = "white_suit"
-	item_state = "white_suit"
-
 /obj/item/clothing/under/suit/telegram
 	name = "telegram suit"
 	desc = "Bright and red, hard to miss. Mostly warn by hotel staff or singing telegram."
@@ -110,7 +117,6 @@
 	item_state = "telegram"
 	body_parts_covered = CHEST|GROIN
 	can_adjust = FALSE
-
 
 /obj/item/clothing/under/suit/beige
 	name = "beige suit"
@@ -122,8 +128,6 @@
 /obj/item/clothing/under/suit/henchmen
 	name = "henchmen jumpsuit"
 	desc = "A very gaudy jumpsuit for a proper Henchman. Guild regulations, you understand."
-	icon = 'icons/obj/clothing/uniforms.dmi'
-	mob_overlay_icon = 'icons/mob/clothing/uniform.dmi'
 	icon_state = "henchmen"
 	item_state = "henchmen"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD

@@ -21,7 +21,7 @@
 /obj/item/clothing/under/rank/engineering/hazard
 	name = "engineer's hazard jumpsuit"
 	desc = "A high visibility jumpsuit made from heat and radiation resistant materials."
-	icon_state = "hazard_orange"
+	icon_state = "hazard"
 	item_state = "engi_suit"
 	alt_covers_chest = TRUE
 

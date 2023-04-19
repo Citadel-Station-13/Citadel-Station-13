@@ -249,13 +249,13 @@
 
 /obj/item/clothing/under/rank/civilian/lawyer/really_black
 	name = "executive suit"
-	desc = "A formal black suit and red tie, intended for the station's finest."
+	desc = "A formal black suit, intended for the station's finest."
 	icon_state = "really_black_suit"
 	item_state = "bl_suit"
 
 /obj/item/clothing/under/rank/civilian/lawyer/really_black/skirt
 	name = "executive suitskirt"
-	desc = "A formal black suitskirt and red tie, intended for the station's finest."
+	desc = "A formal black suitskirt, intended for the station's finest."
 	icon_state = "really_black_suit_skirt"
 	item_state = "bl_suit"
 	body_parts_covered = CHEST|GROIN|ARMS

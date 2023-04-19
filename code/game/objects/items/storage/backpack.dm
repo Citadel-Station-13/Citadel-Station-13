@@ -239,7 +239,7 @@
 /obj/item/storage/backpack/satchel/cap
 	name = "captain's satchel"
 	desc = "An exclusive satchel for Nanotrasen officers."
-	icon_state = "satchel-cap"
+	icon_state = "captainsat"
 	item_state = "captainpack"
 	resistance_flags = FIRE_PROOF
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
@@ -255,14 +255,14 @@
 /obj/item/storage/backpack/satchel/hyd
 	name = "botanist satchel"
 	desc = "A satchel made of all natural fibers."
-	icon_state = "satchel-hyd"
-	item_state = "satchel-hyd"
+	icon_state = "botsat"
+	item_state = "botpack"
 
 /obj/item/storage/backpack/satchel/tox
 	name = "scientist satchel"
 	desc = "Useful for holding research materials."
-	icon_state = "satchel-tox"
-	item_state = "satchel-tox"
+	icon_state = "toxsat"
+	item_state = "toxpack"
 
 /obj/item/storage/backpack/satchel/bone
 	name = "bone satchel"

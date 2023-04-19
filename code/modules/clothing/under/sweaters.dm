@@ -1,6 +1,8 @@
 /obj/item/clothing/under/sweater
 	name = "cream sweater"
 	desc = "Why trade style for comfort? Now you can go commando down south and still be cozy up north."
+	icon = 'icons/obj/clothing/under/sweaters.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/sweaters.dmi'
 	icon_state = "bb_turtle"
 	item_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -17,15 +19,15 @@
 	icon_state = "bb_turtlepur"
 	item_state = "p_suit"
 
-/obj/item/clothing/under/sweater/green
-	name = "green sweater"
-	icon_state = "bb_turtlegrn"
-	item_state = "g_suit"
-
 /obj/item/clothing/under/sweater/red
 	name = "red sweater"
 	icon_state = "bb_turtlered"
 	item_state = "r_suit"
+
+/obj/item/clothing/under/sweater/green
+	name = "green sweater"
+	icon_state = "bb_turtlegrn"
+	item_state = "g_suit"
 
 /obj/item/clothing/under/sweater/blue
 	name = "blue sweater"
