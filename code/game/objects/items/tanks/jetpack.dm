@@ -239,9 +239,13 @@
 	return
 
 /mob/living/carbon/get_jetpack()
-	var/obj/item/tank/jetpack/J = back
-	if(istype(J))
-		return J
+	var/obj/item/I = back
+	if(istype(I, /obj/item/tank/jetpack))
+		return I
+	else if(istype(I, /obj/item/mod/control))
+		var/obj/item/mod/control/C = I
+		for(var/obj/item/mod/module/jetpack/J in C.modules)
+			return J
 
 /mob/living/carbon/human/get_jetpack()
 	var/obj/item/tank/jetpack/J = ..()
