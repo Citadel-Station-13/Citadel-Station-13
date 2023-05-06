@@ -2,7 +2,8 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = "0"
 	name = "\proper space"
-	intact = 0
+	overfloor_placed = FALSE
+	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	dirt_buildup_allowed = FALSE
 
 	initial_temperature = TCMB
@@ -281,7 +282,8 @@
 
 /turf/open/space/transparent
 	baseturfs = /turf/open/space/transparent/openspace
-	intact = FALSE //this means wires go on top
+	overfloor_placed = FALSE // We can't tear this up, with tools, explosives, or other means.
+	underfloor_accessibility = UNDERFLOOR_VISIBLE
 
 /turf/open/space/transparent/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	..()

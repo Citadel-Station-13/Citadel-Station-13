@@ -656,7 +656,7 @@
 		become_blind(EYES_COVERED)
 	else if(tinttotal >= TINT_DARKENED)
 		cure_blind(EYES_COVERED)
-		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/scaled/impaired, 2)
+		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 2)
 	else
 		cure_blind(EYES_COVERED)
 		clear_fullscreen("tint", 0)
@@ -732,10 +732,10 @@
 					visionseverity = 9
 				if(-INFINITY to -24)
 					visionseverity = 10
-			overlay_fullscreen("critvision", /atom/movable/screen/fullscreen/scaled/crit/vision, visionseverity)
+			overlay_fullscreen("critvision", /atom/movable/screen/fullscreen/crit/vision, visionseverity)
 		else
 			clear_fullscreen("critvision")
-		overlay_fullscreen("crit", /atom/movable/screen/fullscreen/scaled/crit, severity)
+		overlay_fullscreen("crit", /atom/movable/screen/fullscreen/crit, severity)
 	else
 		clear_fullscreen("crit")
 		clear_fullscreen("critvision")
@@ -759,7 +759,7 @@
 				severity = 6
 			if(45 to INFINITY)
 				severity = 7
-		overlay_fullscreen("oxy", /atom/movable/screen/fullscreen/scaled/oxy, severity)
+		overlay_fullscreen("oxy", /atom/movable/screen/fullscreen/oxy, severity)
 	else
 		clear_fullscreen("oxy")
 
@@ -780,7 +780,7 @@
 				severity = 5
 			if(85 to INFINITY)
 				severity = 6
-		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/scaled/brute, severity)
+		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
 	else
 		clear_fullscreen("brute")
 

@@ -11,6 +11,7 @@
 	stamina_buffer = INFINITY
 	UpdateStaminaBuffer()
 	GLOB.mob_living_list += src
+	update_fov()
 
 /mob/living/prepare_huds()
 	..()
@@ -611,13 +612,12 @@
 			UNLINT(livingdoll.filters += filter(type="alpha", icon = mob_mask))
 			livingdoll.filters += filter(type="drop_shadow", size = -1)
 	if(severity > 0)
-		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/scaled/brute, severity)
+		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
 	else
 		clear_fullscreen("brute")
 
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
 /mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
-	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
 		fully_heal(admin_revive)
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
@@ -637,6 +637,8 @@
 			for(var/S in mind.spell_list)
 				var/obj/effect/proc_holder/spell/spell = S
 				spell.updateButtonIcon()
+	// The signal is called after everything else so components can properly check the updated values
+	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 
 //proc used to remove all immobilisation effects + reset stamina
 /mob/living/proc/remove_CC(should_update_mobility = TRUE)

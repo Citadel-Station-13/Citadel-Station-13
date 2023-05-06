@@ -241,7 +241,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_y = 28
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,

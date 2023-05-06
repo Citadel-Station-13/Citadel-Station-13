@@ -19,10 +19,6 @@
 	if(istext(id) && mapload && id[1] == "!")
 		id = SSmapping.get_obfuscated_id(id)
 	. = ..()
-	var/turf/T = get_turf_pixel(src)
-	if(iswallturf(T))
-		plane = ABOVE_WALL_PLANE
-
 	if(built)
 		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)

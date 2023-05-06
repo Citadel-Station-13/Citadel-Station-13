@@ -4,11 +4,12 @@
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror"
-	plane = ABOVE_WALL_PLANE
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 200
 	integrity_failure = 0.5
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()

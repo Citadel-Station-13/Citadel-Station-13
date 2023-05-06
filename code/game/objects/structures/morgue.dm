@@ -139,7 +139,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
-		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/scaled/impaired, 2)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 2)
 /*
  * Morgue
  */
@@ -303,7 +303,6 @@ GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/tray
 	icon = 'icons/obj/stationobjs.dmi'
 	density = TRUE
-	layer = TRAY_LAYER
 	var/obj/structure/bodycontainer/connected = null
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW

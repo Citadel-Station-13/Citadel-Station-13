@@ -453,6 +453,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ambientocclusion"] >> ambientocclusion
 	S["auto_fit_viewport"] >> auto_fit_viewport
 	S["widescreenpref"] >> widescreenpref
+	S["fov_darkness"] >> fov_darkness
 	S["long_strip_menu"] >> long_strip_menu
 	S["pixel_size"]	    	>> pixel_size
 	S["scaling_method"]	    >> scaling_method
@@ -518,6 +519,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ambientocclusion = sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
 	auto_fit_viewport = sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
 	widescreenpref = sanitize_integer(widescreenpref, 0, 1, initial(widescreenpref))
+	fov_darkness = sanitize_integer(fov_darkness, 0, 255, initial(fov_darkness))
 	long_strip_menu = sanitize_integer(long_strip_menu, 0, 1, initial(long_strip_menu))
 	pixel_size = sanitize_integer(pixel_size, PIXEL_SCALING_AUTO, PIXEL_SCALING_3X, initial(pixel_size))
 	scaling_method = sanitize_text(scaling_method, initial(scaling_method))
@@ -658,6 +660,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["damagescreenshake"], damagescreenshake)
 	WRITE_FILE(S["arousable"], arousable)
 	WRITE_FILE(S["widescreenpref"], widescreenpref)
+	WRITE_FILE(S["fov_darkness"], fov_darkness)
 	WRITE_FILE(S["long_strip_menu"], long_strip_menu)
 	WRITE_FILE(S["autostand"], autostand)
 	WRITE_FILE(S["cit_toggles"], cit_toggles)

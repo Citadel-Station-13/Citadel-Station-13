@@ -356,7 +356,6 @@
 // /client signals
 #define COMSIG_MOB_CLIENT_LOGOUT "mob_client_logout"				//sent when a mob/logout() starts: (client)
 #define COMSIG_MOB_CLIENT_MOVE "mob_client_move"					//sent when client/Move() finishes with no early returns: (client, direction, n, oldloc)
-#define COMSIG_MOB_CLIENT_CHANGE_VIEW "mob_client_change_view"		//from base of /client/change_view(): (client, old_view, view)
 #define COMSIG_MOB_CLIENT_MOUSEMOVE "mob_client_mousemove"			//from base of /client/MouseMove(): (object, location, control, params)
 
 ///sent when a mob/login() finishes: (client)
@@ -380,7 +379,6 @@
 #define COMSIG_LIVING_MINOR_SHOCK "living_minor_shock"			//sent by stuff like stunbatons and tasers: ()
 #define COMSIG_LIVING_REVIVE "living_revive"					//from base of mob/living/revive() (full_heal, admin_revive)
 
-#define COMSIG_MOB_RESET_PERSPECTIVE "mob_reset_perspective"		//from base of /mob/reset_perspective(): (atom/target)
 #define COMSIG_LIVING_GUN_PROCESS_FIRE "living_gun_process_fire"	//from base of /obj/item/gun/proc/process_fire(): (atom/target, params, zone_override)
 // This returns flags as defined for block in __DEFINES/combat.dm!
 #define COMSIG_LIVING_RUN_BLOCK "living_do_run_block"				//from base of mob/living/do_run_block(): (real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone)
@@ -440,11 +438,18 @@
 	#define COMPONENT_HOSTILE_NO_ATTACK 1
 
 // /obj signals
-#define COMSIG_OBJ_DECONSTRUCT 	"obj_deconstruct"				//from base of obj/deconstruct(): (disassembled)
-#define COMSIG_OBJ_BREAK		"obj_break"						//from base of /obj/obj_break(): (damage_flag)
-#define COMSIG_OBJ_SETANCHORED 	"obj_setanchored"				//called in /obj/structure/setAnchored(): (value)
-#define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH	"obj_default_unfasten_wrench" //called exclusively in plumbing, for now
-#define COMSIG_OBJ_ATTACK_GENERIC "obj_attack_generic"			//from base of atom/animal_attack(): (/mob/user)
+///from base of obj/deconstruct(): (disassembled)
+#define COMSIG_OBJ_DECONSTRUCT 	"obj_deconstruct"
+///from base of /obj/obj_break(): (damage_flag)
+#define COMSIG_OBJ_BREAK		"obj_break"
+///called in /obj/structure/setAnchored(): (value)
+#define COMSIG_OBJ_SETANCHORED 	"obj_setanchored"
+///called exclusively in plumbing, for now
+#define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH	"obj_default_unfasten_wrench"
+///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
+#define COMSIG_OBJ_HIDE "obj_hide"
+///from base of atom/animal_attack(): (/mob/user)
+#define COMSIG_OBJ_ATTACK_GENERIC "obj_attack_generic"
 	#define COMPONENT_STOP_GENERIC_ATTACK 1
 
 

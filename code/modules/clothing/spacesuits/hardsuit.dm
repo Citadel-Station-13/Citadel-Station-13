@@ -946,7 +946,7 @@
 /obj/item/clothing/head/helmet/space/hardsuit/lavaknight/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands)
-		var/mutable_appearance/energy_overlay = mutable_appearance(icon_file, "knight_cydonia_overlay", EMISSIVE_LAYER)
+		var/mutable_appearance/energy_overlay = mutable_appearance(icon_file, "knight_cydonia_overlay")
 		energy_overlay.plane = EMISSIVE_PLANE
 		energy_overlay.color = energy_color
 		. += energy_overlay
@@ -977,7 +977,7 @@
 /obj/item/clothing/suit/space/hardsuit/lavaknight/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands)
-		var/mutable_appearance/energy_overlay = mutable_appearance(icon_file, "knight_cydonia_overlay", EMISSIVE_LAYER)
+		var/mutable_appearance/energy_overlay = mutable_appearance(icon_file, "knight_cydonia_overlay")
 		energy_overlay.plane = EMISSIVE_PLANE
 		energy_overlay.color = energy_color
 		. += energy_overlay

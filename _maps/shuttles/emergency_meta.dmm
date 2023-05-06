@@ -456,7 +456,7 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bt" = (
-/obj/structure/reagent_dispensers/peppertank,
+/obj/structure/reagent_dispensers/wall/peppertank,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bu" = (

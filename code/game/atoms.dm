@@ -12,7 +12,6 @@
 	/// pass_flags that we are. If any of this matches a pass_flag on a moving thing, by default, we let them through.
 	var/pass_flags_self = NONE
 
-	var/level = 2
 	///If non-null, overrides a/an/some in all cases
 	var/article
 

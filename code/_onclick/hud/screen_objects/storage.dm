@@ -22,13 +22,11 @@
 	name = "storage"
 	icon_state = "block"
 	screen_loc = "7,7 to 10,8"
-	layer = HUD_LAYER
 	plane = HUD_PLANE
 	insertion_click = TRUE
 
 /atom/movable/screen/storage/close
 	name = "close"
-	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 	icon_state = "backpack_close"
 
@@ -51,7 +49,6 @@
 
 /atom/movable/screen/storage/volumetric_box
 	icon_state = "stored_continue"
-	layer = VOLUMETRIC_STORAGE_BOX_LAYER
 	plane = VOLUMETRIC_STORAGE_BOX_PLANE
 	var/obj/item/our_item
 
@@ -142,17 +139,14 @@
 /atom/movable/screen/storage/volumetric_box/center/makeItemInactive()
 	if(!holder)
 		return
-	holder.layer = VOLUMETRIC_STORAGE_ITEM_LAYER
 	holder.plane = VOLUMETRIC_STORAGE_ITEM_PLANE
 
 /atom/movable/screen/storage/volumetric_box/center/makeItemActive()
 	if(!holder)
 		return
-	holder.our_item.layer = VOLUMETRIC_STORAGE_ACTIVE_ITEM_LAYER		//make sure we display infront of the others!
 	holder.our_item.plane = VOLUMETRIC_STORAGE_ACTIVE_ITEM_PLANE
 
 /atom/movable/screen/storage/volumetric_edge
-	layer = VOLUMETRIC_STORAGE_BOX_LAYER
 	plane = VOLUMETRIC_STORAGE_BOX_PLANE
 
 /atom/movable/screen/storage/volumetric_edge/Initialize(mapload, master, our_item)

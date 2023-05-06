@@ -113,7 +113,7 @@
 /obj/blob_act(obj/structure/blob/B)
 	if(isturf(loc))
 		var/turf/T = loc
-		if(T.intact && level == 1) //the blob doesn't destroy thing below the floor
+		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE)) //the blob doesn't destroy thing below the floor
 			return
 	take_damage(400, BRUTE, MELEE, 0, get_dir(src, B))
 
@@ -183,11 +183,14 @@
 
 GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', ACID))
 
-//the obj's reaction when touched by acid
+///the obj's reaction when touched by acid
 /obj/acid_act(acidpwr, acid_volume)
-	if(!(resistance_flags & UNACIDABLE) && acid_volume)
-		AddComponent(/datum/component/acid, acidpwr, acid_volume)
-		return 1
+	. = ..()
+	if((resistance_flags & UNACIDABLE) || (acid_volume <= 0) || acidpwr <= 0)
+		return FALSE
+
+	AddComponent(/datum/component/acid, acidpwr, acid_volume)
+	return TRUE
 
 //called when the obj is destroyed by acid.
 /obj/proc/acid_melt()
@@ -208,7 +211,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/fire_act(exposed_temperature, exposed_volume)
 	if(isturf(loc))
 		var/turf/T = loc
-		if(T.intact && level == 1) //fire can't damage things hidden below the floor.
+		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE)) //fire can't damage things hidden below the floor.
 			return
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
 		take_damage(clamp(0.02 * exposed_temperature, 0, 20), BURN, FIRE, 0)

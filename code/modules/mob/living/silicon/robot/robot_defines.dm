@@ -128,4 +128,4 @@
 	var/sleeper_r
 	var/sleeper_nv
 
-	tooltips = TRUE
+	should_tooltip = TRUE

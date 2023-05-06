@@ -220,7 +220,7 @@ Difficulty: Very Hard
 	pixels_per_second = TILES_TO_PIXELS(5)
 	eyeblur = 0
 	damage_type = BRUTE
-	pass_flags = PASSTABLE
+	pass_flags = GAME_PLANE
 
 /obj/item/projectile/colossus/on_hit(atom/target, blocked = FALSE)
 	. = ..()

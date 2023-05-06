@@ -1,13 +1,12 @@
 /obj/structure/sign
 	icon = 'icons/obj/decals.dmi'
 	anchored = TRUE
-	opacity = 0
+	opacity = FALSE
 	density = FALSE
-	plane = ABOVE_WALL_PLANE
 	layer = SIGN_LAYER
 	max_integrity = 100
 	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
-	var/buildable_sign = 1 //unwrenchable and modifiable
+	var/buildable_sign = TRUE //unwrenchable and modifiable
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/structure/sign/basic

@@ -18,9 +18,7 @@
 /obj/machinery/newscaster/security_unit{
 	pixel_y = 32
 	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "ae" = (

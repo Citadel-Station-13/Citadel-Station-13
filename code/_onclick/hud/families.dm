@@ -5,7 +5,7 @@
 	icon_state = "wanted_0"
 	screen_loc = ui_wanted_lvl
 	/// Wanted level, affects the hud icon. Level 0 is default, and the level 0 icon is blank, so in case of no families gamemode (and thus no wanted level), this HUD element will never appear.
-	level = 2
+	var/level = 2
 	/// Boolean, have the cops arrived? If so, the icon stops changing and remains the same.
 	var/cops_arrived = 0
 

@@ -7458,7 +7458,7 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = -26
 	},
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = 30
 	},
 /turf/open/floor/plasteel/dark,
@@ -7512,7 +7512,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/light,
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/dark,
@@ -18407,7 +18407,7 @@
 	c_tag = "Warden's Office";
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = -30
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -22985,7 +22985,7 @@
 	dir = 4
 	},
 /obj/machinery/light,
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_y = -30
 	},
 /obj/item/crowbar,
@@ -28486,9 +28486,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/virusfood{
-	pixel_y = -30
-	},
+/obj/structure/reagent_dispensers/wall/virusfood/directional/south,
 /turf/open/floor/plasteel/dark,
 /area/medical/virology)
 "aUz" = (
@@ -29099,7 +29097,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_y = -30
 	},
 /obj/machinery/button/door{
@@ -32618,7 +32616,7 @@
 	dir = 4;
 	pixel_x = -23
 	},
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_y = -30
 	},
 /obj/item/crowbar,
@@ -39486,7 +39484,7 @@
 /obj/machinery/light_switch{
 	pixel_y = -24
 	},
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = -30
 	},
 /obj/machinery/camera{
@@ -57076,7 +57074,7 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = 30
 	},
 /turf/open/floor/plasteel/dark,
@@ -58482,7 +58480,7 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_y = 30
 	},
 /turf/open/floor/wood,
@@ -64117,7 +64115,7 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = -30
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -68719,7 +68717,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/bot,
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = -30
 	},
 /turf/open/floor/plasteel/dark,

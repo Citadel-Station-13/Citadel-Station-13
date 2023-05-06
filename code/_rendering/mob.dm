@@ -18,4 +18,4 @@
  * destroys screen rendering. call on mob del
  */
 /mob/proc/dispose_rendering()
-	wipe_fullscreens()
+	clear_fullscreens()

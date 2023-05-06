@@ -2012,9 +2012,7 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "ex" = (
 /obj/structure/table,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/item/gun/ballistic/automatic/wt550,
 /obj/item/ammo_box/magazine/wt550m9{
 	pixel_y = 12

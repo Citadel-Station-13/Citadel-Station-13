@@ -244,7 +244,7 @@
 /obj/machinery/computer/shuttle/labor{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = -31
 	},
 /turf/open/floor/plasteel/grimy,

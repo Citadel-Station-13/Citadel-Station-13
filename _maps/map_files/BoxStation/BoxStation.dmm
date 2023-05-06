@@ -687,9 +687,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/office)
 "abI" = (
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -1258,7 +1256,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = 30
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1953,7 +1951,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = 30
 	},
 /obj/structure/table/wood,
@@ -2600,9 +2598,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = -32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "afy" = (
@@ -8942,7 +8938,7 @@
 /obj/machinery/light_switch{
 	pixel_y = -23
 	},
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = 32;
 	pixel_y = -32
 	},
@@ -12691,7 +12687,7 @@
 /area/construction/mining/aux_base)
 "aCY" = (
 /obj/machinery/computer/security,
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_y = 30
 	},
 /obj/effect/turf_decal/tile/red{
@@ -24987,7 +24983,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "bjN" = (
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = 30
 	},
 /obj/effect/turf_decal/tile/red,
@@ -31724,7 +31720,7 @@
 /turf/open/floor/plasteel/dark,
 /area/science/server)
 "bzz" = (
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = -30
 	},
 /obj/machinery/airalarm{
@@ -32419,7 +32415,7 @@
 /area/medical/medbay/central)
 "bBf" = (
 /obj/structure/filingcabinet,
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = 30
 	},
 /obj/machinery/newscaster{
@@ -38235,9 +38231,7 @@
 /area/security/checkpoint/engineering)
 "bOP" = (
 /obj/structure/table/glass,
-/obj/structure/reagent_dispensers/virusfood{
-	pixel_x = -30
-	},
+/obj/structure/reagent_dispensers/wall/virusfood/directional/west,
 /obj/item/book/manual/wiki/infections{
 	pixel_y = 7
 	},
@@ -39920,7 +39914,7 @@
 	pixel_y = 9
 	},
 /obj/item/pen,
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = 30
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -45124,9 +45118,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "chi" = (
-/obj/machinery/atmospherics/pipe/manifold4w/general{
-	level = 2
-	},
+/obj/machinery/atmospherics/pipe/manifold4w/general/visible,
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)

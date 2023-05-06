@@ -3606,9 +3606,7 @@
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/radio,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -8756,9 +8754,7 @@
 /obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/radio,
@@ -12525,9 +12521,7 @@
 /area/security/prison)
 "aUD" = (
 /obj/structure/table/reinforced,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/item/electropack,
 /obj/item/assembly/signaler,
 /obj/machinery/light{
@@ -14224,9 +14218,7 @@
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = -32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -18314,9 +18306,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = -32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -21800,7 +21790,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-8"
 	},
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = 64;
 	pixel_y = 32
 	},
@@ -26937,9 +26927,7 @@
 /area/security/checkpoint/engineering)
 "bYH" = (
 /obj/structure/table/reinforced,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = -32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26;
 	pixel_y = -32
@@ -28377,9 +28365,7 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "cbL" = (
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/structure/table/reinforced,
 /obj/item/clothing/mask/gas/sechailer{
 	pixel_x = -3;
@@ -28761,9 +28747,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -30307,7 +30291,7 @@
 	pixel_x = 32;
 	pixel_y = -32
 	},
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = 32;
 	pixel_y = 32
 	},
@@ -35133,9 +35117,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "cuK" = (
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = -32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/box/flashes,
@@ -40000,9 +39982,7 @@
 /obj/machinery/status_display/ai{
 	pixel_y = 32
 	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -41218,9 +41198,7 @@
 /obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/radio,
@@ -67558,9 +67536,7 @@
 /turf/open/floor/plasteel,
 /area/service/kitchen)
 "dWm" = (
-/obj/structure/reagent_dispensers/virusfood{
-	pixel_x = -32
-	},
+/obj/structure/reagent_dispensers/wall/virusfood/directional/west,
 /obj/structure/table/glass,
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -72086,9 +72062,7 @@
 "etJ" = (
 /obj/machinery/recharger,
 /obj/structure/table/reinforced,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -74147,7 +74121,7 @@
 /turf/open/floor/plasteel,
 /area/engineering/main)
 "fjQ" = (
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_x = -32;
 	pixel_y = 32
 	},

@@ -967,9 +967,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED])
 	if(path_hud)
 		path_huds_watching_me += path_hud
-	for(var/V in path_huds_watching_me)
-		var/datum/atom_hud/H = V
-		H.remove_from_hud(src)
+	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
+		hud.remove_from_hud(src)
 
 	var/list/path_images = hud_list[DIAG_PATH_HUD]
 	QDEL_LIST(path_images)
@@ -978,7 +977,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			var/turf/T = newpath[i]
 			if(T == loc) //don't bother putting an image if it's where we already exist.
 				continue
-			var/direction = NORTH
+			var/direction = get_dir(src, T)
 			if(i > 1)
 				var/turf/prevT = path[i - 1]
 				var/image/prevI = path[prevT]
@@ -987,7 +986,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 					var/turf/prevprevT = path[i - 2]
 					var/prevDir = get_dir(prevprevT, prevT)
 					var/mixDir = direction|prevDir
-					if(mixDir in GLOB.diagonals)
+					if(ISDIAGONALDIR(mixDir))
 						prevI.dir = mixDir
 						if(prevDir & (NORTH|SOUTH))
 							var/matrix/ntransform = matrix()
@@ -1001,7 +1000,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			MA.icon = path_image_icon
 			MA.icon_state = path_image_icon_state
 			MA.layer = ABOVE_OPEN_TURF_LAYER
-			MA.plane = 0
+			MA.plane = GAME_PLANE
 			MA.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 			MA.color = path_image_color
 			MA.dir = direction
@@ -1010,9 +1009,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 			path[T] = I
 			path_images += I
 
-	for(var/V in path_huds_watching_me)
-		var/datum/atom_hud/H = V
-		H.add_to_hud(src)
+	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
+		hud.add_to_hud(src)
 
 
 /mob/living/simple_animal/bot/proc/increment_path()

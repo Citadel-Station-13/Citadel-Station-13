@@ -3,7 +3,6 @@
 	desc = "There is a small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "fireaxe"
-	plane = ABOVE_WALL_PLANE
 	anchored = TRUE
 	density = FALSE
 	armor = list(MELEE = 50, BULLET = 20, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 90, ACID = 50)

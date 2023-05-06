@@ -11,6 +11,7 @@ GLOBAL_LIST_EMPTY(bluespace_pipe_networks)
 	can_buckle = FALSE
 	construction_type = /obj/item/pipe/bluespace
 	var/bluespace_network_name
+	var/showpipe = FALSE
 
 /obj/machinery/atmospherics/pipe/bluespace/New()
 	icon_state = "pipe"
@@ -46,22 +47,21 @@ GLOBAL_LIST_EMPTY(bluespace_pipe_networks)
 /obj/machinery/atmospherics/pipe/bluespace/pipeline_expansion()
 	return ..() + GLOB.bluespace_pipe_networks[bluespace_network_name] - src
 
-/obj/machinery/atmospherics/pipe/bluespace/hide()
-	update_icon()
+/**
+ * Called in Initialize(), set the showpipe var to true or false depending on the situation, calls update_icon()
+ */
+/obj/machinery/atmospherics/pipe/bluespace/proc/hide_pipe(datum/source, covered)
+	SIGNAL_HANDLER
+	showpipe = !covered
+	update_appearance()
 
-/obj/machinery/atmospherics/pipe/bluespace/update_icon(showpipe)
+/obj/machinery/atmospherics/pipe/bluespace/update_icon()
 	underlays.Cut()
 
-	var/turf/T = loc
-	if(level == 2 || !T.intact)
-		showpipe = TRUE
-		plane = GAME_PLANE
-	else
-		showpipe = FALSE
-		plane = FLOOR_PLANE
+	plane = showpipe ? GAME_PLANE : FLOOR_PLANE
 
 	if(!showpipe)
-		return //no need to update the pipes if they aren't showing
+		return ..() //no need to update the pipes if they aren't showing
 
 	var/connected = 0 //Direction bitset
 
@@ -75,6 +75,8 @@ GLOBAL_LIST_EMPTY(bluespace_pipe_networks)
 	for(var/direction in GLOB.cardinals)
 		if((initialize_directions & direction) && !(connected & direction))
 			underlays += get_pipe_underlay("pipe_exposed", direction)
+
+	return ..()
 
 /obj/machinery/atmospherics/pipe/bluespace/paint()
 	return FALSE

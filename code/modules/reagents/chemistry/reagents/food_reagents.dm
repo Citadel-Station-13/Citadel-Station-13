@@ -433,27 +433,58 @@
 	pH = 11
 	value = REAGENT_VALUE_COMMON
 
-/datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/M)
-	M.slurring = max(M.slurring,50)
+/datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/psychonaut, delta_time, times_fired)
+	psychonaut.slurring = max(psychonaut.slurring, 50)
+
 	switch(current_cycle)
 		if(1 to 5)
-			M.Dizzy(5)
-			M.set_drugginess(30)
-			if(prob(10))
-				M.emote(pick("twitch","giggle"))
+			if(DT_PROB(5, delta_time))
+				psychonaut.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			M.Jitter(10)
-			M.Dizzy(10)
-			M.set_drugginess(35)
-			if(prob(20))
-				M.emote(pick("twitch","giggle"))
+			psychonaut.Jitter(10 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+			if(DT_PROB(10, delta_time))
+				psychonaut.emote(pick("twitch","giggle"))
 		if (10 to INFINITY)
-			M.Jitter(20)
-			M.Dizzy(20)
-			M.set_drugginess(40)
-			if(prob(30))
-				M.emote(pick("twitch","giggle"))
+			psychonaut.Jitter(20 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+			if(DT_PROB(16, delta_time))
+				psychonaut.emote(pick("twitch","giggle"))
 	..()
+
+/datum/reagent/drug/mushroomhallucinogen/on_mob_metabolize(mob/living/psychonaut)
+	. = ..()
+
+	SEND_SIGNAL(psychonaut, COMSIG_ADD_MOOD_EVENT, "tripping", /datum/mood_event/high, name)
+	if(!psychonaut.hud_used)
+		return
+
+	var/atom/movable/plane_master_controller/game_plane_master_controller = psychonaut.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+
+	var/list/col_filter_identity = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.000,0,0,0)
+	var/list/col_filter_green = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.333,0,0,0)
+	var/list/col_filter_blue = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.666,0,0,0)
+	var/list/col_filter_red = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 1.000,0,0,0) //visually this is identical to the identity
+
+	game_plane_master_controller.add_filter("rainbow", 10, color_matrix_filter(col_filter_red, FILTER_COLOR_HSL))
+
+	for(var/filter in game_plane_master_controller.get_filters("rainbow"))
+		animate(filter, color = col_filter_identity, time = 0 SECONDS, loop = -1, flags = ANIMATION_PARALLEL)
+		animate(color = col_filter_green, time = 4 SECONDS)
+		animate(color = col_filter_blue, time = 4 SECONDS)
+		animate(color = col_filter_red, time = 4 SECONDS)
+
+	game_plane_master_controller.add_filter("psilocybin_wave", 1, list("type" = "wave", "size" = 2, "x" = 32, "y" = 32))
+
+	for(var/filter in game_plane_master_controller.get_filters("psilocybin_wave"))
+		animate(filter, time = 64 SECONDS, loop = -1, easing = LINEAR_EASING, offset = 32, flags = ANIMATION_PARALLEL)
+
+/datum/reagent/drug/mushroomhallucinogen/on_mob_end_metabolize(mob/living/psychonaut)
+	. = ..()
+	SEND_SIGNAL(psychonaut, COMSIG_CLEAR_MOOD_EVENT, "tripping")
+	if(!psychonaut.hud_used)
+		return
+	var/atom/movable/plane_master_controller/game_plane_master_controller = psychonaut.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	game_plane_master_controller.remove_filter("rainbow")
+	game_plane_master_controller.remove_filter("psilocybin_wave")
 
 /datum/reagent/consumable/garlic //NOTE: having garlic in your blood stops vampires from biting you.
 	name = "Garlic Juice"

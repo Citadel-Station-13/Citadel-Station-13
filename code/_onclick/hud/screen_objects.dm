@@ -667,7 +667,6 @@
 	icon = 'icons/blank_title.png'
 	icon_state = ""
 	screen_loc = "1,1"
-	layer = SPLASHSCREEN_LAYER
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
 
@@ -725,7 +724,7 @@
 	icon_state = ""
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	screen_loc = ui_combo
-	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE
 	var/timerid
 
 /atom/movable/screen/combo/proc/clear_streak()

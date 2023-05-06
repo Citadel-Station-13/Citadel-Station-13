@@ -15,8 +15,6 @@
 	var/textb = copytext(HTMLstring, 6, 8)
 	return rgb(255 - hex2num(textr), 255 - hex2num(textg), 255 - hex2num(textb))
 
-//Better performant than an artisanal proc and more reliable than Turn(). From TGMC.
-#define REVERSE_DIR(dir) ( ((dir & 85) << 1) | ((dir & 170) >> 1) )
 //Returns location. Returns null if no location was found.
 /proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = FALSE, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
 /*
@@ -717,7 +715,7 @@ Checks if that loc and dir has an item on the wall
 */
 GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
 	/obj/machinery/power/apc, /obj/machinery/airalarm, /obj/item/radio/intercom,
-	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
+	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/wall/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
 	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/button,
 	/obj/machinery/computer/security/telescreen, /obj/machinery/embedded_controller/radio/simple_vent_controller,

@@ -1,14 +1,3 @@
-// Byond direction defines, because I want to put them somewhere.
-// #define NORTH 1
-// #define SOUTH 2
-// #define EAST 4
-// #define WEST 8
-
-#define TEXT_NORTH			"[NORTH]"
-#define TEXT_SOUTH			"[SOUTH]"
-#define TEXT_EAST			"[EAST]"
-#define TEXT_WEST			"[WEST]"
-
 /// yeah yeah i'm a lazy asshole who can't debug yeah yeah
 #define DEBUG_LINE message_admins("DEBUG: [__FILE__] [__LINE__] executing!")
 
@@ -470,11 +459,6 @@ GLOBAL_LIST_INIT(pda_reskins, list(
 #define FLESH_SCAR_FILE "wounds/flesh_scar_desc.json"
 #define BONE_SCAR_FILE "wounds/bone_scar_desc.json"
 #define SCAR_LOC_FILE "wounds/scar_loc.json"
-
-
-//Fullscreen overlay resolution in tiles.
-#define FULLSCREEN_OVERLAY_RESOLUTION_X 15
-#define FULLSCREEN_OVERLAY_RESOLUTION_Y 15
 
 #define SUMMON_GUNS "guns"
 #define SUMMON_MAGIC "magic"

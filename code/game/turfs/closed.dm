@@ -1,9 +1,8 @@
 /turf/closed
 	layer = CLOSED_TURF_LAYER
-	plane = WALL_PLANE
-	opacity = 1
+	opacity = TRUE
 	density = TRUE
-	blocks_air = 1
+	blocks_air = TRUE
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	rad_insulation = RAD_MEDIUM_INSULATION
 	pass_flags_self = PASSCLOSEDTURF

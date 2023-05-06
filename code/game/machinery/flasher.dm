@@ -5,7 +5,7 @@
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
-	plane = ABOVE_WALL_PLANE
+	// base_icon_state = "mflash"
 	max_integrity = 250
 	integrity_failure = 0.4
 	light_color = LIGHT_COLOR_WHITE
@@ -16,6 +16,8 @@
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
 	var/strength = 100 //How knocked down targets are when flashed.
 	var/base_state = "mflash"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"

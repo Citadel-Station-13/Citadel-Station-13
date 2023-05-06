@@ -1041,7 +1041,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/show_character_previews(mutable_appearance/source)
 	LAZYINITLIST(char_render_holders)
 	if(!LAZYLEN(char_render_holders))
-		for(var/plane_master_path as anything in subtypesof(/atom/movable/screen/plane_master))
+		for(var/plane_master_path as anything in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
 			var/atom/movable/screen/plane_master/plane_master = new plane_master_path()
 			char_render_holders["plane_master-[plane_master.plane]"] = plane_master
 			plane_master.backdrop(mob)

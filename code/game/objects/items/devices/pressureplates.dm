@@ -5,7 +5,6 @@
 	icon = 'icons/obj/device.dmi'
 	item_state = "flash"
 	icon_state = "pressureplate"
-	level = 1
 	var/trigger_mob = TRUE
 	var/trigger_item = FALSE
 	var/specific_item = null
@@ -29,8 +28,7 @@
 		sigdev = new
 		sigdev.code = roundstart_signaller_code
 		sigdev.frequency = roundstart_signaller_freq
-		if(isopenturf(loc))
-			hide(TRUE)
+	AddElement(/datum/element/undertile, tile_overlay = tile_overlay, use_anchor = TRUE)
 
 /obj/item/pressure_plate/Crossed(atom/movable/AM)
 	. = ..()
@@ -64,21 +62,3 @@
 			sigdev.forceMove(get_turf(src))
 		sigdev = null
 	return ..()
-
-/obj/item/pressure_plate/hide(yes)
-	if(yes)
-		invisibility = INVISIBILITY_MAXIMUM
-		anchored = TRUE
-		icon_state = null
-		active = TRUE
-		can_trigger = TRUE
-		if(tile_overlay)
-			loc.add_overlay(tile_overlay)
-	else
-		invisibility = initial(invisibility)
-		anchored = FALSE
-		icon_state = initial(icon_state)
-		active = FALSE
-		if(tile_overlay)
-			loc.overlays -= tile_overlay
-

@@ -186,6 +186,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/auto_fit_viewport = FALSE
 	///Should we be in the widescreen mode set by the config?
 	var/widescreenpref = TRUE
+	///How opaque is the fov effect?
+	var/fov_darkness = 255
 	///Strip menu style
 	var/long_strip_menu = FALSE
 	///What size should pixels be displayed as? 0 is strech to fit
@@ -905,6 +907,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat +="<td width='300px' height='300px' valign='top'>"
 			dat += "<h2>Citadel Preferences</h2>" //Because fuck me if preferences can't be fucking modularized and expected to update in a reasonable timeframe.
 			dat += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled (15x15)"]</a><br>"
+			dat += "<b>Field of view darkness:</b> <a href='?_src_=prefs;preference=fov_darkness'>[fov_darkness]</a><br>"
 			dat += "<b>Long strip menu:</b> <a href='?_src_=prefs;preference=long_strip_menu'>[long_strip_menu ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Auto stand:</b> <a href='?_src_=prefs;preference=autostand'>[autostand ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Auto OOC:</b> <a href='?_src_=prefs;preference=auto_ooc'>[auto_ooc ? "Enabled" : "Disabled"]</a><br>"
@@ -2760,6 +2763,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("widescreenpref")
 					widescreenpref = !widescreenpref
 					user.client.view_size.setDefault(getScreenSize(widescreenpref))
+				if("fov_darkness")
+					var/how_dark = input(user, "The density of darkness of field of vision cones you may have by wearing restrictive eye cover.", "Field of view darkness", fov_darkness) as null|num
+					if(!isnull(how_dark))
+						fov_darkness = how_dark
 				if("long_strip_menu")
 					long_strip_menu = !long_strip_menu
 
@@ -3081,12 +3088,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("ambientocclusion")
 					ambientocclusion = !ambientocclusion
 					if(parent && parent.screen && parent.screen.len)
-						var/atom/movable/screen/plane_master/game_world/G = parent.mob.hud_used.plane_masters["[GAME_PLANE]"]
-						var/atom/movable/screen/plane_master/above_wall/A = parent.mob.hud_used.plane_masters["[ABOVE_WALL_PLANE]"]
-						var/atom/movable/screen/plane_master/wall/W = parent.mob.hud_used.plane_masters["[WALL_PLANE]"]
-						G.backdrop(parent.mob)
-						A.backdrop(parent.mob)
-						W.backdrop(parent.mob)
+						var/atom/movable/screen/plane_master/game_world/plane_master = locate() in parent.screen
+						if(!plane_master)
+							return
+
+						plane_master.backdrop(parent.mob)
 
 				if("auto_fit_viewport")
 					auto_fit_viewport = !auto_fit_viewport
