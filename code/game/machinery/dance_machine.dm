@@ -121,7 +121,7 @@
 			if(!allowed(usr))
 				return
 			if(!active && !playing)
-				activate_music()
+				INVOKE_ASYNC(src, .proc/activate_music)
 			else
 				stop = 0
 			return TRUE
@@ -152,7 +152,7 @@
 			if(active)
 				say("[selectedtrack.song_name] has been added to the queue.")
 			else if(!playing)
-				activate_music()
+				INVOKE_ASYNC(src, .proc/activate_music)
 			playsound(src, 'sound/machines/ping.ogg', 50, TRUE)
 			queuecooldown = world.time + (3 SECONDS)
 			return TRUE
@@ -497,7 +497,7 @@
 			active = FALSE
 			dance_over()
 			if(stop && queuedplaylist.len)
-				activate_music()
+				INVOKE_ASYNC(src, .proc/activate_music)
 			else
 				playsound(src,'sound/machines/terminal_off.ogg',50,1)
 				update_icon()
