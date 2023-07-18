@@ -1449,99 +1449,98 @@
 //Update the screentip to reflect what we're hoverin over
 /atom/MouseEntered(location, control, params)
 	. = ..()
-	// Screentips
+
 	var/mob/user = usr
-	if(isnull(user) && !user.client)
+	if(isnull(user))
+		return
+	if(!GET_CLIENT(user))
 		return
 
+	// Screentips
 	var/datum/hud/active_hud = user.hud_used
-	if(active_hud)
-		var/screentips_enabled = user.client.prefs.screentip_pref
-		if(screentips_enabled == SCREENTIP_PREFERENCE_DISABLED || (flags_1 & NO_SCREENTIPS_1))
-			active_hud.screentip_text.maptext = ""
-		else
-			active_hud.screentip_text.maptext_y = 0
-			var/lmb_rmb_line = ""
-			var/ctrl_lmb_ctrl_rmb_line = ""
-			var/alt_lmb_alt_rmb_line = ""
-			var/shift_lmb_ctrl_shift_lmb_line = ""
-			var/extra_lines = 0
-			var/extra_context = ""
+	if(!active_hud)
+		return
 
-			if ((isliving(user) || isovermind(user) || isaicamera(user)) && (user.client.prefs.screentip_pref != SCREENTIP_PREFERENCE_NO_CONTEXT))
-				var/obj/item/held_item = user.get_active_held_item()
-				var/allow_images = user.client.prefs.screentip_allow_images
+	var/screentips_enabled = user.client.prefs.screentip_pref
+	if(screentips_enabled == SCREENTIP_PREFERENCE_DISABLED || (flags_1 & NO_SCREENTIPS_1))
+		active_hud.screentip_text.maptext = ""
+		return
 
-				if (flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1 || held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS)
-					var/list/context = list()
+	active_hud.screentip_text.maptext_y = 10 // 10px lines us up with the action buttons top left corner
+	var/lmb_rmb_line = ""
+	var/ctrl_lmb_ctrl_rmb_line = ""
+	var/alt_lmb_alt_rmb_line = ""
+	var/shift_lmb_ctrl_shift_lmb_line = ""
+	var/extra_lines = 0
+	var/extra_context = ""
 
-					var/contextual_screentip_returns = \
-						SEND_SIGNAL(src, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, context, held_item, user) \
-						| (held_item && SEND_SIGNAL(held_item, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, context, src, user))
+	if ((isliving(user) || isovermind(user) || isaicamera(user)) && (user.client.prefs.screentip_pref != SCREENTIP_PREFERENCE_NO_CONTEXT))
+		var/obj/item/held_item = user.get_active_held_item()
 
-					if (contextual_screentip_returns & CONTEXTUAL_SCREENTIP_SET)
-						// LMB and RMB on one line...
-						var/lmb_text = ""
-						if((SCREENTIP_CONTEXT_LMB in context) && (length(context[SCREENTIP_CONTEXT_LMB]) > 0))
-							lmb_text = build_context(context, SCREENTIP_CONTEXT_LMB, allow_images)
-						var/rmb_text = ""
-						if((SCREENTIP_CONTEXT_RMB in context) && (length(context[SCREENTIP_CONTEXT_RMB]) > 0))
-							rmb_text = build_context(context, SCREENTIP_CONTEXT_RMB, allow_images)
+		if (flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1 || held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS)
+			var/list/context = list()
 
-						if (lmb_text)
-							lmb_rmb_line = lmb_text
-							if (rmb_text)
-								lmb_rmb_line += " | [allow_images ? " " : ""][rmb_text]"
-						else if (rmb_text)
-							lmb_rmb_line = rmb_text
+			var/contextual_screentip_returns = \
+				SEND_SIGNAL(src, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, context, held_item, user) \
+				| (held_item && SEND_SIGNAL(held_item, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, context, src, user))
 
-						// Ctrl-LMB, Ctrl-RMB on one line...
-						if (lmb_rmb_line != "")
-							lmb_rmb_line += "<br>"
-							extra_lines++
-						if((SCREENTIP_CONTEXT_CTRL_LMB in context) && (length(context[SCREENTIP_CONTEXT_CTRL_LMB]) > 0))
-							ctrl_lmb_ctrl_rmb_line = build_context(context, SCREENTIP_CONTEXT_CTRL_LMB, allow_images)
+			if (contextual_screentip_returns & CONTEXTUAL_SCREENTIP_SET)
+				var/screentip_images = user.client.prefs.screentip_images
+				// LMB and RMB on one line...
+				var/lmb_text = build_context(context, SCREENTIP_CONTEXT_LMB, screentip_images)
+				var/rmb_text = build_context(context, SCREENTIP_CONTEXT_RMB, screentip_images)
 
-						if((SCREENTIP_CONTEXT_CTRL_RMB in context) && (length(context[SCREENTIP_CONTEXT_CTRL_RMB]) > 0))
-							if (ctrl_lmb_ctrl_rmb_line != "")
-								ctrl_lmb_ctrl_rmb_line += " | [allow_images ? " " : ""]"
-							ctrl_lmb_ctrl_rmb_line += "[SCREENTIP_CONTEXT_CTRL_RMB]: [context[SCREENTIP_CONTEXT_CTRL_RMB]]"
-							ctrl_lmb_ctrl_rmb_line = build_context(context, SCREENTIP_CONTEXT_CTRL_RMB, allow_images)
+				if (lmb_text != "")
+					lmb_rmb_line = lmb_text
+					if (rmb_text != "")
+						lmb_rmb_line += " | [rmb_text]"
+				else if (rmb_text != "")
+					lmb_rmb_line = rmb_text
 
-						// Alt-LMB, Alt-RMB on one line...
-						if (ctrl_lmb_ctrl_rmb_line != "")
-							ctrl_lmb_ctrl_rmb_line += "<br>"
-							extra_lines++
-						if((SCREENTIP_CONTEXT_ALT_LMB in context) && (length(context[SCREENTIP_CONTEXT_ALT_LMB]) > 0))
-							alt_lmb_alt_rmb_line = build_context(context, SCREENTIP_CONTEXT_ALT_LMB, allow_images)
-						if((SCREENTIP_CONTEXT_ALT_RMB in context) && (length(context[SCREENTIP_CONTEXT_ALT_RMB]) > 0))
-							if (alt_lmb_alt_rmb_line != "")
-								alt_lmb_alt_rmb_line += " | [allow_images ? " " : ""]"
-							alt_lmb_alt_rmb_line = build_context(context, SCREENTIP_CONTEXT_ALT_RMB, allow_images)
+				// Ctrl-LMB, Ctrl-RMB on one line...
+				if (lmb_rmb_line != "")
+					lmb_rmb_line += "<br>"
+					extra_lines++
+				if (SCREENTIP_CONTEXT_CTRL_LMB in context)
+					ctrl_lmb_ctrl_rmb_line += build_context(context, SCREENTIP_CONTEXT_CTRL_LMB, screentip_images)
 
-						// Shift-LMB, Ctrl-Shift-LMB on one line...
-						if (alt_lmb_alt_rmb_line != "")
-							alt_lmb_alt_rmb_line += "<br>"
-							extra_lines++
-						if((SCREENTIP_CONTEXT_SHIFT_LMB in context) && (length(context[SCREENTIP_CONTEXT_SHIFT_LMB]) > 0))
-							shift_lmb_ctrl_shift_lmb_line = build_context(context, SCREENTIP_CONTEXT_SHIFT_LMB, allow_images)
+				if (SCREENTIP_CONTEXT_CTRL_RMB in context)
+					if (ctrl_lmb_ctrl_rmb_line != "")
+						ctrl_lmb_ctrl_rmb_line += " | "
+					ctrl_lmb_ctrl_rmb_line += build_context(context, SCREENTIP_CONTEXT_CTRL_RMB, screentip_images)
 
-						if((SCREENTIP_CONTEXT_CTRL_SHIFT_LMB in context) && (length(context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]) > 0))
-							if (shift_lmb_ctrl_shift_lmb_line != "")
-								shift_lmb_ctrl_shift_lmb_line += " | [allow_images ? " " : ""]"
-							shift_lmb_ctrl_shift_lmb_line += "[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]]"
-							shift_lmb_ctrl_shift_lmb_line = build_context(context, SCREENTIP_CONTEXT_CTRL_SHIFT_LMB, allow_images)
+				// Alt-LMB, Alt-RMB on one line...
+				if (ctrl_lmb_ctrl_rmb_line != "")
+					ctrl_lmb_ctrl_rmb_line += "<br>"
+					extra_lines++
+				if (SCREENTIP_CONTEXT_ALT_LMB in context)
+					alt_lmb_alt_rmb_line += build_context(context, SCREENTIP_CONTEXT_ALT_LMB, screentip_images)
+				if (SCREENTIP_CONTEXT_ALT_RMB in context)
+					if (alt_lmb_alt_rmb_line != "")
+						alt_lmb_alt_rmb_line += " | "
+					alt_lmb_alt_rmb_line += build_context(context, SCREENTIP_CONTEXT_ALT_RMB, screentip_images)
 
-						if (shift_lmb_ctrl_shift_lmb_line != "")
-							extra_lines++
+				// Shift-LMB, Ctrl-Shift-LMB on one line...
+				if (alt_lmb_alt_rmb_line != "")
+					alt_lmb_alt_rmb_line += "<br>"
+					extra_lines++
+				if (SCREENTIP_CONTEXT_SHIFT_LMB in context)
+					shift_lmb_ctrl_shift_lmb_line += build_context(context, SCREENTIP_CONTEXT_SHIFT_LMB, screentip_images)
+				if (SCREENTIP_CONTEXT_CTRL_SHIFT_LMB in context)
+					if (shift_lmb_ctrl_shift_lmb_line != "")
+						shift_lmb_ctrl_shift_lmb_line += " | "
+					shift_lmb_ctrl_shift_lmb_line += build_context(context, SCREENTIP_CONTEXT_CTRL_SHIFT_LMB, screentip_images)
 
-						if(extra_lines)
-							extra_context = "<br><span style='font-size: 7px'>[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
-							//first extra line pushes atom name line up 10px, subsequent lines push it up 9px, this offsets that and keeps the first line in the same place
-							active_hud.screentip_text.maptext_y = -10 + (extra_lines - 1) * -9
+				if (shift_lmb_ctrl_shift_lmb_line != "")
+					extra_lines++
 
-			if (screentips_enabled == SCREENTIP_PREFERENCE_CONTEXT_ONLY && extra_context == "")
-				active_hud.screentip_text.maptext = ""
-			else
-				//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
-				active_hud.screentip_text.maptext = "<span class='maptext' style='text-align: center; font-size: 32px; color: [user.client.prefs.screentip_color]'>[name][extra_context]</span>"
+				if(extra_lines)
+					extra_context = "<br><span class='subcontext'>[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
+					//first extra line pushes atom name line up 10px, subsequent lines push it up 9px, this offsets that and keeps the first line in the same place
+					active_hud.screentip_text.maptext_y = -1 + (extra_lines - 1) * -9
+
+	if (screentips_enabled == SCREENTIP_PREFERENCE_CONTEXT_ONLY && extra_context == "")
+		active_hud.screentip_text.maptext = ""
+	else
+		//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
+		active_hud.screentip_text.maptext = "<span class='context' style='text-align: center; color: [user.client.prefs.screentip_color]'>[name][extra_context]</span>"

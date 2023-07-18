@@ -12,19 +12,28 @@ GLOBAL_LIST_INIT_TYPED(screentip_context_icons, /image, prepare_screentip_contex
  * # Builds context with each intent for this key
  * Args:
  * - context = list (REQUIRED)
+ * 	- context[key] = list (REQUIRED)
  * - key = string (REQUIRED)
  * - allow_image = boolean (not required)
 */
 /proc/build_context(list/context, key, allow_image)
+	if(!(length(context) && length(context[key]) && key))
+		return ""
 	var/list/to_add
 	for(var/intent in context[key])
-		var/key_help = "[length(key) > 3 ? "[copytext(key, 1, -3)][allow_image ? " " : ""]" : ""]"
-		var/icon = "[copytext(key, -3)]-[intent]"
+		// Get everything but the mouse button, may be empty
+		var/key_combo = length(key) > 3 ? "[copytext(key, 1, -3)]" : ""
+		// Grab the mouse button, LMB/RMB+intent
+		var/button = "[copytext(key, -3)]-[intent]"
 		if(allow_image)
-			icon = "\icon[GLOB.screentip_context_icons[icon]]"
-		LAZYADD(to_add, "[key_help][icon]: [context[key][intent]]")
+			// Compile into image, if allowed
+			button = "\icon[GLOB.screentip_context_icons[button]]"
+		LAZYADD(to_add, "[key_combo][button][allow_image ? "" : ":"] [context[key][intent]]")
 
-	var/separator = "[allow_image ? "  " : " | "]"
+	// Prepare separator for same button but different intent
+	var/separator = "[allow_image ? " " : " / "]"
+
+	// Voilá, final result
 	return english_list(to_add, "", separator, separator)
 
 #undef HINT_ICON_FILE
