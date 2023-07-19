@@ -305,6 +305,7 @@
 	. = ..()
 	if(isAI(user))
 		LAZYSET(context[SCREENTIP_CONTEXT_CTRL_LMB], INTENT_ANY, "Start streaming") // funny
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/status_display/evac/Initialize(mapload)
 	. = ..()
