@@ -13,6 +13,16 @@
 	var/cooldown_time = 100
 	req_access = list(ACCESS_AI_UPLOAD)
 
+/obj/machinery/ai_slipper/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/machinery/ai_slipper/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(issilicon(user))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Dispense foam")
+		return CONTEXTUAL_SCREENTIP_SET
+
 /obj/machinery/ai_slipper/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>It has <b>[uses]</b> uses of foam remaining.</span>"

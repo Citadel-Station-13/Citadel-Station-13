@@ -99,12 +99,13 @@
 		has_sensor = BROKEN_SENSORS
 		sensordamage = sensormaxintegrity
 
-/obj/item/clothing/under/New()
+/obj/item/clothing/under/Initialize(mapload)
 	if(sensor_flags & SENSOR_RANDOM)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
 	sensor_mode_intended = sensor_mode
-	..()
+	register_context()
+	return ..()
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
@@ -359,6 +360,21 @@
 				mutantrace_variation |= USE_TAUR_CLIP_MASK
 
 	return TRUE
+
+/obj/item/clothing/under/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if (!(item_flags & IN_INVENTORY))
+		return
+
+	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+
+	LAZYSET(context[SCREENTIP_CONTEXT_CTRL_LMB], INTENT_ANY, "Set to highest sensor")
+	if(attached_accessory)
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, "Remove [attached_accessory]")
+	else
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, "Adjust [src]")
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/clothing/under/rank
 	dying_key = DYE_REGISTRY_UNDER
