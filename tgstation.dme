@@ -16,6 +16,7 @@
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
 #include "_maps\map_files\FestiveBall\doorButtonOrganizer.dm"
+#include "code\__byond_version_compat.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_auxtools.dm"
@@ -157,6 +158,7 @@
 #include "code\__DEFINES\dcs\flags.dm"
 #include "code\__DEFINES\dcs\helpers.dm"
 #include "code\__DEFINES\dcs\signals.dm"
+#include "code\__DEFINES\dcs\signals\signals_hud.dm"
 #include "code\__DEFINES\dcs\signals\signals_painting.dm"
 #include "code\__DEFINES\dcs\signals\signals_screentips.dm"
 #include "code\__DEFINES\dcs\signals\signals_subsystem.dm"
