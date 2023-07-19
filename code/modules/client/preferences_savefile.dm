@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	57
+#define SAVEFILE_VERSION_MAX	58
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -382,6 +382,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			else
 				S["all_quirks"] = list("Dullahan")
 
+	// So, we're already on 57 even though we were meant to be on like, 56? i'm gonna try to correct this,
+	// And i'm so sorry for this.
+	if(current_version < 58)
+		S["screentip_images"] = TRUE // This was meant to default active, i'm so sorry. Turn it off if you must.
+
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return
@@ -423,7 +428,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["outline_enabled"] >> outline_enabled
 	S["screentip_pref"] >> screentip_pref
 	S["screentip_color"] >> screentip_color
-	S["screentip_allow_images"] >> screentip_allow_images
+	S["screentip_images"] >> screentip_images
 	S["hotkeys"] >> hotkeys
 	S["chat_on_map"] >> chat_on_map
 	S["max_chat_length"] >> max_chat_length
@@ -614,7 +619,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["outline_color"], outline_color)
 	WRITE_FILE(S["screentip_pref"], screentip_pref)
 	WRITE_FILE(S["screentip_color"], screentip_color)
-	WRITE_FILE(S["screentip_allow_images"], screentip_allow_images)
+	WRITE_FILE(S["screentip_images"], screentip_images)
 	WRITE_FILE(S["hotkeys"], hotkeys)
 	WRITE_FILE(S["chat_on_map"], chat_on_map)
 	WRITE_FILE(S["max_chat_length"], max_chat_length)
