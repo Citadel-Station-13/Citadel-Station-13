@@ -1,12 +1,13 @@
 #define HINT_ICON_FILE 'icons/UI_Icons/screentips/cursor_hints.dmi'
 
-// Generate intent icons
+/// Stores the cursor hint icons for screentip context.
 GLOBAL_LIST_INIT_TYPED(screentip_context_icons, /image, prepare_screentip_context_icons())
 
 /proc/prepare_screentip_context_icons()
-	. = list()
+	var/list/output = list()
 	for(var/state in icon_states(HINT_ICON_FILE))
-		.[state] = image(HINT_ICON_FILE, icon_state = state)
+		output[state] = image(HINT_ICON_FILE, icon_state = state)
+	return output
 
 /*
  * # Builds context with each intent for this key
@@ -21,7 +22,7 @@ GLOBAL_LIST_INIT_TYPED(screentip_context_icons, /image, prepare_screentip_contex
 		return ""
 	var/list/to_add
 	for(var/intent in context[key])
-		// Get everything but the mouse button, may be empty
+		// Splits key combinations from mouse buttons. e.g. `Ctrl-Shift-LMB` goes in, `Ctrl-Shift-` goes out. Will be empty for single button actions.
 		var/key_combo = length(key) > 3 ? "[copytext(key, 1, -3)]" : ""
 		// Grab the mouse button, LMB/RMB+intent
 		var/button = "[copytext(key, -3)]-[intent]"
@@ -34,6 +35,6 @@ GLOBAL_LIST_INIT_TYPED(screentip_context_icons, /image, prepare_screentip_contex
 	var/separator = "[allow_image ? " " : " / "]"
 
 	// Voilá, final result
-	return english_list(to_add, "", separator, separator)
+	return to_add.Join(separator)
 
 #undef HINT_ICON_FILE
