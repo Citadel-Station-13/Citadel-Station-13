@@ -99,13 +99,13 @@
 		has_sensor = BROKEN_SENSORS
 		sensordamage = sensormaxintegrity
 
-/obj/item/clothing/under/Initialize(mapload)
+/obj/item/clothing/under/New()
 	if(sensor_flags & SENSOR_RANDOM)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
 	sensor_mode_intended = sensor_mode
 	register_context()
-	return ..()
+	..()
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
