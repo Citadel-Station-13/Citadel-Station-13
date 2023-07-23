@@ -15,6 +15,16 @@
 	var/ignore_flags = 0
 	var/infinite = FALSE
 
+/obj/item/reagent_containers/hypospray/Initialize(mapload, vol)
+	. = ..()
+	register_item_context()
+
+/obj/item/reagent_containers/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = ..()
+	if(iscarbon(target))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Inject")
+		return CONTEXTUAL_SCREENTIP_SET
+
 /obj/item/reagent_containers/hypospray/attack_paw(mob/user)
 	return attack_hand(user)
 
@@ -378,6 +388,23 @@
 	if(start_vial)
 		vial = new start_vial
 	update_icon()
+	register_context()
+	register_item_context()
+
+/obj/item/hypospray/mkii/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	// Did you know that clicking something while you're holding it is the same as attack_self()?
+	if(vial && (held_item == src))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Remove [vial]")
+	LAZYSET(context[SCREENTIP_CONTEXT_CTRL_LMB], INTENT_ANY, "Set to [mode ? "spray" : "inject"]")
+	LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, "Set transfer amount")
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/hypospray/mkii/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = ..()
+	if(iscarbon(target))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, mode ? "Inject" : "Spray")
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/hypospray/mkii/ComponentInitialize()
 	. = ..()

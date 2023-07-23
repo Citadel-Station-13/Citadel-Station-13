@@ -700,6 +700,14 @@
 /obj/machinery/door/airlock/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
+	if(hasSiliconAccessInArea(user))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Open interface")
+		LAZYSET(context[SCREENTIP_CONTEXT_SHIFT_LMB], INTENT_ANY, density ? "Open" : "Close")
+		LAZYSET(context[SCREENTIP_CONTEXT_CTRL_LMB], INTENT_ANY, locked ? "Unbolt" : "Bolt")
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, secondsElectrified ? "Un-electrify" : "Electrify")
+		LAZYSET(context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB], INTENT_ANY, emergency ? "Disable emergency access" : "Enable emergency access")
+		. = CONTEXTUAL_SCREENTIP_SET
+
 	if(istype(held_item, /obj/item/stack/sheet/plasteel))
 		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Reinforce")
 		return CONTEXTUAL_SCREENTIP_SET
@@ -720,12 +728,12 @@
 
 			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WELDER)
-			LAZYSET(context[SCREENTIP_CONTEXT_RMB], INTENT_ANY, "Weld shut")
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_HARM, "Weld shut")
 
 			if (panel_open)
 				switch (security_level)
 					if (AIRLOCK_SECURITY_METAL, AIRLOCK_SECURITY_PLASTEEL_I, AIRLOCK_SECURITY_PLASTEEL_O)
-						LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Cut shielding")
+						LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_HARM, "Cut shielding")
 						return CONTEXTUAL_SCREENTIP_SET
 
 			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Repair")

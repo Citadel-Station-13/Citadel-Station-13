@@ -41,12 +41,27 @@
 	var/on = FALSE
 	var/interacts_with_air = FALSE
 
+/obj/machinery/atmospherics/Initialize(mapload)
+	. = ..()
+	register_context()
+
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
 	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && isliving(user))
 		var/mob/living/L = user
 		if(SEND_SIGNAL(L, COMSIG_CHECK_VENTCRAWL))
 			. += "<span class='notice'>Alt-click to crawl through it.</span>"
+
+/obj/machinery/atmospherics/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(can_unwrench && held_item?.tool_behaviour == TOOL_WRENCH)
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Unfasten")
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && isliving(user) && SEND_SIGNAL(user, COMSIG_CHECK_VENTCRAWL))
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, "Crawl into")
+		. = CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/atmospherics/New(loc, process = TRUE, setdir)
 	if(!isnull(setdir))
