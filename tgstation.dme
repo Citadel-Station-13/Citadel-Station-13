@@ -160,6 +160,7 @@
 #include "code\__DEFINES\dcs\flags.dm"
 #include "code\__DEFINES\dcs\helpers.dm"
 #include "code\__DEFINES\dcs\signals.dm"
+#include "code\__DEFINES\dcs\signals\signals_hud.dm"
 #include "code\__DEFINES\dcs\signals\signals_medical.dm"
 #include "code\__DEFINES\dcs\signals\signals_mod.dm"
 #include "code\__DEFINES\dcs\signals\signals_painting.dm"
