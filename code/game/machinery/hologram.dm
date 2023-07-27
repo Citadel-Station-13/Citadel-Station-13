@@ -80,6 +80,19 @@ Possible to do for anyone motivated enough:
 	/// If we are currently calling another holopad
 	var/calling = FALSE
 
+/obj/machinery/holopad/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/machinery/holopad/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(isAI(user) && on_network)
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Project yourself")
+		if(LAZYLEN(masters) && masters[user])
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Stop projecting")
+			LAZYSET(context[SCREENTIP_CONTEXT_CTRL_LMB], INTENT_ANY, "Stop projecting")
+		return CONTEXTUAL_SCREENTIP_SET
+
 /obj/machinery/holopad/secure
 	name = "secure holopad"
 	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incoming calls."

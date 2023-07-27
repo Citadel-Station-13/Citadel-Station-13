@@ -930,6 +930,14 @@ DEFINE_BITFIELD(turret_flags, list(
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	power_change() //Checks power and initial settings
+	register_context()
+
+/obj/machinery/turretid/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(issilicon(user) && !(stat & BROKEN))
+		LAZYSET(context[SCREENTIP_CONTEXT_CTRL_LMB], INTENT_ANY, enabled ? "Disable" : "Enable")
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, lethal ? "Set to stun" : "Set to kill")
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/turretid/Destroy()
 	turrets.Cut()
