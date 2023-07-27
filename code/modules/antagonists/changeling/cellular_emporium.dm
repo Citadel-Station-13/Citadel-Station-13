@@ -25,7 +25,7 @@
 /datum/cellular_emporium/ui_data(mob/user)
 	var/list/data = list()
 
-	var/can_readapt = changeling.canrespec
+	var/can_readapt = changeling.can_respec
 	var/genetic_points_remaining = changeling.geneticpoints
 	var/absorbed_dna_count = changeling.absorbedcount
 	var/true_absorbs = changeling.trueabsorbs
@@ -37,7 +37,7 @@
 	var/list/abilities = list()
 
 	for(var/path in changeling.all_powers)
-		var/obj/effect/proc_holder/changeling/ability = path
+		var/datum/action/changeling/ability = path
 
 		var/dna_cost = initial(ability.dna_cost)
 		if(dna_cost <= 0)
@@ -65,7 +65,7 @@
 
 	switch(action)
 		if("readapt")
-			if(changeling.canrespec)
+			if(changeling.can_respec)
 				changeling.readapt()
 		if("evolve")
 			var/sting_name = params["name"]
@@ -75,7 +75,7 @@
 	name = "Cellular Emporium"
 	icon_icon = 'icons/obj/drinks.dmi'
 	button_icon_state = "changelingsting"
-	background_icon_state = "bg_ling"
+	background_icon_state = "bg_changeling"
 	var/datum/cellular_emporium/cellular_emporium
 
 /datum/action/innate/cellular_emporium/New(our_target)
