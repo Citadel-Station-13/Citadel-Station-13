@@ -115,6 +115,8 @@
 	. = ..()
 	SSstation.announcer = /datum/centcom_announcer/medbot
 
+GLOBAL_LIST_INIT(randomizing_station_name_messages, world.file2list("strings/randomizing_station_name_messages.txt"))
+
 /datum/station_trait/randomizing_station_name
 	name = "Randomizing station name"
 	show_in_report = TRUE
@@ -136,8 +138,7 @@
 
 	var/new_name = new_station_name()
 
-	var/pick_entry = pick(CONFIG_GET(keyed_list/randomizing_station_name_message))
-	var/centcom_announcement = CONFIG_GET(keyed_list/randomizing_station_name_message)[pick_entry]
+	var/centcom_announcement = pick(GLOB.randomizing_station_name_messages)
 
 	// Replace with CURRENT station name
 	centcom_announcement = replacetext(centcom_announcement, "%CURRENT_STATION_NAME%", station_name())
