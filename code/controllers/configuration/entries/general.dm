@@ -345,3 +345,7 @@
 	config_entry_value = 5
 //ambition end
 
+/datum/config_entry/keyed_list/randomizing_station_name_message
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_TEXT
+	lowercase = FALSE
