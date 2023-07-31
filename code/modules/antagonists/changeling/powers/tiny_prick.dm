@@ -3,7 +3,8 @@
 	desc = "Stabby stabby"
 	var/sting_icon = null
 
-/datum/action/changeling/sting/Trigger(mob/user)
+/datum/action/changeling/sting/Trigger()
+	var/mob/user = owner
 	if(!user || !user.mind)
 		return
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -74,7 +75,8 @@
 	loudness = 1
 	var/datum/changelingprofile/selected_dna = null
 
-/datum/action/changeling/sting/transformation/Trigger(mob/user)
+/datum/action/changeling/sting/transformation/Trigger()
+	var/mob/user = owner
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(changeling.chosen_sting)
 		unset_sting(user)
