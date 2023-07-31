@@ -76,7 +76,7 @@
 	var/datum/changelingprofile/selected_dna = null
 
 /datum/action/changeling/sting/transformation/Trigger()
-	var/mob/user = usr
+	var/mob/user = owner
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(changeling.chosen_sting)
 		unset_sting(user)
