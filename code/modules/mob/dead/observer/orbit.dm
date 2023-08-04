@@ -94,7 +94,7 @@
 
 				var/obj/item/card/id/card = M.get_idcard()
 				if(card)
-					assignment = "[ckey(card.get_job_name())]"
+					assignment = "[ckey(card.GetJobName())]"
 
 				serialized["assignment"] = assignment
 
