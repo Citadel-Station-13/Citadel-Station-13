@@ -587,3 +587,10 @@
 // 			blended_color = "#2eeb9a"
 // 	pre_asset.Blend(blended_color, ICON_MULTIPLY)
 // 	return pre_asset
+
+/datum/asset/spritesheet/jobs
+	name = "jobs"
+
+/datum/asset/spritesheet/jobs/register()
+	InsertAll("", 'icons/UI_Icons/tgui/jobs.dmi')
+	..()

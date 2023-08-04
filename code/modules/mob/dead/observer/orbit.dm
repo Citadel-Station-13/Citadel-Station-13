@@ -90,6 +90,14 @@
 						antagonists += list(serialized)
 						break
 
+				var/assignment = "no_id"
+
+				var/obj/item/card/id/card = M.get_idcard()
+				if(card)
+					assignment = "[ckey(card.get_job_name())]"
+
+				serialized["assignment"] = assignment
+
 				if (!was_antagonist)
 					alive += list(serialized)
 		else
@@ -107,4 +115,4 @@
 /datum/orbit_menu/ui_assets()
 	. = ..() || list()
 	. += get_asset_datum(/datum/asset/simple/orbit)
-
+	. += get_asset_datum(/datum/asset/spritesheet/jobs)
