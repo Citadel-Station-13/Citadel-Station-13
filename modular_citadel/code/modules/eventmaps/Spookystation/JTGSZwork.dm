@@ -1031,7 +1031,7 @@ GLOBAL_LIST_EMPTY(rain_sounds)
     var/open = FALSE
 
 /obj/item/umbrella/Initialize(mapload)
-    ..()
+    . = ..()
     color = RANDOM_COLOUR
     update_icon()
 
