@@ -26,6 +26,10 @@ GLOBAL_LIST(topic_status_cache)
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
+	#ifdef REFERENCE_DOING_IT_LIVE
+	GLOB.harddel_log = GLOB.world_game_log
+	#endif
+
 	GLOB.revdata = new
 
 	InitTgs()
@@ -140,6 +144,10 @@ GLOBAL_LIST(topic_status_cache)
 #ifdef UNIT_TESTS
 	GLOB.test_log = "[GLOB.log_directory]/tests.log"
 	start_log(GLOB.test_log)
+#endif
+#ifdef REFERENCE_DOING_IT_LIVE
+	GLOB.harddel_log = "[GLOB.log_directory]/harddels.log"
+	start_log(GLOB.harddel_log)
 #endif
 	start_log(GLOB.world_game_log)
 	start_log(GLOB.world_attack_log)
