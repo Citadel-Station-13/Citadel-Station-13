@@ -19,6 +19,11 @@
 	set_frequency(signal_frequency)
 	return ..()
 
+/datum/computer_file/program/signaler/Destroy()
+	SSradio.remove_object(src, signal_frequency)
+	radio_connection = null
+	return ..()
+
 /datum/computer_file/program/signaler/ui_data(mob/user)
 	var/list/data = get_header_data()
 	data["frequency"] = signal_frequency

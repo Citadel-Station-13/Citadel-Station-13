@@ -25,7 +25,7 @@
 	var/sap_amount
 
 /obj/structure/flora/ashtree/Initialize(mapload)
-	..()
+	. = ..()
 	if(prob(50))
 		sap = TRUE
 		icon_state = sap_icon_state

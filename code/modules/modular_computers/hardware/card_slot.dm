@@ -94,7 +94,7 @@
 	if(user && !issilicon(user) && in_range(src, user))
 		user.put_in_hands(stored_card)
 	else
-		stored_card.forceMove(drop_location())
+		stored_card.forceMove(get_turf(src))
 
 	to_chat(user, span_notice("You remove the card from \the [src]."))
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)

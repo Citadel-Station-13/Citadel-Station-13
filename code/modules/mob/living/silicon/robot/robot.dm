@@ -116,17 +116,19 @@
 	if(connected_ai)
 		set_connected_ai(null)
 	if(shell) //??? why would you give an ai radio keys?
-		GLOB.available_ai_shells -= src
+		revert_shell()
 	else
 		if(T && istype(radio) && istype(radio.keyslot))
 			radio.keyslot.forceMove(T)
 			radio.keyslot = null
+	QDEL_LIST(upgrades)
 	QDEL_NULL(wires)
 	QDEL_NULL(module)
 	QDEL_NULL(eye_lights)
 	QDEL_NULL(inv1)
 	QDEL_NULL(inv2)
 	QDEL_NULL(inv3)
+	QDEL_NULL(aiPDA)
 	cell = null
 	return ..()
 
@@ -618,7 +620,7 @@
 
 /mob/living/silicon/robot/proc/SetLockdown(state = TRUE)
 	// They stay locked down if their wire is cut.
-	if(wires.is_cut(WIRE_LOCKDOWN))
+	if(wires?.is_cut(WIRE_LOCKDOWN))
 		state = TRUE
 	if(state)
 		throw_alert("locked", /atom/movable/screen/alert/locked)
@@ -692,7 +694,7 @@
 		// set_light_color(COLOR_RED) //This should only matter for doomsday borgs, as any other time the lamp will be off and the color not seen
 		// set_light_range(1) //Again, like above, this only takes effect when the light is forced on by doomsday mode.
 		lamp_enabled = FALSE
-		lampButton.update_icon()
+		lampButton?.update_icon()
 		update_icons()
 		return
 	set_light(lamp_intensity, l_color = (lamp_doom? COLOR_RED : lamp_color))
@@ -700,7 +702,7 @@
 	// set_light_color(lamp_doom? COLOR_RED : lamp_color) //Red for doomsday killborgs, borg's choice otherwise
 	// set_light_on(TRUE)
 	lamp_enabled = TRUE
-	lampButton.update_icon()
+	lampButton?.update_icon()
 	update_icons()
 
 /mob/living/silicon/robot/proc/deconstruct()
@@ -1139,6 +1141,7 @@
 	for(var/obj/item/borg/upgrade/ai/boris in src)
 	//A player forced reset of a borg would drop the module before this is called, so this is for catching edge cases
 		qdel(boris)
+		upgrades -= boris
 	shell = FALSE
 	GLOB.available_ai_shells -= src
 	name = "Unformatted Cyborg-[ident]"

@@ -648,6 +648,7 @@
 /datum/action/spell_action/Destroy()
 	var/obj/effect/proc_holder/S = target
 	S.action = null
+	target = null
 	return ..()
 
 /datum/action/spell_action/Trigger()

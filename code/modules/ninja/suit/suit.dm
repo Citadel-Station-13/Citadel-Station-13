@@ -84,12 +84,14 @@
 	cell.icon_state = "bscell"
 
 /obj/item/clothing/suit/space/space_ninja/Initialize(mapload)
-    START_PROCESSING(SSobj, src)
-    return ..()
+	START_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/item/clothing/suit/space/space_ninja/Destroy()
-    STOP_PROCESSING(SSobj, src)
-    return ..()
+	QDEL_NULL(spark_system)
+	QDEL_NULL(cell)
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 // Power usage
 /obj/item/clothing/suit/space/space_ninja/process(delta_time)

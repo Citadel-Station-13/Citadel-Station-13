@@ -40,6 +40,24 @@
 	if(!GLOB.ark_of_the_clockwork_justiciar)
 		GLOB.ark_of_the_clockwork_justiciar = src
 
+/obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
+	STOP_PROCESSING(SSprocessing, src)
+	if(!purpose_fulfilled)
+		var/area/gate_area = get_area(src)
+		hierophant_message("<span class='large_brass'><b>An Ark of the Clockwork Justicar has fallen at [gate_area.map_name]!</b></span>")
+		send_to_playing_players(sound(null, 0, channel = CHANNEL_JUSTICAR_ARK))
+	var/was_stranded = SSshuttle.emergency.mode == SHUTTLE_STRANDED
+	SSshuttle.clearHostileEnvironment(src)
+	if(!was_stranded && !purpose_fulfilled)
+		priority_announce("Massive energy anomaly no longer on short-range scanners, bluespace distortions still detected.","Central Command Higher Dimensional Affairs")
+	if(glow)
+		QDEL_NULL(glow)
+	if(countdown)
+		QDEL_NULL(countdown)
+	if(GLOB.ark_of_the_clockwork_justiciar == src)
+		GLOB.ark_of_the_clockwork_justiciar = null
+	. = ..()
+
 /obj/structure/destructible/clockwork/massive/celestial_gateway/on_attack_hand(mob/user, act_intent, unarmed_attack_flags)
 	if(!active  && is_servant_of_ratvar(user) && user.canUseTopic(src, !issilicon(user), NO_DEXTERY))
 		if(alert(user, "Are you sure you want to activate the ark? Once enabled, there will be no turning back.", "Enabling the ark", "Activate!", "Cancel") == "Activate!")
@@ -125,7 +143,7 @@
 			L.forceMove(pick(open_turfs))
 	glow = new(get_turf(src))
 	var/area/gate_area = get_area(src)
-	hierophant_message("<span class='large_brass'><b>An Ark of the Clockwork Justicar has been created in [gate_area.map_name]!</b></span>", FALSE, src)
+	hierophant_message("<span class='large_brass'><b>An Ark of the Clockwork Justicar has been created in [gate_area?.map_name]!</b></span>", FALSE, src)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/initiate_mass_recall()
 	recalling = TRUE
@@ -149,23 +167,7 @@
 	transform = matrix() * 2
 	animate(src, transform = matrix() * 0.5, time = 30, flags = ANIMATION_END_NOW)
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
-	STOP_PROCESSING(SSprocessing, src)
-	if(!purpose_fulfilled)
-		var/area/gate_area = get_area(src)
-		hierophant_message("<span class='large_brass'><b>An Ark of the Clockwork Justicar has fallen at [gate_area.map_name]!</b></span>")
-		send_to_playing_players(sound(null, 0, channel = CHANNEL_JUSTICAR_ARK))
-	var/was_stranded = SSshuttle.emergency.mode == SHUTTLE_STRANDED
-	SSshuttle.clearHostileEnvironment(src)
-	if(!was_stranded && !purpose_fulfilled)
-		priority_announce("Massive energy anomaly no longer on short-range scanners, bluespace distortions still detected.","Central Command Higher Dimensional Affairs")
-	if(glow)
-		qdel(glow)
-		glow = null
-	if(countdown)
-		qdel(countdown)
-		countdown = null
-	. = ..()
+
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

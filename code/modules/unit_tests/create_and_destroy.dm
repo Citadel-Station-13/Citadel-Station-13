@@ -20,6 +20,9 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		// /obj/machinery/restaurant_portal,
 		//Template type
 		/obj/effect/mob_spawn,
+		/obj/effect/mob_spawn/alien,
+		/obj/effect/mob_spawn/alien/corpse,
+		/obj/effect/mob_spawn/alien/corpse/humanoid,
 		//Template type
 		// /obj/structure/holosign/robot_seat,
 		//Singleton
@@ -30,24 +33,43 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		// /obj/merge_conflict_marker,
 		//briefcase launchpads erroring
 		/obj/machinery/launchpad/briefcase,
+		// Needs mind
+		/obj/item/phylactery,
+		//Template type
+		/obj/item/genital_equipment,
+		//No ID to pass in
+		/obj/effect/spawner/structure/window/reinforced/tinted/electrochromatic,
+		// Needs proper args
+		/obj/effect/buildmode_line,
+		//Spawns it in the wall and shuttle controller runtimes (actually not caught in unit test)
+		/obj/effect/landmark/latejoin,
+		//Those DAMN SWARMERS ARE EATING EVERYTHING WHILE TEST IS RUNNING
+		/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon,
+		// Randomly causes test to fail because of random movement
+		/obj/item/grenade/clusterbuster/segment,
+		// With 10% Spawns `while() ... sleep()` proc that causes her hat to harddel // TODO rewrite helmet code attack_self() and port modern /tg/ helmet code
+		/mob/living/carbon/monkey/angry,
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
 	//This turf existing is an error in and of itself
 	ignore += typesof(/turf/baseturf_skipover)
 	ignore += typesof(/turf/baseturf_bottom)
+	// Messes with test results by teleporting stuff out of location
+	ignore += typesof(/turf/open/space/transit)
 	//This demands a borg, so we'll let if off easy
-	// ignore += typesof(/obj/item/modular_computer/pda/silicon)
+	ignore += typesof(/obj/item/modular_computer/tablet/integrated)
 	//This one demands a computer, ditto
 	ignore += typesof(/obj/item/modular_computer/processor)
 	//Very finiky, blacklisting to make things easier
 	ignore += typesof(/obj/item/poster/wanted)
 	//This expects a seed, we can't pass it
-	// ignore += typesof(/obj/item/food/grown)
+	ignore += typesof(/obj/item/reagent_containers/food/snacks/grown)
 	//Needs clients / mobs to observe it to exist. Also includes hallucinations.
 	// ignore += typesof(/obj/effect/client_image_holder)
+	ignore += typesof(/obj/effect/hallucination)
 	//Same to above. Needs a client / mob / hallucination to observe it to exist.
-	// ignore += typesof(/obj/projectile/hallucination)
+	ignore += typesof(/obj/item/projectile/hallucination)
 	// ignore += typesof(/obj/item/hallucinated)
 	//Can't pass in a thing to glow
 	ignore += typesof(/obj/effect/abstract/eye_lighting)
@@ -56,22 +78,30 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	ignore += typesof(/obj/effect/pod_landingzone)
 	//We have a baseturf limit of 10, adding more than 10 baseturf helpers will kill CI, so here's a future edge case to fix.
 	ignore += typesof(/obj/effect/baseturf_helper)
+	//No host to pass in
+	ignore += typesof(/obj/effect/abstract/proximity_checker)
+	//No owner to pass in
+	ignore += typesof(/obj/effect/abstract/parry)
 	//No tauma to pass in
 	ignore += typesof(/mob/camera/imaginary_friend)
+	//There's no shapeshift to hold
+	ignore += typesof(/obj/shapeshift_holder)
 	//No pod to gondola
 	ignore += typesof(/mob/living/simple_animal/pet/gondola/gondolapod)
 	//No heart to give
 	// ignore += typesof(/obj/structure/ethereal_crystal)
 	//No linked console
-	// ignore += typesof(/mob/camera/ai_eye/remote/base_construction)
+	ignore += typesof(/mob/camera/aiEye/remote/base_construction)
 	//See above
-	// ignore += typesof(/mob/camera/ai_eye/remote/shuttle_docker)
+	ignore += typesof(/mob/camera/aiEye/remote/shuttle_docker)
 	//Hangs a ref post invoke async, which we don't support. Could put a qdeleted check but it feels hacky
 	ignore += typesof(/obj/effect/anomaly/grav/high)
 	//See above
 	ignore += typesof(/obj/effect/timestop)
+	// See above
+	ignore += typesof(/obj/effect/domain_expansion)
 	//Invoke async in init, skippppp
-	// ignore += typesof(/mob/living/silicon/robot/model)
+	ignore += typesof(/mob/living/silicon/robot/modules)
 	//This lad also sleeps
 	ignore += typesof(/obj/item/hilbertshotel)
 	//this boi spawns turf changing stuff, and it stacks and causes pain. Let's just not
@@ -100,6 +130,10 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	// ignore += typesof(/obj/structure/industrial_lift)
 	// Runtimes if the associated machinery does not exist, but not the base type
 	// ignore += subtypesof(/obj/machinery/airlock_controller)
+	// All of them sleep with CHECK_TICK and hang refs. //TODO: Port modern /tg/ techwebs
+	ignore += typesof(/obj/machinery/rnd/production)
+	// This one sleeps too in it's AI code
+	ignore += typesof(/mob/living/simple_animal/hostile/swarmer)
 
 	var/list/cached_contents = spawn_at.contents.Copy()
 	var/original_turf_type = spawn_at.type

@@ -173,7 +173,7 @@
 
 /obj/machinery/capture_the_flag/Destroy()
 	GLOB.poi_list.Remove(src)
-	..()
+	return ..()
 
 /obj/machinery/capture_the_flag/process(delta_time)
 	for(var/i in spawned_mobs)
@@ -642,7 +642,7 @@
 	invisibility = 0
 
 /obj/effect/ctf/ammo/Initialize(mapload)
-	..()
+	. = ..()
 	QDEL_IN(src, AMMO_DROP_LIFETIME)
 
 /obj/effect/ctf/ammo/Crossed(atom/movable/AM)
@@ -680,6 +680,11 @@
 	. = ..()
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		CTF.dead_barricades += src
+
+/obj/effect/ctf/dead_barricade/Destroy(force)
+	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+		CTF.dead_barricades -= src
+	return ..()
 
 /obj/effect/ctf/dead_barricade/proc/respawn()
 	if(!QDELETED(src))

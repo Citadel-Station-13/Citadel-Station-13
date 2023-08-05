@@ -71,7 +71,7 @@
 	var/datum/action/cooldown/slam
 
 /mob/living/simple_animal/slaughter/Initialize(mapload)
-	..()
+	. = ..()
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	slam = new /datum/action/cooldown/slam

@@ -74,6 +74,8 @@ SUBSYSTEM_DEF(jukeboxes)
 			activejukeboxes[IDtoupdate][JUKE_FALLOFF] = jukefalloff
 
 /datum/controller/subsystem/jukeboxes/proc/removejukebox(IDtoremove)
+	if(!IDtoremove)
+		return
 	if(islist(activejukeboxes[IDtoremove]))
 		var/jukechannel = activejukeboxes[IDtoremove][JUKE_CHANNEL]
 		for(var/mob/M in GLOB.player_list)

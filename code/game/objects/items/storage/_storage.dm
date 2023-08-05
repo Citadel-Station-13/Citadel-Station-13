@@ -16,7 +16,7 @@
 	AddComponent(component_type)
 
 /obj/item/storage/AllowDrop()
-	return TRUE
+	return !QDELETED(src)
 
 /obj/item/storage/contents_explosion(severity, target, origin)
 	var/in_storage = istype(loc, /obj/item/storage)? (max(0, severity - 1)) : (severity)

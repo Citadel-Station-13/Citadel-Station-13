@@ -89,6 +89,7 @@
 #define REFERENCE_TRACKING
 #define REFERENCE_TRACKING_DEBUG
 #define FIND_REF_NO_CHECK_TICK
+// #define GC_FAILURE_HARD_LOOKUP // Uncomment this to have harddel reftracking in unit tests (takes 3-5min to run per single harddel)
 #endif
 
 #ifdef TGS

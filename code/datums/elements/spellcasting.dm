@@ -24,6 +24,7 @@
 	UnregisterSignal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_MOB_SPELL_CAN_CAST))
 	if(users_by_item[target])
 		var/mob/user = users_by_item[target]
+		users_by_item -= target
 		stacked_spellcasting_by_user[user]--
 		if(!stacked_spellcasting_by_user[user])
 			stacked_spellcasting_by_user -= user

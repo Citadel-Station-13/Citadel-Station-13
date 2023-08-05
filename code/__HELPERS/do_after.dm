@@ -185,7 +185,8 @@
 	while (world.time + resume_time < endtime)
 		stoplag(1)
 		if (progress)
-			progbar.update(world.time - starttime + resume_time)
+			if(!QDELETED(progbar))
+				progbar.update(world.time - starttime + resume_time)
 		if(QDELETED(user) || QDELETED(target))
 			. = 0
 			break
@@ -264,7 +265,8 @@
 	while (world.time + resume_time < endtime)
 		stoplag(1)
 		if (progress)
-			progbar.update(world.time - starttime + resume_time)
+			if(!QDELETED(progbar))
+				progbar.update(world.time - starttime + resume_time)
 
 		if(drifting && !user.inertia_dir)
 			drifting = 0
@@ -339,7 +341,8 @@
 		while(world.time < endtime)
 			stoplag(1)
 			if(progress)
-				progbar.update(world.time - starttime)
+				if(!QDELETED(progbar))
+					progbar.update(world.time - starttime)
 			if(QDELETED(user) || !targets)
 				. = 0
 				break

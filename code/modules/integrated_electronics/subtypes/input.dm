@@ -654,17 +654,18 @@
 
 /obj/item/integrated_circuit/input/signaler/Initialize(mapload)
 	. = ..()
-	spawn(40)
-		set_frequency(frequency)
-		// Set the pins so when someone sees them, they won't show as null
-		set_pin_data(IC_INPUT, 1, frequency)
-		set_pin_data(IC_INPUT, 2, code)
+	addtimer(CALLBACK(src, .proc/init_frequency), 4 SECONDS)
 
 /obj/item/integrated_circuit/input/signaler/Destroy()
 	SSradio.remove_object(src,frequency)
-
 	frequency = 0
 	return ..()
+
+/obj/item/integrated_circuit/input/signaler/proc/init_frequency()
+	set_frequency(frequency)
+	// Set the pins so when someone sees them, they won't show as null
+	set_pin_data(IC_INPUT, 1, frequency)
+	set_pin_data(IC_INPUT, 2, code)
 
 /obj/item/integrated_circuit/input/signaler/on_data_written()
 	var/new_freq = get_pin_data(IC_INPUT, 1)

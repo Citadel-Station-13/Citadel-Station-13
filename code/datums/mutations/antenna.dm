@@ -15,7 +15,7 @@
 	icon_state = "walkietalkie"
 
 /obj/item/implant/radio/antenna/Initialize(mapload)
-	..()
+	. = ..()
 	if (radio)
 		radio.name = "internal antenna"
 

@@ -10,6 +10,10 @@
 	var/obj/item/aicard/stored_card
 	var/locked = FALSE
 
+/obj/item/computer_hardware/ai_slot/Destroy()
+	QDEL_NULL(stored_card)
+	return ..()
+
 ///What happens when the intellicard is removed (or deleted) from the module, through try_eject() or not.
 /obj/item/computer_hardware/ai_slot/Exited(atom/movable/gone, direction)
 	if(stored_card == gone)
@@ -55,7 +59,7 @@
 		if(Adjacent(user))
 			user.put_in_hands(stored_card)
 		else
-			stored_card.forceMove(drop_location())
+			stored_card.forceMove(get_turf(src))
 
 		return TRUE
 	return FALSE

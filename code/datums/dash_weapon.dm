@@ -19,6 +19,10 @@
 	dashing_item = dasher
 	holder = user
 
+/datum/action/innate/dash/Destroy()
+	dashing_item = null
+	return ..()
+
 /datum/action/innate/dash/IsAvailable(silent = FALSE)
 	if(current_charges > 0)
 		return TRUE

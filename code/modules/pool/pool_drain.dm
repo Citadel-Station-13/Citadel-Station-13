@@ -31,8 +31,9 @@
 
 /obj/machinery/pool/drain/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
-	controller.linked_drain = null
-	controller = null
+	if(controller)
+		controller.linked_drain = null
+		controller = null
 	whirling_mobs = null
 	return ..()
 
@@ -129,8 +130,9 @@
 	var/obj/machinery/pool/controller/controller
 
 /obj/machinery/pool/filter/Destroy()
-	controller.linked_filter = null
-	controller = null
+	if(controller)
+		controller.linked_filter = null
+		controller = null
 	return ..()
 
 /obj/machinery/pool/filter/emag_act(mob/living/user)

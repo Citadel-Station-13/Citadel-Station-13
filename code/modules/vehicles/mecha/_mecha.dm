@@ -871,7 +871,7 @@
 	if(pilot_mob && pilot_mob.Adjacent(src))
 		if(LAZYLEN(occupants))
 			return
-		LAZYADD(occupants, src)
+		LAZYADD(occupants, pilot_mob)
 		pilot_mob.mecha = src
 		pilot_mob.forceMove(src)
 		update_icon()

@@ -782,6 +782,7 @@
 
 /obj/item/card/id/departmental_budget/Destroy()
 	SSeconomy.dep_cards -= src
+	registered_account.bank_cards -= src
 	return ..()
 
 /obj/item/card/id/departmental_budget/update_label()

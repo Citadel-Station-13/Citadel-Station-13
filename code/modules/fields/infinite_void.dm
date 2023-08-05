@@ -34,7 +34,8 @@
 		INVOKE_ASYNC(src, .proc/domain_expansion)
 
 /obj/effect/domain_expansion/Destroy()
-	qdel(chronofield)
+	QDEL_NULL(chronofield)
+	target = null
 	return ..()
 
 /obj/effect/domain_expansion/proc/domain_expansion()

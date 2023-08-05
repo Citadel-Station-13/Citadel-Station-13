@@ -26,20 +26,13 @@
 
 	set_codes()
 
+	glob_lists_register(init=TRUE)
+
 	var/turf/T = loc
 	hide(T.intact)
-	if(codes["patrol"])
-		if(!GLOB.navbeacons["[z]"])
-			GLOB.navbeacons["[z]"] = list()
-		GLOB.navbeacons["[z]"] += src //Register with the patrol list!
-	if(codes["delivery"])
-		GLOB.deliverybeacons += src
-		GLOB.deliverybeacontags += location
 
 /obj/machinery/navbeacon/Destroy()
-	if (GLOB.navbeacons["[z]"])
-		GLOB.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
-	GLOB.deliverybeacons -= src
+	glob_lists_deregister()
 	return ..()
 
 /obj/machinery/navbeacon/onTransitZ(old_z, new_z)
@@ -66,6 +59,26 @@
 			codes[key] = val
 		else
 			codes[e] = "1"
+
+/obj/machinery/navbeacon/proc/glob_lists_deregister()
+	if (GLOB.navbeacons["[z]"])
+		GLOB.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
+	GLOB.deliverybeacons -= src
+	GLOB.deliverybeacontags -= location
+
+///Registers the navbeacon to the global beacon lists
+/obj/machinery/navbeacon/proc/glob_lists_register(init=FALSE)
+	if(!init)
+		glob_lists_deregister()
+	if(!codes)
+		return
+	if(codes["patrol"])
+		if(!GLOB.navbeacons["[z]"])
+			GLOB.navbeacons["[z]"] = list()
+		GLOB.navbeacons["[z]"] += src //Register with the patrol list!
+	if(codes["delivery"])
+		GLOB.deliverybeacons += src
+		GLOB.deliverybeacontags += location
 
 
 // called when turf state changes

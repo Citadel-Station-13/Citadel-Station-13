@@ -80,6 +80,7 @@
 	linked_turfs.Cut()
 	mobs_in_pool.Cut()
 	mist_off()
+	QDEL_NULL(wires)
 	return ..()
 
 /obj/machinery/pool/controller/proc/scan_things()

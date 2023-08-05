@@ -35,6 +35,7 @@
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 	QDEL_LIST_ASSOC_VAL(ability_actions)
+	QDEL_LIST(abilities)
 
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src

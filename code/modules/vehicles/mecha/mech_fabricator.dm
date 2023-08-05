@@ -72,6 +72,11 @@
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
 	return ..()
 
+/obj/machinery/mecha_part_fabricator/Destroy()
+	QDEL_NULL(stored_research)
+	rmat = null
+	return ..()
+
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0
 

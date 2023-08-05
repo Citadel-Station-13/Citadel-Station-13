@@ -150,7 +150,7 @@
 		AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/gun/Destroy()
-	if(pin)
+	if(isobj(pin))
 		QDEL_NULL(pin)
 	if(gun_light)
 		QDEL_NULL(gun_light)
@@ -162,6 +162,8 @@
 		QDEL_NULL(azoom)
 	if(firemode_action)
 		QDEL_NULL(firemode_action)
+	if(isatom(suppressed))
+		QDEL_NULL(suppressed)
 	return ..()
 
 /obj/item/gun/examine(mob/user)

@@ -69,7 +69,7 @@
 	RECIPE_PIKE = /obj/item/smithing/pikehead)
 
 /obj/structure/anvil/Initialize(mapload)
-	..()
+	. = ..()
 	currentquality = anvilquality
 
 /obj/structure/anvil/attackby(obj/item/I, mob/user)

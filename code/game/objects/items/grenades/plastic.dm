@@ -33,7 +33,7 @@
 	qdel(nadeassembly)
 	nadeassembly = null
 	target = null
-	..()
+	return ..()
 
 /obj/item/grenade/plastic/attackby(obj/item/I, mob/user, params)
 	if(!nadeassembly && istype(I, /obj/item/assembly_holder))
