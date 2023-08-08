@@ -35,7 +35,7 @@
 		clockwork_desc = "A gateway in reality. It can only [sender ? "send" : "receive"] objects."
 	if(is_stable)
 		return
-	timerid = QDEL_IN(src, lifetime) //We only need this if the gateway is not stable
+	timerid = QDEL_IN_STOPPABLE(src, lifetime) //We only need this if the gateway is not stable
 
 //set up a gateway with another gateway
 /obj/effect/clockwork/spatial_gateway/proc/setup_gateway(obj/effect/clockwork/spatial_gateway/gatewayB, set_duration, set_uses, two_way)
@@ -108,12 +108,12 @@
 		visible_message("<span class='warning'>[src] is disrupted!</span>")
 		animate(src, alpha = 0, transform = matrix()*2, time = 10, flags = ANIMATION_END_NOW)
 		deltimer(timerid)
-		timerid = QDEL_IN(src, 10)
+		timerid = QDEL_IN_STOPPABLE(src, 10)
 		linked_gateway.uses = 0
 		linked_gateway.visible_message("<span class='warning'>[linked_gateway] is disrupted!</span>")
 		animate(linked_gateway, alpha = 0, transform = matrix()*2, time = 10, flags = ANIMATION_END_NOW)
 		deltimer(linked_gateway.timerid)
-		linked_gateway.timerid = QDEL_IN(linked_gateway, 10)
+		linked_gateway.timerid = QDEL_IN_STOPPABLE(linked_gateway, 10)
 		return TRUE
 	return FALSE
 
@@ -279,8 +279,8 @@
 /obj/effect/clockwork/spatial_gateway/stable/proc/start_shutdown()
 		deltimer(timerid)
 		deltimer(linked_gateway.timerid)
-		timerid = QDEL_IN(src, 20)
-		linked_gateway.timerid = QDEL_IN(linked_gateway, 20)
+		timerid = QDEL_IN_STOPPABLE(src, 20)
+		linked_gateway.timerid = QDEL_IN_STOPPABLE(linked_gateway, 20)
 		animate(src, alpha = 0, transform = matrix()*2, time = 20, flags = ANIMATION_END_NOW)
 		animate(linked_gateway, alpha = 0, transform = matrix()*2, time = 20, flags = ANIMATION_END_NOW)
 		src.visible_message("<span class='warning'>[src] begins to destabilise!</span>")
