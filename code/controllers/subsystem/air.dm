@@ -102,6 +102,7 @@ SUBSYSTEM_DEF(air)
 	setup_pipenets()
 	gas_reactions = init_gas_reactions()
 	auxtools_update_reactions()
+	equalize_enabled = CONFIG_GET(flag/atmos_equalize_enabled)
 	return ..()
 
 /datum/controller/subsystem/air/proc/extools_update_ssair()
