@@ -22,7 +22,6 @@ Assistant
 	threat = 0.2
 	
 	family_heirlooms = list(
-		/obj/item/storage/toolbox/mechanical/old/heirloom,
 		/obj/item/clothing/gloves/cut/family
 	)
 

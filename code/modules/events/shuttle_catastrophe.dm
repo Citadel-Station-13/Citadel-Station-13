@@ -3,10 +3,14 @@
 	typepath = /datum/round_event/shuttle_catastrophe
 	weight = 10
 	max_occurrences = 1
+	category = EVENT_CATEGORY_BUREAUCRATIC
+	description = "Replaces the emergency shuttle with a random one."
 
 /datum/round_event_control/shuttle_catastrophe/canSpawnEvent(players, gamemode)
 	if(SSshuttle.emergency.name == "Build your own shuttle kit")
 		return FALSE //don't undo manual player engineering, it also would unload people and ghost them, there's just a lot of problems
+	if(SSshuttle.emergency.in_flight())
+		return FALSE //ditto, problems
 	return ..()
 
 

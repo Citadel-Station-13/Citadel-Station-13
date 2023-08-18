@@ -171,3 +171,9 @@
 	desc = "Lights out, guerilla radio!"
 	database_id = MEDAL_TRAM_SURFER
 	icon = "tram_surfer"
+
+/datum/award/achievement/misc/springlock
+	name = "The Man Inside the MODsuit"
+	desc = "Ignore the warning label on a springlock MODsuit."
+	database_id = MEDAL_SPRINGLOCK
+	icon = "springlock"

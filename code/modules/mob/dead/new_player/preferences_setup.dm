@@ -51,7 +51,8 @@
 
 	if(current_tab == LOADOUT_TAB)
 		//give it its loadout if not on the appearance tab
-		SSjob.equip_loadout(parent.mob, mannequin, FALSE, bypass_prereqs = TRUE, can_drop = FALSE)
+		SSjob.equip_loadout(parent.mob, mannequin, bypass_prereqs = TRUE, can_drop = FALSE)
+		SSjob.post_equip_loadout(parent.mob, mannequin, bypass_prereqs = TRUE, can_drop = FALSE)
 	else
 		if(previewJob && equip_job)
 			mannequin.job = previewJob.title

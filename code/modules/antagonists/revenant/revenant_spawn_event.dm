@@ -6,7 +6,8 @@
 	weight = 7
 	max_occurrences = 1
 	min_players = 5
-
+	category = EVENT_CATEGORY_ENTITIES
+	description = "Spawns an angry, soul sucking ghost."
 
 /datum/round_event/ghost_role/revenant
 	var/ignore_mobcheck = FALSE

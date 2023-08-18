@@ -131,22 +131,24 @@ Notes:
  * Though no tooltips will be created for atoms that have `tooltips = FALSE`
 */
 /atom/movable/proc/get_tooltip_data()
-	return list()
+	return // i did not ask you to create a list, this shit is meant to be overriden
 
 /atom/movable/MouseEntered(location, control, params)
 	. = ..()
 	if(tooltips)
-		if((get(src, /mob) == usr && !QDELETED(src)) && usr?.client.prefs.enable_tips)
+		if(!QDELETED(usr) && !QDELETED(src) && usr?.client?.prefs.enable_tips)
 			var/list/tooltip_data = get_tooltip_data()
 			if(length(tooltip_data))
 				var/examine_data = tooltip_data.Join("<br />")
-				var/timedelay = usr.client.prefs.tip_delay/100
-				usr.client.tip_timer = addtimer(CALLBACK(GLOBAL_PROC, .proc/openToolTip, usr, src, params, name, examine_data), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
-
-/obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
-	. = ..()
-	closeToolTip(usr)
+				var/timedelay = max(usr.client.prefs.tip_delay * 0.01, 0.01) // I heard multiplying is faster, also runtimes from very low/negative numbers
+				usr.client.tip_timer = addtimer(CALLBACK(GLOBAL_PROC, .proc/openToolTip, usr, src, params, name, examine_data), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. multiplying by 0.01 converts it.
 
 /atom/movable/MouseExited(location, control, params)
 	. = ..()
 	closeToolTip(usr)
+
+/client/MouseDown(object, location, control, params)
+	. = ..()
+	closeToolTip(usr)
+
+// Break my stuff again and i'll kill you, kisses

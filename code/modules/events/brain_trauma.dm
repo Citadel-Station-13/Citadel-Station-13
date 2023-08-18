@@ -3,6 +3,8 @@
 	typepath = /datum/round_event/brain_trauma
 	weight = 25
 	min_players = 5
+	category = EVENT_CATEGORY_HEALTH
+	description = "A crewmember gains a random trauma."
 
 /datum/round_event_control/brain_trauma/canSpawnEvent(var/players_amt, var/gamemode)
 	if(!..()) return FALSE

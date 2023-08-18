@@ -91,6 +91,11 @@ GENETICS SCANNER
 	var/scanmode = SCANMODE_HEALTH
 	var/advanced = FALSE
 
+/obj/item/healthanalyzer/Initialize(mapload)
+	. = ..()
+
+	register_item_context()
+
 /obj/item/healthanalyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")
 	return BRUTELOSS
@@ -129,6 +134,24 @@ GENETICS SCANNER
 		woundscan(user, M, src)
 
 	add_fingerprint(user)
+
+/obj/item/healthanalyzer/add_item_context(
+	obj/item/source,
+	list/context,
+	atom/target,
+)
+	if (!isliving(target))
+		return NONE
+
+	switch (scanmode)
+		if (SCANMODE_HEALTH)
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Scan health")
+		if (SCANMODE_CHEMICAL)
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Scan chemicals")
+		if (SCANMODE_WOUND)
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Scan wounds")
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/user, mob/living/M, mode = 1, advanced = FALSE)
@@ -549,6 +572,7 @@ GENETICS SCANNER
 	name = "first aid analyzer"
 	icon_state = "adv_spectrometer"
 	desc = "A prototype MeLo-Tech medical scanner used to diagnose injuries and recommend treatment for serious wounds, but offers no further insight into the patient's health. You hope the final version is less annoying to read!"
+	scanmode = SCANMODE_WOUND // Forces context to give correct tip.
 	var/next_encouragement
 	var/greedy
 

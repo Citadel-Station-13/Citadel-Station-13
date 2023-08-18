@@ -311,14 +311,6 @@
 		InsertAll("", each, GLOB.alldirs)
 	..()
 
-/datum/asset/spritesheet/decals
-	name = "decals"
-
-/datum/asset/spritesheet/decals/register()
-	for(var/each in list('icons/turf/decals.dmi'))
-		InsertAll("", each, GLOB.alldirs)
-	..()
-
 /datum/asset/spritesheet/supplypods
 	name = "supplypods"
 
@@ -595,3 +587,10 @@
 // 			blended_color = "#2eeb9a"
 // 	pre_asset.Blend(blended_color, ICON_MULTIPLY)
 // 	return pre_asset
+
+/datum/asset/spritesheet/jobs
+	name = "jobs"
+
+/datum/asset/spritesheet/jobs/register()
+	InsertAll("", 'icons/UI_Icons/tgui/jobs.dmi')
+	..()

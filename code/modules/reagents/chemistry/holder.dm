@@ -890,6 +890,7 @@
 				R.reaction_turf(A, R.volume * volume_modifier, show_message, from_gas)
 			if("OBJ")
 				R.reaction_obj(A, R.volume * volume_modifier, show_message)
+	SEND_SIGNAL(A, COMSIG_ATOM_EXPOSE_REAGENTS, cached_reagents, src, method, volume_modifier, show_message, from_gas)
 
 /datum/reagents/proc/holder_full()
 	if(total_volume >= maximum_volume)

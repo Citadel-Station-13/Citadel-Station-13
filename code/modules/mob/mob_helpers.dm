@@ -585,7 +585,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 //Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
-	return stat == DEAD || silicon_privileges //Dead guys and silicons can always see reagents
+	return stat == DEAD || silicon_privileges || HAS_TRAIT(src, TRAIT_REAGENT_SCANNER) //Dead guys and silicons can always see reagents
 
 /mob/proc/is_blind()
 	SHOULD_BE_PURE(TRUE)

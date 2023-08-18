@@ -114,3 +114,60 @@
 /datum/station_trait/announcement_medbot/New()
 	. = ..()
 	SSstation.announcer = /datum/centcom_announcer/medbot
+
+GLOBAL_LIST_INIT(randomizing_station_name_messages, world.file2list("strings/randomizing_station_name_messages.txt"))
+
+/datum/station_trait/randomizing_station_name
+	name = "Randomizing station name"
+	show_in_report = TRUE
+	report_message = "Due to legal reasons or other, we might not be able to settle on a station name."
+	trait_processes = TRUE
+	COOLDOWN_DECLARE(randomizing_cooldown)
+	var/trigger_every = 5 MINUTES
+	blacklist = list(/datum/station_trait/randomizing_station_name/fast, /datum/station_trait/randomizing_station_name/slow)
+
+/datum/station_trait/randomizing_station_name/on_round_start()
+	. = ..()
+	COOLDOWN_START(src, randomizing_cooldown, trigger_every)
+
+/datum/station_trait/randomizing_station_name/process(delta_time)
+	if(!COOLDOWN_FINISHED(src, randomizing_cooldown))
+		return
+
+	COOLDOWN_START(src, randomizing_cooldown, trigger_every)
+
+	var/new_name = new_station_name()
+
+	var/centcom_announcement = pick(GLOB.randomizing_station_name_messages)
+
+	// Replace with CURRENT station name
+	centcom_announcement = replacetext(centcom_announcement, "%CURRENT_STATION_NAME%", station_name())
+
+	// Replace with NEW station name
+	centcom_announcement = replacetext(centcom_announcement, "%NEW_STATION_NAME%", new_name)
+
+	// Take a CREWMEMBER's name for the goofs
+	if(findtext(centcom_announcement, "%RANDOM_CREWMEMBER%"))
+		var/crewmember = locate(/mob/living/carbon/human) in GLOB.alive_mob_list
+		if(!crewmember)
+			crewmember = random_unique_name()
+		centcom_announcement = replacetext(centcom_announcement, "%RANDOM_CREWMEMBER%", crewmember)
+
+	// Replace with a completely RANDOM name
+	if(findtext(centcom_announcement, "%RANDOM_NAME%"))
+		var/name = random_unique_name()
+		centcom_announcement = replacetext(centcom_announcement, "%RANDOM_NAME%", name)
+
+	set_station_name(new_name)
+
+	print_command_report(centcom_announcement)
+
+/datum/station_trait/randomizing_station_name/fast
+	name = "Randomizing station name - Fast"
+	trigger_every = 3 MINUTES
+	blacklist = list(/datum/station_trait/randomizing_station_name, /datum/station_trait/randomizing_station_name/slow)
+
+/datum/station_trait/randomizing_station_name/slow
+	name = "Randomizing station name - Slow"
+	trigger_every = 10 MINUTES
+	blacklist = list(/datum/station_trait/randomizing_station_name/fast, /datum/station_trait/randomizing_station_name)
