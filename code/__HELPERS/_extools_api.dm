@@ -7,14 +7,15 @@
 /proc/auxtools_stack_trace(msg)
 	CRASH(msg)
 
-GLOBAL_LIST_EMPTY(auxtools_initialized)
+//glob doesn't exist yet at some gas new calls, imma use it anyways
+GLOBAL_REAL_VAR(list/__auxtools_initialized) = list()
 
 #define AUXTOOLS_CHECK(LIB)\
-	if (!GLOB.auxtools_initialized[LIB]) {\
+	if (!__auxtools_initialized[LIB]) {\
 		if (fexists(LIB)) {\
 			var/string = call(LIB,"auxtools_init")();\
 			if(findtext(string, "SUCCESS")) {\
-				GLOB.auxtools_initialized[LIB] = TRUE;\
+				__auxtools_initialized[LIB] = TRUE;\
 			} else {\
 				CRASH(string);\
 			}\
@@ -24,7 +25,7 @@ GLOBAL_LIST_EMPTY(auxtools_initialized)
 	}\
 
 #define AUXTOOLS_SHUTDOWN(LIB)\
-	if (GLOB.auxtools_initialized[LIB] && fexists(LIB)){\
+	if (__auxtools_initialized[LIB] && fexists(LIB)){\
 		call(LIB,"auxtools_shutdown")();\
-		GLOB.auxtools_initialized[LIB] = FALSE;\
+		__auxtools_initialized[LIB] = FALSE;\
 	}\
