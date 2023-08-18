@@ -52,7 +52,7 @@ SUBSYSTEM_DEF(air)
 	// Max number of turfs to look for a space turf, and max number of turfs that will be decompressed.
 	var/equalize_hard_turf_limit = 2000
 	// Whether equalization is enabled. Can be disabled for performance reasons.
-	var/equalize_enabled = TRUE
+	var/equalize_enabled = FALSE
 	// When above 0, won't equalize; performance handling
 	var/eq_cooldown = 0
 	// Whether turf-to-turf heat exchanging should be enabled.
