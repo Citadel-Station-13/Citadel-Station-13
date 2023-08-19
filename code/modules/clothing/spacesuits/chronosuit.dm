@@ -32,8 +32,8 @@
 	var/teleporting = 0
 	var/phase_timer_id
 
-/obj/item/clothing/suit/space/chronos/New()
-	..()
+/obj/item/clothing/suit/space/chronos/Initialize(mapload)
+	. = ..()
 	teleport_now.chronosuit = src
 	teleport_now.target = src
 
