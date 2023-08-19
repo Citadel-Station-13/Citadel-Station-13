@@ -35,6 +35,8 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		/obj/machinery/launchpad/briefcase,
 		// Needs mind
 		/obj/item/phylactery,
+		//Template type
+		/obj/item/genital_equipment,
 		//No ID to pass in
 		/obj/effect/spawner/structure/window/reinforced/tinted/electrochromatic,
 		// Needs proper args
@@ -114,6 +116,8 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	ignore += typesof(/obj/item/pinpointer/shuttle)
 	//This spawns beams as a part of init, which can sleep past an async proc. This hangs a ref, and fucks us. It's only a problem here because the beam sleeps with CHECK_TICK
 	// ignore += typesof(/obj/structure/alien/resin/flower_bud)
+	//Needs a linked mecha
+	// ignore += typesof(/obj/effect/skyfall_landingzone)
 	//Expects a mob to holderize, we have nothing to give
 	ignore += typesof(/obj/item/clothing/head/mob_holder)
 	//Needs cards passed into the initilazation args

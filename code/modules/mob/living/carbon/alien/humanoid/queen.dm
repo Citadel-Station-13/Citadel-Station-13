@@ -53,6 +53,7 @@
 /mob/living/carbon/alien/humanoid/royal/queen/Destroy()
 	RemoveAbility(promote)
 	QDEL_NULL(promote)
+	QDEL_NULL(small_sprite)
 	return ..()
 
 /mob/living/carbon/alien/humanoid/royal/queen/create_internal_organs()

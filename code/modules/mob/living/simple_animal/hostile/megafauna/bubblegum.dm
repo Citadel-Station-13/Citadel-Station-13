@@ -457,11 +457,11 @@ Difficulty: Hard
 	deathsound = 'sound/effects/splat.ogg'
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Initialize(mapload)
-	. = ..()
+	..()
 	toggle_ai(AI_OFF)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/charge(atom/chargeat = target, delay = 3, chargepast = 2)
-	. = ..()
+	..()
 	qdel(src)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Destroy()
