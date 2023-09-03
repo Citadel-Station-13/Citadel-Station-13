@@ -16,8 +16,6 @@
 
 	level = 1
 
-	interacts_with_air = TRUE
-
 	var/frequency = 0
 	var/id = null
 	var/datum/radio_frequency/radio_connection
