@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT_TYPED(screentip_context_icons, /image, prepare_screentip_contex
  * - allow_image = boolean (not required)
 */
 /proc/build_context(list/context, key, allow_image)
-	if(!(length(context) && length(context[key]) && key))
+	if(!length(context) || !length(context[key]) || !key)
 		return ""
 	var/list/to_add
 	for(var/intent in context[key])
