@@ -25,7 +25,7 @@
 	. = ..()
 	if(stored)
 		to_chat(user, "<span class='notice'>You start struggling to pry the [stored] from the [src]...</span>")
-		if(!do_after(user, 30 SECONDS, TRUE, src))
+		if(!do_after(user, 30 SECONDS, src))
 			to_chat(user, "<span class='warning'>Your fingers slip as you fail to pry the [stored] from the [src], clicking it right back into the slot!</span>")
 			return
 		user.put_in_hands(stored)
@@ -73,7 +73,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-
 // The message server itself.
 /obj/machinery/telecomms/message_server
 	icon = 'icons/obj/machines/research.dmi'
@@ -84,6 +83,8 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
+	// SKYRAT EDIT: Adds a circuit for the message server.
+	circuit = /obj/item/circuitboard/machine/telecomms/message_server
 
 	id = "Messaging Server"
 	network = "tcommsat"

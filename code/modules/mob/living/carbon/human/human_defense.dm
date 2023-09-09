@@ -546,7 +546,7 @@
 		if(src == M)
 			if(has_status_effect(STATUS_EFFECT_CHOKINGSTRAND))
 				to_chat(src, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
-				if(do_after(src, 35, null, src))
+				if(do_after(src, 3.5 SECONDS, src))
 					to_chat(src, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
 					remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 				return
@@ -817,7 +817,7 @@
 				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] stuck to your [LB.name]!</a>")
 			else
 				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
-
+				
 
 /mob/living/carbon/human/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
 	if(damage_type != BRUTE && damage_type != BURN)
