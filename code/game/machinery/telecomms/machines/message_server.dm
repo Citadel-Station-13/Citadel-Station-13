@@ -83,7 +83,6 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
-	// SKYRAT EDIT: Adds a circuit for the message server.
 	circuit = /obj/item/circuitboard/machine/telecomms/message_server
 
 	id = "Messaging Server"
