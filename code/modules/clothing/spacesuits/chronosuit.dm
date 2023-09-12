@@ -32,10 +32,15 @@
 	var/teleporting = 0
 	var/phase_timer_id
 
-/obj/item/clothing/suit/space/chronos/New()
-	..()
+/obj/item/clothing/suit/space/chronos/Initialize(mapload)
+	. = ..()
 	teleport_now.chronosuit = src
 	teleport_now.target = src
+
+/obj/item/clothing/suit/space/chronos/Destroy()
+	QDEL_NULL(teleport_now)
+	QDEL_NULL(camera)
+	. = ..()
 
 /obj/item/clothing/suit/space/chronos/proc/new_camera(mob/user)
 	if(camera)
