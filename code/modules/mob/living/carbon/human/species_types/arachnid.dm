@@ -92,7 +92,7 @@
 	var/nutrition_threshold = NUTRITION_LEVEL_FED
 	if (H.nutrition >= nutrition_threshold)
 		to_chat(H, "<i>You begin spinning some web...</i>")
-		if(!do_after(H, 10 SECONDS, 1, T))
+		if(!do_after(H, 10 SECONDS, T))
 			to_chat(H, "<span class='warning'>Your web spinning was interrupted!</span>")
 			return
 		H.adjust_nutrition(-E.spinner_rate)
@@ -152,7 +152,7 @@
 			to_chat(H, "<span class='warning'>You cannot wrap this.</span>")
 			return
 		H.visible_message("<span class='danger'>[H] starts to wrap [A] into a cocoon!</span>","<span class='warning'>You start to wrap [A] into a cocoon.</span>")
-		if(!do_after(H, 10 SECONDS, 1, A))
+		if(!do_after(H, 10 SECONDS, A))
 			to_chat(H, "<span class='warning'>Your web spinning was interrupted!</span>")
 			return
 		H.adjust_nutrition(E.spinner_rate * -3)

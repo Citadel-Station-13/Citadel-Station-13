@@ -92,7 +92,7 @@
 	if(!istype(I, /obj/item/pickaxe/drill/jackhammer))
 		return FALSE
 	to_chat(user, "<span class='notice'>You begin to smash though [src]...</span>")
-	if(!do_after(user, 70, TRUE, src))
+	if(!do_after(user, 7 SECONDS, src))
 		return FALSE
 	I.play_tool_sound(src)
 	visible_message("<span class='warning'>[user] smashes through [src] with [I]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")

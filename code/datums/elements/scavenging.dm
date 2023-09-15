@@ -98,7 +98,7 @@
 	if(len_messages >= 3)
 		msg_blind = "<span class='italic'>[search_texts[3]]</span>"
 	user.visible_message("<span class='notice'>[user] [search_texts[1]] [source].</span>", msg_first_person, msg_blind)
-	if(do_after(user, scavenge_time * speed_multi, TRUE, source, TRUE, CALLBACK(src, .proc/set_progress, source, world.time), resume_time = progress_done * speed_multi))
+	if(do_after(user, scavenge_time * speed_multi, source, NONE, TRUE, CALLBACK(src, .proc/set_progress, source, world.time), resume_time = progress_done * speed_multi))
 		spawn_loot(source, user)
 	players_busy_scavenging -= user
 

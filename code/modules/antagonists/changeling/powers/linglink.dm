@@ -59,7 +59,7 @@
 				target.reagents.add_reagent(/datum/reagent/medicine/salbutamol, 40) // So they don't choke to death while you interrogate them
 				sleep(1800)
 		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[name]", "[i]"))
-		if(!do_mob(user, target, 20))
+		if(!do_mob(user, target, 2 SECONDS))
 			to_chat(user, "<span class='warning'>Our link with [target] has ended!</span>")
 			changeling.islinking = 0
 			target.mind.linglink = 0

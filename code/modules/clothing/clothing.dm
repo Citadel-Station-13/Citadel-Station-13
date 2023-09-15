@@ -110,7 +110,7 @@
 					to_chat(user, "<span class='warning'>You require 3 [S.name] to repair [src].</span>")
 					return
 				to_chat(user, "<span class='notice'>You begin fixing the damage to [src] with [S]...</span>")
-				if(do_after(user, 6 SECONDS, TRUE, src))
+				if(do_after(user, 6 SECONDS, src))
 					if(S.use(3))
 						repair(user, params)
 		return 1

@@ -139,7 +139,7 @@
 
 /obj/item/restraints/handcuffs/cable/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You start unwinding the cable restraints back into coil</span>")
-	if(!do_after(user, 25, TRUE, user))
+	if(!do_after(user, 25, user))
 		return
 	qdel(src)
 	var/obj/item/stack/cable_coil/coil = new(get_turf(user))

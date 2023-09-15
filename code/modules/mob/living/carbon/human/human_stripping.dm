@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	if (!istype(jumpsuit))
 		return null
 	to_chat(source, "<span class='notice'>[user] is trying to adjust your [jumpsuit.name].")
-	if (!do_mob(user, source, jumpsuit.strip_delay * 0.5, ignorehelditem = TRUE))
+	if (!do_mob(user, source, jumpsuit.strip_delay * 0.5, timed_action_flags = IGNORE_HELD_ITEM))
 		return
 	to_chat(source, "<span class='notice'>[user] successfully adjusted your [jumpsuit.name].")
 	jumpsuit.toggle_jumpsuit_adjust()
@@ -96,7 +96,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		source.visible_message("<span class='danger'>[user] tries to [hardsuit.suittoggled ? "retract" : "extend"] [source]'s helmet.</span>", \
 							"<span class='userdanger'>[user] tries to [hardsuit.suittoggled ? "retract" : "extend"] [source]'s helmet.</span>", \
 							target = user, target_message = "<span class='danger'>You try to [hardsuit.suittoggled ? "retract" : "extend"] [source]'s helmet.</span>")
-		if(!do_mob(user, source, hardsuit_head ? hardsuit_head.strip_delay : POCKET_STRIP_DELAY, ignorehelditem = TRUE))
+		if(!do_mob(user, source, hardsuit_head ? hardsuit_head.strip_delay : POCKET_STRIP_DELAY, timed_action_flags = IGNORE_HELD_ITEM))
 			return null
 		if((source.head != hardsuit_head) && source.head)
 			return null
@@ -279,7 +279,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 
 	to_chat(user, span_notice("You try to [isnull(carbon_source.internal) ? "open": "close"] the valve on [source]'s [item.name]..."))
 
-	if(!do_mob(user, carbon_source, INTERNALS_TOGGLE_DELAY, ignorehelditem = TRUE))
+	if(!do_mob(user, carbon_source, INTERNALS_TOGGLE_DELAY, timed_action_flags = IGNORE_HELD_ITEM))
 		return null
 
 	if(carbon_source.internal)

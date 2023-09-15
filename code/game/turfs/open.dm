@@ -55,7 +55,7 @@
 	. = ..()
 	if(dropping == user && isliving(user))
 		var/mob/living/L = user
-		if(L.resting && do_after(L, max(10, L.getStaminaLoss()*0.5), 0, src))
+		if(L.resting && do_after(L, max(10, L.getStaminaLoss()*0.5), src, IGNORE_HELD_ITEM))
 			if(Adjacent(L, src))
 				step(L, get_dir(L, src))
 				playsound(L, "rustle", 25, 1)

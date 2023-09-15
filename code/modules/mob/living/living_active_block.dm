@@ -48,7 +48,7 @@
 	animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, FALSE, SINE_EASING | EASE_IN)
 
 /mob/living/proc/continue_starting_active_block()
-	return (combat_flags & COMBAT_FLAG_ACTIVE_BLOCK_STARTING)? DO_AFTER_CONTINUE : DO_AFTER_STOP
+	return (combat_flags & COMBAT_FLAG_ACTIVE_BLOCK_STARTING)
 
 /mob/living/get_standard_pixel_x_offset()
 	. = ..()
@@ -102,7 +102,7 @@
 	var/delay = data.block_start_delay
 	combat_flags |= COMBAT_FLAG_ACTIVE_BLOCK_STARTING
 	animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = delay, FALSE, SINE_EASING | EASE_IN)
-	if(!do_after_advanced(src, delay, src, DO_AFTER_REQUIRES_USER_ON_TURF|DO_AFTER_NO_COEFFICIENT, CALLBACK(src, .proc/continue_starting_active_block), MOBILITY_USE, null, null, I))
+	if(!do_after(src, delay, src, (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE), extra_checks = CALLBACK(src, .proc/continue_starting_active_block)))
 		to_chat(src, "<span class='warning'>You fail to raise [I].</span>")
 		combat_flags &= ~(COMBAT_FLAG_ACTIVE_BLOCK_STARTING)
 		animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, FALSE, SINE_EASING | EASE_IN, ANIMATION_END_NOW)
