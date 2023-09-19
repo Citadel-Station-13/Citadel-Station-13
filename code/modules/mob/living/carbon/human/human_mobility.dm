@@ -35,7 +35,7 @@
 				standupwarning = "[src] struggles to stand up."
 		var/usernotice = automatic ? "<span class='notice'>You are now getting up. (Auto)</span>" : "<span class='notice'>You are now getting up.</span>"
 		visible_message("<span class='notice'>[standupwarning]</span>", usernotice, vision_distance = 5)
-		if(do_after(src, totaldelay, target = src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM)))
+		if(do_after(src, totaldelay, target = src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED), extra_checks = CALLBACK(src, PROC_REF(cuff_resist_check))))
 			set_resting(FALSE, TRUE)
 
 			combat_flags &= ~COMBAT_FLAG_RESISTING_REST
