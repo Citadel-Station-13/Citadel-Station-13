@@ -305,15 +305,15 @@
 		to_chat(src, "<span class='warning'>You're already attempting to remove [I]!</span>")
 		return
 	var/obj/item/restraints/R = istype(I, /obj/item/restraints) ? I : null
-	var/allow_breakout_movement = NONE
+	var/allow_breakout_movement = IGNORE_INCAPACITATED
 	if(R?.allow_breakout_movement)
-		allow_breakout_movement = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE)
+		allow_breakout_movement = (IGNORE_INCAPACITATED|IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE)
 	I.item_flags |= BEING_REMOVED
 	breakouttime = I.breakouttime
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
 		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)</span>")
-		if(do_after(src, breakouttime, target = src, timed_action_flags = allow_breakout_movement))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = allow_breakout_movement, extra_checks = CALLBACK(src, PROC_REF(cuff_resist_check))))
 			clear_cuffs(I, cuff_break)
 		else
 			to_chat(src, "<span class='warning'>You fail to remove [I]!</span>")
@@ -322,7 +322,7 @@
 		breakouttime = 50
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
 		to_chat(src, "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>")
-		if(do_after(src, breakouttime, target = src, timed_action_flags = allow_breakout_movement))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = allow_breakout_movement, extra_checks = CALLBACK(src, PROC_REF(cuff_resist_check))))
 			clear_cuffs(I, cuff_break)
 		else
 			to_chat(src, "<span class='warning'>You fail to break [I]!</span>")
@@ -331,6 +331,9 @@
 		clear_cuffs(I, cuff_break)
 
 	I.item_flags &= ~BEING_REMOVED
+
+/mob/living/carbon/proc/cuff_resist_check()
+	return !incapacitated(ignore_restraints = TRUE)
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
