@@ -498,3 +498,20 @@ PAI_CUSTOM_HOLOFORMS
 
 ## Do station renames from the station charter require admin approval to pass, as opposed to autoapproving if not denied.
 STATION_NAME_NEEDS_APPROVAL
+
+## Strings for the station trait "Randomizing station name"
+RANDOMIZING_STATION_NAME_MESSAGE Due to internal affairs, the station is now named %NEW_STATION_NAME%.
+RANDOMIZING_STATION_NAME_MESSAGE The solar system's government has formally requested that the station now be named %NEW_STATION_NAME%.
+RANDOMIZING_STATION_NAME_MESSAGE A gorilla broke into the office and destroyed a bunch of paperwork. We don't know what your station's old name was. It's now %NEW_STATION_NAME%.
+RANDOMIZING_STATION_NAME_MESSAGE An intern said %NEW_STATION_NAME% would be a cool name. That's your station's name now.
+RANDOMIZING_STATION_NAME_MESSAGE Our predictive language model has renamed your station to %NEW_STATION_NAME%.
+RANDOMIZING_STATION_NAME_MESSAGE It's %NEW_STATION_NAME% now.
+RANDOMIZING_STATION_NAME_MESSAGE The CEO demanded that your station be named %NEW_STATION_NAME%.
+RANDOMIZING_STATION_NAME_MESSAGE Our intern accidentally wiped the database, so your station needs a new name: %NEW_STATION_NAME%.
+RANDOMIZING_STATION_NAME_MESSAGE Due to copyright infringement, the station is now temporarily renamed to %NEW_STATION_NAME%.
+RANDOMIZING_STATION_NAME_MESSAGE Due to recent corporate acquisitions, the station has been rebranded to %NEW_STATION_NAME%.
+RANDOMIZING_STATION_NAME_MESSAGE %NEW_STATION_NAME%.
+RANDOMIZING_STATION_NAME_MESSAGE %NEW_STATION_NAME%? %NEW_STATION_NAME%! %NEW_STATION_NAME%!!!!!!!!
+RANDOMIZING_STATION_NAME_MESSAGE A popular social network application had already claimed the trademark of %CURRENT_STATION_NAME%, the station has been renamed to %NEW_STATION_NAME%.
+RANDOMIZING_STATION_NAME_MESSAGE We're pulling a prank on %RANDOM_CREWMEMBER%, so we've changed the station's name to %NEW_STATION_NAME%.
+RANDOMIZING_STATION_NAME_MESSAGE %RANDOM_NAME% made us change the station name, which is now %NEW_STATION_NAME%.
