@@ -277,7 +277,7 @@
 /datum/config_entry/keyed_list/box_random_engine
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM
-	lowercase = FALSE
+	lowercase_key = FALSE
 	splitter = ","
 
 /datum/config_entry/flag/pai_custom_holoforms

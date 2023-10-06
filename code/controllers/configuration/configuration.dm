@@ -151,7 +151,7 @@
 		if (entry == "$reset")
 			var/datum/config_entry/resetee = _entries[lowertext(value)]
 			if (!value || !resetee)
-				log_config_error("Warning: invalid $reset directive: [value]")
+				log_config("Warning: invalid $reset directive: [value]")
 				continue
 			resetee.set_default()
 			log_config("Reset configured value for [value] to original defaults")
