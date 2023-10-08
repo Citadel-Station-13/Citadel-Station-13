@@ -35,8 +35,8 @@
 		message_admins("[key_name_admin(src)] gave [key_name_admin(O)] a full respawn and sent them back to the lobby.")
 		log_admin("[key_name(src)] gave [key_name(O)] a full respawn and sent them back to the lobby.")
 		to_chat(O, "<span class='userdanger'>You have been given a full respawn.</span>")
-		O.do_respawn(FALSE)
-		O.client.prefs.dnr_triggered = FALSE
+		if(O.do_respawn(FALSE))
+			player.prefs.dnr_triggered = FALSE
 	else if(istype(M, /mob/dead/new_player))
 		var/mob/dead/new_player/NP = M
 		var/confirm = alert(src, "Remove [NP]'s respawn restrictions?", "Remove Restrictions", "Yes", "No")
@@ -150,7 +150,7 @@
  */
 /mob/dead/observer/proc/do_respawn(penalize)
 	if(!client)
-		return
+		return FALSE
 	if(isnull(penalize))
 		penalize = client.prefs.respawn_restrictions_active
 	client.prefs.respawn_restrictions_active = penalize
@@ -162,6 +162,7 @@
 	to_chat(N, "<span class='userdanger'>You have been respawned to the lobby. \
 	Remember to take heed of rules regarding round knowledge - notably, that ALL past lives are forgotten. \
 	Any character you join as has NO knowledge of round events unless specified otherwise by an admin.</span>")
+	return TRUE
 
 /**
  * Actual proc that removes us and puts us back on lobby
