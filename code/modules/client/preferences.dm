@@ -2362,7 +2362,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["cock_shape"] = new_shape
 
 				if("cock_visibility")
-					var/n_vis = input(user, "Penis Visibility", "Character Preference") as null|anything in CONFIG_GET(keyed_list/safe_visibility_toggles)
+					var/n_vis = input(user, "Penis Visibility", "Character Preference") as null|anything in CONFIG_GET(str_list/safe_visibility_toggles)
 					if(n_vis)
 						features["cock_visibility"] = n_vis
 
@@ -2384,7 +2384,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["balls_shape"] = new_shape
 
 				if("balls_visibility")
-					var/n_vis = input(user, "Testicles Visibility", "Character Preference") as null|anything in CONFIG_GET(keyed_list/safe_visibility_toggles)
+					var/n_vis = input(user, "Testicles Visibility", "Character Preference") as null|anything in CONFIG_GET(str_list/safe_visibility_toggles)
 					if(n_vis)
 						features["balls_visibility"] = n_vis
 
@@ -2411,7 +2411,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("breasts_visibility")
-					var/n_vis = input(user, "Breasts Visibility", "Character Preference") as null|anything in CONFIG_GET(keyed_list/safe_visibility_toggles)
+					var/n_vis = input(user, "Breasts Visibility", "Character Preference") as null|anything in CONFIG_GET(str_list/safe_visibility_toggles)
 					if(n_vis)
 						features["breasts_visibility"] = n_vis
 
@@ -2433,7 +2433,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("vag_visibility")
-					var/n_vis = input(user, "Vagina Visibility", "Character Preference") as null|anything in CONFIG_GET(keyed_list/safe_visibility_toggles)
+					var/n_vis = input(user, "Vagina Visibility", "Character Preference") as null|anything in CONFIG_GET(str_list/safe_visibility_toggles)
 					if(n_vis)
 						features["vag_visibility"] = n_vis
 
@@ -2456,7 +2456,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["butt_size"] = clamp(round(new_length), min_B, max_B)
 
 				if("butt_visibility")
-					var/n_vis = input(user, "Butt Visibility", "Character Preference") as null|anything in CONFIG_GET(keyed_list/safe_visibility_toggles)
+					var/n_vis = input(user, "Butt Visibility", "Character Preference") as null|anything in CONFIG_GET(str_list/safe_visibility_toggles)
 					if(n_vis)
 						features["butt_visibility"] = n_vis
 
