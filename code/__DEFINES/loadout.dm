@@ -88,12 +88,21 @@
 
 //the names of the customization tabs
 #define SETTINGS_TAB			0
-#define GAME_PREFERENCES_TAB	1
-#define APPEARANCE_TAB			2
-#define SPEECH_TAB				3
-#define LOADOUT_TAB				4
-#define CONTENT_PREFERENCES_TAB	5
-#define KEYBINDINGS_TAB			6
+#define PREFERENCES_TAB			1
+#define KEYBINDINGS_TAB			2
+
+//subtabs for the character settings tab
+#define GENERAL_CHAR_TAB		0
+#define BACKGROUND_CHAR_TAB		1
+#define APPEARANCE_CHAR_TAB		2
+#define MARKINGS_CHAR_TAB		3
+#define SPEECH_CHAR_TAB			4
+#define LOADOUT_CHAR_TAB		5
+
+//subtabs for preferences tab
+#define GAME_PREFS_TAB			0
+#define OOC_PREFS_TAB			1
+#define CONTENT_PREFS_TAB		2
 
 //quirks
 #define QUIRK_POSITIVE	"Positive"
