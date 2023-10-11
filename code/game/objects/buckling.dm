@@ -25,32 +25,11 @@
 			if(user_unbuckle_mob(buckled_mobs[1],user))
 				return 1
 
-/atom/movable/attackby(obj/item/attacking_item, mob/user, params)
-	if(!can_buckle || !istype(attacking_item, /obj/item/riding_offhand) || !user.Adjacent(src))
-		return ..()
-
-	var/obj/item/riding_offhand/riding_item = attacking_item
-	var/mob/living/carried_mob = riding_item.rider
-	if(carried_mob == user) //Piggyback user.
-		return
-	user.unbuckle_mob(carried_mob)
-	carried_mob.forceMove(get_turf(src))
-	return mouse_buckle_handling(carried_mob, user)
-
 /atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
-	return mouse_buckle_handling(M, user)
-
-/**
- * Does some typechecks and then calls user_buckle_mob
- *
- * Arguments:
- * M - The mob being buckled to src
- * user - The mob buckling M to src
- */
-/atom/movable/proc/mouse_buckle_handling(mob/living/M, mob/living/user)
 	if(can_buckle && istype(M) && istype(user))
-		return user_buckle_mob(M, user, check_loc = FALSE)
+		if(user_buckle_mob(M, user))
+			return 1
 
 /atom/movable/proc/has_buckled_mobs()
 	if(!buckled_mobs)

@@ -43,7 +43,7 @@
 	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
 
-/obj/machinery/manned_turret/user_buckle_mob(mob/living/M, mob/living/carbon/user, check_loc)
+/obj/machinery/manned_turret/user_buckle_mob(mob/living/M, mob/living/carbon/user)
 	if(user.incapacitated() || !istype(user))
 		return
 	M.forceMove(get_turf(src))
