@@ -141,26 +141,28 @@
 
 
 /mob/living/carbon/proc/throw_mode_off()
-	in_throw_mode = 0
+	in_throw_mode = FALSE
 	if(client && hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_off"
 
 
 /mob/living/carbon/proc/throw_mode_on()
-	in_throw_mode = 1
+	in_throw_mode = TRUE
 	if(client && hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_on"
 
 /mob/proc/throw_item(atom/target)
 	SEND_SIGNAL(src, COMSIG_MOB_THROW, target)
-	return
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CARBON_THROW_THING, src, target)
+	return TRUE
 
 /mob/living/carbon/throw_item(atom/target)
+	. = ..()
 	throw_mode_off()
 	if(!target || !isturf(loc))
-		return
+		return FALSE
 	if(istype(target, /atom/movable/screen))
-		return
+		return FALSE
 
 	//CIT CHANGES - makes it impossible to throw while in stamina softcrit
 	if(IS_STAMCRIT(src))
@@ -170,59 +172,56 @@
 	var/random_turn = a_intent == INTENT_HARM
 	//END OF CIT CHANGES
 
-	var/obj/item/I = get_active_held_item()
-
 	var/atom/movable/thrown_thing
-	var/mob/living/throwable_mob
+	var/obj/item/held_item = get_active_held_item()
+	var/verb_text = pick("throw", "toss", "hurl", "chuck", "fling")
+	if(prob(0.5))
+		verb_text = "yeet"
 
-	if(istype(I, /obj/item/clothing/head/mob_holder))
-		var/obj/item/clothing/head/mob_holder/holder = I
-		if(holder.held_mob)
-			throwable_mob = holder.held_mob
-			holder.release()
-
-	if(!I || throwable_mob)
-		if(!throwable_mob && pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
-			throwable_mob = pulling
-
-		if(throwable_mob && !throwable_mob.buckled)
-			thrown_thing = throwable_mob
-			if(pulling)
+	var/neckgrab_throw = FALSE
+	if(!held_item)
+		if(pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
+			var/mob/living/throwable_mob = pulling
+			if(!throwable_mob.buckled)
+				thrown_thing = throwable_mob
+				if(grab_state >= GRAB_NECK)
+					neckgrab_throw = TRUE
 				stop_pulling()
-			if(HAS_TRAIT(src, TRAIT_PACIFISM))
-				to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
-				return
-			if(!UseStaminaBuffer(STAM_COST_THROW_MOB * ((throwable_mob.mob_size+1)**2), TRUE))
-				return
-			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
-			var/turf/end_T = get_turf(target)
-			if(start_T && end_T)
-				log_combat(src, throwable_mob, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
-
-	else if(!(I.item_flags & ABSTRACT) && !HAS_TRAIT(I, TRAIT_NODROP))
-		thrown_thing = I
-		dropItemToGround(I)
-
-		if(HAS_TRAIT(src, TRAIT_PACIFISM) && I.throwforce)
-			to_chat(src, "<span class='notice'>You set [I] down gently on the ground.</span>")
-			return
-
-		if(!UseStaminaBuffer(I.getweight(src, STAM_COST_THROW_MULT, SKILL_THROW_STAM_COST), warn = TRUE))
-			return
-
-	if(thrown_thing)
-		var/power_throw = 0
-		if(HAS_TRAIT(src, TRAIT_HULK))
-			power_throw++
-		if(pulling && grab_state >= GRAB_NECK)
-			power_throw++
-		visible_message("<span class='danger'>[src] throws [thrown_thing][power_throw ? " really hard!" : "."]</span>", \
-						"<span class='danger'>You throw [thrown_thing][power_throw ? " really hard!" : "."]</span>")
-		log_message("has thrown [thrown_thing] [power_throw ? "really hard" : ""]", LOG_ATTACK)
-		do_attack_animation(target, no_effect = 1)
-		playsound(loc, 'sound/weapons/punchmiss.ogg', 50, 1, -1)
-		newtonian_move(get_dir(target, src))
-		thrown_thing.safe_throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed + power_throw, src, null, null, null, move_force, random_turn)
+				if(HAS_TRAIT(src, TRAIT_PACIFISM))
+					to_chat(src, span_notice("You gently let go of [throwable_mob]."))
+					return FALSE
+				if(!UseStaminaBuffer(STAM_COST_THROW_MOB * ((throwable_mob.mob_size+1)**2), TRUE))
+					return FALSE
+	else
+		thrown_thing = held_item.on_thrown(src, target)
+	if(!thrown_thing)
+		return FALSE
+	if(isliving(thrown_thing))
+		var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
+		var/turf/end_T = get_turf(target)
+		if(start_T && end_T)
+			log_combat(src, thrown_thing, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
+	var/power_throw = 0
+	if(HAS_TRAIT(src, TRAIT_HULK))
+		power_throw++
+	if(HAS_TRAIT(src, TRAIT_DWARF))
+		power_throw--
+	if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
+		power_throw++
+	if(neckgrab_throw)
+		power_throw++
+	if(isitem(thrown_thing))
+		var/obj/item/thrown_item = thrown_thing
+		if(thrown_item.throw_verb)
+			verb_text = thrown_item.throw_verb
+	visible_message(span_danger("[src] [verb_text][plural_s(verb_text)] [thrown_thing][power_throw ? " really hard!" : "."]"), \
+					span_danger("You [verb_text] [thrown_thing][power_throw ? " really hard!" : "."]"))
+	log_message("has thrown [thrown_thing] [power_throw > 0 ? "really hard" : ""]", LOG_ATTACK)
+	do_attack_animation(target, no_effect = 1)
+	var/extra_throw_range = 0 // HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
+	playsound(loc, 'sound/weapons/punchmiss.ogg', 50, 1, -1)
+	newtonian_move(get_dir(target, src))
+	thrown_thing.safe_throw_at(target, thrown_thing.throw_range + extra_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force, random_turn)
 
 /mob/living/carbon/restrained(ignore_grab)
 	. = (handcuffed || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))
