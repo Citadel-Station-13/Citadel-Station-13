@@ -55,7 +55,7 @@
 	. = ..()
 	if(dropping == user && isliving(user))
 		var/mob/living/L = user
-		if(L.resting && do_after(L, max(10, L.getStaminaLoss()*0.5), 0, src))
+		if(L.resting && do_after(L, max(10, L.getStaminaLoss()*0.5), src, IGNORE_HELD_ITEM))
 			if(Adjacent(L, src))
 				step(L, get_dir(L, src))
 				playsound(L, "rustle", 25, 1)
@@ -222,8 +222,6 @@
 		air = new(2500,src)
 	air.copy_from_turf(src)
 	update_air_ref(planetary_atmos ? 1 : 2)
-
-	update_visuals()
 
 	ImmediateCalculateAdjacentTurfs()
 

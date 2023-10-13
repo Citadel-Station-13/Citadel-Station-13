@@ -32,6 +32,8 @@
 	new /obj/item/clothing/head/beret/ce/white(src)
 	new /obj/item/storage/bag/construction(src)
 	new /obj/item/storage/bag/material(src)
+	new /obj/item/mod/construction/armor/advanced(src)
+	new /obj/item/mod/module/rad_protection(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "electrical supplies locker"

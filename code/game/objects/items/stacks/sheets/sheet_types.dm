@@ -306,7 +306,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 				 "<span class='notice'>You begin whittling [src] into a sharp point at one end.</span>", \
 				 "<span class='italics'>You hear wood carving.</span>")
 		// 8 Second Timer
-		if(!do_after(user, 80, TRUE, src))
+		if(!do_after(user, 8 SECONDS,  src))
 			return
 		// Make Stake
 		var/obj/item/stake/basic/new_item = new(user.loc)
@@ -798,7 +798,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("water bottle", /obj/item/reagent_containers/glass/beaker/waterbottle/empty), \
 	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty,3), \
 	new /datum/stack_recipe("shower curtain", /obj/structure/curtain, 10, time = 10, one_per_turf = 1, on_floor = 1), \
-	new /datum/stack_recipe("duct", /obj/item/stack/ducts,1), \
+	new /datum/stack_recipe("duct", /obj/item/stack/ducts, 1, 5, 50), \
 	new /datum/stack_recipe("laser pointer case", /obj/item/glasswork/glass_base/laserpointer_shell, 30), \
 	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2)))
 

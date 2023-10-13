@@ -39,7 +39,10 @@
 	var/construction_type
 	var/pipe_state //icon_state as a pipe item
 	var/on = FALSE
-	var/interacts_with_air = FALSE
+
+/obj/machinery/atmospherics/Initialize(mapload)
+	. = ..()
+	register_context()
 
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
@@ -47,6 +50,17 @@
 		var/mob/living/L = user
 		if(SEND_SIGNAL(L, COMSIG_CHECK_VENTCRAWL))
 			. += "<span class='notice'>Alt-click to crawl through it.</span>"
+
+/obj/machinery/atmospherics/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(can_unwrench && held_item?.tool_behaviour == TOOL_WRENCH)
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Unfasten")
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && isliving(user) && SEND_SIGNAL(user, COMSIG_CHECK_VENTCRAWL))
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, "Crawl into")
+		. = CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/atmospherics/New(loc, process = TRUE, setdir)
 	if(!isnull(setdir))
@@ -58,10 +72,7 @@
 		armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 100, ACID = 70)
 	..()
 	if(process)
-		if(interacts_with_air)
-			SSair.atmos_air_machinery += src
-		else
-			SSair.atmos_machinery += src
+		SSair.atmos_machinery += src
 	SetInitDirections()
 
 /obj/machinery/atmospherics/Destroy()
@@ -69,7 +80,6 @@
 		nullifyNode(i)
 
 	SSair.atmos_machinery -= src
-	SSair.atmos_air_machinery -= src
 	SSair.pipenets_needing_rebuilt -= src
 
 	dropContents()

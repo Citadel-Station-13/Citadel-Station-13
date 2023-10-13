@@ -501,8 +501,9 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 	var/away_name
 	var/datum/space_level/away_level
+	possible_options += "Custom"
 
-	var/answer = input("What kind ? ","Away/VR") as null|anything in list(possible_options + "Custom")
+	var/answer = input("What kind ? ","Away/VR") as null|anything in possible_options
 	switch(answer)
 		if(null)
 			return

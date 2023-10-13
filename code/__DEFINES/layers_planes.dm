@@ -187,9 +187,18 @@
 #define ABOVE_HUD_LAYER 30
 #define ABOVE_HUD_RENDER_TARGET "ABOVE_HUD_PLANE"
 
-#define LOBBY_BACKGROUND_LAYER 3
-#define LOBBY_BUTTON_LAYER 4
+///Layer for lobby menu collapse button
+#define LOBBY_BELOW_MENU_LAYER 2
+///Layer for lobby menu background image and main buttons (Join/Ready, Observe, Charater Prefs)
+#define LOBBY_MENU_LAYER 3
+///Layer for lobby menu shutter, which covers up the menu to collapse/expand it
+#define LOBBY_SHUTTER_LAYER 4
+///Layer for lobby menu buttons that are hanging away from and lower than the main panel
+#define LOBBY_BOTTOM_BUTTON_LAYER 5
 
 #define SPLASHSCREEN_LAYER 90
 #define SPLASHSCREEN_PLANE 90
 #define SPLASHSCREEN_RENDER_TARGET "SPLASHSCREEN_PLANE"
+
+///Layer for screentips
+#define SCREENTIP_LAYER 40

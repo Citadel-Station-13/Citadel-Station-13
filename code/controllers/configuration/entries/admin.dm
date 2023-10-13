@@ -23,12 +23,12 @@
 /datum/config_entry/flag/see_own_notes	//Can players see their own admin notes
 
 /datum/config_entry/number/note_fresh_days
-	config_entry_value = null
+	default = null
 	min_val = 0
 	integer = FALSE
 
 /datum/config_entry/number/note_stale_days
-	config_entry_value = null
+	default = null
 	min_val = 0
 	integer = FALSE
 
@@ -47,7 +47,7 @@
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/string/autoadmin_rank	// the rank for autoadmins
-	config_entry_value = "Game Master"
+	default = "Game Master"
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/flag/allow_admin_ooccolor	// Allows admins with relevant permissions to have their own ooc colour

@@ -75,7 +75,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		add_overlay(/obj/effect/fullbright)
 
 	if(requires_activation)
-		CALCULATE_ADJACENT_TURFS(src)
+		ImmediateCalculateAdjacentTurfs()
 
 	if (light_power && light_range)
 		update_light()
@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/set_temperature()
 
 /turf/proc/Initalize_Atmos(times_fired)
-	CALCULATE_ADJACENT_TURFS(src)
+	ImmediateCalculateAdjacentTurfs()
 
 /turf/Destroy(force)
 	. = QDEL_HINT_IWILLGC
@@ -388,7 +388,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/list/things = src_object.contents()
 	var/datum/progressbar/progress = new(user, things.len, src)
-	while (do_after(usr, 1 SECONDS, TRUE, src, FALSE, CALLBACK(src_object, /datum/component/storage.proc/mass_remove_from_storage, src, things, progress, TRUE, user)))
+	while (do_after(usr, 1 SECONDS, src, NONE, FALSE, CALLBACK(src_object, /datum/component/storage.proc/mass_remove_from_storage, src, things, progress, TRUE, user)))
 		stoplag(1)
 	progress.end_progress()
 

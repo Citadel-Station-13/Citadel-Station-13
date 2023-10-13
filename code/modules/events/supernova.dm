@@ -4,18 +4,20 @@
 	weight = 5
 	max_occurrences = 1
 	min_players = 2
+	category = EVENT_CATEGORY_SPACE
+	description = "Several modified radstorms hit the station."
 
 /datum/round_event/supernova
-	announceWhen = 40
-	startWhen = 1
-	endWhen = 300
+	announce_when = 40
+	start_when = 1
+	end_when = 300
 	var/power = 1
 	var/datum/sun/supernova
 	var/storm_count = 0
 	var/announced = FALSE
 
 /datum/round_event/supernova/setup()
-	announceWhen = rand(4, 60)
+	announce_when = rand(4, 60)
 	supernova = new
 	SSsun.suns += supernova
 	switch(rand(1,5))
@@ -53,10 +55,10 @@
 		sucker_light.give_home_power()
 
 /datum/round_event/supernova/tick()
-	var/midpoint = round((endWhen-startWhen)/2)
+	var/midpoint = round((end_when-start_when)/2)
 	if(activeFor < midpoint)
 		supernova.power_mod = min(supernova.power_mod*1.2, power)
-	if(activeFor > endWhen-10)
+	if(activeFor > end_when-10)
 		supernova.power_mod /= 4
 	if(prob(round(supernova.power_mod)) && prob(5-storm_count) && !SSweather.get_weather_by_type(/datum/weather/rad_storm))
 		SSweather.run_weather(/datum/weather/rad_storm/supernova)

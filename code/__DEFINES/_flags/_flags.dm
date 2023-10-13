@@ -64,6 +64,8 @@ GLOBAL_LIST_INIT(bitflags, list(
 #define NO_RUINS_1 (1<<10)
 /// Should this tile be cleaned up and reinserted into an excited group?
 #define EXCITED_CLEANUP_1 (1 << 13)
+/// Whether or not this atom has contextual screentips when hovered OVER
+#define HAS_CONTEXTUAL_SCREENTIPS_1 (1 << 14)
 
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn

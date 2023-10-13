@@ -69,6 +69,8 @@
 	var/projectile_piercing = NONE
 	/// number of times we've pierced something. Incremented BEFORE bullet_act and on_hit proc!
 	var/pierces = 0
+	/// If objects are below this layer, we pass through them
+	var/hit_threshhold = PROJECTILE_HIT_THRESHHOLD_LAYER
 	/// "leftover" pixels for Range() calculation as pixel_move() was moved to simulated semi-pixel movement and Range() is in tiles.
 	var/pixels_range_leftover = 0
 	/// "leftover" tick pixels and stuff yeah, so we don't round off things and introducing tracing inaccuracy.
@@ -519,7 +521,7 @@
 	if(!isliving(target))
 		if(isturf(target))		// non dense turfs
 			return FALSE
-		if(target.layer < PROJECTILE_HIT_THRESHHOLD_LAYER)
+		if(target.layer < hit_threshhold)
 			return FALSE
 		else if(!direct_target)		// non dense objects do not get hit unless specifically clicked
 			return FALSE

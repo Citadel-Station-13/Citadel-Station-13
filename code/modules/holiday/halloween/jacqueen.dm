@@ -15,6 +15,8 @@
 	weight = -1							//forces it to be called, regardless of weight
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	category = EVENT_CATEGORY_HOLIDAY
+	description = "Spawns Jacq, a friendly mob that gives players a couple fun stuff to do."
 
 /datum/round_event/jacqueen/start()
 	..()

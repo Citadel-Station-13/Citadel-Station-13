@@ -38,8 +38,8 @@
 	var/can_be_carded = TRUE
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 	var/viewalerts = 0
-	var/icon/holo_icon//Female is assigned when AI is created.
-	var/obj/vehicle/sealed/mecha/controlled_mech //For controlled_mech a mech, to determine whether to relaymove or use the AI eye.
+	var/icon/holo_icon //Female is assigned when AI is created.
+	var/obj/controlled_equipment //A piece of equipment, to determine whether to relaymove or use the AI eye.
 	var/radio_enabled = TRUE //Determins if a carded AI can speak with its built in radio or not.
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
 	var/obj/item/pda/ai/aiPDA
@@ -98,6 +98,13 @@
 	var/max_multicams = 6
 	var/display_icon_override
 	var/emote_display = "Neutral" //text string of the current emote we set for the status displays, to prevent logins resetting it.
+
+	var/datum/robot_control/robot_control
+	/// Station alert datum for showing alerts UI
+	var/datum/station_alert/alert_control
+	///remember AI's last location
+	var/atom/lastloc
+	interaction_range = INFINITY
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -173,10 +180,21 @@
 	GLOB.ai_list -= src
 	GLOB.shuttle_caller_list -= src
 	SSshuttle.autoEvac()
-	qdel(eyeobj) // No AI, no Eye
+	QDEL_NULL(eyeobj) // No AI, no Eye
+	QDEL_NULL(spark_system)
+	QDEL_NULL(malf_picker)
+	QDEL_NULL(doomsday_device)
+	// TODO: Why these no work?
+	// QDEL_NULL(robot_control)
+	QDEL_NULL(aiMulti)
+	// QDEL_NULL(alert_control)
 	malfhack = null
-
-	. = ..()
+	current = null
+	Bot = null
+	controlled_equipment = null
+	linked_core = null
+	apc_override = null
+	return ..()
 
 /mob/living/silicon/ai/IgniteMob()
 	fire_stacks = 0
@@ -410,7 +428,7 @@
 
 	if (href_list["ai_take_control"]) //Mech domination
 		var/obj/vehicle/sealed/mecha/M = locate(href_list["ai_take_control"])
-		if(controlled_mech)
+		if(controlled_equipment)
 			to_chat(src, "<span class='warning'>You are already loaded into an onboard computer!</span>")
 			return
 		if(!GLOB.cameranet.checkCameraVis(M))

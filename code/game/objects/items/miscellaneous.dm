@@ -240,17 +240,30 @@
 	item_state = "box"
 
 /obj/item/choice_beacon/box/plushie/generate_display_names()
-	var/list/plushie_list = list()
-	//plushie set 1: just subtypes of /obj/item/toy/plush
-	var/list/plushies_set_one = subtypesof(/obj/item/toy/plush) - list(/obj/item/toy/plush/narplush, /obj/item/toy/plush/awakenedplushie, /obj/item/toy/plush/random_snowflake, /obj/item/toy/plush/plushling, /obj/item/toy/plush/random) //don't allow these special ones (you can still get narplush/hugbox)
-	for(var/V in plushies_set_one)
-		var/atom/A = V
-		plushie_list[initial(A.name)] = A
-	//plushie set 2: snowflake plushies
-	var/list/plushies_set_two = CONFIG_GET(keyed_list/snowflake_plushies)
-	for(var/V in plushies_set_two)
-		plushie_list[V] = V //easiest way to do this which works with how selecting options works, despite being snowflakey to have the key equal the value
+	var/static/list/plushie_list = list()
+	if(!length(plushie_list))
+		//plushie set 1: just subtypes of /obj/item/toy/plush
+		var/list/plushies_set_one = subtypesof(/obj/item/toy/plush)
+		plushies_set_one = remove_bad_plushies(plushies_set_one)
+		for(var/V in plushies_set_one)
+			var/atom/A = V
+			plushie_list[initial(A.name)] = A
+		//plushie set 2: snowflake plushies
+		var/list/plushies_set_two = CONFIG_GET(keyed_list/snowflake_plushies)
+		for(var/V in plushies_set_two)
+			plushie_list[V] = V //easiest way to do this which works with how selecting options works, despite being snowflakey to have the key equal the value
 	return plushie_list
+
+/// Don't allow these special ones (you can still get narplush/hugbox)
+/obj/item/choice_beacon/box/plushie/proc/remove_bad_plushies(list/plushies)
+	plushies -= list(
+		/obj/item/toy/plush/narplush,
+		/obj/item/toy/plush/awakenedplushie,
+		/obj/item/toy/plush/random_snowflake,
+		/obj/item/toy/plush/plushling,
+		/obj/item/toy/plush/random
+		)
+	return plushies
 
 /obj/item/skub
 	desc = "It's skub."

@@ -6,7 +6,6 @@
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	desc = "A generic pAI mobile hard-light holographics emitter. It seems to be deactivated."
-	weather_immunities = list("ash")
 	health = 500
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
@@ -199,6 +198,13 @@
 
 /mob/living/silicon/pai/restrained(ignore_grab)
 	. = FALSE
+
+/mob/living/silicon/pai/can_interact_with(atom/target)
+	if(istype(target, /obj/item/mod/control)) // A poor workaround for enabling MODsuit control
+		var/obj/item/mod/control/C = target
+		if(C.ai == src)
+			return TRUE
+	return ..()
 
 // See software.dm for Topic()
 
