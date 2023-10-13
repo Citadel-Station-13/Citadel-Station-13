@@ -64,7 +64,8 @@ const ConfigDisplay = (props, context) => {
           <Input
             value={data.greyscale_config}
             onChange={(_, value) =>
-              act('load_config_from_string', { config_string: value })}
+              act('load_config_from_string', { config_string: value })
+            }
           />
         </LabeledList.Item>
       </LabeledList>
@@ -87,7 +88,8 @@ const ColorDisplay = (props, context) => {
           <Input
             value={colors.map((item) => item.value).join('')}
             onChange={(_, value) =>
-              act('recolor_from_string', { color_string: value })}
+              act('recolor_from_string', { color_string: value })
+            }
           />
         </LabeledList.Item>
         {colors.map((item) => (
@@ -110,7 +112,8 @@ const ColorDisplay = (props, context) => {
               value={item.value}
               width={7}
               onChange={(_, value) =>
-                act('recolor', { color_index: item.index, new_color: value })}
+                act('recolor', { color_index: item.index, new_color: value })
+              }
             />
           </LabeledList.Item>
         ))}
@@ -238,9 +241,9 @@ const PreviewDisplay = (props, context) => {
               </Table.Cell>
             </Table.Row>
           )}
-          {!!data.generate_full_preview
-            && data.sprites.steps !== null
-            && data.sprites.steps.map((item) => (
+          {!!data.generate_full_preview &&
+            data.sprites.steps !== null &&
+            data.sprites.steps.map((item) => (
               <Table.Row key={`${item.result}|${item.layer}`}>
                 <Table.Cell verticalAlign="middle">
                   {item.config_name}
