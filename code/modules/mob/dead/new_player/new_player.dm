@@ -702,13 +702,14 @@
 	. = H
 	new_character = .
 	if(transfer_after)
-		transfer_character()
+		transfer_character(TRUE)
 
-/mob/dead/new_player/proc/transfer_character()
+/mob/dead/new_player/proc/transfer_character(late_transfer = FALSE)
 	. = new_character
 	if(.)
 		new_character.key = key		//Manually transfer the key to log them in
 		new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+		SEND_SIGNAL(new_character, COMSIG_MOB_CLIENT_JOINED_FROM_LOBBY, new_character?.client, late_transfer)
 		new_character = null
 		qdel(src)
 
