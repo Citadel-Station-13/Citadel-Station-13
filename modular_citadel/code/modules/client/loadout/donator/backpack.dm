@@ -1,5 +1,4 @@
 /datum/gear/donator/backpack
-	handle_post_equip = TRUE
 
 /datum/gear/donator/backpack/pet
 	name = "Pet Beacon"

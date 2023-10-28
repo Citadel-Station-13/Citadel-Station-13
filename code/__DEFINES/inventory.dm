@@ -46,11 +46,9 @@
 #define ITEM_SLOT_HANDCUFFED (1<<18)
 /// Legcuff slot (bolas, beartraps)
 #define ITEM_SLOT_LEGCUFFED (1<<19)
-/// To attach to a jumpsuit
-#define ITEM_SLOT_ACCESSORY (1<<20)
 
 /// Total amount of slots
-#define SLOTS_AMT 21 // Keep this up to date!
+#define SLOTS_AMT 20 // Keep this up to date!
 
 //SLOT GROUP HELPERS
 #define ITEM_SLOT_POCKETS (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET)

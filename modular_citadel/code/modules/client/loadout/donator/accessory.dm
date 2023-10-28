@@ -1,6 +1,5 @@
 /datum/gear/donator/accessory
-	slot = ITEM_SLOT_ACCESSORY
-	handle_post_equip = TRUE
+	slot = ITEM_SLOT_BACKPACK
 
 /datum/gear/donator/accessory/kiaramedal
 	name = "Insignia of Steele"

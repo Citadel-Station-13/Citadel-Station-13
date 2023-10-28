@@ -148,10 +148,6 @@
 		if(ITEM_SLOT_SUITSTORE)
 			s_store = I
 			update_inv_s_store()
-		if(ITEM_SLOT_ACCESSORY)
-			var/obj/item/clothing/under/attach_target = w_uniform
-			attach_target.attach_accessory(I, src, TRUE)
-			// updates handled by attach_accessory
 		else
 			to_chat(src, "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
 			not_handled = TRUE
