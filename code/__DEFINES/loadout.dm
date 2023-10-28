@@ -61,6 +61,9 @@
 //unlockable items
 #define LOADOUT_CATEGORY_UNLOCKABLE	"Unlockable"
 
+//errors with your savefile
+#define LOADOUT_CATEGORY_ERROR		"Errors"
+
 //how many prosthetics can we have
 #define MAXIMUM_LOADOUT_PROSTHETICS	4
 
