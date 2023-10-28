@@ -16738,6 +16738,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/eventmap/outside)
+"qyn" = (
+/obj/machinery/light/floor,
+/obj/machinery/telecomms/hub/preset,
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
+"szs" = (
+/obj/machinery/light/floor,
+/obj/machinery/ntnet_relay,
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
 
 (1,1,1) = {"
 aJx
@@ -51427,7 +51437,7 @@ aRW
 aac
 aJx
 azQ
-aEO
+qyn
 aEO
 aGC
 aCQ
@@ -51941,7 +51951,7 @@ aRW
 aac
 aJx
 azQ
-aEO
+szs
 aEO
 aEO
 aKl
