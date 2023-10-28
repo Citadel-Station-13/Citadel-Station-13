@@ -225,3 +225,8 @@
 	description = "<span class='nicegreen'>The gods are pleased with this offering!</span>\n"
 	mood_change = 5
 	timeout = 3 MINUTES
+
+/datum/mood_event/kiss
+	description = "<span class='nicegreen'>Someone blew a kiss at me, I must be a real catch!</span>\n"
+	mood_change = 1.5
+	timeout = 2 MINUTES
