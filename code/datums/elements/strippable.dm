@@ -295,7 +295,7 @@
 	if(istype(gloves))
 		strip_mod = gloves.strip_mod
 
-	if (!do_mob(user, source, (strip_delay || item.strip_delay) / strip_mod, ignorehelditem = TRUE))
+	if (!do_mob(user, source, (strip_delay || item.strip_delay) / strip_mod, timed_action_flags = IGNORE_HELD_ITEM))
 		return FALSE
 
 	return TRUE

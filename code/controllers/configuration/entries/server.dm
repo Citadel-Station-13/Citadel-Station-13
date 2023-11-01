@@ -2,12 +2,12 @@
 
 /datum/config_entry/string/servername	// server name (the name of the game window)
 
-/datum/config_entry/string/communityshortname // short name of the server's community 
+/datum/config_entry/string/communityshortname // short name of the server's community
 
 /datum/config_entry/string/communitylink // link to the server's website
 
 /datum/config_entry/string/servertagline
-	config_entry_value = "We forgot to set the server's tagline in config.txt"
+	default = "We forgot to set the server's tagline in config.txt"
 
 /datum/config_entry/flag/usetaglinestrings
 
@@ -16,7 +16,7 @@
 /datum/config_entry/string/stationname	// station name (the name of the station in-game)
 
 /datum/config_entry/number/fps
-	config_entry_value = 20
+	default = 20
 	min_val = 1
 	max_val = 100   //byond will start crapping out at 50, so this is just ridic
 	var/sync_validate = FALSE
@@ -36,7 +36,7 @@
 
 /datum/config_entry/number/ticklag/New()	//ticklag weirdly just mirrors fps
 	var/datum/config_entry/CE = /datum/config_entry/number/fps
-	config_entry_value = 10 / initial(CE.config_entry_value)
+	config_entry_value = 10 / initial(CE.default)
 	..()
 
 /datum/config_entry/number/ticklag/ValidateAndSet(str_val)
@@ -49,7 +49,7 @@
 		sync_validate = FALSE
 
 /datum/config_entry/number/tick_limit_mc_init	//SSinitialization throttling
-	config_entry_value = TICK_LIMIT_MC_INIT_DEFAULT
+	default = TICK_LIMIT_MC_INIT_DEFAULT
 	min_val = 0 //oranges warned us
 	integer = FALSE
 
@@ -64,17 +64,17 @@
 
 /datum/config_entry/number/mc_tick_rate/base_mc_tick_rate
 	integer = FALSE
-	config_entry_value = 1
+	default = 1
 
 /datum/config_entry/number/mc_tick_rate/high_pop_mc_tick_rate
 	integer = FALSE
-	config_entry_value = 1.1
+	default = 1.1
 
 /datum/config_entry/number/mc_tick_rate/high_pop_mc_mode_amount
-	config_entry_value = 65
+	default = 65
 
 /datum/config_entry/number/mc_tick_rate/disable_high_pop_mc_mode_amount
-	config_entry_value = 60
+	default = 60
 
 /datum/config_entry/number/mc_tick_rate
 	abstract_type = /datum/config_entry/number/mc_tick_rate
@@ -92,8 +92,8 @@
 		world.sleep_offline = !config_entry_value
 
 /datum/config_entry/number/rounds_until_hard_restart
-	config_entry_value = -1
+	default = -1
 	min_val = 0
 
 /datum/config_entry/string/force_gamemode
-	config_entry_value = null
+	default = null

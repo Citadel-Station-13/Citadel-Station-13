@@ -306,7 +306,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 				 "<span class='notice'>You begin whittling [src] into a sharp point at one end.</span>", \
 				 "<span class='italics'>You hear wood carving.</span>")
 		// 8 Second Timer
-		if(!do_after(user, 80, TRUE, src))
+		if(!do_after(user, 8 SECONDS,  src))
 			return
 		// Make Stake
 		var/obj/item/stake/basic/new_item = new(user.loc)

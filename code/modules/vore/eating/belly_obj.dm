@@ -539,7 +539,7 @@
 
 //Handle a mob struggling
 // Called from /mob/living/carbon/relaymove()
-/obj/belly/proc/relay_resist(var/mob/living/R)
+/obj/belly/proc/relay_resist(mob/living/R)
 	if (!(R in contents))
 		return  // User is not in this belly
 
@@ -547,7 +547,7 @@
 		to_chat(R,"<span class='warning'>You attempt to climb out of \the [lowertext(name)]. (This will take around [escapetime/10] seconds.)</span>")
 		to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
 
-		if(do_after(R, owner, escapetime))
+		if(do_after(R, escapetime, owner, (IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM)))
 			if((owner.stat || escapable) && (R.loc == src)) //Can still escape?
 				release_specific_contents(R)
 				return
@@ -604,7 +604,7 @@
 		if(prob(escapechance)) //Let's have it check to see if the prey escapes first.
 			to_chat(R,"<span class='warning'>You start to climb out of \the [lowertext(name)].</span>")
 			to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
-			if(do_after(R, escapetime))
+			if(do_after(R, escapetime, owner, (IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM)))
 				if((escapable) && (R.loc == src)) //Can still escape?
 					release_specific_contents(R)
 					to_chat(R,"<span class='warning'>You climb out of \the [lowertext(name)].</span>")

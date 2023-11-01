@@ -694,6 +694,8 @@ SUBSYSTEM_DEF(job)
 			return
 		for(var/i in chosen_gear)
 			var/datum/gear/G = istext(i[LOADOUT_ITEM]) ? text2path(i[LOADOUT_ITEM]) : i[LOADOUT_ITEM]
+			if(!ispath(G))
+				continue
 			G = GLOB.loadout_items[initial(G.category)][initial(G.subcategory)][initial(G.name)]
 			if(!G)
 				continue
@@ -755,6 +757,8 @@ SUBSYSTEM_DEF(job)
 			return
 		for(var/i in chosen_gear)
 			var/datum/gear/G = istext(i[LOADOUT_ITEM]) ? text2path(i[LOADOUT_ITEM]) : i[LOADOUT_ITEM]
+			if(!ispath(G))
+				continue
 			G = GLOB.loadout_items[initial(G.category)][initial(G.subcategory)][initial(G.name)]
 			if(!G)
 				continue

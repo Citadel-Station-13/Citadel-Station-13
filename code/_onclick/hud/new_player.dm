@@ -280,7 +280,7 @@
 	if(!.)
 		return
 
-	hud.mymob.client.prefs.current_tab = GAME_PREFERENCES_TAB
+	hud.mymob.client.prefs.current_tab = PREFERENCES_TAB
 	hud.mymob.client.prefs.ShowChoices(hud.mymob)
 
 /atom/movable/screen/lobby/button/bottom/changelog_button

@@ -115,15 +115,13 @@
 	. = ..()
 	SSstation.announcer = /datum/centcom_announcer/medbot
 
-GLOBAL_LIST_INIT(randomizing_station_name_messages, world.file2list("strings/randomizing_station_name_messages.txt"))
-
 /datum/station_trait/randomizing_station_name
 	name = "Randomizing station name"
 	show_in_report = TRUE
 	report_message = "Due to legal reasons or other, we might not be able to settle on a station name."
 	trait_processes = TRUE
 	COOLDOWN_DECLARE(randomizing_cooldown)
-	var/trigger_every = 5 MINUTES
+	var/trigger_every = 30 MINUTES
 	blacklist = list(/datum/station_trait/randomizing_station_name/fast, /datum/station_trait/randomizing_station_name/slow)
 
 /datum/station_trait/randomizing_station_name/on_round_start()
@@ -138,7 +136,7 @@ GLOBAL_LIST_INIT(randomizing_station_name_messages, world.file2list("strings/ran
 
 	var/new_name = new_station_name()
 
-	var/centcom_announcement = pick(GLOB.randomizing_station_name_messages)
+	var/centcom_announcement = pick(CONFIG_GET(str_list/randomizing_station_name_message))
 
 	// Replace with CURRENT station name
 	centcom_announcement = replacetext(centcom_announcement, "%CURRENT_STATION_NAME%", station_name())
@@ -160,14 +158,14 @@ GLOBAL_LIST_INIT(randomizing_station_name_messages, world.file2list("strings/ran
 
 	set_station_name(new_name)
 
-	print_command_report(centcom_announcement)
+	priority_announce(centcom_announcement)
 
 /datum/station_trait/randomizing_station_name/fast
 	name = "Randomizing station name - Fast"
-	trigger_every = 3 MINUTES
+	trigger_every = 15 MINUTES
 	blacklist = list(/datum/station_trait/randomizing_station_name, /datum/station_trait/randomizing_station_name/slow)
 
 /datum/station_trait/randomizing_station_name/slow
 	name = "Randomizing station name - Slow"
-	trigger_every = 10 MINUTES
+	trigger_every = 1 HOURS
 	blacklist = list(/datum/station_trait/randomizing_station_name/fast, /datum/station_trait/randomizing_station_name)

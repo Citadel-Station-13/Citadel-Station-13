@@ -198,7 +198,7 @@
 
 	H.mob_transforming = TRUE
 
-	if(do_after(owner, delay=60, needhand=FALSE, target=owner, progress=TRUE))
+	if(do_after(owner, 6 SECONDS, owner))
 		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 			make_dupe()
 		else
