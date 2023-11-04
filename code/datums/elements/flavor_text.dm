@@ -157,16 +157,16 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 /datum/element/flavor_text/proc/borged_update_flavor_text(mob/new_character, client/C)
 	C = C || GET_CLIENT(new_character)
 	if(!C)
-		LAZYREMOVE(texts_by_atom, new_character)
+		LAZYSET(texts_by_atom, new_character, "")
 		return
 	var/datum/preferences/P = C.prefs
 	if(!P)
-		LAZYREMOVE(texts_by_atom, new_character)
+		LAZYSET(texts_by_atom, new_character, "")
 		return
 	if(P.custom_names["cyborg"] == new_character.real_name)
 		LAZYSET(texts_by_atom, new_character, P.features[save_key])
 	else
-		LAZYREMOVE(texts_by_atom, new_character)
+		LAZYSET(texts_by_atom, new_character, "")
 
 //subtypes with additional hooks for DNA and preferences.
 /datum/element/flavor_text/carbon
