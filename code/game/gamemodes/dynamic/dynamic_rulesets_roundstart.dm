@@ -1,11 +1,27 @@
 
+/datum/dynamic_ruleset/roundstart/on_station
+	weight = 0
+	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	minimum_players = INFINITY // it's abstract
+
+/datum/dynamic_ruleset/roundstart/on_station/pre_execute(population)
+	. = ..()
+	var/max_candidates = get_antag_cap(population)
+	var/list/picked = antag_pick(candidates, max_candidates)
+	for(var/m in picked)
+		var/datum/mind/M = m
+		assigned += M
+		M.restricted_roles = restricted_roles
+		M.special_role = antag_flag
+	return TRUE
+
 //////////////////////////////////////////////
 //                                          //
 //           SYNDICATE TRAITORS             //
 //                                          //
 //////////////////////////////////////////////
 
-/datum/dynamic_ruleset/roundstart/traitor
+/datum/dynamic_ruleset/roundstart/on_station/traitor
 	name = "Traitors"
 	persistent = TRUE
 	antag_flag = ROLE_TRAITOR
@@ -22,18 +38,11 @@
 	var/autotraitor_cooldown = (15 MINUTES)
 	COOLDOWN_DECLARE(autotraitor_cooldown_check)
 
-/datum/dynamic_ruleset/roundstart/traitor/pre_execute(population)
+/datum/dynamic_ruleset/roundstart/on_station/traitor/pre_execute(population)
 	. = ..()
 	COOLDOWN_START(src, autotraitor_cooldown_check, autotraitor_cooldown)
-	var/num_traitors = get_antag_cap(population) * (scaled_times + 1)
-	for (var/i = 1 to num_traitors)
-		var/mob/M = pick_n_take(candidates)
-		assigned += M.mind
-		M.mind.special_role = ROLE_TRAITOR
-		M.mind.restricted_roles = restricted_roles
-	return TRUE
 
-/datum/dynamic_ruleset/roundstart/traitor/rule_process()
+/datum/dynamic_ruleset/roundstart/on_station/traitor/rule_process()
 	if (COOLDOWN_FINISHED(src, autotraitor_cooldown_check))
 		COOLDOWN_START(src, autotraitor_cooldown_check, autotraitor_cooldown)
 		log_game("DYNAMIC: Checking if we can turn someone into a traitor.")
@@ -68,12 +77,14 @@
 			break
 		var/datum/team/brother_team/team = new
 		var/team_size = prob(10) ? min(3, candidates.len) : 2
-		for(var/k = 1 to team_size)
-			var/mob/bro = pick_n_take(candidates)
-			assigned += bro.mind
-			team.add_member(bro.mind)
-			bro.mind.special_role = "brother"
-			bro.mind.restricted_roles = restricted_roles
+		var/list/picked = antag_pick(candidates, team_size)
+		candidates -= picked
+		for(var/m in picked)
+			var/datum/mind/M = picked
+			assigned += M
+			team.add_member(M)
+			M.special_role = "brother"
+			M.restricted_roles = restricted_roles
 		pre_brother_teams += team
 	return TRUE
 
@@ -93,7 +104,7 @@
 //                                          //
 //////////////////////////////////////////////
 
-/datum/dynamic_ruleset/roundstart/changeling
+/datum/dynamic_ruleset/roundstart/on_station/changeling
 	name = "Changelings"
 	antag_flag = ROLE_CHANGELING
 	antag_datum = /datum/antagonist/changeling
@@ -106,29 +117,13 @@
 	requirements = list(101,60,50,40,30,20,15,10,10,10)
 	antag_cap = list("denominator" = 29)
 
-/datum/dynamic_ruleset/roundstart/changeling/pre_execute(population)
-	. = ..()
-	var/num_changelings = get_antag_cap(population) * (scaled_times + 1)
-	for (var/i = 1 to num_changelings)
-		var/mob/M = pick_n_take(candidates)
-		assigned += M.mind
-		M.mind.restricted_roles = restricted_roles
-		M.mind.special_role = ROLE_CHANGELING
-	return TRUE
-
-/datum/dynamic_ruleset/roundstart/changeling/execute()
-	for(var/datum/mind/changeling in assigned)
-		var/datum/antagonist/changeling/new_antag = new antag_datum()
-		changeling.add_antag_datum(new_antag)
-	return TRUE
-
 //////////////////////////////////////////////
 //                                          //
 //              ELDRITCH CULT               //
 //                                          //
 //////////////////////////////////////////////
 
-/datum/dynamic_ruleset/roundstart/heretics
+/datum/dynamic_ruleset/roundstart/on_station/heretics
 	name = "Heretics"
 	antag_flag = ROLE_HERETIC
 	antag_datum = /datum/antagonist/heretic
@@ -141,20 +136,7 @@
 	requirements = list(101,101,101,50,40,20,20,15,10,10)//higher because of 'round end'
 	antag_cap = list("denominator" = 24)
 
-
-/datum/dynamic_ruleset/roundstart/heretics/pre_execute(population)
-	. = ..()
-	var/num_ecult = get_antag_cap(population) * (scaled_times + 1)
-
-	for (var/i = 1 to num_ecult)
-		var/mob/picked_candidate = pick_n_take(candidates)
-		assigned += picked_candidate.mind
-		picked_candidate.mind.restricted_roles = restricted_roles
-		picked_candidate.mind.special_role = ROLE_HERETIC
-	return TRUE
-
-/datum/dynamic_ruleset/roundstart/heretics/execute()
-
+/datum/dynamic_ruleset/roundstart/on_station/heretics/execute()
 	for(var/c in assigned)
 		var/datum/mind/cultie = c
 		var/datum/antagonist/heretic/new_antag = new antag_datum()
@@ -193,11 +175,11 @@
 	. = ..()
 	if(GLOB.wizardstart.len == 0)
 		return FALSE
-	var/mob/M = pick_n_take(candidates)
+	var/datum/mind/M = antag_pick(candidates)
 	if (M)
-		assigned += M.mind
-		M.mind.assigned_role = ROLE_WIZARD
-		M.mind.special_role = ROLE_WIZARD
+		assigned += M
+		M.assigned_role = ROLE_WIZARD
+		M.special_role = ROLE_WIZARD
 
 	return TRUE
 
@@ -213,7 +195,7 @@
 //                                          //
 //////////////////////////////////////////////
 
-/datum/dynamic_ruleset/roundstart/bloodcult
+/datum/dynamic_ruleset/roundstart/on_station/bloodcult
 	name = "Blood Cult"
 	antag_flag = ROLE_CULTIST
 	antag_datum = /datum/antagonist/cult
@@ -228,23 +210,11 @@
 	antag_cap = list("denominator" = 20, "offset" = 1)
 	var/datum/team/cult/main_cult
 
-/datum/dynamic_ruleset/roundstart/bloodcult/ready(population, forced = FALSE)
+/datum/dynamic_ruleset/roundstart/on_station/bloodcult/ready(population, forced = FALSE)
 	required_candidates = get_antag_cap(population)
 	. = ..()
 
-/datum/dynamic_ruleset/roundstart/bloodcult/pre_execute(population)
-	. = ..()
-	var/cultists = get_antag_cap(population)
-	for(var/cultists_number = 1 to cultists)
-		if(candidates.len <= 0)
-			break
-		var/mob/M = pick_n_take(candidates)
-		assigned += M.mind
-		M.mind.special_role = ROLE_CULTIST
-		M.mind.restricted_roles = restricted_roles
-	return TRUE
-
-/datum/dynamic_ruleset/roundstart/bloodcult/execute()
+/datum/dynamic_ruleset/roundstart/on_station/bloodcult/execute()
 	main_cult = new
 	for(var/datum/mind/M in assigned)
 		var/datum/antagonist/cult/new_cultist = new antag_datum()
@@ -254,7 +224,7 @@
 	main_cult.setup_objectives()
 	return TRUE
 
-/datum/dynamic_ruleset/roundstart/bloodcult/round_result()
+/datum/dynamic_ruleset/roundstart/on_station/bloodcult/round_result()
 	..()
 	if(main_cult.check_cult_victory())
 		SSticker.mode_result = "win - cult win"
@@ -292,13 +262,12 @@
 	. = ..()
 	// If ready() did its job, candidates should have 5 or more members in it
 	var/operatives = get_antag_cap(population)
-	for(var/operatives_number = 1 to operatives)
-		if(candidates.len <= 0)
-			break
-		var/mob/M = pick_n_take(candidates)
-		assigned += M.mind
-		M.mind.assigned_role = "Nuclear Operative"
-		M.mind.special_role = "Nuclear Operative"
+	var/list/picked = antag_pick(candidates, operatives)
+	for(var/m in picked)
+		var/datum/mind/M = m
+		assigned += M
+		M.assigned_role = "Nuclear Operative"
+		M.special_role = "Nuclear Operative"
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/execute()
@@ -353,7 +322,7 @@
 //                                          //
 //////////////////////////////////////////////
 
-/datum/dynamic_ruleset/roundstart/revs
+/datum/dynamic_ruleset/roundstart/on_station/revs
 	name = "Revolution"
 	persistent = TRUE
 	antag_flag = ROLE_REV_HEAD
@@ -376,19 +345,7 @@
 	var/datum/team/revolution/revolution
 	var/finished = FALSE
 
-/datum/dynamic_ruleset/roundstart/revs/pre_execute(population)
-	. = ..()
-	var/max_candidates = get_antag_cap(population)
-	for(var/i = 1 to max_candidates)
-		if(candidates.len <= 0)
-			break
-		var/mob/M = pick_n_take(candidates)
-		assigned += M.mind
-		M.mind.restricted_roles = restricted_roles
-		M.mind.special_role = antag_flag
-	return TRUE
-
-/datum/dynamic_ruleset/roundstart/revs/execute()
+/datum/dynamic_ruleset/roundstart/on_station/revs/execute()
 	revolution = new()
 	for(var/datum/mind/M in assigned)
 		if(check_eligible(M))
@@ -408,11 +365,11 @@
 	log_game("DYNAMIC: [ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
 	return FALSE
 
-/datum/dynamic_ruleset/roundstart/revs/clean_up()
+/datum/dynamic_ruleset/roundstart/on_station/revs/clean_up()
 	qdel(revolution)
 	..()
 
-/datum/dynamic_ruleset/roundstart/revs/rule_process()
+/datum/dynamic_ruleset/roundstart/on_station/revs/rule_process()
 	var/winner = revolution.process_victory(revs_win_threat_injection)
 	if (isnull(winner))
 		return
@@ -421,13 +378,13 @@
 	return RULESET_STOP_PROCESSING
 
 /// Checks for revhead loss conditions and other antag datums.
-/datum/dynamic_ruleset/roundstart/revs/proc/check_eligible(datum/mind/M)
+/datum/dynamic_ruleset/roundstart/on_station/revs/proc/check_eligible(datum/mind/M)
 	var/turf/T = get_turf(M.current)
 	if(!considered_afk(M) && considered_alive(M) && is_station_level(T.z) && !M.antag_datums?.len && !HAS_TRAIT(M, TRAIT_MINDSHIELD))
 		return TRUE
 	return FALSE
 
-/datum/dynamic_ruleset/roundstart/revs/round_result()
+/datum/dynamic_ruleset/roundstart/on_station/revs/round_result()
 	revolution.round_result(finished)
 
 //////////////////////////////////////////////
@@ -436,7 +393,7 @@
 //                                          //
 //////////////////////////////////////////////
 
-/datum/dynamic_ruleset/roundstart/clockcult
+/datum/dynamic_ruleset/roundstart/on_station/clockcult
 	name = "Clock Cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
 	antag_datum = /datum/antagonist/clockcult
@@ -450,23 +407,11 @@
 	antag_cap = list("denominator" = 20, "offset" = 1)
 	var/datum/team/clockcult/main_clockcult
 
-/datum/dynamic_ruleset/roundstart/clockcult/ready(population, forced = FALSE)
+/datum/dynamic_ruleset/roundstart/on_station/clockcult/ready(population, forced = FALSE)
 	required_candidates = get_antag_cap(population)
 	. = ..()
 
-/datum/dynamic_ruleset/roundstart/clockcult/pre_execute(population)
-	. = ..()
-	var/cultists = get_antag_cap(population)
-	for(var/cultists_number = 1 to cultists)
-		if(candidates.len <= 0)
-			break
-		var/mob/M = pick_n_take(candidates)
-		assigned += M.mind
-		M.mind.special_role = ROLE_SERVANT_OF_RATVAR
-		M.mind.restricted_roles = restricted_roles
-	return TRUE
-
-/datum/dynamic_ruleset/roundstart/clockcult/execute()
+/datum/dynamic_ruleset/roundstart/on_station/clockcult/execute()
 	main_clockcult = new
 	for(var/datum/mind/M in assigned)
 		var/datum/antagonist/clockcult/new_cultist = new antag_datum()
@@ -476,7 +421,7 @@
 		M.add_antag_datum(new_cultist)
 	return TRUE
 
-/datum/dynamic_ruleset/roundstart/clockcult/round_result()
+/datum/dynamic_ruleset/roundstart/on_station/clockcult/round_result()
 	..()
 	if(main_clockcult.check_clockwork_victory())
 		SSticker.mode_result = "win - servants completed their objective (summon ratvar)"

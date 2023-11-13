@@ -332,7 +332,7 @@
 //More efficient if you use return list instead of calling this multiple times
 //fail_default_pick makes it use pick() instead of antag rep if it can't find anyone
 //allow_zero_if_insufficient allows it to pick people with zero rep if there isn't enough antags
-/datum/game_mode/proc/antag_pick(list/datum/mind/candidates, return_list = FALSE, fail_default_pick = TRUE, allow_zero_if_insufficient = TRUE)
+/proc/antag_pick(list/datum/mind/candidates, return_list = FALSE, fail_default_pick = TRUE, allow_zero_if_insufficient = TRUE)
 	if(!CONFIG_GET(flag/use_antag_rep)) // || candidates.len <= 1)
 		return pick(candidates)
 
@@ -365,7 +365,7 @@
 			SSpersistence.antag_rep_change[ckey] = -(curr_tickets[ckey] - free_tickets)		//deduct what they spent
 		var/mind = ckey_to_mind[ckey] || (allow_zero_if_insufficient? pick(insufficient) : null)		//we want their mind
 		if(!mind)		//no mind
-			var/warning = "WARNING: No antagonists were successfully picked by /datum/gamemode/proc/antag_pick()![fail_default_pick? " Defaulting to pick()!":""]"
+			var/warning = "WARNING: No antagonists were successfully picked by /proc/antag_pick()![fail_default_pick? " Defaulting to pick()!":""]"
 			message_admins(warning)
 			log_game(warning)
 			if(fail_default_pick)
@@ -390,7 +390,7 @@
 				var/datum/mind/M = pick_n_take(insufficient)
 				add += M
 		if(!length(rolled) && !length(add))		//if no one could normally roll AND no one can zero roll
-			var/warning = "WARNING: No antagonists were successfully picked by /datum/gamemode/proc/antag_pick()![fail_default_pick? " Defaulting to pick()!":""]"
+			var/warning = "WARNING: No antagonists were successfully picked by /proc/antag_pick()![fail_default_pick? " Defaulting to pick()!":""]"
 			message_admins(warning)
 			log_game(warning)
 			var/list/failed = list()

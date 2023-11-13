@@ -5,6 +5,8 @@
 	for (var/_ruleset in subtypesof(/datum/dynamic_ruleset/roundstart))
 		var/datum/dynamic_ruleset/roundstart/ruleset = _ruleset
 
+		if(!initial(ruleset.weight))
+			continue
 		var/has_scaling_cost = initial(ruleset.scaling_cost)
 		var/is_lone = initial(ruleset.flags) & (LONE_RULESET | HIGH_IMPACT_RULESET)
 
