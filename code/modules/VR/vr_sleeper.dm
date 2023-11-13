@@ -16,7 +16,7 @@
 	var/allow_creating_vr_mobs = TRUE //So you can have vr_sleepers that always spawn you as a specific person or 1 life/chance vr games
 	var/only_current_user_can_interact = FALSE
 
-/obj/machinery/vr_sleeper/Initialize()
+/obj/machinery/vr_sleeper/Initialize(mapload)
 	. = ..()
 	sparks = new /datum/effect_system/spark_spread()
 	sparks.set_up(2,0)
@@ -74,6 +74,9 @@
 
 /obj/machinery/vr_sleeper/MouseDrop_T(mob/target, mob/user)
 	if(user.lying || !iscarbon(target) || !Adjacent(target) || !user.canUseTopic(src, BE_CLOSE, TRUE, NO_TK))
+		return
+	if(occupant)
+		to_chat(user, "<span class='boldnotice'>The VR Sleeper is already occupied!</span>")
 		return
 	close_machine(target)
 	ui_interact(user)
@@ -148,7 +151,7 @@
 				if(SOFT_CRIT)
 					status = "Barely Conscious"
 			data["vr_avatar"] += list("status" = status, "health" = vr_mob.health, "maxhealth" = vr_mob.maxHealth)
-	else 
+	else
 		data["can_delete_avatar"] = FALSE
 		data["vr_avatar"] = FALSE
 		data["isliving"] = FALSE
@@ -204,7 +207,7 @@
 	var/vr_category = "default" //So we can have specific sleepers, eg: "Basketball VR Sleeper", etc.
 	var/vr_outfit = /datum/outfit/vr
 
-/obj/effect/landmark/vr_spawn/Initialize()
+/obj/effect/landmark/vr_spawn/Initialize(mapload)
 	. = ..()
 	LAZYADD(GLOB.vr_spawnpoints[vr_category], src)
 
@@ -232,7 +235,7 @@
 	var/area/vr_area
 	var/list/corpse_party
 
-/obj/effect/vr_clean_master/Initialize()
+/obj/effect/vr_clean_master/Initialize(mapload)
 	. = ..()
 	vr_area = get_base_area(src)
 	if(!vr_area)

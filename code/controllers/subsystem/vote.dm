@@ -32,6 +32,8 @@ SUBSYSTEM_DEF(vote)
 
 	var/list/stored_modetier_results = list() // The aggregated tier list of the modes available in secret.
 
+	var/transfer_votes_done = 0
+
 /datum/controller/subsystem/vote/fire()	//called by master_controller
 	if(mode)
 		if(end_time < world.time)
@@ -68,7 +70,7 @@ SUBSYSTEM_DEF(vote)
 	//get the highest number of votes
 	var/greatest_votes = 0
 	var/total_votes = 0
-	if(mode == "gamemode" && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
+	if((mode == "gamemode" || mode == "roundtype") && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
 		for(var/mob/dead/new_player/P in GLOB.player_list)
 			if(P.ready != PLAYER_READY_TO_PLAY && voted[P.ckey])
 				choices[choices[voted[P.ckey]]]--
@@ -104,8 +106,7 @@ SUBSYSTEM_DEF(vote)
 	return .
 
 /datum/controller/subsystem/vote/proc/calculate_condorcet_votes(var/blackbox_text)
-	// https://en.wikipedia.org/wiki/Schulze_method#Implementation
-	if((mode == "gamemode" || mode == "dynamic") && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
+	if((mode == "gamemode" || mode == "dynamic" || mode == "roundtype") && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
 		for(var/mob/dead/new_player/P in GLOB.player_list)
 			if(P.ready != PLAYER_READY_TO_PLAY && voted[P.ckey])
 				voted -= P.ckey
@@ -155,7 +156,7 @@ SUBSYSTEM_DEF(vote)
 	for(var/choice in choices)
 		scores_by_choice += "[choice]"
 		scores_by_choice["[choice]"] = list()
-	if((mode == "gamemode" || mode == "dynamic") && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
+	if((mode == "gamemode" || mode == "dynamic" || mode == "roundtype") && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
 		for(var/mob/dead/new_player/P in GLOB.player_list)
 			if(P.ready != PLAYER_READY_TO_PLAY && voted[P.ckey])
 				voted -= P.ckey
@@ -249,8 +250,18 @@ SUBSYSTEM_DEF(vote)
 	if(vote_system == SCORE_VOTING)
 		calculate_scores(vote_title_text)
 	if(vote_system == HIGHEST_MEDIAN_VOTING)
-		calculate_highest_median(vote_title_text) // nothing uses this at the moment
-	var/list/winners = vote_system == INSTANT_RUNOFF_VOTING ? get_runoff_results() : get_result()
+		calculate_highest_median(vote_title_text)
+	var/list/winners = list()
+	if(mode == "transfer")
+		var/amount_required = 1 + transfer_votes_done
+		transfer_votes_done += 1
+		text += "\nExtending requires at least [amount_required] votes to win."
+		if(choices[VOTE_CONTINUE] < amount_required || choices[VOTE_TRANSFER] >= choices[VOTE_CONTINUE])
+			winners = list(VOTE_TRANSFER)
+		else
+			winners = list(VOTE_CONTINUE)
+	else
+		winners = vote_system == INSTANT_RUNOFF_VOTING ? get_runoff_results() : get_result()
 	var/was_roundtype_vote = mode == "roundtype" || mode == "dynamic"
 	if(winners.len > 0)
 		if(was_roundtype_vote)
@@ -306,14 +317,14 @@ SUBSYSTEM_DEF(vote)
 			if(vote_system == SCHULZE_VOTING)
 				admintext += "\nIt should be noted that this is not a raw tally of votes (impossible in ranked choice) but the score determined by the schulze method of voting, so the numbers will look weird!"
 			else if(vote_system == HIGHEST_MEDIAN_VOTING)
-				admintext += "\nIt should be noted that this is not a raw tally of votes but the number of runoffs done by majority judgement!"
+				admintext += "\nIt should be noted that this is not a raw tally of votes but rather the median score plus a tiebreaker!"
 			for(var/i=1,i<=choices.len,i++)
 				var/votes = choices[choices[i]]
-				admintext += "\n<b>[choices[i]]:</b> [votes]"
+				admintext += "\n<b>[choices[i]]:</b> [votes ? votes : "0"]" //This is raw data, but the raw data is null by default. If ya don't compensate for it, then it'll look weird!
 		else
 			for(var/i=1,i<=scores.len,i++)
 				var/score = scores[scores[i]]
-				admintext += "\n<b>[scores[i]]:</b> [score]"
+				admintext += "\n<b>[scores[i]]:</b> [score ? score : "0"]"
 		message_admins(admintext)
 	return .
 
@@ -322,51 +333,17 @@ SUBSYSTEM_DEF(vote)
 	var/restart = 0
 	if(.)
 		switch(mode)
-			if("roundtype") //CIT CHANGE - adds the roundstart extended/secret vote
+			if("roundtype") //CIT CHANGE - adds the roundstart extended/dynamic vote
 				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
-				GLOB.master_mode = .
-				SSticker.save_mode(.)
+				GLOB.master_mode = "dynamic"
+				if(. == "extended")
+					GLOB.dynamic_extended = TRUE
 				message_admins("The gamemode has been voted for, and has been changed to: [GLOB.master_mode]")
 				log_admin("Gamemode has been voted for and switched to: [GLOB.master_mode].")
-				if(CONFIG_GET(flag/modetier_voting))
-					reset()
-					started_time = 0
-					initiate_vote("mode tiers","server", votesystem=SCORE_VOTING, forced=TRUE, vote_time = 30 MINUTES)
-					to_chat(world,"<b>The vote will end right as the round starts.</b>")
-					return .
 			if("restart")
 				if(. == "Restart Round")
 					restart = 1
-			if("gamemode")
-				if(GLOB.master_mode != .)
-					SSticker.save_mode(.)
-					if(SSticker.HasRoundStarted())
-						restart = 1
-					else
-						GLOB.master_mode = .
-			if("mode tiers")
-				var/list/raw_score_numbers = list()
-				for(var/score_name in scores)
-					sorted_insert(raw_score_numbers,scores[score_name],/proc/cmp_numeric_asc)
-				stored_modetier_results = scores.Copy()
-				for(var/score_name in stored_modetier_results)
-					if(stored_modetier_results[score_name] <= raw_score_numbers[CONFIG_GET(number/dropped_modes)])
-						stored_modetier_results -= score_name
-				stored_modetier_results += "traitor"
-			if("dynamic")
-				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
-					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
-				var/list/runnable_storytellers = config.get_runnable_storytellers()
-				var/datum/dynamic_storyteller/picked
-				for(var/T in runnable_storytellers)
-					var/datum/dynamic_storyteller/S = T
-					if(stored_gamemode_votes[initial(S.name)] == 1 && CHECK_BITFIELD(initial(S.flags), FORCE_IF_WON))
-						picked = S
-					runnable_storytellers[S] *= round(stored_gamemode_votes[initial(S.name)]*100000,1)
-				if(!picked)
-					picked = pickweight(runnable_storytellers, 0)
-				GLOB.dynamic_storyteller_type = picked
 			if("map")
 				var/datum/map_config/VM = config.maplist[.]
 				message_admins("The map has been voted for and will change to: [VM.map_name]")
@@ -374,7 +351,7 @@ SUBSYSTEM_DEF(vote)
 				if(SSmapping.changemap(config.maplist[.]))
 					to_chat(world, "<span class='boldannounce'>The map vote has chosen [VM.map_name] for next round!</span>")
 			if("transfer") // austation begin -- Crew autotransfer vote
-				if(. == "Initiate Crew Transfer")
+				if(. == VOTE_TRANSFER)
 					SSshuttle.autoEnd()
 					var/obj/machinery/computer/communications/C = locate() in GLOB.machines
 					if(C)
@@ -481,26 +458,9 @@ SUBSYSTEM_DEF(vote)
 						continue
 					choices |= M
 			if("transfer") // austation begin -- Crew autotranfer vote
-				choices.Add("Initiate Crew Transfer","Continue Playing") // austation end
+				choices.Add(VOTE_TRANSFER,VOTE_CONTINUE) // austation end
 			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote
-				choices.Add("secret", "extended")
-			if("mode tiers")
-				var/list/modes_to_add = config.votable_modes
-				var/list/probabilities = CONFIG_GET(keyed_list/probability)
-				for(var/tag in modes_to_add)
-					if(probabilities[tag] <= 0)
-						modes_to_add -= tag
-				modes_to_add -= "traitor" // makes it so that traitor is always available
-				choices.Add(modes_to_add)
-			if("dynamic")
-				GLOB.master_mode = "dynamic"
-				var/list/probabilities = CONFIG_GET(keyed_list/storyteller_weight)
-				for(var/T in config.get_runnable_storytellers())
-					var/datum/dynamic_storyteller/S = T
-					var/probability = ((initial(S.config_tag) in probabilities) ? probabilities[initial(S.config_tag)] : initial(S.weight))
-					if(probability > 0)
-						choices.Add(initial(S.name))
-						choice_descs.Add(initial(S.desc))
+				choices.Add("dynamic", "extended")
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)

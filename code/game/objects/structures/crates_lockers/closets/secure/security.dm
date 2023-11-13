@@ -7,7 +7,7 @@
 	new /obj/item/clothing/neck/petcollar(src) //I considered removing the pet stuff too but eh, who knows. We might get Renault back. Plus I guess you could use that collar for... other means. Aren't you supposed to be guarding the disk?
 	new /obj/item/pet_carrier(src)
 	new /obj/item/clothing/suit/armor/vest/capcarapace(src)
-	new /obj/item/clothing/suit/armor/vest/capcarapace/alt(src)
+	new /obj/item/clothing/suit/toggle/captains_parade(src)
 	new /obj/item/clothing/head/crown/fancy(src)
 	new /obj/item/cartridge/captain(src)
 	new /obj/item/storage/box/silver_ids(src)
@@ -17,6 +17,8 @@
 	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/door_remote/captain(src)
 	new /obj/item/storage/photo_album/Captain(src)
+	new /obj/item/mod/construction/armor/magnate(src)
+	new /obj/item/mod/module/holster(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"
@@ -56,6 +58,7 @@
 /obj/structure/closet/secure_closet/hos/PopulateContents()
 	..()
 	new /obj/item/clothing/neck/cloak/hos(src)
+	new /obj/item/clothing/suit/toggle/armor/hos/hos_formal(src)
 	new /obj/item/cartridge/hos(src)
 	new /obj/item/radio/headset/heads/hos(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/parade/female(src)
@@ -63,6 +66,7 @@
 	new /obj/item/clothing/under/rank/security/officer/blueshirt/seccorp/hoscorp(src)
 	new /obj/item/clothing/suit/armor/vest/leather(src)
 	new /obj/item/clothing/suit/armor/hos(src)
+	new /obj/item/clothing/suit/armor/hos/platecarrier(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/skirt(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/alt(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/alt/skirt(src)
@@ -84,6 +88,9 @@
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
 	new /obj/item/storage/photo_album/HoS(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/hos(src)
+	new /obj/item/mod/construction/armor/safeguard(src)
+	new /obj/item/mod/module/jetpack(src)
+	new /obj/item/mod/module/holster(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"
@@ -191,6 +198,7 @@
 	new /obj/item/clothing/under/rank/prisoner( src )
 	new /obj/item/clothing/under/rank/prisoner/skirt( src )
 	new /obj/item/clothing/shoes/sneakers/orange( src )
+	new /obj/item/radio/headset/headset_prisoner( src )
 
 /obj/structure/closet/secure_closet/courtroom
 	name = "courtroom locker"

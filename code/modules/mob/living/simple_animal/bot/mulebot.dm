@@ -49,7 +49,7 @@
 	var/obj/item/stock_parts/cell/cell
 	var/bloodiness = 0
 
-/mob/living/simple_animal/bot/mulebot/Initialize()
+/mob/living/simple_animal/bot/mulebot/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/mulebot(src)
 	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
@@ -138,7 +138,7 @@
 		add_overlay(load)
 	return
 
-/mob/living/simple_animal/bot/mulebot/ex_act(severity)
+/mob/living/simple_animal/bot/mulebot/ex_act(severity, target, origin)
 	unload(0)
 	switch(severity)
 		if(1)
@@ -275,56 +275,6 @@
 			report_delivery = !report_delivery
 		if("ejectpai")
 			ejectpairemote(user)
-
-// TODO: remove this; PDAs currently depend on it
-/mob/living/simple_animal/bot/mulebot/get_controls(mob/user)
-	var/ai = hasSiliconAccessInArea(user)
-	var/dat
-	dat += "<h3>Multiple Utility Load Effector Mk. V</h3>"
-	dat += "<b>ID:</b> [id]<BR>"
-	dat += "<b>Power:</b> [on ? "On" : "Off"]<BR>"
-	dat += "<h3>Status</h3>"
-	dat += "<div class='statusDisplay'>"
-	switch(mode)
-		if(BOT_IDLE)
-			dat += "<span class='good'>Ready</span>"
-		if(BOT_DELIVER)
-			dat += "<span class='good'>[mode_name[BOT_DELIVER]]</span>"
-		if(BOT_GO_HOME)
-			dat += "<span class='good'>[mode_name[BOT_GO_HOME]]</span>"
-		if(BOT_BLOCKED)
-			dat += "<span class='average'>[mode_name[BOT_BLOCKED]]</span>"
-		if(BOT_NAV,BOT_WAIT_FOR_NAV)
-			dat += "<span class='average'>[mode_name[BOT_NAV]]</span>"
-		if(BOT_NO_ROUTE)
-			dat += "<span class='bad'>[mode_name[BOT_NO_ROUTE]]</span>"
-	dat += "</div>"
-
-	dat += "<b>Current Load:</b> [load ? load.name : "<i>none</i>"]<BR>"
-	dat += "<b>Destination:</b> [!destination ? "<i>none</i>" : destination]<BR>"
-	dat += "<b>Power level:</b> [cell ? cell.percent() : 0]%"
-
-	if(locked && !ai && !IsAdminGhost(user))
-		dat += "&nbsp;<br /><div class='notice'>Controls are locked</div><A href='byond://?src=[REF(src)];op=unlock'>Unlock Controls</A>"
-	else
-		dat += "&nbsp;<br /><div class='notice'>Controls are unlocked</div><A href='byond://?src=[REF(src)];op=lock'>Lock Controls</A><BR><BR>"
-
-		dat += "<A href='byond://?src=[REF(src)];op=power'>Toggle Power</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=stop'>Stop</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=go'>Proceed</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=home'>Return to Home</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=destination'>Set Destination</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=setid'>Set Bot ID</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=sethome'>Set Home</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=autopick'>Toggle Auto Pickup Crate</A> ([auto_pickup ? "On":"Off"])<BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=report'>Toggle Delivery Reporting</A> ([report_delivery ? "On" : "Off"])<BR>"
-		if(load)
-			dat += "<A href='byond://?src=[REF(src)];op=unload'>Unload Now</A><BR>"
-		dat += "<div class='notice'>The maintenance hatch is closed.</div>"
-
-	return dat
-
 
 // returns true if the bot has power
 /mob/living/simple_animal/bot/mulebot/proc/has_power()
@@ -580,7 +530,7 @@
 // calculates a path to the current destination
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/mulebot/calc_path(turf/avoid = null)
-	path = get_path_to(src, target, /turf/proc/Distance_cardinal, 0, 250, id=access_card, exclude=avoid)
+	path = get_path_to(src, target, 250, id=access_card, exclude=avoid)
 
 // sets the current destination
 // signals all beacons matching the delivery code
@@ -681,12 +631,12 @@
 	playsound(loc, 'sound/effects/splat.ogg', 50, TRUE)
 
 	var/damage = rand(5,15)
-	H.apply_damage(2*damage, BRUTE, BODY_ZONE_HEAD, run_armor_check(BODY_ZONE_HEAD, "melee"))
-	H.apply_damage(2*damage, BRUTE, BODY_ZONE_CHEST, run_armor_check(BODY_ZONE_CHEST, "melee"))
-	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_LEG, run_armor_check(BODY_ZONE_L_LEG, "melee"))
-	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_LEG, run_armor_check(BODY_ZONE_R_LEG, "melee"))
-	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_ARM, run_armor_check(BODY_ZONE_L_ARM, "melee"))
-	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_ARM, run_armor_check(BODY_ZONE_R_ARM, "melee"))
+	H.apply_damage(2*damage, BRUTE, BODY_ZONE_HEAD, run_armor_check(BODY_ZONE_HEAD, MELEE))
+	H.apply_damage(2*damage, BRUTE, BODY_ZONE_CHEST, run_armor_check(BODY_ZONE_CHEST, MELEE))
+	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_LEG, run_armor_check(BODY_ZONE_L_LEG, MELEE))
+	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_LEG, run_armor_check(BODY_ZONE_R_LEG, MELEE))
+	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_ARM, run_armor_check(BODY_ZONE_L_ARM, MELEE))
+	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_ARM, run_armor_check(BODY_ZONE_R_ARM, MELEE))
 
 	var/turf/T = get_turf(src)
 	T.add_mob_blood(H)

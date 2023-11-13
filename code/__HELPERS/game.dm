@@ -5,6 +5,9 @@
 		locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
 	)
 
+/// Returns either the error landmark or the location of the room. Needless to say, if this is used, it means things have gone awry.
+#define GET_ERROR_ROOM ((locate(/obj/effect/landmark/error) in GLOB.landmarks_list) || locate(4,4,1))
+
 #define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
 #define CULT_POLL_WAIT 2400
 
@@ -396,11 +399,15 @@
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
 	if(!isobj(O))
 		O = new /atom/movable/screen/text()
-	O.maptext = maptext
+	O.maptext = MAPTEXT(maptext)
 	O.maptext_height = maptext_height
 	O.maptext_width = maptext_width
 	O.screen_loc = screen_loc
 	return O
+
+/// Removes an image from a client's `.images`. Useful as a callback.
+/proc/remove_image_from_client(image/image, client/remove_from)
+	remove_from?.images -= image
 
 /proc/remove_images_from_clients(image/I, list/show_to)
 	for(var/client/C in show_to)
@@ -563,14 +570,12 @@
 
 	return A.loc
 
-/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
+///Send a message in common radio when a player arrives
+/proc/announce_arrival(mob/living/carbon/human/character, rank)
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))
 		return
-	var/area/A = get_area(character)
-	var/message = "<span class='game deadsay'><span class='name'>\
-		[character.real_name]</span> ([rank]) has arrived at the station at \
-		<span class='name'>[A.name]</span>.</span>"
-	deadchat_broadcast(message, follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	var/area/player_area = get_area(character)
+	deadchat_broadcast("<span class='game'> has arrived at the station at <span class='name'>[player_area.name]</span>.</span>", "<span class='game'><span class='name'>[character.real_name]</span> ([rank])</span>", follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
 	if((!GLOB.announcement_systems.len) || (!character.mind))
 		return
 	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))

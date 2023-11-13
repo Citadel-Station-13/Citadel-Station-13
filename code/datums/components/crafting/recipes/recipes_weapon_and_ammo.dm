@@ -1,19 +1,3 @@
-/datum/crafting_recipe/pin_removal
-	name = "Pin Removal"
-	result = /obj/item/gun
-	reqs = list(/obj/item/gun = 1)
-	parts = list(/obj/item/gun = 1)
-	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	time = 50
-	category = CAT_WEAPONRY
-	subcategory = CAT_OTHER
-
-/datum/crafting_recipe/pin_removal/check_requirements(mob/user, list/collected_requirements)
-	var/obj/item/gun/G = collected_requirements[/obj/item/gun][1]
-	if (G.no_pin_required || !G.pin)
-		return FALSE
-	return TRUE
-
 /datum/crafting_recipe/strobeshield
 	name = "Strobe Shield"
 	result = /obj/item/shield/riot/flash
@@ -335,7 +319,6 @@
 	name = "Bone Arrow"
 	result = /obj/item/ammo_casing/caseless/arrow/bone
 	time = 5
-	always_availible = FALSE
 	reqs = list(/obj/item/stack/sheet/bone = 1,
 				 /obj/item/stack/sheet/sinew = 1,
 				 /obj/item/ammo_casing/caseless/arrow/ash = 1)
@@ -347,7 +330,6 @@
 	result = /obj/item/ammo_casing/caseless/arrow/ash
 	tools = list(TOOL_WELDER)
 	time = 10 // 1.5 seconds minimum per actually worthwhile arrow excluding interface lag
-	always_availible = FALSE
 	reqs = list(/obj/item/ammo_casing/caseless/arrow/wood = 1)
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO

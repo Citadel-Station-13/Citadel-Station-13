@@ -1,14 +1,11 @@
-/obj/effect/proc_holder/changeling/absorbDNA
+/datum/action/changeling/absorbDNA
 	name = "Absorb DNA"
-	desc = "Absorb the DNA of our victim."
-	chemical_cost = 0
+	desc = "Absorb the DNA of our victim. Requires us to strangle them."
+	button_icon_state = "absorb_dna"
 	dna_cost = 0
-	req_human = 1
-	action_icon = 'icons/mob/actions/actions_changeling.dmi'
-	action_icon_state = "ling_absorb_dna"
-	action_background_icon_state = "bg_ling"
+	req_human = TRUE
 
-/obj/effect/proc_holder/changeling/absorbDNA/can_sting(mob/living/carbon/user)
+/datum/action/changeling/absorbDNA/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
 
@@ -29,7 +26,7 @@
 
 
 
-/obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
+/datum/action/changeling/absorbDNA/sting_action(mob/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/mob/living/carbon/human/target = user.pulling
 	changeling.isabsorbing = 1
@@ -65,7 +62,9 @@
 	user.copy_languages(target, LANGUAGE_ABSORB)
 
 	if(target.mind && user.mind)//if the victim and user have minds
-		target.mind.show_memory(user, 0) //I can read your mind, kekeke. Output all their notes.
+//ambition start
+		to_chat(user, "<i>[target.mind.show_memory()]</i>") //I can read your mind, kekeke. Output all their notes.
+//ambition end
 
 		//Some of target's recent speech, so the changeling can attempt to imitate them better.
 		//Recent as opposed to all because rounds tend to have a LOT of text.
@@ -98,7 +97,7 @@
 			changeling.geneticpoints += round(target_ling.geneticpoints/2)
 			changeling.maxgeneticpoints += round(target_ling.geneticpoints/2)
 			target_ling.geneticpoints = 0
-			target_ling.canrespec = 0
+			target_ling.can_respec = 0
 			changeling.chem_storage += round(target_ling.chem_storage/2)
 			changeling.chem_charges += min(target_ling.chem_charges, changeling.chem_storage)
 			target_ling.chem_charges = 0
@@ -112,7 +111,7 @@
 	changeling.chem_charges=min(changeling.chem_charges+10, changeling.chem_storage)
 
 	changeling.isabsorbing = 0
-	changeling.canrespec = 1
+	changeling.can_respec = 1
 
 	target.death(0)
 	target.Drain()

@@ -75,7 +75,7 @@
 	req_access = list(ACCESS_ATMOSPHERICS)
 	max_integrity = 250
 	integrity_failure = 0.33
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 90, ACID = 30)
 	resistance_flags = FIRE_PROOF
 
 	var/danger_level = 0
@@ -90,7 +90,6 @@
 	var/frequency = FREQ_ATMOS_CONTROL
 	var/alarm_frequency = FREQ_ATMOS_ALARMS
 	var/datum/radio_frequency/radio_connection
-
 	var/list/TLV = list( // Breathable air.
 		"pressure"					= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
 		"temperature"				= new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66),
@@ -108,8 +107,16 @@
 		GAS_NITRYL			= new/datum/tlv/dangerous,
 		GAS_PLUOXIUM			= new/datum/tlv(-1, -1, 5, 6), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
 		GAS_METHANE			= new/datum/tlv(-1, -1, 3, 6),
-		GAS_METHYL_BROMIDE	= new/datum/tlv/dangerous
+		GAS_METHYL_BROMIDE	= new/datum/tlv/dangerous,
+		GAS_AMMONIA		= new/datum/tlv/dangerous,
+		GAS_BROMINE			= new/datum/tlv/dangerous,
+
 	)
+
+/obj/machinery/airalarm/proc/regenerate_TLV()
+	var/list/TLVs = GLOB.gas_data.TLVs
+	for(var/g in TLVs)
+		TLV[g] = TLVs[g]
 
 /obj/machinery/airalarm/server // No checks here.
 	TLV = list(
@@ -131,6 +138,11 @@
 		GAS_METHANE			= new/datum/tlv/no_checks,
 		GAS_METHYL_BROMIDE	= new/datum/tlv/no_checks
 	)
+
+/obj/machinery/airalarm/server/regenerate_TLV()
+	var/list/TLVs = GLOB.gas_data.TLVs
+	for(var/g in TLVs)
+		TLV[g] = new/datum/tlv/no_checks
 
 /obj/machinery/airalarm/kitchen_cold_room // Copypasta: to check temperatures.
 	TLV = list(
@@ -203,6 +215,8 @@
 
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
+	regenerate_TLV()
+	RegisterSignal(SSdcs,COMSIG_GLOB_NEW_GAS,.proc/regenerate_TLV)
 	wires = new /datum/wires/airalarm(src)
 
 	if(ndir)
@@ -219,11 +233,19 @@
 
 	power_change()
 	set_frequency(frequency)
+	register_context()
+
+/obj/machinery/airalarm/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, locked ? "Unlock" : "Lock")
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/airalarm/Destroy()
 	SSradio.remove_object(src, frequency)
 	qdel(wires)
 	wires = null
+	var/area/ourarea = get_area(src)
+	ourarea.atmosalert(FALSE, src)
 	return ..()
 
 /obj/machinery/airalarm/examine(mob/user)
@@ -403,6 +425,9 @@
 		if("incheck")
 			send_signal(device_id, list("checks" = text2num(params["val"])^2), usr)
 			. = TRUE
+		if("direction")
+			send_signal(device_id, list("direction" = text2num(params["val"])), usr)
+			. = TRUE
 		if("set_external_pressure", "set_internal_pressure")
 
 			var/target = params["value"]
@@ -532,7 +557,7 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"set_filters" = list(GAS_CO2, GAS_MIASMA),
+					"set_filters" = list(GAS_CO2, GAS_MIASMA, GAS_GROUP_CHEMICALS),
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
@@ -543,24 +568,11 @@
 					"set_external_pressure" = ONE_ATMOSPHERE
 				))
 		if(AALARM_MODE_CONTAMINATED)
+			var/list/all_gases = GLOB.gas_data.get_by_flag(GAS_FLAG_DANGEROUS)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"set_filters" = list(
-						GAS_CO2,
-						GAS_MIASMA,
-						GAS_PLASMA,
-						GAS_H2O,
-						GAS_HYPERNOB,
-						GAS_NITROUS,
-						GAS_NITRYL,
-						GAS_TRITIUM,
-						GAS_BZ,
-						GAS_STIMULUM,
-						GAS_PLUOXIUM,
-						GAS_METHANE,
-						GAS_METHYL_BROMIDE
-					),
+					"set_filters" = all_gases,
 					"scrubbing" = 1,
 					"widenet" = 1,
 				))
@@ -579,23 +591,35 @@
 				))
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
+					"is_pressurizing" = 1,
 					"power" = 1,
 					"checks" = 1,
-					"set_external_pressure" = ONE_ATMOSPHERE*2
+					"set_external_pressure" = ONE_ATMOSPHERE*1.4
+				))
+				send_signal(device_id, list(
+					"is_siphoning" = 1,
+					"power" = 1,
+					"checks" = 1,
+					"set_external_pressure" = ONE_ATMOSPHERE/1.4
 				))
 		if(AALARM_MODE_REFILL)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"set_filters" = list(GAS_CO2, GAS_MIASMA),
+					"set_filters" = list(GAS_CO2, GAS_MIASMA, GAS_GROUP_CHEMICALS),
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
+					"is_pressurizing" = 1,
 					"power" = 1,
 					"checks" = 1,
 					"set_external_pressure" = ONE_ATMOSPHERE * 3
+				))
+				send_signal(device_id, list(
+					"is_siphoning" = 1,
+					"power" = 0,
 				))
 		if(AALARM_MODE_PANIC,
 			AALARM_MODE_REPLACEMENT)
@@ -607,7 +631,13 @@
 				))
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
+					"is_pressurizing" = 1,
 					"power" = 0
+				))
+				send_signal(device_id, list(
+					"is_siphoning" = 1,
+					"power" = 1,
+					"checks" = 0
 				))
 		if(AALARM_MODE_SIPHON)
 			for(var/device_id in A.air_scrub_names)
@@ -618,9 +648,14 @@
 				))
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
+					"is_pressurizing" = 1,
 					"power" = 0
 				))
-
+				send_signal(device_id, list(
+					"is_siphoning" = 1,
+					"power" = 1,
+					"checks" = 0
+				))
 		if(AALARM_MODE_OFF)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
@@ -638,8 +673,12 @@
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"checks" = 2,
-					"set_internal_pressure" = 0
+					"checks" = 0,
+					"is_pressurizing" = 1
+				))
+				send_signal(device_id, list(
+					"power" = 0,
+					"is_siphoning" = 1
 				))
 
 /obj/machinery/airalarm/update_icon_state()

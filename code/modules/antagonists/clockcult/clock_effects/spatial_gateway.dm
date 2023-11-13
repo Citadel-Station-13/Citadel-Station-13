@@ -17,7 +17,7 @@
 	var/is_stable = FALSE
 	var/busy = FALSE //If someone is already working on closing the gateway, only needed for stable gateways but in the parent to not need typecasting
 
-/obj/effect/clockwork/spatial_gateway/Initialize()
+/obj/effect/clockwork/spatial_gateway/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/check_setup), 1)
 
@@ -102,7 +102,7 @@
 		return TRUE
 	return ..()
 
-/obj/effect/clockwork/spatial_gateway/ex_act(severity)
+/obj/effect/clockwork/spatial_gateway/ex_act(severity, target, origin)
 	if(severity == 1 && uses)
 		uses = 0
 		visible_message("<span class='warning'>[src] is disrupted!</span>")
@@ -251,7 +251,7 @@
 	name = "stable gateway"
 	is_stable = TRUE
 
-/obj/effect/clockwork/spatial_gateway/stable/ex_act(severity)
+/obj/effect/clockwork/spatial_gateway/stable/ex_act(severity, target, origin)
 	if(severity == 1)
 		start_shutdown() //Yes, you can chain devastation-level explosions to delay a gateway shutdown, if you somehow manage to do it without breaking the obelisk. Is it worth it? Probably not.
 		return TRUE

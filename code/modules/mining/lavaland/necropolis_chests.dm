@@ -184,7 +184,7 @@
 	icon_state = "datadisk1"
 	var/modkit_design = /datum/design/unique_modkit
 
-/obj/item/disk/design_disk/modkit_disc/Initialize()
+/obj/item/disk/design_disk/modkit_disc/Initialize(mapload)
 	. = ..()
 	blueprints[1] = new modkit_design
 
@@ -307,7 +307,7 @@
 	var/mob/living/carbon/human/active_owner
 
 /obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot, mob/user, datum/action/A)
-	return slot == SLOT_NECK
+	return slot == ITEM_SLOT_NECK
 
 /obj/item/clothing/neck/necklace/memento_mori/dropped(mob/user)
 	..()
@@ -383,7 +383,7 @@
 		wisp.forceMove(src)
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 
-/obj/item/wisp_lantern/Initialize()
+/obj/item/wisp_lantern/Initialize(mapload)
 	. = ..()
 	wisp = new(src)
 
@@ -473,7 +473,7 @@
 	icon_state = "red_cube"
 	teleport_color = "#FD3F48"
 
-/obj/item/warp_cube/red/Initialize()
+/obj/item/warp_cube/red/Initialize(mapload)
 	. = ..()
 	if(!linked)
 		var/obj/item/warp_cube/blue = new(src.loc)
@@ -484,7 +484,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 
-/obj/effect/warp_cube/ex_act(severity, target)
+/obj/effect/warp_cube/ex_act(severity, target, origin)
 	return
 
 //Meat Hook
@@ -553,7 +553,7 @@
 	actions_types = list(/datum/action/item_action/immortality)
 	var/cooldown = 0
 
-/obj/item/immortality_talisman/Initialize()
+/obj/item/immortality_talisman/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, TRUE)
 
@@ -607,7 +607,7 @@
 /obj/effect/immortality_talisman/attackby()
 	return
 
-/obj/effect/immortality_talisman/ex_act()
+/obj/effect/immortality_talisman/ex_act(severity, target, origin)
 	return
 
 /obj/effect/immortality_talisman/singularity_pull()
@@ -637,7 +637,7 @@
 	name = "paradox bag"
 	desc = "Somehow, it's in two places at once."
 
-/obj/item/shared_storage/red/Initialize()
+/obj/item/shared_storage/red/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = AddComponent(/datum/component/storage/concrete)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
@@ -694,16 +694,20 @@
 
 /datum/reagent/flightpotion/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
-		if(!ishumanbasic(M) || reac_volume < 5) // implying xenohumans are holy
+		var/mob/living/carbon/C = M
+		if(reac_volume < 5)
 			if(method == INGEST && show_message)
-				to_chat(M, "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>")
+				to_chat(C, "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>")
 			return ..()
-
-		to_chat(M, "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>")
-		M.set_species(/datum/species/angel)
-		playsound(M.loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
-		M.adjustBruteLoss(20)
-		M.emote("scream")
+		var/has_wings = (C.dna.species.mutant_bodyparts["deco_wings"] && C.dna.features["deco_wings"] != "None" || C.dna.species.mutant_bodyparts["insect_wings"] && C.dna.features["insect_wings"] != "None")
+		var/has_functional_wings = (C.dna.species.mutant_bodyparts["wings"] != null)
+		to_chat(C, "<span class='userdanger'>A terrible pain travels down your back as [has_wings || has_functional_wings ? "your wings transform" : "wings burst out"]!</span>")
+		C.dna.species.GiveSpeciesFlight(C, has_functional_wings ? TRUE : FALSE) //give them the full list of wing choices if this is their second flight potion
+		to_chat(C, "<span class='notice'>You feel blessed!</span>")
+		ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT) //implying anyone is truly holy in a setting where people throw tantrums when things aren't violent
+		playsound(C.loc, 'sound/items/poster_ripped.ogg', 50, TRUE, -1)
+		C.adjustBruteLoss(20)
+		C.emote("scream")
 	..()
 
 
@@ -766,6 +770,12 @@
 	total_mass_on = 5
 	attack_speed = 0
 	attack_unwieldlyness = CLICK_CD_MELEE * 0.5
+	/// how much stamina does it cost to roll?
+	var/roll_stamcost = 15
+	/// how far are we rolling?
+	var/roll_range = 3
+	/// do you spin when dodgerolling
+	var/roll_orientation = TRUE
 
 /obj/item/melee/transforming/cleaving_saw/examine(mob/user)
 	. = ..()
@@ -811,6 +821,11 @@
 	else
 		B.add_stacks(bleed_stacks_per_hit)
 
+/obj/item/melee/transforming/cleaving_saw/AltClick(mob/user)
+	. = ..()
+	roll_orientation = !roll_orientation
+	to_chat(user, span_notice("You are now [roll_orientation ? "rolling" : "quick-stepping"] when you dodge. (This only affects if you spin or not during a dodge.)"))
+
 /obj/item/melee/transforming/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
 		if(!active)
@@ -829,6 +844,43 @@
 				if(user.Adjacent(L) && L.density)
 					melee_attack_chain(user, L)
 		swiping = FALSE
+
+/obj/item/melee/transforming/cleaving_saw/alt_pre_attack(atom/A, mob/living/user, params)
+	return TRUE // Let's dance.
+
+/obj/item/melee/transforming/cleaving_saw/altafterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
+	if(user.IsImmobilized()) // no free dodgerolls
+		return
+	var/turf/where_to = get_turf(target)
+	user.apply_damage(damage = roll_stamcost, damagetype = STAMINA)
+	user.Immobilize(0.8 SECONDS) // you dont get to adjust your roll
+	user.throw_at(where_to, range = roll_range, speed = 1, force = MOVE_FORCE_NORMAL, spin = roll_orientation)
+	user.apply_status_effect(/datum/status_effect/dodgeroll_iframes)
+	playsound(user, 'sound/effects/body-armor-rolling.ogg', 50, FALSE)
+	return ..()
+
+/datum/status_effect/dodgeroll_iframes
+	id = "dodgeroll_dodging"
+	alert_type = null
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 0.8 SECONDS // worth tweaking?
+
+/datum/status_effect/dodgeroll_iframes/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_LIVING_RUN_BLOCK, .proc/trolled)
+
+/datum/status_effect/dodgeroll_iframes/on_remove()
+	UnregisterSignal(owner, list(
+		COMSIG_LIVING_RUN_BLOCK
+		))
+	return ..()
+
+/datum/status_effect/dodgeroll_iframes/proc/trolled(mob/living/source, real_attack, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)
+	SIGNAL_HANDLER
+	owner.balloon_alert_to_viewers("missed!")
+	playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	return_list[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_PASSTHROUGH
+	return BLOCK_SUCCESS | BLOCK_SHOULD_REDIRECT | BLOCK_TARGET_DODGED
 
 //Dragon
 
@@ -872,7 +924,7 @@
 	var/summon_cooldown = 0
 	var/list/mob/dead/observer/spirits
 
-/obj/item/melee/ghost_sword/Initialize()
+/obj/item/melee/ghost_sword/Initialize(mapload)
 	. = ..()
 	spirits = list()
 	START_PROCESSING(SSobj, src)
@@ -991,7 +1043,7 @@
 				user.mind.AddSpell(D)
 		if(4)
 			to_chat(user, "<span class='danger'>You feel like you could walk straight through lava now.</span>")
-			H.weather_immunities |= "lava"
+			ADD_TRAIT(user, TRAIT_LAVA_IMMUNE, type)
 
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	qdel(src)

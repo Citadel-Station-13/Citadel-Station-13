@@ -7,7 +7,7 @@
 	item_flags = DROPDEL
 	var/footstep = 1
 
-/obj/item/clothing/shoes/clown_shoes/cluwne/Initialize()
+/obj/item/clothing/shoes/clown_shoes/cluwne/Initialize(mapload)
 	.=..()
 	ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
 	ADD_TRAIT(src, CURSED_ITEM_TRAIT, CLOTHING_TRAIT)
@@ -23,7 +23,7 @@
 	. = ..()
 	if(!ishuman(user))
 		return
-	if(slot == SLOT_SHOES)
+	if(slot == ITEM_SLOT_FEET)
 		var/mob/living/carbon/human/H = user
 		H.dna.add_mutation(CLUWNEMUT)
 	return

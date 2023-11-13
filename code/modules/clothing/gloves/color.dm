@@ -31,7 +31,7 @@
 				C.visible_message("<span class='warning'>[U] sprays glittery rubber on the hands of [C]!</span>")
 		else
 			user.visible_message("<span class='warning'>The rubber fails to stick to [C]'s hands!</span>",
-				"<span class='warning'>The rubber fails to stick to [C]'s [(SLOT_GLOVES in C.check_obscured_slots()) ? "unexposed" : ""] hands!</span>")
+				"<span class='warning'>The rubber fails to stick to [C]'s [(ITEM_SLOT_GLOVES in C.check_obscured_slots()) ? "unexposed" : ""] hands!</span>")
 
 		qdel(src)
 
@@ -44,7 +44,7 @@
 	resistance_flags = ACID_PROOF
 	var/shocks_remaining = 10
 
-/obj/item/clothing/gloves/color/yellow/sprayon/Initialize()
+/obj/item/clothing/gloves/color/yellow/sprayon/Initialize(mapload)
 	.=..()
 	ADD_TRAIT(src, TRAIT_NODROP, GLOVE_TRAIT)
 
@@ -79,7 +79,7 @@
 	desc = "Old and worn out insulated gloves, hopefully they still work."
 	name = "worn out insulated gloves"
 
-/obj/item/clothing/gloves/color/fyellow/old/Initialize()
+/obj/item/clothing/gloves/color/fyellow/old/Initialize(mapload)
 	. = ..()
 	siemens_coefficient = pick(0,0,0,0.5,0.5,0.5,0.75)
 
@@ -211,7 +211,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	strip_delay = 60
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 70, ACID = 50)
 
 /obj/item/clothing/gloves/color/latex
 	name = "latex gloves"
@@ -226,7 +226,7 @@
 
 /obj/item/clothing/gloves/color/latex/equipped(mob/user, slot)
 	..()
-	if(slot == SLOT_GLOVES)
+	if(slot == ITEM_SLOT_GLOVES)
 		ADD_TRAIT(user, carrytrait, GLOVE_TRAIT)
 
 /obj/item/clothing/gloves/color/latex/dropped(mob/user)

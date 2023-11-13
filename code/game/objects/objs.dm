@@ -7,6 +7,8 @@
 	var/obj_flags = CAN_BE_HIT
 	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
 
+	var/minimap_override_color // allows this obj to set its own color on the minimap
+
 	var/damtype = BRUTE
 	var/force = 0
 
@@ -26,9 +28,17 @@
 	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
 
 	var/persistence_replacement //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
-	var/current_skin //the item reskin
-	var/list/unique_reskin //List of options to reskin.
+
+	//Reskin variables
+	/// The item reskin
+	var/current_skin
+	/// List of options to reskin.
+	var/list/unique_reskin
+	/// Can always be modified
 	var/always_reskinnable = FALSE
+	/// How to bring up the reskinning menu
+	var/reskin_binding = COMSIG_CLICK_ALT
+	//
 
 	// Access levels, used in modules\jobs\access.dm
 	var/list/req_access
@@ -48,7 +58,7 @@
 				return FALSE
 	return ..()
 
-/obj/Initialize()
+/obj/Initialize(mapload)
 	if (islist(armor))
 		armor = getArmor(arglist(armor))
 	else if (!armor)
@@ -74,6 +84,10 @@
 		var/turf/T = loc
 		T.add_blueprints_preround(src)
 
+/obj/ComponentInitialize()
+	. = ..()
+	if(islist(unique_reskin) && length(unique_reskin))
+		AddElement(/datum/element/object_reskinning)
 
 /obj/Destroy(force=FALSE)
 	if(!ismachinery(src))
@@ -238,7 +252,22 @@
 /obj/get_dumping_location(datum/component/storage/source,mob/user)
 	return get_turf(src)
 
-/obj/proc/CanAStarPass()
+/**
+ * This proc is used for telling whether something can pass by this object in a given direction, for use by the pathfinding system.
+ *
+ * Trying to generate one long path across the station will call this proc on every single object on every single tile that we're seeing if we can move through, likely
+ * multiple times per tile since we're likely checking if we can access said tile from multiple directions, so keep these as lightweight as possible.
+ *
+ * Arguments:
+ * * ID- An ID card representing what access we have (and thus if we can open things like airlocks or windows to pass through them). The ID card's physical location does not matter, just the reference
+ * * to_dir- What direction we're trying to move in, relevant for things like directional windows that only block movement in certain directions
+ * * caller- The movable we're checking pass flags for, if we're making any such checks
+ **/
+/obj/proc/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+	if(ismovable(caller))
+		var/atom/movable/AM = caller
+		if(AM.pass_flags & pass_flags_self)
+			return TRUE
 	. = !density
 
 /obj/proc/check_uplink_validity()
@@ -269,15 +298,15 @@
 		if (islist(result))
 			if (result["button"] != 2) // If the user pressed the cancel button
 				// text2num conveniently returns a null on invalid values
-				armor = armor.setRating(melee = text2num(result["values"]["melee"]),\
-			                  bullet = text2num(result["values"]["bullet"]),\
-			                  laser = text2num(result["values"]["laser"]),\
-			                  energy = text2num(result["values"]["energy"]),\
-			                  bomb = text2num(result["values"]["bomb"]),\
-			                  bio = text2num(result["values"]["bio"]),\
-			                  rad = text2num(result["values"]["rad"]),\
-			                  fire = text2num(result["values"]["fire"]),\
-			                  acid = text2num(result["values"]["acid"]))
+				armor = armor.setRating(melee = text2num(result["values"][MELEE]),\
+			                  bullet = text2num(result["values"][BULLET]),\
+			                  laser = text2num(result["values"][LASER]),\
+			                  energy = text2num(result["values"][ENERGY]),\
+			                  bomb = text2num(result["values"][BOMB]),\
+			                  bio = text2num(result["values"][BIO]),\
+			                  rad = text2num(result["values"][RAD]),\
+			                  fire = text2num(result["values"][FIRE]),\
+			                  acid = text2num(result["values"][ACID]))
 				log_admin("[key_name(usr)] modified the armor on [src] ([type]) to melee: [armor.melee], bullet: [armor.bullet], laser: [armor.laser], energy: [armor.energy], bomb: [armor.bomb], bio: [armor.bio], rad: [armor.rad], fire: [armor.fire], acid: [armor.acid]")
 				message_admins("<span class='notice'>[key_name_admin(usr)] modified the armor on [src] ([type]) to melee: [armor.melee], bullet: [armor.bullet], laser: [armor.laser], energy: [armor.energy], bomb: [armor.bomb], bio: [armor.bio], rad: [armor.rad], fire: [armor.fire], acid: [armor.acid]</span>")
 	if(href_list[VV_HK_MASS_DEL_TYPE])
@@ -323,50 +352,10 @@
 	. = ..()
 	if(obj_flags & UNIQUE_RENAME)
 		. += "<span class='notice'>Use a pen on it to rename it or change its description.</span>"
-	if(unique_reskin && (!current_skin || always_reskinnable))
-		. += "<span class='notice'>Alt-click it to reskin it.</span>"
 
-/obj/AltClick(mob/user)
-	. = ..()
-	if(unique_reskin && (!current_skin || always_reskinnable) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
-		reskin_obj(user)
-		return TRUE
-
-/obj/proc/reskin_obj(mob/M)
-	if(!LAZYLEN(unique_reskin))
-		return
-
-	var/list/items = list()
-	for(var/reskin_option in unique_reskin)
-		var/image/item_image = image(icon = src.icon, icon_state = unique_reskin[reskin_option])
-		items += list("[reskin_option]" = item_image)
-	sortList(items)
-
-	var/pick = show_radial_menu(M, src, items, custom_check = CALLBACK(src, .proc/check_reskin_menu, M), radius = 38, require_near = TRUE)
-	if(!pick)
-		return
-	if(!unique_reskin[pick])
-		return
-	current_skin = pick
-	icon_state = unique_reskin[pick]
-	to_chat(M, "[src] is now skinned as '[pick].'")
-
-/**
-  * Checks if we are allowed to interact with a radial menu for reskins
-  *
-  * Arguments:
-  * * user The mob interacting with the menu
-  */
-/obj/proc/check_reskin_menu(mob/user)
-	if(QDELETED(src))
-		return FALSE
-	if(current_skin)
-		return FALSE
-	if(!istype(user))
-		return FALSE
-	if(user.incapacitated())
-		return FALSE
-	return TRUE
+/// Do you want to make overrides, of course you do! Will be called if an object was reskinned successfully
+/obj/proc/reskin_obj(mob/user)
+	return
 
 /obj/update_overlays()
 	. = ..()
@@ -383,3 +372,34 @@
 
 /obj/proc/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	return
+
+
+//For returning special data when the object is saved
+//For example, or silos will return a list of their materials which will be dumped on top of them
+//Can be customised if you have something that contains something you want saved
+//If you put an incorrect format it will break outputting, so don't use this if you don't know what you are doing
+//NOTE: Contents is automatically saved, so if you store your things in the contents var, don't worry about this
+//====Output Format Examples====:
+//===Single Object===
+//	"/obj/item/folder/blue"
+//===Multiple Objects===
+//	"/obj/item/folder/blue,\n
+//	/obj/item/folder/red"
+//===Single Object with metadata===
+//	"/obj/item/folder/blue{\n
+//	\tdir = 8;\n
+//	\tname = "special folder"\n
+//	\t}"
+//===Multiple Objects with metadata===
+//	"/obj/item/folder/blue{\n
+//	\tdir = 8;\n
+//	\tname = "special folder"\n
+//	\t},\n
+//	/obj/item/folder/red"
+//====How to save easily====:
+//	return "[thing.type][generate_tgm_metadata(thing)]"
+//Where thing is the additional thing you want to same (For example ores inside an ORM)
+//Just add ,\n between each thing
+//generate_tgm_metadata(thing) handles everything inside the {} for you
+/obj/proc/on_object_saved(depth)
+	return ""

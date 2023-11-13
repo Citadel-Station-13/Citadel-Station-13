@@ -1,185 +1,43 @@
-/matrix/proc/TurnTo(old_angle, new_angle)
-	. = new_angle - old_angle
-	Turn(.) //BYOND handles cases such as -270, 360, 540 etc. DOES NOT HANDLE 180 TURNS WELL, THEY TWEEN AND LOOK LIKE SHIT
+/atom/proc/shake_animation(var/intensity = 8) //Makes the object visibly shake
+	var/initial_transform = new/matrix(transform)
+	var/init_px = pixel_x
+	var/shake_dir = pick(-1, 1)
+	var/rotation = 2+soft_cap(intensity, 1, 1, 0.94)
+	var/offset = 1+soft_cap(intensity*0.3, 1, 1, 0.8)
+	var/time = 2+soft_cap(intensity*0.3, 2, 1, 0.92)
+	animate(src, transform=turn(transform, rotation*shake_dir), pixel_x=init_px + offset*shake_dir, time=1)
+	animate(transform=initial_transform, pixel_x=init_px, time=time, easing=ELASTIC_EASING)
 
-/atom/proc/SpinAnimation(speed = 10, loops = -1, clockwise = 1, segments = 3, parallel = TRUE)
-	if(!segments)
-		return
-	var/segment = 360/segments
-	if(!clockwise)
-		segment = -segment
-	var/list/matrices = list()
-	for(var/i in 1 to segments-1)
-		var/matrix/M = matrix(transform)
-		M.Turn(segment*i)
-		matrices += M
-	var/matrix/last = matrix(transform)
-	matrices += last
-
-	speed /= segments
-
-	if(parallel)
-		animate(src, transform = matrices[1], time = speed, loops , flags = ANIMATION_PARALLEL)
-	else
-		animate(src, transform = matrices[1], time = speed, loops)
-
-	for(var/i in 2 to segments) //2 because 1 is covered above
-		animate(transform = matrices[i], time = speed)
-		//doesn't have an object argument because this is "Stacking" with the animate call above
-		//3 billion% intentional
-
-//Dumps the matrix data in format a-f
-/matrix/proc/tolist()
-	. = list()
-	. += a
-	. += b
-	. += c
-	. += d
-	. += e
-	. += f
-
-//Dumps the matrix data in a matrix-grid format
 /*
-  a d 0
-  b e 0
-  c f 1
+	This proc makes the input taper off above cap. But there's no absolute cutoff.
+	Chunks of the input value above cap, are reduced more and more with each successive one and added to the output
+	A higher input value always makes a higher output value. but the rate of growth slows
 */
-/matrix/proc/togrid()
-	. = list()
-	. += a
-	. += d
-	. += 0
-	. += b
-	. += e
-	. += 0
-	. += c
-	. += f
-	. += 1
+/proc/soft_cap(var/input, var/cap = 0, var/groupsize = 1, var/groupmult = 0.9)
 
-//The X pixel offset of this matrix
-/matrix/proc/get_x_shift()
-	. = c
+	//The cap is a ringfenced amount. If we're below that, just return the input
+	if (input <= cap)
+		return input
 
-//The Y pixel offset of this matrix
-/matrix/proc/get_y_shift()
-	. = f
+	var/output = 0
+	var/buffer = 0
+	var/power = 1//We increment this after each group, then apply it to the groupmult as a power
 
-/matrix/proc/get_x_skew()
-	. = b
+	//Ok its above, so the cap is a safe amount, we move that to the output
+	input -= cap
+	output += cap
 
-/matrix/proc/get_y_skew()
-	. = d
-
-//Skews a matrix in a particular direction
-//Missing arguments are treated as no skew in that direction
-
-//As Rotation is defined as a scale+skew, these procs will break any existing rotation
-//Unless the result is multiplied against the current matrix
-/matrix/proc/set_skew(x = 0, y = 0)
-	b = x
-	d = y
+	//Now we start moving groups from input to buffer
 
 
-/////////////////////
-// COLOUR MATRICES //
-/////////////////////
+	while (input > 0)
+		buffer = min(input, groupsize)	//We take the groupsize, or all the input has left if its less
+		input -= buffer
 
-/* Documenting a couple of potentially useful color matrices here to inspire ideas
-// Greyscale - indentical to saturation @ 0
-list(LUMA_R,LUMA_R,LUMA_R,0, LUMA_G,LUMA_G,LUMA_G,0, LUMA_B,LUMA_B,LUMA_B,0, 0,0,0,1, 0,0,0,0)
+		buffer *= groupmult**power //This reduces the group by the groupmult to the power of which index we're on.
+		//This ensures that each successive group is reduced more than the previous one
 
-// Color inversion
-list(-1,0,0,0, 0,-1,0,0, 0,0,-1,0, 0,0,0,1, 1,1,1,0)
+		output += buffer
+		power++ //Transfer to output, increment power, repeat until the input pile is all used
 
-// Sepiatone
-list(0.393,0.349,0.272,0, 0.769,0.686,0.534,0, 0.189,0.168,0.131,0, 0,0,0,1, 0,0,0,0)
-*/
-
-//Does nothing
-/proc/color_matrix_identity()
-	return list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
-
-//Adds/subtracts overall lightness
-//0 is identity, 1 makes everything white, -1 makes everything black
-/proc/color_matrix_lightness(power)
-	return list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, power,power,power,0)
-
-//Changes distance hues have from grey while maintaining the overall lightness. Greys are unaffected.
-//1 is identity, 0 is greyscale, >1 oversaturates colors
-/proc/color_matrix_saturation(value)
-	var/inv = 1 - value
-	var/R = round(LUMA_R * inv, 0.001)
-	var/G = round(LUMA_G * inv, 0.001)
-	var/B = round(LUMA_B * inv, 0.001)
-
-	return list(R + value,R,R,0, G,G + value,G,0, B,B,B + value,0, 0,0,0,1, 0,0,0,0)
-
-//Changes distance colors have from rgb(127,127,127) grey
-//1 is identity. 0 makes everything grey >1 blows out colors and greys
-/proc/color_matrix_contrast(value)
-	var/add = (1 - value) / 2
-	return list(value,0,0,0, 0,value,0,0, 0,0,value,0, 0,0,0,1, add,add,add,0)
-
-//Moves all colors angle degrees around the color wheel while maintaining intensity of the color and not affecting greys
-//0 is identity, 120 moves reds to greens, 240 moves reds to blues
-/proc/color_matrix_rotate_hue(angle)
-	var/sin = sin(angle)
-	var/cos = cos(angle)
-	var/cos_inv_third = 0.333*(1-cos)
-	var/sqrt3_sin = sqrt(3)*sin
-	return list(
-round(cos+cos_inv_third, 0.001), round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), 0,
-round(cos_inv_third-sqrt3_sin, 0.001), round(cos+cos_inv_third, 0.001), round(cos_inv_third+sqrt3_sin, 0.001), 0,
-round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), round(cos+cos_inv_third, 0.001), 0,
-0,0,0,1,
-0,0,0,0)
-
-//These next three rotate values about one axis only
-//x is the red axis, y is the green axis, z is the blue axis.
-/proc/color_matrix_rotate_x(angle)
-	var/sinval = round(sin(angle), 0.001); var/cosval = round(cos(angle), 0.001)
-	return list(1,0,0,0, 0,cosval,sinval,0, 0,-sinval,cosval,0, 0,0,0,1, 0,0,0,0)
-
-/proc/color_matrix_rotate_y(angle)
-	var/sinval = round(sin(angle), 0.001); var/cosval = round(cos(angle), 0.001)
-	return list(cosval,0,-sinval,0, 0,1,0,0, sinval,0,cosval,0, 0,0,0,1, 0,0,0,0)
-
-/proc/color_matrix_rotate_z(angle)
-	var/sinval = round(sin(angle), 0.001); var/cosval = round(cos(angle), 0.001)
-	return list(cosval,sinval,0,0, -sinval,cosval,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
-
-
-//Returns a matrix addition of A with B
-/proc/color_matrix_add(list/A, list/B)
-	if(!istype(A) || !istype(B))
-		return color_matrix_identity()
-	if(A.len != 20 || B.len != 20)
-		return color_matrix_identity()
-	var/list/output = list()
-	output.len = 20
-	for(var/value in 1 to 20)
-		output[value] = A[value] + B[value]
 	return output
-
-//Returns a matrix multiplication of A with B
-/proc/color_matrix_multiply(list/A, list/B)
-	if(!istype(A) || !istype(B))
-		return color_matrix_identity()
-	if(A.len != 20 || B.len != 20)
-		return color_matrix_identity()
-	var/list/output = list()
-	output.len = 20
-	var/x = 1
-	var/y = 1
-	var/offset = 0
-	for(y in 1 to 5)
-		offset = (y-1)*4
-		for(x in 1 to 4)
-			output[offset+x] = round(A[offset+1]*B[x] + A[offset+2]*B[x+4] + A[offset+3]*B[x+8] + A[offset+4]*B[x+12]+(y==5?B[x+16]:0), 0.001)
-	return output
-
-/**
- * Assembles a color matrix, defaulting to identity
- */
-/proc/rgb_construct_color_matrix(rr = 1, rg, rb, gr, gg = 1, gb, br, bg, bb = 1, cr, cg, cb)
-	return list(rr, rg, rb, gr, gg, gb, br, bg, bb, cr, cg, cb)

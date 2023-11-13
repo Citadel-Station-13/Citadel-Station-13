@@ -11,7 +11,7 @@
 	allow_dense = TRUE
 	delivery_icon = null
 	can_weld_shut = FALSE
-	armor = list("melee" = 30, "bullet" = 50, "laser" = 50, "energy" = 100, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
+	armor = list(MELEE = 30, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 100, BIO = 0, RAD = 0, FIRE = 100, ACID = 80)
 	anchored = TRUE //So it cant slide around after landing
 	anchorable = FALSE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
@@ -89,7 +89,7 @@
 		style = customStyle
 	setStyle(style) //Upon initialization, give the supplypod an iconstate, name, and description based on the "style" variable. This system is important for the centcom_podlauncher to function correctly
 
-/obj/structure/closet/supplypod/extractionpod/Initialize()
+/obj/structure/closet/supplypod/extractionpod/Initialize(mapload)
 	. = ..()
 	var/turf/picked_turf = pick(GLOB.holdingfacility)
 	reverse_dropoff_coords = list(picked_turf.x, picked_turf.y, picked_turf.z)
@@ -187,10 +187,10 @@
 	else
 		..()
 
-/obj/structure/closet/supplypod/ex_act() //Explosions dont do SHIT TO US! This is because supplypods create explosions when they land.
+/obj/structure/closet/supplypod/ex_act(severity, target, origin) //Explosions dont do SHIT TO US! This is because supplypods create explosions when they land.
 	return
 
-/obj/structure/closet/supplypod/contents_explosion() //Supplypods also protect their contents from the harmful effects of fucking exploding.
+/obj/structure/closet/supplypod/contents_explosion(severity, target, origin) //Supplypods also protect their contents from the harmful effects of fucking exploding.
 	return
 
 /obj/structure/closet/supplypod/toggle(mob/living/user)
@@ -648,7 +648,7 @@
 	desc = "This disk provides a firmware update to the Express Supply Console, granting the use of Nanotrasen's Bluespace Drop Pods to the supply department."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cargodisk"
-	// inhand_icon_state = "card-id"
+	// item_state = "card-id"
 	w_class = WEIGHT_CLASS_SMALL
 
 // let's not.

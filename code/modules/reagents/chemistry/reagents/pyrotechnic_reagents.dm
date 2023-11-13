@@ -2,6 +2,7 @@
 /datum/reagent/thermite
 	name = "Thermite"
 	description = "Thermite produces an aluminothermic reaction known as a thermite reaction. Can be used to melt walls."
+	chemical_flags = REAGENT_ALL_PROCESS
 	reagent_state = SOLID
 	color = "#550000"
 	taste_description = "sweet tasting metal"
@@ -44,7 +45,12 @@
 	reagent_state = LIQUID
 	color = "#FFC8C8"
 	metabolization_rate = 4
+	chemical_flags = REAGENT_ALL_PROCESS
 	taste_description = "burning"
+	/* no gaseous CLF3 until i can think of a good way to get it to burn that doesn't destroy matter in mysterious ways
+	boiling_point = 289.4
+	*/
+	condensation_amount = 2
 	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/clf3/on_mob_life(mob/living/carbon/M)
@@ -81,6 +87,12 @@
 			M.IgniteMob()
 			if(!locate(/obj/effect/hotspot) in M.loc)
 				new /obj/effect/hotspot(M.loc)
+
+/datum/reagent/clf3/define_gas()
+	var/datum/gas/G = ..()
+	G.enthalpy = -163200
+	G.oxidation_temperature = T0C - 50
+	return G
 
 /datum/reagent/sorium
 	name = "Sorium"
@@ -146,10 +158,20 @@
 /datum/reagent/phlogiston
 	name = "Phlogiston"
 	description = "Catches you on fire and makes you ignite."
+	chemical_flags = REAGENT_ALL_PROCESS
 	reagent_state = LIQUID
 	color = "#FA00AF"
 	taste_description = "burning"
+	boiling_point = T20C-10
 	value = REAGENT_VALUE_UNCOMMON
+
+/datum/reagent/phlogiston/define_gas()
+	var/datum/gas/G = ..()
+	G.enthalpy = FIRE_PLASMA_ENERGY_RELEASED / 100
+	G.fire_products = list(GAS_O2 = 0.25, GAS_METHANE = 0.75) // meanwhile this is just magic
+	G.fire_burn_rate = 1
+	G.fire_temperature = T20C+1
+	return G
 
 /datum/reagent/phlogiston/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	M.adjust_fire_stacks(1)
@@ -168,6 +190,7 @@
 /datum/reagent/napalm
 	name = "Napalm"
 	description = "Very flammable."
+	chemical_flags = REAGENT_ALL_PROCESS
 	reagent_state = LIQUID
 	color = "#FA00AF"
 	taste_description = "burning"
@@ -197,6 +220,7 @@
 	color = "#0000DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
+	chemical_flags = REAGENT_ALL_PROCESS
 	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/cryostylane/on_mob_life(mob/living/carbon/M) //TODO: code freezing into an ice cube
@@ -215,6 +239,7 @@
 	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Pyrosium slowly heats all other reagents in the container."
 	color = "#64FAC8"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ALL_PROCESS
 	taste_description = "bitterness"
 	value = REAGENT_VALUE_COMMON
 
@@ -230,6 +255,7 @@
 	reagent_state = LIQUID
 	color = "#20324D" //RGB: 32, 50, 77
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_ALL_PROCESS
 	taste_description = "charged metal"
 	var/shock_timer = 0
 	value = REAGENT_VALUE_VERY_RARE
@@ -280,6 +306,9 @@
 	color = "#A6FAFF55"
 	taste_description = "the inside of a fire extinguisher"
 	value = REAGENT_VALUE_UNCOMMON
+
+/datum/reagent/firefighting_foam/define_gas()
+	return null
 
 /datum/reagent/firefighting_foam/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T))

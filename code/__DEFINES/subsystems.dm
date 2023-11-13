@@ -29,10 +29,10 @@
  * if the arguments to addtimer are the same as an existing timer, it doesn't create a new timer,
  * and returns the id of the existing timer
  */
-#define TIMER_UNIQUE			(1<<0)
+#define TIMER_UNIQUE (1<<0)
 
 ///For unique timers: Replace the old timer rather then not start this one
-#define TIMER_OVERRIDE			(1<<1)
+#define TIMER_OVERRIDE (1<<1)
 
 /**
  * Timing should be based on how timing progresses on clients, not the server.
@@ -41,20 +41,23 @@
  * should only be used in conjuction with things that have to progress client side, such as
  * animate() or sound()
  */
-#define TIMER_CLIENT_TIME		(1<<2)
+#define TIMER_CLIENT_TIME (1<<2)
 
 ///Timer can be stopped using deltimer()
-#define TIMER_STOPPABLE			(1<<3)
+#define TIMER_STOPPABLE (1<<3)
 
 ///prevents distinguishing identical timers with the wait variable
 ///
 ///To be used with TIMER_UNIQUE
-#define TIMER_NO_HASH_WAIT		(1<<4)
+#define TIMER_NO_HASH_WAIT (1<<4)
 
 ///Loops the timer repeatedly until qdeleted
 ///
 ///In most cases you want a subsystem instead, so don't use this unless you have a good reason
-#define TIMER_LOOP				(1<<5)
+#define TIMER_LOOP (1<<5)
+
+///Delete the timer on parent datum Destroy() and when deltimer'd
+#define TIMER_DELETE_ME (1<<6)
 
 ///Empty ID define
 #define TIMER_ID_NULL -1
@@ -108,8 +111,10 @@
 #define INIT_ORDER_SOUNDS			83
 #define INIT_ORDER_INSTRUMENTS		82
 #define INIT_ORDER_VIS				80
+#define INIT_ORDER_SECURITY_LEVEL 79 // We need to load before events so that it has a security level to choose from.
 #define INIT_ORDER_ACHIEVEMENTS		77
 #define INIT_ORDER_RESEARCH			75
+#define INIT_ORDER_STATION			74 //This is high priority because it manipulates a lot of the subsystems that will initialize after it.
 #define INIT_ORDER_EVENTS			70
 #define INIT_ORDER_JOBS				65
 #define INIT_ORDER_QUIRKS			60
@@ -188,6 +193,7 @@
 #define FIRE_PRIORITY_CALLBACKS		600
 // #define FIRE_PRIORITY_EXPLOSIONS	666
 #define FIRE_PRIORITY_TIMER			700
+#define FIRE_PRIORITY_SOUND_LOOPS 800
 #define FIRE_PRIORITY_INPUT			1000 // This must always always be the max highest priority. Player input must never be lost.
 
 // SS runlevels

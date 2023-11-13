@@ -39,7 +39,7 @@
 	if(!is_miniball)
 		set_light(10, 7, "#EEEEFF")
 
-/obj/singularity/energy_ball/ex_act(severity, target)
+/obj/singularity/energy_ball/ex_act(severity, target, origin)
 	return
 
 /obj/singularity/energy_ball/consume(severity, target)
@@ -358,8 +358,16 @@
 		var/obj/singularity/energy_ball/tesla = source
 		if(istype(tesla))
 			if(istype(closest_atom,/obj/machinery/power/grounding_rod) && tesla.energy>13 && !tesla.contained)
-				qdel(closest_atom)							// each rod deletes two miniballs,
-				tesla.energy = round(tesla.energy/1.5625)	// if there are no miniballs the rod stays and continues to pull the ball in
+
+				// getting the grounding rod's capacitor rating for quick maths
+				var/obj/machinery/power/grounding_rod/rod = closest_atom
+				// assuming the rod is fully constructed the second part will always be a capacitor
+				var/obj/item/stock_parts/capacitor/capacitor = rod.component_parts[2]
+
+				tesla.energy = round(tesla.energy/(1 + 0.28125 * capacitor.rating))
+				qdel(closest_atom) // each rod removes tesla energy depending on the power of the capacitor,
+				// if there are no miniballs the rod stays and continues to pull the ball in
+
 	if(prob(20))//I know I know
 		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets)
 		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets)

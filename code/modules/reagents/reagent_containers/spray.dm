@@ -84,6 +84,7 @@
 	else
 		reagents.trans_to(D, amount_per_transfer_from_this, 1/range)
 	D.add_atom_colour(mix_color_from_reagents(D.reagents.reagent_list), TEMPORARY_COLOUR_PRIORITY)
+	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 	last_spray = world.time
 	INVOKE_ASYNC(D, /obj/effect/decal/chempuff/proc/run_puff, A)
 
@@ -228,7 +229,7 @@
 	generate_amount = 1
 	generate_delay = 40		//deciseconds
 
-/obj/item/reagent_containers/spray/waterflower/cyborg/Initialize()
+/obj/item/reagent_containers/spray/waterflower/cyborg/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 

@@ -23,7 +23,7 @@
 	var/datum/radial_menu/persistent/wiring_gui_menu
 	var/mob/listeningTo
 
-/obj/item/rcl/Initialize()
+/obj/item/rcl/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
@@ -314,7 +314,7 @@
 		else //open the menu
 			showWiringGui(user)
 
-/obj/item/rcl/pre_loaded/Initialize() //Comes preloaded with cable, for testing stuff
+/obj/item/rcl/pre_loaded/Initialize(mapload) //Comes preloaded with cable, for testing stuff
 	loaded = new()
 	loaded.max_amount = max_amount
 	loaded.amount = max_amount

@@ -1,0 +1,184 @@
+2022-08-01:
+  Putnam3145:
+  - bugfix: rad collectors display the right units now
+  - balance: Stasis beds are now 90% as good as surgery tables for surgery
+2022-08-02:
+  SandPoot:
+  - admin: Alphabetically ordered bitfields for admin editing.
+  - admin: It is now easier to change the flags of turrets.
+  - refactor: Allows for defining bitfields in other files.
+2022-08-03:
+  Putnam3145:
+  - balance: Research bomb "midpoint" at which it's worth exactly 50000 points from
+      240->300
+  - code_imp: doesn't snowflake the bomb cap for linux anymore, servers that need
+      to tweak it can do it themselves (I didn't even put it down right, should be
+      5000 instead of 50000, yikes)
+2022-08-04:
+  MrJWhit:
+  - rscadd: Adds more AI screens on box
+  TripleShades:
+  - qol: Three gateways will no longer lose power via Magical SMES Units
+  timothyteakettle:
+  - rscadd: lets AIs control status displays (vtuber mode)
+2022-08-05:
+  Hatterhat:
+  - tweak: The L6 Squad Automatic Weapon, as used by Syndicate nuclear operatives,
+      now fires 7.12x82mm, with no change in ballistic performance. This has the side
+      effect of making it now capable of utilizing match-grade ammunition, which some
+      would think are mutually incompatible concepts.
+  Putnam3145:
+  - tweak: Untied shoelaces probabilities rework
+  - balance: Miner boots are slightly harder to tie/untie now
+2022-08-08:
+  Hatterhat:
+  - tweak: Proto-kinetic crushers and variants can now be renamed via pen.
+  - tweak: Custom descriptions on items tagged with UNIQUE_RENAME can now go to 350
+      characters, up from 140.
+  - tweak: Recoil now pushes your screen in the opposite direction of where you're
+      shooting. It makes sense in context, I swear. Adjust the setting for this in
+      your client prefs, because it defaults to on.
+  Linzolle:
+  - bugfix: catwalk overlays behave properly, appearing on top of cables and such
+  Putnam3145:
+  - tweak: Various gases now have shortened names for filters
+  - balance: Nitric oxide now removes from the power mix like nitrogen/pluoxium do
+  - balance: Nitric oxide now becomes, at most, 20% nitrogen dioxide instead of 50%
+  SandPoot:
+  - bugfix: Fixed the lack of eyes making ERROR appear on people.
+  - qol: Set up for the dmi editor extension, very helpful as you can see the existant
+      states and their names opposed to only images in a huge spritesheet.
+2022-08-09:
+  Putnam3145:
+  - rscadd: 'Adds station traits: Small modifiers that can randomly be chosen each
+      round. They are usually logged in the intercept the station receives early in
+      the round'
+  - refactor: Announcement audio is now stored in a datum to make it easy to add different
+      announcers
+2022-08-17:
+  Putnam3145:
+  - bugfix: added a missing signal call to SSticker
+  TripleShades:
+  - rscadd: '[Omega] Cleanbot named "Rustbucket" to the Bridge'
+  - rscadd: '[Omega] Securitron "Pingsky" to AI Sat'
+  - rscadd: '[Omega] External AI Sat cams around the south'
+  - rscadd: '[Omega] Unfinished cleanbot to Robotics'
+  - rscadd: '[Omega] More status displays and AI displays'
+  - rscadd: '[Omega] Captain''s Wardrobe vendor'
+  - rscadd: '[Omega] Engineering Supermatter Room now has a YouTool'
+  - rscadd: '[Omega] Hydroponics front desk now has windoors'
+  - rscadd: '[Omega] Bar monkey Punpun placed at the Bar'
+  - rscadd: '[Omega] Paramedical room'
+  - rscadd: '[Omega] Scrubbers to Xenobiology slime pens'
+  - rscadd: '[Omega] Xenobiology now has one canister of BZ'
+  - rscdel: '[Omega] Tiny Medbay reception desk'
+  - rscdel: '[Omega] Overlapping cams and window-sitting cams'
+  - rscdel: '[Omega] Defibrillator outside of Medbay Surgery'
+  - rscdel: '[Omega] Rogue isolated power wire under East Maintenence Airlock'
+  - tweak: '[Omega] Virology now has a cycling airlock'
+  - tweak: '[Omega] Xenobiology slime pen floors and kill room floor now match other
+      stations'
+  - tweak: '[Omega] Xenobiology main scrubber and vent shifted around'
+  - tweak: '[Omega] Medbay intercoms are now largely on the unique frequency other
+      stations use'
+  - tweak: '[Omega] Certain floors under airlocks now properly match their surroundings'
+  - tweak: '[Omega] Atmospherics now has layer adaptors'
+  - tweak: '[Omega] Cargo''s starting crates are shifted around to better show which
+      belt goes to the shuttle'
+  - tweak: '[Omega] Engineering Secure Storage button is now in Chief Engineer''s
+      office'
+2022-08-19:
+  BlueWildrose:
+  - balance: Removes persistence from the cleanable glowing goo. It'll no longer last
+      between rounds.
+  TripleShades:
+  - rscadd: '[Omega] One decal to better indicate Turbine area'
+  - rscdel: '[Omega] Duplicate leftover intercom'
+  - bugfix: '[Omega] Virology Airlock access buttons should actually work'
+2022-08-20:
+  Putnam3145:
+  - bugfix: Stake (maybe)
+  - bugfix: Caches the auxmos file if found
+  - balance: Sandstorm now happens less often, tends to be less powerful and is announced.
+  zeroisthebiggay:
+  - tweak: cauteries searing tools and energy scalpels now have heat and can be used
+      to light cigarettes
+2022-08-21:
+  Hatterhat:
+  - tweak: Chief engineers now have expert wiring skills, as befitting a crew member
+      of their assumed caliber. Atmos techs also get more wire skill.
+  - tweak: Research directors now have trained wiring skills, and scientists have
+      basic wiring expertise.
+  - rscadd: 'Cleaving saws now have a Certified FromSoft Classic mechanic: dodge-rolling.
+      Combat mode RMB with it inhand to use.'
+  Linzolle:
+  - rscadd: radial menu to organ manipulation surgery
+  Onule, PositiveEntropy, TetraZeta, Axietheaxolotl, Thgvr, AdipemDragon:
+  - imageadd: Completely resprites all medkits!
+  - imageadd: Completely resprites all medical tools!
+  - imageadd: Removes the clamp sprite and instead creates separate hemostat and retractor
+      inhand sprites!
+  - imageadd: Adds missing inhands for the bonesetter, advanced med tools, tactical
+      medkit, surgical drill and bone gel!
+  Putnam3145:
+  - bugfix: update air ref more aggressively
+  - bugfix: Binary translator key now has a proper description
+  - rscadd: Space lube, drying agent, salbutamol, colorful reagent, drying agent chem
+      gases
+  - bugfix: Signal commander works now
+  - tweak: Infinite blood trails are no longer possible
+  Rohesie:
+  - tweak: Admins and byond users can now set their OOC color to light values and
+      it will save in the preferences.
+  zeroisthebiggay:
+  - imageadd: crushers
+  - imageadd: glaives
+  - imageadd: drills
+  - imageadd: mining scammers
+  - imageadd: my mom
+  - imageadd: new ninja sprites
+  - imageadd: makes the long gloves look more like their normal counterparts
+  - imageadd: mauler gauntlets have lost a grand total of three pixels in order to
+      make them slimmer
+2022-08-22:
+  zeroisthebiggay:
+  - rscadd: Added polychromatic workout shorts to the loadout and to the clothesmate
+      vendors for various workout procedures.
+2022-08-23:
+  Linzolle:
+  - bugfix: suiciding with a stamina projectile now actually works instead of doing
+      literally nothing
+  Putnam3145:
+  - bugfix: security levels work now
+  TrojanCoyote:
+  - tweak: slight change to sprite
+2022-08-24:
+  zeroisthebiggay:
+  - rscadd: hyper slutskirt and secukini
+2022-08-25:
+  Putnam3145:
+  - code_imp: New Find() lint
+2022-08-27:
+  PositiveEntropy:
+  - imageadd: Resprites the IPC/pAI recharge cable!
+  shellspeed1:
+  - rscadd: new garden survival pod added. . It can be bought from the mining vendor
+      for 7500 points.
+  - balance: To reflect the drop in usefulness of the penthouse pod, its price has
+      been halved.
+  - tweak: Penthouse survival pod redone, instead of a kitchen and garden it now features
+      an office area for when a miner feels like writing a book, or shitposting in
+      the station's modular computer chatroom.
+  - bugfix: Stacked windows in survival pods fixed.
+  - tweak: rtgs in survival pods now come prewired, I figured out a new trick woo.
+2022-08-30:
+  Putnam3145:
+  - balance: Untied shoes are slightly less common
+  - admin: Better admin logging on potential prefbreak arousal stuff
+  zeroisthebiggay:
+  - bugfix: harpy wings layering
+  - rscadd: and steals the harpy wings from rp so that there is some variety
+2022-08-31:
+  Putnam3145:
+  - bugfix: has_important_message = TRUE added to a bunch of events so you still know
+      where that pyro anomaly is with an intern

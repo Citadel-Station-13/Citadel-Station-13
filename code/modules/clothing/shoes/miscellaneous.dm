@@ -12,7 +12,7 @@
 	item_state = "jackboots"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 10, "rad" = 0, "fire" = 70, "acid" = 50)
+	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 10, RAD = 0, FIRE = 70, ACID = 50)
 	strip_delay = 70
 	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
@@ -28,7 +28,7 @@
 
 /obj/item/clothing/shoes/combat/sneakboots/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_SHOES)
+	if(slot == ITEM_SLOT_FEET)
 		ADD_TRAIT(user, TRAIT_SILENT_STEP, SHOES_TRAIT)
 
 /obj/item/clothing/shoes/combat/sneakboots/dropped(mob/user)
@@ -40,7 +40,7 @@
 	desc = "High speed, no drag combat boots."
 	permeability_coefficient = 0.01
 	clothing_flags = NOSLIP
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 30, "rad" = 30, "fire" = 90, "acid" = 50)
+	armor = list(MELEE = 40, BULLET = 30, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 30, RAD = 30, FIRE = 90, ACID = 50)
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain wooden sandals."
@@ -73,7 +73,7 @@
 	strip_delay = 50
 	equip_delay_other = 50
 	resistance_flags = NONE
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 75)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 40, ACID = 75)
 	custom_price = PRICE_ABOVE_EXPENSIVE
 	can_be_tied = FALSE
 
@@ -106,13 +106,13 @@
 	var/datum/component/waddle
 	var/enabled_waddle = TRUE
 
-/obj/item/clothing/shoes/clown_shoes/Initialize()
+/obj/item/clothing/shoes/clown_shoes/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50)
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_SHOES)
+	if(slot == ITEM_SLOT_FEET)
 		if(enabled_waddle)
 			waddle = user.AddComponent(/datum/component/waddling)
 		if(user.mind && HAS_TRAIT(user.mind, TRAIT_CLOWN_MENTALITY))
@@ -144,7 +144,7 @@
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
-	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
+	desc = "Nanotrasen-brand jackboots for all your jackboots-related needs. From genuine combat to tacticool LARPing, satisfaction is guaranteed."
 	icon_state = "jackboots"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
@@ -154,6 +154,11 @@
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	lace_time = 12 SECONDS
+
+/obj/item/clothing/shoes/jackboots/sec
+	name = "security jackboots"
+	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
+	icon_state = "jackboots_sec"
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
@@ -213,6 +218,7 @@
 	heat_protection = FEET|LEGS
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
+	lace_time = 10 SECONDS
 
 /obj/item/clothing/shoes/cult
 	name = "\improper Nar'Sien invoker boots"
@@ -231,7 +237,7 @@
 /obj/item/clothing/shoes/cult/alt/ghost
 	item_flags = DROPDEL
 
-/obj/item/clothing/shoes/cult/alt/ghost/Initialize()
+/obj/item/clothing/shoes/cult/alt/ghost/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
@@ -267,9 +273,17 @@
 	desc = "A specialized pair of combat boots with a built-in propulsion system for rapid foward movement."
 	icon_state = "jetboots"
 	resistance_flags = FIRE_PROOF
+	cold_protection = FEET|LEGS
+	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
+	heat_protection = FEET|LEGS
+	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	actions_types = list(/datum/action/item_action/bhop)
 	permeability_coefficient = 0.05
+	unique_reskin = list(
+		"Explorer" = list("icon_state" = "miningjet"),
+		"Jackboot" = list("icon_state" = "jetboots")
+	)
 	var/jumpdistance = 5 //-1 from to see the actual distance, e.g 4 goes over 3 tiles
 	var/jumpspeed = 3
 	var/recharging_rate = 60 //default 6 seconds between each dash
@@ -315,7 +329,7 @@
 	icon_state = "clockwork_treads"
 	lace_time = 8 SECONDS
 
-/obj/item/clothing/shoes/bronze/Initialize()
+/obj/item/clothing/shoes/bronze/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/machines/clockcult/integration_cog_install.ogg' = 1, 'sound/magic/clockwork/fellowship_armory.ogg' = 1), 50)
 
@@ -327,14 +341,14 @@
 	var/wheelToggle = FALSE //False means wheels are not popped out
 	var/obj/vehicle/ridden/scooter/wheelys/W
 
-/obj/item/clothing/shoes/wheelys/Initialize()
+/obj/item/clothing/shoes/wheelys/Initialize(mapload)
 	. = ..()
 	W = new /obj/vehicle/ridden/scooter/wheelys(null)
 
 /obj/item/clothing/shoes/wheelys/ui_action_click(mob/user, action)
 	if(!isliving(user))
 		return
-	if(!istype(user.get_item_by_slot(SLOT_SHOES), /obj/item/clothing/shoes/wheelys))
+	if(!istype(user.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes/wheelys))
 		to_chat(user, "<span class='warning'>You must be wearing the wheely-heels to use them!</span>")
 		return
 	if(!(W.is_occupant(user)))
@@ -417,12 +431,16 @@
 	name = "cowboy boots"
 	desc = "A standard pair of brown cowboy boots."
 	icon_state = "cowboyboots"
+	item_state = "cowboyboots"
+	permeability_coefficient = 0.05 //these are quite tall
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/cowboyboots/black
 	name = "black cowboy boots"
 	desc = "A pair of black cowboy boots, pretty easy to scuff up."
 	icon_state = "cowboyboots_black"
+	item_state = "cowboyboots_black"
 
 /obj/item/clothing/shoes/wallwalkers
 	name = "wall walking boots"
@@ -450,7 +468,7 @@
 
 /obj/item/clothing/shoes/wallwalkers/equipped(mob/user,slot)
 	. = ..()
-	if(slot == SLOT_SHOES)
+	if(slot == ITEM_SLOT_FEET)
 		RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE,.proc/intercept_user_move)
 
 /obj/item/clothing/shoes/wallwalkers/dropped(mob/user)
@@ -541,3 +559,59 @@
 	desc = "They got me for my foams!"
 	icon_state = "SwagShoes"
 	item_state = "SwagShoes"
+
+/obj/item/clothing/shoes/phantom
+	name = "phantom shoes"
+	desc = "Excellent for when you need to do cool flashy flips."
+	icon_state = "phantom_shoes"
+	item_state = "phantom_shoes"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/shoes/saints
+	name = "saints sneakers"
+	desc = "Officially branded Saints sneakers. Incredibly valuable!"
+	icon_state = "saints_shoes"
+	item_state = "saints_shoes"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/shoes/morningstar
+	name = "morningstar boots"
+	desc = "The most expensive boots on this station. Wearing them dropped the value by about 50%."
+	icon_state = "morningstar_shoes"
+	item_state = "morningstar_shoes"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/shoes/deckers
+	name = "deckers rollerskates"
+	desc = "t3h c00L3st sh03z j00'LL 3v3r f1nd."
+	icon_state = "decker_shoes"
+	item_state = "decker_shoes"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/shoes/sybil_slickers
+	name = "sybil slickers shoes"
+	desc = "FOOTBALL! YEAH!"
+	icon_state = "sneakers_blue"
+	item_state = "sneakers_blue"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/shoes/basil_boys
+	name = "basil boys shoes"
+	desc = "FOOTBALL! YEAH!"
+	icon_state = "sneakers_red"
+	item_state = "sneakers_red"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/shoes/yakuza
+	name = "tojo clan shoes"
+	desc = "Steel-toed and intimidating."
+	icon_state = "MajimaShoes"
+	item_state = "MajimaShoes_worn"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/shoes/jackbros
+	name = "frosty boots"
+	desc = "For when you're stepping on up to the plate."
+	icon_state = "JackFrostShoes"
+	item_state = "JackFrostShoes_worn"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON

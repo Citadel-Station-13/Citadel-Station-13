@@ -21,7 +21,7 @@
 	var/full_damage_on_mobs = FALSE
 	var/can_gib_mobs = FALSE
 
-/obj/item/grenade/plastic/Initialize()
+/obj/item/grenade/plastic/Initialize(mapload)
 	. = ..()
 	plastic_overlay = mutable_appearance(icon, "[item_state]2", HIGH_OBJ_LAYER)
 

@@ -228,3 +228,14 @@
 	multiplier = 6
 	bonus_desc = "Under no circumstances mention this shipment to security."
 	foodtype = "\"meal\""
+
+/datum/bounty/item/botany/bonfire
+	name = "Lit Bonfire"
+	description = "Space heaters are malfunctioning and the cargo crew of Central Command is starting to feel cold. Grow some logs and Ship a lit bonfire to warm them up."
+	wanted_types = list(/obj/structure/bonfire)
+
+/datum/bounty/item/botany/bonfire/applies_to(obj/O)
+	if(!..())
+		return FALSE
+	var/obj/structure/bonfire/B = O
+	return !!B.burning

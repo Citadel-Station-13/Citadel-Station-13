@@ -2,8 +2,6 @@
 
 GLOBAL_VAR(restart_counter)
 
-GLOBAL_VAR_INIT(tgs_initialized, FALSE)
-
 GLOBAL_VAR(topic_status_lastcache)
 GLOBAL_LIST(topic_status_cache)
 
@@ -16,7 +14,7 @@ GLOBAL_LIST(topic_status_cache)
 		call(debug_server, "auxtools_init")()
 		enable_debugging()
 	AUXTOOLS_CHECK(AUXMOS)
-#ifdef REFERENCE_TRACKING
+#ifdef EXTOOLS_REFERENCE_TRACKING
 	enable_reference_tracking()
 #endif
 	world.Profile(PROFILE_START)
@@ -76,7 +74,6 @@ GLOBAL_LIST(topic_status_cache)
 /world/proc/InitTgs()
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	GLOB.revdata.load_tgs_info()
-	GLOB.tgs_initialized = TRUE
 
 /world/proc/HandleTestRun()
 	//trigger things to run the whole process
@@ -114,9 +111,13 @@ GLOBAL_LIST(topic_status_cache)
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
 	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
+	GLOB.world_suspicious_login_log = "[GLOB.log_directory]/suspicious_logins.log"
+	GLOB.world_mecha_log = "[GLOB.log_directory]/mecha.log"
 	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
 	GLOB.world_asset_log = "[GLOB.log_directory]/asset.log"
 	GLOB.world_attack_log = "[GLOB.log_directory]/attack.log"
+	GLOB.world_victim_log = "[GLOB.log_directory]/victim.log"
+	GLOB.world_econ_log = "[GLOB.log_directory]/econ.log"
 	GLOB.world_pda_log = "[GLOB.log_directory]/pda.log"
 	GLOB.world_telecomms_log = "[GLOB.log_directory]/telecomms.log"
 	GLOB.world_manifest_log = "[GLOB.log_directory]/manifest.log"
@@ -155,7 +156,8 @@ GLOBAL_LIST(topic_status_cache)
 	start_log(GLOB.world_crafting_log)
 	start_log(GLOB.click_log)
 
-	GLOB.changelog_hash = md5('html/changelog.html') //for telling if the changelog has changed recently
+	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM") + ".yml")
+	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
 		fdel(GLOB.config_error_log)
@@ -284,63 +286,47 @@ GLOBAL_LIST(topic_status_cache)
 	..()
 
 /world/proc/update_status()
+	. = ""
+	if(!config)
+		status = "<b>SERVER LOADING OR BROKEN.</b> (18+)"
+		return
 
-	var/list/features = list()
+	game_state = (CONFIG_GET(number/extreme_popcap) && GLOB.clients.len >= CONFIG_GET(number/extreme_popcap))
 
-	// if(GLOB.master_mode)
-	// 	features += GLOB.master_mode
+	// ---Hub title---
+	var/servername = CONFIG_GET(string/servername)
+	var/stationname = station_name()
+	var/defaultstation = CONFIG_GET(string/stationname)
+	if(servername || stationname != defaultstation)
+		. += (servername ? "<b>[servername]" : "<b>")
+		. += (stationname != defaultstation ? "[servername ? " - " : ""][stationname]</b>\] " : "</b>\] ")
 
-	// if (!GLOB.enter_allowed)
-	// 	features += "closed"
+	var/communityname = CONFIG_GET(string/communityshortname)
+	var/communitylink = CONFIG_GET(string/communitylink)
+	if(communityname)
+		. += (communitylink ? "(<a href=\"[communitylink]\">[communityname]</a>) " : "([communityname]) ")
 
-	var/s = ""
-	var/hostedby
-	if(config)
-		var/server_name = CONFIG_GET(string/servername)
-		if (server_name)
-			s += "<b>[server_name]</b> &#8212; "
-		// features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn"
-		// if(CONFIG_GET(flag/allow_vote_mode))
-		// 	features += "vote"
-		// if(CONFIG_GET(flag/allow_ai))
-		// 	features += "AI allowed"
-		hostedby = CONFIG_GET(string/hostedby)
-
-	s += "<b>[station_name()]</b>";
-	s += " ("
-	s += "<a href=\"https://citadel-station.net/home\">" //Change this to wherever you want the hub to link to.
-	s += "Citadel"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
-	s += "</a>"
-	s += ")\]" //CIT CHANGE - encloses the server title in brackets to make the hub entry fancier
-	s += "<br>[CONFIG_GET(string/servertagline)]<br>" //CIT CHANGE - adds a tagline!
-
-	var/players = GLOB.clients.len
-
-	if(SSmapping.config) // this just stops the runtime, honk.
-		features += "[SSmapping.config.map_name]"	//CIT CHANGE - makes the hub entry display the current map
-
-	if(NUM2SECLEVEL(GLOB.security_level))//CIT CHANGE - makes the hub entry show the security level
-		features += "[NUM2SECLEVEL(GLOB.security_level)] alert"
-
-	var/popcaptext = ""
 	var/popcap = max(CONFIG_GET(number/extreme_popcap), CONFIG_GET(number/hard_popcap), CONFIG_GET(number/soft_popcap))
-	if (popcap)
-		popcaptext = "/[popcap]"
+	if(popcap)
+		. += "([GLOB.clients.len]/[popcap]) "
 
-	if (players > 1)
-		features += "[players][popcaptext] players"
-	else if (players > 0)
-		features += "[players][popcaptext] player"
+	. += "(18+)<br>" //This is obligatory forr obvious reasons.
 
-	game_state = (CONFIG_GET(number/extreme_popcap) && players >= CONFIG_GET(number/extreme_popcap)) //tells the hub if we are full
+	// ---Hub body---
+	var/tagline = (CONFIG_GET(flag/usetaglinestrings) ? pick(GLOB.server_taglines) : CONFIG_GET(string/servertagline))
+	if(tagline)
+		. += "[tagline]<br>"
 
-	if (!host && hostedby)
-		features += "hosted by <b>[hostedby]</b>"
+	// ---Hub footer---
+	. += "\["
+	if(SSmapping.config)
+		. += "[SSmapping.config.map_name], "
+	if(NUM2SECLEVEL(GLOB.security_level))
+		. += "[NUM2SECLEVEL(GLOB.security_level)] alert, "
+	
+	. += "[get_active_player_count(afk_check = TRUE)] playing"
 
-	if (features)
-		s += "\[[jointext(features, ", ")]"
-
-	status = s
+	status = .
 
 /world/proc/update_hub_visibility(new_visibility)
 	if(new_visibility == GLOB.hub_visibility)

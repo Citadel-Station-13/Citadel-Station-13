@@ -127,12 +127,57 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
-
 /datum/status_effect/grouped/stasis
 	id = "stasis"
 	duration = -1
 	tick_interval = 10
+	alert_type = /atom/movable/screen/alert/status_effect/stasis
 	var/last_dead_time
+
+/datum/status_effect/grouped/stasis/proc/update_time_of_death()
+	if(last_dead_time)
+		var/delta = world.time - last_dead_time
+		var/new_timeofdeath = owner.timeofdeath + delta
+		owner.timeofdeath = new_timeofdeath
+		owner.tod = gameTimestamp(wtime=new_timeofdeath)
+		last_dead_time = null
+	if(owner.stat == DEAD)
+		last_dead_time = world.time
+
+/datum/status_effect/grouped/stasis/on_creation(mob/living/new_owner, set_duration)
+	. = ..()
+	if(.)
+		update_time_of_death()
+		owner.reagents?.end_metabolization(owner, FALSE)
+
+/datum/status_effect/grouped/stasis/on_apply()
+	. = ..()
+	if(!.)
+		return
+	RegisterSignal(owner, COMSIG_LIVING_LIFE, .proc/InterruptBiologicalLife)
+	owner.mobility_flags &= ~(MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_PULL | MOBILITY_HOLD)
+	owner.update_mobility()
+	owner.add_filter("stasis_status_ripple", 2, list("type" = "ripple", "flags" = WAVE_BOUNDED, "radius" = 0, "size" = 2))
+	var/filter = owner.get_filter("stasis_status_ripple")
+	animate(filter, radius = 32, time = 15, size = 0, loop = -1)
+
+/datum/status_effect/grouped/stasis/proc/InterruptBiologicalLife()
+	return COMPONENT_INTERRUPT_LIFE_BIOLOGICAL
+
+/datum/status_effect/grouped/stasis/tick()
+	update_time_of_death()
+
+/datum/status_effect/grouped/stasis/on_remove()
+	UnregisterSignal(owner, COMSIG_LIVING_LIFE)
+	owner.mobility_flags |= MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_PULL | MOBILITY_HOLD
+	owner.remove_filter("stasis_status_ripple")
+	update_time_of_death()
+	return ..()
+
+/atom/movable/screen/alert/status_effect/stasis
+	name = "Stasis"
+	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
+	icon_state = "stasis"
 
 /datum/status_effect/robotic_emp
 	id = "emp_no_combat_mode"
@@ -193,6 +238,9 @@
 		else
 			C.adjustStaminaLoss(max(0, stamdmg_per_ds * diff)) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
 	last_tick = world.time
+
+/datum/status_effect/electrode/no_damage
+	stamdmg_per_ds = 0
 
 /datum/status_effect/electrode/no_combat_mode
 	id = "tased_strong"
@@ -768,7 +816,7 @@
 /datum/status_effect/necropolis_curse/proc/apply_curse(set_curse)
 	curse_flags |= set_curse
 	if(curse_flags & CURSE_BLINDING)
-		owner.overlay_fullscreen("curse", /atom/movable/screen/fullscreen/curse, 1)
+		owner.overlay_fullscreen("curse", /atom/movable/screen/fullscreen/scaled/curse, 1)
 
 /datum/status_effect/necropolis_curse/proc/remove_curse(remove_curse)
 	if(remove_curse & CURSE_BLINDING)
@@ -816,7 +864,7 @@
 /obj/effect/temp_visual/curse
 	icon_state = "curse"
 
-/obj/effect/temp_visual/curse/Initialize()
+/obj/effect/temp_visual/curse/Initialize(mapload)
 	. = ..()
 	deltimer(timerid)
 
@@ -926,11 +974,13 @@
 
 /atom/movable/screen/alert/status_effect/strandling/Click(location, control, params)
 	. = ..()
-	to_chat(mob_viewer, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
-	if(do_after(mob_viewer, 35, null, mob_viewer))
-		if(isliving(mob_viewer))
-			var/mob/living/L = mob_viewer
-			to_chat(mob_viewer, "<span class='notice'>You successfully remove the durathread strand.</span>")
+	if(usr != owner)
+		return
+	to_chat(owner, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
+	if(do_after(owner, 3.5 SECONDS, owner))
+		if(isliving(owner))
+			var/mob/living/L = owner
+			to_chat(owner, "<span class='notice'>You successfully remove the durathread strand.</span>")
 			L.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 
 
@@ -1000,11 +1050,15 @@
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	if(!owner.can_hear())
 		return
-	if(hearing_args[HEARING_SPEAKER] == owner)
+	var/mob/hearing_speaker = hearing_args[HEARING_SPEAKER]
+	if(hearing_speaker == owner)
 		return
 	var/mob/living/carbon/C = owner
 	var/hypnomsg = uncostumize_say(hearing_args[HEARING_RAW_MESSAGE], hearing_args[HEARING_MESSAGE_MODE])
 	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
+	// The brain trauma itself does its own set of logging, but this is the only place the source of the hypnosis phrase can be found.
+	hearing_speaker.log_message("has hypnotised [key_name(C)] with the phrase '[hypnomsg]'", LOG_ATTACK)
+	C.log_message("has been hypnotised by the phrase '[hypnomsg]' spoken by [key_name(hearing_speaker)]", LOG_VICTIM, log_globally = FALSE)
 	addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hypnomsg), 10)
 	addtimer(CALLBACK(C, /mob/living.proc/Stun, 60, TRUE, TRUE), 15) //Take some time to think about it
 	qdel(src)
@@ -1129,3 +1183,22 @@
 	else if(fake_msg)
 		to_chat(owner, fake_msg)
 	msg_stage++
+
+/datum/status_effect/cgau_conc
+	id = "cgau_conc"
+	examine_text = "<span class='warning'>SUBJECTPRONOUN sways from side to side hesitantly!</span>"
+	duration = 5 SECONDS
+
+/datum/status_effect/cgau_conc/on_apply()
+	. = ..()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/gauntlet_concussion)
+	if(ishostile(owner))
+		var/mob/living/simple_animal/hostile/simple_owner = owner
+		simple_owner.ranged_cooldown_time *= 2.5
+
+/datum/status_effect/cgau_conc/on_remove()
+	. = ..()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/gauntlet_concussion)
+	if(ishostile(owner))
+		var/mob/living/simple_animal/hostile/simple_owner = owner
+		simple_owner.ranged_cooldown_time /= 2.5

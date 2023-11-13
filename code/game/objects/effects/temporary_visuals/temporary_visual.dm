@@ -8,7 +8,7 @@
 	var/randomdir = TRUE
 	var/timerid
 
-/obj/effect/temp_visual/Initialize()
+/obj/effect/temp_visual/Initialize(mapload)
 	. = ..()
 	if(randomdir)
 		setDir(pick(GLOB.cardinals))
@@ -25,7 +25,7 @@
 /obj/effect/temp_visual/singularity_pull()
 	return
 
-/obj/effect/temp_visual/ex_act()
+/obj/effect/temp_visual/ex_act(severity, target, origin)
 	return
 
 /obj/effect/temp_visual/dir_setting

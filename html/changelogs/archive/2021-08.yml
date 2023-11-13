@@ -1,0 +1,119 @@
+2021-08-02:
+  TripleShades:
+  - rscadd: 'Decorative (read: Station-safe) water tile in the code'
+  - bugfix: Pubby's new water feature wont kill atmosphere anymore
+2021-08-03:
+  zeroisthebiggay:
+  - balance: tempgun is a laser
+  - balance: bake mode is useful
+  - balance: tempgun has less shots
+  - imageadd: tempgun has more sprites
+2021-08-04:
+  BlueWildrose:
+  - bugfix: The debrained overlay actually shows for brainless corpses now instead
+      of showing a blue error.
+  timothyteakettle:
+  - bugfix: legs are no longer awful
+2021-08-05:
+  Putnam3145:
+  - bugfix: organs decay again
+2021-08-07:
+  BlueWildrose:
+  - bugfix: The black dress, pink tutu, the bathrobe, the kimonos, and the qipaos
+      no longer have a missing pixel when wearing them with the feminine bodytype.
+      They're also no longer adjustable (they have no sprite for the adjusted variant
+      and therefore it would just make an error if someone did that.)
+  Putnam3145:
+  - balance: 'Supernova rad storms are now half as likely per tick tweak: Supernovae
+      don''t announce they''re ending if they never announced they''re starting tweak:
+      Supernovae say explicitly no rad storms can happen if they can''t'
+  - rscadd: Monstermos is back
+2021-08-09:
+  Arturlang:
+  - bugfix: Nanite machinery overlays should now work properly
+  - code_imp: screen objects are now atom/movables instead
+  - code_imp: Update appearance is used for updating atoms now instead of update_icon
+      and such
+  BlueWildrose:
+  - bugfix: Old gateway animation is back. Feedback is given that the gateway is open
+      again.
+  Putnam3145:
+  - balance: Rod of asclepius can now be used for revival surgery
+2021-08-11:
+  timothyteakettle:
+  - rscadd: lets felinids, humans and moths have markings
+2021-08-12:
+  Arturlang:
+  - rscdel: Nonslimes and nonvampires will no longer be able to increase their blood
+      to stupid heights
+  Putnam3145:
+  - refactor: Supermatter values use auxgm
+  cadyn:
+  - server: precompile.sh and build.sh updated, auxmos set to 0.2.3 in dependencies.sh
+2021-08-13:
+  Putnam3145:
+  - bugfix: makes certain organs no longer have circular references
+2021-08-16:
+  BlueWildrose:
+  - bugfix: Incapacitated mobs are blacklisted from being human-level intelligence
+      sentience event candidates. This is particularly important due to slimes in
+      BZ stasis on the station.
+  bunny232:
+  - bugfix: Polyvitiligo actually changes your color now
+2021-08-18:
+  timothyteakettle:
+  - rscadd: lets you select 4 prosthetic limbs instead of only 2
+2021-08-20:
+  EmeraldSundisk:
+  - rscadd: Adds a law office/courtroom to OmegaStation
+  - rscadd: Adds a gateway to OmegaStation
+  - rscadd: Adds a pool/maintenance bar to OmegaStation
+  - rscdel: 'Removes the original maintenance garden in OmegaStation tweak: Relocates
+      the bathrooms to the starboard hall tweak: Modifies port quarter maintenance
+      to include some affected items'
+  Putnam3145:
+  - rscadd: Beach now has showers
+  TripleShades:
+  - rscadd: At least four or five space heaters spread across Pubby Station Maints
+  - rscadd: Missing decal in Pubby Station engineering
+  - bugfix: Moved an atmos alarm in the SM emitter chamber so it wont be destroyed
+  WanderingFox95:
+  - rscadd: Empty bottles and pitchers are available to the bartender now.
+  - imageadd: They even come with 10 different fillstates!
+  - imageadd: Better Shark Tails, dodododododo~
+  - rscadd: The old ones are now listed as carp tails.
+2021-08-22:
+  zeroisthebiggay:
+  - spellcheck: trillby can't spell pair
+2021-08-23:
+  zeroisthebiggay:
+  - spellcheck: i hate the grammarchrist
+2021-08-24:
+  BlueWildrose:
+  - balance: MK ultra explosions (failures at making MKultra) are gone, and replaced
+      with a gas that just causes a bunch of status effects to you.
+2021-08-26:
+  keronshb:
+  - rscadd: Adds catwalk floors
+2021-08-28:
+  DeltaFire15:
+  - bugfix: 'Demons now drop bodies on their own tile instead of scattering them across
+      the station. tweak: Space dragon content ejection is now slightly safer.'
+  - bugfix: Space dragons no longer delete their contents if they die due to timeout,
+      ejecting them instead.
+  - bugfix: Carp rifts created by space dragons now have their armor work correctly.
+  Putnam3145:
+  - config: Planetary monstermos can now be disabled with varedit
+  - rscadd: Lavaland/ice planet atmos is no longer a preset gas mixture and varies
+      per round
+  keronshb:
+  - rscadd: Ports Inventory Outlines
+  - imageadd: Re-adds the old glue sprite
+  - rscadd: Adds Plague Rats
+  - rscadd: Gives Plague Rat spawn conditions for regular mice
+  - imageadd: Plague Rat sprite
+  - rscadd: Gremlin
+  - imageadd: Gremlin sprites
+  zeroisthebiggay:
+  - rscdel: grilles as maintenance loot
+  - rscadd: sevensune tail from hyperstation

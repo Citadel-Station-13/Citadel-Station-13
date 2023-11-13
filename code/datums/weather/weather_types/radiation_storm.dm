@@ -18,10 +18,10 @@
 
 	area_type = /area
 	protected_areas = list(/area/maintenance, /area/ai_monitored/turret_protected/ai_upload, /area/ai_monitored/turret_protected/ai_upload_foyer,
-	/area/ai_monitored/turret_protected/ai, /area/commons/storage/emergency/starboard, /area/commons/storage/emergency/port, /area/shuttle, /area/security/prison/safe, /area/security/prison/toilet)
+	/area/ai_monitored/turret_protected/ai, /area/commons/storage/emergency/starboard, /area/commons/storage/emergency/port, /area/shuttle, /area/ruin/lavaland)
 	target_trait = ZTRAIT_STATION
 
-	immunity_type = "rad"
+	immunity_type = TRAIT_RADSTORM_IMMUNE
 
 	var/radiation_intensity = 100
 
@@ -30,7 +30,7 @@
 	status_alarm(TRUE)
 
 /datum/weather/rad_storm/weather_act(mob/living/L)
-	var/resist = L.getarmor(null, "rad")
+	var/resist = L.getarmor(null, RAD)
 	var/ratio = 1 - (min(resist, 100) / 100)
 	L.rad_act(radiation_intensity * ratio)
 

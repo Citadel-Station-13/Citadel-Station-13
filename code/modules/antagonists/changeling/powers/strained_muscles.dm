@@ -1,19 +1,18 @@
 //Strained Muscles: Temporary speed boost at the cost of rapid damage
 //Limited because of hardsuits and such; ideally, used for a quick getaway
 
-/obj/effect/proc_holder/changeling/strained_muscles
+/datum/action/changeling/strained_muscles
 	name = "Strained Muscles"
 	desc = "We evolve the ability to reduce the acid buildup in our muscles, allowing us to move much faster."
 	helptext = "The strain will make us tired, and we will rapidly become fatigued. Standard weight restrictions, like hardsuits, still apply. Our chemical generation is drastically slowed while this is active. Cannot be used in lesser form."
+	button_icon_state = "strained_muscles"
 	dna_cost = 1
-	req_human = 1
+	req_human = TRUE
 	var/stacks = 0 //Increments every 5 seconds; damage increases over time
-	active = 0 //Whether or not you are a hedgehog
-	action_icon = 'icons/obj/implants.dmi'
-	action_icon_state = "adrenal"
-	action_background_icon_state = "bg_ling"
+	active = FALSE //Whether or not you are a hedgehog
 
-/obj/effect/proc_holder/changeling/strained_muscles/sting_action(mob/living/carbon/user)
+/datum/action/changeling/strained_muscles/sting_action(mob/living/carbon/user)
+	..()
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	active = !active
 	if(active)
@@ -32,7 +31,7 @@
 
 	return TRUE
 
-/obj/effect/proc_holder/changeling/strained_muscles/proc/muscle_loop(mob/living/carbon/user)
+/datum/action/changeling/strained_muscles/proc/muscle_loop(mob/living/carbon/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	while(active)
 		user.add_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)

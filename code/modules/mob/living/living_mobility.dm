@@ -9,6 +9,8 @@
 		resting = new_resting
 		if(!silent)
 			to_chat(src, "<span class='notice'>You are now [resting? "resting" : "getting up"].</span>")
+		if(resting == 1)
+			SEND_SIGNAL(src, COMSIG_LIVING_RESTING)
 		update_resting(updating)
 
 /mob/living/proc/update_resting(update_mobility = TRUE)
@@ -28,7 +30,7 @@
 	set name = "Rest"
 	set category = "IC"
 	if(client?.prefs?.autostand)
-		TOGGLE_BITFIELD(combat_flags, COMBAT_FLAG_INTENTIONALLY_RESTING)
+		(combat_flags ^= COMBAT_FLAG_INTENTIONALLY_RESTING)
 		to_chat(src, "<span class='notice'>You are now attempting to [(combat_flags & COMBAT_FLAG_INTENTIONALLY_RESTING) ? "[!resting ? "lay down and ": ""]stay down" : "[resting ? "get up and ": ""]stay up"].</span>")
 		if((combat_flags & COMBAT_FLAG_INTENTIONALLY_RESTING) && !resting)
 			set_resting(TRUE, FALSE)
@@ -117,14 +119,14 @@
 		mobility_flags &= ~(MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_STORAGE | MOBILITY_HOLD)
 
 	if(HAS_TRAIT(src, TRAIT_MOBILITY_NOMOVE))
-		DISABLE_BITFIELD(mobility_flags, MOBILITY_MOVE)
+		mobility_flags &= ~(MOBILITY_MOVE)
 	if(HAS_TRAIT(src, TRAIT_MOBILITY_NOPICKUP))
-		DISABLE_BITFIELD(mobility_flags, MOBILITY_PICKUP)
+		mobility_flags &= ~(MOBILITY_PICKUP)
 	if(HAS_TRAIT(src, TRAIT_MOBILITY_NOUSE))
-		DISABLE_BITFIELD(mobility_flags, MOBILITY_USE)
+		mobility_flags &= ~(MOBILITY_USE)
 
 	if(daze)
-		DISABLE_BITFIELD(mobility_flags, MOBILITY_USE)
+		mobility_flags &= ~(MOBILITY_USE)
 
 	//Handle update-effects.
 	if(!CHECK_MOBILITY(src, MOBILITY_HOLD))

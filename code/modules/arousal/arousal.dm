@@ -55,7 +55,7 @@
 	return genit_list
 
 /obj/item/organ/genital/proc/climaxable(mob/living/carbon/human/H, silent = FALSE) //returns the fluid source (ergo reagents holder) if found.
-	if(CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION))
+	if((genital_flags & GENITAL_FUID_PRODUCTION))
 		. = reagents
 	else
 		if(linked_organ)
@@ -74,7 +74,7 @@
 	if(spill && R.total_volume >= 5)
 		R.reaction(turfing ? target : target.loc, TOUCH, 1, 0)
 	if(!turfing)
-		R.trans_to(target, R.total_volume * (spill ? G.fluid_transfer_factor : 1))
+		R.trans_to(target, R.total_volume * (spill ? G.fluid_transfer_factor : 1), log = TRUE)
 	G.last_orgasmed = world.time
 	R.clear_reagents()
 
@@ -117,6 +117,8 @@
 		if(!do_after(src, mb_time, target = src) || !in_range(src, container) || !G.climaxable(src, TRUE))
 			return
 	to_chat(src,"<span class='userlove'>You used your [G.name] to fill [container].</span>")
+	message_admins("[ADMIN_LOOKUPFLW(src)] used their [G.name] to fill [container].")
+	log_consent("[key_name(src)] used their [G.name] to fill [container].")
 	do_climax(fluid_source, container, G, FALSE)
 
 /mob/living/carbon/human/proc/pick_climax_genitals(silent = FALSE)
@@ -124,7 +126,7 @@
 	var/list/worn_stuff = get_equipped_items()
 
 	for(var/obj/item/organ/genital/G in internal_organs)
-		if(CHECK_BITFIELD(G.genital_flags, CAN_CLIMAX_WITH) && G.is_exposed(worn_stuff)) //filter out what you can't masturbate with
+		if((G.genital_flags & CAN_CLIMAX_WITH) && G.is_exposed(worn_stuff)) //filter out what you can't masturbate with
 			LAZYADD(genitals_list, G)
 	if(LAZYLEN(genitals_list))
 		var/obj/item/organ/genital/ret_organ = input(src, "with what?", "Climax", null) as null|obj in genitals_list
@@ -144,7 +146,7 @@
 			partners -= L
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
-			if(!C.exposed_genitals.len && !C.is_groin_exposed() && !C.is_chest_exposed()) //Nothing through_clothing, no proper partner.
+			if(!C.exposed_genitals.len && !C.is_groin_exposed() && !C.is_chest_exposed() && C.is_mouth_covered()) //Nothing through_clothing, no proper partner.
 				partners -= C
 	//NOW the list should only contain correct partners
 	if(!partners.len)
@@ -158,8 +160,8 @@
 		if(consenting == "Yes")
 			return target
 		else
-			message_admins("[src] tried to climax with [target], but [target] did not consent.")
-			log_consent("[src] tried to climax with [target], but [target] did not consent.")
+			message_admins("[ADMIN_LOOKUPFLW(src)] tried to climax with [target], but [target] did not consent.")
+			log_consent("[key_name(src)] tried to climax with [target], but [target] did not consent.")
 
 /mob/living/carbon/human/proc/pick_climax_container(silent = FALSE)
 	var/list/containers_list = list()
@@ -212,7 +214,7 @@
 	if(forced_climax) //Something forced us to cum, this is not a masturbation thing and does not progress to the other checks
 		log_message("was forced to climax by [cause]",LOG_EMOTE)
 		for(var/obj/item/organ/genital/G in internal_organs)
-			if(!CHECK_BITFIELD(G.genital_flags, CAN_CLIMAX_WITH)) //Skip things like wombs and testicles
+			if(!(G.genital_flags & CAN_CLIMAX_WITH)) //Skip things like wombs and testicles
 				continue
 			mob_climax_outside(G, mb_time = 0) //removed climax timer for sudden, forced orgasms
 		//Now all genitals that could climax, have.

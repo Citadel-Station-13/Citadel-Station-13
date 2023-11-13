@@ -117,8 +117,6 @@ All ShuttleMove procs go here
 	if(rotation)
 		shuttleRotate(rotation)
 
-	update_parallax_contents()
-
 	return TRUE
 
 /atom/movable/proc/lateShuttleMove(turf/oldT, list/movement_force, move_dir)
@@ -153,16 +151,21 @@ All ShuttleMove procs go here
 	//The old turf has now been given back to the area that turf originaly belonged to
 
 	var/area/old_dest_area = newT.loc
-	parallax_movedir = old_dest_area.parallax_movedir
-
+	parallax_moving = old_dest_area.parallax_moving
+	parallax_move_angle = old_dest_area.parallax_move_angle
+	parallax_move_speed = old_dest_area.parallax_move_speed
 	old_dest_area.contents -= newT
 	contents += newT
 	newT.change_area(old_dest_area, src)
 	return TRUE
 
 // Called on areas after everything has been moved
-/area/proc/afterShuttleMove(new_parallax_dir)
-	parallax_movedir = new_parallax_dir
+/area/proc/afterShuttleMove(new_parallax_dir, speed)
+	if(!new_parallax_dir)
+		parallax_moving = FALSE
+		return
+	parallax_move_angle = dir2angle(new_parallax_dir)
+	parallax_move_speed = speed
 	return TRUE
 
 /area/proc/lateShuttleMove()
@@ -309,6 +312,7 @@ All ShuttleMove procs go here
 		if(buckled)
 			shake_force *= 0.25
 		shake_camera(src, shake_force, 1)
+	client?.parallax_holder?.Reset(auto_z_change = FALSE, force = TRUE)
 
 /mob/living/lateShuttleMove(turf/oldT, list/movement_force, move_dir)
 	if(buckled)

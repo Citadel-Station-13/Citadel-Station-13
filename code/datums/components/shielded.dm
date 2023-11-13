@@ -108,7 +108,7 @@
 		SSvis_overlays.add_vis_overlay(holder, 'icons/effects/effects.dmi', to_add, layer, GAME_PLANE, holder.dir)
 
 /datum/component/shielded/proc/on_equip(obj/item/source, mob/living/equipper, slot)
-	if(!(accepted_slots & slotdefine2slotbit(slot)))
+	if(!(accepted_slots & slot))
 		return
 	holder = equipper
 	RegisterSignal(parent, COMSIG_ITEM_RUN_BLOCK, .proc/on_run_block)

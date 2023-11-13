@@ -9,7 +9,7 @@
 	icon_state = ""
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
 	var/mob/living/carbon/owner = null
-	var/mob/living/carbon/original_owner = null
+	var/datum/weakref/original_owner = null
 	var/status = BODYPART_ORGANIC
 	var/needs_processing = FALSE
 
@@ -228,6 +228,8 @@
 	var/mangled_state = get_mangled_state()
 	var/bio_state = owner.get_biological_state()
 	var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
+	var/glass_bones = HAS_TRAIT(owner, TRAIT_GLASS_BONES)
+	var/paper_skin = HAS_TRAIT(owner, TRAIT_PAPER_SKIN)
 
 	if(wounding_type == WOUND_BLUNT)
 		if(sharpness == SHARP_EDGED)
@@ -242,22 +244,29 @@
 			if(wounding_type == WOUND_SLASH)
 				wounding_type = WOUND_BLUNT
 				wounding_dmg *= (easy_dismember ? 1 : 0.5)
+				wounding_dmg *= (glass_bones ? 1.5 : 1)
 			else if(wounding_type == WOUND_PIERCE)
 				wounding_type = WOUND_BLUNT
 				wounding_dmg *= (easy_dismember ? 1 : 0.75)
+				wounding_dmg *= (glass_bones ? 1.5 : 1)
 			if((mangled_state & BODYPART_MANGLED_BONE) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 				return
 		// if we're flesh only, all blunt attacks become weakened slashes in terms of wound damage
 		if(BIO_JUST_FLESH)
 			if(wounding_type == WOUND_BLUNT)
 				wounding_type = WOUND_SLASH
-				wounding_dmg *= (easy_dismember ? 1 : 0.3)
+				wounding_dmg *= (easy_dismember ? 1 : 0.5)
+				wounding_dmg *= (paper_skin ? 1.5 : 1)
 			if((mangled_state & BODYPART_MANGLED_FLESH) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 				return
 		// standard humanoids
 		if(BIO_FLESH_BONE)
 			// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
 			// So a big sharp weapon is still all you need to destroy a limb
+			if(wounding_type == WOUND_SLASH || wounding_type == WOUND_PIERCE)
+				wounding_dmg *= (paper_skin ? 1.5 : 1)
+			else
+				wounding_dmg *= (glass_bones ? 1.5 : 1)
 			if(mangled_state == BODYPART_MANGLED_FLESH && sharpness)
 				playsound(src, "sound/effects/wounds/crackandbleed.ogg", 100)
 				if(wounding_type == WOUND_SLASH && !easy_dismember)
@@ -388,7 +397,7 @@
 		for(var/i in clothing)
 			var/obj/item/clothing/clothes_check = i
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
-			if(clothes_check.armor.getRating("wound"))
+			if(clothes_check.armor.getRating(WOUND))
 				bare_wound_bonus = 0
 				break
 
@@ -447,7 +456,7 @@
 		for(var/c in clothing)
 			var/obj/item/clothing/C = c
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
-			armor_ablation += C.armor.getRating("wound")
+			armor_ablation += C.armor.getRating(WOUND)
 			if(wounding_type == WOUND_SLASH)
 				C.take_damage_zone(body_zone, damage, BRUTE, armour_penetration)
 			else if(wounding_type == WOUND_BURN && damage >= 10) // lazy way to block freezing from shredding clothes without adding another var onto apply_damage()
@@ -630,8 +639,8 @@
 	if(source)
 		C = source
 		if(!original_owner)
-			original_owner = source
-	else if(original_owner && owner != original_owner) //Foreign limb
+			original_owner = WEAKREF(source)
+	else if(original_owner && !IS_WEAKREF_OF(owner, original_owner)) //Foreign limb
 		no_update = TRUE
 	else
 		C = owner

@@ -16,7 +16,7 @@
 
 	light_color = LIGHT_COLOR_RED
 
-/obj/machinery/computer/camera_advanced/Initialize()
+/obj/machinery/computer/camera_advanced/Initialize(mapload)
 	. = ..()
 	for(var/i in networks)
 		networks -= i
@@ -275,7 +275,7 @@
 	if(final)
 		playsound(origin, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
 		remote_eye.setLoc(get_turf(final))
-		C.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
+		C.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/tiled/flash/static)
 		C.clear_fullscreen("flash", 3) //Shorter flash than normal since it's an ~~advanced~~ console!
 	else
 		playsound(origin, 'sound/machines/terminal_prompt_deny.ogg', 25, 0)

@@ -14,10 +14,14 @@
 	var/full_speed = TRUE // If the jetpack will have a speedboost in space/nograv or not
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
-/obj/item/tank/jetpack/Initialize()
+/obj/item/tank/jetpack/Initialize(mapload)
 	. = ..()
 	ion_trail = new
 	ion_trail.set_up(src)
+
+/obj/item/tank/jetpack/Destroy()
+	QDEL_NULL(ion_trail)
+	return ..()
 
 /obj/item/tank/jetpack/populate_gas()
 	if(gas_type)
@@ -181,7 +185,7 @@
 	var/obj/item/tank/internals/tank = null
 	var/mob/living/carbon/human/cur_user
 
-/obj/item/tank/jetpack/suit/Initialize()
+/obj/item/tank/jetpack/suit/Initialize(mapload)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 	temp_air_contents = air_contents
@@ -235,9 +239,13 @@
 	return
 
 /mob/living/carbon/get_jetpack()
-	var/obj/item/tank/jetpack/J = back
-	if(istype(J))
-		return J
+	var/obj/item/I = back
+	if(istype(I, /obj/item/tank/jetpack))
+		return I
+	else if(istype(I, /obj/item/mod/control))
+		var/obj/item/mod/control/C = I
+		for(var/obj/item/mod/module/jetpack/J in C.modules)
+			return J
 
 /mob/living/carbon/human/get_jetpack()
 	var/obj/item/tank/jetpack/J = ..()

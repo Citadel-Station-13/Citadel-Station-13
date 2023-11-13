@@ -6,7 +6,7 @@
 	icon_state = "yellow"
 	density = TRUE
 	volume = 1000
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 50)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 80, ACID = 50)
 	max_integrity = 250
 	integrity_failure = 0.4
 	pressure_resistance = 7 * ONE_ATMOSPHERE
@@ -235,7 +235,7 @@
 		. += "can-open"
 	if(connected_port)
 		. += "can-connector"
-	var/pressure = air_contents.return_pressure()
+	var/pressure = air_contents?.return_pressure()
 	if(pressure >= 40 * ONE_ATMOSPHERE)
 		. += "can-o3"
 	else if(pressure >= 10 * ONE_ATMOSPHERE)
@@ -295,6 +295,7 @@
 	density = FALSE
 	playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	investigate_log("was destroyed.", INVESTIGATE_ATMOS)
+	update_icon_state()
 
 	if(holding)
 		holding.forceMove(T)

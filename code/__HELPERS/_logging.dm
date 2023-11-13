@@ -1,9 +1,12 @@
 //wrapper macros for easier grepping
 #define DIRECT_OUTPUT(A, B) A << B
+#define DIRECT_INPUT(A, B) A >> B
 #define SEND_IMAGE(target, image) DIRECT_OUTPUT(target, image)
 #define SEND_SOUND(target, sound) DIRECT_OUTPUT(target, sound)
 #define SEND_TEXT(target, text) DIRECT_OUTPUT(target, text)
 #define WRITE_FILE(file, text) DIRECT_OUTPUT(file, text)
+#define READ_FILE(file, text) DIRECT_INPUT(file, text)
+
 #ifdef EXTOOLS_LOGGING
 // proc hooked, so we can just put in standard TRUE and FALSE
 #define WRITE_LOG(log, text) extools_log_write(log,text,TRUE)
@@ -13,6 +16,7 @@
 #define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
 #define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
 #endif
+
 //print a warning message to world.log
 #define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [UNLINT(src)] usr: [usr].")
 /proc/warning(msg)
@@ -36,6 +40,12 @@
 /proc/log_test(text)
 	WRITE_LOG(GLOB.test_log, text)
 	SEND_TEXT(world.log, text)
+#endif
+
+#ifdef REFERENCE_TRACKING_LOG
+#define log_reftracker(msg) log_world("## REF SEARCH [msg]")
+#else
+#define log_reftracker(msg)
 #endif
 
 
@@ -67,6 +77,10 @@
 	if (CONFIG_GET(flag/log_game))
 		WRITE_LOG(GLOB.world_game_log, "GAME: [text]")
 
+/proc/log_mecha(text)
+	if (CONFIG_GET(flag/log_mecha))
+		WRITE_LOG(GLOB.world_mecha_log, "MECHA: [text]")
+
 /proc/log_virus(text)
 	if (CONFIG_GET(flag/log_virus))
 		WRITE_LOG(GLOB.world_virus_log, "VIRUS: [text]")
@@ -78,6 +92,19 @@
 	if (CONFIG_GET(flag/log_access))
 		WRITE_LOG(GLOB.world_game_log, "ACCESS: [text]")
 
+/**
+ * Writes to a special log file if the log_suspicious_login config flag is set,
+ * which is intended to contain all logins that failed under suspicious circumstances.
+ *
+ * Mirrors this log entry to log_access when access_log_mirror is TRUE, so this proc
+ * doesn't need to be used alongside log_access and can replace it where appropriate.
+ */
+/proc/log_suspicious_login(text, access_log_mirror = TRUE)
+	if (CONFIG_GET(flag/log_suspicious_login))
+		WRITE_LOG(GLOB.world_suspicious_login_log, "SUSPICIOUS_ACCESS: [text]")
+	if(access_log_mirror)
+		log_access(text)
+
 /proc/log_law(text)
 	if (CONFIG_GET(flag/log_law))
 		WRITE_LOG(GLOB.world_game_log, "LAW: [text]")
@@ -85,6 +112,10 @@
 /proc/log_attack(text)
 	if (CONFIG_GET(flag/log_attack))
 		WRITE_LOG(GLOB.world_attack_log, "ATTACK: [text]")
+
+/proc/log_victim(text)
+	if (CONFIG_GET(flag/log_victim))
+		WRITE_LOG(GLOB.world_victim_log, "VICTIM: [text]")
 
 /proc/log_manifest(ckey, datum/mind/mind,mob/body, latejoin = FALSE)
 	if (CONFIG_GET(flag/log_manifest))
@@ -129,6 +160,10 @@
 /proc/log_telecomms(text)
 	if (CONFIG_GET(flag/log_telecomms))
 		WRITE_LOG(GLOB.world_telecomms_log, "TCOMMS: [text]")
+
+/proc/log_econ(text)
+	if (CONFIG_GET(flag/log_econ))
+		WRITE_LOG(GLOB.world_econ_log, "MONEY: [text]")
 
 /proc/log_chat(text)
 	if (CONFIG_GET(flag/log_pda))

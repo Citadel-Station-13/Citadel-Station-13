@@ -13,7 +13,7 @@
 #define NITRYL_FORMATION_ENERGY				100000
 #define TRITIUM_BURN_OXY_FACTOR				100
 #define TRITIUM_BURN_TRIT_FACTOR			10
-#define TRITIUM_BURN_RADIOACTIVITY_FACTOR	50000 	//The neutrons gotta go somewhere. Completely arbitrary number.
+#define TRITIUM_BURN_RADIOACTIVITY_FACTOR	5000 	//The neutrons gotta go somewhere. Completely arbitrary number.
 #define TRITIUM_MINIMUM_RADIATION_ENERGY	0.1  	//minimum 0.01 moles trit or 10 moles oxygen to start producing rads
 #define SUPER_SATURATION_THRESHOLD			96
 #define STIMULUM_HEAT_SCALE					100000
@@ -27,6 +27,7 @@
 #define NOBLIUM_RESEARCH_AMOUNT				25
 #define BZ_RESEARCH_SCALE					4
 #define BZ_RESEARCH_MAX_AMOUNT				400
+#define QCD_RESEARCH_AMOUNT					0.2 // often made in absolutely massive quantities due to the simple nature of fusion
 #define MIASMA_RESEARCH_AMOUNT				6
 #define STIMULUM_RESEARCH_AMOUNT			50
 //Plasma fusion properties
@@ -42,3 +43,5 @@
 #define FUSION_RAD_MAX						2000
 #define FUSION_RAD_COEFFICIENT				(-1000)
 #define FUSION_INSTABILITY_ENDOTHERMALITY   2
+// Snowflake fire product types
+#define FIRE_PRODUCT_PLASMA 				0

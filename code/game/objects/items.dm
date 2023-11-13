@@ -1,4 +1,5 @@
 GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/effects/fire.dmi', "fire"))
+GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons/effects/welding_effect.dmi', "welding_sparks", GASFIRE_LAYER, ABOVE_LIGHTING_PLANE))
 
 GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // if true, everyone item when created will have its name changed to be
@@ -46,11 +47,23 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	max_integrity = 200
 
 	obj_flags = NONE
+	///Item flags for the item
 	var/item_flags = NONE
 
-	var/hitsound = null
-	var/usesound = null
-	var/throwhitsound = null
+	///Sound played when you hit something with the item
+	var/hitsound
+	///Played when the item is used, for example tools
+	var/usesound
+	///Used when yate into a mob
+	var/mob_throw_hit_sound
+	///Sound used when equipping the item into a valid slot
+	var/equip_sound
+	///Sound uses when picking the item up (into your hands)
+	var/pickup_sound
+	///Sound uses when dropping the item, or when its thrown.
+	var/drop_sound
+	///Whether or not we use stealthy audio levels for this item's attack sounds
+	var/stealthy_audio = FALSE
 
 	/// Weight class for how much storage capacity it uses and how big it physically is meaning storages can't hold it if their maximum weight class isn't as high as it.
 	var/w_class = WEIGHT_CLASS_NORMAL
@@ -129,9 +142,9 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/datum/dog_fashion/dog_fashion = null
 
 	//Tooltip vars
-	var/force_string //string form of an item's force. Edit this var only to set a custom force string
+	///string form of an item's force. Edit this var only to set a custom force string
+	var/force_string
 	var/last_force_string_check = 0
-	var/tip_timer
 
 	var/trigger_guard = TRIGGER_GUARD_NONE
 
@@ -145,6 +158,9 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	//Grinder vars
 	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
+
+	//the outline filter on hover
+	var/outline_filter
 
 	/* Our block parry data. Should be set in init, or something if you are using it.
 	 * This won't be accessed without ITEM_CAN_BLOCK or ITEM_CAN_PARRY so do not set it unless you have to to save memory.
@@ -162,7 +178,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/canMouseDown = FALSE
 
 
-/obj/item/Initialize()
+/obj/item/Initialize(mapload)
 
 	if(attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
@@ -174,6 +190,12 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	if(force_string)
 		item_flags |= FORCE_STRING_OVERRIDE
+
+	if(istype(loc, /obj/item/storage))
+		item_flags |= IN_STORAGE
+
+	if(istype(loc, /obj/item/robot_module))
+		item_flags |= IN_INVENTORY
 
 	if(!hitsound)
 		if(damtype == "fire")
@@ -323,14 +345,19 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	return ..()
 
 /obj/item/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+	. = ..()
+	if(.)
+		return
 	if(!user)
 		return
 	if(anchored)
 		return
-	if(loc == user && current_equipped_slot && current_equipped_slot != SLOT_HANDS)
+	if(loc == user && current_equipped_slot && current_equipped_slot != ITEM_SLOT_HANDS)
 		if(current_equipped_slot in user.check_obscured_slots())
 			to_chat(user, "<span class='warning'>You are unable to unequip that while wearing other garments over it!</span>")
 			return FALSE
+
+	. = TRUE
 
 	if(resistance_flags & ON_FIRE)
 		var/mob/living/carbon/C = user
@@ -366,17 +393,21 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	//If the item is in a storage item, take it out
 	SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
+	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
+		return
 
 	if(throwing)
 		throwing.finalize(FALSE)
 	if(loc == user)
-		if(!allow_attack_hand_drop(user) || !user.temporarilyRemoveItemFromInventory(src))
+		if(!allow_attack_hand_drop(user) || !user.temporarilyRemoveItemFromInventory(I = src))
 			return
 
+	. = FALSE
 	pickup(user)
 	add_fingerprint(user)
 	if(!user.put_in_active_hand(src, FALSE, FALSE))
 		user.dropItemToGround(src)
+		return TRUE
 
 /obj/item/proc/allow_attack_hand_drop(mob/user)
 	return TRUE
@@ -386,7 +417,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return
 	if(anchored)
 		return
-	if(loc == user && current_equipped_slot && current_equipped_slot != SLOT_HANDS)
+	if(loc == user && current_equipped_slot && current_equipped_slot != ITEM_SLOT_HANDS)
 		if(current_equipped_slot in user.check_obscured_slots())
 			to_chat(user, "<span class='warning'>You are unable to unequip that while wearing other garments over it!</span>")
 			return FALSE
@@ -397,7 +428,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(throwing)
 		throwing.finalize(FALSE)
 	if(loc == user)
-		if(!user.temporarilyRemoveItemFromInventory(src))
+		if(!allow_attack_hand_drop(user) || !user.temporarilyRemoveItemFromInventory(src))
 			return
 
 	pickup(user)
@@ -441,10 +472,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		A.Remove(user)
 	if(item_flags & DROPDEL)
 		qdel(src)
-	item_flags &= ~IN_INVENTORY
+	item_flags &= ~(IN_INVENTORY)
+	item_flags &= ~(IN_STORAGE)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
-	// if(!silent)
-	// 	playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE)
+	if(!silent)
+		playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE)
 	user?.update_equipment_speed_mods()
 
 // called just as an item is picked up (loc is not yet changed)
@@ -518,6 +550,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			if(item_action_slot_check(slot, user, A)) //some items only give their actions buttons when in a specific slot.
 				A.Grant(user)
 	item_flags |= IN_INVENTORY
+	if((item_flags & IN_STORAGE)) // Left storage item but somehow has the bitfield active still.
+		item_flags &= ~(IN_STORAGE)
 	// if(!initial)
 	// 	if(equip_sound && (slot_flags & slot))
 	// 		playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
@@ -535,7 +569,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user, datum/action/A)
-	if(slot == SLOT_IN_BACKPACK || slot == SLOT_LEGCUFFED) //these aren't true slots, so avoid granting actions there
+	if(slot == ITEM_SLOT_BACKPACK || slot == ITEM_SLOT_LEGCUFFED) //these aren't true slots, so avoid granting actions there
 		return FALSE
 	return TRUE
 
@@ -555,6 +589,12 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	set name = "Pick up"
 
 	if(usr.incapacitated() || !Adjacent(usr) || usr.lying)
+		return
+
+	if(iscyborg(usr))
+		var/obj/item/gripper/gripper = usr.get_active_held_item(TRUE)
+		if(istype(gripper))
+			gripper.pre_attack(src, usr, get_dist(src, usr))
 		return
 
 	if(usr.get_active_held_item() == null) // Let me know if this has any problems -Yota
@@ -683,8 +723,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		if(isliving(hit_atom)) //Living mobs handle hit sounds differently.
 			var/volume = get_volume_by_throwforce_and_or_w_class()
 			if (throwforce > 0)
-				if (throwhitsound)
-					playsound(hit_atom, throwhitsound, volume, TRUE, -1)
+				if (mob_throw_hit_sound)
+					playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)
 				else if(hitsound)
 					playsound(hit_atom, hitsound, volume, TRUE, -1)
 				else
@@ -692,8 +732,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			else
 				playsound(hit_atom, 'sound/weapons/throwtap.ogg', 1, volume, -1)
 
-		// else
-		// 	playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE)
+		else if (drop_sound)
+			playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE)
 		return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, messy_throw = TRUE)
@@ -778,7 +818,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(ismob(location))
 		var/mob/M = location
 		var/success = FALSE
-		if(src == M.get_item_by_slot(SLOT_WEAR_MASK))
+		if(src == M.get_item_by_slot(ITEM_SLOT_MASK))
 			success = TRUE
 		if(success)
 			location = get_turf(M)
@@ -800,9 +840,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/attack_animal(mob/living/simple_animal/M)
 	if (obj_flags & CAN_BE_HIT)
 		return ..()
-	return 0
-
-/obj/item/mech_melee_attack(obj/mecha/M)
 	return 0
 
 /obj/item/burn()
@@ -867,18 +904,55 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		openToolTip(user,src,params,title = name,content = "[desc]<br><b>Force:</b> [force_string]",theme = "")
 
 /obj/item/MouseEntered(location, control, params)
-	if((item_flags & IN_INVENTORY) && usr.client.prefs.enable_tips && !QDELETED(src))
-		var/timedelay = usr.client.prefs.tip_delay/100
-		var/user = usr
-		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, user), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
-
-/obj/item/MouseExited(location,control,params)
-	SEND_SIGNAL(src, COMSIG_ITEM_MOUSE_EXIT, location, control, params)
-	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
-	closeToolTip(usr)
-
-/obj/item/MouseEntered(location,control,params)
+	. = ..()
 	SEND_SIGNAL(src, COMSIG_ITEM_MOUSE_ENTER, location, control, params)
+	if(get(src, /mob) == usr && !QDELETED(src))
+		var/mob/living/L = usr
+		if(usr.client.prefs.enable_tips)
+			var/timedelay = usr.client.prefs.tip_delay/100
+			usr.client.tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, usr), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
+		if(usr.client.prefs.outline_enabled)
+			if(istype(L) && L.incapacitated())
+				apply_outline(COLOR_RED_GRAY) //if they're dead or handcuffed, let's show the outline as red to indicate that they can't interact with that right now
+			else
+				apply_outline(usr.client.prefs.outline_color) //if the player's alive and well we send the command with no color set, so it uses the theme's color
+
+/obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+	. = ..()
+	remove_filter("hover_outline") //get rid of the hover effect in case the mouse exit isn't called if someone drags and drops an item and somthing goes wrong
+
+/obj/item/MouseExited(location, control, params)
+	SEND_SIGNAL(src, COMSIG_ITEM_MOUSE_EXIT, location, control, params)
+	deltimer(usr.client.tip_timer) //delete any in-progress timer if the mouse is moved off the item before it finishes
+	closeToolTip(usr)
+	remove_filter("hover_outline")
+
+/obj/item/proc/apply_outline(outline_color = null)
+	if(get(src, /mob) != usr || QDELETED(src) || isobserver(usr)) //cancel if the item isn't in an inventory, is being deleted, or if the person hovering is a ghost (so that people spectating you don't randomly make your items glow)
+		return
+	var/theme = lowertext(usr.client.prefs.UI_style)
+	if(!outline_color) //if we weren't provided with a color, take the theme's color
+		switch(theme) //yeah it kinda has to be this way
+			if("midnight")
+				outline_color = COLOR_THEME_MIDNIGHT
+			if("plasmafire")
+				outline_color = COLOR_THEME_PLASMAFIRE
+			if("retro")
+				outline_color = COLOR_THEME_RETRO //just as garish as the rest of this theme
+			if("slimecore")
+				outline_color = COLOR_THEME_SLIMECORE
+			if("operative")
+				outline_color = COLOR_THEME_OPERATIVE
+			if("clockwork")
+				outline_color = COLOR_THEME_CLOCKWORK //if you want free gbp go fix the fact that clockwork's tooltip css is glass'
+			if("glass")
+				outline_color = COLOR_THEME_GLASS
+			else //this should never happen, hopefully
+				outline_color = COLOR_WHITE
+	if(color)
+		outline_color = COLOR_WHITE //if the item is recolored then the outline will be too, let's make the outline white so it becomes the same color instead of some ugly mix of the theme and the tint
+
+	add_filter("hover_outline", 1, list("type" = "outline", "size" = 1, "color" = outline_color))
 
 // Called when a mob tries to use the item as a tool.
 // Handles most checks.
@@ -1006,7 +1080,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
   */
 /obj/item/proc/set_slowdown(new_slowdown)
 	slowdown = new_slowdown
-	if(CHECK_BITFIELD(item_flags, IN_INVENTORY))
+	if((item_flags & IN_INVENTORY))
 		var/mob/living/L = loc
 		if(istype(L))
 			L.update_equipment_speed_mods()
@@ -1015,6 +1089,19 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	. = ..()
 	if(var_name == NAMEOF(src, slowdown))
 		set_slowdown(var_value)			//don't care if it's a duplicate edit as slowdown'll be set, do it anyways to force normal behavior.
+
+/obj/item/proc/canStrip(mob/stripper, mob/owner)
+	SHOULD_BE_PURE(TRUE)
+	return !HAS_TRAIT(src, TRAIT_NODROP) && !(item_flags & ABSTRACT)
+
+/obj/item/proc/doStrip(mob/stripper, mob/owner)
+	if(owner.dropItemToGround(src))
+		if(stripper.can_hold_items())
+			stripper.put_in_hands(src)
+		return TRUE
+	else
+		return FALSE
+
 /**
  * Does the current embedding var meet the criteria for being harmless? Namely, does it explicitly define the pain multiplier and jostle pain mult to be 0? If so, return true.
  *
@@ -1147,3 +1234,44 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		pain_stam_pct = (!isnull(embedding["pain_stam_pct"]) ? embedding["pain_stam_pct"] : EMBEDDED_PAIN_STAM_PCT),\
 		embed_chance_turf_mod = (!isnull(embedding["embed_chance_turf_mod"]) ? embedding["embed_chance_turf_mod"] : EMBED_CHANCE_TURF_MOD))
 	return TRUE
+
+
+/**
+ * * An interrupt for offering an item to other people, called mainly from [/mob/living/carbon/proc/give], in case you want to run your own offer behavior instead.
+ *
+ * * Return TRUE if you want to interrupt the offer.
+ *
+ * * Arguments:
+ * * offerer - the person offering the item
+ */
+/obj/item/proc/on_offered(mob/living/carbon/offerer)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFERING, offerer) & COMPONENT_OFFER_INTERRUPT)
+		return TRUE
+
+/**
+ * * An interrupt for someone trying to accept an offered item, called mainly from [/mob/living/carbon/proc/take], in case you want to run your own take behavior instead.
+ *
+ * * Return TRUE if you want to interrupt the taking.
+ *
+ * * Arguments:
+ * * offerer - the person offering the item
+ * * taker - the person trying to accept the offer
+ */
+/obj/item/proc/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, offerer, taker) & COMPONENT_OFFER_INTERRUPT)
+		return TRUE
+
+/**
+ * Updates all action buttons associated with this item
+ *
+ * Arguments:
+ * * status_only - Update only current availability status of the buttons to show if they are ready or not to use
+ * * force - Force buttons update even if the given button icon state has not changed
+ */
+/obj/item/proc/update_action_buttons(status_only = FALSE, force = FALSE)
+	for(var/datum/action/current_action as anything in actions)
+		current_action.UpdateButtonIcon(status_only, force)
+
+/// Special stuff you want to do when an outfit equips this item.
+/obj/item/proc/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
+	return

@@ -24,7 +24,7 @@
 	blend_mode = BLEND_MULTIPLY
 	alpha = 255
 
-/atom/movable/screen/plane_master/openspace/Initialize()
+/atom/movable/screen/plane_master/openspace/Initialize(mapload)
 	. = ..()
 	filters += filter(type="alpha", render_source=FIELD_OF_VISION_RENDER_TARGET, flags=MASK_INVERSE)
 
@@ -61,7 +61,7 @@
 	plane = ABOVE_WALL_PLANE
 	appearance_flags = PLANE_MASTER
 
-/atom/movable/screen/plane_master/above_wall/Initialize()
+/atom/movable/screen/plane_master/above_wall/Initialize(mapload)
 	. = ..()
 	add_filter("vision_cone", 100, list(type="alpha", render_source=FIELD_OF_VISION_RENDER_TARGET, flags=MASK_INVERSE))
 
@@ -78,7 +78,7 @@
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
-/atom/movable/screen/plane_master/game_world/Initialize()
+/atom/movable/screen/plane_master/game_world/Initialize(mapload)
 	. = ..()
 	add_filter("vision_cone", 100, list(type="alpha", render_source=FIELD_OF_VISION_RENDER_TARGET, flags=MASK_INVERSE))
 
@@ -95,7 +95,7 @@
 	render_target = FIELD_OF_VISION_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/atom/movable/screen/plane_master/field_of_vision/Initialize()
+/atom/movable/screen/plane_master/field_of_vision/Initialize(mapload)
 	. = ..()
 	filters += filter(type="alpha", render_source=FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags=MASK_INVERSE)
 
@@ -112,7 +112,7 @@
 	plane = FIELD_OF_VISION_VISUAL_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/atom/movable/screen/plane_master/field_of_vision_visual/Initialize()
+/atom/movable/screen/plane_master/field_of_vision_visual/Initialize(mapload)
 	. = ..()
 	filters += filter(type="alpha", render_source=FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags=MASK_INVERSE)
 
@@ -124,8 +124,8 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /atom/movable/screen/plane_master/lighting/backdrop(mob/mymob)
-	mymob.overlay_fullscreen("lighting_backdrop_lit", /atom/movable/screen/fullscreen/lighting_backdrop/lit)
-	mymob.overlay_fullscreen("lighting_backdrop_unlit", /atom/movable/screen/fullscreen/lighting_backdrop/unlit)
+	mymob.overlay_fullscreen("lighting_backdrop_lit", /atom/movable/screen/fullscreen/special/lighting_backdrop/lit)
+	mymob.overlay_fullscreen("lighting_backdrop_unlit", /atom/movable/screen/fullscreen/special/lighting_backdrop/unlit)
 
 /*!
  * This system works by exploiting BYONDs color matrix filter to use layers to handle emissive blockers.
@@ -138,11 +138,10 @@
  * This is then used to alpha mask the lighting plane.
  */
 
-/atom/movable/screen/plane_master/lighting/Initialize()
+/atom/movable/screen/plane_master/lighting/Initialize(mapload)
 	. = ..()
 	add_filter("emissives", 1, alpha_mask_filter(render_source = EMISSIVE_RENDER_TARGET, flags = MASK_INVERSE))
 	add_filter("object_lighting", 2, alpha_mask_filter(render_source = O_LIGHTING_VISUAL_RENDER_TARGET, flags = MASK_INVERSE))
-
 
 /**
  * Handles emissive overlays and emissive blockers.
@@ -153,7 +152,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = EMISSIVE_RENDER_TARGET
 
-/atom/movable/screen/plane_master/emissive/Initialize()
+/atom/movable/screen/plane_master/emissive/Initialize(mapload)
 	. = ..()
 	add_filter("em_block_masking", 1, color_matrix_filter(GLOB.em_mask_matrix))
 
@@ -163,9 +162,10 @@
 	plane = PLANE_SPACE_PARALLAX
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_target = PLANE_SPACE_PARALLAX_RENDER_TARGET
 
 /atom/movable/screen/plane_master/parallax_white
-	name = "parallax whitifier plane master"
+	name = "parallax backdrop/space turf plane master"
 	plane = PLANE_SPACE
 
 /atom/movable/screen/plane_master/camera_static
@@ -173,7 +173,6 @@
 	plane = CAMERA_STATIC_PLANE
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
-
 
 //Reserved to chat messages, so they are still displayed above the field of vision masking.
 /atom/movable/screen/plane_master/chat_messages

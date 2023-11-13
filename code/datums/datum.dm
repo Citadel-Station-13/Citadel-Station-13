@@ -57,9 +57,13 @@
 	*/
 	var/list/cooldowns
 
-#ifdef TESTING
+#ifdef REFERENCE_TRACKING
 	var/running_find_references
 	var/last_find_references = 0
+	#ifdef REFERENCE_TRACKING_DEBUG
+	///Stores info about where refs are found, used for sanity checks and testing
+	var/list/found_refs
+	#endif
 #endif
 
 #ifdef DATUMVAR_DEBUGGING_MODE
@@ -102,7 +106,7 @@
 	active_timers = null
 	for(var/thing in timers)
 		var/datum/timedevent/timer = thing
-		if (timer.spent)
+		if (timer.spent && !(timer.flags & TIMER_DELETE_ME))
 			continue
 		qdel(timer)
 
@@ -230,6 +234,7 @@
 		qdel(D)
 	else
 		return returned
+
 
 /**
   * Callback called by a timer to end an associative-list-indexed cooldown.

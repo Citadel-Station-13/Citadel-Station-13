@@ -4,6 +4,8 @@
 	status_flags = 0
 	unique_name = 0
 	pixel_x = -16
+	maptext_height = 64
+	maptext_width = 64
 	bubble_icon = "alienroyal"
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
@@ -28,7 +30,7 @@
 	icon_state = "alienq"
 	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/queen()
 
-/mob/living/carbon/alien/humanoid/royal/queen/Initialize()
+/mob/living/carbon/alien/humanoid/royal/queen/Initialize(mapload)
 	//there should only be one queen
 	for(var/mob/living/carbon/alien/humanoid/royal/queen/Q in GLOB.carbon_list)
 		if(Q == src)
@@ -110,7 +112,7 @@
 	item_flags = ABSTRACT | DROPDEL
 	icon = 'icons/mob/alien.dmi'
 
-/obj/item/queenpromote/Initialize()
+/obj/item/queenpromote/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 

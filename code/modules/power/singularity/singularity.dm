@@ -97,7 +97,7 @@
 		return
 	return ..()
 
-/obj/singularity/ex_act(severity, target)
+/obj/singularity/ex_act(severity, target, origin)
 	switch(severity)
 		if(1)
 			if(current_size <= STAGE_TWO)
@@ -347,10 +347,10 @@
 	var/dir2 = 0
 	var/dir3 = 0
 	switch(direction)
-		if(NORTH||SOUTH)
+		if(NORTH, SOUTH)
 			dir2 = 4
 			dir3 = 8
-		if(EAST||WEST)
+		if(EAST, WEST)
 			dir2 = 1
 			dir3 = 2
 	var/turf/T2 = T
@@ -415,17 +415,13 @@
 
 /obj/singularity/proc/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
-		if(isbrain(M)) //Ignore brains
-			continue
-
-		if(M.stat == CONSCIOUS)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(istype(H.glasses, /obj/item/clothing/glasses/meson))
-					var/obj/item/clothing/glasses/meson/MS = H.glasses
-					if(MS.vision_flags == SEE_TURFS)
-						to_chat(H, "<span class='notice'>You look directly into the [src.name], good thing you had your protective eyewear on!</span>")
-						return
+		if(M.stat == CONSCIOUS && ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(istype(H.glasses, /obj/item/clothing/glasses/meson))
+				var/obj/item/clothing/glasses/meson/MS = H.glasses
+				if(MS.vision_flags == SEE_TURFS)
+					to_chat(H, "<span class='notice'>You look directly into the [src.name], good thing you had your protective eyewear on!</span>")
+					return
 
 		M.apply_effect(60, EFFECT_STUN)
 		M.visible_message("<span class='danger'>[M] stares blankly at the [src.name]!</span>", \

@@ -3,6 +3,7 @@
 	name = "projectile gun"
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_NORMAL
+	recoil = 0.25
 	var/spawnwithmagazine = TRUE
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
@@ -10,7 +11,7 @@
 	var/magazine_wording = "magazine"
 	var/sawn_item_state = "gun"
 
-/obj/item/gun/ballistic/Initialize()
+/obj/item/gun/ballistic/Initialize(mapload)
 	. = ..()
 	if(!spawnwithmagazine)
 		update_icon()
@@ -22,7 +23,7 @@
 
 /obj/item/gun/ballistic/update_icon_state()
 	if(current_skin)
-		icon_state = "[unique_reskin[current_skin]][suppressed ? "-suppressed" : ""][sawn_off ? "-sawn" : ""]"
+		icon_state = "[unique_reskin[current_skin]["icon_state"]][suppressed ? "-suppressed" : ""][sawn_off ? "-sawn" : ""]"
 	else
 		icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""][sawn_off ? "-sawn" : ""]"
 

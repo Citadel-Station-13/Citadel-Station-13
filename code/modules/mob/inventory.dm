@@ -182,7 +182,7 @@
 		held_items[hand_index] = I
 		I.layer = ABOVE_HUD_LAYER
 		I.plane = ABOVE_HUD_PLANE
-		I.equipped(src, SLOT_HANDS)
+		I.equipped(src, ITEM_SLOT_HANDS)
 		if(I.pulledby)
 			I.pulledby.stop_pulling()
 		update_inv_hands()
@@ -337,6 +337,7 @@
 		on_item_dropped(I)
 		if(I.dropped(src) == ITEM_RELOCATED_BY_DROPPED)
 			return FALSE
+	SEND_SIGNAL(src, COMSIG_MOB_UNEQUIPPED_ITEM, I, force, newloc, no_move, invdrop, silent)
 	return TRUE
 
 //This is a SAFE proc. Use this instead of equip_to_slot()!
@@ -375,14 +376,14 @@
 
 	if(!slot_priority)
 		slot_priority = list( \
-			SLOT_BACK, SLOT_WEAR_ID,\
-			SLOT_W_UNIFORM, SLOT_WEAR_SUIT,\
-			SLOT_WEAR_MASK, SLOT_HEAD, SLOT_NECK,\
-			SLOT_SHOES, SLOT_GLOVES,\
-			SLOT_EARS, SLOT_GLASSES,\
-			SLOT_BELT, SLOT_S_STORE,\
-			SLOT_L_STORE, SLOT_R_STORE,\
-			SLOT_GENERC_DEXTROUS_STORAGE\
+			ITEM_SLOT_BACK, ITEM_SLOT_ID,\
+			ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING,\
+			ITEM_SLOT_MASK, ITEM_SLOT_HEAD, ITEM_SLOT_NECK,\
+			ITEM_SLOT_FEET, ITEM_SLOT_GLOVES,\
+			ITEM_SLOT_EARS, ITEM_SLOT_EYES,\
+			ITEM_SLOT_BELT, ITEM_SLOT_SUITSTORE,\
+			ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET,\
+			ITEM_SLOT_DEX_STORAGE\
 		)
 
 	for(var/slot in slot_priority)
@@ -414,10 +415,6 @@
 	drop_all_held_items()
 
 /obj/item/proc/equip_to_best_slot(mob/M)
-	if(src != M.get_active_held_item())
-		to_chat(M, "<span class='warning'>You are not holding anything to equip!</span>")
-		return FALSE
-
 	if(M.equip_to_appropriate_slot(src, TRUE))
 		M.update_inv_hands()
 		return TRUE
@@ -428,7 +425,7 @@
 	if(M.active_storage && M.active_storage.parent && SEND_SIGNAL(M.active_storage.parent, COMSIG_TRY_STORAGE_INSERT, src,M))
 		return TRUE
 
-	var/list/obj/item/possible = list(M.get_inactive_held_item(), M.get_item_by_slot(SLOT_BELT), M.get_item_by_slot(SLOT_GENERC_DEXTROUS_STORAGE), M.get_item_by_slot(SLOT_BACK))
+	var/list/obj/item/possible = list(M.get_inactive_held_item(), M.get_item_by_slot(ITEM_SLOT_BELT), M.get_item_by_slot(ITEM_SLOT_DEX_STORAGE), M.get_item_by_slot(ITEM_SLOT_BACK))
 	for(var/i in possible)
 		if(!i)
 			continue
@@ -450,10 +447,10 @@
 
 //used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
 /mob/proc/getBackSlot()
-	return SLOT_BACK
+	return ITEM_SLOT_BACK
 
 /mob/proc/getBeltSlot()
-	return SLOT_BELT
+	return ITEM_SLOT_BELT
 
 
 
@@ -465,7 +462,7 @@
 //any cost it has isn't a worry
 /mob/proc/change_number_of_hands(amt)
 	if(amt < held_items.len)
-		for(var/i in held_items.len to amt step -1)
+		for(var/i in held_items.len to (amt + 1) step -1)
 			dropItemToGround(held_items[i])
 	held_items.len = amt
 
@@ -476,14 +473,14 @@
 /mob/living/carbon/human/change_number_of_hands(amt)
 	var/old_limbs = held_items.len
 	if(amt < old_limbs)
-		for(var/i in hand_bodyparts.len to amt step -1)
+		for(var/i in hand_bodyparts.len to (amt + 1) step -1)
 			var/obj/item/bodypart/BP = hand_bodyparts[i]
 			BP.dismember()
 			hand_bodyparts[i] = null
 		hand_bodyparts.len = amt
 	else if(amt > old_limbs)
 		hand_bodyparts.len = amt
-		for(var/i in old_limbs+1 to amt)
+		for(var/i in (old_limbs + 1) to amt)
 			var/path = /obj/item/bodypart/l_arm
 			if(!(i % 2))
 				path = /obj/item/bodypart/r_arm

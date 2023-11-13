@@ -4,14 +4,14 @@
 /area/template_noop)
 "b" = (
 /turf/closed/wall/ice,
-/area/ruin/powered/bathhouse)
+/area/ruin/lavaland/powered/bathhouse)
 "c" = (
 /obj/machinery/shower{
 	pixel_y = 16
 	},
 /obj/structure/curtain,
 /turf/open/floor/plasteel/white,
-/area/ruin/powered/bathhouse)
+/area/ruin/lavaland/powered/bathhouse)
 "d" = (
 /turf/closed/mineral/random/snow,
 /area/icemoon/underground/explored)
@@ -23,40 +23,40 @@
 	pixel_y = 20
 	},
 /turf/open/floor/plasteel/white,
-/area/ruin/powered/bathhouse)
+/area/ruin/lavaland/powered/bathhouse)
 "f" = (
 /obj/structure/table/greyscale,
 /obj/item/bikehorn/rubberducky,
 /turf/open/floor/plasteel/white,
-/area/ruin/powered/bathhouse)
+/area/ruin/lavaland/powered/bathhouse)
 "g" = (
 /turf/open/floor/plasteel/white,
-/area/ruin/powered/bathhouse)
+/area/ruin/lavaland/powered/bathhouse)
 "h" = (
 /obj/item/soap,
 /turf/open/floor/plasteel/white,
-/area/ruin/powered/bathhouse)
+/area/ruin/lavaland/powered/bathhouse)
 "i" = (
 /obj/machinery/door/airlock/freezer{
 	name = "bath house airlock"
 	},
 /turf/open/floor/plasteel/white,
-/area/ruin/powered/bathhouse)
+/area/ruin/lavaland/powered/bathhouse)
 "j" = (
 /turf/closed/wall/mineral/wood,
-/area/ruin/powered/bathhouse)
+/area/ruin/lavaland/powered/bathhouse)
 "k" = (
 /turf/open/floor/wood,
-/area/ruin/powered/bathhouse)
+/area/ruin/lavaland/powered/bathhouse)
 "l" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/meatballspaghetti,
 /turf/open/floor/wood,
-/area/ruin/powered/bathhouse)
+/area/ruin/lavaland/powered/bathhouse)
 "m" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/wood,
-/area/ruin/powered/bathhouse)
+/area/ruin/lavaland/powered/bathhouse)
 "n" = (
 /turf/open/floor/plating/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/explored)
@@ -64,7 +64,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet,
 /turf/open/floor/wood,
-/area/ruin/powered/bathhouse)
+/area/ruin/lavaland/powered/bathhouse)
 
 (1,1,1) = {"
 b

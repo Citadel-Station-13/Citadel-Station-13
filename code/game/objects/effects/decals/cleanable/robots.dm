@@ -32,7 +32,7 @@
 		if (!step_to(src, get_step(src, direction), 0))
 			break
 
-/obj/effect/decal/cleanable/robot_debris/ex_act()
+/obj/effect/decal/cleanable/robot_debris/ex_act(severity, target, origin)
 	return
 
 /obj/effect/decal/cleanable/robot_debris/limb
@@ -55,7 +55,7 @@
 	beauty = -100
 	persistent = TRUE
 
-/obj/effect/decal/cleanable/oil/Initialize()
+/obj/effect/decal/cleanable/oil/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/oil, 30)
 	reagents.add_reagent(/datum/reagent/liquidgibs/oil, 5)
@@ -68,6 +68,6 @@
 /obj/effect/decal/cleanable/oil/slippery
 	persistent = FALSE
 
-/obj/effect/decal/cleanable/oil/slippery/Initialize()
+/obj/effect/decal/cleanable/oil/slippery/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery, 80, (NO_SLIP_WHEN_WALKING | SLIDE))

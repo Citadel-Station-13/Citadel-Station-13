@@ -66,7 +66,7 @@
 	blood_overlay_type = "armor"
 	dog_fashion = /datum/dog_fashion/back
 	mutantrace_variation = NONE
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
 
 /obj/item/lighter/gold
@@ -77,7 +77,7 @@
 	item_state = "gold_zippo"
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	heat = 1500
 	resistance_flags = FIRE_PROOF
 	light_color = LIGHT_COLOR_FIRE
@@ -113,7 +113,6 @@
 	desc = "While a normal carrot would be good for your eyes, this one seems a bit more for hugging then eating."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "carrot"
-	item_state = "carrot"
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("slapped")
 	resistance_flags = FLAMMABLE
@@ -137,7 +136,7 @@
 	item_state = "satchel_carrot"
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 
-/obj/item/storage/backpack/satchel/carrot/Initialize()
+/obj/item/storage/backpack/satchel/carrot/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/items/toysqueak1.ogg'=1), 50)
 
@@ -146,7 +145,6 @@
 	desc = "A festive plush that squeeks when you squeeze it!"
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "pine_c"
-	item_state = "pine_c"
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("slapped")
 	resistance_flags = FLAMMABLE
@@ -404,7 +402,7 @@
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/zuliecloak
 	body_parts_covered = CHEST|GROIN|ARMS
-	slot_flags = SLOT_WEAR_SUIT | ITEM_SLOT_NECK //it's a cloak. it's cosmetic. so why the hell not? what could possibly go wrong?
+	slot_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_NECK //it's a cloak. it's cosmetic. so why the hell not? what could possibly go wrong?
 	mutantrace_variation = NONE
 
 /obj/item/clothing/head/hooded/cloakhood/zuliecloak
@@ -547,10 +545,12 @@
 /obj/item/toy/plush/mammal/dog/fritz
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "fritz"
-	item_state = "fritz"
 	attack_verb = list("barked", "boofed", "shotgun'd")
 	obj_flags = UNIQUE_RENAME
-	unique_reskin = list("Goodboye" = "fritz", "Badboye" = "fritz_bad")
+	unique_reskin = list(
+		"Goodboye" = list("icon_state" = "fritz"),
+		"Badboye" = list("icon_state" = "fritz_bad")
+	)
 	mutantrace_variation = NONE
 
 /obj/item/clothing/neck/cloak/polychromic/polyce
@@ -618,3 +618,58 @@
 	icon = 'icons/obj/custom.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
+
+/obj/item/clothing/suit/spacehoodie
+	name = "space hoodie"
+	desc = "You are not sure why this hoodie exists... but it does and it is comfortable."
+	icon_state = "starhoodie"
+	item_state = "starhoodie"
+	icon = 'icons/obj/custom.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	mutantrace_variation = NONE
+
+/obj/item/coin/red
+	name = "red pokerchip"
+	desc = "A red pokerchip."
+	icon_state = "c_red"
+	item_state = "c_red"
+	icon = 'icons/obj/custom.dmi'
+
+/obj/item/coin/blue
+	name = "blue pokerchip"
+	desc = "A blue pokerchip."
+	icon_state = "c_nlue"
+	item_state = "c_blue"
+	icon = 'icons/obj/custom.dmi'
+
+/obj/item/coin/green
+	name = "green pokerchip"
+	desc = "A green pokerchip."
+	icon_state = "c_green"
+	item_state = "c_green"
+	icon = 'icons/obj/custom.dmi'
+
+/obj/item/coin/black
+	name = "black pokerchip"
+	desc = "A black pokerchip."
+	icon_state = "c_black"
+	item_state = "c_black"
+	icon = 'icons/obj/custom.dmi'
+
+/obj/item/storage/box/pockerchips
+	name = "tray of pocker chips"
+	desc = "A tray of green, red, blue, and black pocker chips."
+	icon_state = "c_holder"
+	icon = 'icons/obj/custom.dmi'
+	illustration=null
+
+/obj/item/storage/box/pokerchips/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/coin/red(src)
+	for(var/i in 1 to 10)
+		new /obj/item/coin/blue(src)
+	for(var/i in 1 to 15)
+		new /obj/item/coin/black(src)
+	for(var/i in 1 to 20)
+		new /obj/item/coin/green(src)
+

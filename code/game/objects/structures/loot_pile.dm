@@ -9,6 +9,7 @@
 	icon_state = "randompile"
 	density = FALSE
 	anchored = TRUE
+	max_integrity = 100
 	var/loot_amount = 5
 	var/delete_on_depletion = FALSE
 	var/can_use_hands = TRUE
@@ -30,7 +31,7 @@
 	var/loot_restriction = NO_LOOT_RESTRICTION
 	var/maximum_loot_per_player = 1
 
-/obj/structure/loot_pile/Initialize()
+/obj/structure/loot_pile/Initialize(mapload)
 	. = ..()
 	icon_state = pick(icon_states_to_use)
 

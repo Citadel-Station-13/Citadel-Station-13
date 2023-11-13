@@ -15,6 +15,16 @@
 	var/ignore_flags = 0
 	var/infinite = FALSE
 
+/obj/item/reagent_containers/hypospray/Initialize(mapload, vol)
+	. = ..()
+	register_item_context()
+
+/obj/item/reagent_containers/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = ..()
+	if(iscarbon(target))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Inject")
+		return CONTEXTUAL_SCREENTIP_SET
+
 /obj/item/reagent_containers/hypospray/attack_paw(mob/user)
 	return attack_hand(user)
 
@@ -58,6 +68,7 @@
 	name = "combat stimulant injector"
 	desc = "A modified air-needle autoinjector, used by support operatives to quickly heal injuries in combat and get people back in the fight."
 	amount_per_transfer_from_this = 10
+	item_state = "combat_hypo"
 	icon_state = "combat_hypo"
 	volume = 100
 	ignore_flags = 1 // So they can heal their comrades.
@@ -69,17 +80,27 @@
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 30, /datum/reagent/medicine/omnizine = 30, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/atropine = 15)
 
 /obj/item/reagent_containers/hypospray/combat/nanites
-	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with experimental medical compounds for rapid healing."
+	name = "experimental combat stimulant injector"
+	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with experimental medical nanites and a stimulant for rapid healing and a combat boost."
+	item_state = "nanite_hypo"
+	icon_state = "nanite_hypo"
 	volume = 100
 	list_reagents = list(/datum/reagent/medicine/adminordrazine/quantum_heal = 80, /datum/reagent/medicine/synaptizine = 20)
 
-/obj/item/reagent_containers/hypospray/magillitis
-	name = "experimental autoinjector"
-	desc = "A modified air-needle autoinjector with a small single-use reservoir. It contains an experimental serum."
-	icon_state = "combat_hypo"
-	volume = 5
-	reagent_flags = NONE
-	list_reagents = list(/datum/reagent/magillitis = 5)
+/obj/item/reagent_containers/hypospray/combat/nanites/update_icon()
+	if(reagents.total_volume > 0)
+		icon_state = initial(icon_state)
+	else
+		icon_state = "[initial(icon_state)]0"
+
+/obj/item/reagent_containers/hypospray/combat/heresypurge
+	name = "holy water piercing injector"
+	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with 5 doses of a holy water and pacifier mixture. Not for use on your teammates."
+	item_state = "holy_hypo"
+	icon_state = "holy_hypo"
+	volume = 250
+	list_reagents = list(/datum/reagent/water/holywater = 150, /datum/reagent/peaceborg_tire = 50, /datum/reagent/peaceborg_confuse = 50)
+	amount_per_transfer_from_this = 50
 
 //MediPens
 
@@ -136,6 +157,8 @@
 /obj/item/reagent_containers/hypospray/medipen/ekit
 	name = "emergency first-aid autoinjector"
 	desc = "An epinephrine medipen with extra coagulant and antibiotics to help stabilize bad cuts and burns."
+	icon_state = "healthpen"
+	item_state = "healthpen"
 	volume = 15
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 12, /datum/reagent/medicine/coagulant = 2.5, /datum/reagent/medicine/spaceacillin = 0.5)
@@ -143,15 +166,19 @@
 /obj/item/reagent_containers/hypospray/medipen/blood_loss
 	name = "hypovolemic-response autoinjector"
 	desc = "A medipen designed to stabilize and rapidly reverse severe bloodloss."
+	icon_state = "hypovolemic"
+	item_state = "hypovolemic"
 	volume = 15
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 5, /datum/reagent/medicine/coagulant = 2.5, /datum/reagent/iron = 3.5, /datum/reagent/medicine/salglu_solution = 4)
 
 /obj/item/reagent_containers/hypospray/medipen/stimulants
-	name = "illegal stimpack medipen"
-	desc = "A highly illegal medipen due to its load and small injections, allow for five uses before being drained"
+	name = "stimpack medipen"
+	desc = "Contains stimulants."
+	icon_state = "syndipen"
+	item_state = "syndipen"
 	volume = 50
-	amount_per_transfer_from_this = 10
+	amount_per_transfer_from_this = 50
 	list_reagents = list(/datum/reagent/medicine/stimulants = 50)
 
 /obj/item/reagent_containers/hypospray/medipen/stimulants/baseball
@@ -166,6 +193,7 @@
 	name = "stimpack medipen"
 	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor."
 	icon_state = "stimpen"
+	item_state = "stimpen"
 	volume = 20
 	amount_per_transfer_from_this = 20
 	list_reagents = list(/datum/reagent/medicine/ephedrine = 10, /datum/reagent/consumable/coffee = 10)
@@ -177,20 +205,79 @@
 /obj/item/reagent_containers/hypospray/medipen/morphine
 	name = "morphine medipen"
 	desc = "A rapid way to get you out of a tight situation and fast! You'll feel rather drowsy, though."
+	icon_state = "morphen"
+	item_state = "morphen"
+	volume = 10
+	amount_per_transfer_from_this = 10
 	list_reagents = list(/datum/reagent/medicine/morphine = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/penacid
+	name = "pentetic acid medipen"
+	desc = "A autoinjector containing pentetic acid, used to reduce high levels of radiations and moderate toxins."
+	icon_state = "penacid"
+	item_state = "penacid"
+	volume = 10
+	amount_per_transfer_from_this = 10
+	list_reagents = list(/datum/reagent/medicine/pen_acid = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/atropine
+	name = "atropine autoinjector"
+	desc = "A rapid way to save a person from a critical injury state!"
+	icon_state = "atropen"
+	item_state = "atropen"
+	volume = 10
+	amount_per_transfer_from_this = 10
+	list_reagents = list(/datum/reagent/medicine/atropine = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/salacid
+	name = "salicyclic acid medipen"
+	desc = "A autoinjector containing salicyclic acid, used to treat severe brute damage."
+	icon_state = "salacid"
+	item_state = "salacid"
+	volume = 10
+	amount_per_transfer_from_this = 10
+	list_reagents = list(/datum/reagent/medicine/sal_acid = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/oxandrolone
+	name = "oxandrolone medipen"
+	desc = "A autoinjector containing oxandrolone, used to treat severe burns."
+	icon_state = "oxapen"
+	item_state = "oxapen"
+	volume = 10
+	amount_per_transfer_from_this = 10
+	list_reagents = list(/datum/reagent/medicine/oxandrolone = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/salbutamol
+	name = "salbutamol medipen"
+	desc = "A autoinjector containing salbutamol, used to heal oxygen damage quickly."
+	icon_state = "salpen"
+	item_state = "salpen"
+	volume = 10
+	amount_per_transfer_from_this = 10
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure
 	name = "BVAK autoinjector"
 	desc = "Bio Virus Antidote Kit autoinjector. Has a two use system for yourself, and someone else. Inject when infected."
-	icon_state = "stimpen"
+	icon_state = "tbpen"
+	item_state = "tbpen"
 	volume = 60
 	amount_per_transfer_from_this = 30
 	list_reagents = list(/datum/reagent/medicine/atropine = 10, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/salbutamol = 20, /datum/reagent/medicine/spaceacillin = 20)
 
+/obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/update_icon()
+	if(reagents.total_volume > 30)
+		icon_state = initial(icon_state)
+	else if (reagents.total_volume > 0)
+		icon_state = "[initial(icon_state)]1"
+	else
+		icon_state = "[initial(icon_state)]0"
+
 /obj/item/reagent_containers/hypospray/medipen/survival
 	name = "survival medipen"
 	desc = "A medipen for surviving in the harshest of environments, heals and protects from environmental hazards. WARNING: Do not inject more than one pen in quick succession."
-	icon_state = "stimpen"
+	icon_state = "minepen"
+	item_state = "minepen"
 	volume = 52
 	amount_per_transfer_from_this = 52
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/neo_jelly = 15, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/lavaland_extract = 2)
@@ -198,16 +285,21 @@
 /obj/item/reagent_containers/hypospray/medipen/firelocker
 	name = "fire treatment medipen"
 	desc = "A medipen that has been fulled with burn healing chemicals for personnel without advanced medical knowledge."
+	icon_state = "firepen"
+	item_state = "firepen"
 	volume = 15
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/medicine/oxandrolone = 5, /datum/reagent/medicine/kelotane = 10)
 
-/obj/item/reagent_containers/hypospray/combat/heresypurge
-	name = "holy water autoinjector"
-	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with 5 doses of a holy water mixture."
-	volume = 250
-	list_reagents = list(/datum/reagent/water/holywater = 150, /datum/reagent/peaceborg_tire = 50, /datum/reagent/peaceborg_confuse = 50)
-	amount_per_transfer_from_this = 50
+/obj/item/reagent_containers/hypospray/medipen/magillitis
+	name = "experimental autoinjector"
+	desc = "A custom-frame needle injector with a small single-use reservoir, containing an experimental serum. Unlike the more common medipen frame, it cannot pierce through protective armor or hardsuits, nor can the chemical inside be extracted."
+	icon_state = "gorillapen"
+	item_state = "gorillapen"
+	volume = 5
+	ignore_flags = 0
+	reagent_flags = NONE
+	list_reagents = list(/datum/reagent/magillitis = 5)
 
 #define HYPO_SPRAY 0
 #define HYPO_INJECT 1
@@ -288,7 +380,7 @@
 	quickload = TRUE
 	penetrates = TRUE
 
-/obj/item/hypospray/mkii/Initialize()
+/obj/item/hypospray/mkii/Initialize(mapload)
 	. = ..()
 	if(!spawnwithvial)
 		update_icon()
@@ -296,6 +388,23 @@
 	if(start_vial)
 		vial = new start_vial
 	update_icon()
+	register_context()
+	register_item_context()
+
+/obj/item/hypospray/mkii/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	// Did you know that clicking something while you're holding it is the same as attack_self()?
+	if(vial && (held_item == src))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Remove [vial]")
+	LAZYSET(context[SCREENTIP_CONTEXT_CTRL_LMB], INTENT_ANY, "Set to [mode ? "spray" : "inject"]")
+	LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, "Set transfer amount")
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/hypospray/mkii/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = ..()
+	if(iscarbon(target))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, mode ? "Inject" : "Spray")
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/hypospray/mkii/ComponentInitialize()
 	. = ..()
@@ -409,7 +518,7 @@
 		return
 
 	var/fp_verb = mode == HYPO_SPRAY ? "spray" : "inject"
-	var/method = mode == HYPO_SPRAY ? TOUCH : INJECT
+	var/method = mode == HYPO_SPRAY ? PATCH : INJECT	//Medsprays use patch when spraying, feels like an inconsistancy here.
 
 	if(L != user)
 		L.visible_message("<span class='danger'>[user] is trying to [fp_verb] [L] with [src]!</span>", \

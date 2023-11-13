@@ -7,7 +7,7 @@
 /datum/movespeed_modifier/reagent/ephedrine
 	// strong painkiller effect that caps out at slightly above runspeed
 	multiplicative_slowdown = -1.5
-	priority = -100
+	priority = 500
 	complex_calculation = TRUE
 	absolute_max_tiles_per_second = 7
 
@@ -21,14 +21,14 @@
 	// extremely strong painkiller effect: allows user to run at old sprint speeds but not over by cancelling out slowdowns.
 	// however, will not make user go faster than that
 	multiplicative_slowdown = -4
-	priority = -100
+	priority = 500
 	complex_calculation = TRUE
-	absolute_max_tiles_per_second = 8
+	absolute_max_tiles_per_second = 10
 
 /datum/movespeed_modifier/reagent/methamphetamine
 	// very strong painkiller effect that caps out at slightly above runspeed
 	multiplicative_slowdown = -2.5
-	priority = -100
+	priority = 500
 	complex_calculation = TRUE
 	absolute_max_tiles_per_second = 7.5
 

@@ -16,6 +16,7 @@
 	mutanteyes = /obj/item/organ/eyes/night_vision
 
 	species_category = SPECIES_CATEGORY_SHADOW
+	wings_icons = SPECIES_WINGS_SKELETAL //not sure what's more spooky for these guys - skeleton or dragon?
 
 /datum/species/shadow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
@@ -36,7 +37,7 @@
 	limbs_id = SPECIES_SHADOW
 	burnmod = 1.5
 	blacklisted = TRUE
-	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM, SLOT_S_STORE)
+	no_equip = list(ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING, ITEM_SLOT_SUITSTORE)
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NO_DNA_COPY,NOTRANSSTING,NOEYES,NOGENITALS,NOAROUSAL)
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_NOBREATH,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOHUNGER)
 	mutanteyes = /obj/item/organ/eyes/night_vision/nightmare
@@ -167,7 +168,7 @@
 	sharpness = SHARP_EDGED
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
-/obj/item/light_eater/Initialize()
+/obj/item/light_eater/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 80, 70)
@@ -210,7 +211,7 @@
 			visible_message("<span class='danger'>[S] is disintegrated by [src]!</span>")
 	else if(AM.light_range && AM.light_power  && !(istype(AM, /obj/machinery/power/apc) || istype(AM, /obj/machinery/airalarm)))
 		var/obj/target_object = AM
-		target_object.take_damage(force * 5, BRUTE, "melee", 0)
+		target_object.take_damage(force * 5, BRUTE, MELEE, 0)
 
 
 /obj/item/light_eater/proc/disintegrate(obj/item/O)

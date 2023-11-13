@@ -27,7 +27,7 @@
 	grav_pull = 10
 	consume_range = 12 //How many tiles out do we eat
 
-/obj/singularity/narsie/large/Initialize()
+/obj/singularity/narsie/large/Initialize(mapload)
 	. = ..()
 	send_to_playing_players("<span class='narsie'>NAR'SIE HAS RISEN</span>")
 	sound_to_playing_players('sound/creatures/narsie_rises.ogg')
@@ -44,7 +44,7 @@
 	var/souls = 0
 	var/resolved = FALSE
 
-/obj/singularity/narsie/large/cult/Initialize()
+/obj/singularity/narsie/large/cult/Initialize(mapload)
 	. = ..()
 	GLOB.cult_narsie = src
 	var/list/all_cults = list()
@@ -62,7 +62,7 @@
 	for(var/datum/mind/cult_mind in SSticker.mode.cult)
 		if(isliving(cult_mind.current))
 			var/mob/living/L = cult_mind.current
-			L.narsie_act()
+			INVOKE_ASYNC(L, /atom.proc/narsie_act)
 	for(var/mob/living/player in GLOB.player_list)
 		if(player.stat != DEAD && player.loc && is_station_level(player.loc.z) && !iscultist(player) && !isanimal(player))
 			souls_needed[player] = TRUE
@@ -143,7 +143,7 @@
 		A.narsie_act()
 
 
-/obj/singularity/narsie/ex_act() //No throwing bombs at her either.
+/obj/singularity/narsie/ex_act(severity, target, origin) //No throwing bombs at her either.
 	return
 
 

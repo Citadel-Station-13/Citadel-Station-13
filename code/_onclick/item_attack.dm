@@ -126,6 +126,8 @@
 		return DISCARD_LAST_ACTION
 	user.do_attack_animation(O)
 	O.attacked_by(src, user)
+	if(force >= 20)
+		shake_camera(user, ((force - 15) * 0.01 + 1), ((force - 15) * 0.01))
 
 /atom/movable/proc/attacked_by()
 	return
@@ -260,7 +262,7 @@
 	return clamp((1.5 + (w_class/5)) * ((force_override || force) / 1.5), 0, 10 SECONDS) * CONFIG_GET(number/melee_stagger_factor)
 
 /obj/item/proc/do_stagger_action(mob/living/target, mob/living/user, force_override)
-	if(!CHECK_BITFIELD(target.status_flags, CANSTAGGER))
+	if(!(target.status_flags & CANSTAGGER))
 		return FALSE
 	if(target.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
 		target.do_staggered_animation()

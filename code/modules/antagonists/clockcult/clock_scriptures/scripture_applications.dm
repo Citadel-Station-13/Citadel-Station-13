@@ -207,20 +207,20 @@
 /datum/clockwork_scripture/create_object/summon_arbiter
 	descname = "Powerful Assault Mech"
 	name = "Summon Neovgre, the Anima Bulwark"
-	desc = "Calls forth the mighty Anima Bulwark, a mech with superior defensive and offensive capabilities. It will \
+	desc = "Calls forth the mighty Anima Bulwark, a two-person mech with superior defensive and offensive capabilities. It will \
 			 steadily regenerate HP and triple its regeneration speed while standing \
 			 on a clockwork tile. It will automatically draw power from nearby sigils of \
 			 transmission should the need arise. Its Arbiter laser cannon can decimate foes \
 			 from a range and is capable of smashing through any barrier presented to it. \
-			 Be warned however, choosing to pilot Neovgre is a lifetime commitment, once you are \
-			 in you cannot leave and when it is destroyed it will explode catastrophically, with you inside."
+			 Be warned however, choosing to pilot or man Neovgre is a lifetime commitment, once you are \
+			 in you cannot leave and when it is destroyed it will explode catastrophically, with everyone inside."
 	invocations = list("By the strength of the alloy...!!", "...call forth the Arbiter!!")
 	channel_time = 200 // This is a strong fucking weapon, 20 seconds channel time is getting off light I tell ya.
-	power_cost = 75000 //75 KW
+	power_cost = 40000 //40 KW. Why the hell did I think making this cost 5k more than the ARK was a good idea-KeRSe
 	usage_tip = "Neovgre is a powerful mech that will crush your enemies!"
 	invokers_required = 5
 	multiple_invokers_used = TRUE
-	object_path = /obj/mecha/combat/neovgre
+	object_path = /obj/vehicle/sealed/mecha/combat/neovgre
 	tier = SCRIPTURE_APPLICATION
 	primary_component = BELLIGERENT_EYE
 	sort_priority = 8
@@ -231,3 +231,31 @@
 		to_chat(invoker, "<span class='nezbere'>\"Only one of my weapons may exist in this temporal stream!\"</span>")
 		return FALSE
 	return ..()
+
+/datum/clockwork_scripture/create_object/construct/cogscarab
+	descname = "Building Construct"
+	name = "Cogscarab"
+	desc = "Creates a shell for a cogscarab, a drone that helps build your base!"
+	invocations = list("Arise, drone!", "Create defenses for the true light!")
+	channel_time = 80
+	power_cost = 8000
+	creator_message = "<span class='brass'>Your slab disgorges several chunks of replicant alloy that form into a spiderlike shell.</span>"
+	usage_tip = "These machines will help you get a base built up while you go out to look for more followers."
+	tier = SCRIPTURE_APPLICATION
+	one_per_tile = TRUE
+	primary_component = BELLIGERENT_EYE
+	sort_priority = 9
+	quickbind = TRUE
+	quickbind_desc = "Creates a cogscarab, good for the backline."
+	object_path = /obj/item/clockwork/construct_chassis/cogscarab/
+	construct_type = /mob/living/simple_animal/drone/cogscarab
+	combat_construct = FALSE
+
+/datum/clockwork_scripture/create_object/construct/cogscarab/update_construct_limit()
+	var/human_servants = 0
+	for(var/V in SSticker.mode.servants_of_ratvar)
+		var/datum/mind/M = V
+		var/mob/living/L = M.current
+		if(ishuman(L) && L.stat != DEAD)
+			human_servants++
+	construct_limit = round(clamp((human_servants / 4), 1, 3))	//1 per 4 human servants, maximum of 3

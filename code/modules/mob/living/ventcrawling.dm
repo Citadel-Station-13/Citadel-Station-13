@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 		if(vent_found_parent && (vent_found_parent.members.len || vent_found_parent.other_atmosmch))
 			visible_message("<span class='notice'>[src] begins climbing into the ventilation system...</span>" ,"<span class='notice'>You begin climbing into the ventilation system...</span>")
 
-			if(!do_after(src, 25, target = vent_found, required_mobility_flags = MOBILITY_MOVE))
+			if(!do_after(src, 25, target = vent_found))
 				return
 
 			if(!client)

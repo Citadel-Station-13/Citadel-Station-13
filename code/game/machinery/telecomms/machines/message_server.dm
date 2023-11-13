@@ -14,10 +14,10 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
-	armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
+	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70)
 	var/obj/item/stored
 
-/obj/machinery/blackbox_recorder/Initialize()
+/obj/machinery/blackbox_recorder/Initialize(mapload)
 	. = ..()
 	stored = new /obj/item/blackbox(src)
 
@@ -25,7 +25,7 @@
 	. = ..()
 	if(stored)
 		to_chat(user, "<span class='notice'>You start struggling to pry the [stored] from the [src]...</span>")
-		if(!do_after(user, 30 SECONDS, TRUE, src))
+		if(!do_after(user, 30 SECONDS, src))
 			to_chat(user, "<span class='warning'>Your fingers slip as you fail to pry the [stored] from the [src], clicking it right back into the slot!</span>")
 			return
 		user.put_in_hands(stored)
@@ -73,7 +73,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-
 // The message server itself.
 /obj/machinery/telecomms/message_server
 	icon = 'icons/obj/machines/research.dmi'
@@ -84,6 +83,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
+	circuit = /obj/item/circuitboard/machine/telecomms/message_server
 
 	id = "Messaging Server"
 	network = "tcommsat"
@@ -93,7 +93,7 @@
 	var/list/datum/data_rc_msg/rc_msgs = list()
 	var/decryptkey
 
-/obj/machinery/telecomms/message_server/Initialize()
+/obj/machinery/telecomms/message_server/Initialize(mapload)
 	. = ..()
 	if (!decryptkey)
 		decryptkey = GenerateKey()

@@ -28,7 +28,7 @@ export const NtosWindow = (props, context) => {
     PC_stationtime,
     PC_programheaders = [],
     PC_showexitprogram,
-    PC_showpeneject,
+    TABLET_show_pen_eject,
   } = data;
   return (
     <Window
@@ -79,7 +79,7 @@ export const NtosWindow = (props, context) => {
                   src={resolveAsset(PC_apclinkicon)} />
               </Box>
             )}
-            {!!PC_showpeneject && (
+            {!!TABLET_show_pen_eject && (
               <Button
                 width="26px"
                 lineHeight="22px"
@@ -87,8 +87,8 @@ export const NtosWindow = (props, context) => {
                 color="transparent"
                 icon="pen-alt"
                 tooltip="Eject pen"
-                tooltipPosition="bottom-left"
-                onClick={() => act('eject_pen')} />
+                tooltipPosition="bottom-end"
+                onClick={() => act('TABLET_eject_pen')} />
             )}
             {!!PC_showexitprogram && (
               <Button
@@ -110,7 +110,7 @@ export const NtosWindow = (props, context) => {
                 color="transparent"
                 icon="window-close-o"
                 tooltip="Close"
-                tooltipPosition="bottom-left"
+                tooltipPosition="bottom-end"
                 onClick={() => act('PC_exit')} />
             )}
             {!PC_showexitprogram && (
@@ -122,7 +122,7 @@ export const NtosWindow = (props, context) => {
                 color="transparent"
                 icon="power-off"
                 tooltip="Power off"
-                tooltipPosition="bottom-left"
+                tooltipPosition="bottom-end"
                 onClick={() => act('PC_shutdown')} />
             )}
           </div>

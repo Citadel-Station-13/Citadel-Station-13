@@ -74,12 +74,10 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define iscatperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/felinid))
 #define isethereal(A) (is_species(A, /datum/species/ethereal))
 #define isvampire(A) (is_species(A,/datum/species/vampire))
-#define isdullahan(A) (is_species(A, /datum/species/dullahan))
 
-#define isangel(A) (is_species(A, /datum/species/angel))
 #define ismush(A) (is_species(A, /datum/species/mush))
 #define isshadow(A) (is_species(A, /datum/species/shadow))
-#define isrobotic(A) (is_species(A, /datum/species/ipc) || is_species(A, /datum/species/synthliz))
+#define isrobotic(A) (is_species(A, /datum/species/ipc) || is_species(A, /datum/species/synthliz) || is_species(A, /datum/species/mammal/synthetic))
 #define isdwarf(A) (is_species(A, /datum/species/dwarf))
 
 // Citadel specific species
@@ -208,7 +206,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define ismachinery(A) (istype(A, /obj/machinery))
 
-#define ismecha(A) (istype(A, /obj/mecha))
+#define ismecha(A) (istype(A, /obj/vehicle/sealed/mecha))
 
 #define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune)) //if something is cleanable
 

@@ -22,7 +22,7 @@
 	custom_materials = list(/datum/material/iron=1750, /datum/material/glass=400)
 	flash_protect = 2
 	tint = 2
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 60)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 60)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
@@ -45,7 +45,7 @@
 	hat_type = "cakehat"
 	hitsound = 'sound/weapons/tap.ogg'
 	flags_inv = HIDEEARS|HIDEHAIR
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	brightness_on = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
 	heat = 1000
@@ -90,23 +90,36 @@
 	item_state = "ushankadown"
 	alternate_screams = list('sound/voice/human/cyka1.ogg', 'sound/voice/human/cheekibreeki.ogg')
 	flags_inv = HIDEEARS|HIDEHAIR
-	var/earflaps = 1
+	var/earflaps = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+	heat_protection = HEAD
+	max_heat_protection_temperature = COAT_MAX_TEMP_PROTECT
+	///Sprite visible when the ushanka flaps are folded up.
+	var/upsprite = "ushankaup"
+	///Sprite visible when the ushanka flaps are folded down.
+	var/downsprite = "ushankadown"
 
 	dog_fashion = /datum/dog_fashion/head/ushanka
 
 /obj/item/clothing/head/ushanka/attack_self(mob/user)
 	if(earflaps)
-		src.icon_state = "ushankaup"
-		src.item_state = "ushankaup"
-		earflaps = 0
+		icon_state = upsprite
+		item_state = upsprite
 		to_chat(user, "<span class='notice'>You raise the ear flaps on the ushanka.</span>")
 	else
-		src.icon_state = "ushankadown"
-		src.item_state = "ushankadown"
-		earflaps = 1
+		icon_state = downsprite
+		item_state = downsprite
 		to_chat(user, "<span class='notice'>You lower the ear flaps on the ushanka.</span>")
+	earflaps = !earflaps
+
+/obj/item/clothing/head/ushanka/soviet
+	name = "soviet ushanka"
+	desc = "For the union!"
+	icon_state = "sovietushankadown"
+	item_state = "sovietushankadown"
+	upsprite = "sovietushankaup"
+	downsprite = "sovietushankadown"
 
 /*
  * Pumpkin head
@@ -118,7 +131,7 @@
 	item_state = "hardhat0_pumpkin"
 	hat_type = "pumpkin"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	brightness_on = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
 
@@ -136,7 +149,7 @@
 	beepsky_fashion = /datum/beepsky_fashion/cat
 
 /obj/item/clothing/head/kitty/equipped(mob/living/carbon/human/user, slot)
-	if(ishuman(user) && slot == SLOT_HEAD)
+	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
 		update_icon(user)
 		user.update_inv_head() //Color might have been changed by update_icon.
 	..()
@@ -156,7 +169,7 @@
 	item_state = "hardhat0_reindeer"
 	hat_type = "reindeer"
 	flags_inv = 0
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	brightness_on = 1 //luminosity when on
 	dynamic_hair_suffix = ""
 
@@ -175,7 +188,7 @@
 
 /obj/item/clothing/head/cardborg/equipped(mob/living/user, slot)
 	..()
-	if(ishuman(user) && slot == SLOT_HEAD)
+	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
 		var/mob/living/carbon/human/H = user
 		if(istype(H.wear_suit, /obj/item/clothing/suit/cardborg))
 			var/obj/item/clothing/suit/cardborg/CB = H.wear_suit
@@ -232,14 +245,14 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_helmet_old"
 	flags_inv = HIDEEARS|HIDEHAIR
-	armor = list("melee" = 5, "bullet" = 0, "laser" = -5, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
+	armor = list(MELEE = 5, BULLET = 0, LASER = -5, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 20, ACID = 20)
 
 /obj/item/clothing/head/foilhat
 	name = "tinfoil hat"
 	desc = "Thought control rays, psychotronic scanning. Don't mind that, I'm protected cause I made this hat."
 	icon_state = "foilhat"
 	item_state = "foilhat"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = -5,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = -5, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = -5,ENERGY = 0, BOMB = 0, BIO = 0, RAD = -5, FIRE = 0, ACID = 0)
 	equip_delay_other = 140
 	var/datum/brain_trauma/mild/phobia/conspiracies/paranoia
 	var/warped = FALSE
@@ -254,7 +267,7 @@
 
 /obj/item/clothing/head/foilhat/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot != SLOT_HEAD || warped)
+	if(slot != ITEM_SLOT_HEAD || warped)
 		return
 	if(paranoia)
 		QDEL_NULL(paranoia)
@@ -284,7 +297,7 @@
 	if(!isliving(loc) || !paranoia)
 		return
 	var/mob/living/target = loc
-	if(target.get_item_by_slot(SLOT_HEAD) != src)
+	if(target.get_item_by_slot(ITEM_SLOT_HEAD) != src)
 		return
 	QDEL_NULL(paranoia)
 	if(!target.IsUnconscious())
@@ -307,7 +320,7 @@
 	name = "flak helmet"
 	icon_state = "m1helm"
 	item_state = "helmet"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0.1, "bio" = 0, "rad" = 0, "fire" = -10, "acid" = -15)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0.1, BIO = 0, RAD = 0, FIRE = -10, ACID = -15)
 	desc = "A dilapidated helmet used in ancient wars. This one is brittle and essentially useless. An ace of spades is tucked into the band around the outer shell."
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/tiny/spacenam	//So you can stuff other things in the elastic band instead of it simply being a fluff thing.
 
@@ -315,3 +328,55 @@
 
 /datum/component/storage/concrete/pockets/tiny/spacenam
 	attack_hand_interact = TRUE		//So you can actually see what you stuff in there
+
+//families
+/obj/item/clothing/head/irs
+	name = "internal revenue service cap"
+	icon_state = "irs_hat"
+	item_state = "irs_hat"
+
+/obj/item/clothing/head/pg
+	name = "powder ganger beanie"
+	icon_state = "pg_hat"
+	item_state = "pg_hat"
+
+/obj/item/clothing/head/tmc
+	name = "Lost M.C. bandana"
+	icon_state = "tmc_hat"
+	item_state = "tmc_hat"
+
+/obj/item/clothing/head/deckers
+	name = "Decker headphones"
+	icon_state = "decker_hat"
+	item_state = "decker_hat"
+
+/obj/item/clothing/head/morningstar
+	name = "Morningstar beret"
+	icon_state = "morningstar_hat"
+	item_state = "morningstar_hat"
+
+/obj/item/clothing/head/saints
+	name = "Saints hat"
+	icon_state = "saints_hat"
+	item_state = "saints_hat"
+
+/obj/item/clothing/head/allies
+	name = "allies helmet"
+	icon_state = "allies_helmet"
+	item_state = "allies_helmet"
+
+/obj/item/clothing/head/yuri
+	name = "yuri initiate helmet"
+	icon_state = "yuri_helmet"
+	item_state = "yuri_helmet"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+
+/obj/item/clothing/head/sybil_slickers
+	name = "sybil slickers helmet"
+	icon_state = "football_helmet_blue"
+	item_state = "football_helmet_blue"
+
+/obj/item/clothing/head/basil_boys
+	name = "basil boys helmet"
+	icon_state = "football_helmet_red"
+	item_state = "football_helmet_red"

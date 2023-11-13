@@ -28,7 +28,7 @@
 				if(2)
 					SSshuttle.requestEvac(src,"ALERT: Energy surge detected in AI core! Station integrity may be compromised! Initiati--%m091#ar-BZZT")
 
-/mob/living/silicon/ai/ex_act(severity, target)
+/mob/living/silicon/ai/ex_act(severity, target, origin)
 	switch(severity)
 		if(1)
 			gib()

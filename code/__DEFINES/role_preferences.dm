@@ -14,6 +14,7 @@
 #define ROLE_MALF					"malf AI"
 #define ROLE_REV					"revolutionary"
 #define ROLE_REV_HEAD				"Head Revolutionary"
+#define ROLE_REV_SUCCESSFUL			"Victorious Revolutionary"
 #define ROLE_ALIEN					"xenomorph"
 #define ROLE_PAI					"pAI"
 #define ROLE_CULTIST				"cultist"
@@ -35,20 +36,20 @@
 #define ROLE_DEATHSQUAD             "deathsquad"
 #define ROLE_LAVALAND               "lavaland"
 #define ROLE_INTERNAL_AFFAIRS		"internal affairs agent"
-#define ROLE_GANG					"gangster"
+#define ROLE_FAMILIES 				"family boss"
+#define ROLE_FAMILY_HEAD_ASPIRANT 	"family head aspirant"
 #define ROLE_BLOODSUCKER			"bloodsucker"
 #define ROLE_SPACE_DRAGON			"Space Dragon"
 //#define ROLE_MONSTERHUNTER			"monster hunter" Disabled for now
 #define ROLE_GHOSTCAFE				"ghostcafe"
 #define ROLE_MINOR_ANTAG			"minorantag"
 #define ROLE_RESPAWN				"respawnsystem"
-/// Not an actual antag. Lets players force all antags off.
-#define ROLE_NO_ANTAGONISM			"NO_ANTAGS"
+//Define for disabling individual antagonists for dynamic
+#define HAS_ANTAG_PREF(C,ROLE) (!(NO_ANTAG & C.prefs.toggles) && (ROLE in C.prefs.be_special))
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough
 //(in game days played) to play that role
 GLOBAL_LIST_INIT(special_roles, list(
-	ROLE_NO_ANTAGONISM,
 	ROLE_TRAITOR = /datum/game_mode/traitor,
 	ROLE_BROTHER = /datum/game_mode/traitor/bros,
 	ROLE_OPERATIVE = /datum/game_mode/nuclear,
@@ -69,9 +70,9 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_OVERTHROW = /datum/game_mode/overthrow,
 	ROLE_INTERNAL_AFFAIRS = /datum/game_mode/traitor/internal_affairs,
 	ROLE_SENTIENCE,
-	ROLE_GANG = /datum/game_mode/gang,
 	ROLE_HERETIC = /datum/game_mode/heretics,
 	ROLE_BLOODSUCKER = /datum/game_mode/bloodsucker,
+	ROLE_FAMILIES = /datum/game_mode/gang,
 	ROLE_SPACE_DRAGON
 	//ROLE_MONSTERHUNTER Disabled for now
 ))

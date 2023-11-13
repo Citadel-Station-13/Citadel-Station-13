@@ -167,9 +167,15 @@
 /obj/item/gun/energy/plasmacutter/use(amount)
 	return cell.use(amount * 100)
 
+/obj/item/gun/energy/plasmacutter/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks, skill_gain_mult)
+	target.add_overlay(GLOB.welding_sparks)
+	. = ..()
+	target.cut_overlay(GLOB.welding_sparks)
+
 /obj/item/gun/energy/plasmacutter/adv
 	name = "advanced plasma cutter"
 	icon_state = "adv_plasmacutter"
+	item_state = "adv_plasmacutter"
 	force = 15
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 

@@ -1,5 +1,6 @@
 
 #define DUALWIELD_PENALTY_EXTRA_MULTIPLIER 1.4
+#define FIRING_PIN_REMOVAL_DELAY 50
 
 /obj/item/gun
 	name = "gun"
@@ -21,6 +22,7 @@
 	var/ranged_attack_speed = CLICK_CD_RANGE
 	var/melee_attack_speed = CLICK_CD_MELEE
 
+	var/gun_flags = NONE
 	var/fire_sound = "gunshot"
 	var/suppressed = null					//whether or not a message is displayed when fired
 	var/can_suppress = FALSE
@@ -31,6 +33,7 @@
 	trigger_guard = TRIGGER_GUARD_NORMAL	//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
 	var/sawn_desc = null				//description change if weapon is sawn-off
 	var/sawn_off = FALSE
+	var/firing_burst = 0 //Prevent the weapon from firing again while already firing
 
 	/// can we be put into a turret
 	var/can_turret = TRUE
@@ -56,6 +59,8 @@
 	var/burst_spread = 0				//Spread induced by the gun itself during burst fire per iteration. Only checked if spread is 0.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
 	var/inaccuracy_modifier = 1
+	var/semicd = 0 //cooldown handler
+	var/dual_wield_spread = 24 //additional spread when dual wielding
 
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
@@ -63,7 +68,7 @@
 	var/obj/item/firing_pin/pin = /obj/item/firing_pin //standard firing pin for most guns
 	var/no_pin_required = FALSE //whether the gun can be fired without a pin
 
-	var/obj/item/flashlight/gun_light
+	var/obj/item/flashlight/seclite/gun_light
 	var/can_flashlight = FALSE
 	var/gunlight_state = "flight"
 	var/obj/item/kitchen/knife/bayonet
@@ -86,23 +91,63 @@
 	var/zoom_out_amt = 0
 	var/datum/action/item_action/toggle_scope_zoom/azoom
 
+	//Firemodes
+	var/datum/action/item_action/toggle_firemode/firemode_action
+	/// Current fire selection, can choose between burst, single, and full auto.
+	var/fire_select = SELECT_SEMI_AUTOMATIC
+	var/fire_select_index = 1
+	/// What modes does this weapon have? Put SELECT_FULLY_AUTOMATIC in here to enable fully automatic behaviours.
+	var/list/fire_select_modes = list(SELECT_SEMI_AUTOMATIC)
+	/// if i`1t has an icon for a selector switch indicating current firemode.
+	var/selector_switch_icon = FALSE
+
 	var/dualwield_spread_mult = 1		//dualwield spread multiplier
 
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
 	var/projectile_damage_multiplier = 1
 
-	var/automatic = 0 //can gun use it, 0 is no, anything above 0 is the delay between clicks in ds
+	/// directional recoil multiplier
+	var/dir_recoil_amp = 10
 
-/obj/item/gun/Initialize()
+/obj/item/gun/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/toggle_firemode))
+		fire_select()
+	else if(istype(action, /datum/action/item_action/toggle_scope_zoom))
+		zoom(user, user.dir)
+	else if(istype(action, alight))
+		toggle_gunlight()
+	else
+		..()
+
+/obj/item/gun/Initialize(mapload)
 	. = ..()
-	if(no_pin_required)
-		pin = null
-	else if(pin)
+	if(pin)
 		pin = new pin(src)
+
 	if(gun_light)
-		alight = new (src)
+		alight = new(src)
+
 	if(zoomable)
 		azoom = new (src)
+
+	if(burst_size > 1 && !(SELECT_BURST_SHOT in fire_select_modes))
+		fire_select_modes.Add(SELECT_BURST_SHOT)
+	else if(burst_size <= 1 && (SELECT_BURST_SHOT in fire_select_modes))
+		fire_select_modes.Remove(SELECT_BURST_SHOT)
+
+	burst_size = 1
+
+	sortList(fire_select_modes, /proc/cmp_numeric_asc)
+
+	if(fire_select_modes.len > 1)
+		firemode_action = new(src)
+		firemode_action.button_icon_state = "fireselect_[fire_select]"
+		firemode_action.UpdateButtonIcon()
+
+/obj/item/gun/ComponentInitialize()
+	. = ..()
+	if(SELECT_FULLY_AUTOMATIC in fire_select_modes)
+		AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/gun/Destroy()
 	if(pin)
@@ -113,25 +158,69 @@
 		QDEL_NULL(bayonet)
 	if(chambered)
 		QDEL_NULL(chambered)
+	if(azoom)
+		QDEL_NULL(azoom)
+	if(firemode_action)
+		QDEL_NULL(firemode_action)
 	return ..()
-
-/obj/item/gun/CheckParts(list/parts_list)
-	..()
-	var/obj/item/gun/G = locate(/obj/item/gun) in contents
-	if(G)
-		G.forceMove(loc)
-		QDEL_NULL(G.pin)
-		visible_message("[G] can now fit a new pin, but the old one was destroyed in the process.", null, null, 3)
-		qdel(src)
 
 /obj/item/gun/examine(mob/user)
 	. = ..()
-	if(no_pin_required)
+	if(!no_pin_required)
+		if(pin)
+			. += "It has \a [pin] installed."
+			. += "<span class='info'>[pin] looks like it could be removed with some <b>tools</b>.</span>"
+		else
+			. += "It doesn't have a firing pin installed, and won't fire."
+
+	if(gun_light)
+		. += "It has \a [gun_light] [can_flashlight ? "" : "permanently "]mounted on it."
+		if(can_flashlight) //if it has a light and this is false, the light is permanent.
+			. += "<span class='info'>[gun_light] looks like it can be <b>unscrewed</b> from [src].</span>"
+	else if(can_flashlight)
+		. += "It has a mounting point for a <b>seclite</b>."
+
+	if(bayonet)
+		. += "It has \a [bayonet] [can_bayonet ? "" : "permanently "]affixed to it."
+		if(can_bayonet) //if it has a bayonet and this is false, the bayonet is permanent.
+			. += "<span class='info'>[bayonet] looks like it can be <b>unscrewed</b> from [src].</span>"
+	else if(can_bayonet)
+		. += "It has a <b>bayonet</b> lug on it."
+
+/obj/item/gun/proc/fire_select()
+	var/mob/living/carbon/human/user = usr
+
+	var/max_mode = fire_select_modes.len
+
+	if(max_mode <= 1)
+		to_chat(user, "<span class='warning'>[src] is not capable of switching firemodes!</span>")
 		return
-	if(pin)
-		. += "It has \a [pin] installed."
-	else
-		. += "It doesn't have a firing pin installed, and won't fire."
+
+	fire_select_index = 1 + fire_select_index % max_mode //Magic math to cycle through this shit!
+
+	fire_select = fire_select_modes[fire_select_index]
+
+	switch(fire_select)
+		if(SELECT_SEMI_AUTOMATIC)
+			burst_size = 1
+			fire_delay = 0
+			SEND_SIGNAL(src, COMSIG_GUN_AUTOFIRE_DESELECTED, user)
+			to_chat(user, "<span class='notice'>You switch [src] to semi-automatic.</span>")
+		if(SELECT_BURST_SHOT)
+			burst_size = initial(burst_size)
+			fire_delay = initial(fire_delay)
+			SEND_SIGNAL(src, COMSIG_GUN_AUTOFIRE_DESELECTED, user)
+			to_chat(user, "<span class='notice'>You switch [src] to [burst_size]-round burst.</span>")
+		if(SELECT_FULLY_AUTOMATIC)
+			burst_size = 1
+			SEND_SIGNAL(src, COMSIG_GUN_AUTOFIRE_SELECTED, user)
+			to_chat(user, "<span class='notice'>You switch [src] to automatic.</span>")
+
+	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
+	update_appearance()
+	firemode_action.button_icon_state = "fireselect_[fire_select]"
+	firemode_action.UpdateButtonIcon()
+	return TRUE
 
 /obj/item/gun/equipped(mob/living/user, slot)
 	. = ..()
@@ -153,7 +242,7 @@
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = FALSE, mob/pbtarget, message = 1, stam_cost = 0)
 	if(recoil)
-		shake_camera(user, recoil + 1, recoil)
+		directional_recoil(user, recoil*dir_recoil_amp, Get_Angle(user, pbtarget))
 
 	if(stam_cost) //CIT CHANGE - makes gun recoil cause staminaloss
 		var/safe_cost = clamp(stam_cost, 0, user.stamina_buffer)*(firing && burst_size >= 2 ? 1/burst_size : 1)
@@ -239,7 +328,7 @@
 				return
 
 	if(weapon_weight == WEAPON_HEAVY && user.get_inactive_held_item())
-		to_chat(user, "<span class='userdanger'>You need both hands free to fire \the [src]!</span>")
+		to_chat(user, "<span class='userdanger'>You need both hands free to fire [src]!</span>")
 		return
 
 	user.DelayNextAction()
@@ -417,12 +506,12 @@
 		if(!gun_light)
 			if(!user.transferItemToLoc(I, src))
 				return
-			to_chat(user, "<span class='notice'>You click \the [S] into place on \the [src].</span>")
+			to_chat(user, "<span class='notice'>You click [S] into place on [src].</span>")
 			if(S.on)
 				set_light(0)
-			gun_light = S
+			set_gun_light(S)
 			update_gunlight(user)
-			alight = new /datum/action/item_action/toggle_gunlight(src)
+			alight = new(src)
 			if(loc == user)
 				alight.Grant(user)
 	else if(istype(I, /obj/item/kitchen/knife))
@@ -431,32 +520,132 @@
 			return ..()
 		if(!user.transferItemToLoc(I, src))
 			return
-		to_chat(user, "<span class='notice'>You attach \the [K] to the front of \the [src].</span>")
+		to_chat(user, "<span class='notice'>You attach [K] to [src]'s bayonet lug.</span>")
 		bayonet = K
 		update_icon()
-	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(gun_light)
-			var/obj/item/flashlight/seclite/S = gun_light
-			to_chat(user, "<span class='notice'>You unscrew the seclite from \the [src].</span>")
-			gun_light = null
-			S.forceMove(get_turf(user))
-			update_gunlight(user)
-			S.update_brightness(user)
-			QDEL_NULL(alight)
-		if(bayonet)
-			to_chat(user, "<span class='notice'>You unscrew the bayonet from \the [src].</span>")
-			var/obj/item/kitchen/knife/K = bayonet
-			K.forceMove(get_turf(user))
-			bayonet = null
-			update_icon()
 	else
 		return ..()
 
-/obj/item/gun/ui_action_click(mob/user, action)
-	if(istype(action, /datum/action/item_action/toggle_scope_zoom))
-		zoom(user, user.dir)
-	else if(istype(action, alight))
-		toggle_gunlight()
+/obj/item/gun/screwdriver_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(.)
+		return
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	if((can_flashlight && gun_light) && (can_bayonet && bayonet)) //give them a choice instead of removing both
+		var/list/possible_items = list(gun_light, bayonet)
+		var/obj/item/item_to_remove = input(user, "Select an attachment to remove", "Attachment Removal") as null|obj in possible_items
+		if(!item_to_remove || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+			return
+		return remove_gun_attachment(user, I, item_to_remove)
+
+	else if(gun_light && can_flashlight) //if it has a gun_light and can_flashlight is false, the flashlight is permanently attached.
+		return remove_gun_attachment(user, I, gun_light, "unscrewed")
+
+	else if(bayonet && can_bayonet) //if it has a bayonet, and the bayonet can be removed
+		return remove_gun_attachment(user, I, bayonet, "unfix")
+
+	else if(pin && user.is_holding(src))
+		user.visible_message(span_warning("[user] attempts to remove [pin] from [src] with [I]."),
+		span_notice("You attempt to remove [pin] from [src]. (It will take [DisplayTimeText(FIRING_PIN_REMOVAL_DELAY)].)"), null, 3)
+		if(I.use_tool(src, user, FIRING_PIN_REMOVAL_DELAY, volume = 50))
+			if(!pin) //check to see if the pin is still there, or we can spam messages by clicking multiple times during the tool delay
+				return
+			user.visible_message(span_notice("[pin] is pried out of [src] by [user], destroying the pin in the process."),
+								span_warning("You pry [pin] out with [I], destroying the pin in the process."), null, 3)
+			QDEL_NULL(pin)
+			return TRUE
+
+/obj/item/gun/welder_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(.)
+		return
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	if(pin && user.is_holding(src))
+		user.visible_message(span_warning("[user] attempts to remove [pin] from [src] with [I]."),
+		span_notice("You attempt to remove [pin] from [src]. (It will take [DisplayTimeText(FIRING_PIN_REMOVAL_DELAY)].)"), null, 3)
+		if(I.use_tool(src, user, FIRING_PIN_REMOVAL_DELAY, 5, volume = 50))
+			if(!pin) //check to see if the pin is still there, or we can spam messages by clicking multiple times during the tool delay
+				return
+			user.visible_message(span_notice("[pin] is spliced out of [src] by [user], melting part of the pin in the process."),
+								span_warning("You splice [pin] out of [src] with [I], melting part of the pin in the process."), null, 3)
+			QDEL_NULL(pin)
+			return TRUE
+
+/obj/item/gun/wirecutter_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(.)
+		return
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	if(pin && user.is_holding(src))
+		user.visible_message(span_warning("[user] attempts to remove [pin] from [src] with [I]."),
+		span_notice("You attempt to remove [pin] from [src]. (It will take [DisplayTimeText(FIRING_PIN_REMOVAL_DELAY)].)"), null, 3)
+		if(I.use_tool(src, user, FIRING_PIN_REMOVAL_DELAY, volume = 50))
+			if(!pin) //check to see if the pin is still there, or we can spam messages by clicking multiple times during the tool delay
+				return
+			user.visible_message(span_notice("[pin] is ripped out of [src] by [user], mangling the pin in the process."),
+								span_warning("You rip [pin] out of [src] with [I], mangling the pin in the process."), null, 3)
+			QDEL_NULL(pin)
+			return TRUE
+
+/obj/item/gun/proc/remove_gun_attachment(mob/living/user, obj/item/tool_item, obj/item/item_to_remove, removal_verb)
+	if(tool_item)
+		tool_item.play_tool_sound(src)
+	to_chat(user, span_notice("You [removal_verb ? removal_verb : "remove"] [item_to_remove] from [src]."))
+	item_to_remove.forceMove(drop_location())
+
+	if(Adjacent(user) && !issilicon(user))
+		user.put_in_hands(item_to_remove)
+
+	if(item_to_remove == bayonet)
+		return clear_bayonet()
+	else if(item_to_remove == gun_light)
+		return clear_gunlight()
+
+/obj/item/gun/proc/clear_bayonet()
+	if(!bayonet)
+		return
+	bayonet = null
+	update_appearance()
+	return TRUE
+
+/obj/item/gun/proc/clear_gunlight()
+	if(!gun_light)
+		return
+	var/obj/item/flashlight/seclite/removed_light = gun_light
+	set_gun_light(null)
+	update_gunlight()
+	removed_light.update_brightness()
+	QDEL_NULL(alight)
+	return TRUE
+
+/**
+ * Swaps the gun's seclight, dropping the old seclight if it has not been qdel'd.
+ *
+ * Returns the former gun_light that has now been replaced by this proc.
+ * Arguments:
+ * * new_light - The new light to attach to the weapon. Can be null, which will mean the old light is removed with no replacement.
+ */
+/obj/item/gun/proc/set_gun_light(obj/item/flashlight/seclite/new_light)
+	// Doesn't look like this should ever happen? We're replacing our old light with our old light?
+	if(gun_light == new_light)
+		CRASH("Tried to set a new gun light when the old gun light was also the new gun light.")
+
+	. = gun_light
+
+	// If there's an old gun light that isn't being QDELETED, detatch and drop it to the floor.
+	if(!QDELETED(gun_light))
+		if(gun_light.loc == src)
+			gun_light.forceMove(get_turf(src))
+
+	// If there's a new gun light to be added, attach and move it to the gun.
+	if(new_light)
+		if(new_light.loc != src)
+			new_light.forceMove(src)
+
+	gun_light = new_light
 
 /obj/item/gun/proc/toggle_gunlight()
 	if(!gun_light)
@@ -507,7 +696,7 @@
 		. += knife_overlay
 
 /obj/item/gun/item_action_slot_check(slot, mob/user, datum/action/A)
-	if(istype(A, /datum/action/item_action/toggle_scope_zoom) && slot != SLOT_HANDS)
+	if(istype(A, /datum/action/item_action/toggle_scope_zoom) && slot != ITEM_SLOT_HANDS)
 		return FALSE
 	return ..()
 
@@ -545,7 +734,7 @@
 	if(chambered && chambered.BB)
 		chambered.BB.damage *= 5
 
-	process_fire(target, user, TRUE, params, stam_cost = getstamcost(user))
+	process_fire(target, user, TRUE, params, BODY_ZONE_HEAD, stam_cost = getstamcost(user))
 
 /obj/item/gun/proc/unlock() //used in summon guns and as a convience for admins
 	if(pin)
@@ -606,9 +795,16 @@
 		user.client.view_size.zoomIn()
 
 /obj/item/gun/handle_atom_del(atom/A)
+	if(A == pin)
+		pin = null
 	if(A == chambered)
 		chambered = null
 		update_icon()
+	if(A == bayonet)
+		clear_bayonet()
+	if(A == gun_light)
+		clear_gunlight()
+	return ..()
 
 /obj/item/gun/proc/getinaccuracy(mob/living/user, bonus_spread, stamloss)
 	return 0		// Replacement TBD: Exponential curved aim instability system.
@@ -642,3 +838,6 @@
 	. = recoil
 	if(user && !user.has_gravity())
 		. = recoil*5
+
+#undef FIRING_PIN_REMOVAL_DELAY
+#undef DUALWIELD_PENALTY_EXTRA_MULTIPLIER

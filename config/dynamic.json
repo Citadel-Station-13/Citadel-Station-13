@@ -1,0 +1,146 @@
+{
+	"Dynamic": {},
+	"Roundstart": {
+		"Traitors": {
+			"cost": 8,
+			"scaling_cost": 9,
+			"weight": 5,
+			"required_candidates": 1,
+			"minimum_required_age": 0,
+			"requirements": [
+				101,
+				10,
+				10,
+				10,
+				10,
+				10,
+				10,
+				10,
+				10,
+				10
+			],
+			"antag_cap": {
+				"denominator": 24
+			},
+			"protected_roles": [
+				"Prisoner",
+				"Security Officer",
+				"Warden",
+				"Detective",
+				"Head of Security",
+				"Captain"
+			],
+			"restricted_roles": [
+				"Cyborg"
+			]
+		},
+
+		"Blood Brothers": {
+			"weight": 0
+		},
+
+		"Changelings": {
+			"weight": 3
+		},
+
+		"Heretics": {
+			"weight": 3
+		},
+
+		"Wizard": {
+			"weight": 3
+		},
+
+		"Blood Cult": {
+			"weight": 2
+		},
+
+		"Nuclear Emergency": {
+			"weight": 3
+		},
+
+		"Revolution": {
+			"weight": 2
+		},
+
+		"Clock Cult": {
+			"weight": 3
+		},
+
+		"Families": {
+			"weight": 3
+		}
+	},
+
+	"Midround": {
+		"Syndicate Sleeper Agent": {
+			"weight": 7
+		},
+
+		"Malfunctioning AI": {
+			"weight": 3
+		},
+
+		"Wizard": {
+			"weight": 2
+		},
+
+		"Nuclear Assault": {
+			"weight": 3
+		},
+
+		"Blob": {
+			"weight": 2
+		},
+
+		"Blob Infection": {
+			"weight": 2
+		},
+
+		"Alien Infestation": {
+			"weight": 3
+		},
+
+		"Nightmare": {
+			"weight": 4
+		},
+
+		"Space Dragon": {
+			"weight": 3
+		},
+
+		"Abductors": {
+			"weight": 3
+		},
+
+		"Swarmers": {
+			"weight": 3
+		},
+
+		"Space Ninja": {
+			"weight": 4
+		},
+
+		"Family Head Aspirants": {
+			"weight": 3
+		},
+
+		"Spiders": {
+			"weight": 0
+		}
+	},
+
+	"Latejoin": {
+		"Syndicate Infiltrator": {
+			"weight": 7
+		},
+
+		"Provocateur": {
+			"weight": 2
+		},
+
+		"Heretic Smuggler": {
+			"weight": 4
+		}
+	}
+}

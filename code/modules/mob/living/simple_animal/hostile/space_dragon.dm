@@ -49,6 +49,8 @@
 	mob_size = MOB_SIZE_LARGE
 	armour_penetration = 30
 	pixel_x = -16
+	maptext_height = 64
+	maptext_width = 64
 	turns_per_move = 5
 	movement_type = FLYING
 	health_doll_icon = "spacedragon"
@@ -99,7 +101,7 @@
 	if(!chosen_color)
 		dragon_name()
 		color_selection()
-	
+
 
 /mob/living/simple_animal/hostile/space_dragon/Life()
 	. = ..()
@@ -109,7 +111,7 @@
 			continue
 		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 		visible_message("<span class='danger'>[src] vomits up [consumed_mob]!</span>")
-		consumed_mob.forceMove(loc)
+		consumed_mob.forceMove(get_turf(src))
 		consumed_mob.Paralyze(50)
 	if((rifts_charged == 3 || (SSshuttle.emergency.mode == SHUTTLE_DOCKED && rifts_charged > 0)) && !objective_complete)
 		victory()
@@ -123,6 +125,7 @@
 		to_chat(src, "<span class='boldwarning'>You've failed to summon the rift in a timely manner!  You're being pulled back from whence you came!</span>")
 		destroy_rifts()
 		playsound(src, 'sound/magic/demon_dies.ogg', 100, TRUE)
+		empty_contents()
 		QDEL_NULL(src)
 
 /mob/living/simple_animal/hostile/space_dragon/AttackingTarget()
@@ -157,8 +160,8 @@
 					adjustHealth(-L.maxHealth * 0.5)
 			return
 	. = ..()
-	if(istype(target, /obj/mecha))
-		var/obj/mecha/M = target
+	if(istype(target, /obj/vehicle/sealed/mecha))
+		var/obj/vehicle/sealed/mecha/M = target
 		M.take_damage(50, BRUTE, MELEE, 1)
 
 /mob/living/simple_animal/hostile/space_dragon/AltClickOn(atom/A)
@@ -321,7 +324,7 @@
 		L.adjustFireLoss(30)
 		to_chat(L, "<span class='userdanger'>You're hit by [src]'s fire breath!</span>")
 	// deals damage to mechs
-	for(var/obj/mecha/M in T.contents)
+	for(var/obj/vehicle/sealed/mecha/M in T.contents)
 		if(M in hit_list)
 			continue
 		hit_list += M
@@ -351,7 +354,7 @@
   */
 /mob/living/simple_animal/hostile/space_dragon/proc/empty_contents()
 	for(var/atom/movable/AM in src)
-		AM.forceMove(loc)
+		AM.forceMove(get_turf(src))
 		if(prob(90))
 			step(AM, pick(GLOB.alldirs))
 
@@ -455,7 +458,7 @@
 			var/dir_to_target = get_dir(get_turf(src), get_turf(L))
 			var/throwtarget = get_edge_target_turf(target, dir_to_target)
 			L.safe_throw_at(throwtarget, 10, 1, src)
-			L.Paralyze(50)
+			L.drop_all_held_items()
 	addtimer(CALLBACK(src, .proc/reset_status), 4 + ((tiredness * tiredness_mult) / 10))
 	tiredness = tiredness + (gust_tiredness * tiredness_mult)
 

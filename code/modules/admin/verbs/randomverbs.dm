@@ -491,7 +491,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				GLOB.data_core.manifest_inject(new_character)
 
 			if(alert(new_character,"Would you like an active AI to announce this character?",,"No","Yes")=="Yes")
-				AnnounceArrival(new_character, new_character.mind.assigned_role)
+				announce_arrival(new_character, new_character.mind.assigned_role)
 
 	var/msg = "<span class='adminnotice'>[admin] has respawned [player_key] as [new_character.real_name].</span>"
 	message_admins(msg)
@@ -517,10 +517,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("Admin [key_name_admin(usr)] has added a new AI law - [input]")
 
 	var/show_log = alert(src, "Show ion message?", "Message", "Yes", "No")
-	var/announce_ion_laws = (show_log == "Yes" ? 1 : -1)
+	var/announce_ion_laws = (show_log == "Yes" ? 100 : 0)
 
 	var/datum/round_event/ion_storm/add_law_only/ion = new()
-	ion.announceEvent = announce_ion_laws
+	ion.announce_chance = announce_ion_laws
 	ion.ionMessage = input
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Custom AI Law") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -560,7 +560,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/announce_command_report = TRUE
 	switch(confirm)
 		if("Yes")
-			priority_announce(input, null, "commandreport")
+			priority_announce(input, null, SSstation.announcer.get_rand_report_sound())
 			announce_command_report = FALSE
 		if("Cancel")
 			return
@@ -1557,6 +1557,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_check_player_exp()	//Allows admins to determine who the newer players are.
 	set category = "Admin"
 	set name = "Player Playtime"
+
 	if(!check_rights(R_ADMIN))
 		return
 
@@ -1564,12 +1565,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(usr, "<span class='warning'>Tracking is disabled in the server configuration file.</span>")
 		return
 
-	var/list/msg = list()
-	msg += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
-	for(var/client/C in GLOB.clients)
-		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(C.mob)]'>" + C.get_exp_living() + "</a></LI>"
-	msg += "</UL></BODY></HTML>"
-	src << browse(msg.Join(), "window=Player_playtime_check")
+	new /datum/player_playtime(usr)
 
 /obj/effect/temp_visual/fireball
 	icon = 'icons/obj/wizard.dmi'
@@ -1581,7 +1577,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	duration = 9
 	pixel_z = 270
 
-/obj/effect/temp_visual/fireball/Initialize()
+/obj/effect/temp_visual/fireball/Initialize(mapload)
 	. = ..()
 	animate(src, pixel_z = 0, time = duration)
 
@@ -1592,7 +1588,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	light_range = 2
 	duration = 9
 
-/obj/effect/temp_visual/target/ex_act()
+/obj/effect/temp_visual/target/ex_act(severity, target, origin)
 	return
 
 /obj/effect/temp_visual/target/Initialize(mapload, list/flame_hit)

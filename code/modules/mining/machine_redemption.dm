@@ -11,6 +11,7 @@
 	output_dir = SOUTH
 	req_access = list(ACCESS_MINERAL_STOREROOM)
 	speed_process = TRUE
+	init_process = TRUE
 	circuit = /obj/item/circuitboard/machine/ore_redemption
 	layer = BELOW_OBJ_LAYER
 	var/points = 0
@@ -346,7 +347,7 @@
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
 			return TRUE
 
-/obj/machinery/mineral/ore_redemption/ex_act(severity, target)
+/obj/machinery/mineral/ore_redemption/ex_act(severity, target, origin)
 	do_sparks(5, TRUE, src)
 	..()
 

@@ -5,7 +5,7 @@
 	permeability_coefficient = 0.9
 	block_priority = BLOCK_PRIORITY_UNIFORM
 	slot_flags = ITEM_SLOT_ICLOTHING
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0, "wound" = 5)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 5)
 	mutantrace_variation = STYLE_DIGITIGRADE|USE_TAUR_CLIP_MASK
 	limb_integrity = 120
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
@@ -20,7 +20,7 @@
 	var/alt_covers_chest = FALSE // for adjusted/rolled-down jumpsuits, FALSE = exposes chest and arms, TRUE = exposes arms only
 	var/dummy_thick = FALSE // is able to hold accessories on its item
 	var/obj/item/clothing/accessory/attached_accessory
-	var/mutable_appearance/accessory_overlay
+	var/list/accessory_overlays
 
 /obj/item/clothing/under/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
 	. = ..()
@@ -29,9 +29,9 @@
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
 	if(blood_DNA)
-		. += mutable_appearance('icons/effects/blood.dmi', "uniformblood", color = blood_DNA_to_color())
-	if(accessory_overlay)
-		. += accessory_overlay
+		. += mutable_appearance('icons/effects/blood.dmi', "uniformblood", color = blood_DNA_to_color(), blend_mode = blood_DNA_to_blend())
+	if(length(accessory_overlays))
+		. += accessory_overlays
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if((sensordamage || (has_sensor < HAS_SENSORS && has_sensor != NO_SENSORS)) && istype(I, /obj/item/stack/cable_coil))
@@ -106,6 +106,10 @@
 	sensor_mode_intended = sensor_mode
 	..()
 
+/obj/item/clothing/under/Initialize(mapload)
+	. = ..()
+	register_context()
+
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
 	if(adjusted)
@@ -114,7 +118,7 @@
 		if(!alt_covers_chest)
 			body_parts_covered |= CHEST
 
-	if(attached_accessory && slot != SLOT_HANDS && ishuman(user))
+	if(attached_accessory && slot != ITEM_SLOT_HANDS && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		attached_accessory.on_uniform_equip(src, user)
 		if(attached_accessory.above_suit)
@@ -154,9 +158,15 @@
 			if((flags_inv & HIDEACCESSORY) || (A.flags_inv & HIDEACCESSORY))
 				return TRUE
 
-			accessory_overlay = mutable_appearance('icons/mob/clothing/accessories.dmi', attached_accessory.icon_state)
-			accessory_overlay.alpha = attached_accessory.alpha
-			accessory_overlay.color = attached_accessory.color
+			var/datum/element/polychromic/polychromic = LAZYACCESS(attached_accessory.comp_lookup, "item_worn_overlays")
+			if(!polychromic)
+				var/mutable_appearance/accessory_overlay = mutable_appearance('icons/mob/clothing/accessories.dmi', attached_accessory.icon_state)
+				accessory_overlay.alpha = attached_accessory.alpha
+				accessory_overlay.color = attached_accessory.color
+				accessory_overlays = list(accessory_overlay)
+			else
+				accessory_overlays = list()
+				polychromic.apply_worn_overlays(I, FALSE, 'icons/mob/clothing/accessories.dmi', I.item_state || I.icon_state, NONE, accessory_overlays)
 
 			if(ishuman(loc))
 				var/mob/living/carbon/human/H = loc
@@ -353,6 +363,21 @@
 				mutantrace_variation |= USE_TAUR_CLIP_MASK
 
 	return TRUE
+
+/obj/item/clothing/under/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if (!(item_flags & IN_INVENTORY))
+		return
+
+	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+
+	LAZYSET(context[SCREENTIP_CONTEXT_CTRL_LMB], INTENT_ANY, "Set to highest sensor")
+	if(attached_accessory)
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, "Remove [attached_accessory]")
+	else
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, "Adjust [src]")
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/clothing/under/rank
 	dying_key = DYE_REGISTRY_UNDER

@@ -46,10 +46,10 @@
 	else
 		adjustFireLoss(5)
 
-/mob/living/simple_animal/hostile/blob/CanPass(atom/movable/mover, turf/target)
+/mob/living/simple_animal/hostile/blob/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover, /obj/structure/blob))
-		return 1
-	return ..()
+		return TRUE
 
 /mob/living/simple_animal/hostile/blob/Process_Spacemove(movement_dir = 0)
 	for(var/obj/structure/blob/B in range(1, src))
@@ -102,7 +102,7 @@
 		factory.spores += src
 	. = ..()
 
-/mob/living/simple_animal/hostile/blob/blobspore/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/blob/blobspore/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(!is_zombie && isturf(src.loc))
@@ -221,7 +221,7 @@
 	hud_type = /datum/hud/blobbernaut
 	var/independent = FALSE
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
+/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize(mapload)
 	. = ..()
 	if(independent)
 		pass_flags &= ~PASSBLOB
@@ -233,7 +233,7 @@
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/blob/blobbernaut/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	var/list/blobs_in_area = range(2, src)

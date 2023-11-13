@@ -5,7 +5,6 @@
 // Ready states at roundstart for mob/dead/new_player
 #define PLAYER_NOT_READY 0
 #define PLAYER_READY_TO_PLAY 1
-#define PLAYER_READY_TO_OBSERVE 2
 
 // movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
@@ -290,12 +289,13 @@
 
 // MINOR TWEAKS/MISC
 #define AGE_MIN					18	// youngest a character can be // CITADEL EDIT - 17 --> 18
-#define AGE_MAX					85	// oldest a character can be
+#define AGE_MAX					85	// oldest a character can be randomly generated
+#define AGE_MAX_INPUT			85	// oldest a character's age can be manually set
 #define WIZARD_AGE_MIN			30	// youngest a wizard can be
 #define APPRENTICE_AGE_MIN		29	// youngest an apprentice can be
 #define SHOES_SLOWDOWN			 0	// How much shoes slow you down by default. Negative values speed you up
 #define SHOES_SPEED_SLIGHT	SHOES_SLOWDOWN - 1 // slightest speed boost to movement
-#define POCKET_STRIP_DELAY		40	// time taken (in deciseconds) to search somebody's pockets
+#define POCKET_STRIP_DELAY (4 SECONDS) //time taken to search somebody's pockets
 #define DOOR_CRUSH_DAMAGE		15	// the amount of damage that airlocks deal when they crush you
 
 #define	HUNGER_FACTOR			 0.1	// factor at which mob nutrition decreases
@@ -344,6 +344,39 @@
 ///Define for spawning megafauna instead of a mob for cave gen
 #define SPAWN_MEGAFAUNA "bluh bluh huge boss"
 
+/*
+ * Defines for "AI emotions", allowing the AI to expression emotions
+ * with status displays via emotes.
+ */
+
+#define AI_EMOTION_VERY_HAPPY "Very Happy"
+#define AI_EMOTION_HAPPY "Happy"
+#define AI_EMOTION_NEUTRAL "Neutral"
+#define AI_EMOTION_UNSURE "Unsure"
+#define AI_EMOTION_CONFUSED "Confused"
+#define AI_EMOTION_SAD "Sad"
+#define AI_EMOTION_BSOD "BSOD"
+#define AI_EMOTION_BLANK "Blank"
+#define AI_EMOTION_PROBLEMS "Problems?"
+#define AI_EMOTION_AWESOME "Awesome"
+#define AI_EMOTION_FACEPALM "Facepalm"
+#define AI_EMOTION_THINKING "Thinking"
+#define AI_EMOTION_FRIEND_COMPUTER "Friend Computer"
+#define AI_EMOTION_DORFY "Dorfy"
+#define AI_EMOTION_BLUE_GLOW "Blue Glow"
+#define AI_EMOTION_RED_GLOW "Red Glow"
+
 // / Breathing types. Lungs can access either by these or by a string, which will be considered a gas ID.
 #define BREATH_OXY		/datum/breathing_class/oxygen
 #define BREATH_PLASMA	/datum/breathing_class/plasma
+#define BREATH_METHANE	/datum/breathing_class/methane
+
+//Gremlins
+#define NPC_TAMPER_ACT_FORGET 1 //Don't try to tamper with this again
+#define NPC_TAMPER_ACT_NOMSG  2 //Don't produce a visible message
+
+//Game mode list indexes
+#define CURRENT_LIVING_PLAYERS	"living_players_list"
+#define CURRENT_LIVING_ANTAGS	"living_antags_list"
+#define CURRENT_DEAD_PLAYERS	"dead_players_list"
+#define CURRENT_OBSERVERS		"current_observers_list"

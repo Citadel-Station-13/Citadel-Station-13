@@ -75,6 +75,9 @@
 /obj/machinery/atmospherics/pipe/setPipenet(datum/pipeline/P)
 	parent = P
 
+/obj/machinery/atmospherics/pipe/zap_act(power, zap_flags)
+	return 0 // they're not really machines in the normal sense, probably shouldn't explode
+
 /obj/machinery/atmospherics/pipe/Destroy()
 	QDEL_NULL(parent)
 
@@ -106,7 +109,7 @@
 	. = list(parent)
 
 /obj/machinery/atmospherics/pipe/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee" && damage_amount < 12)
+	if(damage_flag == MELEE && damage_amount < 12)
 		return 0
 	. = ..()
 

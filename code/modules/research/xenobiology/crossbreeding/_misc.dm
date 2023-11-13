@@ -71,9 +71,9 @@
 	icon_state = "frozen"
 	density = TRUE
 	max_integrity = 100
-	armor = list("melee" = 30, "bullet" = 50, "laser" = -50, "energy" = -50, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = -80, "acid" = 30)
+	armor = list(MELEE = 30, BULLET = 50, LASER = -50, ENERGY = -50, BOMB = 0, BIO = 100, RAD = 100, FIRE = -80, ACID = 30)
 
-/obj/structure/ice_stasis/Initialize()
+/obj/structure/ice_stasis/Initialize(mapload)
 	. = ..()
 	playsound(src, 'sound/magic/ethereal_exit.ogg', 50, 1)
 
@@ -92,6 +92,10 @@
 	icon_state = "capturedevice"
 
 /obj/item/capturedevice/attack(mob/living/M, mob/user)
+	try_catching(M, user)
+
+/obj/item/capturedevice/proc/try_catching(mob/living/M, mob/user)
+	set waitfor = FALSE
 	if(length(contents))
 		to_chat(user, "<span class='warning'>The device already has something inside.</span>")
 		return
@@ -116,7 +120,7 @@
 			to_chat(user, "<span class='warning'>This creature is too aggressive to capture.</span>")
 			return
 	to_chat(user, "<span class='notice'>You store [M] in the capture device.</span>")
-	store(M)
+	store(M, user)
 
 /obj/item/capturedevice/attack_self(mob/user)
 	if(contents.len)
@@ -125,7 +129,10 @@
 	else
 		to_chat(user, "<span class='warning'>The device is empty...</span>")
 
-/obj/item/capturedevice/proc/store(var/mob/living/M)
+/obj/item/capturedevice/proc/store(var/mob/living/M, mob/user)
+	if(length(contents))
+		to_chat(user, "<span class='warning'>The device already has something inside.</span>")
+		return
 	M.forceMove(src)
 
 /obj/item/capturedevice/proc/release()

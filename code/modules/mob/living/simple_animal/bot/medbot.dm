@@ -155,87 +155,63 @@
 /mob/living/simple_animal/bot/medbot/attack_paw(mob/user)
 	return attack_hand(user)
 
-/mob/living/simple_animal/bot/medbot/get_controls(mob/user)
-	var/dat
-	dat += hack(user)
-	dat += showpai(user)
-	dat += "<TT><B>Medical Unit Controls v1.1</B></TT><BR><BR>"
-	dat += "Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>"
-	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
-	dat += "Beaker: "
+// Variables sent to TGUI
+/mob/living/simple_animal/bot/medbot/ui_data(mob/user)
+	var/list/data = ..()
 	if(reagent_glass)
-		dat += "<A href='?src=[REF(src)];eject=1'>Loaded \[[reagent_glass.reagents.total_volume]/[reagent_glass.reagents.maximum_volume]\]</a>"
-	else
-		dat += "None Loaded"
-	dat += "<br>Behaviour controls are [locked ? "locked" : "unlocked"]<hr>"
+		data["custom_controls"]["beaker"] = reagent_glass
+		data["custom_contrlos"]["reagents"] = "[reagent_glass.reagents.total_volume]/[reagent_glass.reagents.maximum_volume]"
 	if(!locked || hasSiliconAccessInArea(user) || IsAdminGhost(user))
-		dat += "<TT>Healing Threshold: "
-		dat += "<a href='?src=[REF(src)];adj_threshold=-10'>--</a> "
-		dat += "<a href='?src=[REF(src)];adj_threshold=-5'>-</a> "
-		dat += "[heal_threshold] "
-		dat += "<a href='?src=[REF(src)];adj_threshold=5'>+</a> "
-		dat += "<a href='?src=[REF(src)];adj_threshold=10'>++</a>"
-		dat += "</TT><br>"
+		data["custom_controls"]["injection_amount"] = injection_amount
+		data["custom_controls"]["use_beaker"] = use_beaker
+		data["custom_controls"]["treat_virus"] = treat_virus
+		data["custom_controls"]["heal_threshold"] = heal_threshold
+		data["custom_controls"]["speaker"] = !shut_up
+		data["custom_controls"]["crit_alerts"] = declare_crit
+		data["custom_controls"]["stationary_mode"] = stationary_mode
+	return data
 
-		dat += "<TT>Injection Level: "
-		dat += "<a href='?src=[REF(src)];adj_inject=-5'>-</a> "
-		dat += "[injection_amount] "
-		dat += "<a href='?src=[REF(src)];adj_inject=5'>+</a> "
-		dat += "</TT><br>"
+// Actions received from TGUI
+/mob/living/simple_animal/bot/medbot/ui_act(action, params)
+	. = ..()
+	if(. || !hasSiliconAccessInArea(usr) && !IsAdminGhost(usr) && !(bot_core.allowed(usr) || !locked))
+		return TRUE
+	switch(action)
+		if("heal_threshold")
+			var/adjust_num = round(text2num(params["threshold"]))
+			heal_threshold = adjust_num
+			if(heal_threshold < 5)
+				heal_threshold = 5
+			if(heal_threshold > 75)
+				heal_threshold = 75
 
-		dat += "Reagent Source: "
-		dat += "<a href='?src=[REF(src)];use_beaker=1'>[use_beaker ? "Loaded Beaker (When available)" : "Internal Synthesizer"]</a><br>"
+		if("injection_amount")
+			var/adjust_num = round(text2num(params["amount"]))
+			injection_amount = adjust_num
+			if(injection_amount < 1)
+				injection_amount = 1
+			if(injection_amount > 15)
+				injection_amount = 15
 
-		dat += "Treat Viral Infections: <a href='?src=[REF(src)];virus=1'>[treat_virus ? "Yes" : "No"]</a><br>"
-		dat += "The speaker switch is [shut_up ? "off" : "on"]. <a href='?src=[REF(src)];togglevoice=[1]'>Toggle</a><br>"
-		dat += "Critical Patient Alerts: <a href='?src=[REF(src)];critalerts=1'>[declare_crit ? "Yes" : "No"]</a><br>"
-		dat += "Patrol Station: <a href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</a><br>"
-		dat += "Stationary Mode: <a href='?src=[REF(src)];stationary=1'>[stationary_mode ? "Yes" : "No"]</a><br>"
+		if("use_beaker")
+			use_beaker = !use_beaker
 
-	return dat
+		if("eject")
+			if(!isnull(reagent_glass))
+				reagent_glass.forceMove(drop_location())
+				reagent_glass = null
 
-/mob/living/simple_animal/bot/medbot/Topic(href, href_list)
-	if(..())
-		return 1
+		if("speaker")
+			shut_up = !shut_up
+		if("crit_alerts")
+			declare_crit = !declare_crit
+		if("stationary_mode")
+			stationary_mode = !stationary_mode
+			path = list()
+			update_appearance()
 
-	if(href_list["adj_threshold"])
-		var/adjust_num = text2num(href_list["adj_threshold"])
-		heal_threshold += adjust_num
-		if(heal_threshold < 5)
-			heal_threshold = 5
-		if(heal_threshold > 75)
-			heal_threshold = 75
-
-	else if(href_list["adj_inject"])
-		var/adjust_num = text2num(href_list["adj_inject"])
-		injection_amount += adjust_num
-		if(injection_amount < 5)
-			injection_amount = 5
-		if(injection_amount > 15)
-			injection_amount = 15
-
-	else if(href_list["use_beaker"])
-		use_beaker = !use_beaker
-
-	else if(href_list["eject"] && (!isnull(reagent_glass)))
-		reagent_glass.forceMove(drop_location())
-		reagent_glass = null
-
-	else if(href_list["togglevoice"])
-		shut_up = !shut_up
-
-	else if(href_list["critalerts"])
-		declare_crit = !declare_crit
-
-	else if(href_list["stationary"])
-		stationary_mode = !stationary_mode
-		path = list()
-		update_icon()
-
-	else if(href_list["virus"])
-		treat_virus = !treat_virus
-
-	update_controls()
+		if("virus")
+			treat_virus = !treat_virus
 	return
 
 /mob/living/simple_animal/bot/medbot/attackby(obj/item/W as obj, mob/user as mob, params)
@@ -251,10 +227,9 @@
 
 		reagent_glass = W
 		to_chat(user, "<span class='notice'>You insert [W].</span>")
-		show_controls(user)
 
 	else if(istype(W, /obj/item/reagent_containers/syringe/piercing))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_PIERERCING))
+		if(bot_core.allowed(user) && open && !(upgrades & UPGRADE_MEDICAL_PIERERCING))
 			to_chat(user, "<span class='notice'>You replace \the [src] syringe with a diamond-tipped one!</span>")
 			upgrades |= UPGRADE_MEDICAL_PIERERCING
 			qdel(W)
@@ -268,7 +243,7 @@
 			to_chat(user, "<span class='notice'>The [src] already has a diamond-tipped syringe!</span>")
 
 	else if(istype(W, /obj/item/hypospray/mkii))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_HYPOSPRAY))
+		if(bot_core.allowed(user) && open && !(upgrades & UPGRADE_MEDICAL_HYPOSPRAY))
 			to_chat(user, "<span class='notice'>You replace \the [src] syringe base with a DeForest Medical MK.II Hypospray!</span>")
 			upgrades |= UPGRADE_MEDICAL_HYPOSPRAY
 			injection_time = 15 //Half the time half the death!
@@ -284,7 +259,7 @@
 			to_chat(user, "<span class='notice'>The [src] already has a DeForest Medical Hypospray base!</span>")
 
 	else if(istype(W, /obj/item/circuitboard/machine/chem_dispenser))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_CHEM_BOARD))
+		if(bot_core.allowed(user) && open && !(upgrades & UPGRADE_MEDICAL_CHEM_BOARD))
 			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
 			upgrades |= UPGRADE_MEDICAL_CHEM_BOARD
 			treatment_oxy = /datum/reagent/medicine/salbutamol //Replaces Dex with salbutamol "better" healing of o2
@@ -299,7 +274,7 @@
 			to_chat(user, "<span class='notice'>The [src] already has this upgrade!</span>")
 
 	else if(istype(W, /obj/item/circuitboard/machine/cryo_tube))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_CRYO_BOARD))
+		if(bot_core.allowed(user) && open && !(upgrades & UPGRADE_MEDICAL_CRYO_BOARD))
 			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
 			upgrades |= UPGRADE_MEDICAL_CRYO_BOARD
 			treatment_fire = /datum/reagent/medicine/oxandrolone //Replaces Kep with oxandrolone "better" healing of burns
@@ -314,7 +289,7 @@
 			to_chat(user, "<span class='notice'>The [src] already has this upgrade!</span>")
 
 	else if(istype(W, /obj/item/circuitboard/machine/chem_master))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_CHEM_MASTER))
+		if(bot_core.allowed(user) && open && !(upgrades & UPGRADE_MEDICAL_CHEM_MASTER))
 			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
 			upgrades |= UPGRADE_MEDICAL_CHEM_MASTER
 			treatment_brute = /datum/reagent/medicine/sal_acid //Replaces Bic with Sal Acid "better" healing of brute
@@ -329,7 +304,7 @@
 			to_chat(user, "<span class='notice'>the [src] already has this upgrade!</span>")
 
 	else if(istype(W, /obj/item/circuitboard/machine/sleeper))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_SLEEP_BOARD))
+		if(bot_core.allowed(user) && open && !(upgrades & UPGRADE_MEDICAL_SLEEP_BOARD))
 			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
 			upgrades |= UPGRADE_MEDICAL_SLEEP_BOARD
 			treatment_tox = /datum/reagent/medicine/pen_acid //replaces charcoal with pen acid a "better" healing of toxins
@@ -359,7 +334,7 @@
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		flick("medibot_spark", src)
 		playsound(src, "sparks", 75, 1)
-		if(!CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_PIERERCING))
+		if(!(upgrades & UPGRADE_MEDICAL_PIERERCING))
 			upgrades |= UPGRADE_MEDICAL_PIERERCING //Jabs even harder through the clothing!
 		if(user)
 			oldpatient = user
@@ -517,10 +492,10 @@
 		return
 
 	if(patient && path.len == 0 && (get_dist(src,patient) > 1))
-		path = get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, 0, 30,id=access_card)
+		path = get_path_to(src, patient, 30, id=access_card)
 		mode = BOT_MOVING
 		if(!path.len) //try to get closer if you can't reach the patient directly
-			path = get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, 0, 30,1,id=access_card)
+			path = get_path_to(src, patient, 30, 1, id=access_card)
 			if(!path.len) //Do not chase a patient we cannot reach.
 				soft_reset()
 
@@ -558,7 +533,7 @@
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if (H.wear_suit && H.head && istype(H.wear_suit, /obj/item/clothing) && istype(H.head, /obj/item/clothing) && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_PIERERCING))
+		if (H.wear_suit && H.head && istype(H.wear_suit, /obj/item/clothing) && istype(H.head, /obj/item/clothing) && !(upgrades & UPGRADE_MEDICAL_PIERERCING))
 			var/obj/item/clothing/CS = H.wear_suit
 			var/obj/item/clothing/CH = H.head
 			if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)

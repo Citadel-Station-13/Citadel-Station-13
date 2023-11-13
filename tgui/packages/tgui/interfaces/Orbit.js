@@ -1,3 +1,4 @@
+import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { multiline } from 'common/string';
 import { resolveAsset } from '../assets';
@@ -62,6 +63,18 @@ const OrbitedButton = (props, context) => {
       onClick={() => act("orbit", {
         ref: thing.ref,
       })}>
+      {thing.assignment && (
+        <Box inline ml={1}>
+          <Box
+            className={classes([
+              'jobs8x8',
+              thing.assignment,
+            ])}
+            style={{
+              transform: 'scale(1.5) translate(-50%, 0)',
+            }} />
+        </Box>
+      )}
       {thing.name}
       {thing.orbiters && (
         <Box inline ml={1}>
@@ -150,7 +163,7 @@ export const Orbit = (props, context) => {
                 color="transparent"
                 tooltip={multiline`Toggle Auto-Observe. When active, you'll
                 see the UI / full inventory of whoever you're orbiting. Neat!`}
-                tooltipPosition="bottom-left"
+                tooltipPosition="bottom-start"
                 selected={auto_observe}
                 icon={auto_observe ? "toggle-on" : "toggle-off"}
                 onClick={() => act("toggle_observe")} />
@@ -158,14 +171,14 @@ export const Orbit = (props, context) => {
                 inline
                 color="transparent"
                 tooltip="Refresh"
-                tooltipPosition="bottom-left"
+                tooltipPosition="bottom-start"
                 icon="sync-alt"
                 onClick={() => act("refresh")} />
             </Flex.Item>
           </Flex>
         </Section>
         {antagonists.length > 0 && (
-          <Section title="Visible Antagonists">
+          <Section title="Ghost-Visible Antagonists">
             {sortedAntagonists.map(([name, antags]) => (
               <Section key={name} title={name} level={2}>
                 {antags

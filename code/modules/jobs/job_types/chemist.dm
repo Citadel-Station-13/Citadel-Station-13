@@ -18,11 +18,17 @@
 	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_CHEMISTRY, ACCESS_MINERAL_STOREROOM)
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
+	bounty_types = CIV_JOB_CHEM
 
 	display_order = JOB_DISPLAY_ORDER_CHEMIST
 	threat = 1.5
 
 	starting_modifiers = list(/datum/skill_modifier/job/surgery, /datum/skill_modifier/job/affinity/surgery)
+	
+	family_heirlooms = list(
+		/obj/item/book/manual/wiki/chemistry,
+		/obj/item/fermichem/pHbooklet
+	)
 
 /datum/outfit/job/chemist
 	name = "Chemist"

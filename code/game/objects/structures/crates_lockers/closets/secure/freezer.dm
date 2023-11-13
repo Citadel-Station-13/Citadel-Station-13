@@ -6,7 +6,7 @@
 	recursive_organ_check(src)
 	return ..()
 
-/obj/structure/closet/secure_closet/freezer/Initialize()
+/obj/structure/closet/secure_closet/freezer/Initialize(mapload)
 	. = ..()
 	recursive_organ_check(src)
 
@@ -21,7 +21,7 @@
 	if(.) //if we actually closed the locker
 		recursive_organ_check(src)
 
-/obj/structure/closet/secure_closet/freezer/ex_act()
+/obj/structure/closet/secure_closet/freezer/ex_act(severity, target, origin)
 	if(!jones)
 		jones = TRUE
 	else

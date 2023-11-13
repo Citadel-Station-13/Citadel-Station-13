@@ -22,7 +22,7 @@
 	name = "Succubus milk"
 	description = "A volatile collodial mixture derived from milk that encourages mammary production via a potent estrogen mix."
 	color = "#E60584" // rgb: 96, 0, 255
-	taste_description = "a milky ice cream like flavour."
+	taste_description = "a milky ice cream like flavour"
 	overdose_threshold = 17
 	metabolization_rate = 0.25
 	impure_chem 			= /datum/reagent/fermi/BEsmaller //If you make an inpure chem, it stalls growth
@@ -37,7 +37,7 @@
 		if(volume >= 15) //To prevent monkey breast farms
 			var/turf/T = get_turf(M)
 			var/obj/item/organ/genital/breasts/B = new /obj/item/organ/genital/breasts(T)
-			M.visible_message("<span class='warning'>A pair of breasts suddenly fly out of the [M]!</b></span>")
+			M.visible_message("<span class='warning'>A pair of breasts suddenly fly out of [M]!</b></span>")
 			var/T2 = get_random_station_turf()
 			M.adjustBruteLoss(25)
 			M.DefaultCombatKnockdown(50)
@@ -106,7 +106,7 @@
 	name = "Modesty milk"
 	description = "A volatile collodial mixture derived from milk that encourages mammary reduction via a potent estrogen mix. Produced by reacting impure Succubus milk."
 	color = "#E60584" // rgb: 96, 0, 255
-	taste_description = "a milky ice cream like flavour."
+	taste_description = "a milky ice cream like flavour"
 	metabolization_rate = 0.25
 	can_synth = FALSE
 	value = REAGENT_VALUE_RARE
@@ -121,7 +121,7 @@
 /datum/reagent/fermi/BEsmaller_hypo
 	name = "Rectify milk" //Rectify
 	color = "#E60584"
-	taste_description = "a milky ice cream like flavour."
+	taste_description = "a milky ice cream like flavour"
 	metabolization_rate = 0.25
 	description = "A medicine used to treat organomegaly in a patient's breasts."
 	var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
@@ -175,7 +175,7 @@
 		if(volume >= 15) //to prevent monkey penis farms
 			var/turf/T = get_turf(M)
 			var/obj/item/organ/genital/penis/P = new /obj/item/organ/genital/penis(T)
-			M.visible_message("<span class='warning'>A penis suddenly flies out of the [M]!</b></span>")
+			M.visible_message("<span class='warning'>A penis suddenly flies out of [M]!</b></span>")
 			var/T2 = get_random_station_turf()
 			M.adjustBruteLoss(25)
 			M.DefaultCombatKnockdown(50)
@@ -282,4 +282,88 @@
 		P.modify_size(-0.1, optimal_size)
 	else if(P.length < optimal_size)
 		P.modify_size(0.1, 0, optimal_size)
+	return ..()
+
+
+
+///Ass enhancer
+/datum/reagent/fermi/butt_enlarger
+	name = "Denbu Tincture" //on Hyper it was 'Denbu Draft' but this makes it more consistent with the rectifying chemical down below.
+	description = "A mixture of natural vitamins and valentines plant extract, causing butt enlargement in humanoids."
+	color = "#e8ff1b"
+	taste_description = "butter with a sweet aftertaste" //pass me the butter, OM NOM
+	overdose_threshold = 17
+	can_synth = FALSE
+
+/datum/reagent/fermi/butt_enlarger/on_mob_metabolize(mob/living/carbon/M)
+	. = ..()
+	if(!ishuman(M)) //leaving the monkey feature for those desperate for goon level comedy.
+		if(volume >= 15) //to prevent monkey butt farms
+			var/turf/T = get_turf(M)
+			var/obj/item/organ/genital/butt/B = new /obj/item/organ/genital/butt(T)
+			M.visible_message("<span class='warning'>An ass suddenly flies out of [M]!</b></span>")
+			var/T2 = get_random_station_turf()
+			M.adjustBruteLoss(25)
+			M.DefaultCombatKnockdown(50)
+			M.Stun(50)
+			B.throw_at(T2, 8, 1)
+		M.reagents.del_reagent(type)
+		return
+	var/mob/living/carbon/human/H = M
+	if(!H.getorganslot(ORGAN_SLOT_BUTT) && H.emergent_genital_call())
+		H.genital_override = TRUE
+
+/datum/reagent/fermi/butt_enlarger/on_mob_life(mob/living/carbon/M) //Increases butt size
+	if(!ishuman(M))
+		return ..()
+	var/mob/living/carbon/human/H = M
+	if(!(H.client?.prefs.cit_toggles & BUTT_ENLARGEMENT))
+		return ..()
+	var/obj/item/organ/genital/butt/B = M.getorganslot(ORGAN_SLOT_BUTT)
+	if(!B) //If they don't have a butt. Give them one!
+		var/obj/item/organ/genital/butt/nB = new
+		nB.Insert(M)
+		if(nB)
+			if(M.dna.species.use_skintones && M.dna.features["genitals_use_skintone"])
+				nB.color = SKINTONE2HEX(H.skin_tone)
+			else if(M.dna.features["butt_color"])
+				nB.color = "#[M.dna.features["butt_color"]]"
+			else
+				nB.color = SKINTONE2HEX(H.skin_tone)
+			nB.size = 1
+			to_chat(M, "<span class='warning'>Your ass cheeks bulge outwards and feel more plush.</b></span>")
+			M.reagents.remove_reagent(type, 5)
+			B = nB
+	//If they have, increase size.
+	if(B.size_cached < BUTT_SIZE_MAX) //just in case
+		B.modify_size(0.05)
+	..()
+
+/datum/reagent/fermi/AEsmaller_hypo //"BEsmaller" already exists so using "AE" instead, A is for ass.
+	name = "Rectify tincture"
+	color = "#e8ff1b"
+	taste_description = "butter"
+	description = "A medicine used to treat organomegaly in a patient's ass."
+	metabolization_rate = 0.5
+	can_synth = TRUE
+
+/datum/reagent/fermi/AEsmaller_hypo/on_mob_metabolize(mob/living/M)
+	. = ..()
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+	if(!H.getorganslot(ORGAN_SLOT_BUTT) && H.dna.features["has_butt"])
+		H.give_genital(/obj/item/organ/genital/butt)
+
+/datum/reagent/fermi/AEsmaller_hypo/on_mob_life(mob/living/carbon/M)
+	var/obj/item/organ/genital/butt/B = M.getorganslot(ORGAN_SLOT_BUTT)
+	if(!B)
+		return ..()
+	var/optimal_size = M.dna.features["butt_size"]
+	if(!optimal_size)//Fast fix for those who don't want it.
+		B.modify_size(-0.2)
+	else if(B.size > optimal_size)
+		B.modify_size(-0.1, optimal_size)
+	else if(B.size < optimal_size)
+		B.modify_size(0.1, 0, optimal_size)
 	return ..()

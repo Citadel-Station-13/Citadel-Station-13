@@ -14,7 +14,7 @@
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
 	actions_types = list(/datum/action/item_action/toggle_paddles)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 
 	var/on = FALSE //if the paddles are equipped (1) or on the defib (0)
 	var/safety = TRUE //if you can zap people with the defibs on harm mode
@@ -33,7 +33,7 @@
 /obj/item/defibrillator/get_cell()
 	return cell
 
-/obj/item/defibrillator/Initialize() //starts without a cell for rnd
+/obj/item/defibrillator/Initialize(mapload) //starts without a cell for rnd
 	. = ..()
 	if(cell)
 		cell = new cell(src)
@@ -80,13 +80,13 @@
 /obj/item/defibrillator/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc == user)
 		if(slot_flags == ITEM_SLOT_BACK)
-			if(user.get_item_by_slot(SLOT_BACK) == src)
+			if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
 				ui_action_click()
 			else
 				to_chat(user, "<span class='warning'>Put the defibrillator on your back first!</span>")
 
 		else if(slot_flags == ITEM_SLOT_BELT)
-			if(user.get_item_by_slot(SLOT_BELT) == src)
+			if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
 				ui_action_click()
 			else
 				to_chat(user, "<span class='warning'>Strap the defibrillator's belt on first!</span>")
@@ -182,7 +182,7 @@
 
 /obj/item/defibrillator/equipped(mob/user, slot)
 	..()
-	if((slot_flags == ITEM_SLOT_BACK && slot != SLOT_BACK) || (slot_flags == ITEM_SLOT_BELT && slot != SLOT_BELT))
+	if((slot_flags == ITEM_SLOT_BACK && slot != ITEM_SLOT_BACK) || (slot_flags == ITEM_SLOT_BELT && slot != ITEM_SLOT_BELT))
 		remove_paddles(user)
 		update_power()
 
@@ -287,7 +287,7 @@
 	var/disarm_shock_time = 10
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/shockpaddles/Initialize()
+/obj/item/shockpaddles/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
@@ -423,7 +423,7 @@
 	if((!req_defib && grab_ghost) || (req_defib && defib.grab_ghost))
 		H.notify_ghost_cloning("Your heart is being defibrillated!")
 		H.grab_ghost() // Shove them back in their body.
-	else if(H.can_defib())
+	else if(H.can_revive())
 		H.notify_ghost_cloning("Your heart is being defibrillated. Re-enter your corpse if you want to be revived!", source = src)
 
 	do_help(H, user)
@@ -447,7 +447,7 @@
 	M.visible_message("<span class='danger'>[user] hastily places [src] on [M]'s chest!</span>", \
 			"<span class='userdanger'>[user] hastily places [src] on [M]'s chest!</span>")
 	busy = TRUE
-	if(do_after(user, isnull(defib?.disarm_shock_time)? disarm_shock_time : defib.disarm_shock_time, target = M))
+	if(do_after(user, isnull(defib?.disarm_shock_time)? disarm_shock_time : defib.disarm_shock_time, M))
 		M.visible_message("<span class='danger'>[user] zaps [M] with [src]!</span>", \
 				"<span class='userdanger'>[user] zaps [M] with [src]!</span>")
 		M.DefaultCombatKnockdown(140)
@@ -461,6 +461,8 @@
 			cooldown = TRUE
 	busy = FALSE
 	update_icon()
+	if(SEND_SIGNAL(src, COMSIG_DEFIBRILLATOR_SUCCESS) & COMPONENT_DEFIB_STOP)
+		return
 	if(req_defib)
 		defib.cooldowncheck(user)
 	else
@@ -475,7 +477,7 @@
 		"<span class='warning'>You overcharge the paddles and begin to place them onto [H]'s chest...</span>")
 	busy = TRUE
 	update_icon()
-	if(do_after(user, 30, target = H))
+	if(do_after(user, 3 SECONDS, H))
 		user.visible_message("<span class='notice'>[user] places [src] on [H]'s chest.</span>",
 			"<span class='warning'>You place [src] on [H]'s chest and begin to charge them.</span>")
 		var/turf/T = get_turf(defib)
@@ -484,7 +486,7 @@
 			T.audible_message("<span class='warning'>\The [defib] lets out an urgent beep and lets out a steadily rising hum...</span>")
 		else
 			user.audible_message("<span class='warning'>[src] let out an urgent beep.</span>")
-		if(do_after(user, 30, target = H)) //Takes longer due to overcharging
+		if(do_after(user, 3 SECONDS, H)) //Takes longer due to overcharging
 			if(!H)
 				busy = FALSE
 				update_icon()
@@ -514,6 +516,8 @@
 				cooldown = TRUE
 			busy = FALSE
 			update_icon()
+			if(SEND_SIGNAL(src, COMSIG_DEFIBRILLATOR_SUCCESS) & COMPONENT_DEFIB_STOP)
+				return
 			if(!req_defib)
 				recharge(60)
 			if(req_defib && (defib.cooldowncheck(user)))
@@ -538,7 +542,7 @@
 		primetimer2 = 20
 		deathtimer = DEFIB_TIME_LOSS * 10
 
-	if(do_after(user, primetimer, target = H)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
+	if(do_after(user, primetimer, H)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 		user.visible_message("<span class='notice'>[user] places [src] on [H]'s chest.</span>", "<span class='warning'>You place [src] on [H]'s chest.</span>")
 		playsound(src, 'sound/machines/defib_charge.ogg', 75, 0)
 		// patients rot when they are killed, and die when they are dead
@@ -547,7 +551,7 @@
 		var/total_burn	= 0
 		var/total_brute	= 0
 		var/obj/item/organ/heart = H.getorgan(/obj/item/organ/heart)
-		if(do_after(user, primetimer2, target = H)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
+		if(do_after(user, primetimer2, H)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
 			for(var/obj/item/carried_item in H.contents)
 				if(istype(carried_item, /obj/item/clothing/suit/space))
 					if((!combat && !req_defib) || (req_defib && !defib.combat))
@@ -601,11 +605,12 @@
 						H.adjustOxyLoss(H.health - HALFWAYCRITDEATH, 0)
 					else
 						var/overall_damage = total_brute + total_burn + H.getToxLoss() + H.getOxyLoss()
-						var/mobhealth = H.health
-						H.adjustOxyLoss((mobhealth - HALFWAYCRITDEATH) * (H.getOxyLoss() / overall_damage), 0)
-						H.adjustToxLoss((mobhealth - HALFWAYCRITDEATH) * (H.getToxLoss() / overall_damage), 0)
-						H.adjustFireLoss((mobhealth - HALFWAYCRITDEATH) * (total_burn / overall_damage), 0)
-						H.adjustBruteLoss((mobhealth - HALFWAYCRITDEATH) * (total_brute / overall_damage), 0)
+						if(overall_damage)
+							var/mobhealth = H.health
+							H.adjustOxyLoss((mobhealth - HALFWAYCRITDEATH) * (H.getOxyLoss() / overall_damage), 0)
+							H.adjustToxLoss((mobhealth - HALFWAYCRITDEATH) * (H.getToxLoss() / overall_damage), 0)
+							H.adjustFireLoss((mobhealth - HALFWAYCRITDEATH) * (total_burn / overall_damage), 0)
+							H.adjustBruteLoss((mobhealth - HALFWAYCRITDEATH) * (total_brute / overall_damage), 0)
 					H.updatehealth() // Previous "adjust" procs don't update health, so we do it manually.
 					user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful.</span>")
 					playsound(src, 'sound/machines/defib_success.ogg', 50, 0)
@@ -631,6 +636,8 @@
 					defib.deductcharge(revivecost)
 					cooldown = 1
 				update_icon()
+				if(SEND_SIGNAL(src, COMSIG_DEFIBRILLATOR_SUCCESS) & COMPONENT_DEFIB_STOP)
+					return
 				if(req_defib)
 					defib.cooldowncheck(user)
 				else

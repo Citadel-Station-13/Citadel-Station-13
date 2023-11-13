@@ -33,7 +33,7 @@
 	icon_state = "reactiveoff"
 	item_state = "reactiveoff"
 	blood_overlay_type = "armor"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	actions_types = list(/datum/action/item_action/toggle)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
@@ -51,7 +51,7 @@
 		icon_state = "reactiveoff"
 		item_state = "reactiveoff"
 	add_fingerprint(user)
-	if(user.get_item_by_slot(SLOT_WEAR_SUIT) == src)
+	if(user.get_item_by_slot(ITEM_SLOT_OCLOTHING) == src)
 		user.update_inv_wear_suit()
 
 /obj/item/clothing/suit/armor/reactive/emp_act(severity)
@@ -177,7 +177,7 @@
 
 /obj/item/clothing/suit/armor/reactive/tesla/equipped(mob/user, slot)
 	..()
-	if(slot_flags & slotdefine2slotbit(slot)) //Was equipped to a valid slot for this item?
+	if(slot_flags & slot) //Was equipped to a valid slot for this item?
 		ADD_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "reactive_tesla_armor")
 
 /obj/item/clothing/suit/armor/reactive/tesla/block_action(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)

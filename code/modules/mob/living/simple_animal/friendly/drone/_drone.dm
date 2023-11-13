@@ -79,7 +79,7 @@
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
 
-/mob/living/simple_animal/drone/Initialize()
+/mob/living/simple_animal/drone/Initialize(mapload)
 	. = ..()
 	GLOB.drones_list += src
 	access_card = new /obj/item/card/id(src)
@@ -88,10 +88,10 @@
 
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)
-		equip_to_slot_or_del(I, SLOT_GENERC_DEXTROUS_STORAGE)
+		equip_to_slot_or_del(I, ITEM_SLOT_DEX_STORAGE)
 	if(default_hatmask)
 		var/obj/item/I = new default_hatmask(src)
-		equip_to_slot_or_del(I, SLOT_HEAD)
+		equip_to_slot_or_del(I, ITEM_SLOT_HEAD)
 
 	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
@@ -140,6 +140,12 @@
 	if(!picked)
 		pickVisualAppearence()
 
+/mob/living/simple_animal/drone/auto_deadmin_on_login()
+	if(!client?.holder)
+		return TRUE
+	if(CONFIG_GET(flag/auto_deadmin_silicons) || (client.prefs?.deadmin & DEADMIN_POSITION_SILICON))
+		return client.holder.auto_deadmin()
+	return ..()
 
 /mob/living/simple_animal/drone/death(gibbed)
 	..(gibbed)
@@ -172,7 +178,7 @@
 
 
 /mob/living/simple_animal/drone/examine(mob/user)
-	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!")
+	. = list("<span class='info'>This is [icon2html(src, user)] \a <b>[src]</b>!")
 
 	//Hands
 	for(var/obj/item/I in held_items)
@@ -208,7 +214,7 @@
 			. += "<span class='deadsay'>A message repeatedly flashes on its display: \"REBOOT -- REQUIRED\".</span>"
 		else
 			. += "<span class='deadsay'>A message repeatedly flashes on its display: \"ERROR -- OFFLINE\".</span>"
-	. += "*---------*</span>"
+	. += "</span>"
 
 
 /mob/living/simple_animal/drone/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt maintenance drones.
@@ -225,20 +231,26 @@
 		adjustBruteLoss(heavy_emp_damage)
 		to_chat(src, "<span class='userdanger'>HeAV% DA%^MMA+G TO I/O CIR!%UUT!</span>")
 
-/mob/living/simple_animal/drone/proc/triggerAlarm(class, area/A, O, obj/alarmsource)
-	if(alarmsource.z != z)
+/mob/living/simple_animal/drone/proc/triggerAlarm(class, area/home, cameras, obj/source)
+	if(source.z != z)
 		return
-	if(stat != DEAD)
-		var/list/L = src.alarms[class]
-		for (var/I in L)
-			if (I == A.name)
-				var/list/alarm = L[I]
-				var/list/sources = alarm[2]
-				if (!(alarmsource in sources))
-					sources += alarmsource
-				return
-		L[A.name] = list(A, list(alarmsource))
-		to_chat(src, "--- [class] alarm detected in [A.name]!")
+	if(stat == DEAD)
+		return
+	var/list/our_sort = alarms[class]
+	for(var/areaname in our_sort)
+		if (areaname == home.name)
+			var/list/alarm = our_sort[areaname]
+			var/list/sources = alarm[3]
+			if (!(source in sources))
+				sources += source
+			return TRUE
+
+	our_sort[home.name] = list(home, list(source))
+	to_chat(src, "--- [class] alarm detected in [home.name]!")
+
+///This isn't currently needed since drones do jack shit with cameras. I hate this code so much
+/mob/living/simple_animal/drone/proc/freeCamera(area/home, obj/machinery/camera/cam)
+	return
 
 /mob/living/simple_animal/drone/proc/cancelAlarm(class, area/A, obj/origin)
 	if(stat != DEAD)

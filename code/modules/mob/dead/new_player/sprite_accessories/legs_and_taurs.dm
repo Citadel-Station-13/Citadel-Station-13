@@ -126,6 +126,11 @@
 	hide_legs = USE_SNEK_CLIP_MASK
 	matrixed_sections = MATRIX_RED_GREEN
 
+/datum/sprite_accessory/taur/naga/coiled
+	name = "Naga (coiled)"
+	icon_state = "naga_coiled"
+	ignore = TRUE
+
 /datum/sprite_accessory/taur/otie
 	name = "Otie"
 	icon_state = "otie"

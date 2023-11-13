@@ -13,8 +13,8 @@
  * Glass sheets
  */
 GLOBAL_LIST_INIT(glass_recipes, list ( \
-	new/datum/stack_recipe("directional window", /obj/structure/window/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("fulltile window", /obj/structure/window/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("directional window", /obj/structure/window/unanchored, time = 10, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("fulltile window", /obj/structure/window/fulltile/unanchored, 2, time = 20, on_floor = TRUE, window_checks = TRUE), \
 	null, \
 	new/datum/stack_recipe_list("glass working bases", list( \
 		new/datum/stack_recipe("chem dish", /obj/item/glasswork/glass_base/dish, 10), \
@@ -22,8 +22,8 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 		new/datum/stack_recipe("spout flask", /obj/item/glasswork/glass_base/spouty, 20), \
 		new/datum/stack_recipe("small bulb flask", /obj/item/glasswork/glass_base/flask_small, 5), \
 		new/datum/stack_recipe("large bottle flask", /obj/item/glasswork/glass_base/flask_large, 15), \
-		new/datum/stack_recipe("tea cup", /obj/item/glasswork/glass_base/tea_plate, 5), \
-		new/datum/stack_recipe("tea plate", /obj/item/glasswork/glass_base/tea_cup, 5), \
+		new/datum/stack_recipe("tea cup", /obj/item/glasswork/glass_base/tea_cup, 5), \
+		new/datum/stack_recipe("tea plate", /obj/item/glasswork/glass_base/tea_plate, 5), \
 	)), \
 ))
 
@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	icon_state = "sheet-glass"
 	item_state = "sheet-glass"
 	custom_materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/glass
 	grind_results = list(/datum/reagent/silicon = 20)
@@ -95,8 +95,8 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 
 
 GLOBAL_LIST_INIT(pglass_recipes, list ( \
-	new/datum/stack_recipe("directional window", /obj/structure/window/plasma/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("fulltile window", /obj/structure/window/plasma/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE) \
+	new/datum/stack_recipe("directional window", /obj/structure/window/plasma/unanchored, time = 10, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("fulltile window", /obj/structure/window/plasma/fulltile/unanchored, 2, time = 20, on_floor = TRUE, window_checks = TRUE) \
 ))
 
 /obj/item/stack/sheet/plasmaglass
@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	icon_state = "sheet-pglass"
 	item_state = "sheet-pglass"
 	custom_materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 75, "acid" = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 75, ACID = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plasmaglass
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10)
@@ -147,10 +147,10 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
  * Reinforced glass sheets
  */
 GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
-	new/datum/stack_recipe("windoor frame", /obj/structure/windoor_assembly, 5, time = 0, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("windoor frame", /obj/structure/windoor_assembly, 5, time = 20, on_floor = TRUE, window_checks = TRUE), \
 	null, \
-	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/reinforced/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/reinforced/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE) \
+	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/reinforced/unanchored, time = 10, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/reinforced/fulltile/unanchored, 2, time = 20, on_floor = TRUE, window_checks = TRUE) \
 ))
 
 
@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	icon_state = "sheet-rglass"
 	item_state = "sheet-rglass"
 	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 70, ACID = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/rglass
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/iron = 10)
@@ -198,8 +198,8 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	. += GLOB.reinforced_glass_recipes
 
 GLOBAL_LIST_INIT(prglass_recipes, list ( \
-	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/plasma/reinforced/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/plasma/reinforced/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE) \
+	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/plasma/reinforced/unanchored, time = 10, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/plasma/reinforced/fulltile/unanchored, 2, time = 20, on_floor = TRUE, window_checks = TRUE) \
 ))
 
 /obj/item/stack/sheet/plasmarglass
@@ -209,7 +209,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	icon_state = "sheet-prglass"
 	item_state = "sheet-prglass"
 	custom_materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT, /datum/material/iron=MINERAL_MATERIAL_AMOUNT * 0.5,)
-	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
+	armor = list(MELEE = 20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plasmarglass
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10, /datum/reagent/iron = 10)
@@ -226,7 +226,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	S.efficiency *= 1.2
 
 GLOBAL_LIST_INIT(titaniumglass_recipes, list(
-	new/datum/stack_recipe("shuttle window", /obj/structure/window/shuttle/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE)
+	new/datum/stack_recipe("shuttle window", /obj/structure/window/shuttle/unanchored, 2, time = 20, on_floor = TRUE, window_checks = TRUE)
 	))
 
 /obj/item/stack/sheet/titaniumglass
@@ -236,7 +236,7 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	icon_state = "sheet-titaniumglass"
 	item_state = "sheet-titaniumglass"
 	custom_materials = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/titaniumglass
 	shard_type = /obj/item/shard
@@ -250,7 +250,7 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	S.efficiency *= 1.5
 
 GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
-	new/datum/stack_recipe("plastitanium window", /obj/structure/window/plastitanium/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE)
+	new/datum/stack_recipe("plastitanium window", /obj/structure/window/plastitanium/unanchored, 2, time = 20, on_floor = TRUE, window_checks = TRUE)
 	))
 
 /obj/item/stack/sheet/plastitaniumglass
@@ -260,7 +260,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	icon_state = "sheet-plastitaniumglass"
 	item_state = "sheet-plastitaniumglass"
 	custom_materials = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/plasma=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plastitaniumglass
 	shard_type = /obj/item/shard
@@ -291,7 +291,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	resistance_flags = ACID_PROOF
-	armor = list("melee" = 100, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 100)
+	armor = list(MELEE = 100, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 100)
 	max_integrity = 40
 	sharpness = SHARP_EDGED
 	var/icon_prefix
@@ -303,7 +303,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	return (BRUTELOSS)
 
 
-/obj/item/shard/Initialize()
+/obj/item/shard/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, force)
 	AddComponent(/datum/component/butchering, 150, 65)
@@ -355,7 +355,19 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 
 /obj/item/shard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/lightreplacer))
-		I.attackby(src, user)
+		var/obj/item/lightreplacer/L = I
+		L.attackby(src, user)
+	else if(istype(I, /obj/item/stack/sheet/cloth))
+		var/obj/item/stack/sheet/cloth/C = I
+		to_chat(user, "<span class='notice'>You begin to wrap the [C] around the [src]...</span>")
+		if(do_after(user, 35, target = src))
+			var/obj/item/kitchen/knife/shiv/S = new /obj/item/kitchen/knife/shiv
+			C.use(1)
+			to_chat(user, "<span class='notice'>You wrap the [C] around the [src] forming a makeshift weapon.</span>")
+			remove_item_from_storage(src)
+			qdel(src)
+			user.put_in_hands(S)
+
 	else
 		return ..()
 

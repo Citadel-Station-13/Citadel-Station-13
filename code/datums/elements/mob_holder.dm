@@ -23,17 +23,29 @@
 	src.proctype = proctype
 	src.escape_on_find = escape_on_find
 
+	RegisterSignal(target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_requesting_context_from_item)
 	RegisterSignal(target, COMSIG_CLICK_ALT, .proc/mob_try_pickup)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/element/mob_holder/Detach(datum/source, force)
 	. = ..()
-	UnregisterSignal(source, COMSIG_CLICK_ALT)
-	UnregisterSignal(source, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(source, list(COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, COMSIG_CLICK_ALT, COMSIG_PARENT_EXAMINE))
 
 /datum/element/mob_holder/proc/on_examine(mob/living/source, mob/user, list/examine_list)
 	if(ishuman(user) && !istype(source.loc, /obj/item/clothing/head/mob_holder))
 		examine_list += "<span class='notice'>Looks like [source.p_they(TRUE)] can be picked up with <b>Alt+Click</b>!</span>"
+
+/datum/element/mob_holder/proc/on_requesting_context_from_item(
+	obj/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+	SIGNAL_HANDLER
+
+	if(ishuman(user))
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, "Pick up")
+		return CONTEXTUAL_SCREENTIP_SET
 
 /datum/element/mob_holder/proc/mob_try_pickup(mob/living/source, mob/user)
 	if(!ishuman(user) || !user.Adjacent(source) || user.incapacitated())
@@ -168,7 +180,7 @@
 		L.visible_message("<span class='warning'>[held_mob] escapes from [L]!</span>", "<span class='warning'>[held_mob] escapes your grip!</span>")
 	release()
 
-/obj/item/clothing/head/mob_holder/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+/obj/item/clothing/head/mob_holder/mob_can_equip(M, equipper, slot, disable_warning, bypass_equip_delay_self)
 	if(M == held_mob || !ishuman(M)) //monkeys holding monkeys holding monkeys...
 		return FALSE
 	return ..()

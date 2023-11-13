@@ -30,7 +30,7 @@
 			set_opacity(0) //if we were blocking view, we aren't now because we're fading out
 		stoplag()
 
-/obj/effect/particle_effect/smoke/Initialize()
+/obj/effect/particle_effect/smoke/Initialize(mapload)
 	. = ..()
 	create_reagents(500, NONE, NO_REAGENTS_VALUE)
 	START_PROCESSING(SSobj, src)
@@ -133,13 +133,11 @@
 		M.emote("cough")
 		return 1
 
-/obj/effect/particle_effect/smoke/bad/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /obj/item/projectile/beam))
-		var/obj/item/projectile/beam/B = mover
+/obj/effect/particle_effect/smoke/bad/Crossed(atom/movable/AM, oldloc)
+	. = ..()
+	if(istype(AM, /obj/item/projectile/beam))
+		var/obj/item/projectile/beam/B = AM
 		B.damage = (B.damage/2)
-	return 1
-
-
 
 /datum/effect_system/smoke_spread/bad
 	effect_type = /obj/effect/particle_effect/smoke/bad
@@ -324,3 +322,9 @@
 
 /obj/effect/particle_effect/smoke/transparent
 	opaque = FALSE
+
+/proc/do_smoke(range=0, location=null, smoke_type=/obj/effect/particle_effect/smoke)
+	var/datum/effect_system/smoke_spread/smoke = new
+	smoke.effect_type = smoke_type
+	smoke.set_up(range, location)
+	smoke.start()

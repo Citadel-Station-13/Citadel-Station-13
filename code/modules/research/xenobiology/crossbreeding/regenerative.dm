@@ -14,25 +14,62 @@ Regenerative extracts:
 /obj/item/slimecross/regenerative/proc/core_effect_before(mob/living/carbon/human/target, mob/user)
 	return
 
+/obj/item/slimecross/regenerative/pre_attack(atom/A, mob/living/user, params, attackchain_flags, damage_multiplier)
+	if(isliving(A))
+		var/mob/living/M = A
+		if(M.stat == DEAD)
+			to_chat(user, "<span class='warning'>[src] will not work on the dead!</span>")
+			return TRUE //returning TRUE preemptively ends the attack chain and thus doesn't call afterattack, this is noteworthy for below as well
+		//inform the target that they're about to have a regenerative extract used on them
+		if(M != user) //targeting someone else
+			M.visible_message("<span class='notice'>[user] readies [src], holding it steady near [M] and guiding it to the center of [M.p_their()] mass...</span>",
+				"<span class='notice'>[user] readies [src], holding it steady near you and guiding it to the center of your mass...</span>")
+			if(!do_after(user, 50, target = M)) //5 seconds
+				return TRUE
+		else //targeting self
+			M.visible_message("<span class='notice'>[user] readies [src], holding it steady near [user.p_them()]self and guiding it to the center of [user.p_their()] mass...</span>",
+				"<span class='notice'>You ready [src], holding it steady near you and guiding it to the center of your mass...</span>")
+			if(!do_after(user, 10, target = M)) //1 second
+				return TRUE
+		. = ..()
+	else
+		. = ..()
 
 /obj/item/slimecross/regenerative/afterattack(atom/target,mob/user,prox)
 	. = ..()
 	if(!prox || !isliving(target))
 		return
-	var/mob/living/H = target
-	if(H.stat == DEAD)
-		to_chat(user, "<span class='warning'>[src] will not work on the dead!</span>")
+	var/mob/living/M = target
+	if(M.stat == DEAD)
+		to_chat(user, "<span class='warning'>[M] died before you could apply [src]!</span>")
 		return
-	if(H != user)
-		user.visible_message("<span class='notice'>[user] crushes the [src] over [H], the milky goo quickly regenerating all of [H.p_their()] injuries!</span>",
-			"<span class='notice'>You squeeze the [src], and it bursts over [H], the milky goo regenerating [H.p_their()] injuries.</span>")
+	if(M != user)
+		user.visible_message("<span class='notice'>[user] crushes the [src] over [M], the milky goo quickly regenerating all of [M.p_their()] injuries!</span>",
+			"<span class='notice'>You squeeze the [src], and it bursts over [M], the milky goo regenerating [M.p_their()] injuries.</span>")
 	else
 		user.visible_message("<span class='notice'>[user] crushes the [src] over [user.p_them()]self, the milky goo quickly regenerating all of [user.p_their()] injuries!</span>",
 			"<span class='notice'>You squeeze the [src], and it bursts in your hand, splashing you with milky goo which quickly regenerates your injuries!</span>")
-	core_effect_before(H, user)
-	H.revive(full_heal = 1)
-	core_effect(H, user)
+	core_effect_before(M, user)
+	var/new_disgust_level = 0
+	if(iscarbon(M)) //simpler mobs don't have a disgust variable and we need to grab that.
+		var/mob/living/carbon/C = M
+		new_disgust_level = C.disgust + DISGUST_LEVEL_GROSS
+	M.revive(full_heal = 1)
+	M.set_disgust(new_disgust_level)
+	core_effect(M, user)
 	playsound(target, 'sound/effects/splat.ogg', 40, 1)
+	//warn receivers of the extract about the disgust if they're carbon, making it clear that the regenerative extract is causing this.
+	if(iscarbon(M))
+		var/obj/item/organ/stomach/S = M.getorganslot(ORGAN_SLOT_STOMACH) //for getting the stummy name
+		switch(new_disgust_level)
+			if(0 to DISGUST_LEVEL_GROSS)
+				to_chat(M,"<span class='warning'>While you recovered from [src], you feel a little nauseous.</span>")
+			if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
+				to_chat(M,"<span class='warning'>While you recovered from [src], you feel quite queasy.</span>")
+			if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
+				to_chat(M,"<span class='warning'>While you recovered from [src], you feel like you're about to vomit!</span>")
+			if(DISGUST_LEVEL_DISGUSTED to INFINITY)
+				to_chat(M,"<span class='userdanger'>You feel absolutely sick. Maybe you should lay off the regenerative extracts until your [(S ? S.name : "stomach")] settles!</span>")
 	qdel(src)
 
 /obj/item/slimecross/regenerative/grey
@@ -90,10 +127,10 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/darkpurple/core_effect(mob/living/target, mob/user)
 	var/equipped = 0
-	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/purple(null), SLOT_SHOES)
-	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(null), SLOT_W_UNIFORM)
-	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/purple(null), SLOT_GLOVES)
-	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/head/soft/purple(null), SLOT_HEAD)
+	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/purple(null), ITEM_SLOT_FEET)
+	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(null), ITEM_SLOT_ICLOTHING)
+	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/purple(null), ITEM_SLOT_GLOVES)
+	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/head/soft/purple(null), ITEM_SLOT_HEAD)
 	if(equipped > 0)
 		target.visible_message("<span class='notice'>The milky goo congeals into clothing!</span>")
 
@@ -105,13 +142,13 @@ Regenerative extracts:
 		return
 	var/mob/living/carbon/human/H = target
 	var/fireproofed = FALSE
-	if(H.get_item_by_slot(SLOT_WEAR_SUIT))
+	if(H.get_item_by_slot(ITEM_SLOT_OCLOTHING))
 		fireproofed = TRUE
-		var/obj/item/clothing/C = H.get_item_by_slot(SLOT_WEAR_SUIT)
+		var/obj/item/clothing/C = H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 		fireproof(C)
-	if(H.get_item_by_slot(SLOT_HEAD))
+	if(H.get_item_by_slot(ITEM_SLOT_HEAD))
 		fireproofed = TRUE
-		var/obj/item/clothing/C = H.get_item_by_slot(SLOT_HEAD)
+		var/obj/item/clothing/C = H.get_item_by_slot(ITEM_SLOT_HEAD)
 		fireproof(C)
 	if(fireproofed)
 		target.visible_message("<span class='notice'>Some of [target]'s clothing gets coated in the goo, and turns blue!</span>")
@@ -141,7 +178,7 @@ Regenerative extracts:
 	target.forceMove(T)
 	do_sparks(5,FALSE,target)
 
-/obj/item/slimecross/regenerative/bluespace/Initialize()
+/obj/item/slimecross/regenerative/bluespace/Initialize(mapload)
 	. = ..()
 	T = get_turf(src)
 

@@ -8,7 +8,7 @@
 	var/datum/gas_mixture/air_contents = new()
 
 
-/obj/structure/transit_tube_pod/Initialize()
+/obj/structure/transit_tube_pod/Initialize(mapload)
 	. = ..()
 	air_contents.set_moles(GAS_O2, MOLES_O2STANDARD)
 	air_contents.set_moles(GAS_N2, MOLES_N2STANDARD)
@@ -50,14 +50,14 @@
 		empty_pod(location)
 	qdel(src)
 
-/obj/structure/transit_tube_pod/ex_act(severity, target)
+/obj/structure/transit_tube_pod/ex_act(severity, target, origin)
 	..()
 	if(!QDELETED(src))
 		empty_pod()
 
-/obj/structure/transit_tube_pod/contents_explosion(severity, target)
+/obj/structure/transit_tube_pod/contents_explosion(severity, target, origin)
 	for(var/atom/movable/AM in contents)
-		AM.ex_act(severity, target)
+		AM.ex_act(severity, target, origin)
 
 /obj/structure/transit_tube_pod/singularity_pull(S, current_size)
 	..()

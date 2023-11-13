@@ -9,12 +9,16 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	throwforce = 10
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
-
+	pass_flags_self = PASSMOB
 	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
 
 	attack_hand_is_action = TRUE
 	attack_hand_unwieldlyness = CLICK_CD_MELEE
 	attack_hand_speed = 0
+
+	// Rendering
+	/// Fullscreen objects
+	var/list/fullscreens = list()
 
 	/// What receives our keyboard input. src by default.
 	var/datum/focus
@@ -143,7 +147,6 @@
 	var/registered_z
 
 	var/list/alerts = list() // contains /atom/movable/screen/alert only // On /mob so clientless mobs will throw alerts properly
-	var/list/screens = list()
 	var/list/client_colours = list()
 	var/hud_type = /datum/hud
 
@@ -180,3 +183,6 @@
 
 	///Override for sound_environments. If this is set the user will always hear a specific type of reverb (Instead of the area defined reverb)
 	var/sound_environment_override = SOUND_ENVIRONMENT_NONE
+
+/// A mock client, provided by tests and friends
+	var/datum/client_interface/mock_client

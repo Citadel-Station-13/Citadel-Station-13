@@ -21,9 +21,31 @@
 #define COMSIG_GLOB_PLAY_CINEMATIC "!play_cinematic"
 	#define COMPONENT_GLOB_BLOCK_CINEMATIC 1
 
+/// job subsystem has spawned and equipped a new mob
+#define COMSIG_GLOB_JOB_AFTER_SPAWN "!job_after_spawn"
+
+/// job datum has been called to deal with the aftermath of a latejoin spawn
+#define COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN "!job_after_latejoin_spawn"
+
+#define COMSIG_GLOB_PRE_RANDOM_EVENT "!pre_random_event"
+	/// Do not allow this random event to continue.
+	#define CANCEL_PRE_RANDOM_EVENT (1<<0)
+
+/// a weather event of some kind occured
+#define COMSIG_WEATHER_TELEGRAPH(event_type) "!weather_telegraph [event_type]"
+#define COMSIG_WEATHER_START(event_type) "!weather_start [event_type]"
+#define COMSIG_WEATHER_WINDDOWN(event_type) "!weather_winddown [event_type]"
+#define COMSIG_WEATHER_END(event_type) "!weather_end [event_type]"
+
+/// called by auxgm add_gas: (gas_id)
+#define COMSIG_GLOB_NEW_GAS "!new_gas"
+
 // signals from globally accessible objects
 /// from SSsun when the sun changes position : (primary_sun, suns)
 #define COMSIG_SUN_MOVED "sun_moved"
+
+///from SSsecurity_level when the security level changes : (new_level)
+#define COMSIG_SECURITY_LEVEL_CHANGED "security_level_changed"
 
 /// from SSactivity for things that add threat but aren't "global" (e.g. phylacteries)
 #define COMSIG_THREAT_CALC "threat_calculation"
@@ -41,6 +63,8 @@
 #define COMSIG_PARENT_QDELETING "parent_qdeleting"
 /// generic topic handler (usr, href_list)
 #define COMSIG_TOPIC "handle_topic"
+/// from datum ui_act (usr, action)
+#define COMSIG_UI_ACT "COMSIG_UI_ACT"
 
 /// fires on the target datum when an element is attached to it (/datum/element)
 #define COMSIG_ELEMENT_ATTACH "element_attach"
@@ -229,6 +253,8 @@
 //	#define HEARING_SPANS 6
 	#define HEARING_MESSAGE_MODE 7
 //	#define HEARING_SOURCE 8
+#define COMSIG_MOVABLE_BARK "movable_bark"						//from base of atom/movable/proc/bark(): (list/hearers, distance, volume, pitch)
+#define COMSIG_MOVABLE_QUEUE_BARK "movable_queue_bark"			//from base of atom/movable/proc/send_speech(): (list/hearers, message, range, atom/movable/source, bubble_type, list/spans, datum/language/message_language, message_mode)
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"			//called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_TELEPORTED "movable_teleported"			//from base of do_teleport(): (channel, turf/origin, turf/destination)
 #define COMSIG_MOVABLE_CHASM_DROP "movable_chasm_drop"			//from base of /datum/component/chasm/drop() (/datum/component/chasm)
@@ -295,6 +321,12 @@
 ///from base of mob/AltClickOn(): (atom/A)
 #define COMSIG_MOB_ALTCLICKON "mob_altclickon"
 
+//Gun signals
+///When a gun is switched to automatic fire mode
+#define COMSIG_GUN_AUTOFIRE_SELECTED "gun_autofire_selected"
+///When a gun is switched off of automatic fire mode
+#define COMSIG_GUN_AUTOFIRE_DESELECTED "gun_autofire_deselected"
+
 // Lighting:
 ///from base of [atom/proc/set_light]: (l_range, l_power, l_color, l_on)
 #define COMSIG_ATOM_SET_LIGHT "atom_set_light"
@@ -322,11 +354,22 @@
 #define COMSIG_ATOM_UPDATE_LIGHT_FLAGS "atom_update_light_flags"
 
 // /client signals
-#define COMSIG_MOB_CLIENT_LOGIN "mob_client_login"					//sent when a mob/login() finishes: (client)
 #define COMSIG_MOB_CLIENT_LOGOUT "mob_client_logout"				//sent when a mob/logout() starts: (client)
 #define COMSIG_MOB_CLIENT_MOVE "mob_client_move"					//sent when client/Move() finishes with no early returns: (client, direction, n, oldloc)
 #define COMSIG_MOB_CLIENT_CHANGE_VIEW "mob_client_change_view"		//from base of /client/change_view(): (client, old_view, view)
 #define COMSIG_MOB_CLIENT_MOUSEMOVE "mob_client_mousemove"			//from base of /client/MouseMove(): (object, location, control, params)
+#define COMSIG_MOB_CLIENT_JOINED_FROM_LOBBY "mob_client_joined_from_lobby" //sent when a player joins/latejoins the game: (new_character, client, late_transfer)
+
+///sent when a mob/login() finishes: (client)
+#define COMSIG_MOB_CLIENT_LOGIN "comsig_mob_client_login"
+//from base of client/MouseDown(): (/client, object, location, control, params)
+#define COMSIG_CLIENT_MOUSEDOWN "client_mousedown"
+//from base of client/MouseUp(): (/client, object, location, control, params)
+#define COMSIG_CLIENT_MOUSEUP "client_mouseup"
+	#define COMPONENT_CLIENT_MOUSEUP_INTERCEPT (1<<0)
+//from base of client/MouseUp(): (/client, object, location, control, params)
+#define COMSIG_CLIENT_MOUSEDRAG "client_mousedrag"
+
 
 // /mob/living signals
 #define COMSIG_LIVING_REGENERATE_LIMBS "living_regenerate_limbs"	//from base of /mob/living/regenerate_limbs(): (noheal, excluded_limbs)
@@ -343,6 +386,9 @@
 // This returns flags as defined for block in __DEFINES/combat.dm!
 #define COMSIG_LIVING_RUN_BLOCK "living_do_run_block"				//from base of mob/living/do_run_block(): (real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone)
 #define COMSIG_LIVING_GET_BLOCKING_ITEMS "get_blocking_items"	//from base of mob/living/get_blocking_items(): (list/items)
+
+#define COMSIG_LIVING_RESTING "living_on_resting"				//from mob/living/set_resting
+#define COMSIG_LIVING_STOPPED_PULLING "living_on_stop_pulling"	//from mob/living/stop_pulling
 
 #define COMSIG_LIVING_ACTIVE_BLOCK_START "active_block_start"			//from base of mob/living/keybind_start_active_blocking(): (obj/item/blocking_item, list/backup_items)
 	#define COMPONENT_PREVENT_BLOCK_START 1
@@ -367,8 +413,9 @@
 #define COMSIG_LIVING_LIFE "life_tick"							//from base of mob/living/Life() (seconds, times_fired)
 	#define COMPONENT_INTERRUPT_LIFE_BIOLOGICAL 1		// interrupt biological processes
 	#define COMPONENT_INTERRUPT_LIFE_PHYSICAL 2			// interrupt physical handling
+	#define COMPONET_INTERRUPT_STATUS_EFFECTS 3			// interrupt status effects
 
-#define COMSIG_LIVING_BIOLOGICAL_LIFE "biological_life"			//from base of mob/living/BiologicalLife() (seconds, times_fired)
+#define COMSIG_LIVING_BIOLOGICAL_LIFE "biological_life"			//from base of mob/living/BiologicalLife() (delta_time, times_fired)
 
 #define COMSIG_LIVING_PHYSICAL_LIFE "physical_life"				//from base of mob/living/PhysicalLife() (seconds, times_fired)
 
@@ -411,6 +458,12 @@
 ///from /obj/machinery/obj_break(damage_flag): (damage_flag)
 #define COMSIG_MACHINERY_BROKEN "machinery_broken"
 
+// /obj/machinery/power/supermatter_crystal signals
+/// from /obj/machinery/power/supermatter_crystal/process_atmos(); when the SM delam reaches the point of sounding alarms
+#define COMSIG_SUPERMATTER_DELAM_START_ALARM "sm_delam_start_alarm"
+/// from /obj/machinery/power/supermatter_crystal/process_atmos(); when the SM sounds an audible alarm
+#define COMSIG_SUPERMATTER_DELAM_ALARM "sm_delam_alarm"
+
 // /obj/item signals
 #define COMSIG_ITEM_ATTACK "item_attack"						//from base of obj/item/attack(): (/mob/living/target, /mob/living/user)
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"				//from base of obj/item/attack_self(): (/mob)
@@ -422,6 +475,8 @@
 #define COMSIG_ITEM_AFTERATTACK "item_afterattack"				//from base of obj/item/afterattack(): (atom/target, mob/user, params)
 #define COMSIG_ITEM_ALT_AFTERATTACK "item_alt_afterattack"		//from base of obj/item/altafterattack(): (atom/target, mob/user, proximity, params)
 #define COMSIG_ITEM_EQUIPPED "item_equip"						//from base of obj/item/equipped(): (/mob/equipper, slot)
+/// A mob has just unequipped an item.
+#define COMSIG_MOB_UNEQUIPPED_ITEM "mob_unequipped_item"
 	// Do not grant actions on equip.
 	#define COMPONENT_NO_GRANT_ACTIONS		1
 #define COMSIG_ITEM_DROPPED "item_drop"							//from base of obj/item/dropped(): (mob/user)
@@ -437,8 +492,17 @@
 	#define COMPONENT_BLOCK_SHARPEN_BLOCKED 2
 	#define COMPONENT_BLOCK_SHARPEN_ALREADY 4
 	#define COMPONENT_BLOCK_SHARPEN_MAXED 8
-#define COMSIG_ITEM_MICROWAVE_ACT "microwave_act"                //called on item when microwaved (): (obj/machinery/microwave/M)
+#define COMSIG_ITEM_MICROWAVE_ACT "microwave_act"               //called on item when microwaved (): (obj/machinery/microwave/M)
+
+// /obj/item signals for economy
+#define COMSIG_ITEM_SOLD "item_sold"							//called when an item is sold by the exports subsystem
+#define COMSIG_STRUCTURE_UNWRAPPED "structure_unwrapped"		//called when a wrapped up structure is opened by hand
+#define COMSIG_ITEM_UNWRAPPED "item_unwrapped"					//called when a wrapped up item is opened by hand
+	#define COMSIG_ITEM_SPLIT_VALUE  1
+#define COMSIG_ITEM_SPLIT_PROFIT "item_split_profits"			//Called when getting the item's exact ratio for cargo's profit.
+
 #define COMSIG_ITEM_WORN_OVERLAYS "item_worn_overlays"			//from base of obj/item/worn_overlays(): (isinhands, icon_file, used_state, style_flags, list/overlays)
+#define COMSIG_ARMOR_PLATED "armor_plated"						//called when an armor plate is successfully applied to an object
 // THE FOLLOWING TWO BLOCKS SHOULD RETURN BLOCK FLAGS AS DEFINED IN __DEFINES/combat.dm!
 #define COMSIG_ITEM_CHECK_BLOCK "check_block"					//from base of obj/item/check_block(): (mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 #define COMSIG_ITEM_RUN_BLOCK "run_block"						//from base of obj/item/run_block(): (mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
@@ -450,6 +514,14 @@
 #define COMSIG_MINE_TRIGGERED "minegoboom"						///from [/obj/effect/mine/proc/triggermine]:
 	// Uncovered information
 	#define COMPONENT_DEEPSCAN_UNCOVERED_INFORMATION		1
+///Called when an item is being offered, from [/obj/item/proc/on_offered(mob/living/carbon/offerer)]
+#define COMSIG_ITEM_OFFERING "item_offering"
+	///Interrupts the offer proc
+	#define COMPONENT_OFFER_INTERRUPT (1<<0)
+///Called when an someone tries accepting an offered item, from [/obj/item/proc/on_offer_taken(mob/living/carbon/offer, mob/living/carbon/taker)]
+#define COMSIG_ITEM_OFFER_TAKEN "item_offer_taken"
+	///Interrupts the offer acceptance
+	#define COMPONENT_OFFER_TAKE_INTERRUPT (1<<0)
 ///from [/obj/structure/closet/supplypod/proc/endlaunch]:
 #define COMSIG_SUPPLYPOD_LANDED "supplypodgoboom"
 
@@ -493,6 +565,18 @@
 #define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"				///sent to targets during the process_hit proc of projectiles
 
 #define COMSIG_PELLET_CLOUD_INIT "pellet_cloud_init"				// sent to targets during the process_hit proc of projectiles
+// /obj/vehicle/sealed/mecha signals
+// /sent from mecha action buttons to the mecha they're linked to
+#define COMSIG_MECHA_ACTION_TRIGGER "mecha_action_activate"
+
+///sent from clicking while you have no equipment selected. Sent before cooldown and adjacency checks, so you can use this for infinite range things if you want.
+#define COMSIG_MECHA_MELEE_CLICK "mecha_action_melee_click"
+	/// Prevents click from happening.
+	#define COMPONENT_CANCEL_MELEE_CLICK (1<<0)
+///sent from clicking while you have equipment selected.
+#define COMSIG_MECHA_EQUIPMENT_CLICK "mecha_action_equipment_click"
+	/// Prevents click from happening.
+	#define COMPONENT_CANCEL_EQUIPMENT_CLICK (1<<0)
 
 // /mob/living/carbon/human signals
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target)
@@ -622,3 +706,6 @@
 
 // /datum/component/identification signals
 #define COMSIG_IDENTIFICATION_KNOWLEDGE_CHECK "id_knowledge_check"			// (mob/user) - returns a value from ID_COMPONENT_KNOWLEDGE_NONE to ID_COMPONENT_KNOWLEDGE_FULL
+
+///from base of [/datum/component/multiple_lives/proc/respawn]: (mob/respawned_mob, gibbed, lives_left)
+#define COMSIG_ON_MULTIPLE_LIVES_RESPAWN "on_multiple_lives_respawn"

@@ -485,7 +485,7 @@
 	var/friendly = FALSE
 	var/stealthy = FALSE
 
-/obj/machinery/door/airlock/cult/Initialize()
+/obj/machinery/door/airlock/cult/Initialize(mapload)
 	. = ..()
 	new openingoverlaytype(loc)
 
@@ -576,7 +576,7 @@
 	desc = "An airlock hastily corrupted by blood magic, it is unusually brittle in this state."
 	normal_integrity = 150
 	damage_deflection = 5
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
 //Pinion airlocks: Clockwork doors that only let servants of Ratvar through.
 /obj/machinery/door/airlock/clockwork
@@ -593,7 +593,7 @@
 	normal_integrity = 240
 	var/construction_state = GEAR_SECURE //Pinion airlocks have custom deconstruction
 
-/obj/machinery/door/airlock/clockwork/Initialize()
+/obj/machinery/door/airlock/clockwork/Initialize(mapload)
 	. = ..()
 	new /obj/effect/temp_visual/ratvar/door(loc)
 	new /obj/effect/temp_visual/ratvar/beam/door(loc)

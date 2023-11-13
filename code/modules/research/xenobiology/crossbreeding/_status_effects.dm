@@ -495,7 +495,11 @@
 
 /datum/status_effect/stabilized/orange/tick()
 	var/body_temperature_difference = BODYTEMP_NORMAL - owner.bodytemperature
-	owner.adjust_bodytemperature(min(5,body_temperature_difference))
+	var/cooling_cap = -5
+	if(HAS_TRAIT(owner, TRAIT_ROBOTIC_ORGANISM))
+		cooling_cap *= 0.5									//Only cools by half as much (which is 5 per life tick since this ticks twice as much as life) so it isn't true spaceproofness..
+		body_temperature_difference += SYNTH_COLD_OFFSET	//.. But also cools towards a cold temp, provided there is nothing that counters it.
+	owner.adjust_bodytemperature(clamp(body_temperature_difference, cooling_cap, 5))
 	return ..()
 
 /datum/status_effect/stabilized/purple
@@ -573,6 +577,10 @@
 	if(batteries.len)
 		var/obj/item/stock_parts/cell/ToCharge = pick(batteries)
 		ToCharge.charge += min(ToCharge.maxcharge - ToCharge.charge, ToCharge.maxcharge/10) //10% of the cell, or to maximum.
+		ToCharge.update_appearance() //make sure the cell gets their appearance updated.
+		var/atom/l = ToCharge.loc
+		if(isgun(l)) //updates the gun appearance as well if the cell is inside one.
+			l.update_appearance()
 		to_chat(owner, "<span class='notice'>[linked_extract] discharges some energy into a device you have.</span>")
 	return ..()
 
@@ -595,14 +603,14 @@
 	return ..()
 
 /datum/status_effect/stabilized/darkpurple/tick()
-	var/obj/item/I = owner.get_active_held_item()
-	var/obj/item/reagent_containers/food/snacks/F = I
-	if(istype(F))
-		if(F.cooked_type)
+	var/obj/item/item = owner.get_active_held_item()
+	if(item)
+		var/obj/item/reagent_containers/food/snacks/F = item
+		if(istype(F) && F.cooked_type)
 			to_chat(owner, "<span class='warning'>[linked_extract] flares up brightly, and your hands alone are enough cook [F]!</span>")
 			F.microwave_act()
-	else
-		I.attackby(fire, owner)
+		else
+			item.attackby(fire, owner)
 	return ..()
 
 /datum/status_effect/stabilized/darkpurple/on_remove()

@@ -1,7 +1,7 @@
 /datum/job/ai
 	title = "AI"
 	flag = AI_JF
-//	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
+	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 1
@@ -14,6 +14,8 @@
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_SILICON
 	display_order = JOB_DISPLAY_ORDER_AI
+	allow_bureaucratic_error = FALSE
+	random_spawns_possible = FALSE
 	var/do_special_check = TRUE
 	threat = 5
 	considered_combat_role = TRUE
@@ -25,7 +27,7 @@
 		CRASH("dynamic preview is unsupported")
 	. = H.AIize(latejoin,preference_source)
 
-/datum/job/ai/after_spawn(mob/H, mob/M, latejoin)
+/datum/job/ai/after_spawn(mob/H, client/C, latejoin)
 	. = ..()
 	if(latejoin)
 		var/obj/structure/AIcore/latejoin_inactive/lateJoinCore
@@ -39,8 +41,8 @@
 			H.forceMove(lateJoinCore.loc)
 			qdel(lateJoinCore)
 	var/mob/living/silicon/ai/AI = H
-	AI.apply_pref_name("ai", M.client)			//If this runtimes oh well jobcode is fucked.
-	AI.set_core_display_icon(null, M.client)
+	AI.apply_pref_name("ai", C)			//If this runtimes oh well jobcode is fucked.
+	AI.set_core_display_icon(null, C)
 
 	//we may have been created after our borg
 	if(SSticker.current_state == GAME_STATE_SETTING_UP)

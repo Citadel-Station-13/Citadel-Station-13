@@ -75,7 +75,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		add_overlay(/obj/effect/fullbright)
 
 	if(requires_activation)
-		CALCULATE_ADJACENT_TURFS(src)
+		ImmediateCalculateAdjacentTurfs()
 
 	if (light_power && light_range)
 		update_light()
@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/set_temperature()
 
 /turf/proc/Initalize_Atmos(times_fired)
-	CALCULATE_ADJACENT_TURFS(src)
+	ImmediateCalculateAdjacentTurfs()
 
 /turf/Destroy(force)
 	. = QDEL_HINT_IWILLGC
@@ -136,6 +136,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	flags_1 &= ~INITIALIZED_1
 	requires_activation = FALSE
 	..()
+
+	vis_contents.Cut()
 
 /turf/on_attack_hand(mob/user)
 	user.Move_Pulled(src)
@@ -225,16 +227,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	return FALSE
 
-/turf/CanPass(atom/movable/mover, turf/target)
-	if(!target)
-		return FALSE
-
-	if(istype(mover)) // turf/Enter(...) will perform more advanced checks
-		return !density
-
-	stack_trace("Non movable passed to turf CanPass : [mover]")
-	return FALSE
-
 //There's a lot of QDELETED() calls here if someone can figure out how to optimize this but not runtime when something gets deleted by a Bump/CanPass/Cross call, lemme know or go ahead and fix this mess - kevinz000
 /turf/Enter(atom/movable/mover, atom/oldloc)
 	// Do not call ..()
@@ -243,7 +235,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
 	var/atom/firstbump
 	var/canPassSelf = CanPass(mover, src)
-	if(canPassSelf || (mover.movement_type & UNSTOPPABLE))
+	if(canPassSelf || (mover.movement_type & PHASING))
 		for(var/i in contents)
 			if(QDELETED(mover))
 				return FALSE		//We were deleted, do not attempt to proceed with movement.
@@ -253,7 +245,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			if(!thing.Cross(mover))
 				if(QDELETED(mover))		//Mover deleted from Cross/CanPass, do not proceed.
 					return FALSE
-				if((mover.movement_type & UNSTOPPABLE))
+				if((mover.movement_type & PHASING))
 					mover.Bump(thing)
 					continue
 				else
@@ -265,7 +257,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		firstbump = src
 	if(firstbump)
 		mover.Bump(firstbump)
-		return (mover.movement_type & UNSTOPPABLE)
+		return (mover.movement_type & PHASING)
 	return TRUE
 
 /turf/Exit(atom/movable/mover, atom/newloc)
@@ -279,7 +271,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		if(!thing.Uncross(mover, newloc))
 			if(thing.flags_1 & ON_BORDER_1)
 				mover.Bump(thing)
-			if(!(mover.movement_type & UNSTOPPABLE))
+			if(!(mover.movement_type & PHASING))
 				return FALSE
 		if(QDELETED(mover))
 			return FALSE		//We were deleted.
@@ -379,8 +371,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			continue//Will not harm U. Since null != M, can be excluded to kill everyone.
 		M.adjustBruteLoss(damage)
 		M.Unconscious(damage * 4)
-	for(var/obj/mecha/M in src)
-		M.take_damage(damage*2, BRUTE, "melee", 1)
+	for(var/obj/vehicle/sealed/mecha/M in src)
+		M.take_damage(damage*2, BRUTE, MELEE, 1)
 
 /turf/proc/Bless()
 	new /obj/effect/blessing(src)
@@ -396,9 +388,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/list/things = src_object.contents()
 	var/datum/progressbar/progress = new(user, things.len, src)
-	while (do_after(usr, 1 SECONDS, TRUE, src, FALSE, CALLBACK(src_object, /datum/component/storage.proc/mass_remove_from_storage, src, things, progress, TRUE, user)))
+	while (do_after(usr, 1 SECONDS, src, NONE, FALSE, CALLBACK(src_object, /datum/component/storage.proc/mass_remove_from_storage, src, things, progress, TRUE, user)))
 		stoplag(1)
-	qdel(progress)
+	progress.end_progress()
 
 	return TRUE
 
@@ -451,7 +443,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/is_shielded()
 
-/turf/contents_explosion(severity, target)
+/turf/contents_explosion(severity, target, origin)
 	var/affecting_level
 	if(severity == 1)
 		affecting_level = 1
@@ -469,7 +461,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 				var/atom/movable/AM = A
 				if(!AM.ex_check(explosion_id))
 					continue
-			A.ex_act(severity, target)
+			A.ex_act(severity, target, origin)
 			CHECK_TICK
 
 /turf/wave_ex_act(power, datum/wave_explosion/explosion, dir)
@@ -512,7 +504,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/shove_act(mob/living/target, mob/living/user, pre_act = FALSE)
 	var/list/possibilities
 	for(var/obj/O in contents)
-		if(CHECK_BITFIELD(O.obj_flags, SHOVABLE_ONTO))
+		if((O.obj_flags & SHOVABLE_ONTO))
 			LAZYADD(possibilities, O)
 		else if(!O.CanPass(target, src))
 			return FALSE
@@ -621,11 +613,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/Melt()
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
-/turf/bullet_act(obj/item/projectile/P)
-	. = ..()
-	if(. != BULLET_ACT_FORCE_PIERCE)
-		. =  BULLET_ACT_TURF
-
 /turf/proc/get_yelling_resistance(power)
 	. = 0
 	// don't bother checking fulltile, we don't need accuracy
@@ -638,3 +625,23 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/obj/machinery/door/D = locate() in src
 	if(D?.density)
 		. += D.opacity? 29 : 19			// glass doors are slightly more resistant to screaming
+
+/**
+ * Returns adjacent turfs to this turf that are reachable, in all cardinal directions
+ *
+ * Arguments:
+ * * caller: The movable, if one exists, being used for mobility checks to see what tiles it can reach
+ * * ID: An ID card that decides if we can gain access to doors that would otherwise block a turf
+ * * simulated_only: Do we only worry about turfs with simulated atmos, most notably things that aren't space?
+*/
+/turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only)
+	var/static/space_type_cache = typecacheof(/turf/open/space)
+	. = list()
+
+	for(var/iter_dir in GLOB.cardinals)
+		var/turf/turf_to_check = get_step(src,iter_dir)
+		if(!turf_to_check || (simulated_only && space_type_cache[turf_to_check.type]))
+			continue
+		if(turf_to_check.density || LinkBlockedWithAccess(turf_to_check, caller, ID))
+			continue
+		. += turf_to_check

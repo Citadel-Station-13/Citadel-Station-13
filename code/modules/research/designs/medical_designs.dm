@@ -122,6 +122,17 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/smartdartrepeater
+	name = "Smartdart Repeater"
+	desc = "An experimental smartdart rifle. It can make its own smart darts and is loaded with a hypovial."
+	id = "smartdartrepeater"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/glass = 2000, /datum/material/plastic = 1000, /datum/material/iron = 2000,/datum/material/titanium = 1000 )
+	build_path = /obj/item/gun/chem/smart
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+
 /datum/design/plasmarefiller
 	name = "Plasma-Man Jumpsuit Refill"
 	desc = "A refill pack for the auto-extinguisher on Plasma-man suits."
@@ -201,8 +212,8 @@
 	build_path = /obj/item/storage/hypospraykit // let's not summon new hyposprays thanks
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-	
-/datum/design/hypospray/mkii
+
+/datum/design/hypospray_mkii
 	name = "Hypospray Mk. II"
 	id = "hypospray_mkii"
 	build_type = PROTOLATHE
@@ -210,6 +221,15 @@
 	build_path = /obj/item/hypospray/mkii
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/nanogel
+	name = "Nanogel paste"
+	id = "nanogel"
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(/datum/material/iron = 800, /datum/material/titanium = 500, /datum/material/gold = 100, /datum/material/diamond = 20)
+	build_path = /obj/item/stack/medical/nanogel/one
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/blood_bag
 	name = "Empty Blood Bag"
@@ -936,6 +956,13 @@
 	desc = "A surgical procedure which directly implants a directive into the patient's brain, making it their absolute priority. It can be cleared using a mindshield implant."
 	id = "surgery_brainwashing"
 	surgery = /datum/surgery/advanced/brainwashing
+	research_icon_state = "surgery_head"
+
+/datum/design/surgery/robo_brainwashing
+	name = "Reprogramming"
+	desc = "A surgical procedure which hardcodes a directive into the patient's logic subroutines, making it their absolute priority. It can be purged using a mindshield implant."
+	id = "surgery_robot_brainwashing"
+	surgery = /datum/surgery/advanced/robot_brainwashing
 	research_icon_state = "surgery_head"
 
 /datum/design/surgery/nerve_splicing

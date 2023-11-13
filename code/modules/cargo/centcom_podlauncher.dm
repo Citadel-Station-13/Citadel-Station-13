@@ -567,7 +567,8 @@
 		else if(picking_dropoff_turf)
 			holder.mouse_up_icon = 'icons/effects/mouse_pointers/supplypod_pickturf.dmi' //Icon for when mouse is released
 			holder.mouse_down_icon = 'icons/effects/mouse_pointers/supplypod_pickturf_down.dmi' //Icon for when mouse is pressed
-		holder.mouse_pointer_icon = holder.mouse_up_icon //Icon for idle mouse (same as icon for when released)
+		holder.mouse_override_icon = holder.mouse_up_icon //Icon for idle mouse (same as icon for when released)
+		holder.mouse_pointer_icon = holder.mouse_override_icon
 		holder.click_intercept = src //Create a click_intercept so we know where the user is clicking
 	else
 		var/mob/holder_mob = holder.mob
@@ -595,7 +596,7 @@
 			else
 				return //if target is null and we don't have a specific target, cancel
 			if (effectAnnounce)
-				deadchat_broadcast("A special package is being launched at the station!", turf_target = target)
+				deadchat_broadcast("A special package is being launched at the station!", turf_target = target, message_type=DEADCHAT_ANNOUNCEMENT)
 			var/list/bouttaDie = list()
 			for (var/mob/living/target_mob in target)
 				bouttaDie.Add(target_mob)

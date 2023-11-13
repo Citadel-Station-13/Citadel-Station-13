@@ -158,6 +158,14 @@
 					/obj/item/clothing/head/hardhat/red)
 	crate_name = "firefighting crate"
 
+/datum/supply_pack/emergency/Flexiseal
+	name = "Flexi Seal Crate"
+	desc = "Flexi Seal, the perfect stuff for fixing a nuclear reactor safely!"
+	cost = 1000
+	contains = list(/obj/item/sealant)
+	crate_name = "Flexi Seal Crate"
+	crate_type = /obj/structure/closet/crate/radiation
+
 /datum/supply_pack/emergency/atmostank
 	name = "Firefighting Tank Backpack"
 	desc = "Mow down fires with this high-capacity fire fighting tank backpack. Requires Atmospherics access to open."

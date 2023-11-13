@@ -14,7 +14,7 @@
 	var/charging = 0
 	var/atom/movable/screen/alert/chargealert
 
-/mob/living/simple_animal/hostile/guardian/charger/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/guardian/charger/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(ranged_cooldown <= world.time)

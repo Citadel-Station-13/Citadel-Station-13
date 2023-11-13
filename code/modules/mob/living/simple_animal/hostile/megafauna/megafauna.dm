@@ -10,7 +10,7 @@
 	obj_damage = 400
 	light_range = 3
 	faction = list("mining", "boss")
-	weather_immunities = list("lava","ash")
+	weather_immunities = list(TRAIT_LAVA_IMMUNE,TRAIT_ASHSTORM_IMMUNE)
 	movement_type = FLYING
 	robust_searching = 1
 	ranged_ignores_vision = TRUE
@@ -122,7 +122,7 @@
 			if(!client && ranged && ranged_cooldown <= world.time)
 				OpenFire()
 			if(L.Adjacent(src) && (L.stat != CONSCIOUS))
-				if(vore_active && CHECK_BITFIELD(L.vore_flags,DEVOURABLE))
+				if(vore_active && (L.vore_flags & DEVOURABLE))
 					vore_attack(src,L,src)
 					LoseTarget()
 		else
@@ -138,7 +138,7 @@
 		adjustBruteLoss(-L.maxHealth/2)
 	L.gib()
 
-/mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
+/mob/living/simple_animal/hostile/megafauna/ex_act(severity, target, origin)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			adjustBruteLoss(250)

@@ -14,6 +14,7 @@
 	/// should we immediately call on_spawn or add a timer to trigger
 	var/on_spawn_immediate = TRUE
 	var/mob/living/quirk_holder
+	var/processing_quirk = FALSE
 
 /datum/quirk/New(mob/living/quirk_mob, spawn_effects)
 	if(!quirk_mob || (human_only && !ishuman(quirk_mob)) || quirk_mob.has_quirk(type))
@@ -21,11 +22,13 @@
 		return
 	quirk_holder = quirk_mob
 	SSquirks.quirk_objects += src
-	to_chat(quirk_holder, gain_text)
+	if(gain_text)
+		to_chat(quirk_holder, gain_text)
 	quirk_holder.roundstart_quirks += src
 	if(mob_trait)
 		ADD_TRAIT(quirk_holder, mob_trait, ROUNDSTART_TRAIT)
-	START_PROCESSING(SSquirks, src)
+	if(processing_quirk)
+		START_PROCESSING(SSquirks, src)
 	add()
 	if(spawn_effects)
 		if(on_spawn_immediate)
@@ -35,10 +38,12 @@
 		addtimer(CALLBACK(src, .proc/post_add), 30)
 
 /datum/quirk/Destroy()
-	STOP_PROCESSING(SSquirks, src)
+	if(processing_quirk)
+		STOP_PROCESSING(SSquirks, src)
 	remove()
 	if(quirk_holder)
-		to_chat(quirk_holder, lose_text)
+		if(lose_text)
+			to_chat(quirk_holder, lose_text)
 		quirk_holder.roundstart_quirks -= src
 		if(mob_trait)
 			REMOVE_TRAIT(quirk_holder, mob_trait, ROUNDSTART_TRAIT)
@@ -129,7 +134,7 @@ Use this as a guideline
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/regular/glasses = new(get_turf(H))
 	H.put_in_hands(glasses)
-	H.equip_to_slot(glasses, SLOT_GLASSES)
+	H.equip_to_slot(glasses, ITEM_SLOT_EYES)
 	H.regenerate_icons()
 
 //This whole proc is called automatically

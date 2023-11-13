@@ -6,12 +6,13 @@
 	anchored = FALSE
 	density = TRUE
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN
+	use_power = NO_POWER_USE
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "sheater-off"
 	name = "space heater"
 	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire. Warranty void if used in engines."
 	max_integrity = 250
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 10)
 	circuit = /obj/item/circuitboard/machine/space_heater
 	var/obj/item/stock_parts/cell/cell
 	var/on = FALSE
@@ -27,7 +28,7 @@
 /obj/machinery/space_heater/get_cell()
 	return cell
 
-/obj/machinery/space_heater/Initialize()
+/obj/machinery/space_heater/Initialize(mapload)
 	. = ..()
 	cell = new(src)
 	update_icon()
@@ -72,7 +73,7 @@
 			on = FALSE
 		return PROCESS_KILL
 
-	if(cell && cell.charge > 0)
+	if(cell && cell.charge > 1 / efficiency)
 		var/turf/L = loc
 		PerformHeating(L)
 
@@ -112,7 +113,9 @@
 	var/requiredPower = abs(env.return_temperature() - targetTemperature) * heat_capacity
 	requiredPower = min(requiredPower, heatingPower)
 
-	if(requiredPower < 1)
+	if(requiredPower < 1 || !cell.use(requiredPower / efficiency))
+		on = FALSE
+		update_icon()
 		return
 
 	var/deltaTemperature = requiredPower / heat_capacity
@@ -121,7 +124,6 @@
 	if(deltaTemperature)
 		env.set_temperature(env.return_temperature() + deltaTemperature)
 		air_update_turf()
-	cell.use(requiredPower / efficiency)
 
 /obj/machinery/space_heater/RefreshParts()
 	var/laser = 2
@@ -220,7 +222,7 @@
 			usr.visible_message("<span class='notice'>[usr] switches [on ? "on" : "off"] \the [src].</span>", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
 			update_icon()
 			if (on)
-				SSair.atmos_air_machinery += src
+				SSair.atmos_machinery += src
 			. = TRUE
 		if("mode")
 			setMode = params["mode"]

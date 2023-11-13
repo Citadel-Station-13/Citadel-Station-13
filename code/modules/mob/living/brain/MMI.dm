@@ -8,7 +8,7 @@
 	var/obj/item/radio/radio = null //Let's give it a radio.
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
-	var/obj/mecha = null //This does not appear to be used outside of reference in mecha.dm.
+	var/obj/vehicle/sealed/mecha = null //This does not appear to be used outside of reference in mecha.dm.
 	var/obj/item/organ/brain/brain = null //The actual brain
 	var/datum/ai_laws/laws = new()
 	var/force_replace_ai_name = FALSE
@@ -32,7 +32,7 @@
 	else
 		. += "mmi_dead"
 
-/obj/item/mmi/Initialize()
+/obj/item/mmi/Initialize(mapload)
 	. = ..()
 	radio = new(src) //Spawns a radio inside the MMI.
 	radio.broadcasting = 0 //researching radio mmis turned the robofabs into radios because this didnt start as 0.
@@ -64,8 +64,8 @@
 		brainmob.container = src
 		if(!(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death.
 			brainmob.stat = CONSCIOUS //we manually revive the brain mob
-			GLOB.dead_mob_list -= brainmob
-			GLOB.alive_mob_list += brainmob
+			brainmob.remove_from_dead_mob_list()
+			brainmob.add_to_alive_mob_list()
 
 		brainmob.reset_perspective()
 		brain = newbrain
@@ -102,8 +102,8 @@
 	brainmob.stat = DEAD
 	brainmob.emp_damage = 0
 	brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
-	GLOB.alive_mob_list -= brainmob //Get outta here
-	GLOB.dead_mob_list += brainmob
+	brainmob.remove_from_alive_mob_list() //Get outta here
+	brainmob.add_to_dead_mob_list()
 	brain.brainmob = brainmob //Set the brain to use the brainmob
 	brainmob = null //Set mmi brainmob var to null
 	if(user)
@@ -215,7 +215,7 @@
 	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs and AIs created with it."
 	overrides_aicore_laws = TRUE
 
-/obj/item/mmi/syndie/Initialize()
+/obj/item/mmi/syndie/Initialize(mapload)
 	. = ..()
 	laws = new /datum/ai_laws/syndicate_override()
 	radio.on = 0

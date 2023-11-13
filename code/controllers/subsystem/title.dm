@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(title)
 
 /datum/controller/subsystem/title/Initialize()
 	if(file_path && icon)
-		return ..()
+		return
 
 	if(fexists("data/previous_title.dat"))
 		var/previous_path = file2text("data/previous_title.dat")
@@ -31,13 +31,16 @@ SUBSYSTEM_DEF(title)
 	if(length(title_screens))
 		file_path = "[global.config.directory]/title_screens/images/[pick(title_screens)]"
 
-	if(!file_path || !fexists(file_path))
-		file_path = "icons/default_title.dmi"
+	if(!file_path)
+		file_path = "icons/runtime/default_title.dmi"
 
-	if(fexists(file_path))
-		icon = new(fcopy_rsc(file_path))
-		if(splash_turf)
-			splash_turf.icon = icon
+	ASSERT(fexists(file_path))
+
+	icon = new(fcopy_rsc(file_path))
+
+	if(splash_turf)
+		splash_turf.icon = icon
+		splash_turf.handle_generic_titlescreen_sizes()
 
 	return ..()
 

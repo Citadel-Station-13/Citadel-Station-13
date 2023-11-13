@@ -343,10 +343,16 @@ SUBSYSTEM_DEF(research)
 				break			//Just need one to work.
 	if (!isnull(last_income))
 		var/income_time_difference = world.time - last_income
-		science_tech.last_bitcoins = bitcoins  // Doesn't take tick drift into account
 		for(var/i in bitcoins)
 			bitcoins[i] *= income_time_difference / 10
 		science_tech.add_point_list(bitcoins)
+		var/list/income = science_tech.commit_income()
+		for(var/i in income)
+			var/old_weighted = science_tech.last_bitcoins[i] * (1 MINUTES - income_time_difference)
+			var/new_weighted = income[i] * income_time_difference
+			science_tech.last_bitcoins[i] = (old_weighted + new_weighted) / (1 MINUTES)
+	else
+		science_tech.last_bitcoins = bitcoins.Copy()
 	last_income = world.time
 
 /datum/controller/subsystem/research/proc/calculate_server_coefficient()	//Diminishing returns.
@@ -366,10 +372,16 @@ SUBSYSTEM_DEF(research)
 			techweb_categories[I.category] = list(I.id = TRUE)
 
 /datum/controller/subsystem/research/proc/techweb_node_by_id(id)
-	return techweb_nodes[id] || error_node
+	if(techweb_nodes[id])
+		return techweb_nodes[id]
+	stack_trace("Attempted to access node ID [id] which didn't exist")
+	return error_node
 
 /datum/controller/subsystem/research/proc/techweb_design_by_id(id)
-	return techweb_designs[id] || error_design
+	if(techweb_designs[id])
+		return techweb_designs[id]
+	stack_trace("Attempted to access design ID [id] which didn't exist")
+	return error_design
 
 /datum/controller/subsystem/research/proc/on_design_deletion(datum/design/D)
 	for(var/i in techweb_nodes)

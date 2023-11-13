@@ -18,12 +18,17 @@
 	minimal_access = list(ACCESS_MEDICAL, ACCESS_VIROLOGY, ACCESS_MINERAL_STOREROOM)
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
+	bounty_types = CIV_JOB_VIRO
 
 	display_order = JOB_DISPLAY_ORDER_VIROLOGIST
 
 	threat = 1.5
 
 	starting_modifiers = list(/datum/skill_modifier/job/surgery, /datum/skill_modifier/job/affinity/surgery)
+	
+	family_heirlooms = list(
+		/obj/item/reagent_containers/syringe
+	)
 
 /datum/outfit/job/virologist
 	name = "Virologist"

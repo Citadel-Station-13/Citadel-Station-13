@@ -356,7 +356,7 @@ em {
   font-weight: bold;
 }
 
-.say, .emote, .infoplain {
+.say, .emote, .infoplain, .oocplain, .warningplain {
 }
 
 .deadsay {
@@ -414,6 +414,10 @@ em {
   color: #6d3f40;
 }
 
+.gangradio {
+  color: #ac2ea1;
+}
+
 .centcomradio {
   color: #686868;
 }
@@ -428,6 +432,14 @@ em {
 
 .blueteamradio {
   color: #0000ff;
+}
+
+.greenteamradio {
+  color: #00ff00;
+}
+
+.yellowteamradio {
+  color: #d1ba22;
 }
 
 .yell {
@@ -472,6 +484,10 @@ h1.alert, h2.alert {
   font-style: italic;
 }
 
+blockquote.warning {
+  border-color: #ff0000;
+}
+
 .alertwarning {
   color: #FF0000;
   font-weight: bold;
@@ -510,9 +526,16 @@ h1.alert, h2.alert {
 .info {
   color: #0000CC;
 }
+blockquote.info {
+  border-color: #0000CC;
+}
 
 .notice {
   color: #000099;
+}
+
+blockquote.notice {
+  border-color: #000099;
 }
 
 .tinynotice {
@@ -570,16 +593,31 @@ h1.alert, h2.alert {
   color: #03ff39;
 }
 
+blockquote.green {
+  border-color: #03ff39;
+}
+
 .red {
   color: #FF0000;
+}
+blockquote.red {
+  border-color: #FF0000;
 }
 
 .blue {
   color: #0000FF;
 }
 
+blockquote.blue {
+  border-color: #0000FF;
+}
+
 .nicegreen {
   color: #14a833;
+}
+
+blockquote.nicegreen {
+  border-color: #14a833;
 }
 
 .userlove {
@@ -597,6 +635,10 @@ h1.alert, h2.alert {
 
 .cult {
   color: #973e3b;
+}
+
+blockquote.cult {
+  border-color: #973e3b;
 }
 
 .cultitalic {
@@ -652,6 +694,10 @@ h1.alert, h2.alert {
 
 .purple {
   color: #5e2d79;
+}
+
+blockquote.purple {
+  border-color: #5e2d79;
 }
 
 .holoparasite {
@@ -716,6 +762,10 @@ h1.alert, h2.alert {
 /* from decon_msg: font-size: 185% == font-size 3*/
 .brass {
   color: #BE8700;
+}
+
+blockquote.brass {
+  border-color: #BE8700;
 }
 
 .heavy_brass {
@@ -1030,6 +1080,10 @@ h1.alert, h2.alert {
 .icon {
   height: 1em;
   width: auto;
+}
+
+.bigicon {
+  font-size: 2.5em;
 }
 
 .memo {

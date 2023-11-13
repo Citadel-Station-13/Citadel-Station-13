@@ -357,16 +357,27 @@ Turf and target are separate in case you want to teleport some distance from a t
 		if(M.ckey == key)
 			return M
 
-//Returns the atom sitting on the turf.
-//For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
-//Optional arg 'type' to stop once it reaches a specific type instead of a turf.
-/proc/get_atom_on_turf(atom/movable/M, stop_type)
-	var/atom/loc = M
-	while(loc && loc.loc && !isturf(loc.loc))
-		loc = loc.loc
-		if(stop_type && istype(loc, stop_type))
+/**
+ * Returns the top-most atom sitting on the turf.
+ * For example, using this on a disk, which is in a bag, on a mob,
+ * will return the mob because it's on the turf.
+ *
+ * Arguments
+ * * something_in_turf - a movable within the turf, somewhere.
+ * * stop_type - optional - stops looking if stop_type is found in the turf, returning that type (if found).
+ **/
+/proc/get_atom_on_turf(atom/movable/something_in_turf, stop_type)
+	if(!istype(something_in_turf))
+		CRASH("get_atom_on_turf was not passed an /atom/movable! Got [isnull(something_in_turf) ? "null":"type: [something_in_turf.type]"]")
+
+	var/atom/movable/topmost_thing = something_in_turf
+
+	while(topmost_thing?.loc && !isturf(topmost_thing.loc))
+		topmost_thing = topmost_thing.loc
+		if(stop_type && istype(topmost_thing, stop_type))
 			break
-	return loc
+
+	return topmost_thing
 
 //Returns a list of all locations the target is within.
 /proc/get_nested_locs(atom/movable/M, include_turf = FALSE)
@@ -662,11 +673,32 @@ Turf and target are separate in case you want to teleport some distance from a t
 	if(final_x || final_y)
 		return locate(final_x, final_y, T.z)
 
+///Returns a turf based on text inputs, original turf and viewing client
+/proc/parse_caught_click_modifiers(list/modifiers, turf/origin, client/viewing_client)
+	if(!modifiers)
+		return null
+
+	var/screen_loc = splittext(LAZYACCESS(modifiers, SCREEN_LOC), ",")
+	var/list/actual_view = getviewsize(viewing_client ? viewing_client.view : world.view)
+	var/click_turf_x = splittext(screen_loc[1], ":")
+	var/click_turf_y = splittext(screen_loc[2], ":")
+	var/click_turf_z = origin.z
+
+	var/click_turf_px = text2num(click_turf_x[2])
+	var/click_turf_py = text2num(click_turf_y[2])
+	click_turf_x = origin.x + text2num(click_turf_x[1]) - round(actual_view[1] / 2) - 1
+	click_turf_y = origin.y + text2num(click_turf_y[1]) - round(actual_view[2] / 2) - 1
+
+	var/turf/click_turf = locate(clamp(click_turf_x, 1, world.maxx), clamp(click_turf_y, 1, world.maxy), click_turf_z)
+	LAZYSET(modifiers, ICON_X, "[(click_turf_px - click_turf.pixel_x) + ((click_turf_x - click_turf.x) * world.icon_size)]")
+	LAZYSET(modifiers, ICON_Y, "[(click_turf_py - click_turf.pixel_y) + ((click_turf_y - click_turf.y) * world.icon_size)]")
+	return click_turf
+
 //Finds the distance between two atoms, in pixels
-//centered = 0 counts from turf edge to edge
-//centered = 1 counts from turf center to turf center
+//centered = FALSE counts from turf edge to edge
+//centered = TRUE counts from turf center to turf center
 //of course mathematically this is just adding world.icon_size on again
-/proc/getPixelDistance(atom/A, atom/B, centered = 1)
+/proc/getPixelDistance(atom/A, atom/B, centered = TRUE)
 	if(!istype(A)||!istype(B))
 		return 0
 	. = bounds_dist(A, B) + sqrt((((A.pixel_x+B.pixel_x)**2) + ((A.pixel_y+B.pixel_y)**2)))
@@ -1165,25 +1197,22 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 	var/initialpixely = pixel_y
 	var/shiftx = rand(-pixelshiftx,pixelshiftx)
 	var/shifty = rand(-pixelshifty,pixelshifty)
-	animate(src, pixel_x = pixel_x + shiftx, pixel_y = pixel_y + shifty, time = 0.2, loop = duration)
-	pixel_x = initialpixelx
-	pixel_y = initialpixely
+	animate(src, pixel_x = shiftx, pixel_y = shifty, time = 0.2, loop = duration, flags = ANIMATION_RELATIVE)
+	animate(pixel_x = initialpixelx, pixel_y = initialpixely, time = 0.2)
 
-/atom/proc/do_jiggle(targetangle = 45, timer = 20)
+/atom/proc/do_jiggle(targetangle = 25, timer = 20)
 	var/matrix/OM = matrix(transform)
 	var/matrix/M = matrix(transform)
-	var/halftime = timer * 0.5
 	M.Turn(pick(-targetangle, targetangle))
-	animate(src, transform = M, time = halftime, easing = ELASTIC_EASING)
-	animate(src, transform = OM, time = halftime, easing = ELASTIC_EASING)
+	animate(src, transform = M, time = timer * 0.1, easing = BACK_EASING | EASE_IN)
+	animate(transform = OM, time = timer * 0.4, easing = ELASTIC_EASING)
 
 /atom/proc/do_squish(squishx = 1.2, squishy = 0.6, timer = 20)
 	var/matrix/OM = matrix(transform)
 	var/matrix/M = matrix(transform)
-	var/halftime = timer * 0.5
 	M.Scale(squishx, squishy)
-	animate(src, transform = M, time = halftime, easing = BOUNCE_EASING)
-	animate(src, transform = OM, time = halftime, easing = BOUNCE_EASING)
+	animate(src, transform = M, time = timer * 0.5, easing = ELASTIC_EASING)
+	animate(transform = OM, time = timer * 0.5, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
 
 /proc/weightclass2text(var/w_class)
 	switch(w_class)
@@ -1224,7 +1253,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	move_resist = INFINITY
 	var/ready_to_die = FALSE
 
-/mob/dview/Initialize() //Properly prevents this mob from gaining huds or joining any global lists
+/mob/dview/Initialize(mapload) //Properly prevents this mob from gaining huds or joining any global lists
 	SHOULD_CALL_PARENT(FALSE)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
@@ -1311,7 +1340,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	return temp
 
 //same as do_mob except for movables and it allows both to drift and doesn't draw progressbar
-/proc/do_atom(atom/movable/user , atom/movable/target, time = 30, uninterruptible = 0,datum/callback/extra_checks = null)
+/proc/do_atom(atom/movable/user, atom/movable/target, time = 3 SECONDS, timed_action_flags = NONE, datum/callback/extra_checks)
 	if(!user || !target)
 		return TRUE
 	var/user_loc = user.loc
@@ -1330,11 +1359,10 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	. = TRUE
 	while (world.time < endtime)
 		stoplag(1)
+
 		if(QDELETED(user) || QDELETED(target))
-			. = 0
+			. = FALSE
 			break
-		if(uninterruptible)
-			continue
 
 		if(drifting && !user.inertia_dir)
 			drifting = FALSE
@@ -1344,7 +1372,11 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			target_drifting = FALSE
 			target_loc = target.loc
 
-		if((!drifting && user.loc != user_loc) || (!target_drifting && target.loc != target_loc) || (extra_checks && !extra_checks.Invoke()))
+		if(
+			(!(timed_action_flags & IGNORE_USER_LOC_CHANGE) && !drifting && user.loc != user_loc) \
+			|| (!(timed_action_flags& IGNORE_TARGET_LOC_CHANGE) && !target_drifting && target.loc != target_loc) \
+			|| (extra_checks && !extra_checks.Invoke()) \
+			)
 			. = FALSE
 			break
 
@@ -1600,7 +1632,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	if(!iscarbon(target))
 		return TRUE
 	if(check_neck)
-		if(istype(target.get_item_by_slot(SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
+		if(istype(target.get_item_by_slot(ITEM_SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
 			return FALSE
 	if(check_blood)
 		if(target.reagents.has_reagent(/datum/reagent/consumable/garlic))

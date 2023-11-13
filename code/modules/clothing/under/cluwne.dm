@@ -8,7 +8,7 @@
 	can_adjust = 0
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
-/obj/item/clothing/under/cluwne/Initialize()
+/obj/item/clothing/under/cluwne/Initialize(mapload)
 	.=..()
 	ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
 	ADD_TRAIT(src, CURSED_ITEM_TRAIT, CLOTHING_TRAIT)
@@ -16,7 +16,7 @@
 /obj/item/clothing/under/cluwne/equipped(mob/living/carbon/user, slot)
 	if(!ishuman(user))
 		return
-	if(slot == SLOT_W_UNIFORM)
+	if(slot == ITEM_SLOT_ICLOTHING)
 		var/mob/living/carbon/human/H = user
 		H.dna.add_mutation(CLUWNEMUT)
 	return ..()

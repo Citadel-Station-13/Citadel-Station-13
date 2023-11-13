@@ -98,7 +98,7 @@
 		if(CALL_CHILDREN)
 			call_children()
 
-/mob/living/simple_animal/hostile/asteroid/elite/broodmother/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/asteroid/elite/broodmother/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(health < maxHealth * 0.5 && rand_tent < world.time)

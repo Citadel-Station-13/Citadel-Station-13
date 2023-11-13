@@ -52,6 +52,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/hair_color
 	///The alpha used by the hair. 255 is completely solid, 0 is invisible.
 	var/hair_alpha = 255
+	///The gradient style used for the mob's hair.
+	var/grad_style
+	///The gradient color used to color the gradient.
+	var/grad_color
 
 	///Does the species use skintones or not? As of now only used by humans.
 	var/use_skintones = FALSE
@@ -61,6 +65,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/exotic_bloodtype = ""
 	/// Assume human as the default blood colour, override this default by species subtypes
 	var/exotic_blood_color = BLOOD_COLOR_HUMAN
+	/// Which blend mode should this species blood use?
+	var/exotic_blood_blend_mode = BLEND_MULTIPLY
 	///What the species drops when gibbed by a gibber machine.
 	var/meat = /obj/item/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
 	var/list/gib_types = list(/obj/effect/gibspawner/human, /obj/effect/gibspawner/human/bodypartless)
@@ -104,6 +110,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/burnmod = 1
 	///multiplier for damage from cold temperature
 	var/coldmod = 1
+	///moves their safe minimum temp by this value.
+	var/cold_offset = 0
+	///moves their safe maximum temp by this value.
+	var/hot_offset = 0
 	///multiplier for damage from hot temperature
 	var/heatmod = 1
 	///multiplier for stun durations
@@ -134,6 +144,15 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	/// A path to an outfit that is important for species life e.g. plasmaman outfit
 	var/datum/outfit/outfit_important_for_life
 
+	///Is this species a flying species? Used as an easy check for some things
+	var/flying_species = FALSE
+	///The actual flying ability given to flying species
+	var/datum/action/innate/flight/fly
+	///Current wings icon
+	var/wings_icon = "Angel"
+	//Dictates which wing icons are allowed for a given species. If count is >1 a radial menu is used to choose between all icons in list
+	var/list/wings_icons = SPECIES_WINGS_ANGEL
+
 	///Species-only traits. Can be found in [code/__DEFINES/DNA.dm]
 	var/list/species_traits = list(HAS_FLESH,HAS_BONE) //by default they can scar and have bones/flesh unless set to something else
 	///Generic traits tied to having the species.
@@ -143,6 +162,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	var/list/blacklisted_quirks = list() // Quirks that will be removed upon gaining this species, to be defined by species
 	var/list/removed_quirks = list() // Quirks that got removed due to being blacklisted, and will be restored when on_species_loss() is called
+	var/balance_point_values = FALSE	//If true, will balance point values on species gain after removing blacklisted quirks. Use this for roundstart species with blacklisted quirks that people may attempt to use to powergame trait points.
 
 	///Punch-specific attack verb.
 	var/attack_verb = "punch"
@@ -210,6 +230,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	///For custom overrides for species ass images
 	var/icon/ass_image
+
+	/// List of family heirlooms this species can get with the family heirloom quirk. List of types.
+	var/list/family_heirlooms
 
 ///////////
 // PROCS //
@@ -325,11 +348,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/obj/item/organ/stomach/stomach = C.getorganslot(ORGAN_SLOT_STOMACH)
 	var/obj/item/organ/tail/tail = C.getorganslot(ORGAN_SLOT_TAIL)
 
-	var/should_have_brain = TRUE
+	var/should_have_brain = !(HAS_TRAIT(C, TRAIT_DULLAHAN)) // do not mess with a dullahans brain
 	var/should_have_heart = !(NOBLOOD in species_traits)
-	var/should_have_lungs = !(TRAIT_NOBREATH in inherent_traits)
+	var/should_have_lungs = ((TRAIT_AUXILIARY_LUNGS in inherent_traits) || !(TRAIT_NOBREATH in inherent_traits))
 	var/should_have_appendix = !(TRAIT_NOHUNGER in inherent_traits)
-	var/should_have_eyes = TRUE
+	var/should_have_eyes = !(HAS_TRAIT(C, TRAIT_DULLAHAN)) // .. or their eyes
 	var/should_have_ears = TRUE
 	var/should_have_tongue = TRUE
 	var/should_have_liver = !(NOLIVER in species_traits)
@@ -486,6 +509,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		for(var/datum/disease/A in C.diseases)
 			A.cure(FALSE)
 
+	if(flying_species && isnull(fly))
+		fly = new
+		fly.Grant(C)
+
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(NOGENITALS in H.dna.species.species_traits)
@@ -560,22 +587,54 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(F)
 			qdel(F)
 
+	if(flying_species)
+		if(C.movement_type & FLYING)
+			ToggleFlight(C)
+		fly.Remove(C)
+		QDEL_NULL(fly)
+	if(C.dna && C.dna.species && (C.dna.features["wings"] == wings_icon))
+		if("wings" in C.dna.species.mutant_bodyparts)
+			C.dna.species.mutant_bodyparts -= "wings"
+		C.dna.features["wings"] = "None"
+		C.update_body()
 
 	if(ROBOTIC_LIMBS in species_traits)
 		for(var/obj/item/bodypart/B in C.bodyparts)
 			B.change_bodypart_status(initial(B.status), FALSE, TRUE)
 
+	if((TRAIT_ROBOTIC_ORGANISM in inherent_traits) && C.hud_used)
+		C.hud_used.coolant_display.clear()
+
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
 // shamelessly inspired by antag_datum.remove_blacklisted_quirks()
 /datum/species/proc/remove_blacklisted_quirks(mob/living/carbon/C)
-	var/mob/living/L = C.mind?.current
-	if(istype(L))
-		for(var/q in L.roundstart_quirks)
-			var/datum/quirk/Q = q
-			if(Q.type in blacklisted_quirks)
-				qdel(Q)
-				removed_quirks += Q.type
+	. = 0
+	if(istype(C))
+		if(!balance_point_values)
+			for(var/q in C.roundstart_quirks)
+				var/datum/quirk/Q = q
+				if(Q.type in blacklisted_quirks)
+					removed_quirks += Q.type
+					. += 1
+					qdel(Q)
+		else
+			var/point_overhead = 0
+			for(var/datum/quirk/Q as anything in C.roundstart_quirks)
+				if(Q.type in blacklisted_quirks)
+					point_overhead -= Q.value
+					removed_quirks += Q.type
+					. += 1
+					qdel(Q)
+			if(point_overhead)
+				for(var/datum/quirk/Q as anything in C.roundstart_quirks)
+					if(Q.value > 0)
+						point_overhead -= Q.value
+						removed_quirks += Q.type
+						. += 1
+						qdel(Q)
+						if(!point_overhead)
+							break
 
 // restore any quirks that we removed
 /datum/species/proc/restore_quirks(mob/living/carbon/C)
@@ -641,6 +700,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				fhair_file = 'icons/mob/facialhair_extensions.dmi'
 
 			var/mutable_appearance/facial_overlay = mutable_appearance(fhair_file, fhair_state, -HAIR_LAYER)
+			facial_overlay.category = "HEAD"
 
 			if(!forced_colour)
 				if(hair_color)
@@ -678,7 +738,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	if(!hair_hidden || dynamic_hair_suffix)
 		var/mutable_appearance/hair_overlay = mutable_appearance(layer = -HAIR_LAYER)
-		if(!hair_hidden && !H.getorgan(/obj/item/organ/brain)) //Applies the debrained overlay if there is no brain
+		hair_overlay.category = "HEAD"
+		var/mutable_appearance/gradient_overlay = mutable_appearance(layer = -HAIR_LAYER)
+		gradient_overlay.category = "HEAD"
+		if(!hair_hidden && !H.getorgan(/obj/item/organ/brain) && !H.GetComponent(/datum/component/dullahan)) //Applies the debrained overlay if there is no brain (ignore if they are dullahan)
 			if(!(NOBLOOD in species_traits))
 				hair_overlay.icon = 'icons/mob/human_parts.dmi'
 				hair_overlay.icon_state = "debrained"
@@ -713,8 +776,21 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 							hair_overlay.color = "#" + hair_color
 					else
 						hair_overlay.color = "#" + H.hair_color
+
+					//Gradients
+					grad_style = H.grad_style
+					grad_color = H.grad_color
+					if(grad_style)
+						var/datum/sprite_accessory/gradient = GLOB.hair_gradients_list[grad_style]
+						var/icon/temp = icon(gradient.icon, gradient.icon_state)
+						var/icon/temp_hair = icon(hair_file, hair_state)
+						temp.Blend(temp_hair, ICON_ADD)
+						gradient_overlay.icon = temp
+						gradient_overlay.color = "#" + grad_color
+
 				else
 					hair_overlay.color = forced_colour
+
 				hair_overlay.alpha = hair_alpha
 
 				if(OFFSET_HAIR in H.dna.species.offset_features)
@@ -723,13 +799,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		if(hair_overlay.icon)
 			standing += hair_overlay
+			standing += gradient_overlay
 
 	if(standing.len)
 		H.overlays_standing[HAIR_LAYER] = standing
 
 	H.apply_overlay(HAIR_LAYER)
 
-/datum/species/proc/handle_body(mob/living/carbon/human/H)
+/datum/species/proc/handle_body(mob/living/carbon/human/H, block_recursive_calls = FALSE)
 	H.remove_overlay(BODY_LAYER)
 
 	var/list/standing = list()
@@ -740,6 +817,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		// lipstick
 		if(H.lip_style && (LIPS in species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/lips.dmi', "lips_[H.lip_style]", -BODY_LAYER)
+			lip_overlay.category = "HEAD"
 			lip_overlay.color = H.lip_color
 
 			if(OFFSET_LIPS in H.dna.species.offset_features)
@@ -750,20 +828,22 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		// eyes
 		if(!(NOEYES in species_traits))
-			var/has_eyes = H.getorganslot(ORGAN_SLOT_EYES)
+			var/has_eyes = H.getorganslot(ORGAN_SLOT_EYES) || HAS_TRAIT(H, TRAIT_DULLAHAN) // if they are a dullahan just assume eyes exist
 			if(!has_eyes)
 				standing += mutable_appearance('icons/mob/eyes.dmi', "eyes_missing", -BODY_LAYER)
 			else
 				var/left_state = DEFAULT_LEFT_EYE_STATE
 				var/right_state = DEFAULT_RIGHT_EYE_STATE
 				if(eye_type in GLOB.eye_types)
-					left_state = eye_type + "_left_eye"
-					right_state = eye_type + "_right_eye"
+					left_state = "[eye_type]_left_eye"
+					right_state = "[eye_type]_right_eye"
 				var/mutable_appearance/left_eye = mutable_appearance('icons/mob/eyes.dmi', left_state, -BODY_LAYER)
 				var/mutable_appearance/right_eye = mutable_appearance('icons/mob/eyes.dmi', right_state, -BODY_LAYER)
+				left_eye.category = "HEAD"
+				right_eye.category = "HEAD"
 				if((EYECOLOR in species_traits) && has_eyes)
-					left_eye.color = "#" + H.left_eye_color
-					right_eye.color = "#" + H.right_eye_color
+					left_eye.color = "#[H.left_eye_color]"
+					right_eye.color = "#[H.right_eye_color]"
 				if(OFFSET_EYES in offset_features)
 					left_eye.pixel_x += offset_features[OFFSET_EYES][1]
 					left_eye.pixel_y += offset_features[OFFSET_EYES][2]
@@ -821,9 +901,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		H.overlays_standing[BODY_LAYER] = standing
 
 	H.apply_overlay(BODY_LAYER)
-	handle_mutant_bodyparts(H)
+	handle_mutant_bodyparts(H, null, block_recursive_calls)
 
-/datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
+/datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour, block_recursive_calls = FALSE)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
 
 	H.remove_overlay(BODY_BEHIND_LAYER)
@@ -836,6 +916,22 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return
 
 	var/tauric = mutant_bodyparts["taur"] && H.dna.features["taur"] && H.dna.features["taur"] != "None"
+
+	// stuff for adding/removing the coiling ability if you have a taur part
+	// if another action is ever based on mutant parts we should probably make a system for it so it's all done in one proc with less overhead
+	var/datum/action/found_action
+
+	for(var/datum/action/A in H.actions)
+		if(A.type == /datum/action/innate/ability/coiling)
+			found_action = A
+
+	if(found_action && (!tauric || (H.dna.features["taur"] != "Naga" && H.dna.features["taur"] != "Naga (coiled)")))
+		found_action.Remove(H)
+
+	if(!found_action && tauric && H.dna.features["taur"] == "Naga")
+		found_action = new /datum/action/innate/ability/coiling()
+		found_action.Grant(H)
+
 
 	for(var/mutant_part in mutant_bodyparts)
 		var/reference_list = GLOB.mutant_reference_list[mutant_part]
@@ -922,6 +1018,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		for(var/bodypart in relevant_layers[layer])
 			var/datum/sprite_accessory/S = bodypart
 			var/mutable_appearance/accessory_overlay = mutable_appearance(S.icon, layer = -layernum)
+			accessory_overlay.category = S.mutable_category
 			bodypart = S.mutant_part_string || dna_feature_as_text_string[S]
 
 			if(S.gender_specific)
@@ -1026,6 +1123,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 			if(S.extra) //apply the extra overlay, if there is one
 				var/mutable_appearance/extra_accessory_overlay = mutable_appearance(S.icon, layer = -layernum)
+				extra_accessory_overlay.category = S.mutable_category
 				if(S.gender_specific)
 					extra_accessory_overlay.icon_state = "[g]_[bodypart]_extra_[S.icon_state]_[layertext]"
 				else
@@ -1072,6 +1170,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 			if(S.extra2) //apply the extra overlay, if there is one
 				var/mutable_appearance/extra2_accessory_overlay = mutable_appearance(S.icon, layer = -layernum)
+				extra2_accessory_overlay.category = S.mutable_category
 				if(S.gender_specific)
 					extra2_accessory_overlay.icon_state = "[g]_[bodypart]_extra2_[S.icon_state]_[layertext]"
 				else
@@ -1119,6 +1218,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	H.apply_overlay(BODY_FRONT_LAYER)
 	H.apply_overlay(HORNS_LAYER)
 
+	if(!block_recursive_calls)
+		var/datum/component/dullahan/D = H.GetComponent(/datum/component/dullahan)
+		if(D && D.dullahan_head)
+			D.dullahan_head.update_appearance()
+
 /*
  * Equip the outfit required for life. Replaces items currently worn.
  */
@@ -1140,13 +1244,18 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return move_trail */
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H)
+	if(flying_species) //turns off flight automatically if they can't.
+		HandleFlight(H)
 	if(HAS_TRAIT(H, TRAIT_NOBREATH))
 		H.setOxyLoss(0)
 		H.losebreath = 0
 
 		var/takes_crit_damage = !HAS_TRAIT(H, TRAIT_NOCRITDAMAGE)
 		if((H.health < H.crit_threshold) && takes_crit_damage)
-			H.adjustBruteLoss(1)
+			if(!HAS_TRAIT(H, TRAIT_ROBOTIC_ORGANISM))
+				H.adjustBruteLoss(1)
+			else
+				H.adjustFireLoss(1) //Robots melt instead of taking brute.
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -1170,11 +1279,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/num_legs = H.get_num_legs(FALSE)
 
 	switch(slot)
-		if(SLOT_HANDS)
+		if(ITEM_SLOT_HANDS)
 			if(H.get_empty_held_indexes())
 				return TRUE
 			return FALSE
-		if(SLOT_WEAR_MASK)
+		if(ITEM_SLOT_MASK)
 			if(H.wear_mask)
 				return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_MASK))
@@ -1182,25 +1291,25 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
-		if(SLOT_NECK)
+		if(ITEM_SLOT_NECK)
 			if(H.wear_neck)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_NECK) )
 				return FALSE
 			return TRUE
-		if(SLOT_BACK)
+		if(ITEM_SLOT_BACK)
 			if(H.back)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_BACK) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
-		if(SLOT_WEAR_SUIT)
+		if(ITEM_SLOT_OCLOTHING)
 			if(H.wear_suit)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_OCLOTHING) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
-		if(SLOT_GLOVES)
+		if(ITEM_SLOT_GLOVES)
 			if(H.gloves)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_GLOVES) )
@@ -1208,7 +1317,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(num_arms < 2)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
-		if(SLOT_SHOES)
+		if(ITEM_SLOT_FEET)
 			if(H.shoes)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_FEET) )
@@ -1221,10 +1330,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				else
 					return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
-		if(SLOT_BELT)
+		if(ITEM_SLOT_BELT)
 			if(H.belt)
 				return FALSE
-			if(!CHECK_BITFIELD(I.item_flags, NO_UNIFORM_REQUIRED))
+			if(!(I.item_flags & NO_UNIFORM_REQUIRED))
 				var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
 				if(!H.w_uniform && !nojumpsuit && (!O || !O.is_robotic_limb()))
 					if(return_warning)
@@ -1233,7 +1342,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(!(I.slot_flags & ITEM_SLOT_BELT))
 				return
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
-		if(SLOT_GLASSES)
+		if(ITEM_SLOT_EYES)
 			if(H.glasses)
 				return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_EYES))
@@ -1241,7 +1350,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
-		if(SLOT_HEAD)
+		if(ITEM_SLOT_HEAD)
 			if(H.head)
 				return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_HEAD))
@@ -1249,7 +1358,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
-		if(SLOT_EARS)
+		if(ITEM_SLOT_EARS)
 			if(H.ears)
 				return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_EARS))
@@ -1257,16 +1366,16 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
-		if(SLOT_W_UNIFORM)
+		if(ITEM_SLOT_ICLOTHING)
 			if(H.w_uniform)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_ICLOTHING) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
-		if(SLOT_WEAR_ID)
+		if(ITEM_SLOT_ID)
 			if(H.wear_id)
 				return FALSE
-			if(!CHECK_BITFIELD(I.item_flags, NO_UNIFORM_REQUIRED))
+			if(!(I.item_flags & NO_UNIFORM_REQUIRED))
 				var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
 				if(!H.w_uniform && !nojumpsuit && (!O || !O.is_robotic_limb()))
 					if(return_warning)
@@ -1275,7 +1384,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if( !(I.slot_flags & ITEM_SLOT_ID) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
-		if(SLOT_L_STORE)
+		if(ITEM_SLOT_LPOCKET)
 			if(HAS_TRAIT(I, TRAIT_NODROP)) //Pockets aren't visible, so you can't move TRAIT_NODROP items into them.
 				return FALSE
 			if(H.l_store)
@@ -1287,11 +1396,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				if(return_warning)
 					return_warning[1] = "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return FALSE
-			if(I.slot_flags & ITEM_SLOT_DENYPOCKET)
-				return FALSE
-			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & ITEM_SLOT_POCKET) )
+			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & ITEM_SLOT_POCKETS) )
 				return TRUE
-		if(SLOT_R_STORE)
+		if(ITEM_SLOT_RPOCKET)
 			if(HAS_TRAIT(I, TRAIT_NODROP))
 				return FALSE
 			if(H.r_store)
@@ -1303,12 +1410,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				if(return_warning)
 					return_warning[1] = "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return FALSE
-			if(I.slot_flags & ITEM_SLOT_DENYPOCKET)
-				return FALSE
-			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & ITEM_SLOT_POCKET) )
+			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & ITEM_SLOT_POCKETS) )
 				return TRUE
 			return FALSE
-		if(SLOT_S_STORE)
+		if(ITEM_SLOT_SUITSTORE)
 			if(HAS_TRAIT(I, TRAIT_NODROP))
 				return FALSE
 			if(H.s_store)
@@ -1328,7 +1433,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if( istype(I, /obj/item/pda) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
 				return TRUE
 			return FALSE
-		if(SLOT_HANDCUFFED)
+		if(ITEM_SLOT_HANDCUFFED)
 			if(H.handcuffed)
 				return FALSE
 			if(!istype(I, /obj/item/restraints/handcuffs))
@@ -1336,7 +1441,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(num_arms < 2)
 				return FALSE
 			return TRUE
-		if(SLOT_LEGCUFFED)
+		if(ITEM_SLOT_LEGCUFFED)
 			if(H.legcuffed)
 				return FALSE
 			if(!istype(I, /obj/item/restraints/legcuffs))
@@ -1344,10 +1449,26 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(num_legs < 2)
 				return FALSE
 			return TRUE
-		if(SLOT_IN_BACKPACK)
+		if(ITEM_SLOT_BACKPACK)
 			if(H.back)
 				if(SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_CAN_INSERT, I, H, TRUE))
 					return TRUE
+			return FALSE
+		if(ITEM_SLOT_ACCESSORY)
+			if(istype(H.w_uniform, /obj/item/clothing/under))
+				var/obj/item/clothing/under/attaching_target = H.w_uniform
+				if(attaching_target.attached_accessory)
+					if(return_warning)
+						return_warning[1] = "\The [attaching_target] already has an accessory."
+					return FALSE
+				if(attaching_target.dummy_thick)
+					if(return_warning)
+						return_warning[1] = "\The [attaching_target] is too bulky and cannot have accessories attached to it!"
+					return FALSE
+				else
+					return TRUE
+			else if(return_warning)
+				return_warning[1] = "\The [H.w_uniform] cannot have any attachments."
 			return FALSE
 	return FALSE //Unsupported slot
 
@@ -1378,7 +1499,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 ////////////
 
 /datum/species/proc/handle_digestion(mob/living/carbon/human/H)
-	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
+	if(HAS_TRAIT(H, TRAIT_NOHUNGER))
 		return //hunger is for BABIES
 
 	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
@@ -1610,7 +1731,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			return FALSE
 
 
-		var/armor_block = target.run_armor_check(affecting, "melee")
+		var/armor_block = target.run_armor_check(affecting, MELEE)
 		playsound(target.loc, user.dna.species.attack_sound_override || attack_sound, 25, 1, -1)
 		target.visible_message("<span class='danger'>[user] [atk_verb]ed [target]!</span>", \
 					"<span class='userdanger'>[user] [atk_verb]ed you!</span>", null, COMBAT_MESSAGE_RANGE, null, \
@@ -1819,7 +1940,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	hit_area = affecting.name
 	var/def_zone = affecting.body_zone
 
-	var/armor_block = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>",I.armour_penetration)
+	var/armor_block = H.run_armor_check(affecting, MELEE, "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>",I.armour_penetration)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 	var/Iwound_bonus = I.wound_bonus
@@ -1855,7 +1976,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(BODY_ZONE_HEAD)
 				if(!I.get_sharpness() && armor_block < 50)
 					if(prob(I.force))
-						if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+						if(HAS_TRAIT(H, TRAIT_ROBOTIC_ORGANISM))
 							H.adjustToxLoss(5, toxins_type = TOX_SYSCORRUPT) //Bonk! - Effectively 5 bonus damage
 						else
 							H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
@@ -1871,11 +1992,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 					if(H.stat == CONSCIOUS && H != user && prob(I.force + ((100 - H.health) * 0.5))) // rev deconversion through blunt trauma.
 						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
-						var/datum/antagonist/gang/gang = H.mind.has_antag_datum(/datum/antagonist/gang && !/datum/antagonist/gang/boss)
 						if(rev)
 							rev.remove_revolutionary(FALSE, user)
-						if(gang)
-							H.mind.remove_antag_datum(/datum/antagonist/gang)
 
 				if(bloody)	//Apply blood
 					if(H.wear_mask)
@@ -1980,7 +2098,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(CHECK_MOBILITY(target, MOBILITY_STAND))
 			target.adjustStaminaLoss(5)
 		else
-			target.adjustStaminaLoss(target.getStaminaLoss() > 75? 5 : 75)
+			target.adjustStaminaLoss(IS_STAMCRIT(target)? 2 : 10)
 
 		if(target.is_shove_knockdown_blocked())
 			return
@@ -2152,15 +2270,20 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	//Thermal protection (insulation) has mixed benefits in two situations (hot in hot places, cold in hot places)
 	if(!H.on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
 		var/natural = 0
+		var/cooling_efficiency = 1
 		if(H.stat != DEAD)
 			natural = H.natural_bodytemperature_stabilization()
+			cooling_efficiency = H.get_cooling_efficiency()
+
+		if(HAS_TRAIT(H, TRAIT_ROBOTIC_ORGANISM))	//Synths by default slowly heat up and need to lose said heat to the environment or active cooling. If you have very high cooling efficiency, you instead passively cool.
+			H.adjust_bodytemperature(SYNTH_PASSIVE_HEAT_GAIN * (1 - cooling_efficiency), (T0C + SYNTH_MIN_PASSIVE_COOLING_TEMP), (T0C + SYNTH_MAX_PASSIVE_GAIN_TEMP))
 		var/thermal_protection = 1
 		if(loc_temp < H.bodytemperature) //Place is colder than we are
 			thermal_protection -= H.get_thermal_protection(loc_temp, TRUE) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 			if(H.bodytemperature < BODYTEMP_NORMAL) //we're cold, insulation helps us retain body heat and will reduce the heat we lose to the environment
-				H.adjust_bodytemperature((thermal_protection+1)*natural + max(thermal_protection * (loc_temp - H.bodytemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX))
+				H.adjust_bodytemperature((thermal_protection+1)*natural + max((thermal_protection * (loc_temp - H.bodytemperature) * cooling_efficiency) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX))
 			else //we're sweating, insulation hinders our ability to reduce heat - and it will reduce the amount of cooling you get from the environment
-				H.adjust_bodytemperature(natural*(1/(thermal_protection+1)) + max((thermal_protection * (loc_temp - H.bodytemperature) + BODYTEMP_NORMAL - H.bodytemperature) / BODYTEMP_COLD_DIVISOR , BODYTEMP_COOLING_MAX)) //Extra calculation for hardsuits to bleed off heat
+				H.adjust_bodytemperature(natural*(1/(thermal_protection+1)) + max(((thermal_protection * (loc_temp - H.bodytemperature) + BODYTEMP_NORMAL - H.bodytemperature) * cooling_efficiency) / BODYTEMP_COLD_DIVISOR , BODYTEMP_COOLING_MAX)) //Extra calculation for hardsuits to bleed off heat
 		else //Place is hotter than we are
 			thermal_protection -= H.get_thermal_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 			if(H.bodytemperature < BODYTEMP_NORMAL) //and we're cold, insulation enhances our ability to retain body heat but reduces the heat we get from the environment
@@ -2174,9 +2297,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				H.throw_alert("tempfeel", /atom/movable/screen/alert/cold, 2)
 			if(-35 to -20)
 				H.throw_alert("tempfeel", /atom/movable/screen/alert/cold, 1)
-			if(-20 to 0) //This is the sweet spot where air is considered normal
+			if(-20 to 1) //This is the sweet spot where air is considered normal
 				H.clear_alert("tempfeel")
-			if(0 to 15) //When the air around you matches your body's temperature, you'll start to feel warm.
+			if(1 to 15) //When the air around you matches your body's temperature, you'll start to feel warm.
 				H.throw_alert("tempfeel", /atom/movable/screen/alert/hot, 1)
 			if(15 to 30)
 				H.throw_alert("tempfeel", /atom/movable/screen/alert/hot, 2)
@@ -2184,7 +2307,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				H.throw_alert("tempfeel", /atom/movable/screen/alert/hot, 3)
 
 	// +/- 50 degrees from 310K is the 'safe' zone, where no damage is dealt.
-	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !HAS_TRAIT(H, TRAIT_RESISTHEAT))
+	if(H.bodytemperature > (BODYTEMP_HEAT_DAMAGE_LIMIT + hot_offset) && !HAS_TRAIT(H, TRAIT_RESISTHEAT))
 		//Body temperature is too hot.
 
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
@@ -2212,11 +2335,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			H.emote("scream")
 		H.apply_damage(burn_damage, BURN)
 
-	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(H, TRAIT_RESISTCOLD))
+	else if(H.bodytemperature < (BODYTEMP_COLD_DAMAGE_LIMIT + cold_offset) && !HAS_TRAIT(H, TRAIT_RESISTCOLD))
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
 		//Apply cold slowdown
-		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR))
+		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = (((BODYTEMP_COLD_DAMAGE_LIMIT + cold_offset) - H.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 		switch(H.bodytemperature)
 			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
 				H.throw_alert("temp", /atom/movable/screen/alert/shiver, 1)
@@ -2316,7 +2439,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		for(var/X in burning_items)
 			var/obj/item/I = X
 			if(!(I.resistance_flags & FIRE_PROOF))
-				I.take_damage(H.fire_stacks, BURN, "fire", 0)
+				I.take_damage(H.fire_stacks, BURN, FIRE, 0)
 
 		var/thermal_protection = H.easy_thermal_protection()
 
@@ -2337,10 +2460,13 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	return
 
 ////////////
-//Stun//
+//	Stun  //
 ////////////
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
+	if(flying_species && H.movement_type & FLYING)
+		ToggleFlight(H,0)
+		flyslip(H)
 	if(H)
 		stop_wagging_tail(H)
 	. = stunmod * H.physiology.stun_mod * amount
@@ -2350,10 +2476,21 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 //////////////
 
 /datum/species/proc/space_move(mob/living/carbon/human/H)
-	return 0
+	if(H.movement_type & FLYING)
+		return TRUE
+	return FALSE
 
 /datum/species/proc/negates_gravity(mob/living/carbon/human/H)
-	return 0
+	if(H.movement_type & FLYING)
+		return TRUE
+	return FALSE
+
+////////////////
+//Blood Stuff///
+////////////////
+// true = handle blood normally, false = do not (and then handle blood in this proc instead please!!)
+/datum/species/proc/handle_blood(mob/living/carbon/human/H, delta_time, times_fired)
+	return TRUE
 
 ////////////////
 //Tail Wagging//
@@ -2387,3 +2524,130 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				mutant_bodyparts["spines"] = mutant_bodyparts["waggingspines"]
 				mutant_bodyparts -= "waggingspines"
 			H.update_body()
+
+///////////////
+//FLIGHT SHIT//
+///////////////
+
+/datum/species/proc/GiveSpeciesFlight(mob/living/carbon/human/H, all_wings = FALSE)
+	if(flying_species) //grant them the choice of all wings if they don't have them
+		all_wings = TRUE
+	flying_species = TRUE
+	//CITADEL CHANGE: check if they already have wings, and "evolve" them based off of the wings they have. If they have none, use their species wings basis.
+	var/list/wingslist
+	if(all_wings) //give them the full list of wing choices to pick from, typically if they drink a second flight potion
+		wingslist = SPECIES_WINGS_ALL
+	else
+		//why the fuck do we have two different wing types anyways? they're literally almost both using the same wing shit too.
+		var/datum/sprite_accessory/deco_wings/D = GLOB.deco_wings_list[H.dna.features["deco_wings"]]
+		var/datum/sprite_accessory/insect_wings/I = GLOB.insect_wings_list[H.dna.features["insect_wings"]]
+		if(mutant_bodyparts["deco_wings"] && D?.upgrade_to.len) //species check to see if they were allowed to have deco wings
+			wingslist = D.upgrade_to
+		else if(mutant_bodyparts["insect_wings"] && I?.upgrade_to.len) //species check to see if they were allowed to have insect wings
+			wingslist = I.upgrade_to
+		else
+			wingslist = wings_icons
+
+	if(wingslist.len > 1)
+		if(!H.client)
+			wings_icon = pick(wingslist)
+		else
+			var/list/wings = list()
+			for(var/W in wingslist)
+				var/datum/sprite_accessory/S = GLOB.wings_list[W]	//Gets the datum for every wing this species has, then prompts user with a radial menu
+				var/image/img = image(icon = 'icons/mob/wings_functional.dmi', icon_state = "m_wingsopen_[S.icon_state]_BEHIND")	//Process the HUD elements
+				img.transform *= 0.5
+				img.pixel_x = -32
+				if(wings[S.name])
+					stack_trace("Different wing types with repeated names. Please fix as this may cause issues.")
+				else
+					wings[S.name] = img
+			wings_icon = show_radial_menu(H, H, wings, tooltips = TRUE)
+			if(!wings_icon)
+				wings_icon = pick(wings_icons)
+	else
+		wings_icon = wingslist[1]
+	if(isnull(fly))
+		fly = new
+		fly.Grant(H)
+	if(H.dna.features["wings"] != wings_icon)
+		mutant_bodyparts["wings"] = wings_icon
+		H.dna.features["wings"] = wings_icon
+		H.update_body()
+
+/datum/species/proc/HandleFlight(mob/living/carbon/human/H)
+	if(H.movement_type & FLYING)
+		if(!CanFly(H))
+			ToggleFlight(H)
+			return FALSE
+		return TRUE
+	else
+		return FALSE
+
+/datum/species/proc/CanFly(mob/living/carbon/human/H)
+	if(H.stat || !(H.mobility_flags & MOBILITY_STAND))
+		return FALSE
+	if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))	//Jumpsuits have tail holes, so it makes sense they have wing holes too
+		to_chat(H, "<span class='warning'>Your suit blocks your wings from extending!</span>")
+		return FALSE
+	var/turf/T = get_turf(H)
+	if(!T)
+		return FALSE
+	var/datum/gas_mixture/environment = T.return_air()
+	if(environment && !(environment.return_pressure() > 30))
+		to_chat(H, "<span class='warning'>The atmosphere is too thin for you to fly!</span>")
+		return FALSE
+	else
+		return TRUE
+
+/datum/species/proc/flyslip(mob/living/carbon/human/H)
+	var/obj/buckled_obj
+	if(H.buckled)
+		buckled_obj = H.buckled
+	to_chat(H, "<span class='notice'>Your wings spazz out and launch you!</span>")
+	playsound(H.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
+	for(var/obj/item/I in H.held_items)
+		H.accident(I)
+	var/olddir = H.dir
+	H.stop_pulling()
+	if(buckled_obj)
+		buckled_obj.unbuckle_mob(H)
+		step(buckled_obj, olddir)
+	else
+		new /datum/forced_movement(H, get_ranged_target_turf(H, olddir, 4), 1, FALSE, CALLBACK(H, /mob/living/carbon/.proc/spin, 1, 1))
+	return TRUE
+
+//UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
+/datum/species/proc/ToggleFlight(mob/living/carbon/human/H)
+	if(!(H.movement_type & FLYING) && CanFly(H))
+		stunmod *= 2
+		speedmod -= 0.35
+		H.setMovetype(H.movement_type | FLYING)
+		override_float = TRUE
+		H.pass_flags |= PASSTABLE
+		H.OpenWings()
+		H.update_mobility()
+	else
+		stunmod *= 0.5
+		speedmod += 0.35
+		H.setMovetype(H.movement_type & ~FLYING)
+		override_float = FALSE
+		H.pass_flags &= ~PASSTABLE
+		H.CloseWings()
+
+/datum/action/innate/flight
+	name = "Toggle Flight"
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "flight"
+
+/datum/action/innate/flight/Activate()
+	var/mob/living/carbon/human/H = owner
+	var/datum/species/S = H.dna.species
+	if(S.CanFly(H))
+		S.ToggleFlight(H)
+		if(!(H.movement_type & FLYING))
+			to_chat(H, "<span class='notice'>You settle gently back onto the ground...</span>")
+		else
+			to_chat(H, "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>")
+			H.set_resting(FALSE, TRUE)

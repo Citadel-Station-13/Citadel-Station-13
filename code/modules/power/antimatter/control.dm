@@ -30,7 +30,7 @@
 
 	var/stored_power = 0//Power to deploy per tick
 
-/obj/machinery/power/am_control_unit/Initialize()
+/obj/machinery/power/am_control_unit/Initialize(mapload)
 	. = ..()
 	linked_shielding = list()
 	linked_cores = list()
@@ -114,14 +114,14 @@
 	check_stability()
 	return
 
-/obj/machinery/power/am_control_unit/ex_act(severity, target)
+/obj/machinery/power/am_control_unit/ex_act(severity, target, origin)
 	stability -= (80 - (severity * 20))
 	check_stability()
 	return
 
 /obj/machinery/power/am_control_unit/bullet_act(obj/item/projectile/Proj)
 	. = ..()
-	if(Proj.flag != "bullet")
+	if(Proj.flag != BULLET)
 		stability -= Proj.force
 		check_stability()
 

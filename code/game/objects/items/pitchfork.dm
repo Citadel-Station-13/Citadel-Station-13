@@ -11,11 +11,11 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 30)
 	resistance_flags = FIRE_PROOF
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/pitchfork/Initialize()
+/obj/item/pitchfork/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
@@ -42,7 +42,7 @@
 	force = 19
 	throwforce = 24
 
-/obj/item/pitchfork/demonic/Initialize()
+/obj/item/pitchfork/demonic/Initialize(mapload)
 	. = ..()
 	set_light(3,6,LIGHT_COLOR_RED)
 

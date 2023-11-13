@@ -6,8 +6,9 @@
 	var/hoodtype = /obj/item/clothing/head/hooded/winterhood //so the chaplain hoodie or other hoodies can override this
 	///Alternative mode for hiding the hood, instead of storing the hood in the suit it qdels it, useful for when you deal with hooded suit with storage.
 	var/alternative_mode = FALSE
+	var/no_t //do not update sprites when pulling up hood so we can avoid oddities with certain mechanics
 
-/obj/item/clothing/suit/hooded/Initialize()
+/obj/item/clothing/suit/hooded/Initialize(mapload)
 	. = ..()
 	hood = MakeHelmet()
 
@@ -30,11 +31,11 @@
 	ToggleHood()
 
 /obj/item/clothing/suit/hooded/item_action_slot_check(slot, mob/user, datum/action/A)
-	if(slot == SLOT_WEAR_SUIT || slot == SLOT_NECK)
+	if(slot == ITEM_SLOT_OCLOTHING || slot == ITEM_SLOT_NECK)
 		return 1
 
 /obj/item/clothing/suit/hooded/equipped(mob/user, slot)
-	if(slot != SLOT_WEAR_SUIT && slot != SLOT_NECK)
+	if(slot != ITEM_SLOT_OCLOTHING && slot != ITEM_SLOT_NECK)
 		RemoveHood()
 	..()
 
@@ -51,6 +52,8 @@
 	update_icon()
 
 /obj/item/clothing/suit/hooded/update_icon_state()
+	if(no_t)
+		return
 	icon_state = "[initial(icon_state)]"
 	if(ishuman(hood?.loc))
 		var/mob/living/carbon/human/H = hood.loc
@@ -77,7 +80,7 @@
 			if(H.head)
 				to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
 				return
-			else if(H.equip_to_slot_if_possible(hood,SLOT_HEAD,0,0,1))
+			else if(H.equip_to_slot_if_possible(hood,ITEM_SLOT_HEAD,0,0,1))
 				suittoggled = TRUE
 				update_icon()
 				H.update_inv_wear_suit()
@@ -99,7 +102,7 @@
 
 /obj/item/clothing/head/hooded/equipped(mob/user, slot)
 	..()
-	if(slot != SLOT_HEAD)
+	if(slot != ITEM_SLOT_HEAD)
 		if(suit)
 			suit.RemoveHood()
 		else
@@ -143,7 +146,7 @@
 	. += "Alt-click on [src] to toggle the [togglename]."
 
 //Hardsuit toggle code
-/obj/item/clothing/suit/space/hardsuit/Initialize()
+/obj/item/clothing/suit/space/hardsuit/Initialize(mapload)
 	. = ..()
 	helmet = MakeHelmet()
 
@@ -174,7 +177,7 @@
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
 	if(!helmettype)
 		return
-	if(slot != SLOT_WEAR_SUIT)
+	if(slot != ITEM_SLOT_OCLOTHING)
 		RemoveHelmet()
 	..()
 
@@ -219,7 +222,7 @@
 				if(message)
 					to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
 				return
-			else if(H.equip_to_slot_if_possible(helmet,SLOT_HEAD,0,0,1))
+			else if(H.equip_to_slot_if_possible(helmet,ITEM_SLOT_HEAD,0,0,1))
 				if(message)
 					to_chat(H, "<span class='notice'>You engage the helmet on the hardsuit.</span>")
 				suittoggled = TRUE

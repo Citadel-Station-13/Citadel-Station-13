@@ -185,7 +185,7 @@
 	body_parts_covered = ARMS
 	actions_types = list(/datum/action/item_action/toggle_wings)
 
-/obj/item/clothing/suit/toggle/owlwings/Initialize()
+/obj/item/clothing/suit/toggle/owlwings/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.security_vest_allowed
 
@@ -206,7 +206,7 @@
 
 /obj/item/clothing/suit/cardborg/equipped(mob/living/user, slot)
 	..()
-	if(slot == SLOT_WEAR_SUIT)
+	if(slot == ITEM_SLOT_OCLOTHING)
 		disguise(user)
 
 /obj/item/clothing/suit/cardborg/dropped(mob/living/user)
@@ -259,7 +259,7 @@
 	icon_state = "ponchoshame"
 	item_state = "ponchoshame"
 
-/obj/item/clothing/suit/poncho/ponchoshame/Initialize()
+/obj/item/clothing/suit/poncho/ponchoshame/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, SHAMEBRERO_TRAIT)
 
@@ -279,7 +279,9 @@
 	item_state = "labcoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	cold_protection = CHEST|GROIN|ARMS
+	heat_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT	//Space carp like space, so you should too
+	max_heat_protection_temperature = COAT_MAX_TEMP_PROTECT
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/gun/ballistic/automatic/speargun, /obj/item/staff/bostaff)
 	hoodtype = /obj/item/clothing/head/hooded/carp_hood
 
@@ -289,7 +291,9 @@
 	icon_state = "carp_casual"
 	body_parts_covered = HEAD
 	cold_protection = HEAD
+	heat_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = COAT_MAX_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/suit/hooded/ian_costume	//It's Ian, rub his bell- oh god what happened to his inside parts?
@@ -362,7 +366,10 @@
 	item_state = "ran_suit"
 	body_parts_covered = CHEST|GROIN|LEGS
 	flags_inv = HIDEJUMPSUIT|HIDETAUR
-	heat_protection = CHEST|GROIN|LEGS //fluffy tails!
+	cold_protection = CHEST|GROIN|LEGS //fluffy tails!
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT //Bleh, same as winter coat
+	heat_protection = CHEST|GROIN|LEGS
+	max_heat_protection_temperature = COAT_MAX_TEMP_PROTECT
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/head/ran
@@ -419,7 +426,9 @@
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/radio)
 	body_parts_covered = CHEST|ARMS
 	cold_protection = CHEST|GROIN|ARMS
+	heat_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = COAT_MAX_TEMP_PROTECT
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/jacket/flannel
@@ -427,25 +436,84 @@
 	desc = "Comfy and supposedly flammable."
 	icon_state = "flannel"
 	item_state = "flannel"
-
-/obj/item/clothing/suit/jacket/flannel/red
+/obj/item/clothing/suit/toggle/jacket/flannel/red
 	name = "red flannel jacket"
 	desc = "Comfy and supposedly flammable."
 	icon_state = "flannel_red"
 	item_state = "flannel_red"
-
-/obj/item/clothing/suit/jacket/flannel/aqua
+	togglename = "buttons"
+/obj/item/clothing/suit/toggle/jacket/flannel/aqua
 	name = "aqua flannel jacket"
 	desc = "Comfy and supposedly flammable."
 	icon_state = "flannel_aqua"
 	item_state = "flannel_aqua"
-
-/obj/item/clothing/suit/jacket/flannel/brown
+	togglename = "buttons"
+/obj/item/clothing/suit/toggle/jacket/flannel/brown
 	name = "brown flannel jacket"
 	desc = "Comfy and supposedly flammable."
 	icon_state = "flannel_brown"
 	item_state = "flannel_brown"
+	togglename = "buttons"
+/obj/item/clothing/suit/toggle/jacket/whitehoodie
+	name = "soft hoodie"
+	desc = "A soft hoodie with a TailorCo brand on the tag."
+	icon_state = "white_hoodie"
+	item_state = "white_hoodie"
+	togglename = "zipper"
+/obj/item/clothing/suit/jacket/purplehoodie
+	name = "purple hoodie"
+	desc = "A soft purple hoodie with a TailorCo brand on the tag."
+	icon_state = "purplehoodie"
+	item_state = "purplehoodie"
 
+/obj/item/clothing/suit/jacket/bluehoodie
+	name = "blue hoodie"
+	desc = "A soft blue hoodie with a TailorCo brand on the tag."
+	icon_state = "bluehoodie"
+	item_state = "bluehoodie"
+
+/obj/item/clothing/suit/jacket/heartcoat
+	name = "heart coat"
+	desc = "A soft winter coat with a TailorCo brand on the tag."
+	icon_state = "heartcoat"
+	item_state = "heartcoat"
+
+/obj/item/clothing/suit/jacket/gothiccoat
+	name = "long black jacket"
+	desc = "A rugged looking coat with a TailorCo brand on the tag."
+	icon_state = "gothic_coat"
+	item_state = "gothic_coat"
+
+/obj/item/clothing/suit/jacket/gothicshirt
+	name = "black shirt with cuffs"
+	desc = "A black shirt with a collar and cuffs in a gothic style. A TailorCo brand is listed on the tag."
+	icon_state = "gothic_shirt"
+	item_state = "gothic_shirt"
+
+/obj/item/clothing/suit/jacket/gothicshirtcross
+	name = "elegant black shirt"
+	desc = "A black shirt with finely woven cross on the back. A TailorCo brand is listed on the tag."
+	icon_state = "gothic_shirtcross"
+	item_state = "gothic_shirtcross"
+
+/obj/item/clothing/suit/jacket/gentlecoat
+	name = "grey jacket"
+	desc = "A grey coat with a TailorCo brand on the tag. Looks expensive."
+	icon_state = "gentlecoat"
+	item_state = "gentlecoat"
+
+/obj/item/clothing/suit/toggle/jacket/greenjacket
+	name = "green outdoorsmans jacket"
+	desc = "A green jacket with a TailorCo brand on the tag. Looks expensive."
+	icon_state = "coatar"
+	item_state = "coatar"
+	togglename = "zipper"
+/obj/item/clothing/suit/toggle/jacket/fancytrench
+	name = "grey trenchcoat"
+	desc = "A custom-tailored trenchcoat with a TailorCo brand on the tag."
+	icon_state = "fancytrench"
+	item_state = "fancytrench"
+	togglename = "buttons"
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"
 	desc = "Pompadour not included."
@@ -461,6 +529,7 @@
 	icon_state = "leathercoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	cold_protection = CHEST|GROIN|ARMS|LEGS
+	heat_protection = CHEST|GROIN|ARMS|LEGS
 	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/suit/jacket/puffer
@@ -469,7 +538,7 @@
 	icon_state = "pufferjacket"
 	item_state = "hostrench"
 	body_parts_covered = CHEST|GROIN|ARMS
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 50, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 50, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/suit/jacket/puffer/vest
 	name = "puffer vest"
@@ -478,7 +547,8 @@
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN
 	cold_protection = CHEST|GROIN
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 30, "rad" = 0, "fire" = 0, "acid" = 0)
+	heat_protection = CHEST|GROIN
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 30, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/suit/jacket/miljacket
 	name = "military jacket"
@@ -565,7 +635,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN
 	attack_verb = list("warned", "cautioned", "smashed")
-	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 5, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/suit/petharness
 	name = "pet harness"
@@ -596,8 +666,10 @@
 	item_state = "coatwinter"
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
+	heat_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0)
+	max_heat_protection_temperature = COAT_MAX_TEMP_PROTECT
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
@@ -607,7 +679,9 @@
 	icon_state = "winterhood"
 	body_parts_covered = HEAD
 	cold_protection = HEAD
+	heat_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = COAT_MAX_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
 	rad_flags = RAD_NO_CONTAMINATE
 
@@ -615,26 +689,26 @@
 	name = "centcom winter coat"
 	icon_state = "coatcentcom"
 	item_state = "coatcentcom"
-	armor = list("melee" = 40, "bullet" = 45, "laser" = 45, "energy" = 35, "bomb" = 40, "bio" = 25, "rad" = 25, "fire" = 35, "acid" = 50)
+	armor = list(MELEE = 40, BULLET = 45, LASER = 45, ENERGY = 35, BOMB = 40, BIO = 25, RAD = 25, FIRE = 35, ACID = 50)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/centcom
 
-/obj/item/clothing/suit/hooded/wintercoat/centcom/Initialize()
+/obj/item/clothing/suit/hooded/wintercoat/centcom/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/centcom
 	icon_state = "winterhood_centcom"
-	armor = list("melee" = 40, "bullet" = 45, "laser" = 45, "energy" = 35, "bomb" = 40, "bio" = 25, "rad" = 25, "fire" = 35, "acid" = 50)
+	armor = list(MELEE = 40, BULLET = 45, LASER = 45, ENERGY = 35, BOMB = 40, BIO = 25, RAD = 25, FIRE = 35, ACID = 50)
 
 /obj/item/clothing/suit/hooded/wintercoat/captain
 	name = "captain's winter coat"
 	desc = "A luxurious winter coat, stuffed with the down of the endangered Uka bird and trimmed with genuine sable. The fabric is an indulgently soft micro-fiber, and the deep ultramarine color is only one that could be achieved with minute amounts of crystalline bluespace dust woven into the thread between the plectrums. Extremely lavish, and extremely durable. The tiny flakes of protective material make it nothing short of extremely light lamellar armor."
 	icon_state = "coatcaptain"
 	item_state = "coatcaptain"
-	armor = list("melee" = 25, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
+	armor = list(MELEE = 25, BULLET = 30, LASER = 30, ENERGY = 10, BOMB = 25, BIO = 0, RAD = 0, FIRE = 0, ACID = 50)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/captain
 
-/obj/item/clothing/suit/hooded/wintercoat/captain/Initialize()
+/obj/item/clothing/suit/hooded/wintercoat/captain/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.security_wintercoat_allowed
 
@@ -647,7 +721,7 @@
 	desc = "A cozy winter coat, covered in thick fur. The breast features a proud yellow chevron, reminding everyone that you're the second banana."
 	icon_state = "coathop"
 	item_state = "coathop"
-	armor = list("melee" = 5, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 5, "bio" = 5, "rad" = 0, "fire" = 0, "acid" = 5)
+	armor = list(MELEE = 5, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 5, BIO = 5, RAD = 0, FIRE = 0, ACID = 5)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/hop
 
 /obj/item/clothing/head/hooded/winterhood/hop
@@ -659,10 +733,10 @@
 	desc = "A red, armor-padded winter coat. It glitters with a mild ablative coating and a robust air of authority.  The zipper tab is a pair of jingly little handcuffs that get annoying after the first ten seconds."
 	icon_state = "coatsecurity"
 	item_state = "coatsecurity"
-	armor = list("melee" = 25, "bullet" = 15, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
+	armor = list(MELEE = 25, BULLET = 15, LASER = 30, ENERGY = 10, BOMB = 25, BIO = 0, RAD = 0, FIRE = 0, ACID = 45)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/security
 
-/obj/item/clothing/suit/hooded/wintercoat/security/Initialize()
+/obj/item/clothing/suit/hooded/wintercoat/security/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.security_wintercoat_allowed
 
@@ -675,10 +749,10 @@
 	desc = "A red, armor-padded winter coat, lovingly woven with a Kevlar interleave and reinforced with semi-ablative polymers and a silver azide fill material. The zipper tab looks like a tiny replica of Beepsky."
 	icon_state = "coathos"
 	item_state = "coathos"
-	armor = list("melee" = 35, "bullet" = 35, "laser" = 35, "energy" = 15, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 55)
+	armor = list(MELEE = 35, BULLET = 35, LASER = 35, ENERGY = 15, BOMB = 30, BIO = 0, RAD = 0, FIRE = 0, ACID = 55)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/hos
 
-/obj/item/clothing/suit/hooded/wintercoat/hos/Initialize()
+/obj/item/clothing/suit/hooded/wintercoat/hos/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.security_wintercoat_allowed
 
@@ -692,7 +766,7 @@
 	icon_state = "coatmedical"
 	item_state = "coatmedical"
 	allowed = list(/obj/item/analyzer, /obj/item/sensor_device, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 50, "rad" = 0, "fire" = 0, "acid" = 45)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 50, RAD = 0, FIRE = 0, ACID = 45)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical
 
 /obj/item/clothing/head/hooded/winterhood/medical
@@ -705,7 +779,7 @@
 	icon_state = "coatcmo"
 	item_state = "coatcmo"
 	allowed = list(/obj/item/analyzer, /obj/item/sensor_device, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 50, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 5, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 50, RAD = 0, FIRE = 0, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/cmo
 
 /obj/item/clothing/head/hooded/winterhood/cmo
@@ -718,7 +792,7 @@
 	icon_state = "coatchemistry"
 	item_state = "coatchemistry"
 	allowed = list(/obj/item/analyzer, /obj/item/sensor_device, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 30, "rad" = 0, "fire" = 30, "acid" = 45)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 30, RAD = 0, FIRE = 30, ACID = 45)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/chemistry
 
 /obj/item/clothing/head/hooded/winterhood/chemistry
@@ -731,7 +805,7 @@
 	icon_state = "coatviro"
 	item_state = "coatviro"
 	allowed = list(/obj/item/analyzer, /obj/item/sensor_device, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 30, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 30, RAD = 0, FIRE = 0, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/viro
 
 /obj/item/clothing/head/hooded/winterhood/viro
@@ -744,7 +818,7 @@
 	icon_state = "coatparamed"
 	item_state = "coatparamed"
 	allowed = list(/obj/item/analyzer, /obj/item/sensor_device, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 50, "rad" = 0, "fire" = 0, "acid" = 45)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 50, RAD = 0, FIRE = 0, ACID = 45)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/paramedic
 
 /obj/item/clothing/head/hooded/winterhood/paramedic
@@ -757,7 +831,7 @@
 	icon_state = "coatscience"
 	item_state = "coatscience"
 	allowed = list(/obj/item/analyzer, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science
 
 /obj/item/clothing/head/hooded/winterhood/science
@@ -770,7 +844,7 @@
 	icon_state = "coatrobotics"
 	item_state = "coatrobotics"
 	allowed = list(/obj/item/analyzer, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/melee/classic_baton/telescopic, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/screwdriver, /obj/item/crowbar, /obj/item/wrench, /obj/item/stack/cable_coil, /obj/item/weldingtool, /obj/item/multitool)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/robotics
 
 /obj/item/clothing/head/hooded/winterhood/robotics
@@ -795,7 +869,7 @@
 	icon_state = "coatrd"
 	item_state = "coatrd"
 	allowed = list(/obj/item/analyzer, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 5,"energy" = 0, "bomb" = 15, "bio" = 5, "rad" = 5, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 5,ENERGY = 0, BOMB = 15, BIO = 5, RAD = 5, FIRE = 0, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/rd
 
 /obj/item/clothing/head/hooded/winterhood/rd
@@ -807,7 +881,7 @@
 	desc = "A white winter coat with reflective green and yellow stripes. Stuffed with asbestos, treated with fire retardant PBDE, lined with a micro thin sheet of lead foil and snugly fitted to your body's measurements. This baby's ready to save you from anything except the thyroid cancer and systemic fibrosis you'll get from wearing it. The zipper tab is a tiny golden wrench."
 	icon_state = "coatce"
 	item_state = "coatce"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 5, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 30, "fire" = 35, "acid" = 45)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 5, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 30, FIRE = 35, ACID = 45)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/t_scanner, /obj/item/construction/rcd, /obj/item/pipe_dispenser, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/ce
 
@@ -820,7 +894,7 @@
 	desc = "A surprisingly heavy yellow winter coat with reflective orange stripes. It has a small wrench for its zipper tab, and the inside layer is covered with a radiation-resistant silver-nylon blend. Because you're worth it."
 	icon_state = "coatengineer"
 	item_state = "coatengineer"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 20, "fire" = 30, "acid" = 45)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 20, FIRE = 30, ACID = 45)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/t_scanner, /obj/item/construction/rcd, /obj/item/pipe_dispenser, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering
 
@@ -927,7 +1001,7 @@
 	icon_state = "coatminer"
 	item_state = "coatminer"
 	allowed = list(/obj/item/pickaxe, /obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/miner
 
 /obj/item/clothing/head/hooded/winterhood/miner
@@ -939,7 +1013,7 @@
 	desc = "A brass-plated button up winter coat. Instead of a zipper tab, it has a brass cog with a tiny red gemstone inset."
 	icon_state = "coatratvar"
 	item_state = "coatratvar"
-	armor = list("melee" = 30, "bullet" = 45, "laser" = -10, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
+	armor = list(MELEE = 30, BULLET = 45, LASER = -10, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 60, ACID = 60)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/clockwork/replica_fabricator, /obj/item/clockwork/integration_cog, /obj/item/clockwork/slab, /obj/item/clockwork/weapon/ratvarian_spear)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/ratvar
 	var/real = TRUE
@@ -953,7 +1027,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/ratvar/equipped(mob/living/user,slot)
 	..()
-	if (slot != SLOT_WEAR_SUIT || !real)
+	if (slot != ITEM_SLOT_OCLOTHING || !real)
 		return
 	if (is_servant_of_ratvar(user))
 		return
@@ -968,14 +1042,14 @@
 	desc = "A somber button-up in tones of grey entropy and a wicked crimson zipper. When pulled all the way up, the zipper looks like a bloody gash. The zipper pull looks like a single drop of blood."
 	icon_state = "coatnarsie"
 	item_state = "coatnarsie"
-	armor = list("melee" = 30, "bullet" = 20, "laser" = 30,"energy" = 10, "bomb" = 30, "bio" = 10, "rad" = 10, "fire" = 30, "acid" = 30)
+	armor = list(MELEE = 30, BULLET = 20, LASER = 30,ENERGY = 10, BOMB = 30, BIO = 10, RAD = 10, FIRE = 30, ACID = 30)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/restraints/legcuffs/bola/cult,/obj/item/melee/cultblade,/obj/item/melee/cultblade/dagger,/obj/item/reagent_containers/glass/beaker/unholywater,/obj/item/cult_shift,/obj/item/flashlight/flare/culttorch,/obj/item/cult_spear)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/narsie
 	var/real = TRUE
 
 /obj/item/clothing/suit/hooded/wintercoat/narsie/equipped(mob/living/user,slot)
 	..()
-	if (slot != SLOT_WEAR_SUIT || !real)
+	if (slot != ITEM_SLOT_OCLOTHING || !real)
 		return
 	if (iscultist(user))
 		return
@@ -995,7 +1069,7 @@
 	icon_state = "coatratvar"
 	item_state = "coatratvar"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	real = FALSE
 
 /obj/item/clothing/suit/hooded/wintercoat/narsie/fake
@@ -1004,7 +1078,7 @@
 	icon_state = "coatnarsie"
 	item_state = "coatnarsie"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	real = FALSE
 
 /obj/item/clothing/suit/hooded/wintercoat/durathread
@@ -1012,16 +1086,16 @@
 	desc = "The one coat to rule them all. Extremely durable while providing the utmost comfort."
 	icon_state = "coatdurathread"
 	item_state = "coatdurathread"
-	armor = list("melee" = 15, "bullet" = 8, "laser" = 25, "energy" = 5, "bomb" = 12, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
+	armor = list(MELEE = 15, BULLET = 8, LASER = 25, ENERGY = 5, BOMB = 12, BIO = 0, RAD = 0, FIRE = 0, ACID = 50)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/durathread
 
-/obj/item/clothing/suit/hooded/wintercoat/durathread/Initialize()
+/obj/item/clothing/suit/hooded/wintercoat/durathread/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/durathread
 	icon_state = "winterhood_durathread"
-	armor = list("melee" = 20, "bullet" = 8, "laser" = 15, "energy" = 8, "bomb" = 25, "bio" = 10, "rad" = 15, "fire" = 75, "acid" = 37)
+	armor = list(MELEE = 20, BULLET = 8, LASER = 15, ENERGY = 8, BOMB = 25, BIO = 10, RAD = 15, FIRE = 75, ACID = 37)
 
 /obj/item/clothing/suit/spookyghost
 	name = "spooky ghost"
@@ -1038,7 +1112,7 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_cuirass_old"
 	body_parts_covered = CHEST|GROIN|LEGS
-	armor = list("melee" = 5, "bullet" = 0, "laser" = -5, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
+	armor = list(MELEE = 5, BULLET = 0, LASER = -5, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 20, ACID = 20)
 
 /obj/item/clothing/suit/ghost_sheet
 	name = "ghost sheet"
@@ -1078,7 +1152,7 @@
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST
 	resistance_flags = NONE
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = -5, "acid" = -15) //nylon sucks against acid
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 5, BIO = 0, RAD = 0, FIRE = -5, ACID = -15) //nylon sucks against acid
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/assu_suit
@@ -1182,3 +1256,132 @@
 	desc = "It looks like someone dragged this out of a muddy lake."
 	icon_state = "bomberalt"
 	item_state = "bomberalt"
+
+/obj/item/clothing/suit/driscoll
+	name = "driscoll poncho"
+	desc = "Keeping you warm in the harsh cold of space."
+	icon_state = "driscoll_suit"
+	item_state = "driscoll_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/irs
+	name = "internal revenue service jacket"
+	desc = "I'm crazy enough to take on The Owl, but the IRS? Nooo thank you!"
+	icon_state = "irs_suit"
+	item_state = "irs_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/osi
+	name = "\improper O.S.I. body armor"
+	desc = "You're beyond good and evil, super man. You work for the government. And you're a tool, boy, a tool! Built for a single purpose by the United States of shut your third fucking damn eye for a fucking reason! You can't teach a hammer to love nails, son. That dog don't hunt!"
+	icon_state = "osi_suit"
+	item_state = "osi_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/tmc
+	name = "\improper Lost M.C. cut"
+	desc = "Making sure everyone knows you're in the best biker gang this side of Alderney."
+	icon_state = "tmc_suit"
+	item_state = "tmc_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/pg
+	name = "powder ganger jacket"
+	desc = "Remind Security of their mistakes in giving prisoners blasting charges."
+	icon_state = "pg_suit"
+	item_state = "pg_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/deckers
+	name = "decker hoodie"
+	desc = "Based? Based on what?"
+	icon_state = "decker_suit"
+	item_state = "decker_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/morningstar
+	name = "morningstar coat"
+	desc = "This coat costs more than you've ever made in your entire life."
+	icon_state = "morningstar_suit"
+	item_state = "morningstar_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/saints
+	name = "Third Street Saints fur coat"
+	desc = "Rated 10 out of 10 in Cosmo for best coat brand."
+	icon_state = "saints_suit"
+	item_state = "saints_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/phantom
+	name = "phantom thief coat"
+	desc = "Your foes will never see you coming in this stealthy yet stylish getup."
+	icon_state = "phantom_suit"
+	item_state = "phantom_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/allies
+	name = "allies body armor"
+	desc = "How 'bout some action!? Sponsored by DonkSoft Co. for historical reenactment of the Third World War!"
+	icon_state = "allies_armor"
+	item_state = "allies_armor"
+	body_parts_covered = CHEST|GROIN
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/soviet
+	name = "soviet armored coat"
+	desc = "Conscript reporting! Sponsored by DonkSoft Co. for historical reenactment of the Third World War!"
+	icon_state = "soviet_suit"
+	item_state = "soviet_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/yuri
+	name = "yuri initiate coat"
+	desc = "Yuri is master! Sponsored by DonkSoft Co. for historical reenactment of the Third World War!"
+	icon_state = "yuri_coat"
+	item_state = "yuri_coat"
+	body_parts_covered = CHEST|GROIN|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/sybil_slickers
+	name = "sybil slickers protective gear"
+	desc = "Given to members of the Sybil Slickers football team!"
+	icon_state = "football_armor_blue"
+	item_state = "football_armor_blue"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/basil_boys
+	name = "basil boys protective gear"
+	desc = "Given to members of the Basil Boys football team!"
+	icon_state = "football_armor_red"
+	item_state = "football_armor_red"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/yakuza
+	name = "tojo clan jacket"
+	desc = "The jacket of a mad dog."
+	icon_state = "MajimaJacket"
+	item_state = "MajimaJacket"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/dutch
+	name = "dutch's jacket"
+	desc = "For those long nights on the beach in Tahiti."
+	icon_state = "DutchJacket"
+	item_state = "DutchJacket"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+

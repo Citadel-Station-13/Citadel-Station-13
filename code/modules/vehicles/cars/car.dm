@@ -2,21 +2,27 @@
 	layer = ABOVE_MOB_LAYER
 	anchored = TRUE
 	default_driver_move = FALSE
+	var/explode_on_death = TRUE
 	var/car_traits = NONE //Bitflag for special behavior such as kidnapping
 	var/engine_sound = 'sound/vehicles/carrev.ogg'
 	var/last_enginesound_time
 	var/engine_sound_length = 20 //Set this to the length of the engine sound
 	var/escape_time = 200 //Time it takes to break out of the car
 
-/obj/vehicle/sealed/car/Initialize()
+/obj/vehicle/sealed/car/Initialize(mapload)
 	. = ..()
 	LoadComponent(/datum/component/riding)
+
+/obj/vehicle/sealed/car/Destroy()
+	. = ..()
+	if(explode_on_death)
+		explosion(loc, 0, 1, 2, 3, 0)
 
 /obj/vehicle/sealed/car/generate_actions()
 	. = ..()
 	initialize_controller_action_type(/datum/action/vehicle/sealed/remove_key, VEHICLE_CONTROL_DRIVE)
 	if(car_traits & CAN_KIDNAP)
-		initialize_controller_action_type(/datum/action/vehicle/sealed/DumpKidnappedMobs, VEHICLE_CONTROL_DRIVE)
+		initialize_controller_action_type(/datum/action/vehicle/sealed/dump_kidnapped_mobs, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/sealed/car/driver_move(mob/user, direction)
 	if(key_type && !is_key(inserted_key))

@@ -19,7 +19,7 @@ Slimecrossing Armor
 
 /obj/item/clothing/mask/nobreath/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot == SLOT_WEAR_MASK)
+	if(slot == ITEM_SLOT_MASK)
 		ADD_TRAIT(user, TRAIT_NOBREATH, "breathmask_[REF(src)]")
 		user.failed_last_breath = FALSE
 		user.clear_alert("not_enough_oxy")
@@ -39,7 +39,7 @@ Slimecrossing Armor
 	var/glasses_color = "#FFFFFF"
 
 /obj/item/clothing/glasses/prism_glasses/item_action_slot_check(slot)
-	if(slot == SLOT_GLASSES)
+	if(slot == ITEM_SLOT_EYES)
 		return TRUE
 
 /obj/structure/light_prism
@@ -111,7 +111,7 @@ Slimecrossing Armor
 
 /obj/item/clothing/head/peaceflower/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot == SLOT_HEAD)
+	if(slot == ITEM_SLOT_HEAD)
 		ADD_TRAIT(user, TRAIT_PACIFISM, "peaceflower_[REF(src)]")
 
 /obj/item/clothing/head/peaceflower/dropped(mob/living/carbon/human/user)
@@ -135,7 +135,7 @@ Slimecrossing Armor
 	obj_flags = IMMUTABLE_SLOW
 	slowdown = 4
 	var/hit_reflect_chance = 10 // Citadel Change: because 40% chance of bouncing lasers back into peoples faces isn't good.
-	armor = list("melee" = 70, "bullet" = 70, "laser" = 40, "energy" = 40, "bomb" = 80, "bio" = 80, "rad" = 80, "fire" = 70, "acid" = 90) //Citadel Change to avoid immortal Xenobiologists.
+	armor = list(MELEE = 70, BULLET = 70, LASER = 40, ENERGY = 40, BOMB = 80, BIO = 80, RAD = 80, FIRE = 70, ACID = 90) //Citadel Change to avoid immortal Xenobiologists.
 
 /obj/item/clothing/suit/armor/heavy/adamantine/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(is_energy_reflectable_projectile(object) && prob(hit_reflect_chance))

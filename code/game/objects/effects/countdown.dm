@@ -14,7 +14,7 @@
 	var/displayed_text
 	var/atom/attached_to
 
-/obj/effect/countdown/Initialize()
+/obj/effect/countdown/Initialize(mapload)
 	. = ..()
 	attach(loc)
 
@@ -60,7 +60,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
 
-/obj/effect/countdown/ex_act(severity, target) //immune to explosions
+/obj/effect/countdown/ex_act(severity, target, origin) //immune to explosions
 	return
 
 /obj/effect/countdown/syndicatebomb

@@ -11,6 +11,7 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	flags_1 = NO_SCREENTIPS_1
 
 	/// Minimum explosion power to break tile
 	var/explosion_power_break_tile = EXPLOSION_POWER_FLOOR_TILE_BREAK
@@ -72,7 +73,7 @@
 	if(mapload && prob(66)) // 2/3 instead of 1/3 (default)
 		MakeDirty()
 
-/turf/open/floor/ex_act(severity, target)
+/turf/open/floor/ex_act(severity, target, origin)
 	var/shielded = is_shielded()
 	..()
 	if(severity != 1 && shielded && target != src)
@@ -162,8 +163,6 @@
 	return
 
 /turf/open/floor/update_icon()
-	. = ..()
-	update_visuals()
 
 /turf/open/floor/attack_paw(mob/user)
 	return attack_hand(user)

@@ -49,8 +49,12 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/radio/off = 2,
 	/obj/item/t_scanner = 5,
 	/obj/item/airlock_painter = 1,
+	/obj/item/airlock_painter/decal = 1,
+	/obj/item/airlock_painter/decal/tile = 1,
 	/obj/item/stack/cable_coil/random = 4,
 	/obj/item/stack/cable_coil/random/five = 6,
+	/obj/item/mod/construction/broken_core = 5,
+	/obj/item/mod/module/springlock = 1,
 	/obj/item/stack/medical/suture = 1,
 	/obj/item/stack/rods/ten = 9,
 	/obj/item/stack/rods/twentyfive = 1,
@@ -112,7 +116,6 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/storage/box/marshmallow = 2,
 	/obj/item/clothing/gloves/tackler/offbrand = 1,
 	/obj/item/stack/sticky_tape = 1,
-	/obj/effect/spawner/lootdrop/grille_or_trash = 15,
 	"" = 3
 	))
 

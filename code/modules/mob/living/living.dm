@@ -1,4 +1,4 @@
-/mob/living/Initialize()
+/mob/living/Initialize(mapload)
 	. = ..()
 	if(unique_name)
 		name = "[name] ([rand(1, 1000)])"
@@ -81,6 +81,7 @@
 
 //Called when we bump onto a mob
 /mob/living/proc/MobBump(mob/M)
+	SEND_SIGNAL(src, COMSIG_LIVING_MOB_BUMP, M)
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
 
@@ -88,6 +89,7 @@
 		return TRUE
 
 	var/they_can_move = TRUE
+
 	if(isliving(M))
 		var/mob/living/L = M
 		they_can_move = CHECK_MOBILITY(L, MOBILITY_MOVE)
@@ -105,44 +107,44 @@
 		//Should stop you pushing a restrained person out of the way
 		if(L.pulledby && L.pulledby != src && L.restrained())
 			if(!(world.time % 5))
-				to_chat(src, "<span class='warning'>[L] is restrained, you cannot push past.</span>")
-			return 1
+				to_chat(src, span_warning("[L] is restrained, you cannot push past."))
+			return TRUE
 
 		if(L.pulling)
 			if(ismob(L.pulling))
 				var/mob/P = L.pulling
 				if(P.restrained())
 					if(!(world.time % 5))
-						to_chat(src, "<span class='warning'>[L] is restraining [P], you cannot push past.</span>")
-					return 1
+						to_chat(src, span_warning("[L] is restraining [P], you cannot push past."))
+					return TRUE
 
-	//CIT CHANGES START HERE - makes it so resting stops you from moving through standing folks without a short delay
-		if(!CHECK_MOBILITY(src, MOBILITY_STAND) && CHECK_MOBILITY(L, MOBILITY_STAND))
+	//CIT CHANGES START HERE - makes it so resting stops you from moving through standing folks or over prone bodies without a short delay
+		if(!CHECK_MOBILITY(src, MOBILITY_STAND))
 			var/origtargetloc = L.loc
 			if(!pulledby)
 				if(combat_flags & COMBAT_FLAG_ATTEMPTING_CRAWL)
 					return TRUE
 				if(IS_STAMCRIT(src))
-					to_chat(src, "<span class='warning'>You're too exhausted to crawl under [L].</span>")
+					to_chat(src, "<span class='warning'>You're too exhausted to crawl [(CHECK_MOBILITY(L, MOBILITY_STAND)) ? "under": "over"] [L].</span>")
 					return TRUE
-				ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_ATTEMPTING_CRAWL)
-				visible_message("<span class='notice'>[src] is attempting to crawl under [L].</span>",
-					"<span class='notice'>You are now attempting to crawl under [L].</span>",
-					target = L, target_message = "<span class='notice'>[src] is attempting to crawl under you.</span>")
+				combat_flags |= COMBAT_FLAG_ATTEMPTING_CRAWL
+				visible_message("<span class='notice'>[src] is attempting to crawl [(CHECK_MOBILITY(L, MOBILITY_STAND)) ? "under" : "over"] [L].</span>",
+					"<span class='notice'>You are now attempting to crawl [(CHECK_MOBILITY(L, MOBILITY_STAND)) ? "under": "over"] [L].</span>",
+					target = L, target_message = "<span class='notice'>[src] is attempting to crawl [(CHECK_MOBILITY(L, MOBILITY_STAND)) ? "under" : "over"] you.</span>")
 				if(!do_after(src, CRAWLUNDER_DELAY, target = src) || CHECK_MOBILITY(src, MOBILITY_STAND))
-					DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_ATTEMPTING_CRAWL)
+					combat_flags &= ~(COMBAT_FLAG_ATTEMPTING_CRAWL)
 					return TRUE
 			var/src_passmob = (pass_flags & PASSMOB)
 			pass_flags |= PASSMOB
 			Move(origtargetloc)
 			if(!src_passmob)
 				pass_flags &= ~PASSMOB
-			DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_ATTEMPTING_CRAWL)
+			combat_flags &= ~(COMBAT_FLAG_ATTEMPTING_CRAWL)
 			return TRUE
 	//END OF CIT CHANGES
 
 	if(moving_diagonally)//no mob swap during diagonal moves.
-		return 1
+		return TRUE
 
 	if(!M.buckled && !M.has_buckled_mobs())
 		var/mob_swap = FALSE
@@ -151,7 +153,8 @@
 			if(!too_strong)
 				mob_swap = TRUE
 		else
-			if(M.pulledby == src && a_intent == INTENT_GRAB)
+			//You can swap with the person you are dragging on grab intent, and restrained people in most cases
+			if(M.pulledby == src && !too_strong)
 				mob_swap = TRUE
 			//restrained people act if they were on 'help' intent to prevent a person being pulled from being separated from their puller
 			else if((M.restrained() || M.a_intent == INTENT_HELP) && (restrained() || a_intent == INTENT_HELP))
@@ -159,8 +162,8 @@
 		if(mob_swap)
 			//switch our position with M
 			if(loc && !loc.Adjacent(M.loc))
-				return 1
-			now_pushing = 1
+				return TRUE
+			now_pushing = TRUE
 			var/oldloc = loc
 			var/oldMloc = M.loc
 
@@ -180,27 +183,31 @@
 			if(!M_passmob)
 				M.pass_flags &= ~PASSMOB
 
-			now_pushing = 0
+			now_pushing = FALSE
 
 			if(!move_failed)
-				return 1
+				return TRUE
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
 	if(!(M.status_flags & CANPUSH))
-		return 1
+		return TRUE
 	if(isliving(M))
 		var/mob/living/L = M
 		if(HAS_TRAIT(L, TRAIT_PUSHIMMUNE))
-			return 1
-	//If they're a human, and they're not in help intent, block pushing
-	if(ishuman(M) && (M.a_intent != INTENT_HELP))
-		return TRUE
+			return TRUE
+	if(M.a_intent != INTENT_HELP)
+		//If they're a human, and they're not in help intent, block pushing
+		if(ishuman(M))
+			return TRUE
+		//if they are a cyborg, and they're alive and not in help intent, block pushing
+		if(iscyborg(M) && M.stat != DEAD)
+			return TRUE
 	//anti-riot equipment is also anti-push
 	for(var/obj/item/I in M.held_items)
 		if(!istype(M, /obj/item/clothing))
 			if(prob(I.block_chance*2))
-				return 1
+				return TRUE
 
 /mob/living/get_photo_description(obj/item/camera/camera)
 	var/list/mob_details = list()
@@ -231,21 +238,40 @@
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
 	now_pushing = TRUE
-	var/t = get_dir(src, AM)
+	SEND_SIGNAL(src, COMSIG_LIVING_PUSHING_MOVABLE, AM)
+	var/dir_to_target = get_dir(src, AM)
+
+	// If there's no dir_to_target then the player is on the same turf as the atom they're trying to push.
+	// This can happen when a player is stood on the same turf as a directional window. All attempts to push
+	// the window will fail as get_dir will return 0 and the player will be unable to move the window when
+	// it should be pushable.
+	// In this scenario, we will use the facing direction of the /mob/living attempting to push the atom as
+	// a fallback.
+	if(!dir_to_target)
+		dir_to_target = dir
+
 	var/push_anchored = FALSE
 	if((AM.move_resist * MOVE_FORCE_CRUSH_RATIO) <= force)
-		if(move_crush(AM, move_force, t))
+		if(move_crush(AM, move_force, dir_to_target))
 			push_anchored = TRUE
-	if((AM.move_resist * MOVE_FORCE_FORCEPUSH_RATIO) <= force)			//trigger move_crush and/or force_push regardless of if we can push it normally
-		if(force_push(AM, move_force, t, push_anchored))
+	if((AM.move_resist * MOVE_FORCE_FORCEPUSH_RATIO) <= force) //trigger move_crush and/or force_push regardless of if we can push it normally
+		if(force_push(AM, move_force, dir_to_target, push_anchored))
 			push_anchored = TRUE
+	if(ismob(AM))
+		var/mob/mob_to_push = AM
+		var/atom/movable/mob_buckle = mob_to_push.buckled
+		// If we can't pull them because of what they're buckled to, make sure we can push the thing they're buckled to instead.
+		// If neither are true, we're not pushing anymore.
+		if(mob_buckle && (mob_buckle.buckle_prevents_pull || (force < (mob_buckle.move_resist * MOVE_FORCE_PUSH_RATIO))))
+			now_pushing = FALSE
+			return
 	if((AM.anchored && !push_anchored) || (force < (AM.move_resist * MOVE_FORCE_PUSH_RATIO)))
 		now_pushing = FALSE
 		return
-	if (istype(AM, /obj/structure/window))
+	if(istype(AM, /obj/structure/window))
 		var/obj/structure/window/W = AM
 		if(W.fulltile)
-			for(var/obj/structure/window/win in get_step(W,t))
+			for(var/obj/structure/window/win in get_step(W, dir_to_target))
 				now_pushing = FALSE
 				return
 	if(pulling == AM)
@@ -253,8 +279,9 @@
 	var/current_dir
 	if(isliving(AM))
 		current_dir = AM.dir
-	if(step(AM, t) && Process_Spacemove(t))
-		step(src, t)
+	if(AM.Move(get_step(AM.loc, dir_to_target), dir_to_target, glide_size))
+		AM.add_fingerprint(src)
+		Move(get_step(loc, dir_to_target), dir_to_target)
 	if(current_dir)
 		AM.setDir(current_dir)
 	now_pushing = FALSE
@@ -354,29 +381,33 @@
 			offset = GRAB_PIXEL_SHIFT_NECK
 		if(GRAB_KILL)
 			offset = GRAB_PIXEL_SHIFT_NECK
-	M.setDir(get_dir(M, src))
-	switch(M.dir)
-		if(NORTH)
-			animate(M, pixel_x = 0, pixel_y = offset, 3)
-		if(SOUTH)
-			animate(M, pixel_x = 0, pixel_y = -offset, 3)
-		if(EAST)
-			if(M.lying == 270) //update the dragged dude's direction if we've turned
-				M.lying = 90
-				M.update_transform() //force a transformation update, otherwise it'll take a few ticks for update_mobility() to do so
-				M.lying_prev = M.lying
-			animate(M, pixel_x = offset, pixel_y = 0, 3)
-		if(WEST)
-			if(M.lying == 90)
-				M.lying = 270
-				M.update_transform()
-				M.lying_prev = M.lying
-			animate(M, pixel_x = -offset, pixel_y = 0, 3)
+	var/target_dir = get_dir(M, src)
+	M.setDir(target_dir)
+	var/target_x
+	var/target_y
+	if(target_dir & NORTH)
+		target_y += offset
+	if(target_dir & SOUTH)
+		target_y -= offset
+	if(target_dir & EAST)
+		target_x += offset
+	if(target_dir & WEST)
+		target_x -= offset
+	if(target_x || target_y)
+		if(0 < target_x && M.lying == 270)
+			M.lying = 90
+			M.update_transform(FALSE) //force a transformation update, otherwise it'll take a few ticks for update_mobility() to do so
+			M.lying_prev = M.lying
+		if(0 > target_x && M.lying == 90)
+			M.lying = 270
+			M.update_transform(FALSE)
+			M.lying_prev = M.lying
+		animate(M, pixel_x = target_x, pixel_y = target_y, time = 3, flags = ANIMATION_PARALLEL)
 
 /mob/living/proc/reset_pull_offsets(mob/living/M, override)
 	if(!override && M.buckled)
 		return
-	animate(M, pixel_x = 0, pixel_y = 0, 1)
+	animate(M, pixel_x = 0, pixel_y = 0, time = 3, flags = ANIMATION_PARALLEL)
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
@@ -395,6 +426,7 @@
 	..()
 	update_pull_movespeed()
 	update_pull_hud_icon()
+	SEND_SIGNAL(src, COMSIG_LIVING_STOPPED_PULLING)
 
 /mob/living/verb/stop_pulling1()
 	set name = "Stop Pulling"
@@ -432,8 +464,8 @@
 		to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		death()
 
-/mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE)
-	if(stat || IsUnconscious() || IsStun() || IsParalyzed() || (combat_flags & COMBAT_FLAG_HARD_STAMCRIT) || (check_immobilized && IsImmobilized()) || (!ignore_restraints && restrained(ignore_grab)))
+/mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE, ignore_stasis = FALSE)
+	if(stat || IsUnconscious() || IsStun() || IsParalyzed() || (combat_flags & COMBAT_FLAG_HARD_STAMCRIT) || (check_immobilized && IsImmobilized()) || (!ignore_restraints && restrained(ignore_grab)) || (!ignore_stasis && IS_IN_STASIS(src)))
 		return TRUE
 
 /mob/living/canUseStorage()
@@ -579,7 +611,7 @@
 			UNLINT(livingdoll.filters += filter(type="alpha", icon = mob_mask))
 			livingdoll.filters += filter(type="drop_shadow", size = -1)
 	if(severity > 0)
-		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
+		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/scaled/brute, severity)
 	else
 		clear_fullscreen("brute")
 
@@ -589,8 +621,8 @@
 	if(full_heal)
 		fully_heal(admin_revive)
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
-		GLOB.dead_mob_list -= src
-		GLOB.alive_mob_list += src
+		remove_from_dead_mob_list()
+		add_to_alive_mob_list()
 		suiciding = 0
 		stat = UNCONSCIOUS //the mob starts unconscious,
 		if(!eye_blind)
@@ -677,6 +709,8 @@
 
 	var/bleed_amount = bleedDragAmount()
 	blood_volume = max(blood_volume - bleed_amount, 0) 					//that depends on our brute damage.
+	if(bleed_amount < 0.1)
+		return
 	var/newdir = get_dir(target_turf, start)
 	if(newdir != direction)
 		newdir = newdir | direction
@@ -884,12 +918,11 @@
 	if(anchored || (buckled && buckled.anchored))
 		fixed = 1
 	if(on && !(movement_type & FLOATING) && !fixed)
-		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
-		sleep(10)
-		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
+		animate(src, pixel_z = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
+		animate(pixel_z = -4, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
 		setMovetype(movement_type | FLOATING)
 	else if(((!on || fixed) && (movement_type & FLOATING)))
-		animate(src, pixel_y = get_standard_pixel_y_offset(lying), time = 10)
+		animate(src, pixel_z = get_standard_pixel_y_offset(lying), time = 10)
 		setMovetype(movement_type & ~FLOATING)
 
 // The src mob is trying to strip an item from someone
@@ -920,7 +953,7 @@
 	else
 		to_chat(src,"<span class='notice'>You try to remove [who]'s [what.name].</span>")
 		what.add_fingerprint(src)
-	if(do_mob(src, who, round(what.strip_delay / strip_mod), ignorehelditem = TRUE))
+	if(do_mob(src, who, round(what.strip_delay / strip_mod), timed_action_flags = IGNORE_HELD_ITEM))
 		if(what && Adjacent(who))
 			if(islist(where))
 				var/list/L = where
@@ -934,13 +967,6 @@
 					if(!can_hold_items() || !put_in_hands(what))
 						what.forceMove(drop_location())
 					log_combat(src, who, "stripped [what] off")
-
-	if(Adjacent(who)) //update inventory window
-		who.show_inv(src)
-	else
-		src << browse(null,"window=mob[REF(who)]")
-
-	who.update_equipment_speed_mods() // Updates speed in case stripped speed affecting item
 
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)
@@ -995,7 +1021,7 @@
 	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
 	var/final_pixel_x = get_standard_pixel_x_offset(lying)
 	var/final_pixel_y = get_standard_pixel_y_offset(lying)
-	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
+	animate(src, pixel_x = pixel_x_diff, pixel_y = pixel_y_diff , time = 2, loop = 6, flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
 	animate(pixel_x = final_pixel_x , pixel_y = final_pixel_y , time = 2)
 	floating_need_update = TRUE
 
@@ -1130,7 +1156,7 @@
 
 	amount -= RAD_BACKGROUND_RADIATION // This will always be at least 1 because of how skin protection is calculated
 
-	var/blocked = getarmor(null, "rad")
+	var/blocked = getarmor(null, RAD)
 
 	if(amount > RAD_BURN_THRESHOLD)
 		apply_damage((amount-RAD_BURN_THRESHOLD)/RAD_BURN_THRESHOLD, BURN, null, blocked)
@@ -1159,7 +1185,7 @@
 		visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
-		throw_alert("fire", /atom/movable/screen/alert/fire)
+		throw_alert(FIRE, /atom/movable/screen/alert/fire)
 		update_fire()
 		SEND_SIGNAL(src, COMSIG_LIVING_IGNITED,src)
 		return TRUE
@@ -1289,11 +1315,11 @@
 				return FALSE
 		if(NAMEOF(src, stat))
 			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
-				GLOB.dead_mob_list -= src
-				GLOB.alive_mob_list += src
+				remove_from_dead_mob_list()
+				add_to_alive_mob_list()
 			if((stat < DEAD) && (var_value == DEAD))//Kill he
-				GLOB.alive_mob_list -= src
-				GLOB.dead_mob_list += src
+				remove_from_alive_mob_list()
+				add_to_dead_mob_list()
 		if(NAMEOF(src, health)) //this doesn't work. gotta use procs instead.
 			return FALSE
 	. = ..()

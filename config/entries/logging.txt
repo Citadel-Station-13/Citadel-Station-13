@@ -13,8 +13,14 @@ LOG_SAY
 ## log client access (logon/logoff)
 LOG_ACCESS
 
+## Enables log entries for logins that failed due to suspicious circumstances (banned player, CID randomiser, spoofed BYOND version, etc.) to a dedicated file.
+LOG_SUSPICIOUS_LOGIN
+
 ## log game actions (start of round, results, etc.)
 LOG_GAME
+
+## log mecha actions
+LOG_MECHA
 
 ## log player votes
 LOG_VOTE
@@ -30,6 +36,9 @@ LOG_EMOTE
 
 ## log attack messages
 LOG_ATTACK
+
+## log victim messages
+LOG_VICTIM
 
 ## log pda messages
 LOG_PDA
@@ -52,11 +61,14 @@ LOG_JOB_DEBUG
 ## Log shuttle related actions
 LOG_SHUTTLE
 
+## Log economy-related actions
+LOG_ECON
+
 ## log all world.Topic() calls
 LOG_WORLD_TOPIC
 
 ## enables use of the proc twitterize() that lets you take a large list of strings and turn it into a JSON file of tweet sized strings.
-## As an example of how this could be """useful""" look towards Poly (https://twitter.com/Poly_the_Parrot)
+## As an example of how this could be """useful""" look towards Polly (https://twitter.com/Poly_the_Parrot)
 # LOG_TWITTER
 
 ## Enable logging pictures

@@ -16,7 +16,7 @@
 /obj/effect/clockwork/city_of_cogs_rift/singularity_pull()
 	return
 
-/obj/effect/clockwork/city_of_cogs_rift/Initialize()
+/obj/effect/clockwork/city_of_cogs_rift/Initialize(mapload)
 	. = ..()
 	visible_message("<span class='warning'>The air above [loc] shimmers and pops as a [name] forms there!</span>")
 	for(var/mob/M in GLOB.player_list)
@@ -69,7 +69,7 @@
 	do_sparks(5, TRUE, AM)
 	if(isliving(AM))
 		var/mob/living/L = AM
-		L.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
+		L.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/tiled/flash/static)
 		L.clear_fullscreen("flash", 5)
 		var/obj/item/transfer_valve/TTV = locate() in L.GetAllContents()
 		if(TTV)

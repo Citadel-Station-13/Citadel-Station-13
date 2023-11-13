@@ -53,7 +53,7 @@
 	acidpwr = min(acidpwr, 50) //we reduce the power so reinf floor never get melted.
 	. = ..()
 
-/turf/open/floor/engine/ex_act(severity,target)
+/turf/open/floor/engine/ex_act(severity,target, origin)
 	var/shielded = is_shielded()
 	contents_explosion(severity, target)
 	if(severity != 1 && shielded && target != src)
@@ -133,7 +133,7 @@
 	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearance
 
 
-/turf/open/floor/engine/cult/Initialize()
+/turf/open/floor/engine/cult/Initialize(mapload)
 	. = ..()
 	new /obj/effect/temp_visual/cult/turf/floor(src)
 	realappearance = new /obj/effect/clockwork/overlay/floor/bloodcult(src)

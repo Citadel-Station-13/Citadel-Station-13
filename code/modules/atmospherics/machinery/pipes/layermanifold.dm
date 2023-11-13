@@ -14,7 +14,7 @@
 	var/list/front_nodes
 	var/list/back_nodes
 
-/obj/machinery/atmospherics/pipe/layer_manifold/Initialize()
+/obj/machinery/atmospherics/pipe/layer_manifold/Initialize(mapload)
 	front_nodes = list()
 	back_nodes = list()
 	icon_state = "manifoldlayer_center"
@@ -70,9 +70,9 @@
 
 /obj/machinery/atmospherics/pipe/layer_manifold/SetInitDirections()
 	switch(dir)
-		if(NORTH || SOUTH)
+		if(NORTH, SOUTH)
 			initialize_directions = NORTH|SOUTH
-		if(EAST || WEST)
+		if(EAST, WEST)
 			initialize_directions = EAST|WEST
 
 /obj/machinery/atmospherics/pipe/layer_manifold/isConnectable(obj/machinery/atmospherics/target, given_layer)

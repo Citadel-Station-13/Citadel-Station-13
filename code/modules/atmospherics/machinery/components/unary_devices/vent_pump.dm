@@ -15,8 +15,6 @@
 	level = 1
 	layer = GAS_SCRUBBER_LAYER
 
-	interacts_with_air = TRUE
-
 	var/id_tag = null
 	var/pump_direction = RELEASING
 
@@ -144,7 +142,7 @@
 		"device" = "VP",
 		"timestamp" = world.time,
 		"power" = on,
-		"direction" = pump_direction ? "release" : "siphon",
+		"direction" = pump_direction,
 		"checks" = pressure_checks,
 		"internal" = internal_pressure_bound,
 		"external" = external_pressure_bound,
@@ -177,6 +175,9 @@
 		return
 
 	var/mob/signal_sender = signal.data["user"]
+
+	if((("is_siphoning" in signal.data) && pump_direction == RELEASING) || (("is_pressurizing" in signal.data) && pump_direction == SIPHONING))
+		return
 
 	if("purge" in signal.data)
 		pressure_checks &= ~EXT_BOUND

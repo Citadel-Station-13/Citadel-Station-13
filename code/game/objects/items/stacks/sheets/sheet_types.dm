@@ -24,6 +24,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("stool", /obj/structure/chair/stool, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("bar stool", /obj/structure/chair/stool/bar, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("bed", /obj/structure/bed, 2, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("double bed", /obj/structure/bed/double, 4, one_per_turf = TRUE, on_floor = TRUE), \
 	//CIT CHANGE - adds sofas to metal recipe list
 	new/datum/stack_recipe_list("sofas", list( \
 		new /datum/stack_recipe("sofa (middle)", /obj/structure/chair/sofa, one_per_turf = TRUE, on_floor = TRUE), \
@@ -211,7 +212,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT, /datum/material/plasma=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 10
 	flags_1 = CONDUCT_1
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 80)
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel
 	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/toxin/plasma = 20)
@@ -290,7 +291,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	icon = 'icons/obj/stack_objects.dmi'
 	custom_materials = list(/datum/material/wood=MINERAL_MATERIAL_AMOUNT)
 	sheettype = "wood"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 0)
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/wood
 	novariants = TRUE
@@ -305,7 +306,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 				 "<span class='notice'>You begin whittling [src] into a sharp point at one end.</span>", \
 				 "<span class='italics'>You hear wood carving.</span>")
 		// 8 Second Timer
-		if(!do_after(user, 80, TRUE, src))
+		if(!do_after(user, 8 SECONDS,  src))
 			return
 		// Make Stake
 		var/obj/item/stake/basic/new_item = new(user.loc)
@@ -354,7 +355,7 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	icon = 'icons/obj/stack_objects.dmi'
 	custom_materials = list(/datum/material/bamboo = MINERAL_MATERIAL_AMOUNT)
 	throwforce = 15
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 0)
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/bamboo
 	grind_results = list(/datum/reagent/cellulose = 10)
@@ -396,6 +397,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	new/datum/stack_recipe("rag", /obj/item/reagent_containers/rag, 1), \
 	new/datum/stack_recipe("towel", /obj/item/reagent_containers/rag/towel, 3), \
 	new/datum/stack_recipe("bedsheet", /obj/item/bedsheet, 3), \
+	new/datum/stack_recipe("double bedsheet", /obj/item/bedsheet/double, 6), \
 	new/datum/stack_recipe("empty sandbag", /obj/item/emptysandbag, 4), \
 	new/datum/stack_recipe("padded floor tile", /obj/item/stack/tile/padded, 1, 4, 20), \
 	null, \
@@ -502,6 +504,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 		new /datum/stack_recipe("sterile masks box", /obj/item/storage/box/masks),				\
 		new /datum/stack_recipe("body bag box", /obj/item/storage/box/bodybags),				\
 		new /datum/stack_recipe("prescription glasses box", /obj/item/storage/box/rxglasses),	\
+		new /datum/stack_recipe("oxygen tank box", /obj/item/storage/box/emergencytank),	\
+		new /datum/stack_recipe("extended oxygen tank box", /obj/item/storage/box/engitank),	\
 		null,																					\
 		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks),						\
 		new /datum/stack_recipe("light tubes box", /obj/item/storage/box/lights/tubes),			\
@@ -759,7 +763,8 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 GLOBAL_LIST_INIT(bone_recipes, list(
 	new /datum/stack_recipe("Bone Dagger", /obj/item/kitchen/knife/combat/bone, 2, time = 20), \
 	new /datum/stack_recipe("Skull Helmet", /obj/item/clothing/head/helmet/skull, 4, time = 30), \
-	new /datum/stack_recipe("Bone Armor", /obj/item/clothing/suit/armor/bone, 6, time = 30)))
+	new /datum/stack_recipe("Bone Armor", /obj/item/clothing/suit/armor/bone, 6, time = 30),\
+	new /datum/stack_recipe("Processable Bone", /obj/item/ingot/bone, 2, time = 20)))
 
 /obj/item/stack/sheet/bone
 	name = "bones"
@@ -793,7 +798,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("water bottle", /obj/item/reagent_containers/glass/beaker/waterbottle/empty), \
 	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty,3), \
 	new /datum/stack_recipe("shower curtain", /obj/structure/curtain, 10, time = 10, one_per_turf = 1, on_floor = 1), \
-	new /datum/stack_recipe("duct", /obj/item/stack/ducts,1), \
+	new /datum/stack_recipe("duct", /obj/item/stack/ducts, 1, 5, 50), \
 	new /datum/stack_recipe("laser pointer case", /obj/item/glasswork/glass_base/laserpointer_shell, 30), \
 	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2)))
 

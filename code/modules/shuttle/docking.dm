@@ -162,7 +162,7 @@
 	for(var/i in 1 to areas_to_move.len)
 		CHECK_TICK
 		var/area/internal_area = areas_to_move[i]
-		internal_area.afterShuttleMove(new_parallax_dir)													//areas
+		internal_area.afterShuttleMove(new_parallax_dir, parallax_speed)									//areas
 
 	for(var/i in 1 to old_turfs.len)
 		CHECK_TICK

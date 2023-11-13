@@ -84,7 +84,7 @@
 			countdown.stop()
 			STOP_PROCESSING(SSfastprocess, src)
 
-/obj/machinery/syndicatebomb/Initialize()
+/obj/machinery/syndicatebomb/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/syndicatebomb(src)
 	if(payload)
@@ -242,7 +242,7 @@
 	open_panel = TRUE
 	timer_set = 120
 
-/obj/machinery/syndicatebomb/empty/Initialize()
+/obj/machinery/syndicatebomb/empty/Initialize(mapload)
 	. = ..()
 	wires.cut_all()
 
@@ -270,7 +270,7 @@
 	var/range_light = 17
 	var/range_flame = 17
 
-/obj/item/bombcore/ex_act(severity, target) // Little boom can chain a big boom.
+/obj/item/bombcore/ex_act(severity, target, origin) // Little boom can chain a big boom.
 	detonate()
 
 

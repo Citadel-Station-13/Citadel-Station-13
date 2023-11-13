@@ -1,0 +1,327 @@
+2020-04-15:
+  Arturlang:
+  - rscadd: Adds garlic, a mutation of onions
+  - rscadd: You can now make garlic necklaces.
+  - tweak: Tweaked hunger to be more the same as blood level for bloodsuckers
+  - tweak: Bloodsuckers no longer get zero healing from regenerative cores, the core
+      now heals their wounds but not their blood.
+  - balance: Bloodsucker heal is now based a lot more on blood level.
+  - bugfix: You can no longer be effectively immortal when fully auged as a bloodsucker.
+  - bugfix: Regenerative cores will regain their old names when they are renewed,
+      no more working decayed cores.
+  - code_imp: Removes a lot of unnecesiry clutter of comments and tries to make the
+      vars more consistent for bloodsucker code.
+  - code_imp: Made the regenerative core use one proc instead of copypasta
+  Auris456852:
+  - rscadd: Added printer sound for admins that plays when someone messages Centcomm
+      or the Syndicate. Just like RP!
+  Bhijn:
+  - admin: The traitor panel now actually shows a list of contractor targets.
+  - server: Fail2Topic now supports Linux. Do beware that this requires some sysop
+      experience to properly set up!
+  - config: Fail2Topic is now disabled by default, and the out-of-the-box config files
+      have been updated to be a little more detailed.
+  - rscadd: Added a lfwb-inspired orbiting pixel + flashing outline animation to the
+      sprint and combat mode buttons. This can be toggled via the preferences menu,
+      and is completely independent from all HUD themes.
+  BuffEngineering:
+  - bugfix: You may no longer summon plasteel from the door dimension.
+  - tweak: High security airlocks are now 33% more materially efficient!
+  DeltaFire15:
+  - balance: clockie vanguard now quickly regenerates stam while active (as its description
+      always told you,)
+  Detective-Google:
+  - balance: Shotguns are now slower and require two hands to fire.
+  Ghommie:
+  - bugfix: mobs with antag statuses such as wizard, ert and nuke ops get their flavor
+      text removed now.
+  - bugfix: Fixed megafauna mobs, goliaths and "anchored" AIs being stuffable into
+      closets.
+  - bugfix: After years of visual agony, the Curse of The Floating Disembodied Phallus
+      has come to an end.
+  - rscadd: Underwear now fulfills its purpose.
+  - rscadd: Privates visibility preferences.
+  - refactor: refactored polychromic clothing into an element.
+  - tweak: Blacklists unsynthetizable reagents from botany bees honey production.
+  - bugfix: Fixed toilet cistern loot spawning on the floor.
+  - tweak: The megafauna's hitbox doesn't include 0 alpha sections anymore.
+  - bugfix: Wizard robes & co work again now.
+  - bugfix: Fixed some spell casting message spam.
+  - rscadd: Added M/F body preferences.
+  - bugfix: fixed yet another few airless issues with the space hermit ruin.
+  - bugfix: Intellectual property infringment is not cool.
+  - bugfix: Near-station nuclear explosions now display the on-station nuke explosion
+      cinematic, consistently with its clearance of the station level and its nuclear
+      victory / total annihilation ending status.
+  - balance: Nuclear bombs can't be anchored in space areas (not just turfs) anymore,
+      as a quick effortless way to discourage players from anchoring the device on
+      the edge of the map.
+  - bugfix: Fixed a whacky miniature cell duping issue.
+  - bugfix: Liver failure is back!
+  - tweak: standarized a few (prefs off) side effects from enlargment chems on livers
+      to do organ damage instead without the blood volume whackiness.
+  - tweak: High liver damage now slows mobs down.
+  - bugfix: Fixing an issue with the split personality removing the original owner
+      from the round if the body died while the stranger was in control.
+  - bugfix: fixed a few floaty sprite accessories.
+  - bugfix: Fixed a few mutations not working correctly.
+  - bugfix: Fixed the phantom thief component, again.
+  - refactor: Made votes obfuscation settings more robust.
+  - admin: Also included them in custom votes.
+  - tweak: The map rotation vote will only hide ongoing votes now, not the results.
+  - balance: The crusher's vortex talisman trophy now has a cooldown between each
+      spawned wall.
+  - refactor: Backend body size preferences.
+  - bugfix: Infiltrator's boots don't stop slips and "space wind" through the power
+      of runtime errors anymore, and properly silence the user's footsteps now.
+  - tweak: Chaplains are now inelegible for bloodsuckers.
+  - bugfix: Fixed crafting hud icon overlapping the second pocket on 1:1 screen mode.
+  - code_imp: Removed some dead flightsuit code leftovers.
+  - rscadd: Reenabled the swarmers event. Also blacklisted another dozen other machineries
+      and structures that may be critical to the shift or station integrity from swarmers'
+      HUNGER for materials.
+  - bugfix: Fixed find_safe_turfs() searching for turfs with concentration of oxygen
+      lower than 16 rather higher.
+  KathrinBailey:
+  - rscadd: Radiation shuttesr to all supermatters.
+  - rscadd: Windowed shutters to armouries where relevant.
+  - rscadd: New posters are now on the map in relevant locations.
+  - bugfix: Windowed shutter now has glass, the door closing proc sees this and no
+      longer changes opacity.
+  - bugfix: Accidental HoochMaster removal in the bar.
+  - bugfix: Spawning looking at the supermatter with no mesons on Meta.
+  - bugfix: Missing disposal pipe outside HoP office.
+  - bugfix: Sofas were never adjusted when the pool was added.
+  - rscadd: New shutter sprites
+  - rscadd: Reinforced Shutter
+  - rscadd: Radiation Shutter
+  - rscadd: Window Shutter
+  - tweak: Shutters not being blast doors functionally.
+  - balance: Shutter armour block and health.
+  Kraseo:
+  - balance: Sneaksuit now costs 5 TC rather than 3.
+  - bugfix: You can break out of neckgrabs once more.
+  Owai-Seek:
+  - rscadd: Port Pina Colada, Painkiller, Moscow Mule, Hivemind Eraser, Moana Lou
+      Drinks
+  - rscadd: Gunfire, Hellfire, Sins Delight, Strawberry Daiquiri, Miami Vice, Malibu
+      Sunset, Lizz Fizz, Hotline Miami
+  - rscadd: Strawberry and Pineapple Juice
+  - rscadd: Salami Slices
+  - tweak: Soda Dispenser Juices
+  - tweak: Reorganize Vendor Objects (Bowls, Glasses, Shot Glasses)
+  - tweak: Strawberry Milk and Tea actually use strawberry Juice.
+  - tweak: Lizards can eat egg wraps. Moved Egg Wraps to Misc
+  PersianXerxes:
+  - rscadd: 'TGUI Next UIs for: chem heaters, chem masters, chem dispensers, and sleepers'
+  - code_imp: Reworked Chem Master code
+  Putnam3145:
+  - rscdel: No more station integrity goal
+  - tweak: Upload-hacked-law goal only picksif there's an AI to upload to
+  - rscadd: A new, much more barebones holding facility for contractors.
+  - rscdel: Energy nets are gone.
+  - tweak: Various ghost roles are now easier to ghost as.
+  - tweak: The candles in the dojo no longer make the place hotter and hotter over
+      time.
+  - rscdel: Nymphomania removed
+  - code_imp: Exhibitionism ignored by preferences now, since it was also removed
+  - code_imp: Quirk migration now does an admin log instead of a stack trace
+  - bugfix: Roundstart rulesets now roll properly.
+  - config: Added configs for various antag threat levels.
+  - bugfix: Fixed a runtime in threat calculation.
+  - tweak: Fixed up some misleading texts.
+  - tweak: 'Dynamic reworked to be more "storyteller-like": threat is now how threatened
+      the station is right now and threat level is how much the mode wants the station
+      to be threatened.'
+  - tweak: Random storyteller is now truly random.
+  - tweak: Story storyteller now gives a nice rising-action-climax-falling action
+      curve for threat level.
+  - tweak: '"Chaotic" storyteller now simply ramps up threat level as round goes on.'
+  - rscadd: '"Classic" storyteller, basically doing what "random" did before.'
+  - rscadd: Latejoin changelings for dynamic
+  - bugfix: Average threat calculation works now
+  - bugfix: Contamination is back.
+  Seris02:
+  - balance: stops hijackers from being able to remotely blow up borgs
+  - rscadd: wall walking boots
+  - bugfix: made color picking for character appearance show the colors when you pick
+      them
+  - tweak: the sergal markings
+  Trilbyspaceclone:
+  - rscadd: Cooks aided by Clowns have came out with and new healthy Salad - Caesar
+      Salad. Just dont eat the knife...
+  - rscadd: Ports over TG's Mortars and Pestles.
+  - balance: Water, Holywater and Unholywater will now now quickly purge itself if
+      you have 151u in your system
+  - rscadd: Most crate types can now be made, some costing more do to function over
+      fashion
+  - rscadd: Medical Mechs syringe gun now knows many more life saving chems, like
+      Insulin, Dexalin, Prussian Blue, Kelotane and Bicaridine
+  - balance: torches take less staminda to use.
+  - balance: Glowsticks dont last as long
+  - balance: Penlights are better at being lights
+  - balance: Torches are brighter then before - Indian Johns want to be on lava land
+      rejoy!
+  - balance: Eye lights have 30% less light coming out of them.
+  - spellcheck: Spec Ops crate no longer talks about a "Null Crate" what ever that
+      is
+  - server: Changlogs are updateded once again as of the 28th of March on year 2020
+  - balance: White Ships, Telerelays and a defunk mining post are now always going
+      to spawn.
+  - spellcheck: Corrects a few desc on station side ruins
+  Xantholne:
+  - bugfix: bumbles will stop sleeping so much
+  actioninja:
+  - rscadd: Washing machines now support arbitrary dye color
+  - rscadd: Washing machines now dye nearly every item.
+  - refactor: lots of backend changes to clothing overlays, report any issues
+  - rscadd: Better glowing lights
+  actioninja (ported by Ghommie):
+  - refactor: repathed all under clothing, keep an eye out for errors.
+  bunny232:
+  - bugfix: Box secmos now is now longer connected to the scrubber loop
+  dapnee:
+  - rscadd: plant disk sorter in botany, bounty console for the rest of cargo, a missing
+      air alarm in the incinerator
+  - tweak: fixed a decal in front of security, moved an AIR alarm so it doesn't look
+      awful to ghosts/AI, asteroids don't delete air anymore, fixed more active turfs,
+      the buttons in the bridge "should" work now, HoP and cargo desks should be secure
+      now
+  - rscdel: quarters that found their way out of the quartermaster's back room
+  kappa-sama:
+  - rscdel: normies can no longer steal circuit codes
+  - balance: doubles the Stam damage of nonlethal krav stompers
+  - bugfix: no longer Krav Maga stomp people that are standing
+  - balance: no more 20pop requirement for noslips
+  keronshb:
+  - tweak: Reverts Mining Base RNG Placement
+  kevinz000:
+  - rscadd: Melee attacks now stagger people, preventing them from sprinting until
+      the (relatively short lived) effect runs out. Duration equation is [(1.5 + (w_class/7.5))
+      * force].
+  - balance: Fireman carrying now makes the person being carried unable to use items.
+      Piggybacking now slows down the person being ridden. In both cases, the person
+      riding will be dazed when forcefully dismounted, and dazed for a second if dismounting
+      from piggybacking
+  - bugfix: turfs properly initialize atom colors if they're colored.
+  - tweak: cloners now stabilize mutations while someone's cloning, meaning active
+      genes will not life tick.
+  - code_imp: datum/pipeline return_air stack trace now gives a reference so it's
+      actually marginally useful if caught in round.
+  - rscadd: Volumetric storage is here.
+  - rscadd: Traitor chaplains can now become neutered versions of cults.
+  - bugfix: beams should no longer go across the map and mess everything up if their
+      source or target isn't on a turf.
+  kiwedespars:
+  - rscadd: Added paper masks.
+  necromanceranne:
+  - bugfix: Fixed limb damage calc
+  - tweak: Stunslugs are now a mixed damage taser-like slug that will allow you to
+      apply a variety of damage while still being countered by tasers usual counters.
+  - balance: Mech scattershot guns are no longer oneshotting people into stamina crit.
+  - rscdel: 'Removed an number of cargo crate packs: Riot shotguns/standard shotguns,
+      double barreled shotguns, techshell crate, swat tasers, WT550 types (not rubber
+      or standard), traitor theft objective kits.'
+  - balance: HEALTH AND STAMINA DON'T STACK FOR PUTTING YOU INTO STAMINA CRIT.
+  - balance: YOUR FISTS ARE HELLA GODDAMN STRONG.
+  - balance: 'ACCEPT THE FELINIDS WARES, FOR SKOOMA HAS INCREDIBLE LETHAL PROPERTIES:
+      YOUR HANDS BECOME LIKE SWORDS.'
+  - balance: BOXERS CAN ONLY KNOCK OUT OTHER BOXERS BECAUSE THEY HAVE HONOR OR SOME
+      SHIT
+  - balance: INCREASED STAMINA DAMAGE TO LIMBS FROM 50% TO 75%.
+  - balance: Double-barreled shotguns and any child of such now can be used with off-hand
+      equipment.
+  - rscadd: Readds bioterror darts to the nuclear operative uplink for the legacy
+      price of 6tc! Has all new horrid reagents!
+  - balance: Scatterlaser is now in-line with buckshot. Nukies can't purchase scatterlaser
+      shot.
+  - rscdel: Null crates are no longer available in cargo!
+  - bugfix: Sleeping Carp and Rising Bass now dodge. Again.
+  - bugfix: Russian Revolver can no longer be exploited for a free 357.
+  - balance: Several guns now shoot exactly where you click regardless of movement
+      or turning.
+  timothyteakettle:
+  - rscadd: added beacon for cooks to choose an ingredient box, which replaces the
+      random box they used to receive
+  - rscadd: added a new sushi ingredients box
+  - rscadd: added more items to the wildcard box's possible contents
+  - rscadd: add new holodeck wrestling belt which lets you use moves only on those
+      also wearing it
+  - rscadd: add new holodeck map featuring the holodeck wrestling belt
+  - rscadd: new reagent 'Condensed Cooking Oil'
+  - tweak: list of chems that can go into fried non-food items was changed
+  zeroisthebiggay:
+  - rscadd: sneaksuit to contractor items
+  - tweak: sneaksuit is a bundle
+  - rscdel: intel potion and radio implant from contractor items
+  - rscadd: ghosts can now DNR
+  - balance: sneaksuit is not fireproof
+  - bugfix: insidious balaclava muzzlepsprite works
+  - rscadd: You can now choose your name and color as a holoparasite/guardian/holocarp!
+  - bugfix: fixes lings being able to get mechanical holoparasites
+2020-04-16:
+  ForrestWick:
+  - tweak: changed a certain item to be called meatball, ended racism, thank you obama
+  Linzolle:
+  - tweak: remove any slurs, etc. to comply with GitHub's ToS
+2020-04-19:
+  Anonymous:
+  - rscadd: Xenohybrids will now scream like xeno.
+  Arturlang:
+  - bugfix: You can no longer spam craft things using the crafting menu
+  Detective-Google:
+  - bugfix: uncorks some of Lambda's rooms.
+  Ghommie:
+  - rscadd: Custom skin tone preferences.
+  - tweak: Normalized box dorm lockers. Also removed a straight jacket found in the
+      same area.
+  Jake Park:
+  - bugfix: fixed path name for youtool vending
+  Putnam3145:
+  - bugfix: Objectives now clean theirselves up instead of leaving null entries in
+      lists everywhere.
+  Seris02:
+  - bugfix: stops magboots from not updating slowdowns
+  Trilbyspaceclone:
+  - rscadd: Maints have seen an uptick in left over types of welders, and tools. As
+      well as different types of masks
+  - rscadd: New type of 02 locker - Rng! It can have almost any type of gas/breath
+      mask and almost any type of o2 tank as well as even plasma men internals - Fancy!
+  - tweak: Tool lockers have 70% odds to have a spare random tool inside!
+  - rscadd: 12 new more drinks for most races!
+  - rscadd: New animations for mauna loa, and colour swap from red to blue for a Paramedic
+      Hardsuit helm
+  - tweak: Lowers cog champ ((the drink)) flare rate
+  - rscadd: Six more Sci based bounties have been posted at your local Cargo Bounty
+      Request console
+  - bugfix: Mimes have made catnip plants not become invisible. How helpful.
+  - rscadd: Honey Palm now distills into mead rather then wine
+  UristMcAstronaut:
+  - rscadd: Adds circuit analyzers to maps and to integrated circuit printer and circuitry
+      starter crate.
+  kappa-sama:
+  - balance: aranesp heals 10 instead of 18 stamina per tick
+  - rscdel: removed roundstart hyper earrape screams from xenohybrids
+  kevinz000:
+  - bugfix: you can no longer stun xenos
+  - balance: Contractor kits are now poplocked to 30 players.
+  - rscadd: Shield bashing has been added
+  necromanceranne:
+  - rscadd: You can now craft armwraps!
+  - balance: Pugilists disarm you more easily and are harder to disarm. They also
+      get a discount on disarm.
+  - balance: Pugilists only suffer a flat 10% chance to miss you. It's just like old
+      punches! Kinda.
+  - balance: Chaplain's armbands are a +2, up from a +1!
+  - balance: Martial artists spend stamina when they disarm.
+  - balance: Rising Bass had several moves shortened and made stronger. Has a disarm
+      override attack which does stamina damage and trips people on a disarm stun
+      punch.
+  - balance: CQC had it's disarm move altered to be a stronger version of Krav Maga's.
+      Dizzies and disarms on a disarm stun punch or just does some stamina damage
+      and brute damage.
+  - balance: Sleeping Carp can punch you to the floor on a harm stun punch.
+  - bugfix: Hugs of the Northstar are no longer nodrop.
+  - bugfix: Adding in some overrides and proper flag checks for martial arts.
+  - bugfix: Stun thresholding stops disarm spams at extremely high stamina loss.
+  - tweak: Ashen Arrows are actually called Ashen Arrows in the crafting menu.

@@ -84,6 +84,12 @@
 	user.visible_message("<span class='suicide'>[user] is scratching [user.p_their()] back as hard as [user.p_they()] can with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
+/obj/item/cultivator/bone
+	name = "bone cultivator"
+	desc = "A handle and a few bones tied together to resemble a hoe. Should work for removing weeds."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "cultivator_bone"
+
 /obj/item/hatchet
 	name = "hatchet"
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
@@ -103,7 +109,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 
-/obj/item/hatchet/Initialize()
+/obj/item/hatchet/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 70, 100)
 
@@ -111,6 +117,12 @@
 	user.visible_message("<span class='suicide'>[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
+
+/obj/item/hatchet/bone
+	name = "bone hatchet"
+	desc = "A primitive hatchet made out of mostly bone, with some sinew to keep it together. It just might do for cutting logs into planks."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "hatchet_bone"
 
 /obj/item/scythe
 	icon_state = "scythe0"
@@ -131,7 +143,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/swiping = FALSE
 
-/obj/item/scythe/Initialize()
+/obj/item/scythe/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 90, 105)
 
@@ -179,7 +191,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 
-/obj/item/reagent_containers/glass/bottle/nutrient/Initialize()
+/obj/item/reagent_containers/glass/bottle/nutrient/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)

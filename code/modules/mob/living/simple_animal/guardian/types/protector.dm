@@ -11,7 +11,7 @@
 	toggle_button_type = /atom/movable/screen/guardian/ToggleMode
 	var/toggle = FALSE
 
-/mob/living/simple_animal/hostile/guardian/protector/ex_act(severity)
+/mob/living/simple_animal/hostile/guardian/protector/ex_act(severity, target, origin)
 	if(severity == 1)
 		adjustBruteLoss(400) //if in protector mode, will do 20 damage and not actually necessarily kill the summoner
 	else

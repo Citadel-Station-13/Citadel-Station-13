@@ -1,0 +1,49 @@
+2022-05-03:
+  Putnam3145:
+  - bugfix: Round times are accurate now
+  SandPoot:
+  - bugfix: Actually fixes dragging storage items into themself.
+  timothyteakettle:
+  - rscadd: sodium sensitivity quirk
+2022-05-13:
+  Bhijn & Myr:
+  - rscadd: The server's hub tagline now has the option to pull random strings from
+      strings/server_taglines.txt!
+  LiteralMushroom:
+  - rscadd: alter form affects wings
+  - rscadd: Synths get to spark too.
+  SandPoot:
+  - rscadd: Status displays can now be built.
+  - rscadd: AIs can now quickly modify their status displays using an emote (*bsod)!
+  - rscadd: AIs can also modify their status displays by just clicking on the devices
+      (opens a radial wheel)!
+  - refactor: Status displays simply look a lot better now.
+  TomGarou:
+  - rscadd: Added Reprogramming to surgeries via Techweb under Alien surgery and Brainwashing
+      disk
+  - balance: Synths and non Synths can now be brainwashed equally
+  - bugfix: Brainwash surgery not working with synths due to metal heads
+2022-05-14:
+  Putnam3145:
+  - rscadd: Smelly gases (Bromine, methane, ammonia, nitric oxide and stimulum in
+      particular)
+  - rscadd: Easier-to-make-visible gases; gases made visible with this system are
+      bromine and hydrogen (plus nitryl, but that was already visible in the same
+      way)
+  - bugfix: 'Scrubbers scrub chems properly tweak: Air alarms now show all gases,
+      not just ones they''re hardcoded to show tweak: Contaminated now only removes
+      "dangerous" gases (this is actually a consequence of the hardcode reduction)
+      tweak: Water vapor is now counted as DANGEROUS (this makes it included in "contaminated"
+      and adds admin logging when people open water vapor cans)'
+2022-05-17:
+  timothyteakettle:
+  - rscadd: poly alt cloak can now be renamed/dedescriptioned in loadout
+2022-05-19:
+  timothyteakettle:
+  - rscadd: quirks are now organised into three tabs for positive, neutral and negative
+2022-05-21:
+  Bhijn & Myr:
+  - bugfix: Blood trails no longer have a duplicate directionless iconstate as their
+      base sprite, fixing the Wonkiness of blood trails going west/east.
+  SandPoot:
+  - bugfix: Silicon flavor texts are no longer broken... maybe?

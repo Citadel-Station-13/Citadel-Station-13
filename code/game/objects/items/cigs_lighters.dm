@@ -89,7 +89,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		..()
 
 /obj/item/proc/help_light_cig(mob/living/M)
-	var/mask_item = M.get_item_by_slot(SLOT_WEAR_MASK)
+	var/mask_item = M.get_item_by_slot(ITEM_SLOT_MASK)
 	if(istype(mask_item, /obj/item/clothing/mask/cigarette))
 		return mask_item
 
@@ -123,14 +123,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	user.visible_message("<span class='suicide'>[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer.</span>")
 	return (TOXLOSS|OXYLOSS)
 
-/obj/item/clothing/mask/cigarette/Initialize()
+/obj/item/clothing/mask/cigarette/Initialize(mapload)
 	. = ..()
 	create_reagents(chem_volume, INJECTABLE | NO_REACT, NO_REAGENTS_VALUE) // so it doesn't react until you light it
 	if(list_reagents)
 		reagents.add_reagent_list(list_reagents)
 	if(starts_lit)
 		light()
-	AddComponent(/datum/component/knockoff,90,list(BODY_ZONE_PRECISE_MOUTH),list(SLOT_WEAR_MASK))//90% to knock off when wearing a mask
+	AddComponent(/datum/component/knockoff,90,list(BODY_ZONE_PRECISE_MOUTH),list(ITEM_SLOT_MASK))//90% to knock off when wearing a mask
 
 /obj/item/clothing/mask/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -190,7 +190,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		qdel(src)
 		return
 	// allowing reagents to react after being lit
-	DISABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
+	reagents.reagents_holder_flags &= ~(NO_REACT)
 	reagents.handle_reactions()
 	icon_state = icon_on
 	item_state = icon_on
@@ -300,6 +300,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A Xeno Filtered brand cigarette."
 	list_reagents = list (/datum/reagent/drug/nicotine = 20, /datum/reagent/medicine/regen_jelly = 15, /datum/reagent/drug/krokodil = 4)
 
+/obj/item/clothing/mask/cigarette/dart
+	name = "fat dart"
+	desc = "Chuff back this fat dart"
+	icon_state = "bigoff"
+	icon_on = "bigon"
+	icon_off = "bigoff"
+	w_class = WEIGHT_CLASS_BULKY
+	smoketime = 10000
+	chem_volume = 50
+	list_reagents = list(/datum/reagent/drug/nicotine = 15)
+
 // Rollies.
 
 /obj/item/clothing/mask/cigarette/rollie
@@ -387,7 +398,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	throwforce = 0
 	grind_results = list(/datum/reagent/carbon = 2)
 
-/obj/item/cigbutt/Initialize()
+/obj/item/cigbutt/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/trash)
 
@@ -411,7 +422,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	list_reagents = null
 	var/packeditem = 0
 
-/obj/item/clothing/mask/cigarette/pipe/Initialize()
+/obj/item/clothing/mask/cigarette/pipe/Initialize(mapload)
 	. = ..()
 	name = "empty [initial(name)]"
 
@@ -521,7 +532,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/oil = 5)
 	custom_price = PRICE_ALMOST_CHEAP
 
-/obj/item/lighter/Initialize()
+/obj/item/lighter/Initialize(mapload)
 	. = ..()
 	if(!overlay_state)
 		overlay_state = pick(overlay_list)
@@ -659,7 +670,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		COLOR_ASSEMBLY_PURPLE
 		)
 
-/obj/item/lighter/greyscale/Initialize()
+/obj/item/lighter/greyscale/Initialize(mapload)
 	. = ..()
 	if(!lighter_color)
 		lighter_color = pick(color_list)
@@ -751,7 +762,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(!screw)
 			screw = TRUE
 			to_chat(user, "<span class='notice'>You open the cap on [src].</span>")
-			ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+			reagents.reagents_holder_flags |= OPENCONTAINER
 			if(obj_flags & EMAGGED)
 				add_overlay("vapeopen_high")
 			else if(super)
@@ -761,7 +772,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		else
 			screw = FALSE
 			to_chat(user, "<span class='notice'>You close the cap on [src].</span>")
-			DISABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+			reagents.reagents_holder_flags &= ~(OPENCONTAINER)
 			cut_overlays()
 
 	if(O.tool_behaviour == TOOL_MULTITOOL)
@@ -808,10 +819,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/vape/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_WEAR_MASK)
+	if(slot == ITEM_SLOT_MASK)
 		if(!screw)
 			to_chat(user, "<span class='notice'>You start puffing on the vape.</span>")
-			DISABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
+			reagents.reagents_holder_flags &= ~(NO_REACT)
 			START_PROCESSING(SSobj, src)
 		else //it will not start if the vape is opened.
 			to_chat(user, "<span class='warning'>You need to close the cap first!</span>")
@@ -819,8 +830,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/vape/dropped(mob/user)
 	. = ..()
 	var/mob/living/carbon/C = user
-	if(C.get_item_by_slot(SLOT_WEAR_MASK) == src)
-		ENABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
+	if(C.get_item_by_slot(ITEM_SLOT_MASK) == src)
+		reagents.reagents_holder_flags |= NO_REACT
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/mask/vape/proc/hand_reagents()//had to rename to avoid duplicate error
@@ -906,7 +917,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/list/list_reagents = list() //For the base reagents bongs could get
 
 
-/obj/item/bong/Initialize()
+/obj/item/bong/Initialize(mapload)
 	. = ..()
 	create_reagents(chem_volume, NO_REACT) // so it doesn't react until you light it
 	reagents.add_reagent_list(list_reagents)

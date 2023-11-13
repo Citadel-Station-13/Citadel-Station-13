@@ -6,6 +6,7 @@ GLOBAL_LIST_EMPTY(hair_styles_female_list)	//stores only hair names
 GLOBAL_LIST_EMPTY(facial_hair_styles_list)	//stores /datum/sprite_accessory/facial_hair indexed by name
 GLOBAL_LIST_EMPTY(facial_hair_styles_male_list)	//stores only hair names
 GLOBAL_LIST_EMPTY(facial_hair_styles_female_list)	//stores only hair names
+GLOBAL_LIST_EMPTY(hair_gradients_list) //stores /datum/sprite_accessory/hair_gradient indexed by name
 	//Underwear
 GLOBAL_LIST_EMPTY_TYPED(underwear_list, /datum/sprite_accessory/underwear/bottom)		//stores bottoms indexed by name
 GLOBAL_LIST_EMPTY(underwear_m)	//stores only underwear name
@@ -41,6 +42,10 @@ GLOBAL_LIST_EMPTY(arachnid_legs_list)
 GLOBAL_LIST_EMPTY(arachnid_spinneret_list)
 GLOBAL_LIST_EMPTY(arachnid_mandibles_list)
 GLOBAL_LIST_EMPTY(caps_list)
+
+	//Bark bits
+GLOBAL_LIST_EMPTY(bark_list)
+GLOBAL_LIST_EMPTY(bark_random_list)
 
 //a way to index the right bodypart list given the type of bodypart
 GLOBAL_LIST_INIT(mutant_reference_list, list(
@@ -215,7 +220,13 @@ GLOBAL_LIST_INIT(jumpsuitlist, list(PREF_SUIT, PREF_SKIRT))
 #define UPLINK_PDA		"PDA"
 #define UPLINK_RADIO	"Radio"
 #define UPLINK_PEN		"Pen" //like a real spy!
-GLOBAL_LIST_INIT(uplink_spawn_loc_list, list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN))
+#define UPLINK_IMPLANT "Implant"
+#define UPLINK_IMPLANT_WITH_PRICE "[UPLINK_IMPLANT] (-[UPLINK_IMPLANT_TELECRYSTAL_COST] TC)"
+// What we show to the user
+GLOBAL_LIST_INIT(uplink_spawn_loc_list, list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN, UPLINK_IMPLANT_WITH_PRICE))
+// What is actually saved; if the uplink implant price changes, it won't affect save files then
+GLOBAL_LIST_INIT(uplink_spawn_loc_list_save, list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN, UPLINK_IMPLANT))
+
 
 //List of cached alpha masked icons.
 GLOBAL_LIST_EMPTY(alpha_masked_worn_icons)
@@ -285,6 +296,8 @@ GLOBAL_LIST_INIT(station_names, world.file2list("strings/station_names.txt" + ""
 
 GLOBAL_LIST_INIT(station_suffixes, world.file2list("strings/station_suffixes.txt"))
 
+GLOBAL_LIST_INIT(server_taglines, world.file2list("[global.config.directory]/server_taglines.txt"))
+
 GLOBAL_LIST_INIT(greek_letters, world.file2list("strings/greek_letters.txt"))
 
 GLOBAL_LIST_INIT(phonetic_alphabet, world.file2list("strings/phonetic_alphabet.txt"))
@@ -307,8 +320,8 @@ GLOBAL_LIST_INIT(redacted_strings, list("\[REDACTED\]", "\[CLASSIFIED\]", "\[ARC
 GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/wisdoms.txt"))
 
 //LANGUAGE CHARACTER CUSTOMIZATION
-GLOBAL_LIST_INIT(speech_verbs, list("default","says","gibbers", "states", "chitters", "chimpers", "declares", "bellows", "buzzes" ,"beeps", "chirps", "clicks", "hisses" ,"poofs" , "puffs", "rattles", "mewls" ,"barks", "blorbles", "squeaks", "squawks", "flutters", "warbles", "caws", "gekkers", "clucks"))
-GLOBAL_LIST_INIT(roundstart_tongues, list("default","human tongue" = /obj/item/organ/tongue, "lizard tongue" = /obj/item/organ/tongue/lizard, "skeleton tongue" = /obj/item/organ/tongue/bone, "fly tongue" = /obj/item/organ/tongue/fly, "ipc tongue" = /obj/item/organ/tongue/robot/ipc, "xeno tongue" = /obj/item/organ/tongue/alien))
+GLOBAL_LIST_INIT(speech_verbs, list("default","says","gibbers", "states", "chitters", "chimpers", "declares", "bellows", "buzzes" ,"beeps", "chirps", "clicks", "hisses" ,"poofs" , "puffs", "rattles", "mewls" ,"barks", "blorbles", "squeaks", "squawks", "flutters", "warbles", "caws", "gekkers", "clucks","mumbles","crackles"))
+GLOBAL_LIST_INIT(roundstart_tongues, list("default","human tongue" = /obj/item/organ/tongue, "lizard tongue" = /obj/item/organ/tongue/lizard, "skeleton tongue" = /obj/item/organ/tongue/bone, "fly tongue" = /obj/item/organ/tongue/fly, "ipc tongue" = /obj/item/organ/tongue/robot/ipc, "xeno tongue" = /obj/item/organ/tongue/alien/hybrid))
 
 /proc/get_roundstart_languages()
 	var/list/languages = subtypesof(/datum/language)
@@ -336,40 +349,6 @@ GLOBAL_LIST_INIT(greyscale_limb_types, list("human","moth","lizard","pod","plant
 
 //body ids that have prosthetic sprites
 GLOBAL_LIST_INIT(prosthetic_limb_types, list("xion","bishop","cybersolutions","grayson","hephaestus","nanotrasen","talon"))
-
-//FAMILY HEIRLOOM LIST
-//this works by using the first number for the species as a probability to choose one of the items in the following list for their family heirloom
-//if the probability fails, or the species simply isn't in the list, then it defaults to the next global list, which has its own list of items for each job
-//the first item in the list is for if your job isn't in that list
-
-//species-heirloom list (we categorise them by the species id var)
-GLOBAL_LIST_INIT(species_heirlooms, list(
-	"dwarf" = list(25, list(/obj/item/reagent_containers/food/drinks/dwarf_mug)), //example: 25% chance for dwarves to get a dwarf mug as their heirloom (normal container but has manly dorf icon)
-	"insect" = list(25, list(/obj/item/flashlight/lantern/heirloom_moth)),
-	"ipc" = list(25, list(/obj/item/stock_parts/cell/family)), //gives a broken powercell for flavor text!
-	"synthliz" = list(25, list(/obj/item/stock_parts/cell/family)), //they're also robots
-	"slimeperson" = list(25, list(/obj/item/toy/plush/slimeplushie)),
-	"lizard" = list(25, list(/obj/item/toy/plush/lizardplushie)),
-	))
-
-//job-heirloom list
-GLOBAL_LIST_INIT(job_heirlooms, list(
-	"NO_JOB" = list(/obj/item/toy/cards/deck, /obj/item/lighter, /obj/item/dice/d20),
-	"Clown" = list(/obj/item/paint/anycolor, /obj/item/bikehorn/golden),
-	"Mime" = list(/obj/item/paint/anycolor, /obj/item/toy/dummy),
-	"Cook" = list(/obj/item/kitchen/knife/scimitar),
-	"Botanist" = list(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/storage/bag/plants, /obj/item/toy/plush/beeplushie),
-	"Medical Doctor" = list(/obj/item/healthanalyzer),
-	"Paramedic" = list(/obj/item/lighter), //..why?
-	"Station Engineer" = list(/obj/item/wirecutters/brass/family, /obj/item/crowbar/brass/family, /obj/item/screwdriver/brass/family, /obj/item/wrench/brass/family), //brass tools but without the tool speed modifier
-	"Atmospheric Technician" = list(/obj/item/extinguisher/mini/family),
-	"Lawyer" = list(/obj/item/storage/briefcase/lawyer/family),
-	"Janitor" = list(/obj/item/mop),
-	"Scientist" = list(/obj/item/toy/plush/slimeplushie),
-	"Assistant" = list(/obj/item/clothing/gloves/cut/family),
-	"Chaplain" = list(/obj/item/camera/spooky/family),
-	"Head of Personnel" = list(/obj/item/pinpointer/ian)
-	))
 
 //body ids that have non-gendered bodyparts
 GLOBAL_LIST_INIT(nongendered_limb_types, list("fly", "zombie" ,"synth", "shadow", "cultgolem", "agent", "plasmaman", "clockgolem", "clothgolem"))

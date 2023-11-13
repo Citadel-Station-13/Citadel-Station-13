@@ -142,7 +142,7 @@
 
 	update_icon_dropped()
 	C.update_health_hud() //update the healthdoll
-	C.update_body()
+	C.update_body(FALSE, TRUE) // block recursive calls because we dont want to crash, i.e. don't tell a dullahan to update when dropping its limb
 	C.update_hair()
 	C.update_mobility()
 
@@ -370,7 +370,7 @@
 	update_disabled()
 
 	C.updatehealth()
-	C.update_body()
+	C.update_body(FALSE, TRUE) // again block recursive calls because dullahans will try update their icons by regenerating their head
 	C.update_hair()
 	C.update_damage_overlays()
 	C.update_mobility()

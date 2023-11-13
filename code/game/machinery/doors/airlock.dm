@@ -103,7 +103,10 @@
 
 	var/static/list/airlock_overlays = list()
 
-/obj/machinery/door/airlock/Initialize()
+	/// sigh
+	var/unelectrify_timerid
+
+/obj/machinery/door/airlock/Initialize(mapload)
 	. = ..()
 	wires = new wiretypepath(src) //CIT CHANGE - makes it possible for airlocks to have different wire datums
 	if(frequency)
@@ -694,6 +697,50 @@
 		. += "<span class='notice'>Alt-click [src] to [ secondsElectrified ? "un-electrify" : "permanently electrify"] it.</span>"
 		. += "<span class='notice'>Ctrl-Shift-click [src] to [ emergency ? "disable" : "enable"] emergency access.</span>"
 
+/obj/machinery/door/airlock/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(hasSiliconAccessInArea(user))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Open interface")
+		LAZYSET(context[SCREENTIP_CONTEXT_SHIFT_LMB], INTENT_ANY, density ? "Open" : "Close")
+		LAZYSET(context[SCREENTIP_CONTEXT_CTRL_LMB], INTENT_ANY, locked ? "Unbolt" : "Bolt")
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, secondsElectrified ? "Un-electrify" : "Electrify")
+		LAZYSET(context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB], INTENT_ANY, emergency ? "Disable emergency access" : "Enable emergency access")
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/stack/sheet/plasteel))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Reinforce")
+		return CONTEXTUAL_SCREENTIP_SET
+
+	switch (held_item?.tool_behaviour)
+		if (TOOL_CROWBAR)
+			if (panel_open)
+				if (security_level == AIRLOCK_SECURITY_PLASTEEL_O_S || security_level == AIRLOCK_SECURITY_PLASTEEL_I_S)
+					LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Remove shielding")
+					return CONTEXTUAL_SCREENTIP_SET
+				else if (should_try_removing_electronics())
+					LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Remove electronics")
+					return CONTEXTUAL_SCREENTIP_SET
+
+			// Not always contextually true, but is contextually false in ways that make gameplay interesting.
+			// For example, trying to pry open an airlock, only for the bolts to be down and the lights off.
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Pry open")
+
+			return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_WELDER)
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_HARM, "Weld shut")
+
+			if (panel_open)
+				switch (security_level)
+					if (AIRLOCK_SECURITY_METAL, AIRLOCK_SECURITY_PLASTEEL_I, AIRLOCK_SECURITY_PLASTEEL_O)
+						LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_HARM, "Cut shielding")
+						return CONTEXTUAL_SCREENTIP_SET
+
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Repair")
+			return CONTEXTUAL_SCREENTIP_SET
+
+	return .
+
 /obj/machinery/door/airlock/attack_ai(mob/user)
 	if(!src.canAIControl(user))
 		if(src.canAIHack())
@@ -790,21 +837,6 @@
 		to_chat(user, "<span class='warning'>Wires are protected!</span>")
 		return WIRE_INTERACTION_FAIL
 	return ..()
-
-/obj/machinery/door/airlock/proc/electrified_loop()
-	while (secondsElectrified > NOT_ELECTRIFIED)
-		sleep(10)
-		if(QDELETED(src))
-			return
-
-		secondsElectrified--
-		updateDialog()
-	// This is to protect against changing to permanent, mid loop.
-	if(secondsElectrified == NOT_ELECTRIFIED)
-		set_electrified(NOT_ELECTRIFIED)
-	else
-		set_electrified(ELECTRIFIED_PERMANENT)
-	updateDialog()
 
 /obj/machinery/door/airlock/Topic(href, href_list, var/nowindow = 0)
 	// If you add an if(..()) check you must first remove the var/nowindow parameter.
@@ -1036,6 +1068,31 @@
 		return
 	return !operating && density
 
+/// Returns if a crowbar would remove the airlock electronics
+/obj/machinery/door/airlock/proc/should_try_removing_electronics()
+	if (security_level != 0)
+		return FALSE
+
+	if (!panel_open)
+		return FALSE
+
+	if (obj_flags & EMAGGED)
+		return TRUE
+
+	if (!density)
+		return FALSE
+
+	if (!welded)
+		return FALSE
+
+	if (hasPower())
+		return FALSE
+
+	if (locked)
+		return FALSE
+
+	return TRUE
+
 /obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/living/user)
 	var/beingcrowbarred = null
 	if(I.tool_behaviour == TOOL_CROWBAR)
@@ -1054,9 +1111,9 @@
 		charge.forceMove(get_turf(user))
 		charge = null
 		return
-	if(beingcrowbarred && panel_open && ((obj_flags & EMAGGED) || (density && welded && !operating && !hasPower() && !locked)))
-		user.visible_message("[user] removes the electronics from the airlock assembly.", \
-							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
+	if(beingcrowbarred && should_try_removing_electronics() && !operating)
+		user.visible_message(span_notice("[user] removes the electronics from the airlock assembly."), \
+			span_notice("You start to remove electronics from the airlock assembly..."))
 		if(I.use_tool(src, user, 40, volume=100))
 			deconstruct(TRUE, user)
 			return
@@ -1213,85 +1270,33 @@
 	locked = TRUE
 	return
 
-
-/obj/machinery/door/airlock/proc/change_paintjob(obj/item/airlock_painter/W, mob/user)
-	if(!W.can_use(user))
+// gets called when a player uses an airlock painter on this airlock
+/obj/machinery/door/airlock/proc/change_paintjob(obj/item/airlock_painter/painter, mob/user)
+	if((!in_range(src, user) && loc != user) || !painter.can_use(user)) // user should be adjacent to the airlock, and the painter should have a toner cartridge that isn't empty
 		return
 
-	var/list/optionlist
-	if(airlock_material == "glass")
-		optionlist = list("Standard", "Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Science", "Virology", "Mining", "Maintenance", "External", "External Maintenance")
-	else
-		optionlist = list("Standard", "Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Freezer", "Science", "Virology", "Mining", "Maintenance", "External", "External Maintenance")
-
-	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
-	if((!in_range(src, usr) && src.loc != usr) || !W.use_paint(user))
+	// reads from the airlock painter's `available paintjob` list. lets the player choose a paint option, or cancel painting
+	var/current_paintjob = tgui_input_list(user, "Paintjob for this airlock", "Customize", sortList(painter.available_paint_jobs))
+	if(isnull(current_paintjob)) // if the user clicked cancel on the popup, return
 		return
-	switch(paintjob)
-		if("Standard")
-			icon = 'icons/obj/doors/airlocks/station/public.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			assemblytype = /obj/structure/door_assembly
-		if("Public")
-			icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
-			assemblytype = /obj/structure/door_assembly/door_assembly_public
-		if("Engineering")
-			icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			assemblytype = /obj/structure/door_assembly/door_assembly_eng
-		if("Atmospherics")
-			icon = 'icons/obj/doors/airlocks/station/atmos.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			assemblytype = /obj/structure/door_assembly/door_assembly_atmo
-		if("Security")
-			icon = 'icons/obj/doors/airlocks/station/security.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			assemblytype = /obj/structure/door_assembly/door_assembly_sec
-		if("Command")
-			icon = 'icons/obj/doors/airlocks/station/command.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			assemblytype = /obj/structure/door_assembly/door_assembly_com
-		if("Medical")
-			icon = 'icons/obj/doors/airlocks/station/medical.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			assemblytype = /obj/structure/door_assembly/door_assembly_med
-		if("Research")
-			icon = 'icons/obj/doors/airlocks/station/research.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			assemblytype = /obj/structure/door_assembly/door_assembly_research
-		if("Freezer")
-			icon = 'icons/obj/doors/airlocks/station/freezer.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			assemblytype = /obj/structure/door_assembly/door_assembly_fre
-		if("Science")
-			icon = 'icons/obj/doors/airlocks/station/science.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			assemblytype = /obj/structure/door_assembly/door_assembly_science
-		if("Virology")
-			icon = 'icons/obj/doors/airlocks/station/virology.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			assemblytype = /obj/structure/door_assembly/door_assembly_viro
-		if("Mining")
-			icon = 'icons/obj/doors/airlocks/station/mining.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			assemblytype = /obj/structure/door_assembly/door_assembly_min
-		if("Maintenance")
-			icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			assemblytype = /obj/structure/door_assembly/door_assembly_mai
-		if("External")
-			icon = 'icons/obj/doors/airlocks/external/external.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
-			assemblytype = /obj/structure/door_assembly/door_assembly_ext
-		if("External Maintenance")
-			icon = 'icons/obj/doors/airlocks/station/maintenanceexternal.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			assemblytype = /obj/structure/door_assembly/door_assembly_extmai
+
+	var/airlock_type = painter.available_paint_jobs["[current_paintjob]"] // get the airlock type path associated with the airlock name the user just chose
+	var/obj/machinery/door/airlock/airlock = airlock_type // we need to create a new instance of the airlock and assembly to read vars from them
+	var/obj/structure/door_assembly/assembly = initial(airlock.assemblytype)
+
+	if(airlock_material == "glass" && initial(assembly.noglass)) // prevents painting glass airlocks with a paint job that doesn't have a glass version, such as the freezer
+		to_chat(user, span_warning("This paint job can only be applied to non-glass airlocks."))
+		return
+
+	// applies the user-chosen airlock's icon, overlays and assemblytype to the src airlock
+	painter.use_paint(user)
+	icon = initial(airlock.icon)
+	overlays_file = initial(airlock.overlays_file)
+	assemblytype = initial(airlock.assemblytype)
 	update_icon()
 
-/obj/machinery/door/airlock/CanAStarPass(obj/item/card/id/ID)
-//Airlock is passable if it is open (!density), bot has access, and is not bolted shut or powered off)
+/obj/machinery/door/airlock/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+	//Airlock is passable if it is open (!density), bot has access, and is not bolted shut or powered off)
 	return !density || (check_access(ID) && !locked && hasPower())
 
 /obj/machinery/door/airlock/emag_act(mob/user)
@@ -1365,11 +1370,19 @@
 		wires.cut_all()
 		update_icon()
 
+/obj/machinery/door/airlock/proc/remove_electrify()
+	secondsElectrified = NOT_ELECTRIFIED
+	unelectrify_timerid = null
+	diag_hud_set_electrified()
+
 /obj/machinery/door/airlock/proc/set_electrified(seconds, mob/user)
 	secondsElectrified = seconds
+	if(unelectrify_timerid)
+		deltimer(unelectrify_timerid)
+		unelectrify_timerid = null
+	if(secondsElectrified != ELECTRIFIED_PERMANENT)
+		unelectrify_timerid = addtimer(CALLBACK(src, .proc/remove_electrify), secondsElectrified SECONDS, TIMER_STOPPABLE)
 	diag_hud_set_electrified()
-	if(secondsElectrified > NOT_ELECTRIFIED)
-		INVOKE_ASYNC(src, .proc/electrified_loop)
 
 	if(user)
 		var/message

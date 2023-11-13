@@ -121,9 +121,10 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		remove_verb(src, /mob/dead/observer/verb/boo)
 		remove_verb(src, /mob/dead/observer/verb/possess)
 
-	animate(src, pixel_y = 2, time = 10, loop = -1)
+	animate(src, pixel_z = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = -4, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
 
-	GLOB.dead_mob_list += src
+	add_to_dead_mob_list()
 
 	for(var/v in GLOB.active_alternate_appearances)
 		if(!v)
@@ -166,9 +167,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	QDEL_NULL(spawners_menu)
 	return ..()
 
-/mob/dead/CanPass(atom/movable/mover, turf/target)
-	return 1
-
 /*
  * This proc will update the icon of the ghost itself, with hair overlays, as well as the ghost image.
  * Please call update_icon(icon_state) from now on when you want to update the icon_state of the ghost,
@@ -176,7 +174,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
  * Hair will always update its dir, so if your sprite has no dirs the haircut will go all over the place.
  * |- Ricotez
  */
-/mob/dead/observer/update_icon(new_form)
+/mob/dead/observer/update_icon(updates=ALL, new_form=null)
 	. = ..()
 	if(client) //We update our preferences in case they changed right before update_icon was called.
 		ghost_accs = client.prefs.ghost_accs
@@ -284,7 +282,7 @@ Works together with spawning an observer, noted above.
 			P.respawn_time_of_death = world.time
 			P.respawn_did_cryo = cryo
 	transfer_ckey(ghost, FALSE)
-	ghost.client.init_verbs()
+	ghost.client?.init_verbs()
 	if(penalize)
 		var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
 		var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
@@ -377,8 +375,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			return
 		ghostize(0, penalize = TRUE)
 
-
-
 /mob/dead/observer/Move(NewLoc, direct)
 	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
 		return
@@ -388,7 +384,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(NewLoc)
 		forceMove(NewLoc)
-		update_parallax_contents()
 	else
 		forceMove(get_turf(src))  //Get out of closets and such as a ghost
 		if((direct & NORTH) && y < world.maxy)
@@ -487,9 +482,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!L || !L.len)
 		to_chat(usr, "No area available.")
 		return
-
 	usr.forceMove(pick(L))
-	update_parallax_contents()
 
 /mob/dead/observer/proc/view_gas()
 	set category = "Ghost"
@@ -542,8 +535,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/stop_orbit(datum/component/orbiter/orbits)
 	. = ..()
 	//restart our floating animation after orbit is done.
-	pixel_y = 0
-	animate(src, pixel_y = 2, time = 10, loop = -1)
+	pixel_z = 0
+	animate(src, pixel_z = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = -4, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
@@ -568,7 +562,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
 				A.forceMove(T)
-				A.update_parallax_contents()
 			else
 				to_chat(A, "This mob is not located in the game world.")
 

@@ -1,7 +1,7 @@
 /datum/gear/head
 	category = LOADOUT_CATEGORY_HEAD
 	subcategory = LOADOUT_SUBCATEGORY_HEAD_GENERAL
-	slot = SLOT_HEAD
+	slot = ITEM_SLOT_HEAD
 
 /datum/gear/head/baseball
 	name = "Ballcap"
@@ -57,6 +57,12 @@
 /datum/gear/head/maidband
 	name = "Maid headband"
 	path= /obj/item/clothing/head/maid
+
+/datum/gear/head/maidband/poly
+	name = "Polychromic maid headband"
+	path= /obj/item/clothing/head/maid/polychromic
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#333333", "#FFFFFF")
 
 /datum/gear/head/flakhelm
 	name = "Flak Helmet"
@@ -156,12 +162,12 @@
 /*Commenting out Until next Christmas or made automatic
 /datum/gear/santahatr
 	name = "Red Santa Hat"
-	category = SLOT_HEAD
+	category = ITEM_SLOT_HEAD
 	path = /obj/item/clothing/head/christmashat
 
 /datum/gear/santahatg
 	name = "Green Santa Hat"
-	category = SLOT_HEAD
+	category = ITEM_SLOT_HEAD
 	path = /obj/item/clothing/head/christmashatg
 */
 
@@ -188,6 +194,12 @@
 	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_desc = "Security"
 	restricted_roles = list("Warden","Detective","Security Officer","Head of Security")
+
+/datum/gear/head/cowboyhat/polychromic
+	name = "Cowboy Hat, Polychromic"
+	path = /obj/item/clothing/head/cowboyhat/polychromic
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#5F5F5F", "#DDDDDD")
 
 /datum/gear/head/wkepi
 	name = "white kepi"

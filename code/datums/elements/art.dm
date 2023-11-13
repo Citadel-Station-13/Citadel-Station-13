@@ -54,11 +54,14 @@
 
 /datum/element/art/rev
 
-/datum/element/art/rev/apply_moodlet(atom/source, mob/M, impress)
-	M.visible_message("<span class='notice'>[M] stops to inspect [source].</span>", \
-						 "<span class='notice'>You take in [source], inspecting the fine craftsmanship of the proletariat.</span>")
-
-	if(M.mind && M.mind.has_antag_datum(/datum/antagonist/rev))
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
+/datum/element/art/rev/apply_moodlet(atom/source, mob/user, impress)
+	var/msg
+	if(user.mind?.has_antag_datum(/datum/antagonist/rev))
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
+		msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [source.p_theyre()]. So [pick("subversive", "revolutionary", "unitizing", "egalitarian")]!"
 	else
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
+		msg = "Wow, [source.p_they()] sucks."
+
+	user.visible_message(span_notice("[user] stops to inspect [source]."), \
+		span_notice("You appraise [source], inspecting the fine craftsmanship of the proletariat... [msg]"))

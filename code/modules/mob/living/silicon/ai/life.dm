@@ -3,7 +3,7 @@
 #define POWER_RESTORATION_SEARCH_APC 2
 #define POWER_RESTORATION_APC_FOUND 3
 
-/mob/living/silicon/ai/BiologicalLife(seconds, times_fired)
+/mob/living/silicon/ai/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	//I'm not removing that shitton of tabs, unneeded as they are. -- Urist
@@ -53,11 +53,11 @@
 		if(NONE)
 			return FALSE
 		if(POWER_REQ_ALL)
-			return !T || !A || ((!A.powered(EQUIP) || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
+			return !T || !A || ((!A.powered(EQUIP) || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/vehicle/sealed/mecha)))
 		if(POWER_REQ_CLOCKCULT)
 			for(var/obj/effect/clockwork/sigil/transmission/ST in range(src, SIGIL_ACCESS_RANGE))
 				return FALSE
-			return !T || !A || (!istype(T, /turf/open/floor/clockwork) && (!A.powered(EQUIP) || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
+			return !T || !A || (!istype(T, /turf/open/floor/clockwork) && (!A.powered(EQUIP) || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/vehicle/sealed/mecha)))
 
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)

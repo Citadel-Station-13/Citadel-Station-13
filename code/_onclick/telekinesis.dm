@@ -79,7 +79,7 @@
 	var/atom/movable/focus
 	var/mob/living/carbon/tk_user
 
-/obj/item/tk_grab/Initialize()
+/obj/item/tk_grab/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -101,7 +101,7 @@
 
 //stops TK grabs being equipped anywhere but into hands
 /obj/item/tk_grab/equipped(mob/user, slot)
-	if(slot == SLOT_HANDS)
+	if(slot == ITEM_SLOT_HANDS)
 		return ..()
 	qdel(src)
 

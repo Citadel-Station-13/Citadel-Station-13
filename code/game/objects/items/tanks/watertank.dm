@@ -10,13 +10,13 @@
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/toggle_mister)
 	max_integrity = 200
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 30)
 	resistance_flags = FIRE_PROOF
 
 	var/obj/item/noz
 	var/volume = 500
 
-/obj/item/watertank/Initialize()
+/obj/item/watertank/Initialize(mapload)
 	. = ..()
 	create_reagents(volume, OPENCONTAINER)
 	noz = make_noz()
@@ -58,7 +58,7 @@
 
 /obj/item/watertank/equipped(mob/user, slot)
 	..()
-	if(slot != SLOT_BACK)
+	if(slot != ITEM_SLOT_BACK)
 		remove_noz()
 
 /obj/item/watertank/proc/remove_noz()
@@ -117,7 +117,7 @@
 
 	var/obj/item/watertank/tank
 
-/obj/item/reagent_containers/spray/mister/Initialize()
+/obj/item/reagent_containers/spray/mister/Initialize(mapload)
 	. = ..()
 	tank = loc
 	if(!istype(tank))
@@ -147,7 +147,7 @@
 	item_state = "waterbackpackjani"
 	custom_price = PRICE_ALMOST_ONE_GRAND
 
-/obj/item/watertank/janitor/Initialize()
+/obj/item/watertank/janitor/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/space_cleaner, 500)
 
@@ -183,7 +183,7 @@
 	volume = 200
 	slowdown = 0
 
-/obj/item/watertank/atmos/Initialize()
+/obj/item/watertank/atmos/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/water, 200)
 
@@ -219,7 +219,7 @@
 	var/metal_synthesis_cooldown = 0
 	var/resin_cooldown = 0
 
-/obj/item/extinguisher/mini/nozzle/Initialize()
+/obj/item/extinguisher/mini/nozzle/Initialize(mapload)
 	. = ..()
 	tank = loc
 	if (!istype(tank))
@@ -271,18 +271,7 @@
 		if(resin_cooldown)
 			to_chat(user, "<span class='warning'>Resin launcher is still recharging...</span>")
 			return
-		resin_cooldown = TRUE
-		R.remove_any(100)
-		var/obj/effect/resin_container/A = new (get_turf(src))
-		log_game("[key_name(user)] used Resin Launcher at [AREACOORD(user)].")
-		playsound(src,'sound/items/syringeproj.ogg',40,1)
-		for(var/a=0, a<5, a++)
-			step_towards(A, target)
-			sleep(2)
-		A.Smoke()
-		spawn(100)
-			if(src)
-				resin_cooldown = FALSE
+		launch_resin(target, user)
 		return
 	if(nozzle_mode == RESIN_FOAM)
 		if(!Adj|| !isturf(target))
@@ -300,6 +289,21 @@
 		else
 			to_chat(user, "<span class='warning'>Resin foam mix is still being synthesized...</span>")
 			return
+
+/obj/item/extinguisher/mini/nozzle/proc/launch_resin(atom/target, mob/user)
+	set waitfor = FALSE
+	resin_cooldown = TRUE
+	reagents.remove_any(100)
+	var/obj/effect/resin_container/A = new (get_turf(src))
+	log_game("[key_name(user)] used Resin Launcher at [AREACOORD(user)].")
+	playsound(src,'sound/items/syringeproj.ogg',40,1)
+	for(var/a=0, a<5, a++)
+		step_towards(A, target)
+		sleep(2)
+	A.Smoke()
+	spawn(100)
+		if(src)
+			resin_cooldown = FALSE
 
 /obj/effect/resin_container
 	name = "resin container"
@@ -344,14 +348,14 @@
 	toggle_injection()
 
 /obj/item/reagent_containers/chemtank/item_action_slot_check(slot, mob/user, datum/action/A)
-	if(slot == SLOT_BACK)
+	if(slot == ITEM_SLOT_BACK)
 		return 1
 
 /obj/item/reagent_containers/chemtank/proc/toggle_injection()
 	var/mob/living/carbon/human/user = usr
 	if(!istype(user))
 		return
-	if (user.get_item_by_slot(SLOT_BACK) != src)
+	if (user.get_item_by_slot(ITEM_SLOT_BACK) != src)
 		to_chat(user, "<span class='warning'>The chemtank needs to be on your back before you can activate it!</span>")
 		return
 	if(on)
@@ -436,7 +440,7 @@
 	volume = 2000
 	slowdown = 0
 
-/obj/item/watertank/op/Initialize()
+/obj/item/watertank/op/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/toxin/mutagen,350)
 	reagents.add_reagent(/datum/reagent/napalm,125)

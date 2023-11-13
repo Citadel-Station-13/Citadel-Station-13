@@ -48,7 +48,7 @@
 //Syndicate sub-machine guns.
 /obj/item/gun/ballistic/automatic/c20r/sc_c20r
 
-/obj/item/gun/ballistic/automatic/c20r/sc_c20r/Initialize()
+/obj/item/gun/ballistic/automatic/c20r/sc_c20r/Initialize(mapload)
 	. = ..()
 	for(var/ammo in magazine.stored_ammo)
 		if(prob(95)) //95% chance
@@ -57,7 +57,7 @@
 //Barman's shotgun
 /obj/item/gun/ballistic/shotgun/sc_pump
 
-/obj/item/gun/ballistic/shotgun/sc_pump/Initialize()
+/obj/item/gun/ballistic/shotgun/sc_pump/Initialize(mapload)
 	. = ..()
 	for(var/ammo in magazine.stored_ammo)
 		if(prob(95)) //95% chance
@@ -149,5 +149,5 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 	if(prob(25))
 		mezzer()
 
-/obj/singularity/narsie/mini/ex_act()
+/obj/singularity/narsie/mini/ex_act(severity, target, origin)
 	return

@@ -26,7 +26,7 @@
 		return TRUE
 
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
-	var/armor_block = D.run_armor_check(affecting, "melee")
+	var/armor_block = D.run_armor_check(affecting, MELEE)
 
 	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
 
@@ -59,7 +59,7 @@
 
 /obj/item/clothing/gloves/boxing/equipped(mob/user, slot)
 	. = ..()
-	if(ishuman(user) && slot == SLOT_GLOVES)
+	if(ishuman(user) && slot == ITEM_SLOT_GLOVES)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,TRUE)
 
@@ -68,5 +68,5 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	if(H.get_item_by_slot(SLOT_GLOVES) == src)
+	if(H.get_item_by_slot(ITEM_SLOT_GLOVES) == src)
 		style.remove(H)

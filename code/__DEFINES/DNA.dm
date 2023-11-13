@@ -80,7 +80,7 @@
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3
 
-#define DNA_UNI_IDENTITY_BLOCKS		15
+#define DNA_UNI_IDENTITY_BLOCKS		19
 #define DNA_HAIR_COLOR_BLOCK		1
 #define DNA_FACIAL_HAIR_COLOR_BLOCK	2
 #define DNA_SKIN_TONE_BLOCK			3
@@ -96,6 +96,10 @@
 #define DNA_MUTANTEAR_BLOCK			13
 #define DNA_MUTANTMARKING_BLOCK		14
 #define DNA_TAUR_BLOCK 				15
+#define DNA_BARK_SOUND_BLOCK		16
+#define DNA_BARK_SPEED_BLOCK		17
+#define DNA_BARK_PITCH_BLOCK		18
+#define DNA_BARK_VARIANCE_BLOCK		19
 
 #define DNA_SEQUENCE_LENGTH			4
 #define DNA_MUTATION_BLOCKS			8
@@ -179,10 +183,11 @@
 #define ORGAN_SLOT_VAGINA "vagina"
 #define ORGAN_SLOT_TESTICLES "testicles"
 #define ORGAN_SLOT_BREASTS "breasts"
+#define ORGAN_SLOT_BUTT "butt"
 
 ////organ defines
 #define STANDARD_ORGAN_THRESHOLD 	100
-#define STANDARD_ORGAN_HEALING 		(1/(15 MINUTES / (2 SECONDS)))
+#define STANDARD_ORGAN_HEALING 		(1/(15 MINUTES / (2 SECONDS))) / 3  //Base organ healing can be amped by a factor of up to x5 via satiety. This assumes it to be somewhat in the upper center of positive satiety as base.
 #define STANDARD_ORGAN_DECAY		(1/(15 MINUTES / (2 SECONDS)))		//designed to fail organs when left to decay for ~15 minutes. 2 SECOND is SSmobs tickrate.
 
 
@@ -195,3 +200,8 @@
 #define G_FEMALE 2
 #define G_PLURAL 3
 #define G_NEUTER 4
+
+#define PREVIEW_PREF_JOB "Job"
+#define PREVIEW_PREF_LOADOUT "Loadout"
+#define PREVIEW_PREF_NAKED "Naked"
+#define PREVIEW_PREF_NAKED_AROUSED "Naked - Aroused"

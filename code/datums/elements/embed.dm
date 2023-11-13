@@ -79,7 +79,7 @@
 	var/actual_chance = embed_chance
 
 	if(!weapon.isEmbedHarmless()) // all the armor in the world won't save you from a kick me sign
-		var/armor = max(victim.run_armor_check(hit_zone, "bullet", silent=TRUE), victim.run_armor_check(hit_zone, "bomb", silent=TRUE)) * 0.5 // we'll be nice and take the better of bullet and bomb armor, halved
+		var/armor = max(victim.run_armor_check(hit_zone, BULLET, silent=TRUE), victim.run_armor_check(hit_zone, BOMB, silent=TRUE)) * 0.5 // we'll be nice and take the better of bullet and bomb armor, halved
 
 		if(armor) // we only care about armor penetration if there's actually armor to penetrate
 			var/pen_mod = -armor + weapon.armour_penetration // even a little bit of armor can make a big difference for shrapnel with large negative armor pen
@@ -168,11 +168,13 @@
   * If we hit a valid target (carbon or closed turf), we create the shrapnel_type object and immediately call tryEmbed() on it, targeting what we impacted. That will lead
   *	it to call tryForceEmbed() on its own embed element (it's out of our hands here, our projectile is done), where it will run through all the checks it needs to.
   */
-/datum/element/embed/proc/checkEmbedProjectile(obj/item/projectile/P, atom/movable/firer, atom/hit, angle, hit_zone)
+/datum/element/embed/proc/checkEmbedProjectile(obj/item/projectile/P, atom/movable/firer, atom/hit, angle, hit_zone, blocked)
 	if(!iscarbon(hit))
 		Detach(P)
 		return // we don't care
-
+	if(blocked >= 100)
+		Detach(P)	//fully blocked, no embedding for us.
+		return
 	var/obj/item/payload = new payload_type(get_turf(hit))
 	if(istype(payload, /obj/item/shrapnel/bullet))
 		payload.name = P.name

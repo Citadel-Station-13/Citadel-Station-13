@@ -30,7 +30,7 @@
 
 
 // Takes care blood loss and regeneration
-/mob/living/carbon/human/handle_blood()
+/mob/living/carbon/human/handle_blood(delta_time, times_fired)
 
 	if(NOBLOOD in dna.species.species_traits || bleedsuppress || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		return
@@ -39,55 +39,57 @@
 		return
 
 	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
-		if(integrating_blood > 0)
-			var/blood_integrated = max(integrating_blood - 1, 0)
-			var/blood_diff = integrating_blood - blood_integrated
-			integrating_blood = blood_integrated
-			if(blood_volume < BLOOD_VOLUME_MAXIMUM)
-				blood_volume += blood_diff
-		if(blood_volume < BLOOD_VOLUME_NORMAL)
-			var/nutrition_ratio = 0
-			if(!HAS_TRAIT(src, TRAIT_NOHUNGER))
-				switch(nutrition)
-					if(0 to NUTRITION_LEVEL_STARVING)
-						nutrition_ratio = 0.2
-					if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-						nutrition_ratio = 0.4
-					if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-						nutrition_ratio = 0.6
-					if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-						nutrition_ratio = 0.8
-					else
-						nutrition_ratio = 1
-				if(satiety > 80)
-					nutrition_ratio *= 1.25
-				adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR)
-				blood_volume = min(BLOOD_VOLUME_NORMAL, blood_volume + 0.5 * nutrition_ratio)
+		if(dna.species.handle_blood(src, delta_time, times_fired)) // if this returns TRUE, then the species is not handling blood itself and we can control everything
+			if(integrating_blood > 0)
+				var/blood_integrated = max(integrating_blood - 1, 0)
+				var/blood_diff = integrating_blood - blood_integrated
+				integrating_blood = blood_integrated
+				if(blood_volume < BLOOD_VOLUME_MAXIMUM)
+					blood_volume += blood_diff
+			if(blood_volume < BLOOD_VOLUME_NORMAL)
+				var/nutrition_ratio = 0
+				if(!HAS_TRAIT(src, TRAIT_NOHUNGER))
+					switch(nutrition)
+						if(0 to NUTRITION_LEVEL_STARVING)
+							nutrition_ratio = 0.2
+						if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+							nutrition_ratio = 0.4
+						if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+							nutrition_ratio = 0.6
+						if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+							nutrition_ratio = 0.8
+						else
+							nutrition_ratio = 1
+					if(satiety > 80)
+						nutrition_ratio *= 1.25
+					adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR)
+					blood_volume = min(BLOOD_VOLUME_NORMAL, blood_volume + 0.5 * nutrition_ratio)
 
-		//Effects of bloodloss
-		var/word = pick("dizzy","woozy","faint")
-		var/blood_effect_volume = blood_volume + integrating_blood
-		switch(blood_effect_volume)
-			if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
-				if(prob(10))
-					to_chat(src, "<span class='warning'>You feel terribly bloated.</span>")
-			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-				if(prob(5))
-					to_chat(src, "<span class='warning'>You feel [word].</span>")
-				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.01, 1))
-			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
-				if(prob(5))
-					blur_eyes(6)
-					to_chat(src, "<span class='warning'>You feel very [word].</span>")
-			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-				adjustOxyLoss(5)
-				if(prob(15))
-					Unconscious(rand(20,60))
-					to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
-			if(-INFINITY to BLOOD_VOLUME_SURVIVE)
-				if(!HAS_TRAIT(src, TRAIT_NODEATH))
-					death()
+			//Effects of bloodloss
+			if(!HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))	//Synths are immune to direct consequences of bloodloss, instead suffering penalties to heat exchange.
+				var/word = pick("dizzy","woozy","faint")
+				var/blood_effect_volume = blood_volume + integrating_blood
+				switch(blood_effect_volume)
+					if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
+						if(prob(10))
+							to_chat(src, "<span class='warning'>You feel terribly bloated.</span>")
+					if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
+						if(prob(5))
+							to_chat(src, "<span class='warning'>You feel [word].</span>")
+						adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.01, 1))
+					if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
+						adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
+						if(prob(5))
+							blur_eyes(6)
+							to_chat(src, "<span class='warning'>You feel very [word].</span>")
+					if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
+						adjustOxyLoss(5)
+						if(prob(15))
+							Unconscious(rand(20,60))
+							to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
+					if(-INFINITY to BLOOD_VOLUME_SURVIVE)
+						if(!HAS_TRAIT(src, TRAIT_NODEATH))
+							death()
 
 		var/temp_bleed = 0
 		//Bleeding out
@@ -156,7 +158,7 @@
 
 	blood_volume -= amount
 
-	var/list/blood_data = get_blood_data(blood_id)
+	var/list/blood_data = get_blood_data()
 
 	if(iscarbon(AM))
 		var/mob/living/carbon/C = AM
@@ -177,54 +179,54 @@
 	return TRUE
 
 
-/mob/living/proc/get_blood_data(blood_id)
+/mob/living/proc/get_blood_data()
 	return
 
-/mob/living/carbon/get_blood_data(blood_id)
-	if(blood_id == /datum/reagent/blood || /datum/reagent/blood/jellyblood) //actual blood reagent
-		var/blood_data = list()
-		//set the blood data
-		blood_data["donor"] = src
-		blood_data["viruses"] = list()
+/mob/living/carbon/get_blood_data()
+	var/blood_data = list()
+	//set the blood data
+	blood_data["donor"] = src
+	blood_data["viruses"] = list()
 
-		for(var/thing in diseases)
-			var/datum/disease/D = thing
-			blood_data["viruses"] += D.Copy()
+	for(var/thing in diseases)
+		var/datum/disease/D = thing
+		blood_data["viruses"] += D.Copy()
 
-		blood_data["blood_DNA"] = dna.unique_enzymes
-		blood_data["bloodcolor"] = dna.species.exotic_blood_color
-		if(disease_resistances && disease_resistances.len)
-			blood_data["resistances"] = disease_resistances.Copy()
-		var/list/temp_chem = list()
-		for(var/datum/reagent/R in reagents.reagent_list)
-			temp_chem[R.type] = R.volume
-		blood_data["trace_chem"] = list2params(temp_chem)
-		if(mind)
-			blood_data["mind"] = mind
-		else if(last_mind)
-			blood_data["mind"] = last_mind
-		if(ckey)
-			blood_data["ckey"] = ckey
-		else if(last_mind)
-			blood_data["ckey"] = ckey(last_mind.key)
+	blood_data["blood_DNA"] = dna.unique_enzymes
+	blood_data["bloodcolor"] = dna.species.exotic_blood_color
+	blood_data["bloodblend"] = dna.species.exotic_blood_blend_mode
+	if(disease_resistances && disease_resistances.len)
+		blood_data["resistances"] = disease_resistances.Copy()
+	var/list/temp_chem = list()
+	for(var/datum/reagent/R in reagents.reagent_list)
+		temp_chem[R.type] = R.volume
+	blood_data["trace_chem"] = list2params(temp_chem)
+	if(mind)
+		blood_data["mind"] = mind
+	else if(last_mind)
+		blood_data["mind"] = last_mind
+	if(ckey)
+		blood_data["ckey"] = ckey
+	else if(last_mind)
+		blood_data["ckey"] = ckey(last_mind.key)
 
-		if(!suiciding)
-			blood_data["cloneable"] = 1
-		blood_data["blood_type"] = dna.blood_type
-		blood_data["gender"] = gender
-		blood_data["real_name"] = real_name
-		blood_data["features"] = dna.features
-		blood_data["factions"] = faction
-		blood_data["quirks"] = list()
-		for(var/V in roundstart_quirks)
-			var/datum/quirk/T = V
-			blood_data["quirks"] += T.type
-		blood_data["changeling_loudness"] = 0
-		if(mind)
-			var/datum/antagonist/changeling/ling = mind.has_antag_datum(/datum/antagonist/changeling)
-			if(istype(ling))
-				blood_data["changeling_loudness"] = ling.loudfactor
-		return blood_data
+	if(!suiciding)
+		blood_data["cloneable"] = 1
+	blood_data["blood_type"] = dna.blood_type
+	blood_data["gender"] = gender
+	blood_data["real_name"] = real_name
+	blood_data["features"] = dna.features
+	blood_data["factions"] = faction
+	blood_data["quirks"] = list()
+	for(var/V in roundstart_quirks)
+		var/datum/quirk/T = V
+		blood_data["quirks"] += T.type
+	blood_data["changeling_loudness"] = 0
+	if(mind)
+		var/datum/antagonist/changeling/ling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(istype(ling))
+			blood_data["changeling_loudness"] = ling.loudfactor
+	return blood_data
 
 //get the id of the substance this mob use as blood.
 /mob/proc/get_blood_id()
@@ -264,7 +266,7 @@
 		"O-" = list("O-","SY"),
 		"O+" = list("O-", "O+","SY"),
 		"L" = list("L","SY"),
-		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U","SY"),
+		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U","SY", "BUG"),
 		"HF" = list("HF", "SY"),
 		"X*" = list("X*", "SY"),
 		"SY" = list("SY"),
@@ -369,27 +371,6 @@
 	var/obj/effect/decal/cleanable/oil/B = locate() in T.contents
 	if(!B)
 		B = new(T)
-
-//This is a terrible way of handling it.
-/mob/living/proc/ResetBloodVol()
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if (HAS_TRAIT(src, TRAIT_HIGH_BLOOD))
-			blood_ratio = 1.2
-			H.handle_blood()
-			return
-		blood_ratio = 1
-		H.handle_blood()
-		return
-	blood_ratio = 1
-
-/mob/living/proc/AdjustBloodVol(value)
-	if(blood_ratio == value)
-		return
-	blood_ratio = value
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		H.handle_blood()
 
 /mob/living/proc/adjust_integration_blood(value, remove_actual_blood, force)
     if(integrating_blood +  value < 0 && remove_actual_blood)

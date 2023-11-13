@@ -80,9 +80,101 @@
 	icon_state = "power_display"
 	screen_loc = ui_lingchemdisplay
 
+#define ui_coolant_display "EAST,SOUTH+3:15"
+
+/atom/movable/screen/synth
+	invisibility = INVISIBILITY_ABSTRACT
+
+
+/atom/movable/screen/synth/proc/clear()
+	invisibility = INVISIBILITY_ABSTRACT
+
+/atom/movable/screen/synth/proc/update_counter(mob/living/carbon/human/owner)
+	invisibility = 0
+
+/atom/movable/screen/synth/coolant_counter
+	icon = 'icons/mob/screen_synth.dmi'
+	name = "Coolant System Readout"
+	icon_state = "coolant-3-1"
+	screen_loc = ui_coolant_display
+	var/jammed = 0
+
+/atom/movable/screen/synth/coolant_counter/update_counter(mob/living/carbon/owner)
+	..()
+	var/valuecolor = "#ff2525"
+	if(owner.stat == DEAD)
+		maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>ERR-0F</font></div>"
+		icon_state = "coolant-3-1"
+		return
+	var/coolant_efficiency
+	var/coolant
+	if(!jammed)
+		coolant_efficiency = owner.get_cooling_efficiency()
+		coolant = owner.blood_volume
+	else
+		coolant_efficiency = rand(1, 15) / 10
+		coolant = rand(1, 600)
+		jammed--
+	if(coolant > BLOOD_VOLUME_SAFE * owner.blood_ratio)	//I unfortunately have to use this else-if stack because switch doesn't support variables.
+		valuecolor =  "#4bbd34"
+	else if(coolant > BLOOD_VOLUME_OKAY * owner.blood_ratio)
+		valuecolor = "#dabb0d"
+	else if(coolant > BLOOD_VOLUME_BAD * owner.blood_ratio)
+		valuecolor =  "#dd8109"
+	else if(coolant > BLOOD_VOLUME_SURVIVE * owner.blood_ratio)
+		valuecolor = "#e7520d"
+	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[round((coolant / (BLOOD_VOLUME_NORMAL * owner.blood_ratio)) * 100, 1)]</font></div>"
+
+	var/efficiency_suffix
+	var/state_suffix
+	switch(coolant_efficiency)
+		if(-INFINITY to 0.4)
+			efficiency_suffix = "1"
+		if(0.4 to 0.75)
+			efficiency_suffix = "2"
+		if(0.75 to 0.95)
+			efficiency_suffix = "3"
+		if(0.95 to 1.3)
+			efficiency_suffix = "4"
+		else
+			efficiency_suffix = "5"
+	var/obj/item/organ/lungs/ipc/L = owner.getorganslot(ORGAN_SLOT_LUNGS)
+	if(istype(L) && L.is_cooling)
+		state_suffix = "2"
+	else
+		state_suffix = "1"
+	icon_state = "coolant-[efficiency_suffix]-[state_suffix]"
+
+/atom/movable/screen/synth/coolant_counter/examine(mob/user)
+	. = ..()
+	var/mob/living/carbon/human/owner = hud.mymob
+	if(owner.stat == DEAD)
+		return
+	var/coolant
+	var/total_efficiency
+	var/environ_efficiency
+	var/suitlink_efficiency
+	if(!jammed)
+		coolant = owner.blood_volume
+		total_efficiency = owner.get_cooling_efficiency()
+		environ_efficiency = owner.get_environment_cooling_efficiency()
+		suitlink_efficiency = owner.check_suitlinking()
+	else
+		coolant = rand(1, 600)
+		total_efficiency = rand(1, 15) / 10
+		environ_efficiency = rand(1, 20) / 10
+	. += "<span class='notice'>Performing internal cooling system diagnostics:</span>"
+	. += "<span class='notice'>Coolant level: [coolant] units, [round((coolant / (BLOOD_VOLUME_NORMAL * owner.blood_ratio)) * 100, 0.1)] percent</span>"
+	. += "<span class='notice'>Current Cooling Efficiency: [round(total_efficiency * 100, 0.1)] percent, [suitlink_efficiency ? "<font color='green'>active suitlink detected</font>, guaranteeing <font color='green'>[suitlink_efficiency * 100]%</font> environmental cooling efficiency." : "environment viability: [round(environ_efficiency * 100, 0.1)] percent."]</span>"
+
+/atom/movable/screen/synth/coolant_counter/proc/jam(amount, cap = 20)
+	if(jammed > cap)	//Preserve previous more impactful event.
+		return
+	jammed = min(jammed + amount, cap)
+
 /datum/hud/human/New(mob/living/carbon/human/owner)
 	..()
-	owner.overlay_fullscreen("see_through_darkness", /atom/movable/screen/fullscreen/see_through_darkness)
+	owner.overlay_fullscreen("see_through_darkness", /atom/movable/screen/fullscreen/special/see_through_darkness)
 
 	var/widescreenlayout = FALSE //CIT CHANGE - adds support for different hud layouts depending on widescreen pref
 	if(owner.client && owner.client.prefs && owner.client.prefs.widescreenpref) //CIT CHANGE - ditto
@@ -141,7 +233,7 @@
 	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "i_clothing"
 	inv_box.icon = ui_style
-	inv_box.slot_id = SLOT_W_UNIFORM
+	inv_box.slot_id = ITEM_SLOT_ICLOTHING
 	inv_box.icon_state = "uniform"
 	inv_box.screen_loc = ui_iclothing
 	toggleable_inventory += inv_box
@@ -149,7 +241,7 @@
 	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "o_clothing"
 	inv_box.icon = ui_style
-	inv_box.slot_id = SLOT_WEAR_SUIT
+	inv_box.slot_id = ITEM_SLOT_OCLOTHING
 	inv_box.icon_state = "suit"
 	inv_box.screen_loc = ui_oclothing
 	toggleable_inventory += inv_box
@@ -175,7 +267,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "id"
 	inv_box.screen_loc = ui_id
-	inv_box.slot_id = SLOT_WEAR_ID
+	inv_box.slot_id = ITEM_SLOT_ID
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
@@ -183,7 +275,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mask"
 	inv_box.screen_loc = ui_mask
-	inv_box.slot_id = SLOT_WEAR_MASK
+	inv_box.slot_id = ITEM_SLOT_MASK
 	toggleable_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
@@ -191,7 +283,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "neck"
 	inv_box.screen_loc = ui_neck
-	inv_box.slot_id = SLOT_NECK
+	inv_box.slot_id = ITEM_SLOT_NECK
 	toggleable_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
@@ -199,7 +291,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
 	inv_box.screen_loc = ui_back
-	inv_box.slot_id = SLOT_BACK
+	inv_box.slot_id = ITEM_SLOT_BACK
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
@@ -207,7 +299,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "pocket"
 	inv_box.screen_loc = ui_storage1
-	inv_box.slot_id = SLOT_L_STORE
+	inv_box.slot_id = ITEM_SLOT_LPOCKET
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
@@ -215,7 +307,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "pocket"
 	inv_box.screen_loc = ui_storage2
-	inv_box.slot_id = SLOT_R_STORE
+	inv_box.slot_id = ITEM_SLOT_RPOCKET
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
@@ -223,7 +315,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "suit_storage"
 	inv_box.screen_loc = ui_sstore1
-	inv_box.slot_id = SLOT_S_STORE
+	inv_box.slot_id = ITEM_SLOT_SUITSTORE
 	static_inventory += inv_box
 
 	using = new /atom/movable/screen/resist()
@@ -256,7 +348,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "gloves"
 	inv_box.screen_loc = ui_gloves
-	inv_box.slot_id = SLOT_GLOVES
+	inv_box.slot_id = ITEM_SLOT_GLOVES
 	toggleable_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
@@ -264,7 +356,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "glasses"
 	inv_box.screen_loc = ui_glasses
-	inv_box.slot_id = SLOT_GLASSES
+	inv_box.slot_id = ITEM_SLOT_EYES
 	toggleable_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
@@ -272,7 +364,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "ears"
 	inv_box.screen_loc = ui_ears
-	inv_box.slot_id = SLOT_EARS
+	inv_box.slot_id = ITEM_SLOT_EARS
 	toggleable_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
@@ -280,7 +372,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "head"
 	inv_box.screen_loc = ui_head
-	inv_box.slot_id = SLOT_HEAD
+	inv_box.slot_id = ITEM_SLOT_HEAD
 	toggleable_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
@@ -288,7 +380,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "shoes"
 	inv_box.screen_loc = ui_shoes
-	inv_box.slot_id = SLOT_SHOES
+	inv_box.slot_id = ITEM_SLOT_FEET
 	toggleable_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
@@ -297,7 +389,7 @@
 	inv_box.icon_state = "belt"
 //	inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_belt
-	inv_box.slot_id = SLOT_BELT
+	inv_box.slot_id = ITEM_SLOT_BELT
 	static_inventory += inv_box
 
 	throw_icon = new /atom/movable/screen/throw_catch()
@@ -359,16 +451,23 @@
 	sunlight_display.hud = src
 	infodisplay += sunlight_display
 
+	coolant_display = new /atom/movable/screen/synth/coolant_counter	//Coolant & cooling efficiency readouts for Synths.
+	coolant_display.hud = src
+	infodisplay += coolant_display
+
 	zone_select =  new /atom/movable/screen/zone_sel()
 	zone_select.icon = ui_style
 	zone_select.hud = src
 	zone_select.update_icon()
 	static_inventory += zone_select
 
+	combo_display = new /atom/movable/screen/combo()
+	infodisplay += combo_display
+
 	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)
 			inv.hud = src
-			inv_slots[inv.slot_id] = inv
+			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
 			inv.update_icon()
 
 	update_locked_slots()

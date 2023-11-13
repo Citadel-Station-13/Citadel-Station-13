@@ -115,24 +115,23 @@
 	. = ..()
 	if(!.)
 		return
-	if(HAS_TRAIT(src, TRAIT_NOGUNS))
-		to_chat(src, "<span class='warning'>You can't bring yourself to use a ranged weapon!</span>")
-		return FALSE
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
 		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
-			to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
+			balloon_alert(src, "fingers are too big!")
 			return FALSE
+	if(HAS_TRAIT(src, TRAIT_NOGUNS))
+		to_chat(src, span_warning("You can't bring yourself to use a ranged weapon!"))
+		return FALSE
 
-/mob/living/carbon/human/proc/get_bank_account()
+//Returns the bank account of an ID the user may be holding.
+/mob/living/proc/get_bank_account()
 	RETURN_TYPE(/datum/bank_account)
 	var/datum/bank_account/account
 	var/obj/item/card/id/I = get_idcard()
 
-	if(I && I.registered_account)
+	if(I?.registered_account)
 		account = I.registered_account
 		return account
-
-	return FALSE
 
 /mob/living/carbon/human/can_see_reagents()
 	. = ..()

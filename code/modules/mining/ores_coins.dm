@@ -72,7 +72,7 @@
 /obj/item/stack/ore/uranium
 	name = "uranium ore"
 	icon_state = "Uranium ore"
-	// inhand_icon_state = "Uranium ore"
+	// item_state = "Uranium ore"
 	singular_name = "uranium ore chunk"
 	points = 30
 	// material_flags = MATERIAL_NO_EFFECTS
@@ -152,7 +152,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	C.forcesay("*scream")
 	qdel(src)
 
-/obj/item/stack/ore/glass/ex_act(severity, target)
+/obj/item/stack/ore/glass/ex_act(severity, target, origin)
 	if (severity == EXPLODE_NONE)
 		return
 	qdel(src)
@@ -314,7 +314,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	GibtoniteReaction(P.firer)
 	. = ..()
 
-/obj/item/gibtonite/ex_act()
+/obj/item/gibtonite/ex_act(severity, target, origin)
 	GibtoniteReaction(null, 1)
 
 /obj/item/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
@@ -356,7 +356,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	pixel_x = initial(pixel_x) + rand(0, 16) - 8
 	pixel_y = initial(pixel_y) + rand(0, 8) - 8
 
-/obj/item/stack/ore/ex_act(severity, target)
+/obj/item/stack/ore/ex_act(severity, target, origin)
 	if (!severity || severity >= 2)
 		return
 	qdel(src)
@@ -384,7 +384,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/coinflip
 	item_flags = NO_MAT_REDEMPTION //You know, it's kind of a problem that money is worth more extrinsicly than intrinsically in this universe.
 
-/obj/item/coin/Initialize()
+/obj/item/coin/Initialize(mapload)
 	. = ..()
 	coinflip = pick(sideslist)
 	icon_state = "coin_[coinflip]"

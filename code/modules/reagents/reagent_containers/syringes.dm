@@ -18,7 +18,7 @@
 	custom_price = PRICE_CHEAP_AS_FREE
 	sharpness = SHARP_POINTY
 
-/obj/item/reagent_containers/syringe/Initialize()
+/obj/item/reagent_containers/syringe/Initialize(mapload)
 	. = ..()
 	if(list_reagents) //syringe starts in inject mode if its already got something inside
 		mode = SYRINGE_INJECT
@@ -217,6 +217,31 @@
 	amount_per_transfer_from_this = 50
 	volume = 50
 	list_reagents = list(/datum/reagent/medicine/stimulants = 50)
+
+/obj/item/reagent_containers/syringe/contraband
+	name = "unlabeled syringe"
+	desc = "A syringe containing some sort of unknown chemical cocktail."
+
+/obj/item/reagent_containers/syringe/contraband/space_drugs
+	list_reagents = list(/datum/reagent/drug/space_drugs = 15)
+
+/obj/item/reagent_containers/syringe/contraband/krokodil
+	list_reagents = list(/datum/reagent/drug/krokodil = 15)
+
+/obj/item/reagent_containers/syringe/contraband/crank
+	list_reagents = list(/datum/reagent/drug/crank = 15)
+
+/obj/item/reagent_containers/syringe/contraband/methamphetamine
+	list_reagents = list(/datum/reagent/drug/methamphetamine = 15)
+
+/obj/item/reagent_containers/syringe/contraband/bath_salts
+	list_reagents = list(/datum/reagent/drug/bath_salts = 15)
+
+/obj/item/reagent_containers/syringe/contraband/fentanyl
+	list_reagents = list(/datum/reagent/toxin/fentanyl = 15)
+
+/obj/item/reagent_containers/syringe/contraband/morphine
+	list_reagents = list(/datum/reagent/medicine/morphine = 15)
 
 /obj/item/reagent_containers/syringe/calomel
 	name = "syringe (calomel)"

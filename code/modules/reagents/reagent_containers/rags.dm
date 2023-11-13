@@ -37,14 +37,14 @@
 		var/log_object = "a damp rag containing [reagentlist]"
 		if(user.a_intent == INTENT_HARM && !C.is_mouth_covered())
 			C.visible_message("<span class='danger'>[user] is trying to smother \the [C] with \the [src]!</span>", "<span class='userdanger'>[user] is trying to smother you with \the [src]!</span>", "<span class='italics'>You hear some struggling and muffled cries of surprise.</span>")
-			if(do_after(user, 20, target = C))
+			if(do_after(user, 2 SECONDS, C))
 				reagents.reaction(C, INGEST)
 				reagents.trans_to(C, 5, log = "rag smother")
 				C.visible_message("<span class='danger'>[user] has smothered \the [C] with \the [src]!</span>", "<span class='userdanger'>[user] has smothered you with \the [src]!</span>", "<span class='italics'>You hear some struggling and a heavy breath taken.</span>")
 				log_combat(user, C, "smothered", log_object)
 		else
 			C.visible_message("<span class='notice'>[user] is trying to wipe \the [C] with \the [src].</span>")
-			if(do_after(user, 20, target = C))
+			if(do_after(user, 2 SECONDS, C))
 				reagents.reaction(C, TOUCH)
 				reagents.remove_all(5)
 				C.visible_message("<span class='notice'>[user] has wiped \the [C] with \the [src].</span>")
@@ -52,7 +52,7 @@
 
 	else if(istype(A) && (src in user))
 		user.visible_message("[user] starts to wipe down [A] with [src]!", "<span class='notice'>You start to wipe down [A] with [src]...</span>")
-		if(do_after(user, action_speed, target = A))
+		if(do_after(user, action_speed, A))
 			user.visible_message("[user] finishes wiping off [A]!", "<span class='notice'>You finish wiping off [A].</span>")
 			SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
 
@@ -91,7 +91,7 @@
 	. = ..()
 	if(reagents.total_volume && user.canUseTopic(src, BE_CLOSE))
 		to_chat(user, "<span class='notice'>You start squeezing \the [src] dry...</span>")
-		if(do_after(user, action_speed, TRUE, src))
+		if(do_after(user, action_speed, src))
 			var/msg = "You squeeze \the [src]"
 			var/obj/item/target
 			if(Adjacent(user)) //Allows the user to drain the reagents into a beaker if adjacent (no telepathy).
@@ -134,27 +134,27 @@
 	var/folded_icon = "towel"
 	var/list/possible_colors
 
-/obj/item/reagent_containers/rag/towel/Initialize()
+/obj/item/reagent_containers/rag/towel/Initialize(mapload)
 	. = ..()
 	if(possible_colors)
 		add_atom_colour(pick(possible_colors), FIXED_COLOUR_PRIORITY)
 
 /obj/item/reagent_containers/rag/towel/attack(mob/living/M, mob/living/user)
 	if(user.a_intent == INTENT_HARM)
-		DISABLE_BITFIELD(item_flags, NOBLUDGEON)
+		item_flags &= ~(NOBLUDGEON)
 		. = TRUE
 	..()
 	if(.)
-		ENABLE_BITFIELD(item_flags, NOBLUDGEON)
+		item_flags |= NOBLUDGEON
 
 /obj/item/reagent_containers/rag/towel/equipped(mob/living/user, slot)
 	. = ..()
 	switch(slot)
-		if(SLOT_BELT)
+		if(ITEM_SLOT_BELT)
 			body_parts_covered = GROIN|LEGS
-		if(SLOT_WEAR_SUIT)
+		if(ITEM_SLOT_OCLOTHING)
 			body_parts_covered = CHEST|GROIN|LEGS
-		if(SLOT_HEAD)
+		if(ITEM_SLOT_HEAD)
 			body_parts_covered = HEAD
 			flags_inv = HIDEHAIR
 
@@ -192,4 +192,4 @@
 	extinguish_efficiency = 5
 	action_speed = 15
 	damp_threshold = 0.8
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 20, "bio" = 20, "rad" = 20, "fire" = 50, "acid" = 50) //items don't provide armor to wearers unlike clothing yet.
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 20, BIO = 20, RAD = 20, FIRE = 50, ACID = 50) //items don't provide armor to wearers unlike clothing yet.

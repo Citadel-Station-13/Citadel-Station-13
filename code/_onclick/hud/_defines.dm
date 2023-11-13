@@ -47,6 +47,7 @@
 #define ui_back "CENTER-2:14,SOUTH:5"
 #define ui_storage1 "CENTER+1:18,SOUTH:5"
 #define ui_storage2 "CENTER+2:20,SOUTH:5"
+#define ui_combo "CENTER+4:24,SOUTH+1:7" // combo meter for martial arts
 
 //Lower right, persistent menu
 #define ui_drop_throw "EAST-1:28,SOUTH+1:7"
@@ -176,9 +177,6 @@
 #define ui_ghost_mafia "SOUTH: 6, CENTER+2:24"
 #define ui_ghost_spawners "SOUTH: 6, CENTER+1:24" // LEGACY. SAME LOC AS PAI
 
-// #define ui_wanted_lvl "NORTH,11"
-
-
 //UI position overrides for 1:1 screen layout. (default is 7:5)
 #define ui_stamina "EAST-1:28,CENTER:17" // replacing internals button
 #define ui_overridden_resist "EAST-3:24,SOUTH+1:7"
@@ -190,3 +188,5 @@
 #define ui_boxarea "EAST-4:6,SOUTH+1:6"
 #define ui_boxlang "EAST-5:22,SOUTH+1:6"
 #define ui_boxvore	"EAST-5:22,SOUTH+1:6"
+
+#define ui_wanted_lvl "NORTH,11"

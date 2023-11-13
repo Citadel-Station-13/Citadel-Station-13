@@ -40,9 +40,16 @@
 	if(hotspot && istype(T) && T.air)
 		qdel(hotspot)
 		var/datum/gas_mixture/G = T.air
-		var/plas_amt = min(30,G.get_moles(GAS_PLASMA))  //Absorb some plasma
-		G.adjust_moles(GAS_PLASMA,-plas_amt)
-		absorbed_plasma += plas_amt
+		var/amt_removed = min(30,G.get_moles(GAS_PLASMA))  //Absorb some plasma
+		G.adjust_moles(GAS_PLASMA,-amt_removed)
+		absorbed_plasma += amt_removed
+		var/list/fire_gases = GLOB.gas_data.fire_temperatures.Copy()
+		for(var/gas in fire_gases - GAS_PLASMA)
+			if(amt_removed <= 0)
+				break
+			var/this_amount = min(30-amt_removed, G.get_moles(gas))
+			G.adjust_moles(gas, -this_amount)
+			amt_removed -= this_amount
 		if(G.return_temperature() > T20C)
 			G.set_temperature(max(G.return_temperature()/2,T20C))
 		T.air_update_turf()
@@ -90,7 +97,7 @@
 /obj/effect/particle_effect/foam/long_life
 	lifetime = 150
 
-/obj/effect/particle_effect/foam/Initialize()
+/obj/effect/particle_effect/foam/Initialize(mapload)
 	. = ..()
 	MakeSlippery()
 	create_reagents(1000, NONE, NO_REAGENTS_VALUE) //limited by the size of the reagent holder anyway.
@@ -271,7 +278,7 @@
 	attack_hand_speed = CLICK_CD_MELEE
 	attack_hand_is_action = TRUE
 
-/obj/structure/foamedmetal/Initialize()
+/obj/structure/foamedmetal/Initialize(mapload)
 	. = ..()
 	air_update_turf(1)
 
@@ -291,9 +298,6 @@
 	to_chat(user, "<span class='warning'>You hit [src] but bounce off it!</span>")
 	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
 
-/obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target)
-	return !density
-
 /obj/structure/foamedmetal/iron
 	max_integrity = 50
 	icon_state = "ironfoam"
@@ -306,8 +310,9 @@
 	icon_state = "atmos_resin"
 	alpha = 120
 	max_integrity = 10
+	pass_flags_self = PASSGLASS
 
-/obj/structure/foamedmetal/resin/Initialize()
+/obj/structure/foamedmetal/resin/Initialize(mapload)
 	. = ..()
 	neutralize_air()
 	addtimer(CALLBACK(src, .proc/neutralize_air), 5)		// yeah this sucks, maybe when auxmos is out
@@ -335,14 +340,6 @@
 			L.ExtinguishMob()
 		for(var/obj/item/Item in O)
 			Item.extinguish()
-
-/obj/structure/foamedmetal/resin/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return TRUE
-	. = ..()
-
-/obj/structure/foamedmetal/resin/BlockThermalConductivity()
-	return TRUE
 
 #undef ALUMINUM_FOAM
 #undef IRON_FOAM

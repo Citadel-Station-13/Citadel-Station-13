@@ -23,7 +23,7 @@
 	var/playstyle_string = "<span class='heavy_brass'>You are a bug, yell at whoever spawned you!</span>"
 	var/empower_string = "<span class='heavy_brass'>You have nothing to empower, yell at the coders!</span>" //Shown to the mob when the herald beacon activates
 
-/mob/living/simple_animal/hostile/clockwork/Initialize()
+/mob/living/simple_animal/hostile/clockwork/Initialize(mapload)
 	. = ..()
 	update_values()
 
@@ -43,7 +43,7 @@
 /mob/living/simple_animal/hostile/clockwork/examine(mob/user)
 	var/t_He = p_they(TRUE)
 	var/t_s = p_s()
-	var/msg = "<span class='brass'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n"
+	var/msg = "<span class='brass'>This is [icon2html(src, user)] \a <b>[src]</b>!\n"
 	msg += "[desc]\n"
 	if(health < maxHealth)
 		msg += "<span class='warning'>"
@@ -55,7 +55,7 @@
 	var/addendum = examine_info()
 	if(addendum)
 		msg += "[addendum]\n"
-	msg += "*---------*</span>"
+	msg += "</span>"
 
 	return list(msg)
 

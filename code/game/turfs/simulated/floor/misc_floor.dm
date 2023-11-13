@@ -18,7 +18,7 @@
 	floor_tile = /obj/item/stack/tile/circuit
 	var/on = TRUE
 
-/turf/open/floor/circuit/Initialize()
+/turf/open/floor/circuit/Initialize(mapload)
 	SSmapping.nuke_tiles += src
 	update_icon()
 	. = ..()
@@ -151,7 +151,7 @@
 /turf/open/floor/clockwork/Bless() //Who needs holy blessings when you have DADDY RATVAR?
 	return
 
-/turf/open/floor/clockwork/Initialize()
+/turf/open/floor/clockwork/Initialize(mapload)
 	. = ..()
 	if(uses_overlay)
 		new /obj/effect/temp_visual/ratvar/floor(src)
@@ -263,7 +263,7 @@
 
 /turf/open/floor/padded
 	name = "padded floor"
-	desc = "Keeps crazy people from hurting themselves. It's soft, plush, and very nice to get shoved agaisnt."
+	desc = "Keeps crazy people from hurting themselves. It's soft, plush, and very nice to get shoved against."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor_padded"
 	floor_tile = /obj/item/stack/tile/padded

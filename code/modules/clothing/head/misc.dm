@@ -6,8 +6,14 @@
 	desc = "It's good to be emperor."
 	item_state = "that"
 	flags_inv = 0
-	armor = list("melee" = 30, "bullet" = 15, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 30, BULLET = 15, LASER = 30, ENERGY = 10, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	strip_delay = 80
+
+/obj/item/clothing/head/spacepolice
+	name = "space police cap"
+	desc = "A blue cap for patrolling the daily beat."
+	icon_state = "policecap_families"
+	item_state = "policecap_families"
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
@@ -232,7 +238,7 @@
 
 	dog_fashion = null
 
-/obj/item/clothing/head/sombrero/shamebrero/Initialize()
+/obj/item/clothing/head/sombrero/shamebrero/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, SHAMEBRERO_TRAIT)
 
@@ -258,7 +264,8 @@
 	item_state = "that"
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
-
+	heat_protection = HEAD
+	max_heat_protection_temperature = COAT_MAX_TEMP_PROTECT
 	dog_fashion = /datum/dog_fashion/head/santa
 	beepsky_fashion = /datum/beepsky_fashion/santa
 
@@ -294,7 +301,7 @@
 	name = "crown"
 	desc = "A crown fit for a king, a petty king maybe."
 	icon_state = "crown"
-	armor = list("melee" = 15, "bullet" = 0, "laser" = 0,"energy" = 15, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
+	armor = list(MELEE = 15, BULLET = 0, LASER = 0,ENERGY = 15, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 	dynamic_hair_suffix = ""
 
@@ -348,7 +355,7 @@
 
 /obj/item/clothing/head/frenchberet/equipped(mob/M, slot)
 	. = ..()
-	if (slot == SLOT_HEAD)
+	if (slot == ITEM_SLOT_HEAD)
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	else
 		UnregisterSignal(M, COMSIG_MOB_SAY)
@@ -433,6 +440,16 @@
 	icon_state = "cowboyhat_sec"
 	item_state= "cowboyhat_sec"
 
+/obj/item/clothing/head/cowboyhat/polychromic
+	name = "polychromic cowboy hat"
+	desc = "A polychromic cowboy hat, perfect for your indecisive rancher"
+	icon_state = "cowboyhat_poly"
+	item_state= "cowboyhat_poly"
+
+/obj/item/clothing/head/cowboyhat/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#5F5F5F", "#DDDDDD"), 2)
+
 /obj/item/clothing/head/squatter_hat
 	name = "slav squatter hat"
 	icon_state = "squatter_hat"
@@ -451,7 +468,7 @@
 	desc = "Ain't nobody gonna cheat the hangman in my town."
 	icon_state = "hunter"
 	item_state = "hunter"
-	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 15, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 15, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/head/kepi
@@ -469,6 +486,15 @@
 	icon_state = "maid"
 	item_state = "maid"
 	dynamic_hair_suffix = ""
+
+/obj/item/clothing/head/maid/polychromic
+	name = "polychromic maid headband"
+	icon_state = "polymaid"
+	item_state = "polymaid"
+
+/obj/item/clothing/head/maid/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#333333", "#FFFFFF"), 2)
 
 /obj/item/clothing/head/widered
 	name = "Wide red hat"
@@ -488,3 +514,10 @@
 	desc = "This will scare them. All will know my power."
 	icon_state = "human_leather"
 	item_state = "human_leather"
+
+/obj/item/clothing/head/jackbros
+	name = "frosty hat"
+	desc = "Hee-ho!"
+	icon_state = "JackFrostHat"
+	item_state = "JackFrostHat"
+

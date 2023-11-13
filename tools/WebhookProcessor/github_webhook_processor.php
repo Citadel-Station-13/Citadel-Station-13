@@ -792,8 +792,8 @@ function checkchangelog($payload, $compile = true) {
 			case 'add':
 			case 'adds':
 			case 'rscadd':
-				if($item != 'Added new things' && $item != 'Added more things') {
-					$tags[] = 'Feature';
+				if($item != 'Added new mechanics or gameplay changes' && $item != 'Added more things') {
+					$tags[] = 'Mechanic';
 					$currentchangelogblock[] = array('type' => 'rscadd', 'body' => $item);
 				}
 				break;
@@ -842,6 +842,12 @@ function checkchangelog($payload, $compile = true) {
 					$currentchangelogblock[] = array('type' => 'code_imp', 'body' => $item);
 				}
 				break;
+			case 'expansion':
+				if($item != 'Expands content of an existing feature'){
+					$tags[] = 'Content Expansion';
+					$currentchangelogblock[] = array('type' => 'expansion', 'body' => $item);
+				}
+				break;
 			case 'refactor':
 				if($item != 'refactored some code'){
 					$tags[] = 'Refactor';
@@ -863,6 +869,11 @@ function checkchangelog($payload, $compile = true) {
 			case 'server':
 				if($item != 'something server ops should know')
 					$currentchangelogblock[] = array('type' => 'server', 'body' => $item);
+				break;
+			case 'tweak':
+				if($item != 'tweaked a few things')
+					$tags[] = 'Tweak';
+					$currentchangelogblock[] = array('type' => 'tweak', 'body' => $item);
 				break;
 			default:
 				//we add it to the last changelog entry as a separate line

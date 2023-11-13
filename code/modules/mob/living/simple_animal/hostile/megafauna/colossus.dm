@@ -44,6 +44,8 @@ Difficulty: Very Hard
 	move_to_delay = 10
 	ranged = 1
 	pixel_x = -32
+	maptext_height = 96
+	maptext_width = 96
 	del_on_death = TRUE
 	achievement_type = /datum/award/achievement/boss/colossus_kill
 	crusher_achievement_type = /datum/award/achievement/boss/colossus_crusher
@@ -94,7 +96,7 @@ Difficulty: Very Hard
 			INVOKE_ASYNC(src, .proc/alternating_dir_shots)
 
 
-/mob/living/simple_animal/hostile/megafauna/colossus/Initialize()
+/mob/living/simple_animal/hostile/megafauna/colossus/Initialize(mapload)
 	. = ..()
 	internal = new/obj/item/gps/internal/colossus(src)
 
@@ -262,7 +264,7 @@ Difficulty: Very Hard
 		return FALSE
 	return TRUE
 
-/obj/machinery/smartfridge/black_box/Initialize()
+/obj/machinery/smartfridge/black_box/Initialize(mapload)
 	. = ..()
 	var/static/obj/machinery/smartfridge/black_box/current
 	if(current && current != src)
@@ -421,12 +423,12 @@ Difficulty: Very Hard
 	if(ismob(AM))
 		ActivationReaction(AM, ACTIVATE_MOB_BUMP)
 
-/obj/machinery/anomalous_crystal/ex_act()
+/obj/machinery/anomalous_crystal/ex_act(severity, target, origin)
 	ActivationReaction(null, ACTIVATE_BOMB)
 
 /obj/machinery/anomalous_crystal/honk //Strips and equips you as a clown. I apologize for nothing
 	observer_desc = "This crystal strips and equips its targets as clowns."
-	possible_methods = list(ACTIVATE_TOUCH)  //Because We love AOE transformations!  
+	possible_methods = list(ACTIVATE_TOUCH)  //Because We love AOE transformations!
 	activation_sound = 'sound/items/bikehorn.ogg'
 
 /obj/machinery/anomalous_crystal/honk/ActivationReaction(mob/user)
@@ -436,7 +438,7 @@ Difficulty: Very Hard
 			H.dropItemToGround(W)
 		var/datum/job/clown/C = new /datum/job/clown()
 		C.equip(H)
-		C.after_spawn(H, H, TRUE)
+		C.after_spawn(H, H.client, TRUE)
 		qdel(C)
 		affected_targets.Add(H)
 
@@ -452,7 +454,7 @@ Difficulty: Very Hard
 	var/list/NewFlora = list()
 	var/florachance = 8
 
-/obj/machinery/anomalous_crystal/theme_warp/Initialize()
+/obj/machinery/anomalous_crystal/theme_warp/Initialize(mapload)
 	. = ..()
 	terrain_theme = pick("lavaland","winter","jungle","ayy lmao")
 	observer_desc = "This crystal changes the area around it to match the theme of \"[terrain_theme]\"."
@@ -518,7 +520,7 @@ Difficulty: Very Hard
 	cooldown_add = 50
 	var/obj/item/projectile/generated_projectile = /obj/item/projectile/beam/emitter
 
-/obj/machinery/anomalous_crystal/emitter/Initialize()
+/obj/machinery/anomalous_crystal/emitter/Initialize(mapload)
 	. = ..()
 	generated_projectile = pick(/obj/item/projectile/colossus)
 
@@ -528,21 +530,7 @@ Difficulty: Very Hard
 /obj/machinery/anomalous_crystal/emitter/ActivationReaction(mob/user, method)
 	if(..())
 		var/obj/item/projectile/P = new generated_projectile(get_turf(src))
-		P.setDir(dir)
-		switch(dir)
-			if(NORTH)
-				P.yo = 20
-				P.xo = 0
-			if(EAST)
-				P.yo = 0
-				P.xo = 20
-			if(WEST)
-				P.yo = 0
-				P.xo = -20
-			else
-				P.yo = -20
-				P.xo = 0
-		P.fire()
+		P.fire(angle2dir(dir))
 
 /obj/machinery/anomalous_crystal/dark_reprise //Revives anyone nearby, but turns them into shadowpeople and renders them uncloneable, so the crystal is your only hope of getting up again if you go down.
 	observer_desc = "When activated, this crystal revives anyone nearby, but turns them into Shadowpeople and makes them unclonable, making the crystal their only hope of getting up again."
@@ -643,7 +631,7 @@ Difficulty: Very Hard
 	stop_automated_movement = 1
 	var/heal_power = 5
 
-/mob/living/simple_animal/hostile/lightgeist/Initialize()
+/mob/living/simple_animal/hostile/lightgeist/Initialize(mapload)
 	. = ..()
 	remove_verb(src, /mob/living/verb/pulled)
 	remove_verb(src, /mob/verb/me_verb)
@@ -754,7 +742,7 @@ Difficulty: Very Hard
 /obj/structure/closet/stasis/emp_act()
 	return
 
-/obj/structure/closet/stasis/ex_act()
+/obj/structure/closet/stasis/ex_act(severity, target, origin)
 	return
 
 /obj/structure/closet/stasis/handle_lock_addition()

@@ -331,6 +331,12 @@
 	name = "Space Diner"
 	description = "Come, traveler of the bluespace planes. Sit, enjoy a drink and take one of the fair maidens for a night. The exit is the way you came in, via that teleporter thingy, but do remember to stay safe."
 
+/datum/map_template/ruin/space/suspicious
+	id = "helterskelter"
+	suffix = "skelter.dmm"
+	name = "Helter Skelter"
+	description = "You're looking mighty suspicious. Why don't you go and take a seat over in that driver?"
+
 //Space ruins for the station z
 /datum/map_template/ruin/spacenearstation
 	prefix = "_maps/RandomRuins/SpaceRuinsStation/"

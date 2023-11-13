@@ -18,7 +18,7 @@
 	/// Currently selected category in the UI
 	var/selected_cat
 
-/obj/machinery/biogenerator/Initialize()
+/obj/machinery/biogenerator/Initialize(mapload)
 	. = ..()
 	stored_research = new /datum/techweb/specialized/autounlocking/biogenerator
 	create_reagents(1000)
@@ -27,10 +27,10 @@
 	QDEL_NULL(beaker)
 	return ..()
 
-/obj/machinery/biogenerator/contents_explosion(severity, target)
+/obj/machinery/biogenerator/contents_explosion(severity, target, origin)
 	..()
 	if(beaker)
-		beaker.ex_act(severity, target)
+		beaker.ex_act(severity, target, origin)
 
 /obj/machinery/biogenerator/handle_atom_del(atom/A)
 	..()

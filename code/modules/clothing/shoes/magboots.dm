@@ -56,7 +56,7 @@
 
 /obj/item/clothing/shoes/magboots/advance/debug
 
-/obj/item/clothing/shoes/magboots/advance/debug/Initialize()
+/obj/item/clothing/shoes/magboots/advance/debug/Initialize(mapload)
 	. = ..()
 	var/mob/living/L = loc
 	if(istype(L))
@@ -96,7 +96,7 @@
 
 /obj/item/clothing/shoes/magboots/crushing/equipped(mob/user,slot)
 	. = ..()
-	if (slot == SLOT_SHOES && magpulse)
+	if (slot == ITEM_SLOT_FEET && magpulse)
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED,.proc/crush)
 
 /obj/item/clothing/shoes/magboots/crushing/dropped(mob/user)

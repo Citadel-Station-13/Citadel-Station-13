@@ -18,7 +18,7 @@
 // Hook for generic creation of stuff on new creatures
 //
 /hook/living_new/proc/vore_setup(mob/living/M)
-	add_verb(M, list(/mob/living/proc/preyloop_refresh, /mob/living/proc/lick, /mob/living/proc/smell, /mob/living/proc/escapeOOC))
+	add_verb(M, list(/mob/living/proc/preyloop_refresh, /mob/living/proc/lick, /mob/living/proc/smell_someone, /mob/living/proc/escapeOOC))
 
 	if(M.vore_flags & NO_VORE) //If the mob isn't supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
 		return TRUE
@@ -33,7 +33,7 @@
 	return TRUE
 
 /mob/living/proc/init_vore()
-	ENABLE_BITFIELD(vore_flags, VORE_INIT)
+	vore_flags |= VORE_INIT
 	//Something else made organs, meanwhile.
 	if(LAZYLEN(vore_organs))
 		return TRUE
@@ -75,7 +75,7 @@
 
 	lazy_init_belly()
 	if(pred == prey) //you click your target
-		if(!CHECK_BITFIELD(pred.vore_flags,FEEDING))
+		if(!(pred.vore_flags & FEEDING))
 			to_chat(user, "<span class='notice'>They aren't able to be fed.</span>")
 			to_chat(pred, "<span class='notice'>[user] tried to feed you themselves, but you aren't voracious enough to be fed.</span>")
 			return
@@ -85,11 +85,11 @@
 		feed_grabbed_to_self(user, prey)
 
 	else // click someone other than you/prey
-		if(!CHECK_BITFIELD(pred.vore_flags,FEEDING))
+		if(!(pred.vore_flags & FEEDING))
 			to_chat(user, "<span class='notice'>They aren't voracious enough to be fed.</span>")
 			to_chat(pred, "<span class='notice'>[user] tried to feed you [prey], but you aren't voracious enough to be fed.</span>")
 			return
-		if(!CHECK_BITFIELD(prey.vore_flags,FEEDING))
+		if(!(prey.vore_flags & FEEDING))
 			to_chat(user, "<span class='notice'>They aren't able to be fed to someone.</span>")
 			to_chat(prey, "<span class='notice'>[user] tried to feed you to [pred], but you aren't able to be fed to them.</span>")
 			return
@@ -122,7 +122,7 @@
 		testing("[user] attempted to feed [prey] to [pred], via [lowertext(belly.name)] but it went wrong.")
 		return
 
-	if (!CHECK_BITFIELD(prey.vore_flags, DEVOURABLE))
+	if (!(prey.vore_flags & DEVOURABLE))
 		to_chat(user, "This can't be eaten!")
 		return FALSE
 
@@ -152,7 +152,7 @@
 		swallow_time = istype(prey, /mob/living/carbon/human) ? belly.human_prey_swallow_time : belly.nonhuman_prey_swallow_time
 
 	//Timer and progress bar
-	if(!do_after(user, swallow_time, TRUE, prey))
+	if(!do_after(user, swallow_time, prey))
 		return FALSE // Prey escaped (or user disabled) before timer expired.
 
 	if(!prey.Adjacent(user)) //double check'd just in case they moved during the timer and the do_mob didn't fail for whatever reason
@@ -283,7 +283,7 @@
 	if(!client || !client.prefs)
 		to_chat(src,"<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs variable. Tell a dev.</span>")
 		return FALSE
-	ENABLE_BITFIELD(vore_flags,VOREPREF_INIT)
+	vore_flags |= VOREPREF_INIT
 	COPY_SPECIFIC_BITFIELDS(vore_flags, client.prefs.vore_flags, DIGESTABLE | DEVOURABLE | FEEDING | LICKABLE | SMELLABLE | ABSORBABLE | MOBVORE)
 	vore_taste = client.prefs.vore_taste
 	vore_smell = client.prefs.vore_smell
@@ -394,7 +394,7 @@
 //
 // Equally important as the above
 //
-/mob/living/proc/smell()
+/mob/living/proc/smell_someone()
 	set name = "Smell Someone"
 	set category = "Vore"
 	set desc = "Smell someone nearby!"

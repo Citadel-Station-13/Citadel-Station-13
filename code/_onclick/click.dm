@@ -63,6 +63,8 @@
 		return ShiftClickOn(A)
 	if(modifiers["alt"]) // alt and alt-gr (rightalt)
 		return AltClickOn(A)
+	if(modifiers["ctrl"] && modifiers["right"]) //CIT CHANGE - right click ctrl for a new form of dropping items
+		return CtrlRightClickOn(A, params) //CIT CHANGE
 	if(modifiers["ctrl"])
 		return CtrlClickOn(A)
 
@@ -79,11 +81,6 @@
 
 	if(!modifiers["catcher"] && A.IsObscured())
 		return
-
-	if(ismecha(loc))
-		var/obj/mecha/M = loc
-		M.click_action(A,src,params)
-		return TRUE
 
 	if(restrained())
 		DelayNextAction(CLICK_CD_HANDCUFFED)
@@ -296,6 +293,46 @@
 		user.examinate(src)
 
 /*
+	Ctrl + Right click
+	Combat mode feature
+	Drop item in hand at position.
+*/
+/atom/proc/CtrlRightClickOn(atom/A, params)
+	if(isliving(src) && Adjacent(A)) //honestly only humans can do this given it's combat mode but if it's implemented for any other mobs...
+		var/mob/living/L = src
+		if(L.incapacitated())
+			return
+		var/obj/item/I = L.get_active_held_item()
+		var/turf/T = get_turf(A)
+		if(T)
+			if(I) //drop item at cursor.
+				if(T.density) //no, you can't use your funny blue cube or red cube to clip into the fucking wall.
+					return
+				for(var/atom/C in T.contents) //nor can you clip into a window or a door/false wall that's not open.
+					if(C.opacity || (((C.flags_1 & PREVENT_CLICK_UNDER_1) > 0) != (istype(C,/obj/machinery/door) && !C.density))) //XOR operation within because doors always have PREVENT_CLICK_UNDER_1 flag enabled. Dumb, I know.
+						return
+				if(L.transferItemToLoc(I, T))
+					var/list/click_params = params2list(params)
+					//Center the icon where the user clicked. (shamelessly stole code from tables)
+					if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+						return
+					//Clamp it so that the icon never moves more than 16 pixels in either direction
+					I.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+					I.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+					return TRUE
+			else if(isitem(A) && L.has_active_hand()) //if they have an open hand they'll rotate the item instead.
+				var/obj/item/I2 = A
+				if(!I2.anchored)
+					var/matrix/ntransform = matrix(I2.transform)
+					ntransform.Turn(15)
+					animate(I2, transform = ntransform, time = 2)
+					return TRUE
+			else
+				A.CtrlClick(src)
+
+
+
+/*
 	Ctrl click
 	For most objects, pull
 */
@@ -368,7 +405,7 @@
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)
-	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT)
+	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT, user)
 	return
 
 /*
@@ -427,51 +464,6 @@
 			setDir(EAST, ismousemovement)
 		else
 			setDir(WEST, ismousemovement)
-
-//debug
-/atom/movable/screen/proc/scale_to(x1,y1)
-	if(!y1)
-		y1 = x1
-	var/matrix/M = new
-	M.Scale(x1,y1)
-	transform = M
-
-/atom/movable/screen/click_catcher
-	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "catcher"
-	plane = CLICKCATCHER_PLANE
-	mouse_opacity = MOUSE_OPACITY_OPAQUE
-	screen_loc = "CENTER"
-
-#define MAX_SAFE_BYOND_ICON_SCALE_TILES (MAX_SAFE_BYOND_ICON_SCALE_PX / world.icon_size)
-#define MAX_SAFE_BYOND_ICON_SCALE_PX (33 * 32)			//Not using world.icon_size on purpose.
-
-/atom/movable/screen/click_catcher/proc/UpdateGreed(view_size_x = 15, view_size_y = 15)
-	var/icon/newicon = icon('icons/mob/screen_gen.dmi', "catcher")
-	var/ox = min(MAX_SAFE_BYOND_ICON_SCALE_TILES, view_size_x)
-	var/oy = min(MAX_SAFE_BYOND_ICON_SCALE_TILES, view_size_y)
-	var/px = view_size_x * world.icon_size
-	var/py = view_size_y * world.icon_size
-	var/sx = min(MAX_SAFE_BYOND_ICON_SCALE_PX, px)
-	var/sy = min(MAX_SAFE_BYOND_ICON_SCALE_PX, py)
-	newicon.Scale(sx, sy)
-	icon = newicon
-	screen_loc = "CENTER-[(ox-1)*0.5],CENTER-[(oy-1)*0.5]"
-	var/matrix/M = new
-	M.Scale(px/sx, py/sy)
-	transform = M
-
-/atom/movable/screen/click_catcher/Click(location, control, params)
-	var/list/modifiers = params2list(params)
-	if(modifiers["middle"] && iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		C.swap_hand()
-	else
-		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr.client ? usr.client.eye : usr), usr.client)
-		params += "&catcher=1"
-		if(T)
-			T.Click(location, control, params)
-	. = 1
 
 /* MouseWheelOn */
 

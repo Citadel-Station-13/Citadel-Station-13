@@ -1,13 +1,14 @@
 /mob/living/carbon
 	blood_volume = BLOOD_VOLUME_NORMAL
 
-/mob/living/carbon/Initialize()
+/mob/living/carbon/Initialize(mapload)
 	. = ..()
 	create_reagents(1000, NONE, NO_REAGENTS_VALUE)
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	GLOB.carbon_list += src
 	blood_volume = (BLOOD_VOLUME_NORMAL * blood_ratio)
 	add_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
+	register_context()
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -27,8 +28,8 @@
 		if(prob(40))
 			if(prob(25))
 				audible_message("<span class='warning'>You hear something rumbling inside [src]'s stomach...</span>", \
-							 "<span class='warning'>You hear something rumbling.</span>", 4,\
-							  "<span class='userdanger'>Something is rumbling inside your stomach!</span>")
+								"<span class='warning'>You hear something rumbling.</span>", 4,\
+							    "<span class='userdanger'>Something is rumbling inside your stomach!</span>")
 			var/obj/item/I = user.get_active_held_item()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
@@ -198,7 +199,7 @@
 			if(start_T && end_T)
 				log_combat(src, throwable_mob, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
 
-	else if(!CHECK_BITFIELD(I.item_flags, ABSTRACT) && !HAS_TRAIT(I, TRAIT_NODROP))
+	else if(!(I.item_flags & ABSTRACT) && !HAS_TRAIT(I, TRAIT_NODROP))
 		thrown_thing = I
 		dropItemToGround(I)
 
@@ -229,61 +230,8 @@
 /mob/living/carbon/proc/canBeHandcuffed()
 	return 0
 
-
-/mob/living/carbon/show_inv(mob/user)
-	user.set_machine(src)
-	var/dat = {"
-	<HR>
-	<B><FONT size=3>[name]</FONT></B>
-	<HR>
-	<BR><B>Head:</B> <A href='?src=[REF(src)];item=[SLOT_HEAD]'>				[(head && !(head.item_flags & ABSTRACT)) 			? head 		: "Nothing"]</A>
-	<BR><B>Mask:</B> <A href='?src=[REF(src)];item=[SLOT_WEAR_MASK]'>		[(wear_mask && !(wear_mask.item_flags & ABSTRACT))	? wear_mask	: "Nothing"]</A>
-	<BR><B>Neck:</B> <A href='?src=[REF(src)];item=[SLOT_NECK]'>		[(wear_neck && !(wear_neck.item_flags & ABSTRACT))	? wear_neck	: "Nothing"]</A>"}
-
-	for(var/i in 1 to held_items.len)
-		var/obj/item/I = get_item_for_held_index(i)
-		dat += "<BR><B>[get_held_index_name(i)]:</B></td><td><A href='?src=[REF(src)];item=[SLOT_HANDS];hand_index=[i]'>[(I && !(I.item_flags & ABSTRACT)) ? I : "Nothing"]</a>"
-
-	dat += "<BR><B>Back:</B> <A href='?src=[REF(src)];item=[SLOT_BACK]'>[back ? back : "Nothing"]</A>"
-
-	if(!HAS_TRAIT(src, TRAIT_NO_INTERNALS) && istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/tank))
-		dat += "<BR><A href='?src=[REF(src)];internal=1'>[internal ? "Disable Internals" : "Set Internals"]</A>"
-
-	if(handcuffed)
-		dat += "<BR><A href='?src=[REF(src)];item=[SLOT_HANDCUFFED]'>Handcuffed</A>"
-	if(legcuffed)
-		dat += "<BR><A href='?src=[REF(src)];item=[SLOT_LEGCUFFED]'>Legcuffed</A>"
-
-	dat += {"
-	<BR>
-	<BR><A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
-	"}
-	user << browse(dat, "window=mob[REF(src)];size=325x500")
-	onclose(user, "mob[REF(src)]")
-
 /mob/living/carbon/Topic(href, href_list)
 	..()
-	//strip panel
-	if(usr.canUseTopic(src, BE_CLOSE))
-		if(href_list["internal"] && !HAS_TRAIT(src, TRAIT_NO_INTERNALS))
-			var/slot = text2num(href_list["internal"])
-			var/obj/item/ITEM = get_item_by_slot(slot)
-			if(ITEM && istype(ITEM, /obj/item/tank) && wear_mask && (wear_mask.clothing_flags & ALLOWINTERNALS))
-				visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>", \
-								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on your [ITEM.name].</span>", \
-								target = usr, target_message = "<span class='danger'>You try to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>")
-				if(do_mob(usr, src, POCKET_STRIP_DELAY))
-					if(internal)
-						internal = null
-						update_internals_hud_icon(0)
-					else if(ITEM && istype(ITEM, /obj/item/tank))
-						if((wear_mask && (wear_mask.clothing_flags & ALLOWINTERNALS)) || getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-							internal = ITEM
-							update_internals_hud_icon(1)
-
-					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>", \
-									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on your [ITEM.name].</span>", \
-									target = usr, target_message = "<span class='danger'>You [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>")
 	if(href_list["embedded_object"] && usr.canUseTopic(src, BE_CLOSE))
 		var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
 		if(!L)
@@ -314,12 +262,12 @@
 		// too soon.
 		var/buckle_cd = 600
 		if(handcuffed)
-			var/obj/item/restraints/O = src.get_item_by_slot(SLOT_HANDCUFFED)
+			var/obj/item/restraints/O = src.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
 			buckle_cd = O.breakouttime
 		MarkResistTime()
 		visible_message("<span class='warning'>[src] attempts to unbuckle [p_them()]self!</span>", \
 					"<span class='notice'>You attempt to unbuckle yourself... (This will take around [round(buckle_cd/600,1)] minute\s, and you need to stay still.)</span>")
-		if(do_after(src, buckle_cd, 0, target = src, required_mobility_flags = MOBILITY_RESIST))
+		if(do_after(src, buckle_cd, src, timed_action_flags = IGNORE_HELD_ITEM | IGNORE_INCAPACITATED, extra_checks = CALLBACK(src, .proc/cuff_resist_check)))
 			if(!buckled)
 				return
 			buckled.user_unbuckle_mob(src, src)
@@ -356,13 +304,16 @@
 	if(I.item_flags & BEING_REMOVED)
 		to_chat(src, "<span class='warning'>You're already attempting to remove [I]!</span>")
 		return
+	var/obj/item/restraints/R = istype(I, /obj/item/restraints) ? I : null
+	var/allow_breakout_movement = IGNORE_INCAPACITATED
+	if(R?.allow_breakout_movement)
+		allow_breakout_movement = (IGNORE_INCAPACITATED|IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE)
 	I.item_flags |= BEING_REMOVED
 	breakouttime = I.breakouttime
-	var/datum/cuffbreak_checker/cuffbreak_checker = new(get_turf(src), istype(I, /obj/item/restraints)? I : null)
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
 		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)</span>")
-		if(do_after_advanced(src, breakouttime, src, NONE, CALLBACK(cuffbreak_checker, /datum/cuffbreak_checker.proc/check_movement), required_mobility_flags = MOBILITY_RESIST))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = allow_breakout_movement, extra_checks = CALLBACK(src, PROC_REF(cuff_resist_check))))
 			clear_cuffs(I, cuff_break)
 		else
 			to_chat(src, "<span class='warning'>You fail to remove [I]!</span>")
@@ -371,7 +322,7 @@
 		breakouttime = 50
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
 		to_chat(src, "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>")
-		if(do_after_advanced(src, breakouttime, src, NONE, CALLBACK(cuffbreak_checker, /datum/cuffbreak_checker.proc/check_movement), required_mobility_flags = MOBILITY_RESIST))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = allow_breakout_movement, extra_checks = CALLBACK(src, PROC_REF(cuff_resist_check))))
 			clear_cuffs(I, cuff_break)
 		else
 			to_chat(src, "<span class='warning'>You fail to break [I]!</span>")
@@ -379,27 +330,10 @@
 	else if(cuff_break == INSTANT_CUFFBREAK)
 		clear_cuffs(I, cuff_break)
 
-	QDEL_NULL(cuffbreak_checker)
 	I.item_flags &= ~BEING_REMOVED
 
-/datum/cuffbreak_checker
-	var/turf/last
-	var/obj/item/restraints/cuffs
-
-/datum/cuffbreak_checker/New(turf/initial_turf, obj/item/restraints/R)
-	last = initial_turf
-	if(R)
-		cuffs = R
-
-/datum/cuffbreak_checker/proc/check_movement(atom/user, delay, atom/target, time_left, do_after_flags, required_mobility_flags, required_combat_flags, mob_redirect, stage, initially_held_item, tool, list/passed_in)
-	if(get_turf(user) != last)
-		last = get_turf(user)
-		passed_in[1] = 0.5
-		if(cuffs && !cuffs.allow_breakout_movement)
-			return DO_AFTER_STOP
-	else
-		passed_in[1] = 1
-	return DO_AFTER_CONTINUE
+/mob/living/carbon/proc/cuff_resist_check()
+	return !incapacitated(ignore_restraints = TRUE)
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
@@ -621,12 +555,12 @@
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			set_resting(TRUE, FALSE, FALSE)
 			SEND_SIGNAL(src, COMSIG_DISABLE_COMBAT_MODE)
-			ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT)
+			combat_flags |= COMBAT_FLAG_HARD_STAMCRIT
 			filters += CIT_FILTER_STAMINACRIT
 			update_mobility()
 	if((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && total_health <= STAMINA_CRIT_REMOVAL_THRESHOLD)
 		to_chat(src, "<span class='notice'>You don't feel nearly as exhausted anymore.</span>")
-		DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT)
+		combat_flags &= ~(COMBAT_FLAG_HARD_STAMCRIT)
 		filters -= CIT_FILTER_STAMINACRIT
 		update_mobility()
 	UpdateStaminaBuffer()
@@ -677,12 +611,21 @@
 			if(M.name == XRAY)
 				sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 				see_in_dark = max(see_in_dark, 8)
+
+	if(HAS_TRAIT(src, TRAIT_TRUE_NIGHT_VISION))
+		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
+		see_in_dark = max(see_in_dark, 8)
+
+	if(HAS_TRAIT(src, TRAIT_MESON_VISION))
+		sight |= SEE_TURFS
+		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+
 	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
-		sight |= (SEE_MOBS)
+		sight |= SEE_MOBS
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
 
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
-		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 		see_in_dark = max(see_in_dark, 8)
 
 	if(see_override)
@@ -699,7 +642,7 @@
 		become_blind(EYES_COVERED)
 	else if(tinttotal >= TINT_DARKENED)
 		cure_blind(EYES_COVERED)
-		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 2)
+		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/scaled/impaired, 2)
 	else
 		cure_blind(EYES_COVERED)
 		clear_fullscreen("tint", 0)
@@ -775,10 +718,10 @@
 					visionseverity = 9
 				if(-INFINITY to -24)
 					visionseverity = 10
-			overlay_fullscreen("critvision", /atom/movable/screen/fullscreen/crit/vision, visionseverity)
+			overlay_fullscreen("critvision", /atom/movable/screen/fullscreen/scaled/crit/vision, visionseverity)
 		else
 			clear_fullscreen("critvision")
-		overlay_fullscreen("crit", /atom/movable/screen/fullscreen/crit, severity)
+		overlay_fullscreen("crit", /atom/movable/screen/fullscreen/scaled/crit, severity)
 	else
 		clear_fullscreen("crit")
 		clear_fullscreen("critvision")
@@ -802,7 +745,7 @@
 				severity = 6
 			if(45 to INFINITY)
 				severity = 7
-		overlay_fullscreen("oxy", /atom/movable/screen/fullscreen/oxy, severity)
+		overlay_fullscreen("oxy", /atom/movable/screen/fullscreen/scaled/oxy, severity)
 	else
 		clear_fullscreen("oxy")
 
@@ -823,7 +766,7 @@
 				severity = 5
 			if(85 to INFINITY)
 				severity = 6
-		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
+		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/scaled/brute, severity)
 	else
 		clear_fullscreen("brute")
 
@@ -898,16 +841,16 @@
 	update_inv_handcuffed()
 	update_hud_handcuffed()
 
-/mob/living/carbon/proc/can_defib()
+/mob/living/carbon/proc/can_revive(ignore_timelimit = FALSE, maximum_brute_dam = MAX_REVIVE_BRUTE_DAMAGE, maximum_fire_dam = MAX_REVIVE_FIRE_DAMAGE, ignore_heart = FALSE)
 	var/tlimit = DEFIB_TIME_LIMIT * 10
 	var/obj/item/organ/heart = getorgan(/obj/item/organ/heart)
 	if(suiciding || hellbound || HAS_TRAIT(src, TRAIT_HUSK) || AmBloodsucker(src))
 		return
-	if((world.time - timeofdeath) > tlimit)
+	if(!ignore_timelimit && (world.time - timeofdeath) > tlimit)
 		return
-	if((getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
+	if((getBruteLoss() >= maximum_brute_dam) || (getFireLoss() >= maximum_fire_dam))
 		return
-	if(!heart || (heart.organ_flags & ORGAN_FAILING))
+	if(!ignore_heart && (!heart || (heart.organ_flags & ORGAN_FAILING)))
 		return
 	var/obj/item/organ/brain/BR = getorgan(/obj/item/organ/brain)
 	if(QDELETED(BR) || BR.brain_death || (BR.organ_flags & ORGAN_FAILING) || suiciding)
@@ -1190,15 +1133,15 @@
 /mob/living/carbon/check_obscured_slots()
 	if(head)
 		if(head.flags_inv & HIDEMASK)
-			LAZYOR(., SLOT_WEAR_MASK)
+			LAZYOR(., ITEM_SLOT_MASK)
 		if(head.flags_inv & HIDEEYES)
-			LAZYOR(., SLOT_GLASSES)
+			LAZYOR(., ITEM_SLOT_EYES)
 		if(head.flags_inv & HIDEEARS)
-			LAZYOR(., SLOT_EARS)
+			LAZYOR(., ITEM_SLOT_EARS)
 
 	if(wear_mask)
 		if(wear_mask.flags_inv & HIDEEYES)
-			LAZYOR(., SLOT_GLASSES)
+			LAZYOR(., ITEM_SLOT_EYES)
 
 // if any of our bodyparts are bleeding
 /mob/living/carbon/proc/is_bleeding()

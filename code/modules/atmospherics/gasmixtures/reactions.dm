@@ -5,10 +5,9 @@
 
 	for(var/r in subtypesof(/datum/gas_reaction))
 		var/datum/gas_reaction/reaction = r
-		if(initial(reaction.exclude))
-			continue
 		reaction = new r
-		. += reaction
+		if(!reaction.exclude)
+			. += reaction
 	sortTim(., /proc/cmp_gas_reaction)
 
 /proc/cmp_gas_reaction(datum/gas_reaction/a, datum/gas_reaction/b) // compares lists of reactions by the maximum priority contained within the list
@@ -18,7 +17,6 @@
 	//regarding the requirements lists: the minimum or maximum requirements must be non-zero.
 	//when in doubt, use MINIMUM_MOLE_COUNT.
 	var/list/min_requirements
-	var/list/max_requirements
 	var/exclude = FALSE //do it this way to allow for addition/removal of reactions midmatch in the future
 	var/priority = 100 //lower numbers are checked/react later than higher numbers. if two reactions have the same priority they may happen in either order
 	var/name = "reaction"
@@ -53,23 +51,71 @@
 	id = "vapor"
 
 /datum/gas_reaction/water_vapor/init_reqs()
-	min_requirements = list(GAS_H2O = MOLES_GAS_VISIBLE)
+	min_requirements = list(
+		GAS_H2O = MOLES_GAS_VISIBLE,
+		"MAX_TEMP" = T0C + 40
+	)
 
 /datum/gas_reaction/water_vapor/react(datum/gas_mixture/air, datum/holder)
-	var/turf/open/location = isturf(holder) ? holder : null
-	. = NO_REACTION
+	var/turf/open/location = holder
+	if(!istype(location))
+		return NO_REACTION
 	if (air.return_temperature() <= WATER_VAPOR_FREEZE)
 		if(location && location.freon_gas_act())
-			. = REACTING
+			return REACTING
 	else if(location && location.water_vapor_gas_act())
 		air.adjust_moles(GAS_H2O,-MOLES_GAS_VISIBLE)
-		. = REACTING
+		return REACTING
 
 // no test cause it's entirely based on location
+
+/datum/gas_reaction/condensation
+	priority = 0
+	name = "Condensation"
+	id = "condense"
+	exclude = TRUE
+	var/datum/reagent/condensing_reagent
+
+/datum/gas_reaction/condensation/New(datum/reagent/R)
+	. = ..()
+	if(!istype(R))
+		return
+	min_requirements = list(
+		"MAX_TEMP" = initial(R.boiling_point)
+	)
+	min_requirements[R.get_gas()] = MOLES_GAS_VISIBLE
+	name = "[R.name] condensation"
+	id = "[R.type] condensation"
+	condensing_reagent = GLOB.chemical_reagents_list[R.type]
+	exclude = FALSE
+
+/datum/gas_reaction/condensation/react(datum/gas_mixture/air, datum/holder)
+	. = NO_REACTION
+	var/turf/open/location = holder
+	if(!istype(location))
+		return
+	var/temperature = air.return_temperature()
+	var/static/datum/reagents/reagents_holder = new
+	reagents_holder.clear_reagents()
+	reagents_holder.chem_temp = temperature
+	var/G = condensing_reagent.get_gas()
+	var/amt = air.get_moles(G)
+	air.adjust_moles(G, -min(initial(condensing_reagent.condensation_amount), amt))
+	if(air.get_moles(G) < MOLES_GAS_VISIBLE)
+		amt += air.get_moles(G)
+		air.set_moles(G, 0.0)
+	reagents_holder.add_reagent(condensing_reagent.type, amt)
+	. = REACTING
+	for(var/atom/movable/AM in location)
+		if(location.intact && AM.level == 1)
+			continue
+		reagents_holder.reaction(AM, TOUCH)
+	reagents_holder.reaction(location, TOUCH)
 
 //tritium combustion: combustion of oxygen and tritium (treated as hydrocarbons). creates hotspots. exothermic
 /datum/gas_reaction/tritfire
 	priority = -1 //fire should ALWAYS be last, but tritium fires happen before plasma fires
+	exclude = TRUE // generic fire now takes care of this
 	name = "Tritium Combustion"
 	id = "tritfire"
 
@@ -88,9 +134,9 @@
 			item.temperature_expose(air, temperature, CELL_VOLUME)
 		location.temperature_expose(air, temperature, CELL_VOLUME)
 
-/proc/radiation_burn(turf/open/location, energy_released)
+/proc/radiation_burn(turf/open/location, rad_power)
 	if(istype(location) && prob(10))
-		radiation_pulse(location, energy_released/TRITIUM_BURN_RADIOACTIVITY_FACTOR)
+		radiation_pulse(location, rad_power)
 
 /datum/gas_reaction/tritfire/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
@@ -151,6 +197,7 @@
 /datum/gas_reaction/plasmafire
 	priority = -2 //fire should ALWAYS be last, but plasma fires happen after tritium fires
 	name = "Plasma Combustion"
+	exclude = TRUE // generic fire now takes care of this
 	id = "plasmafire"
 
 /datum/gas_reaction/plasmafire/init_reqs()
@@ -300,7 +347,7 @@
 			fuels[fuel] *= oxidation_ratio
 	fuels += oxidizers
 	var/list/fire_products = GLOB.gas_data.fire_products
-	var/list/fire_enthalpies = GLOB.gas_data.fire_enthalpies
+	var/list/fire_enthalpies = GLOB.gas_data.enthalpies
 	for(var/fuel in fuels + oxidizers)
 		var/amt = fuels[fuel]
 		if(!burn_results[fuel])
@@ -648,7 +695,7 @@
 	//Replace miasma with oxygen
 	var/cleaned_air = min(air.get_moles(GAS_MIASMA), 20 + (air.return_temperature() - FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 70) / 20)
 	air.adjust_moles(GAS_MIASMA, -cleaned_air)
-	air.adjust_moles(GAS_O2, cleaned_air)
+	air.adjust_moles(GAS_METHANE, cleaned_air)
 
 	//Possibly burning a bit of organic matter through maillard reaction, so a *tiny* bit more heat would be understandable
 	air.set_temperature(air.return_temperature() + cleaned_air * 0.002)
@@ -670,3 +717,90 @@
 	if(result != NO_REACTION)
 		return list("success" = FALSE, "message" = "Miasma sterilization not stopping due to water vapor correctly!")
 	return ..()
+
+/datum/gas_reaction/nitric_oxide
+	priority = -5
+	name = "Nitric oxide decomposition"
+	id = "nitric_oxide"
+
+/datum/gas_reaction/nitric_oxide/init_reqs()
+	min_requirements = list(
+		"MAX_TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST+100,
+		GAS_NITRIC = MINIMUM_MOLE_COUNT
+	)
+
+/datum/gas_reaction/nitric_oxide/react(datum/gas_mixture/air, datum/holder)
+	var/nitric = air.get_moles(GAS_NITRIC)
+	var/oxygen = air.get_moles(GAS_O2)
+	var/max_amount = max(nitric / 8, MINIMUM_MOLE_COUNT)
+	var/enthalpy = air.return_temperature() * (air.heat_capacity() + R_IDEAL_GAS_EQUATION * air.total_moles())
+	var/list/enthalpies = GLOB.gas_data.enthalpies
+	if(oxygen > MINIMUM_MOLE_COUNT)
+		var/reaction_amount = min(max_amount, oxygen)/4
+		air.adjust_moles(GAS_NITRIC, -reaction_amount*2)
+		air.adjust_moles(GAS_O2, -reaction_amount)
+		air.adjust_moles(GAS_NITRYL, reaction_amount*2)
+		enthalpy += (reaction_amount * -(enthalpies[GAS_NITRIC] - enthalpies[GAS_NITRYL]))
+	air.adjust_moles(GAS_NITRIC, -max_amount)
+	air.adjust_moles(GAS_O2, max_amount * 0.5)
+	air.adjust_moles(GAS_N2, max_amount * 0.5)
+	enthalpy += max_amount * -enthalpies[GAS_NITRIC]
+	air.set_temperature(enthalpy/(air.heat_capacity() + R_IDEAL_GAS_EQUATION * air.total_moles()))
+	return REACTING
+
+/datum/gas_reaction/hagedorn
+	priority = -INFINITY
+	name = "Hagedorn decomposition"
+	id = "hagedorn"
+
+/datum/gas_reaction/hagedorn/init_reqs()
+	min_requirements = list(
+		"TEMP" = 2e12 // 2 trillion kelvins
+	)
+
+/datum/gas_reaction/hagedorn/react(datum/gas_mixture/air, datum/holder)
+	var/initial_energy = air.thermal_energy()
+	if(air.get_moles(GAS_QCD))
+		return
+	for(var/g in air.get_gases())
+		air.set_moles(g, 0)
+	var/amount = initial_energy / (air.return_temperature() * GLOB.gas_data.specific_heats[GAS_QCD])
+	air.set_moles(GAS_QCD, amount)
+	var/list/largest_values = SSresearch.science_tech.largest_values
+	if(!(GAS_QCD in largest_values))
+		largest_values[GAS_QCD] = 0
+	var/previous_largest = largest_values[GAS_QCD]
+	var/research_amount = min(amount * QCD_RESEARCH_AMOUNT, 100000)
+	if(previous_largest <= research_amount)
+		SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, research_amount)
+		largest_values[GAS_QCD] = research_amount
+	else
+		SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, research_amount / 100)
+
+/datum/gas_reaction/dehagedorn
+	priority = 50
+	name = "Hagedorn condensation"
+	id = "dehagedorn"
+
+/datum/gas_reaction/dehagedorn/init_reqs()
+	min_requirements = list(
+		"MAX_TEMP" = 1.99e12,
+		GAS_QCD = MINIMUM_MOLE_COUNT
+	)
+
+/datum/gas_reaction/dehagedorn/react(datum/gas_mixture/air, datum/holder)
+	var/initial_energy = air.thermal_energy()
+	var/energy_remaining = initial_energy
+	air.set_moles(GAS_QCD, 0)
+	air.set_temperature(min(air.return_temperature(), 1.8e12))
+	var/new_temp = air.return_temperature()
+	var/list/gases = GLOB.gas_data.specific_heats.Copy()
+	gases -= GAS_QCD
+	gases -= GAS_TRITIUM // no refusing sorry
+	gases -= GAS_HYPERNOB // makes it waaay too easy to stabilize it
+	while(energy_remaining > 0)
+		var/G = pick(gases)
+		air.adjust_moles(G, max(0.1, energy_remaining / (gases[G] * new_temp * 20)))
+		energy_remaining = initial_energy - air.thermal_energy()
+	air.set_temperature(initial_energy / air.heat_capacity())
+	return REACTING

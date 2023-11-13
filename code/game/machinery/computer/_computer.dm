@@ -8,7 +8,7 @@
 	active_power_usage = 300
 	max_integrity = 200
 	integrity_failure = 0.5
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 20)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 40, ACID = 20)
 	var/brightness_on = 1
 	var/icon_keyboard = "generic_key"
 	var/icon_screen = "generic"
@@ -17,11 +17,7 @@
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
-
 	power_change()
-
-/obj/machinery/computer/Destroy()
-	. = ..()
 
 /obj/machinery/computer/process()
 	if(stat & (NOPOWER|BROKEN))
@@ -105,10 +101,10 @@
 		switch(severity)
 			if(1)
 				if(prob(50))
-					obj_break("energy")
+					obj_break(ENERGY)
 			if(2)
 				if(prob(10))
-					obj_break("energy")
+					obj_break(ENERGY)
 
 /obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
 	on_deconstruction()
@@ -119,6 +115,9 @@
 			A.circuit = circuit
 			// Circuit removal code is handled in /obj/machinery/Exited()
 			circuit.forceMove(A)
+			// no it's not 4head the circuit's in nullspace which means this won't be called!!
+			circuit = null
+			component_parts -= circuit
 			A.set_anchored(TRUE)
 			if(stat & BROKEN)
 				if(user)

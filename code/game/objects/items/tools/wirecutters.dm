@@ -17,10 +17,9 @@
 	attack_verb = list("pinched", "nipped")
 	hitsound = 'sound/items/wirecutter.ogg'
 	usesound = 'sound/items/wirecutter.ogg'
-
 	tool_behaviour = TOOL_WIRECUTTER
 	toolspeed = 1
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 30)
 	var/random_color = TRUE
 	var/static/list/wirecutter_colors = list(
 		"blue" = rgb(24, 97, 213),
@@ -33,7 +32,7 @@
 	)
 
 
-/obj/item/wirecutters/Initialize()
+/obj/item/wirecutters/Initialize(mapload)
 	. = ..()
 	if(random_color) //random colors!
 		icon_state = "cutters"
@@ -90,6 +89,14 @@
 /obj/item/wirecutters/brass/family
 	toolspeed = 1
 
+/obj/item/wirecutters/ashwalker
+	name = "bone wirecutters"
+	desc = "Rudimentary wirecutters made out of sharpened bones and sinew."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "cutters_bone"
+	toolspeed = 0.75
+	random_color = FALSE
+
 /obj/item/wirecutters/bronze
 	name = "bronze plated wirecutters"
 	desc = "A pair of wirecutters plated with bronze."
@@ -118,7 +125,6 @@
 	desc = "A set of jaws of life, compressed through the magic of science. It's fitted with a cutting head."
 	icon_state = "jaws_cutter"
 	item_state = "jawsoflife"
-
 	custom_materials = list(/datum/material/iron=150,/datum/material/silver=50,/datum/material/titanium=25)
 	usesound = 'sound/items/jaws_cut.ogg'
 	toolspeed = 0.25
@@ -153,7 +159,7 @@
 			var/man = C == user ? "your" : "[C]'\s"
 			user.visible_message("<span class='notice'>[user] attempts to remove the durathread strand from around [man] neck.</span>", \
 								"<span class='notice'>You attempt to remove the durathread strand from around [man] neck.</span>")
-			if(do_after(user, 15, null, C))
+			if(do_after(user, 1.5 SECONDS, C))
 				user.visible_message("<span class='notice'>[user] succesfuly removes the durathread strand.</span>",
 									"<span class='notice'>You succesfuly remove the durathread strand.</span>")
 				C.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)

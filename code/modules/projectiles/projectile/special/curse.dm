@@ -12,7 +12,6 @@
 	knockdown = 20
 	pixels_per_second = TILES_TO_PIXELS(5)
 	range = 16
-	movement_type = FLYING | UNSTOPPABLE
 	var/datum/beam/arm
 	var/handedness = 0
 
@@ -29,18 +28,14 @@
 		arm = starting.Beam(src, icon_state = "curse[handedness]", time = INFINITY, maxdistance = INFINITY, beam_type=/obj/effect/ebeam/curse_arm)
 	..()
 
-/obj/item/projectile/curse_hand/prehit(atom/target)
-	if(target == original)
-		DISABLE_BITFIELD(movement_type, UNSTOPPABLE)
-	else if(!isturf(target))
-		return FALSE
-	return ..()
+/obj/item/projectile/curse_hand/prehit_pierce(atom/target)
+	return (target == original)? PROJECTILE_PIERCE_NONE : PROJECTILE_PIERCE_PHASE
 
 /obj/item/projectile/curse_hand/Destroy()
 	if(arm)
 		arm.End()
 		arm = null
-	if(CHECK_BITFIELD(movement_type, UNSTOPPABLE))
+	if((movement_type & PHASING))
 		playsound(src, 'sound/effects/curse3.ogg', 25, 1, -1)
 	var/turf/T = get_step(src, dir)
 	var/obj/effect/temp_visual/dir_setting/curse/hand/leftover = new(T, dir)

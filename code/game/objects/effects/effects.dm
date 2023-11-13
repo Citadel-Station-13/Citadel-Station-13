@@ -18,9 +18,6 @@
 /obj/effect/acid_act()
 	return
 
-/obj/effect/mech_melee_attack(obj/mecha/M)
-	return 0
-
 /obj/effect/blob_act(obj/structure/blob/B)
 	return
 
@@ -30,7 +27,7 @@
 /obj/effect/experience_pressure_difference()
 	return
 
-/obj/effect/ex_act(severity, target)
+/obj/effect/ex_act(severity, target, origin)
 	if(target == src)
 		qdel(src)
 	else
@@ -51,7 +48,7 @@
 /obj/effect/ConveyorMove()
 	return
 
-/obj/effect/abstract/ex_act(severity, target)
+/obj/effect/abstract/ex_act(severity, target, origin)
 	return
 
 /obj/effect/abstract/singularity_pull()

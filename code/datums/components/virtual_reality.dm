@@ -84,9 +84,9 @@
 	if(VR)
 		VR.level_below = src
 		level_above = VR
-	M.transfer_ckey(vr_M, FALSE)
 	mastermind = M.mind
 	mastermind.current.audiovisual_redirect = parent
+	M.transfer_ckey(vr_M, FALSE)
 	RegisterSignal(mastermind, COMSIG_PRE_MIND_TRANSFER, .proc/switch_player)
 	RegisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING), .proc/game_over)
 	RegisterSignal(M, COMSIG_MOB_PRE_PLAYER_CHANGE, .proc/player_hijacked)

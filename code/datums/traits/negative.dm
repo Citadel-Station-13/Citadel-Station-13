@@ -25,6 +25,7 @@
 	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
 	medical_record_text = "Patient has a severe mood disorder, causing them to experience acute episodes of depression."
 	mood_quirk = TRUE
+	processing_quirk = TRUE
 
 /datum/quirk/depression/on_process()
 	if(prob(0.05))
@@ -38,30 +39,42 @@
 	medical_record_text = "Patient demonstrates an unnatural attachment to a family heirloom."
 	var/obj/item/heirloom
 	var/where
+	processing_quirk = TRUE
 
 GLOBAL_LIST_EMPTY(family_heirlooms)
 
-/datum/quirk/family_heirloom/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
+/datum/quirk/family_heirloom/on_spawn()	
+	// Define holder and type
+	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/heirloom_type
-	var/species_heirloom_entry = GLOB.species_heirlooms[H.dna.species.id]
-	if(species_heirloom_entry)
-		if(prob(species_heirloom_entry[1]))
-			heirloom_type = pick(species_heirloom_entry[2])
+	
+	// The quirk holder's species - we have a 50% chance, if we have a species with a set heirloom, to choose a species heirloom.
+	var/datum/species/holder_species = human_holder.dna?.species
+	if(holder_species && LAZYLEN(holder_species.family_heirlooms) && prob(50))
+		heirloom_type = pick(holder_species.family_heirlooms)
+	else
+		// Our quirk holder's job
+		var/datum/job/holder_job = SSjob.GetJob(human_holder.last_mind?.assigned_role)
+		if(holder_job && LAZYLEN(holder_job.family_heirlooms))
+			heirloom_type = pick(holder_job.family_heirlooms)
+
+	// If we didn't find an heirloom somehow, throw them a generic one
 	if(!heirloom_type)
-		var/job_heirloom_entry = GLOB.job_heirlooms[quirk_holder.mind.assigned_role]
-		if(!job_heirloom_entry)
-			heirloom_type = pick(GLOB.job_heirlooms["NO_JOB"]) //consider: should this be a define?
-		else
-			heirloom_type = pick(job_heirloom_entry)
+		heirloom_type = pick(/obj/item/toy/cards/deck, /obj/item/lighter, /obj/item/dice/d20)
+	
+	// Create the heirloom item
 	heirloom = new heirloom_type(get_turf(quirk_holder))
+	
+	// Add to global list
 	GLOB.family_heirlooms += heirloom
+	
+	// Determine and assign item location
 	var/list/slots = list(
-		"in your left pocket" = SLOT_L_STORE,
-		"in your right pocket" = SLOT_R_STORE,
-		"in your backpack" = SLOT_IN_BACKPACK
+		"in your left pocket" = ITEM_SLOT_LPOCKET,
+		"in your right pocket" = ITEM_SLOT_RPOCKET,
+		"in your backpack" = ITEM_SLOT_BACKPACK
 	)
-	where = H.equip_in_one_of_slots(heirloom, slots, FALSE) || "at your feet"
+	where = human_holder.equip_in_one_of_slots(heirloom, slots, FALSE) || "at your feet"
 
 /datum/quirk/family_heirloom/post_add()
 	if(where == "in your backpack")
@@ -73,12 +86,24 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	heirloom.name = "\improper [family_name[family_name.len]] family [heirloom.name]"
 
 /datum/quirk/family_heirloom/on_process()
-	if(heirloom in quirk_holder.GetAllContents())
+	// Ignore for dead holder
+	if(quirk_holder.stat == DEAD)
+		return
+
+	// When held: Positive mood
+	if(heirloom && (heirloom in quirk_holder.GetAllContents()))
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom_missing")
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "family_heirloom", /datum/mood_event/family_heirloom)
+
+	// When not held: Negative mood
 	else
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
+
+/datum/quirk/item_quirk/family_heirloom/remove()
+	// Clear mood events when removing this quirk
+	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
+	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom_missing")
 
 /datum/quirk/family_heirloom/clone_data()
 	return heirloom
@@ -102,6 +127,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	gain_text = "<span class='danger'>You feel smooth.</span>"
 	lose_text = "<span class='notice'>You feel wrinkled again.</span>"
 	medical_record_text = "Patient has a tumor in their brain that is slowly driving them to brain death."
+	processing_quirk = TRUE
 
 /datum/quirk/brainproblems/on_process()
 	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
@@ -120,7 +146,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 /datum/quirk/nearsighted/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/regular/glasses = new(get_turf(H))
-	if(!H.equip_to_slot_if_possible(glasses, SLOT_GLASSES))
+	if(!H.equip_to_slot_if_possible(glasses, ITEM_SLOT_EYES))
 		H.put_in_hands(glasses)
 
 /datum/quirk/nyctophobia
@@ -129,25 +155,38 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	value = -1
 	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
 
-/datum/quirk/nyctophobia/on_process()
-	var/mob/living/carbon/human/H = quirk_holder
-	if(H.dna.species.id in list("shadow", "nightmare"))
-		return //we're tied with the dark, so we don't get scared of it; don't cleanse outright to avoid cheese
-	var/turf/T = get_turf(quirk_holder)
-	var/lums = T.get_lumcount()
-	if(lums <= 0.2)
-		if(quirk_holder.m_intent == MOVE_INTENT_RUN)
-			addtimer(CALLBACK(src, .proc/recheck),2) //0.2 seconds of being in the dark
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "nyctophobia", /datum/mood_event/nyctophobia)
-	else
-		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
+/datum/quirk/nyctophobia/add()
+	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, .proc/on_holder_moved)
 
-/datum/quirk/nyctophobia/proc/recheck()
-	var/turf/T = get_turf(quirk_holder)
-	var/lums = T.get_lumcount()
-	if(lums <= 0.2) //check again, did they remain in the dark for 0.2 seconds?
-		to_chat(quirk_holder, "<span class='warning'>Easy, easy, take it slow... you're in the dark...</span>")
+/datum/quirk/nyctophobia/remove()
+	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
+	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
+
+/// Called when the quirk holder moves. Updates the quirk holder's mood.
+/datum/quirk/nyctophobia/proc/on_holder_moved(mob/living/source, atom/old_loc, dir, forced)
+	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
+		return
+
+	var/mob/living/carbon/human/human_holder = quirk_holder
+
+	if(human_holder.dna?.species.id in list(SPECIES_SHADOW, SPECIES_NIGHTMARE))
+		return
+
+	if((human_holder.sight & SEE_TURFS) == SEE_TURFS)
+		return
+
+	var/turf/holder_turf = get_turf(quirk_holder)
+
+	var/lums = holder_turf.get_lumcount()
+
+	if(lums > 0.2)
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
+		return
+
+	if(quirk_holder.m_intent == MOVE_INTENT_RUN)
+		to_chat(quirk_holder, span_warning("Easy, easy, take it slow... you're in the dark..."))
 		quirk_holder.toggle_move_intent()
+	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "nyctophobia", /datum/mood_event/nyctophobia)
 
 /datum/quirk/lightless
 	name = "Light Sensitivity"
@@ -156,6 +195,36 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	gain_text = "<span class='danger'>Bright lights seem irritating.</span>"
 	lose_text = "<span class='notice'>Enlightening.</span>"
 	medical_record_text = "Despite my warnings, the patient refuses turn on the lights, only to end up rolling down a full flight of stairs and into the cellar."
+
+/datum/quirk/lightless/add()
+	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, .proc/on_holder_moved)
+
+/datum/quirk/lightless/remove()
+	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
+	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "brightlight")
+
+/datum/quirk/lightless/proc/on_holder_moved(mob/living/source, atom/old_loc, dir, forced)
+	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
+		return
+
+	var/mob/living/carbon/human/human_holder = quirk_holder
+
+	if(human_holder.dna?.species.id in list(SPECIES_SHADOW, SPECIES_NIGHTMARE))
+		return
+
+	if((human_holder.sight & SEE_TURFS) == SEE_TURFS)
+		return
+
+	var/turf/holder_turf = get_turf(quirk_holder)
+
+	var/lums = holder_turf.get_lumcount()
+
+	if(lums < 0.8)
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "brightlight")
+		return
+
+	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "brightlight", /datum/mood_event/brightlight)
+
 
 /datum/quirk/lightless/on_process()
 	var/turf/T = get_turf(quirk_holder)
@@ -236,6 +305,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	gain_text = "<span class='userdanger'>...</span>"
 	lose_text = "<span class='notice'>You feel in tune with the world again.</span>"
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
+	processing_quirk = TRUE
 
 /datum/quirk/insanity/on_process()
 	if(quirk_holder.reagents.has_reagent(/datum/reagent/toxin/mindbreaker))
@@ -261,6 +331,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	lose_text = "<span class='notice'>You feel easier about talking again.</span>" //if only it were that easy!
 	medical_record_text = "Patient is usually anxious in social encounters and prefers to avoid them."
 	var/dumb_thing = TRUE
+	processing_quirk = TRUE
 
 /datum/quirk/social_anxiety/add()
 	RegisterSignal(quirk_holder, COMSIG_MOB_EYECONTACT, .proc/eye_contact)
@@ -383,7 +454,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 /datum/quirk/blindness/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/sunglasses/blindfold/white/glasses = new(get_turf(H))
-	if(!H.equip_to_slot_if_possible(glasses, SLOT_GLASSES, bypass_equip_delay_self = TRUE)) //if you can't put it on the user's eyes, put it in their hands, otherwise put it on their eyes eyes
+	if(!H.equip_to_slot_if_possible(glasses, ITEM_SLOT_EYES, bypass_equip_delay_self = TRUE)) //if you can't put it on the user's eyes, put it in their hands, otherwise put it on their eyes eyes
 		H.put_in_hands(glasses)
 	H.regenerate_icons()
 
@@ -416,3 +487,30 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	. = ..()
 	var/mob/living/carbon/human/H = quirk_holder
 	H?.cure_trauma_type(/datum/brain_trauma/severe/monophobia, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/no_smell
+	name = "Anosmia"
+	desc = "You can't smell anything! You won't be able to detect certain colorless gases."
+	value = -1
+	mob_trait = TRAIT_ANOSMIA
+	gain_text = "<span class='notice'>You can't smell anything!</span>"
+	lose_text = "<span class='notice'>You can smell again!</span>"
+	medical_record_text = "Patient suffers from anosmia and is incapable of smelling gases or particulates."
+
+/datum/quirk/paper_skin
+	name = "Paper Skin"
+	desc = "Your flesh is weaker, resulting in receiving cuts more easily."
+	value = -1
+	mob_trait = TRAIT_PAPER_SKIN
+	gain_text = "<span class='notice'>Your flesh feels weak!</span>"
+	lose_text = "<span class='notice'>Your flesh feels more durable!</span>"
+	medical_record_text = "Patient suffers from weak flesh, resulting in them receiving cuts far more easily."
+
+/datum/quirk/glass_bones
+	name = "Glass Bones"
+	desc = "Your bones are far more brittle, and more vulnerable to breakage."
+	value = -1
+	mob_trait = TRAIT_GLASS_BONES
+	gain_text = "<span class='notice'>Your bones feels weak!</span>"
+	lose_text = "<span class='notice'>Your bones feels more durable!</span>"
+	medical_record_text = "Patient suffers from brittle bones, resulting in them receiving breakages far more easily."

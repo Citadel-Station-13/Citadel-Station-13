@@ -18,7 +18,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	var/ruinSpawned = FALSE
 	var/mysteryRoom
 
-/obj/item/hilbertshotel/Initialize()
+/obj/item/hilbertshotel/Initialize(mapload)
 	. = ..()
 	//Load templates
 	INVOKE_ASYNC(src, .proc/prepare_rooms)
@@ -302,7 +302,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 		user.reset_perspective(parentSphere)
 		user.set_machine(src)
 		var/datum/action/peepholeCancel/PHC = new
-		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/scaled/impaired, 1)
 		PHC.Grant(user)
 		return TRUE
 
@@ -478,7 +478,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 /obj/item/paper/crumpled/docslogs
 	name = "Research Logs"
 
-/obj/item/paper/crumpled/docslogs/Initialize()
+/obj/item/paper/crumpled/docslogs/Initialize(mapload)
 	. = ..()
 	GLOB.hhmysteryRoomNumber = rand(1, SHORT_REAL_LIMIT)
 	info = {"

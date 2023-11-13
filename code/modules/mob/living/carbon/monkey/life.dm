@@ -3,7 +3,7 @@
 /mob/living/carbon/monkey
 
 
-/mob/living/carbon/monkey/BiologicalLife(seconds, times_fired)
+/mob/living/carbon/monkey/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(client)
@@ -162,7 +162,7 @@
 		for(var/X in burning_items)
 			var/obj/item/I = X
 			if(!(I.resistance_flags & FIRE_PROOF))
-				I.take_damage(fire_stacks, BURN, "fire", 0)
+				I.take_damage(fire_stacks, BURN, FIRE, 0)
 
 		adjust_bodytemperature(BODYTEMP_HEATING_MAX)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)

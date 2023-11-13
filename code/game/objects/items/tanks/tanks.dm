@@ -15,7 +15,7 @@
 	throw_range = 4
 	custom_materials = list(/datum/material/iron = 500)
 	actions_types = list(/datum/action/item_action/set_internals)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 80, ACID = 30)
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
@@ -48,7 +48,7 @@
 					var/obj/item/clothing/mask/M = check
 					if(M.mask_adjusted)
 						M.adjustmask(H)
-				if(CHECK_BITFIELD(check.clothing_flags, ALLOWINTERNALS))
+				if((check.clothing_flags & ALLOWINTERNALS))
 					internals = TRUE
 
 			if(!internals)
@@ -64,7 +64,7 @@
 	H.update_action_buttons_icon()
 
 
-/obj/item/tank/Initialize()
+/obj/item/tank/Initialize(mapload)
 	. = ..()
 
 	air_contents = new(volume) //liters
@@ -291,8 +291,8 @@
 			message_admins("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
 			log_game("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
 		//Give the gas a chance to build up more pressure through reacting
-		air_contents.react(src)
-		air_contents.react(src)
+		for(var/i in 1 to TANK_POST_FRAGMENT_REACTIONS)
+			air_contents.react(src)
 
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE

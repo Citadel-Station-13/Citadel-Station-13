@@ -342,7 +342,7 @@
 /obj/item/stack/medical/mesh/advanced/one
 	amount = 1
 
-/obj/item/stack/medical/mesh/Initialize()
+/obj/item/stack/medical/mesh/Initialize(mapload)
 	. = ..()
 	if(amount == max_amount)	 //only seal full mesh packs
 		is_open = FALSE
@@ -487,6 +487,9 @@
 	max_amount = 12	//Two synths worth of fixing, if every single bodypart of them has internal damage. Usually, probably more like 6-12.
 	icon_state = "nanogel"
 	var/being_applied = FALSE	//No doafter stacking.
+
+/obj/item/stack/medical/nanogel/one
+	amount = 1
 
 /obj/item/stack/medical/nanogel/try_heal(mob/living/M, mob/user, silent = FALSE)
 	if(being_applied)

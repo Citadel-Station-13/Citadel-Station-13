@@ -8,7 +8,7 @@
 	density = TRUE
 	CanAtmosPass = ATMOS_PASS_NO
 
-/obj/effect/clockwork/servant_blocker/Initialize()
+/obj/effect/clockwork/servant_blocker/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE)
 
@@ -38,7 +38,7 @@
 /obj/effect/clockwork/servant_blocker/singularity_pull()
 	return
 
-/obj/effect/clockwork/servant_blocker/ex_act(severity, target)
+/obj/effect/clockwork/servant_blocker/ex_act(severity, target, origin)
 	return
 
 /obj/effect/clockwork/servant_blocker/safe_throw_at()

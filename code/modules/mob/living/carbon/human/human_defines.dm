@@ -20,6 +20,11 @@
 	var/hair_color = "000"
 	var/hair_style = "Bald"
 
+	///Colour used for the hair gradient.
+	var/grad_color = "000"
+	///Style used for the hair gradient.
+	var/grad_style
+
 	//Facial hair colour and style
 	var/facial_hair_color = "000"
 	var/facial_hair_style = "Shaved"
@@ -80,6 +85,8 @@
 	var/hardcore_survival_score = 0
 
 	tooltips = TRUE
+
+	var/additional_language //the additional language this human can speak from their preference selection
 
 /// Unarmed parry data for human
 /datum/block_parry_data/unarmed/human

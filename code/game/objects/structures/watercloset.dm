@@ -16,7 +16,7 @@
 	attack_hand_speed = CLICK_CD_MELEE
 	attack_hand_is_action = TRUE
 
-/obj/structure/toilet/Initialize()
+/obj/structure/toilet/Initialize(mapload)
 	. = ..()
 	open = round(rand(0, 1))
 	update_icon()
@@ -48,7 +48,7 @@
 					GM.visible_message("<span class='danger'>[user] starts to give [GM] a swirlie!</span>", "<span class='userdanger'>[user] starts to give you a swirlie...</span>")
 					swirlie = GM
 					var/was_alive = (swirlie.stat != DEAD)
-					if(do_after(user, 3 SECONDS, target = src))
+					if(do_after(user, 3 SECONDS, src))
 						GM.visible_message("<span class='danger'>[user] gives [GM] a swirlie!</span>", "<span class='userdanger'>[user] gives you a swirlie!</span>", "<span class='hear'>You hear a toilet flushing.</span>")
 						if(iscarbon(GM))
 							var/mob/living/carbon/C = GM
@@ -138,7 +138,7 @@
 /obj/structure/toilet/secret
 	var/secret_type = null
 
-/obj/structure/toilet/secret/Initialize()
+/obj/structure/toilet/secret/Initialize(mapload)
 	. = ..()
 	if (secret_type)
 		new secret_type(src)
@@ -255,9 +255,9 @@
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/datum/looping_sound/showering/soundloop
 
-/obj/machinery/shower/Initialize()
+/obj/machinery/shower/Initialize(mapload)
 	. = ..()
-	soundloop = new(list(src), FALSE)
+	soundloop = new(src, FALSE)
 
 /obj/machinery/shower/Destroy()
 	QDEL_NULL(soundloop)
@@ -514,7 +514,7 @@
 						"<span class='notice'>You start washing your [washing_face ? "face" : "hands"]...</span>")
 	busy = TRUE
 
-	if(!do_after(user, 40, target = src))
+	if(!do_after(user, 4 SECONDS, src))
 		busy = FALSE
 		return
 
@@ -595,7 +595,7 @@
 	if(user.a_intent != INTENT_HARM)
 		to_chat(user, "<span class='notice'>You start washing [O]...</span>")
 		busy = TRUE
-		if(!do_after(user, 40, target = src))
+		if(!do_after(user, 4 SECONDS, src))
 			busy = FALSE
 			return 1
 		busy = FALSE
@@ -669,7 +669,7 @@
 			icon_state = "well_3"
 			return TRUE
 		else
-			to_chat(user, "<span class='warning'>You need at least tweenty-five pieces of sandstone!</span>")
+			to_chat(user, "<span class='warning'>You need at least twenty-five pieces of sandstone!</span>")
 			return
 	if(steps == 3 && S.tool_behaviour == TOOL_SHOVEL)
 		S.use_tool(src, user, 80, volume=100)

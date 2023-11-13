@@ -78,7 +78,7 @@ effective or pretty fucking useless.
 	var/ui_x = 320
 	var/ui_y = 335
 
-/obj/item/healthanalyzer/rad_laser/Initialize()
+/obj/item/healthanalyzer/rad_laser/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/identification/syndicate, ID_COMPONENT_DEL_ON_IDENTIFY, ID_COMPONENT_EFFECT_NO_ACTIONS, ID_COMPONENT_IDENTIFY_WITH_DECONSTRUCTOR)
 
@@ -208,7 +208,7 @@ effective or pretty fucking useless.
 	actions_types = list(/datum/action/item_action/toggle)
 
 /obj/item/shadowcloak/ui_action_click(mob/user)
-	if(user.get_item_by_slot(SLOT_BELT) == src)
+	if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
 		if(!on)
 			Activate(usr)
 		else
@@ -216,7 +216,7 @@ effective or pretty fucking useless.
 	return
 
 /obj/item/shadowcloak/item_action_slot_check(slot, mob/user, datum/action/A)
-	if(slot == SLOT_BELT)
+	if(slot == ITEM_SLOT_BELT)
 		return 1
 
 /obj/item/shadowcloak/proc/Activate(mob/living/carbon/human/user)
@@ -238,11 +238,11 @@ effective or pretty fucking useless.
 
 /obj/item/shadowcloak/dropped(mob/user)
 	..()
-	if(user && user.get_item_by_slot(SLOT_BELT) != src)
+	if(user && user.get_item_by_slot(ITEM_SLOT_BELT) != src)
 		Deactivate()
 
 /obj/item/shadowcloak/process()
-	if(user.get_item_by_slot(SLOT_BELT) != src)
+	if(user.get_item_by_slot(ITEM_SLOT_BELT) != src)
 		Deactivate()
 		return
 	var/turf/T = get_turf(src)

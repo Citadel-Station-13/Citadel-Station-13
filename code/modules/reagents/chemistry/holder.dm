@@ -14,6 +14,7 @@
 		GLOB.chemical_reagents_list[path] = D
 
 /proc/build_chemical_reactions_list()
+	message_admins("STARTY START START!")
 	//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
 	// It is filtered into multiple lists within a list.
 	// For example:
@@ -26,11 +27,20 @@
 	//Randomized need to go last since they need to check against conflicts with normal recipes
 	var/paths = subtypesof(/datum/chemical_reaction) - typesof(/datum/chemical_reaction/randomized) + subtypesof(/datum/chemical_reaction/randomized)
 	GLOB.chemical_reactions_list = list()
+	GLOB.normalized_chemical_reactions_list = list() // chemistry pda
+	GLOB.drink_reactions_list = list() // bartender pda
 
 	for(var/path in paths)
 
 		var/datum/chemical_reaction/D = new path()
 		var/list/reaction_ids = list()
+		// store recipes separately for bartender/chemistry cartridges
+		if(D.id && !D.is_secret) // don't show things like secretcatchem or secret sauce
+			var/datum/reagent/r = D.id
+			if(ispath(D.id, /datum/reagent/consumable))
+				GLOB.drink_reactions_list[initial(r.name)] = D
+			if(ispath(D.id, /datum/reagent))
+				GLOB.normalized_chemical_reactions_list[initial(r.name)] = D
 
 		if(D.required_reagents && D.required_reagents.len)
 			for(var/reaction in D.required_reagents)
@@ -42,6 +52,31 @@
 				GLOB.chemical_reactions_list[id] = list()
 			GLOB.chemical_reactions_list[id] += D
 			break // Don't bother adding ourselves to other reagent ids, it is redundant
+
+/proc/recipe_search(mob/M, list/reaction_list)
+	var/option = input(M, "Enter keyword to return a recipe.")
+	if(option)
+		option = lowertext(option)
+		var/list/reagents_required
+		var/found_reagent_name
+		var/required_temp
+		for(var/reagent_name in reaction_list)
+			if(findtext(lowertext(reagent_name), option))
+				var/datum/chemical_reaction/reaction = reaction_list[reagent_name]
+				found_reagent_name = reagent_name
+				reagents_required = reaction.required_reagents
+				required_temp = reaction.required_temp
+				break
+		if(length(reagents_required))
+			to_chat(M, "<b>Recipe found: [found_reagent_name]</b>[required_temp ? "<br>Required Temperature: [required_temp]K" : ""]<br>Required Reagents:")
+			var/reagents_required_string = ""
+			for(var/r in reagents_required)
+				var/datum/reagent/reagent = r
+				reagents_required_string += "<br>[initial(reagent.name)]: [reagents_required[r]]"
+			to_chat(M, reagents_required_string)
+			return
+		else
+			to_chat(M, "<span class='warning'>Reagent with term: [option] could not be located!</span>")
 
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -62,6 +97,7 @@
 	var/fermiIsReacting = FALSE //that prevents multiple reactions from occurring (i.e. add_reagent calls to process_reactions(), this stops any extra reactions.)
 	var/fermiReactID //instance of the chem reaction used during a fermireaction, kept here so it's cache isn't lost between loops/procs.
 	var/value_multiplier = DEFAULT_REAGENTS_VALUE //used for cargo reagents selling.
+	var/force_alt_taste = FALSE
 
 /datum/reagents/New(maximum=100, new_flags = NONE, new_value = DEFAULT_REAGENTS_VALUE)
 	maximum_volume = maximum
@@ -198,6 +234,7 @@
 		var/transfer_amount = T.volume * part
 		if(preserve_data)
 			trans_data = copy_data(T)
+			post_copy_data(T)
 		transferred += "[T] - [transfer_amount]"
 
 		R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, T.purity, pH, no_react = TRUE, ignore_pH = TRUE) //we only handle reaction after every reagent has been transfered.
@@ -238,7 +275,8 @@
 		var/datum/reagent/T = reagent
 		var/copy_amount = T.volume * part
 		if(preserve_data)
-			trans_data = T.data
+			trans_data = copy_data(T)
+			post_copy_data(T)
 		R.add_reagent(T.type, copy_amount * multiplier, trans_data)
 
 	src.update_total()
@@ -265,7 +303,8 @@
 		var/datum/reagent/current_reagent = CR
 		if(current_reagent.type == reagent)
 			if(preserve_data)
-				trans_data = current_reagent.data
+				trans_data = copy_data(current_reagent)
+				post_copy_data(current_reagent)
 			R.add_reagent(current_reagent.type, amount, trans_data, chem_temp, current_reagent.purity, pH, no_react = TRUE)
 			remove_reagent(current_reagent.type, amount, 1)
 			if(log && amount > 0)
@@ -344,6 +383,8 @@
 	if(owner && reagent)
 		if(!owner.reagent_check(reagent, delta_time, times_fired) != TRUE)
 			return
+		if(is_reagent_processing_invalid(reagent, owner))
+			return reagent.on_invalid_process(owner, delta_time, times_fired)
 		if(liverless && !reagent.self_consuming) //need to be metabolized
 			return
 		if(!reagent.metabolizing)
@@ -822,7 +863,7 @@
 	pH = REAGENT_NORMAL_PH
 	return 0
 
-/datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)
+/datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1, from_gas = 0)
 	var/react_type
 	if(isliving(A))
 		react_type = "LIVING"
@@ -846,9 +887,10 @@
 					touch_protection = L.get_permeability_protection()
 				R.reaction_mob(A, method, R.volume * volume_modifier, show_message, touch_protection)
 			if("TURF")
-				R.reaction_turf(A, R.volume * volume_modifier, show_message)
+				R.reaction_turf(A, R.volume * volume_modifier, show_message, from_gas)
 			if("OBJ")
 				R.reaction_obj(A, R.volume * volume_modifier, show_message)
+	SEND_SIGNAL(A, COMSIG_ATOM_EXPOSE_REAGENTS, cached_reagents, src, method, volume_modifier, show_message, from_gas)
 
 /datum/reagents/proc/holder_full()
 	if(total_volume >= maximum_volume)
@@ -856,17 +898,16 @@
 	return FALSE
 
 //Returns the average specific heat for all reagents currently in this holder.
-/datum/reagents/proc/specific_heat()
+/datum/reagents/proc/heat_capacity()
 	. = 0
-	var/cached_amount = total_volume		//cache amount
 	var/list/cached_reagents = reagent_list		//cache reagents
 	for(var/I in cached_reagents)
 		var/datum/reagent/R = I
-		. += R.specific_heat * (R.volume / cached_amount)
+		. += R.specific_heat * R.volume
 
 /datum/reagents/proc/adjust_thermal_energy(J, min_temp = 2.7, max_temp = 1000)
-	var/S = specific_heat()
-	chem_temp = clamp(chem_temp + (J / (S * total_volume)), min_temp, max_temp)
+	var/S = heat_capacity()
+	chem_temp = clamp(chem_temp + (J / S), min_temp, max_temp)
 	if(istype(my_atom, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RC = my_atom
 		RC.temp_check()
@@ -1115,52 +1156,64 @@
 
 	return trans_data
 
+///
+// Should be ran after using copy_data. Calls the reagent's post_copy_data, which usually does nothing.
+/datum/reagents/proc/post_copy_data(datum/reagent/current_reagent)
+	return current_reagent.post_copy_data()
+
 /datum/reagents/proc/get_reagent(type)
 	var/list/cached_reagents = reagent_list
 	. = locate(type) in cached_reagents
 
 /datum/reagents/proc/generate_taste_message(minimum_percent=15)
-	// the lower the minimum percent, the more sensitive the message is.
 	var/list/out = list()
-	var/list/tastes = list() //descriptor = strength
-	if(minimum_percent <= 100)
-		for(var/datum/reagent/R in reagent_list)
-			if(!R.taste_mult)
-				continue
-
-			if(istype(R, /datum/reagent/consumable/nutriment))
-				var/list/taste_data = R.data
-				for(var/taste in taste_data)
-					var/ratio = taste_data[taste]
-					var/amount = ratio * R.taste_mult * R.volume
-					if(taste in tastes)
-						tastes[taste] += amount
-					else
-						tastes[taste] = amount
-			else
-				var/taste_desc = R.taste_description
-				var/taste_amount = R.volume * R.taste_mult
-				if(taste_desc in tastes)
-					tastes[taste_desc] += taste_amount
-				else
-					tastes[taste_desc] = taste_amount
-		//deal with percentages
-		// TODO it would be great if we could sort these from strong to weak
-		var/total_taste = counterlist_sum(tastes)
-		if(total_taste > 0)
-			for(var/taste_desc in tastes)
-				var/percent = tastes[taste_desc]/total_taste * 100
-				if(percent < minimum_percent)
+	if(!force_alt_taste)
+		// the lower the minimum percent, the more sensitive the message is.
+		var/list/tastes = list() //descriptor = strength
+		if(minimum_percent <= 100)
+			for(var/datum/reagent/R in reagent_list)
+				if(!R.taste_mult)
 					continue
-				var/intensity_desc = "a hint of"
-				if(ISINRANGE(percent, minimum_percent * 2, minimum_percent * 3)|| percent == 100)
-					intensity_desc = ""
-				else if(percent > minimum_percent * 3)
-					intensity_desc = "the strong flavor of"
-				if(intensity_desc != "")
-					out += "[intensity_desc] [taste_desc]"
+
+				if(istype(R, /datum/reagent/consumable/nutriment))
+					var/list/taste_data = R.data
+					for(var/taste in taste_data)
+						var/ratio = taste_data[taste]
+						var/amount = ratio * R.taste_mult * R.volume
+						if(taste in tastes)
+							tastes[taste] += amount
+						else
+							tastes[taste] = amount
 				else
-					out += "[taste_desc]"
+					var/taste_desc = R.taste_description
+					var/taste_amount = R.volume * R.taste_mult
+					if(taste_desc in tastes)
+						tastes[taste_desc] += taste_amount
+					else
+						tastes[taste_desc] = taste_amount
+			//deal with percentages
+			// TODO it would be great if we could sort these from strong to weak
+			var/total_taste = counterlist_sum(tastes)
+			if(total_taste > 0)
+				for(var/taste_desc in tastes)
+					var/percent = tastes[taste_desc]/total_taste * 100
+					if(percent < minimum_percent)
+						continue
+					var/intensity_desc = "a hint of"
+					if(ISINRANGE(percent, minimum_percent * 2, minimum_percent * 3)|| percent == 100)
+						intensity_desc = ""
+					else if(percent > minimum_percent * 3)
+						intensity_desc = "the strong flavor of"
+					if(intensity_desc != "")
+						out += "[intensity_desc] [taste_desc]"
+					else
+						out += "[taste_desc]"
+
+	else
+		// alternate taste is to force the taste of the atom if its a food item
+		if(my_atom && isfood(my_atom))
+			var/obj/item/reagent_containers/food/snacks/F = my_atom
+			out = F.tastes
 
 	return english_list(out, "something indescribable")
 

@@ -28,7 +28,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/list/possible_names //If you leave this blank, it will use the global posibrain names
 	var/picked_name
 
-/obj/item/mmi/posibrain/Initialize()
+/obj/item/mmi/posibrain/Initialize(mapload)
 	. = ..()
 	brainmob = new(src)
 	var/new_name
@@ -159,8 +159,8 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	to_chat(brainmob, welcome_message)
 	brainmob.mind.assigned_role = new_role
 	brainmob.stat = CONSCIOUS
-	GLOB.dead_mob_list -= brainmob
-	GLOB.alive_mob_list += brainmob
+	brainmob.remove_from_dead_mob_list()
+	brainmob.add_to_alive_mob_list()
 
 	visible_message(new_mob_message)
 	check_success()

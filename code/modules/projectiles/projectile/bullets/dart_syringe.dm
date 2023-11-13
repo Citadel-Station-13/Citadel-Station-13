@@ -4,7 +4,7 @@
 	damage = 6
 	var/piercing = FALSE
 
-/obj/item/projectile/bullet/dart/Initialize()
+/obj/item/projectile/bullet/dart/Initialize(mapload)
 	. = ..()
 	create_reagents(50, NO_REACT, NO_REAGENTS_VALUE)
 
@@ -25,20 +25,20 @@
 									   "<span class='userdanger'>You were protected against \the [src]!</span>")
 
 	..(target, blocked)
-	DISABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
+	reagents.reagents_holder_flags &= ~(NO_REACT)
 	reagents.handle_reactions()
 	return BULLET_ACT_HIT
 
 /obj/item/projectile/bullet/dart/piercing
 	piercing = TRUE
 
-/obj/item/projectile/bullet/dart/metalfoam/Initialize()
+/obj/item/projectile/bullet/dart/metalfoam/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/aluminium, 15)
 	reagents.add_reagent(/datum/reagent/foaming_agent, 5)
 	reagents.add_reagent(/datum/reagent/toxin/acid, 5)
 
-/obj/item/projectile/bullet/dart/catranq/Initialize()
+/obj/item/projectile/bullet/dart/catranq/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/fermi/furranium, 5) // Turns out I don't even need to give this guy actual tranquilizer chems.
 
@@ -60,6 +60,8 @@
 			if(M.can_inject(null, FALSE, def_zone, piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 				..(target, blocked, TRUE)
 				for(var/datum/reagent/medicine/R in reagents.reagent_list) //OD prevention time!
+					if(R.type in GLOB.blacklisted_medchems)
+						continue
 					if(M.reagents.has_reagent(R.type))
 						if(R.overdose_threshold == 0 || emptrig == TRUE) //Is there a possible OD?
 							M.reagents.add_reagent(R.type, R.volume)

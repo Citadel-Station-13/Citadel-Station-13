@@ -54,6 +54,8 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 	var/max_result_reagents = 1
 	var/list/possible_results = list()
 
+	is_secret = TRUE
+
 /datum/chemical_reaction/randomized/proc/GenerateRecipe()
 	created = world.time
 	if(randomize_container)
@@ -175,7 +177,7 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 		return list()
 	. = ..()
 
-/obj/item/paper/secretrecipe/Initialize()
+/obj/item/paper/secretrecipe/Initialize(mapload)
 	. = ..()
 	if(SSpersistence.initialized)
 		UpdateInfo()

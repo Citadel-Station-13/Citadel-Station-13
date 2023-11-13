@@ -29,7 +29,7 @@
 	var/datum/action/cooldown/riot
 	///Number assigned to rats and mice, checked when determining infighting.
 
-/mob/living/simple_animal/hostile/regalrat/Initialize()
+/mob/living/simple_animal/hostile/regalrat/Initialize(mapload)
 	. = ..()
 	coffer = new /datum/action/cooldown/coffer
 	coffer.Grant(src)
@@ -90,7 +90,7 @@
 
 /datum/action/cooldown/coffer/Trigger()
 	. = ..()
-	if(!.)
+	if(!. || owner.stat != CONSCIOUS)
 		return
 	var/turf/T = get_turf(owner)
 	var/loot = rand(1,100)
@@ -135,7 +135,7 @@
 
 /datum/action/cooldown/riot/Trigger()
 	. = ..()
-	if(!.)
+	if(!. || owner.stat != CONSCIOUS)
 		return
 	var/cap = CONFIG_GET(number/ratcap)
 	var/something_from_nothing = FALSE
@@ -183,7 +183,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	faction = list("rat")
 
-/mob/living/simple_animal/hostile/rat/Initialize()
+/mob/living/simple_animal/hostile/rat/Initialize(mapload)
 	. = ..()
 	SSmobs.cheeserats += src
 	AddComponent(/datum/component/swarming)

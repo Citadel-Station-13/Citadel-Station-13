@@ -26,7 +26,7 @@
 	debug_power = 80
 	bombcheck = FALSE
 
-/obj/item/gun/blastcannon/Initialize()
+/obj/item/gun/blastcannon/Initialize(mapload)
 	. = ..()
 	if(!pin)
 		pin = new
@@ -114,7 +114,8 @@
 	icon_state = "blastwave"
 	damage = 0
 	nodamage = FALSE
-	movement_type = FLYING | UNSTOPPABLE
+	movement_type = FLYING
+	projectile_phasing = ALL		// just blows up the turfs lmao - Silly-Cons
 	var/heavyr = 0
 	var/mediumr = 0
 	var/lightr = 0
@@ -156,5 +157,5 @@
 	mediumr = max(mediumr - 1, 0)
 	lightr = max(lightr - 1, 0)
 
-/obj/item/projectile/blastwave/ex_act()
+/obj/item/projectile/blastwave/ex_act(severity, target, origin)
 	return

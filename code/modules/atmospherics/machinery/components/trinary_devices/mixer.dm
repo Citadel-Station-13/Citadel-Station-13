@@ -17,35 +17,27 @@
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
 /obj/machinery/atmospherics/components/trinary/mixer/CtrlClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(can_interact(user))
 		on = !on
-		update_icon()
+		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
+		update_appearance()
 	return ..()
 
 /obj/machinery/atmospherics/components/trinary/mixer/AltClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(can_interact(user))
 		target_pressure = MAX_OUTPUT_PRESSURE
-		update_icon()
+		investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
+		balloon_alert(user, "pressure output on set to [target_pressure] kPa")
+		update_appearance()
 	return ..()
 
-	//node 3 is the outlet, nodes 1 & 2 are intakes
-
-/obj/machinery/atmospherics/components/trinary/mixer/update_icon()
-	cut_overlays()
+/obj/machinery/atmospherics/components/trinary/mixer/update_overlays()
+	. = ..()
 	for(var/direction in GLOB.cardinals)
 		if(!(direction & initialize_directions))
 			continue
-		var/obj/machinery/atmospherics/node = findConnecting(direction)
 
-		var/image/cap
-		if(node)
-			cap = getpipeimage(icon, "cap", direction, node.pipe_color, piping_layer = piping_layer)
-		else
-			cap = getpipeimage(icon, "cap", direction, piping_layer = piping_layer)
-
-		add_overlay(cap)
-
-	return ..()
+		. += getpipeimage(icon, "cap", direction, pipe_color, piping_layer, TRUE)
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon_nopipes()
 	var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational()

@@ -12,7 +12,7 @@
 	pass_flags = PASSTABLE
 
 
-/obj/item/papercutter/Initialize()
+/obj/item/papercutter/Initialize(mapload)
 	. = ..()
 	storedcutter = new /obj/item/hatchet/cutterblade(src)
 	update_icon()
@@ -120,7 +120,7 @@
 	return ..()
 
 
-/obj/item/paperslip/Initialize()
+/obj/item/paperslip/Initialize(mapload)
 	. = ..()
 	pixel_x = initial(pixel_x) + rand(-5, 5)
 	pixel_y = initial(pixel_y) + rand(-5, 5)
@@ -132,6 +132,6 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "cutterblade"
 	item_state = "knife"
-	// inhand_icon_state = "knife"
+	// item_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'

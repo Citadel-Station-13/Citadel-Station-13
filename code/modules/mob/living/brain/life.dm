@@ -1,5 +1,5 @@
 
-/mob/living/brain/BiologicalLife(seconds, times_fired)
+/mob/living/brain/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	handle_emp_damage()
@@ -24,9 +24,6 @@
 			emp_damage = 0
 		else
 			emp_damage = max(emp_damage-1, 0)
-
-/mob/living/brain/handle_status_effects()
-	return
 
 /mob/living/brain/handle_traits()
 	return

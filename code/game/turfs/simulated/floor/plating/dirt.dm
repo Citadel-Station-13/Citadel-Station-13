@@ -19,3 +19,11 @@
 
 /turf/open/floor/plating/dirt/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
+
+/turf/open/floor/plating/dirt/space
+	baseturfs = /turf/baseturf_bottom
+	planetary_atmos = FALSE
+	desc = "Upon closer examination there's plating beneath the dirt."
+
+/turf/open/floor/plating/dirt/space/airless
+	initial_gas_mix = AIRLESS_ATMOS

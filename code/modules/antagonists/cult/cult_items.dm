@@ -39,7 +39,7 @@
 	armour_penetration = 35
 	actions_types = list(/datum/action/item_action/cult_dagger)
 
-/obj/item/melee/cultblade/dagger/Initialize()
+/obj/item/melee/cultblade/dagger/Initialize(mapload)
 	. = ..()
 	var/image/I = image(icon = 'icons/effects/blood.dmi' , icon_state = null, loc = src)
 	I.override = TRUE
@@ -62,7 +62,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")
 
-/obj/item/melee/cultblade/Initialize()
+/obj/item/melee/cultblade/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 40, 100)
 	AddElement(/datum/element/sword_point)
@@ -87,7 +87,7 @@
 	item_flags = NEEDS_PERMIT | DROPDEL
 	flags_1 = NONE
 
-/obj/item/melee/cultblade/ghost/Initialize()
+/obj/item/melee/cultblade/ghost/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
@@ -131,7 +131,7 @@
 	var/spin_cooldown = 250
 	var/dash_toggled = TRUE
 
-/obj/item/cult_bastard/Initialize()
+/obj/item/cult_bastard/Initialize(mapload)
 	. = ..()
 	set_light(4)
 	jaunt = new(src)
@@ -297,7 +297,7 @@
 	desc = "A torn, dust-caked hood. Strange letters line the inside."
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEEARS
 	flags_cover = HEADCOVERSEYES
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 40,"energy" = 20, "bomb" = 65, "bio" = 10, "rad" = 0, "fire" = 10, "acid" = 10)
+	armor = list(MELEE = 40, BULLET = 30, LASER = 40,ENERGY = 20, BOMB = 65, BIO = 10, RAD = 0, FIRE = 10, ACID = 10)
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -310,7 +310,7 @@
 	item_state = "cultrobes"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 40,"energy" = 20, "bomb" = 65, "bio" = 10, "rad" = 0, "fire" = 10, "acid" = 10)
+	armor = list(MELEE = 40, BULLET = 30, LASER = 40,ENERGY = 20, BOMB = 65, BIO = 10, RAD = 0, FIRE = 10, ACID = 10)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
@@ -326,7 +326,7 @@
 /obj/item/clothing/head/culthood/alt/ghost
 	item_flags = DROPDEL
 
-/obj/item/clothing/head/culthood/alt/ghost/Initialize()
+/obj/item/clothing/head/culthood/alt/ghost/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
@@ -340,7 +340,7 @@
 /obj/item/clothing/suit/cultrobes/alt/ghost
 	item_flags = DROPDEL
 
-/obj/item/clothing/suit/cultrobes/alt/ghost/Initialize()
+/obj/item/clothing/suit/cultrobes/alt/ghost/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
@@ -350,7 +350,7 @@
 	item_state = "magus"
 	desc = "A helm worn by the followers of Nar'Sie."
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES|HIDESNOUT
-	armor = list("melee" = 30, "bullet" = 30, "laser" = 30,"energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 10, "acid" = 10)
+	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 20, BOMB = 0, BIO = 0, RAD = 0, FIRE = 10, ACID = 10)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	mutantrace_variation = STYLE_MUZZLE
 
@@ -361,7 +361,7 @@
 	item_state = "magusred"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
-	armor = list("melee" = 50, "bullet" = 30, "laser" = 50,"energy" = 20, "bomb" = 25, "bio" = 10, "rad" = 0, "fire" = 10, "acid" = 10)
+	armor = list(MELEE = 50, BULLET = 30, LASER = 50,ENERGY = 20, BOMB = 25, BIO = 10, RAD = 0, FIRE = 10, ACID = 10)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/head/helmet/space/hardsuit/cult
@@ -369,7 +369,7 @@
 	desc = "A heavily-armored helmet worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	item_state = "cult_helmet"
-	armor = list("melee" = 60, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 40, "acid" = 75)
+	armor = list(MELEE = 60, BULLET = 50, LASER = 30,ENERGY = 15, BOMB = 30, BIO = 30, RAD = 30, FIRE = 40, ACID = 75)
 	brightness_on = 0
 	actions_types = list()
 
@@ -385,7 +385,7 @@
 	desc = "A heavily-armored exosuit worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
 	w_class = WEIGHT_CLASS_BULKY
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/tank/internals/)
-	armor = list("melee" = 70, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 40, "acid" = 75)
+	armor = list(MELEE = 70, BULLET = 50, LASER = 30,ENERGY = 15, BOMB = 30, BIO = 30, RAD = 30, FIRE = 40, ACID = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cult
 
 /obj/item/clothing/suit/space/hardsuit/cult/ComponentInitialize()
@@ -413,7 +413,7 @@
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
 	w_class = WEIGHT_CLASS_BULKY
-	armor = list("melee" = 50, "bullet" = 40, "laser" = 50,"energy" = 30, "bomb" = 50, "bio" = 30, "rad" = 30, "fire" = 50, "acid" = 60)
+	armor = list(MELEE = 50, BULLET = 40, LASER = 50,ENERGY = 30, BOMB = 50, BIO = 30, RAD = 30, FIRE = 50, ACID = 60)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
 	var/current_charges = 3
@@ -423,7 +423,7 @@
 	name = "empowered cultist armor"
 	desc = "Empowered garb which creates a powerful shield around the user."
 	icon_state = "cult_hoodalt"
-	armor = list("melee" = 50, "bullet" = 40, "laser" = 50,"energy" = 30, "bomb" = 50, "bio" = 30, "rad" = 30, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 50, BULLET = 40, LASER = 50,ENERGY = 30, BOMB = 50, BIO = 30, RAD = 30, FIRE = 50, ACID = 50)
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
@@ -473,7 +473,7 @@
 	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	armor = list("melee" = -50, "bullet" = -50, "laser" = -50,"energy" = -50, "bomb" = -50, "bio" = -50, "rad" = -50, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = -50, BULLET = -50, LASER = -50,ENERGY = -50, BOMB = -50, BIO = -50, RAD = -50, FIRE = 0, ACID = 0)
 	slowdown = -1
 	hoodtype = /obj/item/clothing/head/hooded/berserkerhood
 
@@ -483,7 +483,7 @@
 	icon_state = "culthood"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
-	armor = list("melee" = -50, "bullet" = -50, "laser" = -50, "energy" = -50, "bomb" = -50, "bio" = -50, "rad" = -50, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = -50, BULLET = -50, LASER = -50, ENERGY = -50, BOMB = -50, BIO = -50, RAD = -50, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
 	..()
@@ -660,40 +660,42 @@
 		return
 
 	if(istype(A, /obj/item))
-
-		var/list/cultists = list()
-		for(var/datum/mind/M in SSticker.mode.cult)
-			if(M.current && M.current.stat != DEAD)
-				cultists |= M.current
-		var/mob/living/cultist_to_receive = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in (cultists - user)
-		if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
-			return
-		if(!cultist_to_receive)
-			to_chat(user, "<span class='cult italic'>You require a destination!</span>")
-			log_game("Void torch failed - no target")
-			return
-		if(cultist_to_receive.stat == DEAD)
-			to_chat(user, "<span class='cult italic'>[cultist_to_receive] has died!</span>")
-			log_game("Void torch failed  - target died")
-			return
-		if(!iscultist(cultist_to_receive))
-			to_chat(user, "<span class='cult italic'>[cultist_to_receive] is not a follower of the Geometer!</span>")
-			log_game("Void torch failed - target was deconverted")
-			return
-		if(A in user.GetAllContents())
-			to_chat(user, "<span class='cult italic'>[A] must be on a surface in order to teleport it!</span>")
-			return
-		to_chat(user, "<span class='cult italic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!")
-		cultist_to_receive.put_in_hands(A)
-		charges--
-		to_chat(user, "\The [src] now has [charges] charge\s.")
-		if(charges == 0)
-			qdel(src)
+		transmit_item(A, user, proximity)
 
 	else
 		..()
 		to_chat(user, "<span class='warning'>\The [src] can only transport items!</span>")
 
+/obj/item/flashlight/flare/culttorch/proc/transmit_item(atom/movable/A, mob/user, proximity)
+	set waitfor = FALSE
+	var/list/cultists = list()
+	for(var/datum/mind/M in SSticker.mode.cult)
+		if(M.current && M.current.stat != DEAD)
+			cultists |= M.current
+	var/mob/living/cultist_to_receive = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in (cultists - user)
+	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
+		return
+	if(!cultist_to_receive)
+		to_chat(user, "<span class='cult italic'>You require a destination!</span>")
+		log_game("Void torch failed - no target")
+		return
+	if(cultist_to_receive.stat == DEAD)
+		to_chat(user, "<span class='cult italic'>[cultist_to_receive] has died!</span>")
+		log_game("Void torch failed  - target died")
+		return
+	if(!iscultist(cultist_to_receive))
+		to_chat(user, "<span class='cult italic'>[cultist_to_receive] is not a follower of the Geometer!</span>")
+		log_game("Void torch failed - target was deconverted")
+		return
+	if(A in user.GetAllContents())
+		to_chat(user, "<span class='cult italic'>[A] must be on a surface in order to teleport it!</span>")
+		return
+	to_chat(user, "<span class='cult italic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!")
+	cultist_to_receive.put_in_hands(A)
+	charges--
+	to_chat(user, "\The [src] now has [charges] charge\s.")
+	if(charges == 0)
+		qdel(src)
 
 /obj/item/cult_spear
 	name = "blood halberd"
@@ -714,7 +716,7 @@
 	var/wielded = FALSE // track wielded status on item
 
 
-/obj/item/cult_spear/Initialize()
+/obj/item/cult_spear/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
@@ -872,7 +874,7 @@
 	var/firing = FALSE
 	var/angle
 
-/obj/item/blood_beam/Initialize()
+/obj/item/blood_beam/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 

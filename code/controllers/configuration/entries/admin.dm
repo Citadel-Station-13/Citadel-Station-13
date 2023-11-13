@@ -23,12 +23,12 @@
 /datum/config_entry/flag/see_own_notes	//Can players see their own admin notes
 
 /datum/config_entry/number/note_fresh_days
-	config_entry_value = null
+	default = null
 	min_val = 0
 	integer = FALSE
 
 /datum/config_entry/number/note_stale_days
-	config_entry_value = null
+	default = null
 	min_val = 0
 	integer = FALSE
 
@@ -39,13 +39,15 @@
 
 /datum/config_entry/flag/announce_admin_login
 
-/datum/config_entry/string/centcom_ban_db	// URL for the CentCom Galactic Ban DB API
+/datum/config_entry/string/centcom_ban_db // URL for the CentCom Galactic Ban DB API
+
+/datum/config_entry/string/centcom_source_whitelist
 
 /datum/config_entry/flag/autoadmin  // if autoadmin is enabled
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/string/autoadmin_rank	// the rank for autoadmins
-	config_entry_value = "Game Master"
+	default = "Game Master"
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/flag/allow_admin_ooccolor	// Allows admins with relevant permissions to have their own ooc colour
@@ -62,3 +64,18 @@
 /datum/config_entry/flag/automute_on	//enables automuting/spam prevention
 
 /datum/config_entry/flag/debug_admin_hrefs
+
+/datum/config_entry/flag/auto_deadmin_players
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/auto_deadmin_antagonists
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/auto_deadmin_heads
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/auto_deadmin_silicons
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/auto_deadmin_security
+	protection = CONFIG_ENTRY_LOCKED

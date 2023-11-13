@@ -68,7 +68,7 @@
 	RECIPE_GLAIVE = /obj/item/smithing/glaivehead,
 	RECIPE_PIKE = /obj/item/smithing/pikehead)
 
-/obj/structure/anvil/Initialize()
+/obj/structure/anvil/Initialize(mapload)
 	..()
 	currentquality = anvilquality
 
@@ -283,6 +283,13 @@
 /obj/structure/anvil/obtainable/basic
 	name = "anvil"
 	desc = "An anvil. It's got wheels bolted to the bottom."
+	anvilquality = 0
+	itemqualitymax = 6
+
+/obj/structure/anvil/obtainable/bone
+	name = "bone anvil"
+	desc = "An anvil. It's made of goliath bones and hide and held together by watcher sinews."
+	icon_state = "bonevil"
 	anvilquality = 0
 	itemqualitymax = 6
 

@@ -144,6 +144,7 @@
 				newletter = "nglu"
 			if(5)
 				newletter = "glor"
+			else
 		. += newletter
 	return sanitize(.)
 
@@ -228,22 +229,38 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	return copytext_char(sanitize(.),1,MAX_MESSAGE_LEN)
 
 /proc/shake_camera(mob/M, duration, strength=1)
-	if(!M || !M.client || duration < 1)
+	set waitfor = FALSE
+	if(!M || !M.client || duration <= 0)
 		return
 	var/client/C = M.client
+	if (C.prefs.screenshake==0)
+		return
 	var/oldx = C.pixel_x
 	var/oldy = C.pixel_y
-	var/max = strength*world.icon_size
-	var/min = -(strength*world.icon_size)
+	var/clientscreenshake = (C.prefs.screenshake * 0.01)
+	var/max = (strength*clientscreenshake) * world.icon_size
+	var/min = -((strength*clientscreenshake) * world.icon_size)
+	var/roundedduration = -round(-duration) // round() with only one arg will always round down. so uh. this is Something all right
 
-	for(var/i in 0 to duration-1)
+	for(var/i in 0 to roundedduration-1)
+		duration--
 		if (i == 0)
-			animate(C, pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
+			animate(C, pixel_x=(rand(min,max)*duration), pixel_y=(rand(min,max)*duration), time=1)
 		else
 			animate(pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
 	animate(pixel_x=oldx, pixel_y=oldy, time=1)
 
-
+/proc/directional_recoil(mob/M, strength=1, angle = 0)
+	if(!M || !M.client)
+		return
+	var/client/C = M.client
+	var/client_screenshake = (C.prefs.recoil_screenshake * 0.01)
+	strength *= client_screenshake
+	var/recoil_x = -sin(angle)*4*strength + rand(-strength, strength)
+	var/recoil_y = -cos(angle)*4*strength + rand(-strength, strength)
+	animate(C, pixel_x=recoil_x, pixel_y=recoil_y, time=1, easing=SINE_EASING|EASE_OUT, flags=ANIMATION_PARALLEL|ANIMATION_RELATIVE)
+	animate(pixel_x=0, pixel_y=0, time=3, easing=SINE_EASING|EASE_IN) // according to bhjin this works on more recent byond versions
+	// if you havent updated uuh sucks to be you then
 
 /proc/findname(msg)
 	if(!istext(msg))
@@ -568,7 +585,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 //Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
-	return stat == DEAD || silicon_privileges //Dead guys and silicons can always see reagents
+	return stat == DEAD || silicon_privileges || HAS_TRAIT(src, TRAIT_REAGENT_SCANNER) //Dead guys and silicons can always see reagents
 
 /mob/proc/is_blind()
 	SHOULD_BE_PURE(TRUE)

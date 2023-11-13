@@ -14,6 +14,7 @@
 	taste_description = "alcohol"
 	var/boozepwr = 65 //Higher numbers equal higher hardness, higher hardness equals more intense alcohol poisoning
 	pH = 7.33
+	boiling_point = 351.38
 	value = REAGENT_VALUE_VERY_COMMON //don't bother tweaking all drinks values, way too many can easily be done roundstart or with an upgraded dispenser.
 
 /*
@@ -41,13 +42,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(!iscarbon(L))
 		return
 
-	var/mob/living/carbon/C = L
-	if(HAS_TRAIT(C, TRAIT_ROBOTIC_ORGANISM))
-		C.reagents.remove_reagent(type, amount, FALSE)
-
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/C)
 	if(HAS_TRAIT(C, TRAIT_TOXIC_ALCOHOL))
-		C.adjustToxLoss((boozepwr/25)*REM,forced = TRUE)
+		C.adjustToxLoss((boozepwr/25)*REAGENTS_EFFECT_MULTIPLIER,forced = TRUE)
 	else if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER)
 		var/booze_power = boozepwr
 		if(HAS_TRAIT(C, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
@@ -88,6 +85,31 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				S.success_multiplier = max(0.1*power_multiplier, S.success_multiplier)
 				// +10% success propability on each step, useful while operating in less-than-perfect conditions
 	return ..()
+
+/datum/reagent/consumable/ethanol/define_gas() // So that all alcohols have the same gas, i.e. "ethanol"
+	var/datum/gas/G = new
+	G.id = GAS_ETHANOL
+	G.name = "Ethanol"
+	G.enthalpy = -234800
+	G.specific_heat = 38
+	G.fire_products = list(GAS_CO2 = 1, GAS_H2O = 1.5)
+	G.fire_burn_rate = 1 / 3
+	G.fire_temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
+	G.color = "#404030"
+	G.breath_reagent = /datum/reagent/consumable/ethanol
+	G.group = GAS_GROUP_CHEMICALS
+	return G
+
+/datum/reagent/consumable/ethanol/get_gas()
+	var/datum/auxgm/cached_gas_data = GLOB.gas_data
+	. = GAS_ETHANOL
+	if(!(. in cached_gas_data.ids))
+		var/datum/gas/G = define_gas()
+		if(istype(G))
+			cached_gas_data.add_gas(G)
+		else // this codepath should probably not happen at all, since we never use get_gas() on anything with no boiling point
+			return null
+
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
@@ -1365,7 +1387,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(50)
 	M.dizziness +=2
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 150)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REAGENTS_EFFECT_MULTIPLIER, 150)
 	if(prob(20) && !holder.has_reagent(/datum/reagent/consumable/ethanol/neuroweak))
 		M.adjustStaminaLoss(10)
 		M.drop_all_held_items()
@@ -1376,7 +1398,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			ADD_TRAIT(M, t, type)
 			M.adjustStaminaLoss(10)
 		if(current_cycle > 30)
-			M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
+			M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REAGENTS_EFFECT_MULTIPLIER)
 			if(current_cycle > 50 && prob(15))
 				if(!M.undergoing_cardiac_arrest() && M.can_heartattack())
 					M.set_heartattack(TRUE)
@@ -1401,13 +1423,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/neuroweak/on_mob_life(mob/living/carbon/M)
 	if(holder.has_reagent(/datum/reagent/consumable/ethanol/neurotoxin))
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1*REM, 150)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1*REAGENTS_EFFECT_MULTIPLIER, 150)
 		M.reagents.remove_reagent(/datum/reagent/consumable/ethanol/neurotoxin, 1.5 * REAGENTS_METABOLISM, FALSE)
 	else if(holder.has_reagent(/datum/reagent/toxin/fentanyl))
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1*REM, 150)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1*REAGENTS_EFFECT_MULTIPLIER, 150)
 		M.reagents.remove_reagent(/datum/reagent/toxin/fentanyl, 0.75 * REAGENTS_METABOLISM, FALSE)
 	else
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.5*REM, 150)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.5*REAGENTS_EFFECT_MULTIPLIER, 150)
 		M.dizziness +=2
 	..()
 
@@ -1664,14 +1686,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/heal_points = 10
 	if(L.health <= 0)
 		heal_points = 20 //heal more if we're in softcrit
-	for(var/i in 1 to min(volume, heal_points)) //only heals 1 point of damage per unit on add, for balance reasons
-		L.adjustBruteLoss(-1)
-		L.adjustFireLoss(-1)
-		L.adjustToxLoss(-1)
-		L.adjustOxyLoss(-1)
-		L.adjustStaminaLoss(-1)
+	heal_points = min(volume, heal_points)
+	L.adjustBruteLoss(-heal_points)
+	L.adjustFireLoss(-heal_points)
+	L.adjustToxLoss(-heal_points)
+	L.adjustOxyLoss(-heal_points)
+	L.adjustStaminaLoss(-heal_points)
 	L.visible_message("<span class='warning'>[L] shivers with renewed vigor!</span>", "<span class='notice'>One taste of [lowertext(name)] fills you with energy!</span>")
-	if(!L.stat && heal_points == 20) //brought us out of softcrit
+	if(!L.stat && L.health > 0) //brought us out of softcrit
 		L.visible_message("<span class='danger'>[L] lurches to [L.p_their()] feet!</span>", "<span class='boldnotice'>Up and at 'em, kid.</span>")
 
 /datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_life(mob/living/L)
@@ -1925,7 +1947,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/fernet/on_mob_life(mob/living/carbon/M)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
-		M.adjustToxLoss(1*REM, 0)
+		M.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjust_nutrition(-5)
 	M.overeatduration = 0
 	return ..()
@@ -1943,7 +1965,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/fernet_cola/on_mob_life(mob/living/carbon/M)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
-		M.adjustToxLoss(0.5*REM, 0)
+		M.adjustToxLoss(0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjust_nutrition(-3)
 	M.overeatduration = 0
 	return ..()

@@ -16,7 +16,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "pen"
 	item_state = "pen"
-	// inhand_icon_state = "pen"
+	// item_state = "pen"
 	// worn_icon_state = "pen"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS
 	throwforce = 0
@@ -105,22 +105,22 @@
 	custom_materials = list(/datum/material/gold = 750)
 	sharpness = SHARP_EDGED
 	resistance_flags = FIRE_PROOF
-	unique_reskin = list("Oak" = "pen-fountain-o",
-						"Gold" = "pen-fountain-g",
-						"Rosewood" = "pen-fountain-r",
-						"Black and Silver" = "pen-fountain-b",
-						"Command Blue" = "pen-fountain-cb"
-						)
+	unique_reskin = list(
+		"Oak" = list("icon_state" = "pen-fountain-o"),
+		"Gold" = list("icon_state" = "pen-fountain-g"),
+		"Rosewood" = list("icon_state" = "pen-fountain-r"),
+		"Black and Silver" = list("icon_state" = "pen-fountain-b"),
+		"Command Blue" = list("icon_state" = "pen-fountain-cb")
+	)
 	embedding = list("embed_chance" = 75)
 
-/obj/item/pen/fountain/captain/Initialize()
+/obj/item/pen/fountain/captain/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 200, 115) //the pen is mightier than the sword
 
 /obj/item/pen/fountain/captain/reskin_obj(mob/M)
-	..()
-	if(current_skin)
-		desc = "It's an expensive [current_skin] fountain pen. The nib is quite sharp."
+	. = ..()
+	desc = "It's an expensive [current_skin] fountain pen. The nib is quite sharp."
 
 /obj/item/pen/attack_self(mob/living/carbon/user)
 	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num
@@ -148,6 +148,10 @@
 /obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
 	. = ..()
 	//Changing name/description of items. Only works if they have the UNIQUE_RENAME object flag set
+	try_modify_object(O, user, proximity)
+
+/obj/item/pen/proc/try_modify_object(obj/O, mob/living/user, proximity)
+	set waitfor = FALSE
 	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
 		var/penchoice = input(user, "What would you like to edit?", "Rename, change description or reset both?") as null|anything in list("Rename","Change description","Reset")
 		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
@@ -169,7 +173,7 @@
 				O.renamedByPlayer = TRUE
 
 		if(penchoice == "Change description")
-			var/input = stripped_input(user,"Describe [O] here:", ,"[O.desc]", 140)
+			var/input = stripped_input(user,"Describe [O] here:", ,"[O.desc]", 350)
 			var/olddesc = O.desc
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
@@ -208,7 +212,7 @@
 				reagents.trans_to(M, reagents.total_volume, log = "sleepypen inject")
 
 
-/obj/item/pen/sleepy/Initialize()
+/obj/item/pen/sleepy/Initialize(mapload)
 	. = ..()
 	create_reagents(45, OPENCONTAINER)
 	reagents.add_reagent(/datum/reagent/toxin/chloralhydrate, 20)
@@ -285,7 +289,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "digging_pen"
 	item_state = "pen"
-	// inhand_icon_state = "pen"
+	// item_state = "pen"
 	// worn_icon_state = "pen"
 	force = 3
 	w_class = WEIGHT_CLASS_TINY

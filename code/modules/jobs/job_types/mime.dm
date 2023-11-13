@@ -20,10 +20,14 @@
 	display_order = JOB_DISPLAY_ORDER_MIME
 
 	threat = 0
+	
+	family_heirlooms = list(
+		/obj/item/reagent_containers/food/snacks/baguette
+	)
 
-/datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
+/datum/job/mime/after_spawn(mob/living/carbon/human/H, client/C)
 	. = ..()
-	H.apply_pref_name("mime", M.client)
+	H.apply_pref_name("mime", C)
 
 /datum/outfit/job/mime
 	name = "Mime"

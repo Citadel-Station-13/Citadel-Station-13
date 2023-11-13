@@ -54,7 +54,7 @@
 	resistance_flags = NONE
 	max_integrity = 100
 	integrity_failure = 0.5
-	armor = list("melee" = 50, "bullet" = 20, "laser" = 30, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60)
+	armor = list(MELEE = 50, BULLET = 20, LASER = 30, ENERGY = 0, BOMB = 50, BIO = 0, RAD = 0, FIRE = 70, ACID = 60)
 
 /obj/structure/closet/crate/coffin/meatcoffin
 	name = "meat coffin"
@@ -69,7 +69,7 @@
 	material_drop = /obj/item/reagent_containers/food/snacks/meat/slab
 	material_drop_amount = 3
 	integrity_failure = 0.57
-	armor = list("melee" = 70, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 70, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 100)
+	armor = list(MELEE = 70, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 70, BIO = 0, RAD = 0, FIRE = 70, ACID = 100)
 
 /obj/structure/closet/crate/coffin/metalcoffin
 	name = "metal coffin"
@@ -85,7 +85,7 @@
 	material_drop_amount = 5
 	max_integrity = 200
 	integrity_failure = 0.25
-	armor = list("melee" = 40, "bullet" = 15, "laser" = 50, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60)
+	armor = list(MELEE = 40, BULLET = 15, LASER = 50, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 60)
 
 //////////////////////////////////////////////
 

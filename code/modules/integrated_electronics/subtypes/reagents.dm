@@ -6,7 +6,7 @@
 	cooldown_per_use = 10
 	var/volume = 0
 
-/obj/item/integrated_circuit/reagent/Initialize()
+/obj/item/integrated_circuit/reagent/Initialize(mapload)
 	. = ..()
 	if(volume)
 		create_reagents(volume)
@@ -75,9 +75,9 @@
 	var/transfer_amount = 10
 	var/busy = FALSE
 
-/obj/item/integrated_circuit/reagent/injector/Initialize()
+/obj/item/integrated_circuit/reagent/injector/Initialize(mapload)
 	. = ..()
-	ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+	reagents.reagents_holder_flags |= OPENCONTAINER
 
 /obj/item/integrated_circuit/reagent/injector/on_reagent_change(changetype)
 	push_vol()
@@ -271,9 +271,9 @@
 	activators = list("push ref" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
-/obj/item/integrated_circuit/reagent/storage/Initialize()
+/obj/item/integrated_circuit/reagent/storage/Initialize(mapload)
 	. = ..()
-	ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+	reagents.reagents_holder_flags |= OPENCONTAINER
 
 /obj/item/integrated_circuit/reagent/storage/do_work()
 	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
@@ -301,9 +301,9 @@
 	complexity = 8
 	spawn_flags = IC_SPAWN_RESEARCH
 
-/obj/item/integrated_circuit/reagent/storage/cryo/Initialize()
+/obj/item/integrated_circuit/reagent/storage/cryo/Initialize(mapload)
 	. = ..()
-	ENABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
+	reagents.reagents_holder_flags |= NO_REACT
 
 /obj/item/integrated_circuit/reagent/storage/grinder
 	name = "reagent grinder"
@@ -520,7 +520,7 @@
 	else
 		power_draw_idle = 0
 
-/obj/item/integrated_circuit/reagent/storage/heater/Initialize()
+/obj/item/integrated_circuit/reagent/storage/heater/Initialize(mapload)
 	.=..()
 	START_PROCESSING(SScircuit, src)
 
@@ -572,9 +572,9 @@
 	var/smoke_radius = 5
 	var/notified = FALSE
 
-/obj/item/integrated_circuit/reagent/smoke/Initialize()
+/obj/item/integrated_circuit/reagent/smoke/Initialize(mapload)
 	. = ..()
-	ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+	reagents.reagents_holder_flags |= OPENCONTAINER
 
 /obj/item/integrated_circuit/reagent/smoke/on_reagent_change(changetype)
 	//reset warning only if we have reagents now
@@ -630,9 +630,9 @@
 	power_draw_per_use = 15
 	var/busy = FALSE
 
-/obj/item/integrated_circuit/reagent/extinguisher/Initialize()
+/obj/item/integrated_circuit/reagent/extinguisher/Initialize(mapload)
 	.=..()
-	ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+	reagents.reagents_holder_flags |= OPENCONTAINER
 	set_pin_data(IC_OUTPUT,2, src)
 
 /obj/item/integrated_circuit/reagent/extinguisher/on_reagent_change(changetype)

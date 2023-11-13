@@ -32,7 +32,7 @@
 	verb_yell = "growls loudly"
 	del_on_death = TRUE
 
-/mob/living/simple_animal/bread/hostile/Initialize()
+/mob/living/simple_animal/bread/hostile/Initialize(mapload)
 	. = ..()
 	var/area/A = get_area(src)
 	if(A)
@@ -62,7 +62,7 @@
 	user.transfer_ckey(src, FALSE)
 	density = TRUE
 
-/mob/living/simple_animal/hostile/bread/ex_act()
+/mob/living/simple_animal/hostile/bread/ex_act(severity, target, origin)
 	return
 
 /mob/living/simple_animal/hostile/bread/start_pulling()

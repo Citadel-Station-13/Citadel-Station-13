@@ -5,7 +5,7 @@
 /mob/living/carbon/adjust_drugginess(amount)
 	druggy = max(druggy+amount, 0)
 	if(druggy)
-		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
+		overlay_fullscreen("high", /atom/movable/screen/fullscreen/tiled/high)
 		throw_alert("high", /atom/movable/screen/alert/high)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "high", /datum/mood_event/high)
 		sound_environment_override = SOUND_ENVIRONMENT_DRUGGED
@@ -18,7 +18,7 @@
 /mob/living/carbon/set_drugginess(amount)
 	druggy = max(amount, 0)
 	if(druggy)
-		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
+		overlay_fullscreen("high", /atom/movable/screen/fullscreen/tiled/high)
 		throw_alert("high", /atom/movable/screen/alert/high)
 	else
 		clear_fullscreen("high")

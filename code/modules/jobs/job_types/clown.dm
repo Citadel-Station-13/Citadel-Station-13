@@ -21,6 +21,10 @@
 
 	display_order = JOB_DISPLAY_ORDER_CLOWN
 	threat = 0 // honk
+	
+	family_heirlooms = list(
+		/obj/item/bikehorn/golden
+	)
 
 /datum/outfit/job/clown
 	name = "Clown"
@@ -48,6 +52,11 @@
 	box = /obj/item/storage/box/hug/survival
 
 	chameleon_extras = /obj/item/stamp/clown
+
+/datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly)
+	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_BANANIUM_SHIPMENTS))
+		backpack_contents[/obj/item/stack/sheet/mineral/bananium] = 5
 
 /datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()

@@ -31,7 +31,7 @@
 	if(storedpda)
 		. += "[initial(icon_state)]-closed"
 
-/obj/machinery/pdapainter/Initialize()
+/obj/machinery/pdapainter/Initialize(mapload)
 	. = ..()
 	var/list/blocked = list(
 		/obj/item/pda/ai/pai,
@@ -58,9 +58,9 @@
 		storedpda.forceMove(loc)
 		storedpda = null
 
-/obj/machinery/pdapainter/contents_explosion(severity, target)
+/obj/machinery/pdapainter/contents_explosion(severity, target, origin)
 	if(storedpda)
-		storedpda.ex_act(severity, target)
+		storedpda.ex_act(severity, target, origin)
 
 /obj/machinery/pdapainter/handle_atom_del(atom/A)
 	if(A == storedpda)

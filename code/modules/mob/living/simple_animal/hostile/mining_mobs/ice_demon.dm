@@ -62,7 +62,7 @@
 	SLEEP_CHECK_DEATH(8)
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/ice_demon/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/asteroid/ice_demon/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(target)

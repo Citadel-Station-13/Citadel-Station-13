@@ -45,13 +45,21 @@ Buildable meters
 	if(make_from)
 		make_from_existing(make_from)
 	else
-		pipe_type = _pipe_type
+		if(!initial(src.pipe_type))
+			pipe_type = _pipe_type
 		setDir(_dir)
 
 	update()
 	pixel_x += rand(-5, 5)
 	pixel_y += rand(-5, 5)
+	register_context()
 	return ..()
+
+/obj/item/pipe/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Fasten")
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/pipe/proc/make_from_existing(obj/machinery/atmospherics/make_from)
 	setDir(make_from.dir)
