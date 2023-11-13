@@ -14,7 +14,7 @@
 
 /obj/item/barthpot/attackby(obj/item/I, mob/user, params)
 	if(BallTutorial)
-		say("Hello and welcome to the annual Citadelstation Spookyball 2021! CENTCOM requisitioned this old hospital as a new colony site two years ago, and we’re back again after a few additions here and there. Next to me you can find all the tools you’ll need to build a nice private house, if you’re here for that kind of thing. The axes will chop trees, and give you wood. Shovels will remove grass and things, which you can use the grass to make beds and backets. The pickaxe will allow you pick out the nearby rocks, if you’re more interested in building a cave dwelling. Finally the umbrella and light sources are because it’s spooky, and it might rain! As for interesting spots; There’s the old abandoned mansion which you can get to by going through the entrance and towards the east. There’s also a mech arena directly south, and a racetrack in the caves to the right of the arena, follow the lanterns. And make sure to explore the caves too! Lots of neat things to find!")
+		say("Hello and welcome to the annual Citadel Station Spooky Ball [time2text(world.realtime, "YYYY")]! CENTCOM requisitioned this old hospital as a new colony site [text2num(time2text(world.realtime,"YYYY")) - 2019] years ago, and we’re back again after a few additions here and there. Next to me you can find all the tools you’ll need to build a nice private house, if you’re here for that kind of thing. The axes will chop trees, and give you wood. Shovels will remove grass and things, which you can use the grass to make beds and backets. The pickaxe will allow you pick out the nearby rocks, if you’re more interested in building a cave dwelling. Finally the umbrella and light sources are because it’s spooky, and it might rain! As for interesting spots; There’s the old abandoned mansion which you can get to by going through the entrance and towards the east. There’s also a mech arena directly south, and a racetrack in the caves to the right of the arena, follow the lanterns. And make sure to explore the caves too! Lots of neat things to find!")
 		return
 	if(!active)
 		say("Meow!")
@@ -24,7 +24,7 @@
 		if(istype(I, I2))
 			qdel(I)
 			new /obj/item/reagent_containers/food/snacks/special_candy(loc)
-			to_chat(user, "<span class='notice'>You add the [I.name] to the pot and watch as it melts into the mixture, a candy crystalising in it's wake.</span>")
+			to_chat(user, "<span class='notice'>You add the [I.name] to the pot and watch as it melts into the mixture, a candy crystallizing in it's wake.</span>")
 			say("Hooray! Thank you!")
 			items_list -= I2
 			return
@@ -32,7 +32,7 @@
 
 /obj/item/barthpot/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(BallTutorial)
-		say("Hello and welcome to the annual Citadelstation Spookyball 2021! CENTCOM requisitioned this old hospital as a new colony site two years ago, and we’re back again after a few additions here and there. Next to me you can find all the tools you’ll need to build a nice private house, if you’re here for that kind of thing. The axes will chop trees, and give you wood. Shovels will remove grass and things, which you can use the grass to make beds and backets. The pickaxe will allow you pick out the nearby rocks, if you’re more interested in building a cave dwelling. Finally the umbrella and light sources are because it’s spooky, and it might rain! As for interesting spots; There’s the old abandoned mansion which you can get to by going through the entrance and towards the east. There’s also a mech arena directly south, and a racetrack in the caves to the right of the arena, follow the lanterns. And make sure to explore the caves too! Lots of neat things to find!")
+		say("Hello and welcome to the annual Citadel Station Spooky Ball [time2text(world.realtime, "YYYY")]! CENTCOM requisitioned this old hospital as a new colony site [text2num(time2text(world.realtime,"YYYY")) - 2019] years ago, and we’re back again after a few additions here and there. Next to me you can find all the tools you’ll need to build a nice private house, if you’re here for that kind of thing. The axes will chop trees, and give you wood. Shovels will remove grass and things, which you can use the grass to make beds and backets. The pickaxe will allow you pick out the nearby rocks, if you’re more interested in building a cave dwelling. Finally the umbrella and light sources are because it’s spooky, and it might rain! As for interesting spots; There’s the old abandoned mansion which you can get to by going through the entrance and towards the east. There’s also a mech arena directly south, and a racetrack in the caves to the right of the arena, follow the lanterns. And make sure to explore the caves too! Lots of neat things to find!")
 		return
 	if(!active)
 		say("Meow!")
@@ -40,7 +40,7 @@
 	say("Hello there, I'm Bartholomew, Jacqueline's Familiar.")
 	sleep(20)
 
-	say("I'm currently seeking items to put into my pot, if we get the right items, it should crystalise into a magic candy!")
+	say("I'm currently seeking items to put into my pot, if we get the right items, it should crystalize into a magic candy!")
 	if(!iscarbon(user))
 		say("Though... I'm not sure you can help me.")
 
