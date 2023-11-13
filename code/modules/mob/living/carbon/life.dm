@@ -713,6 +713,12 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(istype(head_item, /obj/item/clothing/head/helmet/space) && istype(suit_item, /obj/item/clothing/suit/space))
 		return 1
 
+	if(istype(head_item, /obj/item/clothing/head/mod) && istype(suit_item, /obj/item/clothing/suit/mod))
+		var/obj/item/clothing/suit/mod/modsuit = suit_item
+		var/obj/item/mod/control/mod_control = modsuit.mod
+		if(mod_control && mod_control.active)
+			return 1
+
 	if(T && is_mining_level(T.z) && istype(head_item, /obj/item/clothing/head/hooded/explorer) && istype(suit_item, /obj/item/clothing/suit/hooded/explorer))
 		return 1
 
