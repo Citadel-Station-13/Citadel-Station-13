@@ -362,7 +362,7 @@
 	restricted_roles = list("AI", "Cyborg")
 	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
 	required_enemies = list(0,0,0,0,0,0,0,0,0,0)
-	weight = 1
+	weight = 0
 	cost = 20
 	requirements = list(101,101,100,60,40,20,20,20,10,10)
 	repeatable = TRUE
