@@ -579,6 +579,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 // called when power status changes
 
 /area/proc/power_change()
+	SHOULD_NOT_SLEEP(TRUE)
 	if(contents.len < GLOB.machines.len) // it would be faster to loop over contents
 		for(var/obj/machinery/M in src) // for each machine in the area
 			M.power_change() // reverify power status (to update icons etc.)
