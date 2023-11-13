@@ -756,7 +756,7 @@
 
 /datum/action/item_action/toggle_scope_zoom/IsAvailable(silent = FALSE)
 	. = ..()
-	if(!.)
+	if(!. && owner)
 		var/obj/item/gun/G = target
 		G.zoom(owner, owner.dir, FALSE)
 
