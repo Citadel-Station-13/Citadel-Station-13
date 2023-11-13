@@ -91,7 +91,7 @@
 	build_path = /obj/item/mod/construction/armor/mining
 	materials = list(/datum/material/iron = 6000, /datum/material/titanium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
-	research_icon_state = "atmospheric-mining"
+	research_icon_state = "mining-plating"
 
 /datum/design/mod_plating/medical
 	name = "MOD Medical Plating"
