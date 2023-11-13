@@ -5,6 +5,7 @@
 	item_state = "shotgun"
 	fire_sound = "sound/weapons/gunshotshotgunshot.ogg"
 	w_class = WEIGHT_CLASS_BULKY
+	recoil = 1
 	force = 10
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
@@ -97,9 +98,10 @@
 	fire_delay = 7
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
-	unique_reskin = list("Tactical" = "riotshotgun",
-						"Wood Stock" = "wood_riotshotgun"
-						)
+	unique_reskin = list(
+		"Tactical" = list("icon_state" = "riotshotgun"),
+		"Wood Stock" = list("icon_state" = "wood_riotshotgun")
+	)
 
 /obj/item/gun/ballistic/shotgun/riot/attackby(obj/item/A, mob/user, params)
 	..()
@@ -192,7 +194,7 @@
 	flags_1 = NONE
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage
 
-/obj/item/gun/ballistic/shotgun/boltaction/enchanted/Initialize()
+/obj/item/gun/ballistic/shotgun/boltaction/enchanted/Initialize(mapload)
 	. = ..()
 	bolt_open = TRUE
 	pump()
@@ -237,9 +239,10 @@
 	fire_delay = 5
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
-	unique_reskin = list("Tactical" = "cshotgun",
-						"Slick" = "cshotgun_slick"
-						)
+	unique_reskin = list(
+		"Tactical" = list("icon_state" = "cshotgun"),
+		"Slick" = list("icon_state" = "cshotgun_slick")
+	)
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 	name = "warden's combat shotgun"
@@ -278,7 +281,7 @@
 	update_icon()
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact/update_icon_state()
-	icon_state = "[current_skin ? unique_reskin[current_skin] : "cshotgun"][stock ? "" : "c"]"
+	icon_state = "[current_skin ? unique_reskin[current_skin]["icon_state"] : "cshotgun"][stock ? "" : "c"]"
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact/afterattack(atom/target, mob/living/user, flag, params)
 	if(!stock)
@@ -303,7 +306,7 @@
 	. = ..()
 	. += "<span class='notice'>Alt-click to pump it.</span>"
 
-/obj/item/gun/ballistic/shotgun/automatic/dual_tube/Initialize()
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/Initialize(mapload)
 	. = ..()
 	if (!alternate_magazine)
 		alternate_magazine = new mag_type(src)
@@ -380,7 +383,7 @@
 
 /obj/item/gun/ballistic/shotgun/leveraction/update_icon_state()
 	if(current_skin)
-		icon_state = "[unique_reskin[current_skin]][sawn_off ? "-sawn" : ""][chambered ? "" : "-e"]"
+		icon_state = "[unique_reskin[current_skin]["icon_state"]][sawn_off ? "-sawn" : ""][chambered ? "" : "-e"]"
 	else
 		icon_state = "[initial(icon_state)][sawn_off ? "-sawn" : ""][chambered ? "" : "-e"]"
 

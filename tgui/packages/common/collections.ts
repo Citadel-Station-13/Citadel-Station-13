@@ -123,6 +123,26 @@ export const map = iterateeFn => collection => {
   throw new Error(`map() can't iterate on type ${typeof collection}`);
 };
 
+/**
+ * Given a collection, will run each element through an iteratee function.
+ * Will then filter out undefined values.
+ */
+export const filterMap = <T, U>(
+  collection: T[],
+  iterateeFn: (value: T) => U | undefined
+): U[] => {
+  const finalCollection: U[] = [];
+
+  for (const value of collection) {
+    const output = iterateeFn(value);
+    if (output !== undefined) {
+      finalCollection.push(output);
+    }
+  }
+
+  return finalCollection;
+};
+
 const COMPARATOR = (objA, objB) => {
   const criteriaA = objA.criteria;
   const criteriaB = objB.criteria;
@@ -285,4 +305,25 @@ export const zip = <T extends unknown[][]>(...arrays: T): Zip<T> => {
  */
 export const zipWith = iterateeFn => (...arrays) => {
   return map(values => iterateeFn(...values))(zip(...arrays));
+};
+
+/**
+ * This method takes a collection of items and a number, returning a collection
+ * of collections, where the maximum amount of items in each is that second arg
+ */
+export const paginate = <T>(collection: T[], maxPerPage: number): T[][] => {
+  const pages: T[][] = [];
+  let page: T[] = [];
+  let itemsToAdd = maxPerPage;
+
+  for (const item of collection) {
+    page.push(item);
+    itemsToAdd--;
+    if (!itemsToAdd) {
+      itemsToAdd = maxPerPage;
+      pages.push(page);
+      page = [];
+    }
+  }
+  return pages;
 };

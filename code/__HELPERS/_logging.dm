@@ -77,6 +77,10 @@
 	if (CONFIG_GET(flag/log_game))
 		WRITE_LOG(GLOB.world_game_log, "GAME: [text]")
 
+/proc/log_mecha(text)
+	if (CONFIG_GET(flag/log_mecha))
+		WRITE_LOG(GLOB.world_mecha_log, "MECHA: [text]")
+
 /proc/log_virus(text)
 	if (CONFIG_GET(flag/log_virus))
 		WRITE_LOG(GLOB.world_virus_log, "VIRUS: [text]")
@@ -156,6 +160,10 @@
 /proc/log_telecomms(text)
 	if (CONFIG_GET(flag/log_telecomms))
 		WRITE_LOG(GLOB.world_telecomms_log, "TCOMMS: [text]")
+
+/proc/log_econ(text)
+	if (CONFIG_GET(flag/log_econ))
+		WRITE_LOG(GLOB.world_econ_log, "MONEY: [text]")
 
 /proc/log_chat(text)
 	if (CONFIG_GET(flag/log_pda))

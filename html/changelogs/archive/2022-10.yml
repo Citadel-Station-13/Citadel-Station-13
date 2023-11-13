@@ -1,0 +1,25 @@
+2022-10-09:
+  KeRSedChaplain:
+  - balance: lets engineering/service borgs use structure summoning scripture without
+      having to have another servant
+  - balance: gives clockwork armor 50 (65 with the buffed version) laser/energy protection,
+      none from -25 was still a dumb choice
+  - balance: made Neovgre tankier and cheaper, but slower. No more dying due to an
+      internal fire that you can't fix yourself!
+  shellspeed1:
+  - balance: The borg premium KA has returned as an 8000 point reward in the mining
+      vendor.
+2022-10-10:
+  Hatterhat:
+  - rscadd: Proto-kinetic gauntlets now support movesets and weird combo strings!
+      Examine them twice to take your first steps into field-testing some fighting
+      game bullshit.
+2022-10-13:
+  Hatterhat:
+  - bugfix: Shoving organ-containing bodyparts e.g. heads into smart organ storages
+      now freezes the organs in the head, too.
+  shellspeed1:
+  - rscadd: The Public Bounty Console has been added replacing both the coin mint
+      and the standard cargo bounties.
+  - rscadd: The Sales Tagger has been added to enable a little bit of entrepreneurship
+      by the crew.

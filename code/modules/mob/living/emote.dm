@@ -5,7 +5,7 @@
 
 /datum/emote/living/blush/run_emote(mob/user, params)
 	. = ..()
-	if(. && isipcperson(user))
+	if(. && isrobotic(user))
 		do_fake_sparks(5,FALSE,user)
 
 /datum/emote/living/bow
@@ -518,6 +518,8 @@
 
 /datum/emote/living/circle/run_emote(mob/user, params)
 	. = ..()
+	if(!.)
+		return
 	var/obj/item/circlegame/N = new(user)
 	if(user.put_in_hands(N))
 		to_chat(user, "<span class='notice'>You make a circle with your hand.</span>")

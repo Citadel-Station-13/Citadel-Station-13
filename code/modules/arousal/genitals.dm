@@ -33,12 +33,16 @@
 	linked_organ = null
 	. = ..()
 
+/obj/item/organ/genital/on_life()
+	return
+
 /obj/item/organ/genital/proc/set_aroused_state(new_state,cause = "manual toggle")
 	if(!(genital_flags & GENITAL_CAN_AROUSE))
 		return FALSE
 	if(!((HAS_TRAIT(owner,TRAIT_PERMABONER) && !new_state) || HAS_TRAIT(owner,TRAIT_NEVERBONER) && new_state))
 		aroused_state = new_state
-	owner.log_message("[src]'s arousal was [new_state ? "enabled" : "disabled"] due to [cause]", LOG_EMOTE)
+	if(cause)
+		owner.log_message("[src]'s arousal was [new_state ? "enabled" : "disabled"] due to [cause]", LOG_EMOTE)
 	return aroused_state
 
 /obj/item/organ/genital/proc/update()

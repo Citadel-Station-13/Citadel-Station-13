@@ -1,6 +1,6 @@
 /obj/machinery/recharge_station
-	name = "cyborg recharging station"
-	desc = "This device recharges cyborgs and resupplies them with materials."
+	name = "recharging station"
+	desc = "This device recharges energy dependent lifeforms, like cyborgs, ethereals and MODsuit users."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "borgcharger0"
 	density = FALSE
@@ -10,17 +10,17 @@
 	req_access = list(ACCESS_ROBOTICS)
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/cyborgrecharger
-	occupant_typecache = list(/mob/living/silicon/robot)
+	occupant_typecache = list(/mob/living/silicon/robot, /mob/living/carbon/human)
 	var/recharge_speed
 	var/repairs
 
-/obj/machinery/recharge_station/Initialize()
+/obj/machinery/recharge_station/Initialize(mapload)
 	. = ..()
 	update_icon()
 
 /obj/machinery/recharge_station/upgraded
 
-/obj/machinery/recharge_station/upgraded/Initialize()
+/obj/machinery/recharge_station/upgraded/Initialize(mapload)
 	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/cyborgrecharger(null)
@@ -31,7 +31,7 @@
 
 /obj/machinery/recharge_station/fullupgrade
 
-/obj/machinery/recharge_station/fullupgrade/Initialize()
+/obj/machinery/recharge_station/fullupgrade/Initialize(mapload)
 	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/cyborgrecharger(null)

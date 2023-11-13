@@ -20,14 +20,22 @@ GLOBAL_LIST_EMPTY(GPS_list)
 /datum/component/gps/item
 	var/updating = TRUE //Automatic updating of GPS list. Can be set to manual by user.
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
+	/// UI state of GPS, altering when it can be used.
+	var/datum/ui_state/state = null
 
-/datum/component/gps/item/Initialize(_gpstag = "COM0", emp_proof = FALSE, starton = TRUE)
+/datum/component/gps/item/Initialize(_gpstag = "COM0", emp_proof = FALSE, starton = TRUE, state = null, overlay_state = "working")
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE || !isitem(parent))
 		return COMPONENT_INCOMPATIBLE
+
+	if(isnull(state))
+		state = GLOB.default_state
+	src.state = state
+
 	var/atom/A = parent
 	if(starton)
-		A.add_overlay("working")
+		if(overlay_state)
+			A.add_overlay(overlay_state)
 	else
 		tracking = FALSE
 	A.name = "[initial(A.name)] ([gpstag])"
@@ -36,6 +44,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, .proc/on_emp_act)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/on_AltClick)
+	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_requesting_context_from_item)
 
 ///Called on COMSIG_ITEM_ATTACK_SELF
 /datum/component/gps/item/proc/interact(datum/source, mob/user)
@@ -45,6 +54,17 @@ GLOBAL_LIST_EMPTY(GPS_list)
 ///Called on COMSIG_PARENT_EXAMINE
 /datum/component/gps/item/proc/on_examine(datum/source, mob/user, list/examine_list)
 	examine_list += "<span class='notice'>Alt-click to switch it [tracking ? "off":"on"].</span>"
+
+/datum/component/gps/item/proc/on_requesting_context_from_item(
+	obj/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+	SIGNAL_HANDLER
+
+	LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, tracking ? "Turn off" : "Turn on")
+	return CONTEXTUAL_SCREENTIP_SET
 
 ///Called on COMSIG_ATOM_EMP_ACT
 /datum/component/gps/item/proc/on_emp_act(datum/source, severity)
@@ -92,6 +112,9 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		ui = new(user, src, "Gps")
 		ui.open()
 	ui.set_autoupdate(updating)
+
+/datum/component/gps/item/ui_state(mob/user)
+	return state
 
 /datum/component/gps/item/ui_data(mob/user)
 	var/list/data = list()

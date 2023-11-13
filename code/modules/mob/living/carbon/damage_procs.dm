@@ -90,10 +90,12 @@
 /mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, toxins_type = TOX_DEFAULT)
 	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER) && toxins_type != TOX_SYSCORRUPT) //damage becomes healing and healing becomes damage
 		amount = -amount
+		// don't allow toxinlover to push blood levels past BLOOD_VOLUME_MAXIMUM, but also don't set it back down to this if it's higher from something else
+		var/blood_cap = blood_volume > BLOOD_VOLUME_MAXIMUM ? blood_volume : BLOOD_VOLUME_MAXIMUM
 		if(amount > 0)
-			blood_volume -= 3 * amount		//5x was too much, this is punishing enough.
+			blood_volume = min((blood_volume - (3 * amount)), blood_cap)	//5x was too much, this is punishing enough.
 		else
-			blood_volume -= amount
+			blood_volume = min((blood_volume - amount), blood_cap)
 	return ..()
 
 /mob/living/carbon/getStaminaLoss()
@@ -209,7 +211,7 @@
 	if(!parts.len)
 		return
 	var/obj/item/bodypart/picked = pick(parts)
-	if(picked.receive_damage(brute, burn, stamina,check_armor ? run_armor_check(picked, (brute ? "melee" : burn ? "fire" : stamina ? "bullet" : null)) : FALSE, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
+	if(picked.receive_damage(brute, burn, stamina,check_armor ? run_armor_check(picked, (brute ? MELEE : burn ? FIRE : stamina ? BULLET : null)) : FALSE, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 		update_damage_overlays()
 
 //Heal MANY bodyparts, in random order

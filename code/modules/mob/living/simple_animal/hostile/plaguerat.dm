@@ -42,7 +42,7 @@ GLOBAL_LIST_EMPTY(plague_rats)
 	var/obj/machinery/atmospherics/components/unary/entry_vent
 	var/obj/machinery/atmospherics/components/unary/exit_vent
 
-/mob/living/simple_animal/hostile/plaguerat/Initialize()
+/mob/living/simple_animal/hostile/plaguerat/Initialize(mapload)
 	. = ..()
 	GLOB.plague_rats += src
 	AddComponent(/datum/component/swarming)
@@ -86,7 +86,7 @@ GLOBAL_LIST_EMPTY(plague_rats)
 					walk_to(src, entry_vent)
 					break
 
-/mob/living/simple_animal/hostile/plaguerat/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/plaguerat/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(isopenturf(loc))

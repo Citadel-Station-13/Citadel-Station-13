@@ -4,7 +4,8 @@
 	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "plasma"
 	item_state = ""	//no inhands
-	slot_flags = 0
+	slot_flags = ITEM_SLOT_ACCESSORY
+	slot_equipment_priority = list(ITEM_SLOT_ACCESSORY)
 	w_class = WEIGHT_CLASS_SMALL
 	var/above_suit = FALSE
 	var/minimize_when_attached = TRUE // TRUE if shown as a small icon in corner, FALSE if overlayed
@@ -57,7 +58,7 @@
 	plane = initial(plane)
 	U.cut_overlays()
 	U.attached_accessory = null
-	U.accessory_overlay = null
+	U.accessory_overlays = null
 
 /obj/item/clothing/accessory/proc/on_uniform_equip(obj/item/clothing/under/U, user)
 	return
@@ -65,7 +66,7 @@
 /obj/item/clothing/accessory/proc/on_uniform_dropped(obj/item/clothing/under/U, user)
 	return
 
-/obj/item/clothing/accessory/AltClick(mob/user)
+/obj/item/clothing/accessory/CtrlClick(mob/user)
 	. = ..()
 	if(istype(user) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(initial(above_suit))
@@ -77,7 +78,7 @@
 	. = ..()
 	. += "<span class='notice'>\The [src] can be attached to a uniform. Alt-click to remove it once attached.</span>"
 	if(initial(above_suit))
-		. += "<span class='notice'>\The [src] can be worn above or below your suit. Alt-click to toggle.</span>"
+		. += "<span class='notice'>\The [src] can be worn above or below your suit. Ctrl-click to toggle.</span>"
 
 //////////////
 //Waistcoats//
@@ -255,6 +256,15 @@
 	item_state = "maidapron"
 	minimize_when_attached = FALSE
 
+/obj/item/clothing/accessory/maidapron/polychromic
+	name = "polychromic maid apron"
+	icon_state = "polymaidapron"
+	item_state = "polymaidapron"
+
+/obj/item/clothing/accessory/maidapron/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#333333", "#FFFFFF"), 2)
+
 /obj/item/clothing/accessory/sleevecrop
 	name = "one sleeved crop top"
 	desc = "Off the shoulder crop top, for those nights out partying."
@@ -378,7 +388,7 @@
 /obj/item/clothing/accessory/medal/gold/captain/family
 	name = "old medal of captaincy"
 	desc = "A rustic badge pure gold, has been through hell and back by the looks, the syndcate have been after these by the looks of it for generations..."
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 10) //Pure gold
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 10) //Pure gold
 	custom_materials = list(/datum/material/gold=2000)
 
 /obj/item/clothing/accessory/medal/gold/heroism
@@ -390,7 +400,7 @@
 	desc = "An eccentric medal made of plasma."
 	icon_state = "plasma"
 	medaltype = "medal-plasma"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = -10, "acid" = 0) //It's made of plasma. Of course it's flammable.
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = -10, ACID = 0) //It's made of plasma. Of course it's flammable.
 	custom_materials = list(/datum/material/plasma=1000)
 
 /obj/item/clothing/accessory/medal/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -480,13 +490,13 @@
 	icon_state = "pocketprotector"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/pocketprotector
 
-/obj/item/clothing/accessory/pocketprotector/full/Initialize()
+/obj/item/clothing/accessory/pocketprotector/full/Initialize(mapload)
 	. = ..()
 	new /obj/item/pen/red(src)
 	new /obj/item/pen(src)
 	new /obj/item/pen/blue(src)
 
-/obj/item/clothing/accessory/pocketprotector/cosmetology/Initialize()
+/obj/item/clothing/accessory/pocketprotector/cosmetology/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to 3)
 		new /obj/item/lipstick/random(src)
@@ -499,21 +509,21 @@
 	name = "bone talisman"
 	desc = "A hunter's talisman, some say the old gods smile on those who wear it."
 	icon_state = "talisman"
-	armor = list("melee" = 5, "bullet" = 5, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 20, "rad" = 5, "fire" = 0, "acid" = 25)
+	armor = list(MELEE = 5, BULLET = 5, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 20, RAD = 5, FIRE = 0, ACID = 25)
 
 /obj/item/clothing/accessory/skullcodpiece
 	name = "skull codpiece"
 	desc = "A skull shaped ornament, intended to protect the important things in life."
 	icon_state = "skull"
 	above_suit = TRUE
-	armor = list("melee" = 5, "bullet" = 5, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 20, "rad" = 5, "fire" = 0, "acid" = 25)
+	armor = list(MELEE = 5, BULLET = 5, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 20, RAD = 5, FIRE = 0, ACID = 25)
 
 /obj/item/clothing/accessory/skullcodpiece/fake
 	name = "false codpiece"
 	desc = "A plastic ornament, intended to protect the important things in life. It's not very good at it."
 	icon_state = "skull"
 	above_suit = TRUE
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
 /////////////////////
 //Syndie Accessories//
@@ -523,21 +533,21 @@
 	name = "protective padding"
 	desc = "A soft padding meant to cushion the wearer from melee harm."
 	icon_state = "padding"
-	armor = list("melee" = 20, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = -20, "acid" = 45)
+	armor = list(MELEE = 20, BULLET = 10, LASER = 0, ENERGY = 0, BOMB = 5, BIO = 0, RAD = 0, FIRE = -20, ACID = 45)
 	flags_inv = HIDEACCESSORY //hidden from indiscrete mob examines.
 
 /obj/item/clothing/accessory/kevlar
 	name = "kevlar padding"
 	desc = "A layered kevlar padding meant to cushion the wearer from ballistic harm."
 	icon_state = "padding"
-	armor = list("melee" = 10, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 25)
+	armor = list(MELEE = 10, BULLET = 20, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 25)
 	flags_inv = HIDEACCESSORY
 
 /obj/item/clothing/accessory/plastics
 	name = "ablative padding"
 	desc = "A thin ultra-refractory composite padding meant to cushion the wearer from energy lasers harm."
 	icon_state = "plastics"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 20, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = -40)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 20, ENERGY = 10, BOMB = 0, BIO = 0, RAD = 0, FIRE = 20, ACID = -40)
 	flags_inv = HIDEACCESSORY
 
 //necklace
@@ -548,3 +558,23 @@
 	obj_flags = UNIQUE_RENAME
 	custom_materials = list(/datum/material/iron=100)
 	resistance_flags = FIRE_PROOF
+
+
+/obj/item/clothing/accessory/pride
+	name = "pride pin"
+	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored holographic pin to show off your pride of sexuality or gender identity, reminding the crew of their unwavering commitment to equity, diversity, and inclusion!"
+	icon_state = "pride"
+	above_suit = TRUE
+	obj_flags = UNIQUE_RENAME
+	unique_reskin = list(
+		"Rainbow Pride"     = list("icon_state" = "pride"),
+		"Bisexual Pride"    = list("icon_state" = "pride_bi"),
+		"Pansexual Pride"   = list("icon_state" = "pride_pan"),
+		"Asexual Pride"     = list("icon_state" = "pride_ace"),
+		"Non-binary Pride"  = list("icon_state" = "pride_enby"),
+		"Transgender Pride" = list("icon_state" = "pride_trans")
+	)
+
+/obj/item/clothing/accessory/pride/reskin_obj(mob/M)
+	. = ..()
+	name = "[current_skin] pin"

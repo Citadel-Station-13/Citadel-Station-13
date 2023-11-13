@@ -5,6 +5,7 @@
 	max_occurrences = 5
 	earliest_start = 0 MINUTES
 	can_be_midround_wizard = FALSE
+	description = "Gives everyone a random race."
 
 /datum/round_event/wizard/race
 	var/list/stored_name
@@ -16,7 +17,7 @@
 	stored_name = list()
 	stored_species = list()
 	stored_dna = list()
-	endWhen = rand(600,1200) //10 to 20 minutes
+	end_when = rand(600,1200) //10 to 20 minutes
 	..()
 
 /datum/round_event/wizard/race/start()

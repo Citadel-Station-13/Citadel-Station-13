@@ -18,7 +18,7 @@
 	var/wielded_mult = 1
 	var/wield_force = 15
 
-/obj/item/melee/smith/Initialize()
+/obj/item/melee/smith/Initialize(mapload)
 	..()
 	if(desc == "cringe")
 		desc = "A handmade [name]."
@@ -55,7 +55,7 @@
 	icon_state = "minipick" //todo:sprite
 	sharpness = SHARP_POINTY//it doesnt have a blade it has a point
 
-/obj/item/mining_scanner/prospector/Initialize()
+/obj/item/mining_scanner/prospector/Initialize(mapload)
 	..()
 	var/mutable_appearance/overlay
 	desc = "A handmade [name]."
@@ -73,7 +73,7 @@
 	icon_state = "pickaxe"
 	sharpness = SHARP_POINTY
 
-/obj/item/pickaxe/smithed/Initialize()
+/obj/item/pickaxe/smithed/Initialize(mapload)
 	..()
 	desc = "A handmade [name]."
 	var/mutable_appearance/overlay
@@ -94,7 +94,7 @@
 	icon_state = "shovel"
 	sharpness = SHARP_EDGED //it cuts through the earth
 
-/obj/item/shovel/smithed/Initialize()
+/obj/item/shovel/smithed/Initialize(mapload)
 	..()
 	desc = "A handmade [name]."
 	var/mutable_appearance/overlay

@@ -1,8 +1,9 @@
-#define LINKIFY_READY(string, value) "<a href='byond://?src=[REF(src)];ready=[value]'>[string]</a>"
-
+///Cooldown for the Reset Lobby Menu HUD verb
+#define RESET_HUD_INTERVAL 15 SECONDS
 /mob/dead/new_player
 	var/ready = 0
-	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
+	///Referenced when you want to delete the new_player later on in the code.
+	var/spawning = 0
 
 	flags_1 = NONE
 
@@ -10,16 +11,21 @@
 
 	density = FALSE
 	stat = DEAD
+	hud_type = /datum/hud/new_player
+	hud_possible = list()
 
-	var/mob/living/new_character	//for instant transfer once the round is set up
+	///For instant transfer once the round is set up
+	var/mob/living/new_character
 
-	//Used to make sure someone doesn't get spammed with messages if they're ineligible for roles
+	///Used to make sure someone doesn't get spammed with messages if they're ineligible for roles
 	var/ineligible_for_roles = FALSE
 
-	//is there a result we want to read from the age gate
+	///Is there a result we want to read from the age gate
 	var/age_gate_result
+	///Cooldown for the Reset Lobby Menu HUD verb
+	COOLDOWN_DECLARE(reset_hud_cooldown)
 
-/mob/dead/new_player/Initialize()
+/mob/dead/new_player/Initialize(mapload)
 	if(client && SSticker.state == GAME_STATE_STARTUP)
 		var/atom/movable/screen/splash/S = new(client, TRUE, TRUE)
 		S.Fade(TRUE)
@@ -34,6 +40,7 @@
 	. = ..()
 
 	GLOB.new_player_list += src
+	add_verb(src, /mob/dead/new_player/proc/reset_menu_hud)
 
 /mob/dead/new_player/Destroy()
 	GLOB.new_player_list -= src
@@ -42,69 +49,6 @@
 
 /mob/dead/new_player/prepare_huds()
 	return
-
-/mob/dead/new_player/proc/new_player_panel()
-	var/output = "<center><p>Welcome, <b>[client ? client.prefs.real_name : "Unknown User"]</b></p>"
-	output += "<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>"
-
-	if(SSticker.current_state <= GAME_STATE_PREGAME)
-		switch(ready)
-			if(PLAYER_NOT_READY)
-				output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | <b>Not Ready</b> | [LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)] \]</p>"
-			if(PLAYER_READY_TO_PLAY)
-				output += "<p>\[ <b>Ready</b> | [LINKIFY_READY("Not Ready", PLAYER_NOT_READY)] | [LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)] \]</p>"
-			if(PLAYER_READY_TO_OBSERVE)
-				output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | [LINKIFY_READY("Not Ready", PLAYER_NOT_READY)] | <b> Observe </b> \]</p>"
-	else
-		output += "<p><a href='byond://?src=[REF(src)];manifest=1'>View the Crew Manifest</a></p>"
-		output += "<p><a href='byond://?src=[REF(src)];late_join=1'>Join Game!</a></p>"
-		output += "<p>[LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)]</p>"
-
-	if(!IsGuestKey(src.key))
-		output += playerpolls()
-
-	output += "</center>"
-
-	//src << browse(output,"window=playersetup;size=210x240;can_close=0")
-	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>New Player Options</div>", 250, 265)
-	popup.set_window_options("can_close=0")
-	popup.set_content(output)
-	popup.open(FALSE)
-
-/mob/dead/new_player/proc/playerpolls()
-	var/output = "" //hey tg why is this a list?
-	if (SSdbcore.Connect())
-		var/isadmin = FALSE
-		if(client?.holder)
-			isadmin = TRUE
-		var/datum/db_query/query_get_new_polls = SSdbcore.NewQuery({"
-			SELECT id FROM [format_table_name("poll_question")]
-			WHERE (adminonly = 0 OR :isadmin = 1)
-			AND Now() BETWEEN starttime AND endtime
-			AND deleted = 0
-			AND id NOT IN (
-				SELECT pollid FROM [format_table_name("poll_vote")]
-				WHERE ckey = :ckey
-				AND deleted = 0
-			)
-			AND id NOT IN (
-				SELECT pollid FROM [format_table_name("poll_textreply")]
-				WHERE ckey = :ckey
-				AND deleted = 0
-			)
-		"}, list("isadmin" = isadmin, "ckey" = ckey))
-		var/rs = REF(src)
-		if(!query_get_new_polls.Execute())
-			qdel(query_get_new_polls)
-			return
-		if(query_get_new_polls.NextRow())
-			output += "<p><b><a href='byond://?src=[rs];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
-		else
-			output += "<p><a href='byond://?src=[rs];showpoll=1'>Show Player Polls</A></p>"
-		qdel(query_get_new_polls)
-		if(QDELETED(src))
-			return
-		return output
 
 /mob/dead/new_player/proc/age_gate()
 	var/list/dat = list("<center>")
@@ -151,6 +95,9 @@
 
 		if(!(client.prefs.db_flags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE)) //completed? Skip
 			return TRUE
+
+		if(!client)
+			return FALSE
 
 		var/age_verification = age_gate()
 		//ban them and kick them
@@ -269,61 +216,12 @@
 	if(!age_verify())
 		return
 
-	//Determines Relevent Population Cap
-	var/relevant_cap
-	var/hpc = CONFIG_GET(number/hard_popcap)
-	var/epc = CONFIG_GET(number/extreme_popcap)
-	if(hpc && epc)
-		relevant_cap = min(hpc, epc)
-	else
-		relevant_cap = max(hpc, epc)
-
-	if(href_list["show_preferences"])
-		client.prefs.ShowChoices(src)
-		return 1
-
-	if(href_list["ready"])
-		var/tready = text2num(href_list["ready"])
-		//Avoid updating ready if we're after PREGAME (they should use latejoin instead)
-		//This is likely not an actual issue but I don't have time to prove that this
-		//no longer is required
-		if(SSticker.current_state <= GAME_STATE_PREGAME)
-			ready = tready
-		//if it's post initialisation and they're trying to observe we do the needful
-		if(!SSticker.current_state < GAME_STATE_PREGAME && tready == PLAYER_READY_TO_OBSERVE)
-			ready = tready
-			make_me_an_observer()
-			return
-
-	if(href_list["refresh"])
-		src << browse(null, "window=playersetup") //closes the player setup window
-		new_player_panel()
-
 	if(href_list["late_join"])
 		if(!SSticker || !SSticker.IsRoundInProgress())
 			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
 			return
-
-		if(href_list["late_join"] == "override")
-			LateChoices()
-			return
-
-		if(SSticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in GLOB.admin_datums)))
-			to_chat(usr, "<span class='danger'>[CONFIG_GET(string/hard_popcap_message)]</span>")
-
-			var/queue_position = SSticker.queued_players.Find(usr)
-			if(queue_position == 1)
-				to_chat(usr, "<span class='notice'>You are next in line to join the game. You will be notified when a slot opens up.</span>")
-			else if(queue_position)
-				to_chat(usr, "<span class='notice'>There are [queue_position-1] players in front of you in the queue to join the game.</span>")
-			else
-				SSticker.queued_players += usr
-				to_chat(usr, "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [SSticker.queued_players.len].</span>")
-			return
 		LateChoices()
-
-	if(href_list["manifest"])
-		ViewManifest()
+		return
 
 	if(href_list["SelectedJob"])
 		if(!SSticker || !SSticker.IsRoundInProgress())
@@ -337,6 +235,17 @@
 			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 			return
 
+		//Determines Relevent Population Cap
+		var/relevant_cap
+		var/hpc = CONFIG_GET(number/hard_popcap)
+		var/epc = CONFIG_GET(number/extreme_popcap)
+		if(hpc && epc)
+			relevant_cap = min(hpc, epc)
+		else
+			relevant_cap = max(hpc, epc)
+
+
+
 		if(SSticker.queued_players.len && !(ckey(key) in GLOB.admin_datums))
 			if((living_player_count() >= relevant_cap) || (src != SSticker.queued_players[1]))
 				to_chat(usr, "<span class='warning'>Server is full.</span>")
@@ -349,6 +258,15 @@
 		if(!GLOB.enter_allowed)
 			to_chat(usr, "<span class='notice'> There is an administrative lock on entering the game!</span>")
 
+		//Determines Relevent Population Cap
+		var/relevant_cap
+		var/hpc = CONFIG_GET(number/hard_popcap)
+		var/epc = CONFIG_GET(number/extreme_popcap)
+		if(hpc && epc)
+			relevant_cap = min(hpc, epc)
+		else
+			relevant_cap = max(hpc, epc)
+
 		if(SSticker.queued_players.len && !(ckey(key) in GLOB.admin_datums))
 			if((living_player_count() >= relevant_cap) || (src != SSticker.queued_players[1]))
 				to_chat(usr, "<span class='warning'>Server is full.</span>")
@@ -359,13 +277,6 @@
 			SSticker.queued_players -= src
 			SSticker.queue_delay = 4
 			qdel(src)
-
-	else if(!href_list["late_join"])
-		new_player_panel()
-
-	if(href_list["showpoll"])
-		handle_player_polling()
-		return
 
 	if(href_list["pollid"])
 		var/pollid = href_list["pollid"]
@@ -447,6 +358,11 @@
 					return
 				to_chat(src, "<span class='notice'>Vote successful.</span>")
 
+/mob/dead/new_player/get_status_tab_items()
+	. = ..()
+	if(!SSticker.HasRoundStarted()) //only show this when the round hasn't started yet
+		. += "Readiness status: [ready ? "" : "Not "]Readied Up!"
+
 //When you cop out of the round (NB: this HAS A SLEEP FOR PLAYER INPUT IN IT)
 /mob/dead/new_player/proc/make_me_an_observer()
 	if(QDELETED(src) || !src.client)
@@ -460,7 +376,6 @@
 	if(QDELETED(src) || !src.client || this_is_like_playing_right != "Yes")
 		ready = PLAYER_NOT_READY
 		src << browse(null, "window=playersetup") //closes the player setup window
-		new_player_panel()
 		return FALSE
 
 	var/mob/dead/observer/observer = new()
@@ -565,11 +480,13 @@
 	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/character = create_character(TRUE)	//creates the human and transfers vars and mind
+	var/datum/job/job = SSjob.GetJob(rank)
+
 	var/equip = SSjob.EquipRank(character, rank, TRUE)
+	job.after_latejoin_spawn(character)
+
 	if(isliving(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
-
-	var/datum/job/job = SSjob.GetJob(rank)
 
 	if(job && !job.override_latejoin_spawn(character))
 		SSjob.SendToLateJoin(character)
@@ -591,7 +508,7 @@
 		if(SSshuttle.arrivals)
 			SSshuttle.arrivals.QueueAnnounce(humanc, rank)
 		else
-			AnnounceArrival(humanc, rank)
+			announce_arrival(humanc, rank)
 		AddEmploymentContract(humanc)
 		if(GLOB.highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
@@ -672,13 +589,23 @@
 		for(var/job in category)
 			var/datum/job/job_datum = SSjob.name_occupations[job]
 			if(job_datum && IsJobUnavailable(job_datum.title, TRUE) == JOB_AVAILABLE)
+				// Get currently occupied slots
+				var/num_positions_current = job_datum.current_positions
+
+				// Get total slots that can be occupied
+				var/num_positions_total = job_datum.total_positions
+
+				// Change to lemniscate for infinite-slot jobs
+				// This variable should only used to display text!
+				num_positions_total = (num_positions_total == -1 ? "∞" : num_positions_total)
+
 				var/command_bold = ""
 				if(job in GLOB.command_positions)
 					command_bold = " command"
 				if(job_datum in SSjob.prioritized_jobs)
-					dept_dat += "<a class='job[command_bold]' style='display:block;width:170px'  href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[job_datum.title] ([job_datum.current_positions])</span></a>"
+					dept_dat += "<a class='job[command_bold]' style='display:block;width:170px'  href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[job_datum.title] ([num_positions_current]/[num_positions_total])</span></a>"
 				else
-					dept_dat += "<a class='job[command_bold]' style='display:block;width:170px' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[job_datum.title] ([job_datum.current_positions])</a>"
+					dept_dat += "<a class='job[command_bold]' style='display:block;width:170px' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[job_datum.title] ([num_positions_current]/[num_positions_total])</a>"
 		if(!dept_dat.len)
 			dept_dat += "<span class='nopositions'>No positions open.</span>"
 		dat += jointext(dept_dat, "")
@@ -760,7 +687,7 @@
 
 		client.prefs.scars_list["[cur_scar_index]"] = valid_scars
 		client.prefs.save_character()
-	
+
 	client.prefs.copy_to(H, initial_spawn = TRUE)
 	H.dna.update_dna_identity()
 	if(mind)
@@ -775,13 +702,14 @@
 	. = H
 	new_character = .
 	if(transfer_after)
-		transfer_character()
+		transfer_character(TRUE)
 
-/mob/dead/new_player/proc/transfer_character()
+/mob/dead/new_player/proc/transfer_character(late_transfer = FALSE)
 	. = new_character
 	if(.)
 		new_character.key = key		//Manually transfer the key to log them in
 		new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+		SEND_SIGNAL(new_character, COMSIG_MOB_CLIENT_JOINED_FROM_LOBBY, new_character?.client, late_transfer)
 		new_character = null
 		qdel(src)
 
@@ -837,3 +765,21 @@
 
 		return FALSE //This is the only case someone should actually be completely blocked from antag rolling as well
 	return TRUE
+
+///Resets the Lobby Menu HUD, recreating and reassigning it to the new player
+/mob/dead/new_player/proc/reset_menu_hud()
+	set name = "Reset Lobby Menu HUD"
+	set category = "OOC"
+	var/mob/dead/new_player/new_player = usr
+	if(!COOLDOWN_FINISHED(new_player, reset_hud_cooldown))
+		to_chat(new_player, span_warning("You must wait <b>[DisplayTimeText(COOLDOWN_TIMELEFT(new_player, reset_hud_cooldown))]</b> before resetting the Lobby Menu HUD again!"))
+		return
+	if(!new_player?.client)
+		return
+	COOLDOWN_START(new_player, reset_hud_cooldown, RESET_HUD_INTERVAL)
+	qdel(new_player.hud_used)
+	create_mob_hud()
+	to_chat(new_player, span_info("Lobby Menu HUD reset. You may reset the HUD again in <b>[DisplayTimeText(RESET_HUD_INTERVAL)]</b>."))
+	hud_used.show_hud(hud_used.hud_version)
+
+#undef RESET_HUD_INTERVAL

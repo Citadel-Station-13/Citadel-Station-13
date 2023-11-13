@@ -33,6 +33,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/alien_plasma_display
 	var/atom/movable/screen/alien_queen_finder
 
+	var/atom/movable/screen/combo/combo_display
+
 	var/atom/movable/screen/devil/soul_counter/devilsouldisplay
 
 	var/atom/movable/screen/synth/coolant_counter/coolant_display
@@ -61,13 +63,15 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	/// This is updated by the preference for cheaper reads than would be
 	/// had with a proc call, especially on one of the hottest procs in the
 	/// game (MouseEntered).
-	var/screentips_enabled = TRUE
+	// var/screentips_enabled = SCREENTIP_PREFERENCE_ENABLED
 
 	/// The color to use for the screentips.
 	/// This is updated by the preference for cheaper reads than would be
 	/// had with a proc call, especially on one of the hottest procs in the
 	/// game (MouseEntered).
-	var/screentip_color
+	// var/screentip_color
+
+	// We don't actually do proccalls really yet, so let's grab at prefs
 
 	var/atom/movable/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = FALSE
@@ -130,6 +134,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	blobpwrdisplay = null
 	alien_plasma_display = null
 	alien_queen_finder = null
+	combo_display = null
 
 	QDEL_LIST_ASSOC_VAL(plane_masters)
 	QDEL_LIST(screenoverlays)

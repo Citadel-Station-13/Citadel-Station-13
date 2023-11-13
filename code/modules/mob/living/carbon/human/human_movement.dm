@@ -85,6 +85,7 @@
 							FP.blood_DNA["color"] = S.last_blood_color
 						else
 							FP.blood_DNA["color"] = BlendRGB(FP.blood_DNA["color"], S.last_blood_color)
+						FP.blood_DNA["blendmode"] = S.last_blood_blend
 					FP.update_icon()
 					update_inv_shoes()
 				//End bloody footprints

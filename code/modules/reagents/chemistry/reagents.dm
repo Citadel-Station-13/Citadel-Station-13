@@ -257,8 +257,6 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	return rs.Join(" | ")
 
 /datum/reagent/proc/define_gas()
-	if(reagent_state == SOLID)
-		return null // doesn't make that much sense
 	var/list/cached_reactions = GLOB.chemical_reactions_list
 	for(var/reaction in cached_reactions[src.type])
 		var/datum/chemical_reaction/C = reaction
@@ -273,6 +271,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	G.color = color
 	G.breath_reagent = src.type
 	G.group = GAS_GROUP_CHEMICALS
+	G.moles_visible = MOLES_GAS_VISIBLE
 	return G
 
 /datum/reagent/proc/create_gas()

@@ -63,6 +63,8 @@
 			if(QDELETED(O))
 				continue
 			var/atom/movable/screen/storage/item_holder/D = new(null, src, O)
+			// SNOWFLAKE: make O opaque too, pending storage rewrite
+			O.mouse_opacity = MOUSE_OPACITY_OPAQUE
 			D.mouse_opacity = MOUSE_OPACITY_OPAQUE //This is here so storage items that spawn with contents correctly have the "click around item to equip"
 			D.screen_loc = "[cx]:[screen_pixel_x],[cy]:[screen_pixel_y]"
 			O.maptext = ""
@@ -138,6 +140,8 @@
 		I = i
 		var/percent = percentage_by_item[I]
 		var/atom/movable/screen/storage/volumetric_box/center/B = new /atom/movable/screen/storage/volumetric_box/center(null, src, I)
+		// SNOWFLAKE: force it to icon until we unfuck storage/click passing
+		I.mouse_opacity = MOUSE_OPACITY_ICON
 		var/pixels_to_use = overrun? MINIMUM_PIXELS_PER_ITEM : max(using_horizontal_pixels * percent, MINIMUM_PIXELS_PER_ITEM)
 		var/addrow = FALSE
 		if(CEILING(pixels_to_use, 1) >= FLOOR(horizontal_pixels - current_pixel - VOLUMETRIC_STORAGE_EDGE_PADDING, 1))

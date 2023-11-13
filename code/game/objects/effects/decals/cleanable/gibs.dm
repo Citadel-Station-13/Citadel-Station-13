@@ -3,6 +3,7 @@
 	desc = "They look bloody and gruesome."
 	icon_state = "gibbl5"
 	layer = LOW_OBJ_LAYER
+	blend_mode = BLEND_DEFAULT
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
 	bloodiness = 0				//This isn't supposed to be bloody.
@@ -10,6 +11,7 @@
 	var/body_colors = "#e3ba84"	//a default color just in case.
 	var/gibs_reagent_id = /datum/reagent/liquidgibs
 	var/gibs_bloodtype = "A+"
+	turf_loc_check = FALSE
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases, list/blood_data)
 	. = ..()
@@ -20,6 +22,9 @@
 	if(gibs_bloodtype)
 		add_blood_DNA(list("Non-human DNA" = gibs_bloodtype), diseases)
 	update_icon()
+
+/obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
+	return FALSE //Never fail to place us
 
 /obj/effect/decal/cleanable/blood/gibs/update_icon()
 	add_atom_colour(blood_DNA_to_color(), FIXED_COLOUR_PRIORITY)

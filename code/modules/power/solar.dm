@@ -5,6 +5,7 @@
 	desc = "A solar panel. Generates electricity when in contact with sunlight."
 	icon = 'goon/icons/obj/power.dmi'
 	icon_state = "sp_base"
+	minimap_override_color = "#02026a"
 	density = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
@@ -241,8 +242,10 @@
 			to_chat(user, "<span class='warning'>You need to secure the assembly before you can add glass.</span>")
 			return
 		var/obj/item/stack/sheet/S = W
-		if(S.use(2))
-			glass_type = W.type
+		S = S.split_stack(amount=2)
+		if(S)
+			glass_type = S
+			S.moveToNullspace()
 			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 			user.visible_message("<span class='notice'>[user] places the glass on the solar assembly.</span>", "<span class='notice'>You place the glass on the solar assembly.</span>")
 			if(tracker)
@@ -297,7 +300,7 @@
 	var/obj/machinery/power/tracker/connected_tracker = null
 	var/list/connected_panels = list()
 
-/obj/machinery/power/solar_control/Initialize()
+/obj/machinery/power/solar_control/Initialize(mapload)
 	. = ..()
 	azimuth_rate = SSsun.base_rotation
 	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/timed_track)

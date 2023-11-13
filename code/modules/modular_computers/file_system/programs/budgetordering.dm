@@ -79,6 +79,7 @@
 	if(id_card?.registered_account)
 		if((ACCESS_HEADS in id_card.access) || (ACCESS_QM in id_card.access))
 			requestonly = FALSE
+			buyer = SSeconomy.get_dep_account(id_card.registered_account.account_job.paycheck_department)
 			can_approve_requests = TRUE
 		else
 			requestonly = TRUE
@@ -104,7 +105,7 @@
 			continue
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
-			"cost" = P.cost,
+			"cost" = P.get_cost(),
 			"id" = pack,
 			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
 			"goody" = P.goody,
@@ -131,7 +132,7 @@
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 		data["cart"] += list(list(
 			"object" = SO.pack.name,
-			"cost" = SO.pack.cost,
+			"cost" = SO.pack.get_cost(),
 			"id" = SO.id,
 			"orderer" = SO.orderer,
 			"paid" = !isnull(SO.paying_account) //paid by requester
@@ -141,7 +142,7 @@
 	for(var/datum/supply_order/SO in SSshuttle.requestlist)
 		data["requests"] += list(list(
 			"object" = SO.pack.name,
-			"cost" = SO.pack.cost,
+			"cost" = SO.pack.get_cost(),
 			"orderer" = SO.orderer,
 			"reason" = SO.reason,
 			"id" = SO.id
@@ -235,7 +236,8 @@
 				return
 
 			if(!self_paid && ishuman(usr) && !account)
-				account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+				var/obj/item/card/id/id_card = card_slot?.GetID()
+				account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 
 			var/turf/T = get_turf(src)
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
@@ -261,7 +263,9 @@
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.requestlist)
 				if(SO.id == id)
-					SO.paying_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+					var/obj/item/card/id/id_card = card_slot?.GetID()
+					if(id_card && id_card?.registered_account)
+						SO.paying_account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 					SSshuttle.requestlist -= SO
 					SSshuttle.shoppinglist += SO
 					. = TRUE

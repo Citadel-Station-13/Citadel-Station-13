@@ -47,7 +47,7 @@
 
 // Bags are prohibited from this due to the potential explotation of objects, same with brought
 
-/obj/item/dogborg/sleeper/Initialize()
+/obj/item/dogborg/sleeper/Initialize(mapload)
 	. = ..()
 	update_icon()
 	item_flags |= NOBLUDGEON //No more attack messages
@@ -90,7 +90,7 @@
 		to_chat(user, "<span class='warning'>Your [src] is already occupied.</span>")
 		return
 	user.visible_message("<span class='warning'>[hound.name] is carefully inserting [target.name] into their [src].</span>", "<span class='notice'>You start placing [target] into your [src]...</span>")
-	if(!patient && iscarbon(target) && !target.buckled && do_after (user, 100, target = target))
+	if(!patient && iscarbon(target) && !target.buckled && do_after(user, 10 SECONDS, target))
 
 		if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
 			return //If they moved away, you can't eat them.
@@ -127,7 +127,7 @@
 	user.visible_message("<span class='notice'>You see [voracious ? "[user] struggling against the expanded material of [hound]'s gut!" : "and hear [user] pounding against something inside of [hound]'s [src.name]!"]</span>", \
 		"<span class='notice'>[voracious ? "You start struggling inside of [src]'s tight, flexible confines," : "You start pounding against the metallic walls of [src],"] trying to trigger the release... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a [voracious ? "couple of thumps" : "loud banging noise"] coming from within [hound].</span>")
-	if(do_after(user, breakout_time, target = src))
+	if(do_after(user, breakout_time, src, IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM))
 		user.visible_message("<span class='warning'>[user] successfully broke out of [hound.name]!</span>", \
 			"<span class='notice'>You successfully break out of [hound.name]!</span>")
 		go_out(user, hound)
@@ -443,7 +443,7 @@
 		to_chat(user,"<span class='warning'>[target] is buckled and can not be put into your [src].</span>")
 		return
 	user.visible_message("<span class='warning'>[hound.name] is ingesting [target] into their [src].</span>", "<span class='notice'>You start ingesting [target] into your [src.name]...</span>")
-	if(do_after(user, 30, target = target) && !patient && !target.buckled)
+	if(do_after(user, 3 SECONDS, target) && !patient && !target.buckled)
 		target.forceMove(src)
 		target.reset_perspective(src)
 		update_gut(hound)

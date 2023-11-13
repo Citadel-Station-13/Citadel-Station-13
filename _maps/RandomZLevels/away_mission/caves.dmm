@@ -1504,12 +1504,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/caves/listeningpost)
-"eQ" = (
-/obj/machinery/mineral/mint,
-/turf/open/floor/plating/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/BMP_asteroid)
 "eR" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel,
@@ -2039,7 +2033,7 @@
 	},
 /area/awaymission/caves/BMP_asteroid)
 "gC" = (
-/obj/mecha/working/ripley/mining,
+/obj/vehicle/sealed/mecha/working/ripley/mining,
 /turf/open/floor/plasteel/recharge_floor,
 /area/awaymission/caves/BMP_asteroid)
 "gD" = (
@@ -9345,8 +9339,8 @@ bM
 bM
 bL
 bL
-eQ
-eQ
+bV
+bV
 bV
 bV
 bV

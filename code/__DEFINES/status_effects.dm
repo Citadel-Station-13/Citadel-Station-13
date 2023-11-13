@@ -152,4 +152,9 @@
 // GROUPED //
 /////////////
 
+#define STASIS_MACHINE_EFFECT "stasis_machine"
+
 #define STASIS_ASCENSION_EFFECT "heretic_ascension"
+
+/// If the incapacitated status effect will ignore a mob in stasis (stasis beds)
+#define IGNORE_STASIS (1<<1)

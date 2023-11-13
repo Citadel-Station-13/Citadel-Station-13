@@ -16,11 +16,21 @@
 	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM)
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
+	bounty_types = CIV_JOB_MED
 
 	display_order = JOB_DISPLAY_ORDER_MEDICAL_DOCTOR
 	threat = 0.5
 
 	starting_modifiers = list(/datum/skill_modifier/job/surgery, /datum/skill_modifier/job/affinity/surgery)
+	
+	family_heirlooms = list(
+		/obj/item/storage/firstaid/ancient/heirloom,
+		/obj/item/scalpel,
+		/obj/item/hemostat,
+		/obj/item/circular_saw,
+		/obj/item/retractor,
+		/obj/item/cautery
+	)
 
 /datum/outfit/job/doctor
 	name = "Medical Doctor"

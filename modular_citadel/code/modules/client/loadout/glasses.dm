@@ -45,3 +45,7 @@
 /datum/gear/glasses/prescription
 	name = "Prescription glasses"
 	path = /obj/item/clothing/glasses/regular
+
+/datum/gear/glasses/modern
+	name = "Modern prescription glasses"
+	path = /obj/item/clothing/glasses/regular/modern

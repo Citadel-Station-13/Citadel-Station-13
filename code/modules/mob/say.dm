@@ -54,7 +54,7 @@
 		to_chat(usr, "<span class='danger'>^^^----- The preceeding message has been DISCARDED for being over the maximum length of [MAX_MESSAGE_LEN]. It has NOT been sent! -----^^^</span>")
 		return
 
-	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trim(html_encode(message), MAX_MESSAGE_LEN)
 	clear_typing_indicator()		// clear it immediately!
 
 	client?.last_activity = world.time
@@ -139,10 +139,14 @@
 
 	var/spanned = say_quote(say_emphasis(message))
 	message = emoji_parse(message)
-	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[emoji_parse(spanned)]</span></span>"
+	var/source = "<span class='game'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name]"
+	var/rendered = " <span class='message'>[emoji_parse(spanned)]</span></span>"
 	log_talk(message, LOG_SAY, tag="DEAD")
 	client?.last_activity = world.time
-	deadchat_broadcast(rendered, follow_target = src, speaker_key = key)
+	var/displayed_key = key
+	if(client?.holder?.fakekey)
+		displayed_key = null
+	deadchat_broadcast(rendered, source, follow_target = src, speaker_key = displayed_key)
 
 /mob/proc/check_emote(message)
 	if(message[1] == "*")

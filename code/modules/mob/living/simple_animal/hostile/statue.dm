@@ -81,7 +81,7 @@
 		return 0
 	return ..()
 
-/mob/living/simple_animal/hostile/statue/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/statue/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(!client && target) // If we have a target and we're AI controlled

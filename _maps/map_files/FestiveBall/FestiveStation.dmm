@@ -5069,7 +5069,7 @@
 /area/command/heads_quarters/ce)
 "ane" = (
 /obj/structure/filingcabinet/chestdrawer,
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/Polly,
 /turf/open/floor/plasteel/dark,
 /area/command/heads_quarters/ce)
 "anf" = (
@@ -29800,8 +29800,8 @@
 /turf/open/floor/carpet/green,
 /area/medical/surgery)
 "byn" = (
-/obj/machinery/sleeper,
 /obj/effect/decal/festive/christmas_ivy_string,
+/obj/machinery/sleeper,
 /turf/open/floor/plasteel/white/side,
 /area/medical/exam_room)
 "byo" = (
@@ -33048,8 +33048,8 @@
 	},
 /area/medical/genetics/cloning)
 "bEC" = (
-/obj/machinery/sleeper{
-	dir = 1
+/obj/machinery/stasis{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 1

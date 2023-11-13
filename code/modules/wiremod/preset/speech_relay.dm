@@ -1,11 +1,11 @@
 /**
  * # Speech Relay preset
  *
- * Acts like poly. Says whatever it hears.
+ * Acts like polly. Says whatever it hears.
  */
 /obj/item/integrated_circuit/loaded/speech_relay
 
-/obj/item/integrated_circuit/loaded/speech_relay/Initialize()
+/obj/item/integrated_circuit/loaded/speech_relay/Initialize(mapload)
 	. = ..()
 	var/obj/item/circuit_component/hear/hear = new()
 	add_component(hear)

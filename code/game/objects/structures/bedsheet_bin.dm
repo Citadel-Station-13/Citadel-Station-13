@@ -65,6 +65,13 @@ GLOBAL_LIST_INIT(double_bedsheets, list(/obj/item/bedsheet/double,
 	if(bedsheet_type == BEDSHEET_DOUBLE)
 		stack_amount *= 2
 		dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+		register_item_context()
+
+/obj/item/bedsheet/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = ..()
+	if(iscarbon(target))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Prepare Surgery")
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/bedsheet/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))
@@ -259,7 +266,7 @@ GLOBAL_LIST_INIT(double_bedsheets, list(/obj/item/bedsheet/double,
 	var/g_mouth
 	var/g_eyes
 
-/obj/item/bedsheet/gondola/Initialize()
+/obj/item/bedsheet/gondola/Initialize(mapload)
 	. = ..()
 	g_mouth = "sheetgondola_mouth[rand(1, 4)]"
 	g_eyes = "sheetgondola_eyes[rand(1, 4)]"
@@ -285,7 +292,7 @@ GLOBAL_LIST_INIT(double_bedsheets, list(/obj/item/bedsheet/double,
 	name = "random bedsheet"
 	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
 
-/obj/item/bedsheet/random/Initialize()
+/obj/item/bedsheet/random/Initialize(mapload)
 	..()
 	if(bedsheet_type == BEDSHEET_SINGLE)
 		var/type = pick(typesof(/obj/item/bedsheet) - (list(/obj/item/bedsheet/random, /obj/item/bedsheet/chameleon) + typesof(/obj/item/bedsheet/unlockable) + GLOB.double_bedsheets))
@@ -446,7 +453,7 @@ GLOBAL_LIST_INIT(double_bedsheets, list(/obj/item/bedsheet/double,
 	icon_state = "random_bedsheet"
 	bedsheet_type = BEDSHEET_DOUBLE
 
-/obj/item/bedsheet/random/double/Initialize()
+/obj/item/bedsheet/random/double/Initialize(mapload)
 	..()
 	if(bedsheet_type == BEDSHEET_DOUBLE)
 		var/type = pick(GLOB.double_bedsheets)

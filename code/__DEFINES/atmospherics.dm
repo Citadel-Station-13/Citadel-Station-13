@@ -152,6 +152,10 @@
 #define ATMOS_PASS_PROC -1 //ask CanAtmosPass()
 #define ATMOS_PASS_DENSITY -2 //just check density
 
+// Adjacency flags
+#define ATMOS_ADJACENT_ANY		(1<<0)
+#define ATMOS_ADJACENT_FIRELOCK	(1<<1)
+
 #define CANATMOSPASS(A, O) ( A.CanAtmosPass == ATMOS_PASS_PROC ? A.CanAtmosPass(O) : ( A.CanAtmosPass == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPass ) )
 #define CANVERTICALATMOSPASS(A, O) ( A.CanAtmosPassVertical == ATMOS_PASS_PROC ? A.CanAtmosPass(O, TRUE) : ( A.CanAtmosPassVertical == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPassVertical ) )
 
@@ -275,6 +279,7 @@
 #define GAS_PLASMA				"plasma"
 #define GAS_H2O					"water_vapor"
 #define GAS_HYPERNOB			"nob"
+#define GAS_NITRIC				"no"
 #define GAS_NITROUS				"n2o"
 #define GAS_NITRYL				"no2"
 #define GAS_HYDROGEN			"hydrogen"
@@ -289,6 +294,7 @@
 #define GAS_AMMONIA				"ammonia"
 #define GAS_FLUORINE			"fluorine"
 #define GAS_ETHANOL				"ethanol"
+#define GAS_QCD					"qcd"
 
 #define GAS_GROUP_CHEMICALS		"Chemicals"
 
@@ -320,14 +326,6 @@
 
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
-
-
-#ifdef TESTING
-GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
-#define CALCULATE_ADJACENT_TURFS(T) if (SSadjacent_air.queue[T]) { GLOB.atmos_adjacent_savings[1] += 1 } else { GLOB.atmos_adjacent_savings[2] += 1; SSadjacent_air.queue[T] = 1 }
-#else
-#define CALCULATE_ADJACENT_TURFS(T) SSadjacent_air.queue[T] = 1
-#endif
 
 //If you're doing spreading things related to atmos, DO NOT USE CANATMOSPASS, IT IS NOT CHEAP. use this instead, the info is cached after all. it's tweaked just a bit to allow for circular checks
 #define TURFS_CAN_SHARE(T1, T2) (LAZYACCESS(T2.atmos_adjacent_turfs, T1) || LAZYLEN(T1.atmos_adjacent_turfs & T2.atmos_adjacent_turfs))

@@ -6,7 +6,6 @@
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	desc = "A generic pAI mobile hard-light holographics emitter. It seems to be deactivated."
-	weather_immunities = list("ash")
 	health = 500
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
@@ -95,7 +94,7 @@
 	GLOB.pai_list -= src
 	return ..()
 
-/mob/living/silicon/pai/Initialize()
+/mob/living/silicon/pai/Initialize(mapload)
 	var/obj/item/paicard/P = loc
 	START_PROCESSING(SSfastprocess, src)
 	GLOB.pai_list += src
@@ -143,7 +142,7 @@
 	custom_holoform.Grant(src)
 	emitter_next_use = world.time + 10 SECONDS
 
-/mob/living/silicon/pai/deployed/Initialize()
+/mob/living/silicon/pai/deployed/Initialize(mapload)
 	. = ..()
 	fold_out(TRUE)
 
@@ -152,7 +151,7 @@
 	if(possible_chassis[chassis])
 		AddElement(/datum/element/mob_holder, chassis, 'icons/mob/pai_item_head.dmi', 'icons/mob/pai_item_rh.dmi', 'icons/mob/pai_item_lh.dmi', ITEM_SLOT_HEAD)
 
-/mob/living/silicon/pai/BiologicalLife(seconds, times_fired)
+/mob/living/silicon/pai/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(hacking)
@@ -199,6 +198,13 @@
 
 /mob/living/silicon/pai/restrained(ignore_grab)
 	. = FALSE
+
+/mob/living/silicon/pai/can_interact_with(atom/target)
+	if(istype(target, /obj/item/mod/control)) // A poor workaround for enabling MODsuit control
+		var/obj/item/mod/control/C = target
+		if(C.ai == src)
+			return TRUE
+	return ..()
 
 // See software.dm for Topic()
 
@@ -321,6 +327,30 @@
 		pai.radio.attackby(W, user, params)
 	else
 		to_chat(user, "Encryption Key ports not configured.")
+
+/obj/item/paicard/attack_ghost(mob/dead/observer/user)
+	if(pai)
+		to_chat(user, "<span class='warning'>This pAI is already in use!</span>")
+		return
+
+	var/area/A = get_area(get_turf(src))
+	if(A.type in SSpai.restricted_areas) // set in subsystem/pai.dm on initialize of the subsystem
+		to_chat(user, "<span class='warning'>You can't download yourself into a restricted area!</span>")
+		return
+
+	var/pai_name = reject_bad_name(stripped_input(usr, "Enter a name for your pAI", "pAI Name", user.name, MAX_NAME_LEN), TRUE)
+	if(!pai_name)
+		to_chat(user, "<span class='warning'>Entered name is not valid.</span>")
+		return
+
+	var/mob/living/silicon/pai/new_pai = new(src)
+	new_pai.name = pai_name
+	new_pai.real_name = new_pai.name
+	new_pai.key = user.key
+
+	setPersonality(new_pai)
+
+	SSticker.mode.update_cult_icons_removed(pai.mind)
 
 /obj/item/paicard/emag_act(mob/user) // Emag to wipe the master DNA and supplemental directive
 	. = ..()

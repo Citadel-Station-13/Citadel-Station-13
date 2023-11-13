@@ -79,6 +79,12 @@
 		var/datum/emote/E = new path()
 		E.emote_list[E.key] = E
 
+	for(var/path in subtypesof(/datum/bark))
+		var/datum/bark/B = new path()
+		GLOB.bark_list[B.id] = path
+		if(B.allow_random)
+			GLOB.bark_random_list[B.id] = path
+
 	// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
 	for(var/path in subtypesof(/datum/sprite_accessory/hair_gradient))
 		var/datum/sprite_accessory/hair_gradient/H = new path()
@@ -113,6 +119,6 @@
 	for(var/path in typesof(/obj/item/coin))
 		var/obj/item/coin/C = new path
 		UNTIL(C.flags_1 & INITIALIZED_1) //we want to make sure the value is calculated and not null.
-		GLOB.coin_values[path] = C.value
+		GLOB.coin_values[path] = C.get_item_credit_value()
 		qdel(C)
 

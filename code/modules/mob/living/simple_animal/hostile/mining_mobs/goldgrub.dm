@@ -35,7 +35,7 @@
 	var/chase_time = 100
 	var/will_burrow = TRUE
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/Initialize()
+/mob/living/simple_animal/hostile/asteroid/goldgrub/Initialize(mapload)
 	. = ..()
 	var/i = rand(1,3)
 	while(i)

@@ -11,7 +11,7 @@
 
 /obj/item/book/granter/proc/turn_page(mob/user)
 	playsound(user, pick('sound/effects/pageturn1.ogg','sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg'), 30, 1)
-	if(do_after(user,50, TRUE, user))
+	if(do_after(user, 5 SECONDS, src))
 		if(remarks.len)
 			to_chat(user, "<span class='notice'>[pick(remarks)]</span>")
 		else
@@ -53,7 +53,7 @@
 				on_reading_stopped()
 				reading = FALSE
 				return
-		if(do_after(user,50, TRUE, user))
+		if(do_after(user, 5 SECONDS, src))
 			on_reading_finished(user)
 		reading = FALSE
 	return TRUE
@@ -368,7 +368,7 @@
 /obj/item/book/granter/spell/random
 	icon_state = "random_book"
 
-/obj/item/book/granter/spell/random/Initialize()
+/obj/item/book/granter/spell/random/Initialize(mapload)
 	. = ..()
 	var/static/banned_spells = list(/obj/item/book/granter/spell/mimery_blockade, /obj/item/book/granter/spell/mimery_guns)
 	var/real_type = pick(subtypesof(/obj/item/book/granter/spell) - banned_spells)

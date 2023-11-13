@@ -1,7 +1,7 @@
 /datum/job/chief_engineer
 	title = "Chief Engineer"
 	flag = CHIEF
-//	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
+	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("Captain")
 	department_flag = ENGSEC
 	head_announce = list(RADIO_CHANNEL_ENGINEERING)
@@ -30,12 +30,22 @@
 						ACCESS_CE, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_TCOMSAT, ACCESS_MINERAL_STOREROOM)
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_ENG
+	bounty_types = CIV_JOB_ENG
 
-	starting_modifiers = list(/datum/skill_modifier/job/level/wiring, /datum/skill_modifier/job/affinity/wiring)
+	starting_modifiers = list(/datum/skill_modifier/job/level/wiring/expert, /datum/skill_modifier/job/affinity/wiring)
 
 	display_order = JOB_DISPLAY_ORDER_CHIEF_ENGINEER
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/paraplegic, /datum/quirk/insanity)
 	threat = 2
+	
+	family_heirlooms = list(
+		/obj/item/clothing/head/hardhat,
+		/obj/item/screwdriver/brass/family,
+		/obj/item/wrench/brass/family,
+		/obj/item/weldingtool/mini, // No brass family variant
+		/obj/item/crowbar/brass/family,
+		/obj/item/wirecutters/brass/family
+	)
 
 /datum/outfit/job/ce
 	name = "Chief Engineer"

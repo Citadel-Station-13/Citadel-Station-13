@@ -832,6 +832,9 @@ function checkchangelog($payload, $compile = true) {
 					$currentchangelogblock[] = array('type' => 'balance', 'body' => $item);
 				}
 				break;
+			case 'tgs':
+				$currentchangelogblock[] = array('type' => 'tgs', 'body' => $item);
+				break;
 			case 'code_imp':
 			case 'code':
 				if($item != 'changed some code'){
@@ -866,6 +869,11 @@ function checkchangelog($payload, $compile = true) {
 			case 'server':
 				if($item != 'something server ops should know')
 					$currentchangelogblock[] = array('type' => 'server', 'body' => $item);
+				break;
+			case 'tweak':
+				if($item != 'tweaked a few things')
+					$tags[] = 'Tweak';
+					$currentchangelogblock[] = array('type' => 'tweak', 'body' => $item);
 				break;
 			default:
 				//we add it to the last changelog entry as a separate line

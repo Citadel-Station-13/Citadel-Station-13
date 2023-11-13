@@ -13,7 +13,7 @@
 	throwforce = 7
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("beaten")
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
 	attack_speed = CLICK_CD_MELEE
 
 	var/stamina_loss_amount = 35
@@ -53,6 +53,8 @@
 		else
 			cell = new preload_cell_type(src)
 	update_icon()
+
+	register_item_context()
 
 /obj/item/melee/baton/DoRevenantThrowEffects(atom/target)
 	switch_status()
@@ -155,6 +157,26 @@
 	if(!interrupt)
 		return ..()
 
+/obj/item/melee/baton/add_item_context(datum/source, list/context, atom/target, mob/living/user)
+	if (isturf(target))
+		return NONE
+
+	if (isobj(target))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Attack")
+	else
+		if (turned_on)
+			LAZYSET(context[SCREENTIP_CONTEXT_RMB], INTENT_ANY, "Knockdown")
+
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Stun")
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_HARM, "Harmful stun")
+		else
+			LAZYSET(context[SCREENTIP_CONTEXT_RMB], INTENT_ANY, "Knockdown") // DON'T TELL EM, PRANKED.
+
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Stun") // STILL DO NOT DARE TELLING THEM
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_HARM, "Attack") // It's fine i guess...?
+
+	return CONTEXTUAL_SCREENTIP_SET
+
 /obj/item/melee/baton/alt_pre_attack(atom/A, mob/living/user, params)
 	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
 		return
@@ -190,7 +212,7 @@
 	var/final_stamina_loss_amount = stamina_loss_amount //Our stunning power for the baton
 	var/shoved = FALSE //Did we succeed on knocking our target over?
 	var/zap_penetration = armor_pen
-	var/zap_block = L.run_armor_check(BODY_ZONE_CHEST, "melee", null, null, zap_penetration) //armor check, including calculation for armor penetration, for our attack
+	var/zap_block = L.run_armor_check(BODY_ZONE_CHEST, MELEE, null, null, zap_penetration) //armor check, including calculation for armor penetration, for our attack
 	final_stamina_loss_amount = block_calculate_resultant_damage(final_stamina_loss_amount, return_list)
 
 	var/obj/item/stock_parts/cell/our_cell = get_cell()
@@ -333,7 +355,7 @@
 	status_duration = 3 //Slows someone for a tiny bit
 	var/obj/item/assembly/igniter/sparkler
 
-/obj/item/melee/baton/cattleprod/Initialize()
+/obj/item/melee/baton/cattleprod/Initialize(mapload)
 	. = ..()
 	sparkler = new (src)
 	sparkler.activate_cooldown = 7 //Helps visualize the knockdown

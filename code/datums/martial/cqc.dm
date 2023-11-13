@@ -11,6 +11,7 @@
 	block_chance = 75
 	pugilist = TRUE
 	var/old_grab_state = null
+	display_combos = TRUE
 
 /datum/martial_art/cqc/reset_streak(mob/living/carbon/human/new_target)
 	. = ..()

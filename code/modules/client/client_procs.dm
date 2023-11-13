@@ -425,7 +425,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	if(holder)
 		add_admin_verbs()
-		to_chat(src, get_message_output("memo"))
+		var/admin_memo_note = get_message_output("memo")
+		if(admin_memo_note)
+			to_chat(src, admin_memo_note)
 		adminGreet()
 
 	add_verbs_from_config()
@@ -468,7 +470,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	if(CONFIG_GET(flag/autoconvert_notes))
 		convert_notes_sql(ckey)
-	to_chat(src, get_message_output("message", ckey))
+	var/admin_message_note = get_message_output("message", ckey)
+	if(admin_message_note)
+		to_chat(src, admin_message_note)
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
 		to_chat(src, "<span class='warning'>Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
 
@@ -867,10 +871,21 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 	last_activity = world.time
 	last_click = world.time
-	var/ab = FALSE
+	//fullauto stuff
+	/*
+	if(!control)
+		return
+	*/
+	if(click_intercept_time)
+		if(click_intercept_time >= world.time)
+			click_intercept_time = 0 //Reset and return. Next click should work, but not this one.
+			return
+		click_intercept_time = 0 //Just reset. Let's not keep re-checking forever.
 	var/list/L = params2list(params)
-	if (object && object == middragatom && L["left"])
-		ab = max(0, 5 SECONDS-(world.time-middragtime)*0.1)
+
+	if(L["drag"])
+		return
+
 	var/mcl = CONFIG_GET(number/minute_click_limit)
 	if (!holder && !ignore_spam && mcl)
 		var/minute = round(world.time, 600)
@@ -879,20 +894,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if (minute != clicklimiter[CURRENT_MINUTE])
 			clicklimiter[CURRENT_MINUTE] = minute
 			clicklimiter[MINUTE_COUNT] = 0
-		clicklimiter[MINUTE_COUNT] += 1+(ab)
+		clicklimiter[MINUTE_COUNT] += 1
 		if (clicklimiter[MINUTE_COUNT] > mcl)
 			var/msg = "Your previous click was ignored because you've done too many in a minute."
 			if (minute != clicklimiter[ADMINSWARNED_AT]) //only one admin message per-minute. (if they spam the admins can just boot/ban them)
 				clicklimiter[ADMINSWARNED_AT] = minute
 
 				msg += " Administrators have been informed."
-				if (ab)
-					log_game("[key_name(src)] is using the middle click aimbot exploit")
-					message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] is using the middle click aimbot exploit</span>")
-					add_system_note("aimbot", "Is using the middle click aimbot exploit")
-					log_click(object, location, control, params, src, "lockout (spam - minute ab c [ab] s [middragtime])", TRUE)
-				else
-					log_click(object, location, control, params, src, "lockout (spam - minute)", TRUE)
+				log_click(object, location, control, params, src, "lockout (spam - minute)", TRUE)
 				log_game("[key_name(src)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 				message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 			to_chat(src, "<span class='danger'>[msg]</span>")
@@ -906,14 +915,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if (second != clicklimiter[CURRENT_SECOND])
 			clicklimiter[CURRENT_SECOND] = second
 			clicklimiter[SECOND_COUNT] = 0
-		clicklimiter[SECOND_COUNT] += 1+(!!ab)
+		clicklimiter[SECOND_COUNT] += 1
 		if (clicklimiter[SECOND_COUNT] > scl)
 			to_chat(src, "<span class='danger'>Your previous click was ignored because you've done too many in a second</span>")
 			return
-
-	if(ab) //Citadel edit, things with stuff.
-		log_click(object, location, control, params, src, "dropped (ab c [ab] s [middragtime])", TRUE)
-		return
 
 	if(prefs.log_clicks)
 		log_click(object, location, control, params, src, extra_info? "clicked ([extra_info])" : null)

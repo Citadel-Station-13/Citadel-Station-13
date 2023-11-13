@@ -9,6 +9,7 @@
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
 	block_parry_data = /datum/block_parry_data/sleeping_carp
 	pugilist = TRUE
+	display_combos = TRUE
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,STRONG_PUNCH_COMBO))
@@ -223,7 +224,7 @@
 	block_chance = 50
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/staff/bostaff/Initialize()
+/obj/item/staff/bostaff/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)

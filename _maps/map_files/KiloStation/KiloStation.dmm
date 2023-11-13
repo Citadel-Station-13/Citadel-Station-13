@@ -12343,6 +12343,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/closet/firecloset,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "auA" = (
@@ -13135,9 +13136,6 @@
 /turf/open/floor/plasteel,
 /area/command/bridge)
 "avS" = (
-/obj/machinery/computer/bounty{
-	dir = 4
-	},
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Head of Personnel's Desk";
@@ -13429,7 +13427,7 @@
 /obj/item/radio/intercom{
 	pixel_x = 28
 	},
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/Polly,
 /turf/open/floor/plasteel/dark,
 /area/command/heads_quarters/ce)
 "awq" = (
@@ -22447,7 +22445,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/sleeper{
+/obj/machinery/stasis{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -35252,7 +35250,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/closet/firecloset,
+/obj/machinery/piratepad/civilian,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/starboard)
 "beP" = (
@@ -36997,6 +36995,9 @@
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
+/obj/machinery/posialert{
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
 "bhC" = (
@@ -37144,7 +37145,6 @@
 /turf/open/floor/plasteel,
 /area/cargo/miningoffice)
 "bhO" = (
-/obj/machinery/computer/bounty,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -38740,9 +38740,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/computer/bounty{
-	dir = 8
-	},
 /turf/open/floor/plasteel/dark,
 /area/cargo/office)
 "bks" = (
@@ -39443,6 +39440,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/chisel,
 /turf/open/floor/plasteel/dark,
 /area/service/library)
 "blB" = (
@@ -42089,8 +42087,10 @@
 /turf/open/floor/plasteel,
 /area/cargo/storage)
 "bpF" = (
-/obj/structure/sign/departments/cargo,
-/turf/closed/wall,
+/obj/machinery/computer/piratepad_control/civilian{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bpG" = (
 /obj/effect/turf_decal/tile/neutral,
@@ -43728,7 +43728,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/beer{
 	desc = "A station exclusive. Consumpt may result in seizures, blindness, drunkenness, or even death.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 10);
+	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko=10);
 	name = "Kilo-Kocktail";
 	pixel_x = 5;
 	pixel_y = 5
@@ -49265,10 +49265,6 @@
 /area/security/checkpoint/supply)
 "bBp" = (
 /obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -84644,6 +84640,17 @@
 	icon_state = "wood-broken6"
 	},
 /area/commons/vacant_room/office)
+"fuh" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/medbay/central)
 "fyr" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/closed/mineral/random/labormineral,
@@ -84880,7 +84887,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/grenadine,
 /obj/item/reagent_containers/food/drinks/beer{
 	desc = "A station exclusive. Consumpt may result in seizures, blindness, drunkenness, or even death.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 10);
+	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko=10);
 	name = "Kilo-Kocktail";
 	pixel_x = 5;
 	pixel_y = 5
@@ -84964,56 +84971,56 @@
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /obj/item/reagent_containers/food/drinks/beer{
 	desc = "A station exclusive. Consumpt may result in seizures, blindness, drunkenness, or even death.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 10);
+	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko=10);
 	name = "Kilo-Kocktail";
 	pixel_x = 5;
 	pixel_y = 5
 	},
 /obj/item/reagent_containers/food/drinks/beer{
 	desc = "A station exclusive. Consumpt may result in seizures, blindness, drunkenness, or even death.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 10);
+	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko=10);
 	name = "Kilo-Kocktail";
 	pixel_x = 5;
 	pixel_y = 5
 	},
 /obj/item/reagent_containers/food/drinks/beer{
 	desc = "A station exclusive. Consumpt may result in seizures, blindness, drunkenness, or even death.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 10);
+	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko=10);
 	name = "Kilo-Kocktail";
 	pixel_x = 5;
 	pixel_y = 5
 	},
 /obj/item/reagent_containers/food/drinks/beer{
 	desc = "A station exclusive. Consumpt may result in seizures, blindness, drunkenness, or even death.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 10);
+	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko=10);
 	name = "Kilo-Kocktail";
 	pixel_x = 5;
 	pixel_y = 5
 	},
 /obj/item/reagent_containers/food/drinks/beer{
 	desc = "A station exclusive. Consumpt may result in seizures, blindness, drunkenness, or even death.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 10);
+	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko=10);
 	name = "Kilo-Kocktail";
 	pixel_x = 5;
 	pixel_y = 5
 	},
 /obj/item/reagent_containers/food/drinks/beer{
 	desc = "A station exclusive. Consumpt may result in seizures, blindness, drunkenness, or even death.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 10);
+	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko=10);
 	name = "Kilo-Kocktail";
 	pixel_x = 5;
 	pixel_y = 5
 	},
 /obj/item/reagent_containers/food/drinks/beer{
 	desc = "A station exclusive. Consumpt may result in seizures, blindness, drunkenness, or even death.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 10);
+	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko=10);
 	name = "Kilo-Kocktail";
 	pixel_x = 5;
 	pixel_y = 5
 	},
 /obj/item/reagent_containers/food/drinks/beer{
 	desc = "A station exclusive. Consumpt may result in seizures, blindness, drunkenness, or even death.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 10);
+	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko=10);
 	name = "Kilo-Kocktail";
 	pixel_x = 5;
 	pixel_y = 5
@@ -85052,6 +85059,10 @@
 "khA" = (
 /turf/closed/wall/rust,
 /area/construction/mining/aux_base)
+"kmy" = (
+/obj/structure/sign/departments/cargo,
+/turf/closed/wall,
+/area/cargo/office)
 "koc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /turf/open/floor/wood,
@@ -104570,7 +104581,7 @@ aRd
 aOR
 abl
 aSW
-aLi
+fuh
 aLi
 aOW
 aWp
@@ -122830,7 +122841,7 @@ aYK
 aYd
 bhe
 cLt
-bhI
+kmy
 bhX
 bhs
 biM

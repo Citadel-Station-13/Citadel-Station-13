@@ -1,10 +1,11 @@
 /datum/round_event_control/floor_cluwne
 	name = "Floor Cluwne"
 	typepath = /datum/round_event/floor_cluwne
-	max_occurrences = 1
+	max_occurrences = 0
 	min_players = 20
 	weight = 10
-
+	category = EVENT_CATEGORY_ENTITIES
+	description = "Spawns a floor cluwne, will hunt a random player and most likely gib them, prepare for adminhelps."
 
 /datum/round_event/floor_cluwne/start()
 	var/list/spawn_locs = list()

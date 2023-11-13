@@ -1,13 +1,14 @@
 /mob/living/carbon
 	blood_volume = BLOOD_VOLUME_NORMAL
 
-/mob/living/carbon/Initialize()
+/mob/living/carbon/Initialize(mapload)
 	. = ..()
 	create_reagents(1000, NONE, NO_REAGENTS_VALUE)
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	GLOB.carbon_list += src
 	blood_volume = (BLOOD_VOLUME_NORMAL * blood_ratio)
 	add_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
+	register_context()
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -27,8 +28,8 @@
 		if(prob(40))
 			if(prob(25))
 				audible_message("<span class='warning'>You hear something rumbling inside [src]'s stomach...</span>", \
-							 "<span class='warning'>You hear something rumbling.</span>", 4,\
-							  "<span class='userdanger'>Something is rumbling inside your stomach!</span>")
+								"<span class='warning'>You hear something rumbling.</span>", 4,\
+							    "<span class='userdanger'>Something is rumbling inside your stomach!</span>")
 			var/obj/item/I = user.get_active_held_item()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
@@ -266,7 +267,7 @@
 		MarkResistTime()
 		visible_message("<span class='warning'>[src] attempts to unbuckle [p_them()]self!</span>", \
 					"<span class='notice'>You attempt to unbuckle yourself... (This will take around [round(buckle_cd/600,1)] minute\s, and you need to stay still.)</span>")
-		if(do_after(src, buckle_cd, 0, target = src, required_mobility_flags = MOBILITY_RESIST))
+		if(do_after(src, buckle_cd, src, timed_action_flags = IGNORE_HELD_ITEM | IGNORE_INCAPACITATED, extra_checks = CALLBACK(src, .proc/cuff_resist_check)))
 			if(!buckled)
 				return
 			buckled.user_unbuckle_mob(src, src)
@@ -303,13 +304,16 @@
 	if(I.item_flags & BEING_REMOVED)
 		to_chat(src, "<span class='warning'>You're already attempting to remove [I]!</span>")
 		return
+	var/obj/item/restraints/R = istype(I, /obj/item/restraints) ? I : null
+	var/allow_breakout_movement = IGNORE_INCAPACITATED
+	if(R?.allow_breakout_movement)
+		allow_breakout_movement = (IGNORE_INCAPACITATED|IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE)
 	I.item_flags |= BEING_REMOVED
 	breakouttime = I.breakouttime
-	var/datum/cuffbreak_checker/cuffbreak_checker = new(get_turf(src), istype(I, /obj/item/restraints)? I : null)
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
 		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)</span>")
-		if(do_after_advanced(src, breakouttime, src, NONE, CALLBACK(cuffbreak_checker, /datum/cuffbreak_checker.proc/check_movement), required_mobility_flags = MOBILITY_RESIST))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = allow_breakout_movement, extra_checks = CALLBACK(src, PROC_REF(cuff_resist_check))))
 			clear_cuffs(I, cuff_break)
 		else
 			to_chat(src, "<span class='warning'>You fail to remove [I]!</span>")
@@ -318,7 +322,7 @@
 		breakouttime = 50
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
 		to_chat(src, "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>")
-		if(do_after_advanced(src, breakouttime, src, NONE, CALLBACK(cuffbreak_checker, /datum/cuffbreak_checker.proc/check_movement), required_mobility_flags = MOBILITY_RESIST))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = allow_breakout_movement, extra_checks = CALLBACK(src, PROC_REF(cuff_resist_check))))
 			clear_cuffs(I, cuff_break)
 		else
 			to_chat(src, "<span class='warning'>You fail to break [I]!</span>")
@@ -326,27 +330,10 @@
 	else if(cuff_break == INSTANT_CUFFBREAK)
 		clear_cuffs(I, cuff_break)
 
-	QDEL_NULL(cuffbreak_checker)
 	I.item_flags &= ~BEING_REMOVED
 
-/datum/cuffbreak_checker
-	var/turf/last
-	var/obj/item/restraints/cuffs
-
-/datum/cuffbreak_checker/New(turf/initial_turf, obj/item/restraints/R)
-	last = initial_turf
-	if(R)
-		cuffs = R
-
-/datum/cuffbreak_checker/proc/check_movement(atom/user, delay, atom/target, time_left, do_after_flags, required_mobility_flags, required_combat_flags, mob_redirect, stage, initially_held_item, tool, list/passed_in)
-	if(get_turf(user) != last)
-		last = get_turf(user)
-		passed_in[1] = 0.5
-		if(cuffs && !cuffs.allow_breakout_movement)
-			return DO_AFTER_STOP
-	else
-		passed_in[1] = 1
-	return DO_AFTER_CONTINUE
+/mob/living/carbon/proc/cuff_resist_check()
+	return !incapacitated(ignore_restraints = TRUE)
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
@@ -624,12 +611,21 @@
 			if(M.name == XRAY)
 				sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 				see_in_dark = max(see_in_dark, 8)
+
+	if(HAS_TRAIT(src, TRAIT_TRUE_NIGHT_VISION))
+		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
+		see_in_dark = max(see_in_dark, 8)
+
+	if(HAS_TRAIT(src, TRAIT_MESON_VISION))
+		sight |= SEE_TURFS
+		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+
 	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
-		sight |= (SEE_MOBS)
+		sight |= SEE_MOBS
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
 
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
-		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 		see_in_dark = max(see_in_dark, 8)
 
 	if(see_override)

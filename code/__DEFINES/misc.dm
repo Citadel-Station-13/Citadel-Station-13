@@ -272,9 +272,13 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define PDA_SKIN_MODERN "Modern"
 #define PDA_SKIN_MINIMAL "Minimal"
 
-GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_SKIN_ALT = 'icons/obj/pda_alt.dmi',
-								PDA_SKIN_RUGGED = 'icons/obj/pda_rugged.dmi', PDA_SKIN_MODERN = 'icons/obj/pda_modern.dmi',
-								PDA_SKIN_MINIMAL = 'icons/obj/pda_minimal.dmi'))
+GLOBAL_LIST_INIT(pda_reskins, list(
+	PDA_SKIN_CLASSIC = list("icon" = 'icons/obj/pda.dmi'),
+	PDA_SKIN_ALT = list("icon" = 'icons/obj/pda_alt.dmi'),
+	PDA_SKIN_RUGGED = list("icon" = 'icons/obj/pda_rugged.dmi'),
+	PDA_SKIN_MODERN = list("icon" = 'icons/obj/pda_modern.dmi'),
+	PDA_SKIN_MINIMAL = list("icon" = 'icons/obj/pda_minimal.dmi')
+	))
 
 /////////////////////////////////////
 // atom.appearence_flags shortcuts //
@@ -387,6 +391,23 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define BEAT_FAST 1
 #define BEAT_SLOW 2
 #define BEAT_NONE 0
+
+//Mouse buttons pressed/held/released
+#define RIGHT_CLICK "right"
+#define MIDDLE_CLICK "middle"
+#define LEFT_CLICK "left"
+
+//Keys held down during the mouse action
+#define CTRL_CLICK "ctrl"
+#define ALT_CLICK "alt"
+#define SHIFT_CLICK "shift"
+
+//Pixel coordinates within the icon, in the icon's coordinate space
+#define ICON_X "icon-x"
+#define ICON_Y "icon-y"
+
+//Pixel coordinates in screen_loc format ("[tile_x]:[pixel_x],[tile_y]:[pixel_y]")
+#define SCREEN_LOC "screen-loc"
 
 //https://secure.byond.com/docs/ref/info.html#/atom/var/mouse_opacity
 #define MOUSE_OPACITY_TRANSPARENT 0

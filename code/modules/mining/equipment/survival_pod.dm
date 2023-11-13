@@ -91,9 +91,23 @@
 	template_id = "shelter_delta"
 
 /obj/item/survivalcapsule/luxury/penthouse
-	name = "penthouse bluespace sheler capsule"
-	desc = "The absolute pinnacle of luxury in terms of survival capsules. While exuberantly expensive it has everything needed to make a small home in lavaland."
+	name = "penthouse bluespace shelter capsule"
+	desc = "The absolute pinnacle of luxury in terms of survival capsules. While exuberantly expensive it has everything needed to survive in luxury."
 	template_id = "shelter_epsilon"
+/obj/item/survivalcapsule/luxury/garden
+	name = "garden & kitchen bluespace shelter capsule"
+	desc = "Everything someone needs to make a home cooked meal while surviving the depths of hell... or space."
+	template_id = "shelter_zeta"
+
+// RBMK reactor beacon so people can create the engine
+
+/obj/item/survivalcapsule/reactor // the not-so-survival capsule
+	name = "RMBK Reactor Beacon"
+	desc = "A special bluespace beacon designed to implement a reactor into the hull of the ship or station that it is activated on."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "beacon"
+	template_id = "reactor"
+	
 //Pod objects
 
 //Window
@@ -161,6 +175,26 @@
 	. = ..()
 	if(!state_open)
 		. += "sleeper_cover"
+
+//Lifeform Stasis Unit
+/obj/machinery/stasis/survival_pod
+	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon_state = "sleeper"
+	mattress_state = null
+	buckle_lying = 270
+
+/obj/machinery/stasis/survival_pod/play_power_sound()
+	return
+
+/obj/machinery/stasis/survival_pod/update_icon()
+	return
+
+//NanoMed
+/obj/machinery/vending/wallmed/survival_pod
+	name = "survival pod medical supply"
+	desc = "Wall-mounted Medical Equipment dispenser. This one seems just a tiny bit smaller."
+	refill_canister = null
+	onstation = FALSE
 
 //Computer
 /obj/item/gps/computer
@@ -327,7 +361,7 @@
 						/obj/item/phylactery,
 						/obj/item/banhammer)
 
-/obj/item/fakeartefact/Initialize()
+/obj/item/fakeartefact/Initialize(mapload)
 	. = ..()
 	var/obj/item/I = pick(possible)
 	name = initial(I.name)

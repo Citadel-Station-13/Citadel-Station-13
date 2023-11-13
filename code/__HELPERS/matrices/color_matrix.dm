@@ -138,6 +138,25 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
 	var/sinval = round(sin(angle), 0.001); var/cosval = round(cos(angle), 0.001)
 	return list(cosval,sinval,0,0, -sinval,cosval,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
 
+/**
+ * Builds a color matrix that transforms the hue, saturation, and value, all in one operation.
+ */
+/proc/color_matrix_hsv(hue, saturation, value)
+	hue = clamp(360 - hue, 0, 360)
+
+	// This is very much a rough approximation of hueshifting. This carries some artifacting, such as negative values that simply shouldn't exist, but it does get the job done, and that's what matters.
+	var/cos_a = cos(hue) // These have to be inverted from 360, otherwise the hue's inverted
+	var/sin_a = sin(hue)
+	var/rot_x = cos_a + (1 - cos_a) / 3
+	var/rot_y = (1 - cos_a) / 3 - 0.5774 * sin_a // 0.5774 is sqrt(1/3)
+	var/rot_z = (1 - cos_a) / 3 + 0.5774 * sin_a
+
+	return list(
+		round((((1-saturation) * LUMA_R) + (rot_x * saturation)) * value, 0.01), round((((1-saturation) * LUMA_R) + (rot_y * saturation)) * value, 0.01), round((((1-saturation) * LUMA_R) + (rot_z * saturation)) * value, 0.01),
+		round((((1-saturation) * LUMA_G) + (rot_z * saturation)) * value, 0.01), round((((1-saturation) * LUMA_G) + (rot_x * saturation)) * value, 0.01), round((((1-saturation) * LUMA_G) + (rot_y * saturation)) * value, 0.01),
+		round((((1-saturation) * LUMA_B) + (rot_y * saturation)) * value, 0.01), round((((1-saturation) * LUMA_B) + (rot_z * saturation)) * value, 0.01), round((((1-saturation) * LUMA_B) + (rot_x * saturation)) * value, 0.01),
+		0, 0, 0
+	)
 
 //Returns a matrix addition of A with B
 /proc/color_matrix_add(list/A, list/B)

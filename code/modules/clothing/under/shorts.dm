@@ -43,6 +43,13 @@
 	. = ..()
 	AddElement(/datum/element/polychromic, poly_colors, 2)
 
+/obj/item/clothing/under/shorts/polychromic/polyworkout
+	name = "polychromatic workout shorts"
+	desc = "Unnaturally scanty and provocative for anyone with a posterior larger than your average malnourished station secretary."
+	icon_state = "workout"
+	item_state = "rainbow"
+	poly_colors = list("#323232", "#FFFFFF")
+
 /obj/item/clothing/under/shorts/polychromic/pantsu
 	name = "polychromic panties"
 	desc = "Topless striped panties. Now with 120% more polychrome!"
@@ -50,5 +57,4 @@
 	item_state = "rainbow"
 	body_parts_covered = GROIN
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
-
 	poly_colors = list("#FFFFFF", "#8CC6FF")

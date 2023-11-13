@@ -98,7 +98,7 @@
 /datum/gear/neck/altpolycloak
 	name = "Alternate Cloak"
 	path = /obj/item/clothing/neck/cloak/alt/polychromic
-	loadout_flags = LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
 	loadout_initial_colors = list("#FFFFFF", "#676767", "#4C4C4C")
 
 /datum/gear/neck/cancloak
@@ -106,3 +106,9 @@
 	path = /obj/item/clothing/neck/cloak/cancloak/polychromic
 	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
 	loadout_initial_colors = list("#585858", "#373737", "#BEBEBE")
+
+/datum/gear/neck/maid
+	name = "Polychromatic Maid Collar"
+	path = /obj/item/clothing/neck/maid
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#333333", "#FFFFFF")

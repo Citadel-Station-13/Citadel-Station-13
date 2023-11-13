@@ -119,7 +119,7 @@
 	integrity_failure = 0.17
 	damage_deflection = 10
 	resistance_flags = FIRE_PROOF
-	armor = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 100, "bomb" = 30, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 50)
+	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 100, BOMB = 30, BIO = 100, RAD = 100, FIRE = 90, ACID = 50)
 	req_access = list(ACCESS_ENGINE_EQUIP)
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 
@@ -290,6 +290,13 @@
 		set_machine_stat(stat | MAINT)
 		update_appearance()
 		addtimer(CALLBACK(src, .proc/update), 5)
+	register_context()
+
+/obj/machinery/power/apc/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(operating)
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, locked ? "Unlock" : "Lock")
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs_list -= src
@@ -300,7 +307,7 @@
 	area.power_equip = FALSE
 	area.power_environ = FALSE
 	area.power_change()
-	area.poweralert(TRUE, src)
+	area.poweralert(FALSE, src)
 	if(occupier)
 		malfvacate(1)
 	qdel(wires)
@@ -852,7 +859,7 @@
 	set_nightshift(!nightshift_lights)
 
 /obj/machinery/power/apc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee" && damage_amount < 10 && (!(stat & BROKEN) || malfai))
+	if(damage_flag == MELEE && damage_amount < 10 && (!(stat & BROKEN) || malfai))
 		return 0
 	. = ..()
 

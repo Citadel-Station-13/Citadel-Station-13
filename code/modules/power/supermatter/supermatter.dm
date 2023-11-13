@@ -42,7 +42,7 @@
 #define THERMAL_RELEASE_MODIFIER 350         //Higher == more heat released during reaction, not to be confused with the above values
 #define THERMAL_RELEASE_CAP_MODIFIER 250     //Higher == lower cap on how much heat can be released per tick--currently 1.3x old value
 #define PLASMA_RELEASE_MODIFIER 750        //Higher == less plasma released by reaction
-#define OXYGEN_RELEASE_MODIFIER 325        //Higher == less oxygen released at high temperature/power
+#define OXYGEN_RELEASE_MODIFIER 550        //Higher == less oxygen released at high temperature/power
 
 #define REACTION_POWER_MODIFIER 0.55       //Higher == more overall power
 
@@ -192,10 +192,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Disables the sm's proccessing totally.
 	var/processes = TRUE
 
-/obj/machinery/power/supermatter_crystal/Initialize()
+/obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
 	uid = gl_uid++
-	SSair.atmos_air_machinery += src
+	SSair.atmos_machinery += src
 	countdown = new(src)
 	countdown.start()
 	GLOB.poi_list |= src
@@ -214,7 +214,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/Destroy()
 	investigate_log("has been destroyed.", INVESTIGATE_SUPERMATTER)
-	SSair.atmos_air_machinery -= src
+	SSair.atmos_machinery -= src
 	QDEL_NULL(radio)
 	GLOB.poi_list -= src
 	QDEL_NULL(countdown)
@@ -600,13 +600,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/max_temp_increase = effective_temperature + ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_CAP_MODIFIER)
 	//Calculate how much gas to release
 	//Varies based on power and gas content
-	removed.adjust_moles(GAS_PLASMA, max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0))
+	removed.adjust_moles(GAS_PLASMA, clamp((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0, 50))
 	//Varies based on power, gas content, and heat
-	removed.adjust_moles(GAS_O2, max(((device_energy + effective_temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0))
+	removed.adjust_moles(GAS_O2, clamp((device_energy * dynamic_heat_modifier + effective_temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0, 100))
 
 	if(removed.return_temperature() < max_temp_increase)
 		removed.adjust_heat(device_energy * dynamic_heat_modifier * THERMAL_RELEASE_MODIFIER)
-		removed.set_temperature(min(removed.return_temperature(), max_temp_increase))
+	removed.set_temperature(min(removed.return_temperature(), max_temp_increase))
 
 
 	if(produces_gas)
@@ -728,7 +728,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return FALSE
 	if(!istype(Proj.firer, /obj/machinery/power/emitter) && power_changes)
 		investigate_log("has been hit by [Proj] fired by [key_name(Proj.firer)]", INVESTIGATE_SUPERMATTER)
-	if(Proj.flag != "bullet")
+	if(Proj.flag != BULLET)
 		if(power_changes) //This needs to be here I swear
 			power += Proj.damage * bullet_energy
 			if(!has_been_powered)
@@ -952,7 +952,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	playsound(T, 'sound/effects/supermatter.ogg', 50, 1)
 	T.visible_message("<span class='danger'>[T] smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
-	CALCULATE_ADJACENT_TURFS(T)
+	T.ImmediateCalculateAdjacentTurfs()
 
 //Do not blow up our internal radio
 /obj/machinery/power/supermatter_crystal/contents_explosion(severity, target, origin)

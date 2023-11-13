@@ -23,7 +23,7 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	if(can_claim())
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
-			D.adjust_money(reward)
+			D.adjust_money(reward * SSeconomy.bounty_modifier)
 		claimed = TRUE
 
 // If an item sent in the cargo shuttle can satisfy the bounty.
@@ -76,8 +76,13 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	return TRUE
 
 // Returns a new bounty of random type, but does not add it to GLOB.bounties_list.
-/proc/random_bounty()
-	switch(rand(1, 15))
+/proc/random_bounty(var/guided = 0)
+	var/bounty_num
+	if(guided && (guided != CIV_JOB_RANDOM))
+		bounty_num = guided
+	else
+		bounty_num = rand(1,13)
+	switch(bounty_num)
 		if(1)
 			var/subtype = pick(subtypesof(/datum/bounty/item/assistant))
 			return new subtype
@@ -100,27 +105,27 @@ GLOBAL_LIST_EMPTY(bounties_list)
 			var/subtype = pick(subtypesof(/datum/bounty/virus))
 			return new subtype
 		if(8)
-			var/subtype = pick(subtypesof(/datum/bounty/item/science))
-			return new subtype
-		if(9)
+			if(rand(2) == 1)
+				var/subtype = pick(subtypesof(/datum/bounty/item/science))
+				return new subtype
 			var/subtype = pick(subtypesof(/datum/bounty/item/slime))
 			return new subtype
-		if(10)
+		if(9)
 			var/subtype = pick(subtypesof(/datum/bounty/item/engineering))
 			return new subtype
-		if(11)
+		if(10)
 			var/subtype = pick(subtypesof(/datum/bounty/item/mining))
 			return new subtype
-		if(12)
+		if(11)
 			var/subtype = pick(subtypesof(/datum/bounty/item/medical))
 			return new subtype
-		if(13)
+		if(12)
 			var/subtype = pick(subtypesof(/datum/bounty/item/botany))
 			return new subtype
-		if(14)
+		if(13)
 			var/subtype = pick(subtypesof(/datum/bounty/item/silly))
 			return new subtype
-		if(15)
+		if(14)
 			var/subtype = pick(subtypesof(/datum/bounty/item/gardencook))
 			return new subtype
 

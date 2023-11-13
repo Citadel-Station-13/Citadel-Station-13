@@ -64,8 +64,8 @@
 	var/overlay_plane = BLACKNESS_PLANE
 	/// If the weather has no purpose but aesthetics.
 	var/aesthetic = FALSE
-	/// Used by mobs to prevent them from being affected by the weather
-	var/immunity_type = "storm"
+	/// Used by mobs (or movables containing mobs, such as enviro bags) to prevent them from being affected by the weather.
+	var/immunity_type
 
 	/// The stage of the weather, from 1-4
 	var/stage = END_STAGE
@@ -133,15 +133,18 @@
 /datum/weather/proc/start()
 	if(stage >= MAIN_STAGE)
 		return
+	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_START(type))
 	stage = MAIN_STAGE
 	update_areas()
-	for(var/M in GLOB.player_list)
-		var/turf/mob_turf = get_turf(M)
-		if(mob_turf && (mob_turf.z in impacted_z_levels))
+	for(var/z_level in impacted_z_levels)
+		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
+			var/turf/mob_turf = get_turf(player)
+			if(!mob_turf)
+				continue
 			if(weather_message)
-				to_chat(M, weather_message)
+				to_chat(player, weather_message)
 			if(weather_sound)
-				SEND_SOUND(M, sound(weather_sound))
+				SEND_SOUND(player, sound(weather_sound))
 	if(!perpetual)
 		addtimer(CALLBACK(src, .proc/wind_down), weather_duration)
 
@@ -192,14 +195,27 @@
   * Returns TRUE if the living mob can be affected by the weather
   *
   */
-/datum/weather/proc/can_weather_act(mob/living/L)
-	var/turf/mob_turf = get_turf(L)
-	if(mob_turf && !(mob_turf.z in impacted_z_levels))
+/datum/weather/proc/can_weather_act(mob/living/mob_to_check)
+	var/turf/mob_turf = get_turf(mob_to_check)
+
+	if(!mob_turf)
 		return
-	if(immunity_type in L.weather_immunities)
+
+	if(!(mob_turf.z in impacted_z_levels))
 		return
-	if(!(get_area(L) in impacted_areas))
+
+	if((immunity_type && HAS_TRAIT(mob_to_check, immunity_type)) || HAS_TRAIT(mob_to_check, TRAIT_WEATHER_IMMUNE))
 		return
+
+	var/atom/loc_to_check = mob_to_check.loc
+	while(loc_to_check != mob_turf)
+		if((immunity_type && HAS_TRAIT(loc_to_check, immunity_type)) || HAS_TRAIT(loc_to_check, TRAIT_WEATHER_IMMUNE))
+			return
+		loc_to_check = loc_to_check.loc
+
+	if(!(get_area(mob_to_check) in impacted_areas))
+		return
+
 	return TRUE
 
 /**

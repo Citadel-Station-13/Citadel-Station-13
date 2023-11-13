@@ -313,7 +313,7 @@
 	var/challenge = FALSE
 	var/moved = FALSE
 
-/obj/item/circuitboard/computer/syndicate_shuttle/Initialize()
+/obj/item/circuitboard/computer/syndicate_shuttle/Initialize(mapload)
 	. = ..()
 	GLOB.syndicate_shuttle_boards += src
 
@@ -348,9 +348,9 @@
 	name = "Snow Taxi (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/snow_taxi
 
-// /obj/item/circuitboard/computer/bountypad
-// 	name = "Bounty Pad (Computer Board)"
-// 	build_path = /obj/machinery/computer/piratepad_control/civilian
+/obj/item/circuitboard/computer/bountypad
+	name = "Bounty Pad (Computer Board)"
+	build_path = /obj/machinery/computer/piratepad_control/civilian
 
 /obj/item/circuitboard/computer/security/shuttle
 	name = "Shuttlelinking Security Cameras (Computer Board)"

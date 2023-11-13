@@ -28,7 +28,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/list/possible_names //If you leave this blank, it will use the global posibrain names
 	var/picked_name
 
-/obj/item/mmi/posibrain/Initialize()
+/obj/item/mmi/posibrain/Initialize(mapload)
 	. = ..()
 	brainmob = new(src)
 	var/new_name

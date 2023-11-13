@@ -9,7 +9,7 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	hoodtype = /obj/item/clothing/head/hooded/explorer
-	armor = list("melee" = 30, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 50, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 30, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 50, FIRE = 50, ACID = 50)
 	flags_inv = HIDEJUMPSUIT|HIDETAUR
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
 	resistance_flags = FIRE_PROOF
@@ -27,7 +27,7 @@
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	cold_protection = HEAD
-	armor = list("melee" = 30, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 50, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 50, "wound" = 10)
+	armor = list(MELEE = 30, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 50, FIRE = 50, ACID = 50, WOUND = 10)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/suit/hooded/explorer/standard
@@ -35,7 +35,7 @@
 
 /obj/item/clothing/head/hooded/explorer/standard
 
-/obj/item/clothing/suit/hooded/explorer/standard/Initialize()
+/obj/item/clothing/suit/hooded/explorer/standard/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
 	RegisterSignal(src, COMSIG_ARMOR_PLATED, .proc/upgrade_icon)
@@ -54,7 +54,7 @@
 		if(wearer.wear_suit == src)
 			wearer.update_inv_wear_suit()
 
-/obj/item/clothing/head/hooded/explorer/standard/Initialize()
+/obj/item/clothing/head/hooded/explorer/standard/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
 	RegisterSignal(src, COMSIG_ARMOR_PLATED, .proc/upgrade_icon)
@@ -81,7 +81,7 @@
 	visor_flags_inv = HIDEFACIALHAIR
 	visor_flags_cover = MASKCOVERSMOUTH
 	actions_types = list(/datum/action/item_action/adjust)
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 5, "bio" = 50, "rad" = 0, "fire" = 20, "acid" = 40, "wound" = 5)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 5, BIO = 50, RAD = 0, FIRE = 20, ACID = 40, WOUND = 5)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/mask/gas/explorer/attack_self(mob/user)
@@ -91,7 +91,7 @@
 	..()
 	w_class = mask_adjusted ? WEIGHT_CLASS_NORMAL : WEIGHT_CLASS_SMALL
 
-/obj/item/clothing/mask/gas/explorer/folded/Initialize()
+/obj/item/clothing/mask/gas/explorer/folded/Initialize(mapload)
 	. = ..()
 	adjustmask()
 
@@ -105,10 +105,10 @@
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF | GOLIATH_RESISTANCE
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC
 	slowdown = 0
-	armor = list("melee" = 70, "bullet" = 40, "laser" = 10, "energy" = 10, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 10, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
 
-/obj/item/clothing/suit/space/hostile_environment/Initialize()
+/obj/item/clothing/suit/space/hostile_environment/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/spraycan_paintable)
 	START_PROCESSING(SSobj, src)
@@ -134,10 +134,10 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL // no space protection
-	armor = list("melee" = 70, "bullet" = 40, "laser" = 10, "energy" = 10, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 10, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
-/obj/item/clothing/head/helmet/space/hostile_environment/Initialize()
+/obj/item/clothing/head/helmet/space/hostile_environment/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/spraycan_paintable)
 	update_icon()
@@ -156,38 +156,48 @@
 		M.appearance_flags = RESET_COLOR
 		. += M
 
+/****************HEVA Suit and Mask****************/
 
-// CITADEL ADDITIONS BELOW
-
-/****************SEVA Suit and Mask****************/
-
-/obj/item/clothing/suit/hooded/explorer/seva
-	name = "SEVA Suit"
-	desc = "A fire-proof suit for exploring hot environments. Its design and material make it easier for a Goliath to keep their grip on the wearer."
-	icon_state = "seva"
-	item_state = "seva"
+/obj/item/clothing/suit/hooded/explorer/heva
+	name = "HEVA suit"
+	desc = "The Hazardous Environments extra-Vehicular Activity suit, developed by WanTon & Sons Perilous Mining and sold to Nanotrasen for missions within inhospitable, mineral-rich zones. \
+			Its sleek plating deflects most biological - radioactive - and chemical substances and materials. Most notably, this will negate the effects of ash storms and give goliaths better grip against you."
+	icon_state = "heva"
+	item_state = "heva"
 	w_class = WEIGHT_CLASS_BULKY
-	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	hoodtype = /obj/item/clothing/head/hooded/explorer/seva
-	armor = list("melee" = 15, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 35, "bio" = 50, "rad" = 25, "fire" = 100, "acid" = 25)
+	hoodtype = /obj/item/clothing/head/hooded/explorer/heva
+	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 20, BIO = 100, RAD = 80, FIRE = 100, ACID = 80)
 	resistance_flags = FIRE_PROOF | GOLIATH_WEAKNESS
 
-/obj/item/clothing/head/hooded/explorer/seva
-	name = "SEVA Hood"
-	desc = "A fire-proof hood for exploring hot environments. Its design and material make it easier for a Goliath to keep their grip on the wearer."
-	icon_state = "seva"
-	item_state = "seva"
-	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 35, "bio" = 50, "rad" = 25, "fire" = 100, "acid" = 25)
+/obj/item/clothing/head/hooded/explorer/heva
+	name = "HEVA hood"
+	desc = "The Hazardous Environments extra-Vehiclar Activity hood, developed by WanTon & Sons Perilous Mining. \
+			Its sleek plating deflects most biological - radioactive - and chemical substances and materials. An instructive tag dictates that the provided mask is required for full protection."
+	icon_state = "heva"
+	item_state = "heva"
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 20, BIO = 100, RAD = 20, FIRE = 60, ACID = 20)
 	resistance_flags = FIRE_PROOF | GOLIATH_WEAKNESS
 
-/obj/item/clothing/mask/gas/seva
-	name = "SEVA Mask"
-	desc = "A face-covering plate that can be connected to an air supply. Intended for use with the SEVA Suit."
-	icon_state = "seva"
-	item_state = "seva"
-	resistance_flags = FIRE_PROOF
+/obj/item/clothing/head/hooded/explorer/heva/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if (slot == ITEM_SLOT_HEAD)
+		ADD_TRAIT(user, TRAIT_ASHSTORM_IMMUNE, "heva_suit")
+
+/obj/item/clothing/head/hooded/explorer/heva/dropped(mob/living/carbon/human/user)
+	..()
+	if (HAS_TRAIT_FROM(user, TRAIT_ASHSTORM_IMMUNE, "heva_suit"))
+		REMOVE_TRAIT(user, TRAIT_ASHSTORM_IMMUNE, "heva_suit")
+
+/obj/item/clothing/mask/gas/heva
+	name = "HEVA mask"
+	desc = "The Hazardous Environments extra-Vehiclar Activity mask, developed by WanTon & Sons Perilous Mining. \
+			Its sleek plating deflects most biological - radioactive - and chemical substances and materials. An instructive tag dictates that the provided protective attire is required for full protection."
+	icon_state = "heva"
+	item_state = "heva"
+	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 60, FIRE = 40, ACID = 50)
 
 /****************Exo-Suit and Mask****************/
 
@@ -199,7 +209,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	hoodtype = /obj/item/clothing/head/hooded/explorer/exo
-	armor = list("melee" = 55, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 40, "bio" = 25, "rad" = 10, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 55, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 40, BIO = 25, RAD = 10, FIRE = 0, ACID = 0)
 	resistance_flags = FIRE_PROOF | GOLIATH_RESISTANCE
 
 /obj/item/clothing/head/hooded/explorer/exo
@@ -207,7 +217,7 @@
 	desc = "A robust helmet for fighting dangerous animals. Its design and material make it harder for a Goliath to keep their grip on the wearer."
 	icon_state = "exo"
 	item_state = "exo"
-	armor = list("melee" = 55, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 40, "bio" = 25, "rad" = 10, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 55, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 40, BIO = 25, RAD = 10, FIRE = 0, ACID = 0)
 	resistance_flags = FIRE_PROOF | GOLIATH_RESISTANCE
 
 /obj/item/clothing/mask/gas/exo

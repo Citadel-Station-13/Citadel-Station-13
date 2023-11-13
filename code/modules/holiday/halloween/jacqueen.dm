@@ -15,6 +15,8 @@
 	weight = -1							//forces it to be called, regardless of weight
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	category = EVENT_CATEGORY_HOLIDAY
+	description = "Spawns Jacq, a friendly mob that gives players a couple fun stuff to do."
 
 /datum/round_event/jacqueen/start()
 	..()
@@ -61,7 +63,7 @@
 		/atom/movable/screen
 	))
 
-/mob/living/simple_animal/jacq/Initialize()
+/mob/living/simple_animal/jacq/Initialize(mapload)
 	. = ..() //fuck you jacq, return a hint you shit
 	cached_z = z
 	poof()
@@ -70,7 +72,7 @@
 	. = ..()
 	AddComponent(/datum/component/stationloving)
 
-/mob/living/simple_animal/jacq/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/jacq/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(!ckey)
@@ -219,23 +221,11 @@
 /mob/living/simple_animal/jacq/proc/treat(mob/living/carbon/C, gender)
 	visible_message("<b>[src]</b> gives off a glowing smile, <span class='spooky'>\"What ken Ah offer ye? I can magic up an object, a potion or a plushie fer ye.\"</span>")
 	jacqrunes("What ken Ah offer ye? I can magic up an object, a potion or a plushie fer ye.", C)
-	var/choices_reward = list("Object - 3 candies", "Potion - 2 candies", "Jacqueline Tracker - 2 candies", "Plushie - 1 candy", "Can I get to know you instead?", "Become a pumpkinhead dullahan (perma) - 4 candies")
+	var/choices_reward = list("Object - 3 candies", "Potion - 2 candies", "Jacqueline Tracker - 2 candies", "Plushie - 1 candy", "Can I get to know you instead?")
 	var/choice_reward = input(usr, "Trick or Treat?", "Trick or Treat?") in choices_reward
 
 	//rewards
 	switch(choice_reward)
-		if("Become a pumpkinhead dullahan (perma) - 4 candies")
-			if(!take_candies(C, 4))
-				visible_message("<b>[src]</b> raises an eyebrown, <span class='spooky'>\"It's 4 candies for that [gender]! Thems the rules!\"</span>")
-				jacqrunes("It's 4 candies for that [gender]! Thems the rules!", C)
-				return
-			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"Off comes your head, a pumpkin taking it's stead!\"</span>")
-			jacqrunes("Off comes your head, a pumpkin taking it's stead!", C)
-			C.reagents.add_reagent(/datum/reagent/mutationtoxin/pumpkinhead, 5)
-			sleep(20)
-			poof()
-			return
-
 		if("Object - 3 candies")
 			if(!take_candies(C, 3))
 				visible_message("<b>[src]</b> raises an eyebrown, <span class='spooky'>\"It's 3 candies per trinket [gender]! Thems the rules!\"</span>")
@@ -664,13 +654,13 @@
 	hat_type = "pumpkin_j"
 	brightness_on = 4
 
-/obj/item/clothing/head/hardhat/pumpkinhead/jaqc/Initialize()
+/obj/item/clothing/head/hardhat/pumpkinhead/jaqc/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, GLUED_ITEM_TRAIT)
 
 /obj/item/clothing/suit/ghost_sheet/sticky
 
-/obj/item/clothing/suit/ghost_sheet/sticky/Initialize()
+/obj/item/clothing/suit/ghost_sheet/sticky/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, GLUED_ITEM_TRAIT)
 
@@ -687,12 +677,6 @@
 		return
 	else
 		..()
-
-/datum/reagent/mutationtoxin/pumpkinhead
-	name = "Pumpkin head mutation toxin"
-	race = /datum/species/dullahan/pumpkin
-	mutationtext = "<span class='spooky'>The pain subsides. You feel your head roll off your shoulders... and you smell pumpkin."
-	//I couldn't get the replace head sprite with a pumpkin to work so, it is what it is.
 
 /mob/living/simple_animal/jacq/proc/check_candies(mob/living/carbon/C)
 	var/invs = C.get_contents()
@@ -723,7 +707,7 @@
 	icon_state = "jacq_potion"
 	desc = "A potion with a strange concoction within. Be careful, as if it's thrown it explodes in a puff of smoke like Jacqueline."
 
-/obj/item/reagent_containers/potion_container/Initialize()
+/obj/item/reagent_containers/potion_container/Initialize(mapload)
 	.=..()
 	var/R = get_random_reagent_id()
 	reagents.add_reagent(R, 30)
@@ -748,6 +732,6 @@
 	icon_state = "jacq_candy"
 	desc = "A candy with strange magic within. Be careful, as the magic isn't always helpful."
 
-/obj/item/reagent_containers/food/snacks/special_candy/Initialize()
+/obj/item/reagent_containers/food/snacks/special_candy/Initialize(mapload)
 	.=..()
 	reagents.add_reagent(get_random_reagent_id(), 5)

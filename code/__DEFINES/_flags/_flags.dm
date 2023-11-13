@@ -64,6 +64,8 @@ GLOBAL_LIST_INIT(bitflags, list(
 #define NO_RUINS_1 (1<<10)
 /// Should this tile be cleaned up and reinserted into an excited group?
 #define EXCITED_CLEANUP_1 (1 << 13)
+/// Whether or not this atom has contextual screentips when hovered OVER
+#define HAS_CONTEXTUAL_SCREENTIPS_1 (1 << 14)
 
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
@@ -106,15 +108,18 @@ GLOBAL_LIST_INIT(bitflags, list(
 #define PASSBLOB		(1<<3)
 #define PASSMOB			(1<<4)
 #define PASSCLOSEDTURF	(1<<5)
+/// Let thrown things past us. **ONLY MEANINGFUL ON pass_flags_self!**
 #define LETPASSTHROW	(1<<6)
+#define	PASSMACHINE		(1<<7)
+#define PASSSTRUCTURE	(1<<8)
 
 //Movement Types
 #define GROUND				(1<<0)
 #define FLYING				(1<<1)
 #define VENTCRAWLING		(1<<2)
 #define FLOATING			(1<<3)
-///When moving, will Bump()/Cross()/Uncross() everything, but won't be stopped.
-#define UNSTOPPABLE			(1<<4)
+///When moving, will Bump()/Cross()/Uncross() everything, but won't stop or Bump() anything.
+#define PHASING				(1<<4)
 ///Applied if you're crawling around on the ground/resting.
 #define CRAWLING			(1<<5)
 

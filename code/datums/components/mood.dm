@@ -34,6 +34,7 @@
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/stop_processing)
 	RegisterSignal(parent, COMSIG_VOID_MASK_ACT, .proc/direct_sanity_drain)
+	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/update_beauty)
 
 
 	if(owner.hud_used)
@@ -50,7 +51,7 @@
 	STOP_PROCESSING(SSobj, src)
 
 /datum/component/mood/proc/print_mood(mob/user)
-	var/msg = "<span class='info'>*---------*\n<EM>Your current mood</EM>\n"
+	var/msg = "<blockquote class='[sanity > SANITY_DISTURBED ? "nicegreen" : "warning"]'><span class='info'><EM>Your current mood</EM></span>\n"
 	msg += "<span class='notice'>My mental status: </span>" //Long term
 	switch(sanity)
 		if(SANITY_GREAT to INFINITY)
@@ -69,23 +70,23 @@
 	msg += "<span class='notice'>My current mood: </span>" //Short term
 	switch(mood_level)
 		if(1)
-			msg += "<span class='boldwarning'>I wish I was dead!<span>\n"
+			msg += "<span class='boldwarning'>I wish I was dead!</span>\n"
 		if(2)
-			msg += "<span class='boldwarning'>I feel terrible...<span>\n"
+			msg += "<span class='boldwarning'>I feel terrible...</span>\n"
 		if(3)
-			msg += "<span class='boldwarning'>I feel very upset.<span>\n"
+			msg += "<span class='boldwarning'>I feel very upset.</span>\n"
 		if(4)
-			msg += "<span class='boldwarning'>I'm a bit sad.<span>\n"
+			msg += "<span class='boldwarning'>I'm a bit sad.</span>\n"
 		if(5)
-			msg += "<span class='nicegreen'>I'm alright.<span>\n"
+			msg += "<span class='nicegreen'>I'm alright.</span>\n"
 		if(6)
-			msg += "<span class='nicegreen'>I feel pretty okay.<span>\n"
+			msg += "<span class='nicegreen'>I feel pretty okay.</span>\n"
 		if(7)
-			msg += "<span class='nicegreen'>I feel pretty good.<span>\n"
+			msg += "<span class='nicegreen'>I feel pretty good.</span>\n"
 		if(8)
-			msg += "<span class='nicegreen'>I feel amazing!<span>\n"
+			msg += "<span class='nicegreen'>I feel amazing!</span>\n"
 		if(9)
-			msg += "<span class='nicegreen'>I love life!<span>\n"
+			msg += "<span class='nicegreen'>I love life!</span>\n"
 
 	msg += "<span class='notice'>Moodlets:\n</span>"//All moodlets
 	if(mood_events.len)
@@ -93,7 +94,8 @@
 			var/datum/mood_event/event = mood_events[i]
 			msg += event.description
 	else
-		msg += "<span class='nicegreen'>I don't have much of a reaction to anything right now.<span>\n"
+		msg += "<span class='nicegreen'>I don't have much of a reaction to anything right now.</span>\n"
+	msg += "</blockquote>"
 	to_chat(user || parent, msg)
 
 ///Called after moodevent/s have been added/removed.
@@ -349,7 +351,7 @@
 		if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
 			add_event(null, "charge", /datum/mood_event/supercharged)
 
-/datum/component/mood/proc/update_beauty(area/A)
+/datum/component/mood/proc/update_beauty(datum/source, area/A)
 	if(A.outdoors) //if we're outside, we don't care.
 		clear_event(null, "area_beauty")
 		return FALSE

@@ -111,8 +111,10 @@
 #define INIT_ORDER_SOUNDS			83
 #define INIT_ORDER_INSTRUMENTS		82
 #define INIT_ORDER_VIS				80
+#define INIT_ORDER_SECURITY_LEVEL 79 // We need to load before events so that it has a security level to choose from.
 #define INIT_ORDER_ACHIEVEMENTS		77
 #define INIT_ORDER_RESEARCH			75
+#define INIT_ORDER_STATION			74 //This is high priority because it manipulates a lot of the subsystems that will initialize after it.
 #define INIT_ORDER_EVENTS			70
 #define INIT_ORDER_JOBS				65
 #define INIT_ORDER_QUIRKS			60

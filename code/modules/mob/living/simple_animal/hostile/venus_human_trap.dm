@@ -20,7 +20,7 @@
 	/// The amount of time it takes to create a venus human trap, in deciseconds
 	var/growth_time = 1200
 
-/obj/structure/alien/resin/flower_bud_enemy/Initialize()
+/obj/structure/alien/resin/flower_bud_enemy/Initialize(mapload)
 	. = ..()
 	var/list/anchors = list()
 	anchors += locate(x-2,y+2,z)
@@ -100,7 +100,7 @@
 /mob/living/simple_animal/hostile/venus_human_trap/ghost_playable
 	playable_plant = TRUE //For admins that want to buss some harmless plants
 
-/mob/living/simple_animal/hostile/venus_human_trap/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/venus_human_trap/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	pull_vines()

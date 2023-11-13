@@ -6,6 +6,8 @@
 	min_players = 10
 	earliest_start = 30 MINUTES
 	dynamic_should_hijack = TRUE
+	category = EVENT_CATEGORY_INVASION
+	description = "The crew will either pay up, or face a pirate assault."
 
 #define PIRATES_ROGUES "Rogues"
 // #define PIRATES_SILVERSCALES "Silverscales"
@@ -37,7 +39,7 @@
 		// if(PIRATES_DUTCHMAN)
 		// 	ship_name = "Flying Dutchman"
 
-	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", "commandreport")
+	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", SSstation.announcer.get_rand_report_sound(), has_important_message = TRUE)
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
 		payoff = max(payoff_min, FLOOR(D.account_balance * 0.80, 1000))
@@ -63,16 +65,16 @@
 
 /proc/pirates_answered(datum/comm_message/threat_msg, payoff, ship_name, initial_send_time, response_max_time, ship_template)
 	if(world.time > initial_send_time + response_max_time)
-		priority_announce("Too late to beg for mercy!",sender_override = ship_name)
+		priority_announce("Too late to beg for mercy!",sender_override = ship_name, has_important_message = TRUE)
 		return
 	if(threat_msg && threat_msg.answered == 1)
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
 			if(D.adjust_money(-payoff))
-				priority_announce("Thanks for the credits, landlubbers.",sender_override = ship_name)
+				priority_announce("Thanks for the credits, landlubbers.",sender_override = ship_name, has_important_message = TRUE)
 				return
 			else
-				priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
+				priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name, has_important_message = TRUE)
 				spawn_pirates(threat_msg, ship_template, TRUE)
 
 /proc/spawn_pirates(datum/comm_message/threat_msg, ship_template, skip_answer_check)
@@ -251,8 +253,8 @@
 /obj/machinery/piratepad
 	name = "cargo hold pad"
 	icon = 'icons/obj/telescience.dmi'
-	icon_state = "lpad-idle-o"
-	var/idle_state = "lpad-idle-o"
+	icon_state = "lpad-idle-off"
+	var/idle_state = "lpad-idle"
 	var/warmup_state = "lpad-idle"
 	var/sending_state = "lpad-beam"
 	var/cargo_hold_id
@@ -264,6 +266,17 @@
 		I.buffer = src
 		return TRUE
 
+/obj/machinery/piratepad/screwdriver_act(mob/living/user, obj/item/screwdriver/screw)
+	. = ..()
+	if(!.)
+		return default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle-off", screw)
+
+/obj/machinery/piratepad/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_deconstruction_crowbar(tool)
+	return TRUE
+
+
 /obj/machinery/computer/piratepad_control
 	name = "cargo hold control terminal"
 	var/status_report = "Ready for delivery."
@@ -274,8 +287,10 @@
 	var/datum/export_report/total_report
 	var/sending_timer
 	var/cargo_hold_id
+	///Reference to the specific pad that the control computer is linked up to.
+	var/datum/weakref/pad_ref
 
-/obj/machinery/computer/piratepad_control/Initialize()
+/obj/machinery/computer/piratepad_control/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -283,7 +298,7 @@
 	. = ..()
 	if (istype(I) && istype(I.buffer,/obj/machinery/piratepad))
 		to_chat(user, "<span class='notice'>You link [src] with [I.buffer] in [I] buffer.</span>")
-		pad = I.buffer
+		pad_ref = WEAKREF(I.buffer)
 		return TRUE
 
 /obj/machinery/computer/piratepad_control/LateInitialize()
@@ -291,10 +306,11 @@
 	if(cargo_hold_id)
 		for(var/obj/machinery/piratepad/P in GLOB.machines)
 			if(P.cargo_hold_id == cargo_hold_id)
-				pad = P
+				pad_ref = WEAKREF(P)
 				return
 	else
 		pad = locate() in range(4,src)
+		pad_ref = WEAKREF(pad)
 
 /obj/machinery/computer/piratepad_control/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -305,7 +321,7 @@
 /obj/machinery/computer/piratepad_control/ui_data(mob/user)
 	var/list/data = list()
 	data["points"] = points
-	data["pad"] = pad ? TRUE : FALSE
+	data["pad"] = pad_ref?.resolve() ? TRUE : FALSE
 	data["sending"] = sending
 	data["status_report"] = status_report
 	return data
@@ -314,7 +330,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!pad)
+	if(!pad_ref?.resolve())
 		return
 
 	switch(action)
@@ -335,6 +351,7 @@
 	status_report = "Predicted value: "
 	var/value = 0
 	var/datum/export_report/ex = new
+	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
 			continue
@@ -353,6 +370,7 @@
 		return
 
 	var/datum/export_report/ex = new
+	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
 
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
@@ -390,6 +408,15 @@
 	sending = FALSE
 
 /obj/machinery/computer/piratepad_control/proc/start_sending()
+	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
+	if(!pad)
+		status_report = "No pad detected. Build or link a pad."
+		pad.audible_message(span_notice("[pad] beeps."))
+		return
+	if(pad?.panel_open)
+		status_report = "Please screwdrive pad closed to send. "
+		pad.audible_message(span_notice("[pad] beeps."))
+		return
 	if(sending)
 		return
 	sending = TRUE

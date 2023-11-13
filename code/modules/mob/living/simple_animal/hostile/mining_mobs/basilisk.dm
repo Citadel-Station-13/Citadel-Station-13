@@ -42,7 +42,7 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
-	flag = "energy"
+	flag = ENERGY
 	temperature = 50
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
@@ -95,7 +95,7 @@
 	wanted_objects = list(/obj/item/pen/survival, /obj/item/stack/ore/diamond)
 	field_of_vision_type = FOV_270_DEGREES //Obviously, it's one eyeball.
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(stat == CONSCIOUS)
@@ -110,7 +110,7 @@
 			qdel(O)
 			src.visible_message("<span class='notice'>[src] examines [O] closer, and telekinetically shatters the pen.</span>")
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize()
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize(mapload)
 	. = ..()
 	if(prob(1))
 		if(prob(75))

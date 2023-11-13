@@ -52,7 +52,7 @@
 							You can attack any item or dead creature to consume it - creatures will fully restore your health. \
 							Finally, you can restore yourself to your original form while morphed by shift-clicking yourself.</b>"
 
-/mob/living/simple_animal/hostile/morph/Initialize()
+/mob/living/simple_animal/hostile/morph/Initialize(mapload)
 	. = ..()
 	src.AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
@@ -220,6 +220,8 @@
 	typepath = /datum/round_event/ghost_role/morph
 	weight = 0 //Admin only
 	max_occurrences = 1
+	category = EVENT_CATEGORY_ENTITIES
+	description = "Spawns a hungry shapeshifting blobby creature."
 
 /datum/round_event/ghost_role/morph
 	minimum_required = 1

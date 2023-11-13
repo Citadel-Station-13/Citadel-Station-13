@@ -37,7 +37,7 @@
 	icon_state = "xmashat"
 	desc = "A crappy paper hat that you are REQUIRED to wear."
 	flags_inv = 0
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/effect/landmark/xmastree
 	name = "christmas tree spawner"
@@ -68,6 +68,8 @@
 	weight = 20
 	max_occurrences = 1
 	earliest_start = 30 MINUTES
+	category = EVENT_CATEGORY_HOLIDAY
+	description = "Spawns santa, who shall roam the station, handing out gifts."
 
 /datum/round_event/santa
 	var/mob/living/carbon/human/santa //who is our santa?

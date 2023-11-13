@@ -8,7 +8,7 @@
 	var/unrestricted = TRUE
 
 /datum/emote/sound/silicon/run_emote(mob/user, params)
-	if(!unrestricted && !(issilicon(user) || isipcperson(user)))
+	if(!unrestricted && !(issilicon(user) || isrobotic(user)))
 		return
 	return ..()
 

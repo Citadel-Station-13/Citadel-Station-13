@@ -12,7 +12,7 @@
 
 /obj/item/clothing/gloves/mittens/random
 
-/obj/item/clothing/gloves/mittens/random/Initialize()
+/obj/item/clothing/gloves/mittens/random/Initialize(mapload)
 	..()
 	var/colours = list("black", "yellow", "lightbrown", "brown", "orange", "red", "purple", "green", "blue", "kitten")
 	var/picked_c = pick(colours)

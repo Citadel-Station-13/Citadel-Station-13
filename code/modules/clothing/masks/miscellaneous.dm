@@ -29,7 +29,7 @@
 	visor_flags_cover = MASKCOVERSMOUTH
 	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.01
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 25, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 25, RAD = 0, FIRE = 0, ACID = 0)
 	actions_types = list(/datum/action/item_action/adjust)
 	mutantrace_variation = STYLE_MUZZLE
 
@@ -41,7 +41,7 @@
 	visor_flags_inv = null
 	visor_flags_cover = null
 	permeability_coefficient = 1
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/mask/surgical/attack_self(mob/user)
 	adjustmask(user)
@@ -113,6 +113,50 @@
 		to_chat(user, "<span class='notice'>Your Joy mask now has a [choice] Emotion!</span>")
 		return 1
 
+/obj/item/clothing/mask/kitsuneblk
+	name = "Black Kitsune Mask"
+	desc = "An oriental styled porcelain mask, this one is black and gold."
+	icon_state = "blackkitsunemask"
+	item_state = "blackkitsunemask"
+	w_class = WEIGHT_CLASS_TINY
+	flags_cover = MASKCOVERSMOUTH
+	flags_inv = HIDEFACE|HIDEFACIALHAIR
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	visor_flags_cover = MASKCOVERSMOUTH
+	slot_flags = ITEM_SLOT_MASK
+
+/obj/item/clothing/mask/kitsuneblk/attack_self(mob/user)
+    adjustmask(user)
+
+/obj/item/clothing/mask/kitsuneblk/AltClick(mob/user)
+    . = ..()
+    if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+        return
+    adjustmask(user)
+    return TRUE
+
+/obj/item/clothing/mask/kitsunewhi
+	name = "White Kitsune Mask"
+	desc = "An oriental styled porcelain mask, this one is white and red."
+	icon_state = "whitekitsunemask"
+	item_state = "whitekitsunemask"
+	w_class = WEIGHT_CLASS_TINY
+	flags_cover = MASKCOVERSMOUTH
+	flags_inv = HIDEFACE|HIDEFACIALHAIR
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	visor_flags_cover = MASKCOVERSMOUTH
+	slot_flags = ITEM_SLOT_MASK
+
+/obj/item/clothing/mask/kitsunewhi/attack_self(mob/user)
+    adjustmask(user)
+
+/obj/item/clothing/mask/kitsunewhi/AltClick(mob/user)
+    . = ..()
+    if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+        return
+    adjustmask(user)
+    return TRUE
+
 /obj/item/clothing/mask/pig
 	name = "pig mask"
 	desc = "A rubber pig mask with a builtin voice modulator."
@@ -133,7 +177,7 @@
 	flags_inv = HIDEFACIALHAIR
 	clothing_flags = NONE
 
-/obj/item/clothing/mask/pig/cursed/Initialize()
+/obj/item/clothing/mask/pig/cursed/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
 	playsound(get_turf(src), 'sound/magic/pighead_curse.ogg', 50, 1)
@@ -159,7 +203,7 @@
 /obj/item/clothing/mask/frog/cursed
 	clothing_flags = NONE
 
-/obj/item/clothing/mask/frog/cursed/Initialize()
+/obj/item/clothing/mask/frog/cursed/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
 
@@ -190,7 +234,7 @@
 	flags_inv = HIDEFACIALHAIR
 	clothing_flags = NONE
 
-/obj/item/clothing/mask/cowmask/cursed/Initialize()
+/obj/item/clothing/mask/cowmask/cursed/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
 	playsound(get_turf(src), 'sound/magic/cowhead_curse.ogg', 50, 1)
@@ -215,7 +259,7 @@
 	clothing_flags = NONE
 	flags_inv = HIDEFACIALHAIR
 
-/obj/item/clothing/mask/horsehead/cursed/Initialize()
+/obj/item/clothing/mask/horsehead/cursed/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
 	playsound(get_turf(src), 'sound/magic/horsehead_curse.ogg', 50, 1)

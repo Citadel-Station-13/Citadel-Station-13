@@ -162,7 +162,7 @@
 	var/pre_attached_grenade_type
 	demands_object_input = TRUE	// You can put stuff in once the circuit is in assembly,passed down from additem and handled by attackby()
 
-/obj/item/integrated_circuit/weaponized/grenade/Initialize()
+/obj/item/integrated_circuit/weaponized/grenade/Initialize(mapload)
 	. = ..()
 	if(pre_attached_grenade_type)
 		var/grenade = new pre_attached_grenade_type(src)

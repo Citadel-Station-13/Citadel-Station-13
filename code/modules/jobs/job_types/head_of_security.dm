@@ -1,7 +1,7 @@
 /datum/job/hos
 	title = "Head of Security"
 	flag = HOS
-//	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
+	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
 	department_head = list("Captain")
 	department_flag = ENGSEC
 	head_announce = list(RADIO_CHANNEL_SECURITY)
@@ -32,10 +32,16 @@
 						ACCESS_HEADS, ACCESS_HOS, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_MAINT_TUNNELS, ACCESS_MINERAL_STOREROOM)
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SEC
+	bounty_types = CIV_JOB_SEC
+
 
 	display_order = JOB_DISPLAY_ORDER_HEAD_OF_SECURITY
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/nonviolent, /datum/quirk/paraplegic, /datum/quirk/blindness, /datum/quirk/monophobia, /datum/quirk/insanity)
 	threat = 3
+
+	family_heirlooms = list(
+		/obj/item/book/manual/wiki/security_space_law
+	)
 
 /datum/outfit/job/hos
 	name = "Head of Security"
@@ -45,7 +51,7 @@
 	belt = /obj/item/pda/heads/hos
 	ears = /obj/item/radio/headset/heads/hos/alt
 	uniform = /obj/item/clothing/under/rank/security/head_of_security
-	shoes = /obj/item/clothing/shoes/jackboots
+	shoes = /obj/item/clothing/shoes/jackboots/sec
 	suit = /obj/item/clothing/suit/armor/hos/trenchcoat
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/HoS/beret

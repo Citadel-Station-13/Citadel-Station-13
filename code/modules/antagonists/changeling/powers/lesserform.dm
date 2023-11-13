@@ -1,18 +1,17 @@
-/obj/effect/proc_holder/changeling/lesserform
+/datum/action/changeling/lesserform
 	name = "Lesser Form"
-	desc = "We debase ourselves and become lesser. We become a monkey. This ability is loud, and might cause our blood to react violently to heat."
+	desc = "We debase ourselves and become lesser. We become a monkey. This ability is loud, and might cause our blood to react violently to heat. Costs 5 chemicals."
+	helptext = "The transformation greatly reduces our size, allowing us to slip out of cuffs and climb through vents."
+	button_icon_state = "lesser_form"
 	chemical_cost = 5
 	dna_cost = 1
 	loudness = 2
-	req_human = 1
-	action_icon = 'icons/mob/actions/actions_changeling.dmi'
-	action_icon_state = "ling_lesser"
-	action_background_icon_state = "bg_ling"
+	req_human = TRUE
 
 //Transform into a monkey.
-/obj/effect/proc_holder/changeling/lesserform/sting_action(mob/living/carbon/human/user)
+/datum/action/changeling/lesserform/sting_action(mob/living/carbon/human/user)
 	if(!user || user.mob_transforming)
-		return 0
+		return FALSE
 	to_chat(user, "<span class='warning'>Our genes cry out!</span>")
 
 	user.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)

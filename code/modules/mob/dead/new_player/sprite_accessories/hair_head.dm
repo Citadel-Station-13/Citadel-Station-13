@@ -3,6 +3,7 @@
 //////////////////////
 /datum/sprite_accessory/hair
 	icon = 'icons/mob/hair.dmi'	  // default icon for all hairs
+	mutable_category = "HEAD"
 
 	// please make sure they're sorted alphabetically and, where needed, categorized
 	// try to capitalize the names please~

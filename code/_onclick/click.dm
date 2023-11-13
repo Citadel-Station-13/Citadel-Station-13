@@ -82,11 +82,6 @@
 	if(!modifiers["catcher"] && A.IsObscured())
 		return
 
-	if(ismecha(loc))
-		var/obj/mecha/M = loc
-		M.click_action(A,src,params)
-		return TRUE
-
 	if(restrained())
 		DelayNextAction(CLICK_CD_HANDCUFFED)
 		return RestrainedClickOn(A)
@@ -410,7 +405,7 @@
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)
-	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT)
+	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT, user)
 	return
 
 /*

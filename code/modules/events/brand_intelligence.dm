@@ -5,10 +5,12 @@
 
 	min_players = 15
 	max_occurrences = 1
+	category = EVENT_CATEGORY_AI
+	description = "Vending machines will attack people until the Patient Zero is disabled."
 
 /datum/round_event/brand_intelligence
-	announceWhen	= 21
-	endWhen			= 1000	//Ends when all vending machines are subverted anyway.
+	announce_when	= 21
+	end_when			= 1000	//Ends when all vending machines are subverted anyway.
 	var/list/obj/machinery/vending/vendingMachines = list()
 	var/list/obj/machinery/vending/infectedMachines = list()
 	var/obj/machinery/vending/originMachine
@@ -35,7 +37,7 @@
 		source = initial(example.name)
 	else if(originMachine)
 		source = originMachine.name
-	priority_announce("Rampant brand intelligence has been detected aboard [station_name()]. Please stand by. The origin is believed to be \a [source].", "Machine Learning Alert")
+	priority_announce("Rampant brand intelligence has been detected aboard [station_name()]. Please stand by. The origin is believed to be \a [source].", "Machine Learning Alert", has_important_message = TRUE)
 
 /datum/round_event/brand_intelligence/start()
 	for(var/obj/machinery/vending/V in GLOB.machines)

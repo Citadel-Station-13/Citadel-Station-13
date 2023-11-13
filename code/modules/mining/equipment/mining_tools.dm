@@ -95,7 +95,7 @@
 /obj/item/pickaxe/drill
 	name = "mining drill"
 	icon_state = "handdrill"
-	item_state = "jackhammer"
+	item_state = "handdrill"
 	slot_flags = ITEM_SLOT_BELT
 	toolspeed = 0.6 //available from roundstart, faster than a pickaxe.
 	usesound = 'sound/weapons/drill.ogg'
@@ -108,19 +108,21 @@
 	flags_1 = NONE
 	toolspeed = 0.5
 
-/obj/item/pickaxe/drill/cyborg/Initialize()
+/obj/item/pickaxe/drill/cyborg/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"
+	item_state = "diamonddrill"
 	toolspeed = 0.4
 	desc = "Yours is the drill that will pierce the heavens!"
 
 /obj/item/pickaxe/drill/cyborg/diamond //This is the BORG version!
 	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP_1 flag, and easier to change borg specific drill mechanics.
 	icon_state = "diamonddrill"
+	item_state = "diamonddrill"
 	toolspeed = 0.4
 	digrange = 2
 
@@ -155,7 +157,7 @@
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
 	sharpness = SHARP_EDGED
 
-/obj/item/shovel/Initialize()
+/obj/item/shovel/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 150, 40) //it's sharp, so it works, but barely.
 

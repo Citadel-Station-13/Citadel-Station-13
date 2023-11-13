@@ -8,7 +8,6 @@
 	initial_language_holder = /datum/language_holder/synthetic
 	see_in_dark = 8
 	bubble_icon = "machine"
-	weather_immunities = list("ash")
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
 	mob_biotypes = MOB_ROBOTIC
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
@@ -50,7 +49,10 @@
 
 	typing_indicator_state = /obj/effect/overlay/typing_indicator/machine
 
-/mob/living/silicon/Initialize()
+	vocal_bark_id = "synth"
+	vocal_pitch_range = 0.1
+
+/mob/living/silicon/Initialize(mapload)
 	. = ..()
 	GLOB.silicon_mobs += src
 	faction += "silicon"
@@ -58,6 +60,7 @@
 		diag_hud.add_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
+	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT)
 
 /mob/living/silicon/ComponentInitialize()
 	. = ..()
@@ -82,6 +85,9 @@
 	return
 
 /mob/living/silicon/proc/cancelAlarm()
+	return
+
+/mob/living/silicon/proc/freeCamera()
 	return
 
 /mob/living/silicon/proc/triggerAlarm()
@@ -413,7 +419,7 @@
 	src << browse(dat, "window=airoster")
 	onclose(src, "airoster")
 
-/mob/living/silicon/update_transform()
+/mob/living/silicon/update_transform(do_animate)
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
 	var/changed = 0
 	if(resize != RESIZE_DEFAULT_SIZE)

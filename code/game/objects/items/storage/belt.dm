@@ -28,7 +28,7 @@
 		for(var/obj/item/I in contents)
 			. += I.get_worn_belt_overlay(icon_file)
 
-/obj/item/storage/belt/Initialize()
+/obj/item/storage/belt/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -290,6 +290,7 @@
 		/obj/item/stack/ore,
 		/obj/item/reagent_containers/food/drinks,
 		/obj/item/organ/regenerative_core,
+		/obj/item/hivelordstabilizer,
 		/obj/item/wormhole_jaunter,
 		/obj/item/storage/bag/plants,
 		/obj/item/stack/marker_beacon
@@ -366,7 +367,7 @@
 /obj/item/storage/belt/military/snack
 	name = "tactical snack rig"
 
-/obj/item/storage/belt/military/snack/Initialize()
+/obj/item/storage/belt/military/snack/Initialize(mapload)
 	. = ..()
 	var/sponsor = pick("DonkCo", "Waffle Co.", "Roffle Co.", "Gorlax Marauders", "Tiger Cooperative")
 	desc = "A set of snack-tical webbing worn by athletes of the [sponsor] VR sports division."

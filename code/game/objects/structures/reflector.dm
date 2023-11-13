@@ -17,7 +17,7 @@
 	var/list/allowed_projectile_typecache = list(/obj/item/projectile/beam)
 	var/rotation_angle = -1
 
-/obj/structure/reflector/Initialize()
+/obj/structure/reflector/Initialize(mapload)
 	. = ..()
 	icon_state = "reflector_base"
 	allowed_projectile_typecache = typecacheof(allowed_projectile_typecache)
@@ -263,3 +263,7 @@
 		return
 	else
 		return ..()
+
+/obj/structure/reflector/shuttleRotate(rotation, params)
+	. = ..()
+	setAngle(SIMPLIFY_DEGREES(rotation_angle + rotation))

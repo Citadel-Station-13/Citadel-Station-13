@@ -19,6 +19,7 @@
 	path_image_color = "#993299"
 	weather_immunities = list("lava","ash")
 
+	var/base_icon = "cleanbot"
 	var/clean_time = 50 //How long do we take to clean?
 	var/upgrades = 0
 
@@ -102,7 +103,7 @@
 		if(ascended && user.stat == CONSCIOUS && user.client)
 			user.client.give_award(/datum/award/achievement/misc/cleanboss, user)
 
-/mob/living/simple_animal/bot/cleanbot/Initialize()
+/mob/living/simple_animal/bot/cleanbot/Initialize(mapload)
 	. = ..()
 
 	chosen_name = name
@@ -126,13 +127,21 @@
 
 /mob/living/simple_animal/bot/cleanbot/turn_on()
 	..()
-	icon_state = "cleanbot[on]"
 	bot_core.updateUsrDialog()
+	update_icon()
 
 /mob/living/simple_animal/bot/cleanbot/turn_off()
 	..()
-	icon_state = "cleanbot[on]"
 	bot_core.updateUsrDialog()
+	update_icon()
+
+/mob/living/simple_animal/bot/cleanbot/update_icon_state()
+	. = ..()
+	switch(mode)
+		if(BOT_CLEANING)
+			icon_state = "[base_icon]-c"
+		else
+			icon_state = "[base_icon][on]"
 
 /mob/living/simple_animal/bot/cleanbot/bot_reset()
 	..()
@@ -381,6 +390,12 @@
 				target = null
 			mode = BOT_IDLE
 			icon_state = "cleanbot[on]"
+	else if(istype(A, /turf)) //for player-controlled cleanbots so they can clean unclickable messes like dirt
+		var/turf/T = A
+		for(var/atom/S in T.contents)
+			if(istype(S, /obj/effect/decal/cleanable)) //clean the first mess found
+				UnarmedAttack(S)
+				return
 	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
 		visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [A]!</span>")
 		playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)

@@ -1,7 +1,7 @@
 /datum/job/officer
 	title = "Security Officer"
 	flag = OFFICER
-//	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
+	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list("Head of Security")
 	department_flag = ENGSEC
 	faction = "Station"
@@ -21,12 +21,18 @@
 	minimal_access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_COURT, ACCESS_WEAPONS, ACCESS_ENTER_GENPOP, ACCESS_LEAVE_GENPOP, ACCESS_MINERAL_STOREROOM) // See /datum/job/officer/get_access()
 	paycheck = PAYCHECK_HARD
 	paycheck_department = ACCOUNT_SEC
+	bounty_types = CIV_JOB_SEC
 
 	mind_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_SECURITY_OFFICER
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/nonviolent, /datum/quirk/paraplegic, /datum/quirk/blindness, /datum/quirk/monophobia)
 	threat = 2
+
+	family_heirlooms = list(
+		/obj/item/book/manual/wiki/security_space_law,
+		/obj/item/clothing/head/beret/sec
+	)
 
 /datum/job/officer/get_access()
 	var/list/L = list()
@@ -35,12 +41,15 @@
 
 GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
 
-/datum/job/officer/after_spawn(mob/living/carbon/human/H, mob/M)
+/datum/job/officer/after_spawn(mob/living/spawned, client/player_client, latejoin = FALSE)
 	. = ..()
+	if(!ishuman(spawned))
+		return
+	var/mob/living/carbon/human/H = spawned
 	// Assign department security
 	var/department
-	if(M && M.client && M.client.prefs)
-		department = M.client.prefs.prefered_security_department
+	if(player_client?.prefs)
+		department = player_client.prefs.prefered_security_department
 		if(!LAZYLEN(GLOB.available_depts) || department == "None")
 			return
 		else if(department in GLOB.available_depts)
@@ -108,11 +117,9 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 				else
 					break
 	if(department)
-		to_chat(M, "<b>You have been assigned to [department]!</b>")
+		to_chat(H, "<b>You have been assigned to [department]!</b>")
 	else
-		to_chat(M, "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>")
-
-
+		to_chat(H, "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>")
 
 /datum/outfit/job/security
 	name = "Security Officer"
@@ -124,7 +131,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/helmet/sec
 	suit = /obj/item/clothing/suit/armor/vest/alt
-	shoes = /obj/item/clothing/shoes/jackboots
+	shoes = /obj/item/clothing/shoes/jackboots/sec
 	l_pocket = /obj/item/restraints/handcuffs
 	r_pocket = /obj/item/assembly/flash/handheld
 	suit_store = /obj/item/gun/energy/e_gun/advtaser
@@ -141,7 +148,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	//The helmet is necessary because /obj/item/clothing/head/helmet/sec is overwritten in the chameleon list by the standard helmet, which has the same name and icon state
 
 
-/obj/item/radio/headset/headset_sec/alt/department/Initialize()
+/obj/item/radio/headset/headset_sec/alt/department/Initialize(mapload)
 	. = ..()
 	wires = new/datum/wires/radio(src)
 	secure_radio_connections = new

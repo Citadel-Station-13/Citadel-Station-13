@@ -44,11 +44,11 @@
 							Though you are not obligated to help, perhaps by aiding a higher ranking devil, you might just get a promotion.  However, you are incapable	\
 							of intentionally harming a fellow devil.</B>"
 
-/mob/living/simple_animal/imp/Initialize()
+/mob/living/simple_animal/imp/Initialize(mapload)
 	..()
 	boost = world.time + 30
 
-/mob/living/simple_animal/imp/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/imp/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(boost<world.time)

@@ -5011,6 +5011,7 @@
 	dir = 1
 	},
 /obj/machinery/light,
+/obj/machinery/jukebox,
 /turf/open/floor/plasteel,
 /area/service/bar)
 "nb" = (

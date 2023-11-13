@@ -93,8 +93,7 @@
 
 	var/turf/T = get_turf(src)
 	if(mind && mind.name && mind.active && !istype(T.loc, /area/ctf) && !(signal & COMPONENT_BLOCK_DEATH_BROADCAST))
-		var/rendered = "<span class='deadsay'><b>[mind.name]</b> has died at <b>[get_area_name(T)]</b>.</span>"
-		deadchat_broadcast(rendered, follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
+		deadchat_broadcast(" has died at <b>[get_area_name(T)]</b>.", "<b>[mind.name]</b>", follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
 	if (client && client.prefs && client.prefs.auto_ooc)
 		if (!(client.prefs.chat_toggles & CHAT_OOC))
 			client.prefs.chat_toggles ^= CHAT_OOC

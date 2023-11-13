@@ -1,7 +1,7 @@
 /obj/item/dnainjector
 	name = "\improper DNA injector"
 	desc = "This injects the person with DNA."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/syringe.dmi'
 	icon_state = "dnainjector"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -15,6 +15,16 @@
 	var/list/remove_mutations = list()
 
 	var/used = 0
+
+/obj/item/dnainjector/Initialize(mapload)
+	. = ..()
+	register_item_context()
+
+/obj/item/dnainjector/add_item_context(obj/item/source, list/context, mob/living/target, mob/living/user)
+	. = ..()
+	if(isliving(target) && target.has_dna() && !used)
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Inject")
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/dnainjector/attack_paw(mob/user)
 	return attack_hand(user)
@@ -523,6 +533,12 @@
 	var/doitanyway = FALSE
 	var/research = FALSE //Set to true to get expended and filled injectors for chromosomes
 	var/filled = FALSE
+
+/obj/item/dnainjector/activator/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = ..()
+	if(istype(target, /obj/machinery/computer/scan_consolenew) && used)
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Recycle")
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/dnainjector/activator/inject(mob/living/carbon/M, mob/user)
 	if(M.has_dna() && !HAS_TRAIT_NOT_FROM(M, TRAIT_RADIMMUNE,BLOODSUCKER_TRAIT) && !HAS_TRAIT(M,TRAIT_NOCLONE))

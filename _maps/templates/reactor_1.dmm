@@ -1,0 +1,149 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/engineering/main/reactor_core)
+"b" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/arrows/white{
+	dir = 8;
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/turf/open/floor/engine,
+/area/engineering/main/reactor_core)
+"c" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engineering/main/reactor_core)
+"d" = (
+/obj/structure/cable/yellow,
+/obj/machinery/atmospherics/components/trinary/nuclear_reactor/cargo,
+/turf/open/floor/engine,
+/area/engineering/main/reactor_core)
+"e" = (
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engineering/main/reactor_core)
+"f" = (
+/obj/machinery/atmospherics/pipe/simple/cyan{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engineering/main/reactor_core)
+"g" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/purple,
+/turf/open/floor/engine,
+/area/engineering/main/reactor_core)
+"h" = (
+/turf/open/floor/engine,
+/area/engineering/main/reactor_core)
+"s" = (
+/obj/effect/turf_decal/stripes/red/corner,
+/turf/open/floor/engine,
+/area/engineering/main/reactor_core)
+"t" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/arrows/white{
+	dir = 8;
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/turf/open/floor/engine,
+/area/engineering/main/reactor_core)
+"B" = (
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/engineering/main/reactor_core)
+"G" = (
+/obj/machinery/atmospherics/pipe/simple/cyan{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/engineering/main/reactor_core)
+"M" = (
+/obj/effect/turf_decal/stripes/red/line,
+/turf/open/floor/engine,
+/area/engineering/main/reactor_core)
+"O" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/engineering/main/reactor_core)
+"P" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/engineering/main/reactor_core)
+"V" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/engineering/main/reactor_core)
+"Y" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/purple,
+/turf/open/floor/plating,
+/area/engineering/main/reactor_core)
+"Z" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engineering/main/reactor_core)
+
+(1,1,1) = {"
+s
+c
+O
+b
+a
+"}
+(2,1,1) = {"
+M
+h
+Z
+h
+V
+"}
+(3,1,1) = {"
+Y
+g
+d
+h
+V
+"}
+(4,1,1) = {"
+M
+h
+f
+h
+V
+"}
+(5,1,1) = {"
+B
+P
+G
+t
+e
+"}

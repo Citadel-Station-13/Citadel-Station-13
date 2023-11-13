@@ -342,7 +342,7 @@
 /obj/item/stack/medical/mesh/advanced/one
 	amount = 1
 
-/obj/item/stack/medical/mesh/Initialize()
+/obj/item/stack/medical/mesh/Initialize(mapload)
 	. = ..()
 	if(amount == max_amount)	 //only seal full mesh packs
 		is_open = FALSE
@@ -490,7 +490,7 @@
 
 /obj/item/stack/medical/nanogel/one
 	amount = 1
-	
+
 /obj/item/stack/medical/nanogel/try_heal(mob/living/M, mob/user, silent = FALSE)
 	if(being_applied)
 		to_chat(user, "<span class='warning'>You are already applying [src]!</span>")

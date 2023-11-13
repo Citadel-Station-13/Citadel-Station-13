@@ -13,6 +13,17 @@
 #define TURRET_FLAG_SHOOT_BORGS			(1<<6)	// checks if it can shoot cyborgs
 #define TURRET_FLAG_SHOOT_HEADS			(1<<7)	// checks if it can shoot at heads of staff
 
+DEFINE_BITFIELD(turret_flags, list(
+	"TURRET_FLAG_AUTH_WEAPONS" = TURRET_FLAG_AUTH_WEAPONS,
+	"TURRET_FLAG_SHOOT_ALL" = TURRET_FLAG_SHOOT_ALL,
+	"TURRET_FLAG_SHOOT_ALL_REACT" = TURRET_FLAG_SHOOT_ALL_REACT,
+	"TURRET_FLAG_SHOOT_ANOMALOUS" = TURRET_FLAG_SHOOT_ANOMALOUS,
+	"TURRET_FLAG_SHOOT_BORGS" = TURRET_FLAG_SHOOT_BORGS,
+	"TURRET_FLAG_SHOOT_CRIMINALS" = TURRET_FLAG_SHOOT_CRIMINALS,
+	"TURRET_FLAG_SHOOT_HEADS" = TURRET_FLAG_SHOOT_HEADS,
+	"TURRET_FLAG_SHOOT_UNSHIELDED" = TURRET_FLAG_SHOOT_UNSHIELDED,
+))
+
 /obj/machinery/porta_turret
 	name = "turret"
 	icon = 'icons/obj/turrets.dmi'
@@ -28,7 +39,7 @@
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
 	max_integrity = 160		//the turret's health
 	integrity_failure = 0.5
-	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 30, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 	/// Base turret icon state
 	base_icon_state = "standard"
 	/// Scan range of the turret for locating targets
@@ -98,7 +109,7 @@
 	/// MISSING:
 	var/shot_stagger = 0
 
-/obj/machinery/porta_turret/Initialize()
+/obj/machinery/porta_turret/Initialize(mapload)
 	. = ..()
 	if(!base)
 		base = src
@@ -478,10 +489,12 @@
 
 	for(var/A in GLOB.mechas_list)
 		if((get_dist(A, base) < scan_range) && can_see(base, A, scan_range))
-			var/obj/mecha/Mech = A
-			if(Mech.occupant && !in_faction(Mech.occupant)) //If there is a user and they're not in our faction
-				if(assess_perp(Mech.occupant) >= 4)
-					targets += Mech
+			var/obj/vehicle/sealed/mecha/mech = A
+			for(var/O in mech.occupants)
+				var/mob/living/occupant = O
+				if(!in_faction(occupant)) //If there is a user and they're not in our faction
+					if(assess_perp(occupant) >= 4)
+						targets += mech
 
 	if((turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS) && GLOB.blobs.len && (mode == TURRET_LETHAL))
 		for(var/obj/structure/blob/B in view(scan_range, base))
@@ -774,7 +787,7 @@
 /obj/machinery/porta_turret/syndicate/energy/pirate
 	max_integrity = 260
 	integrity_failure = 0.08
-	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 50, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 
 /obj/machinery/porta_turret/syndicate/energy/raven
 	stun_projectile =  /obj/item/projectile/beam/laser
@@ -794,7 +807,7 @@
 	lethal_projectile = /obj/item/projectile/bullet/p50/penetrator/shuttle
 	lethal_projectile_sound = 'sound/weapons/gunshot_smg.ogg'
 	stun_projectile_sound = 'sound/weapons/gunshot_smg.ogg'
-	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 80, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 80, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 
 /obj/machinery/porta_turret/syndicate/pod/toolbox
 	max_integrity = 100
@@ -835,7 +848,7 @@
 /obj/machinery/porta_turret/aux_base/interact(mob/user) //Controlled solely from the base console.
 	return
 
-/obj/machinery/porta_turret/aux_base/Initialize()
+/obj/machinery/porta_turret/aux_base/Initialize(mapload)
 	. = ..()
 	cover.name = name
 	cover.desc = desc
@@ -917,6 +930,14 @@
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	power_change() //Checks power and initial settings
+	register_context()
+
+/obj/machinery/turretid/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(issilicon(user) && !(stat & BROKEN))
+		LAZYSET(context[SCREENTIP_CONTEXT_CTRL_LMB], INTENT_ANY, enabled ? "Disable" : "Enable")
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, lethal ? "Set to stun" : "Set to kill")
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/turretid/Destroy()
 	turrets.Cut()

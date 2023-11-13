@@ -40,21 +40,17 @@
 	return FALSE
 
 /turf/proc/ImmediateCalculateAdjacentTurfs()
-	if(SSair.thread_running())
-		CALCULATE_ADJACENT_TURFS(src)
-		return
 	var/canpass = CANATMOSPASS(src, src)
 	var/canvpass = CANVERTICALATMOSPASS(src, src)
 	for(var/direction in GLOB.cardinals_multiz)
 		var/turf/T = get_step_multiz(src, direction)
 		if(!istype(T))
 			continue
-		var/opp_dir = REVERSE_DIR(direction)
 		if(isopenturf(T) && !(blocks_air || T.blocks_air) && ((direction & (UP|DOWN))? (canvpass && CANVERTICALATMOSPASS(T, src)) : (canpass && CANATMOSPASS(T, src))) )
 			LAZYINITLIST(atmos_adjacent_turfs)
 			LAZYINITLIST(T.atmos_adjacent_turfs)
-			atmos_adjacent_turfs[T] = direction
-			T.atmos_adjacent_turfs[src] = opp_dir
+			atmos_adjacent_turfs[T] = ATMOS_ADJACENT_ANY
+			T.atmos_adjacent_turfs[src] = ATMOS_ADJACENT_ANY
 		else
 			if (atmos_adjacent_turfs)
 				atmos_adjacent_turfs -= T
@@ -65,7 +61,12 @@
 		T.__update_auxtools_turf_adjacency_info(isspaceturf(T.get_z_base_turf()), -1)
 	UNSETEMPTY(atmos_adjacent_turfs)
 	src.atmos_adjacent_turfs = atmos_adjacent_turfs
-	set_sleeping(blocks_air)
+	for(var/t in atmos_adjacent_turfs)
+		var/turf/open/T = t
+		for(var/obj/machinery/door/firedoor/FD in T)
+			FD.UpdateAdjacencyFlags()
+	for(var/obj/machinery/door/firedoor/FD in src)
+		FD.UpdateAdjacencyFlags()
 	__update_auxtools_turf_adjacency_info(isspaceturf(get_z_base_turf()))
 
 /turf/proc/set_sleeping(should_sleep)

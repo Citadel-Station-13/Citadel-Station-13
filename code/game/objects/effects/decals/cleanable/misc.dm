@@ -15,7 +15,7 @@
 	persistent = TRUE
 	persistence_allow_stacking = TRUE
 
-/obj/effect/decal/cleanable/ash/Initialize()
+/obj/effect/decal/cleanable/ash/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/ash, 30)
 	pixel_x = rand(-5, 5)
@@ -30,7 +30,7 @@
 	icon_state = "big_ash"
 	beauty = -100
 
-/obj/effect/decal/cleanable/ash/large/Initialize()
+/obj/effect/decal/cleanable/ash/large/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/ash, 30) //double the amount of ash.
 
@@ -43,7 +43,7 @@
 	mergeable_decal = TRUE
 	persistent = TRUE
 
-/obj/effect/decal/cleanable/glass/Initialize()
+/obj/effect/decal/cleanable/glass/Initialize(mapload)
 	. = ..()
 	setDir(pick(GLOB.cardinals))
 
@@ -89,7 +89,7 @@
 	if(data["alpha"])
 		alpha = text2num(data["alpha"])
 
-/obj/effect/decal/cleanable/dirt/Initialize()
+/obj/effect/decal/cleanable/dirt/Initialize(mapload)
 	. = ..()
 	var/turf/T = get_turf(src)
 	if(T.tiled_dirt)
@@ -126,7 +126,7 @@
 	icon_state = "greenglow"
 	beauty = -300
 	mergeable_decal = TRUE
-	persistent = TRUE
+	persistent = FALSE
 
 /obj/effect/decal/cleanable/greenglow/Initialize(mapload)
 	. = ..()
@@ -265,7 +265,7 @@
 		qdel(src)
 	return power		// no block
 
-/obj/effect/decal/cleanable/shreds/Initialize()
+/obj/effect/decal/cleanable/shreds/Initialize(mapload)
 	pixel_x = rand(-10, 10)
 	pixel_y = rand(-10, 10)
 	. = ..()
@@ -311,3 +311,9 @@
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
 	mergeable_decal = TRUE
 	persistent = TRUE
+
+/obj/effect/decal/cleanable/wrapping
+	name = "wrapping shreds"
+	desc = "Torn pieces of cardboard and paper, left over from a package."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "paper_shreds"

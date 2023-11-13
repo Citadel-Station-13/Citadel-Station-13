@@ -19,6 +19,7 @@
 	var/last_bloodtype = ""	//used to track the last bloodtype to have graced these shoes; makes for better performing footprint shenanigans
 	var/last_blood_DNA = ""	//same as last one
 	var/last_blood_color = ""
+	var/last_blood_blend = null
 
 	///Whether these shoes have laces that can be tied/untied
 	var/can_be_tied = TRUE
@@ -68,6 +69,7 @@
 		last_bloodtype = blood_dna[blood_dna[blood_dna.len]]//trust me this works
 		last_blood_DNA = blood_dna[blood_dna.len]
 		last_blood_color = blood_dna["color"]
+		last_blood_blend = blood_dna["blendmode"]
 
 /obj/item/clothing/shoes/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
 	. = ..()
@@ -82,7 +84,7 @@
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
 		if(bloody)
 			var/file2use = style_flags & STYLE_DIGITIGRADE ? 'icons/mob/clothing/feet_digi.dmi' : 'icons/effects/blood.dmi'
-			. += mutable_appearance(file2use, "shoeblood", color = blood_DNA_to_color())
+			. += mutable_appearance(file2use, "shoeblood", color = blood_DNA_to_color(), blend_mode = blood_DNA_to_blend())
 
 /obj/item/clothing/shoes/equipped(mob/user, slot)
 	. = ..()
@@ -178,7 +180,7 @@
 			return
 		user.visible_message("<span class='notice'>[user] begins [tied ? "unknotting" : "tying"] the laces of [user.p_their()] [src.name].</span>", "<span class='notice'>You begin [tied ? "unknotting" : "tying"] the laces of your [src.name]...</span>")
 
-		if(do_after(user, lace_time, needhand=TRUE, target=our_guy, extra_checks=CALLBACK(src, .proc/still_shoed, our_guy)))
+		if(do_after(user, lace_time, our_guy, extra_checks = CALLBACK(src, .proc/still_shoed, our_guy)))
 			to_chat(user, "<span class='notice'>You [tied ? "unknot" : "tie"] the laces of your [src.name].</span>")
 			if(tied == SHOES_UNTIED)
 				adjust_laces(SHOES_TIED, user)
@@ -202,7 +204,7 @@
 		if(HAS_TRAIT(user, TRAIT_CLUMSY)) // based clowns trained their whole lives for this
 			mod_time *= 0.75
 
-		if(do_after(user, mod_time, needhand=TRUE, target=our_guy, extra_checks=CALLBACK(src, .proc/still_shoed, our_guy)))
+		if(do_after(user, mod_time, our_guy, extra_checks = CALLBACK(src, .proc/still_shoed, our_guy)))
 			to_chat(user, "<span class='notice'>You [tied ? "untie" : "knot"] the laces on [loc]'s [src.name].</span>")
 			if(tied == SHOES_UNTIED)
 				adjust_laces(SHOES_KNOTTED, user)
@@ -283,6 +285,6 @@
 
 	to_chat(user, "<span class='notice'>You begin [tied ? "untying" : "tying"] the laces on [src]...</span>")
 
-	if(do_after(user, lace_time, needhand=TRUE, target=src,extra_checks=CALLBACK(src, .proc/still_shoed, user)))
+	if(do_after(user, lace_time, src, extra_checks = CALLBACK(src, .proc/still_shoed, user)))
 		to_chat(user, "<span class='notice'>You [tied ? "untie" : "tie"] the laces on [src].</span>")
 		adjust_laces(tied ? SHOES_TIED : SHOES_UNTIED, user)

@@ -58,7 +58,7 @@
 	name = "Officer Pipsqueak"
 	desc = "It's Officer Beep O'sky's smaller, just-as aggressive cousin, Pipsqueak."
 
-/mob/living/simple_animal/bot/secbot/beepsky/jr/Initialize()
+/mob/living/simple_animal/bot/secbot/beepsky/jr/Initialize(mapload)
 	. = ..()
 	resize = 0.8
 	update_transform()
@@ -174,7 +174,7 @@
 	desc = "It's Officer Pingsky! Delegated to satellite guard duty for harbouring anti-human sentiment."
 	radio_channel = RADIO_CHANNEL_AI_PRIVATE
 
-/mob/living/simple_animal/bot/secbot/Initialize()
+/mob/living/simple_animal/bot/secbot/Initialize(mapload)
 	. = ..()
 	update_icon()
 	var/datum/job/detective/J = new/datum/job/detective
@@ -365,7 +365,7 @@
 	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
 	C.visible_message("<span class='danger'>[process_emote("CAPTURE_ONE", C)]</span>",\
 						"<span class='userdanger'>[process_emote("CAPTURE_TWO", C)]</span>")
-	if(do_after(src, 60, FALSE, C))
+	if(do_after(src, 60, C))
 		attempt_handcuff(C)
 
 /mob/living/simple_animal/bot/secbot/proc/attempt_handcuff(mob/living/carbon/C)

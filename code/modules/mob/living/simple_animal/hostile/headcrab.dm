@@ -24,7 +24,7 @@
 	var/egg_lain = 0
 	gold_core_spawnable = NO_SPAWN //are you sure about this?? // CITADEL CHANGE, Yes.
 
-/mob/living/simple_animal/hostile/headcrab/Initialize()
+/mob/living/simple_animal/hostile/headcrab/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
@@ -83,9 +83,9 @@
 		if(C.can_absorb_dna(owner))
 			C.add_new_profile(owner)
 
-		var/obj/effect/proc_holder/changeling/humanform/hf = new
+		var/datum/action/changeling/humanform/hf = new
 		C.purchasedpowers += hf
-		hf.on_purchase(origin.current, TRUE)
+		C.regain_powers()
 		M.key = origin.key
 	owner.gib()
 

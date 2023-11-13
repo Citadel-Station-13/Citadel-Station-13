@@ -33,7 +33,7 @@
  *
  * Doesn't call parent, see [/atom/proc/Initialize]
  */
-/turf/open/space/Initialize()
+/turf/open/space/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
 	icon_state = SPACE_ICON_STATE
 	if(!space_gas)
@@ -283,7 +283,7 @@
 	baseturfs = /turf/open/space/transparent/openspace
 	intact = FALSE //this means wires go on top
 
-/turf/open/space/transparent/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
+/turf/open/space/transparent/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	..()
 	plane = OPENSPACE_PLANE
 	layer = OPENSPACE_LAYER
@@ -339,7 +339,7 @@
 /turf/open/space/transparent/openspace/show_bottom_level()
 	return FALSE
 
-/turf/open/space/transparent/openspace/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
+/turf/open/space/transparent/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
 
 	icon_state = "transparent"

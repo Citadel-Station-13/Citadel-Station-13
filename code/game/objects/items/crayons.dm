@@ -42,7 +42,7 @@
 	var/static/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
 	var/static/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
 		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER, RANDOM_SYMBOL, RANDOM_PUNCTUATION, RANDOM_DRAWING)
-	var/static/list/graffiti_large_h = list("yiffhell", "secborg", "paint")
+	var/static/list/graffiti_large_h = list("yiffhell", "furrypride", "secborg", "paint")
 
 	var/static/list/all_drawables = graffiti + symbols + drawings + oriented + runes + graffiti_large_h
 
@@ -83,7 +83,7 @@
 	user.visible_message("<span class='suicide'>[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|OXYLOSS)
 
-/obj/item/toy/crayon/Initialize()
+/obj/item/toy/crayon/Initialize(mapload)
 	. = ..()
 	// Makes crayons identifiable in things like grinders
 	if(name == "crayon")
@@ -606,7 +606,7 @@
 	icon_state = "crayonbox"
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/storage/crayons/Initialize()
+/obj/item/storage/crayons/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 7
@@ -701,7 +701,7 @@
 
 		return (OXYLOSS)
 
-/obj/item/toy/crayon/spraycan/Initialize()
+/obj/item/toy/crayon/spraycan/Initialize(mapload)
 	. = ..()
 	// If default crayon red colour, pick a more fun spraycan colour
 	if(!paint_color)

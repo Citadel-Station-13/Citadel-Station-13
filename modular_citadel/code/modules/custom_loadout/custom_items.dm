@@ -66,7 +66,7 @@
 	blood_overlay_type = "armor"
 	dog_fashion = /datum/dog_fashion/back
 	mutantrace_variation = NONE
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
 
 /obj/item/lighter/gold
@@ -113,7 +113,6 @@
 	desc = "While a normal carrot would be good for your eyes, this one seems a bit more for hugging then eating."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "carrot"
-	item_state = "carrot"
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("slapped")
 	resistance_flags = FLAMMABLE
@@ -137,7 +136,7 @@
 	item_state = "satchel_carrot"
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 
-/obj/item/storage/backpack/satchel/carrot/Initialize()
+/obj/item/storage/backpack/satchel/carrot/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/items/toysqueak1.ogg'=1), 50)
 
@@ -146,7 +145,6 @@
 	desc = "A festive plush that squeeks when you squeeze it!"
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "pine_c"
-	item_state = "pine_c"
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("slapped")
 	resistance_flags = FLAMMABLE
@@ -547,10 +545,12 @@
 /obj/item/toy/plush/mammal/dog/fritz
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "fritz"
-	item_state = "fritz"
 	attack_verb = list("barked", "boofed", "shotgun'd")
 	obj_flags = UNIQUE_RENAME
-	unique_reskin = list("Goodboye" = "fritz", "Badboye" = "fritz_bad")
+	unique_reskin = list(
+		"Goodboye" = list("icon_state" = "fritz"),
+		"Badboye" = list("icon_state" = "fritz_bad")
+	)
 	mutantrace_variation = NONE
 
 /obj/item/clothing/neck/cloak/polychromic/polyce

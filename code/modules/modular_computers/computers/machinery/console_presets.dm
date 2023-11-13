@@ -5,7 +5,7 @@
 	var/_has_battery = FALSE
 	var/_has_ai = FALSE
 
-/obj/machinery/modular_computer/console/preset/Initialize()
+/obj/machinery/modular_computer/console/preset/Initialize(mapload)
 	. = ..()
 	if(!cpu)
 		return
@@ -37,6 +37,7 @@
 	hard_drive.store_file(new/datum/computer_file/program/power_monitor())
 	hard_drive.store_file(new/datum/computer_file/program/alarm_monitor())
 	hard_drive.store_file(new/datum/computer_file/program/supermatter_monitor())
+	hard_drive.store_file(new/datum/computer_file/program/nuclear_monitor())
 
 // ===== RESEARCH CONSOLE =====
 /obj/machinery/modular_computer/console/preset/research

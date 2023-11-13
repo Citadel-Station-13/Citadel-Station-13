@@ -5,15 +5,17 @@
 	max_occurrences = 1
 	min_players = 20
 	dynamic_should_hijack = TRUE
+	category = EVENT_CATEGORY_ENTITIES
+	description = "Spawns a space dragon, which will try to take over the station."
 
 /datum/round_event/ghost_role/space_dragon
 	minimum_required = 1
 	role_name = "Space Dragon"
-	announceWhen = 10
+	announce_when = 10
 
 /datum/round_event/ghost_role/space_dragon/announce(fake)
-	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
-	
+	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert", has_important_message = TRUE)
+
 /datum/round_event/ghost_role/space_dragon/spawn_role()
 	var/list/spawn_locs = list()
 	for(var/obj/effect/landmark/carpspawn/carp_spawn in GLOB.landmarks_list)
@@ -24,11 +26,11 @@
 	if(!spawn_locs.len)
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
-	
+
 	var/list/candidates = get_candidates(ROLE_SPACE_DRAGON, null, ROLE_SPACE_DRAGON)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
-	
+
 	var/mob/dead/selected = pick_n_take(candidates)
 
 	var/datum/mind/player_mind = new /datum/mind(selected.key)

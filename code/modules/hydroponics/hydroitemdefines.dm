@@ -109,7 +109,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 
-/obj/item/hatchet/Initialize()
+/obj/item/hatchet/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 70, 100)
 
@@ -143,7 +143,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/swiping = FALSE
 
-/obj/item/scythe/Initialize()
+/obj/item/scythe/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 90, 105)
 
@@ -191,7 +191,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 
-/obj/item/reagent_containers/glass/bottle/nutrient/Initialize()
+/obj/item/reagent_containers/glass/bottle/nutrient/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)

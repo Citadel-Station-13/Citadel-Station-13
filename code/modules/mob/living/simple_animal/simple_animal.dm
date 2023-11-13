@@ -56,6 +56,9 @@
 	var/minbodytemp = 250
 	var/maxbodytemp = 350
 
+	/// List of weather immunity traits that are then added on Initialize(), see traits.dm.
+	var/list/weather_immunities
+
 	///Healable by medical stacks? Defaults to yes.
 	var/healable = 1
 
@@ -151,7 +154,7 @@
 	//Generic flags
 	var/simple_mob_flags = NONE
 
-/mob/living/simple_animal/Initialize()
+/mob/living/simple_animal/Initialize(mapload)
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
 	if(gender == PLURAL)
@@ -165,6 +168,8 @@
 		AddComponent(/datum/component/personal_crafting)
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
+	for(var/trait in weather_immunities)
+		ADD_TRAIT(src, trait, ROUNDSTART_TRAIT)
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
@@ -225,7 +230,7 @@
 						length += emote_see.len
 					var/randomValue = rand(1,length)
 					if(randomValue <= speak.len)
-						say(pick(speak), forced = "poly")
+						say(pick(speak), forced = "polly")
 					else
 						randomValue -= speak.len
 						if(emote_see && randomValue <= emote_see.len)
@@ -233,7 +238,7 @@
 						else
 							emote("me [pick(emote_hear)]", 2)
 				else
-					say(pick(speak), forced = "poly")
+					say(pick(speak), forced = "polly")
 			else
 				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
 					emote("me", EMOTE_VISIBLE, pick(emote_see))
@@ -394,8 +399,8 @@
 		if(L.stat != CONSCIOUS)
 			return FALSE
 	if (ismecha(the_target))
-		var/obj/mecha/M = the_target
-		if (M.occupant)
+		var/obj/vehicle/sealed/mecha/M = the_target
+		if(LAZYLEN(M.occupants))
 			return FALSE
 	return TRUE
 
@@ -482,7 +487,7 @@
 	update_action_buttons_icon()
 	return mobility_flags
 
-/mob/living/simple_animal/update_transform()
+/mob/living/simple_animal/update_transform(do_animate)
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
 	var/changed = 0
 

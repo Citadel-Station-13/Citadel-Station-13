@@ -81,7 +81,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	else
 		return user.canUseTopic(src, BE_CLOSE)
 
-/obj/item/integrated_circuit/Initialize()
+/obj/item/integrated_circuit/Initialize(mapload)
 	displayed_name = name
 	setup_io(inputs, /datum/integrated_io, inputs_default, IC_INPUT)
 	setup_io(outputs, /datum/integrated_io, outputs_default, IC_OUTPUT)

@@ -16,6 +16,7 @@
 	name = "energy gun"
 	desc = "A basic energy-based gun."
 	icon = 'icons/obj/guns/energy.dmi'
+	recoil = 0.1
 
 	var/obj/item/stock_parts/cell/cell //What type of power cell this uses
 	var/cell_type = /obj/item/stock_parts/cell
@@ -49,7 +50,7 @@
 /obj/item/gun/energy/get_cell()
 	return cell
 
-/obj/item/gun/energy/Initialize()
+/obj/item/gun/energy/Initialize(mapload)
 	. = ..()
 	if(cell_type)
 		cell = new cell_type(src)

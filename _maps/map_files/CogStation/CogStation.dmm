@@ -8805,12 +8805,11 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
+/obj/structure/table,
+/obj/item/stack/medical/suture/five,
 /turf/open/floor/plasteel/white,
 /area/medical/clinic)
 "auS" = (
@@ -8876,9 +8875,7 @@
 	name = "Station Intercom (Common)";
 	pixel_y = 26
 	},
-/obj/machinery/sleep_console{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/clinic)
 "auZ" = (
@@ -21248,9 +21245,6 @@
 /turf/open/floor/plasteel/dark/side,
 /area/security/courtroom)
 "aUF" = (
-/obj/machinery/computer/bounty{
-	dir = 1
-	},
 /turf/open/floor/carpet/green,
 /area/command/heads_quarters/hop)
 "aUG" = (
@@ -26772,7 +26766,6 @@
 /turf/open/floor/engine,
 /area/engineering/teg)
 "bgS" = (
-/obj/machinery/computer/bounty,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
@@ -27427,6 +27420,9 @@
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
+	},
+/obj/machinery/computer/piratepad_control/civilian{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/cargo/office)
@@ -29097,9 +29093,6 @@
 /turf/open/floor/plasteel,
 /area/cargo/sorting)
 "blR" = (
-/obj/machinery/computer/bounty{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
@@ -36750,9 +36743,6 @@
 /obj/structure/table,
 /obj/machinery/light/small{
 	dir = 4
-	},
-/obj/item/storage/box/engineer{
-	pixel_y = 4
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
@@ -49206,6 +49196,9 @@
 	c_tag = "Robotics Lab";
 	dir = 4
 	},
+/obj/machinery/posialert{
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel/dark/side{
 	dir = 8
 	},
@@ -57326,7 +57319,7 @@
 	name = "Chief Engineer's RC";
 	pixel_y = -32
 	},
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/Polly,
 /turf/open/floor/plasteel,
 /area/command/heads_quarters/ce)
 "csf" = (
@@ -58026,6 +58019,7 @@
 /obj/effect/turf_decal/tile/brown,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/piratepad/civilian,
 /turf/open/floor/plasteel,
 /area/cargo/office)
 "ctx" = (
@@ -58340,9 +58334,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/east,
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "cua" = (

@@ -7933,6 +7933,9 @@
 /obj/structure/table,
 /obj/item/stack/cable_coil/random,
 /obj/machinery/camera/autoname,
+/obj/machinery/posialert{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "apy" = (
@@ -13514,7 +13517,7 @@
 	},
 /mob/living/simple_animal/pet/gondola{
 	desc = "The last known gondola for lightyears, it is your duty to keep them safe from the filthy yellowed hands of the greytide.";
-	loot = list(/obj/effect/decal/cleanable/blood/gibs, /obj/item/stack/sheet/animalhide/gondola = 1);
+	loot = list(/obj/effect/decal/cleanable/blood/gibs,/obj/item/stack/sheet/animalhide/gondola=1);
 	name = "Filbert"
 	},
 /turf/open/floor/plasteel/dark,
@@ -18306,6 +18309,7 @@
 /obj/structure/table,
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
+/obj/item/chisel,
 /turf/open/floor/plasteel,
 /area/commons/storage/art)
 "aGS" = (
@@ -23372,9 +23376,6 @@
 /turf/open/floor/plasteel,
 /area/cargo/miningoffice)
 "aQs" = (
-/obj/machinery/computer/bounty{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
@@ -24350,12 +24351,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aTo" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
+/obj/machinery/piratepad/civilian,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aTp" = (
@@ -25013,9 +25012,6 @@
 	name = "Station Intercom";
 	pixel_y = -28
 	},
-/obj/machinery/computer/bounty{
-	dir = 1
-	},
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/cargo/storage)
@@ -25116,15 +25112,15 @@
 /turf/open/floor/plasteel,
 /area/cargo/office)
 "aVG" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 8;
 	light_color = "#e8eaff"
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
+	},
+/obj/machinery/computer/piratepad_control/civilian{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -38022,7 +38018,7 @@
 	dir = 5
 	},
 /obj/machinery/vending/medical{
-	products = list(/obj/item/reagent_containers/syringe = 12, /obj/item/reagent_containers/dropper = 3, /obj/item/healthanalyzer = 4, /obj/item/sensor_device = 4, /obj/item/pinpointer/crew = 2, /obj/item/reagent_containers/medspray/sterilizine = 1, /obj/item/stack/medical/gauze = 8, /obj/item/reagent_containers/pill/patch/styptic = 5, /obj/item/reagent_containers/medspray/styptic = 2, /obj/item/reagent_containers/pill/patch/silver_sulf = 5, /obj/item/reagent_containers/medspray/silver_sulf = 2, /obj/item/reagent_containers/pill/insulin = 10, /obj/item/reagent_containers/pill/salbutamol = 2, /obj/item/reagent_containers/glass/bottle/charcoal = 4, /obj/item/reagent_containers/glass/bottle/epinephrine = 4, /obj/item/reagent_containers/glass/bottle/salglu_solution = 3, /obj/item/reagent_containers/glass/bottle/morphine = 4, /obj/item/reagent_containers/glass/bottle/toxin = 3, /obj/item/reagent_containers/syringe/antiviral = 6, /obj/item/storage/hypospraykit/fire = 2, /obj/item/storage/hypospraykit/toxin = 2, /obj/item/storage/hypospraykit/o2 = 2, /obj/item/storage/hypospraykit/brute = 2, /obj/item/storage/hypospraykit/enlarge = 2, /obj/item/reagent_containers/glass/bottle/vial/small = 5, /obj/item/storage/briefcase/medical = 2, /obj/item/stack/sticky_tape/surgical = 3, /obj/item/healthanalyzer/wound = 4, /obj/item/stack/medical/ointment = 2, /obj/item/stack/medical/suture = 2, /obj/item/stack/medical/bone_gel = 4)
+	products = list(/obj/item/reagent_containers/syringe=12,/obj/item/reagent_containers/dropper=3,/obj/item/healthanalyzer=4,/obj/item/sensor_device=4,/obj/item/pinpointer/crew=2,/obj/item/reagent_containers/medspray/sterilizine=1,/obj/item/stack/medical/gauze=8,/obj/item/reagent_containers/pill/patch/styptic=5,/obj/item/reagent_containers/medspray/styptic=2,/obj/item/reagent_containers/pill/patch/silver_sulf=5,/obj/item/reagent_containers/medspray/silver_sulf=2,/obj/item/reagent_containers/pill/insulin=10,/obj/item/reagent_containers/pill/salbutamol=2,/obj/item/reagent_containers/glass/bottle/charcoal=4,/obj/item/reagent_containers/glass/bottle/epinephrine=4,/obj/item/reagent_containers/glass/bottle/salglu_solution=3,/obj/item/reagent_containers/glass/bottle/morphine=4,/obj/item/reagent_containers/glass/bottle/toxin=3,/obj/item/reagent_containers/syringe/antiviral=6,/obj/item/storage/hypospraykit/fire=2,/obj/item/storage/hypospraykit/toxin=2,/obj/item/storage/hypospraykit/o2=2,/obj/item/storage/hypospraykit/brute=2,/obj/item/storage/hypospraykit/enlarge=2,/obj/item/reagent_containers/glass/bottle/vial/small=5,/obj/item/storage/briefcase/medical=2,/obj/item/stack/sticky_tape/surgical=3,/obj/item/healthanalyzer/wound=4,/obj/item/stack/medical/ointment=2,/obj/item/stack/medical/suture=2,/obj/item/stack/medical/bone_gel=4)
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -38153,17 +38149,19 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bDq" = (
-/obj/machinery/sleeper,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
+	},
+/obj/machinery/sleeper{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "bDr" = (
-/obj/machinery/sleeper,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "bDs" = (
@@ -44856,7 +44854,7 @@
 /obj/item/gps/engineering{
 	gpstag = "CE0"
 	},
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/Polly,
 /turf/open/floor/plasteel/dark,
 /area/command/heads_quarters/ce)
 "bUH" = (
@@ -46024,7 +46022,7 @@
 "bXK" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/vending/medical{
-	products = list(/obj/item/reagent_containers/syringe = 12, /obj/item/reagent_containers/dropper = 3, /obj/item/healthanalyzer = 4, /obj/item/sensor_device = 4, /obj/item/pinpointer/crew = 2, /obj/item/reagent_containers/medspray/sterilizine = 1, /obj/item/stack/medical/gauze = 8, /obj/item/reagent_containers/pill/patch/styptic = 5, /obj/item/reagent_containers/medspray/styptic = 2, /obj/item/reagent_containers/pill/patch/silver_sulf = 5, /obj/item/reagent_containers/medspray/silver_sulf = 2, /obj/item/reagent_containers/pill/insulin = 10, /obj/item/reagent_containers/pill/salbutamol = 2, /obj/item/reagent_containers/glass/bottle/charcoal = 4, /obj/item/reagent_containers/glass/bottle/epinephrine = 4, /obj/item/reagent_containers/glass/bottle/salglu_solution = 3, /obj/item/reagent_containers/glass/bottle/morphine = 4, /obj/item/reagent_containers/glass/bottle/toxin = 3, /obj/item/reagent_containers/syringe/antiviral = 6, /obj/item/storage/hypospraykit/fire = 2, /obj/item/storage/hypospraykit/toxin = 2, /obj/item/storage/hypospraykit/o2 = 2, /obj/item/storage/hypospraykit/brute = 2, /obj/item/storage/hypospraykit/enlarge = 2, /obj/item/reagent_containers/glass/bottle/vial/small = 5, /obj/item/storage/briefcase/medical = 2, /obj/item/stack/sticky_tape/surgical = 3, /obj/item/healthanalyzer/wound = 4, /obj/item/stack/medical/ointment = 2, /obj/item/stack/medical/suture = 2, /obj/item/stack/medical/bone_gel = 4)
+	products = list(/obj/item/reagent_containers/syringe=12,/obj/item/reagent_containers/dropper=3,/obj/item/healthanalyzer=4,/obj/item/sensor_device=4,/obj/item/pinpointer/crew=2,/obj/item/reagent_containers/medspray/sterilizine=1,/obj/item/stack/medical/gauze=8,/obj/item/reagent_containers/pill/patch/styptic=5,/obj/item/reagent_containers/medspray/styptic=2,/obj/item/reagent_containers/pill/patch/silver_sulf=5,/obj/item/reagent_containers/medspray/silver_sulf=2,/obj/item/reagent_containers/pill/insulin=10,/obj/item/reagent_containers/pill/salbutamol=2,/obj/item/reagent_containers/glass/bottle/charcoal=4,/obj/item/reagent_containers/glass/bottle/epinephrine=4,/obj/item/reagent_containers/glass/bottle/salglu_solution=3,/obj/item/reagent_containers/glass/bottle/morphine=4,/obj/item/reagent_containers/glass/bottle/toxin=3,/obj/item/reagent_containers/syringe/antiviral=6,/obj/item/storage/hypospraykit/fire=2,/obj/item/storage/hypospraykit/toxin=2,/obj/item/storage/hypospraykit/o2=2,/obj/item/storage/hypospraykit/brute=2,/obj/item/storage/hypospraykit/enlarge=2,/obj/item/reagent_containers/glass/bottle/vial/small=5,/obj/item/storage/briefcase/medical=2,/obj/item/stack/sticky_tape/surgical=3,/obj/item/healthanalyzer/wound=4,/obj/item/stack/medical/ointment=2,/obj/item/stack/medical/suture=2,/obj/item/stack/medical/bone_gel=4)
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -62216,7 +62214,7 @@
 /area/engineering/break_room)
 "cUI" = (
 /obj/machinery/vending/engineering{
-	products = list(/obj/item/clothing/under/rank/engineering/engineer = 4, /obj/item/clothing/shoes/sneakers/orange = 4, /obj/item/clothing/head/hardhat = 4, /obj/item/storage/belt/utility = 4, /obj/item/clothing/glasses/meson/engine = 4, /obj/item/clothing/gloves/color/yellow = 2, /obj/item/screwdriver = 12, /obj/item/crowbar = 12, /obj/item/wirecutters = 12, /obj/item/multitool = 12, /obj/item/wrench = 12, /obj/item/t_scanner = 12, /obj/item/stock_parts/cell = 8, /obj/item/weldingtool = 8, /obj/item/clothing/head/welding = 8, /obj/item/light/tube = 10, /obj/item/clothing/suit/fire = 4, /obj/item/stock_parts/scanning_module = 5, /obj/item/stock_parts/micro_laser = 5, /obj/item/stock_parts/matter_bin = 5, /obj/item/stock_parts/manipulator = 5)
+	products = list(/obj/item/clothing/under/rank/engineering/engineer=4,/obj/item/clothing/shoes/sneakers/orange=4,/obj/item/clothing/head/hardhat=4,/obj/item/storage/belt/utility=4,/obj/item/clothing/glasses/meson/engine=4,/obj/item/clothing/gloves/color/yellow=2,/obj/item/screwdriver=12,/obj/item/crowbar=12,/obj/item/wirecutters=12,/obj/item/multitool=12,/obj/item/wrench=12,/obj/item/t_scanner=12,/obj/item/stock_parts/cell=8,/obj/item/weldingtool=8,/obj/item/clothing/head/welding=8,/obj/item/light/tube=10,/obj/item/clothing/suit/fire=4,/obj/item/stock_parts/scanning_module=5,/obj/item/stock_parts/micro_laser=5,/obj/item/stock_parts/matter_bin=5,/obj/item/stock_parts/manipulator=5)
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -70181,7 +70179,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton{
-	list_reagents = list(/datum/reagent/consumable/milk = 20);
+	list_reagents = list(/datum/reagent/consumable/milk=20);
 	name = "small milk carton";
 	pixel_x = -8;
 	pixel_y = 5

@@ -5,6 +5,8 @@
 	weight = -1
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	category = EVENT_CATEGORY_HOLIDAY
+	description = "Hides surprise filled easter eggs in maintenance."
 
 /datum/round_event/easter/announce(fake)
 	priority_announce(pick("Hip-hop into Easter!","Find some Bunny's stash!","Today is National 'Hunt a Wabbit' Day.","Be kind, give Chocolate Eggs!"))
@@ -16,6 +18,8 @@
 	typepath = /datum/round_event/rabbitrelease
 	weight = 5
 	max_occurrences = 10
+	category = EVENT_CATEGORY_HOLIDAY
+	description = "Summons a wave of cute rabbits."
 
 /datum/round_event/rabbitrelease/announce(fake)
 	priority_announce("Unidentified furry objects detected coming aboard [station_name()]. Beware of Adorable-ness.", "Fluffy Alert", "aliens")
@@ -66,7 +70,7 @@
 	icon = 'icons/mob/easter.dmi'
 	icon_state = "basket"
 
-/obj/item/storage/bag/easterbasket/Initialize()
+/obj/item/storage/bag/easterbasket/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/egg, /obj/item/reagent_containers/food/snacks/chocolateegg, /obj/item/reagent_containers/food/snacks/boiledegg))
@@ -109,7 +113,7 @@
 /obj/item/reagent_containers/food/snacks/egg/loaded
 	containsPrize = TRUE
 
-/obj/item/reagent_containers/food/snacks/egg/loaded/Initialize()
+/obj/item/reagent_containers/food/snacks/egg/loaded/Initialize(mapload)
 	. = ..()
 	var/eggcolor = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
 	icon_state = "egg-[eggcolor]"

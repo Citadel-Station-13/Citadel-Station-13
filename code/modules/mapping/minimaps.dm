@@ -47,21 +47,43 @@
 
 		var/meta_color = area_to_color[A]
 		if(!meta_color)
-			meta_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255)) // technically conflicts could happen but it's like very unlikely and it's not that big of a deal if one happens
+			var/meta_x = LAZYLEN(area_to_color) + 1
+			var/meta_y = (((meta_x + 1) - ((meta_x + 1) % 255)) / 255)
+			var/meta_z = (((meta_y + 1) - ((meta_y + 1) % 255)) / 255)
+			meta_color = rgb(meta_x % 255, meta_y % 255, meta_z % 255) //This supports exactly 16,581,374 areas with no conflicts whatsoever before it just gives up
 			area_to_color[A] = meta_color
 			color_area_names[meta_color] = A.name
 		meta_icon.DrawBox(meta_color, img_x, img_y)
 
-		if(istype(T, /turf/closed/wall))
+		if(A.minimap_show_walls && istype(T, /turf/closed/wall))
 			map_icon.DrawBox("#000000", img_x, img_y)
 
 		else if(!istype(A, /area/space))
-			var/color = A.minimap_color || "#FF00FF"
-			if(locate(/obj/machinery/power/solar) in T)
-				color = "#02026a"
+			var/color = (A.minimap_color2 ? (((img_x + img_y) % 2) ? A.minimap_color2 : A.minimap_color ) : A.minimap_color) || "#FF00FF"
+			if(A.minimap_show_walls)
+				var/overridden
+				for(var/obj/structure/O in T)
+					if(O.minimap_override_color)
+						color = O.minimap_override_color
+						overridden = TRUE
+						break
+					else if(O.density && O.anchored)
+						color = BlendRGB(color, "#000000", 0.5)
+						overridden = TRUE
+						break
 
-			if((locate(/obj/effect/spawner/structure/window) in T) || (locate(/obj/structure/grille) in T))
-				color = BlendRGB(color, "#000000", 0.5)
+				//In an ideal world, we'd be able to get away with just doing for(var/obj/O in T) up there, and calling it a day. However. HOWEVER!
+				//Doing that causes the code to also loop through items. and that uh. Kinda bloats minimap gen time. A LOT. We're talking straight-up doubling the time it takes to gen.
+				//So instead we take our ctrl+c. We copy the above code. And we ctrl+v. It's awful. We hate it. But it works. It's faster. Funny mapgen go vroom
+				if(!overridden)
+					for(var/obj/machinery/O in T)
+						if(O.minimap_override_color)
+							color = O.minimap_override_color
+							break
+						else if(O.density && O.anchored)
+							color = BlendRGB(color, "#000000", 0.25)
+							break
+
 			map_icon.DrawBox(color, img_x, img_y)
 
 	map_icon.Crop(crop_x1, crop_y1, crop_x2, crop_y2)
@@ -102,22 +124,48 @@
 
 	var/list/datas = list()
 	var/list/info = list()
-
-	for(var/i in 1 to length(minimaps))// OLD: for(var/i in 1 to length(minimaps))
+	var/buttonfield = ""
+	var/totalmaps = length(minimaps)
+	for(var/i in 1 to totalmaps)// OLD: for(var/i in 1 to length(minimaps))
 		var/datum/minimap/M = minimaps[i]
 		var/map_name = "minimap-[M.id].png"
 		var/meta_name = "minimap-[M.id]-meta.png"
 		M.send(user)
 		info += {"
-			<div class="block">
+			<div class="block" id='layer-[i]' [i == 1 ? "" : "style='display:none'"]>
+				[totalmaps > 1 ? "<h3>Layer [i]</h3>" : ""]
 				<div> <!-- The div is in here to fit it both in the block div -->
 					<img id='map-[i]' src='[SSassets.transport.get_asset_url(map_name)]' />
 					<img id='map-[i]-meta' src='[SSassets.transport.get_asset_url(meta_name)]' style='display: none' />
 				</div>
-				<div class="statusDisplay" id='label-[i]'></div>
+				[totalmaps <= 1 ? "<div class='statusDisplay' id='label-[i]'> </div>" : ""]
 			</div>
 		"}
 		datas += json_encode(M.color_area_names);
+		buttonfield += "<a onclick='switchmap(\"layer-[i]\")'>Layer [i]</a> "
+
+	if(totalmaps > 1)
+		info += "<div class='block'><div class='statusDisplay'>[buttonfield]</div></div>"
+
+	//This is a hacky workaround; the status display is extremely buggy when multiple z-levels are present. We couldn't figure out how to fix this after 7 hours of banging our head against the wall
+	//We're coder
+	var/mousemove_bit = {"
+				canvas.onmousemove = function(e){
+					var rect = canvas.getBoundingClientRect();
+					var x = Math.floor(e.offsetX * img.width / rect.width);
+					var y = Math.floor(e.offsetY * img.height / rect.height);
+
+					var color_idx = x * 4 + (y * 4 * imagedata.width);
+					var color = "#" + hexify(imagedata.data\[color_idx]) + hexify(imagedata.data\[color_idx+1]) + hexify(imagedata.data\[color_idx+2]);
+
+					label.textContent = data\[color];
+					canvas.title = data\[color];
+				}
+				canvas.onmouseout = function(e){
+					label.textContent = " ";
+					canvas.title = "";
+				}
+	"}
 
 	info = info.Join()
 	//this is bad. Too bad!
@@ -132,6 +180,14 @@
 				num = "0" + num;
 			}
 			return num;
+		}
+		function switchmap(mapid) {
+			var targetblock = document.getElementById(mapid);
+			for(var i = 0; i < [length(minimaps)]; i++) {
+				var currentblock = document.getElementById("layer-" + (i + 1));
+				currentblock.style.display = 'none';
+			}
+			targetblock.style.display = '';
 		}
 		window.onload = function() {
 			if(!window.HTMLCanvasElement) {
@@ -150,6 +206,7 @@
 				var canvas = document.createElement("canvas");
 				canvas.width = img.width * 2;
 				canvas.height = img.height * 2;
+				canvas.id = "canvas-" + (i+1);
 
 				var ctx = canvas.getContext('2d');
 				ctx.msImageSmoothingEnabled = false;
@@ -158,31 +215,23 @@
 				ctx = document.createElement("canvas").getContext('2d');
 				ctx.canvas.width = img.width;
 				ctx.canvas.height = img.height;
+				ctx.id = "ctx-" + (i+1);
 				ctx.drawImage(document.getElementById("map-" + (i+1) + "-meta"), 0, 0);
 
 				var imagedata = ctx.getImageData(0, 0, img.width, img.height);
 
-				canvas.onmousemove = function(e){
-					var rect = canvas.getBoundingClientRect();
-					var x = Math.floor(e.offsetX * img.width / rect.width);
-					var y = Math.floor(e.offsetY * img.height / rect.height);
-
-					var color_idx = x * 4 + (y * 4 * imagedata.width);
-					var color = "#" + hexify(imagedata.data\[color_idx]) + hexify(imagedata.data\[color_idx+1]) + hexify(imagedata.data\[color_idx+2]);
-					var label = document.getElementById("label-" + (i+1)); //label-String(n)
-
-					label.textContent = data\[color];
-					canvas.title = data\[color];
-				}
-				canvas.onmouseout = function(e){
-					canvas.title = "";
-				}
+				var label = document.getElementById("label-" + (i+1)); //label-String(n);
+				[totalmaps <= 1 ? mousemove_bit : ""]
 			}
 		}
 	</script>
 	<style>
 		img, canvas {
-			width: 100%;
+			max-width: 100%;
+			width: auto;
+			margin: auto;
+			display: flex;
+			justify-content: center;
 			background-color: white;
 		}
 	</style>

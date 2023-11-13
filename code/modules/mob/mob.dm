@@ -1,4 +1,4 @@
-/mob/Initialize()
+/mob/Initialize(mapload)
 	add_to_mob_list()
 	if(stat == DEAD)
 		add_to_dead_mob_list()
@@ -138,7 +138,7 @@
 		return
 	hearers -= ignored_mobs
 
-	if(target_message && target && istype(target) && target.client)
+	if(target_message && target && istype(target) && (target.client || target.audiovisual_redirect))
 		hearers -= target
 		if(omni)
 			target.show_message(target_message)
@@ -155,7 +155,7 @@
 	if(self_message)
 		hearers -= src
 	for(var/mob/M in hearers)
-		if(!M.client)
+		if(!M.client && !M.audiovisual_redirect)
 			continue
 		if(omni)
 			M.show_message(message)
@@ -330,7 +330,7 @@
 	else
 		result = A.examine(src) // if a tree is examined but no client is there to see it, did the tree ever really exist?
 
-	to_chat(src, result.Join("\n"))
+	to_chat(src, "<blockquote class='info'>[result.Join("\n")]</blockquote>")
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
 
 /mob/proc/clear_from_recent_examines(atom/A)
@@ -580,11 +580,6 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 					L[++L.len] = list("[S.panel]", "[S.holder_var_type] [S.holder_var_amount]", S.name, REF(S))
 	return L
 
-/mob/proc/add_stings_to_statpanel(list/stings)
-	for(var/obj/effect/proc_holder/changeling/S in stings)
-		if(S.chemical_cost >=0 && S.can_be_used_by(src))
-			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
-
 #define MOB_FACE_DIRECTION_DELAY 1
 
 // facing verbs
@@ -722,7 +717,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 			return pick(protection_sources)
 		else
 			return src
-	if((magic && HAS_TRAIT(src, TRAIT_ANTIMAGIC)) || (holy && HAS_TRAIT(src, TRAIT_HOLY)))
+	if((magic && HAS_TRAIT(src, TRAIT_ANTIMAGIC)) || (!self && magic && HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK)) || (holy && HAS_TRAIT(src, TRAIT_HOLY)))
 		return src
 
 //You can buckle on mobs if you're next to them since most are dense
@@ -878,10 +873,12 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 	if (!client)
 		return
 	client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
-	if (ismecha(loc))
-		var/obj/mecha/M = loc
-		if(M.mouse_pointer)
-			client.mouse_pointer_icon = M.mouse_pointer
+	if(istype(loc, /obj/vehicle/sealed))
+		var/obj/vehicle/sealed/mecha/E = loc
+		if(E.mouse_pointer)
+			client.mouse_pointer_icon = E.mouse_pointer
+	if(client.mouse_override_icon)
+		client.mouse_pointer_icon = client.mouse_override_icon
 
 /mob/proc/is_literate()
 	return 0

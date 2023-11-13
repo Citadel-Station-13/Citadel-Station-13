@@ -92,7 +92,7 @@
 	var/swarming = FALSE
 	var/my_creator = null
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize()
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize(mapload)
 	. = ..()
 	if(swarming)
 		AddComponent(/datum/component/swarming) //oh god not the bees
@@ -126,7 +126,7 @@
 	var/dwarf_mob = FALSE
 	var/mob/living/carbon/human/stored_mob
 
-/mob/living/simple_animal/hostile/asteroid/hivelord/legion/random/Initialize()
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/random/Initialize(mapload)
 	. = ..()
 	if(prob(5))
 		new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf(loc)
@@ -198,7 +198,7 @@
 	swarming = TRUE
 	var/can_infest_dead = FALSE
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(isturf(loc))
@@ -272,13 +272,13 @@
 	aggro_vision_range = 9
 	speed = 3
 	faction = list("mining")
-	weather_immunities = list("lava","ash")
+	weather_immunities = list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE)
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
-/mob/living/simple_animal/hostile/big_legion/Initialize()
+/mob/living/simple_animal/hostile/big_legion/Initialize(mapload)
 	.=..()
 	AddComponent(/datum/component/spawner, list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion), 200, faction, "peels itself off from", 3)
 
@@ -298,7 +298,7 @@
 	. = ..()
 	H.dna.add_mutation(DWARFISM)
 
-/obj/effect/mob_spawn/human/corpse/damaged/legioninfested/Initialize()
+/obj/effect/mob_spawn/human/corpse/damaged/legioninfested/Initialize(mapload)
 	var/type = pickweight(list("Miner" = 45, "Ashwalker" = 10, "Golem" = 10,"Clown" = 10, pick(list("Shadow", "YeOlde","Operative", "Cultist", "Lavaknight")) = 4, "Assistant" = 20, "Beelegion" = 1))
 	switch(type)
 		if("Miner")
@@ -321,7 +321,7 @@
 			gloves = /obj/item/clothing/gloves/color/black
 			mask = /obj/item/clothing/mask/gas/explorer
 			if(prob(20))
-				suit = pickweight(list(/obj/item/clothing/suit/hooded/explorer/standard = 6, /obj/item/clothing/suit/hooded/cloak/goliath = 2, /obj/item/clothing/suit/hooded/explorer/exo = 6, /obj/item/clothing/suit/hooded/explorer/seva = 6))
+				suit = pickweight(list(/obj/item/clothing/suit/hooded/explorer/standard = 6, /obj/item/clothing/suit/hooded/cloak/goliath = 2, /obj/item/clothing/suit/hooded/explorer/exo = 6, /obj/item/clothing/suit/hooded/explorer/heva = 6))
 			if(prob(30))
 				r_pocket = pickweight(list(/obj/item/stack/marker_beacon = 20, /obj/item/stack/spacecash/c1000 = 7, /obj/item/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/damage = 1 ))
 			if(prob(10))

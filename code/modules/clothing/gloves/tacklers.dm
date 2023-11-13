@@ -25,6 +25,10 @@
 	/// See: [/datum/component/tackler/var/skill_mod]
 	var/skill_mod = 1
 
+/obj/item/clothing/gloves/tackler/Destroy()
+	tackler = null
+	return ..()
+
 /obj/item/clothing/gloves/tackler/equipped(mob/user, slot)
 	. = ..()
 	if(!ishuman(user))
@@ -34,12 +38,12 @@
 			var/mob/living/carbon/human/H = user
 			tackler = H.AddComponent(/datum/component/tackler, stamina_cost=tackle_stam_cost, base_knockdown = base_knockdown, range = tackle_range, speed = tackle_speed, skill_mod = skill_mod, min_distance = min_distance)
 		else
-			qdel(tackler) // Only wearing it!
+			QDEL_NULL(tackler) // Only wearing it!
 
 /obj/item/clothing/gloves/tackler/dropped(mob/user)
 	. = ..()
 	if(tackler)
-		qdel(tackler)
+		QDEL_NULL(tackler)
 
 /obj/item/clothing/gloves/tackler/dolphin
 	name = "dolphin gloves"

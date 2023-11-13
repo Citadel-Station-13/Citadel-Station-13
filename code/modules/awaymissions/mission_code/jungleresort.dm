@@ -19,7 +19,7 @@
 	icon_state = "whip"
 
 /obj/item/clothing/suit/hooded/wintercoat/captain/jungle
-	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 0, BOMB = 0, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/head/rice_hat/cursed // this was a stupid idea lmao
 	name = "cursed rice hat"
@@ -32,7 +32,7 @@
     else
         UnregisterSignal(M, COMSIG_MOB_SAY)
 
-/obj/item/clothing/head/rice_hat/cursed/Initialize()
+/obj/item/clothing/head/rice_hat/cursed/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, SHAMEBRERO_TRAIT)
 

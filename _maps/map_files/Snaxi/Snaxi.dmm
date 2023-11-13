@@ -85,7 +85,7 @@
 /obj/machinery/keycard_auth{
 	pixel_y = -28
 	},
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/Polly,
 /turf/open/floor/plasteel,
 /area/command/heads_quarters/ce)
 "aai" = (
@@ -9515,6 +9515,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/posialert{
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "axr" = (
@@ -11007,9 +11010,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "aPZ" = (
@@ -20516,9 +20517,6 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
 "fUX" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -20527,6 +20525,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/obj/machinery/sleeper{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -23736,9 +23737,6 @@
 /turf/open/floor/plasteel/dark,
 /area/security/office)
 "hWn" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -23755,6 +23753,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "hWp" = (
@@ -25710,7 +25709,6 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/machinery/computer/bounty,
 /turf/open/floor/plasteel,
 /area/cargo/storage)
 "jjB" = (
@@ -29421,9 +29419,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
 "lOX" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/structure/window/reinforced,
 /obj/structure/mirror{
 	pixel_x = 25
@@ -29433,6 +29428,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "lPB" = (
@@ -35740,7 +35736,7 @@
 	pixel_y = -22
 	},
 /obj/machinery/light,
-/obj/structure/closet/emcloset,
+/obj/machinery/piratepad/civilian,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "pLP" = (
@@ -36872,7 +36868,7 @@
 /area/engineering/secure_construction)
 "qzP" = (
 /obj/machinery/vending/dinnerware{
-	contraband = list(/obj/item/kitchen/rollingpin = 2, /obj/item/kitchen/knife/butcher = 2, /obj/item/reagent_containers/food/condiment/flour = 4)
+	contraband = list(/obj/item/kitchen/rollingpin=2,/obj/item/kitchen/knife/butcher=2,/obj/item/reagent_containers/food/condiment/flour=4)
 	},
 /turf/open/floor/plasteel/freezer,
 /area/service/kitchen)
@@ -37118,7 +37114,9 @@
 	},
 /area/service/chapel/main)
 "qHq" = (
-/obj/structure/closet/crate,
+/obj/machinery/computer/piratepad_control/civilian{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "qHC" = (
@@ -43682,6 +43680,7 @@
 /obj/structure/table,
 /obj/item/toy/cards/deck,
 /obj/item/storage/crayons,
+/obj/item/chisel,
 /turf/open/floor/plasteel/grimy,
 /area/commons/fitness/recreation)
 "uWC" = (
@@ -44164,9 +44163,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone3)
 "vkk" = (
@@ -44908,7 +44905,7 @@
 	dir = 8
 	},
 /obj/effect/spawner/lootdrop/armory_contraband{
-	loot = list(/obj/item/gun/ballistic/automatic/pistol = 5, /obj/item/gun/ballistic/shotgun/automatic/combat = 5, /obj/item/gun/ballistic/revolver/mateba, /obj/item/gun/ballistic/automatic/pistol/deagle, /obj/item/storage/box/syndie_kit/throwing_weapons = 3)
+	loot = list(/obj/item/gun/ballistic/automatic/pistol=5,/obj/item/gun/ballistic/shotgun/automatic/combat=5,/obj/item/gun/ballistic/revolver/mateba,/obj/item/gun/ballistic/automatic/pistol/deagle,/obj/item/storage/box/syndie_kit/throwing_weapons=3)
 	},
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 3;
@@ -46270,9 +46267,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "wut" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 8
@@ -46280,6 +46274,9 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
+	},
+/obj/machinery/sleeper{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -47811,16 +47808,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai_upload)
-"xEf" = (
-/obj/machinery/computer/bounty{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown,
-/turf/open/floor/plasteel,
-/area/cargo/qm)
 "xEt" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -89693,7 +89680,7 @@ rDE
 dFF
 sLn
 acv
-xEf
+jmU
 krH
 avT
 xUL

@@ -281,7 +281,7 @@
 	var/area/shuttle/transit/assigned_area
 	var/obj/docking_port/mobile/owner
 
-/obj/docking_port/stationary/transit/Initialize()
+/obj/docking_port/stationary/transit/Initialize(mapload)
 	. = ..()
 	SSshuttle.transit += src
 
@@ -298,6 +298,16 @@
 			qdel(reserved_area)
 		reserved_area = null
 	return ..()
+
+/obj/docking_port/stationary/picked/whiteship
+	name = "Deep Space"
+	id = "whiteship_away"
+	dheight = 0
+	dir = 2
+	dwidth = 11
+	height = 22
+	width = 35
+	shuttlekeys = list("whiteship_meta", "whiteship_pubby", "whiteship_box", "whiteship_cere", "whiteship_kilo", "whiteship_donut", "whiteship_delta")
 
 /obj/docking_port/stationary/picked
 	///Holds a list of map name strings for the port to pick from
@@ -891,7 +901,7 @@
 	var/range = (engine_coeff * max(width, height))
 	var/long_range = range * 2.5
 	var/atom/distant_source
-	if(engine_list[1])
+	if(length(engine_list))
 		distant_source = engine_list[1]
 	else
 		for(var/A in areas)
