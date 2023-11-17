@@ -105,7 +105,7 @@
 	addStaticPower(-value, powerchannel)
 
 /obj/machinery/proc/power_change()
-	//SIGNAL_HANDLER
+	SHOULD_NOT_SLEEP(TRUE)
 	//SHOULD_CALL_PARENT(TRUE)
 
 	if(stat & BROKEN)
