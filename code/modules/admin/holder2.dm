@@ -30,6 +30,9 @@ GLOBAL_PROTECT(href_token)
 
 	var/datum/filter_editor/filteriffic
 
+	/// A lazylist of tagged datums, for quick reference with the View Tags verb
+	var/list/tagged_datums
+
 /datum/admins/CanProcCall(procname)
 	. = ..()
 	if(!check_rights(R_SENSITIVE))

@@ -58,7 +58,10 @@
 	if(modifiers["shift"] && modifiers["ctrl"])
 		return CtrlShiftClickOn(A)
 	if(modifiers["middle"])
-		return MiddleClickOn(A)
+		if(modifiers["ctrl"])
+			return CtrlMiddleClickOn(A)
+		else
+			return MiddleClickOn(A)
 	if(modifiers["shift"] && (client && client.show_popup_menus || modifiers["right"])) //CIT CHANGE - makes shift-click examine use right click instead of left click in combat mode
 		return ShiftClickOn(A)
 	if(modifiers["alt"]) // alt and alt-gr (rightalt)
@@ -356,6 +359,14 @@
 		return TRUE
 	else
 		return ..()
+
+/mob/proc/CtrlMiddleClickOn(atom/A)
+	if(check_rights_for(client, R_ADMIN))
+		client.toggle_tag_datum(A)
+	else
+		A.CtrlClick(src)
+	return
+
 /*
 	Alt click
 	Used as an alternate way to interact with things.

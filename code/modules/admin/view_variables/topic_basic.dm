@@ -59,6 +59,8 @@
 
 	if(href_list[VV_HK_MARK])
 		usr.client.mark_datum(target)
+	if(href_list[VV_HK_TAG])
+		usr.client.tag_datum(target)
 	if(href_list[VV_HK_ADDCOMPONENT])
 		if(!check_rights(NONE))
 			return
