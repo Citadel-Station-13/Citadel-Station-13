@@ -65,7 +65,7 @@ i couldn't actually find anything in the parts of the code it's calling preventi
 	var/datum/surgery_step/incise/surgery_step = new
 	var/datum/surgery/organ_manipulation/surgery_for_zero = new
 
-	INVOKE_ASYNC(surgery_step, /datum/surgery_step/proc/initiate, user, patient_zero, BODY_ZONE_CHEST, scalpel, surgery_for_zero)
+	INVOKE_ASYNC(surgery_step, TYPE_PROC_REF(/datum/surgery_step, initiate), user, patient_zero, BODY_ZONE_CHEST, scalpel, surgery_for_zero)
 	sleep(1)
 	TEST_ASSERT(surgery_for_zero.step_in_progress, "Surgery on patient zero was not initiated")
 
@@ -77,7 +77,7 @@ i couldn't actually find anything in the parts of the code it's calling preventi
 	TEST_ASSERT(!surgery_for_one.step_in_progress, "Surgery for patient one is somehow in progress, despite not initiating")
 
 	user.apply_status_effect(STATUS_EFFECT_HIPPOCRATIC_OATH)
-	INVOKE_ASYNC(surgery_step, /datum/surgery_step/proc/initiate, user, patient_one, BODY_ZONE_CHEST, scalpel, surgery_for_one)
+	INVOKE_ASYNC(surgery_step, TYPE_PROC_REF(/datum/surgery_step, initiate), user, patient_one, BODY_ZONE_CHEST, scalpel, surgery_for_one)
 	TEST_ASSERT(surgery_for_one.step_in_progress, "Surgery on patient one was not initiated, despite having rod of asclepius")
 */
 

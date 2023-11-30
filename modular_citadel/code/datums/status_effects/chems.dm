@@ -313,8 +313,8 @@
 				owner.jitteriness += 250
 			if(67 to 89) //anger
 				if(prob(10))
-					addtimer(CALLBACK(M, /mob/verb/a_intent_change, INTENT_HARM), 2)
-					addtimer(CALLBACK(M, /mob/proc/click_random_mob), 2)
+					addtimer(CALLBACK(M, TYPE_VERB_REF(/mob, a_intent_change), INTENT_HARM), 2)
+					addtimer(CALLBACK(M, TYPE_PROC_REF(/mob, click_random_mob)), 2)
 					if(lewd)
 						to_chat(owner, "<span class='warning'>You are overwhelmed with anger at the lack of [enthrallGender]'s presence and suddenly lash out!</span>")
 					else
@@ -487,7 +487,7 @@
 			if (lowertext(customTriggers[trigger][1]) == "speak")//trigger2
 				var/saytext = "Your mouth moves on it's own before you can even catch it."
 				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), C, "<span class='notice'><i>[saytext]</i></span>"), 5)
-				addtimer(CALLBACK(C, /atom/movable/proc/say, "[customTriggers[trigger][2]]"), 5)
+				addtimer(CALLBACK(C, TYPE_PROC_REF(/atom/movable, say), "[customTriggers[trigger][2]]"), 5)
 				log_reagent("FERMICHEM: MKULTRA: [owner] ckey: [owner.key] has been forced to say: \"[customTriggers[trigger][2]]\" from previous trigger.")
 
 

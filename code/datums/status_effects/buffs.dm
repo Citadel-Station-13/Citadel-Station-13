@@ -135,7 +135,7 @@
 	owner.add_stun_absorption("inathneq", 150, 2, "'s flickering blue aura momentarily intensifies!", "Inath-neq's power absorbs the stun!", " glowing with a flickering blue light!")
 	owner.status_flags |= GODMODE
 	animate(owner, color = oldcolor, time = 150, easing = EASE_IN)
-	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), 150)
+	addtimer(CALLBACK(owner, TYPE_PROC_REF(/atom, update_atom_colour)), 150)
 	playsound(owner, 'sound/magic/ethereal_enter.ogg', 50, 1)
 	return ..()
 
@@ -409,7 +409,7 @@
 	owner.add_stun_absorption("bloody bastard sword", duration, 2, "doesn't even flinch as the sword's power courses through them!", "You shrug off the stun!", " glowing with a blazing red aura!")
 	owner.spin(duration,1)
 	animate(owner, color = oldcolor, time = duration, easing = EASE_IN)
-	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), duration)
+	addtimer(CALLBACK(owner, TYPE_PROC_REF(/atom, update_atom_colour)), duration)
 	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
 	return ..()
 
