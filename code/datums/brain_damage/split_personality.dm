@@ -20,7 +20,7 @@
 	..()
 	make_backseats()
 	get_ghost()
-	RegisterSignal(M, COMSIG_MOB_DEATH, .proc/revert_to_normal)
+	RegisterSignal(M, COMSIG_MOB_DEATH, PROC_REF(revert_to_normal))
 
 /datum/brain_trauma/severe/split_personality/proc/make_backseats()
 	stranger_backseat = new(owner, src)

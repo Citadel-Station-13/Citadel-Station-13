@@ -21,7 +21,7 @@
 			user.tod = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
 		user.fakedeath("changeling", TRUE) //play dead
 		user.update_stat()
-		addtimer(CALLBACK(src, .proc/ready_to_regenerate, user), LING_FAKEDEATH_TIME, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, PROC_REF(ready_to_regenerate), user), LING_FAKEDEATH_TIME, TIMER_UNIQUE)
 	return TRUE
 
 /datum/action/changeling/fakedeath/proc/revive(mob/living/user)

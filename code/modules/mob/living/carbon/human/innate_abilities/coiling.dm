@@ -33,7 +33,7 @@
 	if(currently_coiling)
 		to_chat(owner, span_warning("You are already coiling someone!"))
 		return
-		
+
 	// begin the coiling action
 	H.visible_message("<span class='warning'>[owner] coils [H] with their tail!</span>", \
 						  "<span class='userdanger'>[owner] coils you with their tail!</span>")
@@ -46,12 +46,12 @@
 	H.forceMove(get_turf(owner))
 
 	// cancel the coiling action if certain things are done
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/cancel_coil)
-	RegisterSignal(owner, COMSIG_LIVING_RESTING, .proc/cancel_coil)
-	RegisterSignal(owner, COMSIG_LIVING_STOPPED_PULLING, .proc/cancel_coil)
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(cancel_coil))
+	RegisterSignal(owner, COMSIG_LIVING_RESTING, PROC_REF(cancel_coil))
+	RegisterSignal(owner, COMSIG_LIVING_STOPPED_PULLING, PROC_REF(cancel_coil))
 
 	// update the coil offset, update again if owner changes direction
-	RegisterSignal(owner, COMSIG_ATOM_DIR_CHANGE, .proc/update_coil_offset)
+	RegisterSignal(owner, COMSIG_ATOM_DIR_CHANGE, PROC_REF(update_coil_offset))
 	update_coil_offset(null, null, owner.dir)
 
 	// set our overlay to new image
@@ -62,7 +62,7 @@
 
 /datum/action/innate/ability/coiling/proc/cancel_coil()
 	var/mob/living/carbon/human/H = owner
-	
+
 	if(!currently_coiling)
 		return
 

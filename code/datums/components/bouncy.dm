@@ -18,11 +18,11 @@
 		var/list/diff_bounces = difflist(bounce_signals, _bounce_signals, TRUE)
 		for(var/bounce in diff_bounces)
 			bounce_signals += bounce
-			RegisterSignal(parent, bounce, .proc/bounce_up)
+			RegisterSignal(parent, bounce, PROC_REF(bounce_up))
 
 /datum/component/bouncy/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, bounce_signals, .proc/bounce_up)
+	RegisterSignal(parent, bounce_signals, PROC_REF(bounce_up))
 
 /datum/component/bouncy/UnregisterFromParent()
 	. = ..()

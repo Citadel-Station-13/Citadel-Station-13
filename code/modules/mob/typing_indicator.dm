@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(typing_indicator_overlays)
 		return
 	typing_indicator_current = state_override
 	add_overlay(state_override)
-	typing_indicator_timerid = addtimer(CALLBACK(src, .proc/clear_typing_indicator), timeout_override, TIMER_STOPPABLE)
+	typing_indicator_timerid = addtimer(CALLBACK(src, PROC_REF(clear_typing_indicator)), timeout_override, TIMER_STOPPABLE)
 
 /**
   * Removes typing indicator.

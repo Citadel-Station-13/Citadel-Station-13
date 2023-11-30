@@ -95,7 +95,7 @@
 			mainsource = word
 
 	if(matches)
-		addtimer(CALLBACK(src, .proc/freak_out, null, mainsource), 10) //to react AFTER the chat message
+		addtimer(CALLBACK(src, PROC_REF(freak_out), null, mainsource), 10) //to react AFTER the chat message
 
 /datum/brain_trauma/mild/phobia/handle_speech(datum/source, list/speech_args)
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))

@@ -49,7 +49,7 @@
 	visible_message("There are positronic personalities available!")
 	radio.talk_into(src, "There are positronic personalities available!", science_channel)
 	playsound(loc, 'sound/machines/ping.ogg', 50)
-	addtimer(CALLBACK(src, .proc/liftcooldown), 300)
+	addtimer(CALLBACK(src, PROC_REF(liftcooldown)), 300)
 
 /obj/machinery/posialert/proc/liftcooldown()
 	inuse = FALSE

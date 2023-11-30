@@ -165,7 +165,7 @@ SUBSYSTEM_DEF(vote)
 		var/list/pretty_vote = list()
 		for(var/choice in choices)
 			if(("[choice]" in this_vote) && ("[choice]" in scores_by_choice))
-				sorted_insert(scores_by_choice["[choice]"],this_vote["[choice]"],/proc/cmp_numeric_asc)
+				sorted_insert(scores_by_choice["[choice]"],this_vote["[choice]"],GLOBAL_PROC_REF(cmp_numeric_asc))
 				// START BALLOT GATHERING
 				pretty_vote += "[choice]"
 				if(this_vote["[choice]"] in GLOB.vote_score_options)

@@ -50,12 +50,12 @@
 	if(!quit_action)
 		quit_action = new
 	quit_action.Grant(M)
-	RegisterSignal(quit_action, COMSIG_ACTION_TRIGGER, .proc/action_trigger)
-	RegisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING), .proc/game_over)
-	RegisterSignal(M, COMSIG_MOB_GHOSTIZE, .proc/be_a_quitter)
-	RegisterSignal(M, COMSIG_MOB_KEY_CHANGE, .proc/on_player_transfer)
-	RegisterSignal(current_mind, COMSIG_MIND_TRANSFER, .proc/on_player_transfer)
-	RegisterSignal(current_mind, COMSIG_PRE_MIND_TRANSFER, .proc/pre_player_transfer)
+	RegisterSignal(quit_action, COMSIG_ACTION_TRIGGER, PROC_REF(action_trigger))
+	RegisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING), PROC_REF(game_over))
+	RegisterSignal(M, COMSIG_MOB_GHOSTIZE, PROC_REF(be_a_quitter))
+	RegisterSignal(M, COMSIG_MOB_KEY_CHANGE, PROC_REF(on_player_transfer))
+	RegisterSignal(current_mind, COMSIG_MIND_TRANSFER, PROC_REF(on_player_transfer))
+	RegisterSignal(current_mind, COMSIG_PRE_MIND_TRANSFER, PROC_REF(pre_player_transfer))
 	if(mastermind?.current)
 		mastermind.current.audiovisual_redirect = M
 	ADD_TRAIT(M, TRAIT_NO_MIDROUND_ANTAG, VIRTUAL_REALITY_TRAIT)
@@ -87,9 +87,9 @@
 	mastermind = M.mind
 	mastermind.current.audiovisual_redirect = parent
 	M.transfer_ckey(vr_M, FALSE)
-	RegisterSignal(mastermind, COMSIG_PRE_MIND_TRANSFER, .proc/switch_player)
-	RegisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING), .proc/game_over)
-	RegisterSignal(M, COMSIG_MOB_PRE_PLAYER_CHANGE, .proc/player_hijacked)
+	RegisterSignal(mastermind, COMSIG_PRE_MIND_TRANSFER, PROC_REF(switch_player))
+	RegisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING), PROC_REF(game_over))
+	RegisterSignal(M, COMSIG_MOB_PRE_PLAYER_CHANGE, PROC_REF(player_hijacked))
 	SStgui.close_user_uis(vr_M, src)
 	session_paused = FALSE
 	return TRUE
@@ -114,8 +114,8 @@
 		quit()
 		return COMPONENT_STOP_MIND_TRANSFER
 	UnregisterSignal(old_mob, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING, COMSIG_MOB_PRE_PLAYER_CHANGE))
-	RegisterSignal(new_mob, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING), .proc/game_over)
-	RegisterSignal(new_mob, COMSIG_MOB_PRE_PLAYER_CHANGE, .proc/player_hijacked)
+	RegisterSignal(new_mob, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING), PROC_REF(game_over))
+	RegisterSignal(new_mob, COMSIG_MOB_PRE_PLAYER_CHANGE, PROC_REF(player_hijacked))
 	old_mob.audiovisual_redirect = null
 	new_mob.audiovisual_redirect = parent
 

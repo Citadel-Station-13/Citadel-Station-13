@@ -62,7 +62,7 @@
 /obj/item/implant/deathrattle/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()
 	if(.)
-		RegisterSignal(target, COMSIG_LIVING_PREDEATH, .proc/on_predeath)
+		RegisterSignal(target, COMSIG_LIVING_PREDEATH, PROC_REF(on_predeath))
 
 		if(!group)
 			to_chat(target, "<i>You hear a strange, robotic voice in your head...</i> \"<span class='robot'>Warning: No other linked implants detected.</span>\"")

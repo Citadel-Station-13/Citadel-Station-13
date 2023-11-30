@@ -324,7 +324,7 @@
 	oldLoc = get_turf(oldLoc)
 	if(!QDELETED(camera) && !updating && oldLoc != get_turf(src))
 		updating = TRUE
-		addtimer(CALLBACK(src, .proc/do_camera_update, oldLoc), VIDEO_CAMERA_BUFFER)
+		addtimer(CALLBACK(src, PROC_REF(do_camera_update), oldLoc), VIDEO_CAMERA_BUFFER)
 #undef VIDEO_CAMERA_BUFFER
 
 /obj/item/integrated_circuit/output/video_camera/proc/do_camera_update(oldLoc)

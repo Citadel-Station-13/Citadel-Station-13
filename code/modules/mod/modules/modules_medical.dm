@@ -109,7 +109,7 @@
 
 /obj/item/mod/module/defibrillator/Initialize(mapload)
 	. = ..()
-	RegisterSignal(device, COMSIG_DEFIBRILLATOR_SUCCESS, .proc/on_defib_success)
+	RegisterSignal(device, COMSIG_DEFIBRILLATOR_SUCCESS, PROC_REF(on_defib_success))
 
 /obj/item/mod/module/defibrillator/Destroy()
 	UnregisterSignal(device, COMSIG_DEFIBRILLATOR_SUCCESS)

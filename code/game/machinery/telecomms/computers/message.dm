@@ -216,7 +216,7 @@
 			if(istype(S) && S.hack_software)
 				hacking = TRUE
 				//Time it takes to bruteforce is dependant on the password length.
-				addtimer(CALLBACK(src, .proc/BruteForce, usr), (10 SECONDS) * length(linkedServer.decryptkey))
+				addtimer(CALLBACK(src, PROC_REF(BruteForce), usr), (10 SECONDS) * length(linkedServer.decryptkey))
 
 		if("del_log")
 			if(!auth)
@@ -344,7 +344,7 @@
 	var/obj/item/paper/monitorkey/MK = new(loc, linkedServer)
 	// Will help make emagging the console not so easy to get away with.
 	MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
-	addtimer(CALLBACK(src, .proc/UnmagConsole), (10 SECONDS) * length(linkedServer.decryptkey))
+	addtimer(CALLBACK(src, PROC_REF(UnmagConsole)), (10 SECONDS) * length(linkedServer.decryptkey))
 	//message = rebootmsg
 	return TRUE
 

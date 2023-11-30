@@ -8,12 +8,12 @@
 		return COMPONENT_INCOMPATIBLE
 	var/mob/living/L = parent
 
-	RegisterSignal(L, COMSIG_LIVING_SET_AS_ATTACKER, .proc/on_set_as_attacker)
-	RegisterSignal(L, COMSIG_LIVING_ATTACKER_SET, .proc/on_attacker_set)
-	RegisterSignal(L, COMSIG_MOB_DEATH, .proc/on_death)
-	RegisterSignal(L, COMSIG_EXIT_AREA, .proc/on_exit_area)
-	RegisterSignal(L, COMSIG_LIVING_LIFE, .proc/on_life)
-	RegisterSignal(L, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ATTACK_RANGED, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_THROW, COMSIG_MOVABLE_TELEPORTED, COMSIG_LIVING_GUN_PROCESS_FIRE, COMSIG_MOB_APPLY_DAMAGE), .proc/minor_activity)
+	RegisterSignal(L, COMSIG_LIVING_SET_AS_ATTACKER, PROC_REF(on_set_as_attacker))
+	RegisterSignal(L, COMSIG_LIVING_ATTACKER_SET, PROC_REF(on_attacker_set))
+	RegisterSignal(L, COMSIG_MOB_DEATH, PROC_REF(on_death))
+	RegisterSignal(L, COMSIG_EXIT_AREA, PROC_REF(on_exit_area))
+	RegisterSignal(L, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+	RegisterSignal(L, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ATTACK_RANGED, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_THROW, COMSIG_MOVABLE_TELEPORTED, COMSIG_LIVING_GUN_PROCESS_FIRE, COMSIG_MOB_APPLY_DAMAGE), PROC_REF(minor_activity))
 
 /datum/component/activity/proc/log_activity()
 	historical_activity_levels["[world.time]"] = activity_level

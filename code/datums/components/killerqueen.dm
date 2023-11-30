@@ -51,10 +51,10 @@
 
 /datum/component/killerqueen/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_ANIMAL), .proc/touch_detonate)
-	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/bump_detonate)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby_detonate)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_ANIMAL), PROC_REF(touch_detonate))
+	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(bump_detonate))
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby_detonate))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/killerqueen/UnregisterFromParent()
 	. = ..()

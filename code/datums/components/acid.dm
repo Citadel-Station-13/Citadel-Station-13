@@ -9,9 +9,9 @@
 	var/acid_cap = acidpwr * 300
 	level = min(acidpwr * acid_volume, acid_cap)
 	START_PROCESSING(SSprocessing, src)
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/add_acid_overlay)
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_acid_overlay))
 	if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
+		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
 	O.update_icon()
 
 /datum/component/acid/proc/on_attack_hand(datum/source, mob/user)

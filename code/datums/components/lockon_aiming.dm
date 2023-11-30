@@ -47,7 +47,7 @@
 	if(icon_state)
 		lock_icon_state = icon_state
 	generate_lock_visuals()
-	RegisterSignal(parent, COMSIG_MOB_CLIENT_MOUSEMOVE, .proc/onMouseMove)
+	RegisterSignal(parent, COMSIG_MOB_CLIENT_MOUSEMOVE, PROC_REF(onMouseMove))
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/component/lockon_aiming/Destroy()

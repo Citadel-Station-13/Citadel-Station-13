@@ -90,7 +90,7 @@
 					return
 
 				to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
-				if(P.use_tool(src, user, 20, volume=50, amount=5, extra_checks = CALLBACK(src, .proc/check_state, 1)))
+				if(P.use_tool(src, user, 20, volume=50, amount=5, extra_checks = CALLBACK(src, PROC_REF(check_state), 1)))
 					to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
 					state = 2
 					icon_state = "box_1"
@@ -99,7 +99,7 @@
 			if(P.tool_behaviour == TOOL_SCREWDRIVER && !anchored)
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "<span class='hear'>You hear banging and clanking.</span>")
-				if(P.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/check_state, 1)))
+				if(P.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, PROC_REF(check_state), 1)))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
 						var/obj/item/stack/sheet/metal/M = new (loc, 5)
@@ -108,7 +108,7 @@
 				return
 			if(P.tool_behaviour == TOOL_WRENCH)
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [src]...</span>")
-				if(P.use_tool(src, user, 40, volume=75, extra_checks = CALLBACK(src, .proc/check_state, 1)))
+				if(P.use_tool(src, user, 40, volume=75, extra_checks = CALLBACK(src, PROC_REF(check_state), 1)))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
 						set_anchored(!anchored)
@@ -117,7 +117,7 @@
 		if(2)
 			if(P.tool_behaviour == TOOL_WRENCH)
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [src]...</span>")
-				if(P.use_tool(src, user, 40, volume=75, extra_checks = CALLBACK(src, .proc/check_state, 2)))
+				if(P.use_tool(src, user, 40, volume=75, extra_checks = CALLBACK(src, PROC_REF(check_state), 2)))
 					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
 					set_anchored(!anchored)
 				return
@@ -175,7 +175,7 @@
 
 			if(P.tool_behaviour == TOOL_WRENCH && !circuit.needs_anchored)
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [src]...</span>")
-				if(P.use_tool(src, user, 40, volume=75, extra_checks = CALLBACK(src, .proc/check_state, 3)))
+				if(P.use_tool(src, user, 40, volume=75, extra_checks = CALLBACK(src, PROC_REF(check_state), 3)))
 					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
 					set_anchored(!anchored)
 				return
@@ -231,7 +231,7 @@
 				for(var/obj/item/co in replacer)
 					part_list += co
 				//Sort the parts. This ensures that higher tier items are applied first.
-				part_list = sortTim(part_list, /proc/cmp_rped_sort)
+				part_list = sortTim(part_list, GLOBAL_PROC_REF(cmp_rped_sort))
 
 				for(var/path in req_components)
 					while(req_components[path] > 0 && (locate(path) in part_list))

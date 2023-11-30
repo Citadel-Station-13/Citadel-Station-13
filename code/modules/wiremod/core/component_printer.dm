@@ -289,7 +289,7 @@
 
 /obj/machinery/module_duplicator/proc/print_module(list/design)
 	flick("module-fab-print", src)
-	addtimer(CALLBACK(src, .proc/finish_module_print, design), 1.6 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(finish_module_print), design), 1.6 SECONDS)
 
 /obj/machinery/module_duplicator/proc/finish_module_print(list/design)
 	var/obj/item/circuit_component/module/module = new(drop_location())
@@ -333,7 +333,7 @@
 	data["materials"] = list(/datum/material/glass = total_cost)
 
 	flick("module-fab-scan", src)
-	addtimer(CALLBACK(src, .proc/finish_module_scan, user, data), 1.4 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(finish_module_scan), user, data), 1.4 SECONDS)
 
 /obj/machinery/module_duplicator/proc/finish_module_scan(mob/user, data)
 	scanned_designs += list(data)

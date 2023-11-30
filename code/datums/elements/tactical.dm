@@ -9,8 +9,8 @@
 		return ELEMENT_INCOMPATIBLE
 
 	src.allowed_slot = allowed_slot
-	RegisterSignal(target, COMSIG_ITEM_EQUIPPED, .proc/modify)
-	RegisterSignal(target, COMSIG_ITEM_DROPPED, .proc/unmodify)
+	RegisterSignal(target, COMSIG_ITEM_EQUIPPED, PROC_REF(modify))
+	RegisterSignal(target, COMSIG_ITEM_DROPPED, PROC_REF(unmodify))
 
 /datum/element/tactical/Detach(datum/target)
 	UnregisterSignal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))

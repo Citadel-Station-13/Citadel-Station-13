@@ -200,7 +200,7 @@
 /obj/item/clothing/gloves/fingerless/ablative/equipped(mob/user, slot)
 	. = ..()
 	if(current_equipped_slot == ITEM_SLOT_GLOVES)
-		RegisterSignal(user, COMSIG_LIVING_ACTIVE_PARRY_START, .proc/get_component_parry_data)
+		RegisterSignal(user, COMSIG_LIVING_ACTIVE_PARRY_START, PROC_REF(get_component_parry_data))
 		wornonce = TRUE
 
 /obj/item/clothing/gloves/fingerless/ablative/dropped(mob/user)

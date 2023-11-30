@@ -67,8 +67,8 @@
 	. = ..()
 	if(ispath(cell))
 		cell = new cell
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/turn_on)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/turn_off)
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, PROC_REF(turn_on))
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, PROC_REF(turn_off))
 
 /obj/item/electrostaff/ComponentInitialize()
 	. = ..()

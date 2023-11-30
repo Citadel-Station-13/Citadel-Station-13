@@ -64,7 +64,7 @@
 				affected_mob.visible_message("<span class='warning'>[affected_mob] looks terrifyingly gaunt...</span>", "<span class='revennotice'>You suddenly feel like your skin is <i>wrong</i>...</span>")
 				affected_mob.add_atom_colour("#1d2953", TEMPORARY_COLOUR_PRIORITY)
 				new /obj/effect/temp_visual/revenant(affected_mob.loc)
-				addtimer(CALLBACK(src, .proc/curses), 150)
+				addtimer(CALLBACK(src, PROC_REF(curses)), 150)
 
 /datum/disease/revblight/proc/curses()
 	if(QDELETED(affected_mob))

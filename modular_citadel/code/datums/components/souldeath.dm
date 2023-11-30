@@ -6,13 +6,13 @@
 /datum/component/souldeath/Initialize()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/equip)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/unequip)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(equip))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(unequip))
 
 /datum/component/souldeath/proc/equip(datum/source, mob/living/equipper, slot)
 	if(!slot || equip_slot == slot)
 		wearer = equipper
-		RegisterSignal(wearer, COMSIG_MOB_DEATH, .proc/die, TRUE)
+		RegisterSignal(wearer, COMSIG_MOB_DEATH, PROC_REF(die), TRUE)
 		signal = TRUE
 	else
 		if(signal)

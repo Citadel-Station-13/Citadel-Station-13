@@ -28,7 +28,7 @@
 	pet_moodlet = pet_mood
 	punt_moodlet = punt_mood
 
-	RegisterSignal(target, COMSIG_MOB_ATTACK_HAND, .proc/on_attack_hand)
+	RegisterSignal(target, COMSIG_MOB_ATTACK_HAND, PROC_REF(on_attack_hand))
 
 /datum/element/wuv/Detach(datum/source, force)
 	. = ..()
@@ -42,9 +42,9 @@
 	//we want to delay the effect to be displayed after the mob is petted, not before.
 	switch(act_intent)
 		if(INTENT_HARM)
-			addtimer(CALLBACK(src, .proc/kick_the_dog, source, user), 1)
+			addtimer(CALLBACK(src, PROC_REF(kick_the_dog), source, user), 1)
 		if(INTENT_HELP)
-			addtimer(CALLBACK(src, .proc/pet_the_dog, source, user), 1)
+			addtimer(CALLBACK(src, PROC_REF(pet_the_dog), source, user), 1)
 
 /datum/element/wuv/proc/pet_the_dog(mob/target, mob/user)
 	if(QDELETED(target) || QDELETED(user) || target.stat != CONSCIOUS)

@@ -65,4 +65,4 @@
 	if(isliving(O))
 		var/mob/living/L = O
 		to_chat(L, "<span class='warning'>You feel something click beneath you!</span>")
-	addtimer(CALLBACK(src, .proc/drive), drive_delay)
+	addtimer(CALLBACK(src, PROC_REF(drive)), drive_delay)

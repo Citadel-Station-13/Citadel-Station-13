@@ -5,7 +5,7 @@
 
 /datum/component/storage/concrete/emergency/Initialize()
 	. = ..()
-	RegisterSignal(parent, COMSIG_ATOM_EMAG_ACT, .proc/unlock_me)
+	RegisterSignal(parent, COMSIG_ATOM_EMAG_ACT, PROC_REF(unlock_me))
 
 /datum/component/storage/concrete/emergency/on_attack_hand(datum/source, mob/user)
 	var/atom/A = parent

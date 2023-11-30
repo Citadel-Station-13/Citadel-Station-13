@@ -72,7 +72,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 		sleep(5)
 		step(E,direction)
 	if(!QDELETED(src))
-		addtimer(CALLBACK(src, .proc/decrement_total_effect), 20)
+		addtimer(CALLBACK(src, PROC_REF(decrement_total_effect)), 20)
 
 /datum/effect_system/proc/decrement_total_effect()
 	total_effects--

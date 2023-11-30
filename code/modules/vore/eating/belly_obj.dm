@@ -338,7 +338,7 @@
 
 	// Setup the autotransfer checks if needed
 	if(transferlocation != null && autotransferchance > 0)
-		addtimer(CALLBACK(src, /obj/belly/.proc/check_autotransfer, prey), autotransferwait)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/belly, check_autotransfer), prey), autotransferwait)
 
 /obj/belly/proc/check_autotransfer(var/mob/prey, var/obj/belly/target)
 	// Some sanity checks
@@ -347,7 +347,7 @@
 			transfer_contents(prey, transferlocation)
 		else
 			// Didn't transfer, so wait before retrying
-			addtimer(CALLBACK(src, /obj/belly/.proc/check_autotransfer, prey), autotransferwait)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/belly, check_autotransfer), prey), autotransferwait)
 
 //Transfers contents from one belly to another
 /obj/belly/proc/transfer_contents(var/atom/movable/content, var/obj/belly/target, silent = FALSE)

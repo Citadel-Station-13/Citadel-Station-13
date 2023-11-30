@@ -17,7 +17,7 @@ GLOBAL_LIST_EMPTY(client_ghost_timeouts)
 	var/mob/M = target
 	if(!(M in GLOB.ghost_eligible_mobs))
 		GLOB.ghost_eligible_mobs += M
-		RegisterSignal(M, COMSIG_MOB_GHOSTIZE, .proc/get_ghost_flags)
+		RegisterSignal(M, COMSIG_MOB_GHOSTIZE, PROC_REF(get_ghost_flags))
 
 /datum/element/ghost_role_eligibility/Detach(mob/M)
 	. = ..()

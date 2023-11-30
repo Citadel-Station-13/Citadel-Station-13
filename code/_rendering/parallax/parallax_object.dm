@@ -123,7 +123,7 @@
 /atom/movable/screen/parallax_layer/proc/QueueLoop(delay, speed, matrix/translate_matrix, matrix/target_matrix)
 	if(queued_animation)
 		CancelAnimation()
-	queued_animation = addtimer(CALLBACK(src, .proc/_loop, speed, translate_matrix, target_matrix), delay, TIMER_STOPPABLE)
+	queued_animation = addtimer(CALLBACK(src, PROC_REF(_loop), speed, translate_matrix, target_matrix), delay, TIMER_STOPPABLE)
 
 /atom/movable/screen/parallax_layer/proc/_loop(speed, matrix/translate_matrix = matrix(1, 0, 0, 0, 1, 480), matrix/target_matrix = matrix())
 	transform = translate_matrix

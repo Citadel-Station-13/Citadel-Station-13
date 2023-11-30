@@ -21,7 +21,7 @@
 /obj/item/wormhole_jaunter/equipped(mob/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_BELT)
-		RegisterSignal(user, COMSIG_MOVABLE_CHASM_DROP, .proc/chasm_react)
+		RegisterSignal(user, COMSIG_MOVABLE_CHASM_DROP, PROC_REF(chasm_react))
 
 /obj/item/wormhole_jaunter/dropped(mob/user)
 	. = ..()

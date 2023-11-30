@@ -12,12 +12,12 @@
 
 	src.tier = given_tier
 
-	RegisterSignal(target, COMSIG_HANDLE_VENTCRAWL, .proc/handle_ventcrawl)
-	RegisterSignal(target, COMSIG_CHECK_VENTCRAWL, .proc/check_ventcrawl)
+	RegisterSignal(target, COMSIG_HANDLE_VENTCRAWL, PROC_REF(handle_ventcrawl))
+	RegisterSignal(target, COMSIG_CHECK_VENTCRAWL, PROC_REF(check_ventcrawl))
 	to_chat(target, "<span class='notice'>You can ventcrawl! Use alt+click on vents to quickly travel about the station.</span>")
 
 	if(duration!=0)
-		addtimer(CALLBACK(src, .proc/Detach, target), duration)
+		addtimer(CALLBACK(src, PROC_REF(Detach), target), duration)
 
 /datum/element/ventcrawling/Detach(datum/target)
 	UnregisterSignal(target, list(COMSIG_HANDLE_VENTCRAWL, COMSIG_CHECK_VENTCRAWL))

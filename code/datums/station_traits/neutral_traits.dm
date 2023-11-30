@@ -40,7 +40,7 @@
 		// Also gives him a couple extra lives to survive eventual tiders.
 		dog.AddComponent(/datum/component/twitch_plays/simple_movement/auto, 3 SECONDS)
 		dog.AddComponent(/datum/component/multiple_lives, 2)
-		RegisterSignal(dog, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, .proc/do_corgi_respawn)
+		RegisterSignal(dog, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, PROC_REF(do_corgi_respawn))
 
 		// The extended safety checks at time of writing are about chasms and lava
 		// if there are any chasms and lava on stations in the future, woah
@@ -78,7 +78,7 @@
 	new_dog.regenerate_icons()
 	new_dog.AddComponent(/datum/component/twitch_plays/simple_movement/auto, 3 SECONDS)
 	if(lives_left)
-		RegisterSignal(new_dog, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, .proc/do_corgi_respawn)
+		RegisterSignal(new_dog, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, PROC_REF(do_corgi_respawn))
 
 	if(!gibbed) //The old dog will now disappear so we won't have more than one Ian at a time.
 		qdel(old_dog)

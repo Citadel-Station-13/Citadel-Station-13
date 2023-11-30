@@ -501,7 +501,7 @@
 		for(var/R in S.bonus_reagents)
 			LAZYSET(S.cached_reagents_amount, R, S.reagents.get_reagent_amount(R))
 		S.previous_typepath = type
-		addtimer(CALLBACK(S, .proc/cool_down), 7 MINUTES) //canonically they reverted back to normal after 7 minutes.
+		addtimer(CALLBACK(S, PROC_REF(cool_down)), 7 MINUTES) //canonically they reverted back to normal after 7 minutes.
 
 /obj/item/reagent_containers/food/snacks/donkpocket/proc/cool_down()
 	if(!previous_typepath) //This shouldn't happen.

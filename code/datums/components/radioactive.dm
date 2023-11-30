@@ -19,10 +19,10 @@
 	can_contaminate = _can_contaminate
 
 	if(istype(parent, /atom))
-		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/rad_examine)
+		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(rad_examine))
 		if(istype(parent, /obj/item))
-			RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/rad_attack)
-			RegisterSignal(parent, COMSIG_ITEM_ATTACK_OBJ, .proc/rad_attack)
+			RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(rad_attack))
+			RegisterSignal(parent, COMSIG_ITEM_ATTACK_OBJ, PROC_REF(rad_attack))
 	else
 		CRASH("Something that wasn't an atom was given /datum/component/radioactive")
 
@@ -33,7 +33,7 @@
 	//This relies on parent not being a turf or something. IF YOU CHANGE THAT, CHANGE THIS
 	var/atom/movable/master = parent
 	master.add_filter("rad_glow", 2, list("type" = "outline", "color" = "#39ff1430", "size" = 2))
-	addtimer(CALLBACK(src, .proc/glow_loop, master), rand(1,19))//Things should look uneven
+	addtimer(CALLBACK(src, PROC_REF(glow_loop), master), rand(1,19))//Things should look uneven
 
 	START_PROCESSING(SSradiation, src)
 
@@ -52,7 +52,7 @@
 		return
 	strength -= strength / hl3_release_date
 	if(strength <= RAD_BACKGROUND_RADIATION)
-		addtimer(CALLBACK(src, .proc/check_dissipate), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(check_dissipate)), 5 SECONDS)
 		return PROCESS_KILL
 
 /datum/component/radioactive/proc/check_dissipate()

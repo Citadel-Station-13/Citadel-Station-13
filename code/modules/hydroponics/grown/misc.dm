@@ -330,7 +330,7 @@
 			playsound(src, 'sound/effects/fuse.ogg', 100, 0)
 			message_admins("[ADMIN_LOOKUPFLW(user)] ignited a coconut bomb for detonation at [ADMIN_VERBOSEJMP(user)] [pretty_string_from_reagent_list(reagents.reagent_list)]")
 			log_game("[key_name(user)] primed a coconut grenade for detonation at [AREACOORD(user)].")
-			addtimer(CALLBACK(src, .proc/prime), 5 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(prime)), 5 SECONDS)
 			icon_state = "coconut_grenade_active"
 			desc = "RUN!"
 			if(!seed.get_gene(/datum/plant_gene/trait/glow))

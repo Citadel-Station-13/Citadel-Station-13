@@ -44,7 +44,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	stat |= EMPED
-	addtimer(CALLBACK(src, .proc/unemp), severity*9)
+	addtimer(CALLBACK(src, PROC_REF(unemp)), severity*9)
 	refresh_working()
 
 /obj/machinery/rnd/server/proc/unemp()

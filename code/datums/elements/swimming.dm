@@ -7,7 +7,7 @@
 		return
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/check_valid)
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(check_valid))
 	ADD_TRAIT(target, TRAIT_SWIMMING, TRAIT_SWIMMING)		//seriously there's only one way to get this
 
 /datum/element/swimming/Detach(datum/target)

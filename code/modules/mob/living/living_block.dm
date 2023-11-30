@@ -27,7 +27,7 @@
 		return_list[BLOCK_RETURN_PROJECTILE_BLOCK_PERCENTAGE] = 100
 		return
 	var/list/obj/item/tocheck = get_blocking_items()
-	sortTim(tocheck, /proc/cmp_numeric_dsc, TRUE)
+	sortTim(tocheck, GLOBAL_PROC_REF(cmp_numeric_dsc), TRUE)
 	// i don't like this
 	var/block_chance_modifier = round(damage / -3)
 	if(real_attack)

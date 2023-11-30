@@ -100,12 +100,12 @@
 
 /datum/component/embedded/RegisterWithParent()
 	if(iscarbon(parent))
-		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/jostleCheck)
-		RegisterSignal(parent, COMSIG_CARBON_EMBED_RIP, .proc/ripOutCarbon)
-		RegisterSignal(parent, COMSIG_CARBON_EMBED_REMOVAL, .proc/safeRemoveCarbon)
+		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(jostleCheck))
+		RegisterSignal(parent, COMSIG_CARBON_EMBED_RIP, PROC_REF(ripOutCarbon))
+		RegisterSignal(parent, COMSIG_CARBON_EMBED_REMOVAL, PROC_REF(safeRemoveCarbon))
 	else if(isclosedturf(parent))
-		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examineTurf)
-		RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/itemMoved)
+		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(examineTurf))
+		RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(itemMoved))
 
 /datum/component/embedded/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_EMBED_RIP, COMSIG_CARBON_EMBED_REMOVAL, COMSIG_PARENT_EXAMINE))
@@ -137,7 +137,7 @@
 
 	limb.embedded_objects |= weapon // on the inside... on the inside...
 	weapon.forceMove(victim)
-	RegisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), .proc/byeItemCarbon)
+	RegisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), PROC_REF(byeItemCarbon))
 	var/damage = 0
 	if(harmful)
 		victim.visible_message("<span class='danger'>[weapon] embeds itself in [victim]'s [limb.name]!</span>",ignored_mobs=victim)
@@ -304,7 +304,7 @@
 	// we can't store the item IN the turf (cause turfs are just kinda... there), so we fake it by making the item invisible and bailing if it moves due to a blast
 	weapon.forceMove(hit)
 	weapon.invisibility = INVISIBILITY_ABSTRACT
-	RegisterSignal(weapon, COMSIG_MOVABLE_MOVED, .proc/itemMoved)
+	RegisterSignal(weapon, COMSIG_MOVABLE_MOVED, PROC_REF(itemMoved))
 
 	var/pixelX = rand(-2, 2)
 	var/pixelY = rand(-1, 3) // bias this upwards since in-hands are usually on the lower end of the sprite
@@ -327,7 +327,7 @@
 	var/matrix/M = matrix()
 	M.Translate(pixelX, pixelY)
 	overlay.transform = M
-	RegisterSignal(hit,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/apply_overlay)
+	RegisterSignal(hit,COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_overlay))
 	hit.update_icon()
 
 	if(harmful)

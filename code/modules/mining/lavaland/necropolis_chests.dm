@@ -408,7 +408,7 @@
 /obj/effect/wisp/orbit(atom/thing, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
 	. = ..()
 	if(ismob(thing))
-		RegisterSignal(thing, COMSIG_MOB_UPDATE_SIGHT, .proc/update_user_sight)
+		RegisterSignal(thing, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(update_user_sight))
 		var/mob/being = thing
 		being.update_sight()
 		to_chat(thing, "<span class='notice'>The wisp enhances your vision.</span>")
@@ -593,7 +593,7 @@
 
 	can_destroy = FALSE
 
-	addtimer(CALLBACK(src, .proc/unvanish, user), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(unvanish), user), 10 SECONDS)
 
 /obj/effect/immortality_talisman/proc/unvanish(mob/user)
 	user.status_flags &= ~GODMODE
@@ -867,7 +867,7 @@
 
 /datum/status_effect/dodgeroll_iframes/on_apply()
 	. = ..()
-	RegisterSignal(owner, COMSIG_LIVING_RUN_BLOCK, .proc/trolled)
+	RegisterSignal(owner, COMSIG_LIVING_RUN_BLOCK, PROC_REF(trolled))
 
 /datum/status_effect/dodgeroll_iframes/on_remove()
 	UnregisterSignal(owner, list(

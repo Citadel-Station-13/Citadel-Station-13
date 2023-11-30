@@ -315,7 +315,7 @@
 /obj/structure/foamedmetal/resin/Initialize(mapload)
 	. = ..()
 	neutralize_air()
-	addtimer(CALLBACK(src, .proc/neutralize_air), 5)		// yeah this sucks, maybe when auxmos is out
+	addtimer(CALLBACK(src, PROC_REF(neutralize_air)), 5)		// yeah this sucks, maybe when auxmos is out
 
 /obj/structure/foamedmetal/resin/proc/neutralize_air()
 	if(isopenturf(loc))

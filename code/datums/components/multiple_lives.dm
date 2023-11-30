@@ -15,8 +15,8 @@
 	src.lives_left = lives_left
 
 /datum/component/multiple_lives/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/respawn)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, COMSIG_MOB_DEATH, PROC_REF(respawn))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/multiple_lives/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOB_DEATH, COMSIG_PARENT_EXAMINE))

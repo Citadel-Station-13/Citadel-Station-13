@@ -98,8 +98,8 @@
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = base_icon_state
 
-	addtimer(CALLBACK(src, .proc/Spread), delay_spread)
-	addtimer(CALLBACK(src, .proc/Decay), delay_decay, FALSE) // Start decaying the plant
+	addtimer(CALLBACK(src, PROC_REF(Spread)), delay_spread)
+	addtimer(CALLBACK(src, PROC_REF(Decay)), delay_decay, FALSE) // Start decaying the plant
 
 /**
   * Causes glowshroom spreading across the floor/walls.
@@ -151,7 +151,7 @@
 			CHECK_TICK
 	if(shrooms_planted <= myseed.yield) //if we didn't get all possible shrooms planted, try again later
 		myseed.adjust_yield(-shrooms_planted)
-		addtimer(CALLBACK(src, .proc/Spread), delay_spread)
+		addtimer(CALLBACK(src, PROC_REF(Spread)), delay_spread)
 
 /obj/structure/glowshroom/proc/CalcDir(turf/location = loc)
 	var/direction = 16
@@ -204,7 +204,7 @@
 		if(obj_integrity > max_integrity)
 			obj_integrity = max_integrity
 		if (myseed.endurance > 0)
-			addtimer(CALLBACK(src, .proc/Decay), delay_decay, FALSE) // Recall decay timer
+			addtimer(CALLBACK(src, PROC_REF(Decay)), delay_decay, FALSE) // Recall decay timer
 			return
 	if (myseed.endurance < 1) // Plant is gone
 		qdel(src)

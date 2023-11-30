@@ -77,7 +77,7 @@
 				jumper.AddElement(/datum/element/swimming)
 				sleep(1)
 				jumper.forceMove(T)
-				addtimer(CALLBACK(src, .proc/dive, jumper, original_layer, original_px, original_py), 10)
+				addtimer(CALLBACK(src, PROC_REF(dive), jumper, original_layer, original_px, original_py), 10)
 
 /obj/structure/pool/Lboard/proc/dive(mob/living/carbon/jumper, original_layer, original_px, original_py)
 	switch(rand(1, 100))
@@ -87,7 +87,7 @@
 			sleep(15)
 			backswim()
 			var/atom/throw_target = get_edge_target_turf(src, dir)
-			jumper.throw_at(throw_target, 1, 1, callback = CALLBACK(src, .proc/on_finish_jump, jumper))
+			jumper.throw_at(throw_target, 1, 1, callback = CALLBACK(src, PROC_REF(on_finish_jump), jumper))
 
 		if(21 to 40)
 			jumper.visible_message("<span class='notice'>[jumper] goes for a dive!</span>", \
@@ -95,7 +95,7 @@
 			sleep(20)
 			backswim()
 			var/atom/throw_target = get_edge_target_turf(src, dir)
-			jumper.throw_at(throw_target, 2, 1, callback = CALLBACK(src, .proc/on_finish_jump, jumper))
+			jumper.throw_at(throw_target, 2, 1, callback = CALLBACK(src, PROC_REF(on_finish_jump), jumper))
 
 		if(41 to 60)
 			jumper.visible_message("<span class='notice'>[jumper] goes for a long dive! Stay far away!</span>", \
@@ -103,7 +103,7 @@
 			sleep(25)
 			backswim()
 			var/atom/throw_target = get_edge_target_turf(src, dir)
-			jumper.throw_at(throw_target, 3, 1, callback = CALLBACK(src, .proc/on_finish_jump, jumper))
+			jumper.throw_at(throw_target, 3, 1, callback = CALLBACK(src, PROC_REF(on_finish_jump), jumper))
 
 		if(61 to 80)
 			jumper.visible_message("<span class='notice'>[jumper] goes for an awesome dive! Don't stand in [jumper.p_their()] way!</span>", \
@@ -111,14 +111,14 @@
 			sleep(30)
 			backswim()
 			var/atom/throw_target = get_edge_target_turf(src, dir)
-			jumper.throw_at(throw_target, 4, 1, callback = CALLBACK(src, .proc/on_finish_jump, jumper))
+			jumper.throw_at(throw_target, 4, 1, callback = CALLBACK(src, PROC_REF(on_finish_jump), jumper))
 		if(81 to 91)
 			sleep(20)
 			backswim()
 			jumper.visible_message("<span class='danger'>[jumper] misses [jumper.p_their()] step!</span>", \
 							 "<span class='userdanger'>You misstep!</span>")
 			var/atom/throw_target = get_edge_target_turf(src, dir)
-			jumper.throw_at(throw_target, 0, 1, callback = CALLBACK(src, .proc/on_finish_jump, jumper))
+			jumper.throw_at(throw_target, 0, 1, callback = CALLBACK(src, PROC_REF(on_finish_jump), jumper))
 			jumper.DefaultCombatKnockdown(100)
 			jumper.adjustBruteLoss(10)
 
@@ -133,7 +133,7 @@
 				jumper.visible_message("<span class='notice'>[jumper] fails!</span>", \
 						 "<span class='userdanger'>You can't quite do it!</span>")
 				var/atom/throw_target = get_edge_target_turf(src, dir)
-				jumper.throw_at(throw_target, 1, 1, callback = CALLBACK(src, .proc/on_finish_jump, jumper))
+				jumper.throw_at(throw_target, 1, 1, callback = CALLBACK(src, PROC_REF(on_finish_jump), jumper))
 			else
 				jumper.fire_stacks = min(1,jumper.fire_stacks + 1)
 				jumper.IgniteMob()
@@ -142,8 +142,8 @@
 				jumper.visible_message("<span class='danger'>[jumper] bursts into flames of pure awesomness!</span>", \
 					 "<span class='userdanger'>No one can stop you now!</span>")
 				var/atom/throw_target = get_edge_target_turf(src, dir)
-				jumper.throw_at(throw_target, 6, 1, callback = CALLBACK(src, .proc/on_finish_jump, jumper))
-	addtimer(CALLBACK(src, .proc/togglejumping), 35)
+				jumper.throw_at(throw_target, 6, 1, callback = CALLBACK(src, PROC_REF(on_finish_jump), jumper))
+	addtimer(CALLBACK(src, PROC_REF(togglejumping)), 35)
 	reset_position(jumper, original_layer, original_px, original_py)
 
 /obj/structure/pool/Lboard/proc/togglejumping()

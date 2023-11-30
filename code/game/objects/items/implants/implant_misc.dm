@@ -57,7 +57,7 @@
 	. = ..()
 	if(.)
 		update_position()
-		RegisterSignal(imp_in, COMSIG_MOVABLE_MOVED, .proc/update_position)
+		RegisterSignal(imp_in, COMSIG_MOVABLE_MOVED, PROC_REF(update_position))
 
 /obj/item/implant/warp/removed(mob/living/source, silent, special)
 	. = ..()

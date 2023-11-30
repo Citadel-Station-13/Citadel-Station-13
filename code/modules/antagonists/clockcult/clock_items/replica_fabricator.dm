@@ -115,7 +115,7 @@
 			else
 				user.visible_message("<span class='warning'>[user]'s [name] starts consuming [target]!</span>", \
 				"<span class='brass'>Your [name] starts consuming [target]...</span>")
-		if(!do_after(user, fabrication_values["operation_time"], target = target, extra_checks = CALLBACK(src, .proc/fabricate_checks, fabrication_values, target, target_type, user, TRUE)))
+		if(!do_after(user, fabrication_values["operation_time"], target = target, extra_checks = CALLBACK(src, PROC_REF(fabricate_checks), fabrication_values, target, target_type, user, TRUE)))
 			return FALSE
 		if(!silent)
 			var/atom/A = fabrication_values["new_obj_type"]
