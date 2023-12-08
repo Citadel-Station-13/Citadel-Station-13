@@ -103,52 +103,55 @@ export const BorgPanel = (props, context) => {
               {upgrades.map(upgrade => {
                 if (!upgrade.module_type
                   || (upgrade.module_type.includes(borg.active_module))) {
-                  const installedCount =
-                    active_upgrades.filter(installed_upgrade
+                  const installedCount
+                    = active_upgrades.filter(installed_upgrade
                     => installed_upgrade.type === upgrade.type).length;
                   const isInstalled = installedCount > 0;
                   return (
                     <>
-                    <Button
-                      key={upgrade.type}
-                      icon={isInstalled ? 'check-square-o' : 'square-o'}
-                      content={isInstalled ? `${upgrade.name} ${installedCount
+                      <Button
+                        key={upgrade.type}
+                        icon={isInstalled ? 'check-square-o' : 'square-o'}
+                        content={isInstalled ? `${upgrade.name} ${installedCount
                         && (!upgrade.denied_type || upgrade.maximum_of_type > 1)
                         && upgrade.cost
                         !== null ? `(${installedCount} installed)` : ''}`
-                        : upgrade.name}
-                      selected={isInstalled}
-                      onClick={() => act('toggle_upgrade', {
-                        upgrade: upgrade.type,
-                      })} />
+                          : upgrade.name}
+                        selected={isInstalled}
+                        onClick={() => act('toggle_upgrade', {
+                          upgrade: upgrade.type,
+                        })} />
                       {
-                      (!upgrade.denied_type || upgrade.maximum_of_type > 1)
-                      && upgrade.cost !== null ? (
-                      <>
-                        <Button
-                          content={<Icon name="plus"/>}
-                          disabled={ka_remaining_capacity < upgrade.cost
-                             || (upgrade.denied_type
+                        (!upgrade.denied_type || upgrade.maximum_of_type > 1)
+                      && upgrade.cost !== null
+                          ? (
+                            <>
+                              <Button
+                                content={<Icon name="plus" />}
+                                disabled={ka_remaining_capacity < upgrade.cost
+                                || (upgrade.denied_type
                               && (installedCount === upgrade.maximum_of_type))}
-                          onClick={() => act('add_upgrade', {
-                            upgrade: upgrade.type,
-                          })}
-                          />
-                        <Button
-                          content={<Icon name="minus"/>}
-                          disabled={!isInstalled}
-                          onClick={() => act('remove_upgrade', {
-                            upgrade: upgrade.type,
-                          })}
-                          />
-                      </>
-                      ) : ""}
-                  </>
+                                onClick={() => act('add_upgrade', {
+                                  upgrade: upgrade.type,
+                                })}
+                              />
+                              <Button
+                                content={<Icon name="minus" />}
+                                disabled={!isInstalled}
+                                onClick={() => act('remove_upgrade', {
+                                  upgrade: upgrade.type,
+                                })}
+                              />
+                            </>
+                          ) : ""
+                      }
+                    </>
                   );
-              }})}
+                } })}
             </LabeledList.Item>
-            {ka_remaining_capacity !== null &&
-              <LabeledList.Item label="Remaining ka capacity">
+            {
+              ka_remaining_capacity !== null
+              && <LabeledList.Item label="Remaining ka capacity">
                 {ka_remaining_capacity}
               </LabeledList.Item>
             }
