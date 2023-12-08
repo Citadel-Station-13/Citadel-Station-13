@@ -151,9 +151,11 @@ export const BorgPanel = (props, context) => {
             </LabeledList.Item>
             {
               ka_remaining_capacity !== null
-              && <LabeledList.Item label="Remaining ka capacity">
-                {ka_remaining_capacity}
-              </LabeledList.Item>
+              && (
+                <LabeledList.Item label="Remaining ka capacity">
+                  {ka_remaining_capacity}
+                </LabeledList.Item>
+              )
             }
             <LabeledList.Item label="Master AI">
               {ais.map(ai => (
