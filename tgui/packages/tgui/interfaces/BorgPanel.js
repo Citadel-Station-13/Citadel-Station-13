@@ -104,8 +104,8 @@ export const BorgPanel = (props, context) => {
                 if (!upgrade.module_type
                   || (upgrade.module_type.includes(borg.active_module))) {
                   const installedCount
-                    = active_upgrades.filter(installed_upgrade
-                    => installed_upgrade.type === upgrade.type).length;
+                    = active_upgrades.filter(installed_upgrade =>
+                      installed_upgrade.type === upgrade.type).length;
                   const isInstalled = installedCount > 0;
                   return (
                     <>
