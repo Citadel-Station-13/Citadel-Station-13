@@ -101,26 +101,35 @@ export const BorgPanel = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Item label="Upgrades">
               {upgrades.map(upgrade => {
-                if (!upgrade.module_type || (upgrade.module_type.includes(borg.active_module))) {
-                  const installedCount = active_upgrades.filter(installed_upgrade => installed_upgrade.type === upgrade.type).length;
+                if (!upgrade.module_type
+                  || (upgrade.module_type.includes(borg.active_module))) {
+                  const installedCount =
+                    active_upgrades.filter(installed_upgrade
+                    => installed_upgrade.type === upgrade.type).length;
                   const isInstalled = installedCount > 0;
                   return (
                     <>
                     <Button
                       key={upgrade.type}
                       icon={isInstalled ? 'check-square-o' : 'square-o'}
-                      content={isInstalled ? `${upgrade.name} ${installedCount && (!upgrade.denied_type || upgrade.maximum_of_type > 1) && upgrade.cost != null ? `(${installedCount} installed)` : ''}` : upgrade.name}
-                      selected={isInstalled}  // Set selected to the value of isInstalled
+                      content={isInstalled ? `${upgrade.name} ${installedCount
+                        && (!upgrade.denied_type || upgrade.maximum_of_type > 1)
+                        && upgrade.cost
+                        !== null ? `(${installedCount} installed)` : ''}`
+                        : upgrade.name}
+                      selected={isInstalled}
                       onClick={() => act('toggle_upgrade', {
                         upgrade: upgrade.type,
                       })} />
                       {
-                      (!upgrade.denied_type || upgrade.maximum_of_type > 1) && upgrade.cost != null ? (
+                      (!upgrade.denied_type || upgrade.maximum_of_type > 1)
+                      && upgrade.cost !== null ? (
                       <>
                         <Button
                           content={<Icon name="plus"/>}
                           disabled={ka_remaining_capacity < upgrade.cost
-                             || (upgrade.denied_type && (installedCount === upgrade.maximum_of_type))}
+                             || (upgrade.denied_type
+                              && (installedCount === upgrade.maximum_of_type))}
                           onClick={() => act('add_upgrade', {
                             upgrade: upgrade.type,
                           })}
@@ -138,7 +147,7 @@ export const BorgPanel = (props, context) => {
                   );
               }})}
             </LabeledList.Item>
-            {ka_remaining_capacity != null &&
+            {ka_remaining_capacity !== null &&
               <LabeledList.Item label="Remaining ka capacity">
                 {ka_remaining_capacity}
               </LabeledList.Item>

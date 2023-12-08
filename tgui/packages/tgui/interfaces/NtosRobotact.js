@@ -213,8 +213,10 @@ export const NtosRobotactContent = (props, context) => {
               )}
               {tab_sub === 2 && (
                 <Section>
-                  {borgUpgrades.filter((upgrade, index, arr) => arr.indexOf(upgrade) === index).map(upgrade => {
-                    const upgradeCount = borgUpgrades.filter(u => u === upgrade).length;
+                  {borgUpgrades.filter((upgrade, index, arr) =>
+                    arr.indexOf(upgrade) === index).map(upgrade => {
+                    const upgradeCount = borgUpgrades.filter(u =>
+                      u === upgrade).length;
                     return (
                       <Box mb={1} key={upgrade}>
                         {upgrade} {upgradeCount > 1 ? `x${upgradeCount}` : ''}
