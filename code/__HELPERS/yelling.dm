@@ -30,7 +30,7 @@
 #define RUN_YELL(_T, _P, _D) \
 	returned = max(_P - max(_T.get_yelling_resistance(_P), 0) - 1, 0); 	\
 	processed[_T] = returned;
-	// _T.maptext = "[returned]";
+	// _T.maptext = MAPTEXT(returned);
 
 	var/list/turf/edges_next
 	var/list/turf/powers_next

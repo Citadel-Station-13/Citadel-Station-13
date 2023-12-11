@@ -180,8 +180,8 @@
 					resulthealth = "[round((host.health / host.maxHealth) * 100, 0.5)]%"
 			else
 				resulthealth = "NONE"
-			G.hosthealth.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#AF0AAF'>HOST<br>[resulthealth]</font></div>"
-		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#AF0AAF'>[round((health / maxHealth) * 100, 0.5)]%</font>"
+			G.hosthealth.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#AF0AAF'>HOST<br>[resulthealth]</font></div>")
+		hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#AF0AAF'>[round((health / maxHealth) * 100, 0.5)]%</font>")
 
 /mob/living/simple_animal/hostile/clockwork/guardian/proc/update_stats()
 	if(GLOB.ratvar_awakens)

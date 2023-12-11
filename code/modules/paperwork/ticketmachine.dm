@@ -142,7 +142,7 @@
 			maptext_x = 10
 		if(100)
 			maptext_x = 8
-	maptext = "[current_number]" //Finally, apply the maptext
+	maptext = MAPTEXT("[current_number]") //Finally, apply the maptext
 
 /obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, params)
 	..()
@@ -182,11 +182,7 @@
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 100, FALSE)
 	ticket_number ++
 	to_chat(user, "<span class='notice'>You take a ticket from [src], looks like you're ticket number #[ticket_number]...</span>")
-	var/obj/item/ticket_machine_ticket/theirticket = new /obj/item/ticket_machine_ticket(get_turf(src))
-	theirticket.name = "Ticket #[ticket_number]"
-	theirticket.maptext = "<font color='#000000'>[ticket_number]</font>"
-	theirticket.saved_maptext = "<font color='#000000'>[ticket_number]</font>"
-	theirticket.ticket_number = ticket_number
+	var/obj/item/ticket_machine_ticket/theirticket = new /obj/item/ticket_machine_ticket(get_turf(src), ticket_number)
 	theirticket.source = src
 	theirticket.owner = user
 	user.put_in_hands(theirticket)
@@ -211,10 +207,25 @@
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
+	var/number
 	var/saved_maptext = null
 	var/mob/living/carbon/owner
 	var/obj/machinery/ticket_machine/source
-	var/ticket_number
+
+/obj/item/ticket_machine_ticket/Initialize(mapload, num)
+	. = ..()
+	number = num
+	if(!isnull(num))
+		name += " #[num]"
+		saved_maptext = MAPTEXT(num)
+		maptext = saved_maptext
+
+/obj/item/ticket_machine_ticket/examine(mob/user)
+	. = ..()
+	if(!isnull(number))
+		. += span_notice("The ticket reads shimmering text that tells you that you are number [number] in queue.")
+		if(source)
+			. += span_notice("Below that, you can see that you are [number - source.current_number] spot\s away from being served.")
 
 /obj/item/ticket_machine_ticket/attack_hand(mob/user)
 	. = ..()
@@ -233,7 +244,7 @@
 /obj/item/ticket_machine_ticket/Destroy()
 	if(owner && source)
 		source.ticket_holders -= owner
-		source.tickets[ticket_number] = null
+		source.tickets[number] = null
 		owner = null
 		source = null
 	return ..()
