@@ -535,7 +535,7 @@
 
 /obj/item/stack/tile/plasteel/cyborg
 	custom_materials = null // All other Borg versions of items have no Metal or Glass - RR
-	is_cyborg = 1
+	is_cyborg = TRUE
 	cost = 125
 
 /obj/item/stack/tile/material

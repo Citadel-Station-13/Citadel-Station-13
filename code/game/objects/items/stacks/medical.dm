@@ -216,7 +216,7 @@
 
 /obj/item/stack/medical/gauze/cyborg
 	custom_materials = null
-	is_cyborg = 1
+	is_cyborg = TRUE
 	cost = 250
 
 /obj/item/stack/medical/suture
@@ -440,7 +440,7 @@
 
 /obj/item/stack/medical/bone_gel/cyborg
 	custom_materials = null
-	is_cyborg = 1
+	is_cyborg = TRUE
 	cost = 250
 
 /obj/item/stack/medical/aloe

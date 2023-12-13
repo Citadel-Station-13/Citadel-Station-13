@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 
 /obj/item/stack/sheet/glass/cyborg
 	custom_materials = null
-	is_cyborg = 1
+	is_cyborg = TRUE
 	cost = 500
 
 /obj/item/stack/sheet/glass/fifty
@@ -178,6 +178,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 
 /obj/item/stack/sheet/rglass/cyborg
 	custom_materials = null
+	is_cyborg = TRUE
 	var/datum/robot_energy_storage/glasource
 	var/metcost = 250
 	var/glacost = 500

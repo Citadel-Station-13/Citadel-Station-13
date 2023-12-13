@@ -515,7 +515,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	used_skills = list(/datum/skill/level/job/wiring)
 
 /obj/item/stack/cable_coil/cyborg
-	is_cyborg = 1
+	is_cyborg = TRUE
 	custom_materials = null
 	cost = 1
 

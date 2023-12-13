@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/cyborg
 	custom_materials = null
-	is_cyborg = 1
+	is_cyborg = TRUE
 	cost = 250
 
 /obj/item/stack/rods/cyborg/ComponentInitialize()
