@@ -1081,9 +1081,9 @@ GLOBAL_LIST_INIT(hay_recipes, list ( \
 	attack_verb = list("tickled", "poked", "whipped")
 	hitsound = 'sound/weapons/grenadelaunch.ogg'
 
-/obj/item/stack/sheet/hay/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.hay_recipes
-	return ..()
+/obj/item/stack/sheet/hay/get_main_recipes()
+	. = ..()
+	. += GLOB.hay_recipes
 
 /obj/item/stack/sheet/hay/fifty
 	amount = 50
@@ -1098,7 +1098,7 @@ GLOBAL_LIST_INIT(hay_recipes, list ( \
 	amount = 5
 
 
-/obj/item/stack/sheet/hay/update_icon()
+/obj/item/stack/sheet/hay/update_icon_state()
 	var/amount = get_amount()
 	if((amount <= 4) && (amount > 0))
 		icon_state = "hay[amount]"
