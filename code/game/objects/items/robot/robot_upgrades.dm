@@ -8,31 +8,28 @@
 	icon_state = "cyborg_upgrade"
 	w_class = WEIGHT_CLASS_SMALL
 	var/locked = FALSE
-	var/installed = 0
-	var/require_module = 0
-	var/list/module_type
+	var/installed = FALSE
+	var/require_module = FALSE
+	var/list/module_type = null
 	///	Bitflags listing module compatibility. Used in the exosuit fabricator for creating sub-categories.
 	var/module_flags = NONE
 	// if true, is not stored in the robot to be ejected
 	// if module is reset
 	var/one_use = FALSE
+	/// Means this is a basetype and should not be used
+	var/abstract_type = /obj/item/borg/upgrade
+	/// Show the amount of this module that is installed
+	var/show_amount = FALSE
 
 /obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/R, user = usr)
 	if(R.stat == DEAD)
-		to_chat(user, "<span class='warning'>[src] will not function on a deceased cyborg.</span>")
+		to_chat(user, span_warning("[src] will not function on a deceased cyborg!"))
 		return FALSE
 	if(module_type && !is_type_in_list(R.module, module_type))
-		to_chat(R, "<span class='alert'>Upgrade mounting error! No suitable hardpoint detected.</span>")
-		to_chat(user, "<span class='warning'>There's no mounting point for the module!</span>")
+		to_chat(R, span_alert("Upgrade mounting error! No suitable hardpoint detected."))
+		to_chat(user, span_warning("There's no mounting point for the module!"))
 		return FALSE
 	return TRUE
-
-/*
-This proc gets called by upgrades after installing them. Use this for things that for example need to be moved into a specific borg item,
-as performing this in action() will cause the upgrade to end up in the borg instead of its intended location due to forceMove() being called afterwards..
-*/
-/obj/item/borg/upgrade/proc/afterInstall(mob/living/silicon/robot/R, user = usr)
-	return
 
 /obj/item/borg/upgrade/proc/deactivate(mob/living/silicon/robot/R, user = usr)
 	if (!(src in R.upgrades))
@@ -324,12 +321,12 @@ as performing this in action() will cause the upgrade to end up in the borg inst
 /obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		ADD_TRAIT(src, TRAIT_LAVA_IMMUNE, type)
+		ADD_TRAIT(R, TRAIT_LAVA_IMMUNE, type)
 
 /obj/item/borg/upgrade/lavaproof/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		REMOVE_TRAIT(src, TRAIT_LAVA_IMMUNE, type)
+		REMOVE_TRAIT(R, TRAIT_LAVA_IMMUNE, type)
 
 /obj/item/borg/upgrade/selfrepair
 	name = "self-repair module"
@@ -440,6 +437,7 @@ as performing this in action() will cause the upgrade to end up in the borg inst
 		/obj/item/robot_module/syndicate_medical)
 	var/list/additional_reagents = list()
 	module_flags = BORG_MODULE_MEDICAL
+	abstract_type = /obj/item/borg/upgrade/hypospray
 
 /obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
