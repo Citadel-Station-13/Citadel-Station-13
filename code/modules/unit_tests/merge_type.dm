@@ -1,7 +1,6 @@
 /datum/unit_test/merge_type/Run()
 	var/list/blacklist = list(/obj/item/stack/sheet,
 							  /obj/item/stack/sheet/mineral,
-							  /obj/item/stack/sheet/rglass/cyborg,
 							  /obj/item/stack/ore,
 							  /obj/item/stack/spacecash,
 							//   /obj/item/stack/license_plates,
@@ -11,6 +10,8 @@
 	var/list/paths = subtypesof(/obj/item/stack) - blacklist
 
 	for(var/stackpath in paths)
+		if(initial(stackpath.is_cyborg))
+			continue
 		var/obj/item/stack/stack = new stackpath
 		if(!stack.merge_type)
 			Fail("([stack]) lacks set merge_type variable!")
