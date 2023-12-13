@@ -725,7 +725,7 @@
 
 /atom/movable/screen/bloodsucker/blood_counter/update_counter(value, valuecolor)
 	..()
-	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[round(value,1)]</font></div>"
+	maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[round(value,1)]</font></div>")
 
 /atom/movable/screen/bloodsucker/rank_counter
 	name = "Bloodsucker Rank"
@@ -735,7 +735,7 @@
 
 /atom/movable/screen/bloodsucker/rank_counter/update_counter(value, valuecolor)
 	..()
-	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[round(value,1)]</font></div>"
+	maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[round(value,1)]</font></div>")
 
 /atom/movable/screen/bloodsucker/sunlight_counter
 	icon = 'icons/mob/actions/bloodsucker.dmi'
@@ -763,7 +763,7 @@
 
 /atom/movable/screen/bloodsucker/sunlight_counter/update_counter(value, valuecolor)
 	..()
-	maptext = "<div align='center' valign='bottom' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[value]</font></div>"
+	maptext = MAPTEXT("<div align='center' valign='bottom' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[value]</font></div>")
 
 /datum/antagonist/bloodsucker/proc/count_vassals(datum/mind/master)
 	var/datum/antagonist/bloodsucker/B = master.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
