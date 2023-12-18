@@ -379,8 +379,8 @@
 			to_chat(user, span_warning("You can't reach the wiring!"))
 		return
 
-	if(istype(W, /obj/item/aiModule))
-		var/obj/item/aiModule/MOD = W
+	if(istype(W, /obj/item/ai_module))
+		var/obj/item/ai_module/MOD = W
 		if(!opened)
 			to_chat(user, span_warning("You need access to the robot's insides to do that!"))
 			return

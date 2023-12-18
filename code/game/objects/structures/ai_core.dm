@@ -248,7 +248,7 @@
 						balloon_alert(user, "need two sheets of reinforced glass!")
 					return
 
-				if(istype(P, /obj/item/aiModule))
+				if(istype(P, /obj/item/ai_module))
 					if(!core_mmi)
 						balloon_alert(user, "no brain installed!")
 						return
@@ -258,7 +258,7 @@
 					if(core_mmi.laws.id != DEFAULT_AI_LAWID)
 						balloon_alert(user, "[AI_CORE_BRAIN(core_mmi)] already has set laws!")
 						return
-					var/obj/item/aiModule/module = P
+					var/obj/item/ai_module/module = P
 					module.install(laws, user)
 					return
 
