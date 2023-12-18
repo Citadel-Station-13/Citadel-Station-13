@@ -30,6 +30,7 @@
 	d_hud = DATA_HUD_DIAGNOSTIC_ADVANCED
 	mob_size = MOB_SIZE_LARGE
 	has_field_of_vision = FALSE //Vision through cameras.
+	var/battery = 200 //emergency power if the AI's APC is off
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/current
 	var/list/connected_robots = list()
@@ -46,7 +47,7 @@
 	var/obj/item/multitool/aiMulti
 	var/mob/living/simple_animal/bot/Bot
 	var/tracking = FALSE //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
-	var/datum/effect_system/spark_spread/spark_system//So they can initialize sparks whenever/N
+	var/datum/effect_system/spark_spread/spark_system //So they can initialize sparks whenever/N
 	var/obj/machinery/status_display/controlled_display
 
 	//MALFUNCTION
@@ -83,7 +84,7 @@
 	var/cooldown = 0
 	var/acceleration = 1
 
-	var/obj/structure/AIcore/deactivated/linked_core //For exosuit control
+	var/obj/structure/ai_core/deactivated/linked_core //For exosuit control
 	var/mob/living/silicon/robot/deployed_shell = null //For shell control
 	var/datum/action/innate/deploy_shell/deploy_action = new
 	var/datum/action/innate/deploy_last_shell/redeploy_action = new
@@ -105,11 +106,17 @@
 	///remember AI's last location
 	var/atom/lastloc
 	interaction_range = INFINITY
+	///whether its mmi is a posibrain or regular mmi when going ai mob to ai core structure
+	var/posibrain_inside = TRUE
+	///whether its cover is opened, so you can wirecut it for deconstruction
+	var/opened = FALSE
+	///whether AI is anchored or not, used for checks
+	var/is_anchored = TRUE
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
-		new/obj/structure/AIcore/deactivated(loc) //New empty terminal.
+		new/obj/structure/ai_core/deactivated(loc) //New empty terminal.
 		return INITIALIZE_HINT_QDEL //Delete AI.
 
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, src)
@@ -125,6 +132,8 @@
 			mind.store_memory("As an AI, you must obey your silicon laws above all else. Your objectives will consider you to be dead.")
 			to_chat(src, "<span class='userdanger'>You have been installed as an AI! </span>")
 			to_chat(src, "<span class='danger'>You must obey your silicon laws above all else. Your objectives will consider you to be dead.</span>")
+		if(!mind.has_ever_been_ai)
+			mind.has_ever_been_ai = TRUE
 
 	to_chat(src, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
 	to_chat(src, "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>")
@@ -237,6 +246,8 @@
 		. += text("Systems nonfunctional")
 		return
 	. += text("System integrity: [(health + 100) * 0.5]%")
+	if(isturf(loc)) //only show if we're "in" a core
+		. += "Backup Power: [battery * 0.5]%"
 	. += text("Connected cyborgs: [length(connected_robots)]")
 	for(var/r in connected_robots)
 		var/mob/living/silicon/robot/connected_robot = r
@@ -333,18 +344,64 @@
 	if(!isturf(loc)) // if their location isn't a turf
 		return // stop
 	if(incapacitated())
-		return
-	var/is_anchored = FALSE
-	if(move_resist == MOVE_FORCE_OVERPOWERING)
+		if(battery < 50)
+			to_chat(src, span_warning("Insufficient backup power!"))
+			return
+		battery = battery - 50
+		to_chat(src, span_notice("You route power from your backup battery to move the bolts."))
+	flip_anchored()
+	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
+
+/mob/living/silicon/ai/proc/flip_anchored()
+	if(is_anchored)
+		is_anchored = !is_anchored
 		move_resist = MOVE_FORCE_NORMAL
+		status_flags |= CANPUSH
 		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, src)
 	else
-		is_anchored = TRUE
+		is_anchored = !is_anchored
 		move_resist = MOVE_FORCE_OVERPOWERING
+		status_flags &= ~CANPUSH
 		ADD_TRAIT(src, TRAIT_NO_TELEPORT, src)
 
-	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
-	// the message in the [] will change depending whether or not the AI is anchored
+/mob/living/silicon/ai/proc/ai_mob_to_structure()
+	disconnect_shell()
+	ShutOffDoomsdayDevice()
+	var/obj/structure/ai_core/deactivated/ai_core = new(get_turf(src), /* skip_mmi_creation = */ TRUE)
+	if(make_mmi_drop_and_transfer(ai_core.core_mmi, the_core = ai_core))
+		qdel(src)
+	return ai_core
+
+/mob/living/silicon/ai/proc/make_mmi_drop_and_transfer(obj/item/mmi/the_mmi, the_core)
+	var/mmi_type
+	if(posibrain_inside)
+		mmi_type = new/obj/item/mmi/posibrain(src, /* autoping = */ FALSE)
+	else
+		mmi_type = new/obj/item/mmi(src)
+	if(hack_software)
+		new/obj/item/malf_upgrade(get_turf(src))
+	the_mmi = mmi_type
+	the_mmi.brain = new /obj/item/organ/brain(the_mmi)
+	the_mmi.brain.organ_flags |= ORGAN_FROZEN
+	the_mmi.brain.name = "[real_name]'s brain"
+	the_mmi.name = "[initial(the_mmi.name)]: [real_name]"
+	the_mmi.brainmob = new /mob/living/brain(the_mmi)
+	the_mmi.brainmob.name = src.real_name
+	the_mmi.brainmob.real_name = src.real_name
+	the_mmi.brainmob.container = the_mmi
+	the_mmi.brainmob.suiciding = suiciding
+	if(the_core)
+		var/obj/structure/ai_core/core = the_core
+		core.core_mmi = the_mmi
+		the_mmi.forceMove(the_core)
+	else
+		the_mmi.forceMove(get_turf(src))
+	if(the_mmi.brainmob.stat == DEAD && !suiciding)
+		the_mmi.brainmob.stat = CONSCIOUS
+	if(mind)
+		mind.transfer_to(the_mmi.brainmob)
+	the_mmi.update_appearance()
+	return TRUE
 
 // AIs are immobile
 /mob/living/silicon/ai/update_mobility()
@@ -427,18 +484,30 @@
 		return
 
 	if (href_list["ai_take_control"]) //Mech domination
-		var/obj/vehicle/sealed/mecha/M = locate(href_list["ai_take_control"])
+		var/obj/vehicle/sealed/mecha/M = locate(href_list["ai_take_control"]) in GLOB.mechas_list
+		if (!M)
+			return
+
+		var/mech_has_controlbeacon = FALSE
+		for(var/obj/item/mecha_parts/mecha_tracking/ai_control/A in M.trackers)
+			mech_has_controlbeacon = TRUE
+			break
+		if(!can_dominate_mechs && !mech_has_controlbeacon)
+			message_admins("Warning: possible href exploit by [key_name(usr)] - attempted control of a mecha without can_dominate_mechs or a control beacon in the mech.")
+			usr.log_message("possibly attempting href exploit - attempted control of a mecha without can_dominate_mechs or a control beacon in the mech.", LOG_ADMIN)
+			return
+
 		if(controlled_equipment)
-			to_chat(src, "<span class='warning'>You are already loaded into an onboard computer!</span>")
+			to_chat(src, span_warning("You are already loaded into an onboard computer!"))
 			return
 		if(!GLOB.cameranet.checkCameraVis(M))
-			to_chat(src, "<span class='warning'>Exosuit is no longer near active cameras.</span>")
+			to_chat(src, span_warning("Exosuit is no longer near active cameras."))
 			return
 		if(!isturf(loc))
-			to_chat(src, "<span class='warning'>You aren't in your core!</span>")
+			to_chat(src, span_warning("You aren't in your core!"))
 			return
 		if(M)
-			M.transfer_ai(AI_MECH_HACK,src, usr) //Called om the mech itself.
+			M.transfer_ai(AI_MECH_HACK, src, usr) //Called on the mech itself.
 
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
@@ -825,10 +894,12 @@
 			to_chat(user, "<span class='warning'>No intelligence patterns detected.</span>"    )
 			return
 		ShutOffDoomsdayDevice()
-		new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.
+		var/obj/structure/ai_core/new_core = new /obj/structure/ai_core/deactivated(loc, posibrain_inside)//Spawns a deactivated terminal at AI location.
+		new_core.circuit.battery = battery
 		ai_restore_power()//So the AI initially has power.
-		control_disabled = 1//Can't control things remotely if you're stuck in a card!
-		radio_enabled = 0 	//No talking on the built-in radio for you either!
+		control_disabled = TRUE //Can't control things remotely if you're stuck in a card!
+		interaction_range = 0
+		radio_enabled = FALSE //No talking on the built-in radio for you either!
 		forceMove(card)
 		card.AI = src
 		to_chat(src, "You have been downloaded to a mobile storage device. Remote device connection severed.")
@@ -1063,7 +1134,7 @@
 				// Sends an announcement the AI has cryoed.
 				var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
 				announcer.announce("CRYOSTORAGE", src.real_name, announce_rank, list())
-			new /obj/structure/AIcore/latejoin_inactive(loc)
+			new /obj/structure/ai_core/latejoin_inactive(loc)
 			if(src.mind)
 				//Handle job slot/tater cleanup.
 				if(src.mind.assigned_role == "AI")
