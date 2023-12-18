@@ -293,7 +293,15 @@
 	remove_antag_datum(/datum/antagonist/cult)
 
 	var/datum/antagonist/rev/revolutionary = has_antag_datum(/datum/antagonist/rev)
-	revolutionary?.remove_revolutionary()
+	revolutionary?.remove_revolutionary(TRUE)
+
+	if(!isbrain(current))
+		return
+	if(!istype(loc, /obj/item/organ/brain))
+		return
+	var/obj/item/organ/brain/B = loc
+	if(!istype(B.laws, /datum/ai_laws/ratvar))
+		remove_servant_of_ratvar(current, TRUE)
 
 /datum/mind/proc/remove_all_antag() //For the Lazy amongst us.
 	remove_changeling()
