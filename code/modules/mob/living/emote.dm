@@ -209,8 +209,8 @@
 		qdel(kiss_blower)
 		to_chat(user, "<span class='warning'>You're incapable of blowing a kiss in your current state.</span>")
 
-/datum/emote/living/blowkiss
-	key = "blowkiss"
+/datum/emote/living/kiss2
+	key = "kiss2"
 	key_third_person = "kisses"
 	message = "blows a kiss."
 	message_param = "blows a kiss to %t."
