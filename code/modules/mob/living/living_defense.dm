@@ -106,48 +106,51 @@
 		else
 				return 0
 
-/mob/living/proc/catch_item(obj/item/I, skip_throw_mode_check = FALSE)
-	return FALSE
-
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	// Throwingdatum can be null if someone had an accident() while slipping with an item in hand.
-	var/obj/item/I
-	var/throwpower = 30
-	if(isitem(AM))
-		I = AM
-		throwpower = I.throwforce
-	var/impacting_zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
-	var/list/block_return = list()
-	var/total_damage = AM.throwforce
-	if(mob_run_block(AM, throwpower, "\the [AM.name]", ATTACK_TYPE_THROWN, 0, throwingdatum?.thrower, impacting_zone, block_return) & BLOCK_SUCCESS)
+	if(!isitem(AM))
+		// Filled with made up numbers for non-items.
+		if(mob_run_block(AM, 30, "\the [AM.name]", ATTACK_TYPE_PROJECTILE, 0, throwingdatum.thrower, throwingdatum.thrower.zone_selected, list()))
+			hitpush = FALSE
+			skipcatch = TRUE
+			blocked = TRUE
+		else
+			playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
+		return ..()
+
+	var/obj/item/thrown_item = AM
+	if(thrown_item.thrownby == WEAKREF(src)) //No throwing stuff at yourself to trigger hit reactions
+		return ..()
+
+	if(mob_run_block(AM, thrown_item.throwforce, "\the [thrown_item.name]", ATTACK_TYPE_PROJECTILE, 0, throwingdatum.thrower, throwingdatum.thrower.zone_selected, list()))
 		hitpush = FALSE
 		skipcatch = TRUE
 		blocked = TRUE
-		total_damage = block_calculate_resultant_damage(total_damage, block_return)
-	if(I)
-		var/nosell_hit = SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, impacting_zone, throwingdatum, FALSE, blocked)
-		if(nosell_hit)
-			skipcatch = TRUE
-			hitpush = FALSE
-		if(!skipcatch && isturf(I.loc) && catch_item(I))
-			return TRUE
-		var/dtype = BRUTE
 
-		dtype = I.damtype
+	var/zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
+	var/nosell_hit = SEND_SIGNAL(thrown_item, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, blocked, throwingdatum) // TODO: find a better way to handle hitpush and skipcatch for humans
+	if(nosell_hit)
+		skipcatch = TRUE
+		hitpush = FALSE
 
-		if(!blocked)
-			if(!nosell_hit)
-				visible_message("<span class='danger'>[src] is hit by [I]!</span>", \
-								"<span class='userdanger'>You're hit by [I]!</span>")
-				if(!I.throwforce)
-					return
-				var/armor = run_armor_check(impacting_zone, MELEE, "Your armor has protected your [parse_zone(impacting_zone)].", "Your armor has softened hit to your [parse_zone(impacting_zone)].",I.armour_penetration)
-				apply_damage(I.throwforce, dtype, impacting_zone, armor, sharpness=I.get_sharpness(), wound_bonus=(nosell_hit * CANT_WOUND))
-		else
-			return 1
-	else
-		playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
-	..()
+	if(blocked)
+		return TRUE
+
+	var/mob/thrown_by = thrown_item.thrownby?.resolve()
+	if(thrown_by)
+		log_combat(thrown_by, src, "threw and hit", thrown_item)
+	if(nosell_hit)
+		return ..()
+	visible_message(span_danger("[src] is hit by [thrown_item]!"), \
+					span_userdanger("You're hit by [thrown_item]!"))
+	if(!thrown_item.throwforce)
+		return
+	var/armor = run_armor_check(zone, MELEE, "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].", thrown_item.armour_penetration, "", FALSE)
+	apply_damage(thrown_item.throwforce, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND))
+	if(QDELETED(src)) //Damage can delete the mob.
+		return
+	if(lying) // physics says it's significantly harder to push someone by constantly chucking random furniture at them if they are down on the floor.
+		hitpush = FALSE
+	return ..()
 
 /mob/living/fire_act()
 	adjust_fire_stacks(3)

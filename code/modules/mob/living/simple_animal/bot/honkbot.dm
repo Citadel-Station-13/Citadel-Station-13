@@ -138,13 +138,14 @@
 		bike_horn(A)
 
 
-/mob/living/simple_animal/bot/honkbot/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(istype(AM, /obj/item))
+/mob/living/simple_animal/bot/honkbot/hitby(atom/movable/hitting_atom, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
+	if(istype(hitting_atom, /obj/item))
 		playsound(src, honksound, 50, TRUE, -1)
-		var/obj/item/I = AM
-		if(I.throwforce < health && I.thrownby && (istype(I.thrownby, /mob/living/carbon/human)))
-			var/mob/living/carbon/human/H = I.thrownby
-			retaliate(H)
+		var/obj/item/item_hitby = hitting_atom
+		var/mob/thrown_by = item_hitby.thrownby?.resolve()
+		if(item_hitby.throwforce < src.health && thrown_by && ishuman(thrown_by))
+			var/mob/living/carbon/human/human_throwee = thrown_by
+			retaliate(human_throwee)
 	..()
 
 /mob/living/simple_animal/bot/honkbot/proc/bike_horn() //use bike_horn

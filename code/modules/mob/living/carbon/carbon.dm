@@ -125,8 +125,8 @@
 			take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 			victim.DefaultCombatKnockdown(20)
 			DefaultCombatKnockdown(20)
-			visible_message("<span class='danger'>[src] crashes into [victim] [extra_speed ? "really hard" : ""], knocking them both over!</span>",\
-				"<span class='userdanger'>You violently crash into [victim] [extra_speed ? "extra hard" : ""]!</span>")
+			visible_message("<span class='danger'>[src] crashes into [victim][extra_speed ? " really hard" : ""], knocking them both over!</span>",\
+				"<span class='userdanger'>You violently crash into [victim][extra_speed ? " extra hard" : ""]!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,1)
 
 
@@ -134,20 +134,20 @@
 /mob/living/carbon/proc/toggle_throw_mode()
 	if(stat)
 		return
-	if(in_throw_mode)
+	if(throw_mode)
 		throw_mode_off()
 	else
 		throw_mode_on()
 
 
 /mob/living/carbon/proc/throw_mode_off()
-	in_throw_mode = FALSE
+	throw_mode = FALSE
 	if(client && hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_off"
 
 
 /mob/living/carbon/proc/throw_mode_on()
-	in_throw_mode = TRUE
+	throw_mode = TRUE
 	if(client && hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_on"
 

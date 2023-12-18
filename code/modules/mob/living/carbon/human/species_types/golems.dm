@@ -419,7 +419,8 @@
 	var/obj/item/I
 	if(istype(AM, /obj/item))
 		I = AM
-		if(I.thrownby == H) //No throwing stuff at yourself to trigger the teleport
+		var/mob/thrown_by = I.thrownby?.resolve()
+		if(thrown_by == H) //No throwing stuff at yourself to trigger the teleport
 			return 0
 		else
 			reactive_teleport(H)

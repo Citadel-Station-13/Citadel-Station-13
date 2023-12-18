@@ -112,7 +112,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 
-	var/mob/thrownby = null
+	///A weakref to the mob who threw the item
+	var/datum/weakref/thrownby = null //I cannot verbally describe how much I hate this var
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
 
@@ -739,7 +740,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, messy_throw = TRUE)
-	thrownby = thrower
+	thrownby = WEAKREF(thrower)
 	callback = CALLBACK(src, .proc/after_throw, callback, (spin && messy_throw)) //replace their callback with our own
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force)
 
@@ -834,7 +835,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		. = ""
 
 /obj/item/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	return
+	return // SEND_SIGNAL(src, COMSIG_ATOM_HITBY, AM, skipcatch, hitpush, blocked, throwingdatum)
 
 /obj/item/attack_hulk(mob/living/carbon/human/user)
 	return 0
