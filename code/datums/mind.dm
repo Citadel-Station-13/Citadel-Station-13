@@ -297,9 +297,9 @@
 
 	if(!isbrain(current))
 		return
-	if(!istype(loc, /obj/item/organ/brain))
+	if(!istype(current.loc, /obj/item/mmi))
 		return
-	var/obj/item/organ/brain/B = loc
+	var/obj/item/mmi/B = current.loc.loc
 	if(!istype(B.laws, /datum/ai_laws/ratvar))
 		remove_servant_of_ratvar(current, TRUE)
 
