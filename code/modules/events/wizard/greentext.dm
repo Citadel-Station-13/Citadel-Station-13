@@ -39,6 +39,26 @@
 	roundend_callback = CALLBACK(src,.proc/check_winner)
 	SSticker.OnRoundend(roundend_callback)
 
+/obj/item/greentext/Destroy(force)
+	if(!(resistance_flags & ON_FIRE) && !force)
+		return QDEL_HINT_LETMELIVE
+
+	SSticker.round_end_events -= roundend_callback
+	GLOB.poi_list.Remove(src)
+	roundend_callback = null
+	for(var/i in GLOB.player_list)
+		var/mob/M = i
+		var/message = "<span class='warning'>A dark temptation has passed from this world"
+		if(M in color_altered_mobs)
+			message += " and you're finally able to forgive yourself"
+			if(M.color == "#FF0000" || M.color == "#00FF00")
+				M.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
+		message += "...</span>"
+		// can't skip the mob check as it also does the decolouring
+		if(!quiet)
+			to_chat(M, message)
+	. = ..()
+
 /obj/item/greentext/equipped(mob/living/user as mob)
 	to_chat(user, "<font color='green'>So long as you leave this place with greentext in hand you know will be happy...</font>")
 	var/list/other_objectives = user.mind.get_all_objectives()
@@ -80,24 +100,7 @@
 		last_holder.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
 		last_holder = new_holder //long live the king
 
-/obj/item/greentext/Destroy(force)
-	if(!(resistance_flags & ON_FIRE) && !force)
-		return QDEL_HINT_LETMELIVE
 
-	SSticker.round_end_events -= roundend_callback
-	GLOB.poi_list.Remove(src)
-	for(var/i in GLOB.player_list)
-		var/mob/M = i
-		var/message = "<span class='warning'>A dark temptation has passed from this world"
-		if(M in color_altered_mobs)
-			message += " and you're finally able to forgive yourself"
-			if(M.color == "#FF0000" || M.color == "#00FF00")
-				M.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
-		message += "...</span>"
-		// can't skip the mob check as it also does the decolouring
-		if(!quiet)
-			to_chat(M, message)
-	. = ..()
 
 /obj/item/greentext/quiet
 	quiet = TRUE

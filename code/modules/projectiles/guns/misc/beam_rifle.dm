@@ -507,8 +507,8 @@
 		duration = 0
 		. = ..()
 		if(!generation)			//first one
-			QDEL_LIST(gun.current_tracers)
-		gun.current_tracers += .
+			QDEL_LIST(gun?.current_tracers)
+		gun?.current_tracers += .
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam
 	tracer_type = /obj/effect/projectile/tracer/tracer/aiming

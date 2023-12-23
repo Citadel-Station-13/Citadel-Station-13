@@ -128,3 +128,15 @@
 #define CLONEPOD_GET_MIND		1
 #define CLONEPOD_POLL_MIND		2
 #define CLONEPOD_NO_MIND		3
+
+/// Max length of a status line in the status display
+#define MAX_STATUS_LINE_LENGTH 40
+
+/// Blank Status Display
+#define SD_BLANK 0
+/// Shows the emergency shuttle timer
+#define SD_EMERGENCY 1
+/// Shows an arbitrary message, user-set
+#define SD_MESSAGE 2
+/// Shows an alert picture (e.g. red alert, radiation, etc.)
+#define SD_PICTURE 3

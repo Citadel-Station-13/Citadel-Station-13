@@ -453,7 +453,7 @@
 /obj/item/ectoplasm/revenant/Destroy()
 	if(!QDELETED(revenant))
 		qdel(revenant)
-	..()
+	return ..()
 
 /proc/RevenantThrow(over, mob/user, obj/item/throwable)
 	var/mob/living/simple_animal/revenant/spooker = user

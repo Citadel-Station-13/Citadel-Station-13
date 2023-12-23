@@ -69,6 +69,8 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/gun/energy/Destroy()
+	if(cell)
+		QDEL_NULL(cell)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 

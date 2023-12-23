@@ -30,7 +30,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/Initialize(mapload)
 	. = ..()
-	timerid = QDEL_IN(src, 600)
+	timerid = QDEL_IN_STOPPABLE(src, 600)
 	playsound(src, 'sound/effects/curse1.ogg', 100, 1, -1)
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/Destroy()
@@ -57,7 +57,8 @@
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/proc/check_for_target()
 	if(QDELETED(set_target) || set_target.stat != CONSCIOUS || z != set_target.z)
-		qdel(src)
+		if(!QDELETED(src))
+			qdel(src)
 		return TRUE
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/GiveTarget(new_target)

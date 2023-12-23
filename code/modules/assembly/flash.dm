@@ -234,6 +234,10 @@
 	var/obj/item/organ/cyberimp/arm/flash/I = null
 	var/active_light_strength = 7
 
+/obj/item/assembly/flash/armimplant/Destroy()
+	I = null
+	return ..()
+
 /obj/item/assembly/flash/armimplant/burn_out()
 	if(I && I.owner)
 		to_chat(I.owner, "<span class='warning'>Your photon projector implant overheats and deactivates!</span>")

@@ -23,7 +23,8 @@
 	while (world.time + resume_time < endtime)
 		stoplag(1)
 		if (progress)
-			progbar.update(world.time - starttime + resume_time)
+			if(!QDELETED(progbar))
+				progbar.update(world.time - starttime + resume_time)
 
 		if(drifting && !user.inertia_dir)
 			drifting = FALSE
@@ -93,7 +94,8 @@
 	while (world.time + resume_time < endtime)
 		stoplag(1)
 		if (progress)
-			progbar.update(world.time - starttime + resume_time)
+			if(!QDELETED(progbar))
+				progbar.update(world.time - starttime + resume_time)
 
 		if(drifting && !user.inertia_dir)
 			drifting = FALSE

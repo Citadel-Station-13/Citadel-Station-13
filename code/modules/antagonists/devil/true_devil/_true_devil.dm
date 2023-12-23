@@ -29,7 +29,7 @@
 	create_bodyparts() //initialize bodyparts
 	create_internal_organs()
 	grant_all_languages()
-	..()
+	. = ..()
 
 /mob/living/carbon/true_devil/create_internal_organs()
 	internal_organs += new /obj/item/organ/brain

@@ -11,13 +11,13 @@
 
 
 /obj/structure/furnace/Initialize(mapload)
-	..()
+	. = ..()
 	create_reagents(250, TRANSPARENT)
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/furnace/Destroy()
-	..()
 	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/structure/furnace/process()
 	if(debug)

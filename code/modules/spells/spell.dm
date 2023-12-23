@@ -20,6 +20,12 @@
 	if(has_action)
 		action = new base_action(src)
 
+/obj/effect/proc_holder/Destroy()
+	QDEL_NULL(action)
+	if(ranged_ability_user)
+		remove_ranged_ability()
+	return ..()
+
 /obj/effect/proc_holder/proc/on_gain(mob/living/user)
 	return
 
@@ -33,12 +39,6 @@
 	return ""
 
 GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for the badmin verb for now
-
-/obj/effect/proc_holder/Destroy()
-	QDEL_NULL(action)
-	if(ranged_ability_user)
-		remove_ranged_ability()
-	return ..()
 
 /obj/effect/proc_holder/singularity_act()
 	return

@@ -203,7 +203,7 @@
 /obj/item/reagent_containers/pill/neurine
 	name = "neurine pill"
 	desc = "Used to treat non-severe mental traumas."
-	list_reagents = list("neurine" = 10)
+	list_reagents = list(/datum/reagent/medicine/neurine = 10)
 	icon_state = "pill22"
 	roundstart = TRUE
 

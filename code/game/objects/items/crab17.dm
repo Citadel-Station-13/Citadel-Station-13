@@ -81,6 +81,14 @@
 	addtimer(CALLBACK(src, .proc/startUp), 50)
 	QDEL_IN(src, 8 MINUTES) //Self destruct after 8 min
 
+/obj/structure/checkoutmachine/Destroy()
+	bogdanoff = null
+	stop_dumping()
+	STOP_PROCESSING(SSfastprocess, src)
+	priority_announce("The credit deposit machine at [get_area(src)] has been destroyed. Station funds have stopped draining!", sender_override = "CRAB-17 Protocol")
+	explosion(src, 0,0,1, flame_range = 2)
+	return ..()
+
 
 /obj/structure/checkoutmachine/proc/startUp() //very VERY snowflake code that adds a neat animation when the pod lands.
 	start_dumping() //The machine doesnt move during this time, giving people close by a small window to grab their funds before it starts running around
@@ -144,13 +152,6 @@
 	add_overlay("text")
 	canwalk = TRUE
 	START_PROCESSING(SSfastprocess, src)
-
-/obj/structure/checkoutmachine/Destroy()
-	stop_dumping()
-	STOP_PROCESSING(SSfastprocess, src)
-	priority_announce("The credit deposit machine at [get_area(src)] has been destroyed. Station funds have stopped draining!", sender_override = "CRAB-17 Protocol")
-	explosion(src, 0,0,1, flame_range = 2)
-	return ..()
 
 /obj/structure/checkoutmachine/proc/start_dumping()
 	accounts_to_rob = SSeconomy.bank_accounts.Copy()
@@ -220,7 +221,10 @@
 	playsound(src,  'sound/weapons/mortar_whistle.ogg', 70, TRUE, 6)
 	addtimer(CALLBACK(src, .proc/endLaunch), 5, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
-
+/obj/effect/dumpeetTarget/Destroy()
+	dump = null
+	bogdanoff = null
+	return ..()
 
 /obj/effect/dumpeetTarget/proc/endLaunch()
 	QDEL_NULL(DF) //Delete the falling machine effect, because at this point its animation is over. We dont use temp_visual because we want to manually delete it as soon as the pod appears

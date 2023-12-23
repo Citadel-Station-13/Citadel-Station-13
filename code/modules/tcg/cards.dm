@@ -114,12 +114,15 @@
 	. = ..()
 	if(!special)
 		datum_type = new_datum
-	card_datum = new datum_type
+	if(datum_type)
+		card_datum = new datum_type
+	illegal = illegal_card
+	if(!card_datum)
+		return
 	icon = card_datum.pack
 	icon_state = card_datum.icon_state
 	name = card_datum.name
 	desc = card_datum.desc
-	illegal = illegal_card
 
 	switch(card_datum.rarity)
 		if("Common")
@@ -378,8 +381,8 @@
 	var/static/radial_pickup = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_pickup")
 
 /obj/item/tcgcard_deck/Initialize(mapload)
-	. = ..()
 	LoadComponent(/datum/component/storage/concrete/tcg)
+	. = ..()
 
 /obj/item/tcgcard_deck/ComponentInitialize()
 	. = ..()

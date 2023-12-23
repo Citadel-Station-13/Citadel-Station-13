@@ -137,6 +137,11 @@
 	jaunt = new(src)
 	linked_action = new(src)
 
+/obj/item/cult_bastard/Destroy()
+	QDEL_NULL(jaunt)
+	QDEL_NULL(linked_action)
+	. = ..()
+
 /obj/item/cult_bastard/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 50, 80)
@@ -740,7 +745,7 @@
 /obj/item/cult_spear/Destroy()
 	if(spear_act)
 		qdel(spear_act)
-	..()
+	return ..()
 
 /obj/item/cult_spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/turf/T = get_turf(hit_atom)

@@ -81,4 +81,4 @@ GLOBAL_LIST(gang_tags)
 
 /obj/effect/decal/cleanable/crayon/gang/Destroy()
 	LAZYREMOVE(GLOB.gang_tags, src)
-	..()
+	return ..()

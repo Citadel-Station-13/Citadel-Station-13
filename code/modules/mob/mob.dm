@@ -23,6 +23,7 @@
 	remove_from_mob_list()
 	remove_from_dead_mob_list()
 	remove_from_alive_mob_list()
+	QDEL_LIST(mob_spell_list)
 	GLOB.all_clockwork_mobs -= src
 	focus = null
 	LAssailant = null
@@ -39,6 +40,8 @@
 		qdel(cc)
 	client_colours = null
 	ghostize()
+	if(mind?.current == src) //Let's just be safe yeah? This will occasionally be cleared, but not always. Can't do it with ghostize without changing behavior
+		mind.set_current(null)
 	..()
 	return QDEL_HINT_HARDDEL
 

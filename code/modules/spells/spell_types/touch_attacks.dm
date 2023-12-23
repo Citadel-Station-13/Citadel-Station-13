@@ -7,6 +7,14 @@
 	include_user = 1
 	range = -1
 
+
+/obj/effect/proc_holder/spell/targeted/touch/Destroy()
+	remove_hand()
+	if(action?.owner)
+		var/mob/guy_who_needs_to_know = action.owner
+		to_chat(guy_who_needs_to_know, span_notice("The power of the spell dissipates from your hand."))
+	return ..()
+
 /obj/effect/proc_holder/spell/targeted/touch/proc/remove_hand(recharge = FALSE)
 	QDEL_NULL(attached_hand)
 	if(recharge)

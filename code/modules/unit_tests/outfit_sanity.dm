@@ -2,7 +2,7 @@
 	H.equip_to_slot_or_del(new outfit.##outfit_key(H), ##slot_name, TRUE); \
 	/* We don't check the result of equip_to_slot_or_del because it returns false for random jumpsuits, as they delete themselves on init */ \
 	if (!H.get_item_by_slot(##slot_name)) { \
-		Fail("[outfit.name]'s [#outfit_key] is invalid!"); \
+		TEST_FAIL("[outfit.name]'s [#outfit_key] is invalid!"); \
 	} \
 }
 
@@ -45,6 +45,6 @@
 				var/number = backpack_contents[path] || 1
 				for (var/_ in 1 to number)
 					if (!H.equip_to_slot_or_del(new path(H), ITEM_SLOT_BACKPACK, TRUE))
-						Fail("[outfit.name]'s backpack_contents are invalid! Couldn't add [path] to backpack.")
+						TEST_FAIL("[outfit.name]'s backpack_contents are invalid! Couldn't add [path] to backpack.")
 
 #undef CHECK_OUTFIT_SLOT

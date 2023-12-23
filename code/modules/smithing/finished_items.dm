@@ -8,6 +8,7 @@
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON //yeah ok
 	slot_flags = ITEM_SLOT_BELT
+	obj_flags = UNIQUE_RENAME
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -19,7 +20,7 @@
 	var/wield_force = 15
 
 /obj/item/melee/smith/Initialize(mapload)
-	..()
+	. = ..()
 	if(desc == "cringe")
 		desc = "A handmade [name]."
 	overlay = mutable_appearance(icon, overlay_state)
@@ -56,7 +57,7 @@
 	sharpness = SHARP_POINTY//it doesnt have a blade it has a point
 
 /obj/item/mining_scanner/prospector/Initialize(mapload)
-	..()
+	. = ..()
 	var/mutable_appearance/overlay
 	desc = "A handmade [name]."
 	overlay = mutable_appearance(icon, "minihandle")
@@ -74,7 +75,7 @@
 	sharpness = SHARP_POINTY
 
 /obj/item/pickaxe/smithed/Initialize(mapload)
-	..()
+	. = ..()
 	desc = "A handmade [name]."
 	var/mutable_appearance/overlay
 	overlay = mutable_appearance(icon, "stick")
@@ -95,7 +96,7 @@
 	sharpness = SHARP_EDGED //it cuts through the earth
 
 /obj/item/shovel/smithed/Initialize(mapload)
-	..()
+	. = ..()
 	desc = "A handmade [name]."
 	var/mutable_appearance/overlay
 	overlay = mutable_appearance(icon, "shovelhandle")

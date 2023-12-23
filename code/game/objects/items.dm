@@ -209,6 +209,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			LAZYADD(used_skills[path], S.skill_traits)
 
 /obj/item/Destroy()
+	master = null
 	item_flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
 		var/mob/m = loc

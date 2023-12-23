@@ -28,6 +28,12 @@
 	wires = new /datum/wires/tesla_coil(src)
 	linked_techweb = SSresearch.science_tech
 
+/obj/machinery/power/tesla_coil/Destroy()
+	QDEL_NULL(wires)
+	linked_techweb = null
+	return ..()
+
+
 /obj/machinery/power/tesla_coil/RefreshParts()
 	var/power_multiplier = 0
 	zap_cooldown = 100

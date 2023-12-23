@@ -87,6 +87,9 @@
 
 /obj/item/phylactery/Initialize(mapload, datum/mind/newmind)
 	. = ..()
+	if(!newmind)
+		stack_trace("A phylactery was created with no target mind")
+		return INITIALIZE_HINT_QDEL
 	mind = newmind
 	name = "phylactery of [mind.name]"
 

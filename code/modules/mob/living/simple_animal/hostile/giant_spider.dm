@@ -396,10 +396,6 @@
 	action_icon_state = "wrap_0"
 	action_background_icon_state = "bg_alien"
 
-/obj/effect/proc_holder/wrap/Initialize(mapload)
-	. = ..()
-	action = new(src)
-
 /obj/effect/proc_holder/wrap/update_icon()
 	action.button_icon_state = "wrap_[active]"
 	action.UpdateButtonIcon()

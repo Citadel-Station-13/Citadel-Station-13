@@ -60,6 +60,12 @@
 	blink.outer_tele_radius = 3
 	AddSpell(blink)
 
+/mob/living/simple_animal/hostile/wizard/Destroy()
+	QDEL_NULL(fireball)
+	QDEL_NULL(mm)
+	QDEL_NULL(blink)
+	return ..()
+
 /mob/living/simple_animal/hostile/wizard/handle_automated_action()
 	. = ..()
 	INVOKE_ASYNC(src, .proc/AutomatedCast)

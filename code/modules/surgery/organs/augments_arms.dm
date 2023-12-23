@@ -24,6 +24,11 @@
 	for(var/obj/item/I in contents)
 		add_item(I)
 
+/obj/item/organ/cyberimp/arm/Destroy()
+	QDEL_LIST(items_list)
+	QDEL_NULL(holder)
+	return ..()
+
 /obj/item/organ/cyberimp/arm/proc/add_item(obj/item/I)
 	if(I in items_list)
 		return

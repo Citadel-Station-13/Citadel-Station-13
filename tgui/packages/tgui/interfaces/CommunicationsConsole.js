@@ -200,8 +200,8 @@ const PageChangingStatus = (props, context) => {
   const { act, data } = useBackend(context);
   const { maxStatusLineLength } = data;
 
-  const [lineOne, setLineOne] = useLocalState(context, "lineOne", data.lineOne);
-  const [lineTwo, setLineTwo] = useLocalState(context, "lineTwo", data.lineTwo);
+  const [upperText, setupperText] = useLocalState(context, "upperText", data.upperText);
+  const [lowerText, setlowerText] = useLocalState(context, "lowerText", data.lowerText);
 
   return (
     <Box>
@@ -263,18 +263,18 @@ const PageChangingStatus = (props, context) => {
           <Flex.Item mb={1}>
             <Input
               maxLength={maxStatusLineLength}
-              value={lineOne}
+              value={upperText}
               width="200px"
-              onChange={(_, value) => setLineOne(value)}
+              onChange={(_, value) => setupperText(value)}
             />
           </Flex.Item>
 
           <Flex.Item mb={1}>
             <Input
               maxLength={maxStatusLineLength}
-              value={lineTwo}
+              value={lowerText}
               width="200px"
-              onChange={(_, value) => setLineTwo(value)}
+              onChange={(_, value) => setlowerText(value)}
             />
           </Flex.Item>
 
@@ -283,8 +283,8 @@ const PageChangingStatus = (props, context) => {
               icon="comment-o"
               content="Message"
               onClick={() => act("setStatusMessage", {
-                lineOne,
-                lineTwo,
+                upperText,
+                lowerText,
               })}
             />
           </Flex.Item>

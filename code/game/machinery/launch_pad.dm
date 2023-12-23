@@ -39,9 +39,10 @@
 	MA.plane = 0
 	holder.appearance = MA
 	update_indicator()
-	
+
 /obj/machinery/launchpad/Destroy()
-	qdel(hud_list[DIAG_LAUNCHPAD_HUD])
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.remove_from_hud(src)
 	return ..()
 
 /obj/machinery/launchpad/examine(mob/user)
@@ -229,7 +230,9 @@
     src.briefcase = briefcase
 
 /obj/machinery/launchpad/briefcase/Destroy()
-	QDEL_NULL(briefcase)
+	if(!QDELETED(briefcase))
+		qdel(briefcase)
+	briefcase = null
 	return ..()
 
 /obj/machinery/launchpad/briefcase/isAvailable(silent = FALSE)
@@ -271,7 +274,8 @@
 
 /obj/item/storage/briefcase/launchpad/Destroy()
 	if(!QDELETED(pad))
-		QDEL_NULL(pad)
+		qdel(pad)
+	pad = null
 	return ..()
 
 /obj/item/storage/briefcase/launchpad/PopulateContents()

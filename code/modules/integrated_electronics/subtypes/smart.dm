@@ -177,7 +177,7 @@
 
 /obj/item/integrated_circuit/input/mmi_tank/Destroy()
 	RemoveBrain()
-	..()
+	return ..()
 
 /obj/item/integrated_circuit/input/mmi_tank/relaymove(var/n,var/dir)
 	set_pin_data(IC_OUTPUT, 2, dir)
@@ -320,7 +320,7 @@
 
 /obj/item/integrated_circuit/input/pAI_connector/Destroy()
 	RemovepAI()
-	..()
+	return ..()
 
 /obj/item/integrated_circuit/input/pAI_connector/proc/RemovepAI()
 	if(installed_pai)
