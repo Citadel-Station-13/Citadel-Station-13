@@ -380,7 +380,7 @@
 			var/image/bad_snowflake = image(icon = 'modular_citadel/icons/mob/widerobot.dmi', icon_state = "alina-med")
 			bad_snowflake.pixel_x = -16
 			med_icons["Alina"] = bad_snowflake
-		med_icons = sortList(med_icons)
+		med_icons = sort_list(med_icons)
 	var/med_borg_icon = show_radial_menu(R, R , med_icons, custom_check = CALLBACK(src, .proc/check_menu, R), radius = 42, require_near = TRUE)
 	switch(med_borg_icon)
 		if("Default")
@@ -498,7 +498,7 @@
 			var/image/bad_snowflake = image(icon = 'modular_citadel/icons/mob/widerobot.dmi', icon_state = "alina-eng")
 			bad_snowflake.pixel_x = -16
 			engi_icons["Alina"] = bad_snowflake
-		engi_icons = sortList(engi_icons)
+		engi_icons = sort_list(engi_icons)
 	var/engi_borg_icon = show_radial_menu(R, R , engi_icons, custom_check = CALLBACK(src, .proc/check_menu, R), radius = 42, require_near = TRUE)
 	switch(engi_borg_icon)
 		if("Default")
@@ -595,7 +595,7 @@
 			var/image/bad_snowflake = image(icon = 'modular_citadel/icons/mob/widerobot.dmi', icon_state = "alina-sec")
 			bad_snowflake.pixel_x = -16
 			sec_icons["Alina"] = bad_snowflake
-		sec_icons = sortList(sec_icons)
+		sec_icons = sort_list(sec_icons)
 	var/sec_borg_icon = show_radial_menu(R, R , sec_icons, custom_check = CALLBACK(src, .proc/check_menu, R), radius = 42, require_near = TRUE)
 	switch(sec_borg_icon)
 		if("Default")
@@ -681,7 +681,7 @@
 
 /obj/item/robot_module/peacekeeper/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/static/list/peace_icons = sortList(list(
+	var/static/list/peace_icons = sort_list(list(
 		"Default" = image(icon = 'icons/mob/robots.dmi', icon_state = "peace"),
 		"Borgi" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "borgi"),
 		"Spider" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "whitespider")
@@ -852,7 +852,7 @@
 			var/image/bad_snowflake = image(icon = 'modular_citadel/icons/mob/widerobot.dmi', icon_state = "alina-sec")
 			bad_snowflake.pixel_x = -16
 			service_icons["Alina"] = bad_snowflake
-		service_icons = sortList(service_icons)
+		service_icons = sort_list(service_icons)
 	var/service_robot_icon = show_radial_menu(R, R , service_icons, custom_check = CALLBACK(src, .proc/check_menu, R), radius = 42, require_near = TRUE)
 	switch(service_robot_icon)
 		if("(Service) Waitress")
@@ -966,7 +966,7 @@
 			var/image/wide = image(icon = 'modular_citadel/icons/mob/widerobot.dmi', icon_state = L[a])
 			wide.pixel_x = -16
 			mining_icons[a] = wide
-		mining_icons = sortList(mining_icons)
+		mining_icons = sort_list(mining_icons)
 	var/mining_borg_icon = show_radial_menu(R, R , mining_icons, custom_check = CALLBACK(src, .proc/check_menu, R), radius = 42, require_near = TRUE)
 	switch(mining_borg_icon)
 		if("Lavaland")

@@ -107,7 +107,7 @@
 			ref = REF(T)
 		)
 		data_out["servers"] += list(data)	// This /might/ cause an oom. Too bad!
-	data_out["servers"] = sortList(data_out["servers"]) //a-z sort
+	data_out["servers"] = sort_list(data_out["servers"]) //a-z sort
 
 	data_out["fake_message"] = list(
 		sender = customsender,

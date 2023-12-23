@@ -1672,7 +1672,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				var/name = GLOB.trait_name_map[trait] || trait
 				availible_traits[name] = trait
 
-	var/chosen_trait = input("Select trait to modify", "Trait") as null|anything in sortList(availible_traits)
+	var/chosen_trait = input("Select trait to modify", "Trait") as null|anything in sort_list(availible_traits)
 	if(!chosen_trait)
 		return
 	chosen_trait = availible_traits[chosen_trait]
@@ -1689,7 +1689,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				if("All")
 					source = null
 				if("Specific")
-					source = input("Source to be removed","Trait Remove/Add") as null|anything in sortList(D.status_traits[chosen_trait])
+					source = input("Source to be removed","Trait Remove/Add") as null|anything in sort_list(D.status_traits[chosen_trait])
 					if(!source)
 						return
 			REMOVE_TRAIT(D,chosen_trait,source)

@@ -162,7 +162,7 @@
 	if(BORG_SEC_AVAILABLE)
 		modulelist["Security"] = /obj/item/robot_module/security
 
-	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in sortList(modulelist)
+	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in sort_list(modulelist)
 	if(!input_module || module.type != /obj/item/robot_module)
 		return
 
@@ -379,8 +379,8 @@
 			to_chat(user, span_warning("You can't reach the wiring!"))
 		return
 
-	if(istype(W, /obj/item/aiModule))
-		var/obj/item/aiModule/MOD = W
+	if(istype(W, /obj/item/ai_module))
+		var/obj/item/ai_module/MOD = W
 		if(!opened)
 			to_chat(user, span_warning("You need access to the robot's insides to do that!"))
 			return

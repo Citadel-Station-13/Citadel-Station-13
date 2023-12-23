@@ -75,6 +75,9 @@ GLOBAL_LIST_EMPTY(living_heart_cache)	//A list of all living hearts in existance
 #define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
 #define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
 
+/// Checks if the given mob is a malf ai.
+#define IS_MALF_AI(mob) (isAI(mob) && mob?.mind?.has_antag_datum(/datum/antagonist/traitor))
+
 #define PATH_SIDE "Side"
 
 #define PATH_ASH "Ash"

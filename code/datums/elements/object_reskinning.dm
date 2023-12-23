@@ -65,7 +65,7 @@
 			icon = to_reskin.unique_reskin[reskin_option]["icon"] ? to_reskin.unique_reskin[reskin_option]["icon"] : to_reskin.icon,
 			icon_state = to_reskin.unique_reskin[reskin_option]["icon_state"] ? to_reskin.unique_reskin[reskin_option]["icon_state"] : to_reskin.icon_state)
 		items += list("[reskin_option]" = item_image)
-	sortList(items)
+	sort_list(items)
 
 	// Display to the user
 	var/pick = show_radial_menu(user, to_reskin, items, custom_check = CALLBACK(src, .proc/check_reskin_menu, user, to_reskin), radius = 38, require_near = TRUE)

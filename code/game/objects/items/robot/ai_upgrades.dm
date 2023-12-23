@@ -25,7 +25,7 @@
 		AI.hack_software = TRUE
 		log_game("[key_name(user)] has upgraded [key_name(AI)] with a [src].")
 		message_admins("[ADMIN_LOOKUPFLW(user)] has upgraded [ADMIN_LOOKUPFLW(AI)] with a [src].")
-	to_chat(user, "<span class='notice'>You upgrade [AI]. [src] is consumed in the process.</span>")
+	to_chat(user, span_notice("You install [src], upgrading [AI]."))
 	qdel(src)
 
 
@@ -46,7 +46,7 @@
 		AI.eyeobj.relay_speech = TRUE
 		to_chat(AI, "<span class='userdanger'>[user] has upgraded you with surveillance software!</span>")
 		to_chat(AI, "Via a combination of hidden microphones and lip reading software, you are able to use your cameras to listen in on conversations.")
-	to_chat(user, "<span class='notice'>You upgrade [AI]. [src] is consumed in the process.</span>")
+	to_chat(user, span_notice("You install [src], upgrading [AI]."))
 	log_game("[key_name(user)] has upgraded [key_name(AI)] with a [src].")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has upgraded [ADMIN_LOOKUPFLW(AI)] with a [src].")
 	qdel(src)

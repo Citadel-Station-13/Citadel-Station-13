@@ -237,7 +237,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			choices["[C.mob]([C])"] = C
 		else
 			choices[C] = C
-	choices = sortList(choices)
+	choices = sort_list(choices)
 	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in choices
 	if(!selection || !(selection in choices))
 		return

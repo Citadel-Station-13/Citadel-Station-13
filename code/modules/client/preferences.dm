@@ -1429,7 +1429,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
 		var/datum/job/lastJob
 
-		for(var/datum/job/job in sortList(SSjob.occupations, /proc/cmp_job_display_asc))
+		for(var/datum/job/job in sort_list(SSjob.occupations, /proc/cmp_job_display_asc))
 
 			index += 1
 			if((index >= limit) || (job.title in splitJobs))
@@ -2981,7 +2981,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							if(!length(key_bindings[old_key]))
 								key_bindings -= old_key
 						key_bindings[full_key] += list(kb_name)
-						key_bindings[full_key] = sortList(key_bindings[full_key])
+						key_bindings[full_key] = sort_list(key_bindings[full_key])
 					if(href_list["special"])		// special keys need a full reset
 						user.client.ensure_keys_set(src)
 					user << browse(null, "window=capturekeypress")

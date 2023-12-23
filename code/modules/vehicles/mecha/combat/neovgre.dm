@@ -25,7 +25,7 @@
 	else
 		add_control_flags(M, VEHICLE_CONTROL_MELEE|VEHICLE_CONTROL_EQUIPMENT)
 
-/obj/vehicle/sealed/mecha/combat/neovgre/mob_exit(mob/M, silent, forced)
+/obj/vehicle/sealed/mecha/combat/neovgre/mob_exit(mob/M, silent, randomstep, forced)
 	if(forced)
 		..()
 
