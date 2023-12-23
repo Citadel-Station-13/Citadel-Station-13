@@ -611,7 +611,7 @@
 	results = list(/datum/reagent/consumable/ethanol/eggnog = 15)
 	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 5, /datum/reagent/consumable/eggnog = 10)
 
-/datum/cheimcal_reaction/eggnog
+/datum/chemical_reaction/eggnog
 	name = "eggnog"
 	id = /datum/reagent/consumable/eggnog
 	results = list(/datum/reagent/consumable/eggnog = 10)

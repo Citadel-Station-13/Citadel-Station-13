@@ -1152,7 +1152,6 @@
 	description = "A creamy, rich beverage made out of whisked eggs, milk and sugar, for when you feel like celebrating the winter holidays."
 	color = "#fcfdc6" // rgb: 252, 253, 198
 	nutriment_factor = 2 * REAGENTS_METABOLISM
-	boozepwr = 1
 	quality = DRINK_VERYGOOD
 	taste_description = "custard"
 	glass_icon_state = "nog3"
