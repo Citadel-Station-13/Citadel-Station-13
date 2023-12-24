@@ -7,8 +7,7 @@
 	desc = "A wall with alien alloy plating.";
 	icon = 'icons/turf/walls/abductor_wall.dmi';
 	icon_state = "abductor";
-	name = "alien wall";
-	smooth = 5
+	name = "alien wall"
 	},
 /area/mafia)
 "g" = (

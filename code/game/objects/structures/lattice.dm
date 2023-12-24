@@ -10,11 +10,9 @@
 	layer = LATTICE_LAYER //under pipes
 	plane = FLOOR_PLANE
 	var/number_of_rods = 1
-	canSmoothWith = list(/obj/structure/lattice,
-	/turf/open/floor,
-	/turf/closed/wall,
-	/obj/structure/falsewall)
-	smooth = SMOOTH_MORE
+	smooth_groups = list(SMOOTH_GROUP_LATTICE)
+	smooth_with = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_WALL, SMOOTH_GROUP_LATTICE, SMOOTH_GROUP_FALSEWALL)
+	smooth_flags = SMOOTH_CORNERS
 	//	flags = CONDUCT_1
 
 /obj/structure/lattice/examine(mob/user)
@@ -75,7 +73,6 @@
 	icon = 'icons/obj/smooth_structures/lattice_clockwork.dmi'
 
 /obj/structure/lattice/clockwork/Initialize(mapload)
-	canSmoothWith += /turf/open/indestructible/clock_spawn_room //list overrides are a terrible thing
 	. = ..()
 	ratvar_act()
 	if(is_reebe(z))
@@ -98,8 +95,9 @@
 	icon = 'icons/obj/smooth_structures/catwalk.dmi'
 	icon_state = "catwalk"
 	number_of_rods = 2
-	smooth = SMOOTH_TRUE
-	canSmoothWith = null
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_CATWALK)
+	smooth_with = list(SMOOTH_GROUP_CATWALK)
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 
 /obj/structure/lattice/catwalk/deconstruction_hints(mob/user)
@@ -123,12 +121,9 @@
 /obj/structure/lattice/catwalk/clockwork
 	name = "clockwork catwalk"
 	icon = 'icons/obj/smooth_structures/catwalk_clockwork.dmi'
-	canSmoothWith = list(/obj/structure/lattice,
-	/turf/open/floor,
-	/turf/open/indestructible/clock_spawn_room,
-	/turf/closed/wall,
-	/obj/structure/falsewall)
-	smooth = SMOOTH_MORE
+	smooth_groups = list(SMOOTH_GROUP_LATTICE)
+	smooth_with = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_WALL, SMOOTH_GROUP_LATTICE, SMOOTH_GROUP_FALSEWALL)
+	smooth_flags = SMOOTH_CORNERS
 
 /obj/structure/lattice/catwalk/clockwork/Initialize(mapload)
 	. = ..()
@@ -157,8 +152,7 @@
 	icon_state = "catwalk"
 	number_of_rods = 1
 	color = "#5286b9ff"
-	smooth = SMOOTH_TRUE
-	canSmoothWith = null
+	smooth_flags = SMOOTH_CORNERS
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 

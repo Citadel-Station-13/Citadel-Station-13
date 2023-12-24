@@ -10,13 +10,15 @@ SUBSYSTEM_DEF(icon_smooth)
 
 /datum/controller/subsystem/icon_smooth/fire()
 	var/list/cached = smooth_queue
-	while(cached.len)
-		var/atom/A = cached[cached.len]
+	while(length(cached))
+		var/atom/smoothing_atom = cached[length(cached)]
 		cached.len--
-		if (A.flags_1 & INITIALIZED_1)
-			smooth_icon(A)
+		if(QDELETED(smoothing_atom) || !(smoothing_atom.smooth_flags & SMOOTH_QUEUED))
+			continue
+		if(smoothing_atom.flags_1 & INITIALIZED_1)
+			smoothing_atom.smooth_icon()
 		else
-			deferred += A
+			deferred += smoothing_atom
 		if (MC_TICK_CHECK)
 			return
 
@@ -25,18 +27,23 @@ SUBSYSTEM_DEF(icon_smooth)
 			smooth_queue = deferred
 			deferred = cached
 		else
-			can_fire = 0
+			can_fire = FALSE
 
 /datum/controller/subsystem/icon_smooth/Initialize()
-	smooth_zlevel(1,TRUE)
-	smooth_zlevel(2,TRUE)
-	var/queue = smooth_queue
-	smooth_queue = list()
-	for(var/V in queue)
-		var/atom/A = V
-		if(!A || A.z <= 2)
-			continue
-		smooth_icon(A)
-		CHECK_TICK
-
+	for(var/z in 1 to world.maxz)
+		smooth_zlevel(z, TRUE)
 	return ..()
+
+
+/datum/controller/subsystem/icon_smooth/proc/add_to_queue(atom/thing)
+	if(thing.smooth_flags & SMOOTH_QUEUED)
+		return
+	thing.smooth_flags |= SMOOTH_QUEUED
+	smooth_queue += thing
+	if(!can_fire)
+		can_fire = TRUE
+
+/datum/controller/subsystem/icon_smooth/proc/remove_from_queues(atom/thing)
+	thing.smooth_flags &= ~SMOOTH_QUEUED
+	smooth_queue -= thing
+	deferred -= thing

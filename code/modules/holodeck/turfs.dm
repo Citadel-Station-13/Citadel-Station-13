@@ -104,8 +104,9 @@
 	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "carpet"
 	floor_tile = /obj/item/stack/tile/carpet
-	smooth = SMOOTH_TRUE
-	canSmoothWith = null
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_FLOOR_HOLOCARPET)
+	smooth_with = list(SMOOTH_GROUP_FLOOR_HOLOCARPET)
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
 
@@ -113,10 +114,10 @@
 	. = ..()
 	addtimer(CALLBACK(src, /atom/.proc/update_icon), 1)
 
-/turf/open/floor/holofloor/carpet/update_icon()
+/turf/open/floor/holofloor/carpet/update_icon(updates)
 	. = ..()
-	if(intact)
-		queue_smooth(src)
+	if((updates & UPDATE_SMOOTHING) && intact)
+		QUEUE_SMOOTH(src)
 
 /turf/open/floor/holofloor/wood
 	icon_state = "wood"
@@ -163,8 +164,9 @@
 
 /turf/open/floor/holofloor/ice/smooth
 	icon_state = "smooth"
-	smooth = SMOOTH_MORE | SMOOTH_BORDER
-	canSmoothWith = list(/turf/open/floor/plating/ice/smooth, /turf/open/floor/plating/ice, /turf/open/floor/holofloor/ice)
+	smooth_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	smooth_groups = list(SMOOTH_GROUP_FLOOR, SMOOTH_GROUP_FLOOR_ICE)
+	smooth_with = list(SMOOTH_GROUP_FLOOR_ICE)
 	baseturfs = /turf/open/floor/holofloor/ice/smooth
 
 /turf/open/floor/holofloor/ice/Initialize(mapload)

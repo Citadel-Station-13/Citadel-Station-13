@@ -5,6 +5,7 @@
 	icon_state = "r_wall"
 	opacity = 1
 	density = TRUE
+	smooth_groups = list(SMOOTH_GROUP_WALL, SMOOTH_GROUP_WALL_PLASTEEL, SMOOTH_GROUP_WALL_METALLIC)
 
 	var/d_state = INTACT
 	hardness = 10
@@ -209,15 +210,16 @@
 				return 1
 	return 0
 
-/turf/closed/wall/r_wall/update_icon()
+/turf/closed/wall/r_wall/update_icon(updates)
 	. = ..()
 	if(d_state != INTACT)
-		smooth = SMOOTH_FALSE
+		smooth_flags = NONE
 		clear_smooth_overlays()
 	else
-		smooth = SMOOTH_TRUE
-		queue_smooth_neighbors(src)
-		queue_smooth(src)
+		smooth_flags = SMOOTH_CORNERS
+		if(updates & UPDATE_SMOOTHING)
+			QUEUE_SMOOTH_NEIGHBORS(src)
+			QUEUE_SMOOTH(src)
 
 /turf/closed/wall/r_wall/update_icon_state()
 	if(d_state != INTACT)
@@ -254,20 +256,21 @@
 	icon_state = "map-shuttle"
 	explosion_block = 20
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
-	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/r_wall/syndicate, /turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plastitanium, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
+	smooth_flags = SMOOTH_CORNERS | SMOOTH_DIAGONAL_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_WALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_WINDOW_PLASTITANIUM, SMOOTH_GROUP_SHUTTLE_HEATER)
 
 /turf/closed/wall/r_wall/syndicate/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	return FALSE
 
 /turf/closed/wall/r_wall/syndicate/nodiagonal
-	smooth = SMOOTH_MORE
+	smooth_flags = SMOOTH_CORNERS
 	icon_state = "map-shuttle_nd"
 
 /turf/closed/wall/r_wall/syndicate/nosmooth
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
-	smooth = SMOOTH_FALSE
+	smooth_flags = NONE
 
 /turf/closed/wall/r_wall/syndicate/overspace
 	icon_state = "map-overspace"
@@ -278,10 +281,11 @@
 /turf/closed/wall/r_wall/syndicate/pirate
 	desc = "Yarr just try to blow this to smithereens!"
 	explosion_block = 30
-	canSmoothWith = list(/turf/closed/wall/r_wall/syndicate/pirate, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plastitanium/pirate, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
+	smooth_groups = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_WALL)
+	smooth_with = list(SMOOTH_GROUP_WALL_PLASTITANIUM, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_WINDOW_PLASTITANIUM, SMOOTH_GROUP_SHUTTLE_HEATER)
 
 /turf/closed/wall/r_wall/syndicate/pirate/nodiagonal
-	smooth = SMOOTH_MORE
+	smooth_flags = SMOOTH_CORNERS
 	icon_state = "map-shuttle_nd"
 
 /turf/closed/wall/r_wall/syndicate/pirate/nosmooth

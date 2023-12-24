@@ -543,19 +543,20 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 //This proc is used to update the icons of nearby windows.
 /obj/structure/window/proc/update_nearby_icons()
 	update_icon()
-	if(smooth)
-		queue_smooth_neighbors(src)
+	if(IS_SMOOTH(src))
+		QUEUE_SMOOTH_NEIGHBORS(src)
 
 //merges adjacent full-tile windows into one
-/obj/structure/window/update_overlays()
+/obj/structure/window/update_overlays(updates)
 	. = ..()
 	if(QDELETED(src) || !fulltile)
 		return
 	var/ratio = obj_integrity / max_integrity
 	ratio = CEILING(ratio*4, 1) * 25
 
-	if(smooth)
-		queue_smooth(src)
+	// let's NOT INFINITE LOOP?
+	if((updates & UPDATE_SMOOTHING) && IS_SMOOTH(src))
+		QUEUE_SMOOTH(src)
 
 	if(ratio > 75)
 		return
@@ -693,8 +694,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	max_integrity = 50
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_WINDOW, SMOOTH_GROUP_WINDOW_NORMAL)
+	smooth_with = list(SMOOTH_GROUP_WINDOW_NORMAL)
 	glass_amount = 2
 
 /obj/structure/window/fulltile/unanchored
@@ -707,8 +709,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	max_integrity = 300
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_WINDOW, SMOOTH_GROUP_WINDOW_NORMAL)
+	smooth_with = list(SMOOTH_GROUP_WINDOW_NORMAL)
 	glass_amount = 2
 
 /obj/structure/window/plasma/fulltile/unanchored
@@ -721,7 +724,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	max_integrity = 1000
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smooth = SMOOTH_TRUE
+	smooth_flags = SMOOTH_CORNERS
 	glass_amount = 2
 
 /obj/structure/window/plasma/reinforced/fulltile/unanchored
@@ -734,8 +737,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	max_integrity = 100
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_WINDOW, SMOOTH_GROUP_WINDOW_NORMAL)
+	smooth_with = list(SMOOTH_GROUP_WINDOW_NORMAL)
 	level = 3
 	glass_amount = 2
 
@@ -748,8 +752,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	dir = FULLTILE_WINDOW_DIR
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_WINDOW, SMOOTH_GROUP_WINDOW_NORMAL)
+	smooth_with = list(SMOOTH_GROUP_WINDOW_NORMAL)
 	level = 3
 	glass_amount = 2
 
@@ -757,7 +762,6 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	icon = 'icons/obj/smooth_structures/rice_window.dmi'
 	icon_state = "ice_window"
 	max_integrity = 150
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
 	level = 3
 	glass_amount = 2
 
@@ -773,9 +777,10 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	flags_1 = PREVENT_CLICK_UNDER_1
 	reinf = TRUE
 	heat_resistance = 1600
+	smooth_flags = SMOOTH_CORNERS
+	smooth_with = list(SMOOTH_GROUP_WINDOW_TITANIUM)
+	smooth_groups = list(SMOOTH_GROUP_SHUTTLE_EXTERIOR, SMOOTH_GROUP_WINDOW_SHUTTLE, SMOOTH_GROUP_WINDOW_TITANIUM)
 	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, RAD = 100, FIRE = 80, ACID = 100)
-	smooth = SMOOTH_TRUE
-	canSmoothWith = null
 	explosion_block = 3
 	level = 3
 	glass_type = /obj/item/stack/sheet/titaniumglass
@@ -804,9 +809,10 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	reinf = TRUE
 	extra_reinforced = TRUE
 	heat_resistance = 1600
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_WINDOW_PLASTITANIUM, SMOOTH_GROUP_WINDOW_SHUTTLE, SMOOTH_GROUP_SHUTTLE_EXTERIOR)
+	smooth_with = list(SMOOTH_GROUP_WINDOW_PLASTITANIUM)
 	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, RAD = 100, FIRE = 80, ACID = 100)
-	smooth = SMOOTH_TRUE
-	canSmoothWith = null
 	explosion_block = 3
 	level = 3
 	glass_type = /obj/item/stack/sheet/plastitaniumglass
@@ -880,8 +886,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 
 /obj/structure/window/reinforced/clockwork/fulltile
 	icon_state = "clockwork_window"
-	smooth = SMOOTH_TRUE
-	canSmoothWith = null
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_WINDOW_CLOCKWORK)
+	smooth_with = list(SMOOTH_GROUP_WINDOW_CLOCKWORK)
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	dir = FULLTILE_WINDOW_DIR
@@ -908,8 +915,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	max_integrity = 15
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe)
+	smooth_flags = SMOOTH_CORNERS
+	smooth_groups = list(SMOOTH_GROUP_PAPER_FRAME)
+	smooth_with = list(SMOOTH_GROUP_PAPER_FRAME)
 	glass_amount = 2
 	glass_type = /obj/item/stack/sheet/paperframes
 	heat_resistance = 233
@@ -943,16 +951,14 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 			user.visible_message("<span class='danger'>[user] tears a hole in [src].</span>")
 			update_icon()
 
-/obj/structure/window/paperframe/update_icon()
+/obj/structure/window/paperframe/update_overlays(updates)
+	. = ..()
 	if(obj_integrity < max_integrity)
-		cut_overlay(paper)
-		add_overlay(torn)
+		. += torn
 		set_opacity(FALSE)
 	else
-		cut_overlay(torn)
-		add_overlay(paper)
+		. += paper
 		set_opacity(TRUE)
-	queue_smooth(src)
 
 /obj/structure/window/paperframe/attackby(obj/item/W, mob/user)
 	if(W.get_temperature())
@@ -984,8 +990,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 
 /obj/structure/window/bronze/fulltile
 	icon_state = "clockwork_window"
-	canSmoothWith = null
-	smooth = SMOOTH_TRUE
+	smooth_groups = list(SMOOTH_GROUP_WINDOW_CLOCKWORK)
+	smooth_with = list(SMOOTH_GROUP_WINDOW_CLOCKWORK)
+	smooth_flags = SMOOTH_CORNERS
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	dir = FULLTILE_WINDOW_DIR
