@@ -125,7 +125,7 @@
 	var/datum/component/uplink/uplink = uplink_holder.GetComponent(/datum/component/uplink)
 	uplink.telecrystals = INITIAL_CRYSTALS
 	// Give AI hacking board
-	var/obj/item/aiModule/core/full/overthrow/O = new(H)
+	var/obj/item/ai_module/core/full/overthrow/O = new(H)
 	var/list/slots = list (
 		"backpack" = ITEM_SLOT_BACKPACK,
 		"left pocket" = ITEM_SLOT_LPOCKET,

@@ -541,7 +541,7 @@
 /obj/machinery/computer/shuttle/pod/Initialize(mapload)
 	. = ..()
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_lock)
-	
+
 /obj/machinery/computer/shuttle/pod/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
@@ -571,18 +571,19 @@
 
 	if(obj_flags & EMAGGED)
 		return
-		
+
 	admin_controlled = !(new_level < SEC_LEVEL_RED)
-	
+
 /obj/docking_port/stationary/random
 	name = "escape pod"
 	id = "pod"
 	dwidth = 1
 	width = 3
 	height = 4
-	var/target_area = list(/area/lavaland/surface/outdoors, /area/icemoon/underground/unexplored/rivers)
+	/// The area the pod tries to land at
+	var/target_area = /area/lavaland/surface/outdoors
+	/// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
 	var/edge_distance = 16
-	// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
 
 /obj/docking_port/stationary/random/Initialize(mapload)
 	. = ..()
@@ -590,15 +591,21 @@
 		return
 
 	var/list/turfs = get_area_turfs(target_area)
-	var/turf/T = pick(turfs)
-
+	var/original_len = turfs.len
 	while(turfs.len)
-		if(T.x<edge_distance || T.y<edge_distance || (world.maxx+1-T.x)<edge_distance || (world.maxy+1-T.y)<edge_distance)
-			turfs -= T
-			T = pick(turfs)
+		var/turf/picked_turf = pick(turfs)
+		if(picked_turf.x<edge_distance || picked_turf.y<edge_distance || (world.maxx+1-picked_turf.x)<edge_distance || (world.maxy+1-picked_turf.y)<edge_distance)
+			turfs -= picked_turf
 		else
-			forceMove(T)
-			break
+			forceMove(picked_turf)
+			return
+
+	// Fallback: couldn't find anything
+	WARNING("docking port '[id]' could not be randomly placed in [target_area]: of [original_len] turfs, none were suitable")
+	return INITIALIZE_HINT_QDEL
+
+/obj/docking_port/stationary/random/icemoon
+	target_area = /area/icemoon/surface/outdoors
 
 //Pod suits/pickaxes
 

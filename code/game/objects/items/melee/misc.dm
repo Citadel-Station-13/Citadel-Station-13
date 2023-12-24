@@ -107,7 +107,7 @@
 	..()
 
 /obj/item/melee/sabre/get_belt_overlay()
-	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "sabre")
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "sabre") // todo: make this and its rapier equivalent work for the inhands too
 
 /obj/item/melee/sabre/get_worn_belt_overlay(icon_file)
 	return mutable_appearance(icon_file, "-sabre")
@@ -225,7 +225,7 @@
 	..()
 
 /obj/item/melee/rapier/get_belt_overlay()
-	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "rapier")
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "rapier") // todo: same as sabre
 
 /obj/item/melee/rapier/get_worn_belt_overlay(icon_file)
 	return mutable_appearance(icon_file, "-rapier")

@@ -44,6 +44,7 @@
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
 	if(rotation_flags & ROTATION_WRENCH)
 		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/WrenchRot)
+	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_requesting_context_from_item)
 
 /datum/component/simple_rotation/proc/add_verbs()
 	if(rotation_flags & ROTATION_VERBS)
@@ -63,7 +64,7 @@
 		AM.verbs -= /atom/movable/proc/simple_rotate_counterclockwise
 
 /datum/component/simple_rotation/proc/remove_signals()
-	UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_PARENT_EXAMINE, COMSIG_PARENT_ATTACKBY))
+	UnregisterSignal(parent, list(COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, COMSIG_CLICK_ALT, COMSIG_PARENT_EXAMINE, COMSIG_PARENT_ATTACKBY))
 
 /datum/component/simple_rotation/RegisterWithParent()
 	add_verbs()
@@ -156,6 +157,21 @@
 
 /datum/component/simple_rotation/proc/default_after_rotation(mob/user, rotation_type)
 	to_chat(user,"<span class='notice'>You [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [parent].</span>")
+
+/datum/component/simple_rotation/proc/on_requesting_context_from_item(
+	obj/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+	var/rotation = (rotation_flags & ROTATION_FLIP) ? "Flip" : "Rotate [rotation_flags & ROTATION_CLOCKWISE ? "clockwise" : "counter-clockwise"]"
+
+	if(rotation_flags & ROTATION_ALTCLICK)
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, rotation)
+		. = CONTEXTUAL_SCREENTIP_SET
+	if(held_item?.tool_behaviour == TOOL_WRENCH && (rotation_flags & ROTATION_WRENCH))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, rotation)
+		. = CONTEXTUAL_SCREENTIP_SET
 
 /atom/movable/proc/simple_rotate_clockwise()
 	set name = "Rotate Clockwise"

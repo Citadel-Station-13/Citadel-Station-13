@@ -25,6 +25,10 @@
 	threat = 1.5
 
 	starting_modifiers = list(/datum/skill_modifier/job/surgery, /datum/skill_modifier/job/affinity/surgery)
+	
+	family_heirlooms = list(
+		/obj/item/reagent_containers/syringe
+	)
 
 /datum/outfit/job/virologist
 	name = "Virologist"

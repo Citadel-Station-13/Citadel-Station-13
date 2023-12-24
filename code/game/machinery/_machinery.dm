@@ -149,10 +149,11 @@ Class Procs:
 		circuit = new circuit(src)
 		circuit.apply_default_parts(src)
 
-	if(!speed_process && init_process)
-		START_PROCESSING(SSmachines, src)
-	else
-		START_PROCESSING(SSfastprocess, src)
+	if(init_process) // Required to prevent non-speed non-init machines from running
+		if(speed_process)
+			START_PROCESSING(SSfastprocess, src)
+		else
+			START_PROCESSING(SSmachines, src)
 	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
 
 	if (occupant_typecache)

@@ -730,6 +730,7 @@
 		return
 	//new size detected
 	holder.resize = features["body_size"] / old_size
+	holder.maptext_height = 32 * features["body_size"] // Adjust runechat height
 	holder.update_transform()
 	if(iscarbon(holder))
 		var/mob/living/carbon/C = holder

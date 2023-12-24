@@ -20,6 +20,12 @@
 	display_order = JOB_DISPLAY_ORDER_BOTANIST
 	threat = 1.5 // lol powergame
 
+	family_heirlooms = list(
+		/obj/item/cultivator,
+		/obj/item/reagent_containers/glass/bucket, // Watering cans don't exist yet
+		/obj/item/toy/plush/beeplushie,
+	)
+
 /datum/outfit/job/botanist
 	name = "Botanist"
 	jobtype = /datum/job/hydro

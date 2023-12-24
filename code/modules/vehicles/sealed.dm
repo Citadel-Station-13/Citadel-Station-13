@@ -1,7 +1,6 @@
 /obj/vehicle/sealed
 	enclosed = TRUE // you're in a sealed vehicle dont get dinked idiot
 	var/enter_delay = 20
-	var/explode_on_death = TRUE
 	flags_1 = BLOCK_FACE_ATOM_1
 
 /obj/vehicle/sealed/generate_actions()
@@ -26,7 +25,7 @@
 		return FALSE
 	if(occupant_amount() >= max_occupants)
 		return FALSE
-	if(do_after(M, get_enter_delay(M), FALSE, src, TRUE))
+	if(do_after(M, get_enter_delay(M), src, timed_action_flags = IGNORE_HELD_ITEM))
 		mob_enter(M)
 		return TRUE
 	return FALSE
@@ -90,8 +89,6 @@
 
 /obj/vehicle/sealed/Destroy()
 	DumpMobs()
-	if(explode_on_death)
-		explosion(loc, 0, 1, 2, 3, 0)
 	return ..()
 
 /obj/vehicle/sealed/proc/DumpMobs(randomstep = TRUE)

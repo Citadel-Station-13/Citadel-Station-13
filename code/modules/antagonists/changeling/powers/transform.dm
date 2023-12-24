@@ -1,13 +1,11 @@
-/obj/effect/proc_holder/changeling/transform
+/datum/action/changeling/transform
 	name = "Transform"
-	desc = "We take on the appearance and voice of one we have absorbed."
+	desc = "We take on the appearance and voice of one we have absorbed. Costs 5 chemicals."
+	button_icon_state = "transform"
 	chemical_cost = 5
 	dna_cost = 0
 	req_dna = 1
-	req_human = 1
-	action_icon = 'icons/mob/actions/actions_changeling.dmi'
-	action_icon_state = "ling_transform"
-	action_background_icon_state = "bg_ling"
+	req_human = TRUE
 
 /obj/item/clothing/glasses/changeling
 	name = "flesh"
@@ -132,7 +130,7 @@
 	. = ..()
 
 //Change our DNA to that of somebody we've absorbed.
-/obj/effect/proc_holder/changeling/transform/sting_action(mob/living/carbon/human/user)
+/datum/action/changeling/transform/sting_action(mob/living/carbon/human/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/datum/changelingprofile/chosen_prof = changeling.select_dna()
 

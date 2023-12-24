@@ -34,6 +34,10 @@
 	ass_image = 'icons/ass/assslime.png'
 	blacklisted_quirks = list(/datum/quirk/glass_bones)
 
+	family_heirlooms = list(
+		/obj/item/toy/plush/slimeplushie
+	)
+
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	C.faction -= "slime"
 	if(ishuman(C))
@@ -194,7 +198,7 @@
 
 	H.mob_transforming = TRUE
 
-	if(do_after(owner, delay=60, needhand=FALSE, target=owner, progress=TRUE))
+	if(do_after(owner, 6 SECONDS, owner))
 		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 			make_dupe()
 		else

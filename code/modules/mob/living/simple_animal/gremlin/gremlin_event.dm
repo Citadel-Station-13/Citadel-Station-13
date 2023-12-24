@@ -5,8 +5,8 @@
 	max_occurrences = 2
 	earliest_start = 20 MINUTES
 	min_players = 5
-
-
+	category = EVENT_CATEGORY_ENTITIES
+	description = "Annoying little creatures go around the station causing havoc and hacking everything."
 
 /datum/round_event/gremlin
 	var/static/list/acceptable_spawns = list("xeno_spawn", "generic event spawn", "blobstart", "Assistant")

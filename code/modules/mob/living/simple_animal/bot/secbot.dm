@@ -365,7 +365,7 @@
 	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
 	C.visible_message("<span class='danger'>[process_emote("CAPTURE_ONE", C)]</span>",\
 						"<span class='userdanger'>[process_emote("CAPTURE_TWO", C)]</span>")
-	if(do_after(src, 60, FALSE, C))
+	if(do_after(src, 60, C))
 		attempt_handcuff(C)
 
 /mob/living/simple_animal/bot/secbot/proc/attempt_handcuff(mob/living/carbon/C)

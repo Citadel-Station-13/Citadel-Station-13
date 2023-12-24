@@ -263,3 +263,7 @@
 		return
 	else
 		return ..()
+
+/obj/structure/reflector/shuttleRotate(rotation, params)
+	. = ..()
+	setAngle(SIMPLIFY_DEGREES(rotation_angle + rotation))

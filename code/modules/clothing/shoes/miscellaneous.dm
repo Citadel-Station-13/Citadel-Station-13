@@ -144,7 +144,7 @@
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
-	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
+	desc = "Nanotrasen-brand jackboots for all your jackboots-related needs. From genuine combat to tacticool LARPing, satisfaction is guaranteed."
 	icon_state = "jackboots"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
@@ -154,6 +154,11 @@
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	lace_time = 12 SECONDS
+
+/obj/item/clothing/shoes/jackboots/sec
+	name = "security jackboots"
+	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
+	icon_state = "jackboots_sec"
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
@@ -275,8 +280,10 @@
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	actions_types = list(/datum/action/item_action/bhop)
 	permeability_coefficient = 0.05
-	unique_reskin = list("Explorer" = "miningjet",
-						"Jackboot" = "jetboots")
+	unique_reskin = list(
+		"Explorer" = list("icon_state" = "miningjet"),
+		"Jackboot" = list("icon_state" = "jetboots")
+	)
 	var/jumpdistance = 5 //-1 from to see the actual distance, e.g 4 goes over 3 tiles
 	var/jumpspeed = 3
 	var/recharging_rate = 60 //default 6 seconds between each dash

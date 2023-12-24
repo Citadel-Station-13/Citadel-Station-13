@@ -17,6 +17,8 @@
 	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/door_remote/captain(src)
 	new /obj/item/storage/photo_album/Captain(src)
+	new /obj/item/mod/construction/armor/magnate(src)
+	new /obj/item/mod/module/holster(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"
@@ -86,6 +88,9 @@
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
 	new /obj/item/storage/photo_album/HoS(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/hos(src)
+	new /obj/item/mod/construction/armor/safeguard(src)
+	new /obj/item/mod/module/jetpack(src)
+	new /obj/item/mod/module/holster(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"

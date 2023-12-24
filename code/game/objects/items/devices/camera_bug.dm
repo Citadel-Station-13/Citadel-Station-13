@@ -82,7 +82,7 @@
 				continue
 			if(length(list("ss13","mine", "rd", "labor", "toxins", "minisat")&camera.network))
 				bugged_cameras[camera.c_tag] = camera
-	return sortList(bugged_cameras)
+	return sort_list(bugged_cameras)
 
 
 /obj/item/camera_bug/proc/menu(list/cameras)

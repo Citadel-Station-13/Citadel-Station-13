@@ -145,13 +145,13 @@
 	name = "Hacked AI Law Upload Module"
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. \
 			Be careful with wording, as artificial intelligences may look for loopholes to exploit."
-	item = /obj/item/aiModule/syndicate
+	item = /obj/item/ai_module/syndicate
 	cost = 9
 
 /datum/uplink_item/device_tools/damaged_module
 	name = "Damaged AI Law Upload Module"
 	desc = "This AI law upload module has been laying around our warehouse for god knows how long. We do not know why you would ever use this."
-	item = /obj/item/aiModule/core/full/damaged
+	item = /obj/item/ai_module/core/full/damaged
 	cost = 5
 
 /datum/uplink_item/device_tools/headsetupgrade

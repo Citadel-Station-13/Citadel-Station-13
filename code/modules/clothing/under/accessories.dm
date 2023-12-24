@@ -4,7 +4,8 @@
 	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "plasma"
 	item_state = ""	//no inhands
-	slot_flags = 0
+	slot_flags = ITEM_SLOT_ACCESSORY
+	slot_equipment_priority = list(ITEM_SLOT_ACCESSORY)
 	w_class = WEIGHT_CLASS_SMALL
 	var/above_suit = FALSE
 	var/minimize_when_attached = TRUE // TRUE if shown as a small icon in corner, FALSE if overlayed
@@ -565,10 +566,15 @@
 	icon_state = "pride"
 	above_suit = TRUE
 	obj_flags = UNIQUE_RENAME
-	unique_reskin = list("Rainbow Pride" = "pride",
-						"Bisexual Pride" = "pride_bi",
-						"Pansexual Pride" = "pride_pan",
-						"Asexual Pride" = "pride_ace",
-						"Non-binary Pride" = "pride_enby",
-						"Transgender Pride" = "pride_trans",
-						)
+	unique_reskin = list(
+		"Rainbow Pride"     = list("icon_state" = "pride"),
+		"Bisexual Pride"    = list("icon_state" = "pride_bi"),
+		"Pansexual Pride"   = list("icon_state" = "pride_pan"),
+		"Asexual Pride"     = list("icon_state" = "pride_ace"),
+		"Non-binary Pride"  = list("icon_state" = "pride_enby"),
+		"Transgender Pride" = list("icon_state" = "pride_trans")
+	)
+
+/obj/item/clothing/accessory/pride/reskin_obj(mob/M)
+	. = ..()
+	name = "[current_skin] pin"

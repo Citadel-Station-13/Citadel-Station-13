@@ -32,6 +32,11 @@
 	display_order = JOB_DISPLAY_ORDER_QUARTERMASTER
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/insanity)
 	threat = 0.5
+	
+	family_heirlooms = list(
+		/obj/item/stamp,
+		/obj/item/stamp/denied
+	)
 
 /datum/outfit/job/quartermaster
 	name = "Quartermaster"

@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
+import { Box, Button, Icon, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
 export const BorgPanel = (props, context) => {
@@ -12,6 +12,9 @@ export const BorgPanel = (props, context) => {
   const upgrades = data.upgrades || [];
   const ais = data.ais || [];
   const laws = data.laws || [];
+
+  const active_upgrades = data.active_upgrades || [];
+  const ka_remaining_capacity = data.ka_remaining_capacity || 0;
   return (
     <Window
       title="Borg Panel"
@@ -97,17 +100,63 @@ export const BorgPanel = (props, context) => {
               ))}
             </LabeledList.Item>
             <LabeledList.Item label="Upgrades">
-              {upgrades.map(upgrade => (
-                <Button
-                  key={upgrade.type}
-                  icon={upgrade.installed ? 'check-square-o' : 'square-o'}
-                  content={upgrade.name}
-                  selected={upgrade.installed}
-                  onClick={() => act('toggle_upgrade', {
-                    upgrade: upgrade.type,
-                  })} />
-              ))}
+              {upgrades.map(upgrade => {
+                if (!upgrade.module_type
+                  || (upgrade.module_type.includes(borg.active_module))) {
+                  const installedCount
+                    = active_upgrades.filter(installed_upgrade =>
+                      installed_upgrade.type === upgrade.type).length;
+                  const isInstalled = installedCount > 0;
+                  return (
+                    <>
+                      <Button
+                        key={upgrade.type}
+                        icon={isInstalled ? 'check-square-o' : 'square-o'}
+                        content={isInstalled ? `${upgrade.name} ${installedCount
+                        && (!upgrade.denied_type || upgrade.maximum_of_type > 1)
+                        && upgrade.cost
+                        !== null ? `(${installedCount} installed)` : ''}`
+                          : upgrade.name}
+                        selected={isInstalled}
+                        onClick={() => act('toggle_upgrade', {
+                          upgrade: upgrade.type,
+                        })} />
+                      {
+                        (!upgrade.denied_type || upgrade.maximum_of_type > 1)
+                      && upgrade.cost !== null
+                          ? (
+                            <>
+                              <Button
+                                content={<Icon name="plus" />}
+                                disabled={ka_remaining_capacity < upgrade.cost
+                                || (upgrade.denied_type
+                              && (installedCount === upgrade.maximum_of_type))}
+                                onClick={() => act('add_upgrade', {
+                                  upgrade: upgrade.type,
+                                })}
+                              />
+                              <Button
+                                content={<Icon name="minus" />}
+                                disabled={!isInstalled}
+                                onClick={() => act('remove_upgrade', {
+                                  upgrade: upgrade.type,
+                                })}
+                              />
+                            </>
+                          ) : ""
+                      }
+                    </>
+                  );
+                } })}
             </LabeledList.Item>
+            {
+              ka_remaining_capacity !== null
+              && (
+                <LabeledList.Item label="Remaining ka capacity">
+                  {ka_remaining_capacity}
+                </LabeledList.Item>
+              )
+            }
             <LabeledList.Item label="Master AI">
               {ais.map(ai => (
                 <Button

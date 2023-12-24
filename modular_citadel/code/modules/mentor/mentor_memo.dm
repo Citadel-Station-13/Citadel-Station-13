@@ -94,7 +94,7 @@
 				var/datum/db_query/update_query = SSdbcore.NewQuery({"
 					UPDATE [format_table_name("mentor_memo")]
 					SET memotext = :new_memo, last_editor = :ckey, edits = :edit_text WHERE ckey = :target_ckey
-					"}, list("new_memo" = new_memo, "ckey" = ckey, "edit_text" = (edit_text ? "" : edit_text), "target_ckey" = target_ckey))
+					"}, list("new_memo" = new_memo, "ckey" = ckey, "edit_text" = (edit_text || ""), "target_ckey" = target_ckey))
 				if(!update_query.Execute())
 					var/err = update_query.ErrorMsg()
 					qdel(update_query)

@@ -21,6 +21,10 @@
 
 	display_order = JOB_DISPLAY_ORDER_CLOWN
 	threat = 0 // honk
+	
+	family_heirlooms = list(
+		/obj/item/bikehorn/golden
+	)
 
 /datum/outfit/job/clown
 	name = "Clown"

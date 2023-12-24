@@ -67,6 +67,8 @@
 	var/datum/language_holder/language_holder
 	var/unconvertable = FALSE
 	var/late_joiner = FALSE
+	///has this mind ever been an AI
+	var/has_ever_been_ai = FALSE
 
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
 	var/list/learned_recipes //List of learned recipe TYPES.
@@ -285,6 +287,21 @@
 //Todo make this reset signal
 		if(O)
 			O.unlock_code = null
+
+/// Remove the antagonists that should not persist when being borged
+/datum/mind/proc/remove_antags_for_borging()
+	remove_antag_datum(/datum/antagonist/cult)
+
+	var/datum/antagonist/rev/revolutionary = has_antag_datum(/datum/antagonist/rev)
+	revolutionary?.remove_revolutionary(TRUE)
+
+	if(!isbrain(current))
+		return
+	if(!istype(current.loc, /obj/item/mmi))
+		return
+	var/obj/item/mmi/B = current.loc.loc
+	if(!istype(B.laws, /datum/ai_laws/ratvar))
+		remove_servant_of_ratvar(current, TRUE)
 
 /datum/mind/proc/remove_all_antag() //For the Lazy amongst us.
 	remove_changeling()
@@ -1636,11 +1653,6 @@ GLOBAL_LIST(objective_choices)
 	for(var/X in spell_list)
 		var/obj/effect/proc_holder/spell/S = X
 		S.action.Grant(new_character)
-	var/datum/antagonist/changeling/changeling = new_character.mind.has_antag_datum(/datum/antagonist/changeling)
-	if(changeling &&(ishuman(new_character) || ismonkey(new_character)))
-		for(var/P in changeling.purchasedpowers)
-			var/obj/effect/proc_holder/changeling/I = P
-			I.action.Grant(new_character)
 
 /datum/mind/proc/disrupt_spells(delay, list/exceptions = New())
 	for(var/X in spell_list)

@@ -1,5 +1,5 @@
 /datum/config_entry/number/snowflake_plushie_prob
-	config_entry_value = 50
+	default = 50
 
 /datum/config_entry/keyed_list/snowflake_plushies
 	key_mode = KEY_MODE_TEXT

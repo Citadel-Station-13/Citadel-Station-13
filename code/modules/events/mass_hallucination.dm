@@ -5,6 +5,8 @@
 	max_occurrences = 5
 	min_players = 1
 	var/forced_hallucination
+	category = EVENT_CATEGORY_HEALTH
+	description = "Multiple crewmembers start to hallucinate the same thing."
 
 /datum/round_event_control/mass_hallucination/admin_setup()
 	if(!check_rights(R_FUN))

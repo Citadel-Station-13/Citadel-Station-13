@@ -44,7 +44,7 @@
 
 /atom/movable/screen/devil/soul_counter/proc/update_counter(souls = 0)
 	invisibility = 0
-	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#FF0000'>[souls]</font></div>"
+	maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#FF0000'>[souls]</font></div>")
 	switch(souls)
 		if(0,null)
 			icon_state = "Devil-1"
@@ -103,7 +103,7 @@
 	..()
 	var/valuecolor = "#ff2525"
 	if(owner.stat == DEAD)
-		maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>ERR-0F</font></div>"
+		maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>ERR-0F</font></div>")
 		icon_state = "coolant-3-1"
 		return
 	var/coolant_efficiency
@@ -123,7 +123,7 @@
 		valuecolor =  "#dd8109"
 	else if(coolant > BLOOD_VOLUME_SURVIVE * owner.blood_ratio)
 		valuecolor = "#e7520d"
-	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[round((coolant / (BLOOD_VOLUME_NORMAL * owner.blood_ratio)) * 100, 1)]</font></div>"
+	maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[round((coolant / (BLOOD_VOLUME_NORMAL * owner.blood_ratio)) * 100, 1)]</font></div>")
 
 	var/efficiency_suffix
 	var/state_suffix

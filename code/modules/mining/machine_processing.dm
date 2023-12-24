@@ -121,6 +121,7 @@
 	icon_state = "furnace"
 	density = TRUE
 	needs_item_input = TRUE
+	init_process = TRUE
 	var/obj/machinery/mineral/CONSOLE = null
 	var/on = FALSE
 	var/datum/material/selected_material = null

@@ -37,6 +37,16 @@
 	smooth_flags = SMOOTH_CORNERS
 	smooth_groups = list(SMOOTH_GROUP_TABLE, SMOOTH_GROUP_TABLE_NORMAL)
 
+/obj/structure/table/Initialize(mapload)
+	. = ..()
+
+	var/static/list/barehanded_interactions = list(
+		INTENT_ANY = "Slap",
+		INTENT_HARM = "Slam"
+	)
+
+	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text_combat_mode = barehanded_interactions)
+
 /obj/structure/table/examine(mob/user)
 	. = ..()
 	. += deconstruction_hints(user)
@@ -483,6 +493,19 @@
 	// size so that the north/south corners look nice - examine the detail on
 	// the sprites in the editor to see why.
 	icon = smooth_icon
+
+	if (!(flags_1 & NODECONSTRUCT_1))
+		var/static/list/tool_behaviors = list(
+			TOOL_SCREWDRIVER = list(
+				SCREENTIP_CONTEXT_LMB = list(INTENT_ANY = "Disassemble"),
+			),
+
+			TOOL_WRENCH = list(
+				SCREENTIP_CONTEXT_LMB = list(INTENT_ANY = "Deconstruct"),
+			),
+		)
+
+		AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/structure/table/wood/fancy/black
 	icon_state = "fancy_table_black"
