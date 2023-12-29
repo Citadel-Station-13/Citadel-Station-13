@@ -89,7 +89,7 @@
 		DelayNextAction(CLICK_CD_HANDCUFFED)
 		return RestrainedClickOn(A)
 
-	if(in_throw_mode)
+	if(throw_mode)
 		throw_item(A)
 		return
 

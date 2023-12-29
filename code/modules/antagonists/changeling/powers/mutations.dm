@@ -325,7 +325,7 @@
 	..()
 
 /obj/item/projectile/tentacle/proc/reset_throw(mob/living/carbon/human/H)
-	if(H.in_throw_mode)
+	if(H.throw_mode)
 		H.throw_mode_off() //Don't annoy the changeling if he doesn't catch the item
 
 /obj/item/projectile/tentacle/proc/tentacle_grab(mob/living/carbon/human/H, mob/living/carbon/C)
