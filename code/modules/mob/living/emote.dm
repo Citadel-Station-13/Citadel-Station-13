@@ -214,7 +214,7 @@
 	key_third_person = "kisses"
 	message = "blows a kiss."
 	message_param = "blows a kiss to %t."
-    emote_type = EMOTE_AUDIBLE
+	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/audio_emote
 	emote_type = EMOTE_AUDIBLE

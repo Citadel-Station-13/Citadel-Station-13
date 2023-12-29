@@ -539,7 +539,7 @@
 /mob/living/carbon/human/clean_blood()
 	var/mob/living/carbon/human/H = src
 	if(H.gloves)
-		if(H.gloves.clean_blood()) 
+		if(H.gloves.clean_blood())
 			H.update_inv_gloves()
 	else
 		..() // Clear the Blood_DNA list
