@@ -9,6 +9,8 @@
 	anchored = TRUE
 	layer = GHOST_LAYER
 	color = "#ff0000" // text color
+	appearance_flags = NO_CLIENT_COLOR | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM
+	vis_flags = VIS_INHERIT_ID
 	var/text_size = 3 // larger values clip when the displayed text is larger than 2 digits.
 	var/started = FALSE
 	var/displayed_text
@@ -17,6 +19,10 @@
 /obj/effect/countdown/Initialize(mapload)
 	. = ..()
 	attach(loc)
+	RegisterSignal(loc, COMSIG_PARENT_QDELETING, .proc/on_parent_deleting)
+
+/obj/effect/countdown/proc/on_parent_deleting(atom/being_deleted, force)
+	qdel(src)
 
 /obj/effect/countdown/examine(mob/user)
 	. = ..()
@@ -24,7 +30,12 @@
 
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A
-	forceMove(get_turf(A))
+	if(ismovable(A))
+		var/atom/movable/M = A
+		moveToNullspace()
+		M.vis_contents |= src
+	else
+		forceMove(get_turf(A))
 
 /obj/effect/countdown/proc/start()
 	if(!started)
@@ -44,20 +55,22 @@
 /obj/effect/countdown/process()
 	if(!attached_to || QDELETED(attached_to))
 		qdel(src)
-	forceMove(get_turf(attached_to))
+	if(!ismovable(attached_to))
+		forceMove(get_turf(attached_to))
 	var/new_val = get_value()
 	if(new_val == displayed_text)
 		return
 	displayed_text = new_val
 
 	if(displayed_text)
-		maptext = "<font size = [text_size]>[displayed_text]</font>"
+		maptext = MAPTEXT("[displayed_text]")
 	else
 		maptext = null
 
 /obj/effect/countdown/Destroy()
-	attached_to = null
 	STOP_PROCESSING(SSfastprocess, src)
+	UnregisterSignal(attached_to, COMSIG_PARENT_QDELETING)
+	attached_to = null
 	. = ..()
 
 /obj/effect/countdown/ex_act(severity, target, origin) //immune to explosions
