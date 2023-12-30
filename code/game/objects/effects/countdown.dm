@@ -9,7 +9,7 @@
 	anchored = TRUE
 	layer = GHOST_LAYER
 	color = "#ff0000" // text color
-	appearance_flags = NO_CLIENT_COLOR | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM
+	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	vis_flags = VIS_INHERIT_ID
 	var/text_size = 3 // larger values clip when the displayed text is larger than 2 digits.
 	var/started = FALSE

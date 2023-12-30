@@ -515,7 +515,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	used_skills = list(/datum/skill/level/job/wiring)
 
 /obj/item/stack/cable_coil/cyborg
-	is_cyborg = 1
+	is_cyborg = TRUE
 	custom_materials = null
 	cost = 1
 
@@ -572,7 +572,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		return ..()
 
 
-/obj/item/stack/cable_coil/update_icon()
+/obj/item/stack/cable_coil/update_icon_state()
 	icon_state = "[initial(item_state)][amount < 3 ? amount : ""]"
 	name = "cable [amount < 3 ? "piece" : "coil"]"
 

@@ -132,6 +132,16 @@
 	else
 		icon_state = "[initial(icon_state)]_3"
 
+/obj/item/stack/update_overlays()
+	. = ..()
+	if(isturf(loc))
+		return
+	if(locate(/atom/movable/screen/storage/item_holder) in vis_locs) // It's being handled by the storage we're in, forget about it.
+		return
+	var/mutable_appearance/number = mutable_appearance(appearance_flags = APPEARANCE_UI_IGNORE_ALPHA)
+	number.maptext = MAPTEXT(get_amount())
+	. += number
+
 /obj/item/stack/examine(mob/user)
 	. = ..()
 	if (is_cyborg)
@@ -150,6 +160,14 @@
 	else
 		. += "There is [get_amount()] in the stack."
 	. += "<span class='notice'>Alt-click to take a custom amount.</span>"
+
+/obj/item/stack/equipped(mob/user, slot)
+	. = ..()
+	update_icon()
+
+/obj/item/stack/dropped(mob/user, slot)
+	. = ..()
+	update_icon()
 
 /obj/item/stack/proc/get_amount()
 	if(is_cyborg)
@@ -491,7 +509,11 @@
 			F.forceMove(user.drop_location())
 		add_fingerprint(user)
 		F.add_fingerprint(user)
-	zero_amount()
+	if(!zero_amount())
+		var/atom/movable/screen/storage/item_holder/holder = locate(/atom/movable/screen/storage/item_holder) in vis_locs
+		if(holder.master && istype(holder.master, /datum/component/storage/concrete))
+			var/datum/component/storage/concrete/storage = holder.master
+			storage.refresh_mob_views()
 
 /obj/item/stack/attackby(obj/item/W, mob/user, params)
 	if(can_merge(W))
