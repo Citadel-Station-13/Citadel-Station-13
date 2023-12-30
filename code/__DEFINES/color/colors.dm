@@ -188,10 +188,42 @@
 #define CIRCUIT_COLOR_ENGINEERING "#F8D700"
 #define CIRCUIT_COLOR_SUPPLY "#C47749"
 
-/// Colors for pride week
+/// === LGBT Colors Start ===
+/// Black and white colors will not be covered for the flags that do have them. We'll just use COLOR_WHITE and COLOR_BLACK.
+/// Colors for pride
 #define COLOR_PRIDE_RED "#FF6666"
 #define COLOR_PRIDE_ORANGE "#FC9F3C"
 #define COLOR_PRIDE_YELLOW "#EAFF51"
 #define COLOR_PRIDE_GREEN "#41FC66"
 #define COLOR_PRIDE_BLUE "#42FFF2"
 #define COLOR_PRIDE_PURPLE "#5D5DFC"
+
+/// Colors for transgender flag
+#define COLOR_TRANS_BLUE "#5ACFFA"
+#define COLOR_TRANS_PINK "#F5ABB9"
+
+/// Colors for lesbian flag
+#define COLOR_LESBIAN_ORANGERED "#D62900"
+#define COLOR_LESBIAN_SANDYBROWN "#FF9B55"
+#define COLOR_LESBIAN_PALEVIOLETRED "#D462A5"
+#define COLOR_LESBIAN_DARKMAGENTA "#A50062"
+
+/// Colors for bisexual flag
+#define COLOR_BISEXUAL_MEDIUMVIOLETRED "#D70071"
+#define COLOR_BISEXUAL_DARKORCHID "#9C4E97"
+#define COLOR_BISEXUAL_DARKBLUE "#0035A9"
+
+/// Colors for intersex flag
+#define COLOR_INTERSEX_GOLD "#FFD900"
+#define COLOR_INTERSEX_DARKMAGENTA "#7A00AB"
+
+/// Colors for asexual flag
+#define COLOR_ACE_DARKGRAY "#A4A5A4"
+#define COLOR_ACE_PURPLE "#810081"
+
+/// Colors for pansexual flag
+#define COLOR_PAN_DEEPPINK "#FF1B8D"
+#define COLOR_PAN_GOLD "#FFD900"
+#define COLOR_PAN_DODGERBLUE "#1BB3FF"
+
+/// === LGBT Colors End ===
