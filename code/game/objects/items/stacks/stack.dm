@@ -136,6 +136,8 @@
 	. = ..()
 	if(isturf(loc))
 		return
+	if(locate(/atom/movable/screen/storage/item_holder) in vis_locs) // It's being handled by the storage we're in, forget about it.
+		return
 	var/mutable_appearance/number = mutable_appearance(appearance_flags = APPEARANCE_UI_IGNORE_ALPHA)
 	number.maptext = MAPTEXT(get_amount())
 	. += number
@@ -507,7 +509,11 @@
 			F.forceMove(user.drop_location())
 		add_fingerprint(user)
 		F.add_fingerprint(user)
-	zero_amount()
+	if(!zero_amount())
+		var/atom/movable/screen/storage/item_holder/holder = locate(/atom/movable/screen/storage/item_holder) in vis_locs
+		if(holder.master && istype(holder.master, /datum/component/storage/concrete))
+			var/datum/component/storage/concrete/storage = holder.master
+			storage.refresh_mob_views()
 
 /obj/item/stack/attackby(obj/item/W, mob/user, params)
 	if(can_merge(W))
